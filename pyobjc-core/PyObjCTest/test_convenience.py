@@ -1,6 +1,216 @@
 from PyObjCTools.TestSupport import *
 import objc
 import objc._convenience as convenience
+import operator
+
+class TestNSDecimalNumber (TestCase):
+    def setUp(self):
+        self.NSDecimalNumber = objc.lookUpClass('NSDecimalNumber')
+
+    def testCreation(self):
+        v = self.NSDecimalNumber()
+        self.assertIsInstance(v, self.NSDecimalNumber)
+        self.assertEqual(str(v), "0")
+
+        v = self.NSDecimalNumber(1)
+        self.assertIsInstance(v, self.NSDecimalNumber)
+        self.assertEqual(str(v), "1")
+
+        v = self.NSDecimalNumber(1.5)
+        self.assertIsInstance(v, self.NSDecimalNumber)
+        self.assertEqual(str(v), "1.5")
+
+        v = self.NSDecimalNumber(objc.NSDecimal("2.5"))
+        self.assertIsInstance(v, self.NSDecimalNumber)
+        self.assertEqual(str(v), "2.5")
+
+        w = self.NSDecimalNumber(v)
+        self.assertIsInstance(w, self.NSDecimalNumber)
+        self.assertEqual(str(w), "2.5")
+
+        self.assertRaises(TypeError, self.NSDecimalNumber, {})
+
+    def testCalculation(self):
+        a_o = self.NSDecimalNumber("1.5")
+        b_o = self.NSDecimalNumber("2.5")
+
+        a_c = objc.NSDecimal("1.5")
+        b_c = objc.NSDecimal("2.5")
+
+        # Subtraction
+
+        v_o = a_o - b_o
+        v_c = a_c - b_c
+        self.assertEqual(str(v_o), str(v_c))
+        self.assertIsInstance(v_o, self.NSDecimalNumber)
+
+        v_o = 1 - b_o
+        v_c = 1 - b_c
+        self.assertEqual(str(v_o), str(v_c))
+        self.assertIsInstance(v_o, self.NSDecimalNumber)
+
+        v_o = a_o - 1
+        v_c = a_c - 1
+        self.assertEqual(str(v_o), str(v_c))
+        self.assertIsInstance(v_o, self.NSDecimalNumber)
+
+        # Addition
+
+        v_o = a_o + b_o
+        v_c = a_c + b_c
+        self.assertEqual(str(v_o), str(v_c))
+        self.assertIsInstance(v_o, self.NSDecimalNumber)
+
+        v_o = 1 + b_o
+        v_c = 1 + b_c
+        self.assertEqual(str(v_o), str(v_c))
+        self.assertIsInstance(v_o, self.NSDecimalNumber)
+
+        v_o = a_o + 1
+        v_c = a_c + 1
+        self.assertEqual(str(v_o), str(v_c))
+        self.assertIsInstance(v_o, self.NSDecimalNumber)
+
+        # Multiplication
+
+        v_o = a_o * b_o
+        v_c = a_c * b_c
+        self.assertEqual(str(v_o), str(v_c))
+        self.assertIsInstance(v_o, self.NSDecimalNumber)
+
+        v_o = 2 * b_o
+        v_c = 2 * b_c
+        self.assertEqual(str(v_o), str(v_c))
+        self.assertIsInstance(v_o, self.NSDecimalNumber)
+
+        v_o = a_o * 2
+        v_c = a_c * 2
+        self.assertEqual(str(v_o), str(v_c))
+        self.assertIsInstance(v_o, self.NSDecimalNumber)
+
+        # Division
+
+        v_o = a_o / b_o
+        v_c = a_c / b_c
+        self.assertEqual(str(v_o), str(v_c))
+        self.assertIsInstance(v_o, self.NSDecimalNumber)
+
+        v_o = 2 / b_o
+        v_c = 2 / b_c
+        self.assertEqual(str(v_o), str(v_c))
+        self.assertIsInstance(v_o, self.NSDecimalNumber)
+
+        v_o = a_o / 2
+        v_c = a_c / 2
+        self.assertEqual(str(v_o), str(v_c))
+        self.assertIsInstance(v_o, self.NSDecimalNumber)
+
+        # Floor Division
+
+        v_o = a_o // b_o
+        v_c = a_c // b_c
+        self.assertEqual(str(v_o), str(v_c))
+        self.assertIsInstance(v_o, self.NSDecimalNumber)
+
+        v_o = 2 // b_o
+        v_c = 2 // b_c
+        self.assertEqual(str(v_o), str(v_c))
+        self.assertIsInstance(v_o, self.NSDecimalNumber)
+
+        v_o = a_o // 2
+        v_c = a_c // 2
+        self.assertEqual(str(v_o), str(v_c))
+        self.assertIsInstance(v_o, self.NSDecimalNumber)
+
+        # Modulo
+
+        # Not supported at the moment.
+
+        self.assertRaises(TypeError, operator.mod, a_o, b_o)
+        self.assertRaises(TypeError, operator.mod, a_c, b_c)
+        self.assertRaises(TypeError, operator.mod, a_o, 2)
+        self.assertRaises(TypeError, operator.mod, a_c, 2)
+        self.assertRaises(TypeError, operator.mod, 2, b_o)
+        self.assertRaises(TypeError, operator.mod, 2, b_c)
+
+        #v_o = a_o % b_o
+        #v_c = a_c % b_c
+        #self.assertEqual(str(v_o), str(v_c))
+        #self.assertIsInstance(v_o, self.NSDecimalNumber)
+
+        #v_o = 2 % b_o
+        #v_c = 2 % b_c
+        #self.assertEqual(str(v_o), str(v_c))
+        #self.assertIsInstance(v_o, self.NSDecimalNumber)
+
+        #v_o = a_o % 2
+        #v_c = a_c % 2
+        self.assertEqual(str(v_o), str(v_c))
+        #self.assertIsInstance(v_o, self.NSDecimalNumber)
+
+        # Negate
+        v_o = -a_o
+        v_c = -a_c
+        self.assertEqual(str(v_o), str(v_c))
+        self.assertIsInstance(v_o, self.NSDecimalNumber)
+
+        # Unary plus
+        v_o = +a_o
+        v_c = +a_c
+        self.assertEqual(str(v_o), str(v_c))
+        self.assertIsInstance(v_o, self.NSDecimalNumber)
+
+        # Abs
+        v_o = abs(a_o)
+        v_c = abs(a_c)
+        self.assertEqual(str(v_o), str(v_c))
+        self.assertIsInstance(v_o, self.NSDecimalNumber)
+
+        v_o = abs(-a_o)
+        v_c = abs(-a_c)
+        self.assertEqual(str(v_o), str(v_c))
+        self.assertIsInstance(v_o, self.NSDecimalNumber)
+
+        # Rounding
+        a_o = self.NSDecimalNumber("15.125")
+        a_c = objc.NSDecimal("15.125")
+
+        v_o = round(a_o)
+        v_c = round(a_c)
+        self.assertEqual(str(v_o), str(v_c))
+        self.assertIsInstance(v_o, self.NSDecimalNumber)
+
+        v_o = round(a_o, 1)
+        v_c = round(a_c, 1)
+        self.assertEqual(str(v_o), str(v_c))
+        self.assertIsInstance(v_o, self.NSDecimalNumber)
+
+        v_o = round(a_o, -1)
+        v_c = round(a_c, -1)
+        self.assertEqual(str(v_o), str(v_c))
+        self.assertIsInstance(v_o, self.NSDecimalNumber)
+
+    def test_compare(self):
+        a_o = self.NSDecimalNumber("1.5")
+        b_o = self.NSDecimalNumber("2.5")
+        c_o = self.NSDecimalNumber("2.5")
+
+        self.assertTrue(a_o < b_o)
+        self.assertFalse(b_o < a_o)
+        self.assertTrue(a_o <= b_o)
+        self.assertFalse(b_o <= a_o)
+
+        self.assertFalse(a_o > b_o)
+        self.assertTrue(b_o > a_o)
+        self.assertFalse(a_o >= b_o)
+        self.assertTrue(b_o >= a_o)
+
+        self.assertTrue(b_o == c_o)
+        self.assertTrue(b_o == objc.NSDecimal('2.5'))
+        self.assertFalse(b_o == a_o)
+
+        self.assertTrue(b_o != a_o)
+        self.assertFalse(b_o != c_o)
 
 class TestNSData (TestCase):
     def test_creation(self):

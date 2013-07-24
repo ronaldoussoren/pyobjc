@@ -13,6 +13,7 @@
 
 static char Decimal_Encoding[sizeof(@encode(NSDecimal)) + 32];
 static size_t Decimal_Encoding_Len = 0;
+static PyObject* _NSDecimalNumber_Class = NULL;
 
 typedef struct {
     PyObject_HEAD
@@ -302,10 +303,26 @@ PyObjC_number_to_decimal(PyObject* pyValue, NSDecimal* outResult)
 
     }
 
+    if (_NSDecimalNumber_Class == NULL) {
+        _NSDecimalNumber_Class = PyObjCClass_New([NSDecimalNumber class]);
+        if (_NSDecimalNumber_Class == NULL) {
+            PyErr_Clear();
+        }
+    }
+
+    if (_NSDecimalNumber_Class != NULL && PyObject_IsInstance(pyValue, _NSDecimalNumber_Class)) {
+        NSDecimalNumber* val = PyObjCObject_GetObject(pyValue);
+        *outResult = [val decimalValue];
+        return 0;
+    }
+
     PyErr_Format(PyExc_TypeError, "cannot convert object of %s to NSDecimal", pyValue->ob_type->tp_name);
     return -1;
 }
 
+/* NOTE: This is intentionally not in the tp_init slot, that would make NSDecimal
+ * objects mutable.
+ */
 static int
 decimal_init(PyObject* self, PyObject* args, PyObject* kwds)
 {
@@ -407,6 +424,7 @@ static PyObject*
 decimal_richcompare(PyObject* self, PyObject* other, int type)
 {
     NSComparisonResult res;
+    (void)decimal_coerce(&self, &other);
 
     if (!Decimal_Check(other)) {
         if (type == Py_EQ) {

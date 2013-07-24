@@ -6,6 +6,22 @@ An overview of the relevant changes in new, and older, releases.
 Version 3.0
 -----------
 
+* ``NSDecimalNumber`` can now be instantatiated as a normal Python object::
+
+     value = NSDecimalNumber(4)
+
+* ``NSData`` and ``NSMutableData`` can now be instantiated as a normal
+  Python object::
+
+      value = NSData(someBytes)
+
+   or::
+
+      value = NSData()
+
+* ``NSDecimal`` now coerces the other value to ``NSDecimal`` in coercions.
+  Because of you can now order instances of ``NSDecimal`` and ``int``.
+
 * ``PyObjCTools.KeyValueCoding.ArrayOperators`` and
   ``PyObjCTools.KeyValueCoding.arrayOperators`` were accidently public
   names in previous releases, and are now removed. Use the array operators

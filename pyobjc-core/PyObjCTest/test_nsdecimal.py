@@ -78,29 +78,30 @@ class TestNSDecimalWrwapper (TestCase):
         self.assertEqual(objc.NSDecimal("1.50"), objc.NSDecimal("1.500"))
 
 
-
-        # It is not possible to compare with other numeric types:
+        # Comparison with other types is possible when
+        # they can be casted to NSDecimal without loosing
+        # precision.
         d5 = objc.NSDecimal("5")
         i5 = 5
         f5 = 5.0
         D5 = decimal.Decimal(5)
 
-        self.assertFalse(d5 == i5)
+        self.assertTrue(d5 == i5)
         self.assertFalse(d5 == f5)
         self.assertFalse(d5 == D5)
-        self.assertTrue(d5 != i5)
+        self.assertFalse(d5 != i5)
         self.assertTrue(d5 != f5)
         self.assertTrue(d5 != D5)
-        self.assertRaises(TypeError, operator.lt, d5, i5)
+        self.assertFalse(d5 < i5)
         self.assertRaises(TypeError, operator.lt, d5, f5)
         self.assertRaises(TypeError, operator.lt, d5, D5)
-        self.assertRaises(TypeError, operator.gt, d5, i5)
+        self.assertFalse(d5 > i5)
         self.assertRaises(TypeError, operator.gt, d5, f5)
         self.assertRaises(TypeError, operator.gt, d5, D5)
-        self.assertRaises(TypeError, operator.ge, d5, i5)
+        self.assertTrue(d5 >= i5)
         self.assertRaises(TypeError, operator.ge, d5, f5)
         self.assertRaises(TypeError, operator.ge, d5, D5)
-        self.assertRaises(TypeError, operator.le, d5, i5)
+        self.assertTrue(d5 <= i5)
         self.assertRaises(TypeError, operator.le, d5, f5)
         self.assertRaises(TypeError, operator.le, d5, D5)
 
