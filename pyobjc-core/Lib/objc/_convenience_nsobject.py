@@ -20,11 +20,12 @@ def nsobject_hash(self, _max=sys.maxsize, _const=((sys.maxsize + 1) * 2)):
     rval = self.hash()
     if rval > _max:
         rval -= _const
-        # -1 is not a valid hash in Python and hash(x) will
-        # translate a hash of -1 to -2, so we might as well
-        # do it here so that it's not too surprising..
-        if rval == -1:
-            rval = -2
+
+    # -1 is not a valid hash in Python and hash(x) will
+    # translate a hash of -1 to -2, so we might as well
+    # do it here so that it's not too surprising..
+    if rval == -1:
+        rval = -2
     return int(rval)
 
 def nsobject__eq__(self, other):

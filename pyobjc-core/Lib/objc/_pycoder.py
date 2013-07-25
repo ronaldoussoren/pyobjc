@@ -510,19 +510,7 @@ def pyobjectEncode(self, coder):
 
     else:
         reduce = getattr(self, "__reduce_ex__", None)
-        if reduce is not None:
-            rv = reduce(2)
-
-        else: # pragma: no cover
-            # This path will never be used because object implements
-            # __reduce_ex__ (at least in python2.6 and later)
-            rv = getattr(self, "__reduce__", None)
-            if reduce is not None:
-                rv = reduce()
-
-            else:
-                raise PicklingError("Can't pickle %r object: %r" %
-                        (t.__name__, self))
+        rv = reduce(2)
 
     if type(rv) is str:
         save_global(coder, self, rv)

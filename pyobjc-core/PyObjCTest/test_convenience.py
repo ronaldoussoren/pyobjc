@@ -2,6 +2,38 @@ from PyObjCTools.TestSupport import *
 import objc
 import objc._convenience as convenience
 import operator
+import sys
+
+class OC_WithHash (objc.lookUpClass('NSObject')):
+    def initWithHash_(self, value):
+        self = objc.super(OC_WithHash, self).init()
+        if self is None:
+            return None
+
+        self._hash = value
+        return self
+
+    def hash(self):
+        return self._hash
+
+
+
+class TestBasicConvenience (TestCase):
+    def test_hashprotocol(self):
+        v = objc.lookUpClass('NSObject').alloc().init()
+        v.hash()
+
+        hash(v) + 0
+
+    def test_hash_not_negative_one(self):
+        v = OC_WithHash.alloc().initWithHash_(-1)
+        self.assertEqual(v.hash(), -1)
+        self.assertEqual(hash(v), -2)
+
+    def test_hash_not_enormous(self):
+        v = OC_WithHash.alloc().initWithHash_(2**64-1)
+        self.assertEqual(v.hash(), 2**64-1)
+        self.assertTrue(-sys.maxsize-1 <= hash(v) <= sys.maxsize )
 
 class TestNSDecimalNumber (TestCase):
     def setUp(self):

@@ -8,6 +8,9 @@ exclude_lines =
     if 0:
     if __name__ == .__main__.:
 
+partial_branches =
+    pragma: no branch
+
 omit =
    PyObjCTest/*
    setup*

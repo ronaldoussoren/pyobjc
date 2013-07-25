@@ -45,6 +45,7 @@ class ArrayTests (seq_tests.CommonTest):
 
         u = self.type2test()
         self.assertRaises(ValueError, u.index, 1)
+        self.assertRaises(ValueError, u.index, 1, 1)
 
         u = self.type2test([0, 1])
         self.assertEqual(u.index(0), 0)
@@ -127,9 +128,19 @@ class MutableArrayTest (list_tests.CommonTest):
         v = self.type2test([0, 1,2,3,4,])
         self.assertEqual(u, v)
 
+        u = self.type2test([1,2,3,4,])
+        u.insert(-2, 0)
+        v = self.type2test([1,2,0, 3,4,])
+        self.assertEqual(u, v)
+
     def test_pyobjc_pop(self):
         u = self.type2test([1,2,3,4,])
         self.assertRaises(IndexError, u.pop, -8)
+
+        u = self.type2test([1,2,3,4,])
+        self.assertEqual(u.pop(-2), 3)
+
+        v = self.type2test([1,2,4,])
 
     def test_pyobjc_delitem(self):
         u = self.type2test([1,2,3,4,])

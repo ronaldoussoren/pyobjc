@@ -18,10 +18,12 @@ def addConvenienceForBasicSequence(classname, readonly=True):
     ))
 
     if not readonly:
-        raise NotImplementedError
+        addConvenienceForClass(classname, (
+            ('__setitem__', lambda self, idx, value: self.setObject_atIndex_(value, idx)),
+        ))
 
 
-# XXX
+# XXX: Move these to another file
 addConvenienceForBasicSequence('WebScriptObject', True)
 addConvenienceForClass('WebScriptObject', (
     ('count',    lambda self: self.lenght()),
