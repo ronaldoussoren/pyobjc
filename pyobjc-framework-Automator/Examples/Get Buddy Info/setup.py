@@ -45,13 +45,17 @@ setup(
     name="Get Buddy Info",
     plugin=["GetBuddyInfo.py"],
     data_files=[],
-    options=dict(py2app=dict(
-        extension=".action",
-        plist=infoPlist,
-    )),
+    options=dict(
+        py2app=dict(
+            extension=".action",
+            plist=infoPlist,
+        ),
+    ),
     setup_requires=[
         "py2app",
         "pyobjc-framework-Automator",
+        "pyobjc-framework-AddressBook",
+        "pyobjc-framework-InstantMessage",
         "pyobjc-framework-Cocoa",
     ]
 )

@@ -1,8 +1,11 @@
 import sys
-from Cocoa import *
-from Automator import *
-from AddressBook import *
-from InstantMessage import *
+from Cocoa import NSAppleEventDescriptor
+from Automator import AMBundleAction
+from InstantMessage import IMService, IMPersonFirstNameKey, IMPersonLastNameKey, IMPersonServiceNameKey
+from InstantMessage import IMPersonScreenNameKey, IMPersonStatusKey, IMPersonStatusUnknown
+from InstantMessage import IMPersonStatusOffline, IMPersonStatusIdle, IMPersonStatusAway
+from InstantMessage import IMPersonStatusAvailable, IMPersonStatusMessageKey
+from AddressBook import ABAddressBook, ABPerson
 
 class GetBuddyInfo (AMBundleAction):
     def runWithInput_fromAction_error_(self, input, anAction, errorInfo):

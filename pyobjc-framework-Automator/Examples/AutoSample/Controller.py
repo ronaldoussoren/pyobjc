@@ -1,5 +1,7 @@
-from Cocoa import *
-from Automator import *
+import objc
+from Cocoa import NSObject, NSURL, NSMutableArray, NSBundle
+from Cocoa import NSIndexSet, NSBeginInformationalAlertSheet
+from Automator import AMWorkflow
 
 class Controller (NSObject):
     # interface builder variables
