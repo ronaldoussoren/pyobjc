@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 """
 This script prints some information on 'My Card'  record using
 the AddressBook C API.

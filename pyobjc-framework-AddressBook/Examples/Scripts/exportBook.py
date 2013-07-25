@@ -1,4 +1,4 @@
-#!/usr/bin/env python2.3
+#!/usr/bin/env python3
 """
 This script gives a short example on how to use the addressbook framework,
 it creates an CSV file containing information about all entries in the
@@ -86,8 +86,6 @@ def main(argv=None):
         csvStream.writerow([ f[0] for f in FIELD_NAMES])
         for row in bookFields(book, [ f[1] for f in FIELD_NAMES]):
             csvStream.writerow(row)
-
-        fp.close()
 
 if __name__ == "__main__":
     main()

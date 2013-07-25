@@ -6,7 +6,6 @@ To install this plugin you have to build it (using 'python setup.py py2app')
 and then copy it to  '~/Library/Address\ Book\ Plug-Ins' (this folder may
 not exist yet.
 """
-from __future__ import unicode_literals
 from AddressBook import kABAddressProperty
 from AppKit import NSObject, NSNull, NSStringPboardType
 
