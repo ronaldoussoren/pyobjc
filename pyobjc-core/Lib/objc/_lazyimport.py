@@ -14,7 +14,6 @@ from objc import lookUpClass, getClassList, nosuchclass_error, loadBundle
 import objc
 ModuleType = type(sys)
 
-
 def _loadBundle(frameworkName, frameworkIdentifier, frameworkPath):
     if frameworkIdentifier is None:
         bundle = loadBundle(
@@ -60,7 +59,7 @@ class ObjCLazyModule (ModuleType):
                 '_ObjCLazyModule__aliases',
             )
 
-    def __init__(self, name, frameworkIdentifier, frameworkPath, metadict, inline_list=None, initialdict={}, parents=()):
+    def __init__(self, name, frameworkIdentifier, frameworkPath, metadict=None, inline_list=None, initialdict=None, parents=()):
         super(ObjCLazyModule, self).__init__(name)
 
         if frameworkIdentifier is not None or frameworkPath is not None:
@@ -74,7 +73,11 @@ class ObjCLazyModule (ModuleType):
                 if sys.modules[nm] is not None:
                     self.__dict__[rest] = sys.modules[nm]
 
-        self.__dict__.update(initialdict)
+        if metadict is None:
+            metadict = {}
+
+        if initialdict:
+            self.__dict__.update(initialdict)
         self.__dict__.update(metadict.get('misc', {}))
         self.__parents = parents
         self.__varmap = metadict.get('constants')
@@ -114,6 +117,8 @@ class ObjCLazyModule (ModuleType):
 
             else:
                 self.__dict__[name] = value
+                if '__all__' in self.__dict__:
+                    del self.__dict__['__all__']
                 return value
 
         # Check if the name is a constant from
@@ -124,6 +129,8 @@ class ObjCLazyModule (ModuleType):
             pass
         else:
             self.__dict__[name] = value
+            if '__all__' in self.__dict__:
+                del self.__dict__['__all__']
             return value
 
         # Then check if the name is class
@@ -134,36 +141,33 @@ class ObjCLazyModule (ModuleType):
 
         else:
             self.__dict__[name] = value
+            if '__all__' in self.__dict__:
+                del self.__dict__['__all__']
             return value
 
         # Finally give up and raise AttributeError
         raise AttributeError(name)
 
     def __calc_all(self):
-        all = set()
 
         # Ensure that all dynamic entries get loaded
         if self.__varmap_dct:
-            if self.__varmap_dct:
-                tp = self.__varmap_dct.pop(name)
-                return objc._loadConstant(name, tp, False)
-                dct = {}
-                objc.loadBundleVariables(self.__bundle, dct,
-                        [ (nm, self.__varmap[nm]) for nm in self.__varmap_dct ])
-                for nm in dct:
-                    if nm not in self.__dict__:
-                        self.__dict__[nm] = dct[nm]
+            dct = {}
+            objc.loadBundleVariables(self.__bundle, dct,
+                    [ (nm, self.__varmap_dct[nm].encode('ascii')) for nm in self.__varmap_dct ])
+            for nm in dct:
+                if nm not in self.__dict__:
+                    self.__dict__[nm] = dct[nm]
 
-                self.__varmap_dct = {}
+            self.__varmap_dct = {}
 
         if self.__varmap:
             varmap = []
             for nm, tp in re.findall(r"\$([A-Z0-9a-z_]*)(@[^$]*)?(?=\$)", self.__varmap):
-                varmap.append((nm, b'@' if tp is None else tp))
+                varmap.append((nm, b'@' if not tp else tp.encode('ascii')))
 
             dct = {}
-            objc.loadBundleVariables(self.__bundle, dct,
-                    [ (nm, self.__varmap[nm]) for nm in self.__varmap_dct ])
+            objc.loadBundleVariables(self.__bundle, dct, varmap)
 
             for nm in dct:
                 if nm not in self.__dict__:
@@ -172,23 +176,13 @@ class ObjCLazyModule (ModuleType):
             self.__varmap = ""
 
         if self.__enummap:
-            for nm, val in re.findall(r"\$([A-Z0-9a-z_]*)@([^$])*(?=\$)", self.__enummap):
+            for nm, val in re.findall(r"\$([A-Z0-9a-z_]*)@([^$]*)(?=\$)", self.__enummap):
                 if nm not in self.__dict__:
                     self.__dict__[nm] = self.__prs_enum(val)
-                try:
-                    getattr(self, nm)
-                except AttributeError:
-                    pass
 
             self.__enummap = ""
 
         if self.__funcmap:
-            for nm in list(self.__funcmap):
-                try:
-                    getattr(self, nm)
-                except AttributeError:
-                    pass
-
             func_list = []
             for nm in self.__funcmap:
                 func_list.append((nm,) + self.__funcmap[nm])
@@ -215,29 +209,32 @@ class ObjCLazyModule (ModuleType):
                 except AttributeError:
                     pass
 
+        all_names = set()
+
         # Add all names that are already in our __dict__
-        all.update(self.__dict__)
+        all_names.update(self.__dict__)
 
         # Merge __all__of parents ('from parent import *')
         for p in self.__parents:
-            all.update(getattr(p, '__all__', ()))
+            try:
+                all_names.update(p.__all__)
+            except AttributeError:
+                all_names.update(dir(p))
 
         # Add all class names
-        all.update(cls.__name__ for cls in getClassList())
+        all_names.update(cls.__name__ for cls in getClassList())
 
-        return [ v for v in all if not v.startswith('_') ]
+        return [ v for v in all_names if not v.startswith('_') ]
 
     def __prs_enum(self, val):
         if val.startswith("'"):
-            if isinstance(val, bytes):
-                # Python 2.x
+            if isinstance(val, bytes): # pragma: no 3.x cover
                 val, = struct.unpack('>l', val[1:-1])
-            else:
-                # Python 3.x
+            else: # pragma: no 2.x cover
                 val, = struct.unpack('>l', val[1:-1].encode('latin1'))
 
-        elif '.' in val:
-            val = float(name, val)
+        elif '.' in val or 'e' in val:
+            val = float(val)
 
         else:
             val = int(val)
@@ -248,13 +245,14 @@ class ObjCLazyModule (ModuleType):
         if self.__varmap_dct:
             if name in self.__varmap_dct:
                 tp = self.__varmap_dct.pop(name)
-                return objc._loadConstant(name, tp, False)
+                result = objc._loadConstant(name, tp, False)
+                return result
 
         if self.__varmap:
             m = re.search(r"\$%s(@[^$]*)?\$"%(name,), self.__varmap)
             if m is not None:
                 tp = m.group(1)
-                if tp is None:
+                if not tp:
                     tp = '@'
                 else:
                     tp = tp[1:]
@@ -271,10 +269,7 @@ class ObjCLazyModule (ModuleType):
         if self.__enummap:
             m = re.search(r"\$%s@([^$]*)\$"%(name,), self.__enummap)
             if m is not None:
-                val = m.group(1)
-                val = self.__prs_enum(val)
-
-                return val
+                return self.__prs_enum(m.group(1))
 
         if self.__funcmap:
             if name in self.__funcmap:
@@ -310,7 +305,7 @@ class ObjCLazyModule (ModuleType):
                 info = self.__expressions.pop(name)
                 try:
                     return eval(info, {}, self.__expressions_mapping)
-                except NameError:
+                except: # Ignore all errors in evaluation the expression.
                     pass
 
         if self.__aliases:
