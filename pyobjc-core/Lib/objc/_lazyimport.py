@@ -51,6 +51,16 @@ class GetAttrMap (object):
             raise KeyError(key)
 
 class ObjCLazyModule (ModuleType):
+    """
+    A module type that loads PyObjC metadata lazily, that is constants, global
+    variables and functions are created from the metadata as needed. This
+    reduces the resource usage of PyObjC (both in time and memory), as most
+    symbols exported by frameworks are never used in programs.
+
+    The loading code assumes that the metadata dictionary is valid, and invalid
+    metadata may cause exceptions other than AttributeError when accessing module
+    attributes.
+    """
 
     # Define slots for all attributes, that way they don't end up it __dict__.
     __slots__ = (
@@ -357,5 +367,4 @@ class ObjCLazyModule (ModuleType):
                 continue
 
             v = objc.registerCFSignature(name, type, func())
-            if v is not None:
-                self.__dict__[name] = v
+            self.__dict__[name] = v

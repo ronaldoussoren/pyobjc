@@ -5,6 +5,10 @@ import objc
 import sys
 import os
 import struct
+import operator
+
+if sys.version_info[0] == 3:  # pragma: no 2.x cover; pragma: no branch
+    long = int
 
 if sys.maxsize > 2 ** 32:
     def sel32or64(a, b): return b
@@ -54,14 +58,13 @@ class TestLazyImport (TestCase):
         self.do_test_all_types(all=True)
 
     def do_test_all_types(self, all):
-        # NOTE: Test isn't ready yet
-        # Note: this test uses the real functions, other tests can (and will) mock
-        #       functions in objc._objc to test failure condictions, but the full
-        #       API stack should be used in at least one testcase.
         metadict = {
+            'nometadata': 42, # Ignored...
             'constants': '$NSWorkspaceMoveOperation$NSWorkspaceCopyOperation@@$',
             'constants_dict': {
                 'NSWorkspaceLinkOperation': '@',
+                'NSWindowWillCloseNotification': '@',
+                'NSUnderlineByWordMask': objc._C_NSUInteger.decode('ascii'),
             },
             'enums': '$NSAWTEventType@16$NSAboveBottom@4$NSAboveTop@1$',
 
@@ -116,6 +119,7 @@ class TestLazyImport (TestCase):
         self.assertIsInstance(mod.NSWorkspaceMoveOperation, objc.pyobjc_unicode)
         self.assertIsInstance(mod.NSWorkspaceCopyOperation, objc.pyobjc_unicode)
         self.assertIsInstance(mod.NSWorkspaceLinkOperation, objc.pyobjc_unicode)
+        self.assertIsInstance(mod.NSUnderlineByWordMask, (int, long))
         self.assertEqual(mod.NSAWTEventType, 16)
         self.assertEqual(mod.NSAboveBottom, 4)
         self.assertEqual(mod.NSAboveTop, 1)
@@ -129,14 +133,17 @@ class TestLazyImport (TestCase):
         self.assertIs(mod.NSURL, objc.lookUpClass('NSURL'))
         self.assertRaises(AttributeError, getattr, mod, 'NSNonExistingClass')
 
-
-
+        mod.NSAccessibilityActionDescription = 99
+        mod.NSWindowWillCloseNotification = 100
         self.assertEqual(set(dir(mod)), set(mod.__all__))
         self.assertIn('NSRectClipList', mod.__dict__)
         self.assertIn('NSRectClipList', mod.__all__)
         self.assertIn('NSAccessibilityActionDescription', mod.__all__)
+        self.assertEqual(mod.NSAccessibilityActionDescription, 99)
         self.assertIn('mysum', mod.__all__)
         self.assertIn('NSWorkspaceMoveOperation', mod.__all__)
+        self.assertIn('NSWindowWillCloseNotification', mod.__all__)
+        self.assertEqual(mod.NSWindowWillCloseNotification, 100)
         self.assertNotIn('__doc__', mod.__all__)
 
     def test_without_framework(self):
@@ -185,7 +192,6 @@ class TestLazyImport (TestCase):
         self.assertRaises(AttributeError, getattr, mod, 'NSRectClipList')
         self.assertRaises(AttributeError, getattr, mod, 'ABAddressBookErrorDomain')
         self.assertRaises(AttributeError, getattr, mod, 'ABMultiValueIdentifiersErrorKey')
-
 
     def test_with_parents(self):
         mod = objc.ObjCLazyModule ('RootLess', None, None, None, None,
@@ -273,14 +279,44 @@ class TestLazyImport (TestCase):
         self.assertEqual(mod.max, sys.maxsize)
         self.assertEqual(mod.min, -sys.maxsize-1)
 
+    def test_existing_submodules(self):
+        try:
+            sys.modules['MyFramework.submodule'] = 42
+            sys.modules['MyFramework.submodule.x'] = 99
+            sys.modules['MyFramework.submodule2'] = 1
+            sys.modules['MyFramework.submodule3'] = None
+            mod = objc.ObjCLazyModule ('MyFramework', None, None, {}, None,
+                    {}, ())
+            self.assertIsInstance(mod, objc.ObjCLazyModule)
+            self.assertEqual(mod.submodule, 42)
+            self.assertEqual(mod.submodule2, 1)
+            self.assertRaises(KeyError, operator.getitem, mod.__dict__, 'submodule3')
+            self.assertRaises(KeyError, operator.getitem, mod.__dict__, 'submodule.x')
+        finally:
+            for nm in ('MyFramework.submodule', 'MyFramework.submodule.x', 'MyFramework.submodule2'):
+                if nm in sys.modules:
+                    del sys.modules[nm]
 
-    # XXX: add tests for the rest of the module
-    # - metadict with/without various elements (that is, with/without 'misc', 'constants', ...)
-    # - metadict with invalid data
-    # - verify that look-ups are done in the expected order (and document?)
-    # - dotted name ('Quartz.CoreGraphics')
-    # - test with frameworkIdentifier == frameworkPath == None (both with and without a parents.
-    # - test with protocols in metadict
+    def test_inlinetab(self):
+        # Use inlinetab from PyObjCTest.metadatafunction extension
+        # -> Also check that '__all__' processing loads inline functions!
+        self.fail()
+
+    def test_magic(self):
+        # Create 'magic cookie' variable, and verify that it is one
+        self.fail()
+
+    def test_cftype(self):
+        # create some cftypes:
+        # - with and without tollfree bridging
+        # - with and without typeid function
+        self.fail()
+
+    def test_informal_protocols(self):
+        # Add informal protocols to metadict, ensure
+        # the are stored in a private attribute (to keep
+        # them alive), but aren't exposed as attributes
+        self.fail()
 
 if __name__ == "__main__":
     main()

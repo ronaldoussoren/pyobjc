@@ -1115,9 +1115,6 @@ registerCFSignature(PyObject* self __attribute__((__unused__)),
     } else {
         return PyObjCCFType_New(name, encoding, typeId);
     }
-
-    Py_INCREF(Py_None);
-    return Py_None;
 }
 
 PyDoc_STRVAR(_updatingMetadata_doc,
