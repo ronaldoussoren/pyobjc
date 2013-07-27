@@ -6,26 +6,47 @@ from objc._convenience import addConvenienceForClass
 
 __all__ = ('addConvenienceForBasicSequence',)
 
-def collection_iter(self):
+def seq_iter(self):
     for idx in range(len(self)):
         yield self[idx]
 
+def seq_len(self):
+    return self.count()
+
+def seq_getitem(self, idx):
+    if isinstance(idx, slice):
+        raise ValueError("Slices not supported")
+
+    if idx < 0:
+        orig_idx = idx
+        idx += seq_len(self)
+
+        if idx < 0:
+            raise IndexError(orig_idx)
+
+    return self.objectAtIndex_(idx)
+
+def seq_setitem(self, idx, value):
+    if isinstance(idx, slice):
+        raise ValueError("Slices not supported")
+
+    if idx < 0:
+        orig_idx = idx
+        idx += seq_len(self)
+
+        if idx < 0:
+            raise IndexError(orig_idx)
+
+    return self.setObject_atIndex_(value, idx)
+
 def addConvenienceForBasicSequence(classname, readonly=True):
     addConvenienceForClass(classname, (
-        ('__len__',  lambda self: self.count()),
-        ('__getitem__', lambda self, idx: self.objectAtIndex_(idx)),
-        ('__iter__', collection_iter),
+        ('__len__',  seq_len),
+        ('__getitem__', seq_getitem),
+        ('__iter__', seq_iter),
     ))
 
     if not readonly:
         addConvenienceForClass(classname, (
-            ('__setitem__', lambda self, idx, value: self.setObject_atIndex_(value, idx)),
+            ('__setitem__', seq_setitem),
         ))
-
-
-# XXX: Move these to another file
-addConvenienceForBasicSequence('WebScriptObject', True)
-addConvenienceForClass('WebScriptObject', (
-    ('count',    lambda self: self.lenght()),
-))
-addConvenienceForBasicSequence('QCStructure', True)

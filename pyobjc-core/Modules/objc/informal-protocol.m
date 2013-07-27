@@ -36,12 +36,24 @@ proto_dealloc(PyObject* object)
 
     if (selToProtocolMapping) {
         for (i = 0; i < len; i++) {
+            PyObject* cur;
+            int r;
             PyObjCSelector* tmp =
                 (PyObjCSelector*)PyTuple_GET_ITEM(
                     self->selectors, i);
 
-            PyDict_DelItemString(selToProtocolMapping,
-                sel_getName(tmp->sel_selector));
+            /* Remove method from the selector to protocol mappping,
+             * but only if this protocol is registered for the selector.
+             */
+            cur = PyDict_GetItemString(selToProtocolMapping, sel_getName(tmp->sel_selector));
+            if (cur == (PyObject*)self) {
+                r = PyDict_DelItemString(selToProtocolMapping,
+                    sel_getName(tmp->sel_selector));
+                if (r == -1) {
+                    /* Shouldn't happen */
+                    PyErr_Clear();
+                }
+            }
         }
     }
 

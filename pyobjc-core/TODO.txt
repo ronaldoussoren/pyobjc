@@ -4,6 +4,8 @@ TODO's for the 3.0 branch
 Short term
 ----------
 
+* Exception translation to ObjC: KeyError to NSRangeException etc.
+
 * AppHelper doesn't work? I got an objc stacktrace with an exception in one of the webkit examples
 
 * All examples should work cleanly in Python 3 (no 2to3)

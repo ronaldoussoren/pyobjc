@@ -183,7 +183,7 @@ if sys.version_info[0] == 2:  # pragma: no 3.x cover
 
     encode_dispatch[long] = save_long
 
-else: # pragma: no cover (py3k)
+else: # pragma: no 2.x cover
     def save_int(coder, obj):
         if coder.allowsKeyedCoding():
             coder.encodeInt_forKey_(kOP_LONG, kKIND)

@@ -174,8 +174,6 @@ def nsarray_pop(self, idx=-1):
 
     elif idx < 0:
         idx += len(self)
-        if idx < 0:
-            raise IndexError("list index out of range")
 
     rval = self.objectAtIndex_(idx)
     self.removeObjectAtIndex_(idx)
@@ -197,9 +195,6 @@ def nsarray__setitem__(self, idx, anObject):
                 # Empty slice: insert values
                 stop = start
 
-        elif start <= stop:
-            start = stop
-
         anObject = _ensure_array(anObject)
 
         if step == 1:
@@ -211,17 +206,16 @@ def nsarray__setitem__(self, idx, anObject):
                 slice_len, len(anObject)))
 
         if step > 0:
-            if anObject is self:
-                toAssign = list(anObject)
-
-            else:
-                toAssign = anObject
+            # NOTE: 'anObject' cannot be 'self' because assigning to an extended
+            # slice cannot change the size of 'self' and slep 1 is handled earlier.
+            toAssign = anObject
 
             for inIdx, outIdx in enumerate(range(start, stop, step)):
                 self.replaceObjectAtIndex_withObject_(outIdx, toAssign[inIdx])
 
-        elif step == 0:
-            raise ValueError("Step 0")
+        # slice.indexes already catches this:
+        #elif step == 0:
+        #    raise ValueError("Step 0")
 
         else:
             if anObject is self:
@@ -245,13 +239,13 @@ def nsarray__setitem__(self, idx, anObject):
 
 
 def nsarray_add(self, other):
-    result = NSMutableArray.arrayWithArray_(self)
+    result = NSMutableArray(self)
     result.addObjectsFromArray_(_ensure_array(other))
     return result
 
 
 def nsarray_radd(self, other):
-    result = NSMutableArray.arrayWithArray_(other)
+    result = NSMutableArray(other)
     result.addObjectsFromArray_(self)
     return result
 
@@ -374,7 +368,9 @@ else:
 def nsarray__len__(self):
     return self.count()
 
-def nsarray__copy__(self):
+# NOTE: 'no cover' because call of the system array
+# classes are subclasses of NSMutableArray.
+def nsarray__copy__(self):  # pragma: no cover
     return self.copy()
 
 addConvenienceForClass('NSArray', (

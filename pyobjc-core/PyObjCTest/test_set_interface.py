@@ -7,12 +7,14 @@ from PyObjCTools.TestSupport import *
 
 import objc
 import operator
+import collections
 NSSet = objc.lookUpClass('NSSet')
 NSMutableSet = objc.lookUpClass('NSMutableSet')
 
 import test.test_set
 from test.test_set import PassThru, check_pass_thru
 test.test_set.empty_set = NSMutableSet()
+import operator
 
 
 import sys
@@ -22,6 +24,82 @@ if sys.version_info[0] == 3:
         return list(range(*args))
 
 
+class TestPyObjCSet (TestCase):
+    def test_reverse_operator(self):
+
+        class MySet (collections.Set):
+            def __init__(self, init=()):
+                self._value = list(init)
+
+            def __iter__(self):
+                return iter(self._value)
+
+            def __contains__(self, value):
+                return value in self._value
+
+            def __len__(self):
+                return len(self._value)
+
+            def __or__(self, other): return NotImplemented
+            def __and__(self, other): return NotImplemented
+            def __xor__(self, other): return NotImplemented
+            def __sub__(self, other): return NotImplemented
+            def __add__(self, other): return NotImplemented
+
+        s = NSSet([1,2,3])
+
+        res = MySet([3,4]) | s
+        self.assertEqual(res, NSSet([1,2,3,4]))
+        self.assertIsInstance(res, NSSet)
+        self.assertRaises(TypeError, operator.or_,  (3,4), s)
+
+        res = MySet([3,4]) & s
+        self.assertEqual(res, NSSet([3]))
+        self.assertIsInstance(res, NSSet)
+        self.assertRaises(TypeError, operator.and_,  (3,4), s)
+
+        res = MySet([3,4]) - s
+        self.assertEqual(res, NSSet([4]))
+        self.assertIsInstance(res, NSSet)
+
+        res = MySet([3,4]) ^ s
+        self.assertEqual(res, NSSet([1,2,4]))
+        self.assertIsInstance(res, NSSet)
+
+    def test_subset(self):
+        s = set([1,2,3])
+        self.assertTrue(s.issubset([1,2,3,4]))
+        self.assertFalse(s.issubset([1,2,4,5]))
+
+        s = NSSet([1,2,3])
+        self.assertTrue(s.issubset([1,2,3,4]))
+        self.assertFalse(s.issubset([1,2,4,5]))
+
+    def test_superset(self):
+        s = set([1,2,3])
+        self.assertTrue(s.issuperset([1,2]))
+        self.assertFalse(s.issuperset([1,5]))
+
+        s = NSSet([1,2,3])
+        self.assertTrue(s.issuperset([1,2]))
+        self.assertFalse(s.issuperset([1,5]))
+
+    def test_conversion(self):
+        s = NSSet([1,2,3])
+        self.assertItemsEqual(list(s), [1,2,3])
+
+        it = iter(s)
+        self.assertItemsEqual(list(it), [1,2,3])
+
+        it = iter(s)
+        it.next()
+        v = list(it)
+        self.assertEqual(len(v), 2)
+        seen = set()
+        for x in v:
+            self.assertIn(x, s)
+            self.assertNotIn(x, seen)
+            seen.add(x)
 
 
 class TestSet (test.test_set.TestJointOps, TestCase):
@@ -131,7 +209,7 @@ class TestSet (test.test_set.TestJointOps, TestCase):
         n  = self.thetype(s)
         self.assertIsInstance(n, self.thetype)
         self.assertEqual(n, s)
-        
+
     def test_copy(self):
         dup = self.s.copy()
         self.assertEqual(id(self.s), id(dup))
@@ -316,21 +394,12 @@ class TestVariousIteratorArgs (test.test_set.TestVariousIteratorArgs):
                 self.assertRaises(ZeroDivisionError, getattr(set('january'), methname), test.test_set.E(data))
 
 
-
-
-
-
 class TestGraphs (test.test_set.TestGraphs):
     def setUp(self):
         test.test_set.set = NSMutableSet
 
     def tearDown(self):
         del test.test_set.set
-
-
-
-
-
 
 
 

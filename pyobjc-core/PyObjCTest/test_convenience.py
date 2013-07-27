@@ -4,6 +4,10 @@ import objc._convenience as convenience
 import operator
 import sys
 
+from PyObjCTest.sequence import *
+objc.addConvenienceForBasicSequence('OC_TestSequence', False)
+objc.addConvenienceForBasicSequence('OC_TestMutableSequence', True)
+
 class OC_WithHash (objc.lookUpClass('NSObject')):
     def initWithHash_(self, value):
         self = objc.super(OC_WithHash, self).init()
@@ -16,6 +20,44 @@ class OC_WithHash (objc.lookUpClass('NSObject')):
     def hash(self):
         return self._hash
 
+    def someKey(self):
+        objc.lookUpClass('NSException').alloc().initWithName_reason_userInfo_(
+            'NSRangeException', 'Test exception', {}).raise__()
+        return 1
+
+    def someOtherKey(self):
+        raise KeyError()
+
+class OC_Compared (objc.lookUpClass('NSObject')):
+    def initWithValue_(self, value):
+        self = super(OC_Compared, self).init()
+        if self is None:
+            return None
+
+        self._value = value
+        return self
+
+    @objc.typedSelector(objc._C_NSBOOL + b"@:@")
+    def isEqualTo_(self, other):
+        return self.compare_(other) == 0
+
+    @objc.typedSelector(objc._C_NSBOOL + b"@:@")
+    def isNotEqualTo_(self, other):
+        return self.compare_(other) != 0
+
+    @objc.typedSelector(objc._C_NSInteger + b"@:@")
+    def compare_(self, other):
+        if isinstance(other, OC_Compared):
+            other = other._value
+
+        if self._value < other:
+            return -1
+
+        elif self._value > other:
+            return 1
+
+        else:
+            return 0
 
 
 class TestBasicConvenience (TestCase):
@@ -34,6 +76,35 @@ class TestBasicConvenience (TestCase):
         v = OC_WithHash.alloc().initWithHash_(2**64-1)
         self.assertEqual(v.hash(), 2**64-1)
         self.assertTrue(-sys.maxsize-1 <= hash(v) <= sys.maxsize )
+
+    def test_comparisons(self):
+        o1 = objc.lookUpClass('NSObject').alloc().init()
+        o2 = objc.lookUpClass('NSObject').alloc().init()
+
+        self.assertTrue(o1 == o1)
+        self.assertFalse(o1 == o2)
+        self.assertTrue(o1 != o2)
+        self.assertFalse(o1 != o1)
+
+        o1 = OC_Compared.alloc().initWithValue_(21)
+        o2 = OC_Compared.alloc().initWithValue_(42)
+        o3 = OC_Compared.alloc().initWithValue_(42)
+
+        self.assertTrue(o1 < o2)
+        self.assertTrue(o1 <= o2)
+        self.assertTrue(o2 == o3)
+        self.assertTrue(o1 != o2)
+        self.assertTrue(o2 <= o3)
+        self.assertTrue(o2 >= o3)
+        self.assertTrue(o2 > o1)
+
+        self.assertFalse(o2 < o1)
+        self.assertFalse(o2 <= o1)
+        self.assertFalse(o1 == o3)
+        self.assertFalse(o2 != o3)
+        self.assertFalse(o2 <= o1)
+        self.assertFalse(o1 >= o3)
+        self.assertFalse(o1 > o2)
 
 class TestNSDecimalNumber (TestCase):
     def setUp(self):
@@ -401,7 +472,8 @@ class TestBasicConveniences (TestCase):
         self.assertRaises(TypeError, lambda: o._[42])
         self.assertEqual(repr(o._), '<KVC accessor for %r>'%(o,))
         self.assertRaises(AttributeError, getattr, o._, 'nosuchattr')
-        self.assertRaises(TypeError, o._.__setitem__, 42)
+        self.assertRaises(AttributeError, getattr, o._, '')
+        self.assertRaises(TypeError, o._.__getitem__, 42)
 
         o = objc.lookUpClass('NSMutableDictionary').dictionary()
         o._.key1 = 1
@@ -409,8 +481,50 @@ class TestBasicConveniences (TestCase):
 
         self.assertEqual(o, {'key1': 1, 'key2': 2 })
         self.assertRaises(AttributeError, o._.nosuchattr)
-        self.assertRaises(TypeError, o._.__setitem__, 42)
+        self.assertRaises(TypeError, o._.__setitem__, 42, 1)
 
+        o = OC_WithHash.alloc().initWithHash_(1)
+        self.assertRaises(IndexError, getattr, o._, 'someKey')
+        self.assertRaises(KeyError, getattr, o._, 'someOtherKey')
+
+
+class TestSequences (TestCase):
+    def test_reading(self):
+        o = OC_TestSequence.alloc().initWithArray_(['a', 'b', 'c', 'd'])
+
+        self.assertEqual(len(o), 4)
+        self.assertEqual(o[0], 'a')
+        self.assertEqual(o[3], 'd')
+        self.assertEqual(o[-1], 'd')
+        self.assertEqual(o[-3], 'b')
+
+        self.assertRaises(IndexError, operator.getitem, o, 6)
+        self.assertRaises(IndexError, operator.getitem, o, -6)
+        self.assertRaises(ValueError, operator.getitem, o, slice(1, 3))
+
+        self.assertEqual(list(iter(o)), ['a', 'b', 'c', 'd'])
+        self.assertRaises(AttributeError, operator.setitem, o, 1, 'A')
+
+        o = OC_TestSequence.alloc().initWithArray_([])
+        self.assertEqual(list(iter(o)), [])
+
+    def test_writing(self):
+        o = OC_TestMutableSequence.alloc().initWithArray_(['a', 'b', 'c', 'd'])
+
+        o[0] = 'A'
+        self.assertEqual(o[0], 'A')
+
+        o[2] = 'C'
+        self.assertEqual(o[2], 'C')
+
+        o[-3] = 'X'
+        self.assertEqual(o[1], 'X')
+
+        self.assertEqual(list(o), ['A', 'X', 'C', 'd'])
+
+        self.assertRaises(IndexError, operator.setitem, o, 6, 'x')
+        self.assertRaises(IndexError, operator.setitem, o, -7, 'x')
+        self.assertRaises(ValueError, operator.setitem, o, slice(1, 3), (1,2))
 
 if __name__ == "__main__":
     main()

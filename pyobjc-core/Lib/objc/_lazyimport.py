@@ -66,7 +66,7 @@ class ObjCLazyModule (ModuleType):
     __slots__ = (
                 '_ObjCLazyModule__bundle', '_ObjCLazyModule__enummap', '_ObjCLazyModule__funcmap',
                 '_ObjCLazyModule__parents', '_ObjCLazyModule__varmap', '_ObjCLazyModule__inlinelist',
-                '_ObjCLazyModule__aliases',
+                '_ObjCLazyModule__aliases', '_ObjCLazyModule__informal_protocols',
             )
 
     def __init__(self, name, frameworkIdentifier, frameworkPath, metadict=None, inline_list=None, initialdict=None, parents=()):
@@ -74,6 +74,8 @@ class ObjCLazyModule (ModuleType):
 
         if frameworkIdentifier is not None or frameworkPath is not None:
             self.__bundle = self.__dict__['__bundle__'] = _loadBundle(name, frameworkIdentifier, frameworkPath)
+        else:
+            self.__bundle = None
 
         pfx = name + '.'
         for nm in sys.modules:
@@ -164,17 +166,30 @@ class ObjCLazyModule (ModuleType):
         if self.__varmap_dct:
             dct = {}
             objc.loadBundleVariables(self.__bundle, dct,
-                    [ (nm, self.__varmap_dct[nm].encode('ascii')) for nm in self.__varmap_dct ])
+                    [ (nm, self.__varmap_dct[nm].encode('ascii'))
+                        for nm in self.__varmap_dct if not self.__varmap_dct[nm].startswith('=')])
             for nm in dct:
                 if nm not in self.__dict__:
                     self.__dict__[nm] = dct[nm]
+
+            for nm, tp in self.__varmap_dct.items():
+                if tp.startswith('='):
+                    try:
+                        self.__dict__[nm] = objc._loadConstant(nm, tp[1:], True)
+                    except AttributeError:
+                        pass
+
 
             self.__varmap_dct = {}
 
         if self.__varmap:
             varmap = []
+            specials = []
             for nm, tp in re.findall(r"\$([A-Z0-9a-z_]*)(@[^$]*)?(?=\$)", self.__varmap):
-                varmap.append((nm, b'@' if not tp else tp.encode('ascii')))
+                if tp and tp.startswith('@='):
+                    specials.append((nm, tp[2:]))
+                else:
+                    varmap.append((nm, b'@' if not tp else tp[1:].encode('ascii')))
 
             dct = {}
             objc.loadBundleVariables(self.__bundle, dct, varmap)
@@ -182,6 +197,12 @@ class ObjCLazyModule (ModuleType):
             for nm in dct:
                 if nm not in self.__dict__:
                     self.__dict__[nm] = dct[nm]
+
+            for nm, tp in specials:
+                try:
+                    self.__dict__[nm] = objc._loadConstant(nm, tp, True)
+                except AttributeError:
+                    pass
 
             self.__varmap = ""
 
@@ -202,6 +223,14 @@ class ObjCLazyModule (ModuleType):
             for nm in dct:
                 if nm not in self.__dict__:
                     self.__dict__[nm] = dct[nm]
+
+            if self.__inlinelist is not None:
+                dct = {}
+                objc.loadFunctionList(
+                    self.__inlinelist, dct, func_list, skip_undefined=True)
+                for nm in dct:
+                    if nm not in self.__dict__:
+                        self.__dict__[nm] = dct[nm]
 
             self.__funcmap = {}
 
@@ -255,7 +284,12 @@ class ObjCLazyModule (ModuleType):
         if self.__varmap_dct:
             if name in self.__varmap_dct:
                 tp = self.__varmap_dct.pop(name)
-                result = objc._loadConstant(name, tp, False)
+                if tp.startswith('='):
+                    tp = tp[1:]
+                    magic = True
+                else:
+                    magic = False
+                result = objc._loadConstant(name, tp, magic)
                 return result
 
         if self.__varmap:
@@ -297,15 +331,10 @@ class ObjCLazyModule (ModuleType):
                     return d[name]
 
                 if self.__inlinelist is not None:
-                    try:
-                        objc.loadFunctionList(
-                            self.__inlinelist, d, func_list, skip_undefined=False)
-                    except objc.error:
-                        pass
-
-                    else:
-                        if name in d:
-                            return d[name]
+                    objc.loadFunctionList(
+                        self.__inlinelist, d, func_list, skip_undefined=True)
+                    if name in d:
+                        return d[name]
 
         if self.__expressions:
             if name in self.__expressions:
@@ -337,7 +366,7 @@ class ObjCLazyModule (ModuleType):
 
         for name, type, gettypeid_func, tollfree in cftypes:
             if tollfree:
-                for nm in tollfree.split(','):
+                for nm in tollfree.split(','):  # pragma: no branch
                     try:
                         objc.lookUpClass(nm)
                     except objc.error:
@@ -347,9 +376,8 @@ class ObjCLazyModule (ModuleType):
                         break
                 try:
                     v = objc.registerCFSignature(name, type, None, tollfree)
-                    if v is not None:
-                        self.__dict__[name] = v
-                        continue
+                    self.__dict__[name] = v
+                    continue
                 except objc.nosuchclass_error:
                     pass
 
@@ -362,8 +390,7 @@ class ObjCLazyModule (ModuleType):
                 # function. Proxy using the generic CFType
                 if tollfree is None:
                     v = objc.registerCFSignature(name, type, None, 'NSCFType')
-                    if v is not None:
-                        self.__dict__[name] = v
+                    self.__dict__[name] = v
                 continue
 
             v = objc.registerCFSignature(name, type, func())

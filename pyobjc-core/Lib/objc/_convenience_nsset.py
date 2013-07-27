@@ -69,50 +69,36 @@ def nsset__contains__(self, value):
     return self.containsObject_(value)
 
 def nsset__or__(self, other):
-    if not isinstance(self, collections.Set):
-        raise TypeError("NSSet|value where value is not a set")
     if not isinstance(other, collections.Set):
         raise TypeError("NSSet|value where value is not a set")
     return nsset_union(self, other)
 
 def nsset__ror__(self, other):
-    if not isinstance(self, collections.Set):
-        raise TypeError("value|NSSet where value is not a set")
     if not isinstance(other, collections.Set):
         raise TypeError("value|NSSet where value is not a set")
     return nsset_union(other, self)
 
 def nsset__and__(self, other):
-    if not isinstance(self, collections.Set):
-        raise TypeError("NSSet&value where value is not a set")
     if not isinstance(other, collections.Set):
         raise TypeError("NSSet&value where value is not a set")
     return nsset_intersection(self, other)
 
 def nsset__rand__(self, other):
-    if not isinstance(self, collections.Set):
-        raise TypeError("value&NSSet where value is not a set")
     if not isinstance(other, collections.Set):
         raise TypeError("value&NSSet where value is not a set")
     return nsset_intersection(other, self)
 
 def nsset__sub__(self, other):
-    if not isinstance(self, collections.Set):
-        raise TypeError("NSSet-value where value is not a set")
     if not isinstance(other, collections.Set):
         raise TypeError("NSSet-value where value is not a set")
     return nsset_difference(self, other)
 
-def nsset_rsub__(self, other):
-    if not isinstance(self, collections.Set):
-        raise TypeError("NSSet-value where value is not a set")
+def nsset__rsub__(self, other):
     if not isinstance(other, collections.Set):
         raise TypeError("NSSet-value where value is not a set")
-    return nsset_difference(other, self)
+    return nsset_difference(NSMutableSet(other), self)
 
 def nsset__xor__(self, other):
-    if not isinstance(self, collections.Set):
-        raise TypeError("NSSet-value where value is not a set")
     if not isinstance(other, collections.Set):
         raise TypeError("NSSet-value where value is not a set")
     return nsset_symmetric_difference(other, self)
@@ -170,9 +156,6 @@ def nsset__gt__(self, other):
 if sys.version_info[0] == 2:  # pragma: no 3.x cover
     def nsset__cmp__(self, other):
         raise TypeError("Cannot compare sets using cmp")
-
-def nsset__length_hint__(self):
-    return len(self)
 
 def nsset_update(self, *others):
     for other in others:
@@ -260,7 +243,6 @@ class nsset__iter__ (object):
 addConvenienceForClass('NSSet', (
     ('__len__', lambda self: self.count()),
     ('__iter__', lambda self: nsset__iter__(self)),
-    ('__length_hint__', nsset__length_hint__),
     ('__contains__',  nsset__contains__),
     ('isdisjoint',  nsset_isdisjoint),
     ('union',  nsset_union),
@@ -282,6 +264,7 @@ addConvenienceForClass('NSSet', (
     ('__xor__', nsset__xor__),
     ('__rxor__', nsset__xor__),
     ('__sub__', nsset__sub__),
+    ('__rsub__', nsset__rsub__),
 ))
 
 if sys.version_info[0] == 2:  # pragma: no 3.x cover

@@ -868,6 +868,12 @@ obj_get_instanceMethods(PyObject* _self, void* closure __attribute__((__unused__
 }
 
 static PyObject*
+obj_get_flags(PyObject* self, void* closure __attribute__((__unused__)))
+{
+    return Py_BuildValue("I", PyObjCObject_GetFlags(self));
+}
+
+static PyObject*
 obj_get_blocksignature(PyObject* self, void* closure __attribute__((__unused__)))
 {
     if (PyObjCObject_IsBlock(self)) {
@@ -937,6 +943,10 @@ static PyGetSetDef obj_getset[] = {
         .get    = obj_get_blocksignature,
         .set    = obj_set_blocksignature,
         .doc    = "Call signature for a block, or None",
+    },
+    {
+        .name   = "__flags__",
+        .get    = obj_get_flags,
     },
     {
         .name   = NULL  /* SENTINEL */

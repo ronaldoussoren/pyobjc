@@ -14,14 +14,11 @@ typedef struct {
     PyObject_HEAD
 
     __strong id objc_object;
-    int         flags;
+    unsigned int flags;
 } PyObjCObject;
 
 typedef struct {
-    PyObject_HEAD
-    __strong id objc_object;
-
-    int         flags;
+    PyObjCObject base;
     PyObjCMethodSignature* signature;
 } PyObjCBlockObject;
 
