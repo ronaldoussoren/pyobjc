@@ -38,11 +38,30 @@ import test.pickletester
 
 MyList = test.pickletester.MyList
 
+class float_subclass (float): pass
 class tuple_subclass (tuple): pass
 class list_subclass (list): pass
 class dict_subclass (dict): pass
 class set_subclass (set): pass
 class frozenset_subclass (frozenset): pass
+
+class with_getstate (object):
+    def __init__(self, value=None):
+        self.value = value
+
+    def __getstate__(self):
+        return self.value
+
+    def __setstate__(self, value):
+        self.value = value
+
+class only_getstate (object):
+    def __init__(self, slots=None, dct=None):
+        self._slots = slots
+        self._dct = dct
+
+    def __getstate__(self):
+        return (self._dct, self._slots)
 
 class reduce_global (object):
     def __reduce__(self):
@@ -1115,6 +1134,70 @@ class TestArchiveNative (TestCase):
         self.assertEqual(a, b)
         self.assertIsInstance(b, float)
 
+        a = float_subclass(1.5)
+        buf = self.dumps(a)
+        self.assertIsInstance(buf, NSData)
+        b = self.loads(buf)
+        self.assertEqual(a, b)
+        self.assertIsInstance(b, float_subclass)
+
+    def test_more_state(self):
+        a = with_getstate(1.5)
+        self.assertEqual(a.value, 1.5)
+        buf = self.dumps(a)
+        self.assertIsInstance(buf, NSData)
+        b = self.loads(buf)
+        self.assertIsInstance(b, with_getstate)
+        self.assertEqual(a.value, b.value)
+        self.assertIsInstance(b.value, float)
+
+        a = with_getstate(42)
+        self.assertEqual(a.value, 42)
+        buf = self.dumps(a)
+        self.assertIsInstance(buf, NSData)
+        b = self.loads(buf)
+        self.assertIsInstance(b, with_getstate)
+        self.assertEqual(a.value, b.value)
+        self.assertIsInstance(b.value, (int, long))
+
+        a = with_getstate(1<<100)
+        self.assertEqual(a.value, 1<<100)
+        buf = self.dumps(a)
+        self.assertIsInstance(buf, NSData)
+        b = self.loads(buf)
+        self.assertIsInstance(b, with_getstate)
+        self.assertEqual(a.value, b.value)
+        self.assertIsInstance(b.value, (int, long))
+
+        a = with_getstate((1,2))
+        self.assertEqual(a.value, (1,2))
+        buf = self.dumps(a)
+        self.assertIsInstance(buf, NSData)
+        b = self.loads(buf)
+        self.assertIsInstance(b, with_getstate)
+        self.assertEqual(a.value, b.value)
+        self.assertIsInstance(b.value, tuple)
+
+        a = only_getstate({'a':42, 'b':9, NSString('otherstr'): 'b'}, {'c': 4, 'd': 7, 42: 'b', 'a': 1, NSString('nsstr'): NSString('xx') })
+        buf = self.dumps(a)
+        self.assertIsInstance(buf, NSData)
+        b = self.loads(buf)
+        self.assertIsInstance(b, only_getstate)
+        self.assertEqual(b.__dict__, {
+            #'_slots': None,
+            #'_kwds': None,
+            'a': 42,
+            'b': 9,
+            'c': 4,
+            'd': 7,
+            42: 'b',
+            'nsstr': 'xx',
+            'otherstr': 'b',
+        })
+        for k in b.__dict__:
+            self.assertNotIsInstance(k, objc.pyobjc_unicode)
+            if sys.version_info[0] == 3:
+                self.assertNotIsInstance(k, bytes)
 
 class TestKeyedArchiveNative (TestArchiveNative):
     def dumps(self, arg, proto=0, fast=0):

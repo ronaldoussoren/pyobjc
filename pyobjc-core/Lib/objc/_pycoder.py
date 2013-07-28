@@ -28,7 +28,10 @@ if sys.version_info[0] == 2:  # pragma: no 3.x cover
     def intern(value):
         if isinstance(value, objc.pyobjc_unicode):
             return bltin_intern(value.encode('utf-8'))
-        return bltin_intern(value)
+        elif isinstance(value, basestr):
+            return bltin_intern(value)
+        else:
+            return value
 
     def import_module(name):
         __import__(name)
@@ -42,7 +45,10 @@ else:   # pragma: no 2.x cover
     def intern(value):
         if isinstance(value, objc.pyobjc_unicode):
             return bltin_intern(str(value))
-        return bltin_intern(value)
+        elif isinstance(value, str):
+            return bltin_intern(value)
+        else:
+            return value
 
     def import_module(name):
         if name == 'copy_reg':
@@ -203,7 +209,11 @@ else: # pragma: no 2.x cover
             coder.encodeObject_(unicode(repr(obj)))
     encode_dispatch[int] = save_int
 
-def save_float(coder, obj):
+def save_float(coder, obj):  # pragma: no cover
+    # NOTE: 'no cover' because floats are encoded as OC_PythonNumber
+    # and that doesn't call back to this code for basic C types.
+    # TODO: full review the code path and remove this function.
+
     # Encode floats as strings, this seems to be needed to get
     # 100% reliable round-trips.
     if coder.allowsKeyedCoding():
