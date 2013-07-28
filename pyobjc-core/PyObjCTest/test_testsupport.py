@@ -317,38 +317,55 @@ class TestTestSupport (TestCase):
         finally:
             sys.maxsize = orig
 
+    def testAssertIsSubclass(self):
+        self.assertIsSubclass(int, object)
+        self.assertIsSubclass(str, object)
+        self.assertIsSubclass(objc.objc_class, type)
+        self.assertRaises(self.failureException, self.assertIsSubclass, objc.objc_class, objc.objc_object)
+
+    def testAssertIsNotSubclass(self):
+        self.assertIsNotSubclass(object, int)
+        self.assertRaises(self.failureException, self.assertIsNotSubclass, objc.objc_object, object)
+
+    def testAssertIsIstance(self):
+        self.assertIsInstance(object(), object)
+        self.assertIsInstance(42, object)
+        self.assertIsInstance(42, (int, str))
+
+        self.assertRaises(self.failureException, self.assertIsInstance, 42, str)
+
 
     def test_assert_cftype(self):
-        self.assertRaises(AssertionError, self.assertIsCFType, long)
-        self.assertRaises(AssertionError, self.assertIsCFType, objc.lookUpClass('NSCFType'))
+        self.assertRaises(self.failureException, self.assertIsCFType, long)
+        self.assertRaises(self.failureException, self.assertIsCFType, objc.lookUpClass('NSCFType'))
 
         # 'assertIsCFType' primarily tests that a type is either tollfree bridged, or
         # has a distinct type that is different from the default NSCFType 'placeholder' type.
-        self.assertIsCFType(objc.lookUpClass('NSObject'))
-        #self.assertRaises(AssertionError, self.assertIsCFType, objc.lookUpClass('NSObject'))
+        #self.assertIsCFType(objc.lookUpClass('NSObject'))
+        self.assertRaises(self.failureException, self.assertIsCFType, objc.lookUpClass('NSObject'))
 
         class OC_OPAQUE_TEST_1 (objc.lookUpClass('NSCFType')): pass
         try:
             self.assertIsCFType(OC_OPAQUE_TEST_1)
-        except AssertionError:
+        except self.failureException:
             self.fail("CFType subclass not recognized as CFType")
 
 
 
     def test_assert_opaque(self):
-        self.assertRaises(AssertionError, self.assertIsOpaquePointer, long)
+        self.assertRaises(self.failureException, self.assertIsOpaquePointer, long)
 
         class N (object):
             @property
             def __pointer__(self):
                 pass
 
-        self.assertRaises(AssertionError, self.assertIsOpaquePointer, N)
+        self.assertRaises(self.failureException, self.assertIsOpaquePointer, N)
 
         class N (object):
             __typestr__  = b"^q"
 
-        self.assertRaises(AssertionError, self.assertIsOpaquePointer, N)
+        self.assertRaises(self.failureException, self.assertIsOpaquePointer, N)
 
         class N (object):
             __typestr__  = b"^q"
@@ -360,7 +377,7 @@ class TestTestSupport (TestCase):
         try:
             self.assertIsOpaquePointer(N)
 
-        except AssertionError:
+        except self.failureException:
             self.fail("assertIsOpaque fails on opaque pointer type")
 
 
@@ -369,31 +386,31 @@ class TestTestSupport (TestCase):
         self.assertResultIsNullTerminated(m)
 
         m = Method(None, {"c_array_delimited_by_null": False })
-        self.assertRaises(AssertionError, self.assertResultIsNullTerminated, m)
+        self.assertRaises(self.failureException, self.assertResultIsNullTerminated, m)
 
         m = Method(None, {})
-        self.assertRaises(AssertionError, self.assertResultIsNullTerminated, m)
+        self.assertRaises(self.failureException, self.assertResultIsNullTerminated, m)
 
     def test_assert_arg_nullterminated(self):
         m = Method(3, {"c_array_delimited_by_null": True }, selector=True)
         self.assertArgIsNullTerminated(m, 1)
-        self.assertRaises(AssertionError, self.assertArgIsNullTerminated, m, 0)
+        self.assertRaises(self.failureException, self.assertArgIsNullTerminated, m, 0)
 
         m = Method(3, {"c_array_delimited_by_null": False }, selector=True)
-        self.assertRaises(AssertionError, self.assertArgIsNullTerminated, m, 1)
+        self.assertRaises(self.failureException, self.assertArgIsNullTerminated, m, 1)
 
         m = Method(3, {}, selector=True)
-        self.assertRaises(AssertionError, self.assertArgIsNullTerminated, m, 1)
+        self.assertRaises(self.failureException, self.assertArgIsNullTerminated, m, 1)
 
         m = Method(3, {"c_array_delimited_by_null": True }, selector=False)
         self.assertArgIsNullTerminated(m, 3)
-        self.assertRaises(AssertionError, self.assertArgIsNullTerminated, m, 2)
+        self.assertRaises(self.failureException, self.assertArgIsNullTerminated, m, 2)
 
         m = Method(3, {"c_array_delimited_by_null": False }, selector=False)
-        self.assertRaises(AssertionError, self.assertArgIsNullTerminated, m, 3)
+        self.assertRaises(self.failureException, self.assertArgIsNullTerminated, m, 3)
 
         m = Method(3, {}, selector=False)
-        self.assertRaises(AssertionError, self.assertArgIsNullTerminated, m, 3)
+        self.assertRaises(self.failureException, self.assertArgIsNullTerminated, m, 3)
 
     def test_function_nullterminated(self):
         m = Method(None, {}, selector=False)
@@ -404,15 +421,15 @@ class TestTestSupport (TestCase):
         self.assertIsNullTerminated(m)
 
         m._meta['variadic'] = False
-        self.assertRaises(AssertionError, self.assertIsNullTerminated, m)
+        self.assertRaises(self.failureException, self.assertIsNullTerminated, m)
 
         m._meta['variadic'] = True
         m._meta['c_array_delimited_by_null'] = False
-        self.assertRaises(AssertionError, self.assertIsNullTerminated, m)
+        self.assertRaises(self.failureException, self.assertIsNullTerminated, m)
 
         del m._meta['variadic']
         m._meta['c_array_delimited_by_null'] = True
-        self.assertRaises(AssertionError, self.assertIsNullTerminated, m)
+        self.assertRaises(self.failureException, self.assertIsNullTerminated, m)
 
         m = Method(None, {}, selector=True)
         m._meta.update({
@@ -422,122 +439,122 @@ class TestTestSupport (TestCase):
         self.assertIsNullTerminated(m)
 
         m._meta['variadic'] = False
-        self.assertRaises(AssertionError, self.assertIsNullTerminated, m)
+        self.assertRaises(self.failureException, self.assertIsNullTerminated, m)
 
         m._meta['variadic'] = True
         m._meta['c_array_delimited_by_null'] = False
-        self.assertRaises(AssertionError, self.assertIsNullTerminated, m)
+        self.assertRaises(self.failureException, self.assertIsNullTerminated, m)
 
         del m._meta['variadic']
         m._meta['c_array_delimited_by_null'] = True
-        self.assertRaises(AssertionError, self.assertIsNullTerminated, m)
+        self.assertRaises(self.failureException, self.assertIsNullTerminated, m)
 
     def test_arg_varialbe_size(self):
         m = Method(3, { 'c_array_of_variable_length': True }, selector=True)
         self.assertArgIsVariableSize(m, 1)
-        self.assertRaises(AssertionError, self.assertArgIsVariableSize, m, 0)
+        self.assertRaises(self.failureException, self.assertArgIsVariableSize, m, 0)
 
         m = Method(3, { 'c_array_of_variable_length': False }, selector=True)
-        self.assertRaises(AssertionError, self.assertArgIsVariableSize, m, 1)
+        self.assertRaises(self.failureException, self.assertArgIsVariableSize, m, 1)
 
         m = Method(3, { 'c_array_of_variable_length': True }, selector=False)
         self.assertArgIsVariableSize(m, 3)
-        self.assertRaises(AssertionError, self.assertArgIsVariableSize, m, 1)
+        self.assertRaises(self.failureException, self.assertArgIsVariableSize, m, 1)
 
         m = Method(3, { 'c_array_of_variable_length': False }, selector=False)
-        self.assertRaises(AssertionError, self.assertArgIsVariableSize, m, 3)
+        self.assertRaises(self.failureException, self.assertArgIsVariableSize, m, 3)
 
     def test_result_varialbe_size(self):
         m = Method(None, { 'c_array_of_variable_length': True }, selector=True)
         self.assertResultIsVariableSize(m, 1)
 
         m = Method(None, { 'c_array_of_variable_length': False }, selector=True)
-        self.assertRaises(AssertionError, self.assertResultIsVariableSize, m, 1)
+        self.assertRaises(self.failureException, self.assertResultIsVariableSize, m, 1)
 
         m = Method(None, { }, selector=True)
-        self.assertRaises(AssertionError, self.assertResultIsVariableSize, m, 1)
+        self.assertRaises(self.failureException, self.assertResultIsVariableSize, m, 1)
 
     def test_argsize_in_result(self):
         m = Method(3, { 'c_array_length_in_result': True }, selector=True)
         self.assertArgSizeInResult(m, 1)
-        self.assertRaises(AssertionError, self.assertArgSizeInResult, m, 0)
+        self.assertRaises(self.failureException, self.assertArgSizeInResult, m, 0)
 
         m = Method(3, { 'c_array_length_in_result': False }, selector=True)
-        self.assertRaises(AssertionError, self.assertArgSizeInResult, m, 1)
+        self.assertRaises(self.failureException, self.assertArgSizeInResult, m, 1)
 
         m = Method(3, {}, selector=True)
-        self.assertRaises(AssertionError, self.assertArgSizeInResult, m, 1)
+        self.assertRaises(self.failureException, self.assertArgSizeInResult, m, 1)
 
         m = Method(3, { 'c_array_length_in_result': True }, selector=False)
         self.assertArgSizeInResult(m, 3)
-        self.assertRaises(AssertionError, self.assertArgSizeInResult, m, 2)
+        self.assertRaises(self.failureException, self.assertArgSizeInResult, m, 2)
 
         m = Method(3, { 'c_array_length_in_result': False }, selector=True)
-        self.assertRaises(AssertionError, self.assertArgSizeInResult, m, 3)
+        self.assertRaises(self.failureException, self.assertArgSizeInResult, m, 3)
 
         m = Method(3, {}, selector=True)
-        self.assertRaises(AssertionError, self.assertArgSizeInResult, m, 3)
+        self.assertRaises(self.failureException, self.assertArgSizeInResult, m, 3)
 
     def test_arg_printf(self):
         m = Method(3, { 'printf_format': True }, selector=True)
         m._meta['variadic'] = True
         self.assertArgIsPrintf(m, 1)
-        self.assertRaises(AssertionError, self.assertArgIsPrintf, m, 0)
+        self.assertRaises(self.failureException, self.assertArgIsPrintf, m, 0)
 
         m._meta['variadic'] = False
-        self.assertRaises(AssertionError, self.assertArgIsPrintf, m, 1)
+        self.assertRaises(self.failureException, self.assertArgIsPrintf, m, 1)
 
         m._meta['variadic'] = True
         m._meta['arguments'][3]['printf_format'] = False
-        self.assertRaises(AssertionError, self.assertArgIsPrintf, m, 1)
+        self.assertRaises(self.failureException, self.assertArgIsPrintf, m, 1)
 
         m._meta['variadic'] = True
-        del m._meta['arguments'][3]['printf_format'] 
-        self.assertRaises(AssertionError, self.assertArgIsPrintf, m, 1)
+        del m._meta['arguments'][3]['printf_format']
+        self.assertRaises(self.failureException, self.assertArgIsPrintf, m, 1)
 
 
         m = Method(3, { 'printf_format': True }, selector=False)
         m._meta['variadic'] = True
         self.assertArgIsPrintf(m, 3)
-        self.assertRaises(AssertionError, self.assertArgIsPrintf, m, 2)
+        self.assertRaises(self.failureException, self.assertArgIsPrintf, m, 2)
 
         m._meta['variadic'] = False
-        self.assertRaises(AssertionError, self.assertArgIsPrintf, m, 3)
+        self.assertRaises(self.failureException, self.assertArgIsPrintf, m, 3)
 
         m._meta['variadic'] = True
         m._meta['arguments'][3]['printf_format'] = False
-        self.assertRaises(AssertionError, self.assertArgIsPrintf, m, 3)
+        self.assertRaises(self.failureException, self.assertArgIsPrintf, m, 3)
 
         m._meta['variadic'] = True
-        del m._meta['arguments'][3]['printf_format'] 
-        self.assertRaises(AssertionError, self.assertArgIsPrintf, m, 3)
+        del m._meta['arguments'][3]['printf_format']
+        self.assertRaises(self.failureException, self.assertArgIsPrintf, m, 3)
 
 
     def test_arg_cfretained(self):
         m = Method(3, {'already_cfretained': True}, selector=True)
         self.assertArgIsCFRetained(m, 1)
-        self.assertRaises(AssertionError, self.assertArgIsCFRetained, m, 0)
+        self.assertRaises(self.failureException, self.assertArgIsCFRetained, m, 0)
 
         m = Method(3, {'already_cfretained': False}, selector=True)
-        self.assertRaises(AssertionError, self.assertArgIsCFRetained, m, 1)
+        self.assertRaises(self.failureException, self.assertArgIsCFRetained, m, 1)
 
         m = Method(3, {}, selector=True)
-        self.assertRaises(AssertionError, self.assertArgIsCFRetained, m, 1)
+        self.assertRaises(self.failureException, self.assertArgIsCFRetained, m, 1)
 
         m = Method(3, {'already_cfretained': True}, selector=False)
         self.assertArgIsCFRetained(m, 3)
-        self.assertRaises(AssertionError, self.assertArgIsCFRetained, m, 2)
+        self.assertRaises(self.failureException, self.assertArgIsCFRetained, m, 2)
 
         m = Method(3, {'already_cfretained': False}, selector=False)
-        self.assertRaises(AssertionError, self.assertArgIsCFRetained, m, 3)
+        self.assertRaises(self.failureException, self.assertArgIsCFRetained, m, 3)
 
         m = Method(3, {}, selector=False)
-        self.assertRaises(AssertionError, self.assertArgIsCFRetained, m, 3)
+        self.assertRaises(self.failureException, self.assertArgIsCFRetained, m, 3)
 
     def test_arg_not_cfretained(self):
         m = Method(3, {'already_cfretained': True}, selector=True)
         self.assertArgIsNotCFRetained(m, 0)
-        self.assertRaises(AssertionError, self.assertArgIsNotCFRetained, m, 1)
+        self.assertRaises(self.failureException, self.assertArgIsNotCFRetained, m, 1)
 
         m = Method(3, {'already_cfretained': False}, selector=True)
         self.assertArgIsNotCFRetained(m, 1)
@@ -560,14 +577,14 @@ class TestTestSupport (TestCase):
         self.assertResultIsCFRetained(m)
 
         m = Method(None, {'already_cfretained': False })
-        self.assertRaises(AssertionError, self.assertResultIsCFRetained, m)
+        self.assertRaises(self.failureException, self.assertResultIsCFRetained, m)
 
         m = Method(None, {})
-        self.assertRaises(AssertionError, self.assertResultIsCFRetained, m)
+        self.assertRaises(self.failureException, self.assertResultIsCFRetained, m)
 
     def test_result_not_cfretained(self):
         m = Method(None, {'already_cfretained': True })
-        self.assertRaises(AssertionError, self.assertResultIsNotCFRetained, m)
+        self.assertRaises(self.failureException, self.assertResultIsNotCFRetained, m)
 
         m = Method(None, {'already_cfretained': False })
         self.assertResultIsNotCFRetained(m)
@@ -579,8 +596,8 @@ class TestTestSupport (TestCase):
     def test_arg_type(self):
         m = Method(3, {'type': objc._C_DBL }, selector=True)
         self.assertArgHasType(m, 1, objc._C_DBL)
-        self.assertRaises(AssertionError, self.assertArgHasType, m, 2, objc._C_ID)
-        self.assertRaises(AssertionError, self.assertArgHasType, m, 1, objc._C_ID)
+        self.assertRaises(self.failureException, self.assertArgHasType, m, 2, objc._C_ID)
+        self.assertRaises(self.failureException, self.assertArgHasType, m, 1, objc._C_ID)
 
         m = Method(3, {}, selector=True)
         self.assertArgHasType(m, 1, objc._C_ID)
@@ -589,48 +606,48 @@ class TestTestSupport (TestCase):
             m = Method(3, {'type': objc._C_LNG }, selector=True)
             self.assertArgHasType(m, 1, objc._C_LNG)
             self.assertArgHasType(m, 1, objc._C_LNG_LNG)
-            self.assertRaises(AssertionError, self.assertArgHasType, m, 1, objc._C_ID)
+            self.assertRaises(self.failureException, self.assertArgHasType, m, 1, objc._C_ID)
 
             m = Method(3, {'type': objc._C_ULNG }, selector=True)
             self.assertArgHasType(m, 1, objc._C_ULNG)
             self.assertArgHasType(m, 1, objc._C_ULNG_LNG)
-            self.assertRaises(AssertionError, self.assertArgHasType, m, 1, objc._C_ID)
+            self.assertRaises(self.failureException, self.assertArgHasType, m, 1, objc._C_ID)
 
             m = Method(3, {'type': objc._C_LNG_LNG }, selector=True)
             self.assertArgHasType(m, 1, objc._C_LNG)
             self.assertArgHasType(m, 1, objc._C_LNG_LNG)
-            self.assertRaises(AssertionError, self.assertArgHasType, m, 1, objc._C_ID)
+            self.assertRaises(self.failureException, self.assertArgHasType, m, 1, objc._C_ID)
 
             m = Method(3, {'type': objc._C_ULNG_LNG }, selector=True)
             self.assertArgHasType(m, 1, objc._C_ULNG)
             self.assertArgHasType(m, 1, objc._C_ULNG_LNG)
-            self.assertRaises(AssertionError, self.assertArgHasType, m, 1, objc._C_ID)
+            self.assertRaises(self.failureException, self.assertArgHasType, m, 1, objc._C_ID)
 
         else:
             m = Method(3, {'type': objc._C_LNG }, selector=True)
             self.assertArgHasType(m, 1, objc._C_LNG)
             self.assertArgHasType(m, 1, objc._C_INT)
-            self.assertRaises(AssertionError, self.assertArgHasType, m, 1, objc._C_ID)
+            self.assertRaises(self.failureException, self.assertArgHasType, m, 1, objc._C_ID)
 
             m = Method(3, {'type': objc._C_ULNG }, selector=True)
             self.assertArgHasType(m, 1, objc._C_ULNG)
             self.assertArgHasType(m, 1, objc._C_UINT)
-            self.assertRaises(AssertionError, self.assertArgHasType, m, 1, objc._C_ID)
+            self.assertRaises(self.failureException, self.assertArgHasType, m, 1, objc._C_ID)
 
             m = Method(3, {'type': objc._C_INT }, selector=True)
             self.assertArgHasType(m, 1, objc._C_LNG)
             self.assertArgHasType(m, 1, objc._C_INT)
-            self.assertRaises(AssertionError, self.assertArgHasType, m, 1, objc._C_ID)
+            self.assertRaises(self.failureException, self.assertArgHasType, m, 1, objc._C_ID)
 
             m = Method(3, {'type': objc._C_UINT }, selector=True)
             self.assertArgHasType(m, 1, objc._C_UINT)
             self.assertArgHasType(m, 1, objc._C_UINT)
-            self.assertRaises(AssertionError, self.assertArgHasType, m, 1, objc._C_ID)
+            self.assertRaises(self.failureException, self.assertArgHasType, m, 1, objc._C_ID)
 
         m = Method(3, {'type': objc._C_DBL }, selector=False)
         self.assertArgHasType(m, 3, objc._C_DBL)
-        self.assertRaises(AssertionError, self.assertArgHasType, m, 3, objc._C_ID)
-        self.assertRaises(AssertionError, self.assertArgHasType, m, 2, objc._C_ID)
+        self.assertRaises(self.failureException, self.assertArgHasType, m, 3, objc._C_ID)
+        self.assertRaises(self.failureException, self.assertArgHasType, m, 2, objc._C_ID)
 
         m = Method(3, {}, selector=False)
         self.assertArgHasType(m, 3, objc._C_ID)
@@ -639,183 +656,183 @@ class TestTestSupport (TestCase):
             m = Method(3, {'type': objc._C_LNG }, selector=False)
             self.assertArgHasType(m, 3, objc._C_LNG)
             self.assertArgHasType(m, 3, objc._C_LNG_LNG)
-            self.assertRaises(AssertionError, self.assertArgHasType, m, 3, objc._C_ID)
+            self.assertRaises(self.failureException, self.assertArgHasType, m, 3, objc._C_ID)
 
             m = Method(3, {'type': objc._C_ULNG }, selector=False)
             self.assertArgHasType(m, 3, objc._C_ULNG)
             self.assertArgHasType(m, 3, objc._C_ULNG_LNG)
-            self.assertRaises(AssertionError, self.assertArgHasType, m, 3, objc._C_ID)
+            self.assertRaises(self.failureException, self.assertArgHasType, m, 3, objc._C_ID)
 
             m = Method(3, {'type': objc._C_LNG_LNG }, selector=False)
             self.assertArgHasType(m, 3, objc._C_LNG)
             self.assertArgHasType(m, 3, objc._C_LNG_LNG)
-            self.assertRaises(AssertionError, self.assertArgHasType, m, 3, objc._C_ID)
+            self.assertRaises(self.failureException, self.assertArgHasType, m, 3, objc._C_ID)
 
             m = Method(3, {'type': objc._C_ULNG_LNG }, selector=False)
             self.assertArgHasType(m, 3, objc._C_ULNG)
             self.assertArgHasType(m, 3, objc._C_ULNG_LNG)
-            self.assertRaises(AssertionError, self.assertArgHasType, m, 3, objc._C_ID)
+            self.assertRaises(self.failureException, self.assertArgHasType, m, 3, objc._C_ID)
 
         else:
             m = Method(3, {'type': objc._C_LNG }, selector=False)
             self.assertArgHasType(m, 3, objc._C_LNG)
             self.assertArgHasType(m, 3, objc._C_INT)
-            self.assertRaises(AssertionError, self.assertArgHasType, m, 3, objc._C_ID)
+            self.assertRaises(self.failureException, self.assertArgHasType, m, 3, objc._C_ID)
 
             m = Method(3, {'type': objc._C_ULNG }, selector=False)
             self.assertArgHasType(m, 3, objc._C_ULNG)
             self.assertArgHasType(m, 3, objc._C_UINT)
-            self.assertRaises(AssertionError, self.assertArgHasType, m, 3, objc._C_ID)
+            self.assertRaises(self.failureException, self.assertArgHasType, m, 3, objc._C_ID)
 
             m = Method(3, {'type': objc._C_INT }, selector=False)
             self.assertArgHasType(m, 3, objc._C_LNG)
             self.assertArgHasType(m, 3, objc._C_INT)
-            self.assertRaises(AssertionError, self.assertArgHasType, m, 3, objc._C_ID)
+            self.assertRaises(self.failureException, self.assertArgHasType, m, 3, objc._C_ID)
 
             m = Method(3, {'type': objc._C_UINT }, selector=False)
             self.assertArgHasType(m, 3, objc._C_UINT)
             self.assertArgHasType(m, 3, objc._C_UINT)
-            self.assertRaises(AssertionError, self.assertArgHasType, m, 3, objc._C_ID)
+            self.assertRaises(self.failureException, self.assertArgHasType, m, 3, objc._C_ID)
 
 
     def test_result_type(self):
         m = Method(None, {})
         self.assertResultHasType(m, objc._C_VOID)
-        self.assertRaises(AssertionError, self.assertResultHasType, m, objc._C_ID)
+        self.assertRaises(self.failureException, self.assertResultHasType, m, objc._C_ID)
 
         m = Method(None, { 'type': objc._C_DBL})
         self.assertResultHasType(m, objc._C_DBL)
-        self.assertRaises(AssertionError, self.assertResultHasType, m, objc._C_ID)
+        self.assertRaises(self.failureException, self.assertResultHasType, m, objc._C_ID)
 
         if sys.maxsize > 2**32:
             m = Method(None, {'type': objc._C_LNG }, selector=False)
             self.assertResultHasType(m, objc._C_LNG)
             self.assertResultHasType(m, objc._C_LNG_LNG)
-            self.assertRaises(AssertionError, self.assertResultHasType, m, objc._C_ID)
+            self.assertRaises(self.failureException, self.assertResultHasType, m, objc._C_ID)
 
             m = Method(None, {'type': objc._C_ULNG }, selector=False)
             self.assertResultHasType(m, objc._C_ULNG)
             self.assertResultHasType(m, objc._C_ULNG_LNG)
-            self.assertRaises(AssertionError, self.assertResultHasType, m, objc._C_ID)
+            self.assertRaises(self.failureException, self.assertResultHasType, m, objc._C_ID)
 
             m = Method(None, {'type': objc._C_LNG_LNG }, selector=False)
             self.assertResultHasType(m, objc._C_LNG)
             self.assertResultHasType(m, objc._C_LNG_LNG)
-            self.assertRaises(AssertionError, self.assertResultHasType, m, objc._C_ID)
+            self.assertRaises(self.failureException, self.assertResultHasType, m, objc._C_ID)
 
             m = Method(None, {'type': objc._C_ULNG_LNG }, selector=False)
             self.assertResultHasType(m, objc._C_ULNG)
             self.assertResultHasType(m, objc._C_ULNG_LNG)
-            self.assertRaises(AssertionError, self.assertResultHasType, m, objc._C_ID)
+            self.assertRaises(self.failureException, self.assertResultHasType, m, objc._C_ID)
 
         else:
             m = Method(None, {'type': objc._C_LNG }, selector=False)
             self.assertResultHasType(m, objc._C_LNG)
             self.assertResultHasType(m, objc._C_INT)
-            self.assertRaises(AssertionError, self.assertResultHasType, m, objc._C_ID)
+            self.assertRaises(self.failureException, self.assertResultHasType, m, objc._C_ID)
 
             m = Method(None, {'type': objc._C_ULNG }, selector=False)
             self.assertResultHasType(m, objc._C_ULNG)
             self.assertResultHasType(m, objc._C_UINT)
-            self.assertRaises(AssertionError, self.assertResultHasType, m, objc._C_ID)
+            self.assertRaises(self.failureException, self.assertResultHasType, m, objc._C_ID)
 
             m = Method(None, {'type': objc._C_INT }, selector=False)
             self.assertResultHasType(m, objc._C_LNG)
             self.assertResultHasType(m, objc._C_INT)
-            self.assertRaises(AssertionError, self.assertResultHasType, m, objc._C_ID)
+            self.assertRaises(self.failureException, self.assertResultHasType, m, objc._C_ID)
 
             m = Method(None, {'type': objc._C_UINT }, selector=False)
             self.assertResultHasType(m, objc._C_UINT)
             self.assertResultHasType(m, objc._C_UINT)
-            self.assertRaises(AssertionError, self.assertResultHasType, m, objc._C_ID)
+            self.assertRaises(self.failureException, self.assertResultHasType, m, objc._C_ID)
 
 
     def test_arg_fixed_size(self):
         m = Method(3, { 'c_array_of_fixed_length': 42 }, selector=True)
         self.assertArgIsFixedSize(m, 1, 42)
-        self.assertRaises(AssertionError, self.assertArgIsFixedSize, m, 0, 42)
-        self.assertRaises(AssertionError, self.assertArgIsFixedSize, m, 1, 3)
+        self.assertRaises(self.failureException, self.assertArgIsFixedSize, m, 0, 42)
+        self.assertRaises(self.failureException, self.assertArgIsFixedSize, m, 1, 3)
 
         m = Method(3, { }, selector=True)
-        self.assertRaises(AssertionError, self.assertArgIsFixedSize, m, 1, 3)
+        self.assertRaises(self.failureException, self.assertArgIsFixedSize, m, 1, 3)
 
         m = Method(3, { 'c_array_of_fixed_length': 42 }, selector=False)
         self.assertArgIsFixedSize(m, 3, 42)
-        self.assertRaises(AssertionError, self.assertArgIsFixedSize, m, 2, 42)
-        self.assertRaises(AssertionError, self.assertArgIsFixedSize, m, 3, 3)
+        self.assertRaises(self.failureException, self.assertArgIsFixedSize, m, 2, 42)
+        self.assertRaises(self.failureException, self.assertArgIsFixedSize, m, 3, 3)
 
         m = Method(3, { }, selector=False)
-        self.assertRaises(AssertionError, self.assertArgIsFixedSize, m, 3, 3)
+        self.assertRaises(self.failureException, self.assertArgIsFixedSize, m, 3, 3)
 
     def test_result_fixed_size(self):
         m = Method(None, { 'c_array_of_fixed_length': 42 })
         self.assertResultIsFixedSize(m, 42)
-        self.assertRaises(AssertionError, self.assertResultIsFixedSize, m, 3)
+        self.assertRaises(self.failureException, self.assertResultIsFixedSize, m, 3)
 
         m = Method(None, { }, selector=True)
-        self.assertRaises(AssertionError, self.assertResultIsFixedSize, m, 3)
+        self.assertRaises(self.failureException, self.assertResultIsFixedSize, m, 3)
 
 
     def test_arg_size_in_arg(self):
         m = Method(3, {'c_array_length_in_arg': 4 }, selector=True)
         self.assertArgSizeInArg(m, 1, 2)
-        self.assertRaises(AssertionError, self.assertArgSizeInArg, m, 1, 3)
-        self.assertRaises(AssertionError, self.assertArgSizeInArg, m, 0, 3)
+        self.assertRaises(self.failureException, self.assertArgSizeInArg, m, 1, 3)
+        self.assertRaises(self.failureException, self.assertArgSizeInArg, m, 0, 3)
 
         m = Method(3, {'c_array_length_in_arg': (2, 4) }, selector=True)
         self.assertArgSizeInArg(m, 1, (0, 2))
-        self.assertRaises(AssertionError, self.assertArgSizeInArg, m, 1, (0, 3))
-        self.assertRaises(AssertionError, self.assertArgSizeInArg, m, 0, (1, 2))
+        self.assertRaises(self.failureException, self.assertArgSizeInArg, m, 1, (0, 3))
+        self.assertRaises(self.failureException, self.assertArgSizeInArg, m, 0, (1, 2))
 
 
 
         m = Method(3, {'c_array_length_in_arg': 4 }, selector=False)
         self.assertArgSizeInArg(m, 3, 4)
-        self.assertRaises(AssertionError, self.assertArgSizeInArg, m, 1, 3)
-        self.assertRaises(AssertionError, self.assertArgSizeInArg, m, 0, 3)
+        self.assertRaises(self.failureException, self.assertArgSizeInArg, m, 1, 3)
+        self.assertRaises(self.failureException, self.assertArgSizeInArg, m, 0, 3)
 
         m = Method(3, {'c_array_length_in_arg': (2, 4) }, selector=False)
         self.assertArgSizeInArg(m, 3, (2, 4))
-        self.assertRaises(AssertionError, self.assertArgSizeInArg, m, 1, (2, 3))
-        self.assertRaises(AssertionError, self.assertArgSizeInArg, m, 0, (2, 3))
+        self.assertRaises(self.failureException, self.assertArgSizeInArg, m, 1, (2, 3))
+        self.assertRaises(self.failureException, self.assertArgSizeInArg, m, 0, (2, 3))
 
     def test_result_ize_in_arg(self):
         m = Method(None, {'c_array_length_in_arg': 4 }, selector=True)
         self.assertResultSizeInArg(m, 2)
-        self.assertRaises(AssertionError, self.assertResultSizeInArg, m, 3)
-        self.assertRaises(AssertionError, self.assertResultSizeInArg, m, 3)
+        self.assertRaises(self.failureException, self.assertResultSizeInArg, m, 3)
+        self.assertRaises(self.failureException, self.assertResultSizeInArg, m, 3)
 
         m = Method(None, {'c_array_length_in_arg': 4 }, selector=False)
         self.assertResultSizeInArg(m, 4)
-        self.assertRaises(AssertionError, self.assertResultSizeInArg, m, 3)
+        self.assertRaises(self.failureException, self.assertResultSizeInArg, m, 3)
 
 
 
     def test_arg_retained(self):
         m = Method(3, {'already_retained': True}, selector=True)
         self.assertArgIsRetained(m, 1)
-        self.assertRaises(AssertionError, self.assertArgIsRetained, m, 0)
+        self.assertRaises(self.failureException, self.assertArgIsRetained, m, 0)
 
         m = Method(3, {'already_retained': False}, selector=True)
-        self.assertRaises(AssertionError, self.assertArgIsRetained, m, 1)
+        self.assertRaises(self.failureException, self.assertArgIsRetained, m, 1)
 
         m = Method(3, {}, selector=True)
-        self.assertRaises(AssertionError, self.assertArgIsRetained, m, 1)
+        self.assertRaises(self.failureException, self.assertArgIsRetained, m, 1)
 
         m = Method(3, {'already_retained': True}, selector=False)
         self.assertArgIsRetained(m, 3)
-        self.assertRaises(AssertionError, self.assertArgIsRetained, m, 2)
+        self.assertRaises(self.failureException, self.assertArgIsRetained, m, 2)
 
         m = Method(3, {'already_retained': False}, selector=False)
-        self.assertRaises(AssertionError, self.assertArgIsRetained, m, 3)
+        self.assertRaises(self.failureException, self.assertArgIsRetained, m, 3)
 
         m = Method(3, {}, selector=False)
-        self.assertRaises(AssertionError, self.assertArgIsRetained, m, 3)
+        self.assertRaises(self.failureException, self.assertArgIsRetained, m, 3)
 
     def test_arg_not_retained(self):
         m = Method(3, {'already_retained': True}, selector=True)
         self.assertArgIsNotRetained(m, 0)
-        self.assertRaises(AssertionError, self.assertArgIsNotRetained, m, 1)
+        self.assertRaises(self.failureException, self.assertArgIsNotRetained, m, 1)
 
         m = Method(3, {'already_retained': False}, selector=True)
         self.assertArgIsNotRetained(m, 1)
@@ -838,14 +855,14 @@ class TestTestSupport (TestCase):
         self.assertResultIsRetained(m)
 
         m = Method(None, {'already_retained': False })
-        self.assertRaises(AssertionError, self.assertResultIsRetained, m)
+        self.assertRaises(self.failureException, self.assertResultIsRetained, m)
 
         m = Method(None, {})
-        self.assertRaises(AssertionError, self.assertResultIsRetained, m)
+        self.assertRaises(self.failureException, self.assertResultIsRetained, m)
 
     def test_result_not_retained(self):
         m = Method(None, {'already_retained': True })
-        self.assertRaises(AssertionError, self.assertResultIsNotRetained, m)
+        self.assertRaises(self.failureException, self.assertResultIsNotRetained, m)
 
         m = Method(None, {'already_retained': False })
         self.assertResultIsNotRetained(m)
@@ -859,20 +876,20 @@ class TestTestSupport (TestCase):
         m = Method(3, { "type": b"n^@" })
         try:
             self.assertArgIsIn(m, 3)
-        except AssertionError:
+        except self.failureException:
             raise
             self.fail("test failure for input argument")
 
         m = Method(3, { "type": b"n^@" }, selector=True)
         try:
             self.assertArgIsIn(m, 1)
-        except AssertionError:
+        except self.failureException:
             self.fail("test failure for input argument")
 
         m = Method(3, { "type": b"^@" })
         try:
             self.assertArgIsIn(m, 3)
-        except AssertionError:
+        except self.failureException:
             pass
         else:
             self.fail("test pass for not-input argument")
@@ -880,7 +897,7 @@ class TestTestSupport (TestCase):
         m = Method(3, { "type": b"^@" }, selector=True)
         try:
             self.assertArgIsIn(m, 1)
-        except AssertionError:
+        except self.failureException:
             pass
 
         else:
@@ -890,20 +907,20 @@ class TestTestSupport (TestCase):
         m = Method(3, { "type": b"o^@" })
         try:
             self.assertArgIsOut(m, 3)
-        except AssertionError:
+        except self.failureException:
             raise
             self.fail("test failure for input argument")
 
         m = Method(3, { "type": b"o^@" }, selector=True)
         try:
             self.assertArgIsOut(m, 1)
-        except AssertionError:
+        except self.failureException:
             self.fail("test failure for input argument")
 
         m = Method(3, { "type": b"^@" })
         try:
             self.assertArgIsOut(m, 3)
-        except AssertionError:
+        except self.failureException:
             pass
         else:
             self.fail("test pass for not-input argument")
@@ -911,7 +928,7 @@ class TestTestSupport (TestCase):
         m = Method(3, { "type": b"^@" }, selector=True)
         try:
             self.assertArgIsOut(m, 1)
-        except AssertionError:
+        except self.failureException:
             pass
 
         else:
@@ -921,20 +938,20 @@ class TestTestSupport (TestCase):
         m = Method(3, { "type": b"N^@" })
         try:
             self.assertArgIsInOut(m, 3)
-        except AssertionError:
+        except self.failureException:
             raise
             self.fail("test failure for input argument")
 
         m = Method(3, { "type": b"N^@" }, selector=True)
         try:
             self.assertArgIsInOut(m, 1)
-        except AssertionError:
+        except self.failureException:
             self.fail("test failure for input argument")
 
         m = Method(3, { "type": b"^@" })
         try:
             self.assertArgIsInOut(m, 3)
-        except AssertionError:
+        except self.failureException:
             pass
         else:
             self.fail("test pass for not-input argument")
@@ -942,7 +959,7 @@ class TestTestSupport (TestCase):
         m = Method(3, { "type": b"^@" }, selector=True)
         try:
             self.assertArgIsInOut(m, 1)
-        except AssertionError:
+        except self.failureException:
             pass
 
         else:
@@ -952,20 +969,20 @@ class TestTestSupport (TestCase):
         m = Method(3, { "type": objc._C_NSBOOL })
         try:
             self.assertArgIsBOOL(m, 3)
-        except AssertionError:
+        except self.failureException:
             raise
             self.fail("unexpected test failure")
 
         m = Method(3, { "type": objc._C_NSBOOL }, selector=True)
         try:
             self.assertArgIsBOOL(m, 1)
-        except AssertionError:
+        except self.failureException:
             self.fail("unexpected test failure")
 
         m = Method(3, { "type": b"@" })
         try:
             self.assertArgIsBOOL(m, 3)
-        except AssertionError:
+        except self.failureException:
             pass
         else:
             self.fail("unexpected test pass")
@@ -973,7 +990,7 @@ class TestTestSupport (TestCase):
         m = Method(3, { "type": b"@" }, selector=True)
         try:
             self.assertArgIsBOOL(m, 1)
-        except AssertionError:
+        except self.failureException:
             pass
 
         else:
@@ -983,27 +1000,27 @@ class TestTestSupport (TestCase):
         m = Method(3, { 'type': objc._C_SEL, 'sel_of_type': b'v@:@' }, selector=True)
         self.assertArgIsSEL(m, 1, b'v@:@')
 
-        self.assertRaises(AssertionError, self.assertArgIsSEL, m, 2, b'v@:@')
-        self.assertRaises(AssertionError, self.assertArgIsSEL, m, 1, b'v@:')
+        self.assertRaises(self.failureException, self.assertArgIsSEL, m, 2, b'v@:@')
+        self.assertRaises(self.failureException, self.assertArgIsSEL, m, 1, b'v@:')
 
         m = Method(3, { 'type': objc._C_SEL }, selector=True)
-        self.assertRaises(AssertionError, self.assertArgIsSEL, m, 1, b'v@:')
+        self.assertRaises(self.failureException, self.assertArgIsSEL, m, 1, b'v@:')
 
         m = Method(3, { 'type': objc._C_ID, 'sel_of_type': b'v@:@' }, selector=True)
-        self.assertRaises(AssertionError, self.assertArgIsSEL, m, 1, b'v@:@')
+        self.assertRaises(self.failureException, self.assertArgIsSEL, m, 1, b'v@:@')
 
 
         m = Method(3, { 'type': objc._C_SEL, 'sel_of_type': b'v@:@' }, selector=False)
         self.assertArgIsSEL(m, 3, b'v@:@')
 
-        self.assertRaises(AssertionError, self.assertArgIsSEL, m, 2, b'v@:@')
-        self.assertRaises(AssertionError, self.assertArgIsSEL, m, 3, b'v@:')
+        self.assertRaises(self.failureException, self.assertArgIsSEL, m, 2, b'v@:@')
+        self.assertRaises(self.failureException, self.assertArgIsSEL, m, 3, b'v@:')
 
         m = Method(3, { 'type': objc._C_SEL }, selector=False)
-        self.assertRaises(AssertionError, self.assertArgIsSEL, m, 3, b'v@:')
+        self.assertRaises(self.failureException, self.assertArgIsSEL, m, 3, b'v@:')
 
         m = Method(3, { 'type': objc._C_ID, 'sel_of_type': b'v@:@' }, selector=False)
-        self.assertRaises(AssertionError, self.assertArgIsSEL, m, 3, b'v@:@')
+        self.assertRaises(self.failureException, self.assertArgIsSEL, m, 3, b'v@:@')
 
     def test_arg_is_function(self):
         m = Method(3, { 'type': b'^?', 'callable': {
@@ -1014,9 +1031,9 @@ class TestTestSupport (TestCase):
                 ]
             }}, selector=True)
         self.assertArgIsFunction(m, 1, b'i@d', False)
-        self.assertRaises(AssertionError, self.assertArgIsFunction, m, 0, 'v', False)
-        self.assertRaises(AssertionError, self.assertArgIsFunction, m, 1, 'i@b', False)
-        self.assertRaises(AssertionError, self.assertArgIsFunction, m, 1, 'i@d', True)
+        self.assertRaises(self.failureException, self.assertArgIsFunction, m, 0, 'v', False)
+        self.assertRaises(self.failureException, self.assertArgIsFunction, m, 1, 'i@b', False)
+        self.assertRaises(self.failureException, self.assertArgIsFunction, m, 1, 'i@d', True)
         m = Method(3, { 'type': b'^?', 'callable': {
                 'retval': { 'type': objc._C_INT },
                 'arguments': [
@@ -1026,16 +1043,17 @@ class TestTestSupport (TestCase):
             },
             'callable_retained': True }, selector=True)
         self.assertArgIsFunction(m, 1, b'i@d', True)
+        self.assertRaises(self.failureException, self.assertArgIsFunction, m, 1, b'i@d', False)
 
         m = Method(3, { 'type': b'?', 'callable': {}}, selector=True)
-        self.assertRaises(AssertionError, self.assertArgIsFunction, m, 1, 'v', False)
+        self.assertRaises(self.failureException, self.assertArgIsFunction, m, 1, 'v', False)
 
         m = Method(3, { 'type': b'^?', }, selector=True)
-        self.assertRaises(AssertionError, self.assertArgIsFunction, m, 1, 'v', False)
+        self.assertRaises(self.failureException, self.assertArgIsFunction, m, 1, 'v', False)
         m = Method(3, { 'type': b'^?', 'callable': {}}, selector=True)
-        self.assertRaises(AssertionError, self.assertArgIsFunction, m, 1, 'v', False)
+        self.assertRaises(self.failureException, self.assertArgIsFunction, m, 1, 'v', False)
         m = Method(3, { 'type': b'^?', 'callable': { 'retval': {'type': objc._C_VOID } }}, selector=True)
-        self.assertRaises(AssertionError, self.assertArgIsFunction, m, 1, 'v', False)
+        self.assertRaises(self.failureException, self.assertArgIsFunction, m, 1, 'v', False)
 
 
 
@@ -1047,9 +1065,9 @@ class TestTestSupport (TestCase):
                 ]
             }}, selector=False)
         self.assertArgIsFunction(m, 3, b'i@d', False)
-        self.assertRaises(AssertionError, self.assertArgIsFunction, m, 2, 'v', False)
-        self.assertRaises(AssertionError, self.assertArgIsFunction, m, 3, 'i@b', False)
-        self.assertRaises(AssertionError, self.assertArgIsFunction, m, 3, 'i@d', True)
+        self.assertRaises(self.failureException, self.assertArgIsFunction, m, 2, 'v', False)
+        self.assertRaises(self.failureException, self.assertArgIsFunction, m, 3, 'i@b', False)
+        self.assertRaises(self.failureException, self.assertArgIsFunction, m, 3, 'i@d', True)
         m = Method(3, { 'type': b'^?', 'callable': {
                 'retval': { 'type': objc._C_INT },
                 'arguments': [
@@ -1061,14 +1079,14 @@ class TestTestSupport (TestCase):
         self.assertArgIsFunction(m, 3, b'i@d', True)
 
         m = Method(3, { 'type': b'?', 'callable': {}}, selector=False)
-        self.assertRaises(AssertionError, self.assertArgIsFunction, m, 3, 'v', False)
+        self.assertRaises(self.failureException, self.assertArgIsFunction, m, 3, 'v', False)
 
         m = Method(3, { 'type': b'^?', }, selector=True)
-        self.assertRaises(AssertionError, self.assertArgIsFunction, m, 3, 'v', False)
+        self.assertRaises(self.failureException, self.assertArgIsFunction, m, 3, 'v', False)
         m = Method(3, { 'type': b'^?', 'callable': {}}, selector=False)
-        self.assertRaises(AssertionError, self.assertArgIsFunction, m, 3, 'v', False)
+        self.assertRaises(self.failureException, self.assertArgIsFunction, m, 3, 'v', False)
         m = Method(3, { 'type': b'^?', 'callable': { 'retval': {'type': objc._C_VOID } }}, selector=False)
-        self.assertRaises(AssertionError, self.assertArgIsFunction, m, 3, 'v', False)
+        self.assertRaises(self.failureException, self.assertArgIsFunction, m, 3, 'v', False)
 
     def test_result_is_function(self):
         m = Method(None, { 'type': b'^?', 'callable': {
@@ -1079,20 +1097,20 @@ class TestTestSupport (TestCase):
                 ]
             }}, selector=True)
         self.assertResultIsFunction(m, b'i@d')
-        self.assertRaises(AssertionError, self.assertResultIsFunction, m, 'i@b')
+        self.assertRaises(self.failureException, self.assertResultIsFunction, m, 'i@b')
 
         m = Method(1, {})
-        self.assertRaises(AssertionError, self.assertResultIsFunction, m, 'i@b')
+        self.assertRaises(self.failureException, self.assertResultIsFunction, m, 'i@b')
 
         m = Method(None, { 'type': b'?', 'callable': {}}, selector=True)
-        self.assertRaises(AssertionError, self.assertResultIsFunction, m, 'v')
+        self.assertRaises(self.failureException, self.assertResultIsFunction, m, 'v')
 
         m = Method(None, { 'type': b'^?', }, selector=True)
-        self.assertRaises(AssertionError, self.assertResultIsFunction, m, 'v')
+        self.assertRaises(self.failureException, self.assertResultIsFunction, m, 'v')
         m = Method(None, { 'type': b'^?', 'callable': {}}, selector=True)
-        self.assertRaises(AssertionError, self.assertResultIsFunction, m, 'v')
+        self.assertRaises(self.failureException, self.assertResultIsFunction, m, 'v')
         m = Method(None, { 'type': b'^?', 'callable': { 'retval': {'type': objc._C_VOID } }}, selector=True)
-        self.assertRaises(AssertionError, self.assertResultIsFunction, m, 'v')
+        self.assertRaises(self.failureException, self.assertResultIsFunction, m, 'v')
 
 
 
@@ -1106,8 +1124,8 @@ class TestTestSupport (TestCase):
                 ]
             }}, selector=True)
         self.assertArgIsBlock(m, 1, b'i@d')
-        self.assertRaises(AssertionError, self.assertArgIsBlock, m, 0, 'v')
-        self.assertRaises(AssertionError, self.assertArgIsBlock, m, 1, 'i@b')
+        self.assertRaises(self.failureException, self.assertArgIsBlock, m, 0, 'v')
+        self.assertRaises(self.failureException, self.assertArgIsBlock, m, 1, 'i@b')
 
         m = Method(3, { 'type': b'@?', 'callable': {
                 'retval': { 'type': objc._C_INT },
@@ -1117,17 +1135,17 @@ class TestTestSupport (TestCase):
                 ]
             },
             'callable_retained': True }, selector=True)
-        self.assertRaises(AssertionError, self.assertArgIsBlock, m, 1, 'v')
+        self.assertRaises(self.failureException, self.assertArgIsBlock, m, 1, 'v')
 
         m = Method(3, { 'type': b'?', 'callable': {}}, selector=True)
-        self.assertRaises(AssertionError, self.assertArgIsBlock, m, 1, 'v')
+        self.assertRaises(self.failureException, self.assertArgIsBlock, m, 1, 'v')
 
         m = Method(3, { 'type': b'@?', }, selector=True)
-        self.assertRaises(AssertionError, self.assertArgIsBlock, m, 1, 'v')
+        self.assertRaises(self.failureException, self.assertArgIsBlock, m, 1, 'v')
         m = Method(3, { 'type': b'@?', 'callable': {}}, selector=True)
-        self.assertRaises(AssertionError, self.assertArgIsBlock, m, 1, 'v')
+        self.assertRaises(self.failureException, self.assertArgIsBlock, m, 1, 'v')
         m = Method(3, { 'type': b'@?', 'callable': { 'retval': {'type': objc._C_VOID } }}, selector=True)
-        self.assertRaises(AssertionError, self.assertArgIsBlock, m, 1, 'v')
+        self.assertRaises(self.failureException, self.assertArgIsBlock, m, 1, 'v')
 
 
 
@@ -1140,8 +1158,8 @@ class TestTestSupport (TestCase):
                 ]
             }}, selector=False)
         self.assertArgIsBlock(m, 3, b'i@d')
-        self.assertRaises(AssertionError, self.assertArgIsBlock, m, 2, 'v')
-        self.assertRaises(AssertionError, self.assertArgIsBlock, m, 3, 'i@b')
+        self.assertRaises(self.failureException, self.assertArgIsBlock, m, 2, 'v')
+        self.assertRaises(self.failureException, self.assertArgIsBlock, m, 3, 'i@b')
 
         m = Method(3, { 'type': b'@?', 'callable': {
                 'retval': { 'type': objc._C_INT },
@@ -1151,17 +1169,17 @@ class TestTestSupport (TestCase):
                 ]
             },
             'callable_retained': True }, selector=False)
-        self.assertRaises(AssertionError, self.assertArgIsBlock, m, 3, 'v')
+        self.assertRaises(self.failureException, self.assertArgIsBlock, m, 3, 'v')
 
         m = Method(3, { 'type': b'?', 'callable': {}}, selector=False)
-        self.assertRaises(AssertionError, self.assertArgIsBlock, m, 3, 'v')
+        self.assertRaises(self.failureException, self.assertArgIsBlock, m, 3, 'v')
 
         m = Method(3, { 'type': b'@?', }, selector=True)
-        self.assertRaises(AssertionError, self.assertArgIsBlock, m, 3, 'v')
+        self.assertRaises(self.failureException, self.assertArgIsBlock, m, 3, 'v')
         m = Method(3, { 'type': b'@?', 'callable': {}}, selector=False)
-        self.assertRaises(AssertionError, self.assertArgIsBlock, m, 3, 'v')
+        self.assertRaises(self.failureException, self.assertArgIsBlock, m, 3, 'v')
         m = Method(3, { 'type': b'@?', 'callable': { 'retval': {'type': objc._C_VOID } }}, selector=False)
-        self.assertRaises(AssertionError, self.assertArgIsBlock, m, 3, 'v')
+        self.assertRaises(self.failureException, self.assertArgIsBlock, m, 3, 'v')
 
 
     def test_result_is_block(self):
@@ -1174,7 +1192,7 @@ class TestTestSupport (TestCase):
                 ]
             }}, selector=True)
         self.assertResultIsBlock(m, b'i@d')
-        self.assertRaises(AssertionError, self.assertResultIsBlock, m, 'i@b')
+        self.assertRaises(self.failureException, self.assertResultIsBlock, m, 'i@b')
 
         m = Method(None, { 'type': b'@?', 'callable': {
                 'retval': { 'type': objc._C_INT },
@@ -1184,39 +1202,39 @@ class TestTestSupport (TestCase):
                 ]
             },
             'callable_retained': True }, selector=True)
-        self.assertRaises(AssertionError, self.assertResultIsBlock, m, 'v')
+        self.assertRaises(self.failureException, self.assertResultIsBlock, m, 'v')
 
         m = Method(3, {})
-        self.assertRaises(AssertionError, self.assertResultIsBlock, m, 'v')
+        self.assertRaises(self.failureException, self.assertResultIsBlock, m, 'v')
 
         m = Method(None, { 'type': b'?', 'callable': {}}, selector=True)
-        self.assertRaises(AssertionError, self.assertResultIsBlock, m, 'v')
+        self.assertRaises(self.failureException, self.assertResultIsBlock, m, 'v')
 
         m = Method(None, { 'type': b'@?', }, selector=True)
-        self.assertRaises(AssertionError, self.assertResultIsBlock, m, 'v')
+        self.assertRaises(self.failureException, self.assertResultIsBlock, m, 'v')
         m = Method(None, { 'type': b'@?', 'callable': {}}, selector=True)
-        self.assertRaises(AssertionError, self.assertResultIsBlock, m, 'v')
+        self.assertRaises(self.failureException, self.assertResultIsBlock, m, 'v')
         m = Method(None, { 'type': b'@?', 'callable': { 'retval': {'type': objc._C_VOID } }}, selector=True)
-        self.assertRaises(AssertionError, self.assertResultIsBlock, m, 'v')
+        self.assertRaises(self.failureException, self.assertResultIsBlock, m, 'v')
 
     def test_result_bool(self):
         m = Method(None, { "type": objc._C_NSBOOL })
         try:
             self.assertResultIsBOOL(m)
-        except AssertionError:
+        except self.failureException:
             raise
             self.fail("unexpected test failure")
 
         m = Method(None, { "type": objc._C_NSBOOL }, selector=True)
         try:
             self.assertResultIsBOOL(m)
-        except AssertionError:
+        except self.failureException:
             self.fail("unexpected test failure")
 
         m = Method(None, { "type": b"@" })
         try:
             self.assertResultIsBOOL(m)
-        except AssertionError:
+        except self.failureException:
             pass
         else:
             self.fail("unexpected test pass")
@@ -1224,7 +1242,7 @@ class TestTestSupport (TestCase):
         m = Method(None, { "type": b"@" }, selector=True)
         try:
             self.assertResultIsBOOL(m)
-        except AssertionError:
+        except self.failureException:
             pass
 
         else:
@@ -1259,7 +1277,7 @@ class TestTestSupport (TestCase):
         orig_use    = TestSupport._usepool
         orig_class = TestSupport._poolclass
         orig_run   = TestSupport._unittest.TestCase.run
-        
+
         allocs = [0]
         NSObject = objc.lookUpClass('NSObject')
         class PoolClass (object):
@@ -1273,7 +1291,7 @@ class TestTestSupport (TestCase):
 
 
         TestSupport._unittest.TestCase.run = lambda self: None
-                
+
         try:
             TestSupport._poolclass = PoolClass
 

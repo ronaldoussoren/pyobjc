@@ -270,6 +270,12 @@ class TestCase (_unittest.TestCase):
         if any(x is tp for x in _nscftype):
             self.fail(message or "%r is not a unique CFTypeRef type"%(tp,))
 
+        for cls in tp.__bases__:
+            if 'NSCFType' in cls.__name__:
+                return
+
+        self.fail(message or "%r is not a CFTypeRef type"%(tp,))
+
         # NOTE: Don't test if this is a subclass of one of the known
         #       CF roots, this tests is mostly used to ensure that the
         #       type is distinct from one of those roots.
@@ -807,19 +813,18 @@ class TestCase (_unittest.TestCase):
             if hasattr(value, key):
                 self.fail(message or "%s is an attribute of %r"%(key, value))
 
-    def assertIsSubclass(self, value, type, message=None):
-        if not issubclass(value, type):
-            print(value, type)
-            self.fail(message or "%s is not a subclass of %r but %s"%(value, type, type(value)))
+    def assertIsSubclass(self, value, types, message=None):
+        if not issubclass(value, types):
+            self.fail(message or "%s is not a subclass of %r"%(value, types))
 
-    def assertIsNotSubclass(self, value, type, message=None):
-        if issubclass(value, type):
-            self.fail(message or "%s is a subclass of %r but %s"%(value, type, type(value)))
+    def assertIsNotSubclass(self, value, types, message=None):
+        if issubclass(value, types):
+            self.fail(message or "%s is a subclass of %r"%(value, types))
 
-    #if not hasattr(_unittest.TestCase, 'assertIsInstance'): # pragma: no cover
-    def assertIsInstance(self, value, types, message=None):
-        if not isinstance(value, types):
-            self.fail(message or "%s is not an instance of %r but %s"%(value, types, type(value)))
+    if not hasattr(_unittest.TestCase, 'assertIsInstance'): # pragma: no cover
+        def assertIsInstance(self, value, types, message=None):
+            if not isinstance(value, types):
+                self.fail(message or "%s is not an instance of %r but %s"%(value, types, type(value)))
 
     if not hasattr(_unittest.TestCase, 'assertIsNotInstance'): # pragma: no cover
         def assertIsNotInstance(self, value, types, message=None):

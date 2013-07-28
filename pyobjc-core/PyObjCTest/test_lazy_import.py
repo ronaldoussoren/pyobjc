@@ -339,7 +339,7 @@ class TestLazyImport (TestCase):
                 ('CFAllocatorRef', b'^{__CFAllocator=}', 'CFAllocatorGetTypeID', None),
                 ('CFArrayRef', b'^{__CFArray=}', 'CFArrayGetTypeID', 'DoesNotExist,NSArray'),
                 ('CFAttributedStringRef', b'^{__CFAttributedString=}', 'CFAttributedStringGetTypeID', '__NSCFAttributedString,NSCFAttributedString'),
-                ('CFBagRef', b'^{__CFBag=}', 'CFBagGetTypeID', None),
+                ('CFBagRef', b'^{__CFBag=}', 'xCFBagGetTypeID', None),
                 ('CFNoType', b'^{__CFNoType', 'CFNoTypeGetTypeID', 'DoesNotExist'),
             ],
             'functions': {

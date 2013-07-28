@@ -30,6 +30,10 @@ if sys.version_info[0] == 2:  # pragma: no 3.x cover
             return bltin_intern(value.encode('utf-8'))
         return bltin_intern(value)
 
+    def import_module(name):
+        __import__(name)
+        return sys.modules[name]
+
 else:   # pragma: no 2.x cover
     unicode = str
     long = int
@@ -39,6 +43,12 @@ else:   # pragma: no 2.x cover
         if isinstance(value, objc.pyobjc_unicode):
             return bltin_intern(str(value))
         return bltin_intern(value)
+
+    def import_module(name):
+        if name == 'copy_reg':
+            name = 'copyreg'
+        __import__(name)
+        return sys.modules[name]
 
 
 NSArray = objc.lookUpClass("NSArray")
@@ -202,7 +212,7 @@ def save_float(coder, obj):
     else:
         coder.encodeValueOfObjCType_at_(objc._C_INT, kOP_FLOAT_STR)
         coder.encodeObject_(unicode(repr(obj)))
-    #coder.encodeDouble_forKey_(obj, kVALUE)
+
 encode_dispatch[float] = save_float
 
 def save_global(coder, obj, name=None):
@@ -214,8 +224,7 @@ def save_global(coder, obj, name=None):
         module = whichmodule(obj, name)
 
     try:
-        __import__ (module)
-        mod = sys.modules[module]
+        mod = import_module(module)
         klass= getattr(mod, name)
 
     except (ImportError, KeyError, AttributeError):
@@ -304,12 +313,12 @@ def load_global_ext(coder, setValue):
         raise ValueError("unregistered extension code %d" % code)
 
     module, name = key
-    __import__(module)
-    mod = sys.modules[module]
+    mod = import_module(module)
     klass = getattr(mod, name)
     copyreg._extension_cache[code] = klass
     return klass
 decode_dispatch[kOP_GLOBAL_EXT] = load_global_ext
+
 
 def load_global(coder, setValue):
     if coder.allowsKeyedCoding():
@@ -319,8 +328,7 @@ def load_global(coder, setValue):
         module = coder.decodeObject()
         name = coder.decodeObject()
 
-    __import__(module)
-    mod = sys.modules[module]
+    mod = import_module(module)
     klass = getattr(mod, name)
     return klass
 

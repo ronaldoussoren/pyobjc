@@ -27,6 +27,8 @@ MYDIR = os.path.dirname(os.path.abspath(__file__))
 NSArray = objc.lookUpClass('NSArray')
 NSArchiver = objc.lookUpClass('NSArchiver')
 NSKeyedArchiver = objc.lookUpClass('NSKeyedArchiver')
+NSUnarchiver = objc.lookUpClass('NSUnarchiver')
+NSKeyedUnarchiver = objc.lookUpClass('NSKeyedUnarchiver')
 NSSet = objc.lookUpClass('NSSet')
 
 class TestNSKeyedArchivingInterop (TestCase):
@@ -335,6 +337,42 @@ class TestNSArchivingInterop (TestCase):
 
             converted = readPlistFromBytes(converted)
             self.assertEqual(converted, testval)
+
+
+class Class1:
+    pass
+
+class Class2 (object):
+    pass
+
+class TestLoadingOlderVersions (TestCase):
+    def do_verify(self, path):
+        import __main__
+
+        # Ensure that class definitions are present:
+        __main__.Class1 = Class1
+        __main__.Class2 = Class2
+
+        if path.endswith('keyed'):
+            archiver = NSKeyedUnarchiver
+        else:
+            archiver = NSUnarchiver
+
+        data = archiver.unarchiveObjectWithFile_(path)
+        self.assertIsInstance(data, Class2)
+        self.assertEqual(data.lst, [1,2,3])
+        self.assertEqual(data.string, "hello world")
+        self.assertIsInstance(data.obj, Class1)
+        o = data.obj
+        self.assertEqual(o.a, 42)
+        self.assertEqual(o.b, 2.5)
+
+    for fname in os.listdir(os.path.join(MYDIR, 'archives')):
+        def test(self, fname=fname):
+            self.do_verify(os.path.join(MYDIR, 'archives', fname))
+        locals()['test_%s'%(fname.replace('.', '_').replace('-', '_'))] = test
+        del test
+
 
 if __name__ == "__main__":
     main()

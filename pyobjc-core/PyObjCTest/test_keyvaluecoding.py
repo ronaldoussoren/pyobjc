@@ -301,6 +301,34 @@ class TestArrayOperators (TestCase):
         self.assertRaises(KeyError, arrayOperators.unionOfArrays, transactions, 'date')
         self.assertRaises(KeyError, arrayOperators.distinctUnionOfArrays, transactions, 'date')
 
+    def test_unionOfArrays_variations(self):
+        lst = [[
+            { 'a': 1 },
+            { 'a': 2 },
+            { 'a': 1 },
+            { 'a': 3 },
+            { 'a': 2 },
+        ]]
+
+        arrayOperators = KeyValueCoding._ArrayOperators
+        self.assertEqual(arrayOperators.distinctUnionOfArrays(lst, 'a'), [1,2,3])
+
+        lst = [
+            [
+                { 'a': [1] },
+                { 'a': [2] },
+                { 'a': [1] },
+            ],
+            [
+                { 'a': 3 },
+                { 'a': [2] },
+            ],
+        ]
+
+        arrayOperators = KeyValueCoding._ArrayOperators
+        self.assertEqual(arrayOperators.distinctUnionOfArrays(lst, 'a'), [[1],[2],3])
+
+
     def testUnionOfSets(self):
         arrayOperators = KeyValueCoding._ArrayOperators
 

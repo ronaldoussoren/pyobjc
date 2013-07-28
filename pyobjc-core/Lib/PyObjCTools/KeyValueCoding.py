@@ -94,7 +94,7 @@ class _ArrayOperators (object):
         s = set()
         r = []
         for lst in obj:
-            for item in [ getKeyPath(item, path) for item in lst ]:
+            for item in (getKeyPath(item, path) for item in lst):
                 try:
                     if item in s or item in r:
                         continue
@@ -114,7 +114,7 @@ class _ArrayOperators (object):
         path = '.'.join(segments)
         rval = set()
         for lst in obj:
-            for item in [ getKeyPath(item, path) for item in lst ]:
+            for item in (getKeyPath(item, path) for item in lst):
                 rval.add(item)
         return rval
 
@@ -124,8 +124,7 @@ class _ArrayOperators (object):
         rval = []
         s = set()
         r = []
-        lst = [ getKeyPath(item, path) for item in obj ]
-        for item in lst:
+        for item in (getKeyPath(item, path) for item in obj):
             try:
                 if item in s or item in r:
                     continue
@@ -163,7 +162,7 @@ class _ArrayOperators (object):
         path = '.'.join(segments)
         rval = []
         for lst in obj:
-            rval.extend([ getKeyPath(item, path) for item in lst ])
+            rval.extend(getKeyPath(item, path) for item in lst)
         return rval
 
 
@@ -171,8 +170,6 @@ class _ArrayOperators (object):
     def unionOfObjects(obj, segments):
         path = '.'.join(segments)
         return [ getKeyPath(item, path) for item in obj]
-
-
 
 
 def getKey(obj, key):

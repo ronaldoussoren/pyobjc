@@ -2431,5 +2431,13 @@ PyObjC_MODULE_INIT(_objc)
 #error "No Py_ARG_NSUInteger"
 #endif
 
+#if PY_MAJOR_VERSION == 3
+    /*
+     * Archives created with Python 2.x can contain instances of OC_PythonString,
+     * use OC_PythonUnicode to decode.
+     */
+    [NSUnarchiver decodeClassName:@"OC_PythonString" asClassName:@"OC_PythonUnicode"];
+#endif /* PY_MAJOR_VERSION == 3 */
+
     PyObjC_INITDONE();
 }
