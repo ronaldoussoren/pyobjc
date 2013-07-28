@@ -63,6 +63,14 @@ class only_getstate (object):
     def __getstate__(self):
         return (self._dct, self._slots)
 
+class with_reduce_func (object):
+    def __init__(self, *args):
+        self.args = args
+
+    def __reduce__(self):
+        return with_reduce_func, self.args
+
+
 class reduce_global (object):
     def __reduce__(self):
         return "reduce_global"
@@ -1198,6 +1206,20 @@ class TestArchiveNative (TestCase):
             self.assertNotIsInstance(k, objc.pyobjc_unicode)
             if sys.version_info[0] == 3:
                 self.assertNotIsInstance(k, bytes)
+
+
+        a = with_reduce_func([1,2], (3,4), {'a': 4}, {'d', 'e'}, frozenset(['f']), id)
+        buf = self.dumps(a)
+        self.assertIsInstance(buf, NSData)
+        b = self.loads(buf)
+        self.assertIsInstance(b, with_reduce_func)
+        self.assertEqual(a.args, b.args)
+        self.assertIsInstance(b.args[0], list)
+        self.assertIsInstance(b.args[1], tuple)
+        self.assertIsInstance(b.args[2], dict)
+        self.assertIsInstance(b.args[3], set)
+        self.assertIsInstance(b.args[4], frozenset)
+
 
 class TestKeyedArchiveNative (TestArchiveNative):
     def dumps(self, arg, proto=0, fast=0):

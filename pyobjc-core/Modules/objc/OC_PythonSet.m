@@ -63,8 +63,10 @@
 
 -(Class)classForCoder
 {
-    if (PyAnySet_CheckExact(value)) {
+    if (PyFrozenSet_CheckExact(value)) {
         return [NSSet class];
+    } else if (PyAnySet_CheckExact(value)) {
+        return [NSMutableSet class];
     } else {
         return [OC_PythonSet class];
     }
