@@ -20,7 +20,7 @@ to actually load the metadata.
      Loading metadata using compiled files
 
 
-.. metadata-dictionary:
+.. _metadata-dictionary:
 
 Metadata dictionaries
 ---------------------
