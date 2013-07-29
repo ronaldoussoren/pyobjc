@@ -6,6 +6,9 @@ An overview of the relevant changes in new, and older, releases.
 Version 3.0
 -----------
 
+* Added ``objc.registerABCForClass`` to make it possible to register
+  a class with a number of ABC classes when the class becomes available.
+
 * ``NSDecimalNumber`` can now be instantatiated as a normal Python object::
 
      value = NSDecimalNumber(4)

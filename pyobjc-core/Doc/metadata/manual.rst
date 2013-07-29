@@ -445,6 +445,12 @@ Metadata for Objective-C methods and classes
 
    Register *type* as a dict-like type that will be bridged to Objective-C as an NSDictionary subclass.
 
+.. function:: registerABCForClass(classname, \*abc_class)
+
+   Objective-C *classname* will be registered with the ABC classes in *abc_class*
+   when the Objective-C class gets used from Python.
+
+   .. versionadded: 3.0
 
 .. function:: addConvenienceForClass(classname, method)
 
@@ -473,8 +479,6 @@ Metadata for Objective-C methods and classes
 
    Like :func:`addConvenienceForBasicMapping`, but for sequences with
    ``count`` and ``objectAtIndex:`` selectors.
-
-   .. warning:: ``readonly==False`` is not supported at the moment.
 
    .. versionadded:: 3.0
 

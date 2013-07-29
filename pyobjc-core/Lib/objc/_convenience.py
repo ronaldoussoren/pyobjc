@@ -8,7 +8,7 @@ import sys
 import warnings
 import collections
 
-__all__ = ( 'addConvenienceForClass',)
+__all__ = ( 'addConvenienceForClass', 'registerABCForClass')
 
 CLASS_METHODS = {}
 CLASS_ABC = {}
@@ -18,7 +18,7 @@ def register(f):
 
 # XXX: interface is too wide (super_class is not needed, can pass actual class)
 @register
-def add_convenience_methods(super_class, name, type_dict):
+def add_convenience_methods(cls, type_dict):
     """
     Add additional methods to the type-dict of subclass 'name' of
     'super_class'.
@@ -28,11 +28,15 @@ def add_convenience_methods(super_class, name, type_dict):
 
     Matching entries from both mappings are added to the 'type_dict'.
     """
-    for nm, value in CLASS_METHODS.get(name, ()):
+    for nm, value in CLASS_METHODS.get(cls.__name__, ()):
         type_dict[nm] = value
 
-    # XXX: Work is needed to deal with ABCs (class isn't defined yet)
-
+    try:
+        for cls in CLASS_ABC[cls.__name__]:
+            cls.register(cls)
+        del CLASS_ABC[cls.__name__]
+    except KeyError:
+        pass
 
 def register(f):
     options._make_bundleForClass = f
@@ -43,6 +47,20 @@ def makeBundleForClass():
     def bundleForClass(cls):
         return cb
     return selector(bundleForClass, isClassMethod=True)
+
+def registerABCForClass(classname, *abc_class):
+    """
+    Register *classname* with the *abc_class*-es when
+    the class becomes available.
+    """
+    try:
+        CLASS_ABC += tuple(abc_class)
+    except KeyError:
+        CLASS_ABC = tuple(abc_class)
+
+    options._mapping_count += 1
+    _rescanClass(classname)
+
 
 def addConvenienceForClass(classname, methods):
     """

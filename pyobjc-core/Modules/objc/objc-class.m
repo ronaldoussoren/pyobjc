@@ -2835,8 +2835,6 @@ PyObjCClass_HasPythonImplementation(PyObject* cls)
 static int
 update_convenience_methods(PyObject* cls)
 {
-    PyObject* super_class;
-    PyObject* name;
     PyObject* res;
     PyObject* args;
     Class     objc_cls;
@@ -2854,45 +2852,20 @@ update_convenience_methods(PyObject* cls)
 
     objc_cls = PyObjCClass_GetClass(cls);
 
-    if (class_getSuperclass(objc_cls) == nil) {
-        super_class = Py_None;
-        Py_INCREF(super_class);
-    } else {
-        super_class = PyObjCClass_New(class_getSuperclass(objc_cls));
-        if (super_class == NULL) {
-            return -1;
-        }
-    }
-
-    name = PyText_FromString(class_getName(objc_cls));
-    if (name == NULL) {
-        Py_DECREF(super_class);
-        return -1;
-    }
-
-#if 0
-    dict = /*PyDict_Copy*/(((PyTypeObject*)cls)->tp_dict);
-    Py_INCREF(dict);
-#else
     dict = PyDict_New();
-#endif
     if (dict == NULL) {
-        Py_DECREF(super_class);
-        Py_DECREF(name);
         return -1;
     }
 
-    args = PyTuple_New(3);
+    args = PyTuple_New(2);
     if (args == NULL) {
-        Py_DECREF(super_class);
-        Py_DECREF(name);
         Py_DECREF(dict);
         return -1;
     }
 
-    PyTuple_SET_ITEM(args, 0, super_class);
-    PyTuple_SET_ITEM(args, 1, name);
-    PyTuple_SET_ITEM(args, 2, dict);
+    PyTuple_SET_ITEM(args, 0, cls);
+    PyTuple_SET_ITEM(args, 1, dict);
+    Py_INCREF(cls);
 
     res = PyObject_Call(PyObjC_ClassExtender, args, NULL);
     if (res == NULL) {
@@ -2928,11 +2901,13 @@ update_convenience_methods(PyObject* cls)
             }
 #endif
         } else {
+            if (PyDict_SetItem(((PyTypeObject*)cls)->tp_dict, k, v) == -1) {
+                PyErr_Clear();
+            }
             continue;
         }
 
         if (PyType_Type.tp_setattro(cls, k, v) == -1) {
-            PyErr_Print();
             PyErr_Clear();
             continue;
         }
