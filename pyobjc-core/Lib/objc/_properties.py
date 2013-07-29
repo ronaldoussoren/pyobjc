@@ -778,7 +778,7 @@ class set_proxy (collections.MutableSet):
             return self._wrapped >= other
 
 
-    if sys.version_info[0] == 2:  # pragma: no 3.x cover
+    if sys.version_info[0] == 2:  # pragma: no 3.x cover; pragma: no branch
         def __cmp__(self, other):
             raise TypeError('cannot compare sets using cmp()')
 

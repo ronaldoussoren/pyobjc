@@ -217,7 +217,7 @@ def describe_callable_metadata(name, metadata, offset='', ismethod=False):
 
 objc.options._callable_doc = describe_callable
 
-if hasattr(objc.options, '_callable_signature'):  # pragma: no branch
+if hasattr(objc.options, '_callable_signature'):  # pragma: no branch; pragma: no 2.x cover
     import inspect
 
     def callable_signature(callable):

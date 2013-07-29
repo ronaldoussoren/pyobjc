@@ -140,6 +140,7 @@ OBJECT_PROP(_nscoding_encoder, PyObjC_Encoder, NULL)
 OBJECT_PROP(_nscoding_decoder, PyObjC_Decoder, NULL)
 OBJECT_PROP(_copy, PyObjC_CopyFunc, NULL)
 OBJECT_PROP(_class_extender, PyObjC_ClassExtender, NULL)
+OBJECT_PROP(_make_bundleForClass, PyObjC_MakeBundleForClass, NULL)
 OBJECT_PROP(_nsnumber_wrapper, PyObjC_NSNumberWrapper, NULL)
 OBJECT_PROP(_callable_doc, PyObjC_CallableDocFunction, NULL)
 #if PY_VERSION_HEX >= 0x03030000
@@ -167,6 +168,7 @@ static PyGetSetDef object_getset[] = {
     GETSET(_mapping_count,          "Private counter for noticing metadata updates"),
     GETSET(_copy,                   "Private helper function for copy support"),
     GETSET(_class_extender,         "Private helper function for enriching class APIs"),
+    GETSET(_make_bundleForClass,    "Private helper function for enriching class APIs"),
     GETSET(_nsnumber_wrapper,       "Private type used for proxying NSNumber instances"),
     GETSET(_callable_doc,           "Private helper function for generating __doc__ for selectors"),
     GETSET(_mapping_types,          "Private list of types that proxied as instances of NSMutableDictionary"),

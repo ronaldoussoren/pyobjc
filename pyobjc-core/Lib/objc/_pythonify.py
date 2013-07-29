@@ -46,7 +46,7 @@ class OC_PythonLong(base_class):
         return (base_class, (base_class(self),))
 
 
-if sys.version_info[0] == 2:  # pragma: no 3.x cover
+if sys.version_info[0] == 2:  # pragma: no 3.x cover; pragma: no branch
     class OC_PythonInt(int):
         __slots__=('__pyobjc_object__',)
 

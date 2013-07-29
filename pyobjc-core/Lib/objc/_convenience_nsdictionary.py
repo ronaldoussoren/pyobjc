@@ -339,14 +339,17 @@ else:  # pragma: no 3.x cover
 
 
     def nsdict_iterkeys(aDict):
-        return iter(self.keyEnumerator())
+        return iter(aDict.keyEnumerator())
 
     def nsdict_itervalues(aDict):
-        return iter(self.objectEnumerator())
+        return iter(aDict.objectEnumerator())
 
     def nsdict_iteritems(aDict):
         for key in aDict:
             yield (key, aDict[key])
+
+    def nsdict_old_items(aDict):
+        return [(key, aDict[key]) for key in aDict]
 
     addConvenienceForClass('NSDictionary', (
         ('__cmp__', nsdict__cmp__),
@@ -355,7 +358,7 @@ else:  # pragma: no 3.x cover
         ('viewvalues', lambda self: nsdict_values(self)),
         ('viewitems', lambda self: nsdict_items(self)),
         ('keys', lambda self: self.allKeys()),
-        ('items', lambda self: dictItems(self)),
+        ('items', nsdict_old_items),
         ('values', lambda self: self.allValues()),
         ('iterkeys', nsdict_iterkeys),
         ('iteritems', nsdict_iteritems),

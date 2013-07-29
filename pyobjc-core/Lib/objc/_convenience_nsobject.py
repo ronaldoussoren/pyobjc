@@ -12,7 +12,7 @@ from objc._convenience import addConvenienceForClass
 
 if sys.version_info[0] == 2:  # pragma: no 3.x cover
     STR_TYPES=(str, unicode)
-else:
+else:  # pragma: no 2.x cover
     STR_TYPES=str
 
 
@@ -100,19 +100,13 @@ addConvenienceForClass("NSObject", (
     ('_',   property(kvc)),
 ))
 
-if sys.version_info[0] == 2:  # pragma: no 3.x cover
+if sys.version_info[0] == 2:  # pragma: no 3.x cover; pragma: no branch
     def nsobject__cmp__(self, other):
         try:
             func = self.compare_
 
         except AttributeError:
             return NotImplemented
-            if self < other:
-                return -1
-            elif self > other:
-                return 1
-            else:
-                return 0
 
         else:
             return func(other)

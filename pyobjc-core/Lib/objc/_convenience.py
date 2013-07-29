@@ -16,6 +16,7 @@ CLASS_ABC = {}
 def register(f):
     options._class_extender = f
 
+# XXX: interface is too wide (super_class is not needed, can pass actual class)
 @register
 def add_convenience_methods(super_class, name, type_dict):
     """
@@ -27,28 +28,29 @@ def add_convenience_methods(super_class, name, type_dict):
 
     Matching entries from both mappings are added to the 'type_dict'.
     """
-    if type_dict.get('__objc_python_subclass__'):
-        if 'bundleForClass' not in type_dict:
-            cb = currentBundle()
-            def bundleForClass(cls):
-                return cb
-            type_dict['bundleForClass'] = selector(
-                bundleForClass, isClassMethod=True)
-
     for nm, value in CLASS_METHODS.get(name, ()):
         type_dict[nm] = value
 
     # XXX: Work is needed to deal with ABCs (class isn't defined yet)
 
 
+def register(f):
+    options._make_bundleForClass = f
+
+@register
+def makeBundleForClass():
+    cb = currentBundle()
+    def bundleForClass(cls):
+        return cb
+    return selector(bundleForClass, isClassMethod=True)
+
 def addConvenienceForClass(classname, methods):
     """
     Add the list with methods to the class with the specified name
     """
-    if classname in CLASS_METHODS:
+    try:
         CLASS_METHODS[classname] += tuple(methods)
-
-    else:
+    except KeyError:
         CLASS_METHODS[classname] = tuple(methods)
 
     options._mapping_count += 1

@@ -163,6 +163,13 @@ class MutableArrayTest (list_tests.CommonTest):
         self.assertRaises(ValueError, operator.setitem, a, slice(None, None,2), a)
         self.assertRaises(ValueError, operator.setitem, a, slice(None, None,2), l)
 
+    def test_pyobjc_clear(self):
+        a = NSMutableArray([1,2,3])
+        self.assertEqual(len(a), 3)
+
+        a.clear()
+        self.assertEqual(len(a), 0)
+
     def test_pyobjc_radd(self):
         a = NSArray([1,2])
 

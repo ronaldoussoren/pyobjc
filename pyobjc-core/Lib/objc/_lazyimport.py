@@ -391,6 +391,7 @@ class ObjCLazyModule (ModuleType):
                 if tollfree is None:
                     v = objc.registerCFSignature(name, type, None, 'NSCFType')
                     self.__dict__[name] = v
+
                 continue
 
             v = objc.registerCFSignature(name, type, func())

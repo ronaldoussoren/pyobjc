@@ -106,6 +106,21 @@ class TestBasicConvenience (TestCase):
         self.assertFalse(o1 >= o3)
         self.assertFalse(o1 > o2)
 
+        if sys.version_info[0] == 2:
+            self.assertEqual(cmp(o1, o2), -1)
+            self.assertEqual(cmp(o2, o3), 0)
+            self.assertEqual(cmp(o2, o1), 1)
+
+            first = objc.lookUpClass('NSObject').alloc().init()
+            second = objc.lookUpClass('NSObject').alloc().init()
+
+            # '__cmp__' returns NotImplemented, what happens
+            # next is not really interesting (but this shoudn't
+            # cause an exception and be consistent).
+            a = cmp(first, second)
+            b = cmp(first, second)
+            self.assertEqual(a, b)
+
 class TestNSDecimalNumber (TestCase):
     def setUp(self):
         self.NSDecimalNumber = objc.lookUpClass('NSDecimalNumber')
@@ -275,23 +290,24 @@ class TestNSDecimalNumber (TestCase):
         self.assertIsInstance(v_o, self.NSDecimalNumber)
 
         # Rounding
-        a_o = self.NSDecimalNumber("15.125")
-        a_c = objc.NSDecimal("15.125")
+        if sys.version_info[0] == 3:
+            a_o = self.NSDecimalNumber("15.125")
+            a_c = objc.NSDecimal("15.125")
 
-        v_o = round(a_o)
-        v_c = round(a_c)
-        self.assertEqual(str(v_o), str(v_c))
-        self.assertIsInstance(v_o, self.NSDecimalNumber)
+            v_o = round(a_o)
+            v_c = round(a_c)
+            self.assertEqual(str(v_o), str(v_c))
+            self.assertIsInstance(v_o, self.NSDecimalNumber)
 
-        v_o = round(a_o, 1)
-        v_c = round(a_c, 1)
-        self.assertEqual(str(v_o), str(v_c))
-        self.assertIsInstance(v_o, self.NSDecimalNumber)
+            v_o = round(a_o, 1)
+            v_c = round(a_c, 1)
+            self.assertEqual(str(v_o), str(v_c))
+            self.assertIsInstance(v_o, self.NSDecimalNumber)
 
-        v_o = round(a_o, -1)
-        v_c = round(a_c, -1)
-        self.assertEqual(str(v_o), str(v_c))
-        self.assertIsInstance(v_o, self.NSDecimalNumber)
+            v_o = round(a_o, -1)
+            v_c = round(a_c, -1)
+            self.assertEqual(str(v_o), str(v_c))
+            self.assertIsInstance(v_o, self.NSDecimalNumber)
 
     def test_compare(self):
         a_o = self.NSDecimalNumber("1.5")

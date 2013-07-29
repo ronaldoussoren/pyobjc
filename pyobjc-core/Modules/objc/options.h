@@ -15,6 +15,7 @@ extern PyObject* PyObjC_Encoder;
 extern PyObject* PyObjC_Decoder;
 extern PyObject* PyObjC_CopyFunc;
 extern PyObject* PyObjC_ClassExtender;
+extern PyObject* PyObjC_MakeBundleForClass;
 extern PyObject* PyObjC_NSNumberWrapper;
 extern PyObject* PyObjC_CallableDocFunction;
 #if PY_VERSION_HEX >= 0x03030000

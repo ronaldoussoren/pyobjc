@@ -20,7 +20,7 @@ if sys.version_info[0] == 2:  # pragma: no 3.x cover
     INT_TYPES = (int, long)
     STR_TYPES = (str, unicode)
 
-else:
+else:  # pragma: no 2.x cover
     INT_TYPES = int
     STR_TYPES = str
 
@@ -335,7 +335,7 @@ if sys.version_info[0] == 2:  # pragma: no 3.x cover
 
         self.sortUsingFunction_context_(sort_func, cmp)
 
-else:
+else:  # pragma: no 2.x cover
     def nsarray_sort(self, key=lambda x: x, reverse=False):
         if reverse:
             def sort_func(a, b, _):
@@ -405,7 +405,7 @@ addConvenienceForClass('NSMutableArray', (
 ))
 
 
-if sys.version_info[0] == 2:  # pragma: no 3.x cover
+if sys.version_info[0] == 2:  # pragma: no 3.x cover; pragma: no branch
     def nsarray__getslice__(self, i, j):
         i = max(i, 0); j = max(j, 0)
         return nsarray__getitem__(self, slice(i, j))

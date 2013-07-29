@@ -345,6 +345,26 @@ class Class1:
 class Class2 (object):
     pass
 
+class Class3:
+    def __init__(self):
+        self.a = None
+        self.b = None
+
+    def __getstate__(self):
+        return (self.a, self.b)
+
+    def __setstate__(self, state):
+        self.a, self.b = state
+
+class Class4:
+    def __init__(self):
+        self.a = None
+        self.b = None
+
+    def __getstate__(self):
+        return {'a': self.a, 'b': self.b, NSString.stringWithString_('c'): self.c}
+
+
 class TestLoadingOlderVersions (TestCase):
     def do_verify(self, path):
         import __main__
@@ -352,6 +372,8 @@ class TestLoadingOlderVersions (TestCase):
         # Ensure that class definitions are present:
         __main__.Class1 = Class1
         __main__.Class2 = Class2
+        __main__.Class3 = Class3
+        __main__.Class4 = Class4
 
         if path.endswith('keyed'):
             archiver = NSKeyedUnarchiver
@@ -366,6 +388,15 @@ class TestLoadingOlderVersions (TestCase):
         o = data.obj
         self.assertEqual(o.a, 42)
         self.assertEqual(o.b, 2.5)
+        self.assertIsInstance(data.o3, Class3)
+        self.assertIsInstance(data.o4, Class4)
+        o = data.o3
+        self.assertEqual(o.a, 42)
+        self.assertEqual(o.b, 21)
+        o = data.o4
+        self.assertEqual(o.a, 'A')
+        self.assertEqual(o.b, 'B')
+
 
     for fname in os.listdir(os.path.join(MYDIR, 'archives')):
         def test(self, fname=fname):

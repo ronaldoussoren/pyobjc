@@ -212,7 +212,6 @@ PyDoc_STRVAR(class_doc,
 "of the created class."
 );
 
-static int add_convenience_methods(Class cls, PyObject* type_dict);
 static int update_convenience_methods(PyObject* cls);
 
 /*
@@ -900,8 +899,21 @@ static    char* keywords[] = { "name", "bases", "dict", "protocols", NULL };
         return NULL;
     }
 
-    if (objc_class != nil) {
-        if (add_convenience_methods(objc_class, dict) < 0) {
+    if (PyObjC_MakeBundleForClass != NULL) {
+        PyObject* m = PyObject_CallObject(PyObjC_MakeBundleForClass, NULL);
+        if (m == NULL) {
+            (void)PyObjCClass_UnbuildClass(objc_class);
+            Py_DECREF(old_dict);
+            Py_DECREF(protocols);
+            Py_DECREF(real_bases);
+            Py_DECREF(metadict);
+            Py_DECREF(hiddenSelectors);
+            Py_DECREF(hiddenClassSelectors);
+            return NULL;
+        }
+        r = PyDict_SetItemString(dict, "bundleForClass", m);
+        Py_DECREF(m);
+        if (r == -1) {
             (void)PyObjCClass_UnbuildClass(objc_class);
             Py_DECREF(old_dict);
             Py_DECREF(protocols);
@@ -912,8 +924,6 @@ static    char* keywords[] = { "name", "bases", "dict", "protocols", NULL };
             return NULL;
         }
     }
-
-
 
     PyTypeObject* metatype;
     if (objc_class != nil) {
@@ -1040,6 +1050,8 @@ static    char* keywords[] = { "name", "bases", "dict", "protocols", NULL };
 
     Py_DECREF(keys);
     Py_DECREF(old_dict);
+
+    PyObjCClass_CheckMethodList(res, 1);
 
     /* This is an "extra" ref */
     Py_INCREF(res);
@@ -2804,70 +2816,6 @@ PyObjCClass_HasPythonImplementation(PyObject* cls)
     return info->hasPythonImpl;
 }
 
-
-/*!
- * @function add_convenience_methods
- * @abstract Add the convenience methods for a class wrapper
- * @param cls  An Objective-C class wrapper
- * @param type_dict the __dict__ for the new class
- * @result Returns -1 on error, 0 on success
- * @discussion
- *     This function calls the PyObjC_ClassExtender function (if one is
- *     registered) and then updates the class __dict__.
- */
-static int
-add_convenience_methods(Class cls, PyObject* type_dict)
-{
-    PyObject* super_class;
-    PyObject* name;
-    PyObject* res;
-    PyObject* args;
-
-    if (class_isMetaClass(cls)) {
-        return 0;
-    }
-
-    if (PyObjC_ClassExtender == NULL || cls == nil) return 0;
-
-    if (class_getSuperclass(cls) == nil) {
-        super_class = Py_None;
-        Py_INCREF(super_class);
-
-    } else {
-        super_class = PyObjCClass_New(class_getSuperclass(cls));
-        if (super_class == NULL) {
-            return -1;
-        }
-    }
-
-    name = PyText_FromString(class_getName(cls));
-    if (name == NULL) {
-        Py_DECREF(super_class);
-        return -1;
-    }
-
-    args = PyTuple_New(3);
-    if (args == NULL) {
-        Py_DECREF(super_class);
-        Py_DECREF(name);
-        return -1;
-    }
-
-    PyTuple_SET_ITEM(args, 0, super_class);
-    PyTuple_SET_ITEM(args, 1, name);
-    PyTuple_SET_ITEM(args, 2, type_dict);
-    Py_INCREF(type_dict);
-
-    res = PyObject_CallObject(PyObjC_ClassExtender, args);
-    Py_DECREF(args);
-    if (res == NULL) {
-        return -1;
-    }
-    Py_DECREF(res);
-
-    return 0;
-}
-
 /*!
  * @function update_convenience_methods
  * @abstract Update the convenience methods for a class
@@ -2893,9 +2841,9 @@ update_convenience_methods(PyObject* cls)
     PyObject* args;
     Class     objc_cls;
     PyObject* dict;
-    PyObject* keys;
+    PyObject* k;
     PyObject* v;
-    Py_ssize_t i, len;
+    Py_ssize_t pos;
 
     if (PyObjC_ClassExtender == NULL || cls == NULL) return 0;
 
@@ -2922,8 +2870,12 @@ update_convenience_methods(PyObject* cls)
         return -1;
     }
 
+#if 0
     dict = /*PyDict_Copy*/(((PyTypeObject*)cls)->tp_dict);
     Py_INCREF(dict);
+#else
+    dict = PyDict_New();
+#endif
     if (dict == NULL) {
         Py_DECREF(super_class);
         Py_DECREF(name);
@@ -2948,33 +2900,11 @@ update_convenience_methods(PyObject* cls)
         return -1;
     }
     Py_DECREF(res);
-    keys = PyDict_Keys(dict);
-    if (keys == NULL) {
-        Py_DECREF(args);
-        return -1;
-    }
 
-    v = PySequence_Fast(keys, "PyDict_Keys didn't return a sequence");
-    Py_DECREF(keys);
-    if (v == NULL) {
-        return -1;
-    }
-    keys = v;
-
-    len = PySequence_Fast_GET_SIZE(keys);
-    for (i = 0; i < len; i++) {
-        PyObject* k = PySequence_Fast_GET_ITEM(keys, i);
-
-        if (k == NULL) {
-            PyErr_Clear();
-            continue;
-        }
-
+    pos = 0;
+    while (PyDict_Next(dict, &pos, &k, &v)) {
         if (PyUnicode_Check(k)) {
-            if (!PyObjC_is_ascii_prefix(k, "__", 2)) {
-                continue;
-
-            } else if (
+            if (
                     PyObjC_is_ascii_string(k, "__dict__")
                     ||    PyObjC_is_ascii_string(k, "__bases__")
                     ||    PyObjC_is_ascii_string(k, "__slots__")
@@ -2987,10 +2917,6 @@ update_convenience_methods(PyObject* cls)
 
         } else if (PyString_Check(k)) {
             char* n = PyString_AS_STRING(k);
-
-            if (n[0] != '_' || n[1] != '_') {
-                continue;
-            }
 
             if (       strcmp(n, "__dict__") == 0
                 || strcmp(n, "__bases__") == 0
@@ -3005,12 +2931,6 @@ update_convenience_methods(PyObject* cls)
             continue;
         }
 
-        v = PyDict_GetItem(dict, k);
-        if (v == NULL) {
-            PyErr_Clear();
-            continue;
-        }
-
         if (PyType_Type.tp_setattro(cls, k, v) == -1) {
             PyErr_Print();
             PyErr_Clear();
@@ -3018,7 +2938,6 @@ update_convenience_methods(PyObject* cls)
         }
     }
 
-    Py_DECREF(keys);
     Py_DECREF(args);
 
     return 0;

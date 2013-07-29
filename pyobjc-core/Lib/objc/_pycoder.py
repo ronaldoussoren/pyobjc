@@ -28,12 +28,14 @@ if sys.version_info[0] == 2:  # pragma: no 3.x cover
     def intern(value):
         if isinstance(value, objc.pyobjc_unicode):
             return bltin_intern(value.encode('utf-8'))
-        elif isinstance(value, basestr):
+        elif isinstance(value, basestring):
             return bltin_intern(value)
         else:
             return value
 
     def import_module(name):
+        if name == 'copyreg':
+            name = 'copy_reg'
         __import__(name)
         return sys.modules[name]
 
@@ -440,7 +442,20 @@ def load_reduce(coder, setValue):
         args = new_args
         del new_args
 
-    value = func(*args)
+    if sys.version_info[0] == 2 and func == copyreg.__newobj__:  # pragma: no 3.x cover
+        try:
+            value = func(*args)
+        except AttributeError:
+            # copyreg.__newobj__ failed, almost certainly because
+            # there is __new__ method. This happens when a class
+            # is serialized in Python 3 and read back in Python 2
+            # as a classic class.
+            cls = args[0]
+            args = args[1:]
+            value = cls(*args)
+
+    else:
+        value = func(*args)
 
     # We now have the object, but haven't set the correct
     # state yet.  Tell the bridge about this value right

@@ -2,6 +2,7 @@
 branch = True
 
 [report]
+include = Lib/*
 exclude_lines =
     pragma: no 3.x cover
     pragma: no cover

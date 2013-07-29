@@ -25,17 +25,13 @@ def nsdata__new__(cls, value=None):
     else:
         return cls.dataWithBytes_length_(value, len(value))
 
-if sys.version_info[:2] <= (2,6):  # pragma: no 3.x cover
-    def nsdata__str__(self):
-        return self.bytes()[:]
-
-elif sys.version_info[0] == 2:  # pragma: no 3.x cover
+if sys.version_info[0] == 2:  # pragma: no 3.x cover
     def nsdata__str__(self):
         if len(self) == 0:
             return str(b"")
         return str(self.bytes().tobytes())
 
-else:
+else:  # pragma: no 2.x cover
     def nsdata__str__(self):
         if len(self) == 0:
             return str(b"")
@@ -45,7 +41,7 @@ else:
         return bytes(self.bytes())
 
 addConvenienceForClass('NSData', (
-    ('__new__', nsdata__new__),
+    ('__new__', staticmethod(nsdata__new__)),
     ('__len__', lambda self: self.length()),
     ('__str__', nsdata__str__),
 ))

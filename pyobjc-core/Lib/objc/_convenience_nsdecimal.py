@@ -53,7 +53,6 @@ addConvenienceForClass('NSDecimalNumber', (
     ('__neg__',         lambda self: NSDecimalNumber(operator.neg(NSDecimal(self)))),
     ('__pos__',         lambda self: NSDecimalNumber(operator.pos(NSDecimal(self)))),
     ('__abs__',         lambda self: NSDecimalNumber(abs(NSDecimal(self)))),
-    ('__round__',       lambda self, n=0 : NSDecimalNumber(round(NSDecimal(self), n))),
     ('__lt__',         lambda self, other: (NSDecimal(self) < other)),
     ('__gt__',         lambda self, other: (NSDecimal(self) > other)),
     ('__le__',         lambda self, other: (NSDecimal(self) <= other)),
@@ -64,7 +63,12 @@ addConvenienceForClass('NSDecimalNumber', (
 
 if sys.version_info[0] == 2:  # pragma: no 3.x cover
     addConvenienceForClass('NSDecimalNumber', (
-        ('__div__',         lambda self, other: operator.div(NSDecimalNumber(NSDecimal(self), other))),
-        ('__rdiv__',        lambda self, other: operator.div(NSDecimalNumber(other, NSDecimal(self)))),
+        ('__div__',         lambda self, other: NSDecimalNumber(operator.div(NSDecimal(self), other))),
+        ('__rdiv__',        lambda self, other: NSDecimalNumber(operator.div(other, NSDecimal(self)))),
         ('__cmp__',         lambda self, other: cmp(NSDecimalNumber(NSDecimal(self), other))),
+    ))
+
+else:  # pragma: no 2.x cover
+    addConvenienceForClass('NSDecimalNumber', (
+        ('__round__',       lambda self, n=0 : NSDecimalNumber(round(NSDecimal(self), n))),
     ))

@@ -55,6 +55,7 @@ TEST_XML=b"""\
   <string_constant name='strconst4' nsstring='true' /><!-- ignore -->
   <string_constant name='strconst5' value64='string five' /><!-- ignore 32-bit -->
   <string_constant name='strconst6' value64='string five unicode' nsstring='true' /><!-- ignore 32-bit -->
+  <string_constant name='strconst7' value='zee&#0235;n' nsstring='true' />
   <string_constant /><!-- ignore -->
   <enum name='enum1' value='1' />
   <enum name='enum2' value='3' value64='4'/>
@@ -519,6 +520,7 @@ class TestBridgeSupportParser (TestCase):
             'strconst2': b'string constant 2' if sys.maxsize < 2**32 else b'string constant two',
             'strconst1u': b'string constant1 unicode'.decode('ascii'),
             'strconst2u': b'string constant 2 unicode'.decode('ascii') if sys.maxsize < 2**32 else b'string constant two unicode'.decode('ascii'),
+            'strconst7': b'zee\xebn'.decode('latin1'),
             'enum1': 1,
             'enum2': 3 if sys.maxsize < 2**32 else 4,
             'enum3': 5 if sys.byteorder == 'little' else 6,
