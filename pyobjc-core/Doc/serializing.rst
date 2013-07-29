@@ -20,20 +20,19 @@ Cocoa's "NSKeyedArchiver" or "NSArchiver" classes (and
 preferably the former). At this time it is not possible to
 encode Cocoa objects using the :mod:`pickle` module.
 
-.. todo::
-
-   Explain why it is not possible to pickle Cocoa objects.
-
 Pickling support for Cocoa objects
 ----------------------------------
 
 It is currently not possible to serialize a arbitrary Cocoa
 object into a :mod:`pickle` archive due to slight
-incompatibilities in the overal serialization mechanism.
+incompatibilities in the overal serialization mechanism when
+dealing with possibly circular data structures.
 
 It is possible to pickle a Python subclass of a Cocoa
 class when that Python class implements the "__reduce__"
-hook.
+for "__reduce_ex__" hook (as documented in the documentation
+for the :mod:`pickle` module).
+
 
 NSCoding support for Python objects
 -----------------------------------
@@ -57,21 +56,30 @@ implement the NSCoding protocol, that is the subclass must implement
 "initWithCoder:" and "encodeWithCoder:" to serialize the object
 state.
 
+The serialization of archives with only builtin Python types and Cocoa
+objects is compatible with archiving the corresponding Cocoa objects.
+Because of this, these archives (both normal and keyed) can be read
+back by Objective-C programs, which means such archives could be used
+for inter-process communication. However, keep in mind that archives
+can contain arbitrary objects and reading back archives might not
+be secure when the other process cannot be trusted.
+
 .. note::
 
    In Mac OS X 10.8, an likely other OSX releases as well, the
    Cocoa collection classes cannot properly archive and unarchive
-   object graphs with cycles between collections.
-
-   Because of this serializing the graph below with an NSArchiver
-   will result in a grabled datastructure when read back. The
-   same will be true when archiving with NSKeyedArchiver and
-   reading the archive back in pure Objective-C.
+   object graphs with cycles between collections (like the
+   code below).
 
    .. sourcecode:: python
 
       a = []
       a.append(a)
+
+   Because of this serializing the graph below with an NSArchiver
+   will result in a grabled datastructure when read back. The
+   same will be true when archiving with NSKeyedArchiver and
+   reading the archive back in pure Objective-C.
 
    This is an unfortunate limitation in Cocoa that PyObjC cannot
    paper over.
@@ -83,7 +91,11 @@ Backward compatibility
 The format used for serializing Python objects has changed a couple
 of times. Because of this it is not always possible to read back
 archives created with a newer version of PyObjC using older versions
-of PyObjC.
+of PyObjC. As of PyObjC 3.0 there is a fairly good test suite for
+the NSCoding support in PyObjC and the intention is to not introduce
+futher backward incompatble changes for keyed archiving, and only
+introduce changes for non-keyed archiver when there are no other
+solutions.
 
 The following table lists the changes in the encoding, with "forward compatible" meaning
 that this version of PyObjC can read older archives, and "backward compatible" meaning that older
@@ -93,9 +105,6 @@ versions of PyObjC can read back newer archives.
   | *Version* | *Backward*  |br|   | *Forward* |br|     | *Notes*                              |
   |           | *compatible*       | *compatbile*       |                                      |
   +===========+====================+====================+======================================+
-  |           |                    |                    | TODO: check C code                   |
-  |           |                    |                    |                                      |
-  +-----------+--------------------+--------------------+--------------------------------------+
   | 2.5       | Yes                | Maybe              | Encoding of pure python objects      |
   |           |                    |                    | other than those with explicit       |
   |           |                    |                    | support in PyObjC was broken for a   |

@@ -20,6 +20,8 @@ to actually load the metadata.
      Loading metadata using compiled files
 
 
+.. metadata-dictionary:
+
 Metadata dictionaries
 ---------------------
 
