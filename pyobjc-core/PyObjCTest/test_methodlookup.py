@@ -3,11 +3,19 @@ import objc
 
 from PyObjCTest.methodlookup import PyObjC_MethodLookup1, PyObjC_MethodLookup2
 
+class TestSuperObject (TestCase):
+    def test_super_type(self):
+        if objc._pep447:
+            self.assertIs(objc.super, super)
+
+        else:
+            self.assertIsSubclass(objc.super, super)
+            self.assertIsNot(objc.super, super)
 
 class TestMethodResolution (TestCase):
     #
     # These are fairly minimal tests of the lazy method resolution mechanism
-    # introduced in PyObjC 3.x. 
+    # introduced in PyObjC 3.x.
 
 
     def test_instance_dir(self):
@@ -60,7 +68,7 @@ class TestMethodResolution (TestCase):
     def test_instance_overloading(self):
         s1 = PyObjC_MethodLookup1.instance3
         s2 = PyObjC_MethodLookup1.instance4
-        
+
         # Overridden in subclass:
         self.assertNotEqual(PyObjC_MethodLookup2.instance3, s1)
 
@@ -76,7 +84,7 @@ class TestMethodResolution (TestCase):
 
         self.assertIn('clsmeth3', type(PyObjC_MethodLookup1).__dict__)
         self.assertIn('clsmeth4', type(PyObjC_MethodLookup1).__dict__)
-        
+
         # Overridden in subclass:
         self.assertEqual(PyObjC_MethodLookup2.clsmeth3.definingClass, PyObjC_MethodLookup2)
         self.assertIn('clsmeth3', type(PyObjC_MethodLookup2).__dict__)
@@ -127,7 +135,7 @@ class TestMethodResolution (TestCase):
         s = PyObjC_MethodLookup1.pyobjc_instanceMethods.both
         self.assertFalse(s.isClassMethod)
         self.assertRaises(AttributeError, getattr, PyObjC_MethodLookup1.pyobjc_instanceMethods, 'clsmeth5')
-        
+
 
 if __name__ == "__main__":
     main()

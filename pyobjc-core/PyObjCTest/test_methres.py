@@ -1,11 +1,18 @@
 from PyObjCTools.TestSupport import *
 
 import objc
+import objc._objc
 
 NSObject = objc.lookUpClass('NSObject')
 NSURL = objc.lookUpClass('NSURL')
 
 class TestMethodResolution (TestCase):
+    def test_super_object(self):
+        if getattr(objc._objc, 'pep447', False):
+            self.assertIs(objc.super, super)
+        else:
+            self.assertIsSubclass(objc.super, super)
+
     def test_loading_categories(self):
         obj = NSObject.alloc().init()
         url = NSURL.alloc().initWithString_("http://www.python.org/")

@@ -2262,6 +2262,107 @@ static PyMethodDef class_methods[] = {
     }
 };
 
+#ifdef Py_HAVE_LOCAL_LOOKUP
+
+static int
+is_dunder_name(PyObject* name)
+{
+    /* FIXME: should check name suffix as well */
+    if (PyUnicode_Check(name)) {
+        if (PyObjC_is_ascii_prefix(name, "__", 2)) {
+            return 1;
+        } else {
+            return 0;
+        }
+
+#if PY_MAJOR_VERSION == 2
+    } else if (PyString_Check(name)) {
+        if (strncmp(PyString_AS_STRING(name) "__", 2) == 0) {
+            return 1;
+        } else {
+            return 0;
+        }
+
+#endif
+    } else {
+        return 1;
+    }
+}
+
+static SEL
+default_selector(PyObject* name)
+{
+#ifndef PyObjC_FAST_UNICODE_ASCII
+    /* XXX: name_bytes */
+    SEL      sel = PyObjCSelector_DefaultSelector(PyBytes_AsString(name_bytes));
+    return sel;
+#else
+    return PyObjCSelector_DefaultSelector(PyObjC_Unicode_Fast_Bytes(name));
+#endif
+}
+
+static PyObject*
+metaclass_locallookup(PyTypeObject* tp, PyObject* name)
+{
+    PyObject* result;
+#ifdef PyObjC_DEBUG
+    if (!PyType_IsSubtype(tp, &PyObjCClass_Type)) {
+        return NULL;
+    }
+#endif /* PyObjC_DEBUG */
+
+    result = PyDict_GetItem(tp->tp_dict, name);
+    if (result != NULL) {
+        Py_INCREF(result);
+        return result;
+    }
+
+    if (is_dunder_name(name)) {
+        return NULL;
+    }
+
+
+    result = PyObjCMetaClass_TryResolveSelector((PyObject*)Py_TYPE(tp), name, default_selector(name));
+    if (result != NULL) {
+        Py_INCREF(result);
+        return result;
+    }
+
+    /* TODO: harder names */
+
+    return NULL;
+}
+
+static PyObject*
+class_locallookup(PyTypeObject* tp, PyObject* name)
+{
+    PyObject* result;
+#ifdef PyObjC_DEBUG
+    if (!PyType_IsSubtype(tp, &PyObjCObject_Type)) {
+        return NULL;
+    }
+#endif /* PyObjC_DEBUG */
+
+    result = PyDict_GetItem(tp->tp_dict, name);
+    if (result != NULL) {
+        Py_INCREF(result);
+        return result;
+    }
+
+    if (is_dunder_name(name)) {
+        return NULL;
+    }
+
+    result = PyObjCClass_TryResolveSelector((PyObject*)tp, name, default_selector(name));
+    if (result != NULL) {
+        Py_INCREF(result);
+        return result;
+    }
+
+    return NULL;
+}
+#endif /* Py_HAVE_LOCALLOOKUP */
+
 /*
  * This is the class for type(NSObject), and is a subclass of type()
  * with an overridden tp_getattro that is used to dynamicly look up
@@ -2276,6 +2377,9 @@ PyTypeObject PyObjCMetaClass_Type = {
     .tp_methods     = metaclass_methods,
     .tp_base        = &PyType_Type,
     .tp_dictoffset  = offsetof(PyTypeObject, tp_dict),
+#ifdef Py_HAVE_LOCAL_LOOKUP
+    .tp_locallookup = metaclass_locallookup,
+#endif /* Py_HAVE_LOCAL_LOOKUP */
 };
 
 
@@ -2300,6 +2404,9 @@ PyTypeObject PyObjCClass_Type = {
     .tp_base        = &PyObjCMetaClass_Type,
     .tp_init        = class_init,
     .tp_new         = class_new,
+#ifdef Py_HAVE_LOCAL_LOOKUP
+    .tp_locallookup = class_locallookup,
+#endif /* Py_HAVE_LOCAL_LOOKUP */
 };
 
 /*

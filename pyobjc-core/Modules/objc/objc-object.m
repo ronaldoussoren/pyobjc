@@ -197,6 +197,221 @@ object_dealloc(PyObject* obj)
     PyErr_Restore(ptype, pvalue, ptraceback);
 }
 
+static int
+object_verify_type(PyObject* obj)
+{
+    /* Check that the Objective-C type of 'obj' hasn't changed */
+
+    id obj_inst = PyObjCObject_GetObject(obj);
+    if (obj_inst == nil) {
+        return 0;
+    }
+
+    if (PyObjCClass_IsCFWrapper(Py_TYPE(obj))) {
+        /* Object is a CoreFoundation type, ISA swiffling doesn't
+         * apply, and the bridge uses different Python types for
+         * the various CF types while those have one of a (very)
+         * small set of Objective-C classes.
+         */
+        return 0;
+    }
+
+    if (PyObjCObject_GetFlags(obj) & PyObjCObject_kMAGIC_COOKIE) {
+        /* A magic cookie object, don't treat this like a normal
+         * object because that might cause havoc.
+         */
+
+    } else {
+        /* Special hack for KVO on MacOS X, when an object is observed it's
+         * ISA is changed by the runtime. We change the python type as well.
+         *
+         * (The same can happen when other code perform ISA swiffling)
+         */
+        PyTypeObject* tp = (PyTypeObject*)PyObjCClass_New(object_getClass(obj_inst));
+
+        if (tp != Py_TYPE(obj)) {
+            PyTypeObject* tmp;
+
+            if (tp->tp_dict == NULL) {
+                if (PyType_Ready(tp) < 0)
+                    Py_DECREF(tp);
+                    return -1;
+            }
+
+            tmp = Py_TYPE(obj);
+            Py_TYPE(obj) = tp;
+            Py_INCREF(tp);
+            Py_DECREF(tmp);
+
+            PyObjCClass_CheckMethodList((PyObject*)tp, 0);
+        }
+        Py_CLEAR(tp);
+    }
+    return 0;
+}
+
+static int
+object_verify_not_nil(PyObject* obj, PyObject* name)
+{
+    if (PyObjCObject_GetObject(obj) == nil) {
+#if PY_MAJOR_VERSION == 2
+        PyErr_Format(PyExc_AttributeError,
+             "cannot access attribute '%.400s' of NIL '%.50s' object",
+             PyString_AS_STRING(name),
+             Py_TYPE(obj)->tp_name);
+#else
+        PyErr_Format(PyExc_AttributeError,
+             "cannot access attribute '%U' of NIL '%.50s' object",
+             name,
+             Py_TYPE(obj)->tp_name);
+#endif
+        return -1;
+    }
+    return 0;
+}
+
+PyObject*
+PyObjCClass_TryResolveSelector(PyObject* base, PyObject* name, SEL sel)
+{
+    Class cls = PyObjCClass_GetClass(base);
+    PyObject* dict = ((PyTypeObject *)base)->tp_dict;
+    Method m = class_getInstanceMethod(cls, sel);
+    if (m) {
+#ifndef PyObjC_FAST_BUT_INEXACT
+        int use = 1;
+        Class sup = class_getSuperclass(cls);
+        if (sup) {
+            Method m_sup = class_getInstanceMethod(sup, sel);
+            if (m_sup == m) {
+                use = 0;
+            }
+        }
+        if (!use) return NULL;
+#endif
+
+        /* Create (unbound) selector */
+        PyObject* result = PyObjCSelector_NewNative(
+                cls, sel, method_getTypeEncoding(m), 0);
+        if (result == NULL) {
+            return NULL;
+        }
+
+        /* add to __dict__ 'cache' */
+        if (PyDict_SetItem(dict, name, result) == -1) {
+            Py_DECREF(result);
+            return NULL;
+        }
+
+        /* and return as a borrowed reference */
+        Py_DECREF(result);
+        return result;
+    }
+    return NULL;
+}
+
+static PyObject**
+_get_dictptr(PyObject* obj)
+{
+    Py_ssize_t dictoffset;
+    id obj_object;
+    dictoffset = PyObjCClass_DictOffset((PyObject*)Py_TYPE(obj));
+    if (dictoffset == 0) return NULL;
+    obj_object = PyObjCObject_GetObject(obj);
+    PyObjC_Assert(obj_object != nil, NULL);
+    return (PyObject**)(((char*)obj_object) + dictoffset);
+}
+
+#ifdef Py_HAVE_LOCAL_LOOKUP
+
+/*
+ * Implementation of object_getattro for Python versions
+ * that implement PEP 447. Most of the PyObjC magic is in
+ * the tp_locallookup logic in the metaclass types.
+ */
+
+static PyObject*
+object_getattro(PyObject* obj, PyObject* name)
+{
+    PyObject* result;
+
+    if (object_verify_not_nil(obj, name) == -1) {
+        return NULL;
+    }
+
+    if (object_verify_type(obj) == -1) {
+        return NULL;
+    }
+
+
+
+    result = PyObject_GenericGetAttr(obj, name);
+
+    if (result == NULL && PyErr_ExceptionMatches(PyExc_AttributeError)) {
+        /* Attribute not found, the object might respond to this
+         * selector anyway, therefore perform one final lookup.
+         */
+        PyObject* ptype, *pvalue, *ptraceback;
+
+        if (!PyObjCObject_IsClassic(obj)) {
+            const char* namestr;
+#ifndef PyObjC_FAST_UNICODE_ASCII
+            PyObject* name_bytes;
+#endif
+
+            PyErr_Fetch(&ptype, &pvalue, &ptraceback);
+
+            if (PyUnicode_Check(name)) {
+#ifndef PyObjC_FAST_UNICODE_ASCII
+                name_bytes = PyUnicode_AsEncodedString(name, NULL, NULL);
+                if (name_bytes == NULL) {
+                    PyErr_Restore(ptype, pvalue, ptraceback);
+                    return NULL;
+                }
+#else
+                if (PyObjC_Unicode_Fast_Bytes(name) == NULL) {
+                    PyErr_Restore(ptype, pvalue, ptraceback);
+                    return NULL;
+                }
+#endif
+
+#if PY_MAJOR_VERSION == 2
+            } else if (PyString_Check(name)) {
+                name_bytes = name; Py_INCREF(name_bytes);
+#endif
+            } else {
+                PyErr_Restore(ptype, pvalue, ptraceback);
+                return NULL;
+            }
+
+#ifndef PyObjC_FAST_UNICODE_ASCII
+            namestr = PyBytes_AsString(name_bytes);
+#else
+            namestr = PyObjC_Unicode_Fast_Bytes(name);
+#endif
+            if (namestr == NULL) {
+                PyErr_Restore(ptype, pvalue, ptraceback);
+                return NULL;
+            }
+
+            result = PyObjCSelector_FindNative(obj, namestr);
+#ifndef PyObjC_FAST_UNICODE_ASCII
+            Py_DECREF(name_bytes)
+#endif
+            if (result != NULL) {
+                Py_DECREF(ptype);
+                Py_DECREF(pvalue);
+                Py_DECREF(ptraceback);
+            } else {
+                PyErr_Restore(ptype, pvalue, ptraceback);
+            }
+        }
+    }
+    return result;
+}
+
+
+#else /* !PY_HAVE_LOCALLOOKUP */
+
 
 static inline PyObject*
 _type_lookup(PyTypeObject* tp, PyObject* name
@@ -354,56 +569,7 @@ _type_lookup_harder(PyTypeObject* tp, PyObject* name
     return descr;
 }
 
-PyObject*
-PyObjCClass_TryResolveSelector(PyObject* base, PyObject* name, SEL sel)
-{
-    Class cls = PyObjCClass_GetClass(base);
-    PyObject* dict = ((PyTypeObject *)base)->tp_dict;
-    Method m = class_getInstanceMethod(cls, sel);
-    if (m) {
-#ifndef PyObjC_FAST_BUT_INEXACT
-        int use = 1;
-        Class sup = class_getSuperclass(cls);
-        if (sup) {
-            Method m_sup = class_getInstanceMethod(sup, sel);
-            if (m_sup == m) {
-                use = 0;
-            }
-        }
-        if (!use) return NULL;
-#endif
 
-        /* Create (unbound) selector */
-        PyObject* result = PyObjCSelector_NewNative(
-                cls, sel, method_getTypeEncoding(m), 0);
-        if (result == NULL) {
-            return NULL;
-        }
-
-        /* add to __dict__ 'cache' */
-        if (PyDict_SetItem(dict, name, result) == -1) {
-            Py_DECREF(result);
-            return NULL;
-        }
-
-        /* and return as a borrowed reference */
-        Py_DECREF(result);
-        return result;
-    }
-    return NULL;
-}
-
-static PyObject**
-_get_dictptr(PyObject* obj)
-{
-    Py_ssize_t dictoffset;
-    id obj_object;
-    dictoffset = PyObjCClass_DictOffset((PyObject*)Py_TYPE(obj));
-    if (dictoffset == 0) return NULL;
-    obj_object = PyObjCObject_GetObject(obj);
-    PyObjC_Assert(obj_object != nil, NULL);
-    return (PyObject**)(((char*)obj_object) + dictoffset);
-}
 
 static PyObject*
 object_getattro(PyObject* obj, PyObject* name)
@@ -413,7 +579,6 @@ object_getattro(PyObject* obj, PyObject* name)
     PyObject *res = NULL;
     descrgetfunc f;
     PyObject** dictptr;
-    id obj_inst;
     const char* namestr;
 #ifndef PyObjC_FAST_UNICODE_ASCII
     PyObject* name_bytes;
@@ -455,57 +620,12 @@ object_getattro(PyObject* obj, PyObject* name)
         return NULL;
     }
 
-    obj_inst = PyObjCObject_GetObject(obj);
-    if (!obj_inst) {
-#if PY_MAJOR_VERSION == 2
-        PyErr_Format(PyExc_AttributeError,
-             "cannot access attribute '%.400s' of NIL '%.50s' object",
-             PyString_AS_STRING(name),
-             Py_TYPE(obj)->tp_name);
-#else
-        PyErr_Format(PyExc_AttributeError,
-             "cannot access attribute '%U' of NIL '%.50s' object",
-             name,
-             Py_TYPE(obj)->tp_name);
-#endif
+    if (object_verify_not_nil(obj, name) == -1) {
         goto done;
     }
 
-    if (PyObjCObject_GetFlags(obj) & PyObjCObject_kMAGIC_COOKIE) {
-        /* A magic cookie object, don't treat this like a normal
-         * object because that might cause havoc.
-         */
-
-    } else {
-        /* Special hack for KVO on MacOS X, when an object is observed it's
-         * ISA is changed by the runtime. We change the python type as well.
-         */
-        tp = (PyTypeObject*)PyObjCClass_New(object_getClass(obj_inst));
-
-        descr = NULL;
-
-        if (tp != Py_TYPE(obj) && !PyObjCClass_IsCFWrapper(Py_TYPE(obj))) {
-            /* Workaround for KVO implementation feature */
-            PyObject* dict;
-            PyTypeObject* tmp;
-
-            if (tp->tp_dict == NULL) {
-                if (PyType_Ready(tp) < 0)
-                    goto done;
-            }
-
-            tmp = Py_TYPE(obj);
-            Py_TYPE(obj) = tp;
-            Py_INCREF(tp);
-            Py_DECREF(tmp);
-
-            PyObjCClass_CheckMethodList((PyObject*)tp, 0);
-            dict = tp->tp_dict;
-
-            PyObjC_Assert(dict && PyDict_Check(dict), NULL);
-            descr = PyDict_GetItem(dict, name);
-        }
-        Py_CLEAR(tp);
+    if (object_verify_type(obj) == -1) {
+        goto done;
     }
 
     tp = Py_TYPE(obj);
@@ -665,7 +785,65 @@ done:
     return res;
 }
 
+#endif /* !PY_HAVE_LOCALLOOKUP */
 
+#ifdef Py_HAVE_LOCAL_LOOKUP
+static int
+object_setattro(PyObject *obj, PyObject *name, PyObject *value)
+{
+    int result;
+    NSString* obj_name = nil;
+
+    if (object_verify_not_nil(obj, name) == -1) {
+        return -1;
+    }
+
+    if (((PyObjCObject*)obj)->objc_dict == NULL) {
+        PyObject** ptr_dict = _get_dictptr(obj);
+        if (ptr_dict != NULL) {
+            ((PyObjCObject*)obj)->objc_dict = *ptr_dict = PyDict_New();
+            if (((PyObjCObject*)obj)->objc_dict == NULL) {
+                return -1;
+            }
+        }
+    }
+
+
+    if (((PyObjCClassObject*)Py_TYPE(obj))->useKVO) {
+        if ((PyObjCObject_GetFlags(obj) & PyObjCObject_kUNINITIALIZED) == 0) {
+            if (!PyObjC_is_ascii_prefix(name, "_", 1)) {
+                if (depythonify_c_value("@", name, &obj_name) == -1) {
+                    PyErr_Clear();
+                } else {
+                    NS_DURING
+                        [PyObjCObject_GetObject(obj) willChangeValueForKey:obj_name];
+                    NS_HANDLER
+                        PyObjCErr_FromObjC(localException);
+                    NS_ENDHANDLER
+                    if (PyErr_Occurred()) {
+                        return -1;
+                    }
+                }
+            }
+        }
+    }
+
+    result = PyObject_GenericSetAttr(obj, name, value);
+
+    if (obj_name) {
+        NS_DURING
+            [PyObjCObject_GetObject(obj) didChangeValueForKey:obj_name];
+        NS_HANDLER
+            PyObjCErr_FromObjC(localException);
+        NS_ENDHANDLER
+        if (PyErr_Occurred()) {
+            return -1;
+        }
+    }
+    return result;
+}
+
+#else /* !PY_HAVE_LOCALLOOKUP */
 static int
 object_setattro(PyObject *obj, PyObject *name, PyObject *value)
 {
@@ -700,19 +878,7 @@ object_setattro(PyObject *obj, PyObject *name, PyObject *value)
         return -1;
     }
 
-    obj_inst = PyObjCObject_GetObject(obj);
-    if (obj_inst == nil) {
-        PyErr_Format(PyExc_AttributeError,
-             "Cannot set '%s.400s' on NIL '%.50s' object",
-#ifndef PyObjC_FAST_UNICODE_ASCII
-             PyBytes_AS_STRING(name_bytes),
-#else
-             PyObjC_Unicode_Fast_Bytes(name),
-#endif
-             tp->tp_name);
-#ifndef PyObjC_FAST_UNICODE_ASCII
-        Py_DECREF(name_bytes);
-#endif
+    if (object_verify_not_nil(obj, name) == -1) {
         return -1;
     }
 
@@ -835,6 +1001,7 @@ object_setattro(PyObject *obj, PyObject *name, PyObject *value)
 #endif
     return res;
 }
+#endif /* !PY_HAVE_LOCALLOOKUP */
 
 PyDoc_STRVAR(objc_get_real_class_doc, "Return the current ISA of the object");
 
@@ -1149,6 +1316,9 @@ PyObjCClassObject PyObjCObject_Type = {
             .tp_alloc       = PyType_GenericAlloc,
             .tp_new         = object_new,
             .tp_del         = (destructor)object_del,
+#ifdef Py_HAVE_LOCAL_LOOKUP
+            .tp_dictoffset  = offsetof(PyObjCObject, objc_dict),
+#endif /* Py_HAVE_LOCALLOOKUP */
         },
     }
 };
@@ -1178,6 +1348,16 @@ _PyObjCObject_NewDeallocHelper(id objc_object)
     PyObjCClass_CheckMethodList((PyObject*)Py_TYPE(res), 1);
 
     ((PyObjCObject*)res)->objc_object = objc_object;
+
+#ifdef Py_HAVE_LOCAL_LOOKUP
+    PyObject** dict_ptr = _get_dictptr(res);
+    if (dict_ptr != NULL) {
+        ((PyObjCObject*)res)->objc_dict = *dict_ptr;
+    } else {
+        ((PyObjCObject*)res)->objc_dict = NULL;
+    }
+#endif /* Py_HAVe_LOCAL_LOOKUP */
+
     ((PyObjCObject*)res)->flags = PyObjCObject_kDEALLOC_HELPER;
     return res;
 }
@@ -1254,6 +1434,14 @@ PyObjCObject_New(id objc_object, int flags, int retain)
     PyObjCClass_CheckMethodList((PyObject*)Py_TYPE(res), 1);
 
     ((PyObjCObject*)res)->objc_object = objc_object;
+#ifdef Py_HAVE_LOCAL_LOOKUP
+    PyObject** dict_ptr = _get_dictptr(res);
+    if (dict_ptr != NULL) {
+        ((PyObjCObject*)res)->objc_dict = *dict_ptr;
+    } else {
+        ((PyObjCObject*)res)->objc_dict = NULL;
+    }
+#endif /* Py_HAVe_LOCAL_LOOKUP */
     ((PyObjCObject*)res)->flags = flags;
 
     if (flags & PyObjCObject_kBLOCK) {

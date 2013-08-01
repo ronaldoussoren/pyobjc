@@ -1,12 +1,29 @@
 Support for ``FSRef`` and ``FSSpec``
 ====================================
 
-PyObjC has its own wrappers for the types ``FSRef`` and ``FSSpec``, and also
-supports the wrappers for these types in ``Carbon.File``.
+.. py:currentmodule:: objc
 
-.. class:: objc.FSRef
+PyObjC has its own wrappers for the types ``FSRef`` and ``FSSpec``, and also
+supports the wrappers for these types in ``Carbon.File``. The wrappers in
+
+.. note::
+
+   The wrappers for these types in ``Carbon.File`` should not be used,
+   that module is not available in Python 3 and has been unmaintained
+   in Python 2.x with the introduction of Mac OS X.
+
+   The types in this document are fully supported, and will be supported
+   as long as Mac OS X supports these types.
+
+.. class:: FSRef
 
     This type represents an opaque ``FSRef`` structure.
+
+    .. note::
+
+       All API's using the FSRef type are deprecated by Apple as of Mac OS X 10.8,
+       for most of those APIs there are alternate APIs that use URL objects
+       (:c:type:`NSURL` or :c:type:`CFURL`).
 
     New instances are created using the ``from_pathname`` method:
 
@@ -37,21 +54,16 @@ supports the wrappers for these types in ``Carbon.File``.
           This method is only available when ``Carbon`` support is
           enabled in the Python build.
 
-    .. note:: ``Carbon.File.FSRef`` instances can be used as the argument
-       of functions that have an ``FSRef`` structure as one of their
-       arguments.
 
-
-    .. note::
-
-       All API's using the FSRef type are deprecated by Apple as of Mac OS X 10.8,
-       for most of those APIs there are alternate APIs that use URL objects
-       (:c:type:`NSURL` or :c:type:`CFURL`).
-
-.. class:: objc.FSSpec
+.. class:: FSSpec
 
     This type represents an opaque ``FSSpec`` structure. It is not possible
     to create ``FSSpec`` instances in Python code.
+
+    .. note::
+
+       "FSSpec" is a deprecated type in Apple's APIs. The type is not
+       availble for 64-bit code, and shouldn't be used for new development.
 
     Instances of ``objc.FSSpec`` are opaque and don't provide access to
     specific fields in the structure. The following methods and properties
@@ -59,24 +71,13 @@ supports the wrappers for these types in ``Carbon.File``.
 
     .. attribute:: aref.data
 
-        A bytestring containing the value of the ``FSRef`` object.
+        A bytestring containing the value of the ``FSSpec`` object.
 
     .. method:: aref.as_carbon
 
-        Returns a ``Carbon.File.FSRef`` instance for the ``FSRef`` object.
+        Returns a ``Carbon.File.FSSpec`` instance for the ``FSSpec`` object.
 
         ..note::
 
           This method is only available when ``Carbon`` support is
           enabled in the Python build.
-
-    .. note::
-
-       ``Carbon.File.FSSpec`` instances can be used as the argument
-       of functions that have an ``FSSpec`` structure as one of their
-       arguments.
-
-    .. note::
-
-       "FSSpec" is a deprecated type in Apple's APIs. The type is not
-       availble for 64-bit code, and shouldn't be used for new development.

@@ -10,6 +10,8 @@
 
 #include "pyobjc.h"
 
+#ifndef Py_HAVE_LOCAL_LOOKUP
+
 
 /*
  * NOTE: This is a minor tweak of Python 2.5's super_getattro and is a rather
@@ -198,3 +200,6 @@ PyTypeObject PyObjCSuper_Type = {
     .tp_new         = PyType_GenericNew,
     .tp_free        = PyObject_GC_Del,
 };
+
+
+#endif /* !Py_HAVE_LOCAL_LOOKUP */

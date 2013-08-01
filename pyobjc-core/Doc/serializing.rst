@@ -56,14 +56,6 @@ implement the NSCoding protocol, that is the subclass must implement
 "initWithCoder:" and "encodeWithCoder:" to serialize the object
 state.
 
-The serialization of archives with only builtin Python types and Cocoa
-objects is compatible with archiving the corresponding Cocoa objects.
-Because of this, these archives (both normal and keyed) can be read
-back by Objective-C programs, which means such archives could be used
-for inter-process communication. However, keep in mind that archives
-can contain arbitrary objects and reading back archives might not
-be secure when the other process cannot be trusted.
-
 .. note::
 
    In Mac OS X 10.8, an likely other OSX releases as well, the
@@ -176,5 +168,4 @@ a way that they can be read back by pure Objective-C programs:
 
 * Instances of :class:`bytes`, but only for Python 3
 
-* Instances of Cocoa objects that implement the NSCoding protocol, both for
-  "native" classes and classes implemented in Python.
+* Instances of Cocoa objects that implement the NSCoding protocol.

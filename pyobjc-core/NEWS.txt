@@ -55,7 +55,7 @@ Version 3.0
     most recent SDK available.
 
 * The lazy importer has smarter calculation of the ``__all__`` attribute,
-  which should speed up 'from Cocoa import *'.
+  which should speed up 'from Cocoa import \*'.
 
 * BUGFIX: using a method definition with only ``*args`` and ``**kwds`` used
   to crash the interpreter, the now once again raise a TypeError exception.
@@ -187,7 +187,7 @@ Version 3.0
 * The framework wrappers no longer export a "protocols" submodule. Those submodules were deprecated in
   2.4 and did not contain information that is usefull for users of PyObjC.
 
-* Dropped the *objc.runtime" attribute (which was deprecated in PyObjC 2.0)
+* Dropped the "objc.runtime" attribute (which was deprecated in PyObjC 2.0)
 
 * Dropped depcreated APIs *objc.pluginBundle*, *objc.registerPlugin*. Py2app has used a
   different mechanism for years now.
@@ -221,7 +221,7 @@ Version 3.0
 * Bugfix: objc.NSDecimal(2.5) works with python 3 (caused a confusing
   exception due to buggy code before).
 
-* Bugfix: the support for :func:`round <__builtin__.round>` for :type:`objc.NSDecimal`
+* Bugfix: the support for :func:`round <__builtin__.round>` for :class:`objc.NSDecimal`
   always rounded down, instead of using the normal rounding rules used by other
   methods.
 
@@ -334,7 +334,7 @@ Version 3.0
   anymore.
 
 * Removed +[OC_PythonObject setVersion:encoder:decoder:],
- +[OC_PythonObject pythonifyStructTable], +[OC_PythonObject depythonifyTable].
+  +[OC_PythonObject pythonifyStructTable], +[OC_PythonObject depythonifyTable].
 
  All were private methods used by the core bridge and are no longer necessary.
 
@@ -504,7 +504,7 @@ Version 2.5.1
   python code.
 
 - Opaque pointer types now can be constructed with a "c_void_p" keyword
-  argument that contains a :type:`ctypes.c_void_p` value for the pointer.
+  argument that contains a :class:`ctypes.c_void_p` value for the pointer.
 
   This is the reverse of the *__c_void_p__()* method that was added
   earlier.

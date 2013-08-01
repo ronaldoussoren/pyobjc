@@ -2117,6 +2117,7 @@ PyObjC_MODULE_INIT(_objc)
         PyObjC_INITERROR();
     }
 
+#ifndef Py_HAVE_LOCAL_LOOKUP
     PyObjCSuper_Type.tp_doc = PySuper_Type.tp_doc;
     PyObjCSuper_Type.tp_init = PySuper_Type.tp_init;
     PyObjCSuper_Type.tp_alloc = PySuper_Type.tp_alloc;
@@ -2127,6 +2128,7 @@ PyObjC_MODULE_INIT(_objc)
     if (PyType_Ready(&PyObjCSuper_Type) < 0) {
         PyObjC_INITERROR();
     }
+#endif /* !Py_HAVE_LOCAL_LOOKUP */
 
 #if PyObjC_BUILD_RELEASE >= 1007
     if (PyType_Ready(&PyObjCWeakRef_Type) < 0) {
@@ -2209,9 +2211,20 @@ PyObjC_MODULE_INIT(_objc)
     if (PyDict_SetItemString(d, "IMP", (PyObject*)&PyObjCIMP_Type) < 0) {
         PyObjC_INITERROR();
     }
+
+#ifndef Py_HAVE_LOCAL_LOOKUP
     if (PyDict_SetItemString(d, "super", (PyObject*)&PyObjCSuper_Type) < 0) {
         PyObjC_INITERROR();
     }
+#else /* Py_HAVE_LOCAL_LOOKUP */
+    if (PyDict_SetItemString(d, "super", (PyObject*)&PySuper_Type) < 0) {
+        PyObjC_INITERROR();
+    }
+    if (PyDict_SetItemString(d, "_pep447", Py_True) < 0) {
+        PyObjC_INITERROR();
+    }
+#endif /* Py_HAVE_LOCAL_LOOKUP */
+
 
 #if PyObjC_BUILD_RELEASE >= 1007
     if (objc_loadWeak != NULL) {
