@@ -13,7 +13,7 @@
 #include <dlfcn.h>
 
 static CFBundleRef
-NSBundle2CFBundle(NSBundle* bundle)
+CreateCFBundleFromNSBundle(NSBundle* bundle)
 {
     CFURLRef bundleURL;
 
@@ -43,7 +43,7 @@ static char* keywords[] = { "bundle", "module_globals", "typeid", "name", "skip_
     }
 
     PyObjC_DURING
-        cfBundle = NSBundle2CFBundle(bundle);
+        cfBundle = CreateCFBundleFromNSBundle(bundle);
 
     PyObjC_HANDLER
         PyObjCErr_FromObjC(localException);
@@ -112,7 +112,7 @@ static char* keywords[] = { "bundle", "module_globals", "variableInfo", "skip_un
     }
 
     PyObjC_DURING
-        cfBundle = NSBundle2CFBundle(bundle);
+        cfBundle = CreateCFBundleFromNSBundle(bundle);
 
     PyObjC_HANDLER
         PyObjCErr_FromObjC(localException);
@@ -221,7 +221,7 @@ static char* keywords[] = { "bundle", "module_globals", "functionInfo", "skip_un
         cfBundle = NULL;
     } else {
         PyObjC_DURING
-            cfBundle = NSBundle2CFBundle(bundle);
+            cfBundle = CreateCFBundleFromNSBundle(bundle);
 
         PyObjC_HANDLER
             PyObjCErr_FromObjC(localException);
