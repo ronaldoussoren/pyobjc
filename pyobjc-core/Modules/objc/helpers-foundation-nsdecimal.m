@@ -993,6 +993,11 @@ imp_NSDecimalNumber_decimalValue(
     if (result == NULL) goto error;
 
     Decimal_Convert(result, &res);
+    if (res == NULL) {
+        Py_DECREF(result);
+        goto error;
+    }
+
     *pretval = *res;
     Py_DECREF(result);
     PyGILState_Release(state);
