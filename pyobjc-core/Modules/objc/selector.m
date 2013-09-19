@@ -577,7 +577,7 @@ objcsel_descr_get(PyObject* _self, PyObject* obj, PyObject* class)
     PyObjCNativeSelector* meth = (PyObjCNativeSelector*)_self;
     PyObjCNativeSelector* result;
 
-    if (meth->base.sel_self != NULL || obj == Py_None) {
+    if (meth->base.sel_self != NULL || obj == Py_None || obj == NULL) {
         Py_INCREF(meth);
         return (PyObject*)meth;
     }
@@ -1565,7 +1565,7 @@ pysel_descr_get(PyObject* _meth, PyObject* obj, PyObject* class)
     PyObjCPythonSelector* meth = (PyObjCPythonSelector*)_meth;
     PyObjCPythonSelector* result;
 
-    if (meth->base.sel_self != NULL || obj == Py_None) {
+    if (meth->base.sel_self != NULL || obj == Py_None || obj == NULL) {
         Py_INCREF(meth);
         return (PyObject*)meth;
     }
