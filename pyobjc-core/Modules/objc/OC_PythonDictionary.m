@@ -329,8 +329,8 @@
 }
 
 
-- (id)initWithObjects:(NSObject**)objects
-      forKeys:(NSObject**)keys
+- (id)initWithObjects:(const id*)objects
+      forKeys:(const id<NSCopying>*)keys
         count:(NSUInteger)count
 {
     /* This implementation is needed for our support for the NSCoding

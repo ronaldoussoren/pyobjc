@@ -38,7 +38,9 @@ static char gNumCharValues[] = { 1, 2, 3, 4 };
 
 -(instancetype)init
 {
-    [super init];
+    self = [super init];
+    if (self == nil) return nil;
+
     _idx = 0;
     return self;
 }

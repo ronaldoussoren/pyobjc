@@ -577,7 +577,7 @@ objcsel_descr_get(PyObject* _self, PyObject* obj, PyObject* class)
     PyObjCNativeSelector* meth = (PyObjCNativeSelector*)_self;
     PyObjCNativeSelector* result;
 
-    if (meth->base.sel_self != NULL || obj == Py_None || obj == NULL) {
+    if (meth->base.sel_self != NULL || obj == Py_None) {
         Py_INCREF(meth);
         return (PyObject*)meth;
     }
@@ -1075,6 +1075,7 @@ compensate_arglist(PyObject* _self, PyObject* args, PyObject* kwds)
 
     if (self->base.sel_methinfo == NULL) {
         /* Make sure we actually have metadata */
+        /* XXX: this is unclean... */
         PyObjCSelector_GetMetadata(_self);
     }
     if (self->numoutput == 0) {
@@ -1565,7 +1566,7 @@ pysel_descr_get(PyObject* _meth, PyObject* obj, PyObject* class)
     PyObjCPythonSelector* meth = (PyObjCPythonSelector*)_meth;
     PyObjCPythonSelector* result;
 
-    if (meth->base.sel_self != NULL || obj == Py_None || obj == NULL) {
+    if (meth->base.sel_self != NULL || obj == Py_None) {
         Py_INCREF(meth);
         return (PyObject*)meth;
     }

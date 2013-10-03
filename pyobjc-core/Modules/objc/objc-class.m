@@ -2313,6 +2313,9 @@ metaclass_locallookup(PyTypeObject* tp, PyObject* name)
 
     result = PyDict_GetItem(tp->tp_dict, name);
     if (result != NULL) {
+        if (PyObjCSelector_Check(result) && PyObjCSelector_IsHidden(result)) {
+            return NULL;
+        }
         Py_INCREF(result);
         return result;
     }
@@ -2324,6 +2327,9 @@ metaclass_locallookup(PyTypeObject* tp, PyObject* name)
 
     result = PyObjCMetaClass_TryResolveSelector((PyObject*)Py_TYPE(tp), name, default_selector(name));
     if (result != NULL) {
+        if (PyObjCSelector_Check(result) && PyObjCSelector_IsHidden(result)) {
+            return NULL;
+        }
         Py_INCREF(result);
         return result;
     }
@@ -2345,6 +2351,9 @@ class_locallookup(PyTypeObject* tp, PyObject* name)
 
     result = PyDict_GetItem(tp->tp_dict, name);
     if (result != NULL) {
+        if (PyObjCSelector_Check(result) && PyObjCSelector_IsHidden(result)) {
+            return NULL;
+        }
         Py_INCREF(result);
         return result;
     }
@@ -2355,9 +2364,14 @@ class_locallookup(PyTypeObject* tp, PyObject* name)
 
     result = PyObjCClass_TryResolveSelector((PyObject*)tp, name, default_selector(name));
     if (result != NULL) {
+        if (PyObjCSelector_Check(result) && PyObjCSelector_IsHidden(result)) {
+            return NULL;
+        }
         Py_INCREF(result);
         return result;
     }
+
+    /* TODO: harder names */
 
     return NULL;
 }
@@ -2944,7 +2958,6 @@ update_convenience_methods(PyObject* cls)
 {
     PyObject* res;
     PyObject* args;
-    Class     objc_cls;
     PyObject* dict;
     PyObject* k;
     PyObject* v;
@@ -2956,8 +2969,6 @@ update_convenience_methods(PyObject* cls)
         PyErr_SetString(PyExc_TypeError, "not a class");
         return -1;
     }
-
-    objc_cls = PyObjCClass_GetClass(cls);
 
     dict = PyDict_New();
     if (dict == NULL) {

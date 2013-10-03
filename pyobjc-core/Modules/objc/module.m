@@ -1244,10 +1244,9 @@ static  char* keywords[] = { "callable", "closureFor", "argIndex", NULL };
         }
 
     } else if (PyObjCSelector_Check(closureFor)) {
-        methinfo = ((PyObjCSelector*)closureFor)->sel_methinfo;
+        methinfo = PyObjCSelector_GetMetadata(closureFor);
         if (methinfo == NULL) {
-            PyErr_SetString(PyExc_ValueError,
-                "No signature??");
+            PyObjC_Assert(PyErr_Occurred(), NULL);
             return NULL;
         }
 
@@ -2214,6 +2213,9 @@ PyObjC_MODULE_INIT(_objc)
 
 #ifndef Py_HAVE_LOCAL_LOOKUP
     if (PyDict_SetItemString(d, "super", (PyObject*)&PyObjCSuper_Type) < 0) {
+        PyObjC_INITERROR();
+    }
+    if (PyDict_SetItemString(d, "_pep447", Py_False) < 0) {
         PyObjC_INITERROR();
     }
 #else /* Py_HAVE_LOCAL_LOOKUP */

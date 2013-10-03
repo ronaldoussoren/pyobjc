@@ -186,7 +186,6 @@ make_dict(PyObject* self, int class_method)
 
             } else if (!PyObjCSelector_Check(v)) {
                 Py_DECREF(v);
-                free(methods);
                 v = NULL;
 
             } else {
