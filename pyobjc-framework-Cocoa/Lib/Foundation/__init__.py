@@ -15,6 +15,12 @@ objc.addConvenienceForClass('NSAttributedString', (
     ('__len__',     lambda self: self.length()),
 ))
 
+# XXX
+objc.addConvenienceForBasicMapping('NSMergeConflict', True)
+objc.addConvenienceForBasicMapping('NSUbiquitousKeyValueStore', False)
+objc.addConvenienceForBasicMapping('NSUserDefaults', False)
+
+
 def _setup_conveniences():
     NSNull = objc.lookUpClass('NSNull')
     def nscache_getitem(self, key):

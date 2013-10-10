@@ -20,4 +20,5 @@ sys.modules['ExceptionHandling'] = mod = objc.ObjCLazyModule('ExceptionHandling'
        'objc': objc,
     }, ( Foundation,))
 
+import sys
 del sys.modules['ExceptionHandling._metadata']

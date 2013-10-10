@@ -20,8 +20,6 @@ class DragAppAppDelegate (NSObject):
 
         return self._managedObjectModel
 
-
-
     # Change this path/code to point to your App's data store.
     def applicationSupportFolder(self):
         paths = NSSearchPathForDirectoriesInDomains(NSApplicationSupportDirectory, NSUserDomainMask, True)
@@ -57,7 +55,6 @@ class DragAppAppDelegate (NSObject):
                 NSApplication.sharedApplication().presentError_(error)
 
         return self._managedObjectContext
-
 
     def windowWillReturnUndoManager_(self, window):
         return self.managedObjectContext().undoManager()
