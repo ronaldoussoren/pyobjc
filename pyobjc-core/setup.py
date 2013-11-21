@@ -476,7 +476,6 @@ class oc_build_ext (build_ext.build_ext):
     def run(self):
         verify_platform()
 
-        _fixup_compiler()
         if not self.use_system_libffi:
             for ext in self.extensions:
                 if ext.name == 'objc._objc':
@@ -492,6 +491,14 @@ class oc_build_ext (build_ext.build_ext):
                 CFLAGS.extend(['-isysroot', self.sdk_root])
                 EXT_CFLAGS.extend(['-isysroot', self.sdk_root])
                 OBJC_LDFLAGS.extend(['-isysroot', self.sdk_root])
+
+
+        cflags = get_config_var('CFLAGS')
+        if '-mno-fused-madd' in cflags:
+            cflags = cflags.replace('-mno-fused-madd', '')
+            get_config_vars()['CFLAGS'] = cflags
+
+        _fixup_compiler()
 
         build_ext.build_ext.run(self)
         extensions = self.extensions
