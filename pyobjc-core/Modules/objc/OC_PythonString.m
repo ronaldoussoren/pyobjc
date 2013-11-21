@@ -169,7 +169,7 @@
     return self;
 }
 
--(id)initWithBytes:(void*)bytes length:(NSUInteger)length encoding:(NSStringEncoding)encoding
+-(id)initWithBytes:(const void*)bytes length:(NSUInteger)length encoding:(NSStringEncoding)encoding
 {
     NSString* tmpval = [[NSString alloc] initWithBytes:bytes length:length encoding:encoding];
 

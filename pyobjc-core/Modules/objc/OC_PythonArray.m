@@ -332,7 +332,7 @@
     return [OC_PythonArray class];
 }
 
--(id)initWithObjects:(NSObject**)objects count:(NSUInteger)count
+-(id)initWithObjects:(const id[])objects count:(NSUInteger)count
 {
     /* initWithObjects:count: is primarily present to support the NSCoding
      * protocol of NSArray.
