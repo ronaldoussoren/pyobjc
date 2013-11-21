@@ -10,12 +10,12 @@ An introduction to PyObjC
 Preface
 -------
 
-PyObjC is a bridge between Python and Objective-C.  It allows Python 
+PyObjC is a bridge between Python and Objective-C.  It allows Python
 scripts to use and extend existing Objective-C class libraries;
 most importantly the `Cocoa libraries`_ by `Apple`_.
 
 This document describes how to use Objective-C class libraries from Python
-scripts and how to interpret the documentation of those libraries from the 
+scripts and how to interpret the documentation of those libraries from the
 point of view of a Python programmer.
 
 .. _`Apple`: http://www.apple.com/
@@ -84,7 +84,7 @@ especially for cases like this:
       # note the trailing underscore
       someObject.setValue_(aValue)
 
-There are a few additional rules regarding message dispatch, see the 
+There are a few additional rules regarding message dispatch, see the
 `Overview of the bridge`_ for the complete rundown.
 
 Two-phase instantiation
@@ -255,10 +255,10 @@ same as Python with single inheritance.
 
 An important difference between Python and Objective-C is that the latter is
 not a pure object-oriented language.  Some values are not objects, but values
-of plain C types, such as ``int`` and ``double``.  These basic C types can 
-be used as the types of arguments and the return value of methods. 
+of plain C types, such as ``int`` and ``double``.  These basic C types can
+be used as the types of arguments and the return value of methods.
 
-Object allocation and initialization are explicit and separate actions in 
+Object allocation and initialization are explicit and separate actions in
 Objective-C.  The former is done by the class-method ``alloc``, while the
 latter is done by instance methods whose name customarily starts with ``init``.
 
@@ -297,13 +297,13 @@ the selector.  The message:
  .. sourcecode:: objective-c
 
     [anArray indexOfObject:someObject inRange:someRange]
-    
+
 Target:
     ``anArray``
 
 Selector:
     ``indexOfObject:inRange:``
-    
+
 Arguments:
     ``someObject``, ``someRange``
 
@@ -313,7 +313,7 @@ Python is:
  .. sourcecode:: python
 
     anArray.indexOfObject_inRange_(someObject, someRange)
-    
+
 This may be awkward and "unpythonic" at first, however this syntax is necessary
 to preserve the semantics of Objective-C message dispatch.
 
@@ -410,7 +410,7 @@ A class implementation:
         //     return self
         return self;
     }
-        
+
 
     // an accessor, instance variables (attributes) are in a separate
     // namespace and are considered "private"
@@ -440,7 +440,7 @@ A class implementation:
 Objective-C also features exceptions, but they are typically only used for
 disaster recovery, not error handling, so you will not encounter them very
 often.  Read `The Objective-C Programming Language`_ if you want to
-know more about exceptions in Objective-C. 
+know more about exceptions in Objective-C.
 
 One thing to keep in mind when translating Objective-C snippets to Python is
 that any message can be sent to ``nil``, and the return value of that message
@@ -462,10 +462,10 @@ Overview of the bridge
 Classes
 .......
 
-Objective-C classes are visible as (new-style) Python classes and can be 
+Objective-C classes are visible as (new-style) Python classes and can be
 subclassed just like normal Python classes.  All the usual introspection
-mechanisms work as well, as do ``__slots__`` and descriptors.  The major 
-differences between normal Python classes and Objective-C classes are the way 
+mechanisms work as well, as do ``__slots__`` and descriptors.  The major
+differences between normal Python classes and Objective-C classes are the way
 that instances are created and initialized, and the fact that Objective-C
 selectors look strange when translated to Python methods.
 
@@ -485,7 +485,7 @@ as the prefix for all classes in the `Cocoa libraries`_.  Note that the ``NS``
 prefix made much more sense when it was called NeXTstep, but persists to this
 day for compatibility reasons.
 
-As described in `Objective-C for PyObjC users`_ the creation of Objective-C 
+As described in `Objective-C for PyObjC users`_ the creation of Objective-C
 objects is a two-stage process.  To initialize objects, first call a
 class method to allocate the memory (typically ``alloc``), and then call an
 initializer (typically starts with ``init``).  Some classes have class methods
@@ -500,11 +500,11 @@ message dispatch syntax can not be translated directly to Python, a few
 simple translations must take place.  The rules for these translations are:
 
 1. Replace all colons in the selector with underscores:
-  
+
     - ``someMethod:withFoo:andBar:`` translates to ``someMethod_withFoo_andBar_``
 
 2. If the result ``class`` or ``raise`` (Python keywords), append two underscores:
-  
+
     - ``class`` translates to ``class__``
     - ``raise`` translates to ``raise__``
 
@@ -543,7 +543,7 @@ terminology, there are three kinds of pointers that can be used in a method:
     Used to pass data by reference to the function.  This is not a special
     case from Python.
 
-    Instead of a regular value you may also pass in the value ``objc.NULL``, 
+    Instead of a regular value you may also pass in the value ``objc.NULL``,
     when you do that the Objective-C method will receive a NULL pointer instead
     of a pointer to your value.
 
@@ -552,8 +552,8 @@ terminology, there are three kinds of pointers that can be used in a method:
 
     Pass in either ``None`` or ``objc.NULL`` for output arguments.
     to the method. If the value is ``objc.NULL`` the Objective-C code will
-    receive a NULL pointer for this argument, otherwise it will receive a 
-    valid pointer. 
+    receive a NULL pointer for this argument, otherwise it will receive a
+    valid pointer.
 
 ``inout``:
     A combination of in and out (a value is passed by reference, and mutated
@@ -561,7 +561,7 @@ terminology, there are three kinds of pointers that can be used in a method:
     and thus do not have an effect on the number of arguments a method expects.
     See below for notes on how ``inout`` arguments change the return value.
 
-    Instead of a regular value you may also pass in the value ``objc.NULL``, 
+    Instead of a regular value you may also pass in the value ``objc.NULL``,
     when you do that the Objective-C method will receive a NULL pointer instead
     of a pointer to your value.
 
@@ -585,7 +585,7 @@ One element:
 
 More than one element:
     The return value of this call will be a tuple in the same order as the list.
-    
+
 The rules for pass by reference arguments may look quite complicated, but
 it turns out this is very straightforward when working with them.
 
@@ -615,8 +615,8 @@ When defining methods in an Objective-C subclass, the bridge must provide
 type signatures for each method to the Objective-C runtime.  The default
 type signature is for all arguments as well as the return value to be objects (just
 like with normal Python methods).  If there is no return statement in the implementation,
-then the return value will be void.  The bridge will automatically pick a better 
-signature when it has more information available.  Specifically, a method overrides 
+then the return value will be void.  The bridge will automatically pick a better
+signature when it has more information available.  Specifically, a method overrides
 an existing method, the bridge will assume you want to use the same
 method signature.  Furthermore, if the method is implemented in an (informal)
 protocol known to the bridge it will use the signature from the corresponding
@@ -665,19 +665,19 @@ In Python 2.4 or later there is a decorator for this purpose:
 Reference counting
 ..................
 
-The Cocoa libraries, and most (if not all) other class libraries for 
+The Cocoa libraries, and most (if not all) other class libraries for
 Objective-C use explicit reference counting to manage memory.  The methods
-``retain``, ``release`` and ``autorelease`` are used to manage these 
+``retain``, ``release`` and ``autorelease`` are used to manage these
 reference counts.  You won't have to manage reference counts in Python, the
-bridge does all that work for you (but see :doc:`Notes on supported APIs and classes 
+bridge does all that work for you (but see :doc:`Notes on supported APIs and classes
 on Mac OS X </apinotes>` for some advanced issues).
 
 The only reasons reference counts are mentioned at all are to tell you about
-ignoring them, and more importantly to introduce you to some issues w.r.t. 
+ignoring them, and more importantly to introduce you to some issues w.r.t.
 reference counting.
 
-It turns out that Cocoa uses a primitive form of :mod:`weak references <weakref>`.  Those 
-are not true :mod:`weak references <weakref>` as in Python, but use-cases where an object 
+It turns out that Cocoa uses a primitive form of :mod:`weak references <weakref>`.  Those
+are not true :mod:`weak references <weakref>` as in Python, but use-cases where an object
 stores a reference to another object without increasing the reference count
 for that other object.  The bridge cannot solve the issues this introduces
 for you, which means that you get hard crashes when you're not careful when
@@ -691,10 +691,10 @@ object stays alive, but the proxy object as seen by the Objective-C code is
 actually an autoreleased object that will be cleaned up unless the Objective-C
 code increases its reference count.
 
-The document :doc:`Notes on supported APIs and classes on Mac OS X </apinotes>` contains 
+The document :doc:`Notes on supported APIs and classes on Mac OS X </apinotes>` contains
 information about classes that work with weak references.  The most important
 are notification centers and ``NSOutlineView``, to be exact: the outline view
-stores weak references to the objects return by the method 
+stores weak references to the objects return by the method
 ``outlineView:child:ofItem:`` of its data source.  The easiest way to avoid
 crashes with outline views is to make sure that you model for the view uses
 subclasses of ``NSObject`` to represent the nodes in the outline view.
@@ -714,7 +714,7 @@ and ``objc.formal_protocol``.  The only ones that have to care about these
 objects are the maintainers of wrappers around Objective-C frameworks: they
 have to keep these protocol wrappers up-to-date.
 
-PyObjC will automatically use the information in the ``informal_protocol`` 
+PyObjC will automatically use the information in the ``informal_protocol``
 objects to add the right method signatures to methods, and to warn about
 classes that partially implement a protocol.
 
@@ -728,9 +728,9 @@ to create and use *Controller* objects using `Key-Value Observing`_ and
 `Key-Value Coding`_.  In order to create accessors compatible with this, you
 must use ``objc.accessor`` to create an appropriate selector descriptor.
 
-PyObjC automaticly emits the right `Key-Value Observing`_ notifications when 
+PyObjC automaticly emits the right `Key-Value Observing`_ notifications when
 you set attributes on an Objective-C class. This is however not supported for
-pure python objects. You should therefore use ``NSMutableArray`` instances 
+pure python objects. You should therefore use ``NSMutableArray`` instances
 instead of Python lists for instance variables that will be observed and contain
 a sequence of values (and simularly for ``NSMutableDictionary`` instead of
 ``dict``).
@@ -740,7 +740,7 @@ a sequence of values (and simularly for ``NSMutableDictionary`` instead of
 .. _`Key-Value Observing`: https://developer.apple.com/library/mac/#documentation/Cocoa/Conceptual/KeyValueObserving/KeyValueObserving.html
 
 NOTE: Key-Value Observing is not supported for "pure" python objects, that
-is instances of classes that don't inherit from ``NSObject``. Adding such 
+is instances of classes that don't inherit from ``NSObject``. Adding such
 support is not possible adding a KVO-like interface to the Python interpreter.
 
 Categories
@@ -775,7 +775,7 @@ Python:
 
 	objc.classAddMethods(NSObject, [objectFootprint])
 
-This is not very clear, PyObjC therefore also provides the following 
+This is not very clear, PyObjC therefore also provides the following
 mechanism, implemented on top of ``objc.classAddMethods``:
 
  .. sourcecode:: python
@@ -838,23 +838,23 @@ Cocoa for Python programmers
 
 Cocoa frameworks are mapped onto Python packages with the same name; that is
 the classes, constants and functions from the AppKit framework are available
-after you import ``AppKit`` in your Python script. 
+after you import ``AppKit`` in your Python script.
 
-These helper modules contain *only* functions, constants and classes that 
-wrap items in the corresponding framework.  All utility functions and classes 
+These helper modules contain *only* functions, constants and classes that
+wrap items in the corresponding framework.  All utility functions and classes
 are located in the ``PyObjCTools`` package and ``objc`` module.  Note that it
 is possible to use ``pydoc`` (or the ``help()``) function with the framework
 wrappers, but that this is not very useful for the entire module due to the
 size of these modules.
 
-This makes it easier to find documentation for an item: if you import it 
+This makes it easier to find documentation for an item: if you import it
 from the wrapper module for an Objective-C framework the documentation for
 that item can be found in the documentation for the framework; otherwise the
 item is documented in the PyObjC documentation.
 
-The module ``PyObjCTools.NibClassBuilder`` can be used to make working with 
-NIB files more convenient.  This module can be used to extract information 
-about classes from NIB files, both as a standalone tool generating source code 
+The module ``PyObjCTools.NibClassBuilder`` can be used to make working with
+NIB files more convenient.  This module can be used to extract information
+about classes from NIB files, both as a standalone tool generating source code
 and during runtime.  See the online documentation for this module for more
 information.
 
@@ -904,6 +904,18 @@ in the body of the loop in order to optimize memory usage.  For example, ``NSRun
 will be create a new ``NSAutoreleasePool`` at the beginning of each run loop iteration
 and release it at the end.
 
+.. warning::
+
+   Autorelease pools are thread global state and will not be shared amongst threads,
+   every thread needs to create its own pool(s).
+
+.. warning::
+
+   It is possible to create nested pools (that is, create a new pool when there already
+   is an active pool), but nested pools must be released in reverse order. The pools
+   form a stack that must be cleaned up by popping pools from the top. When you don't
+   do this you can end up with unexpected behavior, including hard crashes.
+
 Finalizers
 ..........
 
@@ -918,7 +930,7 @@ In Objective-C, there is no cyclic garbage collection, so all Objective-C
 objects (including subclasses from Python) are already subject to these
 restrictions.  When subclassing an Objective-C class, you may implement
 ``dealloc`` or ``__del__``.  If you implement ``dealloc``, ensure that
-you call the super ``dealloc`` at the end.  If you implement both 
+you call the super ``dealloc`` at the end.  If you implement both
 ``__del__`` and ``dealloc``, the order in which they are called is
 undefined.
 
@@ -932,7 +944,7 @@ Copying
 
 It is possible for a Python subclass of an Objective-C class to implement
 the ``NSCopying`` protocol.  Some care must be taken when the superclass
-already implements the protocol. 
+already implements the protocol.
 
 Some ``NSCopying`` compliant Objective-C classes copy the template object
 manually.  In those cases the Python subclass must also copy the additional
@@ -978,7 +990,7 @@ An example ``setup.py`` script:
         app = ["iClass.py"],
         data_files = ["English.lproj"],
     )
-	
+
 During development you typically invoke it from the command line like this:
 
  .. sourcecode:: sh
@@ -1007,13 +1019,13 @@ following command to see the list of options:
 
 
 
-.. 
+..
         This section is disabled for now because the Xcode templates aren't maintained.
 
         "IDE approach" : Xcode
         ......................
 
-        PyObjC includes a number of Xcode templates that can be used to 
+        PyObjC includes a number of Xcode templates that can be used to
         develop applications, using the same underlying functionality that
         is in py2app.  These templates are used like any other Xcode template,
         but there are some organizational rules about the template.
