@@ -208,7 +208,7 @@ build_intermediate_class(Class base_class, char* name)
 {
     Class intermediate_class = nil;
 
-    intermediate_class = objc_allocateClassPair(base_class, strdup(name), 0);
+    intermediate_class = objc_allocateClassPair(base_class, name, 0);
     if (intermediate_class == NULL) {
         PyErr_NoMemory();
         goto error_cleanup;

@@ -11,6 +11,8 @@ import Foundation
 from WebKit import _metadata
 from WebKit._WebKit import *
 
+objc.addConvenienceForBasicSequence('WebScriptObject', True)
+
 sys.modules['WebKit'] = mod = objc.ObjCLazyModule(
     "WebKit",
     "com.apple.WebKit",
@@ -24,3 +26,4 @@ sys.modules['WebKit'] = mod = objc.ObjCLazyModule(
 
 import sys
 del sys.modules['WebKit._metadata']
+

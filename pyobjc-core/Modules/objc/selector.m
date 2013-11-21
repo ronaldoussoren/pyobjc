@@ -1075,6 +1075,7 @@ compensate_arglist(PyObject* _self, PyObject* args, PyObject* kwds)
 
     if (self->base.sel_methinfo == NULL) {
         /* Make sure we actually have metadata */
+        /* XXX: this is unclean... */
         PyObjCSelector_GetMetadata(_self);
     }
     if (self->numoutput == 0) {

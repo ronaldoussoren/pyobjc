@@ -210,7 +210,7 @@ PyObjCErr_AsExc(void)
 
         if (depythonify_c_value(@encode(id), args, &result) == -1) {
             PyErr_Clear();
-            [[NSException alloc] initWithName:NSInternalInconsistencyException
+            result = [[NSException alloc] initWithName:NSInternalInconsistencyException
                                        reason:@"Cannot convert Python exception"
                                      userInfo: nil];
         }

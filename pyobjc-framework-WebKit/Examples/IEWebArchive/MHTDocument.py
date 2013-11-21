@@ -44,3 +44,4 @@ class MHTDocument (NSDocument):
             fp.write(archive.data().bytes())
         self.webview.mainFrame().stopLoading()
         self.webview.mainFrame().loadArchive_(archive)
+        1/0

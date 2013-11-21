@@ -39,6 +39,8 @@ objc.addConvenienceForClass('CIContextImpl', (
     ('__setitem__',     lambda self, key, value: self.setObject_forKey_(value, key)),
 ))
 
+objc.addConvenienceForBasicSequence('QCStructure', True)
+
 
 sys.modules['Quartz.QuartzCore'] = mod = objc.ObjCLazyModule('Quartz.QuartzCore',
     "com.apple.QuartzCore",

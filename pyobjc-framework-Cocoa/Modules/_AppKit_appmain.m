@@ -6,10 +6,10 @@
 
 #import <AppKit/AppKit.h>
 
-static PyObject* 
+static PyObject*
 objc_NSApplicationMain(
-	PyObject* self __attribute__((__unused__)), 
-	PyObject* args, 
+	PyObject* self __attribute__((__unused__)),
+	PyObject* args,
 	PyObject* kwds)
 {
 static	char* keywords[] = { "argv", NULL };
@@ -26,7 +26,7 @@ static	char* keywords[] = { "argv", NULL };
 	}
 
 	if (!PySequence_Check(arglist)) {
-		PyErr_SetString(PyExc_TypeError, 
+		PyErr_SetString(PyExc_TypeError,
 			"NSApplicationMain: need list of strings as argument");
 		return NULL;
 	}
@@ -45,7 +45,7 @@ static	char* keywords[] = { "argv", NULL };
 			goto error_cleanup;
 		}
 		if (PyUnicode_Check(v)) {
-			PyObject* bytes = PyUnicode_AsEncodedString(v, 
+			PyObject* bytes = PyUnicode_AsEncodedString(v,
 					NULL, NULL);
 			if (!bytes) {
 				goto error_cleanup;
@@ -56,7 +56,7 @@ static	char* keywords[] = { "argv", NULL };
 			argv[i] = strdup(PyString_AsString(v));
 #endif
 		} else {
-			PyErr_SetString(PyExc_TypeError, 
+			PyErr_SetString(PyExc_TypeError,
 				"NSApplicationMain: need list of strings "
 				"as argument");
 			goto error_cleanup;
@@ -72,8 +72,12 @@ static	char* keywords[] = { "argv", NULL };
 	argv[argc] = NULL;
 
 	PyObjC_DURING
+                NSLog(@"->NSApplicationMain");
 		res = NSApplicationMain(argc, (const char**)argv);
+                NSLog(@"<-NSApplicationMain");
+
 	PyObjC_HANDLER
+                NSLog(@"NSApplicationMain: exc %@", localException);
 		PyObjCErr_FromObjC(localException);
 		res = -1;
 	PyObjC_ENDHANDLER

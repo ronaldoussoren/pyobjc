@@ -1420,7 +1420,7 @@ PyObjC_RegisterStructType(
         }
         r = PyDict_SetItemString(((PyTypeObject*)structType)->tp_dict, "__struct_pack__", v);
         Py_DECREF(v);
-        if (v == NULL) {
+        if (r == -1) {
             Py_DECREF(structType);
             return NULL;
         }
