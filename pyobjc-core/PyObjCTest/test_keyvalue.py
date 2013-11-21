@@ -540,51 +540,6 @@ if PyObjCTest_KeyValueObserver is not None:
 
             self.assertEqual(DEALLOCS, before+1, "Leaking an observed object")
 
-        def _testAutomaticObserving(self):
-            outer_pool = NSAutoreleasePool.alloc().init()
-            observer = PyObjCTestObserver.alloc().init()
-            o = PyObjCTestObserved2.alloc().init()
-            pool = NSAutoreleasePool.alloc().init()
-
-            self.assertEqual(o.foo, None)
-            self.assertEqual(o.bar, None)
-
-            o.foo = 'foo'
-            self.assertEqual(o.foo, 'foo')
-
-            o.bar = 'bar'
-            self.assertEqual(o.bar, 'bar')
-
-            o.addObserver_forKeyPath_options_context_(observer, 'bar',
-                (NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld),
-                0)
-            o.addObserver_forKeyPath_options_context_(observer, 'foo',
-                (NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld),
-                0)
-            try:
-                o.bar = "world"
-                self.assertEqual(o.bar, "world")
-
-                o.foo = "xxx"
-                self.assertEqual(o.foo, "xxx")
-            finally:
-                o.removeObserver_forKeyPath_(observer, "bar")
-                o.removeObserver_forKeyPath_(observer, "foo")
-            self.assertEqual(len(observer.observed), 2)
-
-            self.assertEqual(observer.observed[0],
-                ('bar', o,  { 'kind': 1, 'new': 'world', 'old': 'bar' }, 0))
-            self.assertEqual(observer.observed[1],
-                ('foo', o, { 'kind': 1, 'new': 'xxx', 'old': 'foo' }, 0))
-
-            del observer
-            del pool
-
-            before = DEALLOCS
-            del o
-            del outer_pool
-            self.assertEqual(DEALLOCS, before+1, "Leaking an observed object")
-
         def testObserving(self):
             outer_pool = NSAutoreleasePool.alloc().init()
             observer = PyObjCTestObserver.alloc().init()
