@@ -57,3 +57,26 @@ def _resolve_name(name):
         m = getattr(m, k)
 
     return getattr(m, name)
+
+
+
+_NSAutoreleasePool = None
+class autorelease_pool(object):
+    """
+    A context manager that implements the same feature as
+    @synchronized statements in Objective-C. Locking can also
+    be done manually using the ``lock`` and ``unlock`` methods.
+
+    The mutex for object ``anObject`` is represented by
+    ``objc.object_lock(anObject)``.
+    """
+    def __init__(self):
+        global _NSAutoreleasePool
+        if _NSAutoreleasePool is None:
+            _NSAutoreleasePool = objc.lookUpClass('NSAutoreleasePool')
+
+    def __enter__(self):
+        self._pool = _NSAutoreleasePool.alloc().init()
+
+    def __exit__(self, type, value, tp):
+        del self._pool

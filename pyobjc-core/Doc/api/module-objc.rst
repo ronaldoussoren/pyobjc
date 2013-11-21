@@ -494,6 +494,18 @@ in this section help in finetuning this behaviour.
    embedding application.
 
 
+.. function:: autorelease_pool()
+
+   A context manager that runs the body of the block with a fresh autorelease
+   pool. The actual release pool is not accessible.
+
+   Usage::
+
+        with autorelease_pool():
+            pass
+
+   .. todo:: insert links to documentation explaining why you'd want to use this.
+
 Test support
 ------------
 

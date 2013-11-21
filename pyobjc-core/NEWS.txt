@@ -6,6 +6,22 @@ An overview of the relevant changes in new, and older, releases.
 Version 3.0
 -----------
 
+* Addd ``objc.autorelease_pool``, a context manager for managing an
+  autorelease pool. Usage::
+
+       with objc.autorelease_pool():
+          pass
+
+
+  This is equivalent to::
+
+       _pool = NSAutoreleasePool.alloc().init()
+       try:
+           pass
+
+       finally:
+           del _pool
+
 * Added ``objc.registerABCForClass`` to make it possible to register
   a class with a number of ABC classes when the class becomes available.
 
