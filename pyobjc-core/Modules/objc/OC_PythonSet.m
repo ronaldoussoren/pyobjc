@@ -151,6 +151,7 @@
 - (id)initWithCoder:(NSCoder*)coder
 {
     int code;
+    id result;
 
     if ([coder allowsKeyedCoding]) {
         code = [coder decodeInt32ForKey:@"pytype"];
@@ -160,8 +161,13 @@
     }
 
     if (code == 1) {
-        value = PyFrozenSet_New(NULL);
-        return [super initWithCoder:coder];
+        //value = PyFrozenSet_New(NULL);
+        value = PySet_New(NULL);
+        result =  [super initWithCoder:coder];
+        if (result != nil) {
+            Py_TYPE(value) = &PyFrozenSet_Type;
+        }
+        return result;
     } else if (code == 2) {
         value = PySet_New(NULL);
         return [super initWithCoder:coder];
