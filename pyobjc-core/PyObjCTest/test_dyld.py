@@ -1,6 +1,7 @@
 from PyObjCTools.TestSupport import *
 import os
 import subprocess
+import sys
 
 import objc._dyld as dyld
 
@@ -157,8 +158,9 @@ class TestDyld (TestCase):
             self.assertEqual(dyld.dyld_library('/usr/lib/libSystem.dylib', 'libSystem.dylib'), '/usr/lib/libSystem_debug.dylib')
 
         else:
+            p = subprocess.check_output(['xcrun', '--show-sdk-path']).strip()
             os.environ['DYLD_LIBRARY_PATH'] = os.path.join(
-                    subprocess.check_output(['xcrun', '--show-sdk-path']).decode('utf-8').strip(),
+                    (p.decode('utf-8') if sys.version_info[0] == 3 else p),
                     'usr', 'lib')
             os.environ['DYLD_IMAGE_SUFFIX'] = "_debug"
             self.assertEqual(dyld.dyld_library('/usr/lib/libSystem.dylib', 'libSystem.dylib'),
