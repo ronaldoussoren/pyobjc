@@ -6,6 +6,13 @@ An overview of the relevant changes in new, and older, releases.
 Version 3.0
 -----------
 
+* Archiving now supports nested definitions and method references, simular
+  to the support of those added to pickle protocol 4 in Python 3.4.
+
+  Encoding nested classes requires support for the ``__qualname__`` attribute,
+  and hence requires Python 3.3. Decoding should work with earlier python
+  versions as well.
+
 * Addd ``objc.autorelease_pool``, a context manager for managing an
   autorelease pool. Usage::
 

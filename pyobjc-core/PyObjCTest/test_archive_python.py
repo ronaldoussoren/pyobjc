@@ -256,6 +256,8 @@ class TestKeyedArchiveSimple (TestCase):
 
         def f(): pass
         del f.__module__
+        if hasattr(f, '__qualname__'):
+            f.__qualname__ = f.__name__
         try:
             sys.f = f
 
@@ -890,6 +892,13 @@ class TestKeyedArchivePlainPython (TestCase, test.pickletester.AbstractPickleTes
     @onlyIf(0, "python unittest not relevant for archiving")
     def test_load_long_python2_str_as_bytes(self): pass
 
+    @onlyIf(0, "python unittest not relevant for archiving")
+    def test_load_python2_unicode_as_str(self): pass
+
+    @onlyIf(0, "python unittest not relevant for archiving")
+    def test_load_python2_str_as_bytes(self): pass
+
+
 
 
 
@@ -999,10 +1008,24 @@ class TestArchivePlainPython (TestKeyedArchivePlainPython):
     def loads(self, buf):
         return NSUnarchiver.unarchiveObjectWithData_(buf)
 
+
     @expectedFailure
     def test_recursive_dict(self):
         # See 'TestArchiveNative'
         test.pickletester.AbstractPickleTests.test_recursive_dict(self)
+
+    @expectedFailure
+    def test_recursive_set(self):
+        # See 'TestArchiveNative'
+        test.pickletester.AbstractPickleTests.test_recursive_set(self)
+
+    @expectedFailure
+    def test_recursive_frozenset(self):
+        # See 'TestArchiveNative'
+        try:
+            test.pickletester.AbstractPickleTests.test_recursive_frozenset(self)
+        except SystemError:
+            self.fail("SystemError during test")
 
     @expectedFailure
     def test_recursive_list(self):

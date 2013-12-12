@@ -19,7 +19,49 @@ except ImportError:  # pragma: no 3.x cover
 
 import copy
 
-from pickle import PicklingError, UnpicklingError, whichmodule
+from pickle import PicklingError, UnpicklingError
+
+try:
+    import builtins as _builtins
+except ImportError: # pragma: no 3.x cover
+    import __builtin__ as _builtins
+
+# _getattribute and whichmodule are adapted from the
+# same function's in Python 3.4's pickle module. The
+# primary difference is that the functions below
+# behave as if 'allow_qualname' is true)
+
+def _getattribute(obj, name):
+    dotted_path = name.split(".")
+    for subpath in dotted_path:
+        if subpath == '<locals>':
+            raise AttributeError("Can't get local attribute %r on %r" % (
+                name, obj))
+        try:
+            obj = getattr(obj, subpath)
+        except AttributeError:
+            raise AttributeError("Can't get attribute %r on %r" % (
+                name, obj))
+    return obj
+
+def whichmodule(obj, name):
+    module_name = getattr(obj, '__module__', None)
+    if module_name is not None:
+        return module_name
+
+    for module_name, module in sys.modules.items():
+        if module_name == "__main__" or module is None:
+            continue
+
+        try:
+            if _getattribute(module, name) is obj:
+                return module_name
+
+        except AttributeError as exc:
+            pass
+
+    return '__main__'
+
 
 
 if sys.version_info[0] == 2:  # pragma: no 3.x cover
@@ -36,7 +78,7 @@ if sys.version_info[0] == 2:  # pragma: no 3.x cover
     def import_module(name):
         if name == 'copyreg':
             name = 'copy_reg'
-        __import__(name)
+        __import__(name, level=0)
         return sys.modules[name]
 
 else:   # pragma: no 2.x cover
@@ -55,7 +97,7 @@ else:   # pragma: no 2.x cover
     def import_module(name):
         if name == 'copy_reg':
             name = 'copyreg'
-        __import__(name)
+        __import__(name, level=0)
         return sys.modules[name]
 
 
@@ -229,27 +271,26 @@ encode_dispatch[float] = save_float
 
 def save_global(coder, obj, name=None):
     if name is None:
+        name = getattr(obj, '__qualname__', None)
+    if name is None:
         name = obj.__name__
 
-    module = getattr(obj, "__module__", None)
-    if module is None:
-        module = whichmodule(obj, name)
-
+    module_name = whichmodule(obj, name)
     try:
-        mod = import_module(module)
-        klass= getattr(mod, name)
+        module = import_module(module_name)
+        obj2 = _getattribute(module, name)
 
     except (ImportError, KeyError, AttributeError):
         raise PicklingError(
                   "Can't pickle %r: it's not found as %s.%s" %
-                  (obj, module, name))
+                  (obj, module_name, name))
     else:
-        if klass is not obj:
+        if obj2 is not obj:
             raise PicklingError(
                 "Can't pickle %r: it's not the same object as %s.%s" %
-                (obj, module, name))
+                (obj, module_name, name))
 
-    code = copyreg._extension_registry.get((module, name))
+    code = copyreg._extension_registry.get((module_name, name))
 
     if coder.allowsKeyedCoding():
         if code:
@@ -258,7 +299,7 @@ def save_global(coder, obj, name=None):
 
         else:
             coder.encodeInt_forKey_(kOP_GLOBAL, kKIND)
-            coder.encodeObject_forKey_(unicode(module), kMODULE)
+            coder.encodeObject_forKey_(unicode(module_name), kMODULE)
             coder.encodeObject_forKey_(unicode(name), kNAME)
 
     else:
@@ -268,13 +309,16 @@ def save_global(coder, obj, name=None):
 
         else:
             coder.encodeValueOfObjCType_at_(objc._C_INT, kOP_GLOBAL)
-            coder.encodeObject_(unicode(module))
+            coder.encodeObject_(unicode(module_name))
             coder.encodeObject_(unicode(name))
 
 if sys.version_info[0] == 2:  # pragma: no 3.x cover
     encode_dispatch[ClassType] = save_global
 encode_dispatch[type(save_global)] = save_global
-encode_dispatch[type(dir)] = save_global
+try:
+    dir.__reduce__()
+except TypeError:
+    encode_dispatch[type(dir)] = save_global
 
 def save_type(coder, obj):
     if obj is type(None):
@@ -346,7 +390,7 @@ def load_global_ext(coder, setValue):
 
     module, name = key
     mod = import_module(module)
-    klass = getattr(mod, name)
+    klass = _getattribute(mod, name)
     copyreg._extension_cache[code] = klass
     return klass
 decode_dispatch[kOP_GLOBAL_EXT] = load_global_ext
@@ -354,15 +398,14 @@ decode_dispatch[kOP_GLOBAL_EXT] = load_global_ext
 
 def load_global(coder, setValue):
     if coder.allowsKeyedCoding():
-        module = coder.decodeObjectForKey_(kMODULE)
+        module_name = coder.decodeObjectForKey_(kMODULE)
         name = coder.decodeObjectForKey_(kNAME)
     else:
-        module = coder.decodeObject()
+        module_name = coder.decodeObject()
         name = coder.decodeObject()
 
-    mod = import_module(module)
-    klass = getattr(mod, name)
-    return klass
+    mod = import_module(module_name)
+    return _getattribute(mod, name)
 
 decode_dispatch[kOP_GLOBAL] = load_global
 
