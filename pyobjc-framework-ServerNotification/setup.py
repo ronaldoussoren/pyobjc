@@ -12,6 +12,7 @@ from pyobjc_setup import setup
 
 setup(
     min_os_level='10.6',
+    max_os_level='10.8',
     name='pyobjc-framework-ServerNotification',
     version="3.0a1",
     description = "Wrappers for the framework ServerNotification on Mac OS X",
