@@ -10,6 +10,14 @@ if sys.maxsize > 2**32:
     import Accounts
 
     class TestACAccountType (TestCase):
+        @min_os_level("10.9")
+        def testConstants10_9(self):
+            self.assertIsInstance(Accounts.ACAccountTypeIdentifierLinkedIn, unicode)
+            self.assertIsInstance(Accounts.ACAccountTypeIdentifierTencentWeibo, unicode)
+            self.assertIsInstance(Accounts.ACLinkedInAppIdKey, unicode)
+            self.assertIsInstance(Accounts.ACLinkedInPermissionsKey, unicode)
+            self.assertIsInstance(Accounts.ACTencentWeiboAppIdKey, unicode)
+
         @min_os_level("10.8")
         def testConstants(self):
             self.assertIsInstance(Accounts.ACAccountTypeIdentifierTwitter, unicode)

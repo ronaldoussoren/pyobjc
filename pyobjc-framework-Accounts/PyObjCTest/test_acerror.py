@@ -10,6 +10,17 @@ if sys.maxsize > 2**32:
         unicode = str
 
     class TestACError (TestCase):
+        @min_os_level("10.9")
+        def testConstants10_9(self):
+            self.assertEqual(Accounts.ACErrorAccessDeniedByProtectionPolicy, 10)
+            self.assertEqual(Accounts.ACErrorClientPermissionDenied, 9)
+            self.assertEqual(Accounts.ACErrorCredentialNotFound, 11)
+            self.assertEqual(Accounts.ACErrorFetchCredentialFailed, 12)
+            self.assertEqual(Accounts.ACErrorInvalidClientBundleID, 16)
+            self.assertEqual(Accounts.ACErrorRemoveCredentialFailed, 14)
+            self.assertEqual(Accounts.ACErrorStoreCredentialFailed, 13)
+            self.assertEqual(Accounts.ACErrorUpdatingNonexistentAccount, 15)
+
         @min_os_level("10.8")
         def testConstants(self):
             self.assertIsInstance(Accounts.ACErrorDomain, unicode)
