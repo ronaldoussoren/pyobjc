@@ -478,8 +478,9 @@ class TestBridgeSupportParser (TestCase):
 
         try:
             for is32bit in (True, False):
+                sys.maxsize = 2**31-1 if is32bit else 2**63-1
+
                 for endian in ('little', 'big'):
-                    sys.maxsize = 2**63-1 if endian == 'big' else 2**32-1
                     sys.byteorder = endian
 
                     # Reload the bridgesupport module because

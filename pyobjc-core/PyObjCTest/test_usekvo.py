@@ -18,10 +18,11 @@ class TestUseKVOObserver (NSObject):
 
 class TestUseKVO (TestCase):
     def setUp(self):
-        self._previous = objc.setUseKVOForSetattr(True)
+        self._previous = objc.options.use_kvo
+        objc.options.use_kvo = True
 
     def tearDown(self):
-        objc.setUseKVOForSetattr(self._previous)
+        objc.options.use_kvo = self._previous
 
     def areChangesEmitted(self, object):
         observer = TestUseKVOObserver.alloc().init()
@@ -45,7 +46,7 @@ class TestUseKVO (TestCase):
             self.fail("Setting 'value' on %r does emit KVO" % object)
 
     def testPythonAttr_True(self):
-        objc.setUseKVOForSetattr(True)
+        objc.options.use_kvo = True
 
         class OCTestUseKVO1 (NSObject):
             pass
@@ -56,7 +57,7 @@ class TestUseKVO (TestCase):
         self.assertChangesEmitted(obj)
 
     def testObjCAttr_True(self):
-        objc.setUseKVOForSetattr(True)
+        objc.options.use_kvo = True
 
         class OCTestUseKVO2 (NSObject):
             value = objc.ivar()
@@ -68,7 +69,7 @@ class TestUseKVO (TestCase):
 
 
     def testPythonAttr_False(self):
-        objc.setUseKVOForSetattr(False)
+        objc.options.use_kvo = False
 
         class OCTestUseKVO3 (NSObject):
             pass
@@ -78,7 +79,7 @@ class TestUseKVO (TestCase):
         self.assertNoChangesEmitted(obj)
 
     def testObjCAttr_False(self):
-        objc.setUseKVOForSetattr(False)
+        objc.options.use_kvo = False
 
         class OCTestUseKVO4 (NSObject):
             value = objc.ivar()

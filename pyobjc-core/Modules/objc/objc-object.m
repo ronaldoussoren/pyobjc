@@ -175,10 +175,7 @@ object_dealloc(PyObject* obj)
             PyObjC_DURING
                 if (((PyObjCObject*)obj)->flags & PyObjCObject_kCFOBJECT) {
                     CFRelease(((PyObjCObject*)obj)->objc_object);
-                } else if (strcmp(object_getClassName(((PyObjCObject*)obj)->objc_object),
-                        "NSAutoreleasePool") != 0) {
 
-                        CFRelease(((PyObjCObject*)obj)->objc_object);
                 } else {
                     CFRelease(((PyObjCObject*)obj)->objc_object);
                 }
@@ -201,8 +198,9 @@ static int
 object_verify_type(PyObject* obj)
 {
     /* Check that the Objective-C type of 'obj' hasn't changed */
+    id obj_inst;
 
-    id obj_inst = PyObjCObject_GetObject(obj);
+    obj_inst = PyObjCObject_GetObject(obj);
     if (obj_inst == nil) {
         return 0;
     }
@@ -333,12 +331,13 @@ static PyObject*
 object_getattro(PyObject* obj, PyObject* name)
 {
     PyObject* result;
+    id obj_inst;
 
     if (object_verify_not_nil(obj, name) == -1) {
         return NULL;
     }
 
-    if (object_verify_type(obj) == -1) {
+    if (object_verify_type(obj, &obj_inst) == -1) {
         return NULL;
     }
 
@@ -882,6 +881,8 @@ object_setattro(PyObject *obj, PyObject *name, PyObject *value)
         return -1;
     }
 
+    obj_inst = PyObjCObject_GetObject(obj);
+
     obj_name = nil;
     if (((PyObjCClassObject*)tp)->useKVO) {
         if ((PyObjCObject_GetFlags(obj) & PyObjCObject_kUNINITIALIZED) == 0) {
@@ -893,6 +894,7 @@ object_setattro(PyObject *obj, PyObject *name, PyObject *value)
                     PyObjC_Unicode_Fast_Bytes(name)
 #endif
                 ];
+
                 NS_DURING
                     [(NSObject*)obj_inst willChangeValueForKey:obj_name];
                 NS_HANDLER

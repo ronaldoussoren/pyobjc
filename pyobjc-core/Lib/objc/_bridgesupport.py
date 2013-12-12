@@ -13,11 +13,9 @@ import functools
 import pkg_resources
 import os
 
-from objc import registerMetaDataForSelector, error
-
 
 for method in (b'alloc', b'copy', b'copyWithZone:', b'mutableCopy', b'mutableCopyWithZone:'):
-    registerMetaDataForSelector(b'NSObject', method,
+    objc.registerMetaDataForSelector(b'NSObject', method,
             {
                 'retval': { 'already_retained': True },
             })
@@ -84,7 +82,7 @@ class _BridgeSupportParser (object):
         root = ET.fromstring(xmldata.strip())
 
         if root.tag != 'signatures':
-            raise error("invalid root node in bridgesupport file")
+            raise objc.error("invalid root node in bridgesupport file")
 
         for node in root:
             method = getattr(self, 'do_%s'%(node.tag,), None)

@@ -1700,8 +1700,8 @@ const char* PyObjCSelector_Signature(PyObject* obj)
 Class
 PyObjCSelector_GetClass(PyObject* sel)
 {
-    if (!PyObjCNativeSelector_Check(sel)) {
-        PyErr_SetString(PyExc_TypeError, "Expecting PyObjCSelector");
+    if (!PyObjCSelector_Check(sel)) {
+        PyErr_Format(PyExc_TypeError, "3Expecting PyObjCSelector, got an instance of %s", Py_TYPE(sel)->tp_name);
         return NULL;
     }
 
@@ -1712,7 +1712,7 @@ SEL
 PyObjCSelector_GetSelector(PyObject* sel)
 {
     if (!PyObjCSelector_Check(sel)) {
-        PyErr_SetString(PyExc_TypeError, "Expecting PyObjCSelector");
+        PyErr_Format(PyExc_TypeError, "4Expecting PyObjCSelector, got an instance of %s", Py_TYPE(sel)->tp_name);
         return NULL;
     }
 

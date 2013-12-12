@@ -13,7 +13,7 @@ def getVerbose():
 
 
 def setUseKVOForSetattr(value):
-    warnings.warn("Set objc.options.use_kvo instead", DeprecationWarning)
+    warnings.warn("Set objc.options.use_kvo instead", DeprecationWarning, 2)
     _options.use_kvo = bool(value)
 
 

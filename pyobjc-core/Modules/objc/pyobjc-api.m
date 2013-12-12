@@ -42,7 +42,7 @@ static Class
 sel_get_class(PyObject* sel)
 {
     if (!PyObjCSelector_Check(sel)) {
-        PyErr_SetString(PyExc_TypeError, "Expecting PyObjCSelector");
+        PyErr_Format(PyExc_TypeError, "1Expecting PyObjCSelector, got an instance of %s", Py_TYPE(sel)->tp_name);
         return NULL;
     }
     return ((PyObjCSelector*)sel)->sel_class;
@@ -52,7 +52,7 @@ static SEL
 sel_get_sel(PyObject* sel)
 {
     if (!PyObjCSelector_Check(sel)) {
-        PyErr_SetString(PyExc_TypeError, "Expecting PyObjCSelector");
+        PyErr_Format(PyExc_TypeError, "2Expecting PyObjCSelector, got an instance of %s", Py_TYPE(sel)->tp_name);
         return NULL;
     }
     return ((PyObjCSelector*)sel)->sel_selector;
