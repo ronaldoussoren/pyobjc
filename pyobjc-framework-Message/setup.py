@@ -20,4 +20,5 @@ setup(
         'pyobjc-core>=3.0a1',
         'pyobjc-framework-Cocoa>=3.0a1',
     ],
+    max_os_level="10.8",
 )
