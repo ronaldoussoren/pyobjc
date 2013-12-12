@@ -16,6 +16,9 @@ collections.Set.register(NSSet)
 collections.MutableSet.register(NSMutableSet)
 
 def nsset_isdisjoint(self, other):
+    if not hasattr(other, '__contains__'):
+        other = list(other)
+
     for item in self:
         if item in other:
             return False
@@ -34,6 +37,9 @@ def nsset_union(self, *other):
 def nsset_intersection(self, *others):
     if len(others) == 0:
         return self.mutableCopy()
+
+    others = [o if hasattr(o, '__contains__') else list(o) for o in others]
+
     result = NSMutableSet()
     for item in self:
         for o in others:
@@ -56,7 +62,9 @@ def nsset_difference(self, *others):
 
 def nsset_symmetric_difference(self, other):
     result = NSMutableSet()
-    for item in self:
+    if not hasattr(other, '__contains__'):
+        other = list(other)
+    for item in iter(self):
         if item not in other:
             result.add(item)
     for item in other:
