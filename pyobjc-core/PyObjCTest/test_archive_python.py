@@ -751,6 +751,9 @@ class TestKeyedArchivePlainPython (TestCase, test.pickletester.AbstractPickleTes
     def tearDown(self):
         test.pickletester.protocols = self._protocols
 
+    def assert_is_copy(self, a, b):
+        return self.assertEqual(a, b)
+
 
     def dumps(self, arg, proto=0, fast=0):
         # Ignore proto and fast
@@ -871,6 +874,23 @@ class TestKeyedArchivePlainPython (TestCase, test.pickletester.AbstractPickleTes
 
     @onlyIf(0, "python unittest not relevant for archiving")
     def test_pop_empty_stack(self): pass
+
+    @onlyIf(0, "python unittest not relevant for archiving")
+    def test_framing_many_objects(self): pass
+
+    @onlyIf(0, "python unittest not relevant for archiving")
+    def test_set_chunking(self): pass
+
+    @onlyIf(0, "python unittest not relevant for archiving")
+    def test_optional_frames(self): pass
+
+    @onlyIf(0, "python unittest not relevant for archiving")
+    def test_framing_large_objects(self): pass
+
+    @onlyIf(0, "python unittest not relevant for archiving")
+    def test_load_long_python2_str_as_bytes(self): pass
+
+
 
 
     def test_long(self):
@@ -1014,6 +1034,9 @@ class TestArchivePlainPython (TestKeyedArchivePlainPython):
 
     @onlyIf(0, "python unittest not relevant for archiving")
     def test_negative_32b_binbytes(self): pass
+
+    @onlyIf(0, "python unittest not relevant for archiving")
+    def test_framing_many_objects(self): pass
 
 
 #

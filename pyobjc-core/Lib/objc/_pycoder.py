@@ -275,7 +275,27 @@ if sys.version_info[0] == 2:  # pragma: no 3.x cover
     encode_dispatch[ClassType] = save_global
 encode_dispatch[type(save_global)] = save_global
 encode_dispatch[type(dir)] = save_global
-encode_dispatch[type] = save_global
+
+def save_type(coder, obj):
+    if obj is type(None):
+        return save_reduce(coder, type, (None,), obj=obj)
+    elif obj is type(NotImplemented):
+        return save_reduce(coder, type, (NotImplemented,), obj=obj)
+    elif obj is type(Ellipsis):
+        return save_reduce(coder, type, (Ellipsis,), obj=obj)
+    return save_global(coder, obj)
+encode_dispatch[type] = save_type
+
+
+def save_ellipsis(coder, obj):
+    save_global(coder, Ellipsis, 'Ellipsis')
+encode_dispatch[type(Ellipsis)] = save_ellipsis
+
+def save_notimplemented(coder, obj):
+    save_global(coder, NotImplemented, 'NotImplemented')
+encode_dispatch[type(NotImplemented)] = save_notimplemented
+
+
 
 
 decode_dispatch = {}
