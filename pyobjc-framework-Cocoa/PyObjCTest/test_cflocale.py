@@ -15,7 +15,11 @@ except NameError:
 
 class TestLocale (TestCase):
     def testTypes(self):
-        self.assertIsCFType(CFLocaleRef)
+        try:
+            cls = objc.lookUpClass('__NSCFLocale')
+            self.assertIs(CFLocaleRef, cls)
+        except objc.error:
+            self.assertIsCFType(CFLocaleRef)
 
     def testGetTypeID(self):
         self.assertIsInstance(CFLocaleGetTypeID(), (int, long))

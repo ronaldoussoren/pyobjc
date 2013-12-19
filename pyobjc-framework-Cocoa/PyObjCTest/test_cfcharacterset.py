@@ -15,7 +15,17 @@ except NameError:
 
 class TestCharacterSet (TestCase):
     def testTypes(self):
-        self.assertIsCFType(CFCharacterSetRef)
+        cls = None
+        try:
+            cls = objc.lookUpClass('__NSCFCharacterSet')
+        except objc.error:
+            cls = objc.lookUpClass('NSCFCharacterSet')
+        if cls is None:
+            self.assertIsCFType(CFCharacterSetRef)
+
+        else:
+            self.assertIs(CFCharacterSetRef, cls)
+
         self.assertIsCFType(CFMutableCharacterSetRef)
 
     def testTypeId(self):

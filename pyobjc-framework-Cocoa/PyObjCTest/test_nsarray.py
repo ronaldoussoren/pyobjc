@@ -351,12 +351,13 @@ class TestNSMutableArrayInteraction(TestCase):
         def cmpfunc(l, r):
             return -cmp(l,r)
 
-        a.sort(cmpfunc=cmpfunc)
-
-        self.assertEqual(a, (3, 2, 1, 0))
+        if sys.version_info[0] == 2:
+            a.sort(cmpfunc=cmpfunc)
+            self.assertEqual(a, (3, 2, 1, 0))
+        else:
+            self.assertRaises(TypeError, a.sort, cmpfunc=cmpfunc)
 
         a.sort()
-
         self.assertEqual(a, (0, 1, 2, 3))
 
         map={

@@ -1,5 +1,5 @@
-static const void* 
-mod_machport_retain(const void* info) 
+static const void*
+mod_machport_retain(const void* info)
 {
 	PyGILState_STATE state = PyGILState_Ensure();
 	Py_INCREF((PyObject*)info);
@@ -17,7 +17,7 @@ mod_machport_release(const void* info)
 
 
 static CFMachPortContext mod_CFMachPortContext = {
-	0,		
+	0,
 	NULL,
 	mod_machport_retain,
 	mod_machport_release,
@@ -25,7 +25,7 @@ static CFMachPortContext mod_CFMachPortContext = {
 };
 
 static void
-mod_CFMachPortCallBack(	
+mod_CFMachPortCallBack(
 	CFMachPortRef f,
 	void* msg,
 	CFIndex size,
@@ -48,7 +48,7 @@ mod_CFMachPortCallBack(
 	PyGILState_Release(state);
 }
 
-static void 
+static void
 mod_CFMachPortInvalidationCallBack(CFMachPortRef f, void *_info)
 {
 	PyObject* info = (PyObject*)_info;
@@ -88,7 +88,7 @@ mod_CFMachPortCreate(
 	}
 
 	if (py_shouldFree != Py_None && py_shouldFree != PyObjC_NULL) {
-		PyErr_SetString(PyExc_ValueError, 
+		PyErr_SetString(PyExc_ValueError,
 				"shouldFree not None or NULL");
 		return NULL;
 	}
@@ -102,9 +102,9 @@ mod_CFMachPortCreate(
 	CFMachPortRef rv = NULL;
 	PyObjC_DURING
 		rv = CFMachPortCreate(
-			allocator, 
+			allocator,
 			mod_CFMachPortCallBack, &context, &shouldFree);
-		
+
 
 	PyObjC_HANDLER
 		rv = NULL;
@@ -155,7 +155,7 @@ mod_CFMachPortCreateWithPort(
 	}
 
 	if (py_shouldFree != Py_None && py_shouldFree != PyObjC_NULL) {
-		PyErr_SetString(PyExc_ValueError, 
+		PyErr_SetString(PyExc_ValueError,
 				"shouldFree not None or NULL");
 		return NULL;
 	}
@@ -169,10 +169,10 @@ mod_CFMachPortCreateWithPort(
 	CFMachPortRef rv = NULL;
 	PyObjC_DURING
 		rv = CFMachPortCreateWithPort(
-			allocator, 
+			allocator,
 			port,
 			mod_CFMachPortCallBack, &context, &shouldFree);
-		
+
 
 	PyObjC_HANDLER
 		rv = NULL;
@@ -235,12 +235,12 @@ mod_CFMachPortGetContext(
 	}
 
 	if (context.version != 0) {
-		PyErr_SetString(PyExc_ValueError, "retrieved context is not valid");
+		PyErr_Format(PyExc_ValueError, "retrieved context with version %d is not valid", context.version);
 		return NULL;
 	}
 
 	if (context.retain != mod_machport_retain) {
-		PyErr_SetString(PyExc_ValueError, 
+		PyErr_SetString(PyExc_ValueError,
 			"retrieved context is not supported");
 		return NULL;
 	}

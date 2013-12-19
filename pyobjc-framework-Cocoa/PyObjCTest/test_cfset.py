@@ -10,6 +10,11 @@ except NameError:
 
 class TestSet (TestCase):
     def testTypes(self):
+        try:
+            if objc.lookUpClass('NSSet') is CFSetRef:
+                return
+        except objc.error:
+            pass
         self.assertIsCFType(CFSetRef)
 
     def testTypeID(self):

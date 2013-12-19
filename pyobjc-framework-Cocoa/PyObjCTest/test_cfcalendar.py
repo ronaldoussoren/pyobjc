@@ -10,7 +10,17 @@ except NameError:
 
 class TestCFCalendarVariadic (TestCase):
     def testTypes(self):
-        self.assertIsCFType(CFCalendarRef)
+        cls = None
+        try:
+            cls = objc.lookUpClasS('NSCFCalendar')
+        except objc.error:
+            cls = objc.lookUpClasS('__NSCFCalendar')
+
+        if cls is None:
+            self.assertIsCFType(CFCalendarRef)
+
+        else:
+            self.assertIs(CFCalenderRef, cls)
 
     def testCFCalendarComposeAbsoluteTime(self):
         calendar = CFCalendarCreateWithIdentifier(
