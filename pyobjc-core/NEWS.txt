@@ -6,6 +6,9 @@ An overview of the relevant changes in new, and older, releases.
 Version 3.0
 -----------
 
+* The wrapper type for opaque pointers didn't have a "__module__" attribute,
+  which breaks code that (correctly) assumes that all types have such an attribute.
+
 * Archiving now supports nested definitions and method references, simular
   to the support of those added to pickle protocol 4 in Python 3.4.
 

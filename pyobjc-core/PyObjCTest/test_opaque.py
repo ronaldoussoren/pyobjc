@@ -11,6 +11,8 @@ class TestFromPython (TestCase):
                 "BarHandle", BarEncoded, "BarHandle doc")
 
         self.assertIsInstance(tp, type)
+        self.assertEqual(tp.__module__, "objc")
+        self.assertEqual(repr(tp), "<class 'objc.BarHandle'>")
 
         f = OC_OpaqueTest.createBarWithFirst_andSecond_(1.0, 4.5)
         self.assertIsInstance(f, tp)
@@ -22,6 +24,16 @@ class TestFromPython (TestCase):
         # NULL pointer is converted to None
         self.assertEqual(OC_OpaqueTest.nullBar(), None)
 
+    def testNaming (self):
+        tp = objc.createOpaquePointerType(
+                "Mod.BarHandle", BarEncoded, "BarHandle doc")
+
+        self.assertIsInstance(tp, type)
+        self.assertEqual(tp.__module__, "Mod")
+        self.assertEqual(tp.__name__, "BarHandle")
+        if sys.version_info[:2] >= (3,3):
+            self.assertEqual(tp.__qualname__, "BarHandle")
+        self.assertEqual(repr(tp), "<class 'Mod.BarHandle'>")
 
 class TestFromC (TestCase):
     def testMutable(self):

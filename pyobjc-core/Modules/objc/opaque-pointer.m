@@ -258,6 +258,7 @@ static  ffi_cif* new_cif = NULL;
     int r;
     PyObject* v = NULL;
     PyObject* w = NULL;
+    const char* name_dot;
 
     if (new_cif == NULL) {
         PyObjCMethodSignature* signature;
@@ -304,7 +305,12 @@ static  ffi_cif* new_cif = NULL;
     newType->ht_type.tp_flags |= Py_TPFLAGS_HEAPTYPE;
     newType->ht_type.tp_flags &= ~Py_TPFLAGS_HAVE_GC;
 
-    newType->ht_name = PyText_FromString(name);
+    name_dot = strchr(name, '.');
+    if (name_dot != NULL && name_dot[1] != '\0') {
+        newType->ht_name = PyText_FromString(name_dot + 1);
+    } else {
+        newType->ht_name = PyText_FromString(name);
+    }
     if (newType->ht_name == NULL) {
         PyMem_Free(newType);
         PyErr_NoMemory();
@@ -314,12 +320,8 @@ static  ffi_cif* new_cif = NULL;
     newType->ht_type.tp_name = PyText_AsString(newType->ht_name);
 
 #if PY_VERSION_HEX >= 0x03030000
-    newType->ht_qualname = PyText_FromString(name);
-    if (newType->ht_qualname == NULL) {
-        PyMem_Free(newType);
-        PyErr_NoMemory();
-        return NULL;
-    }
+    newType->ht_qualname = newType->ht_name;
+    Py_INCREF(newType->ht_qualname);
 #endif
 
     v = PyDict_New();
@@ -333,10 +335,33 @@ static  ffi_cif* new_cif = NULL;
     }
 
     if (PyDict_SetItemString(v, "__typestr__", w) != 0) {
+        Py_CLEAR(w);
         goto error_cleanup;
     }
 
     Py_CLEAR(w);
+
+    if (name_dot == NULL || name_dot[1] == '\0') {
+        w = PyText_FromString("objc");
+        if (w == NULL) {
+            goto error_cleanup;
+        }
+        if (PyDict_SetItemString(v, "__module__", w) != 0) {
+            Py_CLEAR(w);
+            goto error_cleanup;
+        }
+        Py_CLEAR(w);
+    } else {
+        w = PyText_FromStringAndSize(name, name_dot - name);
+        if (w == NULL) {
+            goto error_cleanup;
+        }
+        if (PyDict_SetItemString(v, "__module__", w) != 0) {
+            Py_CLEAR(w);
+            goto error_cleanup;
+        }
+        Py_CLEAR(w);
+    }
 
     newType->ht_type.tp_dict = v; v = NULL;
 
