@@ -332,9 +332,13 @@ def Extension(*args, **kwds):
     os_level = get_os_level()
     cflags =  ["-DPyObjC_BUILD_RELEASE=%02d%02d"%(tuple(map(int, os_level.split('.'))))]
     ldflags = []
+
     if os_level != '10.4':
-        cflags.extend(['-isysroot','/'])
-        ldflags.extend(['-isysroot','/'])
+        if os.path.exists('/usr/include/stdio.h'):
+            # only tweak the SDK when using the command-line tools
+            # FIXME: This should be properly fixed
+            cflags.extend(['-isysroot','/'])
+            ldflags.extend(['-isysroot','/'])
     else:
         cflags.append('-DNO_OBJC2_RUNTIME')
 
