@@ -16,7 +16,7 @@ try:
 except NameError:
     unicode = str
 
-class TestNSDecimalWrwapper (TestCase):
+class TestNSDecimalWrapper (TestCase):
     def test_creation(self):
         d = objc.NSDecimal(0)
         self.assertEqual(str(d), "0")

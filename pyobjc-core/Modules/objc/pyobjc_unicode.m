@@ -202,14 +202,15 @@ PyObjCUnicode_New(NSString* value)
     Py_UCS4 maxchar;
     int nr_surrogates;
 
-    PyObjC_DURING
-        length = [value length];
-        characters = PyObject_MALLOC(sizeof(unichar) * (length+1));
-        if (characters == NULL) {
-            PyErr_NoMemory();
-            NS_VALUERETURN(NULL, PyObject*);
-        }
+    length = [value length];
 
+    characters = PyObject_MALLOC(sizeof(unichar) * (length+1));
+    if (characters == NULL) {
+        PyErr_NoMemory();
+        return NULL;
+    }
+
+    PyObjC_DURING
         range = NSMakeRange(0, length);
 
         [value getCharacters: characters range: range];
@@ -221,9 +222,11 @@ PyObjCUnicode_New(NSString* value)
             characters = NULL;
         }
         PyObjCErr_FromObjC(localException);
-        NS_VALUERETURN(NULL, PyObject*);
-
     PyObjC_ENDHANDLER
+
+    if (characters == NULL) {
+        return NULL;
+    }
 
     result = PyObject_New(PyObjCUnicodeObject, &PyObjCUnicode_Type);
     result->weakrefs = NULL;

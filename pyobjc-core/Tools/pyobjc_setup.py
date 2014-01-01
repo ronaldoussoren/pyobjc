@@ -225,6 +225,8 @@ def _working_compiler(executable):
             executable, '-c', fp.name] + cflags,
             stdout=subprocess.PIPE, stderr=subprocess.PIPE)
         exit = p.wait()
+        p.stdout.close()
+        p.stderr.close()
         if exit != 0:
             return False
 

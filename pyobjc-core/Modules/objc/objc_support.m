@@ -238,12 +238,14 @@
 
 -(PyObject*)__pyobjc_PythonObject__
 {
+    assert(PyGILState_Check());
     PyObject *rval = (PyObject *)PyObjCUnicode_New(self);
     return rval;
 }
 
 -(PyObject*)__pyobjc_PythonTransient__:(int*)cookie
 {
+    assert(PyGILState_Check());
     *cookie = 0;
     return (PyObject *)PyObjCUnicode_New(self);
 }
@@ -1835,6 +1837,7 @@ pythonify_c_value(const char *type, void *datum)
             Py_INCREF (retobject);
 
         } else {
+            assert(PyGILState_Check());
             retobject = [obj  __pyobjc_PythonObject__];
         }
         break;

@@ -428,15 +428,25 @@ decimal_richcompare(PyObject* self, PyObject* other, int type)
 
     if (!Decimal_Check(other)) {
         if (type == Py_EQ) {
+            if (PyErr_Occurred()) {
+                PyErr_Clear();
+            }
             return PyBool_FromLong(0);
 
         } else if (type == Py_NE) {
+            if (PyErr_Occurred()) {
+                PyErr_Clear();
+            }
             return PyBool_FromLong(1);
         }
 
         PyErr_Format(PyExc_TypeError,
             "Cannot compare NSDecimal and %s",
             other->ob_type->tp_name);
+        return NULL;
+    }
+
+    if (PyErr_Occurred()) {
         return NULL;
     }
 

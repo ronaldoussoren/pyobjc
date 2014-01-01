@@ -83,19 +83,30 @@
 
 -(id)__realObject__
 {
+#ifdef Py_DEBUG
+    if (!PyUnicode_IS_READY(value)) {
+            /* Object should be ready, ensure we crash with the GIL
+             * held when it's not.
+             */
+            PyObjC_BEGIN_WITH_GIL
+                PyUnicode_GET_LENGTH(value);
+            PyObjC_END_WITH_GIL
+    }
+#endif
+
     if (!realObject) {
         switch (PyUnicode_KIND(value)) {
         case PyUnicode_1BYTE_KIND:
             if (PyUnicode_IS_ASCII(value)) {
                 realObject = [[NSString alloc]
                     initWithBytesNoCopy:PyUnicode_1BYTE_DATA(value)
-                           length:(NSUInteger)PyUnicode_GET_SIZE(value)
+                           length:(NSUInteger)PyUnicode_GET_LENGTH(value)
                          encoding:NSASCIIStringEncoding
                      freeWhenDone:NO];
             } else {
                 realObject = [[NSString alloc]
                     initWithBytesNoCopy:PyUnicode_1BYTE_DATA(value)
-                           length:(NSUInteger)PyUnicode_GET_SIZE(value)
+                           length:(NSUInteger)PyUnicode_GET_LENGTH(value)
                          encoding:NSISOLatin1StringEncoding
                      freeWhenDone:NO];
 
@@ -105,7 +116,7 @@
         case PyUnicode_2BYTE_KIND:
             realObject = [[NSString alloc]
                 initWithCharactersNoCopy:PyUnicode_2BYTE_DATA(value)
-                       length:(NSUInteger)PyUnicode_GET_SIZE(value)
+                       length:(NSUInteger)PyUnicode_GET_LENGTH(value)
                  freeWhenDone:NO];
             break;
 

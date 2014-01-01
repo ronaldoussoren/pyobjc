@@ -3482,6 +3482,7 @@ PyObjCFFI_BuildResult(
                 }
             } else {
 
+                assert(PyGILState_Check());
                 objc_result = pythonify_c_return_value (tp, pRetval);
                 if (objc_result == NULL) {
                     return NULL;
@@ -4019,6 +4020,8 @@ PyObjCFFI_Caller(PyObject *aMeth, PyObject* self, PyObject *args)
         PyObjCErr_FromObjC(localException);
 
     PyObjC_ENDHANDLER
+
+    assert(PyGILState_Check());
 
     if (unlikely(isUninitialized && PyObjCObject_Check(self))) {
         ((PyObjCObject*)self)->flags  |= PyObjCObject_kUNINITIALIZED;

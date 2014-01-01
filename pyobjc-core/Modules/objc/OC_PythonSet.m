@@ -162,14 +162,19 @@
 
     if (code == 1) {
         //value = PyFrozenSet_New(NULL);
-        value = PySet_New(NULL);
+        PyObjC_BEGIN_WITH_GIL
+            value = PySet_New(NULL);
+        PyObjC_END_WITH_GIL
+
         result =  [super initWithCoder:coder];
         if (result != nil) {
             Py_TYPE(value) = &PyFrozenSet_Type;
         }
         return result;
     } else if (code == 2) {
-        value = PySet_New(NULL);
+        PyObjC_BEGIN_WITH_GIL
+            value = PySet_New(NULL);
+        PyObjC_END_WITH_GIL
         return [super initWithCoder:coder];
     }
 

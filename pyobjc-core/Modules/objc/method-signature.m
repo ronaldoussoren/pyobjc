@@ -363,6 +363,9 @@ setup_type(struct _PyObjC_ArgDescr* meta, const char* type)
             *cur++ = _C_PTR;
             memcpy(cur, c, e-c);
             cur[e-c] = '\0';
+#ifdef PyObjC_DEBUG
+            meta->type = PyMem_Realloc((void*)(meta->type), (withoutModifiers - type) + (e - c) + 4);
+#endif /* PyObjC_DEBUG */
 
     } else {
         meta->type = type;
@@ -894,14 +897,14 @@ setup_descr(struct _PyObjC_ArgDescr* descr, PyObject* meta, BOOL is_native)
             type = descr->type;
         }
 
-        char* tp = PyMem_Malloc(strlen(type)+2);
+        const char* withoutModifiers = PyObjCRT_SkipTypeQualifiers(type);
+        char* tp = PyMem_Malloc(strlen(withoutModifiers)+2);
         if (tp == NULL) {
             Py_XDECREF(bytes);
             PyErr_NoMemory();
             return -1;
         }
 
-        const char* withoutModifiers = PyObjCRT_SkipTypeQualifiers(type);
         /*PyObjC_Assert(*withoutModifiers != _C_ARY_B, -1);*/
         if (typeModifier != '\0') {
             /* Skip existing modifiers, we're overriding those */
@@ -914,6 +917,10 @@ setup_descr(struct _PyObjC_ArgDescr* descr, PyObject* meta, BOOL is_native)
         descr->typeOverride = YES;
         descr->type = tp;
         Py_XDECREF(bytes);
+
+#ifdef PyObjC_DEBUG
+        descr->type = PyMem_Realloc((void*)(descr->type), strlen(withoutModifiers) + 3);
+#endif /* PyObjC_DEBUG */
 
     } else if (descr != NULL && descr->type == NULL) {
         if (typeModifier != '\0') {
@@ -933,11 +940,14 @@ setup_descr(struct _PyObjC_ArgDescr* descr, PyObject* meta, BOOL is_native)
         } else if (typeModifier != '\0') {
             if (descr->tmpl) return -2;
 
-            char* tp = PyMem_Malloc(strlen(descr->type)+2);
+            char* tp = PyMem_Malloc(strlen(withoutModifiers)+2);
             if (tp == NULL) {
                 PyErr_NoMemory();
                 return -1;
             }
+
+            tp[0]  = typeModifier;
+            strcpy(tp+1, withoutModifiers);
 
             if (descr->typeOverride) {
                 PyMem_Free((void*)(descr->type));
@@ -945,11 +955,12 @@ setup_descr(struct _PyObjC_ArgDescr* descr, PyObject* meta, BOOL is_native)
             }
 
             /* Skip existing modifiers, we're overriding those */
-            strcpy(tp+1, withoutModifiers);
-            tp[0]  = typeModifier;
-            PyObjC_Assert(tp != NULL, -1);
             descr->typeOverride = YES;
             descr->type = tp;
+
+#ifdef PyObjC_DEBUG
+            descr->type = PyMem_Realloc((void*)(descr->type), strlen(withoutModifiers) + 3);
+#endif /* PyObjC_DEBUG */
         }
     }
     return 0;
@@ -1344,6 +1355,10 @@ merge_descr(struct _PyObjC_ArgDescr* descr, struct _PyObjC_ArgDescr* meta, BOOL 
             PyObjC_Assert(tp != NULL, NULL);
             descr->typeOverride = YES;
             descr->type = tp;
+
+#ifdef PyObjC_DEBUG
+            descr->type = PyMem_Realloc((void*)(descr->type), strlen(withoutModifiers) + 3);
+#endif /* PyObjC_DEBUG */
 
             if (to_free) {
                 PyMem_Free(to_free);

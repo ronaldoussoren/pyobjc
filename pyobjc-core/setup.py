@@ -71,6 +71,7 @@ OBJC_LDFLAGS = [
     '-framework', 'Foundation',
     '-framework', 'Carbon',
     '-fvisibility=protected',
+    '-g', '-O1', # XXX
 ]
 
 
@@ -104,9 +105,9 @@ if get_config_var('Py_DEBUG'):
     cfg_vars = get_config_vars()
     for k in vars:
         if isinstance(cfg_vars[k], str) and '-O2' in cfg_vars[k]:
-            cfg_vars[k] = cfg_vars[k].replace('-O2', '-O1')
+            cfg_vars[k] = cfg_vars[k].replace('-O2', '-O1 -g')
         elif isinstance(cfg_vars[k], str) and '-O3' in cfg_vars[k]:
-            cfg_vars[k] = cfg_vars[k].replace('-O3', '-O1')
+            cfg_vars[k] = cfg_vars[k].replace('-O3', '-O1 -g')
 
 else:
     # Enable -O4, which enables link-time optimization with

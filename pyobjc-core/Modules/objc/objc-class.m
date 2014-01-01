@@ -393,8 +393,6 @@ PyObjCClass_NewMetaClass(Class objc_class)
     result = (PyTypeObject*)PyType_Type.tp_new(&PyType_Type, args, NULL);
     Py_DECREF(args);
     if (result == NULL) {
-        PyErr_Print();
-        abort();
         return NULL;
     }
 
@@ -950,6 +948,7 @@ static    char* keywords[] = { "name", "bases", "dict", "protocols", NULL };
 
     } else {
         metatype = Py_TYPE(PyObjC_NSCFTypeClass);
+        Py_INCREF(metatype);
     }
     Py_DECREF(metadict); metadict = NULL;
 
