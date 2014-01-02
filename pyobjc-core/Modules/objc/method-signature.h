@@ -28,8 +28,8 @@ struct _PyObjC_ArgDescr {
 
     const char* sel_type;
     char modifier;
-    int8_t arrayArg;
-    int8_t arrayArgOut;
+    int16_t arrayArg;
+    int16_t arrayArgOut;
     enum _PyObjC_PointerType ptrType:3;
     unsigned int allowNULL:1;
     unsigned int typeOverride:1;
