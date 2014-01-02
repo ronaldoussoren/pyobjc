@@ -8,20 +8,22 @@
 #  Based on Apples FahrenheitToCelsiusTransformer Example
 #  file:///Developer/ADC%20Reference%20Library/documentation/Cocoa/Conceptual/ValueTransformers/index.html
 
-from Cocoa import *
+import objc
+from Cocoa import NSValueTransformer, NSNumber, NSObject
 
 
 class FahrenheitToCelsiusTransformer(NSValueTransformer):
     # While not strictly necessary, because PyObjC can deduce that
     # these selectors should be implemented for the class,
     # declaring them as classmethod helps make this more clear.
+
+    @classmethod
     def transformedValueClass(cls):
         return NSNumber
-    transformedValueClass = classmethod(transformedValueClass)
 
+    @classmethod
     def allowsReverseTransformation(cls):
         return True
-    allowsReverseTransformation = classmethod(allowsReverseTransformation)
 
     def transformedValue_(self, value):
         if value is None:
@@ -49,4 +51,4 @@ class TransformerAppDelegate (NSObject):
     fahrenheit = objc.ivar('fahrenheit', objc._C_DBL)
 
 trans = FahrenheitToCelsiusTransformer.alloc().init()
-NSValueTransformer.setValueTransformer_forName_(trans, u"FahrenheitToCelsiusTransformer")
+NSValueTransformer.setValueTransformer_forName_(trans, "FahrenheitToCelsiusTransformer")

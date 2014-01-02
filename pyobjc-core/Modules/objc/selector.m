@@ -735,7 +735,7 @@ PyObjCSelector_FindNative(PyObject* self, const char* name)
             return NULL;
         }
 
-        if (strcmp(class_getName(cls), "_NSZombie") == 0) {
+        if (strcmp(class_getName(cls), "_NSZombie") == 0 || strcmp(class_getName(cls), "_CNZombie_") == 0) {
             PyErr_Format(PyExc_AttributeError,
                 "No attribute %s", name);
             return NULL;
@@ -752,11 +752,12 @@ PyObjCSelector_FindNative(PyObject* self, const char* name)
 
 
         NS_DURING
-            if ([cls respondsToSelector:sel]) {
+            if ((class_getClassMethod(cls, @selector(respondsToSelector:)) != NULL) && [cls respondsToSelector:sel]) {
                 methsig = [cls methodSignatureForSelector:sel];
                 retval = PyObjCSelector_NewNative(cls, sel,
                     PyObjC_NSMethodSignatureToTypeString(methsig, buf, sizeof(buf)), 1);
-            } else if ((Object_class != nil) && (cls != Object_class) && nil != (methsig = [(NSObject*)cls methodSignatureForSelector:sel])) {
+            } else if ((class_getClassMethod(cls, @selector(methodSignatureForSelector:)) != NULL)
+                       && nil != (methsig = [(NSObject*)cls methodSignatureForSelector:sel])) {
                 retval = PyObjCSelector_NewNative(cls, sel,
                     PyObjC_NSMethodSignatureToTypeString(
                         methsig, buf, sizeof(buf)), 1);

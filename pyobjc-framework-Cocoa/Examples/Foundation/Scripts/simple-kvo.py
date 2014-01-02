@@ -18,7 +18,7 @@ MyClass.setKeys_triggerChangeNotificationsForDependentKey_(
 
 class Observer(NSObject):
     def observeValueForKeyPath_ofObject_change_context_(self, path, object, changeDescription, context):
-        print 'path "%s" was changed to "%s".' % (path, changeDescription[NSKeyValueChangeNewKey])
+        print('path "%s" was changed to "%s".' % (path, changeDescription[NSKeyValueChangeNewKey]))
 
 myInstance = MyClass.new()
 observer = Observer.new()
@@ -30,4 +30,4 @@ myInstance.addObserver_forKeyPath_options_context_(observer, "power", NSKeyValue
 myInstance.setValue_forKey_(2, "base")
 myInstance.power = 4
 
-print "%d ** %d == %d" % (myInstance.base, myInstance.valueForKey_("power"), myInstance.result())
+print("%d ** %d == %d" % (myInstance.base, myInstance.valueForKey_("power"), myInstance.result()))

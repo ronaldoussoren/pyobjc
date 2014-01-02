@@ -1,4 +1,5 @@
-from Foundation import *
+from Foundation import NSObject
+from objc import super
 import objc
 
 class RPCMethod(NSObject):
@@ -19,16 +20,16 @@ class RPCMethod(NSObject):
         else:
             return self.k_methodSignature
 
+    @objc.accessor
     def setMethodSignature_(self, aSignature):
         self.k_methodSignature = aSignature
-    setMethodSignature_ = objc.accessor(setMethodSignature_)
 
     def methodDescription(self):
         if self.k_methodDescription is None:
-            self.setMethodDescription_(u"<description not yet received>")
+            self.setMethodDescription_("<description not yet received>")
             self.document.fetchMethodDescription_(self)
         return self.k_methodDescription
 
+    @objc.accessor
     def setMethodDescription_(self, aDescription):
         self.k_methodDescription = aDescription
-    setMethodDescription_ = objc.accessor(setMethodDescription_)

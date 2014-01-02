@@ -1,12 +1,13 @@
-from Cocoa import *
+import Cocoa
+import objc
 
 import math
 
 searchIndex = 0
 
-class MyWindowController (NSWindowController):
+class MyWindowController (Cocoa.NSWindowController):
     query = objc.ivar()
-    previousRowCount = objc.ivar(objc._C_INT)
+    previousRowCount = objc.ivar(type=objc._C_INT)
 
     myTableView = objc.IBOutlet()
     mySearchResults = objc.IBOutlet()
@@ -17,7 +18,7 @@ class MyWindowController (NSWindowController):
 
 
     def dealloc(self):
-        NSNotificationCenter.defaultCenter().removeObserver_(self)
+        Cocoa.NSNotificationCenter.defaultCenter().removeObserver_(self)
 
     def awakeFromNib(self):
         # no vertical scrolling, we always want to show all rows
@@ -28,20 +29,19 @@ class MyWindowController (NSWindowController):
 
         # put the focus in the first text field
         displayValue = self.predicateEditor.displayValuesForRow_(1).lastObject()
-        if isinstance(displayValue,  NSControl):
+        if isinstance(displayValue,  Cocoa.NSControl):
             self.window().makeFirstResponder_(displayValue)
 
         # create and initalize our query
-        self.query = NSMetadataQuery.alloc().init()
+        self.query = Cocoa.NSMetadataQuery.alloc().init()
 
         # setup our Spotlight notifications
-        nf = NSNotificationCenter.defaultCenter()
+        nf = Cocoa.NSNotificationCenter.defaultCenter()
         nf.addObserver_selector_name_object_(self, 'queryNotification:', None, self.query)
 
         # initialize our Spotlight query, sort by contact name
 
-        # XXX: this framework isn't wrapped yet!
-        self.query.setSortDescriptors_([NSSortDescriptor.alloc().initWithKey_ascending_(
+        self.query.setSortDescriptors_([Cocoa.NSSortDescriptor.alloc().initWithKey_ascending_(
             'kMDItemContactKeywords', True)])
         self.query.setDelegate_(self)
 
@@ -56,9 +56,12 @@ class MyWindowController (NSWindowController):
     def loadResultsFromQuery_(self, notif):
         results = notif.object().results()
 
-        NSLog("search count = %d", len(results))
+        Cocoa.NSLog("search count = %d", len(results))
         foundResultsStr = "Results found: %d"%(len(results),)
         self.progressSearchLabel.setStringValue_(foundResultsStr)
+
+        if len(results) == 0:
+            return
 
         # iterate through the array of results, and match to the existing stores
         for item in results:
@@ -79,42 +82,42 @@ class MyWindowController (NSWindowController):
                     'phone': phoneStr or "",
                     'city': cityStr or "",
                     'state': stateStr or "",
-                    'url': NSURL.fileURLWithPath_(storePath),
+                    'url': Cocoa.NSURL.fileURLWithPath_(storePath),
             }
             self.mySearchResults.append(dict)
 
     def queryNotification_(self, note):
         # the NSMetadataQuery will send back a note when updates are happening.
         # By looking at the [note name], we can tell what is happening
-        if note.name() == NSMetadataQueryDidStartGatheringNotification:
+        if note.name() == Cocoa.NSMetadataQueryDidStartGatheringNotification:
             # the query has just started
-            NSLog("search: started gathering")
+            Cocoa.NSLog("search: started gathering")
 
             self.progressSearch.setHidden_(False)
             self.progressSearch.startAnimation_(self)
             self.progressSearch.animate_(self)
             self.progressSearchLabel.setStringValue_("Searching...")
 
-        elif note.name() == NSMetadataQueryDidFinishGatheringNotification:
+        elif note.name() == Cocoa.NSMetadataQueryDidFinishGatheringNotification:
             # at this point, the query will be done. You may recieve an update
             # later on.
-            NSLog("search: finished gathering");
+            Cocoa.NSLog("search: finished gathering");
 
             self.progressSearch.setHidden_(True)
             self.progressSearch.stopAnimation_(self)
 
             self.loadResultsFromQuery_(note)
 
-        elif note.name() == NSMetadataQueryGatheringProgressNotification:
+        elif note.name() == Cocoa.NSMetadataQueryGatheringProgressNotification:
             # the query is still gathering results...
-            NSLog("search: progressing...")
+            Cocoa.NSLog("search: progressing...")
 
             self.progressSearch.animate_(self)
 
-        elif note.name() == NSMetadataQueryDidUpdateNotification:
+        elif note.name() == Cocoa.NSMetadataQueryDidUpdateNotification:
             # an update will happen when Spotlight notices that a file as
             # added, removed, or modified that affected the search results.
-            NSLog("search: an update happened.")
+            Cocoa.NSLog("search: an update happened.")
 
     # -------------------------------------------------------------------------
     #   inspect:selectedObjects
@@ -126,7 +129,7 @@ class MyWindowController (NSWindowController):
         objectDict = selectedObjects[0]
         if objectDict is not None:
             url = objectDict['url']
-            NSWorkspace.sharedWorkspace().openURL_(url)
+            Cocoa.NSWorkspace.sharedWorkspace().openURL_(url)
 
     # ------------------------------------------------------------------------
     #   spotlightFriendlyPredicate:predicate
@@ -138,10 +141,10 @@ class MyWindowController (NSWindowController):
     #           - Any compound predicate (other than NOT) must have at least two subpredicates
     # -------------------------------------------------------------------------
     def spotlightFriendlyPredicate_(self, predicate):
-        if predicate == NSPredicate.predicateWithValue_(True) or predicate == NSPredicate.predicateWithValue_(False):
+        if predicate == Cocoa.NSPredicate.predicateWithValue_(True) or predicate == Cocoa.NSPredicate.predicateWithValue_(False):
             return False
 
-        elif isinstance(predicate, NSCompoundPredicate):
+        elif isinstance(predicate, Cocoa.NSCompoundPredicate):
 
             type = predicate.compoundPredicateType()
             cleanSubpredicates = []
@@ -155,11 +158,11 @@ class MyWindowController (NSWindowController):
                 return None
 
             else:
-                if len(cleanSubpredicates) == 1 and type != NSNotPredicateType:
+                if len(cleanSubpredicates) == 1 and type != Cocoa.NSNotPredicateType:
                     return cleanSubpredicates[0]
 
                 else:
-                    return NSCompoundPredicate.alloc().initWithType_subpredicates_(type, cleanSubpredicates)
+                    return Cocoa.NSCompoundPredicate.alloc().initWithType_subpredicates_(type, cleanSubpredicates)
 
         else:
             return predicate
@@ -174,9 +177,9 @@ class MyWindowController (NSWindowController):
                 self.mySearchResults.arrangedObjects());        # remove the old search results
 
             # always search for items in the Address Book
-            addrBookPredicate = NSPredicate.predicateWithFormat_(
+            addrBookPredicate = Cocoa.NSPredicate.predicateWithFormat_(
                 "(kMDItemKind = 'Address Book Person Data')")
-            predicate = NSCompoundPredicate.andPredicateWithSubpredicates_(
+            predicate = Cocoa.NSCompoundPredicate.andPredicateWithSubpredicates_(
                 [addrBookPredicate, predicate])
 
             self.query.setPredicate_(predicate)
@@ -196,11 +199,11 @@ class MyWindowController (NSWindowController):
     @objc.IBAction
     def predicateEditorChanged_(self, sender):
         # check NSApp currentEvent for the return key
-        event = NSApp.currentEvent()
+        event = Cocoa.NSApp.currentEvent()
         if event is None:
             return
 
-        if event.type() == NSKeyDown:
+        if event.type() == Cocoa.NSKeyDown:
             characters = event.characters()
             if len(characters) > 0 and characters[0] == u'\r':
                 # get the predicat, which is the object value of our view
@@ -210,7 +213,7 @@ class MyWindowController (NSWindowController):
                 predicate = self.spotlightFriendlyPredicate_(predicate)
                 if predicate is not None:
                     global searchIndex
-                    title = NSLocalizedString("Search #%ld", "Search title");
+                    title = Cocoa.NSLocalizedString("Search #%ld", "Search title");
                     self.createNewSearchForPredicate_withTitle_(
                             predicate, title % searchIndex)
                     searchIndex += 1
@@ -239,9 +242,9 @@ class MyWindowController (NSWindowController):
         oldPredicateEditorViewMask = predicateEditorScrollView.autoresizingMask()
 
         tableScrollView.setAutoresizingMask_(
-                NSViewWidthSizable | NSViewMaxYMargin)
+                Cocoa.NSViewWidthSizable | Cocoa.NSViewMaxYMargin)
         predicateEditorScrollView.setAutoresizingMask_(
-                NSViewWidthSizable | NSViewHeightSizable)
+                Cocoa.NSViewWidthSizable | Cocoa.NSViewHeightSizable)
 
         # determine if we need to grow or shrink the window
         growing = (newRowCount > self.previousRowCount)
@@ -254,11 +257,11 @@ class MyWindowController (NSWindowController):
         # We don't care about the horizontal dimension, so leave that as 0.
         #
         sizeChange = self.predicateEditor.convertSize_toView_(
-                NSMakeSize(0, heightDifference), None)
+                Cocoa.NSMakeSize(0, heightDifference), None)
 
         # offset our status view
         frame = self.progressView.frame()
-        self.progressView.setFrameOrigin_(NSMakePoint(
+        self.progressView.setFrameOrigin_(Cocoa.NSMakePoint(
             frame.origin.x,
             frame.origin.y - self.predicateEditor.rowHeight() * (newRowCount - self.previousRowCount)))
 

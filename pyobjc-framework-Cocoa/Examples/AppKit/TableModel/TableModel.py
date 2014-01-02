@@ -16,7 +16,8 @@ sources or nibs.)
 # ask our object for data; it controls us, not the other way around.
 
 from PyObjCTools import AppHelper
-from Cocoa import *
+from Cocoa import NSObject
+import objc
 import pkg_resources
 
 ROWCOUNT = 200
@@ -46,7 +47,7 @@ class TableModel(NSObject):
     @objc.IBAction
     def doubleClick_(self, sender):
         # double-clicking a column header causes clickedRow() to return -1
-        print "doubleClick!", sender.clickedColumn(), sender.clickedRow()
+        print("doubleClick!", sender.clickedColumn(), sender.clickedRow())
 
     # data source methods
     def numberOfRowsInTableView_(self, aTableView):
@@ -89,7 +90,7 @@ class TableModel(NSObject):
         self.label.setStringValue_(label)
 
     def windowShouldClose_(self, sender):
-        print "Should Close?"
+        print("Should Close?")
         return 0
 
 

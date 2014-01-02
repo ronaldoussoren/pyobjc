@@ -20,14 +20,16 @@ sources or nibs.)
 # -> Scroll View), and *no* work in the code. It was too easy, so for kicks
 # I added zoom functionality and a "Show rulers" checkbox.
 
-from Cocoa import *
+import objc
+from objc import super
+import Cocoa
 from PyObjCTools import AppHelper
 
 ZOOM = 2.0
 
 
 # class defined in MainMenu.nib
-class DotView(NSView):
+class DotView(Cocoa.NSView):
     colorWell = objc.IBOutlet()
     sizeSlider = objc.IBOutlet()
 
@@ -35,7 +37,7 @@ class DotView(NSView):
         self.center = (50.0, 50.0)
         super(DotView, self).initWithFrame_(frame)
         self.radius = 10.0
-        self.color = NSColor.redColor()
+        self.color = Cocoa.NSColor.redColor()
         return self
 
     def awakeFromNib(self):
@@ -71,7 +73,7 @@ class DotView(NSView):
 
     def mouseDown_(self, event):
         eventLocation = event.locationInWindow()
-        if event.modifierFlags() & NSCommandKeyMask:
+        if event.modifierFlags() & Cocoa.NSCommandKeyMask:
             clipView = self.superview()
             self.originalPoint = eventLocation
             self.originalOffset = clipView.bounds()[0]
@@ -81,7 +83,7 @@ class DotView(NSView):
             self.autoscroll_(event)
 
     def mouseDragged_(self, event):
-        if event.modifierFlags() & NSCommandKeyMask:
+        if event.modifierFlags() & Cocoa.NSCommandKeyMask:
             clipView = self.superview()
             eventLocation = event.locationInWindow()
             ox, oy = self.originalPoint
@@ -95,13 +97,13 @@ class DotView(NSView):
             self.mouseDown_(event)
 
     def drawRect_(self, rect):
-        NSColor.whiteColor().set()
-        NSRectFill(self.bounds())
+        Cocoa.NSColor.whiteColor().set()
+        Cocoa.NSRectFill(self.bounds())
         origin = (self.center[0]-self.radius, self.center[1]-self.radius)
         size = (2 * self.radius, 2 * self.radius)
         dotRect = (origin, size)
         self.color.set()
-        NSBezierPath.bezierPathWithOvalInRect_(dotRect).fill()
+        Cocoa.NSBezierPath.bezierPathWithOvalInRect_(dotRect).fill()
 
     @objc.IBAction
     def setRadius_(self, sender):

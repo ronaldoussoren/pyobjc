@@ -2,49 +2,54 @@
 """
 This script using NSNetServiceBrowser to look for local HTTP servers.
 """
-
+from __future__ import print_function
 import objc
-from Foundation import *
+from Foundation import NSObject, NSRunLoop, NSNetServiceBrowser, NSDate
+objc.setVerbose(1)
 
 class PrintingResolverDelegate(NSObject):
     def netServiceDidResolveAddress_(self, service):
         addresses = service.addresses()
         if len(addresses) == 0:
             return
-        print "%s.%s" % (service.name(), service.domain())
+        print("%s.%s" % (service.name(), service.domain()))
         for address in service.addresses():
-            print "   %s"%(address,)
-        print ""
+            print("   %s"%(address,))
+        print("")
+        service.setDelegate_(None)
 
     def netService_didNotResolve_(self, service, didNotResolve):
-        print "didNotResolve",didNotResolve
+        print("didNotResolve",didNotResolve)
+        service.setDelegate_(None)
 
 class PrintingBrowserDelegate(NSObject):
     def startLookup(self):
+        self.delegates = []
         for aNetService in self.services:
             prd = PrintingResolverDelegate.new()
             aNetService.setDelegate_(prd)
             aNetService.resolve()
+            self.delegates.append(prd)
 
     def netServiceBrowserWillSearch_(self, browser):
-        print "Browsing for advertised services..."
+        print("Browsing for advertised services...")
         self.services = []
 
     def netServiceBrowserDidStopSearch_(self, browser):
-        print "Browse complete"
+        print("Browse complete")
         self.startLookup()
 
     def netServiceBrowser_didNotSearch_(self, browser, errorDict):
-        print "Could not search."
+        print("Could not search.")
 
     def netServiceBrowser_didFindService_moreComing_(self, browser, aNetService, moreComing):
-        print "Found a service: %s %s"%(aNetService.name(), aNetService.domain())
+        print("Found a service: %s %s"%(aNetService.name(), aNetService.domain()))
         self.services.append(aNetService)
         if not moreComing:
             browser.stop()
 
     def netServiceBrowser_didRemoveService_moreComing_(self, browser, aNetService, moreComing):
-        print "Service removed: %s"%(aNetService.name(),)
+        print("Service removed: %s"%(aNetService.name(),))
         if not moreComing:
             browser.stop()
 

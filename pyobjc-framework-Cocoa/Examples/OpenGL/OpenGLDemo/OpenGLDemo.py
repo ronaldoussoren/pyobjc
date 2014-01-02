@@ -45,7 +45,9 @@ class OpenGLDemoView(NSOpenGLView):
         self.color_index = sender.tag()
         self.setNeedsDisplay_(True)
 
-    def drawRect_(self, ((x, y), (w, h))):
+    def drawRect_(self, pos, siz):
+        x, y = pos
+        w, h = siz
         glViewport(0, 0, w, h)
         clear_color = [0.0]*4
         clear_color[self.color_index] = 1.0

@@ -1,11 +1,12 @@
-from Cocoa import *
+import objc
+import Cocoa
 
 gNumDaysInMonth = ( 0, 31, 28, 31, 30, 21, 30, 31, 31, 30, 31, 30, 31 )
 
 def isLeap(year):
     return (((year % 4) == 0 and ((year % 100) != 0)) or (year % 400) == 0)
 
-class CalendarMatrix (NSMatrix):
+class CalendarMatrix (Cocoa.NSMatrix):
     lastMonthButton = objc.IBOutlet()
     monthName = objc.IBOutlet()
     nextMonthButton = objc.IBOutlet()
@@ -16,12 +17,12 @@ class CalendarMatrix (NSMatrix):
         self._selectedDay = None
         self._startOffset = 0
 
-        cell = NSButtonCell.alloc().initTextCell_("")
-        now  = NSCalendarDate.date()
+        cell = Cocoa.NSButtonCell.alloc().initTextCell_("")
+        now  = Cocoa.NSCalendarDate.date()
 
-        cell.setShowsStateBy_(NSOnOffButton)
+        cell.setShowsStateBy_(Cocoa.NSOnOffButton)
         self.initWithFrame_mode_prototype_numberOfRows_numberOfColumns_(
-            frameRect, NSRadioModeMatrix, cell, 5, 7)
+            frameRect, Cocoa.NSRadioModeMatrix, cell, 5, 7)
 
         count = 0
         for i in range(6):
@@ -31,14 +32,14 @@ class CalendarMatrix (NSMatrix):
                     val.setTag_(count)
                 count += 1
 
-        self._selectedDay = NSCalendarDate.dateWithYear_month_day_hour_minute_second_timeZone_(
+        self._selectedDay = Cocoa.NSCalendarDate.dateWithYear_month_day_hour_minute_second_timeZone_(
                 now.yearOfCommonEra(),
                 now.monthOfYear(),
                 now.dayOfMonth(),
                 0,
                 0,
                 0,
-                NSTimeZone.localTimeZone())
+                Cocoa.NSTimeZone.localTimeZone())
         return self
 
 
@@ -47,14 +48,14 @@ class CalendarMatrix (NSMatrix):
         prevSelDate = self.selectedDay()
         selDay = self.selectedCell().tag() - self._startOffset + 1
 
-        selDate = NSCalendarDate.dateWithYear_month_day_hour_minute_second_timeZone_(
+        selDate = Cocoa.NSCalendarDate.dateWithYear_month_day_hour_minute_second_timeZone_(
                 prevSelDate.yearOfCommonEra(),
                 prevSelDate.monthOfYear(),
                 selDay,
                 0,
                 0,
                 0,
-                NSTimeZone.localTimeZone())
+                Cocoa.NSTimeZone.localTimeZone())
         self.setSelectedDay_(selDate)
         self.highlightTodayIfVisible()
 
@@ -82,7 +83,7 @@ class CalendarMatrix (NSMatrix):
             else:
                 currentMonth -= 1
 
-        self.setSelectedDay_(NSCalendarDate.dateWithYear_month_day_hour_minute_second_timeZone_(currentYear, currentMonth, 1, 0, 0, 0, NSTimeZone.localTimeZone()))
+        self.setSelectedDay_(Cocoa.NSCalendarDate.dateWithYear_month_day_hour_minute_second_timeZone_(currentYear, currentMonth, 1, 0, 0, 0, Cocoa.NSTimeZone.localTimeZone()))
         self.refreshCalendar()
         self.choseDay_(self)
 
@@ -98,14 +99,14 @@ class CalendarMatrix (NSMatrix):
         currentMonth = selDate.monthOfYear()
         currentYear = selDate.yearOfCommonEra()
 
-        firstOfMonth = NSCalendarDate.dateWithYear_month_day_hour_minute_second_timeZone_(
+        firstOfMonth = Cocoa.NSCalendarDate.dateWithYear_month_day_hour_minute_second_timeZone_(
                     currentYear,
                     currentMonth,
                     1,
                     0,
                     0,
                     0,
-                    NSTimeZone.localTimeZone())
+                    Cocoa.NSTimeZone.localTimeZone())
         self.monthName.setStringValue_(
             firstOfMonth.descriptionWithCalendarFormat_("%B %Y"))
         daysInMonth = gNumDaysInMonth[currentMonth]
@@ -127,22 +128,22 @@ class CalendarMatrix (NSMatrix):
                 cell.setBordered_(False)
                 cell.setEnabled_(False)
                 cell.setTitle_("")
-                cell.setCellAttribute_to_(NSCellHighlighted, False)
+                cell.setCellAttribute_to_(Cocoa.NSCellHighlighted, False)
             else:
                 # Fill in valid days in the matrix
                 cell.setBordered_(True)
                 cell.setEnabled_(True)
-                cell.setFont_(NSFont.systemFontOfSize_(12))
+                cell.setFont_(Cocoa.NSFont.systemFontOfSize_(12))
                 cell.setTitle_(str(dayLabel))
                 dayLabel += 1
-                cell.setCellAttribute_to_(NSCellHighlighted, False)
+                cell.setCellAttribute_to_(Cocoa.NSCellHighlighted, False)
 
         self.selectCellWithTag_(selDate.dayOfMonth() + self._startOffset - 1)
         self.highlightTodayIfVisible()
 
 
     def highlightTodayIfVisible(self):
-        now = NSCalendarDate.date()
+        now = Cocoa.NSCalendarDate.date()
         selDate = self.selectedDay()
 
         if (selDate.yearOfCommonEra() == now.yearOfCommonEra()
@@ -150,8 +151,8 @@ class CalendarMatrix (NSMatrix):
                 and selDate.dayOfMonth() == now.dayOfMonth()):
             aCell = self.cellWithTag_(
                 now.dayOfMonth() + self._startOffset - 1)
-            aCell.setHighlightsBy_(NSMomentaryChangeButton)
-            aCell.setCellAttribute_to_(NSCellHighlighted, True)
+            aCell.setHighlightsBy_(Cocoa.NSMomentaryChangeButton)
+            aCell.setCellAttribute_to_(Cocoa.NSCellHighlighted, True)
 
     def awakeFromNib(self):
         self.setTarget_(self)

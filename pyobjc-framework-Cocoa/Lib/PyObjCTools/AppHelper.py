@@ -237,16 +237,13 @@ def runEventLoop(argv=None, unexpectedErrorAlert=None, installInterrupt=None, pd
                     firstRun = False
                     if installInterrupt:
                         installMachInterrupt()
-                    print("Running main", main)
                     main(argv)
                 else:
                     NSApp().run()
             except RAISETHESE:
-                print("got exception")
                 traceback.print_exc()
                 break
             except:
-                print("got other exception", sys.exc_info())
                 exctype, e, tb = sys.exc_info()
                 objc_exception = False
                 if isinstance(e, objc.error):
@@ -262,7 +259,6 @@ def runEventLoop(argv=None, unexpectedErrorAlert=None, installInterrupt=None, pd
                 break
 
     finally:
-        print("In finally")
         if Debugging is not None:
             Debugging.removeExceptionHandler()
         PyObjCAppHelperRunLoopStopper.removeRunLoopStopperFromRunLoop_(runLoop)

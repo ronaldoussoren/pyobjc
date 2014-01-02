@@ -2,7 +2,8 @@
 WSTApplicationDelegateClass
 """
 
-from AppKit import *
+import objc
+from Foundation import NSObject
 
 from PyObjCTools import AppHelper
 from WSTConnectionWindowControllerClass import WSTConnectionWindowController

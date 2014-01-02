@@ -48,8 +48,8 @@ class PythonBrowserModel(NSObject):
             obj = eval(value, {})
         except:
             NSBeep()
-            print "XXX Error:", sys.exc_info()
-            print "XXX      :", repr(value)
+            print("XXX Error:", sys.exc_info())
+            print("XXX      :", repr(value))
         else:
             item.setValue(obj)
 
@@ -59,7 +59,10 @@ class PythonBrowserModel(NSObject):
 
 
 # objects of these types are not eligable for expansion in the outline view
-SIMPLE_TYPES = (str, unicode, int, long, float, complex)
+try:
+    SIMPLE_TYPES = (str, unicode, int, long, float, complex)
+except NameError:
+    SIMPLE_TYPES = (str, int, float, complex)
 
 
 def getInstanceVarNames(obj):
@@ -81,8 +84,7 @@ def getInstanceVarNames(obj):
                     slots[name] = 1
     if "__dict__" in slots:
         del slots["__dict__"]
-    slots = slots.keys()
-    slots.sort()
+    slots = list(sorted(slots.keys()))
     return slots
 
 
@@ -130,7 +132,7 @@ class PythonItem(NSObject):
         self.object = obj
         self.childrenEditable = 0
         if isinstance(obj, dict):
-            self.children = obj.keys()
+            self.children = list(obj.keys())
             self.children.sort()
             self._getChild = getitem
             self._setChild = setitem
@@ -162,7 +164,7 @@ class PythonItem(NSObject):
         return self._getChild is not None
 
     def getChild(self, child):
-        if self._childRefs.has_key(child):
+        if child in self._childRefs:
             return self._childRefs[child]
 
         name = self.children[child]

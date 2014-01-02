@@ -7,11 +7,11 @@
 #  The original version was written in Objective-C by Malcolm Crawford
 #  at http://homepage.mac.com/mmalc/CocoaExamples/controllers.html
 
-from Foundation import *
-from AppKit import NSArrayController
+from objc import super
+from Cocoa import NSArrayController
 
 class FilteringArrayController(NSArrayController):
-    _k_searchString = u""
+    _k_searchString = ""
 
     def search_(self, sender):
         self.setSearchString_(sender.stringValue())
@@ -23,12 +23,12 @@ class FilteringArrayController(NSArrayController):
         Set default values, and keep reference to new object -- see arrangeObjects_
         """
         self.newObj = super(FilteringArrayController, self).newObject()
-        self.newObj.setValue_forKey_(u"First", u"firstName")
-        self.newObj.setValue_forKey_(u"Last", u"lastName")
+        self.newObj.setValue_forKey_("First", "firstName")
+        self.newObj.setValue_forKey_("Last", "lastName")
         return self.newObj
 
     def arrangeObjects_(self, objects):
-        if self._k_searchString == None or self._k_searchString == u"":
+        if self._k_searchString == None or self._k_searchString == "":
             self.newObj = None
             return super(FilteringArrayController, self).arrangeObjects_(objects)
 
@@ -47,11 +47,11 @@ class FilteringArrayController(NSArrayController):
                 matchedObjects.append(item)
                 self.newObj = None
             else:
-                lowerName = item.valueForKeyPath_(u"firstName").lower()
+                lowerName = item.valueForKeyPath_("firstName").lower()
                 if lowerSearch in lowerName:
                     matchedObjects.append(item)
                 else:
-                    lowerName = item.valueForKeyPath_(u"lastName").lower()
+                    lowerName = item.valueForKeyPath_("lastName").lower()
                     if lowerSearch in lowerName:
                         matchedObjects.append(item)
         return super(FilteringArrayController, self).arrangeObjects_(matchedObjects)

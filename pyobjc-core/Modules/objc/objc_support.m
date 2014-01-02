@@ -478,9 +478,12 @@ PyObjCRT_SkipTypeSpec(const char *type)
         break;
 
 
+    case '\0':
+        return type;
+
     default:
         PyErr_Format(PyObjCExc_InternalError,
-            "PyObjCRT_SkipTypeSpec: Unhandled type '%#x' %s", *type, type);
+            "PyObjCRT_SkipTypeSpec: Unhandled type '0x%x' %s", *type, type);
         return NULL;
     }
 
@@ -549,7 +552,7 @@ PyObjCRT_NextField(const char *type)
             return NULL;
         } else if (unlikely(*type != _C_ARY_E)) {
             PyErr_Format(PyObjCExc_InternalError,
-                "PyObjCRT_SkipTypeSpec: Got '%#x' at end of array encoding, expecting '%#x'", *type, _C_ARY_E);
+                "PyObjCRT_SkipTypeSpec: Got '0x%x' at end of array encoding, expecting '0x%x'", *type, _C_ARY_E);
             return NULL;
         }
         if (type) type++;
@@ -578,7 +581,7 @@ PyObjCRT_NextField(const char *type)
             return NULL;
         } else if (unlikely(*type != _C_STRUCT_E)) {
             PyErr_Format(PyObjCExc_InternalError,
-                "PyObjCRT_SkipTypeSpec: Got '%#x' at end of struct encoding, expecting '%#x'", *type, _C_STRUCT_E);
+                "PyObjCRT_SkipTypeSpec: Got '0x%x' at end of struct encoding, expecting '0x%x'", *type, _C_STRUCT_E);
             return NULL;
         }
         type++;
@@ -607,7 +610,7 @@ PyObjCRT_NextField(const char *type)
             return NULL;
         } else if (unlikely(*type != _C_STRUCT_E)) {
             PyErr_Format(PyObjCExc_InternalError,
-                "PyObjCRT_SkipTypeSpec: Got '%#x' at end of union encoding, expecting '%#x'", *type, _C_UNION_E);
+                "PyObjCRT_SkipTypeSpec: Got '0x%x' at end of union encoding, expecting '0x%x'", *type, _C_UNION_E);
             return NULL;
         }
         type++;
@@ -629,7 +632,7 @@ PyObjCRT_NextField(const char *type)
 
     default:
         PyErr_Format(PyObjCExc_InternalError,
-            "PyObjCRT_SkipTypeSpec: Unhandled type '%#x'", *type);
+            "PyObjCRT_SkipTypeSpec: Unhandled type '0x%x'", *type);
         return NULL;
     }
 
@@ -797,7 +800,7 @@ PyObjCRT_AlignOfType(const char *type)
 
     default:
         PyErr_Format(PyObjCExc_InternalError,
-            "PyObjCRT_AlignOfType: Unhandled type '%#x' %s", *type, type);
+            "PyObjCRT_AlignOfType: Unhandled type '0x%x' %s", *type, type);
         return -1;
     }
 }
@@ -2999,7 +3002,7 @@ depythonify_c_value(const char *type, PyObject *argument, void *datum)
 
     default:
         PyErr_Format(PyExc_ValueError,
-            "depythonifying unknown typespec %#x", *type);
+            "depythonifying unknown typespec 0x%x", *type);
         return -1;
     }
     return 0;

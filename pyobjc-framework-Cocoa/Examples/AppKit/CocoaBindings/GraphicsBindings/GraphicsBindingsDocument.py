@@ -9,10 +9,11 @@
 #  http://homepage.mac.com/mmalc/CocoaExamples/controllers.html
 
 import objc
+from objc import super
 from PyObjCTools import AppHelper
 
 from RadiansToDegreesTransformer import RadiansToDegreesTransformer
-from Cocoa import *
+from Cocoa import NSDocument, NSValueTransformer, NSKeyedArchiver, NSKeyedUnarchiver
 
 class GraphicsBindingsDocument (NSDocument):
     graphicsView = objc.IBOutlet()
@@ -42,17 +43,17 @@ class GraphicsBindingsDocument (NSDocument):
         # we don't have palette items for them
 
         # allow the shadow inspector (joystick) to handle multiple selections
-        offsetOptions = { u"NSAllowsEditingMultipleValuesSelection" : True }
+        offsetOptions = { "NSAllowsEditingMultipleValuesSelection" : True }
         angleOptions = {
-            u"NSValueTransformerName" :  u"RadiansToDegreesTransformer",
-            u"NSAllowsEditingMultipleValuesSelection" : True,
+            "NSValueTransformerName" :  "RadiansToDegreesTransformer",
+            "NSAllowsEditingMultipleValuesSelection" : True,
         }
 
         BINDINGS = [
-            (u'graphics',  self.graphicsView, self.graphicsController, u'arrangedObjects', None),
-            (u'selectionIndexes', self.graphicsView, self.graphicsController, u'selectionIndexes', None),
-            (u'offset', self.shadowInspector, self.graphicsController, u'selection.shadowOffset', offsetOptions),
-            (u'angle', self.shadowInspector, self.graphicsController, u'selection.shadowAngle', angleOptions),
+            ('graphics',  self.graphicsView, self.graphicsController, 'arrangedObjects', None),
+            ('selectionIndexes', self.graphicsView, self.graphicsController, 'selectionIndexes', None),
+            ('offset', self.shadowInspector, self.graphicsController, 'selection.shadowOffset', offsetOptions),
+            ('angle', self.shadowInspector, self.graphicsController, 'selection.shadowAngle', angleOptions),
         ]
         for binding in BINDINGS:
             self.makeBinding_fromObject_toObject_withKeyPath_options_(*binding)
@@ -74,4 +75,4 @@ class GraphicsBindingsDocument (NSDocument):
         return True
 
 vt = RadiansToDegreesTransformer.alloc().init()
-NSValueTransformer.setValueTransformer_forName_(vt, u"RadiansToDegreesTransformer")
+NSValueTransformer.setValueTransformer_forName_(vt, "RadiansToDegreesTransformer")

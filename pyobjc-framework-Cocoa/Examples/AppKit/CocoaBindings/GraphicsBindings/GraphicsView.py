@@ -13,23 +13,25 @@ GraphicsObservationContext = 1092
 SelectionIndexesObservationContext = 1093
 
 
-from Foundation import *
-from AppKit import *
-from objc import ivar
+import objc
+from objc import super
+from Cocoa import NSView, NSKeyValueObservingOptionNew, NSKeyValueObservingOptionOld
+from Cocoa import NSKeyValueChangeNewKey, NSKeyValueChangeOldKey, NSUnionRect, NSMakeRect
+from Cocoa import NSDrawLightBezel, NSBezierPath, NSNotFound, NSIntersectsRect, NSColor
+from Cocoa import NSShiftKeyMask, NSIndexSet, NSInsetRect
 from Circle import Circle
-from sets import Set
 
-class GraphicsView(NSView):
-    graphicsContainer = ivar(u'graphicsContainer')
-    graphicsKeyPath   = ivar(u'graphicsKeyPath')
+class GraphicsView (NSView):
+    graphicsContainer = objc.ivar('graphicsContainer')
+    graphicsKeyPath   = objc.ivar('graphicsKeyPath')
 
-    selectionIndexesContainer = ivar(u'selectionIndexesContainer') # GraphicsArrayController
-    selectionIndexesKeyPath   = ivar(u'selectionIndexesKeyPath')
+    selectionIndexesContainer = objc.ivar('selectionIndexesContainer') # GraphicsArrayController
+    selectionIndexesKeyPath   = objc.ivar('selectionIndexesKeyPath')
 
-    oldGraphics = ivar(u'oldGraphics')
+    oldGraphics = objc.ivar('oldGraphics')
 
     def exposedBindings(self):
-        return [u"graphics", u"selectedObjects"]
+        return ["graphics", "selectedObjects"]
 
     def initWithFrame_(self, frameRect):
         return super(GraphicsView, self).initWithFrame_(frameRect)
@@ -50,7 +52,7 @@ class GraphicsView(NSView):
         for newGraphic in graphics:
             # Register as observer for all the drawing-related properties
             newGraphic.addObserver_forKeyPath_options_context_(
-                self, u"drawingBounds", (NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld),
+                self, "drawingBounds", (NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld),
                 PropertyObservationContext)
             keys = Circle.keysForNonBoundsProperties()
             for key in keys:
@@ -62,10 +64,10 @@ class GraphicsView(NSView):
         for graphic in graphics:
             for key in graphic.class__().keysForNonBoundsProperties():
                 graphic.removeObserver_forKeyPath_(self, key)
-            graphic.removeObserver_forKeyPath_(self, u"drawingBounds")
+            graphic.removeObserver_forKeyPath_(self, "drawingBounds")
 
     def bind_toObject_withKeyPath_options_(self, bindingName, observableObject, observableKeyPath, options):
-        if bindingName == u"graphics":
+        if bindingName == "graphics":
             self.graphicsContainer = observableObject
             self.graphicsKeyPath = observableKeyPath
             self.graphicsContainer.addObserver_forKeyPath_options_context_(
@@ -73,7 +75,7 @@ class GraphicsView(NSView):
                     NSKeyValueObservingOptionOld), GraphicsObservationContext)
             self.startObservingGraphics_(self.graphics())
 
-        elif bindingName == u"selectionIndexes":
+        elif bindingName == "selectionIndexes":
             self.selectionIndexesContainer = observableObject
             self.selectionIndexesKeyPath = observableKeyPath
             self.selectionIndexesContainer.addObserver_forKeyPath_options_context_(
@@ -81,11 +83,11 @@ class GraphicsView(NSView):
         self.setNeedsDisplay_(True)
 
     def unbind_(self, bindingName):
-        if bindingName == u"graphics":
+        if bindingName == "graphics":
             self.graphicsContainer.removeObserver_forKeyPath_(self, self.graphicsKeyPath)
             self.graphicsContainer = None
             self.graphicsKeyPath = None
-        if bindingName == u"selectionIndexes":
+        if bindingName == "selectionIndexes":
             self.selectionIndexesContainer.removeObserver_forKeyPath_(self, self.selectionIndexesKeyPath)
             self.seletionIndexesContainer = None
             self.selectionIndexesKeyPath = None
@@ -96,12 +98,12 @@ class GraphicsView(NSView):
             # Should be able to use
             # NSArray *oldGraphics = [change objectForKey:NSKeyValueChangeOldKey];
             # etc. but the dictionary doesn't contain old and new arrays...??
-            newGraphics = Set(object.valueForKeyPath_(self.graphicsKeyPath))
-            onlyNew = newGraphics - Set(self.oldGraphics)
+            newGraphics = set(object.valueForKeyPath_(self.graphicsKeyPath))
+            onlyNew = newGraphics - set(self.oldGraphics or [])
             self.startObservingGraphics_(onlyNew)
 
             if self.oldGraphics:
-                removed = Set(self.oldGraphics) - newGraphics
+                removed = set(self.oldGraphics) - newGraphics
                 self.stopObservingGraphics_(removed)
 
             self.oldGraphics = newGraphics
@@ -114,7 +116,7 @@ class GraphicsView(NSView):
             updateRect = (0,)
             # Note: for Circle, drawingBounds is a dependent key of all the other
             # property keys except color, so we'll get this anyway...
-            if keyPath == u"drawingBounds":
+            if keyPath == "drawingBounds":
                 newBounds = change.objectForKey_(NSKeyValueChangeNewKey)
                 oldBounds = change.objectForKey_(NSKeyValueChangeOldKey)
                 updateRect = NSUnionRect(newBounds, oldBounds)
@@ -176,7 +178,7 @@ class GraphicsView(NSView):
 
         # if no graphic hit, then if extending selection do nothing
         # else set selection to nil
-        if aGraphic == None:
+        if aGraphic is None:
             if not event.modifierFlags() & NSShiftKeyMask:
                 self.selectionIndexesContainer.setValue_forKeyPath_(None, self.selectionIndexesKeyPath)
             return
@@ -197,8 +199,9 @@ class GraphicsView(NSView):
             else:
                 selection = self.selectionIndexes().mutableCopy()
                 selection.addIndex_(graphicIndex)
+
         self.selectionIndexesContainer.setValue_forKeyPath_(selection, self.selectionIndexesKeyPath)
 
 
-GraphicsView.exposeBinding_(u"graphics")
-GraphicsView.exposeBinding_(u"selectionIndexes")
+GraphicsView.exposeBinding_("graphics")
+GraphicsView.exposeBinding_("selectionIndexes")

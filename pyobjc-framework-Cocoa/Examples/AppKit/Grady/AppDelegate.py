@@ -1,8 +1,8 @@
-from Cocoa import *
+import objc
+import Cocoa
+from MyWindowController import MyWindowController
 
-from MyWindowController import *
-
-class AppDelegate (NSObject):
+class AppDelegate (Cocoa.NSObject):
     myWindowController = objc.ivar()
 
     @objc.IBAction
@@ -20,7 +20,7 @@ class AppDelegate (NSObject):
         enable = self.respondsToSelector_(theMenuItem.action())
 
         # disable "New" if the window is already up
-        if theMenuItem.action() == 'newDocument:':
+        if theMenuItem.action() == b'newDocument:':
             if self.myWindowController.window().isKeyWindow():
                 enable = False
 

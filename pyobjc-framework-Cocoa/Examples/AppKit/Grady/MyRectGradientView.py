@@ -1,4 +1,5 @@
-from MyBaseGradientView import *
+from MyBaseGradientView import MyBaseGradientView
+import Cocoa
 
 class MyRectGradientView (MyBaseGradientView):
     def init(self):
@@ -6,7 +7,7 @@ class MyRectGradientView (MyBaseGradientView):
         if self is None:
             return self
 
-        self.myOffsetPt = NSMakePoint(0.0, 0.0)
+        self.myOffsetPt = Cocoa.NSMakePoint(0.0, 0.0)
         return self
 
     def drawRect_(self, rect):

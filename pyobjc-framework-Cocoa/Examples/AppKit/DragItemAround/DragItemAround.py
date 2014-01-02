@@ -1,16 +1,16 @@
 # Updated by mvl on 2009-02-22 for PyObjC 2
 
 import objc
+from objc import super
 from PyObjCTools import AppHelper
-from AppKit import *
-from Foundation import *
+import Cocoa
 
 
-class DraggableItemView(NSView):
+class DraggableItemView(Cocoa.NSView):
     """."""
-    _locationDefault = NSMakePoint(0.0, 0.0)
-    _itemColorDefault = NSColor.redColor()
-    _backgroundColorDefault = NSColor.whiteColor()
+    _locationDefault = Cocoa.NSMakePoint(0.0, 0.0)
+    _itemColorDefault = Cocoa.NSColor.redColor()
+    _backgroundColorDefault = Cocoa.NSColor.whiteColor()
 
     def awakeFromNib(self):
         self.dragging = None
@@ -26,10 +26,10 @@ class DraggableItemView(NSView):
 
     def drawRect_(self, rect):
         """."""
-        NSColor.whiteColor().set()
-        NSBezierPath.fillRect_(rect)
+        Cocoa.NSColor.whiteColor().set()
+        Cocoa.NSBezierPath.fillRect_(rect)
         self.itemColor().set()
-        NSBezierPath.fillRect_(self.calculatedItemBounds())
+        Cocoa.NSBezierPath.fillRect_(self.calculatedItemBounds())
 
     def isOpaque(self):
         """."""
@@ -54,7 +54,7 @@ class DraggableItemView(NSView):
         if itemHit:
             self.dragging = True
             self.lastDragLocation = clickLocation
-            NSCursor.closedHandCursor().push()
+            Cocoa.NSCursor.closedHandCursor().push()
 
     def mouseDragged_(self, event):
         """."""
@@ -73,8 +73,7 @@ class DraggableItemView(NSView):
     def mouseUp_(self, event):
         """."""
         self.dragging = False
-        # NSCursor has both an instance and a class method w/ the name 'pop'
-        NSCursor.pyobjc_classMethods.pop()
+        Cocoa.NSCursor.pop()
         self.window().invalidateCursorRectsForView_(self)
 
     def acceptsFirstResponder(self):
@@ -100,7 +99,7 @@ class DraggableItemView(NSView):
         """."""
         self.discardCursorRects()
         self.addCursorRect_cursor_(self.calculatedItemBounds(),
-                                   NSCursor.openHandCursor())
+                                   Cocoa.NSCursor.openHandCursor())
 
     @objc.IBAction
     def moveUp_(self, sender):
@@ -135,7 +134,7 @@ class DraggableItemView(NSView):
 
     def setLocation_(self, point):
         """."""
-        if not NSEqualPoints(point, self.location()):
+        if not Cocoa.NSEqualPoints(point, self.location()):
             self.setNeedsDisplayInRect_(self.calculatedItemBounds())
             self._location = point
             self.setNeedsDisplayInRect_(self.calculatedItemBounds())
@@ -167,12 +166,12 @@ class DraggableItemView(NSView):
 
     def calculatedItemBounds(self):
         """."""
-        return NSMakeRect(self.location().x, self.location().y,
+        return Cocoa.NSMakeRect(self.location().x, self.location().y,
                           60.0, 20.0)
 
     def isPointInItem_(self, testPoint):
         """."""
-        itemHit = NSPointInRect(testPoint, self.calculatedItemBounds())
+        itemHit = Cocoa.NSPointInRect(testPoint, self.calculatedItemBounds())
         if itemHit:
             pass
         return itemHit

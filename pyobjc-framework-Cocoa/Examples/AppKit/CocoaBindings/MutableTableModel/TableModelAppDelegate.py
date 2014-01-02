@@ -1,9 +1,10 @@
-from Foundation import *
+import objc
+from Foundation import NSObject, NSMutableArray
 import pwd
 
 FIELDS = "name password uid gid class change expire gecos home_dir shell".split()
 def getPasswords():
-    a = NSMutableArray.array()
+    a = NSMutableArray()
 
     for pw in pwd.getpwall():
         a.append({

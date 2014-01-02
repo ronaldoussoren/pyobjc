@@ -4,13 +4,13 @@ WSTApplicationDelegateClass
 An instance of this class is instantiated in the MainMenu.nib default NIB file.
 """
 
-from Cocoa import *
+import Cocoa
 from PyObjCTools import AppHelper
 from twisted.internet import reactor
 
 from WSTConnectionWindowControllerClass import WSTConnectionWindowController
 
-class WSTApplicationDelegate (NSObject):
+class WSTApplicationDelegate (Cocoa.NSObject):
 
     def newConnectionAction_(self, sender):
         """Action method fired when the user selects the 'new connection'

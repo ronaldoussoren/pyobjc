@@ -1,1 +1,9 @@
-Demonstrates how to use Carbon global hot keys from a PyObjC application. Also demonstrates how to use a ``NSApplication`` subclass.
+Demonstrates how to use Carbon global hot keys from a PyObjC
+application. Also demonstrates how to use a ``NSApplication``
+subclass.
+
+.. note::
+
+   Requires Python 2.x because the code uses the Carbon package
+   that was removed in Python 3.0.
+

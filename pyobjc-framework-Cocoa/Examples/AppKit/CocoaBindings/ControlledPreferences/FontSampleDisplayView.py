@@ -8,9 +8,12 @@
 #  The original version was written in Objective-C by Malcolm Crawford
 #  at http://homepage.mac.com/mmalc/CocoaExamples/controllers.html
 
-from Foundation import *
-from AppKit import *
-from PyObjCTools.KeyValueCoding import *
+from objc import super
+from Cocoa import NSView, NSUserDefaultsController, NSUnarchiver
+from Cocoa import NSDrawLightBezel, NSRectFill, NSInsetRect
+from Cocoa import NSFontAttributeName, NSAttributedString, NSFont
+from Cocoa import NSMakePoint, NSNotificationCenter, NSUserDefaultsDidChangeNotification
+from PyObjCTools.KeyValueCoding import getKey
 
 class FontSampleDisplayView(NSView):
     """
@@ -18,11 +21,11 @@ class FontSampleDisplayView(NSView):
     """
     def drawRect_(self, rect):
         defaults = NSUserDefaultsController.sharedUserDefaultsController().values()
-        favoriteColor = NSUnarchiver.unarchiveObjectWithData_(getKey(defaults, u'FavoriteColor'))
-        fontName = getKey(defaults, u'FontName')
-        fontSize = getKey(defaults, u'FontSize')
+        favoriteColor = NSUnarchiver.unarchiveObjectWithData_(getKey(defaults, 'FavoriteColor'))
+        fontName = getKey(defaults, 'FontName')
+        fontSize = getKey(defaults, 'FontSize')
         favoriteFont = NSFont.fontWithName_size_(fontName, fontSize)
-        wordOfTheDay = getKey(defaults, u'WordOfTheDay')
+        wordOfTheDay = getKey(defaults, 'WordOfTheDay')
 
         # Do the actual drawing
         myBounds = self.bounds() # = (x, y), (bw, bh)
