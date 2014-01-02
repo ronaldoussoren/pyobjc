@@ -14,8 +14,8 @@ try:
     import setuptools
 
 except ImportError:
-    import distribute_setup
-    distribute_setup.use_setuptools()
+    print("This package requires setuptools to build")
+    sys.exit(1)
 
 from setuptools.command import test
 from setuptools.command import build_py
