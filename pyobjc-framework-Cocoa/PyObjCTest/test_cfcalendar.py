@@ -12,15 +12,15 @@ class TestCFCalendarVariadic (TestCase):
     def testTypes(self):
         cls = None
         try:
-            cls = objc.lookUpClasS('NSCFCalendar')
+            cls = objc.lookUpClass('NSCFCalendar')
         except objc.error:
-            cls = objc.lookUpClasS('__NSCFCalendar')
+            cls = objc.lookUpClass('__NSCFCalendar')
 
         if cls is None:
             self.assertIsCFType(CFCalendarRef)
 
         else:
-            self.assertIs(CFCalenderRef, cls)
+            self.assertIs(CFCalendarRef, cls)
 
     def testCFCalendarComposeAbsoluteTime(self):
         calendar = CFCalendarCreateWithIdentifier(
