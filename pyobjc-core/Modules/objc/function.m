@@ -292,6 +292,7 @@ PyTypeObject PyObjCFunc_Type =
     .tp_repr        = func_repr,
     .tp_call        = func_call,
     .tp_getattro    = PyObject_GenericGetAttr,
+    .tp_setattro    = PyObject_GenericSetAttr,
     .tp_flags       = Py_TPFLAGS_DEFAULT,
     .tp_doc         = "Wrapper around a Objective-C function",
     .tp_methods     = func_methods,

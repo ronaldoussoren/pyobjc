@@ -91,7 +91,7 @@ class TestPDFView (TestCase):
         self.assertArgIsBOOL(PDFView.setEnableDataDetectors_, 0)
 
     def testProtocols(self):
-        self.assertIsInstance(protocols.PDFViewDelegate, objc.informal_protocol)
+        #self.assertIsInstance(protocols.PDFViewDelegate, objc.informal_protocol)
 
         self.assertArgHasType(TestPDFViewHelper.PDFViewWillChangeScaleFactor_toScale_, 1, objc._C_CGFloat)
         self.assertResultHasType(TestPDFViewHelper.PDFViewWillChangeScaleFactor_toScale_, objc._C_CGFloat)

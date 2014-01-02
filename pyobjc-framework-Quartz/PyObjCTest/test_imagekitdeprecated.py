@@ -39,7 +39,7 @@ class TestImageKitDeprecated (TestCase):
 
     @min_os_level('10.5')
     def testProtocols(self):
-        self.assertIsInstance(protocols.IKImageBrowserDataSourceDeprecated, objc.informal_protocol)
+        #self.assertIsInstance(protocols.IKImageBrowserDataSourceDeprecated, objc.informal_protocol)
 
         self.assertResultHasType(TestImageKitDeprecatedHelper.numberOfCellsInImageBrowser_, objc._C_NSUInteger)
         self.assertArgHasType(TestImageKitDeprecatedHelper.imageBrowser_cellAtIndex_, 1, objc._C_NSUInteger)
