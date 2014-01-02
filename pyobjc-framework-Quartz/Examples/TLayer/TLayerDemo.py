@@ -1,12 +1,12 @@
-from Cocoa import *
-from PyObjCTools import NibClassBuilder
-from Quartz import *
+import Cocoa
+import Quartz
 import objc
+from objc import super
 
 import ShadowOffsetView
 
 
-class TLayerDemo (NSObject):
+class TLayerDemo (Cocoa.NSObject):
     colorWell = objc.IBOutlet()
     shadowOffsetView = objc.IBOutlet()
     shadowRadiusSlider = objc.IBOutlet()
@@ -16,32 +16,32 @@ class TLayerDemo (NSObject):
 
     @classmethod
     def initialize(self):
-        NSColorPanel.sharedColorPanel().setShowsAlpha_(True)
+        Cocoa.NSColorPanel.sharedColorPanel().setShowsAlpha_(True)
 
     def init(self):
         self = super(TLayerDemo, self).init()
         if self is None:
             return None
 
-        if not NSBundle.loadNibNamed_owner_("TLayerDemo", self):
-            NSLog("Failed to load TLayerDemo.nib")
+        if not Cocoa.NSBundle.loadNibNamed_owner_("TLayerDemo", self):
+            Cocoa.NSLog("Failed to load TLayerDemo.nib")
             return nil
 
         self.shadowOffsetView.setScale_(40)
-        self.shadowOffsetView.setOffset_(CGSizeMake(-30, -30))
-        self.tlayerView.setShadowOffset_(CGSizeMake(-30, -30))
+        self.shadowOffsetView.setOffset_(Quartz.CGSizeMake(-30, -30))
+        self.tlayerView.setShadowOffset_(Quartz.CGSizeMake(-30, -30))
 
         self.shadowRadiusChanged_(self.shadowRadiusSlider)
 
         # Better to do this as a subclass of NSControl....
-        NSNotificationCenter.defaultCenter(
+        Cocoa.NSNotificationCenter.defaultCenter(
                 ).addObserver_selector_name_object_(
-                        self, 'shadowOffsetChanged:',
+                        self, b'shadowOffsetChanged:',
                         ShadowOffsetView.ShadowOffsetChanged, None)
         return self
 
     def dealloc(self):
-        NSNotificationCenter.defaultCenter().removeObserver_(self)
+        Cocoa.NSNotificationCenter.defaultCenter().removeObserver_(self)
         super(TLayerDemo, self).dealloc()
 
     def window(self):

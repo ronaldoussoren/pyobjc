@@ -6,6 +6,9 @@ An overview of the relevant changes in new, and older, releases.
 Version 3.0
 -----------
 
+* The module ``PyObjCTools.NibClassBuilder`` is not longer available. It only worked
+  with ancient versions of Interface Builder (pre-Xcode)
+
 * The wrapper type for opaque pointers didn't have a "__module__" attribute,
   which breaks code that (correctly) assumes that all types have such an attribute.
 

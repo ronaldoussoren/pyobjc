@@ -1,13 +1,13 @@
-from Cocoa import *
-from Quartz import *
+import Cocoa
+import Quartz
 import objc
 
 import math
 
 ShadowOffsetChanged = "ShadowOffsetChanged"
 
-class ShadowOffsetView (NSView):
-    _offset = objc.ivar(type=CGSize.__typestr__)
+class ShadowOffsetView (Cocoa.NSView):
+    _offset = objc.ivar(type=Quartz.CGSize.__typestr__)
     _scale = objc.ivar(type=objc._C_FLT)
 
 
@@ -18,10 +18,10 @@ class ShadowOffsetView (NSView):
         self._scale = scale
 
     def offset(self):
-        return CGSizeMake(self._offset.width * self._scale, self._offset.height * self._scale)
+        return Quartz.CGSizeMake(self._offset.width * self._scale, self._offset.height * self._scale)
 
     def setOffset_(self, offset):
-        offset = CGSizeMake(offset.width / self._scale, offset.height / self._scale);
+        offset = Quartz.CGSizeMake(offset.width / self._scale, offset.height / self._scale);
         if self._offset != offset:
             self._offset = offset;
             self.setNeedsDisplay_(True)
@@ -31,9 +31,9 @@ class ShadowOffsetView (NSView):
 
     def setOffsetFromPoint_(self, point):
         bounds = self.bounds()
-        offset = CGSize(
-            width = (point.x - NSMidX(bounds)) / (NSWidth(bounds) / 2),
-            height = (point.y - NSMidY(bounds)) / (NSHeight(bounds) / 2))
+        offset = Quartz.CGSize(
+            width = (point.x - Cocoa.NSMidX(bounds)) / (Cocoa.NSWidth(bounds) / 2),
+            height = (point.y - Cocoa.NSMidY(bounds)) / (Cocoa.NSHeight(bounds) / 2))
         radius = math.sqrt(offset.width * offset.width + offset.height * offset.height)
         if radius > 1:
             offset.width /= radius;
@@ -42,7 +42,7 @@ class ShadowOffsetView (NSView):
         if self._offset != offset:
             self._offset = offset;
             self.setNeedsDisplay_(True)
-            NSNotificationCenter.defaultCenter().postNotificationName_object_(ShadowOffsetChanged, self)
+            Cocoa.NSNotificationCenter.defaultCenter().postNotificationName_object_(ShadowOffsetChanged, self)
 
     def mouseDown_(self, event):
         point = self.convertPoint_fromView_(event.locationInWindow(), None)
@@ -54,33 +54,33 @@ class ShadowOffsetView (NSView):
 
     def drawRect_(self, rect):
         bounds = self.bounds()
-        x = NSMinX(bounds)
-        y = NSMinY(bounds)
-        w = NSWidth(bounds)
-        h = NSHeight(bounds)
+        x = Cocoa.NSMinX(bounds)
+        y = Cocoa.NSMinY(bounds)
+        w = Cocoa.NSWidth(bounds)
+        h = Cocoa.NSHeight(bounds)
         r = min(w / 2, h / 2)
 
-        context = NSGraphicsContext.currentContext().graphicsPort()
+        context = Cocoa.NSGraphicsContext.currentContext().graphicsPort()
 
-        CGContextTranslateCTM(context, x + w/2, y + h/2)
+        Quartz.CGContextTranslateCTM(context, x + w/2, y + h/2)
 
-        CGContextAddArc(context, 0, 0, r, 0, math.pi, True)
-        CGContextClip(context)
+        Quartz.CGContextAddArc(context, 0, 0, r, 0, math.pi, True)
+        Quartz.CGContextClip(context)
 
-        CGContextSetGrayFillColor(context, 0.910, 1)
-        CGContextFillRect(context, CGRectMake(-w/2, -h/2, w, h))
+        Quartz.CGContextSetGrayFillColor(context, 0.910, 1)
+        Quartz.CGContextFillRect(context, Quartz.CGRectMake(-w/2, -h/2, w, h))
 
-        CGContextAddArc(context, 0, 0, r, 0, 2*math.pi, True)
-        CGContextSetGrayStrokeColor(context, 0.616, 1)
-        CGContextStrokePath(context)
+        Quartz.CGContextAddArc(context, 0, 0, r, 0, 2*math.pi, True)
+        Quartz.CGContextSetGrayStrokeColor(context, 0.616, 1)
+        Quartz.CGContextStrokePath(context)
 
-        CGContextAddArc(context, 0, -2, r, 0, 2*math.pi, True)
-        CGContextSetGrayStrokeColor(context, 0.784, 1)
-        CGContextStrokePath(context)
+        Quartz.CGContextAddArc(context, 0, -2, r, 0, 2*math.pi, True)
+        Quartz.CGContextSetGrayStrokeColor(context, 0.784, 1)
+        Quartz.CGContextStrokePath(context)
 
-        CGContextMoveToPoint(context, 0, 0)
-        CGContextAddLineToPoint(context, r * self._offset.width, r * self._offset.height)
+        Quartz.CGContextMoveToPoint(context, 0, 0)
+        Quartz.CGContextAddLineToPoint(context, r * self._offset.width, r * self._offset.height)
 
-        CGContextSetLineWidth(context, 2)
-        CGContextSetGrayStrokeColor(context, 0.33, 1)
-        CGContextStrokePath(context)
+        Quartz.CGContextSetLineWidth(context, 2)
+        Quartz.CGContextSetGrayStrokeColor(context, 0.33, 1)
+        Quartz.CGContextStrokePath(context)

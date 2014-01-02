@@ -39,6 +39,7 @@ static PyObject* decimal_floordivide(PyObject* left, PyObject* right);
 static PyObject* decimal_power(PyObject* left, PyObject* right, PyObject* power);
 static int decimal_nonzero(PyObject* self);
 static int decimal_coerce(PyObject** l, PyObject** r);
+static int decimal_coerce_compare(PyObject** l, PyObject** r);
 static PyObject* decimal_positive(PyObject* self);
 static PyObject* decimal_negative(PyObject* self);
 static PyObject* decimal_absolute(PyObject* self);
@@ -424,7 +425,7 @@ static PyObject*
 decimal_richcompare(PyObject* self, PyObject* other, int type)
 {
     NSComparisonResult res;
-    (void)decimal_coerce(&self, &other);
+    (void)decimal_coerce_compare(&self, &other);
 
     if (!Decimal_Check(other)) {
         if (type == Py_EQ) {
@@ -647,6 +648,7 @@ static char* keywords[] = { "digits", NULL };
     return Decimal_New(&result);
 }
 
+
 static int decimal_coerce(PyObject** l, PyObject** r)
 {
     PyObject* right = NULL;
@@ -711,6 +713,26 @@ error:
     Py_XDECREF(left);
     Py_XDECREF(right);
     return 1;
+}
+
+static int decimal_coerce_compare(PyObject** l, PyObject** r)
+{
+    if (PyFloat_Check(*l)) {
+        NSDecimal tmp;
+        PyObjC_number_to_decimal(*l, &tmp);
+        if (PyObjC_number_to_decimal(*r, &tmp) == -1) {
+            return 1;
+        }
+        *l = Decimal_New(&tmp);
+    }
+    if (PyFloat_Check(*r)) {
+        NSDecimal tmp;
+        if (PyObjC_number_to_decimal(*r, &tmp) == -1) {
+            return 1;
+        }
+        *r = Decimal_New(&tmp);
+    }
+    return decimal_coerce(l, r);
 }
 
 static PyObject*

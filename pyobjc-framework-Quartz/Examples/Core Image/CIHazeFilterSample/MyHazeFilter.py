@@ -1,11 +1,11 @@
-from Cocoa import *
-from Quartz import *
-
 import objc
+from objc import super
+import Cocoa
+import Quartz
 
 _hazeRemovalKernel = None
 
-class MyHazeFilter (CIFilter):
+class MyHazeFilter (Quartz.CIFilter):
     inputImage      = objc.ivar()
     inputColor      = objc.ivar()
     inputDistance   = objc.ivar()
@@ -14,34 +14,34 @@ class MyHazeFilter (CIFilter):
 
     @classmethod
     def initialize(cls):
-        CIFilter.registerFilterName_constructor_classAttributes_(
+        Quartz.CIFilter.registerFilterName_constructor_classAttributes_(
                 "MyHazeRemover",  cls, {
-                    kCIAttributeFilterDisplayName: "Haze Remover" ,
-                    kCIAttributeFilterCategories: [
-                        kCICategoryColorAdjustment, kCICategoryVideo,
-                        kCICategoryStillImage, kCICategoryInterlaced,
-                        kCICategoryNonSquarePixels,
+                    Quartz.kCIAttributeFilterDisplayName: "Haze Remover" ,
+                    Quartz.kCIAttributeFilterCategories: [
+                        Quartz.kCICategoryColorAdjustment, Quartz.kCICategoryVideo,
+                        Quartz.kCICategoryStillImage, Quartz.kCICategoryInterlaced,
+                        Quartz.kCICategoryNonSquarePixels,
                     ],
                     "inputDistance": {
-                        kCIAttributeMin: 0.0,
-                        kCIAttributeMax: 1.0,
-                        kCIAttributeSliderMin: 0.0,
-                        kCIAttributeSliderMax: 0.7,
-                        kCIAttributeDefault: 0.2,
-                        kCIAttributeIdentity: 0.0,
-                        kCIAttributeType: kCIAttributeTypeScalar,
+                        Quartz.kCIAttributeMin: 0.0,
+                        Quartz.kCIAttributeMax: 1.0,
+                        Quartz.kCIAttributeSliderMin: 0.0,
+                        Quartz.kCIAttributeSliderMax: 0.7,
+                        Quartz.kCIAttributeDefault: 0.2,
+                        Quartz.kCIAttributeIdentity: 0.0,
+                        Quartz.kCIAttributeType: Quartz.kCIAttributeTypeScalar,
                     },
 
                     "inputSlope": {
-                        kCIAttributeSliderMin: -0.01,
-                        kCIAttributeSliderMax: 0.01,
-                        kCIAttributeDefault: 0.0,
-                        kCIAttributeIdentity: 0.0,
-                        kCIAttributeType: kCIAttributeTypeScalar,
+                        Quartz.kCIAttributeSliderMin: -0.01,
+                        Quartz.kCIAttributeSliderMax: 0.01,
+                        Quartz.kCIAttributeDefault: 0.0,
+                        Quartz.kCIAttributeIdentity: 0.0,
+                        Quartz.kCIAttributeType: Quartz.kCIAttributeTypeScalar,
                     },
 
                     "inputColor": {
-                        kCIAttributeDefault: CIColor.colorWithRed_green_blue_alpha_(
+                        Quartz.kCIAttributeDefault: Quartz.CIColor.colorWithRed_green_blue_alpha_(
                             1.0, 1.0, 1.0, 1.0),
                     },
                 })
@@ -55,16 +55,17 @@ class MyHazeFilter (CIFilter):
         global _hazeRemovalKernel
 
         if _hazeRemovalKernel is None:
-            bundle = NSBundle.bundleForClass_(type(self))
-            code = open(bundle.pathForResource_ofType_(
-                "MyHazeRemoval", "cikernel"), 'rb').read()
-            kernels = CIKernel.kernelsWithString_(code)
+            bundle = Cocoa.NSBundle.bundleForClass_(type(self))
+            with open(bundle.pathForResource_ofType_(
+                "MyHazeRemoval", "cikernel"), 'r') as fp:
+                code = fp.read()
+            kernels = Quartz.CIKernel.kernelsWithString_(code)
             _hazeRemovalKernel = kernels[0]
 
         return super(MyHazeFilter, self).init()
 
     def outputImage(self):
-        src = CISampler.samplerWithImage_(self.inputImage)
+        src = Quartz.CISampler.samplerWithImage_(self.inputImage)
 
         return self.apply_arguments_options_(_hazeRemovalKernel,
                 (src, self.inputColor, self.inputDistance, self.inputSlope),

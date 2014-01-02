@@ -2,8 +2,9 @@
 SampleCIView - simple OpenGL based CoreImage view
 """
 
-from Cocoa import *
-from Quartz import *
+import objc
+import Quartz
+import Cocoa
 import CGL
 
 from OpenGL.GL import *
@@ -16,10 +17,10 @@ import objc
 # The default pixel format
 _pf = None
 
-class SampleCIView (NSOpenGLView):
+class SampleCIView (Cocoa.NSOpenGLView):
     _context = objc.ivar()
     _image = objc.ivar()
-    _lastBounds = objc.ivar(type=NSRect.__typestr__)
+    _lastBounds = objc.ivar(type=Cocoa.NSRect.__typestr__)
 
     @classmethod
     def defaultPixelFormat(self):
@@ -30,9 +31,9 @@ class SampleCIView (NSOpenGLView):
             # renderer is important - otherwise CoreImage may not be able to
             # create deeper context's that share textures with this one.
 
-            attr = ( NSOpenGLPFAAccelerated,
-                    NSOpenGLPFANoRecovery, NSOpenGLPFAColorSize, 32 )
-            _pf = NSOpenGLPixelFormat.alloc().initWithAttributes_(attr)
+            attr = ( Cocoa.NSOpenGLPFAAccelerated,
+                    Cocoa.NSOpenGLPFANoRecovery, Cocoa.NSOpenGLPFAColorSize, 32 )
+            _pf = Cocoa.NSOpenGLPixelFormat.alloc().initWithAttributes_(attr)
 
         return _pf
 
@@ -43,13 +44,13 @@ class SampleCIView (NSOpenGLView):
         if self._image is not image:
             self._image = image
 
-            if CGRectIsInfinite(r):
+            if Quartz.CGRectIsInfinite(r):
                 self.setNeedsDisplay_(True)
             else:
                 self.setNeedsDisplayInRect_(r)
 
     def setImage_(self, image):
-        self.setImage_dirtyRect_(image, CGRectInfinite)
+        self.setImage_dirtyRect_(image, Quartz.CGRectInfinite)
 
     def prepareOpenGL(self):
         parm = 1
@@ -57,7 +58,7 @@ class SampleCIView (NSOpenGLView):
         # Enable beam-synced updates.
 
         self.openGLContext().setValues_forParameter_(
-                (parm,), NSOpenGLCPSwapInterval)
+                (parm,), Cocoa.NSOpenGLCPSwapInterval)
 
         # Make sure that everything we don't need is disabled. Some of these
         # are enabled by default and can slow down rendering.
@@ -112,12 +113,12 @@ class SampleCIView (NSOpenGLView):
             if pf is None:
                 pf = type(self).defaultPixelFormat()
 
-            self._context=CIContext.contextWithCGLContext_pixelFormat_options_(
+            self._context=Quartz.CIContext.contextWithCGLContext_pixelFormat_options_(
                 CGL.CGLGetCurrentContext(), pf.CGLPixelFormatObj(), None)
 
-        ir = CGRectIntegral(r)
+        ir = Quartz.CGRectIntegral(r)
 
-        if NSGraphicsContext.currentContextDrawingToScreen():
+        if Cocoa.NSGraphicsContext.currentContextDrawingToScreen():
             self.updateMatrices()
 
             # Clear the specified subrect of the OpenGL surface then
@@ -126,7 +127,7 @@ class SampleCIView (NSOpenGLView):
             # pixel in case * it has to interpolate (allow for hardware
             # inaccuracies)
 
-            rr = CGRectIntersection (CGRectInset(ir, -1.0, -1.0),
+            rr = Quartz.CGRectIntersection (Quartz.CGRectInset(ir, -1.0, -1.0),
                         self._lastBounds)
 
             glScissor(ir.origin.x, ir.origin.y, ir.size.width, ir.size.height)
@@ -160,6 +161,6 @@ class SampleCIView (NSOpenGLView):
                     self._image, ir)
 
                 if cgImage is not None:
-                    CGContextDrawImage(
-                            NSGraphicsContext.currentContext().graphicsPort(),
+                    Quartz.CGContextDrawImage(
+                            Cocoa.NSGraphicsContext.currentContext().graphicsPort(),
                             ir, cgImage)

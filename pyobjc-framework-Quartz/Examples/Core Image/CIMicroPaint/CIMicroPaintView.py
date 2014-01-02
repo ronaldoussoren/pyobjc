@@ -1,9 +1,9 @@
-from Cocoa import *
-from Quartz import *
+import objc
+from objc import super
+import Cocoa
+import Quartz
 
 from SampleCIView import SampleCIView
-
-import objc
 
 class CIMicroPaintView  (SampleCIView):
     imageAccumulator    = objc.ivar()
@@ -19,20 +19,20 @@ class CIMicroPaintView  (SampleCIView):
             return None
 
         self.brushSize = 25.0
-        self.color = NSColor.colorWithDeviceRed_green_blue_alpha_(
+        self.color = Cocoa.NSColor.colorWithDeviceRed_green_blue_alpha_(
                 0.0, 0.0, 0.0, 1.0)
 
-        self.brushFilter = CIFilter.filterWithName_("CIRadialGradient")
+        self.brushFilter = Quartz.CIFilter.filterWithName_("CIRadialGradient")
         self.brushFilter.setDefaults()
         for k, v in (
-                ("inputColor1", CIColor.colorWithRed_green_blue_alpha_(
+                ("inputColor1", Quartz.CIColor.colorWithRed_green_blue_alpha_(
                    0.0, 0.0, 0.0, 0.0)),
                 ("inputRadius0", 0.0),
             ):
 
             self.brushFilter.setValue_forKey_(v, k)
 
-        self.compositeFilter = CIFilter.filterWithName_("CISourceOverCompositing")
+        self.compositeFilter = Quartz.CIFilter.filterWithName_("CISourceOverCompositing")
         self.compositeFilter.setDefaults()
 
         return self
@@ -40,21 +40,21 @@ class CIMicroPaintView  (SampleCIView):
     def viewBoundsDidChange_(self, bounds):
         if self.imageAccumulator is not None  and \
                 bounds == self.imageAccumulator.extent():
-            print "Nothing changed"
+            print("Nothing changed")
             return
 
         # Create a new accumulator and composite the old one over the it.
 
-        c = CIImageAccumulator.alloc(
+        c = Quartz.CIImageAccumulator.alloc(
             ).initWithExtent_format_(bounds, kCIFormatRGBA16)
-        f = CIFilter.filterWithName_("CIConstantColorGenerator")
+        f = Quartz.CIFilter.filterWithName_("CIConstantColorGenerator")
         f.setDefaults()
         f.setValue_forKey_(
-             CIColor.colorWithRed_green_blue_alpha_(1.0, 1.0, 1.0, 1.0),
+             Quartz.CIColor.colorWithRed_green_blue_alpha_(1.0, 1.0, 1.0, 1.0),
              "inputColor")
 
         if self.imageAccumulator is not None:
-            f = CIFilter.filterWithName_("CISourceOverCompositing")
+            f = Quartz.CIFilter.filterWithName_("CISourceOverCompositing")
             f.setDefaults()
             f.setValue_forKey_(self.imageAccumulator.image(), "inputImage")
             f.setValue_forKey_(c.image(), "inputBackgroundImage")
@@ -66,15 +66,15 @@ class CIMicroPaintView  (SampleCIView):
     def mouseDragged_(self, event):
         loc = self.convertPoint_fromView_(event.locationInWindow(), None)
 
-        rect = CGRectMake(loc.x-self.brushSize, loc.y-self.brushSize,
+        rect = Quartz.CGRectMake(loc.x-self.brushSize, loc.y-self.brushSize,
             2.0*self.brushSize, 2.0*self.brushSize)
         self.brushFilter.setValue_forKey_(self.brushSize, "inputRadius1")
 
-        cicolor = CIColor.alloc().initWithColor_(self.color)
+        cicolor = Quartz.CIColor.alloc().initWithColor_(self.color)
         self.brushFilter.setValue_forKey_(cicolor, "inputColor0")
 
         self.brushFilter.setValue_forKey_(
-            CIVector.vectorWithX_Y_(loc.x, loc.y),
+            Quartz.CIVector.vectorWithX_Y_(loc.x, loc.y),
             "inputCenter")
 
         self.compositeFilter.setValue_forKey_(

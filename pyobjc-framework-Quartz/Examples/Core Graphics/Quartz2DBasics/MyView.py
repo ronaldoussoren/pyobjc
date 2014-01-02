@@ -1,17 +1,20 @@
-from Cocoa import *
-from UIHandling import *
-from PyObjCTools import NibClassBuilder
+import objc
+import Cocoa
+import UIHandling
 import AppDrawing
 import math
 
-_drawingCommand = kCommandStrokedAndFilledRects
+_drawingCommand = UIHandling.kCommandStrokedAndFilledRects
 _pdfDocument = None
 
-class MyView (NibClassBuilder.AutoBaseClass):
+class MyView (Cocoa.NSView):
+    currentMenuItem = objc.IBOutlet()
+
     def drawRect_(self, rect):
-        context = NSGraphicsContext.currentContext().graphicsPort()
+        context = Cocoa.NSGraphicsContext.currentContext().graphicsPort()
         AppDrawing.myDispatchDrawing(context, _drawingCommand)
 
+    @objc.IBAction
     def setDrawCommand_(self, sender):
         global _drawingCommand
 
@@ -21,16 +24,16 @@ class MyView (NibClassBuilder.AutoBaseClass):
             _drawingCommand = newCommand
             self.setNeedsDisplay_(True)
 
-            self.currentMenuItem.setState_(NSOffState)
+            self.currentMenuItem.setState_(Cocoa.NSOffState)
             self.currentMenuItem = sender;
-            self.currentMenuItem.setState_(NSOnState)
+            self.currentMenuItem.setState_(Cocoa.NSOnState)
 
     def currentPrintableCommand(self):
         # The best representation for printing or exporting
         # when the current command caches using a bitmap context
         # or a layer is to not do any caching.
-        if _drawingCommand == kCommandDoCGLayer:
-            return kCommandDoUncachedDrawing
+        if _drawingCommand == UIHandling.kCommandDoCGLayer:
+            return UIHandling.kCommandDoUncachedDrawing
 
         return _drawingCommand
 
@@ -39,16 +42,16 @@ class MyView (NibClassBuilder.AutoBaseClass):
 
         savedDrawingCommand = _drawingCommand
         _drawingCommand = self.currentPrintableCommand()
-        NSPrintOperation.printOperationWithView_(self).runOperation()
+        Cocoa.NSPrintOperation.printOperationWithView_(self).runOperation()
         _drawingCommand = savedDrawingCommand
 
     def knowsPageRange_(self, range):
-        return True, NSRange(1, 1)
+        return True, Cocoa.NSRange(1, 1)
 
     def rectForPage_(self, page):
-        pi = NSPrintOperation.currentOperation().printInfo()
+        pi = Cocoa.NSPrintOperation.currentOperation().printInfo()
         paperSize = pi.paperSize()
-        return NSMakeRect(0, 0, paperSize.width, paperSize.height)
+        return Cocoa.NSMakeRect(0, 0, paperSize.width, paperSize.height)
 
     def validateMenuItem_(self, menuItem):
         if menuItem.tag() == _drawingCommand:

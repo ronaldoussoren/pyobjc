@@ -1,11 +1,10 @@
-from Cocoa import *
-from Quartz import *
-
 import objc
+import Quartz
+import Cocoa
 
 import MyHazeFilter
 
-class HazeFilterView (NSView):
+class HazeFilterView (Cocoa.NSView):
     filter = objc.ivar()
     distance = objc.ivar(type=objc._C_FLT)
     slope = objc.ivar(type=objc._C_FLT)
@@ -19,25 +18,25 @@ class HazeFilterView (NSView):
         self.setNeedsDisplay_(True)
 
     def drawRect_(self, rect):
-        cg = CGRectMake(
-                NSMinX(rect), NSMinY(rect), NSWidth(rect), NSHeight(rect))
+        cg = Quartz.CGRectMake(
+                Cocoa.NSMinX(rect), Cocoa.NSMinY(rect), Cocoa.NSWidth(rect), Cocoa.NSHeight(rect))
 
-        context = NSGraphicsContext.currentContext().CIContext()
+        context = Cocoa.NSGraphicsContext.currentContext().CIContext()
 
         if self.filter is None:
             # make sure initialize is called
             MyHazeFilter.MyHazeFilter.pyobjc_classMethods.class__()
 
-            url = NSURL.fileURLWithPath_(
-                NSBundle.mainBundle().pathForResource_ofType_(
+            url = Cocoa.NSURL.fileURLWithPath_(
+                Cocoa.NSBundle.mainBundle().pathForResource_ofType_(
                     "CraterLake", "jpg"))
-            self.filter = CIFilter.filterWithName_("MyHazeRemover")
+            self.filter = Quartz.CIFilter.filterWithName_("MyHazeRemover")
             self.filter.setValue_forKey_(
-                CIImage.imageWithContentsOfURL_(url),
+                Quartz.CIImage.imageWithContentsOfURL_(url),
                 "inputImage")
 
             self.filter.setValue_forKey_(
-                CIColor.colorWithRed_green_blue_(0.7, 0.9,  1),
+                Quartz.CIColor.colorWithRed_green_blue_(0.7, 0.9,  1),
                 "inputColor")
 
         self.filter.setValue_forKey_(self.distance, "inputDistance")
