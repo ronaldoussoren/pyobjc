@@ -1,4 +1,4 @@
-from Quartz import *
+import Cocoa
 import Quartz
 import objc
 
@@ -11,7 +11,7 @@ import sys
 # load it manually:
 if not hasattr(Quartz, 'PMCGImageCreateWithEPSDataProvider'):
     functions = [
-        ('PMCGImageCreateWithEPSDataProvider', '@@@'),
+        ('PMCGImageCreateWithEPSDataProvider', b'@@@'),
     ]
     import AppKit
     d = {}
@@ -20,13 +20,13 @@ if not hasattr(Quartz, 'PMCGImageCreateWithEPSDataProvider'):
     if 'PMCGImageCreateWithEPSDataProvider' in d:
         PMCGImageCreateWithEPSDataProvider=d['PMCGImageCreateWithEPSDataProvider']
     else:
-        print >>sys.stderr, "PMCGImageCreateWithEPSDataProvider doesn't exist"
+        print("PMCGImageCreateWithEPSDataProvider doesn't exist")
 
 def getEPSBBox(epspath):
     try:
         fp = open(epspath, 'rU')
-    except IOError, msg:
-        return CGRectZero
+    except IOError as msg:
+        return Quartz.CGRectZero
 
     try:
         #  This is a VERY poor man's EPS DSC parser, here just so that
@@ -46,11 +46,11 @@ def getEPSBBox(epspath):
                     lly = int(fields[1])
                     urx = int(fields[2])
                     ury = int(fields[3])
-                    return CGRectMake(llx, lly, urx - llx, ury - lly)
+                    return Quartz.CGRectMake(llx, lly, urx - llx, ury - lly)
     finally:
         fp.close()
 
-    return CGRectZero
+    return Quartz.CGRectZero
 
 def createEPSPreviewImage(url):
     # The CGImage used as the preview needs to have the
@@ -61,17 +61,17 @@ def createEPSPreviewImage(url):
     # size. Your code would most likely create an image
     # that reflects a PICT or TIFF preview present in the
     # EPS data.
-    result, path = CFURLGetFileSystemRepresentation(url, True, None, 1024)
+    result, path = Cocoa.CFURLGetFileSystemRepresentation(url, True, None, 1024)
     if not result:
-        print >>sys.stderr, "Couldn't get the path for EPS file!"
+        print("Couldn't get the path for EPS file!")
         return None
 
-    path = path.rstrip('\0')
+    path = path.rstrip(b'\0')
 
     epsRect = getEPSBBox(path)
     # Check whether the EPS bounding box is empty.
-    if epsRect == CGRectZero:
-        print >>sys.stderr, "Couldn't find BoundingBox comment!"
+    if epsRect == Quartz.CGRectZero:
+        print("Couldn't find BoundingBox comment!")
         return None
 
     wantDisplayColorSpace = False
@@ -85,7 +85,7 @@ def createEPSPreviewImage(url):
                                     wantDisplayColorSpace,
                                     needsTransparentBitmap)
     if bitmapContext is None:
-        print >>sys.stderr, "Couldn't create bitmap context"
+        print("Couldn't create bitmap context")
         return None
 
     epsRect.origin.x = epsRect.origin.y = 0
@@ -95,15 +95,15 @@ def createEPSPreviewImage(url):
     # the upper-right corner of the bounding box and the other
     # line is from the lower-right corner to the upper-left
     # corner of the bounding box.
-    CGContextBeginPath(bitmapContext)
-    CGContextMoveToPoint(bitmapContext, 0, 0)
-    CGContextAddLineToPoint(bitmapContext, epsRect.size.width, epsRect.size.height)
-    CGContextMoveToPoint(bitmapContext, epsRect.size.width, 0)
-    CGContextAddLineToPoint(bitmapContext, 0, epsRect.size.height)
-    CGContextStrokePath(bitmapContext)
+    Quartz.CGContextBeginPath(bitmapContext)
+    Quartz.CGContextMoveToPoint(bitmapContext, 0, 0)
+    Quartz.CGContextAddLineToPoint(bitmapContext, epsRect.size.width, epsRect.size.height)
+    Quartz.CGContextMoveToPoint(bitmapContext, epsRect.size.width, 0)
+    Quartz.CGContextAddLineToPoint(bitmapContext, 0, epsRect.size.height)
+    Quartz.CGContextStrokePath(bitmapContext)
     # Stroke the bounding rectangle, inset so that the stroke is
     # completely contained in the EPS bounding rect.
-    CGContextStrokeRect(bitmapContext, CGRectInset(epsRect, 0.5, 0.5))
+    Quartz.CGContextStrokeRect(bitmapContext, Quartz.CGRectInset(epsRect, 0.5, 0.5))
 
     # Now create an image from the bitmap raster data. This image
     # has a data provider that releases the image raster data when
@@ -113,7 +113,7 @@ def createEPSPreviewImage(url):
     epsPreviewImage = BitmapContext.createImageFromBitmapContext(bitmapContext)
 
     if epsPreviewImage is None:
-        print >>sys.stderr, "Couldn't create preview image!"
+        print("Couldn't create preview image!")
         return None
 
     return epsPreviewImage
@@ -126,7 +126,7 @@ def createEPSPreviewImage(url):
 def createCGEPSImage(url):
     previewImage = createEPSPreviewImage(url)
     if previewImage is None:
-        print >>sys.stderr, "Couldn't create EPS preview!"
+        print("Couldn't create EPS preview!")
         return None
 
     # It is important that the data provider supplying the
@@ -136,9 +136,9 @@ def createCGEPSImage(url):
     # to follow these guidelines since your data provider
     # is not necessarily called before you release the image
     # that uses the provider.
-    epsDataProvider = CGDataProviderCreateWithURL(url)
+    epsDataProvider = Quartz.CGDataProviderCreateWithURL(url)
     if epsDataProvider is None:
-        print >>sys.stderr, "Couldn't create EPS data provider!"
+        print("Couldn't create EPS data provider!")
         return None
 
     # Create the hybrid CGImage that contains the preview image
@@ -154,7 +154,7 @@ def createCGEPSImage(url):
     del epsDataProvider
 
     if epsImage is None:
-        print >>sys.stderr, "Couldn't create EPS hybrid image!"
+        print("Couldn't create EPS hybrid image!")
         return None
 
     return epsImage
@@ -168,25 +168,25 @@ def drawEPSDataImage(context, url):
     # Create a destination rectangle at the location
     # to draw the EPS document. The size of the rect is scaled
     # down to 1/2 the size of the EPS graphic.
-    destinationRect = CGRectMake(100, 100,
-                        CGImageGetWidth(epsDataImage),
-                        CGImageGetHeight(epsDataImage))
+    destinationRect = Quartz.CGRectMake(100, 100,
+                        Quartz.CGImageGetWidth(epsDataImage),
+                        Quartz.CGImageGetHeight(epsDataImage))
     # Draw the image to the destination. When the EPS
     # data associated with the image is sent to a PostScript
     # printer, the EPS bounding box is mapped to this
     # destination rectangle, translated and scaled as necessary.
-    CGContextDrawImage(context, destinationRect, epsDataImage)
+    Quartz.CGContextDrawImage(context, destinationRect, epsDataImage)
 
     # Draw the image a second time. This time the image is
     # rotated by 45 degrees and scaled by an additional scaling factor
     # of 0.5 in the x dimension. The center point of this image coincides
     # with the center point of the earlier drawing.
-    CGContextTranslateCTM(context,
+    Quartz.CGContextTranslateCTM(context,
             destinationRect.origin.x + destinationRect.size.width/2,
             destinationRect.origin.y + destinationRect.size.height/2)
-    CGContextRotateCTM(context, Utilities.DEGREES_TO_RADIANS(45))
-    CGContextScaleCTM(context, 0.5, 1)
-    CGContextTranslateCTM(context,
+    Quartz.CGContextRotateCTM(context, Utilities.DEGREES_TO_RADIANS(45))
+    Quartz.CGContextScaleCTM(context, 0.5, 1)
+    Quartz.CGContextTranslateCTM(context,
             -(destinationRect.origin.x + destinationRect.size.width/2),
             -(destinationRect.origin.y + destinationRect.size.height/2) )
-    CGContextDrawImage(context, destinationRect, epsDataImage)
+    Quartz.CGContextDrawImage(context, destinationRect, epsDataImage)

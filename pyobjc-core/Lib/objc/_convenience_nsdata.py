@@ -74,7 +74,7 @@ if sys.version_info[0] == 2:
         ('__getslice__', nsdata__getslice__),
     ))
     addConvenienceForClass('NSMutableData', (
-        ('__setslice__', nsmutabledata__getslice__),
+        ('__setslice__', nsmutabledata__setslice__),
     ))
 
 

@@ -334,6 +334,8 @@ def Extension(*args, **kwds):
     os_level = get_os_level()
     cflags =  ["-DPyObjC_BUILD_RELEASE=%02d%02d"%(tuple(map(int, os_level.split('.'))))]
     ldflags = []
+    if 'clang' in get_config_var('CC'):
+        cflags.append('-Wno-deprecated-declarations')
 
     if os_level != '10.4':
         if os.path.exists('/usr/include/stdio.h'):

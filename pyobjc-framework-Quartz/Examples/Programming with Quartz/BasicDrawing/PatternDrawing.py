@@ -1,4 +1,4 @@
-from Quartz import *
+import Quartz
 import Utilities
 
 import sys
@@ -8,8 +8,8 @@ def scalePatternPhase(phase):
     # space by the scaling factor.
     patternScaling = Utilities.getScalingFactor()
     if patternScaling != 1.0:
-        phase = CGSizeApplyAffineTransform(phase,
-            CGAffineTransformMakeScale(patternScaling, patternScaling))
+        phase = Quartz.CGSizeApplyAffineTransform(phase,
+            Quartz.CGAffineTransformMakeScale(patternScaling, patternScaling))
 
     return phase
 
@@ -18,8 +18,8 @@ def scalePatternMatrix(patternTransform):
     # scaling base space by the scaling factor.
     patternScaling = Utilities.getScalingFactor()
     if patternScaling != 1.0:
-        patternTransform = CGAffineTransformConcat(patternTransform,
-                CGAffineTransformMakeScale(patternScaling, patternScaling))
+        patternTransform = Quartz.CGAffineTransformConcat(patternTransform,
+                Quartz.CGAffineTransformMakeScale(patternScaling, patternScaling))
 
     return patternTransform
 
@@ -31,34 +31,34 @@ def myDrawRedBlackCheckerBoardPattern(info, patternCellContext):
     #
     # Each 'cell' of the checkerboard is 2 units on a side.
     #
-    # This code uses CGColorRefs which are available in Panther
+    # This code uses Quartz.CGColorRefs which are available in Panther
     # and later only. Patterns are available in all versions of
-    # Mac OS X but this code uses CGColorRefs for convenience
+    # Mac OS X but this code uses Quartz.CGColorRefs for convenience
     # and efficiency.
 
     # Paint a black checkerboard box.
-    CGContextSetFillColorWithColor(patternCellContext,
+    Quartz.CGContextSetFillColorWithColor(patternCellContext,
             Utilities.getRGBOpaqueBlackColor())
     # This is a 1x1 unit rect whose origin is at 0,0 in pattern space.
-    CGContextFillRect(patternCellContext, CGRectMake(0.0, 0.0, 1.0, 1.0))
+    Quartz.CGContextFillRect(patternCellContext, Quartz.CGRectMake(0.0, 0.0, 1.0, 1.0))
     # This is a 1x1 unit rect whose origin is at 1,1 in pattern space.
-    CGContextFillRect(patternCellContext, CGRectMake(1.0, 1.0, 1.0, 1.0))
+    Quartz.CGContextFillRect(patternCellContext, Quartz.CGRectMake(1.0, 1.0, 1.0, 1.0))
 
     # Paint a red checkerboard box.
-    CGContextSetFillColorWithColor(patternCellContext,
+    Quartz.CGContextSetFillColorWithColor(patternCellContext,
             Utilities.getRGBOpaqueRedColor())
     # This is a 1x1 unit rect whose origin is at 1,0 in pattern space,
     # that is, immediately to the right of first black checkerboard box.
-    CGContextFillRect(patternCellContext, CGRectMake(1.0, 0.0, 1.0, 1.0))
+    Quartz.CGContextFillRect(patternCellContext, Quartz.CGRectMake(1.0, 0.0, 1.0, 1.0))
     # This is a 1x1 unit rect whose origin is at 0,1 in pattern space,
     # that is, immediately above the first black checkerboard box.
-    CGContextFillRect(patternCellContext, CGRectMake(0.0, 1.0, 1.0, 1.0))
+    Quartz.CGContextFillRect(patternCellContext, Quartz.CGRectMake(0.0, 1.0, 1.0, 1.0))
 
 def createRedBlackCheckerBoardPattern(patternTransform):
-    pattern = CGPatternCreate(None,
+    pattern = Quartz.CGPatternCreate(None,
         # The pattern cell origin is at (0,0) with a
         # width of 2 units and a height of 2 units.
-        CGRectMake(0, 0, 2, 2),
+        Quartz.CGRectMake(0, 0, 2, 2),
         # Use the pattern transform supplied to this routine.
         scalePatternMatrix(patternTransform),
         # In pattern space the xStep is 2 units to the next cell in x
@@ -66,28 +66,26 @@ def createRedBlackCheckerBoardPattern(patternTransform):
         2, 2,
         # This value is a good choice for this type of pattern and it
         # avoids seams between tiles.
-        kCGPatternTilingConstantSpacingMinimalDistortion,
+        Quartz.kCGPatternTilingConstantSpacingMinimalDistortion,
         # This pattern has intrinsic color.
         True,
-        (
-            myDrawRedBlackCheckerBoardPattern,
-            None
-        ))
+        myDrawRedBlackCheckerBoardPattern,
+        )
     return pattern
 
 def doRedBlackCheckerboard(context):
     dash = [4]
     pattern = createRedBlackCheckerBoardPattern(
-                            CGAffineTransformMakeScale(20, 20))
+                            Quartz.CGAffineTransformMakeScale(20, 20))
     if pattern is None:
-        print >>sys.stderr, "Couldn't create pattern!"
+        print("Couldn't create pattern!")
         return
 
     # Create the pattern color space. Since the pattern
     # itself has intrinsic color, the 'baseColorSpace' parameter
-    # to CGColorSpaceCreatePattern must be None.
-    patternColorSpace = CGColorSpaceCreatePattern(None)
-    CGContextSetFillColorSpace(context, patternColorSpace)
+    # to Quartz.CGColorSpaceCreatePattern must be None.
+    patternColorSpace = Quartz.CGColorSpaceCreatePattern(None)
+    Quartz.CGContextSetFillColorSpace(context, patternColorSpace)
 
     # The pattern has intrinsic color so the color components array
     # passed to CGContextSetFillPattern is just the alpha value used
@@ -97,198 +95,198 @@ def doRedBlackCheckerboard(context):
     color = [1.0]
 
     # Set the fill color to the checkerboard pattern.
-    CGContextSetFillPattern(context, pattern, color)
+    Quartz.CGContextSetFillPattern(context, pattern, color)
 
     # Fill a 100x100 unit rect at (20,20).
-    CGContextFillRect(context, CGRectMake(20, 20, 100, 100))
+    Quartz.CGContextFillRect(context, Quartz.CGRectMake(20, 20, 100, 100))
 
     # Save the graphics state before changing the stroke color.
-    CGContextSaveGState(context)
+    Quartz.CGContextSaveGState(context)
     if 1:
         # Set the stroke color space and color to the pattern.
-        CGContextSetStrokeColorSpace(context, patternColorSpace)
-        CGContextSetStrokePattern(context, pattern, color)
+        Quartz.CGContextSetStrokeColorSpace(context, patternColorSpace)
+        Quartz.CGContextSetStrokePattern(context, pattern, color)
 
         # Stroke an ellipse with the pattern.
-        CGContextSetLineWidth(context, 8)
-        CGContextBeginPath(context)
-        Utilities.myCGContextAddEllipseInRect(context, CGRectMake(120, 20, 50, 100))
-        CGContextStrokePath(context)
+        Quartz.CGContextSetLineWidth(context, 8)
+        Quartz.CGContextBeginPath(context)
+        Utilities.myCGContextAddEllipseInRect(context, Quartz.CGRectMake(120, 20, 50, 100))
+        Quartz.CGContextStrokePath(context)
 
     # Restore to the graphics state without the
     # pattern stroke color.
-    CGContextRestoreGState(context)
+    Quartz.CGContextRestoreGState(context)
 
     # Now draw text.
-    CGContextSetTextMatrix(context, CGAffineTransformIdentity)
+    Quartz.CGContextSetTextMatrix(context, Quartz.CGAffineTransformIdentity)
     # Choose the font with the PostScript name "Times-Roman",
     # size 80 points, with the encoding MacRoman encoding.
-    CGContextSelectFont(context, "Times-Roman", 80, kCGEncodingMacRoman)
+    Quartz.CGContextSelectFont(context, b"Times-Roman", 80, Quartz.kCGEncodingMacRoman)
 
     # Using the fill text drawing mode.
-    CGContextSetTextDrawingMode(context, kCGTextFill)
+    Quartz.CGContextSetTextDrawingMode(context, Quartz.kCGTextFill)
 
     # Draw text with the pattern.
-    CGContextShowTextAtPoint(context, 20, 120, "Text", 4)
+    Quartz.CGContextShowTextAtPoint(context, 20, 120, b"Text", 4)
 
     # Rectangle 1, filled.
-    CGContextFillRect(context, CGRectMake(200, 20, 90, 90))
+    Quartz.CGContextFillRect(context, Quartz.CGRectMake(200, 20, 90, 90))
 
     # Rectangle 2, filled and stroked with a dash.
-    CGContextSetLineWidth(context, 2)
-    CGContextSetLineDash(context, 0, dash, 1)
-    CGContextBeginPath(context)
-    CGContextAddRect(context, CGRectMake(200, 70, 90, 90))
-    CGContextDrawPath(context, kCGPathFillStroke)
+    Quartz.CGContextSetLineWidth(context, 2)
+    Quartz.CGContextSetLineDash(context, 0, dash, 1)
+    Quartz.CGContextBeginPath(context)
+    Quartz.CGContextAddRect(context, Quartz.CGRectMake(200, 70, 90, 90))
+    Quartz.CGContextDrawPath(context, Quartz.kCGPathFillStroke)
 
 def doPatternMatrix(context):
-    basePatternMatrix = CGAffineTransformMakeScale(20, 20)
+    basePatternMatrix = Quartz.CGAffineTransformMakeScale(20, 20)
     pattern = createRedBlackCheckerBoardPattern(basePatternMatrix)
     if pattern is None:
-        print >>sys.stderr, "Couldn't create pattern!"
+        print("Couldn't create pattern!")
         return
 
     # Create the pattern color space. Since the pattern
     # itself has intrinsic color, the 'baseColorSpace' parameter
-    # to CGColorSpaceCreatePattern must be None.
-    patternColorSpace = CGColorSpaceCreatePattern(None)
+    # to Quartz.CGColorSpaceCreatePattern must be None.
+    patternColorSpace = Quartz.CGColorSpaceCreatePattern(None)
 
-    CGContextSetFillColorSpace(context, patternColorSpace)
+    Quartz.CGContextSetFillColorSpace(context, patternColorSpace)
     del patternColorSpace
 
-    CGContextTranslateCTM(context, 40, 40)
-    CGContextSetPatternPhase(context, scalePatternPhase(CGSize(40, 40)))
+    Quartz.CGContextTranslateCTM(context, 40, 40)
+    Quartz.CGContextSetPatternPhase(context, scalePatternPhase(Quartz.CGSize(40, 40)))
 
     # The pattern has intrinsic color so the color components array
-    # passed to CGContextSetFillPattern is the alpha value used
+    # passed to Quartz.CGContextSetFillPattern is the alpha value used
     # to composite the pattern cell.
 
     # Paint the pattern first with alpha = 1.
     color = [1]
-    CGContextSetFillPattern(context, pattern, color)
+    Quartz.CGContextSetFillPattern(context, pattern, color)
 
     # Rectangle 1.
-    CGContextFillRect(context, CGRectMake(0, 0, 100, 100))
+    Quartz.CGContextFillRect(context, Quartz.CGRectMake(0, 0, 100, 100))
 
-    CGContextSaveGState(context)
+    Quartz.CGContextSaveGState(context)
     if 1:
         # Rectangle 2.
         # Paint the pattern with 65% alpha.
         color = [0.65]
-        CGContextSetFillPattern(context, pattern, color)
+        Quartz.CGContextSetFillPattern(context, pattern, color)
         # Rotate 45 degrees about the point (150, 50).
-        CGContextTranslateCTM(context, 150.0, 50.0)
-        CGContextRotateCTM(context, Utilities.DEGREES_TO_RADIANS(45.0))
-        CGContextTranslateCTM(context, -50.0, -50.0)
+        Quartz.CGContextTranslateCTM(context, 150.0, 50.0)
+        Quartz.CGContextRotateCTM(context, Utilities.DEGREES_TO_RADIANS(45.0))
+        Quartz.CGContextTranslateCTM(context, -50.0, -50.0)
         # Rectangle 2. Patterns do not translate, scale or
         # rotate with the CTM. You can see that the pattern
         # tile of this filled rectangle is that of Rectangle
         # 1.
-        CGContextFillRect(context, CGRectMake(0, 0, 100, 100))
+        Quartz.CGContextFillRect(context, Quartz.CGRectMake(0, 0, 100, 100))
         # Release the pattern.
         del pattern
-    CGContextRestoreGState(context)
+    Quartz.CGContextRestoreGState(context)
 
-    CGContextSaveGState(context)
+    Quartz.CGContextSaveGState(context)
     if 1:
         # Rectangle 3. The pattern is rotated with the object.
         # Rotate 45 degrees about the point 250, 50.
-        t = CGAffineTransformMakeTranslation(250.0, 50.0)
-        t = CGAffineTransformRotate(t, Utilities.DEGREES_TO_RADIANS(45.0))
+        t = Quartz.CGAffineTransformMakeTranslation(250.0, 50.0)
+        t = Quartz.CGAffineTransformRotate(t, Utilities.DEGREES_TO_RADIANS(45.0))
         # Translate back to -50, -50.
-        t = CGAffineTransformTranslate(t, -50.0, -50.0)
-        CGContextConcatCTM(context, t)
+        t = Quartz.CGAffineTransformTranslate(t, -50.0, -50.0)
+        Quartz.CGContextConcatCTM(context, t)
         # Make a new pattern that is equivalent to
         # the old pattern but transformed to current user
         # space. The order of transformations is crucial.
         # This ordering is equivalent to using the same pattern
         # matrix as before but transforming base space by t.
-        patTransform = CGAffineTransformConcat(basePatternMatrix, t)
+        patTransform = Quartz.CGAffineTransformConcat(basePatternMatrix, t)
         pattern = createRedBlackCheckerBoardPattern(patTransform)
         color = [1]
-        CGContextSetFillPattern(context, pattern, color)
+        Quartz.CGContextSetFillPattern(context, pattern, color)
         # Release the pattern.
         del pattern
-        CGContextFillRect(context, CGRectMake(0, 0, 100, 100))
-    CGContextRestoreGState(context)
+        Quartz.CGContextFillRect(context, Quartz.CGRectMake(0, 0, 100, 100))
+    Quartz.CGContextRestoreGState(context)
 
-    CGContextSaveGState(context)
+    Quartz.CGContextSaveGState(context)
     if 1:
         # Rectangle 4. The pattern is scaled with the object.
         # Translate and scale.
-        t = CGAffineTransformMakeTranslation(320, 0)
-        t = CGAffineTransformScale(t, 2, 2)
-        CGContextConcatCTM(context, t)
+        t = Quartz.CGAffineTransformMakeTranslation(320, 0)
+        t = Quartz.CGAffineTransformScale(t, 2, 2)
+        Quartz.CGContextConcatCTM(context, t)
         # Make a new pattern that is equivalent to
         # the old pattern but transformed to current user
         # space. The order of transformations is crucial.
         # This ordering is equivalent to using the same pattern
         # matrix as before but transforming base space by t.
-        patTransform = CGAffineTransformConcat(basePatternMatrix, t)
+        patTransform = Quartz.CGAffineTransformConcat(basePatternMatrix, t)
         pattern = createRedBlackCheckerBoardPattern(patTransform)
         color = [1]
-        CGContextSetFillPattern(context, pattern, color)
+        Quartz.CGContextSetFillPattern(context, pattern, color)
         # Release the pattern.
         del pattern
-        CGContextFillRect(context, CGRectMake(0, 0, 100, 100))
-    CGContextRestoreGState(context)
+        Quartz.CGContextFillRect(context, Quartz.CGRectMake(0, 0, 100, 100))
+    Quartz.CGContextRestoreGState(context)
 
 
 def doPatternPhase(context):
     pattern = createRedBlackCheckerBoardPattern(
-                            CGAffineTransformMakeScale(20, 20))
+                            Quartz.CGAffineTransformMakeScale(20, 20))
     if pattern is None:
-        print >>sys.stderr, "Couldn't create pattern!"
+        print("Couldn't create pattern!")
         return
 
     # Create the pattern color space for a colored pattern.
-    patternColorSpace = CGColorSpaceCreatePattern(None)
-    CGContextSetFillColorSpace(context, patternColorSpace)
+    patternColorSpace = Quartz.CGColorSpaceCreatePattern(None)
+    Quartz.CGContextSetFillColorSpace(context, patternColorSpace)
 
     # Paint the pattern with alpha = 1.
     color = (1,)
-    CGContextSetFillPattern(context, pattern, color)
+    Quartz.CGContextSetFillPattern(context, pattern, color)
 
     # Rectangle 1
-    CGContextFillRect(context, CGRectMake(20, 150, 100, 100))
+    Quartz.CGContextFillRect(context, Quartz.CGRectMake(20, 150, 100, 100))
 
     # Rectangle 2
-    CGContextFillRect(context, CGRectMake(130, 150, 100, 100))
+    Quartz.CGContextFillRect(context, Quartz.CGRectMake(130, 150, 100, 100))
 
     # Rectangle 3
     # Set the pattern phase so that the pattern origin
     # is at the lower-left of the shape.
-    CGContextSetPatternPhase(context, scalePatternPhase( CGSizeMake(20, 20) ))
-    CGContextFillRect(context, CGRectMake(20, 20, 100, 100))
+    Quartz.CGContextSetPatternPhase(context, scalePatternPhase( Quartz.CGSizeMake(20, 20) ))
+    Quartz.CGContextFillRect(context, Quartz.CGRectMake(20, 20, 100, 100))
 
     # Rectangle 4
     # Set the pattern phase so that the pattern origin
     # is at the lower-left corner of the shape.
-    CGContextSetPatternPhase(context, scalePatternPhase( CGSizeMake(130, 20) ))
-    CGContextTranslateCTM(context, 130, 20)
-    CGContextFillRect(context, CGRectMake(0, 0, 100, 100))
+    Quartz.CGContextSetPatternPhase(context, scalePatternPhase( Quartz.CGSizeMake(130, 20) ))
+    Quartz.CGContextTranslateCTM(context, 130, 20)
+    Quartz.CGContextFillRect(context, Quartz.CGRectMake(0, 0, 100, 100))
 
 def drawRotatedRect(c, p):
-    r = CGRectMake(0, 0, 1, 1)
-    CGContextSaveGState(c)
+    r = Quartz.CGRectMake(0, 0, 1, 1)
+    Quartz.CGContextSaveGState(c)
     if 1:
-        CGContextTranslateCTM(c, p.x, p.y)
-        CGContextRotateCTM(c, Utilities.DEGREES_TO_RADIANS(45))
-        CGContextTranslateCTM(c, -r.size.width/2, -r.size.height/2)
-        CGContextFillRect(c, r)
-    CGContextRestoreGState(c)
+        Quartz.CGContextTranslateCTM(c, p.x, p.y)
+        Quartz.CGContextRotateCTM(c, Utilities.DEGREES_TO_RADIANS(45))
+        Quartz.CGContextTranslateCTM(c, -r.size.width/2, -r.size.height/2)
+        Quartz.CGContextFillRect(c, r)
+    Quartz.CGContextRestoreGState(c)
 
 def myStencilPatternProc(info, patternCellContext):
-    drawRotatedRect(patternCellContext, CGPointMake(1, 1))
-    drawRotatedRect(patternCellContext, CGPointMake(1.75, 1))
+    drawRotatedRect(patternCellContext, Quartz.CGPointMake(1, 1))
+    drawRotatedRect(patternCellContext, Quartz.CGPointMake(1.75, 1))
 
 def createStencilPattern(patternTransform):
-    pattern = CGPatternCreate(None,
+    pattern = Quartz.CGPatternCreate(None,
                 # The pattern cell origin is at (0,0) with a
                 # width of 2.5 units and a height of 2 units. This
                 # pattern cell has transparent areas since
                 # the pattern proc only marks a portion of the cell.
-                CGRectMake(0, 0, 2.5, 2),
+                Quartz.CGRectMake(0, 0, 2.5, 2),
                 # Use the pattern transform supplied to this routine.
                 scalePatternMatrix(patternTransform),
                 # Use the width and height of the pattern cell for
@@ -296,19 +294,17 @@ def createStencilPattern(patternTransform):
                 2.5, 2,
                 # This value is a good choice for this type of pattern and it
                 # avoids seams between tiles.
-                kCGPatternTilingConstantSpacingMinimalDistortion,
+                Quartz.kCGPatternTilingConstantSpacingMinimalDistortion,
                 # This pattern does not have intrinsic color.
                 False,   # Must be False for a stencil pattern.
-                (
-                    myStencilPatternProc,
-                    None,
-                ))
+                myStencilPatternProc,
+                )
     return pattern
 
 def doStencilPattern(context):
-    pattern = createStencilPattern(CGAffineTransformMakeScale(20, 20))
+    pattern = createStencilPattern(Quartz.CGAffineTransformMakeScale(20, 20))
     if pattern is None:
-        print >>sys.stderr, "Couldn't create pattern!"
+        print("Couldn't create pattern!")
         return
 
     # Create the pattern color space. This pattern is a stencil
@@ -318,9 +314,9 @@ def doStencilPattern(context):
     # to say what underlying color space should be used when
     # the pattern proc is called.
     baseColorSpace = Utilities.getTheCalibratedRGBColorSpace()
-    patternColorSpace = CGColorSpaceCreatePattern(baseColorSpace)
+    patternColorSpace = Quartz.CGColorSpaceCreatePattern(baseColorSpace)
 
-    CGContextSetFillColorSpace(context, patternColorSpace)
+    Quartz.CGContextSetFillColorSpace(context, patternColorSpace)
     # This code is finished with the pattern color space and can release
     # it because Quartz retains it while it is the current color space.
     del patternColorSpace
@@ -330,34 +326,34 @@ def doStencilPattern(context):
     # the pattern with in the baseColorSpace. In the case here,
     # first paint the pattern with opaque blue.
     color = (0.11, 0.208, 0.451, 1.0)
-    CGContextSetFillPattern(context, pattern, color)
+    Quartz.CGContextSetFillPattern(context, pattern, color)
 
     # Rectangle 1.
-    CGContextSetPatternPhase(context, scalePatternPhase( CGSizeMake(20, 160) ))
-    CGContextBeginPath(context)
-    CGContextAddRect(context, CGRectMake(20, 160, 105, 80))
-    CGContextDrawPath(context, kCGPathFillStroke)
+    Quartz.CGContextSetPatternPhase(context, scalePatternPhase( Quartz.CGSizeMake(20, 160) ))
+    Quartz.CGContextBeginPath(context)
+    Quartz.CGContextAddRect(context, Quartz.CGRectMake(20, 160, 105, 80))
+    Quartz.CGContextDrawPath(context, Quartz.kCGPathFillStroke)
 
     # Rectangle 2.
     # Set the pattern color so the stencil pattern
     # is painted in a yellow shade.
     color = (1.0, 0.816, 0.0, 1.0)
-    CGContextSetFillPattern(context, pattern, color)
+    Quartz.CGContextSetFillPattern(context, pattern, color)
     # Set the pattern phase to the origin of the next object.
-    CGContextSetPatternPhase(context, scalePatternPhase( CGSizeMake(140, 160) ))
-    CGContextBeginPath(context)
-    CGContextAddRect(context, CGRectMake(140, 160, 105, 80))
-    CGContextDrawPath(context, kCGPathFillStroke)
+    Quartz.CGContextSetPatternPhase(context, scalePatternPhase( Quartz.CGSizeMake(140, 160) ))
+    Quartz.CGContextBeginPath(context)
+    Quartz.CGContextAddRect(context, Quartz.CGRectMake(140, 160, 105, 80))
+    Quartz.CGContextDrawPath(context, Quartz.kCGPathFillStroke)
 
-    CGContextSaveGState(context)
+    Quartz.CGContextSaveGState(context)
     if 1:
-        CGContextSetFillColorWithColor(context,
+        Quartz.CGContextSetFillColorWithColor(context,
                 Utilities.getRGBOpaqueBlueColor())
         # Fill color is now blue. Paint two blue rectangles
         # that will be underneath the drawing which follows.
-        CGContextFillRect(context, CGRectMake(20, 40, 105, 80))
-        CGContextFillRect(context, CGRectMake(140, 40, 105, 80))
-    CGContextRestoreGState(context)
+        Quartz.CGContextFillRect(context, Quartz.CGRectMake(20, 40, 105, 80))
+        Quartz.CGContextFillRect(context, Quartz.CGRectMake(140, 40, 105, 80))
+    Quartz.CGContextRestoreGState(context)
 
     # The fill color is again the stencil pattern with
     # the underlying fill color an opaque yellow.
@@ -366,17 +362,17 @@ def doStencilPattern(context):
     # This paints over the blue rect just painted at 20,40
     # and the blue underneath is visible where the pattern has
     # transparent areas.
-    CGContextSetPatternPhase(context, scalePatternPhase( CGSizeMake(20, 40) ))
-    CGContextFillRect(context, CGRectMake(20, 40, 105, 80))
+    Quartz.CGContextSetPatternPhase(context, scalePatternPhase( Quartz.CGSizeMake(20, 40) ))
+    Quartz.CGContextFillRect(context, Quartz.CGRectMake(20, 40, 105, 80))
 
     # Rectangle 4.
     # Change the alpha value of the underlying color used
     # to paint the stencil pattern.
     color = list(color)
     color[3] = 0.75
-    CGContextSetFillPattern(context, pattern, color)
-    CGContextSetPatternPhase(context, scalePatternPhase( CGSizeMake(140, 40) ))
-    CGContextFillRect(context, CGRectMake(140, 40, 105, 80))
+    Quartz.CGContextSetFillPattern(context, pattern, color)
+    Quartz.CGContextSetPatternPhase(context, scalePatternPhase( Quartz.CGSizeMake(140, 40) ))
+    Quartz.CGContextFillRect(context, Quartz.CGRectMake(140, 40, 105, 80))
 
 class MyPDFPatternInfo (object):
     rect = None
@@ -385,10 +381,10 @@ class MyPDFPatternInfo (object):
 def myDrawPDFPattern(info, patternCellContext):
     # This pattern proc draws the first page of a PDF document to
     # a destination rect.
-    CGContextSaveGState(patternCellContext)
-    CGContextClipToRect(patternCellContext, info.rect)
-    CGContextDrawPDFDocument(patternCellContext, info.rect, info.pdfDoc, 1)
-    CGContextRestoreGState(patternCellContext)
+    Quartz.CGContextSaveGState(patternCellContext)
+    Quartz.CGContextClipToRect(patternCellContext, info.rect)
+    Quartz.CGContextDrawPDFDocument(patternCellContext, info.rect, info.pdfDoc, 1)
+    Quartz.CGContextRestoreGState(patternCellContext)
 
 # Versions of Tiger prior to 10.4.3 have a bug such that use of an xStep that
 # doesn't match the width of pattern bounding box or a yStep that doesn't match the
@@ -404,19 +400,19 @@ OPTIMIZEDPERF=0
 def createPDFPatternPattern(additionalTransformP, url):
     patternInfoP = MyPDFPatternInfo()
 
-    patternInfoP.pdfDoc = CGPDFDocumentCreateWithURL(url)
+    patternInfoP.pdfDoc = Quartz.CGPDFDocumentCreateWithURL(url)
     if patternInfoP.pdfDoc is None:
-        print >>sys.stderr, "Couldn't create PDF document reference!"
+        print("Couldn't create PDF document reference!")
         return
 
-    patternInfoP.rect = CGPDFDocumentGetMediaBox(patternInfoP.pdfDoc, 1)
+    patternInfoP.rect = Quartz.CGPDFDocumentGetMediaBox(patternInfoP.pdfDoc, 1)
     # Set the origin of the media rect for the PDF document to (0,0).
-    patternInfoP.rect.origin = CGPointZero
+    patternInfoP.rect.origin = Quartz.CGPointZero
 
     if additionalTransformP is not None:
         patternTransform = additionalTransformP
     else:
-        patternTransform = CGAffineTransformIdentity
+        patternTransform = Quartz.CGAffineTransformIdentity
 
     # To emulate the example from the bitmap context drawing chapter,
     # the tile offset in each dimension is the tile size in that
@@ -433,17 +429,17 @@ def createPDFPatternPattern(additionalTransformP, url):
     # To workaround this bug, we can make the bounds rect incorporate
     # the xstep,ystep since xstep,ystep are larger than the bounds.
     if OPTIMIZEDPERF or TIGERSTEPWORKAROUND:
-        patternRect = CGRectMake(0, 0, tileOffsetX, tileOffsetY)
+        patternRect = Quartz.CGRectMake(0, 0, tileOffsetX, tileOffsetY)
     else:
         patternRect = patternInfoP.rect
 
     if OPTIMIZEDPERF:
         # Produces best performance if bbox == xstep/ystep
-        spacing = kCGPatternTilingConstantSpacing
+        spacing = Quartz.kCGPatternTilingConstantSpacing
     else:
-        spacing = kCGPatternTilingConstantSpacingMinimalDistortion
+        spacing = Quartz.kCGPatternTilingConstantSpacingMinimalDistortion
 
-    pattern = CGPatternCreate(patternInfoP,
+    pattern = Quartz.CGPatternCreate(patternInfoP,
             # The pattern cell size is the size
             # of the media rect of the PDF document.
             patternRect,
@@ -454,10 +450,8 @@ def createPDFPatternPattern(additionalTransformP, url):
             spacing,
             # This pattern has intrinsic color.
             True,
-            (
-                myDrawPDFPattern,
-                None,
-            ))
+            myDrawPDFPattern,
+            )
     # If the pattern can't be created then release the
     # pattern resources and info parameter.
     if pattern is None:
@@ -468,31 +462,31 @@ def createPDFPatternPattern(additionalTransformP, url):
 
 def drawWithPDFPattern(context, url):
     if SCALEPATTERN:
-        patternMatrix = CGAffineTransformMakeScale(1.0/3, 1.0/3)
+        patternMatrix = Quartz.CGAffineTransformMakeScale(1.0/3, 1.0/3)
     else:
-        patternMatrix = CGAffineTransformMakeScale(1, 1)
+        patternMatrix = Quartz.CGAffineTransformMakeScale(1, 1)
 
     # Scale the PDF pattern down to 1/3 its original size.
     pdfPattern = createPDFPatternPattern(patternMatrix, url)
     if pdfPattern is None:
-        print >>sys.stderr, "Couldn't create pattern!"
+        print("Couldn't create pattern!")
         return
 
     # Create the pattern color space. Since the pattern
     # itself has intrinsic color, the 'baseColorSpace' parameter
     # to CGColorSpaceCreatePattern must be None.
-    patternColorSpace = CGColorSpaceCreatePattern(None)
-    CGContextSetFillColorSpace(context, patternColorSpace)
+    patternColorSpace = Quartz.CGColorSpaceCreatePattern(None)
+    Quartz.CGContextSetFillColorSpace(context, patternColorSpace)
     # Quartz retains the color space so this code
     # can now release it since it no longer needs it.
     del patternColorSpace
 
     # Paint the pattern with an alpha of 1.
     color = (1,)
-    CGContextSetFillPattern(context, pdfPattern, color)
+    Quartz.CGContextSetFillPattern(context, pdfPattern, color)
     # Quartz retains the pattern so this code
     # can now release it since it no longer needs it.
     del pdfPattern
 
     # Fill a US Letter size rect with the pattern.
-    CGContextFillRect(context, CGRectMake(0, 0, 612, 792))
+    Quartz.CGContextFillRect(context, Quartz.CGRectMake(0, 0, 612, 792))

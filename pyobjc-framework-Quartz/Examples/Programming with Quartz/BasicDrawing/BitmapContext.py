@@ -2,10 +2,8 @@ import sys
 
 import objc
 
-from Quartz import *
 import Quartz
-
-from LaunchServices import * # kUTType* constants
+import LaunchServices
 
 import Utilities
 import DrawingBasics
@@ -52,11 +50,11 @@ def createRGBBitmapContext(width, height, wantDisplayColorSpace, needsTransparen
         cs = Utilities.getTheCalibratedRGBColorSpace()
 
     if needsTransparentBitmap:
-        transparency = kCGImageAlphaPremultipliedFirst
+        transparency = Quartz.kCGImageAlphaPremultipliedFirst
     else:
-        transparency = kCGImageAlphaPremultipliedFirst
+        transparency = Quartz.kCGImageAlphaPremultipliedFirst
 
-    context = CGBitmapContextCreate(rasterData, width, height, 8, bytesPerRow,
+    context = Quartz.CGBitmapContextCreate(rasterData, width, height, 8, bytesPerRow,
             cs, transparency)
     if context is None:
         return None
@@ -67,23 +65,23 @@ def createRGBBitmapContext(width, height, wantDisplayColorSpace, needsTransparen
     # the needs of the caller.
     if needsTransparentBitmap:
         # Clear the context bits so they are transparent.
-        CGContextClearRect(context, CGRectMake(0, 0, width, height))
+        Quartz.CGContextClearRect(context, Quartz.CGRectMake(0, 0, width, height))
 
     else:
         # Since the drawing destination is opaque, first paint
         # the context bits to white.
-        CGContextSaveGState(context)
-        CGContextSetFillColorWithColor(context, Utilities.getRGBOpaqueWhiteColor())
-        CGContextFillRect(context, CGRectMake(0, 0, width, height))
-        CGContextRestoreGState(context)
+        Quartz.CGContextSaveGState(context)
+        Quartz.CGContextSetFillColorWithColor(context, Utilities.getRGBOpaqueWhiteColor())
+        Quartz.CGContextFillRect(context, Quartz.CGRectMake(0, 0, width, height))
+        Quartz.CGContextRestoreGState(context)
 
     return context
 
 def myCGContextGetBitmapInfo(c):
     if hasattr(Quartz, 'CGBitmapContextGetBitmapInfo'):
-        return CGBitmapContextGetBitmapInfo(c)
+        return Quartz.CGBitmapContextGetBitmapInfo(c)
     else:
-        return CGBitmapContextGetAlphaInfo(c)
+        return Quartz.CGBitmapContextGetAlphaInfo(c)
 
 # createImageFromBitmapContext creates a CGImageRef
 # from a bitmap context. Calling this routine
@@ -96,38 +94,38 @@ def createImageFromBitmapContext(c):
     # We own the data, hence remove from the mapping
     del _rasterDataForContext[c]
 
-    imageDataSize = CGBitmapContextGetBytesPerRow(c)*CGBitmapContextGetHeight(c)
+    imageDataSize = Quartz.CGBitmapContextGetBytesPerRow(c)*Quartz.CGBitmapContextGetHeight(c)
 
     if rasterData is None:
         fprintf(stderr, "Context is not a bitmap context!")
 
     # Create the data provider from the image data
-    dataProvider = CGDataProviderCreateWithData(None,
+    dataProvider = Quartz.CGDataProviderCreateWithData(None,
                                 rasterData,
                                 imageDataSize,
                                 None)
     if dataProvider is None:
-        print >>sys.stderr, "Couldn't create data provider!"
+        print("Couldn't create data provider!")
         return None
 
     # Now create the image. The parameters for the image closely match
     # the parameters of the bitmap context. This code uses a NULL
     # decode array and shouldInterpolate is true.
-    image = CGImageCreate(
-                CGBitmapContextGetWidth(c),
-                CGBitmapContextGetHeight(c),
-                CGBitmapContextGetBitsPerComponent(c),
-                CGBitmapContextGetBitsPerPixel(c),
-                CGBitmapContextGetBytesPerRow(c),
-                CGBitmapContextGetColorSpace(c),
+    image = Quartz.CGImageCreate(
+                Quartz.CGBitmapContextGetWidth(c),
+                Quartz.CGBitmapContextGetHeight(c),
+                Quartz.CGBitmapContextGetBitsPerComponent(c),
+                Quartz.CGBitmapContextGetBitsPerPixel(c),
+                Quartz.CGBitmapContextGetBytesPerRow(c),
+                Quartz.CGBitmapContextGetColorSpace(c),
                 myCGContextGetBitmapInfo(c),
                 dataProvider,
                 None,
                 True,
-                kCGRenderingIntentDefault)
+                Quartz.kCGRenderingIntentDefault)
 
     if image is None:
-        print >>sys.stderr, "Couldn't create image!"
+        print("Couldn't create image!")
         return None
     return image
 
@@ -142,17 +140,17 @@ def exportCGImageToFileWithQT(image, url, outputFormat, dpi):
     """
     return
 
-    if outputFormat.lower() == kUTTypeTIFF.lower():
-        imageExportType = kQTFileTypeTIFF;
+    if outputFormat.lower() == LaunchServices.kUTTypeTIFF.lower():
+        imageExportType = LaunchServices.kQTFileTypeTIFF;
 
-    elif outputFormat.lower() == kUTTypePNG.lower():
-        imageExportType = kQTFileTypePNG;
+    elif outputFormat.lower() == LaunchServices.kUTTypePNG.lower():
+        imageExportType = LaunchServices.kQTFileTypePNG;
 
-    elif outputFormat.lower() == kUTTypeJPEG.lower():
-        imageExportType = kQTFileTypeJPEG;
+    elif outputFormat.lower() == LaunchServices.kUTTypeJPEG.lower():
+        imageExportType = LaunchServices.kQTFileTypeJPEG;
 
     else:
-        print >>sys.stderr, "Requested image export format %@s unsupported"%(outputFormat,)
+        print("Requested image export format %@s unsupported"%(outputFormat,))
         return
 
         result, dataRef, dataRefType = QTNewDataReferenceFromCFURL(url, 0,  None, None)
@@ -176,30 +174,30 @@ def exportCGImageToFileWithQT(image, url, outputFormat, dpi):
             DisposeHandle(dataRef);
 
         if result:
-            print >>sys.stderr, "QT export got bad result = %d!"%(result,)
+            print("QT export got bad result = %d!"%(result,))
 
 
 def exportCGImageToFileWithDestination(image, url, outputFormat, dpi):
     # Create an image destination at the supplied URL that
     # corresponds to the output image format. The destination will
     # only contain 1 image.
-    imageDestination = CGImageDestinationCreateWithURL(url, outputFormat, 1, None)
+    imageDestination = Quartz.CGImageDestinationCreateWithURL(url, outputFormat, 1, None)
 
     if imageDestination is None:
-        print >>sys.stderr, "Couldn't create image destination!"
+        print("Couldn't create image destination!")
         return
 
     # Create an options dictionary with the X&Y resolution of the image
     options = {
-        kCGImagePropertyDPIWidth: dpi,
-        kCGImagePropertyDPIHeight: dpi,
+        Quartz.kCGImagePropertyDPIWidth: dpi,
+        Quartz.kCGImagePropertyDPIHeight: dpi,
     }
 
     # Add the image with the options dictionary to the destination.
-    CGImageDestinationAddImage(imageDestination, image, options);
+    Quartz.CGImageDestinationAddImage(imageDestination, image, options);
 
     # When all the images are added to the destination, finalize it.
-    CGImageDestinationFinalize(imageDestination);
+    Quartz.CGImageDestinationFinalize(imageDestination);
 
 def MakeImageDocument(url, imageType, exportInfo):
     # First make a bitmap context for a US Letter size
@@ -210,7 +208,7 @@ def MakeImageDocument(url, imageType, exportInfo):
 
     # For JPEG output type the bitmap should not be transparent. If other types are added that
     # do not support transparency, this code should be updated to check for those types as well.
-    needTransparentBitmap = (imageType.lower() != kUTTypeJPEG.lower())
+    needTransparentBitmap = (imageType.lower() != LaunchServices.kUTTypeJPEG.lower())
 
     # Create an RGB Bitmap context using the generic calibrated RGB color space
     # instead of the display color space.
@@ -218,17 +216,17 @@ def MakeImageDocument(url, imageType, exportInfo):
     c = createRGBBitmapContext(width, height, useDisplayColorSpace, needTransparentBitmap)
 
     if c is None:
-        print >>sys.stderr, "Couldn't make destination bitmap context"
+        print("Couldn't make destination bitmap context")
         return memFullErr;
 
     # Scale the coordinate system based on the resolution in dots per inch.
-    CGContextScaleCTM(c, dpi/72, dpi/72);
+    Quartz.CGContextScaleCTM(c, dpi/72, dpi/72);
 
     # Set the font smoothing parameter to false since it's better to
     # draw any text without special LCD text rendering when creating
     # rendered data for export.
     if hasattr(Quartz, 'CGContextSetShouldSmoothFonts'):
-        CGContextSetShouldSmoothFonts(c, False)
+        Quartz.CGContextSetShouldSmoothFonts(c, False)
 
     # Set the scaling factor for shadows. This is a hack so that
     # drawing code that needs to know the scaling factor can
@@ -262,36 +260,36 @@ def MakeImageDocument(url, imageType, exportInfo):
 
 
 def MakeTIFFDocument(url, exportInfo):
-    return MakeImageDocument(url, kUTTypeTIFF, exportInfo)
+    return MakeImageDocument(url, LaunchServices.kUTTypeTIFF, exportInfo)
 
 def MakePNGDocument(url, exportInfo):
-    return MakeImageDocument(url, kUTTypePNG, exportInfo)
+    return MakeImageDocument(url, LaunchServices.kUTTypePNG, exportInfo)
 
 def MakeJPEGDocument(url, exportInfo):
-    return MakeImageDocument(url, kUTTypeJPEG, exportInfo)
+    return MakeImageDocument(url, LaunchServices.kUTTypeJPEG, exportInfo)
 
 def createCGLayerForDrawing(c):
-    rect = CGRectMake(0, 0, 50, 50)
+    rect = Quartz.CGRectMake(0, 0, 50, 50)
 
     # Make the layer the size of the rectangle that
     # this code draws into the layer.
     layerSize = rect.size
 
     # Create the layer to draw into.
-    layer = CGLayerCreateWithContext(c, layerSize, None);
+    layer = Quartz.CGLayerCreateWithContext(c, layerSize, None);
     if layer is None:
         return None
 
     # Get the context corresponding to the layer.
-    layerContext = CGLayerGetContext(layer)
+    layerContext = Quartz.CGLayerGetContext(layer)
     if layerContext is None:
         return None
 
     #$ Set the fill color to opaque black.
-    CGContextSetFillColorWithColor(layerContext, Utilities.getRGBOpaqueBlackColor())
+    Quartz.CGContextSetFillColorWithColor(layerContext, Utilities.getRGBOpaqueBlackColor())
 
     # Draw the content into the layer.
-    CGContextFillRect(layerContext, rect)
+    Quartz.CGContextFillRect(layerContext, rect)
 
     # Now the layer has the contents needed.
     return layer
@@ -301,41 +299,41 @@ def doSimpleCGLayer(context):
     layer = createCGLayerForDrawing(context)
 
     if layer is None:
-        print >>sys.stderr, "Couldn't create layer!"
+        print("Couldn't create layer!")
         return
 
     # Get the size of the layer created.
-    s = CGLayerGetSize(layer)
+    s = Quartz.CGLayerGetSize(layer)
 
     # Clip to a rect that corresponds to
     # a grid of 8x8 layer objects.
-    CGContextClipToRect(context, CGRectMake(0, 0, 8*s.width, 8*s.height))
+    Quartz.CGContextClipToRect(context, Quartz.CGRectMake(0, 0, 8*s.width, 8*s.height))
 
     # Paint 8 rows of layer objects.
     for j in range(8):
-        CGContextSaveGState(context)
+        Quartz.CGContextSaveGState(context)
         # Paint 4 columns of layer objects, moving
         # across the drawing canvas by skipping a
         # square on the grid each time across.
         for i in range(4):
             # Draw the layer at the current origin.
-            CGContextDrawLayerAtPoint(context,
-                    CGPointZero,
+            Quartz.CGContextDrawLayerAtPoint(context,
+                    Quartz.CGPointZero,
                     layer);
             # Translate across two layer widths.
-            CGContextTranslateCTM(context, 2*s.width, 0);
+            Quartz.CGContextTranslateCTM(context, 2*s.width, 0);
 
-        CGContextRestoreGState(context)
+        Quartz.CGContextRestoreGState(context)
         # Translate to the left one layer width on
         # even loop counts and to the right one
         # layer width on odd loop counts. Each
         # time through the outer loop, translate up
         # one layer height.
         if j % 2:
-            CGContextTranslateCTM(context,
+            Quartz.CGContextTranslateCTM(context,
                 s.width, s.height)
         else:
-            CGContextTranslateCTM(context,
+            Quartz.CGContextTranslateCTM(context,
                 -s.width, s.height)
 
 def createAlphaOnlyContext(width, height):
@@ -359,16 +357,16 @@ def createAlphaOnlyContext(width, height):
     # This type of context is only available in Panther and later, otherwise
     # this fails and returns a NULL context. The color space for an alpha
     #// only context is NULL and the BitmapInfo value is kCGImageAlphaOnly.
-    context = CGBitmapContextCreate(rasterData, width, height, 8, bytesPerRow,
-                                        None, kCGImageAlphaOnly);
+    context = Quartz.CGBitmapContextCreate(rasterData, width, height, 8, bytesPerRow,
+                                        None, Quartz.kCGImageAlphaOnly);
     if context is None:
-        print >>sys.stderr, "Couldn't create the context!"
+        print("Couldn't create the context!")
         return None
 
     _rasterDataForContext[context] = rasterData
 
     # Clear the context bits so they are initially transparent.
-    CGContextClearRect(context, CGRectMake(0, 0, width, height))
+    Quartz.CGContextClearRect(context, Quartz.CGRectMake(0, 0, width, height))
 
     return context;
 
@@ -383,24 +381,24 @@ def createMaskFromAlphaOnlyContext(alphaContext):
     # We own the data, hence remove from the mapping
     del _rasterDataForContext[alphaContext]
 
-    imageDataSize = CGBitmapContextGetBytesPerRow(alphaContext) * CGBitmapContextGetHeight(alphaContext)
+    imageDataSize = Quartz.CGBitmapContextGetBytesPerRow(alphaContext) * Quartz.CGBitmapContextGetHeight(alphaContext)
     invertDecode = [ 1.0, 0.0 ]
 
     # Create the data provider from the image data.
-    dataProvider = CGDataProviderCreateWithData(None,
+    dataProvider = Quartz.CGDataProviderCreateWithData(None,
                                             rasterData,
                                             imageDataSize,
                                             None)
 
     if dataProvider is None:
-        print >>sys.stderr, "Couldn't create data provider!"
+        print("Couldn't create data provider!")
         return None
 
-    mask = CGImageMaskCreate(CGBitmapContextGetWidth(alphaContext),
-                          CGBitmapContextGetHeight(alphaContext),
-                          CGBitmapContextGetBitsPerComponent(alphaContext),
-                          CGBitmapContextGetBitsPerPixel(alphaContext),
-                          CGBitmapContextGetBytesPerRow(alphaContext),
+    mask = Quartz.CGImageMaskCreate(Quartz.CGBitmapContextGetWidth(alphaContext),
+                          Quartz.CGBitmapContextGetHeight(alphaContext),
+                          Quartz.CGBitmapContextGetBitsPerComponent(alphaContext),
+                          Quartz.CGBitmapContextGetBitsPerPixel(alphaContext),
+                          Quartz.CGBitmapContextGetBytesPerRow(alphaContext),
                           dataProvider,
                           # The decode is an inverted decode since a mask has the opposite
                           # sense than alpha, i.e. 0 in a mask paints 100% and 1 in a mask
@@ -409,7 +407,7 @@ def createMaskFromAlphaOnlyContext(alphaContext):
                           True)
 
     if mask is None:
-        print >>sys.stderr, "Couldn't create image mask!"
+        print("Couldn't create image mask!")
         return None
 
     return mask
@@ -423,7 +421,7 @@ def doAlphaOnlyContext(context):
     height = 400
     alphaContext = createAlphaOnlyContext(width, height);
     if context is None:
-        print >>sys.stderr, "Couldn't create the alpha-only context!"
+        print("Couldn't create the alpha-only context!")
         return
 
     # Draw the content to the alpha-only context, capturing
@@ -443,14 +441,14 @@ def doAlphaOnlyContext(context):
         return
 
     # Set the fill color space.
-    CGContextSetFillColorSpace(context, Utilities.getTheCalibratedRGBColorSpace());
+    Quartz.CGContextSetFillColorSpace(context, Utilities.getTheCalibratedRGBColorSpace());
     opaqueBlue = ( 0.11, 0.208, 0.451, 1.0 )
     # Set the painting color to opaque blue.
-    CGContextSetFillColor(context, opaqueBlue);
+    Quartz.CGContextSetFillColor(context, opaqueBlue);
     # Draw the mask, painting the mask with blue. This colorizes
     # the image to blue and it is as if we painted the
     # alpha rects with blue instead of red.
-    CGContextDrawImage(context, CGRectMake(0, 0, width, height), mask);
+    Quartz.CGContextDrawImage(context, Quartz.CGRectMake(0, 0, width, height), mask);
 
 _pdfDoc = None
 _pdfURL = None
@@ -469,9 +467,9 @@ def getThePDFDoc(url):
     # See whether to update the cached PDF document.
     if _pdfDoc is None or url != _pdfURL:
         # Release any cached document or URL.
-        _pdfDoc = CGPDFDocumentCreateWithURL(url);
+        _pdfDoc = Quartz.CGPDFDocumentCreateWithURL(url);
         if _pdfDoc is not None:
-            pdfMediaRect = CGPDFDocumentGetMediaBox(_pdfDoc, 1)
+            pdfMediaRect = Quartz.CGPDFDocumentGetMediaBox(_pdfDoc, 1)
             _width = pdfMediaRect.size.width;
             _height = pdfMediaRect.size.height;
             # Keep the URL of the PDF file being cached.
@@ -499,7 +497,7 @@ def TilePDFNoBuffer(context, url):
     extraOffset = 6.0
     pdfDoc, tileX, tileY = getThePDFDoc(url)
     if pdfDoc is None:
-        print >>sys.stderr, "Couldn't get the PDF document!"
+        print("Couldn't get the PDF document!")
         return
 
     if DOSCALING:
@@ -516,8 +514,8 @@ def TilePDFNoBuffer(context, url):
     # Tile the PDF document.
     for h in range(0, int(fillheight), int(tileOffsetY)):
         for w in range(0, int(fillwidth), int(tileOffsetX)):
-            CGContextDrawPDFDocument(context,
-                CGRectMake(w, h, tileX, tileY), pdfDoc, 1);
+            Quartz.CGContextDrawPDFDocument(context,
+                Quartz.CGRectMake(w, h, tileX, tileY), pdfDoc, 1);
 
 def TilePDFWithOffscreenBitmap(context, url):
     # Again this should really be computed based on
@@ -528,7 +526,7 @@ def TilePDFWithOffscreenBitmap(context, url):
 
     pdfDoc, tileX, tileY = getThePDFDoc(url)
     if pdfDoc is None:
-        print >>sys.stderr, "Couldn't get the PDF document"
+        print("Couldn't get the PDF document")
         return
 
     if DOSCALING:
@@ -551,12 +549,12 @@ def TilePDFWithOffscreenBitmap(context, url):
                                         useDisplayColorSpace,
                                         needTransparentBitmap);
     if bitmapContext is None:
-        print >>sys.stderr, "Couldn't create bitmap context!"
+        print("Couldn't create bitmap context!")
         return
 
     # Draw the PDF document one time into the bitmap context.
-    CGContextDrawPDFDocument(bitmapContext,
-                    CGRectMake(0, 0, tileX, tileY), pdfDoc, 1);
+    Quartz.CGContextDrawPDFDocument(bitmapContext,
+                    Quartz.CGRectMake(0, 0, tileX, tileY), pdfDoc, 1);
 
     # Create an image from the raster data. Calling
     # createImageFromBitmapContext gives up ownership
@@ -572,11 +570,11 @@ def TilePDFWithOffscreenBitmap(context, url):
     # Now tile the image.
     for h in range(0, int(fillheight), int(tileOffsetY)):
         for w in range(0, int(fillwidth), int(tileOffsetX)):
-            CGContextDrawImage(context, CGRectMake(w, h, tileX, tileY), image)
+            Quartz.CGContextDrawImage(context, Quartz.CGRectMake(w, h, tileX, tileY), image)
 
 
 def createLayerWithImageForContext(c, url):
-    layerSize = CGSize()
+    layerSize = Quartz.CGSize()
     pdfDoc, layerSize.width, layerSize.height = getThePDFDoc(url)
     if pdfDoc is None:
         return None
@@ -587,20 +585,20 @@ def createLayerWithImageForContext(c, url):
         layerSize.height /= 3
 
     # Create the layer to draw into.
-    layer = CGLayerCreateWithContext(c, layerSize, None)
+    layer = Quartz.CGLayerCreateWithContext(c, layerSize, None)
     if layer is None:
         return NULL
 
     # Get the context corresponding to the layer. Note
     # that this is a 'Get' function so the code must
     # not release the context.
-    layerContext = CGLayerGetContext(layer)
+    layerContext = Quartz.CGLayerGetContext(layer)
     if layerContext is None:
         return None
 
     # Draw the PDF document into the layer.
-    CGContextDrawPDFDocument(layerContext,
-        CGRectMake(0, 0, layerSize.width, layerSize.height), pdfDoc, 1);
+    Quartz.CGContextDrawPDFDocument(layerContext,
+        Quartz.CGRectMake(0, 0, layerSize.width, layerSize.height), pdfDoc, 1);
 
     # Now the layer has the contents needed.
     return layer
@@ -612,11 +610,11 @@ def TilePDFWithCGLayer(context, url):
     fillheight = 792.0
     layer = createLayerWithImageForContext(context, url)
     if layer is None:
-        print >>sys.stderr, "Couldn't create the layer!"
+        print("Couldn't create the layer!")
         return
 
     # Compute the tile size and offset.
-    s = CGLayerGetSize(layer);
+    s = Quartz.CGLayerGetSize(layer);
     tileX = s.width
     tileY = s.height
 
@@ -637,4 +635,4 @@ def TilePDFWithCGLayer(context, url):
     # of each tile.
     for h in range(0, int(fillheight), int(tileOffsetY)):
         for w in range(0, int(fillwidth), int(tileOffsetX)):
-            CGContextDrawLayerAtPoint(context, CGPointMake(w, h), layer)
+            Quartz.CGContextDrawLayerAtPoint(context, Quartz.CGPointMake(w, h), layer)

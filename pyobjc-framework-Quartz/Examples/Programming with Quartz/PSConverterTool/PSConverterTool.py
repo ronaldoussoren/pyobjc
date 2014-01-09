@@ -1,10 +1,11 @@
-from CoreFoundation import *
-from Quartz import *
+from __future__ import print_function
+import Cocoa
+import Quartz
 
 import sys
 import objc
 
-DEBUG=0
+DEBUG=1
 
 class MyConverterData (object):
     def __init__(self):
@@ -16,7 +17,7 @@ class MyConverterData (object):
 # Converter callbacks
 
 def begin_document_callback(info):
-    print >>info.outStatusFile, "\nBegin Document\n"
+    print("\nBegin Document\n", file=info.outStatusFile)
 
 def end_document_callback(info, success):
     if success:
@@ -24,24 +25,24 @@ def end_document_callback(info, success):
     else:
         success = "failed"
 
-    print >>info.outStatusFile, "\nEnd Document: %s\n"%(success,)
+    print("\nEnd Document: %s\n"%(success,), file=info.outStatusFile)
 
 def begin_page_callback(info, pageno,  page_info):
-    print >>info.outStatusFile, "\nBeginning page %d\n"%(pageno,)
+    print("\nBeginning page %d\n"%(pageno,), file=info.outStatusFile)
     if DEBUG:
         if page_info is not None:
-            CFShow(page_info)
+            Cocoa.CFShow(page_info)
 
 
 def end_page_callback(info, pageno, page_info):
-    print >>info.outStatusFile, "\nEnd page %d\n"%(pageno,)
+    print("\nEnd page %d\n"%(pageno,), file=info.outStatusFile)
     if DEBUG:
         if page_info is not None:
-            CFShow(page_info)
+            Cocoa.CFShow(page_info)
 
 def progress_callback(info):
     if info.doProgress:
-        print >>info.outStatusFile.write(".")
+        info.outStatusFile.write(".")
         info.outStatusFile.flush()
 
     # Here would be a callout to code that
@@ -51,8 +52,8 @@ def progress_callback(info):
     #UpdateStatus(converterDataP);
 
     if info.abortConverter:
-        CGPSConverterAbort(info.converter);
-        print >>info.outStatusFile, "ABORTED!"
+        Quartz.CGPSConverterAbort(info.converter);
+        print("ABORTED!", file=info.outStatusFile)
 
 
 def message_callback(info, cfmessage):
@@ -63,23 +64,23 @@ def message_callback(info, cfmessage):
     # are PostScript error messages and are the typical
     # reason a conversion job fails.
 
-    print >>info.outStatusFile, "\nMessage: %s"%(
-            message)
+    print("\nMessage: %s"%(
+            cfmessage), file=info.outStatusFile)
 
 #  Given an input URL and a destination output URL, convert
 #    an input PS or EPS file to an output PDF file. This conversion
 #    can be time intensive and perhaps should be performed on
 #    a secondary thread or by another process. */
 def convertPStoPDF(inputPSURL, outPDFURL):
-    provider = CGDataProviderCreateWithURL(inputPSURL);
-    consumer = CGDataConsumerCreateWithURL(outPDFURL);
+    provider = Quartz.CGDataProviderCreateWithURL(inputPSURL);
+    consumer = Quartz.CGDataConsumerCreateWithURL(outPDFURL);
 
     if provider is None or consumer is None:
         if provider is None:
-            print >>sys.stderr, "Couldn't create provider"
+            print("Couldn't create provider")
 
         if consumer is None:
-            print >>sys.stderr, "Couldn't create consumer"
+            print("Couldn't create consumer")
 
         return False
 
@@ -96,7 +97,7 @@ def convertPStoPDF(inputPSURL, outPDFURL):
     # info parameter and our callbacks as the set of callbacks
     # to use for the conversion. There are no converter options
     # defined as of Tiger so the options dictionary passed is None.
-    myConverterData.converter = CGPSConverterCreate(myConverterData, (
+    myConverterData.converter = Quartz.CGPSConverterCreate(myConverterData, (
         begin_document_callback,
         end_document_callback,
         begin_page_callback,
@@ -107,15 +108,15 @@ def convertPStoPDF(inputPSURL, outPDFURL):
         ), None)
 
     if myConverterData.converter is None:
-        print >>sys.stderr, "Couldn't create converter object!"
+        print("Couldn't create converter object!")
         return False
 
     # There are no conversion options so the options
     # dictionary for the conversion is None.
-    success = CGPSConverterConvert(myConverterData.converter,
+    success = Quartz.CGPSConverterConvert(myConverterData.converter,
                     provider, consumer, None)
     if not success:
-        print >>sys.stderr, "Conversion failed!"
+        print("Conversion failed!")
 
     # There is no CGPSConverterRelease function. Since
     # a CGPSConverter object is a CF object, use CFRelease
@@ -127,15 +128,24 @@ def main(args = None):
         args = sys.argv
 
     if len(args) != 3:
-        print >>sys.stderr, "Usage: %s inputfile outputfile."%(args[0],)
+        print("Usage: %s inputfile outputfile."%(args[0],))
         return 0
 
-    # Create the data provider and data consumer.
-    inputURL = CFURLCreateFromFileSystemRepresentation(None,
-                        args[1], len(args[1]), False)
+    infile = args[1]
+    outfile = args[2]
 
-    outputURL = CFURLCreateFromFileSystemRepresentation(None,
-                        args[2], len(args[2]), False)
+    if not isinstance(infile, bytes):
+        infile = infile.encode('utf-8')
+
+    if not isinstance(outfile, bytes):
+        outfile = outfile.encode('utf-8')
+
+    # Create the data provider and data consumer.
+    inputURL = Cocoa.CFURLCreateFromFileSystemRepresentation(None,
+                        infile, len(infile), False)
+
+    outputURL = Cocoa.CFURLCreateFromFileSystemRepresentation(None,
+                        outfile, len(outfile), False)
 
     if inputURL is not None and outputURL is not None:
         convertPStoPDF(inputURL, outputURL)

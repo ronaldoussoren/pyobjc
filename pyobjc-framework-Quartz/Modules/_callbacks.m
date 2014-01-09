@@ -64,8 +64,6 @@ m_CGDataConsumerPutBytesCallback(void* _info, const void* buffer, size_t count)
 #endif
 			PyTuple_GET_ITEM(info, 2), buffer, (Py_ssize_t)count, (Py_ssize_t)count);
 	if (result == NULL) {
-		printf("%s\n", PyObject_REPR(PyTuple_GET_ITEM(info, 2)));
-		printf("%p\n", buffer);
 		PyObjCErr_ToObjCWithGILState(&state);
 	}
 
@@ -185,7 +183,7 @@ m_CGDataProviderGetBytesCallback(
 
 #if 	PY_VERSION_HEX >= 0x02070000
 	Py_buffer view;
-	if (PyBuffer_FillInfo(&view, NULL, buffer, count, 1, PyBUF_WRITABLE) < 0) {
+	if (PyBuffer_FillInfo(&view, NULL, buffer, count, 0, PyBUF_WRITABLE) < 0) {
 		PyObjCErr_ToObjCWithGILState(&state);
 	}
 	buf = PyMemoryView_FromBuffer(&view);
@@ -263,12 +261,14 @@ m_CGDataProviderSkipBytesCallback(void* _info, size_t count)
 
 	PyGILState_STATE   state = PyGILState_Ensure();
 
-	PyObject* result = PyObject_CallFunction(PyTuple_GET_ITEM(info, 2),
-			"Ol", PyTuple_GET_ITEM(info, 0), count);
-	if (result == NULL) {
-		PyObjCErr_ToObjCWithGILState(&state);
-	}
-	Py_DECREF(result);
+        if (PyTuple_GET_ITEM(info, 2) != Py_None) {
+            PyObject* result = PyObject_CallFunction(PyTuple_GET_ITEM(info, 2),
+                            "Ol", PyTuple_GET_ITEM(info, 0), count);
+            if (result == NULL) {
+                    PyObjCErr_ToObjCWithGILState(&state);
+            }
+            Py_DECREF(result);
+        }
 
 	PyGILState_Release(state);
 }
@@ -281,12 +281,14 @@ m_CGDataProviderRewindCallback(void* _info)
 
 	PyGILState_STATE   state = PyGILState_Ensure();
 
-	PyObject* result = PyObject_CallFunction(PyTuple_GET_ITEM(info, 3),
+        if (PyTuple_GET_ITEM(info, 3) != Py_None) {
+            PyObject* result = PyObject_CallFunction(PyTuple_GET_ITEM(info, 3),
 			"O", PyTuple_GET_ITEM(info, 0));
-	if (result == NULL) {
-		PyObjCErr_ToObjCWithGILState(&state);
-	}
-	Py_DECREF(result);
+            if (result == NULL) {
+                    PyObjCErr_ToObjCWithGILState(&state);
+            }
+            Py_DECREF(result);
+        }
 
 	PyGILState_Release(state);
 }
@@ -298,7 +300,7 @@ m_CGDataProviderReleaseInfoCallback(void* _info)
 
 	PyGILState_STATE   state = PyGILState_Ensure();
 
-	if (PyTuple_GET_ITEM(info, 3) != Py_None) {
+	if (PyTuple_GET_ITEM(info, 4) != Py_None) {
 		PyObject* result = PyObject_CallFunction(PyTuple_GET_ITEM(info, 4),
 				"O", PyTuple_GET_ITEM(info, 0));
 		if (result == NULL) {
@@ -371,7 +373,7 @@ m_CGDataProviderGetBytesAtOffsetCallback(void* _info, void* buffer,
 
 #if 	PY_VERSION_HEX >= 0x02070000
 	Py_buffer view;
-	if (PyBuffer_FillInfo(&view, NULL, buffer, count, 1, PyBUF_WRITABLE) < 0) {
+	if (PyBuffer_FillInfo(&view, NULL, buffer, count, 0, PyBUF_WRITABLE) < 0) {
 		PyObjCErr_ToObjCWithGILState(&state);
 	}
 	buf = PyMemoryView_FromBuffer(&view);
@@ -1777,7 +1779,8 @@ m_CGPatternCreate(PyObject* self __attribute__((__unused__)),
 		return NULL;
 	}
 	if (!PyCallable_Check(draw)) {
-		PyErr_SetString(PyExc_TypeError, "drawPattern is not callable");
+		PyErr_Format(PyExc_TypeError, "drawPattern of type %.80s is not callable",
+                        Py_TYPE(draw)->tp_name);
 		return NULL;
 	}
 	if (PyObjC_PythonToObjC(@encode(CGRect), py_bounds, &bounds) < 0) {

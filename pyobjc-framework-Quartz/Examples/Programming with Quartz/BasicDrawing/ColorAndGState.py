@@ -1,6 +1,6 @@
 import sys
 
-from Quartz import *
+import Quartz
 
 import Utilities
 import array
@@ -11,34 +11,34 @@ def doColorSpaceFillAndStroke(context):
     aBlue = ( 0.482, 0.62, 0.871, 1.0 )     # red,green,blue,alpha
 
     # Set the fill color space to be the generic calibrated RGB color space.
-    CGContextSetFillColorSpace(context, theColorSpace)
+    Quartz.CGContextSetFillColorSpace(context, theColorSpace)
     # Set the fill color to opaque red. The number of elements in the
     # array passed to this function must be the number of color
     # components in the current fill color space plus 1 for alpha.
-    CGContextSetFillColor(context, opaqueRed)
+    Quartz.CGContextSetFillColor(context, opaqueRed)
 
     # Set the stroke color space to be the generic calibrated RGB color space.
-    CGContextSetStrokeColorSpace(context, theColorSpace)
+    Quartz.CGContextSetStrokeColorSpace(context, theColorSpace)
     # Set the stroke color to opaque blue. The number of elements
     # in the array passed to this function must be the number of color
     # components in the current stroke color space plus 1 for alpha.
-    CGContextSetStrokeColor(context, aBlue)
+    Quartz.CGContextSetStrokeColor(context, aBlue)
 
-    CGContextSetLineWidth(context, 8.0)
+    Quartz.CGContextSetLineWidth(context, 8.0)
     # Rectangle 1.
-    CGContextBeginPath(context)
-    CGContextAddRect(context, CGRectMake(20.0, 20.0, 100.0, 100.0))
-    CGContextDrawPath(context, kCGPathFillStroke)
+    Quartz.CGContextBeginPath(context)
+    Quartz.CGContextAddRect(context, Quartz.CGRectMake(20.0, 20.0, 100.0, 100.0))
+    Quartz.CGContextDrawPath(context, Quartz.kCGPathFillStroke)
 
     # Continue to use the stroke colorspace already set
     # but change the stroke alpha value to a semitransparent blue.
     aBlue = list(aBlue)
     aBlue[3] = 0.5
-    CGContextSetStrokeColor(context, aBlue)
+    Quartz.CGContextSetStrokeColor(context, aBlue)
     # Rectangle 2.
-    CGContextBeginPath(context)
-    CGContextAddRect(context, CGRectMake(140.0, 20.0, 100.0, 100.0))
-    CGContextDrawPath(context, kCGPathFillStroke)
+    Quartz.CGContextBeginPath(context)
+    Quartz.CGContextAddRect(context, Quartz.CGRectMake(140.0, 20.0, 100.0, 100.0))
+    Quartz.CGContextDrawPath(context, Quartz.kCGPathFillStroke)
 
     # Don't release the color space since this routine
     # didn't create it.
@@ -59,37 +59,37 @@ def drawWithColorRefs(context):
         color = (0.663, 0.0, 0.031, 1.0)
         theColorSpace = Utilities.getTheCalibratedRGBColorSpace()
         # Create a CGColorRef for opaque red.
-        _opaqueRedColor = CGColorCreate(theColorSpace, color)
+        _opaqueRedColor = Quartz.CGColorCreate(theColorSpace, color)
         # Make the color array correspond to an opaque blue color.
         color = (0.482, 0.62, 0.87, 1.0)
-        # Create another CGColorRef for opaque blue.
-        _opaqueBlueColor = CGColorCreate(theColorSpace, color)
+        # Create another Quartz.CGColorRef for opaque blue.
+        _opaqueBlueColor = Quartz.CGColorCreate(theColorSpace, color)
         # Create a new CGColorRef from the opaqueBlue CGColorRef
         # but with a different alpha value.
-        _transparentBlueColor = CGColorCreateCopyWithAlpha(
+        _transparentBlueColor = Quartz.CGColorCreateCopyWithAlpha(
                 _opaqueBlueColor, 0.5)
         if _opaqueRedColor is None or _opaqueBlueColor is None or _transparentBlueColor is None:
-            print >>sys.stderr, "Couldn't create one of the CGColorRefs!!!"
+            print("Couldn't create one of the CGColorRefs!!!")
             return
 
     # Set the fill color to the opaque red CGColor object.
-    CGContextSetFillColorWithColor(context, _opaqueRedColor)
+    Quartz.CGContextSetFillColorWithColor(context, _opaqueRedColor)
     # Set the stroke color to the opaque blue CGColor object.
-    CGContextSetStrokeColorWithColor(context, _opaqueBlueColor)
+    Quartz.CGContextSetStrokeColorWithColor(context, _opaqueBlueColor)
 
-    CGContextSetLineWidth(context, 8.0)
+    Quartz.CGContextSetLineWidth(context, 8.0)
     # Draw the first rectangle.
-    CGContextBeginPath(context)
-    CGContextAddRect(context, CGRectMake(20.0, 20.0, 100.0, 100.0))
-    CGContextDrawPath(context, kCGPathFillStroke)
+    Quartz.CGContextBeginPath(context)
+    Quartz.CGContextAddRect(context, Quartz.CGRectMake(20.0, 20.0, 100.0, 100.0))
+    Quartz.CGContextDrawPath(context, Quartz.kCGPathFillStroke)
 
     # Set the stroke color to be that of the transparent blue
     # CGColor object.
-    CGContextSetStrokeColorWithColor(context, _transparentBlueColor)
+    Quartz.CGContextSetStrokeColorWithColor(context, _transparentBlueColor)
     # Draw a second rectangle to the right of the first one.
-    CGContextBeginPath(context)
-    CGContextAddRect(context, CGRectMake(140.0, 20.0, 100.0, 100.0))
-    CGContextDrawPath(context, kCGPathFillStroke)
+    Quartz.CGContextBeginPath(context)
+    Quartz.CGContextAddRect(context, Quartz.CGRectMake(140.0, 20.0, 100.0, 100.0))
+    Quartz.CGContextDrawPath(context, Quartz.kCGPathFillStroke)
 
 def doIndexedColorDrawGraphics(context):
     theBaseRGBSpace = Utilities.getTheCalibratedRGBColorSpace()
@@ -111,71 +111,71 @@ def doIndexedColorDrawGraphics(context):
     # Create the indexed color space with this color lookup table,
     # using the RGB color space as the base color space and a 2 element
     # color lookup table to characterize the indexed color space.
-    theIndexedSpace = CGColorSpaceCreateIndexed(theBaseRGBSpace, 1, lookupTable)
+    theIndexedSpace = Quartz.CGColorSpaceCreateIndexed(theBaseRGBSpace, 1, lookupTable)
     if theIndexedSpace is not None:
-        CGContextSetStrokeColorSpace(context, theIndexedSpace)
-        CGContextSetFillColorSpace(context, theIndexedSpace)
+        Quartz.CGContextSetStrokeColorSpace(context, theIndexedSpace)
+        Quartz.CGContextSetFillColorSpace(context, theIndexedSpace)
 
         # Set the stroke color to an opaque blue.
-        CGContextSetStrokeColor(context, aBlue)
+        Quartz.CGContextSetStrokeColor(context, aBlue)
         # Set the fill color to an opaque red.
-        CGContextSetFillColor(context, opaqueRed)
+        Quartz.CGContextSetFillColor(context, opaqueRed)
 
-        CGContextSetLineWidth(context, 8.0)
+        Quartz.CGContextSetLineWidth(context, 8.0)
         # Draw the first rectangle.
-        CGContextBeginPath(context)
-        CGContextAddRect(context, CGRectMake(20.0, 20.0, 100.0, 100.0))
-        CGContextDrawPath(context, kCGPathFillStroke)
+        Quartz.CGContextBeginPath(context)
+        Quartz.CGContextAddRect(context, Quartz.CGRectMake(20.0, 20.0, 100.0, 100.0))
+        Quartz.CGContextDrawPath(context, Quartz.kCGPathFillStroke)
 
         # Continue to use the stroke colorspace already set
         # but change the stroke alpha value to a semitransparent value
         # while leaving the index value unchanged.
         aBlue = list(aBlue)
         aBlue[1] = 0.5
-        CGContextSetStrokeColor(context, aBlue)
+        Quartz.CGContextSetStrokeColor(context, aBlue)
         # Draw another rectangle to the right of the first one.
-        CGContextBeginPath(context)
-        CGContextAddRect(context, CGRectMake(140.0, 20.0, 100.0, 100.0))
-        CGContextDrawPath(context, kCGPathFillStroke)
+        Quartz.CGContextBeginPath(context)
+        Quartz.CGContextAddRect(context, Quartz.CGRectMake(140.0, 20.0, 100.0, 100.0))
+        Quartz.CGContextDrawPath(context, Quartz.kCGPathFillStroke)
     else:
-        print >>sys.stderr, "Couldn't make the indexed color space!"
+        print("Couldn't make the indexed color space!")
 
 def drawWithGlobalAlpha(context):
-    rect = CGRectMake(40.0, 210.0, 100.0, 100.0)
+    rect = Quartz.CGRectMake(40.0, 210.0, 100.0, 100.0)
     color = [1.0, 0.0, 0.0, 1.0] # opaque red
     # Set the fill color space to that returned by getTheCalibratedRGBColorSpace.
-    CGContextSetFillColorSpace(context, Utilities.getTheCalibratedRGBColorSpace())
+    Quartz.CGContextSetFillColorSpace(context, Utilities.getTheCalibratedRGBColorSpace())
 
-    CGContextSetFillColor(context, color)
+    Quartz.CGContextSetFillColor(context, color)
     for i in range(2):
-        CGContextSaveGState(context)
+        Quartz.CGContextSaveGState(context)
         # Paint the leftmost rect on this row with 100% opaque red.
-        CGContextFillRect(context, rect)
+        Quartz.CGContextFillRect(context, rect)
 
-        CGContextTranslateCTM(context, rect.size.width + 70.0, 0.0)
+        Quartz.CGContextTranslateCTM(context, rect.size.width + 70.0, 0.0)
         # Set the alpha value of this rgba color to 0.5.
         color[3] = 0.5
         # Use the new color as the fill color in the graphics state.
-        CGContextSetFillColor(context, color)
+        Quartz.CGContextSetFillColor(context, color)
         # Paint the center rect on this row with 50% opaque red.
-        CGContextFillRect(context, rect)
+        Quartz.CGContextFillRect(context, rect)
 
-        CGContextTranslateCTM(context, rect.size.width + 70.0, 0.0)
+        Quartz.CGContextTranslateCTM(context, rect.size.width + 70.0, 0.0)
         # Set the alpha value of this rgba color to 0.25.
         color[3] = 0.25
         # Use the new color as the fill color in the graphics state.
-        CGContextSetFillColor(context, color)
+        Quartz.CGContextSetFillColor(context, color)
         # Paint the rightmost rect on this row with 25% opaque red.
-        CGContextFillRect(context, rect)
-        CGContextRestoreGState(context)
+        Quartz.CGContextFillRect(context, rect)
+        Quartz.CGContextRestoreGState(context)
         # After restoring the graphics state, the fill color is set to
         # that prior to calling CGContextSaveGState, that is, opaque
         # red. The coordinate system is also restored.
 
         # Now set the context global alpha value to 50% opaque.
-        CGContextSetAlpha(context, 0.5)
+        Quartz.CGContextSetAlpha(context, 0.5)
         # Translate down for a second row of rectangles.
-        CGContextTranslateCTM(context, 0.0, -(rect.size.height + 70.0))
+        Quartz.CGContextTranslateCTM(context, 0.0, -(rect.size.height + 70.0))
         # Reset the alpha value of the color array to fully opaque.
         color[3] = 1.0
 
@@ -184,81 +184,81 @@ def drawWithColorBlendMode(context, url):
     green = [0.584, 0.871, 0.318, 1.0]
 
     # Create a CGPDFDocument object from the URL.
-    pdfDoc = CGPDFDocumentCreateWithURL(url)
+    pdfDoc = Quartz.CGPDFDocumentCreateWithURL(url)
     if pdfDoc is None:
-        print >>sys.stderr, "Couldn't create CGPDFDocument from URL!"
+        print("Couldn't create CGPDFDocument from URL!")
         return
 
     # Obtain the media box for page 1 of the PDF document.
-    pdfRect = CGPDFDocumentGetMediaBox(pdfDoc, 1)
+    pdfRect = Quartz.CGPDFDocumentGetMediaBox(pdfDoc, 1)
     # Set the origin of the rectangle to (0,0).
     pdfRect.origin.x = pdfRect.origin.y = 0
 
     # Graphic 1, the left portion of the figure.
-    CGContextTranslateCTM(context, 20, 10 + CGRectGetHeight(pdfRect)/2)
+    Quartz.CGContextTranslateCTM(context, 20, 10 + Quartz.CGRectGetHeight(pdfRect)/2)
 
     # Draw the PDF document.
-    CGContextDrawPDFDocument(context, pdfRect, pdfDoc, 1)
+    Quartz.CGContextDrawPDFDocument(context, pdfRect, pdfDoc, 1)
 
     # Set the fill color space to that returned by getTheCalibratedRGBColorSpace.
-    CGContextSetFillColorSpace(context, Utilities.getTheCalibratedRGBColorSpace())
+    Quartz.CGContextSetFillColorSpace(context, Utilities.getTheCalibratedRGBColorSpace())
     # Set the fill color to green.
-    CGContextSetFillColor(context, green)
+    Quartz.CGContextSetFillColor(context, green)
 
     # Graphic 2, the top-right portion of the figure.
-    CGContextTranslateCTM(context, CGRectGetWidth(pdfRect) + 10,
-                                    CGRectGetHeight(pdfRect)/2 + 10)
+    Quartz.CGContextTranslateCTM(context, Quartz.CGRectGetWidth(pdfRect) + 10,
+                                    Quartz.CGRectGetHeight(pdfRect)/2 + 10)
 
     # Draw the PDF document again.
-    CGContextDrawPDFDocument(context, pdfRect, pdfDoc, 1)
+    Quartz.CGContextDrawPDFDocument(context, pdfRect, pdfDoc, 1)
 
     # Make a fill rectangle that is the same size as the PDF document
     # but inset each side by 80 units in x and 20 units in y.
-    insetRect = CGRectInset(pdfRect, 80, 20)
+    insetRect = Quartz.CGRectInset(pdfRect, 80, 20)
     # Fill the rectangle with green. Because the fill color is opaque and
     # the blend mode is Normal, this obscures the drawing underneath.
-    CGContextFillRect(context, insetRect)
+    Quartz.CGContextFillRect(context, insetRect)
 
     # Graphic 3, the bottom-right portion of the figure.
-    CGContextTranslateCTM(context, 0, -(10 + CGRectGetHeight(pdfRect)))
+    Quartz.CGContextTranslateCTM(context, 0, -(10 + Quartz.CGRectGetHeight(pdfRect)))
 
     # Draw the PDF document again.
-    CGContextDrawPDFDocument(context, pdfRect, pdfDoc, 1)
+    Quartz.CGContextDrawPDFDocument(context, pdfRect, pdfDoc, 1)
 
     # Set the blend mode to kCGBlendModeColor which will
     # colorize the destination with subsequent drawing.
-    CGContextSetBlendMode(context, kCGBlendModeColor)
+    Quartz.CGContextSetBlendMode(context, Quartz.kCGBlendModeColor)
     # Draw the rectangle on top of the PDF document. The portion of the
     # background that is covered by the rectangle is colorized
     # with the fill color.
-    CGContextFillRect(context, insetRect)
+    Quartz.CGContextFillRect(context, insetRect)
 
 
 def createEllipsePath(context, center, ellipseSize):
-    CGContextSaveGState(context)
+    Quartz.CGContextSaveGState(context)
     # Translate the coordinate origin to the center point.
-    CGContextTranslateCTM(context, center.x, center.y)
+    Quartz.CGContextTranslateCTM(context, center.x, center.y)
     # Scale the coordinate system to half the width and height
     # of the ellipse.
-    CGContextScaleCTM(context, ellipseSize.width/2, ellipseSize.height/2)
-    CGContextBeginPath(context)
+    Quartz.CGContextScaleCTM(context, ellipseSize.width/2, ellipseSize.height/2)
+    Quartz.CGContextBeginPath(context)
     # Add a circular arc to the path, centered at the origin and
     # with a radius of 1.0. This radius, together with the
     # scaling above for the width and height, produces an ellipse
     # of the correct size.
-    CGContextAddArc(context, 0.0, 0.0, 1.0, 0.0, Utilities.DEGREES_TO_RADIANS(360.0), 0.0)
+    Quartz.CGContextAddArc(context, 0.0, 0.0, 1.0, 0.0, Utilities.DEGREES_TO_RADIANS(360.0), 0.0)
     # Close the path so that this path is suitable for stroking,
     # should that be desired.
-    CGContextClosePath(context)
-    CGContextRestoreGState(context)
+    Quartz.CGContextClosePath(context)
+    Quartz.CGContextRestoreGState(context)
 
 _opaqueBrownColor = None
 _opaqueOrangeColor = None
 def doClippedEllipse(context):
     global _opaqueBrownColor, _opaqueOrangeColor
 
-    theCenterPoint = CGPoint(120.0, 120.0)
-    theEllipseSize = CGSize(100.0, 200.0)
+    theCenterPoint = Quartz.CGPoint(120.0, 120.0)
+    theEllipseSize = Quartz.CGSize(100.0, 200.0)
     dash = [ 2.0 ]
 
     # Initialize the CGColorRefs if necessary.
@@ -268,50 +268,50 @@ def doClippedEllipse(context):
         color = [0.325, 0.208, 0.157, 1.0]
         theColorSpace = Utilities.getTheCalibratedRGBColorSpace()
         # Create a CGColorRef for opaque brown.
-        _opaqueBrownColor = CGColorCreate(theColorSpace, color)
+        _opaqueBrownColor = Quartz.CGColorCreate(theColorSpace, color)
         # Make the color array correspond to an opaque orange.
         color = [0.965, 0.584, 0.059, 1.0 ]
         # Create another CGColorRef for opaque orange.
-        _opaqueOrangeColor = CGColorCreate(theColorSpace, color)
+        _opaqueOrangeColor = Quartz.CGColorCreate(theColorSpace, color)
 
     # Draw two ellipses centered about the same point, one
     # rotated 45 degrees from the other.
-    CGContextSaveGState(context)
+    Quartz.CGContextSaveGState(context)
     # Ellipse 1
     createEllipsePath(context, theCenterPoint, theEllipseSize)
-    CGContextSetFillColorWithColor(context, _opaqueBrownColor)
-    CGContextFillPath(context)
+    Quartz.CGContextSetFillColorWithColor(context, _opaqueBrownColor)
+    Quartz.CGContextFillPath(context)
     # Translate and rotate about the center point of the ellipse.
-    CGContextTranslateCTM(context, theCenterPoint.x, theCenterPoint.y)
+    Quartz.CGContextTranslateCTM(context, theCenterPoint.x, theCenterPoint.y)
     # Rotate by 45 degrees.
-    CGContextRotateCTM(context, Utilities.DEGREES_TO_RADIANS(45))
+    Quartz.CGContextRotateCTM(context, Utilities.DEGREES_TO_RADIANS(45))
     # Ellipse 2
     # CGPointZero is a pre-defined Quartz point corresponding to
     # the coordinate (0,0).
-    createEllipsePath(context, CGPointZero, theEllipseSize)
-    CGContextSetFillColorWithColor(context, _opaqueOrangeColor)
-    CGContextFillPath(context)
-    CGContextRestoreGState(context)
+    createEllipsePath(context, Quartz.CGPointZero, theEllipseSize)
+    Quartz.CGContextSetFillColorWithColor(context, _opaqueOrangeColor)
+    Quartz.CGContextFillPath(context)
+    Quartz.CGContextRestoreGState(context)
 
-    CGContextTranslateCTM(context, 170.0, 0.0)
+    Quartz.CGContextTranslateCTM(context, 170.0, 0.0)
     # Now use the first ellipse as a clipping area prior to
     # painting the second ellipse.
-    CGContextSaveGState(context)
+    Quartz.CGContextSaveGState(context)
     # Ellipse 3
     createEllipsePath(context, theCenterPoint, theEllipseSize)
-    CGContextSetStrokeColorWithColor(context, _opaqueBrownColor)
-    CGContextSetLineDash(context, 0, dash, 1)
+    Quartz.CGContextSetStrokeColorWithColor(context, _opaqueBrownColor)
+    Quartz.CGContextSetLineDash(context, 0, dash, 1)
     # Stroke the path with a dash.
-    CGContextStrokePath(context)
+    Quartz.CGContextStrokePath(context)
     # Ellipse 4
     createEllipsePath(context, theCenterPoint, theEllipseSize)
     # Clip to the elliptical path.
-    CGContextClip(context)
-    CGContextTranslateCTM(context, theCenterPoint.x, theCenterPoint.y)
+    Quartz.CGContextClip(context)
+    Quartz.CGContextTranslateCTM(context, theCenterPoint.x, theCenterPoint.y)
     # Rotate by 45 degrees.
-    CGContextRotateCTM(context, Utilities.DEGREES_TO_RADIANS(45))
+    Quartz.CGContextRotateCTM(context, Utilities.DEGREES_TO_RADIANS(45))
     # Ellipse 5
-    createEllipsePath(context, CGPointZero, theEllipseSize)
-    CGContextSetFillColorWithColor(context, _opaqueOrangeColor)
-    CGContextFillPath(context)
-    CGContextRestoreGState(context)
+    createEllipsePath(context, Quartz.CGPointZero, theEllipseSize)
+    Quartz.CGContextSetFillColorWithColor(context, _opaqueOrangeColor)
+    Quartz.CGContextFillPath(context)
+    Quartz.CGContextRestoreGState(context)

@@ -454,8 +454,7 @@ static inline PyObject* _PyObjCTuple_GetItem(PyObject* tuple, Py_ssize_t idx)
 
 #define PyObjC_ENDHANDLER \
         NS_ENDHANDLER \
-        Py_END_ALLOW_THREADS \
-        assert(PyGILState_Check());
+        Py_END_ALLOW_THREADS
 
 #else /* !NO_OBJC2_RUNTIME */
 
@@ -468,8 +467,7 @@ static inline PyObject* _PyObjCTuple_GetItem(PyObject* tuple, Py_ssize_t idx)
 
 #define PyObjC_ENDHANDLER \
         } \
-        Py_END_ALLOW_THREADS \
-        assert(PyGILState_Check());
+        Py_END_ALLOW_THREADS
 
 #endif /* !NO_OBJC2_RUNTIME */
 
