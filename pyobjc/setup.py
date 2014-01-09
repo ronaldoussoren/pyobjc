@@ -71,7 +71,7 @@ DEL_REQUIRES_10_7=[
         'pyobjc-framework-InterfaceBuilderKit=',
 ]
 REQUIRES_10_7=[
-        'pyobjc-framework-AVFoundation='+VERSION,
+#        'pyobjc-framework-AVFoundation='+VERSION,
         'pyobjc-framework-StoreKit=='+VERSION,
 ]
 
