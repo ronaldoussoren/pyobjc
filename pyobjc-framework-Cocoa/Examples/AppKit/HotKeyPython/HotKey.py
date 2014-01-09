@@ -15,7 +15,6 @@ sources or nibs.)
 NOTE: This example requires Python 2 because it uses the "Carbon"
       module that was removed in Python 3.
 """
-
 import Cocoa
 from objc import super
 from PyObjCTools import AppHelper
@@ -38,7 +37,7 @@ class HotKeyApp(Cocoa.NSApplication):
         if theEvent.type() == Cocoa.NSSystemDefined and \
                theEvent.subtype() == kEventHotKeyPressedSubtype:
             self.activateIgnoringOtherApps_(True)
-            NSRunAlertPanel('Hot Key Pressed', 'Hot Key Pressed',
+            Cocoa.NSRunAlertPanel('Hot Key Pressed', 'Hot Key Pressed',
                 None, None, None)
         super(HotKeyApp, self).sendEvent_(theEvent)
 

@@ -14,7 +14,6 @@ plist = dict(
 setup(
     app=["HotKey.py"],
     data_files=["English.lproj"],
-    setup_requires=["py2app"],
     options=dict(
         py2app=dict(
             plist=plist
