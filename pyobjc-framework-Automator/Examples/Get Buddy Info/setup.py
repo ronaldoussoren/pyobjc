@@ -2,7 +2,7 @@
 Script for building the example.
 
 Usage:
-    python setup.py py2app
+    python3 setup.py py2app
 
 Then install the bundle in dist into ~/Library/Automator.
 """

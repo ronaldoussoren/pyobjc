@@ -1,24 +1,27 @@
-from Cocoa import *
-from InstantMessage import *
-from AddressBook import *
+import Cocoa
+import InstantMessage
+import AddressBook
+import objc
 
-kAddressBookPersonStatusChanged = u"AddressBookPersonStatusChanged"
-kStatusImagesChanged = u"StatusImagesChanged"
+kAddressBookPersonStatusChanged = "AddressBookPersonStatusChanged"
+kStatusImagesChanged = "StatusImagesChanged"
 
-class ServiceWatcher (NSObject):
+class ServiceWatcher (Cocoa.NSObject):
     def startMonitoring(self):
-        nCenter = IMService.notificationCenter()
+        nCenter = InstantMessage.IMService.notificationCenter()
+        if nCenter is None:
+            return None
 
         nCenter.addObserver_selector_name_object_(
-                self, 'imPersonStatusChangedNotification:',
-                IMPersonStatusChangedNotification, None)
+                self, b'imPersonStatusChangedNotification:',
+                InstantMessage.IMPersonStatusChangedNotification, None)
 
         nCenter.addObserver_selector_name_object_(
-                self, 'imStatusImagesChangedAppearanceNotification:',
-                IMStatusImagesChangedAppearanceNotification, None)
+                self, b'imStatusImagesChangedAppearanceNotification:',
+                InstantMessage.IMStatusImagesChangedAppearanceNotification, None)
 
     def stopMonitoring(self):
-        nCenter = IMService.notificationCenter()
+        nCenter = InstantMessage.IMService.notificationCenter()
         nCenter.removeObserver_(self)
 
     def awakeFromNib(self):
@@ -32,10 +35,10 @@ class ServiceWatcher (NSObject):
     def imPersonStatusChangedNotification_(self, notification):
         service = notification.object()
         userInfo = notification.userInfo()
-        screenName = userInfo[IMPersonScreenNameKey]
+        screenName = userInfo[InstantMessage.IMPersonScreenNameKey]
         abPersons = service.peopleWithScreenName_(screenName)
 
-        center = NSNotificationCenter.defaultCenter()
+        center = Cocoa.NSNotificationCenter.defaultCenter()
         for person in abPersons:
             center.postNotificationName_object_(
                     kAddressBookPersonStatusChanged, person)
@@ -48,5 +51,5 @@ class ServiceWatcher (NSObject):
     # call <tt>imageURLForStatus:</tt> to get the new image.
     # See "Class Methods" for IMService in this document.
     def imStatusImagesChangedAppearanceNotification_(self, notification):
-        NSNotificationCenter.defaultCenter().postNotificationName_object_(
+        Cocoa.NSNotificationCenter.defaultCenter().postNotificationName_object_(
                 kStatusImagesChanged, self)

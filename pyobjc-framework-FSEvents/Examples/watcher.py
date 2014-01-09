@@ -1,4 +1,6 @@
-from FSEvents import *
+from __future__ import print_function
+import FSEvents
+import Cocoa
 import objc
 import sys
 import os
@@ -22,7 +24,7 @@ class Settings (object):
             'flush_seconds',
     )
     def __init__(self):
-        self.sinceWhen = kFSEventStreamEventIdSinceNow
+        self.sinceWhen = FSEvents.kFSEventStreamEventIdSinceNow
         self.latency   = 60
         self.flags     = 0
         self.array_of_paths = []
@@ -38,9 +40,9 @@ class Settings (object):
             fmt = fmt % kwds
 
         if self.verbose:
-            print >>sys.stderr, fmt
+            print(fmt, file=sys.stderr)
         else:
-            print >>sys.stdout, fmt
+            print(fmt, file=sys.stdout)
 
     def debug(self, fmt, *args, **kwds):
         if not self.verbose:
@@ -52,7 +54,7 @@ class Settings (object):
         elif kwds:
             fmt = fmt % kwds
 
-        print >>sys.stderr, fmt
+        print(fmt, file=sys.stderr)
 
     def error(self, fmt, *args, **kwds):
         if args:
@@ -61,7 +63,7 @@ class Settings (object):
         elif kwds:
             fmt = fmt % kwds
 
-        print >>sys.stderr, fmt
+        print(fmt, file=sys.stderr)
 
     def dump(self):
         self.mesg("settings->sinceWhen = %d", self.sinceWhen)
@@ -76,7 +78,7 @@ class Settings (object):
 
     def parse_argv(self, argv):
         self.latency = 1.0
-        self.sinceWhen = -1 # kFSEventStreamEventIdSinceNow
+        self.sinceWhen = -1 # FSEvents.kFSEventStreamEventIdSinceNow
         self.flush_seconds = -1
 
         idx = 1
@@ -128,13 +130,13 @@ def usage(progname):
 
 
 def timer_callback(timer, streamRef):
-    settings.debug("CFAbsoluteTimeGetCurrent() => %.3f", CFAbsoluteTimeGetCurrent())
+    settings.debug("CFAbsoluteTimeGetCurrent() => %.3f", Cocoa.CFAbsoluteTimeGetCurrent())
     settings.debug("FSEventStreamFlushAsync(streamRef = %s)", streamRef)
-    FSEventStreamFlushAsync(streamRef)
+    FSEvents.FSEventStreamFlushAsync(streamRef)
 
 def fsevents_callback(streamRef, clientInfo, numEvents, eventPaths, eventMasks, eventIDs):
     settings.debug("fsevents_callback(streamRef = %s, clientInfo = %s, numEvents = %s)", streamRef, clientInfo, numEvents)
-    settings.debug("fsevents_callback: FSEventStreamGetLatestEventId(streamRef) => %s", FSEventStreamGetLatestEventId(streamRef))
+    settings.debug("fsevents_callback: FSEventStreamGetLatestEventId(streamRef) => %s", FSEvents.FSEventStreamGetLatestEventId(streamRef))
     full_path = clientInfo
 
     for i in range(numEvents):
@@ -142,16 +144,16 @@ def fsevents_callback(streamRef, clientInfo, numEvents, eventPaths, eventMasks, 
         if path[-1] == '/':
             path = path[:-1]
 
-        if eventMasks[i] & kFSEventStreamEventFlagMustScanSubDirs:
+        if eventMasks[i] & FSEvents.kFSEventStreamEventFlagMustScanSubDirs:
             recursive = True
 
-        elif eventMasks[i] & kFSEventStreamEventFlagUserDropped:
+        elif eventMasks[i] & FSEvents.kFSEventStreamEventFlagUserDropped:
             settings.mesg("BAD NEWS! We dropped events.")
             settings.mesg("Forcing a full rescan.")
             recursive = 1
             path = full_path
 
-        elif eventMasks[i] & kFSEventStreamEventFlagKernelDropped:
+        elif eventMasks[i] & FSEvents.kFSEventStreamEventFlagKernelDropped:
             settings.mesg("REALLY BAD NEWS! The kernel dropped events.")
             settings.mesg("Forcing a full rescan.")
             recursive = 1
@@ -162,18 +164,18 @@ def fsevents_callback(streamRef, clientInfo, numEvents, eventPaths, eventMasks, 
 
         new_size = get_directory_size(path, recursive)
         if new_size < 0:
-            print "Could not update size on %s"%(path,)
+            print("Could not update size on %s"%(path,))
 
         else:
-            print "New total size: %d (change made to %s) for path: %s"%(
-                    get_total_size(), path, full_path)
+            print("New total size: %d (change made to %s) for path: %s"%(
+                    get_total_size(), path, full_path))
 
 
 def my_FSEventStreamCreate(path):
     if settings.verbose:
-        print [path]
+        print([path])
 
-    streamRef = FSEventStreamCreate(kCFAllocatorDefault,
+    streamRef = FSEvents.FSEventStreamCreate(Cocoa.kCFAllocatorDefault,
                                     fsevents_callback,
                                     path,
                                     [path],
@@ -185,7 +187,7 @@ def my_FSEventStreamCreate(path):
         return None
 
     if settings.verbose:
-        FSEventStreamShow(streamRef)
+        FSEvents.FSEventStreamShow(streamRef)
 
     return streamRef
 
@@ -208,9 +210,9 @@ def main(argv=None):
 
     streamRef = my_FSEventStreamCreate(full_path)
 
-    FSEventStreamScheduleWithRunLoop(streamRef, CFRunLoopGetCurrent(), kCFRunLoopDefaultMode)
+    FSEvents.FSEventStreamScheduleWithRunLoop(streamRef, Cocoa.CFRunLoopGetCurrent(), Cocoa.kCFRunLoopDefaultMode)
 
-    startedOK = FSEventStreamStart(streamRef)
+    startedOK = FSEvents.FSEventStreamStart(streamRef)
     if not startedOK:
         settings.error("failed to start the FSEventStream")
         return
@@ -220,25 +222,25 @@ def main(argv=None):
     #       during which we would miss events.
     #
     dir_sz = get_directory_size(full_path, 1)
-    print "Initial total size is: %d for path: %s"%(get_total_size(), full_path)
+    print("Initial total size is: %d for path: %s"%(get_total_size(), full_path))
 
     if settings.flush_seconds >= 0:
-        settings.debug("CFAbsoluteTimeGetCurrent() => %.3f", CFAbsoluteTimeGetCurrent())
+        settings.debug("CFAbsoluteTimeGetCurrent() => %.3f", Cocoa.CFAbsoluteTimeGetCurrent())
 
-        timer = CFRunLoopTimerCreate(
-                FSEventStreamGetSinceWhen(streamRef),
-                CFAbsoluteTimeGetCurrent() + settings.flush_seconds,
+        timer = Cocoa.CFRunLoopTimerCreate(
+                FSEvents.FSEventStreamGetSinceWhen(streamRef),
+                Cocoa.CFAbsoluteTimeGetCurrent() + settings.flush_seconds,
                 settings.flush_seconds,
                 0, 0, timer_callback, streamRef)
-        CFRunLoopAddTimer(CFRunLoopGetCurrent(), timer, kCFRunLoopDefaultMode)
+        Cocoa.CFRunLoopAddTimer(Cocoa.CFRunLoopGetCurrent(), timer, Cocoa.kCFRunLoopDefaultMode)
 
 
     # Run
-    CFRunLoopRun()
+    Cocoa.CFRunLoopRun()
 
     #Stop / Invalidate / Release
-    FSEventStreamStop(streamRef)
-    FSEventStreamInvalidate(streamRef)
+    FSEvents.FSEventStreamStop(streamRef)
+    FSEvents.FSEventStreamInvalidate(streamRef)
     #FSEventStreamRelease(streamRef)
     return
 
@@ -258,15 +260,14 @@ class dir_item (object):
 dir_items = {}
 
 def get_total_size():
-    return sum(dir_items.itervalues())
+    return sum(dir_items.values())
 
 def iterate_subdirs(dirname, recursive):
     dir_items[dirname] = 0
 
     try:
         names = os.listdir(dirname)
-    except os.error, msg:
-        print msg.errno, errno.EPERM
+    except os.error as msg:
         if msg.errno in (errno.ENOENT, errno.EPERM, errno.EACCES):
             del dir_items[dirname]
             return 0

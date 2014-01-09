@@ -61,6 +61,8 @@ class TestLaunchServices (TestCase):
         for a in arr:
             if str(a) == 'file://localhost/Applications/Calculator.app/':
                 break
+            elif str(a) == 'file:///Applications/Calculator.app/':
+                break
         else:
             self.fail("No Calculator.app?")
 

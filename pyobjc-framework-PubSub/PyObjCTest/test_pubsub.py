@@ -12,9 +12,9 @@ class TestPubSub (TestCase):
 
 
     def testProtocols(self):
-        self.assert_( hasattr(PubSub, 'protocols') )
-        self.assert_( hasattr(PubSub.protocols, 'PSClientDelegate') )
-        self.assert_( isinstance(PubSub.protocols.PSClientDelegate, objc.informal_protocol) )
+        self.assertFalse( hasattr(PubSub, 'protocols') )
+        #self.assert_( hasattr(PubSub.protocols, 'PSClientDelegate') )
+        #self.assert_( isinstance(PubSub.protocols.PSClientDelegate, objc.informal_protocol) )
 
 
 if __name__ == "__main__":

@@ -1,5 +1,5 @@
-from Cocoa import *
-from InstallerPlugins import *
+import Cocoa
+import InstallerPlugins
 
 import objc
 
@@ -8,7 +8,7 @@ import objc
 # to remove custom plugins from its flow.
 # So plugins cannot serve as effective gatekeepers to prevent installation.
 
-class RegistrationPane (InstallerPane):
+class RegistrationPane (InstallerPlugins.InstallerPane):
     uiFirstNameField = objc.IBOutlet()
     uiLastNameField = objc.IBOutlet()
     uiOrganizationField = objc.IBOutlet()
@@ -40,7 +40,7 @@ class RegistrationPane (InstallerPane):
         localization helper method:  This pulls localized strings from the
         plugin's bundle
         '''
-        return NSBundle.bundleForClass_(type(self
+        return Cocoa.NSBundle.bundleForClass_(type(self
                     )).localizedStringForKey_value_table_(key, '', None)
 
     def title(self):
@@ -49,7 +49,7 @@ class RegistrationPane (InstallerPane):
 
     def didEnterPane_(self, dir):
         ''' pane's entry point: code called when user enters this pane '''
-        NSLog("DIDENTER")
+        Cocoa.NSLog("DIDENTER")
         self._updateNextButtonState()
 
     def shouldExitPane_(self, dir):
@@ -57,10 +57,10 @@ class RegistrationPane (InstallerPane):
         called when user clicks "Continue" -- return value indicates
         if application should exit pane
         '''
-        if dir == InstallerDirectionForward and not self._serialNumberIsValid():
+        if dir == InstallerPlugins.InstallerDirectionForward and not self._serialNumberIsValid():
             self._updateNextButtonState()
 
-            NSBeginInformationalAlertSheet(
+            Cocoa.NSBeginInformationalAlertSheet(
                     None,
                     self._localizedStringForKey_("OK_BUTTON"),
                     None,

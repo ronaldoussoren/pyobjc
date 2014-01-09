@@ -130,7 +130,7 @@ class TestLSInfo (TestCase):
         self.assertArgIsOut(LSGetExtensionInfo, 2)
         ok, info = LSGetExtensionInfo(len(self.path), self.path, None)
         self.failUnlessEqual(ok, 0)
-        self.failUnlessEqual(info, self.path.index('.')+1)
+        self.failUnlessEqual(info, self.path.rindex('.')+1)
 
         self.assertArgIsOut(LSCopyDisplayNameForURL, 1)
         self.assertArgIsCFRetained(LSCopyDisplayNameForURL, 1)

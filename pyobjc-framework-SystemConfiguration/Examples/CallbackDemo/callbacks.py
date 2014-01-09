@@ -9,7 +9,7 @@ Usage:
     python callbacks.py
 """
 from __future__ import print_function
-from Cocoa import CFRunLoopGetCurrent, CFRunLoopStop, CFRunLoopAddSource,
+from Cocoa import CFRunLoopGetCurrent, CFRunLoopStop, CFRunLoopAddSource
 from Cocoa import CFRunLoopRun, kCFRunLoopCommonModes
 from SystemConfiguration import SCDynamicStoreCreate, SCDynamicStoreSetNotificationKeys, SCDynamicStoreCreateRunLoopSource
 from SystemConfiguration import SCPreferencesCreate, SCPreferencesSetCallback, SCPreferencesScheduleWithRunLoop

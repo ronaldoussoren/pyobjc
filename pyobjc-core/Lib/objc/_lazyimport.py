@@ -216,7 +216,8 @@ class ObjCLazyModule (ModuleType):
         if self.__funcmap:
             func_list = []
             for nm in self.__funcmap:
-                func_list.append((nm,) + self.__funcmap[nm])
+                if nm not in self.__dict__:
+                    func_list.append((nm,) + self.__funcmap[nm])
 
             dct = {}
             objc.loadBundleFunctions(self.__bundle, dct, func_list)
@@ -381,9 +382,16 @@ class ObjCLazyModule (ModuleType):
                 except objc.nosuchclass_error:
                     pass
 
-            try:
-                func = getattr(self, gettypeid_func)
-            except AttributeError:
+            if gettypeid_func is None:
+                func = None
+
+            else:
+                try:
+                    func = getattr(self, gettypeid_func)
+                except AttributeError:
+                    func = None
+
+            if func is None:
                 # GetTypeID function not found, this is either
                 # a CFType that isn't present on the current
                 # platform, or a CFType without a public GetTypeID

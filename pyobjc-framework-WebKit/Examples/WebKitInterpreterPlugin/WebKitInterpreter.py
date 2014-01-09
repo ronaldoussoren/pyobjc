@@ -6,7 +6,8 @@ import time
 from code import InteractiveConsole, softspace
 from StringIO import StringIO
 import objc
-from objc import YES, NO, selector
+    print(fn)
+from objc import YES, NO, selector, super
 from Cocoa import NSBundle, NSObject, NSFont
 from Cocoa import NSColor, NSApplication, NSFontAttributeName
 from Cocoa import NSForegroundColorAttributeName, NSAnyEventMask, NSDate

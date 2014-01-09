@@ -2,7 +2,7 @@
 Script for building the example.
 
 Usage:
-    python setup.py py2app
+    python2 setup.py py2app
 """
 from setuptools import setup
 

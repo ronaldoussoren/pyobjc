@@ -9,10 +9,11 @@ Usage:
     python netcon.py
 """
 from __future__ import print_function
-from SystemConfiguration import *
+from SystemConfiguration import SCNetworkConnectionCreateWithServiceID, SCNetworkConnectionScheduleWithRunLoop
+from CoreFoundation import CFRunLoopGetCurrent, CFRunLoopRun, kCFRunLoopCommonModes
 
 def connectionChanged(connection, status, info):
-    print "Status of %s connection changed: %s"(info, status)
+    print("Status of %s connection changed: %s"(info, status))
 
 
 def main():

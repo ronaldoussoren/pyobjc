@@ -12,11 +12,11 @@ class TestInterfaceBuilderKit (TestCase):
         self.assert_( hasattr(InterfaceBuilderKit, 'IBPlugin') )
         self.assert_( isinstance(InterfaceBuilderKit.IBPlugin, objc.objc_class) )
 
-    def test_protocols(self):
-
-        self.assert_( hasattr(InterfaceBuilderKit, 'protocols') )
-        self.assert_( hasattr(InterfaceBuilderKit.protocols, 'IBObjectIntegration') )
-        self.assert_( isinstance(InterfaceBuilderKit.protocols.IBObjectIntegration, objc.informal_protocol) )
+    #def test_protocols(self):
+    #
+    #    self.assert_( hasattr(InterfaceBuilderKit, 'protocols') )
+    #    self.assert_( hasattr(InterfaceBuilderKit.protocols, 'IBObjectIntegration') )
+    #    self.assert_( isinstance(InterfaceBuilderKit.protocols.IBObjectIntegration, objc.informal_protocol) )
 
 if __name__ == "__main__":
     main()

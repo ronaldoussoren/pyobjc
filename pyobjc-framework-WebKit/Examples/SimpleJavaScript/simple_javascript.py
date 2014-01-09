@@ -10,7 +10,8 @@ import JavaScriptCore
 with JavaScriptCore.autoreleasing(JavaScriptCore.JSGlobalContextCreate(None)) as ctx:
 
     script = JavaScriptCore.JSStringCreateWithUTF8CString(b"return new Array")
-    fn = JavaScriptCore.JSObjectMakeFunction(ctx, None, 0, None, script, None, 1, None)
+    fn, exc = JavaScriptCore.JSObjectMakeFunction(ctx, None, 0, None, script, None, 1, None)
+    assert exc is None
     result = JavaScriptCore.JSObjectCallAsFunction(ctx, fn, None, 0, None, None)
     JavaScriptCore.JSStringRelease(script)
 
