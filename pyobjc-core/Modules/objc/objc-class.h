@@ -100,7 +100,7 @@ extern Class PyObjCClass_GetClass(PyObject* object);
 extern PyObject* PyObjCClass_FindSelector(PyObject* cls, SEL selector, BOOL class_method);
 extern void PyObjCClass_MaybeRescan(PyObject* class);
 extern int ObjC_RegisterClassProxy(Class cls, PyObject* classProxy);
-extern void PyObjCClass_CheckMethodList(PyObject* cls, int recursive);
+extern int PyObjCClass_CheckMethodList(PyObject* cls, int recursive);
 extern Py_ssize_t PyObjCClass_DictOffset(PyObject* cls);
 extern PyObject* PyObjCClass_GetDelMethod(PyObject* cls);
 extern void PyObjCClass_SetDelMethod(PyObject* cls, PyObject* newval);

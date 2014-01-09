@@ -23,10 +23,10 @@ def _CW8021XProfile__ne__(self, other):
 
     return not self.isEqualToProfile_(other)
 
-objc.addConvenienceForClass('CW8021XProfile', {
-    '__eq__': _CW8021XProfile__eq__,
-    '__ne__': _CW8021XProfile__ne__,
-})
+objc.addConvenienceForClass('CW8021XProfile', (
+    ('__eq__', _CW8021XProfile__eq__),
+    ('__ne__', _CW8021XProfile__ne__),
+))
 
 
 def _CWChannel__eq__(self, other):
@@ -41,10 +41,10 @@ def _CWChannel__ne__(self, other):
 
     return not self.isEqualToChannel_(other)
 
-objc.addConvenienceForClass('CWChannel', {
-    '__eq__': _CWChannel__eq__,
-    '__ne__': _CWChannel__ne__,
-})
+objc.addConvenienceForClass('CWChannel', (
+    ('__eq__', _CWChannel__eq__),
+    ('__ne__', _CWChannel__ne__),
+))
 
 def _CWConfiguration__eq__(self, other):
     if not isinstance(other, type(self)):
@@ -58,10 +58,10 @@ def _CWConfiguration__ne__(self, other):
 
     return not self.isEqualToConfiguration_(other)
 
-objc.addConvenienceForClass('CWConfiguration', {
-    '__eq__': _CWConfiguration__eq__,
-    '__ne__': _CWConfiguration__ne__,
-})
+objc.addConvenienceForClass('CWConfiguration', (
+    ('__eq__', _CWConfiguration__eq__),
+    ('__ne__', _CWConfiguration__ne__),
+))
 
 def _CWNetwork__eq__(self, other):
     if not isinstance(other, type(self)):
@@ -75,10 +75,10 @@ def _CWNetwork__ne__(self, other):
 
     return not self.isEqualToNetwork_(other)
 
-objc.addConvenienceForClass('CWNetwork', {
-    '__eq__': _CWNetwork__eq__,
-    '__ne__': _CWNetwork__ne__,
-})
+objc.addConvenienceForClass('CWNetwork', (
+    ('__eq__', _CWNetwork__eq__),
+    ('__ne__', _CWNetwork__ne__),
+))
 
 def _CWNetworkProfile__eq__(self, other):
     if not isinstance(other, type(self)):
@@ -92,10 +92,10 @@ def _CWNetworkProfile__ne__(self, other):
 
     return not self.isEqualToNetworkProfile_(other)
 
-objc.addConvenienceForClass('CWNetworkProfile', {
-    '__eq__': _CWNetworkProfile__eq__,
-    '__ne__': _CWNetworkProfile__ne__,
-})
+objc.addConvenienceForClass('CWNetworkProfile', (
+    ('__eq__', _CWNetworkProfile__eq__),
+    ('__ne__', _CWNetworkProfile__ne__),
+))
 
 
 sys.modules['CoreWLAN'] = mod = objc.ObjCLazyModule(

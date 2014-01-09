@@ -503,7 +503,9 @@ static    char* keywords[] = { "name", "bases", "dict", "protocols", NULL };
 
     super_class = PyObjCClass_GetClass(py_super_class);
     if (super_class) {
-        PyObjCClass_CheckMethodList(py_super_class, 1);
+        if (PyObjCClass_CheckMethodList(py_super_class, 1) < 0) {
+            return NULL;
+        }
     }
 
     hiddenSelectors = PyDict_New();
@@ -764,7 +766,16 @@ static    char* keywords[] = { "name", "bases", "dict", "protocols", NULL };
             return NULL;
 
         } else {
-            PyObjCClass_CheckMethodList(py_super_class, 1);
+            if (PyObjCClass_CheckMethodList(py_super_class, 1) < 0) {
+                (void)PyObjCClass_UnbuildClass(objc_class);
+                Py_DECREF(protocols);
+                Py_DECREF(real_bases);
+                Py_DECREF(metadict);
+                Py_DECREF(hiddenSelectors);
+                Py_DECREF(hiddenClassSelectors);
+                return NULL;
+            }
+
         }
 
         Py_DECREF(PyList_GET_ITEM(real_bases, 0));
@@ -1050,7 +1061,10 @@ static    char* keywords[] = { "name", "bases", "dict", "protocols", NULL };
     Py_DECREF(keys);
     Py_DECREF(old_dict);
 
-    PyObjCClass_CheckMethodList(res, 1);
+    if (PyObjCClass_CheckMethodList(res, 1) < 0) {
+        Py_DECREF(res);
+        return NULL;
+    }
 
     /* This is an "extra" ref */
     Py_INCREF(res);
@@ -1089,14 +1103,14 @@ class_dealloc(PyObject* cls)
     Py_FatalError(buf);
 }
 
-void
+int
 PyObjCClass_CheckMethodList(PyObject* cls, int recursive)
 {
     PyObjCClassObject* info;
 
     info = (PyObjCClassObject*)cls;
 
-    if (info->class == NULL) return;
+    if (info->class == NULL) return 0;
 
     while (info->class != NULL) {
 
@@ -1106,9 +1120,7 @@ PyObjCClass_CheckMethodList(PyObject* cls, int recursive)
 
             r =  update_convenience_methods(cls);
             if (r < 0) {
-                PyErr_SetString(PyExc_RuntimeError,
-                    "Cannot rescan method table");
-                return;
+                return -1;
             }
             if (info->sel_to_py) {
                 Py_XDECREF(info->sel_to_py);
@@ -1122,6 +1134,7 @@ PyObjCClass_CheckMethodList(PyObject* cls, int recursive)
         Py_DECREF(cls); /* We don't actually need the reference, convert to a borrowed one */
         info = (PyObjCClassObject*)cls;
     }
+    return 0;
 }
 
 
@@ -1215,7 +1228,9 @@ _type_lookup(PyTypeObject* tp, PyObject* name
     for (i = 0; i < n; i++) {
         base = PyTuple_GET_ITEM(mro, i);
         if (PyObjCClass_Check(base)) {
-            PyObjCClass_CheckMethodList(base, 0);
+            if (PyObjCClass_CheckMethodList(base, 0) < 0) {
+                return NULL;
+            }
             dict = ((PyTypeObject *)base)->tp_dict;
 
         } else if (PyType_Check(base)) {
@@ -1624,13 +1639,18 @@ class_getattro(PyObject* self, PyObject* name)
                 Py_TYPE(name)->tp_name);
         return NULL;
     }
-    PyObjCClass_CheckMethodList(self, 1);
+    if (PyObjCClass_CheckMethodList(self, 1) < 0) {
+        return NULL;
+    }
 
     descr = _type_lookup(Py_TYPE(self), name
 #ifndef PyObjC_FAST_UNICODE_ASCII
         , name_bytes
 #endif
     );
+    if (descr == NULL && PyErr_Occurred()) {
+        return NULL;
+    }
 
     f = NULL;
     if (descr != NULL
@@ -2810,7 +2830,9 @@ PyObjCClass_FindSelector(PyObject* cls, SEL selector, BOOL class_method)
         return NULL;
     }
 
-    PyObjCClass_CheckMethodList(cls, 1);
+    if (PyObjCClass_CheckMethodList(cls, 1) < 0) {
+        return NULL;
+    }
 
     info = (PyObjCClassObject*)cls;
     if (info->sel_to_py == NULL) {

@@ -3,19 +3,21 @@ from PyObjCTools.TestSupport import *
 import CoreWLAN
 
 class TestCWConfiguration (TestCase):
-    @min_os_level('10.6')
+    @os_level_between('10.6', '10.8')
     def testMethods10_6(self):
-        self.assertResultIsBOOL(CoreWLAN.CWConfiguration.alwaysRememberNetworks)
-        self.assertResultIsBOOL(CoreWLAN.CWConfiguration.disconnectOnLogout)
         self.assertResultIsBOOL(CoreWLAN.CWConfiguration.requireAdminForNetworkChange)
         self.assertResultIsBOOL(CoreWLAN.CWConfiguration.requireAdminForPowerChange)
         self.assertResultIsBOOL(CoreWLAN.CWConfiguration.requireAdminForIBSSCreation)
 
-        self.assertArgIsBOOL(CoreWLAN.CWConfiguration.setAlwaysRememberNetworks_, 0)
-        self.assertArgIsBOOL(CoreWLAN.CWConfiguration.setDisconnectOnLogout_, 0)
         self.assertArgIsBOOL(CoreWLAN.CWConfiguration.setRequireAdminForNetworkChange_, 0)
         self.assertArgIsBOOL(CoreWLAN.CWConfiguration.setRequireAdminForPowerChange_, 0)
         self.assertArgIsBOOL(CoreWLAN.CWConfiguration.setRequireAdminForIBSSCreation_, 0)
+
+        self.assertResultIsBOOL(CoreWLAN.CWConfiguration.alwaysRememberNetworks)
+        self.assertArgIsBOOL(CoreWLAN.CWConfiguration.setAlwaysRememberNetworks_, 0)
+
+        self.assertResultIsBOOL(CoreWLAN.CWConfiguration.disconnectOnLogout)
+        self.assertArgIsBOOL(CoreWLAN.CWConfiguration.setDisconnectOnLogout_, 0)
 
     @min_os_level('10.7')
     def testMethods10_7(self):

@@ -239,6 +239,18 @@ def max_os_level(release):
     """
     return onlyIf(os_release() <= release)
 
+def os_level_between(min_release, max_release):
+    """
+    Usage::
+
+        class Tests (unittest.TestCase):
+
+            @os_level_between('10.5', '10.8')
+            def testUntilLeopard(self):
+                pass
+    """
+    return onlyIf(min_release <= os_release() <= max_release)
+
 _poolclass = objc.lookUpClass('NSAutoreleasePool')
 
 # NOTE: On at least OSX 10.8 there are multiple proxy classes for CFTypeRef...

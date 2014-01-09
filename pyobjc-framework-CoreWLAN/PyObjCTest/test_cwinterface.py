@@ -37,7 +37,7 @@ class TestCWInterface (TestCase):
         self.assertResultIsBOOL(CoreWLAN.CWInterface.commitConfiguration_authorization_error_);
         self.assertArgIsOut(CoreWLAN.CWInterface.commitConfiguration_authorization_error_, 2);
 
-    @min_os_level('10.6')
+    @os_level_between('10.6', '10.8')
     def testMethods10_6(self):
         self.assertResultIsBOOL(CoreWLAN.CWInterface.supportsWoW);
         self.assertResultIsBOOL(CoreWLAN.CWInterface.supportsWEP);

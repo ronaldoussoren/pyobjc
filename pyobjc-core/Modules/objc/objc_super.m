@@ -113,7 +113,9 @@ super_getattro(PyObject *self, PyObject *name)
              * Also make sure that the method tables are up-to-date.
              */
             if (PyObjCClass_Check(tmp)) {
-                PyObjCClass_CheckMethodList(tmp, NO);
+                if (PyObjCClass_CheckMethodList(tmp, NO) < 0) {
+                    return NULL;
+                }
             }
 
             if (PyObjCClass_Check(tmp) && PyObjCClass_Check(su->obj))  {

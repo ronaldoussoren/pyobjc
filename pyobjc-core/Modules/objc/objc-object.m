@@ -241,7 +241,10 @@ object_verify_type(PyObject* obj)
             Py_INCREF(tp);
             Py_DECREF(tmp);
 
-            PyObjCClass_CheckMethodList((PyObject*)tp, 0);
+            if (PyObjCClass_CheckMethodList((PyObject*)tp, 0) < 0) {
+                Py_DECREF(tp);
+                return -1;
+            }
         }
         Py_CLEAR(tp);
     }
@@ -442,7 +445,10 @@ _type_lookup(PyTypeObject* tp, PyObject* name
         base = PyTuple_GET_ITEM(mro, i);
 
         if (PyObjCClass_Check(base)) {
-            PyObjCClass_CheckMethodList(base, 0);
+            if (PyObjCClass_CheckMethodList(base, 0) < 0) {
+                return NULL;
+            }
+
             dict = ((PyTypeObject *)base)->tp_dict;
 
         } else if (PyType_Check(base)) {
@@ -640,6 +646,9 @@ object_getattro(PyObject* obj, PyObject* name)
             , name_bytes
 #endif
         );
+        if (descr == NULL && PyErr_Occurred()) {
+            return NULL;
+        }
     }
 
     f = NULL;
@@ -914,6 +923,9 @@ object_setattro(PyObject *obj, PyObject *name, PyObject *value)
         , name_bytes
 #endif
     );
+    if (descr == NULL && PyErr_Occurred()) {
+        return -1;
+    }
     f = NULL;
     if (descr != NULL
 #if PY_MAJOR_VERSION == 2
@@ -1347,7 +1359,10 @@ _PyObjCObject_NewDeallocHelper(id objc_object)
         return NULL;
     }
 
-    PyObjCClass_CheckMethodList((PyObject*)Py_TYPE(res), 1);
+    if (PyObjCClass_CheckMethodList((PyObject*)Py_TYPE(res), 1) < 0) {
+        Py_DECREF(res);
+        return NULL;
+    }
 
     ((PyObjCObject*)res)->objc_object = objc_object;
 
@@ -1433,7 +1448,10 @@ PyObjCObject_New(id objc_object, int flags, int retain)
     /* This should be in the tp_alloc for the new class, but
      * adding a tp_alloc to PyObjCClass_Type doesn't seem to help
      */
-    PyObjCClass_CheckMethodList((PyObject*)Py_TYPE(res), 1);
+    if (PyObjCClass_CheckMethodList((PyObject*)Py_TYPE(res), 1) < 0) {
+        Py_DECREF(res);
+        return NULL;
+    }
 
     ((PyObjCObject*)res)->objc_object = objc_object;
 #ifdef Py_HAVE_LOCAL_LOOKUP

@@ -1700,7 +1700,9 @@ static char* keywords[] = { "name", NULL };
     py_cls = objc_class_locate(cls);
     if (py_cls == NULL) goto done;
 
-    PyObjCClass_CheckMethodList(py_cls, NO);
+    if (PyObjCClass_CheckMethodList(py_cls, NO) < 0) {
+        return NULL;
+    }
 
 done:
     Py_INCREF(Py_None);
