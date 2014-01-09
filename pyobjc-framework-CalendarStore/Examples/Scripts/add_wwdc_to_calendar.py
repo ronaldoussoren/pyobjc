@@ -7,7 +7,7 @@ import textwrap
 
 store = CalCalendarStore.defaultCalendarStore()
 for cal in store.calendars():
-    if cal._.title == u"Work":
+    if cal._.title == "Work":
         event = CalEvent.event()
         event._.calendar = cal
         event._.title = "WWDC 2009"
