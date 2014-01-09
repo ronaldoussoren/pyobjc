@@ -52,7 +52,7 @@ class WhereIsMyMacAppDelegate (Cocoa.NSObject):
         currentLocation = locationManager.location()
 
         externalBrowserURL = Cocoa.NSURL.URLWithString_(
-                u"http://maps.google.com/maps?ll=%f,%f&amp;spn=%f,%f"%(
+                "http://maps.google.com/maps?ll=%f,%f&amp;spn=%f,%f"%(
                     currentLocation.coordinate.latitude,
                     currentLocation.coordinate.longitude,
                     WhereIsMyMacAppDelegate.latitudeRangeForLocation_(currentLocation),
@@ -75,8 +75,9 @@ class WhereIsMyMacAppDelegate (Cocoa.NSObject):
 
         # Load the HTML for displaying the Google map from a file and replace the
         # format placeholders with our location data
-        path = Cocoa.NSBundle.mainBundle().pathForResource_ofType_(u"HTMLFormatString", u"html")
-        htmlString = open(path, 'r').read() % (
+        path = Cocoa.NSBundle.mainBundle().pathForResource_ofType_("HTMLFormatString", "html")
+        with open(path, 'r') as fp:
+            htmlString = fp.read() % (
                 newLocation.coordinate().latitude,
                 newLocation.coordinate().longitude,
                 WhereIsMyMacAppDelegate.latitudeRangeForLocation_(newLocation),
@@ -84,16 +85,16 @@ class WhereIsMyMacAppDelegate (Cocoa.NSObject):
 
         # Load the HTML in the WebView and set the labels
         self.webView.mainFrame().loadHTMLString_baseURL_(htmlString, None)
-        self.locationLabel.setStringValue_(u"%f, %f"%(
+        self.locationLabel.setStringValue_("%f, %f"%(
                 newLocation.coordinate().latitude, newLocation.coordinate().longitude))
-        self.accuracyLabel.setStringValue_(u"%f"%(newLocation.horizontalAccuracy(),))
+        self.accuracyLabel.setStringValue_("%f"%(newLocation.horizontalAccuracy(),))
 
     def locationManager_didFailWithError_(self, manager, error):
         self.webView.mainFrame.loadHTMLString_baseURL_(
-                Cocoa.NSLocalizedString(u"Location manager failed with error: %s", nil) % (
+                Cocoa.NSLocalizedString("Location manager failed with error: %s", nil) % (
                     error.localizedDescription()), None)
-        self.locationLabel.setStringValue_(u"")
-        self.accuracyLabel.setStringValue_(u"")
+        self.locationLabel.setStringValue_("")
+        self.accuracyLabel.setStringValue_("")
 
     def applicationWillTerminate_(self, aNotification):
         self.locationManager.stopUpdatingLocation()
