@@ -171,6 +171,9 @@ static char* keywords[] = { "bundle", "module_globals", "variableInfo", "skip_un
         value = CFBundleGetDataPointerForName(cfBundle,
                 (CFStringRef)name);
         if (value == NULL) {
+            value = dlsym(RTLD_DEFAULT, [(NSString*)name UTF8String]);
+        }
+        if (value == NULL) {
             if (!skip_undefined) {
                 PyErr_SetString(PyObjCExc_Error,
                     "cannot find a variable");
