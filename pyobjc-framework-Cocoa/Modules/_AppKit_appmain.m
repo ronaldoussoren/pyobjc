@@ -112,5 +112,5 @@ error_cleanup:
 		"NSApplicationMain", 				\
 		(PyCFunction)objc_NSApplicationMain, 		\
 		METH_VARARGS|METH_KEYWORDS, 			\
-		"int NSApplicationMain(int argc, const char *argv[]);" \
+		"NSApplicationMain(arg0, arg1)\n\nint NSApplicationMain(int argc, const char *argv[]);" \
 	},

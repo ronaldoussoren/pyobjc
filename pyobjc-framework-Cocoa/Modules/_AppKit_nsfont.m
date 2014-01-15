@@ -1,4 +1,4 @@
-static PyObject* 
+static PyObject*
 m_NSConvertGlyphsToPackedGlyphs(
 	PyObject* self __attribute__((__unused__)), PyObject* arguments)
 {
@@ -14,7 +14,7 @@ m_NSConvertGlyphsToPackedGlyphs(
 	Py_ssize_t c;
 	NSMultibyteGlyphPacking packing;
 	char* packedGlyphs;
-	
+
 	if  (!PyArg_ParseTuple(arguments, "OOOO", &py_glBuf, &py_count, &py_packing, &py_packedGlyphs)) {
 		return NULL;
 	}
@@ -47,11 +47,11 @@ m_NSConvertGlyphsToPackedGlyphs(
 		PyErr_NoMemory();
 		return NULL;
 	}
-	
+
 	NSInteger result = -1;
 	PyObjC_DURING
 		result = NSConvertGlyphsToPackedGlyphs(glBuf, count, packing, packedGlyphs);
-		
+
 	PyObjC_HANDLER
 		PyObjCErr_FromObjC(localException);
 	PyObjC_ENDHANDLER
@@ -70,7 +70,7 @@ m_NSConvertGlyphsToPackedGlyphs(
 	}
 
 	PyObject* pyRes;
-	
+
 	if (result == 0) {
 		pyRes = Py_BuildValue("Ns#",
 			PyObjC_ObjCToPython(@encode(NSInteger), &result), packedGlyphs, result-1);
@@ -90,5 +90,5 @@ m_NSConvertGlyphsToPackedGlyphs(
 	   "NSConvertGlyphsToPackedGlyphs",			\
 	   (PyCFunction)m_NSConvertGlyphsToPackedGlyphs,	\
 	   METH_VARARGS,					\
-	   0							\
+	   "NSConvertGlyphsToPackedGlyphs(arg0, arg1, arg2, arg3)\n\nNSInteger NSConvertGlyphsToPackedGlyphs(NSGlyph *glBuf, NSInteger count, NSMultibyteGlyphPacking packing, char *packedGlyphs);" \
 	},

@@ -6,8 +6,8 @@
 #import <CFNetwork/CFNetwork.h>
 #endif
 
-static const void* 
-mod_retain(const void* info) 
+static const void*
+mod_retain(const void* info)
 {
 	PyGILState_STATE state = PyGILState_Ensure();
 	Py_INCREF((PyObject*)info);
@@ -25,7 +25,7 @@ mod_release(const void* info)
 
 
 static CFStreamClientContext mod_CFStreamClientContext = {
-	0,		
+	0,
 	NULL,
 	(void*(*)(void*))mod_retain,
 	(void(*)(void*))mod_release,
@@ -165,7 +165,7 @@ m_CFNetworkExecuteProxyAutoConfigurationScript(PyObject* mod __attribute__((__un
 
 	PyObjC_DURING
 		ref = USE_10_5(CFNetworkExecuteProxyAutoConfigurationScript)(
-				script, url, 
+				script, url,
 				m_CFProxyAutoConfigurationResultCallback,
 				&context);
 	PyObjC_HANDLER
@@ -227,7 +227,7 @@ m_CFNetworkExecuteProxyAutoConfigurationURL(PyObject* mod __attribute__((__unuse
 
 	PyObjC_DURING
 		ref = USE_10_5(CFNetworkExecuteProxyAutoConfigurationURL)(
-				script, url, 
+				script, url,
 				m_CFProxyAutoConfigurationResultCallback,
 				&context);
 	PyObjC_HANDLER
@@ -258,7 +258,7 @@ m_CFHostSetClient(PyObject* mod __attribute__((__unused__)),
 	PyObject*   py_host;
 	Boolean ok = 0;
 
-	if (!PyArg_ParseTuple(args, "OOO", &py_host, 
+	if (!PyArg_ParseTuple(args, "OOO", &py_host,
 				&callback, &ctx)) {
 		return NULL;
 	}
@@ -319,7 +319,7 @@ static PyMethodDef mod_methods[] = {
 		"CFNetworkExecuteProxyAutoConfigurationScript",
 		(PyCFunction)m_CFNetworkExecuteProxyAutoConfigurationScript,
 		METH_VARARGS,
-		NULL
+		"CFNetworkExecuteProxyAutoConfigurationScript(arg0, arg1, arg2, arg3)"
 	},
 #endif /* OSX >= 10.5 */
 #if PyObjC_BUILD_RELEASE >= 1005
@@ -327,7 +327,7 @@ static PyMethodDef mod_methods[] = {
 		"CFNetworkExecuteProxyAutoConfigurationURL",
 		(PyCFunction)m_CFNetworkExecuteProxyAutoConfigurationURL,
 		METH_VARARGS,
-		NULL
+		"CFNetworkExecuteProxyAutoConfigurationURL(arg0, arg1, arg2, arg3)"
 	},
 #endif /* OSX >= 10.5 */
 
@@ -335,7 +335,7 @@ static PyMethodDef mod_methods[] = {
 		"CFHostSetClient",
 		(PyCFunction)m_CFHostSetClient,
 		METH_VARARGS,
-		NULL
+		"CFHostSetClient(arg0, arg1, arg2)"
 	},
 
 	{ 0, 0, 0, }
@@ -350,7 +350,7 @@ PyObjC_MODULE_INIT(_manual)
 		PyObjC_INITERROR();
 	}
 
-        if (PyObjC_ImportAPI(m) < 0) { 
+        if (PyObjC_ImportAPI(m) < 0) {
 		PyObjC_INITERROR();
 	}
 
