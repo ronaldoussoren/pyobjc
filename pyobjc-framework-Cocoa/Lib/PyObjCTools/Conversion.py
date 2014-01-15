@@ -12,7 +12,7 @@ __all__ = [
     'toPythonDecimal', 'fromPythonDecimal',
 ]
 
-from Foundation import *
+import Foundation
 import datetime
 import time
 try:
@@ -32,7 +32,7 @@ except NameError:
     )
     basestring = str
 
-DECIMAL_LOCALE = NSDictionary.dictionaryWithObject_forKey_(
+DECIMAL_LOCALE = Foundation.NSDictionary.dictionaryWithObject_forKey_(
     '.', 'NSDecimalSeparator')
 
 def toPythonDecimal(aNSDecimalNumber):
@@ -46,13 +46,13 @@ def fromPythonDecimal(aPythonDecimal):
     """
     Convert a Python decimal.Decimal to a NSDecimalNumber
     """
-    return NSDecimalNumber.decimalNumberWithString_locale_(
+    return Foundation.NSDecimalNumber.decimalNumberWithString_locale_(
         unicode(aPythonDecimal), DECIMAL_LOCALE)
 
 FORMATS = dict(
-    xml=NSPropertyListXMLFormat_v1_0,
-    binary=NSPropertyListBinaryFormat_v1_0,
-    ascii=NSPropertyListOpenStepFormat,
+    xml=Foundation.NSPropertyListXMLFormat_v1_0,
+    binary=Foundation.NSPropertyListBinaryFormat_v1_0,
+    ascii=Foundation.NSPropertyListOpenStepFormat,
 )
 
 def serializePropertyList(aPropertyList, format='xml'):
@@ -80,7 +80,7 @@ def serializePropertyList(aPropertyList, format='xml'):
         formatOption = FORMATS[format]
     except KeyError:
         raise TypeError("Invalid format: %s" % (format,))
-    data, err = NSPropertyListSerialization.dataFromPropertyList_format_errorDescription_(aPropertyList, formatOption)
+    data, err = Foundation.NSPropertyListSerialization.dataFromPropertyList_format_errorDescription_(aPropertyList, formatOption)
     if err is not None:
         # braindead API!
         errStr = err.encode('utf-8')
@@ -98,7 +98,7 @@ def deserializePropertyList(propertyListData):
         propertyListData = buffer(propertyListData)
     elif isinstance(propertyListData, unicode):
         propertyListData = buffer(propertyListData.encode('utf-8'))
-    plist, fmt, err = NSPropertyListSerialization.propertyListFromData_mutabilityOption_format_errorDescription_(propertyListData, NSPropertyListMutableContainers)
+    plist, fmt, err = Foundation.NSPropertyListSerialization.propertyListFromData_mutabilityOption_format_errorDescription_(propertyListData, Foundation.NSPropertyListMutableContainers)
     if err is not None:
         # braindead API!
         errStr = err.encode('utf-8')
@@ -119,7 +119,7 @@ def propertyListFromPythonCollection(aPyCollection, conversionHelper=None):
     None.
     """
     if isinstance(aPyCollection, dict):
-        collection = NSMutableDictionary.dictionary()
+        collection = Foundation.NSMutableDictionary.dictionary()
         for aKey in aPyCollection:
             if not isinstance(aKey, basestring):
                 raise TypeError("Property list keys must be strings")
@@ -128,14 +128,14 @@ def propertyListFromPythonCollection(aPyCollection, conversionHelper=None):
             collection[aKey] = convertedValue
         return collection
     elif isinstance(aPyCollection, (list, tuple)):
-        collection = NSMutableArray.array()
+        collection = Foundation.NSMutableArray.array()
         for aValue in aPyCollection:
             convertedValue = propertyListFromPythonCollection(aValue,
                 conversionHelper=conversionHelper)
             collection.append(aValue)
         return collection
     elif isinstance(aPyCollection, (datetime.datetime, datetime.date)):
-        return NSDate.dateWithTimeIntervalSince1970_(
+        return Foundation.NSDate.dateWithTimeIntervalSince1970_(
             time.mktime(aPyCollection.timetuple()))
     elif decimal is not None and isinstance(aPyCollection, decimal.Decimal):
         return fromPythonDecimal(aPyCollection)
@@ -157,7 +157,7 @@ def pythonCollectionFromPropertyList(aCollection, conversionHelper=None):
     callable that will be invoked any time an encountered object cannot be
     converted.
     """
-    if isinstance(aCollection, NSDictionary):
+    if isinstance(aCollection, Foundation.NSDictionary):
         pyCollection = {}
         for k in aCollection:
             if not isinstance(k, basestring):
@@ -166,19 +166,19 @@ def pythonCollectionFromPropertyList(aCollection, conversionHelper=None):
                 aCollection[k], conversionHelper)
             pyCollection[k] = convertedValue
         return pyCollection
-    elif isinstance(aCollection, NSArray):
+    elif isinstance(aCollection, Foundation.NSArray):
         return [
             pythonCollectionFromPropertyList(item, conversionHelper)
             for item in aCollection
         ]
-    elif isinstance(aCollection, NSData):
+    elif isinstance(aCollection, Foundation.NSData):
         return buffer(aCollection)
-    elif isinstance(aCollection, NSDate):
+    elif isinstance(aCollection, Foundation.NSDate):
         return datetime.datetime.fromtimestamp(
             aCollection.timeIntervalSince1970())
-    elif isinstance(aCollection, NSDecimalNumber) and decimal is not None:
+    elif isinstance(aCollection, Foundation.NSDecimalNumber) and decimal is not None:
         return toPythonDecimal(aCollection)
-    elif aCollection is NSNull.null():
+    elif aCollection is Foundation.NSNull.null():
         return None
     elif isinstance(aCollection, PYTHON_TYPES):
         return aCollection
