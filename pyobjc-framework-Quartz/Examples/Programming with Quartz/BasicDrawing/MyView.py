@@ -1,16 +1,17 @@
-from Cocoa import *
+import objc
+from objc import super
+import Cocoa
 
 import UIHandling
 import AppDrawing
 import FrameworkTextDrawing
 
-import objc
 
 # XXX: Why are these global?
 _drawingCommand = UIHandling.kHICommandSimpleRect
 _pdfDocument = None
 
-class MyView (NSView):
+class MyView (Cocoa.NSView):
     currentMenuItem = objc.IBOutlet()
 
     def initWithFrame_(self, frameRect):
@@ -29,7 +30,7 @@ class MyView (NSView):
 
 
     def drawRect_(self, rect):
-        context = NSGraphicsContext.currentContext().graphicsPort()
+        context = Cocoa.NSGraphicsContext.currentContext().graphicsPort()
 
         if _pdfDocument is None:
             if  _drawingCommand in (UIHandling.kHICommandDrawNSString,
@@ -63,13 +64,13 @@ class MyView (NSView):
 
             # Disable previous menu item.
             if self.currentMenuItem is not None:
-                self.currentMenuItem.setState_(NSOffState)
+                self.currentMenuItem.setState_(Cocoa.NSOffState)
 
             # Update the current item.
             self.currentMenuItem = sender
 
             # Enable new menu item.
-            self.currentMenuItem.setState_(NSOnState)
+            self.currentMenuItem.setState_(Cocoa.NSOnState)
 
             # If we were showing a pasted document, let's get rid of it.
             if _pdfDocument:
@@ -93,7 +94,7 @@ class MyView (NSView):
         # Set the drawing command to be one that is printable.
         _drawingCommand = self.currentPrintableCommand()
         # Do the printing operation on the view.
-        NSPrintOperation.printOperationWithView_(self).runOperation()
+        Cocoa.NSPrintOperation.printOperationWithView_(self).runOperation()
         # Restore that before the printing operation.
         _drawingCommand = savedDrawingCommand
 
@@ -119,17 +120,17 @@ class MyView (NSView):
 
     # Return the number of pages available for printing. For this
     # application it is always 1.
-    def knowsPageRange_(self):
-        return True, NSRange(1, 1)
+    def knowsPageRange_(self, aRange):
+        return True, Cocoa.NSRange(1, 1)
 
     # Return the drawing rectangle for a particular page number.
     # For this application it is always the page width and height.
     def rectForPage_(self, page):
-        pi = NSPrintOperation.currentOperation().printInfo()
+        pi = Cocoa.NSPrintOperation.currentOperation().printInfo()
 
         # Calculate the page height in points.
         paperSize = pi.paperSize()
-        return NSMakeRect(0, 0, paperSize.width, paperSize.height)
+        return Cocoa.NSMakeRect(0, 0, paperSize.width, paperSize.height)
 
     def validateMenuItem_(self, menuItem):
         if menuItem.tag() == _drawingCommand:

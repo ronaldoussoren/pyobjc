@@ -20,6 +20,14 @@ class TestDict (test.test_dict.DictTest, TestCase):
 
     def test_literal_constructor(self): pass
 
+    def test_pyobjc_update(self):
+        value  = NSMutableDictionary(a=1, b=2)
+        self.assertRaises(TypeError, value.update, {'a':3}, {'b':4})
+        self.assertEqual(value, dict(a=1, b=2))
+
+        value.update(a=3, c=4)
+        self.assertEqual(value, dict(a=3, b=2, c=4))
+
     def test_bool(self):
         self.assertIs(not NSMutableDictionary(), True)
         self.assertTrue(NSMutableDictionary({1: 2}))
@@ -404,6 +412,153 @@ class TestDict (test.test_dict.DictTest, TestCase):
 
 class GeneralMappingTests (test.test_dict.GeneralMappingTests):
     type2test = NSMutableDictionary
+
+
+class TestPyObjCDict (TestCase):
+    #def test_comparison(self):
+    #    self.fail()
+
+    def test_creation(self):
+        for dict_type in (NSDictionary, NSMutableDictionary):
+            v = dict_type()
+            self.assertIsInstance(v, dict_type)
+            self.assertEqual(len(v), 0)
+
+            v = dict_type({1:2, 2:3})
+            self.assertIsInstance(v, dict_type)
+            self.assertEqual(len(v), 2)
+            self.assertEqual(v[1], 2)
+            self.assertEqual(v[2], 3)
+
+            v = dict_type([(1, -1), (2, 9)])
+            self.assertIsInstance(v, dict_type)
+            self.assertEqual(len(v), 2)
+            self.assertEqual(v[1], -1)
+            self.assertEqual(v[2], 9)
+
+            v = dict_type(v for v in [(1, -1), (2, 9)])
+            self.assertIsInstance(v, dict_type)
+            self.assertEqual(len(v), 2)
+            self.assertEqual(v[1], -1)
+            self.assertEqual(v[2], 9)
+
+            self.assertRaises(TypeError, dict_type, (1,2), (3,4))
+
+            v = dict_type(a=3, b=4)
+            self.assertEqual(len(v), 2)
+            self.assertEqual(v['a'], 3)
+            self.assertEqual(v['b'], 4)
+
+            v = dict_type((v for v in [(1, -1), (2, 9)]), a='hello', b='world')
+            self.assertIsInstance(v, dict_type)
+            self.assertEqual(len(v), 4)
+            self.assertEqual(v[1], -1)
+            self.assertEqual(v[2], 9)
+            self.assertEqual(v['a'], 'hello')
+            self.assertEqual(v['b'], 'world')
+
+    def test_values(self):
+        py = dict(a=4, b=3)
+        oc = NSDictionary(a=4, b=3)
+
+        self.assertIn(4, py.values())
+        self.assertIn(4, oc.values())
+        self.assertNotIn(9, py.values())
+        self.assertNotIn(9, oc.values())
+
+    def test_view_set(self):
+        oc = NSDictionary(a=1, b=2, c=3, d=4, e=5)
+
+        v = oc.viewkeys() | {'a', 'f' }
+        self.assertEqual(v, {'a', 'b', 'c', 'd', 'e', 'f' })
+        self.assertIsInstance(v, set)
+        self.assertRaises(TypeError, operator.or_, oc.viewkeys(), ('a', 'f'))
+        self.assertRaises(TypeError, operator.or_, ('a', 'f'), oc.keys())
+
+        v = oc.viewkeys() & {'a', 'f' }
+        self.assertEqual(v, {'a'})
+        self.assertIsInstance(v, set)
+        self.assertRaises(TypeError, operator.and_, oc.viewkeys(), ('a', 'f'))
+        self.assertRaises(TypeError, operator.and_, ('a', 'f'), oc.keys())
+
+        v = oc.viewkeys() ^ {'a', 'f' }
+        self.assertEqual(v, {'b', 'c', 'd', 'e', 'f'})
+        self.assertIsInstance(v, set)
+        self.assertRaises(TypeError, operator.xor, oc.viewkeys(), ('a', 'f'))
+        self.assertRaises(TypeError, operator.xor, ('a', 'f'), oc.keys())
+
+        v = oc.viewkeys() - {'a', 'f' }
+        self.assertEqual(v, {'b', 'c', 'd', 'e'})
+        self.assertIsInstance(v, set)
+        self.assertRaises(TypeError, operator.sub, oc.viewkeys(), ('a', 'f'))
+        self.assertRaises(TypeError, operator.sub, ('a', 'f'), oc.keys())
+
+        self.assertTrue(operator.lt(oc.viewkeys(), ('a', 'f')))
+        self.assertTrue(operator.le(oc.viewkeys(), ('a', 'f')))
+        self.assertFalse(operator.gt(oc.viewkeys(), ('a', 'f')))
+        self.assertFalse(operator.ge(oc.viewkeys(), ('a', 'f')))
+
+
+
+        v = oc.viewvalues() | {1, 9 }
+        self.assertEqual(v, {1,2,3,4,5,9})
+        self.assertIsInstance(v, set)
+        self.assertRaises(TypeError, operator.or_, oc.viewvalues(), (1, 9))
+        self.assertRaises(TypeError, operator.or_, (1, 9), oc.viewvalues())
+
+        v = oc.viewvalues() & {1, 9 }
+        self.assertEqual(v, {1})
+        self.assertIsInstance(v, set)
+        self.assertRaises(TypeError, operator.and_, oc.viewvalues(), (1, 9))
+        self.assertRaises(TypeError, operator.and_, (1, 9), oc.viewvalues())
+
+        v = oc.viewvalues() ^ {1, 9 }
+        self.assertEqual(v, {2, 3, 4, 5, 9})
+        self.assertIsInstance(v, set)
+        self.assertRaises(TypeError, operator.xor, oc.viewvalues(), (1, 9))
+        self.assertRaises(TypeError, operator.xor, (1, 9), oc.viewvalues())
+
+        v = oc.viewvalues() - {1, 9 }
+        self.assertEqual(v, {2,3,4,5})
+        self.assertIsInstance(v, set)
+        self.assertRaises(TypeError, operator.sub, oc.viewvalues(), (1, 9))
+        self.assertRaises(TypeError, operator.sub, (1, 9), oc.viewvalues())
+
+        self.assertTrue(operator.lt(oc.viewvalues(), (1, 9)))
+        self.assertTrue(operator.le(oc.viewvalues(), (1, 9)))
+        self.assertFalse(operator.gt(oc.viewvalues(), (1, 9)))
+        self.assertFalse(operator.ge(oc.viewvalues(), (1, 9)))
+
+
+
+        v = oc.viewitems() | {('a', 1), ('f', 9) }
+        self.assertEqual(v, {('a', 1), ('b', 2), ('c', 3), ('d', 4), ('e', 5), ('f', 9)})
+        self.assertIsInstance(v, set)
+        self.assertRaises(TypeError, operator.or_, oc.viewitems(), (('a', 1), ('f', 9)))
+        self.assertRaises(TypeError, operator.or_, (1, 9), oc.viewitems())
+
+        v = oc.viewitems() & {('a',1), ('f',9)}
+        self.assertEqual(v, {('a', 1)})
+        self.assertIsInstance(v, set)
+        self.assertRaises(TypeError, operator.and_, oc.viewitems(), (('a', 1), ('f', 9)))
+        self.assertRaises(TypeError, operator.and_, (('a', 1), ('f', 9)), oc.viewitems())
+
+        v = oc.viewitems() ^ {('a',1), ('f',9)}
+        self.assertEqual(v, {('b', 2), ('c', 3), ('d', 4), ('e', 5), ('f', 9)})
+        self.assertIsInstance(v, set)
+        self.assertRaises(TypeError, operator.xor, oc.viewitems(), (('a', 1), ('f', 9)))
+        self.assertRaises(TypeError, operator.xor, (('a', 1), ('f', 9)), oc.viewitems())
+
+        v = oc.viewitems() - {('a',1), ('f',9)}
+        self.assertEqual(v, {('b', 2), ('c', 3), ('d', 4), ('e', 5)})
+        self.assertIsInstance(v, set)
+        self.assertRaises(TypeError, operator.sub, oc.viewitems(), (('a', 1), ('f', 9)))
+        self.assertRaises(TypeError, operator.sub, (('a', 1), ('f', 9)), oc.viewitems())
+
+        self.assertTrue(operator.lt(oc.viewitems(), (('a', 1), ('f', 9))))
+        self.assertTrue(operator.le(oc.viewitems(), (('a', 1), ('f', 9))))
+        self.assertFalse(operator.gt(oc.viewitems(), (('a', 1), ('f', 9))))
+        self.assertFalse(operator.ge(oc.viewitems(), (('a', 1), ('f', 9))))
 
 
 if __name__ == "__main__":

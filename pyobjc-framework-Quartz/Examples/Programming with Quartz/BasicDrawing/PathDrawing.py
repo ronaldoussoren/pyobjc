@@ -1,94 +1,94 @@
-from Quartz import *
+import Quartz
 import math
 
 def doEgg(context):
-    p0 = CGPoint(0, 0)
-    p1 = CGPoint(0, 200)
-    c1 = CGPoint(140, 5)
-    c2 = CGPoint(80, 198)
+    p0 = Quartz.CGPoint(0, 0)
+    p1 = Quartz.CGPoint(0, 200)
+    c1 = Quartz.CGPoint(140, 5)
+    c2 = Quartz.CGPoint(80, 198)
 
-    CGContextTranslateCTM(context, 100, 5)
-    CGContextBeginPath(context)
+    Quartz.CGContextTranslateCTM(context, 100, 5)
+    Quartz.CGContextBeginPath(context)
 
-    CGContextMoveToPoint(context, p0.x, p0.y)
+    Quartz.CGContextMoveToPoint(context, p0.x, p0.y)
     # Create the Bezier path segment for the right side of the egg.
-    CGContextAddCurveToPoint(context, c1.x, c1.y, c2.x, c2.y, p1.x, p1.y)
+    Quartz.CGContextAddCurveToPoint(context, c1.x, c1.y, c2.x, c2.y, p1.x, p1.y)
     # Create the Bezier path segment for the left side of the egg.
-    CGContextAddCurveToPoint(context, -c2.x, c2.y, -c1.x, c1.y, p0.x, p0.y)
-    CGContextClosePath(context)
-    CGContextSetLineWidth(context, 2)
-    CGContextDrawPath(context, kCGPathStroke)
+    Quartz.CGContextAddCurveToPoint(context, -c2.x, c2.y, -c1.x, c1.y, p0.x, p0.y)
+    Quartz.CGContextClosePath(context)
+    Quartz.CGContextSetLineWidth(context, 2)
+    Quartz.CGContextDrawPath(context, Quartz.kCGPathStroke)
 
 def addRoundedRectToPath(context, rect, ovalWidth, ovalHeight):
     # If either ovalWidth or ovalHeight is 0, draw a regular rectangle.
     if ovalWidth == 0 or ovalHeight == 0:
-        CGContextAddRect(context, rect)
+        Quartz.CGContextAddRect(context, rect)
     else:
-        CGContextSaveGState(context)
+        Quartz.CGContextSaveGState(context)
         if 1:
             # Translate to lower-left corner of rectangle.
-            CGContextTranslateCTM(context,
-                    CGRectGetMinX(rect), CGRectGetMinY(rect))
+            Quartz.CGContextTranslateCTM(context,
+                    Quartz.CGRectGetMinX(rect), Quartz.CGRectGetMinY(rect))
             # Scale by the oval width and height so that
             # each rounded corner is 0.5 units in radius.
-            CGContextScaleCTM(context, ovalWidth, ovalHeight)
+            Quartz.CGContextScaleCTM(context, ovalWidth, ovalHeight)
             # Unscale the rectangle width by the amount of the X scaling.
-            fw = CGRectGetWidth(rect) / ovalWidth
+            fw = Quartz.CGRectGetWidth(rect) / ovalWidth
             # Unscale the rectangle height by the amount of the Y scaling.
-            fh = CGRectGetHeight(rect) / ovalHeight
+            fh = Quartz.CGRectGetHeight(rect) / ovalHeight
             # Start at the right edge of the rect, at the midpoint in Y.
-            CGContextMoveToPoint(context, fw, fh/2)
+            Quartz.CGContextMoveToPoint(context, fw, fh/2)
             # Segment 1
-            CGContextAddArcToPoint(context, fw, fh, fw/2, fh, 0.5)
+            Quartz.CGContextAddArcToPoint(context, fw, fh, fw/2, fh, 0.5)
             # Segment 2
-            CGContextAddArcToPoint(context, 0, fh, 0, fh/2, 0.5)
+            Quartz.CGContextAddArcToPoint(context, 0, fh, 0, fh/2, 0.5)
             # Segment 3
-            CGContextAddArcToPoint(context, 0, 0, fw/2, 0, 0.5)
+            Quartz.CGContextAddArcToPoint(context, 0, 0, fw/2, 0, 0.5)
             # Segment 4
-            CGContextAddArcToPoint(context, fw, 0, fw, fh/2, 0.5)
+            Quartz.CGContextAddArcToPoint(context, fw, 0, fw, fh/2, 0.5)
             # Closing the path adds the last segment.
-            CGContextClosePath(context)
-        CGContextRestoreGState(context)
+            Quartz.CGContextClosePath(context)
+        Quartz.CGContextRestoreGState(context)
 
 def doRoundedRects(context):
-    rect = CGRectMake(10, 10, 210, 150)
+    rect = Quartz.CGRectMake(10, 10, 210, 150)
     ovalWidth = 100
     ovalHeight = 100
-    CGContextSetLineWidth(context, 2.)
-    CGContextBeginPath(context)
+    Quartz.CGContextSetLineWidth(context, 2.)
+    Quartz.CGContextBeginPath(context)
     addRoundedRectToPath(context, rect, ovalWidth, ovalHeight)
-    CGContextSetRGBStrokeColor(context, 1, 0, 0, 1)
-    CGContextDrawPath(context, kCGPathStroke)
+    Quartz.CGContextSetRGBStrokeColor(context, 1, 0, 0, 1)
+    Quartz.CGContextDrawPath(context, Quartz.kCGPathStroke)
 
 def doStrokeWithCTM(context):
-    CGContextTranslateCTM(context, 150., 180.)
-    CGContextSetLineWidth(context, 10)
+    Quartz.CGContextTranslateCTM(context, 150., 180.)
+    Quartz.CGContextSetLineWidth(context, 10)
     # Draw ellipse 1 with a uniform stroke.
-    CGContextSaveGState(context)
+    Quartz.CGContextSaveGState(context)
     if 1:
         # Scale the CTM so the circular arc will be elliptical.
-        CGContextScaleCTM(context, 2, 1)
-        CGContextBeginPath(context)
+        Quartz.CGContextScaleCTM(context, 2, 1)
+        Quartz.CGContextBeginPath(context)
         # Create an arc that is a circle.
-        CGContextAddArc(context, 0., 0., 45., 0., 2*math.pi, 0)
+        Quartz.CGContextAddArc(context, 0., 0., 45., 0., 2*math.pi, 0)
         # Restore the context parameters prior to stroking the path.
         # CGContextRestoreGState does not affect the path in the context.
-    CGContextRestoreGState(context)
-    CGContextStrokePath(context)
+    Quartz.CGContextRestoreGState(context)
+    Quartz.CGContextStrokePath(context)
 
     # *** was 0, -120
-    CGContextTranslateCTM(context, 220., 0.)
+    Quartz.CGContextTranslateCTM(context, 220., 0.)
     # Draw ellipse 2 with non-uniform stroke.
-    CGContextSaveGState(context)
+    Quartz.CGContextSaveGState(context)
     if 1:
         # Scale the CTM so the circular arc will be elliptical.
-        CGContextScaleCTM(context, 2, 1)
-        CGContextBeginPath(context)
+        Quartz.CGContextScaleCTM(context, 2, 1)
+        Quartz.CGContextBeginPath(context)
         # Create an arc that is a circle.
-        CGContextAddArc(context, 0., 0., 45., 0., 2*math.pi, 0)
+        Quartz.CGContextAddArc(context, 0., 0., 45., 0., 2*math.pi, 0)
         # Stroke the path with the scaled coordinate system in effect.
-        CGContextStrokePath(context)
-    CGContextRestoreGState(context)
+        Quartz.CGContextStrokePath(context)
+    Quartz.CGContextRestoreGState(context)
 
 def doRotatedEllipsesWithCGPath(context):
     totreps = 144
@@ -96,59 +96,59 @@ def doRotatedEllipsesWithCGPath(context):
     tintIncrement = 1.0/totreps
 
     # Create a new transform consisting of a 45 degree rotation.
-    theTransform = CGAffineTransformMakeRotation(math.pi/4)
+    theTransform = Quartz.CGAffineTransformMakeRotation(math.pi/4)
     # Apply a scaling transformation to the transform just created.
-    theTransform = CGAffineTransformScale(theTransform, 1, 2)
+    theTransform = Quartz.CGAffineTransformScale(theTransform, 1, 2)
     # Create a mutable CGPath object.
-    path = CGPathCreateMutable()
+    path = Quartz.CGPathCreateMutable()
     if path is None:
-        print >>sys.stderr, "Couldn't create path!"
+        print("Couldn't create path!")
         return
 
     # Add a circular arc to the CGPath object, transformed
     # by an affine transform.
-    CGPathAddArc(path, theTransform, 0., 0., 45., 0., 2*math.pi, False);
+    Quartz.CGPathAddArc(path, theTransform, 0., 0., 45., 0., 2*math.pi, False);
     # Close the CGPath object.
-    CGPathCloseSubpath(path)
+    Quartz.CGPathCloseSubpath(path)
 
     # Place the first ellipse at a good location.
-    CGContextTranslateCTM(context, 100, 100)
+    Quartz.CGContextTranslateCTM(context, 100, 100)
     for i in range(totreps):
-        CGContextBeginPath(context)
+        Quartz.CGContextBeginPath(context)
         # Add the CGPath object to the current path in the context.
-        CGContextAddPath(context, path)
+        Quartz.CGContextAddPath(context, path)
 
         # Set the fill color for this instance of the ellipse.
-        CGContextSetRGBFillColor(context, tint, 0., 0., 1.)
+        Quartz.CGContextSetRGBFillColor(context, tint, 0., 0., 1.)
         # Filling the path implicitly closes it.
-        CGContextFillPath(context)
+        Quartz.CGContextFillPath(context)
         # Compute the next tint color.
         tint -= tintIncrement
         # Move over for the next ellipse.
-        CGContextTranslateCTM(context, 1, 0.)
+        Quartz.CGContextTranslateCTM(context, 1, 0.)
 
 def alignPointToUserSpace(context, p):
     # Compute the coordinates of the point in device space.
-    p = CGContextConvertPointToDeviceSpace(context, p)
+    p = Quartz.CGContextConvertPointToDeviceSpace(context, p)
     # Ensure that coordinates are at exactly the corner
     # of a device pixel.
     p.x = math.floor(p.x)
     p.y = math.floor(p.y)
     # Convert the device aligned coordinate back to user space.
-    return CGContextConvertPointToUserSpace(context, p)
+    return Quartz.CGContextConvertPointToUserSpace(context, p)
 
 def alignSizeToUserSpace(context, s):
     # Compute the size in device space.
-    s = CGContextConvertSizeToDeviceSpace(context, s)
+    s = Quartz.CGContextConvertSizeToDeviceSpace(context, s)
     # Ensure that size is an integer multiple of device pixels.
     s.width = math.floor(s.width)
     s.height = math.floor(s.height)
     # Convert back to user space.
-    return CGContextConvertSizeToUserSpace(context, s)
+    return Quartz.CGContextConvertSizeToUserSpace(context, s)
 
 def alignRectToUserSpace(context, r):
     # Compute the coordinates of the rectangle in device space.
-    r = CGContextConvertRectToDeviceSpace(context, r)
+    r = Quartz.CGContextConvertRectToDeviceSpace(context, r)
     # Ensure that the x and y coordinates are at a pixel corner.
     r.origin.x = math.floor(r.origin.x)
     r.origin.y = math.floor(r.origin.y)
@@ -161,48 +161,48 @@ def alignRectToUserSpace(context, r):
     r.size.height = math.floor(r.size.height)
 
     # Convert back to user space.
-    return CGContextConvertRectToUserSpace(context, r)
+    return Quartz.CGContextConvertRectToUserSpace(context, r)
 
 def doPixelAlignedFillAndStroke(context):
-    p1 = CGPointMake(16.7, 17.8)
-    p2 = CGPointMake(116.7, 17.8)
-    r = CGRectMake(16.7, 20.8, 100.6, 100.6)
+    p1 = Quartz.CGPointMake(16.7, 17.8)
+    p2 = Quartz.CGPointMake(116.7, 17.8)
+    r = Quartz.CGRectMake(16.7, 20.8, 100.6, 100.6)
 
-    CGContextSetLineWidth(context, 2)
-    CGContextSetRGBFillColor(context, 1., 0., 0., 1.)
-    CGContextSetRGBStrokeColor(context, 1., 0., 0., 1.)
+    Quartz.CGContextSetLineWidth(context, 2)
+    Quartz.CGContextSetRGBFillColor(context, 1., 0., 0., 1.)
+    Quartz.CGContextSetRGBStrokeColor(context, 1., 0., 0., 1.)
 
     # Unaligned drawing.
-    CGContextBeginPath(context)
-    CGContextMoveToPoint(context, p1.x, p1.y)
-    CGContextAddLineToPoint(context, p2.x, p2.y)
-    CGContextStrokePath(context)
-    CGContextFillRect(context, r)
+    Quartz.CGContextBeginPath(context)
+    Quartz.CGContextMoveToPoint(context, p1.x, p1.y)
+    Quartz.CGContextAddLineToPoint(context, p2.x, p2.y)
+    Quartz.CGContextStrokePath(context)
+    Quartz.CGContextFillRect(context, r)
 
     # Translate to the right before drawing along
     # aligned coordinates.
-    CGContextTranslateCTM(context, 106, 0)
+    Quartz.CGContextTranslateCTM(context, 106, 0)
 
     # Aligned drawing.
 
     # Compute the length of the line in user space.
-    s = CGSizeMake(p2.x - p1.x, p2.y - p1.y)
+    s = Quartz.CGSizeMake(p2.x - p1.x, p2.y - p1.y)
 
-    CGContextBeginPath(context)
+    Quartz.CGContextBeginPath(context)
     # Align the starting point to a device
     # pixel boundary.
     p1 = alignPointToUserSpace(context, p1)
     # Establish the starting point of the line.
-    CGContextMoveToPoint(context, p1.x, p1.y)
+    Quartz.CGContextMoveToPoint(context, p1.x, p1.y)
     # Compute the line length as an integer
     # number of device pixels.
     s = alignSizeToUserSpace(context, s)
-    CGContextAddLineToPoint(context,
+    Quartz.CGContextAddLineToPoint(context,
                                 p1.x + s.width,
                                 p1.y + s.height)
-    CGContextStrokePath(context)
+    Quartz.CGContextStrokePath(context)
     # Compute a rect that is aligned to device
     # space with a width that is an integer
     # number of device pixels.
     r = alignRectToUserSpace(context, r)
-    CGContextFillRect(context, r)
+    Quartz.CGContextFillRect(context, r)

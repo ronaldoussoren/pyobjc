@@ -3,6 +3,8 @@ import objc
 from PyObjCTest.structpointer2 import *
 from PyObjCTest.structpointer1 import *
 
+TestStructPointerStructPtr = objc.createOpaquePointerType("TestStructPointerStructPtr", FooEncoded);
+
 class TestOpaqueStructPointer (TestCase):
     def testPointer(self):
 

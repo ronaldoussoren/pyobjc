@@ -2,29 +2,28 @@
 Script for building the example.
 
 Usage:
-    python setup.py py2app
+    python3 setup.py py2app
 """
-from distutils.core import setup
-import py2app
+from setuptools import setup
 
 plist = dict(
-    CFBundleIdentifier = u'net.sf.pyobjc.TinyURLService',
+    CFBundleIdentifier = "net.sf.pyobjc.TinyURLService",
     LSBackgroundOnly = 1,
     NSServices = [
         dict(
             NSKeyEquivalent=dict(
-                default=u'0',
+                default="0",
             ),
             NSMenuItem=dict(
-                default=u'Shorten URL'
+                default="Shorten URL"
             ),
-            NSMessage=u'doTinyURLService',
-            NSPortName=u'TinyURLService',
+            NSMessage="doTinyURLService",
+            NSPortName="TinyURLService",
             NSReturnTypes=[
-                u'NSStringPboardType',
+                "NSStringPboardType",
             ],
             NSSendTypes=[
-                u'NSStringPboardType',
+                "NSStringPboardType",
             ],
         ),
     ],
@@ -34,4 +33,8 @@ plist = dict(
 setup(
     app=["TinyURLService.py"],
     options=dict(py2app=dict(plist=plist)),
+    setup_requires=[
+        "py2app",
+        "pyobjc-framework-Cocoa",
+    ]
 )

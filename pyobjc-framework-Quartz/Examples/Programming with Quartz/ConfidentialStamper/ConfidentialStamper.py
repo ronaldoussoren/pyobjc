@@ -3,11 +3,11 @@ Add a watermark to all pages in a PDF document
 """
 import sys, math, os
 
-from Quartz import *
-from Foundation import *
+import Quartz
+import Cocoa
 
 def usage(name):
-    print >>sys.stderr, "Usage %s [inputfile]"%(name,)
+    print("Usage %s [inputfile]"%(name,))
 
 
 class MyPDFData (object):
@@ -18,7 +18,9 @@ class MyPDFData (object):
 # a path to a file. The path can be relative to the
 # current directory or an absolute path.
 def createURL(path):
-    return CFURLCreateFromFileSystemRepresentation(None, path,
+    if not isinstance(path, bytes):
+        path = path.encode('utf-8')
+    return Cocoa.CFURLCreateFromFileSystemRepresentation(None, path,
                             len(path), False)
 
 # For the supplied URL and media box, create a PDF context
@@ -26,9 +28,9 @@ def createURL(path):
 # as its document media box.
 def myCreatePDFContext(url, mediaBox):
     dict = {}
-    dict[kCGPDFContextCreator] = "PDF Stamper Application"
+    dict[Quartz.kCGPDFContextCreator] = "PDF Stamper Application"
 
-    pdfContext = CGPDFContextCreateWithURL(url, mediaBox, dict)
+    pdfContext = Quartz.CGPDFContextCreateWithURL(url, mediaBox, dict)
     return pdfContext
 
 # For a URL corresponding to an existing PDF document on disk,
@@ -36,12 +38,12 @@ def myCreatePDFContext(url, mediaBox):
 # page.
 def myCreatePDFSourceDocument(url):
     myPDFData = MyPDFData()
-    myPDFData.pdfDoc = CGPDFDocumentCreateWithURL(url)
+    myPDFData.pdfDoc = Quartz.CGPDFDocumentCreateWithURL(url)
     if myPDFData.pdfDoc is not None:
         # NOTE: the original code uses CGPDFDocumentGetMediaBox, but that
         # API is deprecated and doesn't work in Leopard.
-        page = CGPDFDocumentGetPage(myPDFData.pdfDoc, 1)
-        myPDFData.mediaRect = CGPDFPageGetBoxRect(page, kCGPDFMediaBox)
+        page = Quartz.CGPDFDocumentGetPage(myPDFData.pdfDoc, 1)
+        myPDFData.mediaRect = Quartz.CGPDFPageGetBoxRect(page, Quartz.kCGPDFMediaBox)
 
         # Make the media rect origin at 0,0.
         myPDFData.mediaRect.origin.x = myPDFData.mediaRect.origin.y = 0.0
@@ -55,7 +57,7 @@ def myCreatePDFSourceDocument(url):
 def StampWithPDFDocument(context,
                         sourcePDFDoc,
                         stampFileDoc, stampMediaRect):
-    numPages = CGPDFDocumentGetNumberOfPages(sourcePDFDoc)
+    numPages = Quartz.CGPDFDocumentGetNumberOfPages(sourcePDFDoc)
 
     # Loop over document pages and stamp each one appropriately.
     for i in range(1, numPages+1):
@@ -65,34 +67,34 @@ def StampWithPDFDocument(context,
 
         # NOTE: the original code uses CGPDFDocumentGetMediaBox, but that
         # API is deprecated and doesn't work in Leopard.
-        page = CGPDFDocumentGetPage(sourcePDFDoc, i)
-        pageRect = CGPDFPageGetBoxRect(page, kCGPDFMediaBox)
+        page = Quartz.CGPDFDocumentGetPage(sourcePDFDoc, i)
+        pageRect = Quartz.CGPDFPageGetBoxRect(page, Quartz.kCGPDFMediaBox)
 
-        CGContextBeginPage(context, pageRect)
-        CGContextSaveGState(context)
+        Quartz.CGContextBeginPage(context, pageRect)
+        Quartz.CGContextSaveGState(context)
         # Clip to the media box of the page.
-        CGContextClipToRect(context, pageRect)
+        Quartz.CGContextClipToRect(context, pageRect)
         # First draw the content of the source document.
-        CGContextDrawPDFDocument(context, pageRect, sourcePDFDoc, i)
+        Quartz.CGContextDrawPDFDocument(context, pageRect, sourcePDFDoc, i)
         # Translate to center of destination rect, that is the center of
         # the media box of content to draw on top of.
-        CGContextTranslateCTM(context,
+        Quartz.CGContextTranslateCTM(context,
             pageRect.size.width/2, pageRect.size.height/2)
         # Compute angle of the diagonal across the destination page.
         angle = math.atan(pageRect.size.height/pageRect.size.width)
         # Rotate by an amount so that drawn content goes along a diagonal
         # axis across the page.
-        CGContextRotateCTM(context, angle)
+        Quartz.CGContextRotateCTM(context, angle)
         # Move the origin so that the media box of the PDF to stamp
         # is centered around center point of destination.
-        CGContextTranslateCTM(context,
+        Quartz.CGContextTranslateCTM(context,
             -stampMediaRect.size.width/2,
             -stampMediaRect.size.height/2)
         # Now draw the document to stamp with on top of original content.
-        CGContextDrawPDFDocument(context, stampMediaRect,
+        Quartz.CGContextDrawPDFDocument(context, stampMediaRect,
             stampFileDoc, 1)
-        CGContextRestoreGState(context)
-        CGContextEndPage(context)
+        Quartz.CGContextRestoreGState(context)
+        Quartz.CGContextEndPage(context)
 
 # From an input PDF document and a PDF document whose contents you
 # want to draw on top of the other, create a new PDF document
@@ -101,18 +103,18 @@ def StampWithPDFDocument(context,
 def createStampedFileWithFile(inURL, stampURL, outURL):
     sourceFileData = myCreatePDFSourceDocument(inURL)
     if sourceFileData.pdfDoc is None:
-        print >>sys.stderr, "Can't create PDFDocumentRef for source input file!"
+        print("Can't create PDFDocumentRef for source input file!")
         return
 
     stampFileData = myCreatePDFSourceDocument(stampURL)
     if stampFileData.pdfDoc is None:
-        CGPDFDocumentRelease(sourceFileData.pdfDoc);
-        print >>sys.stderr, "Can't create PDFDocumentRef for file to stamp with!"
+        Quartz.CGPDFDocumentRelease(sourceFileData.pdfDoc);
+        print("Can't create PDFDocumentRef for file to stamp with!")
         return
 
     pdfContext = myCreatePDFContext(outURL, sourceFileData.mediaRect)
     if pdfContext is None:
-        print >>sys.stderr, "Can't create PDFContext for output file!"
+        print("Can't create PDFContext for output file!")
         return
 
     StampWithPDFDocument(pdfContext, sourceFileData.pdfDoc,
@@ -135,17 +137,17 @@ def main(args = None):
 
     inURL = createURL(inputFileName);
     if inURL is None:
-        print >>sys.stderr, "Couldn't create URL for input file!"
+        print("Couldn't create URL for input file!")
         return 1
 
     outURL = createURL(outputFileName)
     if outURL is None:
-        print >>sys.stderr, "Couldn't create URL for output file!"
+        print("Couldn't create URL for output file!")
         return 1
 
     stampURL = createURL(stampFileName)
     if stampURL is None:
-        print >>sys.stderr, "Couldn't create URL for stamping file!"
+        print("Couldn't create URL for stamping file!")
         return 1
 
     createStampedFileWithFile(inURL, stampURL, outURL)

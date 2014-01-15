@@ -4,6 +4,9 @@
 #pragma weak CFFileDescriptorCreate
 #pragma weak CFFileDescriptorGetContext
 
+WEAK_LINKED_NAME_10_5(CFFileDescriptorCreate)
+WEAK_LINKED_NAME_10_5(CFFileDescriptorGetContext)
+
 static void* 
 mod_filedescr_retain(void* info) 
 {
@@ -89,7 +92,7 @@ mod_CFFileDescriptorCreate(
 
 	CFFileDescriptorRef rv = NULL;
 	PyObjC_DURING
-		rv = CFFileDescriptorCreate(
+		rv = USE_10_5(CFFileDescriptorCreate)(
 			allocator, descriptor, closeOnInvalidate,
 			mod_CFFileDescriptorCallBack, &context);
 		
@@ -139,7 +142,7 @@ mod_CFFileDescriptorGetContext(
 	context.version = 0;
 
 	PyObjC_DURING
-		CFFileDescriptorGetContext(f, &context);
+		USE_10_5(CFFileDescriptorGetContext)(f, &context);
 
 	PyObjC_HANDLER
 		PyObjCErr_FromObjC(localException);
@@ -181,13 +184,5 @@ mod_CFFileDescriptorGetContext(
 	},
 
 #define COREFOUNDATION_FILEDESCRIPTOR_AFTER_CREATE		\
-	if (&CFFileDescriptorCreate == NULL) {  /* weakly linked */		\
-		if (PyObject_DelAttrString(m, "CFFileDescriptorCreate") == -1) {		\
-			PyObjC_INITERROR();		\
-		}		\
-	}		\
-	if (&CFFileDescriptorGetContext == NULL) {  /* weakly linked */		\
-		if (PyObject_DelAttrString(m, "CFFileDescriptorGetContext") == -1) {		\
-			PyObjC_INITERROR();		\
-		}		\
-	}
+	CHECK_WEAK_LINK_10_5(m, CFFileDescriptorCreate); \
+	CHECK_WEAK_LINK_10_5(m, CFFileDescriptorGetContext);

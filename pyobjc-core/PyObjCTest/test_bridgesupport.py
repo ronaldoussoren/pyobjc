@@ -55,6 +55,7 @@ TEST_XML=b"""\
   <string_constant name='strconst4' nsstring='true' /><!-- ignore -->
   <string_constant name='strconst5' value64='string five' /><!-- ignore 32-bit -->
   <string_constant name='strconst6' value64='string five unicode' nsstring='true' /><!-- ignore 32-bit -->
+  <string_constant name='strconst7' value='zee&#0235;n' nsstring='true' />
   <string_constant /><!-- ignore -->
   <enum name='enum1' value='1' />
   <enum name='enum2' value='3' value64='4'/>
@@ -94,7 +95,7 @@ TEST_XML=b"""\
     <method selector='method3' variadic='true' c_array_delimited_by_null='true'></method>
     <method selector='method4' variadic='true' c_array_length_in_arg='4'></method>
     <method selector='method5' c_array_delimited_by_null='true'><retval type='d'/></method><!-- c_array... ignored -->
-    <method selector='method6' c_array_length_in_arg='4'><retval type='d' /></method><!-- c_array... ignored -->
+    <method selector='method6' c_array_length_in_arg='4'><retval type='d' /><dummy/></method><!-- c_array... ignored -->
     <method selector='method7' ignore='true'></method>
     <method selector='method8' ignore='true' suggestion='ignore me'></method>
     <method selector='method9' suggestion='ignore me'><retval type='d'/></method><!-- suggestion ignored -->
@@ -139,6 +140,7 @@ TEST_XML=b"""\
           <retval type='v' />
           <arg type='@' />
           <arg type='d' />
+          <dummy />
        </retval>
     </method>
     <method selector='method22'>
@@ -419,6 +421,9 @@ TEST_XML=b"""\
     <method selector='selector6' type64='v@:@' /><!-- ignore 32-bit -->
     <method selector='selector7' type='v@:f' class_method='false' /><!-- manpage: class_method, pyobjc 2.3: classmethod -->
     <method selector='selector8' type='v@:f' class_method='true' />
+    <method/>
+    <method selector='selector9'/>
+    <method type='v@:f'/>
   </informal_protocol>
   <struct/><!-- ignore -->
   <struct type='{foo=dd}' /><!--ignore-->
@@ -473,8 +478,9 @@ class TestBridgeSupportParser (TestCase):
 
         try:
             for is32bit in (True, False):
+                sys.maxsize = 2**31-1 if is32bit else 2**63-1
+
                 for endian in ('little', 'big'):
-                    sys.maxsize = 2**63-1 if endian == 'big' else 2**32-1
                     sys.byteorder = endian
 
                     # Reload the bridgesupport module because
@@ -515,6 +521,7 @@ class TestBridgeSupportParser (TestCase):
             'strconst2': b'string constant 2' if sys.maxsize < 2**32 else b'string constant two',
             'strconst1u': b'string constant1 unicode'.decode('ascii'),
             'strconst2u': b'string constant 2 unicode'.decode('ascii') if sys.maxsize < 2**32 else b'string constant two unicode'.decode('ascii'),
+            'strconst7': b'zee\xebn'.decode('latin1'),
             'enum1': 1,
             'enum2': 3 if sys.maxsize < 2**32 else 4,
             'enum3': 5 if sys.byteorder == 'little' else 6,
@@ -1318,7 +1325,7 @@ class TestParseBridgeSupport (TestCase):
             self.assertIsInstance(typestr, bytes)
             self.assertIsInstance(doc, (str, type(None)))
             self.assertEqual(len(objc.splitSignature(typestr)), 1)
-            self.assertTrue(typestr.startswith(objc._C_PTR))
+            self.assertStartswith(typestr, objc._C_PTR)
             return '<pointer %r>'%(name,)
 
         def createStructType(name, typestr, fieldnames, doc=None, pack=-1):
@@ -1439,6 +1446,7 @@ class TestParseBridgeSupport (TestCase):
                  <retval type='f' />
                  <arg type='@' />
                  <arg type='d' />
+                 <dummy />
               </function>
               <function name='function2'>
                  <retval type='d' />
@@ -1470,13 +1478,7 @@ class TestParseBridgeSupport (TestCase):
 
             from distutils.sysconfig import get_config_var
 
-            self.assertIn('protocols', module_globals)
-            m = module_globals.pop('protocols')
-            self.assertIsInstance(m, type(objc))
-            self.assertEqual(m.__name__, 'TestFramework.protocols')
-            self.assertEqual(m.protocol1, "<informal_protocol 'protocol1'>")
-            self.assertEqual(m.protocol2, "<informal_protocol 'protocol2'>")
-            self.assertIs(sys.modules['TestFramework.protocols'], m)
+            self.assertNotIn('protocols', module_globals)
             self.assertEqual(module_globals, {
                 "enum_value":   42,
                 "const_value":  "<constant 'const_value'>",
@@ -1604,10 +1606,7 @@ class TestInitFrameworkWrapper (TestCase):
                 self.assertEqual(g, update_globals)
                 self.assertEqual(calls, [('', g, 'TestFramework', None, None)])
 
-                self.assertNotEqual(len(g['protocols'].__dict__), 0)
-                for v in g['protocols'].__dict__.values():
-                    self.assertIsInstance(v, objc.formal_protocol)
-
+                self.assertEqual(len(g['protocols'].__dict__), 0)
 
             # 2. Run without problems, without 'protocols' in dictionary
             raise_exception = None
@@ -1636,18 +1635,14 @@ class TestInitFrameworkWrapper (TestCase):
             bridgesupport._parseBridgeSupport('', g, 'TestFramework', 'a', 'b')
             self.assertEqual(g, update_globals)
             self.assertEqual(calls, [('', g, 'TestFramework', 'a', 'b')])
-            self.assertNotEqual(len(g['protocols'].__dict__), 0)
-            for v in g['protocols'].__dict__.values():
-                self.assertIsInstance(v, objc.formal_protocol)
+            self.assertEqual(len(g['protocols'].__dict__), 0)
 
             calls = []
             g = {}
             bridgesupport._parseBridgeSupport('', g, 'TestFramework', inlineTab='a')
             self.assertEqual(g, update_globals)
             self.assertEqual(calls, [('', g, 'TestFramework', None, 'a')])
-            self.assertNotEqual(len(g['protocols'].__dict__), 0)
-            for v in g['protocols'].__dict__.values():
-                self.assertIsInstance(v, objc.formal_protocol)
+            self.assertEqual(len(g['protocols'].__dict__), 0)
 
 
     def test_calls_initwrappper(self):
@@ -1699,7 +1694,10 @@ class TestInitFrameworkWrapper (TestCase):
                 return (package, name) in resources
 
             def resource_string(package, name):
-                return resources[(package, name)]
+                try:
+                    return resources[(package, name)]
+                except KeyError:
+                    raise os.error(name)
 
             parse_calls = []
             def parseBridgeSupport(xml,  globals, framework, dylib_path=None, inlineTab=None):
@@ -1729,6 +1727,17 @@ class TestInitFrameworkWrapper (TestCase):
             parse_calls = []
             g = {}
             objc.initFrameworkWrapper("TestFramework", "/Library/Framework/Test.framework", "com.apple.Test", g)
+            basic_verify(g)
+            self.assertEqual(len(g), 2)
+            self.assertEqual(load_calls, [
+                (Bundle([('TestFramework', 'bridgesupport', 'BridgeSupport')]), 'TestFramework', g, SENTINEL, 'com.apple.Test', True)
+            ])
+            self.assertEqual(parse_calls, [])
+
+            load_calls = []
+            parse_calls = []
+            g = {}
+            objc.initFrameworkWrapper("TestFramework", "/Library/Framework/Test.framework", "com.apple.Test", g, frameworkResourceName='TestResources')
             basic_verify(g)
             self.assertEqual(len(g), 2)
             self.assertEqual(load_calls, [
@@ -1977,9 +1986,9 @@ class TestInitFrameworkWrapper (TestCase):
                     "Test", "/Library/Framework/Test.framework", "com.apple.Test", g,
                     inlineTab=inlineTab, scan_classes=False)
 
-            self.assertEquals(load_calls, [])
-            self.assertEquals(parse_calls, [])
-            self.assertEquals(g, {})
+            self.assertEqual(load_calls, [])
+            self.assertEqual(parse_calls, [])
+            self.assertEqual(g, {})
 
             # 8. framework_identifier is not None, cannot find through identifier
             resources = {}
@@ -1998,10 +2007,10 @@ class TestInitFrameworkWrapper (TestCase):
                     "Test", "/Library/Framework/Test.framework", "com.apple.Test", g,
                     inlineTab=inlineTab, scan_classes=False)
 
-            self.assertEquals(load_calls, [
+            self.assertEqual(load_calls, [
                 (Bundle(calls=[('Test', 'bridgesupport', 'BridgeSupport')]), 'Test', g, '/Library/Framework/Test.framework', SENTINEL, False),
             ])
-            self.assertEquals(parse_calls, [])
+            self.assertEqual(parse_calls, [])
 
             load_calls = []
             parse_calls = []
@@ -2015,11 +2024,10 @@ class TestInitFrameworkWrapper (TestCase):
                     "Test", "/Library/Framework/Test.framework", "com.apple.Test", g,
                     inlineTab=inlineTab)
 
-            self.assertEquals(load_calls, [
+            self.assertEqual(load_calls, [
                 (Bundle(calls=[('Test', 'bridgesupport', 'BridgeSupport')]), 'Test', g, '/Library/Framework/Test.framework', SENTINEL, True),
             ])
-            self.assertEquals(parse_calls, [])
-
+            self.assertEqual(parse_calls, [])
 
             # XXX: The following path's aren't properly tested at the moment:
             # 8. Use the 'frameworkResourceName' parameter
@@ -2037,15 +2045,15 @@ class TestInitFrameworkWrapper (TestCase):
 
             return_value = False
             exception  = None
-            self.assertEquals(bridgesupport.safe_resource_exists("a", "b"), False)
+            self.assertEqual(bridgesupport.safe_resource_exists("a", "b"), False)
 
             return_value = True
             exception  = None
-            self.assertEquals(bridgesupport.safe_resource_exists("a", "b"), True)
+            self.assertEqual(bridgesupport.safe_resource_exists("a", "b"), True)
 
             return_value = True
             exception  = ImportError
-            self.assertEquals(bridgesupport.safe_resource_exists("a", "b"), False)
+            self.assertEqual(bridgesupport.safe_resource_exists("a", "b"), False)
 
 
     def test_real_loader(self):
@@ -2063,7 +2071,7 @@ class TestInitFrameworkWrapper (TestCase):
                 arch = '-i386'
             else:
                 arch = '-x86_64'
-        
+
         return # XXX
         p = subprocess.Popen([
             '/usr/bin/arch', arch,

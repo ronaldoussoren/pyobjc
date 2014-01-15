@@ -5,6 +5,7 @@ from PyObjCTest import testbndl
 from PyObjCTest import copying
 
 import objc, sys
+import functools
 from PyObjCTest.fnd import NSObject, NSAutoreleasePool
 
 rct = structargs.StructArgClass.someRect.__metadata__()['retval']['type']
@@ -28,6 +29,28 @@ class ReturnAStruct (NSObject):
 
 
 class TestRegressions(TestCase):
+    def testSetCompare(self):
+        oc = objc.lookUpClass('NSSet').setWithArray_([None])
+        oc2 = objc.lookUpClass('NSMutableSet').setWithArray_([None])
+        py = { None }
+
+        self.assertEqual(list(oc.allObjects()), [None])
+        for o in oc.allObjects():
+            self.assertIn(o, py)
+        self.assertEqual(oc, oc2)
+        self.assertIsNot(oc, oc2)
+        self.assertEqual(oc, py)
+
+        if sys.version_info[0] == 3:
+            self.assertEqual(py, oc)
+
+    def testNSObjectPerforming(self):
+        o = NSObject.performSelector_('new')
+        self.assertIsInstance(o, NSObject)
+
+        v = o.performSelector_('description')
+        self.assertEqual(v, o.description())
+
     def testNSObjectRespondsToCommonMethods(self):
         self.assertTrue(NSObject.pyobjc_classMethods.respondsToSelector_('alloc'))
         self.assertTrue(NSObject.instancesRespondToSelector_('init'))
@@ -126,17 +149,6 @@ class TestRegressions(TestCase):
         self.assertEqual(len(calls), 1)
         o = InitializeTestClass.new()
         self.assertEqual(len(calls), 1)
-
-    def testPrivateIntrospection(self):
-        o = testbndl.PyObjC_TestClass4.alloc().init()
-        self.assertEqual(o._privateMethodWithArg_(1.5), 1)
-        self.assertEqual(o._privateMethodWithArg_(-2.5), -2)
-
-        imp = testbndl.PyObjC_TestClass4.instanceMethodForSelector_('_privateMethodWithArg:')
-        self.assertEqual(imp.signature, b'i@:f')
-
-        sel = testbndl.PyObjC_TestClass4._privateMethodWithArg_
-        self.assertEqual(sel.signature, b'i@:f')
 
     def testStructReturnPy(self):
         o = ReturnAStruct.alloc().init()
@@ -255,6 +267,29 @@ class TestInitMemoryLeak (TestCase):
         self.assertEqual(v.objectForKey_("foo"), "ofk2: foo")
         self.assertEqual(v["foo"], "gi: foo")
 
+    def testExceptionOnWrapper(self):
+        # NOTE: I'm not to happy about the type error and will
+        #       likely change PyObjC. The test primarily checks
+        #       that this code doesn't crash the interpreter.
+
+        def decorator(function):
+            @functools.wraps(function)
+            def wrapper(*args, **kwds):
+                return function(*args, **kwds)
+
+            return wrapper
+
+        try:
+            class OCTestRegrWithWrapped (NSObject):
+                @decorator
+                def someMethod(self):
+                    pass
+
+        except TypeError:
+            pass
+
+        else:
+            self.fail("TypeError not raised")
 
 if __name__ == '__main__':
     main()

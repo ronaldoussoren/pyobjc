@@ -8,9 +8,11 @@ unitest.m file as its methods.
 """
 import sys, platform
 from PyObjCTools.TestSupport import *
-from  PyObjCTest import ctests
+import objc
 
-names = [ x for x in dir (ctests) if not x.startswith('_') ]
+ctests = objc._ctests
+
+names = list(ctests.keys())
 methods = {}
 
 def do_exec(value, locals, globals):
@@ -22,7 +24,7 @@ def make_test(name):
     Create a method for use in a unittest, the exec is needed to get the
     proper function name
     """
-    result = { 'meth': getattr(ctests, name) }
+    result = { 'meth': ctests[name] }
 
     if sys.platform == 'darwin' and name == 'CheckNSInvoke' and platform.machine() == 'Power Macintosh' and map(int, platform.mac_ver()[0].split('.')) < [10, 6]:
         # There is a bug in Apple's implementation of NSInvocation

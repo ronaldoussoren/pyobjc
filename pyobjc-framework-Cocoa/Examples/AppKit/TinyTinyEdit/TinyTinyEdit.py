@@ -1,9 +1,11 @@
 """TinyTinyEdit -- A minimal Document-based Cocoa application."""
-from Cocoa import *
+
+import objc
+import Cocoa
 from PyObjCTools import Signals
 from PyObjCTools import AppHelper
 
-class TinyTinyDocument(NSDocument):
+class TinyTinyDocument(Cocoa.NSDocument):
     textView = objc.IBOutlet()
     path = None
 
@@ -20,10 +22,11 @@ class TinyTinyDocument(NSDocument):
         return True
 
     def writeToFile_ofType_(self, path, tp):
-        f = file(path, "w")
-        text = self.textView.string()
-        f.write(text.encode("utf8"))
-        f.close()
+        with open(path, "w") as f:
+            text = self.textView.string()
+            if sys.version_info[0] == 2:
+                text = text.encode('utf-8')
+            f.write(text)
         return True
 
     def windowControllerDidLoadNib_(self, controller):
@@ -31,9 +34,11 @@ class TinyTinyDocument(NSDocument):
             self.readFromUTF8(self.path)
 
     def readFromUTF8(self, path):
-        f = file(path)
-        text = unicode(f.read(), "utf8")
-        f.close()
+        with open(path, 'r') as f:
+            text = f.read()
+
+        if sys.version_info[0] == 2:
+            text = text.decode('utf-8')
         self.textView.setString_(text)
 
 

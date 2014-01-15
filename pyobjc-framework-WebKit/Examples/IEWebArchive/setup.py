@@ -2,10 +2,9 @@
 Script for building the example.
 
 Usage:
-    python setup.py py2app
+    python3 setup.py py2app
 """
-from distutils.core import setup
-import py2app
+from setuptools import setup
 
 plist = dict(
     CFBundleDocumentTypes = [
@@ -23,4 +22,9 @@ setup(
     app=["main.py"],
     data_files=["MainMenu.nib", "MHTDocument.nib"],
     options=dict(py2app=dict(plist=plist)),
+    setup_requires=[
+        "py2app",
+        "pyobjc-framework-Cocoa",
+        "pyobjc-framework-WebKit",
+    ]
 )

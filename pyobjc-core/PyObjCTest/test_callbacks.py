@@ -146,6 +146,10 @@ class TestCallbackFor (TestCase):
         def function(arg1, arg2):
             pass
         self.assertIn(' "objc.__imp__" ', repr(function.pyobjc_closure))
+        meta = function.__metadata__()
+        self.assertIsInstance(meta, dict)
+        self.assertEqual(len(meta['arguments']), 2)
+
 
         @objc.callbackFor(OC_CallbackTest.selWithCallback2_)
         def function():

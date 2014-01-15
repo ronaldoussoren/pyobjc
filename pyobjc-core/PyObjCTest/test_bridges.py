@@ -28,17 +28,17 @@ class TestBridges (TestCase):
         range_type = range if sys.version_info[0] == 3 else xrange
 
         v = range_type(0, 10)
-        self.assertTrue(issubclass(classOfProxy(v), NSMutableArray))
+        self.assertIsSubclass(classOfProxy(v), NSMutableArray)
 
-    def test_user_collectons(self):
+    def test_user_collections(self):
         # Note: Not "UserDict" because UserDict doesn't implement
         # __iter__ and hence isn't a collections.Mapping, and doesn't
         # implement enough API to implement the NSDictionary interface.
         v = IterableUserDict()
-        self.assertTrue(issubclass(classOfProxy(v), NSMutableDictionary))
+        self.assertIsSubclass(classOfProxy(v), NSMutableDictionary)
 
         v = UserList()
-        self.assertTrue(issubclass(classOfProxy(v), NSMutableArray))
+        self.assertIsSubclass(classOfProxy(v), NSMutableArray)
 
     def test_abc(self):
         class MySequence (collections.Sequence):
@@ -60,10 +60,10 @@ class TestBridges (TestCase):
                 yield
 
         v = MyDictionary()
-        self.assertTrue(issubclass(classOfProxy(v), NSMutableDictionary))
+        self.assertIsSubclass(classOfProxy(v), NSMutableDictionary)
 
         v = MySequence()
-        self.assertTrue(issubclass(classOfProxy(v), NSMutableArray))
+        self.assertIsSubclass(classOfProxy(v), NSMutableArray)
 
 
 if __name__ == "__main__":

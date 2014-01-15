@@ -1,4 +1,5 @@
-from Foundation import *
+import objc
+from Foundation import NSObject
 from InfoWindowController import InfoWindowController
 
 class ToDoAppDelegate (NSObject):

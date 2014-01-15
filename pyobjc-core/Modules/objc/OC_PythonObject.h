@@ -1,5 +1,5 @@
 /* Copyright (c) 1996,97 by Lele Gaifax.  All Rights Reserved
- * Copyright (c) 2002,2003 Ronald Oussoren.
+ * Copyright (c) 2002-2014 Ronald Oussoren.
  *
  * This software may be used and distributed freely for any purpose
  * provided that this notice is included unchanged on any and all
@@ -24,30 +24,14 @@
 #ifndef _OC_PythonObject_H
 #define _OC_PythonObject_H
 
-#import <Foundation/NSProxy.h>
-#import <Foundation/NSDictionary.h>
-#import <Foundation/NSMethodSignature.h>
-
-extern PyObject* PyObjC_Encoder;
-extern PyObject* PyObjC_Decoder;
-extern PyObject* PyObjC_CopyFunc;
-
 extern void PyObjC_encodeWithCoder(PyObject* pyObject, NSCoder* coder);
-
-
-
 
 @interface OC_PythonObject : NSProxy  <NSCopying>
 {
   PyObject *pyObject;
 }
 
-+ (int)wrapPyObject:(PyObject *)argument toId:(id *)datum;
 + (id <NSObject>)objectWithPythonObject:(PyObject *) obj;
-+ (id)depythonifyTable;
-+ (id)pythonifyStructTable;
-+ (PyObject *)__pythonifyStruct:(PyObject *) obj withType:(const char *) type length:(Py_ssize_t) length;
-+ (id <NSObject>)objectWithCoercedPyObject:(PyObject *) obj;
 - (id)initWithPyObject:(PyObject *) obj;
 
 /*!
@@ -60,8 +44,8 @@ extern void PyObjC_encodeWithCoder(PyObject* pyObject, NSCoder* coder);
  * @method __pyobjc_PythonObject__
  * @result Returns a new reference to the wrapped object
  * @discussion
- * 	This method is part of the implementation of objc_support.m,
- * 	see that file for details.
+ *     This method is part of the implementation of objc_support.m,
+ *     see that file for details.
  */
 - (PyObject*) __pyobjc_PythonObject__;
 - (void) forwardInvocation:(NSInvocation *) invocation;

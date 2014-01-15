@@ -8,10 +8,11 @@
 #  The original version was written in Objective-C by Malcolm Crawford
 #  http://homepage.mac.com/mmalc/CocoaExamples/controllers.html
 
-from Foundation import *
-from AppKit import *
-from objc import ivar
-from math import sin, cos #, sqrt, atan2
+from Cocoa import NSObject, NSColor, NSMakeRect, NSUnionRect
+from Cocoa import NSShadow, NSMakeSize, NSBezierPath
+from objc import super
+import objc
+from math import sin, cos
 
 
 class Circle(NSObject):
@@ -21,23 +22,24 @@ class Circle(NSObject):
     Circle class, adopts Graphic protocol
     Adds radius and color, and support for drawing a shadow
     """
-    xLoc = ivar(u'xLoc', 'd')
-    yLoc = ivar(u'yLoc', 'd')
+    xLoc = objc.ivar('xLoc', objc._C_DBL)
+    yLoc = objc.ivar('yLoc', objc._C_DBL)
 
-    radius = ivar(u'radius', 'd')
-    color  = ivar(u'color')
-    shadowOffset = ivar(u'shadowOffset', 'd')
-    shadowAngle  = ivar(u'shadowAngle', 'd') # in radians
+    radius = objc.ivar('radius', objc._C_DBL)
+    color  = objc.ivar('color')
+    shadowOffset = objc.ivar('shadowOffset', objc._C_DBL)
+    shadowAngle  = objc.ivar('shadowAngle', objc._C_DBL) # in radians
 
-
+    @classmethod
     def keysForNonBoundsProperties(cls):
-        return [u"xLoc", u"yLoc", u"shadowOffset", u"shadowAngle", u"color", u"radius"]
-    keysForNonBoundsProperties = classmethod(keysForNonBoundsProperties)
+        return ["xLoc", "yLoc", "shadowOffset", "shadowAngle", "color", "radius"]
 
 
     def init(self):
         self = super(Circle, self).init()
-        if self == None: return None
+        if self is None:
+            return None
+
         self.color = NSColor.redColor()
         self.xLoc = 15.0
         self.yLoc = 15.0
@@ -45,7 +47,7 @@ class Circle(NSObject):
         return self
 
     def description(self):
-        return u"circle"
+        return "circle"
 
     def drawingBounds(self):
         drawingBounds = NSMakeRect(self.xLoc - self.radius-1, self.yLoc - self.radius-1,
@@ -79,7 +81,8 @@ class Circle(NSObject):
         # draw circle
         circle = NSBezierPath.bezierPathWithOvalInRect_(circleBounds)
         myColor = self.color
-        if myColor == None: myColor = NSColor.redColor()
+        if myColor is None:
+            myColor = NSColor.redColor()
         myColor.set()
         circle.fill()
 
@@ -95,30 +98,30 @@ class Circle(NSObject):
 
     def initWithCoder_(self, coder):
         if not coder.allowsKeyedCoding():
-            print "Circle only works with NSKeyedArchiver"
-        self.xLoc = coder.decodeFloatForKey_(u"xLoc")
-        self.yLoc = coder.decodeFloatForKey_(u"yLoc")
-        self.radius = coder.decodeFloatForKey_(u"radius")
-        self.shadowOffset = coder.decodeFloatForKey_(u"shadowOffset")
-        self.shadowAngle = coder.decodeFloatForKey_(u"shadowAngle")
+            print("Circle only works with NSKeyedArchiver")
+        self.xLoc = coder.decodeFloatForKey_("xLoc")
+        self.yLoc = coder.decodeFloatForKey_("yLoc")
+        self.radius = coder.decodeFloatForKey_("radius")
+        self.shadowOffset = coder.decodeFloatForKey_("shadowOffset")
+        self.shadowAngle = coder.decodeFloatForKey_("shadowAngle")
 
-        colorData = coder.decodeObjectForKey_(u"color")
+        colorData = coder.decodeObjectForKey_("color")
         self.color = NSUnarchiver.unarchiveObjectWithData_(colorData)
         return self
 
     def encodeWithCoder_(self, coder):
         if not coder.allowsKeyedCoding():
-            print "Circle only works with NSKeyedArchiver"
-        coder.encodeFloat_forKey_(self.xLoc, u"xLoc")
-        coder.encodeFloat_forKey_(self.yLoc, u"yLoc")
-        coder.encodeFloat_forKey_(self.radius, u"radius")
-        coder.encodeFloat_forKey_(self.shadowOffset, u"shadowOffset")
-        coder.encodeFloat_forKey_(self.shadowAngle, u"shadowAngle")
+            print("Circle only works with NSKeyedArchiver")
+        coder.encodeFloat_forKey_(self.xLoc, "xLoc")
+        coder.encodeFloat_forKey_(self.yLoc, "yLoc")
+        coder.encodeFloat_forKey_(self.radius, "radius")
+        coder.encodeFloat_forKey_(self.shadowOffset, "shadowOffset")
+        coder.encodeFloat_forKey_(self.shadowAngle, "shadowAngle")
 
         colorData = NSArchiver.archivedDataWithRootObject_(self.color)
         coder.encodeObject_forKey_(colorData, u"color")
 
 
 # if any of these properties changes, the bounds have changed
-boundsChangingKeys = [u"xLoc", u"yLoc", u"shadowOffset", u"shadowAngle", u"radius"]
+boundsChangingKeys = ["xLoc", "yLoc", "shadowOffset", "shadowAngle", "radius"]
 Circle.setKeys_triggerChangeNotificationsForDependentKey_(boundsChangingKeys, u"drawingBounds")

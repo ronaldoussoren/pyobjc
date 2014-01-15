@@ -10,7 +10,11 @@ except NameError:
 class TestCFFileSecurity (TestCase):
     @min_os_level('10.7')
     def testTypes(self):
-        self.assertIsCFType(CoreFoundation.CFFileSecurityRef)
+        try:
+            cls = objc.lookUpClass('__NSFileSecurity')
+            self.assertIs(cls, CoreFoundation.CFFileSecurityRef)
+        except objc.error:
+            self.assertIsCFType(CoreFoundation.CFFileSecurityRef)
 
     @min_os_level('10.7')
     def testTypeID(self):

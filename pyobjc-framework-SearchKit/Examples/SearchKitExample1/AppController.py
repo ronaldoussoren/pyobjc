@@ -1,9 +1,9 @@
-from Cocoa import *
-from SearchKit import *
-
+import Cocoa
+import SearchKit
+import objc
 import os
 
-class AppController (NSObject):
+class AppController (Cocoa.NSObject):
 
     myWindow = objc.IBOutlet()
 
@@ -24,7 +24,7 @@ class AppController (NSObject):
 
     def awakeFromNib(self):
         # set our default directory to index to be our home directory
-        self.directoryToIndex = NSHomeDirectory()
+        self.directoryToIndex = Cocoa.NSHomeDirectory()
         # go ahead and put that value into the UI right on wake-up
         self.directoryTextField.setStringValue_(self.directoryToIndex)
 
@@ -42,20 +42,20 @@ class AppController (NSObject):
         # we are setting up an NSOpenPanel to select only a directory and then
         # we will use that directory to choose where to place our index file and
         # which files we'll read in to make searchable.
-        op = NSOpenPanel.openPanel()
+        op = Cocoa.NSOpenPanel.openPanel()
         op.setCanChooseDirectories_(True)
         op.setCanChooseFiles_(False)
         op.setResolvesAliases_(True)
         op.setAllowsMultipleSelection_(False)
         result = op.runModalForDirectory_file_types_(None, None, None)
-        if result == NSOKButton:
+        if result == Cocoa.NSOKButton:
             self.directoryToIndex = op.filename()
             self.directoryTextField.setStringValue_(self.directoryToIndex)
 
     @objc.IBAction
     def buildIndex_(self, sender):
         # we will need an NSFileManager object to do various checking of files.
-        fm = NSFileManager.defaultManager()
+        fm = Cocoa.NSFileManager.defaultManager()
 
         # you don't have to provide the index with a name, but we will...
         indexName = "My Arbitrary Index Name"
@@ -64,7 +64,7 @@ class AppController (NSObject):
         # onto it
         indexFile = os.path.join(self.directoryToIndex, "myindex")
         # and build an NSURL from that
-        fileUrlToIndex = NSURL.fileURLWithPath_(indexFile)
+        fileUrlToIndex = Cocoa.NSURL.fileURLWithPath_(indexFile)
 
         # When indexing documents, there's a number of index specific
         # considerations that can be applied with search kit. To set any of
@@ -78,10 +78,10 @@ class AppController (NSObject):
         # We could also do this all in procedural C with the native
         # CoreFoundation components, but I find this is significantly easier
         # - both to write and  to understand.
-        analysisDict[kSKLanguageTypes] = u"en"
+        analysisDict[SearchKit.kSKLanguageTypes] = u"en"
         # another example of setting an attribute, in this case the minimum term
         # length
-        analysisDict[kSKMinTermLength] = 2
+        analysisDict[SearchKit.kSKMinTermLength] = 2
         # when we hand this dictionary into the function to create the index, we
         # simply cast it back to a CFDictionaryRef and everything just nicely
         # moves with it. This toll-free bridging concept is so handy!
@@ -95,14 +95,14 @@ class AppController (NSObject):
             fm.removeFileAtPath_handler_(indexFile, None)
 
         # the function to create the on-disk index
-        self.myIndex = SKIndexCreateWithURL(
+        self.myIndex = SearchKit.SKIndexCreateWithURL(
                                         # the file:# URL of where to place the
                                         # index file
                                         fileUrlToIndex,
                                         # a name for the index (this may be None)
                                         indexName,
                                         # the type of index
-                                        kSKIndexInverted,
+                                        SearchKit.kSKIndexInverted,
                                         # and our index attributes dictionary
                                         analysisDict)
         # note that the above function call will silently fail if you give it a
@@ -110,7 +110,7 @@ class AppController (NSObject):
 
         if self.myIndex is None:
             # we shouldn't get here...
-            NSLog("TROUBLE: index is None")
+            Cocoa.NSLog("TROUBLE: index is None")
             return
 
         # display information about our newly created and completely blank index
@@ -122,7 +122,7 @@ class AppController (NSObject):
         # MacOS 10.3, the only plugins supported are the default plugins,
         # which include processing for plaintext, PDF, HTML, RTF, and
         # Microsoft Word documents.
-        SKLoadDefaultExtractorPlugIns()
+        SearchKit.SKLoadDefaultExtractorPlugIns()
 
         # we're just going to get a "short list". You could alternately use the
         # NSDirectoryEnumerator class to recursively descend through all the
@@ -137,7 +137,7 @@ class AppController (NSObject):
             # object, so we'll create one and pass it over.
 
             # create the URL with the filename
-            fileURL = NSURL.fileURLWithPath_(
+            fileURL = Cocoa.NSURL.fileURLWithPath_(
                     os.path.join(self.directoryToIndex, aFile))
 
             # invoke a helper method to add this file into our index
@@ -148,10 +148,10 @@ class AppController (NSObject):
         # in memory but isn't useful for searching and won't respond with the
         # correct information about the index (number of documents, number of
         # terms, etc).
-        if not SKIndexFlush(self.myIndex):
-            NSLog("A problem was encountered flushing the index to disk.")
+        if not SearchKit.SKIndexFlush(self.myIndex):
+            Cocoa.NSLog("A problem was encountered flushing the index to disk.")
 
-        NSLog("flushed index to disk")
+        Cocoa.NSLog("flushed index to disk")
 
         # update the index information
         self.displayIndexInformation()
@@ -163,7 +163,7 @@ class AppController (NSObject):
         # properly
         if self.myIndex is None:
             msg = "No index has been created to against which to search."
-            NSLog(msg)
+            Cocoa.NSLog(msg)
             self.searchResultsTextView.setString_(msg)
             return
 
@@ -183,22 +183,22 @@ class AppController (NSObject):
 
         # and then we immediately turn around and use that to create
         # a Search Kit Search Group reference.
-        searchgroup = SKSearchGroupCreate(searchArray)
+        searchgroup = SearchKit.SKSearchGroupCreate(searchArray)
 
         # now that we have a searchgroup, we can request a result set
         # from it with our search terms.
-        searchResults = SKSearchCreate(self.myIndex, searchQuery, kSKSearchRanked)
+        searchResults = SearchKit.SKSearchCreate(self.myIndex, searchQuery, SearchKit.kSKSearchRanked)
 
         if searchResults is None:
             msg = "Search function failed"
-            NSLog(msg)
+            Cocoa.NSLog(msg)
             self.searchResultsTextView.setString_(msg)
             return
 
         # now to go through the results, we can create an array for each
         # SearchKit document and another for the scores, and then populate
         # them from the SearchResults
-        busy, outDocumentIDsArray, scoresArray, resultCount=  SKSearchFindMatches(searchResults, # the search result set
+        busy, outDocumentIDsArray, scoresArray, resultCount=  SearchKit.SKSearchFindMatches(searchResults, # the search result set
                                           10,
                                           None,      # an array of SKDocumentID
                                           None,      # an array of scores
@@ -214,11 +214,11 @@ class AppController (NSObject):
 
         # iterate over the results and tell the NSTextView what we found
         for score, hitID in zip(scoresArray, outDocumentIDsArray):
-            hit = SKIndexCopyDocumentForDocumentID(self.myIndex, hitID)
+            hit = SearchKit.SKIndexCopyDocumentForDocumentID(self.myIndex, hitID)
             if hit is None:
                 continue
 
-            documentName = SKDocumentGetName(hit)
+            documentName = SearchKit.SKDocumentGetName(hit)
 
             textOfResults += "Score: %f ==> %s\n"%(score, documentName)
 
@@ -229,39 +229,39 @@ class AppController (NSObject):
         # memory exception because we never initialized our SearchKit index
         # properly
         if self.myIndex is None:
-            NSLog("myIndex is None - not processing %@",
+            Cocoa.NSLog("myIndex is None - not processing %@",
                     fileURL)
             return
 
-        NSLog("Processing %@", fileURL.absoluteString())
+        Cocoa.NSLog("Processing %@", fileURL.absoluteString())
         # create the Search Kit document object
         # note that this method only accepts file:# style URL's
-        aDocument = SKDocumentCreateWithURL(fileURL)
+        aDocument = SearchKit.SKDocumentCreateWithURL(fileURL)
 
         # if you wanted to watch them process in, just uncomment the following
         # 2 lines.
-        #NSLog("Name: %@", SKDocumentGetName(aDocument))
-        #NSLog("Scheme: %@", SKDocumentGetSchemeName(aDocument))
+        #NSLog("Name: %@", SearchKit.SKDocumentGetName(aDocument))
+        #NSLog("Scheme: %@", SearchKit.SKDocumentGetSchemeName(aDocument))
 
         # add the document to the index
-        if not SKIndexAddDocument(self.myIndex, # a reference ot the index added to
+        if not SearchKit.SKIndexAddDocument(self.myIndex, # a reference ot the index added to
                                  aDocument, # the document we want to add
                                  None, # this could be a mime type hint in the form
                                       # of a CFStringRef
                                   1):   # a boolean value indicating the document
                                       # can be overwritten
-            NSLog("There was a problem adding %@", fileURL)
+            Cocoa.NSLog("There was a problem adding %@", fileURL)
 
 
     def displayIndexInformation(self):
         if self.myIndex is not None:
             # get the number of documents in the index
-            numberOfDocuments = SKIndexGetDocumentCount(self.myIndex)
+            numberOfDocuments = SearchKit.SKIndexGetDocumentCount(self.myIndex)
             # place it into the text field
             self.numberOfDocumentsTextField.setIntValue_(numberOfDocuments)
 
             # get the number of terms in the index
-            maxTerm = SKIndexGetMaximumTermID(self.myIndex)
+            maxTerm = SearchKit.SKIndexGetMaximumTermID(self.myIndex)
             # place it into the text field
             self.numberOfTermsTextField.setIntValue_(maxTerm)
 

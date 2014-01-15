@@ -1,0 +1,218 @@
+TODO's for the 3.0 branch
+=========================
+
+Short term
+----------
+
+* Exception translation to ObjC: KeyError to NSRangeException etc.
+
+* AppHelper doesn't work? I got an objc stacktrace with an exception in one of the webkit examples
+
+* All examples should work cleanly in Python 3 (no 2to3)
+
+* 'del sys.modules["_metadata"]' in wrappers: add 'import sys' just above
+
+* Code cleanup for the new C code, I've done too much copy&paste editing
+  while getting the new code to work properly.
+
+* Calling methods is slower than expected, create better performance tests and try
+  to optimize (for example by creating a shortcut variant that doesn't handle
+  "hard" methods).
+
+* Lib/objc/_convenience.py cleanup:
+
+  - Move bits of _convenience.py to the right framework wrapper
+
+  - Split into smaller modules even for the parts kept in core
+
+* Issue #29: Move some Foundation helpers to core
+
+  This helps in keeping pyobjc-core usable without framework wrappers, and the core
+  has intimate knowledge about these types anyway for implementing the OC_* classes.
+
+  - convenience helpers for NSArray, NSData, NSDictionary, NSSet need to be in core
+  - likewise for mutable versions
+  - likewise for their C helpers (partially done for NSData)
+
+* Create and run performance tests to check if new code is faster than the 2.x branch
+
+  - check if it is useful to cache method name lookup in subclasses as well (that is,
+    when looking for a method in a subclass and that method is found in a superclass
+    add it to the subclass dict as well, with a flag mentioning that this is a cache
+    entry).
+
+    This avoids hitting the runtime when calling methods that are defined in a superclass,
+    and could be more efficient. Needs care to avoid problems with objc.super though.
+
+    note: no need to care for __builtin__.super support here, that super wont work
+    with Cocoa classes anyway (already true in 2.x, and more glaringly so in 3.0)
+
+Medium term
+-----------
+
+* Loading a framework takes too much time, why?
+
+  On my machine the first import is slow, subsequence imports are faster.
+
+  This appears to primairly be disk I/O::
+
+     $ for in in $(seq 20); do purge; python -c 'pass'; time python3 -c 'import Quartz'; done
+     ...
+
+     real	0m28.873s
+     user	0m0.635s
+     sys	0m0.169s
+
+     ...
+
+  These times were fairly consistent, the 'real' time fluctuated but around the 30
+  second mark.
+
+  The regular interpreter startup is much faster::
+
+     $ for in in $(seq 5); do purge; python -c 'pass'; time python3 -c 'pass'; done
+
+     real	0m3.504s
+     user	0m0.068s
+     sys	0m0.033s
+
+     ...
+
+  Again, the timing was consistent.
+
+  It is likely possible to speed up the framework loading by reducing the amount of
+  disk I/O.
+
+  There is however some inherent overhead in loading just "objc":
+
+      $ for in in $(seq 5); do purge; python -c 'pass'; time python3 -c 'import objc'; done
+
+      real	0m16.866s
+      user	0m0.255s
+      sys	0m0.086s
+
+      real	0m12.323s
+      user	0m0.255s
+      sys	0m0.057s
+
+      real	0m9.325s
+      user	0m0.252s
+      sys	0m0.052s
+
+  It might be possible to avoid part of this by using a smaller number of submodules for
+  the objc package.
+
+
+
+* Look for a more efficient encoding of _metadata.py, possibly using a C exension
+
+* Try adding support for ARC runtime functions (to avoid hitting
+  the autorelease pool on systems using ARC)
+
+  - Add explict preprocessor test and #error line to ensure
+    PyObjC itself isn't compiled with ARC enabled.
+
+  - Basically try to create a variant of the libffi assembly code
+    for x86_64 that calls objc_retainAutoreleasedReturnValue on the
+    result and use that instead of the regular assembly unless
+    the method returns an 'already_retained' value (and adjust
+    libffi-support code to deal with this).
+
+    Note: code changes should be done carefully to ensure PyObjC still works
+    on older OSX releases that don't support ARC (10.6 and earlier and
+    32-bit binaries)
+
+* Remove use of CFRetain/CFRelease, use regular -retain/-release messages
+  instead (or even 'objc_retain/objc_release)'
+
+* PyList_GET_ITEM/PyTuple_GET_ITEM + usage without INCREF is unsafe when code
+  might call back into python!
+
+* Add tests for backward compatibility in archiving code (that is, create
+  some archives/keyed-archives with PyObjC 2.3, 2.5, 2.5.1, 3.0, check those
+  in as binary files and test that the can be read back)
+
+* Look for XXX/TODO/FIXME in code and fix those problems.
+
+* special_registry in supercall should be a dictionary
+  (selector -> list of structs)
+
+* Add testsuite for "difficult" calls through NSUndoManager (but first check docs
+  and test in objc, calling methods with arbitrary pointer arguments likely
+  won't work with NSUndoManager anyway)
+
+* Is Selector_FindNative needed with the new lookup mechanism?
+  (also check explict class/instance method lookup mechanism)
+
+* Remove PyObjCUtil_Strdup, use regular strdup instead
+
+* Add tests using NumPy/numarray (and check if those implement the memoryview interface)
+
+
+* From Cocoa-dev:
+	NSArray *a = @[ @"$nill", @"$null", @"$nall" ];
+	NSLog(@"%s NSKeyedArchiver archiving %@", __FUNCTION__, a);
+	NSData *e = [ NSKeyedArchiver archivedDataWithRootObject: a ];
+	NSArray *b = [ NSKeyedUnarchiver unarchiveObjectWithData: e ];
+	NSLog(@"%s NSKeyedUnarchiver got %@", __FUNCTION__, b);
+	/*NSKeyedArchiver archiving (
+	 "$nill",
+	 "$null",
+	 "$nall"
+	 )
+	 NSKeyedUnarchiver got ()
+	 **/
+
+  That is, some strins don't archive properly? Work around this in
+  OC_PythonUnicode's archiving support
+
+* Finish partial bindings:
+  - AVFoundation
+  - GameKit
+  - DiskArbitration
+
+* Create framework bindings:
+
+  - AppleShareClientCore bindings? (there are headers, but no documentation)
+  - AudioToolbox
+  - AudioUnit
+  - AudioVideoBridging
+  - CoreAudio, CoreAudioKit
+  - CoreMIDI
+  - CoreMedia, CoreMediaIO
+  - DVComponentGlue
+  - DVDPlayback
+  - DiscRecording, DiscRecordingUI
+  - GSS
+  - ICADevices
+  - IMServicePlugIn
+  - IOBluetooth, IOBluetoothUI
+  - IOKit, IOSurface (?)
+  - ImageCaptureCore (add to Quartz)
+  - OSAKit?
+  - SceneKit (add to Quartz)
+  - Security, SecurityFoundation, SecurityInterface
+
+* objc.IMP should work for Python methods (see XXX comment)
+
+* Improve documentation, both end-user documentation and documentation
+  on how the bridge works.
+
+* JavsaScriptCore bindings need work (missing opaque pointer types, no tests, no examples, ...)
+
+* Add (private) function to convert dictionary to a compiled metadata object,
+  use that to reduce the memory use of the 'lazy' modules used by metadata
+  (either by generating calls in the metadata converted or converting manually in the
+  lazy module)
+
+* Further speedups in method calls: I've already reduced the amount of
+  memory allocations (PyMem_Alloc, ...), and it should be possible to
+  further reduce this.
+
+* IS_DECIMAL/IS_FSREF/IS_FSSPEC are a hack and slow down the common code-path.
+
+* Corefoundation: instead of trying to detect NSCFType use the __PythonObject__
+  method on NSObject.
+
+* objc.WeakRef: look into using MAZeroingWeekRef (sp?) for the implementation
+  on older platforms.

@@ -1,10 +1,11 @@
 """
 Abstract: Custom that handles Drag and Drop for table views by acting as a datasource.
 """
-from Cocoa import *
+import Cocoa
 import objc
+from objc import super
 
-class DragSupportDataSource (NSObject):
+class DragSupportDataSource (Cocoa.NSObject):
     # all the table views for which self is the datasource
     registeredTableViews = objc.ivar()
 
@@ -13,7 +14,7 @@ class DragSupportDataSource (NSObject):
         if self is None:
             return None
 
-        self.registeredTableViews = NSMutableSet.alloc().init()
+        self.registeredTableViews = Cocoa.NSMutableSet.alloc().init()
         return self;
 
     # ******** table view data source necessities *********
@@ -25,7 +26,7 @@ class DragSupportDataSource (NSObject):
     def numberOfRowsInTableView_(self, aTableView):
         # this is potentially slow if there are lots of table views
         if not self.registeredTableViews.containsObject_(aTableView):
-            aTableView.registerForDraggedTypes_([NSStringPboardType])
+            aTableView.registerForDraggedTypes_([Cocoa.NSStringPboardType])
             #Cache the table views that have "registered" with us.
             self.registeredTableViews.addObject_(aTableView)
 
@@ -42,23 +43,23 @@ class DragSupportDataSource (NSObject):
     def tableView_writeRowsWithIndexes_toPasteboard_(self, tv, rowIndexes, pboard):
         success = False
 
-        infoForBinding = tv.infoForBinding_(NSContentBinding)
+        infoForBinding = tv.infoForBinding_(Cocoa.NSContentBinding)
         if infoForBinding is not None:
-            arrayController = infoForBinding.objectForKey_(NSObservedObjectKey)
+            arrayController = infoForBinding.objectForKey_(Cocoa.NSObservedObjectKey)
             objects = arrayController.arrangedObjects().objectsAtIndexes_(
                     rowIndexes)
 
-            objectIDs = NSMutableArray.array()
-            for i in xrange(objects.count()):
+            objectIDs = Cocoa.NSMutableArray.array()
+            for i in range(objects.count()):
                 item = objects[i]
                 objectID = item.objectID()
                 representedURL = objectID.URIRepresentation()
                 objectIDs.append(representedURL)
 
-            pboard.declareTypes_owner_([NSStringPboardType], None)
-            pboard.addTypes_owner_([NSStringPboardType], None)
+            pboard.declareTypes_owner_([Cocoa.NSStringPboardType], None)
+            pboard.addTypes_owner_([Cocoa.NSStringPboardType], None)
             success = pboard.setString_forType_(
-                    objectIDs.componentsJoinedByString_(', '), NSStringPboardType)
+                    objectIDs.componentsJoinedByString_(', '), Cocoa.NSStringPboardType)
 
         return success
 
@@ -69,42 +70,42 @@ class DragSupportDataSource (NSObject):
         # Avoid drag&drop on self. This might be interersting to enable in
         # light of ordered relationships
         if info.draggingSource() is not tableView:
-            return NSDragOperationCopy
+            return Cocoa.NSDragOperationCopy
         else:
-            return NSDragOperationNone
+            return Cocoa.NSDragOperationNone
 
     def tableView_acceptDrop_row_dropOperation_(
             self, tableView, info, row, operation):
 
         success = False
-        urlStrings = info.draggingPasteboard().stringForType_(NSStringPboardType)
+        urlStrings = info.draggingPasteboard().stringForType_(Cocoa.NSStringPboardType)
 
         # get to the arraycontroller feeding the destination table view
-        destinationContentBindingInfo = tableView.infoForBinding_(NSContentBinding)
+        destinationContentBindingInfo = tableView.infoForBinding_(Cocoa.NSContentBinding)
         if destinationContentBindingInfo is not None:
 
-            destinationArrayController = destinationContentBindingInfo.objectForKey_(NSObservedObjectKey)
+            destinationArrayController = destinationContentBindingInfo.objectForKey_(Cocoa.NSObservedObjectKey)
             sourceArrayController = None
 
             # check for the arraycontroller feeding the source table view
-            contentSetBindingInfo = destinationArrayController.infoForBinding_(NSContentSetBinding)
+            contentSetBindingInfo = destinationArrayController.infoForBinding_(Cocoa.NSContentSetBinding)
             if contentSetBindingInfo is not None:
-                sourceArrayController = contentSetBindingInfo.objectForKey_(NSObservedObjectKey)
+                sourceArrayController = contentSetBindingInfo.objectForKey_(Cocoa.NSObservedObjectKey)
 
             # there should be exactly one item selected in the source controller, otherwise the destination controller won't be able to manipulate the relationship when we do addObject:
             if (sourceArrayController is not None) and (sourceArrayController.selectedObjects().count() == 1):
                 context = destinationArrayController.managedObjectContext()
-                destinationControllerEntity = NSEntityDescription.entityForName_inManagedObjectContext_(destinationArrayController.entityName(), context)
+                destinationControllerEntity = Cocoa.NSEntityDescription.entityForName_inManagedObjectContext_(destinationArrayController.entityName(), context)
 
                 items = urlStrings.split(', ')
                 itemsToAdd = []
 
-                for i in xrange(len(items)):
+                for i in range(len(items)):
                     urlString = items[i]
 
                     # take the URL and get the managed object - assume
                     # all controllers using the same context
-                    url = NSURL.URLWithString_(urlString)
+                    url = Cocoa.NSURL.URLWithString_(urlString)
                     objectID = context.persistentStoreCoordinator().managedObjectIDForURIRepresentation_(url)
                     if objectID is not None:
                         object = context.objectRegisteredForID_(objectID)

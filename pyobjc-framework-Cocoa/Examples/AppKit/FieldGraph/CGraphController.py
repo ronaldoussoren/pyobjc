@@ -1,13 +1,12 @@
-from Foundation import *
+import objc
+import Cocoa
 from PyObjCTools import AppHelper
 
-from CGraphModel import *
-from CGraphView import *
-from fieldMath import *
+from fieldMath import degToRad, radToDeg
 
 
 #____________________________________________________________
-class CGraphController(NSObject):
+class CGraphController(Cocoa.NSObject):
     graphModel = objc.IBOutlet()
     graphView = objc.IBOutlet()
     fieldNormalizeCheck = objc.IBOutlet()
@@ -32,7 +31,7 @@ class CGraphController(NSObject):
 # Update GUI display and control values
 
     def awakeFromNib(self):
-        self.mapImage = NSImage.imageNamed_("Map")
+        self.mapImage = Cocoa.NSImage.imageNamed_("Map")
         self.graphView.setMapImage(self.mapImage)
         self.drawGraph()
 

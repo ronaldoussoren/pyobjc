@@ -1,15 +1,15 @@
-from Cocoa import *
+from objc import super
+import Cocoa
 
 RowSelectedNotification = "RowSelectedNotification"
 
-class  SelectionNotifyMatrix (NSMatrix):
+class  SelectionNotifyMatrix (Cocoa.NSMatrix):
     def mouseDown_(self, theEvent):
         super(SelectionNotifyMatrix, self).mouseDown_(theEvent)
 
         row = self.selectedRow()
-        #print "mouseDown_", theEvent, row
         if row != -1:
-            NSNotificationCenter.defaultCenter(
+            Cocoa.NSNotificationCenter.defaultCenter(
                 ).postNotificationName_object_userInfo_(
                     RowSelectedNotification,
                     self,
@@ -18,7 +18,7 @@ class  SelectionNotifyMatrix (NSMatrix):
     def selectCellAtRow_column_(self, row, col):
         super(SelectionNotifyMatrix, self).selectCellAtRow_column_(row, col)
 
-        NSNotificationCenter.defaultCenter(
+        Cocoa.NSNotificationCenter.defaultCenter(
             ).postNotificationName_object_userInfo_(
                 RowSelectedNotification,
                 self,

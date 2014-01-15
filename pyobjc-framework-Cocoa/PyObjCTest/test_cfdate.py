@@ -12,8 +12,17 @@ except NameError:
 
 class TestDate (TestCase):
     def testTypes(self):
-        self.assertIsCFType(CFDateRef)
-        self.assertIsCFType(CFTimeZoneRef)
+        try:
+            cls = objc.lookUpClass('__NSDate')
+            self.assertIs(cls, CFDateRef)
+        except objc.error:
+            self.assertIsCFType(CFDateRef)
+
+        try:
+            cls = objc.lookUpClass('NSTimeZone')
+            self.assertIs(cls, CFTimeZoneRef)
+        except objc.error:
+            self.assertIsCFType(CFTimeZoneRef)
 
     def testTypeID(self):
         v = CFDateGetTypeID()

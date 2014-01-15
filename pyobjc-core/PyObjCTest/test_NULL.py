@@ -1,17 +1,6 @@
 from PyObjCTools.TestSupport import *
 import objc
 
-setSignature = objc.setSignatureForSelector
-#setSignature(b"OCTestNULL", "callOut:", "i@:o^i")
-#setSignature(b"OCTestNULL", "callList:andInOut2:", "i@:@^i")
-#setSignature(b"OCTestNULL", "callList:andInOut:", "i@:@N^i")
-#setSignature(b"OCTestNULL", "callList:andIn:", "i@:@n^i")
-#setSignature(b"OCTestNULL", "callList:andOut:", "i@:@o^i")
-#setSignature(b"OCTestNULL", "on:callList:andInOut:", "i@:@@N^i")
-#setSignature(b"OCTestNULL", "on:callList:andIn:", "i@:@@n^i")
-#setSignature(b"OCTestNULL", "on:callList:andOut:", "i@:@@N^i") # 'N' is by design
-#setSignature(b"OCTestNULL", "on:callOut:", "v@:@N^i") # 'N' is by design
-
 objc.registerMetaDataForSelector(b"OCTestNULL", b"callOut:", dict(
             arguments={
                 2: dict(type_modifier=b'o', null_accepted=True),

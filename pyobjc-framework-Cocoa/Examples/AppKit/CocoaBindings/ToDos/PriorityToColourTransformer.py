@@ -7,8 +7,7 @@
 #  The original version was written in Objective-C by Malcolm Crawford
 #  at http://homepage.mac.com/mmalc/CocoaExamples/controllers.html
 
-from Foundation import NSValueTransformer
-from AppKit import NSColor
+from Cocoa import NSValueTransformer, NSColor
 
 class PriorityToColourTransformer(NSValueTransformer):
 
@@ -21,7 +20,9 @@ class PriorityToColourTransformer(NSValueTransformer):
         return False
 
     def transformedValue_(self, priority):
-        if priority > 4:
+        if priority is None:
+            return NSColor.blackColor()
+        elif priority > 4:
             return NSColor.redColor()
         elif priority > 3:
             return NSColor.orangeColor()

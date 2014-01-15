@@ -8,11 +8,11 @@
 #  The original version was written in Objective-C by Malcolm Crawford
 #  at http://homepage.mac.com/mmalc/CocoaExamples/controllers.html
 
-
+import objc
 from FontNameToDisplayNameTransformer import FontNameToDisplayNameTransformer
-from Foundation import *
-from AppKit import *
-from PyObjCTools.KeyValueCoding import *
+from Cocoa import NSWindowController, NSUserDefaultsController, NSFont
+from Cocoa import NSFontManager, NSValueTransformer, NSArchiver, NSColor
+from PyObjCTools.KeyValueCoding import getKey
 
 class PreferencesPanelController (NSWindowController):
 
@@ -22,8 +22,8 @@ class PreferencesPanelController (NSWindowController):
 
         # Get font name and size from user defaults
         defaults = NSUserDefaultsController.sharedUserDefaultsController().values()
-        fontName = getKey(defaults, u'FontName')
-        fontSize = getKey(defaults, u'FontSize')
+        fontName = getKey(defaults, 'FontName')
+        fontSize = getKey(defaults, 'FontSize')
 
         # Create font from name and size; initialize font panel
         font = NSFont.fontWithName_size_(fontName, fontSize)
@@ -52,30 +52,27 @@ class PreferencesPanelController (NSWindowController):
         fontSize = panelFont.pointSize()
 
         defaults = NSUserDefaultsController.sharedUserDefaultsController().values()
-        defaults.setValue_forKey_(panelFont.fontName(), u"FontName")
-        defaults.setValue_forKey_(fontSize, u"FontSize")
+        defaults.setValue_forKey_(panelFont.fontName(), "FontName")
+        defaults.setValue_forKey_(fontSize, "FontSize")
 
 
-"""
-Set up initial values for defaults:
-Create dictionary with keys and values for WordOfTheDay, FontName,
-FontSize, and FavoriteColor.  Mostly straightforward, but:
-
-Store the fontName of the font as the default; the textfield displays
-the font's displayName using a value transformer.
-
-The color must be archived -- you can't store NSColors directly in NSUserDefaults.
-"""
-
+# Set up initial values for defaults:
+# Create dictionary with keys and values for WordOfTheDay, FontName,
+# FontSize, and FavoriteColor.  Mostly straightforward, but:
+#
+# Store the fontName of the font as the default; the textfield displays
+# the font's displayName using a value transformer.
+#
+# The color must be archived -- you can't store NSColors directly in NSUserDefaults.
 dictionary = {}
-dictionary[u'WordOfTheDay'] = u'Today'
+dictionary['WordOfTheDay'] = 'Today'
 systemFont = NSFont.systemFontOfSize_(NSFont.systemFontSize())
-dictionary[u"FontName"] = systemFont.fontName()
-dictionary[u"FontSize"] = systemFont.pointSize()
+dictionary["FontName"] = systemFont.fontName()
+dictionary["FontSize"] = systemFont.pointSize()
 archivedColor = NSArchiver.archivedDataWithRootObject_(NSColor.greenColor())
-dictionary[u'FavoriteColor'] = archivedColor
+dictionary['FavoriteColor'] = archivedColor
 NSUserDefaultsController.sharedUserDefaultsController().setInitialValues_(dictionary)
 
 # Create and register font name value transformer
 transformer = FontNameToDisplayNameTransformer.alloc().init()
-NSValueTransformer.setValueTransformer_forName_(transformer, u'FontNameToDisplayNameTransformer')
+NSValueTransformer.setValueTransformer_forName_(transformer, 'FontNameToDisplayNameTransformer')

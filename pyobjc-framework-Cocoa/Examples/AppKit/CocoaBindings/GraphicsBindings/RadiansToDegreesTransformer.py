@@ -8,17 +8,17 @@
 #  The original version was written in Objective-C by Malcolm Crawford
 #  http://homepage.mac.com/mmalc/CocoaExamples/controllers.html
 
-from Foundation import *
+from Foundation import NSNumber, NSValueTransformer
 
 class RadiansToDegreesTransformer(NSValueTransformer):
 
+    @classmethod
     def transformedValueClass(cls):
         return NSNumber
-    transformedValueClass = classmethod(transformedValueClass)
 
+    @classmethod
     def allowsReverseTransformation(cls):
         return True
-    allowsReverseTransformation = classmethod(allowsReverseTransformation)
 
     def transformedValue_(self, radians):
         return radians / (3.1415927/180.0)

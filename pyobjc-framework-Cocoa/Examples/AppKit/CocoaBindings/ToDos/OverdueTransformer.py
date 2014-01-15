@@ -7,8 +7,7 @@
 #  The original version was written in Objective-C by Malcolm Crawford
 #  at http://homepage.mac.com/mmalc/CocoaExamples/controllers.html
 
-from Foundation import *
-from AppKit import *
+from Cocoa import NSValueTransformer, NSColor
 
 class OverdueTransformer(NSValueTransformer):
 

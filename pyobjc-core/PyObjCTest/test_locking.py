@@ -58,7 +58,7 @@ class ObjCThread (threading.Thread):
 
 class BaseClass (objc.lookUpClass('NSObject')):
     def initWithList_(self, list):
-        self = super(BaseClass, self).init()
+        self = objc.super(BaseClass, self).init()
         if self is None:
             return None
 

@@ -447,7 +447,7 @@ if PyObjCTest_KeyValueObserver is not None:
         FOOBASE = "base"
 
         def init(self):
-            self = super(PyObjCTestObserved1, self).init()
+            self = objc.super(PyObjCTestObserved1, self).init()
             if self is not None:
                 self._kvo_bar = None
                 self._kvo_foo = None
@@ -486,7 +486,7 @@ if PyObjCTest_KeyValueObserver is not None:
         bar = objc.ivar('bar')
 
         def init(self):
-            self = super(PyObjCTestObserved2, self).init()
+            self = objc.super(PyObjCTestObserved2, self).init()
             self.foo = None
             return self
 
@@ -498,49 +498,46 @@ if PyObjCTest_KeyValueObserver is not None:
         # Check for using KVO in python.
 
         def testAutomaticObserving(self):
-            outer_pool = NSAutoreleasePool.alloc().init()
-            observer = PyObjCTestObserver.alloc().init()
-            o = PyObjCTestObserved2.alloc().init()
-            pool = NSAutoreleasePool.alloc().init()
+            with objc.autorelease_pool():
+                observer = PyObjCTestObserver.alloc().init()
+                o = PyObjCTestObserved2.alloc().init()
+                with objc.autorelease_pool():
+                    self.assertEqual(o.foo, None)
+                    self.assertEqual(o.bar, None)
 
-            self.assertEqual(o.foo, None)
-            self.assertEqual(o.bar, None)
+                    o.foo = 'foo'
+                    self.assertEqual(o.foo, 'foo')
 
-            o.foo = 'foo'
-            self.assertEqual(o.foo, 'foo')
+                    o.bar = 'bar'
+                    self.assertEqual(o.bar, 'bar')
 
-            o.bar = 'bar'
-            self.assertEqual(o.bar, 'bar')
+                    o.addObserver_forKeyPath_options_context_(observer, 'bar',
+                        (NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld),
+                        0)
+                    o.addObserver_forKeyPath_options_context_(observer, 'foo',
+                        (NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld),
+                        0)
+                    try:
+                        o.bar = "world"
+                        self.assertEqual(o.bar, "world")
 
-            o.addObserver_forKeyPath_options_context_(observer, 'bar',
-                (NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld),
-                0)
-            o.addObserver_forKeyPath_options_context_(observer, 'foo',
-                (NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld),
-                0)
-            try:
-                o.bar = "world"
-                self.assertEqual(o.bar, "world")
+                        o.foo = "xxx"
+                        self.assertEqual(o.foo, "xxx")
+                    finally:
+                        o.removeObserver_forKeyPath_(observer, "bar")
+                        o.removeObserver_forKeyPath_(observer, "foo")
+                    self.assertEqual(len(observer.observed), 2)
 
-                o.foo = "xxx"
-                self.assertEqual(o.foo, "xxx")
-            finally:
-                o.removeObserver_forKeyPath_(observer, "bar")
-                o.removeObserver_forKeyPath_(observer, "foo")
+                    self.assertEqual(observer.observed[0],
+                        ('bar', o,  { 'kind': 1, 'new': 'world', 'old': 'bar' }, 0))
+                    self.assertEqual(observer.observed[1],
+                        ('foo', o, { 'kind': 1, 'new': 'xxx', 'old': 'foo' }, 0))
 
-            self.assertEqual(len(observer.observed), 2)
+                    del observer
 
-            self.assertEqual(observer.observed[0],
-                ('bar', o,  { 'kind': 1, 'new': 'world', 'old': 'bar' }, 0))
-            self.assertEqual(observer.observed[1],
-                ('foo', o, { 'kind': 1, 'new': 'xxx', 'old': 'foo' }, 0))
+                before = DEALLOCS
+                del o
 
-            del observer
-            del pool
-
-            before = DEALLOCS
-            del o
-            del outer_pool
             self.assertEqual(DEALLOCS, before+1, "Leaking an observed object")
 
         def testObserving(self):

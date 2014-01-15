@@ -18,9 +18,12 @@ sys.modules['CoreText'] = mod = objc.ObjCLazyModule('CoreText',
     _metadata.__dict__, None, {
        '__doc__': __doc__,
        '__path__': __path__,
+       '__loader__': globals().get('__loader__', None),
        'objc': objc,
     }, ( CoreFoundation, Quartz, CoreText._manual,))
 
 import CoreText._manual as m
 for nm in dir(m):
     setattr(mod, nm, getattr(m, nm))
+
+del sys.modules['CoreText._metadata']

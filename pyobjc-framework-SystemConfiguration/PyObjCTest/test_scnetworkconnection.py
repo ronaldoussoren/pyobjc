@@ -54,7 +54,7 @@ class TestSCNetworkConnection (TestCase):
         v,  servId, userOpts = SCNetworkConnectionCopyUserPreferences(None, None, None)
         if v:
             self.assertIsInstance(servId, unicode)
-            self.assertIsInstance(userOpts, CFDictionaryRef)
+            self.assertIsInstance(userOpts, (CFDictionaryRef, type(None)))
         else:
             self.assertTrue(servId is None)
             self.assertTrue(userOpts is None)

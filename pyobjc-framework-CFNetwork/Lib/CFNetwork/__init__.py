@@ -30,6 +30,7 @@ sys.modules['CFNetwork'] = mod = objc.ObjCLazyModule(
         '__doc__': __doc__,
         'objc': objc,
         '__path__': __path__,
+        '__loader__': globals().get('__loader__', None),
         'CFSocketStreamSOCKSGetError': CFSocketStreamSOCKSGetError,
         'CFSocketStreamSOCKSGetErrorSubdomain': CFSocketStreamSOCKSGetErrorSubdomain,
     }, (CoreFoundation,))
@@ -38,3 +39,5 @@ sys.modules['CFNetwork'] = mod = objc.ObjCLazyModule(
 import CFNetwork._manual
 for nm in dir(CFNetwork._manual):
     setattr(mod, nm, getattr(CFNetwork._manual, nm))
+
+del sys.modules['CFNetwork._metadata']

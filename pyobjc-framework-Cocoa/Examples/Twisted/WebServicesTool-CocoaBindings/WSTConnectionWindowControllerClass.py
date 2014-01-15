@@ -4,8 +4,8 @@ for the document windows for the Web Services Tool application.
 
 Implements a standard toolbar.
 """
-
-from AppKit import *
+import objc
+import AppKit
 
 from twisted.internet import defer
 from twisted.web.xmlrpc import Proxy
@@ -21,13 +21,13 @@ from RPCMethod import *
 # log.logerr = open('/dev/null','w')
 
 # Identifier for 'reload contents' toolbar item.
-kWSTReloadContentsToolbarItemIdentifier = u"WST: Reload Contents Toolbar Identifier"
+kWSTReloadContentsToolbarItemIdentifier = "WST: Reload Contents Toolbar Identifier"
 
 # Identifier for 'preferences' toolbar item.
-kWSTPreferencesToolbarItemIdentifier = u"WST: Preferences Toolbar Identifier"
+kWSTPreferencesToolbarItemIdentifier = "WST: Preferences Toolbar Identifier"
 
 # Identifier for URL text field toolbar item.
-kWSTUrlTextFieldToolbarItemIdentifier = u"WST: URL Textfield Toolbar Identifier"
+kWSTUrlTextFieldToolbarItemIdentifier = "WST: URL Textfield Toolbar Identifier"
 
 def addToolbarItem(aController, anIdentifier, aLabel, aPaletteLabel,
                    aToolTip, aTarget, anAction, anItemContent, aMenu):
@@ -37,7 +37,7 @@ def addToolbarItem(aController, anIdentifier, aLabel, aPaletteLabel,
     implementation of aController.  It should be refactored into a
     generically useful toolbar management untility.
     """
-    toolbarItem = NSToolbarItem.alloc().initWithItemIdentifier_(anIdentifier)
+    toolbarItem = AppKit.NSToolbarItem.alloc().initWithItemIdentifier_(anIdentifier)
 
     toolbarItem.setLabel_(aLabel)
     toolbarItem.setPaletteLabel_(aPaletteLabel)
@@ -46,7 +46,7 @@ def addToolbarItem(aController, anIdentifier, aLabel, aPaletteLabel,
     if anAction:
         toolbarItem.setAction_(anAction)
 
-    if isinstance(anItemContent, NSImage):
+    if isinstance(anItemContent, AppKit.NSImage):
         toolbarItem.setImage_(anItemContent)
     else:
         toolbarItem.setView_(anItemContent)
@@ -57,14 +57,14 @@ def addToolbarItem(aController, anIdentifier, aLabel, aPaletteLabel,
         toolbarItem.setMaxSize_( maxSize )
 
     if aMenu:
-        menuItem = NSMenuItem.alloc().init()
+        menuItem = AppKit.NSMenuItem.alloc().init()
         menuItem.setSubmenu_(aMenu)
         menuItem.setTitle_( aMenu.title() )
         toolbarItem.setMenuFormRepresentation_(menuItem)
 
     aController.k_toolbarItems[anIdentifier] = toolbarItem
 
-class WSTConnectionWindowController (NSWindowController):
+class WSTConnectionWindowController (AppKit.NSWindowController):
     methodDescriptionTextView = objc.IBOutlet()
     methodsTable = objc.IBOutlet()
     progressIndicator = objc.IBOutlet()
@@ -85,7 +85,7 @@ class WSTConnectionWindowController (NSWindowController):
         Returns self (as per ObjC designated initializer definition,
         unlike Python's __init__() method).
         """
-        self = self.initWithWindowNibName_(u"WSTConnection")
+        self = self.initWithWindowNibName_("WSTConnection")
 
         self.k_toolbarItems = {}
         self.k_toolbarDefaultItemIdentifiers = []
@@ -102,8 +102,8 @@ class WSTConnectionWindowController (NSWindowController):
         """
         self.retain() # balanced by autorelease() in windowWillClose_
 
-        self.statusTextField.setStringValue_(u"No host specified.")
-        self.progressIndicator.setStyle_(NSProgressIndicatorSpinningStyle)
+        self.statusTextField.setStringValue_("No host specified.")
+        self.progressIndicator.setStyle_(AppKit.NSProgressIndicatorSpinningStyle)
         self.progressIndicator.setDisplayedWhenStopped_(False)
 
         self.createToolbar()
@@ -118,7 +118,7 @@ class WSTConnectionWindowController (NSWindowController):
         """
         Creates and configures the toolbar to be used by the window.
         """
-        toolbar = NSToolbar.alloc().initWithIdentifier_(u"WST Connection Window")
+        toolbar = AppKit.NSToolbar.alloc().initWithIdentifier_("WST Connection Window")
         toolbar.setDelegate_(self)
         toolbar.setAllowsUserCustomization_(True)
         toolbar.setAutosavesConfiguration_(True)
@@ -127,7 +127,7 @@ class WSTConnectionWindowController (NSWindowController):
 
         self.window().setToolbar_(toolbar)
 
-        lastURL = NSUserDefaults.standardUserDefaults().stringForKey_(u"LastURL")
+        lastURL = AppKit.NSUserDefaults.standardUserDefaults().stringForKey_("LastURL")
         if lastURL and len(lastURL):
             self.urlTextField.setStringValue_(lastURL)
 
@@ -139,33 +139,33 @@ class WSTConnectionWindowController (NSWindowController):
         """
         addToolbarItem(
             self, kWSTReloadContentsToolbarItemIdentifier,
-            u"Reload", u"Reload", u"Reload Contents", None,
-            "reloadVisibleData:", NSImage.imageNamed_(u"Reload"), None)
+            "Reload", "Reload", "Reload Contents", None,
+            "reloadVisibleData:", AppKit.NSImage.imageNamed_("Reload"), None)
         addToolbarItem(
             self, kWSTPreferencesToolbarItemIdentifier,
-            u"Preferences", u"Preferences", u"Show Preferences", None,
-            "orderFrontPreferences:", NSImage.imageNamed_(u"Preferences"), None)
+            "Preferences", "Preferences", "Show Preferences", None,
+            "orderFrontPreferences:", AppKit.NSImage.imageNamed_("Preferences"), None)
         addToolbarItem(
             self, kWSTUrlTextFieldToolbarItemIdentifier,
-            u"URL", u"URL", u"Server URL", None,
+            "URL", "URL", "Server URL", None,
             None, self.urlTextField, None)
 
         self.k_toolbarDefaultItemIdentifiers = [
             kWSTReloadContentsToolbarItemIdentifier,
             kWSTUrlTextFieldToolbarItemIdentifier,
-            NSToolbarSeparatorItemIdentifier,
-            NSToolbarCustomizeToolbarItemIdentifier,
+            AppKit.NSToolbarSeparatorItemIdentifier,
+            AppKit.NSToolbarCustomizeToolbarItemIdentifier,
         ]
 
         self.k_toolbarAllowedItemIdentifiers = [
             kWSTReloadContentsToolbarItemIdentifier,
             kWSTUrlTextFieldToolbarItemIdentifier,
-            NSToolbarSeparatorItemIdentifier,
-            NSToolbarSpaceItemIdentifier,
-            NSToolbarFlexibleSpaceItemIdentifier,
-            NSToolbarPrintItemIdentifier,
+            AppKit.NSToolbarSeparatorItemIdentifier,
+            AppKit.NSToolbarSpaceItemIdentifier,
+            AppKit.NSToolbarFlexibleSpaceItemIdentifier,
+            AppKit.NSToolbarPrintItemIdentifier,
             kWSTPreferencesToolbarItemIdentifier,
-            NSToolbarCustomizeToolbarItemIdentifier,
+            AppKit.NSToolbarCustomizeToolbarItemIdentifier,
         ]
 
     def toolbarDefaultItemIdentifiers_(self, anIdentifier):
@@ -192,7 +192,7 @@ class WSTConnectionWindowController (NSWindowController):
         Effectively makes a copy of the cached reference instance of
         the toolbar item identified by itemIdentifier.
         """
-        newItem = NSToolbarItem.alloc().initWithItemIdentifier_(itemIdentifier)
+        newItem = AppKit.NSToolbarItem.alloc().initWithItemIdentifier_(itemIdentifier)
         item = self.k_toolbarItems[itemIdentifier]
 
         newItem.setLabel_( item.label() )
@@ -219,7 +219,7 @@ class WSTConnectionWindowController (NSWindowController):
         forces the fileld's contents to be redisplayed.
         """
         if not aMessage:
-            aMessage = u"Displaying information about %d methods." % (len(self.k_methods),)
+            aMessage = "Displaying information about %d methods." % (len(self.k_methods),)
         self.statusTextField.setStringValue_(aMessage)
     setStatusTextFieldMessage_ = objc.accessor(setStatusTextFieldMessage_)
 
@@ -242,14 +242,14 @@ class WSTConnectionWindowController (NSWindowController):
         self.k_methods = {}
 
         if not url:
-            self.window().setTitle_(u"Untitled.")
-            self.setStatusTextFieldMessage_(u"No URL specified.")
+            self.window().setTitle_("Untitled.")
+            self.setStatusTextFieldMessage_("No URL specified.")
             return
 
         self.window().setTitle_(url)
-        NSUserDefaults.standardUserDefaults().setObject_forKey_(url, u"LastURL")
+        AppKit.NSUserDefaults.standardUserDefaults().setObject_forKey_(url, "LastURL")
 
-        self.setStatusTextFieldMessage_(u"Retrieving method list...")
+        self.setStatusTextFieldMessage_("Retrieving method list...")
         self.getMethods(url)
 
     def getMethods(self, url):
@@ -276,8 +276,8 @@ class WSTConnectionWindowController (NSWindowController):
         self.k_server = None
         self.k_methodPrefix = None
         self.setStatusTextFieldMessage_(
-           (u"Server failed to respond to %s.  "
-            u"See below for more information."       ) % (method,)
+           ("Server failed to respond to %s.  "
+            "See below for more information."       ) % (method,)
         )
         #log.err(why)
         self.methodDescriptionTextView.setString_(why.getTraceback())
@@ -292,7 +292,7 @@ class WSTConnectionWindowController (NSWindowController):
         self.k_methodPrefix = _methodPrefix
 
         self.setStatusTextFieldMessage_(
-            u"Retrieving information about %d methods." % (len(self.k_methods),)
+            "Retrieving information about %d methods." % (len(self.k_methods),)
         )
 
         # we could make all the requests at once :)
@@ -313,7 +313,7 @@ class WSTConnectionWindowController (NSWindowController):
 
     def fetchMethodSignature(self, ignore, index, aMethod):
         self.setStatusTextFieldMessage_(
-            u"Retrieving signature for method %s (%d of %d)."
+            "Retrieving signature for method %s (%d of %d)."
             % (aMethod.methodName() , index, len(self.k_methods))
         )
         return self.k_server.callRemote(
@@ -327,11 +327,11 @@ class WSTConnectionWindowController (NSWindowController):
             return
         for aSignature in methodSignature:
             if isinstance(aSignature, list) and len(aSignature) > 0:
-                signature = u"%s %s(%s)" % (aSignature[0], aMethod.methodName(), u", ".join(aSignature[1:]))
+                signature = "%s %s(%s)" % (aSignature[0], aMethod.methodName(), ", ".join(aSignature[1:]))
             else:
                 signature = aSignature
         if signatures:
-            signatures = signatures + u", " + signature
+            signatures = signatures + ", " + signature
         else:
             signatures = signature
 
@@ -340,16 +340,16 @@ class WSTConnectionWindowController (NSWindowController):
 
     def couldntProcessSignatureForMethod(self, why, index, aMethod):
         #log.err(why)
-        aMethod.setMethodSignature_(u"<error> %s %s" % (aMethod.methodName(), why.getBriefTraceback()))
+        aMethod.setMethodSignature_("<error> %s %s" % (aMethod.methodName(), why.getBriefTraceback()))
         self.replaceObjectInMethodArrayAtIndex_withObject_(index, aMethod)
 
     def fetchMethodDescription_(self, aMethod):
         def cacheDesc(v):
-            aMethod.setMethodDescription_(v or u'No description available.')
+            aMethod.setMethodDescription_(v or 'No description available.')
 
-        self.setStatusTextFieldMessage_(u"Retrieving documentation for method %s..." % (aMethod.methodName(),))
+        self.setStatusTextFieldMessage_("Retrieving documentation for method %s..." % (aMethod.methodName(),))
         self.startWorking()
-        self.k_server.callRemote((self.k_methodPrefix + u'methodHelp').encode('utf-8'), aMethod.methodName().encode('utf-8')).addCallback(cacheDesc)
+        self.k_server.callRemote((self.k_methodPrefix + 'methodHelp').encode('utf-8'), aMethod.methodName().encode('utf-8')).addCallback(cacheDesc)
 
     def methodArray(self):
         return self.k_methodArray

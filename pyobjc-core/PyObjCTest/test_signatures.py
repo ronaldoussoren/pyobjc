@@ -6,68 +6,8 @@ import objc
 
 class PyOCTestTypeStr(TestCase):
     def testSelectorSignatures(self):
-
-        self.assertIsInstance(
-                objc.selector(lambda x,y:1, signature=b"ii"),
-                objc.selector
-        )
-        self.assertIsInstance(
-                objc.selector(lambda x,y:1, argumentTypes="ii"),
-                objc.selector
-        )
-        self.assertIsInstance(
-                objc.selector(lambda x,y:1,
-                    argumentTypes="ii", returnType="s"),
-                objc.selector
-        )
-
         self.assertRaises(ValueError, objc.selector, lambda x,y:1,
                 signature=b"FOOBAR")
-
-        self.assertRaises(TypeError, objc.selector, lambda x,y:1,
-                signature=b"@@", returnType="i")
-        self.assertRaises(TypeError, objc.selector, lambda x,y:1,
-                signature=b"@@", argumentTypes="ii")
-
-        self.assertRaises(ValueError, objc.selector, lambda x,y:1,
-                argumentTypes="iX")
-        self.assertRaises(ValueError, objc.selector, lambda x,y:1,
-                returnType="X")
-
-    def testArgumentTypesPythonStyle(self):
-        # Check that argumentTypes + returnType is correctly converted to
-        # a signature
-
-        s = objc.selector(lambda self: None, argumentTypes='ii', returnType='i')
-        self.assertEqual(s.signature, b'i@:ii')
-
-        s = objc.selector(lambda self: None, argumentTypes='Oi', returnType='i')
-        self.assertEqual(s.signature, b'i@:@i')
-
-        s = objc.selector(lambda self: None, argumentTypes='', returnType='l')
-        self.assertEqual(s.signature, objc._C_LNG + b'@:')
-
-        s = objc.selector(lambda self: None, argumentTypes='', returnType='f')
-        self.assertEqual(s.signature, objc._C_FLT + b'@:')
-
-        s = objc.selector(lambda self: None, argumentTypes='', returnType='d')
-        self.assertEqual(s.signature, objc._C_DBL + b'@:')
-
-        s = objc.selector(lambda self: None, argumentTypes='', returnType='i')
-        self.assertEqual(s.signature, objc._C_INT + b'@:')
-
-        s = objc.selector(lambda self: None, argumentTypes='', returnType='s')
-        self.assertEqual(s.signature, b'@@:')
-
-        s = objc.selector(lambda self: None, argumentTypes='', returnType='S')
-        self.assertEqual(s.signature, b'@@:')
-
-        s = objc.selector(lambda self: None, argumentTypes='', returnType='z')
-        self.assertEqual(s.signature, b'@@:')
-
-        s = objc.selector(lambda self: None, argumentTypes='zbhilcfdO', returnType='z')
-        self.assertEqual(s.signature, b'@@:@csilcfd@')
-
 
     def testAll(self):
         self.assertEqual(objc._C_BOOL, b"B")

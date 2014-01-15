@@ -6,11 +6,13 @@
 #  Copyright (c) 2004 __MyCompanyName__. All rights reserved.
 #
 
-from Cocoa import *
+from objc import super
+import objc
+from Cocoa import NSArrayController
 import re
 
-kLiteralSearch = u'Literal Search'
-kRegularExpressionSearch = u'Regular Expression Search'
+kLiteralSearch = 'Literal Search'
+kRegularExpressionSearch = 'Regular Expression Search'
 
 def regexForSearchString(searchString, searchType):
     if not searchString:
@@ -18,13 +20,12 @@ def regexForSearchString(searchString, searchType):
 
     searchString = searchString.strip()
     if searchType == kLiteralSearch:
-        searchString = re.escape(searchString.strip()) + ur'(?i)'
+        searchString = re.escape(searchString.strip()) + r'(?i)'
     return re.compile(searchString)
 
 def dictValueFilter(dicts, regex):
     for dct in dicts:
-        for value in dct.itervalues():
-            print value
+        for value in dct.values():
             if regex.search(value):
                 yield dct
                 break

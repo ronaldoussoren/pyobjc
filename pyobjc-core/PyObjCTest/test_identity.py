@@ -37,7 +37,7 @@ class TestPythonRoundTrip (TestCase):
             container.setStoredObject_(v)
             self.assertTrue(v is container.storedObject(), repr(v))
 
-    def dont_testPythonStrings(self):
+    def testPythonStrings(self):
         # XXX: this test would always fail, this is by design.
 
         container = OC_TestIdentity.alloc().init()
@@ -46,14 +46,14 @@ class TestPythonRoundTrip (TestCase):
             container.setStoredObject_(v)
             self.assertTrue(v is container.storedObject(), repr(v))
 
-    def dont_testPythonNumber(self):
+    def testPythonNumber(self):
         # XXX: this test would always fail, need to move some code to C
         # to fix (but not now)
         container = OC_TestIdentity.alloc().init()
 
         for v in (99999, sys.maxsize * 3, 10.0):
             container.setStoredObject_(v)
-            self.assertTrue(v is container.storedObject, repr(v))
+            self.assertTrue(v is container.storedObject(), repr(v))
 
 
 class ObjCRoundTrip (TestCase):

@@ -17,5 +17,8 @@ sys.modules['CFOpenDirectory'] = mod = objc.ObjCLazyModule('CFOpenDirectory',
     _metadata.__dict__, None, {
        '__doc__': __doc__,
        '__path__': __path__,
+       '__loader__': globals().get('__loader__', None),
        'objc': objc,
     }, ( CoreFoundation, Foundation,))
+
+del sys.modules['CFOpenDirectory._metadata']

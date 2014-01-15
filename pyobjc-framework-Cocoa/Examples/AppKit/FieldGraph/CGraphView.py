@@ -1,15 +1,16 @@
 import objc
-from Foundation import *
-from AppKit import *
+from objc import super
+import Cocoa
 from math import pi, sin, cos
-from fieldMath import *
+
+from fieldMath import degToRad
 
 # Convience global variables
 x, y = 0, 1
 llc, sze = 0, 1 # Left Lower Corner, Size
 
 #____________________________________________________________
-class CGraphView(NSView):
+class CGraphView (Cocoa.NSView):
 
     azmuthSlider = objc.IBOutlet()
     mapOffsetEWSlider = objc.IBOutlet()
@@ -46,19 +47,19 @@ class CGraphView(NSView):
         self.setMapRect()
 
     def setCrossCursor(self):
-        crosshairImage = NSImage.imageNamed_("CrossCursor")
+        crosshairImage = Cocoa.NSImage.imageNamed_("CrossCursor")
         imageSize = crosshairImage.size()
-        self.crossCursor = NSCursor.alloc().initWithImage_hotSpot_(crosshairImage, (8, 8))
+        self.crossCursor = Cocoa.NSCursor.alloc().initWithImage_hotSpot_(crosshairImage, (8, 8))
         rect = self.bounds()
         self.trackingRect = self.addTrackingRect_owner_userData_assumeInside_(self.bounds(), self, 0, 0)
 
-    def setGridColor(self, color=NSColor.greenColor()):
+    def setGridColor(self, color=Cocoa.NSColor.greenColor()):
         self.gridColor = color
 
-    def setRmsColor(self, color=NSColor.blueColor()):
+    def setRmsColor(self, color=Cocoa.NSColor.blueColor()):
         self.rmsColor = color
 
-    def setGraphColor(self, color=NSColor.blackColor()):
+    def setGraphColor(self, color=Cocoa.NSColor.blackColor()):
         self.graphColor = color
 
     def setGain(self, gain, total):
@@ -84,8 +85,8 @@ class CGraphView(NSView):
         self.graphCenter = (frame[sze][x]/2, frame[sze][y]/2)
         self.graphRadius = (min(frame[sze][x], frame[sze][y]) / 2) - self.graphMargin
 
-        NSColor.whiteColor().set()
-        NSRectFill(self.bounds())
+        Cocoa.NSColor.whiteColor().set()
+        Cocoa.NSRectFill(self.bounds())
 
         self.drawMap()
         self.drawGrid()
@@ -109,7 +110,7 @@ class CGraphView(NSView):
 
         drawInRect = ((xOffset, yOffset), (xImageSize, yImageSize))
 
-        self.mapImage.drawInRect_fromRect_operation_fraction_(drawInRect, self.mapRect, NSCompositeSourceOver, self.mapVisible)
+        self.mapImage.drawInRect_fromRect_operation_fraction_(drawInRect, self.mapRect, Cocoa.NSCompositeSourceOver, self.mapVisible)
 
     def drawGrid(self):
         self.gridColor.set()
@@ -122,7 +123,7 @@ class CGraphView(NSView):
         x, y = 0, 1
         if radius >= 1:
             dotRect = ((center[x]-radius, center[y]-radius), (2*radius, 2*radius))
-            path = NSBezierPath.bezierPathWithOvalInRect_(dotRect)
+            path = Cocoa.NSBezierPath.bezierPathWithOvalInRect_(dotRect)
             path.stroke()
 
     def drawRMS(self):
@@ -133,7 +134,7 @@ class CGraphView(NSView):
         center = self.graphCenter
         radius = self.graphRadius
         x, y = 0, 1
-        path = NSBezierPath.bezierPath()
+        path = Cocoa.NSBezierPath.bezierPath()
         for i in range(1, self.lines+1):
             iR = pi / i
             cosR = cos(iR) * radius
@@ -149,11 +150,11 @@ class CGraphView(NSView):
             self.graphColor.set()
             path = self.path.copy()
 
-            transform = NSAffineTransform.transform()
+            transform = Cocoa.NSAffineTransform.transform()
             transform.rotateByRadians_(-(pi / 2.0) - self.azmuth)
             path.transformUsingAffineTransform_(transform)
 
-            transform = NSAffineTransform.transform()
+            transform = Cocoa.NSAffineTransform.transform()
             center = self.graphCenter
             transform.translateXBy_yBy_(center[0], center[1])
             transform.scaleBy_(self.graphRadius / self.maxMag)
@@ -243,7 +244,7 @@ class CGraphView(NSView):
         self.setNeedsDisplay_(1)
 
     def mouseEntered_(self, event):
-        print 'CGraphView: mouseEntered_'
+        print('CGraphView: mouseEntered_')
 
     def mouseExited_(self, event):
-        print 'CGraphView: mouseExited_'
+        print('CGraphView: mouseExited_')

@@ -11,7 +11,7 @@ except ImportError:
 
 import os
 
-VERSION="2.6b1"
+VERSION="3.0a1"
 
 # Note 1: the requires list is split into a number
 # of lists because not all framework wrappers can
@@ -21,6 +21,7 @@ VERSION="2.6b1"
 # packaged into an egg file because of this.
 
 REQUIRES=[
+        'py2app>=0.7',
         'pyobjc-core=='+VERSION,
         'pyobjc-framework-AddressBook=='+VERSION,
         'pyobjc-framework-AppleScriptKit=='+VERSION,
@@ -29,6 +30,7 @@ REQUIRES=[
         'pyobjc-framework-Cocoa=='+VERSION,
         'pyobjc-framework-CoreData=='+VERSION,
         'pyobjc-framework-CoreText=='+VERSION,
+        'pyobjc-framework-DiskArbitration=='+VERSION,
         'pyobjc-framework-ExceptionHandling=='+VERSION,
         'pyobjc-framework-InstallerPlugins=='+VERSION,
         'pyobjc-framework-LatentSemanticMapping=='+VERSION,
@@ -62,12 +64,15 @@ REQUIRES_10_6=[
         'pyobjc-framework-CoreLocation=='+VERSION,
         'pyobjc-framework-ServerNotification=='+VERSION,
         'pyobjc-framework-ServiceManagement=='+VERSION,
+        'pyobjc-framework-CoreWLAN=='+VERSION,
 ]
 
 DEL_REQUIRES_10_7=[
         'pyobjc-framework-InterfaceBuilderKit=',
 ]
 REQUIRES_10_7=[
+#        'pyobjc-framework-AVFoundation='+VERSION,
+        'pyobjc-framework-StoreKit=='+VERSION,
 ]
 
 REQUIRES_10_8=[
@@ -75,7 +80,7 @@ REQUIRES_10_8=[
 #        'pyobjc-framework-AudioVideoBridging=='+VERSION,
         'pyobjc-framework-EventKit=='+VERSION,
 #        'pyobjc-framework-GLKit=='+VERSION,
-#        'pyobjc-framework-GameKit=='+VERSION,
+        'pyobjc-framework-GameKit=='+VERSION,
 #        'pyobjc-framework-MediaToolbox=='+VERSION,
 #        'pyobjc-framework-SceneKit=='+VERSION,
         'pyobjc-framework-Social=='+VERSION,

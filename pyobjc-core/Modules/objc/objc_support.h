@@ -1,5 +1,5 @@
 /* Copyright (c) 1996,97,98 by Lele Gaifax.  All Rights Reserved
- * Copyright (2) 2003 Ronald Oussoren
+ * Copyright (c) 2003-2014 Ronald Oussoren
  *
  * This software may be used and distributed freely for any purpose
  * provided that this notice is included unchanged on any and all
@@ -34,9 +34,9 @@ extern BOOL PyObjC_signatures_compatible(const char* type1, const char* type2);
   and returns an equivalent Python object where C structures and
   arrays are represented as tuples. */
 extern PyObject *pythonify_c_value (const char *type,
-				    void *datum);
+                    void *datum);
 extern PyObject *pythonify_c_return_value (const char *type,
-				    void *datum);
+                    void *datum);
 
 extern PyObject *pythonify_c_array_nullterminated(const char* type, void* datum, BOOL already_retained, BOOL already_cfretained);
 
@@ -51,23 +51,23 @@ extern int depythonify_c_array_nullterminated(const char* type, Py_ssize_t count
   Returns NULL on success, or a static error string describing the
   error. */
 extern int depythonify_c_value (const char *type,
-					PyObject *arg,
-					void *datum);
+                    PyObject *arg,
+                    void *datum);
 extern int depythonify_c_return_value (const char *type,
-					PyObject *arg,
-					void *datum);
+                    PyObject *arg,
+                    void *datum);
 
 extern int depythonify_c_return_array_count(const char* rettype, Py_ssize_t count, PyObject* arg, void* resp, BOOL already_retained, BOOL already_cfretained);
 extern int depythonify_c_return_array_nullterminated(const char* rettype, PyObject* arg, void* resp, BOOL already_retained, BOOL already_cfretained);
 
 
-extern Py_ssize_t PyObjCRT_SizeOfReturnType(const char* type);
-extern Py_ssize_t PyObjCRT_SizeOfType(const char *type);
-extern Py_ssize_t PyObjCRT_AlignOfType(const char *type);
+extern Py_ssize_t PyObjCRT_SizeOfReturnType(const char* type) __attribute__((__pure__));
+extern Py_ssize_t PyObjCRT_SizeOfType(const char *type) __attribute__((__pure__));
+extern Py_ssize_t PyObjCRT_AlignOfType(const char *type) __attribute__((__pure__));
 extern const char *PyObjCRT_SkipTypeSpec (const char *type);
 extern const char* PyObjCRT_NextField(const char *type);
 extern const char* PyObjCRT_SkipTypeQualifiers (const char* type);
-extern Py_ssize_t PyObjCRT_AlignedSize (const char *type);
+extern Py_ssize_t PyObjCRT_AlignedSize (const char *type) __attribute__((__pure__));
 
 
 extern const char* PyObjCRT_RemoveFieldNames(char* buf, const char* type);
@@ -75,25 +75,24 @@ extern const char* PyObjCRT_RemoveFieldNames(char* buf, const char* type);
 /*
  * Compatibility with pyobjc-api.h
  */
-static inline id PyObjC_PythonToId(PyObject* value)
+static inline id
+PyObjC_PythonToId(PyObject* value)
 {
-	id res;
-	int r;
+    id res;
+    int r;
 
-	r = depythonify_c_value(@encode(id), value, &res);
-	if (r == -1) {
-		return NULL;
-	} else {
-		return res;
-	}
+    r = depythonify_c_value(@encode(id), value, &res);
+    if (r == -1) {
+        return NULL;
+    } else {
+        return res;
+    }
 }
 
-static inline PyObject* PyObjC_IdToPython(id value)
+static inline PyObject*
+PyObjC_IdToPython(id value)
 {
-	PyObject* res;
-
-	res = pythonify_c_value(@encode(id), &value);
-	return res;
+    return pythonify_c_value(@encode(id), &value);
 }
 
 #endif /* _objc_support_H */

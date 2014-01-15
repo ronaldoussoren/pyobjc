@@ -1,3 +1,5 @@
+- Don't open empty document on startup
+- tweak NIB: resize constraints on webview are wrong
 - cleanup loader.py (and rename to mht_loader)
   * Just a set of function: read and write
 - support for .webarchive loading

@@ -1,6 +1,8 @@
-from Cocoa import *
+import objc
+from objc import super
+import Cocoa
 
-class MyWindowController (NSWindowController):
+class MyWindowController (Cocoa.NSWindowController):
     rectGradientView = objc.IBOutlet()
     bezierGradientView = objc.IBOutlet()
 
@@ -18,19 +20,19 @@ class MyWindowController (NSWindowController):
 
     def awakeFromNib(self):
         # make sure our angle text input keep the right format
-        formatter = NSNumberFormatter.alloc().init()
-        formatter.setNumberStyle_(NSNumberFormatterDecimalStyle)
+        formatter = Cocoa.NSNumberFormatter.alloc().init()
+        formatter.setNumberStyle_(Cocoa.NSNumberFormatterDecimalStyle)
         self.angle.cell().setFormatter_(formatter)
 
         # setup the initial start color
-        self.rectGradientView.setStartColor_(NSColor.orangeColor())
-        self.bezierGradientView.setStartColor_(NSColor.orangeColor())
-        self.startColorWell.setColor_(NSColor.orangeColor())
+        self.rectGradientView.setStartColor_(Cocoa.NSColor.orangeColor())
+        self.bezierGradientView.setStartColor_(Cocoa.NSColor.orangeColor())
+        self.startColorWell.setColor_(Cocoa.NSColor.orangeColor())
 
         # setup the initial end color
-        self.rectGradientView.setEndColor_(NSColor.blueColor())
-        self.bezierGradientView.setEndColor_(NSColor.blueColor())
-        self.endColorWell.setColor_(NSColor.blueColor())
+        self.rectGradientView.setEndColor_(Cocoa.NSColor.blueColor())
+        self.bezierGradientView.setEndColor_(Cocoa.NSColor.blueColor())
+        self.endColorWell.setColor_(Cocoa.NSColor.blueColor())
 
         # setup the initial angle value
         self.rectGradientView.setAngle_(90.0)

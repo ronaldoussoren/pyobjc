@@ -11,9 +11,12 @@ This creates a directory "dist" containing HotKey.app. (The
 -A option causes the files to be symlinked to the .app bundle instead
 of copied. This means you don't have to rebuild the app if you edit the
 sources or nibs.)
-"""
 
-from AppKit import *
+NOTE: This example requires Python 2 because it uses the "Carbon"
+      module that was removed in Python 3.
+"""
+import Cocoa
+from objc import super
 from PyObjCTools import AppHelper
 from Carbon.CarbonEvt import RegisterEventHotKey, GetApplicationEventTarget
 from Carbon.Events import cmdKey, controlKey
@@ -22,7 +25,7 @@ import struct
 kEventHotKeyPressedSubtype = 6
 kEventHotKeyReleasedSubtype = 9
 
-class HotKeyApp(NSApplication):
+class HotKeyApp(Cocoa.NSApplication):
 
     def finishLaunching(self):
         super(HotKeyApp, self).finishLaunching()
@@ -31,10 +34,10 @@ class HotKeyApp(NSApplication):
                                              GetApplicationEventTarget(), 0)
 
     def sendEvent_(self, theEvent):
-        if theEvent.type() == NSSystemDefined and \
+        if theEvent.type() == Cocoa.NSSystemDefined and \
                theEvent.subtype() == kEventHotKeyPressedSubtype:
             self.activateIgnoringOtherApps_(True)
-            NSRunAlertPanel(u'Hot Key Pressed', u'Hot Key Pressed',
+            Cocoa.NSRunAlertPanel('Hot Key Pressed', 'Hot Key Pressed',
                 None, None, None)
         super(HotKeyApp, self).sendEvent_(theEvent)
 

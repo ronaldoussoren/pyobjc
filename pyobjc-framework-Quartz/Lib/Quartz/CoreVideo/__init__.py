@@ -16,8 +16,11 @@ sys.modules['Quartz.CoreVideo'] = mod = objc.ObjCLazyModule('Quartz.CoreVideo',
     _metadata.__dict__, None, {
        '__doc__': __doc__,
        '__path__': __path__,
+       '__loader__': globals().get('__loader__', None),
        'objc': objc,
     }, ( CoreFoundation, ))
+
+del sys.modules['Quartz.CoreVideo._metadata']
 
 def _load(mod):
     import Quartz

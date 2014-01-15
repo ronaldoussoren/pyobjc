@@ -1,9 +1,8 @@
 
 import math
 
-from Quartz import *
 import Quartz
-from CoreFoundation import *
+import Cocoa
 
 class ExportInfo (object):
     command = None
@@ -33,7 +32,7 @@ def getAppBundle():
     global _appBundle
 
     if _appBundle is None:
-        _appBundle = CFBundleGetMainBundle()
+        _appBundle = Cocoa.CFBundleGetMainBundle()
 
     return _appBundle
 
@@ -48,7 +47,7 @@ def getTheRGBColorSpace():
 
     # Set once, the first time this function is called.
     if _deviceRGB is None:
-        _deviceRGB = CGColorSpaceCreateDeviceRGB()
+        _deviceRGB = Quartz.CGColorSpaceCreateDeviceRGB()
 
     return _deviceRGB
 
@@ -58,8 +57,8 @@ def getTheCalibratedRGBColorSpace():
     global _genericRGBColorSpace
 
     if _genericRGBColorSpace is None:
-        _genericRGBColorSpace = CGColorSpaceCreateWithName(
-                kCGColorSpaceGenericRGB)
+        _genericRGBColorSpace = Quartz.CGColorSpaceCreateWithName(
+                Quartz.kCGColorSpaceGenericRGB)
 
     return _genericRGBColorSpace
 
@@ -68,8 +67,8 @@ def getTheCalibratedGrayColorSpace():
     global _genericGrayColorSpace
 
     if _genericGrayColorSpace is None:
-        _genericGrayColorSpace = CGColorSpaceCreateWithName(
-                kCGColorSpaceGenericGray)
+        _genericGrayColorSpace = Quartz.CGColorSpaceCreateWithName(
+                Quartz.kCGColorSpaceGenericGray)
     return _genericGrayColorSpace
 
 
@@ -79,8 +78,8 @@ def getTheSRGBColorSpace():
     global _genericSRGBColorSpace
 
     if _genericSRGBColorSpace is None:
-        _genericSRGBColorSpace = CGColorSpaceCreateWithName(
-                kCGColorSpaceGenericRGB) # XXX: should be GenericSRGB
+        _genericSRGBColorSpace = Quartz.CGColorSpaceCreateWithName(
+                Quartz.kCGColorSpaceGenericRGB) # XXX: should be GenericSRGB
     return _genericSRGBColorSpace
 
 def getTheDisplayColorSpace():
@@ -95,7 +94,7 @@ def getRGBOpaqueWhiteColor():
 
     if _rgbWhite is None:
         opaqueWhite = (1.0, 1.0, 1.0, 1.0)
-        _rgbWhite = CGColorCreate(getTheCalibratedRGBColorSpace(), opaqueWhite)
+        _rgbWhite = Quartz.CGColorCreate(getTheCalibratedRGBColorSpace(), opaqueWhite)
     return _rgbWhite
 
 _rgbBlack = None
@@ -103,7 +102,7 @@ def getRGBOpaqueBlackColor():
     global _rgbBlack
     if _rgbBlack is None:
         opaqueBlack = (0, 0, 0, 1)
-        _rgbBlack = CGColorCreate(
+        _rgbBlack = Quartz.CGColorCreate(
                 getTheCalibratedRGBColorSpace(), opaqueBlack)
     return _rgbBlack
 
@@ -112,7 +111,7 @@ def getRGBOpaqueGrayColor():
     global _rgbGray
     if _rgbGray is None:
         opaqueGray = (0.9, 0.9, 0.9, 1)
-        _rgbGray = CGColorCreate(
+        _rgbGray = Quartz.CGColorCreate(
                 getTheCalibratedRGBColorSpace(), opaqueGray)
     return _rgbGray
 
@@ -121,7 +120,7 @@ def getRGBOpaqueRedColor():
     global _rgbRed
     if _rgbRed is None:
         opaqueRed = (0.663, 0, 0.031, 1)
-        _rgbRed = CGColorCreate(
+        _rgbRed = Quartz.CGColorCreate(
                 getTheCalibratedRGBColorSpace(), opaqueRed)
     return _rgbRed
 
@@ -130,7 +129,7 @@ def getRGBOpaqueBlueColor():
     global _rgbBlue
     if _rgbBlue is None:
         opaqueBlue = (0.482, 0.62, 0.871, 1)
-        _rgbBlue = CGColorCreate(
+        _rgbBlue = Quartz.CGColorCreate(
                 getTheCalibratedRGBColorSpace(), opaqueBlue)
     return _rgbBlue
 
@@ -139,7 +138,7 @@ def getRGBOpaquePurpleColor():
     global _rgbPurple
     if _rgbPurple is None:
         opaquePurple = (0.69, 0.486, 0.722, 1)
-        _rgbPurple = CGColorCreate(
+        _rgbPurple = Quartz.CGColorCreate(
                 getTheCalibratedRGBColorSpace(), opaquePurple)
     return _rgbPurple
 
@@ -148,7 +147,7 @@ def getRGBOpaqueDarkBlueColor():
     global _rgbDarkBlue
     if _rgbDarkBlue is None:
         opaqueDarkBlue = (0.11, 0.208, 0.451, 1)
-        _rgbDarkBlue = CGColorCreate(
+        _rgbDarkBlue = Quartz.CGColorCreate(
                 getTheCalibratedRGBColorSpace(), opaqueDarkBlue)
     return _rgbDarkBlue
 
@@ -157,7 +156,7 @@ def getRGBOpaqueBrownColor():
     global _rgbBrown
     if _rgbBrown is None:
         opaqueBrown = (0.325, 0.208, 0.157, 1)
-        _rgbBrown = CGColorCreate(
+        _rgbBrown = Quartz.CGColorCreate(
                 getTheCalibratedRGBColorSpace(), opaqueBrown)
     return _rgbBrown
 
@@ -166,7 +165,7 @@ def getRGBOpaqueOrangeColor():
     global _rgbOrange
     if _rgbOrange is None:
         opaqueOrange = (0.965, 0.584, 0.059, 1)
-        _rgbOrange = CGColorCreate(
+        _rgbOrange = Quartz.CGColorCreate(
                 getTheCalibratedRGBColorSpace(), opaqueOrange)
     return _rgbOrange
 
@@ -175,7 +174,7 @@ def getRGBOpaqueYellowColor():
     global _rgbYellow
     if _rgbYellow is None:
         opaqueYellow = (1, 0.816, 0, 1)
-        _rgbYellow = CGColorCreate(
+        _rgbYellow = Quartz.CGColorCreate(
                 getTheCalibratedRGBColorSpace(), opaqueYellow)
     return _rgbYellow
 
@@ -184,7 +183,7 @@ def getRGBOpaqueGreenColor():
     global _rgbGreen
     if _rgbGreen is None:
         opaqueGreen = (0.584, 0.871, 0.318, 1)
-        _rgbGreen = CGColorCreate(
+        _rgbGreen = Quartz.CGColorCreate(
                 getTheCalibratedRGBColorSpace(), opaqueGreen)
     return _rgbGreen
 
@@ -193,61 +192,61 @@ def getRGBOpaqueDarkGreenColor():
     global _rgbDarkGreen
     if _rgbDarkGreen is None:
         opaqueDarkGreen = (0.404, 0.808, 0.239, 1)
-        _rgbDarkGreen = CGColorCreate(
+        _rgbDarkGreen = Quartz.CGColorCreate(
                 getTheCalibratedRGBColorSpace(), opaqueDarkGreen)
     return _rgbDarkGreen
 
 def myCGContextAddEllipseInRect(context, r):
     if hasattr(Quartz, 'CGContextAddEllipseInRect'):
-        CGContextAddEllipseInRect(context, r)
+        Quartz.CGContextAddEllipseInRect(context, r)
 
     else:
         # This is not a perfect emulation but is correct as long as there is
         # not an open subpath already in the current path. In that case the
         # CGContextClosePath here would not necessarily produce the desired
         # result.
-        CGContextSaveGState(context)
+        Quartz.CGContextSaveGState(context)
         if 1:
         # Translate to the center of the ellipse.
-            CGContextTranslateCTM(context,
-                            CGRectGetMidX(r),
-                            CGRectGetMidY(r))
+            Quartz.CGContextTranslateCTM(context,
+                            Quartz.CGRectGetMidX(r),
+                            Quartz.CGRectGetMidY(r))
             # Scale by half the width and height of the rectangle
             # bounding the ellipse.
-            CGContextScaleCTM(context, r.size.width/2, r.size.height/2)
+            Quartz.CGContextScaleCTM(context, r.size.width/2, r.size.height/2)
             # Establish a current point at the first point
             # on the ellipse. This ensures that there
             # is no line segment connecting the previous
             # current point to the first point on the subpath.
-            CGContextMoveToPoint(context, 1, 0)
+            Quartz.CGContextMoveToPoint(context, 1, 0)
             # Circular arc around the ellipse center with
             # a radius that, when scaled by the CTM, produces
             # the major and minor axes of the ellipse. Since
             # CGContextAddEllipseInRect defines the direction
             # of the path as clockwise, this routine will
             # draw the arc clockwise also.
-            CGContextAddArc(context, 0, 0, 1, 0, 2*math.pi, 1)
-            CGContextClosePath(context)
-        CGContextRestoreGState(context)
+            Quartz.CGContextAddArc(context, 0, 0, 1, 0, 2*math.pi, 1)
+            Quartz.CGContextClosePath(context)
+        Quartz.CGContextRestoreGState(context)
 
 # Routines that are useful for debugging.
 
 def drawPoint(context, p):
-    CGContextSaveGState(context)
+    Quartz.CGContextSaveGState(context)
     if 1:
         # Opaque black.
-        CGContextSetRGBStrokeColor(context, 0, 0, 0, 1)
-        CGContextSetLineWidth(context, 5)
-        CGContextSetLineCap(context, kCGLineCapRound)
-        CGContextMoveToPoint(context, p.x, p.y)
-        CGContextAddLineToPoint(context, p.x, p.y)
-        CGContextStrokePath(context)
-    CGContextRestoreGState(context)
+        Quartz.CGContextSetRGBStrokeColor(context, 0, 0, 0, 1)
+        Quartz.CGContextSetLineWidth(context, 5)
+        Quartz.CGContextSetLineCap(context, Quartz.kCGLineCapRound)
+        Quartz.CGContextMoveToPoint(context, p.x, p.y)
+        Quartz.CGContextAddLineToPoint(context, p.x, p.y)
+        Quartz.CGContextStrokePath(context)
+    Quartz.CGContextRestoreGState(context)
 
 
 def printCTM(context):
-    t = CGContextGetCTM(context)
-    print >>sys.stderr, "CurrentCTM is %r"%(t,)
+    t = Quartz.CGContextGetCTM(context)
+    print("CurrentCTM is %r"%(t,))
 
 kTickLength = 5
 kTickDistance = 72
@@ -256,55 +255,55 @@ kAxesLength = (20*kTickDistance)
 def drawCoordinateAxes(context):
     tickLength = kTickLength
 
-    CGContextSaveGState(context)
+    Quartz.CGContextSaveGState(context)
     if 1:
-        CGContextBeginPath(context)
+        Quartz.CGContextBeginPath(context)
         # Paint the x-axis in red.
-        CGContextSetRGBStrokeColor(context, 1, 0, 0, 1)
-        CGContextMoveToPoint(context, -kTickLength, 0.)
-        CGContextAddLineToPoint(context, kAxesLength, 0.)
-        CGContextDrawPath(context, kCGPathStroke)
+        Quartz.CGContextSetRGBStrokeColor(context, 1, 0, 0, 1)
+        Quartz.CGContextMoveToPoint(context, -kTickLength, 0.)
+        Quartz.CGContextAddLineToPoint(context, kAxesLength, 0.)
+        Quartz.CGContextDrawPath(context, Quartz.kCGPathStroke)
 
         # Paint the y-axis in blue.
-        CGContextSetRGBStrokeColor(context, 0, 0, 1, 1)
-        CGContextMoveToPoint(context, 0, -kTickLength)
-        CGContextAddLineToPoint(context, 0, kAxesLength)
-        CGContextDrawPath(context, kCGPathStroke)
+        Quartz.CGContextSetRGBStrokeColor(context, 0, 0, 1, 1)
+        Quartz.CGContextMoveToPoint(context, 0, -kTickLength)
+        Quartz.CGContextAddLineToPoint(context, 0, kAxesLength)
+        Quartz.CGContextDrawPath(context, Quartz.kCGPathStroke)
 
         # Paint the x-axis tick marks in red.
-        CGContextSetRGBStrokeColor(context, 1, 0, 0, 1)
+        Quartz.CGContextSetRGBStrokeColor(context, 1, 0, 0, 1)
         for i in range(2):
             for t in range(0, kAxesLength, kTickDistance):
-                CGContextMoveToPoint(context, t, -tickLength)
-                CGContextAddLineToPoint(context, t, tickLength)
+                Quartz.CGContextMoveToPoint(context, t, -tickLength)
+                Quartz.CGContextAddLineToPoint(context, t, tickLength)
 
-            CGContextDrawPath(context, kCGPathStroke)
-            CGContextRotateCTM(context, math.pi/2.)
+            Quartz.CGContextDrawPath(context, Quartz.kCGPathStroke)
+            Quartz.CGContextRotateCTM(context, math.pi/2.)
             # Paint the y-axis tick marks in blue.
-            CGContextSetRGBStrokeColor(context, 0, 0, 1, 1)
+            Quartz.CGContextSetRGBStrokeColor(context, 0, 0, 1, 1)
 
-        drawPoint(context, CGPointZero)
-    CGContextRestoreGState(context)
+        drawPoint(context, Quartz.CGPointZero)
+    Quartz.CGContextRestoreGState(context)
 
 def drawDebuggingRect(context, rect):
-    CGContextSaveGState(context)
+    Quartz.CGContextSaveGState(context)
     if 1:
-        CGContextSetLineWidth(context, 4.)
+        Quartz.CGContextSetLineWidth(context, 4.)
         # Draw opaque red from top-left to bottom-right.
-        CGContextSetRGBStrokeColor(context, 1, 0, 0, 1.0)
-        CGContextMoveToPoint(context, rect.origin.x,
+        Quartz.CGContextSetRGBStrokeColor(context, 1, 0, 0, 1.0)
+        Quartz.CGContextMoveToPoint(context, rect.origin.x,
                                         rect.origin.y + rect.size.height)
-        CGContextAddLineToPoint(context,
+        Quartz.CGContextAddLineToPoint(context,
                                         rect.origin.x + rect.size.width,
                                         rect.origin.y)
-        CGContextStrokePath(context)
+        Quartz.CGContextStrokePath(context)
         # Draw opaque blue from top-right to bottom-left.
-        CGContextSetRGBStrokeColor(context, 0, 0, 1, 1.0)
-        CGContextMoveToPoint(context, rect.origin.x + rect.size.width,
+        Quartz.CGContextSetRGBStrokeColor(context, 0, 0, 1, 1.0)
+        Quartz.CGContextMoveToPoint(context, rect.origin.x + rect.size.width,
                                         rect.origin.y + rect.size.height)
-        CGContextAddLineToPoint(context, rect.origin.x, rect.origin.y)
-        CGContextStrokePath(context)
+        Quartz.CGContextAddLineToPoint(context, rect.origin.x, rect.origin.y)
+        Quartz.CGContextStrokePath(context)
         # Opaque black.
-        CGContextSetRGBStrokeColor(context, 0, 0, 0, 1.)
-        CGContextStrokeRect(context, rect)
-    CGContextRestoreGState(context)
+        Quartz.CGContextSetRGBStrokeColor(context, 0, 0, 0, 1.)
+        Quartz.CGContextStrokeRect(context, rect)
+    Quartz.CGContextRestoreGState(context)

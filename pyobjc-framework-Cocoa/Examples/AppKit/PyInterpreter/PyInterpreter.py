@@ -1,15 +1,27 @@
+from __future__ import print_function
 import sys
 import traceback
-import sets
 import keyword
 import time
-from code import InteractiveConsole, softspace
-from StringIO import StringIO
-from objc import YES, NO, selector, IBAction, IBOutlet
-from Foundation import *
-from AppKit import *
+from functools import partial
+from code import InteractiveConsole
+from objc import YES, NO, selector, IBAction, IBOutlet, super
+from Cocoa import NSBundle, NSObject, NSTextView, NSForegroundColorAttributeName
+from Cocoa import NSFont, NSColor, NSFontAttributeName, NSApplication
+from Cocoa import NSUIntegerMax, NSDate, NSDefaultRunLoopMode, NSKeyDown
+from Cocoa import NSAttributedString
 from PyObjCTools import AppHelper
 
+if sys.version_info[0] == 2:
+    exec('''
+def exec_code(code, globals):
+    exec code in locals
+    '''
+    )
+else:
+    unicode=str
+    import builtins
+    exec_code = getattr(builtins, 'exec')
 
 try:
     sys.ps1
@@ -43,22 +55,22 @@ class PseudoUTF8Output(object):
 class PseudoUTF8Input(object):
     softspace = 0
     def __init__(self, readlinemethod):
-        self._buffer = u''
+        self._buffer = ''
         self._readline = readlinemethod
 
     def read(self, chars=None):
         if chars is None:
             if self._buffer:
                 rval = self._buffer
-                self._buffer = u''
-                if rval.endswith(u'\r'):
-                    rval = rval[:-1]+u'\n'
+                self._buffer = ''
+                if rval.endswith('\r'):
+                    rval = rval[:-1]+'\n'
                 return rval.encode('utf-8')
             else:
-                return self._readline(u'\x04')[:-1].encode('utf-8')
+                return self._readline('\x04')[:-1].encode('utf-8')
         else:
             while len(self._buffer) < chars:
-                self._buffer += self._readline(u'\x04\r')
+                self._buffer += self._readline('\x04\r')
                 if self._buffer.endswith('\x04'):
                     self._buffer = self._buffer[:-1]
                     break
@@ -66,13 +78,13 @@ class PseudoUTF8Input(object):
             return rval.encode('utf-8').replace('\r','\n')
 
     def readline(self):
-        if u'\r' not in self._buffer:
-            self._buffer += self._readline(u'\x04\r')
+        if '\r' not in self._buffer:
+            self._buffer += self._readline('\x04\r')
         if self._buffer.endswith('\x04'):
             rval = self._buffer[:-1].encode('utf-8')
         elif self._buffer.endswith('\r'):
             rval = self._buffer[:-1].encode('utf-8')+'\n'
-        self._buffer = u''
+        self._buffer = ''
 
         return rval
 
@@ -86,13 +98,13 @@ class AsyncInteractiveConsole(InteractiveConsole):
 
     def asyncinteract(self, write=None, banner=None):
         if self.lock:
-            raise ValueError, "Can't nest"
+            raise ValueError("Can't nest")
         self.lock = True
         if write is None:
             write = self.write
-        cprt = u'Type "help", "copyright", "credits" or "license" for more information.'
+        cprt = 'Type "help", "copyright", "credits" or "license" for more information.'
         if banner is None:
-            write(u"Python %s in %s\n%s\n" % (
+            write("Python %s in %s\n%s\n" % (
                 sys.version,
                 NSBundle.mainBundle().objectForInfoDictionaryKey_('CFBundleName'),
                 cprt,
@@ -124,14 +136,14 @@ class AsyncInteractiveConsole(InteractiveConsole):
 
     def runcode(self, code):
         try:
-            exec code in self.locals
+            exec_code(code, self.locals)
         except SystemExit:
             raise
         except:
             self.showtraceback()
         else:
-            if softspace(sys.stdout, 0):
-                print
+            if sys.stdout.softspace:
+                print()
 
 
     def recommendCompletionsFor(self, word):
@@ -159,14 +171,14 @@ class AsyncInteractiveConsole(InteractiveConsole):
                 ]
             else:
                 # they started typing the method name
-                check = filter(lambda s:s.lower().startswith(wordlower), dir(obj))
+                check = list(filter(lambda s:s.lower().startswith(wordlower), dir(obj)))
         else:
             # no dots, must be in the normal namespaces.. no eval necessary
-            check = sets.Set(dir(__builtins__))
+            check = set(dir(__builtins__))
             check.update(keyword.kwlist)
             check.update(self.locals)
             wordlower = parts[-1].lower()
-            check = filter(lambda s:s.lower().startswith(wordlower), check)
+            check = list(filter(lambda s:s.lower().startswith(wordlower), check))
         check.sort()
         return check, 0
 
@@ -213,7 +225,7 @@ class PyInterpreter(NSObject):
         self._stdoutColor = NSColor.blueColor()
         self._codeColor = NSColor.blackColor()
         self._historyLength = 50
-        self._history = [u'']
+        self._history = ['']
         self._historyView = 0
         self._characterIndexForInput = 0
         self._stdin = PseudoUTF8Input(self._nestedRunLoopReaderUntilEOLchars_)
@@ -222,9 +234,9 @@ class PyInterpreter(NSObject):
         self._stdout = PseudoUTF8Output(self.writeStdout_)
         self._isInteracting = False
         self._console = AsyncInteractiveConsole()
-        self._interp = self._console.asyncinteract(
+        self._interp = partial(next, self._console.asyncinteract(
             write=self.writeCode_,
-        ).next
+        ))
         self._autoscroll = True
 
     #
@@ -280,8 +292,8 @@ class PyInterpreter(NSObject):
     def executeLine_(self, line):
         self.addHistoryLine_(line)
         self._executeWithRedirectedIO_args_kwds_(self._executeLine_, (line,), {})
-        self._history = filter(None, self._history)
-        self._history.append(u'')
+        self._history = list(filter(None, self._history))
+        self._history.append('')
         self._historyView = len(self._history) - 1
 
     def _executeLine_(self, line):
@@ -456,7 +468,8 @@ class PyInterpreter(NSObject):
     #  NSTextViewDelegate methods
     #
 
-    def textView_completions_forPartialWordRange_indexOfSelectedItem_(self, aTextView, completions, (begin, length), index):
+    def textView_completions_forPartialWordRange_indexOfSelectedItem_(self, aTextView, completions, range, index):
+        (begin, length) = range
         txt = self.textView.textStorage().mutableString()
         end = begin+length
         while (begin>0) and (txt[begin].isalnum() or txt[begin] in '._'):
@@ -506,7 +519,7 @@ class PyInterpreter(NSObject):
             return YES
         else:
             if DEBUG_DELEGATE and aSelector not in PASSTHROUGH:
-                print aSelector
+                print(aSelector)
             return NO
 
     #
@@ -550,4 +563,6 @@ class PyInterpreter(NSObject):
 
 
 if __name__ == '__main__':
+    import objc
+    objc.setVerbose(1)
     AppHelper.runEventLoop()

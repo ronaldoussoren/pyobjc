@@ -3,12 +3,13 @@ from PyObjCTools.TestSupport import *
 import objc
 import sys
 
-try:
-    from  Foundation import NSRange
-
-    _C_NSRange = NSRange.__typestr__
-
-except ImportError:
+#try:
+#    from  Foundation import NSRange
+#
+#    _C_NSRange = NSRange.__typestr__
+#
+#except ImportError:
+if 1:
     if sys.maxsize > 2 ** 32:
         _C_NSRange = b"{_NSRange=QQ}"
     else:
@@ -304,6 +305,9 @@ class TestBasicDescriptors (TestCase):
             pass
 
 
+        def countOfFoo_withBar_withBaz_withNone_(self, foo, bar, baz, none):
+            pass
+        self.assertRaises(TypeError, objc.accessor, countOfFoo_withBar_withBaz_withNone_)
 
 
     def test_typedAccessor(self):
@@ -661,12 +665,6 @@ class TestBasicDescriptors (TestCase):
         self.assertIsInstance(method, objc.selector)
         self.assertEqual(method.signature, b'q@:@q')
         self.assertEqual(method.selector, b'foo:bar:')
-
-
-
-
-
-
 
 if __name__ == "__main__":
     main()

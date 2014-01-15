@@ -14,8 +14,8 @@ Implements a standard toolbar.
 # a new connection for each request). Up to (and including) version 2.3b1,
 # Python would not grant time to other threads while blocking inside
 # getaddrinfo(). This has been fixed *after* 2.3b1 was released. (jvr)
-
-from Cocoa import *
+import objc
+import Cocoa
 
 from twisted.internet import defer
 from twisted.web.xmlrpc import Proxy
@@ -45,7 +45,7 @@ def addToolbarItem(aController, anIdentifier, aLabel, aPaletteLabel,
     implementation of aController.  It should be refactored into a
     generically useful toolbar management untility.
     """
-    toolbarItem = NSToolbarItem.alloc().initWithItemIdentifier_(anIdentifier)
+    toolbarItem = Cocoa.NSToolbarItem.alloc().initWithItemIdentifier_(anIdentifier)
 
     toolbarItem.setLabel_(aLabel)
     toolbarItem.setPaletteLabel_(aPaletteLabel)
@@ -54,7 +54,7 @@ def addToolbarItem(aController, anIdentifier, aLabel, aPaletteLabel,
     if anAction:
         toolbarItem.setAction_(anAction)
 
-    if type(anItemContent) == NSImage:
+    if type(anItemContent) == Cocoa.NSImage:
         toolbarItem.setImage_(anItemContent)
     else:
         toolbarItem.setView_(anItemContent)
@@ -65,14 +65,14 @@ def addToolbarItem(aController, anIdentifier, aLabel, aPaletteLabel,
         toolbarItem.setMaxSize_( maxSize )
 
     if aMenu:
-        menuItem = NSMenuItem.alloc().init()
+        menuItem = Cocoa.NSMenuItem.alloc().init()
         menuItem.setSubmenu_(aMenu)
         menuItem.setTitle_( aMenu.title() )
         toolbarItem.setMenuFormRepresentation_(menuItem)
 
     aController._toolbarItems[anIdentifier] = toolbarItem
 
-class WSTConnectionWindowController (NSWindowController):
+class WSTConnectionWindowController (Cocoa.NSWindowController):
     """
     As per the definition in the NIB file,
     WSTConnectionWindowController is a subclass of
@@ -125,7 +125,7 @@ class WSTConnectionWindowController (NSWindowController):
         self.retain() # balanced by autorelease() in windowWillClose_
 
         self.statusTextField.setStringValue_("No host specified.")
-        self.progressIndicator.setStyle_(NSProgressIndicatorSpinningStyle)
+        self.progressIndicator.setStyle_(Cocoa.NSProgressIndicatorSpinningStyle)
         self.progressIndicator.setDisplayedWhenStopped_(False)
 
         self.createToolbar()
@@ -140,7 +140,7 @@ class WSTConnectionWindowController (NSWindowController):
         """
         Creates and configures the toolbar to be used by the window.
         """
-        toolbar = NSToolbar.alloc().initWithIdentifier_("WST Connection Window")
+        toolbar = Cocoa.NSToolbar.alloc().initWithIdentifier_("WST Connection Window")
         toolbar.setDelegate_(self)
         toolbar.setAllowsUserCustomization_(True)
         toolbar.setAutosavesConfiguration_(True)
@@ -149,7 +149,7 @@ class WSTConnectionWindowController (NSWindowController):
 
         self.window().setToolbar_(toolbar)
 
-        lastURL = NSUserDefaults.standardUserDefaults().stringForKey_("LastURL")
+        lastURL = Cocoa.NSUserDefaults.standardUserDefaults().stringForKey_("LastURL")
         if lastURL and len(lastURL):
             self.urlTextField.setStringValue_(lastURL)
 
@@ -161,29 +161,29 @@ class WSTConnectionWindowController (NSWindowController):
         """
         addToolbarItem(self, kWSTReloadContentsToolbarItemIdentifier,
                        "Reload", "Reload", "Reload Contents", None,
-                       "reloadVisibleData:", NSImage.imageNamed_("Reload"), None)
+                       "reloadVisibleData:", Cocoa.NSImage.imageNamed_("Reload"), None)
         addToolbarItem(self, kWSTPreferencesToolbarItemIdentifier,
                        "Preferences", "Preferences", "Show Preferences", None,
-                       "orderFrontPreferences:", NSImage.imageNamed_("Preferences"), None)
+                       "orderFrontPreferences:", Cocoa.NSImage.imageNamed_("Preferences"), None)
         addToolbarItem(self, kWSTUrlTextFieldToolbarItemIdentifier,
                        "URL", "URL", "Server URL", None, None, self.urlTextField, None)
 
         self._toolbarDefaultItemIdentifiers = [
             kWSTReloadContentsToolbarItemIdentifier,
             kWSTUrlTextFieldToolbarItemIdentifier,
-            NSToolbarSeparatorItemIdentifier,
-            NSToolbarCustomizeToolbarItemIdentifier,
+            Cocoa.NSToolbarSeparatorItemIdentifier,
+            Cocoa.NSToolbarCustomizeToolbarItemIdentifier,
         ]
 
         self._toolbarAllowedItemIdentifiers = [
             kWSTReloadContentsToolbarItemIdentifier,
             kWSTUrlTextFieldToolbarItemIdentifier,
-            NSToolbarSeparatorItemIdentifier,
-            NSToolbarSpaceItemIdentifier,
-            NSToolbarFlexibleSpaceItemIdentifier,
-            NSToolbarPrintItemIdentifier,
+            Cocoa.NSToolbarSeparatorItemIdentifier,
+            Cocoa.NSToolbarSpaceItemIdentifier,
+            Cocoa.NSToolbarFlexibleSpaceItemIdentifier,
+            Cocoa.NSToolbarPrintItemIdentifier,
             kWSTPreferencesToolbarItemIdentifier,
-            NSToolbarCustomizeToolbarItemIdentifier,
+            Cocoa.NSToolbarCustomizeToolbarItemIdentifier,
         ]
 
     def toolbarDefaultItemIdentifiers_(self, anIdentifier):
@@ -210,7 +210,7 @@ class WSTConnectionWindowController (NSWindowController):
         Effectively makes a copy of the cached reference instance of
         the toolbar item identified by itemIdentifier.
         """
-        newItem = NSToolbarItem.alloc().initWithItemIdentifier_(itemIdentifier)
+        newItem = Cocoa.NSToolbarItem.alloc().initWithItemIdentifier_(itemIdentifier)
         item = self._toolbarItems[itemIdentifier]
 
         newItem.setLabel_( item.label() )
@@ -271,7 +271,7 @@ class WSTConnectionWindowController (NSWindowController):
             return
 
         self.window().setTitle_(url)
-        NSUserDefaults.standardUserDefaults().setObject_forKey_(url, "LastURL")
+        Cocoa.NSUserDefaults.standardUserDefaults().setObject_forKey_(url, "LastURL")
 
         self.setStatusTextFieldMessage_("Retrieving method list...")
         self.getMethods(url)

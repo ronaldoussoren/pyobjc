@@ -50,7 +50,7 @@ class SplitSignatureTest (TestCase):
             for selName in list(cls.__dict__.keys()):
                 try:
                     sel = getattr(cls, selName.decode('latin1'))
-                except AttributeError:
+                except (AttributeError, TypeError):
                     continue
 
                 if not isinstance(sel, objc.selector): continue
@@ -101,7 +101,7 @@ class SplitSignatureTest (TestCase):
 
                 try:
                     sel = getattr(cls, selName)
-                except AttributeError:
+                except (AttributeError, TypeError):
                     continue
 
                 if not isinstance(sel, objc.selector): continue
@@ -120,14 +120,6 @@ class SplitSignatureTest (TestCase):
 
         self.assertEqual(objc.splitStructSignature(b'{NSPoint=dd}'), ("NSPoint", [(None, b'd'), (None, b'd')]))
         self.assertEqual(objc.splitStructSignature(b'{NSPoint="x"d"y"d}'), ("NSPoint", [("x", b'd'), ("y", b'd')]))
-
-    def testSplitStruct(self):
-        self.assertRaises(ValueError, objc.splitStruct, objc._C_ID)
-        self.assertRaises(ValueError, objc.splitStruct, b"{NSPoint=dd")
-        self.assertRaises(ValueError, objc.splitStruct, b"{NSPoint=dd}d")
-
-        self.assertEqual(objc.splitStruct(b'{NSPoint=dd}'), ("NSPoint", [(None, b'd'), (None, b'd')]))
-        self.assertEqual(objc.splitStruct(b'{NSPoint="x"d"y"d}'), ("NSPoint", [("x", b'd'), ("y", b'd')]))
 
 if __name__ == "__main__":
     main()

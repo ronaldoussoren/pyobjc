@@ -49,7 +49,7 @@ m_copyDescription_python(const void* value)
 	}
 
 	/* description is autoreleased, we should donate a reference to
-	 * our caller 
+	 * our caller
 	 */
 	CFRetain(result);
 
@@ -79,7 +79,7 @@ m_FSEVentStreamCallback(
 	PyObject* callback;
 	PyObject* info;
 	PyObject* v;
-	PyObject* paths;	
+	PyObject* paths;
 
 	v = PyTuple_GET_ITEM((PyObject*)clientCallbackInfo, 0);
 	if (PyObjC_PythonToObjC(
@@ -98,7 +98,7 @@ m_FSEVentStreamCallback(
 		}
 	} else {
 		/* The evenPaths are a CArray of C strings */
-		paths = PyObjC_CArrayToPython(@encode(char*), 
+		paths = PyObjC_CArrayToPython(@encode(char*),
 				eventPaths, numEvents);
 		if (paths == NULL) {
 			PyObjCErr_ToObjCWithGILState(&state);
@@ -106,14 +106,14 @@ m_FSEVentStreamCallback(
 	}
 
 	PyObject* py_streamRef = PyObjC_ObjCToPython(
-			@encode(ConstFSEventStreamRef), 
+			@encode(ConstFSEventStreamRef),
 			&streamRef);
 	if (py_streamRef == NULL) {
 		Py_DECREF(paths);
 		PyObjCErr_ToObjCWithGILState(&state);
 	}
 	PyObject* py_eventFlags = PyObjC_CArrayToPython(
-			@encode(FSEventStreamCreateFlags), 
+			@encode(FSEventStreamCreateFlags),
 			(void*)eventFlags, numEvents);
 	if (py_eventFlags == NULL) {
 		Py_DECREF(paths);
@@ -121,7 +121,7 @@ m_FSEVentStreamCallback(
 		PyObjCErr_ToObjCWithGILState(&state);
 	}
 	PyObject* py_eventIds = PyObjC_CArrayToPython(
-			@encode(FSEventStreamEventId), 
+			@encode(FSEventStreamEventId),
 			(void*)eventIds, numEvents);
 	if (py_eventIds == NULL) {
 		Py_DECREF(paths);
@@ -131,7 +131,7 @@ m_FSEVentStreamCallback(
 	}
 
 	PyObject* result = PyObject_CallFunction(callback,
-			"OO" Py_ARG_SIZE_T "OOO",
+			"OOnOOO",
 			py_streamRef, info, numEvents, paths,
 			py_eventFlags,
 			py_eventIds);
@@ -171,7 +171,7 @@ m_FSEventStreamCreate(PyObject* self __attribute__((__unused__)),
 
 		return NULL;
 	}
-	
+
 	CFAllocatorRef allocator;
 	if (PyObjC_PythonToObjC(@encode(CFAllocatorRef), py_allocator, &allocator) < 0) {
 		return NULL;
@@ -241,7 +241,7 @@ m_FSEventStreamCreate(PyObject* self __attribute__((__unused__)),
 	}
 
 	PyObject* result =  PyObjC_ObjCToPython(@encode(FSEventStreamRef), &stream);
-	// FSEventStreamRef is not a CF type (AFAIK), hence the user is 
+	// FSEventStreamRef is not a CF type (AFAIK), hence the user is
 	// responsible for maintaining the refcount.
 	//FSEventStreamRelease(stream);
 	return result;
@@ -269,13 +269,13 @@ m_FSEventStreamCreateRelativeToDevice(PyObject* self __attribute__((__unused__))
 	PyObject* py_deviceToWatch;
 
 	if (!PyArg_ParseTuple(args, "OOOOOOOO",
-		&py_allocator, &py_callback, &py_callback_info, 
-		&py_deviceToWatch, &py_pathsToWatch, &py_sinceWhen, 
+		&py_allocator, &py_callback, &py_callback_info,
+		&py_deviceToWatch, &py_pathsToWatch, &py_sinceWhen,
 		&py_latency, &py_flags)) {
 
 		return NULL;
 	}
-	
+
 	CFAllocatorRef allocator;
 	if (PyObjC_PythonToObjC(@encode(CFAllocatorRef), py_allocator, &allocator) < 0) {
 		return NULL;
@@ -351,7 +351,7 @@ m_FSEventStreamCreateRelativeToDevice(PyObject* self __attribute__((__unused__))
 
 	PyObject* result = PyObjC_ObjCToPython(
 			@encode(FSEventStreamRef), &stream);
-	// FSEventStreamRef is not a CF type (AFAIK), hence the user is 
+	// FSEventStreamRef is not a CF type (AFAIK), hence the user is
 	// responsible for maintaining the refcount.
 	//FSEventStreamRelease(stream);
 	return result;
@@ -384,7 +384,7 @@ PyObjC_MODULE_INIT(_callbacks)
 		PyObjC_INITERROR();
 	}
 
-        if (PyObjC_ImportAPI(m) < 0) { 
+        if (PyObjC_ImportAPI(m) < 0) {
 		PyObjC_INITERROR();
 	}
 

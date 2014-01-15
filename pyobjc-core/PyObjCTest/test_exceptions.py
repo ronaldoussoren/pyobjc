@@ -1,7 +1,5 @@
 #
 # Some more tests for exception handling.
-# XXX: we should centralize all exception handling tests into this file, this
-#      is now mostly used to check general unicode support in exceptions.
 #
 from __future__ import unicode_literals
 from PyObjCTest.exceptions import *

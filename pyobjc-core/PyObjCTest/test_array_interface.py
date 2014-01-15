@@ -2,6 +2,7 @@ from PyObjCTools.TestSupport import *
 from test import list_tests, seq_tests
 import objc
 import sys
+import operator
 
 # Import some of the stdlib tests
 from test import mapping_tests
@@ -11,6 +12,27 @@ NSMutableArray = objc.lookUpClass('NSMutableArray')
 
 class ArrayTests (seq_tests.CommonTest):
     type2test = NSArray
+
+    def test_from_iterator(self):
+        a = NSArray(i for i in range(5))
+        self.assertEqual(a, NSArray([0,1,2,3,4]))
+
+    def test_pyobjc_copy(self):
+        a = NSArray()
+        b = a.copy()
+        self.assertEqual(a, b)
+        self.assertIsInstance(b, NSArray)
+
+        a = NSArray([0])
+        b = a.copy()
+        self.assertEqual(a, b)
+        self.assertIsInstance(b, NSArray)
+
+        a = NSArray([0, 2])
+        b = a.copy()
+        self.assertEqual(a, b)
+        self.assertIsInstance(b, NSArray)
+
 
     @onlyIf(0, "Not relevant for NSArray")
     def test_pickle(self):
@@ -42,6 +64,10 @@ class ArrayTests (seq_tests.CommonTest):
         # This duplicates the tests in seq_tests, but
         # disables the 'count' test because NSArray.count
         # is not the regular python one.
+
+        u = self.type2test()
+        self.assertRaises(ValueError, u.index, 1)
+        self.assertRaises(ValueError, u.index, 1, 1)
 
         u = self.type2test([0, 1])
         self.assertEqual(u.index(0), 0)
@@ -117,6 +143,90 @@ class MutableArrayTest (list_tests.CommonTest):
     def test_pickle(self):
         pass
 
+    def test_pyobjc_setitem(self):
+        l = [1,2,3,4,5,6,7,8,9]
+        a = NSMutableArray([1,2,3,4,5,6,7,8,9])
+        self.assertRaises(TypeError, operator.setitem, a, 'a', 'b')
+        self.assertRaises(ValueError, operator.setitem, a, slice(1,4,0), ('c', 'd'))
+        a[1:4] = a
+        l[1:4] = l
+        self.assertEqual(a, NSMutableArray(l))
+
+        l = [1,2,3,4]
+        a = NSMutableArray([1,2,3,4])
+        l[-2:2] = 'a'
+        a[-2:2] = 'a'
+        self.assertEqual(a, NSMutableArray(l))
+
+        l = [1,2,3,4]
+        a = NSMutableArray([1,2,3,4])
+        self.assertRaises(ValueError, operator.setitem, a, slice(None, None,2), a)
+        self.assertRaises(ValueError, operator.setitem, a, slice(None, None,2), l)
+
+    def test_pyobjc_clear(self):
+        a = NSMutableArray([1,2,3])
+        self.assertEqual(len(a), 3)
+
+        a.clear()
+        self.assertEqual(len(a), 0)
+
+    def test_pyobjc_radd(self):
+        a = NSArray([1,2])
+
+        res = a + [3,4]
+        self.assertEqual(res, NSArray([1,2,3,4]))
+        self.assertIsInstance(res, NSArray)
+
+        res = a + (3,4)
+        self.assertEqual(res, NSArray([1,2,3,4]))
+        self.assertIsInstance(res, NSArray)
+
+        res = a + (x for x in (3,4))
+        self.assertEqual(res, NSArray([1,2,3,4]))
+        self.assertIsInstance(res, NSArray)
+
+        res = [3,4] + a
+        self.assertEqual(res, NSArray([3,4, 1, 2]))
+        self.assertIsInstance(res, NSArray)
+
+        res = (3,4) + a
+        self.assertEqual(res, NSArray([3,4, 1, 2]))
+        self.assertIsInstance(res, NSArray)
+
+        res = (x for x in (3,4)) + a
+        self.assertEqual(res, NSArray([3,4, 1, 2]))
+        self.assertIsInstance(res, NSArray)
+
+
+    def test_pyobjc_insert(self):
+        u = self.type2test([1,2,3,4,])
+        u.insert(-8, 0)
+
+        v = self.type2test([0, 1,2,3,4,])
+        self.assertEqual(u, v)
+
+        u = self.type2test([1,2,3,4,])
+        u.insert(-2, 0)
+        v = self.type2test([1,2,0, 3,4,])
+        self.assertEqual(u, v)
+
+    def test_pyobjc_pop(self):
+        u = self.type2test([1,2,3,4,])
+        self.assertRaises(IndexError, u.pop, -8)
+
+        u = self.type2test([1,2,3,4,])
+        self.assertEqual(u.pop(-2), 3)
+
+
+    def test_pyobjc_delitem(self):
+        u = self.type2test([1,2,3,4,])
+        del u[3:1]
+
+        v = self.type2test([1,2,3,4,])
+        self.assertEqual(u, v)
+
+
+
     def test_init(self):
         # Removed tests that are not relevant
 
@@ -142,11 +252,6 @@ class MutableArrayTest (list_tests.CommonTest):
         b = self.type2test(a)
         self.assertNotEqual(id(a), id(b))
         self.assertEqual(a, b)
-
-
-
-
-
 
     def test_index(self):
         # As superclass, but without calls to u.count
@@ -263,8 +368,36 @@ class MutableArrayTest (list_tests.CommonTest):
         pass
 
 
-    # Disabled for now due to crash:
-    def test_sort(self): pass
+    def test_sort(self):
+        base = [2,1,5,4,1,3]
+
+        l = self.type2test(base)
+        l.sort()
+        self.assertEqual(l, self.type2test([1,1,2,3,4,5]))
+
+        l = self.type2test(base)
+        l.sort(reverse=True)
+        self.assertEqual(l, self.type2test([5,4,3,2,1,1]))
+
+        base = [-2,1,-5,4,3]
+        l = self.type2test(base)
+        l.sort(key=lambda x:abs(x))
+        self.assertEqual(l, self.type2test([1,-2,3,4,-5]))
+
+        l = self.type2test(base)
+        l.sort(key=lambda x:abs(x), reverse=True)
+        self.assertEqual(l, self.type2test([-5,4,3,-2,1]))
+
+        if sys.version_info[0] == 2:
+            base = [-2,1,-5,4,3]
+            l = self.type2test(base)
+            l.sort(cmp=lambda x, y: cmp(abs(x), abs(y)))
+            self.assertEqual(l, self.type2test([1,-2,3,4,-5]))
+
+            l = self.type2test(base)
+            l.sort(cmp=lambda x, y: cmp(abs(x), abs(y)), reverse=True)
+            self.assertEqual(l, self.type2test([-5,4,3,-2,1]))
+
 
 if __name__ == "__main__":
     main()

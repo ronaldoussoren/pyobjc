@@ -5,7 +5,7 @@
 
 
 static PyObject*
-m_CTFontCopyAvailableTables(PyObject* self __attribute__((__unused__)), 
+m_CTFontCopyAvailableTables(PyObject* self __attribute__((__unused__)),
 		PyObject* args)
 {
 	PyObject* py_font;
@@ -98,7 +98,7 @@ m_CTParagraphStyleGetTabStops(PyObject* self __attribute__((__unused__)),
 
 	if (!b) {
 		return Py_BuildValue("OO", Py_False, Py_None);
-	} 
+	}
 
 	result = Py_BuildValue("NN", PyBool_FromLong(b), PyObjC_IdToPython((NSObject*)output));
 	return result;
@@ -116,7 +116,7 @@ m_CTParagraphStyleCreate(PyObject* self __attribute__((__unused__)),
 	CTParagraphStyleSetting* settings;
 	CTParagraphStyleRef style = NULL;
 
-	if (!PyArg_ParseTuple(args, "O" Py_ARG_SIZE_T, &py_settings, &len)) {
+	if (!PyArg_ParseTuple(args, "On", &py_settings, &len)) {
 		return NULL;
 	}
 
@@ -184,14 +184,14 @@ m_CTParagraphStyleCreate(PyObject* self __attribute__((__unused__)),
 			return NULL;
 		}
 
-		r = PyObjC_PythonToObjC(@encode(CTParagraphStyleSpecifier), 
+		r = PyObjC_PythonToObjC(@encode(CTParagraphStyleSpecifier),
 				PySequence_Fast_GET_ITEM(s, 0), &cur->spec);
 		if (r == -1) {
 			Py_DECREF(seq);
 			free(settings);
 			return NULL;
 		}
-		r = PyObjC_PythonToObjC(@encode(size_t), 
+		r = PyObjC_PythonToObjC(@encode(size_t),
 				PySequence_Fast_GET_ITEM(s, 1), &cur->valueSize);
 		if (r == -1) {
 			Py_DECREF(seq);
@@ -208,7 +208,7 @@ m_CTParagraphStyleCreate(PyObject* self __attribute__((__unused__)),
 				r = -1;
 			} else {
 
-				r = PyObjC_PythonToObjC(@encode(CFArrayRef), 
+				r = PyObjC_PythonToObjC(@encode(CFArrayRef),
 					PySequence_Fast_GET_ITEM(s, 2), &aref);
 				cur->value = &aref;
 			}
@@ -244,11 +244,11 @@ m_CTParagraphStyleCreate(PyObject* self __attribute__((__unused__)),
 	PyObjC_HANDLER
 		rv = NULL;
 		PyObjCErr_FromObjC(localException);
-	
+
 	PyObjC_ENDHANDLER
 
 	free(settings);
-	
+
 	if (PyErr_Occurred()) {
 		if (rv) {
 			CFRelease(rv);

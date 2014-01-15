@@ -8,38 +8,41 @@
 #  The original version was written in Objective-C by Malcolm Crawford
 #  http://homepage.mac.com/mmalc/CocoaExamples/controllers.html
 
-from Foundation import *
-from AppKit import *
-from objc import ivar
+import objc
+from objc import super
+from Cocoa import NSView, NSNumber, NSMakePoint, NSValueTransformer, NSMakeRect
+from Cocoa import NSNoSelectionMarker, NSNotApplicableMarker, NSMultipleValuesMarker
+from Cocoa import NSShiftKeyMask, NSDrawDarkBezel, NSDrawLightBezel, NSBezierPath
+from Cocoa import NSAffineTransform, NSLocalizedStringFromTable, NSInsetRect, NSColor
 from math import sin, cos, sqrt, atan2, pi
 
-class JoystickView(NSView):
+class JoystickView (NSView):
     AngleObservationContext = 2091
     OffsetObservationContext = 2092
 
-    maxOffset = ivar(u"maxOffset", 'd')
-    angle  = ivar(u"angle")#, 'd') # expect angle in degrees
-    offset = ivar(u"offset")#, 'd')
+    maxOffset = objc.ivar("maxOffset", objc._C_DBL)
+    angle  = objc.ivar("angle")#, 'd') # expect angle in degrees
+    offset = objc.ivar("offset")#, 'd')
 
-    observedObjectForAngle    = ivar(u'observedObjectForAngle')
-    observedKeyPathForAngle   = ivar(u'observedKeyPathForAngle')
-    angleValueTransformerName = ivar(u'angleValueTransformerName')
-    badSelectionForAngle      = ivar(u'badSelectionForAngle')
-    multipleSelectionForAngle = ivar(u'multipleSelectionForAngle')
-    allowsMultipleSelectionForAngle = ivar(u'allowsMultipleSelectionForAngle')
+    observedObjectForAngle    = objc.ivar('observedObjectForAngle')
+    observedKeyPathForAngle   = objc.ivar('observedKeyPathForAngle')
+    angleValueTransformerName = objc.ivar('angleValueTransformerName')
+    badSelectionForAngle      = objc.ivar('badSelectionForAngle')
+    multipleSelectionForAngle = objc.ivar('multipleSelectionForAngle')
+    allowsMultipleSelectionForAngle = objc.ivar('allowsMultipleSelectionForAngle')
 
-    observedObjectForOffset    = ivar(u'observedObjectForOffset')
-    observedKeyPathForOffset   = ivar(u'observedKeyPathForOffset')
-    offsetValueTransformerName = ivar(u'offsetValueTransformerName')
-    badSelectionForOffset      = ivar(u'badSelectionForOffset')
-    multipleSelectionForOffset = ivar(u'multipleSelectionForOffset')
-    allowsMultipleSelectionForOffset = ivar(u'allowsMultipleSelectionForOffset')
+    observedObjectForOffset    = objc.ivar('observedObjectForOffset')
+    observedKeyPathForOffset   = objc.ivar('observedKeyPathForOffset')
+    offsetValueTransformerName = objc.ivar('offsetValueTransformerName')
+    badSelectionForOffset      = objc.ivar('badSelectionForOffset')
+    multipleSelectionForOffset = objc.ivar('multipleSelectionForOffset')
+    allowsMultipleSelectionForOffset = objc.ivar('allowsMultipleSelectionForOffset')
 
 
+    @classmethod
     def valueClassForBinding_(cls, binding):
         # both require numbers
         return NSNumber
-    valueClassForBinding_ = classmethod(valueClassForBinding_)
 
 
     def initWithFrame_(self, frameRect):
@@ -56,7 +59,7 @@ class JoystickView(NSView):
     def bind_toObject_withKeyPath_options_(
         self, bindingName, observableController, keyPath, options):
 
-        if bindingName == u"angle":
+        if bindingName == "angle":
             # observe the controller for changes -- note, pass binding identifier
             # as the context, so we get that back in observeValueForKeyPath:...
             # that way we can determine what needs to be updated.
@@ -67,23 +70,23 @@ class JoystickView(NSView):
             self.observedObjectForAngle = observableController
             self.observedKeyPathForAngle = keyPath
             # options
-            self.angleValueTransformerName = options[u"NSValueTransformerName"]
+            self.angleValueTransformerName = options["NSValueTransformerName"]
             self.allowsMultipleSelectionForAngle = False
-            if options[u"NSAllowsEditingMultipleValuesSelection"]:
+            if options["NSAllowsEditingMultipleValuesSelection"]:
                 self.allowsMultipleSelectionForAngle = True
 
-        if bindingName == u"offset":
+        if bindingName == "offset":
             observableController.addObserver_forKeyPath_options_context_(
                 self, keyPath, 0, self.OffsetObservationContext)
             self.observedObjectForOffset = observableController
             self.observedKeyPathForOffset = keyPath
             self.allowsMultipleSelectionForOffset = False
-            if options[u"NSAllowsEditingMultipleValuesSelection"]:
+            if options["NSAllowsEditingMultipleValuesSelection"]:
                 self.allowsMultipleSelectionForOffset = True
 
 
     def unbind_(self, bindingName):
-        if bindingName == u"angle":
+        if bindingName == "angle":
             if self.observedObjectForAngle is None:
                 return
             self.observedObjectForAngle.removeObserver_forKeyPath_(
@@ -91,7 +94,7 @@ class JoystickView(NSView):
             self.observedObjectForAngle = None
             self.observedKeyPathForAngle = None
             self.angleValueTransformerName = None
-        elif bindingName == u"offset":
+        elif bindingName == "offset":
             if self.observedObjectForOffset is None:
                 return None
             self.observedObjectForOffset.removeObserver_forKeyPath_(
@@ -113,6 +116,7 @@ class JoystickView(NSView):
             if (newAngle == NSNoSelectionMarker or newAngle == NSNotApplicableMarker
                 or (newAngle == NSMultipleValuesMarker and not self.allowsMultipleSelectionForAngle)):
                 self.badSelectionForAngle = True
+
             else:
                 # note we have a good selection
                 # if we got a NSMultipleValuesMarker, note it but don't update value
@@ -124,7 +128,7 @@ class JoystickView(NSView):
                     if self.angleValueTransformerName is not None:
                         vt = NSValueTransformer.valueTransformerForName_(self.angleValueTransformerName)
                         newAngle = vt.transformedValue_(newAngle)
-                    self.setValue_forKey_(newAngle, u"angle")
+                    self.setValue_forKey_(newAngle, "angle")
 
         if context == self.OffsetObservationContext:
             # offset changed
@@ -142,7 +146,7 @@ class JoystickView(NSView):
                 if newOffset == NSMultipleValuesMarker:
                     self.multipleSelectionForOffset = True
                 else:
-                    self.setValue_forKey_(newOffset, u"offset")
+                    self.setValue_forKey_(newOffset, "offset")
                     self.multipleSelectionForOffset = False
         self.setNeedsDisplay_(True)
 
@@ -249,7 +253,7 @@ class JoystickView(NSView):
         # user can do something, so draw white background and
         # clip in anticipation of future drawing
         NSDrawLightBezel(myBounds,myBounds)
-        clipRect = NSBezierPath.bezierPathWithRect_( NSInsetRect(myBounds,2.0,2.0) )
+        clipRect = NSBezierPath.bezierPathWithRect_(NSInsetRect(myBounds,2.0,2.0))
         clipRect.addClip()
 
         if self.multipleSelectionForAngle or self.multipleSelectionForOffset:
@@ -295,10 +299,10 @@ class JoystickView(NSView):
         xOffset = sin(angleRadians) * self.offset
         yOffset = cos(angleRadians) * self.offset
 
-        path.moveToPoint_( NSMakePoint(xOffset,yOffset-5) )
-        path.lineToPoint_( NSMakePoint(xOffset,yOffset+5) )
-        path.moveToPoint_( NSMakePoint(xOffset-5,yOffset) )
-        path.lineToPoint_( NSMakePoint(xOffset+5,yOffset) )
+        path.moveToPoint_(NSMakePoint(xOffset,yOffset-5))
+        path.lineToPoint_(NSMakePoint(xOffset,yOffset+5))
+        path.moveToPoint_(NSMakePoint(xOffset-5,yOffset))
+        path.lineToPoint_(NSMakePoint(xOffset+5,yOffset))
 
         NSColor.lightGrayColor().set()
         path.setLineWidth_(1.5)
@@ -307,10 +311,10 @@ class JoystickView(NSView):
         # draw + in center of view
         path = NSBezierPath.bezierPath()
 
-        path.moveToPoint_( NSMakePoint(0,-5) )
-        path.lineToPoint_( NSMakePoint(0,+5) )
-        path.moveToPoint_( NSMakePoint(-5,0) )
-        path.lineToPoint_( NSMakePoint(+5,0) )
+        path.moveToPoint_(NSMakePoint(0,-5))
+        path.lineToPoint_(NSMakePoint(0,+5))
+        path.moveToPoint_(NSMakePoint(-5,0))
+        path.lineToPoint_(NSMakePoint(+5,0))
 
         NSColor.blackColor().set()
         path.setLineWidth_(1.0)
@@ -322,21 +326,21 @@ class JoystickView(NSView):
         self.setValue_forKey_(0, key)
 
 
-    def validateMaxOffset_error(self,ioValue):
-        if ioValue == None:
+    def validateMaxOffset_error(self, ioValue):
+        if ioValue is None:
             # trap this in setNilValueForKey
             # alternative might be to create new NSNumber with value 0 here
             return True
         if ioValue <= 0.0:
-            errorString = NSLocalizedStringFromTable(u"Maximum Offset must be greater than zero",
-                   u"Joystick",
-                   u"validation: zero maxOffset error")
+            errorString = NSLocalizedStringFromTable("Maximum Offset must be greater than zero",
+                   "Joystick",
+                   "validation: zero maxOffset error")
             userInfoDict = { NSLocalizedDescriptionKey : errorString }
-            error = NSError.alloc().initWithDomain_code_userInfo_(u"JoystickView", 1, userInfoDict)
+            error = NSError.alloc().initWithDomain_code_userInfo_("JoystickView", 1, userInfoDict)
             outError = error
             return False
         return True
 
 
-JoystickView.exposeBinding_(u"offset")
-JoystickView.exposeBinding_(u"angle")
+JoystickView.exposeBinding_("offset")
+JoystickView.exposeBinding_("angle")

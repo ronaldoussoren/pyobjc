@@ -52,15 +52,15 @@ subpackages = [ "Quartz.%s"%(fn,) for fn in os.listdir('Lib/Quartz') if os.path.
 
 setup(
     name='pyobjc-framework-Quartz',
-    version="2.6b1",
+    version="3.0a1",
     description = "Wrappers for the Quartz frameworks on Mac OS X",
     packages = [ "Quartz" ] + subpackages,
     setup_requires = [
-        'pyobjc-core>=2.6b1',
+        'pyobjc-core>=3.0a1',
     ],
     install_requires = [
-        'pyobjc-core>=2.6b1',
-        'pyobjc-framework-Cocoa>=2.6b1',
+        'pyobjc-core>=3.0a1',
+        'pyobjc-framework-Cocoa>=3.0a1',
     ],
     ext_modules = [
         # CoreVideo
@@ -71,7 +71,7 @@ setup(
         Extension('Quartz.CoreGraphics._inlines',
             [ 'Modules/_CoreGraphics_inlines.m' ]),
         Extension('Quartz.CoreGraphics._callbacks',
-            [ 'Modules/_callbacks.m' ]),
+            [ 'Modules/_callbacks.m' ], extra_compile_args=['-Wno-deprecated-declarations']),
         Extension('Quartz.CoreGraphics._doubleindirect',
             [ 'Modules/_doubleindirect.m' ]),
         Extension('Quartz.CoreGraphics._sortandmap',

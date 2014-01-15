@@ -36,6 +36,12 @@ __all__ = [
 ]
 
 def isPythonException(exception):
+    if hasattr(exception, '_pyobjc_info_'):
+        return False
+
+    if not hasattr(exception, 'userInfo'):
+        return True
+
     return (exception.userInfo() or {}).get('__pyobjc_exc_type__') is not None
 
 def nsLogPythonException(exception):

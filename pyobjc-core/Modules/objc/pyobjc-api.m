@@ -15,154 +15,119 @@
 #endif
 
 
-static void do_weaklink(PyObject* module_dict, struct PyObjC_WeakLink* funcs)
+static id
+python_to_id(PyObject* object)
 {
-	while (funcs->name) {
-		if (!funcs->func) {
-			if (PyDict_DelItemString(
-					module_dict,
-					funcs->name) == -1) {
-				PyErr_Clear();
-			}
-		}
-		funcs++;
-	}
+    id result;
+    int err;
+
+    err = depythonify_c_value(@encode(id), object, &result);
+    if (err == -1) {
+        return nil;
+    }
+
+    return result;
 }
 
-static int obj_is_uninitialized(PyObject* object)
+static PyObject*
+id_to_python(id object)
 {
-	if (!PyObjCObject_Check(object)) {
-		return -1;
-	}
-	return (PyObjCObject_GetFlags(object) & PyObjCObject_kUNINITIALIZED) != 0;
+    PyObject* result;
+
+    result = pythonify_c_value(@encode(id), &object);
+    return result;
 }
 
-static id python_to_id(PyObject* object)
+static Class
+sel_get_class(PyObject* sel)
 {
-	id result;
-	int err;
-
-	err = depythonify_c_value(@encode(id), object, &result);
-	if (err == -1) {
-		return nil;
-	}
-
-	return result;
+    if (!PyObjCSelector_Check(sel)) {
+        PyErr_Format(PyExc_TypeError, "1Expecting PyObjCSelector, got an instance of %s", Py_TYPE(sel)->tp_name);
+        return NULL;
+    }
+    return ((PyObjCSelector*)sel)->sel_class;
 }
 
-static PyObject* id_to_python(id object)
+static SEL
+sel_get_sel(PyObject* sel)
 {
-	PyObject* result;
-
-	result = pythonify_c_value(@encode(id), &object);
-	return result;
+    if (!PyObjCSelector_Check(sel)) {
+        PyErr_Format(PyExc_TypeError, "2Expecting PyObjCSelector, got an instance of %s", Py_TYPE(sel)->tp_name);
+        return NULL;
+    }
+    return ((PyObjCSelector*)sel)->sel_selector;
 }
 
-static Class      sel_get_class(PyObject* sel)
+static void
+fill_super(struct objc_super* super, Class cls, id receiver)
 {
-	if (!PyObjCNativeSelector_Check(sel)) {
-		PyErr_SetString(PyExc_TypeError, "Expecting PyObjCSelector");
-		return NULL;
-	}
-	return ((PyObjCNativeSelector*)sel)->sel_class;
+    objc_superSetReceiver(*super, receiver);
+    objc_superSetClass(*super, cls);
 }
 
-static SEL      sel_get_sel(PyObject* sel)
+static void
+fill_super_cls(struct objc_super* super, Class cls, Class self)
 {
-	if (!PyObjCSelector_Check(sel)) {
-		PyErr_SetString(PyExc_TypeError, "Expecting PyObjCSelector");
-		return NULL;
-	}
-	return ((PyObjCSelector*)sel)->sel_selector;
+    objc_superSetReceiver(*super, self);
+    objc_superSetClass(*super, object_getClass(cls));
 }
 
-static void 	fill_super(struct objc_super* super, Class cls, id receiver)
+static int
+depythonify_c_array_count2(const char* type, Py_ssize_t count, BOOL strict, PyObject* value, void* datum)
 {
-	objc_superSetReceiver(*super, receiver);
-	objc_superSetClass(*super, cls);
-}
-
-static void 	fill_super_cls(struct objc_super* super, Class cls, Class self)
-{
-	objc_superSetReceiver(*super, self);
-	objc_superSetClass(*super, object_getClass(cls));
-}
-
-static int depythonify_c_array_count2(const char* type, Py_ssize_t count, BOOL strict, PyObject* value, void* datum)
-{
-	return depythonify_c_array_count(type, count, strict, value, datum, NO, NO);
+    return depythonify_c_array_count(type, count, strict, value, datum, NO, NO);
 }
 
 
 
 
 struct pyobjc_api objc_api = {
-	PYOBJC_API_VERSION,		/* api_version */
-	sizeof(struct pyobjc_api),	/* struct_size */
-	&PyObjCClass_Type,		/* class_type */
-	(PyTypeObject*)&PyObjCObject_Type, /* object_type */
-	&PyObjCSelector_Type,		/* select_type */
-	(RegisterMethodMappingFunctionType*)PyObjC_RegisterMethodMapping,	/* register_method_mapping */
-	(int (*)(char*, PyObject *(*)(PyObject*, PyObject*, PyObject*), void (*)(void*, void*, void**, void*)))PyObjC_RegisterSignatureMapping,	/* register_signature_mapping */
-	PyObjCObject_GetObject,		/* obj_get_object */
-	PyObjCObject_ClearObject,		/* obj_clear_object */
-	PyObjCClass_GetClass,		/* cls_get_class */
-	PyObjCClass_New,			/* cls_to_python */
-	python_to_id,			/* python_to_id */
-	id_to_python,			/* id_to_python */
-	PyObjCErr_FromObjC,		/* err_objc_to_python */
-	PyObjCErr_ToObjC,			/* err_python_to_objc */
-	depythonify_c_value,		/* py_to_objc */
-	pythonify_c_value,		/* objc_to_python */
-	PyObjCRT_SizeOfType,		/* sizeof_type */
-	sel_get_class,			/* sel_get_class */
-	sel_get_sel,			/* sel_get_sel */
-	fill_super,			/* fill_super */
-	fill_super_cls,			/* fill_super_cls*/
-	PyObjCPointerWrapper_Register,	/* register_pointer_wrapper */
-	(void(*)(void*,void*,void**,void*))PyObjCUnsupportedMethod_IMP,    /* unsupported_method_imp */
-	PyObjCUnsupportedMethod_Caller, /* unsupported_method_caller */
-	PyObjCErr_ToObjCWithGILState,	/* objc_err_to_objc_gil */
-	PyObjCRT_AlignOfType,		/* alignof_type */
-	sel_getName,			/* selname */
-	PyObjCRT_SimplifySignature,	/* simplify_sig */
-	PyObjC_FreeCArray,		/* free_c_array */
-	PyObjC_PythonToCArray,		/* py_to_c_array */
-	PyObjC_CArrayToPython,		/* c_array_to_py */
-	PyObjC_RegisterStructType,	/* register_struct */
-	&PyObjCIMP_Type,		/* imp_type */
-	PyObjCIMP_GetIMP,		/* imp_get_imp */
-	PyObjCIMP_GetSelector,		/* imp_get_sel */
-	PyObjCErr_AsExc,		/* err_python_to_nsexception */
-	PyGILState_Ensure,		/* gilstate_ensure */
-	obj_is_uninitialized,   /* obj_is_uninitialized */
-	PyObjCObject_New,		/* pyobjc_object_new */
-	PyObjCCreateOpaquePointerType, /* pointer_type_new */
-	PyObjCObject_NewTransient,	/* newtransient */
-	PyObjCObject_ReleaseTransient,  /* releasetransient */
-	do_weaklink,			/* doweaklink */
-	PyObjCRT_RemoveFieldNames,	/* removefields */
-	&PyObjC_NULL,			/* PyObjC_NULL */
-	depythonify_c_array_count2,	/* PyObjC_DepythonifyCArray */
-	PyObjC_VarList_New,		/* PyObjC_VarList_New */
-	PyObjC_is_ascii_string,
-	PyObjC_is_ascii_prefix,
-	PyObjCObject_Convert,
+    .api_version                = PYOBJC_API_VERSION,
+    .struct_len                 = sizeof(struct pyobjc_api),
+    .register_method_mapping    =  (RegisterMethodMappingFunctionType*)PyObjC_RegisterMethodMapping,
+    .obj_get_object             = PyObjCObject_GetObject,
+    .cls_get_class              = PyObjCClass_GetClass,
+    .python_to_id               = python_to_id,
+    .id_to_python               = id_to_python,
+    .err_objc_to_python         = PyObjCErr_FromObjC,
+    .py_to_objc                 = depythonify_c_value,
+    .objc_to_py                 = pythonify_c_value,
+    .sizeof_type                = PyObjCRT_SizeOfType,
+    .sel_get_class              = sel_get_class,
+    .sel_get_sel                = sel_get_sel,
+    .fill_super                 = fill_super,
+    .fill_super_cls             = fill_super_cls,
+    .register_pointer_wrapper   = PyObjCPointerWrapper_Register,
+    .unsupported_method_imp     = (void(*)(void*,void*,void**,void*))PyObjCUnsupportedMethod_IMP,
+    .unsupported_method_caller  = PyObjCUnsupportedMethod_Caller,
+    .err_python_to_objc_gil     = PyObjCErr_ToObjCWithGILState,
+    .free_c_array               = PyObjC_FreeCArray,
+    .py_to_c_array              = PyObjC_PythonToCArray,
+    .c_array_to_py              = PyObjC_CArrayToPython,
+    .imp_type                   = &PyObjCIMP_Type,
+    .imp_get_imp                = PyObjCIMP_GetIMP,
+    .imp_get_sel                = PyObjCIMP_GetSelector,
+    .newtransient               = PyObjCObject_NewTransient,
+    .releasetransient           = PyObjCObject_ReleaseTransient,
+    .pyobjc_null                = &PyObjC_NULL,
+    .dep_c_array_count          = depythonify_c_array_count2,
+    .varlistnew                 = PyObjC_VarList_New,
+    .pyobjcobject_convert       = PyObjCObject_Convert,
 };
 
 int PyObjCAPI_Register(PyObject* module)
 {
 #if PY_MAJOR_VERSION == 2
-	PyObject* API = PyCObject_FromVoidPtr(&objc_api, NULL);
+    PyObject* API = PyCObject_FromVoidPtr(&objc_api, NULL);
 #else
-	PyObject* API = PyCapsule_New(&objc_api, "objc." PYOBJC_API_NAME, NULL);
+    PyObject* API = PyCapsule_New(&objc_api, "objc." PYOBJC_API_NAME, NULL);
 #endif
 
-	if (API == NULL) return -1;
+    if (API == NULL) return -1;
 
-	if (PyModule_AddObject(module, PYOBJC_API_NAME, API) < 0) {
-		Py_DECREF(API);
-		return -1;
-	}
-	return 0;
+    if (PyModule_AddObject(module, PYOBJC_API_NAME, API) < 0) {
+        Py_DECREF(API);
+        return -1;
+    }
+    return 0;
 }

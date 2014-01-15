@@ -17,7 +17,7 @@ protocols:
 
 Conforming to a formal protocol requires the interface of a class to explicitly
 declare that it implements that protocol, and the implementation must implement
-all methods of the protocol.
+all required methods of the protocol.
 
 Informal protocols are defined as categories on NSObject with no implementation:
 
@@ -41,17 +41,18 @@ it possible to use the protocol description to provide better error messages and
 to automaticly deduce the method signatures for classes that implement an
 informal protocol.
 
-Informal protocols are represented using instances of 
-``objc.informal_protocol``.  These instances are automaticly added to a
-registry used by the class builder, so it is not necessary to explicitly
-state that a class implements an informal protocol.
+Informal protocols are represented using instances of
+:class:`objc.informal_protocol`.  Instances of this class are added to
+a internal registration in the bridge, and are automaticly used when a new
+class is declared. Because of this classes don't have to declare that they
+conform to an informal protocol.
 
 Formal protocols and PyObjC
 ---------------------------
 
-PyObjC also has an explicit representation for formal protocols. 
+PyObjC also has an explicit representation for formal protocols.
 
-Formal protocols are represented as instances of ``objc.formal_protocol``. 
+Formal protocols are represented as instances of ``objc.formal_protocol``.
 Unlike informal protocols, it is necessary to explicitly declare
 conformance to formal protocols.  However, all formal protocols in Cocoa
 are also described using ``objc.informal_protocol`` objects.
@@ -61,7 +62,7 @@ are also described using ``objc.informal_protocol`` objects.
    Is this necessary? we could also use the same strategy as for informal
    protocols, and drop the informal_protocol wrappers for formal protocols.
 
-In python 2.x declaring conformance to a formal protocol is done by using 
+In python 2.x declaring conformance to a formal protocol is done by using
 the formal protocol as a mix-in, and by implementing its methods:
 
  .. sourcecode:: python
@@ -85,6 +86,25 @@ a keyword argument:
 	NSLocking = objc.protocolNamed('NSLocking')
 
 	class MyLockingObject(NSObject, protocols=[NSLocking]):
+		def lock(self):
+			pass
+
+		def unlock(self):
+			pass
+
+And finally, it is also possible to specify the protocols that the class
+conforms to using an attribute named *__pyobjc_protocols__* in the class body. This
+works for both Python 2.x and 3.x, and is primarily meant to be used by code that
+needs to work with both language versions.
+
+ .. sourcecode:: python
+    :linenos:
+
+	NSLocking = objc.protocolNamed('NSLocking')
+
+	class MyLockingObject(NSObject):
+                __pyobjc_protocols__ = [NSLocking]
+
 		def lock(self):
 			pass
 

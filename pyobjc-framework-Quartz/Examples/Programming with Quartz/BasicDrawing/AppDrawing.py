@@ -1,4 +1,5 @@
-from Quartz import *
+import Quartz
+import Cocoa
 
 import Utilities
 import UIHandling
@@ -56,14 +57,14 @@ def GetURL(name):
         if name in _urlMap:
             return _urlMap[name]
 
-        url = CFBundleCopyResourceURL(mainBundle, name, None, None)
+        url = Cocoa.CFBundleCopyResourceURL(mainBundle, name, None, None)
         _urlMap[name] = url
     else:
-        print >>sys.stderr, "Can't get the app bundle!"
+        print("Can't get the app bundle!")
         return
 
     if url is None:
-        print >>sys.stderr, "Couldn't get URL for %r"%(name,)
+        print("Couldn't get URL for %r"%(name,))
 
     return url
 

@@ -13,8 +13,8 @@ def __add__(self, value):
     return self.indexPathByAddingIndex_(value)
 
 
-objc.addConvenienceForClass("NSIndexPath", [
+objc.addConvenienceForClass("NSIndexPath", (
     ('__len__', __len__),
     ('__getitem__', __getitem__),
     ('__add__', __add__),
-])
+))

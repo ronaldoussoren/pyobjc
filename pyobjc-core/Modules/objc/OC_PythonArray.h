@@ -1,5 +1,5 @@
 /*!
- * @header OC_PythonArray.h 
+ * @header OC_PythonArray.h
  * @abstract Objective-C proxy class for Python sequences
  * @discussion
  *     This file defines the class that is used to represent Python sequences
@@ -7,32 +7,20 @@
  */
 
 #import "pyobjc.h"
-#import <Foundation/Foundation.h>
 
 /*!
  * @class       OC_PythonArray
  * @abstract    Objective-C proxy class for Python sequences
- * @discussion  Instances of this class are used as proxies for Python 
- * 	        sequences when these are passed to Objective-C code. Because 
- * 	        this class is a subclass of NSMutableArray Python sequences 
- * 	        can be used everywhere where NSArray or NSMutableArray objects 
- * 	        are expected.
+ * @discussion  Instances of this class are used as proxies for Python
+ *              sequences when these are passed to Objective-C code. Because
+ *              this class is a subclass of NSMutableArray Python sequences
+ *              can be used everywhere where NSArray or NSMutableArray objects
+ *              are expected.
  */
 @interface OC_PythonArray : NSMutableArray
 {
-	PyObject* value;
+    PyObject* value;
 }
-
-/*!
- * @method depythonifyObject:
- * @abstract Create a new instance when appropriate
- * @param value A python object
- * @result Returns an autoreleased value or nil. Might set error in latter case.
- *
- * Caller must own the GIL
- */
-+(OC_PythonArray*)depythonifyObject:(PyObject*)object;
-
 
 /*!
  * @method arrayWithPythonObject:
@@ -134,8 +122,19 @@
  */
 -(void)removeObjectAtIndex:(NSUInteger)idx;
 
-/* These two are only present to *disable* coding, not implement it */
+
+/*
+ * @method encodeWithCoder:
+ * @abstract Encode a python sequence to an NSCoder
+ * @param coder The coder to use
+ */
 - (void)encodeWithCoder:(NSCoder*)coder;
+
+/*
+ * @method initWithCoder:
+ * @abstract Restore a python sequence from an NSCoder
+ * @param coder The coder to use
+ */
 - (id)initWithCoder:(NSCoder*)coder;
 
 @end

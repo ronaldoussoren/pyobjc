@@ -7,13 +7,13 @@
 #  The original version was written in Objective-C by Malcolm Crawford
 #  at http://homepage.mac.com/mmalc/CocoaExamples/controllers.html
 
-from Foundation import *
+from Foundation import NSObject
 import objc
 
 
 class Category(NSObject):
     title = objc.ivar('title')
-    priority = objc.ivar('priority', 'i')
+    priority = objc.ivar('priority', objc._C_INT)
 
     @classmethod
     def allCategories(cls):

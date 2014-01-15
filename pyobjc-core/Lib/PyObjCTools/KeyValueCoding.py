@@ -29,7 +29,7 @@ from __future__ import unicode_literals
 import sys
 
 __all__ = ("getKey", "setKey", "getKeyPath", "setKeyPath")
-if sys.version_info[0] == 2:
+if sys.version_info[0] == 2:  # pragma: no 3.x cover; pragma: no branch
     __all__ = tuple(str(x) for x in __all__)
 
 
@@ -39,9 +39,8 @@ import sys
 import collections
 import warnings
 
-if sys.version_info[0] == 2:
+if sys.version_info[0] == 2:  # pragma: no 3.x cover
     from itertools import imap as map
-    pass
 
 else:   # pragma: no cover (py3k)
     basestring = str
@@ -95,7 +94,7 @@ class _ArrayOperators (object):
         s = set()
         r = []
         for lst in obj:
-            for item in [ getKeyPath(item, path) for item in lst ]:
+            for item in (getKeyPath(item, path) for item in lst):
                 try:
                     if item in s or item in r:
                         continue
@@ -115,7 +114,7 @@ class _ArrayOperators (object):
         path = '.'.join(segments)
         rval = set()
         for lst in obj:
-            for item in [ getKeyPath(item, path) for item in lst ]:
+            for item in (getKeyPath(item, path) for item in lst):
                 rval.add(item)
         return rval
 
@@ -125,8 +124,7 @@ class _ArrayOperators (object):
         rval = []
         s = set()
         r = []
-        lst = [ getKeyPath(item, path) for item in obj ]
-        for item in lst:
+        for item in (getKeyPath(item, path) for item in obj):
             try:
                 if item in s or item in r:
                     continue
@@ -135,7 +133,7 @@ class _ArrayOperators (object):
                 s.add(item)
 
             except TypeError:
-                if item in rval: 
+                if item in rval:
                     continue
 
                 rval.append(item)
@@ -164,7 +162,7 @@ class _ArrayOperators (object):
         path = '.'.join(segments)
         rval = []
         for lst in obj:
-            rval.extend([ getKeyPath(item, path) for item in lst ])
+            rval.extend(getKeyPath(item, path) for item in lst)
         return rval
 
 
@@ -172,8 +170,6 @@ class _ArrayOperators (object):
     def unionOfObjects(obj, segments):
         path = '.'.join(segments)
         return [ getKeyPath(item, path) for item in obj]
-
-
 
 
 def getKey(obj, key):
@@ -304,7 +300,7 @@ def setKey(obj, key, value):
                 return
             except AttributeError:
                 raise KeyError("Key %s does not exist" % (key,))
-    
+
     try:
         getattr(obj, "_" + key)
     except AttributeError:
@@ -391,19 +387,3 @@ class kvc(object):
         if not isinstance(item, basestring):
             raise TypeError('Keys must be strings')
         setKeyPath(self.__pyobjc_object__, item, value)
-
-
-
-# XXX: Undocumented and deprecated functions, only present because these had public
-#      names in previous releases and the module has suboptimal documentation.
-#      To be removed in PyObjC 3.0
-class ArrayOperators (_ArrayOperators):
-    def __init__(self):
-        warnings.warn("Don't use PyObjCTools.KeyValueCoding.ArrayOperators", DeprecationWarning)
-
-class _Deprecated (object):
-    def __getattr__(self, nm):
-        warnings.warn("Don't use PyObjCTools.KeyValueCoding.arrayOperators", DeprecationWarning)
-        return getattr(_ArrayOperators, nm)
-
-arrayOperators = _Deprecated()

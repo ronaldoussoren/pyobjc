@@ -2,18 +2,25 @@
 Script for building the example.
 
 Usage:
-    python setup.py py2app
+    python2 setup.py py2app
 """
 from setuptools import setup
 
 plist = dict(
-    NSPrincipalClass='HotKeyApp',
+    NSPrincipalClass="HotKeyApp",
 )
 
 
 setup(
     app=["HotKey.py"],
     data_files=["English.lproj"],
-    setup_requires=["py2app"],
-    options=dict(py2app=dict(plist=plist)),
+    options=dict(
+        py2app=dict(
+            plist=plist
+        )
+    ),
+    setup_requires=[
+        "py2app",
+        "pyobjc-framework-Cocoa",
+    ]
 )

@@ -8,11 +8,12 @@
 #  at http://homepage.mac.com/mmalc/CocoaExamples/controllers.html
 
 import objc
-from Cocoa import *
+from objc import super
+from Cocoa import NSDocument, NSMutableArray, NSKeyedArchiver, NSKeyedUnarchiver
 
 # BookmarksDocument defines this as it may be used for copy and paste
 # in addition to just drag and drop
-CopiedRowsType = u"COPIED_ROWS_TYPE"
+CopiedRowsType = "COPIED_ROWS_TYPE"
 
 class BookmarksDocument (NSDocument):
     bookmarksArray = objc.ivar('bookmarksArray')
@@ -25,7 +26,7 @@ class BookmarksDocument (NSDocument):
         return self
 
     def windowNibName(self):
-        return u"BookmarksDocument"
+        return "BookmarksDocument"
 
     # Straightforward, standard document class
     # Allows content array to be saved, and file opened

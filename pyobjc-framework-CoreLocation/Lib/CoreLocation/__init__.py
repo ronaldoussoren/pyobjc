@@ -28,7 +28,10 @@ sys.modules['CoreLocation'] = mod = objc.ObjCLazyModule(
     _metadata.__dict__, None, {
         '__doc__': __doc__,
         '__path__': __path__,
+        '__loader__': globals().get('__loader__', None),
         'objc': objc,
         'kCLErrorGeocodeFoundNoResult': kCLErrorGeocodeFoundNoResult,
         'kCLErrorGeocodeCanceled': kCLErrorGeocodeCanceled,
     }, (Foundation,))
+
+del sys.modules['CoreLocation._metadata']

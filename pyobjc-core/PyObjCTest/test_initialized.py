@@ -1,15 +1,16 @@
 from __future__ import unicode_literals
+import objc
 from PyObjCTools.TestSupport import *
 from PyObjCTest.initialize import OC_TestInitialize
 
 class OC_TestInitializePython (OC_TestInitialize):
     def init(self):
-        return super(OC_TestInitializePython, self).init()
+        return objc.super(OC_TestInitializePython, self).init()
 
 OBJECT_LIST=[]
 class OC_TestInitializePython2 (OC_TestInitialize):
     def init(self):
-        self = super(OC_TestInitializePython2, self).init()
+        self = objc.super(OC_TestInitializePython2, self).init()
         OBJECT_LIST.append(self)
         return self
 

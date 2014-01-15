@@ -1,61 +1,182 @@
-#!/usr/bin/env python
-
 import sys
 import subprocess
 import shutil
 import re
 import os
 import plistlib
-
-# We need at least Python 2.5
-MIN_PYTHON = (2, 6)
-
-# FIXME: autodetect default values for USE_* variables:
-#  both should be false by default, unless
-#  1) python is /usr/bin/python: both should be true
-#  2) python build with --with-system-libffi: USE_SYSTEM_FFI
-#     should be true.
-
-# Set USE_SYSTEM_FFI to True to link to the system version
-# of libffi
-USE_SYSTEM_FFI = False
-
-if sys.version_info < MIN_PYTHON:
-    vstr = '.'.join(map(str, MIN_PYTHON))
-    raise SystemExit('PyObjC: Need at least Python ' + vstr)
-
+import glob
+import site
+import platform
 
 try:
     import setuptools
 
 except ImportError:
-    import distribute_setup
-    distribute_setup.use_setuptools()
+    # setuptools is required to run the setup file, bail out early
+    print("This package requires setuptools to build")
+    sys.exit(1)
 
 
-#extra_args=dict(
-    #use_2to3 = True,
-#)
+from pkg_resources import working_set, normalize_path, add_activation_listener, require
 
-def get_os_level():
-    pl = plistlib.readPlist('/System/Library/CoreServices/SystemVersion.plist')
-    v = pl['ProductVersion']
-    return '.'.join(v.split('.')[:2])
-
-
-
-
-
-from setuptools.command import build_py
-from setuptools.command import test
+from setuptools import setup, Extension, find_packages
 from distutils import log
 from distutils.core import Command
+from distutils.errors import DistutilsPlatformError, DistutilsSetupError, DistutilsError
+from setuptools.command import build_py, test, egg_info
+from setuptools.command import build_ext, install_lib
+
+# We need at least Python 2.7
+MIN_PYTHON = (2, 7)
+
+if sys.version_info < MIN_PYTHON:
+    vstr = '.'.join(map(str, MIN_PYTHON))
+    raise SystemExit('PyObjC: Need at least Python ' + vstr)
+
+#
+#
+# Compiler arguments
+#
+#
+
+# CFLAGS for the objc._objc extension:
+CFLAGS = [
+    "-DPyObjC_STRICT_DEBUGGING",
+    "-DMACOSX", # For libffi
+    "-DPyObjC_BUILD_RELEASE=%02d%02d"%(
+        tuple(map(int, platform.mac_ver()[0].split('.')[:2]))),
+    "-DMACOSX",
+    "-g",
+    "-fexceptions",
+
+    # Loads of warning flags
+    "-Wall", "-Wstrict-prototypes", "-Wmissing-prototypes",
+    "-Wformat=2", "-W",
+    "-Wpointer-arith",
+    "-Wmissing-declarations",
+    "-Wnested-externs",
+    "-W",
+    "-Wno-import",
+    #"-fvisibility=protected",
+    "-Wshorten-64-to-32",
+    "-Werror",
+]
+
+# CFLAGS for other (test) extensions:
+EXT_CFLAGS = CFLAGS + ["-IModules/objc"]
+
+# LDFLAGS for the objc._objc extension
+OBJC_LDFLAGS = [
+    '-framework', 'CoreFoundation',
+    '-framework', 'Foundation',
+    '-framework', 'Carbon',
+    '-fvisibility=protected',
+    '-g', '-O1', # XXX
+]
+
+
+#
+#
+# Adjust distutils CFLAGS:
+#
+# - PyObjC won't work when compiled with -O0
+# - To make it easier to debug reduce optimization level
+#   to -O1 when building with a --with-pydebug build of Python
+# - Set optimization to -O4 with normal builds of Python,
+#   enables link-time optimization with clang and appears to
+#   be (slightly) faster.
+#
+
+from distutils.sysconfig import get_config_var, get_config_vars
+
+if '-O0' in get_config_var('CFLAGS'):
+    # -O0 doesn't work with some (older?) compilers, unconditionally
+    # change -O0 to -O1 to work around that issue.
+    print ("Change -O0 to -O1 (-O0 miscompiles libffi)")
+    vars = get_config_vars()
+    for k in vars:
+        if isinstance(vars[k], str) and '-O0' in vars[k]:
+            vars[k] = vars[k].replace('-O0', '-O1')
+
+
+if get_config_var('Py_DEBUG'):
+    # Running with Py_DEBUG, reduce optimization level
+    # to make it easier to debug the code.
+    cfg_vars = get_config_vars()
+    for k in vars:
+        if isinstance(cfg_vars[k], str) and '-O2' in cfg_vars[k]:
+            cfg_vars[k] = cfg_vars[k].replace('-O2', '-O1 -g')
+        elif isinstance(cfg_vars[k], str) and '-O3' in cfg_vars[k]:
+            cfg_vars[k] = cfg_vars[k].replace('-O3', '-O1 -g')
+
+else:
+    # Enable -O4, which enables link-time optimization with
+    # clang. This appears to have a positive effect on performance.
+    cfg_vars = get_config_vars()
+    for k in cfg_vars:
+        if isinstance(cfg_vars[k], str) and '-O2' in cfg_vars[k]:
+            cfg_vars[k] = cfg_vars[k].replace('-O2', '-O4')
+        elif isinstance(cfg_vars[k], str) and '-O3' in cfg_vars[k]:
+            cfg_vars[k] = cfg_vars[k].replace('-O3', '-O4')
+
+
+# XXX: bug in CPython 3.4 repository leaks unwanted compiler flag into disutils.
+cfg_vars = get_config_vars()
+for k in cfg_vars:
+    if isinstance(cfg_vars[k], str) and '-Werror=declaration-after-statement' in cfg_vars[k]:
+        cfg_vars[k] = cfg_vars[k].replace('-Werror=declaration-after-statement', '')
+
+
+
+
+
+#
+# Support for an embedded copy of libffi
+#
+FFI_CFLAGS=['-Ilibffi-src/include', '-Ilibffi-src/powerpc']
+
+# The list below includes the source files for all CPU types that we run on
+# this makes it easier to build fat binaries on Mac OS X.
+FFI_SOURCE=[
+    "libffi-src/ffi.c",
+    "libffi-src/types.c",
+    "libffi-src/powerpc/ppc-darwin.S",
+    "libffi-src/powerpc/ppc-darwin_closure.S",
+    "libffi-src/powerpc/ppc-ffi_darwin.c",
+    "libffi-src/powerpc/ppc64-darwin_closure.S",
+    "libffi-src/x86/darwin64.S",
+    "libffi-src/x86/x86-darwin.S",
+    "libffi-src/x86/x86-ffi64.c",
+    "libffi-src/x86/x86-ffi_darwin.c",
+]
+
+
+
+
+# Patch distutils: it needs to compile .S files as well.
+from distutils.unixccompiler import UnixCCompiler
+UnixCCompiler.src_extensions.append('.S')
+del UnixCCompiler
+
+
+#
+#
+# Custom distutils commands
+#
+#
+
+def verify_platform():
+    if sys.platform != 'darwin':
+        raise DistutilsPlatformError("PyObjC requires Mac OS X to build")
+
+    if sys.version_info[:2] < (2, 7):
+        raise DistutilsPlatformError("PyObjC requires Python 2.7 or later to build")
 
 
 class oc_build_py (build_py.build_py):
-    def run_2to3(self, files, doctests=True):
-        files = [ fn for fn in files if not os.path.basename(fn).startswith('test3_') ]
-        build_py.build_py.run_2to3(self, files, doctests)
+    def run(self):
+        verify_platform()
+        build_py.build_py.run(self)
 
     def build_packages(self):
         log.info("Overriding build_packages to copy PyObjCTest")
@@ -66,7 +187,6 @@ class oc_build_py (build_py.build_py):
         finally:
             self.packages = p
 
-from pkg_resources import working_set, normalize_path, add_activation_listener, require
 
 class oc_test (test.test):
     description = "run test suite"
@@ -131,7 +251,6 @@ class oc_test (test.test):
         if 'PyObjCTools' in sys.modules:
             del sys.modules['PyObjCTools']
 
-
         ei_cmd = self.get_finalized_command('egg_info')
         sys.path.insert(0, normalize_path(ei_cmd.egg_base))
         sys.path.insert(1, os.path.dirname(__file__))
@@ -149,6 +268,10 @@ class oc_test (test.test):
 
 
     def run(self):
+        verify_platform()
+
+        be_cmd = self.get_finalized_command('build_ext')
+
         import unittest
 
         # Ensure that build directory is on sys.path (py3k)
@@ -164,7 +287,7 @@ class oc_test (test.test):
             meta = self.distribution.metadata
             name = meta.get_name()
             test_pkg = name + "_tests"
-            suite = makeTestSuite()
+            suite = makeTestSuite(be_cmd.use_system_libffi)
 
             runner = unittest.TextTestRunner(verbosity=self.verbosity)
             result = runner.run(suite)
@@ -181,91 +304,47 @@ class oc_test (test.test):
             )
             print("SUMMARY: %s"%(summary,))
 
+            if not result.wasSuccessful():
+                raise DistutilsError("some tests failed")
+
         finally:
             self.remove_from_sys_path()
 
-from setuptools.command import egg_info
 
-def write_header(cmd, basename, filename):
-    with open(os.path.join('Modules/objc/', os.path.basename(basename)), 'rU') as fp:
-        data = fp.read()
-    if not cmd.dry_run:
-        if not os.path.exists(os.path.dirname(filename)):
-            os.makedirs(os.path.dirname(filename))
-
-    cmd.write_file(basename, filename, data)
-
-
-# This is a workaround for a bug in setuptools: I'd like
-# to use the 'egg_info.writers' entry points in the setup()
-# call, but those don't work when also using a package_base
-# argument as we do.
-# (issue 123 in the distribute tracker)
-class my_egg_info (egg_info.egg_info):
+class oc_egg_info (egg_info.egg_info):
+    # This is a workaround for a bug in setuptools: I'd like
+    # to use the 'egg_info.writers' entry points in the setup()
+    # call, but those don't work when also using a package_base
+    # argument as we do.
+    # (issue 123 in the distribute tracker)
     def run(self):
+        verify_platform()
+
         self.mkpath(self.egg_info)
 
         for hdr in ("pyobjc-compat.h", "pyobjc-api.h"):
             fn = os.path.join("include", hdr)
 
-            write_header(self, fn, os.path.join(self.egg_info, fn))
+            self.write_header(fn, os.path.join(self.egg_info, fn))
 
         egg_info.egg_info.run(self)
 
+    def write_header(self, basename, filename):
+        with open(os.path.join('Modules/objc/', os.path.basename(basename)), 'rU') as fp:
+            data = fp.read()
+        if not self.dry_run:
+            if not os.path.exists(os.path.dirname(filename)):
+                os.makedirs(os.path.dirname(filename))
 
-if sys.version_info[0] == 3:
-    # FIXME: add custom test command that does the work.
-    # - Patch sys.path
-    # - Ensure PyObjCTest gets translated by 2to3
-    from distutils.util import get_platform
-    build_dir = 'build/lib.%s-%d.%d'%(
-        get_platform(), sys.version_info[0], sys.version_info[1])
-    if hasattr(sys, 'gettotalrefcount'):
-        build_dir += '-pydebug'
-    sys.path.insert(0,  build_dir)
-
-
-import os
-import glob
-import site
-import platform
-
-if 'MallocStackLogging' in os.environ:
-    del os.environ['MallocStackLogging']
-if 'MallocStackLoggingNoCompact' in os.environ:
-    del os.environ['MallocStackLoggingNoCompact']
-
-# See the news file:
-#os.environ['MACOSX_DEPLOYMENT_TARGET']='10.5'
+        self.write_file(basename, filename, data)
 
 
 
-#if int(os.uname()[2].split('.')[0]) >= 10:
-#        USE_SYSTEM_FFI = True
+class oc_install_lib (install_lib.install_lib):
+    def run(self):
+        verify_platform()
+        install_lib.install_lib.run(self)
 
-
-# Some PiPy stuff
-LONG_DESCRIPTION="""
-PyObjC is a bridge between Python and Objective-C.  It allows full
-featured Cocoa applications to be written in pure Python.  It is also
-easy to use other frameworks containing Objective-C class libraries
-from Python and to mix in Objective-C, C and C++ source.
-
-Python is a highly dynamic programming language with a shallow learning
-curve.  It combines remarkable power with very clear syntax.
-
-The installer package installs a number of Xcode templates for
-easily creating new Cocoa-Python projects.
-
-PyObjC also supports full introspection of Objective-C classes and
-direct invocation of Objective-C APIs from the interactive interpreter.
-"""
-
-from setuptools import setup, Extension, find_packages
-from setuptools.command import build_ext, install_lib
-import os
-
-class pyobjc_install_lib (install_lib.install_lib):
     def get_exclusions(self):
         result = install_lib.install_lib.get_exclusions(self)
         for fn in install_lib._install_lib.get_outputs(self):
@@ -304,6 +383,7 @@ def _working_compiler(executable):
         p = subprocess.Popen([
             executable, '-c', fp.name] + cflags,
             stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+        stdout, stderr = p.communicate()
         exit = p.wait()
         if exit != 0:
             return False
@@ -344,14 +424,13 @@ def _fixup_compiler():
             cc = os.popen("/usr/bin/xcrun -find clang").read()
 
     if not cc:
-        raise SystemExit("Cannot locate compiler candidate")
+        raise DistutilsPlatformError("Cannot locate compiler candidate")
 
     if not _working_compiler(cc):
-        raise SystemExit("Cannot locate a working compiler")
+        raise DistutilsPlatformError("Cannot locate a working compiler")
 
     if cc != oldcc:
-        print("Use '%s' instead of '%s' as the compiler"%(
-            cc, oldcc))
+        log.info("Use '%s' instead of '%s' as the compiler"%(cc, oldcc))
 
         vars = get_config_vars()
         for env in ('BLDSHARED', 'LDSHARED', 'CC', 'CXX'):
@@ -361,9 +440,67 @@ def _fixup_compiler():
                 vars[env] = ' '.join(split)
 
 
-class pyobjc_build_ext (build_ext.build_ext):
+class oc_build_ext (build_ext.build_ext):
+    user_options = [
+        ('use-system-libffi=', None, "print what tests are run"),
+        ('deployment-target=', None, "deployment target to use"),
+        ('sdk-root=', None, "Path to the SDK to use, or 'python'"),
+    ]
+    boolean_options = [ 'use-system-libffi' ]
+
+    def initialize_options(self):
+        build_ext.build_ext.initialize_options(self)
+        self.use_system_libffi=False
+        self.deployment_target = None
+        self.sdk_root = None
+
+    def finalize_options(self):
+        build_ext.build_ext.finalize_options(self)
+
+        if self.sdk_root is None:
+            if os.path.exists('/usr/bin/xcodebuild'):
+                self.sdk_root = subprocess.check_output(
+                        ['/usr/bin/xcodebuild', '-version', '-sdk', 'macosx', 'Path'],
+                        universal_newlines=True)[:-1]
+
+            else:
+                self.sdk_root = '/'
+
+        if not os.path.exists(self.sdk_root):
+            raise DistutilsSetupError("SDK root %r does not exist"%(self.sdk_root,))
+
+        if not os.path.exists(os.path.join(self.sdk_root, 'usr/include/objc/runtime.h')):
+            if '-DNO_OBJC2_RUNTIME' not in CFLAGS:
+                CFLAGS.append('-DNO_OBJC2_RUNTIME')
+                EXT_CFLAGS.append('-DNO_OBJC2_RUNTIME')
+
     def run(self):
+        verify_platform()
+
+        if not self.use_system_libffi:
+            for ext in self.extensions:
+                if ext.name == 'objc._objc':
+                    if ext.sources[:-len(FFI_SOURCE)] != FFI_SOURCE:
+                        ext.sources.extend(FFI_SOURCE)
+                        ext.extra_compile_args.extend(FFI_CFLAGS)
+
+        if self.deployment_target is not None:
+            os.environ['MACOSX_DEPLOYMENT_TARGET'] = self.deployment_target
+
+        if self.sdk_root != 'python':
+            if '-isysroot' not in CFLAGS:
+                CFLAGS.extend(['-isysroot', self.sdk_root])
+                EXT_CFLAGS.extend(['-isysroot', self.sdk_root])
+                OBJC_LDFLAGS.extend(['-isysroot', self.sdk_root])
+
+
+        cflags = get_config_var('CFLAGS')
+        if '-mno-fused-madd' in cflags:
+            cflags = cflags.replace('-mno-fused-madd', '')
+            get_config_vars()['CFLAGS'] = cflags
+
         _fixup_compiler()
+
         build_ext.build_ext.run(self)
         extensions = self.extensions
         self.extensions = [
@@ -371,205 +508,97 @@ class pyobjc_build_ext (build_ext.build_ext):
         self.copy_extensions_to_source()
         self.extensions = extensions
 
-def frameworks(*args):
-    lst = []
-    for arg in args:
-        lst.extend(['-framework', arg])
-    return lst
+#
+# Calculate package metadata
+#
 
-def IfFrameWork(name, packages, extensions, headername=None):
+def parse_package_metadata():
     """
-    Return the packages and extensions if the framework exists, or
-    two empty lists if not.
+    Read the 'metadata' section of 'setup.cfg' to calculate the package
+    metadata (at least those parts that can be configured staticly).
     """
-    import os
-    for pth in ('/System/Library/Frameworks', '/Library/Frameworks'):
-        basedir = os.path.join(pth, name)
-        if os.path.exists(basedir):
-            if (headername is None) or os.path.exists(os.path.join(basedir, "Headers", headername)):
-                return packages, extensions
-    return [], []
+    try:
+        from ConfigParser import RawConfigParser
+    except ImportError:
+        from configparser import RawConfigParser
 
-# Double-check
-if sys.platform != 'darwin':
-    print("You're not running on MacOS X, and don't use GNUstep")
-    print("I don't know how to build PyObjC on such a platform.")
-    print("Please read the ReadMe.")
-    print("")
-    raise SystemExit("ObjC runtime not found")
+    cfg = RawConfigParser()
+    with open('setup.cfg') as fp:
+        cfg.readfp(fp)
 
-from distutils.sysconfig import get_config_var, get_config_vars
+    cfg.optionxform = lambda x: x
 
-CFLAGS=[ ]
+    metadata = {}
+    for opt in cfg.options('metadata'):
+        val = cfg.get('metadata', opt)
+        if opt in ('classifiers',):
+            metadata[opt] = [x for x in val.splitlines() if x]
+        elif opt in ('long_description',):
+            metadata[opt] = val[1:]
+        elif opt in ('packages', 'namespace_packages', 'platforms'):
+            metadata[opt] = [x.strip() for x in val.split(',')]
+        else:
+            metadata[opt] = val
 
-# Enable 'PyObjC_STRICT_DEBUGGING' to enable some costly internal
-# assertions.
-CFLAGS.extend([
-    #"-fdiagnostics-show-option",
+    metadata['version'] = package_version()
 
-    # Use this to analyze with clang
-    #"--analyze",
-
-# The following flags are an attempt at getting rid of /usr/local
-# in the compiler search path.
-    "-DPyObjC_STRICT_DEBUGGING",
-    "-DMACOSX", # For libffi
-    "-DPyObjC_BUILD_RELEASE=%02d%02d"%(tuple(map(int, platform.mac_ver()[0].split('.')[:2]))),
-#    "-no-cpp-precomp",
-    "-DMACOSX",
-    "-g",
-    "-fexceptions",
-
-
-    # Loads of warning flags
-    "-Wall", "-Wstrict-prototypes", "-Wmissing-prototypes",
-    "-Wformat=2", "-W",
-    #"-Wshadow", # disabled due to warnings from Python headers
-    "-Wpointer-arith", #"-Wwrite-strings",
-    "-Wmissing-declarations",
-    "-Wnested-externs",
-#    "-Wno-long-long",
-    "-W",
-
-    #"-fcatch-undefined-behavior",
-    #"-Wno-missing-method-return-type", # XXX
-    "-Wno-import",
-    "-DPyObjC_BUILD_RELEASE=%02d%02d"%(tuple(map(int, get_os_level().split('.')))),
-    #"-Warray-bounds", # XXX: Needed to avoid False positives for PyTuple access macros
-    ])
-
-## Arghh, a stupid compiler flag can cause problems. Don't
-## enable -O0 if you value your sanity. With -O0 PyObjC will crash
-## on i386 systems when a method returns a struct that isn't returned
-## in registers.
-if '-O0' in get_config_var('CFLAGS'):
-    print ("Change -O0 to -O1")
-    vars = get_config_vars()
-    for k in vars:
-        if isinstance(vars[k], str) and '-O0' in vars[k]:
-            vars[k] = vars[k].replace('-O0', '-O1')
-
-OBJC_LDFLAGS = frameworks('CoreFoundation', 'Foundation', 'Carbon')
-
-if not os.path.exists('/usr/include/objc/runtime.h'):
-    CFLAGS.append('-DNO_OBJC2_RUNTIME')
-
-# Force compilation with the local SDK, compilation of PyObC will result in
-# a binary that runs on other releases of the OS without using a particular SDK.
-CFLAGS.extend(['-isysroot', '/'])
-OBJC_LDFLAGS.extend(['-isysroot', '/'])
-CFLAGS.append('-Ibuild/codegen/')
-
-# Patch distutils: it needs to compile .S files as well.
-from distutils.unixccompiler import UnixCCompiler
-UnixCCompiler.src_extensions.append('.S')
-del UnixCCompiler
-
-
-#
-# Support for an embedded copy of libffi
-#
-FFI_CFLAGS=['-Ilibffi-src/include', '-Ilibffi-src/powerpc']
-
-# The list below includes the source files for all CPU types that we run on
-# this makes it easier to build fat binaries on Mac OS X.
-FFI_SOURCE=[
-    "libffi-src/ffi.c",
-    "libffi-src/types.c",
-    "libffi-src/powerpc/ppc-darwin.S",
-    "libffi-src/powerpc/ppc-darwin_closure.S",
-    "libffi-src/powerpc/ppc-ffi_darwin.c",
-    "libffi-src/powerpc/ppc64-darwin_closure.S",
-    "libffi-src/x86/darwin64.S",
-    "libffi-src/x86/x86-darwin.S",
-    "libffi-src/x86/x86-ffi64.c",
-    "libffi-src/x86/x86-ffi_darwin.c",
-]
-
-
-
-#
-# Calculate the list of extensions: objc._objc + extensions for the unittests
-#
-
-if USE_SYSTEM_FFI:
-    ExtensionList =  [
-        Extension("objc._objc",
-            list(glob.glob(os.path.join('Modules', 'objc', '*.m'))),
-            extra_compile_args=CFLAGS + ["-I/usr/include/ffi"],
-            extra_link_args=OBJC_LDFLAGS + ["-lffi"],
-            depends=list(glob.glob(os.path.join('Modules', 'objc', '*.h'))),
-        ),
-    ]
-
-else:
-    ExtensionList =  [
-        Extension("objc._objc",
-            FFI_SOURCE + list(glob.glob(os.path.join('Modules', 'objc', '*.m'))),
-            extra_compile_args=CFLAGS + FFI_CFLAGS,
-            extra_link_args=OBJC_LDFLAGS,
-            depends=list(glob.glob(os.path.join('Modules', 'objc', '*.h'))),
-        ),
-    ]
-
-for test_source in glob.glob(os.path.join('Modules', 'objc', 'test', '*.m')):
-    name, ext = os.path.splitext(os.path.basename(test_source))
-
-    ExtensionList.append(Extension('PyObjCTest.' + name,
-        [test_source],
-        extra_compile_args=['-IModules/objc'] + CFLAGS,
-        extra_link_args=OBJC_LDFLAGS))
+    return metadata
 
 def package_version():
+    """
+    Return the package version, the canonical location
+    for the version is the main header file of the objc._objc
+    extension.
+    """
     fp = open('Modules/objc/pyobjc.h', 'r')
     for ln in fp.readlines():
         if ln.startswith('#define OBJC_VERSION'):
             fp.close()
             return ln.split()[-1][1:-1]
 
-    raise ValueError("Version not found")
-
-CLASSIFIERS = filter(None,
-"""
-Development Status :: 5 - Production/Stable
-Environment :: Console
-Environment :: MacOS X :: Cocoa
-Intended Audience :: Developers
-License :: OSI Approved :: MIT License
-Natural Language :: English
-Operating System :: MacOS :: MacOS X
-Programming Language :: Python
-Programming Language :: Python :: 2
-Programming Language :: Python :: 2.6
-Programming Language :: Python :: 2.7
-Programming Language :: Python :: 3
-Programming Language :: Python :: 3.1
-Programming Language :: Python :: 3.2
-Programming Language :: Python :: 3.3
-Programming Language :: Objective C
-Topic :: Software Development :: Libraries :: Python Modules
-Topic :: Software Development :: User Interfaces
-""".splitlines())
+    raise DistutilsSetupError("Version not found")
 
 
-dist = setup(
-    name = "pyobjc-core",
-    version = package_version(),
-    description = "Python<->ObjC Interoperability Module",
-    long_description = LONG_DESCRIPTION,
-    author = "Ronald Oussoren, bbum, SteveM, LeleG, many others stretching back through the reaches of time...",
-    author_email = "pyobjc-dev@lists.sourceforge.net",
-    url = "http://pyobjc.sourceforge.net/",
-    platforms = [ 'MacOS X' ],
-    ext_modules = ExtensionList,
-    packages = [ 'objc', 'PyObjCTools', ],
-    namespace_packages = ['PyObjCTools'],
-    package_dir = { '': 'Lib', 'PyObjCTest': 'PyObjCTest' },
-    extra_path = "PyObjC",
-    cmdclass = {'build_ext': pyobjc_build_ext, 'install_lib': pyobjc_install_lib, 'build_py': oc_build_py, 'test': oc_test, 'egg_info':my_egg_info },
-    options = {'egg_info': {'egg_base': 'Lib'}},
-    classifiers = CLASSIFIERS,
-    license = 'MIT License',
-    download_url = 'http://pyobjc.sourceforge.net/software/index.php',
-    zip_safe = False,
+#
+# Actually call the setup function.
+#
+# Note that all package metadata is stored in setup.cfg, except those
+# bits that require Python code to calculate or are needed to control
+# the working of distutils.
+#
+setup(
+    ext_modules = [
+        Extension(
+            "objc._objc",
+            list(glob.glob(os.path.join('Modules', 'objc', '*.m'))),
+            extra_compile_args=CFLAGS,
+            extra_link_args=OBJC_LDFLAGS,
+            depends=list(glob.glob(os.path.join('Modules', 'objc', '*.h'))),
+        ),
+    ] + [
+        Extension(
+            "PyObjCTest." + os.path.splitext(os.path.basename(test_source))[0],
+            [test_source],
+            extra_compile_args=EXT_CFLAGS,
+            extra_link_args=OBJC_LDFLAGS)
+
+        for test_source in glob.glob(os.path.join('Modules', 'objc', 'test', '*.m'))
+    ],
+    cmdclass = {
+        'build_ext': oc_build_ext,
+        'install_lib': oc_install_lib,
+        'build_py': oc_build_py,
+        'test': oc_test,
+        'egg_info':oc_egg_info
+    },
+    package_dir = {
+        '': 'Lib',
+        'PyObjCTest': 'PyObjCTest'
+    },
+    options = {
+        'egg_info': {
+            'egg_base': 'Lib'
+        }
+    },
+    **parse_package_metadata()
 )

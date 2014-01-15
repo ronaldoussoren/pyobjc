@@ -117,10 +117,11 @@ class TestLatentSemanticMapping (TestCase):
 
         fn = __file__
         fn = os.path.splitext(fn)[0] + ".py"
-        for line in open(fn, 'r'):
-            t = LSMTextCreate(None, map)
-            LSMTextAddWords(t, line, CFLocaleCopyCurrent(), 0)
-            LSMMapAddText(map, t, cat)
+        with open(fn, 'r') as fp:
+            for line in fp:
+                t = LSMTextCreate(None, map)
+                LSMTextAddWords(t, line, CFLocaleCopyCurrent(), 0)
+                LSMMapAddText(map, t, cat)
 
 
         v = LSMMapAddTextWithWeight(map, text2, cat2, 2.0)

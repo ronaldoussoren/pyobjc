@@ -11,13 +11,14 @@ demonstrate their usage using the ``NSMutableDictonary`` class.
 
 We'll start by importing everything we need::
 
-    >>> from Foundation import *
+    >>> from Foundation import NSMutableDictionary
 
 Then create an empty dictionary::
 
     >>> d = NSMutableDictionary.dictionary()
     >>> d
-    {}
+    {
+    }
     >>> isinstance(d, dict)
     False
     >>> isinstance(d, NSMutableDictionary)
@@ -27,20 +28,25 @@ You can add a new value using the Objective-C API::
 
     >>> d.setObject_forKey_(42, 'key2')
     >>> d
-    {key2 = 42; }
+    {
+        key2 = 42;
+    }
 
 But can also use the familiar python interface:
 
-    >>> d['key1'] = u'hello'
+    >>> d['key1'] = 'hello'
     >>> d
-    {key1 = hello; key2 = 42; }
+    {
+        key1 = hello;
+        key2 = 42;
+    }
 
 The same is true for fetching elements::
 
     >>> d['key2']
     42
     >>> d.objectForKey_('key1')
-    u'hello'
+    'hello'
 """
 import doctest
 import __main__

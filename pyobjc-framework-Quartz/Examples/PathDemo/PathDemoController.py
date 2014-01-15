@@ -1,7 +1,7 @@
-from Cocoa import *
+import Cocoa
 import objc
 
-class PathDemoController (NSObject):
+class PathDemoController (Cocoa.NSObject):
     button      = objc.ivar()
     popup       = objc.ivar()
     window      = objc.ivar()

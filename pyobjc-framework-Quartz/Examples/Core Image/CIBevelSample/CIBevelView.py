@@ -1,5 +1,6 @@
-from Cocoa import *
-from Quartz import *
+import objc
+from objc import super
+import Quartz
 
 from SampleCIView import SampleCIView
 
@@ -25,37 +26,37 @@ class CIBevelView (SampleCIView):
             return None
 
         self.points = [ None ] * NUM_POINTS
-        self.points[0] = CGPointMake(0.5 * frameRect.size.width, frameRect.size.height - 100.0)
-        self.points[1] = CGPointMake(150.0, 100.0)
-        self.points[2] = CGPointMake(frameRect.size.width - 150.0, 100.0)
-        self.points[3] = CGPointMake(0.7*self.points[0].x + 0.3*self.points[2].x, 0.7*self.points[0].y + 0.3*self.points[2].y)
+        self.points[0] = Quartz.CGPointMake(0.5 * frameRect.size.width, frameRect.size.height - 100.0)
+        self.points[1] = Quartz.CGPointMake(150.0, 100.0)
+        self.points[2] = Quartz.CGPointMake(frameRect.size.width - 150.0, 100.0)
+        self.points[3] = Quartz.CGPointMake(0.7*self.points[0].x + 0.3*self.points[2].x, 0.7*self.points[0].y + 0.3*self.points[2].y)
 
-        url = NSURL.fileURLWithPath_(
-           NSBundle.mainBundle().pathForResource_ofType_("lightball", "tiff"))
+        url = Cocoa.NSURL.fileURLWithPath_(
+           Cocoa.NSBundle.mainBundle().pathForResource_ofType_("lightball", "tiff"))
 
-        self.lightball = CIImage.imageWithContentsOfURL_(url)
+        self.lightball = Quartz.CIImage.imageWithContentsOfURL_(url)
 
-        self.heightFieldFilter = CIFilter.filterWithName_("CIHeightFieldFromMask")
+        self.heightFieldFilter = Quartz.CIFilter.filterWithName_("CIHeightFieldFromMask")
         self.heightFieldFilter.setDefaults()
         self.heightFieldFilter.setValue_forKey_(15.0, "inputRadius")
 
-        self.twirlFilter = CIFilter.filterWithName_("CITwirlDistortion")
+        self.twirlFilter = Quartz.CIFilter.filterWithName_("CITwirlDistortion")
         self.twirlFilter.setDefaults()
         self.twirlFilter.setValue_forKey_(
-            CIVector.vectorWithX_Y_(
+            Quartz.CIVector.vectorWithX_Y_(
                 0.5*frameRect.size.width,
                 0.5*frameRect.size.height),
             "inputCenter")
         self.twirlFilter.setValue_forKey_(300.0, "inputRadius")
         self.twirlFilter.setValue_forKey_(0.0, "inputAngle")
 
-        self.shadedFilter = CIFilter.filterWithName_("CIShadedMaterial")
+        self.shadedFilter = Quartz.CIFilter.filterWithName_("CIShadedMaterial")
         self.shadedFilter.setDefaults()
         self.shadedFilter.setValue_forKey_(self.lightball, "inputShadingImage")
         self.shadedFilter.setValue_forKey_(20.0, "inputScale")
 
         # 1/30 second should give us decent animation
-        NSTimer.scheduledTimerWithTimeInterval_target_selector_userInfo_repeats_(
+        Cocoa.NSTimer.scheduledTimerWithTimeInterval_target_selector_userInfo_repeats_(
                 1.0/30.0, self, 'changeTwirlAngle:', None, True)
         return self
 
@@ -91,22 +92,22 @@ class CIBevelView (SampleCIView):
         self.mouseDragged_(event)
 
     def updateImage(self):
-        context = NSGraphicsContext.currentContext().CIContext()
+        context = Cocoa.NSGraphicsContext.currentContext().CIContext()
         if self.lineImage is None:
             bounds  = self.bounds()
             layer   = context.createCGLayerWithSize_info_(
-                    CGSizeMake(NSWidth(bounds), NSHeight(bounds)), None)
+                    Quartz.CGSizeMake(Cocoa.NSWidth(bounds), Cocoa.NSHeight(bounds)), None)
 
-            cg      = CGLayerGetContext(layer)
+            cg      = Quartz.CGLayerGetContext(layer)
 
-            CGContextSetRGBStrokeColor(cg, 1,1,1,1)
-            CGContextSetLineCap(cg, kCGLineCapRound)
+            Quartz.CGContextSetRGBStrokeColor(cg, 1,1,1,1)
+            Quartz.CGContextSetLineCap(cg, Quartz.kCGLineCapRound)
 
-            CGContextSetLineWidth(cg, 60.0)
-            CGContextMoveToPoint(cg, self.points[0].x, self.points[0].y)
+            Quartz.CGContextSetLineWidth(cg, 60.0)
+            Quartz.CGContextMoveToPoint(cg, self.points[0].x, self.points[0].y)
             for i in range(1, NUM_POINTS):
-                CGContextAddLineToPoint(cg, self.points[i].x, self.points[i].y)
-            CGContextStrokePath(cg)
+                Quartz.CGContextAddLineToPoint(cg, self.points[i].x, self.points[i].y)
+            Quartz.CGContextStrokePath(cg)
 
             self.lineImage = CIImage.alloc().initWithCGLayer_(layer)
 

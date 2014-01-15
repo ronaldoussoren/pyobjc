@@ -1,6 +1,7 @@
-from Cocoa import *
-from Quartz import *
-from LaunchServices import *
+import objc
+import Cocoa
+import Quartz
+import LaunchServices
 
 import os
 
@@ -11,21 +12,21 @@ import os
 # -------------------------------------------------------------------------
 def openFiles():
     # Get a list of extensions to filter in our NSOpenPanel.
-    panel = NSOpenPanel.openPanel()
+    panel = Cocoa.NSOpenPanel.openPanel()
 
     # The user can choose a folder; images in the folder are added recursively.
     panel.setCanChooseDirectories_(True)
     panel.setCanChooseFiles_(True)
     panel.setAllowsMultipleSelection_(True)
 
-    if panel.runModalForTypes_(NSImage.imageUnfilteredTypes()) == NSOKButton:
+    if panel.runModalForTypes_(Cocoa.NSImage.imageUnfilteredTypes()) == Cocoa.NSOKButton:
         return panel.filenames()
 
     return []
 
 #==============================================================================
 # This is the data source object.
-class myImageObject (NSObject):
+class myImageObject (Cocoa.NSObject):
     _path = objc.ivar()
 
     # -------------------------------------------------------------------------
@@ -44,7 +45,7 @@ class myImageObject (NSObject):
     #   Set up the image browser to use a path representation.
     # -------------------------------------------------------------------------
     def imageRepresentationType(self):
-        return IKImageBrowserPathRepresentationType
+        return Quartz.IKImageBrowserPathRepresentationType
 
     # -------------------------------------------------------------------------
     #   imageRepresentation:
@@ -62,7 +63,7 @@ class myImageObject (NSObject):
     def imageUID(self):
         return self._path
 
-class ImageBrowserController (NSWindowController):
+class ImageBrowserController (Cocoa.NSWindowController):
     imageBrowser = objc.IBOutlet()
 
     images = objc.ivar()
@@ -75,8 +76,8 @@ class ImageBrowserController (NSWindowController):
     def awakeFromNib(self):
         # Create two arrays : The first is for the data source representation.
         # The second one contains temporary imported images  for thread safeness.
-        self.images = NSMutableArray.alloc().init()
-        self.importedImages = NSMutableArray.alloc().init()
+        self.images = Cocoa.NSMutableArray.alloc().init()
+        self.importedImages = Cocoa.NSMutableArray.alloc().init()
 
         # Allow reordering, animations and set the dragging destination
         # delegate.
@@ -113,29 +114,29 @@ class ImageBrowserController (NSWindowController):
         isImageFile = False
         uti = None
 
-        url = CFURLCreateWithFileSystemPath(None, filePath, kCFURLPOSIXPathStyle, False)
+        url = Cocoa.CFURLCreateWithFileSystemPath(None, filePath, Cocoa.kCFURLPOSIXPathStyle, False)
 
-        res, info =  LSCopyItemInfoForURL(url, kLSRequestExtension | kLSRequestTypeCreator, None)
+        res, info =  LaunchServices.LSCopyItemInfoForURL(url, LaunchServices.kLSRequestExtension | LaunchServices.kLSRequestTypeCreator, None)
         if res == 0:
             # Obtain the UTI using the file information.
 
             # If there is a file extension, get the UTI.
             if info[3] != None:
-                uti = UTTypeCreatePreferredIdentifierForTag(kUTTagClassFilenameExtension, info[3], kUTTypeData)
+                uti = LaunchServices.UTTypeCreatePreferredIdentifierForTag(LaunchServices.kUTTagClassFilenameExtension, info[3], LaunchServices.kUTTypeData)
 
             # No UTI yet
             if uti is None:
                 # If there is an OSType, get the UTI.
-                typeString = UTCreateStringForOSType(info.filetype)
+                typeString = LaunchServices.UTCreateStringForOSType(info.filetype)
                 if typeString != None:
-                    uti = UTTypeCreatePreferredIdentifierForTag(kUTTagClassOSType, typeString, kUTTypeData)
+                    uti = LaunchServices.UTTypeCreatePreferredIdentifierForTag(LaunchServices.kUTTagClassOSType, typeString, LaunchServices.kUTTypeData)
 
             # Verify that this is a file that the ImageIO framework supports.
             if uti is not None:
-                supportedTypes = CGImageSourceCopyTypeIdentifiers()
+                supportedTypes = Quartz.CGImageSourceCopyTypeIdentifiers()
 
                 for item in supportedTypes:
-                    if UTTypeConformsTo(uti, item):
+                    if LaunchServices.UTTypeConformsTo(uti, item):
                         isImageFile = True
                         break
 
@@ -147,11 +148,11 @@ class ImageBrowserController (NSWindowController):
     def addAnImageWithPath_(self, path):
         addObject = False
 
-        fileAttribs = NSFileManager.defaultManager().fileAttributesAtPath_traverseLink_(path, True)
+        fileAttribs = Cocoa.NSFileManager.defaultManager().fileAttributesAtPath_traverseLink_(path, True)
         if fileAttribs is not None:
             # Check for packages.
-            if NSFileTypeDirectory == fileAttribs[NSFileType]:
-                if not NSWorkspace.sharedWorkspace().isFilePackageAtPath_(path):
+            if Cocoa.NSFileTypeDirectory == fileAttribs[Cocoa.NSFileType]:
+                if not Cocoa.NSWorkspace.sharedWorkspace().isFilePackageAtPath_(path):
                     addObject = True    # If it is a file, it's OK to add.
 
             else:
@@ -188,7 +189,7 @@ class ImageBrowserController (NSWindowController):
     #   add these paths in the temporary images array.
     # -------------------------------------------------------------------------
     def addImagesWithPaths_(self, paths):
-        pool = NSAutoreleasePool.alloc().init()
+        pool = Cocoa.NSAutoreleasePool.alloc().init()
 
         for path in paths:
             isdir = os.path.isdir(path)
@@ -196,7 +197,7 @@ class ImageBrowserController (NSWindowController):
 
         # Update the data source in the main thread.
         self.performSelectorOnMainThread_withObject_waitUntilDone_(
-                'updateDatasource', None, True)
+                b'updateDatasource', None, True)
 
         del pool
 
@@ -214,8 +215,8 @@ class ImageBrowserController (NSWindowController):
         path = openFiles()
         if path:
             # launch import in an independent thread
-            NSThread.detachNewThreadSelector_toTarget_withObject_(
-                    'addImagesWithPaths:', self, path)
+            Cocoa.NSThread.detachNewThreadSelector_toTarget_withObject_(
+                    b'addImagesWithPaths:', self, path)
 
     # -------------------------------------------------------------------------
     #   addImageButtonClicked:sender
@@ -287,13 +288,13 @@ class ImageBrowserController (NSWindowController):
     #   draggingEntered:sender
     # -------------------------------------------------------------------------
     def draggingEntered_(self, sender):
-        return NSDragOperationCopy
+        return Cocoa.NSDragOperationCopy
 
     # -------------------------------------------------------------------------
     #   draggingUpdated:sender
     # -------------------------------------------------------------------------
     def draggingUpdated_(self, sender):
-        return NSDragOperationCopy
+        return Cocoa.NSDragOperationCopy
 
     # -------------------------------------------------------------------------
     #   performDragOperation:sender
@@ -303,13 +304,13 @@ class ImageBrowserController (NSWindowController):
 
         # Look for paths on the pasteboard.
         data = None
-        if NSFilenamesPboardType in pasteboard.types():
-            data = pasteboard.dataForType_(NSFilenamesPboardType)
+        if Cocoa.NSFilenamesPboardType in pasteboard.types():
+            data = pasteboard.dataForType_(Cocoa.NSFilenamesPboardType)
 
         if data is not None:
             # Retrieve  paths.
-            filenames, format, errorDescription = NSPropertyListSerialization.propertyListFromData_mutabilityOption_format_errorDescription_(
-                    data , kCFPropertyListImmutable, None, None)
+            filenames, format, errorDescription = Cocoa.NSPropertyListSerialization.propertyListFromData_mutabilityOption_format_errorDescription_(
+                    data , Cocoa.kCFPropertyListImmutable, None, None)
 
             # Add paths to the data source.
             for fn in filenames:

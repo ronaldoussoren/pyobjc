@@ -1,16 +1,9 @@
 #ifndef PyObjC_BUNDLE_VARIABLES_H
 #define PyObjC_BUNDLE_VARIABLES_H
 
-PyObject* PyObjC_loadSpecialVar(PyObject* self __attribute__((__unused__)),
-		PyObject* args, PyObject* kwds);
-PyObject* PyObjC_loadBundleVariables(PyObject* self __attribute__((__unused__)),
-		PyObject* args, PyObject* kwds);
-
-PyObject* PyObjC_loadBundleFunctions(PyObject* self __attribute__((__unused__)),
-		PyObject* args, PyObject* kwds);
-
-PyObject* PyObjC_loadFunctionList(PyObject* self __attribute__((__unused__)),
-		                PyObject* args, PyObject* kwds);
-
+extern PyObject* PyObjC_loadSpecialVar(PyObject*, PyObject*, PyObject*) __attribute__((__nonnull__)) __attribute__((__warn_unused_result__));
+extern PyObject* PyObjC_loadBundleVariables(PyObject*, PyObject*, PyObject*) __attribute__((__nonnull__)) __attribute__((__warn_unused_result__));
+extern PyObject* PyObjC_loadBundleFunctions(PyObject*, PyObject*, PyObject*) __attribute__((__nonnull__)) __attribute__((__warn_unused_result__));
+extern PyObject* PyObjC_loadFunctionList(PyObject*, PyObject*, PyObject*) __attribute__((__nonnull__)) __attribute__((__warn_unused_result__));
 
 #endif /* PyObjC_BUNDLE_VARIABLES_H */

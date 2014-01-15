@@ -2,22 +2,22 @@
 Example for using CGShading and CGFunction. This code is directly translated
 from procedural C code and is definitely not good Python style.
 """
-from PyObjCTools import NibClassBuilder
-from Quartz import *
+import objc
+from objc import super
+import Cocoa
+import Quartz
 
 import math
+import sys
 import random
-import objc
 import array
-
-NibClassBuilder.extractClasses("MainMenu")
 
 # Global variables
 frequency = [ 0.0, 0.0, 0.0, 0.0 ]
-startPoint = CGPoint(0.0, 0.0)
+startPoint = Quartz.CGPoint(0.0, 0.0)
 startRadius = 0.0
 startExtend = False
-endPoint = CGPoint(0.0, 0.0)
+endPoint = Quartz.CGPoint(0.0, 0.0)
 endRadius = 0.0
 endExtend = False
 
@@ -35,7 +35,7 @@ MAX_HEIGHT = 1000
 
 
 def randomPoint():
-    return CGPoint(random.random(), random.random())
+    return Quartz.CGPoint(random.random(), random.random())
 
 
 
@@ -47,13 +47,16 @@ def evaluate1(components, input, output):
     return out
 
 def getFunction1(colorspace):
-    callbacks = ( evaluate1, None )
-    domain = array.array('f', [ -2 * math.pi, 2 * math.pi ])
-    range = array.array('f', [ 0, 1, 0, 1, 0, 1, 0, 1, 0, 1 ])
-    components = 1 + CGColorSpaceGetNumberOfComponents(colorspace)
+    if sys.maxsize > 2 ** 32:
+        a_type = 'd'
+    else:
+        a_type = 'f'
+    domain = array.array(a_type, [ -2 * math.pi, 2 * math.pi ])
+    range = array.array(a_type, [ 0, 1, 0, 1, 0, 1, 0, 1, 0, 1 ])
+    components = 1 + Quartz.CGColorSpaceGetNumberOfComponents(colorspace)
 
-    return CGFunctionCreate(components, 1, domain, components,
-                            range, callbacks)
+    return Quartz.CGFunctionCreate(components, 1, domain, components,
+                            range, evaluate1)
 
 def evaluate2(components, input, output):
     c = [ 0.510, 0.188, 0.910, 0.122 ]
@@ -69,13 +72,12 @@ def evaluate2(components, input, output):
     return out
 
 def getFunction2(colorspace):
-    callbacks = ( evaluate2, None )
     domain = [0, 1]
     range = [ 0, 1, 0, 1, 0, 1, 0, 1, 0, 1 ]
 
-    components = 1 + CGColorSpaceGetNumberOfComponents(colorspace);
-    return CGFunctionCreate(components, 1, domain, components,
-                            range, callbacks)
+    components = 1 + Quartz.CGColorSpaceGetNumberOfComponents(colorspace);
+    return Quartz.CGFunctionCreate(components, 1, domain, components,
+                            range, evaluate2)
 
 def evaluate3(components, input, output):
     c = [ 0.3, 0, 0, 0 ]
@@ -87,43 +89,43 @@ def evaluate3(components, input, output):
     return out
 
 def getFunction3(colorspace):
-    callbacks = ( evaluate3, None )
     domain = [0, 1]
     range = [ 0, 1, 0, 1, 0, 1, 0, 1, 0, 1 ]
 
-    components = 1 + CGColorSpaceGetNumberOfComponents(colorspace);
-    return CGFunctionCreate(components, 1, domain, components,
-                            range, callbacks);
+    components = 1 + Quartz.CGColorSpaceGetNumberOfComponents(colorspace);
+    return Quartz.CGFunctionCreate(components, 1, domain, components,
+                            range, evaluate3);
 
 def getAxialShading(colorspace, function):
-    return CGShadingCreateAxial(colorspace, startPoint, endPoint,
+    return Quartz.CGShadingCreateAxial(colorspace, startPoint, endPoint,
                                 function, startExtend, endExtend);
 
 def getRadialShading(colorspace, function):
-    return CGShadingCreateRadial(colorspace, startPoint, startRadius,
+    return Quartz.CGShadingCreateRadial(colorspace, startPoint, startRadius,
                                  endPoint, endRadius, function,
                                  startExtend, endExtend);
 
 
-class MyQuartzView (NibClassBuilder.AutoBaseClass):
+class MyQuartzView (Cocoa.NSView):
+
     def initWithFrame_(self, frameRect):
         global startPoint, startRadius, startExtend
         global endPoint, endRadius, endExtend
 
         super(MyQuartzView, self).initWithFrame_(frameRect)
 
-        startPoint = CGPoint(0, 0)
+        startPoint = Quartz.CGPoint(0, 0)
         startRadius = 0;
         startExtend = False;
 
-        endPoint = CGPointMake( 0, 0 );
+        endPoint = Quartz.CGPointMake( 0, 0 );
         endRadius = 0;
         endExtend = False;
 
         return self;
 
     def drawRect_(self, rect):
-        currentContext = NSGraphicsContext.currentContext().graphicsPort()
+        currentContext = Cocoa.NSGraphicsContext.currentContext().graphicsPort()
 
         # Note that at this point the current context CTM is set up such
         # that the context size corresponds to the size of the view
@@ -141,73 +143,74 @@ class MyQuartzView (NibClassBuilder.AutoBaseClass):
         if getFunction is None:
             self.randomize_(self)
 
-        m = CGAffineTransformIdentity;
-        m = CGAffineTransformRotate(m, angle);
-        m = CGAffineTransformScale(m, width, height);
-        m = CGAffineTransformScale(m, sx, sy);
+        m = Quartz.CGAffineTransformIdentity;
+        m = Quartz.CGAffineTransformRotate(m, angle);
+        m = Quartz.CGAffineTransformScale(m, width, height);
+        m = Quartz.CGAffineTransformScale(m, sx, sy);
 
-        CGContextBeginPage(currentContext, bounds)
+        Quartz.CGContextBeginPage(currentContext, bounds)
 
-        CGContextTranslateCTM(currentContext,
+        Quartz.CGContextTranslateCTM(currentContext,
                 bounds.size.width/2, bounds.size.height/2);
-        CGContextConcatCTM(currentContext, m);
-        CGContextTranslateCTM(currentContext, -0.5, -0.5);
+        Quartz.CGContextConcatCTM(currentContext, m);
+        Quartz.CGContextTranslateCTM(currentContext, -0.5, -0.5);
 
-        CGContextSaveGState(currentContext);
+        Quartz.CGContextSaveGState(currentContext);
 
-        CGContextClipToRect(currentContext, CGRectMake(0, 0, 1, 1));
-        CGContextSetRGBFillColor(currentContext, 0.7, 0.7, 0.9, 1);
-        CGContextFillRect(currentContext, CGRectMake(0, 0, 1, 1));
+        Quartz.CGContextClipToRect(currentContext, Quartz.CGRectMake(0, 0, 1, 1));
+        Quartz.CGContextSetRGBFillColor(currentContext, 0.7, 0.7, 0.9, 1);
+        Quartz.CGContextFillRect(currentContext, Quartz.CGRectMake(0, 0, 1, 1));
 
-        CGContextDrawShading(currentContext, shading);
+        Quartz.CGContextDrawShading(currentContext, shading);
 
-        CGContextRestoreGState(currentContext);
+        Quartz.CGContextRestoreGState(currentContext);
 
-        CGContextSaveGState(currentContext);
-        CGContextClipToRect(currentContext, CGRectMake(0, 0, 1, 1));
-        CGContextSetRGBStrokeColor(currentContext, 1, 0, 0, 1);
+        Quartz.CGContextSaveGState(currentContext);
+        Quartz.CGContextClipToRect(currentContext, Quartz.CGRectMake(0, 0, 1, 1));
+        Quartz.CGContextSetRGBStrokeColor(currentContext, 1, 0, 0, 1);
 
         if (getShading == getRadialShading):
-            CGContextAddArc(currentContext,
+            Quartz.CGContextAddArc(currentContext,
                     startPoint.x, startPoint.y, startRadius,
                     math.radians(0), math.radians(360), True)
-            CGContextClosePath(currentContext)
-            CGContextMoveToPoint(currentContext, endPoint.x + endRadius, endPoint.y)
-            CGContextAddArc(currentContext, endPoint.x, endPoint.y, endRadius,
+            Quartz.CGContextClosePath(currentContext)
+            Quartz.CGContextMoveToPoint(currentContext, endPoint.x + endRadius, endPoint.y)
+            Quartz.CGContextAddArc(currentContext, endPoint.x, endPoint.y, endRadius,
                         math.radians(0), math.radians(360), True)
-            CGContextClosePath(currentContext)
+            Quartz.CGContextClosePath(currentContext)
 
-        CGContextMoveToPoint(currentContext, startPoint.x + 0.01, startPoint.y)
-        CGContextAddArc(currentContext, startPoint.x, startPoint.y, 0.01,
+        Quartz.CGContextMoveToPoint(currentContext, startPoint.x + 0.01, startPoint.y)
+        Quartz.CGContextAddArc(currentContext, startPoint.x, startPoint.y, 0.01,
                     math.radians(0), math.radians(360), True)
-        CGContextClosePath(currentContext)
-        CGContextMoveToPoint(currentContext, startPoint.x, startPoint.y)
-        CGContextAddLineToPoint(currentContext, endPoint.x, endPoint.y)
+        Quartz.CGContextClosePath(currentContext)
+        Quartz.CGContextMoveToPoint(currentContext, startPoint.x, startPoint.y)
+        Quartz.CGContextAddLineToPoint(currentContext, endPoint.x, endPoint.y)
 
-        ctm = CGContextGetCTM(currentContext)
-        CGContextConcatCTM(currentContext, CGAffineTransformInvert(ctm))
-        CGContextStrokePath(currentContext)
-        CGContextRestoreGState(currentContext)
+        ctm = Quartz.CGContextGetCTM(currentContext)
+        Quartz.CGContextConcatCTM(currentContext, Quartz.CGAffineTransformInvert(ctm))
+        Quartz.CGContextStrokePath(currentContext)
+        Quartz.CGContextRestoreGState(currentContext)
 
-        CGContextSaveGState(currentContext)
-        CGContextSetGrayStrokeColor(currentContext, 0, 1)
-        CGContextAddRect(currentContext, CGRectMake(0, 0, 1, 1))
-        ctm = CGContextGetCTM(currentContext)
-        CGContextConcatCTM(currentContext, CGAffineTransformInvert(ctm))
-        CGContextStrokePath(currentContext)
-        CGContextRestoreGState(currentContext)
+        Quartz.CGContextSaveGState(currentContext)
+        Quartz.CGContextSetGrayStrokeColor(currentContext, 0, 1)
+        Quartz.CGContextAddRect(currentContext, Quartz.CGRectMake(0, 0, 1, 1))
+        ctm = Quartz.CGContextGetCTM(currentContext)
+        Quartz.CGContextConcatCTM(currentContext, Quartz.CGAffineTransformInvert(ctm))
+        Quartz.CGContextStrokePath(currentContext)
+        Quartz.CGContextRestoreGState(currentContext)
 
-        CGContextEndPage(currentContext)
+        Quartz.CGContextEndPage(currentContext)
 
-        CGContextFlush(currentContext);
+        Quartz.CGContextFlush(currentContext);
 
+    @objc.IBAction
     def randomize_(self, sender):
         global colorspace, getFunction, getShading
         global function, shading
         global startPoint, startRadius, endPoint, endRadius
 
         if colorspace is None:
-            colorspace = CGColorSpaceCreateDeviceRGB()
+            colorspace = Quartz.CGColorSpaceCreateDeviceRGB()
 
         for k in range(len(frequency)):
             frequency[k] = random.random()
@@ -236,6 +239,7 @@ class MyQuartzView (NibClassBuilder.AutoBaseClass):
 
         self.setNeedsDisplay_(True)
 
+    @objc.IBAction
     def toggleStartExtend_(self, sender):
         global startExtend, shading
 
@@ -244,6 +248,7 @@ class MyQuartzView (NibClassBuilder.AutoBaseClass):
 
         self.setNeedsDisplay_(True)
 
+    @objc.IBAction
     def toggleEndExtend_(self, sender):
         global endExtend, shading
 

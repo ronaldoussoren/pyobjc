@@ -1,4 +1,4 @@
-from Cocoa import *
+import Cocoa
 import objc
 
 import PDFHandling
@@ -10,17 +10,17 @@ _dpi = 144
 _useQT = False
 
 def getURLToExport(suffix):
-    savePanel = NSSavePanel.savePanel()
+    savePanel = Cocoa.NSSavePanel.savePanel()
 
     initialFileName = "BasicDrawing.%s"%(suffix,)
 
-    if savePanel.runModalForDirectory_file_(None, initialFileName) == NSFileHandlingPanelOKButton:
+    if savePanel.runModalForDirectory_file_(None, initialFileName) == Cocoa.NSFileHandlingPanelOKButton:
         return savePanel.URL()
 
     return None
 
 
-class MyAppController (NSObject):
+class MyAppController (Cocoa.NSObject):
     theView = objc.IBOutlet()
     currentDPIMenuItem  = objc.IBOutlet()
     currentExportStyleMenuItem  = objc.IBOutlet()
@@ -33,21 +33,21 @@ class MyAppController (NSObject):
         if self.currentDPIMenuItem is not sender:
             # Uncheck the previous item.
             if self.currentDPIMenuItem is not None:
-                self.currentDPIMenuItem.setState_(NSOffState)
+                self.currentDPIMenuItem.setState_(Cocoa.NSOffState)
             # Update to the current item.
             self.currentDPIMenuItem = sender
             # Check new menu item.
-            self.currentDPIMenuItem.setState_(NSOnState)
+            self.currentDPIMenuItem.setState_(Cocoa.NSOnState)
 
     def updateExportStyleMenu_(self, sender):
         if self.currentExportStyleMenuItem is not sender:
             # Uncheck the previous item.
             if self.currentExportStyleMenuItem is not None:
-                self.currentExportStyleMenuItem.setState_(NSOffState)
+                self.currentExportStyleMenuItem.setState_(Cocoa.NSOffState)
             # Update to the current item.
             self.currentExportStyleMenuItem = sender
             # Check new menu item.
-            self.currentExportStyleMenuItem.setState_(NSOnState)
+            self.currentExportStyleMenuItem.setState_(Cocoa.NSOnState)
 
     @objc.IBAction
     def setExportResolution_(self, sender):

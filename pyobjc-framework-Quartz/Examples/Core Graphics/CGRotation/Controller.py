@@ -1,8 +1,11 @@
-from Cocoa import *
-from CGImageUtils import *
+import objc
+import Quartz
+import Cocoa
+import CGImageUtils
+import LaunchServices
 import math
 
-class Controller (NSObject):
+class Controller (Cocoa.NSObject):
     imageView = objc.IBOutlet()
     scaleYView = objc.IBOutlet()
     textScaleYView = objc.IBOutlet()
@@ -19,10 +22,10 @@ class Controller (NSObject):
     def awakeFromNib(self):
         self.openImageIOSupportedTypes = None
         # Ask CFBundle for the location of our demo image
-        url = CFBundleCopyResourceURL(CFBundleGetMainBundle(), u"demo", u"png", None)
+        url = Cocoa.CFBundleCopyResourceURL(Cocoa.CFBundleGetMainBundle(), u"demo", u"png", None)
         if url is not None:
             # And if available, load it
-            self.imageView.setImage_(IICreateImage(url))
+            self.imageView.setImage_(CGImageUtils.IICreateImage(url))
 
         self.imageView.window().center()
         self.setRotation_(0.0)
@@ -49,7 +52,7 @@ class Controller (NSObject):
 
     @objc.IBAction
     def changeTranslateY_(self, sender):
-        self.setTranslateY_(self.translateY + sender.floatValue())
+        self.setTranslateY_(self._translateY + sender.floatValue())
         sender.setFloatValue_(0.0)
 
     @objc.IBAction
@@ -69,23 +72,23 @@ class Controller (NSObject):
         extensions = None
         # Only get extensions for UTIs that are images (i.e. conforms to public.image aka kUTTypeImage)
         # This excludes PDF support that ImageIO advertises, but won't actually use.
-        if UTTypeConformsTo(uti, kUTTypeImage):
+        if LaunchServices.UTTypeConformsTo(uti, LaunchServices.kUTTypeImage):
             # Copy the decleration for the UTI (if it exists)
-            decleration = UTTypeCopyDeclaration(uti)
+            decleration = LaunchServices.UTTypeCopyDeclaration(uti)
             if decleration is not None:
                 # Grab the tags for this UTI, which includes extensions, OSTypes and MIME types.
-                tags = CFDictionaryGetValue(decleration, kUTTypeTagSpecificationKey)
+                tags = Cocoa.CFDictionaryGetValue(decleration, LaunchServices.kUTTypeTagSpecificationKey)
                 if tags is not None:
                     # We are interested specifically in the extensions that this UTI uses
-                    filenameExtensions = tags.get(kUTTagClassFilenameExtension)
-                    if filenameExtensios is not None:
+                    filenameExtensions = tags.get(LaunchServices.kUTTagClassFilenameExtension)
+                    if filenameExtensions is not None:
                         # It is valid for a UTI to export either an Array (of Strings) representing
                         # multiple tags, or a String representing a single tag.
-                        type = CFGetTypeID(filenameExtensions)
-                        if type == CFStringGetTypeID():
+                        type = Cocoa.CFGetTypeID(filenameExtensions)
+                        if type == Cocoa.CFStringGetTypeID():
                             # If a string was exported, then wrap it up in an array.
-                            extensions = NSArray.arrayWithObject_(filenameExtensions)
-                        elif type == CFArrayGetTypeID():
+                            extensions = Cocoa.NSArray.arrayWithObject_(filenameExtensions)
+                        elif type == Cocoa.CFArrayGetTypeID():
                             # If an array was exported, then just return that array.
                             extensions = filenameExtensions.copy()
 
@@ -95,16 +98,16 @@ class Controller (NSObject):
     # from the UTIs that Image IO tells us it can handle.
     def createOpenTypesArray(self):
         if self.openImageIOSupportedTypes is None:
-            imageIOUTIs = CGImageSourceCopyTypeIdentifiers()
+            imageIOUTIs = Quartz.CGImageSourceCopyTypeIdentifiers()
             count = len(imageIOUTIs)
-            self.openImageIOSupportedTypes = NSMutableArray.alloc().initWithCapacity_(count)
-            for i in xrange(count):
+            self.openImageIOSupportedTypes = Cocoa.NSMutableArray.alloc().initWithCapacity_(count)
+            for i in range(count):
                 self.openImageIOSupportedTypes.addObjectsFromArray_(
                     self.extensionsForUTI_(imageIOUTIs[i]))
 
     @objc.IBAction
     def openDocument_(self, sender):
-        panel = NSOpenPanel.openPanel()
+        panel = Cocoa.NSOpenPanel.openPanel()
         panel.setAllowsMultipleSelection_(False)
         panel.setResolvesAliases_(True)
         panel.setTreatsFilePackagesAsDirectories_(True)
@@ -115,18 +118,18 @@ class Controller (NSObject):
                 None, None, self.openImageIOSupportedTypes, self.imageView.window(), self,
                 'openImageDidEnd:returnCode:contextInfo:', None)
 
-    @objc.signature("v@:@i^v")
+    @objc.signature(b"v@:@i^v")
     def openImageDidEnd_returnCode_contextInfo_(self, panel, returnCode, contextInfo_):
-        if returnCode == NSOKButton:
+        if returnCode == Cocoa.NSOKButton:
             if len(panel.filenames()) > 0:
-                image = IICreateImage(NSURL.fileURLWithPath_(panel.filenames()[0]))
-                if images is not None:
+                image = CGImageUtils.IICreateImage(Cocoa.NSURL.fileURLWithPath_(panel.filenames()[0]))
+                if image is not None:
                     # Ownership is transferred to the CGImageView.
                     self.imageView.setImage_(image)
 
     @objc.IBAction
     def saveDocumentAs_(self, sender):
-        panel = NSSavePanel.savePanel()
+        panel = Cocoa.NSSavePanel.savePanel()
         panel.setCanSelectHiddenExtension_(True)
         panel.setRequiredFileType_("jpeg")
         panel.setAllowsOtherFileTypes_(False)
@@ -136,11 +139,11 @@ class Controller (NSObject):
                 None, "untitled image", self.imageView.window(), self,
                 'saveImageDidEnd:returnCode:contextInfo:', None)
 
-    @objc.signature("v@:@i^v")
+    @objc.signature(b"v@:@i^v")
     def saveImageDidEnd_returnCode_contextInfo_(self, panel, returnCode, contextInfo):
-        if returnCode == NSOKButton:
+        if returnCode == Cocoa.NSOKButton:
             frame = self.imageView.frame()
-            IISaveImage(self.imageView.image(), panel.URL(),
+            CGImageUtils.IISaveImage(self.imageView.image(), panel.URL(),
                     math.ceil(frame.size.width), math.ceil(frame.size.height))
 
     def setRotation_(self, r):

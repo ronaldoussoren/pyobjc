@@ -156,7 +156,7 @@ class TestQTMovie (TestCase):
         self.assertIsInstance(QTMovieChapterTargetTrackAttribute, unicode)
 
     def testInformalProtocols(self):
-        self.assertIsInstance(protocols.QTMovie_Delegate, objc.informal_protocol)
+        #self.assertIsInstance(protocols.QTMovie_Delegate, objc.informal_protocol)
         self.assertResultIsBOOL(TestQTMovieHelper.movie_linkToURL_)
         self.assertResultIsBOOL(TestQTMovieHelper.movieShouldLoadData_)
         self.assertResultIsBOOL(TestQTMovieHelper.movieShouldTask_)

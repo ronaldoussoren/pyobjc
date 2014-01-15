@@ -3,11 +3,495 @@ What's new in PyObjC
 
 An overview of the relevant changes in new, and older, releases.
 
-Version 2.6
+Version 3.0
 -----------
 
-.. note::
-   This is version currently in development and has not been released yet
+* ``inspect.signature`` works for all functions and methods implemented in C,
+  when using Python 3.4 or later.
+
+* The module ``PyObjCTools.NibClassBuilder`` is not longer available. It only worked
+  with ancient versions of Interface Builder (pre-Xcode)
+
+* The wrapper type for opaque pointers didn't have a "__module__" attribute,
+  which breaks code that (correctly) assumes that all types have such an attribute.
+
+* Archiving now supports nested definitions and method references, simular
+  to the support of those added to pickle protocol 4 in Python 3.4.
+
+  Encoding nested classes requires support for the ``__qualname__`` attribute,
+  and hence requires Python 3.3. Decoding should work with earlier python
+  versions as well.
+
+* Addd ``objc.autorelease_pool``, a context manager for managing an
+  autorelease pool. Usage::
+
+       with objc.autorelease_pool():
+          pass
+
+
+  This is equivalent to::
+
+       _pool = NSAutoreleasePool.alloc().init()
+       try:
+           pass
+
+       finally:
+           del _pool
+
+* Added ``objc.registerABCForClass`` to make it possible to register
+  a class with a number of ABC classes when the class becomes available.
+
+* ``NSDecimalNumber`` can now be instantatiated as a normal Python object::
+
+     value = NSDecimalNumber(4)
+
+* ``NSData`` and ``NSMutableData`` can now be instantiated as a normal
+  Python object::
+
+      value = NSData(someBytes)
+
+   or::
+
+      value = NSData()
+
+* ``NSDecimal`` now coerces the other value to ``NSDecimal`` in coercions.
+  Because of you can now order instances of ``NSDecimal`` and ``int``.
+
+* ``PyObjCTools.KeyValueCoding.ArrayOperators`` and
+  ``PyObjCTools.KeyValueCoding.arrayOperators`` were accidently public
+  names in previous releases, and are now removed. Use the array operators
+  in the KVC protocol instead.
+
+* Restructured the "convenience" method code. This shouldn't have user
+  visible effects, but makes the code easier to maintain.
+
+* ``objc.addConvienceForSelector`` no longer exists, it isn't possible
+  to provide this functionality with the current implementation of the
+  bridge.
+
+* The build of pyobjc-core can now be configured by editing setup.cfg (or
+  providing arguments to the build_ext command), instead of editing the
+  setup.py file.
+
+  Currently the following options are availabel for the build_ext command:
+
+  * ``--use-system-libffi``: When this option is used the build will use
+    /usr/lib/libffi.dylib instead of the embedded copy of libffi. The latter
+    is the default is and is better tested.
+
+  * ``--deployment-target=VAL``: The value of ``MACOSX_DEPLOYMENT_TARGET`` to use,
+    defaults to the deployment target used for building Python itself
+
+  * ``--sdk-root=VAL``: Path to the SDK root used to build PyObjC, or "python" to
+    use the default SDK selected by distutils. The default is to use the
+    most recent SDK available.
+
+* The lazy importer has smarter calculation of the ``__all__`` attribute,
+  which should speed up 'from Cocoa import \*'.
+
+* BUGFIX: using a method definition with only ``*args`` and ``**kwds`` used
+  to crash the interpreter, the now once again raise a TypeError exception.
+
+* The metadata for pyobjc-framework-Accounts was incomplete, fixed that.
+
+* :func:`objc.callbackFor` now also adds a *__metadata__* method to decorated
+  functions. This is primarily to make it easier to test the metadata values.
+
+* The *__typestr__* attribute of opaque pointer types is now a byte string,
+  in previous versions this was an instance of :class:`str` (this only affects
+  Python 3 support)
+
+* The JavaScriptCore bindings (in pyobjc-framework-WebKit) are now more usable
+  because types like "JSValueRef" are now exposed to Python (they were missing
+  due to incomplete metadata).
+
+* Exclude a number of keys from the metadata dictionary when they have the
+  default value (in the result from the *__metadata__()* method on methods
+  and functions)
+
+* The "lazy" modules used by framework wrappers now always have a ``__loader__``
+  attribute (as required by PEP 302). The value can be :data:`None` when there
+  is no explicit loader (such as when importing from the filesystem in Python 3.2
+  or earlier).
+
+* Method (and function) metadata is stored in a more compact manner, reducing the
+  memory use of PyObjC applications.
+
+* Removed support for hiding "protected" methods, :func:`objc.setHideProtected` is gone,
+  it complicated the code without real advantages.
+
+  Reasons for this:
+
+  * There were some conflicts because a class implemented two selectors that caused
+    the same python method to be added to the class *__dict__*. Which one was added
+    was basicly random.
+
+  * The functionality required PyObjC to maintain a full *__dict__* for classes, even
+    when most Cocoa methods were never called. Ensuring that the contents of *__dict__*
+    is correct in the face of Objective-C categories and class patches required some
+    *very* expensive code.
+
+  As a side effect of this some classes may no longer have the convenience methods they
+  had in earlier releases (in particular classes that are not mentioned in Apple's
+  documentation).
+
+* Issue #3: The bridge now lazily looks for Objective-C methods as they are used from Python, instead
+  of trying to maintain a class *__dict__* that mirrors the method list of the Objective-C
+  class.
+
+  Maintaining the *__dict__* was *very* expensive, on every method call the bridge would
+  check if the method list had changed and there is no cheap way to perform that check.
+
+  .. note::
+     I haven't done performance tests at this time, it is not yet clear if this work will
+     make the bridge more efficient or that there are other more important bottlenecks.
+
+* The default translation from a python name to a selector was slightly changed:
+
+  * double underscores inside the name are no translated to colons, that is 'foo__bar_' is translated to 'foo__bar:', not 'foo::bar:'
+
+  * if the Python name start with two uppercase letters and an underscore, that first underscore is not translated into
+    an colon. Two leading capitals are often used as a way to add some kind of namespacing
+    to selector names (and avoid conflicts when a method with the same name is added later by the library provider)
+
+* Added *__new__* method to NSString, it is now possible to explictly convert a python string to a Cocoa
+  string with ``NSString(someString)``
+
+* Added *__eq__* and *__ne__* methods to native selector objects, which mean you can now
+  check if two method objects are the same using 'sel1 == sel2'. This works both for bound
+  and unbound selectors.
+
+* NSData.bytes() could raise an exception on some version of Python 3 when the data object is empty.
+  The function now returns an empty bytes object instead.
+
+* NSMutableData.mutableBytes() raises an exception when the data object has a 0-sized buffer.
+  (see also the previous bullet)
+
+* Add attribute *__objclass__* to :class:`objc.selector` instances as an alias for *definingClass*. The name
+  *__objclass__* is used by builtin method objects for the same purpose as *definingClass*.
+
+  The new attribute is needed to ensure that ``help(NSObject)`` works (although all methods are shown as
+  data descriptors, not methods)
+
+* :class`objc.selector` no longer implements *__set__*, which means it is now classified as a method
+  descriptor by the :mod:`inspec` module, which gives nicer output in :mod:`pydoc`.
+
+  This doesn't change any functionality beyond that, it is still possible to overwrite methods and not
+  possible to delete them.
+
+* :class:`objc.native_selector` and :class:`objc.function` now have a (minimal) docstring with information
+  object.  This makes :func:`help <pydoc.help>` for Cocoa classes and functions more useful.
+
+  As a side-effect of this the docstring is no longer writeable.
+
+  .. note::
+
+     The docstring show the interface of a block with a function prototype instead of the proper
+     C declaration, that makes the implementation slightly easier and the function prototype syntax
+     is slightly easier to read for users that aren't C experts.
+
+* :class:`objc.selector`, :class:`objc.function` and :class:`objc.IMP` now have an implementation for
+  the "__signature__" property when using Python 3.3 or later. This makes it possible to use
+  :func:`inspect.signature` with these objects.
+
+* It should now be possible to write tuples with more than INT_MAX elements to an NSArchive. Those archives
+  cannot be read back by older versions of PyObjC (or python running in 32-bit mode), but archives that
+  contain only smaller tuples can be read back by earlier versions.
+
+* Issue #38: Struct wrappers and opaque pointer types now implement support for :func:`sys.getsizeof`,
+  as do :class:`objc.FSRef`, :class:`objc.FSSpec`, and Objective-C classes.
+
+  The size of Objective-C instances is not entirely correct, and cannot be. The :func:`sizeof <sys.sizeof>` function
+  only reports the size of the proxy object and the basic size of the Objective-C object. It does not
+  report additional buffers used by the object, which for example means that a too low size is reported
+  for Cocoa containers like NSArray.
+
+* Opaque pointer objects now have a method "__c_void_p__" that returns a :class:`ctypes.void_p` for
+  the same pointer.
+
+* Added an API to "pyobjc-api.h" that makes it easier to explicitly load function references in
+  manual function wrappers. This replaces the compiler support for weak linking, which was needed
+  because weak linking did not work properly with clang (Xcode 4.5.1). This also makes it possible
+  to compile in support for functions that aren't available on the build platform (in particular, when
+  building on 10.8 the Quartz bindings now contain support for some functions that were dropped in 10.8
+  and which will be available through pyobjc when deploying to 10.7)
+
+* The framework wrappers no longer export a "protocols" submodule. Those submodules were deprecated in
+  2.4 and did not contain information that is usefull for users of PyObjC.
+
+* Dropped the "objc.runtime" attribute (which was deprecated in PyObjC 2.0)
+
+* Dropped depcreated APIs *objc.pluginBundle*, *objc.registerPlugin*. Py2app has used a
+  different mechanism for years now.
+
+* Dropped deprecatd APIs: *objc.splitStruct*,  *objc._loadFunctionList*. Both have
+  been replaced by newer APIs in PyObjC 2.4.
+
+* Foundation's *NSDecimal* type is exposed in the objc module as well.
+
+  This was done to remove a dependency from the pyobjc-core package to pyobjc-framework-Cocoa.
+
+* The type :class:`objc.NSDecimal` is now an immutable type, just like
+  :class:`decimal.Decimal` and other Python value types.
+
+  Because of this the interface of ``Foundation.NSScanner.scanDecimal_`` has changed, in
+  previous versions it is used as::
+
+      dec = Foundation.NSDecimal()
+      ok = scanner.scanDecimal_(dec)
+
+  In the current version it is called just like any other method with an output argument::
+
+      ok, dec = scanner.scanDecimal_(None)
+
+* The C code is more careful about updating Python reference counts, in earlier versions
+  it was possible to trigger access to a field in a datastructure that was being deallocated
+  because the calls to :c:macro:`Py_DECREF` for the field happened before setting the
+  field to :c:data:`NULL` or a new value.  This could then result in a hard crash due to
+  accessing freed memory.
+
+* Bugfix: objc.NSDecimal(2.5) works with python 3 (caused a confusing
+  exception due to buggy code before).
+
+* Bugfix: the support for :func:`round <__builtin__.round>` for :class:`objc.NSDecimal`
+  always rounded down, instead of using the normal rounding rules used by other
+  methods.
+
+* PybjC no longer supports the CoreFoundation bindings in the "Carbon.CF" module
+  in the standard library for Python 2.  The "Carbon.CF" module is not present
+  in Python 3, and is unmaintained in Python 2.
+
+* The 'struct sockaddr' conversion code now understands the AF_UNIX address family.
+
+* The function "objc.setSignatureForSelector" has been removed (and was deprecated
+  in 2.3), use the metadata system instead."
+
+* The 'returnTypes' and 'argumentTypes' parameters for 'objc.selector' have
+  been removed (they were deprecated in version 2.5). These were an attempt
+  to use type encodings as used in :c:func:`Py_BuildValue` and AFAIK were never
+  used in real code.
+
+* The header "pyobjc-api.h" has been cleaned up:
+
+  .. note::
+
+     "pyobjc-api.h" is used by extension modules in the PyObjC framework wrappers
+     but is not intended to be a public API. Please let me (Ronald) know if you
+     use this API, I'm trying to get the API as small as possible and that might
+     lead to its complete removal in a future version of PyObjC.
+
+  - Py_ARG_SIZE_T is no longer defined by pyobjc-api.h (use "n" instead)
+
+  - Removed the following functions from the API (PYOBJC_API_VERSION is now 20)
+    because they aren't used by PyObjC:
+
+    - PyObjC_PerformWeaklinking (and struct PyObjC_WeakLink)
+
+    - PyObjCRT_RemoveFieldNames
+
+    - PyObjC_is_ascii_string
+
+    - PyObjC_is_ascii_prefix
+
+    - PyObjCObject_Check
+
+    - PyObjCClass_Check
+
+    - PyObjCSelector_Check
+
+    - PyObjCObject_ClearObject
+
+    - PyObjCClass_New
+
+    - PyObjCErr_ToObjC
+
+    - PyObjC_RegisterSignatureMapping
+
+    - PyObjCRT_AlignOfType
+
+    - PyObjCRT_SELName
+
+    - PyObjCRT_SimplifySignature
+
+    - PyObjC_RegisterStructType
+
+    - PyObjCObject_IsUninitialized
+
+    - PyObjCObject_New
+
+    - PyObjCCreateOpaquePointerType
+
+    .. note::
+
+       There will be futher cleanup of this API before the 3.0 release.
+
+    Added a *name* argument to PyObjCPointerWrapper_Register.
+
+* The KVO implementation for Cocoa subclasses used to ignore exceptions
+  in the implementation of ``[obj willChangeValueForKey:]`` and
+  ``[obj didChangeValueForKey:]`` and no longer does so.
+
+  One side effect of this is that ``willChangeForForKey_`` and
+  ``didChangeValueForKey_`` can now cause user visible exceptions
+  when "__useKVO__" is true (the default) and these methods are implemented
+  in Python.
+
+* PyObjC 3 requires a compiler that supports Objective-C with C99 as the base
+  language.
+
+* PyObjC raises an exception instead of creating instances of
+  :class:`objc.PyObjCPointer` when you set :data:`objc.options.unknown_pointer_raises`
+  to :data:`True`.
+
+  The default is currently :data:`False`, that will be changed in a future version
+  and the entire `objc.ObjCPointer` class will likely be removed some releases
+  after that.
+
+* Configuration options are now attributes of special object :data:`objc.options`.
+
+  The following functions are therefore now deprecated and will be removed
+  in PyObjC 3.1:
+
+  * :func:`objc.getVerbose`
+
+  * :func:`objc.setVerbose`
+
+  * :func:`objc.setUseKVOForSetAttr`
+
+  * :func:`objc.setStrBridgeEnabled`
+
+  * :func:`objc.getStrBridgeEnabled`
+
+* Removed objc._setClassSetUpHook, an internal method that is not used
+  anymore.
+
+* Removed +[OC_PythonObject setVersion:encoder:decoder:],
+  +[OC_PythonObject pythonifyStructTable], +[OC_PythonObject depythonifyTable].
+
+ All were private methods used by the core bridge and are no longer necessary.
+
+* Added :func:`objc.registerSetType` and :func:`objc.registerDateType`, with
+  simular semantics as the already existing functions :func:`objc.registerMappingType`
+  and :func:`objc.registerListType`.
+
+* Moved the logic for creating Objective-C proxies for Python objects from
+  class methods on OC_PythonObject, OC_PythonArray, OC_PythonDictionary,
+  OC_PythonSet and OC_PythonDate to a C function to simplify this logic and
+  make it easier to further optimize.
+
+  Because of this a number of (private) class methods are no longer
+  available. This shouldn't affect normal code because these methods aren't
+  part of the public API for PyObjC.
+
+* Added bindings to the CoreWLAN framework (Mac OS X 10.6 or later) in
+  package "pyobjc-framework-CoreWLAN"
+
+* Added bindings to the AVFoundation framework (Mac OS X 10.7 or later) in
+  package "pyobjc-framework-AVFoundation"
+
+* The *__dict__* for ``anObject.pyobjc_instanceMethods`` and
+  ``AClass.pyobjc_classMethods`` is now read-only instead of read-write.
+
+  Updates of *__dict__* already did not affect anything (the value is
+  calculated on access).
+
+* Removed workarounds for KVO bugs in Mac OS X 10.3.9, which means KVO
+  will likely not work properly anymore on that release of OS X.
+
+* Earlier versions of PyObjC accidently exposed ``-[NSObject respondsToSelector:]``
+  as ``NSObject.respondsToSelector()`` as well as the expected
+  ``NSObject.respondsToSelector_()``. The first incorrect binding no
+  longer works.
+
+* Python 3 only: NSKeyedArchives with a bytes object can now be read
+  back by a pure Objective-C program (that program will decode it
+  as an NSData object).
+
+  Because of this the encoding for method for OC_PythonData was changed,
+  archives created by PyObjC 3.0 can therefore not be read back
+  by earlier PyObjC versions (but PyObjC 3.0 can read archives created
+  by those older versions)
+
+* NSKeyedArchives with a python list or tuple (but not subclasses) can
+  now be read back as NSArrays in Objective-C programs.
+
+* NSKeyedArchives with a python set or frozenset (but not subclasses)
+  can now be read back as NSSets in Objective-C programs.
+
+  This required a change in the format used to create the archive,
+  which means that archives with a set or frozenset (but not subclasses)
+  cannot be read back by earlier versions of PyObjC.
+
+* When writing instances of list, tuple, dict, set and frozenset to
+  an NSArchive, but not an NSKeyedArchiver, the objects are stored
+  with the same encoding as the corresponding Cocoa class.
+
+  This has two side effects: the archive can be read back by pure
+  Objective-C code and when you read back the archive using PyObjC you'll
+  get instances of Cocoa classes instead of the native python classes.
+
+* ``-[OC_PythonEnumerator nextObject]`` now returns ``[NSNull null]`` instead
+  of ``nil``, to be compatible with the behavior of item getters/setters
+  and to avoid ending iteration premature when a Python sequence contains
+  :data:`None`.
+
+* Fixed a number of issues with :data:`None` as a member of a set-like
+  object proxied by ``OC_PythonSet``. The easiest way to trigger the
+  issue in earlier versions::
+
+     assert {None} == NSSet.setWithArray([None])
+
+  These expose sets with the same members to ObjC code, but those objects
+  didn't compare equal.
+
+* Python 2 only: NSDictionary instances now have the same internal
+  other as dict instances with the same value, that is
+  ``cmp(anNSDict1, anNSDict2) == ``cmp(dict(anNSDict1), dict(anNSDict2))``.
+
+* In previous versions of PyObjC instances of ``Foundation.NSDecimal`` behaved
+  as if they had the same methods as ``Foundation.NSDecimalNumber``. In 3.0
+  PyObjC no longer exposes these methods.
+
+* Python blocks (that is, Python callables passed to a method/function that
+  expects an Objective-C block argument) now include an Objective-C
+  signature string (introduced in "ABI.2010.3.16").
+
+* PyObjC now supports blocks that have a large struct as the return value
+  (for example a block that returns an NSRect structure).
+
+* Reduced the number of unnecessary methods implemented by the various
+  OC_Python* classes, this might affect some Objective-C code that directly
+  uses these classes instead of just using the interface of their
+  superclasses.
+
+* ``del NSObject.__version__`` crashed the interpreter because the setter
+  didn't guard against deletion attempts.
+
+* ``del aSelector.isHidden`` crashed the interpreter (see above)
+
+* Class :class:`objc.ObjCPointer` was not exposed in the :mod:`objc` module.
+
+* The implementation of :class:`objc.ObjCPointer` didn't have a proper
+  implementation of *__getattribute__* and that made objects of this
+  class even more useless than they should have been.
+
+* Values of :class:`objc.ObjCPointer` no longer have an unpack method
+  (the method has been inaccisible for several releases and its implementation
+  as unsafe)
+
+* The *type* attribute of :class:`objc.ObjCPointer` now starts with
+  :data:`objc._C_PTR` (that is, the *type* attribute is the encoded type
+  of the pointer, instead of the encoded type of the pointed-to value).
+
+* Framework wrappers no longer have a 'protocols' submodule, use
+  :func:`objc.protocolNamed` to access a protocol.
+
+* ``-[OC_PythonObject valueForKeyPath:]`` and ``-[OC_PythonObject setValue:forKeyPath:]``
+  now call helper functions in :mod:`PyObjCTools.KeyValueCoding`, just
+  like ``-[OC_PythonObject valueForKey:]`` and ``-[OC_PythonObject setValue:forKey:]``.
+
+  This should give better results in some edge cases when dealing with
+  complicated keypaths.
 
 
 Version 2.5.2
@@ -71,7 +555,7 @@ Version 2.5.1
   python code.
 
 - Opaque pointer types now can be constructed with a "c_void_p" keyword
-  argument that contains a :type:`ctypes.c_void_p` value for the pointer.
+  argument that contains a :class:`ctypes.c_void_p` value for the pointer.
 
   This is the reverse of the *__c_void_p__()* method that was added
   earlier.

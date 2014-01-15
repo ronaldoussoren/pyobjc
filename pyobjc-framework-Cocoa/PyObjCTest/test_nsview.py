@@ -17,6 +17,8 @@ except NameError:
 class TestNSViewHelper (NSObject):
     def view_stringForToolTip_point_userData_(self, a, b, c, d): return 1
 
+    def layer_shouldInheritContentsScale_fromWindow_(self, l, s, w): return 1
+
 class ObjCTestNSView_KnowPageRange (NSView):
     def knowsPageRange_(self, range):
         return  objc.YES, (1, 10)
@@ -169,8 +171,17 @@ class TestHeader (TestCase):
 
     @min_os_level('10.7')
     def testMethods10_7(self):
-        self.assertResultIsBOOL(NSView.layer_shouldInheritContentsScale_fromWindow_)
         self.assertResultIsBOOL(NSView.isDrawingFindIndicator)
+
+        try:
+            NSView.layer_shouldInheritContentsScale_fromWindow_
+        except AttributeError:
+            pass
+        else:
+            self.assertResultIsBOOL(NSView.layer_shouldInheritContentsScale_fromWindow_)
+
+
+        self.assertResultIsBOOL(TestNSViewHelper.layer_shouldInheritContentsScale_fromWindow_)
 
     @min_os_level('10.8')
     def testMethods10_8(self):

@@ -1,10 +1,12 @@
 from PyObjCTools import AppHelper
-from Cocoa import *
+import objc
+from objc import super
+import Cocoa
 
 from math import floor
 import sys
 
-class Controller(NSObject):
+class Controller(Cocoa.NSObject):
     itsWindow = objc.IBOutlet()
 
     @objc.IBAction
@@ -13,48 +15,48 @@ class Controller(NSObject):
         self.itsWindow.setAlphaValue_(sender.floatValue())
         self.itsWindow.display()
 
-class CustomView(NSView):
+class CustomView(Cocoa.NSView):
     circleImage = objc.ivar()
     pentaImage = objc.ivar()
 
     def awakeFromNib(self):
-        self.circleImage = NSImage.imageNamed_("circle")
+        self.circleImage = Cocoa.NSImage.imageNamed_("circle")
         if self.circleImage is None:
             sys.stderr.write('failed to access circle image\n')
             raise RuntimeError
-        self.pentaImage = NSImage.imageNamed_("pentagram")
+        self.pentaImage = Cocoa.NSImage.imageNamed_("pentagram")
         if self.pentaImage is None:
             sys.stderr.write('failed to access pentagram image\n')
             raise RuntimeError
         self.setNeedsDisplay_(True)
 
     def drawRect_(self, rect):
-        NSColor.clearColor().set()
-        NSRectFill(self.frame())
+        Cocoa.NSColor.clearColor().set()
+        Cocoa.NSRectFill(self.frame())
         if self.window().alphaValue() > 0.7:
-            self.circleImage.compositeToPoint_operation_(NSZeroPoint, NSCompositeSourceOver)
+            self.circleImage.compositeToPoint_operation_(Cocoa.NSZeroPoint, Cocoa.NSCompositeSourceOver)
         else:
-            self.pentaImage.compositeToPoint_operation_(NSZeroPoint, NSCompositeSourceOver)
+            self.pentaImage.compositeToPoint_operation_(Cocoa.NSZeroPoint, Cocoa.NSCompositeSourceOver)
 
-        if floor(NSAppKitVersionNumber) <= NSAppKitVersionNumber10_1:
+        if floor(Cocoa.NSAppKitVersionNumber) <= Cocoa.NSAppKitVersionNumber10_1:
             self.window().setHasShadow_(False)
             self.window().setHasShadow_(True)
         else:
             self.window().invalidateShadow()
 
-class CustomWindow(NSWindow):
+class CustomWindow(Cocoa.NSWindow):
     def awakeFromNib(self):
-        self.initialLocation = NSPoint()
+        self.initialLocation = Cocoa.NSPoint()
 
     def initWithContentRect_styleMask_backing_defer_(self, contentRect, aStyle,
                                                      bufferingType, flag):
         result = super(CustomWindow, self).initWithContentRect_styleMask_backing_defer_(
-                contentRect, NSBorderlessWindowMask, NSBackingStoreBuffered, False)
+                contentRect, Cocoa.NSBorderlessWindowMask, Cocoa.NSBackingStoreBuffered, False)
         if result is None:
             sys.stderr.write('superclass call failed\n')
             raise RuntimeError
-        result.setBackgroundColor_(NSColor.clearColor())
-        result.setLevel_(NSStatusWindowLevel)
+        result.setBackgroundColor_(Cocoa.NSColor.clearColor())
+        result.setLevel_(Cocoa.NSStatusWindowLevel)
         result.setAlphaValue_(1.0)
         result.setOpaque_(False)
         result.setHasShadow_(True)
@@ -64,7 +66,7 @@ class CustomWindow(NSWindow):
         return True
 
     def mouseDragged_(self, theEvent):
-        screenFrame = NSScreen.mainScreen().frame()
+        screenFrame = Cocoa.NSScreen.mainScreen().frame()
         if screenFrame is None:
             sys.stderr.write('failed to obtain screen\n')
             raise RuntimeError
@@ -73,7 +75,7 @@ class CustomWindow(NSWindow):
             sys.stderr.write('failed to obtain frame\n')
             raise RuntimeError
         currentLocation = self.convertBaseToScreen_(self.mouseLocationOutsideOfEventStream())
-        newOrigin = NSMakePoint((currentLocation.x - self.initialLocation.x),
+        newOrigin = Cocoa.NSMakePoint((currentLocation.x - self.initialLocation.x),
                                 (currentLocation.y - self.initialLocation.y))
         if (newOrigin.y + windowFrame.size.height) > \
             (screenFrame.origin.y + screenFrame.size.height):

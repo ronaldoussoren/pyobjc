@@ -19,7 +19,7 @@ OC_PythonSet = objc.lookUpClass("OC_PythonSet")
 class OC_SetPredicate (NSPredicate):
     # A simple test predicate class
     def initWithFunction_(self, pred):
-        self = super(OC_SetPredicate, self).init()
+        self = objc.super(OC_SetPredicate, self).init()
         if self is None:
             return None
 
@@ -35,7 +35,7 @@ class OC_TestElem(NSObject):
         return self.alloc().initWithK_(k)
 
     def initWithK_(self, k):
-        super(OC_TestElem, self).init()
+        objc.super(OC_TestElem, self).init()
         self.k = k
         return self
 

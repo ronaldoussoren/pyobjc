@@ -11,12 +11,13 @@
 #  file:///Developer/ADC%20Reference%20Library/documentation/Cocoa/Conceptual/DragandDrop/index.html#//apple_ref/doc/uid/10000069i
 #  or http://developer.apple.com/documentation/Cocoa/Conceptual/DragandDrop/Tasks/DraggingFiles.html
 
-
-from Foundation import *
-from AppKit import *
+import objc
+from Cocoa import NSArrayController, NSMakeRange, NSIndexSet, NSCalendarDate
+from Cocoa import NSURL, NSURLPboardType, NSNotFound, NSMutableIndexSet
+from Cocoa import NSDragOperationCopy, NSDragOperationMove, NSTableViewDropAbove
 from BookmarksDocument import CopiedRowsType
 
-MovedRowsType = u"MOVED_ROWS_TYPE"
+MovedRowsType = "MOVED_ROWS_TYPE"
 
 class DNDArrayController (NSArrayController):
     # DNDArrayController is delegate and dataSource of tableView

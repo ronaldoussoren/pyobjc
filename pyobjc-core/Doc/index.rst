@@ -20,6 +20,8 @@ Contents:
    blocks
    objc-gc
    type-wrapper
+   introspecting
+   serializing
    metadata/index
    api/index
    dev/index

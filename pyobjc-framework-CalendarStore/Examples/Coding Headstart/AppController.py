@@ -1,5 +1,6 @@
-from Cocoa import *
-from CalendarStore import *
+import objc
+from Cocoa import NSObject, NSDate, NSApp, NSApplication, NSLog
+from CalendarStore import CalCalendarStore, CalEvent, CalTask
 
 class AppController (NSObject):
     mainWindow = objc.IBOutlet()

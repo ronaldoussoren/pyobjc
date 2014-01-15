@@ -2,18 +2,17 @@
 Script for building the example:
 
 Usage:
-    python setup.py py2app
+    python3 setup.py py2app
 """
-from distutils.core import setup
-import py2app
+from setuptools import setup
 
 plist = dict(
     CFBundleDocumentTypes = [
         dict(
-            CFBundleTypeExtensions=[u'Bookmarks', u'*'],
-            CFBundleTypeName=u'Bookmarks File',
-            CFBundleTypeRole=u'Editor',
-            NSDocumentClass=u'BookmarksDocument',
+            CFBundleTypeExtensions=["Bookmarks", "*"],
+            CFBundleTypeName="Bookmarks File",
+            CFBundleTypeRole="Editor",
+            NSDocumentClass="BookmarksDocument",
         ),
     ],
 )
@@ -25,4 +24,8 @@ setup(
     options=dict(py2app=dict(
         plist=plist,
     )),
+    setup_requires=[
+        "py2app",
+        "pyobjc-framework-Cocoa",
+    ]
 )

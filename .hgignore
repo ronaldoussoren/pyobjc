@@ -5,6 +5,7 @@ __pycache__
 autom4te.cache
 htmlcov
 .coverage
+new-bindings
 
 syntax: glob
 *.so

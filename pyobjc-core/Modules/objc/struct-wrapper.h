@@ -5,7 +5,7 @@
  * @abstract Creation of mutable struct-like types
  * @discussion
  *      This module defines a function that can be used to create
- *      types for mutable struct-like types. 
+ *      types for mutable struct-like types.
  *
  *      The struct-like type has the following properties:
  *
@@ -16,7 +16,7 @@
  *      - Instances can be compared with sequences, and will compare equal
  *        to a tuple with equal values for the fields.
  *
- *      This module also defines a pair of functions to integrate this 
+ *      This module also defines a pair of functions to integrate this
  *      functionality in PyObjC, that is to make it possible to translate
  *      C structs to instances of these struct-like types.
  */
@@ -37,17 +37,17 @@
  *
  *    If tpinit is NULL the type will have a default __init__ that initializes
  *    the fields to None and uses its arguments to optionally initiaze the
- *    fields. 
+ *    fields.
  *
  */
 PyObject* PyObjC_MakeStructType(
-	const char* name,
-	const char* doc,
-	initproc tpinit,
-	Py_ssize_t numFields,
-	const char** fieldnames,
-	const char* typestr,
-	Py_ssize_t pack);
+    const char* name,
+    const char* doc,
+    initproc tpinit,
+    Py_ssize_t numFields,
+    const char** fieldnames,
+    const char* typestr,
+    Py_ssize_t pack);
 
 
 /*!
@@ -62,26 +62,26 @@ PyObject* PyObjC_MakeStructType(
  * @param pack       Value of 'pragma pack', use -1 for default packing
  * @result Returns a newly allocated type or NULL
  * @discussion
- *    This function calls PyObjC_MakeStructType(name, doc, tpinit, numFields, 
+ *    This function calls PyObjC_MakeStructType(name, doc, tpinit, numFields,
  *    fieldnames) and then adds the created type to an internal lookup table.
  *
  *    PyObjC_CreateRegisteredStruct can then be used to create instances of
  *    the type.
  */
 PyObject* PyObjC_RegisterStructType(
-	const char* signature,
-	const char* name,
-	const char* doc,
-	initproc tpinit,
-	Py_ssize_t numFields,
-	const char** fieldnames,
-	Py_ssize_t pack);
+    const char* signature,
+    const char* name,
+    const char* doc,
+    initproc tpinit,
+    Py_ssize_t numFields,
+    const char** fieldnames,
+    Py_ssize_t pack);
 
 /*!
  * @function PyObjC_CreateRegisteredStruct
  * @param signature  An Objective-C signature for a struct type
  * @param len        Length of the signature string
- * @param objc_signature 
+ * @param objc_signature
  *                If not null this will be set to the signature that
  *                was used to register the struct type. This might include
  *                type codes that are private to PyObjC (such as _C_NSBOOL)
@@ -91,11 +91,42 @@ PyObject* PyObjC_RegisterStructType(
  *     This function will not set an error when it cannot find or create
  *     a wrapper for the specified Objective-C type.
  *
- *     The returned instance is uninitialized, all fields are NULL. The 
+ *     The returned instance is uninitialized, all fields are NULL. The
  *     __init__ method has not been called.
- */     
+ */
 PyObject* PyObjC_CreateRegisteredStruct(const char* signature, Py_ssize_t len, const char** objc_signature, Py_ssize_t* pack);
 
+/*!
+ * @function PyObjC_RegisterStructAlias
+ * @param signature  An Objective-C signature for a struct type
+ * @param type       The type to use for wrapping this struct type,
+ *                   this should be a type created with PyObjC_MakeStructType
+ *                   for a struct with a compatible signature.
+ * @result -1 on error, 0 on success.
+ * @discussion
+ *
+ *     This function is used to ensure that there is only one
+ *     wrapper type for C structures that are the same except for
+ *     the struct tag and that are used for the same tasks.
+ *
+ *     An example of this are NSRect and CGRect (in 32-bit code
+ *     this are two seperate struct types, in 64-bit code NSRect
+ *     is already an alias for CGRect). By using this function PyObjC
+ *     ensures that NSRect is always an alias for CGRect in Python code.
+ */
 int PyObjC_RegisterStructAlias(const char* signature, PyObject* type);
+
+/*!
+ * @function PyObjC_FindRegisteredStruct
+ * @param signature   An Objective-C signature for a struct type
+ * @param len         Length of the sigature string
+ * @result A type registered with PyObjC_CreateRegisteredStruct or PyObjC_RegisterStructAlias,
+ *         or NULL when such a type cannot be found.
+ *
+ * @discussion
+ *     This function will not set an error when it cannot find
+ *     a wrapper for the specified Objective-C type.
+ */
+PyObject* PyObjC_FindRegisteredStruct(const char* signature, Py_ssize_t len);
 
 #endif /* PyObjC_STRUCT_MEMBER */

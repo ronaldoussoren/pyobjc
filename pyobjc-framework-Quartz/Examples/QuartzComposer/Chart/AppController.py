@@ -1,5 +1,7 @@
-from Cocoa import *
-from Quartz import *
+import objc
+from objc import super
+import Cocoa
+import Quartz
 
 # APPLICATION DATA STORAGE NOTES:
 # - This application uses a simple data storage as an array of entries,
@@ -67,7 +69,7 @@ kParameterKey_Data      = "Data"    # NSArray of NSDictionaries
 kParameterKey_Scale     = "Scale"   # NSNumber
 kParameterKey_Spacing   = "Spacing" # NSNumber
 
-class AppController (NSObject):
+class AppController (Cocoa.NSObject):
     tableView = objc.IBOutlet()
     view = objc.IBOutlet()
 
@@ -88,9 +90,9 @@ class AppController (NSObject):
         # QCView is bound to a QCPatchController in the nib file, this
         # will actually update the QCPatchController along with all the
         # bindings)
-        if not self.view.loadCompositionFromFile_(NSBundle.mainBundle().pathForResource_ofType_("Chart", "qtz")):
-            NSLog("Composition loading failed")
-            NSApp.terminate_(None)
+        if not self.view.loadCompositionFromFile_(Cocoa.NSBundle.mainBundle().pathForResource_ofType_("Chart", "qtz")):
+            Cocoa.NSLog("Composition loading failed")
+            Cocoa.NSApp.terminate_(None)
 
         # Populate data storage
         self._data.extend([
@@ -147,7 +149,7 @@ class AppController (NSObject):
         #Add a new entry to the data storage
         self._data.append({
             kDataKey_Label: "Untitled",
-            kDAtaKey_Value: 0,
+            kDataKey_Value: 0,
         })
 
         #Notify the NSTableView and update the chart
@@ -155,7 +157,7 @@ class AppController (NSObject):
         self.updateChart()
 
         #Automatically select and edit the new entry
-        self.tableView.selectRow_byExtendingSelection(len(self._data)-1, False)
+        self.tableView.selectRow_byExtendingSelection_(len(self._data)-1, False)
         self.tableView.editColumn_row_withEvent_select_(
                 self.tableView.columnWithIdentifier_(kDataKey_Label),
                 len(self._data)-1, None, True)
@@ -164,7 +166,7 @@ class AppController (NSObject):
     def removeEntry_(self, sender):
         #Make sure we have a valid selected row
         selectedRow = self.tableView.selectedRow()
-        if selectedRow < 0 or tableView.editedRow() == selectedRow:
+        if selectedRow < 0 or self.tableView.editedRow() == selectedRow:
             return
 
         #Remove the currently selected entry from the data storage

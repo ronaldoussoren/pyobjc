@@ -1,5 +1,5 @@
 /*!
- * @header OC_PythonData.h 
+ * @header OC_PythonData.h
  * @abstract Objective-C proxy class for Python buffers
  * @discussion
  *     This file defines the class that is used to represent Python buffers
@@ -7,26 +7,20 @@
  */
 
 #import "pyobjc.h"
-#import <Foundation/Foundation.h>
+
 
 /*!
  * @class       OC_PythonData
  * @abstract    Objective-C proxy class for Python buffers
- * @discussion  Instances of this class are used as proxies for Python 
- *          buffers when these are passed to Objective-C code. Because 
- *          this class is a subclass of NSData, Python buffers
- *          (except str, unicode) can be used everywhere where NSData
- *          is expected.
+ * @discussion  Instances of this class are used as proxies for Python
+ *              buffers when these are passed to Objective-C code. Because
+ *              this class is a subclass of NSData, Python buffers
+ *              (except str, unicode) can be used everywhere where NSData
+ *              is expected.
  */
 @interface OC_PythonData : NSData
 {
-	PyObject* value;
-
-	/* XXX: why are these here? These fields don't seem to be necessary
-	 * at all!
-	 */
-	Py_ssize_t buffer_len;
-	const void *buffer;
+    PyObject* value;
 }
 
 /*!

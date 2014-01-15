@@ -24,7 +24,7 @@ class OCCopy (NSObject):
 
 class OCObserve (NSObject):
     def init(self):
-        self = super(OCObserve, self).init()
+        self = objc.super(OCObserve, self).init()
         self.values = []
         self.registrations = []
         return self
@@ -77,40 +77,40 @@ class TestObjectProperty (TestCase):
 
         o = OCTestObjectProperty1.alloc().init()
 
-        self.assertTrue(o.respondsToSelector(b'p1'))
-        self.assertTrue(o.respondsToSelector(b'setP1:'))
+        self.assertTrue(o.respondsToSelector_(b'p1'))
+        self.assertTrue(o.respondsToSelector_(b'setP1:'))
 
         v = OCCopy.alloc().init()
         o.p1 = v
         self.assertIs(o.p1, v)
         self.assertIs(o._p1, v)
 
-        self.assertTrue(o.respondsToSelector(b'p2'))
-        self.assertTrue(o.respondsToSelector(b'setP2:'))
+        self.assertTrue(o.respondsToSelector_(b'p2'))
+        self.assertTrue(o.respondsToSelector_(b'setP2:'))
 
         o.p2 = v
         self.assertIsInstance(o.p2, OCCopy)
         self.assertIsNot(o.p2, v)
         self.assertIsNot(o._p2, v)
 
-        self.assertTrue(o.respondsToSelector(b'p3'))
-        self.assertFalse(o.respondsToSelector(b'setP3:'))
+        self.assertTrue(o.respondsToSelector_(b'p3'))
+        self.assertFalse(o.respondsToSelector_(b'setP3:'))
 
         o._p3 = v
         self.assertIs(o.p3, v)
 
 
-        self.assertTrue(o.respondsToSelector(b'p4'))
-        self.assertTrue(o.respondsToSelector(b'setP4:'))
+        self.assertTrue(o.respondsToSelector_(b'p4'))
+        self.assertTrue(o.respondsToSelector_(b'setP4:'))
 
         o.p4 = v
         self.assertIs(o.p4, v)
         self.assertIs(o.myp4, v)
 
-        self.assertTrue(o.respondsToSelector(b'p5'))
-        self.assertTrue(o.respondsToSelector(b'setP5:'))
-        self.assertTrue(o.respondsToSelector(b'p6'))
-        self.assertTrue(o.respondsToSelector(b'setP6:'))
+        self.assertTrue(o.respondsToSelector_(b'p5'))
+        self.assertTrue(o.respondsToSelector_(b'setP5:'))
+        self.assertTrue(o.respondsToSelector_(b'p6'))
+        self.assertTrue(o.respondsToSelector_(b'setP6:'))
         s = o.methodSignatureForSelector_(b'p5')
         self.assertEqual(s.methodReturnType(), objc._C_INT)
         s = o.methodSignatureForSelector_(b'p6')
@@ -121,6 +121,7 @@ class TestObjectProperty (TestCase):
             p1 = objc.object_property()
             p2 = objc.object_property()
             p3 = objc.object_property(read_only=True, depends_on=['p1', 'p2'])
+            p9 = objc.object_property()
 
             @p3.getter
             def p3(self):
@@ -141,6 +142,11 @@ class TestObjectProperty (TestCase):
                 return "-%s-"%(self.p4,)
             p5.depends_on('p4')
 
+            @OCTestObjectProperty2.p9.getter
+            def p9(self):
+                return "+%s+"%(self.p4,)
+            p9.depends_on('p4')
+
         observer1 = OCObserve.alloc().init()
         observer2 = OCObserve.alloc().init()
         object1 = OCTestObjectProperty2.alloc().init()
@@ -154,21 +160,25 @@ class TestObjectProperty (TestCase):
         self.assertIsInstance(v, objc.lookUpClass('NSSet'))
         self.assertEqual(v, {'p1', 'p2', 'p4'})
 
-        self.assertTrue(object1.respondsToSelector('p1'))
-        self.assertTrue(object1.respondsToSelector('setP1:'))
-        self.assertTrue(object1.respondsToSelector('p2'))
-        self.assertTrue(object1.respondsToSelector('setP2:'))
-        self.assertTrue(object1.respondsToSelector('p3'))
-        self.assertFalse(object1.respondsToSelector('setP3:'))
+        self.assertTrue(object1.respondsToSelector_('p1'))
+        self.assertTrue(object1.respondsToSelector_('setP1:'))
+        self.assertTrue(object1.respondsToSelector_('p2'))
+        self.assertTrue(object1.respondsToSelector_('setP2:'))
+        self.assertTrue(object1.respondsToSelector_('p3'))
+        self.assertFalse(object1.respondsToSelector_('setP3:'))
+        self.assertTrue(object1.respondsToSelector_('p9'))
+        self.assertTrue(object1.respondsToSelector_('setP9:'))
 
-        self.assertTrue(object2.respondsToSelector('p1'))
-        self.assertTrue(object2.respondsToSelector('setP1:'))
-        self.assertTrue(object2.respondsToSelector('p2'))
-        self.assertTrue(object2.respondsToSelector('setP2:'))
-        self.assertTrue(object2.respondsToSelector('p3'))
-        self.assertFalse(object2.respondsToSelector('setP3:'))
-        self.assertTrue(object2.respondsToSelector('p4'))
-        self.assertTrue(object2.respondsToSelector('setP4:'))
+        self.assertTrue(object2.respondsToSelector_('p1'))
+        self.assertTrue(object2.respondsToSelector_('setP1:'))
+        self.assertTrue(object2.respondsToSelector_('p2'))
+        self.assertTrue(object2.respondsToSelector_('setP2:'))
+        self.assertTrue(object2.respondsToSelector_('p3'))
+        self.assertFalse(object2.respondsToSelector_('setP3:'))
+        self.assertTrue(object2.respondsToSelector_('p4'))
+        self.assertTrue(object2.respondsToSelector_('setP4:'))
+        self.assertTrue(object2.respondsToSelector_('p9'))
+        self.assertTrue(object2.respondsToSelector_('setP9:'))
 
         observer1.register(object1, 'p1')
         observer1.register(object1, 'p2')
@@ -179,6 +189,7 @@ class TestObjectProperty (TestCase):
         observer2.register(object2, 'p3')
         observer2.register(object2, 'p4')
         observer2.register(object2, 'p5')
+        observer2.register(object2, 'p9')
 
         try:
             self.assertEqual(observer1.values, [])
@@ -188,7 +199,6 @@ class TestObjectProperty (TestCase):
             object1.p2 = "b"
             self.assertEqual(object1.p3, ("a", "b"))
             self.assertEqual(object1.pyobjc_instanceMethods.p3(), ("a", "b"))
-
 
             object2.p1 = "a"
             object2.p2 = "b"
@@ -203,7 +213,7 @@ class TestObjectProperty (TestCase):
 
             #seen = { v[1]: v[2]['new'] for v in observer2.values }
             self.assertEqual(observer2.seen,
-                {'p1': 'a', 'p2': 'b', 'p3': ('c', 'b', 'a'), 'p4': 'c', 'p5': '-c-' })
+                    {'p1': 'a', 'p2': 'b', 'p3': ('c', 'b', 'a'), 'p4': 'c', 'p5': '-c-', 'p9': '+c+' })
 
         finally:
             observer1.unregister(object1, 'p1')
@@ -215,6 +225,7 @@ class TestObjectProperty (TestCase):
             observer2.unregister(object2, 'p3')
             observer2.unregister(object2, 'p4')
             observer2.unregister(object2, 'p5')
+            observer2.unregister(object2, 'p9')
 
     def testDepends2(self):
         class OCTestObjectProperty2B (NSObject):
@@ -265,21 +276,21 @@ class TestObjectProperty (TestCase):
         self.assertIsInstance(v, objc.lookUpClass('NSSet'))
         self.assertEqual(v, {'p1', 'p2', 'p4'})
 
-        self.assertTrue(object1.respondsToSelector('p1'))
-        self.assertTrue(object1.respondsToSelector('setP1:'))
-        self.assertTrue(object1.respondsToSelector('p2'))
-        self.assertTrue(object1.respondsToSelector('setP2:'))
-        self.assertTrue(object1.respondsToSelector('p3'))
-        self.assertFalse(object1.respondsToSelector('setP3:'))
+        self.assertTrue(object1.respondsToSelector_('p1'))
+        self.assertTrue(object1.respondsToSelector_('setP1:'))
+        self.assertTrue(object1.respondsToSelector_('p2'))
+        self.assertTrue(object1.respondsToSelector_('setP2:'))
+        self.assertTrue(object1.respondsToSelector_('p3'))
+        self.assertFalse(object1.respondsToSelector_('setP3:'))
 
-        self.assertTrue(object2.respondsToSelector('p1'))
-        self.assertTrue(object2.respondsToSelector('setP1:'))
-        self.assertTrue(object2.respondsToSelector('p2'))
-        self.assertTrue(object2.respondsToSelector('setP2:'))
-        self.assertTrue(object2.respondsToSelector('p3'))
-        self.assertFalse(object2.respondsToSelector('setP3:'))
-        self.assertTrue(object2.respondsToSelector('p4'))
-        self.assertTrue(object2.respondsToSelector('setP4:'))
+        self.assertTrue(object2.respondsToSelector_('p1'))
+        self.assertTrue(object2.respondsToSelector_('setP1:'))
+        self.assertTrue(object2.respondsToSelector_('p2'))
+        self.assertTrue(object2.respondsToSelector_('setP2:'))
+        self.assertTrue(object2.respondsToSelector_('p3'))
+        self.assertFalse(object2.respondsToSelector_('setP3:'))
+        self.assertTrue(object2.respondsToSelector_('p4'))
+        self.assertTrue(object2.respondsToSelector_('setP4:'))
 
         observer1.register(object1, 'p1')
         observer1.register(object1, 'p2')
@@ -498,7 +509,7 @@ class TestObjectProperty (TestCase):
 
             @OCTestObjectProperty5.p3.getter
             def p3(self):
-                return not super(OCTestObjectProperty6, self).p3
+                return not objc.super(OCTestObjectProperty6, self).p3
 
         base = OCTestObjectProperty5.alloc().init()
         self.assertRaises(ValueError, setattr, base, 'p1', 1)

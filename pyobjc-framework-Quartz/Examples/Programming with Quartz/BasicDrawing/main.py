@@ -1,6 +1,4 @@
-from PyObjCTools import NibClassBuilder, AppHelper
-
-NibClassBuilder.extractClasses("MainMenu")
+from PyObjCTools import AppHelper
 
 # Make sure all code is loaded
 import AppDrawing

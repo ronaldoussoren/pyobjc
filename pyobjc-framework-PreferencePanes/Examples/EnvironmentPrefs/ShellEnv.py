@@ -12,8 +12,9 @@ TODO:
 - Undo
 """
 import objc
-from Cocoa import *
-from PreferencePanes import *
+from objc import super
+import Cocoa
+import PreferencePanes
 from PyObjCTools import AppHelper
 import os
 
@@ -27,7 +28,7 @@ ENVPLIST="~/.MacOSX/environment.plist"
 # Template for new keys
 NEWTMPL=NSLocalizedString("New_Variable_%d", "")
 
-class EnvironmentPane (NSPreferencePane):
+class EnvironmentPane (PreferencePanes.NSPreferencePane):
     """
     The 'model/controller' for the "Shell Environment" preference pane
     """
@@ -60,10 +61,10 @@ class EnvironmentPane (NSPreferencePane):
     def didSelect(self):
         # We are the selected preference pane. Load the environment.plist.
 
-        self.environ = NSMutableDictionary.dictionaryWithContentsOfFile_(
+        self.environ = Cocoa.NSMutableDictionary.dictionaryWithContentsOfFile_(
             os.path.expanduser(ENVPLIST))
         if self.environ is None:
-            self.environ = NSMutableDictionary.dictionary()
+            self.environ = Cocoa.NSMutableDictionary.dictionary()
         self.keys = list(self.environ.keys())
         self.keys.sort()
         self.changed = False
@@ -74,44 +75,44 @@ class EnvironmentPane (NSPreferencePane):
         # unsaved changes ask if they should be saved right now.
 
         if self.changed:
-            NSBeginAlertSheet(
-                NSLocalizedString("Save changes?", ""),
-                NSLocalizedString("Cancel", ""),
-                NSLocalizedString("Don't Save", ""),
-                NSLocalizedString("Save", ""),
+            Cocoa.NSBeginAlertSheet(
+                Cocoa.NSLocalizedString("Save changes?", ""),
+                Cocoa.NSLocalizedString("Cancel", ""),
+                Cocoa.NSLocalizedString("Don't Save", ""),
+                Cocoa.NSLocalizedString("Save", ""),
                 self.mainView().window(),
                 self,
                 None,
                 "sheetDidDismiss:returnCode:contextInfo:",
                 0,
-                NSLocalizedString("There are unsaved changed, should these be saved?", ""))
-            return NSUnselectLater
-        return NSUnselectNow
+                Cocoa.NSLocalizedString("There are unsaved changed, should these be saved?", ""))
+            return PreferencePanes.NSUnselectLater
+        return PreferencePanes.NSUnselectNow
 
     @AppHelper.endSheetMethod
     def sheetDidDismiss_returnCode_contextInfo_(self, sheet, code, info):
         # Sheet handler for saving unsaved changes.
 
-        if code == NSAlertDefaultReturn: # 'Cancel'
-            self.replyToShouldUnselect_(NSUnselectCancel)
+        if code == Cocoa.NSAlertDefaultReturn: # 'Cancel'
+            self.replyToShouldUnselect_(PreferencePanes.NSUnselectCancel)
             return
 
-        elif code == NSAlertAlternateReturn: # 'Don't Save'
+        elif code == Cocoa.NSAlertAlternateReturn: # 'Don't Save'
             pass
 
-        elif code == NSAlertOtherReturn: # 'Save'
+        elif code == Cocoa.NSAlertOtherReturn: # 'Save'
             r = self.saveEnvironment()
             if not r:
                 self.runAlertSheet(
-                    NSLocalizedString("Cannot save changes", ""),
-                    NSLocalizedString("It was not possible to save your changes", ""))
-                self.replyToShouldUnselect_(NSUnselectCancel)
+                    Cocoa.NSLocalizedString("Cannot save changes", ""),
+                    Cocoa.NSLocalizedString("It was not possible to save your changes", ""))
+                self.replyToShouldUnselect_(PreferencePanes.NSUnselectCancel)
                 return
 
         self.keys = ()
         self.environ = None
         self.changed = False
-        self.replyToShouldUnselect_(NSUnselectNow)
+        self.replyToShouldUnselect_(PreferencePanes.NSUnselectNow)
 
     def saveEnvironment(self):
         """
@@ -153,7 +154,7 @@ class EnvironmentPane (NSPreferencePane):
         while self.environ.has_key(name):
             i += 1
             name = NEWTMPL%(i,)
-        self.environ[name] = NSLocalizedString("New Value", "")
+        self.environ[name] = Cocoa.NSLocalizedString("New Value", "")
         self.keys = list(self.environ.keys())
         self.keys.sort()
         self.mainTable.reloadData()
@@ -187,8 +188,8 @@ class EnvironmentPane (NSPreferencePane):
             if value != envname:
                 if self.environ.has_key(value):
                     self.runAlertSheet(
-                        NSLocalizedString("Name exists", ""),
-                        NSLocalizedString("The name %s is already used", "")%(
+                        Cocoa.NSLocalizedString("Name exists", ""),
+                        Cocoa.NSLocalizedString("The name %s is already used", "")%(
                             value,))
                     aView.reloadData()
                     return
@@ -216,8 +217,8 @@ class EnvironmentPane (NSPreferencePane):
 
     def runAlertSheet(self, title, message):
         """ Run an alertsheet without callbacks """
-        NSBeginAlertSheet(title,
-            NSLocalizedString("OK", ""), None, None,
+        Cocoa.NSBeginAlertSheet(title,
+            Cocoa.NSLocalizedString("OK", ""), None, None,
             self.mainView().window(),
             self,
             None,

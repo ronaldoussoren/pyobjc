@@ -24,7 +24,7 @@ static void mod_binheap_release (CFAllocatorRef allocator __attribute__((__unuse
 
 static CFStringRef mod_binheap_copydescription(const void* ptr)
 {
-	CFStringRef r =  CFCopyDescription(ptr);	
+	CFStringRef r =  CFCopyDescription(ptr);
 	return r;
 }
 
@@ -40,7 +40,7 @@ CFComparisonResult mod_binheap_compare(const void *ptr1, const void *ptr2, void 
 
 
 static CFBinaryHeapCallBacks mod_NSObjectBinaryHeapCallbacks = {
-	0, 
+	0,
 	mod_binheap_retain,
 	mod_binheap_release,
 	mod_binheap_copydescription,
@@ -48,7 +48,7 @@ static CFBinaryHeapCallBacks mod_NSObjectBinaryHeapCallbacks = {
 };
 
 
-static PyObject* 
+static PyObject*
 mod_CFBinaryHeapCreate(PyObject* self __attribute__((__unused__)),
 	PyObject* args)
 {
@@ -58,7 +58,7 @@ mod_CFBinaryHeapCreate(PyObject* self __attribute__((__unused__)),
 	CFBinaryHeapRef heap;
 
 
-	if (!PyArg_ParseTuple(args, "O" Py_ARG_SIZE_T, &py_allocator, &count)) {
+	if (!PyArg_ParseTuple(args, "On", &py_allocator, &count)) {
 		return NULL;
 	}
 
@@ -78,7 +78,7 @@ mod_CFBinaryHeapCreate(PyObject* self __attribute__((__unused__)),
 
 static PyObject*
 mod_CFBinaryHeapGetValues(
-	PyObject* self __attribute__((__unused__)), 
+	PyObject* self __attribute__((__unused__)),
 	PyObject* args)
 {
 	PyObject* py_heap;

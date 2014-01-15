@@ -1,9 +1,9 @@
-from Foundation import *
+from Foundation import NSObject, NSMutableArray
 import os, pwd
 
 
 def getPasswords():
-    a = NSMutableArray.array()
+    a = NSMutableArray()
     for pw in pwd.getpwall():
         a.append({
             'name': pw.pw_name,

@@ -1,4 +1,5 @@
-from Foundation import *
+import Cocoa
+from objc import super
 
 # enum ToDoItemStatus
 INCOMPLETE=0
@@ -10,7 +11,7 @@ SECS_IN_HOUR=SECS_IN_MINUTE*60
 SECS_IN_DAY=SECS_IN_HOUR*24
 SECS_IN_WEEK=SECS_IN_DAY*7
 
-class ToDoItem (NSObject):
+class ToDoItem (Cocoa.NSObject):
     __slots__ = (
         '_day',
         '_itemName',
@@ -22,8 +23,8 @@ class ToDoItem (NSObject):
     )
 
     def init(self):
-        self = NSObject.init(self)
-        if not self:
+        self = super(ToDoItem, self).init()
+        if self is None:
             return None
 
         self._day = None
@@ -52,8 +53,8 @@ class ToDoItem (NSObject):
         return descr
 
     def initWithName_andDate_(self, aName, aDate):
-        self = NSObject.init(self)
-        if not self:
+        self = super(ToDoItem, self).init()
+        if self is None:
             return None
 
         self._day = None
@@ -72,12 +73,12 @@ class ToDoItem (NSObject):
         if aDate:
             self.setDay_(aDate)
         else:
-            now = NSCalendarDate.date()
+            now = Cocoa.NSCalendarDate.date()
 
             self.setDay_(
-                NSCalendarDate.dateWithYear_month_day_hour_minute_second_timeZone_(
+                Cocoa.NSCalendarDate.dateWithYear_month_day_hour_minute_second_timeZone_(
                 now.yearOfCommonEra(), now.monthOfYear(), now.dayOfMonth(), 0, 0, 0,
-                NSTimeZone.localTimeZone()))
+                Cocoa.NSTimeZone.localTimeZone()))
         self.setStatus_(INCOMPLETE)
         self.setNotes_("")
         return self

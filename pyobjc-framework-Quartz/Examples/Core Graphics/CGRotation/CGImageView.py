@@ -1,8 +1,9 @@
-from Cocoa import *
-from Quartz import *
-from CGImageUtils import *
+import objc
+import Cocoa
+import Quartz
+import CGImageUtils
 
-class CGImageView (NSView):
+class CGImageView (Cocoa.NSView):
     _image = objc.ivar()
 
     def setImage_(self, img):
@@ -16,13 +17,13 @@ class CGImageView (NSView):
 
     def drawRect_(self, rect):
         # Obtain the current context
-        ctx = NSGraphicsContext.currentContext().graphicsPort()
+        ctx = Cocoa.NSGraphicsContext.currentContext().graphicsPort()
 
         # Draw the image in the context
-        IIDrawImageTransformed(self._image, ctx,
-                CGRectMake(rect.origin.x, rect.origin.y, rect.size.width, rect.size.height))
+        CGImageUtils.IIDrawImageTransformed(self._image, ctx,
+                Quartz.CGRectMake(rect.origin.x, rect.origin.y, rect.size.width, rect.size.height))
 
         # Draw the view border, just a simple stroked rectangle
-        CGContextAddRect(ctx, CGRectMake(rect.origin.x, rect.origin.y, rect.size.width, rect.size.height))
-        CGContextSetRGBStrokeColor(ctx, 1.0, 0.0, 0.0, 1.0)
-        CGContextStrokePath(ctx)
+        Quartz.CGContextAddRect(ctx, Quartz.CGRectMake(rect.origin.x, rect.origin.y, rect.size.width, rect.size.height))
+        Quartz.CGContextSetRGBStrokeColor(ctx, 1.0, 0.0, 0.0, 1.0)
+        Quartz.CGContextStrokePath(ctx)

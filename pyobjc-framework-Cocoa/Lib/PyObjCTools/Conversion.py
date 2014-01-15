@@ -20,10 +20,17 @@ try:
 except ImportError:
     decimal = None
 
-PYTHON_TYPES = (
-    basestring, bool, int, float, long, list, tuple, dict,
-    datetime.date, datetime.datetime, bool, buffer, type(None),
-)
+try:
+    PYTHON_TYPES = (
+        basestring, bool, int, float, long, list, tuple, dict, set,
+        datetime.date, datetime.datetime, bool, buffer, type(None),
+    )
+except NameError:
+    PYTHON_TYPES = (
+        str, bool, int, float, list, tuple, dict, set,
+        datetime.date, datetime.datetime, bool, type(None), bytes,
+    )
+    basestring = str
 
 DECIMAL_LOCALE = NSDictionary.dictionaryWithObject_forKey_(
     '.', 'NSDecimalSeparator')

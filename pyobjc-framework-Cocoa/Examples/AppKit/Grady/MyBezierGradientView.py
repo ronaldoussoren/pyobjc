@@ -1,4 +1,5 @@
-from MyBaseGradientView import *
+from MyBaseGradientView import MyBaseGradientView
+import Cocoa
 
 class MyBezierGradientView (MyBaseGradientView):
     def init(self):
@@ -6,13 +7,13 @@ class MyBezierGradientView (MyBaseGradientView):
         if self is None:
             return None
 
-        self.myOffsetPt = NSMakePoint(0.0, 0.0)
+        self.myOffsetPt = Cocoa.NSMakePoint(0.0, 0.0)
         return self
 
     def drawRect_(self, rect):
         self.resetGradient()
 
-        bezierPath = NSBezierPath.alloc().init()
+        bezierPath = Cocoa.NSBezierPath.alloc().init()
         bezierPath.appendBezierPathWithOvalInRect_(rect)
 
         if self.myIsRadial:

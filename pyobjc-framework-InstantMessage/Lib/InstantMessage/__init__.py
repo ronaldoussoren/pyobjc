@@ -17,5 +17,8 @@ sys.modules['InstantMessage'] = mod = objc.ObjCLazyModule('InstantMessage',
     _metadata.__dict__, None, {
        '__doc__': __doc__,
        '__path__': __path__,
+       '__loader__': globals().get('__loader__', None),
        'objc': objc,
     }, ( Foundation, Quartz,))
+
+del sys.modules['InstantMessage._metadata']

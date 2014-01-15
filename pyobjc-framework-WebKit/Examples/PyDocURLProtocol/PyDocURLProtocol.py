@@ -1,8 +1,13 @@
-from Foundation import *
+from __future__ import print_function
+from Cocoa import NSURLProtocol, NSURLResponse, NSError, NSString, NSURL, NSData
+from Cocoa import NSURLErrorDomain, NSURLErrorResourceUnavailable, NSURLCacheStorageNotAllowed
 import objc
 from pydochelper import gethtmldoc
+import sys
 
-PYDOCSCHEME = u'pydoc'
+PY3K = (sys.version_info[0] == 3)
+
+PYDOCSCHEME = u"pydoc"
 
 class PyDocURLProtocol(NSURLProtocol):
 
@@ -18,13 +23,18 @@ class PyDocURLProtocol(NSURLProtocol):
         client = self.client()
         request = self.request()
         urlpath = request.URL().standardizedURL().path()
-        modpath = urlpath.replace(u'/', u'.'
-            ).lstrip(u'.'
-            ).replace(u'.html', u'')
+        modpath = urlpath.replace("/", "."
+            ).lstrip("."
+            ).replace(".html", "")
+
+        if not PY3K:
+            modpath = modpath.encode("utf-8")
 
         try:
-            data = gethtmldoc(modpath.encode('utf-8'))
-        except Exception, e:
+            data = gethtmldoc(modpath)
+            if PY3K:
+                data = data.encode("utf-8")
+        except Exception as e:
             client.URLProtocol_didFailWithError_(
                 self,
                 NSError.errorWithDomain_code_userInfo_(
@@ -36,9 +46,9 @@ class PyDocURLProtocol(NSURLProtocol):
         else:
             response = NSURLResponse.alloc().initWithURL_MIMEType_expectedContentLength_textEncodingName_(
                 request.URL(),
-                u'text/html',
+                "text/html",
                 len(data),
-                u'utf-8',
+                "utf-8",
             )
             client.URLProtocol_didReceiveResponse_cacheStoragePolicy_(
                 self,
@@ -47,7 +57,7 @@ class PyDocURLProtocol(NSURLProtocol):
             )
             client.URLProtocol_didLoadData_(
                 self,
-                buffer(data),
+                NSData.dataWithBytes_length_(data, len(data)),
             )
             client.URLProtocolDidFinishLoading_(self)
 
@@ -62,12 +72,15 @@ def teardown():
 
 def main(*args):
     if not args:
-        args = ('dict',)
-    setup()
-    for arg in args:
-        url = NSURL.URLWithString_(u'pydoc:///%s' % (arg,))
-        print NSString.stringWithContentsOfURL_(url)
-    teardown()
+        args = ("dict",)
 
-import sys
-if __name__ == '__main__': main(*sys.argv[1:])
+    setup()
+    try:
+        for arg in args:
+            url = NSURL.URLWithString_(u"pydoc:///%s" % (arg,))
+            print(NSString.stringWithContentsOfURL_(url))
+    finally:
+        teardown()
+
+if __name__ == "__main__":
+    main(*sys.argv[1:])

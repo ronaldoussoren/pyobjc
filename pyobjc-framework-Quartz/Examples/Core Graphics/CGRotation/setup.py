@@ -2,13 +2,20 @@
 Script for building the example.
 
 Usage:
-    python setup.py py2app
+    python3 setup.py py2app
 """
-from distutils.core import setup
-import py2app
+from setuptools import setup
 
 setup(
-    name='CGRotation',
+    name="CGRotation",
     app=["main.py"],
-    data_files=["English.lproj", "demo.png"],
+    data_files=[
+        "English.lproj",
+        "demo.png"
+    ],
+    setup_requires=[
+        "py2app",
+        "pyobjc-framework-Cocoa",
+        "pyobjc-framework-Quartz",
+    ]
 )

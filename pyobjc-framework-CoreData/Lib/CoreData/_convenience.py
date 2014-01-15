@@ -7,13 +7,30 @@ there (it generates accessor methods at runtime, which interferes with the
 implementation in this file).
 """
 __all__ = ()
-from objc import addConvenienceForClass
+from objc import addConvenienceForClass, super
 from Foundation import NSObject
+import os
+
+# XXX: This is fairly crude, need further research.
+#      This code basicly tries to outsmart tricks that
+#      CoreData plays, and that's asking for problems.
+if os.uname()[2] < '13.':
+    def _first_python(cls):
+        if '__objc_python_subclass__' in cls.__dict__:
+            return cls
+        return None
+else:
+    def _first_python(cls):
+        for cls in cls.mro():
+            if '__objc_python_subclass__' in cls.__dict__:
+                return cls
+        return None
 
 def NSMOsetValue_ForKey_(self, name, value):
     try:
-        if '__objc_python_subclass__' in self.__class__.__dict__:
-            super(self.__class__, self).setValue_forKey_(value, name)
+        first = _first_python(self.__class__)
+        if first is not None:
+            super(first, self).setValue_forKey_(value, name)
         else:
             self.setValue_forKey_(value, name)
 
@@ -23,15 +40,17 @@ def NSMOsetValue_ForKey_(self, name, value):
 
 def NSMOgetValueForKey_(self, name):
     try:
-        if '__objc_python_subclass__' in self.__class__.__dict__:
-            return super(self.__class__, self).valueForKey_(name)
+        first = _first_python(self.__class__)
+        if first is not None:
+            return super(first, self).valueForKey_(name)
         else:
             return self.valueForKey_(name)
 
     except KeyError as msg:
         raise AttributeError(name)
 
-addConvenienceForClass('NSManagedObject', (
-    ('__setattr__', NSMOsetValue_ForKey_),
-    ('__getattr__', NSMOgetValueForKey_),
-))
+if os.uname()[2] < '13.' or True:
+    addConvenienceForClass('NSManagedObject', (
+        ('__setattr__', NSMOsetValue_ForKey_),
+        ('__getattr__', NSMOgetValueForKey_),
+    ))

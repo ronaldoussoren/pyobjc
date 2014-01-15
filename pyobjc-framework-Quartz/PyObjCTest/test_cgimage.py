@@ -146,9 +146,10 @@ class TestCGImage (TestCase):
         self.assertTrue(v is objc.NULL)
 
         v = CGImageGetDecode(image2)
-        self.assertIsInstance(v, objc.varlist)
-        self.assertEqual(v[0], 0.0)
-        self.assertEqual(v[1], 1.0)
+        if v is not objc.NULL:
+            self.assertIsInstance(v, objc.varlist)
+            self.assertEqual(v[0], 0.0)
+            self.assertEqual(v[1], 1.0)
 
         self.assertResultHasType(CGImageGetShouldInterpolate, objc._C_BOOL)
         v = CGImageGetShouldInterpolate(image)

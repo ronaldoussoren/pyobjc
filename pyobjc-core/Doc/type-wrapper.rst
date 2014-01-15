@@ -22,49 +22,35 @@ API of the structure types but does not exist as a real type.
    A structure type.
 
    .. data:: _fields
-
       A tuple with the field names for this structure. Every name
       in *_fields* is present as an attribute of instances of the type.
 
-      .. versionadded:: 2.5
-
    .. data:: __typestr__
-
       The type encoding for this structure type
 
    .. method:: __getitem__(idx)
-
       Return the *idx*-th element of the object. This also supports
       slices.
 
    .. method:: __setitem__(idx, value)
-
       Set the *idx*-th element of the object. This also supports
       slice, but the assignment is not allowed to change the number
       of elements.
 
    .. method:: copy()
-
       Returns a deep copy of the structure, that is all field values
       that are instances of a structure types are copied as well.
 
    .. method:: __pyobjc_copy__()
-
       An alias for :meth:`copy`, for use by PyObjC.
 
    .. method:: _replace(\**kwds)
-
       First create a copy of the object, then use the keyword arguments
       to replace the values of some attributes.
 
-      .. versionadded:: 2.5
-
    .. method:: _asdict()
-
       Returns a dictionary where the keys are the values in :data:`_fields`
       and the values are the corresponding attribute values.
-
-      .. versionadded:: 2.5
 
 
 .. _type-opaque:
@@ -81,33 +67,24 @@ The rest of this section describes :class:`OpaquePointerType`, which defines the
 API of the opaque pointer types but does not exist as a real type.
 
 .. class::  OpaquePointerType(cobject=None, c_void_p=None)
-   
+
    An opaque pointer type. Values are usually created by the PyObjC bridge,
    but can be created manually using one of the keyword arguments:
 
-   * *cobject*: A PyCapsule object with name "objc.__opaque__" that represents 
+   * *cobject*: A PyCapsule object with name "objc.__opaque__" that represents
      an opaque pointer value.
-
-   * *c_void_p*: An instance of :class:`ctypes.c_void_p` or 
+   * *c_void_p*: An instance of :class:`ctypes.c_void_p` or
      :class:`int <__builtin__.int>` that represents an opaque pointer value.
 
-   .. versionchanged:: 2.5.1 added the *c_void_p* argument
-
    .. data:: __typestr__
-
       The type encoding for the opaque pointer type
 
    .. data:: __pointer__
-
       An integer with the raw pointer value
 
    .. method:: __c_void_p__()
-
       Returns a :class:`ctypes.c_void_p` instance with the raw pointer value
 
-      .. versionadded:: 2.5
-
    .. method:: __cobject__()
-
       Returns a PyCapsule object with name "objc.__opaque__" representing
       the raw pointer value.

@@ -17,34 +17,34 @@
 @implementation OC_TestFilePointer
 -(FILE*)openFile:(char*)path withMode:(char*)mode
 {
-	return fopen(path, mode);
+    return fopen(path, mode);
 }
 
 -(NSString*)readline:(FILE*)fp
 {
-	char buf[1024];
+    char buf[1024];
 
-	return [NSString stringWithCString: fgets(buf, sizeof(buf), fp)
-		         encoding:NSASCIIStringEncoding];
+    return [NSString stringWithCString: fgets(buf, sizeof(buf), fp)
+                 encoding:NSASCIIStringEncoding];
 }
 @end
 
 static PyMethodDef mod_methods[] = {
-	{ 0, 0, 0, 0 }
+    { 0, 0, 0, 0 }
 };
 
 #if PY_VERSION_HEX >= 0x03000000
 
 static struct PyModuleDef mod_module = {
-	PyModuleDef_HEAD_INIT,
-	"filepointer",
-	NULL,
-	0,
-	mod_methods,
-	NULL,
-	NULL,
-	NULL,
-	NULL
+    PyModuleDef_HEAD_INIT,
+    "filepointer",
+    NULL,
+    0,
+    mod_methods,
+    NULL,
+    NULL,
+    NULL,
+    NULL
 };
 
 #define INITERROR() return NULL
@@ -52,7 +52,7 @@ static struct PyModuleDef mod_module = {
 
 PyObject* PyInit_filepointer(void);
 
-PyObject*
+PyObject* __attribute__((__visibility__("default")))
 PyInit_filepointer(void)
 
 #else
@@ -62,30 +62,30 @@ PyInit_filepointer(void)
 
 void initfilepointer(void);
 
-void
+void __attribute__((__visibility__("default")))
 initfilepointer(void)
 #endif
 {
-	PyObject* m;
+    PyObject* m;
 
 #if PY_VERSION_HEX >= 0x03000000
-	m = PyModule_Create(&mod_module);
+    m = PyModule_Create(&mod_module);
 #else
-	m = Py_InitModule4("filepointer", mod_methods,
-		NULL, NULL, PYTHON_API_VERSION);
+    m = Py_InitModule4("filepointer", mod_methods,
+        NULL, NULL, PYTHON_API_VERSION);
 #endif
-	if (!m) {
-		INITERROR();
-	}
+    if (!m) {
+        INITERROR();
+    }
 
-	if (PyObjC_ImportAPI(m) < 0) {
-		INITERROR();
-	}
+    if (PyObjC_ImportAPI(m) < 0) {
+        INITERROR();
+    }
 
-	if (PyModule_AddObject(m, "OC_TestFilePointer", 
-			PyObjCClass_New([OC_TestFilePointer class])) < 0) {
-		INITERROR();
-	}
+    if (PyModule_AddObject(m, "OC_TestFilePointer",
+            PyObjC_IdToPython([OC_TestFilePointer class])) < 0) {
+        INITERROR();
+    }
 
-	INITDONE();
+    INITDONE();
 }

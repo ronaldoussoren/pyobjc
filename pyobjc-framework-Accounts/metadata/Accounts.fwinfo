@@ -2,9 +2,94 @@
 # for information on how to update this file.
 {
  "definitions": {
-  "classes": {}, 
-  "formal_protocols": {}, 
-  "functions": {}, 
+  "classes": {
+     "ACAccountStore": {
+       "methods": [
+         {
+	   "selector": "requestAccessToAccountsWithType:options:completion:",
+	   "class_method": false,
+	   "args": {
+	      "2": {
+	         "callable": {
+		    "arguments": {
+		      "0": { "typestr": "^v" },
+		      "1": { "typestr": "Z" },
+		      "2": {  "typestr": "@" }
+		    },
+		    "retval": { "typestr": "v" }
+		 }
+	     }
+	   }
+	 },
+         {
+	   "selector": "saveAccount:withCompletionHandler:",
+	   "class_method": false,
+	   "args": {
+	      "1": {
+	         "callable": {
+		    "arguments": {
+		      "0": { "typestr": "^v" },
+		      "1": { "typestr": "Z" },
+		      "2": {  "typestr": "@" }
+		    },
+		    "retval": { "typestr": "v" }
+		 }
+	     }
+	   }
+	 },
+         {
+	   "selector": "requestAccessToAccountsWithType:withCompletionHandler:",
+	   "class_method": false,
+	   "args": {
+	      "1": {
+	         "callable": {
+		    "arguments": {
+		      "0": { "typestr": "^v" },
+		      "1": { "typestr": "Z" },
+		      "2": {  "typestr": "@" }
+		    },
+		    "retval": { "typestr": "v" }
+		 }
+	     }
+	   }
+	 },
+         {
+	   "selector": "renewCredentialsForAccount:completion:",
+	   "class_method": false,
+	   "args": {
+	      "1": {
+	         "callable": {
+		    "arguments": {
+		      "0": { "typestr": "^v" },
+		      "1": { "typestr": ["i", "q"] },
+		      "2": {  "typestr": "@" }
+		    },
+		    "retval": { "typestr": "v" }
+		 }
+	     }
+	   }
+	 },
+         {
+	   "selector": "removeAccount:withCompletionHandler:",
+	   "class_method": false,
+	   "args": {
+	      "1": {
+	         "callable": {
+		    "arguments": {
+		      "0": { "typestr": "^v" },
+		      "1": { "typestr": "Z" },
+		      "2": {  "typestr": "@" }
+		    },
+		    "retval": { "typestr": "v" }
+		 }
+	     }
+	   }
+	 }
+       ]
+     }
+  },
+  "formal_protocols": {},
+  "functions": {},
   "informal_protocols": {}
  }
 }

@@ -112,7 +112,10 @@ class TestBase (TestCase):
     def testCFNull(self):
         self.assertIsInstance(CFNullGetTypeID(), (int, long))
         self.assertIsInstance(kCFNull, CFNullRef)
-        self.assertIsCFType(CFNullRef)
+
+        cls = objc.lookUpClass('NSNull')
+        if cls is not CFNullRef:
+            self.assertIsCFType(CFNullRef)
 
     def testCFAllocator(self):
         self.assertIsCFType(CFAllocatorRef)

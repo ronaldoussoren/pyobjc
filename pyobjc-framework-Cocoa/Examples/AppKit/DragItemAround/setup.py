@@ -2,13 +2,16 @@
 Script for building the example.
 
 Usage:
-    python setup.py py2app
+    python3 setup.py py2app
 """
 from setuptools import setup
 
 setup(
-    name='DragItemAround',
+    name="DragItemAround",
     app=["DragItemAround.py"],
     data_files=["MainMenu.nib"],
-    setup_requires=["py2app"],
+    setup_requires=[
+        "py2app",
+        "pyobjc-framework-Cocoa",
+    ]
 )

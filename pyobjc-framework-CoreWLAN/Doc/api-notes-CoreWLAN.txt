@@ -1,0 +1,23 @@
+API notes: CoreWLAN framework
+=============================
+
+API Notes
+---------
+
+.. note::
+
+   The Accounts framework is only available in OSX 10.6 or later.
+
+
+CWKeychainCopyEAPIdentity
+.........................
+
+This function returns a SecIdentityRef (by reference), the security
+framework isn't wrapped by PyObjC at this time.
+
+CWKeychainSetEAPIdentity
+........................
+
+This function has a SecIdentityRef argument, but because the
+security framework isn't wrapped by PyObjC at this time it is
+not yet possible to create values for this argument.

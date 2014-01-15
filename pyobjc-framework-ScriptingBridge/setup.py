@@ -18,15 +18,15 @@ import os
 setup(
     min_os_level='10.5',
     name='pyobjc-framework-ScriptingBridge',
-    version="2.6b1",
+    version="3.0a1",
     description = "Wrappers for the framework ScriptingBridge on Mac OS X",
     packages = [ "ScriptingBridge" ],
     setup_requires = [
-        'pyobjc-core>=2.6b1',
+        'pyobjc-core>=3.0a1',
     ],
     install_requires = [
-        'pyobjc-core>=2.6b1',
-        'pyobjc-framework-Cocoa>=2.6b1',
+        'pyobjc-core>=3.0a1',
+        'pyobjc-framework-Cocoa>=3.0a1',
     ],
     ext_modules = [
         Extension("ScriptingBridge._ScriptingBridge",

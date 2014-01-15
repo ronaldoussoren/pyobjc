@@ -1,8 +1,6 @@
-from PyObjCTools import NibClassBuilder, AppHelper
+from PyObjCTools import AppHelper
 
-NibClassBuilder.extractClasses("MainMenu")
-NibClassBuilder.extractClasses("TLayerDemo")
-
+import objc; objc.setVerbose(True)
 import AppDelegate
 import Circle
 import Extras
@@ -10,6 +8,5 @@ import ShadowOffsetView
 import TLayerDemo
 import TLayerView
 
-import objc; objc.setVerbose(True)
 
 AppHelper.runEventLoop()

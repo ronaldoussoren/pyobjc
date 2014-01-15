@@ -72,7 +72,7 @@ class TestSuper (TestCase):
         o = PyObjC_ClsInst2.alloc().init()
 
         self.assertEqual(o.instance(), 10)
-        self.assertEqual(super(PyObjC_ClsInst2, o).instance(), 1)
+        self.assertEqual(objc.super(PyObjC_ClsInst2, o).instance(), 1)
 
     def testBoth(self):
         o = PyObjC_ClsInst2.alloc().init()

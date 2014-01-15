@@ -17,7 +17,7 @@ class TestNSExceptionHandlerHelper (NSObject):
 
 class TestNSExceptionHandler (TestCase):
     def testProtocols(self):
-        self.assertIsInstance(protocols.NSExceptionHandlerDelegate, objc.informal_protocol)
+        #self.assertIsInstance(protocols.NSExceptionHandlerDelegate, objc.informal_protocol)
 
         self.assertResultIsBOOL(TestNSExceptionHandlerHelper.exceptionHandler_shouldLogException_mask_)
         self.assertArgHasType(TestNSExceptionHandlerHelper.exceptionHandler_shouldLogException_mask_, 2, objc._C_NSUInteger)

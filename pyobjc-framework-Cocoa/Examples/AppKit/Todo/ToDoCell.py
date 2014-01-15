@@ -1,10 +1,11 @@
-from Cocoa import *
+import objc
+import Cocoa
 
 NOT_DONE=0
 DONE=1
 DEFERRED=2
 
-class ToDoCell (NSButtonCell):
+class ToDoCell (Cocoa.NSButtonCell):
 
     __slots__ = ('_triState', '_doneImage', '_deferredImage', '_timeDue' )
 
@@ -14,19 +15,19 @@ class ToDoCell (NSButtonCell):
         self._doneImage = None
         self._deferredImage = None
 
-        NSButtonCell.initTextCell_(self, "")
+        Cocoa.NSButtonCell.initTextCell_(self, "")
 
-        self.setType_(NSToggleButton)
-        self.setImagePosition_(NSImageLeft)
-        self.setBezelStyle_(NSShadowlessSquareBezelStyle)
-        self.setFont_(NSFont.userFontOfSize_(10))
-        self.setAlignment_(NSRightTextAlignment)
+        self.setType_(Cocoa.NSToggleButton)
+        self.setImagePosition_(Cocoa.NSImageLeft)
+        self.setBezelStyle_(Cocoa.NSShadowlessSquareBezelStyle)
+        self.setFont_(Cocoa.NSFont.userFontOfSize_(10))
+        self.setAlignment_(Cocoa.NSRightTextAlignment)
 
-        self._doneImage = NSImage.imageNamed_("DoneMark")
-        self._deferredImage = NSImage.imageNamed_("DeferredMark")
+        self._doneImage = Cocoa.NSImage.imageNamed_("DoneMark")
+        self._deferredImage = Cocoa.NSImage.imageNamed_("DeferredMark")
         return self
 
-    @objc.typedAccessor('i')
+    @objc.typedAccessor(objc._C_INT)
     def setTriState_(self, newState):
         if newState > DEFERRED:
             self._triState = NOT_DONE
@@ -35,7 +36,7 @@ class ToDoCell (NSButtonCell):
 
         self.updateImage()
 
-    @objc.typedAccessor('i')
+    @objc.typedAccessor(objc._C_INT)
     def triState(self):
         return self._triState
 
@@ -52,30 +53,25 @@ class ToDoCell (NSButtonCell):
     def updateImage(self):
 
         if self._triState == NOT_DONE:
-            #print "NO IMAGE"
             self.setImage_(None)
         elif self._triState == DONE:
-            #print "DONE IMAGE"
             self.setImage_(self._doneImage)
         elif self._triState == DEFERRED:
-            #print "DEFERRED IMAGE"
             self.setImage_(self._deferredImage)
 
         self.controlView().updateCell_(self)
 
     def startTrackingAt_inView_(self, startPoint, controlView):
-        #print "startTracking:", startPoint, controlView
         return 1
 
     def stopTracking_at_inView_mouseIsUp_(self, lastPoint, stopPoint, controlView, flag):
-        #print "stopTracking:", lastPoint, stopPoint, controlView, flag, self.triState()
         if flag:
             self.setTriState_(self.triState() + 1)
 
     def setTimeDue_(self, newTime):
         if newTime:
             self._timeDue = newTime
-            self.setTitle_(self._timeDue.descriptionWithCalendarFormat_timeZone_locale_("%I:%M %p", NSTimeZone.localTimeZone(), None))
+            self.setTitle_(self._timeDue.descriptionWithCalendarFormat_timeZone_locale_("%I:%M %p", Cocoa.NSTimeZone.localTimeZone(), None))
         else:
             self._timeDue = None
             self.setTitle_("-->")

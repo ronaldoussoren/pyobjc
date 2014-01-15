@@ -214,6 +214,19 @@ def onlyOn64Bit(function):
     """
     return onlyIf(not is32Bit(), "64-bit only")(function)
 
+def min_python_release(version):
+    """
+    Usage::
+
+        class Tests (unittest.TestCase):
+
+            @min_python_release('3.2')
+            def test_python_3_2(self):
+                pass
+    """
+    parts = tuple(map(int, version.split('.')))
+    return onlyIf(_sys.version_info[:2] >= parts, "Requires Python %s or later"%(version,))
+
 
 def min_os_level(release):
     """
@@ -225,7 +238,7 @@ def min_os_level(release):
             def testSnowLeopardCode(self):
                 pass
     """
-    return onlyIf(os_release() >= release)
+    return onlyIf(os_release() >= release, "Requires OSX %s or later"%(release,))
 
 def max_os_level(release):
     """
@@ -237,7 +250,19 @@ def max_os_level(release):
             def testUntilLeopard(self):
                 pass
     """
-    return onlyIf(os_release() <= release)
+    return onlyIf(os_release() <= release, "Requires OSX upto %s"%(release,))
+
+def os_level_between(min_release, max_release):
+    """
+    Usage::
+
+        class Tests (unittest.TestCase):
+
+            @os_level_between('10.5', '10.8')
+            def testUntilLeopard(self):
+                pass
+    """
+    return onlyIf(min_release <= os_release() <= max_release, "Requires OSX %s upto %s"%(min_release, max_release))
 
 _poolclass = objc.lookUpClass('NSAutoreleasePool')
 
@@ -270,6 +295,19 @@ class TestCase (_unittest.TestCase):
         if any(x is tp for x in _nscftype):
             self.fail(message or "%r is not a unique CFTypeRef type"%(tp,))
 
+        for cls in tp.__bases__:
+            if 'NSCFType' in cls.__name__:
+                return
+
+        self.fail(message or "%r is not a CFTypeRef type"%(tp,))
+
+        # NOTE: Don't test if this is a subclass of one of the known
+        #       CF roots, this tests is mostly used to ensure that the
+        #       type is distinct from one of those roots.
+        #  XXX: With the next two lines enabled there are spurious test
+        #       failures when a CF type is toll-free bridged to an
+        #       (undocumented) Cocoa class. It might be worthwhile to
+        #       look for these, but not in the test suite.
         #if not issubclass(tp, _nscftype):
         #    self.fail(message or "%r is not a CFTypeRef subclass"%(tp,))
 
@@ -590,7 +628,7 @@ class TestCase (_unittest.TestCase):
             i = info['arguments'][argno+offset]
         except (KeyError, IndexError):
             self.fail(message or "arg %d of %s has no metadata (or doesn't exist)"%(argno, method))
-        
+
         type = i.get('type', b'@')
         if type != objc._C_SEL:
             self.fail(message or "arg %d of %s is not of type SEL"%(
@@ -761,6 +799,10 @@ class TestCase (_unittest.TestCase):
 
 
 
+    if not hasattr(_unittest.TestCase, 'assertStartswith'):
+        def assertStartswith(self, value, test, message = None): # pragma: no cover
+            if not value.startswith(test):
+                self.fail(message or "%r does not start with %r"%(value, test))
 
     if not hasattr(_unittest.TestCase, 'assertIs'): # pragma: no cover
         def assertIs(self, value, test, message = None):
@@ -795,6 +837,14 @@ class TestCase (_unittest.TestCase):
         def assertNotHasAttr(self, value, key, message=None):
             if hasattr(value, key):
                 self.fail(message or "%s is an attribute of %r"%(key, value))
+
+    def assertIsSubclass(self, value, types, message=None):
+        if not issubclass(value, types):
+            self.fail(message or "%s is not a subclass of %r"%(value, types))
+
+    def assertIsNotSubclass(self, value, types, message=None):
+        if issubclass(value, types):
+            self.fail(message or "%s is a subclass of %r"%(value, types))
 
     if not hasattr(_unittest.TestCase, 'assertIsInstance'): # pragma: no cover
         def assertIsInstance(self, value, types, message=None):
@@ -860,6 +910,7 @@ class TestCase (_unittest.TestCase):
             del p
             _gc.collect()
 
+
 main = _unittest.main
 
 if hasattr(_unittest, 'expectedFailure'):
@@ -880,8 +931,8 @@ else: # pragma: no cover (py2.6)
 
         return test
 
-# XXX: filterwarnings relies on implementation details of
-#      the warnings module
+# NOTE: filterwarnings relies on implementation details of
+#       the warnings module
 class filterWarnings (object):
     def __init__(self, kind, category):
         self._kind = kind

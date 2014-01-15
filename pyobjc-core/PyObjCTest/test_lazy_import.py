@@ -3,6 +3,14 @@ from PyObjCTools.TestSupport import *
 import objc._lazyimport as lazyimport
 import objc
 import sys
+import os
+import struct
+import operator
+
+from PyObjCTest import metadatafunction
+
+if sys.version_info[0] == 3:  # pragma: no 2.x cover; pragma: no branch
+    long = int
 
 if sys.maxsize > 2 ** 32:
     def sel32or64(a, b): return b
@@ -38,7 +46,6 @@ class TestLazyImport (TestCase):
         self.assertEqual(o.bundleIdentifier(), 'com.apple.AppKit')
         self.assertTrue(o.isLoaded())
 
-
         # Should not be loaded yet, hence fallback from identifier to path
         o = lazyimport._loadBundle('PreferencePanes', 'com.apple.frameworks.preferencepanes', '/System/Library/Frameworks/PreferencePanes.framework')
         o.load()
@@ -46,38 +53,53 @@ class TestLazyImport (TestCase):
         self.assertTrue(o.isLoaded())
 
 
+    def test_all_types_without_all(self):
+        self.do_test_all_types(all=False)
 
-    def no_test_all_types(self):
-        # NOTE: Test isn't ready yet
-        # Note: this test uses the real functions, other tests can (and will) mock 
-        #       functions in objc._objc to test failure condictions, but the full
-        #       API stack should be used in at least one testcase.
+    def test_all_types_with_all(self):
+        self.do_test_all_types(all=True)
+
+    def do_test_all_types(self, all):
         metadict = {
-            'constants': '$NSAFMCharacterSet$NSAFMDescender$',
-            'constants_dicts': { 
-                'NSAFMAscender': b'@',
+            'nometadata': 42, # Ignored...
+            'protocols': {'NSMachPortDelegateMethods': objc.informal_protocol('NSMachPortDelegateMethods', [objc.selector(None, b'handleMachMessage:', b'v@:^v', isRequired=False)]) },
+            'constants': '$NSWorkspaceMoveOperation$NSWorkspaceCopyOperation@@$',
+            'constants_dict': {
+                'NSWorkspaceLinkOperation': '@',
+                'NSWindowWillCloseNotification': '@',
+                'NSUnderlineByWordMask': objc._C_NSUInteger.decode('ascii'),
             },
             'enums': '$NSAWTEventType@16$NSAboveBottom@4$NSAboveTop@1$',
 
             'functions': {
                 'NSRectClipList': (
-                    sel32or64(b'v^{_NSRect={_NSPoint=ff}{_NSSize=ff}}i', b'v^{CGRect={CGPoint=dd}{CGSize=dd}}q'), 
-                    '', 
+                    sel32or64(b'v^{_NSRect={_NSPoint=ff}{_NSSize=ff}}i', b'v^{CGRect={CGPoint=dd}{CGSize=dd}}q'),
+                    '',
                     {
                         'arguments': {
                             0: {
-                                'c_array_length_in_arg': 1, 
+                                'c_array_length_in_arg': 1,
                                 'type_modifier': b'n'
                             }
                         }
                     }
                 ),
+                'FunctionThatDoesNotExist': (
+                    sel32or64(b'v^{_NSRect={_NSPoint=ff}{_NSSize=ff}}i', b'v^{CGRect={CGPoint=dd}{CGSize=dd}}q'),
+                    '', {}
+                ),
+                'NSAccessibilityActionDescription': (
+                    b'@@', '', {}
+                ),
             },
             'aliases': {
                 'doc_string': '__doc__',
+                'invalid_alias': 'does_not_exist',
             },
             'expressions': {
                 'mysum': 'NSAWTEventType + NSAboveBottom + 3',
+                'invalid_expression1': 'no_such_name + 1',
+                'invalid_expression2': 'NSAboveBottom + "b"',
             }
         }
 
@@ -89,52 +111,291 @@ class TestLazyImport (TestCase):
                 initial_dict, ())
         self.assertIsInstance(mod, objc.ObjCLazyModule)
 
+        if all:
+            # Force precalculation of all attributes by accessing the __all__
+            # attribute
+            self.assertEqual(set(dir(mod)), set(mod.__all__))
+
         self.assertEqual(mod.__doc__, initial_dict['__doc__'])
         self.assertEqual(mod.doc_string, initial_dict['__doc__'])
-        self.assertIsInstance(mod.NSAFMCharacterSet, objc.objc_object)
-        self.assertIsInstance(mod.NSAFMDescender, objc.objc_object)
-        self.assertIsInstance(mod.NSAFMAscender, objc.objc_object)
+        self.assertRaises(AttributeError, getattr, mod, 'invalid_alias')
+        self.assertIsInstance(mod.NSWorkspaceMoveOperation, objc.pyobjc_unicode)
+        self.assertTrue((mod.NSWorkspaceMoveOperation.nsstring().__flags__ & 0x10) == 0x00)
+        self.assertIsInstance(mod.NSWorkspaceCopyOperation, objc.pyobjc_unicode)
+        self.assertIsInstance(mod.NSWorkspaceLinkOperation, objc.pyobjc_unicode)
+
+        self.assertIsInstance(mod.NSUnderlineByWordMask, (int, long))
         self.assertEqual(mod.NSAWTEventType, 16)
         self.assertEqual(mod.NSAboveBottom, 4)
         self.assertEqual(mod.NSAboveTop, 1)
         self.assertIsInstance(mod.NSRectClipList, objc.function)
         self.assertEqual(mod.NSRectClipList.__name__, 'NSRectClipList')
-        self.assertArgLengthInArg(mod.NSRectClipList, 0, 1)
+        self.assertArgSizeInArg(mod.NSRectClipList, 0, 1)
+        self.assertRaises(AttributeError, getattr, mod, 'FunctionThatDoesNotExist')
         self.assertEqual(mod.mysum, mod.NSAWTEventType + mod.NSAboveBottom + 3)
+        self.assertRaises(AttributeError, getattr, mod, 'invalid_expression1')
+        self.assertRaises(AttributeError, getattr, mod, 'invalid_expression2')
+        self.assertIs(mod.NSURL, objc.lookUpClass('NSURL'))
+        self.assertRaises(AttributeError, getattr, mod, 'NSNonExistingClass')
 
+        mod.NSAccessibilityActionDescription = 99
+        mod.NSWindowWillCloseNotification = 100
+        self.assertEqual(set(dir(mod)), set(mod.__all__))
+        self.assertIn('NSRectClipList', mod.__dict__)
+        self.assertIn('NSRectClipList', mod.__all__)
+        self.assertIn('NSAccessibilityActionDescription', mod.__all__)
+        self.assertEqual(mod.NSAccessibilityActionDescription, 99)
+        self.assertIn('mysum', mod.__all__)
+        self.assertIn('NSWorkspaceMoveOperation', mod.__all__)
+        self.assertIn('NSWindowWillCloseNotification', mod.__all__)
+        self.assertEqual(mod.NSWindowWillCloseNotification, 100)
+        self.assertNotIn('__doc__', mod.__all__)
 
-    def test_hack(self):
-        # This is not really a test, but ensures that the code is at 
-        # least exercised a little. 
-        # There still have to be real tests...
+        self.assertIn('NSMachPortDelegateMethods', mod._ObjCLazyModule__informal_protocols)
+
+    def test_without_framework(self):
+        initial_dict = {
+                '__doc__': 'rootless test module',
+        }
+        metadict = {
+            'constants': '$ABAddressBookErrorDomain$',
+            'constants_dict': {
+                'ABMultiValueIdentifiersErrorKey': '@',
+            },
+            'enums': '$NSAWTEventType@16$NSAboveBottom@4$NSAboveTop@1$',
+
+            'functions': {
+                'ABPersonSetImageData': (objc._C_BOOL + objc._C_ID + objc._C_ID, '', {}),
+            },
+            'aliases': {
+                'doc_string': '__doc__',
+            },
+            'expressions': {
+                'mysum': 'NSAWTEventType + NSAboveBottom + 3',
+            }
+        }
+
+        mod = objc.ObjCLazyModule ('RootLess', None, None, metadict, None,
+                initial_dict, ())
+
+        self.assertEqual(mod.__doc__, 'rootless test module')
+        self.assertEqual(mod.__doc__, mod.doc_string)
+        self.assertEqual(mod.NSAboveBottom, 4)
+        self.assertEqual(mod.mysum, mod.NSAWTEventType + mod.NSAboveBottom + 3)
+        self.assertRaises(AttributeError, getattr, mod, 'ABPersonSetImageData')
+        self.assertRaises(AttributeError, getattr, mod, 'ABAddressBookErrorDomain')
+        self.assertRaises(AttributeError, getattr, mod, 'ABMultiValueIdentifiersErrorKey')
+
+    def test_with_parents(self):
+        mod = objc.ObjCLazyModule ('RootLess', None, None, None, None,
+                None, (sys, os))
+
+        self.assertEqual(mod.path, sys.path)
+        self.assertIn('path', mod.__dict__)
+        self.assertEqual(mod.unlink, os.unlink)
+        self.assertIn('unlink', mod.__dict__)
+
+        mod.__dict__['version_info'] = 42
+        self.assertEqual(mod.version_info, 42)
+
+        self.assertIn('walk', mod.__all__)
+        self.assertIn('version', mod.__all__)
+        self.assertNotIn('__doc__', mod.__all__)
+
+    def test_all_clearing(self):
+        metadict = {
+            'enums': '$NSAWTEventType@16$NSAboveBottom@4$NSAboveTop@1$',
+        }
+
+        initial_dict = {
+                '__doc__': 'AppKit test module',
+        }
+
+        mod = objc.ObjCLazyModule ('AppKit', None, '/System/Library/Frameworks/AppKit.framework', metadict, None,
+                initial_dict, (sys,))
+        self.assertIsInstance(mod, objc.ObjCLazyModule)
+
+        mod.__all__ = 42
+        self.assertIs(mod.path, sys.path)
+        self.assertNotIn('__all__', mod.__dict__)
+
+        mod.__all__ = 42
+        self.assertEqual(mod.NSAWTEventType, 16)
+        self.assertNotIn('__all__', mod.__dict__)
+
+        mod.__all__ = 42
+        self.assertIs(mod.NSObject, objc.lookUpClass('NSObject'))
+        self.assertNotIn('__all__', mod.__dict__)
+
+        self.assertTrue('NSAWTEventType' in mod.__all__)
+        self.assertTrue('NSAboveBottom' in mod.__all__)
+
+    def test_enum_formats(self):
+        metadict = {
+            'enums': '$intval@16$floatval@4.5$charval@\'1234\'$floatval2@1e3$',
+        }
+
+        initial_dict = {
+                '__doc__': 'AppKit test module',
+        }
+
+        mod = objc.ObjCLazyModule ('AppKit', None, '/System/Library/Frameworks/AppKit.framework', metadict, None,
+                initial_dict, ())
+        self.assertIsInstance(mod, objc.ObjCLazyModule)
+
+        self.assertEqual(mod.intval, 16)
+        self.assertEqual(mod.floatval, 4.5)
+        self.assertEqual(mod.charval, struct.unpack('>l', b'1234')[0])
+        self.assertEqual(mod.floatval2, 1.0e3)
+
+    def test_magic_aliases(self):
+        metadict = {
+            'aliases': {
+                'umax': 'ULONG_MAX',
+                'max': 'LONG_MAX',
+                'min': 'LONG_MIN',
+            }
+        }
+
+        initial_dict = {
+                '__doc__': 'AppKit test module',
+        }
+
+        mod = objc.ObjCLazyModule ('AppKit', None, '/System/Library/Frameworks/AppKit.framework', metadict, None,
+                initial_dict, ())
+        self.assertIsInstance(mod, objc.ObjCLazyModule)
+
+        if sys.maxsize > 2**32:
+            self.assertEqual(mod.umax, 2**64-1)
+        else:
+            self.assertEqual(mod.umax, 2**32-1)
+        self.assertEqual(mod.max, sys.maxsize)
+        self.assertEqual(mod.min, -sys.maxsize-1)
+
+    def test_existing_submodules(self):
         try:
-            import CoreFoundation
-            import Foundation
-            import AppKit
-        except ImportError:
-            return
+            sys.modules['MyFramework.submodule'] = 42
+            sys.modules['MyFramework.submodule.x'] = 99
+            sys.modules['MyFramework.submodule2'] = 1
+            sys.modules['MyFramework.submodule3'] = None
+            mod = objc.ObjCLazyModule ('MyFramework', None, None, {}, None,
+                    {}, ())
+            self.assertIsInstance(mod, objc.ObjCLazyModule)
+            self.assertEqual(mod.submodule, 42)
+            self.assertEqual(mod.submodule2, 1)
+            self.assertRaises(KeyError, operator.getitem, mod.__dict__, 'submodule3')
+            self.assertRaises(KeyError, operator.getitem, mod.__dict__, 'submodule.x')
+        finally:
+            for nm in ('MyFramework.submodule', 'MyFramework.submodule.x', 'MyFramework.submodule2'):
+                if nm in sys.modules:
+                    del sys.modules[nm]
 
-        CoreFoundation.__all__
-        Foundation.__all__
-        AppKit.__all__
-        dir(Foundation)
+    def test_inline_list(self):
+        # Use inlinetab from PyObjCTest.metadatafunction extension
+        # -> Also check that '__all__' processing loads inline functions!
+        metadict = {
+            'functions': {
+                "makeArrayWithFormat_": (b'@@', '',
+                    dict(
+                        variadic=True,
+                        arguments={
+                            0: dict(printf_format=True),
+                        }
+                )),
+                "makeArrayWithCFormat_": (b'@*', '',
+                    dict(
+                        variadic=True,
+                        arguments={
+                            0: dict(printf_format=True),
+                        }
+                )),
+                "make4Tuple_": (b'@^d', '',
+                     dict(
+                     arguments={
+                        0:  dict(type_modifier=objc._C_IN, c_array_of_fixed_length=4, null_accepted=False),
+                     }
+                )),
+                "NoSuchFunction": (b'@d', '', {}),
+            }
+        }
 
-        try:
-            import Quartz
-        except ImportError:
-            return
+        inline_list = metadatafunction.function_list
+        mod = objc.ObjCLazyModule ('MyFramework', None, None, metadict, inline_list, {}, ())
+        self.assertIsInstance(mod, objc.ObjCLazyModule)
 
-        Quartz.__all__
+        self.assertIsInstance(mod.makeArrayWithFormat_, objc.function)
+        v = mod.makeArrayWithFormat_("%3d", 10)
+        self.assertEqual(list(v), [ "%3d", " 10"])
+        self.assertRaises(AttributeError, getattr, mod, 'NoSuchFunction')
+
+        mod.make4Tuple_ = 42
+        self.assertIn('makeArrayWithFormat_', mod.__all__)
+        self.assertIn('makeArrayWithCFormat_', mod.__all__)
+        self.assertEqual(mod.make4Tuple_, 42)
+
+    def test_cftype(self):
+        metadict = {
+            'cftypes': [
+                ('CFAllocatorRef', b'^{__CFAllocator=}', 'CFAllocatorGetTypeID', None),
+                ('CFArrayRef', b'^{__CFArray=}', 'CFArrayGetTypeID', 'DoesNotExist,NSArray'),
+                ('CFAttributedStringRef', b'^{__CFAttributedString=}', 'CFAttributedStringGetTypeID', '__NSCFAttributedString,NSCFAttributedString'),
+                ('CFBagRef', b'^{__CFBag=}', 'xCFBagGetTypeID', None),
+                ('CFNoType', b'^{__CFNoType', 'CFNoTypeGetTypeID', 'DoesNotExist'),
+            ],
+            'functions': {
+                'CFAllocatorGetTypeID': (objc._C_NSUInteger, ''),
+                'CFArrayGetTypeID': (objc._C_NSUInteger, ''),
+            },
+            'constants': '$kCFAllocatorDefault@=^{__CFAllocator=}$kCFAllocatorMalloc@=^{__CFAllocator=}$kCFAllocatorMissing@=^{__CFAllocator=}$',
+            'constants_dict': {
+                'kCFAllocatorSystemDefault': '=^{__CFAllocator=}',
+                'kCFAllocatorMallocZone': '=^{__CFAllocator=}',
+                'kCFAllocatorMissingZone': '=^{__CFAllocator=}',
+                'kCFAllocatorMissingOtherZone': '=^{__CFAllocator=}',
+            }
+        }
+        mod = objc.ObjCLazyModule ('AppKit', None, '/System/Library/Frameworks/CoreFoundation.framework', metadict, None, {}, ())
+
+        # Ensure that all types are loaded:
+        self.assertIn('CFAllocatorRef', mod.__dict__)
+        self.assertIn('CFArrayRef', mod.__dict__)
+        self.assertIn('CFAttributedStringRef', mod.__dict__)
+        self.assertIn('CFBagRef', mod.__dict__)
+        self.assertNotIn('CFNoType', mod.__dict__)
+
+        # Type validation:
+        self.assertIn('NSCFType', mod.CFAllocatorRef.__bases__[0].__name__)
+        self.assertIs(mod.CFArrayRef, objc.lookUpClass('NSArray'))
+        self.assertIn(mod.CFAttributedStringRef, (objc.lookUpClass('NSCFAttributedString'), objc.lookUpClass('__NSCFAttributedString')))
+        self.assertIn('NSCFType', mod.CFBagRef.__name__)
+        self.assertIsNot(mod.CFBagRef, mod.CFAllocatorRef)
 
 
-       
-    # XXX: add tests for the rest of the module
-    # - metadict with/without various elements (that is, with/without 'misc', 'constants', ...)
-    # - metadict with invalid data
-    # - verify that look-ups are done in the expected order (and document?)
-    # - dotted name ('Quartz.CoreGraphics')
-    # - test with frameworkIdentifier == frameworkPath == None (both with and without a parents. 
-    # - test with protocols in metadict
+        # Tests for 'magic cookie' constants:
+        self.assertIsInstance(mod.kCFAllocatorDefault, objc.objc_object)
+        self.assertTrue((mod.kCFAllocatorDefault.__flags__ & 0x10) == 0x10)
+        self.assertIsInstance(mod.kCFAllocatorDefault, mod.CFAllocatorRef)
+
+        self.assertIsInstance(mod.kCFAllocatorSystemDefault, objc.objc_object)
+        self.assertTrue((mod.kCFAllocatorSystemDefault.__flags__ & 0x10) == 0x10)
+        self.assertIsInstance(mod.kCFAllocatorSystemDefault, mod.CFAllocatorRef)
+
+        self.assertRaises(AttributeError, getattr, mod, 'kCFAllocatorMissing')
+        self.assertRaises(AttributeError, getattr, mod, 'kCFAllocatorMissingZone')
+
+        self.assertIn('kCFAllocatorDefault', mod.__all__)
+        self.assertIn('kCFAllocatorSystemDefault', mod.__all__)
+        self.assertIn('kCFAllocatorMallocZone', mod.__all__)
+        self.assertIn('kCFAllocatorMalloc', mod.__all__)
+        self.assertRaises(AttributeError, getattr, mod, 'kCFAllocatorOtherMissingZone')
+
+        self.assertIsInstance(mod.kCFAllocatorMalloc, objc.objc_object)
+        self.assertTrue((mod.kCFAllocatorMalloc.__flags__ & 0x10) == 0x10)
+        self.assertIsInstance(mod.kCFAllocatorMalloc, mod.CFAllocatorRef)
+
+        self.assertIsInstance(mod.kCFAllocatorMallocZone, objc.objc_object)
+        self.assertTrue((mod.kCFAllocatorMallocZone.__flags__ & 0x10) == 0x10)
+        self.assertIsInstance(mod.kCFAllocatorMallocZone, mod.CFAllocatorRef)
 
 if __name__ == "__main__":
     main()

@@ -1,10 +1,8 @@
-from CoreData import *
-
-#import "Note.h"
+import CoreData
 
 noteCount = 1
 
-class Note (NSManagedObject):
+class Note (CoreData.NSManagedObject):
     def awakeFromInsert(self):
         global noteCount
 

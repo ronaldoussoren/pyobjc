@@ -5,19 +5,21 @@
  *     This file defines the class that is used to represent Python str
  *     in Objective-C.
  */
+#ifndef OC_PYTHONSTRING_H
+#define OC_PYTHONSTRING_H
 
 #include "pyobjc.h"
 
 /*!
  * @class       OC_PythonString
  * @abstract    Objective-C proxy class for Python str
- * @discussion  Instances of this class are used as proxies for Python 
+ * @discussion  Instances of this class are used as proxies for Python
  *              str when these are passed to Objective-C code.
  */
 @interface OC_PythonString : NSString
 {
-	PyObject* value;
-	id realObject;
+    PyObject* value;
+    id realObject;
 }
 
 /*!
@@ -67,3 +69,5 @@
 -(void)getCharacters:(unichar *)buffer range:(NSRange)aRange;
 
 @end
+
+#endif /* OC_PYTHONSTRING_H */

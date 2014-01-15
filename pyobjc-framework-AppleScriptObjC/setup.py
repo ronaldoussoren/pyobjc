@@ -14,14 +14,14 @@ from pyobjc_setup import setup
 setup(
     min_os_level='10.6',
     name='pyobjc-framework-AppleScriptObjC',
-    version="2.6b1",
+    version="3.0a1",
     description = "Wrappers for the framework AppleScriptObjC on Mac OS X",
     packages = [ "AppleScriptObjC" ],
     setup_requires = [
-        'pyobjc-core>=2.6b1',
+        'pyobjc-core>=3.0a1',
     ],
     install_requires = [
-        'pyobjc-core>=2.6b1',
-        'pyobjc-framework-Cocoa>=2.6b1',
+        'pyobjc-core>=3.0a1',
+        'pyobjc-framework-Cocoa>=3.0a1',
     ],
 )

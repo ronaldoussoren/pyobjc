@@ -2,13 +2,16 @@
 Script for building the example.
 
 Usage:
-    python setup.py py2app
+    python3 setup.py py2app
 """
-from distutils.core import setup
-import py2app
+from setuptools import setup
 
 setup(
     name="AutoSample",
     app=["main.py"],
     data_files=["English.lproj", "workflows"],
+    setup_requires=[
+        "pyobjc-framework-Automator",
+        "pyobjc-framework-Cocoa",
+    ]
 )

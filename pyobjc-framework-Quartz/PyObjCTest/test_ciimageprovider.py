@@ -9,6 +9,8 @@ except NameError:
     unicode = str
 
 class TestCIImageProviderHelper (NSObject):
+
+    @objc.namedSelector(b'provideImageData:bytesPerRow:origin::size::userInfo:')
     def provideImageData_bytesPerRow_origin__size__userInfo_(self,
             data, rowbytes, x, y, width, height, userInfo):
         pass

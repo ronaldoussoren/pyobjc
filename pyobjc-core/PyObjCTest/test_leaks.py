@@ -9,7 +9,7 @@ LeaksDel = 0
 
 class LeaksClass (NSObject):
     def init(self):
-        self = super(LeaksClass, self).init()
+        self = objc.super(LeaksClass, self).init()
         return self
 
     def __del__(self):

@@ -3,8 +3,12 @@ Bindings and notification support for Calendar data used
 by this application.  Exposes read-only collections
 (calendars, events, tasks) as observable entities.
 """
-from Cocoa import *
-from CalendarStore import *
+import objc
+from Cocoa import NSValueTransformer, NSString, NSObject, NSDate, NSNotificationCenter
+from CalendarStore import CalCalendarStore, CalCalendarsChangedExternallyNotification
+from CalendarStore import CalCalendarsChangedNotification, CalEventsChangedExternallyNotification
+from CalendarStore import CalEventsChangedNotification, CalPriorityHigh, CalPriorityMedium
+from CalendarStore import CalTasksChangedExternallyNotification, CalTasksChangedNotification
 
 highPriority = "High"
 normPriority = "Normal"

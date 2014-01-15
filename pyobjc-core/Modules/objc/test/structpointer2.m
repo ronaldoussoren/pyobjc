@@ -8,7 +8,7 @@
 
 
 static PyMethodDef mod_methods[] = {
-	{ 0, 0, 0, 0 }
+    { 0, 0, 0, 0 }
 };
 
 typedef struct TestStructPointerStruct* Foo;
@@ -16,15 +16,15 @@ typedef struct TestStructPointerStruct* Foo;
 #if PY_VERSION_HEX >= 0x03000000
 
 static struct PyModuleDef mod_module = {
-	PyModuleDef_HEAD_INIT,
-	"structpointer2",
-	NULL,
-	0,
-	mod_methods,
-	NULL,
-	NULL,
-	NULL,
-	NULL
+    PyModuleDef_HEAD_INIT,
+    "structpointer2",
+    NULL,
+    0,
+    mod_methods,
+    NULL,
+    NULL,
+    NULL,
+    NULL
 };
 
 #define INITERROR() return NULL
@@ -32,7 +32,7 @@ static struct PyModuleDef mod_module = {
 
 PyObject* PyInit_structpointer2(void);
 
-PyObject*
+PyObject* __attribute__((__visibility__("default")))
 PyInit_structpointer2(void)
 
 #else
@@ -42,35 +42,35 @@ PyInit_structpointer2(void)
 
 void initstructpointer2(void);
 
-void
+void __attribute__((__visibility__("default")))
 initstructpointer2(void)
 #endif
 {
-	PyObject* m;
-	PyObject* v;
+    PyObject* m;
 
 #if PY_VERSION_HEX >= 0x03000000
-	m = PyModule_Create(&mod_module);
+    m = PyModule_Create(&mod_module);
 #else
-	m = Py_InitModule4("structpointer2", mod_methods,
-		NULL, NULL, PYTHON_API_VERSION);
+    m = Py_InitModule4("structpointer2", mod_methods,
+        NULL, NULL, PYTHON_API_VERSION);
 #endif
-	if (!m) {
-		INITERROR();
-	}
+    if (!m) {
+        INITERROR();
+    }
 
-	if (PyObjC_ImportAPI(m) < 0) {
-		INITERROR();
-	}
-	v = PyObjCCreateOpaquePointerType("TestStructPointerStructPtr",
-			@encode(Foo), NULL);
-	if (v == NULL) {
-		INITERROR();
-	}
-	if (PyDict_SetItemString(PyModule_GetDict(m), "TestStructPointerStructPtr",
-			v) < 0) {
-		INITERROR();
-	}
+    if (PyObjC_ImportAPI(m) < 0) {
+        INITERROR();
+    }
 
-	INITDONE();
+#if PY_VERSION_HEX >= 0x03000000
+    if (PyModule_AddObject(m, "FooEncoded",  PyBytes_FromString(@encode(Foo))) < 0) {
+        INITERROR();
+    }
+#else
+    if (PyModule_AddObject(m, "FooEncoded",  PyString_FromString(@encode(Foo))) < 0) {
+        INITERROR();
+    }
+#endif
+
+    INITDONE();
 }

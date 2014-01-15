@@ -1,5 +1,7 @@
 from PyObjCTools.TestSupport import *
 import os
+import subprocess
+import sys
 
 import objc._dyld as dyld
 
@@ -149,8 +151,22 @@ class TestDyld (TestCase):
 
         self.assertEqual(dyld.dyld_library('/usr/lib/libSystem.dylib', 'libXSystem.dylib'), '/usr/lib/libSystem.dylib')
 
-        os.environ['DYLD_IMAGE_SUFFIX'] = "_debug"
-        self.assertEqual(dyld.dyld_library('/usr/lib/libSystem.dylib', 'libSystem.dylib'), '/usr/lib/libSystem_debug.dylib')
+        # When the 'command line tools for xcode' are not installed there is no debug version of libsystem in the system wide
+        # library directory. In that case we look in the SDK instead.
+        if os.path.exists('/usr/lib/libSystem_debug.dylib'):
+            os.environ['DYLD_IMAGE_SUFFIX'] = "_debug"
+            self.assertEqual(dyld.dyld_library('/usr/lib/libSystem.dylib', 'libSystem.dylib'), '/usr/lib/libSystem_debug.dylib')
+
+        else:
+            p = subprocess.check_output(['xcrun', '--show-sdk-path']).strip()
+            os.environ['DYLD_LIBRARY_PATH'] = os.path.join(
+                    (p.decode('utf-8') if sys.version_info[0] == 3 else p),
+                    'usr', 'lib')
+            os.environ['DYLD_IMAGE_SUFFIX'] = "_debug"
+            self.assertEqual(dyld.dyld_library('/usr/lib/libSystem.dylib', 'libSystem.dylib'),
+                    os.path.join(os.environ['DYLD_LIBRARY_PATH'], 'libSystem_debug.dylib'))
+
+
 
     def test_dyld_framework(self):
         for k in ('DYLD_FRAMEWORK_PATH', 'DYLD_FALLBACK_FRAMEWORK_PATH', 'DYLD_IMAGE_SUFFIX'):

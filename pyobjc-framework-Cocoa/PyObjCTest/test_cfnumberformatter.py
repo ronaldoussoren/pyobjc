@@ -21,7 +21,7 @@ class TestNumberFormatter (TestCase):
         self.assertIsInstance(CFNumberFormatterGetTypeID(), (int, long))
 
     def testFuncs(self):
-        locale = CFLocaleCopyCurrent()
+        locale = CFLocaleCreate(None, "en_US")
         fmt = CFNumberFormatterCreate(None, locale, kCFNumberFormatterDecimalStyle)
         self.assertIsInstance(fmt, CFNumberFormatterRef)
         v = CFNumberFormatterGetLocale(fmt)

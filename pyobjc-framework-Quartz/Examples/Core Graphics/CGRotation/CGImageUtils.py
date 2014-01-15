@@ -1,5 +1,7 @@
-from Quartz import *
-from LaunchServices import * # UT info
+import objc
+import Quartz
+import Cocoa
+import LaunchServices
 import math
 
 class ImageInfo (object):
@@ -20,10 +22,10 @@ class ImageInfo (object):
 def IICreateImage(url):
     ii = None
     # Try to create an image source to the image passed to us
-    imageSrc = CGImageSourceCreateWithURL(url, None)
+    imageSrc = Quartz.CGImageSourceCreateWithURL(url, None)
     if imageSrc is not None:
         # And if we can, try to obtain the first image available
-        image = CGImageSourceCreateImageAtIndex(imageSrc, 0, None)
+        image = Quartz.CGImageSourceCreateImageAtIndex(imageSrc, 0, None)
         if image is not None:
             # and if we could, create the ImageInfo struct with default values
             ii = ImageInfo()
@@ -35,7 +37,7 @@ def IICreateImage(url):
             # the ImageInfo struct owns this CGImageRef now, so no need for a retain.
             ii.fImageRef = image
             # the ImageInfo struct owns this CFDictionaryRef, so no need for a retain.
-            ii.fProperties = CGImageSourceCopyPropertiesAtIndex(imageSrc, 0, None);
+            ii.fProperties = Quartz.CGImageSourceCopyPropertiesAtIndex(imageSrc, 0, None);
             # Setup the orientation transformation matrix so that the image will display with the
             # proper orientation
             IIGetOrientationTransform(ii)
@@ -45,8 +47,8 @@ def IICreateImage(url):
 # Transforms the context based on the orientation of the image.
 # This ensures the image always appears correctly when drawn.
 def IIGetOrientationTransform(image):
-    w = CGImageGetWidth(image.fImageRef)
-    h = CGImageGetHeight(image.fImageRef)
+    w = Quartz.CGImageGetWidth(image.fImageRef)
+    h = Quartz.CGImageGetHeight(image.fImageRef)
     if image.fProperties is not None:
         # The Orientations listed here are mirroed from CGImageProperties.h,
         # listed under the kCGImagePropertyOrientation key.
@@ -54,42 +56,42 @@ def IIGetOrientationTransform(image):
         if orientation == 1:
             # 1 = 0th row is at the top, and 0th column is on the left.
             # Orientation Normal
-            image.fOrientation = CGAffineTransformMake(1.0, 0.0, 0.0, 1.0, 0.0, 0.0);
+            image.fOrientation = Quartz.CGAffineTransformMake(1.0, 0.0, 0.0, 1.0, 0.0, 0.0);
 
         elif orientation == 2:
             # 2 = 0th row is at the top, and 0th column is on the right.
             # Flip Horizontal
-            image.fOrientation = CGAffineTransformMake(-1.0, 0.0, 0.0, 1.0, w, 0.0)
+            image.fOrientation = Quartz.CGAffineTransformMake(-1.0, 0.0, 0.0, 1.0, w, 0.0)
 
         elif orientation == 3:
             # 3 = 0th row is at the bottom, and 0th column is on the right.
             # Rotate 180 degrees
-            image.fOrientation = CGAffineTransformMake(-1.0, 0.0, 0.0, -1.0, w, h)
+            image.fOrientation = Quartz.CGAffineTransformMake(-1.0, 0.0, 0.0, -1.0, w, h)
 
         elif orientation == 4:
             # 4 = 0th row is at the bottom, and 0th column is on the left.
             # Flip Vertical
-            image.fOrientation = CGAffineTransformMake(1.0, 0.0, 0, -1.0, 0.0, h)
+            image.fOrientation = Quartz.CGAffineTransformMake(1.0, 0.0, 0, -1.0, 0.0, h)
 
         elif orientation == 5:
             # 5 = 0th row is on the left, and 0th column is the top.
             # Rotate -90 degrees and Flip Vertical
-            image.fOrientation = CGAffineTransformMake(0.0, -1.0, -1.0, 0.0, h, w)
+            image.fOrientation = Quartz.CGAffineTransformMake(0.0, -1.0, -1.0, 0.0, h, w)
 
         elif orientation == 6:
             # 6 = 0th row is on the right, and 0th column is the top.
             # Rotate 90 degrees
-            image.fOrientation = CGAffineTransformMake(0.0, -1.0, 1.0, 0.0, 0.0, w)
+            image.fOrientation = Quartz.CGAffineTransformMake(0.0, -1.0, 1.0, 0.0, 0.0, w)
 
         elif orientation == 7:
             # 7 = 0th row is on the right, and 0th column is the bottom.
             # Rotate 90 degrees and Flip Vertical
-            image.fOrientation = CGAffineTransformMake(0.0, 1.0, 1.0, 0.0, 0.0, 0.0)
+            image.fOrientation = Quartz.CGAffineTransformMake(0.0, 1.0, 1.0, 0.0, 0.0, 0.0)
 
         elif orientation == 8:
             # 8 = 0th row is on the left, and 0th column is the bottom.
             # Rotate -90 degrees
-            image.fOrientation = CGAffineTransformMake(0.0, 1.0,-1.0, 0.0, h, 0.0)
+            image.fOrientation = Quartz.CGAffineTransformMake(0.0, 1.0,-1.0, 0.0, h, 0.0)
 
 # Gets the orientation of the image from the properties dictionary if available
 # If the kCGImagePropertyOrientation is not available or invalid,
@@ -97,7 +99,7 @@ def IIGetOrientationTransform(image):
 def IIGetImageOrientation(image):
     result = 1
     if image.fProperties is not None:
-        orientation = image.fProperties.get(kCGImagePropertyOrientation)
+        orientation = image.fProperties.get(Quartz.kCGImagePropertyOrientation)
         if orientation is not None:
             result = orientation
 
@@ -112,7 +114,7 @@ def IISaveImage(image, url, width, height):
     assert (image is not None) and (url is not None) and (width != 0.0) and (height != 0.0)
 
     # Try to create a jpeg image destination at the url given to us
-    imageDest = CGImageDestinationCreateWithURL(url, kUTTypeJPEG, 1, None)
+    imageDest = Quartz.CGImageDestinationCreateWithURL(url, LaunchServices.kUTTypeJPEG, 1, None)
     if imageDest is not None:
         # And if we can, then we can start building our final image.
         # We begin by creating a CGBitmapContext to host our desintation image.
@@ -121,19 +123,19 @@ def IISaveImage(image, url, width, height):
         imageData = objc.allocateBuffer(int(4 * width * height))
 
         # Create the bitmap context
-        bitmapContext = CGBitmapContextCreate(
+        bitmapContext = Quartz.CGBitmapContextCreate(
                 imageData, # image data we just allocated...
                 width, # width
                 height, # height
                 8, # 8 bits per component
                 4 * width, # bytes per pixel times number of pixels wide
-                CGImageGetColorSpace(image.fImageRef), # use the same colorspace as the original image
-                kCGImageAlphaPremultipliedFirst) # use premultiplied alpha
+                Quartz.CGImageGetColorSpace(image.fImageRef), # use the same colorspace as the original image
+                Quartz.kCGImageAlphaPremultipliedFirst) # use premultiplied alpha
 
         # Check that all that went well
         if bitmapContext is not None:
             # Now, we draw the image to the bitmap context
-            IIDrawImageTransformed(image, bitmapContext, CGRectMake(0.0, 0.0, width, height))
+            IIDrawImageTransformed(image, bitmapContext, Quartz.CGRectMake(0.0, 0.0, width, height))
 
             # We have now gotten our image data to the bitmap context, and correspondingly
             # into imageData. If we wanted to, we could look at any of the pixels of the image
@@ -141,7 +143,7 @@ def IISaveImage(image, url, width, height):
             # going to ask ImageIO to write this out to disk.
 
             # Obtain a CGImageRef from the bitmap context for ImageIO
-            imageIOImage = CGBitmapContextCreateImage(bitmapContext)
+            imageIOImage = Quartz.CGBitmapContextCreateImage(bitmapContext)
 
             # Check if we have additional properties from the original image
             if image.fProperties is not None:
@@ -155,24 +157,24 @@ def IISaveImage(image, url, width, height):
                     # and then pass that dictionary to ImageIO when adding the image.
                     prop = CFDictionaryCreateMutableCopy(None, 0, image.fProperties)
                     orientation = 1;
-                    prop[kCGImagePropertyOrientation] = orientation
+                    prop[Quartz.kCGImagePropertyOrientation] = orientation
 
                     # And add the image with the new properties
-                    CGImageDestinationAddImage(imageDest, imageIOImage, prop);
+                    Quartz.CGImageDestinationAddImage(imageDest, imageIOImage, prop);
 
                 else:
                     # Otherwise, the image was already in the default orientation and we can
                     # just save it with the original properties.
-                    CGImageDestinationAddImage(imageDest, imageIOImage, image.fProperties)
+                    Quartz.CGImageDestinationAddImage(imageDest, imageIOImage, image.fProperties)
 
             else:
                 # If we don't, then just add the image without properties
-                CGImageDestinationAddImage(imageDest, imageIOImage, None)
+                Quartz.CGImageDestinationAddImage(imageDest, imageIOImage, None)
 
             del bitmapContext
 
         # Finalize the image destination
-        result = CGImageDestinationFinalize(imageDest)
+        result = Quartz.CGImageDestinationFinalize(imageDest)
         del imageDest
 
     return result
@@ -197,13 +199,13 @@ def IIApplyTransformation(image, context, bounds):
 
 # Draw the image to the given context centered inside the given bounds
 def IIDrawImage(image, context, bounds):
-    imageRect = NSRect()
+    imageRect = Cocoa.NSRect()
     if image is not None and context is not None:
         # Setup the image rect so that the image fills it's natural boudaries in the base coordinate system.
         imageRect.origin.x = 0.0
         imageRect.origin.y = 0.0
-        imageRect.size.width = CGImageGetWidth(image.fImageRef);
-        imageRect.size.height = CGImageGetHeight(image.fImageRef);
+        imageRect.size.width = Quartz.CGImageGetWidth(image.fImageRef);
+        imageRect.size.height = Quartz.CGImageGetHeight(image.fImageRef);
 
         # Obtain the orientation matrix for this image
         ctm = image.fOrientation;
@@ -213,7 +215,7 @@ def IIDrawImage(image, context, bounds):
         if image.fProperties is None or IIGetImageOrientation(image) < 5:
             # For orientations 1-4, the images are unrotated, so the width and height of the base image
             # can be used as the width and height of the coordinate translation calculation.
-            CGContextTranslateCTM(
+            Quartz.CGContextTranslateCTM(
                 context,
                 math.floor((bounds.size.width - imageRect.size.width) / 2.0),
                 math.floor((bounds.size.height - imageRect.size.height) / 2.0))
@@ -221,49 +223,49 @@ def IIDrawImage(image, context, bounds):
         else:
             # For orientations 5-8, the images are rotated 90 or -90 degrees, so we need to use
             # the image width in place of the height and vice versa.
-            CGContextTranslateCTM(
+            Quartz.CGContextTranslateCTM(
                 context,
                 floorf((bounds.size.width - imageRect.size.height) / 2.0),
                 floorf((bounds.size.height - imageRect.size.width) / 2.0))
 
         # Finally, orient the context so that the image draws naturally.
-        CGContextConcatCTM(context, ctm)
+        Quartz.CGContextConcatCTM(context, ctm)
 
         # And draw the image.
-        CGContextDrawImage(context, imageRect, image.fImageRef)
+        Quartz.CGContextDrawImage(context, imageRect, image.fImageRef)
 
 # Rotates the context around the center point of the given bounds
 def IIRotateContext(image, context, bounds):
     # First we translate the context such that the 0,0 location is at the center of the bounds
-    CGContextTranslateCTM(context, bounds.size.width/2.0, bounds.size.height/2.0)
+    Quartz.CGContextTranslateCTM(context, bounds.size.width/2.0, bounds.size.height/2.0)
 
     # Then we rotate the context, converting our angle from degrees to radians
-    CGContextRotateCTM(context, image.fRotation * math.pi / 180.0)
+    Quartz.CGContextRotateCTM(context, image.fRotation * math.pi / 180.0)
 
     # Finally we have to restore the center position
-    CGContextTranslateCTM(context, -bounds.size.width/2.0, -bounds.size.height/2.0)
+    Quartz.CGContextTranslateCTM(context, -bounds.size.width/2.0, -bounds.size.height/2.0)
 
 # Scale the context around the center point of the given bounds
 def IIScaleContext(image, context, bounds):
     # First we translate the context such that the 0,0 location is at the center of the bounds
-    CGContextTranslateCTM(context, bounds.size.width/2.0, bounds.size.height/2.0)
+    Quartz.CGContextTranslateCTM(context, bounds.size.width/2.0, bounds.size.height/2.0)
 
     # Next we scale the context to the size that we want
-    CGContextScaleCTM(context, image.fScaleX, image.fScaleY);
+    Quartz.CGContextScaleCTM(context, image.fScaleX, image.fScaleY);
 
     # Finally we have to restore the center position
-    CGContextTranslateCTM(context, -bounds.size.width/2.0, -bounds.size.height/2.0)
+    Quartz.CGContextTranslateCTM(context, -bounds.size.width/2.0, -bounds.size.height/2.0)
 
 # Translate the context
 def IITranslateContext(image, context):
     # Translation is easy, just translate.
-    CGContextTranslateCTM(context, image.fTranslateX, image.fTranslateY)
+    Quartz.CGContextTranslateCTM(context, image.fTranslateX, image.fTranslateY)
 
 # Draw the image to the given context centered inside the given bounds with
 # the transformation info. The CTM of the context is unchanged after this call
 def IIDrawImageTransformed(image, context, bounds):
     # We save the current graphics state so as to not disrupt it for the caller.
-    CGContextSaveGState(context)
+    Quartz.CGContextSaveGState(context)
 
     # Apply the transformation
     IIApplyTransformation(image, context, bounds)
@@ -272,7 +274,7 @@ def IIDrawImageTransformed(image, context, bounds):
     IIDrawImage(image, context, bounds)
 
     # Restore our original graphics state.
-    CGContextRestoreGState(context)
+    Quartz.CGContextRestoreGState(context)
 
 # Release the ImageInfo struct and other associated data
 # you should not refer to the reference after this call

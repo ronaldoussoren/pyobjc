@@ -14,6 +14,11 @@ except NameError:
 
 class TestMachPort (TestCase):
     def testTypes(self):
+        try:
+            if objc.lookUpClass('NSMachPort') is CFMachPortRef:
+                return
+        except objc.error:
+            pass
         self.assertIsCFType(CFMachPortRef)
 
     def testTypeID(self):

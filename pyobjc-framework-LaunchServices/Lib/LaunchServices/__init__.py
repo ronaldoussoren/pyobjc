@@ -23,7 +23,10 @@ sys.modules['LaunchServices'] = mod = objc.ObjCLazyModule(
     '__doc__': __doc__,
     'objc': objc,
     '__path__': __path__,
+    '__loader__': globals().get('__loader__', None),
     }, (Foundation,))
+
+del sys.modules['LaunchServices._metadata']
 
 
 # Load an undocumented, yet announced function. This function was announced

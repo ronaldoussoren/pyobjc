@@ -16,6 +16,7 @@ sys.modules['CoreFoundation'] = mod = objc.ObjCLazyModule('CoreFoundation',
     {
         '__doc__': __doc__,
         '__path__': __path__,
+        '__loader__': globals().get('__loader__', None),
     }, ())
 
 import CoreFoundation._CoreFoundation
@@ -24,3 +25,6 @@ for nm in dir(CoreFoundation._CoreFoundation):
     setattr(mod, nm, getattr(CoreFoundation._CoreFoundation, nm))
 for nm in dir(CoreFoundation._static):
     setattr(mod, nm, getattr(CoreFoundation._static, nm))
+
+import sys
+del sys.modules['CoreFoundation._metadata']

@@ -13,11 +13,9 @@ import functools
 import pkg_resources
 import os
 
-from objc import registerMetaDataForSelector, error
-
 
 for method in (b'alloc', b'copy', b'copyWithZone:', b'mutableCopy', b'mutableCopyWithZone:'):
-    registerMetaDataForSelector(b'NSObject', method,
+    objc.registerMetaDataForSelector(b'NSObject', method,
             {
                 'retval': { 'already_retained': True },
             })
@@ -26,9 +24,6 @@ for method in (b'alloc', b'copy', b'copyWithZone:', b'mutableCopy', b'mutableCop
 #
 # The rest of this file contains support for bridgesupport
 # XML files.
-#
-# TODO: parseBridgeSupport (and its support class) is a
-#       basic port from C, check if it can be simplified.
 
 # NOTE: This search path only contains system locations to
 # avoid accidently reiying on system-specific functionality.
@@ -49,16 +44,11 @@ _BOOLEAN_ATTRIBUTES=[
 ]
 
 
-if sys.version_info[0] == 2:
-    _unicode = unicode
-
+if sys.version_info[0] == 2: # pragma: no 3.x cover
     def _as_bytes(value):
         return value
 
-else: # pragma: no cover (py3k)
-
-    _unicode = str
-
+else: # pragma: no 2.x cover
     def _as_bytes(value):
         if isinstance(value, bytes):
             return value
@@ -92,7 +82,7 @@ class _BridgeSupportParser (object):
         root = ET.fromstring(xmldata.strip())
 
         if root.tag != 'signatures':
-            raise error("invalid root node in bridgesupport file")
+            raise objc.error("invalid root node in bridgesupport file")
 
         for node in root:
             method = getattr(self, 'do_%s'%(node.tag,), None)
@@ -564,7 +554,7 @@ class _BridgeSupportParser (object):
         if not name or not value:
             return
 
-        if sys.version_info[0] == 2:
+        if sys.version_info[0] == 2:  # pragma: no 3.x cover
             if nsstring:
                 if not isinstance(value, unicode):
                     value = value.decode('utf-8')
@@ -575,19 +565,13 @@ class _BridgeSupportParser (object):
                     except UnicodeError as e:
                         warnings.warn("Error parsing BridgeSupport data for constant %s: %s" % (name, e), RuntimeWarning)
                         return
-        else: # pragma: no cover (py3k)
+        else:  # pragma: no 2.x cover
             if not nsstring:
                 try:
                     value = value.encode('latin1')
                 except UnicodeError as e:
                     warnings.warn("Error parsing BridgeSupport data for constant %s: %s" % (name, e), RuntimeWarning)
                     return
-
-        if nsstring:
-            assert isinstance(value, _unicode)
-        else:
-            assert isinstance(value, bytes)
-
 
         self.values[name] = value
 
@@ -632,20 +616,6 @@ def parseBridgeSupport(xmldata, globals, frameworkName, dylib_path=None, inlineT
         for class_name, sel_name, is_class in prs.meta:
             objc.registerMetaDataForSelector(class_name, sel_name, prs.meta[(class_name, sel_name, is_class)])
 
-        for name, method_list in prs.informal_protocols:
-            proto = objc.informal_protocol(name, method_list)
-
-            # XXX: protocols submodule should be deprecated
-            if "protocols" not in globals:
-                mod_name = "%s.protocols"%(frameworkName,)
-                m = globals["protocols"] = type(objc)(mod_name)
-                sys.modules[mod_name] = m
-
-            else:
-                m = globals["protocols"]
-
-            setattr(m, name, proto)
-
         if prs.functions:
             objc.loadBundleFunctions(None, globals, prs.functions)
 
@@ -667,18 +637,10 @@ def parseBridgeSupport(xmldata, globals, frameworkName, dylib_path=None, inlineT
 
 def _parseBridgeSupport(data, globals, frameworkName, *args, **kwds):
     try:
-        try:
-            objc.parseBridgeSupport(data, globals, frameworkName, *args, **kwds)
-        except objc.internal_error as e:
-            import warnings
-            warnings.warn("Error parsing BridgeSupport data for %s: %s" % (frameworkName, e), RuntimeWarning)
-    finally:
-        # Add formal protocols to the protocols submodule, for backward
-        # compatibility with earlier versions of PyObjC
-        if 'protocols' in globals:
-            for p in objc.protocolsForProcess():
-                setattr(globals['protocols'], p.__name__, p)
-
+        objc.parseBridgeSupport(data, globals, frameworkName, *args, **kwds)
+    except objc.internal_error as e:
+        import warnings
+        warnings.warn("Error parsing BridgeSupport data for %s: %s" % (frameworkName, e), RuntimeWarning)
 
 def safe_resource_exists(package, resource):
     try:
@@ -756,8 +718,7 @@ def initFrameworkWrapper(frameworkName,
     if safe_resource_exists(frameworkResourceName, "PyObjC.bridgesupport"):
         data = pkg_resources.resource_string(frameworkResourceName,
             "PyObjC.bridgesupport")
-        if data:
-            _parseBridgeSupport(data, globals, frameworkName, inlineTab=inlineTab)
+        _parseBridgeSupport(data, globals, frameworkName, inlineTab=inlineTab)
         return bundle
 
     # Look for metadata in the framework bundle
@@ -775,8 +736,7 @@ def initFrameworkWrapper(frameworkName,
         if safe_resource_exists(frameworkResourceName, "PyObjCOverrides.bridgesupport"):
             data = pkg_resources.resource_string(frameworkResourceName,
                 "PyObjCOverrides.bridgesupport")
-            if data:
-                _parseBridgeSupport(data, globals, frameworkName, inlineTab=inlineTab)
+            _parseBridgeSupport(data, globals, frameworkName, inlineTab=inlineTab)
 
         return bundle
 
@@ -787,7 +747,7 @@ def initFrameworkWrapper(frameworkName,
         path = os.path.join(dn, fn)
         if os.path.exists(path):
             with open(path, 'rb') as fp:
-                data = fp.read()
+                data = fp.read()  # pragma: no branch
 
             dylib_path = os.path.join(dn, frameworkName + '.dylib')
             if os.path.exists(dylib_path):
@@ -799,8 +759,7 @@ def initFrameworkWrapper(frameworkName,
             if safe_resource_exists(frameworkResourceName, "PyObjCOverrides.bridgesupport"):
                 data = pkg_resources.resource_string(frameworkResourceName,
                     "PyObjCOverrides.bridgesupport")
-                if data:
-                    _parseBridgeSupport(data, globals, frameworkName, inlineTab=inlineTab)
+                _parseBridgeSupport(data, globals, frameworkName, inlineTab=inlineTab)
 
             return bundle
 

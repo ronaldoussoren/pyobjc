@@ -229,7 +229,7 @@ class TestDecimalNumber (TestCase):
         self.assertEqual(three // two, one)
 
         if sys.version_info[0] > 2:
-            self.assertEqual(round(three / two), one)
+            self.assertEqual(round(three / two), two)
             self.assertEqual(round(one / two, 1), one_half)
 
 

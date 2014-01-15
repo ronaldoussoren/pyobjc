@@ -9,10 +9,8 @@ to the XML-RPC handler of a web server.  If the server at least
 implements the listMethods() method, the app will display a list of
 available methods.
 
-See: http://pyobjc.sourceforge.net/
-
 Source for both the pyobjc module and the Web Services Tool are
-available via the pyobjc sourceforge CVS repository.
+available via the pyobjc repository.
 
 The source of this application demonstrates
 - using Python's network libraries inside a Cocoa app

@@ -1,10 +1,12 @@
-from CoreData import *
-from AppKit import *
+import CoreData
+import Cocoa
+import objc
+from objc import super
 
-prioritySortDescriptions = NSArray.arrayWithObject_(
-        NSSortDescriptor.alloc().initWithKey_ascending_("value", True))
+prioritySortDescriptions = Cocoa.NSArray.arrayWithObject_(
+        Cocoa.NSSortDescriptor.alloc().initWithKey_ascending_("value", True))
 
-class MyDocument (NSPersistentDocument):
+class MyDocument (CoreData.NSPersistentDocument):
     outlineTreeController = objc.IBOutlet()
 
     def initWithType_error_(self, tp, error):
@@ -15,14 +17,14 @@ class MyDocument (NSPersistentDocument):
         managedObjectContext = self.managedObjectContext()
 
         for aPriorityValue in range(5):
-            aPriority = NSEntityDescription.insertNewObjectForEntityForName_inManagedObjectContext_("Priority", managedObjectContext)
+            aPriority = CoreData.NSEntityDescription.insertNewObjectForEntityForName_inManagedObjectContext_("Priority", managedObjectContext)
             aPriority.setValue_forKey_(aPriorityValue+1, "value")
 
-        NSEntityDescription.insertNewObjectForEntityForName_inManagedObjectContext_("Note", managedObjectContext)
+        CoreData.NSEntityDescription.insertNewObjectForEntityForName_inManagedObjectContext_("Note", managedObjectContext)
 
         managedObjectContext.processPendingChanges()
         managedObjectContext.undoManager().removeAllActions()
-        self.updateChangeCount_(NSChangeCleared)
+        self.updateChangeCount_(Cocoa.NSChangeCleared)
 
         return (self, None)
 
@@ -43,7 +45,7 @@ class MyDocument (NSPersistentDocument):
     def indentNote_(self, sender):
         selectionPath = self.outlineTreeController.selectionIndexPath()
         if not selectionPath:
-            NSBeep()
+            Cocoa.NSBeep()
             return
 
         selection = self.outlineTreeController.selection()
@@ -58,7 +60,7 @@ class MyDocument (NSPersistentDocument):
 
         index = selectionPath.indexAtPosition_(selectionPath.length() - 1)
         if index == 0:
-            NSBeep()
+            Cocoa.NSBeep()
         else:
             sibling = children.objectAtIndex_(index - 1)
             selection.setValue_forKeyPath_(sibling, "parent")
@@ -67,9 +69,9 @@ class MyDocument (NSPersistentDocument):
         selection = self.outlineTreeController.selection()
         parent = selection.valueForKeyPath_("parent")
 
-        if parent is None or parent is NSMultipleValuesMarker or parent is NSNoSelectionMarker or parent is NSNotApplicableMarker:
-            NSBeep();
-            return;
+        if parent in (None, Cocoa.NSMultipleValuesMarker, Cocoa.NSNoSelectionMarker, Cocoa.NSNotApplicableMarker):
+            Cocoa.NSBeep()
+            return
 
         parent = parent.valueForKeyPath_("parent")
         selection.setValue_forKeyPath_(parent, "parent")

@@ -1,8 +1,9 @@
+import objc
 from Foundation import NSObject
-from objc import *
 from AppKit import NSBezierPath
 
-from fieldMath import *
+from fieldMath import bessel, degToRad, polarToRect
+from math import cos, sin, sqrt, hypot, pi
 
 #____________________________________________________________
 class CGraphModel(NSObject):

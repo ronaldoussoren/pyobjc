@@ -17,7 +17,7 @@ from Foundation import *
 
 class KeyValueClass1 (NSObject):
     def init(self):
-        self = super(KeyValueClass1, self).init()
+        self = objc.super(KeyValueClass1, self).init()
         self.key3 = 3
         self._key4 = b"4".decode('ascii')
         self.__private = b"private".decode('ascii')
@@ -56,7 +56,7 @@ class KeyValueClass1 (NSObject):
 
 class KeyValueClass1Explicit (NSObject):
     def init(self):
-        self = super(KeyValueClass1Explicit, self).init()
+        self = objc.super(KeyValueClass1Explicit, self).init()
         self._values = {}
         self._values[b'key3'.decode('ascii')] = 3
         self._values[b'key4'.decode('ascii')] = b"4".decode('ascii')
@@ -100,7 +100,7 @@ class KeyValueClass4 (NSObject):
     __slots__ = ('foo', )
 
     def init(self):
-        self = super(KeyValueClass4, self).init()
+        self = objc.super(KeyValueClass4, self).init()
         self.foo = b"foobar".decode('ascii')
         return self
 

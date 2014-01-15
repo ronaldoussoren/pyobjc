@@ -17,5 +17,8 @@ sys.modules['ScreenSaver'] = mod = objc.ObjCLazyModule('ScreenSaver',
     _metadata.__dict__, _inline_list_, {
        '__doc__': __doc__,
        '__path__': __path__,
+       '__loader__': globals().get('__loader__', None),
        'objc': objc,
     }, ( AppKit,))
+
+del sys.modules['ScreenSaver._metadata']

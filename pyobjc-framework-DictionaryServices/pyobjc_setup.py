@@ -14,8 +14,8 @@ try:
     import setuptools
 
 except ImportError:
-    import distribute_setup
-    distribute_setup.use_setuptools()
+    print("This package requires setuptools to build")
+    sys.exit(1)
 
 from setuptools.command import test
 from setuptools.command import build_py
@@ -36,6 +36,7 @@ class oc_build_py (build_py.build_py):
 
 
 from pkg_resources import working_set, normalize_path, add_activation_listener, require
+from distutils.errors import DistutilsPlatformError, DistutilsError
 
 class oc_test (test.test):
     description = "run test suite"
@@ -139,13 +140,14 @@ class oc_test (test.test):
                 skip=len(getattr(result, 'skipped', [])),
             )
             print("SUMMARY: %s"%(summary,))
+            if not result.wasSuccessful():
+                raise DistutilsError("some tests failed")
 
         finally:
             self.remove_from_sys_path()
 
 
 from setuptools import setup as _setup, Extension as _Extension, Command
-from distutils.errors import DistutilsPlatformError
 from distutils.command import build, install
 from setuptools.command import develop, test, build_ext, install_lib
 import pkg_resources
@@ -172,6 +174,7 @@ Programming Language :: Python :: 3
 Programming Language :: Python :: 3.1
 Programming Language :: Python :: 3.2
 Programming Language :: Python :: 3.3
+Programming Language :: Python :: Implementation :: CPython
 Programming Language :: Objective C
 Topic :: Software Development :: Libraries :: Python Modules
 Topic :: Software Development :: User Interfaces
@@ -222,6 +225,8 @@ def _working_compiler(executable):
             executable, '-c', fp.name] + cflags,
             stdout=subprocess.PIPE, stderr=subprocess.PIPE)
         exit = p.wait()
+        p.stdout.close()
+        p.stderr.close()
         if exit != 0:
             return False
 
@@ -329,9 +334,15 @@ def Extension(*args, **kwds):
     os_level = get_os_level()
     cflags =  ["-DPyObjC_BUILD_RELEASE=%02d%02d"%(tuple(map(int, os_level.split('.'))))]
     ldflags = []
+    if 'clang' in get_config_var('CC'):
+        cflags.append('-Wno-deprecated-declarations')
+
     if os_level != '10.4':
-        cflags.extend(['-isysroot','/'])
-        ldflags.extend(['-isysroot','/'])
+        if os.path.exists('/usr/include/stdio.h'):
+            # only tweak the SDK when using the command-line tools
+            # FIXME: This should be properly fixed
+            cflags.extend(['-isysroot','/'])
+            ldflags.extend(['-isysroot','/'])
     else:
         cflags.append('-DNO_OBJC2_RUNTIME')
 

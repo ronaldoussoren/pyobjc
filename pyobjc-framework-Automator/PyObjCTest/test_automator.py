@@ -14,9 +14,7 @@ class TestAutomator (TestCase):
         self.assert_( isinstance(Automator.AMAppleScriptAction, objc.objc_class) )
 
     def testInformalProtocols(self):
-        self.assert_(hasattr(Automator, 'protocols'))
-        self.assert_(hasattr(Automator.protocols, 'AMWorkflowControllerDelegate'))
-        self.assert_(isinstance(Automator.protocols.AMWorkflowControllerDelegate, objc.informal_protocol))
+        self.assertFalse(hasattr(Automator, 'protocols'))
 
 
 if __name__ == "__main__":

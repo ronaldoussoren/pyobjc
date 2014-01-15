@@ -2,40 +2,39 @@
 Script for building the example.
 
 Usage:
-    python setup.py py2app
+    python3 setup.py py2app
 """
-from distutils.core import setup
-import py2app
+from setuptools import setup
 
 plist = dict(
-    CFBundleIdentifier = u'net.sf.pyobjc.PyObjCSimpleService',
-    CFBundleName = u'PyObjCSimpleService',
+    CFBundleIdentifier = "net.sf.pyobjc.PyObjCSimpleService",
+    CFBundleName = "PyObjCSimpleService",
     LSBackgroundOnly = 1,
     NSServices = [
         dict(
             NSKeyEquivalent=dict(
-                default=u'F',
+                default="F",
             ),
             NSMenuItem=dict(
-                default=u'Open File',
+                default="Open File",
             ),
-            NSMessage=u'doOpenFileService',
-            NSPortName=u'PyObjCSimpleService',
+            NSMessage="doOpenFileService",
+            NSPortName="PyObjCSimpleService",
             NSSendTypes=[
-                u'NSStringPboardType',
+                "NSStringPboardType",
             ],
         ),
         dict(
             NSMenuItem=dict(
-                default=u'Capitalize String',
+                default="Capitalize String",
             ),
-            NSMessage=u'doCapitalizeService',
-            NSPortName=u'PyObjCSimpleService',
+            NSMessage="doCapitalizeService",
+            NSPortName="PyObjCSimpleService",
             NSReturnTypes=[
-                u'NSStringPboardType',
+                "NSStringPboardType",
             ],
             NSSendTypes=[
-                u'NSStringPboardType',
+                "NSStringPboardType",
             ],
         ),
     ],
@@ -43,7 +42,15 @@ plist = dict(
 
 
 setup(
-    name='Simple Service',
+    name="Simple Service",
     app=["SimpleService_main.py"],
-    options=dict(py2app=dict(plist=plist)),
+    options=dict(
+        py2app=dict(
+            plist=plist
+        )
+    ),
+    setup_requires=[
+        "py2app",
+        "pyobjc-framework-Cocoa",
+    ]
 )

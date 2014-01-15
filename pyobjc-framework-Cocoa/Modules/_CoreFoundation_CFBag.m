@@ -3,7 +3,7 @@
  */
 static PyObject*
 mod_CFBagGetValues(
-	PyObject* self __attribute__((__unused__)), 
+	PyObject* self __attribute__((__unused__)),
 	PyObject* args)
 {
 	PyObject* py_bag;
@@ -33,7 +33,7 @@ mod_CFBagGetValues(
 }
 
 
-static PyObject* 
+static PyObject*
 mod_CFBagCreate(PyObject* self __attribute__((__unused__)),
 	PyObject* args)
 {
@@ -47,7 +47,7 @@ mod_CFBagCreate(PyObject* self __attribute__((__unused__)),
 	CFBagRef bag;
 
 
-	if (!PyArg_ParseTuple(args, "OO" Py_ARG_SIZE_T, &py_allocator, &py_members, &count)) {
+	if (!PyArg_ParseTuple(args, "OOn", &py_allocator, &py_members, &count)) {
 		return NULL;
 	}
 
@@ -72,7 +72,7 @@ mod_CFBagCreate(PyObject* self __attribute__((__unused__)),
 	return result;
 }
 
-static PyObject* 
+static PyObject*
 mod_CFBagCreateMutable(PyObject* self __attribute__((__unused__)),
 	PyObject* args)
 {
@@ -82,7 +82,7 @@ mod_CFBagCreateMutable(PyObject* self __attribute__((__unused__)),
 	CFBagRef bag;
 
 
-	if (!PyArg_ParseTuple(args, "O" Py_ARG_SIZE_T, &py_allocator, &count)) {
+	if (!PyArg_ParseTuple(args, "On", &py_allocator, &count)) {
 		return NULL;
 	}
 

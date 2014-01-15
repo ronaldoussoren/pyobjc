@@ -7,12 +7,7 @@ import platform
 # Most useful systems will at least have 'NSObject'.
 NSObject = objc.lookUpClass('NSObject')
 
-# XXX : This is a really dumb way to detect < 10.3
-if not NSObject.instancesRespondToSelector_('setValue:forKey:'):
-    # Defining protocols in an MH_BUNDLE makes < 10.3 explode
-    OC_TestProtocol = None
-else:
-    from PyObjCTest.protocol import OC_TestProtocol
+from PyObjCTest.protocol import OC_TestProtocol
 
 MyProto = objc.informal_protocol("MyProto", (
     objc.selector(None, selector=b"testMethod", signature=b"I@:", isRequired=1),
@@ -64,62 +59,58 @@ if (sys.maxsize < 2 ** 32 or platform.mac_ver()[0] >= '10.7') and sys.version_in
         objc.selector(None, selector=b"aClassOne:", signature=b"@@:i", isClassMethod=1),
     ])
 
-    if OC_TestProtocol is not None:
+    class TestFormalOCProtocols(TestCase):
+        def testMethodInfo(self):
+            actual = OC_TestProtocol.instanceMethods()
+            actual.sort(key=lambda item: item['selector'])
+            expected = [
+                {'required': True, 'selector': b'method1', 'typestr': b'i@:'},
+                {'required': True, 'selector': b'method2:', 'typestr': b'v@:i'}
+            ]
+            self.assertEqual(actual, expected)
+            self.assertEqual(OC_TestProtocol.classMethods(), [])
 
-        class TestFormalOCProtocols(TestCase):
-            def testMethodInfo(self):
-                actual = OC_TestProtocol.instanceMethods()
-                actual.sort(key=lambda item: item['selector'])
-                expected = [
-                    {'required': True, 'selector': b'method1', 'typestr': b'i@:'},
-                    {'required': True, 'selector': b'method2:', 'typestr': b'v@:i'}
-                ]
-                self.assertEqual(actual, expected)
-                self.assertEqual(OC_TestProtocol.classMethods(), [])
+            self.assertEqual(OC_TestProtocol.descriptionForInstanceMethod_(b"method1"), (b"method1", b"i@:"))
+            self.assertEqual(OC_TestProtocol.descriptionForInstanceMethod_(b"method2:"), (b"method2:", b"v@:i"))
 
-                self.assertEqual(OC_TestProtocol.descriptionForInstanceMethod_(b"method1"), (b"method1", b"i@:"))
-                self.assertEqual(OC_TestProtocol.descriptionForInstanceMethod_(b"method2:"), (b"method2:", b"v@:i"))
+        def testImplementFormalProtocol(self):
 
-            def testImplementFormalProtocol(self):
+            class MyClassNotImplementingProtocol(NSObject):
+                pass
 
-                class MyClassNotImplementingProtocol(NSObject):
-                    pass
+            self.assertFalse(MyClassNotImplementingProtocol.pyobjc_classMethods.conformsToProtocol_(OC_TestProtocol))
 
-                self.assertFalse(MyClassNotImplementingProtocol.pyobjc_classMethods.conformsToProtocol_(OC_TestProtocol))
-
-                try:
-                    class MyClassNotAlsoImplementingProtocol(NSObject, OC_TestProtocol):
-                        def method1(self): pass
-
-                    self.fail("class not implementing protocol, yet created")
-                except TypeError:
-                    pass
-
-                class MyClassImplementingProtocol(NSObject, OC_TestProtocol):
+            try:
+                class MyClassNotAlsoImplementingProtocol(NSObject, OC_TestProtocol):
                     def method1(self): pass
-                    def method2_(self, a): pass
 
-                self.assertTrue(MyClassImplementingProtocol.pyobjc_classMethods.conformsToProtocol_(OC_TestProtocol))
+                self.fail("class not implementing protocol, yet created")
+            except TypeError:
+                pass
 
+            class MyClassImplementingProtocol(NSObject, OC_TestProtocol):
+                def method1(self): pass
+                def method2_(self, a): pass
 
-
-                # The PyObjC implementation of formal protocols is slightly looser
-                # than Objective-C itself: you can inherit part of the protocol
-                # from the superclass.
-                # XXX: not really: you won't inherit the right signatures by default
-
-                class MyClassImplementingHalfOfProtocol(NSObject):
-                    def method1(self): pass
-                    method1 = objc.selector(method1, signature=b'i@:')
-
-                self.assertFalse(MyClassImplementingHalfOfProtocol.pyobjc_classMethods.conformsToProtocol_(OC_TestProtocol))
-
-                class MyClassImplementingAllOfProtocol(MyClassImplementingHalfOfProtocol, OC_TestProtocol):
-                    def method2_(self, v): pass
-
-                self.assertTrue(MyClassImplementingAllOfProtocol.pyobjc_classMethods.conformsToProtocol_(OC_TestProtocol))
+            self.assertTrue(MyClassImplementingProtocol.pyobjc_classMethods.conformsToProtocol_(OC_TestProtocol))
 
 
+
+            # The PyObjC implementation of formal protocols is slightly looser
+            # than Objective-C itself: you can inherit part of the protocol
+            # from the superclass.
+            # XXX: not really: you won't inherit the right signatures by default
+
+            class MyClassImplementingHalfOfProtocol(NSObject):
+                def method1(self): pass
+                method1 = objc.selector(method1, signature=b'i@:')
+
+            self.assertFalse(MyClassImplementingHalfOfProtocol.pyobjc_classMethods.conformsToProtocol_(OC_TestProtocol))
+
+            class MyClassImplementingAllOfProtocol(MyClassImplementingHalfOfProtocol, OC_TestProtocol):
+                def method2_(self, v): pass
+
+            self.assertTrue(MyClassImplementingAllOfProtocol.pyobjc_classMethods.conformsToProtocol_(OC_TestProtocol))
 
 
     class TestFormalProtocols (TestCase):

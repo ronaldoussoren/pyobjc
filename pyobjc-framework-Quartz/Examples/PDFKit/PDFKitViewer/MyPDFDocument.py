@@ -1,16 +1,22 @@
-from AppKit import *
-from Quartz import *
 import objc
+from objc import super
+import Cocoa
+import Quartz
 
-from PyObjCTools import NibClassBuilder
-
-class MyPDFDocument (NibClassBuilder.AutoBaseClass):
+class MyPDFDocument (Cocoa.NSDocument):
     _outline        = objc.ivar()
     _searchResults  = objc.ivar()
 
+    _drawer = objc.IBOutlet()
+    _noOutlineText = objc.IBOutlet()
+    _outlineView = objc.IBOutlet()
+    _pdfView = objc.IBOutlet()
+    _searchProgress = objc.IBOutlet()
+    _searchTable = objc.IBOutlet()
+
 
     def dealloc(self):
-        NSNotificationCenter.defaultCenter().removeObserver_(self)
+        Cocoa.NSNotificationCenter.defaultCenter().removeObserver_(self)
         self._searchResults = None
         super(MyPDFDocument, self).dealloc()
 
@@ -21,24 +27,24 @@ class MyPDFDocument (NibClassBuilder.AutoBaseClass):
         super(MyPDFDocument, self).windowControllerDidLoadNib_(controller)
 
         if self.fileName():
-            pdfDoc = PDFDocument.alloc().initWithURL_(
-                    NSURL.fileURLWithPath_(self.fileName()))
+            pdfDoc = Quartz.PDFDocument.alloc().initWithURL_(
+                    Cocoa.NSURL.fileURLWithPath_(self.fileName()))
             self._pdfView.setDocument_(pdfDoc)
 
         # Page changed notification.
-        NSNotificationCenter.defaultCenter().addObserver_selector_name_object_(
-                self, "pageChanged:", PDFViewPageChangedNotification, self._pdfView)
+        Cocoa.NSNotificationCenter.defaultCenter().addObserver_selector_name_object_(
+                self, "pageChanged:", Quartz.PDFViewPageChangedNotification, self._pdfView)
 
         # Find notifications.
-        center = NSNotificationCenter.defaultCenter()
+        center = Cocoa.NSNotificationCenter.defaultCenter()
         center.addObserver_selector_name_object_(
-                self, 'startFind:', PDFDocumentDidBeginFindNotification,
+                self, 'startFind:', Quartz.PDFDocumentDidBeginFindNotification,
                 self._pdfView.document())
         center.addObserver_selector_name_object_(
-                self, 'findProgress:', PDFDocumentDidEndPageFindNotification,
+                self, 'findProgress:', Quartz.PDFDocumentDidEndPageFindNotification,
                 self._pdfView.document())
         center.addObserver_selector_name_object_(
-                self, 'endFind:', PDFDocumentDidEndFindNotification,
+                self, 'endFind:', Quartz.PDFDocumentDidEndFindNotification,
                 self._pdfView.document())
 
         # Set self to be delegate (find).
@@ -69,7 +75,7 @@ class MyPDFDocument (NibClassBuilder.AutoBaseClass):
 
         if (self._pdfView.displayMode() & 0x01) and (
                     self._pdfView.document().pageCount() > 1):
-            windowSize.width +=  NSScroller.scrollerWidth()
+            windowSize.width +=  Cocoa.NSScroller.scrollerWidth()
         controller.window().setContentSize_(windowSize)
 
     def dataRepresentationOfType_(self, aType):
@@ -92,13 +98,13 @@ class MyPDFDocument (NibClassBuilder.AutoBaseClass):
     @objc.IBAction
     def displaySinglePage_(self, sender):
         # Display single page mode.
-        if self._pdfView.displayMode() > kPDFDisplaySinglePageContinuous:
+        if self._pdfView.displayMode() > Quartz.kPDFDisplaySinglePageContinuous:
             self._pdfView.setDisplayMode_(self._pdfView.displayMode() - 2)
 
     @objc.IBAction
     def displayTwoUp_(self, sender):
         #  Display two-up.
-        if self._pdfView.displayMode() < kPDFDisplayTwoUp:
+        if self._pdfView.displayMode() < Quartz.kPDFDisplayTwoUp:
             self._pdfView.setDisplayMode_(self._pdfView.displayMode() + 2)
 
     def pageChanged_(self, notification):
@@ -142,10 +148,10 @@ class MyPDFDocument (NibClassBuilder.AutoBaseClass):
 
         # Lazily allocate _searchResults.
         if self._searchResults is None:
-            self._searchResults = NSMutableArray.arrayWithCapacity_(10)
+            self._searchResults = Cocoa.NSMutableArray.arrayWithCapacity_(10)
 
         self._pdfView.document().beginFindString_withOptions_(
-                sender.stringValue(), NSCaseInsensitiveSearch)
+                sender.stringValue(), Cocoa.NSCaseInsensitiveSearch)
 
     def startFind_(self, notification):
         # Empty arrays.

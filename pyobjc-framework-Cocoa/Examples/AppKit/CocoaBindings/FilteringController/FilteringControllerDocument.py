@@ -8,7 +8,9 @@
 #  at http://homepage.mac.com/mmalc/CocoaExamples/controllers.html
 
 from PyObjCTools import AppHelper
-from Cocoa import *
+import objc
+from objc import super
+from Cocoa import NSDocument, NSKeyedArchiver, NSKeyedUnarchiver
 
 
 
@@ -22,7 +24,7 @@ class FilteringControllerDocument (NSDocument):
         return self
 
     def windowNibName(self):
-        return u"FilteringControllerDocument"
+        return "FilteringControllerDocument"
 
     def windowControllerDidLoadNib_(self, controller):
         super(FilteringControllerDocument, self).windowControllerDidLoadNib_(controller)

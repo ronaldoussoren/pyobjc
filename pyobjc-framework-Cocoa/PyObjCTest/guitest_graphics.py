@@ -8,6 +8,7 @@ from AppKit import *
 from Foundation import *
 import array
 import sys
+import unittest
 
 
 class SimpleImage:
@@ -18,11 +19,13 @@ class SimpleImage:
     def __init__(self, image):
         data = image.TIFFRepresentation()
         bitmap = NSBitmapImageRep.imageRepWithData_(data)
+
         self.bitmap = bitmap
         self.data = bitmap.bitmapData()
         self.rowbytes = bitmap.bytesPerRow()
         self.pixbytes = bitmap.bitsPerPixel() // 8
         self.rowCount = bitmap.pixelsHigh()
+
 
         if bitmap.isPlanar():
             raise ValueError("Planar image!")
@@ -85,6 +88,10 @@ class RectTest (TestCase):
         """
 
         img = SimpleImage(image)
+
+        if img.bitmap.pixelsWide() != img.bitmap.size()[0]:
+            raise unittest.SkipTest("Test doesn't work with retina")
+
 
         allpoints = [ (x, y)
                 for x in range(img.width())

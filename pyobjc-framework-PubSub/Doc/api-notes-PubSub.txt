@@ -5,3 +5,7 @@ API Notes
 ---------
 
 The PyObjC bindings for the PubSub framework are complete.
+
+.. note::
+
+   This framework is deprecated in OSX 10.9

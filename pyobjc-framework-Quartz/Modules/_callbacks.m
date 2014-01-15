@@ -11,8 +11,37 @@
 #import <CoreGraphics/CoreGraphics.h>
 #endif
 
+#if PyObjC_BUILD_RELEASE >= 1008
 
-/* 
+typedef size_t (*CGDataProviderGetBytesCallback) (void *info, void *buffer, size_t count);
+typedef void (*CGDataProviderSkipBytesCallback) (void *info, size_t count);
+typedef void (*CGDataProviderRewindCallback) (void *info);
+typedef void (*CGDataProviderReleaseInfoCallback) (void *info);
+typedef const void * (*CGDataProviderGetBytePointerCallback) (void *info);
+typedef void (*CGDataProviderReleaseBytePointerCallback) (void *info, const void *pointer);
+typedef size_t (*CGDataProviderGetBytesAtOffsetCallback) (void *info, void *buffer, size_t offset, size_t count);
+
+typedef struct CGDataProviderCallbacks {
+	CGDataProviderGetBytesCallback getBytes;
+	CGDataProviderSkipBytesCallback skipBytes;
+	CGDataProviderRewindCallback rewind;
+	CGDataProviderReleaseInfoCallback releaseProvider;
+} CGDataProviderCallbacks;
+
+typedef struct CGDataProviderDirectAccessCallbacks {
+	CGDataProviderGetBytePointerCallback getBytePointer;
+	CGDataProviderReleaseBytePointerCallback releaseBytePointer;
+	CGDataProviderGetBytesAtOffsetCallback getBytes;
+	CGDataProviderReleaseInfoCallback releaseProvider;
+} CGDataProviderDirectAccessCallbacks;
+
+extern CGDataProviderRef CGDataProviderCreate (void *info, const CGDataProviderCallbacks *callbacks);
+extern CGDataProviderRef CGDataProviderCreateDirectAccess (void *info, size_t size, const CGDataProviderDirectAccessCallbacks *callbacks);
+
+#endif
+
+
+/*
  *
  * CGDataConsumerCreate
  *
@@ -27,7 +56,7 @@ m_CGDataConsumerPutBytesCallback(void* _info, const void* buffer, size_t count)
 	PyGILState_STATE   state = PyGILState_Ensure();
 
 	PyObject* result = PyObject_CallFunction(
-			PyTuple_GET_ITEM(info, 0), 
+			PyTuple_GET_ITEM(info, 0),
 #if PY_MAJOR_VERSION == 2
 			"Os#l",
 #else
@@ -35,8 +64,6 @@ m_CGDataConsumerPutBytesCallback(void* _info, const void* buffer, size_t count)
 #endif
 			PyTuple_GET_ITEM(info, 2), buffer, (Py_ssize_t)count, (Py_ssize_t)count);
 	if (result == NULL) {
-		printf("%s\n", PyObject_REPR(PyTuple_GET_ITEM(info, 2)));
-		printf("%p\n", buffer);
 		PyObjCErr_ToObjCWithGILState(&state);
 	}
 
@@ -65,7 +92,7 @@ m_CGDataConsumerReleaseInfoCallback(void* _info)
 		}
 		Py_DECREF(result);
 	}
-	
+
 	Py_DECREF(info);
 
 	PyGILState_Release(state);
@@ -82,7 +109,7 @@ PyDoc_STRVAR(doc_CGDataConsumerCreate,
 	"\n"
 	"putBytes and release are callback functions. Release may be None");
 static PyObject*
-m_CGDataConsumerCreate(PyObject* self __attribute__((__unused__)), 
+m_CGDataConsumerCreate(PyObject* self __attribute__((__unused__)),
 		PyObject* args)
 {
 	PyObject* info;
@@ -109,7 +136,7 @@ m_CGDataConsumerCreate(PyObject* self __attribute__((__unused__)),
 
 	CGDataConsumerRef result;
 	PyObjC_DURING
-		result = CGDataConsumerCreate(real_info, 
+		result = CGDataConsumerCreate(real_info,
 				&m_CGDataConsumerCallbacks);
 
 	PyObjC_HANDLER
@@ -156,7 +183,7 @@ m_CGDataProviderGetBytesCallback(
 
 #if 	PY_VERSION_HEX >= 0x02070000
 	Py_buffer view;
-	if (PyBuffer_FillInfo(&view, NULL, buffer, count, 1, PyBUF_WRITABLE) < 0) {
+	if (PyBuffer_FillInfo(&view, NULL, buffer, count, 0, PyBUF_WRITABLE) < 0) {
 		PyObjCErr_ToObjCWithGILState(&state);
 	}
 	buf = PyMemoryView_FromBuffer(&view);
@@ -196,7 +223,7 @@ m_CGDataProviderGetBytesCallback(
 	}
 
 	if (PyTuple_GET_ITEM(result, 1) != buf) {
-		const void* b; 
+		const void* b;
 		Py_ssize_t c;
 
 		if (PyObject_AsReadBuffer(PyTuple_GET_ITEM(result, 1),
@@ -227,57 +254,58 @@ m_CGDataProviderGetBytesCallback(
 	return c_result;
 }
 
-#if PyObjC_BUILD_RELEASE < 1008
-
-static void 
+static void
 m_CGDataProviderSkipBytesCallback(void* _info, size_t count)
 {
 	PyObject* info = (PyObject*)_info;
 
 	PyGILState_STATE   state = PyGILState_Ensure();
 
-	PyObject* result = PyObject_CallFunction(PyTuple_GET_ITEM(info, 2),
-			"Ol", PyTuple_GET_ITEM(info, 0), count);
-	if (result == NULL) {
-		PyObjCErr_ToObjCWithGILState(&state);
-	} 
-	Py_DECREF(result);
+        if (PyTuple_GET_ITEM(info, 2) != Py_None) {
+            PyObject* result = PyObject_CallFunction(PyTuple_GET_ITEM(info, 2),
+                            "Ol", PyTuple_GET_ITEM(info, 0), count);
+            if (result == NULL) {
+                    PyObjCErr_ToObjCWithGILState(&state);
+            }
+            Py_DECREF(result);
+        }
 
 	PyGILState_Release(state);
 }
 
-#endif
 
-static void 
+static void
 m_CGDataProviderRewindCallback(void* _info)
 {
 	PyObject* info = (PyObject*)_info;
 
 	PyGILState_STATE   state = PyGILState_Ensure();
 
-	PyObject* result = PyObject_CallFunction(PyTuple_GET_ITEM(info, 3),
+        if (PyTuple_GET_ITEM(info, 3) != Py_None) {
+            PyObject* result = PyObject_CallFunction(PyTuple_GET_ITEM(info, 3),
 			"O", PyTuple_GET_ITEM(info, 0));
-	if (result == NULL) {
-		PyObjCErr_ToObjCWithGILState(&state);
-	} 
-	Py_DECREF(result);
+            if (result == NULL) {
+                    PyObjCErr_ToObjCWithGILState(&state);
+            }
+            Py_DECREF(result);
+        }
 
 	PyGILState_Release(state);
 }
 
-static void 
+static void
 m_CGDataProviderReleaseInfoCallback(void* _info)
 {
 	PyObject* info = (PyObject*)_info;
 
 	PyGILState_STATE   state = PyGILState_Ensure();
 
-	if (PyTuple_GET_ITEM(info, 3) != Py_None) {
+	if (PyTuple_GET_ITEM(info, 4) != Py_None) {
 		PyObject* result = PyObject_CallFunction(PyTuple_GET_ITEM(info, 4),
 				"O", PyTuple_GET_ITEM(info, 0));
 		if (result == NULL) {
 			PyObjCErr_ToObjCWithGILState(&state);
-		} 
+		}
 		Py_DECREF(result);
 	}
 
@@ -287,16 +315,15 @@ m_CGDataProviderReleaseInfoCallback(void* _info)
 	PyGILState_Release(state);
 }
 
-#if PyObjC_BUILD_RELEASE < 1008
+
+
 static CGDataProviderCallbacks m_CGDataProviderCallbacks = {
 	m_CGDataProviderGetBytesCallback, 	/*  getBytes */
 	m_CGDataProviderSkipBytesCallback,	/*  skipBytes */
 	m_CGDataProviderRewindCallback,		/*  rewind */
 	m_CGDataProviderReleaseInfoCallback	/*  releaseProvider */
 };
-#endif /* PyObjC_BUILD_RELEASE < 1008 */
 
-#if PyObjC_BUILD_RELEASE < 1008
 static const void*
 m_CGDataProviderGetBytePointerCallback(void* _info)
 {
@@ -305,11 +332,11 @@ m_CGDataProviderGetBytePointerCallback(void* _info)
 	PyGILState_STATE   state = PyGILState_Ensure();
 
 	PyObject* result = PyObject_CallFunction(
-			PyTuple_GET_ITEM(info, 1), 
+			PyTuple_GET_ITEM(info, 1),
 			"O", PyTuple_GET_ITEM(info, 0));
 	if (result == NULL) {
 		PyObjCErr_ToObjCWithGILState(&state);
-	} 
+	}
 	if (result == PyObjC_NULL || result == Py_None) {
 		Py_DECREF(result);
 		PyGILState_Release(state);
@@ -333,10 +360,10 @@ static void
 m_CGDataProviderReleaseBytePointerCallback(void* _info, const void* pointer)
 {
 	/* FIXME: have to store enough info to recover the right PyObject* */
-}	
+}
 
 static size_t
-m_CGDataProviderGetBytesAtOffsetCallback(void* _info, void* buffer, 
+m_CGDataProviderGetBytesAtOffsetCallback(void* _info, void* buffer,
 		size_t offset, size_t count)
 {
 	PyObject* info = (PyObject*)_info;
@@ -346,7 +373,7 @@ m_CGDataProviderGetBytesAtOffsetCallback(void* _info, void* buffer,
 
 #if 	PY_VERSION_HEX >= 0x02070000
 	Py_buffer view;
-	if (PyBuffer_FillInfo(&view, NULL, buffer, count, 1, PyBUF_WRITABLE) < 0) {
+	if (PyBuffer_FillInfo(&view, NULL, buffer, count, 0, PyBUF_WRITABLE) < 0) {
 		PyObjCErr_ToObjCWithGILState(&state);
 	}
 	buf = PyMemoryView_FromBuffer(&view);
@@ -386,7 +413,7 @@ m_CGDataProviderGetBytesAtOffsetCallback(void* _info, void* buffer,
 	}
 
 	if (PyTuple_GET_ITEM(result, 1) != buf) {
-		const void* b; 
+		const void* b;
 		Py_ssize_t c;
 
 		if (PyObject_AsReadBuffer(PyTuple_GET_ITEM(result, 1),
@@ -417,13 +444,13 @@ m_CGDataProviderGetBytesAtOffsetCallback(void* _info, void* buffer,
 	return c_result;
 }
 
+
 static CGDataProviderDirectAccessCallbacks m_CGDataProviderDirectAccessCallbacks = {
 	m_CGDataProviderGetBytePointerCallback,		/* getBytePointer */
 	m_CGDataProviderReleaseBytePointerCallback,	/* releaseBytePointer */
 	m_CGDataProviderGetBytesAtOffsetCallback,	/* getBytes */
 	m_CGDataProviderReleaseInfoCallback		/* releaseProvider */
 };
-#endif /* PyObjC_BUILD_RELEASE < 1008 */
 
 
 
@@ -442,7 +469,7 @@ m_CGDataProviderSkipForwardCallback(void* _info, off_t count)
 			"Ol", PyTuple_GET_ITEM(info, 0), count);
 	if (result == NULL) {
 		PyObjCErr_ToObjCWithGILState(&state);
-	} 
+	}
 
 	if (PyObjC_PythonToObjC(@encode(off_t), result, &retval) < 0) {
 		Py_DECREF(result);
@@ -464,12 +491,14 @@ static CGDataProviderSequentialCallbacks m_CGDataProviderSequentialCallbacks = {
 
 };
 
+WEAK_LINKED_NAME_10_5(CGDataProviderCreateSequential)
+
 PyDoc_STRVAR(doc_CGDataProviderCreateSequential,
 	"CGDataConsumerCreateSequential(info, (getBytes, skipForward, rewind, releaseProvider)) -> object\n"
 	"\n"
 	"getBytes, skipForward, rewind and release are callback functions. Release may be None");
 static PyObject*
-m_CGDataProviderCreateSequential(PyObject* self __attribute__((__unused__)), 
+m_CGDataProviderCreateSequential(PyObject* self __attribute__((__unused__)),
 		PyObject* args)
 {
 	PyObject* info;
@@ -506,7 +535,7 @@ m_CGDataProviderCreateSequential(PyObject* self __attribute__((__unused__)),
 
 	CGDataProviderRef result;
 	PyObjC_DURING
-		result = CGDataProviderCreateSequential(real_info, 
+		result = USE_10_5(CGDataProviderCreateSequential)(real_info,
 				&m_CGDataProviderSequentialCallbacks);
 
 	PyObjC_HANDLER
@@ -537,13 +566,14 @@ m_CGDataProviderCreateSequential(PyObject* self __attribute__((__unused__)),
 #endif
 
 
-#if PyObjC_BUILD_RELEASE < 1008
+WEAK_LINKED_NAME(CGDataProviderCreate)
+
 PyDoc_STRVAR(doc_CGDataProviderCreate,
 	"CGDataConsumerCreate(info, (getBytes, skipBytes, rewind, releaseProvider)) -> object\n"
 	"\n"
 	"getBytes, skipBytes, rewind and release are callback functions. Release may be None");
 static PyObject*
-m_CGDataProviderCreate(PyObject* self __attribute__((__unused__)), 
+m_CGDataProviderCreate(PyObject* self __attribute__((__unused__)),
 		PyObject* args)
 {
 	PyObject* info;
@@ -580,7 +610,7 @@ m_CGDataProviderCreate(PyObject* self __attribute__((__unused__)),
 
 	CGDataProviderRef result;
 	PyObjC_DURING
-		result = CGDataProviderCreate(real_info, 
+		result = USE(CGDataProviderCreate)(real_info,
 				&m_CGDataProviderCallbacks);
 
 	PyObjC_HANDLER
@@ -608,12 +638,14 @@ m_CGDataProviderCreate(PyObject* self __attribute__((__unused__)),
 	return retval;
 }
 
+WEAK_LINKED_NAME(CGDataProviderCreateDirectAccess)
+
 PyDoc_STRVAR(doc_CGDataProviderCreateDirectAccess,
 	"CGDataConsumerCreateDirectAccess(info, (getBytePointer, releaseBytePointer, getBytes, release)) -> object\n"
 	"\n"
 	"getBytePointer, releaseBytePointer, getBytes and release are callback functions. Release may be None");
 static PyObject*
-m_CGDataProviderCreateDirectAccess(PyObject* self __attribute__((__unused__)), 
+m_CGDataProviderCreateDirectAccess(PyObject* self __attribute__((__unused__)),
 		PyObject* args)
 {
 	PyObject* info;
@@ -663,7 +695,7 @@ m_CGDataProviderCreateDirectAccess(PyObject* self __attribute__((__unused__)),
 
 	CGDataProviderRef result;
 	PyObjC_DURING
-		result = CGDataProviderCreateDirectAccess(real_info, 
+		result = USE(CGDataProviderCreateDirectAccess)(real_info,
 				size,
 				&callbacks);
 
@@ -691,7 +723,6 @@ m_CGDataProviderCreateDirectAccess(PyObject* self __attribute__((__unused__)),
 	CGDataProviderRelease(result);
 	return retval;
 }
-#endif
 
 /*
  * CGDataProviderCreateWithData
@@ -754,7 +785,7 @@ m_CGDataProviderCreateWithData(PyObject* self __attribute__((__unused__)),
 	PyObject* bufobj = NULL;
 	Py_ssize_t sz = (Py_ssize_t)size;
 	void* arr;
-	
+
 	tag = PyObjC_PythonToCArray(NO, YES,
 			@encode(char), data, &arr, &sz, &bufobj);
 	if (tag < 0) {
@@ -822,7 +853,7 @@ m_CGFunctionEvaluateCallback(void* _info, const CGFloat* inData, CGFloat* outDat
 
 
 	PyObject* result = PyObject_CallFunction(PyTuple_GET_ITEM(info, 1),
-			"OOO", 
+			"OOO",
 			PyTuple_GET_ITEM(info, 0),
 			input,
 			Py_None);
@@ -880,8 +911,8 @@ m_CGFunctionCreate(PyObject* self __attribute__((__unused__)),
 	int rangeTag;
 	int domainTag;
 
-	if (!PyArg_ParseTuple(args, "OOOOOO", 
-			&info, &domDim, &domain, &rangeDim, 
+	if (!PyArg_ParseTuple(args, "OOOOOO",
+			&info, &domDim, &domain, &rangeDim,
 			&range, &evaluate)) {
 		return NULL;
 	}
@@ -905,7 +936,7 @@ m_CGFunctionCreate(PyObject* self __attribute__((__unused__)),
 			return NULL;
 		}
 	}
-		
+
 	if (range == Py_None) {
 		rangeArr = NULL;
 		rangeTag = -1;
@@ -926,7 +957,8 @@ m_CGFunctionCreate(PyObject* self __attribute__((__unused__)),
 	}
 
 	if (!PyCallable_Check(evaluate)) {
-		PyErr_SetString(PyExc_TypeError, "evaluate not callable");
+		PyErr_Format(PyExc_TypeError, "evaluate not callable, but of type %.80s",
+                        Py_TYPE(evaluate)->tp_name);
 		if (domainTag != -1) {
 			PyObjC_FreeCArray(domainTag, domainArr);
 			Py_XDECREF(domainBuf);
@@ -987,7 +1019,7 @@ m_CGFunctionCreate(PyObject* self __attribute__((__unused__)),
 }
 
 
-/* 
+/*
  * - CGDisplayRegisterReconfigurationCallback
  * - CGDisplayRemoveReconfigurationCallback
  */
@@ -1006,7 +1038,7 @@ struct callback_info display_reconfig_callback = { NULL, 0 };
 
 static int
 insert_callback_info(
-	struct callback_info* info, 
+	struct callback_info* info,
 	PyObject* callback,
 	PyObject* user_info,
 	PyObject* real_info)
@@ -1061,8 +1093,8 @@ insert_callback_info(
 
 static PyObject*
 find_callback_info(
-	struct callback_info* info, 
-	PyObject* callback, 
+	struct callback_info* info,
+	PyObject* callback,
 	PyObject* user_info)
 {
 	size_t i;
@@ -1085,8 +1117,8 @@ find_callback_info(
 
 static void
 remove_callback_info(
-	struct callback_info* info, 
-	PyObject* callback, 
+	struct callback_info* info,
+	PyObject* callback,
 	PyObject* user_info)
 {
 	size_t i;
@@ -1179,13 +1211,13 @@ m_CGDisplayRegisterReconfigurationCallback(
 		PyObjCErr_FromObjC(localException);
 
 	PyObjC_ENDHANDLER
-	
+
 	if (PyErr_Occurred()) {
 		Py_DECREF(real_info);
 		return NULL;
 	}
 
-	if (insert_callback_info(&display_reconfig_callback, 
+	if (insert_callback_info(&display_reconfig_callback,
 				callback, userinfo, real_info) == -1) {
 		CGDisplayRemoveReconfigurationCallback(
 			m_CGDisplayReconfigurationCallBack,
@@ -1209,7 +1241,7 @@ m_CGDisplayRemoveReconfigurationCallback(
 		return NULL;
 	}
 
-	PyObject* real_info = find_callback_info(&display_reconfig_callback, callback, userinfo); 
+	PyObject* real_info = find_callback_info(&display_reconfig_callback, callback, userinfo);
 
 	if (real_info == NULL) {
 		return NULL;
@@ -1241,7 +1273,7 @@ m_CGDisplayRemoveReconfigurationCallback(
 
 struct callback_info screen_move_callback = { NULL, 0 };
 
-static void 
+static void
 m_CGScreenUpdateMoveCallback(
 	CGScreenUpdateMoveDelta delta,
 	size_t count,
@@ -1298,7 +1330,7 @@ m_CGScreenRegisterMoveCallback(
 	}
 
 	PyObject* real_info = Py_BuildValue("OO", callback, userinfo);
-	
+
 	PyObjC_DURING
 		CGScreenRegisterMoveCallback(
 			m_CGScreenUpdateMoveCallback, real_info);
@@ -1307,13 +1339,13 @@ m_CGScreenRegisterMoveCallback(
 		PyObjCErr_FromObjC(localException);
 
 	PyObjC_ENDHANDLER
-	
+
 	if (PyErr_Occurred()) {
 		Py_DECREF(real_info);
 		return NULL;
 	}
 
-	if (insert_callback_info(&screen_move_callback, 
+	if (insert_callback_info(&screen_move_callback,
 				callback, userinfo, real_info) < 0) {
 		CGScreenUnregisterMoveCallback(
 			m_CGScreenUpdateMoveCallback,
@@ -1338,7 +1370,7 @@ m_CGScreenUnregisterMoveCallback(
 		return NULL;
 	}
 
-	PyObject* real_info = find_callback_info(&screen_move_callback, callback, userinfo); 
+	PyObject* real_info = find_callback_info(&screen_move_callback, callback, userinfo);
 
 	if (real_info == NULL) {
 		return NULL;
@@ -1417,7 +1449,7 @@ m_CGRegisterScreenRefreshCallback(
 	}
 
 	PyObject* real_info = Py_BuildValue("OO", callback, userinfo);
-	
+
 	CGError err = -1;
 	PyObjC_DURING
 		err = CGRegisterScreenRefreshCallback(
@@ -1427,13 +1459,13 @@ m_CGRegisterScreenRefreshCallback(
 		PyObjCErr_FromObjC(localException);
 
 	PyObjC_ENDHANDLER
-	
+
 	if (PyErr_Occurred()) {
 		Py_DECREF(real_info);
 		return NULL;
 	}
 
-	if (insert_callback_info(&screen_refresh_callback, 
+	if (insert_callback_info(&screen_refresh_callback,
 				callback, userinfo, real_info) < 0) {
 		CGUnregisterScreenRefreshCallback(
 			m_CGScreenRefreshCallback,
@@ -1457,7 +1489,7 @@ m_CGUnregisterScreenRefreshCallback(
 		return NULL;
 	}
 
-	PyObject* real_info = find_callback_info(&screen_refresh_callback, callback, userinfo); 
+	PyObject* real_info = find_callback_info(&screen_refresh_callback, callback, userinfo);
 
 	if (real_info == NULL) {
 		return NULL;
@@ -1495,9 +1527,9 @@ m_CGUnregisterScreenRefreshCallback(
 
 static CGEventRef
 m_CGEventTapCallBack(
-	CGEventTapProxy proxy, 
-	CGEventType type, 
-	CGEventRef event, 
+	CGEventTapProxy proxy,
+	CGEventType type,
+	CGEventRef event,
 	void * _info)
 {
 	PyObject* info = (PyObject*)_info;
@@ -1535,7 +1567,7 @@ m_CGEventTapCallBack(
 		PyObjCErr_ToObjCWithGILState(&state);
 	}
 
-	if (PyObjC_PythonToObjC(@encode(CGEventRef), result, &event) < 0) {	
+	if (PyObjC_PythonToObjC(@encode(CGEventRef), result, &event) < 0) {
 		PyObjCErr_ToObjCWithGILState(&state);
 	}
 
@@ -1747,7 +1779,8 @@ m_CGPatternCreate(PyObject* self __attribute__((__unused__)),
 		return NULL;
 	}
 	if (!PyCallable_Check(draw)) {
-		PyErr_SetString(PyExc_TypeError, "drawPattern is not callable");
+		PyErr_Format(PyExc_TypeError, "drawPattern of type %.80s is not callable",
+                        Py_TYPE(draw)->tp_name);
 		return NULL;
 	}
 	if (PyObjC_PythonToObjC(@encode(CGRect), py_bounds, &bounds) < 0) {
@@ -1797,7 +1830,7 @@ m_CGPatternCreate(PyObject* self __attribute__((__unused__)),
 	return retval;
 }
 
-/* 
+/*
  * CGPSConverterCreate
  */
 
@@ -1821,7 +1854,7 @@ m_CGPSConverterBeginDocumentCallback(void* _info)
 }
 
 static void
-m_CGPSConverterBeginPageCallback(void* _info, 
+m_CGPSConverterBeginPageCallback(void* _info,
 		size_t pageNumber, CFDictionaryRef pageInfo)
 {
 	PyObject* info = (PyObject*)_info;
@@ -1830,9 +1863,9 @@ m_CGPSConverterBeginPageCallback(void* _info,
 
 	PyObject* result = PyObject_CallFunction(
 		PyTuple_GET_ITEM(info, 3),
-		"OlN", 
+		"OlN",
 		PyTuple_GET_ITEM(info, 0),
-		(long)pageNumber, 
+		(long)pageNumber,
 		PyObjC_ObjCToPython(@encode(CFDictionaryRef), &pageInfo));
 
 	if (result == NULL) {
@@ -1853,7 +1886,7 @@ m_CGPSConverterEndDocumentCallback(void* _info, bool success)
 
 	PyObject* result = PyObject_CallFunction(
 		PyTuple_GET_ITEM(info, 2),
-		"ON", PyTuple_GET_ITEM(info, 0), 
+		"ON", PyTuple_GET_ITEM(info, 0),
 		PyBool_FromLong(success));
 
 	if (result == NULL) {
@@ -1865,7 +1898,7 @@ m_CGPSConverterEndDocumentCallback(void* _info, bool success)
 }
 
 static void
-m_CGPSConverterEndPageCallback(void* _info, size_t pageNumber, 
+m_CGPSConverterEndPageCallback(void* _info, size_t pageNumber,
 		CFDictionaryRef pageInfo)
 {
 	PyObject* info = (PyObject*)_info;
@@ -1874,9 +1907,9 @@ m_CGPSConverterEndPageCallback(void* _info, size_t pageNumber,
 
 	PyObject* result = PyObject_CallFunction(
 		PyTuple_GET_ITEM(info, 4),
-		"OlN", 
+		"OlN",
 		PyTuple_GET_ITEM(info, 0),
-		(long)pageNumber, 
+		(long)pageNumber,
 		PyObjC_ObjCToPython(@encode(CFDictionaryRef), &pageInfo));
 
 	if (result == NULL) {
@@ -1896,7 +1929,7 @@ m_CGPSConverterMessageCallback(void* _info, CFStringRef message)
 
 	PyObject* result = PyObject_CallFunction(
 		PyTuple_GET_ITEM(info, 6),
-		"ON", 
+		"ON",
 		PyTuple_GET_ITEM(info, 0),
 		PyObjC_ObjCToPython(@encode(CFStringRef), &message));
 
@@ -2019,14 +2052,14 @@ m_CGPSConverterCreate(
 	}
 
 	PyObject* real_info = Py_BuildValue("OOOOOOOO",
-			info, 
+			info,
 			beginDocument, endDocument,
 			beginPage, endPage,
 			noteProgress, noteMessage,
 			releaseInfo);
 
 	PyObjC_DURING
-		result = CGPSConverterCreate(real_info, 
+		result = CGPSConverterCreate(real_info,
 				&m_CGPSConverterCallbacks,
 				options);
 
@@ -2053,7 +2086,6 @@ static PyMethodDef mod_methods[] = {
 		doc_CGDataConsumerCreate
 	},
 
-#if PyObjC_BUILD_RELEASE < 1008
 	{
 		"CGDataProviderCreate",
 		(PyCFunction)m_CGDataProviderCreate,
@@ -2067,7 +2099,6 @@ static PyMethodDef mod_methods[] = {
 		METH_VARARGS,
 		doc_CGDataProviderCreateDirectAccess
 	},
-#endif
 
 #if PyObjC_BUILD_RELEASE >= 1005
 
@@ -2167,12 +2198,11 @@ PyObjC_MODULE_INIT(_callbacks)
         if (PyObjC_ImportAPI(m) < 0) PyObjC_INITERROR();
 
 #if PyObjC_BUILD_RELEASE >= 1005
-	if (CGDataProviderCreateSequential == NULL) {
-		if (PyDict_DelItemString(md, "CGDataProviderCreateSequential") < 0) {
-			PyObjC_INITERROR();
-		}
-	}
+	CHECK_WEAK_LINK_10_5(m, CGDataProviderCreateSequential);
 #endif
-	
+
+	CHECK_WEAK_LINK(m, CGDataProviderCreate);
+	CHECK_WEAK_LINK(m, CGDataProviderCreateDirectAccess);
+
 	PyObjC_INITDONE();
 }

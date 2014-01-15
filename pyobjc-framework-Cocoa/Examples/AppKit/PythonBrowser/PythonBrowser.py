@@ -24,12 +24,14 @@ of copied. This means you don't have to rebuild the app if you edit the
 sources or nibs.)
 """
 
-from Cocoa import *
+import objc
+import Cocoa
 import sys
 
+from PythonBrowserModel import PythonBrowserModel
 
 # class defined in PythonBrowser.nib
-class PythonBrowserWindowController(NSWindowController):
+class PythonBrowserWindowController(Cocoa.NSWindowController):
     outlineView = objc.IBOutlet()
 
     def __new__(cls, obj):
@@ -37,14 +39,13 @@ class PythonBrowserWindowController(NSWindowController):
         return cls.alloc().initWithObject_(obj)
 
     def initWithObject_(self, obj):
-        from PythonBrowserModel import PythonBrowserModel
         self = self.initWithWindowNibName_("PythonBrowser")
         self.setWindowTitleForObject_(obj)
         self.model = PythonBrowserModel.alloc().initWithObject_(obj)
         self.outlineView.setDataSource_(self.model)
         self.outlineView.setDelegate_(self.model)
         self.outlineView.setTarget_(self)
-        self.outlineView.setDoubleAction_("doubleClick:")
+        self.outlineView.setDoubleAction_(b"doubleClick:")
         self.window().makeFirstResponder_(self.outlineView)
         self.showWindow_(self)
         # The window controller doesn't need to be retained (referenced)
@@ -90,7 +91,7 @@ class PythonBrowserWindowController(NSWindowController):
         self.setObject_(mod)
 
 
-class PythonBrowserAppDelegate(NSObject):
+class PythonBrowserAppDelegate(Cocoa.NSObject):
 
     def applicationDidFinishLaunching_(self, notification):
         self.newBrowser_(self)

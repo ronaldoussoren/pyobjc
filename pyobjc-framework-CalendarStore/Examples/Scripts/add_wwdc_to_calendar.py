@@ -1,12 +1,13 @@
 """
 Adds WWDC 2007 to the 'Work' calendar
 """
-from CalendarStore import *
+from __future__ import print_function
+from CalendarStore import CalCalendarStore, CalEvent
 import textwrap
 
 store = CalCalendarStore.defaultCalendarStore()
 for cal in store.calendars():
-    if cal._.title == u"Work":
+    if cal._.title == "Work":
         event = CalEvent.event()
         event._.calendar = cal
         event._.title = "WWDC 2009"
@@ -30,9 +31,8 @@ for cal in store.calendars():
         event._.endDate = stop
         res, err = store.saveEvent_span_error_(event, 0, None)
         if not res:
-            print "Adding WWDC failed", err.localizedDescription()
+            print("Adding WWDC failed", err.localizedDescription())
         break
 
-
 else:
-    print "Cannot find the right calendar"
+    print("Cannot find the right calendar")

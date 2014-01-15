@@ -54,16 +54,19 @@ def importExternalTestCases(pathPattern="test_*.py", root=".", package=None):
 
 
 
-def makeTestSuite():
+def makeTestSuite(use_system_libffi):
     import __main__
     topdir = dirname(__main__.__file__)
-    if sys.version_info[0] == 3:
-        del sys.path[1]
-        deja_topdir = dirname(dirname(topdir))
-    else:
-        deja_topdir = topdir
+    #if sys.version_info[0] == 3:
+    #    del sys.path[1]
+    #    deja_topdir = dirname(dirname(topdir))
+    #else:
+    #    deja_topdir = topdir
+    deja_topdir = topdir
+
     deja_suite = dejagnu.testSuiteForDirectory(join(deja_topdir,
         'libffi-src/tests/testsuite/libffi.call'))
+    print(deja_topdir)
 
     plain_suite = importExternalTestCases("test_*.py",
         join(topdir, 'PyObjCTest'), package='PyObjCTest')
@@ -71,11 +74,8 @@ def makeTestSuite():
     version_suite = importExternalTestCases("test%d_*.py"%(sys.version_info[0],),
         join(topdir, 'PyObjCTest'), package='PyObjCTest')
 
-    suite = unittest.TestSuite((plain_suite, version_suite, deja_suite))
-
-    # the libffi tests don't work unless we use our own
-    # copy of libffi.
-    import __main__
-    if __main__.USE_SYSTEM_FFI:
+    if use_system_libffi:
         return unittest.TestSuite((plain_suite, version_suite))
-    return suite
+
+    else:
+        return unittest.TestSuite((plain_suite, version_suite, deja_suite))

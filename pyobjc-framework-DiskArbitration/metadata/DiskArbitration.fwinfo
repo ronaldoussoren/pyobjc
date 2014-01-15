@@ -1,0 +1,639 @@
+# objective.metada exceptions file, see its document
+# for information on how to update this file.
+{
+ "definitions": {
+  "classes": {}, 
+  "formal_protocols": {}, 
+  "functions": {
+   "DAApprovalSessionCreate": {
+    "args": {
+     "0": {}
+    }, 
+    "retval": {
+     "already_cfretained": true
+    }
+   }, 
+   "DAApprovalSessionScheduleWithRunLoop": {
+    "args": {
+     "0": {}, 
+     "1": {}, 
+     "2": {}
+    }
+   }, 
+   "DAApprovalSessionUnscheduleFromRunLoop": {
+    "args": {
+     "0": {}, 
+     "1": {}, 
+     "2": {}
+    }
+   }, 
+   "DADiskClaim": {
+    "args": {
+     "0": {}, 
+     "2": {
+      "function": {
+       "args": [
+        {
+         "typestr": [
+          "^{__DADisk=}", 
+          false
+         ]
+        }, 
+        {
+         "typestr": [
+          "^v", 
+          false
+         ]
+        }
+       ], 
+       "retval": {
+        "typestr": [
+         "^{__DADissenter=}", 
+         false
+        ]
+       }
+      }
+     }, 
+     "3": {}, 
+     "4": {
+      "function": {
+       "args": [
+        {
+         "typestr": [
+          "^{__DADisk=}", 
+          false
+         ]
+        }, 
+        {
+         "typestr": [
+          "^{__DADissenter=}", 
+          false
+         ]
+        }, 
+        {
+         "typestr": [
+          "^v", 
+          false
+         ]
+        }
+       ], 
+       "retval": {
+        "typestr": [
+         "v", 
+         false
+        ]
+       }
+      }
+     }, 
+     "5": {}
+    }
+   }, 
+   "DADiskCopyDescription": {
+    "args": {
+     "0": {}
+    }, 
+    "retval": {
+     "already_cfretained": true
+    }
+   }, 
+   "DADiskCopyIOMedia": {
+    "args": {
+     "0": {}
+    }
+   }, 
+   "DADiskCopyWholeDisk": {
+    "args": {
+     "0": {}
+    }, 
+    "retval": {
+     "already_cfretained": true
+    }
+   }, 
+   "DADiskCreateFromBSDName": {
+    "args": {
+     "0": {}, 
+     "1": {}, 
+     "2": {}
+    }, 
+    "retval": {
+     "already_cfretained": true
+    }
+   }, 
+   "DADiskCreateFromIOMedia": {
+    "args": {
+     "0": {}, 
+     "1": {}
+    }, 
+    "retval": {
+     "already_cfretained": true
+    }
+   }, 
+   "DADiskCreateFromVolumePath": {
+    "args": {
+     "0": {}, 
+     "1": {}, 
+     "2": {}
+    }, 
+    "retval": {
+     "already_cfretained": true
+    }
+   }, 
+   "DADiskEject": {
+    "args": {
+     "0": {}, 
+     "2": {
+      "function": {
+       "args": [
+        {
+         "typestr": [
+          "^{__DADisk=}", 
+          false
+         ]
+        }, 
+        {
+         "typestr": [
+          "^{__DADissenter=}", 
+          false
+         ]
+        }, 
+        {
+         "typestr": [
+          "^v", 
+          false
+         ]
+        }
+       ], 
+       "retval": {
+        "typestr": [
+         "v", 
+         false
+        ]
+       }
+      }
+     }, 
+     "3": {}
+    }
+   }, 
+   "DADiskGetBSDName": {
+    "args": {
+     "0": {}
+    }, 
+    "retval": {}
+   }, 
+   "DADiskGetOptions": {
+    "args": {
+     "0": {}
+    }
+   }, 
+   "DADiskIsClaimed": {
+    "args": {
+     "0": {}
+    }
+   }, 
+   "DADiskMount": {
+    "args": {
+     "0": {}, 
+     "1": {}, 
+     "3": {
+      "function": {
+       "args": [
+        {
+         "typestr": [
+          "^{__DADisk=}", 
+          false
+         ]
+        }, 
+        {
+         "typestr": [
+          "^{__DADissenter=}", 
+          false
+         ]
+        }, 
+        {
+         "typestr": [
+          "^v", 
+          false
+         ]
+        }
+       ], 
+       "retval": {
+        "typestr": [
+         "v", 
+         false
+        ]
+       }
+      }
+     }, 
+     "4": {}
+    }
+   }, 
+   "DADiskMountWithArguments": {
+    "args": {
+     "0": {}, 
+     "1": {}, 
+     "3": {
+      "function": {
+       "args": [
+        {
+         "typestr": [
+          "^{__DADisk=}", 
+          false
+         ]
+        }, 
+        {
+         "typestr": [
+          "^{__DADissenter=}", 
+          false
+         ]
+        }, 
+        {
+         "typestr": [
+          "^v", 
+          false
+         ]
+        }
+       ], 
+       "retval": {
+        "typestr": [
+         "v", 
+         false
+        ]
+       }
+      }
+     }, 
+     "4": {}, 
+     "5": {}
+    }
+   }, 
+   "DADiskRename": {
+    "args": {
+     "0": {}, 
+     "1": {}, 
+     "3": {
+      "function": {
+       "args": [
+        {
+         "typestr": [
+          "^{__DADisk=}", 
+          false
+         ]
+        }, 
+        {
+         "typestr": [
+          "^{__DADissenter=}", 
+          false
+         ]
+        }, 
+        {
+         "typestr": [
+          "^v", 
+          false
+         ]
+        }
+       ], 
+       "retval": {
+        "typestr": [
+         "v", 
+         false
+        ]
+       }
+      }
+     }, 
+     "4": {}
+    }
+   }, 
+   "DADiskSetOptions": {
+    "args": {
+     "0": {}
+    }
+   }, 
+   "DADiskUnclaim": {
+    "args": {
+     "0": {}
+    }
+   }, 
+   "DADiskUnmount": {
+    "args": {
+     "0": {}, 
+     "2": {
+      "function": {
+       "args": [
+        {
+         "typestr": [
+          "^{__DADisk=}", 
+          false
+         ]
+        }, 
+        {
+         "typestr": [
+          "^{__DADissenter=}", 
+          false
+         ]
+        }, 
+        {
+         "typestr": [
+          "^v", 
+          false
+         ]
+        }
+       ], 
+       "retval": {
+        "typestr": [
+         "v", 
+         false
+        ]
+       }
+      }
+     }, 
+     "3": {}
+    }
+   }, 
+   "DADissenterCreate": {
+    "args": {
+     "0": {}, 
+     "2": {}
+    }, 
+    "retval": {
+     "already_cfretained": true
+    }
+   }, 
+   "DADissenterGetStatus": {
+    "args": {
+     "0": {}
+    }
+   }, 
+   "DADissenterGetStatusString": {
+    "args": {
+     "0": {}
+    }, 
+    "retval": {}
+   }, 
+   "DARegisterDiskAppearedCallback": {
+    "args": {
+     "0": {}, 
+     "1": {}, 
+     "2": {
+      "function": {
+       "args": [
+        {
+         "typestr": [
+          "^{__DADisk=}", 
+          false
+         ]
+        }, 
+        {
+         "typestr": [
+          "^v", 
+          false
+         ]
+        }
+       ], 
+       "retval": {
+        "typestr": [
+         "v", 
+         false
+        ]
+       }
+      }
+     }, 
+     "3": {}
+    }
+   }, 
+   "DARegisterDiskDescriptionChangedCallback": {
+    "args": {
+     "0": {}, 
+     "1": {}, 
+     "2": {}, 
+     "3": {
+      "function": {
+       "args": [
+        {
+         "typestr": [
+          "^{__DADisk=}", 
+          false
+         ]
+        }, 
+        {
+         "typestr": [
+          "^{__CFArray=}", 
+          false
+         ]
+        }, 
+        {
+         "typestr": [
+          "^v", 
+          false
+         ]
+        }
+       ], 
+       "retval": {
+        "typestr": [
+         "v", 
+         false
+        ]
+       }
+      }
+     }, 
+     "4": {}
+    }
+   }, 
+   "DARegisterDiskDisappearedCallback": {
+    "args": {
+     "0": {}, 
+     "1": {}, 
+     "2": {
+      "function": {
+       "args": [
+        {
+         "typestr": [
+          "^{__DADisk=}", 
+          false
+         ]
+        }, 
+        {
+         "typestr": [
+          "^v", 
+          false
+         ]
+        }
+       ], 
+       "retval": {
+        "typestr": [
+         "v", 
+         false
+        ]
+       }
+      }
+     }, 
+     "3": {}
+    }
+   }, 
+   "DARegisterDiskEjectApprovalCallback": {
+    "args": {
+     "0": {}, 
+     "1": {}, 
+     "2": {
+      "function": {
+       "args": [
+        {
+         "typestr": [
+          "^{__DADisk=}", 
+          false
+         ]
+        }, 
+        {
+         "typestr": [
+          "^v", 
+          false
+         ]
+        }
+       ], 
+       "retval": {
+        "typestr": [
+         "^{__DADissenter=}", 
+         false
+        ]
+       }
+      }
+     }, 
+     "3": {}
+    }
+   }, 
+   "DARegisterDiskMountApprovalCallback": {
+    "args": {
+     "0": {}, 
+     "1": {}, 
+     "2": {
+      "function": {
+       "args": [
+        {
+         "typestr": [
+          "^{__DADisk=}", 
+          false
+         ]
+        }, 
+        {
+         "typestr": [
+          "^v", 
+          false
+         ]
+        }
+       ], 
+       "retval": {
+        "typestr": [
+         "^{__DADissenter=}", 
+         false
+        ]
+       }
+      }
+     }, 
+     "3": {}
+    }
+   }, 
+   "DARegisterDiskPeekCallback": {
+    "args": {
+     "0": {}, 
+     "1": {}, 
+     "3": {
+      "function": {
+       "args": [
+        {
+         "typestr": [
+          "^{__DADisk=}", 
+          false
+         ]
+        }, 
+        {
+         "typestr": [
+          "^v", 
+          false
+         ]
+        }
+       ], 
+       "retval": {
+        "typestr": [
+         "v", 
+         false
+        ]
+       }
+      }
+     }, 
+     "4": {}
+    }
+   }, 
+   "DARegisterDiskUnmountApprovalCallback": {
+    "args": {
+     "0": {}, 
+     "1": {}, 
+     "2": {
+      "function": {
+       "args": [
+        {
+         "typestr": [
+          "^{__DADisk=}", 
+          false
+         ]
+        }, 
+        {
+         "typestr": [
+          "^v", 
+          false
+         ]
+        }
+       ], 
+       "retval": {
+        "typestr": [
+         "^{__DADissenter=}", 
+         false
+        ]
+       }
+      }
+     }, 
+     "3": {}
+    }
+   }, 
+   "DASessionCreate": {
+    "args": {
+     "0": {}
+    }, 
+    "retval": {
+     "already_cfretained": true
+    }
+   }, 
+   "DASessionScheduleWithRunLoop": {
+    "args": {
+     "0": {}, 
+     "1": {}, 
+     "2": {}
+    }
+   }, 
+   "DASessionSetDispatchQueue": {
+    "args": {
+     "0": {}
+    }
+   }, 
+   "DASessionUnscheduleFromRunLoop": {
+    "args": {
+     "0": {}, 
+     "1": {}, 
+     "2": {}
+    }
+   }, 
+   "DAUnregisterApprovalCallback": {
+    "args": {
+     "0": {}, 
+     "1": {}, 
+     "2": {}
+    }
+   }, 
+   "DAUnregisterCallback": {
+    "args": {
+     "0": {}, 
+     "1": {}, 
+     "2": {}
+    }
+   }
+  }, 
+  "informal_protocols": {}
+ }
+}

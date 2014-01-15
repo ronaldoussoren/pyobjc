@@ -14,7 +14,7 @@ def funcattr(**kwds):
 
 class OC_TestCopy1 (NSObject):
     def init(self):
-        self = super(OC_TestCopy1, self).init()
+        self = objc.super(OC_TestCopy1, self).init()
         if self is not None:
             self.x = 1
             self.y = 2
@@ -37,9 +37,10 @@ class OC_TestCopy1 (NSObject):
             signature=NSObject.copyWithZone_.signature,
             isClassMethod=False)
 
+#OC_CopyBase.initWithInt_
 class OC_TestCopy2 (OC_CopyBase):
     def init(self):
-        self = super(OC_TestCopy2, self).initWithInt_(10)
+        self = objc.super(OC_TestCopy2, self).initWithInt_(10)
         if self is not None:
             self.x = 1
             self.y = 2
@@ -55,7 +56,7 @@ class OC_TestCopy3 (OC_CopyBase):
     __slots__ = 'x y'.split()
 
     def init(self):
-        self = super(OC_TestCopy3, self).initWithInt_(10)
+        self = objc.super(OC_TestCopy3, self).initWithInt_(10)
         if self is not None:
             self.x = 1
             self.y = 2
@@ -68,7 +69,7 @@ class OC_TestCopy3 (OC_CopyBase):
 
 class OC_TestCopy4 (OC_CopyBase):
     def init(self):
-        self = super(OC_TestCopy4, self).initWithInt_(10)
+        self = objc.super(OC_TestCopy4, self).initWithInt_(10)
         if self is not None:
             self.x = 1
             self.y = 2
@@ -82,7 +83,7 @@ class OC_TestCopy4 (OC_CopyBase):
 
     @funcattr(occlass="OC_TestCopy4")
     def copyWithZone_(self, zone):
-        other = super(OC_TestCopy4, self).copyWithZone_(zone)
+        other = objc.super(OC_TestCopy4, self).copyWithZone_(zone)
         other.x = self.x
         other.y = self.y
         other.z = "hello"

@@ -324,7 +324,17 @@ class TestArraysOut (TestCase):
         self.assertIs(v, objc.NULL )
 
     def testWithCountInResult(self):
-
+        self.maxDiff=None
+        self.assertEqual(fillArray_uptoCount_.__metadata__(), {
+            'retval': {
+                'type': b'i',
+                '_template': True,
+            },
+            'arguments': (
+                { 'type': b'o^i', 'c_array_length_in_arg': 1, 'c_array_length_in_result': True, 'null_accepted': False },
+                { 'type': b'i', '_template': True },
+            )
+        })
         c, v = fillArray_uptoCount_(None, 20)
         self.assertEqual(c, 10)
         self.assertEqual(list(v),  [i+2 for i in range(10)])

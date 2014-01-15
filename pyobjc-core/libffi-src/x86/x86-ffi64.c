@@ -2,8 +2,8 @@
 
 /* -----------------------------------------------------------------------
    x86-ffi64.c - Copyright (c) 2002  Bo Thorsen <bo@suse.de>
-   
-   x86-64 Foreign Function Interface 
+
+   x86-64 Foreign Function Interface
 
    Permission is hereby granted, free of charge, to any person obtaining
    a copy of this software and associated documentation files (the
@@ -161,7 +161,7 @@ classify_argument(
 			return 1;
 #else
 		{
-			int size = byte_offset + type->size;
+			size_t size = byte_offset + type->size;
 
 			if (size <= 4)
 			{
@@ -208,12 +208,12 @@ classify_argument(
 
 		case FFI_TYPE_STRUCT:
 		{
-			ffi_type**				ptr; 
+			ffi_type**				ptr;
 			int						i;
 			enum x86_64_reg_class	subclasses[MAX_CLASSES];
 			const int				UNITS_PER_WORD = 8;
 			int						words =
-				(type->size + UNITS_PER_WORD - 1) / UNITS_PER_WORD;
+				(int)((type->size + UNITS_PER_WORD - 1) / UNITS_PER_WORD);
 
 			/* If the struct is larger than 16 bytes, pass it on the stack.  */
 			if (type->size > 16)
@@ -232,7 +232,7 @@ classify_argument(
 				if (num == 0)
 					return 0;
 
-				int pos = byte_offset / 8;
+				int pos = (int)(byte_offset / 8);
 
 				for (i = 0; i < num; i++)
 				{
@@ -285,7 +285,7 @@ classify_argument(
 				}
 			}
 
-			return words;
+			return (int)words;
 		}
 
 		default:
@@ -420,8 +420,8 @@ ffi_prep_cif_machdep(
 		flags |= 1 << 11;
 
 	cif->flags = flags;
-	cif->bytes = bytes;
-	cif->bytes = ALIGN(bytes,8);
+	/*cif->bytes = (unsigned)bytes;*/
+	cif->bytes = (unsigned)ALIGN(bytes,8);
 
 	return FFI_OK;
 }

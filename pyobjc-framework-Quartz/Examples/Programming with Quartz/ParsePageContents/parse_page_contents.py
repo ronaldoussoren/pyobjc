@@ -4,12 +4,13 @@ Parse a PDF file and print some information about it.
 Usage:
     python parse_page_contents.py inputfile ...
 """
-from Quartz import *
+from __future__ import print_function
 import objc
 import sys
 import array
 
 import Quartz
+import Cocoa
 
 class MyDataScan (object):
     def __init__(self):
@@ -20,42 +21,42 @@ class MyDataScan (object):
 
 def printPageResults(outFile, myData, pageNum):
     if myData.numImagesWithColorThisPage:
-        print >>outFile, "Found %d images with intrinsic color on page %d."%(
-                myData.numImagesWithColorThisPage, pageNum)
+        print("Found %d images with intrinsic color on page %d."%(
+                myData.numImagesWithColorThisPage, pageNum), file=outFile)
 
     if myData.numImageMasksThisPage:
-        print >>outFile, "Found %d image masks on page %d."%(
+        print("Found %d image masks on page %d."%(
                     myData.numImageMasksThisPage,
-                    pageNum)
+                    pageNum), file=outFile)
 
     if myData.numImagesMaskedWithMaskThisPage:
-        print >>outFile, "Found %d images masked with masks on page %d."%(
+        print("Found %d images masked with masks on page %d."%(
                     myData.numImagesMaskedWithMaskThisPage,
-                    pageNum)
+                    pageNum), file=outFile)
 
     if myData.numImagesMaskedWithColorsThisPage:
-        print >>outFile, "Found %d images masked with colors on page %d."%(
+        print("Found %d images masked with colors on page %d."%(
                     myData.numImagesMaskedWithColorsThisPage,
-                    pageNum)
+                    pageNum), file=outFile)
 
 def printDocResults(outFile, totPages, totImages):
-    print >>outFile
-    print >>outFile, "Summary: %d page document contains %d images."%(
-                        totPages, totImages)
-    print >>outFile
+    print('', file=outFile)
+    print("Summary: %d page document contains %d images."%(
+                        totPages, totImages), file=outFile)
+    print('', file=outFile)
 
 
 def checkImageType(imageDict, myScanData):
-    hasMaskKey, isMask = CGPDFDictionaryGetBoolean(imageDict, "ImageMask", None);
+    hasMaskKey, isMask = Quartz.CGPDFDictionaryGetBoolean(imageDict, "ImageMask", None);
     if not hasMaskKey:
-        hasMaskKey, isMask = CGPDFDictionaryGetBoolean(imageDict, "IM", None);
+        hasMaskKey, isMask = Quartz.CGPDFDictionaryGetBoolean(imageDict, "IM", None);
 
     if hasMaskKey and isMask:
         myScanData.numImageMasksThisPage += 1
         return
 
     # If image is masked with an alpha image it has an SMask entry.
-    hasSMaskKey, object = CGPDFDictionaryGetObject(imageDict, "SMask", None)
+    hasSMaskKey, object = Quartz.CGPDFDictionaryGetObject(imageDict, "SMask", None)
     if hasSMaskKey:
         # This object must be an XObject that is an image.
         # This code assumes the PDF is well formed in this regard.
@@ -64,18 +65,18 @@ def checkImageType(imageDict, myScanData):
 
     # If this image is masked with an image or with colors it has
     # a Mask entry.
-    hasMask, object = CGPDFDictionaryGetObject(imageDict, "Mask", None)
+    hasMask, object = Quartz.CGPDFDictionaryGetObject(imageDict, "Mask", None)
     if hasMask:
         # If the object is an XObject then the mask is an image.
         # If it is an array, the mask is an array of colors.
-        type = CGPDFObjectGetType(object)
+        type = Quartz.CGPDFObjectGetType(object)
         # Check if it is a stream type which it must be to be an XObject.
-        if type == kCGPDFObjectTypeStream:
+        if type == Quartz.kCGPDFObjectTypeStream:
             myScanData.numImagesMaskedWithMaskThisPage += 1
-        elif type == kCGPDFObjectTypeArray:
+        elif type == Quartz.kCGPDFObjectTypeArray:
             myScanData.numImagesMaskedWithColorsThisPage += 1
         else:
-            print >>sys.stderr, "Mask entry in Image object is not well formed!"
+            print("Mask entry in Image object is not well formed!")
 
         return
 
@@ -92,46 +93,46 @@ def checkImageType(imageDict, myScanData):
 #       Note that forms, patterns, and potentially other resources contain
 #       images. This code only counts the top level images in a PDF document,
 #       not images embedded in other resources.
-@objc.callbackFor(CGPDFOperatorTableSetCallback)
+@objc.callbackFor(Quartz.CGPDFOperatorTableSetCallback)
 def myOperator_Do(s, info):
     # Check to see if this is an image or not.
-    cs = CGPDFScannerGetContentStream(s)
+    cs = Quartz.CGPDFScannerGetContentStream(s)
 
     # The Do operator takes a name. Pop the name off the
     # stack. If this fails then the argument to the
     # Do operator is not a name and is therefore invalid!
-    res, name = CGPDFScannerPopName(s, None)
+    res, name = Quartz.CGPDFScannerPopName(s, None)
     if not res:
-        print >>sys.stderr, "Couldn't pop name off stack!"
+        print("Couldn't pop name off stack!")
         return
 
     # Get the resource with type "XObject" and the name
     # obtained from the stack.
-    xobject = CGPDFContentStreamGetResource(cs, "XObject", name);
+    xobject = Quartz.CGPDFContentStreamGetResource(cs, "XObject", name);
     if xobject is None:
-        print >>sys.stderr, "Couldn't get XObject with name %s"%(name,)
+        print("Couldn't get XObject with name %s"%(name,))
         return
 
     # An XObject must be a stream so obtain the value from the xobject
     # as if it were a stream. If this fails, the PDF is malformed.
-    res, stream = CGPDFObjectGetValue(xobject, kCGPDFObjectTypeStream, None)
+    res, stream = Quartz.CGPDFObjectGetValue(xobject, Quartz.kCGPDFObjectTypeStream, None)
     if not res:
-        print >>sys.stderr, "XObject '%s' is not a stream"%(name,)
+        print("XObject '%s' is not a stream"%(name,))
         return
 
-    print stream
+    print(stream)
 
     # Streams consist of a dictionary and the data associated
     # with the stream. This code only cares about the dictionary.
-    dict = CGPDFStreamGetDictionary(stream);
+    dict = Quartz.CGPDFStreamGetDictionary(stream);
     if dict is None:
-        print >>sys.stderr, "Couldn't obtain dictionary from stream %s!"%(name,)
+        print("Couldn't obtain dictionary from stream %s!"%(name,))
         return
 
     # An XObject dict has a Subtype that indicates what kind it is.
-    res, name = CGPDFDictionaryGetName(dict, "Subtype", None)
+    res, name = Quartz.CGPDFDictionaryGetName(dict, "Subtype", None)
     if not res:
-        print >>sys.stderr, "Couldn't get SubType of dictionary object!"
+        print("Couldn't get SubType of dictionary object!")
         return
 
     # This code is interested in the "Image" Subtype of an XObject.
@@ -147,22 +148,22 @@ def myOperator_Do(s, info):
 
 # This callback handles inline images. Inline images end with the
 # "EI" operator.
-@objc.callbackFor(CGPDFOperatorTableSetCallback)
+@objc.callbackFor(Quartz.CGPDFOperatorTableSetCallback)
 def myOperator_EI(s, info):
-    print "EI"
+    print("EI")
     # When the scanner encounters the EI operator, it has a
     # stream corresponding to the image on the operand stack.
     # This code pops the stream off the stack in order to
     # examine it.
-    res, stream = CGPDFScannerPopStream(s, None)
+    res, stream = Quartz.CGPDFScannerPopStream(s, None)
     if not res:
-        print >>sys.stderr, "Couldn't create stream from inline image"
+        print("Couldn't create stream from inline image")
         return
 
     # Get the image dictionary from the stream.
-    dict = CGPDFStreamGetDictionary(stream);
+    dict = Quartz.CGPDFStreamGetDictionary(stream);
     if dict is None:
-        print >>sys.stderr, "Couldn't get dict from inline image stream!"
+        print("Couldn't get dict from inline image stream!")
         return
 
     # By definition the stream passed to EI is an image so
@@ -170,50 +171,50 @@ def myOperator_EI(s, info):
     checkImageType(dict, info)
 
 def createMyOperatorTable():
-    myTable = CGPDFOperatorTableCreate()
-    CGPDFOperatorTableSetCallback(myTable, "Do", myOperator_Do)
-    CGPDFOperatorTableSetCallback(myTable, "EI", myOperator_EI)
+    myTable = Quartz.CGPDFOperatorTableCreate()
+    Quartz.CGPDFOperatorTableSetCallback(myTable, b"Do", myOperator_Do)
+    Quartz.CGPDFOperatorTableSetCallback(myTable, b"EI", myOperator_EI)
     return myTable
 
 def dumpPageStreams(url, outFile):
     # Create a CGPDFDocumentRef from the input PDF file.
-    pdfDoc = CGPDFDocumentCreateWithURL(url);
+    pdfDoc = Quartz.CGPDFDocumentCreateWithURL(url);
     if pdfDoc is None:
-        print >>sys.stderr, "Couldn't open PDF document!"
+        print("Couldn't open PDF document!")
         return
 
     # Create the operator table with the needed callbacks.
     table = createMyOperatorTable();
     if table is None:
-        print >>sys.stderr, "Couldn't create operator table!"
+        print("Couldn't create operator table!")
         return
 
     # Initialize the count of the images.
     totalImages = 0
 
     # Obtain the total number of pages for the document.
-    totPages = CGPDFDocumentGetNumberOfPages(pdfDoc)
+    totPages = Quartz.CGPDFDocumentGetNumberOfPages(pdfDoc)
 
     # Loop over all the pages in the document, scanning the
     # content stream of each one.
     for i in range(1, totPages+1):
         # Get the PDF page for this page in the document.
-        p = CGPDFDocumentGetPage(pdfDoc, i)
+        p = Quartz.CGPDFDocumentGetPage(pdfDoc, i)
 
         # Create a reference to the content stream for this page.
-        cs = CGPDFContentStreamCreateWithPage(p)
+        cs = Quartz.CGPDFContentStreamCreateWithPage(p)
 
         if cs is None:
-            print >>sys.stderr, "Couldn't create content stream for page #%d"%(i,)
+            print("Couldn't create content stream for page #%d"%(i,))
             return
 
         # Initialize the counters of images for this page.
         myData = MyDataScan()
 
         # Create a scanner for this PDF document page.
-        scanner = CGPDFScannerCreate(cs, table, 0);
+        scanner = Quartz.CGPDFScannerCreate(cs, table, 0);
         if scanner is None:
-            print >>sys.stderr, "Couldn't create scanner for page #%d!"%(i,)
+            print("Couldn't create scanner for page #%d!"%(i,))
             return
 
 
@@ -222,8 +223,8 @@ def dumpPageStreams(url, outFile):
         # operator is encountered. Once the content stream for the
         # page has been consumed or Quartz detects a malformed
         # content stream, CGPDFScannerScan returns.
-        if not CGPDFScannerScan(scanner):
-            print >>sys.stderr, "Scanner couldn't scan all of page #%d!"%(i,)
+        if not Quartz.CGPDFScannerScan(scanner):
+            print("Scanner couldn't scan all of page #%d!"%(i,))
 
         # Print the results for this page.
         printPageResults(outFile, myData, i);
@@ -238,9 +239,9 @@ def dumpPageStreams(url, outFile):
 
         # Once the page has been scanned, release the
         # scanner for this page.
-        CGPDFScannerRelease(scanner)
+        Quartz.CGPDFScannerRelease(scanner)
         # Release the content stream for this page.
-        CGPDFContentStreamRelease(cs)
+        Quartz.CGPDFContentStreamRelease(cs)
         # Done with this page; loop to next page.
 
     printDocResults(outFile, totPages, totalImages)
@@ -250,21 +251,22 @@ def main(args = None):
         args = sys.argv
 
     if len(args) < 2:
-        print >>sys.stderr, "Usage: %s inputfile ... "%(args[0],)
+        print("Usage: %s inputfile ... "%(args[0],))
         return 1
 
     for inputFileName in args[1:]:
-        print "Beginning Document %r"%(inputFileName,)
+        print("Beginning Document %r"%(inputFileName,))
 
-        print CFURLCreateFromFileSystemRepresentation.__metadata__()
-        inURL = CFURLCreateFromFileSystemRepresentation(None, inputFileName,
+        if not isinstance(inputFileName, bytes):
+            inputFileName = inputFileName.encode('utf-8')
+
+        inURL = Cocoa.CFURLCreateFromFileSystemRepresentation(None, inputFileName,
                                 len(inputFileName), False)
         if inURL is None:
-            print >>sys.stderr, "Couldn't create URL for input file!"
+            print("Couldn't create URL for input file!")
             return 1
 
         dumpPageStreams(inURL, sys.stdout)
-        #CFRelease(inURL)
 
     return 0
 

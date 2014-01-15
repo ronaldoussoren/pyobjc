@@ -28,7 +28,7 @@ class ThreadingTest (TestCase):
 
         class PyObjCTestThreadRunnerString (NSObject):
             def init(self):
-                self = super(PyObjCTestThreadRunnerString, self).init()
+                self = objc.super(PyObjCTestThreadRunnerString, self).init()
                 if self is None: return None
 
                 self.storage = []

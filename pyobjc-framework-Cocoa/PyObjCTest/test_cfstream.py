@@ -18,8 +18,18 @@ except NameError:
 
 class TestStream (TestCase):
     def testTypes(self):
-        self.assertIsCFType(CFReadStreamRef)
-        self.assertIsCFType(CFWriteStreamRef)
+        try:
+            if objc.lookUpClass('__NSCFInputStream') is not CFReadStreamRef:
+                self.assertIsCFType(CFReadStreamRef)
+        except objc.error:
+            self.assertIsCFType(CFReadStreamRef)
+
+        try:
+            if objc.lookUpClass('__NSCFOutputStream') is not CFWriteStreamRef:
+                self.assertIsCFType(CFWriteStreamRef)
+        except objc.error:
+            self.assertIsCFType(CFWriteStreamRef)
+
 
     def testConstants(self):
         self.assertEqual(kCFStreamStatusNotOpen , 0)

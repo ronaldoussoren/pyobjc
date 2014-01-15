@@ -11,6 +11,7 @@ TODO:
 - Do the same for sets (NSSet) and lists (NSArray)
 """
 from PyObjCTools.TestSupport import *
+import operator
 import objc
 
 # Import some of the stdlib tests
@@ -266,11 +267,14 @@ class TestNSDictionaryInterface (TestCase):
         self.assertTrue({1} == self.dictClass().dictionaryWithDictionary_({1:1}).keys())
         self.assertEqual(self.dictClass().dictionaryWithDictionary_({1:1}).keys() | {2}, {1, 2})
         self.assertEqual({2} | self.dictClass().dictionaryWithDictionary_({1:1}).keys(), {1, 2})
+        self.assertFalse(self.dictClass().dictionaryWithDictionary_({1:1}).keys() == [1])
+
         # And a few for .items()
         self.assertTrue(self.dictClass().dictionaryWithDictionary_({1:1}).items() == {(1,1)})
         self.assertTrue({(1,1)} == self.dictClass().dictionaryWithDictionary_({1:1}).items())
         self.assertEqual(self.dictClass().dictionaryWithDictionary_({1:1}).items() | {2}, {(1,1), 2})
         self.assertEqual({2} | self.dictClass().dictionaryWithDictionary_({1:1}).items(), {(1,1), 2})
+        self.assertFalse(self.dictClass().dictionaryWithDictionary_({1:1}).items() == [(1,1)])
 
 
 class TestNSMutableDictionaryInterface (TestNSDictionaryInterface):
@@ -629,11 +633,38 @@ class DictSetTest (DictSetTest):
 
 
 
-
-
 class GeneralMappingTestsNSMutableDictionary (
         mapping_tests.BasicTestMappingProtocol):
     type2test = NSMutableDictionary
+
+
+class TestDictUpdates (TestCase):
+
+    def do_test(self, dictType):
+        d = dictType()
+        d['a'] = 42
+        self.assertRaises(TypeError, d.update, {}, {})
+
+        d.update({'b': 9})
+        self.assertEqual(dict(d), {'a':42, 'b':9})
+
+        d.update({'a': 2})
+        self.assertEqual(dict(d), {'a':2, 'b':9})
+
+        d.update([('a', 1), ('c', 3)])
+        self.assertEqual(dict(d), {'a':1, 'b':9, 'c': 3})
+
+        d.update(d=4, a=9, e=3)
+        self.assertEqual(dict(d), {'a':9, 'b':9, 'c': 3, 'd': 4, 'e': 3})
+
+        d.update()
+        self.assertEqual(dict(d), {'a':9, 'b':9, 'c': 3, 'd': 4, 'e': 3})
+
+    def test_native(self):
+        self.do_test(dict)
+
+    def test_objc(self):
+        self.do_test(NSMutableDictionary)
 
 
 import collections
@@ -654,6 +685,107 @@ class TestABC (TestCase):
         self.assertTrue(isinstance(d.keys(), collections.KeysView))
         self.assertTrue(isinstance(d.values(), collections.ValuesView))
         self.assertTrue(isinstance(d.items(), collections.ItemsView))
+
+class TestPyObjCDict (TestCase):
+    def test_comparison(self):
+        self.assertRaises(TypeError, operator.lt, {}, {})
+        self.assertRaises(TypeError, operator.le, {}, {})
+        self.assertRaises(TypeError, operator.gt, {}, {})
+        self.assertRaises(TypeError, operator.ge, {}, {})
+
+        self.assertRaises(TypeError, operator.lt, NSDictionary(), {})
+        self.assertRaises(TypeError, operator.le, NSDictionary(), {})
+        self.assertRaises(TypeError, operator.gt, NSDictionary(), {})
+        self.assertRaises(TypeError, operator.lt, {}, NSDictionary())
+        self.assertRaises(TypeError, operator.le, {}, NSDictionary())
+        self.assertRaises(TypeError, operator.gt, {}, NSDictionary())
+
+        self.assertFalse(NSMutableDictionary() == [])
+        self.assertFalse(NSDictionary() == [])
+        self.assertFalse(NSMutableDictionary() == 42)
+        self.assertFalse(NSDictionary() == 42)
+        self.assertFalse(NSMutableDictionary() == object())
+        self.assertFalse(NSDictionary() == object())
+
+    def test_creation(self):
+        for dict_type in (NSDictionary, NSMutableDictionary):
+            v = dict_type()
+            self.assertIsInstance(v, dict_type)
+            self.assertEqual(len(v), 0)
+
+            v = dict_type({1:2, 2:3})
+            self.assertIsInstance(v, dict_type)
+            self.assertEqual(len(v), 2)
+            self.assertEqual(v[1], 2)
+            self.assertEqual(v[2], 3)
+
+            v = dict_type([(1, -1), (2, 9)])
+            self.assertIsInstance(v, dict_type)
+            self.assertEqual(len(v), 2)
+            self.assertEqual(v[1], -1)
+            self.assertEqual(v[2], 9)
+
+            v = dict_type(v for v in [(1, -1), (2, 9)])
+            self.assertIsInstance(v, dict_type)
+            self.assertEqual(len(v), 2)
+            self.assertEqual(v[1], -1)
+            self.assertEqual(v[2], 9)
+
+            self.assertRaises(TypeError, dict_type, (1,2), (3,4))
+
+            v = dict_type(a=3, b=4)
+            self.assertEqual(len(v), 2)
+            self.assertEqual(v['a'], 3)
+            self.assertEqual(v['b'], 4)
+
+            v = dict_type((v for v in [(1, -1), (2, 9)]), a='hello', b='world')
+            self.assertIsInstance(v, dict_type)
+            self.assertEqual(len(v), 4)
+            self.assertEqual(v[1], -1)
+            self.assertEqual(v[2], 9)
+            self.assertEqual(v['a'], 'hello')
+            self.assertEqual(v['b'], 'world')
+
+    def test_values(self):
+        py = dict(a=4, b=3)
+        oc = NSDictionary(a=4, b=3)
+
+        self.assertIn(4, py.values())
+        self.assertIn(4, oc.values())
+        self.assertNotIn(9, py.values())
+        self.assertNotIn(9, oc.values())
+
+    def test_view_set(self):
+        oc = NSDictionary(a=1, b=2, c=3, d=4, e=5)
+
+        v = oc.keys() | {'a', 'f' }
+        self.assertEqual(v, {'a', 'b', 'c', 'd', 'e', 'f' })
+        self.assertIsInstance(v, set)
+        self.assertRaises(TypeError, operator.or_, oc.keys(), ('a', 'f'))
+        self.assertRaises(TypeError, operator.or_, ('a', 'f'), oc.keys())
+
+        v = oc.keys() & {'a', 'f' }
+        self.assertEqual(v, {'a'})
+        self.assertIsInstance(v, set)
+        self.assertRaises(TypeError, operator.and_, oc.keys(), ('a', 'f'))
+        self.assertRaises(TypeError, operator.and_, ('a', 'f'), oc.keys())
+
+        v = oc.keys() ^ {'a', 'f' }
+        self.assertEqual(v, {'b', 'c', 'd', 'e', 'f'})
+        self.assertIsInstance(v, set)
+        self.assertRaises(TypeError, operator.xor, oc.keys(), ('a', 'f'))
+        self.assertRaises(TypeError, operator.xor, ('a', 'f'), oc.keys())
+
+        v = oc.keys() - {'a', 'f' }
+        self.assertEqual(v, {'b', 'c', 'd', 'e'})
+        self.assertIsInstance(v, set)
+        self.assertRaises(TypeError, operator.sub, oc.keys(), ('a', 'f'))
+        self.assertRaises(TypeError, operator.sub, ('a', 'f'), oc.keys())
+
+        self.assertRaises(TypeError, operator.lt, oc.keys(), ('a', 'f'))
+        self.assertRaises(TypeError, operator.le, oc.keys(), ('a', 'f'))
+        self.assertRaises(TypeError, operator.gt, oc.keys(), ('a', 'f'))
+        self.assertRaises(TypeError, operator.ge, oc.keys(), ('a', 'f'))
 
 if __name__ == "__main__":
     main()

@@ -14,7 +14,8 @@ See also the iClass demo.
 
 from PyObjCTools import AppHelper
 from objc import getClassList, objc_object
-from Foundation import *
+import objc
+from Foundation import NSObject
 
 
 try:
@@ -36,6 +37,20 @@ def _sortClasses(classList):
     classes = [(cls.__name__, cls) for cls in classList]
     classes.sort()
     return [cls for name, cls in classes]
+
+if sys.version_info[0] == 2:
+    def formatSelector(selector):
+        if selector.isClassMethod:
+            return '+' + selector.selector
+        else:
+            return '-' + selector.selector
+
+else:
+    def formatSelector(selector):
+        if selector.isClassMethod:
+            return '+' + selector.selector.decode('ascii')
+        else:
+            return '-' + selector.selector.decode('ascii')
 
 
 class ClassBrowserDelegate (NSObject):
@@ -84,18 +99,16 @@ class ClassBrowserDelegate (NSObject):
             if col < 0:
                 break
             row = self.browser.selectedRowInColumn_(col)
+
+
         if row >= 0:
             self.selectedClass = self.columns[col][row]
-            # Classes get initialized lazily, upon the first attribute access,
-            # only after that cls.__dict__ actually contains the methods.
-            # Do a dummy hasattr() to make sure the class is initialized.
-            hasattr(self.selectedClass, "alloc")
             self.selectedClassMethods = [
-                '-' + obj.selector for obj in self.selectedClass.pyobjc_instanceMethods.__dict__.values()
+                formatSelector(obj) for obj in self.selectedClass.pyobjc_instanceMethods.__dict__.values()
                  if hasattr(obj, "selector")
             ]
             self.selectedClassMethods += [
-                '+' + obj.selector for obj in self.selectedClass.pyobjc_classMethods.__dict__.values()
+                formatSelector(obj) for obj in self.selectedClass.pyobjc_classMethods.__dict__.values()
                 if hasattr(obj, "selector")
             ]
             self.selectedClassMethods.sort()

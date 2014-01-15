@@ -1,20 +1,21 @@
-from Cocoa import *
-from Quartz import *
+import Cocoa
+import Quartz
 import objc
+from objc import super
 
 from Extras import makeRandomPointInRect
 from Circle import Circle
 
 gCircleCount = 3
 
-class NSEvent (objc.Category(NSEvent)):
+class NSEvent (objc.Category(Cocoa.NSEvent)):
     def locationInView_(self, view):
         return view.convertPoint_fromView_(self.locationInWindow(), None)
 
-class TLayerView (NSView):
+class TLayerView (Cocoa.NSView):
     circles = objc.ivar()
     shadowRadius = objc.ivar(type=objc._C_FLT)
-    shadowOffset = objc.ivar(type=CGSize.__typestr__)
+    shadowOffset = objc.ivar(type=Quartz.CGSize.__typestr__)
     useTLayer = objc.ivar(type=objc._C_BOOL)
 
     def initWithFrame_(self, frame):
@@ -33,14 +34,14 @@ class TLayerView (NSView):
         self.circles = []
 
         for c in  colors:
-            color = NSColor.colorWithCalibratedRed_green_blue_alpha_(*c)
+            color = Cocoa.NSColor.colorWithCalibratedRed_green_blue_alpha_(*c)
             circle = Circle.alloc().init()
             circle.color = color
             circle.radius = circleRadius
             circle.center = makeRandomPointInRect(self.bounds())
             self.circles.append(circle)
 
-        self.registerForDraggedTypes_([NSColorPboardType])
+        self.registerForDraggedTypes_([Cocoa.NSColorPboardType])
         self.setNeedsDisplay_(True)
         return self
 
@@ -68,7 +69,7 @@ class TLayerView (NSView):
     def boundsForCircle_(self, circle):
         dx = 2 * abs(self.shadowOffset.width) + 2 * self.shadowRadius;
         dy = 2 * abs(self.shadowOffset.height) + 2 * self.shadowRadius;
-        return NSInsetRect(circle.bounds(), -dx, -dy)
+        return Cocoa.NSInsetRect(circle.bounds(), -dx, -dy)
 
     def dragCircleAtIndex_withEvent_(self, index, event):
         circle = self.circles[index]
@@ -77,13 +78,13 @@ class TLayerView (NSView):
 
         self.setNeedsDisplayInRect_(self.boundsForCircle_(circle))
 
-        mask = NSLeftMouseDraggedMask | NSLeftMouseUpMask;
+        mask = Cocoa.NSLeftMouseDraggedMask | Cocoa.NSLeftMouseUpMask;
 
         start = event.locationInView_(self)
 
         while (1):
             event = self.window().nextEventMatchingMask_(mask)
-            if event.type() == NSLeftMouseUp:
+            if event.type() == Cocoa.NSLeftMouseUp:
                 break
 
             self.setNeedsDisplayInRect_(self.boundsForCircle_(circle))
@@ -119,35 +120,35 @@ class TLayerView (NSView):
         self.setNeedsDisplay_(True)
 
     def drawRect_(self, rect):
-        context = NSGraphicsContext.currentContext().graphicsPort()
+        context = Cocoa.NSGraphicsContext.currentContext().graphicsPort()
 
-        CGContextSetRGBFillColor(context, 0.7, 0.7, 0.9, 1)
-        CGContextFillRect(context, rect)
+        Quartz.CGContextSetRGBFillColor(context, 0.7, 0.7, 0.9, 1)
+        Quartz.CGContextFillRect(context, rect)
 
-        CGContextSetShadow(context, self.shadowOffset, self.shadowRadius)
+        Quartz.CGContextSetShadow(context, self.shadowOffset, self.shadowRadius)
 
         if self.useTLayer:
-            CGContextBeginTransparencyLayer(context, None)
+            Quartz.CGContextBeginTransparencyLayer(context, None)
 
         for circle in self.circles:
             bounds = self.boundsForCircle_(circle)
-            if NSIntersectsRect(bounds, rect):
+            if Cocoa.NSIntersectsRect(bounds, rect):
                 circle.draw()
 
         if self.useTLayer:
-            CGContextEndTransparencyLayer(context)
+            Quartz.CGContextEndTransparencyLayer(context)
 
     def draggingEntered_(self, sender):
         # Since we have only registered for NSColorPboardType drags, this is
         # actually unneeded. If you were to register for any other drag types,
         # though, this code would be necessary.
 
-        if (sender.draggingSourceOperationMask() & NSDragOperationGeneric) != 0:
+        if (sender.draggingSourceOperationMask() & Cocoa.NSDragOperationGeneric) != 0:
             pasteboard = sender.draggingPasteboard()
-            if pasteboard.types().containsObject_(NSColorPboardType):
-                return NSDragOperationGeneric
+            if pasteboard.types().containsObject_(Cocoa.NSColorPboardType):
+                return Cocoa.NSDragOperationGeneric
 
-        return NSDragOperationNone
+        return Cocoa.NSDragOperationNone
 
     def performDragOperation_(self, sender):
         point = self.convertPoint_fromView_(sender.draggingLocation(), None)
@@ -161,7 +162,7 @@ class TLayerView (NSView):
         return False
 
     def concludeDragOperation_(self, sender):
-        color = NSColor.colorFromPasteboard_(sender.draggingPasteboard())
+        color = Cocoa.NSColor.colorFromPasteboard_(sender.draggingPasteboard())
         point = self.convertPoint_fromView_(sender.draggingLocation(), None)
         index = self.indexOfCircleAtPoint_(point)
 

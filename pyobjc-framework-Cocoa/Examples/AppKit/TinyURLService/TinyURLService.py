@@ -1,5 +1,4 @@
-from Foundation import *
-from AppKit import *
+import Cocoa
 from PyObjCTools import AppHelper
 import objc
 import traceback
@@ -8,10 +7,10 @@ import urllib2
 
 def serviceSelector(fn):
     # this is the signature of service selectors
-    return objc.selector(fn, signature="v@:@@o^@")
+    return objc.selector(fn, signature=b"v@:@@o^@")
 
 def ERROR(s):
-    #NSLog(u"ERROR: %s", s)
+    #NSLog("ERROR: %s", s)
     return s
 
 NAME = 'TinyURLService-0.0'
@@ -20,62 +19,54 @@ def getTinyURL(url):
     data = urllib.urlencode(dict(url=url, source=NAME))
     return urllib2.urlopen(TINYURL_API, data).read().decode('utf-8')
 
-class TinyURLService(NSObject):
+class TinyURLService(Cocoa.NSObject):
 
     @serviceSelector
     def doTinyURLService_userData_error_(self, pboard, data, error):
         # Mail.app in 10.4.1 doesn't do NSURLPboardType correctly!
         # Probably elsewhere too, so we just use strings.
         try:
-            #NSLog(u'doTinyURLService: %s', pboard)
             types = pboard.types()
             url = None
 
 
-            if NSStringPboardType in types:
-                #NSLog(u'getting NSStringPboardType')
-                urlString = pboard.stringForType_(NSStringPboardType)
-                #NSLog(u'NSStringPboardType: %s', urlString)
-                url = NSURL.URLWithString_(urlString.strip())
+            if Cocoa.NSStringPboardType in types:
+                urlString = pboard.stringForType_(Cocoa.NSStringPboardType)
+                url = Cocoa.NSURL.URLWithString_(urlString.strip())
                 if url is None:
-                    #NSLog(u'urlString was %s', urlString)
-                    return ERROR(NSLocalizedString(
+                    return ERROR(Cocoa.NSLocalizedString(
                         "Error: Given URL was not well-formed.",
                         "Given URL not well-formed."
                     ))
 
             if url is None:
-                return ERROR(NSLocalizedString(
+                return ERROR(Cocoa.NSLocalizedString(
                         "Error: Pasteboard doesn't contain a valid URL.",
                         "Pasteboard doesn't contain a valid URL.",
                     ))
 
 
             urlString = url.absoluteString()
-            #NSLog(u'urlString = %s', urlString)
 
             res = getTinyURL(urlString.UTF8String())
 
-            #NSLog(u'res = %r' % (res,))
-            resURL = NSURL.URLWithString_(res)
-            #NSLog(u'resURL = %s', resURL)
+            resURL = Cocoa.NSURL.URLWithString_(res)
             if resURL is None:
-                NSLog(u'res was %s', res)
-                return ERROR(NSLocalizedString(
+                return ERROR(Cocoa.NSLocalizedString(
                     "Error: Resultant URL was not well-formed.",
                     "Resultant URL not well-formed."
                 ))
-            pboard.declareTypes_owner_([NSStringPboardType], None)
-            pboard.setString_forType_(resURL.absoluteString(), NSStringPboardType)
+            pboard.declareTypes_owner_([Cocoa.NSStringPboardType], None)
+            pboard.setString_forType_(resURL.absoluteString(), Cocoa.NSStringPboardType)
             return ERROR(None)
         except:
             traceback.print_exc()
-            return ERROR(u'Exception, see traceback')
+            return ERROR('Exception, see traceback')
 
 
 def main():
     serviceProvider = TinyURLService.alloc().init()
-    NSRegisterServicesProvider(serviceProvider, u'TinyURLService')
+    Cocoa.NSRegisterServicesProvider(serviceProvider, 'TinyURLService')
     AppHelper.runConsoleEventLoop()
 
 if __name__ == '__main__':

@@ -248,7 +248,8 @@ class TestCTFont (TestCase):
         self.assertArgIsOut(CTFontCopyLocalizedName, 2)
 
         v = CTFontCopyCharacterSet(font)
-        self.assertIsInstance(v, CFCharacterSetRef)
+        #self.assertIsInstance(v, CFCharacterSetRef)
+        self.assertIn('CharacterSet', type(v).__name__)
 
         v = CTFontGetStringEncoding(font)
         self.assertIsInstance(v, (int, long))

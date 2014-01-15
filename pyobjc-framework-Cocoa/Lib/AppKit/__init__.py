@@ -11,6 +11,26 @@ import Foundation
 from AppKit import _metadata
 from AppKit._inlines import _inline_list_
 
+def _setup_conveniences():
+    def fontdescriptor_get(self, key, default=None):
+        value = self.objectForKey_(key)
+        if value is None:
+            return default
+        return value
+
+    def fontdescriptor_getitem(self, key, default=None):
+        value = self.objectForKey_(key)
+        if value is None:
+            raise KeyError(key)
+        return value
+
+    objc.addConvenienceForClass('NSFontDescriptor', (
+        ('__getitem__',  fontdescriptor_getitem),
+        ('get',          fontdescriptor_get),
+    ))
+
+_setup_conveniences()
+
 def NSDictionaryOfVariableBindings(*names):
     """
     Return a dictionary with the given names and there values.
@@ -31,6 +51,7 @@ sys.modules['AppKit'] = mod = objc.ObjCLazyModule('AppKit',
             'objc': objc,
             'NSDictionaryOfVariableBindings': NSDictionaryOfVariableBindings,
             '__path__': __path__,
+            '__loader__': globals().get('__loader__', None),
         }, (Foundation,))
 
 # NSApp is a global variable that can be changed in ObjC,
@@ -144,3 +165,6 @@ try:
     mod.NSImageNameApplicationIcon
 except AttributeError:
     mod.NSImageNameApplicationIcon = "NSApplicationIcon"
+
+import sys
+del sys.modules['AppKit._metadata']

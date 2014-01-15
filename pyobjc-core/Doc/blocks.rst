@@ -14,8 +14,8 @@ functions. The syntax for them is like this:
 This is a literal for a block that takes no arguments and prints a value when
 called.
 
-Blocks are only suppored when PyObjC is compiled using an Objective-C compiler
-that also supports blocks. 
+PyObjC supports blocks, but only when compiled using a compiler that supports
+blocks in Objective-C.
 
 Calling blocks from Python
 --------------------------
@@ -33,14 +33,14 @@ It is not possible to call arbitrary blocks because PyObjC needs to store some
 additional metadata for a block. This means it is only possible to call blocks
 where the bridge knows the call signature, which means:
 
-* Block was returned from a method for which we know the signature of 
+* Block was returned from a method for which we know the signature of
   returned blocks. PyObjC ships with metadata that covers all of Cocoa.
 
 * When a block is stored in a Cocoa datastructure, such as an NSArray, and that
   is the only reference to the block PyObjC will loose the additional information
   that is needed to call the block.
 
-It is possible to retrieve and set the call signature of a block using the 
+It is possible to retrieve and set the call signature of a block using the
 ``__block_signature__`` attribute on blocks.
 
 
@@ -58,10 +58,10 @@ behave just like regular functions.
 Metadata for blocks
 -------------------
 
-The current implementation of blocks doesn't allow for full introspection, 
+The current implementation of blocks doesn't allow for full introspection,
 which means that PyObjC must be taught about the signatures of blocks.  This
 is done using the :doc:`metadata system </metadata/index>`.
 
 .. versionchanged:: 2.5
-   For basic blocks and (Objective-)C code compiled using a recent enough 
+   For basic blocks and (Objective-)C code compiled using a recent enough
    compiler the bridge can extract the block signature from the runtime.

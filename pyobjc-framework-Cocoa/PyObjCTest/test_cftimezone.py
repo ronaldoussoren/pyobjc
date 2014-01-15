@@ -18,6 +18,11 @@ except NameError:
 
 class TestTimeZone (TestCase):
     def testTypes(self):
+        try:
+            if objc.lookUpClass('NSTimeZone') is CFTimeZoneRef:
+                return
+        except objc.error:
+            pass
         self.assertIsCFType(CFTimeZoneRef)
 
     def testTypeID(self):
