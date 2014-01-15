@@ -6,6 +6,9 @@ An overview of the relevant changes in new, and older, releases.
 Version 3.0
 -----------
 
+* ``inspect.signature`` works for all functions and methods implemented in C,
+  when using Python 3.4 or later.
+
 * The module ``PyObjCTools.NibClassBuilder`` is not longer available. It only worked
   with ancient versions of Interface Builder (pre-Xcode)
 

@@ -64,7 +64,7 @@ static NSAutoreleasePool* global_release_pool = nil;
 @end
 
 PyDoc_STRVAR(pyobjc_id_doc,
-  "pyobjc_id(obj) -> int\n"
+  "pyobjc_id(obj)\n"
   "\n"
   "Return the id of the underlying NSObject as an int."
 );
@@ -89,7 +89,7 @@ PyObject *kwds)
 
 
 PyDoc_STRVAR(repythonify_doc,
-  "repythonify(obj, type='@') -> object\n"
+  "repythonify(obj, type='@')\n"
   "\n"
   "Put an object through the bridge by calling \n"
   "depythonify_c_value then pythonify_c_value.\n"
@@ -141,7 +141,7 @@ PyObject* PyObjCStrBridgeWarning = NULL;
 #endif /* PY_VERSION_MAJOR == 2 */
 
 PyDoc_STRVAR(lookUpClass_doc,
-  "lookUpClass(class_name) -> class\n"
+  "lookUpClass(class_name)\n"
   "\n"
   "Search for the named classes in the Objective-C runtime and return it.\n"
   "Raises noclass_error when the class doesn't exist.");
@@ -275,7 +275,7 @@ recycle_autorelease_pool(PyObject* self __attribute__((__unused__)),
 }
 
 PyDoc_STRVAR(set_class_extender_doc,
-    "setClassExtender(func) -> None\n"
+    "_setClassExtender(func)\n"
     "\n"
     "Register a function that will be called to update the class\n"
     "dict of new Objective-C classes and class-proxies. This will\n"
@@ -316,7 +316,7 @@ static     char* keywords[] = { "callback", NULL };
 
 
 PyDoc_STRVAR(getClassList_doc,
-  "getClassList() -> [ cls, ...] n"
+  "getClassList()"
   "\n"
   "Return a list with all Objective-C classes known to the runtime.\n"
 );
@@ -328,7 +328,7 @@ getClassList(PyObject* self __attribute__((__unused__)))
 
 
 PyDoc_STRVAR(allocateBuffer_doc,
-         "allocateBuffer(size) -> <r/w buffer>\n"
+         "allocateBuffer(size)\n"
          "\n"
          "Allocate a buffer of memory of size. Buffer is \n"
          "read/write."
@@ -358,7 +358,7 @@ allocateBuffer(PyObject* self __attribute__((__unused__)), PyObject* args, PyObj
 }
 
 PyDoc_STRVAR(currentBundle_doc,
-    "currentBundle() -> bundle\n"
+    "currentBundle()\n"
     "\n"
     "Get the current bundle during module initialization.\n"
     "Works for plug-ins and applications.\n"
@@ -498,7 +498,7 @@ static    Py_ssize_t    curClassCount = -1;
 }
 
 PyDoc_STRVAR(objc_splitSignature_doc,
-    "splitSignature(signature) -> list\n"
+    "splitSignature(signature)\n"
     "\n"
     "Split a signature string into a list of items."
 );
@@ -559,7 +559,7 @@ static  char* keywords[] = { "signature", NULL };
 
 
 PyDoc_STRVAR(objc_splitStructSignature_doc,
-    "splitStructSignature(signature) -> structname, fields\n"
+    "splitStructSignature(signature)\n"
     "\n"
     "Split a struct signature string into a list of items."
 );
@@ -717,14 +717,18 @@ PyDoc_STRVAR(PyObjC_loadFunctionList_doc,
     "\n"
     "Load the specified functions. List should be a capsule object containing\n"
     "an array of { char*, funcion } structs.");
-
-
+PyDoc_STRVAR(PyObjC_loadSpecialVar_doc,
+    "loadSpecialVar(bundle, module_globals, typeid, name, skip_undefined=True)\n"
+    "\n"
+    "Load a magic cookie object from a bundle. A magic cookie is a \n"
+    "C pointer that represents a CoreFoundation or Objective-C object \n"
+    "that cannot be deferenced.\n");
 
 
 
 
 PyDoc_STRVAR(protocolsForProcess_doc,
-    "protocolsForProcess() -> [Protocols]\n"
+    "protocolsForProcess()\n"
     "\n"
     "Returns a list of Protocol objects that are present in the process"
 );
@@ -764,7 +768,7 @@ protocolsForProcess(PyObject* self __attribute__((__unused__)))
 }
 
 PyDoc_STRVAR(protocolNamed_doc,
-    "_protocolNamed(name) -> Protocol\n");
+    "_protocolNamed(name)\n");
 static PyObject*
 protocolNamed(PyObject* self __attribute__((__unused__)), PyObject* args, PyObject* kwds)
 {
@@ -788,7 +792,7 @@ static     char* keywords[] = { "name", NULL };
 
 
 PyDoc_STRVAR(protocolsForClass_doc,
-    "protocolsForClass(cls) -> [Protocols]\n"
+    "protocolsForClass(cls)\n"
     "\n"
     "Returns a list of Protocol objects that the class claims\n"
     "to implement directly."
@@ -831,7 +835,7 @@ protocolsForClass(PyObject* self __attribute__((__unused__)),
 }
 
 PyDoc_STRVAR(createOpaquePointerType_doc,
-    "createOpaquePointerType(name, typestr, doc) -> type\n"
+    "createOpaquePointerType(name, typestr, doc)\n"
     "\n"
     "Return a wrapper type for opaque pointers of the given type. The type \n"
     "will be registered with PyObjC and will be used to wrap pointers of the \n"
@@ -857,7 +861,7 @@ static char* keywords[] = { "name", "typestr", "doc", NULL };
 }
 
 PyDoc_STRVAR(registerMetaData_doc,
-    "registerMetaDataForSelector(class, selector, metadata) -> None\n"
+    "registerMetaDataForSelector(classObject, selector, metadata)\n"
     "\n"
     "Registers a metadata dictionary for method *selector* in *class*");
 static PyObject*
@@ -914,7 +918,7 @@ registerStructAlias(PyObject* self __attribute__((__unused__)),
 
 
 PyDoc_STRVAR(createStructType_doc,
-    "createStructType(name, typestr, fieldnames, doc, pack) -> type\n"
+    "createStructType(name, typestr, fieldnames, doc, pack)\n"
     "\n"
     "Return a wrapper type for structs of the given type. The wrapper will \n"
     "registered with PyObjC and will be used to wrap structs of the given type.\n"
@@ -1023,17 +1027,17 @@ error_cleanup:
 }
 
 PyDoc_STRVAR(PyObjCIvar_Info_doc,
-    "listInstanceVariables(classOrInstance) -> [ (name, typestr), ... ]\n"
+    "listInstanceVariables(classOrInstance)\n"
     "\n"
     "Return information about all instance variables of an object or class\n"
 );
 PyDoc_STRVAR(PyObjCIvar_Get_doc,
-    "getInstanceVariable(object, name) -> value\n"
+    "getInstanceVariable(object, name)\n"
     "\n"
     "Return the value of an instance variable\n"
 );
 PyDoc_STRVAR(PyObjCIvar_Set_doc,
-    "setInstanceVariable(object, name, value [, updateRefCount])\n"
+    "setInstanceVariable(object, name, value, updateRefCount=False)\n"
     "\n"
     "Modify an instance variable. If the instance variable is an object \n"
     "reference you must include the ``updateRefCount`` argument, otherwise it \n"
@@ -1046,7 +1050,7 @@ PyDoc_STRVAR(PyObjCIvar_Set_doc,
 );
 
 PyDoc_STRVAR(registerCFSignature_doc,
-    "registerCFSignature(name, encoding, typeId [, tollfreeName]) -> type\n"
+    "registerCFSignature(name, encoding, typeId, tollfreeName=None) -> type\n"
     "\n"
     "Register a CoreFoundation based type with the bridge. If \n"
     "tollFreeName is supplied the type is tollfree bridged to that class.");
@@ -1118,7 +1122,7 @@ registerCFSignature(PyObject* self __attribute__((__unused__)),
 }
 
 PyDoc_STRVAR(_updatingMetadata_doc,
-    "PRIVATE:");
+    "_updatingMetadata(flag)\n\nPRIVATE FUNCTION");
 static PyObject*
 _updatingMetadata(PyObject* self __attribute__((__unused__)),
         PyObject* args, PyObject* kwds)
@@ -1194,7 +1198,7 @@ PyObjC_objc_sync_exit(PyObject* self __attribute__((__unused__)), PyObject* args
 
 
 PyDoc_STRVAR(_makeClosure_doc,
-  "_makeClosure(callable, closureFor, [argIndex]) -> closure, metadata\n"
+  "_makeClosure(callable, closureFor, argIndex=0)\n"
   "\n"
   "Returns a closure object that can be used to call the function from\n"
   "C. This object has no useable interface from Python.\n"
@@ -1223,7 +1227,7 @@ static  char* keywords[] = { "callable", "closureFor", "argIndex", NULL };
     PyObject* callable;
     PyObject* closureFor;
     PyObjCMethodSignature* methinfo;
-    Py_ssize_t argIndex;
+    Py_ssize_t argIndex = 0;
     Py_ssize_t i;
 
     argIndex=-1;
@@ -1446,7 +1450,7 @@ typestr2typestr(PyObject* args)
     /* Associated Object support. Functionality is available on OSX 10.6 or later. */
 
 PyDoc_STRVAR(PyObjC_setAssociatedObject_doc,
-    "setAssociatedObject(object, key, value, [policy=objc.OBJC_ASSOCIATION_RETAIN])\n"
+    "setAssociatedObject(object, key, value, policy=objc.OBJC_ASSOCIATION_RETAIN)\n"
     "\n"
     "Set the value for an object assiociation. Use 'None' as the\n"
     "value to clear an association.");
@@ -1492,7 +1496,7 @@ static char* keywords[] = { "object", "key", "value", "policy", NULL };
 
 
 PyDoc_STRVAR(PyObjC_getAssociatedObject_doc,
-    "getAssociatedObject(object, key) -> value\n"
+    "getAssociatedObject(object, key)\n"
     "\n"
     "Get the value for an object assiociation. Returns None \n"
     "when they association doesn't exist.");
@@ -1715,7 +1719,7 @@ static PyMethodDef mod_methods[] = {
         .ml_name    = "propertiesForClass",
         .ml_meth    = (PyCFunction)mod_propertiesForClass,
         .ml_flags   = METH_O,
-        .ml_doc     = "Return information about properties from the runtim",
+        .ml_doc     = "propertiesForClass(classObject)\n\nReturn information about properties from the runtim",
     },
     {
         .ml_name    = "splitSignature",
@@ -1829,6 +1833,7 @@ static PyMethodDef mod_methods[] = {
         .ml_name    = "loadSpecialVar",
         .ml_meth    = (PyCFunction)PyObjC_loadSpecialVar,
         .ml_flags   = METH_VARARGS|METH_KEYWORDS,
+        .ml_doc     = PyObjC_loadSpecialVar_doc
     },
     {
         .ml_name    = "loadBundleFunctions",
@@ -1896,6 +1901,7 @@ static PyMethodDef mod_methods[] = {
         .ml_flags   = METH_VARARGS|METH_KEYWORDS,
         .ml_doc     = _makeClosure_doc
     },
+#if 0
     {
         .ml_name    = "_sockaddrFromPython",
         .ml_meth    = (PyCFunction)PyObjC_SockAddrFromPython,
@@ -1906,22 +1912,24 @@ static PyMethodDef mod_methods[] = {
         .ml_meth    = (PyCFunction)PyObjC_SockAddrToPython,
         .ml_flags   = METH_VARARGS,
     },
+#endif
     {
         .ml_name    = "_ivar_dict",
         .ml_meth    = (PyCFunction)ivar_dict,
         .ml_flags   = METH_NOARGS,
+        .ml_doc     = "_ivar_dict()\n\nPRIVATE FUNCTION\n"
     },
     {
         .ml_name    = "_objc_sync_enter",
         .ml_meth    = (PyCFunction)PyObjC_objc_sync_enter,
         .ml_flags   = METH_VARARGS,
-        "acquire mutex for an object"
+        .ml_doc     = "_objc_sync_enter(object)\n\nacquire mutex for an object"
     },
     {
         .ml_name    = "_objc_sync_exit",
         .ml_meth    = (PyCFunction)PyObjC_objc_sync_exit,
         .ml_flags   = METH_VARARGS,
-        "release mutex for an object"
+        .ml_doc     = "_objc_sync_exit(object)\n\nrelease mutex for an object"
     },
     {
         .ml_name    = "_block_call",
@@ -1933,12 +1941,13 @@ static PyMethodDef mod_methods[] = {
         .ml_name    = "_block_signature",
         .ml_meth    = (PyCFunction)block_signature,
         .ml_flags   = METH_O,
-        "return signature string for a block, or None"
+        "_block_signature(block) -> signature\n\nreturn signature string for a block, or None"
     },
     {
         .ml_name    = "_typestr2typestr",
         .ml_meth    = (PyCFunction)typestr2typestr,
         .ml_flags   = METH_O,
+        .ml_doc     = "_typestr2typestr(value)\nReturns the standard Objective-C version for a PyObjC typestr"
     },
 
 #if    PyObjC_BUILD_RELEASE >= 1006
@@ -1968,16 +1977,19 @@ static PyMethodDef mod_methods[] = {
         .ml_name    = "_loadConstant",
         .ml_meth    = (PyCFunction)PyObjC_LoadConstant,
         .ml_flags   = METH_VARARGS|METH_KEYWORDS,
+        .ml_doc     = "_loadConstant(name, type, magic)\n\nLoad a single C constant and return its value"
     },
     {
         .ml_name    = "_nameForSignature",
         .ml_meth    = (PyCFunction)name_for_signature,
         .ml_flags   = METH_O,
+        .ml_doc     = "_nameForSignature(typestr)\n\nReturn a pretty name for a PyObjC type string"
     },
     {
         .ml_name    = "_rescanClass",
         .ml_meth    = (PyCFunction)force_rescan,
         .ml_flags   = METH_VARARGS|METH_KEYWORDS,
+        .ml_doc     = "_rescanClass(classObject)\n\nForce a rescan of the method table of a class",
     },
     {
         .ml_name    = NULL /* SENTINEL */

@@ -1330,6 +1330,7 @@ PyObjCClassObject PyObjCObject_Type = {
             .tp_alloc       = PyType_GenericAlloc,
             .tp_new         = object_new,
             .tp_del         = (destructor)object_del,
+            .tp_doc         = "objc_object()",
 #ifdef Py_HAVE_LOCAL_LOOKUP
             .tp_dictoffset  = offsetof(PyObjCObject, objc_dict),
 #endif /* Py_HAVE_LOCALLOOKUP */

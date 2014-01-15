@@ -214,6 +214,19 @@ def onlyOn64Bit(function):
     """
     return onlyIf(not is32Bit(), "64-bit only")(function)
 
+def min_python_release(version):
+    """
+    Usage::
+
+        class Tests (unittest.TestCase):
+
+            @min_python_release('3.2')
+            def test_python_3_2(self):
+                pass
+    """
+    parts = tuple(map(int, version.split('.')))
+    return onlyIf(_sys.version_info[:2] >= parts, "Requires Python %s or later"%(version,))
+
 
 def min_os_level(release):
     """
@@ -225,7 +238,7 @@ def min_os_level(release):
             def testSnowLeopardCode(self):
                 pass
     """
-    return onlyIf(os_release() >= release)
+    return onlyIf(os_release() >= release, "Requires OSX %s or later"%(release,))
 
 def max_os_level(release):
     """
@@ -237,7 +250,7 @@ def max_os_level(release):
             def testUntilLeopard(self):
                 pass
     """
-    return onlyIf(os_release() <= release)
+    return onlyIf(os_release() <= release, "Requires OSX upto %s"%(release,))
 
 def os_level_between(min_release, max_release):
     """
@@ -249,7 +262,7 @@ def os_level_between(min_release, max_release):
             def testUntilLeopard(self):
                 pass
     """
-    return onlyIf(min_release <= os_release() <= max_release)
+    return onlyIf(min_release <= os_release() <= max_release, "Requires OSX %s upto %s"%(min_release, max_release))
 
 _poolclass = objc.lookUpClass('NSAutoreleasePool')
 
