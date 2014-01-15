@@ -1,15 +1,10 @@
-WARNING: This is an experimental branch for cleaning up the core bridge code,
-don't use this in production (or even at all unless you want to contribute to the
-clean up effort)
-
-
 Welcome to the PyObjC repository
 ================================
 
 This repository contains a number of Python packages/distributions
 for the PyObjC project:
 
-* 'pyobjc': a meta package that is used for easy installation 
+* 'pyobjc': a meta package that is used for easy installation
   using easy_install or pip
 
 * 'pyobjc-core': the actual bridge
@@ -22,22 +17,20 @@ for the PyObjC project:
 Supported Python versions
 -------------------------
 
-PyObjC is regularly tested using Python 2.7, 3.2 and 3.3. 
+PyObjC is regularly tested using Python 2.7, 3.3 and 3.4.
 
-Python 2.6 and 3.1 should also work, but aren't tested as much.
-
-I'm also regularly testing using the development version of Python (3.4), 
-although support for 3.4 might be broken when there are large changes in
+I'm also regularly testing using the development version of Python,
+although support for that might be broken when there are large changes in
 the implementation.
 
 PyPy, Jython and IronPython are not supported, and it is unlikely that this
-will change anytime soon. 
+will change anytime soon.
 
 Installing
 ----------
 
 The easiest way to install PyObjC from the repository is by using the
-"install.py" script next to this file. 
+"install.py" script next to this file.
 
 First create a check-out::
 
