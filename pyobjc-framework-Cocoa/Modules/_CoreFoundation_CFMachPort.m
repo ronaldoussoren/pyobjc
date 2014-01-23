@@ -249,7 +249,7 @@ mod_CFMachPortGetContext(
 	}
 
 	if (context.version != 0) {
-		PyErr_Format(PyExc_ValueError, "retrieved context with version %d is not valid", context.version);
+		PyErr_Format(PyExc_ValueError, "retrieved context with version %ld is not valid", (long)context.version);
 		return NULL;
 	}
 	if (context.copyDescription != mod_machport_copyDescription) {

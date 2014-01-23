@@ -13,6 +13,10 @@
 #  define __has_extension(x) __has_feature(x)
 #endif
 
+#if !__has_feature(objc_instancetype)
+#  define instancetype id
+#endif
+
 /*
  *
  * Start of Cocoa definitions
@@ -209,13 +213,6 @@ typedef unsigned int NSUInteger;
 
 
 
-#ifndef __has_feature
-#  define __has_feature(x) 0
-#endif
-
-#if !__has_feature(objc_instancetype)
-#  define instancetype id
-#endif
 
 /* On some versions of GCC <limits.h> defines LONG_LONG_MAX but not LLONG_MAX, compensate.  */
 #ifndef LLONG_MIN

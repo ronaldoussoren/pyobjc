@@ -209,7 +209,7 @@ def _find_executable(executable):
         for p in os.environ['PATH'].split(os.pathsep):
             f = os.path.join(p, executable)
             if os.path.isfile(f):
-                return f
+                return executable
     return None
 
 def _working_compiler(executable):

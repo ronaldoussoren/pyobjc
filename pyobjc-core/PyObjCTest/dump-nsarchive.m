@@ -46,12 +46,21 @@ int main(int argc, char** argv)
         return 2;
     }
 
+#if PyObjC_BUILD_RELEASE >= 1006
     NSError* error = nil;
     NSData* data = [NSPropertyListSerialization
         dataWithPropertyList:value
                       format:NSPropertyListXMLFormat_v1_0
                      options:NSPropertyListMutableContainersAndLeaves
                        error:&error];
+#else
+    NSString* error = nil;
+    NSData* data = [NSPropertyListSerialization
+        dataFromPropertyList:value
+                      format:NSPropertyListXMLFormat_v1_0
+                       errorDescription:&error];
+#endif
+
     if (data == nil) {
         /* Some types we test cannot be represented as a plist */
         printf("%s\n", [[value description] UTF8String]);

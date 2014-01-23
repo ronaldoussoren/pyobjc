@@ -276,7 +276,7 @@ static int divBy5_remainder_(int x, int* r)
 
 static void swapX_andY_(double* x, double* y)
 {
-    int t = *x;
+    double t = *x;
     *x = *y;
     *y = t;
 }

@@ -13,6 +13,7 @@ import tempfile
 from distutils.sysconfig import get_config_var
 import os
 import sys
+import platform
 
 if sys.version_info[0] == 2:
     from plistlib import readPlistFromString as readPlistFromBytes, Data
@@ -38,7 +39,9 @@ class TestNSKeyedArchivingInterop (TestCase):
         dst = cls.progpath = os.path.join(MYDIR, 'dump-nsarchive')
 
         subprocess.check_call([
-            'cc', '-o', dst, src, '-framework', 'Foundation'])
+            'cc', '-o', dst, src, '-framework', 'Foundation',
+            '-DPyObjC_BUILD_RELEASE=%02d%02d'%(tuple(map(int, platform.mac_ver()[0].split('.')[:2]))),
+        ])
 
     @classmethod
     def tearDownClass(cls):

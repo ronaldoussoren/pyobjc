@@ -402,7 +402,7 @@ static void use_id(id x __attribute__((__unused__))) { };
 
 -(void)swapX:(double*)x andY:(double*)y /* inout */
 {
-    int t = *x;
+    double t = *x;
     *x = *y;
     *y = t;
 }

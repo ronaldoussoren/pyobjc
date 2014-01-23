@@ -85,6 +85,8 @@ typedef struct aix_fd_struct {
 
 	Note: ppc64 CR is saved in the low word of a long on the stack.
 */
+void
+ffi_prep_args(extended_cif*, unsigned *const);
 
 /*@-exportheader@*/
 void
@@ -810,6 +812,8 @@ typedef union
 	contain parameters to be passed into the stack frame and setting up space
 	for a return value, ffi_closure_ASM invokes the following helper function
 	to do most of the work.  */
+int ffi_closure_helper_DARWIN(ffi_closure*, void*, unsigned long*, ffi_dblfl*);
+
 int
 ffi_closure_helper_DARWIN(
 	ffi_closure*	closure,
@@ -826,7 +830,7 @@ ffi_closure_helper_DARWIN(
 #endif
 
 	double				temp;
-	unsigned int		i;
+	long i;
 	unsigned int		nf = 0;	/* number of FPRs already used.  */
 	unsigned int		ng = 0;	/* number of GPRs already used.  */
 	ffi_cif*			cif = closure->cif;
@@ -891,7 +895,7 @@ ffi_closure_helper_DARWIN(
 					avalue[i] = alloca(arg_types[i]->size);
 					ffi64_struct_to_ram_form(arg_types[i], (const char*)pgr,
 						&gprSize, (const char*)pfr, &fprSize, &nf, avalue[i], NULL);
- 
+
 					ng	+= gprSize / sizeof(long);
 					pgr	+= gprSize / sizeof(long);
 					pfr	+= (fprSize - savedFPRSize) / sizeof(double);
@@ -907,7 +911,7 @@ ffi_closure_helper_DARWIN(
 						size_al = ALIGN(arg_types[i]->size, 8);
 
 					if (size_al < 3)
-						avalue[i] = (void*)pgr + MODE_CHOICE(4,8) - size_al;
+						avalue[i] = (void*)((char*)pgr + MODE_CHOICE(4,8) - size_al);
 					else
 						avalue[i] = (void*)pgr;
 
@@ -1479,7 +1483,7 @@ ffi64_struct_to_reg_form(
 								memcpy(&outGPRs[destGMarker],
 									&inStruct[srcMarker], inType->size);
 						}
-						
+
 						srcMarker += inType->size;
 						destGMarker += inType->size;
 						i += inType->size - 1;
@@ -1561,7 +1565,7 @@ ffi64_struct_to_reg_form(
 			case FFI_TYPE_STRUCT:
 				recurseCount++;
 				ffi64_struct_to_reg_form(inType->elements[i],
-					inStruct, &srcMarker, &fprsUsed, outGPRs, 
+					inStruct, &srcMarker, &fprsUsed, outGPRs,
 					&destGMarker, outFPRs, &destFMarker);
 				recurseCount--;
 				break;

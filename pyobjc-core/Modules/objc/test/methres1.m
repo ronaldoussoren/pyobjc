@@ -4,8 +4,6 @@
 #import <Foundation/Foundation.h>
 
 @interface NSObject (MethodResolution1)
-{
-}
 -(id)oc_method1;
 -(id)ocmethod2;
 @end

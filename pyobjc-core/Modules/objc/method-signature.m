@@ -377,7 +377,7 @@ setup_type(struct _PyObjC_ArgDescr* meta, const char* type)
 static PyObjCMethodSignature*
 new_methodsignature(const char* signature)
 {
-    Py_ssize_t nargs;
+    Py_ssize_t nargs, i;
     const char* cur;
     PyObjCMethodSignature* retval;
 
@@ -398,7 +398,7 @@ new_methodsignature(const char* signature)
         return NULL;
     }
 
-    for (Py_ssize_t i = 0; i < nargs; i++) {
+    for (i = 0; i < nargs; i++) {
         retval->argtype[i] = NULL;
     }
 

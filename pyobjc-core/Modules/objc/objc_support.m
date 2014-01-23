@@ -2902,7 +2902,7 @@ depythonify_c_value(const char *type, PyObject *argument, void *datum)
             if (tmp != NULL) {
                 double dblval = PyFloat_AsDouble(tmp);
                 Py_DECREF(tmp);
-                *(float*) datum = dblval;
+                *(float*) datum = (float)dblval;
                 return 0;
             }
 

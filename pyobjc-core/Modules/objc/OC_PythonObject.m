@@ -1093,7 +1093,7 @@ static  PyObject* setKeyFunc = NULL;
     return self;
 }
 
--(NSObject*)replacementObjectForArchiver:(NSObject*)archiver
+-(NSObject*)replacementObjectForArchiver:(NSArchiver*)archiver
 {
     (void)archiver;
     return (NSObject*)self;

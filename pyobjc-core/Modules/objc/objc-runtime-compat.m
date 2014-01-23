@@ -387,7 +387,7 @@ compat_class_copyProtocolList(Class cls, unsigned int* outCount)
     while (protocol_list != NULL) {
         Protocol** tmp;
         tmp = realloc(list, (count + protocol_list->count)*sizeof(Protocol*));
-        if (tmplist == NULL) {
+        if (tmp == NULL) {
             free(list);
             *outCount = 0;
             return NULL;
@@ -809,7 +809,7 @@ Class (*PyObjC_object_setClass)(id obj, Class cls) = NULL;
 const char* (*PyObjC_object_getClassName)(id obj) = NULL;
 Method* (*PyObjC_class_copyMethodList)(Class, unsigned int*) = NULL;
 const char*  (*PyObjC_class_getName)(Class) = NULL;
-const size_t  (*PyObjC_class_getInstanceSize)(Class) = NULL;
+size_t  (*PyObjC_class_getInstanceSize)(Class) = NULL;
 Class (*PyObjC_class_getSuperclass)(Class) = NULL;
 BOOL (*PyObjC_class_addMethod)(Class, SEL, IMP, const char*) = NULL;
 BOOL (*PyObjC_class_addMethodList)(Class, struct PyObjC_method*, unsigned int) = NULL;

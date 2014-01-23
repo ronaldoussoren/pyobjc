@@ -57,9 +57,10 @@ CFLAGS = [
     "-Wnested-externs",
     "-W",
     "-Wno-import",
+    "-Wno-unknown-pragmas",
     #"-fvisibility=protected",
     "-Wshorten-64-to-32",
-    "-Werror",
+    #"-Werror",
 ]
 
 # CFLAGS for other (test) extensions:
@@ -367,7 +368,7 @@ def _find_executable(executable):
         for p in os.environ['PATH'].split(os.pathsep):
             f = os.path.join(p, executable)
             if os.path.isfile(f):
-                return f
+                return executable
     return None
 
 def _working_compiler(executable):
@@ -461,7 +462,7 @@ class oc_build_ext (build_ext.build_ext):
             if os.path.exists('/usr/bin/xcodebuild'):
                 self.sdk_root = subprocess.check_output(
                         ['/usr/bin/xcodebuild', '-version', '-sdk', 'macosx', 'Path'],
-                        universal_newlines=True)[:-1]
+                        universal_newlines=True).strip()
 
             else:
                 self.sdk_root = '/'

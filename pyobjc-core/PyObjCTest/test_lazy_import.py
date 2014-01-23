@@ -17,6 +17,14 @@ if sys.maxsize > 2 ** 32:
 else:
     def sel32or64(a, b): return a
 
+def lookupClasses(*names):
+    result = []
+    for nm in names:
+        try:
+            result.append(objc.lookUpClass(nm))
+        except objc.nosuchclass_error:
+            pass
+    return tuple(result)
 
 class TestLazyImport (TestCase):
     def test_exports(self):
@@ -366,7 +374,7 @@ class TestLazyImport (TestCase):
         # Type validation:
         self.assertIn('NSCFType', mod.CFAllocatorRef.__bases__[0].__name__)
         self.assertIs(mod.CFArrayRef, objc.lookUpClass('NSArray'))
-        self.assertIn(mod.CFAttributedStringRef, (objc.lookUpClass('NSCFAttributedString'), objc.lookUpClass('__NSCFAttributedString')))
+        self.assertIn(mod.CFAttributedStringRef, lookupClasses('NSCFAttributedString', '__NSCFAttributedString'))
         self.assertIn('NSCFType', mod.CFBagRef.__name__)
         self.assertIsNot(mod.CFBagRef, mod.CFAllocatorRef)
 
