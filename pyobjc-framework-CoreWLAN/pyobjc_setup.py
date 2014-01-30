@@ -409,7 +409,7 @@ def setup(
         class no_test (oc_test):
             def run(self, msg=msg):
                 print("WARNING: %s\n"%(msg,))
-                print("SUMMARY: {'count': 0, 'fails': 0, 'errors': 0, 'xfails': 0, 'skip': 65, 'xpass': 0, 'message': %r }\n"%(msg,))
+                print("SUMMARY: {'count': 0, 'fails': 0, 'errors': 0, 'xfails': 0, 'skip': 65, 'xpass': 0, 'message': %r }"%(msg,))
 
         cmdclass['build'] = create_command_subclass(build.build)
         cmdclass['test'] = no_test
