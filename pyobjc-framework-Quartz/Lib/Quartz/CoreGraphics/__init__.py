@@ -23,6 +23,7 @@ sys.modules['Quartz.CoreGraphics'] = mod = objc.ObjCLazyModule('Quartz.CoreGraph
        'objc': objc,
     }, ( CoreFoundation,))
 
+import sys
 del sys.modules['Quartz.CoreGraphics._metadata']
 
 

@@ -20,4 +20,5 @@ sys.modules['Quartz.ImageIO'] = mod = objc.ObjCLazyModule('Quartz.ImageIO',
        'objc': objc,
     }, ( Quartz.CoreGraphics,))
 
+import sys
 del sys.modules['Quartz.ImageIO._metadata']

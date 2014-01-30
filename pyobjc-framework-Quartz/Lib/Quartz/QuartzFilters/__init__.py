@@ -20,4 +20,5 @@ sys.modules['Quartz.QuartzFilters'] = mod = objc.ObjCLazyModule('Quartz.QuartzFi
        'objc': objc,
     }, ( Foundation,))
 
+import sys
 del sys.modules['Quartz.QuartzFilters._metadata']

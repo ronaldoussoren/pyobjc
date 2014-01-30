@@ -21,4 +21,5 @@ sys.modules['Quartz.QuartzComposer'] = mod = objc.ObjCLazyModule('Quartz.QuartzC
        'objc': objc,
     }, ( Quartz.CoreGraphics, Foundation,))
 
+import sys
 del sys.modules['Quartz.QuartzComposer._metadata']

@@ -20,4 +20,5 @@ sys.modules['Quartz.PDFKit'] = mod = objc.ObjCLazyModule('Quartz.PDFKit',
        'objc': objc,
     }, ( AppKit,))
 
+import sys
 del sys.modules['Quartz.PDFKit._metadata']

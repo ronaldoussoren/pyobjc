@@ -20,4 +20,5 @@ sys.modules['Quartz.QuickLookUI'] = mod = objc.ObjCLazyModule('Quartz.QuickLookU
        'objc': objc,
     }, ( Cocoa,))
 
+import sys
 del sys.modules['Quartz.QuickLookUI._metadata']

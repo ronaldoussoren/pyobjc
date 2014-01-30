@@ -25,4 +25,5 @@ sys.modules['Quartz.ImageKit'] = mod = objc.ObjCLazyModule('Quartz.ImageKit',
        'objc': objc,
     }, ( Cocoa, ))
 
+import sys
 del sys.modules['Quartz.ImageKit._metadata']
