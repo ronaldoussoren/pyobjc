@@ -20,4 +20,5 @@ sys.modules['InterfaceBuilderKit'] = mod = objc.ObjCLazyModule('InterfaceBuilder
        'objc': objc,
     }, ( AppKit,))
 
+import sys
 del sys.modules['InterfaceBuilderKit._metadata']

@@ -22,4 +22,5 @@ sys.modules['CoreData'] = objc.ObjCLazyModule(
         'objc': objc
     }, (Foundation,))
 
+import sys
 del sys.modules['CoreData._metadata']

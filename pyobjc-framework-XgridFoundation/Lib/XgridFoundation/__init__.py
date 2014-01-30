@@ -19,4 +19,6 @@ sys.modules['XgridFoundation'] = mod = objc.ObjCLazyModule('XgridFoundation',
        '__loader__': globals().get('__loader__', None),
        'objc': objc,
     }, ( Foundation,))
+
+import sys
 del sys.modules['XgridFoundation._metadata']

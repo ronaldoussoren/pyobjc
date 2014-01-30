@@ -17,4 +17,5 @@ sys.modules['OpenDirectory'] = mod = objc.ObjCLazyModule('OpenDirectory',
        'objc': objc,
     }, (CFOpenDirectory,))
 
+import sys
 del sys.modules['OpenDirectory._metadata']

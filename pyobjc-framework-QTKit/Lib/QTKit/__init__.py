@@ -21,4 +21,5 @@ sys.modules['QTKit'] = mod = objc.ObjCLazyModule('QTKit',
        'objc': objc,
     }, ( Cocoa, Quartz,))
 
+import sys
 del sys.modules['QTKit._metadata']

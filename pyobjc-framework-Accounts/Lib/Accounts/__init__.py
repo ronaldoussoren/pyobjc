@@ -22,4 +22,5 @@ sys.modules['Accounts'] = mod = objc.ObjCLazyModule(
         '__loader__': globals().get('__loader__', None),
     }, (Foundation,))
 
+import sys
 del sys.modules['Accounts._metadata']

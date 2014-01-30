@@ -20,4 +20,5 @@ sys.modules['Message'] = mod = objc.ObjCLazyModule('Message',
        'objc': objc,
     }, ( Foundation,))
 
+import sys
 del sys.modules['Message._metadata']

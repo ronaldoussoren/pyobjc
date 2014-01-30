@@ -21,4 +21,5 @@ sys.modules['CFOpenDirectory'] = mod = objc.ObjCLazyModule('CFOpenDirectory',
        'objc': objc,
     }, ( CoreFoundation, Foundation,))
 
+import sys
 del sys.modules['CFOpenDirectory._metadata']

@@ -20,4 +20,5 @@ sys.modules['DictionaryServices'] = mod = objc.ObjCLazyModule('DictionaryService
        'objc': objc,
     }, ( Foundation,))
 
+import sys
 del sys.modules['DictionaryServices._metadata']

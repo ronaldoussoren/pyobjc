@@ -22,4 +22,5 @@ sys.modules['DiskArbitration'] = mod = objc.ObjCLazyModule(
         '__loader__': globals().get('__loader__', None),
     }, (CoreFoundation,))
 
+import sys
 del sys.modules['DiskArbitration._metadata']

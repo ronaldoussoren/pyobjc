@@ -20,4 +20,5 @@ sys.modules['PubSub'] = mod = objc.ObjCLazyModule('PubSub',
        'objc': objc,
     }, ( Foundation,))
 
+import sys
 del sys.modules['PubSub._metadata']

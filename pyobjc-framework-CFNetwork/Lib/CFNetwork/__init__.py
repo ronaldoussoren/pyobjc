@@ -40,4 +40,5 @@ import CFNetwork._manual
 for nm in dir(CFNetwork._manual):
     setattr(mod, nm, getattr(CFNetwork._manual, nm))
 
+import sys
 del sys.modules['CFNetwork._metadata']

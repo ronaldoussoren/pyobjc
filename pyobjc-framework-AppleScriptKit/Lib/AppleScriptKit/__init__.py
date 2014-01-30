@@ -21,4 +21,5 @@ sys.modules['AppleScriptKit'] = mod = objc.ObjCLazyModule("AppleScriptKit",
         '__loader__': globals().get('__loader__', None),
     }, (AppKit,))
 
+import sys
 del sys.modules['AppleScriptKit._metadata']

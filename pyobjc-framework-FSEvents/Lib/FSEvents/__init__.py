@@ -21,4 +21,5 @@ sys.modules['FSEvents'] = mod = objc.ObjCLazyModule('FSEvents',
        'objc': objc,
     }, ( FSEvents._callbacks, Foundation))
 
+import sys
 del sys.modules['FSEvents._metadata']

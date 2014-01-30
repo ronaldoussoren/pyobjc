@@ -109,4 +109,5 @@ sys.modules['CoreWLAN'] = mod = objc.ObjCLazyModule(
                 '__loader__': globals().get('__loader__', None),
             }, (Foundation,))
 
+import sys
 del sys.modules['CoreWLAN._metadata']

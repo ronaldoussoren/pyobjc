@@ -20,4 +20,5 @@ sys.modules['PreferencePanes'] = mod = objc.ObjCLazyModule('PreferencePanes',
        'objc': objc,
     }, ( AppKit,))
 
+import sys
 del sys.modules['PreferencePanes._metadata']

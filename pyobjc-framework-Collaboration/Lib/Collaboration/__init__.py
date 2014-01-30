@@ -21,4 +21,5 @@ sys.modules['Collaboration'] = objc.ObjCLazyModule(
         'objc': objc,
     }, (Foundation,))
 
+import sys
 del sys.modules['Collaboration._metadata']

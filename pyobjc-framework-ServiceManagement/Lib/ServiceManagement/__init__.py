@@ -19,4 +19,6 @@ sys.modules['ServiceManagement'] = mod = objc.ObjCLazyModule('ServiceManagement'
        '__loader__': globals().get('__loader__', None),
        'objc': objc,
     }, ( CoreFoundation, ))
+
+import sys
 del sys.modules['ServiceManagement._metadata']

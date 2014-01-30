@@ -34,4 +34,5 @@ sys.modules['CoreLocation'] = mod = objc.ObjCLazyModule(
         'kCLErrorGeocodeCanceled': kCLErrorGeocodeCanceled,
     }, (Foundation,))
 
+import sys
 del sys.modules['CoreLocation._metadata']

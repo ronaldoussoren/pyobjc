@@ -20,4 +20,5 @@ sys.modules['LatentSemanticMapping'] = mod = objc.ObjCLazyModule('LatentSemantic
        'objc': objc,
     }, ( Foundation,))
 
+import sys
 del sys.modules['LatentSemanticMapping._metadata']

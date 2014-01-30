@@ -21,4 +21,5 @@ sys.modules['ScreenSaver'] = mod = objc.ObjCLazyModule('ScreenSaver',
        'objc': objc,
     }, ( AppKit,))
 
+import sys
 del sys.modules['ScreenSaver._metadata']

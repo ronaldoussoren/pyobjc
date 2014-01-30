@@ -20,6 +20,8 @@ sys.modules['ScriptingBridge'] = mod = objc.ObjCLazyModule('ScriptingBridge',
        '__loader__': globals().get('__loader__', None),
        'objc': objc,
     }, ( Foundation,))
+
+import sys
 del sys.modules['ScriptingBridge._metadata']
 
 # Override the default behaviour of the bridge to ensure that we

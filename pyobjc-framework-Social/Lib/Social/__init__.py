@@ -21,4 +21,6 @@ sys.modules['Social'] = mod = objc.ObjCLazyModule(
         '__path__': __path__,
         '__loader__': globals().get('__loader__', None),
     }, (Foundation,))
+
+import sys
 del sys.modules['Social._metadata']

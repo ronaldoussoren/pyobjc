@@ -21,4 +21,5 @@ sys.modules['InputMethodKit'] = mod = objc.ObjCLazyModule('InputMethodKit',
        'objc': objc,
     }, ( Foundation,))
 
+import sys
 del sys.modules['InputMethodKit._metadata']

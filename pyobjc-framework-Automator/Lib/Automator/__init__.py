@@ -19,4 +19,5 @@ sys.modules['Automator'] = objc.ObjCLazyModule('Automator',
             '__loader__': globals().get('__loader__', None),
         }, (AppKit,))
 
+import sys
 del sys.modules['Automator._metadata']

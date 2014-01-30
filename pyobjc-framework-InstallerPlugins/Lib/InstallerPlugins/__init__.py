@@ -20,4 +20,5 @@ sys.modules['InstallerPlugins'] = mod = objc.ObjCLazyModule('InstallerPlugins',
        'objc': objc,
     }, ( AppKit,))
 
+import sys
 del sys.modules['InstallerPlugins._metadata']

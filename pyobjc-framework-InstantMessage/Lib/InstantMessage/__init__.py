@@ -21,4 +21,5 @@ sys.modules['InstantMessage'] = mod = objc.ObjCLazyModule('InstantMessage',
        'objc': objc,
     }, ( Foundation, Quartz,))
 
+import sys
 del sys.modules['InstantMessage._metadata']
