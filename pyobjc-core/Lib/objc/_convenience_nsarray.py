@@ -316,7 +316,7 @@ def nsarray_clear(self):
 
 
 if sys.version_info[0] == 2:  # pragma: no 3.x cover
-    def nsarray_sort(self, cmp=cmp, key=None, reverse=False):
+    def nsarray_sort(self, cmpfunc=cmp, key=None, reverse=False):
         if key is None:
             if reverse:
                 def sort_func(a, b, cmp):
@@ -333,7 +333,7 @@ if sys.version_info[0] == 2:  # pragma: no 3.x cover
                 def sort_func(a, b, cmp):
                     return cmp(key(a), key(b))
 
-        self.sortUsingFunction_context_(sort_func, cmp)
+        self.sortUsingFunction_context_(sort_func, cmpfunc)
 
 else:  # pragma: no 2.x cover
     def nsarray_sort(self, key=lambda x: x, reverse=False):
