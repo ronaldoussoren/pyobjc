@@ -84,7 +84,7 @@ PyObject *kwds)
         PyErr_SetString(PyExc_TypeError, "not an Objective-C object");
         return NULL;
     }
-    return PyInt_FromLong((long)PyObjCObject_GetObject(o));
+    return PyLong_FromVoidPtr((void*)PyObjCObject_GetObject(o));
 }
 
 
