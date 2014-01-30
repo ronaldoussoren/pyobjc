@@ -401,15 +401,15 @@ def setup(
         def create_command_subclass(base_class):
 
             class subcommand (base_class):
-                def run(self):
+                def run(self, msg=msg):
                     raise DistutilsPlatformError(msg)
 
             return subcommand
 
         class no_test (oc_test):
-            def run(self):
+            def run(self, msg=msg):
                 print("WARNING: %s\n"%(msg,))
-                print("SUMMARY: {'count': 0, 'fails': 0, 'errors': 0, 'xfails': 0, 'skip': 65, 'xpass': 0, 'message': msg }\n")
+                print("SUMMARY: {'count': 0, 'fails': 0, 'errors': 0, 'xfails': 0, 'skip': 65, 'xpass': 0, 'message': %r }\n"%(msg,))
 
         cmdclass['build'] = create_command_subclass(build.build)
         cmdclass['test'] = no_test
