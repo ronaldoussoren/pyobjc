@@ -808,7 +808,7 @@ try:
     r(b'NSPropertyListSerialization', b'dataWithPropertyList:format:options:error:', {'arguments': {5: {'type_modifier': b'o'}}})
     r(b'NSPropertyListSerialization', b'propertyList:isValidForFormat:', {'retval': {'type': 'Z'}})
     r(b'NSPropertyListSerialization', b'propertyListFromData:mutabilityOption:format:errorDescription:', {'arguments': {4: {'type_modifier': b'o'}, 5: {'type_modifier': b'o'}}})
-    r(b'NSPropertyListSerialization', b'propertyListWithData:options:format:error:', {'arguments': {5: {'type_modifier': b'o'}}})
+    r(b'NSPropertyListSerialization', b'propertyListWithData:options:format:error:', {'arguments': {4: {'type_modifier': b'o'}, 5: {'type_modifier': b'o'}}})
     r(b'NSPropertyListSerialization', b'propertyListWithStream:options:format:error:', {'arguments': {5: {'type_modifier': b'o'}}})
     r(b'NSPropertyListSerialization', b'writePropertyList:toStream:format:options:error:', {'arguments': {6: {'type_modifier': b'o'}}})
     r(b'NSProxy', b'allowsWeakReference', {'retval': {'type': 'Z'}})

@@ -9163,7 +9163,8 @@
      },
      {
       "args": {
-       "2": {},
+       "2": {
+        "type_modifier": "o"},
        "3": {
         "type_modifier": "o"
        }
