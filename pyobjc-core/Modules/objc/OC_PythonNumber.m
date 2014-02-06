@@ -5,6 +5,14 @@
 +(instancetype)numberWithPythonObject:(PyObject*)v
 {
     OC_PythonNumber* res;
+    if (PyLong_Check(v)) {
+        unsigned long long lv = PyLong_AsUnsignedLongLong(v);
+        if (PyErr_Occurred()) {
+            PyErr_Clear();
+        } else if (lv >= 1ULL<<63) {
+            return [[NSNumber alloc] initWithUnsignedLongLong:lv];
+        }
+    }
 
     res = [[OC_PythonNumber alloc] initWithPythonObject:v];
     [res autorelease];
@@ -72,7 +80,17 @@
 
 #endif
         } else if (PyLong_Check(value)) {
-            PyObjC_GIL_RETURN(@encode(long long));
+            (void)PyLong_AsLongLong(value);
+            if (!PyErr_Occurred()) {
+                PyObjC_GIL_RETURN(@encode(long long));
+            } else {
+                PyErr_Clear();
+                (void)PyLong_AsUnsignedLongLong(value);
+                if (!PyErr_Occurred()) {
+                    PyObjC_GIL_RETURN(@encode(unsigned long long));
+                }
+                PyErr_Clear();
+            }
         }
     PyObjC_END_WITH_GIL
     [NSException raise:NSInvalidArgumentException
@@ -92,6 +110,17 @@
     PyObjC_END_WITH_GIL
 }
 
+-(void)getValue:(void*)buffer forType:(const char*)type
+{
+    int r;
+    NSLog(@"getValue %p forType %s", buffer, type);
+    PyObjC_BEGIN_WITH_GIL
+        r = depythonify_c_value(type, value, buffer);
+        if (r == -1) {
+            PyObjC_GIL_FORWARD_EXC();
+        }
+    PyObjC_END_WITH_GIL
+}
 
 
 -(BOOL)boolValue
@@ -312,7 +341,13 @@
             (void)PyLong_AsLongLong(value);
             if (PyErr_Occurred()) {
                 PyErr_Clear();
-                use_super = 0;
+                (void)PyLong_AsUnsignedLongLong(value);
+                if (PyErr_Occurred()) {
+                    PyErr_Clear();
+                    use_super = 0;
+                } else {
+                    use_super = 1;
+                }
             } else {
                 use_super = 1;
             }

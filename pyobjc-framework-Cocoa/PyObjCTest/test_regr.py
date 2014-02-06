@@ -74,5 +74,15 @@ class TestRegr (TestCase):
                 (AppKit.NSOpenGLPFAAccelerated,
                 AppKit.NSOpenGLPFANoRecovery, AppKit.NSOpenGLPFAColorSize, 32))
 
+    def testBinaryPlist(self):
+        pl = {
+            'key': 2 ** 64 - 1,
+        }
+        data, error = Foundation.NSPropertyListSerialization.dataWithPropertyList_format_options_error_(
+            pl, Foundation.NSPropertyListBinaryFormat_v1_0, 0, None)
+        restored, format, error = Foundation.NSPropertyListSerialization.propertyListWithData_options_format_error_(
+                data, 0, None, None)
+        self.assertEqual(pl, restored)
+
 if __name__ == "__main__":
     main()

@@ -6,6 +6,12 @@ An overview of the relevant changes in new, and older, releases.
 Version 3.0
 -----------
 
+* Python integer values with values between 2 ** 63 and 2**64 are now proxied
+  as plain NSNumber objects, not as using PyObjC specific subclass of NSNumber,
+  to avoid a problem with writing them to binary plist files.
+
+  This is a workaround and will likely be changed in some future version.
+
 * ``inspect.signature`` works for all functions and methods implemented in C,
   when using Python 3.4 or later.
 
