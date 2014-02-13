@@ -154,13 +154,13 @@ static PyMethodDef fsref_methods[] = {
         .ml_name    = "as_pathname",
         .ml_meth    = (PyCFunction)fsref_as_path,
         .ml_flags   = METH_NOARGS,
-        .ml_doc     = "as_pathname()\n\nReturn POSIX path for this object (Unicode string)"
+        .ml_doc     = "as_pathname()\n" CLINIC_SEP "\nReturn POSIX path for this object (Unicode string)"
     },
     {
         .ml_name    = "from_pathname",
         .ml_meth    = (PyCFunction)fsref_from_path,
         .ml_flags   = METH_O|METH_CLASS,
-        .ml_doc     = "from_pathname(path)\n\nCreate FSRef instance for an POSIX path"
+        .ml_doc     = "from_pathname(path)\n" CLINIC_SEP "\nCreate FSRef instance for an POSIX path"
     },
 
 #if USE_TOOLBOX_OBJECT_GLUE
@@ -168,7 +168,7 @@ static PyMethodDef fsref_methods[] = {
         .ml_name    = "as_carbon",
         .ml_meth    = (PyCFunction)fsref_as_carbon,
         .ml_flags   = METH_NOARGS,
-        .ml_doc     = "as_carbon()\n\nReturn Carbon.File.FSRef instance for this object"
+        .ml_doc     = "as_carbon()\n" CLINIC_SEP "\nReturn Carbon.File.FSRef instance for this object"
     },
 #endif /* USE_TOOLBOX_OBJECT_GLUE */
 

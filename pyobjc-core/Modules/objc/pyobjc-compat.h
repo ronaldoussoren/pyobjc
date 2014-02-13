@@ -249,6 +249,21 @@ typedef unsigned int NSUInteger;
 #define PyObjC__STR(x) #x
 #define PyObjC_STR(x) PyObjC__STR(x)
 
+
+/* Use CLINIC_SEP between the prototype and
+ * description in doc strings, to get clean
+ * docstrings.
+ */
+#if PY_VERSION_HEX >= 0x03040000
+
+# define CLINIC_SEP "--\n"
+
+#else
+
+# define CLINIC_SEP ""
+
+#endif
+
 /* Define PyObjC_UNICODE_FAST_PATH when
  * 1) We're before Python 3.3, and
  * 2) Py_UNICODE has the same size as unichar

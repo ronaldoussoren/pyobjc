@@ -5,6 +5,7 @@
 
 PyDoc_STRVAR(proto_cls_doc,
 "objc.formal_protocol(name, supers, selector_list)\n"
+CLINIC_SEP
 "\n"
 "This class is used to proxy Objective-C formal protocols, and can also be \n"
 "used to define new formal protocols.\n"
@@ -448,37 +449,37 @@ static PyMethodDef proto_methods[] = {
         .ml_name    = "name",
         .ml_meth    = (PyCFunction)proto_name,
         .ml_flags   = METH_NOARGS,
-        .ml_doc     = "Return the  protocol name",
+        .ml_doc     = "name()\n" CLINIC_SEP "\nReturn the  protocol name",
     },
     {
         .ml_name    = "conformsTo_",
         .ml_meth    = (PyCFunction)proto_conformsTo_,
         .ml_flags   = METH_VARARGS,
-        .ml_doc     = "Does this protocol conform to another protocol"
+        .ml_doc     = "conformsTo_(other)\n" CLINIC_SEP "\nDoes this protocol conform to another protocol"
     },
     {
         .ml_name    = "descriptionForInstanceMethod_",
         .ml_meth    = (PyCFunction)descriptionForInstanceMethod_,
         .ml_flags   = METH_O,
-        .ml_doc     = "Description for an instance method in the protocol"
+        .ml_doc     = "descriptionForInstanceMethod_(selector)\n" CLINIC_SEP "\nDescription for an instance method in the protocol"
     },
     {
         .ml_name    = "descriptionForClassMethod_",
         .ml_meth    = (PyCFunction)descriptionForClassMethod_,
         .ml_flags   = METH_O,
-        .ml_doc     = "Description for a class method in the protocol"
+        .ml_doc     = "descriptionForClassMethod_(selector)\n" CLINIC_SEP "\nDescription for a class method in the protocol"
     },
     {
         .ml_name    = "instanceMethods",
         .ml_meth    = (PyCFunction)instanceMethods,
         .ml_flags   = METH_NOARGS,
-        .ml_doc     = "List of instance methods in this protocol"
+        .ml_doc     = "instanceMethods()\n" CLINIC_SEP "\nList of instance methods in this protocol"
     },
     {
         .ml_name    = "classMethods",
         .ml_meth    = (PyCFunction)classMethods,
         .ml_flags   = METH_NOARGS,
-        .ml_doc     = "List of class methods in this protocol"
+        .ml_doc     = "classMethods()\n" CLINIC_SEP "\nList of class methods in this protocol"
     },
     {
         .ml_name    = NULL  /* SENTINEL */

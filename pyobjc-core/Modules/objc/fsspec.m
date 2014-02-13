@@ -80,7 +80,7 @@ static PyMethodDef fsspec_methods[] = {
         .ml_name    = "as_carbon",
         .ml_meth    = (PyCFunction)fsspec_as_carbon,
         .ml_flags   = METH_NOARGS,
-        .ml_doc     = "as_carbon()\n\nReturn Carbon.File.FSSpec instance for this object"
+        .ml_doc     = "as_carbon()\n" CLINIC_SEP "\nReturn Carbon.File.FSSpec instance for this object"
     },
 #endif /* defined(USE_TOOLBOX_OBJECT_GLUE) && !defined(__LP64__) */
     {

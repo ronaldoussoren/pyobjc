@@ -316,6 +316,7 @@ static PyMethodDef ivar_methods[] = {
 
 PyDoc_STRVAR(ivar_doc,
 "ivar(name, type='@', isOutlet=False) -> instance-variable\n"
+CLINIC_SEP
 "\n"
 "Creates a descriptor for accessing an Objective-C instance variable.\n\n"
 "This should only be used in the definition of Objective-C subclasses, and\n"

@@ -65,6 +65,7 @@ static NSAutoreleasePool* global_release_pool = nil;
 
 PyDoc_STRVAR(pyobjc_id_doc,
   "pyobjc_id(obj)\n"
+  CLINIC_SEP
   "\n"
   "Return the id of the underlying NSObject as an int."
 );
@@ -90,6 +91,7 @@ PyObject *kwds)
 
 PyDoc_STRVAR(repythonify_doc,
   "repythonify(obj, type='@')\n"
+  CLINIC_SEP
   "\n"
   "Put an object through the bridge by calling \n"
   "depythonify_c_value then pythonify_c_value.\n"
@@ -142,6 +144,7 @@ PyObject* PyObjCStrBridgeWarning = NULL;
 
 PyDoc_STRVAR(lookUpClass_doc,
   "lookUpClass(class_name)\n"
+  CLINIC_SEP
   "\n"
   "Search for the named classes in the Objective-C runtime and return it.\n"
   "Raises noclass_error when the class doesn't exist.");
@@ -170,6 +173,7 @@ static char* keywords[] = { "class_name", NULL };
 
 PyDoc_STRVAR(classAddMethods_doc,
      "classAddMethods(targetClass, methodsArray)\n"
+     CLINIC_SEP
      "\n"
      "Adds methods in methodsArray to class. The effect is similar to how \n"
      "categories work. If class already implements a method as defined in \n"
@@ -214,6 +218,7 @@ classAddMethods(PyObject* self __attribute__((__unused__)),
 
 PyDoc_STRVAR(remove_autorelease_pool_doc,
   "removeAutoreleasePool()\n"
+  CLINIC_SEP
   "\n"
   "This removes the global NSAutoreleasePool.  You should do this\n"
   "at the end of a plugin's initialization script.\n");
@@ -243,6 +248,7 @@ remove_autorelease_pool(PyObject* self __attribute__((__unused__)),
 
 PyDoc_STRVAR(recycle_autorelease_pool_doc,
   "recycleAutoreleasePool()\n"
+  CLINIC_SEP
   "\n"
   "This 'releases' the global autorelease pool and creates a new one.\n"
   "This method is for system use only\n");
@@ -276,6 +282,7 @@ recycle_autorelease_pool(PyObject* self __attribute__((__unused__)),
 
 PyDoc_STRVAR(set_class_extender_doc,
     "_setClassExtender(func)\n"
+    CLINIC_SEP
     "\n"
     "Register a function that will be called to update the class\n"
     "dict of new Objective-C classes and class-proxies. This will\n"
@@ -316,7 +323,8 @@ static     char* keywords[] = { "callback", NULL };
 
 
 PyDoc_STRVAR(getClassList_doc,
-  "getClassList()"
+  "getClassList()\n"
+  CLINIC_SEP
   "\n"
   "Return a list with all Objective-C classes known to the runtime.\n"
 );
@@ -329,6 +337,7 @@ getClassList(PyObject* self __attribute__((__unused__)))
 
 PyDoc_STRVAR(allocateBuffer_doc,
          "allocateBuffer(size)\n"
+         CLINIC_SEP
          "\n"
          "Allocate a buffer of memory of size. Buffer is \n"
          "read/write."
@@ -359,6 +368,7 @@ allocateBuffer(PyObject* self __attribute__((__unused__)), PyObject* args, PyObj
 
 PyDoc_STRVAR(currentBundle_doc,
     "currentBundle()\n"
+    CLINIC_SEP
     "\n"
     "Get the current bundle during module initialization.\n"
     "Works for plug-ins and applications.\n"
@@ -383,7 +393,8 @@ currentBundle(PyObject* self __attribute__((__unused__)))
 
 PyDoc_STRVAR(loadBundle_doc,
     "loadBundle(module_name, module_globals, bundle_path=None, "
-    "bundle_identifier=None, scan_classes=True) -> bundle\n"
+    "bundle_identifier=None, scan_classes=True)\n"
+    CLINIC_SEP
     "\n"
     "Load the bundle identified by 'bundle_path' or 'bundle_identifier' \n"
     "and add the classes in the bundle to the 'module_globals'.\n"
@@ -499,6 +510,7 @@ static    Py_ssize_t    curClassCount = -1;
 
 PyDoc_STRVAR(objc_splitSignature_doc,
     "splitSignature(signature)\n"
+    CLINIC_SEP
     "\n"
     "Split a signature string into a list of items."
 );
@@ -560,6 +572,7 @@ static  char* keywords[] = { "signature", NULL };
 
 PyDoc_STRVAR(objc_splitStructSignature_doc,
     "splitStructSignature(signature)\n"
+    CLINIC_SEP
     "\n"
     "Split a struct signature string into a list of items."
 );
@@ -691,6 +704,7 @@ static  char* keywords[] = { "signature", NULL };
 PyDoc_STRVAR(PyObjC_loadBundleVariables_doc,
     "loadBundleVariables(bundle, module_globals, variableInfo, "
     "skip_undefined=True)\n"
+    CLINIC_SEP
     "\n"
     "Load the specified variables in the bundle. If skip_undefined is \n"
     "True, variables that are not present in the bundle are skipped, \n"
@@ -702,6 +716,7 @@ PyDoc_STRVAR(PyObjC_loadBundleVariables_doc,
 PyDoc_STRVAR(PyObjC_loadBundleFunctions_doc,
     "loadBundleFunctions(bundle, module_globals, functionInfo, "
     "skip_undefined=True)\n"
+    CLINIC_SEP
     "\n"
     "Load the specified functions in the bundle. If skip_undefined is \n"
     "True, variables that are not present in the bundle are skipped, \n"
@@ -714,11 +729,13 @@ PyDoc_STRVAR(PyObjC_loadBundleFunctions_doc,
 PyDoc_STRVAR(PyObjC_loadFunctionList_doc,
     "loadFunctionList(list, module_globals, functionInfo, "
     "skip_undefined=True)\n"
+    CLINIC_SEP
     "\n"
     "Load the specified functions. List should be a capsule object containing\n"
     "an array of { char*, funcion } structs.");
 PyDoc_STRVAR(PyObjC_loadSpecialVar_doc,
     "loadSpecialVar(bundle, module_globals, typeid, name, skip_undefined=True)\n"
+    CLINIC_SEP
     "\n"
     "Load a magic cookie object from a bundle. A magic cookie is a \n"
     "C pointer that represents a CoreFoundation or Objective-C object \n"
@@ -729,6 +746,7 @@ PyDoc_STRVAR(PyObjC_loadSpecialVar_doc,
 
 PyDoc_STRVAR(protocolsForProcess_doc,
     "protocolsForProcess()\n"
+    CLINIC_SEP
     "\n"
     "Returns a list of Protocol objects that are present in the process"
 );
@@ -768,7 +786,12 @@ protocolsForProcess(PyObject* self __attribute__((__unused__)))
 }
 
 PyDoc_STRVAR(protocolNamed_doc,
-    "_protocolNamed(name)\n");
+    "_protocolNamed(name)\n"
+    CLINIC_SEP
+    "\n"
+    "Returns an Objective-C protocol named *name*.\n"
+    "Raises AttributeError when no such protocol can be found.\n"
+    );
 static PyObject*
 protocolNamed(PyObject* self __attribute__((__unused__)), PyObject* args, PyObject* kwds)
 {
@@ -793,6 +816,7 @@ static     char* keywords[] = { "name", NULL };
 
 PyDoc_STRVAR(protocolsForClass_doc,
     "protocolsForClass(cls)\n"
+    CLINIC_SEP
     "\n"
     "Returns a list of Protocol objects that the class claims\n"
     "to implement directly."
@@ -836,6 +860,7 @@ protocolsForClass(PyObject* self __attribute__((__unused__)),
 
 PyDoc_STRVAR(createOpaquePointerType_doc,
     "createOpaquePointerType(name, typestr, doc)\n"
+    CLINIC_SEP
     "\n"
     "Return a wrapper type for opaque pointers of the given type. The type \n"
     "will be registered with PyObjC and will be used to wrap pointers of the \n"
@@ -862,6 +887,7 @@ static char* keywords[] = { "name", "typestr", "doc", NULL };
 
 PyDoc_STRVAR(registerMetaData_doc,
     "registerMetaDataForSelector(classObject, selector, metadata)\n"
+    CLINIC_SEP
     "\n"
     "Registers a metadata dictionary for method *selector* in *class*");
 static PyObject*
@@ -889,6 +915,7 @@ static char* keywords[] = { "class_", "selector", "metadata", NULL };
 
 PyDoc_STRVAR(registerStructAlias_doc,
     "registerStructAlias(typestr, structType)\n"
+    CLINIC_SEP
     "\n"
     "Registers 'typestr' as a type that should be mapped onto 'structType'\n"
     "'structType' must be created using 'createStructType' (or through \n"
@@ -919,6 +946,7 @@ registerStructAlias(PyObject* self __attribute__((__unused__)),
 
 PyDoc_STRVAR(createStructType_doc,
     "createStructType(name, typestr, fieldnames, doc, pack)\n"
+    CLINIC_SEP
     "\n"
     "Return a wrapper type for structs of the given type. The wrapper will \n"
     "registered with PyObjC and will be used to wrap structs of the given type.\n"
@@ -1028,16 +1056,19 @@ error_cleanup:
 
 PyDoc_STRVAR(PyObjCIvar_Info_doc,
     "listInstanceVariables(classOrInstance)\n"
+    CLINIC_SEP
     "\n"
     "Return information about all instance variables of an object or class\n"
 );
 PyDoc_STRVAR(PyObjCIvar_Get_doc,
     "getInstanceVariable(object, name)\n"
+    CLINIC_SEP
     "\n"
     "Return the value of an instance variable\n"
 );
 PyDoc_STRVAR(PyObjCIvar_Set_doc,
     "setInstanceVariable(object, name, value, updateRefCount=False)\n"
+    CLINIC_SEP
     "\n"
     "Modify an instance variable. If the instance variable is an object \n"
     "reference you must include the ``updateRefCount`` argument, otherwise it \n"
@@ -1050,7 +1081,8 @@ PyDoc_STRVAR(PyObjCIvar_Set_doc,
 );
 
 PyDoc_STRVAR(registerCFSignature_doc,
-    "registerCFSignature(name, encoding, typeId, tollfreeName=None) -> type\n"
+    "registerCFSignature(name, encoding, typeId, tollfreeName=None)\n"
+    CLINIC_SEP
     "\n"
     "Register a CoreFoundation based type with the bridge. If \n"
     "tollFreeName is supplied the type is tollfree bridged to that class.");
@@ -1122,7 +1154,10 @@ registerCFSignature(PyObject* self __attribute__((__unused__)),
 }
 
 PyDoc_STRVAR(_updatingMetadata_doc,
-    "_updatingMetadata(flag)\n\nPRIVATE FUNCTION");
+    "_updatingMetadata(flag)\n"
+    CLINIC_SEP
+    "\n"
+    "PRIVATE FUNCTION");
 static PyObject*
 _updatingMetadata(PyObject* self __attribute__((__unused__)),
         PyObject* args, PyObject* kwds)
@@ -1199,6 +1234,7 @@ PyObjC_objc_sync_exit(PyObject* self __attribute__((__unused__)), PyObject* args
 
 PyDoc_STRVAR(_makeClosure_doc,
   "_makeClosure(callable, closureFor, argIndex=0)\n"
+  CLINIC_SEP
   "\n"
   "Returns a closure object that can be used to call the function from\n"
   "C. This object has no useable interface from Python.\n"
@@ -1451,6 +1487,7 @@ typestr2typestr(PyObject* args)
 
 PyDoc_STRVAR(PyObjC_setAssociatedObject_doc,
     "setAssociatedObject(object, key, value, policy=objc.OBJC_ASSOCIATION_RETAIN)\n"
+    CLINIC_SEP
     "\n"
     "Set the value for an object assiociation. Use 'None' as the\n"
     "value to clear an association.");
@@ -1497,6 +1534,7 @@ static char* keywords[] = { "object", "key", "value", "policy", NULL };
 
 PyDoc_STRVAR(PyObjC_getAssociatedObject_doc,
     "getAssociatedObject(object, key)\n"
+    CLINIC_SEP
     "\n"
     "Get the value for an object assiociation. Returns None \n"
     "when they association doesn't exist.");
@@ -1538,6 +1576,7 @@ static char* keywords[] = { "object", "key", NULL};
 
 PyDoc_STRVAR(PyObjC_removeAssociatedObjects_doc,
     "removeAssociatedObjects(object)\n"
+    CLINIC_SEP
     "\n"
     "Remove all assocations from an object. This should in general not be used because\n"
     "it clear all references, including those made from unrelated code.\n");
@@ -1719,7 +1758,11 @@ static PyMethodDef mod_methods[] = {
         .ml_name    = "propertiesForClass",
         .ml_meth    = (PyCFunction)mod_propertiesForClass,
         .ml_flags   = METH_O,
-        .ml_doc     = "propertiesForClass(classObject)\n\nReturn information about properties from the runtim",
+        .ml_doc     =
+            "propertiesForClass(classObject)\n"
+            CLINIC_SEP
+            "\n"
+            "Return information about properties from the runtime",
     },
     {
         .ml_name    = "splitSignature",
@@ -1917,37 +1960,37 @@ static PyMethodDef mod_methods[] = {
         .ml_name    = "_ivar_dict",
         .ml_meth    = (PyCFunction)ivar_dict,
         .ml_flags   = METH_NOARGS,
-        .ml_doc     = "_ivar_dict()\n\nPRIVATE FUNCTION\n"
+        .ml_doc     = "_ivar_dict()\n" CLINIC_SEP "\nPRIVATE FUNCTION\n"
     },
     {
         .ml_name    = "_objc_sync_enter",
         .ml_meth    = (PyCFunction)PyObjC_objc_sync_enter,
         .ml_flags   = METH_VARARGS,
-        .ml_doc     = "_objc_sync_enter(object)\n\nacquire mutex for an object"
+        .ml_doc     = "_objc_sync_enter(object)\n" CLINIC_SEP "\nacquire mutex for an object"
     },
     {
         .ml_name    = "_objc_sync_exit",
         .ml_meth    = (PyCFunction)PyObjC_objc_sync_exit,
         .ml_flags   = METH_VARARGS,
-        .ml_doc     = "_objc_sync_exit(object)\n\nrelease mutex for an object"
+        .ml_doc     = "_objc_sync_exit(object)\n" CLINIC_SEP "\nrelease mutex for an object"
     },
     {
         .ml_name    = "_block_call",
         .ml_meth    = (PyCFunction)PyObjCBlock_Call,
         .ml_flags   = METH_VARARGS,
-        "_block_call(block, signature, args, kwds) -> retval"
+        "_block_call(block, signature, args, kwds)\n" CLINIC_SEP "\nCall an Objective-C block"
     },
     {
         .ml_name    = "_block_signature",
         .ml_meth    = (PyCFunction)block_signature,
         .ml_flags   = METH_O,
-        "_block_signature(block) -> signature\n\nreturn signature string for a block, or None"
+        "_block_signature(block)\n" CLINIC_SEP "\nreturn signature string for a block, or None"
     },
     {
         .ml_name    = "_typestr2typestr",
         .ml_meth    = (PyCFunction)typestr2typestr,
         .ml_flags   = METH_O,
-        .ml_doc     = "_typestr2typestr(value)\nReturns the standard Objective-C version for a PyObjC typestr"
+        .ml_doc     = "_typestr2typestr(value)\n" CLINIC_SEP "\nReturns the standard Objective-C version for a PyObjC typestr"
     },
 
 #if    PyObjC_BUILD_RELEASE >= 1006
@@ -1977,19 +2020,19 @@ static PyMethodDef mod_methods[] = {
         .ml_name    = "_loadConstant",
         .ml_meth    = (PyCFunction)PyObjC_LoadConstant,
         .ml_flags   = METH_VARARGS|METH_KEYWORDS,
-        .ml_doc     = "_loadConstant(name, type, magic)\n\nLoad a single C constant and return its value"
+        .ml_doc     = "_loadConstant(name, type, magic)\n" CLINIC_SEP "\nLoad a single C constant and return its value"
     },
     {
         .ml_name    = "_nameForSignature",
         .ml_meth    = (PyCFunction)name_for_signature,
         .ml_flags   = METH_O,
-        .ml_doc     = "_nameForSignature(typestr)\n\nReturn a pretty name for a PyObjC type string"
+        .ml_doc     = "_nameForSignature(typestr)\n" CLINIC_SEP "\nReturn a pretty name for a PyObjC type string"
     },
     {
         .ml_name    = "_rescanClass",
         .ml_meth    = (PyCFunction)force_rescan,
         .ml_flags   = METH_VARARGS|METH_KEYWORDS,
-        .ml_doc     = "_rescanClass(classObject)\n\nForce a rescan of the method table of a class",
+        .ml_doc     = "_rescanClass(classObject)\n" CLINIC_SEP "\nForce a rescan of the method table of a class",
     },
     {
         .ml_name    = NULL /* SENTINEL */

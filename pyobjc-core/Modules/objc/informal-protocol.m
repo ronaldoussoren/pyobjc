@@ -7,6 +7,7 @@
 
 PyDoc_STRVAR(proto_cls_doc,
 "objc.informal_protocol(name, selector_list)\n"
+CLINIC_SEP
 "\n"
 "This class can be used to specify which methods are supported by an informal\n"
 "protocol. Instances of this type can by used while creating subclasses of \n"

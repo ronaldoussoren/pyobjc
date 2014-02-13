@@ -20,6 +20,7 @@
 
 PyDoc_STRVAR(weakref_cls_doc,
 "objc.WeakRef(object)\n"
+CLINIC_SEP
 "\n"
 "Create zeroing weak reference to a Cocoa object.\n"
 "Raises `VAlueError` when *object* is not a Cocoa \n"

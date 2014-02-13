@@ -200,6 +200,7 @@ static PyBufferProcs nsmutabledata_as_buffer = {
 
 PyDoc_STRVAR(class_doc,
 "objc_class(name, bases, dict) -> a new Objective-C class\n"
+CLINIC_SEP
 "\n"
 "objc_class is the meta-type for Objective-C classes. It should not be\n"
 "necessary to manually create instances of this type, those are \n"

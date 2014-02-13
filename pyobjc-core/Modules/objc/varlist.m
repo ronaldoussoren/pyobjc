@@ -10,6 +10,7 @@ typedef struct {
 
 PyDoc_STRVAR(object_as_tuple_doc,
     "as_tuple(count)\n"
+    CLINIC_SEP
     "\n"
     "Return a tuple containing the first ``count`` elements of "
     "this list"

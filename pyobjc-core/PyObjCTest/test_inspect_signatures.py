@@ -10,7 +10,14 @@ class TestInspectSignatures (TestCase):
         for nm in dir(objc):
             obj = getattr(objc, nm)
             if isinstance(obj, types.BuiltinMethodType):
-                self.assertIsNot(inspect.signature(obj), None, "No inspect.signature for %s"%(nm,))
+                try:
+                    value = inspect.signature(obj)
+
+                except ValueError:
+                    value = None
+
+                if value is None:
+                    self.fail("No inspect.signature for %s"%(nm,))
 
     @min_python_release("3.4")
     def test_class_signature(self):
@@ -22,15 +29,17 @@ class TestInspectSignatures (TestCase):
             class_list.append(objc.WeakRef)
         for cls in class_list:
             for nm in dir(cls):
-                if nm in ('__new__', '__subclasshook__', '__abstractmethods__'):
+                if nm in ('__new__', '__subclasshook__', '__abstractmethods__', '__prepare__'):
                     continue
                 obj = getattr(cls, nm)
                 if isinstance(obj, types.BuiltinMethodType):
-                    self.assertIsNot(inspect.signature(obj), None, "No inspect.signature for %s.%s"%(cls.__name__, nm,))
+                    try:
+                        value = inspect.signature(obj)
+                    except ValueError:
+                        value = None
+
+                    if value is None:
+                        self.fail("No inspect.signature for %s.%s"%(cls.__name__, nm,))
 
 if __name__ == "__main__":
     main()
-
-
-
-
