@@ -6,6 +6,10 @@ An overview of the relevant changes in new, and older, releases.
 Version 3.0
 -----------
 
+* Issue #76: It is now possible to pass ``None`` to a method expecting a block
+  argument, as with normal object arguments the Objective-C method receives
+  a ``nil`` value.
+
 * Python integer values with values between 2 ** 63 and 2**64 are now proxied
   as plain NSNumber objects, not as using PyObjC specific subclass of NSNumber,
   to avoid a problem with writing them to binary plist files.

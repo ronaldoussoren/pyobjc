@@ -37,6 +37,12 @@ objc.parseBridgeSupport('''\
               <arg type='d' />
           </retval>
         </method>
+        <method selector='callOptionalBlock:withValue:'>
+          <arg index='0' block='true'>
+            <retval type='@'/>
+            <arg type='@' />
+          </arg>
+        </method>
         <method selector='callIntBlock:withValue:'>
           <arg index='0' block='true' >
               <retval type='v' />
@@ -69,6 +75,13 @@ objc.parseBridgeSupport('''\
             <arg type='d' />
           </arg>
         </method>
+        <method selector='optionalBlock:'>
+          <retval type='@' />
+          <arg index='0' block='true' type='@?'>
+            <retval type='@'/>
+            <arg type='@' />
+          </arg>
+        </method>
       </class>
     </signatures>
     ''' % dict(NSRect_tp=NSRect_tp if sys.version_info[0] == 2 else NSRect_tp.decode('ascii')),
@@ -87,9 +100,23 @@ class BlocksHelper (objc.lookUpClass('NSObject')):
     def processBlock_(self, block):
         return -block(2.5, 4.0)
 
+    def optionalBlock_(self, block):
+        if block is None:
+            return "no block"
+
+        else:
+            return block("x")
 
 
 class TestBlocks (TestCase):
+    @min_os_level('10.6')
+    @onlyIf(blocksEnabled, "no blocks")
+    def testOptionalBlock(self):
+        obj = OCTestBlock.alloc().init()
+
+        self.assertEqual(obj.callOptionalBlock_withValue_(None, "hello"), "NOBLOCK")
+        self.assertEqual(obj.callOptionalBlock_withValue_(lambda x: x+x, "hello"), "hellohello")
+
     @min_os_level('10.6')
     @onlyIf(blocksEnabled, "no blocks")
     def testBlockToObjC(self):
@@ -185,6 +212,9 @@ class TestBlocks (TestCase):
         helper = BlocksHelper.alloc().init()
         value = obj.callProcessBlockOn_(helper)
         self.assertEqual(value, -(2.5 * 4.0))
+
+        value = obj.callOptionalBlockOn_(helper)
+        self.assertEqual(value, "no block")
 
 if __name__ == "__main__":
     main()

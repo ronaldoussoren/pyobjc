@@ -6,6 +6,7 @@
 #if (PyObjC_BUILD_RELEASE >= 1006) && (__GNUC__ >= 4 && __GNUC_MINOR__ >= 2)
 @interface NSObject (IndirectBlockTest)
 -(double)processBlock:(double(^)(double, double))aBlock;
+-(id)optionalBlock:(id(^)(id))aBlock;
 @end
 #endif
 
@@ -18,6 +19,7 @@
 -(NSRect(^)(double, double, double, double))getStructBlock;
 -(void)callIntBlock:(void(^)(int))block withValue:(int)value;
 -(double)callDoubleBlock:(double(^)(double, double))block withValue:(double)v1 andValue:(double)v2;
+-(id)callOptionalBlock:(id(^)(id))block withValue:(id)value;
 #endif
 
 @end
@@ -62,6 +64,20 @@
 -(double)callProcessBlockOn:(NSObject*)testObject
 {
     return [testObject processBlock:^(double a, double b) { return a*b; }];
+}
+
+-(id)callOptionalBlockOn:(NSObject*)testObject
+{
+    return [testObject optionalBlock:nil];
+}
+
+-(id)callOptionalBlock:(id(^)(id))block withValue:(id)value
+{
+    if (!block) {
+        return @"NOBLOCK";
+    } else {
+        return block(value);
+    }
 }
 
 #endif

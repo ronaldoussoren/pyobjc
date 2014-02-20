@@ -3031,23 +3031,31 @@ PyObjCFFI_ParseArguments(
             case _C_ID:
                 if (argtype[1] == '?') {
                     /* Argument is a block */
-                    if (methinfo->argtype[i]->callable == NULL) {
-                        PyErr_Format(PyExc_TypeError, "Argument %"PY_FORMAT_SIZE_T"d is a block, but no signature available", i);
-                        return -1;
+                    if (argument == Py_None) {
+                        argbuf_cur = align(argbuf_cur, PyObjCRT_AlignOfType(argtype));
+                        arg = argbuf + argbuf_cur;
+                        argbuf_cur += PyObjCRT_SizeOfType(argtype);
+                        PyObjC_Assert(argbuf_cur <= argbuf_len, -1);
+                        *(void**)arg = NULL;
+                    } else {
+                        if (methinfo->argtype[i]->callable == NULL) {
+                            PyErr_Format(PyExc_TypeError, "Argument %"PY_FORMAT_SIZE_T"d is a block, but no signature available", i);
+                            return -1;
+                        }
+                        argbuf_cur = align(argbuf_cur, PyObjCRT_AlignOfType(argtype));
+                        arg = argbuf + argbuf_cur;
+                        argbuf_cur += PyObjCRT_SizeOfType(argtype);
+                        PyObjC_Assert(argbuf_cur <= argbuf_len, -1);
+                        *(void**)arg = PyObjCBlock_Create(
+                            methinfo->argtype[i]->callable, argument);
+                        if (*(void**)arg == NULL) {
+                            return -1;
+                        }
+                        byref_attr[i].buffer = PyCapsule_New(
+                            *(void**)arg,
+                            "objc.__block__",
+                            block_capsule_cleanup);
                     }
-                    argbuf_cur = align(argbuf_cur, PyObjCRT_AlignOfType(argtype));
-                    arg = argbuf + argbuf_cur;
-                    argbuf_cur += PyObjCRT_SizeOfType(argtype);
-                    PyObjC_Assert(argbuf_cur <= argbuf_len, -1);
-                    *(void**)arg = PyObjCBlock_Create(
-                        methinfo->argtype[i]->callable, argument);
-                    if (*(void**)arg == NULL) {
-                        return -1;
-                    }
-                    byref_attr[i].buffer = PyCapsule_New(
-                        *(void**)arg,
-                        "objc.__block__",
-                        block_capsule_cleanup);
                     arglist[i] = signature_to_ffi_type(argtype);
                     values[i] = arg;
 
