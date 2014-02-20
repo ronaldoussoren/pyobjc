@@ -6,6 +6,9 @@ An overview of the relevant changes in new, and older, releases.
 Version 3.0
 -----------
 
+* Issue #64: Fix metadata for ``Quartz.CGEventKeyboardSetUnicodeString``
+  and ``Quartz.CGEventKeyboardGetUnicodeString``.
+
 * Issue #77: Passing a bound selector as a block argument failed when the block
   was actually called because the trampoline that calls back to Python accidently
   ignored the bound ``self`` argument.

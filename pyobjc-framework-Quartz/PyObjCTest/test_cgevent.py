@@ -123,6 +123,13 @@ class TestCGEvent (TestCase):
         v = CGEventCreateCopy(evt)
         self.assertIsInstance(v, CGEventRef)
 
+        s = b"hello world".decode('utf-8')
+        CGEventKeyboardSetUnicodeString(evt, len(s), s)
+
+        a, t = CGEventKeyboardGetUnicodeString(evt, 50, None, None)
+        self.assertEqual(s, t)
+        self.assertEqual(a, len(t))
+
     @min_os_level('10.5')
     def testFunctions10_5(self):
         self.assertResultIsCFRetained(CGEventCreateScrollWheelEvent)
