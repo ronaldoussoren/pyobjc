@@ -685,6 +685,36 @@ Types
       Returns a copy of the metadata dictionary for the selector.  See the
       :doc:`metadata system documentation </metadata/manual>` for more information.
 
+.. class:: python_method(callable)
+
+   Use this as a decorator in a Cocoa class definition to avoid creating a
+   selector object for a method.
+
+   For example::
+
+       class MyClass (NSObject):
+
+          @python_method
+          @classmethod
+          def fromkeys(self, keys):
+              pass
+
+          @python_method
+          def items(self):
+              pass
+
+   In this example class *MyClass* has a Python classmethod "fromkeys" and
+   a normal method "items", neither of which are converted to a selector object
+   and neither of which are registered with the Objective-C runtime.
+
+   Instances of this type have an attribute named *callable* containing the wrapped
+   callable, but are themselves not callable.
+
+   .. note::
+
+      If you use multiple decorators the :class:`python_method` decorator should be
+      the outermost decorator (that is, the first one in the list of decorators).
+
 .. class:: ivar([name[, type[, isOutlet]]])
 
    Creates a descriptor for accessing an Objective-C instance variable. This should only

@@ -2175,6 +2175,9 @@ PyObjC_MODULE_INIT(_objc)
     if (PyType_Ready(&PyObjC_FSSpecType) < 0) {
         PyObjC_INITERROR();
     }
+    if (PyType_Ready(&PyObjCPythonMethod_Type) < 0) {
+        PyObjC_INITERROR();
+    }
 
 #ifndef Py_HAVE_LOCAL_LOOKUP
     PyObjCSuper_Type.tp_doc = PySuper_Type.tp_doc;
@@ -2268,6 +2271,9 @@ PyObjC_MODULE_INIT(_objc)
         PyObjC_INITERROR();
     }
     if (PyDict_SetItemString(d, "IMP", (PyObject*)&PyObjCIMP_Type) < 0) {
+        PyObjC_INITERROR();
+    }
+    if (PyDict_SetItemString(d, "python_method", (PyObject*)&PyObjCPythonMethod_Type) < 0) {
         PyObjC_INITERROR();
     }
 

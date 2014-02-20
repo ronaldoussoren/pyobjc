@@ -6,6 +6,22 @@ An overview of the relevant changes in new, and older, releases.
 Version 3.0
 -----------
 
+* Added a decorator "python_method" than can be used to decorate methods that should
+  not be registered with the Objective-C runtime and should not be converted to a
+  Objective-C selector.
+
+  Usage::
+
+      class MyClass (NSObject):
+
+          @python_method
+	  @classmethod
+	  def fromkeys(self, keys):
+	      pass
+
+  This makes it easier to add a more "pythonic" API to Objective-C subclasses without
+  being hindered by PyObjC's conventions for naming methods.
+
 * Issue #64: Fix metadata for ``Quartz.CGEventKeyboardSetUnicodeString``
   and ``Quartz.CGEventKeyboardGetUnicodeString``.
 
