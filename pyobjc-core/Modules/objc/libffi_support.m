@@ -1266,6 +1266,19 @@ method_stub(ffi_cif* cif __attribute__((__unused__)), void* resp, void** args, v
         Py_DECREF(v);
     }
 
+    /* Avoid calling a PyObjCPythonSelector directory, it does
+     * additional work that we don't need.
+     */
+    if (PyObjCPythonSelector_Check(callable)) {
+        if (((PyObjCSelector*)callable)->sel_self != NULL) {
+            if (PyList_Insert(arglist, 0, ((PyObjCSelector*)callable)->sel_self) < 0) {
+                Py_DECREF(arglist);
+                goto error;
+            }
+        }
+        callable = ((PyObjCPythonSelector*)callable)->callable;
+    }
+
     v = PyList_AsTuple(arglist);
     if (v == NULL) {
         Py_DECREF(arglist);
@@ -1285,13 +1298,6 @@ method_stub(ffi_cif* cif __attribute__((__unused__)), void* resp, void** args, v
                 "Missing callable in closure object");
         Py_DECREF(arglist);
         goto error;
-    }
-
-    /* Avoid calling a PyObjCPythonSelector directory, it does
-     * additional work that we don't need.
-     */
-    if (PyObjCPythonSelector_Check(callable)) {
-        callable = ((PyObjCPythonSelector*)callable)->callable;
     }
 
     res = PyObject_Call(callable, arglist, NULL);
@@ -1889,14 +1895,21 @@ _argcount(PyObject* callable, BOOL* haveVarArgs, BOOL* haveVarKwds)
         }
 
     } else if (PyObjCPythonSelector_Check(callable)) {
-        return _argcount(((PyObjCPythonSelector*)callable)->callable, haveVarArgs, haveVarKwds);
+        Py_ssize_t result = _argcount(((PyObjCPythonSelector*)callable)->callable, haveVarArgs, haveVarKwds);
+        if (((PyObjCSelector*)callable)->sel_self != NULL) {
+            result -= 1;
+        }
+        return result;
 
     } else if (PyObjCNativeSelector_Check(callable)) {
         PyObjCMethodSignature* sig = PyObjCSelector_GetMetadata(callable);
-         Py_ssize_t result = Py_SIZE(sig) - 1;
+        Py_ssize_t result = Py_SIZE(sig) - 1;
 
-         Py_DECREF(sig);
-         return result;
+        Py_DECREF(sig);
+        if (((PyObjCSelector*)callable)->sel_self != NULL) {
+            result -= 1;
+        }
+        return result;
 
     } else {
         PyErr_Format(PyExc_TypeError,

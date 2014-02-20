@@ -6,6 +6,10 @@ An overview of the relevant changes in new, and older, releases.
 Version 3.0
 -----------
 
+* Issue #77: Passing a bound selector as a block argument failed when the block
+  was actually called because the trampoline that calls back to Python accidently
+  ignored the bound ``self`` argument.
+
 * Issue #76: It is now possible to pass ``None`` to a method expecting a block
   argument, as with normal object arguments the Objective-C method receives
   a ``nil`` value.

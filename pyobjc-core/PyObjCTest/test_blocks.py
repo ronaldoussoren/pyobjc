@@ -133,6 +133,40 @@ class TestBlocks (TestCase):
 
         self.assertEqual(lst, [42, 43])
 
+        class Helper (object):
+            def __init__(self):
+                self.values = []
+
+            def callback(self, v):
+                self.values.append(v)
+
+        helper = Helper()
+        obj.callIntBlock_withValue_(helper.callback, 42)
+        self.assertEqual(len(helper.values), 1)
+        obj.callIntBlock_withValue_(helper.callback, 43)
+        self.assertEqual(len(helper.values), 2)
+        self.assertEqual(helper.values, [42, 43])
+
+        class Helper2 (objc.lookUpClass('NSObject')):
+            def init(self):
+                self = objc.super(Helper2, self).init()
+                if self is None:
+                    return None
+                self.values = []
+                return self
+
+            def callback_(self, v):
+                self.values.append(v)
+
+        helper = Helper2.alloc().init()
+        self.assertIsNot(helper, None)
+        self.assertEqual(len(helper.values), 0)
+        obj.callIntBlock_withValue_(helper.callback_, 42)
+        self.assertEqual(len(helper.values), 1)
+        obj.callIntBlock_withValue_(helper.callback_, 43)
+        self.assertEqual(len(helper.values), 2)
+        self.assertEqual(helper.values, [42, 43])
+
     @min_os_level('10.6')
     @onlyIf(blocksEnabled, "no blocks")
     def testBlockToObjC2(self):

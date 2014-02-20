@@ -85,6 +85,7 @@ class SplitSignatureTest (TestCase):
             "myMethod",
             "twoargs",
             "set_helper",
+            "callback",
 
             # dictionary methods
             "get",
