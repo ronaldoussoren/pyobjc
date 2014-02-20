@@ -401,7 +401,8 @@ objcsel_repr(PyObject* _self)
     return rval;
 }
 
-static PyObject* objcsel_richcompare(PyObject* a, PyObject* b, int op)
+static PyObject*
+objcsel_richcompare(PyObject* a, PyObject* b, int op)
 {
     if (op == Py_EQ || op == Py_NE) {
         if (PyObjCNativeSelector_Check(a) && PyObjCNativeSelector_Check(b)) {
@@ -439,8 +440,21 @@ static PyObject* objcsel_richcompare(PyObject* a, PyObject* b, int op)
         }
 
     } else {
-        PyErr_SetString(PyExc_TypeError, "Cannot use '<', '<=', '>=' and '>' with objc.selector");
-        return NULL;
+        if (PyObjCSelector_Check(a) && PyObjCSelector_Check(b)) {
+            SEL sel_a = PyObjCSelector_GET_SELECTOR(a);
+            SEL sel_b = PyObjCSelector_GET_SELECTOR(b);
+
+            int r = strcmp(sel_getName(sel_a), sel_getName(sel_b));
+            switch (op) {
+            case Py_LT: return PyBool_FromLong(r < 0);
+            case Py_LE: return PyBool_FromLong(r <= 0);
+            case Py_GT: return PyBool_FromLong(r > 0);
+            case Py_GE: return PyBool_FromLong(r >= 0);
+            }
+        }
+
+        Py_INCREF(Py_NotImplemented);
+        return Py_NotImplemented;
     }
 }
 
@@ -1012,8 +1026,20 @@ pysel_richcompare(PyObject* a, PyObject* b, int op)
             }
         }
     } else {
-        PyErr_SetString(PyExc_TypeError, "Cannot use '<', '<=', '>=' and '>' with objc.selector");
-        return NULL;
+        if (PyObjCSelector_Check(a) && PyObjCSelector_Check(b)) {
+            SEL sel_a = PyObjCSelector_GET_SELECTOR(a);
+            SEL sel_b = PyObjCSelector_GET_SELECTOR(b);
+
+            int r = strcmp(sel_getName(sel_a), sel_getName(sel_b));
+            switch (op) {
+            case Py_LT: return PyBool_FromLong(r < 0);
+            case Py_LE: return PyBool_FromLong(r <= 0);
+            case Py_GT: return PyBool_FromLong(r > 0);
+            case Py_GE: return PyBool_FromLong(r >= 0);
+            }
+        }
+        Py_INCREF(Py_NotImplemented);
+        return Py_NotImplemented;
     }
 }
 
