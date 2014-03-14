@@ -44,15 +44,11 @@ As with :func:`dir`, class methods are not mentioned in the
 documentation for a class, and it is not yet clear if it is
 possible to teach :mod:`pydoc` to list methods on the metaclass.
 
-The prototype of methods lists ``...`` instead of an actual
-argument list. That's due to a limitation in :mod:`pydoc` w.r.t.
-functions implemented in C. The documentation string does list
-a full prototype, and information about arguments.
-
-.. note::
-
-   This may be fixed for Python 3.4, see
-   `issue #17053 in Python's tracker`_.
+For python versions earlier than 3.4 the prototype of methods lists
+``...`` instead of an actual argument list. That's due to a
+limitation in :mod:`pydoc` w.r.t.  functions implemented in C.
+The documentation string does list a full prototype, and
+information about arguments.
 
 
 Function and method metadata

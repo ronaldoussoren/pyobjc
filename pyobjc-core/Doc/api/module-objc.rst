@@ -687,6 +687,7 @@ Types
 
 .. class:: python_method(callable)
 
+
    Use this as a decorator in a Cocoa class definition to avoid creating a
    selector object for a method.
 
@@ -709,6 +710,8 @@ Types
 
    Instances of this type have an attribute named *callable* containing the wrapped
    callable, but are themselves not callable.
+
+   .. versionadded:: 3.0
 
    .. note::
 
