@@ -249,7 +249,7 @@ of Objective-C.
 
 Objective-C is an object-oriented programming language implemented as a
 superset of C that borrows heavily in concept and syntax from Smalltalk.
-of C and borrows heavily from Smalltalk.  It features single inheritance with
+It features single inheritance with
 dynamic dispatch and (in theory) multiple root classes.  This is basically the
 same as Python with single inheritance.
 
