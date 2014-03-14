@@ -711,7 +711,7 @@ PyObjCSelector_FindNative(PyObject* self, const char* name)
     char buf[2048];
 
     if (PyObjCObject_Check(self)) {
-        if (PyObjCClass_HiddenSelector((PyObject*)Py_TYPE(self), sel, NO)) {
+        if (PyObjCObject_IsMagic(self) || PyObjCClass_HiddenSelector((PyObject*)Py_TYPE(self), sel, NO)) {
             PyErr_Format(PyExc_AttributeError,
                 "No attribute %s", name);
             return NULL;

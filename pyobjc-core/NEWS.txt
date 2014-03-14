@@ -6,6 +6,17 @@ An overview of the relevant changes in new, and older, releases.
 Version 3.0
 -----------
 
+* Issue #50: Accessing Objective-C methods on "magic cookie" variables,
+  like ``LaunchServices.kLSSharedFileListItemLast`` would crash the interpreter.
+
+  This affected code like::
+
+      from LaunchServices import kLSSharedFileListItemLast
+
+      kLSSharedFileListItemLast == kLSSharedFileListItemLast
+      dir(kLSSharedFileListItemLast)
+      kLSSharedFileListItemLast.compare_
+
 * Added a decorator "python_method" than can be used to decorate methods that should
   not be registered with the Objective-C runtime and should not be converted to a
   Objective-C selector.

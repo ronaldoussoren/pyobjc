@@ -39,6 +39,7 @@ PyObject* _PyObjCObject_NewDeallocHelper(id objc_object);
 #define PyObjCObject_GetFlags(object) (((PyObjCObject*)(object))->flags)
 #define PyObjCObject_IsClassic(object) (PyObjCObject_GetFlags(object) & PyObjCObject_kCLASSIC)
 #define PyObjCObject_IsBlock(object) (PyObjCObject_GetFlags(object) & PyObjCObject_kBLOCK)
+#define PyObjCObject_IsMagic(object) (PyObjCObject_GetFlags(object) & PyObjCObject_kMAGIC_COOKIE)
 #define PyObjCObject_GetBlock(object) (((PyObjCBlockObject*)(object))->signature)
 #define PyObjCObject_SET_BLOCK(object, value) (((PyObjCBlockObject*)(object))->signature = (value))
 

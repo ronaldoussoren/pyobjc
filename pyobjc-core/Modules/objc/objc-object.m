@@ -1167,6 +1167,16 @@ meth_sizeof(PyObject* self __attribute__((__unused__)))
 }
 
 static PyObject*
+meth_is_magic(PyObject* self)
+{
+    if (PyObjCObject_GetObject(self) == nil) {
+        return PyBool_FromLong(0);
+    } else {
+        return PyBool_FromLong(PyObjCObject_IsMagic(self));
+    }
+}
+
+static PyObject*
 as_cobject(PyObject* self)
 {
     if (PyObjCObject_GetObject(self) == nil) {
@@ -1235,6 +1245,11 @@ meth_dir(PyObject* self)
         return NULL;
     }
 
+    if (PyObjCObject_IsMagic(self)) {
+        /* "magic cookie" objects don't have Objective-C methods */
+        return result;
+    }
+
     cls = object_getClass(PyObjCObject_GetObject(self));
     while (cls != NULL) {
         /* Now add all instance method names */
@@ -1299,6 +1314,11 @@ static PyMethodDef obj_methods[] = {
     {
         .ml_name    = "__sizeof__",
         .ml_meth    = (PyCFunction)meth_sizeof,
+        .ml_flags   = METH_NOARGS,
+    },
+    {
+        .ml_name    = "__is_magic",
+        .ml_meth    = (PyCFunction)meth_is_magic,
         .ml_flags   = METH_NOARGS,
     },
     {

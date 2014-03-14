@@ -27,7 +27,6 @@ extern bool ffi64_stret_needs_ptr(const ffi_type* inType, unsigned short*, unsig
  */
 
 static const char gCharEncoding[] = { _C_CHR, 0 };
-static const char gCFRangeEncoding[1024] = { 0 };
 
 #if defined(__ppc__)
 

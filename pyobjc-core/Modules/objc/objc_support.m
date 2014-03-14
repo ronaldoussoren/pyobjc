@@ -890,7 +890,7 @@ PyObjCRT_SizeOfType(const char *type)
          */
         if (strncmp(type,
             @encode(struct sockaddr),
-            sizeof(@encode(struct sockaddr)-1)) == 0) {
+            sizeof(@encode(struct sockaddr))-1) == 0) {
 
             return sizeof(struct sockaddr_in6);
         }
@@ -1182,7 +1182,7 @@ pythonify_c_struct(const char *type, void *datum)
     Py_ssize_t pack;
 
     /* Hacked up support for socket addresses */
-    if (strncmp(type, @encode(struct sockaddr), sizeof(@encode(struct sockaddr)-1)) == 0) {
+    if (strncmp(type, @encode(struct sockaddr), sizeof(@encode(struct sockaddr))-1) == 0) {
         return PyObjC_SockAddrToPython(datum);
     }
 
@@ -1575,7 +1575,7 @@ depythonify_c_struct(const char *types, PyObject *arg, void *datum)
     Py_ssize_t pack;
 
     /* Hacked in support for sockaddr structs */
-    if (strncmp(types, @encode(struct sockaddr), sizeof(@encode(struct sockaddr)-1)) == 0) {
+    if (strncmp(types, @encode(struct sockaddr), sizeof(@encode(struct sockaddr))-1) == 0) {
         return PyObjC_SockAddrFromPython(arg, datum);
     }
 
