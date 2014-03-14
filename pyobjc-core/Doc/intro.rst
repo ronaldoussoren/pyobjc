@@ -503,7 +503,8 @@ simple translations must take place.  The rules for these translations are:
 
     - ``someMethod:withFoo:andBar:`` translates to ``someMethod_withFoo_andBar_``
 
-2. If the result ``class`` or ``raise`` (Python keywords), append two underscores:
+2. If the result of the first step is ``class`` or ``raise`` (which are Python keywords),
+   append two underscores:
 
     - ``class`` translates to ``class__``
     - ``raise`` translates to ``raise__``
@@ -550,7 +551,7 @@ terminology, there are three kinds of pointers that can be used in a method:
 ``out``:
     Used to pass data from the function (e.g. an additional return value).
 
-    Pass in either ``None`` or ``objc.NULL`` for output arguments.
+    Pass in either ``None`` or ``objc.NULL`` for output arguments
     to the method. If the value is ``objc.NULL`` the Objective-C code will
     receive a NULL pointer for this argument, otherwise it will receive a
     valid pointer.
@@ -696,7 +697,7 @@ information about classes that work with weak references.  The most important
 are notification centers and ``NSOutlineView``, to be exact: the outline view
 stores weak references to the objects return by the method
 ``outlineView:child:ofItem:`` of its data source.  The easiest way to avoid
-crashes with outline views is to make sure that you model for the view uses
+crashes with outline views is to make sure that your model for the view uses
 subclasses of ``NSObject`` to represent the nodes in the outline view.
 
 Another gotcha is that ``obj.setDelegate_()`` often does *not* retain the
@@ -746,7 +747,7 @@ support is not possible adding a KVO-like interface to the Python interpreter.
 Categories
 ..........
 
-Objective-C has a mechanism for modularize a class definition, it is possible
+Objective-C has a mechanism for modularizing a class definition. It is possible
 to add methods to an existing class in a separate compilation unit and even
 a separate library.  This mechanism is named categories and is used to enhance
 existing classes, for splitting classes in several parts and to document
@@ -851,12 +852,6 @@ This makes it easier to find documentation for an item: if you import it
 from the wrapper module for an Objective-C framework the documentation for
 that item can be found in the documentation for the framework; otherwise the
 item is documented in the PyObjC documentation.
-
-The module ``PyObjCTools.NibClassBuilder`` can be used to make working with
-NIB files more convenient.  This module can be used to extract information
-about classes from NIB files, both as a standalone tool generating source code
-and during runtime.  See the online documentation for this module for more
-information.
 
 PyObjC includes a number of examples that show how to use Cocoa from
 Python.  The :doc:`PyObjC Example index </examples/index>` contains an overview of those examples.
@@ -969,7 +964,9 @@ will be undefined (memory corruption, crashes, etc.).
 Building applications
 ---------------------
 
-There are two different recommended ways to build applications with PyObjC.
+.. There are two different recommended ways to build applications with PyObjC.
+
+There currently is one recommended way for building applications with PyObjC: use py2app.
 
 "py2app" :  setup.py
 ....................
