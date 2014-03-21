@@ -12,19 +12,19 @@ import sys
 import objc
 from types import *
 
-try:
-    import copyreg
-except ImportError:  # pragma: no 3.x cover
+if sys.version_info[0] == 2:
     import copy_reg as copyreg
+else:
+    import copyreg
 
 import copy
 
 from pickle import PicklingError, UnpicklingError
 
-try:
-    import builtins as _builtins
-except ImportError: # pragma: no 3.x cover
+if sys.version_info[0] == 2:
     import __builtin__ as _builtins
+else:
+    import builtins as _builtins
 
 # _getattribute and whichmodule are adapted from the
 # same function's in Python 3.4's pickle module. The
