@@ -11,15 +11,15 @@ from pyobjc_setup import setup, Extension
 
 setup(
     name='pyobjc-framework-ScreenSaver',
-    version="3.0",
+    version="3.1",
     description = "Wrappers for the framework ScreenSaver on Mac OS X",
     packages = [ "ScreenSaver" ],
     setup_requires = [
-        'pyobjc-core>=3.0',
+        'pyobjc-core>=3.1',
     ],
     install_requires = [
-        'pyobjc-core>=3.0',
-        'pyobjc-framework-Cocoa>=3.0',
+        'pyobjc-core>=3.1',
+        'pyobjc-framework-Cocoa>=3.1',
     ],
     ext_modules = [
         Extension('ScreenSaver._inlines',

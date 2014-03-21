@@ -13,15 +13,15 @@ import os
 
 setup(
     name='pyobjc-framework-WebKit',
-    version="3.0",
+    version="3.1",
     description = "Wrappers for the framework WebKit on Mac OS X",
     packages = [ "WebKit", "JavaScriptCore" ],
     setup_requires = [
-        'pyobjc-core>=3.0',
+        'pyobjc-core>=3.1',
     ],
     install_requires = [
-        'pyobjc-core>=3.0',
-        'pyobjc-framework-Cocoa>=3.0',
+        'pyobjc-core>=3.1',
+        'pyobjc-framework-Cocoa>=3.1',
     ],
     ext_modules = [
         Extension("WebKit._WebKit",
