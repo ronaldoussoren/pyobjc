@@ -11,15 +11,15 @@ from pyobjc_setup import setup
 
 setup(
     name='pyobjc-framework-CoreWLAN',
-    version="3.0a1",
+    version="3.0",
     description = "Wrappers for the framework CoreWLAN on Mac OS X",
     packages = [ "CoreWLAN" ],
     setup_requires = [
-        'pyobjc-core>=3.0a1',
+        'pyobjc-core>=3.0',
     ],
     install_requires = [
-        'pyobjc-core>=3.0a1',
-        'pyobjc-framework-Cocoa>=3.0a1',
+        'pyobjc-core>=3.0',
+        'pyobjc-framework-Cocoa>=3.0',
     ],
     min_os_level="10.6",
 )

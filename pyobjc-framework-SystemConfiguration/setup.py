@@ -10,15 +10,15 @@ from pyobjc_setup import setup, Extension
 
 setup(
     name='pyobjc-framework-SystemConfiguration',
-    version="3.0a1",
+    version="3.0",
     description = "Wrappers for the framework SystemConfiguration on Mac OS X",
     packages = [ "SystemConfiguration" ],
     setup_requires = [
-        'pyobjc-core>=3.0a1',
+        'pyobjc-core>=3.0',
     ],
     install_requires = [
-        'pyobjc-core>=3.0a1',
-        'pyobjc-framework-Cocoa>=3.0a1',
+        'pyobjc-core>=3.0',
+        'pyobjc-framework-Cocoa>=3.0',
     ],
     ext_modules = [
         Extension('SystemConfiguration._manual',
