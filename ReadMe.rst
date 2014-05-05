@@ -1,11 +1,6 @@
 Welcome to the PyObjC repository
 ================================
 
-WARNING: The "default" branch contains a pre-release version of
-PyObjC 3.0. I'm not fully done testing this version yet, most development
-has been done on OSX 10.8 and 10.9 systems (and primarily the latter since
-its release).
-
 This repository contains a number of Python packages/distributions
 for the PyObjC project:
 
