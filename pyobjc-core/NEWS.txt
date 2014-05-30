@@ -3,6 +3,11 @@ What's new in PyObjC
 
 An overview of the relevant changes in new, and older, releases.
 
+Version 3.0.1
+-------------
+
+* Issue #86: Fix installation issue with setuptools 3.6
+
 Version 3.0
 -----------
 

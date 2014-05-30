@@ -348,7 +348,12 @@ class oc_install_lib (install_lib.install_lib):
 
     def get_exclusions(self):
         result = install_lib.install_lib.get_exclusions(self)
-        for fn in install_lib._install_lib.get_outputs(self):
+        if hasattr(install_lib, '_install_lib'):
+            outputs = install_lib._install_lib.get_outputs(self)
+        else:
+            outputs = install_lib.orig.install_lib.get_outputs(self)
+
+        for fn in outputs:
             if 'PyObjCTest' in fn:
                 result[fn] = 1
 
