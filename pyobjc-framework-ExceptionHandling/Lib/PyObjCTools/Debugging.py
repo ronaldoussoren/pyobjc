@@ -51,23 +51,31 @@ def nsLogPythonException(exception):
         userInfo['__pyobjc_exc_type__'],
         userInfo['__pyobjc_exc_value__'],
         userInfo['__pyobjc_exc_traceback__'],
-    )).decode('utf8'))
+    )))
     # we logged it, so don't log it for us
     return False
 
 def nsLogObjCException(exception):
     userInfo = exception.userInfo()
     stack = userInfo.get(NSStackTraceKey)
-    if not stack or not os.path.exists('/usr/bin/atos'):
+    if not stack:
         return True
-    pipe = os.popen('/usr/bin/atos -p %d %s' % (os.getpid(), stack))
+
+    if os.path.exists('/usr/bin/xcrun'):
+        pipe = os.popen('/usr/bin/xcrun atos -p %d %s' % (os.getpid(), stack))
+
+    elif os.path.exists('/usr/bin/atos'):
+        pipe = os.popen('xcrun atos -p %d %s' % (os.getpid(), stack))
+    else:
+        return True
+
     stacktrace = pipe.readlines()
     stacktrace.reverse()
     NSLog("%@", "*** ObjC exception '%s' (reason: '%s') discarded\n" % (
             exception.name(), exception.reason(),
         ) +
         'Stack trace (most recent call last):\n' +
-        ''.join([('  '+line) for line in stacktrace]).decode('utf8')
+        ''.join([('  '+line) for line in stacktrace])
     )
     return False
 

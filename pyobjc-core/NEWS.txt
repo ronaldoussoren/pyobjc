@@ -12,6 +12,9 @@ Version 3.0.1
 
 * Issue #82: NSArray.__iter__ was accedently removed in PyObjC 3.0
 
+* PyObjCTools.Debugging didn't work properly on recent OSX versions (at least OSX 10.9)
+  because ``/usr/bin/atos`` no longer worked.
+
 Version 3.0
 -----------
 
