@@ -1,14 +1,11 @@
+import objc
+from PyObjCTools import Debugging
 
-from Foundation import NSObject
-from objc import python_method
+NSArray = objc.lookUpClass('NSArray')
+a = NSArray.arrayWithArray_(['a', 'b', 'c'])
+print(list(iter(a)))
 
+Debugging.installVerboseExceptionHandler()
+print(list(iter(a)))
 
-class MyObject (NSObject):
-    @python_method
-    def my_method(self):
-        return 42
-
-
-print(MyObject.my_method)
-print(MyObject.alloc().init().my_method)
-print(MyObject.alloc().init().my_method())
+print(a.__iter__)

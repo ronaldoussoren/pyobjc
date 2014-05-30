@@ -11,15 +11,15 @@ from pyobjc_setup import setup
 
 setup(
     name='pyobjc-framework-Accounts',
-    version="3.0",
+    version="3.0.1",
     description = "Wrappers for the framework Accounts on Mac OS X",
     packages = [ "Accounts" ],
     setup_requires = [
-        'pyobjc-core>=3.0',
+        'pyobjc-core>=3.0.1',
     ],
     install_requires = [
-        'pyobjc-core>=3.0',
-        'pyobjc-framework-Cocoa>=3.0',
+        'pyobjc-core>=3.0.1',
+        'pyobjc-framework-Cocoa>=3.0.1',
     ],
     min_os_level="10.8",
 )
