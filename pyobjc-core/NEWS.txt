@@ -10,6 +10,8 @@ Version 3.0.1
 
 * Issue #85: Remove debug output from the wrapper for ``NSApplicationMain``.
 
+* Issue #82: NSArray.__iter__ was accedently removed in PyObjC 3.0
+
 Version 3.0
 -----------
 

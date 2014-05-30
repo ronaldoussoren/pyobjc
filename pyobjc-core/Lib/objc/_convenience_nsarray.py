@@ -373,6 +373,9 @@ def nsarray__len__(self):
 def nsarray__copy__(self):  # pragma: no cover
     return self.copy()
 
+def nsarray__index__(self):
+    return iter(self.objectEnumerator())
+
 addConvenienceForClass('NSArray', (
     ('__new__', staticmethod(nsarray_new)),
     ('__add__', nsarray_add),
@@ -383,6 +386,7 @@ addConvenienceForClass('NSArray', (
     ('__contains__', nsarray__contains__),
     ('__getitem__', nsarray__getitem__),
     ('__copy__', nsarray__copy__),
+    ('__iter__', nsarray__index__),
     ('index', nsarray_index),
     ('remove', nsarray_remove),
     ('pop', nsarray_pop),
