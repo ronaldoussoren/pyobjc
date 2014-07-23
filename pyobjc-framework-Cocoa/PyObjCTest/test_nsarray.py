@@ -352,10 +352,10 @@ class TestNSMutableArrayInteraction(TestCase):
             return -cmp(l,r)
 
         if sys.version_info[0] == 2:
-            a.sort(cmpfunc=cmpfunc)
+            a.sort(cmp=cmpfunc)
             self.assertEqual(a, (3, 2, 1, 0))
         else:
-            self.assertRaises(TypeError, a.sort, cmpfunc=cmpfunc)
+            self.assertRaises(TypeError, a.sort, cmp=cmpfunc)
 
         a.sort()
         self.assertEqual(a, (0, 1, 2, 3))
