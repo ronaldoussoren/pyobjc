@@ -541,8 +541,11 @@ def parse_package_metadata():
             metadata[opt] = [x for x in val.splitlines() if x]
         elif opt in ('long_description',):
             metadata[opt] = val[1:]
-        elif opt in ('packages', 'namespace_packages', 'platforms'):
+        elif opt in ('packages', 'namespace_packages', 'platforms', 'keywords'):
             metadata[opt] = [x.strip() for x in val.split(',')]
+
+        elif opt in ['zip-safe']:
+            metadata['zip_safe'] = int(val)
         else:
             metadata[opt] = val
 

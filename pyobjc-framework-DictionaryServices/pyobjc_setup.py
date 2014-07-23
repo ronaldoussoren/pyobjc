@@ -156,6 +156,9 @@ import os
 import plistlib
 import sys
 import __main__
+if not os.path.basename(__main__.__file__).startswith('setup.py'):
+    # Workaround to get a proper report when using pyroma.
+    import setup as __main__
 
 CLASSIFIERS = filter(None,
 """
@@ -454,5 +457,6 @@ def setup(
         zip_safe = False,
         license = 'MIT License',
         classifiers = CLASSIFIERS,
+        keywords = ["PyObjC"] + [ p for p in k['packages'] if p not in ('PyObjCTools',)],
         **k
     )
