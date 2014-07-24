@@ -25,7 +25,7 @@ class TestMachPort (TestCase):
         self.assertIsInstance(CFMachPortGetTypeID(), (int, long))
 
     @min_os_level('10.8')
-    @expectedFailure
+    @expectedFailureIf(osx_release() == '10.8')
     def testCreate10_8(self):
         class Context: pass
         context = Context()

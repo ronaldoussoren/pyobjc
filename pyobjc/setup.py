@@ -168,4 +168,5 @@ dist = setup(
     zip_safe = True,
     # workaround for setuptools 0.6b4 bug
     dependency_links = [],
+    keywords=['Objective-C', 'bridge', 'Cocoa'],
 )

@@ -5,6 +5,7 @@ graft Lib
 graft Modules
 graft source-deps
 graft PyObjCTest
+graft metadata
 global-exclude .DS_Store
 global-exclude *.pyc
 global-exclude *.so
