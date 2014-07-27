@@ -13,15 +13,15 @@ import os
 setup(
     min_os_level='10.5',
     name='pyobjc-framework-InputMethodKit',
-    version="3.0.1",
+    version="3.0.2",
     description = "Wrappers for the framework InputMethodKit on Mac OS X",
     packages = [ "InputMethodKit" ],
     setup_requires = [
-        'pyobjc-core>=3.0.1',
+        'pyobjc-core>=3.0.2',
     ],
     install_requires = [
-        'pyobjc-core>=3.0.1',
-        'pyobjc-framework-Cocoa>=3.0.1',
+        'pyobjc-core>=3.0.2',
+        'pyobjc-framework-Cocoa>=3.0.2',
     ],
     ext_modules = [
         Extension("InputMethodKit._InputMethodKit",

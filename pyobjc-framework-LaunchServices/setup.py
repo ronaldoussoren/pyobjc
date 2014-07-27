@@ -29,14 +29,14 @@ from pyobjc_setup import setup
 
 setup(
     name='pyobjc-framework-LaunchServices',
-    version="3.0.1",
+    version="3.0.2",
     description = "Wrappers for the framework LaunchServices on Mac OS X",
     packages = [ "LaunchServices" ],
     setup_requires = [
-        'pyobjc-core>=3.0.1',
+        'pyobjc-core>=3.0.2',
     ],
     install_requires = [
-        'pyobjc-core>=3.0.1',
-        'pyobjc-framework-Cocoa>=3.0.1',
+        'pyobjc-core>=3.0.2',
+        'pyobjc-framework-Cocoa>=3.0.2',
     ],
 )

@@ -12,15 +12,15 @@ import os
 
 setup(
     name='pyobjc-framework-StoreKit',
-    version="3.0.1",
+    version="3.0.2",
     description = "Wrappers for the framework StoreKit on Mac OS X",
     packages = [ "StoreKit" ],
     setup_requires = [
-        'pyobjc-core>=3.0.1',
+        'pyobjc-core>=3.0.2',
     ],
     install_requires = [
-        'pyobjc-core>=3.0.1',
-        'pyobjc-framework-Cocoa>=3.0.1',
+        'pyobjc-core>=3.0.2',
+        'pyobjc-framework-Cocoa>=3.0.2',
     ],
     ext_modules = [
         Extension("StoreKit._StoreKit",

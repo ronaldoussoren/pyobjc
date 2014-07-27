@@ -17,16 +17,16 @@ import os
 
 setup(
     name='pyobjc-framework-SyncServices',
-    version="3.0.1",
+    version="3.0.2",
     description = "Wrappers for the framework SyncServices on Mac OS X",
     packages = [ "SyncServices" ],
     setup_requires = [
-        'pyobjc-core>=3.0.1',
+        'pyobjc-core>=3.0.2',
     ],
     install_requires = [
-        'pyobjc-core>=3.0.1',
-        'pyobjc-framework-Cocoa>=3.0.1',
-        'pyobjc-framework-CoreData>=3.0.1',
+        'pyobjc-core>=3.0.2',
+        'pyobjc-framework-Cocoa>=3.0.2',
+        'pyobjc-framework-CoreData>=3.0.2',
     ],
     ext_modules = [
         Extension("SyncServices._SyncServices",
