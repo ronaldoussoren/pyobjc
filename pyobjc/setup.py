@@ -21,7 +21,7 @@ VERSION="3.1"
 # packaged into an egg file because of this.
 
 REQUIRES=[
-        'py2app>=0.8',
+        'py2app>=0.9',
         'pyobjc-core=='+VERSION,
         'pyobjc-framework-AddressBook=='+VERSION,
         'pyobjc-framework-AppleScriptKit=='+VERSION,
@@ -168,4 +168,5 @@ dist = setup(
     zip_safe = True,
     # workaround for setuptools 0.6b4 bug
     dependency_links = [],
+    keywords=['Objective-C', 'bridge', 'Cocoa'],
 )

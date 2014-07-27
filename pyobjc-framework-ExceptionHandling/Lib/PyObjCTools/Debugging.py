@@ -51,23 +51,47 @@ def nsLogPythonException(exception):
         userInfo['__pyobjc_exc_type__'],
         userInfo['__pyobjc_exc_value__'],
         userInfo['__pyobjc_exc_traceback__'],
-    )).decode('utf8'))
+    )))
     # we logged it, so don't log it for us
     return False
+
+
+_atos_command = None
+
+def _run_atos(stack):
+    global _atos_command
+    if _atos_command is None:
+        if os.path.exists('/usr/bin/atos'):
+            _atos_command = '/usr/bin/atos'
+            if int(os.uname()[2].split('.')[0]) >= 13:
+                _atos_command += ' -d'
+
+        elif os.path.exists('/usr/bin/xcrun'):
+            _atos_command = '/usr/bin/xcrun atos'
+
+        else:
+            return None
+
+    return os.popen('%s -p %s %s'%(_atos_command, os.getpid(), stack))
 
 def nsLogObjCException(exception):
     userInfo = exception.userInfo()
     stack = userInfo.get(NSStackTraceKey)
-    if not stack or not os.path.exists('/usr/bin/atos'):
+    if not stack:
         return True
-    pipe = os.popen('/usr/bin/atos -p %d %s' % (os.getpid(), stack))
+
+    pipe = _run_atos(stack)
+    if pipe is None:
+        return True
+
+
     stacktrace = pipe.readlines()
     stacktrace.reverse()
     NSLog("%@", "*** ObjC exception '%s' (reason: '%s') discarded\n" % (
             exception.name(), exception.reason(),
         ) +
         'Stack trace (most recent call last):\n' +
-        ''.join([('  '+line) for line in stacktrace]).decode('utf8')
+        ''.join([('  '+line) for line in stacktrace])
     )
     return False
 

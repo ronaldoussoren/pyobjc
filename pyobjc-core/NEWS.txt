@@ -3,6 +3,23 @@ What's new in PyObjC
 
 An overview of the relevant changes in new, and older, releases.
 
+Version 3.0.2
+-------------
+
+* ?
+
+Version 3.0.1
+-------------
+
+* Issue #86: Fix installation issue with setuptools 3.6.
+
+* Issue #85: Remove debug output from the wrapper for ``NSApplicationMain``.
+
+* Issue #82: NSArray.__iter__ was accedently removed in PyObjC 3.0
+
+* PyObjCTools.Debugging didn't work properly on recent OSX versions (at least OSX 10.9)
+  because ``/usr/bin/atos`` no longer worked.
+
 Version 3.0
 -----------
 

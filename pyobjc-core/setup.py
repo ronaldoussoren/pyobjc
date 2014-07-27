@@ -116,9 +116,9 @@ else:
     cfg_vars = get_config_vars()
     for k in cfg_vars:
         if isinstance(cfg_vars[k], str) and '-O2' in cfg_vars[k]:
-            cfg_vars[k] = cfg_vars[k].replace('-O2', '-O4')
+            cfg_vars[k] = cfg_vars[k].replace('-O2', '-O3')
         elif isinstance(cfg_vars[k], str) and '-O3' in cfg_vars[k]:
-            cfg_vars[k] = cfg_vars[k].replace('-O3', '-O4')
+            cfg_vars[k] = cfg_vars[k].replace('-O3', '-O3')
 
 
 # XXX: bug in CPython 3.4 repository leaks unwanted compiler flag into disutils.
@@ -348,7 +348,12 @@ class oc_install_lib (install_lib.install_lib):
 
     def get_exclusions(self):
         result = install_lib.install_lib.get_exclusions(self)
-        for fn in install_lib._install_lib.get_outputs(self):
+        if hasattr(install_lib, '_install_lib'):
+            outputs = install_lib._install_lib.get_outputs(self)
+        else:
+            outputs = install_lib.orig.install_lib.get_outputs(self)
+
+        for fn in outputs:
             if 'PyObjCTest' in fn:
                 result[fn] = 1
 
@@ -536,8 +541,11 @@ def parse_package_metadata():
             metadata[opt] = [x for x in val.splitlines() if x]
         elif opt in ('long_description',):
             metadata[opt] = val[1:]
-        elif opt in ('packages', 'namespace_packages', 'platforms'):
+        elif opt in ('packages', 'namespace_packages', 'platforms', 'keywords'):
             metadata[opt] = [x.strip() for x in val.split(',')]
+
+        elif opt in ['zip-safe']:
+            metadata['zip_safe'] = int(val)
         else:
             metadata[opt] = val
 

@@ -338,6 +338,8 @@ class TestString (TestCase):
         #print s
         CFStringTrim(s, trim_chars)
         #print s
+        #print(s)
+        #CFShow(s)
         self.assertEqual(s, b"Hello".decode('ascii'))
 
         CFStringReplaceAll(s, b"* * * *abc * ".decode('ascii'))

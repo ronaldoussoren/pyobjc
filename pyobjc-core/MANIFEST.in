@@ -1,13 +1,19 @@
-include *.txt MANIFEST.in setup.py
+include *.txt MANIFEST.in setup.py MANIFEST
 graft Doc
 graft Examples
 graft Lib
+graft Misc
 graft Modules
+graft PyObjCTest
 graft Scripts
+graft Tools
 graft libffi-src
 graft setup-lib
 graft source-deps
-graft PyObjCTest
 global-exclude .DS_Store
 global-exclude *.pyc
+global-exclude *.pyo
 global-exclude *.so
+global-exclude *.dSYM/*
+global-exclude *.dSYM
+global-exclude __pycache__

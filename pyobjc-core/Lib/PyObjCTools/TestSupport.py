@@ -931,6 +931,12 @@ else: # pragma: no cover (py2.6)
 
         return test
 
+def expectedFailureIf(condition):
+    if condition:
+        return expectedFailure
+    else:
+        return lambda func: func
+
 # NOTE: filterwarnings relies on implementation details of
 #       the warnings module
 class filterWarnings (object):

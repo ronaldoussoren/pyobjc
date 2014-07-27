@@ -72,12 +72,9 @@ static	char* keywords[] = { "argv", NULL };
 	argv[argc] = NULL;
 
 	PyObjC_DURING
-                NSLog(@"->NSApplicationMain");
 		res = NSApplicationMain(argc, (const char**)argv);
-                NSLog(@"<-NSApplicationMain");
 
 	PyObjC_HANDLER
-                NSLog(@"NSApplicationMain: exc %@", localException);
 		PyObjCErr_FromObjC(localException);
 		res = -1;
 	PyObjC_ENDHANDLER

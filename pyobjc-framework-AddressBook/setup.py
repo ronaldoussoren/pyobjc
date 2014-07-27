@@ -31,8 +31,8 @@ setup(
             depends=[
                 os.path.join('Modules', fn)
                     for fn in os.listdir('Modules')
-                    if fn.startswith('_AddressBook') 
+                    if fn.startswith('_AddressBook')
             ]
         ),
-    ]
+    ],
 )

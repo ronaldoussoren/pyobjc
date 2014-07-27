@@ -3,6 +3,7 @@ graft Doc
 graft Examples
 graft Lib
 graft Modules
+graft metadata
 graft source-deps
 graft PyObjCTest
 global-exclude .DS_Store

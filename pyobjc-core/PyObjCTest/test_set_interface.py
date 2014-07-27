@@ -342,11 +342,12 @@ class TestOnlySetsNumeric (test.test_set.TestOnlySetsNumeric):
         self.other = 19
         self.otherIsIterable = False
 
-class TestOnlySetsOperator (test.test_set.TestOnlySetsOperator):
-    def setUp(self):
-        self.set   = NSMutableSet((1, 2, 3))
-        self.other = operator.add
-        self.otherIsIterable = False
+if hasattr(test.test_set, 'TestOnlySetsOperator'):
+    class TestOnlySetsOperator (test.test_set.TestOnlySetsOperator):
+        def setUp(self):
+            self.set   = NSMutableSet((1, 2, 3))
+            self.other = operator.add
+            self.otherIsIterable = False
 
 
 class TestOnlySetsTuple (test.test_set.TestOnlySetsTuple):

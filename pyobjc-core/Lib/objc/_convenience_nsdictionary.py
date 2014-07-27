@@ -106,6 +106,13 @@ class nsdict_view (collections.Set):
         result.intersection_update(other)
         return result
 
+    def __rand__(self, other):
+        if not isinstance(other, collections.Set):
+            return NotImplemented
+        result = set(self)
+        result.intersection_update(other)
+        return result
+
     def __or__(self, other):
         if not isinstance(other, collections.Set):
             return NotImplemented
@@ -127,7 +134,21 @@ class nsdict_view (collections.Set):
         result.difference_update(other)
         return result
 
+    def __rsub__(self, other):
+        if not isinstance(other, collections.Set):
+            return NotImplemented
+        result = set(other)
+        result.difference_update(self)
+        return result
+
     def __xor__(self, other):
+        if not isinstance(other, collections.Set):
+            return NotImplemented
+        result = set(self)
+        result.symmetric_difference_update(other)
+        return result
+
+    def __rxor__(self, other):
         if not isinstance(other, collections.Set):
             return NotImplemented
         result = set(self)

@@ -1,10 +1,13 @@
 include *.txt MANIFEST.in *.py
+graft metadata
 graft Doc
 graft Examples
 graft Lib
 graft Modules
 graft source-deps
 graft PyObjCTest
+graft BridgeSupport
+graft Exceptions
 global-exclude .DS_Store
 global-exclude *.pyc
 global-exclude *.so

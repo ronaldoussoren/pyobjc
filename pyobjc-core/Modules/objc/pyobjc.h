@@ -7,7 +7,6 @@
 
 #define OBJC_VERSION "3.1"
 
-
 #define PY_SSIZE_T_CLEAN
 #include <Python.h>
 #include "structmember.h"
