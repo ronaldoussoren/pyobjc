@@ -1,0 +1,18 @@
+API notes: LocalAuthentication framework
+=========================================
+
+Apple Documentation
+-------------------
+
+The framework is documented on `Apple's developer website`__
+
+.. __: http://developer.apple.com/library/mac/#documentation/LocalAuthentication/Reference/LocalAuthenticationFrameworkRef/_index.html
+
+API Notes
+---------
+
+The entire "LocalAuthentication" framework on MacOSX 10.10 (or later) is available from Python.
+
+.. note::
+
+   The LocalAuthentication framework is only available in 64-bit applications.

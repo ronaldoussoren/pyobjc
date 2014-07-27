@@ -1,0 +1,14 @@
+API notes: CoreBluetooth framework
+==================================
+
+Apple Documentation
+-------------------
+
+The framework is documented on `Apple's developer website`__
+
+.. __: http://developer.apple.com/library/mac/#documentation/CoreBluetooth/Reference/CoreBluetoothFrameworkRef/_index.html
+
+API Notes
+---------
+
+The entire "CoreBluetooth" framework on MacOSX 10.9 (or later) is available from Python.
