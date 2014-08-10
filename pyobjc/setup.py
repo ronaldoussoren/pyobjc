@@ -80,7 +80,7 @@ REQUIRES_10_8=[
 #        'pyobjc-framework-AudioVideoBridging=='+VERSION,
         'pyobjc-framework-EventKit=='+VERSION,
 #        'pyobjc-framework-GLKit=='+VERSION,
-        'pyobjc-framework-GameKit=='+VERSION,
+#        'pyobjc-framework-GameKit=='+VERSION,
 #        'pyobjc-framework-MediaToolbox=='+VERSION,
 #        'pyobjc-framework-SceneKit=='+VERSION,
         'pyobjc-framework-Social=='+VERSION,
