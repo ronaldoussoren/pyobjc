@@ -60,28 +60,28 @@ if sys.maxsize > 2 ** 32:
             c = MapKit.MKMapPointForCoordinate(MapKit.CLLocationCoordinate2D())
             self.assertIsInstance(c, MapKit.MKMapPoint)
 
-            c = MapKit.MKCoordinateForMapPoint(MapKit.MKPoint())
+            c = MapKit.MKCoordinateForMapPoint(MapKit.MKMapPoint())
             self.assertIsInstance(c, MapKit.CLLocationCoordinate2D)
 
-            self.assertArgHasType(MapKit.MKMetersPerMapPointAtLatitude, 0, objc._C_DOUBLE)
-            self.assertResultHasType(MapKit.MKMetersPerMapPointAtLatitude, objc._C_DOUBLE)
+            self.assertArgHasType(MapKit.MKMetersPerMapPointAtLatitude, 0, objc._C_DBL)
+            self.assertResultHasType(MapKit.MKMetersPerMapPointAtLatitude, objc._C_DBL)
 
-            self.assertArgHasType(MapKit.MKMapPointsPerMeterAtLatitude, 0, objc._C_DOUBLE)
-            self.assertResultHasType(MapKit.MKMapPointsPerMeterAtLatitude, objc._C_DOUBLE)
+            self.assertArgHasType(MapKit.MKMapPointsPerMeterAtLatitude, 0, objc._C_DBL)
+            self.assertResultHasType(MapKit.MKMapPointsPerMeterAtLatitude, objc._C_DBL)
 
             self.assertArgHasType(MapKit.MKMetersBetweenMapPoints, 0, MapKit.MKMapPoint.__typestr__)
             self.assertArgHasType(MapKit.MKMetersBetweenMapPoints, 1, MapKit.MKMapPoint.__typestr__)
-            self.assertResultHasType(MapKit.MKMetersBetweenMapPoints, objc._C_DOUBLE)
+            self.assertResultHasType(MapKit.MKMetersBetweenMapPoints, objc._C_DBL)
 
             c = MapKit.MKMapPointMake(1.5, 2.5)
             self.assertIsInstance(c, MapKit.MKMapPoint)
             self.assertEqual(c.x, 1.5)
-            self.assertEqual(c.y, 1.5)
+            self.assertEqual(c.y, 2.5)
 
             c = MapKit.MKMapSizeMake(1.5, 2.5)
             self.assertIsInstance(c, MapKit.MKMapSize)
             self.assertEqual(c.width, 1.5)
-            self.assertEqual(c.height, 1.5)
+            self.assertEqual(c.height, 2.5)
 
             c = MapKit.MKMapRectMake(1.5, 2.5, 3.5, 4.5)
             self.assertIsInstance(c, MapKit.MKMapRect)

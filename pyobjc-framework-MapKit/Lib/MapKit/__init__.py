@@ -12,7 +12,7 @@ import CoreLocation
 import Quartz
 
 from MapKit import _metadata, _MapKit
-from AppKit._inlines import _inline_list_
+from MapKit._inlines import _inline_list_
 
 sys.modules['MapKit'] = mod = objc.ObjCLazyModule(
     "MapKit",

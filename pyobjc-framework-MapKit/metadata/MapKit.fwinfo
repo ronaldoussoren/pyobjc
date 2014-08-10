@@ -204,8 +204,8 @@
   "functions": {
    "MKMapRectDivide": {
     "args": {
-     "1": {},
-     "2": {}
+     "1": { "type_modifier": "o" },
+     "2": { "type_modifier": "o" }
     }
    }
   },
