@@ -8,21 +8,19 @@ documentation for details on how to use these functions and classes.
 import objc
 import sys
 import Cocoa
-import Quartz
 
-from AVKit import _metadata, _AVKit
+from MediaAccessibility import _metadata
 
-sys.modules['AVKit'] = mod = objc.ObjCLazyModule(
-    "AVKit",
-    "com.apple.AVKit",
-    objc.pathForFramework("/System/Library/Frameworks/AVKit.framework"),
+sys.modules['MediaAccessibility'] = mod = objc.ObjCLazyModule(
+    "MediaAccessibility",
+    "com.apple.MediaAccessibility",
+    objc.pathForFramework("/System/Library/Frameworks/MediaAccessibility.framework"),
     _metadata.__dict__, None, {
         '__doc__': __doc__,
         'objc': objc,
         '__path__': __path__,
         '__loader__': globals().get('__loader__', None),
-    }, (Cocoa, Quartz))
+    }, (Cocoa,))
 
 import sys
-del sys.modules['AVKit._metadata']
-del sys.modules['AVKit._AVKit']
+del sys.modules['MediaAccessibility._metadata']

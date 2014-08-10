@@ -1,0 +1,16 @@
+API Notes: MediaAccessibility framework
+=======================================
+
+Apple documentation
+-------------------
+
+The full API is described in `Apple's documentation`__, both
+the C and Objective-C APIs are available (but see the `API Notes`_ below).
+
+.. __: https://developer.apple.com/library/mac/documentation/UserExperience/Conceptual/MediaAccessibility/MediaAccessibility.html
+
+
+API Notes
+---------
+
+The full framework is available from Python. This framework was introduced in OSX 10.9.

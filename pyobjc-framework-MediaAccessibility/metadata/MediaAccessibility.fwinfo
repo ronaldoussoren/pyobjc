@@ -1,0 +1,88 @@
+// objective.metadata exceptions file, see its document
+// for information on how to update this file.
+{
+ "definitions": {
+  "classes": {},
+  "formal_protocols": {},
+  "functions": {
+   "MACaptionAppearanceAddSelectedLanguage": {
+    "args": {
+     "1": { "type_modifier": "o", "null_accepted": true }
+    }
+   },
+   "MACaptionAppearanceCopyBackgroundColor": {
+    "args": {
+     "1": { "type_modifier": "o", "null_accepted": true }
+    },
+    "retval": {
+     "already_cfretained": true
+    }
+   },
+   "MACaptionAppearanceCopyFontDescriptorForStyle": {
+    "args": {
+     "1": { "type_modifier": "o", "null_accepted": true }
+    },
+    "retval": {
+     "already_cfretained": true
+    }
+   },
+   "MACaptionAppearanceCopyForegroundColor": {
+    "args": {
+     "1": { "type_modifier": "o", "null_accepted": true }
+    },
+    "retval": {
+     "already_cfretained": true
+    }
+   },
+   "MACaptionAppearanceCopyPreferredCaptioningMediaCharacteristics": {
+    "retval": {
+     "already_cfretained": true
+    }
+   },
+   "MACaptionAppearanceCopySelectedLanguages": {
+    "retval": {
+     "already_cfretained": true
+    }
+   },
+   "MACaptionAppearanceCopyWindowColor": {
+    "args": {
+     "1": { "type_modifier": "o", "null_accepted": true }
+    },
+    "retval": {
+     "already_cfretained": true
+    }
+   },
+   "MACaptionAppearanceGetBackgroundOpacity": {
+    "args": {
+     "1": { "type_modifier": "o", "null_accepted": true }
+    }
+   },
+   "MACaptionAppearanceGetForegroundOpacity": {
+    "args": {
+     "1": { "type_modifier": "o", "null_accepted": true }
+    }
+   },
+   "MACaptionAppearanceGetRelativeCharacterSize": {
+    "args": {
+     "1": { "type_modifier": "o", "null_accepted": true }
+    }
+   },
+   "MACaptionAppearanceGetTextEdgeStyle": {
+    "args": {
+     "1": { "type_modifier": "o", "null_accepted": true }
+    }
+   },
+   "MACaptionAppearanceGetWindowOpacity": {
+    "args": {
+     "1": { "type_modifier": "o", "null_accepted": true }
+    }
+   },
+   "MACaptionAppearanceGetWindowRoundedCornerRadius": {
+    "args": {
+     "1": { "type_modifier": "o", "null_accepted": true }
+    }
+   }
+  },
+  "informal_protocols": {}
+ }
+}
