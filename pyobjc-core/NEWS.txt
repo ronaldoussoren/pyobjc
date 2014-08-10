@@ -9,6 +9,9 @@ Version 3.0.2
 * Issue #93: For a objc.PyObjCPointer object ``ptr.pointerAsInteger`` returned
   a 32-bit value on 64-bit systems.
 
+* Issue #92: Removed dependency on pyobjc-framework-GameKit from the pyobjc
+  package, GameKit isn't packaged yet.
+
 
 Version 3.0.1
 -------------
