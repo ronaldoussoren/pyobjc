@@ -96,7 +96,7 @@ REQUIRES_10_9=[
         'pyobjc-framework-CoreBluetooth=='+VERSION,
         'pyobjc-framework-MapKit=='+VERSION,
         'pyobjc-framework-MediaAccessibility=='+VERSION,
-        #'pyobjc-framework-MediaLibrary=='+VERSION,
+        'pyobjc-framework-MediaLibrary=='+VERSION,
         #'pyobjc-framework-SpriteKit=='+VERSION,
         #'pyobjc-framework-GameController=='+VERSION,
         #'pyobjc-framework-AVKit=='+VERSION,
