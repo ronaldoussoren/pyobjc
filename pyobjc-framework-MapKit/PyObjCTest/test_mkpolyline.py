@@ -15,10 +15,10 @@ if sys.maxsize > 2 ** 32:
         def testClasses(self):
             self.assertIsInstance(MapKit.MKPolyline, objc.objc_class)
 
-            self.assertArgCountInArg(MapKit.MKPolyline.polylineWithPoints_count_, 0, 1)
+            self.assertArgSizeInArg(MapKit.MKPolyline.polylineWithPoints_count_, 0, 1)
             self.assertArgIsIn(MapKit.MKPolyline.polylineWithPoints_count_, 0)
 
-            self.assertArgCountInArg(MapKit.MKPolyline.polylineWithCoordinates_count_, 0, 1)
+            self.assertArgSizeInArg(MapKit.MKPolyline.polylineWithCoordinates_count_, 0, 1)
             self.assertArgIsIn(MapKit.MKPolyline.polylineWithCoordinates_count_, 0)
 
 if __name__ == "__main__":

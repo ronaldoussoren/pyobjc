@@ -18,7 +18,7 @@ if sys.maxsize > 2 ** 32:
             self.assertIsInstance(MapKit.MKMapSnapshotter, objc.objc_class)
 
             self.assertResultIsBOOL(MapKit.MKMapSnapshotter.isLoading)
-            self.assertArgIsBOOL(MapKit.MKMapSnapshotter.setLoading_, 0)
+            #self.assertArgIsBOOL(MapKit.MKMapSnapshotter.setLoading_, 0)
 
             self.assertArgIsBlock(MapKit.MKMapSnapshotter.startWithCompletionHandler_, 0, MKMapSnapshotCompletionHandler)
 

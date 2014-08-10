@@ -3,172 +3,192 @@
 {
  "definitions": {
   "classes": {
+   "MKDirections": {
+     "methods": [
+       {
+         "args": {
+	    "0": {
+	      "callable": {
+	        "arguments": {
+	          "0": { "typestr": "^v" },
+	          "1": { "typestr": "@" },
+	          "2": { "typestr": "@" }
+	        },
+		"retval": { "typestr": "v" }
+	      }
+	    }
+	 },
+	 "class_method": false,
+	 "selector": "calculateDirectionsWithCompletionHandler:"
+       },
+       {
+         "args": {
+	    "0": {
+	      "callable": {
+	        "arguments": {
+	          "0": { "typestr": "^v" },
+	          "1": { "typestr": "@" },
+	          "2": { "typestr": "@" }
+	        },
+		"retval": { "typestr": "v" }
+	      }
+	    }
+	 },
+	 "class_method": false,
+	 "selector": "calculateETAWithCompletionHandler:"
+       }
+     ]
+   },
    "MKGeodesicPolyline": {
     "methods": [
      {
       "args": {
-       "0": {}
-      }, 
-      "class_method": true, 
+       "0": { "type_modifier": "n", "c_array_length_in_arg": 1 }
+      },
+      "class_method": true,
       "selector": "polylineWithPoints:count:"
-     }, 
+     },
      {
       "args": {
-       "0": {}
-      }, 
-      "class_method": true, 
+       "0": { "type_modifier": "n", "c_array_length_in_arg": 1}
+      },
+      "class_method": true,
       "selector": "polylineWithCoordinates:count:"
      }
     ]
-   }, 
+   },
+   "MKMapSnapshotter": {
+    "methods": [
+     {
+      "args": {
+        "0": {
+	  "callable": {
+	    "arguments": {
+	      "0": { "typestr": "^v" },
+	      "1": { "typestr": "@" },
+	      "2": { "typestr": "@" }
+	    },
+	    "retval": { "typestr": "v" }
+	  }
+	}
+      },
+      "class_method": false,
+      "selector": "startWithCompletionHandler:"
+     },
+     {
+      "args": {
+        "1": {
+	  "callable": {
+	    "arguments": {
+	      "0": { "typestr": "^v" },
+	      "1": { "typestr": "@" },
+	      "2": { "typestr": "@" }
+	    },
+	    "retval": { "typestr": "v" }
+	  }
+	}
+      },
+      "class_method": false,
+      "selector": "startWithQueue:completionHandler:"
+     }
+    ]
+   },
    "MKMultiPoint": {
     "methods": [
      {
       "args": {
-       "0": {}
-      }, 
-      "class_method": false, 
+       "0": { "type_modifier": "o", "c_array_length_in_arg": 1 }
+      },
+      "class_method": false,
       "selector": "getCoordinates:range:"
-     }, 
+     },
      {
-      "class_method": false, 
-      "retval": {}, 
-      "selector": "points"
-     }
-    ], 
-    "properties": [
-     {
-      "attributes": [
-       "nonatomic", 
-       "readonly"
-      ], 
-      "name": "points"
+       "class_method": false,
+       "retval": { "c_array_of_variable_length": true },
+       "selector": "points"
      }
     ]
-   }, 
-   "MKOverlayPathRenderer": {
-    "methods": [
-     {
-      "args": {
-       "0": {}
-      }, 
-      "class_method": false, 
-      "selector": "applyStrokePropertiesToContext:atZoomScale:"
-     }, 
-     {
-      "args": {
-       "0": {}
-      }, 
-      "class_method": false, 
-      "selector": "applyFillPropertiesToContext:atZoomScale:"
-     }, 
-     {
-      "args": {
-       "0": {}, 
-       "1": {}
-      }, 
-      "class_method": false, 
-      "selector": "strokePath:inContext:"
-     }, 
-     {
-      "args": {
-       "0": {}, 
-       "1": {}
-      }, 
-      "class_method": false, 
-      "selector": "fillPath:inContext:"
-     }, 
-     {
-      "class_method": false, 
-      "retval": {}, 
-      "selector": "path"
-     }, 
-     {
-      "args": {
-       "0": {}
-      }, 
-      "class_method": false, 
-      "selector": "setPath:"
-     }
-    ], 
-    "properties": [
-     {
-      "attributes": [], 
-      "name": "path"
-     }
-    ]
-   }, 
-   "MKOverlayRenderer": {
-    "methods": [
-     {
-      "args": {
-       "2": {}
-      }, 
-      "class_method": false, 
-      "selector": "drawMapRect:zoomScale:inContext:"
-     }
-    ]
-   }, 
+   },
    "MKPolygon": {
     "methods": [
      {
       "args": {
-       "0": {}
-      }, 
-      "class_method": true, 
+       "0": { "type_modifier": "n", "c_array_length_in_arg": 1 }
+      },
+      "class_method": true,
       "selector": "polygonWithPoints:count:"
-     }, 
+     },
      {
       "args": {
-       "0": {}
-      }, 
-      "class_method": true, 
+       "0": { "type_modifier": "n", "c_array_length_in_arg": 1 }
+      },
+      "class_method": true,
       "selector": "polygonWithPoints:count:interiorPolygons:"
-     }, 
+     },
      {
       "args": {
-       "0": {}
-      }, 
-      "class_method": true, 
+       "0": { "type_modifier": "n", "c_array_length_in_arg": 1 }
+      },
+      "class_method": true,
       "selector": "polygonWithCoordinates:count:"
-     }, 
+     },
      {
       "args": {
-       "0": {}
-      }, 
-      "class_method": true, 
+       "0": { "type_modifier": "n", "c_array_length_in_arg": 1 }
+      },
+      "class_method": true,
       "selector": "polygonWithCoordinates:count:interiorPolygons:"
      }
     ]
-   }, 
+   },
    "MKPolyline": {
     "methods": [
      {
       "args": {
-       "0": {}
-      }, 
-      "class_method": true, 
+       "0": { "type_modifier": "n", "c_array_length_in_arg": 1 }
+      },
+      "class_method": true,
       "selector": "polylineWithPoints:count:"
-     }, 
+     },
      {
       "args": {
-       "0": {}
-      }, 
-      "class_method": true, 
+       "0": { "type_modifier": "n", "c_array_length_in_arg": 1 }
+      },
+      "class_method": true,
       "selector": "polylineWithCoordinates:count:"
      }
     ]
+   },
+   "MKTileOverlay": {
+     "methods": [
+       {
+          "args": {
+	    "1": {
+	      "callable": {
+	        "arguments": {
+	          "0": { "typestr": "^v" },
+	          "1": { "typestr": "@" },
+	          "2": { "typestr": "@" }
+	        },
+		"retval": { "typestr": "v" }
+	      }
+	    }
+	  },
+	  "class_method": false,
+	  "selector": "loadTileAtPath:result:"
+       }
+     ]
    }
-  }, 
-  "formal_protocols": {}, 
+  },
+  "formal_protocols": {},
   "functions": {
    "MKMapRectDivide": {
     "args": {
-     "1": {}, 
+     "1": {},
      "2": {}
     }
    }
-  }, 
+  },
   "informal_protocols": {}
  }
 }

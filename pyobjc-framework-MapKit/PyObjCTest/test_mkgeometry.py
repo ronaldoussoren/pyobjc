@@ -35,7 +35,7 @@ if sys.maxsize > 2 ** 32:
 
         @min_os_level("10.9")
         def testConstants(self):
-            self.assertIsInstance(MapKit.MKMapSizeWorld, float)
+            self.assertIsInstance(MapKit.MKMapSizeWorld, MapKit.MkMapSize)
             self.assertIsInstance(MapKit.MKMapRectWorld, MapKit.MKMapRect)
             self.assertIsInstance(MapKit.MKMapRectNull, MapKit.MKMapRect)
 
@@ -107,8 +107,8 @@ if sys.maxsize > 2 ** 32:
             self.assertIsInstance(MapKit.MKStringFromMapRect(MapKit.MKMapRect()), unicode)
             self.assertIsInstance(MapKit.MKMapRectUnion(MapKit.MKMapRect(), MapKit.MKMapRect()), MapKit.MKMapRect)
             self.assertIsInstance(MapKit.MKMapRectIntersection(MapKit.MKMapRect(), MapKit.MKMapRect()), MapKit.MKMapRect)
-            self.assertIsInstance(MapKit.MKMapRectInset(MapKit.MKMapRect(), 0.0, 0.0)), MapKit.MKMapRect)
-            self.assertIsInstance(MapKit.MKMapRectOffset(MapKit.MKMapRect(), 0.0, 0.0)), MapKit.MKMapRect)
+            self.assertIsInstance(MapKit.MKMapRectInset(MapKit.MKMapRect(), 0.0, 0.0), MapKit.MKMapRect)
+            self.assertIsInstance(MapKit.MKMapRectOffset(MapKit.MKMapRect(), 0.0, 0.0), MapKit.MKMapRect)
 
             self.assertArgIsOut(MapKit.MKMapRectDivide, 1)
             self.assertArgIsOut(MapKit.MKMapRectDivide, 2)

@@ -33,8 +33,8 @@ if sys.maxsize > 2 ** 32:
             self.assertArgIsBOOL(TestMKMapViewHelper.mapView_regionWillChangeAnimated_, 1)
             self.assertArgIsBOOL(TestMKMapViewHelper.mapView_regionDidChangeAnimated_, 1)
             self.assertArgIsBOOL(TestMKMapViewHelper.mapViewDidFinishRenderingMap_fullyRendered_, 1)
-            self.assertArgHasType(TestMKMapViewHelper.mapView_annotationView_didChangeDragState_fromOldState_, 2, objc._C_UInteger)
-            self.assertArgHasType(TestMKMapViewHelper.mapView_annotationView_didChangeDragState_fromOldState_, 3, objc._C_UInteger)
+            self.assertArgHasType(TestMKMapViewHelper.mapView_annotationView_didChangeDragState_fromOldState_, 2, objc._C_NSUInteger)
+            self.assertArgHasType(TestMKMapViewHelper.mapView_annotationView_didChangeDragState_fromOldState_, 3, objc._C_NSUInteger)
 
         @min_os_level("10.9")
         def testClasses(self):
@@ -56,16 +56,10 @@ if sys.maxsize > 2 ** 32:
             self.assertResultIsBOOL(MapKit.MKMapView.isRotateEnabled)
             self.assertResultIsBOOL(MapKit.MKMapView.isPitchEnabled)
 
-            self.assertArgIsBOOL(MapKit.MKMapView.setShowsCompas_, 0)
-            self.assertArgIsBOOL(MapKit.MKMapView.setShowsZoomControls_, 0)
-            self.assertArgIsBOOL(MapKit.MKMapView.setShowsScale_, 0)
             self.assertArgIsBOOL(MapKit.MKMapView.setShowsPointsOfInterest_, 0)
             self.assertArgIsBOOL(MapKit.MKMapView.setShowsBuildings_, 0)
             self.assertArgIsBOOL(MapKit.MKMapView.setShowsUserLocation_, 0)
 
-            self.assertResultIsBOOL(MapKit.MKMapView.showsCompas)
-            self.assertResultIsBOOL(MapKit.MKMapView.showsZoomControls)
-            self.assertResultIsBOOL(MapKit.MKMapView.showsScale)
             self.assertResultIsBOOL(MapKit.MKMapView.showsPointsOfInterest)
             self.assertResultIsBOOL(MapKit.MKMapView.showsBuildings)
             self.assertResultIsBOOL(MapKit.MKMapView.showsUserLocation)

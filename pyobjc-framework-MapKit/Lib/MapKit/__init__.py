@@ -9,6 +9,7 @@ import objc
 import sys
 import Cocoa
 import CoreLocation
+import Quartz
 
 from MapKit import _metadata, _MapKit
 
@@ -21,7 +22,7 @@ sys.modules['MapKit'] = mod = objc.ObjCLazyModule(
         'objc': objc,
         '__path__': __path__,
         '__loader__': globals().get('__loader__', None),
-    }, (Cocoa, CoreLocation))
+    }, (Cocoa, CoreLocation, Quartz))
 
 import sys
 del sys.modules['MapKit._metadata']

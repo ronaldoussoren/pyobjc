@@ -33,6 +33,7 @@ setup(
         'pyobjc-core>=3.1',
         'pyobjc-framework-Cocoa>=3.1',
         'pyobjc-framework-CoreLocation>=3.1',
+        'pyobjc-framework-Quartz>=3.1',
     ],
     min_os_level="10.9",
 )

@@ -16,8 +16,8 @@ if sys.maxsize > 2 ** 32:
             self.assertIsInstance(MapKit.MKMapItem, objc.objc_class)
 
             self.assertResultIsBOOL(MapKit.MKMapItem.isCurrentLocation)
-            self.assertResultIsBOOL(MapKit.MKMapItem.openInMapsWithLaunchOptions_))
-            self.assertResultIsBOOL(MapKit.MKMapItem.openMapsWithItems_launchOptions_))
+            self.assertResultIsBOOL(MapKit.MKMapItem.openInMapsWithLaunchOptions_)
+            self.assertResultIsBOOL(MapKit.MKMapItem.openMapsWithItems_launchOptions_)
 
         @min_os_level("10.9")
         def testConstants(self):

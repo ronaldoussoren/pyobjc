@@ -10,12 +10,6 @@ from PyObjCTools.TestSupport import *
 if sys.maxsize > 2 ** 32:
     import MapKit
 
-    class TestMKAnnotationHelpler (MapKit.NSObject):
-        def coordinate(self):
-            return 1
-        def setCoordinate_(self, value):
-            pass
-
     class TestMKAnnotationView (TestCase):
         @min_os_level("10.9")
         def testConstants(self):

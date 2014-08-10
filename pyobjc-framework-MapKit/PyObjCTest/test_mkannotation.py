@@ -10,7 +10,7 @@ except NameError:
 if sys.maxsize > 2 ** 32:
     import MapKit
 
-    class TestMKAnnotationHelpler (MapKit.NSObject):
+    class TestMKAnnotationHelper (MapKit.NSObject):
         def coordinate(self):
             return 1
         def setCoordinate_(self, value):
@@ -21,8 +21,8 @@ if sys.maxsize > 2 ** 32:
         def testProtocols(self):
             self.assertIsInstance(objc.protocolNamed("MKAnnotation"), objc.formal_protocol)
 
-            self.assertResultHasType(TestMKAnnotationHelpler.coordinate, MapKit.CLLocationCoordinate2D.__typestr__)
-            self.assertArgHasType(TestMKAnnotationHelpler.setCoordinate_, 0, MapKit.CLLocationCoordinate2D.__typestr__)
+            self.assertResultHasType(TestMKAnnotationHelper.coordinate, MapKit.CLLocationCoordinate2D.__typestr__)
+            self.assertArgHasType(TestMKAnnotationHelper.setCoordinate_, 0, MapKit.CLLocationCoordinate2D.__typestr__)
 
 
 
