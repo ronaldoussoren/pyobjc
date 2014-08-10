@@ -1,0 +1,36 @@
+// objective.metadata exceptions file, see its document
+// for information on how to update this file.
+{
+ "definitions": {
+  "classes": {},
+  "formal_protocols": {},
+  "functions": {
+   "GCExtendedGamepadSnapShotDataV100FromNSData": {
+    "args": {
+     "0": {}
+    }
+   },
+   "GCGamepadSnapShotDataV100FromNSData": {
+    "args": {
+     "0": {}
+    }
+   },
+   "NSDataFromGCExtendedGamepadSnapShotDataV100": {
+    "args": {
+     "0": {}
+    }
+   },
+   "NSDataFromGCGamepadSnapShotDataV100": {
+    "args": {
+     "0": {}
+    }
+   }
+  },
+  "structs": {
+    "GCExtendedGamepadSnapShotDataV100": {
+       "pack": 1
+    }
+  },
+  "informal_protocols": {}
+ }
+}

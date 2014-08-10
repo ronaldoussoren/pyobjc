@@ -98,8 +98,7 @@ REQUIRES_10_9=[
         'pyobjc-framework-MediaAccessibility=='+VERSION,
         'pyobjc-framework-MediaLibrary=='+VERSION,
         #'pyobjc-framework-SpriteKit=='+VERSION,
-        #'pyobjc-framework-GameController=='+VERSION,
-        #'pyobjc-framework-AVKit=='+VERSION,
+        'pyobjc-framework-GameController=='+VERSION,
 ]
 DEL_REQUIRES_10_9=[
         'pyobjc-framework-Message=',
