@@ -7,19 +7,32 @@ for general tips and tricks regarding the translation between Python
 and (Objective-)C frameworks
 '''
 
-from pyobjc_setup import setup
+from pyobjc_setup import setup, Extension
+import os
 
 setup(
     name='pyobjc-framework-MapKit',
     version="3.1",
     description = "Wrappers for the framework MapKit on Mac OS X",
     packages = [ "MapKit" ],
+    ext_modules = [
+        Extension("MapKit._MapKit",
+            [ "Modules/_MapKit.m" ],
+            extra_link_args=["-framework", "MapKit"],
+            depends=[
+                os.path.join('Modules', fn)
+                for fn in os.listdir('Modules')
+                if fn.startswith('_MapKit')
+            ]
+        ),
+    ],
     setup_requires = [
         'pyobjc-core>=3.1',
     ],
     install_requires = [
         'pyobjc-core>=3.1',
         'pyobjc-framework-Cocoa>=3.1',
+        'pyobjc-framework-CoreLocation>=3.1',
     ],
     min_os_level="10.9",
 )

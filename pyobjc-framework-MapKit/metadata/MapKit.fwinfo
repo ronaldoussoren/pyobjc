@@ -1,0 +1,174 @@
+// objective.metadata exceptions file, see its document
+// for information on how to update this file.
+{
+ "definitions": {
+  "classes": {
+   "MKGeodesicPolyline": {
+    "methods": [
+     {
+      "args": {
+       "0": {}
+      }, 
+      "class_method": true, 
+      "selector": "polylineWithPoints:count:"
+     }, 
+     {
+      "args": {
+       "0": {}
+      }, 
+      "class_method": true, 
+      "selector": "polylineWithCoordinates:count:"
+     }
+    ]
+   }, 
+   "MKMultiPoint": {
+    "methods": [
+     {
+      "args": {
+       "0": {}
+      }, 
+      "class_method": false, 
+      "selector": "getCoordinates:range:"
+     }, 
+     {
+      "class_method": false, 
+      "retval": {}, 
+      "selector": "points"
+     }
+    ], 
+    "properties": [
+     {
+      "attributes": [
+       "nonatomic", 
+       "readonly"
+      ], 
+      "name": "points"
+     }
+    ]
+   }, 
+   "MKOverlayPathRenderer": {
+    "methods": [
+     {
+      "args": {
+       "0": {}
+      }, 
+      "class_method": false, 
+      "selector": "applyStrokePropertiesToContext:atZoomScale:"
+     }, 
+     {
+      "args": {
+       "0": {}
+      }, 
+      "class_method": false, 
+      "selector": "applyFillPropertiesToContext:atZoomScale:"
+     }, 
+     {
+      "args": {
+       "0": {}, 
+       "1": {}
+      }, 
+      "class_method": false, 
+      "selector": "strokePath:inContext:"
+     }, 
+     {
+      "args": {
+       "0": {}, 
+       "1": {}
+      }, 
+      "class_method": false, 
+      "selector": "fillPath:inContext:"
+     }, 
+     {
+      "class_method": false, 
+      "retval": {}, 
+      "selector": "path"
+     }, 
+     {
+      "args": {
+       "0": {}
+      }, 
+      "class_method": false, 
+      "selector": "setPath:"
+     }
+    ], 
+    "properties": [
+     {
+      "attributes": [], 
+      "name": "path"
+     }
+    ]
+   }, 
+   "MKOverlayRenderer": {
+    "methods": [
+     {
+      "args": {
+       "2": {}
+      }, 
+      "class_method": false, 
+      "selector": "drawMapRect:zoomScale:inContext:"
+     }
+    ]
+   }, 
+   "MKPolygon": {
+    "methods": [
+     {
+      "args": {
+       "0": {}
+      }, 
+      "class_method": true, 
+      "selector": "polygonWithPoints:count:"
+     }, 
+     {
+      "args": {
+       "0": {}
+      }, 
+      "class_method": true, 
+      "selector": "polygonWithPoints:count:interiorPolygons:"
+     }, 
+     {
+      "args": {
+       "0": {}
+      }, 
+      "class_method": true, 
+      "selector": "polygonWithCoordinates:count:"
+     }, 
+     {
+      "args": {
+       "0": {}
+      }, 
+      "class_method": true, 
+      "selector": "polygonWithCoordinates:count:interiorPolygons:"
+     }
+    ]
+   }, 
+   "MKPolyline": {
+    "methods": [
+     {
+      "args": {
+       "0": {}
+      }, 
+      "class_method": true, 
+      "selector": "polylineWithPoints:count:"
+     }, 
+     {
+      "args": {
+       "0": {}
+      }, 
+      "class_method": true, 
+      "selector": "polylineWithCoordinates:count:"
+     }
+    ]
+   }
+  }, 
+  "formal_protocols": {}, 
+  "functions": {
+   "MKMapRectDivide": {
+    "args": {
+     "1": {}, 
+     "2": {}
+    }
+   }
+  }, 
+  "informal_protocols": {}
+ }
+}

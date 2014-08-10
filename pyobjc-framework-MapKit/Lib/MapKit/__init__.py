@@ -8,8 +8,9 @@ documentation for details on how to use these functions and classes.
 import objc
 import sys
 import Cocoa
+import CoreLocation
 
-from MapKit import _metadata
+from MapKit import _metadata, _MapKit
 
 sys.modules['MapKit'] = mod = objc.ObjCLazyModule(
     "MapKit",
@@ -20,7 +21,8 @@ sys.modules['MapKit'] = mod = objc.ObjCLazyModule(
         'objc': objc,
         '__path__': __path__,
         '__loader__': globals().get('__loader__', None),
-    }, (Cocoa,))
+    }, (Cocoa, CoreLocation))
 
 import sys
 del sys.modules['MapKit._metadata']
+del sys.modules['MapKit._MapKit']

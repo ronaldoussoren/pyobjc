@@ -1,18 +1,30 @@
 import sys
+from PyObjCTools.TestSupport import *
 
 try:
     unicode
 except NameError:
     unicode = str
 
+
 if sys.maxsize > 2 ** 32:
-    from PyObjCTools.TestSupport import *
     import MapKit
 
+    class TestMKAnnotationHelpler (MapKit.NSObject):
+        def coordinate(self):
+            return 1
+        def setCoordinate_(self, value):
+            pass
+
     class TestMKAnnotation (TestCase):
-        @min_os_level("10.10")
-        def testClasses(self):
-            self.assertIsInstance(MapKit.MKAnnotation, objc.objc_class)
+        @min_os_level("10.9")
+        def testProtocols(self):
+            self.assertIsInstance(objc.protocolNamed("MKAnnotation"), objc.formal_protocol)
+
+            self.assertResultHasType(TestMKAnnotationHelpler.coordinate, MapKit.CLLocationCoordinate2D.__typestr__)
+            self.assertArgHasType(TestMKAnnotationHelpler.setCoordinate_, 0, MapKit.CLLocationCoordinate2D.__typestr__)
+
+
 
 if __name__ == "__main__":
     main()
