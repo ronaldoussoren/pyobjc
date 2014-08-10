@@ -8,6 +8,10 @@ Version 3.1
 
 * Support OSX 10.10 in PyObjCTools.TestSupport (version comparison was too naive)
 
+* Add bindings for CoreBluetooth, MapKit, AVKit, MediaLibrary, MediaAccessibility (all new in OSX 10.9)
+
+* Add bindings for FinderSync (all new in OSX 10.10)
+
 Version 3.0.2
 -------------
 
