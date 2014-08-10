@@ -30,12 +30,12 @@ if sys.maxsize > 2 ** 32:
             self.assertIsInstance(s.height, float)
 
             s = MapKit.MKMapRect()
-            self.assertIsInstance(s.origin, float)
-            self.assertIsInstance(s.size, float)
+            self.assertIsInstance(s.origin, MapKit.MKMapPoint)
+            self.assertIsInstance(s.size, MapKit.MKMapSize)
 
         @min_os_level("10.9")
         def testConstants(self):
-            self.assertIsInstance(MapKit.MKMapSizeWorld, MapKit.MkMapSize)
+            self.assertIsInstance(MapKit.MKMapSizeWorld, MapKit.MKMapSize)
             self.assertIsInstance(MapKit.MKMapRectWorld, MapKit.MKMapRect)
             self.assertIsInstance(MapKit.MKMapRectNull, MapKit.MKMapRect)
 

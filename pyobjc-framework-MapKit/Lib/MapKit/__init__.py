@@ -12,12 +12,13 @@ import CoreLocation
 import Quartz
 
 from MapKit import _metadata, _MapKit
+from AppKit._inlines import _inline_list_
 
 sys.modules['MapKit'] = mod = objc.ObjCLazyModule(
     "MapKit",
     "com.apple.MapKit",
     objc.pathForFramework("/System/Library/Frameworks/MapKit.framework"),
-    _metadata.__dict__, None, {
+    _metadata.__dict__, _inline_list_, {
         '__doc__': __doc__,
         'objc': objc,
         '__path__': __path__,

@@ -17,8 +17,8 @@ if sys.maxsize > 2 ** 32:
         def testClasses(self):
             self.assertIsInstance(MapKit.MKLocalSearch, objc.objc_class)
 
-            self.assertArgIsBlock(MapKit.MKLocationSearch.startWithCompletionHandler_, 0, MKLocalSearchCompletionHandler)
-            self.assertResultIsBOOL(MapKit.MKLocationSearch.isSearching)
+            self.assertArgIsBlock(MapKit.MKLocalSearch.startWithCompletionHandler_, 0, MKLocalSearchCompletionHandler)
+            self.assertResultIsBOOL(MapKit.MKLocalSearch.isSearching)
 
 if __name__ == "__main__":
     main()

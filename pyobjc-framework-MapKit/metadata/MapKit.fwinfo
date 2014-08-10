@@ -57,6 +57,26 @@
      }
     ]
    },
+   "MKLocalSearch": {
+    "methods": [
+     {
+      "selector": "startWithCompletionHandler:",
+      "class_method": false,
+      "args": {
+        "0": {
+	  "callable": {
+	    "arguments": {
+	      "0": { "typestr": "^v" },
+	      "1": { "typestr": "@" },
+	      "2": { "typestr": "@" }
+	    },
+	    "retval": { "typestr": "v" }
+	  }
+	}
+      }
+     }
+    ]
+   },
    "MKMapSnapshotter": {
     "methods": [
      {

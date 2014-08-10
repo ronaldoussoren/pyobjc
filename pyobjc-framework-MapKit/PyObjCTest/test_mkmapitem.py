@@ -28,6 +28,9 @@ if sys.maxsize > 2 ** 32:
             self.assertIsInstance(MapKit.MKLaunchOptionsDirectionsModeWalking, unicode)
             self.assertIsInstance(MapKit.MKLaunchOptionsMapCenterKey, unicode)
             self.assertIsInstance(MapKit.MKLaunchOptionsMapSpanKey, unicode)
+
+        @min_os_level("10.10")
+        def testConstants10_10(self):
             self.assertIsInstance(MapKit.MKLaunchOptionsCameraKey, unicode)
 
 if __name__ == "__main__":

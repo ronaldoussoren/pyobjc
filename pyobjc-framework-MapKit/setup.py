@@ -25,6 +25,9 @@ setup(
                 if fn.startswith('_MapKit')
             ]
         ),
+        Extension("MapKit._inlines",
+            [ "Modules/_MapKit_inlines.m" ],
+        ),
     ],
     setup_requires = [
         'pyobjc-core>=3.1',
