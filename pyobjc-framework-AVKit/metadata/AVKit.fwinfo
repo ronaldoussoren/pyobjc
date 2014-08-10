@@ -1,0 +1,30 @@
+// objective.metadata exceptions file, see its document
+// for information on how to update this file.
+{
+ "definitions": {
+  "classes": {
+    "AVPlayerView": {
+       "methods": [
+         {
+	   "class_method": false,
+	   "selector": "beginTrimmingWithCompletionHandler:",
+	   "args": {
+	      "0": {
+	        "callable": {
+		  "arguments": {
+		    "0": { "typestr": "^v" },
+		    "1": { "typestr": "q" }
+		  },
+	          "retval": { "typestr": "v" }
+		}
+              }
+	   }
+	 }
+       ]
+     }
+  },
+  "formal_protocols": {},
+  "functions": {},
+  "informal_protocols": {}
+ }
+}
