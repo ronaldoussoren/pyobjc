@@ -93,8 +93,16 @@ DEL_REQUIRES_10_8=[
 
 REQUIRES_10_9=[
         'pyobjc-framework-CoreBluetooth=='+VERSION,
+        #'pyobjc-framework-MapKit=='+VERSION,
+        #'pyobjc-framework-MediaAccessibility=='+VERSION,
+        #'pyobjc-framework-MediaLibrary=='+VERSION,
+        #'pyobjc-framework-SpriteKit=='+VERSION,
+        #'pyobjc-framework-GameController=='+VERSION,
+        #'pyobjc-framework-AVKit=='+VERSION,
 ]
 DEL_REQUIRES_10_9=[
+        'pyobjc-framework-Message=',
+        'pyobjc-framework-ServerNotification=',
 ]
 
 REQUIRES_10_10=[

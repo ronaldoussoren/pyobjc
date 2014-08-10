@@ -1,0 +1,23 @@
+API notes: MapKit framework
+===========================
+
+Apple Documentation
+-------------------
+
+The framework is documented on `Apple's developer website`__
+
+.. __: http://developer.apple.com/library/mac/#documentation/MapKit/Reference/MapKitFrameworkRef/_index.html
+
+API Notes
+---------
+
+The entire "MapKit" framework on MacOSX 10.9 (or later) is available from Python.
+
+.. note::
+
+   The MapKit framework is only available in 64-bit applications.
+
+.. note::
+
+   The MapKit framework is only available in applications in the AppStore (or signed by
+   a development key of a developer that could ship to the AppStore)
