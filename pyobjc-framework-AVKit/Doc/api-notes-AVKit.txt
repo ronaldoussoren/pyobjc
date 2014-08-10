@@ -1,0 +1,20 @@
+API Notes: AVKit framework
+==========================
+
+Apple documentation
+-------------------
+
+The full API is described in `Apple's documentation`__, both
+the C and Objective-C APIs are available (but see the `API Notes`_ below).
+
+.. __: https://developer.apple.com/library/mac/documentation/UserExperience/Conceptual/AVKit/AVKit.html
+
+
+API Notes
+---------
+
+The full API for the AVKit framework is available from Python
+
+.. note::
+
+   This framework is only available on OSX 10.9 and later and requires a 64-bit binary.
