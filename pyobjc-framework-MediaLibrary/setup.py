@@ -23,15 +23,4 @@ setup(
         'pyobjc-framework-Cocoa>=3.1',
         'pyobjc-framework-Quartz>=3.1',
     ],
-    ext_modules = [
-        Extension("MediaLibrary._MediaLibrary",
-            [ "Modules/_MediaLibrary.m" ],
-            extra_link_args=["-framework", "MediaLibrary"],
-            depends=[
-                os.path.join('Modules', fn)
-                    for fn in os.listdir('Modules')
-                    if fn.startswith('_MediaLibrary')
-            ]
-        ),
-    ],
 )

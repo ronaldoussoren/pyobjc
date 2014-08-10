@@ -10,7 +10,7 @@ import sys
 import Cocoa
 import Quartz
 
-from MediaLibrary import _metadata, _MediaLibrary
+from MediaLibrary import _metadata
 
 sys.modules['MediaLibrary'] = mod = objc.ObjCLazyModule(
     "MediaLibrary",
@@ -25,4 +25,3 @@ sys.modules['MediaLibrary'] = mod = objc.ObjCLazyModule(
 
 import sys
 del sys.modules['MediaLibrary._metadata']
-del sys.modules['MediaLibrary._MediaLibrary']
