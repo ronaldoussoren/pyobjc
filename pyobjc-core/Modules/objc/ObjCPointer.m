@@ -51,7 +51,7 @@ static PyMemberDef PyObjCPointer_members[] = {
     },
     {
         .name   = "pointerAsInteger",
-        .type   = T_INT,
+        .type   = T_LONG,
         .offset = offsetof(PyObjCPointer, ptr),
         .flags  = READONLY,
     },
