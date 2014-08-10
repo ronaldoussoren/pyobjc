@@ -363,7 +363,7 @@ class TestCase (_unittest.TestCase):
     def assertResultIsVariableSize(self, method, message = None):
         info = method.__metadata__()
         if not info.get('retval', {}).get('c_array_of_variable_length', False):
-            self.fail(message or "result of %r is not a variable sized array"%(argno, method))
+            self.fail(message or "result of %r is not a variable sized array"%(method,))
 
     def assertArgSizeInResult(self, method, argno, message = None):
         if isinstance(method, objc.selector):
