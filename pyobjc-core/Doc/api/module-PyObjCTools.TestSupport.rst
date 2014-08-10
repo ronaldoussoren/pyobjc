@@ -11,7 +11,7 @@ wrappers.
 
 .. warning::
 
-   This module is primarily used for testing PyObjC 
+   This module is primarily used for testing PyObjC
    and the API isn't fully stable.
 
 
@@ -29,7 +29,7 @@ wrappers.
    "literal".
 
    The *value* is a byte string of length 4 and contains
-   the contents of the :c:type:`char` C literal with 
+   the contents of the :c:type:`char` C literal with
    the four character code, for example ``b"abcd"``.
 
 .. function:: cast_int(value)
@@ -56,8 +56,13 @@ wrappers.
 .. function:: os_release()
 
    Returns the major release of Mac OS X on the current machine,
-   for example "10.5" on all systems running a version 
+   for example "10.5" on all systems running a version
    of Leopard.
+
+.. function:: os_level_key(release)
+
+   Return a value for *release* that can be used to compare
+   two versions with the "<" and ">" operators.
 
 .. function:: is32Bit()
 
@@ -116,7 +121,7 @@ wrappers.
 
    .. method:: run()
 
-      Calls :meth:`unitest.TestCase.run`, but ensures that there is a fresh 
+      Calls :meth:`unitest.TestCase.run`, but ensures that there is a fresh
       autorelease pool for every test. This makes is less likely that two
       tests accidenty influence each other.
 
@@ -209,7 +214,7 @@ wrappers.
 
    .. method:: assertIsNullTerminated(method[, message])
 
-      Asserts that the callable has metadata that indicates that the 
+      Asserts that the callable has metadata that indicates that the
       callable is variadic function where the argument list is terminated by
       a null value.
 
@@ -350,7 +355,7 @@ wrappers.
 
       *count* can also be an tuple of two elements: the first elements
       specifies the size before the call, the second the size
-      after the call. 
+      after the call.
 
    .. method:: assertArgIsOut(method, argno[, message])
 

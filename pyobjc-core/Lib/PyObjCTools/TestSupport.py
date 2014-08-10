@@ -228,6 +228,12 @@ def min_python_release(version):
     return onlyIf(_sys.version_info[:2] >= parts, "Requires Python %s or later"%(version,))
 
 
+def os_level_key(release):
+    """
+    Return an object that can be used to compare two releases.
+    """
+    return map(int, release.split('.'))
+
 def min_os_level(release):
     """
     Usage::
@@ -238,7 +244,7 @@ def min_os_level(release):
             def testSnowLeopardCode(self):
                 pass
     """
-    return onlyIf(os_release() >= release, "Requires OSX %s or later"%(release,))
+    return onlyIf(os_level_key(os_release()) >= os_level_key(release), "Requires OSX %s or later"%(release,))
 
 def max_os_level(release):
     """
@@ -250,7 +256,7 @@ def max_os_level(release):
             def testUntilLeopard(self):
                 pass
     """
-    return onlyIf(os_release() <= release, "Requires OSX upto %s"%(release,))
+    return onlyIf(os_level_key(os_release()) <= os_level_key(release), "Requires OSX upto %s"%(release,))
 
 def os_level_between(min_release, max_release):
     """
@@ -262,7 +268,7 @@ def os_level_between(min_release, max_release):
             def testUntilLeopard(self):
                 pass
     """
-    return onlyIf(min_release <= os_release() <= max_release, "Requires OSX %s upto %s"%(min_release, max_release))
+    return onlyIf(os_level_key(min_release) <= os_level_key(os_release()) <= os_level_key(max_release), "Requires OSX %s upto %s"%(min_release, max_release))
 
 _poolclass = objc.lookUpClass('NSAutoreleasePool')
 
