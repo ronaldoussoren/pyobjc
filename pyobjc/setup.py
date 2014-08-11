@@ -21,7 +21,7 @@ VERSION="3.1"
 # packaged into an egg file because of this.
 
 REQUIRES=[
-        'py2app>=0.9',
+        'py2app>=0.10',
         'pyobjc-core=='+VERSION,
         'pyobjc-framework-AddressBook=='+VERSION,
         'pyobjc-framework-AppleScriptKit=='+VERSION,
