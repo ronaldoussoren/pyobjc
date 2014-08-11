@@ -20,7 +20,7 @@ if sys.maxsize > 2 ** 32:
             self.assertResultIsBOOL(GameController.GCExtendedGamepadSnapShotDataV100FromNSData)
             self.assertArgIsOut(GameController.GCExtendedGamepadSnapShotDataV100FromNSData, 0)
 
-            self.assertArgIsIn(GameController.GCExtendedGamepadSnapShotDataV100FromNSData, 0)
+            self.assertArgIsOut(GameController.GCExtendedGamepadSnapShotDataV100FromNSData, 0)
 
         @min_os_level("10.9")
         def test_structs(self):

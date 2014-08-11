@@ -9,7 +9,7 @@ import objc
 import sys
 import Cocoa
 
-from GameController import _metadata, _GameController
+from GameController import _metadata
 
 sys.modules['GameController'] = mod = objc.ObjCLazyModule(
     "GameController",
@@ -24,4 +24,3 @@ sys.modules['GameController'] = mod = objc.ObjCLazyModule(
 
 import sys
 del sys.modules['GameController._metadata']
-del sys.modules['GameController._GameController']

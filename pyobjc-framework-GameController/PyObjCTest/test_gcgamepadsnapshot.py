@@ -13,7 +13,7 @@ if sys.maxsize > 2 ** 32:
     class TestGCGamepadSnapshot (TestCase):
         @min_os_level("10.9")
         def testClasses(self):
-            self.assertIsInstance(GameController.GCGamepadSnapshotCController, objc.objc_class)
+            self.assertIsInstance(GameController.GCGamepadSnapshot, objc.objc_class)
 
         @min_os_level("10.9")
         def testStructs(self):
@@ -22,14 +22,14 @@ if sys.maxsize > 2 ** 32:
             v = GameController.GCGamepadSnapShotDataV100()
             self.assertIsInstance(v.version, int)
             self.assertIsInstance(v.size, int)
-            self.assertIsInstance(v.dpadX, int)
-            self.assertIsInstance(v.dpadY, int)
-            self.assertIsInstance(v.buttonA, int)
-            self.assertIsInstance(v.buttonB, int)
-            self.assertIsInstance(v.buttonX, int)
-            self.assertIsInstance(v.buttonY, int)
-            self.assertIsInstance(v.leftShoulder, int)
-            self.assertIsInstance(v.rightShoulder, int)
+            self.assertIsInstance(v.dpadX, float)
+            self.assertIsInstance(v.dpadY, float)
+            self.assertIsInstance(v.buttonA, float)
+            self.assertIsInstance(v.buttonB, float)
+            self.assertIsInstance(v.buttonX, float)
+            self.assertIsInstance(v.buttonY, float)
+            self.assertIsInstance(v.leftShoulder, float)
+            self.assertIsInstance(v.rightShoulder, float)
 
         @min_os_level("10.9")
         def testFunctions(self):

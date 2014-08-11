@@ -21,7 +21,7 @@ if sys.maxsize > 2 ** 32:
             self.assertArgIsBlock(GameController.GCController.setControllerPausedHandler_, 0, b"v@")
 
             self.assertResultIsBOOL(GameController.GCController.isAttachedToDevice)
-            self.assertArgIsBOOL(GameController.GCController.setAttachedToDevice_, 0)
+            #self.assertArgIsBOOL(GameController.GCController.setAttachedToDevice_, 0)
 
             self.assertArgIsBlock(GameController.GCController.startWirelessControllerDiscoveryWithCompletionHandler_, 0, b"v")
 
