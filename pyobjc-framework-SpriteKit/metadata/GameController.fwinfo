@@ -1,0 +1,286 @@
+// objective.metadata exceptions file, see its document
+// for information on how to update this file.
+{
+ "definitions": {
+  "classes": {
+   "GCController": {
+     "methods": [
+       {
+         "class_method": false,
+	 "selector": "startWirelessControllerDiscoveryWithCompletionHandler:",
+	 "arguments": {
+	  "2": {
+	   "callable": {
+	     "arguments": {
+	        "0": { "typestr": "^v" }
+	     },
+	     "retval": {
+	       "typestr": "v"
+	     }
+	   }
+	  }
+	 }
+       },
+       {
+         "class_method": false,
+	 "selector": "controllerPausedHandler",
+	 "retval": {
+	   "callable": {
+	     "arguments": {
+	        "0": { "typestr": "^v" },
+	        "1": { "typestr": "@" }
+	     },
+	     "retval": {
+	       "typestr": "v"
+	     }
+	   }
+	 }
+       },
+       {
+         "class_method": false,
+	 "selector": "setControllerPausedHandler:",
+	 "arguments": {
+	  "2": {
+	   "callable": {
+	     "arguments": {
+	        "0": { "typestr": "^v" },
+	        "1": { "typestr": "@" }
+	     },
+	     "retval": {
+	       "typestr": "v"
+	     }
+	   }
+	  }
+	 }
+       }
+     ]
+   },
+   "GCControllerDirectionPad" : {
+     "methods": [
+       {
+         "class_method": false,
+	 "selector": "valueChangedHandler",
+	 "retval": {
+	   "callable": {
+	     "arguments": {
+	        "0": { "typestr": "^v" },
+	        "1": { "typestr": "@" },
+	        "2": { "typestr": "f" },
+	        "3": { "typestr": "f" }
+	     },
+	     "retval": {
+	       "typestr": "v"
+	     }
+	   }
+	 }
+       },
+       {
+         "class_method": false,
+	 "selector": "setValueChangedHandler:",
+	 "arguments": {
+	  "2": {
+	   "callable": {
+	     "arguments": {
+	        "0": { "typestr": "^v" },
+	        "1": { "typestr": "@" },
+	        "2": { "typestr": "f" },
+	        "3": { "typestr": "f" }
+	     },
+	     "retval": {
+	       "typestr": "v"
+	     }
+	   }
+	  }
+	 }
+       }
+     ]
+   },
+   "GCControllerButtonInput" : {
+     "methods": [
+       {
+         "class_method": false,
+	 "selector": "valueChangedHandler",
+	 "retval": {
+	   "callable": {
+	     "arguments": {
+	        "0": { "typestr": "^v" },
+	        "1": { "typestr": "@" },
+	        "2": { "typestr": "f" },
+	        "3": { "typestr": "Z" }
+	     },
+	     "retval": {
+	       "typestr": "v"
+	     }
+	   }
+	 }
+       },
+       {
+         "class_method": false,
+	 "selector": "setValueChangedHandler:",
+	 "arguments": {
+	  "2": {
+	   "callable": {
+	     "arguments": {
+	        "0": { "typestr": "^v" },
+	        "1": { "typestr": "@" },
+	        "2": { "typestr": "f" },
+	        "3": { "typestr": "Z" }
+	     },
+	     "retval": {
+	       "typestr": "v"
+	     }
+	   }
+	  }
+	 }
+       }
+     ]
+   },
+   "GCControllerAxisInput" : {
+     "methods": [
+       {
+         "class_method": false,
+	 "selector": "valueChangedHandler",
+	 "retval": {
+	   "callable": {
+	     "arguments": {
+	        "0": { "typestr": "^v" },
+	        "1": { "typestr": "@" },
+	        "2": { "typestr": "f" }
+	     },
+	     "retval": {
+	       "typestr": "v"
+	     }
+	   }
+	 }
+       },
+       {
+         "class_method": false,
+	 "selector": "setValueChangedHandler:",
+	 "arguments": {
+	  "2": {
+	   "callable": {
+	     "arguments": {
+	        "0": { "typestr": "^v" },
+	        "1": { "typestr": "@" },
+	        "2": { "typestr": "f" }
+	     },
+	     "retval": {
+	       "typestr": "v"
+	     }
+	   }
+	  }
+	 }
+       }
+     ]
+   },
+   "GCExtendedGamepad": {
+     "methods": [
+       {
+         "class_method": false,
+	 "selector": "valueChangedHandler",
+	 "retval": {
+	   "callable": {
+	     "arguments": {
+	        "0": { "typestr": "^v" },
+	        "1": { "typestr": "@" },
+	        "2": { "typestr": "@" }
+	     },
+	     "retval": {
+	       "typestr": "v"
+	     }
+	   }
+	 }
+       },
+       {
+         "class_method": false,
+	 "selector": "setValueChangedHandler:",
+	 "arguments": {
+	  "2": {
+	   "callable": {
+	     "arguments": {
+	        "0": { "typestr": "^v" },
+	        "1": { "typestr": "@" },
+	        "2": { "typestr": "@" }
+	     },
+	     "retval": {
+	       "typestr": "v"
+	     }
+	   }
+	  }
+	 }
+       }
+     ]
+   },
+   "GCGamepad": {
+     "methods": [
+       {
+         "class_method": false,
+	 "selector": "valueChangedHandler",
+	 "retval": {
+	   "callable": {
+	     "arguments": {
+	        "0": { "typestr": "^v" },
+	        "1": { "typestr": "@" },
+	        "2": { "typestr": "@" }
+	     },
+	     "retval": {
+	       "typestr": "v"
+	     }
+	   }
+	 }
+       },
+       {
+         "class_method": false,
+	 "selector": "setValueChangedHandler:",
+	 "arguments": {
+	  "2": {
+	   "callable": {
+	     "arguments": {
+	        "0": { "typestr": "^v" },
+	        "1": { "typestr": "@" },
+	        "2": { "typestr": "@" }
+	     },
+	     "retval": {
+	       "typestr": "v"
+	     }
+	   }
+	  }
+	 }
+       }
+     ]
+   }
+  },
+  "formal_protocols": {},
+  "functions": {
+   "GCExtendedGamepadSnapShotDataV100FromNSData": {
+    "args": {
+     "0": { "type_modifier": "o" }
+    }
+   },
+   "GCGamepadSnapShotDataV100FromNSData": {
+    "args": {
+     "0": { "type_modifier": "o"}
+    }
+   },
+   "NSDataFromGCExtendedGamepadSnapShotDataV100": {
+    "args": {
+     "0": { "type_modifier": "n"}
+    }
+   },
+   "NSDataFromGCGamepadSnapShotDataV100": {
+    "args": {
+     "0": { "type_modifier": "n" }
+    }
+   }
+  },
+  "structs": {
+    "GCExtendedGamepadSnapShotDataV100": {
+       "pack": 1
+    },
+    "GCGamepadSnapShotDataV100": {
+       "pack": 1
+    }
+  },
+  "informal_protocols": {}
+ }
+}

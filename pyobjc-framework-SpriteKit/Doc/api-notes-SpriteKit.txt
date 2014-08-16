@@ -1,0 +1,23 @@
+API Notes: SpriteKit framework
+===============================
+
+Apple documentation
+-------------------
+
+The full API is described in `Apple's documentation`__, both
+the C and Objective-C APIs are available (but see the `API Notes`_ below).
+
+.. __: https://developer.apple.com/library/mac/documentation/UserExperience/Conceptual/SpriteKit/SpriteKit.html
+
+
+API Notes
+---------
+
+The full API for the SpriteKit framework is available from Python, except for methods that have a vector_float3
+as one of their arguments or as a return value (those require changes to PyObjC's core bridge).
+
+TODO: Document how vectors are handled ("vector_float3" and simular types)
+
+.. note::
+
+   This framework is only available on OSX 10.9 and later and requires a 64-bit binary.
