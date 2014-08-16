@@ -195,7 +195,9 @@ class TestNSArchivingInterop (TestCase):
         dst = cls.progpath = os.path.join(MYDIR, 'dump-nsarchive')
 
         subprocess.check_call([
-            'cc', '-o', dst, src, '-framework', 'Foundation'])
+            'cc', '-o', dst, src, '-framework', 'Foundation',
+            '-DPyObjC_BUILD_RELEASE=%02d%02d'%(tuple(map(int, platform.mac_ver()[0].split('.')[:2]))),
+        ])
 
     @classmethod
     def tearDownClass(cls):

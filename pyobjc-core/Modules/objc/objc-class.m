@@ -53,12 +53,12 @@ PyObjCClass_HiddenSelector(PyObject* tp, SEL sel, BOOL classMethod)
     PyObject* mro;
     Py_ssize_t i, n;
     if (tp == NULL) {
-        return NO;
+        return NULL;
     }
 
     mro = ((PyTypeObject*)tp)->tp_mro;
     if (mro == NULL) {
-        return NO;
+        return NULL;
     }
 
     PyObjC_Assert(PyTuple_Check(mro), NULL);
