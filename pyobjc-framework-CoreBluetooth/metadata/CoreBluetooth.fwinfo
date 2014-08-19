@@ -1,0 +1,94 @@
+// objective.metadata exceptions file, see its document
+// for information on how to update this file.
+{
+ "definitions": {
+  "classes": {
+   "CBCentral": {
+    "methods": [
+     {
+      "class_method": false, 
+      "retval": {}, 
+      "selector": "UUID"
+     }
+    ], 
+    "properties": [
+     {
+      "attributes": [
+       "nonatomic", 
+       "readonly"
+      ], 
+      "name": "UUID"
+     }
+    ]
+   }, 
+   "CBCentralManager": {
+    "methods": [
+     {
+      "args": {
+       "1": {}
+      }, 
+      "class_method": false, 
+      "selector": "initWithDelegate:queue:"
+     }, 
+     {
+      "args": {
+       "1": {}
+      }, 
+      "class_method": false, 
+      "selector": "initWithDelegate:queue:options:"
+     }
+    ]
+   }, 
+   "CBPeripheral": {
+    "methods": [
+     {
+      "class_method": false, 
+      "retval": {}, 
+      "selector": "UUID"
+     }
+    ], 
+    "properties": [
+     {
+      "attributes": [
+       "nonatomic", 
+       "readonly"
+      ], 
+      "name": "UUID"
+     }
+    ]
+   }, 
+   "CBPeripheralManager": {
+    "methods": [
+     {
+      "args": {
+       "1": {}
+      }, 
+      "class_method": false, 
+      "selector": "initWithDelegate:queue:"
+     }, 
+     {
+      "args": {
+       "1": {}
+      }, 
+      "class_method": false, 
+      "selector": "initWithDelegate:queue:options:"
+     }
+    ]
+   }, 
+   "CBUUID": {
+    "methods": [
+     {
+      "args": {
+       "0": {}
+      }, 
+      "class_method": true, 
+      "selector": "UUIDWithCFUUID:"
+     }
+    ]
+   }
+  }, 
+  "formal_protocols": {}, 
+  "functions": {}, 
+  "informal_protocols": {}
+ }
+}

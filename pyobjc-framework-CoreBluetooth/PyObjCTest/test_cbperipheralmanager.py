@@ -38,7 +38,7 @@ class TestCBAdvertisementData (TestCase):
     @min_os_level("10.9")
     def testMethods(self):
         self.assertResultIsBOOL(CoreBluetooth.CBPeripheralManager.isAdvertising)
-        self.assertResultIsBOOL(CoreBluetooth.CBPeripheralManager.updateValue_forCharacteristic_onSubscribedCentrals_))
+        self.assertResultIsBOOL(CoreBluetooth.CBPeripheralManager.updateValue_forCharacteristic_onSubscribedCentrals_)
 
         # XXX: A number of methods have a dispatch_queue as their argument
 

@@ -7,7 +7,8 @@ for general tips and tricks regarding the translation between Python
 and (Objective-)C frameworks
 '''
 
-from pyobjc_setup import setup
+import os
+from pyobjc_setup import setup, Extension
 
 setup(
     name='pyobjc-framework-CoreBluetooth',
@@ -23,4 +24,15 @@ setup(
         'pyobjc-framework-Cocoa>=3.1',
     ],
     min_os_level="10.9",
+    ext_modules = [
+        Extension("CoreBluetooth._CoreBluetooth",
+            [ "Modules/_CoreBluetooth.m" ],
+            extra_link_args=["-framework", "CoreBluetooth"],
+            depends=[
+                os.path.join('Modules', fn)
+                    for fn in os.listdir('Modules')
+                    if fn.startswith('_CoreBluetooth')
+            ]
+        ),
+    ],
 )

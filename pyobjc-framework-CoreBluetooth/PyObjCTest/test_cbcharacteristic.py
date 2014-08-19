@@ -23,7 +23,7 @@ class TestCBAdvertisementData (TestCase):
         self.assertEqual(CoreBluetooth.CBCharacteristicPropertyNotify, 0x10)
         self.assertEqual(CoreBluetooth.CBCharacteristicPropertyIndicate, 0x20)
         self.assertEqual(CoreBluetooth.CBCharacteristicPropertyAuthenticatedSignedWrites, 0x40)
-        self.assertEqual(CoreBluetooth.CBCharacteristicPropertyExtendedPropertie,  0x80)
+        self.assertEqual(CoreBluetooth.CBCharacteristicPropertyExtendedProperties,  0x80)
         self.assertEqual(CoreBluetooth.CBCharacteristicPropertyNotifyEncryptionRequired, 0x100)
         self.assertEqual(CoreBluetooth.CBCharacteristicPropertyIndicateEncryptionRequired, 0x200)
 
