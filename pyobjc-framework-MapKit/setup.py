@@ -14,6 +14,7 @@ setup(
     name='pyobjc-framework-MapKit',
     version="3.1",
     description = "Wrappers for the framework MapKit on Mac OS X",
+    long_description=__doc__,
     packages = [ "MapKit" ],
     ext_modules = [
         Extension("MapKit._MapKit",

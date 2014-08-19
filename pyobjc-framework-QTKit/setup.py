@@ -17,6 +17,7 @@ setup(
     name='pyobjc-framework-QTKit',
     version="3.1",
     description = "Wrappers for the framework QTKit on Mac OS X",
+    long_description=__doc__,
     packages = [ "QTKit" ],
     setup_requires = [
         'pyobjc-core>=3.1',

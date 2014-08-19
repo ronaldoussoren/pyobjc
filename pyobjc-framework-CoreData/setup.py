@@ -13,6 +13,7 @@ setup(
     name='pyobjc-framework-CoreData',
     version="3.1",
     description = "Wrappers for the framework CoreData on Mac OS X",
+    long_description=__doc__,
     packages = [ "CoreData" ],
     setup_requires = [
         'pyobjc-core>=3.1',

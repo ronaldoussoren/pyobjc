@@ -60,7 +60,8 @@ class TestCFHTTPStream (TestCase):
             self.assertArgIsBOOL(CFHTTPReadStreamSetRedirectsAutomatically, 1)
             CFHTTPReadStreamSetRedirectsAutomatically(v, True)
 
-            CFHTTPReadStreamSetProxy(v, "localhost", 8080)
+	    if os_level_key(os_release()) < os_level_key('10.10'):
+		    CFHTTPReadStreamSetProxy(v, "localhost", 8080)
 
         finally:
             os.dup2(fd_2, 2)

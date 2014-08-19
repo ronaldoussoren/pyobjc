@@ -13,6 +13,7 @@ setup(
     name='pyobjc-framework-CoreWLAN',
     version="3.1",
     description = "Wrappers for the framework CoreWLAN on Mac OS X",
+    long_description=__doc__,
     packages = [ "CoreWLAN" ],
     setup_requires = [
         'pyobjc-core>=3.1',

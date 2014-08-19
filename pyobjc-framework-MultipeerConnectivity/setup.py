@@ -13,6 +13,7 @@ setup(
     name='pyobjc-framework-MultipeerConnectivity',
     version="3.1",
     description = "Wrappers for the framework MultipeerConnectivity on Mac OS X",
+    long_description=__doc__,
     packages = [ "MultipeerConnectivity" ],
     setup_requires = [
         'pyobjc-core>=3.1',

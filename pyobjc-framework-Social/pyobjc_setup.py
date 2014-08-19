@@ -155,10 +155,6 @@ import shutil
 import os
 import plistlib
 import sys
-import __main__
-if not os.path.basename(__main__.__file__).startswith('setup.py'):
-    # Workaround to get a proper report when using pyroma.
-    import setup as __main__
 
 CLASSIFIERS = filter(None,
 """
@@ -366,6 +362,8 @@ def Extension(*args, **kwds):
 
     return _Extension(*args, **kwds)
 
+def _sort_key(version):
+   return tuple(int(x) for x in version.split('.'))
 
 def setup(
         min_os_level=None,
@@ -383,10 +381,10 @@ def setup(
 
     else:
         if min_os_level is not None:
-            if os_level < min_os_level:
+            if _sort_key(os_level) < _sort_key(min_os_level):
                 os_compatible = False
         if max_os_level is not None:
-            if os_level > max_os_level:
+            if _sort_key(os_level) > _sort_key(max_os_level):
                 os_compatible = False
 
     if cmdclass is None:
@@ -445,7 +443,6 @@ def setup(
 
     _setup(
         cmdclass=cmdclass,
-        long_description=__main__.__doc__,
         author='Ronald Oussoren',
         author_email='pyobjc-dev@lists.sourceforge.net',
         url='http://pyobjc.sourceforge.net',

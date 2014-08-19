@@ -16,6 +16,7 @@ setup(
     name='pyobjc-framework-AppleScriptObjC',
     version="3.1",
     description = "Wrappers for the framework AppleScriptObjC on Mac OS X",
+    long_description=__doc__,
     packages = [ "AppleScriptObjC" ],
     setup_requires = [
         'pyobjc-core>=3.1',

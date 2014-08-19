@@ -12,6 +12,7 @@ setup(
     name='pyobjc-framework-Message',
     version="3.1",
     description = "Wrappers for the framework Message on Mac OS X",
+    long_description=__doc__,
     packages = [ "Message" ],
     setup_requires = [
         'pyobjc-core>=3.1',

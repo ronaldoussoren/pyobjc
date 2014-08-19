@@ -15,6 +15,7 @@ setup(
     name='pyobjc-framework-XgridFoundation',
     version="3.1",
     description = "Wrappers for the framework XgridFoundation on Mac OS X",
+    long_description=__doc__,
     packages = [ "XgridFoundation" ],
     setup_requires = [
         'pyobjc-core>=3.1',

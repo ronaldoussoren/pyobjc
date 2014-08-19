@@ -14,6 +14,7 @@ setup(
     name='pyobjc-framework-Collaboration',
     version="3.1",
     description = "Wrappers for the framework Collaboration on Mac OS X",
+    long_description=__doc__,
     packages = [ "Collaboration" ],
     setup_requires = [
         'pyobjc-core>=3.1',

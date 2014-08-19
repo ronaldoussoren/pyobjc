@@ -14,6 +14,7 @@ setup(
     name='pyobjc-framework-SpriteKit',
     version="3.1",
     description = "Wrappers for the framework SpriteKit on Mac OS X",
+    long_description=__doc__,
     packages = [ "SpriteKit" ],
     setup_requires = [
         'pyobjc-core>=3.1',

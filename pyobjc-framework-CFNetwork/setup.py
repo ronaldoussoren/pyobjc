@@ -18,6 +18,7 @@ setup(
     name='pyobjc-framework-CFNetwork',
     version="3.1",
     description = "Wrappers for the framework CFNetwork on Mac OS X",
+    long_description=__doc__,
     packages = [ "CFNetwork" ],
     setup_requires = [
         'pyobjc-core>=3.1',

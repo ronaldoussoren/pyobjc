@@ -14,6 +14,7 @@ setup(
     name='pyobjc-framework-GameController',
     version="3.1",
     description = "Wrappers for the framework GameController on Mac OS X",
+    long_description=__doc__,
     packages = [ "GameController" ],
     setup_requires = [
         'pyobjc-core>=3.1',

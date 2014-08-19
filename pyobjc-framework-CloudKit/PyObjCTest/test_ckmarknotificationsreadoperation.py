@@ -18,7 +18,7 @@ if sys.maxsize > 2 ** 32:
         @min_os_level("10.10")
         def testMethods10_10(self):
             self.assertResultIsBlock(CloudKit.CKMarkNotificationsReadOperation.markNotificationsReadCompletionBlock, b"v@@")
-            self.assertArgIsBlock(CloudKit.CKMarkNotificationsReadOperation.setMarkNotificationsReadCompletionBlock_, b"v@@")
+            self.assertArgIsBlock(CloudKit.CKMarkNotificationsReadOperation.setMarkNotificationsReadCompletionBlock_, 0, b"v@@")
 
 if __name__ == "__main__":
     main()

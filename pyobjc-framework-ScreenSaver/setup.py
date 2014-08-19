@@ -13,6 +13,7 @@ setup(
     name='pyobjc-framework-ScreenSaver',
     version="3.1",
     description = "Wrappers for the framework ScreenSaver on Mac OS X",
+    long_description=__doc__,
     packages = [ "ScreenSaver" ],
     setup_requires = [
         'pyobjc-core>=3.1',

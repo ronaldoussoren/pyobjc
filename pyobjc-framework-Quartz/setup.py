@@ -54,6 +54,7 @@ setup(
     name='pyobjc-framework-Quartz',
     version="3.1",
     description = "Wrappers for the Quartz frameworks on Mac OS X",
+    long_description=__doc__,
     packages = [ "Quartz" ] + subpackages,
     setup_requires = [
         'pyobjc-core>=3.1',

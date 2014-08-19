@@ -13,6 +13,7 @@ setup(
     name='pyobjc-framework-LocalAuthentication',
     version="3.1",
     description = "Wrappers for the framework LocalAuthentication on Mac OS X",
+    long_description=__doc__,
     packages = [ "LocalAuthentication" ],
     setup_requires = [
         'pyobjc-core>=3.1',

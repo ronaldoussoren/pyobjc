@@ -15,6 +15,7 @@ setup(
     name='pyobjc-framework-Automator',
     version="3.1",
     description = "Wrappers for the framework Automator on Mac OS X",
+    long_description=__doc__,
     packages = [ "Automator" ],
     setup_requires = [
         'pyobjc-core>=3.1',

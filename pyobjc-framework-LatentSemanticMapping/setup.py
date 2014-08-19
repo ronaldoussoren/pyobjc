@@ -18,6 +18,7 @@ setup(
     name='pyobjc-framework-LatentSemanticMapping',
     version="3.1",
     description = "Wrappers for the framework LatentSemanticMapping on Mac OS X",
+    long_description=__doc__,
     packages = [ "LatentSemanticMapping" ],
     setup_requires = [
         'pyobjc-core>=3.1',

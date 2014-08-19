@@ -15,6 +15,7 @@ setup(
     name='pyobjc-framework-Social',
     version="3.1",
     description = "Wrappers for the framework Accounts on Mac OS X",
+    long_description=__doc__,
     packages = [ "Social" ],
     setup_requires = [
         'pyobjc-core>=3.1',

@@ -31,7 +31,7 @@ if sys.maxsize > 2 ** 32:
         @min_os_level("10.10")
         def testMethods(self):
             self.assertResultIsBOOL(CloudKit.CKNotification.isPruned)
-            self.assertArgIsBOOL(CloudKit.CKNotification.setPruned_, 0)
+            #self.assertArgIsBOOL(CloudKit.CKNotification.setPruned_, 0)
 
             self.assertResultIsBOOL(CloudKit.CKQueryNotification.isPublicDatabase)
 

@@ -8,6 +8,15 @@ except NameError:
     unicode = str
 
 class TestABGlobals (TestCase):
+    @min_os_level('10.9')
+    def testConstants10_9(self):
+        self.assertIsInstance(kABSocialProfileServiceTencentWeibo, unicode)
+        self.assertIsInstance(kABSocialProfileServiceYelp, unicode)
+
+    @min_os_level('10.8')
+    def testConstants10_8(self):
+        self.assertIsInstance(kABSocialProfileServiceSinaWeibo, unicode)
+
     @min_os_level('10.7')
     def testConstants10_7(self):
         self.assertIsInstance(kABMobileMeLabel, unicode)

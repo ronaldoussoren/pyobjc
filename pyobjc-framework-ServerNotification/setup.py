@@ -16,6 +16,7 @@ setup(
     name='pyobjc-framework-ServerNotification',
     version="3.1",
     description = "Wrappers for the framework ServerNotification on Mac OS X",
+    long_description=__doc__,
     packages = [ "ServerNotification" ],
     setup_requires = [
         'pyobjc-core>=3.1',

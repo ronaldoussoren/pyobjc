@@ -13,6 +13,7 @@ setup(
     name='pyobjc-framework-Accounts',
     version="3.1",
     description = "Wrappers for the framework Accounts on Mac OS X",
+    long_description=__doc__,
     packages = [ "Accounts" ],
     setup_requires = [
         'pyobjc-core>=3.1',

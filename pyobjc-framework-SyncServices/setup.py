@@ -19,6 +19,7 @@ setup(
     name='pyobjc-framework-SyncServices',
     version="3.1",
     description = "Wrappers for the framework SyncServices on Mac OS X",
+    long_description=__doc__,
     packages = [ "SyncServices" ],
     setup_requires = [
         'pyobjc-core>=3.1',

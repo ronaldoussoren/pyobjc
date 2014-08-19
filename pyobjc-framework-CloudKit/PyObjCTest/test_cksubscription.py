@@ -26,12 +26,14 @@ if sys.maxsize > 2 ** 32:
             self.assertEqual(CloudKit.CKSubscriptionOptionsFiresOnRecordUpdate, 2)
             self.assertEqual(CloudKit.CKSubscriptionOptionsFiresOnRecordDeletion, 4)
             self.assertEqual(CloudKit.CKSubscriptionOptionsFiresOnce, 8)
-            self.assertEqual(CloudKit.CKSubscriptionOptionsThisClientOnly, 16)
 
         @min_os_level("10.10")
         def testMethods(self):
             self.assertResultIsBOOL(CloudKit.CKNotificationInfo.shouldBadge)
             self.assertArgIsBOOL(CloudKit.CKNotificationInfo.setShouldBadge_, 0)
+
+            self.assertResultIsBOOL(CloudKit.CKNotificationInfo.shouldSendContentAvailable)
+            self.assertArgIsBOOL(CloudKit.CKNotificationInfo.setShouldSendContentAvailable_, 0)
 
 if __name__ == "__main__":
     main()

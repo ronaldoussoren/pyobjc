@@ -18,6 +18,7 @@ setup(
     name='pyobjc-framework-SearchKit',
     version="3.1",
     description = "Wrappers for the framework SearchKit on Mac OS X",
+    long_description=__doc__,
     packages = [ "SearchKit" ],
     setup_requires = [
         'pyobjc-core>=3.1',

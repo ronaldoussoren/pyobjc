@@ -15,6 +15,7 @@ setup(
     name='pyobjc-framework-FSEvents',
     version="3.1",
     description = "Wrappers for the framework FSEvents on Mac OS X",
+    long_description=__doc__,
     packages = [ "FSEvents" ],
     setup_requires = [
         'pyobjc-core>=3.1',

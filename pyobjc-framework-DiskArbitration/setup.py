@@ -14,6 +14,7 @@ setup(
     name='pyobjc-framework-DiskArbitration',
     version="3.1",
     description = "Wrappers for the framework DiskArbitration on Mac OS X",
+    long_description=__doc__,
     packages = [ "DiskArbitration" ],
     setup_requires = [
         'pyobjc-core>=3.1',

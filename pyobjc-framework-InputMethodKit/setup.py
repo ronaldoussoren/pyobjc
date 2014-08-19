@@ -15,6 +15,7 @@ setup(
     name='pyobjc-framework-InputMethodKit',
     version="3.1",
     description = "Wrappers for the framework InputMethodKit on Mac OS X",
+    long_description=__doc__,
     packages = [ "InputMethodKit" ],
     setup_requires = [
         'pyobjc-core>=3.1',

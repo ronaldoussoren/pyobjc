@@ -135,7 +135,7 @@ def sorted_framework_wrappers():
                         max_platform = max_platform[:-1]
                     max_platform = max_platform[1:-1]
 
-        if not (min_platform <= cur_platform <= max_platform):
+        if not (version_key(min_platform) <= version_key(cur_platform) <= version_key(max_platform)):
             print("Skipping {!r} because it is not supported on the current platform".format(subdir))
             continue
         frameworks.append(subdir)
@@ -170,6 +170,9 @@ def build_project(project, extra_args):
         return False
 
     return True
+
+def version_key(version):
+    return tuple(int(x) for x in version.split('.'))
 
 def main():
     for project in ['pyobjc-core'] + sorted_framework_wrappers():

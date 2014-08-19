@@ -17,8 +17,8 @@ if sys.maxsize > 2 ** 32:
 
         @min_os_level("10.10")
         def testConstants(self):
-            self.assertIsEqual(CloudKit.CKReferenceActionNone, 0)
-            self.assertIsEqual(CloudKit.CKReferenceActionDeleteSelf, 1)
+            self.assertEqual(CloudKit.CKReferenceActionNone, 0)
+            self.assertEqual(CloudKit.CKReferenceActionDeleteSelf, 1)
 
 if __name__ == "__main__":
     main()

@@ -16,6 +16,7 @@ setup(
     name='pyobjc-framework-CalendarStore',
     version="3.1",
     description = "Wrappers for the framework CalendarStore on Mac OS X",
+    long_description=__doc__,
     packages = [ "CalendarStore" ],
     setup_requires = [
         'pyobjc-core>=3.1',

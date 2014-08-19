@@ -13,6 +13,7 @@ setup(
     name='pyobjc-framework-FinderSync',
     version="3.1",
     description = "Wrappers for the framework FinderSync on Mac OS X",
+    long_description=__doc__,
     packages = [ "FinderSync" ],
     setup_requires = [
         'pyobjc-core>=3.1',

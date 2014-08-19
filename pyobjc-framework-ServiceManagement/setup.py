@@ -15,6 +15,7 @@ setup(
     name='pyobjc-framework-ServiceManagement',
     version="3.1",
     description = "Wrappers for the framework ServiceManagement on Mac OS X",
+    long_description=__doc__,
     packages = [ "ServiceManagement" ],
     setup_requires = [
         'pyobjc-core>=3.1',

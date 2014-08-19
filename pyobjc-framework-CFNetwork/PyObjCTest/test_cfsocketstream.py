@@ -13,6 +13,15 @@ except NameError:
 
 
 class TestCFSocketStream (TestCase):
+    @min_os_level('10.9')
+    def testConstants10_9(self):
+        self.assertIsInstance(kCFStreamPropertySSLContext, unicode)
+
+    @min_os_level('10.8')
+    def testConstants10_9(self):
+        self.assertIsInstance(kCFStreamPropertyNoCellular, unicode)
+        self.assertIsInstance(kCFStreamPropertyConnectionIsCellular, unicode)
+
     @min_os_level('10.7')
     def testConstants10_7(self):
         self.assertIsInstance(kCFStreamNetworkServiceType, unicode)
@@ -101,9 +110,10 @@ class TestCFSocketStream (TestCase):
         self.assertIsInstance(rd, CFReadStreamRef)
         self.assertIsInstance(wr, CFWriteStreamRef)
 
-        self.assertResultIsBOOL(CFSocketStreamPairSetSecurityProtocol)
-        v = CFSocketStreamPairSetSecurityProtocol(rd, wr, kCFStreamSocketSecuritySSLv23)
-        self.assertIsInstance(v, bool)
+        if os_level_key(os_release()) < os_level_key('10.10'):
+		self.assertResultIsBOOL(CFSocketStreamPairSetSecurityProtocol)
+		v = CFSocketStreamPairSetSecurityProtocol(rd, wr, kCFStreamSocketSecuritySSLv23)
+		self.assertIsInstance(v, bool)
 
         self.assertArgIsCFRetained(CFStreamCreatePairWithSocketToNetService, 2)
         self.assertArgIsCFRetained(CFStreamCreatePairWithSocketToNetService, 3)

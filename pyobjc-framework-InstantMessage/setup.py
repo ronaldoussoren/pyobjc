@@ -17,6 +17,7 @@ setup(
     name='pyobjc-framework-InstantMessage',
     version="3.1",
     description = "Wrappers for the framework InstantMessage on Mac OS X",
+    long_description=__doc__,
     packages = [ "InstantMessage" ],
     setup_requires = [
         'pyobjc-core>=3.1',

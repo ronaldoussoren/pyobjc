@@ -12,6 +12,7 @@ setup(
     name='pyobjc-framework-PreferencePanes',
     version="3.1",
     description = "Wrappers for the framework PreferencePanes on Mac OS X",
+    long_description=__doc__,
     packages = [ "PreferencePanes" ],
     setup_requires = [
         'pyobjc-core>=3.1',

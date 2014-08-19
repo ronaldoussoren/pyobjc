@@ -14,6 +14,7 @@ setup(
     name='pyobjc-framework-MediaAccessibility',
     version="3.1",
     description = "Wrappers for the framework MediaAccessibility on Mac OS X",
+    long_description=__doc__,
     packages = [ "MediaAccessibility" ],
     setup_requires = [
         'pyobjc-core>=3.1',

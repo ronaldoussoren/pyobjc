@@ -18,6 +18,7 @@ setup(
     name='pyobjc-framework-DictionaryServices',
     version="3.1",
     description = "Wrappers for the framework DictionaryServices on Mac OS X",
+    long_description=__doc__,
     packages = [ "DictionaryServices" ],
     setup_requires = [
         'pyobjc-core>=3.1',

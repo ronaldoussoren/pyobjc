@@ -20,6 +20,7 @@ setup(
     name='pyobjc-framework-ScriptingBridge',
     version="3.1",
     description = "Wrappers for the framework ScriptingBridge on Mac OS X",
+    long_description=__doc__,
     packages = [ "ScriptingBridge" ],
     setup_requires = [
         'pyobjc-core>=3.1',

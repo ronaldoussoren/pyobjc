@@ -17,6 +17,7 @@ setup(
     name='pyobjc-framework-PubSub',
     version="3.1",
     description = "Wrappers for the framework PubSub on Mac OS X",
+    long_description=__doc__,
     packages = [ "PubSub" ],
     setup_requires = [
         'pyobjc-core>=3.1',

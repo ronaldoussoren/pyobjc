@@ -28,6 +28,7 @@ setup(
     name='pyobjc-framework-InterfaceBuilderKit',
     version="3.1",
     description = "Wrappers for the framework InterfaceBuilderKit on Mac OS X",
+    long_description=__doc__,
     packages = [ "InterfaceBuilderKit" ],
     setup_requires = [
         'pyobjc-core>=3.1',

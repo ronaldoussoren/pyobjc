@@ -12,6 +12,7 @@ setup(
     name='pyobjc-framework-SystemConfiguration',
     version="3.1",
     description = "Wrappers for the framework SystemConfiguration on Mac OS X",
+    long_description=__doc__,
     packages = [ "SystemConfiguration" ],
     setup_requires = [
         'pyobjc-core>=3.1',

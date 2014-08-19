@@ -12,13 +12,11 @@ if sys.maxsize > 2 ** 32:
     class TestCKAsset (TestCase):
         @min_os_level("10.10")
         def testClasses(self):
-            self.assertHasAttr(CloudKit, "CKContainer")
+            self.assertIsInstance(CloudKit.CKAsset, objc.objc_class)
             self.assertIsInstance(CloudKit.CKContainer, objc.objc_class)
 
         @min_os_level("10.10")
         def testConstants(self):
-            self.assertIsInstance(CloudKit.CKAsset, unicode)
-
             self.assertEqual(CloudKit.CKAccountStatusCouldNotDetermine, 0)
             self.assertEqual(CloudKit.CKAccountStatusAvailable, 1)
             self.assertEqual(CloudKit.CKAccountStatusRestricted, 2)
@@ -31,19 +29,19 @@ if sys.maxsize > 2 ** 32:
 
         @min_os_level("10.10")
         def testMethods10_10(self):
-            self.assertArgIsBlock(CKContainer.accountStatusWithCompletionHandler_, 0,
+            self.assertArgIsBlock(CloudKit.CKContainer.accountStatusWithCompletionHandler_, 0,
                     b"v" + objc._C_NSInteger + b"@")
-            self.assertArgIsBlock(CKContainer.statusForApplicationPermission_completionHandler_, 1,
+            self.assertArgIsBlock(CloudKit.CKContainer.statusForApplicationPermission_completionHandler_, 1,
                     b"v" + objc._C_NSInteger + b"@")
-            self.assertArgIsBlock(CKContainer.requestApplicationPermission_completionHandler_, 1,
+            self.assertArgIsBlock(CloudKit.CKContainer.requestApplicationPermission_completionHandler_, 1,
                     b"v" + objc._C_NSInteger + b"@")
-            self.assertArgIsBlock(CKContainer.fetchUserRecordIDWithCompletionHandler_, 0,
+            self.assertArgIsBlock(CloudKit.CKContainer.fetchUserRecordIDWithCompletionHandler_, 0,
                     b"v@@")
-            self.assertArgIsBlock(CKContainer.discoverAllContactUserInfosWithCompletionHandler_, 0,
+            self.assertArgIsBlock(CloudKit.CKContainer.discoverAllContactUserInfosWithCompletionHandler_, 0,
                     b"v@@")
-            self.assertArgIsBlock(CKContainer.discoverUserInfoWithEmailAddress_completionHandler_, 1,
+            self.assertArgIsBlock(CloudKit.CKContainer.discoverUserInfoWithEmailAddress_completionHandler_, 1,
                     b"v@@")
-            self.assertArgIsBlock(CKContainer.discoverUserInfoWithUserRecordID_completionHandler_, 1,
+            self.assertArgIsBlock(CloudKit.CKContainer.discoverUserInfoWithUserRecordID_completionHandler_, 1,
                     b"v@@")
 
 

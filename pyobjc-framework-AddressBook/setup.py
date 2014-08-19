@@ -16,6 +16,7 @@ setup(
     name='pyobjc-framework-AddressBook',
     version="3.1",
     description = "Wrappers for the framework AddressBook on Mac OS X",
+    long_description=__doc__,
     packages = [ "AddressBook" ],
     setup_requires = [
         'pyobjc-core>=3.1',

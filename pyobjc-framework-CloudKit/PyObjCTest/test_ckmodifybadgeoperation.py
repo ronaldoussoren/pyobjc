@@ -17,8 +17,8 @@ if sys.maxsize > 2 ** 32:
 
         @min_os_level("10.10")
         def testMethods10_10(self):
-            self.assertResultIsBOOL(CloudKit.CKModifyBadgeOperation.thisDeviceOnly)
-            self.assertArgIsBOOL(CloudKit.CKModifyBadgeOperation.setThisDeviceOnly_, 0)
+            #self.assertResultIsBOOL(CloudKit.CKModifyBadgeOperation.thisDeviceOnly)
+            #self.assertArgIsBOOL(CloudKit.CKModifyBadgeOperation.setThisDeviceOnly_, 0)
 
             self.assertResultIsBlock(CloudKit.CKModifyBadgeOperation.modifyBadgeCompletionBlock, b"v@")
             self.assertArgIsBlock(CloudKit.CKModifyBadgeOperation.setModifyBadgeCompletionBlock_, 0, b"v@")
