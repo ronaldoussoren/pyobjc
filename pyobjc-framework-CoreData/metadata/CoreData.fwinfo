@@ -684,6 +684,13 @@
     "methods": [
      {
       "args": {
+       "4": { "type_modifier": "o" }
+      }, 
+      "class_method": true, 
+      "selector": "removeUbiquitousContentAndPersistentStoreAtURL:options:error:"
+     }, 
+     {
+      "args": {
        "0": {}
       }, 
       "class_method": true, 

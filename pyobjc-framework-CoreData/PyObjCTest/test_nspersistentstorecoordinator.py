@@ -35,6 +35,20 @@ class TestNSPersistentStoreCoordinator (TestCase):
         self.assertIsInstance(NSPersistentStoreCoordinatorWillRemoveStoreNotification, unicode)
         self.assertIsInstance(NSSQLiteAnalyzeOption, unicode)
 
+    @min_os_level("10.9")
+    def testConstants10_9(self):
+        self.assertEqual(NSPersistentStoreUbiquitousTransitionTypeAccountAdded, 1)
+        self.assertEqual(NSPersistentStoreUbiquitousTransitionTypeAccountRemoved, 2)
+        self.assertEqual(NSPersistentStoreUbiquitousTransitionTypeContentRemoved, 3)
+        self.assertEqual(NSPersistentStoreUbiquitousTransitionTypeInitialImportCompleted, 4)
+
+        self.assertIsInstance(NSPersistentStoreCoordinatorStoresWillChangeNotification, unicode)
+        self.assertIsInstance(NSPersistentStoreUbiquitousTransitionTypeKey, unicode)
+        self.assertIsInstance(NSPersistentStoreUbiquitousPeerTokenOption, unicode)
+        self.assertIsInstance(NSPersistentStoreRemoveUbiquitousMetadataOption, unicode)
+        self.assertIsInstance(NSPersistentStoreUbiquitousContainerIdentifierKey, unicode)
+        self.assertIsInstance(NSPersistentStoreRebuildFromUbiquitousContentOption, unicode)
+
     @min_os_level('10.6')
     def testConstants10_6(self):
         self.assertIsInstance(NSSQLiteManualVacuumOption, unicode)
@@ -55,6 +69,11 @@ class TestNSPersistentStoreCoordinator (TestCase):
         self.assertIsInstance(NSPersistentStoreUbiquitousContentNameKey, unicode)
         self.assertIsInstance(NSPersistentStoreUbiquitousContentURLKey, unicode)
         self.assertIsInstance(NSPersistentStoreDidImportUbiquitousContentChangesNotification, unicode)
+
+    @min_os_level("10.9")
+    def testMethods10_9(self):
+        self.assertArgIsOut(NSPersistentStoreCoordinator.removeUbiquitousContentAndPersistentStoreAtURL_options_error_, 2)
+        self.assertResultIsBOOL(NSPersistentStoreCoordinator.removeUbiquitousContentAndPersistentStoreAtURL_options_error_)
 
     @min_os_level("10.7")
     def testMethods10_7(self):
