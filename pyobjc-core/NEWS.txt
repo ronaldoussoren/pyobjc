@@ -6,6 +6,9 @@ An overview of the relevant changes in new, and older, releases.
 Version 3.0.2
 -------------
 
+* Issue #99: Installation failed with recent versions of setuptools due to
+  invalid assumptions in the PyObjC setup script.
+
 * Issue #93: For a objc.PyObjCPointer object ``ptr.pointerAsInteger`` returned
   a 32-bit value on 64-bit systems.
 
