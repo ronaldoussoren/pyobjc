@@ -6,12 +6,14 @@ An overview of the relevant changes in new, and older, releases.
 Version 3.1
 -----------
 
-* Support OSX 10.10 in PyObjCTools.TestSupport (version comparison was too naive)
+* Support OSX 10.10 in PyObjCTools.TestSupport (version comparison was too
+  naive)
 
 * Add bindings for CoreBluetooth, MapKit, AVKit, MediaLibrary,
   MediaAccessibility, GameController (all new in OSX 10.9)
 
-* Add bindings for FinderSync, CloudKit, CryptoTokenKit, MultipeerConnectivity (all new in OSX 10.10)
+* Add bindings for FinderSync, CloudKit, CryptoTokenKit,
+  MultipeerConnectivity (all new in OSX 10.10)
 
 * TODO: Update existing bindings with new functionality in OSX 10.9 and 10.10
 
