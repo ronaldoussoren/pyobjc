@@ -16,15 +16,16 @@ from pyobjc_setup import setup, Extension
 
 setup(
     name='pyobjc-framework-CFNetwork',
-    version="3.0.2",
+    version="3.0.3",
     description = "Wrappers for the framework CFNetwork on Mac OS X",
+    long_description=__doc__,
     packages = [ "CFNetwork" ],
     setup_requires = [
-        'pyobjc-core>=3.0.2',
+        'pyobjc-core>=3.0.3',
     ],
     install_requires = [
-        'pyobjc-core>=3.0.2',
-        'pyobjc-framework-Cocoa>=3.0.2',
+        'pyobjc-core>=3.0.3',
+        'pyobjc-framework-Cocoa>=3.0.3',
     ],
     ext_modules = [
         Extension("CFNetwork._manual",

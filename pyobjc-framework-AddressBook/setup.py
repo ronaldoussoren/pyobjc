@@ -14,15 +14,16 @@ import os
 
 setup(
     name='pyobjc-framework-AddressBook',
-    version="3.0.2",
+    version="3.0.3",
     description = "Wrappers for the framework AddressBook on Mac OS X",
+    long_description=__doc__,
     packages = [ "AddressBook" ],
     setup_requires = [
-        'pyobjc-core>=3.0.2',
+        'pyobjc-core>=3.0.3',
     ],
     install_requires = [
-        'pyobjc-core>=3.0.2',
-        'pyobjc-framework-Cocoa>=3.0.2',
+        'pyobjc-core>=3.0.3',
+        'pyobjc-framework-Cocoa>=3.0.3',
     ],
     ext_modules = [
         Extension("AddressBook._AddressBook",

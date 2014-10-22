@@ -3,6 +3,11 @@ What's new in PyObjC
 
 An overview of the relevant changes in new, and older, releases.
 
+Version 3.0.3
+-------------
+
+* Fix a number of OSX 10.10 support issues.
+
 Version 3.0.2
 -------------
 

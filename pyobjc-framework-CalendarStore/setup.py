@@ -14,14 +14,15 @@ from pyobjc_setup import setup
 setup(
     min_os_level='10.5',
     name='pyobjc-framework-CalendarStore',
-    version="3.0.2",
+    version="3.0.3",
     description = "Wrappers for the framework CalendarStore on Mac OS X",
+    long_description=__doc__,
     packages = [ "CalendarStore" ],
     setup_requires = [
-        'pyobjc-core>=3.0.2',
+        'pyobjc-core>=3.0.3',
     ],
     install_requires = [
-        'pyobjc-core>=3.0.2',
-        'pyobjc-framework-Cocoa>=3.0.2',
+        'pyobjc-core>=3.0.3',
+        'pyobjc-framework-Cocoa>=3.0.3',
     ],
 )
