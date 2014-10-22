@@ -10,15 +10,15 @@ from pyobjc_setup import setup
 
 setup(
     name='pyobjc-framework-AppleScriptKit',
-    version="3.0.3",
+    version="3.0.4",
     description = "Wrappers for the framework AppleScriptKit on Mac OS X",
     long_description=__doc__,
     packages = [ "AppleScriptKit" ],
     setup_requires = [
-        'pyobjc-core>=3.0.3',
+        'pyobjc-core>=3.0.4',
     ],
     install_requires = [
-        'pyobjc-core>=3.0.3',
-        'pyobjc-framework-Cocoa>=3.0.3',
+        'pyobjc-core>=3.0.4',
+        'pyobjc-framework-Cocoa>=3.0.4',
     ],
 )

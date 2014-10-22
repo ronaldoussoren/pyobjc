@@ -5,7 +5,7 @@
  * Central include file for PyObjC.
  */
 
-#define OBJC_VERSION "3.0.3"
+#define OBJC_VERSION "3.0.4"
 
 #define PY_SSIZE_T_CLEAN
 #include <Python.h>

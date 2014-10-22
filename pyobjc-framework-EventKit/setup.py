@@ -11,16 +11,16 @@ from pyobjc_setup import setup
 
 setup(
     name='pyobjc-framework-EventKit',
-    version="3.0.3",
+    version="3.0.4",
     description = "Wrappers for the framework Accounts on Mac OS X",
     long_description=__doc__,
     packages = [ "EventKit" ],
     setup_requires = [
-        'pyobjc-core>=3.0.3',
+        'pyobjc-core>=3.0.4',
     ],
     install_requires = [
-        'pyobjc-core>=3.0.3',
-        'pyobjc-framework-Cocoa>=3.0.3',
+        'pyobjc-core>=3.0.4',
+        'pyobjc-framework-Cocoa>=3.0.4',
     ],
     min_os_level="10.8",
 )
