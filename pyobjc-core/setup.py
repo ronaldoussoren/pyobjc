@@ -510,13 +510,11 @@ class oc_build_ext (build_ext.build_ext):
 
             for ext in self.extensions:
                 if ext.name == 'objc._objc':
-                    print ">>> CHOOSING SYSTEM LIBFFI"
                     ext.extra_compile_args.extend(FFI_CFLAGS)
                     ext.extra_link_args.extend(FFI_LDFLAGS)
         else:
             for ext in self.extensions:
                 if ext.name == 'objc._objc':
-                    print ">>> CHOOSING EMBEDDED LIBFFI"
                     if ext.sources[:-len(EMBEDDED_FFI_SOURCE)] != EMBEDDED_FFI_SOURCE:
                         ext.sources.extend(EMBEDDED_FFI_SOURCE)
                         ext.extra_compile_args.extend(EMBEDDED_FFI_CFLAGS)
