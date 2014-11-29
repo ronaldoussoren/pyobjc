@@ -91,6 +91,12 @@ DEL_REQUIRES_10_8=[
         'pyobjc-framework-InterfaceBuilderKit=',
 ]
 
+REQUIRES_10_9=[]
+DEL_REQUIRES_10_9=[
+        'pyobjc-framework-ServerNotification=',
+        'pyobjc-framework-Message=',
+]
+
 import platform
 rel = tuple(map(int, platform.mac_ver()[0].split('.')[:2]))
 if rel >= (10, 5):
@@ -107,6 +113,14 @@ if rel >= (10, 7):
 if rel >= (10, 8):
     REQUIRES.extend(REQUIRES_10_8)
     for name in DEL_REQUIRES_10_8:
+        for line in REQUIRES:
+            if line.startswith(name):
+                REQUIRES.remove(line)
+                continue
+
+if rel >= (10, 9):
+    REQUIRES.extend(REQUIRES_10_9)
+    for name in DEL_REQUIRES_10_9:
         for line in REQUIRES:
             if line.startswith(name):
                 REQUIRES.remove(line)
