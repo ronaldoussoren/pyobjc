@@ -6,7 +6,13 @@ An overview of the relevant changes in new, and older, releases.
 Version 3.0.4
 -------------
 
-* ...
+* Fix installation on OSX 10.10 when using "pip install pyobjc".
+
+  Issues #102, #103.
+
+* Fix crash when ``sys.modules`` contains an object that is not a string.
+
+  Issue #95.
 
 Version 3.0.3
 -------------
