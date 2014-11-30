@@ -52,7 +52,7 @@ class TestNSNumber (TestCase):
         v = NSNumber.numberWithUnsignedLongLong_(2 ** 63 + 5000)
         self.assertIsInstance(v, long)
 
-        if os_release() <= '10.5':
+        if os_release() <= '10.5' and os_release() != '10.10':
             self.assertEqual(v.description(), str(-2**63+5000))
         else:
             self.assertEqual(v.description(), str(2**63+5000))
@@ -97,7 +97,7 @@ class TestNSNumber (TestCase):
         data = pickle.dumps(v)
 
         w = pickle.loads(data)
-        if os_release() <= '10.5':
+        if os_release() <= '10.5' and os_release() != '10.10':
             self.assertEqual(w, {
                 'long': -2**63 + 5000,
                 'int': 42,
