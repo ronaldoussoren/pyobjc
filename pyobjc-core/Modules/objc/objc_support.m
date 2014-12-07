@@ -191,7 +191,7 @@
 @end /* PyObjCSupport */
 
 
-#if PyObjC_BUILD_RELEASE < 1008
+#if PyObjC_BUILD_RELEASE < 1008 || !defined(__LP64__)
 @interface Object (PyObjCSupport)
 -(PyObject*)__pyobjc_PythonObject__;
 -(PyObject*)__pyobjc_PythonTransient__:(int*)cookie;
