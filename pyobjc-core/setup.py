@@ -585,6 +585,12 @@ setup(
             extra_link_args=OBJC_LDFLAGS,
             depends=list(glob.glob(os.path.join('Modules', 'objc', '*.h'))),
         ),
+        Extension(
+            "objc._machsignals",
+            ["Modules/_machsignals.m"],
+            extra_compile_args=EXT_CFLAGS,
+            extra_link_args=OBJC_LDFLAGS,
+        ),
     ] + [
         Extension(
             "PyObjCTest." + os.path.splitext(os.path.basename(test_source))[0],

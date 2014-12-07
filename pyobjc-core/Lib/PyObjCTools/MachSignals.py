@@ -13,7 +13,7 @@ In other words, Python's signal handling code does not wake
 reliably when not running Python code, but this does.
 """
 
-import _machsignals
+from objc import _machsignals
 __all__ = ['getsignal', 'signal']
 
 def getsignal(signum):
@@ -30,5 +30,5 @@ def signal(signum, handler):
     """
     rval = getsignal(signum)
     _machsignals._signalmapping[signum] = handler
-    _machsignals.handleSignal(signum)
+    _machsignals.handle_signal(signum)
     return rval

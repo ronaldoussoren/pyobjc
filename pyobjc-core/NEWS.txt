@@ -22,6 +22,12 @@ Version 3.0.4
 
   Issue #106
 
+* ``PyObjCTools.MachSignals`` likely hasn't worked at all since PyObjC 2.0
+  because it uses a C module that was never ported to PyObjC 2.0. This private
+  module is reintroduced in this release (with a slightly changed API)
+
+  Issue #109
+
 Version 3.0.3
 -------------
 
