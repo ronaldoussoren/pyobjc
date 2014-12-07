@@ -57,15 +57,25 @@ const char*
 PyObjCBlock_GetSignature(void* _block)
 {
     struct block_literal* block = (struct block_literal*)_block;
-    struct block_descriptor_basic* descriptor = (struct block_descriptor_basic*)block->descriptor;
-    size_t offset = 0;
 
-    if (block->flags & BLOCK_HAS_COPY_DISPOSE) {
-        offset += 2;
+    if (((intptr_t)(block->isa)) & 0x1) {
+        /* XXX: Hack to avoid a hard crash that I haven't been able
+         * to pintpoint yet (test doesn't fail reliably, and I haven't
+         * been able to trigger it with a unittest.
+         *
+         * Without this test the tests for blocks without metadata
+         * sometimes crash due to invalid block pointers :-(
+         */
+        return NULL;
     }
 
     if (block->flags & BLOCK_HAS_SIGNATURE) {
-        return descriptor->rest[offset];
+        const char* signature_loc = (void*)(block->descriptor);
+        signature_loc += sizeof(unsigned long) * 2;
+        if (block->flags & BLOCK_HAS_COPY_DISPOSE) {
+            signature_loc += sizeof(void(*)(void)) * 2;
+        }
+        return *(const char**)signature_loc;
     }
     return NULL;
 }

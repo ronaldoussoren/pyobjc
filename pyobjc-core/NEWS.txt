@@ -14,6 +14,14 @@ Version 3.0.4
 
   Issue #95.
 
+* Fix crash on OSX 10.8 or later when using a 32-bit build and accessing
+  an instance of "Object" (that is, pre-Nextstep classes).
+
+* Fix a crash when using blocks without metadata, but with a block
+  signature from the block runtime.
+
+  Issue #106
+
 Version 3.0.3
 -------------
 
