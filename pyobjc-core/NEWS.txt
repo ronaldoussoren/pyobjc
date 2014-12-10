@@ -6,7 +6,7 @@ An overview of the relevant changes in new, and older, releases.
 Version 3.0.5
 -------------
 
-* ?
+* Add objc.MAC_OS_X_VERSION_10_10 and MAC_OS_X_VERSION_10_9.
 
 Version 3.0.4
 -------------
