@@ -1129,8 +1129,8 @@ compensate_arglist(PyObject* _self, PyObject* args, PyObject* kwds)
                     PyObject* a = PyTuple_GET_ITEM(args, first_arg + i - 2);
                     if (a != Py_None && a != PyObjC_NULL) {
                         PyErr_Format(PyExc_TypeError,
-                            "argument %" PY_FORMAT_SIZE_T "d is an output argument but is passed a value other than None or objc.NULL (%s)",
-                            i-1-first_arg, PyObject_REPR(args));
+                            "argument %" PY_FORMAT_SIZE_T "d is an output argument but is passed a value other than None or objc.NULL",
+                            i-1-first_arg);
                         return NULL;
                     }
                 }
