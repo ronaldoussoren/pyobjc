@@ -117,6 +117,16 @@ if (sys.maxsize < 2 ** 32 or platform.mac_ver()[0] >= '10.7') and sys.version_in
         # Implement unittests for formal protocols here.
         #
 
+        @onlyPython2
+        def testInheritedProtocol(self):
+            class MyClassImplementingNSObject(NSObject, objc.protocolNamed("OC_TestProtocol2")):
+                def method(self): return 1
+
+                @classmethod
+                def classMethod(self):
+                    return 2
+            self.assertTrue(MyClassImplementingNSObject.conformsToProtocol_(objc.protocolNamed("OC_TestProtocol2")))
+
         def testImplementAnotherObject(self):
             anObject = NSObject.alloc().init()
 

@@ -2910,6 +2910,30 @@ PyObjCClass_FindSelector(PyObject* cls, SEL selector, BOOL class_method)
                 return value;
             }
         }
+        {
+            char selbuf[2048];
+            char* name;
+            PyObject* py_name;
+            name = PyObjC_SELToPythonName(selector, selbuf, sizeof(selbuf));
+            if (!name) continue;
+
+            py_name = PyText_FromString(name);
+            if (!py_name) {
+                PyErr_Clear();
+                continue;
+            }
+
+            if (class_method) {
+                value = PyObjCMetaClass_TryResolveSelector((PyObject*)Py_TYPE(c), py_name, selector);
+            } else {
+                value = PyObjCClass_TryResolveSelector(c, py_name, selector);
+            }
+            Py_DECREF(py_name);
+            if (value != NULL) {
+                Py_INCREF(value);
+                return value;
+            }
+        }
     }
 
     /* If all else fails, ask the actual class (getattro also does this) */

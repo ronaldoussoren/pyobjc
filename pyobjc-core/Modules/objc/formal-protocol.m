@@ -566,7 +566,7 @@ do_verify(
             if (is_required) {
                 PyErr_Format(PyExc_TypeError,
                     "class %s does not full implement protocol "
-                    "%s: no implementation for %s",
+                    "%s: no implementation for '%s'",
                     name,
                     protocol_name,
                     sel_getName(descr->name));
@@ -582,7 +582,7 @@ do_verify(
         if (!PyObjCSelector_IsClassMethod(meth)) {
             PyErr_Format(PyExc_TypeError,
                 "class %s does not correctly implement "
-                "protocol %s: method %s is not a "
+                "protocol %s: method '%s' is not a "
                 "class method",
                 name,
                 protocol_name,
@@ -595,7 +595,7 @@ do_verify(
         if (PyObjCSelector_IsClassMethod(meth)) {
             PyErr_Format(PyExc_TypeError,
                 "class %s does not correctly implement "
-                "protocol %s: method %s is not an "
+                "protocol %s: method '%s' is not an "
                 "instance method",
                 name,
                 protocol_name,
@@ -612,7 +612,7 @@ do_verify(
 
     PyErr_Format(PyExc_TypeError,
         "class %s does not correctly implement "
-        "protocol %s: the signature for method %s "
+        "protocol %s: the signature for method '%s' "
         "is %s instead of %s",
         name,
         protocol_name,

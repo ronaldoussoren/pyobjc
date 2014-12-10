@@ -8,6 +8,13 @@ Version 3.0.5
 
 * Add objc.MAC_OS_X_VERSION_10_10 and MAC_OS_X_VERSION_10_9.
 
+* The code that checked for compliance to formal protocols didn't look
+  at parent classes to determine if a class implements the protocol.
+
+  Issue #107
+
+* Fix build issue for python 3.
+
 Version 3.0.4
 -------------
 
