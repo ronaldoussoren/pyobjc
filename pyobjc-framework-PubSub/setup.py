@@ -15,15 +15,15 @@ from pyobjc_setup import setup
 setup(
     min_os_level='10.5',
     name='pyobjc-framework-PubSub',
-    version="3.0.4",
+    version="3.0.5",
     description = "Wrappers for the framework PubSub on Mac OS X",
     long_description=__doc__,
     packages = [ "PubSub" ],
     setup_requires = [
-        'pyobjc-core>=3.0.4',
+        'pyobjc-core>=3.0.5',
     ],
     install_requires = [
-        'pyobjc-core>=3.0.4',
-        'pyobjc-framework-Cocoa>=3.0.4',
+        'pyobjc-core>=3.0.5',
+        'pyobjc-framework-Cocoa>=3.0.5',
     ],
 )
