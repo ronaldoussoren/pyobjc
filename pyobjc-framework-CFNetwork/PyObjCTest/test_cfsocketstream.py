@@ -111,9 +111,9 @@ class TestCFSocketStream (TestCase):
         self.assertIsInstance(wr, CFWriteStreamRef)
 
         if os_level_key(os_release()) < os_level_key('10.10'):
-		self.assertResultIsBOOL(CFSocketStreamPairSetSecurityProtocol)
-		v = CFSocketStreamPairSetSecurityProtocol(rd, wr, kCFStreamSocketSecuritySSLv23)
-		self.assertIsInstance(v, bool)
+            self.assertResultIsBOOL(CFSocketStreamPairSetSecurityProtocol)
+            v = CFSocketStreamPairSetSecurityProtocol(rd, wr, kCFStreamSocketSecuritySSLv23)
+            self.assertIsInstance(v, bool)
 
         self.assertArgIsCFRetained(CFStreamCreatePairWithSocketToNetService, 2)
         self.assertArgIsCFRetained(CFStreamCreatePairWithSocketToNetService, 3)
