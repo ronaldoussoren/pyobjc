@@ -1,154 +1,99 @@
 #!/usr/bin/env python
 
-try:
-    import setuptools
-
-except ImportError:
-    import distribute_setup
-    distribute_setup.use_setuptools()
-
-    import setuptools
-
+import setuptools
 import os
+import platform
 
 VERSION="3.1b1"
 
-# Note 1: the requires list is split into a number
-# of lists because not all framework wrappers can
-# be used on all OSX releases.
-#
-# Note 2: this package will not work correctly when
-# packaged into an egg file because of this.
+# Table with all framework wrappers and the OSX releases where they are
+# first supported, and where support was removed. The introduced column
+# is ``None`` when the framework is supported on OSX 10.4 or later. The
+# removed column is ``None`` when the framework is present ont he latest
+# supported OSX release.
+FRAMEWORKS_WRAPPERS=[
+        # Name                      Introcuded          Removed
+        ('AddressBook',             None,               None        ),
+        ('AppleScriptKit',          None,               None        ),
+        ('Automator',               None,               None        ),
+        ('CFNetwork',               None,               None        ),
+        ('Cocoa',                   None,               None        ),
+        ('CoreData',                None,               None        ),
+        ('CoreText',                None,               None        ),
+        ('DiskArbitration',         None,               None        ),
+        ('ExceptionHandling',       None,               None        ),
+        ('InstallerPlugins',        None,               None        ),
+        ('LatentSemanticMapping',   None,               None        ),
+        ('LaunchServices',          None,               None        ),
+        ('Message',                 None,               '10.9'      ),
+        ('PreferencePanes',         None,               None        ),
+        ('Quartz',                  None,               None        ),
+        ('ScreenSaver',             None,               None        ),
+        ('SearchKit',               None,               None        ),
+        ('SyncServices',            None,               None        ),
+        ('SystemConfiguration',     None,               None        ),
+        ('WebKit',                  None,               None        ),
+        ('XgridFoundation',         None,               '10.8'      ),
+        ('FSEvents',                '10.5',             None        ),
+        ('CalendarStore',           '10.5',             None        ),
+        ('Collaboration',           '10.5',             None        ),
+        ('DictionaryServices',      '10.5',             None        ),
+        ('InputMethodKit',          '10.5',             None        ),
+        ('InstantMessage',          '10.5',             None        ),
+        ('InterfaceBuilderKit',     '10.5',             '10.7'      ),
+        ('PubSub',                  '10.5',             None        ),
+        ('QTKit',                   '10.5',             None        ),
+        ('ScriptingBridge',         '10.5',             None        ),
+        ('AppleScriptObjC',         '10.6',             None        ),
+        ('CoreLocation',            '10.6',             None        ),
+        ('ServerNotification',      '10.6',             '10.9'      ),
+        ('ServiceManagement',       '10.6',             None        ),
+        ('CoreWLAN',                '10.6',             None        ),
+        ('StoreKit',                '10.7',             None        ),
+        ('Accounts',                '10.8',             None        ),
+#        ('AudioVideoBridging',      '10.8',             None        ),
+        ('EventKit',                '10.8',             None        ),
+#        ('GLKit',                   '10.8',             None        ),
+#        ('GameKit',                 '10.8',             None        ),
+#        ('MediaToolbox',            '10.8',             None        ),
+#        ('SceneKit',                '10.8',             None        ),
+        ('Social',                  '10.8',             None        ),
+#        ('VideoToolbox',            '10.8',             None        ),
+        ('AVKit',                   '10.9',             None        ),
+        ('CoreBluetooth',           '10.9',             None        ),
+        ('MapKit',                  '10.9',             None        ),
+        ('MediaAccessibility',      '10.9',             None        ),
+        ('MediaLibrary',            '10.9',             None        ),
+#        ('SpriteKit',               '10.9',             None        ),
+        ('GameController',          '10.9',             None        ),
+        ('CloudKit',                '10.10',            None        ),
+        ('CryptoTokenKit',          '10.10',            None        ),
+        ('FinderSync',              '10.10',            None        ),
+        ('MultipeerConnectivity',   '10.10',            None        ),
+]
 
-REQUIRES=[
+
+BASE_REQUIRES=[
         'py2app>=0.10',
         'pyobjc-core=='+VERSION,
-        'pyobjc-framework-AddressBook=='+VERSION,
-        'pyobjc-framework-AppleScriptKit=='+VERSION,
-        'pyobjc-framework-Automator=='+VERSION,
-        'pyobjc-framework-CFNetwork=='+VERSION,
-        'pyobjc-framework-Cocoa=='+VERSION,
-        'pyobjc-framework-CoreData=='+VERSION,
-        'pyobjc-framework-CoreText=='+VERSION,
-        'pyobjc-framework-DiskArbitration=='+VERSION,
-        'pyobjc-framework-ExceptionHandling=='+VERSION,
-        'pyobjc-framework-InstallerPlugins=='+VERSION,
-        'pyobjc-framework-LatentSemanticMapping=='+VERSION,
-        'pyobjc-framework-LaunchServices=='+VERSION,
-        'pyobjc-framework-Message=='+VERSION,
-        'pyobjc-framework-PreferencePanes=='+VERSION,
-        'pyobjc-framework-Quartz=='+VERSION,
-        'pyobjc-framework-ScreenSaver=='+VERSION,
-        'pyobjc-framework-SearchKit=='+VERSION,
-        'pyobjc-framework-SyncServices=='+VERSION,
-        'pyobjc-framework-SystemConfiguration=='+VERSION,
-        'pyobjc-framework-WebKit=='+VERSION,
-        'pyobjc-framework-XgridFoundation=='+VERSION,
 ]
 
-REQUIRES_10_5=[
-        'pyobjc-framework-FSEvents=='+VERSION,
-        'pyobjc-framework-CalendarStore=='+VERSION,
-        'pyobjc-framework-Collaboration=='+VERSION,
-        'pyobjc-framework-DictionaryServices=='+VERSION,
-        'pyobjc-framework-InputMethodKit=='+VERSION,
-        'pyobjc-framework-InstantMessage=='+VERSION,
-        'pyobjc-framework-InterfaceBuilderKit=='+VERSION,
-        'pyobjc-framework-PubSub=='+VERSION,
-        'pyobjc-framework-QTKit=='+VERSION,
-        'pyobjc-framework-ScriptingBridge=='+VERSION,
-]
+def version_key(version):
+    return tuple(int(x) for x in version.split('.'))
 
-REQUIRES_10_6=[
-        'pyobjc-framework-AppleScriptObjC=='+VERSION,
-        'pyobjc-framework-CoreLocation=='+VERSION,
-        'pyobjc-framework-ServerNotification=='+VERSION,
-        'pyobjc-framework-ServiceManagement=='+VERSION,
-        'pyobjc-framework-CoreWLAN=='+VERSION,
-]
+def framework_requires():
+    build_platform = platform.mac_ver()[0]
+    result = []
 
-DEL_REQUIRES_10_7=[
-        'pyobjc-framework-InterfaceBuilderKit=',
-]
-REQUIRES_10_7=[
-#        'pyobjc-framework-AVFoundation='+VERSION,
-        'pyobjc-framework-StoreKit=='+VERSION,
-]
+    for name, introduced, removed in FRAMEWORKS_WRAPPERS:
+        if introduced is not None and version_key(introduced) > version_key(build_platform):
+            continue
+        if removed is not None and version_key(removed) <= version_key(build_platform):
+            continue
 
-REQUIRES_10_8=[
-        'pyobjc-framework-Accounts=='+VERSION,
-#        'pyobjc-framework-AudioVideoBridging=='+VERSION,
-        'pyobjc-framework-EventKit=='+VERSION,
-#        'pyobjc-framework-GLKit=='+VERSION,
-#        'pyobjc-framework-GameKit=='+VERSION,
-#        'pyobjc-framework-MediaToolbox=='+VERSION,
-#        'pyobjc-framework-SceneKit=='+VERSION,
-        'pyobjc-framework-Social=='+VERSION,
-#        'pyobjc-framework-VideoToolbox=='+VERSION,
-]
-DEL_REQUIRES_10_8=[
-        'pyobjc-framework-XgridFoundation=',
-        'pyobjc-framework-InterfaceBuilderKit=',
-]
+        result.append('pyobjc_framework-%s=='%(name,)+VERSION)
 
-REQUIRES_10_9=[
-        'pyobjc-framework-AVKit=='+VERSION,
-        'pyobjc-framework-CoreBluetooth=='+VERSION,
-        'pyobjc-framework-MapKit=='+VERSION,
-        'pyobjc-framework-MediaAccessibility=='+VERSION,
-        'pyobjc-framework-MediaLibrary=='+VERSION,
-        #'pyobjc-framework-SpriteKit=='+VERSION,
-        'pyobjc-framework-GameController=='+VERSION,
-]
-DEL_REQUIRES_10_9=[
-        'pyobjc-framework-Message=',
-        'pyobjc-framework-ServerNotification=',
-]
-
-REQUIRES_10_10=[
-        'pyobjc-framework-CloudKit=='+VERSION,
-        'pyobjc-framework-CryptoTokenKit=='+VERSION,
-        'pyobjc-framework-FinderSync=='+VERSION,
-        'pyobjc-framework-MultipeerConnectivity=='+VERSION,
-]
-DEL_REQUIRES_10_10=[
-]
-
-
-import platform
-rel = tuple(map(int, platform.mac_ver()[0].split('.')[:2]))
-if rel >= (10, 5):
-    REQUIRES.extend(REQUIRES_10_5)
-if rel >= (10, 6):
-    REQUIRES.extend(REQUIRES_10_6)
-if rel >= (10, 7):
-    REQUIRES.extend(REQUIRES_10_7)
-    for name in DEL_REQUIRES_10_7:
-        for line in REQUIRES:
-            if line.startswith(name):
-                REQUIRES.remove(line)
-                continue
-if rel >= (10, 8):
-    REQUIRES.extend(REQUIRES_10_8)
-    for name in DEL_REQUIRES_10_8:
-        for line in REQUIRES:
-            if line.startswith(name):
-                REQUIRES.remove(line)
-                continue
-if rel >= (10, 9):
-    REQUIRES.extend(REQUIRES_10_9)
-    for name in DEL_REQUIRES_10_9:
-        for line in REQUIRES:
-            if line.startswith(name):
-                REQUIRES.remove(line)
-                continue
-if rel >= (10, 10):
-    REQUIRES.extend(REQUIRES_10_10)
-    for name in DEL_REQUIRES_10_10:
-        for line in REQUIRES:
-            if line.startswith(name):
-                REQUIRES.remove(line)
-                continue
+    return result
 
 
 # Some PiPy stuff
@@ -199,7 +144,7 @@ dist = setup(
     url = "http://pyobjc.sourceforge.net/",
     platforms = [ 'MacOS X' ],
     packages = [],
-    install_requires = REQUIRES,
+    install_requires = BASE_REQUIRES + framework_requires(),
     setup_requires = [],
     extra_path = "PyObjC",
     classifiers = CLASSIFIERS,
