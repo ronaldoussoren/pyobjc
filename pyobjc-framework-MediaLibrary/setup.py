@@ -12,16 +12,16 @@ import os
 
 setup(
     name='pyobjc-framework-MediaLibrary',
-    version="3.1",
+    version="3.1b1",
     description = "Wrappers for the framework MediaLibrary on Mac OS X",
     long_description=__doc__,
     packages = [ "MediaLibrary" ],
     setup_requires = [
-        'pyobjc-core>=3.1',
+        'pyobjc-core>=3.1b1',
     ],
     install_requires = [
-        'pyobjc-core>=3.1',
-        'pyobjc-framework-Cocoa>=3.1',
-        'pyobjc-framework-Quartz>=3.1',
+        'pyobjc-core>=3.1b1',
+        'pyobjc-framework-Cocoa>=3.1b1',
+        'pyobjc-framework-Quartz>=3.1b1',
     ],
 )

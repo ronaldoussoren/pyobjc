@@ -12,15 +12,15 @@ import os
 
 setup(
     name='pyobjc-framework-GameController',
-    version="3.1",
+    version="3.1b1",
     description = "Wrappers for the framework GameController on Mac OS X",
     long_description=__doc__,
     packages = [ "GameController" ],
     setup_requires = [
-        'pyobjc-core>=3.1',
+        'pyobjc-core>=3.1b1',
     ],
     install_requires = [
-        'pyobjc-core>=3.1',
-        'pyobjc-framework-Cocoa>=3.1',
+        'pyobjc-core>=3.1b1',
+        'pyobjc-framework-Cocoa>=3.1b1',
     ],
 )

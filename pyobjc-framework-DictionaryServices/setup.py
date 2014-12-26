@@ -16,15 +16,15 @@ from pyobjc_setup import setup
 setup(
     min_os_level='10.5',
     name='pyobjc-framework-DictionaryServices',
-    version="3.1",
+    version="3.1b1",
     description = "Wrappers for the framework DictionaryServices on Mac OS X",
     long_description=__doc__,
     packages = [ "DictionaryServices" ],
     setup_requires = [
-        'pyobjc-core>=3.1',
+        'pyobjc-core>=3.1b1',
     ],
     install_requires = [
-        'pyobjc-core>=3.1',
-        'pyobjc-framework-Cocoa>=3.1',
+        'pyobjc-core>=3.1b1',
+        'pyobjc-framework-Cocoa>=3.1b1',
     ],
 )
