@@ -204,6 +204,9 @@ class oc_test (test.test):
 
 
     def cleanup_environment(self):
+        from pkg_resources import add_activation_listener
+        add_activation_listener(lambda dist: dist.activate())
+
         ei_cmd = self.get_finalized_command('egg_info')
         egg_name = ei_cmd.egg_name.replace('-', '_')
 
@@ -218,9 +221,9 @@ class oc_test (test.test):
                 dirname,))
             sys.path.remove(dirname)
 
-        from pkg_resources import add_activation_listener
-        add_activation_listener(lambda dist: dist.activate())
-        working_set.__init__()
+        working_set.__init__(sys.path)
+
+
 
     def add_project_to_sys_path(self):
         from pkg_resources import normalize_path, add_activation_listener
@@ -259,6 +262,14 @@ class oc_test (test.test):
         add_activation_listener(lambda dist: dist.activate())
         working_set.__init__()
         require('%s==%s'%(ei_cmd.egg_name, ei_cmd.egg_version))
+
+        from PyObjCTools import TestSupport
+        if os.path.realpath(os.path.dirname(TestSupport.__file__)) != os.path.realpath('Lib/PyObjCTools'):
+            raise DistutilsError("Setting up test environment failed for 'PyObjCTools.TestSupport'")
+
+        import objc
+        if os.path.realpath(os.path.dirname(objc.__file__)) != os.path.realpath('Lib/objc'):
+            raise DistutilsError("Setting up test environment failed for 'objc'")
 
     def remove_from_sys_path(self):
         from pkg_resources import working_set
