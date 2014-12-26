@@ -20,7 +20,14 @@
 -(void)callIntBlock:(void(^)(int))block withValue:(int)value;
 -(double)callDoubleBlock:(double(^)(double, double))block withValue:(double)v1 andValue:(double)v2;
 -(id)callOptionalBlock:(id(^)(id))block withValue:(id)value;
+
+-(int(^)(int))getIntBlock2;
+-(int(^)(int, int))getIntBlock3;
+-(int(^)(NSString*))getObjectBlock;
+-(int(^)(NSString*, NSString*))getObjectBlock2;
+
 #endif
+
 
 @end
 
@@ -39,6 +46,27 @@
 {
     return [[^{ return 42; } copy] autorelease];
 }
+
+-(int(^)(int))getIntBlock2
+{
+    return [[^(int x) { return x * 2; } copy] autorelease];
+}
+
+-(int(^)(int, int))getIntBlock3
+{
+    return [[^(int x, int y) { return x + y; } copy] autorelease];
+}
+
+-(int(^)(NSString*))getObjectBlock
+{
+    return [[ ^(NSString* a) { return [a length]; } copy] autorelease];
+}
+
+-(int(^)(NSString*, NSString*))getObjectBlock2
+{
+    return [[^(NSString* a, NSString* b) { return [a length] + [b length]; } copy] autorelease];
+}
+
 
 -(double(^)(double,double))getFloatBlock
 {

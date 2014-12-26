@@ -79,7 +79,9 @@ class ObjCLazyModule (ModuleType):
 
         pfx = name + '.'
         for nm in sys.modules:
-            if nm.startswith(pfx):
+            # See issue #95: there can be objects that aren't strings in
+            # sys.modules.
+            if hasattr(nm, 'startswith') and nm.startswith(pfx):
                 rest = nm[len(pfx):]
                 if '.' in rest: continue
                 if sys.modules[nm] is not None:

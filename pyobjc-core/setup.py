@@ -353,15 +353,16 @@ class oc_install_lib (install_lib.install_lib):
         else:
             outputs = install_lib.orig.install_lib.get_outputs(self)
 
+        exclusions = {}
         for fn in outputs:
             if 'PyObjCTest' in fn:
-                result[fn] = 1
+                exclusions[fn] = 1
 
         for fn in os.listdir('PyObjCTest'):
-            result[os.path.join('PyObjCTest', fn)] = 1
-            result[os.path.join(self.install_dir, 'PyObjCTest', fn)] = 1
+            exclusions[os.path.join('PyObjCTest', fn)] = 1
+            exclusions[os.path.join(self.install_dir, 'PyObjCTest', fn)] = 1
 
-
+        result.update(exclusions)
         return result
 
 
@@ -583,6 +584,12 @@ setup(
             extra_compile_args=CFLAGS,
             extra_link_args=OBJC_LDFLAGS,
             depends=list(glob.glob(os.path.join('Modules', 'objc', '*.h'))),
+        ),
+        Extension(
+            "objc._machsignals",
+            ["Modules/_machsignals.m"],
+            extra_compile_args=EXT_CFLAGS,
+            extra_link_args=OBJC_LDFLAGS,
         ),
     ] + [
         Extension(

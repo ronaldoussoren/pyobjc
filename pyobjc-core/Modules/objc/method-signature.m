@@ -387,9 +387,19 @@ new_methodsignature(const char* signature)
     cur = PyObjCRT_SkipTypeSpec(signature);
 
     nargs = 0;
-    for ( ; cur && *cur; cur = PyObjCRT_SkipTypeSpec(cur)) {
+    while (cur && *cur) {
+        cur = PyObjCRT_SkipTypeSpec(cur);
+        if (cur && *cur == '"') {
+            cur++;
+            while (*cur != '\0' && *cur != '"') {
+                cur++;
+            }
+            cur++;
+            while (isdigit(*cur)) cur++;
+        }
         nargs++;
     }
+
     retval = PyObject_NewVar(PyObjCMethodSignature,
             &PyObjCMethodSignature_Type, nargs /*+1*/);
 
@@ -456,7 +466,7 @@ new_methodsignature(const char* signature)
 
     cur = PyObjCRT_SkipTypeSpec(retval->signature);
     nargs = 0;
-    for ( ; cur && *cur; cur = PyObjCRT_SkipTypeSpec(cur)) {
+    while (cur && *cur) {
         if (unlikely(*cur == _C_CONST)) {
             /* Ignore a 'const' qualifier, not used by the bridge */
             cur++;
@@ -480,6 +490,15 @@ new_methodsignature(const char* signature)
             PyObjC_Assert(retval->argtype[nargs]->type != NULL, NULL);
         }
 
+        cur = PyObjCRT_SkipTypeSpec(cur);
+        if (cur && *cur == '"') {
+            cur++;
+            while (*cur != '\0' && *cur != '"') {
+                cur++;
+            }
+            cur++;
+            while (isdigit(*cur)) cur++;
+        }
         nargs++;
     }
 

@@ -18,5 +18,6 @@ that build upon the core features of PyObjC.
    module-PyObjCTools.AppHelper.rst
    module-PyObjCTools.Conversion.rst
    module-PyObjCTools.NibClassBuilder.rst
+   module-PyObjCTools.MachSignals.rst
    module-PyObjCTools.Signals.rst
    module-PyObjCTools.TestSupport.rst

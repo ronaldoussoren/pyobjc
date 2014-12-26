@@ -227,6 +227,9 @@ def min_python_release(version):
     parts = tuple(map(int, version.split('.')))
     return onlyIf(_sys.version_info[:2] >= parts, "Requires Python %s or later"%(version,))
 
+def _sort_key(version):
+   return tuple(int(x) for x in version.split('.'))
+
 
 def os_level_key(release):
     """

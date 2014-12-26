@@ -8,7 +8,6 @@
 
 #include <objc/Object.h>
 
-static Class Object_class = nil;
 
 static char* pysel_default_signature(PyObject* callable);
 static PyObject* pysel_new(PyTypeObject* type, PyObject* args, PyObject* kwds);
@@ -725,10 +724,6 @@ PyObjCSelector_FindNative(PyObject* self, const char* name)
         }
     }
 
-    if (Object_class == nil) {
-        Object_class = objc_getClass("Object");
-    }
-
     if (name[0] == '_' && name[1] == '_') {
         /* No known Objective-C class has methods whose name
          * starts with '__' or '_:'. This allows us to shortcut
@@ -755,11 +750,15 @@ PyObjCSelector_FindNative(PyObject* self, const char* name)
             return NULL;
         }
 
-        if (strcmp(class_getName(cls), "NSProxy") == 0) {
+        if (
+#ifndef __LP64__
+                strcmp(class_getName(cls), "Object") == 0 ||
+#endif /* !__LP64__ */
+                strcmp(class_getName(cls), "NSProxy") == 0) {
             if (sel == @selector(methodSignatureForSelector:)) {
                 PyErr_Format(PyExc_AttributeError,
-                    "Accessing NSProxy.%s is not supported",
-                    name);
+                    "Accessing %s.%s is not supported",
+                    class_getName(cls), name);
                 return NULL;
             }
         }
@@ -1130,8 +1129,8 @@ compensate_arglist(PyObject* _self, PyObject* args, PyObject* kwds)
                     PyObject* a = PyTuple_GET_ITEM(args, first_arg + i - 2);
                     if (a != Py_None && a != PyObjC_NULL) {
                         PyErr_Format(PyExc_TypeError,
-                            "argument %" PY_FORMAT_SIZE_T "d is an output argument but is passed a value other than None or objc.NULL (%s)",
-                            i-1-first_arg, PyObject_REPR(args));
+                            "argument %" PY_FORMAT_SIZE_T "d is an output argument but is passed a value other than None or objc.NULL",
+                            i-1-first_arg);
                         return NULL;
                     }
                 }

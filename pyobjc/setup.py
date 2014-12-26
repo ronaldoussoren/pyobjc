@@ -114,6 +114,7 @@ REQUIRES_10_10=[
 DEL_REQUIRES_10_10=[
 ]
 
+
 import platform
 rel = tuple(map(int, platform.mac_ver()[0].split('.')[:2]))
 if rel >= (10, 5):
@@ -148,6 +149,7 @@ if rel >= (10, 10):
             if line.startswith(name):
                 REQUIRES.remove(line)
                 continue
+
 
 # Some PiPy stuff
 LONG_DESCRIPTION="""

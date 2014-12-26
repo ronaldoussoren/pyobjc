@@ -17,6 +17,48 @@ Version 3.1
 
 * TODO: Update existing bindings with new functionality in OSX 10.9 and 10.10
 
+Version 3.0.5
+-------------
+
+* Add objc.MAC_OS_X_VERSION_10_10 and MAC_OS_X_VERSION_10_9.
+
+* The code that checked for compliance to formal protocols didn't look
+  at parent classes to determine if a class implements the protocol.
+
+  Issue #107
+
+* Fix build issue for python 3.
+
+Version 3.0.4
+-------------
+
+* Fix installation on OSX 10.10 when using "pip install pyobjc".
+
+  Issues #102, #103.
+
+* Fix crash when ``sys.modules`` contains an object that is not a string.
+
+  Issue #95.
+
+* Fix crash on OSX 10.8 or later when using a 32-bit build and accessing
+  an instance of "Object" (that is, pre-Nextstep classes).
+
+* Fix a crash when using blocks without metadata, but with a block
+  signature from the block runtime.
+
+  Issue #106
+
+* ``PyObjCTools.MachSignals`` likely hasn't worked at all since PyObjC 2.0
+  because it uses a C module that was never ported to PyObjC 2.0. This private
+  module is reintroduced in this release (with a slightly changed API)
+
+  Issue #109
+
+Version 3.0.3
+-------------
+
+* Fix a number of OSX 10.10 support issues.
+
 Version 3.0.2
 -------------
 

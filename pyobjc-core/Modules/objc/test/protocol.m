@@ -11,10 +11,17 @@
 -(void)method2:(int)v;
 @end
 
+@protocol OC_TestProtocol2
+-(id)description;
+-(void)method;
++(id)alloc;
++(id)classMethod;
+@end
+
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wprotocol"
 #pragma clang diagnostic ignored "-Wincomplete-implementation"
-@interface OC_TestProtocolClass : NSObject <OC_TestProtocol>
+@interface OC_TestProtocolClass : NSObject <OC_TestProtocol, OC_TestProtocol2>
 {}
 @end
 

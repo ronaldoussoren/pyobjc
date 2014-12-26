@@ -250,5 +250,27 @@ class TestBlocks (TestCase):
         value = obj.callOptionalBlockOn_(helper)
         self.assertEqual(value, "no block")
 
+    @min_os_level('10.6')
+    @onlyIf(blocksEnabled, "no blocks")
+    def testBlocksWithoutMetadata(self):
+        obj = OCTestBlock.alloc().init()
+
+        block = obj.getIntBlock2()
+        value = block(4)
+        self.assertEqual(value, 8)
+
+        block = obj.getIntBlock3()
+        value = block(4, 8)
+        self.assertEqual(value, 12)
+
+        block = obj.getObjectBlock()
+        value = block("hello")
+        self.assertEqual(value, 5)
+
+        block = obj.getObjectBlock2()
+        value = block("hello", "world");
+        self.assertEqual(value, 10)
+
+
 if __name__ == "__main__":
     main()
