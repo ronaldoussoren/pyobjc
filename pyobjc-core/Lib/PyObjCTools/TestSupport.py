@@ -235,7 +235,7 @@ def os_level_key(release):
     """
     Return an object that can be used to compare two releases.
     """
-    return map(int, release.split('.'))
+    return tuple(int(x) for x in release.split('.'))
 
 def min_os_level(release):
     """
