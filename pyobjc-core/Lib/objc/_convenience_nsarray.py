@@ -187,6 +187,10 @@ def nsarray_remove(self, obj):
     self.removeObjectAtIndex_(idx)
 
 
+index_error_message = 'index is not an integer'
+if sys.version_info[:2] >= (3, 5):
+    index_error_message='list indices must be integers or slices'
+
 def nsarray__setitem__(self, idx, anObject):
     if isinstance(idx, slice):
         start, stop, step = idx.indices(self.count())
@@ -227,7 +231,7 @@ def nsarray__setitem__(self, idx, anObject):
                 self.replaceObjectAtIndex_withObject_(outIdx, toAssign[inIdx])
 
     elif not isinstance(idx, INT_TYPES):
-        raise TypeError("index is not an integer")
+        raise TypeError(index_error_message)
 
     else:
         if idx < 0:

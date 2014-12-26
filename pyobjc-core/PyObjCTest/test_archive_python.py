@@ -898,6 +898,8 @@ class TestKeyedArchivePlainPython (TestCase, test.pickletester.AbstractPickleTes
     @onlyIf(0, "python unittest not relevant for archiving")
     def test_load_python2_str_as_bytes(self): pass
 
+    @onlyIf(0, "python unittest not relevant for archiving")
+    def test_complex_newobj(self): pass
 
 
 
@@ -1060,6 +1062,9 @@ class TestArchivePlainPython (TestKeyedArchivePlainPython):
 
     @onlyIf(0, "python unittest not relevant for archiving")
     def test_framing_many_objects(self): pass
+
+    @onlyIf(0, "python unittest not relevant for archiving")
+    def test_complex_newobj(self): pass
 
 
 #
