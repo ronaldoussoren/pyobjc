@@ -55,6 +55,9 @@ class oc_test (test.test):
 
 
     def cleanup_environment(self):
+        from pkg_resources import add_activation_listener
+        add_activation_listener(lambda dist: dist.activate())
+
         ei_cmd = self.get_finalized_command('egg_info')
         egg_name = ei_cmd.egg_name.replace('-', '_')
 
@@ -69,8 +72,6 @@ class oc_test (test.test):
                 dirname,))
             sys.path.remove(dirname)
 
-        from pkg_resources import add_activation_listener
-        add_activation_listener(lambda dist: dist.activate())
         working_set.__init__()
 
     def add_project_to_sys_path(self):
