@@ -1,5 +1,5 @@
 #ifndef PyObjC_POINTER_SUPPORT_H
-#define  PyObjC_POINTER_SUPPORT_H
+#define PyObjC_POINTER_SUPPORT_H
 
 extern PyTypeObject PyObjCZoneWrapper_Type;
 

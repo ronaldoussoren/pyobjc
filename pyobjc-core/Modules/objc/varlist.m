@@ -24,7 +24,7 @@ static char* keywords[] = { "count", NULL };
     PyObjC_VarList* self = (PyObjC_VarList*)_self;
 
     Py_ssize_t i, length;
-    PyObject*  result;
+    PyObject* result;
 
     if (!PyArg_ParseTupleAndKeywords(args, kwds, "n", keywords, &length)) {
         return NULL;
@@ -74,7 +74,7 @@ object__getslice__(PyObject* _self, Py_ssize_t start, Py_ssize_t stop)
     result = PyTuple_New(stop - start);
 
     for (idx = start; idx < stop; idx++) {
-        PyObject* v =  pythonify_c_value(
+        PyObject* v = pythonify_c_value(
             VARLIST_TYPE(self),
             ((unsigned char*)self->array) + (idx * self->itemsize));
         if (v == NULL) {
@@ -116,7 +116,7 @@ object__setslice__(PyObject* _self, Py_ssize_t start, Py_ssize_t stop, PyObject*
     }
 
     for (idx = start; idx < stop; idx++) {
-        PyObject* v =  PySequence_Fast_GET_ITEM(seq, idx-start);
+        PyObject* v = PySequence_Fast_GET_ITEM(seq, idx-start);
         int r = depythonify_c_value(
             VARLIST_TYPE(self),
             v,
@@ -267,7 +267,7 @@ object_ass_subscript(PyObject* self, PyObject* item, PyObject* value)
     }
 }
 
-static PyMappingMethods  object_tp_as_mapping = {
+static PyMappingMethods object_tp_as_mapping = {
     .mp_subscript     = object_subscript,
     .mp_ass_subscript = object_ass_subscript
 };

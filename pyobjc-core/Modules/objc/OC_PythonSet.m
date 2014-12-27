@@ -166,7 +166,7 @@
             value = PySet_New(NULL);
         PyObjC_END_WITH_GIL
 
-        result =  [super initWithCoder:coder];
+        result = [super initWithCoder:coder];
         if (result != nil) {
             Py_TYPE(value) = &PyFrozenSet_Type;
         }

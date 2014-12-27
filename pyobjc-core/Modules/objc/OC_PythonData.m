@@ -118,7 +118,7 @@
 #if PY_VERSION_HEX >= 0x02060000
     } else if (PyByteArray_CheckExact(value)) {
         return [NSMutableData class];
-#endif /* PY_VERSION_HEX >= 0x02060000  */
+#endif /* PY_VERSION_HEX >= 0x02060000 */
 
     } else {
         return [OC_PythonData class];
@@ -149,7 +149,7 @@
 
             }
             [super encodeWithCoder:coder];
-#endif /* PY_VERSION_HEX >= 0x02060000  */
+#endif /* PY_VERSION_HEX >= 0x02060000 */
 
         } else {
             if ([coder allowsKeyedCoding]) {
@@ -314,8 +314,8 @@
 }
 
 /* Ensure that we can be unarchived as a generic string by pure ObjC
- *  * code.
- *   */
+ * code.
+ */
 +(NSArray*)classFallbacksForKeyedArchiver
 {
     return [NSArray arrayWithObject:@"NSData"];

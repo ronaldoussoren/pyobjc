@@ -1,4 +1,4 @@
-/* Copyright (c) 1996,97 by Lele Gaifax.  All Rights Reserved
+/* Copyright (c) 1996,97 by Lele Gaifax. All Rights Reserved
  * Copyright (c) 2002-2014 Ronald Oussoren.
  *
  * This software may be used and distributed freely for any purpose
@@ -12,7 +12,7 @@
  * Revision: 1.16
  * Date: 1998/08/18 15:35:51
  *
- * Created Wed Sep  4 18:36:15 1996.
+ * Created Wed Sep 4 18:36:15 1996.
  *
  * NOTE: This used to be an ObjC translation of 'Python/abstract.h', most of
  *       that was removed by Ronald because no-one was using or maintaining
@@ -26,7 +26,7 @@
 
 extern void PyObjC_encodeWithCoder(PyObject* pyObject, NSCoder* coder);
 
-@interface OC_PythonObject : NSProxy  <NSCopying>
+@interface OC_PythonObject : NSProxy <NSCopying>
 {
   PyObject *pyObject;
 }

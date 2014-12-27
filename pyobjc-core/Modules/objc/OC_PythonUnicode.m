@@ -254,8 +254,8 @@
     byteorder = 2;
     switch (encoding) {
     case NSASCIIStringEncoding: byteorder = 0; break;
-    case NSUTF8StringEncoding:  byteorder = -1; break;
-    case NSISOLatin1StringEncoding:  byteorder = 1; break;
+    case NSUTF8StringEncoding: byteorder = -1; break;
+    case NSISOLatin1StringEncoding: byteorder = 1; break;
     }
     if (byteorder != 2) {
         PyObjC_BEGIN_WITH_GIL

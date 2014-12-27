@@ -109,7 +109,7 @@ static NSArray* make4Tuple_(double* data)
 
 static NSArray* null4Tuple_(double* data)
 {
-    if (data)  {
+    if (data) {
         return make4Tuple_(data);
     } else {
         return nil;
@@ -376,9 +376,9 @@ static NSArray* makeArrayWithFormat_(NSString* fmt, ...)
             NULL];
 }
 
-#pragma GCC   diagnostic push
-#pragma clang   diagnostic push
-#pragma GCC   diagnostic ignored "-Wformat-nonliteral"
+#pragma GCC diagnostic push
+#pragma clang  diagnostic push
+#pragma GCC diagnostic ignored "-Wformat-nonliteral"
 #pragma clang diagnostic ignored "-Wformat-nonliteral"
 
 static NSArray* makeArrayWithCFormat_(char* fmt, ...)
@@ -396,8 +396,8 @@ static NSArray* makeArrayWithCFormat_(char* fmt, ...)
             NULL];
 }
 
-#pragma GCC   diagnostic pop
-#pragma clang   diagnostic pop
+#pragma GCC diagnostic pop
+#pragma clang diagnostic pop
 
 static int maybeFillArray_(int* data)
 {
@@ -415,7 +415,7 @@ static int maybeFillArray_(int* data)
 typedef void (*F)(void);
 static struct function {
     char* name;
-    F    function;
+    F function;
 } gFunctionMap[] = {
     { "makeIntArrayOf5", (F)makeIntArrayOf5 },
     { "makeStringArray", (F)makeStringArray },

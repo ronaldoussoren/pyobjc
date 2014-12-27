@@ -274,7 +274,7 @@ error_cleanup:
 
 
 /* PyObjC uses a number of typecode descriptors that aren't available in
- * the objc runtime.  Remove these from the type string (inline).
+ * the objc runtime. Remove these from the type string (inline).
  */
 static void
 tc2tc(char* buf)
@@ -375,7 +375,7 @@ need_intermediate(PyObject* class_dict)
 
 
 Class
-PyObjCClass_BuildClass(Class super_class,  PyObject* protocols,
+PyObjCClass_BuildClass(Class super_class, PyObject* protocols,
       char* name, PyObject* class_dict, PyObject* meta_dict,
       PyObject* hiddenSelectors, PyObject* hiddenClassSelectors)
 {
@@ -475,7 +475,7 @@ PyObjCClass_BuildClass(Class super_class,  PyObject* protocols,
     if (!PyObjCClass_HasPythonImplementation(py_superclass)
                     && need_intermediate(class_dict)) {
         Class intermediate_class;
-        char  buf[1024];
+        char buf[1024];
 
         have_intermediate = 1;
 
@@ -678,7 +678,7 @@ PyObjCClass_BuildClass(Class super_class,  PyObject* protocols,
             if (shouldCopy) {
                 r = PyDict_SetItem(meta_dict, pyname, value);
                 Py_DECREF(pyname);
-                if (r == -1)  {
+                if (r == -1) {
                     goto error_cleanup;
                 }
             }
@@ -716,7 +716,7 @@ PyObjCClass_BuildClass(Class super_class,  PyObject* protocols,
               || PyObject_TypeCheck(value, &PyClassMethod_Type)) {
 
         PyObject* pyname;
-        const char*     ocname;
+        const char* ocname;
         pyname = key;
 #ifndef PyObjC_FAST_UNICODE_ASCII
         PyObject* pyname_bytes = NULL;
@@ -988,7 +988,7 @@ PyObjCClass_BuildClass(Class super_class,  PyObject* protocols,
                 if (closure == NULL) goto error_cleanup;
 
                 preclass_addMethod(new_class, cur->selector, closure, cur->typestr);
-                PyObject* sel = PyObjCSelector_NewNative(new_class, cur->selector,  cur->typestr, 0);
+                PyObject* sel = PyObjCSelector_NewNative(new_class, cur->selector, cur->typestr, 0);
                 if (sel == NULL) goto error_cleanup;
 
                 int r = PyDict_SetItemString(class_dict, cur->method_name, sel);
@@ -1062,7 +1062,7 @@ PyObjCClass_BuildClass(Class super_class,  PyObject* protocols,
         if (is_override) {
             imp = PyObjC_MakeIMP(new_class, super_class, value, value);
 
-        } else  {
+        } else {
             imp = PyObjC_MakeIMP(new_class, nil, value, value);
         }
 
@@ -1104,7 +1104,7 @@ PyObjCClass_BuildClass(Class super_class,  PyObject* protocols,
 
         if (is_override) {
              imp = PyObjC_MakeIMP(new_meta_class, super_class, value, value);
-        } else  {
+        } else {
              imp = PyObjC_MakeIMP(new_meta_class, nil, value, value);
         }
 
@@ -1156,7 +1156,7 @@ error_cleanup:
  * Below here are implementations of various methods needed to correctly
  * subclass Objective-C classes from Python.
  *
- * These are added to the new Objective-C class by  PyObjCClass_BuildClass (but
+ * These are added to the new Objective-C class by PyObjCClass_BuildClass (but
  * only if the super_class is a 'pure' objective-C class)
  *
  * NOTE:
@@ -1265,7 +1265,7 @@ free_ivars(id self, PyObject* cls)
             PyErr_Clear();
             cls = NULL;
 
-        }  else if (PyTuple_Size(o) == 0) {
+        } else if (PyTuple_Size(o) == 0) {
             PyErr_Clear();
             cls = NULL;
             Py_DECREF(o);
@@ -1365,12 +1365,12 @@ object_method_copyWithZone_(
 
         for (i = 0; i < ivarCount; i++) {
             Ivar v = ivarList[i];
-            const char*  typestr;
+            const char* typestr;
             ptrdiff_t offset;
             PyObject** p;
 
             typestr = ivar_getTypeEncoding(v);
-            offset  = ivar_getOffset(v);
+            offset = ivar_getOffset(v);
 
             if (strcmp(typestr, @encode(PyObject*))!=0)
                 continue;
@@ -1459,7 +1459,7 @@ object_method_methodSignatureForSelector(
     SEL _meth = *(SEL*)args[1];
     SEL aSelector = *(SEL*)args[2];
 
-    struct objc_super  spr;
+    struct objc_super spr;
     PyObject* pyself;
     PyObject* pymeth;
     NSMethodSignature** presult = (NSMethodSignature**)retval;
@@ -1498,7 +1498,7 @@ object_method_methodSignatureForSelector(
     PyObjC_END_WITH_GIL
 
     NS_DURING
-        *presult =  [NSMethodSignature signatureWithObjCTypes:(
+        *presult = [NSMethodSignature signatureWithObjCTypes:(
                         (PyObjCSelector*)pymeth)->sel_python_signature];
     NS_HANDLER
         PyObjC_BEGIN_WITH_GIL
@@ -1691,7 +1691,7 @@ object_method_forwardInvocation(
     }
 
     if (!have_output) {
-        if (*type  != _C_VOID && *type != _C_ONEWAY) {
+        if (*type != _C_VOID && *type != _C_ONEWAY) {
             argbuf = PyMem_Malloc(arglen+64);
 
             err = depythonify_c_value(type, result, argbuf);

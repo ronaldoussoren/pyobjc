@@ -38,7 +38,7 @@ struct FooStruct {
 
 +(NSObject*)callArrayOf4Structs:(OC_StructTest*)object
 {
-static    struct FooStruct structs[4] = {
+static struct FooStruct structs[4] = {
         { 1, 2 },
         { 3, 4 },
         { 5, 6 },

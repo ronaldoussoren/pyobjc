@@ -339,7 +339,7 @@
     NSUInteger i;
 
     PyObjC_BEGIN_WITH_GIL
-        for  (i = 0; i < count; i++) {
+        for (i = 0; i < count; i++) {
             PyObject* k;
             PyObject* v;
             int r;
@@ -571,4 +571,4 @@
     }
 }
 
-@end  // interface OC_PythonDictionary
+@end /* interface OC_PythonDictionary */

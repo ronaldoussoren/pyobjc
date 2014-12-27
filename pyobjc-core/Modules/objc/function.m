@@ -7,7 +7,7 @@
 typedef struct {
     PyObject_HEAD
 
-    ffi_cif*  cif;
+    ffi_cif* cif;
     PyObjCMethodSignature* methinfo;
     void* function;
     PyObject* doc;

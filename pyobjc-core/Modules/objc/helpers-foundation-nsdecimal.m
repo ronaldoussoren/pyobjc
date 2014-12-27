@@ -575,9 +575,9 @@ static PyObject* decimal_positive(PyObject* self)
 
 static PyObject* decimal_negative(PyObject* self)
 {
-    NSDecimal  result;
+    NSDecimal result;
     NSCalculationError err;
-    NSDecimal  zero;
+    NSDecimal zero;
     DecimalFromComponents(&zero, 0, 0, 0);
 
     err = NSDecimalSubtract(&result, &zero, &Decimal_Value(self), NSRoundPlain);
@@ -590,7 +590,7 @@ static PyObject* decimal_negative(PyObject* self)
         PyErr_SetString(PyExc_OverflowError, "Numeric underflow");
         return NULL;
 
-    } else  {
+    } else {
         NSDecimalCompact(&result);
         return Decimal_New(&result);
     }
@@ -598,9 +598,9 @@ static PyObject* decimal_negative(PyObject* self)
 
 static PyObject* decimal_absolute(PyObject* self)
 {
-    NSDecimal  result;
+    NSDecimal result;
     NSCalculationError err;
-    NSDecimal  zero;
+    NSDecimal zero;
     DecimalFromComponents(&zero, 0, 0, 0);
 
 
@@ -627,7 +627,7 @@ static PyObject* decimal_absolute(PyObject* self)
         PyErr_SetString(PyExc_OverflowError, "Numeric underflow");
         return NULL;
 
-    } else  {
+    } else {
         NSDecimalCompact(&result);
         return Decimal_New(&result);
     }
@@ -637,7 +637,7 @@ static PyObject* decimal_round(PyObject* self, PyObject* args, PyObject* kwds)
 {
 static char* keywords[] = { "digits", NULL };
     Py_ssize_t digits = 0;
-    NSDecimal  result;
+    NSDecimal result;
 
     if (!PyArg_ParseTupleAndKeywords(args, kwds, "|n", keywords, &digits)) {
         return NULL;
@@ -739,7 +739,7 @@ static PyObject*
 decimal_repr(PyObject* self)
 {
     NSString* val = NSDecimalString(&Decimal_Value(self), NULL);
-    PyObject* tmp =  PyObjC_IdToPython(val);
+    PyObject* tmp = PyObjC_IdToPython(val);
     PyObject* repr = PyObject_Str(tmp);
     Py_DECREF(tmp);
     return repr;
@@ -803,7 +803,7 @@ call_NSDecimalNumber_decimalNumberWithDecimal_(
     NSDecimal* aDecimal;
     id res;
 
-    if  (!PyArg_ParseTuple(arguments, "O&", Decimal_Convert, &aDecimal)) {
+    if (!PyArg_ParseTuple(arguments, "O&", Decimal_Convert, &aDecimal)) {
         return NULL;
     }
 
@@ -834,7 +834,7 @@ call_NSDecimalNumber_initWithDecimal_(
     NSDecimal* aDecimal;
     id res;
 
-    if  (!PyArg_ParseTuple(arguments, "O&", Decimal_Convert, &aDecimal)) {
+    if (!PyArg_ParseTuple(arguments, "O&", Decimal_Convert, &aDecimal)) {
         return NULL;
     }
 
@@ -866,7 +866,7 @@ imp_NSDecimalNumber_initWithDecimal_(
 {
     id self = *(id*)args[0];
     NSDecimal aDecimal = *(NSDecimal*)args[2];
-    id* pretval  = (id*)resp;
+    id* pretval = (id*)resp;
 
     PyObject* result = NULL;
     PyObject* arglist = NULL;
@@ -913,7 +913,7 @@ call_NSDecimalNumber_decimalValue(
 {
     struct objc_super super;
     NSDecimal aDecimal;
-    if  (!PyArg_ParseTuple(arguments, "")) {
+    if (!PyArg_ParseTuple(arguments, "")) {
         return NULL;
     }
 
@@ -952,7 +952,7 @@ imp_NSDecimalNumber_decimalNumberWithDecimal_(
 {
     Class self = *(id*)args[0];
     NSDecimal aDecimal = *(NSDecimal*)args[2];
-    id* pretval  = (id*)resp;
+    id* pretval = (id*)resp;
 
     PyObject* result = NULL;
     PyObject* arglist = NULL;
@@ -1017,7 +1017,7 @@ imp_NSDecimalNumber_decimalValue(
 
     v = PyObjC_IdToPython(self);
     if (v == NULL) goto error;
-    PyTuple_SetItem(arglist, 0,  v);
+    PyTuple_SetItem(arglist, 0, v);
 
     result = PyObject_Call((PyObject*)callable, arglist, NULL);
     Py_DECREF(arglist); arglist = NULL;

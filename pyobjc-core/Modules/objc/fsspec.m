@@ -32,7 +32,7 @@
 typedef struct {
     PyObject_HEAD
 
-    FSSpec    ref;
+    FSSpec ref;
 } PyObjC_FSSpecObject;
 
 static PyObject* fsspec_as_bytes(PyObject* ref, void* closure __attribute__((__unused__)))

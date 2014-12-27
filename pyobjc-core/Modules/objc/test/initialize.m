@@ -10,7 +10,7 @@ static int numUninitialized = 0;
 
 @interface OC_TestInitialize : NSObject
 {
-    int       isInitialized;
+    int isInitialized;
 }
 -(instancetype)init;
 -(instancetype)retain;

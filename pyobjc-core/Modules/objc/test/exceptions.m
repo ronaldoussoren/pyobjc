@@ -31,12 +31,12 @@ static NSString* addSomeUnicode(NSString* input)
 
 -(void)raiseSimpleWithInfo
 {
-    [[NSException     exceptionWithName:@"InfoException"
-            reason:@"Reason string"
-            userInfo:[NSDictionary dictionaryWithObjectsAndKeys:
-                @"value1", @"key1",
-                @"value2", @"key2",
-                NULL]] raise];
+    [[NSException exceptionWithName:@"InfoException"
+                             reason:@"Reason string"
+                           userInfo:[NSDictionary dictionaryWithObjectsAndKeys:
+                                @"value1", @"key1",
+                                @"value2", @"key2",
+                                NULL]] raise];
 }
 
 -(void)raiseUnicodeName
@@ -55,14 +55,14 @@ static NSString* addSomeUnicode(NSString* input)
 
 -(void)raiseUnicodeWithInfo
 {
-    [[NSException     exceptionWithName:addSomeUnicode(@"InfoException")
-            reason:addSomeUnicode(@"Reason string")
-            userInfo:[NSDictionary dictionaryWithObjectsAndKeys:
-                addSomeUnicode(@"value1"),
-                    addSomeUnicode(@"key1"),
-                addSomeUnicode(@"value2"),
-                    addSomeUnicode(@"key2"),
-                NULL]] raise];
+    [[NSException exceptionWithName:addSomeUnicode(@"InfoException")
+                             reason:addSomeUnicode(@"Reason string")
+                           userInfo:[NSDictionary dictionaryWithObjectsAndKeys:
+                                addSomeUnicode(@"value1"),
+                                addSomeUnicode(@"key1"),
+                                addSomeUnicode(@"value2"),
+                                addSomeUnicode(@"key2"),
+                                NULL]] raise];
 }
 
 -(void)raiseAString

@@ -16,15 +16,15 @@ static void use_id(id x __attribute__((__unused__))) { };
 @interface OC_MetaDataTest : NSObject
 {
 }
-+(BOOL)   boolClassMethod;
++(BOOL)boolClassMethod;
 /* Return value arrays: */
--(int*)   makeIntArrayOf5;
--(char**) makeStringArray;
--(int*)   makeIntArrayOf:(int)count;
--(const int*)   nullIntArrayOf5;
--(char**) nullStringArray;
--(int*)   nullIntArrayOf:(int)count;
--(int*)   unknownLengthArray;
+-(int*)makeIntArrayOf5;
+-(char**)makeStringArray;
+-(int*)makeIntArrayOf:(int)count;
+-(const int*)nullIntArrayOf5;
+-(char**)nullStringArray;
+-(int*)nullIntArrayOf:(int)count;
+-(int*)unknownLengthArray;
 
 /* In arrays: */
 -(NSArray*)makeIntArray:(int*) data count:(unsigned)count;
@@ -64,9 +64,9 @@ static void use_id(id x __attribute__((__unused__))) { };
 
 
 /* pass-by-reference */
--(int)sumX:(int*)x andY:(int*)y;        /* in */
--(int)divBy5:(int)x remainder:(int*)r;        /* out */
--(void)swapX:(double*)x andY:(double*)y;     /* inout */
+-(int)sumX:(int*)x andY:(int*)y; /* in */
+-(int)divBy5:(int)x remainder:(int*)r; /* out */
+-(void)swapX:(double*)x andY:(double*)y; /* inout */
 -(NSArray*)input:(int*)x output:(int*)y inputAndOutput:(int*)z;
 
 -(NSArray*)makeArrayWithFormat:(NSString*)fmt, ...;
@@ -75,12 +75,12 @@ static void use_id(id x __attribute__((__unused__))) { };
 
 /* Helpers for calling back into python: */
 
-+(int*)   makeIntArrayOf5On:(OC_MetaDataTest*)obj;
-+(char**) makeStringArrayOn:(OC_MetaDataTest*)obj;
-+(int*)   makeIntArrayOf:(int)count on:(OC_MetaDataTest*)obj;
-+(const int*)   nullIntArrayOf5On:(OC_MetaDataTest*)obj;
-+(char**) nullStringArrayOn:(OC_MetaDataTest*)obj;
-+(int*)   nullIntArrayOf:(int)count on:(OC_MetaDataTest*)obj;
++(int*)makeIntArrayOf5On:(OC_MetaDataTest*)obj;
++(char**)makeStringArrayOn:(OC_MetaDataTest*)obj;
++(int*)makeIntArrayOf:(int)count on:(OC_MetaDataTest*)obj;
++(const int*)nullIntArrayOf5On:(OC_MetaDataTest*)obj;
++(char**)nullStringArrayOn:(OC_MetaDataTest*)obj;
++(int*)nullIntArrayOf:(int)count on:(OC_MetaDataTest*)obj;
 +(NSArray*)makeIntArray:(int*) data count:(unsigned)count on:(OC_MetaDataTest*)obj;
 +(NSArray*)makeIntArray:(int*) data countPtr:(unsigned*)countPtr on:(OC_MetaDataTest*)obj;
 +(NSArray*)nullIntArray:(int*) data count:(unsigned)count on:(OC_MetaDataTest*)obj;
@@ -126,13 +126,13 @@ static void use_id(id x __attribute__((__unused__))) { };
 
 @implementation OC_MetaDataTest
 
-+(BOOL) boolClassMethod
++(BOOL)boolClassMethod
 {
     return YES;
 }
 
 
--(int*)   makeIntArrayOf5
+-(int*)makeIntArrayOf5
 {
     static int result[5];
     int i;
@@ -142,7 +142,7 @@ static void use_id(id x __attribute__((__unused__))) { };
     return result;
 }
 
--(char**) makeStringArray
+-(char**)makeStringArray
 {
     static char* result[] = {
         "hello",
@@ -155,7 +155,7 @@ static void use_id(id x __attribute__((__unused__))) { };
 }
 
 
--(int*)   makeIntArrayOf:(int)count
+-(int*)makeIntArrayOf:(int)count
 {
     static int* result = NULL;
     int i;
@@ -172,17 +172,17 @@ static void use_id(id x __attribute__((__unused__))) { };
     }
     return result;
 }
--(const int*)   nullIntArrayOf5
+-(const int*)nullIntArrayOf5
 {
     return NULL;
 }
 
--(char**) nullStringArray
+-(char**)nullStringArray
 {
     return NULL;
 }
 
--(int*)   nullIntArrayOf:(int)count
+-(int*)nullIntArrayOf:(int)count
 {
     use_int(count);
     return NULL;
@@ -236,7 +236,7 @@ static void use_id(id x __attribute__((__unused__))) { };
 
 -(NSArray*)null4Tuple:(double*)data
 {
-    if (data)  {
+    if (data) {
         return [self make4Tuple:data];
     } else {
         return nil;
@@ -389,12 +389,12 @@ static void use_id(id x __attribute__((__unused__))) { };
     return 1;
 }
 
--(int)sumX:(int*)x andY:(int*)y        /* in */
+-(int)sumX:(int*)x andY:(int*)y /* in */
 {
     return *x + *y;
 }
 
--(int)divBy5:(int)x remainder:(int*)r    /* out */
+-(int)divBy5:(int)x remainder:(int*)r /* out */
 {
     *r = x % 5;
     return x / 5;
@@ -483,32 +483,32 @@ static void use_id(id x __attribute__((__unused__))) { };
 }
 
 
-+(int*)   makeIntArrayOf5On:(OC_MetaDataTest*)obj
++(int*)makeIntArrayOf5On:(OC_MetaDataTest*)obj
 {
     return [obj makeIntArrayOf5];
 }
 
-+(char**) makeStringArrayOn:(OC_MetaDataTest*)obj
++(char**)makeStringArrayOn:(OC_MetaDataTest*)obj
 {
     return [obj makeStringArray];
 }
 
-+(int*)   makeIntArrayOf:(int)count on:(OC_MetaDataTest*)obj
++(int*)makeIntArrayOf:(int)count on:(OC_MetaDataTest*)obj
 {
     return [obj makeIntArrayOf:count];
 }
 
-+(const int*)   nullIntArrayOf5On:(OC_MetaDataTest*)obj
++(const int*)nullIntArrayOf5On:(OC_MetaDataTest*)obj
 {
     return [obj nullIntArrayOf5];
 }
 
-+(char**) nullStringArrayOn:(OC_MetaDataTest*)obj
++(char**)nullStringArrayOn:(OC_MetaDataTest*)obj
 {
     return [obj nullStringArray];
 }
 
-+(int*)   nullIntArrayOf:(int)count on:(OC_MetaDataTest*)obj
++(int*)nullIntArrayOf:(int)count on:(OC_MetaDataTest*)obj
 {
     return [obj nullIntArrayOf:count];
 }
@@ -681,7 +681,7 @@ static void use_id(id x __attribute__((__unused__))) { };
 -(NSArray*)makeArrayWithCFormat:(char*)fmt, ...
 {
     va_list ap;
-    char  buffer[2048];
+    char buffer[2048];
 
     va_start(ap, fmt);
     vsnprintf(buffer, sizeof(buffer), fmt, ap);
@@ -760,15 +760,15 @@ static void use_id(id x __attribute__((__unused__))) { };
     memset(data, '\xab', count);
 }
 
--(int*)   unknownLengthArray
+-(int*)unknownLengthArray
 {
-static  int theValue[] = { 1, 3, 5, 7, 11, 13, 17, 19 };
+static int theValue[] = { 1, 3, 5, 7, 11, 13, 17, 19 };
     return theValue;
 }
 
--(int*)  unknownLengthMutable
+-(int*)unknownLengthMutable
 {
-static  int theValue[20];
+static int theValue[20];
     return theValue;
 }
 

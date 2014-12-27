@@ -21,7 +21,7 @@ GET_STRUCT_FIELD(PyObject* self, PyMemberDef* member)
 {
     PyObject* v;
 
-    v =  *(PyObject**)(((char*)self) + member->offset);
+    v = *(PyObject**)(((char*)self) + member->offset);
     if (v == NULL) {
         return Py_None;
     } else {
@@ -81,7 +81,7 @@ struct_sq_slice(PyObject* self, Py_ssize_t ilow, Py_ssize_t ihigh)
     Py_ssize_t i, len;
 
     len = struct_sq_length(self);
-    if (ilow < 0)  ilow = 0;
+    if (ilow < 0) ilow = 0;
     if (ihigh > len) ihigh = len;
 
     result = PyTuple_New(ihigh - ilow);
@@ -139,7 +139,7 @@ struct_sq_ass_slice(PyObject* self, Py_ssize_t ilow, Py_ssize_t ihigh, PyObject*
 
 
     len = struct_sq_length(self);
-    if (ilow < 0)  {
+    if (ilow < 0) {
         ilow = 0;
     } else if (ilow > len) {
         ilow = len;
@@ -580,7 +580,7 @@ static int LOCATE_MEMBER(PyTypeObject* type, const char* name)
     int i = 0;
     PyMemberDef* member;
 
-    for (i = 0,  member = type->tp_members;
+    for (i = 0, member = type->tp_members;
             member->name != NULL; i++, member++) {
         if (strcmp(member->name, name) == 0) {
             return i;
@@ -1059,8 +1059,8 @@ done:
 }
 
 struct StructTypeObject {
-    PyTypeObject     base;
-    Py_ssize_t       pack;         /* struct packing, -1 for default packing */
+    PyTypeObject base;
+    Py_ssize_t pack;         /* struct packing, -1 for default packing */
 };
 
 /*
@@ -1411,7 +1411,7 @@ PyObjC_RegisterStructType(
 
     if (pack != -1) {
         /* Store custom struct packing as an attribute of the type
-         * object, to be able to  fetch it when depythonifying the object.
+         * object, to be able to fetch it when depythonifying the object.
          */
         v = Py_BuildValue("n", pack);
         if (v == NULL) {

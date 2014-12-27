@@ -12,12 +12,12 @@
 
 -(id)oc_method1
 {
-	return @"NSURL.oc_method1";
+    return @"NSURL.oc_method1";
 }
 
 -(id)ocmethod2
 {
-	return @"NSURL.ocmethod2";
+    return @"NSURL.ocmethod2";
 }
 
 @end

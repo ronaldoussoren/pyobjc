@@ -39,7 +39,7 @@
 
 +(CFUUIDRef)createUUID
 {
-    CFUUIDRef result =  CFUUIDCreate(NULL);
+    CFUUIDRef result = CFUUIDCreate(NULL);
 
     /* We own a reference, but want to released a borrowed ref. */
     [(NSObject*)result retain];
@@ -51,7 +51,7 @@
 
 +(NSObject*)anotherUUID
 {
-    CFUUIDRef result =  CFUUIDCreate(NULL);
+    CFUUIDRef result = CFUUIDCreate(NULL);
 
     /* We own a reference, but want to released a borrowed ref. */
     [(NSObject*)result autorelease];
@@ -97,7 +97,7 @@
     CFLocaleRef currentLocale = CFLocaleCopyCurrent();
     CFDateFormatterRef formatter = CFDateFormatterCreate(
             NULL, currentLocale,
-            kCFDateFormatterShortStyle, kCFDateFormatterNoStyle  );
+            kCFDateFormatterShortStyle, kCFDateFormatterNoStyle);
 
     if (currentLocale != NULL) {
         CFRelease(currentLocale);

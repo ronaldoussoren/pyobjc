@@ -87,7 +87,7 @@ static PyMethodDef opaque_methods[] = {
 static PyObject*
 opaque_new(PyTypeObject* type, PyObject* args, PyObject* kwds)
 {
-static  char* keywords[] = { "cobject", "c_void_p", NULL };
+static char* keywords[] = { "cobject", "c_void_p", NULL };
     PyObject* cobject = NULL;
     PyObject* c_void_p = NULL;
 
@@ -246,9 +246,9 @@ PyObjCCreateOpaquePointerType(
         const char* docstr)
 {
 static const char convert_cif_signature[] = { _C_INT, _C_PTR, _C_VOID, _C_PTR, _C_VOID, 0 };
-static const char new_cif_signature[]     = { _C_PTR, _C_VOID, _C_PTR, _C_VOID, 0 };
-static  ffi_cif* convert_cif = NULL;
-static  ffi_cif* new_cif = NULL;
+static const char new_cif_signature[] = { _C_PTR, _C_VOID, _C_PTR, _C_VOID, 0 };
+static ffi_cif* convert_cif = NULL;
+static ffi_cif* new_cif = NULL;
 
     PyHeapTypeObject* newType = NULL;
     PyObjCPointerWrapper_ToPythonFunc from_c = NULL;
@@ -330,7 +330,7 @@ static  ffi_cif* new_cif = NULL;
     }
 
     w = PyBytes_FromString(typestr);
-    if (w ==  NULL) {
+    if (w == NULL) {
         goto error_cleanup;
     }
 

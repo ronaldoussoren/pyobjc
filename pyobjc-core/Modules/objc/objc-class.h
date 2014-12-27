@@ -1,5 +1,5 @@
-#ifndef  PyObjC_OBJC_CLASS_H
-#define  PyObjC_OBJC_CLASS_H
+#ifndef PyObjC_OBJC_CLASS_H
+#define PyObjC_OBJC_CLASS_H
 /*!
  * @header objc-class.m
  * @abstract Definition of the wrapper for Objective-C classes
@@ -117,7 +117,7 @@ extern PyObject* PyObjCMetaClass_TryResolveSelector(PyObject* base, PyObject* na
 
 static inline int PyObjCClass_IsCFWrapper(PyTypeObject* tp)
 {
-	return ((PyObjCClassObject*)tp)->isCFWrapper;
+    return ((PyObjCClassObject*)tp)->isCFWrapper;
 }
 
 PyObject* objc_class_locate(Class objc_class);

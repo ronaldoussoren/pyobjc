@@ -45,8 +45,8 @@ typedef int (RegisterMethodMappingFunctionType)(
             void (*)(void*, void*, void**, void*));
 
 struct pyobjc_api {
-    int api_version;    /* API version */
-    size_t struct_len;    /* Length of this struct */
+    int api_version; /* API version */
+    size_t struct_len; /* Length of this struct */
     RegisterMethodMappingFunctionType *register_method_mapping;
     id (*obj_get_object)(PyObject*);
     Class (*cls_get_class)(PyObject*);
@@ -85,43 +85,43 @@ struct pyobjc_api {
 #ifndef PYOBJC_BUILD
 
 #ifndef PYOBJC_METHOD_STUB_IMPL
-static struct pyobjc_api*    PyObjC_API;
+static struct pyobjc_api* PyObjC_API;
 #endif /* PYOBJC_METHOD_STUB_IMPL */
 
-#define PyObjCIMP_Check(obj)  PyObject_TypeCheck(obj, PyObjC_API->imp_type)
+#define PyObjCIMP_Check(obj) PyObject_TypeCheck(obj, PyObjC_API->imp_type)
 #define PyObjCObject_GetObject (PyObjC_API->obj_get_object)
-#define PyObjCClass_GetClass   (PyObjC_API->cls_get_class)
+#define PyObjCClass_GetClass (PyObjC_API->cls_get_class)
 #define PyObjCSelector_GetClass (PyObjC_API->sel_get_class)
 #define PyObjCSelector_GetSelector (PyObjC_API->sel_get_sel)
-#define PyObjC_PythonToId      (PyObjC_API->python_to_id)
-#define PyObjC_IdToPython      (PyObjC_API->id_to_python)
-#define PyObjCErr_FromObjC     (PyObjC_API->err_objc_to_python)
-#define PyObjCErr_ToObjCWithGILState       (PyObjC_API->err_python_to_objc_gil)
-#define PyObjC_PythonToObjC    (PyObjC_API->py_to_objc)
-#define PyObjC_ObjCToPython    (PyObjC_API->objc_to_py)
+#define PyObjC_PythonToId (PyObjC_API->python_to_id)
+#define PyObjC_IdToPython (PyObjC_API->id_to_python)
+#define PyObjCErr_FromObjC (PyObjC_API->err_objc_to_python)
+#define PyObjCErr_ToObjCWithGILState (PyObjC_API->err_python_to_objc_gil)
+#define PyObjC_PythonToObjC (PyObjC_API->py_to_objc)
+#define PyObjC_ObjCToPython (PyObjC_API->objc_to_py)
 #define PyObjC_RegisterMethodMapping (PyObjC_API->register_method_mapping)
-#define PyObjC_InitSuper    (PyObjC_API->fill_super)
-#define PyObjC_InitSuperCls    (PyObjC_API->fill_super_cls)
+#define PyObjC_InitSuper (PyObjC_API->fill_super)
+#define PyObjC_InitSuperCls (PyObjC_API->fill_super_cls)
 #define PyObjCPointerWrapper_Register (PyObjC_API->register_pointer_wrapper)
 #define PyObjCUnsupportedMethod_IMP (PyObjC_API->unsupported_method_imp)
 #define PyObjCUnsupportedMethod_Caller (PyObjC_API->unsupported_method_caller)
-#define PyObjCRT_SizeOfType      (PyObjC_API->sizeof_type)
-#define PyObjC_FreeCArray    (PyObjC_API->free_c_array)
-#define PyObjC_PythonToCArray    (PyObjC_API->py_to_c_array)
-#define PyObjC_CArrayToPython    (PyObjC_API->c_array_to_py)
-#define PyObjCIMP_GetIMP   (PyObjC_API->imp_get_imp)
-#define PyObjCIMP_GetSelector   (PyObjC_API->imp_get_sel)
+#define PyObjCRT_SizeOfType (PyObjC_API->sizeof_type)
+#define PyObjC_FreeCArray (PyObjC_API->free_c_array)
+#define PyObjC_PythonToCArray (PyObjC_API->py_to_c_array)
+#define PyObjC_CArrayToPython (PyObjC_API->c_array_to_py)
+#define PyObjCIMP_GetIMP (PyObjC_API->imp_get_imp)
+#define PyObjCIMP_GetSelector (PyObjC_API->imp_get_sel)
 #define PyObjCObject_NewTransient (PyObjC_API->newtransient)
 #define PyObjCObject_ReleaseTransient (PyObjC_API->releasetransient)
-#define PyObjC_NULL          (*(PyObjC_API->pyobjc_null))
-#define PyObjC_DepythonifyCArray  (PyObjC_API->dep_c_array_count)
-#define PyObjC_VarList_New  (PyObjC_API->varlistnew)
+#define PyObjC_NULL (*(PyObjC_API->pyobjc_null))
+#define PyObjC_DepythonifyCArray (PyObjC_API->dep_c_array_count)
+#define PyObjC_VarList_New (PyObjC_API->varlistnew)
 #define PyObjCObject_Convert (PyObjC_API->pyobjcobject_convert)
 
 typedef void (*PyObjC_Function_Pointer)(void);
 typedef struct PyObjC_function_map {
-    const char*         name;
-    PyObjC_Function_Pointer     function;
+    const char* name;
+    PyObjC_Function_Pointer function;
 } PyObjC_function_map;
 
 
@@ -180,14 +180,14 @@ PyObjC_ImportAPI(PyObject* calling_module)
     if (PyObjC_API->api_version != PYOBJC_API_VERSION) {
         PyErr_Format(PyExc_RuntimeError,
             "Wrong version of PyObjC C API (got %d, expected %d)",
-	    (int)PyObjC_API->api_version, (int)PYOBJC_API_VERSION);
+            (int)PyObjC_API->api_version, (int)PYOBJC_API_VERSION);
         return -1;
     }
 
     if (PyObjC_API->struct_len < sizeof(struct pyobjc_api)) {
         PyErr_Format(PyExc_RuntimeError,
             "Wrong struct-size of PyObjC C API (got %d, expected %d)",
-	    (int)PyObjC_API->struct_len, (int)sizeof(struct pyobjc_api));
+            (int)PyObjC_API->struct_len, (int)sizeof(struct pyobjc_api));
         return -1;
     }
 
@@ -205,9 +205,9 @@ PyObjC_ImportAPI(PyObject* calling_module)
 
 #else /* PyObjC_BUILD */
 
-extern struct pyobjc_api    objc_api;
+extern struct pyobjc_api objc_api;
 extern int PyObjCAPI_Register(PyObject* module);
 
 #endif /* !PYOBJC_BUILD */
 
-#endif /*  PyObjC_API_H */
+#endif /* PyObjC_API_H */

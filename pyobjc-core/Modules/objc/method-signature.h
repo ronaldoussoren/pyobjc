@@ -7,7 +7,7 @@ extern PyTypeObject PyObjCMethodSignature_Type;
 
 enum _PyObjC_PointerType
 #if __has_feature(objc_fixed_enum)
-	: unsigned char
+    : unsigned char
 #endif /* __has_feature(objc_fixed_enum) */
 {
     PyObjC_kPointerPlain = 0,
@@ -74,7 +74,7 @@ extern PyObject*
 PyObjCMethodSignature_AsDict(PyObjCMethodSignature* methinfo);
 
 #define PyObjCMethodSignature_FromSignature(sig, is_native) \
-	PyObjCMethodSignature_WithMetaData((sig), NULL, (is_native))
+    PyObjCMethodSignature_WithMetaData((sig), NULL, (is_native))
 
 
 #ifdef PyObjC_DEBUG

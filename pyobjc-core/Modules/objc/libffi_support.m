@@ -105,7 +105,7 @@ static void describe_cif(ffi_cif* cif)
 
     printf("<ffi_cif abi=%d nargs=%d  bytes=%d flags=%#x args=[",
         cif->abi, cif->nargs, cif->bytes, cif->flags);
-    for  (i = 0; i < cif->nargs; i++) {
+    for (i = 0; i < cif->nargs; i++) {
         describe_ffitype(cif->arg_types[i]);
         printf("%s", ", ");
     }
@@ -241,7 +241,7 @@ static PyObject* array_types = NULL;
 static ffi_type*
 struct_to_ffi_type(const char* argtype)
 {
-static  PyObject* struct_types = NULL;
+static PyObject* struct_types = NULL;
 
     PyObject* v;
     ffi_type* type;
@@ -385,7 +385,7 @@ signature_to_ffi_type(const char* argtype)
          return &ffi_type_sint;
 #else /* !defined(__ppc__) || defined(__LP64__) */
          return &ffi_type_schar;
-#endif /* !defined(__ppc__) || defined(__LP64__)  */
+#endif /* !defined(__ppc__) || defined(__LP64__) */
 
 #endif /* _C_BOOL */
 
@@ -401,11 +401,11 @@ signature_to_ffi_type(const char* argtype)
       * don't work (e.g. give testsuite failures).
       */
 #ifdef __LP64__
-    case _C_LNG: return &ffi_type_sint64;  /* ffi_type_slong */
-    case _C_ULNG: return &ffi_type_uint64;  /* ffi_type_ulong */
+    case _C_LNG: return &ffi_type_sint64; /* ffi_type_slong */
+    case _C_ULNG: return &ffi_type_uint64; /* ffi_type_ulong */
 #else /* !__LP64__ */
-    case _C_LNG: return &ffi_type_sint;  /* ffi_type_slong */
-    case _C_ULNG: return &ffi_type_uint;  /* ffi_type_ulong */
+    case _C_LNG: return &ffi_type_sint; /* ffi_type_slong */
+    case _C_ULNG: return &ffi_type_uint; /* ffi_type_ulong */
 #endif /* !__LP64__ */
     case _C_LNG_LNG: return &ffi_type_sint64;
     case _C_ULNG_LNG: return &ffi_type_uint64;
@@ -601,7 +601,7 @@ parse_printf_args(
 
         /* Skip flags */
         while (1) {
-           if (!*format)  break;
+           if (!*format) break;
            if (
                (*format == '#')
             || (*format == '0')
@@ -1010,7 +1010,7 @@ static Py_ssize_t parse_varargs_array(
     }
 
     for (;argoffset < maxarg; curarg++, argoffset++) {
-        byref[curarg]  = PyMem_Malloc(argSize);
+        byref[curarg] = PyMem_Malloc(argSize);
         if (byref[curarg] == NULL) {
             return -1;
         }
@@ -1024,7 +1024,7 @@ static Py_ssize_t parse_varargs_array(
         values[curarg] = byref[curarg];
         arglist[curarg] = &ffi_type_pointer;
     }
-    byref[curarg]  = NULL;
+    byref[curarg] = NULL;
     values[curarg] = &byref[curarg];
     arglist[curarg] = &ffi_type_pointer;
     return curarg+1;
@@ -1066,7 +1066,7 @@ method_stub(ffi_cif* cif __attribute__((__unused__)), void* resp, void** args, v
     Py_ssize_t count;
     BOOL haveCountArg;
 
-    PyGILState_STATE   state = PyGILState_Ensure();
+    PyGILState_STATE state = PyGILState_Ensure();
 
     rettype = methinfo->rettype->type;
 
@@ -2434,7 +2434,7 @@ PyObjCFFI_ParseArguments(
     if (methinfo->variadic && (methinfo->null_terminated_array || (methinfo->arrayArg != -1))) {
         meth_arg_count = Py_SIZE(methinfo) - 1;
 
-    }  else {
+    } else {
         meth_arg_count = Py_SIZE(methinfo);
     }
 
@@ -2515,7 +2515,7 @@ PyObjCFFI_ParseArguments(
             if (error == -1) {
                 return -1;
 
-            }  else if (error == 0) {
+            } else if (error == 0) {
                 continue;
 
             }
@@ -2893,7 +2893,7 @@ PyObjCFFI_ParseArguments(
 
                     case PyObjC_kFixedLengthArray:
                         {
-                            char resttype[] = {  _C_CHR, 0 };
+                            char resttype[] = { _C_CHR, 0 };
                             count = methinfo->argtype[i]->arrayArg;
                             byref_attr[i].token = PyObjC_PythonToCArray(
                                 NO, YES,
@@ -3529,7 +3529,7 @@ PyObjCFFI_BuildResult(
         }
     } else {
         Py_INCREF(Py_None);
-        objc_result =  Py_None;
+        objc_result = Py_None;
     }
 
     /* XXX: This is for selectors only, need to change this !!!! */
@@ -3572,7 +3572,7 @@ PyObjCFFI_BuildResult(
 
         for (i = argOffset; i < Py_SIZE(methinfo); i++) {
             const char *argtype = methinfo->argtype[i]->type;
-            PyObject*   v = NULL;
+            PyObject*  v = NULL;
 
             switch (*argtype) {
             case _C_INOUT:
@@ -3753,7 +3753,7 @@ PyObjCRT_ResultUsesStret(const char* typestr)
     }
 
     if (*typestr == _C_STRUCT_B &&
-#ifdef  __ppc64__
+#ifdef __ppc64__
         ffi64_stret_needs_ptr((typestr), NULL, NULL)
 
 #else /* !__ppc64__ */
@@ -3794,7 +3794,7 @@ PyObjCFFI_Caller(PyObject *aMeth, PyObject* self, PyObject *args)
     Py_ssize_t byref_in_count = 0;
     Py_ssize_t byref_out_count = 0;
     Py_ssize_t plain_count = 0;
-    PyObjCMethodSignature*  methinfo;
+    PyObjCMethodSignature* methinfo;
     PyObjCNativeSelector* meth = (PyObjCNativeSelector*)aMeth;
     PyObject* objc_result = NULL;
     PyObject* result = NULL;
@@ -3975,7 +3975,7 @@ PyObjCFFI_Caller(PyObject *aMeth, PyObject* self, PyObject *args)
             objc_superSetClass(super,
                     object_getClass(meth->base.sel_class));
         } else {
-            objc_superSetClass(super,  meth->base.sel_class);
+            objc_superSetClass(super, meth->base.sel_class);
         }
 
         useStret = PyObjCRT_ResultUsesStret(rettype);
@@ -4012,8 +4012,8 @@ PyObjCFFI_Caller(PyObject *aMeth, PyObject* self, PyObject *args)
     }
 
     if (likely(PyObjCObject_Check(self))) {
-        isUninitialized = ((PyObjCObject*)self)->flags  & PyObjCObject_kUNINITIALIZED;
-        ((PyObjCObject*)self)->flags  &= ~PyObjCObject_kUNINITIALIZED;
+        isUninitialized = ((PyObjCObject*)self)->flags & PyObjCObject_kUNINITIALIZED;
+        ((PyObjCObject*)self)->flags &= ~PyObjCObject_kUNINITIALIZED;
     } else {
         isUninitialized = NO;
     }
@@ -4041,7 +4041,7 @@ PyObjCFFI_Caller(PyObject *aMeth, PyObject* self, PyObject *args)
     PyObjC_ENDHANDLER
 
     if (unlikely(isUninitialized && PyObjCObject_Check(self))) {
-        ((PyObjCObject*)self)->flags  |= PyObjCObject_kUNINITIALIZED;
+        ((PyObjCObject*)self)->flags |= PyObjCObject_kUNINITIALIZED;
     }
 
     if (PyErr_Occurred()) goto error_cleanup;

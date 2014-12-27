@@ -124,7 +124,7 @@
 #undef PyObjC_BUILD
 
 #if __has_feature(objc_arc_weak)
-#  error "It is not possible to compile PyObjC with ARC enabled"
+# error "It is not possible to compile PyObjC with ARC enabled"
 #endif
 
 /*

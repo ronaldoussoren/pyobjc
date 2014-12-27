@@ -11,7 +11,7 @@
 
 static PyObject*
 object_new(
-    PyTypeObject*  type __attribute__((__unused__)),
+    PyTypeObject* type __attribute__((__unused__)),
     PyObject* args,
     PyObject* kwds)
 {
@@ -516,7 +516,7 @@ _type_lookup_harder(PyTypeObject* tp, PyObject* name
 
     for (i = 0; i < n; i++) {
         Class cls;
-        Method*   methods;
+        Method*  methods;
         unsigned int method_count, j;
         base = PyTuple_GET_ITEM(mro, i);
 
@@ -1089,7 +1089,7 @@ obj_set_blocksignature(PyObject* self, PyObject* newVal, void* closure __attribu
     }
     if (!PyObjCObject_IsBlock(self)) {
         PyErr_SetString(PyExc_TypeError, "'__block_signature__' can only be set on Block objects");
-        return  -1;
+        return -1;
     }
 
     if (newVal != NULL) {
@@ -1190,7 +1190,7 @@ as_cobject(PyObject* self)
 PyObject*
 PyObjC_get_c_void_p(void)
 {
-static  PyObject* c_void_p = NULL;
+static PyObject* c_void_p = NULL;
     if (c_void_p == NULL) {
         PyObject* mod_ctypes = PyImport_ImportModule("ctypes");
         if (mod_ctypes == NULL) {
@@ -1444,7 +1444,7 @@ PyObjCObject_New(id objc_object, int flags, int retain)
 {
     Class cls = object_getClass(objc_object);
     PyTypeObject* cls_type;
-    PyObject*     res;
+    PyObject* res;
 
     res = PyObjC_FindPythonProxy(objc_object);
     if (res) return res;

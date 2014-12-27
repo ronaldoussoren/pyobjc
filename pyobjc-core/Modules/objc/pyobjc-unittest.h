@@ -35,12 +35,12 @@
 #define BEGIN_UNITTEST(name) \
     static PyObject* \
     test_##name (PyObject* self __attribute__((__unused__))) \
-     {  \
+     { \
 
 #define END_UNITTEST \
         Py_INCREF(Py_None); \
         return Py_None; \
-    error:             \
+    error:              \
         return NULL;    \
     }
 
@@ -118,9 +118,9 @@ unittest_assert_failed(const char* file, int line, char* msg, ...)
 
 #define TESTDEF(name) \
     { \
-        .ml_name	= #name, \
-        .ml_meth	= (PyCFunction)test_##name,  \
-        .ml_flags	= METH_NOARGS,  \
+        .ml_name  = #name, \
+        .ml_meth  = (PyCFunction)test_##name,  \
+        .ml_flags = METH_NOARGS,  \
     }
 
 #endif /* PyObjC_UNITTEST_H */

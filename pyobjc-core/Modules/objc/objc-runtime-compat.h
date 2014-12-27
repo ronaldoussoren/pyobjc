@@ -61,10 +61,10 @@
 /* These don't actually exist in the Objective-C runtime, but are used
  * by the bridge to simplify code.
  */
-#define _C_UNICHAR    'T'
+#define _C_UNICHAR 'T'
 #define _C_CHAR_AS_TEXT 't'
-#define _C_CHAR_AS_INT    'z'
-#define _C_NSBOOL    'Z'
+#define _C_CHAR_AS_INT 'z'
+#define _C_NSBOOL 'Z'
 
 struct PyObjC_method {
     SEL name;
@@ -91,7 +91,7 @@ struct PyObjC_method {
 BOOL PyObjC_class_isSubclassOf(Class child, Class parent);
 #define class_isSubclassOf PyObjC_class_isSubclassOf
 
-#if (MAC_OS_X_VERSION_MIN_REQUIRED < MAC_OS_X_VERSION_10_5)  && !defined(__OBJC2__)
+#if (MAC_OS_X_VERSION_MIN_REQUIRED < MAC_OS_X_VERSION_10_5) && !defined(__OBJC2__)
 
 #define preclass_addIvar PyObjC_preclass_addIvar
 #define preclass_addMethod PyObjC_preclass_addMethod
@@ -129,12 +129,12 @@ extern IMP (*PyObjC_method_setImplementation)(Method, IMP);
 
 extern BOOL (*PyObjC_sel_isEqual)(SEL, SEL);
 
-extern const char*  (*PyObjC_ivar_getName)(Ivar);
-extern const char*  (*PyObjC_ivar_getTypeEncoding)(Ivar);
-extern ptrdiff_t    (*PyObjC_ivar_getOffset)(Ivar);
+extern const char* (*PyObjC_ivar_getName)(Ivar);
+extern const char* (*PyObjC_ivar_getTypeEncoding)(Ivar);
+extern ptrdiff_t (*PyObjC_ivar_getOffset)(Ivar);
 
 extern Protocol** (*PyObjC_objc_copyProtocolList)(unsigned int*);
-extern Protocol*  (*PyObjC_objc_getProtocol)(const char*);
+extern Protocol* (*PyObjC_objc_getProtocol)(const char*);
 extern struct objc_method_description_list* (*PyObjC_protocol_copyInstanceMethodDescriptionList)(Protocol*);
 extern struct objc_method_description_list* (*PyObjC_protocol_copyClassMethodDescriptionList)(Protocol*);
 extern struct objc_method_description_list* (*PyObjC_protocol_copyOptionalInstanceMethodDescriptionList)(Protocol*);
@@ -212,7 +212,7 @@ extern void (*PyObjC_object_setIvar)(id, Ivar, id);
 #define preclass_addProtocol class_addProtocol
 
 extern BOOL PyObjC_class_addMethodList(Class, struct PyObjC_method*, unsigned int);
-#define class_addMethodList    PyObjC_class_addMethodList
+#define class_addMethodList PyObjC_class_addMethodList
 
 /*
  * XXX: Override protocol_getMethodDescription. This is a crude hack that's added because

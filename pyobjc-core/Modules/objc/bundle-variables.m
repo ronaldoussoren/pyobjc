@@ -232,7 +232,7 @@ static char* keywords[] = { "bundle", "module_globals", "functionInfo", "skip_un
 
         PyObjC_ENDHANDLER
 
-        if  (cfBundle == NULL && PyErr_Occurred()) {
+        if (cfBundle == NULL && PyErr_Occurred()) {
             return NULL;
         }
 
@@ -348,7 +348,7 @@ static char* keywords[] = { "bundle", "module_globals", "functionInfo", "skip_un
 
 typedef void(*function)(void);
 struct functionlist {
-    char*     name;
+    char* name;
     function func;
 };
 

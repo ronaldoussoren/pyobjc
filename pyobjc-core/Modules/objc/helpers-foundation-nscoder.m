@@ -12,7 +12,7 @@ call_NSCoder_encodeValueOfObjCType_at_(
     struct objc_super super;
     Py_ssize_t typestr_len;
 
-    if  (!PyArg_ParseTuple(arguments, Py_ARG_BYTES "#O", &typestr, &typestr_len, &value)) {
+    if (!PyArg_ParseTuple(arguments, Py_ARG_BYTES "#O", &typestr, &typestr_len, &value)) {
         return NULL;
     }
 
@@ -141,7 +141,7 @@ call_NSCoder_encodeArrayOfObjCType_count_at_(
     struct objc_super super;
     Py_ssize_t typestr_len;
 
-    if  (!PyArg_ParseTuple(arguments, Py_ARG_BYTES "#" Py_ARG_NSUInteger "O", &typestr, &typestr_len, &count, &value)) {
+    if (!PyArg_ParseTuple(arguments, Py_ARG_BYTES "#" Py_ARG_NSUInteger "O", &typestr, &typestr_len, &count, &value)) {
         return NULL;
     }
 
@@ -228,8 +228,8 @@ imp_NSCoder_encodeArrayOfObjCType_count_at_(
     PyObject* arglist = NULL;
     PyObject* v = NULL;
     PyObject* values = NULL;
-    Py_ssize_t    size;
-    NSUInteger     i;
+    Py_ssize_t size;
+    NSUInteger i;
     PyObject* pyself = NULL;
     int cookie = 0;
 
@@ -295,12 +295,12 @@ call_NSCoder_decodeValueOfObjCType_at_(
 {
     char* typestr;
     PyObject* value;
-    void*     buf;
-    Py_ssize_t    size, typestr_len;
+    void* buf;
+    Py_ssize_t size, typestr_len;
     struct objc_super super;
     PyObject* py_buf;
 
-    if  (!PyArg_ParseTuple(arguments, Py_ARG_BYTES "#O", &typestr, &typestr_len, &py_buf)) {
+    if (!PyArg_ParseTuple(arguments, Py_ARG_BYTES "#O", &typestr, &typestr_len, &py_buf)) {
         return NULL;
     }
 
@@ -414,16 +414,16 @@ call_NSCoder_decodeArrayOfObjCType_count_at_(
     PyObject* method, PyObject* self, PyObject* arguments)
 {
     char* typestr;
-    NSUInteger   count;
-    NSUInteger   i;
+    NSUInteger count;
+    NSUInteger i;
     PyObject* result;
     PyObject* py_buf;
-    void*     buf;
-    Py_ssize_t    size;
+    void* buf;
+    Py_ssize_t size;
     struct objc_super super;
     Py_ssize_t typestr_len;
 
-    if  (!PyArg_ParseTuple(arguments,
+    if (!PyArg_ParseTuple(arguments,
                 Py_ARG_BYTES "#" Py_ARG_NSUInteger "O",
                 &typestr, &typestr_len, &count, &py_buf)) {
         return NULL;
@@ -480,7 +480,7 @@ call_NSCoder_decodeArrayOfObjCType_count_at_(
     }
 
     for (i = 0; i < count; i++) {
-        PyTuple_SetItem(result, i,  pythonify_c_value(typestr,
+        PyTuple_SetItem(result, i, pythonify_c_value(typestr,
                 ((char*)buf) + (size * i)));
         if (PyTuple_GetItem(result, i) == NULL) {
             Py_DECREF(result);
@@ -583,7 +583,7 @@ call_NSCoder_encodeBytes_length_(
 
     struct objc_super super;
 
-    if  (!PyArg_ParseTuple(arguments, Py_ARG_BYTES"#n", &bytes, &size, &length)) {
+    if (!PyArg_ParseTuple(arguments, Py_ARG_BYTES"#n", &bytes, &size, &length)) {
         return NULL;
     }
 
@@ -688,7 +688,7 @@ call_NSCoder_decodeBytesWithReturnedLength_(
     PyObject* py_buf;
     struct objc_super super;
 
-    if  (!PyArg_ParseTuple(arguments, "O", &py_buf)) {
+    if (!PyArg_ParseTuple(arguments, "O", &py_buf)) {
         return NULL;
     }
     if (py_buf != Py_None) {
@@ -831,7 +831,7 @@ imp_NSCoder_decodeBytesWithReturnedLength_(
     /* Should return an autoreleased buffer, do this by createing an
      * NSData that will release the buffer
      */
-    *pretval =  (const void*)[[[[NSData alloc] initWithBytes:*pretval length:len]
+    *pretval = (const void*)[[[[NSData alloc] initWithBytes:*pretval length:len]
           autorelease] bytes];
 
     Py_DECREF(result);
@@ -859,7 +859,7 @@ call_NSCoder_decodeBytesForKey_returnedLength_(
     id key;
     struct objc_super super;
 
-    if  (!PyArg_ParseTuple(arguments, "O&O", PyObjCObject_Convert, &key, &py_buf)) {
+    if (!PyArg_ParseTuple(arguments, "O&O", PyObjCObject_Convert, &key, &py_buf)) {
         return NULL;
     }
 
@@ -1008,7 +1008,7 @@ imp_NSCoder_decodeBytesForKey_returnedLength_(
     /* Should return an autoreleased buffer, do this by createing an
      * NSData that will release the buffer
      */
-    *pretval =  (const void*)[[[[NSData alloc] initWithBytes:*pretval length:len]
+    *pretval = (const void*)[[[[NSData alloc] initWithBytes:*pretval length:len]
           autorelease] bytes];
 
     Py_DECREF(result);
@@ -1034,7 +1034,7 @@ call_NSCoder_encodeBytes_length_forKey_(
     id key;
     struct objc_super super;
 
-    if  (!PyArg_ParseTuple(arguments, Py_ARG_BYTES "#O&", &bytes, &size,
+    if (!PyArg_ParseTuple(arguments, Py_ARG_BYTES "#O&", &bytes, &size,
             PyObjCObject_Convert, &key)) {
         return NULL;
     }

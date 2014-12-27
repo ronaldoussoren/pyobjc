@@ -50,7 +50,7 @@
 
 -(void)dealloc
 {
-    [oc_value  release];
+    [oc_value release];
     oc_value = nil;
 
     PyObjC_BEGIN_WITH_GIL

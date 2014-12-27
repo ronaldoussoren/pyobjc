@@ -12,12 +12,12 @@
 
 -(id)oc_method1
 {
-	return @"NSObject.oc_method1";
+    return @"NSObject.oc_method1";
 }
 
 -(id)ocmethod2
 {
-	return @"NSObject.ocmethod2";
+    return @"NSObject.ocmethod2";
 }
 
 @end

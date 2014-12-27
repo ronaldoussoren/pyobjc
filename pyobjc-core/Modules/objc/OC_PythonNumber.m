@@ -219,15 +219,15 @@
     PyObjC_BEGIN_WITH_GIL
 #if PY_MAJOR_VERSION == 2
         if (PyInt_Check(value)) {
-            result =  PyInt_AsLong(value);
+            result = PyInt_AsLong(value);
             PyObjC_GIL_RETURN(result);
         } else
 #endif
         if (PyFloat_Check(value)) {
-            result =  (long long)PyFloat_AsDouble(value);
+            result = (long long)PyFloat_AsDouble(value);
             PyObjC_GIL_RETURN(result);
         } else if (PyLong_Check(value)) {
-            result =  PyLong_AsUnsignedLongLongMask(value);
+            result = PyLong_AsUnsignedLongLongMask(value);
             PyObjC_GIL_RETURN(result);
         }
     PyObjC_END_WITH_GIL
@@ -243,12 +243,12 @@
 
     PyObjC_BEGIN_WITH_GIL
         if (PyLong_Check(value)) {
-            result =  PyLong_AsUnsignedLongLongMask(value);
+            result = PyLong_AsUnsignedLongLongMask(value);
             PyObjC_GIL_RETURN(result);
 
 #if PY_MAJOR_VERSION == 2
         } else if (PyInt_Check(value)) {
-            result =  (unsigned long long)PyInt_AsLong(value);
+            result = (unsigned long long)PyInt_AsLong(value);
             PyObjC_GIL_RETURN(result);
 #endif
 
@@ -265,7 +265,7 @@
                 long long t = (long long)temp;
                 result = (unsigned long long)t;
             } else {
-                result =  (unsigned long long)temp;
+                result = (unsigned long long)temp;
             }
             PyObjC_GIL_RETURN(result);
         }

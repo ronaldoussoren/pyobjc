@@ -18,10 +18,10 @@
  */
 
 enum {
-    BLOCK_HAS_COPY_DISPOSE =  (1 << 25),
-    BLOCK_IS_GLOBAL        =  (1 << 28),
-    BLOCK_HAS_STRET        =  (1 << 29),
-    BLOCK_HAS_SIGNATURE    =  (1 << 30)
+    BLOCK_HAS_COPY_DISPOSE = (1 << 25),
+    BLOCK_IS_GLOBAL        = (1 << 28),
+    BLOCK_HAS_STRET        = (1 << 29),
+    BLOCK_HAS_SIGNATURE    = (1 << 30)
 };
 
 /*
@@ -46,8 +46,8 @@ struct block_descriptor_basic {
 
 struct block_literal {
     void* isa;
-    int   flags;
-    int   reserved;
+    int flags;
+    int reserved;
     void (*invoke)(void*, ...);
     struct block_descriptor* descriptor;
     PyObject* invoke_cleanup;
@@ -114,7 +114,7 @@ static struct block_descriptor gDescriptorTemplate = {
 };
 
 static struct block_literal gLiteralTemplate = {
-    0,     /* ISA */
+    0, /* ISA */
     BLOCK_HAS_COPY_DISPOSE,
     0,
     0,
@@ -151,8 +151,8 @@ PyObjCBlock_Call(PyObject* module __attribute__((__unused__)), PyObject* func_ar
     unsigned char* argbuf = NULL;
     ffi_type* arglist[MAX_ARGCOUNT];
     void* values[MAX_ARGCOUNT];
-    void* byref[MAX_ARGCOUNT] =  { 0 };
-    struct byref_attr byref_attr[MAX_ARGCOUNT] =  { {0, 0} };
+    void* byref[MAX_ARGCOUNT] = { 0 };
+    struct byref_attr byref_attr[MAX_ARGCOUNT] = { {0, 0} };
     ffi_cif cif;
     PyObject* retval;
 
@@ -186,7 +186,7 @@ PyObjCBlock_Call(PyObject* module __attribute__((__unused__)), PyObject* func_ar
     argbuf_len = PyObjCRT_SizeOfReturnType(signature->rettype->type);
     argbuf_len = align(argbuf_len, sizeof(void*));
 
-    int useStret =  PyObjCRT_ResultUsesStret(signature->rettype->type);
+    int useStret = PyObjCRT_ResultUsesStret(signature->rettype->type);
     if (useStret == -1) {
         goto error;
     }

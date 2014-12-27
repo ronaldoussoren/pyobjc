@@ -19,7 +19,7 @@ struct registry
 static PyObject* signature_registry = NULL;
 
 /* Dict mapping from selector to a list of (Class, struct registry) tuples */
-static PyObject* special_registry  = NULL;
+static PyObject* special_registry = NULL;
 
 /*
  * Initialize the data structures
@@ -101,7 +101,7 @@ PyObjC_RegisterMethodMapping(Class class, SEL sel,
         PyErr_NoMemory();
         return -1;
     }
-    v->call_to_objc  = call_to_objc;
+    v->call_to_objc = call_to_objc;
     v->call_to_python = call_to_python;
 
     entry = PyTuple_New(2);
@@ -148,7 +148,7 @@ int PyObjC_RegisterSignatureMapping(
     PyObjCFFI_ClosureFunc call_to_python)
 {
     struct registry* v;
-    PyObject*  entry;
+    PyObject* entry;
     char signature_buf[1024];
     int r;
 
@@ -176,7 +176,7 @@ int PyObjC_RegisterSignatureMapping(
         PyErr_NoMemory();
         return -1;
     }
-    v->call_to_objc  = call_to_objc;
+    v->call_to_objc = call_to_objc;
     v->call_to_python = call_to_python;
 
     entry = PyCapsule_New(v, "objc.__memblock__", memblock_capsule_cleanup);
@@ -235,7 +235,7 @@ search_special(Class class, SEL sel)
      *   was added later).
      */
     for (i = 0; i < PyList_GET_SIZE(lst); i++) {
-        PyObject* entry   = PyList_GET_ITEM(lst, i);
+        PyObject* entry = PyList_GET_ITEM(lst, i);
         PyObject* pyclass = PyTuple_GET_ITEM(entry, 0);
 
         if (pyclass == NULL) continue;

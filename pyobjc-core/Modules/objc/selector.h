@@ -25,12 +25,12 @@ typedef PyObject* (*PyObjC_CallFunc)(
 
 typedef struct {
     PyObject_HEAD
-    const char*  sel_python_signature;
-    const char*  sel_native_signature;
-    SEL          sel_selector;
-    PyObject*    sel_self;
-    Class        sel_class;
-    int          sel_flags;
+    const char* sel_python_signature;
+    const char* sel_native_signature;
+    SEL sel_selector;
+    PyObject* sel_self;
+    Class sel_class;
+    int sel_flags;
     PyObjCMethodSignature* sel_methinfo;
 } PyObjCSelector;
 
@@ -41,9 +41,9 @@ typedef struct {
 
 typedef struct {
     PyObjCSelector base;
-    PyObject*    callable;
-    Py_ssize_t    argcount;
-    Py_ssize_t    numoutput;
+    PyObject* callable;
+    Py_ssize_t argcount;
+    Py_ssize_t numoutput;
 } PyObjCPythonSelector;
 
 extern PyTypeObject PyObjCSelector_Type;

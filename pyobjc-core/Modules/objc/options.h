@@ -10,7 +10,7 @@ extern BOOL PyObjC_StrBridgeEnabled;
 #endif
 
 extern Py_ssize_t PyObjC_MappingCount;
-extern int       PyObjC_NSCoding_Version;
+extern int PyObjC_NSCoding_Version;
 extern PyObject* PyObjC_Encoder;
 extern PyObject* PyObjC_Decoder;
 extern PyObject* PyObjC_CopyFunc;

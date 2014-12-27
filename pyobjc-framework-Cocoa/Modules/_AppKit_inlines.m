@@ -5,9 +5,9 @@
 
 static PyObjC_function_map function_map[] = {
 #if PyObjC_BUILD_RELEASE >= 1008
-	{ "NSEdgeInsetsMake", (PyObjC_Function_Pointer)&NSEdgeInsetsMake },
+    { "NSEdgeInsetsMake", (PyObjC_Function_Pointer)&NSEdgeInsetsMake },
 #endif
-	{ "NSEventMaskFromType", (PyObjC_Function_Pointer)&NSEventMaskFromType },
+    { "NSEventMaskFromType", (PyObjC_Function_Pointer)&NSEventMaskFromType },
     { 0, 0 }
 };
 
@@ -20,15 +20,15 @@ static PyMethodDef mod_methods[] = {
 #if PY_MAJOR_VERSION == 3
 
 static struct PyModuleDef mod_module = {
-        PyModuleDef_HEAD_INIT,
-	"_inlines",
-	NULL,
-	0,
-	mod_methods,
-	NULL,
-	NULL,
-	NULL,
-	NULL
+    PyModuleDef_HEAD_INIT,
+    "_inlines",
+    NULL,
+    0,
+    mod_methods,
+    NULL,
+    NULL,
+    NULL,
+    NULL
 };
 
 #define INITERROR() return NULL
@@ -50,21 +50,21 @@ void
 init_inlines(void)
 #endif
 {
-	PyObject* m;
+    PyObject* m;
 #if PY_MAJOR_VERSION == 3
-	m = PyModule_Create(&mod_module);
+    m = PyModule_Create(&mod_module);
 #else
-	m = Py_InitModule4("_inlines", mod_methods,
-		NULL, NULL, PYTHON_API_VERSION);
+    m = Py_InitModule4("_inlines", mod_methods,
+            NULL, NULL, PYTHON_API_VERSION);
 #endif
-	if (!m) { 
-		INITERROR();
-	}
+    if (!m) {
+            INITERROR();
+    }
 
-	if (PyModule_AddObject(m, "_inline_list_", 
-		PyObjC_CreateInlineTab(function_map)) < 0) {
-		INITERROR();
-	}
+    if (PyModule_AddObject(m, "_inline_list_",
+        PyObjC_CreateInlineTab(function_map)) < 0) {
+        INITERROR();
+    }
 
-	INITDONE();
+    INITDONE();
 }

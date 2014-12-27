@@ -35,7 +35,7 @@
 typedef struct {
     PyObject_HEAD
 
-    FSRef    ref;
+    FSRef ref;
 } PyObjC_FSRefObject;
 
 static PyObject*

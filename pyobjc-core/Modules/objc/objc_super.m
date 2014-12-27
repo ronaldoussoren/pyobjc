@@ -36,7 +36,7 @@ super_getattro(PyObject *self, PyObject *name)
 
     if (!skip) {
         /* We want __class__ to return the class of the super object
-         *  (i.e. super, or a subclass), not the class of su->obj.
+         * (i.e. super, or a subclass), not the class of su->obj.
          */
         if (PyUnicode_Check(name)) {
             skip = (PyUnicode_GET_SIZE(name) && PyObjC_is_ascii_string(name, "__class__"));
@@ -118,7 +118,7 @@ super_getattro(PyObject *self, PyObject *name)
                 }
             }
 
-            if (PyObjCClass_Check(tmp) && PyObjCClass_Check(su->obj))  {
+            if (PyObjCClass_Check(tmp) && PyObjCClass_Check(su->obj)) {
                 dict = Py_TYPE(tmp)->tp_dict;
 
             } else if (PyType_Check(tmp)) {

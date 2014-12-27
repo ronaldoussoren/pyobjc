@@ -24,9 +24,9 @@
 
 #if !defined(LLONG_MAX) && defined(LONG_LONG_MAX)
 
-#  define LLONG_MAX LONG_LONG_MAX
-#  define LLONG_MIN LONG_LONG_MIN
-#  define ULLONG_MAX ULONG_LONG_MAX
+# define LLONG_MAX LONG_LONG_MAX
+# define LLONG_MIN LONG_LONG_MIN
+# define ULLONG_MAX ULONG_LONG_MAX
 
 #endif
 
@@ -43,23 +43,23 @@ struct dummy2
 
 
 struct s1 {
-    int    i;
+    int i;
     double d;
 };
 
 
 struct complexStruct
 {
-    /*  0 */ char         ch;
-    /*  1 */ unsigned char uch;
-    /*  4 */ int        i1;
-    /*  8 */ unsigned int    u;
-    /* 12 */ short         s;
-    /* 20 */ double        d;
-    /* 28 */ struct s1    sub1[2];
-    /* 60 */ int        i2;
+    /*  0 */ char           ch;
+    /*  1 */ unsigned char  uch;
+    /*  4 */ int            i1;
+    /*  8 */ unsigned int   u;
+    /* 12 */ short          s;
+    /* 20 */ double         d;
+    /* 28 */ struct s1      sub1[2];
+    /* 60 */ int            i2;
     /* 62 */ unsigned short us;
-    /* 64 */ char*         str;
+    /* 64 */ char*          str;
 };
 
 
@@ -434,10 +434,10 @@ static char* g_charps[] = {
 {
     struct dummy2 res;
 
-    res.array[0]  = 1;
-    res.array[1]  = 2;
-    res.array[2]  = 3;
-    res.array[3]  = 4;
+    res.array[0] = 1;
+    res.array[1] = 2;
+    res.array[2] = 3;
+    res.array[3] = 4;
 
     return res;
 }
@@ -511,7 +511,7 @@ static char* g_charps[] = {
 
 - (char*)charpArg:(char*)arg
 {
-static     char buf[1024];
+static char buf[1024];
     size_t len = strlen(arg);
     size_t i;
 
@@ -1992,7 +1992,7 @@ inittestbndl(void)
         INITERROR();
     }
 #else
-    if (PyModule_AddObject(m, "PyObjCTest_KeyValueObserver",  Py_None) < 0) {
+    if (PyModule_AddObject(m, "PyObjCTest_KeyValueObserver", Py_None) < 0) {
         INITERROR();
     }
 

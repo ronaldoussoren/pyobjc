@@ -190,6 +190,26 @@ typedef unsigned int NSUInteger;
 #define CHECK_WEAK_LINK_10_8(module, NAME) CHECK_WEAK_LINK(module, NAME)
 #endif
 
+#if MAC_OS_X_VERSION_MIN_REQUIRED >= MAC_OS_X_VERSION_10_9
+#define WEAK_LINKED_NAME_10_9(NAME)
+#define USE_10_9(NAME)                NAME
+#define CHECK_WEAK_LINK_10_9(module, NAME) do {} while(0)
+#else
+#define WEAK_LINKED_NAME_10_9(NAME)         WEAK_LINKED_NAME(NAME)
+#define USE_10_9(NAME)                USE(NAME)
+#define CHECK_WEAK_LINK_10_9(module, NAME) CHECK_WEAK_LINK(module, NAME)
+#endif
+
+#if MAC_OS_X_VERSION_MIN_REQUIRED >= MAC_OS_X_VERSION_10_10
+#define WEAK_LINKED_NAME_10_10(NAME)
+#define USE_10_10(NAME)                NAME
+#define CHECK_WEAK_LINK_10_10(module, NAME) do {} while(0)
+#else
+#define WEAK_LINKED_NAME_10_10(NAME)         WEAK_LINKED_NAME(NAME)
+#define USE_10_10(NAME)                USE(NAME)
+#define CHECK_WEAK_LINK_10_10(module, NAME) CHECK_WEAK_LINK(module, NAME)
+#endif
+
 /*
  *
  * End of Cocoa definitions
@@ -204,17 +224,17 @@ typedef unsigned int NSUInteger;
  */
 
 #ifdef __GNUC__
-#define unlikely(x)  __builtin_expect (!!(x), 0)
-#define likely(x)    __builtin_expect (!!(x), 1)
+#define unlikely(x) __builtin_expect (!!(x), 0)
+#define likely(x) __builtin_expect (!!(x), 1)
 #else
-#define likely(x)    x
-#define likely(x)    x
+#define likely(x) x
+#define likely(x) x
 #endif
 
 
 
 
-/* On some versions of GCC <limits.h> defines LONG_LONG_MAX but not LLONG_MAX, compensate.  */
+/* On some versions of GCC <limits.h> defines LONG_LONG_MAX but not LLONG_MAX, compensate. */
 #ifndef LLONG_MIN
 #ifdef LONG_LONG_MIN
 #define LLONG_MIN LONG_LONG_MIN

@@ -43,13 +43,13 @@ ObjCErr_PyExcForName(const char* value)
     if (strcmp(value, "NSRangeException") == 0) {
         return PyExc_IndexError;
 
-    }  else if (strcmp(value, "NSInvalidArgumentException") == 0) {
+    } else if (strcmp(value, "NSInvalidArgumentException") == 0) {
         return PyExc_ValueError;
 
-    }  else if (strcmp(value, "NSMallocException") == 0) {
+    } else if (strcmp(value, "NSMallocException") == 0) {
         return PyExc_MemoryError;
 
-    }  else if (strcmp(value, "NSUnknownKeyException") == 0) {
+    } else if (strcmp(value, "NSUnknownKeyException") == 0) {
         return PyExc_KeyError;
     }
 
@@ -102,8 +102,8 @@ PyObjCErr_FromObjC(NSException* localException)
                 val = [userInfo objectForKey:@"__pyobjc_exc_type__"];
                 if (val) {
                     exc_type = [val pyObject];
-                    exc_value = [[userInfo objectForKey:@"__pyobjc_exc_value__"]  pyObject];
-                    exc_traceback = [[userInfo objectForKey:@"__pyobjc_exc_traceback__"]  pyObject];
+                    exc_value = [[userInfo objectForKey:@"__pyobjc_exc_value__"] pyObject];
+                    exc_traceback = [[userInfo objectForKey:@"__pyobjc_exc_traceback__"] pyObject];
 
                     /* -pyObject returns a borrowed reference and
                      * PyErr_Restore steals one from us.
@@ -140,7 +140,7 @@ PyObjCErr_FromObjC(NSException* localException)
             PyDict_SetItemString(dict, "name", c_localException_name);
             Py_DECREF(c_localException_name);
 
-            PyDict_SetItemString(dict, "reason",  c_localException_reason);
+            PyDict_SetItemString(dict, "reason", c_localException_reason);
             Py_DECREF(c_localException_reason);
             if (userInfo) {
                 v = PyObjCObject_New(userInfo, PyObjCObject_kDEFAULT, YES);
@@ -375,7 +375,7 @@ NSMapTableKeyCallBacks PyObjCUtil_ObjCIdentityKeyCallBacks = {
 NSMapTableValueCallBacks PyObjCUtil_ObjCValueCallBacks = {
     &nsmaptable_objc_retain,
     &nsmaptable_objc_release,
-    NULL  // generic description
+    NULL // generic description
 };
 
 
@@ -462,9 +462,9 @@ static int
 buffer_get(BOOL writable, PyObject* obj, void** bufptr, Py_ssize_t* sizeptr)
 {
     if (writable) {
-        return PyObject_AsWriteBuffer(obj, bufptr,  sizeptr);
+        return PyObject_AsWriteBuffer(obj, bufptr, sizeptr);
     } else {
-        return PyObject_AsReadBuffer(obj, (const void**)bufptr,  sizeptr);
+        return PyObject_AsReadBuffer(obj, (const void**)bufptr, sizeptr);
     }
 }
 
@@ -668,12 +668,12 @@ code_compatible(char array_code, char type_code)
  */
 int
 PyObjC_PythonToCArray(
-    BOOL        writable, BOOL exactSize,
+    BOOL writable, BOOL exactSize,
     const char* elementType,
-    PyObject*   pythonList,
+    PyObject*  pythonList,
     void** array,
-    Py_ssize_t*   size,
-    PyObject**    bufobj)
+    Py_ssize_t*  size,
+    PyObject** bufobj)
 {
     Py_ssize_t eltsize = PyObjCRT_SizeOfType(elementType);
     Py_ssize_t i;
@@ -811,7 +811,7 @@ PyObjC_PythonToCArray(
 
         /* *array = PyBytes_AsString(*bufobj); return SHOULD_IGNORE*/
 
-#else    /* Python before 3.3 */
+#else /* Python before 3.3 */
         if (writable) {
             *array = PyMem_Malloc(*size * sizeof(UniChar));
             memcpy(*array, PyUnicode_AsUnicode(pythonList), *size * sizeof(UniChar));
@@ -823,7 +823,7 @@ PyObjC_PythonToCArray(
             Py_INCREF(pythonList);
             return SHOULD_IGNORE;
         }
-#endif  /* Python before 3.3 */
+#endif /* Python before 3.3 */
 
 #if PY_MAJOR_VERSION == 2
     } else if (*elementType == _C_UNICHAR && PyString_Check(pythonList)) {

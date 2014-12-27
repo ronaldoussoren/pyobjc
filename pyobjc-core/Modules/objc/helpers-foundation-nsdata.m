@@ -101,7 +101,7 @@ imp_NSData_bytes(
         }
 
         Py_DECREF(result);
-        *pretval =  (void *)p;
+        *pretval = (void *)p;
         PyGILState_Release(state);
         return;
 
@@ -134,8 +134,8 @@ static PyObject*
 call_NSMutableData_mutableBytes(
     PyObject* method, PyObject* self, PyObject* arguments)
 {
-    void*     bytes;
-    NSUInteger  bytes_len;
+    void* bytes;
+    NSUInteger bytes_len;
     PyObject* result;
     struct objc_super super;
 

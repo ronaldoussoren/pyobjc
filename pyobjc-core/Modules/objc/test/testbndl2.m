@@ -23,9 +23,9 @@
 
 #if !defined(LLONG_MAX) && defined(LONG_LONG_MAX)
 
-#  define LLONG_MAX LONG_LONG_MAX
-#  define LLONG_MIN LONG_LONG_MIN
-#  define ULLONG_MAX ULONG_LONG_MAX
+# define LLONG_MAX LONG_LONG_MAX
+# define LLONG_MIN LONG_LONG_MIN
+# define ULLONG_MAX ULONG_LONG_MAX
 
 #endif
 
@@ -42,18 +42,18 @@ const char* sel_getName(SEL sel)
 struct TestStruct1 {
     int i;
     int d;
-    short  s[5];
+    short s[5];
 };
 
 struct TestStruct2 {
     int i;
     double d;
-    short  s[5];
+    short s[5];
 };
 
 struct TestStruct3 {
     char ch;
-    int  i;
+    int i;
 };
 
 struct TestStruct4 {
@@ -948,99 +948,99 @@ struct TestStruct5 {
 +(id)callstructTestStruct5Arg:(struct TestStruct5)arg of:(PyObjC_TestClass1*)obj;
 +(id)invokestructTestStruct5Arg:(struct TestStruct5)arg of:(PyObjC_TestClass1*)obj;
 /* Multiple arguments */
-#ifdef  HAVE_BOOL
+#ifdef HAVE_BOOL
 +(id)callboolArg:(bool)arg1 andboolArg:(bool)arg2 of:(PyObjC_TestClass1*)obj;
 +(id)invokeboolArg:(bool)arg1 andboolArg:(bool)arg2 of:(PyObjC_TestClass1*)obj;
 #endif /* HAVE_BOOL */
-#ifdef  HAVE_BOOL
+#ifdef HAVE_BOOL
 +(id)callboolArg:(bool)arg1 andBOOLArg:(BOOL)arg2 of:(PyObjC_TestClass1*)obj;
 +(id)invokeboolArg:(bool)arg1 andBOOLArg:(BOOL)arg2 of:(PyObjC_TestClass1*)obj;
 #endif /* HAVE_BOOL */
-#ifdef  HAVE_BOOL
+#ifdef HAVE_BOOL
 +(id)callboolArg:(bool)arg1 andcharArg:(char)arg2 of:(PyObjC_TestClass1*)obj;
 +(id)invokeboolArg:(bool)arg1 andcharArg:(char)arg2 of:(PyObjC_TestClass1*)obj;
 #endif /* HAVE_BOOL */
-#ifdef  HAVE_BOOL
+#ifdef HAVE_BOOL
 +(id)callboolArg:(bool)arg1 andsignedshortArg:(signed short)arg2 of:(PyObjC_TestClass1*)obj;
 +(id)invokeboolArg:(bool)arg1 andsignedshortArg:(signed short)arg2 of:(PyObjC_TestClass1*)obj;
 #endif /* HAVE_BOOL */
-#ifdef  HAVE_BOOL
+#ifdef HAVE_BOOL
 +(id)callboolArg:(bool)arg1 andsignedintArg:(signed int)arg2 of:(PyObjC_TestClass1*)obj;
 +(id)invokeboolArg:(bool)arg1 andsignedintArg:(signed int)arg2 of:(PyObjC_TestClass1*)obj;
 #endif /* HAVE_BOOL */
-#ifdef  HAVE_BOOL
+#ifdef HAVE_BOOL
 +(id)callboolArg:(bool)arg1 andsignedlongArg:(signed long)arg2 of:(PyObjC_TestClass1*)obj;
 +(id)invokeboolArg:(bool)arg1 andsignedlongArg:(signed long)arg2 of:(PyObjC_TestClass1*)obj;
 #endif /* HAVE_BOOL */
-#ifdef  HAVE_BOOL
+#ifdef HAVE_BOOL
 +(id)callboolArg:(bool)arg1 andsignedlonglongArg:(signed long long)arg2 of:(PyObjC_TestClass1*)obj;
 +(id)invokeboolArg:(bool)arg1 andsignedlonglongArg:(signed long long)arg2 of:(PyObjC_TestClass1*)obj;
 #endif /* HAVE_BOOL */
-#ifdef  HAVE_BOOL
+#ifdef HAVE_BOOL
 +(id)callboolArg:(bool)arg1 andunsignedcharArg:(unsigned char)arg2 of:(PyObjC_TestClass1*)obj;
 +(id)invokeboolArg:(bool)arg1 andunsignedcharArg:(unsigned char)arg2 of:(PyObjC_TestClass1*)obj;
 #endif /* HAVE_BOOL */
-#ifdef  HAVE_BOOL
+#ifdef HAVE_BOOL
 +(id)callboolArg:(bool)arg1 andunsignedshortArg:(unsigned short)arg2 of:(PyObjC_TestClass1*)obj;
 +(id)invokeboolArg:(bool)arg1 andunsignedshortArg:(unsigned short)arg2 of:(PyObjC_TestClass1*)obj;
 #endif /* HAVE_BOOL */
-#ifdef  HAVE_BOOL
+#ifdef HAVE_BOOL
 +(id)callboolArg:(bool)arg1 andunsignedintArg:(unsigned int)arg2 of:(PyObjC_TestClass1*)obj;
 +(id)invokeboolArg:(bool)arg1 andunsignedintArg:(unsigned int)arg2 of:(PyObjC_TestClass1*)obj;
 #endif /* HAVE_BOOL */
-#ifdef  HAVE_BOOL
+#ifdef HAVE_BOOL
 +(id)callboolArg:(bool)arg1 andunsignedlongArg:(unsigned long)arg2 of:(PyObjC_TestClass1*)obj;
 +(id)invokeboolArg:(bool)arg1 andunsignedlongArg:(unsigned long)arg2 of:(PyObjC_TestClass1*)obj;
 #endif /* HAVE_BOOL */
-#ifdef  HAVE_BOOL
+#ifdef HAVE_BOOL
 +(id)callboolArg:(bool)arg1 andunsignedlonglongArg:(unsigned long long)arg2 of:(PyObjC_TestClass1*)obj;
 +(id)invokeboolArg:(bool)arg1 andunsignedlonglongArg:(unsigned long long)arg2 of:(PyObjC_TestClass1*)obj;
 #endif /* HAVE_BOOL */
-#ifdef  HAVE_BOOL
+#ifdef HAVE_BOOL
 +(id)callboolArg:(bool)arg1 andfloatArg:(float)arg2 of:(PyObjC_TestClass1*)obj;
 +(id)invokeboolArg:(bool)arg1 andfloatArg:(float)arg2 of:(PyObjC_TestClass1*)obj;
 #endif /* HAVE_BOOL */
-#ifdef  HAVE_BOOL
+#ifdef HAVE_BOOL
 +(id)callboolArg:(bool)arg1 anddoubleArg:(double)arg2 of:(PyObjC_TestClass1*)obj;
 +(id)invokeboolArg:(bool)arg1 anddoubleArg:(double)arg2 of:(PyObjC_TestClass1*)obj;
 #endif /* HAVE_BOOL */
-#ifdef  HAVE_BOOL
+#ifdef HAVE_BOOL
 +(id)callboolArg:(bool)arg1 andidArg:(id)arg2 of:(PyObjC_TestClass1*)obj;
 +(id)invokeboolArg:(bool)arg1 andidArg:(id)arg2 of:(PyObjC_TestClass1*)obj;
 #endif /* HAVE_BOOL */
-#ifdef  HAVE_BOOL
+#ifdef HAVE_BOOL
 +(id)callboolArg:(bool)arg1 andcharPtrArg:(char*)arg2 of:(PyObjC_TestClass1*)obj;
 +(id)invokeboolArg:(bool)arg1 andcharPtrArg:(char*)arg2 of:(PyObjC_TestClass1*)obj;
 #endif /* HAVE_BOOL */
-#ifdef  HAVE_BOOL
+#ifdef HAVE_BOOL
 +(id)callboolArg:(bool)arg1 andNSPointArg:(NSPoint)arg2 of:(PyObjC_TestClass1*)obj;
 +(id)invokeboolArg:(bool)arg1 andNSPointArg:(NSPoint)arg2 of:(PyObjC_TestClass1*)obj;
 #endif /* HAVE_BOOL */
-#ifdef  HAVE_BOOL
+#ifdef HAVE_BOOL
 +(id)callboolArg:(bool)arg1 andNSRectArg:(NSRect)arg2 of:(PyObjC_TestClass1*)obj;
 +(id)invokeboolArg:(bool)arg1 andNSRectArg:(NSRect)arg2 of:(PyObjC_TestClass1*)obj;
 #endif /* HAVE_BOOL */
-#ifdef  HAVE_BOOL
+#ifdef HAVE_BOOL
 +(id)callboolArg:(bool)arg1 andstructTestStruct1Arg:(struct TestStruct1)arg2 of:(PyObjC_TestClass1*)obj;
 +(id)invokeboolArg:(bool)arg1 andstructTestStruct1Arg:(struct TestStruct1)arg2 of:(PyObjC_TestClass1*)obj;
 #endif /* HAVE_BOOL */
-#ifdef  HAVE_BOOL
+#ifdef HAVE_BOOL
 +(id)callboolArg:(bool)arg1 andstructTestStruct2Arg:(struct TestStruct2)arg2 of:(PyObjC_TestClass1*)obj;
 +(id)invokeboolArg:(bool)arg1 andstructTestStruct2Arg:(struct TestStruct2)arg2 of:(PyObjC_TestClass1*)obj;
 #endif /* HAVE_BOOL */
-#ifdef  HAVE_BOOL
+#ifdef HAVE_BOOL
 +(id)callboolArg:(bool)arg1 andstructTestStruct3Arg:(struct TestStruct3)arg2 of:(PyObjC_TestClass1*)obj;
 +(id)invokeboolArg:(bool)arg1 andstructTestStruct3Arg:(struct TestStruct3)arg2 of:(PyObjC_TestClass1*)obj;
 #endif /* HAVE_BOOL */
-#ifdef  HAVE_BOOL
+#ifdef HAVE_BOOL
 +(id)callboolArg:(bool)arg1 andstructTestStruct4Arg:(struct TestStruct4)arg2 of:(PyObjC_TestClass1*)obj;
 +(id)invokeboolArg:(bool)arg1 andstructTestStruct4Arg:(struct TestStruct4)arg2 of:(PyObjC_TestClass1*)obj;
 #endif /* HAVE_BOOL */
-#ifdef  HAVE_BOOL
+#ifdef HAVE_BOOL
 +(id)callboolArg:(bool)arg1 andstructTestStruct5Arg:(struct TestStruct5)arg2 of:(PyObjC_TestClass1*)obj;
 +(id)invokeboolArg:(bool)arg1 andstructTestStruct5Arg:(struct TestStruct5)arg2 of:(PyObjC_TestClass1*)obj;
 #endif /* HAVE_BOOL */
-#ifdef  HAVE_BOOL
+#ifdef HAVE_BOOL
 +(id)callBOOLArg:(BOOL)arg1 andboolArg:(bool)arg2 of:(PyObjC_TestClass1*)obj;
 +(id)invokeBOOLArg:(BOOL)arg1 andboolArg:(bool)arg2 of:(PyObjC_TestClass1*)obj;
 #endif /* HAVE_BOOL */
@@ -1088,7 +1088,7 @@ struct TestStruct5 {
 +(id)invokeBOOLArg:(BOOL)arg1 andstructTestStruct4Arg:(struct TestStruct4)arg2 of:(PyObjC_TestClass1*)obj;
 +(id)callBOOLArg:(BOOL)arg1 andstructTestStruct5Arg:(struct TestStruct5)arg2 of:(PyObjC_TestClass1*)obj;
 +(id)invokeBOOLArg:(BOOL)arg1 andstructTestStruct5Arg:(struct TestStruct5)arg2 of:(PyObjC_TestClass1*)obj;
-#ifdef  HAVE_BOOL
+#ifdef HAVE_BOOL
 +(id)callcharArg:(char)arg1 andboolArg:(bool)arg2 of:(PyObjC_TestClass1*)obj;
 +(id)invokecharArg:(char)arg1 andboolArg:(bool)arg2 of:(PyObjC_TestClass1*)obj;
 #endif /* HAVE_BOOL */
@@ -1136,7 +1136,7 @@ struct TestStruct5 {
 +(id)invokecharArg:(char)arg1 andstructTestStruct4Arg:(struct TestStruct4)arg2 of:(PyObjC_TestClass1*)obj;
 +(id)callcharArg:(char)arg1 andstructTestStruct5Arg:(struct TestStruct5)arg2 of:(PyObjC_TestClass1*)obj;
 +(id)invokecharArg:(char)arg1 andstructTestStruct5Arg:(struct TestStruct5)arg2 of:(PyObjC_TestClass1*)obj;
-#ifdef  HAVE_BOOL
+#ifdef HAVE_BOOL
 +(id)callsignedshortArg:(signed short)arg1 andboolArg:(bool)arg2 of:(PyObjC_TestClass1*)obj;
 +(id)invokesignedshortArg:(signed short)arg1 andboolArg:(bool)arg2 of:(PyObjC_TestClass1*)obj;
 #endif /* HAVE_BOOL */
@@ -1184,7 +1184,7 @@ struct TestStruct5 {
 +(id)invokesignedshortArg:(signed short)arg1 andstructTestStruct4Arg:(struct TestStruct4)arg2 of:(PyObjC_TestClass1*)obj;
 +(id)callsignedshortArg:(signed short)arg1 andstructTestStruct5Arg:(struct TestStruct5)arg2 of:(PyObjC_TestClass1*)obj;
 +(id)invokesignedshortArg:(signed short)arg1 andstructTestStruct5Arg:(struct TestStruct5)arg2 of:(PyObjC_TestClass1*)obj;
-#ifdef  HAVE_BOOL
+#ifdef HAVE_BOOL
 +(id)callsignedintArg:(signed int)arg1 andboolArg:(bool)arg2 of:(PyObjC_TestClass1*)obj;
 +(id)invokesignedintArg:(signed int)arg1 andboolArg:(bool)arg2 of:(PyObjC_TestClass1*)obj;
 #endif /* HAVE_BOOL */
@@ -1232,7 +1232,7 @@ struct TestStruct5 {
 +(id)invokesignedintArg:(signed int)arg1 andstructTestStruct4Arg:(struct TestStruct4)arg2 of:(PyObjC_TestClass1*)obj;
 +(id)callsignedintArg:(signed int)arg1 andstructTestStruct5Arg:(struct TestStruct5)arg2 of:(PyObjC_TestClass1*)obj;
 +(id)invokesignedintArg:(signed int)arg1 andstructTestStruct5Arg:(struct TestStruct5)arg2 of:(PyObjC_TestClass1*)obj;
-#ifdef  HAVE_BOOL
+#ifdef HAVE_BOOL
 +(id)callsignedlongArg:(signed long)arg1 andboolArg:(bool)arg2 of:(PyObjC_TestClass1*)obj;
 +(id)invokesignedlongArg:(signed long)arg1 andboolArg:(bool)arg2 of:(PyObjC_TestClass1*)obj;
 #endif /* HAVE_BOOL */
@@ -1280,7 +1280,7 @@ struct TestStruct5 {
 +(id)invokesignedlongArg:(signed long)arg1 andstructTestStruct4Arg:(struct TestStruct4)arg2 of:(PyObjC_TestClass1*)obj;
 +(id)callsignedlongArg:(signed long)arg1 andstructTestStruct5Arg:(struct TestStruct5)arg2 of:(PyObjC_TestClass1*)obj;
 +(id)invokesignedlongArg:(signed long)arg1 andstructTestStruct5Arg:(struct TestStruct5)arg2 of:(PyObjC_TestClass1*)obj;
-#ifdef  HAVE_BOOL
+#ifdef HAVE_BOOL
 +(id)callsignedlonglongArg:(signed long long)arg1 andboolArg:(bool)arg2 of:(PyObjC_TestClass1*)obj;
 +(id)invokesignedlonglongArg:(signed long long)arg1 andboolArg:(bool)arg2 of:(PyObjC_TestClass1*)obj;
 #endif /* HAVE_BOOL */
@@ -1328,7 +1328,7 @@ struct TestStruct5 {
 +(id)invokesignedlonglongArg:(signed long long)arg1 andstructTestStruct4Arg:(struct TestStruct4)arg2 of:(PyObjC_TestClass1*)obj;
 +(id)callsignedlonglongArg:(signed long long)arg1 andstructTestStruct5Arg:(struct TestStruct5)arg2 of:(PyObjC_TestClass1*)obj;
 +(id)invokesignedlonglongArg:(signed long long)arg1 andstructTestStruct5Arg:(struct TestStruct5)arg2 of:(PyObjC_TestClass1*)obj;
-#ifdef  HAVE_BOOL
+#ifdef HAVE_BOOL
 +(id)callunsignedcharArg:(unsigned char)arg1 andboolArg:(bool)arg2 of:(PyObjC_TestClass1*)obj;
 +(id)invokeunsignedcharArg:(unsigned char)arg1 andboolArg:(bool)arg2 of:(PyObjC_TestClass1*)obj;
 #endif /* HAVE_BOOL */
@@ -1376,7 +1376,7 @@ struct TestStruct5 {
 +(id)invokeunsignedcharArg:(unsigned char)arg1 andstructTestStruct4Arg:(struct TestStruct4)arg2 of:(PyObjC_TestClass1*)obj;
 +(id)callunsignedcharArg:(unsigned char)arg1 andstructTestStruct5Arg:(struct TestStruct5)arg2 of:(PyObjC_TestClass1*)obj;
 +(id)invokeunsignedcharArg:(unsigned char)arg1 andstructTestStruct5Arg:(struct TestStruct5)arg2 of:(PyObjC_TestClass1*)obj;
-#ifdef  HAVE_BOOL
+#ifdef HAVE_BOOL
 +(id)callunsignedshortArg:(unsigned short)arg1 andboolArg:(bool)arg2 of:(PyObjC_TestClass1*)obj;
 +(id)invokeunsignedshortArg:(unsigned short)arg1 andboolArg:(bool)arg2 of:(PyObjC_TestClass1*)obj;
 #endif /* HAVE_BOOL */
@@ -1424,7 +1424,7 @@ struct TestStruct5 {
 +(id)invokeunsignedshortArg:(unsigned short)arg1 andstructTestStruct4Arg:(struct TestStruct4)arg2 of:(PyObjC_TestClass1*)obj;
 +(id)callunsignedshortArg:(unsigned short)arg1 andstructTestStruct5Arg:(struct TestStruct5)arg2 of:(PyObjC_TestClass1*)obj;
 +(id)invokeunsignedshortArg:(unsigned short)arg1 andstructTestStruct5Arg:(struct TestStruct5)arg2 of:(PyObjC_TestClass1*)obj;
-#ifdef  HAVE_BOOL
+#ifdef HAVE_BOOL
 +(id)callunsignedintArg:(unsigned int)arg1 andboolArg:(bool)arg2 of:(PyObjC_TestClass1*)obj;
 +(id)invokeunsignedintArg:(unsigned int)arg1 andboolArg:(bool)arg2 of:(PyObjC_TestClass1*)obj;
 #endif /* HAVE_BOOL */
@@ -1472,7 +1472,7 @@ struct TestStruct5 {
 +(id)invokeunsignedintArg:(unsigned int)arg1 andstructTestStruct4Arg:(struct TestStruct4)arg2 of:(PyObjC_TestClass1*)obj;
 +(id)callunsignedintArg:(unsigned int)arg1 andstructTestStruct5Arg:(struct TestStruct5)arg2 of:(PyObjC_TestClass1*)obj;
 +(id)invokeunsignedintArg:(unsigned int)arg1 andstructTestStruct5Arg:(struct TestStruct5)arg2 of:(PyObjC_TestClass1*)obj;
-#ifdef  HAVE_BOOL
+#ifdef HAVE_BOOL
 +(id)callunsignedlongArg:(unsigned long)arg1 andboolArg:(bool)arg2 of:(PyObjC_TestClass1*)obj;
 +(id)invokeunsignedlongArg:(unsigned long)arg1 andboolArg:(bool)arg2 of:(PyObjC_TestClass1*)obj;
 #endif /* HAVE_BOOL */
@@ -1520,7 +1520,7 @@ struct TestStruct5 {
 +(id)invokeunsignedlongArg:(unsigned long)arg1 andstructTestStruct4Arg:(struct TestStruct4)arg2 of:(PyObjC_TestClass1*)obj;
 +(id)callunsignedlongArg:(unsigned long)arg1 andstructTestStruct5Arg:(struct TestStruct5)arg2 of:(PyObjC_TestClass1*)obj;
 +(id)invokeunsignedlongArg:(unsigned long)arg1 andstructTestStruct5Arg:(struct TestStruct5)arg2 of:(PyObjC_TestClass1*)obj;
-#ifdef  HAVE_BOOL
+#ifdef HAVE_BOOL
 +(id)callunsignedlonglongArg:(unsigned long long)arg1 andboolArg:(bool)arg2 of:(PyObjC_TestClass1*)obj;
 +(id)invokeunsignedlonglongArg:(unsigned long long)arg1 andboolArg:(bool)arg2 of:(PyObjC_TestClass1*)obj;
 #endif /* HAVE_BOOL */
@@ -1568,7 +1568,7 @@ struct TestStruct5 {
 +(id)invokeunsignedlonglongArg:(unsigned long long)arg1 andstructTestStruct4Arg:(struct TestStruct4)arg2 of:(PyObjC_TestClass1*)obj;
 +(id)callunsignedlonglongArg:(unsigned long long)arg1 andstructTestStruct5Arg:(struct TestStruct5)arg2 of:(PyObjC_TestClass1*)obj;
 +(id)invokeunsignedlonglongArg:(unsigned long long)arg1 andstructTestStruct5Arg:(struct TestStruct5)arg2 of:(PyObjC_TestClass1*)obj;
-#ifdef  HAVE_BOOL
+#ifdef HAVE_BOOL
 +(id)callfloatArg:(float)arg1 andboolArg:(bool)arg2 of:(PyObjC_TestClass1*)obj;
 +(id)invokefloatArg:(float)arg1 andboolArg:(bool)arg2 of:(PyObjC_TestClass1*)obj;
 #endif /* HAVE_BOOL */
@@ -1616,7 +1616,7 @@ struct TestStruct5 {
 +(id)invokefloatArg:(float)arg1 andstructTestStruct4Arg:(struct TestStruct4)arg2 of:(PyObjC_TestClass1*)obj;
 +(id)callfloatArg:(float)arg1 andstructTestStruct5Arg:(struct TestStruct5)arg2 of:(PyObjC_TestClass1*)obj;
 +(id)invokefloatArg:(float)arg1 andstructTestStruct5Arg:(struct TestStruct5)arg2 of:(PyObjC_TestClass1*)obj;
-#ifdef  HAVE_BOOL
+#ifdef HAVE_BOOL
 +(id)calldoubleArg:(double)arg1 andboolArg:(bool)arg2 of:(PyObjC_TestClass1*)obj;
 +(id)invokedoubleArg:(double)arg1 andboolArg:(bool)arg2 of:(PyObjC_TestClass1*)obj;
 #endif /* HAVE_BOOL */
@@ -1664,7 +1664,7 @@ struct TestStruct5 {
 +(id)invokedoubleArg:(double)arg1 andstructTestStruct4Arg:(struct TestStruct4)arg2 of:(PyObjC_TestClass1*)obj;
 +(id)calldoubleArg:(double)arg1 andstructTestStruct5Arg:(struct TestStruct5)arg2 of:(PyObjC_TestClass1*)obj;
 +(id)invokedoubleArg:(double)arg1 andstructTestStruct5Arg:(struct TestStruct5)arg2 of:(PyObjC_TestClass1*)obj;
-#ifdef  HAVE_BOOL
+#ifdef HAVE_BOOL
 +(id)callidArg:(id)arg1 andboolArg:(bool)arg2 of:(PyObjC_TestClass1*)obj;
 +(id)invokeidArg:(id)arg1 andboolArg:(bool)arg2 of:(PyObjC_TestClass1*)obj;
 #endif /* HAVE_BOOL */
@@ -1712,7 +1712,7 @@ struct TestStruct5 {
 +(id)invokeidArg:(id)arg1 andstructTestStruct4Arg:(struct TestStruct4)arg2 of:(PyObjC_TestClass1*)obj;
 +(id)callidArg:(id)arg1 andstructTestStruct5Arg:(struct TestStruct5)arg2 of:(PyObjC_TestClass1*)obj;
 +(id)invokeidArg:(id)arg1 andstructTestStruct5Arg:(struct TestStruct5)arg2 of:(PyObjC_TestClass1*)obj;
-#ifdef  HAVE_BOOL
+#ifdef HAVE_BOOL
 +(id)callcharPtrArg:(char*)arg1 andboolArg:(bool)arg2 of:(PyObjC_TestClass1*)obj;
 +(id)invokecharPtrArg:(char*)arg1 andboolArg:(bool)arg2 of:(PyObjC_TestClass1*)obj;
 #endif /* HAVE_BOOL */
@@ -1760,7 +1760,7 @@ struct TestStruct5 {
 +(id)invokecharPtrArg:(char*)arg1 andstructTestStruct4Arg:(struct TestStruct4)arg2 of:(PyObjC_TestClass1*)obj;
 +(id)callcharPtrArg:(char*)arg1 andstructTestStruct5Arg:(struct TestStruct5)arg2 of:(PyObjC_TestClass1*)obj;
 +(id)invokecharPtrArg:(char*)arg1 andstructTestStruct5Arg:(struct TestStruct5)arg2 of:(PyObjC_TestClass1*)obj;
-#ifdef  HAVE_BOOL
+#ifdef HAVE_BOOL
 +(id)callNSPointArg:(NSPoint)arg1 andboolArg:(bool)arg2 of:(PyObjC_TestClass1*)obj;
 +(id)invokeNSPointArg:(NSPoint)arg1 andboolArg:(bool)arg2 of:(PyObjC_TestClass1*)obj;
 #endif /* HAVE_BOOL */
@@ -1808,7 +1808,7 @@ struct TestStruct5 {
 +(id)invokeNSPointArg:(NSPoint)arg1 andstructTestStruct4Arg:(struct TestStruct4)arg2 of:(PyObjC_TestClass1*)obj;
 +(id)callNSPointArg:(NSPoint)arg1 andstructTestStruct5Arg:(struct TestStruct5)arg2 of:(PyObjC_TestClass1*)obj;
 +(id)invokeNSPointArg:(NSPoint)arg1 andstructTestStruct5Arg:(struct TestStruct5)arg2 of:(PyObjC_TestClass1*)obj;
-#ifdef  HAVE_BOOL
+#ifdef HAVE_BOOL
 +(id)callNSRectArg:(NSRect)arg1 andboolArg:(bool)arg2 of:(PyObjC_TestClass1*)obj;
 +(id)invokeNSRectArg:(NSRect)arg1 andboolArg:(bool)arg2 of:(PyObjC_TestClass1*)obj;
 #endif /* HAVE_BOOL */
@@ -1856,7 +1856,7 @@ struct TestStruct5 {
 +(id)invokeNSRectArg:(NSRect)arg1 andstructTestStruct4Arg:(struct TestStruct4)arg2 of:(PyObjC_TestClass1*)obj;
 +(id)callNSRectArg:(NSRect)arg1 andstructTestStruct5Arg:(struct TestStruct5)arg2 of:(PyObjC_TestClass1*)obj;
 +(id)invokeNSRectArg:(NSRect)arg1 andstructTestStruct5Arg:(struct TestStruct5)arg2 of:(PyObjC_TestClass1*)obj;
-#ifdef  HAVE_BOOL
+#ifdef HAVE_BOOL
 +(id)callstructTestStruct1Arg:(struct TestStruct1)arg1 andboolArg:(bool)arg2 of:(PyObjC_TestClass1*)obj;
 +(id)invokestructTestStruct1Arg:(struct TestStruct1)arg1 andboolArg:(bool)arg2 of:(PyObjC_TestClass1*)obj;
 #endif /* HAVE_BOOL */
@@ -1904,7 +1904,7 @@ struct TestStruct5 {
 +(id)invokestructTestStruct1Arg:(struct TestStruct1)arg1 andstructTestStruct4Arg:(struct TestStruct4)arg2 of:(PyObjC_TestClass1*)obj;
 +(id)callstructTestStruct1Arg:(struct TestStruct1)arg1 andstructTestStruct5Arg:(struct TestStruct5)arg2 of:(PyObjC_TestClass1*)obj;
 +(id)invokestructTestStruct1Arg:(struct TestStruct1)arg1 andstructTestStruct5Arg:(struct TestStruct5)arg2 of:(PyObjC_TestClass1*)obj;
-#ifdef  HAVE_BOOL
+#ifdef HAVE_BOOL
 +(id)callstructTestStruct2Arg:(struct TestStruct2)arg1 andboolArg:(bool)arg2 of:(PyObjC_TestClass1*)obj;
 +(id)invokestructTestStruct2Arg:(struct TestStruct2)arg1 andboolArg:(bool)arg2 of:(PyObjC_TestClass1*)obj;
 #endif /* HAVE_BOOL */
@@ -1952,7 +1952,7 @@ struct TestStruct5 {
 +(id)invokestructTestStruct2Arg:(struct TestStruct2)arg1 andstructTestStruct4Arg:(struct TestStruct4)arg2 of:(PyObjC_TestClass1*)obj;
 +(id)callstructTestStruct2Arg:(struct TestStruct2)arg1 andstructTestStruct5Arg:(struct TestStruct5)arg2 of:(PyObjC_TestClass1*)obj;
 +(id)invokestructTestStruct2Arg:(struct TestStruct2)arg1 andstructTestStruct5Arg:(struct TestStruct5)arg2 of:(PyObjC_TestClass1*)obj;
-#ifdef  HAVE_BOOL
+#ifdef HAVE_BOOL
 +(id)callstructTestStruct3Arg:(struct TestStruct3)arg1 andboolArg:(bool)arg2 of:(PyObjC_TestClass1*)obj;
 +(id)invokestructTestStruct3Arg:(struct TestStruct3)arg1 andboolArg:(bool)arg2 of:(PyObjC_TestClass1*)obj;
 #endif /* HAVE_BOOL */
@@ -2000,7 +2000,7 @@ struct TestStruct5 {
 +(id)invokestructTestStruct3Arg:(struct TestStruct3)arg1 andstructTestStruct4Arg:(struct TestStruct4)arg2 of:(PyObjC_TestClass1*)obj;
 +(id)callstructTestStruct3Arg:(struct TestStruct3)arg1 andstructTestStruct5Arg:(struct TestStruct5)arg2 of:(PyObjC_TestClass1*)obj;
 +(id)invokestructTestStruct3Arg:(struct TestStruct3)arg1 andstructTestStruct5Arg:(struct TestStruct5)arg2 of:(PyObjC_TestClass1*)obj;
-#ifdef  HAVE_BOOL
+#ifdef HAVE_BOOL
 +(id)callstructTestStruct4Arg:(struct TestStruct4)arg1 andboolArg:(bool)arg2 of:(PyObjC_TestClass1*)obj;
 +(id)invokestructTestStruct4Arg:(struct TestStruct4)arg1 andboolArg:(bool)arg2 of:(PyObjC_TestClass1*)obj;
 #endif /* HAVE_BOOL */
@@ -2048,7 +2048,7 @@ struct TestStruct5 {
 +(id)invokestructTestStruct4Arg:(struct TestStruct4)arg1 andstructTestStruct4Arg:(struct TestStruct4)arg2 of:(PyObjC_TestClass1*)obj;
 +(id)callstructTestStruct4Arg:(struct TestStruct4)arg1 andstructTestStruct5Arg:(struct TestStruct5)arg2 of:(PyObjC_TestClass1*)obj;
 +(id)invokestructTestStruct4Arg:(struct TestStruct4)arg1 andstructTestStruct5Arg:(struct TestStruct5)arg2 of:(PyObjC_TestClass1*)obj;
-#ifdef  HAVE_BOOL
+#ifdef HAVE_BOOL
 +(id)callstructTestStruct5Arg:(struct TestStruct5)arg1 andboolArg:(bool)arg2 of:(PyObjC_TestClass1*)obj;
 +(id)invokestructTestStruct5Arg:(struct TestStruct5)arg1 andboolArg:(bool)arg2 of:(PyObjC_TestClass1*)obj;
 #endif /* HAVE_BOOL */

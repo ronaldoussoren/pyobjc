@@ -5,33 +5,33 @@
 
 static PyObjC_function_map function_map[] = {
 #if PyObjC_BUILD_RELEASE >= 1009
-	{ "MKCoordinateSpanMake", (PyObjC_Function_Pointer)&MKCoordinateSpanMake },
-	{ "MKCoordinateRegionMake", (PyObjC_Function_Pointer)&MKCoordinateRegionMake },
-	{ "MKMapPointMake", (PyObjC_Function_Pointer)&MKMapPointMake },
-	{ "MKMapSizeMake", (PyObjC_Function_Pointer)&MKMapSizeMake },
-	{ "MKMapRectMake", (PyObjC_Function_Pointer)&MKMapRectMake },
-	{ "MKMapRectGetMinX", (PyObjC_Function_Pointer)&MKMapRectGetMinX },
-	{ "MKMapRectGetMinY", (PyObjC_Function_Pointer)&MKMapRectGetMinY },
-	{ "MKMapRectGetMidX", (PyObjC_Function_Pointer)&MKMapRectGetMidX },
-	{ "MKMapRectGetMidY", (PyObjC_Function_Pointer)&MKMapRectGetMidY },
-	{ "MKMapRectGetMaxX", (PyObjC_Function_Pointer)&MKMapRectGetMaxX },
-	{ "MKMapRectGetMaxY", (PyObjC_Function_Pointer)&MKMapRectGetMaxY },
-	{ "MKMapRectGetWidth", (PyObjC_Function_Pointer)&MKMapRectGetWidth },
-	{ "MKMapRectGetHeight", (PyObjC_Function_Pointer)&MKMapRectGetHeight },
-	{ "MKMapPointEqualToPoint", (PyObjC_Function_Pointer)&MKMapPointEqualToPoint },
-	{ "MKMapSizeEqualToSize", (PyObjC_Function_Pointer)&MKMapSizeEqualToSize },
-	{ "MKMapRectEqualToRect", (PyObjC_Function_Pointer)&MKMapRectEqualToRect },
-	{ "MKMapRectIsNull", (PyObjC_Function_Pointer)&MKMapRectIsNull },
-	{ "MKMapRectIsEmpty", (PyObjC_Function_Pointer)&MKMapRectIsEmpty },
-	{ "MKStringFromMapPoint", (PyObjC_Function_Pointer)&MKStringFromMapPoint },
-	{ "MKStringFromMapSize", (PyObjC_Function_Pointer)&MKStringFromMapSize },
-	{ "MKStringFromMapRect", (PyObjC_Function_Pointer)&MKStringFromMapRect },
+    { "MKCoordinateSpanMake", (PyObjC_Function_Pointer)&MKCoordinateSpanMake },
+    { "MKCoordinateRegionMake", (PyObjC_Function_Pointer)&MKCoordinateRegionMake },
+    { "MKMapPointMake", (PyObjC_Function_Pointer)&MKMapPointMake },
+    { "MKMapSizeMake", (PyObjC_Function_Pointer)&MKMapSizeMake },
+    { "MKMapRectMake", (PyObjC_Function_Pointer)&MKMapRectMake },
+    { "MKMapRectGetMinX", (PyObjC_Function_Pointer)&MKMapRectGetMinX },
+    { "MKMapRectGetMinY", (PyObjC_Function_Pointer)&MKMapRectGetMinY },
+    { "MKMapRectGetMidX", (PyObjC_Function_Pointer)&MKMapRectGetMidX },
+    { "MKMapRectGetMidY", (PyObjC_Function_Pointer)&MKMapRectGetMidY },
+    { "MKMapRectGetMaxX", (PyObjC_Function_Pointer)&MKMapRectGetMaxX },
+    { "MKMapRectGetMaxY", (PyObjC_Function_Pointer)&MKMapRectGetMaxY },
+    { "MKMapRectGetWidth", (PyObjC_Function_Pointer)&MKMapRectGetWidth },
+    { "MKMapRectGetHeight", (PyObjC_Function_Pointer)&MKMapRectGetHeight },
+    { "MKMapPointEqualToPoint", (PyObjC_Function_Pointer)&MKMapPointEqualToPoint },
+    { "MKMapSizeEqualToSize", (PyObjC_Function_Pointer)&MKMapSizeEqualToSize },
+    { "MKMapRectEqualToRect", (PyObjC_Function_Pointer)&MKMapRectEqualToRect },
+    { "MKMapRectIsNull", (PyObjC_Function_Pointer)&MKMapRectIsNull },
+    { "MKMapRectIsEmpty", (PyObjC_Function_Pointer)&MKMapRectIsEmpty },
+    { "MKStringFromMapPoint", (PyObjC_Function_Pointer)&MKStringFromMapPoint },
+    { "MKStringFromMapSize", (PyObjC_Function_Pointer)&MKStringFromMapSize },
+    { "MKStringFromMapRect", (PyObjC_Function_Pointer)&MKStringFromMapRect },
 #endif
     { 0, 0 }
 };
 
 static PyMethodDef mod_methods[] = {
-        { 0, 0, 0, 0 } /* sentinel */
+    { 0, 0, 0, 0 } /* sentinel */
 };
 
 
@@ -40,14 +40,14 @@ static PyMethodDef mod_methods[] = {
 
 static struct PyModuleDef mod_module = {
         PyModuleDef_HEAD_INIT,
-	"_inlines",
-	NULL,
-	0,
-	mod_methods,
-	NULL,
-	NULL,
-	NULL,
-	NULL
+    "_inlines",
+    NULL,
+    0,
+    mod_methods,
+    NULL,
+    NULL,
+    NULL,
+    NULL
 };
 
 #define INITERROR() return NULL
@@ -69,21 +69,21 @@ void
 init_inlines(void)
 #endif
 {
-	PyObject* m;
+    PyObject* m;
 #if PY_MAJOR_VERSION == 3
-	m = PyModule_Create(&mod_module);
+    m = PyModule_Create(&mod_module);
 #else
-	m = Py_InitModule4("_inlines", mod_methods,
-		NULL, NULL, PYTHON_API_VERSION);
+    m = Py_InitModule4("_inlines", mod_methods,
+        NULL, NULL, PYTHON_API_VERSION);
 #endif
-	if (!m) {
-		INITERROR();
-	}
+    if (!m) {
+        INITERROR();
+    }
 
-	if (PyModule_AddObject(m, "_inline_list_",
-		PyObjC_CreateInlineTab(function_map)) < 0) {
-		INITERROR();
-	}
+    if (PyModule_AddObject(m, "_inline_list_",
+        PyObjC_CreateInlineTab(function_map)) < 0) {
+        INITERROR();
+    }
 
-	INITDONE();
+    INITDONE();
 }

@@ -15,7 +15,7 @@ typedef struct {
 
     __strong id objc_object;
 #if Py_HAVE_LOCAL_LOOKUP
-    PyObject*   objc_dict;
+    PyObject* objc_dict;
 #endif /* Py_HAVE_LOCAL_LOOKUP */
     unsigned int flags;
 } PyObjCObject;

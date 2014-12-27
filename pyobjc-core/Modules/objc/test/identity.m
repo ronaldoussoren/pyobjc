@@ -9,7 +9,7 @@
 @interface OC_TestIdentity : NSObject
 {
     NSObject* storedObject;
-    int       isClassic;
+    int isClassic;
 }
 
 -(NSObject*)storedObject;

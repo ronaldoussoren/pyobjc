@@ -49,7 +49,7 @@ ivar_descr_get(PyObject* _self, PyObject* obj, PyObject* type __attribute__((__u
 {
     PyObjCInstanceVariable* self = (PyObjCInstanceVariable*)_self;
     Ivar var;
-    id   objc;
+    id objc;
     PyObject* res;
 
     if (!obj || PyObjCClass_Check(obj)) {
@@ -120,7 +120,7 @@ ivar_descr_set(PyObject* _self, PyObject* obj, PyObject* value)
     PyObjCInstanceVariable* self = (PyObjCInstanceVariable*)_self;
     Ivar var;
     id objc;
-    Py_ssize_t  size;
+    Py_ssize_t size;
     int res;
 
     if (value == NULL && !self->isSlot) {
@@ -228,7 +228,7 @@ ivar_descr_set(PyObject* _self, PyObject* obj, PyObject* value)
 static int
 ivar_init(PyObject* _self, PyObject* args, PyObject* kwds)
 {
-static  char* keywords[] = { "name", "type", "isOutlet", NULL };
+static char* keywords[] = { "name", "type", "isOutlet", NULL };
     PyObjCInstanceVariable* self = (PyObjCInstanceVariable*)_self;
     char* name = NULL;
     char* type = @encode(id);
@@ -246,7 +246,7 @@ static  char* keywords[] = { "name", "type", "isOutlet", NULL };
             return -1;
         }
 
-    } else  {
+    } else {
         self->name = NULL;
     }
 

@@ -8,11 +8,11 @@
 
 @interface ClassWithVariables : NSObject
 {
-    int    intValue;
-    double    floatValue;
-    char    charValue;
-    char*    strValue;
-    NSRect  rectValue;
+    int intValue;
+    double floatValue;
+    char charValue;
+    char* strValue;
+    NSRect rectValue;
     NSObject* nilValue;
     PyObject* pyValue;
     NSObject* objValue;

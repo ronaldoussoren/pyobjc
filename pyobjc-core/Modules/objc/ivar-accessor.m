@@ -51,7 +51,7 @@ PyObjCIvar_Info(PyObject* self __attribute__((__unused__)), PyObject* object)
 
     r = PyList_Append(result, v);
     Py_DECREF(v);
-    if  (r == -1) {
+    if (r == -1) {
         Py_DECREF(result);
         return result;
     }

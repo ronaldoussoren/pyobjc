@@ -184,7 +184,7 @@ static PyObject*
 classAddMethods(PyObject* self __attribute__((__unused__)),
     PyObject* args, PyObject* keywds)
 {
-    static     char* kwlist[] = { "targetClass", "methodsArray", NULL };
+    static char* kwlist[] = { "targetClass", "methodsArray", NULL };
     PyObject* classObject = NULL;
     PyObject* methodsArray = NULL;
 
@@ -220,7 +220,7 @@ PyDoc_STRVAR(remove_autorelease_pool_doc,
   "removeAutoreleasePool()\n"
   CLINIC_SEP
   "\n"
-  "This removes the global NSAutoreleasePool.  You should do this\n"
+  "This removes the global NSAutoreleasePool. You should do this\n"
   "at the end of a plugin's initialization script.\n");
 
 static PyObject*
@@ -256,7 +256,7 @@ static PyObject*
 recycle_autorelease_pool(PyObject* self __attribute__((__unused__)),
     PyObject* args, PyObject* kwds)
 {
-    static    char* keywords[] = { NULL };
+    static char* keywords[] = { NULL };
 
     if (!PyArg_ParseTupleAndKeywords(args, kwds, "", keywords)) {
         return NULL;
@@ -302,7 +302,7 @@ static PyObject*
 set_class_extender(PyObject* self __attribute__((__unused__)),
     PyObject* args, PyObject* kwds)
 {
-static     char* keywords[] = { "callback", NULL };
+static char* keywords[] = { "callback", NULL };
     PyObject* callback;
 
     if (!PyArg_ParseTupleAndKeywords(args, kwds, "O:setClassExtender",
@@ -345,7 +345,7 @@ PyDoc_STRVAR(allocateBuffer_doc,
 static PyObject*
 allocateBuffer(PyObject* self __attribute__((__unused__)), PyObject* args, PyObject* kwds)
 {
-    static    char* keywords[] = { "length", 0 };
+    static char* keywords[] = { "length", 0 };
     Py_ssize_t length;
 
     if (!PyArg_ParseTupleAndKeywords(args, kwds, "n",
@@ -408,8 +408,8 @@ PyDoc_STRVAR(loadBundle_doc,
 static PyObject*
 loadBundle(PyObject* self __attribute__((__unused__)), PyObject* args, PyObject* kwds)
 {
-static  char* keywords[] = { "module_name", "module_globals", "bundle_path", "bundle_identifier", "scan_classes", NULL };
-static    Py_ssize_t    curClassCount = -1;
+static char* keywords[] = { "module_name", "module_globals", "bundle_path", "bundle_identifier", "scan_classes", NULL };
+static Py_ssize_t curClassCount = -1;
     NSBundle* bundle = nil;
     id bundle_identifier = nil;
     id bundle_path = nil;
@@ -482,7 +482,7 @@ static    Py_ssize_t    curClassCount = -1;
     curClassCount = len = PyTuple_GET_SIZE(class_list);
     for (i = 0; i < len; i++) {
         PyObject* item;
-        const char*  nm;
+        const char* nm;
 
         item = PyTuple_GET_ITEM(class_list, i);
         if (item == NULL) {
@@ -517,7 +517,7 @@ PyDoc_STRVAR(objc_splitSignature_doc,
 static PyObject*
 objc_splitSignature(PyObject* self __attribute__((__unused__)), PyObject* args, PyObject* kwds)
 {
-static  char* keywords[] = { "signature", NULL };
+static char* keywords[] = { "signature", NULL };
     const char* signature;
     const char* end;
     PyObject* result;
@@ -579,7 +579,7 @@ PyDoc_STRVAR(objc_splitStructSignature_doc,
 static PyObject*
 objc_splitStructSignature(PyObject* self __attribute__((__unused__)), PyObject* args, PyObject* kwds)
 {
-static  char* keywords[] = { "signature", NULL };
+static char* keywords[] = { "signature", NULL };
     const char* signature;
     const char* end;
     PyObject* structname;
@@ -795,7 +795,7 @@ PyDoc_STRVAR(protocolNamed_doc,
 static PyObject*
 protocolNamed(PyObject* self __attribute__((__unused__)), PyObject* args, PyObject* kwds)
 {
-static     char* keywords[] = { "name", NULL };
+static char* keywords[] = { "name", NULL };
     char* name;
     Protocol* p;
 
@@ -1259,7 +1259,7 @@ _makeClosure(
     PyObject* args,
     PyObject* kwds)
 {
-static  char* keywords[] = { "callable", "closureFor", "argIndex", NULL };
+static char* keywords[] = { "callable", "closureFor", "argIndex", NULL };
     PyObject* callable;
     PyObject* closureFor;
     PyObjCMethodSignature* methinfo;
@@ -1482,7 +1482,7 @@ typestr2typestr(PyObject* args)
     return result;
 }
 
-#if    PyObjC_BUILD_RELEASE >= 1006
+#if PyObjC_BUILD_RELEASE >= 1006
     /* Associated Object support. Functionality is available on OSX 10.6 or later. */
 
 PyDoc_STRVAR(PyObjC_setAssociatedObject_doc,
@@ -1623,7 +1623,7 @@ PyObjC_LoadConstant(PyObject* self __attribute__((__unused__)),
 static char* keywords[] = { "name", "type", "magic", NULL };
     char* name;
     char* type;
-    int   magic;
+    int magic;
 
     if (!PyArg_ParseTupleAndKeywords(args, kwds, "ssi",
         keywords, &name, &type, &magic)) {
@@ -1944,18 +1944,6 @@ static PyMethodDef mod_methods[] = {
         .ml_flags   = METH_VARARGS|METH_KEYWORDS,
         .ml_doc     = _makeClosure_doc
     },
-#if 0
-    {
-        .ml_name    = "_sockaddrFromPython",
-        .ml_meth    = (PyCFunction)PyObjC_SockAddrFromPython,
-        .ml_flags   = METH_VARARGS,
-    },
-    {
-        .ml_name    = "_sockaddrToPython",
-        .ml_meth    = (PyCFunction)PyObjC_SockAddrToPython,
-        .ml_flags   = METH_VARARGS,
-    },
-#endif
     {
         .ml_name    = "_ivar_dict",
         .ml_meth    = (PyCFunction)ivar_dict,
@@ -2335,7 +2323,7 @@ PyObjC_MODULE_INIT(_objc)
     {
         struct objc_typestr_values* cur = objc_typestr_values;
 
-        for (; cur->name != NULL; cur ++)  {
+        for (; cur->name != NULL; cur ++) {
             PyObject* t = PyBytes_FromStringAndSize(&cur->value, 1);
             if (t == NULL) {
                 PyObjC_INITERROR();
@@ -2383,7 +2371,7 @@ PyObjC_MODULE_INIT(_objc)
 
     PyObjCPointerWrapper_Init();
 
-#if    PyObjC_BUILD_RELEASE >= 1006
+#if PyObjC_BUILD_RELEASE >= 1006
     if (objc_setAssociatedObject != NULL) {
         if (PyModule_AddIntConstant(m, "OBJC_ASSOCIATION_ASSIGN", OBJC_ASSOCIATION_ASSIGN) < 0) {
             PyObjC_INITERROR();

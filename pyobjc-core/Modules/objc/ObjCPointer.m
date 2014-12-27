@@ -1,4 +1,4 @@
-/* Copyright (c) 1996,97 by Lele Gaifax.  All Rights Reserved
+/* Copyright (c) 1996,97 by Lele Gaifax. All Rights Reserved
  * With various updates by Ronald Oussoren and others ((C) 2002-2014)
  *
  * This software may be used and distributed freely for any purpose

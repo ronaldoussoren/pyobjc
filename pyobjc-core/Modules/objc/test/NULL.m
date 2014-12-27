@@ -107,7 +107,7 @@ static struct PyModuleDef mod_module = {
 };
 
 #define INITERROR() return NULL
-#define INITDONE()  return m
+#define INITDONE() return m
 
 PyObject* PyInit_NULL(void);
 
@@ -117,7 +117,7 @@ PyInit_NULL(void)
 #else
 
 #define INITERROR() return
-#define INITDONE()  return
+#define INITDONE() return
 
 void initNULL(void);
 

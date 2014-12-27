@@ -161,7 +161,7 @@ PyObjCPointerWrapper_Register(
         struct wrapper* tmp;
 
         tmp = PyMem_Realloc(
-            items, sizeof(struct wrapper) *  (item_count+1));
+            items, sizeof(struct wrapper) * (item_count+1));
         if (tmp == NULL) {
             PyErr_NoMemory();
             return -1;

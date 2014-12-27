@@ -99,7 +99,7 @@ setipaddr(char* name, struct sockaddr* addr_ret, size_t addr_ret_size, int af)
         int siz;
         memset(&hints, 0, sizeof(hints));
         hints.ai_family = af;
-        hints.ai_socktype = SOCK_DGRAM;    /*dummy*/
+        hints.ai_socktype = SOCK_DGRAM; /*dummy*/
         hints.ai_flags = AI_PASSIVE;
         error = getaddrinfo(NULL, "0", &hints, &res);
         /* We assume that those thread-unsafe getaddrinfo() versions
@@ -302,7 +302,7 @@ PyObjC_SockAddrFromPython(PyObject* value, void* buffer)
 
         flowinfo = scope_id = 0;
         if (!PyArg_ParseTuple(value, "eti|ii",
-            "idna", &host, &port, &flowinfo, &scope_id))  {
+            "idna", &host, &port, &flowinfo, &scope_id)) {
 
             return -1;
         }

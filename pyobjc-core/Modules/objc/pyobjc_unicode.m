@@ -309,11 +309,11 @@ PyObjCUnicode_New(NSString* value)
                 Py_UCS4 ch = Py_UNICODE_JOIN_SURROGATES(
                     characters[i],
                     characters[i+1]);
-                *latin1_cur++ =  (Py_UCS1)ch;
+                *latin1_cur++ = (Py_UCS1)ch;
                 i++;
 
             } else {
-                *latin1_cur++ =  (Py_UCS1)characters[i];
+                *latin1_cur++ = (Py_UCS1)characters[i];
             }
         }
 
@@ -353,10 +353,10 @@ PyObjCUnicode_New(NSString* value)
                     Py_UCS4 ch = Py_UNICODE_JOIN_SURROGATES(
                         characters[i],
                         characters[i+1]);
-                    *ucs2_cur++ =  (Py_UCS2)ch;
+                    *ucs2_cur++ = (Py_UCS2)ch;
                     i++;
                 } else {
-                    *ucs2_cur++ =  (Py_UCS2)characters[i];
+                    *ucs2_cur++ = (Py_UCS2)characters[i];
                 }
             }
             ascii->length = length - nr_surrogates;
@@ -385,13 +385,13 @@ PyObjCUnicode_New(NSString* value)
                      * Python 3.3 enforces this, keep surrogate pair
                      * to avoid an error.
                      */
-                    *ucs4_cur++ =  (Py_UCS4)characters[i];
+                    *ucs4_cur++ = (Py_UCS4)characters[i];
                 } else {
-                    *ucs4_cur++ =  (Py_UCS4)ch;
+                    *ucs4_cur++ = (Py_UCS4)ch;
                     i++;
                 }
             } else {
-                *ucs4_cur++ =  (Py_UCS4)characters[i];
+                *ucs4_cur++ = (Py_UCS4)characters[i];
             }
         }
         *ucs4_cur = 0;

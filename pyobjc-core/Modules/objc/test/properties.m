@@ -8,15 +8,15 @@ typedef struct s { int i; char b; } struct_s;
     int _prop1;
     float _prop2;
     struct_s _prop3;
-    id    _prop4;
-    id    _prop5;
-    id    _prop6;
-    id    _prop7;
-    id    _prop8;
-    id    _prop9;
+    id _prop4;
+    id _prop5;
+    id _prop6;
+    id _prop7;
+    id _prop8;
+    id _prop9;
     struct_s _prop10;
-    id    _prop11;
-    id    _prop12;
+    id _prop11;
+    id _prop12;
 }
 
 #if (PyObjC_BUILD_RELEASE >= 1005)

@@ -965,7 +965,7 @@ setup_descr(struct _PyObjC_ArgDescr* descr, PyObject* meta, BOOL is_native)
                 return -1;
             }
 
-            tp[0]  = typeModifier;
+            tp[0] = typeModifier;
             strcpy(tp+1, withoutModifiers);
 
             if (descr->typeOverride) {
@@ -1370,7 +1370,7 @@ merge_descr(struct _PyObjC_ArgDescr* descr, struct _PyObjC_ArgDescr* meta, BOOL 
 
             /* Skip existing modifiers, we're overriding those */
             strcpy(tp+1, withoutModifiers);
-            tp[0]  = meta->modifier;
+            tp[0] = meta->modifier;
             PyObjC_Assert(tp != NULL, NULL);
             descr->typeOverride = YES;
             descr->type = tp;
@@ -1476,7 +1476,7 @@ PyObjCMethodSignature* PyObjCMethodSignature_ForSelector(
     }
 
     if (isClassMethod) {
-        const char* nm  = sel_getName(sel);
+        const char* nm = sel_getName(sel);
         if (strncmp(nm, "new", 3) == 0 && ((nm[3] == 0) || isupper(nm[3]))) {
             if (methinfo->rettype->tmpl) {
                 methinfo->rettype = alloc_descr(methinfo->rettype);
@@ -1525,7 +1525,7 @@ argdescr2dict(struct _PyObjC_ArgDescr* descr)
             end --;
         }
         end ++;
-        v = PyBytes_FromStringAndSize(descr->type,  end - descr->type);
+        v = PyBytes_FromStringAndSize(descr->type, end - descr->type);
         if (v == NULL) goto error;
         r = PyDict_SetItemString(result, "type", v);
         Py_DECREF(v);

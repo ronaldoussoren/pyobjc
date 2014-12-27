@@ -232,8 +232,8 @@ make_dict(PyObject* self, int class_method)
 
 typedef struct {
     PyObject_HEAD
-    PyObject*    base;
-    int        class_method;
+    PyObject* base;
+    int class_method;
 } ObjCMethodAccessor;
 
 static void
@@ -298,7 +298,7 @@ obj_getattro(PyObject* _self, PyObject* name)
         dict = make_dict(self->base, self->class_method);
         return dict;
 
-        result  = PyDictProxy_New(dict);
+        result = PyDictProxy_New(dict);
         Py_DECREF(dict);
         return result;
     }

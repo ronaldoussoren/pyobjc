@@ -17,7 +17,7 @@ PyObjCString_InternFromStringAndSize(const char* v, Py_ssize_t l)
 }
 
 #ifndef PY_FORMAT_LONG_LONG
-#define   PY_FORMAT_LONG_LONG "ll"
+#define PY_FORMAT_LONG_LONG "ll"
 #endif
 
 /*
@@ -39,7 +39,7 @@ PyObjCString_FromFormatV(const char* format, va_list vargs)
 #ifdef VA_LIST_IS_ARRAY
     Py_MEMCPY(count, vargs, sizeof(va_list));
 #else
-#ifdef  __va_copy
+#ifdef __va_copy
     __va_copy(count, vargs);
 #else
     count = vargs;
@@ -110,15 +110,15 @@ PyObjCString_FromFormatV(const char* format, va_list vargs)
 #ifdef HAVE_LONG_LONG
                 /* Need at most
                    ceil(log10(256)*SIZEOF_LONG_LONG) digits,
-                   plus 1 for the sign.  53/22 is an upper
+                   plus 1 for the sign. 53/22 is an upper
                    bound for log10(256). */
                 if (longlongflag)
                     n += 2 + (SIZEOF_LONG_LONG*53-1) / 22;
                 else
 #endif
                     /* 20 bytes is enough to hold a 64-bit
-                       integer.  Decimal takes the most
-                       space.  This isn't enough for
+                       integer. Decimal takes the most
+                       space. This isn't enough for
                        octal. */
                     n += 20;
 
@@ -300,7 +300,7 @@ PyObjCString_FromFormatV(const char* format, va_list vargs)
                 break;
             case 'p':
                 sprintf(s, "%p", va_arg(vargs, void*));
-                /* %p is ill-defined:  ensure leading 0x. */
+                /* %p is ill-defined: ensure leading 0x. */
                 if (s[1] == 'X')
                     s[1] = 'x';
                 else if (s[1] != 'x') {

@@ -344,7 +344,7 @@ static char gNumCharValues[] = { 1, 2, 3, 4 };
 
 -(NSObject*)int8ArrayOf4InOut:(char*)buffer
 {
-    NSObject* result =  [NSArray arrayWithObjects:
+    NSObject* result = [NSArray arrayWithObjects:
             [NSNumber numberWithInt:buffer[0]],
             [NSNumber numberWithInt:buffer[1]],
             [NSNumber numberWithInt:buffer[2]],
@@ -359,7 +359,7 @@ static char gNumCharValues[] = { 1, 2, 3, 4 };
 
 -(NSObject*)int8ArrayOf4In:(char*)buffer
 {
-    NSObject* result =  [NSArray arrayWithObjects:
+    NSObject* result = [NSArray arrayWithObjects:
             [NSNumber numberWithInt:buffer[0]],
             [NSNumber numberWithInt:buffer[1]],
             [NSNumber numberWithInt:buffer[2]],

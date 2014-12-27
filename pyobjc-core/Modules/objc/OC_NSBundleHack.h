@@ -1,5 +1,5 @@
 /*!
- * @header   OC_NSBundleHack.h
+ * @header OC_NSBundleHack.h
  * @abstract NSBundle hacks to support plugins
  * @discussion
  *     This file defines the class that is used to convince NSBundle
@@ -10,8 +10,8 @@
 #import <Foundation/Foundation.h>
 
 /*!
- * @class       OC_NSBundleHack
- * @abstract    NSBundle hacks to support plugins
+ * @class OC_NSBundleHack
+ * @abstract NSBundle hacks to support plugins
  * @discussion
  *     This class that is used to pose for NSBundle
  *     if it does not do the right thing

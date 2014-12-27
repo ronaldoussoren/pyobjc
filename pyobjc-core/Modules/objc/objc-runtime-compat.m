@@ -34,7 +34,7 @@ typedef struct _ProtocolTemplate {
 } ProtocolTemplate;
 
 struct objc10_object {
-    Class    isa;
+    Class isa;
 };
 
 struct PyObjC_ivar {
@@ -222,7 +222,7 @@ error_cleanup:
     if (result) {
         if (result[0].methodLists) {
             if (result[0].methodLists[0] != 0 &&
-                    result[0].methodLists[0] != 0)  {
+                    result[0].methodLists[0] != 0) {
                 free(result[0].methodLists[0]);
             }
             free(result[0].methodLists);
@@ -230,7 +230,7 @@ error_cleanup:
 
         if (result[1].methodLists) {
             if (result[1].methodLists[1] != 0 &&
-                    result[1].methodLists[0] != 0)  {
+                    result[1].methodLists[0] != 0) {
                 free(result[1].methodLists[0]);
             }
             free(result[1].methodLists);
@@ -347,7 +347,7 @@ static Ivar*
 compat_class_copyIvarList(Class cls, unsigned int* outCount)
 {
     Ivar* list;
-    int   i;
+    int i;
     struct objc_ivar_list* ivars = cls->ivars;
 
     if (ivars) {
@@ -564,7 +564,7 @@ compat_method_getImplementation(Method m)
 static IMP
 compat_method_setImplementation(Method m, IMP imp)
 {
-    IMP result =  m->method_imp;
+    IMP result = m->method_imp;
     m->method_imp = imp;
     return result;
 }
@@ -755,7 +755,7 @@ compat_protocol_copyProtocolList(Protocol *proto, unsigned int *outCount)
 static struct objc_method_description
 compat_protocol_getMethodDescription(Protocol *p, SEL aSel, BOOL isRequiredMethod, BOOL isInstanceMethod)
 {
-static struct objc_method_description empty_description =  { NULL, NULL };
+static struct objc_method_description empty_description = { NULL, NULL };
     struct objc_method_description* result;
     if (!isRequiredMethod) {
         return empty_description;
@@ -798,18 +798,18 @@ Class (*PyObjC_objc_allocateClassPair)(Class, const char*, size_t) = NULL;
 void (*PyObjC_objc_registerClassPair)(Class) = NULL;
 void (*PyObjC_objc_disposeClassPair)(Class) = NULL;
 Protocol** (*PyObjC_objc_copyProtocolList)(unsigned int*) = NULL;
-Protocol*  (*PyObjC_objc_getProtocol)(const char* name) = NULL;
+Protocol* (*PyObjC_objc_getProtocol)(const char* name) = NULL;
 BOOL (*PyObjC_preclass_addMethod)(Class, SEL, IMP, const char*) = NULL;
 BOOL (*PyObjC_preclass_addIvar)(Class cls,
     const char *name, size_t size, uint8_t alignment,
     const char *types) = NULL;
 BOOL (*PyObjC_preclass_addProtocol)(Class cls, Protocol *protocol) = NULL;
-Class   (*PyObjC_object_getClass)(id obj) = NULL;
+Class (*PyObjC_object_getClass)(id obj) = NULL;
 Class (*PyObjC_object_setClass)(id obj, Class cls) = NULL;
 const char* (*PyObjC_object_getClassName)(id obj) = NULL;
 Method* (*PyObjC_class_copyMethodList)(Class, unsigned int*) = NULL;
-const char*  (*PyObjC_class_getName)(Class) = NULL;
-size_t  (*PyObjC_class_getInstanceSize)(Class) = NULL;
+const char* (*PyObjC_class_getName)(Class) = NULL;
+size_t (*PyObjC_class_getInstanceSize)(Class) = NULL;
 Class (*PyObjC_class_getSuperclass)(Class) = NULL;
 BOOL (*PyObjC_class_addMethod)(Class, SEL, IMP, const char*) = NULL;
 BOOL (*PyObjC_class_addMethodList)(Class, struct PyObjC_method*, unsigned int) = NULL;
@@ -821,9 +821,9 @@ IMP (*PyObjC_method_getImplementation)(Method m) = NULL;
 IMP (*PyObjC_method_setImplementation)(Method m, IMP imp) = NULL;
 const char *(*PyObjC_method_getTypeEncoding)(Method m) = NULL;
 BOOL (*PyObjC_sel_isEqual)(SEL, SEL) = NULL;
-const char*  (*PyObjC_ivar_getName)(Ivar) = NULL;
-const char*  (*PyObjC_ivar_getTypeEncoding)(Ivar) = NULL;
-ptrdiff_t    (*PyObjC_ivar_getOffset)(Ivar) = NULL;
+const char* (*PyObjC_ivar_getName)(Ivar) = NULL;
+const char* (*PyObjC_ivar_getTypeEncoding)(Ivar) = NULL;
+ptrdiff_t (*PyObjC_ivar_getOffset)(Ivar) = NULL;
 
 #else /* (MAC_OS_X_VERSION_MIN_REQUIRED >= MAC_OS_X_VERSION_10_5) || defined(__OBJC2__) */
 
@@ -1028,7 +1028,7 @@ static void compat_protocol_addProtocol(Protocol* proto, Protocol* newProto)
 struct objc_method_description
 PyObjC_protocol_getMethodDescription(Protocol *p, SEL aSel, BOOL isRequiredMethod, BOOL isInstanceMethod)
 {
-    struct objc_method_description  result = protocol_getMethodDescription(p, aSel, isRequiredMethod, isInstanceMethod);
+    struct objc_method_description result = protocol_getMethodDescription(p, aSel, isRequiredMethod, isInstanceMethod);
     if (result.name != NULL) {
         return result;
     }
@@ -1063,7 +1063,7 @@ PyObjC_protocol_getMethodDescription(Protocol *p, SEL aSel, BOOL isRequiredMetho
 
 void PyObjC_SetupRuntimeCompat(void)
 {
-#if (MAC_OS_X_VERSION_MIN_REQUIRED < MAC_OS_X_VERSION_10_5)  && !defined(__OBJC2__)
+#if (MAC_OS_X_VERSION_MIN_REQUIRED < MAC_OS_X_VERSION_10_5) && !defined(__OBJC2__)
 
 #ifdef NO_OBJC2_RUNTIME
     /*
@@ -1076,7 +1076,7 @@ void PyObjC_SetupRuntimeCompat(void)
     PyObjC_preclass_addIvar = compat_preclass_addIvar;
     PyObjC_preclass_addProtocol = compat_preclass_addProtocol;
 
-#   define SETUP(funcname) \
+# define SETUP(funcname) \
         PyObjC_##funcname = compat_##funcname
 
 #else /* !NO_OBJC2_RUNTIME */
@@ -1094,7 +1094,7 @@ void PyObjC_SetupRuntimeCompat(void)
     }
 
 
-#   define SETUP(funcname) \
+# define SETUP(funcname) \
     if ((funcname) == NULL) { \
         PyObjC_##funcname = compat_##funcname; \
     } else { \
@@ -1170,7 +1170,7 @@ void PyObjC_SetupRuntimeCompat(void)
     PyObjC_protocol_addProtocol = protocol_addProtocol;
 
 #else /* PyObjC_BUILD_RELEASE >= 1007 && !__LP64 */
-#   define SETUP(funcname) \
+# define SETUP(funcname) \
     if ((funcname) == NULL) { \
         PyObjC_##funcname = compat_##funcname; \
     } else { \

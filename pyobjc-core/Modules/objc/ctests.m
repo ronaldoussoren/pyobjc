@@ -22,7 +22,7 @@ struct Struct2 {
 
 struct Struct3 {
     char ch;
-    int  i;
+    int i;
 };
 
 struct Struct4 {
@@ -73,7 +73,7 @@ BEGIN_UNITTEST(CheckNSInvoke)
     PyObjCTest_NSInvoke* obj = [[PyObjCTest_NSInvoke alloc] init];
     NSInvocation* inv;
     struct Struct2 v1 = { 1, 2, { 3, 4, 5, 6, 7 } };
-    short    v2 = 8;
+    short v2 = 8;
 
     [obj methodWithMyStruct: v1 andShort: v2];
     inv = [NSInvocation invocationWithMethodSignature:
@@ -219,8 +219,8 @@ BEGIN_UNITTEST(FillStruct3)
 
     Py_DECREF(input);
 
-    ASSERT_EQUALS(output.ch, '\001',    "%d");
-    ASSERT_EQUALS(output.i, 2,  "%d");
+    ASSERT_EQUALS(output.ch, '\001', "%d");
+    ASSERT_EQUALS(output.i,  2,      "%d");
 
 END_UNITTEST
 
@@ -233,7 +233,7 @@ BEGIN_UNITTEST(FillStruct4)
     input = PyTuple_New(2);
     FAIL_IF(input == NULL);
 
-    PyTuple_SetItem(input, 0,  PyBytes_FromStringAndSize("\001", 1));
+    PyTuple_SetItem(input, 0, PyBytes_FromStringAndSize("\001", 1));
     PyTuple_SetItem(input, 1, PyInt_FromLong(500000));
 
     r = depythonify_c_value(@encode(struct Struct4), input, &output);
@@ -242,7 +242,7 @@ BEGIN_UNITTEST(FillStruct4)
     Py_DECREF(input);
 
     ASSERT_EQUALS(output.ch, '\001',    "%d");
-    ASSERT_EQUALS(output.i, 500000,  "%ll");
+    ASSERT_EQUALS(output.i,  500000,    "%ll");
 
 END_UNITTEST
 
@@ -258,12 +258,12 @@ BEGIN_UNITTEST(FillStruct5Array)
 
     v = PyTuple_New(2);
     PyTuple_SetItem(v, 0, PyInt_FromLong(500000));
-    PyTuple_SetItem(v, 1,  PyBytes_FromStringAndSize("\001", 1));
+    PyTuple_SetItem(v, 1, PyBytes_FromStringAndSize("\001", 1));
     PyTuple_SetItem(input, 0, v);
 
     v = PyTuple_New(2);
     PyTuple_SetItem(v, 0, PyInt_FromLong(1000000));
-    PyTuple_SetItem(v, 1,  PyBytes_FromStringAndSize("\002", 1));
+    PyTuple_SetItem(v, 1, PyBytes_FromStringAndSize("\002", 1));
     PyTuple_SetItem(input, 1, v);
 
     r = depythonify_c_value(@encode(Struct5Array), input, &output);
@@ -271,10 +271,10 @@ BEGIN_UNITTEST(FillStruct5Array)
 
     Py_DECREF(input);
 
-    ASSERT_EQUALS(output[0].ch, '\001',    "%d");
-    ASSERT_EQUALS(output[0].i, 500000,  "%ll");
-    ASSERT_EQUALS(output[1].ch, '\002',    "%d");
-    ASSERT_EQUALS(output[1].i, 1000000,  "%ll");
+    ASSERT_EQUALS(output[0].ch, '\001',  "%d");
+    ASSERT_EQUALS(output[0].i,  500000,  "%ll");
+    ASSERT_EQUALS(output[1].ch, '\002',  "%d");
+    ASSERT_EQUALS(output[1].i,  1000000, "%ll");
 
 END_UNITTEST
 
@@ -497,7 +497,7 @@ BEGIN_UNITTEST(TestTypeCode)
     ASSERT_EQUALS(@encode(long long)[0], 'q', "%c");
     ASSERT_EQUALS(@encode(unsigned long long)[0], 'Q', "%c");
 
-#if defined(MACOSX) &&  MAC_OS_X_VERSION_MAX_ALLOWED > MAC_OS_X_VERSION_10_1
+#if defined(MACOSX) && MAC_OS_X_VERSION_MAX_ALLOWED > MAC_OS_X_VERSION_10_1
     ASSERT_EQUALS(@encode(bool)[0], 'B', "%#x");
 #endif
 
@@ -506,7 +506,7 @@ END_UNITTEST
 BEGIN_UNITTEST(TestSimplifySignature)
     /* Make sure PyObjCRT_SimplifySignature works */
     char b[1024];
-    int  r;
+    int r;
 
     r = PyObjCRT_SimplifySignature("@1234@0:{_NSPoint=ff}02i22", b, sizeof(b));
     ASSERT(r != -1);

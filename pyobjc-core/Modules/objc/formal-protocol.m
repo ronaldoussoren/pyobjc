@@ -239,7 +239,7 @@ append_method_list(PyObject* lst, Protocol* protocol, BOOL isRequired, BOOL isIn
             "{sysysO}",
 #endif /* PY_MAJOR_VERSION == 3 */
             "selector", sel_getName(methods[i].name),
-            "typestr",  buf,
+            "typestr", buf,
             "required", isRequired?Py_True:Py_False);
         if (item == NULL) {
             free(methods);

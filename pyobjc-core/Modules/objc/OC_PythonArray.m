@@ -340,7 +340,7 @@
     NSUInteger i;
     PyObjC_BEGIN_WITH_GIL
         if (PyTuple_CheckExact(value) && (NSUInteger)PyTuple_Size(value) == count) {
-            for  (i = 0; i < count; i++) {
+            for (i = 0; i < count; i++) {
                 PyObject* v;
 
                 if (objects[i] == [NSNull null]) {
@@ -366,7 +366,7 @@
 
         } else {
 
-            for  (i = 0; i < count; i++) {
+            for (i = 0; i < count; i++) {
                 PyObject* v;
                 int r;
 
@@ -381,7 +381,7 @@
                     PyObjC_GIL_FORWARD_EXC();
                 }
 
-                r = PyList_Append(value,  v);
+                r = PyList_Append(value, v);
                 if (r == -1) {
                     PyObjC_GIL_FORWARD_EXC();
                 }

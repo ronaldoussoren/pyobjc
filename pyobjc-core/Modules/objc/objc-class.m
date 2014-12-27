@@ -451,7 +451,7 @@ static    char* keywords[] = { "name", "bases", "dict", "protocols", NULL };
     Py_ssize_t len;
     Class objc_class = NULL;
     Class super_class = NULL;
-    PyObject*  py_super_class = NULL;
+    PyObject* py_super_class = NULL;
     PyObjCClassObject* info;
     PyObject* keys;
     PyObject* protocols;
@@ -971,7 +971,7 @@ static    char* keywords[] = { "name", "bases", "dict", "protocols", NULL };
      * of magic intermediate classes, therefore explicitly refer to the
      * metatype we just created.
      */
-    res =  PyType_Type.tp_new(metatype, args, NULL);
+    res = PyType_Type.tp_new(metatype, args, NULL);
     Py_DECREF(metatype);
     if (res == NULL) {
         Py_DECREF(args);
@@ -1119,7 +1119,7 @@ PyObjCClass_CheckMethodList(PyObject* cls, int recursive)
             int r;
             info->generation = PyObjC_MappingCount;
 
-            r =  update_convenience_methods(cls);
+            r = update_convenience_methods(cls);
             if (r < 0) {
                 return -1;
             }
@@ -1143,10 +1143,10 @@ static PyObject*
 metaclass_dir(PyObject* self)
 {
     PyObject* result;
-    Class     cls;
-    Method*   methods;
+    Class cls;
+    Method* methods;
     unsigned int method_count, i;
-    char      selbuf[2048];
+    char selbuf[2048];
 
     /* Start of with keys in __dict__ */
     result = PyDict_Keys(((PyTypeObject*)self)->tp_dict);
@@ -1211,9 +1211,9 @@ _type_lookup(PyTypeObject* tp, PyObject* name
     PyObject *descr = NULL;
     PyObject* res;
 #ifndef PyObjC_FAST_UNICODE_ASCII
-    SEL      sel = PyObjCSelector_DefaultSelector(PyBytes_AsString(name_bytes));
+    SEL sel = PyObjCSelector_DefaultSelector(PyBytes_AsString(name_bytes));
 #else
-    SEL      sel = PyObjCSelector_DefaultSelector(PyObjC_Unicode_Fast_Bytes(name));
+    SEL sel = PyObjCSelector_DefaultSelector(PyObjC_Unicode_Fast_Bytes(name));
 #endif
 
     /* TODO: if sel.startswith('__') and sel.endswith('__'): look_in_runtime = False */
@@ -1286,10 +1286,10 @@ _type_lookup_harder(PyTypeObject* tp, PyObject* name
     n = PyTuple_GET_SIZE(mro);
     for (i = 0; i < n; i++) {
         Class cls;
-        Method*   methods;
+        Method*  methods;
         unsigned int method_count, j;
-        char      selbuf[2048];
-        char*     sel_name;
+        char selbuf[2048];
+        char*  sel_name;
 
         base = PyTuple_GET_ITEM(mro, i);
 
@@ -1416,9 +1416,9 @@ _type_lookup_instance(PyObject* class_dict, PyTypeObject* tp, PyObject* name
     PyObject *descr = NULL;
     PyObject* res;
 #ifndef PyObjC_FAST_UNICODE_ASCII
-    SEL      sel = PyObjCSelector_DefaultSelector(PyBytes_AsString(name_bytes));
+    SEL sel = PyObjCSelector_DefaultSelector(PyBytes_AsString(name_bytes));
 #else
-    SEL      sel = PyObjCSelector_DefaultSelector(PyObjC_Unicode_Fast_Bytes(name));
+    SEL sel = PyObjCSelector_DefaultSelector(PyObjC_Unicode_Fast_Bytes(name));
 #endif
 
     /* TODO: if sel.startswith('__') and sel.endswith('__'): look_in_runtime = False */
@@ -1840,7 +1840,7 @@ class_setattro(PyObject* self, PyObject* name, PyObject* value)
          */
         PyObject* newVal;
         Method curMethod;
-        Class  curClass;
+        Class curClass;
         int r;
         BOOL b;
 
@@ -1927,7 +1927,7 @@ class_richcompare(PyObject* self, PyObject* other, int op)
 {
     Class self_class;
     Class other_class;
-    int   v;
+    int v;
     PyObject* result;
 
     if (!PyObjCClass_Check(other)) {
@@ -2022,7 +2022,7 @@ class_compare(PyObject* self, PyObject* other)
 {
     Class self_class;
     Class other_class;
-    int   v;
+    int v;
 
     if (!PyObjCClass_Check(other)) {
         PyErr_SetString(PyExc_NotImplementedError, "Cmp with other");
@@ -2124,15 +2124,15 @@ cls_get_version(PyObject* self, void* closure __attribute__((__unused__)))
     }
 }
 
-static  int
+static int
 cls_set_version(PyObject* self, PyObject* newVal, void* closure __attribute__((__unused__)))
 {
     Class cls = PyObjCClass_GetClass(self);
-    int   val;
-    int   r;
+    int val;
+    int r;
 
     if (newVal == NULL) {
-        PyErr_SetString(PyExc_TypeError, "Cannot delete __version__  attribute");
+        PyErr_SetString(PyExc_TypeError, "Cannot delete __version__ attribute");
         return -1;
     }
 
@@ -2151,7 +2151,7 @@ cls_get_useKVO(PyObject* self, void* closure __attribute__((__unused__)))
     return PyBool_FromLong(((PyObjCClassObject*)self)->useKVO);
 }
 
-static  int
+static int
 cls_set_useKVO(PyObject* self, PyObject* newVal, void* closure __attribute__((__unused__)))
 {
     if (newVal == NULL) {
@@ -2314,7 +2314,7 @@ default_selector(PyObject* name)
 {
 #ifndef PyObjC_FAST_UNICODE_ASCII
     /* XXX: name_bytes */
-    SEL      sel = PyObjCSelector_DefaultSelector(PyBytes_AsString(name_bytes));
+    SEL sel = PyObjCSelector_DefaultSelector(PyBytes_AsString(name_bytes));
     return sel;
 #else
     return PyObjCSelector_DefaultSelector(PyObjC_Unicode_Fast_Bytes(name));
@@ -2822,7 +2822,7 @@ PyObject*
 PyObjCClass_FindSelector(PyObject* cls, SEL selector, BOOL class_method)
 {
     PyObjCClassObject* info;
-    PyObject*          result;
+    PyObject* result;
 
     if (!PyObjCClass_Check(cls)) {
         PyErr_Format(PyObjCExc_InternalError,
@@ -3043,9 +3043,9 @@ update_convenience_methods(PyObject* cls)
         if (PyUnicode_Check(k)) {
             if (
                     PyObjC_is_ascii_string(k, "__dict__")
-                    ||    PyObjC_is_ascii_string(k, "__bases__")
-                    ||    PyObjC_is_ascii_string(k, "__slots__")
-                    ||    PyObjC_is_ascii_string(k, "__mro__")
+                    || PyObjC_is_ascii_string(k, "__bases__")
+                    || PyObjC_is_ascii_string(k, "__slots__")
+                    || PyObjC_is_ascii_string(k, "__mro__")
                  ) {
 
                 continue;
@@ -3055,7 +3055,7 @@ update_convenience_methods(PyObject* cls)
         } else if (PyString_Check(k)) {
             char* n = PyString_AS_STRING(k);
 
-            if (       strcmp(n, "__dict__") == 0
+            if (   strcmp(n, "__dict__") == 0
                 || strcmp(n, "__bases__") == 0
                 || strcmp(n, "__slots__") == 0
                 || strcmp(n, "__mro__") == 0
@@ -3105,7 +3105,7 @@ PyObjCClass_AddMethods(PyObject* classObject, PyObject** methods, Py_ssize_t met
     PyObject* extraDict = NULL;
     PyObject* metaDict = NULL;
 
-    targetClass  = PyObjCClass_GetClass(classObject);
+    targetClass = PyObjCClass_GetClass(classObject);
     if (targetClass == NULL) {
         return -1;
     }

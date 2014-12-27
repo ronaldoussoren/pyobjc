@@ -1,4 +1,4 @@
-/* Copyright (c) 1996,97 by Lele Gaifax.  All Rights Reserved
+/* Copyright (c) 1996,97 by Lele Gaifax. All Rights Reserved
  * Copyright 2002, 2003 Ronald Oussoren, Jack Jansen
  * Copyright 2003-2014 Ronald Oussoren
  *
@@ -14,15 +14,15 @@
 
 #include <stdarg.h>
 
-#import  <Foundation/NSObject.h>
-#import  <Foundation/NSMethodSignature.h>
-#import  <Foundation/NSInvocation.h>
-#import  <Foundation/NSString.h>
-#import  <Foundation/NSDictionary.h>
-#import  <Foundation/NSEnumerator.h>
+#import <Foundation/NSObject.h>
+#import <Foundation/NSMethodSignature.h>
+#import <Foundation/NSInvocation.h>
+#import <Foundation/NSString.h>
+#import <Foundation/NSDictionary.h>
+#import <Foundation/NSEnumerator.h>
 
 #if MAC_OS_X_VERSION_MAX_ALLOWED >= MAC_OS_X_VERSION_10_3
-#import  <Foundation/NSKeyValueObserving.h>
+#import <Foundation/NSKeyValueObserving.h>
 #endif
 
 #import "OC_PythonUnicode.h"
@@ -214,7 +214,7 @@ check_argcount (PyObject *pymethod, Py_ssize_t argcount)
 static PyObject*
 get_method_for_selector(PyObject *obj, SEL aSelector)
 {
-    const char*  meth_name;
+    const char* meth_name;
     char pymeth_name[256];
     Py_ssize_t argcount;
     PyObject* pymethod;
@@ -241,7 +241,7 @@ get_method_for_selector(PyObject *obj, SEL aSelector)
         return NULL;
     }
 
-    result =  check_argcount(pymethod, argcount);
+    result = check_argcount(pymethod, argcount);
     if (result == NULL) {
         Py_DECREF(pymethod);
     }
@@ -292,7 +292,7 @@ get_method_for_selector(PyObject *obj, SEL aSelector)
 
 + (NSMethodSignature *) methodSignatureForSelector:(SEL) sel
 {
-    Method           m;
+    Method m;
 
     m = class_getClassMethod(self, sel);
     if (m) {
@@ -313,12 +313,12 @@ get_method_for_selector(PyObject *obj, SEL aSelector)
      * an exception.
      */
 
-    char*           encoding;
-    PyObject*          pymethod;
-    PyCodeObject*      func_code;
-    Py_ssize_t         argcount;
-    Class           cls;
-    Method           m;
+    char* encoding;
+    PyObject* pymethod;
+    PyCodeObject* func_code;
+    Py_ssize_t argcount;
+    Class cls;
+    Method m;
 
     cls = object_getClass(self);
     m = class_getInstanceMethod(cls, sel);
@@ -378,8 +378,8 @@ get_method_for_selector(PyObject *obj, SEL aSelector)
         return YES;
 
     } else if (sel_isEqual(aSelector, @selector(respondsToSelector:))){
-        SEL    sel;
-        BOOL    b;
+        SEL sel;
+        BOOL b;
 
         [invocation getArgument:&sel atIndex:2];
 
@@ -389,7 +389,7 @@ get_method_for_selector(PyObject *obj, SEL aSelector)
         return YES;
 
     } else if (sel_isEqual(aSelector, @selector(classForKeyedArchiver))){
-        Class    c;
+        Class c;
 
         c = [self classForKeyedArchiver];
         [invocation setReturnValue:&c];
@@ -397,7 +397,7 @@ get_method_for_selector(PyObject *obj, SEL aSelector)
         return YES;
 
     } else if (sel_isEqual(aSelector, @selector(classForArchiver))){
-        Class    c;
+        Class c;
 
         c = [self classForArchiver];
         [invocation setReturnValue:&c];
@@ -405,7 +405,7 @@ get_method_for_selector(PyObject *obj, SEL aSelector)
         return YES;
 
     } else if (sel_isEqual(aSelector, @selector(classForCoder))){
-        Class    c;
+        Class c;
 
         c = [self classForCoder];
         [invocation setReturnValue:&c];
@@ -413,7 +413,7 @@ get_method_for_selector(PyObject *obj, SEL aSelector)
         return YES;
 
     } else if (sel_isEqual(aSelector, @selector(classForPortCoder))){
-        Class    c;
+        Class c;
 
         c = [self classForPortCoder];
         [invocation setReturnValue:&c];
@@ -421,7 +421,7 @@ get_method_for_selector(PyObject *obj, SEL aSelector)
         return YES;
 
     } else if (sel_isEqual(aSelector, @selector(replacementObjectForKeyedArchiver:))){
-        NSObject*    c;
+        NSObject* c;
         NSKeyedArchiver* archiver;
 
         [invocation getArgument:&archiver atIndex:2];
@@ -431,7 +431,7 @@ get_method_for_selector(PyObject *obj, SEL aSelector)
         return YES;
 
     } else if (sel_isEqual(aSelector, @selector(replacementObjectForArchiver:))){
-        NSObject*    c;
+        NSObject* c;
         NSArchiver* archiver;
 
         [invocation getArgument:&archiver atIndex:2];
@@ -441,7 +441,7 @@ get_method_for_selector(PyObject *obj, SEL aSelector)
         return YES;
 
     } else if (sel_isEqual(aSelector, @selector(replacementObjectForCoder:))){
-        NSObject*    c;
+        NSObject* c;
         NSCoder* archiver;
 
         [invocation getArgument:&archiver atIndex:2];
@@ -451,7 +451,7 @@ get_method_for_selector(PyObject *obj, SEL aSelector)
         return YES;
 
     } else if (sel_isEqual(aSelector, @selector(replacementObjectForPortCoder:))){
-        NSObject*    c;
+        NSObject* c;
         NSPortCoder* archiver;
 
         [invocation getArgument:&archiver atIndex:2];
@@ -461,7 +461,7 @@ get_method_for_selector(PyObject *obj, SEL aSelector)
         return YES;
 
     } else if (sel_isEqual(aSelector, @selector(copy))) {
-        NSObject*    c;
+        NSObject* c;
 
         c = [self copy];
         [invocation setReturnValue:&c];
@@ -469,7 +469,7 @@ get_method_for_selector(PyObject *obj, SEL aSelector)
         return YES;
 
     } else if (sel_isEqual(aSelector, @selector(copyWithZone:))) {
-        NSObject*    c;
+        NSObject* c;
         NSZone* zone;
 
         [invocation getArgument:&zone atIndex:2];
@@ -526,7 +526,7 @@ get_method_for_selector(PyObject *obj, SEL aSelector)
         for (i=2; i< argcount; i++) {
             const char *argtype;
             char *argbuffer;
-            Py_ssize_t  argsize;
+            Py_ssize_t argsize;
             PyObject *pyarg;
 
             argtype = [msign getArgumentTypeAtIndex:i];
@@ -615,7 +615,7 @@ get_method_for_selector(PyObject *obj, SEL aSelector)
     PyObject* rval;
 
     PyObjC_BEGIN_WITH_GIL
-        rval =  PyObjCClass_New([OC_PythonObject class]);
+        rval = PyObjCClass_New([OC_PythonObject class]);
         *cookie = 0;
     PyObjC_END_WITH_GIL
 
@@ -675,7 +675,7 @@ getModuleFunction(char* modname, char* funcname)
  */
 -(id)valueForKey:(NSString*) key
 {
-static  PyObject* getKeyFunc = NULL;
+static PyObject* getKeyFunc = NULL;
 
     PyObject* keyName;
     PyObject* val;
@@ -727,7 +727,7 @@ static  PyObject* getKeyFunc = NULL;
 
 -(void)setValue:value forKey:(NSString*) key
 {
-static  PyObject* setKeyFunc = NULL;
+static PyObject* setKeyFunc = NULL;
 
     PyObject* keyName;
     PyObject* pyValue;
@@ -792,7 +792,7 @@ static  PyObject* setKeyFunc = NULL;
 
 -(id)valueForKeyPath: (NSString*) keyPath
 {
-static  PyObject* getKeyFunc = NULL;
+static PyObject* getKeyFunc = NULL;
 
     PyObject* keyName;
     PyObject* val;
@@ -838,7 +838,7 @@ static  PyObject* getKeyFunc = NULL;
 
 -(void)setValue: value forKeyPath: (NSString*) keyPath
 {
-static  PyObject* setKeyFunc = NULL;
+static PyObject* setKeyFunc = NULL;
 
     PyObject* keyName;
     PyObject* pyValue;

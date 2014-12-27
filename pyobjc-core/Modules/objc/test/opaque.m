@@ -90,18 +90,18 @@ initopaque(void)
     }
 
 #if PY_VERSION_HEX >= 0x03000000
-    if (PyModule_AddObject(m, "BarEncoded",  PyBytes_FromString(@encode(BarHandle))) < 0) {
+    if (PyModule_AddObject(m, "BarEncoded", PyBytes_FromString(@encode(BarHandle))) < 0) {
         INITERROR();
     }
-    if (PyModule_AddObject(m, "FooEncoded",  PyBytes_FromString(@encode(FooHandle))) < 0) {
+    if (PyModule_AddObject(m, "FooEncoded", PyBytes_FromString(@encode(FooHandle))) < 0) {
         INITERROR();
     }
 #else
-    if (PyModule_AddObject(m, "BarEncoded",  PyString_FromString(@encode(BarHandle))) < 0) {
+    if (PyModule_AddObject(m, "BarEncoded", PyString_FromString(@encode(BarHandle))) < 0) {
         INITERROR();
     }
 
-    if (PyModule_AddObject(m, "FooEncoded",  PyString_FromString(@encode(FooHandle))) < 0) {
+    if (PyModule_AddObject(m, "FooEncoded", PyString_FromString(@encode(FooHandle))) < 0) {
         INITERROR();
     }
 #endif
