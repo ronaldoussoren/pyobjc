@@ -18,7 +18,7 @@ PyDoc_STRVAR(machsignals_doc,
     "make sure our signal handler is called."
 );
 
-static mach_port_t exit_m_port       = MACH_PORT_NULL;
+static mach_port_t exit_m_port = MACH_PORT_NULL;
 static PyObject *signalmapping;
 
 
@@ -120,7 +120,7 @@ PyObjC_MODULE_INIT(_machsignals)
 
     if (PyObjC_ImportAPI(m) < 0) {
         PyErr_Print();
-	PyObjC_INITERROR();
+        PyObjC_INITERROR();
     }
 
     signalmapping = PyDict_New();
@@ -128,7 +128,12 @@ PyObjC_MODULE_INIT(_machsignals)
         PyObjC_INITERROR();
     }
 
-    PyObject_SetAttrString(m, "_signalmapping", signalmapping);
+    if (PyModule_AddObject(m, "_signalmapping", signalmapping) == -1) {
+        PyObjC_INITERROR();
+    }
+    if (PyModule_AddStringConstant(m, "__doc__", machsignals_doc) == -1) {
+        PyObjC_INITERROR();
+    }
 
     e_port = CFMachPortCreate(NULL, SIGCallback, NULL, NULL);
     exit_m_port = CFMachPortGetPort(e_port);
