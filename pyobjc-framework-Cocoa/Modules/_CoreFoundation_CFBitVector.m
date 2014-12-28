@@ -96,7 +96,7 @@ mod_CFBitVectorGetBits(PyObject* self __attribute__((__unused__)),
 #define COREFOUNDATION_BITVECTOR_METHODS \
     { \
         "CFBitVectorCreate", \
-        (PyCFunction)mod_CFBitVectorCreate \
+        (PyCFunction)mod_CFBitVectorCreate, \
         METH_VARARGS, \
         NULL \
     }, \

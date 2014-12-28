@@ -104,7 +104,7 @@ static char* keywords[] = { "hfsTypeCode", NULL };
 
 #define FOUNDATION_TYPECODE_METHODS \
     { \
-        "NSFileTypeForHFSTypeCode" \
+        "NSFileTypeForHFSTypeCode", \
         (PyCFunction)objc_NSFileTypeForHFSTypeCode, \
         METH_VARARGS|METH_KEYWORDS, \
         objc_NSFileTypeForHFSTypeCode_doc \
