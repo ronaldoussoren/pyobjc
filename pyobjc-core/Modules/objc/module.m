@@ -2372,7 +2372,9 @@ PyObjC_MODULE_INIT(_objc)
     PyObjCPointerWrapper_Init();
 
 #if PyObjC_BUILD_RELEASE >= 1006
+#if MAC_OS_X_VERSION_MIN_REQUIRED < MAC_OS_X_VERSION_10_6
     if (objc_setAssociatedObject != NULL) {
+#endif /* MAC_OS_X_VERSION_MIN_REQUIRED < MAC_OS_X_VERSION_10_6 */
         if (PyModule_AddIntConstant(m, "OBJC_ASSOCIATION_ASSIGN", OBJC_ASSOCIATION_ASSIGN) < 0) {
             PyObjC_INITERROR();
         }
@@ -2388,6 +2390,7 @@ PyObjC_MODULE_INIT(_objc)
         if (PyModule_AddIntConstant(m, "OBJC_ASSOCIATION_COPY", OBJC_ASSOCIATION_COPY) < 0) {
             PyObjC_INITERROR();
         }
+#if MAC_OS_X_VERSION_MIN_REQUIRED < MAC_OS_X_VERSION_10_6
     } else {
         /* Build on a system where object associations are available, running on a platform where they aren't.
          * Disable the wrappers.
@@ -2403,6 +2406,7 @@ PyObjC_MODULE_INIT(_objc)
         }
 
     }
+#endif /* MAC_OS_X_VERSION_MIN_REQUIRED < MAC_OS_X_VERSION_10_6 */
 #endif /* PyObjC_BUILD_RELEASE >= 1006 */
 
 
