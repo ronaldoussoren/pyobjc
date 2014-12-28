@@ -12,6 +12,7 @@ if sys.maxsize > 2**32:
             self.assertEqual(Social.SLRequestMethodGET, 0)
             self.assertEqual(Social.SLRequestMethodPOST, 1)
             self.assertEqual(Social.SLRequestMethodDELETE, 2)
+            self.assertEqual(Social.SLRequestMethodPUT, 3)
 
         @min_os_level("10.8")
         def testMethods(self):
