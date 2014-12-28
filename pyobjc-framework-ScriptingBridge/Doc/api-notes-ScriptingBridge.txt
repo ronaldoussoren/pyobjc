@@ -22,6 +22,7 @@ This can then be used to call "AppleScript" methods, like this::
 API Notes
 ---------
 
-The PyObjC bindings for the ScriptingBridge framework are
-complete.
+``-[SBObject sendEvent:id:parameters]``
+.......................................
 
+This method is not supported at the moment.
