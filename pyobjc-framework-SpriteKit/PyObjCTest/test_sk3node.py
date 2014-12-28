@@ -8,12 +8,12 @@ except NameError:
 
 
 if sys.maxsize > 2 ** 32:
-    import SpriteKid
+    import SpriteKit
 
     class TestSK3Node (TestCase):
         @min_os_level("10.10")
         def testClasses(self):
-            self.assertIsInstance(SpriteKid.SK3Node, objc.objc_class)
+            self.assertIsInstance(SpriteKit.SK3Node, objc.objc_class)
 
 if __name__ == "__main__":
     main()
