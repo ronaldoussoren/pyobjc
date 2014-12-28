@@ -87,7 +87,7 @@
     result = CFDateCreate(NULL, CFAbsoluteTimeGetCurrent());
 
     /* We own a reference, but want to released a borrowed ref. */
-    [(NSObject*)result autorelease];
+    [(NSDate*)result autorelease];
 
     return result;
 }
