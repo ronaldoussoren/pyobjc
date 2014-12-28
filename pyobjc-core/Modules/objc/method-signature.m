@@ -253,7 +253,7 @@ determine_if_shortcut(PyObjCMethodSignature* methinfo)
     methinfo->shortcut_signature = NO;
     methinfo->shortcut_argbuf_size = 0;
 
-    return 0;
+    /* return 0; */
 
     if (methinfo == NULL || methinfo->variadic) {
         return 0;

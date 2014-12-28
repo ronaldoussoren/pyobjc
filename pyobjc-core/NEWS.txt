@@ -6,6 +6,8 @@ An overview of the relevant changes in new, and older, releases.
 Version 3.1
 -----------
 
+* Re-enable faster method calls for simple method calls.
+
 * Support OSX 10.10 in PyObjCTools.TestSupport (version comparison was too
   naive)
 
