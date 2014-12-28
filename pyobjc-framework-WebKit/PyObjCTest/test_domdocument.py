@@ -30,6 +30,7 @@ class TestDOMDocument (TestCase):
         self.assertResultIsBOOL(DOMDocument.queryCommandIndeterm_)
         self.assertResultIsBOOL(DOMDocument.queryCommandState_)
         self.assertResultIsBOOL(DOMDocument.queryCommandSupported_)
+        self.assertResultIsBOOL(DOMDocument.hasFocus)
 
 
 if __name__ == "__main__":

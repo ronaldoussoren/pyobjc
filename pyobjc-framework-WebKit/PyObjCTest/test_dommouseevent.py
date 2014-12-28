@@ -16,5 +16,12 @@ class TestDOMMouseEvent (TestCase):
         self.assertArgIsBOOL(DOMMouseEvent.initMouseEvent_canBubble_cancelable_view_detail_screenX_screenY_clientX_clientY_ctrlKey_altKey_shiftKey_metaKey_button_relatedTarget_, 11)
         self.assertArgIsBOOL(DOMMouseEvent.initMouseEvent_canBubble_cancelable_view_detail_screenX_screenY_clientX_clientY_ctrlKey_altKey_shiftKey_metaKey_button_relatedTarget_, 12)
 
+        self.assertArgIsBOOL(DOMMouseEvent.initMouseEvent_______________, 1)
+        self.assertArgIsBOOL(DOMMouseEvent.initMouseEvent_______________, 2)
+        self.assertArgIsBOOL(DOMMouseEvent.initMouseEvent_______________, 9)
+        self.assertArgIsBOOL(DOMMouseEvent.initMouseEvent_______________, 10)
+        self.assertArgIsBOOL(DOMMouseEvent.initMouseEvent_______________, 11)
+        self.assertArgIsBOOL(DOMMouseEvent.initMouseEvent_______________, 12)
+
 if __name__ == "__main__":
     main()

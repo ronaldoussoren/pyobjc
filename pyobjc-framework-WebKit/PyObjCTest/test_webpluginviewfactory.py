@@ -14,5 +14,9 @@ class TestWebPluginViewFactory (TestCase):
         self.assertIsInstance(WebPlugInContainerKey, unicode)
         self.assertIsInstance(WebPlugInContainingElementKey, unicode)
 
+    @min_os_level('10.6')
+    def testConstants10_6(self):
+        self.assertIsInstance(WebPlugInShouldLoadMainResourceKey, unicode)
+
 if __name__ == "__main__":
     main()

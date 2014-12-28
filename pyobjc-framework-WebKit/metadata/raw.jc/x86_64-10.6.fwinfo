@@ -550,7 +550,7 @@
      },
      {
       "name": "argumentCount",
-      "typestr": "q"
+      "typestr": "Q"
      },
      {
       "name": "arguments",
@@ -632,7 +632,7 @@
      },
      {
       "name": "argumentCount",
-      "typestr": "q"
+      "typestr": "Q"
      },
      {
       "name": "arguments",
@@ -655,7 +655,7 @@
      },
      {
       "name": "argumentCount",
-      "typestr": "q"
+      "typestr": "Q"
      },
      {
       "name": "arguments",
@@ -782,7 +782,7 @@
      },
      {
       "name": "argumentCount",
-      "typestr": "q"
+      "typestr": "Q"
      },
      {
       "name": "arguments",
@@ -988,7 +988,7 @@
      },
      {
       "name": "numChars",
-      "typestr": "q"
+      "typestr": "Q"
      }
     ],
     "retval": {
@@ -1027,7 +1027,7 @@
      }
     ],
     "retval": {
-     "typestr": "q"
+     "typestr": "Q"
     }
    },
    "JSStringGetMaximumUTF8CStringSize": {
@@ -1038,7 +1038,7 @@
      }
     ],
     "retval": {
-     "typestr": "q"
+     "typestr": "Q"
     }
    },
    "JSStringGetUTF8CString": {
@@ -1053,11 +1053,11 @@
      },
      {
       "name": "bufferSize",
-      "typestr": "q"
+      "typestr": "Q"
      }
     ],
     "retval": {
-     "typestr": "q"
+     "typestr": "Q"
     }
    },
    "JSStringIsEqual": {
@@ -1148,7 +1148,7 @@
      }
     ],
     "retval": {
-     "typestr": "i"
+     "typestr": "I"
     }
    },
    "JSValueIsBoolean": {

@@ -55,6 +55,9 @@ class TestWebPreferences (TestCase):
         self.assertResultIsBOOL(WebPreferences.usesPageCache)
         self.assertArgIsBOOL(WebPreferences.setUsesPageCache_, 0)
 
+        self.assertResultIsBOOL(WebPreferences.suppressesIncrementalRendering)
+        self.assertArgIsBOOL(WebPreferences.setSuppressesIncrementalRendering_, 0)
+
 
 if __name__ == "__main__":
     main()

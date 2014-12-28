@@ -5,6 +5,7 @@ from WebKit import *
 class TestDOMEvent (TestCase):
 
     def testConstants(self):
+        self.assertEqual(DOM_NONE, 0)
         self.assertEqual(DOM_CAPTURING_PHASE, 1)
         self.assertEqual(DOM_AT_TARGET, 2)
         self.assertEqual(DOM_BUBBLING_PHASE, 3)

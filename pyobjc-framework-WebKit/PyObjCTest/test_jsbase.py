@@ -11,6 +11,7 @@ class TestJSBase (TestCase):
         self.assertIsOpaquePointer(JavaScriptCore.JSPropertyNameArrayRef)
         self.assertIsOpaquePointer(JavaScriptCore.JSPropertyNameAccumulatorRef)
         self.assertIsOpaquePointer(JavaScriptCore.JSValueRef)
+        self.assertIsOpaquePointer(JavaScriptCore.JSClassRef)
 
         self.assertIs(JavaScriptCore.JSObjectRef, JavaScriptCore.JSValueRef)
         self.assertIs(JavaScriptCore.JSGlobalContextRef, JavaScriptCore.JSContextRef)

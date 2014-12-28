@@ -30,7 +30,10 @@ class TestDOMCSSPrimitiveValue (TestCase):
         self.assertEqual(DOM_CSS_COUNTER, 23)
         self.assertEqual(DOM_CSS_RECT, 24)
         self.assertEqual(DOM_CSS_RGBCOLOR, 25)
-
+        self.assertEqual(DOM_CSS_VW, 26)
+        self.assertEqual(DOM_CSS_VH, 27)
+        self.assertEqual(DOM_CSS_VMIN, 28)
+        self.assertEqual(DOM_CSS_VMAX, 29)
 
 if __name__ == "__main__":
     main()

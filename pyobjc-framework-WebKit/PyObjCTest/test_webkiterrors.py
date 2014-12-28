@@ -20,8 +20,7 @@ class TestWebKitErrors (TestCase):
         self.assertEqual(WebKitErrorCannotFindPlugIn, 200)
         self.assertEqual(WebKitErrorCannotLoadPlugIn, 201)
         self.assertEqual(WebKitErrorJavaUnavailable, 202)
-
-
+        self.assertEqual(WebKitErrorBlockedPlugInVersion, 203)
 
 
 if __name__ == "__main__":

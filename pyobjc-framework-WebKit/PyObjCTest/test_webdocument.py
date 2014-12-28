@@ -12,6 +12,9 @@ class TestWebDocumentHelper (NSObject):
 
 
 class TestWebDocument (TestCase):
+    def testProtocols(self):
+        self.assertIsInstance(objc.protocolNamed("WebDocumentView"), objc.formal_protocol)
+
     def testMethods(self):
         self.assertArgIsBOOL(TestWebDocumentHelper.setNeedsLayout_, 0)
 

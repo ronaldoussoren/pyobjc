@@ -17,5 +17,9 @@ class TestDOMEventTarget (TestCase):
         self.assertArgIsBOOL(TestDOMEventTargetHelper.removeEventListener___, 2)
         self.assertResultIsBOOL(TestDOMEventTargetHelper.dispatchEvent_)
 
+    def testProtocols(self):
+        p = objc.protocolNamed("DOMEventTarget")
+        self.assertIsInstance(p, objc.formal_protocol)
+
 if __name__ == "__main__":
     main()

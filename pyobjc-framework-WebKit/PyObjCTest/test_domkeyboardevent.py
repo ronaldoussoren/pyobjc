@@ -31,7 +31,21 @@ class TestDOMKeyboardEvent (TestCase):
         self.assertArgIsBOOL(DOMKeyboardEvent.initKeyboardEvent_canBubble_cancelable_view_keyIdentifier_keyLocation_ctrlKey_altKey_shiftKey_metaKey_, 8)
         self.assertArgIsBOOL(DOMKeyboardEvent.initKeyboardEvent_canBubble_cancelable_view_keyIdentifier_keyLocation_ctrlKey_altKey_shiftKey_metaKey_, 9)
 
-
+    @min_os_level('10.8')
+    def test_methods10_8(self):
+        self.assertArgIsBOOL(DOMKeyboardEvent.initKeyboardEvent_canBubble_cancelable_view_keyIdentifier_location_ctrlKey_altKey_shiftKey_metaKey_altGraphKey_, 1)
+        self.assertArgIsBOOL(DOMKeyboardEvent.initKeyboardEvent_canBubble_cancelable_view_keyIdentifier_location_ctrlKey_altKey_shiftKey_metaKey_altGraphKey_, 2)
+        self.assertArgIsBOOL(DOMKeyboardEvent.initKeyboardEvent_canBubble_cancelable_view_keyIdentifier_location_ctrlKey_altKey_shiftKey_metaKey_altGraphKey_, 6)
+        self.assertArgIsBOOL(DOMKeyboardEvent.initKeyboardEvent_canBubble_cancelable_view_keyIdentifier_location_ctrlKey_altKey_shiftKey_metaKey_altGraphKey_, 7)
+        self.assertArgIsBOOL(DOMKeyboardEvent.initKeyboardEvent_canBubble_cancelable_view_keyIdentifier_location_ctrlKey_altKey_shiftKey_metaKey_altGraphKey_, 8)
+        self.assertArgIsBOOL(DOMKeyboardEvent.initKeyboardEvent_canBubble_cancelable_view_keyIdentifier_location_ctrlKey_altKey_shiftKey_metaKey_altGraphKey_, 9)
+        self.assertArgIsBOOL(DOMKeyboardEvent.initKeyboardEvent_canBubble_cancelable_view_keyIdentifier_location_ctrlKey_altKey_shiftKey_metaKey_altGraphKey_, 10)
+        self.assertArgIsBOOL(DOMKeyboardEvent.initKeyboardEvent_canBubble_cancelable_view_keyIdentifier_location_ctrlKey_altKey_shiftKey_metaKey_, 1)
+        self.assertArgIsBOOL(DOMKeyboardEvent.initKeyboardEvent_canBubble_cancelable_view_keyIdentifier_location_ctrlKey_altKey_shiftKey_metaKey_, 2)
+        self.assertArgIsBOOL(DOMKeyboardEvent.initKeyboardEvent_canBubble_cancelable_view_keyIdentifier_location_ctrlKey_altKey_shiftKey_metaKey_, 6)
+        self.assertArgIsBOOL(DOMKeyboardEvent.initKeyboardEvent_canBubble_cancelable_view_keyIdentifier_location_ctrlKey_altKey_shiftKey_metaKey_, 7)
+        self.assertArgIsBOOL(DOMKeyboardEvent.initKeyboardEvent_canBubble_cancelable_view_keyIdentifier_location_ctrlKey_altKey_shiftKey_metaKey_, 8)
+        self.assertArgIsBOOL(DOMKeyboardEvent.initKeyboardEvent_canBubble_cancelable_view_keyIdentifier_location_ctrlKey_altKey_shiftKey_metaKey_, 9)
 
 if __name__ == "__main__":
     main()

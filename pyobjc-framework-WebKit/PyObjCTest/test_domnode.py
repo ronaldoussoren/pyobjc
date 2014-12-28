@@ -26,6 +26,10 @@ class TestDOMNode (TestCase):
         self.assertEqual(DOM_DOCUMENT_POSITION_CONTAINED_BY, 16)
         self.assertEqual(DOM_DOCUMENT_POSITION_IMPLEMENTATION_SPECIFIC, 32)
 
+    @min_os_level('10.5')
+    def testConstants10_5(self):
+        self.assertResultIsBOOL(DOMNode.isDefaultNamespace_)
+        self.assertResultIsBOOL(DOMNode.contains_)
 
     def testMethods(self):
         self.assertResultIsBOOL(DOMNode.hasChildNodes)

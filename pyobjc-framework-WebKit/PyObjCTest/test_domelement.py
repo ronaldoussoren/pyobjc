@@ -3,6 +3,9 @@ from PyObjCTools.TestSupport import *
 from WebKit import *
 
 class TestDOMElement (TestCase):
+    def testConstants(self):
+        self.assertEquals(DOM_ALLOW_KEYBOARD_INPUT, 1)
+
     def testMethods(self):
         self.assertResultIsBOOL(DOMElement.hasAttribute_)
         self.assertResultIsBOOL(DOMElement.hasAttributeNS_localName_)

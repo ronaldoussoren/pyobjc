@@ -209,13 +209,15 @@ class TestJSObjectRef (TestCase):
         self.assertArgIsIn(func, 4)
         self.assertArgIsOut(func, 5)
 
-        self.fail("Need to think about these wrappers....")
 
-        # XXX: Creating classes is probably easiest using custom code, I don't think the
-        #      bridge metadata can fully describe the C level interface.
-        definition = JavaScriptCore.kJSClassDefinitionEmpty.copy()
-        cls = JavaScriptCore.JSClassCreate(definition)
-        self.assertIsInstance(cls, JavaScriptCore.JSClassRef)
+    def testUnsupported(self):
+        self.assertNotHasAttr(JavaScriptCore, 'kJSClassDefinitionEmpty')
+        self.assertNotHasAttr(JavaScriptCore, 'JSStaticValue')
+        self.assertNotHasAttr(JavaScriptCore, 'JSStaticFunction')
+        self.assertNotHasAttr(JavaScriptCore, 'JSClassDefinition')
+
+        self.assertNotHasAttr(JavaScriptCore, 'JSClassCreate')
+
 
 
 

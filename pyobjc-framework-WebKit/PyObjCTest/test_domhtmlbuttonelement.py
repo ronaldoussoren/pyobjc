@@ -11,6 +11,7 @@ class TestDOMHTMLButtonElement (TestCase):
     def testMethods10_6(self):
         self.assertResultIsBOOL(DOMHTMLButtonElement.willValidate)
         self.assertResultIsBOOL(DOMHTMLButtonElement.autofocus)
+        self.assertArgIsBOOL(DOMHTMLButtonElement.setAutofocus_, 0)
 
 
 if __name__ == "__main__":

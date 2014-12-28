@@ -30,6 +30,21 @@ class TestJSContextRef (TestCase):
         self.assertResultHasType(JavaScriptCore.JSContextGetGroup, JavaScriptCore.JSContextGroupRef.__typestr__)
         self.assertArgHasType(JavaScriptCore.JSContextGetGroup, 0, JavaScriptCore.JSContextRef.__typestr__)
 
+    @min_os_level('10.7')
+    def test_functions10_7(self):
+        self.assertResultHasType(JavaScriptCore.JSContextGetGlobalContext, JavaScriptCore.JSGlobalContextRef.__typestr__)
+        self.assertArgHasType(JavaScriptCore.JSContextGetGlobalContext, 0, JavaScriptCore.JSContextRef.__typestr__)
+
+    @min_os_level('10.10')
+    def test_functions10_10(self):
+        self.assertResultHasType(JavaScriptCore.JSGlobalContextCopyName, JavaScriptCore.JSStringRef.__typestr__)
+        self.assertArgHasType(JavaScriptCore.JSGlobalContextCopyName, 0, JavaScriptCore.JSContextRef.__typestr__)
+
+        self.assertResultHasType(JavaScriptCore.JSGlobalContextSetName, objc._C_VOID)
+        self.assertArgHasType(JavaScriptCore.JSGlobalContextSetName, 0, JavaScriptCore.JSContextRef.__typestr__)
+        self.assertArgHasType(JavaScriptCore.JSGlobalContextSetName, 1, JavaScriptCore.JSStringRef.__typestr__)
+
+
 
 if __name__ == "__main__":
     main()

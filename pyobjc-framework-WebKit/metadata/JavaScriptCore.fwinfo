@@ -2,7 +2,146 @@
 # for information on how to update this file.
 {
  "definitions": {
-  "classes": {},
+ "externs": {
+   "kJSClassDefinitionEmpty": {
+    "ignore": true
+   }
+  },
+  "classes": {
+   "JSContext": {
+    "methods": [
+     {
+      "class_method": false,
+      "selector": "exceptionHandler",
+      "retval": {
+       "callable": {
+        "arguments": {
+	 "0": { "typestr": "^v" },
+	 "1": { "typestr": "@" },
+	 "2": { "typestr": "@" }
+	},
+	"retval": {
+	 "typestr": "v"
+	}
+       }
+      }
+     },
+     {
+      "class_method": false,
+      "selector": "setExceptionHandler:",
+      "arguments": {
+       "2": {
+        "callable": {
+         "arguments": {
+	  "0": { "typestr": "^v" },
+	  "1": { "typestr": "@" },
+	  "2": { "typestr": "@" }
+	 },
+	 "retval": {
+	  "typestr": "v"
+	 }
+	}
+       }
+      }
+     }
+    ]
+   },
+   "JSValue": {
+    "methods": [
+     {
+      "class_method": false,
+      "selector": "valueWithBool:inContext:",
+      "args": {
+       "0": { "type_override": "Z" }
+      }
+     },
+     {
+      "class_method": false,
+      "selector": "toBool",
+      "retval": {
+       "type_override": "Z"
+      }
+     },
+     {
+      "class_method": false,
+      "selector": "deleteProperty:",
+      "retval": {
+       "type_override": "Z"
+      }
+     },
+     {
+      "class_method": false,
+      "selector": "hasProperty:",
+      "retval": {
+       "type_override": "Z"
+      }
+     },
+     {
+      "class_method": false,
+      "selector": "isUndefined",
+      "retval": {
+       "type_override": "Z"
+      }
+     },
+     {
+      "class_method": false,
+      "selector": "isBoolean",
+      "retval": {
+       "type_override": "Z"
+      }
+     },
+     {
+      "class_method": false,
+      "selector": "isNumber",
+      "retval": {
+       "type_override": "Z"
+      }
+     },
+     {
+      "class_method": false,
+      "selector": "isString",
+      "retval": {
+       "type_override": "Z"
+      }
+     },
+     {
+      "class_method": false,
+      "selector": "isEqualToObject:",
+      "retval": {
+       "type_override": "Z"
+      }
+     },
+     {
+      "class_method": false,
+      "selector": "isEqualWithTypeCoercionToObject:",
+      "retval": {
+       "type_override": "Z"
+      }
+     },
+     {
+      "class_method": false,
+      "selector": "isInstanceOf:",
+      "retval": {
+       "type_override": "Z"
+      }
+     },
+     {
+      "class_method": false,
+      "selector": "isObject",
+      "retval": {
+       "type_override": "Z"
+      }
+     },
+     {
+      "class_method": false,
+      "selector": "isNull",
+      "retval": {
+       "type_override": "Z"
+      }
+     }
+    ]
+   }
+  },
   "formal_protocols": {},
   "opaque": {
       "JSContextGroupRef": {
@@ -101,23 +240,7 @@
     }
    },
    "JSClassCreate": {
-    "args": {
-     "0": {}
-    },
-    "retval": {
-     "already_cfretained": true
-    }
-   },
-   "JSClassRelease": {
-    "args": {
-     "0": {}
-    }
-   },
-   "JSClassRetain": {
-    "args": {
-     "0": {}
-    },
-    "retval": {}
+    "ignore": true
    },
    "JSContextGetGlobalObject": {
     "args": {

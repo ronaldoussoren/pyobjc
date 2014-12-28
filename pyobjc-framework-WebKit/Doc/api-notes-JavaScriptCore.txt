@@ -56,7 +56,20 @@ arbitrary data to an object::
    aValue = objc.context.get(JavaScriptCore.JSObjectGetPrivate(anObject))
 
 
+``JSStaticValue``, ``JSStaticFunction``, ``JSClassDefinition``
+--------------------------------------------------------------
+
+These structs and functions using them are not yet supported.
+
+
 ``JSClassCreate``, ``kJSClassDefinitionEmpty``
 ----------------------------------------------
 
 Not supported at the moment as this requires manual wrappers (C code).
+
+
+``JSExport``
+------------
+
+OSX 10.9 introcuded a ``JSExport`` protocol. There is a C macro for renaming the name
+seen in JavaScript for a given selector. That macro is not available in Python.

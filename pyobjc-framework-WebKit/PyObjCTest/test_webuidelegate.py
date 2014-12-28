@@ -97,7 +97,7 @@ class TestWebUIDelegate (TestCase):
         self.assertResultIsBOOL(TestWebUIDelegateHelper.webView_shouldPerformAction_fromSender_)
         self.assertResultHasType(TestWebUIDelegateHelper.webView_dragDestinationActionMaskForDraggingInfo_, objc._C_NSUInteger)
         self.assertResultHasType(TestWebUIDelegateHelper.webView_dragSourceActionMaskForPoint_, objc._C_NSUInteger)
-        self.assertArgHasType(TestWebUIDelegateHelper.webView_willPerformDragSourceAction_fromPoint_withPasteboard_, 1, objc._C_INT)
+        self.assertArgHasType(TestWebUIDelegateHelper.webView_willPerformDragSourceAction_fromPoint_withPasteboard_, 1, objc._C_NSUInteger)
         self.assertArgHasType(TestWebUIDelegateHelper.webView_willPerformDragSourceAction_fromPoint_withPasteboard_, 2, NSPoint.__typestr__)
         self.assertResultHasType(TestWebUIDelegateHelper.webViewHeaderHeight_, objc._C_FLT)
         self.assertResultHasType(TestWebUIDelegateHelper.webViewFooterHeight_, objc._C_FLT)
