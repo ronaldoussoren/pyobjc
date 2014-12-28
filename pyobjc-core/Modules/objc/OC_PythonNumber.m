@@ -10,7 +10,16 @@
         if (PyErr_Occurred()) {
             PyErr_Clear();
         } else if (lv >= 1ULL<<63) {
+            /* Workaround for round-trip problems... */
+#ifdef __clang__
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wincompatible-pointer-types"
+#endif
+
             return [[NSNumber alloc] initWithUnsignedLongLong:lv];
+#ifdef __clang__
+#pragma clang diagnostic pop
+#endif
         }
     }
 
