@@ -489,7 +489,7 @@ class oc_build_ext (build_ext.build_ext):
     def run(self):
         verify_platform()
 
-        if self.use_system_libffi or True:
+        if self.use_system_libffi:
             import shlex
             LIBFFI_INCLUDEDIR = get_config_var("LIBFFI_INCLUDEDIR") or "/usr/include/ffi"
 
