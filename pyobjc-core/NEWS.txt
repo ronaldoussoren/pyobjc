@@ -6,6 +6,13 @@ An overview of the relevant changes in new, and older, releases.
 Version 3.0.5
 -------------
 
+* BridgeSupport code failed when there are unions in the bridgesupport
+  file due to a bug in the code that parses Objective-C encoded types.
+
+  Issue #111
+
+* BridgeSupport code didn't work properly with Python 3.x
+
 * Add objc.MAC_OS_X_VERSION_10_10 and MAC_OS_X_VERSION_10_9.
 
 * The code that checked for compliance to formal protocols didn't look

@@ -606,7 +606,7 @@ PyObjCRT_NextField(const char *type)
                         "Unexpected NULL while parsing union encoding type");
             }
             return NULL;
-        } else if (unlikely(*type != _C_STRUCT_E)) {
+        } else if (unlikely(*type != _C_UNION_E)) {
             PyErr_Format(PyObjCExc_InternalError,
                 "PyObjCRT_SkipTypeSpec: Got '0x%x' at end of union encoding, expecting '0x%x'", *type, _C_UNION_E);
             return NULL;
