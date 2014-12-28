@@ -23,7 +23,7 @@ setup(
         'pyobjc-core>=3.1b1',
         'pyobjc-framework-Cocoa>=3.1b1',
     ],
-    min_os_level="10.9",
+    min_os_level="10.10",
     ext_modules = [
         Extension("CoreBluetooth._CoreBluetooth",
             [ "Modules/_CoreBluetooth.m" ],

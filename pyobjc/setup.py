@@ -60,7 +60,7 @@ FRAMEWORKS_WRAPPERS=[
         ('Social',                  '10.8',             None        ),
 #        ('VideoToolbox',            '10.8',             None        ),
         ('AVKit',                   '10.9',             None        ),
-        ('CoreBluetooth',           '10.9',             None        ),
+        ('CoreBluetooth',           '10.10',            None        ),
         ('MapKit',                  '10.9',             None        ),
         ('MediaAccessibility',      '10.9',             None        ),
         ('MediaLibrary',            '10.9',             None        ),
