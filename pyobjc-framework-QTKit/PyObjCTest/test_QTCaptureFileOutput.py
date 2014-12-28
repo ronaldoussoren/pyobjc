@@ -12,6 +12,9 @@ class TestQTCaptureFileOutput (TestCase):
         self.assertEqual(QTCaptureFileOutputBufferDestinationNewFile, 1)
         self.assertEqual(QTCaptureFileOutputBufferDestinationOldFile, 2)
 
+    def testMethods(self):
+        self.assertResultIsBOOL(QTCaptureFileOutput.isRecordingPaused)
+
     def testProtocols(self):
         self.assertResultIsBOOL(TestQTCaptureFileOutputHelper.captureOutput_shouldChangeOutputFileAtURL_forConnections_dueToError_)
 
