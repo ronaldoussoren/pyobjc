@@ -134,11 +134,11 @@ for k in cfg_vars:
 #
 # Support for an embedded copy of libffi
 #
-FFI_CFLAGS=['-Ilibffi-src/include', '-Ilibffi-src/powerpc']
+EMBEDDED_FFI_CFLAGS=['-Ilibffi-src/include', '-Ilibffi-src/powerpc']
 
 # The list below includes the source files for all CPU types that we run on
 # this makes it easier to build fat binaries on Mac OS X.
-FFI_SOURCE=[
+EMBEDDED_FFI_SOURCE=[
     "libffi-src/ffi.c",
     "libffi-src/types.c",
     "libffi-src/powerpc/ppc-darwin.S",
@@ -457,12 +457,17 @@ class oc_build_ext (build_ext.build_ext):
 
     def initialize_options(self):
         build_ext.build_ext.initialize_options(self)
-        self.use_system_libffi=False
+        self.use_system_libffi = False
         self.deployment_target = None
         self.sdk_root = None
 
     def finalize_options(self):
         build_ext.build_ext.finalize_options(self)
+
+        # setting was not set manually, check whether python was configured this
+        # way.
+        if not self.use_system_libffi:
+            self.use_system_libffi = '--with-system-ffi' in get_config_var("CONFIG_ARGS")
 
         if self.sdk_root is None:
             if os.path.exists('/usr/bin/xcodebuild'):
@@ -484,12 +489,35 @@ class oc_build_ext (build_ext.build_ext):
     def run(self):
         verify_platform()
 
-        if not self.use_system_libffi:
+        if self.use_system_libffi or True:
+            import shlex
+            LIBFFI_INCLUDEDIR = get_config_var("LIBFFI_INCLUDEDIR") or "/usr/include/ffi"
+
+            try:
+                p = subprocess.Popen(["pkg-config", "libffi", "--cflags"], stdout=subprocess.PIPE)
+                FFI_CFLAGS = shlex.split(p.communicate()[0].strip())
+                if p.returncode != 0:
+                    raise Exception("pkg-config failed")
+
+                p = subprocess.Popen(["pkg-config", "libffi", "--libs"], stdout=subprocess.PIPE)
+                FFI_LDFLAGS = shlex.split(p.communicate()[0].strip())
+                if p.returncode != 0:
+                    raise Exception("pkg-config failed")
+            except Exception:
+                # pkg-config failed, so make some assuptions
+                FFI_CFLAGS = ["-I" + LIBFFI_INCLUDEDIR]
+                FFI_LDFLAGS = ["-lffi"]
+
             for ext in self.extensions:
                 if ext.name == 'objc._objc':
-                    if ext.sources[:-len(FFI_SOURCE)] != FFI_SOURCE:
-                        ext.sources.extend(FFI_SOURCE)
-                        ext.extra_compile_args.extend(FFI_CFLAGS)
+                    ext.extra_compile_args.extend(FFI_CFLAGS)
+                    ext.extra_link_args.extend(FFI_LDFLAGS)
+        else:
+            for ext in self.extensions:
+                if ext.name == 'objc._objc':
+                    if ext.sources[:-len(EMBEDDED_FFI_SOURCE)] != EMBEDDED_FFI_SOURCE:
+                        ext.sources.extend(EMBEDDED_FFI_SOURCE)
+                        ext.extra_compile_args.extend(EMBEDDED_FFI_CFLAGS)
 
         if self.deployment_target is not None:
             os.environ['MACOSX_DEPLOYMENT_TARGET'] = self.deployment_target
