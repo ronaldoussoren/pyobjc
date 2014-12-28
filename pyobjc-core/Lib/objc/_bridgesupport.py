@@ -48,11 +48,19 @@ if sys.version_info[0] == 2: # pragma: no 3.x cover
     def _as_bytes(value):
         return value
 
+    def _as_string(value):
+        return value
+
 else: # pragma: no 2.x cover
     def _as_bytes(value):
         if isinstance(value, bytes):
             return value
         return value.encode('ascii')
+
+    def _as_string(value):
+        if isinstance(value, bytes):
+            return value.decode('ascii')
+        return value
 
 class _BridgeSupportParser (object):
     """
@@ -607,7 +615,7 @@ def parseBridgeSupport(xmldata, globals, frameworkName, dylib_path=None, inlineT
 
         for name, typestr, magic in prs.constants:
             try:
-                value = objc._loadConstant(name, typestr, magic)
+                value = objc._loadConstant(name, _as_string(typestr), magic)
             except AttributeError:
                 continue
 
