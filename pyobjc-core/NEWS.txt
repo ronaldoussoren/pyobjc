@@ -22,6 +22,11 @@ Version 3.1
 Version 3.0.5
 -------------
 
+* PyObjC now uses the system libffi when CPython itself was compiled to
+  use that version of libffi.
+
+  Patch by Max Bélanger.
+
 * BridgeSupport code failed when there are unions in the bridgesupport
   file due to a bug in the code that parses Objective-C encoded types.
 
