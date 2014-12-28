@@ -22,6 +22,7 @@ class TestSMErrors (TestCase):
         self.assertEqual(kSMErrorServiceUnavailable, 7)
         self.assertEqual(kSMErrorJobPlistNotFound, 8)
         self.assertEqual(kSMErrorJobMustBeEnabled, 9)
+        self.assertEqual(kSMErrorInvalidPlist, 10)
 
 if __name__ == "__main__":
     main()
