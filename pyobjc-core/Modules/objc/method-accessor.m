@@ -296,7 +296,6 @@ obj_getattro(PyObject* _self, PyObject* name)
 
         PyObject* dict;
         dict = make_dict(self->base, self->class_method);
-        return dict;
 
         result = PyDictProxy_New(dict);
         Py_DECREF(dict);
