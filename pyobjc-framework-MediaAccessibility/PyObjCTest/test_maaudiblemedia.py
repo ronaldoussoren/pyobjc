@@ -15,10 +15,9 @@ class TestMAAudibleMedia (TestCase):
         self.assertResultIsCFRetained(MediaAccessibility.MAAudibleMediaCopyPreferredCharacteristics)
 
         a = MediaAccessibility.MAAudibleMediaCopyPreferredCharacteristics()
-        self.assertIsInstance(a, MediaAccessibility.NSArray)
+        self.assertIsInstance(a, (MediaAccessibility.NSArray, type(None)))
 
     @min_os_level("10.9")
-    @expectedFailure
     def test_constants(self):
         # Present in headers, but not actually exported?
         self.assertIsInstance(MediaAccessibility.kMAAudibleMediaSettingsChangedNotification, unicode)

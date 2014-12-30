@@ -5,6 +5,9 @@
   "classes": {},
   "formal_protocols": {},
   "functions": {
+   "MAAudibleMediaCopyPreferredCharacteristics": {
+    "variadic": false
+   },
    "MACaptionAppearanceAddSelectedLanguage": {
     "args": {
      "1": { "type_modifier": "o", "null_accepted": true }
