@@ -19,7 +19,7 @@ if sys.maxsize > 2 ** 32:
             self.assertResultIsBOOL(LocalAuthentication.LAContext.canEvaluatePolicy_error_)
             self.assertArgIsOut(LocalAuthentication.LAContext.canEvaluatePolicy_error_, 1)
 
-            self.assertArgIsBlock(LocalAuthentication.LAContext.evaluatePolicy_localizedReason_reply_, 2, b"v" + objc._C_BOOL + b"@")
+            self.assertArgIsBlock(LocalAuthentication.LAContext.evaluatePolicy_localizedReason_reply_, 2, b"v" + objc._C_NSBOOL + b"@")
 
             self.assertResultIsBOOL(LocalAuthentication.LAContext.isCancelButtonVisible)
             self.assertArgIsBOOL(LocalAuthentication.LAContext.setCancelButtonVisible_, 0)

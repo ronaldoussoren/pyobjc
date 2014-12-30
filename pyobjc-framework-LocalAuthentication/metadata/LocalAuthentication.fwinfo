@@ -1,0 +1,67 @@
+// objective.metadata exceptions file, see its document
+// for information on how to update this file.
+{
+ "definitions": {
+  "literals": {
+   "kLAErrorDomain": {
+    "unicode": true
+   }
+  },
+  "classes": {
+   "LAContext": {
+    "methods": [
+     {
+      "args": {
+       "2": {
+        "callable": {
+	 "arguments": {
+	  "0": { "typestr": "^v" },
+	  "1": { "typestr": "Z" },
+	  "2": { "typestr": "@" }
+	 },
+	 "retval": { "typestr": "v" }
+	}
+       }
+      },
+      "class_method": false,
+      "selector": "evaluatePolicy:localizedReason:reply:"
+     },
+     {
+      "args": {
+       "1": { "type_modifier": "o" }
+      },
+      "class_method": false,
+      "selector": "canEvaluatePolicy:error:"
+     },
+     {
+      "args": {
+       "0": { "type_override": "Z" }
+      },
+      "class_method": false,
+      "selector": "setCancelButtonVisible:"
+     },
+     {
+      "args": {
+       "0": { "type_override": "Z" }
+      },
+      "class_method": false,
+      "selector": "setFallbackButtonVisible:"
+     },
+     {
+      "retval": { "type_override": "Z" },
+      "class_method": false,
+      "selector": "isCancelButtonVisible"
+     },
+     {
+      "retval": { "type_override": "Z" },
+      "class_method": false,
+      "selector": "isFallbackButtonVisible"
+     }
+    ]
+   }
+  },
+  "formal_protocols": {},
+  "functions": {},
+  "informal_protocols": {}
+ }
+}
