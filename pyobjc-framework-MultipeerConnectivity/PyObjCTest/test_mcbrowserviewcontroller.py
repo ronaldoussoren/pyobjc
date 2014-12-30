@@ -20,7 +20,7 @@ if sys.maxsize > 2 ** 32:
 
         @min_os_level("10.10")
         def testProtocols(self):
-            self.assertIsIntance(objc.protocolNamed("MCBrowserViewControllerDelegate"), objc.formal_protocol)
+            self.assertIsInstance(objc.protocolNamed("MCBrowserViewControllerDelegate"), objc.formal_protocol)
 
             self.assertResultIsBOOL(TestMCBrowserViewControllerHelper.browserViewController_shouldPresentNearbyPeer_withDiscoveryInfo_)
 

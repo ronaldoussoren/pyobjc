@@ -10,6 +10,7 @@ import sys
 import Foundation
 
 from MultipeerConnectivity import _metadata
+import MultipeerConnectivity._MultipeerConnectivity
 
 sys.modules['MultipeerConnectivity'] = mod = objc.ObjCLazyModule(
     "MultipeerConnectivity",
@@ -24,3 +25,4 @@ sys.modules['MultipeerConnectivity'] = mod = objc.ObjCLazyModule(
 
 import sys
 del sys.modules['MultipeerConnectivity._metadata']
+del sys.modules['MultipeerConnectivity._MultipeerConnectivity']

@@ -21,7 +21,7 @@ if sys.maxsize > 2 ** 32:
 
         @min_os_level("10.10")
         def testProtocols(self):
-            self.assertIsIntance(objc.protocolNamed("MCNearbyServiceAdvertiserDelegate"), objc.formal_protocol)
+            self.assertIsInstance(objc.protocolNamed("MCNearbyServiceAdvertiserDelegate"), objc.formal_protocol)
             self.assertArgIsBlock(TestMCNearbyServiceAdvertiserDelegateHelper.advertiser_didReceiveInvitationFromPeer_withContext_invitationHandler_, 3, b"v" + objc._C_NSBOOL + b"@")
 
 if __name__ == "__main__":

@@ -17,12 +17,15 @@ Version 3.1
 * Add bindings for FinderSync, CloudKit, CryptoTokenKit,
   MultipeerConnectivity (all new in OSX 10.10)
 
-* Updated bindings for ServiceManagement, Social, StoreKit, WebKit and JavaScriptCore
+* Updated bindings for OpenDirectory, ServiceManagement, Social, StoreKit, WebKit and JavaScriptCore
   with the new APIs introduced in OSX 10.9 and 10.10.
+
+* Unchanged framework bindings: PreferencePanes, PubSub.
 
 * TODO: Update existing bindings with new functionality in OSX 10.9 and 10.10
 
 * TODO: SpriteKit bindings are incomplete
+* TODO: Quartz bindings update
 
 Version 3.0.5
 -------------

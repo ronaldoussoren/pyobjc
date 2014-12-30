@@ -24,13 +24,13 @@ if sys.maxsize > 2 ** 32:
         def testMethods(self):
             self.assertResultIsBOOL(MultipeerConnectivity.MCSession.sendData_toPeers_withMode_error_)
             self.assertArgIsBlock(MultipeerConnectivity.MCSession.sendResourceAtURL_withName_toPeer_withCompletionHandler_, 3, b"v@")
-            self.assertArgIsOut(MultipeerConnectivitity.MCSession.startStreamWithName_toPeer_error_, 2)
+            self.assertArgIsOut(MultipeerConnectivity.MCSession.startStreamWithName_toPeer_error_, 2)
 
-            self.assertArgIsBlock(MultipeerConnectivity.MCSession.nearbyConnectionDataForPeer_withCompletionHanlder_, 1, b"v@@")
+            self.assertArgIsBlock(MultipeerConnectivity.MCSession.nearbyConnectionDataForPeer_withCompletionHandler_, 1, b"v@@")
 
         @min_os_level("10.10")
         def testProtocols(self):
-            self.assertIsIntance(objc.protocolNamed("MCSessionDelegate"), objc.formal_protocol)
+            self.assertIsInstance(objc.protocolNamed("MCSessionDelegate"), objc.formal_protocol)
 
             self.assertArgIsBlock(
                 TestMCSessionHelper.session_didReceiveCertificate_fromPeer_certificateHandler_,
