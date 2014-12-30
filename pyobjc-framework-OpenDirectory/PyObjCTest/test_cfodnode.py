@@ -53,5 +53,41 @@ class TestCFODNode (TestCase):
 
         self.assertArgIsOut(CFOpenDirectory.ODNodeCustomCall, 3)
 
+    @min_os_level('10.9')
+    def testMethods10_9(self):
+        self.assertArgIsOut(CFOpenDirectory.ODNodeCustomFunction, 3)
+
+        self.assertResultIsCFRetained(CFOpenDirectory.ODNodeCopyPolicies)
+        self.assertArgIsOut(CFOpenDirectory.ODNodeCopyPolicies, 1)
+
+        self.assertResultIsCFRetained(CFOpenDirectory.ODNodeCopySupportedPolicies)
+        self.assertArgIsOut(CFOpenDirectory.ODNodeCopySupportedPolicies, 1)
+
+        self.assertResultHasType(CFOpenDirectory.ODNodeSetPolicies, objc._C_BOOL)
+        self.assertArgIsOut(CFOpenDirectory.ODNodeSetPolicies, 2)
+
+        self.assertResultHasType(CFOpenDirectory.ODNodeSetPolicy, objc._C_BOOL)
+        self.assertArgIsOut(CFOpenDirectory.ODNodeSetPolicy, 3)
+
+        self.assertResultHasType(CFOpenDirectory.ODNodeRemovePolicy, objc._C_BOOL)
+        self.assertArgIsOut(CFOpenDirectory.ODNodeRemovePolicy, 2)
+
+    @min_os_level('10.10')
+    def testMethods10_10(self):
+        self.assertResultHasType(CFOpenDirectory.ODNodeAddAccountPolicy, objc._C_BOOL)
+        self.assertArgIsOut(CFOpenDirectory.ODNodeAddAccountPolicy, 3)
+
+        self.assertResultHasType(CFOpenDirectory.ODNodeRemoveAccountPolicy, objc._C_BOOL)
+        self.assertArgIsOut(CFOpenDirectory.ODNodeRemoveAccountPolicy, 3)
+
+        self.assertResultHasType(CFOpenDirectory.ODNodeSetAccountPolicies, objc._C_BOOL)
+        self.assertArgIsOut(CFOpenDirectory.ODNodeSetAccountPolicies, 2)
+
+        self.assertResultIsCFRetained(CFOpenDirectory.ODNodeCopyAccountPolicies)
+        self.assertArgIsOut(CFOpenDirectory.ODNodeCopyAccountPolicies, 1)
+
+        self.assertResultHasType(CFOpenDirectory.ODNodePasswordContentCheck, objc._C_BOOL)
+        self.assertArgIsOut(CFOpenDirectory.ODNodePasswordContentCheck, 3)
+
 if __name__ == "__main__":
     main()

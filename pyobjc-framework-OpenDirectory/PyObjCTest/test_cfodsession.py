@@ -16,5 +16,8 @@ class TestCFODSession (TestCase):
         self.assertResultIsCFRetained(CFOpenDirectory.ODSessionCopyNodeNames)
         self.assertArgIsOut(CFOpenDirectory.ODSessionCopyNodeNames, 2)
 
+    def testConstants(self):
+        self.assertIsInstance(CFOpenDirectory.kODSessionDefault, (CFOpenDirectory.ODSessionRef, type(None)))
+
 if __name__ == "__main__":
     main()

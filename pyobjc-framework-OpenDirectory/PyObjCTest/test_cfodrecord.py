@@ -68,5 +68,53 @@ class TestCFODRecord (TestCase):
         self.assertResultHasType(CFOpenDirectory.ODRecordContainsMember, objc._C_BOOL)
         self.assertArgIsOut(CFOpenDirectory.ODRecordContainsMember, 2)
 
+    @min_os_level('10.9')
+    def testMethods10_9(self):
+        self.assertResultIsCFRetained(CFOpenDirectory.ODRecordCopyPolicies)
+        self.assertArgIsOut(CFOpenDirectory.ODRecordCopyPolicies, 1)
+
+        self.assertResultIsCFRetained(CFOpenDirectory.ODRecordCopyEffectivePolicies)
+        self.assertArgIsOut(CFOpenDirectory.ODRecordCopyEffectivePolicies, 1)
+
+        self.assertResultIsCFRetained(CFOpenDirectory.ODRecordCopySupportedPolicies)
+        self.assertArgIsOut(CFOpenDirectory.ODRecordCopySupportedPolicies, 1)
+
+        self.assertResultHasType(CFOpenDirectory.ODRecordSetPolicies, objc._C_BOOL)
+        self.assertArgIsOut(CFOpenDirectory.ODRecordSetPolicies, 2)
+
+        self.assertResultHasType(CFOpenDirectory.ODRecordSetPolicy, objc._C_BOOL)
+        self.assertArgIsOut(CFOpenDirectory.ODRecordSetPolicy, 3)
+
+        self.assertResultHasType(CFOpenDirectory.ODRecordRemovePolicy, objc._C_BOOL)
+        self.assertArgIsOut(CFOpenDirectory.ODRecordRemovePolicy, 2)
+
+    @min_os_level('10.10')
+    def testMethods10_10(self):
+        self.assertResultHasType(CFOpenDirectory.ODRecordAddAccountPolicy, objc._C_BOOL)
+        self.assertArgIsOut(CFOpenDirectory.ODRecordAddAccountPolicy, 3)
+
+        self.assertResultHasType(CFOpenDirectory.ODRecordRemoveAccountPolicy, objc._C_BOOL)
+        self.assertArgIsOut(CFOpenDirectory.ODRecordRemoveAccountPolicy, 3)
+
+        self.assertResultHasType(CFOpenDirectory.ODRecordSetAccountPolicies, objc._C_BOOL)
+        self.assertArgIsOut(CFOpenDirectory.ODRecordSetAccountPolicies, 2)
+
+        self.assertResultIsCFRetained(CFOpenDirectory.ODRecordCopyAccountPolicies)
+        self.assertArgIsOut(CFOpenDirectory.ODRecordCopyAccountPolicies, 1)
+
+        self.assertResultHasType(CFOpenDirectory.ODRecordAuthenticationAllowed, objc._C_BOOL)
+        self.assertArgIsOut(CFOpenDirectory.ODRecordAuthenticationAllowed, 1)
+
+        self.assertResultHasType(CFOpenDirectory.ODRecordPasswordChangeAllowed, objc._C_BOOL)
+        self.assertArgIsOut(CFOpenDirectory.ODRecordPasswordChangeAllowed, 2)
+
+        self.assertResultHasType(CFOpenDirectory.ODRecordWillPasswordExpire, objc._C_BOOL)
+        self.assertResultHasType(CFOpenDirectory.ODRecordWillAuthenticationsExpire, objc._C_BOOL)
+
+        CFOpenDirectory.ODRecordSecondsUntilPasswordExpires # No further tests
+        CFOpenDirectory.ODRecordSecondsUntilAuthenticationsExpire # No further tests
+
+
+
 if __name__ == "__main__":
     main()

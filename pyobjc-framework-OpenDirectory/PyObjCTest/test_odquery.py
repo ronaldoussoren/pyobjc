@@ -1,6 +1,7 @@
 from PyObjCTools.TestSupport import *
 
 import OpenDirectory
+import objc
 
 class TestODQuery (TestCase):
     def testMethods(self):
@@ -9,6 +10,9 @@ class TestODQuery (TestCase):
 
         self.assertArgIsBOOL(OpenDirectory.ODQuery.resultsAllowingPartial_error_, 0)
         self.assertArgIsOut(OpenDirectory.ODQuery.resultsAllowingPartial_error_, 1)
+
+    def testProtocols(self):
+        self.assertIsInstance(objc.protocolNamed("ODQueryDelegate"), objc.formal_protocol)
 
 if __name__ == "__main__":
     main()

@@ -24,5 +24,31 @@ class TestODNode (TestCase):
         self.assertArgIsOut(OpenDirectory.ODNode.recordWithRecordType_name_attributes_error_, 3)
         self.assertArgIsOut(OpenDirectory.ODNode.customCall_sendData_error_, 2)
 
+        self.assertArgIsOut(OpenDirectory.ODNode.createRecordWithRecordType_name_attributes_error_, 3)
+        self.assertArgIsOut(OpenDirectory.ODNode.customFunction_payload_error_, 2)
+
+    @min_os_level('10.9')
+    def testMethods10_9(self):
+        self.assertArgIsOut(OpenDirectory.ODNode.policiesAndReturnError_, 0)
+        self.assertArgIsOut(OpenDirectory.ODNode.supportedPoliciesAndReturnError_, 0)
+        self.assertResultIsBOOL(OpenDirectory.ODNode.setPolicies_error_)
+        self.assertArgIsOut(OpenDirectory.ODNode.setPolicies_error_, 1)
+        self.assertResultIsBOOL(OpenDirectory.ODNode.setPolicy_value_error_)
+        self.assertArgIsOut(OpenDirectory.ODNode.setPolicy_value_error_, 2)
+        self.assertResultIsBOOL(OpenDirectory.ODNode.removePolicy_error_)
+        self.assertArgIsOut(OpenDirectory.ODNode.removePolicy_error_, 1)
+
+    @min_os_level('10.10')
+    def testMethods10_10(self):
+        self.assertResultIsBOOL(OpenDirectory.ODNode.addAccountPolicy_toCategory_error_)
+        self.assertArgIsOut(OpenDirectory.ODNode.addAccountPolicy_toCategory_error_, 2)
+        self.assertResultIsBOOL(OpenDirectory.ODNode.removeAccountPolicy_fromCategory_error_)
+        self.assertArgIsOut(OpenDirectory.ODNode.removeAccountPolicy_fromCategory_error_, 2)
+        self.assertResultIsBOOL(OpenDirectory.ODNode.setAccountPolicies_error_)
+        self.assertArgIsOut(OpenDirectory.ODNode.setAccountPolicies_error_, 1)
+        self.assertArgIsOut(OpenDirectory.ODNode.accountPoliciesAndReturnError_, 0)
+        self.assertResultIsBOOL(OpenDirectory.ODNode.passwordContentCheck_forRecordName_error_)
+        self.assertArgIsOut(OpenDirectory.ODNode.passwordContentCheck_forRecordName_error_, 2)
+
 if __name__ == "__main__":
     main()
