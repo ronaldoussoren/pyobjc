@@ -17,7 +17,7 @@ if sys.maxsize > 2 ** 32:
 
         @min_os_level("10.10")
         def testProtocols(self):
-            self.assertIsIntance(objc.protocolNamed("FIFinderSync"), objc.formal_protocol)
+            self.assertIsInstance(objc.protocolNamed("FIFinderSync"), objc.formal_protocol)
 
         @min_os_level("10.10")
         def testConstants(self):

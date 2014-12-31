@@ -29,7 +29,7 @@ Version 3.1
 
 * TODO: Update existing bindings with new functionality in OSX 10.9 and 10.10
 
-* TODO: SpriteKit bindings are incomplete
+* TODO: GameController, SpriteKit bindings are incomplete
 * TODO: Quartz bindings update
 
 Version 3.0.5
