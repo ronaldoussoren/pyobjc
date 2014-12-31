@@ -20,6 +20,7 @@ class TestLatentSemanticMapping (TestCase):
         self.assertEqual(kLSMMapWriteError, -6642)
         self.assertEqual(kLSMMapBadPath, -6643)
         self.assertEqual(kLSMMapBadCluster, -6644)
+        self.assertEqual(kLSMMapOverflow, -6645)
 
         self.assertEqual(kLSMMapPairs, 1)
         self.assertEqual(kLSMMapTriplets, 2)
@@ -50,10 +51,6 @@ class TestLatentSemanticMapping (TestCase):
         self.assertEqual(kLSMTextPreserveCase, 1)
         self.assertEqual(kLSMTextPreserveAcronyms, 2)
         self.assertEqual(kLSMTextApplySpamHeuristics, 4)
-
-
-
-
 
 
     def testTypes(self):
@@ -183,8 +180,6 @@ class TestLatentSemanticMapping (TestCase):
 
         v = LSMMapStartTraining(map)
         mytext = LSMTextCreate(None, map)
-
-
 
         v = LSMTextAddToken(mytext, v)
         self.assertIsInstance(v, (int, long))
