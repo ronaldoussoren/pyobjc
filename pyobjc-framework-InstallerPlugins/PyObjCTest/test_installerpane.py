@@ -17,7 +17,5 @@ class TestInstallerPane (TestCase):
         self.assertResultIsBOOL(InstallerPane.gotoNextPane)
         self.assertResultIsBOOL(InstallerPane.gotoPreviousPane)
 
-
-
 if __name__ == "__main__":
     main()
