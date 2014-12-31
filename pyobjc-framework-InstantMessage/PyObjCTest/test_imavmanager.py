@@ -47,9 +47,7 @@ class TestIMAVManager (TestCase):
         self.assertResultIsBOOL(TestIMAVManagerHelper.renderIntoPixelBuffer_forTime_)
         self.assertArgIsIn(TestIMAVManagerHelper.renderIntoPixelBuffer_forTime_, 1)
 
-
         self.assertResultIsBOOL(TestIMAVManagerHelper.renderIntoOpenGLBuffer_onScreen_forTime_)
-
 
 if __name__ == "__main__":
     main()

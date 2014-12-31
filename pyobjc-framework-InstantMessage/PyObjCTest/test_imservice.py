@@ -25,6 +25,13 @@ class TestIMService (TestCase):
         self.assertEqual(IMPersonStatusIdle, 2)
         self.assertEqual(IMPersonStatusAway, 3)
         self.assertEqual(IMPersonStatusAvailable, 4)
+        self.assertEqual(IMPersonStatusNoStatus, 5)
+
+        self.assertEqual(IMServiceStatusLoggedOut, 0)
+        self.assertEqual(IMServiceStatusDisconnected, 1)
+        self.assertEqual(IMServiceStatusLoggingOut, 2)
+        self.assertEqual(IMServiceStatusLoggingIn, 3)
+        self.assertEqual(IMServiceStatusLoggedIn, 4)
 
         self.assertIsInstance(IMPersonServiceNameKey, unicode)
         self.assertIsInstance(IMPersonScreenNameKey, unicode)
@@ -43,10 +50,6 @@ class TestIMService (TestCase):
         self.assertIsInstance(IMCapabilityFileSharing, unicode)
         self.assertIsInstance(IMCapabilityAudioConference, unicode)
         self.assertIsInstance(IMCapabilityVideoConference, unicode)
-
-    @min_os_level("10.5")
-    def testConstants10_5(self):
-        self.assertEqual(IMPersonStatusNoStatus, 5)
 
     @min_os_level("10.5")
     def testFunctions10_5(self):

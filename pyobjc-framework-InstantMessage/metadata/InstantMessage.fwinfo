@@ -3,6 +3,19 @@
 {
  "definitions": {
   "classes": {
+   "IMAVControl": {
+    "methods": [
+     {
+      "args": {
+       "0": {
+        "sel_of_type": "v@:@"
+       }
+      },
+      "class_method": false,
+      "selector": "setAction:"
+     }
+    ]
+   },
    "NSObject": {
     "methods": [
      {
@@ -10,60 +23,60 @@
        "0": {
         "type_modifier": "o"
        }
-      }, 
-      "class_method": false, 
+      },
+      "class_method": false,
       "selector": "getPixelBufferPixelFormat:"
-     }, 
+     },
      {
       "args": {
        "0": {
         "type_override": "^{__CVBuffer=}"
-       }, 
+       },
        "1": {
         "type_modifier": "n"
        }
-      }, 
-      "class_method": false, 
+      },
+      "class_method": false,
       "retval": {
        "type_override": "Z"
-      }, 
+      },
       "selector": "renderIntoPixelBuffer:forTime:"
-     }, 
+     },
      {
       "args": {
        "0": {
         "type_modifier": "o"
-       }, 
+       },
        "1": {
         "type_modifier": "o"
        }
-      }, 
-      "class_method": false, 
+      },
+      "class_method": false,
       "selector": "getOpenGLBufferContext:pixelFormat:"
-     }, 
+     },
      {
       "args": {
        "0": {
         "type_override": "^{__CVBuffer=}"
-       }, 
+       },
        "1": {
         "type_modifier": "n"
-       }, 
+       },
        "2": {
         "type_modifier": "n"
        }
-      }, 
-      "class_method": false, 
+      },
+      "class_method": false,
       "retval": {
        "type_override": "Z"
-      }, 
+      },
       "selector": "renderIntoOpenGLBuffer:onScreen:forTime:"
      }
     ]
    }
-  }, 
-  "formal_protocols": {}, 
-  "functions": {}, 
+  },
+  "formal_protocols": {},
+  "functions": {},
   "informal_protocols": {
    "IMVideoDataSource": {
     "methods": [
@@ -72,53 +85,53 @@
        "0": {
         "type_modifier": "o"
        }
-      }, 
-      "class_method": false, 
+      },
+      "class_method": false,
       "selector": "getPixelBufferPixelFormat:"
-     }, 
+     },
      {
       "args": {
        "0": {
         "type_override": "^{__CVBuffer=}"
-       }, 
+       },
        "1": {
         "type_modifier": "n"
        }
-      }, 
-      "class_method": false, 
+      },
+      "class_method": false,
       "retval": {
        "type_override": "Z"
-      }, 
+      },
       "selector": "renderIntoPixelBuffer:forTime:"
-     }, 
+     },
      {
       "args": {
        "0": {
         "type_modifier": "o"
-       }, 
+       },
        "1": {
         "type_modifier": "o"
        }
-      }, 
-      "class_method": false, 
+      },
+      "class_method": false,
       "selector": "getOpenGLBufferContext:pixelFormat:"
-     }, 
+     },
      {
       "args": {
        "0": {
         "type_override": "^{__CVBuffer=}"
-       }, 
+       },
        "1": {
         "type_modifier": "n"
-       }, 
+       },
        "2": {
         "type_modifier": "n"
        }
-      }, 
-      "class_method": false, 
+      },
+      "class_method": false,
       "retval": {
        "type_override": "Z"
-      }, 
+      },
       "selector": "renderIntoOpenGLBuffer:onScreen:forTime:"
      }
     ]
