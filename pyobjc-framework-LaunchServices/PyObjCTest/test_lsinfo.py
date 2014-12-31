@@ -28,10 +28,16 @@ class TestLSInfo (TestCase):
             os.unlink(self.path)
 
     def testConstants(self):
+        if sys.maxsize < 2 ** 32:
+            self.assertEqual(kLSInvalidExtensionIndex, 0xffffffff)
+        else:
+            self.assertEqual(kLSInvalidExtensionIndex, 0xffffffffffffffff)
         self.assertEqual(kLSAppInTrashErr, -10660)
         self.assertEqual(kLSExecutableIncorrectFormat, -10661)
         self.assertEqual(kLSAttributeNotFoundErr, -10662)
         self.assertEqual(kLSAttributeNotSettableErr, -10663)
+        self.assertEqual(kLSIncompatibleApplicationVersionErr, -10664)
+        self.assertEqual(kLSNoRosettaEnvironmentErr, -10665)
         self.assertEqual(kLSUnknownErr, -10810)
         self.assertEqual(kLSNotAnApplicationErr, -10811)
         self.assertEqual(kLSNotInitializedErr, -10812)

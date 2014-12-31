@@ -32,6 +32,10 @@ class TestLSSharedFileList (TestCase):
         self.assertIsInstance(kLSSharedFileListVolumesNetworkVisible, unicode)
         self.assertIsInstance(kLSSharedFileListItemHidden, unicode)
 
+    @min_os_level('10.6')
+    def testConstants10_6(self):
+        self.assertIsInstance(kLSSharedFileListLoginItemHidden, unicode)
+
     @min_os_level('10.5')
     def testMagicConstants10_5(self):
         self.assertIsInstance(kLSSharedFileListItemBeforeFirst, LSSharedFileListItemRef)
@@ -120,9 +124,6 @@ class TestLSSharedFileList (TestCase):
         v = LSSharedFileListRemoveAllItems(lst)
         self.assertIsInstance(v, (int, long))
 
-
-
-
     @expectedFailure
     def testMissing(self):
         # Needs more infrastructure
@@ -131,14 +132,10 @@ class TestLSSharedFileList (TestCase):
         # FSRef suckage
         self.fail('LSSharedFileListItemRef')
 
-
-
-
-
-
-
-
-
+    @min_os_level('10.10')
+    def testFunctions10_10(self):
+        self.assertResultIsCFRetained(LSSharedFileListItemCopyResolvedURL)
+        self.assertArgIsOut(LSSharedFileListItemCopyResolvedURL, 2)
 
 if __name__ == "__main__":
     main()

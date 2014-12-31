@@ -65,8 +65,19 @@ class TestUTType (TestCase):
         v = UTGetOSTypeFromString(v)
         self.assertEqual(v, 24353)
 
+    @min_os_level('10.10')
+    def testFunctions10_10(self):
+        self.assertResultIsCFRetained(UTTypeCopyAllTagsWithClass)
+        v = UTTypeCopyAllTagsWithClass(kUTTypeArchive, kUTTagClassFilenameExtension)
+        self.assertIsInstance(v, CFArrayRef)
 
+        self.assertResultIsBOOL(UTTypeConformsTo)
+        v = UTTypeIsDeclared("public.python-script")
+        self.assertTrue(v in (True, False))
 
+        self.assertResultIsBOOL(UTTypeIsDynamic)
+        v = UTTypeIsDynamic("public.python-script")
+        self.assertTrue(v in (True, False))
 
 
 if __name__ == "__main__":

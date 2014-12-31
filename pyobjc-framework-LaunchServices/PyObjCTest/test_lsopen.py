@@ -68,11 +68,6 @@ class TestLSOpen (TestCase):
         self.assertEqual(o.launchFlags, 0)
         self.assertEqual(o.asyncRefCon, None)
 
-    @expectedFailure
-    def testUnsupportedStructs(self):
-        self.fail("LSLaunchFSRefSpec")
-
-
     def testFunctions(self):
         url = CFURLCreateFromFileSystemRepresentation(None, self.bpath, len(self.bpath), True)
 
@@ -135,12 +130,13 @@ class TestLSOpen (TestCase):
         self.assertIsInstance(psn, (int, long))
 
 
-    @expectedFailure
     def testFSRef(self):
         # Functions using structs we don't support, probably need
         # manual wrappers
-        self.fail("LSOpenFromRefSpec")
-        self.fail("LSOpenFromURLSpec")
+        self.assertArgIsIn(LSOpenFromRefSpec, 0)
+        self.assertArgIsOut(LSOpenFromRefSpec, 1)
+        self.assertArgIsIn(LSOpenFromURLSpec, 0)
+        self.assertArgIsOut(LSOpenFromURLSpec, 1)
 
 if __name__ == "__main__":
     main()
