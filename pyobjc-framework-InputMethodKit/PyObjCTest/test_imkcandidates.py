@@ -18,6 +18,10 @@ class TestIMKCandidates (TestCase):
         self.assertEqual(kIMKLocateCandidatesLeftHint, 3)
         self.assertEqual(kIMKLocateCandidatesRightHint, 4)
 
+        self.assertEqual(kIMKMain, 0)
+        self.assertEqual(kIMKAnnotation, 1)
+        self.assertEqual(kIMKSubList, 2)
+
         self.assertIsInstance(IMKCandidatesOpacityAttributeName, unicode)
 
     @min_os_level('10.6')

@@ -35,10 +35,6 @@ class TestIMKInputControllerHelper (NSObject):
         return True
 
 
-
-
-
-
 class TestIMKInputController (TestCase):
     def testConstants(self):
         self.assertIsInstance(kIMKCommandMenuItemName, unicode)
@@ -74,6 +70,9 @@ class TestIMKInputController (TestCase):
         self.assertArgHasType(TestIMKInputControllerHelper.mouseMovedOnCharacterIndex_coordinate_withModifier_client_, 1, NSPoint.__typestr__)
         self.assertArgHasType(TestIMKInputControllerHelper.mouseMovedOnCharacterIndex_coordinate_withModifier_client_, 2, objc._C_NSUInteger)
 
+
+    def testMethods(self):
+        self.assertArgIsSEL(IMKInputController.doCommandBySelector_commandDictionary_, 0, b"v@:@")
 
 
 if __name__ == "__main__":

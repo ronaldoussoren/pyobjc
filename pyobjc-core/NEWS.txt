@@ -20,8 +20,8 @@ Version 3.1
 * Updated bindings for LaunchServices, OpenDirectory, ServiceManagement,
   Social, StoreKit, WebKit and JavaScriptCore with the new APIs introduced in OSX 10.9 and 10.10.
 
-* Unchanged framework bindings: InstallerPlugins, InstantMessage, InterfaceBuilderKit,
-  LatentSemanticMapping, PreferencePanes, PubSub.
+* Unchanged framework bindings: InputMethodKit, InstallerPlugins,
+  InstantMessage, InterfaceBuilderKit, LatentSemanticMapping, PreferencePanes, PubSub.
 
   .. note::
 

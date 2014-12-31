@@ -14,6 +14,7 @@ class TestIMKServer (TestCase):
         # exported by the framework.
         #
         # See also: Radar #6783035
+        self.assertIsInstance(IMKModeDictionary, unicode)
         self.assertIsInstance(IMKDelegateClass, unicode)
         self.assertIsInstance(IMKControllerClass, unicode)
 
@@ -21,6 +22,7 @@ class TestIMKServer (TestCase):
     def testMethods10_7(self):
         self.assertResultIsBOOL(IMKServer.paletteWillTerminate)
         self.assertResultIsBOOL(IMKServer.lastKeyEventWasDeadKey)
+
 
 
 if __name__ == "__main__":
