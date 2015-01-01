@@ -22,6 +22,11 @@ class TestCLLocationManager (TestCase):
         self.assertEqual(kCLAuthorizationStatusDenied, 2)
         self.assertEqual(kCLAuthorizationStatusAuthorized, 3)
 
+        self.assertEqual(CLActivityTypeOther, 1)
+        self.assertEqual(CLActivityTypeAutomotiveNavigation, 2)
+        self.assertEqual(CLActivityTypeFitness, 3)
+        self.assertEqual(CLActivityTypeOtherNavigation, 4)
+
     @min_os_level('10.7')
     def testMethods10_7(self):
         self.assertResultIsBOOL(CLLocationManager.locationServicesEnabled)
@@ -29,6 +34,14 @@ class TestCLLocationManager (TestCase):
         self.assertResultIsBOOL(CLLocationManager.significantLocationChangeMonitoringAvailable)
         self.assertResultIsBOOL(CLLocationManager.regionMonitoringAvailable)
         self.assertResultIsBOOL(CLLocationManager.regionMonitoringEnabled)
+
+    @min_os_level('10.9')
+    def testMethods10_9(self):
+        self.assertResultIsBOOL(CLLocationManager.deferredLocationUpdatesAvailable)
+
+    @min_os_level('10.10')
+    def testMethods10_10(self):
+        self.assertResultIsBOOL(CLLocationManager.isMonitoringAvailableForClass_)
 
 if __name__ == "__main__":
     main()

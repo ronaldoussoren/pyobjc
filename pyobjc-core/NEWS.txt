@@ -17,7 +17,7 @@ Version 3.1
 * Add bindings for FinderSync, CloudKit, CryptoTokenKit,
   MultipeerConnectivity (all new in OSX 10.10)
 
-* Updated bindings for CoreText, CoreWLAN, EventKit, FSEvents,
+* Updated bindings for CoreLocation, CoreText, CoreWLAN, EventKit, FSEvents,
   LaunchServices, OpenDirectory, ServiceManagement, Social, StoreKit,
   WebKit and JavaScriptCore with the new APIs introduced in OSX 10.9 and 10.10.
 
