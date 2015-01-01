@@ -9,6 +9,10 @@ if sys.maxsize > 2**32:
         def testBasic(self):
             self.assertTrue(hasattr(EventKit, "EKParticipant"))
 
+        @min_os_level('10.9')
+        def testMethods10_9(self):
+            self.assertResultIsBOOL(EventKit.EKParticipant.isCurrentUser)
+
         @min_os_level('10.8')
         def testConstants10_8(self):
             self.assertEqual(EventKit.EKParticipantRoleUnknown, 0)

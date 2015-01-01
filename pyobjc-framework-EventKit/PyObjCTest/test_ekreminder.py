@@ -14,5 +14,11 @@ if sys.maxsize > 2**32:
             self.assertResultIsBOOL(EventKit.EKReminder.isCompleted)
             self.assertArgIsBOOL(EventKit.EKReminder.setCompleted_, 0)
 
+        def testConstants(self):
+            self.assertEqual(EventKit.EKReminderPriorityNone, 0)
+            self.assertEqual(EventKit.EKReminderPriorityHigh, 1)
+            self.assertEqual(EventKit.EKReminderPriorityMedium, 5)
+            self.assertEqual(EventKit.EKReminderPriorityLow, 9)
+
 if __name__ == '__main__':
     main()
