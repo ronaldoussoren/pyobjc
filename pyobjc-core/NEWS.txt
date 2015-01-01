@@ -21,8 +21,9 @@ Version 3.1
   LaunchServices, OpenDirectory, ServiceManagement, Social, StoreKit,
   WebKit and JavaScriptCore with the new APIs introduced in OSX 10.9 and 10.10.
 
-* Unchanged framework bindings: DictionaryServices, ExceptionHandling, InputMethodKit, InstallerPlugins,
-  InstantMessage, InterfaceBuilderKit, LatentSemanticMapping, PreferencePanes, PubSub.
+* Unchanged framework bindings: Collaboration, DictionaryServices,
+  ExceptionHandling, InputMethodKit, InstallerPlugins, InstantMessage, InterfaceBuilderKit,
+  LatentSemanticMapping, PreferencePanes, PubSub.
 
   .. note::
 
