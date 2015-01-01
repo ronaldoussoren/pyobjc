@@ -1,0 +1,26 @@
+import sys
+
+try:
+    unicode
+except NameError:
+    unicode = str
+
+if sys.maxsize > 2 ** 32:
+    from PyObjCTools.TestSupport import *
+    import CryptoTokenKit
+
+    class TestTKError (TestCase):
+        def testConstants(self):
+            self.assertIsInstance(CryptoTokenKit.TKErrorDomain, unicode)
+
+            self.assertEqual(CryptoTokenKit.TKErrorCodeNotImplemented, -1)
+            self.assertEqual(CryptoTokenKit.TKErrorCodeCommunicationError, -2)
+            self.assertEqual(CryptoTokenKit.TKErrorCodeCorruptedData, -3)
+            self.assertEqual(CryptoTokenKit.TKErrorCodeCanceledByUser, -4)
+            self.assertEqual(CryptoTokenKit.TKErrorAuthenticationFailed, -5)
+            self.assertEqual(CryptoTokenKit.TKErrorObjectNotFound, -6)
+            self.assertEqual(CryptoTokenKit.TKErrorTokenNotFound, -7)
+
+
+if __name__ == "__main__":
+    main()

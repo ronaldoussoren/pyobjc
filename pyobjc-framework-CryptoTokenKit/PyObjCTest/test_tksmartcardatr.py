@@ -25,7 +25,7 @@ if sys.maxsize > 2 ** 32:
             self.assertEqual(CryptoTokenKit.TKSmartCardProtocolT0, 1)
             self.assertEqual(CryptoTokenKit.TKSmartCardProtocolT1, 2)
             self.assertEqual(CryptoTokenKit.TKSmartCardProtocolT15, 1 << 15)
-            self.assertEqual(CryptoTokenKit.TKSmartCardProtocolAny, 1 << 16 - 1)
+            self.assertEqual(CryptoTokenKit.TKSmartCardProtocolAny, (1 << 16) - 1)
 
 
 if __name__ == "__main__":
