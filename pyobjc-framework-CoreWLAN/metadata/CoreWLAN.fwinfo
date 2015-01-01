@@ -116,6 +116,25 @@
   },
   "formal_protocols": {},
   "functions": {
+   "CWKeychainCopyWiFiEAPIdentity": {
+    "args": {
+     "0": {},
+     "2": { "type_modifier": "o", "already_cfretained": true }
+    }
+   },
+   "CWKeychainFindWiFiPassword": {
+    "args": {
+     "0": {},
+     "2": { "type_modifier": "o" }
+    }
+   },
+   "CWKeychainFindWiFiEAPUsernameAndPassword": {
+    "args": {
+     "0": {},
+     "2": { "type_modifier": "o" },
+     "3": { "type_modifier": "o" }
+    }
+   },
    "CWKeychainCopyEAPIdentity": {
     "args": {
      "0": {},

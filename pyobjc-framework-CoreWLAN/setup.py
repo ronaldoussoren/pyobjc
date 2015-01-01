@@ -7,7 +7,8 @@ for general tips and tricks regarding the translation between Python
 and (Objective-)C frameworks
 '''
 
-from pyobjc_setup import setup
+import os
+from pyobjc_setup import setup, Extension
 
 setup(
     name='pyobjc-framework-CoreWLAN',
@@ -21,6 +22,17 @@ setup(
     install_requires = [
         'pyobjc-core>=3.1b1',
         'pyobjc-framework-Cocoa>=3.1b1',
+    ],
+    ext_modules = [
+        Extension("CoreWLAN._CoreWLAN",
+            [ "Modules/_CoreWLAN.m" ],
+            extra_link_args=["-framework", "CoreWLAN"],
+            depends=[
+                os.path.join('Modules', fn)
+                for fn in os.listdir('Modules')
+                if fn.startswith('_CoreWLAN')
+            ]
+        ),
     ],
     min_os_level="10.6",
 )

@@ -9,7 +9,7 @@ import objc
 import sys
 import Foundation
 
-from CoreWLAN import _metadata
+from CoreWLAN import _metadata, _CoreWLAN
 
 def _CW8021XProfile__eq__(self, other):
     if not isinstance(other, type(self)):
@@ -111,3 +111,4 @@ sys.modules['CoreWLAN'] = mod = objc.ObjCLazyModule(
 
 import sys
 del sys.modules['CoreWLAN._metadata']
+del sys.modules['CoreWLAN._CoreWLAN']

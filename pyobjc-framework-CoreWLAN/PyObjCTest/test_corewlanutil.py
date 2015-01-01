@@ -28,5 +28,19 @@ class TestCoreWLANUtil (TestCase):
         self.assertArgIsOut(CoreWLAN.CWKeychainCopyPassword, 1)
         self.assertArgIsCFRetained(CoreWLAN.CWKeychainCopyPassword, 1)
 
+    @min_os_level('10.9')
+    def testFunctions10_9(self):
+        self.assertArgIsOut(CoreWLAN.CWKeychainFindWiFiPassword, 2)
+        self.assertArgIsOut(CoreWLAN.CWKeychainFindWiFiEAPUsernameAndPassword, 2)
+        self.assertArgIsOut(CoreWLAN.CWKeychainFindWiFiEAPUsernameAndPassword, 3)
+        self.assertArgIsOut(CoreWLAN.CWKeychainCopyWiFiEAPIdentity, 2)
+        self.assertArgIsCFRetained(CoreWLAN.CWKeychainCopyWiFiEAPIdentity, 2)
+
+        CoreWLAN.CWKeychainSetWiFiPassword # Only check existance
+        CoreWLAN.CWKeychainDeleteWiFiPassword # Only check existance
+        CoreWLAN.CWKeychainSetWiFiEAPUsernameAndPassword # Only check existance
+        CoreWLAN.CWKeychainDeleteWiFiEAPUsernameAndPassword # Only check existance
+        CoreWLAN.CWKeychainSetWiFiEAPIdentity # Only check existance
+
 if __name__ == "__main__":
     main()
