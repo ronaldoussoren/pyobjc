@@ -14,3 +14,8 @@ is responsibly for managing the retain-count of objects of this type.
 This means you have to call ``FSEventStreamRelease`` when you're done with
 a stream. You must not use the stream after that, it will then refer to an
 invalid stream.
+
+``FSEventStreamSetDispatchQueue``
+.................................
+
+Not supported at the moment because ``dispatch_queue_t`` is not wrapped yet.

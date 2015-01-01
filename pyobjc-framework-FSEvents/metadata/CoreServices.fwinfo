@@ -3,6 +3,10 @@
 {
  "definitions": {
   "classes": {},
+  "enum": {
+   "kFSEventStreamCreateFlagMarkSelf": { "value": 32 },
+   "kFSEventStreamEventFlagOwnEvent": { "value": 524288 }
+  },
   "cftypes": {
     "ConstFSEventStreamRef": {
     	"opaque": true,
@@ -15,6 +19,13 @@
   },
   "formal_protocols": {},
   "functions": {
+   "FSEventStreamSetExclusionPaths": {
+    "args": {
+     "0": { "typestr": "^{__FSEventStream=}" },
+     "1": { "typestr": "^{__CFArray=}" }
+    },
+    "retval": { "type": "Z" }
+   },
    "FSEventStreamCopyDescription": {
     "args": {
      "0": {

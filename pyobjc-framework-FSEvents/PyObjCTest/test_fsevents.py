@@ -32,6 +32,21 @@ class TestFSEvents (TestCase):
             ('kFSEventStreamEventFlagRootChanged', 0x00000020),
             ('kFSEventStreamEventFlagMount', 0x00000040),
             ('kFSEventStreamEventFlagUnmount', 0x00000080),
+            ('kFSEventStreamCreateFlagIgnoreSelf', 0x00000008),
+            ('kFSEventStreamCreateFlagFileEvents', 0x00000010),
+            ('kFSEventStreamCreateFlagMarkSelf', 0x00000020),
+            ('kFSEventStreamEventFlagItemCreated', 0x00000100),
+            ('kFSEventStreamEventFlagItemRemoved', 0x00000200),
+            ('kFSEventStreamEventFlagItemInodeMetaMod', 0x00000400),
+            ('kFSEventStreamEventFlagItemRenamed', 0x00000800),
+            ('kFSEventStreamEventFlagItemModified', 0x00001000),
+            ('kFSEventStreamEventFlagItemFinderInfoMod', 0x00002000),
+            ('kFSEventStreamEventFlagItemChangeOwner', 0x00004000),
+            ('kFSEventStreamEventFlagItemXattrMod', 0x00008000),
+            ('kFSEventStreamEventFlagItemIsFile', 0x00010000),
+            ('kFSEventStreamEventFlagItemIsDir', 0x00020000),
+            ('kFSEventStreamEventFlagItemIsSymlink', 0x00040000),
+            ('kFSEventStreamEventFlagOwnEvent', 0x00080000),
             ):
 
             self.assertHasAttr(FSEvents, k)
@@ -133,6 +148,15 @@ class TestFSEvents (TestCase):
     def testOpaque(self):
         self.assertHasAttr(FSEvents, 'FSEventStreamRef')
         self.assertIsOpaquePointer(FSEventStreamRef)
+
+    @min_os_level('10.6')
+    def testFunctions10_6(self):
+        # Can't test beyond this because PyObjC doesn't support dispatch_queue_t yet
+        self.assertHasAttr(FSEvents, 'FSEventStreamSetDispatchQueue')
+
+    @min_os_level('10.9')
+    def testFunctions10_9(self):
+        self.assertResultIsBOOL(FSEvents.FSEventStreamSetExclusionPaths)
 
 
 if __name__ == "__main__":
