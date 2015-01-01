@@ -22,6 +22,7 @@ class TestNSFetchRequest (TestCase):
     @min_os_level("10.6")
     def testConstants10_6(self):
         self.assertEqual(NSDictionaryResultType, 2)
+        self.assertEqual(NSCountResultType, 4)
 
     @min_os_level("10.6")
     def testMethods10_6(self):

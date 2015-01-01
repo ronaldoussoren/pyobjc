@@ -90,6 +90,11 @@ class TestNSPersistentStoreCoordinator (TestCase):
         self.assertArgIsOut(NSPersistentStoreCoordinator.setMetadata_forPersistentStoreOfType_URL_error_, 3)
         self.assertResultIsBOOL(NSPersistentStoreCoordinator.setURL_forPersistentStore_)
 
+    @min_os_level('10.10')
+    def testMethods10_10(self):
+        self.assertArgIsBlock(NSPersistentStoreCoordinator.performBlock_, 0, b'v')
+        self.assertArgIsBlock(NSPersistentStoreCoordinator.performBlockAndWait_, 0, b'v')
+
 
     def testMethods(self):
         self.assertArgIsOut(NSPersistentStoreCoordinator.addPersistentStoreWithType_configuration_URL_options_error_, 4)

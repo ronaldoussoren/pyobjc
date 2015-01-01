@@ -29,6 +29,10 @@ class TestNSManagedObjectContext (TestCase):
         self.assertIsInstance(NSOverwriteMergePolicy, NSObject)
         self.assertIsInstance(NSRollbackMergePolicy, NSObject)
 
+        self.assertEqual(NSConfinementConcurrencyType, 0)
+        self.assertEqual(NSPrivateQueueConcurrencyType, 1)
+        self.assertEqual(NSMainQueueConcurrencyType, 2)
+
     def testMethods(self):
         self.assertResultIsBOOL(NSManagedObjectContext.hasChanges)
         self.assertArgIsOut(NSManagedObjectContext.executeFetchRequest_error_, 1)
@@ -56,6 +60,10 @@ class TestNSManagedObjectContext (TestCase):
     def testMethods10_7(self):
         self.assertArgIsBlock(NSManagedObjectContext.performBlock_, 0, b'v')
         self.assertArgIsBlock(NSManagedObjectContext.performBlockAndWait_, 0, b'v')
+
+    @min_os_level('10.10')
+    def testMethods10_10(self):
+        self.assertArgIsOut(NSManagedObjectContext.executeRequest_error_, 1)
 
 
 if __name__ == "__main__":

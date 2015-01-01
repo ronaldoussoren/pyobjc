@@ -15,6 +15,7 @@ class TestNSEntityMigrationPolicy (TestCase):
         self.assertIsInstance(NSMigrationDestinationObjectKey, unicode)
         self.assertIsInstance(NSMigrationEntityMappingKey, unicode)
         self.assertIsInstance(NSMigrationPropertyMappingKey, unicode)
+        self.assertIsInstance(NSMigrationEntityPolicyKey, unicode)
 
     @min_os_level("10.5")
     def testMethods(self):

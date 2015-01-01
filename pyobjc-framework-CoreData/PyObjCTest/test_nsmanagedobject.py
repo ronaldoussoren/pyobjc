@@ -29,6 +29,14 @@ class TestNSManagedObject (TestCase):
     def testMethods10_5(self):
         self.assertResultIsBOOL(NSManagedObject.hasFaultForRelationshipNamed_)
 
+    @min_os_level("10.6")
+    def testMethods10_6(self):
+        self.assertResultIsBOOL(NSManagedObject.contextShouldIgnoreUnmodeledPropertyChanges)
+
+    @min_os_level("10.7")
+    def testMethods10_7(self):
+        self.assertResultIsBOOL(NSManagedObject.hasChanges)
+
     @min_os_level('10.6')
     def testConstants10_6(self):
         self.assertEqual(NSSnapshotEventUndoInsertion, 1 << 1)
@@ -37,11 +45,6 @@ class TestNSManagedObject (TestCase):
         self.assertEqual(NSSnapshotEventRollback, 1 << 4)
         self.assertEqual(NSSnapshotEventRefresh, 1 << 5)
         self.assertEqual(NSSnapshotEventMergePolicy, 1 << 6)
-
-    @min_os_level("10.7")
-    def testMethods10_7(self):
-        self.assertResultIsBOOL(NSManagedObject.hasChanges)
-
 
 if __name__ == "__main__":
     main()

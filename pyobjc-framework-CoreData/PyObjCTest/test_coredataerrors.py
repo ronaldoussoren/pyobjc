@@ -67,6 +67,7 @@ class TestCoreDataErrors (TestCase):
         self.assertEqual(NSPersistentStoreIncompatibleSchemaError, 134020)
         self.assertEqual(NSPersistentStoreSaveError, 134030)
         self.assertEqual(NSPersistentStoreIncompleteSaveError, 134040)
+        self.assertEqual(NSPersistentStoreSaveConflictsError, 134050)
 
     @min_os_level('10.7')
     def testConstants10_7(self):
