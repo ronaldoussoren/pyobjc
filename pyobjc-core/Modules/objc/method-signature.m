@@ -1520,7 +1520,11 @@ argdescr2dict(struct _PyObjC_ArgDescr* descr)
      * method signature.
      */
     if (descr->type != NULL) {
-        end = PyObjCRT_SkipTypeSpec(descr->type) - 1;
+        end = PyObjCRT_SkipTypeSpec(descr->type);
+        if (unlikely(end == NULL)) {
+            goto error;
+        }
+        end--;
         while ((end != descr->type) && isdigit(*end)) {
             end --;
         }

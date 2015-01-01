@@ -55,8 +55,11 @@ PyObjCSelector_GetMetadata(PyObject* _self)
 PyDoc_STRVAR(sel_metadata_doc, "__metadata__()\n" CLINIC_SEP "\nReturn a dict that describes the metadata for this method, including metadata for the 2 hidden ObjC parameters (self and _sel) ");
 static PyObject* sel_metadata(PyObject* self)
 {
-    PyObject* result = PyObjCMethodSignature_AsDict(PyObjCSelector_GetMetadata(self));
     int r;
+    PyObject* result = PyObjCMethodSignature_AsDict(PyObjCSelector_GetMetadata(self));
+    if (result == NULL) {
+        return NULL;
+    }
 
     r = PyDict_SetItemString(result, "classmethod",
         (((PyObjCSelector*)self)->sel_flags & PyObjCSelector_kCLASS_METHOD) ? Py_True : Py_False);
