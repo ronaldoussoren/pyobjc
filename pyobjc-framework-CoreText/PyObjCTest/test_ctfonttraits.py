@@ -39,6 +39,31 @@ class TestCTFontTraits (TestCase):
         self.assertEqual(kCTFontScriptsClass, cast_uint(10 << kCTFontClassMaskShift))
         self.assertEqual(kCTFontSymbolicClass, cast_uint(12 << kCTFontClassMaskShift))
 
+        self.assertEqual(kCTFontTraitItalic, (1 << 0))
+        self.assertEqual(kCTFontTraitBold, (1 << 1))
+        self.assertEqual(kCTFontTraitExpanded, (1 << 5))
+        self.assertEqual(kCTFontTraitCondensed, (1 << 6))
+        self.assertEqual(kCTFontTraitMonoSpace, (1 << 10))
+        self.assertEqual(kCTFontTraitVertical, (1 << 11))
+        self.assertEqual(kCTFontTraitUIOptimized, (1 << 12))
+        self.assertEqual(kCTFontTraitColorGlyphs, (1 << 13))
+        self.assertEqual(kCTFontTraitComposite, (1 << 14))
+        self.assertEqual(kCTFontTraitClassMask, (15 << kCTFontClassMaskShift))
+
+        self.assertEqual(kCTFontClassUnknown, (0 << kCTFontClassMaskShift))
+        self.assertEqual(kCTFontClassOldStyleSerifs, (1 << kCTFontClassMaskShift))
+        self.assertEqual(kCTFontClassTransitionalSerifs, (2 << kCTFontClassMaskShift))
+        self.assertEqual(kCTFontClassModernSerifs, (3 << kCTFontClassMaskShift))
+        self.assertEqual(kCTFontClassClarendonSerifs, (4 << kCTFontClassMaskShift))
+        self.assertEqual(kCTFontClassSlabSerifs, (5 << kCTFontClassMaskShift))
+        self.assertEqual(kCTFontClassFreeformSerifs, (7 << kCTFontClassMaskShift))
+        self.assertEqual(kCTFontClassSansSerif, (8 << kCTFontClassMaskShift))
+        self.assertEqual(kCTFontClassOrnamentals, (9 << kCTFontClassMaskShift))
+        self.assertEqual(kCTFontClassScripts, (10 << kCTFontClassMaskShift))
+        self.assertEqual(kCTFontClassSymbolic, (12 << kCTFontClassMaskShift))
+
+
+
     @min_os_level("10.7")
     def testConstants10_7(self):
         self.assertEqual(kCTFontTraitColorGlyphs, 1<<13)

@@ -25,38 +25,38 @@ class TestCTFontManager (TestCase):
         self.assertIsInstance(kCTFontManagerRegisteredFontsChangedNotification, unicode)
 
 
-    @expectedFailure
     @min_os_level('10.6')
     def testFunctions10_6(self):
-        self.fail("CTFontManagerCopyAvailablePostScriptNames")
-        self.fail("CTFontManagerCopyAvailableFontFamilyNames")
-        self.fail("CTFontManagerCopyAvailableFontURLs")
-        self.fail("CTFontManagerCompareFontFamilyNames")
-        self.fail("CTFontManagerCreateFontDescriptorsFromURL")
-        self.fail("CTFontManagerRegisterFontsForURL")
-        self.fail("CTFontManagerUnregisterFontsForURL")
-        self.fail("CTFontManagerRegisterFontsForURLs")
-        self.fail("CTFontManagerUnregisterFontsForURLs")
-        self.fail("CTFontManagerEnableFontDescriptors")
-        self.fail("CTFontManagerGetScopeForURL")
-        self.fail("CTFontManagerIsSupportedFont")
-        self.fail("CTFontManagerCreateFontRequestRunLoopSource")
-        self.fail("CTFontManagerSetAutoActivationSetting")
-        self.fail("CTFontManagerGetAutoActivationSetting")
+        self.assertResultIsCFRetained(CTFontManagerCopyAvailablePostScriptNames)
+        self.assertResultIsCFRetained(CTFontManagerCopyAvailableFontFamilyNames)
+        self.assertResultIsCFRetained(CTFontManagerCopyAvailableFontURLs)
+        self.assertResultIsCFRetained(CTFontManagerCreateFontDescriptorsFromURL)
 
-    @expectedFailure
+        self.assertArgHasType(CTFontManagerCompareFontFamilyNames, 0, b"^{__CFString=}")
+        self.assertArgHasType(CTFontManagerCompareFontFamilyNames, 1, b"^{__CFString=}")
+        self.assertArgHasType(CTFontManagerCompareFontFamilyNames, 2, b"^v")
+        self.assertArgIsOut(CTFontManagerRegisterFontsForURL, 2)
+        self.assertArgIsOut(CTFontManagerUnregisterFontsForURL, 2)
+        self.assertArgIsOut(CTFontManagerRegisterFontsForURLs, 2)
+        self.assertArgIsOut(CTFontManagerUnregisterFontsForURLs, 2)
+        self.assertArgHasType(CTFontManagerEnableFontDescriptors, 1, objc._C_BOOL)
+        CTFontManagerGetScopeForURL # Test that function exists
+        self.assertResultHasType(CTFontManagerIsSupportedFont, objc._C_BOOL)
+        self.assertResultIsCFRetained(CTFontManagerCreateFontRequestRunLoopSource)
+        self.assertArgIsBlock(CTFontManagerCreateFontRequestRunLoopSource, 1, b"@@i")
+        v = CTFontManagerGetAutoActivationSetting(None)
+        CTFontManagerSetAutoActivationSetting(None, v)
+
     @min_os_level('10.7')
     def testFunctions10_7(self):
-        self.fail("CTFontManagerCreateFontDescriptorFromData")
+        self.assertResultIsCFRetained(CTFontManagerCreateFontDescriptorFromData)
 
 
-
-    @expectedFailure
     @min_os_level('10.8')
     def testFunctions10_8(self):
-        self.fail("CTFontManagerCreateFontDescriptorFromData")
-        self.fail("CTFontManagerRegisterGraphicsFont")
-        self.fail("CTFontManagerUnregisterGraphicsFont")
+        self.assertResultIsCFRetained(CTFontManagerCreateFontDescriptorFromData)
+        self.assertArgIsOut(CTFontManagerRegisterGraphicsFont, 1)
+        self.assertArgIsOut(CTFontManagerUnregisterGraphicsFont, 1)
 
 if __name__ == "__main__":
     main()

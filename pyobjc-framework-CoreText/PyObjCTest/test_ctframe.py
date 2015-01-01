@@ -23,8 +23,19 @@ class TestCTFrame (TestCase):
     def testConstants(self):
         self.assertEqual(kCTFrameProgressionTopToBottom, 0)
         self.assertEqual(kCTFrameProgressionRightToLeft, 1)
+        self.assertEqual(kCTFrameProgressionLeftToRight, 2)
+
+        self.assertEqual(kCTFramePathFillEvenOdd, 0)
+        self.assertEqual(kCTFramePathFillWindingNumber, 1)
 
         self.assertIsInstance(kCTFrameProgressionAttributeName, unicode)
+
+    @min_os_level('10.7')
+    def testConstants10_7(self):
+        self.assertIsInstance(kCTFramePathFillRuleAttributeName, unicode)
+        self.assertIsInstance(kCTFramePathWidthAttributeName, unicode)
+        self.assertIsInstance(kCTFrameClippingPathsAttributeName, unicode)
+        self.assertIsInstance(kCTFramePathClippingPathAttributeName, unicode)
 
     def testFunctions(self):
         v = CTFrameGetTypeID()
@@ -58,6 +69,8 @@ class TestCTFrame (TestCase):
         v = CTFrameGetLines(frame)
         self.assertIsInstance(v, CFArrayRef)
 
+        self.assertArgIsOut(CTFrameGetLineOrigins, 2)
+        self.assertArgSizeInArg(CTFrameGetLineOrigins, 2, 1)
         v = CTFrameGetLineOrigins(frame, CFRange(0, 1), None)
         self.assertIsInstance(v, tuple)
         self.assertEqual(len(v), 1)

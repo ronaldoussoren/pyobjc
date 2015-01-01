@@ -33,10 +33,37 @@ class TestCTFont (TestCase):
         self.assertIsInstance(kCTBaselineClassRoman, unicode)
         self.assertIsInstance(kCTBaselineOriginalFont, unicode)
         self.assertIsInstance(kCTBaselineReferenceFont, unicode)
-        self.assertIsInstance(kCTBaselineReferenceFont, unicode)
 
         self.assertEqual(kCTFontTableAnkr, fourcc(b'ankr'))
 
+        self.assertEqual(kCTFontUIFontNone, 0xffffffff)
+        self.assertEqual(kCTFontUIFontUser, 0)
+        self.assertEqual(kCTFontUIFontUserFixedPitch, 1)
+        self.assertEqual(kCTFontUIFontSystem, 2)
+        self.assertEqual(kCTFontUIFontEmphasizedSystem, 3)
+        self.assertEqual(kCTFontUIFontSmallSystem, 4)
+        self.assertEqual(kCTFontUIFontSmallEmphasizedSystem, 5)
+        self.assertEqual(kCTFontUIFontMiniSystem, 6)
+        self.assertEqual(kCTFontUIFontMiniEmphasizedSystem, 7)
+        self.assertEqual(kCTFontUIFontViews, 8)
+        self.assertEqual(kCTFontUIFontApplication, 9)
+        self.assertEqual(kCTFontUIFontLabel, 10)
+        self.assertEqual(kCTFontUIFontMenuTitle, 11)
+        self.assertEqual(kCTFontUIFontMenuItem, 12)
+        self.assertEqual(kCTFontUIFontMenuItemMark, 13)
+        self.assertEqual(kCTFontUIFontMenuItemCmdKey, 14)
+        self.assertEqual(kCTFontUIFontWindowTitle, 15)
+        self.assertEqual(kCTFontUIFontPushButton, 16)
+        self.assertEqual(kCTFontUIFontUtilityWindowTitle, 17)
+        self.assertEqual(kCTFontUIFontAlertHeader, 18)
+        self.assertEqual(kCTFontUIFontSystemDetail, 19)
+        self.assertEqual(kCTFontUIFontEmphasizedSystemDetail, 20)
+        self.assertEqual(kCTFontUIFontToolbar, 21)
+        self.assertEqual(kCTFontUIFontSmallToolbar, 22)
+        self.assertEqual(kCTFontUIFontMessage, 23)
+        self.assertEqual(kCTFontUIFontPalette, 24)
+        self.assertEqual(kCTFontUIFontToolTip, 25)
+        self.assertEqual(kCTFontUIFontControlContent, 26)
 
     def testConstants(self):
         self.assertIsInstance(kCTFontCopyrightNameKey, unicode)
@@ -58,17 +85,17 @@ class TestCTFont (TestCase):
         self.assertIsInstance(kCTFontSampleTextNameKey, unicode)
         self.assertIsInstance(kCTFontPostScriptCIDNameKey, unicode)
 
-        self.assertEqual(kCTFontNoFontType,  4294967295) # (uint32_t)-1
-        self.assertEqual(kCTFontUserFontType,  0)
-        self.assertEqual(kCTFontUserFixedPitchFontType,  1)
-        self.assertEqual(kCTFontSystemFontType,  2)
-        self.assertEqual(kCTFontEmphasizedSystemFontType,  3)
-        self.assertEqual(kCTFontSmallSystemFontType,  4)
-        self.assertEqual(kCTFontSmallEmphasizedSystemFontType,  5)
-        self.assertEqual(kCTFontMiniSystemFontType,  6)
-        self.assertEqual(kCTFontMiniEmphasizedSystemFontType,  7)
-        self.assertEqual(kCTFontViewsFontType,  8)
-        self.assertEqual(kCTFontApplicationFontType,  9)
+        self.assertEqual(kCTFontNoFontType, 4294967295) # (uint32_t)-1
+        self.assertEqual(kCTFontUserFontType, 0)
+        self.assertEqual(kCTFontUserFixedPitchFontType, 1)
+        self.assertEqual(kCTFontSystemFontType, 2)
+        self.assertEqual(kCTFontEmphasizedSystemFontType, 3)
+        self.assertEqual(kCTFontSmallSystemFontType, 4)
+        self.assertEqual(kCTFontSmallEmphasizedSystemFontType, 5)
+        self.assertEqual(kCTFontMiniSystemFontType, 6)
+        self.assertEqual(kCTFontMiniEmphasizedSystemFontType, 7)
+        self.assertEqual(kCTFontViewsFontType, 8)
+        self.assertEqual(kCTFontApplicationFontType, 9)
         self.assertEqual(kCTFontLabelFontType, 10)
         self.assertEqual(kCTFontMenuTitleFontType, 11)
         self.assertEqual(kCTFontMenuItemFontType, 12)
@@ -114,12 +141,14 @@ class TestCTFont (TestCase):
         self.assertEqual(kCTFontTableGSUB, fourcc(b'GSUB'))
         self.assertEqual(kCTFontTableJSTF, fourcc(b'JSTF'))
         self.assertEqual(kCTFontTableLTSH, fourcc(b'LTSH'))
+        self.assertEqual(kCTFontTableMATH, fourcc(b'MATH'))
         self.assertEqual(kCTFontTableOS2, fourcc(b'OS/2'))
         self.assertEqual(kCTFontTablePCLT, fourcc(b'PCLT'))
         self.assertEqual(kCTFontTableVDMX, fourcc(b'VDMX'))
         self.assertEqual(kCTFontTableVORG, fourcc(b'VORG'))
         self.assertEqual(kCTFontTableZapf, fourcc(b'Zapf'))
         self.assertEqual(kCTFontTableAcnt, fourcc(b'acnt'))
+        self.assertEqual(kCTFontTableAnkr, fourcc(b'ankr'))
         self.assertEqual(kCTFontTableAvar, fourcc(b'avar'))
         self.assertEqual(kCTFontTableBdat, fourcc(b'bdat'))
         self.assertEqual(kCTFontTableBhed, fourcc(b'bhed'))
@@ -143,7 +172,9 @@ class TestCTFont (TestCase):
         self.assertEqual(kCTFontTableHsty, fourcc(b'hsty'))
         self.assertEqual(kCTFontTableJust, fourcc(b'just'))
         self.assertEqual(kCTFontTableKern, fourcc(b'kern'))
+        self.assertEqual(kCTFontTableKerx, fourcc(b'kerx'))
         self.assertEqual(kCTFontTableLcar, fourcc(b'lcar'))
+        self.assertEqual(kCTFontTableLtag, fourcc(b'ltag'))
         self.assertEqual(kCTFontTableLoca, fourcc(b'loca'))
         self.assertEqual(kCTFontTableMaxp, fourcc(b'maxp'))
         self.assertEqual(kCTFontTableMort, fourcc(b'mort'))
@@ -153,6 +184,7 @@ class TestCTFont (TestCase):
         self.assertEqual(kCTFontTablePost, fourcc(b'post'))
         self.assertEqual(kCTFontTablePrep, fourcc(b'prep'))
         self.assertEqual(kCTFontTableProp, fourcc(b'prop'))
+        self.assertEqual(kCTFontTableSbit, fourcc(b'sbit'))
         self.assertEqual(kCTFontTableTrak, fourcc(b'trak'))
         self.assertEqual(kCTFontTableVhea, fourcc(b'vhea'))
         self.assertEqual(kCTFontTableVmtx, fourcc(b'vmtx'))
@@ -379,6 +411,12 @@ class TestCTFont (TestCase):
         v = CTFontGetTypeID()
         self.assertIsInstance(v, (int, long))
 
+        v, a = CTFontGetLigatureCaretPositions(font, gl[0], None, 5)
+        self.assertIsInstance(v, int)
+        self.assertIsInstance(a, tuple)
+        self.assertEqual(len(a), 5)
+        self.assertTrue(all(isinstance(x, float) for x in a))
+
     @min_os_level('10.6')
     def testFunctions10_6(self):
         self.assertResultIsCFRetained(CTFontCreateWithNameAndOptions)
@@ -397,15 +435,41 @@ class TestCTFont (TestCase):
         v = CTFontCreateWithFontDescriptorAndOptions(descr, 14.0, None, 0)
         self.assertIsInstance(v, CTFontRef)
 
-    @expectedFailure
     @min_os_level('10.7')
     def testFunctions10_7(self):
-        self.fail("CTFontDrawGlyphs")
+        self.assertArgHasType(CTFontDrawGlyphs, 0, b"^{__CTFont=}")
+        self.assertArgHasType(CTFontDrawGlyphs, 1, b"n^S")
+        self.assertArgSizeInArg(CTFontDrawGlyphs, 1, 3)
+        self.assertArgHasType(CTFontDrawGlyphs, 2, b"n^" + CGPoint.__typestr__)
+        self.assertArgSizeInArg(CTFontDrawGlyphs, 2, 3)
+        self.assertArgHasType(CTFontDrawGlyphs, 3, objc._C_NSUInteger)
+        self.assertArgHasType(CTFontDrawGlyphs, 4, b"^{CGContext=}")
 
-    @expectedFailure
+
     @min_os_level('10.8')
     def testFunctions10_8(self):
-        self.fail("CTFontGetOpticalBoundsForGlyps")
+
+        font = CTFontCreateUIFontForLanguage(
+                kCTFontMiniSystemFontType,
+                10.0, "nl_NL")
+        self.assertTrue(font is not None)
+        v, gl = CTFontGetGlyphsForCharacters(font,
+                b"hello".decode('latin1'), None, 5)
+        self.assertTrue(v)
+        self.assertIsInstance(gl, tuple)
+
+        v, r = CTFontGetOpticalBoundsForGlyphs(font, gl, None, 5, 0)
+        self.assertIsInstance(v, CGRect)
+        self.assertIsInstance(r, tuple)
+        self.assertEqual(len(r), 5)
+        self.assertIsInstance(r[0], CGRect)
+
+        self.assertResultIsCFRetained(CTFontCopyDefaultCascadeListForLanguages)
+
+    @min_os_level('10.10')
+    def testConstants10_10(self):
+        self.assertIsInstance(kCTFontOpenTypeFeatureTag, unicode)
+        self.assertIsInstance(kCTFontOpenTypeFeatureValue, unicode)
 
 if __name__ == "__main__":
     main()

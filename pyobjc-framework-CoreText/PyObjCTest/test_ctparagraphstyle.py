@@ -20,6 +20,12 @@ class TestCTParagraphStyle (TestCase):
         self.assertEqual(kCTJustifiedTextAlignment, 3)
         self.assertEqual(kCTNaturalTextAlignment, 4)
 
+        self.assertEqual(kCTTextAlignmentLeft, 0)
+        self.assertEqual(kCTTextAlignmentRight, 1)
+        self.assertEqual(kCTTextAlignmentCenter, 2)
+        self.assertEqual(kCTTextAlignmentJustified, 3)
+        self.assertEqual(kCTTextAlignmentNatural, 4)
+
         self.assertEqual(kCTLineBreakByWordWrapping, 0)
         self.assertEqual(kCTLineBreakByCharWrapping, 1)
         self.assertEqual(kCTLineBreakByClipping, 2)
@@ -48,6 +54,7 @@ class TestCTParagraphStyle (TestCase):
         self.assertEqual(kCTParagraphStyleSpecifierMaximumLineSpacing, 14)
         self.assertEqual(kCTParagraphStyleSpecifierMinimumLineSpacing, 15)
         self.assertEqual(kCTParagraphStyleSpecifierLineSpacingAdjustment, 16)
+        self.assertEqual(kCTParagraphStyleSpecifierLineBoundsOptions, 17)
 
     @min_os_level("10.8")
     def testConstants10_8(self):

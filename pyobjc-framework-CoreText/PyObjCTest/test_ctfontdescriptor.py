@@ -62,6 +62,43 @@ class TestCTFontDescriptor (TestCase):
         self.assertEqual(kCTFontPriorityDynamic,  50000)
         self.assertEqual(kCTFontPriorityProcess,  60000)
 
+    @min_os_level('10.7')
+    def testConstants10_7(self):
+        self.assertEqual(kCTFontOrientationDefault, 0)
+        self.assertEqual(kCTFontOrientationHorizontal, 1)
+        self.assertEqual(kCTFontOrientationVertical, 2)
+        self.assertEqual(kCTFontDefaultOrientation, kCTFontOrientationDefault)
+        self.assertEqual(kCTFontHorizontalOrientation, kCTFontOrientationHorizontal)
+        self.assertEqual(kCTFontVerticalOrientation, kCTFontOrientationVertical)
+
+
+    @min_os_level('10.8')
+    def testConstants10_8(self):
+        self.assertEqual(kCTFontDescriptorMatchingDidBegin, 0)
+        self.assertEqual(kCTFontDescriptorMatchingDidFinish, 1)
+        self.assertEqual(kCTFontDescriptorMatchingWillBeginQuerying, 2)
+        self.assertEqual(kCTFontDescriptorMatchingStalled, 3)
+        self.assertEqual(kCTFontDescriptorMatchingWillBeginDownloading, 4)
+        self.assertEqual(kCTFontDescriptorMatchingDownloading, 5)
+        self.assertEqual(kCTFontDescriptorMatchingDidFinishDownloading, 6)
+        self.assertEqual(kCTFontDescriptorMatchingDidMatch, 7)
+        self.assertEqual(kCTFontDescriptorMatchingDidFailWithError, 8)
+
+        self.assertIsInstance(kCTFontDownloadableAttribute, unicode)
+        self.assertIsInstance(kCTFontDescriptorMatchingSourceDescriptor, unicode)
+        self.assertIsInstance(kCTFontDescriptorMatchingDescriptors, unicode)
+        self.assertIsInstance(kCTFontDescriptorMatchingResult, unicode)
+        self.assertIsInstance(kCTFontDescriptorMatchingPercentage, unicode)
+        self.assertIsInstance(kCTFontDescriptorMatchingCurrentAssetSize, unicode)
+        self.assertIsInstance(kCTFontDescriptorMatchingTotalDownloadedSize, unicode)
+        self.assertIsInstance(kCTFontDescriptorMatchingTotalAssetSize, unicode)
+        self.assertIsInstance(kCTFontDescriptorMatchingError, unicode)
+
+    @min_os_level('10.9')
+    def testFunctions10_9(self):
+        CTFontDescriptorProgressHandler = objc_C_BOOL + objc._C_UINT + objc._C_ID
+        self.assertResultHasType(CTFontDescriptorMatchFontDescriptorsWithProgressHandler, objc._C_BOOL)
+        self.assertArgIsBlock(CTFontDescriptorMatchFontDescriptorsWithProgressHandler, 2, CTFontDescriptorProgressHandler)
 
 
     def testFunctions(self):
@@ -118,6 +155,10 @@ class TestCTFontDescriptor (TestCase):
         v = CTFontDescriptorGetTypeID()
         self.assertIsInstance(v, (int, long))
 
+    @min_os_level('10.9')
+    def testFunctions10_9(self):
+        self.assertResultIsCFRetained(CTFontDescriptorCreateCopyWithFamily)
+        self.assertResultIsCFRetained(CTFontDescriptorCreateCopyWithSymbolicTraits)
 
 
 

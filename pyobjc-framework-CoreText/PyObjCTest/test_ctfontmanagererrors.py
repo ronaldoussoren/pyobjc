@@ -20,7 +20,7 @@ class TestCTFontManagerErrors (TestCase):
 
         self.assertEqual(kCTFontManagerErrorNotRegistered, 201)
         self.assertEqual(kCTFontManagerErrorInUse, 202)
-        self.assertEqual(kCTFontManagerErrorSystemRequired, 202)
+        self.assertEqual(kCTFontManagerErrorSystemRequired, 203)
 
 
 if __name__ == "__main__":

@@ -26,12 +26,15 @@ class TestCTStringAttributes (TestCase):
         self.assertEqual(kCTUnderlinePatternDash,  0x0200)
         self.assertEqual(kCTUnderlinePatternDashDot,  0x0300)
         self.assertEqual(kCTUnderlinePatternDashDotDot,  0x0400)
+        self.assertEqual(kCTWritingDirectionEmbedding,  0)
+        self.assertEqual(kCTWritingDirectionOverride,  2)
 
     @min_os_level('10.5')
     def testConstants10_5(self):
         self.assertIsInstance(kCTForegroundColorFromContextAttributeName, unicode)
         self.assertIsInstance(kCTSuperscriptAttributeName, unicode)
         self.assertIsInstance(kCTCharacterShapeAttributeName, unicode)
+        self.assertIsInstance(kCTRunDelegateAttributeName, unicode)
 
     @min_os_level('10.6')
     def testConstants10_6(self):
@@ -45,6 +48,14 @@ class TestCTStringAttributes (TestCase):
         self.assertIsInstance(kCTBaselineInfoAttributeName, unicode)
         self.assertIsInstance(kCTBaselineReferenceInfoAttributeName, unicode)
         self.assertIsInstance(kCTWritingDirectionAttributeName, unicode)
+
+    @min_os_level('10.9')
+    def testConstants10_9(self):
+        self.assertIsInstance(kCTLanguageAttributeName, unicode)
+
+    @min_os_level('10.10')
+    def testConstants10_10(self):
+        self.assertIsInstance(kCTRubyAnnotationAttributeName, unicode)
 
 
 if __name__ == "__main__":

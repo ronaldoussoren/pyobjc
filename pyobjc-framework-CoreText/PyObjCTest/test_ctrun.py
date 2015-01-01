@@ -109,12 +109,9 @@ class TestCTRun (TestCase):
             self.assertIsInstance(r[i], CGSize)
 
 
-        try:
-            CTRunGetAdvancesPtr
-        except NameError:
-            pass
-        else:
-            self.fail("CTRunGetAdvancesPtr is defined")
+        v = CTRunGetAdvancesPtr(run)
+        self.assertIsInstance(v, objc.varlist)
+        self.assertIsInstance(v[0], CGSize)
 
 
 if __name__ == "__main__":

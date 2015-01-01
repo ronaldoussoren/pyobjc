@@ -24,6 +24,12 @@ class TestCTGlyphInfo (TestCase):
         self.assertEqual(kCTAdobeJapan2CharacterCollection, 4)
         self.assertEqual(kCTAdobeKorea1CharacterCollection, 5)
 
+        self.assertEqual(kCTCharacterCollectionIdentityMapping, 0)
+        self.assertEqual(kCTCharacterCollectionAdobeCNS1, 1)
+        self.assertEqual(kCTCharacterCollectionAdobeGB1, 2)
+        self.assertEqual(kCTCharacterCollectionAdobeJapan1, 3)
+        self.assertEqual(kCTCharacterCollectionAdobeJapan2, 4)
+        self.assertEqual(kCTCharacterCollectionAdobeKorea1, 5)
 
     def testFunctions(self):
         v = CTGlyphInfoGetTypeID()

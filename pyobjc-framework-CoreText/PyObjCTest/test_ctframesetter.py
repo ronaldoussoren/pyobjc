@@ -34,7 +34,6 @@ class TestCTFramesetter (TestCase):
     @min_os_level('10.5')
     @onlyIf(CGSize is not None, "CoreGraphics not available")
     def testMethods10_5(self):
-        #self.fail('CTFramesetterSuggestFrameSizeWithConstraints')
         setter = CTFramesetterCreateWithAttributedString(
                     CFAttributedStringCreate(None, b"hello".decode('latin1'), None))
         self.assertIsInstance(setter, CTFramesetterRef)

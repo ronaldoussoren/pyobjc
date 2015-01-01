@@ -45,5 +45,13 @@ class TestCTTypesetter (TestCase):
         v = CTTypesetterSuggestClusterBreak(ref, 0, 100.0)
         self.assertIsInstance(v, (int, long))
 
+    @min_os_level('10.6')
+    def testFunctions10_6(self):
+        self.assertResultIsCFRetained(CTTypesetterCreateLineWithOffset)
+        CTTypesetterSuggestLineBreakWithOffset
+        CTTypesetterSuggestLineBreak
+        CTTypesetterSuggestClusterBreakWithOffset
+
+
 if __name__ == "__main__":
     main()

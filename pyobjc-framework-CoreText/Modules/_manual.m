@@ -100,7 +100,7 @@ m_CTParagraphStyleGetTabStops(PyObject* self __attribute__((__unused__)),
         return Py_BuildValue("OO", Py_False, Py_None);
     }
 
-    result = Py_BuildValue("NN", PyBool_FromLong(b), PyObjC_IdToPython((NSObject*)output));
+    result = Py_BuildValue("NN", PyBool_FromLong(b), PyObjC_IdToPython((NSArray*)output));
     return result;
 }
 
@@ -219,7 +219,7 @@ m_CTParagraphStyleCreate(PyObject* self __attribute__((__unused__)),
             r = PyObject_AsReadBuffer(
                 PySequence_Fast_GET_ITEM(s, 2), &buf, &buflen);
             if (r != -1) {
-                if (buflen != cur->valueSize) {
+                if ((size_t)buflen != cur->valueSize) {
                     PyErr_Format(PyExc_ValueError,
                         "Got buffer of %ld bytes, need %ld bytes",
                         (long)buflen, (long)cur->valueSize);
@@ -267,6 +267,163 @@ m_CTParagraphStyleCreate(PyObject* self __attribute__((__unused__)),
 }
 
 
+static void
+m_CTRunDelegateDeallocateCallback(void* refCon)
+{
+    PyGILState_STATE state = PyGILState_Ensure();
+
+    Py_XDECREF((PyObject*)refCon);
+
+    PyGILState_Release(state);
+}
+
+static CGFloat
+m_CTRunDelegateGetAscentCallback(void* refCon)
+{
+    PyObject* info = (PyObject*)refCon;
+    PyObject* cb = PyTuple_GET_ITEM(info, 0);
+    PyObject* rc = PyTuple_GET_ITEM(info, 3);
+    CGFloat value;
+
+    PyGILState_STATE state = PyGILState_Ensure();
+
+    PyObject* rv = PyObject_CallFunction(cb, "O", rc);
+    if (rv == NULL) {
+        PyObjCErr_ToObjCWithGILState(&state);
+    }
+
+    if (PyObjC_PythonToObjC(@encode(CGFloat), rv, &value) < 0) {
+        Py_DECREF(rv);
+        PyObjCErr_ToObjCWithGILState(&state);
+    }
+
+    PyGILState_Release(state);
+    return value;
+}
+
+static CGFloat
+m_CTRunDelegateGetDescentCallback(void* refCon)
+{
+    PyObject* info = (PyObject*)refCon;
+    PyObject* cb = PyTuple_GET_ITEM(info, 1);
+    PyObject* rc = PyTuple_GET_ITEM(info, 3);
+    CGFloat value;
+
+    PyGILState_STATE state = PyGILState_Ensure();
+
+    PyObject* rv = PyObject_CallFunction(cb, "O", rc);
+    if (rv == NULL) {
+        PyObjCErr_ToObjCWithGILState(&state);
+    }
+
+    if (PyObjC_PythonToObjC(@encode(CGFloat), rv, &value) < 0) {
+        Py_DECREF(rv);
+        PyObjCErr_ToObjCWithGILState(&state);
+    }
+
+    PyGILState_Release(state);
+    return value;
+}
+
+static CGFloat
+m_CTRunDelegateGetWidthCallback(void* refCon)
+{
+    PyObject* info = (PyObject*)refCon;
+    PyObject* cb = PyTuple_GET_ITEM(info, 2);
+    PyObject* rc = PyTuple_GET_ITEM(info, 3);
+    CGFloat value;
+
+    PyGILState_STATE state = PyGILState_Ensure();
+
+    PyObject* rv = PyObject_CallFunction(cb, "O", rc);
+    if (rv == NULL) {
+        PyObjCErr_ToObjCWithGILState(&state);
+    }
+
+    if (PyObjC_PythonToObjC(@encode(CGFloat), rv, &value) < 0) {
+        Py_DECREF(rv);
+        PyObjCErr_ToObjCWithGILState(&state);
+    }
+
+    PyGILState_Release(state);
+    return value;
+}
+
+static CTRunDelegateCallbacks m_CTRunDelegateCallbacks = {
+    kCTRunDelegateCurrentVersion,
+    m_CTRunDelegateDeallocateCallback,
+    m_CTRunDelegateGetAscentCallback,
+    m_CTRunDelegateGetDescentCallback,
+    m_CTRunDelegateGetWidthCallback,
+};
+
+static PyObject*
+m_CTRunDelegateGetRefCon(PyObject* self __attribute__((__unused__)), PyObject* args)
+{
+    PyObject* py_delegate;
+    CTRunDelegateRef delegate;
+    PyObject* py_refcon;
+    void*  refcon;
+
+    if (!PyArg_ParseTuple(args, "O", &py_delegate)) {
+        return NULL;
+    }
+    if (PyObjC_PythonToObjC(@encode(CTRunDelegateRef), py_delegate, &delegate) == -1) {
+        return NULL;
+    }
+
+    refcon = CTRunDelegateGetRefCon(delegate);
+    if (refcon == NULL) {
+        Py_INCREF(Py_None);
+        return Py_None;
+    }
+
+    py_refcon = PyTuple_GET_ITEM((PyObject*)refcon, 3);
+    Py_INCREF(py_refcon);
+    return py_refcon;
+}
+
+
+static PyObject*
+m_CTRunDelegateCreate(PyObject* self __attribute__((__unused__)), PyObject* args)
+{
+    PyObject* py_delegate;
+    PyObject* py_getAscender;
+    PyObject* py_getDescender;
+    PyObject* py_getWidth;
+    PyObject* py_refCon;
+    PyObject* info;
+    CTRunDelegateRef delegate;
+
+    if (!PyArg_ParseTuple(args, "(OOO)O", &py_getAscender, &py_getDescender, &py_getWidth, &py_refCon)) {
+        return NULL;
+    }
+    if (!PyCallable_Check(py_getAscender)) {
+        PyErr_SetString(PyExc_TypeError, "getAscender is not callable");
+        return NULL;
+    }
+    if (!PyCallable_Check(py_getDescender)) {
+        PyErr_SetString(PyExc_TypeError, "getDescender is not callable");
+        return NULL;
+    }
+    if (!PyCallable_Check(py_getWidth)) {
+        PyErr_SetString(PyExc_TypeError, "getWidth is not callable");
+        return NULL;
+    }
+    info = Py_BuildValue("(OOOO)", py_getAscender, py_getDescender, py_getWidth, py_refCon);
+    if (info == NULL) {
+        return NULL;
+    }
+
+    delegate = CTRunDelegateCreate(&m_CTRunDelegateCallbacks, (void*)info);
+    if (delegate == NULL) {
+        Py_DECREF(info);
+        return NULL;
+    }
+    py_delegate = PyObjC_ObjCToPython(@encode(CTRunDelegateRef), &delegate);
+    CFRelease(delegate);
+    return py_delegate;
+}
 
 
 static PyMethodDef mod_methods[] = {
@@ -288,7 +445,18 @@ static PyMethodDef mod_methods[] = {
         METH_VARARGS,
         NULL,
     },
-
+    {
+        "CTRunDelegateGetRefCon",
+        (PyCFunction)m_CTRunDelegateGetRefCon,
+        METH_VARARGS,
+        NULL,
+    },
+    {
+        "CTRunDelegateCreate",
+        (PyCFunction)m_CTRunDelegateCreate,
+        METH_VARARGS,
+        "CTRunDelegateCreate((getAscent, getDescent, getWidth), info) -> runDelegate",
+    },
     { 0, 0, 0, }
 };
 

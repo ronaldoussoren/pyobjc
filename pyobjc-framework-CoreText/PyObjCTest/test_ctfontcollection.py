@@ -19,7 +19,30 @@ class TestCTFontCollection (TestCase):
     def testConstants(self):
         self.assertIsInstance(kCTFontCollectionRemoveDuplicatesOption, unicode)
 
+    @min_os_level('10.7')
+    def testConstants(self):
+        self.assertIsInstance(kCTFontCollectionIncludeDisabledFontsOption, unicode)
+        self.assertIsInstance(kCTFontCollectionDisallowAutoActivationOption, unicode)
+
+        self.assertEqual(kCTFontCollectionCopyDefaultOptions, 0)
+        self.assertEqual(kCTFontCollectionCopyUnique, 1 << 0)
+        self.assertEqual(kCTFontCollectionCopyStandardSort, 1 << 1)
+
+
+    @min_os_level('10.7')
+    def testFunctions10_7(self):
+        self.assertResultIsCFRetained(CTFontCollectionCreateMutableCopy)
+        self.assertResultIsCFRetained(CTFontCollectionCopyQueryDescriptors)
+        CTFontCollectionSetQueryDescriptors
+        self.assertResultIsCFRetained(CTFontCollectionCopyExclusionDescriptors)
+        CTFontCollectionSetExclusionDescriptors
+        self.assertResultIsCFRetained(CTFontCollectionCreateMatchingFontDescriptorsWithOptions)
+        self.assertResultIsCFRetained(CTFontCollectionCreateMatchingFontDescriptorsForFamily)
+        self.assertResultIsCFRetained(CTFontCollectionCopyFontAttribute)
+        self.assertResultIsCFRetained(CTFontCollectionCopyFontAttributes)
+
     def testFunctions(self):
+        self.assertResultIsCFRetained(CTFontCollectionCreateCopyWithFontDescriptors)
 
         v = CTFontCollectionCreateWithFontDescriptors([
             CTFontDescriptorCreateWithNameAndSize("Optima Bold", 14),

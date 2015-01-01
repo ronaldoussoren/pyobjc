@@ -24,7 +24,7 @@ API Notes
 
 * ``CTFontCopyAvailableTables``
 
-  This function returns a python tuple, not a ``CFArrayRef``. That's because the C version 
+  This function returns a python tuple, not a ``CFArrayRef``. That's because the C version
   returns a CFArray that doesn't contain objects.
 
 * ``CTParagraphStyleGetValueForSpecifier``
@@ -46,4 +46,13 @@ API Notes
   Use ``CTParagraphStyleGetTabStops`` to fetch the tabstops from a style object, using
   ``CTParagraphStyleGetValueSpecifieker`` is not supported with key ``kCTParagraphStyleSpecifierTabStops``.
 
-* ``CTRunGetAdvancesPtr`` is not supported, use ``CTRunGetAdvances`` instead.
+* All types and constants definied in "SFNTLayoutTypes.h" and "SFNTTypes.h" are not yet supported
+
+* ``CTRunDelegateGetRefCon``
+
+  This function is only supported when the *runDelegate* argument was created in Python.
+
+* ``CTRunDelegateCreate``
+
+  The first argument is a tuple with the ``getAscent``, ``getDescent`` and ``getWidth`` functions,
+  the second argument is an arbitrary python object.
