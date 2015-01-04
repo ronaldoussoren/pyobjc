@@ -15,6 +15,7 @@ FRAMEWORKS_WRAPPERS=[
         # Name                      Introcuded          Removed
         ('AddressBook',             None,               None        ),
         ('AppleScriptKit',          None,               None        ),
+        ('ApplicationServices',     None,               None        ),
         ('Automator',               None,               None        ),
         ('CFNetwork',               None,               None        ),
         ('Cocoa',                   None,               None        ),
