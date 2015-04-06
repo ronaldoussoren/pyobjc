@@ -21,8 +21,8 @@ from setuptools.command import test
 from setuptools.command import build_py
 from distutils.sysconfig import get_config_var, get_config_vars
 
-
 from distutils import log
+import shlex
 
 class oc_build_py (build_py.build_py):
     def build_packages(self):
@@ -186,6 +186,24 @@ def get_os_level():
     v = pl['ProductVersion']
     return '.'.join(v.split('.')[:2])
 
+def get_sdk_level():
+    cflags = get_config_var('CFLAGS')
+    cflags = shlex.split(cflags)
+    for i, val in enumerate(cflags):
+        if val == '-isysroot':
+            sdk = cflags[i+1]
+            break
+    else:
+        return None
+
+    if sdk == '/':
+        return get_os_level()
+
+    sdk = os.path.basename(sdk)
+    assert sdk.startswith('MacOSX')
+    assert sdk.endswith('.sdk')
+    return sdk[6:-4]
+
 class pyobjc_install_lib (install_lib.install_lib):
     def get_exclusions(self):
         result = install_lib.install_lib.get_exclusions(self)
@@ -220,7 +238,7 @@ def _find_executable(executable):
     return None
 
 def _working_compiler(executable):
-    import tempfile, subprocess, shlex
+    import tempfile, subprocess
     with tempfile.NamedTemporaryFile(mode='w', suffix='.c') as fp:
         fp.write('#include <stdarg.h>\nint main(void) { return 0; }\n')
         fp.flush()
@@ -338,7 +356,10 @@ def Extension(*args, **kwds):
     Simple wrapper about distutils.core.Extension that adds additional PyObjC
     specific flags.
     """
-    os_level = get_os_level()
+    os_level = get_sdk_level()
+    if os_level is None:
+        os_level = get_os_level()
+
     cflags =  ["-DPyObjC_BUILD_RELEASE=%02d%02d"%(tuple(map(int, os_level.split('.'))))]
     ldflags = []
     if 'clang' in get_config_var('CC'):
