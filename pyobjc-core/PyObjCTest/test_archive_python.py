@@ -901,6 +901,14 @@ class TestKeyedArchivePlainPython (TestCase, test.pickletester.AbstractPickleTes
     @onlyIf(0, "python unittest not relevant for archiving")
     def test_complex_newobj(self): pass
 
+    @onlyIf(0, "python unittest not relevant for archiving")
+    def test_compat_pickle(self): pass
+
+    @onlyIf(0, "python unittest not relevant for archiving")
+    def test_compat_unpickle(self): pass
+
+    @onlyIf(0, "python unittest not relevant for archiving")
+    def test_frame_readline(self): pass
 
 
 
@@ -1066,6 +1074,14 @@ class TestArchivePlainPython (TestKeyedArchivePlainPython):
     @onlyIf(0, "python unittest not relevant for archiving")
     def test_complex_newobj(self): pass
 
+    @onlyIf(0, "python unittest not relevant for archiving")
+    def test_compat_pickle(self): pass
+
+    @onlyIf(0, "python unittest not relevant for archiving")
+    def test_compat_unpickle(self): pass
+
+    @onlyIf(0, "python unittest not relevant for archiving")
+    def test_frame_readline(self): pass
 
 #
 # Disable testing of plain Archiving for now, need full support
