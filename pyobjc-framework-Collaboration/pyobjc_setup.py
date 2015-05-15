@@ -398,7 +398,9 @@ def setup(
 
     k = kwds.copy()
 
-    os_level = get_os_level()
+    os_level = get_sdk_level()
+    if os_level is None:
+        os_level = get_os_level()
     os_compatible = True
     if sys.platform != 'darwin':
         os_compatible = False

@@ -7,6 +7,7 @@ import plistlib
 import glob
 import site
 import platform
+import shlex
 
 try:
     import setuptools
@@ -22,9 +23,12 @@ from pkg_resources import working_set, normalize_path, add_activation_listener, 
 from setuptools import setup, Extension, find_packages
 from distutils import log
 from distutils.core import Command
+from distutils.sysconfig import get_config_var
 from distutils.errors import DistutilsPlatformError, DistutilsSetupError, DistutilsError
 from setuptools.command import build_py, test, egg_info
 from setuptools.command import build_ext, install_lib
+
+
 
 # We need at least Python 2.7
 MIN_PYTHON = (2, 7)
@@ -39,12 +43,37 @@ if sys.version_info < MIN_PYTHON:
 #
 #
 
+def get_os_level():
+    pl = plistlib.readPlist('/System/Library/CoreServices/SystemVersion.plist')
+    v = pl['ProductVersion']
+    return '.'.join(v.split('.')[:2])
+
+def get_sdk_level():
+    cflags = get_config_var('CFLAGS')
+    cflags = shlex.split(cflags)
+    for i, val in enumerate(cflags):
+        if val == '-isysroot':
+            sdk = cflags[i+1]
+            break
+    else:
+        return None
+
+    if sdk == '/':
+        return get_os_level()
+
+    sdk = os.path.basename(sdk)
+    assert sdk.startswith('MacOSX')
+    assert sdk.endswith('.sdk')
+    return sdk[6:-4]
+
+
+
 # CFLAGS for the objc._objc extension:
 CFLAGS = [
     "-DPyObjC_STRICT_DEBUGGING",
     "-DMACOSX", # For libffi
     "-DPyObjC_BUILD_RELEASE=%02d%02d"%(
-        tuple(map(int, platform.mac_ver()[0].split('.')[:2]))),
+        tuple(map(int, (get_sdk_level() or get_os_level()).split('.')))),
     "-DMACOSX",
     "-g",
     "-fexceptions",
