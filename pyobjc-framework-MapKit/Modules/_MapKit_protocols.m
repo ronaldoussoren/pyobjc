@@ -6,7 +6,7 @@
 
 static void __attribute__((__used__)) use_protocols(void)
 {
-    PyObject* p;
+    PyObject* p __attribute__((__unused__));
 #if defined(__LP64__) && PyObjC_BUILD_RELEASE >= 1009
     p = PyObjC_IdToPython(@protocol(MKAnnotation)); Py_XDECREF(p);
     p = PyObjC_IdToPython(@protocol(MKMapViewDelegate)); Py_XDECREF(p);

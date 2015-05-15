@@ -6,7 +6,7 @@
 
 static void __attribute__((__used__)) use_protocols(void)
 {
-    PyObject* p;
+    PyObject* p __attribute__((__unused__));
 #if PyObjC_BUILD_RELEASE >= 1007
     p = PyObjC_IdToPython(@protocol(SKPaymentTransactionObserver)); Py_XDECREF(p);
     p = PyObjC_IdToPython(@protocol(SKProductsRequestDelegate)); Py_XDECREF(p);

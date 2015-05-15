@@ -6,7 +6,7 @@
 
 static void __attribute__((__used__)) use_protocols(void)
 {
-    PyObject* p;
+    PyObject* p __attribute__((__unused__));
 #if defined(__x86_64__) && PyObjC_BUILD_RELEASE >= 1010
     p = PyObjC_IdToPython(@protocol(AVCaptureViewDelegate)); Py_XDECREF(p);
 #endif
