@@ -8,7 +8,7 @@ class TestCGPDFOperatorTable (TestCase):
         self.assertIsOpaquePointer(CGPDFOperatorTableRef)
 
     def testFunctions(self):
-        CGPDFOperatorCallback = b'v^{PDFScanner=}^v'
+        CGPDFOperatorCallback = b'v^{CGPDFScanner=}^v'
 
         self.assertArgIsFunction(CGPDFOperatorTableSetCallback, 2, CGPDFOperatorCallback, True)
 

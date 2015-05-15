@@ -461,6 +461,185 @@ m_CGBitmapContextCreateWithData(PyObject* self __attribute__((__unused__)),
 }
 #endif
 
+static PyObject*
+m_CGPDFObjectGetValue(PyObject* self __attribute__((__unused__)),
+        PyObject* args)
+{
+    bool res;
+    CGPDFObjectRef obj;
+    CGPDFObjectType type;
+    PyObject* p_obj;
+    PyObject* p_type;
+    PyObject* p_val;
+
+    if (!PyArg_ParseTuple(args, "OOO", &p_obj, &p_type, &p_val)) {
+        return NULL;
+    }
+    if (PyObjC_PythonToObjC(@encode(CGPDFObjectRef), p_obj, &obj) == -1) {
+        return NULL;
+    }
+    if (PyObjC_PythonToObjC(@encode(CGPDFObjectType), p_type, &type) == -1) {
+        return NULL;
+    }
+    if (p_val != Py_None && p_val != PyObjC_NULL) {
+        PyErr_SetString(PyExc_ValueError, "value must be None or objc.NULL");
+        return NULL;
+    }
+
+    switch (type) {
+    case kCGPDFObjectTypeNull:
+        {
+                res = CGPDFObjectGetValue(obj, type, NULL);
+                return Py_BuildValue("NO",
+                        PyBool_FromLong(res),
+                        Py_None);
+        }
+        break;
+
+    case kCGPDFObjectTypeBoolean:
+        {
+            if (p_val == Py_None) {
+                CGPDFBoolean val;
+                res = CGPDFObjectGetValue(obj, type, &val);
+                return Py_BuildValue("NN",
+                        PyBool_FromLong(res),
+                        PyBool_FromLong(val)
+                    );
+            } else {
+                res = CGPDFObjectGetValue(obj, type, NULL);
+                return Py_BuildValue("NO",
+                        PyBool_FromLong(res),
+                        Py_None);
+            }
+        }
+        break;
+
+    case kCGPDFObjectTypeInteger:
+        {
+            if (p_val == Py_None) {
+                CGPDFInteger val;
+                res = CGPDFObjectGetValue(obj, type, &val);
+                return Py_BuildValue("NN",
+                        PyBool_FromLong(res),
+                        PyLong_FromLong(val)
+                    );
+            } else {
+                res = CGPDFObjectGetValue(obj, type, NULL);
+                return Py_BuildValue("NO",
+                        PyBool_FromLong(res),
+                        Py_None);
+            }
+        }
+        break;
+    case kCGPDFObjectTypeReal:
+        {
+            if (p_val == Py_None) {
+                CGPDFReal val;
+                res = CGPDFObjectGetValue(obj, type, &val);
+                return Py_BuildValue("NN",
+                        PyBool_FromLong(res),
+                        PyFloat_FromDouble(val)
+                    );
+            } else {
+                res = CGPDFObjectGetValue(obj, type, NULL);
+                return Py_BuildValue("NO",
+                        PyBool_FromLong(res),
+                        Py_None);
+            }
+        }
+        break;
+    case kCGPDFObjectTypeName:
+        {
+            if (p_val == Py_None) {
+                char* val;
+                res = CGPDFObjectGetValue(obj, type, &val);
+                return Py_BuildValue("NN",
+                        PyBool_FromLong(res),
+                        PyText_FromString(val)
+                    );
+            } else {
+                res = CGPDFObjectGetValue(obj, type, NULL);
+                return Py_BuildValue("NO",
+                        PyBool_FromLong(res),
+                        Py_None);
+            }
+        }
+        break;
+    case kCGPDFObjectTypeString:
+        {
+            if (p_val == Py_None) {
+                CGPDFStringRef val;
+                res = CGPDFObjectGetValue(obj, type, &val);
+                return Py_BuildValue("NN",
+                        PyBool_FromLong(res),
+                        PyObjC_ObjCToPython(@encode(CGPDFStringRef), &val)
+                    );
+            } else {
+                res = CGPDFObjectGetValue(obj, type, NULL);
+                return Py_BuildValue("NO",
+                        PyBool_FromLong(res),
+                        Py_None);
+            }
+        }
+        break;
+    case kCGPDFObjectTypeArray:
+        {
+            if (p_val == Py_None) {
+                CGPDFArrayRef val;
+                res = CGPDFObjectGetValue(obj, type, &val);
+                return Py_BuildValue("NN",
+                        PyBool_FromLong(res),
+                        PyObjC_ObjCToPython(@encode(CGPDFArrayRef), &val)
+                    );
+            } else {
+                res = CGPDFObjectGetValue(obj, type, NULL);
+                return Py_BuildValue("NO",
+                        PyBool_FromLong(res),
+                        Py_None);
+            }
+        }
+        break;
+    case kCGPDFObjectTypeDictionary:
+        {
+            if (p_val == Py_None) {
+                CGPDFDictionaryRef val;
+                res = CGPDFObjectGetValue(obj, type, &val);
+                return Py_BuildValue("NN",
+                        PyBool_FromLong(res),
+                        PyObjC_ObjCToPython(@encode(CGPDFDictionaryRef), &val)
+                    );
+            } else {
+                res = CGPDFObjectGetValue(obj, type, NULL);
+                return Py_BuildValue("NO",
+                        PyBool_FromLong(res),
+                        Py_None);
+            }
+        }
+        break;
+    case kCGPDFObjectTypeStream:
+        {
+            if (p_val == Py_None) {
+                CGPDFStreamRef val;
+                res = CGPDFObjectGetValue(obj, type, &val);
+                return Py_BuildValue("NN",
+                        PyBool_FromLong(res),
+                        PyObjC_ObjCToPython(@encode(CGPDFStreamRef), &val)
+                    );
+            } else {
+                res = CGPDFObjectGetValue(obj, type, NULL);
+                return Py_BuildValue("NO",
+                        PyBool_FromLong(res),
+                        Py_None);
+            }
+        }
+        break;
+
+    default:
+        PyErr_SetString(PyExc_ValueError, "Invalid object type");
+        return NULL;
+    }
+}
+
 
 static PyMethodDef mod_methods[] = {
 #if PyObjC_BUILD_RELEASE >= 1005
@@ -503,7 +682,12 @@ static PyMethodDef mod_methods[] = {
         NULL
     },
 #endif
-
+    {
+        "CGPDFObjectGetValue",
+        (PyCFunction)m_CGPDFObjectGetValue,
+        METH_VARARGS,
+        NULL
+    },
 
     { 0, 0, 0, }
 };

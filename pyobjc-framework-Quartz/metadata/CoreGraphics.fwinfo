@@ -2818,6 +2818,7 @@
     }
    },
    "CGPDFObjectGetValue": {
+    "ignore": true,
     "args": {
      "0": { "type_override": "^{CGPDFObject=}" },
      "2": { "type_modifier": "o", "c_array_of_variable_length": true }
@@ -3781,6 +3782,9 @@
    }
   },
   "opaque": {
+   "CGPDFOperatorTableRef": {
+    "typestr": "^{CGPDFOperatorTable}"
+   },
    "CGDirectPaletteRef": {
     "typestr": "^{_CGDirectPaletteRef=}"
    },

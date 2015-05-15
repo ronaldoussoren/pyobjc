@@ -6,22 +6,18 @@
    "QCPlugIn": {
     "methods": [
      {
-      "retval": {
-       "already_retained": true
-      },
-      "selector": "createViewController",
-      "class_method": false
-     }
-    ]
-   },
-   "QCPlugIn": {
-    "methods": [
-     {
       "args": {
        "0": {}
       },
       "class_method": true,
       "selector": "registerPlugInClass:"
+     },
+     {
+      "retval": {
+       "already_retained": true
+      },
+      "selector": "createViewController",
+      "class_method": false
      }
     ]
    },
