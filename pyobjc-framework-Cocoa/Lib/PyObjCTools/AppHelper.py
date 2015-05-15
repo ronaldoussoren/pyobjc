@@ -14,7 +14,7 @@ __all__ = ( 'runEventLoop', 'runConsoleEventLoop', 'stopEventLoop', 'endSheetMet
 from AppKit import (NSApp, NSRunAlertPanel, NSApplicationMain,
                     NSApplicationDidFinishLaunchingNotification)
 from Foundation import (NSObject, NSRunLoop, NSTimer, NSDefaultRunLoopMode,
-                        NSNotificationCenter, NSLog, NSAutoreleasePool)
+                        NSNotificationCenter, NSLog, NSAutoreleasePool, NSDate)
 
 import os
 import sys
@@ -166,7 +166,7 @@ def installMachInterrupt():
     MachSignals.signal(signal.SIGINT, machInterrupt)
 
 
-def runConsoleEventLoop(argv=None, installInterrupt=False, mode=NSDefaultRunLoopMode):
+def runConsoleEventLoop(argv=None, installInterrupt=False, mode=NSDefaultRunLoopMode, maxTimeout=3.0):
     if argv is None:
         argv = sys.argv
     if installInterrupt:
@@ -180,6 +180,9 @@ def runConsoleEventLoop(argv=None, installInterrupt=False, mode=NSDefaultRunLoop
             nextfire = runLoop.limitDateForMode_(mode)
             if not stopper.shouldRun():
                 break
+
+            soon = NSDate.dateWithTimeIntervalSinceNow_(maxTimeout)
+            nextfire = nextfire.earlierDate_(soon)
             if not runLoop.runMode_beforeDate_(mode, nextfire):
                 stopper.stop()
 

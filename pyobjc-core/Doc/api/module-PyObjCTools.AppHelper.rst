@@ -20,17 +20,22 @@ This module exports functions that are useful when working with the
 
     Convert a method to a form that is suitable to use as the delegate callback
     for sheet methods.
-    
+
     :rtype: selector
 
 .. function:: stopEventLoop()
 
-    Stops the event loop (if started by ``runConsoleEventLoop``) or sends the
+    Stops the event loop (if started by :func:`runConsoleEventLoop`) or sends the
     ``NSApplication`` a ``terminate:`` message.
 
-.. function:: runConsoleEventLoop(argv=None, installInterrupt=False, mode=NSDefaultRunLoopMode)
+.. function:: runConsoleEventLoop(argv=None, installInterrupt=False, mode=NSDefaultRunLoopMode, maxTimeout=3.0)
 
-    Run a ``NSRunLoop`` in a stoppable way (with ``stopEventLoop``).
+    Run a ``NSRunLoop`` in a stoppable way (with ``stopEventLoop``). The
+    maximum delay between a call to :func:`stopEventLoop` and actually stopping
+    the runloop is *maxTimeout* seconds.
+
+    .. versionadded: 3.1
+       The *maxTimeout* parameter
 
 .. function:: runEventLoop(argv=None, unexpectedErrorAlert=unexpectedErrorAlert, installInterrupt=None, pdb=None, main=NSApplicationMain)
 
