@@ -64,6 +64,11 @@ class TestCVPixelFormatDescription (TestCase):
     def testConstants10_7(self):
         self.assertIsInstance(kCVPixelFormatContainsAlpha, unicode)
 
+    @min_os_level('10.10')
+    def testConstants10_10(self):
+        self.assertIsInstance(kCVPixelFormatContainsYCbCr, unicode)
+        self.assertIsInstance(kCVPixelFormatContainsRGB, unicode)
+
 
 
 if __name__ == "__main__":

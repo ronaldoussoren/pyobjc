@@ -232,7 +232,7 @@ m_CGDataProviderGetBytesCallback(
                 PyObjCErr_ToObjCWithGILState(&state);
         }
 
-            if (c < c_result || c > count) {
+            if ((size_t)c < c_result || (size_t)c > count) {
             PyErr_SetString(PyExc_ValueError,
                 "Inconsistent size");
             Py_DECREF(result);
@@ -420,7 +420,7 @@ m_CGDataProviderGetBytesAtOffsetCallback(void* _info, void* buffer,
             PyObjCErr_ToObjCWithGILState(&state);
         }
 
-        if (c < c_result || c > count) {
+        if ((size_t)c < c_result || (size_t)c > count) {
             PyErr_SetString(PyExc_ValueError,
                 "Inconsistent size");
             Py_DECREF(result);

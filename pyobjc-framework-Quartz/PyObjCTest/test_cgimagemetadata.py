@@ -104,6 +104,10 @@ class TestCGImageMetadata (TestCase):
         self.assertEqual(Quartz.kCGImageMetadataErrorConflictingArguments, 3)
         self.assertEqual(Quartz.kCGImageMetadataErrorPrefixConflict, 4)
 
+    @min_os_level('10.9')
+    def testConstants10_9(self):
+        self.assertIsInstance(Quartz.kCGImageMetadataNamespaceExifEX, unicode)
+        self.assertIsInstance(Quartz.kCGImageMetadataPrefixExifEX, unicode)
 
 
 if __name__ == "__main__":

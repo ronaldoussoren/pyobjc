@@ -2,6 +2,9 @@
 # for information on how to update this file.
 {
  "definitions": {
+  "enum": {
+   "CGGlyphMax": { "value": 65534 }
+  },
   "cftypes": {
    "CGColorRef": {
     "gettypeid_func": "CGColorGetTypeID",
@@ -104,6 +107,16 @@
   },
   "formal_protocols": {},
   "functions": {
+   "CGPathCreateWithRoundedRect": {
+    "args": {
+     "3": { "type_modifier": "n" }
+    }
+   },
+   "CGPathAddRoundedRect": {
+    "args": {
+     "1": { "type_modifier": "n" }
+    }
+   },
    "CGAcquireDisplayFadeReservation": {
     "args": {
      "1": { "type_modifier": "o" }

@@ -32,5 +32,10 @@ class TestQLPreviewPanel (TestCase):
         self.assertResultHasType(TestQLPreviewPanelHelper.previewPanel_sourceFrameOnScreenForPreviewItem_, NSRect.__typestr__)
         self.assertArgHasType(TestQLPreviewPanelHelper.previewPanel_transitionImageForPreviewItem_contentRect_, 2, objc._C_PTR + NSRect.__typestr__)
 
+    @min_os_level('10.6')
+    def testProtocols(self):
+        objc.protocolNamed('QLPreviewPanelDelegate')
+
+
 if __name__ == "__main__":
     main()

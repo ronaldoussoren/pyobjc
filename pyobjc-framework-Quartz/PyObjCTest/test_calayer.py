@@ -78,6 +78,10 @@ class TestCALayer (TestCase):
     def testConstants10_6(self):
         self.assertIsInstance(kCAFilterTrilinear, unicode)
 
+    @min_os_level('10.6')
+    def testProtocols(self):
+        objc.protocolNamed('CAAction')
+
 
 if __name__ == "__main__":
     main()

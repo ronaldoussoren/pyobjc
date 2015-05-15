@@ -45,6 +45,20 @@ class TestCVPixelBuffer (TestCase):
         self.assertEqual(kCVPixelFormatType_422YpCbCr10, fourcc(b'v210'))
         self.assertEqual(kCVPixelFormatType_444YpCbCr10, fourcc(b'v410'))
         self.assertEqual(kCVPixelFormatType_420YpCbCr8Planar, fourcc(b'y420'))
+        self.assertEqual(kCVPixelFormatType_420YpCbCr8PlanarFullRange, fourcc(b'f420'))
+        self.assertEqual(kCVPixelFormatType_422YpCbCr_4A_8BiPlanar, fourcc(b'a2vy'))
+        self.assertEqual(kCVPixelFormatType_420YpCbCr8BiPlanarVideoRange, fourcc(b'420v'))
+        self.assertEqual(kCVPixelFormatType_420YpCbCr8BiPlanarFullRange, fourcc(b'420f'))
+        self.assertEqual(kCVPixelFormatType_422YpCbCr8_yuvs, fourcc(b'yuvs'))
+        self.assertEqual(kCVPixelFormatType_422YpCbCr8FullRange, fourcc(b'yuvf'))
+        self.assertEqual(kCVPixelFormatType_OneComponent8, fourcc(b'L008'))
+        self.assertEqual(kCVPixelFormatType_TwoComponent8, fourcc(b'2C08'))
+        self.assertEqual(kCVPixelFormatType_OneComponent16Half, fourcc(b'L00h'))
+        self.assertEqual(kCVPixelFormatType_OneComponent32Float, fourcc(b'L00f'))
+        self.assertEqual(kCVPixelFormatType_TwoComponent16Half, fourcc(b'2C0h'))
+        self.assertEqual(kCVPixelFormatType_TwoComponent32Float, fourcc(b'2C0f'))
+        self.assertEqual(kCVPixelFormatType_64RGBAHalf, fourcc(b'RGhA'))
+        self.assertEqual(kCVPixelFormatType_128RGBAFloat, fourcc(b'RGfA'))
 
         self.assertIsInstance(kCVPixelBufferPixelFormatTypeKey, unicode)
         self.assertIsInstance(kCVPixelBufferMemoryAllocatorKey, unicode)
@@ -67,10 +81,19 @@ class TestCVPixelBuffer (TestCase):
         self.assertIsInstance(v.offset, (int, long))
         self.assertIsInstance(v.rowBytes, (int, long))
 
+        # XXX: Type needs more work (unconstrained C array) in componentInfo:
+        v = CVPlanarPixelBufferInfo()
+        self.assertEqual(v.componentInfo, None)
+
         v = CVPlanarPixelBufferInfo_YCbCrPlanar()
-        self.assertIsInstance(v.componentInfoY, CVPlanarComponentInfo)
-        self.assertIsInstance(v.componentInfoCb, CVPlanarComponentInfo)
-        self.assertIsInstance(v.componentInfoCr, CVPlanarComponentInfo)
+        self.assertEqual(v.componentInfoY, CVPlanarComponentInfo())
+        self.assertEqual(v.componentInfoCb, CVPlanarComponentInfo())
+        self.assertEqual(v.componentInfoCr, CVPlanarComponentInfo())
+
+
+        v = CVPlanarPixelBufferInfo_YCbCrBiPlanar()
+        self.assertEqual(v.componentInfoY, CVPlanarComponentInfo())
+        self.assertEqual(v.componentInfoCbCr, CVPlanarComponentInfo())
 
     def testFunctions(self):
         self.assertIsInstance(CVPixelBufferGetTypeID(), (int, long))

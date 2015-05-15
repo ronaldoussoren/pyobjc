@@ -93,13 +93,17 @@ class TestCGImageDestination (TestCase):
         self.assertIsInstance(kCGImageDestinationDateTime, unicode)
         self.assertIsInstance(kCGImageDestinationOrientation, unicode)
 
+    @min_os_level('10.10')
+    def testConstants10_10(self):
+        self.assertIsInstance(kCGImageDestinationImageMaxPixelSize, unicode)
+        self.assertIsInstance(kCGImageDestinationEmbedThumbnail, unicode)
+        self.assertIsInstance(kCGImageMetadataShouldExcludeGPS, unicode)
+
     @min_os_level('10.8')
     def testFunctions10_8(self):
         CGImageDestinationAddImageAndMetadata
         self.assertResultHasType(CGImageDestinationCopyImageSource, objc._C_BOOL)
         self.assertArgIsOut(CGImageDestinationCopyImageSource, 3)
-
-
 
 
 if __name__ == "__main__":

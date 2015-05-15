@@ -7,7 +7,7 @@ try:
 except NameError:
     unicode = str
 
-if os_release() >= '10.5':
+if os_level_key(os_release()) >= os_level_key('10.5'):
     class TestCAMediaTimingHelper (NSObject):
         __pyobjc_protocols__ = [objc.protocolNamed('CAMediaTiming')]
 
@@ -55,6 +55,9 @@ class TestCAMediaTiming (TestCase):
         self.assertResultHasType(TestCAMediaTimingHelper.fillMode, objc._C_ID)
         self.assertArgHasType(TestCAMediaTimingHelper.setFillMode_, 0, objc._C_ID)
 
+    @min_os_level('10.5')
+    def testProtocols(self):
+        objc.protocolNamed('CAMediaTiming')
 
 if __name__ == "__main__":
     main()

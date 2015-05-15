@@ -16,6 +16,11 @@ class TestCGGeometry (TestCase):
         self.assertIsInstance(v.origin, CGPoint)
         self.assertIsInstance(v.size, CGSize)
 
+        v = CGVector()
+        self.assertIsInstance(v.dx, float)
+        self.assertIsInstance(v.dy, float)
+
+
     def testConstants(self):
         self.assertEqual(CGRectMinXEdge, 0)
         self.assertEqual(CGRectMinYEdge, 1)
@@ -47,6 +52,7 @@ class TestCGGeometry (TestCase):
         self.assertIsInstance(v, CGSize)
         self.assertEqual(v.width, 2.5)
         self.assertEqual(v.height, 3.5)
+
 
         v = CGRectMake(2.5, 3.5, 15.5, 25.5)
         self.assertIsInstance(v, CGRect)
@@ -164,6 +170,12 @@ class TestCGGeometry (TestCase):
         self.assertIsInstance(p, CGRect)
         self.assertEqual(p, CGRectMake(0, 10, 20, 30))
 
+    @min_os_level('10.9')
+    def testFunctions10_9(self):
+        v = CGVectorMake(2.5, 3.5)
+        self.assertIsInstance(v, CGVector)
+        self.assertEqual(v.dx, 2.5)
+        self.assertEqual(v.dy, 3.5)
 
 
 if __name__ == "__main__":

@@ -32,5 +32,8 @@ class TestIKCameraDeviceView (TestCase):
 
         self.assertArgIsBOOL(IKCameraDeviceView.selectIndexes_byExtendingSelection_, 1)
 
+    def testProtocols(self):
+        objc.protocolNamed('IKCameraDeviceViewDelegate')
+
 if __name__ == "__main__":
     main()

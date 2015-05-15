@@ -207,6 +207,15 @@ class TestCGImageProperties (TestCase):
         self.assertIsInstance(kCGImagePropertyIPTCLanguageIdentifier, unicode)
         self.assertIsInstance(kCGImagePropertyIPTCStarRating, unicode)
 
+        self.assertEqual(kCGImagePropertyOrientationUp, 1)
+        self.assertEqual(kCGImagePropertyOrientationUpMirrored, 2)
+        self.assertEqual(kCGImagePropertyOrientationDown, 3)
+        self.assertEqual(kCGImagePropertyOrientationDownMirrored, 4)
+        self.assertEqual(kCGImagePropertyOrientationLeftMirrored, 5)
+        self.assertEqual(kCGImagePropertyOrientationRight, 6)
+        self.assertEqual(kCGImagePropertyOrientationRightMirrored, 7)
+        self.assertEqual(kCGImagePropertyOrientationLeft, 8)
+
 
 
     @min_os_level('10.5')
@@ -321,6 +330,20 @@ class TestCGImageProperties (TestCase):
         self.assertIsInstance(kCGImagePropertyExifLensMake, unicode)
         self.assertIsInstance(kCGImagePropertyExifLensModel, unicode)
         #self.assertIsInstance(kCGImagePropertyExifLensSerialNumber, unicode)
+
+    @min_os_level('10.9')
+    def testConstants10_9(self):
+        self.assertIsInstance(kCGImagePropertyOpenEXRDictionary, unicode)
+        self.assertIsInstance(kCGImagePropertyOpenEXRAspectRatio, unicode)
+
+    @min_os_level('10.10')
+    def testConstants10_10(self):
+        self.assertIsInstance(kCGImagePropertyMakerAppleDictionary, unicode)
+        self.assertIsInstance(kCGImagePropertyAPNGLoopCount, unicode)
+        self.assertIsInstance(kCGImagePropertyAPNGDelayTime, unicode)
+        self.assertIsInstance(kCGImagePropertyAPNGUnclampedDelayTime, unicode)
+        self.assertIsInstance(kCGImagePropertyGPSHPositioningError, unicode)
+        self.assertIsInstance(kCGImageProperty8BIMVersion, unicode)
 
 if __name__ == "__main__":
     main()

@@ -16,6 +16,8 @@ class TestCVReturn (TestCase):
         self.assertEqual(kCVReturnInvalidSize, -6681)
         self.assertEqual(kCVReturnInvalidPixelBufferAttributes, -6682)
         self.assertEqual(kCVReturnPixelBufferNotOpenGLCompatible, -6683)
+        self.assertEqual(kCVReturnPixelBufferNotMetalCompatible, -6684)
+        self.assertEqual(kCVReturnWouldExceedAllocationThreshold, -6689)
         self.assertEqual(kCVReturnPoolAllocationFailed, -6690)
         self.assertEqual(kCVReturnInvalidPoolAttributes, -6691)
 

@@ -174,7 +174,30 @@ class TestCGPath (TestCase):
         CGPathMoveToPoint(path, transform, 10, 30)
         CGPathAddRelativeArc(path, transform, 80, 90, 22.5, 33.0, 5.0)
 
+    @min_os_level('10.9')
+    def testFunctions10_9(self):
+
+        path = CGPathCreateMutable()
+        self.assertIsInstance(path, CGPathRef)
+
+        transform = CGAffineTransformIdentity
+
+        self.assertResultIsCFRetained(CGPathCreateWithRoundedRect)
+        v = CGPathCreateWithRoundedRect(CGRectMake(100, 200, 300, 400), 2, 4, transform)
+        self.assertIsInstance(v, CGPathRef)
+
+        CGPathAddRoundedRect(path, transform, CGRectMake(100, 200, 300, 400), 2, 3)
+
+
     def testConstants(self):
+        self.assertEqual(kCGLineJoinMiter, 0)
+        self.assertEqual(kCGLineJoinRound, 1)
+        self.assertEqual(kCGLineJoinBevel, 2)
+
+        self.assertEqual(kCGLineCapButt, 0)
+        self.assertEqual(kCGLineCapRound, 1)
+        self.assertEqual(kCGLineCapSquare, 2)
+
         self.assertEqual(kCGPathElementMoveToPoint, 0)
         self.assertEqual(kCGPathElementAddLineToPoint, 1)
         self.assertEqual(kCGPathElementAddQuadCurveToPoint, 2)

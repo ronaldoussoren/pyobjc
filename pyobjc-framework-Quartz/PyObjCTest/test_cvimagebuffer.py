@@ -82,6 +82,10 @@ class TestCVImageBuffer (TestCase):
     def testConstants10_8(self):
         self.assertIsInstance(kCVImageBufferColorPrimaries_P22, unicode)
 
+    @min_os_level('10.10')
+    def testConstants10_10(self):
+        self.assertIsInstance(kCVImageBufferAlphaChannelIsOpaque, unicode)
+
     @min_os_level('10.8')
     def testFunctions10_8(self):
         self.assertResultIsCFRetained(CVImageBufferCreateColorSpaceFromAttachments)

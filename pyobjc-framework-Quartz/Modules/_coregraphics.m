@@ -520,7 +520,7 @@ PyObjC_MODULE_INIT(_coregraphics)
 
     if (PyObjC_ImportAPI(m) < 0) PyObjC_INITERROR();
 
-#if PyObjC_BUILD_RELEASE >= 1005
+#if PyObjC_BUILD_RELEASE >= 1005 && (MAC_OS_X_VERSION_MIN_REQUIRED < MAC_OS_X_VERSION_10_5)
     if (CGFontCopyTableTags == NULL) {
         if (PyDict_DelItemString(d, "CGFontCopyTableTags") < 0) {
             PyObjC_INITERROR();

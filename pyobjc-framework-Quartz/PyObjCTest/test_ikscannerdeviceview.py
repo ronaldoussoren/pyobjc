@@ -3,6 +3,10 @@ from PyObjCTools.TestSupport import *
 
 class TestIKScannerDeviceView (TestCase):
     @min_os_level('10.6')
+    def testProtocols10_6(self):
+        objc.protocolNamed('IKScannerDeviceViewDelegate')
+
+    @min_os_level('10.6')
     def testConstants10_6(self):
         self.assertEqual(IKScannerDeviceViewTransferModeFileBased, 0)
         self.assertEqual(IKScannerDeviceViewTransferModeMemoryBased, 1)

@@ -62,6 +62,9 @@ class TestQCPlugIn (TestCase):
 
     @expectedFailure
     def testProtocols(self):
+        objc.protocolNamed('QCPlugInContext')
+        objc.protocolNamed('QCPlugInInputImageSource')
+        objc.protocolNamed('QCPlugInOutputImageProvider')
         self.fail("Test interface for QCPlugInContext")
 
 if __name__ == "__main__":

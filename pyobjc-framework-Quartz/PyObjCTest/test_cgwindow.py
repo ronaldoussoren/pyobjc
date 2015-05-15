@@ -15,6 +15,8 @@ except NameError:
 class TestCGWindow (TestCase):
     def testConstants(self):
         self.assertEqual(kCGWindowIDCFNumberType, kCFNumberSInt32Type)
+        self.assertEqual(kCGWindowSharingCFNumberType, kCFNumberSInt32Type)
+        self.assertEqual(kCGWindowBackingCFNumberType, kCFNumberSInt32Type)
         self.assertEqual(kCGNullWindowID, 0)
         self.assertEqual(kCGWindowSharingNone, 0)
         self.assertEqual(kCGWindowSharingReadOnly, 1)
@@ -48,6 +50,14 @@ class TestCGWindow (TestCase):
         self.assertEqual(kCGWindowImageBoundsIgnoreFraming, (1 << 0))
         self.assertEqual(kCGWindowImageShouldBeOpaque, (1 << 1))
         self.assertEqual(kCGWindowImageOnlyShadows, (1 << 2))
+
+        self.assertEqual(kCGWindowImageDefault, 0)
+        self.assertEqual(kCGWindowImageBoundsIgnoreFraming, (1 << 0))
+        self.assertEqual(kCGWindowImageShouldBeOpaque, (1 << 1))
+        self.assertEqual(kCGWindowImageOnlyShadows, (1 << 2))
+        self.assertEqual(kCGWindowImageBestResolution, (1 << 3))
+        self.assertEqual(kCGWindowImageNominalResolution, (1 << 4))
+
 
 
     def testFunctions(self):

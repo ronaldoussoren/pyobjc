@@ -9,6 +9,7 @@ import objc
 import Cocoa
 
 from Quartz.ImageKit import _metadata
+import Quartz.ImageKit._imagekit
 
 objc.addConvenienceForBasicMapping('IKImageBrowserGridGroup', False)
 objc.addConvenienceForBasicMapping('IKImageCell', False)

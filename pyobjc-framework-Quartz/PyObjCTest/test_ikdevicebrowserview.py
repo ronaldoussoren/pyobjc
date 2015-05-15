@@ -22,8 +22,8 @@ class TestIKDeviceBrowserView (TestCase):
         self.assertResultIsBOOL(IKDeviceBrowserView.displaysNetworkScanners)
         self.assertArgIsBOOL(IKDeviceBrowserView.setDisplaysNetworkScanners_, 0)
 
-if __name__ == "__main__":
-    main()
+    def testProtocols(self):
+        objc.protocolNamed('IKDeviceBrowserViewDelegate')
 
 if __name__ == "__main__":
     main()

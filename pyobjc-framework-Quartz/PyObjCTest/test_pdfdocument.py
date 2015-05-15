@@ -13,6 +13,10 @@ class TestPDFDocument (TestCase):
         self.assertEqual(kPDFPrintPageScaleToFit, 1)
         self.assertEqual(kPDFPrintPageScaleDownToFit, 2)
 
+        self.assertEqual(kPDFDocumentPermissionsNone, 0)
+        self.assertEqual(kPDFDocumentPermissionsUser, 1)
+        self.assertEqual(kPDFDocumentPermissionsOwner, 2)
+
         self.assertIsInstance(PDFDocumentDidUnlockNotification, unicode)
         self.assertIsInstance(PDFDocumentDidBeginFindNotification, unicode)
         self.assertIsInstance(PDFDocumentDidEndFindNotification, unicode)

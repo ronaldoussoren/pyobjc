@@ -28,6 +28,10 @@ class TestCGImageSource (TestCase):
         self.assertIsInstance(Quartz.kCGImageSourceThumbnailMaxPixelSize, unicode)
         self.assertIsInstance(Quartz.kCGImageSourceCreateThumbnailWithTransform, unicode)
 
+    @min_os_level('10.9')
+    def testConstants10_9(self):
+        self.assertIsInstance(Quartz.kCGImageSourceShouldCacheImmediately, unicode)
+
     def testTypes(self):
         self.assertIsCFType(Quartz.CGImageSourceRef)
 
@@ -56,6 +60,10 @@ class TestCGImageSource (TestCase):
     @min_os_level('10.8')
     def testFunctions10_8(self):
         self.assertResultIsCFRetained(Quartz.CGImageSourceCopyMetadataAtIndex)
+
+    @min_os_level('10.9')
+    def testFunctions10_9(self):
+        Quartz.CGImageSourceRemoveCacheAtIndex
 
 if __name__ == "__main__":
     main()
