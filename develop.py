@@ -13,6 +13,9 @@ import shutil
 import subprocess
 import sys
 import platform
+import shlex
+from distutils.sysconfig import get_config_var
+
 
 TOPDIR = os.path.dirname(os.path.abspath(__file__))
 
@@ -92,15 +95,37 @@ def topological_sort(items, partial_order):
         return None
     return sorted
 
+def get_os_level():
+    pl = plistlib.readPlist('/System/Library/CoreServices/SystemVersion.plist')
+    v = pl['ProductVersion']
+    return '.'.join(v.split('.')[:2])
+
+def get_sdk_level():
+    cflags = get_config_var('CFLAGS')
+    cflags = shlex.split(cflags)
+    for i, val in enumerate(cflags):
+        if val == '-isysroot':
+            sdk = cflags[i+1]
+            break
+    else:
+        return None
+
+    if sdk == '/':
+        return get_os_level()
+
+    sdk = os.path.basename(sdk)
+    assert sdk.startswith('MacOSX')
+    assert sdk.endswith('.sdk')
+    return sdk[6:-4]
+
 
 def sorted_framework_wrappers():
     frameworks = []
     partial_order = []
-    cur_platform = '.'.join(platform.mac_ver()[0].split('.')[:2])
+    cur_platform = get_sdk_level() or get_os_level()
     for subdir in os.listdir(TOPDIR):
         if not subdir.startswith('pyobjc-framework-'):
             continue
-
 
         setup = os.path.join(TOPDIR, subdir, 'setup.py')
         in_requires = False
