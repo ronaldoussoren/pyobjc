@@ -512,7 +512,7 @@
           "class_method": false,
           "retval": {
              "callable": {
-               "arguments": {        
+               "arguments": {
                  "0": { "typestr": "^v" },
                  "1": { "typestr": "@" },
                  "2": { "typestr": "@" },
@@ -528,7 +528,7 @@
           "arguments": {
            "2": {
              "callable": {
-               "arguments": {        
+               "arguments": {
                  "0": { "typestr": "^v" },
                  "1": { "typestr": "@" },
                  "2": { "typestr": "@" },
@@ -548,7 +548,7 @@
           "class_method": false,
           "retval": {
              "callable": {
-               "arguments": {        
+               "arguments": {
                  "0": { "typestr": "^v" },
                  "1": { "typestr": "@" },
                  "2": { "typestr": "@" },
@@ -564,7 +564,7 @@
           "arguments": {
             "2": {
              "callable": {
-               "arguments": {        
+               "arguments": {
                  "0": { "typestr": "^v" },
                  "1": { "typestr": "@" },
                  "2": { "typestr": "@" },
@@ -584,7 +584,7 @@
           "class_method": false,
           "retval": {
              "callable": {
-               "arguments": {        
+               "arguments": {
                  "0": { "typestr": "^v" },
                  "1": { "typestr": "@" },
                  "2": { "typestr": "@" },
@@ -600,7 +600,7 @@
           "arguments": {
            "2": {
              "callable": {
-               "arguments": {        
+               "arguments": {
                  "0": { "typestr": "^v" },
                  "1": { "typestr": "@" },
                  "2": { "typestr": "@" },
@@ -616,7 +616,7 @@
           "class_method": false,
           "retval": {
              "callable": {
-               "arguments": {        
+               "arguments": {
                  "0": { "typestr": "^v" },
                  "1": { "typestr": "@" }
                },
@@ -630,7 +630,7 @@
           "arguments": {
            "2": {
              "callable": {
-               "arguments": {        
+               "arguments": {
                  "0": { "typestr": "^v" },
                  "1": { "typestr": "@" }
                },
@@ -644,7 +644,7 @@
           "class_method": false,
           "retval": {
              "callable": {
-               "arguments": {        
+               "arguments": {
                  "0": { "typestr": "^v" },
                  "1": { "typestr": "@" },
                  "2": { "typestr": "d" }
@@ -659,7 +659,7 @@
           "arguments": {
            "2": {
              "callable": {
-               "arguments": {        
+               "arguments": {
                  "0": { "typestr": "^v" },
                  "1": { "typestr": "@" },
                  "2": { "typestr": "d" }
@@ -678,7 +678,7 @@
           "class_method": false,
           "retval": {
              "callable": {
-               "arguments": {        
+               "arguments": {
                  "0": { "typestr": "^v" },
                  "1": { "typestr": "@" },
                  "2": { "typestr": "@" }
@@ -693,7 +693,7 @@
           "arguments": {
            "2": {
              "callable": {
-               "arguments": {        
+               "arguments": {
                  "0": { "typestr": "^v" },
                  "1": { "typestr": "@" },
                  "2": { "typestr": "@" }
@@ -712,7 +712,7 @@
           "class_method": false,
           "retval": {
              "callable": {
-               "arguments": {        
+               "arguments": {
                  "0": { "typestr": "^v" },
                  "1": { "typestr": "@" },
                  "2": { "typestr": "@" }
@@ -727,7 +727,7 @@
           "arguments": {
            "2": {
              "callable": {
-               "arguments": {        
+               "arguments": {
                  "0": { "typestr": "^v" },
                  "1": { "typestr": "@" },
                  "2": { "typestr": "@" }
@@ -746,69 +746,7 @@
           "class_method": false,
           "retval": {
              "callable": {
-               "arguments": {        
-                 "0": { "typestr": "^v" },
-                 "1": { "typestr": "@" },
-                 "2": { "typestr": "d" }
-               },
-               "retval": { "typestr":  "v" }
-             }
-           }
-        },
-        {
-          "selector": "setPerRecordCompletionBlock:",
-          "class_method": false,
-          "arguments": {
-           "2": {
-             "callable": {
-               "arguments": {        
-                 "0": { "typestr": "^v" },
-                 "1": { "typestr": "@" },
-                 "2": { "typestr": "d" }
-               },
-               "retval": { "typestr":  "v" }
-             }
-           }
-          }
-        }
-      ]
-    },
-    "CKFetchRecordChangesOperation": {
-      "methods": [
-        {
-          "selector": "recordChangedBlock",
-          "class_method": false,
-          "retval": {
-             "callable": {
-               "arguments": {        
-                 "0": { "typestr": "^v" },
-                 "1": { "typestr": "@" }
-               },
-               "retval": { "typestr":  "v" }
-             }
-           }
-        },
-        {
-          "selector": "setRecordChangedBlock:",
-          "class_method": false,
-          "arguments": {
-           "2": {
-             "callable": {
-               "arguments": {        
-                 "0": { "typestr": "^v" },
-                 "1": { "typestr": "@" }
-               },
-               "retval": { "typestr":  "v" }
-             }
-           }
-          }
-        },
-        {
-          "selector": "perRecordProgressBlock",
-          "class_method": false,
-          "retval": {
-             "callable": {
-               "arguments": {        
+               "arguments": {
                  "0": { "typestr": "^v" },
                  "1": { "typestr": "@" },
                  "2": { "typestr": "d" }
@@ -823,7 +761,7 @@
           "arguments": {
            "2": {
              "callable": {
-               "arguments": {        
+               "arguments": {
                  "0": { "typestr": "^v" },
                  "1": { "typestr": "@" },
                  "2": { "typestr": "d" }
@@ -832,12 +770,262 @@
              }
            }
           }
+        },
+        {
+          "selector": "perRecordCompletionBlock",
+          "class_method": false,
+          "retval": {
+             "callable": {
+               "arguments": {
+                 "0": { "typestr": "^v" },
+                 "1": { "typestr": "@" },
+                 "2": { "typestr": "@" },
+                 "3": { "typestr": "@" }
+               },
+               "retval": { "typestr":  "v" }
+             }
+           }
+        },
+        {
+          "selector": "setPerRecordCompletionBlock:",
+          "class_method": false,
+          "arguments": {
+           "2": {
+             "callable": {
+               "arguments": {
+                 "0": { "typestr": "^v" },
+                 "1": { "typestr": "@" },
+                 "2": { "typestr": "@" },
+                 "3": { "typestr": "@" }
+               },
+               "retval": { "typestr":  "v" }
+             }
+           }
+          }
+        },
+        {
+          "selector": "fetchRecordsCompletionBlock",
+          "class_method": false,
+          "retval": {
+             "callable": {
+               "arguments": {
+                 "0": { "typestr": "^v" },
+                 "1": { "typestr": "@" },
+                 "2": { "typestr": "@" }
+               },
+               "retval": { "typestr":  "v" }
+             }
+           }
+        },
+        {
+          "selector": "setFetchRecordsCompletionBlock:",
+          "class_method": false,
+          "arguments": {
+           "2": {
+             "callable": {
+               "arguments": {
+                 "0": { "typestr": "^v" },
+                 "1": { "typestr": "@" },
+                 "2": { "typestr": "@" }
+               },
+               "retval": { "typestr":  "v" }
+             }
+           }
+          }
         }
       ]
+    },
+    "CKFetchRecordChangesOperation": {
+      "methods": [
+        {
+          "selector": "fetchRecordChangesCompletionBlock",
+          "class_method": false,
+          "retval": {
+             "callable": {
+               "arguments": {
+                 "0": { "typestr": "^v" },
+                 "1": { "typestr": "@" },
+                 "2": { "typestr": "@" },
+                 "3": { "typestr": "@" }
+               },
+               "retval": { "typestr":  "v" }
+             }
+           }
+        },
+        {
+          "selector": "setFetchRecordChangesCompletionBlock:",
+          "class_method": false,
+          "arguments": {
+           "2": {
+             "callable": {
+               "arguments": {
+                 "0": { "typestr": "^v" },
+                 "1": { "typestr": "@" },
+                 "2": { "typestr": "@" },
+                 "3": { "typestr": "@" }
+               },
+               "retval": { "typestr":  "v" }
+             }
+           }
+          }
+        },
+        {
+          "selector": "recordChangedBlock",
+          "class_method": false,
+          "retval": {
+             "callable": {
+               "arguments": {
+                 "0": { "typestr": "^v" },
+                 "1": { "typestr": "@" }
+               },
+               "retval": { "typestr":  "v" }
+             }
+           }
+        },
+        {
+          "selector": "setRecordChangedBlock:",
+          "class_method": false,
+          "arguments": {
+           "2": {
+             "callable": {
+               "arguments": {
+                 "0": { "typestr": "^v" },
+                 "1": { "typestr": "@" }
+               },
+               "retval": { "typestr":  "v" }
+             }
+           }
+          }
+        },
+        {
+          "selector": "perRecordProgressBlock",
+          "class_method": false,
+          "retval": {
+             "callable": {
+               "arguments": {
+                 "0": { "typestr": "^v" },
+                 "1": { "typestr": "@" },
+                 "2": { "typestr": "d" }
+               },
+               "retval": { "typestr":  "v" }
+             }
+           }
+        },
+        {
+          "selector": "setPerRecordProgressBlock:",
+          "class_method": false,
+          "arguments": {
+           "2": {
+             "callable": {
+               "arguments": {
+                 "0": { "typestr": "^v" },
+                 "1": { "typestr": "@" },
+                 "2": { "typestr": "d" }
+               },
+               "retval": { "typestr":  "v" }
+             }
+           }
+          }
+        },
+        {
+          "selector": "setRecordWithIDWasDeletedBlock:",
+          "class_method": false,
+          "arguments": {
+           "2": {
+             "callable": {
+               "arguments": {
+                 "0": { "typestr": "^v" },
+                 "1": { "typestr": "@" }
+               },
+               "retval": { "typestr":  "v" }
+             }
+           }
+          }
+        },
+        {
+          "selector": "recordWithIDWasDeletedBlock",
+          "class_method": false,
+          "retval": {
+             "callable": {
+               "arguments": {
+                 "0": { "typestr": "^v" },
+                 "1": { "typestr": "@" }
+               },
+               "retval": { "typestr":  "v" }
+             }
+          }
+        }
+      ]
+    },
+    "CKFetchSubscriptionsOperation": {
+     "methods": [
+        {
+          "selector": "setFetchSubscriptionCompletionBlock:",
+          "class_method": false,
+          "arguments": {
+           "2": {
+             "callable": {
+               "arguments": {
+                 "0": { "typestr": "^v" },
+                 "1": { "typestr": "@" },
+                 "2": { "typestr": "@" }
+               },
+               "retval": { "typestr":  "v" }
+             }
+           }
+          }
+        },
+        {
+          "selector": "fetchSubscriptionCompletionBlock",
+          "class_method": false,
+          "retval": {
+             "callable": {
+               "arguments": {
+                 "0": { "typestr": "^v" },
+                 "1": { "typestr": "@" },
+                 "2": { "typestr": "@" }
+               },
+               "retval": { "typestr":  "v" }
+             }
+          }
+        }
+     ]
+    },
+    "CKModifyBadgeOperation": {
+     "methods": [
+        {
+          "selector": "setModifyBadgeCompletionBlock:",
+          "class_method": false,
+          "arguments": {
+           "2": {
+             "callable": {
+               "arguments": {
+                 "0": { "typestr": "^v" },
+                 "1": { "typestr": "@" }
+               },
+               "retval": { "typestr":  "v" }
+             }
+           }
+          }
+        },
+        {
+          "selector": "modifyBadgeCompletionBlock",
+          "class_method": false,
+          "retval": {
+             "callable": {
+               "arguments": {
+                 "0": { "typestr": "^v" },
+                 "1": { "typestr": "@" }
+               },
+               "retval": { "typestr":  "v" }
+             }
+          }
+        }
+     ]
     }
-  }, 
-  "formal_protocols": {}, 
-  "functions": {}, 
+  },
+  "formal_protocols": {},
+  "functions": {},
   "informal_protocols": {}
  }
 }
