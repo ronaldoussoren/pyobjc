@@ -132,6 +132,78 @@
 	   }
 	  }
 	 }
+       },
+       {
+         "class_method": false,
+	 "selector": "pressedChangedHandler",
+	 "retval": {
+	   "callable": {
+	     "arguments": {
+	        "0": { "typestr": "^v" },
+	        "1": { "typestr": "@" },
+	        "2": { "typestr": "f" },
+	        "3": { "typestr": "Z" }
+	     },
+	     "retval": {
+	       "typestr": "v"
+	     }
+	   }
+	 }
+       },
+       {
+         "class_method": false,
+	 "selector": "setPressedChangedHandler:",
+	 "arguments": {
+	  "2": {
+	   "callable": {
+	     "arguments": {
+	        "0": { "typestr": "^v" },
+	        "1": { "typestr": "@" },
+	        "2": { "typestr": "f" },
+	        "3": { "typestr": "Z" }
+	     },
+	     "retval": {
+	       "typestr": "v"
+	     }
+	   }
+	  }
+	 }
+       }
+     ]
+   },
+   "GCMotion" : {
+     "methods": [
+       {
+         "class_method": false,
+	 "selector": "valueChangedHandler",
+	 "retval": {
+	   "callable": {
+	     "arguments": {
+	        "0": { "typestr": "^v" },
+	        "1": { "typestr": "@" }
+	     },
+	     "retval": {
+	       "typestr": "v"
+	     }
+	   }
+	 }
+       },
+       {
+         "class_method": false,
+	 "selector": "setValueChangedHandler:",
+	 "arguments": {
+	  "2": {
+	   "callable": {
+	     "arguments": {
+	        "0": { "typestr": "^v" },
+	        "1": { "typestr": "@" }
+	     },
+	     "retval": {
+	       "typestr": "v"
+	     }
+	   }
+	  }
+	 }
        }
      ]
    },
