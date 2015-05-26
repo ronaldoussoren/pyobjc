@@ -13,10 +13,9 @@ the C and Objective-C APIs are available (but see the `API Notes`_ below).
 API Notes
 ---------
 
-The full API for the SpriteKit framework is available from Python, except for methods that have a vector_float3
-as one of their arguments or as a return value (those require changes to PyObjC's core bridge).
-
-TODO: Document how vectors are handled ("vector_float3" and simular types)
+The full API for the SpriteKit framework is available from Python, except for methods that have a
+vector_float3 as one of their arguments or as a return value (those require changes to PyObjC's core
+bridge).
 
 .. note::
 

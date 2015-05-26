@@ -24,4 +24,15 @@ setup(
         'pyobjc-framework-Cocoa>=3.1b1',
         'pyobjc-framework-Quartz>=3.1b1',
     ],
+    ext_modules = [
+        Extension("SpriteKit._SpriteKit",
+            [ "Modules/_SpriteKit.m" ],
+            extra_link_args=["-framework", "SpriteKit"],
+            depends=[
+                os.path.join('Modules', fn)
+                for fn in os.listdir('Modules')
+                if fn.startswith('_SpriteKit')
+            ]
+        ),
+    ],
 )

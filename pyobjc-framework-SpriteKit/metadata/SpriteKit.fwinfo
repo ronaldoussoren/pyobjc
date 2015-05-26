@@ -1,3 +1,422 @@
+// objective.metadata exceptions file, see its document
+// for information on how to update this file.
 {
- "definitions": {}
+ "definitions": {
+  "classes": {
+   "SKTextureAtlas": {
+    "methods": [
+     {
+      "args": {
+       "0": {
+        "callable": {
+         "arguments": {
+          "0": {
+           "typestr": "^v"
+          }
+         },
+         "retval": {
+          "typestr": "v"
+         }
+        }
+       }
+      },
+      "selector": "preloadWithCompletionHandler:",
+      "class_method": false
+     },
+     {
+      "args": {
+       "1": {
+        "callable": {
+         "arguments": {
+          "0": {
+           "typestr": "^v"
+          }
+         },
+         "retval": {
+          "typestr": "v"
+         }
+        }
+       }
+      },
+      "selector": "preloadTextureAtlases:withCompletionHandler:",
+      "class_method": false
+     }
+    ]
+   },
+   "SKMutableTexture": {
+    "methods": [
+     {
+      "args": {
+       "0": {
+        "callable": {
+         "arguments": {
+          "0": {
+           "typestr": "^v"
+          },
+          "1": {
+           "typestr": "^v",
+	   "c_array_length_in_arg": 2,
+	   "type_modifier": "N"
+          },
+          "2": {
+           "typestr": "Q"
+          }
+         },
+         "retval": {
+          "typestr": "v"
+         }
+        }
+       }
+      },
+      "selector": "modifyPixelDataWithBlock:",
+      "class_method": false
+     }
+    ]
+   },
+   "SKNode": {
+    "methods": [
+     {
+      "args": {
+       "1": {
+        "callable": {
+         "arguments": {
+          "0": {
+           "typestr": "^v"
+          },
+          "1": {
+           "typestr": "@"
+          },
+          "2": {
+           "type_modifier": "o",
+           "typestr": "^Z"
+          }
+         },
+         "retval": {
+          "typestr": "v"
+         }
+        }
+       }
+      },
+      "selector": "enumerateChildNodesWithName:usingBlock:",
+      "class_method": false
+     },
+     {
+      "args": {
+       "1": {
+        "callable": {
+         "arguments": {
+          "0": {
+           "typestr": "^v"
+          }
+         },
+         "retval": {
+          "typestr": "v"
+         }
+        }
+       }
+      },
+      "selector": "runAction:completion:",
+      "class_method": false
+     }
+    ]
+   },
+   "SKAction": {
+    "methods": [
+     {
+      "args": {
+       "0": {}
+      },
+      "class_method": true,
+      "selector": "followPath:duration:"
+     },
+     {
+      "args": {
+       "0": {}
+      },
+      "class_method": true,
+      "selector": "followPath:asOffset:orientToPath:duration:"
+     },
+     {
+      "args": {
+       "0": {}
+      },
+      "class_method": true,
+      "selector": "followPath:speed:"
+     },
+     {
+      "args": {
+       "0": {}
+      },
+      "class_method": true,
+      "selector": "followPath:asOffset:orientToPath:speed:"
+     },
+     {
+      "args": {
+       "1": {}
+      },
+      "class_method": true,
+      "selector": "runBlock:queue:"
+     },
+     {
+      "class_method": false,
+      "selector": "performSelector:onTarget:",
+      "args": {
+       "0": {
+        "sel_of_type": "v@:"
+       }
+      }
+     },
+     {
+      "args": {
+       "0": {
+        "callable": {
+         "arguments": {
+          "0": {
+           "typestr": "^v"
+          },
+          "1": {
+           "typestr": "f"
+          }
+         },
+         "retval": {
+          "typestr": "f"
+         }
+        }
+       }
+      },
+      "selector": "setTimingFunc:",
+      "class_method": false
+     },
+     {
+      "retval": {
+       "callable": {
+         "arguments": {
+          "0": {
+           "typestr": "^v"
+          },
+          "1": {
+           "typestr": "f"
+          }
+         },
+         "retval": {
+          "typestr": "f"
+         }
+       }
+      },
+      "selector": "timingFunc",
+      "class_method": false
+     }
+    ]
+   },
+   "SKPhysicsBody": {
+    "methods": [
+     {
+      "args": {
+       "0": {}
+      },
+      "class_method": true,
+      "selector": "bodyWithPolygonFromPath:"
+     },
+     {
+      "args": {
+       "0": {}
+      },
+      "class_method": true,
+      "selector": "bodyWithEdgeChainFromPath:"
+     },
+     {
+      "args": {
+       "0": {}
+      },
+      "class_method": true,
+      "selector": "bodyWithEdgeLoopFromPath:"
+     }
+    ]
+   },
+   "SKRegion": {
+    "methods": [
+     {
+      "args": {
+       "0": {}
+      },
+      "class_method": false,
+      "selector": "initWithPath:"
+     },
+     {
+      "class_method": false,
+      "retval": {},
+      "selector": "path"
+     }
+    ],
+    "properties": [
+     {
+      "attributes": [
+       "nonatomic",
+       "readonly"
+      ],
+      "name": "path"
+     }
+    ]
+   },
+   "SKShapeNode": {
+    "methods": [
+     {
+      "args": {
+       "0": {}
+      },
+      "class_method": true,
+      "selector": "shapeNodeWithPath:"
+     },
+     {
+      "args": {
+       "0": {}
+      },
+      "class_method": true,
+      "selector": "shapeNodeWithPath:centered:"
+     },
+     {
+      "args": {
+       "0": {
+        "type_modifier": "n",
+	"c_array_length_in_arg": 1
+       }
+      },
+      "class_method": true,
+      "selector": "shapeNodeWithPoints:count:"
+     },
+     {
+      "args": {
+       "0": {
+        "type_modifier": "n",
+	"c_array_length_in_arg": 1
+       }
+      },
+      "class_method": true,
+      "selector": "shapeNodeWithSplinePoints:count:"
+     },
+     {
+      "class_method": false,
+      "retval": {},
+      "selector": "path"
+     },
+     {
+      "args": {
+       "0": {}
+      },
+      "class_method": false,
+      "selector": "setPath:"
+     }
+    ],
+    "properties": [
+     {
+      "attributes": [
+       "nonatomic"
+      ],
+      "name": "path"
+     }
+    ]
+   },
+   "SKTexture": {
+    "methods": [
+     {
+      "args": {
+       "0": {}
+      },
+      "class_method": true,
+      "selector": "textureWithCGImage:"
+     },
+     {
+      "args": {
+       "1": {
+        "callable": {
+         "arguments": {
+          "0": {
+           "typestr": "^v"
+          }
+         },
+         "retval": {
+          "typestr": "v"
+         }
+        }
+       }
+      },
+      "selector": "preloadTextures:withCompletionHandler:",
+      "class_method": false
+     },
+     {
+      "args": {
+       "0": {
+        "callable": {
+         "arguments": {
+          "0": {
+           "typestr": "^v"
+          }
+         },
+         "retval": {
+          "typestr": "v"
+         }
+        }
+       }
+      },
+      "selector": "preloadWithCompletionHandler:",
+      "class_method": false
+     }
+    ]
+   },
+   "SKPhysicsWorld": {
+    "methods": [
+     {
+      "args": {
+       "1": {
+        "callable": {
+         "arguments": {
+          "0": {
+           "typestr": "^v"
+          },
+          "1": {
+           "typestr": "@"
+          },
+          "2": {
+           "type_modifier": "o",
+           "typestr": "^Z"
+          }
+         },
+         "retval": {
+          "typestr": "v"
+         }
+        }
+       }
+      },
+      "selector": "enumerateBodiesAtPoint:usingBlock:",
+      "class_method": false
+     },
+     {
+      "args": {
+       "1": {
+        "callable": {
+         "arguments": {
+          "0": {
+           "typestr": "^v"
+          },
+          "1": {
+           "typestr": "@"
+          },
+          "2": {
+           "type_modifier": "o",
+           "typestr": "^Z"
+          }
+         },
+         "retval": {
+          "typestr": "v"
+         }
+        }
+       }
+      },
+      "selector": "enumerateBodiesInRect:usingBlock:",
+      "class_method": false
+     }
+    ]
+   }
+  }
+ }
 }
