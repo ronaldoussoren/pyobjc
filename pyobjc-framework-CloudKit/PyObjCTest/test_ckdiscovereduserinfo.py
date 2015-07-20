@@ -15,5 +15,8 @@ if sys.maxsize > 2 ** 32:
             self.assertHasAttr(CloudKit, "CKDiscoveredUserInfo")
             self.assertIsInstance(CloudKit.CKDiscoveredUserInfo, objc.objc_class)
 
+            self.assertResultIsBlock(CloudKit.CKDiscoverUserInfosOperation.discoverUserInfosCompletionBlock, b'v@@@')
+            self.assertArgIsBlock(CloudKit.CKDiscoverUserInfosOperation.setDiscoverUserInfosCompletionBlock_, 0, b'v@@@')
+
 if __name__ == "__main__":
     main()

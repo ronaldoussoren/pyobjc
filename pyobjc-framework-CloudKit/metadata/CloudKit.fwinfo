@@ -76,9 +76,10 @@
 	       "arguments": {
                  "0": { "typestr": "^v" },
                  "1": { "typestr": "@" },
-                 "2": { "typestr": "@" }
+                 "2": { "typestr": "@" },
+                 "3": { "typestr": "@" }
                },
-               "retval": { "typestr":  "@" }
+               "retval": { "typestr":  "v" }
              }
            }
           }
@@ -91,9 +92,10 @@
 	       "arguments": {
                  "0": { "typestr": "^v" },
                  "1": { "typestr": "@" },
-                 "2": { "typestr": "@" }
+                 "2": { "typestr": "@" },
+                 "3": { "typestr": "@" }
                },
-               "retval": { "typestr":  "@" }
+               "retval": { "typestr":  "v" }
              }
           }
         }

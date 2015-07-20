@@ -27,5 +27,13 @@ if sys.maxsize > 2 ** 32:
             self.assertArgIsBlock(CloudKit.CKFetchRecordChangesOperation.setFetchRecordChangesCompletionBlock_, 0, b"v@@@")
             self.assertResultIsBlock(CloudKit.CKFetchRecordChangesOperation.fetchRecordChangesCompletionBlock, b"v@@@")
 
+        @min_os_level("10.11")
+        def testMethods10_11(self):
+            self.assertArgIsBOOL(CloudKit.CKFetchRecordChangesOperation.setFetchAllChanges_, 0)
+            self.assertResultIsBOOL(CloudKit.CKFetchRecordChangesOperation.fetchAllChanges)
+
+            self.assertArgIsBlock(CloudKit.CKFetchRecordChangesOperation.setServerChangeTokenFetchedBlock_, 0, b"v@")
+            self.assertResultIsBlock(CloudKit.CKFetchRecordChangesOperation.serverChangeTokenFetchedBlock, b"v@")
+
 if __name__ == "__main__":
     main()

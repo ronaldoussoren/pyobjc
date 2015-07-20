@@ -17,6 +17,8 @@ if sys.maxsize > 2 ** 32:
 
         @min_os_level("10.10")
         def testConstants(self):
+            self.assertIsInstnace(CloudKit.CKOwnerDefaultName, unicode)
+
             self.assertEqual(CloudKit.CKAccountStatusCouldNotDetermine, 0)
             self.assertEqual(CloudKit.CKAccountStatusAvailable, 1)
             self.assertEqual(CloudKit.CKAccountStatusRestricted, 2)
@@ -26,6 +28,10 @@ if sys.maxsize > 2 ** 32:
             self.assertEqual(CloudKit.CKApplicationPermissionStatusCouldNotComplete, 1)
             self.assertEqual(CloudKit.CKApplicationPermissionStatusDenied, 2)
             self.assertEqual(CloudKit.CKApplicationPermissionStatusGranted, 3)
+
+        @min_os_level("10.11")
+        def testConstants(self):
+            self.assertIsInstnace(CloudKit.CKAccountChangedNotification, unicode)
 
         @min_os_level("10.10")
         def testMethods10_10(self):
