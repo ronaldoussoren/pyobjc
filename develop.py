@@ -14,6 +14,7 @@ import subprocess
 import sys
 import platform
 import shlex
+import plistlib
 from distutils.sysconfig import get_config_var
 
 
