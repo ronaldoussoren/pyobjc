@@ -20,6 +20,10 @@ if sys.maxsize > 2 ** 32:
             self.assertHasAttr(Accounts, "ACAccountStoreDidChangeNotification")
             self.assertIsInstance(Accounts.ACAccountStoreDidChangeNotification, unicode)
 
+            self.assertEqual(Accounts.ACAccountCredentialRenewResultRenewed, 0)
+            self.assertEqual(Accounts.ACAccountCredentialRenewResultRejected, 1)
+            self.assertEqual(Accounts.ACAccountCredentialRenewResultFailed, 2)
+
         def testMethods(self):
             self.assertArgIsBlock(Accounts.ACAccountStore.saveAccount_withCompletionHandler_, 1, ACAccountStoreSaveCompletionHandler)
             self.assertArgIsBlock(Accounts.ACAccountStore.requestAccessToAccountsWithType_withCompletionHandler_, 1, ACAccountStoreRequestAccessCompletionHandler)

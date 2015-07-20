@@ -16,10 +16,15 @@ if sys.maxsize > 2**32:
             self.assertEqual(Accounts.ACErrorClientPermissionDenied, 9)
             self.assertEqual(Accounts.ACErrorCredentialNotFound, 11)
             self.assertEqual(Accounts.ACErrorFetchCredentialFailed, 12)
-            self.assertEqual(Accounts.ACErrorInvalidClientBundleID, 16)
             self.assertEqual(Accounts.ACErrorRemoveCredentialFailed, 14)
             self.assertEqual(Accounts.ACErrorStoreCredentialFailed, 13)
             self.assertEqual(Accounts.ACErrorUpdatingNonexistentAccount, 15)
+            self.assertEqual(Accounts.ACErrorInvalidClientBundleID, 16)
+            self.assertEqual(Accounts.ACErrorDeniedByPlugin, 17)
+            self.assertEqual(Accounts.ACErrorCoreDataSaveFailed, 18)
+            self.assertEqual(Accounts.ACErrorFailedSerializingAccountInfo, 19)
+            self.assertEqual(Accounts.ACErrorInvalidCommand, 20)
+            self.assertEqual(Accounts.ACErrorMissingTransportMessageID, 21)
 
         @min_os_level("10.8")
         def testConstants(self):

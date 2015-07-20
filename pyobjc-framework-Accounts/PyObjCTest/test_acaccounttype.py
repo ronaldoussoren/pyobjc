@@ -22,6 +22,12 @@ if sys.maxsize > 2**32:
         def testConstants(self):
             self.assertIsInstance(Accounts.ACAccountTypeIdentifierTwitter, unicode)
             self.assertIsInstance(Accounts.ACAccountTypeIdentifierSinaWeibo, unicode)
+            self.assertIsInstance(Accounts.ACFacebookAppIdKey, unicode)
+            self.assertIsInstance(Accounts.ACFacebookPermissionsKey, unicode)
+            self.assertIsInstance(Accounts.ACFacebookAudienceKey, unicode)
+            self.assertIsInstance(Accounts.ACFacebookAudienceEveryone, unicode)
+            self.assertIsInstance(Accounts.ACFacebookAudienceFriends, unicode)
+            self.assertIsInstance(Accounts.ACFacebookAudienceOnlyMe, unicode)
 
         @min_os_level("10.8")
         def testMethods(self):
