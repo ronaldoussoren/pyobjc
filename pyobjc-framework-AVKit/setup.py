@@ -16,6 +16,7 @@ setup(
     description = "Wrappers for the framework AVKit on Mac OS X",
     long_description=__doc__,
     packages = [ "AVKit" ],
+    min_os_level="10.9",
     setup_requires = [
         'pyobjc-core>=3.1b1',
     ],
