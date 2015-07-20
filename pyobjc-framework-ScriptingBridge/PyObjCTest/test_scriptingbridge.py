@@ -13,6 +13,7 @@ class TestSBApplication (TestCase):
     @min_os_level('10.6')
     def testProtocols(self):
         objc.protocolNamed('SBApplicationDelegate')
+        self.assertArgHasType(TestSBApplicationHelper.eventDidFail_withError_, 0, 'r^{AEDesc=I^^{OpaqueAEDataStorageType}}')
 
 
 if __name__ == "__main__":
