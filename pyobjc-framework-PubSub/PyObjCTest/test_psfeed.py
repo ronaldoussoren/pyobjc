@@ -29,6 +29,7 @@ class TestPSFeed (TestCase):
         self.assertResultIsBOOL(PSFeed.isRefreshing)
         self.assertResultIsBOOL(PSFeed.refresh_)
         self.assertArgIsOut(PSFeed.refresh_, 0)
+        self.assertArgIsBOOL(PSFeed.XMLRepresentationWithEntries_, 0)
 
 
 if __name__ == "__main__":
