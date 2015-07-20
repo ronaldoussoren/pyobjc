@@ -18,6 +18,7 @@ class TestScreenSaver (TestCase):
         self.assertHasAttr(ScreenSaver, 'ScreenSaverView')
         self.assertIsInstance(ScreenSaver.ScreenSaverView, objc.objc_class)
 
+        self.assertArgIsBOOL(ScreenSaver.ScreenSaverView.initWithFrame_isPreview_, 1)
         self.assertResultIsBOOL(ScreenSaver.ScreenSaverView.isAnimating)
         self.assertResultIsBOOL(ScreenSaver.ScreenSaverView.isPreview)
 
