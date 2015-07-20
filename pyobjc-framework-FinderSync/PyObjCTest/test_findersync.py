@@ -12,8 +12,8 @@ if sys.maxsize > 2 ** 32:
     class TestFinderSync (TestCase):
         @min_os_level("10.10")
         def testClasses(self):
-            self.assertHasAttr(FinderSync, "FIFinderSyncController")
             self.assertIsInstance(FinderSync.FIFinderSyncController, objc.objc_class)
+            self.assertIsInstance(FinderSync.FIFinderSync, objc.objc_class)
 
         @min_os_level("10.10")
         def testProtocols(self):
