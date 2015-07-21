@@ -36,10 +36,14 @@ class TestAutomatorErrors (TestCase):
         self.assertEqual(AMActionPropertyListInvalidError, -214)
         self.assertEqual(AMActionInsufficientDataError, -215)
         self.assertEqual(AMActionIsDeprecatedError, -216)
+        self.assertEqual(AMActionFailedGatekeeperError, -217)
+        self.assertEqual(AMActionSignatureCorruptError, -218)
+        self.assertEqual(AMActionQuarantineError, -219)
+        self.assertEqual(AMActionXProtectError, -220)
+        self.assertEqual(AMActionMalwareError, -221)
         self.assertEqual(AMConversionNotPossibleError, -300)
         self.assertEqual(AMConversionNoDataError, -301)
         self.assertEqual(AMConversionFailedError, -302)
-
 
 if __name__ == "__main__":
     main()
