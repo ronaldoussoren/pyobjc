@@ -3,7 +3,24 @@
 {
  "definitions": {
   "enum": {
-   "EKErrorLast": { "value": 30 }
+   "EKErrorOSNotSupported": { "value": 30 },
+   "EKErrorLast": { "value": 31 },
+   "EKWeekdaySunday": { "value": 1 },
+   "EKWeekdayMonday": { "value": 2 },
+   "EKWeekdayTuesday": { "value": 3 },
+   "EKWeekdayWednesday": { "value": 4 },
+   "EKWeekdayThursday": { "value": 5 },
+   "EKWeekdayFriday": { "value": 6 },
+   "EKWeekdaySaturday": { "value": 7 },
+   "EKParticipantScheduleStatusNone": { "value": 0 },
+   "EKParticipantScheduleStatusPending": { "value": 1 },
+   "EKParticipantScheduleStatusSent": { "value": 2 },
+   "EKParticipantScheduleStatusDelivered": { "value": 3 },
+   "EKParticipantScheduleStatusRecipientNotRecognized": { "value": 4 },
+   "EKParticipantScheduleStatusNoPrivileges": { "value": 5 },
+   "EKParticipantScheduleStatusDeliveryFailed": { "value": 6 },
+   "EKParticipantScheduleStatusCannotDeliver": { "value": 7 },
+   "EKParticipantScheduleStatusRecipientNotAllowed": { "value": 8 },
   },
   "expressions": {
    "DATE_COMPONENTS": { "ignore": true },

@@ -44,7 +44,8 @@ if sys.maxsize > 2**32:
             self.assertEqual(EventKit.EKErrorInvalidEntityType, 27)
             self.assertEqual(EventKit.EKErrorProcedureAlarmsNotMutable, 28)
             self.assertEqual(EventKit.EKErrorEventStoreNotAuthorized, 29)
-            self.assertEqual(EventKit.EKErrorLast, 30)
+            self.assertEqual(EventKit.EKErrorOSNotSupported, 30)
+            self.assertEqual(EventKit.EKErrorLast, 31)
 
 if __name__ == '__main__':
     main()

@@ -48,16 +48,6 @@ if sys.maxsize > 2**32:
             self.assertArgIsBOOL(EventKit.EKEventStore.saveReminder_commit_error_, 1)
             self.assertArgIsOut(EventKit.EKEventStore.saveReminder_commit_error_, 2)
 
-
-        @expectedFailure
-        @min_os_level('10.8')
-        def testDocumentButMissingMethods(self):
-            self.assertResultIsBOOL(EventKit.EKEventStore.saveEvent_span_error_)
-            self.assertArgIsOut(EventKit.EKEventStore.saveEvent_span_error_, 2)
-
-            self.assertResultIsBOOL(EventKit.EKEventStore.removeEvent_span_error_)
-            self.assertArgIsOut(EventKit.EKEventStore.removeEvent_span_error_, 2)
-
         @min_os_level('10.9')
         def testMethods10_9(self):
             self.assertArgIsBlock(EventKit.EKEventStore.requestAccessToEntityType_completion_, 1, b"vZ@")
