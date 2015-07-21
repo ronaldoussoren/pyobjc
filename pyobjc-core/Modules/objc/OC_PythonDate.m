@@ -42,6 +42,11 @@
 -(oneway void)release
 {
     /* See comment in OC_PythonUnicode */
+    if (unlikely(!Py_IsInitialized())) {
+        [super release];
+        return;
+    }
+
     PyObjC_BEGIN_WITH_GIL
         [super release];
 
@@ -52,6 +57,11 @@
 {
     [oc_value release];
     oc_value = nil;
+
+    if (unlikely(!Py_IsInitialized())) {
+        [super dealloc];
+        return;
+    }
 
     PyObjC_BEGIN_WITH_GIL
         PyObjC_UnregisterObjCProxy(value, self);
@@ -135,8 +145,10 @@
                 PyObjC_GIL_FORWARD_EXC();
             }
 
-
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
             oc_value = [NSDate dateWithString: PyObjC_PythonToId(v)];
+#pragma clang diagnostic pop
             [oc_value retain];
             Py_DECREF(v);
 
@@ -169,7 +181,10 @@
                     /* Raise ObjC exception */
                 }
 
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
                 oc_value = [NSDate dateWithString: PyObjC_PythonToId(v)];
+#pragma clang diagnostic pop
                 [oc_value retain];
                 Py_DECREF(v);
             }

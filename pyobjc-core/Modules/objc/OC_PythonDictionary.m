@@ -105,6 +105,11 @@
 -(oneway void)release
 {
     /* See comment in OC_PythonUnicode */
+    if (unlikely(!Py_IsInitialized())) {
+        [super release];
+        return;
+    }
+
     PyObjC_BEGIN_WITH_GIL
         [super release];
 
@@ -113,6 +118,11 @@
 
 -(void)dealloc
 {
+    if (unlikely(!Py_IsInitialized())) {
+        [super dealloc];
+        return;
+    }
+
     PyObjC_BEGIN_WITH_GIL
         PyObjC_UnregisterObjCProxy(value, self);
         Py_CLEAR(value);

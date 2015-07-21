@@ -1,6 +1,6 @@
 /* Copyright (c) 1996,97 by Lele Gaifax. All Rights Reserved
  * Copyright 2002, 2003 Ronald Oussoren, Jack Jansen
- * Copyright 2003-2014 Ronald Oussoren
+ * Copyright 2003-2015 Ronald Oussoren
  *
  * This software may be used and distributed freely for any purpose
  * provided that this notice is included unchanged on any and all
@@ -66,6 +66,11 @@ extern NSString * const NSUnknownKeyException; /* Radar #3336042 */
 -(oneway void)release
 {
     /* See comment in OC_PythonUnicode */
+    if (unlikely(!Py_IsInitialized())) {
+        [super release];
+        return;
+    }
+
     PyObjC_BEGIN_WITH_GIL
         [super release];
     PyObjC_END_WITH_GIL
@@ -74,6 +79,11 @@ extern NSString * const NSUnknownKeyException; /* Radar #3336042 */
 
 -(void)dealloc
 {
+    if (unlikely(!Py_IsInitialized())) {
+        [super dealloc];
+        return;
+    }
+
     PyObjC_BEGIN_WITH_GIL
         PyObjC_UnregisterObjCProxy(pyObject, self);
         Py_CLEAR(pyObject);

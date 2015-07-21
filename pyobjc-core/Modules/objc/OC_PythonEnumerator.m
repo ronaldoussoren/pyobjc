@@ -18,9 +18,31 @@
     return self;
 }
 
+-(oneway void)release
+{
+    /* See comment in OC_PythonUnicode */
+    if (unlikely(!Py_IsInitialized())) {
+        [super release];
+        return;
+    }
+
+    PyObjC_BEGIN_WITH_GIL
+        [super release];
+
+    PyObjC_END_WITH_GIL
+}
+
 -(void)dealloc
 {
-    Py_XDECREF(value);
+    if (unlikely(!Py_IsInitialized())) {
+        [super release];
+        return;
+    }
+
+    PyObjC_BEGIN_WITH_GIL
+        Py_XDECREF(value);
+    PyObjC_END_WITH_GIL
+
     [super dealloc];
 }
 

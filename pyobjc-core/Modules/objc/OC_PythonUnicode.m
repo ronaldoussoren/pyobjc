@@ -55,6 +55,16 @@
     /* FIXME: Should switch to __weak on OSX 10.7 or later, that should
      * fix this issue without a performance penalty.
      */
+    /*
+     * There is also a race condition on application shutdown between
+     * the call to Py_Finalize (shutting down the interpreter) and the
+     * cleanup performed by Cocoa, possible on other threads.
+     */
+    if (unlikely(!Py_IsInitialized())) {
+        [super release];
+        return;
+    }
+
     PyObjC_BEGIN_WITH_GIL
         [super release];
     PyObjC_END_WITH_GIL
@@ -62,6 +72,10 @@
 
 -(void)dealloc
 {
+    if (unlikely(!Py_IsInitialized())) {
+        [super dealloc];
+        return;
+    }
     PyObjC_BEGIN_WITH_GIL
         PyObjC_UnregisterObjCProxy(value, self);
         [realObject release];
