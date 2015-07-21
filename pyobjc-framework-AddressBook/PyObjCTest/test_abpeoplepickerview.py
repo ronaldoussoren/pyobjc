@@ -31,7 +31,5 @@ class TestABPeoplePickerView (TestCase):
         self.assertArgIsSEL(ABPeoplePickerView.setGroupDoubleAction_, 0, b'v@:@')
         self.assertArgIsSEL(ABPeoplePickerView.setNameDoubleAction_, 0, b'v@:@')
 
-
-
 if __name__ == "__main__":
     main()

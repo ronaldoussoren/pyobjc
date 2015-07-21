@@ -25,3 +25,8 @@ ABPeoplePicker C API
 wrapped by PyObjC.
 
 The C API has some problems on Snow Leopard, use the Object-Oriented API instead.
+
+ABActionCallbacks C API
+.......................
+
+The ``ABActionCallbacks`` plugin interface for C based CFBundles is not supported

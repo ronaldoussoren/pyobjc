@@ -54,7 +54,5 @@ class TestABTypedefs (TestCase):
         self.assertEqual(kABSearchAnd, 0)
         self.assertEqual(kABSearchOr, 1)
 
-
-
 if __name__ == "__main__":
     main()

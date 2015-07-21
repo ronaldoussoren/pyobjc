@@ -81,6 +81,7 @@ class TestABGlobals (TestCase):
         self.assertIsInstance(kABNicknameProperty, unicode)
         self.assertIsInstance(kABMaidenNameProperty, unicode)
         self.assertIsInstance(kABBirthdayProperty, unicode)
+        self.assertIsInstance(kABAlternateBirthdayComponentsProperty, unicode)
 
         self.assertIsInstance(kABOrganizationProperty, unicode)
         self.assertIsInstance(kABJobTitleProperty, unicode)
