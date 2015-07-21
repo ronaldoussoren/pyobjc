@@ -10,6 +10,12 @@ API Notes
 
 * ``CFHostSetClient``
 
-  The ``context`` argument can be an arbitrary Python object.
+  The ``context`` argument can be an arbitrary Python object, in particular
+  the creation of a ``CFHostClientContext`` is performed by the bridge and
+  is not exposed to Python.
 
+* `CFNetServicesSetClient``
 
+  The ``context`` argument can be an arbitrary Python object, in particular
+  the creation of a ``CFNetServiceClientContext`` is performed by the bridge and
+  is not exposed to Python.

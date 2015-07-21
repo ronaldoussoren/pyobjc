@@ -37,8 +37,6 @@ class TestCFSocketStream (TestCase):
 
     def testConstants(self):
         self.assertIsInstance(kCFStreamPropertySSLPeerCertificates, unicode)
-
-        self.assertIsInstance(kCFStreamPropertySSLPeerCertificates, unicode)
         self.assertIsInstance(kCFStreamPropertySSLSettings, unicode)
         self.assertIsInstance(kCFStreamSSLLevel, unicode)
         self.assertIsInstance(kCFStreamSSLAllowsExpiredCertificates, unicode)
@@ -130,6 +128,10 @@ class TestCFSocketStream (TestCase):
         #self.assertIsInstance(kCFStreamPropertySSLContext, unicode)
         self.assertIsInstance(kCFStreamPropertyNoCellular, unicode)
         self.assertIsInstance(kCFStreamPropertyConnectionIsCellular, unicode)
+
+    @min_os_level('10.11')
+    def testConstants10_11(self):
+        self.assertIsInstance(kCFStreamPropertySocketExtendedBackgroundIdleMode, unicode)
 
 if __name__ == "__main__":
     main()

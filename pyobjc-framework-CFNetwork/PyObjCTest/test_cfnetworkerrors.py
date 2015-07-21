@@ -114,6 +114,12 @@ class TestCFNetwork (TestCase):
         self.assertEqual(kCFErrorHTTPBadProxyCredentials, 307)
         self.assertEqual(kCFErrorPACFileError, 308)
 
+        self.assertEqual(kCFURLErrorBackgroundSessionInUseByAnotherProcess, -996)
+        self.assertEqual(kCFURLErrorBackgroundSessionWasDisconnected, -997)
+        self.assertEqual(kCFURLErrorAppTransportSecurityRequiresSecureConnection, -1022)
+
+
+
     @min_os_level('10.8')
     def testConstants10_8(self):
         self.assertEqual(kCFStreamErrorHTTPSProxyFailureUnexpectedResponseToCONNECTMethod, 311)

@@ -37,6 +37,11 @@ class TestCFHTTPMessage (TestCase):
     def testConstants10_5_failure(self):
         self.assertIsInstance(kCFHTTPAuthenticationSchemeKerberos, unicode)
 
+    @expectedFailure
+    @min_os_level('10.10')
+    def testConstants10_10(self):
+        self.assertIsInstance(kCFHTTPVersion2_0, unicode)
+
     def testConstants(self):
         self.assertIsInstance(kCFHTTPVersion1_0, unicode)
         self.assertIsInstance(kCFHTTPVersion1_1, unicode)

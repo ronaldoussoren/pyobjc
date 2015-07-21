@@ -102,10 +102,5 @@ class TestCFFTPStream (TestCase):
         v = CFHTTPAuthenticationRequiresAccountDomain(ref)
         self.assertIsInstance(v, bool)
 
-
-
-
-
-
 if __name__ == "__main__":
     main()
