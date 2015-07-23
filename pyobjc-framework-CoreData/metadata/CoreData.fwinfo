@@ -2,6 +2,21 @@
 # for information on how to update this file.
 {
  "definitions": {
+  "enum": {
+   "NSCoreDataVersionNumber10_10": { "value": 526.0 },
+   "NSCoreDataVersionNumber10_10_2": { "value": 526.1 },
+   "NSCoreDataVersionNumber10_10_3": { "value": 526.2 },
+   "NSBatchDeleteRequestType": { "value": 7 },
+   "NSBatchDeleteResultTypeStatusOnly": { "value": 0 },
+   "NSBatchDeleteResultTypeObjectIDs": { "value": 1 },
+   "NSBatchDeleteResultTypeCount": { "value": 2 },
+   "NSManagedObjectConstraintValidationError": { "value": 1551 },
+   "NSManagedObjectConstraintMergeError": { "value": 133021 },
+   "NSMigrationConstraintViolationError": { "value": 134111 }
+  },
+  "externs": {
+   "NSPersistentStoreForceDestroyOption": { "typestr": "@" }
+  },
   "classes": {
    "NSAtomicStore": {
     "methods": [
@@ -365,6 +380,13 @@
       "selector": "validateForInsert:"
      },
      {
+      "class_method": false,
+      "retval": {
+       "type_override": "Z"
+      },
+      "selector": "hasPersistentChangedValues"
+     },
+     {
       "args": {
        "0": {
         "type_modifier": "o"
@@ -639,6 +661,22 @@
       },
       "class_method": false,
       "selector": "resolveConflicts:error:"
+     },
+     {
+      "args": {
+       "1": { "type_modifier": "o"}
+      },
+      "retval": { "type_override": "Z" },
+      "class_method": false,
+      "selector": "resolveConstraintConflicts:error:"
+     },
+     {
+      "args": {
+       "1": { "type_modifier": "o"}
+      },
+      "retval": { "type_override": "Z" },
+      "class_method": false,
+      "selector": "resolveOptimisticLockingVersionConflicts:error:"
      }
     ]
    },
@@ -763,6 +801,16 @@
       },
       "class_method": true,
       "selector": "removeUbiquitousContentAndPersistentStoreAtURL:options:error:"
+     },
+     {
+      "args": {
+       "4": { "type_modifier": "o" }
+      },
+      "retval": {
+        "type_override": "Z"
+      },
+      "class_method": true,
+      "selector": "setMetadata:forPersistentStoreOfType:URL:options:error:"
      },
      {
       "args": {

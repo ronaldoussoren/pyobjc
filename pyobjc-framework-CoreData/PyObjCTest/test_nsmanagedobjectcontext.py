@@ -65,6 +65,13 @@ class TestNSManagedObjectContext (TestCase):
     def testMethods10_10(self):
         self.assertArgIsOut(NSManagedObjectContext.executeRequest_error_, 1)
 
+    @min_os_level('10.11')
+    def testMethods10_11(self):
+        self.assertResultIsBOOL(NSManagedObjectContext.shouldDeleteInaccessibleFaults)
+        self.assertArgIsBOOL(NSManagedObjectContext.setShouldDeleteInaccessibleFaults_, 0)
+
+        self.assertResultIsBOOL(NSManagedObjectContext.shouldHandleInaccessibleFault_forObjectID_triggeredByProperty_)
+
 
 if __name__ == "__main__":
     main()

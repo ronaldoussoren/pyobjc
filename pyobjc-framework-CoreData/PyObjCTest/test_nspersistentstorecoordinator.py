@@ -35,20 +35,6 @@ class TestNSPersistentStoreCoordinator (TestCase):
         self.assertIsInstance(NSPersistentStoreCoordinatorWillRemoveStoreNotification, unicode)
         self.assertIsInstance(NSSQLiteAnalyzeOption, unicode)
 
-    @min_os_level("10.9")
-    def testConstants10_9(self):
-        self.assertEqual(NSPersistentStoreUbiquitousTransitionTypeAccountAdded, 1)
-        self.assertEqual(NSPersistentStoreUbiquitousTransitionTypeAccountRemoved, 2)
-        self.assertEqual(NSPersistentStoreUbiquitousTransitionTypeContentRemoved, 3)
-        self.assertEqual(NSPersistentStoreUbiquitousTransitionTypeInitialImportCompleted, 4)
-
-        self.assertIsInstance(NSPersistentStoreCoordinatorStoresWillChangeNotification, unicode)
-        self.assertIsInstance(NSPersistentStoreUbiquitousTransitionTypeKey, unicode)
-        self.assertIsInstance(NSPersistentStoreUbiquitousPeerTokenOption, unicode)
-        self.assertIsInstance(NSPersistentStoreRemoveUbiquitousMetadataOption, unicode)
-        self.assertIsInstance(NSPersistentStoreUbiquitousContainerIdentifierKey, unicode)
-        self.assertIsInstance(NSPersistentStoreRebuildFromUbiquitousContentOption, unicode)
-
     @min_os_level('10.6')
     def testConstants10_6(self):
         self.assertIsInstance(NSSQLiteManualVacuumOption, unicode)
@@ -70,31 +56,23 @@ class TestNSPersistentStoreCoordinator (TestCase):
         self.assertIsInstance(NSPersistentStoreUbiquitousContentURLKey, unicode)
         self.assertIsInstance(NSPersistentStoreDidImportUbiquitousContentChangesNotification, unicode)
 
+    @min_os_level("10.8")
+    def testConstants10_8(self):
+        self.assertIsInstance(NSPersistentStoreForceDestroyOption, unicode)
+
     @min_os_level("10.9")
-    def testMethods10_9(self):
-        self.assertArgIsOut(NSPersistentStoreCoordinator.removeUbiquitousContentAndPersistentStoreAtURL_options_error_, 2)
-        self.assertResultIsBOOL(NSPersistentStoreCoordinator.removeUbiquitousContentAndPersistentStoreAtURL_options_error_)
+    def testConstants10_9(self):
+        self.assertEqual(NSPersistentStoreUbiquitousTransitionTypeAccountAdded, 1)
+        self.assertEqual(NSPersistentStoreUbiquitousTransitionTypeAccountRemoved, 2)
+        self.assertEqual(NSPersistentStoreUbiquitousTransitionTypeContentRemoved, 3)
+        self.assertEqual(NSPersistentStoreUbiquitousTransitionTypeInitialImportCompleted, 4)
 
-    @min_os_level("10.7")
-    def testMethods10_7(self):
-        self.assertArgIsOut(NSPersistentStoreCoordinator.executeRequest_withContext_error_, 2)
-
-    @min_os_level('10.6')
-    def testMethods10_6(self):
-        self.assertArgIsOut(NSPersistentStoreCoordinator.importStoreWithIdentifier_fromExternalRecordsDirectory_toURL_options_withType_error_, 5)
-
-    @min_os_level('10.5')
-    def testMethods10_5(self):
-        self.assertArgIsOut(NSPersistentStoreCoordinator.metadataForPersistentStoreOfType_URL_error_, 2)
-        self.assertResultIsBOOL(NSPersistentStoreCoordinator.setMetadata_forPersistentStoreOfType_URL_error_)
-        self.assertArgIsOut(NSPersistentStoreCoordinator.setMetadata_forPersistentStoreOfType_URL_error_, 3)
-        self.assertResultIsBOOL(NSPersistentStoreCoordinator.setURL_forPersistentStore_)
-
-    @min_os_level('10.10')
-    def testMethods10_10(self):
-        self.assertArgIsBlock(NSPersistentStoreCoordinator.performBlock_, 0, b'v')
-        self.assertArgIsBlock(NSPersistentStoreCoordinator.performBlockAndWait_, 0, b'v')
-
+        self.assertIsInstance(NSPersistentStoreCoordinatorStoresWillChangeNotification, unicode)
+        self.assertIsInstance(NSPersistentStoreUbiquitousTransitionTypeKey, unicode)
+        self.assertIsInstance(NSPersistentStoreUbiquitousPeerTokenOption, unicode)
+        self.assertIsInstance(NSPersistentStoreRemoveUbiquitousMetadataOption, unicode)
+        self.assertIsInstance(NSPersistentStoreUbiquitousContainerIdentifierKey, unicode)
+        self.assertIsInstance(NSPersistentStoreRebuildFromUbiquitousContentOption, unicode)
 
     def testMethods(self):
         self.assertArgIsOut(NSPersistentStoreCoordinator.addPersistentStoreWithType_configuration_URL_options_error_, 4)
@@ -104,9 +82,41 @@ class TestNSPersistentStoreCoordinator (TestCase):
         self.assertResultIsBOOL(NSPersistentStoreCoordinator.tryLock)
         self.assertArgIsOut(NSPersistentStoreCoordinator.metadataForPersistentStoreWithURL_error_, 1)
 
+    @min_os_level('10.5')
+    def testMethods10_5(self):
+        self.assertArgIsOut(NSPersistentStoreCoordinator.metadataForPersistentStoreOfType_URL_error_, 2)
+        self.assertResultIsBOOL(NSPersistentStoreCoordinator.setMetadata_forPersistentStoreOfType_URL_error_)
+        self.assertArgIsOut(NSPersistentStoreCoordinator.setMetadata_forPersistentStoreOfType_URL_error_, 3)
+        self.assertResultIsBOOL(NSPersistentStoreCoordinator.setURL_forPersistentStore_)
 
+    @min_os_level('10.6')
+    def testMethods10_6(self):
+        self.assertArgIsOut(NSPersistentStoreCoordinator.importStoreWithIdentifier_fromExternalRecordsDirectory_toURL_options_withType_error_, 5)
 
+    @min_os_level("10.7")
+    def testMethods10_7(self):
+        self.assertArgIsOut(NSPersistentStoreCoordinator.executeRequest_withContext_error_, 2)
 
+    @min_os_level("10.9")
+    def testMethods10_9(self):
+        self.assertArgIsOut(NSPersistentStoreCoordinator.setMetadata_forPersistentStoreOfType_URL_options_error_, 4)
+        self.assertResultIsBOOL(NSPersistentStoreCoordinator.setMetadata_forPersistentStoreOfType_URL_options_error_)
+
+        self.assertArgIsOut(NSPersistentStoreCoordinator.removeUbiquitousContentAndPersistentStoreAtURL_options_error_, 2)
+        self.assertResultIsBOOL(NSPersistentStoreCoordinator.removeUbiquitousContentAndPersistentStoreAtURL_options_error_)
+
+    @min_os_level('10.10')
+    def testMethods10_10(self):
+        self.assertArgIsBlock(NSPersistentStoreCoordinator.performBlock_, 0, b'v')
+        self.assertArgIsBlock(NSPersistentStoreCoordinator.performBlockAndWait_, 0, b'v')
+
+    @min_os_level('10.11')
+    def testMethods10_11(self):
+        self.assertArgIsOut(NSPersistentStoreCoordinator.destroyPersistentStoreAtURL_withType_options_error_, 3)
+        self.assertResultIsBOOL(NSPersistentStoreCoordinator.destroyPersistentStoreAtURL_withType_options_error_)
+
+        self.assertArgIsOut(NSPersistentStoreCoordinator.replacePersistentStoreAtURL_destinationOptions_withPersistentStoreFromURL_sourceOptions_storeType_error_, 5)
+        self.assertResultIsBOOL(NSPersistentStoreCoordinator.replacePersistentStoreAtURL_destinationOptions_withPersistentStoreFromURL_sourceOptions_storeType_error_)
 
 if __name__ == "__main__":
     main()

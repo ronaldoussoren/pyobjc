@@ -37,6 +37,10 @@ class TestNSManagedObject (TestCase):
     def testMethods10_7(self):
         self.assertResultIsBOOL(NSManagedObject.hasChanges)
 
+    @min_os_level("10.9")
+    def testMethods10_9(self):
+        self.assertResultIsBOOL(NSManagedObject.hasPersistentChangedValues)
+
     @min_os_level('10.6')
     def testConstants10_6(self):
         self.assertEqual(NSSnapshotEventUndoInsertion, 1 << 1)

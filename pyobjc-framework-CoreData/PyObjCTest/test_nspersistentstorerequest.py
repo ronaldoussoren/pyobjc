@@ -6,6 +6,7 @@ class TestNSPersistentStoreRequest (TestCase):
         self.assertEqual(NSFetchRequestType, 1)
         self.assertEqual(NSSaveRequestType, 2)
         self.assertEqual(NSBatchUpdateRequestType, 6)
+        self.assertEqual(NSBatchDeleteRequestType, 7)
 
     @min_os_level('10.10')
     def testMethods10_10(self):

@@ -23,8 +23,10 @@ class TestCoreDataErrors (TestCase):
         self.assertEqual(NSPersistentStoreOperationError, 134070)
         self.assertEqual(NSPersistentStoreOpenError, 134080)
         self.assertEqual(NSPersistentStoreTimeoutError, 134090)
+        self.assertEqual(NSPersistentStoreUnsupportedRequestTypeError, 134091)
         self.assertEqual(NSPersistentStoreIncompatibleVersionHashError, 134100)
         self.assertEqual(NSMigrationError, 134110)
+        self.assertEqual(NSMigrationConstraintViolationError, 134111)
         self.assertEqual(NSMigrationCancelledError, 134120)
         self.assertEqual(NSMigrationMissingSourceModelError, 134130)
         self.assertEqual(NSMigrationMissingMappingModelError, 134140)
@@ -42,8 +44,8 @@ class TestCoreDataErrors (TestCase):
         self.assertIsInstance(NSAffectedStoresErrorKey, unicode)
         self.assertIsInstance(NSAffectedObjectsErrorKey, unicode)
 
-
         self.assertEqual(NSManagedObjectValidationError, 1550)
+        self.assertEqual(NSManagedObjectConstraintValidationError, 1551)
         self.assertEqual(NSValidationMultipleErrorsError, 1560)
         self.assertEqual(NSValidationMissingMandatoryPropertyError, 1570)
         self.assertEqual(NSValidationRelationshipLacksMinimumCountError, 1580)
@@ -62,6 +64,7 @@ class TestCoreDataErrors (TestCase):
         self.assertEqual(NSManagedObjectReferentialIntegrityError, 133000)
         self.assertEqual(NSManagedObjectExternalRelationshipError, 133010)
         self.assertEqual(NSManagedObjectMergeError, 133020)
+        self.assertEqual(NSManagedObjectConstraintMergeError, 133021)
         self.assertEqual(NSPersistentStoreInvalidTypeError, 134000)
         self.assertEqual(NSPersistentStoreTypeMismatchError, 134010)
         self.assertEqual(NSPersistentStoreIncompatibleSchemaError, 134020)
