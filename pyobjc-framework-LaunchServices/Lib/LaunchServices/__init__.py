@@ -10,15 +10,11 @@ import Foundation
 
 from LaunchServices import _metadata
 
-if os.path.exists('/System/Library/Frameworks/ApplicationServices.framework/Frameworks/LaunchServices.framework'):
-    framework = '/System/Library/Frameworks/ApplicationServices.framework/Frameworks/LaunchServices.framework'
-else:
-    framework = '/System/Library/Frameworks/CoreServices.framework/Frameworks/LaunchServices.framework'
 
 sys.modules['LaunchServices'] = mod = objc.ObjCLazyModule(
     "LaunchServices",
     "com.apple.LaunchServices",
-    objc.pathForFramework(framework),
+    objc.pathForFramework('/System/Library/Frameworks/CoreServices.framework/CoreServices'),
     _metadata.__dict__, None, {
     '__doc__': __doc__,
     'objc': objc,
