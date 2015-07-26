@@ -22,6 +22,10 @@
 #include <limits.h>
 #include <float.h>
 
+#ifdef __clang__
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
+#endif /* __clang__ */
+
 #if !defined(LLONG_MAX) && defined(LONG_LONG_MAX)
 
 # define LLONG_MAX LONG_LONG_MAX
