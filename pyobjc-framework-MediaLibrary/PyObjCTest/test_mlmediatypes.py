@@ -28,6 +28,7 @@ if sys.maxsize > 2 ** 32:
             self.assertIsInstance(MediaLibrary.MLiTunesPlaylistTypeIdentifier, unicode)
             self.assertIsInstance(MediaLibrary.MLiTunesPurchasedPlaylistTypeIdentifier, unicode)
             self.assertIsInstance(MediaLibrary.MLiTunesPodcastPlaylistTypeIdentifier, unicode)
+            self.assertIsInstance(MediaLibrary.MLiTunesVideoPlaylistTypeIdentifier, unicode)
             self.assertIsInstance(MediaLibrary.MLiTunesSmartPlaylistTypeIdentifier, unicode)
             self.assertIsInstance(MediaLibrary.MLiTunesFolderPlaylistTypeIdentifier, unicode)
             self.assertIsInstance(MediaLibrary.MLiTunesMoviesPlaylistTypeIdentifier, unicode)
@@ -133,6 +134,7 @@ if sys.maxsize > 2 ** 32:
             self.assertIsInstance(MediaLibrary.MLPhotosSharedGroupTypeIdentifier, unicode)
             self.assertIsInstance(MediaLibrary.MLPhotosAlbumsGroupTypeIdentifier, unicode)
             self.assertIsInstance(MediaLibrary.MLPhotosAlbumTypeIdentifier, unicode)
+            self.assertIsInstance(MediaLibrary.MLPhotosFolderTypeIdentifier, unicode)
             self.assertIsInstance(MediaLibrary.MLPhotosSmartAlbumTypeIdentifier, unicode)
             self.assertIsInstance(MediaLibrary.MLPhotosPublishedAlbumTypeIdentifier, unicode)
             self.assertIsInstance(MediaLibrary.MLPhotosAllMomentsGroupTypeIdentifier, unicode)
@@ -147,6 +149,11 @@ if sys.maxsize > 2 ** 32:
             self.assertIsInstance(MediaLibrary.MLPhotosFavoritesGroupTypeIdentifier, unicode)
             self.assertIsInstance(MediaLibrary.MLPhotosPanoramasGroupTypeIdentifier, unicode)
             self.assertIsInstance(MediaLibrary.MLPhotosVideosGroupTypeIdentifier, unicode)
+            self.assertIsInstance(MediaLibrary.MLPhotosSloMoGroupTypeIdentifier, unicode)
+            self.assertIsInstance(MediaLibrary.MLPhotosTimelapseGroupTypeIdentifier, unicode)
+            self.assertIsInstance(MediaLibrary.MLPhotosBurstGroupTypeIdentifier, unicode)
+            self.assertIsInstance(MediaLibrary.MLPhotosFacesAlbumTypeIdentifier, unicode)
+            self.assertIsInstance(MediaLibrary.MLPhotosAllPhotosAlbumTypeIdentifier, unicode)
 
 if __name__ == "__main__":
     main()
