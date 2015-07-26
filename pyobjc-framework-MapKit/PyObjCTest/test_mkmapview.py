@@ -69,6 +69,18 @@ if sys.maxsize > 2 ** 32:
             self.assertArgIsBOOL(MapKit.MKMapView.deselectAnnotation_animated_, 1)
             self.assertArgIsBOOL(MapKit.MKMapView.showAnnotations_animated_, 1)
 
+            self.assertResultIsBOOL(MapKit.MKMapView.showsCompass)
+            self.assertArgIsBOOL(MapKit.MKMapView.setShowsCompass_, 0)
+
+        @min_os_level("10.10")
+        def testClasses10_10(self):
+            self.assertResultIsBOOL(MapKit.MKMapView.showsScale)
+            self.assertArgIsBOOL(MapKit.MKMapView.setShowsScale_, 0)
+
+        @min_os_level("10.11")
+        def testClasses10_11(self):
+            self.assertResultIsBOOL(MapKit.MKMapView.showsTraffic)
+            self.assertArgIsBOOL(MapKit.MKMapView.setShowsTraffic_, 0)
 
 
 if __name__ == "__main__":

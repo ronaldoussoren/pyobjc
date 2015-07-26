@@ -15,7 +15,7 @@ if sys.maxsize > 2 ** 32:
         def testClasses(self):
             self.assertIsInstance(MapKit.MKMultiPoint, objc.objc_class)
 
-            self.assertResultIsVariableSize(MapKit.MKMultiPoint.points)
+            self.assertResultIsVariableSize(MapKit.MKMultiPoint.points) #  XXX: Gone in 10.11 SDK headers?
 
             self.assertArgSizeInArg(MapKit.MKMultiPoint.getCoordinates_range_, 0, 1)
             self.assertArgIsOut(MapKit.MKMultiPoint.getCoordinates_range_, 0)

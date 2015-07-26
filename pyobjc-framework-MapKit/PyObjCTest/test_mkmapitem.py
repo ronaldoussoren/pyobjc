@@ -33,5 +33,9 @@ if sys.maxsize > 2 ** 32:
         def testConstants10_10(self):
             self.assertIsInstance(MapKit.MKLaunchOptionsCameraKey, unicode)
 
+        @min_os_level("10.11")
+        def testConstants10_11(self):
+            self.assertIsInstance(MapKit.MKLaunchOptionsDirectionsModeTransit, unicode)
+
 if __name__ == "__main__":
     main()

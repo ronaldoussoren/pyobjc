@@ -25,5 +25,10 @@ if sys.maxsize > 2 ** 32:
             self.assertEqual(MapKit.MKErrorPlacemarkNotFound, 4)
             self.assertEqual(MapKit.MKErrorDirectionsNotFound, 5)
 
+        @min_os_level("10.11")
+        def testConstants10_11(self):
+            self.assertEqual(MapKit.MKMapTypeSatelliteFlyover, 3)
+            self.assertEqual(MapKit.MKMapTypeHybridFlyover, 4)
+
 if __name__ == "__main__":
     main()

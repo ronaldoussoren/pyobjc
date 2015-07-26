@@ -2,6 +2,12 @@
 // for information on how to update this file.
 {
  "definitions": {
+  "enum": {
+   "MKDirectionsTransportTypeTransit": { "value": 4 },
+   "MKMapTypeSatelliteFlyover": { "value": 4 },
+   "MKMapTypeHybridFlyover": { "value": 5 }
+
+  },
   "classes": {
    "MKDirections": {
      "methods": [

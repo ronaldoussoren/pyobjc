@@ -17,5 +17,9 @@ if sys.maxsize > 2 ** 32:
             self.assertEqual(MapKit.MKDirectionsTransportTypeWalking, 1 << 1)
             self.assertEqual(MapKit.MKDirectionsTransportTypeAny, 0x0FFFFFFF)
 
+        @min_os_level("10.11")
+        def testConstants10_11(self):
+            self.assertEqual(MapKit.MKDirectionsTransportTypeTransit, 1 << 2)
+
 if __name__ == "__main__":
     main()
