@@ -1,0 +1,19 @@
+# objective.metada exceptions file, see its document
+# for information on how to update this file.
+{
+ "definitions": {
+  "enum": {
+   "PHAssetMediaTypeUnknown": { "value": 0 },
+   "PHAssetMediaTypeImage": { "value": 1 },
+   "PHAssetMediaTypeVide": { "value": 2  },
+   "PHAssetMediaTypeAudi": { "value": 3  },
+   "PHAssetMediaSubtypeNone": { "value": 0 },
+   "PHAssetMediaSubtypePhotoPanorama": { "value": 1 },
+   "PHAssetMediaSubtypePhotoHDR": { "value": 2 },
+   "PHAssetMediaSubtypePhotoScreenshot": { "value": 4 },
+   "PHAssetMediaSubtypeVideoStreamed": { "value": 65536 },
+   "PHAssetMediaSubtypeVideoHighFrameRate": { "value": 131072 },
+   "PHAssetMediaSubtypeVideoTimelapse": { "value": 262144 }
+  }
+ }
+}
