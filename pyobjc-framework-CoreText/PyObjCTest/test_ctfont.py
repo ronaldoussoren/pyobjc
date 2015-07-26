@@ -424,14 +424,16 @@ class TestCTFont (TestCase):
         self.assertIsInstance(v, CTFontRef)
 
 
+    #@expectedFailure
+    def testFunctions10_6_crash(self):
         descr = CTFontDescriptorCreateWithNameAndSize(
                 b"Courier".decode('latin1'), 14.0)
         self.assertNotEqual(descr, None)
 
-        # FIXME: this crashes the interpreter, without a clear reason
-        return
-
         self.assertResultIsCFRetained(CTFontCreateWithFontDescriptorAndOptions)
+
+        # FIXME: this crashes the interpreter, without a clear reason
+        #self.fail("hard crash...")
         v = CTFontCreateWithFontDescriptorAndOptions(descr, 14.0, None, 0)
         self.assertIsInstance(v, CTFontRef)
 

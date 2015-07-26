@@ -42,6 +42,7 @@ class TestCTRunDelegate (TestCase):
 
         # XXX: Still missing tests that actually call the callback
         #      functions.
+        self.fail("Tests for using callbacks!")
 
 
 

@@ -3,7 +3,8 @@
 {
  "definitions": {
   "enum": {
-   "kCTFontManagerErrorSystemRequired": { "value": 203 }
+   "kCTFontManagerErrorSystemRequired": { "value": 203 },
+   "kCTLineBoundsIncludeLanguageExtents": { "value": 32 }
   },
   "cftypes": {
    "CTFontCollectionRef": {
@@ -1772,6 +1773,26 @@
    "CTTypesetterSuggestLineBreakWithOffset": {
     "args": {
      "0": {}
+    }
+   },
+   "CTLineEnumerateCaretOffsets": {
+    "args": {
+     "0": {
+     	"type_override": "^{__CTLine=}"
+     },
+     "1": {
+      "type_override": "@!",
+      "callable": {
+       "arguments": {
+        "0": { "type": "^v" },
+        "1": { "type": "d" },
+        "2": { "type": "L" },
+        "3": { "type": "B" },
+        "4": { "type": "o^B" }
+       },
+       "retval": { "type": "v" }
+      }
+     }
     }
    }
   },

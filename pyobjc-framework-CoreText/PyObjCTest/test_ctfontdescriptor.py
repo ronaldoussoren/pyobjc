@@ -160,8 +160,5 @@ class TestCTFontDescriptor (TestCase):
         self.assertResultIsCFRetained(CTFontDescriptorCreateCopyWithFamily)
         self.assertResultIsCFRetained(CTFontDescriptorCreateCopyWithSymbolicTraits)
 
-
-
-
 if __name__ == "__main__":
     main()

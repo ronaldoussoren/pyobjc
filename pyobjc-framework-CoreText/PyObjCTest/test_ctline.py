@@ -100,6 +100,10 @@ class TestCTLine (TestCase):
         self.assertEqual(kCTLineBoundsUseGlyphPathBounds, 1 << 3)
         self.assertEqual(kCTLineBoundsUseOpticalBounds, 1 << 4)
 
+    @min_os_level('10.11')
+    def testConstants10_11(self):
+        self.assertEqual(kCTLineBoundsIncludeLanguageExtents, 1 << 5)
+
     @min_os_level("10.8")
     def testFunctions10_8(self):
         astr = CFAttributedStringCreate(None, b"-".decode('latin1'), None)
@@ -110,6 +114,10 @@ class TestCTLine (TestCase):
 
         r = CTLineGetBoundsWithOptions(token, kCTLineBoundsExcludeTypographicLeading)
         self.assertIsInstance(r, CGRect)
+
+    @min_os_level("10.11")
+    def testFunctions10_11(self):
+        self.assertArgIsBlock(CTLineEnumerateCaretOffsets, 1, b'vdIBo^B')
 
 if __name__ == "__main__":
     main()

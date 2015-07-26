@@ -36,6 +36,7 @@ class TestCTParagraphStyle (TestCase):
         self.assertEqual(kCTWritingDirectionNatural, -1)
         self.assertEqual(kCTWritingDirectionLeftToRight, 0)
         self.assertEqual(kCTWritingDirectionRightToLeft, 1)
+
         self.assertEqual(kCTParagraphStyleSpecifierAlignment, 0)
         self.assertEqual(kCTParagraphStyleSpecifierFirstLineHeadIndent, 1)
         self.assertEqual(kCTParagraphStyleSpecifierHeadIndent, 2)
@@ -50,16 +51,10 @@ class TestCTParagraphStyle (TestCase):
         self.assertEqual(kCTParagraphStyleSpecifierParagraphSpacing, 11)
         self.assertEqual(kCTParagraphStyleSpecifierParagraphSpacingBefore, 12)
         self.assertEqual(kCTParagraphStyleSpecifierBaseWritingDirection, 13)
-
         self.assertEqual(kCTParagraphStyleSpecifierMaximumLineSpacing, 14)
         self.assertEqual(kCTParagraphStyleSpecifierMinimumLineSpacing, 15)
         self.assertEqual(kCTParagraphStyleSpecifierLineSpacingAdjustment, 16)
         self.assertEqual(kCTParagraphStyleSpecifierLineBoundsOptions, 17)
-
-    @min_os_level("10.8")
-    def testConstants10_8(self):
-        pass
-        #self.assertEqual(kCTParagraphStyleSpecifierBoundsOptions, 17)
 
     def testStructs(self):
         v = CTParagraphStyleSetting()

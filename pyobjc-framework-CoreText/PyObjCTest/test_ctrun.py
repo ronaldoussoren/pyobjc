@@ -108,7 +108,6 @@ class TestCTRun (TestCase):
         for i in range(3):
             self.assertIsInstance(r[i], CGSize)
 
-
         v = CTRunGetAdvancesPtr(run)
         self.assertIsInstance(v, objc.varlist)
         self.assertIsInstance(v[0], CGSize)
