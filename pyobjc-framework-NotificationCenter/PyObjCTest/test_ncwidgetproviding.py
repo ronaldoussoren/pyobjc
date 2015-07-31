@@ -20,10 +20,10 @@ if sys.maxsize > 2 ** 32:
 
         @min_os_level('10.10')
         def testClasses10_10(self):
-            objc.protocolNamed('NCWidgetProvidingHelper')
+            objc.protocolNamed('NCWidgetProviding')
 
             self.assertArgIsBlock(TestNCWidgetProvidingHelper.widgetPerformUpdateWithCompletionHandler_, 0, b'v' + objc._C_NSUInteger)
-            self.resultHasType(TestNCWidgetProvidingHelper.widgetMarginInsetsForProposedMarginInsets_, NotificationCenter.NSEdgeInsets.__typestr__)
+            self.assertResultHasType(TestNCWidgetProvidingHelper.widgetMarginInsetsForProposedMarginInsets_, NotificationCenter.NSEdgeInsets.__typestr__)
             self.assertArgHasType(TestNCWidgetProvidingHelper.widgetMarginInsetsForProposedMarginInsets_, 0, NotificationCenter.NSEdgeInsets.__typestr__)
             self.assertResultIsBOOL(TestNCWidgetProvidingHelper.widgetAllowsEditing)
 

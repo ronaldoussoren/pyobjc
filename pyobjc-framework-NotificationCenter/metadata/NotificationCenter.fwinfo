@@ -2,5 +2,136 @@
 // for information on how to update this file.
 {
  "definitions": {
+  "enum": {
+   "NCUpdateResultNewData": { "value": 0 },
+   "NCUpdateResultNoData": { "value": 1 },
+   "NCUpdateResultFailed": { "value": 2 }
+  },
+  "classes": {
+   "NSObject": {
+    "methods": [
+     {
+      "selector": "widgetPerformUpdateWithCompletionHandler:",
+      "class_method": false,
+      "args": {
+       "0": {
+        "type_override": "@?",
+	"callable": {
+	 "arguments": {
+	  "0": { "typestr": "^v" },
+	  "1": { "typestr": ["I", "Q"] }
+	 },
+	 "retval": { "type": "v" }
+	}
+       }
+      }
+     },
+     {
+      "selector": "widgetSearch:searchForTerm:maxResults:",
+      "class_method": false,
+      "args": {
+       "2": {
+        "type_override": [ "I", "Q" ]
+       }
+      }
+     },
+     {
+      "selector": "widgetAllowsEditing",
+      "class_method": false,
+      "retval": {
+       "type_override": "Z"
+      }
+     },
+     {
+      "selector": "widgetMarginInsetsForProposedMarginInsets:",
+      "class_method": false,
+      "args": {
+       "0": {
+        "type_override": "{NSEdgeInsets=dddd}"
+       }
+      },
+      "retval": {
+       "type_override": "{NSEdgeInsets=dddd}"
+      }
+     }
+    ]
+   },
+   "NCWidgetController": {
+    "methods": [
+     {
+      "selector": "setHasContent:forWidgetWithBundleIdentifier:",
+      "class_method": false,
+      "args": {
+       "0": {
+        "type_override": "Z"
+       }
+      }
+     }
+    ]
+   },
+   "NCWidgetListViewController": {
+    "methods": [
+     {
+      "selector": "hasDividerLines",
+      "class_method": false,
+      "retval": {
+       "type_override": "Z"
+      }
+     },
+     {
+      "selector": "setHasDividerLines:",
+      "class_method": false,
+      "args": {
+       "0": {
+        "type_override": "Z"
+       }
+      }
+     },
+     {
+      "selector": "editing",
+      "class_method": false,
+      "retval": {
+       "type_override": "Z"
+      }
+     },
+     {
+      "selector": "setEditing:",
+      "class_method": false,
+      "args": {
+       "0": {
+        "type_override": "Z"
+       }
+      }
+     },
+     {
+      "selector": "showsAddButtonWhenEditing",
+      "class_method": false,
+      "retval": {
+       "type_override": "Z"
+      }
+     },
+     {
+      "selector": "setShowsAddButtonWhenEditing:",
+      "class_method": false,
+      "args": {
+       "0": {
+        "type_override": "Z"
+       }
+      }
+     },
+     {
+      "selector": "viewControllerAtRow:makeIfNecessary:",
+      "class_method": false,
+      "args": {
+       "1": {
+        "type_override": "Z"
+       }
+      }
+     }
+    ]
+   }
+  },
+  "protocols": {
+  }
  }
 }

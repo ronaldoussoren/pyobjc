@@ -5,8 +5,8 @@ import sys
 if sys.maxsize > 2 ** 32:
     import NotificationCenter
 
-    def TestNCWidgetSearchViewDelegateHelper (NSObject):
-        def setHasContent_forWidgetWithBundleIdentifier_(self, c, i): pass
+    class TestNCWidgetSearchViewDelegateHelper (NotificationCenter.NSObject):
+        def widgetSearch_searchForTerm_maxResults_(self, a, b, c): pass
 
 
     class TestNCWidgetSearchViewControlle (TestCase):
@@ -14,7 +14,8 @@ if sys.maxsize > 2 ** 32:
         def testClasses10_10(self):
             objc.protocolNamed('NCWidgetSearchViewDelegate')
 
-            self.assertArgIsBOOL(NotificationCenter.NCWidgetController.setHasContent_forWidgetWithBundleIdentifier_, 0)
+            self.assertArgHasType(TestNCWidgetSearchViewDelegateHelper.widgetSearch_searchForTerm_maxResults_,
+                    2, objc._C_NSUInteger)
 
 
 if __name__ == "__main__":
