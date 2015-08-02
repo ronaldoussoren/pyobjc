@@ -1,0 +1,81 @@
+// objective.metadata exceptions file, see its document
+// for information on how to update this file.
+{
+ "definitions": {
+  "externs": {
+   "IMAccountSettingServerHost": { "typestr": "@" },
+   "IMAccountSettingServerPort": { "typestr": "@" },
+   "IMAccountSettingLoginHandle": { "typestr": "@" },
+   "IMAccountSettingPassword": { "typestr": "@" },
+   "IMAccountSettingUsesSSL": { "typestr": "@" },
+   "IMSessionPropertyAvailability": { "typestr": "@" },
+   "IMSessionPropertyStatusMessage": { "typestr": "@" },
+   "IMSessionPropertyPictureData": { "typestr": "@" },
+   "IMSessionPropertyIdleDate": { "typestr": "@" },
+   "IMSessionPropertyIsInvisible": { "typestr": "@" },
+   "IMGroupListDefaultGroup": { "typestr": "@" },
+   "IMGroupListNameKey": { "typestr": "@" },
+   "IMGroupListPermissionsKey": { "typestr": "@" },
+   "IMGroupListHandlesKey": { "typestr": "@" },
+   "IMHandlePropertyAvailability": { "typestr": "@" },
+   "IMHandlePropertyStatusMessage": { "typestr": "@" },
+   "IMHandlePropertyAuthorizationStatus": { "typestr": "@" },
+   "IMHandlePropertyIdleDate": { "typestr": "@" },
+   "IMHandlePropertyAlias": { "typestr": "@" },
+   "IMHandlePropertyFirstName": { "typestr": "@" },
+   "IMHandlePropertyLastName": { "typestr": "@" },
+   "IMHandlePropertyEmailAddress": { "typestr": "@" },
+   "IMHandlePropertyPictureIdentifier": { "typestr": "@" },
+   "IMHandlePropertyPictureData": { "typestr": "@" },
+   "IMHandlePropertyCapabilities": { "typestr": "@" },
+   "IMHandleCapabilityMessaging": { "typestr": "@" },
+   "IMHandleCapabilityOfflineMessaging": { "typestr": "@" },
+   "IMHandleCapabilityChatRoom": { "typestr": "@" },
+   "IMHandleCapabilityHandlePicture": { "typestr": "@" },
+   "IMHandleCapabilityFileTransfer": { "typestr": "@" },
+   "IMAttributeFontFamily": { "typestr": "@" },
+   "IMAttributeFontSize": { "typestr": "@" },
+   "IMAttributeItalic": { "typestr": "@" },
+   "IMAttributeBold": { "typestr": "@" },
+   "IMAttributeUnderline": { "typestr": "@" },
+   "IMAttributeStrikethrough": { "typestr": "@" },
+   "IMAttributeLink": { "typestr": "@" },
+   "IMAttributePreformatted": { "typestr": "@" },
+   "IMAttributeBaseWritingDirection": { "typestr": "@" },
+   "IMAttributeForegroundColor": { "typestr": "@" },
+   "IMAttributeBackgroundColor": { "typestr": "@" },
+   "IMAttributeMessageBackgroundColor": { "typestr": "@" }
+  },
+  "enum": {
+   "IMSessionAvailabilityAway": { "value": 0 },
+   "IMSessionAvailabilityAvailable": { "value": 1 },
+   "IMGroupListCanReorderGroup": { "value":  1 },
+   "IMGroupListCanRenameGroup": { "value":  2 },
+   "IMGroupListCanAddNewMembers": { "value":  4 },
+   "IMGroupListCanRemoveMembers": { "value":  8 },
+   "IMGroupListCanReorderMembers": { "value":  16 },
+   "IMHandleAvailabilityUnknown": { "value":  -2 },
+   "IMHandleAvailabilityOffline": { "value":  -1 },
+   "IMHandleAvailabilityAway": { "value":  0 },
+   "IMHandleAvailabilityAvailable": { "value":  1 },
+   "IMHandleAuthorizationStatusAccepted": { "value":  0 },
+   "IMHandleAuthorizationStatusPending": { "value":  1 },
+   "IMHandleAuthorizationStatusDeclined": { "value":  2 }
+  },
+  "classes": {
+   "NSObject": {
+    "methods": [
+     {
+      "selector": "plugInDidLogOutWithError:reconnect:",
+      "class_method": false,
+      "args": {
+       "1": {
+        "type_override": "Z"
+       }
+      }
+     }
+    ]
+   }
+  }
+ }
+}
