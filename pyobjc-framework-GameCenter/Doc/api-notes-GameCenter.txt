@@ -1,0 +1,16 @@
+API Notes: GameCenter framework
+===============================
+
+Apple documentation
+-------------------
+
+The full API is described in `Apple's documentation`__.
+
+.. __: https://developer.apple.com/library/mac/documentation/UserExperience/Conceptual/GameCenter/GameCenter.html
+
+
+API Notes
+---------
+
+The entire framework is available.
+
