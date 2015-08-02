@@ -14,7 +14,7 @@ if sys.maxsize > 2 ** 32:
             self.assertArgIsBOOL(GameCenter.GKScore.setShouldSetDefaultLeaderboard_, 0)
 
             self.assertArgIsBlock(GameCenter.GKScore.reportScores_withCompletionHandler_, 1, b'v@')
-            self.assertArgIsBlock(GameCenter.GKScore.reportScoreWithCompletionHandler_, 1, b'v@')
+            self.assertArgIsBlock(GameCenter.GKScore.reportScoreWithCompletionHandler_, 0, b'v@')
 
 if __name__ == "__main__":
     main()

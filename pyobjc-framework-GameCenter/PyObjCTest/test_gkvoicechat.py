@@ -27,14 +27,14 @@ if sys.maxsize > 2 ** 32:
             self.assertArgIsBlock(GameCenter.GKVoiceChat.setPlayerVoiceChatStateDidChangeHandler_, 0, b'v@@')
 
             self.assertResultIsBOOL(GameCenter.GKVoiceChat.isActive)
-            self.assertArgIsBOOL(GameCenter.GKVoiceChat.setActive_, 1)
+            self.assertArgIsBOOL(GameCenter.GKVoiceChat.setActive_, 0)
 
             self.assertResultIsBOOL(GameCenter.GKVoiceChat.isVoIPAllowed)
 
             self.assertResultIsBlock(GameCenter.GKVoiceChat.playerStateUpdateHandler, b'v@' + objc._C_NSUInteger)
             self.assertArgIsBlock(GameCenter.GKVoiceChat.setPlayerStateUpdateHandler_, 0, b'v@' + objc._C_NSUInteger)
 
-            self.assertArgIsBOOL(GameCenter.GKVoiceChat.setMute_forPlayer_, 1)
+            self.assertArgIsBOOL(GameCenter.GKVoiceChat.setMute_forPlayer_, 0)
 
 if __name__ == "__main__":
     main()

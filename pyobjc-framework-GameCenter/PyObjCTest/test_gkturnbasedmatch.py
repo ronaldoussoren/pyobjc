@@ -71,7 +71,7 @@ if sys.maxsize > 2 ** 32:
         @min_os_level('10.8')
         def testMethods10_8(self):
             self.assertArgIsBlock(GameCenter.GKTurnBasedMatch.findMatchForRequest_withCompletionHandler_, 1, b'v@@')
-            self.assertArgIsBlock(GameCenter.GKTurnBasedMatch.loadMatchesWithCompletionHanlder_, 0, b'v@@')
+            self.assertArgIsBlock(GameCenter.GKTurnBasedMatch.loadMatchesWithCompletionHandler_, 0, b'v@@')
             self.assertArgIsBlock(GameCenter.GKTurnBasedMatch.loadMatchWithID_withCompletionHandler_, 1, b'v@@')
             self.assertArgIsBlock(GameCenter.GKTurnBasedMatch.acceptInviteWithCompletionHandler_, 0, b'v@@')
             self.assertArgIsBlock(GameCenter.GKTurnBasedMatch.declineInviteWithCompletionHandler_, 0, b'v@')
@@ -98,7 +98,7 @@ if sys.maxsize > 2 ** 32:
             self.assertArgIsBlock(GameCenter.GKTurnBasedMatch.sendReminderToParticipants_localizableMessageKey_arguments_completionHandler_, 3, b'v@')
 
             self.assertArgIsBlock(GameCenter.GKTurnBasedExchange.cancelWithLocalizableMessageKey_arguments_completionHandler_, 2, b'v@')
-            self.assertArgIsBlock(GameCenter.GKTurnBasedExchange.replyWithLocalizableMessageKey_arguments_data_completionHandler_, 2, b'v@')
+            self.assertArgIsBlock(GameCenter.GKTurnBasedExchange.replyWithLocalizableMessageKey_arguments_data_completionHandler_, 3, b'v@')
 
 
 

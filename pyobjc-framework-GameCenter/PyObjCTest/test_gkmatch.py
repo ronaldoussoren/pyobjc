@@ -35,8 +35,8 @@ if sys.maxsize > 2 ** 32:
             self.assertResultIsBOOL(GameCenter.GKMatch.sendDataToAllPlayers_withDataMode_error_)
             self.assertArgIsOut(GameCenter.GKMatch.sendDataToAllPlayers_withDataMode_error_, 2)
 
-            self.assertArgIsBlock(GameCenter.GKMatch.chooseBestHostingPlayerWithCompletionHandler_, b'v@')
-            self.assertArgIsBlock(GameCenter.GKMatch.rematchWithCompletionHandler_, b'v@@')
+            self.assertArgIsBlock(GameCenter.GKMatch.chooseBestHostingPlayerWithCompletionHandler_, 0, b'v@')
+            self.assertArgIsBlock(GameCenter.GKMatch.rematchWithCompletionHandler_, 0, b'v@@')
 
         @min_os_level('10.9')
         def testMethods10_9(self):

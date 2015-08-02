@@ -157,6 +157,20 @@
    "NSObject": {
     "methods": [
      {
+      "selector": "match:shouldReinvitePlayer:",
+      "class_method": false,
+      "retval": {
+       "type_override": "Z"
+      }
+     },
+     {
+      "selector": "match:shouldReinviteDisconnectedPlayer:",
+      "class_method": false,
+      "retval": {
+       "type_override": "Z"
+      }
+     },
+     {
       "selector": "match:player:didChangeConnectionState:",
       "class_method": false,
       "args": {
@@ -707,6 +721,13 @@
    "GKVoiceChat": {
     "methods": [
      {
+      "selector": "isVoIPAllowed",
+      "class_method": false,
+      "retval": {
+       "type_override": "Z"
+      }
+     },
+     {
       "selector": "isActive",
       "class_method": false,
       "retval": {
@@ -714,10 +735,28 @@
       }
      },
      {
+      "selector": "setActive:",
+      "class_method": false,
+      "args": {
+       "0": {
+        "type_override": "Z"
+       }
+      }
+     },
+     {
       "selector": "setPlayer:muted:",
       "class_method": false,
       "args": {
        "1": {
+        "type_override": "Z"
+       }
+      }
+     },
+     {
+      "selector": "setMute:forPlayer:",
+      "class_method": false,
+      "args": {
+       "0": {
         "type_override": "Z"
        }
       }
@@ -757,11 +796,211 @@
 	}
        }
       }
+     },
+     {
+      "selector": "playerStateUpdateHandler",
+      "class_method": false,
+      "retval": {
+       "type_override": "@?",
+       "callable": {
+        "arguments": {
+	 "0": { "type": "^v" },
+	 "1": { "type": "@" },
+	 "2": { "type": [ "I", "Q" ] }
+	},
+	"retval": {
+	 "type": "v"
+	}
+       }
+      }
+     },
+     {
+      "selector": "setPlayerStateUpdateHandler:",
+      "class_method": false,
+      "args": {
+       "0": {
+        "type_override": "@?",
+        "callable": {
+         "arguments": {
+	  "0": { "type": "^v" },
+	  "1": { "type": "@" },
+	  "2": { "type": [ "I", "Q" ] }
+	 },
+	 "retval": {
+	  "type": "v"
+	 }
+	}
+       }
+      }
      }
     ]
    },
    "GKTurnBasedMatch": {
     "methods": [
+     {
+      "selector": "participantQuitInTurnWithOutcome:nextParticipant:matchData:completionHandler:",
+      "class_method": false,
+      "args": {
+       "3": {
+        "type_override": "@?",
+        "callable": {
+         "arguments": {
+	  "0": { "type": "^v" },
+	  "1": { "type": "@" }
+	 },
+	 "retval": {
+	  "type": "v"
+	 }
+        }
+       }
+      }
+     },
+     {
+      "selector": "endTurnWithNextParticipant:matchData:completionHandler:",
+      "class_method": false,
+      "args": {
+       "2": {
+        "type_override": "@?",
+        "callable": {
+         "arguments": {
+	  "0": { "type": "^v" },
+	  "1": { "type": "@" }
+	 },
+	 "retval": {
+	  "type": "v"
+	 }
+        }
+       }
+      }
+     },
+     {
+      "selector": "saveCurrentTurnWithMatchData:completionHandler:",
+      "class_method": false,
+      "args": {
+       "1": {
+        "type_override": "@?",
+        "callable": {
+         "arguments": {
+	  "0": { "type": "^v" },
+	  "1": { "type": "@" }
+	 },
+	 "retval": {
+	  "type": "v"
+	 }
+        }
+       }
+      }
+     },
+     {
+      "selector": "endMatchInTurnWithMatchData:completionHandler:",
+      "class_method": false,
+      "args": {
+       "1": {
+        "type_override": "@?",
+        "callable": {
+         "arguments": {
+	  "0": { "type": "^v" },
+	  "1": { "type": "@" }
+	 },
+	 "retval": {
+	  "type": "v"
+	 }
+        }
+       }
+      }
+     },
+     {
+      "selector": "participantQuitOutOfTurnWithOutcome:withCompletionHandler:",
+      "class_method": false,
+      "args": {
+       "1": {
+        "type_override": "@?",
+        "callable": {
+         "arguments": {
+	  "0": { "type": "^v" },
+	  "1": { "type": "@" }
+	 },
+	 "retval": {
+	  "type": "v"
+	 }
+        }
+       }
+      }
+     },
+     {
+      "selector": "loadMatchDataWithCompletionHandler:",
+      "class_method": false,
+      "args": {
+       "0": {
+        "type_override": "@?",
+        "callable": {
+         "arguments": {
+	  "0": { "type": "^v" },
+	  "1": { "type": "@" },
+	  "2": { "type": "@" }
+	 },
+	 "retval": {
+	  "type": "v"
+	 }
+        }
+       }
+      }
+     },
+     {
+      "selector": "removeWithCompletionHandler:",
+      "class_method": false,
+      "args": {
+       "0": {
+        "type_override": "@?",
+        "callable": {
+         "arguments": {
+	  "0": { "type": "^v" },
+	  "1": { "type": "@" }
+	 },
+	 "retval": {
+	  "type": "v"
+	 }
+        }
+       }
+      }
+     },
+     {
+      "selector": "declineInviteWithCompletionHandler:",
+      "class_method": false,
+      "args": {
+       "0": {
+        "type_override": "@?",
+        "callable": {
+         "arguments": {
+	  "0": { "type": "^v" },
+	  "1": { "type": "@" }
+	 },
+	 "retval": {
+	  "type": "v"
+	 }
+        }
+       }
+      }
+     },
+     {
+      "selector": "acceptInviteWithCompletionHandler:",
+      "class_method": false,
+      "args": {
+       "0": {
+        "type_override": "@?",
+        "callable": {
+         "arguments": {
+	  "0": { "type": "^v" },
+	  "1": { "type": "@" },
+	  "2": { "type": "@" }
+	 },
+	 "retval": {
+	  "type": "v"
+	 }
+        }
+       }
+      }
+     },
      {
       "selector": "sendExchangeToParticipants:data:localizableMessageKey:arguments:timeout:completionHandler:",
       "class_method": false,
@@ -908,6 +1147,44 @@
         }
        }
       }
+     },
+     {
+      "selector": "loadMatchesWithCompletionHandler:",
+      "class_method": false,
+      "args": {
+       "0": {
+        "type_override": "@?",
+        "callable": {
+         "arguments": {
+	  "0": { "type": "^v" },
+	  "1": { "type": "@" },
+	  "2": { "type": "@" }
+	 },
+	 "retval": {
+	  "type": "v"
+	 }
+        }
+       }
+      }
+     },
+     {
+      "selector": "loadMatchWithID:withCompletionHandler:",
+      "class_method": false,
+      "args": {
+       "1": {
+        "type_override": "@?",
+        "callable": {
+         "arguments": {
+	  "0": { "type": "^v" },
+	  "1": { "type": "@" },
+	  "2": { "type": "@" }
+	 },
+	 "retval": {
+	  "type": "v"
+	 }
+        }
+       }
+      }
      }
     ]
    },
@@ -968,6 +1245,18 @@
         "type_modifier": "o"
        }
       }
+     },
+     {
+      "selector": "acceptConnectionFromPeer:error:",
+      "class_method": false,
+      "retval": {
+       "type_override": "Z"
+      },
+      "args": {
+       "1": {
+        "type_modifier": "o"
+       }
+      }
      }
     ]
    },
@@ -994,8 +1283,44 @@
      }
     ]
    },
+   "GKTurnBasedMatchmakerViewController": {
+    "methods": [
+     {
+      "selector": "showExistingMatches",
+      "class_method": false,
+      "retval": {
+       "type_override": "Z"
+      }
+     },
+     {
+      "selector": "setShowExistingMatches:",
+      "class_method": false,
+      "args": {
+       "0": {
+        "type_override": "Z"
+       }
+      }
+     }
+    ]
+   },
    "GKMatchmakerViewController": {
     "methods": [
+     {
+      "selector": "showExistingMatches",
+      "class_method": false,
+      "retval": {
+       "type_override": "Z"
+      }
+     },
+     {
+      "selector": "setShowExistingMatches:",
+      "class_method": false,
+      "args": {
+       "0": {
+        "type_override": "Z"
+       }
+      }
+     },
      {
       "selector": "isHosted",
       "class_method": false,
@@ -1045,7 +1370,7 @@
       "selector": "loadFriendPlayersWithCompletionHandler:",
       "class_method": false,
       "args": {
-       "2": {
+       "0": {
         "type_override": "@?",
         "callable": {
          "arguments": {
@@ -1064,7 +1389,7 @@
       "selector": "loadLeaderboardSetsWithCompletionHandler:",
       "class_method": false,
       "args": {
-       "2": {
+       "0": {
         "type_override": "@?",
         "callable": {
          "arguments": {
@@ -1152,6 +1477,176 @@
 	}
        }
       }
+     },
+     {
+      "selector": "deleteSavedGamesWithName:completionHandler:",
+      "class_method": false,
+      "args": {
+       "1": {
+        "type_override": "@?",
+        "callable": {
+         "arguments": {
+          "0": { "type": "^v" },
+	  "1": { "type": "@" }
+	 },
+	 "retval": {
+	  "type": "v"
+	 }
+        }
+       }
+      }
+     },
+     {
+      "selector": "setDefaultLeaderboardCategoryID:completionHandler:",
+      "class_method": false,
+      "args": {
+       "1": {
+        "type_override": "@?",
+        "callable": {
+         "arguments": {
+          "0": { "type": "^v" },
+	  "1": { "type": "@" }
+	 },
+	 "retval": {
+	  "type": "v"
+	 }
+        }
+       }
+      }
+     },
+     {
+      "selector": "resolveConflictingSavedGames:withData:completionHandler:",
+      "class_method": false,
+      "args": {
+       "2": {
+        "type_override": "@?",
+        "callable": {
+         "arguments": {
+          "0": { "type": "^v" },
+	  "1": { "type": "@" },
+	  "2": { "type": "@" }
+	 },
+	 "retval": {
+	  "type": "v"
+	 }
+        }
+       }
+      }
+     },
+     {
+      "selector": "loadDefaultLeaderboardCategoryIDWithCompletionHandler:",
+      "class_method": false,
+      "args": {
+       "0": {
+        "type_override": "@?",
+        "callable": {
+         "arguments": {
+          "0": { "type": "^v" },
+	  "1": { "type": "@" },
+	  "2": { "type": "@" }
+	 },
+	 "retval": {
+	  "type": "v"
+	 }
+        }
+       }
+      }
+     },
+     {
+      "selector": "setDefaultLeaderboardIdentifier:completionHandler:",
+      "class_method": false,
+      "args": {
+       "1": {
+        "type_override": "@?",
+        "callable": {
+         "arguments": {
+          "0": { "type": "^v" },
+	  "1": { "type": "@" }
+	 },
+	 "retval": {
+	  "type": "v"
+	 }
+        }
+       }
+      }
+     },
+     {
+      "selector": "loadFriendsWithCompletionHandler:",
+      "class_method": false,
+      "args": {
+       "0": {
+        "type_override": "@?",
+        "callable": {
+         "arguments": {
+          "0": { "type": "^v" },
+	  "1": { "type": "@" },
+	  "2": { "type": "@" }
+	 },
+	 "retval": {
+	  "type": "v"
+	 }
+        }
+       }
+      }
+     },
+     {
+      "selector": "loadDefaultLeaderboardIdentifierWithCompletionHandler:",
+      "class_method": false,
+      "args": {
+       "0": {
+        "type_override": "@?",
+        "callable": {
+         "arguments": {
+          "0": { "type": "^v" },
+	  "1": { "type": "@" },
+	  "2": { "type": "@" }
+	 },
+	 "retval": {
+	  "type": "v"
+	 }
+        }
+       }
+      }
+     },
+     {
+      "selector": "generateIdentityVerificationSignatureWithCompletionHandler:",
+      "class_method": false,
+      "args": {
+       "0": {
+        "type_override": "@?",
+        "callable": {
+         "arguments": {
+          "0": { "type": "^v" },
+	  "1": { "type": "@" },
+	  "2": { "type": "@" },
+	  "3": { "type": "@" },
+	  "4": { "type": [ "I", "Q" ] },
+	  "5": { "type": "@" }
+	 },
+	 "retval": {
+	  "type": "v"
+	 }
+        }
+       }
+      }
+     },
+     {
+      "selector": "authenticateWithCompletionHandler:",
+      "class_method": false,
+      "args": {
+       "0": {
+        "type_override": "@?",
+        "callable": {
+         "arguments": {
+          "0": { "type": "^v" },
+	  "1": { "type": "@" }
+	 },
+	 "retval": {
+	  "type": "v"
+	 }
+        }
+       }
+      }
      }
     ]
    },
@@ -1200,7 +1695,194 @@
    "GKMatchmaker": {
     "methods": [
      {
+      "selector": "findPlayersForHostedMatchRequest:withCompletionHandler:",
+      "class_method": false,
+      "args": {
+       "1": {
+        "type_override": "@?",
+        "callable": {
+         "arguments": {
+	  "0": { "type": "^v" },
+	  "1": { "type": "@" },
+	  "2": { "type": "@" }
+	 },
+	 "retval": {
+	  "type": "v"
+	 }
+        }
+       }
+      }
+     },
+     {
+      "selector": "setInviteHandler:",
+      "class_method": false,
+      "args": {
+       "0": {
+        "type_override": "@?",
+        "callable": {
+         "arguments": {
+	  "0": { "type": "^v" },
+	  "1": { "type": "@" },
+	  "2": { "type": "@" }
+	 },
+	 "retval": {
+	  "type": "v"
+	 }
+        }
+       }
+      }
+     },
+     {
+      "selector": "inviteHandler",
+      "class_method": false,
+      "retval": {
+       "type_override": "@?",
+       "callable": {
+        "arguments": {
+         "0": { "type": "^v" },
+	 "1": { "type": "@" },
+	 "2": { "type": "@" }
+	},
+	"retval": {
+	 "type": "v"
+	}
+       }
+      }
+     },
+     {
+      "selector": "queryActivityWithCompletionHandler:",
+      "class_method": false,
+      "args": {
+       "0": {
+        "type_override": "@?",
+        "callable": {
+         "arguments": {
+	  "0": { "type": "^v" },
+	  "1": { "type": [ "i", "q" ] },
+	  "2": { "type": "@" }
+	 },
+	 "retval": {
+	  "type": "v"
+	 }
+        }
+       }
+      }
+     },
+     {
+      "selector": "findMatchForRequest:withCompletionHandler:",
+      "class_method": false,
+      "args": {
+       "1": {
+        "type_override": "@?",
+        "callable": {
+         "arguments": {
+	  "0": { "type": "^v" },
+	  "1": { "type": "@" },
+	  "2": { "type": "@" }
+	 },
+	 "retval": {
+	  "type": "v"
+	 }
+        }
+       }
+      }
+     },
+     {
       "selector": "startBrowsingForNearbyPlayersWithReachableHandler:",
+      "class_method": false,
+      "args": {
+       "0": {
+        "type_override": "@?",
+        "callable": {
+         "arguments": {
+	  "0": { "type": "^v" },
+	  "1": { "type": "@" },
+	  "2": { "type": "Z" }
+	 },
+	 "retval": {
+	  "type": "v"
+	 }
+        }
+       }
+      }
+     },
+     {
+      "selector": "matchForInvite:completionHandler:",
+      "class_method": false,
+      "args": {
+       "1": {
+        "type_override": "@?",
+        "callable": {
+         "arguments": {
+	  "0": { "type": "^v" },
+	  "1": { "type": "@" },
+	  "2": { "type": "@" }
+	 },
+	 "retval": {
+	  "type": "v"
+	 }
+        }
+       }
+      }
+     },
+     {
+      "selector": "addPlayersToMatch:matchRequest:completionHandler:",
+      "class_method": false,
+      "args": {
+       "2": {
+        "type_override": "@?",
+        "callable": {
+         "arguments": {
+	  "0": { "type": "^v" },
+	  "1": { "type": "@" }
+	 },
+	 "retval": {
+	  "type": "v"
+	 }
+        }
+       }
+      }
+     },
+     {
+      "selector": "queryPlayerGroupActivity:withCompletionHandler:",
+      "class_method": false,
+      "args": {
+       "1": {
+        "type_override": "@?",
+        "callable": {
+         "arguments": {
+	  "0": { "type": "^v" },
+	  "1": { "type": [ "i", "q" ] },
+	  "2": { "type": "@" }
+	 },
+	 "retval": {
+	  "type": "v"
+	 }
+        }
+       }
+      }
+     },
+     {
+      "selector": "findPlayersForHostedRequest:withCompletionHandler:",
+      "class_method": false,
+      "args": {
+       "1": {
+        "type_override": "@?",
+        "callable": {
+         "arguments": {
+	  "0": { "type": "^v" },
+	  "1": { "type": "@" },
+	  "2": { "type": "@" }
+	 },
+	 "retval": {
+	  "type": "v"
+	 }
+        }
+       }
+      }
+     },
+     {
+      "selector": "startBrowsingForNearbyPlayersWithHandler:",
       "class_method": false,
       "args": {
        "0": {
@@ -1258,6 +1940,23 @@
         }
        }
       }
+     },
+     {
+      "selector": "showBannerWithTitle:message:duration:completionHandler:",
+      "class_method": false,
+      "args": {
+       "3": {
+        "type_override": "@?",
+        "callable": {
+         "arguments": {
+	  "0": { "type": "^v" }
+	 },
+	 "retval": {
+	  "type": "v"
+	 }
+        }
+       }
+      }
      }
     ]
    },
@@ -1298,11 +1997,84 @@
 	}
        }
       }
+     },
+     {
+      "selector": "setInviteeResponseHandler:",
+      "class_method": false,
+      "args": {
+       "0": {
+        "type_override": "@?",
+        "callable": {
+         "arguments": {
+	  "0": { "type": "^v" },
+	  "1": { "type": "@" },
+	  "2": { "type": ["I", "Q"] }
+	 },
+	 "retval": {
+	  "type": "v"
+	 }
+        }
+       }
+      }
+     },
+     {
+      "selector": "inviteeResponseHandler",
+      "class_method": false,
+      "retval": {
+       "type_override": "@?",
+       "callable": {
+        "arguments": {
+         "0": { "type": "^v" },
+	 "1": { "type": "@" },
+	 "2": { "type": ["I", "Q"] }
+	},
+	"retval": {
+	 "type": "v"
+	}
+       }
+      }
      }
     ]
    },
    "GKMatch": {
     "methods": [
+     {
+      "selector": "rematchWithCompletionHandler:",
+      "class_method": false,
+      "args": {
+       "0": {
+        "type_override": "@?",
+        "callable": {
+         "arguments": {
+	  "0": { "type": "^v" },
+	  "1": { "type": "@" },
+	  "2": { "type": "@" }
+	 },
+	 "retval": {
+	  "type": "v"
+	 }
+        }
+       }
+      }
+     },
+     {
+      "selector": "chooseBestHostingPlayerWithCompletionHandler:",
+      "class_method": false,
+      "args": {
+       "0": {
+        "type_override": "@?",
+        "callable": {
+         "arguments": {
+	  "0": { "type": "^v" },
+	  "1": { "type": "@" }
+	 },
+	 "retval": {
+	  "type": "v"
+	 }
+        }
+       }
+      }
+     },
      {
       "selector": "chooseBestHostPlayerWithCompletionHandler:",
       "class_method": false,
@@ -1330,6 +2102,147 @@
       "args": {
        "3": {
         "type_modifier": "o"
+       }
+      }
+     },
+     {
+      "selector": "sendData:toPlayers:withDataMode:error:",
+      "class_method": false,
+      "retval": {
+       "type_override": "Z"
+      },
+      "args": {
+       "3": {
+        "type_modifier": "o"
+       }
+      }
+     },
+     {
+      "selector": "sendDataToAllPlayers:withDataMode:error:",
+      "class_method": false,
+      "retval": {
+       "type_override": "Z"
+      },
+      "args": {
+       "2": {
+        "type_modifier": "o"
+       }
+      }
+     }
+    ]
+   },
+   "GKTurnBasedExchange": {
+    "methods": [
+     {
+      "selector": "showExistingMatches",
+      "class_method": false,
+      "retval": {
+       "type_override": "Z"
+      }
+     },
+     {
+      "selector": "setShowExistingMatches:",
+      "class_method": false,
+      "args": {
+       "0": {
+        "type_override": "Z"
+       }
+      }
+     },
+     {
+      "selector": "cancelWithLocalizableMessageKey:arguments:completionHandler:",
+      "class_method": false,
+      "args": {
+       "2": {
+        "type_override": "@?",
+        "callable": {
+         "arguments": {
+	  "0": { "type": "^v" },
+	  "1": { "type": "@" }
+	 },
+	 "retval": {
+	  "type": "v"
+	 }
+        }
+       }
+      }
+     },
+     {
+      "selector": "replyWithLocalizableMessageKey:arguments:data:completionHandler:",
+      "class_method": false,
+      "args": {
+       "3": {
+        "type_override": "@?",
+        "callable": {
+         "arguments": {
+	  "0": { "type": "^v" },
+	  "1": { "type": "@" }
+	 },
+	 "retval": {
+	  "type": "v"
+	 }
+        }
+       }
+      }
+     }
+    ]
+   },
+   "GKLeaderboardSet": {
+    "methods": [
+     {
+      "selector": "loadImageWithCompletionHandler:",
+      "class_method": false,
+      "args": {
+       "0": {
+        "type_override": "@?",
+        "callable": {
+         "arguments": {
+	  "0": { "type": "^v" },
+	  "1": { "type": "@" },
+	  "2": { "type": "@" }
+	 },
+	 "retval": {
+	  "type": "v"
+	 }
+        }
+       }
+      }
+     },
+     {
+      "selector": "loadLeaderboardsWithCompletionHandler:",
+      "class_method": false,
+      "args": {
+       "0": {
+        "type_override": "@?",
+        "callable": {
+         "arguments": {
+	  "0": { "type": "^v" },
+	  "1": { "type": "@" },
+	  "2": { "type": "@" }
+	 },
+	 "retval": {
+	  "type": "v"
+	 }
+        }
+       }
+      }
+     },
+     {
+      "selector": "loadLeaderboardSetsWithCompletionHandler:",
+      "class_method": false,
+      "args": {
+       "0": {
+        "type_override": "@?",
+        "callable": {
+         "arguments": {
+	  "0": { "type": "^v" },
+	  "1": { "type": "@" },
+	  "2": { "type": "@" }
+	 },
+	 "retval": {
+	  "type": "v"
+	 }
+        }
        }
       }
      }

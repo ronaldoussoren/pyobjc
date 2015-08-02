@@ -47,11 +47,11 @@ if sys.maxsize > 2 ** 32:
 
         @min_os_level('10.10')
         def testMethods10_10(self):
-            self.assertResultIsBlock(GameCenter.GKMatchRequest.recipientResponseHandler, b'@' + objc._C_NSUInteger)
-            self.assertResultIsBlock(GameCenter.GKMatchRequest.inviteeResponseHandler, b'@' + objc._C_NSUInteger)
+            self.assertResultIsBlock(GameCenter.GKMatchRequest.recipientResponseHandler, b'v@' + objc._C_NSUInteger)
+            self.assertResultIsBlock(GameCenter.GKMatchRequest.inviteeResponseHandler, b'v@' + objc._C_NSUInteger)
 
-            self.assertResultIsBlock(GameCenter.GKMatchRequest.setRecipientResponseHandler_, 0, b'@' + objc._C_NSUInteger)
-            self.assertResultIsBlock(GameCenter.GKMatchRequest.setInviteeResponseHandler_, 0, b'@' + objc._C_NSUInteger)
+            self.assertArgIsBlock(GameCenter.GKMatchRequest.setRecipientResponseHandler_, 0, b'v@' + objc._C_NSUInteger)
+            self.assertArgIsBlock(GameCenter.GKMatchRequest.setInviteeResponseHandler_, 0, b'v@' + objc._C_NSUInteger)
 
             self.assertArgIsBlock(GameCenter.GKMatchmaker.findPlayersForHostedRequest_withCompletionHandler_, 1, b'v@@')
             self.assertArgIsBlock(GameCenter.GKMatchmaker.startBrowsingForNearbyPlayersWithHandler_, 0, b'v@Z')
