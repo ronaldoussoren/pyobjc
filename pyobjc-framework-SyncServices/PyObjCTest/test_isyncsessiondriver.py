@@ -3,6 +3,8 @@ from PyObjCTools.TestSupport import *
 from SyncServices import *
 
 class TestISyncSessionDriverHelper (NSObject):
+    def preferredSyncModeForEntityName_(self, n): return 1
+    def sessionBeginTimeout(self): return 0
     def sessionDriver_didNegotiateAndReturnError_(self, d, e): return 1
     def sessionDriver_willNegotiateAndReturnError_(self, d, e): return 1
     def sessionDriver_didReceiveSyncAlertAndReturnError_(self, d, e): return 1
@@ -53,8 +55,12 @@ class TestISyncSessionDriver (TestCase):
         self.assertEqual(ISyncSessionDriverChangeIgnored, 2)
         self.assertEqual(ISyncSessionDriverChangeError, 3)
 
-    @min_os_level('10.5')
     def testMethods(self):
+        self.assertResultIsBOOL(ISyncSessionDriver.handlesSyncAlerts)
+        self.assertArgIsBOOL(ISyncSessionDriver.setHandlesSyncAlerts_, 0)
+
+    @min_os_level('10.5')
+    def testMethods10_5(self):
         self.assertResultIsBOOL(ISyncSessionDriver.sync)
         self.assertResultIsBOOL(ISyncSessionDriver.startAsynchronousSync_)
         self.assertArgIsOut(ISyncSessionDriver.startAsynchronousSync_, 0)
@@ -63,7 +69,10 @@ class TestISyncSessionDriver (TestCase):
 
     @min_os_level('10.5')
     def testProtocols(self):
-        #self.assertIsInstance(protocols.ISyncSessionDriverDataSourceOptionalMethods, objc.informal_protocol)
+        objc.protocolNamed('ISyncSessionDriverDataSource')
+        self.assertResultHasType(TestISyncSessionDriverHelper.preferredSyncModeForEntityName_, objc._C_INT)
+        self.assertResultHasType(TestISyncSessionDriverHelper.sessionBeginTimeout, objc._C_DBL)
+
         self.assertArgHasType(TestISyncSessionDriverHelper.recordsForEntityName_moreComing_error_, 1, objc._C_OUT + objc._C_PTR + objc._C_NSBOOL)
         self.assertArgHasType(TestISyncSessionDriverHelper.recordsForEntityName_moreComing_error_, 2, objc._C_OUT + objc._C_PTR + objc._C_ID)
 
