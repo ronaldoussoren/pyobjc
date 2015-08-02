@@ -1,0 +1,677 @@
+// objective.metadata exceptions file, see its document
+// for information on how to update this file.
+{
+ "definitions": {
+  "externs": {
+   "GKErrorDomain": { "typestr": "@" },
+   "GKVoiceChatServiceErrorDomain": { "typestr": "@" },
+   "GKPlayerAuthenticationDidChangeNotificationName": { "typestr": "@" },
+   "GKSessionErrorDomain": { "typestr": "@" },
+   "GKTurnTimeoutDefault": { "typestr": "d" },
+   "GKTurnTimeoutNone": { "typestr": "d" },
+   "GKExchangeTimeoutDefault": { "typestr": "d" },
+   "GKExchangeTimeoutNone": { "typestr": "d" }
+  },
+  "enum": {
+   "GKInviteRecipientResponseAccepted": { "value": 0 },
+   "GKInviteRecipientResponseDeclined": { "value": 1 },
+   "GKInviteRecipientResponseFailed": { "value": 2 },
+   "GKInviteRecipientResponseIncompatible": { "value": 3 },
+   "GKInviteRecipientResponseUnableToConnect": { "value": 4 },
+   "GKInviteRecipientResponseNoAnswer": { "value": 5 },
+   "GKInviteeResponseAccepted": { "value": 0 },
+   "GKInviteeResponseDeclined": { "value": 0 },
+   "GKInviteeResponseFailed": { "value": 0 },
+   "GKInviteeResponseIncompatible": { "value": 0 },
+   "GKInviteeResponseUnableToConnect": { "value": 0 },
+   "GKInviteeResponseNoAnswer": { "value": 0 },
+   "GKInviteRecipientResponseDeclined": { "value": 1 },
+   "GKInviteRecipientResponseFailed": { "value": 2 },
+   "GKInviteRecipientResponseIncompatible": { "value": 3 },
+   "GKInviteRecipientResponseUnableToConnect": { "value": 4 },
+   "GKInviteRecipientResponseNoAnswer": { "value": 5 },
+   "GKMatchTypePeerToPeer": { "value": 0 },
+   "GKMatchTypeHosted": { "value": 1 },
+   "GKMatchTypeTurnBased": { "value": 2 },
+   "GKPlayerStateUnknown": { "value": 0 },
+   "GKPlayerStateConnected": { "value": 1 },
+   "GKPlayerStateDisconnected": { "value": 2 },
+   "GKMatchSendDataReliable": { "value": 0 },
+   "GKMatchSendDataUnreliable": { "value": 1 },
+   "GKVoiceChatPlayerConnected": { "value": 0 },
+   "GKVoiceChatPlayerDisconnected": { "value": 1 },
+   "GKVoiceChatPlayerSpeaking": { "value": 2 },
+   "GKVoiceChatPlayerSilent": { "value": 3 },
+   "GKVoiceChatPlayerConnecting": { "value": 4 },
+   "GKSendDataReliable": { "value": 0 },
+   "GKSendDataUnreliable": { "value": 1 },
+   "GKSessionModeServer": { "value": 0 },
+   "GKSessionModeClient": { "value": 1 },
+   "GKSessionModePeer": { "value": 2 },
+   "GKPeerStateAvailable": { "value": 0 },
+   "GKPeerStateUnavailable": { "value": 1 },
+   "GKPeerStateConnected": { "value": 2 },
+   "GKPeerStateDisconnected": { "value": 3 },
+   "GKPeerStateConnecting": { "value": 4 },
+   "GKVoiceChatServiceInternalError": { "value": 32000 },
+   "GKVoiceChatServiceNoRemotePacketsError": { "value": 32001 },
+   "GKVoiceChatServiceUnableToConnectError": { "value": 32002 },
+   "GKVoiceChatServiceRemoteParticipantHangupError": { "value": 32003 },
+   "GKVoiceChatServiceInvalidCallIDError": { "value": 32004 },
+   "GKVoiceChatServiceAudioUnavailableError": { "value": 32005 },
+   "GKVoiceChatServiceUninitializedClientError": { "value": 32006 },
+   "GKVoiceChatServiceClientMissingRequiredMethodsError": { "value": 32007 },
+   "GKVoiceChatServiceRemoteParticipantBusyError": { "value": 32008 },
+   "GKVoiceChatServiceRemoteParticipantCancelledError": { "value": 32009 },
+   "GKVoiceChatServiceRemoteParticipantResponseInvalidError": { "value": 32010 },
+   "GKVoiceChatServiceRemoteParticipantDeclinedInviteError": { "value": 32011 },
+   "GKVoiceChatServiceMethodCurrentlyInvalidError": { "value": 32012 },
+   "GKVoiceChatServiceNetworkConfigurationError": { "value": 32013 },
+   "GKVoiceChatServiceUnsupportedRemoteVersionError": { "value": 32014 },
+   "GKVoiceChatServiceOutOfMemoryError": { "value": 32015 },
+   "GKVoiceChatServiceInvalidParameterError": { "value": 32016 },
+   "GKSessionInvalidParameterError": { "value": 30500 },
+   "GKSessionPeerNotFoundError": { "value": 30501 },
+   "GKSessionDeclinedError": { "value": 30502 },
+   "GKSessionTimedOutError": { "value": 30503 },
+   "GKSessionCancelledError": { "value": 30504 },
+   "GKSessionConnectionFailedError": { "value": 30505 },
+   "GKSessionConnectionClosedError": { "value": 30506 },
+   "GKSessionDataTooBigError": { "value": 30507 },
+   "GKSessionNotConnectedError": { "value": 30508 },
+   "GKSessionCannotEnableError": { "value": 30509 },
+   "GKSessionInProgressError": { "value": 30510 },
+   "GKSessionConnectivityError": { "value": 30201 },
+   "GKSessionTransportError": { "value": 30202 },
+   "GKSessionInternalError": { "value": 30203 },
+   "GKSessionUnknownError": { "value": 30204 },
+   "GKSessionSystemError": { "value": 30205 },
+   "GKTurnBasedMatchStatusUnknown": { "value": 0 },
+   "GKTurnBasedMatchStatusOpen": { "value": 1 },
+   "GKTurnBasedMatchStatusEnded": { "value": 2 },
+   "GKTurnBasedMatchStatusMatching": { "value": 3 },
+   "GKTurnBasedExchangeStatusUnknown": { "value": 0 },
+   "GKTurnBasedExchangeStatusActive": { "value": 1 },
+   "GKTurnBasedExchangeStatusComplete": { "value": 2 },
+   "GKTurnBasedExchangeStatusResolved": { "value": 3 },
+   "GKTurnBasedExchangeStatusCanceled": { "value": 4 },
+   "GKTurnBasedParticipantStatusUnknown": { "value": 0 },
+   "GKTurnBasedParticipantStatusInvited": { "value": 1 },
+   "GKTurnBasedParticipantStatusDeclined": { "value": 2 },
+   "GKTurnBasedParticipantStatusMatching": { "value": 3 },
+   "GKTurnBasedParticipantStatusActive": { "value": 4 },
+   "GKTurnBasedParticipantStatusDone": { "value": 5 },
+   "GKTurnBasedMatchOutcomeNone": { "value": 0 },
+   "GKTurnBasedMatchOutcomeQuit": { "value": 1 },
+   "GKTurnBasedMatchOutcomeWon": { "value": 2 },
+   "GKTurnBasedMatchOutcomeLost": { "value": 3 },
+   "GKTurnBasedMatchOutcomeTied": { "value": 4 },
+   "GKTurnBasedMatchOutcomeTimeExpired": { "value": 5 },
+   "GKTurnBasedMatchOutcomeFirst": { "value": 6 },
+   "GKTurnBasedMatchOutcomeSecond": { "value": 7 },
+   "GKTurnBasedMatchOutcomeThird": { "value": 8 },
+   "GKTurnBasedMatchOutcomeFourth": { "value": 9 },
+   "GKTurnBasedMatchOutcomeCustomRange": { "value": 16711680 },
+   "GKChallengeStateInvalid": { "value": 0 },
+   "GKChallengeStatePending": { "value": 1 },
+   "GKChallengeStateCompleted": { "value": 2 },
+   "GKChallengeStateDeclined": { "value": 3 },
+   "GKErrorUnknown": { "value": 1 },
+   "GKErrorCancelled": { "value": 2 },
+   "GKErrorCommunicationsFailure": { "value": 3 },
+   "GKErrorUserDenied": { "value": 4 },
+   "GKErrorInvalidCredentials": { "value": 5 },
+   "GKErrorNotAuthenticated": { "value": 6 },
+   "GKErrorAuthenticationInProgress": { "value": 7 },
+   "GKErrorInvalidPlayer": { "value": 8 },
+   "GKErrorScoreNotSet": { "value": 9 },
+   "GKErrorParentalControlsBlocked": { "value": 10 },
+   "GKErrorPlayerStatusExceedsMaximumLength": { "value": 11 },
+   "GKErrorPlayerStatusInvalid": { "value": 12 },
+   "GKErrorMatchRequestInvalid": { "value": 13 },
+   "GKErrorUnderage": { "value": 14 },
+   "GKErrorGameUnrecognized": { "value": 15 },
+   "GKErrorNotSupported": { "value": 16 },
+   "GKErrorInvalidParameter": { "value": 17 },
+   "GKErrorUnexpectedConnection": { "value": 18 },
+   "GKErrorChallengeInvalid": { "value": 19 },
+   "GKErrorTurnBasedMatchDataTooLarge": { "value": 20 },
+   "GKErrorTurnBasedTooManySessions": { "value": 21 },
+   "GKErrorTurnBasedInvalidParticipant": { "value": 22 },
+   "GKErrorTurnBasedInvalidTurn": { "value": 23 },
+   "GKErrorTurnBasedInvalidState": { "value": 24 },
+   "GKErrorInvitationsDisabled": { "value": 25 },
+   "GKErrorPlayerPhotoFailure": { "value": 26 },
+   "GKErrorUbiquityContainerUnavailable": { "value": 27 },
+   "GKGameCenterViewControllerStateDefault": { "value": -1 },
+   "GKGameCenterViewControllerStateLeaderboards": { "value": 0 },
+   "GKGameCenterViewControllerStateAchievements": { "value": 1 },
+   "GKGameCenterViewControllerStateChallenges": { "value": 2 },
+   "GKLeaderboardTimeScopeToday": { "value": 0 },
+   "GKLeaderboardTimeScopeWeek": { "value": 1},
+   "GKLeaderboardTimeScopeAllTime": { "value": 2 },
+   "GKLeaderboardPlayerScopeGlobal": { "value": 0 },
+   "GKLeaderboardPlayerScopeFriendsOnly": { "value": 1 }
+  },
+  "classes": {
+   "NSObject": {
+    "methods": [
+     {
+      "selector": "player:receivedTurnEventForMatch:didBecomeActive:",
+      "class_method": false,
+      "args": {
+       "2": {
+        "type_override": "Z"
+       }
+      }
+     },
+     {
+      "selector": "handleTurnEventForMatch:didBecomeActive:",
+      "class_method": false,
+      "args": {
+       "1": {
+        "type_override": "Z"
+       }
+      }
+     },
+     {
+      "selector": "shouldShowBannerForLocallyReceivedChallenge:",
+      "class_method": false,
+      "retval": {
+       "type_override": "Z"
+      }
+     },
+     {
+      "selector": "shouldShowBannerForLocallyCompletedChallenge:",
+      "class_method": false,
+      "retval": {
+       "type_override": "Z"
+      }
+     },
+     {
+      "selector": "shouldShowBannerForRemotelyCompletedChallenge:",
+      "class_method": false,
+      "retval": {
+       "type_override": "Z"
+      }
+     }
+    ]
+   },
+   "GKDialogController": {
+    "methods": [
+     {
+      "selector": "presentViewController:",
+      "class_method": false,
+      "retval": {
+       "type_override": "Z"
+      }
+     }
+    ]
+   },
+   "GKLeaderboard": {
+    "methods": [
+     {
+      "selector": "isLoading",
+      "class_method": false,
+      "retval": {
+       "type_override": "Z"
+      }
+     },
+     {
+      "selector": "loadScoresWithCompletionHandler:",
+      "class_method": false,
+      "args": {
+       "0": {
+        "type_override": "@?",
+	"callable": {
+	 "arguments": {
+	  "0": { "type": "^v" },
+	  "1": { "type": "@" },
+	  "2": { "type": "@" }
+	 },
+	 "retval": {
+	  "type": "v"
+	 }
+	}
+       }
+      }
+     },
+     {
+      "selector": "loadLeaderboardsWithCompletionHandler:",
+      "class_method": false,
+      "args": {
+       "0": {
+        "type_override": "@?",
+	"callable": {
+	 "arguments": {
+	  "0": { "type": "^v" },
+	  "1": { "type": "@" },
+	  "2": { "type": "@" }
+	 },
+	 "retval": {
+	  "type": "v"
+	 }
+	}
+       }
+      }
+     },
+     {
+      "selector": "loadCategoriesWithCompletionHandler:",
+      "class_method": false,
+      "args": {
+       "0": {
+        "type_override": "@?",
+	"callable": {
+	 "arguments": {
+	  "0": { "type": "^v" },
+	  "1": { "type": "@" },
+	  "2": { "type": "@" },
+	  "3": { "type": "@" }
+	 },
+	 "retval": {
+	  "type": "v"
+	 }
+	}
+       }
+      }
+     },
+     {
+      "selector": "setDefaultLeaderboard:withCompletionHandler:",
+      "class_method": false,
+      "args": {
+       "1": {
+        "type_override": "@?",
+	"callable": {
+	 "arguments": {
+	  "0": { "type": "^v" },
+	  "1": { "type": "@" }
+	 },
+	 "retval": {
+	  "type": "v"
+	 }
+	}
+       }
+      }
+     },
+     {
+      "selector": "loadImageWithCompletionHandler:",
+      "class_method": false,
+      "args": {
+       "0": {
+        "type_override": "@?",
+	"callable": {
+	 "arguments": {
+	  "0": { "type": "^v" },
+	  "1": { "type": "@" },
+	  "2": { "type": "@" }
+	 },
+	 "retval": {
+	  "type": "v"
+	 }
+	}
+       }
+      }
+     }
+    ]
+   },
+   "GKScore": {
+    "methods": [
+     {
+      "selector": "challengeComposeControllerWithMessage:players:completionHandler:",
+      "class_method": false,
+      "args": {
+       "2": {
+        "type_override": "@?",
+	"callable": {
+	 "arguments": {
+	  "0": { "type": "^v" },
+	  "1": { "type": "Z" },
+	  "2": { "type": "@" }
+	 },
+	 "retval": {
+	  "type": "@"
+	 }
+	}
+       }
+      }
+     },
+     {
+      "selector": "reportScores:withEligibleChallenges:withCompletionHandler:",
+      "class_method": false,
+      "args": {
+       "2": {
+        "type_override": "@?",
+	"callable": {
+	 "arguments": {
+	  "0": { "type": "^v" },
+	  "1": { "type": "@" }
+	 },
+	 "retval": {
+	  "type": "v"
+	 }
+	}
+       }
+      }
+     }
+    ]
+   },
+   "GKAchievement": {
+    "methods": [
+     {
+      "selector": "challengeComposeControllerWithMessage:players:completionHandler:",
+      "class_method": false,
+      "args": {
+       "2": {
+        "type_override": "@?",
+	"callable": {
+	 "arguments": {
+	  "0": { "type": "^v" },
+	  "1": { "type": "Z" },
+	  "2": { "type": "@" }
+	 },
+	 "retval": {
+	  "type": "@"
+	 }
+	}
+       }
+      }
+     },
+     {
+      "selector": "selectChallengeablePlayers:withCompletionHandler:",
+      "class_method": false,
+      "args": {
+       "1": {
+        "type_override": "@?",
+	"callable": {
+	 "arguments": {
+	  "0": { "type": "^v" },
+	  "1": { "type": "@" },
+	  "2": { "type": "@" }
+	 },
+	 "retval": {
+	  "type": "v"
+	 }
+	}
+       }
+      }
+     },
+     {
+      "selector": "reportAchievements:withEligibleChallenges:withCompletionHandler:",
+      "class_method": false,
+      "args": {
+       "2": {
+        "type_override": "@?",
+	"callable": {
+	 "arguments": {
+	  "0": { "type": "^v" },
+	  "1": { "type": "@" }
+	 },
+	 "retval": {
+	  "type": "v"
+	 }
+	}
+       }
+      }
+     },
+     {
+      "selector": "loadAchievementsWithCompletionHandler:",
+      "class_method": false,
+      "args": {
+       "0": {
+        "type_override": "@?",
+	"callable": {
+	 "arguments": {
+	  "0": { "type": "^v" },
+	  "1": { "type": "@" },
+	  "2": { "type": "@" }
+	 },
+	 "retval": {
+	  "type": "v"
+	 }
+	}
+       }
+      }
+     },
+     {
+      "selector": "resetAchievementsWithCompletionHandler:",
+      "class_method": false,
+      "args": {
+       "0": {
+        "type_override": "@?",
+	"callable": {
+	 "arguments": {
+	  "0": { "type": "^v" },
+	  "1": { "type": "@" }
+	 },
+	 "retval": {
+	  "type": "v"
+	 }
+	}
+       }
+      }
+     },
+     {
+      "selector": "selectChallengeablePlayerIDs:withCompletionHandler:",
+      "class_method": false,
+      "args": {
+       "1": {
+        "type_override": "@?",
+	"callable": {
+	 "arguments": {
+	  "0": { "type": "^v" },
+	  "1": { "type": "@" },
+	  "2": { "type": "@" }
+	 },
+	 "retval": {
+	  "type": "v"
+	 }
+	}
+       }
+      }
+     },
+     {
+      "selector": "reportAchievements:withCompletionHandler:",
+      "class_method": false,
+      "args": {
+       "1": {
+        "type_override": "@?",
+	"callable": {
+	 "arguments": {
+	  "0": { "type": "^v" },
+	  "1": { "type": "@" }
+	 },
+	 "retval": {
+	  "type": "v"
+	 }
+	}
+       }
+      }
+     },
+     {
+      "selector": "reportAchievementWithCompletionHandler:",
+      "class_method": false,
+      "args": {
+       "0": {
+        "type_override": "@?",
+	"callable": {
+	 "arguments": {
+	  "0": { "type": "^v" },
+	  "1": { "type": "@" }
+	 },
+	 "retval": {
+	  "type": "v"
+	 }
+	}
+       }
+      }
+     },
+     {
+      "selector": "isHidden",
+      "class_method": false,
+      "retval": {
+       "type_override": "Z"
+      }
+     },
+     {
+      "selector": "isCompleted",
+      "class_method": false,
+      "retval": {
+       "type_override": "Z"
+      }
+     },
+     {
+      "selector": "showsCompletionBanner",
+      "class_method": false,
+      "retval": {
+       "type_override": "Z"
+      }
+     },
+     {
+      "selector": "setShowsCompletionBanner:",
+      "class_method": false,
+      "args": {
+       "0": {
+        "type_override": "Z"
+       }
+      }
+     }
+    ]
+   },
+   "GKChallenge": {
+    "methods": [
+     {
+      "selector": "loadReceivedChallengesWithCompletionHandler:",
+      "class_method": false,
+      "args": {
+       "0": {
+        "type_override": "@?",
+	"callable": {
+	 "arguments": {
+	  "0": { "type": "^v" },
+	  "1": { "type": "@" },
+	  "2": { "type": "@" }
+	 },
+	 "retval": {
+	  "type": "v"
+	 }
+	}
+       }
+      }
+     }
+    ]
+   },
+   "GKAchievementDescription": {
+    "methods": [
+     {
+      "selector": "loadAchievementDescriptionsWithCompletionHandler:",
+      "class_method": false,
+      "args": {
+       "0": {
+        "type_override": "@?",
+	"callable": {
+	 "arguments": {
+	  "0": { "type": "^v" },
+	  "1": { "type": "@" },
+	  "2": { "type": "@" }
+	 },
+	 "retval": {
+	  "type": "v"
+	 }
+	}
+       }
+      }
+     },
+     {
+      "selector": "loadImageWithCompletionHandler:",
+      "class_method": false,
+      "args": {
+       "0": {
+        "type_override": "@?",
+	"callable": {
+	 "arguments": {
+	  "0": { "type": "^v" },
+	  "1": { "type": "@" },
+	  "2": { "type": "@" }
+	 },
+	 "retval": {
+	  "type": "v"
+	 }
+	}
+       }
+      }
+     },
+     {
+      "selector": "isHidden",
+      "class_method": false,
+      "retval": {
+       "type_override": "Z"
+      }
+     },
+     {
+      "selector": "isReplayable",
+      "class_method": false,
+      "retval": {
+       "type_override": "Z"
+      }
+     }
+    ]
+   },
+   "GKVoiceChat": {
+    "methods": [
+     {
+      "selector": "isActive",
+      "class_method": false,
+      "retval": {
+       "type_override": "Z"
+      }
+     },
+     {
+      "selector": "setPlayer:muted:",
+      "class_method": false,
+      "args": {
+       "1": {
+        "type_override": "Z"
+       }
+      }
+     },
+     {
+      "selector": "setPlayerVoiceChatStateDidChangeHandler:",
+      "class_method": false,
+      "args": {
+       "0": {
+        "type_override": "@?",
+	"callable": {
+	 "arguments": {
+	  "0": { "type": "^v" },
+	  "1": { "type": "@" },
+	  "2": { "type": "@" }
+	 },
+	 "retval": {
+	  "type": "v"
+	 }
+	}
+       }
+      }
+     },
+     {
+      "selector": "playerVoiceChatStateDidChangeHandler",
+      "class_method": false,
+      "retval": {
+       "type_override": "@?",
+       "callable": {
+        "arguments": {
+	 "0": { "type": "^v" },
+	 "1": { "type": "@" },
+	 "2": { "type": "@" }
+	},
+	"retval": {
+	 "type": "v"
+	}
+       }
+      }
+     }
+    ]
+   }
+  }
+ }
+}
