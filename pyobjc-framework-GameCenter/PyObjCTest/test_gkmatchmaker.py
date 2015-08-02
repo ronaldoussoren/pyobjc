@@ -30,16 +30,16 @@ if sys.maxsize > 2 ** 32:
         def testMethods10_8(self):
             self.assertResultIsBOOL(GameCenter.GKInvite.isHosted)
 
-            self.assertArgIsBlock(GameCenter.GKMatchMaker.matchForInvite_completionHandler_, 1, b'v@@')
-            self.assertArgIsBlock(GameCenter.GKMatchMaker.findMatchForRequest_withCompletionHandler_, 1, b'v@@')
-            self.assertArgIsBlock(GameCenter.GKMatchMaker.addPlayersToMatch_matchRequest_completionHandler_, 2, b'v@')
-            self.assertArgIsBlock(GameCenter.GKMatchMaker.queryPlayerGroupActivity_withCompletionHandler_, 1, b'v' + objc._C_NSInteger + b'@')
-            self.assertArgIsBlock(GameCenter.GKMatchMaker.queryActivityWithCompletionHandler_, 0, b'v' + objc._C_NSInteger + b'@')
+            self.assertArgIsBlock(GameCenter.GKMatchmaker.matchForInvite_completionHandler_, 1, b'v@@')
+            self.assertArgIsBlock(GameCenter.GKMatchmaker.findMatchForRequest_withCompletionHandler_, 1, b'v@@')
+            self.assertArgIsBlock(GameCenter.GKMatchmaker.addPlayersToMatch_matchRequest_completionHandler_, 2, b'v@')
+            self.assertArgIsBlock(GameCenter.GKMatchmaker.queryPlayerGroupActivity_withCompletionHandler_, 1, b'v' + objc._C_NSInteger + b'@')
+            self.assertArgIsBlock(GameCenter.GKMatchmaker.queryActivityWithCompletionHandler_, 0, b'v' + objc._C_NSInteger + b'@')
 
-            self.assertResultIsBlock(GameCenter.GKMatchMaker.inviteHandler, b'v@@')
-            self.assertArgIsBlock(GameCenter.GKMatchMaker.setInviteHandler_, 0, b'v@@')
+            self.assertResultIsBlock(GameCenter.GKMatchmaker.inviteHandler, b'v@@')
+            self.assertArgIsBlock(GameCenter.GKMatchmaker.setInviteHandler_, 0, b'v@@')
 
-            self.assertArgIsBlock(GameCenter.GKMatchMaker.findPlayersForHostedMatchRequest_withCompletionHandler_, 1, b'v@@')
+            self.assertArgIsBlock(GameCenter.GKMatchmaker.findPlayersForHostedMatchRequest_withCompletionHandler_, 1, b'v@@')
 
         @min_os_level('10.9')
         def testMethods10_9(self):
