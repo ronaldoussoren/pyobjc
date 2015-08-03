@@ -1,0 +1,73 @@
+// objective.metadata exceptions file, see its document
+// for information on how to update this file.
+{
+ "definitions": {
+  "classes": {},
+  "formal_protocols": {},
+  "functions": {
+   "NetFSCFStringtoCString": {
+    "args": {
+     "0": { "type_override": "^{__CFString=}" }
+    },
+    "retval": {
+     "type_override": "^t",
+     "c_array_delimited_by_null": true
+    }
+   },
+   "NetFSCopyURLForRemountingVolume": {
+    "args": {
+     "0": {}
+    },
+    "retval": {
+     "already_cfretained": true
+    }
+   },
+   "NetFSMountURLAsync": {
+    "args": {
+     "0": {},
+     "1": {},
+     "2": {},
+     "3": {},
+     "4": {},
+     "5": {},
+     "6": { "type_modifier": "o" },
+     "7": {},
+     "8": {
+      "callable": {
+       "arguments": {
+        "0": { "type": "^v" },
+        "1": { "type": "i" },
+        "2": { "type": "^v" },
+        "3": { "type": "@" }
+       },
+       "retval": { "type": "v" }
+      }
+     }
+    }
+   },
+   "NetFSMountURLCancel": {
+    "args": {
+     "0": {}
+    }
+   },
+   "NetFSMountURLProbe": {
+    "args": {
+     "0": {}
+    },
+    "retval": {}
+   },
+   "NetFSMountURLSync": {
+    "args": {
+     "0": {},
+     "1": {},
+     "2": {},
+     "3": {},
+     "4": {},
+     "5": {},
+     "6": { "type_modifier": "o" }
+    }
+   }
+  },
+  "informal_protocols": {}
+ }
+}

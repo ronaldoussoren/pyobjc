@@ -1,0 +1,17 @@
+API Notes: NetFS framework
+==========================
+
+Apple documentation
+-------------------
+
+The full API is described in `Apple's documentation`__.
+
+.. __: https://developer.apple.com/library/mac/documentation/UserExperience/Conceptual/NetFS/NetFS.html
+
+
+API Notes
+---------
+
+The Plugin API is not support (types ``NetFSMountInterface_V1`` and ``NetFSInterface``
+and functions ``NetFSInterface_AddRef``, ``NetFSInterface_Release``,
+``NetFS_CreateInterface`` and ``NetFSQueryInterface``)
