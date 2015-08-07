@@ -35,7 +35,7 @@ class TestSCDynamicStoreCopyDHCPInfo (TestCase):
             r = DHCPInfoGetLeaseStartTime(info)
             self.assertTrue(r is None or isinstance(r, NSDate))
 
-        if os_release() >= '10.8':
+        if os_level_key(os_release()) >= os_level_key('10.8'):
             DHCPInfoGetLeaseExpirationTime
 
             if info:

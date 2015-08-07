@@ -19,6 +19,7 @@ class TestSCSchemaDefinitions (TestCase):
         self.assertIsInstance(kSCPropNetIPSecLocalCertificate, unicode)
         self.assertIsInstance(kSCValNetIPSecAuthenticationMethodSharedSecret, unicode)
         self.assertIsInstance(kSCValNetIPSecAuthenticationMethodCertificate, unicode)
+        self.assertIsInstance(kSCValNetIPSecAuthenticationMethodHybrid, unicode)
         self.assertIsInstance(kSCValNetIPSecSharedSecretEncryptionKeychain, unicode)
         self.assertIsInstance(kSCValNetIPSecLocalIdentifierTypeKeyID, unicode)
         self.assertIsInstance(kSCPropNetModemAccessPointName, unicode)
@@ -286,6 +287,20 @@ class TestSCSchemaDefinitions (TestCase):
         self.assertIsInstance(kSCPropUsersConsoleUserName, unicode)
         self.assertIsInstance(kSCPropUsersConsoleUserUID, unicode)
         self.assertIsInstance(kSCPropUsersConsoleUserGID, unicode)
+
+    @min_os_level('10.6')
+    def testConstants10_6(self):
+        self.assertIsInstance(kSCValNetInterfaceTypeIPSec, unicode)
+        self.assertIsInstance(kSCPropNetIPSecConnectTime, unicode)
+        self.assertIsInstance(kSCPropNetIPSecRemoteAddress, unicode)
+        self.assertIsInstance(kSCPropNetIPSecStatus, unicode)
+        self.assertIsInstance(kSCPropNetIPSecXAuthEnabled, unicode)
+        self.assertIsInstance(kSCPropNetIPSecXAuthName, unicode)
+        self.assertIsInstance(kSCPropNetIPSecXAuthPassword, unicode)
+        self.assertIsInstance(kSCPropNetIPSecXAuthPasswordEncryption, unicode)
+        self.assertIsInstance(kSCValNetIPSecXAuthPasswordEncryptionKeychain, unicode)
+        self.assertIsInstance(kSCValNetIPSecXAuthPasswordEncryptionPrompt, unicode)
+        self.assertIsInstance(kSCValNetIPv4ConfigMethodAutomatic, unicode)
 
     @min_os_level('10.7')
     def testConstants10_7(self):

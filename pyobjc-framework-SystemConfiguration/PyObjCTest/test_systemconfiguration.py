@@ -21,24 +21,36 @@ class TestSystemConfiguration (TestCase):
         self.assertEqual(kSCStatusFailed,  1001)
         self.assertEqual(kSCStatusInvalidArgument,  1002)
         self.assertEqual(kSCStatusAccessError,  1003)
+
         self.assertEqual(kSCStatusNoKey,  1004)
         self.assertEqual(kSCStatusKeyExists,  1005)
         self.assertEqual(kSCStatusLocked,  1006)
         self.assertEqual(kSCStatusNeedLock,  1007)
+
         self.assertEqual(kSCStatusNoStoreSession,  2001)
         self.assertEqual(kSCStatusNoStoreServer,  2002)
         self.assertEqual(kSCStatusNotifierActive, 2003)
+
         self.assertEqual(kSCStatusNoPrefsSession, 3001)
         self.assertEqual(kSCStatusPrefsBusy, 3002)
         self.assertEqual(kSCStatusNoConfigFile, 3003)
         self.assertEqual(kSCStatusNoLink, 3004)
         self.assertEqual(kSCStatusStale, 3005)
         self.assertEqual(kSCStatusMaxLink, 3006)
+
         self.assertEqual(kSCStatusReachabilityUnknown, 4001)
 
     @min_os_level('10.5')
     def testConstants10_5(self):
         self.assertIsInstance(kCFErrorDomainSystemConfiguration, unicode)
+
+    @min_os_level('10.6')
+    def testConstants10_6(self):
+        self.assertEqual(kSCStatusConnectionNoService, 5001)
+
+    @min_os_level('10.9')
+    def testConstants10_9(self):
+        self.assertEqual(kSCStatusConnectionIgnore, 5002)
 
     @min_os_level('10.5')
     def testFunctions10_5(self):

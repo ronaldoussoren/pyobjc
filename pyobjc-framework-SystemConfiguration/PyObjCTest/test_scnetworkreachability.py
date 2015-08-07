@@ -59,6 +59,21 @@ class TestSCNetworkReachability (TestCase):
             self.assertResultIsBOOL(SCNetworkReachabilityUnscheduleFromRunLoop)
             r = SCNetworkReachabilityUnscheduleFromRunLoop(ref, rl, kCFRunLoopCommonModes)
 
+        @min_os_level('10.6')
+        def testFunctions10_6(self):
+            self.assertResultIsBOOL(SCNetworkReachabilitySetDispatchQueue)
+
+        def testConstants(self):
+            self.assertEqual(kSCNetworkReachabilityFlagsTransientConnection, 1<<0)
+            self.assertEqual(kSCNetworkReachabilityFlagsReachable, 1<<1)
+            self.assertEqual(kSCNetworkReachabilityFlagsConnectionRequired, 1<<2)
+            self.assertEqual(kSCNetworkReachabilityFlagsConnectionOnTraffic, 1<<3)
+            self.assertEqual(kSCNetworkReachabilityFlagsInterventionRequired, 1<<4)
+            self.assertEqual(kSCNetworkReachabilityFlagsConnectionOnDemand, 1<<5)
+            self.assertEqual(kSCNetworkReachabilityFlagsIsLocalAddress, 1<<16)
+            self.assertEqual(kSCNetworkReachabilityFlagsIsDirect, 1<<17)
+
+            self.assertEqual(kSCNetworkReachabilityFlagsConnectionAutomatic, kSCNetworkReachabilityFlagsConnectionOnTraffic)
 
 if __name__ == "__main__":
     main()

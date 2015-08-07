@@ -62,6 +62,10 @@ class TestSCNetworkConfiguration (TestCase):
         self.assertTrue(isinstance(kSCNetworkProtocolTypeProxies, unicode))
         self.assertTrue(isinstance(kSCNetworkProtocolTypeSMB, unicode))
 
+    @min_os_level('10.5')
+    def testConstants10_5(self):
+        self.assertIsInstance(kSCNetworkInterfaceTypeIPSec, unicode)
+
     def testFunctions(self):
         r = SCNetworkInterfaceGetTypeID()
         self.assertTrue(isinstance(r, (int, long)))
@@ -126,29 +130,21 @@ class TestSCNetworkConfiguration (TestCase):
         r = SCNetworkInterfaceCopyMediaSubTypeOptions(available, r[0])
         self.assertTrue(isinstance(r, CFArrayRef))
 
-        if sys.byteorder == 'little':
-            # These tests crash in Rosetta on an intel machine::
-            #
-            #   Unhandled transform (1) for ioctl group = 105 (i), number = 68, length = 32
-            #   Illegal instruction
+        r, mtu_cur, mtu_min, mtu_max = SCNetworkInterfaceCopyMTU(iface, None, None, None)
+        self.assertTrue(r is True)
+        self.assertTrue(isinstance(mtu_cur, (int, long)))
+        self.assertTrue(isinstance(mtu_min, (int, long)))
+        self.assertTrue(isinstance(mtu_max, (int, long)))
+        r = SCNetworkInterfaceSetMediaOptions(iface,
+            current['MediaSubType'],
+            current['MediaOptions'])
+        self.assertTrue(r is True or r is False)
 
-            # I haven't filed a bug for this yet.
+        r = SCNetworkInterfaceSetMTU(iface, mtu_cur)
+        self.assertTrue(r is True or r is False)
 
-            r, mtu_cur, mtu_min, mtu_max = SCNetworkInterfaceCopyMTU(iface, None, None, None)
-            self.assertTrue(r is True)
-            self.assertTrue(isinstance(mtu_cur, (int, long)))
-            self.assertTrue(isinstance(mtu_min, (int, long)))
-            self.assertTrue(isinstance(mtu_max, (int, long)))
-            r = SCNetworkInterfaceSetMediaOptions(iface,
-                current['MediaSubType'],
-                current['MediaOptions'])
-            self.assertTrue(r is True or r is False)
-
-            r = SCNetworkInterfaceSetMTU(iface, mtu_cur)
-            self.assertTrue(r is True or r is False)
-
-            r = SCNetworkInterfaceForceConfigurationRefresh(iface)
-            self.assertTrue(r is True or r is False)
+        r = SCNetworkInterfaceForceConfigurationRefresh(iface)
+        self.assertTrue(r is True or r is False)
 
         prefs = SCPreferencesCreate(None, "SystemConfiguration", None)
         self.assertTrue(isinstance(prefs, SCPreferencesRef))
@@ -159,6 +155,7 @@ class TestSCNetworkConfiguration (TestCase):
         a = SCBondInterfaceCopyAvailableMemberInterfaces(prefs)
         self.assertTrue(isinstance(a, CFArrayRef))
 
+        self.assertResultIsCFRetained(SCBondInterfaceCreate)
         iface = SCBondInterfaceCreate(prefs)
         self.assertTrue(iface is None or isinstance(iface, SCBondInterfaceRef))
 
@@ -228,6 +225,16 @@ class TestSCNetworkConfiguration (TestCase):
 
             r = SCVLANInterfaceRemove(iface)
             self.assertTrue(r is True)
+
+        self.assertResultIsCFRetained(SCVLANInterfaceCreate)
+        SCVLANInterfaceRemove
+        SCVLANInterfaceGetPhysicalInterface
+        SCVLANInterfaceGetTag
+        SCVLANInterfaceGetOptions
+        SCVLANInterfaceSetPhysicalInterfaceAndTag
+        SCVLANInterfaceSetLocalizedDisplayName
+        SCVLANInterfaceSetOptions
+
 
         r = SCNetworkProtocolGetTypeID()
         self.assertTrue(isinstance(r, (int, long)))
@@ -344,6 +351,8 @@ class TestSCNetworkConfiguration (TestCase):
 
         v = SCNetworkSetSetCurrent(SCNetworkSetCopyCurrent(prefs))
         self.assertIsInstance(v, bool)
+
+        self.assertResultIsBOOL(SCNetworkSetRemoveService)
 
 
     @min_os_level('10.5')

@@ -78,21 +78,13 @@ class TestSCPreferences (TestCase):
         SCPreferencesSynchronize(ref)
 
 
-
-    @expectedFailure
     def testSecurityIntegreation(self):
-        self.fail("Need Security framework wrappers")
-        #aref = SFAuthorization.authorization().authorizationRef ()
-        # XXX: Security frameworks aren't wrapped yet
-        aref = None
-        ref = SCPreferencesCreateWithAuthorization(None, "pyobjc.test", "pyobjc.test", aref)
-        self.assertIsInstance(ref, SCPreferencesRef)
+        self.assertResultIsCFRetained(SCPreferencesCreateWithAuthorization)
 
 
-
-
-
-
+    @min_os_level('10.6')
+    def testFunctions10_6(self):
+        SCPreferencesSetDispatchQueue
 
 
 if __name__ == "__main__":

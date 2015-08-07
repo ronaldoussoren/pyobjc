@@ -119,6 +119,9 @@ class TestSCDynamicStore (TestCase):
 
 
 
+    @min_os_level('10.6')
+    def testFunctions10_6(self):
+        self.assertResultIsBOOL(SCDynamicStoreSetDispatchQueue)
 
 
 

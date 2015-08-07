@@ -44,6 +44,9 @@ class TestSCNetworkConnection (TestCase):
         self.assertEqual(kSCNetworkConnectionErrorsIn, b"ErrorsIn".decode('latin1'))
         self.assertEqual(kSCNetworkConnectionErrorsOut, b"ErrorsOut".decode('latin1'))
 
+        self.assertEqual(kSCNetworkConnectionSelectionOptionOnDemandHostName, b"OnDemandHostName".decode('latin1'))
+        self.assertEqual(kSCNetworkConnectionSelectionOptionOnDemandRetry, b"OnDemandRetry".decode('latin1'))
+
     def testFunctions(self):
         v = SCNetworkConnectionGetTypeID()
         self.assertIsInstance(v, (int, long))
@@ -66,7 +69,6 @@ class TestSCNetworkConnection (TestCase):
 
         self.assertResultIsCFRetained(SCNetworkConnectionCopyServiceID)
 
-        # FIXME: Need test for this
         SCNetworkConnectionGetStatus
 
         self.assertResultIsCFRetained(SCNetworkConnectionCopyExtendedStatus)
@@ -77,6 +79,9 @@ class TestSCNetworkConnection (TestCase):
         self.assertResultIsBOOL(SCNetworkConnectionScheduleWithRunLoop)
         self.assertResultIsBOOL(SCNetworkConnectionUnscheduleFromRunLoop)
 
+    @min_os_level('10.6')
+    def testFunctions10_6(self):
+        self.assertResultIsBOOL(SCNetworkConnectionSetDispatchQueue)
 
 if __name__ == "__main__":
     main()
