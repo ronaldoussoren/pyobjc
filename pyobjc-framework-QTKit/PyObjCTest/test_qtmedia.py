@@ -45,8 +45,18 @@ class TestQTMedia (TestCase):
         self.assertIsInstance(QTMediaTimeScaleAttribute, unicode)
         self.assertIsInstance(QTMediaTypeAttribute, unicode)
 
+    @min_os_level('10.6')
+    def testConstants10_6(self):
+        self.assertIsInstance(QTMediaTypeSubtitle, unicode)
+        self.assertIsInstance(QTMediaTypeClosedCaption, unicode)
+
     def testMethods(self):
         self.assertResultIsBOOL(QTMedia.hasCharacteristic_)
+
+    @onlyOn32Bit
+    def testMethods32bit(self):
+        self.assertArgIsOut(QTMedia.mediaWithQuickTimeMedia_error_, 1)
+        self.assertArgIsOut(QTMedia.initWithQuickTimeMedia_error_, 1)
 
 if __name__ == "__main__":
     main()

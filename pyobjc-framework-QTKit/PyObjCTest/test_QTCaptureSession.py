@@ -19,6 +19,5 @@ class TestQTCaptureSession (TestCase):
         self.assertArgIsOut(QTCaptureSession.addOutput_error_, 1)
         self.assertResultIsBOOL(QTCaptureSession.isRunning)
 
-
 if __name__ == "__main__":
     main()

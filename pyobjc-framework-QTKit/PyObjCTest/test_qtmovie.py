@@ -130,8 +130,6 @@ class TestQTMovie (TestCase):
         self.assertEqual(QTMovieLoadStatePlaythroughOK, 20000)
         self.assertEqual(QTMovieLoadStateComplete, 100000)
 
-
-
     @min_os_level('10.5')
     def testConstants10_5(self):
         self.assertIsInstance(QTMovieApertureModeClassic, unicode)
@@ -154,6 +152,16 @@ class TestQTMovie (TestCase):
         self.assertIsInstance(QTMovieChapterName, unicode)
         self.assertIsInstance(QTMovieChapterStartTime, unicode)
         self.assertIsInstance(QTMovieChapterTargetTrackAttribute, unicode)
+
+
+    @min_os_level('10.6')
+    def testConstants10_6(self):
+        self.assertIsInstance(QTMovieNaturalSizeDidChangeNotification, unicode)
+        self.assertIsInstance(QTMovieOpenAsyncRequiredAttribute, unicode)
+        self.assertIsInstance(QTMovieOpenForPlaybackAttribute, unicode)
+        self.assertIsInstance(QTMovieLoadStateErrorAttribute, unicode)
+        self.assertIsInstance(QTMovieFrameImageSessionMode, unicode)
+        self.assertIsInstance(QTDisallowedForInitializationPurposeException, unicode)
 
     def testInformalProtocols(self):
         #self.assertIsInstance(protocols.QTMovie_Delegate, objc.informal_protocol)

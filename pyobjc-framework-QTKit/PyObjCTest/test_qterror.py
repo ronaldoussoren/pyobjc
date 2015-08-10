@@ -30,9 +30,26 @@ class TestQTError (TestCase):
         self.assertEqual(QTErrorMaximumDurationReached, 1205)
         self.assertEqual(QTErrorMaximumFileSizeReached, 1206)
         self.assertEqual(QTErrorMediaDiscontinuity, 1207)
+        self.assertEqual(QTErrorMaximumNumberOfSamplesForFileFormatReached, 1208)
         self.assertEqual(QTErrorDeviceNotConnected, 1300)
         self.assertEqual(QTErrorDeviceInUseByAnotherApplication, 1301)
         self.assertEqual(QTErrorDeviceExcludedByAnotherDevice, 1302)
+        self.assertEqual(QTErrorInvalidDestinationFileTypeForExport, 1501)
+        self.assertEqual(QTErrorInvalidSourceFileTypeForExport, 1502)
+        self.assertEqual(QTErrorExportExecutionFailed, 1503)
+        self.assertEqual(QTErrorExportInsufficientSpaceOnDevice, 1504)
+        self.assertEqual(QTErrorExportNoSuchDirectoryOrFile, 1505)
+        self.assertEqual(QTErrorExportIOError, 1506)
+
+    @min_os_level('10.6')
+    def testConstants10_6(self):
+        self.assertIsInstance(QTErrorTimeKey, unicode)
+        self.assertIsInstance(QTErrorFileSizeKey, unicode)
+
+    @expectedFailure
+    @min_os_level('10.6')
+    def testConstants10_6_fail(self):
+        self.assertIsInstance(QTErrorRecordingSuccessfullyFinishedKey, unicode)
 
 if __name__ == "__main__":
     main()

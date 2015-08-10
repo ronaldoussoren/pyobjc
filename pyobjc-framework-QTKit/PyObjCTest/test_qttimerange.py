@@ -2,6 +2,11 @@
 from PyObjCTools.TestSupport import *
 from QTKit import *
 
+try:
+    unicode
+except NameError:
+    unicode = str
+
 class TestQTTimeRange (TestCase):
     def testStructs(self):
         v = QTTimeRange()
@@ -37,6 +42,14 @@ class TestQTTimeRange (TestCase):
 
         o = QTIntersectionTimeRange(rng, rng2)
         self.assertIsInstance(o, QTTimeRange)
+
+        s = QTStringFromTimeRange(rng)
+        self.assertIsInstance(s, unicode)
+
+        t = QTTimeRangeFromString(s)
+        self.assertIsInstance(t, QTTimeRange)
+
+        self.assertTrue(QTEqualTimeRanges(t, rng))
 
 if __name__ == "__main__":
     main()

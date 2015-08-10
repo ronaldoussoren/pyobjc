@@ -33,6 +33,12 @@ class TestQTTime (TestCase):
         v = QTMakeTimeWithTimeInterval(1500.0)
         self.assertIsInstance(v, QTTime)
 
+        v = QTMakeTime(50000, 100)
+        self.assertIsInstance(v, QTTime)
+
+        v = QTMakeTimeScaled(v, 100)
+        self.assertIsInstance(v, QTTime)
+
         #self.assertResultIsBOOL(QTGetTimeRecord)
         #v, o = QTGetTimeRecord(v, None)
         #self.assertTrue(v is True)
@@ -63,6 +69,12 @@ class TestQTTime (TestCase):
         self.assertTrue(o is False)
         o = QTTimeIsIndefinite(QTIndefiniteTime)
         self.assertTrue(o is True)
+
+    @min_os_level('10.5')
+    def testFunctions10_5(self):
+        v = QTStringFromSMPTETime((0, 0, 0, 0, 0, 0, 0, 0, 0))
+        self.assertIsInstance(v, unicode)
+
 
 
 if __name__ == "__main__":

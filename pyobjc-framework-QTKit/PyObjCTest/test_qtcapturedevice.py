@@ -30,6 +30,7 @@ class TestQTCaptureDevice (TestCase):
 
         self.assertEqual(QTCaptureDeviceAVCTransportControlsNotPlayingMode, 0)
         self.assertEqual(QTCaptureDeviceAVCTransportControlsPlayingMode, 1)
+
         self.assertEqual(QTCaptureDeviceAVCTransportControlsFastestReverseSpeed, -19000)
         self.assertEqual(QTCaptureDeviceAVCTransportControlsVeryFastReverseSpeed, -16000)
         self.assertEqual(QTCaptureDeviceAVCTransportControlsFastReverseSpeed, -13000)

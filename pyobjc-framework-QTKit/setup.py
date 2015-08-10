@@ -11,7 +11,8 @@ and (Objective-)C frameworks
 
 Note that this framework is deprecated in OSX 10.9
 '''
-from pyobjc_setup import setup
+from pyobjc_setup import setup, Extension
+import os
 
 setup(
     name='pyobjc-framework-QTKit',
@@ -26,5 +27,16 @@ setup(
         'pyobjc-core>=3.1b1',
         'pyobjc-framework-Cocoa>=3.1b1',
         'pyobjc-framework-Quartz>=3.1b1',
+    ],
+    ext_modules = [
+        Extension("QTKit._QTKit",
+            [ "Modules/_QTKit.m" ],
+            extra_link_args=["-framework", "QTKit"],
+            depends=[
+                os.path.join('Modules', fn)
+                for fn in os.listdir('Modules')
+                if fn.startswith('_QTKit')
+            ]
+        ),
     ],
 )

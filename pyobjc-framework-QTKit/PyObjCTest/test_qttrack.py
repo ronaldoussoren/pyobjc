@@ -32,5 +32,10 @@ class TestQTTrack (TestCase):
         self.assertResultIsBOOL(QTTrack.isEnabled)
         self.assertArgIsBOOL(QTTrack.setEnabled_, 0)
 
+    @onlyOn32Bit
+    def testMethods32Bit(self):
+        self.assertArgIsOut(QTTrack.trackWithQuickTimeTrack_error_, 1)
+        self.assertArgIsOut(QTTrack.initWithQuickTimeTrack_error_, 1)
+
 if __name__ == "__main__":
     main()

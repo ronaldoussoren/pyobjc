@@ -9,7 +9,7 @@ import objc
 import Cocoa
 import Quartz
 
-from QTKit import _metadata
+from QTKit import _metadata, _QTKit
 
 sys.modules['QTKit'] = mod = objc.ObjCLazyModule('QTKit',
     "com.apple.QTKit",
@@ -23,3 +23,4 @@ sys.modules['QTKit'] = mod = objc.ObjCLazyModule('QTKit',
 
 import sys
 del sys.modules['QTKit._metadata']
+del sys.modules['QTKit._QTKit']

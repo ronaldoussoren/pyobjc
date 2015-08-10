@@ -6,6 +6,12 @@ class TestQTKitDefines (TestCase):
     def testConstants(self):
         self.assertEqual(QTKIT_VERSION_7_0, 70000)
         self.assertEqual(QTKIT_VERSION_7_2, 70200)
+        self.assertEqual(QTKIT_VERSION_7_6_3, 70603)
+        self.assertEqual(QTKIT_VERSION_7_6_6, 70606)
+        self.assertEqual(QTKIT_VERSION_7_7, 70700)
+        self.assertEqual(QTKIT_VERSION_7_7_2, 70702)
+        self.assertEqual(QTKIT_VERSION_7_7_3, 70703)
+
 
         self.assertEqual(VideoMediaType, fourcc(b'vide'))
         self.assertEqual(SoundMediaType, fourcc(b'soun'))
