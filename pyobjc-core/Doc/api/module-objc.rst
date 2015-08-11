@@ -1096,15 +1096,11 @@ Name                     Objective-C type
 ------------------------ -------------------------------------------------
 :const:`_C_CHAR_AS_INT`  :c:type:`int8_t` (or :c:type:`char` when
                     used as a number)
------------------------- -------------------------------------------------
-:const:`_C_VECTOR_FLOAT3 :c:type:`vector_float3`
------------------------- -------------------------------------------------
-:const:`_C_VECTOR_FLOAT4 :c:type:`vector_float4`
 ======================== =================================================
 
 The values :const:`_C_NSBOOL`, :const:`_C_UNICHAR`, :const:`_C_CHAR_AS_TEXT`,
-:const:`_C_CHAR_AS_INT`, :const:`_C_VECTOR_FLOAT4` and :const:`_C_VECTOR_FLOAT4`
-are inventions of PyObjC and are not used in the Objective-C runtime.
+and :const:`_C_CHAR_AS_INT` are inventions of PyObjC and are not used in
+the Objective-C runtime.
 
 Complex types
 ..............
