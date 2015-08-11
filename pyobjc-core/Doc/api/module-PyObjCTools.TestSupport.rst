@@ -93,6 +93,17 @@ wrappers.
 
    Decorator for enabling a test only when the process is running in 64-bit mode.
 
+
+.. function:: min_sdk_level(version)
+
+   Decorator for enabling a test only when running with a build of PyObjC
+   that was done with a recent enough SDK for Mac OS X.
+
+.. function:: max_sdk_level(version)
+
+   Decorator for enabling a test only when running with a build of PyObjC
+   that was done with an old enough SDK for Mac OS X.
+
 .. function:: min_os_level(version)
 
    Decorator for enabling a test only when running on a recent enough release

@@ -237,6 +237,30 @@ def os_level_key(release):
     """
     return tuple(int(x) for x in release.split('.'))
 
+
+def min_sdk_level(release):
+    """
+    Usage::
+
+        class Tests (unittest.TestCase):
+            @min_sdk_level('10.6')
+            def testSnowLeopardSDK(self):
+                pass
+    """
+    v = (objc.PyObjC_BUILD_RELEASE / 100, objc.PyObjC_BUILD_RELEASE % 100)
+    return onlyIf(v >= os_level_key(release), "Requires build with SDK %s or later"%(release,))
+
+def max_sdk_level(release):
+    """
+    Usage::
+
+        class Tests (unittest.TestCase):
+            @max_sdk_level('10.5')
+            def testUntilLeopardSDK(self):
+                pass
+    """
+    return onlyIf(objc.PyObjC_BUILD_RELEASE <= os_level_key(release), "Requires build with SDK %s or later"%(release,))
+
 def min_os_level(release):
     """
     Usage::
