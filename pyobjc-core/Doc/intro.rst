@@ -5,7 +5,7 @@ An introduction to PyObjC
 ..	:authors: Ronald Oussoren, Bob Ippolito
 	:contact: pyobjc-dev@lists.sourceforge.net
 	:URL: http://pyobjc.sourceforge.net/
-	:copyright: 2003-2014 The PyObjC Project
+	:copyright: 2003-2015 The PyObjC Project
 
 Preface
 -------
