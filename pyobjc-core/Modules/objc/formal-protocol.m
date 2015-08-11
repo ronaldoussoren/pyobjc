@@ -118,7 +118,7 @@ static char* keywords[] = { "name", "supers", "selectors", NULL };
         }
     }
 
-    if (objc_allocateProtocol == NULL) {
+    if (&objc_allocateProtocol == NULL) {
         /* Protocol creation API is new in OSX 10.7, can will be weak-linked when
          * building on OSX 10.7 with a 10.6 deployment target.
          */
