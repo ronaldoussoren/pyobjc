@@ -13,8 +13,18 @@ __all__ = ( 'runEventLoop', 'runConsoleEventLoop', 'stopEventLoop', 'endSheetMet
 
 from AppKit import (NSApp, NSRunAlertPanel, NSApplicationMain,
                     NSApplicationDidFinishLaunchingNotification)
-from Foundation import (NSObject, NSRunLoop, NSTimer, NSDefaultRunLoopMode,
-                        NSNotificationCenter, NSLog, NSAutoreleasePool, NSDate)
+
+from Foundation import (
+    NSAutoreleasePool,
+    NSDate,
+    NSDefaultRunLoopMode,
+    NSLog,
+    NSNotificationCenter,
+    NSObject,
+    NSRunLoop,
+    NSTimer,
+    NSThread,
+)
 
 import os
 import sys
@@ -22,40 +32,86 @@ import traceback
 import objc
 from objc import super
 
-class PyObjCAppHelperCaller(NSObject):
+class PyObjCMessageRunner(NSObject):
+    """
+    Wraps a Python function and its arguments and allows it to be posted to the
+    MainThread's `NSRunLoop`.
+    """
+    def initWithPayload_(self, payload):
+        """
+        Designated initializer.
+        """
+        self = super(PyObjCMessageRunner, self).init()
+        if not self:
+            return None
 
-    def initWithArgs_(self, args):
-        self = self.init()
-        self.args = args
+        self._payload = payload
+
         return self
 
-    def callAfter_(self, sender):
+    def callAfter(self):
+        """
+        Posts a message to the Main thread, to be executed immediately.
+        """
         self.performSelectorOnMainThread_withObject_waitUntilDone_(
-            self.call_, self.args, False)
+            self.scheduleCallWithDelay_, None, False,
+        )
 
     def callLater_(self, delay):
-        self.performSelector_withObject_afterDelay_(
-            self.callAfter_, None, delay)
+        """
+        Posts a message to the Main thread, to be executed after the given
+        delay, in seconds.
+        """
+        self.performSelectorOnMainThread_withObject_waitUntilDone_(
+            self.scheduleCallWithDelay_, delay, False,
+        )
 
-    def call_(self, func_args_kwargs):
-        (func, args, kwargs) = func_args_kwargs
+    def scheduleCallWithDelay_(self, delay):
+        """
+        This is run once we're on the Main thread.
+        """
+        assert NSThread.isMainThread(), "Call is not executing on the Main thread!"
+
+        # There's no delay, just run the call now.
+        if not delay:
+            self.performCall()
+            return
+
+        # There's a delay, schedule it for later.
+        self.performSelector_withObject_afterDelay_(
+            self.performCall, None, delay,
+        )
+
+    def performCall(self):
+        """
+        Actually runs the payload.
+        """
+        assert NSThread.isMainThread(), "Call is not executing on the Main thread!"
+
+        # Unpack the payload.
+        (func, args, kwargs) = self._payload
+
+        # Run it.
         func(*args, **kwargs)
 
-
 def callAfter(func, *args, **kwargs):
-    """call a function on the main thread (async)"""
+    """
+    Call a function on the Main thread (async).
+    """
     pool = NSAutoreleasePool.alloc().init()
-    obj = PyObjCAppHelperCaller.alloc().initWithArgs_((func, args, kwargs))
-    obj.callAfter_(None)
-    del obj
+    runner = PyObjCMessageRunner.alloc().initWithPayload_((func, args, kwargs))
+    runner.callAfter()
+    del runner
     del pool
 
 def callLater(delay, func, *args, **kwargs):
-    """call a function on the main thread after a delay (async)"""
+    """
+    Call a function on the Main thread after a delay (async).
+    """
     pool = NSAutoreleasePool.alloc().init()
-    obj = PyObjCAppHelperCaller.alloc().initWithArgs_((func, args, kwargs))
-    obj.callLater_(delay)
-    del obj
+    runner = PyObjCMessageRunner.alloc().initWithPayload_((func, args, kwargs))
+    runner.callLater_(delay)
+    del runner
     del pool
 
 class PyObjCAppHelperApplicationActivator(NSObject):
