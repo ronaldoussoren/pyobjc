@@ -1,0 +1,336 @@
+# objective.metada exceptions file, see its document
+# for information on how to update this file.
+{
+ "definitions": {
+  "classes": {
+   "ICCameraDevice": {
+    "methods": [
+     {
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "batteryLevelAvailable"
+     }, 
+     {
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "isAccessRestrictedAppleDevice"
+     }, 
+     {
+      "args": {
+       "0": {
+        "type_override": "Z"
+       }
+      }, 
+      "class_method": false, 
+      "selector": "setTetheredCaptureEnabled:"
+     }, 
+     {
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "tetheredCaptureEnabled"
+     }
+    ]
+   }, 
+   "ICCameraItem": {
+    "methods": [
+     {
+      "class_method": false, 
+      "retval": {}, 
+      "selector": "thumbnailIfAvailable"
+     }, 
+     {
+      "args": {
+       "0": {}
+      }, 
+      "class_method": false, 
+      "selector": "setThumbnailIfAvailable:"
+     }, 
+     {
+      "class_method": false, 
+      "retval": {}, 
+      "selector": "largeThumbnailIfAvailable"
+     }, 
+     {
+      "args": {
+       "0": {}
+      }, 
+      "class_method": false, 
+      "selector": "setLargeThumbnailIfAvailable:"
+     }, 
+     {
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "isInTemporaryStore"
+     }, 
+     {
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "isLocked"
+     }, 
+     {
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "isRaw"
+     }, 
+     {
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "wasAddedAfterContentCatalogCompleted"
+     }
+    ], 
+    "properties": [
+     {
+      "attributes": [], 
+      "name": "thumbnailIfAvailable"
+     }, 
+     {
+      "attributes": [], 
+      "name": "largeThumbnailIfAvailable"
+     }
+    ]
+   }, 
+   "ICDevice": {
+    "methods": [
+     {
+      "class_method": false, 
+      "retval": {}, 
+      "selector": "icon"
+     }, 
+     {
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "hasConfigurableWiFiInterface"
+     }, 
+     {
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "hasOpenSession"
+     }, 
+     {
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "isRemote"
+     }, 
+     {
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "isShared"
+     }
+    ], 
+    "properties": [
+     {
+      "attributes": [
+       "readonly"
+      ], 
+      "name": "icon"
+     }
+    ]
+   }, 
+   "ICDeviceBrowser": {
+    "methods": [
+     {
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "isBrowsing"
+     }
+    ]
+   }, 
+   "ICScannerBandData": {
+    "methods": [
+     {
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "isBigEndian"
+     }
+    ]
+   }, 
+   "ICScannerFeatureBoolean": {
+    "methods": [
+     {
+      "args": {
+       "0": {
+        "type_override": "Z"
+       }
+      }, 
+      "class_method": false, 
+      "selector": "setValue:"
+     }, 
+     {
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "value"
+     }
+    ]
+   }, 
+   "ICScannerFunctionalUnit": {
+    "methods": [
+     {
+      "class_method": false, 
+      "retval": {}, 
+      "selector": "overviewImage"
+     }, 
+     {
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "acceptsThresholdForBlackAndWhiteScanning"
+     }, 
+     {
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "canPerformOverviewScan"
+     }, 
+     {
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "overviewScanInProgress"
+     }, 
+     {
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "scanInProgress"
+     }, 
+     {
+      "args": {
+       "0": {
+        "type_override": "Z"
+       }
+      }, 
+      "class_method": false, 
+      "selector": "setUsesThresholdForBlackAndWhiteScanning:"
+     }, 
+     {
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "usesThresholdForBlackAndWhiteScanning"
+     }
+    ], 
+    "properties": [
+     {
+      "attributes": [
+       "readonly"
+      ], 
+      "name": "overviewImage"
+     }
+    ]
+   }, 
+   "ICScannerFunctionalUnitDocumentFeeder": {
+    "methods": [
+     {
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "documentLoaded"
+     }, 
+     {
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "duplexScanningEnabled"
+     }, 
+     {
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "reverseFeederPageOrder"
+     }, 
+     {
+      "args": {
+       "0": {
+        "type_override": "Z"
+       }
+      }, 
+      "class_method": false, 
+      "selector": "setDuplexScanningEnabled:"
+     }, 
+     {
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "supportsDuplexScanning"
+     }
+    ]
+   }, 
+   "NSObject": {
+    "methods": [
+     {
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "cameraDevice:shouldGetMetadataOfItem:"
+     }, 
+     {
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "cameraDevice:shouldGetThumbnailOfItem:"
+     }, 
+     {
+      "args": {
+       "2": {
+        "type_override": "Z"
+       }
+      }, 
+      "class_method": false, 
+      "selector": "deviceBrowser:didAddDevice:moreComing:"
+     }, 
+     {
+      "args": {
+       "2": {
+        "type_override": "Z"
+       }
+      }, 
+      "class_method": false, 
+      "selector": "deviceBrowser:didRemoveDevice:moreGoing:"
+     }
+    ]
+   }
+  }, 
+  "formal_protocols": {}, 
+  "functions": {}, 
+  "informal_protocols": {}
+ }
+}

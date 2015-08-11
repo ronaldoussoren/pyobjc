@@ -1,0 +1,11 @@
+include *.txt MANIFEST.in *.py
+graft metadata
+graft Doc
+graft Examples
+graft Lib
+graft Modules
+graft source-deps
+graft PyObjCTest
+global-exclude .DS_Store
+global-exclude *.pyc
+global-exclude *.so

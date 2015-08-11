@@ -1,0 +1,7 @@
+API Notes: ImageCaptureCore framework
+============================
+
+API Notes
+---------
+
+The PyObjC bindings for the ImageCaptureCore framework are complete.
