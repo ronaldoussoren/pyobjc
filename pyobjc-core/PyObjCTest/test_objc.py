@@ -16,6 +16,9 @@ class TestConstants(TestCase):
     def testNil(self):
         self.assertIsNone(objc.nil, "nil is not nil/None.")
 
+    def testFloatLimits(self):
+        self.assertIsInstance(objc._FLT_MIN, float)
+        self.assertIsInstance(objc._FLT_MAX, float)
 
 class TestClassLookup(TestCase):
     def testLookupClassNoSuchClassErrorRaised(self):

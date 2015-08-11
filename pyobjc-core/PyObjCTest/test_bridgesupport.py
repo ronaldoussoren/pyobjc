@@ -1286,8 +1286,8 @@ class TestParseBridgeSupport (TestCase):
         class InlineTab (object): pass
         def loadConstant(name, typestr, magic):
             self.assertIsInstance(name, str)
-            self.assertIsInstance(typestr, bytes)
-            self.assertEqual(len(objc.splitSignature(typestr)), 1)
+            self.assertIsInstance(typestr, str)
+            self.assertEqual(len(objc.splitSignature(typestr.encode('ascii'))), 1)
             self.assertIsInstance(magic, bool)
 
             if 'raise' in name:

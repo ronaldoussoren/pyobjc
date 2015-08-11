@@ -252,6 +252,26 @@ class TestDecimalByReference (TestCase):
         self.assertIsInstance(d, objc.NSDecimal)
         self.assertEqual(str(d), "2.5")
 
+        objc._updatingMetadata(True)
+        objc.registerMetaDataForSelector(b"OC_TestDecimal", b"getDecimal:",
+            dict(
+                arguments={
+                    2+0:  dict(type_modifier=objc._C_OUT, type=b'^{_NSDecimal=b8b4b1b1b18[8S]}', null_accepted=False),
+                    #2+0:  dict(type=b'o^{_NSDecimal=b8b4b1b1b18[8S]}', null_accepted=False),
+                }
+            )
+        )
+        objc._updatingMetadata(False)
+        self.assertArgIsOut(o.getDecimal_, 0)
+        r = o.getDecimal_(None)
+        self.assertIsInstance(r, tuple)
+        self.assertEqual(r[0], 1)
+        d = r[1]
+        self.assertIsInstance(d, objc.NSDecimal)
+        self.assertEqual(str(d), "2.5")
+
+
+
     def test_byref_inout(self):
         d1 = objc.NSDecimal("1.25")
         o = OC_TestDecimal.alloc().init()
