@@ -359,6 +359,14 @@ class ObjCLazyModule (ModuleType):
                     return sys.maxsize
                 elif alias == 'LONG_MIN':
                     return -sys.maxsize-1
+                elif alias == 'DBL_MAX':
+                    return sys.float_info.max
+                elif alias == 'DBL_MIN':
+                    return sys.float_info.min
+                elif alias == 'FLT_MAX':
+                    return objc._FLT_MAX
+                elif alias == 'FLT_MIN':
+                    return objc._FLT_MIN
 
                 return getattr(self, alias)
 
