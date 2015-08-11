@@ -1014,9 +1014,14 @@ Constants
    The value of :c:data:`MAC_OS_X_VERSION_MIN_REQUIRED` when PyObjC was
    compiled.
 
+.. data:: PyObjC_BUILD_RELEASE
+
+   The version number of the SDK used to build PyObjC, in the same format
+   as :data:`MAC_OS_X_VERSION_10_N`
+
 .. data:: MAC_OS_X_VERSION_10_N
 
-   There are currently 6 constants of this form, for ``N`` from 1 to 6,
+   There are currently 6 constants of this form, for ``N`` from 1 to 10,
    and these have the same value as the Objective-C constant of the same
    name.
 
@@ -1091,11 +1096,15 @@ Name                     Objective-C type
 ------------------------ -------------------------------------------------
 :const:`_C_CHAR_AS_INT`  :c:type:`int8_t` (or :c:type:`char` when
                     used as a number)
+------------------------ -------------------------------------------------
+:const:`_C_VECTOR_FLOAT3 :c:type:`vector_float3`
+------------------------ -------------------------------------------------
+:const:`_C_VECTOR_FLOAT4 :c:type:`vector_float4`
 ======================== =================================================
 
-The values :const:`_C_NSBOOL`, :const:`_C_UNICHAR`, :const:`_C_CHAR_AS_TEXT`
-and :const:`_C_CHAR_AS_INT` are inventions of PyObjC and are not used in
-the Objective-C runtime.
+The values :const:`_C_NSBOOL`, :const:`_C_UNICHAR`, :const:`_C_CHAR_AS_TEXT`,
+:const:`_C_CHAR_AS_INT`, :const:`_C_VECTOR_FLOAT4` and :const:`_C_VECTOR_FLOAT4`
+are inventions of PyObjC and are not used in the Objective-C runtime.
 
 Complex types
 ..............
@@ -1278,6 +1287,18 @@ Descriptors
 
       The IBOutlet decorator is recognized by Interface Builder when it
       reads Python code. Beyond that the decoerator has no effect.
+
+.. function:: IBInspectable(prop)
+
+   Mark a property as a value that can be introspected in IB.
+
+   See `the Xcode documentation <https://developer.apple.com/library/ios/recipes/xcode_help-IB_objects_media/chapters/CreatingaLiveViewofaCustomObject.html>` for more information on this decorator.
+
+.. function:: IB_DESIGNABLE(cls)
+
+   Class decorator to tell IB that the class can be used in IB designs.
+
+   See `the Xcode documentation <https://developer.apple.com/library/ios/recipes/xcode_help-IB_objects_media/chapters/CreatingaLiveViewofaCustomObject.html>` for more information on this decorator.
 
 .. function:: instancemethod
 

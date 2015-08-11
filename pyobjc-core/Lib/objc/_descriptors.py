@@ -4,7 +4,7 @@ Python <-> Objective-C bridge (PyObjC)
 This module defines the core interfaces of the Python<->Objective-C bridge.
 """
 
-__all__ = ['IBOutlet', 'IBAction', 'accessor', 'Accessor', 'typedAccessor', 'callbackFor', 'selectorFor', 'synthesize', 'namedselector', 'typedSelector', 'namedSelector', 'instancemethod', 'signature' ]
+__all__ = ['IBOutlet', 'IBAction', 'accessor', 'Accessor', 'typedAccessor', 'callbackFor', 'selectorFor', 'synthesize', 'namedselector', 'typedSelector', 'namedSelector', 'instancemethod', 'signature', 'IBInspectable', 'IB_DESIGNABLE' ]
 
 from objc._objc import ivar, selector, _makeClosure, selector, _C_SEL, _C_ID, _C_NSUInteger, _C_NSBOOL
 import sys, textwrap
@@ -16,6 +16,22 @@ _C_NSRange = [b"{_NSRange=II}", b"{_NSRange=QQ}"][sys.maxsize > 2**32]
 #
 # Interface builder support.
 #
+def IB_DESIGNABLE(cls):
+    """
+    Class decorator for annotating that a class can be used in Interface Builder.
+
+    The decorator doesn't do anything.
+    """
+    return cls
+
+def IBInspectable(prop):
+    """
+    Decorator for an Objective-C property to tell IB that the updated in IB.
+
+    The decorator doesn't do anything
+    """
+    return prop
+
 def IBOutlet(name=None):
     """
     Create an instance variable that can be used as an outlet in
