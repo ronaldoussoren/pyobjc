@@ -908,6 +908,7 @@ static char* keywords[] = { "class_", "selector", "metadata", NULL };
         return NULL;
 
     } else {
+        PyObjC_MappingCount ++;
         Py_INCREF(Py_None);
         return Py_None;
     }
@@ -1501,7 +1502,7 @@ static char* keywords[] = { "object", "key", "value", "policy", NULL };
     id value;
     long policy = OBJC_ASSOCIATION_RETAIN;
 
-    if (objc_setAssociatedObject == NULL) {
+    if (&objc_setAssociatedObject == NULL) {
         PyErr_SetString(PyObjCExc_Error, "setAssociatedObject not available on this platform");
         return NULL;
     }
@@ -1547,7 +1548,7 @@ static char* keywords[] = { "object", "key", NULL};
     PyObject* key;
     id value;
 
-    if (objc_getAssociatedObject == NULL) {
+    if (&objc_getAssociatedObject == NULL) {
         PyErr_SetString(PyObjCExc_Error, "setAssociatedObject not available on this platform");
         return NULL;
     }
@@ -1588,7 +1589,7 @@ PyObjC_removeAssociatedObjects(PyObject* self __attribute__((__unused__)),
 static char* keywords[] = { "object", NULL};
     id object;
 
-    if (objc_removeAssociatedObjects == NULL) {
+    if (&objc_removeAssociatedObjects == NULL) {
         PyErr_SetString(PyObjCExc_Error, "removeAssociatedObjects not available on this platform");
         return NULL;
     }
@@ -2283,7 +2284,7 @@ PyObjC_MODULE_INIT(_objc)
 
 
 #if PyObjC_BUILD_RELEASE >= 1007
-    if (objc_loadWeak != NULL) {
+    if (&objc_loadWeak != NULL) {
         if (PyDict_SetItemString(d, "WeakRef", (PyObject*)&PyObjCWeakRef_Type) < 0) {
             PyObjC_INITERROR();
         }
@@ -2476,17 +2477,40 @@ PyObjC_MODULE_INIT(_objc)
     if (PyModule_AddIntConstant(m, "MAC_OS_X_VERSION_10_9", MAC_OS_X_VERSION_10_9) < 0) {
         PyObjC_INITERROR();
     }
-#endif /* MAC_OS_X_VERSION_10_8 */
+#endif /* MAC_OS_X_VERSION_10_9 */
 
 #ifdef MAC_OS_X_VERSION_10_10
     if (PyModule_AddIntConstant(m, "MAC_OS_X_VERSION_10_10", MAC_OS_X_VERSION_10_10) < 0) {
         PyObjC_INITERROR();
     }
-#endif /* MAC_OS_X_VERSION_10_8 */
+#endif /* MAC_OS_X_VERSION_10_10 */
+
+    if (PyModule_AddIntConstant(m, "PyObjC_BUILD_RELEASE", PyObjC_BUILD_RELEASE) < 0) {
+        PyObjC_INITERROR();
+    }
 
     if (PyModule_AddIntConstant(m, "_NSNotFound", NSNotFound) < 0) {
         PyObjC_INITERROR();
     }
+
+
+    if ((v = PyFloat_FromDouble(FLT_MIN)) == NULL) {
+        PyObjC_INITERROR();
+    }
+    if (PyModule_AddObject(m, "_FLT_MIN", v) < 0) {
+        Py_DECREF(v);
+        PyObjC_INITERROR();
+    }
+    Py_DECREF(v);
+
+    if ((v = PyFloat_FromDouble(FLT_MAX)) == NULL) {
+        PyObjC_INITERROR();
+    }
+    if (PyModule_AddObject(m, "_FLT_MAX", v) < 0) {
+        Py_DECREF(v);
+        PyObjC_INITERROR();
+    }
+    Py_DECREF(v);
 
     if (PyModule_AddStringConstant(m, "platform", "MACOSX") < 0) {
         PyObjC_INITERROR();
