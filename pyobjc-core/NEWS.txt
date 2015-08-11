@@ -6,33 +6,66 @@ An overview of the relevant changes in new, and older, releases.
 Version 3.1
 -----------
 
+* Fix for the functions in ``PyObjCTools.AppHelper``: those functions didn't work
+  correctly when the calling thread didn't have a runloop.
+
+  Patch by Max Bélanger.
+
+* Issue #126: Load the LaunchServices definitions through the CoreServices
+  umbrella framework to avoid problems on OSX 10.11.
+
+* Issue #124: Sporadic crash at program shutdown due to a race condition between
+  Python interpreter shutdown and Cocoa cleanup.
+
+  This is mostly a workaround, I don't have a full solution for this yet and
+  I'm not sure if one is possible.
+
+* Added ``objc.PyObjC_BUILD_RELEASE`` which contains the version of the SDK
+  that was used to build PyObjC in the same format as the OSX availability
+  macros.
+
+* Added *maxTimeout* parameter to ``PyObjCTools.AppHelper.runConsoleEventLoop``
+  to fix issue #117. The default value is 3 seconds, which means that
+  the console eventloop will stop within 3 seconds of calling ``stopEventLoop``.
+
 * Re-enable faster method calls for simple method calls.
 
 * Support OSX 10.10 in PyObjCTools.TestSupport (version comparison was too
   naive)
 
+* Add bindings for ApplicationServices, currently only the HIServices sub
+  framework is exposed.
+
+* Add bindings for NetFS, introduced in OSX 10.7.
+
+* Add bindings for ImageCaptureCore. Initial patch by Max Bélanger.
+
+* Add bindings for IMServicePlugIn, introduced in OSX 10.7.
+
 * Add bindings for CoreBluetooth, MapKit, AVKit, MediaLibrary,
   MediaAccessibility, GameController (all new in OSX 10.9)
 
 * Add bindings for FinderSync, CloudKit, CryptoTokenKit,
-  MultipeerConnectivity (all new in OSX 10.10)
+  MultipeerConnectivity, NotificationCenter (all new in OSX 10.10)
 
-* Updated bindings for CoreData, CoreLocation, CoreText, CoreWLAN, EventKit, FSEvents,
-  LaunchServices, OpenDirectory, ServiceManagement, Social, StoreKit,
-  WebKit and JavaScriptCore with the new APIs introduced in OSX 10.9 and 10.10.
+* Add bindings for Contacts, Photos, PhotosUI (new in OSX 10.11)
+
+* Updated bindings for AppKit, CoreData, CoreFoundation, CoreGraphics,
+  CoreLocation, CoreText, CoreVideo, CoreWLAN, EventKit, FSEvents,
+  ImageIO, ImageKit, JavaScriptCore, LaunchServices, OpenDirectory,
+  PDFKit, QuartzComposer, QuartzCore, QuartzFilters, QuickLookUI,
+  ServiceManagement, Social, StoreKit and WebKit with the new APIs
+  introduced in OSX 10.9, 10.10 and 10.11.
 
 * Unchanged framework bindings: Collaboration, DictionaryServices,
-  ExceptionHandling, InputMethodKit, InstallerPlugins, InstantMessage, InterfaceBuilderKit,
-  LatentSemanticMapping, PreferencePanes, PubSub.
+  ExceptionHandling, InputMethodKit, InstallerPlugins, InstantMessage,
+  InterfaceBuilderKit, LatentSemanticMapping, PreferencePanes, PubSub.
 
   .. note::
 
      InterfaceBuilderKit will likely be removed in a future version of PyObjC
 
-* TODO: Update existing bindings with new functionality in OSX 10.9 and 10.10
-
 * TODO: DiskArbitration, GameController, SpriteKit bindings are incomplete
-* TODO: Quartz bindings update
 
 * Fix hard crash with invalid type strings in metadata.
 
