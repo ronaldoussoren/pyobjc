@@ -13,6 +13,8 @@ except NameError:
     bytes = str
 
 class Behaviour (NSObject):
+    def scale(self): return 1
+    def roundingMode(self): return 1
     def exceptionDuringOperation_error_leftOperand_rightOperand_(self, exc, err, l, r):
         pass
 
@@ -70,8 +72,11 @@ class TestNSDecimalNumber (TestCase):
 
 
     def testProtocols(self):
+        objc.protocolNamed('NSDecimalNumberBehaviors')
         self.assertArgHasType(Behaviour.exceptionDuringOperation_error_leftOperand_rightOperand_, 0, objc._C_SEL)
         self.assertArgHasType(Behaviour.exceptionDuringOperation_error_leftOperand_rightOperand_, 1, objc._C_NSUInteger)
+        self.assertResultHasType(Behaviour.scale, objc._C_SHT) # XXX: should this happen without a protocol definition, a bit too generic!
+        self.assertResultHasType(Behaviour.roundingMode, objc._C_NSUInteger)
 
 if __name__ == "__main__":
     main()

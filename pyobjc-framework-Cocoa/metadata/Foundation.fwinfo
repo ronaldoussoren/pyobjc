@@ -2,6 +2,22 @@
 # for information on how to update this file.
 {
  "definitions": {
+  "aliases": {
+    "NSDayCalendarUnit": { "alias": "NSCalendarUnitDay" },
+    "NSHourCalendarUnit": { "alias": "NSCalendarUnitHour" },
+    "NSMinuteCalendarUnit": { "alias": "NSCalendarUnitMinute" },
+    "NSMonthCalendarUnit": { "alias": "NSCalendarUnitMonth" },
+    "NSQuarterCalendarUnit": { "alias": "NSCalendarUnitQuarter" },
+    "NSSecondCalendarUnit": { "alias": "NSCalendarUnitSecond" },
+    "NSWeekOfMonthCalendarUnit": { "alias": "NSCalendarUnitWeekOfMonth" },
+    "NSWeekOfYearCalendarUnit": { "alias": "NSCalendarUnitWeekOfYear" },
+    "NSWeekdayCalendarUnit": { "alias": "NSCalendarUnitWeekday" },
+    "NSWeekdayOrdinalCalendarUnit": { "alias": "NSCalendarUnitWeekdayOrdinal" },
+    "NSWrapCalendarComponents": { "alias": "NSCalendarWrapComponents" },
+    "NSYearCalendarUnit": { "alias": "NSCalendarUnitYear" },
+    "NSYearForWeekOfYearCalendarUnit": { "alias": "NSCalendarUnitYearForWeekOfYear" },
+    "NSEraCalendarUnit": { "alias": "NSCalendarUnitEra" }
+  },
   "enum": {
     "NSURLErrorCancelled": { "value": -999, "comment": "List of values that are aliases from CFNetwork" },
     "NSURLErrorClientCertificateRequired": { "value": -1206 },
@@ -1399,6 +1415,34 @@
     "methods": [
      {
       "args": {
+       "3": {
+        "callable": {
+         "arguments": {
+          "0": {
+           "typestr": "^v"
+          },
+          "1": {
+           "typestr": "@"
+          },
+          "2": {
+           "typestr": "Z"
+          },
+          "3": {
+           "type_modifier": "o",
+           "typestr": "^Z"
+          }
+         },
+         "retval": {
+          "typestr": "v"
+         }
+        }
+       }
+      },
+      "class_method": false,
+      "selector": "enumerateDatesStartingAfterDate:matchingComponents:options:usingBlock:"
+     },
+     {
+      "args": {
        "1": {
         "type_modifier": "o"
        },
@@ -1986,6 +2030,62 @@
    },
    "NSData": {
     "methods": [
+     {
+      "selector": "initWithBytesNoCopy:length:deallocator:",
+      "class_method": false,
+      "arguments": {
+       "4": {
+        "callable": {
+         "arguments": {
+          "0": {
+           "typestr": "^v"
+          },
+          "1": {
+           "typestr": "^v",
+	   "c_array_length_in_arg": 2,
+	   "type_modifier": "n"
+          },
+          "2": {
+           "typestr": [ "I", "Q" ]
+          }
+         },
+         "retval": {
+          "typestr": "v"
+         }
+        }
+       }
+      }
+     },
+     {
+      "selector": "enumerateByteRangesUsingBlock:",
+      "class_method": false,
+      "arguments": {
+       "2": {
+        "callable": {
+         "arguments": {
+          "0": {
+           "typestr": "^v"
+          },
+          "1": {
+           "typestr": "^v",
+	   "c_array_length_in_arg": 2,
+	   "type_modifier": "n"
+          },
+          "2": {
+           "typestr": [ "{_NSRange=II}", "{_NSRange=QQ}" ]
+          },
+          "3": {
+           "type_modifier": "o",
+           "typestr": "^Z"
+          }
+         },
+         "retval": {
+          "typestr": "v"
+         }
+        }
+       }
+      }
+     },
      {
       "class_method": false,
       "retval": {
@@ -2783,6 +2883,52 @@
      }
     ]
    },
+   "NSExtensionContext": {
+    "methods": [
+     {
+      "args": {
+       "1": {
+        "callable": {
+         "arguments": {
+          "0": {
+           "typestr": "^v"
+          },
+          "1": {
+           "typestr": "Z"
+          }
+         },
+         "retval": {
+          "typestr": "v"
+         }
+        }
+       }
+      },
+      "class_method": false,
+      "selector": "openURL:completionHandler:"
+     },
+     {
+      "args": {
+       "1": {
+        "callable": {
+         "arguments": {
+          "0": {
+           "typestr": "^v"
+          },
+          "1": {
+           "typestr": "Z"
+          }
+         },
+         "retval": {
+          "typestr": "v"
+         }
+        }
+       }
+      },
+      "class_method": false,
+      "selector": "completeRequestReturningItems:completionHandler:"
+     }
+    ]
+   },
    "NSException": {
     "methods": [
      {
@@ -2886,6 +3032,27 @@
    },
    "NSFileCoordinator": {
     "methods": [
+     {
+      "args": {
+       "2": {
+        "callable": {
+         "arguments": {
+          "0": {
+           "typestr": "^v"
+          },
+          "1": {
+           "typestr": "@"
+          }
+         },
+         "retval": {
+          "typestr": "v"
+         }
+        }
+       }
+      },
+      "class_method": false,
+      "selector": "coordinateAccessWithIntents:queue:byAccessor:"
+     },
      {
       "args": {
        "2": {
@@ -3167,6 +3334,30 @@
    },
    "NSFileManager": {
     "methods": [
+     {
+      "args": {
+       "0": {
+        "type_modifier": "o"
+       },
+       "3": {
+        "type_modifier": "o"
+       }
+      },
+      "selector": "getRelationship:ofDirectoryAtURL:toItemAtURL:error:",
+      "class_method": false
+     },
+     {
+      "args": {
+       "0": {
+        "type_modifier": "o"
+       },
+       "4": {
+        "type_modifier": "o"
+       }
+      },
+      "selector": "getRelationship:ofDirectory:inDomain:toItemAtURL:error:",
+      "class_method": false
+     },
      {
       "args": {
        "1": {
@@ -3654,6 +3845,30 @@
    },
    "NSFileVersion": {
     "methods": [
+     {
+      "args": {
+       "1": {
+        "callable": {
+         "arguments": {
+          "0": {
+           "typestr": "^v"
+          },
+          "1": {
+           "typestr": "@"
+          },
+          "2": {
+           "typestr": "@"
+          }
+         },
+         "retval": {
+          "typestr": "v"
+         }
+        }
+       }
+      },
+      "class_method": true,
+      "selector": "getNonlocalVersionsOfItemAtURL:completionHandler:"
+     },
      {
       "args": {
        "3": {"type_modifier": "o"}
@@ -7731,7 +7946,7 @@
      {
       "class_method": false,
       "retval": {
-       "type_override": "I"
+       "type_override": ["I", "Q"]
       },
       "selector": "roundingMode"
      },

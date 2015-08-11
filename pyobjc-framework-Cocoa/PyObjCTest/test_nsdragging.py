@@ -66,10 +66,15 @@ class TestNSDragging (TestCase):
         self.assertEqual(NSDraggingContextOutsideApplication, 0)
         self.assertEqual(NSDraggingContextWithinApplication, 1)
 
+        self.assertEqual(NSDraggingItemEnumerationConcurrent, NSEnumerationConcurrent)
         self.assertEqual(NSDraggingItemEnumerationClearNonenumeratedImages, 1<<16)
 
 
     def testProtocols(self):
+        objc.protocolNamed('NSDraggingDestination')
+        objc.protocolNamed('NSDraggingSource')
+
+    def testProtocolImplementations(self):
         self.assertResultHasType(TestNSDraggingHelper.draggingSourceOperationMask, objc._C_NSUInteger)
         self.assertResultHasType(TestNSDraggingHelper.draggingLocation, NSPoint.__typestr__)
         self.assertResultHasType(TestNSDraggingHelper.draggedImageLocation, NSPoint.__typestr__)

@@ -241,5 +241,14 @@ class TestNSRect (TestCase):
         self.assertEqual(p.size.width, 3)
         self.assertEqual(p.size.height, 4)
 
+    def testNSEdgeInserts(self):
+        v = NSEdgeInsets()
+        self.assertEqual(v.top, 0.0)
+        self.assertEqual(v.left, 0.0)
+        self.assertEqual(v.bottom, 0.0)
+        self.assertEqual(v.right, 0.0)
+
+
+
 if __name__ == "__main__":
     main()

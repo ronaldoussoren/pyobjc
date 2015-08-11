@@ -45,10 +45,17 @@ class TestNSOutlineViewHelper (NSObject):
 
     def outlineView_draggingSession_willBeginAtPoint_(self, a, b, c): pass
     def outlineView_draggingSession_endedAtPoint_(self, a, b, c): pass
+    def outlineView_didAddRowView_forRow_(self, a, b, c): pass
+    def outlineView_didRemoveRowView_forRow_(self, a, b, c): pass
 
 
 
 class TestNSOutlineView (TestCase):
+    @min_os_level('10.9')
+    def testConstants10_9(self):
+        self.assertIsInstance(NSOutlineViewDisclosureButtonKey, unicode)
+        self.assertIsInstance(NSOutlineViewShowHideButtonKey, unicode)
+
     def testConstants(self):
         self.assertEqual(NSOutlineViewDropOnItemIndex, -1)
 
@@ -78,6 +85,8 @@ class TestNSOutlineView (TestCase):
         self.assertArgIsBOOL(NSOutlineView.setAutosaveExpandedItems_, 0)
 
     def testProtocols(self):
+        objc.protocolNamed('NSOutlineViewDelegate')
+
         self.assertArgHasType(TestNSOutlineViewHelper.outlineView_child_ofItem_, 1, objc._C_NSInteger)
         self.assertResultIsBOOL(TestNSOutlineViewHelper.outlineView_isItemExpandable_)
         self.assertResultHasType(TestNSOutlineViewHelper.outlineView_numberOfChildrenOfItem_, objc._C_NSInteger)
@@ -93,6 +102,10 @@ class TestNSOutlineView (TestCase):
         self.assertResultHasType(TestNSOutlineViewHelper.outlineView_heightOfRowByItem_, objc._C_CGFloat)
         self.assertResultIsBOOL(TestNSOutlineViewHelper.outlineView_shouldExpandItem_)
         self.assertResultIsBOOL(TestNSOutlineViewHelper.outlineView_shouldCollapseItem_)
+
+        self.assertArgHasType(TestNSOutlineViewHelper.outlineView_didAddRowView_forRow_, 2, objc._C_NSInteger)
+        self.assertArgHasType(TestNSOutlineViewHelper.outlineView_didRemoveRowView_forRow_, 2, objc._C_NSInteger)
+
 
     @min_os_level('10.5')
     def testProtocols10_5(self):

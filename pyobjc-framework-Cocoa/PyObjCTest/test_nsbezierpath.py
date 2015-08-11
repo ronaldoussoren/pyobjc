@@ -117,11 +117,14 @@ class TestNSBezierPath(TestCase):
         self.assertEqual(NSButtLineCapStyle, 0)
         self.assertEqual(NSRoundLineCapStyle, 1)
         self.assertEqual(NSSquareLineCapStyle, 2)
+
         self.assertEqual(NSMiterLineJoinStyle, 0)
         self.assertEqual(NSRoundLineJoinStyle, 1)
         self.assertEqual(NSBevelLineJoinStyle, 2)
+
         self.assertEqual(NSNonZeroWindingRule, 0)
         self.assertEqual(NSEvenOddWindingRule, 1)
+
         self.assertEqual(NSMoveToBezierPathElement, 0)
         self.assertEqual(NSLineToBezierPathElement, 1)
         self.assertEqual(NSCurveToBezierPathElement, 2)
@@ -133,6 +136,12 @@ class TestNSBezierPath(TestCase):
         self.assertResultIsBOOL(NSBezierPath.containsPoint_)
         self.assertResultIsBOOL(NSBezierPath.cachesBezierPath)
         self.assertArgIsBOOL(NSBezierPath.setCachesBezierPath_, 0)
+        self.assertArgIsBOOL(NSBezierPath.appendBezierPathWithArcWithCenter_radius_startAngle_endAngle_clockwise_, 4)
+
+        self.assertArgSizeInArg(NSBezierPath.appendBezierPathWithGlyphs_count_inFont_, 0, 1)
+
+        # XXX: NSBezierPath.drawPackedGlyphs_atPoint_
+        # XXX: NSBezierPath.appendBezierPathWithPackedGlyphs_
 
 
 if __name__ == '__main__':

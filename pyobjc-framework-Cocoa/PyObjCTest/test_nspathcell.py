@@ -11,6 +11,9 @@ class TestNSPathCell (TestCase):
         m = NSPathCell.setDoubleAction_.__metadata__()
         self.assertEqual(m['arguments'][2]['sel_of_type'], b'v@:@')
 
+    @min_sdk_level('10.10')
+    def testProtocols(self):
+        objc.protocolNamed('NSPathCellDelegate')
 
 if __name__ == "__main__":
     main()

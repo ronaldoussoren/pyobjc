@@ -11,6 +11,7 @@ class TestNSBox (TestCase):
         self.assertEqual(NSAboveBottom, 4)
         self.assertEqual(NSAtBottom, 5)
         self.assertEqual(NSBelowBottom, 6)
+
         self.assertEqual(NSBoxPrimary, 0)
         self.assertEqual(NSBoxSecondary, 1)
         self.assertEqual(NSBoxSeparator, 2)

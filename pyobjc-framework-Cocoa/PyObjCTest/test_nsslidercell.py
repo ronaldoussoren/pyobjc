@@ -18,5 +18,9 @@ class TestNSSliderCell (TestCase):
         self.assertResultIsBOOL(NSSliderCell.allowsTickMarkValuesOnly)
         self.assertArgIsBOOL(NSSliderCell.setAllowsTickMarkValuesOnly_, 0)
 
+    @min_os_level('10.9')
+    def testMethods10_9(self):
+        self.assertArgIsBOOL(NSSliderCell.barRectFlipped_, 0)
+
 if __name__ == "__main__":
     main()

@@ -17,6 +17,8 @@ class TestNSInputServerHelper (NSObject):
 
 class TestNSInputServer (TestCase):
     def testProtocols(self):
+        objc.protocolNamed('NSInputServiceProvider')
+        objc.protocolNamed('NSInputServerMouseTracker')
         self.assertArgIsSEL(TestNSInputServerHelper.doCommandBySelector_client_, 0, b'v@:@')
         self.assertArgHasType(TestNSInputServerHelper.markedTextSelectionChanged_client_, 0, NSRange.__typestr__)
         self.assertResultIsBOOL(TestNSInputServerHelper.canBeDisabled)

@@ -24,7 +24,8 @@ class TestNSWorkspace(TestCase):
         self.assert_(res[2] == b''.decode('ascii'))
 
     def testConstants(self):
-        self.assertEqual(NSWorkspaceLaunchAndPrint, 2)
+        self.assertEqual(NSWorkspaceLaunchAndPrint, 0x00000002)
+        self.assertEqual(NSWorkspaceLaunchWithErrorPresentation, 0x00000040)
         self.assertEqual(NSWorkspaceLaunchInhibitingBackgroundOnly, 0x00000080)
         self.assertEqual(NSWorkspaceLaunchWithoutAddingToRecents, 0x00000100)
         self.assertEqual(NSWorkspaceLaunchWithoutActivation, 0x00000200)
@@ -146,6 +147,11 @@ class TestNSWorkspace(TestCase):
 
         self.assertResultIsBOOL(NSWorkspace.setDesktopImageURL_forScreen_options_error_)
         self.assertArgIsOut(NSWorkspace.setDesktopImageURL_forScreen_options_error_, 3)
+
+    @min_os_level('10.10')
+    def testMethods10_10(self):
+        self.assertArgIsOut(NSWorkspace.openURL_options_configuration_error_, 3)
+        self.assertArgIsOut(NSWorkspace.openURLs_withApplicationAtURL_options_configuration_error_, 4)
 
 
 if __name__ == '__main__':

@@ -65,7 +65,7 @@ class TestNSLayoutContraintManual (TestCase):
         self.assertEqual(v.right, 0.0)
 
         self.assertEqual(NSEdgeInsets.__typestr__,
-                b'{_NSEdgeInsets=' + objc._C_CGFloat + objc._C_CGFloat + objc._C_CGFloat + objc._C_CGFloat + b'}')
+                b'{NSEdgeInsets=' + objc._C_CGFloat + objc._C_CGFloat + objc._C_CGFloat + objc._C_CGFloat + b'}')
 
     @min_os_level('10.7')
     def testFunctions10_7(self):
@@ -91,6 +91,11 @@ class TestNSLayoutContraintManual (TestCase):
         self.assertArgIsBOOL(NSView.setTranslatesAutoresizingMaskIntoConstraints_, 0)
         self.assertResultIsBOOL(NSView.requiresConstraintBasedLayout)
         self.assertResultIsBOOL(NSView.hasAmbiguousLayout)
+
+    @min_os_level('10.10')
+    def testMethods10_10(self):
+        self.assertResultIsBOOL(NSLayoutConstraint.isActive)
+        self.assertArgIsBOOL(NSLayoutConstraint.setActive_, 0)
 
 if __name__ == "__main__":
     main()

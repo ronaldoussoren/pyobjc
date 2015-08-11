@@ -66,14 +66,42 @@ class TestNSData(TestCase):
     def testConstants10_7(self):
         self.assertEqual(NSDataReadingMappedAlways, 1<<3)
 
+        self.assertEqual(NSDataReadingMappedIfSafe, 1<<0)
+        self.assertEqual(NSDataReadingUncached, 1<<1)
+
     @min_os_level('10.8')
     def testConstants10_8(self):
         self.assertEqual(NSDataWritingWithoutOverwriting, 1<<1)
+
+    @min_os_level('10.9')
+    def testConstants10_9(self):
+        self.assertEqual(NSDataBase64Encoding64CharacterLineLength, 1<<0)
+        self.assertEqual(NSDataBase64Encoding76CharacterLineLength, 1<<1)
+        self.assertEqual(NSDataBase64EncodingEndLineWithCarriageReturn, 1<<4)
+        self.assertEqual(NSDataBase64EncodingEndLineWithLineFeed, 1<<5)
+
+        self.assertEqual(NSDataBase64DecodingIgnoreUnknownCharacters, 1<<0)
 
     @min_os_level('10.6')
     def testMethods10_6(self):
         self.assertResultHasType(NSData.rangeOfData_options_range_, NSRange.__typestr__)
         self.assertArgHasType(NSData.rangeOfData_options_range_, 2, NSRange.__typestr__)
+
+    @min_os_level('10.9')
+    def testMethods10_6(self):
+        self.assertArgIsBlock(NSData.enumerateByteRangesUsingBlock_, 0, b'vn^v' + NSRange.__typestr__ + b'o^Z')
+        data = NSData.dataWithBytes_length_(rawBytes, len(rawBytes))
+
+        l = []
+        def cb (buf, rng, done):
+            l.append((buf, rng, done))
+            return False
+        data.enumerateByteRangesUsingBlock_(cb)
+        self.assertEqual(l, [
+            (rawBytes, NSRange(0, len(rawBytes)), None),
+        ])
+
+        self.assertArgIsBlock(NSData.initWithBytesNoCopy_length_deallocator_, 2, b'vn^v' + objc._C_NSUInteger)
 
     def assertDataContents(self, d1, d2, rawData):
         self.assertEqual(len(d1), d1.length(), "d1: len() and -length didn't match.")

@@ -13,8 +13,17 @@ class TestNSTokenFieldCellHelper (NSObject):
 class TestNSTokenFieldCell (TestCase):
     def testConstants(self):
         self.assertEqual(NSDefaultTokenStyle, 0)
-        self.assertEqual(NSPlainTextTokenStyle, 1)
-        self.assertEqual(NSRoundedTokenStyle, 2)
+        self.assertEqual(NSTokenStyleNone, 1)
+        self.assertEqual(NSTokenStyleRounded, 2)
+
+        self.assertEqual(NSPlainTextTokenStyle, 1) # Deprecated
+        self.assertEqual(NSRoundedTokenStyle, 2) # Deprecated
+
+    @min_os_level('10.10')
+    def testContants10_10(self):
+        self.assertEqual(NSTokenStyleSquared, 3)
+        self.assertEqual(NSTokenStylePlainSquared, 4)
+
 
     def testProtocols(self):
         self.assertArgHasType(TestNSTokenFieldCellHelper.tokenFieldCell_completionsForSubstring_indexOfToken_indexOfSelectedItem_, 2, objc._C_NSInteger)

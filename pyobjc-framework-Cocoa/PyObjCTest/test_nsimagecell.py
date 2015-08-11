@@ -4,7 +4,6 @@ from AppKit import *
 
 class TestNSImageCell (TestCase):
     def testConstants(self):
-
         self.assertEqual(NSImageAlignCenter, 0)
         self.assertEqual(NSImageAlignTop, 1)
         self.assertEqual(NSImageAlignTopLeft, 2)

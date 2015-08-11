@@ -19,6 +19,10 @@ class TestNSExpression (TestCase):
     def testConstants10_6(self):
         self.assertEqual(NSBlockExpressionType, 19)
 
+    @min_os_level('10.9')
+    def testConstants10_9(self):
+        self.assertEqual(NSAnyKeyExpressionType, 15)
+
     @min_os_level('10.6')
     def testMethods10_6(self):
         self.assertArgIsBlock(NSExpression.expressionForBlock_arguments_, 0, b'@@@@')

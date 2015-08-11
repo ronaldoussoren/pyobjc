@@ -8,6 +8,12 @@
     }
   },
   "externs": {
+    "kCFTypeSetCallBacks": {
+      "ignore": true
+    },
+    "kCFTypeDictionaryValueCallBacks": {
+      "ignore": true
+    },
     "kCFPlugInDynamicRegistrationKey": {
       "ignore": true
     },
@@ -56,197 +62,197 @@
   "cftypes": {
    "CFAllocatorRef": {
     "gettypeid_func": "CFAllocatorGetTypeID"
-   }, 
+   },
    "CFArrayRef": {
-    "gettypeid_func": "CFArrayGetTypeID", 
+    "gettypeid_func": "CFArrayGetTypeID",
     "tollfree": "NSArray"
-   }, 
+   },
    "CFAttributedStringRef": {
-    "gettypeid_func": "CFAttributedStringGetTypeID", 
+    "gettypeid_func": "CFAttributedStringGetTypeID",
     "tollfree": "__NSCFAttributedString,NSCFAttributedString"
-   }, 
+   },
    "CFBagRef": {
     "gettypeid_func": "CFBagGetTypeID"
-   }, 
+   },
    "CFBinaryHeapRef": {
     "gettypeid_func": "CFBinaryHeapGetTypeID"
-   }, 
+   },
    "CFBitVectorRef": {
     "gettypeid_func": "CFBitVectorGetTypeID"
-   }, 
+   },
    "CFBooleanRef": {
-    "gettypeid_func": "CFBooleanGetTypeID", 
+    "gettypeid_func": "CFBooleanGetTypeID",
     "tollfree": "__NSCFBoolean,NSCFBoolean"
-   }, 
+   },
    "CFBundleRef": {
     "gettypeid_func": "CFBundleGetTypeID"
-   }, 
+   },
    "CFCalendarRef": {
-    "gettypeid_func": "CFCalendarGetTypeID", 
+    "gettypeid_func": "CFCalendarGetTypeID",
     "tollfree": "__NSCFCalendar,NSCFCalendar"
-   }, 
+   },
    "CFCharacterSetRef": {
-    "gettypeid_func": "CFCharacterSetGetTypeID", 
+    "gettypeid_func": "CFCharacterSetGetTypeID",
     "tollfree": "__NSCFCharacterSet,NSCFCharacterSet"
-   }, 
+   },
    "CFDataRef": {
-    "gettypeid_func": "CFDataGetTypeID", 
+    "gettypeid_func": "CFDataGetTypeID",
     "tollfree": "__NSCFData,NSCFData"
-   }, 
+   },
    "CFDateFormatterRef": {
     "gettypeid_func": "CFDateFormatterGetTypeID"
-   }, 
+   },
    "CFDateRef": {
-    "gettypeid_func": "CFDateGetTypeID", 
+    "gettypeid_func": "CFDateGetTypeID",
     "tollfree": "__NSCFDate,NSCFDate,__NSDate"
-   }, 
+   },
    "CFDictionaryRef": {
-    "gettypeid_func": "CFDictionaryGetTypeID", 
+    "gettypeid_func": "CFDictionaryGetTypeID",
     "tollfree": "NSDictionary"
-   }, 
+   },
    "CFErrorRef": {
-    "gettypeid_func": "CFErrorGetTypeID", 
+    "gettypeid_func": "CFErrorGetTypeID",
     "tollfree": "__NSCFError,NSCFError"
-   }, 
+   },
    "CFFileDescriptorRef": {
     "gettypeid_func": "CFFileDescriptorGetTypeID"
-   }, 
+   },
    "CFFileSecurityRef": {
     "gettypeid_func": "CFFileSecurityGetTypeID",
     "tollfree": "__NSFileSecurity"
-   }, 
+   },
    "CFLocaleRef": {
-    "gettypeid_func": "CFLocaleGetTypeID", 
+    "gettypeid_func": "CFLocaleGetTypeID",
     "tollfree": "__NSCFLocale,NSCFLocale"
-   }, 
+   },
    "CFMachPortRef": {
-    "gettypeid_func": "CFMachPortGetTypeID", 
+    "gettypeid_func": "CFMachPortGetTypeID",
     "tollfree": "NSMachPort"
-   }, 
+   },
    "CFMessagePortRef": {
     "gettypeid_func": "CFMessagePortGetTypeID"
-   }, 
+   },
    "CFMutableArrayRef": {
-    "gettypeid_func": "CFArrayGetTypeID", 
+    "gettypeid_func": "CFArrayGetTypeID",
     "tollfree": "NSMutableArray"
-   }, 
+   },
    "CFMutableAttributedStringRef": {
-    "gettypeid_func": "CFAttributedStringGetTypeID", 
+    "gettypeid_func": "CFAttributedStringGetTypeID",
     "tollfree": "__NSCFAttributedString,NSCFAttributedString"
-   }, 
+   },
    "CFMutableBagRef": {
     "gettypeid_func": "CFBagGetTypeID"
-   }, 
+   },
    "CFMutableBitVectorRef": {
     "gettypeid_func": "CFBitVectorGetTypeID"
-   }, 
+   },
    "CFMutableCharacterSetRef": {
     "gettypeid_func": "CFCharacterSetGetTypeID"
-   }, 
+   },
    "CFMutableDataRef": {
-    "gettypeid_func": "CFDataGetTypeID", 
+    "gettypeid_func": "CFDataGetTypeID",
     "tollfree": "NSMutableData"
-   }, 
+   },
    "CFMutableDictionaryRef": {
-    "gettypeid_func": "CFDictionaryGetTypeID", 
+    "gettypeid_func": "CFDictionaryGetTypeID",
     "tollfree": "NSMutableDictionary"
-   }, 
+   },
    "CFMutableSetRef": {
-    "gettypeid_func": "CFSetGetTypeID", 
+    "gettypeid_func": "CFSetGetTypeID",
     "tollfree": "NSMutableSet"
-   }, 
+   },
    "CFMutableStringRef": {
     "gettypeid_func": "CFStringGetTypeID"
-   }, 
+   },
    "CFNotificationCenterRef": {
     "gettypeid_func": "CFNotificationCenterGetTypeID"
-   }, 
+   },
    "CFNullRef": {
-    "gettypeid_func": "CFNullGetTypeID", 
+    "gettypeid_func": "CFNullGetTypeID",
     "tollfree": "NSNull"
-   }, 
+   },
    "CFNumberFormatterRef": {
     "gettypeid_func": "CFNumberFormatterGetTypeID"
-   }, 
+   },
    "CFNumberRef": {
-    "gettypeid_func": "CFNumberGetTypeID", 
+    "gettypeid_func": "CFNumberGetTypeID",
     "tollfree": "__NSCFNumber,NSCFNumber"
-   }, 
+   },
    "CFPlugInInstanceRef": {
     "gettypeid_func": "CFPlugInInstanceGetTypeID"
-   }, 
+   },
    "CFPlugInRef": {
-    "comment": "CFPlugin", 
-    "gettypeid_func": "CFPlugInGetTypeID", 
+    "comment": "CFPlugin",
+    "gettypeid_func": "CFPlugInGetTypeID",
     "ignore": "true"
-   }, 
+   },
    "CFPropertyListRef": {
     "ignore": "true"
-   }, 
+   },
    "CFReadStreamRef": {
-    "gettypeid_func": "CFReadStreamGetTypeID", 
+    "gettypeid_func": "CFReadStreamGetTypeID",
     "tollfree": "__NSCFInputStream,NSCFInputStream"
-   }, 
+   },
    "CFRunLoopObserverRef": {
     "gettypeid_func": "CFRunLoopObserverGetTypeID"
-   }, 
+   },
    "CFRunLoopRef": {
     "gettypeid_func": "CFRunLoopGetTypeID"
-   }, 
+   },
    "CFRunLoopSourceRef": {
     "gettypeid_func": "CFRunLoopSourceGetTypeID"
-   }, 
+   },
    "CFRunLoopTimerRef": {
-    "gettypeid_func": "CFRunLoopTimerGetTypeID", 
+    "gettypeid_func": "CFRunLoopTimerGetTypeID",
     "tollfree": "__NSCFTimer,NSCFTimer"
-   }, 
+   },
    "CFSetRef": {
-    "gettypeid_func": "CFSetGetTypeID", 
+    "gettypeid_func": "CFSetGetTypeID",
     "tollfree": "NSSet"
-   }, 
+   },
    "CFSocketRef": {
     "gettypeid_func": "CFSocketGetTypeID"
-   }, 
+   },
    "CFStringRef": {
-    "gettypeid_func": "CFStringGetTypeID", 
+    "gettypeid_func": "CFStringGetTypeID",
     "tollfree": "NSString"
-   }, 
+   },
    "CFStringTokenizerRef": {
     "gettypeid_func": "CFStringTokenizerGetTypeID"
-   }, 
+   },
    "CFTimeZoneRef": {
-    "gettypeid_func": "CFTimeZoneGetTypeID", 
+    "gettypeid_func": "CFTimeZoneGetTypeID",
     "tollfree": "NSTimeZone"
-   }, 
+   },
    "CFTreeRef": {
     "gettypeid_func": "CFTreeGetTypeID"
-   }, 
+   },
    "CFURLEnumeratorRef": {
     "gettypeid_func": "CFURLEnumeratorGetTypeID"
-   }, 
+   },
    "CFURLRef": {
-    "gettypeid_func": "CFURLGetTypeID", 
+    "gettypeid_func": "CFURLGetTypeID",
     "tollfree": "NSURL"
-   }, 
+   },
    "CFUUIDRef": {
     "gettypeid_func": "CFUUIDGetTypeID"
-   }, 
+   },
    "CFUserNotificationRef": {
     "gettypeid_func": "CFUserNotificationGetTypeID"
-   }, 
+   },
    "CFWriteStreamRef": {
-    "gettypeid_func": "CFWriteStreamGetTypeID", 
+    "gettypeid_func": "CFWriteStreamGetTypeID",
     "tollfree": "__NSCFOutputStream,NSCFOutputStream"
-   }, 
+   },
    "CFXMLNodeRef": {
     "gettypeid_func": "CFXMLNodeGetTypeID"
-   }, 
+   },
    "CFXMLParserRef": {
     "gettypeid_func": "CFXMLParserGetTypeID"
    }
-  }, 
-  "classes": {}, 
-  "formal_protocols": {}, 
+  },
+  "classes": {},
+  "formal_protocols": {},
   "functions": {
    "_CFAutoreleasePoolPrintPools": {
      "args": {},
@@ -262,19 +268,19 @@
    },
    "CFAllocatorAllocate": {
     "ignore": true
-   }, 
+   },
    "CFAllocatorCreate": {
     "ignore": true
-   }, 
+   },
    "CFAllocatorDeallocate": {
     "ignore": true
-   }, 
+   },
    "CFAllocatorGetContext": {
     "ignore": true
-   }, 
+   },
    "CFAllocatorReallocate": {
     "ignore": true
-   }, 
+   },
    "CFArrayAppendValue": {
      "args": {
        "1": { "type_override": "@" }
@@ -287,2180 +293,2180 @@
       "function": {
        "args": [
         {
-         "typestr": "@" 
-        }, 
+         "typestr": "@"
+        },
         {
          "typestr": "@"
         }
-       ], 
+       ],
        "retval": {
         "typestr": "v"
        }
       }
-     }, 
+     },
      "3": { "type_override": "@" }
     }
-   }, 
+   },
    "CFArrayBSearchValues": {
     "args": {
-     "0": {}, 
-     "2": { "type_override": "@"}, 
+     "0": {},
+     "2": { "type_override": "@"},
      "3": {
       "callable_retained": false,
       "function": {
        "args": [
         {
          "typestr": "@"
-        }, 
+        },
         {
          "typestr": "@"
-        }, 
+        },
         {
          "typestr": "@"
         }
-       ], 
+       ],
        "retval": {
         "typestr": "l"
        }
       }
-     }, 
+     },
      "4": {"type_override": "@"}
     }
-   }, 
+   },
    "CFArrayContainsValue": {
     "args": {
      "2": { "type_override": "@"}
     }
-   }, 
+   },
    "CFArrayCreate": {
     "args": {
-     "0": {}, 
-     "1": {}, 
+     "0": {},
+     "1": {},
      "3": {}
-    }, 
+    },
     "retval": {
      "already_cfretained": true
     }
-   }, 
+   },
    "CFArrayCreateCopy": {
     "args": {
-     "0": {}, 
+     "0": {},
      "1": {}
-    }, 
+    },
     "retval": {
      "already_cfretained": true
     }
-   }, 
+   },
    "CFArrayCreateMutable": {
     "args": {
-     "0": {}, 
+     "0": {},
      "2": {}
-    }, 
+    },
     "retval": {
      "already_cfretained": true
     }
-   }, 
+   },
    "CFArrayCreateMutableCopy": {
     "args": {
-     "0": {}, 
+     "0": {},
      "2": {}
-    }, 
+    },
     "retval": {
      "already_cfretained": true
     }
-   }, 
+   },
    "CFArrayExchangeValuesAtIndices": {
     "args": {
      "0": {}
     }
-   }, 
+   },
    "CFArrayGetCount": {
     "args": {
      "0": {}
     }
-   }, 
+   },
    "CFArrayGetCountOfValue": {
     "args": {
-     "0": {}, 
+     "0": {},
      "2": { "type_override": "@"}
     }
-   }, 
+   },
    "CFArrayGetFirstIndexOfValue": {
     "args": {
-     "0": {}, 
+     "0": {},
      "2": { "type_override": "@"}
     }
-   }, 
+   },
    "CFArrayGetLastIndexOfValue": {
     "args": {
-     "0": {}, 
+     "0": {},
      "2": { "type_override": "@"}
     }
-   }, 
+   },
    "CFArrayGetValueAtIndex": {
     "args": {
      "0": {}
-    }, 
+    },
     "retval": { "type_override": "@"}
-   }, 
+   },
    "CFArrayGetValues": {
     "args": {
-     "0": {}, 
+     "0": {},
      "2": { "c_array_length_in_arg": 1, "type_modifier": "o", "type_override": "^@" }
     }
-   }, 
+   },
    "CFArrayInsertValueAtIndex": {
     "args": {
-     "0": {}, 
+     "0": {},
      "2": { "type_override": "@"}
     }
-   }, 
+   },
    "CFArrayRemoveAllValues": {
     "args": {
      "0": {}
     }
-   }, 
+   },
    "CFArrayRemoveValueAtIndex": {
     "args": {
      "0": {}
     }
-   }, 
+   },
    "CFArrayReplaceValues": {
     "args": {
-     "0": {}, 
+     "0": {},
      "2": { "c_array_length_in_arg": 3, "type_modifier": "n", "type_override": "^@" }
     }
-   }, 
+   },
    "CFArraySetValueAtIndex": {
     "args": {
-     "0": {}, 
+     "0": {},
      "2": { "type_override": "@" }
     }
-   }, 
+   },
    "CFArraySortValues": {
     "args": {
-     "0": {}, 
+     "0": {},
      "2": {
       "callable_retained": false,
       "function": {
        "args": [
         {
          "typestr": "@"
-        }, 
+        },
         {
          "typestr": "@"
-        }, 
+        },
         {
          "typestr": "@"
         }
-       ], 
+       ],
        "retval": {
         "typestr": "l"
        }
       }
-     }, 
+     },
      "3": { "type_override": "@"}
     }
-   }, 
+   },
    "CFAttributedStringBeginEditing": {
     "args": {
      "0": {}
     }
-   }, 
+   },
    "CFAttributedStringCreate": {
     "args": {
-     "0": {}, 
-     "1": {}, 
+     "0": {},
+     "1": {},
      "2": {}
-    }, 
+    },
     "retval": {
      "already_cfretained": true
     }
-   }, 
+   },
    "CFAttributedStringCreateCopy": {
     "args": {
-     "0": {}, 
+     "0": {},
      "1": {}
-    }, 
+    },
     "retval": {
      "already_cfretained": true
     }
-   }, 
+   },
    "CFAttributedStringCreateMutable": {
     "args": {
      "0": {}
-    }, 
+    },
     "retval": {
      "already_cfretained": true
     }
-   }, 
+   },
    "CFAttributedStringCreateMutableCopy": {
     "args": {
-     "0": {}, 
+     "0": {},
      "2": {}
-    }, 
+    },
     "retval": {
      "already_cfretained": true
     }
-   }, 
+   },
    "CFAttributedStringCreateWithSubstring": {
     "args": {
-     "0": {}, 
+     "0": {},
      "1": {}
-    }, 
+    },
     "retval": {
      "already_cfretained": true
     }
-   }, 
+   },
    "CFAttributedStringEndEditing": {
     "args": {
      "0": {}
     }
-   }, 
+   },
    "CFAttributedStringGetAttribute": {
     "args": {
-     "0": {}, 
-     "2": {}, 
+     "0": {},
+     "2": {},
      "3": { "type_modifier": "o" }
     }
-   }, 
+   },
    "CFAttributedStringGetAttributeAndLongestEffectiveRange": {
     "args": {
-     "0": {}, 
-     "2": {}, 
+     "0": {},
+     "2": {},
      "4": { "type_modifier": "o"}
     }
-   }, 
+   },
    "CFAttributedStringGetAttributes": {
     "args": {
-     "0": {}, 
+     "0": {},
      "2": { "type_modifier": "o" }
-    }, 
+    },
     "retval": {}
-   }, 
+   },
    "CFAttributedStringGetAttributesAndLongestEffectiveRange": {
     "args": {
-     "0": {}, 
+     "0": {},
      "3": { "type_modifier": "o" }
-    }, 
+    },
     "retval": {}
-   }, 
+   },
    "CFAttributedStringGetLength": {
     "args": {
      "0": {}
     }
-   }, 
+   },
    "CFAttributedStringGetMutableString": {
     "args": {
      "0": {}
-    }, 
+    },
     "retval": {}
-   }, 
+   },
    "CFAttributedStringGetString": {
     "args": {
      "0": {}
-    }, 
+    },
     "retval": {}
-   }, 
+   },
    "CFAttributedStringRemoveAttribute": {
     "args": {
-     "0": {}, 
+     "0": {},
      "2": {}
     }
-   }, 
+   },
    "CFAttributedStringReplaceAttributedString": {
     "args": {
-     "0": {}, 
+     "0": {},
      "2": {}
     }
-   }, 
+   },
    "CFAttributedStringReplaceString": {
     "args": {
-     "0": {}, 
+     "0": {},
      "2": {}
     }
-   }, 
+   },
    "CFAttributedStringSetAttribute": {
     "args": {
-     "0": {}, 
+     "0": {},
      "2": {}
     }
-   }, 
+   },
    "CFAttributedStringSetAttributes": {
     "args": {
-     "0": {}, 
+     "0": {},
      "2": {}
     }
-   }, 
+   },
    "CFBagAddValue": {
     "args": {
-     "0": {}, 
+     "0": {},
      "1": { "type_override": "@" }
     }
-   }, 
+   },
    "CFBagApplyFunction": {
     "args": {
-     "0": {}, 
+     "0": {},
      "1": {
       "callable_retained": false,
       "function": {
        "args": [
         {
          "typestr": "@"
-        }, 
+        },
         {
          "typestr": "@"
         }
-       ], 
+       ],
        "retval": {
         "typestr": "v"
        }
       }
-     }, 
+     },
      "2": { "type_override": "@" }
     }
-   }, 
+   },
    "CFBagContainsValue": {
     "args": {
-     "0": {}, 
+     "0": {},
      "1": { "type_override": "@" }
     }
-   }, 
+   },
    "CFBagCreate": {
     "args": {
-     "0": {}, 
-     "1": {}, 
+     "0": {},
+     "1": {},
      "3": {}
-    }, 
+    },
     "retval": {
      "already_cfretained": true
     }
-   }, 
+   },
    "CFBagCreateCopy": {
     "args": {
-     "0": {}, 
+     "0": {},
      "1": {}
-    }, 
+    },
     "retval": {
      "already_cfretained": true
     }
-   }, 
+   },
    "CFBagCreateMutable": {
     "args": {
-     "0": {}, 
+     "0": {},
      "2": {}
-    }, 
+    },
     "retval": {
      "already_cfretained": true
     }
-   }, 
+   },
    "CFBagCreateMutableCopy": {
     "args": {
-     "0": {}, 
+     "0": {},
      "2": {}
-    }, 
+    },
     "retval": {
      "already_cfretained": true
     }
-   }, 
+   },
    "CFBagGetCount": {
     "args": {
      "0": {}
     }
-   }, 
+   },
    "CFBagGetCountOfValue": {
     "args": {
-     "0": {}, 
+     "0": {},
      "1": { "type_override": "@" }
     }
-   }, 
+   },
    "CFBagGetValue": {
     "args": {
-     "0": {}, 
+     "0": {},
      "1": { "type_override": "@" }
-    }, 
+    },
     "retval": { "type_override": "@" }
-   }, 
+   },
    "CFBagGetValueIfPresent": {
     "args": {
-     "0": {}, 
-     "1": { "type_override": "@"}, 
+     "0": {},
+     "1": { "type_override": "@"},
      "2": { "type_modifier": "o", "type_override": "^@"}
     }
-   }, 
+   },
    "CFBagGetValues": {
     "args": {
-     "0": {}, 
+     "0": {},
      "1": { "type_override": "^@", "type_modifier": "o", "c_array_of_variable_length": true }
     }
-   }, 
+   },
    "CFBagRemoveAllValues": {
     "args": {
      "0": {}
     }
-   }, 
+   },
    "CFBagRemoveValue": {
     "args": {
-     "0": {}, 
+     "0": {},
      "1": { "type_override": "@"}
     }
-   }, 
+   },
    "CFBagReplaceValue": {
     "args": {
-     "0": {}, 
+     "0": {},
      "1": { "type_override": "@" }
     }
-   }, 
+   },
    "CFBagSetValue": {
     "args": {
-     "0": {}, 
+     "0": {},
      "1": { "type_override": "@" }
     }
-   }, 
+   },
    "CFBinaryHeapAddValue": {
     "args": {
-     "0": {}, 
+     "0": {},
      "1": { "type_override": "@"}
     }
-   }, 
+   },
    "CFBinaryHeapApplyFunction": {
     "args": {
-     "0": {}, 
+     "0": {},
      "1": {
       "callable_retained": false,
       "function": {
        "args": [
         {
-         "typestr": "@" 
-        }, 
+         "typestr": "@"
+        },
         {
          "typestr": "@"
         }
-       ], 
+       ],
        "retval": {
         "typestr": "v"
        }
       }
-     }, 
+     },
      "2": { "type_override": "@"}
     }
-   }, 
+   },
    "CFBinaryHeapContainsValue": {
     "args": {
-     "0": {}, 
+     "0": {},
      "1": { "type_override": "@" }
     }
-   }, 
+   },
    "CFBinaryHeapCreate": {
     "args": {
-     "0": {}, 
-     "2": {}, 
+     "0": {},
+     "2": {},
      "3": {}
-    }, 
+    },
     "retval": {
      "already_cfretained": true
     }
-   }, 
+   },
    "CFBinaryHeapCreateCopy": {
     "args": {
-     "0": {}, 
+     "0": {},
      "2": {}
-    }, 
+    },
     "retval": {
      "already_cfretained": true
     }
-   }, 
+   },
    "CFBinaryHeapGetCount": {
     "args": {
      "0": {}
     }
-   }, 
+   },
    "CFBinaryHeapGetCountOfValue": {
     "args": {
-     "0": {}, 
+     "0": {},
      "1": { "type_override": "@" }
     }
-   }, 
+   },
    "CFBinaryHeapGetMinimum": {
     "args": {
      "0": {}
-    }, 
+    },
     "retval": { "type_override": "@"}
-   }, 
+   },
    "CFBinaryHeapGetMinimumIfPresent": {
     "args": {
-     "0": {}, 
+     "0": {},
      "1": { "type_modifier": "o", "type_override": "^@" }
     }
-   }, 
+   },
    "CFBinaryHeapGetValues": {
     "args": {
-     "0": {}, 
+     "0": {},
      "1": {}
     }
-   }, 
+   },
    "CFBinaryHeapRemoveAllValues": {
     "args": {
      "0": {}
     }
-   }, 
+   },
    "CFBinaryHeapRemoveMinimumValue": {
     "args": {
      "0": {}
     }
-   }, 
+   },
    "CFBitVectorContainsBit": {
     "args": {
      "0": {}
     }
-   }, 
+   },
    "CFBitVectorCreate": {
     "args": {
-     "0": {}, 
+     "0": {},
      "1": { "c_array_of_variable_length": true, "type_modifier": "n" }
-    }, 
+    },
     "retval": {
      "already_cfretained": true
     }
-   }, 
+   },
    "CFBitVectorCreateCopy": {
     "args": {
-     "0": {}, 
+     "0": {},
      "1": {}
-    }, 
+    },
     "retval": {
      "already_cfretained": true
     }
-   }, 
+   },
    "CFBitVectorCreateMutable": {
     "args": {
      "0": {}
-    }, 
+    },
     "retval": {
      "already_cfretained": true
     }
-   }, 
+   },
    "CFBitVectorCreateMutableCopy": {
     "args": {
-     "0": {}, 
+     "0": {},
      "2": {}
-    }, 
+    },
     "retval": {
      "already_cfretained": true
     }
-   }, 
+   },
    "CFBitVectorFlipBitAtIndex": {
     "args": {
      "0": {}
     }
-   }, 
+   },
    "CFBitVectorFlipBits": {
     "args": {
      "0": {}
     }
-   }, 
+   },
    "CFBitVectorGetBitAtIndex": {
     "args": {
      "0": {}
     }
-   }, 
+   },
    "CFBitVectorGetBits": {
     "args": {
-     "0": {}, 
+     "0": {},
      "2": { "c_array_of_variable_length": true, "type_modifier": "o" }
     }
-   }, 
+   },
    "CFBitVectorGetCount": {
     "args": {
      "0": {}
     }
-   }, 
+   },
    "CFBitVectorGetCountOfBit": {
     "args": {
      "0": {}
     }
-   }, 
+   },
    "CFBitVectorGetFirstIndexOfBit": {
     "args": {
      "0": {}
     }
-   }, 
+   },
    "CFBitVectorGetLastIndexOfBit": {
     "args": {
      "0": {}
     }
-   }, 
+   },
    "CFBitVectorSetAllBits": {
     "args": {
      "0": {}
     }
-   }, 
+   },
    "CFBitVectorSetBitAtIndex": {
     "args": {
      "0": {}
     }
-   }, 
+   },
    "CFBitVectorSetBits": {
     "args": {
      "0": {}
     }
-   }, 
+   },
    "CFBitVectorSetCount": {
     "args": {
      "0": {}
     }
-   }, 
+   },
    "CFBooleanGetValue": {
     "args": {
      "0": {}
     }
-   }, 
+   },
    "CFBundleCloseBundleResourceMap": {
     "args": {
      "0": {}
     }
-   }, 
+   },
    "CFBundleCopyAuxiliaryExecutableURL": {
     "args": {
-     "0": {}, 
+     "0": {},
      "1": {}
-    }, 
+    },
     "retval": {
      "already_cfretained": true
     }
-   }, 
+   },
    "CFBundleCopyBuiltInPlugInsURL": {
     "args": {
      "0": {}
-    }, 
+    },
     "retval": {
      "already_cfretained": true
     }
-   }, 
+   },
    "CFBundleCopyBundleLocalizations": {
     "args": {
      "0": {}
-    }, 
+    },
     "retval": {
      "already_cfretained": true
     }
-   }, 
+   },
    "CFBundleCopyBundleURL": {
     "args": {
      "0": {}
-    }, 
+    },
     "retval": {
      "already_cfretained": true
     }
-   }, 
+   },
    "CFBundleCopyExecutableArchitectures": {
     "args": {
      "0": {}
-    }, 
+    },
     "retval": {
      "already_cfretained": true
     }
-   }, 
+   },
    "CFBundleCopyExecutableArchitecturesForURL": {
     "args": {
      "0": {}
-    }, 
+    },
     "retval": {
      "already_cfretained": true
     }
-   }, 
+   },
    "CFBundleCopyExecutableURL": {
     "args": {
      "0": {}
-    }, 
+    },
     "retval": {
      "already_cfretained": true
     }
-   }, 
+   },
    "CFBundleCopyInfoDictionaryForURL": {
     "args": {
      "0": {}
-    }, 
+    },
     "retval": {
      "already_cfretained": true
     }
-   }, 
+   },
    "CFBundleCopyInfoDictionaryInDirectory": {
     "args": {
      "0": {}
-    }, 
+    },
     "retval": {
      "already_cfretained": true
     }
-   }, 
+   },
    "CFBundleCopyLocalizationsForPreferences": {
     "args": {
-     "0": {}, 
+     "0": {},
      "1": {}
-    }, 
+    },
     "retval": {
      "already_cfretained": true
     }
-   }, 
+   },
    "CFBundleCopyLocalizationsForURL": {
     "args": {
      "0": {}
-    }, 
+    },
     "retval": {
      "already_cfretained": true
     }
-   }, 
+   },
    "CFBundleCopyLocalizedString": {
     "args": {
-     "0": {}, 
-     "1": {}, 
-     "2": {}, 
+     "0": {},
+     "1": {},
+     "2": {},
      "3": {}
-    }, 
+    },
     "retval": {
      "already_cfretained": true
     }
-   }, 
+   },
    "CFBundleCopyPreferredLocalizationsFromArray": {
     "args": {
      "0": {}
-    }, 
+    },
     "retval": {
      "already_cfretained": true
     }
-   }, 
+   },
    "CFBundleCopyPrivateFrameworksURL": {
     "args": {
      "0": {}
-    }, 
+    },
     "retval": {
      "already_cfretained": true
     }
-   }, 
+   },
    "CFBundleCopyResourceURL": {
     "args": {
-     "0": {}, 
-     "1": {}, 
-     "2": {}, 
+     "0": {},
+     "1": {},
+     "2": {},
      "3": {}
-    }, 
+    },
     "retval": {
      "already_cfretained": true
     }
-   }, 
+   },
    "CFBundleCopyResourceURLForLocalization": {
     "args": {
-     "0": {}, 
-     "1": {}, 
-     "2": {}, 
-     "3": {}, 
+     "0": {},
+     "1": {},
+     "2": {},
+     "3": {},
      "4": {}
-    }, 
+    },
     "retval": {
      "already_cfretained": true
     }
-   }, 
+   },
    "CFBundleCopyResourceURLInDirectory": {
     "args": {
-     "0": {}, 
-     "1": {}, 
-     "2": {}, 
+     "0": {},
+     "1": {},
+     "2": {},
      "3": {}
-    }, 
+    },
     "retval": {
      "already_cfretained": true
     }
-   }, 
+   },
    "CFBundleCopyResourceURLsOfType": {
     "args": {
-     "0": {}, 
-     "1": {}, 
+     "0": {},
+     "1": {},
      "2": {}
-    }, 
+    },
     "retval": {
      "already_cfretained": true
     }
-   }, 
+   },
    "CFBundleCopyResourceURLsOfTypeForLocalization": {
     "args": {
-     "0": {}, 
-     "1": {}, 
-     "2": {}, 
+     "0": {},
+     "1": {},
+     "2": {},
      "3": {}
-    }, 
+    },
     "retval": {
      "already_cfretained": true
     }
-   }, 
+   },
    "CFBundleCopyResourceURLsOfTypeInDirectory": {
     "args": {
-     "0": {}, 
-     "1": {}, 
+     "0": {},
+     "1": {},
      "2": {}
-    }, 
+    },
     "retval": {
      "already_cfretained": true
     }
-   }, 
+   },
    "CFBundleCopyResourcesDirectoryURL": {
     "args": {
      "0": {}
-    }, 
+    },
     "retval": {
      "already_cfretained": true
     }
-   }, 
+   },
    "CFBundleCopySharedFrameworksURL": {
     "args": {
      "0": {}
-    }, 
+    },
     "retval": {
      "already_cfretained": true
     }
-   }, 
+   },
    "CFBundleCopySharedSupportURL": {
     "args": {
      "0": {}
-    }, 
+    },
     "retval": {
      "already_cfretained": true
     }
-   }, 
+   },
    "CFBundleCopySupportFilesDirectoryURL": {
     "args": {
      "0": {}
-    }, 
+    },
     "retval": {
      "already_cfretained": true
     }
-   }, 
+   },
    "CFBundleCreate": {
     "args": {
-     "0": {}, 
+     "0": {},
      "1": {}
-    }, 
+    },
     "retval": {
      "already_cfretained": true
     }
-   }, 
+   },
    "CFBundleCreateBundlesFromDirectory": {
     "args": {
-     "0": {}, 
-     "1": {}, 
+     "0": {},
+     "1": {},
      "2": {}
-    }, 
+    },
     "retval": {
      "already_cfretained": true
     }
-   }, 
+   },
    "CFBundleGetAllBundles": {
     "retval": {}
-   }, 
+   },
    "CFBundleGetBundleWithIdentifier": {
     "args": {
      "0": {}
-    }, 
+    },
     "retval": {}
-   }, 
+   },
    "CFBundleGetDataPointerForName": {
     "ignore": true
-   }, 
+   },
    "CFBundleGetDataPointersForNames": {
     "ignore": true
-   }, 
+   },
    "CFBundleGetDevelopmentRegion": {
     "args": {
      "0": {}
-    }, 
+    },
     "retval": {}
-   }, 
+   },
    "CFBundleGetFunctionPointerForName": {
     "ignore": true
-   }, 
+   },
    "CFBundleGetFunctionPointersForNames": {
     "ignore": true
-   }, 
+   },
    "CFBundleGetIdentifier": {
     "args": {
      "0": {}
-    }, 
+    },
     "retval": {}
-   }, 
+   },
    "CFBundleGetInfoDictionary": {
     "args": {
      "0": {}
-    }, 
+    },
     "retval": {}
-   }, 
+   },
    "CFBundleGetLocalInfoDictionary": {
     "args": {
      "0": {}
-    }, 
+    },
     "retval": {}
-   }, 
+   },
    "CFBundleGetMainBundle": {
     "retval": {}
-   }, 
+   },
    "CFBundleGetPackageInfo": {
     "args": {
-     "0": {}, 
-     "1": { "type_modifier": "o" }, 
+     "0": {},
+     "1": { "type_modifier": "o" },
      "2": { "type_modifier": "o" }
     }
-   }, 
+   },
    "CFBundleGetPackageInfoInDirectory": {
     "args": {
-     "0": {}, 
-     "1": { "type_modifier": "o" }, 
+     "0": {},
+     "1": { "type_modifier": "o" },
      "2": { "type_modifier": "o" }
     }
-   }, 
+   },
    "CFBundleGetPlugIn": {
     "args": {
      "0": {}
-    }, 
+    },
     "retval": {}
-   }, 
+   },
    "CFBundleGetValueForInfoDictionaryKey": {
     "args": {
-     "0": {}, 
+     "0": {},
      "1": {}
     }
-   }, 
+   },
    "CFBundleGetVersionNumber": {
     "args": {
      "0": {}
     }
-   }, 
+   },
    "CFBundleIsExecutableLoaded": {
     "args": {
      "0": {}
     }
-   }, 
+   },
    "CFBundleLoadExecutable": {
     "args": {
      "0": {}
     }
-   }, 
+   },
    "CFBundleLoadExecutableAndReturnError": {
     "args": {
-     "0": {}, 
+     "0": {},
      "1": {
-      "already_cfretained": true, 
-      "null_accepted": true, 
+      "already_cfretained": true,
+      "null_accepted": true,
       "type_modifier": "o"
      }
     }
-   }, 
+   },
    "CFBundleOpenBundleResourceFiles": {
     "args": {
-     "0": {}, 
-     "1": { "type_modifier": "o" }, 
+     "0": {},
+     "1": { "type_modifier": "o" },
      "2": { "type_modifier": "o" }
     }
-   }, 
+   },
    "CFBundleOpenBundleResourceMap": {
     "args": {
      "0": {}
     }
-   }, 
+   },
    "CFBundlePreflightExecutable": {
     "args": {
-     "0": {}, 
+     "0": {},
      "1": {
-      "already_cfretained": true, 
-      "null_accepted": true, 
+      "already_cfretained": true,
+      "null_accepted": true,
       "type_modifier": "o"
      }
     }
-   }, 
+   },
    "CFBundleUnloadExecutable": {
     "args": {
      "0": {}
     }
-   }, 
+   },
    "CFCalendarAddComponents": {
     "args": {
-     "0": {}, 
-     "1": {}, 
+     "0": {},
+     "1": {},
      "3": {}
-    }, 
+    },
     "variadic": true
-   }, 
+   },
    "CFCalendarComposeAbsoluteTime": {
     "args": {
-     "0": {}, 
-     "1": {}, 
+     "0": {},
+     "1": {},
      "2": {}
-    }, 
+    },
     "variadic": true
-   }, 
+   },
    "CFCalendarCopyCurrent": {
     "retval": {
      "already_cfretained": true
     }
-   }, 
+   },
    "CFCalendarCopyLocale": {
     "args": {
      "0": {}
-    }, 
+    },
     "retval": {
      "already_cfretained": true
     }
-   }, 
+   },
    "CFCalendarCopyTimeZone": {
     "args": {
      "0": {}
-    }, 
+    },
     "retval": {
      "already_cfretained": true
     }
-   }, 
+   },
    "CFCalendarCreateWithIdentifier": {
     "args": {
-     "0": {}, 
+     "0": {},
      "1": {}
-    }, 
+    },
     "retval": {
      "already_cfretained": true
     }
-   }, 
+   },
    "CFCalendarDecomposeAbsoluteTime": {
     "args": {
-     "0": {}, 
+     "0": {},
      "2": {}
-    }, 
+    },
     "variadic": true
-   }, 
+   },
    "CFCalendarGetComponentDifference": {
     "args": {
-     "0": {}, 
+     "0": {},
      "4": {}
-    }, 
+    },
     "variadic": true
-   }, 
+   },
    "CFCalendarGetFirstWeekday": {
     "args": {
      "0": {}
     }
-   }, 
+   },
    "CFCalendarGetIdentifier": {
     "args": {
      "0": {}
-    }, 
+    },
     "retval": {}
-   }, 
+   },
    "CFCalendarGetMaximumRangeOfUnit": {
     "args": {
      "0": {}
     }
-   }, 
+   },
    "CFCalendarGetMinimumDaysInFirstWeek": {
     "args": {
      "0": {}
     }
-   }, 
+   },
    "CFCalendarGetMinimumRangeOfUnit": {
     "args": {
      "0": {}
     }
-   }, 
+   },
    "CFCalendarGetOrdinalityOfUnit": {
     "args": {
      "0": {}
     }
-   }, 
+   },
    "CFCalendarGetRangeOfUnit": {
     "args": {
      "0": {}
     }
-   }, 
+   },
    "CFCalendarGetTimeRangeOfUnit": {
     "args": {
-     "0": {}, 
-     "3": { "type_modifier": "o" }, 
+     "0": {},
+     "3": { "type_modifier": "o" },
      "4": { "type_modifier": "o" }
     }
-   }, 
+   },
    "CFCalendarSetFirstWeekday": {
     "args": {
      "0": {}
     }
-   }, 
+   },
    "CFCalendarSetLocale": {
     "args": {
-     "0": {}, 
+     "0": {},
      "1": {}
     }
-   }, 
+   },
    "CFCalendarSetMinimumDaysInFirstWeek": {
     "args": {
      "0": {}
     }
-   }, 
+   },
    "CFCalendarSetTimeZone": {
     "args": {
-     "0": {}, 
+     "0": {},
      "1": {}
     }
-   }, 
+   },
    "CFCharacterSetAddCharactersInRange": {
     "args": {
      "0": {}
     }
-   }, 
+   },
    "CFCharacterSetAddCharactersInString": {
     "args": {
-     "0": {}, 
+     "0": {},
      "1": {}
     }
-   }, 
+   },
    "CFCharacterSetCreateBitmapRepresentation": {
     "args": {
-     "0": {}, 
+     "0": {},
      "1": {}
-    }, 
+    },
     "retval": {
      "already_cfretained": true
     }
-   }, 
+   },
    "CFCharacterSetCreateCopy": {
     "args": {
-     "0": {}, 
+     "0": {},
      "1": {}
-    }, 
+    },
     "retval": {
      "already_cfretained": true
     }
-   }, 
+   },
    "CFCharacterSetCreateInvertedSet": {
     "args": {
-     "0": {}, 
+     "0": {},
      "1": {}
-    }, 
+    },
     "retval": {
      "already_cfretained": true
     }
-   }, 
+   },
    "CFCharacterSetCreateMutable": {
     "args": {
      "0": {}
-    }, 
+    },
     "retval": {
      "already_cfretained": true
     }
-   }, 
+   },
    "CFCharacterSetCreateMutableCopy": {
     "args": {
-     "0": {}, 
+     "0": {},
      "1": {}
-    }, 
+    },
     "retval": {
      "already_cfretained": true
     }
-   }, 
+   },
    "CFCharacterSetCreateWithBitmapRepresentation": {
     "args": {
-     "0": {}, 
+     "0": {},
      "1": {}
-    }, 
+    },
     "retval": {
      "already_cfretained": true
     }
-   }, 
+   },
    "CFCharacterSetCreateWithCharactersInRange": {
     "args": {
      "0": {}
-    }, 
+    },
     "retval": {
      "already_cfretained": true
     }
-   }, 
+   },
    "CFCharacterSetCreateWithCharactersInString": {
     "args": {
-     "0": {}, 
+     "0": {},
      "1": {}
-    }, 
+    },
     "retval": {
      "already_cfretained": true
     }
-   }, 
+   },
    "CFCharacterSetGetPredefined": {
     "retval": {}
-   }, 
+   },
    "CFCharacterSetHasMemberInPlane": {
     "args": {
      "0": {}
     }
-   }, 
+   },
    "CFCharacterSetIntersect": {
     "args": {
-     "0": {}, 
+     "0": {},
      "1": {}
     }
-   }, 
+   },
    "CFCharacterSetInvert": {
     "args": {
      "0": {}
     }
-   }, 
+   },
    "CFCharacterSetIsCharacterMember": {
     "args": {
      "0": {}
     }
-   }, 
+   },
    "CFCharacterSetIsLongCharacterMember": {
     "args": {
      "0": {}
     }
-   }, 
+   },
    "CFCharacterSetIsSupersetOfSet": {
     "args": {
-     "0": {}, 
+     "0": {},
      "1": {}
     }
-   }, 
+   },
    "CFCharacterSetRemoveCharactersInRange": {
     "args": {
      "0": {}
     }
-   }, 
+   },
    "CFCharacterSetRemoveCharactersInString": {
     "args": {
-     "0": {}, 
+     "0": {},
      "1": {}
     }
-   }, 
+   },
    "CFCharacterSetUnion": {
     "args": {
-     "0": {}, 
+     "0": {},
      "1": {}
     }
-   }, 
+   },
    "CFCopyDescription": {
     "retval": {
      "already_cfretained": true
     }
-   }, 
+   },
    "CFCopyTypeIDDescription": {
     "retval": {
      "already_cfretained": true
     }
-   }, 
+   },
    "CFDataAppendBytes": {
     "args": {
      "1": { "c_array_length_in_arg": 2, "type_modifier": "n", "type_override": "^v" }
     }
-   }, 
+   },
    "CFDataCreate": {
     "args": {
-     "0": {}, 
+     "0": {},
      "1": { "c_array_length_in_arg": 2, "type_modifier": "n", "type_override": "^v" }
-    }, 
+    },
     "retval": {
      "already_cfretained": true
     }
-   }, 
+   },
    "CFDataCreateCopy": {
     "args": {
-     "0": {}, 
+     "0": {},
      "1": {}
-    }, 
+    },
     "retval": {
      "already_cfretained": true
     }
-   }, 
+   },
    "CFDataCreateMutable": {
     "args": {
      "0": {}
-    }, 
+    },
     "retval": {
      "already_cfretained": true
     }
-   }, 
+   },
    "CFDataCreateMutableCopy": {
     "args": {
-     "0": {}, 
+     "0": {},
      "2": {}
-    }, 
+    },
     "retval": {
      "already_cfretained": true
     }
-   }, 
+   },
    "CFDataCreateWithBytesNoCopy": {
     "args": {
-     "0": {}, 
-     "1": { "c_array_length_in_arg": 2, "type_modifier": "n", "type_override": "^v" }, 
+     "0": {},
+     "1": { "c_array_length_in_arg": 2, "type_modifier": "n", "type_override": "^v" },
      "3": {}
-    }, 
+    },
     "retval": {
      "already_cfretained": true
     }
-   }, 
+   },
    "CFDataDeleteBytes": {
     "args": {
      "0": {}
     }
-   }, 
+   },
    "CFDataFind": {
     "args": {
-     "0": {}, 
+     "0": {},
      "1": {}
     }
-   }, 
+   },
    "CFDataGetBytePtr": {
     "args": {
      "0": {}
-    }, 
+    },
     "retval": { "c_array_of_variable_length": true, "type_override": "^v" }
-   }, 
+   },
    "CFDataGetBytes": {
     "args": {
-     "0": {}, 
+     "0": {},
      "2": { "c_array_length_in_arg": 1, "type_modifier": "o", "type_override": "^v" }
     }
-   }, 
+   },
    "CFDataGetLength": {
     "args": {
      "0": {}
     }
-   }, 
+   },
    "CFDataGetMutableBytePtr": {
     "args": {
      "0": {}
-    }, 
+    },
     "retval": { "c_array_of_variable_length": true, "type_override": "^v" }
-   }, 
+   },
    "CFDataIncreaseLength": {
     "args": {
      "0": {}
     }
-   }, 
+   },
    "CFDataReplaceBytes": {
     "args": {
-     "0": {}, 
+     "0": {},
      "2": { "c_array_length_in_arg": 3, "type_modifier": "n", "type_override": "^v" }
     }
-   }, 
+   },
    "CFDataSetLength": {
     "args": {
      "0": {}
     }
-   }, 
+   },
    "CFDateCompare": {
     "args": {
-     "0": {}, 
-     "1": {}, 
+     "0": {},
+     "1": {},
      "2": {}
     }
-   }, 
+   },
    "CFDateCreate": {
     "args": {
      "0": {}
-    }, 
+    },
     "retval": {
      "already_cfretained": true
     }
-   }, 
+   },
    "CFDateFormatterCopyProperty": {
     "args": {
-     "0": {}, 
+     "0": {},
      "1": {}
     }
-   }, 
+   },
    "CFDateFormatterCreate": {
     "args": {
-     "0": {}, 
+     "0": {},
      "1": {}
-    }, 
+    },
     "retval": {
      "already_cfretained": true
     }
-   }, 
+   },
    "CFDateFormatterCreateDateFormatFromTemplate": {
     "args": {
-     "0": {}, 
-     "1": {}, 
+     "0": {},
+     "1": {},
      "3": {}
-    }, 
+    },
     "retval": {
      "already_cfretained": true
     }
-   }, 
+   },
    "CFDateFormatterCreateDateFromString": {
     "args": {
-     "0": {}, 
-     "1": {}, 
-     "2": {}, 
+     "0": {},
+     "1": {},
+     "2": {},
      "3": { "type_modifier": "N" }
-    }, 
+    },
     "retval": {
      "already_cfretained": true
     }
-   }, 
+   },
    "CFDateFormatterCreateStringWithAbsoluteTime": {
     "args": {
-     "0": {}, 
+     "0": {},
      "1": {}
-    }, 
+    },
     "retval": {
      "already_cfretained": true
     }
-   }, 
+   },
    "CFDateFormatterCreateStringWithDate": {
     "args": {
-     "0": {}, 
-     "1": {}, 
+     "0": {},
+     "1": {},
      "2": {}
-    }, 
+    },
     "retval": {
      "already_cfretained": true
     }
-   }, 
+   },
    "CFDateFormatterGetAbsoluteTimeFromString": {
     "args": {
-     "0": {}, 
-     "1": {}, 
-     "2": { "type_modifier": "N" }, 
+     "0": {},
+     "1": {},
+     "2": { "type_modifier": "N" },
      "3": { "type_modifier": "o" }
     }
-   }, 
+   },
    "CFDateFormatterGetDateStyle": {
     "args": {
      "0": {}
     }
-   }, 
+   },
    "CFDateFormatterGetFormat": {
     "args": {
      "0": {}
-    }, 
+    },
     "retval": {}
-   }, 
+   },
    "CFDateFormatterGetLocale": {
     "args": {
      "0": {}
-    }, 
+    },
     "retval": {}
-   }, 
+   },
    "CFDateFormatterGetTimeStyle": {
     "args": {
      "0": {}
     }
-   }, 
+   },
    "CFDateFormatterSetFormat": {
     "args": {
-     "0": {}, 
+     "0": {},
      "1": {}
     }
-   }, 
+   },
    "CFDateFormatterSetProperty": {
     "args": {
-     "0": {}, 
+     "0": {},
      "1": {}
     }
-   }, 
+   },
    "CFDateGetAbsoluteTime": {
     "args": {
      "0": {}
     }
-   }, 
+   },
    "CFDateGetTimeIntervalSinceDate": {
     "args": {
-     "0": {}, 
+     "0": {},
      "1": {}
     }
-   }, 
+   },
    "CFDictionaryAddValue": {
     "args": {
-     "0": {}, 
-     "1": { "type_override": "@" }, 
+     "0": {},
+     "1": { "type_override": "@" },
      "2": { "type_override": "@" }
     }
-   }, 
+   },
    "CFDictionaryApplyFunction": {
     "args": {
-     "0": {}, 
+     "0": {},
      "1": {
       "callable_retained": false,
       "function": {
        "args": [
         {
          "typestr": "@"
-        }, 
+        },
         {
          "typestr": "@"
-        }, 
+        },
         {
          "typestr": "@"
         }
-       ], 
+       ],
        "retval": {
         "typestr": "v"
        }
       }
-     }, 
+     },
      "2": { "type_override": "@" }
     }
-   }, 
+   },
    "CFDictionaryContainsKey": {
     "args": {
-     "0": {}, 
+     "0": {},
      "1": { "type_override": "@" }
     }
-   }, 
+   },
    "CFDictionaryContainsValue": {
     "args": {
-     "0": {}, 
+     "0": {},
      "1": { "type_override": "@" }
     }
-   }, 
+   },
    "CFDictionaryCreate": {
     "args": {
-     "0": {}, 
-     "1": {}, 
-     "2": {}, 
-     "4": {}, 
+     "0": {},
+     "1": {},
+     "2": {},
+     "4": {},
      "5": {}
-    }, 
+    },
     "retval": {
      "already_cfretained": true
     }
-   }, 
+   },
    "CFDictionaryCreateCopy": {
     "args": {
-     "0": {}, 
+     "0": {},
      "1": {}
-    }, 
+    },
     "retval": {
      "already_cfretained": true
     }
-   }, 
+   },
    "CFDictionaryCreateMutable": {
     "args": {
-     "0": {}, 
-     "2": {}, 
+     "0": {},
+     "2": {},
      "3": {}
-    }, 
+    },
     "retval": {
      "already_cfretained": true
     }
-   }, 
+   },
    "CFDictionaryCreateMutableCopy": {
     "args": {
-     "0": {}, 
+     "0": {},
      "2": {}
-    }, 
+    },
     "retval": {
      "already_cfretained": true
     }
-   }, 
+   },
    "CFDictionaryGetCount": {
     "args": {
      "0": {}
     }
-   }, 
+   },
    "CFDictionaryGetCountOfKey": {
     "args": {
-     "0": {}, 
+     "0": {},
      "1": { "type_override": "@" }
     }
-   }, 
+   },
    "CFDictionaryGetCountOfValue": {
     "args": {
-     "0": {}, 
+     "0": {},
      "1": { "type_override": "@" }
     }
-   }, 
+   },
    "CFDictionaryGetKeysAndValues": {
     "ignore": true
-   }, 
+   },
    "CFDictionaryGetValue": {
     "args": {
-     "0": {}, 
+     "0": {},
      "1": { "type_override": "@" }
-    }, 
+    },
     "retval": { "type_override": "@" }
-   }, 
+   },
    "CFDictionaryGetValueIfPresent": {
     "args": {
-     "0": {}, 
-     "1": { "type_override": "@" }, 
+     "0": {},
+     "1": { "type_override": "@" },
      "2": { "type_modifier": "o", "type_override": "^@" }
     }
-   }, 
+   },
    "CFDictionaryRemoveAllValues": {
     "args": {
      "0": {}
     }
-   }, 
+   },
    "CFDictionaryRemoveValue": {
     "args": {
-     "0": {}, 
+     "0": {},
      "1": { "type_override": "@" }
     }
-   }, 
+   },
    "CFDictionaryReplaceValue": {
     "args": {
-     "0": {}, 
-     "1": { "type_override": "@" }, 
+     "0": {},
+     "1": { "type_override": "@" },
      "2": { "type_override": "@" }
     }
-   }, 
+   },
    "CFDictionarySetValue": {
     "args": {
-     "0": {}, 
-     "1": { "type_override": "@" }, 
+     "0": {},
+     "1": { "type_override": "@" },
      "2": { "type_override": "@" }
     }
-   }, 
+   },
    "CFErrorCopyDescription": {
     "args": {
      "0": {}
-    }, 
+    },
     "retval": {
      "already_cfretained": true
     }
-   }, 
+   },
    "CFErrorCopyFailureReason": {
     "args": {
      "0": {}
-    }, 
+    },
     "retval": {
      "already_cfretained": true
     }
-   }, 
+   },
    "CFErrorCopyRecoverySuggestion": {
     "args": {
      "0": {}
-    }, 
+    },
     "retval": {
      "already_cfretained": true
     }
-   }, 
+   },
    "CFErrorCopyUserInfo": {
     "args": {
      "0": {}
-    }, 
+    },
     "retval": {
      "already_cfretained": true
     }
-   }, 
+   },
    "CFErrorCreate": {
     "args": {
-     "0": {}, 
-     "1": {}, 
+     "0": {},
+     "1": {},
      "3": {}
-    }, 
+    },
     "retval": {
      "already_cfretained": true
     }
-   }, 
+   },
    "CFErrorCreateWithUserInfoKeysAndValues": {
     "args": {
-     "0": {}, 
-     "1": {}, 
-     "3": { "c_array_length_in_arg": 5, "type_modifier": "n", "type_override": "^@" }, 
+     "0": {},
+     "1": {},
+     "3": { "c_array_length_in_arg": 5, "type_modifier": "n", "type_override": "^@" },
      "4": { "c_array_length_in_arg": 5, "type_modifier": "n", "type_override": "^@" }
-    }, 
+    },
     "retval": {
      "already_cfretained": true
     }
-   }, 
+   },
    "CFErrorGetCode": {
     "args": {
      "0": {}
     }
-   }, 
+   },
    "CFErrorGetDomain": {
     "args": {
      "0": {}
-    }, 
+    },
     "retval": {}
-   }, 
+   },
    "CFFileDescriptorCreate": {
     "args": {
-     "0": {}, 
+     "0": {},
      "3": {
       "function": {
        "args": [
         {
          "typestr": "^{__CFFileDescriptor=}"
-        }, 
+        },
         {
          "typestr": "Q"
-        }, 
+        },
         {
          "typestr": "^v"
         }
-       ], 
+       ],
        "retval": {
         "typestr": "v"
        }
       }
-     }, 
+     },
      "4": {}
-    }, 
+    },
     "retval": {
      "already_cfretained": true
     }
-   }, 
+   },
    "CFFileDescriptorCreateRunLoopSource": {
     "args": {
-     "0": {}, 
+     "0": {},
      "1": {}
-    }, 
+    },
     "retval": {
      "already_cfretained": true
     }
-   }, 
+   },
    "CFFileDescriptorDisableCallBacks": {
     "args": {
      "0": {}
     }
-   }, 
+   },
    "CFFileDescriptorEnableCallBacks": {
     "args": {
      "0": {}
     }
-   }, 
+   },
    "CFFileDescriptorGetContext": {
     "args": {
-     "0": {}, 
+     "0": {},
      "1": {}
     }
-   }, 
+   },
    "CFFileDescriptorGetNativeDescriptor": {
     "args": {
      "0": {}
     }
-   }, 
+   },
    "CFFileDescriptorInvalidate": {
     "args": {
      "0": {}
     }
-   }, 
+   },
    "CFFileDescriptorIsValid": {
     "args": {
      "0": {}
     }
-   }, 
+   },
    "CFFileSecurityCopyAccessControlList": {
     "args": {
-     "0": {}, 
+     "0": {},
      "1": { "type_modifier": "o" }
     }
-   }, 
+   },
    "CFFileSecurityCopyGroupUUID": {
     "args": {
-     "0": {}, 
+     "0": {},
      "1": { "type_modifier": "o" }
     }
-   }, 
+   },
    "CFFileSecurityCopyOwnerUUID": {
     "args": {
-     "0": {}, 
+     "0": {},
      "1": { "type_modifier": "o" }
     }
-   }, 
+   },
    "CFFileSecurityCreate": {
     "args": {
      "0": {}
-    }, 
+    },
     "retval": {
      "already_cfretained": true
     }
-   }, 
+   },
    "CFFileSecurityCreateCopy": {
     "args": {
-     "0": {}, 
+     "0": {},
      "1": {}
-    }, 
+    },
     "retval": {
      "already_cfretained": true
     }
-   }, 
+   },
    "CFFileSecurityGetGroup": {
     "args": {
-     "0": {}, 
+     "0": {},
      "1": { "type_modifier": "o" }
     }
-   }, 
+   },
    "CFFileSecurityGetMode": {
     "args": {
-     "0": {}, 
+     "0": {},
      "1": { "type_modifier": "o" }
     }
-   }, 
+   },
    "CFFileSecurityGetOwner": {
     "args": {
-     "0": {}, 
+     "0": {},
      "1": { "type_modifier": "o" }
     }
-   }, 
+   },
    "CFFileSecuritySetAccessControlList": {
     "args": {
-     "0": {}, 
+     "0": {},
      "1": {}
     }
-   }, 
+   },
    "CFFileSecuritySetGroup": {
     "args": {
      "0": {}
     }
-   }, 
+   },
    "CFFileSecuritySetGroupUUID": {
     "args": {
-     "0": {}, 
+     "0": {},
      "1": {}
     }
-   }, 
+   },
    "CFFileSecuritySetMode": {
     "args": {
      "0": {}
     }
-   }, 
+   },
    "CFFileSecuritySetOwner": {
     "args": {
      "0": {}
     }
-   }, 
+   },
    "CFFileSecuritySetOwnerUUID": {
     "args": {
-     "0": {}, 
+     "0": {},
      "1": {}
     }
-   }, 
+   },
    "CFGetAllocator": {
     "retval": {}
-   }, 
+   },
    "CFGregorianDateGetAbsoluteTime": {
     "args": {
      "1": {}
     }
-   }, 
+   },
    "CFLocaleCopyAvailableLocaleIdentifiers": {
     "retval": {
      "already_cfretained": true
     }
-   }, 
+   },
    "CFLocaleCopyCommonISOCurrencyCodes": {
     "retval": {
      "already_cfretained": true
     }
-   }, 
+   },
    "CFLocaleCopyCurrent": {
     "retval": {
      "already_cfretained": true
     }
-   }, 
+   },
    "CFLocaleCopyDisplayNameForPropertyValue": {
     "args": {
-     "0": {}, 
-     "1": {}, 
+     "0": {},
+     "1": {},
      "2": {}
-    }, 
+    },
     "retval": {
      "already_cfretained": true
     }
-   }, 
+   },
    "CFLocaleCopyISOCountryCodes": {
     "retval": {
      "already_cfretained": true
     }
-   }, 
+   },
    "CFLocaleCopyISOCurrencyCodes": {
     "retval": {
      "already_cfretained": true
     }
-   }, 
+   },
    "CFLocaleCopyISOLanguageCodes": {
     "retval": {
      "already_cfretained": true
     }
-   }, 
+   },
    "CFLocaleCopyPreferredLanguages": {
     "retval": {
      "already_cfretained": true
     }
-   }, 
+   },
    "CFLocaleCreate": {
     "args": {
-     "0": {}, 
+     "0": {},
      "1": {}
-    }, 
+    },
     "retval": {
      "already_cfretained": true
     }
-   }, 
+   },
    "CFLocaleCreateCanonicalLanguageIdentifierFromString": {
     "args": {
-     "0": {}, 
+     "0": {},
      "1": {}
-    }, 
+    },
     "retval": {
      "already_cfretained": true
     }
-   }, 
+   },
    "CFLocaleCreateCanonicalLocaleIdentifierFromScriptManagerCodes": {
     "args": {
      "0": {}
-    }, 
+    },
     "retval": {
      "already_cfretained": true
     }
-   }, 
+   },
    "CFLocaleCreateCanonicalLocaleIdentifierFromString": {
     "args": {
-     "0": {}, 
+     "0": {},
      "1": {}
-    }, 
+    },
     "retval": {
      "already_cfretained": true
     }
-   }, 
+   },
    "CFLocaleCreateComponentsFromLocaleIdentifier": {
     "args": {
-     "0": {}, 
+     "0": {},
      "1": {}
-    }, 
+    },
     "retval": {
      "already_cfretained": true
     }
-   }, 
+   },
    "CFLocaleCreateCopy": {
     "args": {
-     "0": {}, 
+     "0": {},
      "1": {}
-    }, 
+    },
     "retval": {
      "already_cfretained": true
     }
-   }, 
+   },
    "CFLocaleCreateLocaleIdentifierFromComponents": {
     "args": {
-     "0": {}, 
+     "0": {},
      "1": {}
-    }, 
+    },
     "retval": {
      "already_cfretained": true
     }
-   }, 
+   },
    "CFLocaleCreateLocaleIdentifierFromWindowsLocaleCode": {
     "args": {
      "0": {}
-    }, 
+    },
     "retval": {
      "already_cfretained": true
     }
-   }, 
+   },
    "CFLocaleGetIdentifier": {
     "args": {
      "0": {}
-    }, 
+    },
     "retval": {}
-   }, 
+   },
    "CFLocaleGetLanguageCharacterDirection": {
     "args": {
      "0": {}
     }
-   }, 
+   },
    "CFLocaleGetLanguageLineDirection": {
     "args": {
      "0": {}
     }
-   }, 
+   },
    "CFLocaleGetSystem": {
     "retval": {}
-   }, 
+   },
    "CFLocaleGetValue": {
     "args": {
-     "0": {}, 
+     "0": {},
      "1": {}
     }
-   }, 
+   },
    "CFLocaleGetWindowsLocaleCodeFromLocaleIdentifier": {
     "args": {
      "0": {}
     }
-   }, 
+   },
    "CFMachPortCreate": {
     "args": {
-     "0": {}, 
+     "0": {},
      "1": {
       "function": {
        "args": [
         {
          "typestr": "^{__CFMachPort=}"
-        }, 
+        },
         {
          "typestr": "^v"
-        }, 
+        },
         {
          "typestr": "q"
-        }, 
+        },
         {
          "typestr": "^v"
         }
-       ], 
+       ],
        "retval": {
         "typestr": "v"
        }
       }
-     }, 
-     "2": {}, 
+     },
+     "2": {},
      "3": {}
-    }, 
+    },
     "retval": {
      "already_cfretained": true
     }
-   }, 
+   },
    "CFMachPortCreateRunLoopSource": {
     "args": {
-     "0": {}, 
+     "0": {},
      "1": {}
-    }, 
+    },
     "retval": {
      "already_cfretained": true
     }
-   }, 
+   },
    "CFMachPortCreateWithPort": {
     "args": {
-     "0": {}, 
+     "0": {},
      "2": {
       "function": {
        "args": [
         {
          "typestr": "^{__CFMachPort=}"
-        }, 
+        },
         {
          "typestr": "^v"
-        }, 
+        },
         {
          "typestr": "q"
-        }, 
+        },
         {
          "typestr": "^v"
         }
-       ], 
+       ],
        "retval": {
         "typestr": "v"
        }
       }
-     }, 
-     "3": {}, 
+     },
+     "3": {},
      "4": {}
-    }, 
+    },
     "retval": {
      "already_cfretained": true
     }
-   }, 
+   },
    "CFMachPortGetContext": {
     "args": {
-     "0": {}, 
+     "0": {},
      "1": {}
     }
-   }, 
+   },
    "CFMachPortGetInvalidationCallBack": {
     "args": {
      "0": {}
-    }, 
+    },
     "retval": {}
-   }, 
+   },
    "CFMachPortGetPort": {
     "args": {
      "0": {}
     }
-   }, 
+   },
    "CFMachPortInvalidate": {
     "args": {
      "0": {}
     }
-   }, 
+   },
    "CFMachPortIsValid": {
     "args": {
      "0": {}
     }
-   }, 
+   },
    "CFMachPortSetInvalidationCallBack": {
     "args": {
-     "0": {}, 
+     "0": {},
      "1": {
       "function": {
        "args": [
         {
          "typestr": "^{__CFMachPort=}"
-        }, 
+        },
         {
          "typestr": "^v"
         }
-       ], 
+       ],
        "retval": {
         "typestr": "v"
        }
       }
      }
     }
-   }, 
+   },
    "CFMessagePortCreateLocal": {
     "args": {
-     "0": {}, 
-     "1": {}, 
+     "0": {},
+     "1": {},
      "2": {
       "function": {
        "args": [
         {
          "typestr": "^{__CFMessagePort=}"
-        }, 
+        },
         {
          "typestr": "i"
-        }, 
+        },
         {
          "typestr": "^{__CFData=}"
-        }, 
+        },
         {
          "typestr": "^v"
         }
-       ], 
+       ],
        "retval": {
         "typestr": "^{__CFData=}"
        }
       }
-     }, 
-     "3": {}, 
+     },
+     "3": {},
      "4": {}
-    }, 
+    },
     "retval": {
      "already_cfretained": true
     }
-   }, 
+   },
    "CFMessagePortCreateRemote": {
     "args": {
-     "0": {}, 
+     "0": {},
      "1": {}
-    }, 
+    },
     "retval": {
      "already_cfretained": true
     }
-   }, 
+   },
    "CFMessagePortCreateRunLoopSource": {
     "args": {
-     "0": {}, 
+     "0": {},
      "1": {}
-    }, 
+    },
     "retval": {
      "already_cfretained": true
     }
-   }, 
+   },
    "CFMessagePortGetContext": {
     "args": {
-     "0": {}, 
+     "0": {},
      "1": {}
     }
-   }, 
+   },
    "CFMessagePortGetInvalidationCallBack": {
     "args": {
      "0": {}
-    }, 
+    },
     "retval": {
        "function": {
          "args": [
@@ -2470,473 +2476,473 @@
 	 "retval": { "typestr": "v" }
       }
     }
-   }, 
+   },
    "CFMessagePortGetName": {
     "args": {
      "0": {}
-    }, 
+    },
     "retval": {}
-   }, 
+   },
    "CFMessagePortInvalidate": {
     "args": {
      "0": {}
     }
-   }, 
+   },
    "CFMessagePortIsRemote": {
     "args": {
      "0": {}
     }
-   }, 
+   },
    "CFMessagePortIsValid": {
     "args": {
      "0": {}
     }
-   }, 
+   },
    "CFMessagePortSendRequest": {
     "args": {
-     "0": {}, 
-     "2": {}, 
-     "5": {}, 
+     "0": {},
+     "2": {},
+     "5": {},
      "6": { "type_modifier": "o"}
     }
-   }, 
+   },
    "CFMessagePortSetDispatchQueue": {
     "args": {
-     "0": {}, 
+     "0": {},
      "1": {}
     }
-   }, 
+   },
    "CFMessagePortSetInvalidationCallBack": {
     "args": {
-     "0": {}, 
+     "0": {},
      "1": {
       "function": {
        "args": [
         {
          "typestr": "^{__CFMessagePort=}"
-        }, 
+        },
         {
          "typestr": "^v"
         }
-       ], 
+       ],
        "retval": {
         "typestr": "v"
        }
       }
      }
     }
-   }, 
+   },
    "CFMessagePortSetName": {
     "args": {
-     "0": {}, 
+     "0": {},
      "1": {}
     }
-   }, 
+   },
    "CFNotificationCenterAddObserver": {
     "args": {
-     "0": {}, 
-     "1": { "type_override": "@"}, 
+     "0": {},
+     "1": { "type_override": "@"},
      "2": {
       "function": {
        "args": [
         {
          "typestr": "@"
-        }, 
+        },
         {
          "typestr": "@"
-        }, 
+        },
         {
          "typestr": "@"
-        }, 
+        },
         {
          "typestr": "@"
-        }, 
+        },
         {
          "typestr": "@"
         }
-       ], 
+       ],
        "retval": {
         "typestr": "v"
        }
       }
-     }, 
-     "3": { "type_override": "@" }, 
+     },
+     "3": { "type_override": "@" },
      "4": { "type_override": "@" }
     }
-   }, 
+   },
    "CFNotificationCenterGetDarwinNotifyCenter": {
     "retval": {}
-   }, 
+   },
    "CFNotificationCenterGetDistributedCenter": {
     "retval": {}
-   }, 
+   },
    "CFNotificationCenterGetLocalCenter": {
     "retval": {}
-   }, 
+   },
    "CFNotificationCenterPostNotification": {
     "args": {
-     "0": {}, 
-     "1": {}, 
-     "2": { "type_override": "@"}, 
+     "0": {},
+     "1": {},
+     "2": { "type_override": "@"},
      "3": {}
     }
-   }, 
+   },
    "CFNotificationCenterPostNotificationWithOptions": {
     "args": {
-     "0": {}, 
-     "1": {}, 
-     "2": { "type_override": "@"}, 
+     "0": {},
+     "1": {},
+     "2": { "type_override": "@"},
      "3": {}
     }
-   }, 
+   },
    "CFNotificationCenterRemoveEveryObserver": {
     "args": {
-     "0": {}, 
+     "0": {},
      "1": { "type_override": "@"}
     }
-   }, 
+   },
    "CFNotificationCenterRemoveObserver": {
     "args": {
-     "0": {}, 
-     "1": { "type_override": "@" }, 
-     "2": {}, 
+     "0": {},
+     "1": { "type_override": "@" },
+     "2": {},
      "3": { "type_override": "@" }
     }
-   }, 
+   },
    "CFNumberCompare": {
     "args": {
-     "0": {}, 
-     "1": {}, 
+     "0": {},
+     "1": {},
      "2": {}
     }
-   }, 
+   },
    "CFNumberCreate": {
     "args": {
-     "0": {}, 
+     "0": {},
      "2": {}
-    }, 
+    },
     "retval": {
      "already_cfretained": true
     }
-   }, 
+   },
    "CFNumberFormatterCopyProperty": {
     "args": {
-     "0": {}, 
+     "0": {},
      "1": {}
     }
-   }, 
+   },
    "CFNumberFormatterCreate": {
     "args": {
-     "0": {}, 
+     "0": {},
      "1": {}
-    }, 
+    },
     "retval": {
      "already_cfretained": true
     }
-   }, 
+   },
    "CFNumberFormatterCreateNumberFromString": {
     "args": {
-     "0": {}, 
-     "1": {}, 
-     "3": { "type_modifier": "N" }, 
+     "0": {},
+     "1": {},
+     "3": { "type_modifier": "N" },
      "4": {}
-    }, 
+    },
     "retval": {
      "already_cfretained": true
     }
-   }, 
+   },
    "CFNumberFormatterCreateStringWithNumber": {
     "args": {
-     "0": {}, 
-     "1": {}, 
+     "0": {},
+     "1": {},
      "2": {}
-    }, 
+    },
     "retval": {
      "already_cfretained": true
     }
-   }, 
+   },
    "CFNumberFormatterCreateStringWithValue": {
     "args": {
-     "0": {}, 
-     "1": {}, 
+     "0": {},
+     "1": {},
      "3": {}
-    }, 
+    },
     "retval": {
      "already_cfretained": true
     }
-   }, 
+   },
    "CFNumberFormatterGetDecimalInfoForCurrencyCode": {
     "args": {
-     "0": {}, 
-     "1": { "type_modifier": "o" }, 
+     "0": {},
+     "1": { "type_modifier": "o" },
      "2": { "type_modifier": "o" }
     }
-   }, 
+   },
    "CFNumberFormatterGetFormat": {
     "args": {
      "0": {}
-    }, 
+    },
     "retval": {}
-   }, 
+   },
    "CFNumberFormatterGetLocale": {
     "args": {
      "0": {}
-    }, 
+    },
     "retval": {}
-   }, 
+   },
    "CFNumberFormatterGetStyle": {
     "args": {
      "0": {}
     }
-   }, 
+   },
    "CFNumberFormatterGetValueFromString": {
     "args": {
-     "0": {}, 
-     "1": {}, 
-     "2": { "type_modifier": "N" }, 
+     "0": {},
+     "1": {},
+     "2": { "type_modifier": "N" },
      "4": { "type_modifier": "o" }
     }
-   }, 
+   },
    "CFNumberFormatterSetFormat": {
     "args": {
-     "0": {}, 
+     "0": {},
      "1": {}
     }
-   }, 
+   },
    "CFNumberFormatterSetProperty": {
     "args": {
-     "0": {}, 
+     "0": {},
      "1": {}
     }
-   }, 
+   },
    "CFNumberGetByteSize": {
     "args": {
      "0": {}
     }
-   }, 
+   },
    "CFNumberGetType": {
     "args": {
      "0": {}
     }
-   }, 
+   },
    "CFNumberGetValue": {
     "args": {
-     "0": {}, 
+     "0": {},
      "2": {}
     }
-   }, 
+   },
    "CFNumberIsFloatType": {
     "args": {
      "0": {}
     }
-   }, 
+   },
    "CFPlugInAddInstanceForFactory": {
     "ignore": true
-   }, 
+   },
    "CFPlugInFindFactoriesForPlugInType": {
     "ignore": true
-   }, 
+   },
    "CFPlugInFindFactoriesForPlugInTypeInPlugIn": {
     "ignore": true
-   }, 
+   },
    "CFPlugInGetBundle": {
     "ignore": true
-   }, 
+   },
    "CFPlugInInstanceCreate": {
     "ignore": true
-   }, 
+   },
    "CFPlugInInstanceCreateWithInstanceDataSize": {
     "ignore": true
-   }, 
+   },
    "CFPlugInInstanceGetFactoryName": {
     "ignore": true
-   }, 
+   },
    "CFPlugInInstanceGetInstanceData": {
     "ignore": true
-   }, 
+   },
    "CFPlugInInstanceGetInterfaceFunctionTable": {
     "ignore": true
-   }, 
+   },
    "CFPlugInIsLoadOnDemand": {
     "ignore": true
-   }, 
+   },
    "CFPlugInRegisterFactoryFunction": {
     "ignore": true
-   }, 
+   },
    "CFPlugInRegisterFactoryFunctionByName": {
     "ignore": true
-   }, 
+   },
    "CFPlugInRegisterPlugInType": {
     "ignore": true
-   }, 
+   },
    "CFPlugInRemoveInstanceForFactory": {
     "ignore": true
-   }, 
+   },
    "CFPlugInSetLoadOnDemand": {
     "ignore": true
-   }, 
+   },
    "CFPlugInUnregisterFactory": {
     "ignore": true
-   }, 
+   },
    "CFPlugInUnregisterPlugInType": {
     "ignore": true
-   }, 
+   },
    "CFPlugInInstanceGetTypeID": {
     "ignore": true
-   }, 
+   },
    "CFPreferencesAddSuitePreferencesToApp": {
     "args": {
-     "0": {}, 
+     "0": {},
      "1": {}
     }
-   }, 
+   },
    "CFPreferencesAppSynchronize": {
     "args": {
      "0": {}
     }
-   }, 
+   },
    "CFPreferencesAppValueIsForced": {
     "args": {
-     "0": {}, 
+     "0": {},
      "1": {}
     }
-   }, 
+   },
    "CFPreferencesCopyAppValue": {
     "args": {
-     "0": {}, 
+     "0": {},
      "1": {}
     }
-   }, 
+   },
    "CFPreferencesCopyApplicationList": {
     "args": {
-     "0": {}, 
+     "0": {},
      "1": {}
-    }, 
+    },
     "retval": {
      "already_cfretained": true
     }
-   }, 
+   },
    "CFPreferencesCopyKeyList": {
     "args": {
-     "0": {}, 
-     "1": {}, 
+     "0": {},
+     "1": {},
      "2": {}
-    }, 
+    },
     "retval": {
      "already_cfretained": true
     }
-   }, 
+   },
    "CFPreferencesCopyMultiple": {
     "args": {
-     "0": {}, 
-     "1": {}, 
-     "2": {}, 
+     "0": {},
+     "1": {},
+     "2": {},
      "3": {}
-    }, 
+    },
     "retval": {
      "already_cfretained": true
     }
-   }, 
+   },
    "CFPreferencesCopyValue": {
     "args": {
-     "0": {}, 
-     "1": {}, 
-     "2": {}, 
+     "0": {},
+     "1": {},
+     "2": {},
      "3": {}
     }
-   }, 
+   },
    "CFPreferencesGetAppBooleanValue": {
     "args": {
-     "0": {}, 
-     "1": {}, 
+     "0": {},
+     "1": {},
      "2": { "type_modifier": "o" }
     }
-   }, 
+   },
    "CFPreferencesGetAppIntegerValue": {
     "args": {
-     "0": {}, 
-     "1": {}, 
+     "0": {},
+     "1": {},
      "2": { "type_modifier": "o" }
     }
-   }, 
+   },
    "CFPreferencesRemoveSuitePreferencesFromApp": {
     "args": {
-     "0": {}, 
+     "0": {},
      "1": {}
     }
-   }, 
+   },
    "CFPreferencesSetAppValue": {
     "args": {
-     "0": {}, 
+     "0": {},
      "2": {}
     }
-   }, 
+   },
    "CFPreferencesSetMultiple": {
     "args": {
-     "0": {}, 
-     "1": {}, 
-     "2": {}, 
-     "3": {}, 
+     "0": {},
+     "1": {},
+     "2": {},
+     "3": {},
      "4": {}
     }
-   }, 
+   },
    "CFPreferencesSetValue": {
     "args": {
-     "0": {}, 
-     "2": {}, 
-     "3": {}, 
+     "0": {},
+     "2": {},
+     "3": {},
      "4": {}
     }
-   }, 
+   },
    "CFPreferencesSynchronize": {
     "args": {
-     "0": {}, 
-     "1": {}, 
+     "0": {},
+     "1": {},
      "2": {}
     }
-   }, 
+   },
    "CFPropertyListCreateData": {
     "args": {
-     "0": {}, 
+     "0": {},
      "1": { "type_override": "@" },
      "4": {
-      "already_cfretained": true, 
-      "null_accepted": true, 
+      "already_cfretained": true,
+      "null_accepted": true,
       "type_modifier": "o"
      }
-    }, 
+    },
     "retval": {
      "already_cfretained": true
     }
-   }, 
+   },
    "CFPropertyListCreateDeepCopy": {
     "args": {
      "0": {}
     }
-   }, 
+   },
    "CFPropertyListCreateFromStream": {
     "args": {
-     "0": {}, 
-     "1": {}, 
-     "4": { "type_modifier": "o" }, 
+     "0": {},
+     "1": {},
+     "4": { "type_modifier": "o" },
      "5": { "type_modifier": "o" }
     }
-   }, 
+   },
    "CFPropertyListCreateFromXMLData": {
     "args": {
-     "0": {}, 
-     "1": {}, 
+     "0": {},
+     "1": {},
      "3": { "type_modifier": "o" }
     }
-   }, 
+   },
    "CFPropertyListCreateWithData": {
     "args": {
-     "0": {}, 
-     "1": {}, 
-     "3": { "type_modifier": "o" }, 
+     "0": {},
+     "1": {},
+     "3": { "type_modifier": "o" },
      "4": {
-      "already_cfretained": true, 
-      "null_accepted": true, 
+      "already_cfretained": true,
+      "null_accepted": true,
       "type_modifier": "o"
      }
     },
@@ -2944,15 +2950,15 @@
        "type_override": "@",
        "already_cfretained": true
     }
-   }, 
+   },
    "CFPropertyListCreateWithStream": {
     "args": {
-     "0": {}, 
-     "1": {}, 
-     "4": { "type_modifier": "o" }, 
+     "0": {},
+     "1": {},
+     "4": { "type_modifier": "o" },
      "5": {
-      "already_cfretained": true, 
-      "null_accepted": true, 
+      "already_cfretained": true,
+      "null_accepted": true,
       "type_modifier": "o"
      }
     },
@@ -2960,26 +2966,26 @@
        "type_override": "@",
        "already_cfretained": true
     }
-   }, 
+   },
    "CFPropertyListCreateXMLData": {
     "args": {
      "0": {}
-    }, 
+    },
     "retval": {
      "already_cfretained": true
     }
-   }, 
+   },
    "CFPropertyListWrite": {
     "args": {
      "0": { "type_override": "@" },
-     "1": {}, 
+     "1": {},
      "4": {
-      "already_cfretained": true, 
-      "null_accepted": true, 
+      "already_cfretained": true,
+      "null_accepted": true,
       "type_modifier": "o"
      }
     }
-   }, 
+   },
    "CFPropertyListIsValid": {
      "args": {
        "0": { "type_override": "@" }
@@ -2988,233 +2994,233 @@
    "CFPropertyListWriteToStream": {
     "args": {
      "0": { "type_override": "@" },
-     "1": {}, 
+     "1": {},
      "3": { "type_modifier": "o" }
     }
-   }, 
+   },
    "CFReadStreamClose": {
     "args": {
      "0": {}
     }
-   }, 
+   },
    "CFReadStreamCopyError": {
     "args": {
      "0": {}
-    }, 
+    },
     "retval": {
      "already_cfretained": true
     }
-   }, 
+   },
    "CFReadStreamCopyProperty": {
     "args": {
-     "0": {}, 
+     "0": {},
      "1": {}
     }
-   }, 
+   },
    "CFReadStreamCreateWithBytesNoCopy": {
     "args": {
-     "0": {}, 
-     "1": { "c_array_length_in_arg": 2, "type_modifier": "n", "type_override": "^v" }, 
+     "0": {},
+     "1": { "c_array_length_in_arg": 2, "type_modifier": "n", "type_override": "^v" },
      "3": {}
-    }, 
+    },
     "retval": {
      "already_cfretained": true
     }
-   }, 
+   },
    "CFReadStreamCreateWithFile": {
     "args": {
-     "0": {}, 
+     "0": {},
      "1": {}
-    }, 
+    },
     "retval": {
      "already_cfretained": true
     }
-   }, 
+   },
    "CFReadStreamGetBuffer": {
     "args": {
-     "0": {}, 
+     "0": {},
      "2": { "type_modifier": "o" }
-    }, 
+    },
     "retval": { "c_array_length_in_arg": 2, "type_override": "^v" }
-   }, 
+   },
    "CFReadStreamGetError": {
     "args": {
      "0": {}
     }
-   }, 
+   },
    "CFReadStreamGetStatus": {
     "args": {
      "0": {}
     }
-   }, 
+   },
    "CFReadStreamHasBytesAvailable": {
     "args": {
      "0": {}
     }
-   }, 
+   },
    "CFReadStreamOpen": {
     "args": {
      "0": {}
     }
-   }, 
+   },
    "CFReadStreamRead": {
     "args": {
-     "0": {}, 
+     "0": {},
      "1": { "c_array_length_in_arg": 2, "c_array_length_in_result": true, "type_modifier": "o", "type_override": "^v" }
     }
-   }, 
+   },
    "CFReadStreamScheduleWithRunLoop": {
     "args": {
-     "0": {}, 
-     "1": {}, 
+     "0": {},
+     "1": {},
      "2": {}
     }
-   }, 
+   },
    "CFReadStreamSetClient": {
     "args": {
-     "0": {}, 
+     "0": {},
      "2": {
       "function": {
        "args": [
         {
          "typestr": "^{__CFReadStream=}"
-        }, 
+        },
         {
          "typestr": "Q"
-        }, 
+        },
         {
          "typestr": "^v"
         }
-       ], 
+       ],
        "retval": {
         "typestr": "v"
        }
       }
-     }, 
+     },
      "3": {}
     }
-   }, 
+   },
    "CFReadStreamSetProperty": {
     "args": {
-     "0": {}, 
+     "0": {},
      "1": {}
     }
-   }, 
+   },
    "CFReadStreamUnscheduleFromRunLoop": {
     "args": {
-     "0": {}, 
-     "1": {}, 
+     "0": {},
+     "1": {},
      "2": {}
     }
-   }, 
+   },
    "CFRunLoopAddCommonMode": {
     "args": {
-     "0": {}, 
+     "0": {},
      "1": {}
     }
-   }, 
+   },
    "CFRunLoopAddObserver": {
     "args": {
-     "0": {}, 
-     "1": {}, 
+     "0": {},
+     "1": {},
      "2": {}
     }
-   }, 
+   },
    "CFRunLoopAddSource": {
     "args": {
-     "0": {}, 
-     "1": {}, 
+     "0": {},
+     "1": {},
      "2": {}
     }
-   }, 
+   },
    "CFRunLoopAddTimer": {
     "args": {
-     "0": {}, 
-     "1": {}, 
+     "0": {},
+     "1": {},
      "2": {}
     }
-   }, 
+   },
    "CFRunLoopContainsObserver": {
     "args": {
-     "0": {}, 
-     "1": {}, 
+     "0": {},
+     "1": {},
      "2": {}
     }
-   }, 
+   },
    "CFRunLoopContainsSource": {
     "args": {
-     "0": {}, 
-     "1": {}, 
+     "0": {},
+     "1": {},
      "2": {}
     }
-   }, 
+   },
    "CFRunLoopContainsTimer": {
     "args": {
-     "0": {}, 
-     "1": {}, 
+     "0": {},
+     "1": {},
      "2": {}
     }
-   }, 
+   },
    "CFRunLoopCopyAllModes": {
     "args": {
      "0": {}
-    }, 
+    },
     "retval": {
      "already_cfretained": true
     }
-   }, 
+   },
    "CFRunLoopCopyCurrentMode": {
     "args": {
      "0": {}
-    }, 
+    },
     "retval": {
      "already_cfretained": true
     }
-   }, 
+   },
    "CFRunLoopGetCurrent": {
     "retval": {}
-   }, 
+   },
    "CFRunLoopGetMain": {
     "retval": {}
-   }, 
+   },
    "CFRunLoopGetNextTimerFireDate": {
     "args": {
-     "0": {}, 
+     "0": {},
      "1": {}
     }
-   }, 
+   },
    "CFRunLoopIsWaiting": {
     "args": {
      "0": {}
     }
-   }, 
+   },
    "CFRunLoopObserverCreate": {
     "args": {
-     "0": {}, 
+     "0": {},
      "4": {
       "function": {
        "args": [
         {
          "typestr": "^{__CFRunLoopObserver=}"
-        }, 
+        },
         {
          "typestr": "Q"
-        }, 
+        },
         {
          "typestr": "^v"
         }
-       ], 
+       ],
        "retval": {
         "typestr": "v"
        }
       }
-     }, 
+     },
      "5": {}
-    }, 
+    },
     "retval": {
      "already_cfretained": true
     }
-   }, 
+   },
    "CFRunLoopObserverCreateWithHandler": {
     "args": {
      "0": {},
@@ -3228,42 +3234,42 @@
 	  ]
        }
      }
-    }, 
+    },
     "retval": {
      "already_cfretained": true
     }
-   }, 
+   },
    "CFRunLoopObserverDoesRepeat": {
     "args": {
      "0": {}
     }
-   }, 
+   },
    "CFRunLoopObserverGetActivities": {
     "args": {
      "0": {}
     }
-   }, 
+   },
    "CFRunLoopObserverGetContext": {
     "args": {
-     "0": {}, 
+     "0": {},
      "1": {}
     }
-   }, 
+   },
    "CFRunLoopObserverGetOrder": {
     "args": {
      "0": {}
     }
-   }, 
+   },
    "CFRunLoopObserverInvalidate": {
     "args": {
      "0": {}
     }
-   }, 
+   },
    "CFRunLoopObserverIsValid": {
     "args": {
      "0": {}
     }
-   }, 
+   },
    "CFRunLoopPerformBlock": {
     "args": {
      "0": {},
@@ -3278,97 +3284,97 @@
        }
      }
     }
-   }, 
+   },
    "CFRunLoopRemoveObserver": {
     "args": {
-     "0": {}, 
-     "1": {}, 
+     "0": {},
+     "1": {},
      "2": {}
     }
-   }, 
+   },
    "CFRunLoopRemoveSource": {
     "args": {
-     "0": {}, 
-     "1": {}, 
+     "0": {},
+     "1": {},
      "2": {}
     }
-   }, 
+   },
    "CFRunLoopRemoveTimer": {
     "args": {
-     "0": {}, 
-     "1": {}, 
+     "0": {},
+     "1": {},
      "2": {}
     }
-   }, 
+   },
    "CFRunLoopRunInMode": {
     "args": {
      "0": {}
     }
-   }, 
+   },
    "CFRunLoopSourceCreate": {
     "args": {
-     "0": {}, 
+     "0": {},
      "2": {}
-    }, 
+    },
     "retval": {
      "already_cfretained": true
     }
-   }, 
+   },
    "CFRunLoopSourceGetContext": {
     "args": {
-     "0": {}, 
+     "0": {},
      "1": {}
     }
-   }, 
+   },
    "CFRunLoopSourceGetOrder": {
     "args": {
      "0": {}
     }
-   }, 
+   },
    "CFRunLoopSourceInvalidate": {
     "args": {
      "0": {}
     }
-   }, 
+   },
    "CFRunLoopSourceIsValid": {
     "args": {
      "0": {}
     }
-   }, 
+   },
    "CFRunLoopSourceSignal": {
     "args": {
      "0": {}
     }
-   }, 
+   },
    "CFRunLoopStop": {
     "args": {
      "0": {}
     }
-   }, 
+   },
    "CFRunLoopTimerCreate": {
     "args": {
-     "0": {}, 
+     "0": {},
      "5": {
       "function": {
        "args": [
         {
          "typestr": "^{__CFRunLoopTimer=}"
-        }, 
+        },
         {
          "typestr": "^v"
         }
-       ], 
+       ],
        "retval": {
         "typestr": "v"
        }
       }
-     }, 
+     },
      "6": {}
-    }, 
+    },
     "retval": {
      "already_cfretained": true
     }
-   }, 
+   },
    "CFRunLoopTimerCreateWithHandler": {
     "args": {
      "0": {},
@@ -3383,2295 +3389,2295 @@
 	 }
       }
      }
-    }, 
+    },
     "retval": {
      "already_cfretained": true
     }
-   }, 
+   },
    "CFRunLoopTimerDoesRepeat": {
     "args": {
      "0": {}
     }
-   }, 
+   },
    "CFRunLoopTimerGetContext": {
     "args": {
-     "0": {}, 
+     "0": {},
      "1": {}
     }
-   }, 
+   },
    "CFRunLoopTimerGetInterval": {
     "args": {
      "0": {}
     }
-   }, 
+   },
    "CFRunLoopTimerGetNextFireDate": {
     "args": {
      "0": {}
     }
-   }, 
+   },
    "CFRunLoopTimerGetOrder": {
     "args": {
      "0": {}
     }
-   }, 
+   },
    "CFRunLoopTimerInvalidate": {
     "args": {
      "0": {}
     }
-   }, 
+   },
    "CFRunLoopTimerIsValid": {
     "args": {
      "0": {}
     }
-   }, 
+   },
    "CFRunLoopTimerSetNextFireDate": {
     "args": {
      "0": {}
     }
-   }, 
+   },
    "CFRunLoopWakeUp": {
     "args": {
      "0": {}
     }
-   }, 
+   },
    "CFSetAddValue": {
     "args": {
-     "0": {}, 
+     "0": {},
      "1": { "type_override": "@"}
     }
-   }, 
+   },
    "CFSetApplyFunction": {
     "args": {
-     "0": {}, 
+     "0": {},
      "1": {
       "callable_retained": false,
       "function": {
        "args": [
         {
          "typestr": "@"
-        }, 
+        },
         {
          "typestr": "@"
         }
-       ], 
+       ],
        "retval": {
         "typestr": "v"
        }
       }
-     }, 
+     },
      "2": { "type_override": "@" }
     }
-   }, 
+   },
    "CFSetContainsValue": {
     "args": {
-     "0": {}, 
+     "0": {},
      "1": { "type_override": "@"}
     }
-   }, 
+   },
    "CFSetCreate": {
     "args": {
-     "0": {}, 
-     "1": {}, 
+     "0": {},
+     "1": {},
      "3": {}
-    }, 
+    },
     "retval": {
      "already_cfretained": true
     }
-   }, 
+   },
    "CFSetCreateCopy": {
     "args": {
-     "0": {}, 
+     "0": {},
      "1": {}
-    }, 
+    },
     "retval": {
      "already_cfretained": true
     }
-   }, 
+   },
    "CFSetCreateMutable": {
     "args": {
-     "0": {}, 
+     "0": {},
      "2": {}
-    }, 
+    },
     "retval": {
      "already_cfretained": true
     }
-   }, 
+   },
    "CFSetCreateMutableCopy": {
     "args": {
-     "0": {}, 
+     "0": {},
      "2": {}
-    }, 
+    },
     "retval": {
      "already_cfretained": true
     }
-   }, 
+   },
    "CFSetGetCount": {
     "args": {
      "0": {}
     }
-   }, 
+   },
    "CFSetGetCountOfValue": {
     "args": {
-     "0": {}, 
+     "0": {},
      "1": { "type_override": "@" }
     }
-   }, 
+   },
    "CFSetGetValue": {
     "args": {
-     "0": {}, 
+     "0": {},
      "1": { "type_override": "@"}
-    }, 
+    },
     "retval": { "type_override": "@"}
-   }, 
+   },
    "CFSetGetValueIfPresent": {
     "args": {
-     "0": {}, 
-     "1": { "type_override": "@"}, 
+     "0": {},
+     "1": { "type_override": "@"},
      "2": { "type_modifier": "o", "type_override": "^@" }
     }
-   }, 
+   },
    "CFSetGetValues": {
     "ignore": true
-   }, 
+   },
    "CFSetRemoveAllValues": {
     "args": {
      "0": {}
     }
-   }, 
+   },
    "CFSetRemoveValue": {
     "args": {
-     "0": {}, 
+     "0": {},
      "1": { "type_override": "@"}
     }
-   }, 
+   },
    "CFSetReplaceValue": {
     "args": {
-     "0": {}, 
+     "0": {},
      "1": { "type_override": "@" }
     }
-   }, 
+   },
    "CFSetSetValue": {
     "args": {
-     "0": {}, 
+     "0": {},
      "1": { "type_override": "@"}
     }
-   }, 
+   },
    "CFShowStr": {
     "args": {
      "0": {}
     }
-   }, 
+   },
    "CFSocketConnectToAddress": {
     "args": {
-     "0": {}, 
+     "0": {},
      "1": {}
     }
-   }, 
+   },
    "CFSocketCopyAddress": {
     "args": {
      "0": {}
-    }, 
+    },
     "retval": {
      "already_cfretained": true
     }
-   }, 
+   },
    "CFSocketCopyPeerAddress": {
     "args": {
      "0": {}
-    }, 
+    },
     "retval": {
      "already_cfretained": true
     }
-   }, 
+   },
    "CFSocketCopyRegisteredSocketSignature": {
     "ignore": true
-   }, 
+   },
    "CFSocketCopyRegisteredValue": {
     "ignore": true
-   }, 
+   },
    "CFSocketCreate": {
     "args": {
-     "0": {}, 
+     "0": {},
      "5": {
       "function": {
        "args": [
         {
          "typestr": "^{__CFSocket=}"
-        }, 
+        },
         {
          "typestr": "Q"
-        }, 
+        },
         {
          "typestr": "^{__CFData=}"
-        }, 
+        },
         {
          "typestr": "^v"
-        }, 
+        },
         {
          "typestr": "^v"
         }
-       ], 
+       ],
        "retval": {
         "typestr": "v"
        }
       }
-     }, 
+     },
      "6": {}
-    }, 
+    },
     "retval": {
      "already_cfretained": true
     }
-   }, 
+   },
    "CFSocketCreateConnectedToSocketSignature": {
     "args": {
-     "0": {}, 
-     "1": {}, 
+     "0": {},
+     "1": {},
      "3": {
       "function": {
        "args": [
         {
          "typestr": "^{__CFSocket=}"
-        }, 
+        },
         {
          "typestr": "Q"
-        }, 
+        },
         {
          "typestr": "^{__CFData=}"
-        }, 
+        },
         {
          "typestr": "^v"
-        }, 
+        },
         {
          "typestr": "^v"
         }
-       ], 
+       ],
        "retval": {
-        "typestr": "v" 
+        "typestr": "v"
        }
       }
-     }, 
+     },
      "4": {}
-    }, 
+    },
     "retval": {
      "already_cfretained": true
     }
-   }, 
+   },
    "CFSocketCreateRunLoopSource": {
     "args": {
-     "0": {}, 
+     "0": {},
      "1": {}
-    }, 
+    },
     "retval": {
      "already_cfretained": true
     }
-   }, 
+   },
    "CFSocketCreateWithNative": {
     "args": {
-     "0": {}, 
+     "0": {},
      "3": {
       "function": {
        "args": [
         {
          "typestr": "^{__CFSocket=}"
-        }, 
+        },
         {
          "typestr": "Q"
-        }, 
+        },
         {
          "typestr": "^{__CFData=}"
-        }, 
+        },
         {
          "typestr": "^v"
-        }, 
+        },
         {
-         "typestr": "^v" 
+         "typestr": "^v"
         }
-       ], 
+       ],
        "retval": {
         "typestr": "v"
        }
       }
-     }, 
+     },
      "4": {}
-    }, 
+    },
     "retval": {
      "already_cfretained": true
     }
-   }, 
+   },
    "CFSocketCreateWithSocketSignature": {
     "args": {
-     "0": {}, 
-     "1": {}, 
+     "0": {},
+     "1": {},
      "3": {
       "function": {
        "args": [
         {
          "typestr": "^{__CFSocket=}"
-        }, 
+        },
         {
          "typestr": "Q"
-        }, 
+        },
         {
          "typestr": "^{__CFData=}"
-        }, 
+        },
         {
          "typestr": "^v"
-        }, 
+        },
         {
          "typestr": "^v"
         }
-       ], 
+       ],
        "retval": {
         "typestr": "v"
        }
       }
-     }, 
+     },
      "4": {}
-    }, 
+    },
     "retval": {
      "already_cfretained": true
     }
-   }, 
+   },
    "CFSocketDisableCallBacks": {
     "args": {
      "0": {}
     }
-   }, 
+   },
    "CFSocketEnableCallBacks": {
     "args": {
      "0": {}
     }
-   }, 
+   },
    "CFSocketGetContext": {
     "args": {
-     "0": {}, 
+     "0": {},
      "1": {}
     }
-   }, 
+   },
    "CFSocketGetNative": {
     "args": {
      "0": {}
     }
-   }, 
+   },
    "CFSocketGetSocketFlags": {
     "args": {
      "0": {}
     }
-   }, 
+   },
    "CFSocketInvalidate": {
     "args": {
      "0": {}
     }
-   }, 
+   },
    "CFSocketIsValid": {
     "args": {
      "0": {}
     }
-   }, 
+   },
    "CFSocketRegisterSocketSignature": {
     "ignore": true
-   }, 
+   },
    "CFSocketRegisterValue": {
     "ignore": true
-   }, 
+   },
    "CFSocketSendData": {
     "args": {
-     "0": {}, 
-     "1": {}, 
+     "0": {},
+     "1": {},
      "2": {}
     }
-   }, 
+   },
    "CFSocketSetAddress": {
     "args": {
-     "0": {}, 
+     "0": {},
      "1": {}
     }
-   }, 
+   },
    "CFSocketSetSocketFlags": {
     "args": {
      "0": {}
     }
-   }, 
+   },
    "CFSocketUnregister": {
     "ignore": true
-   }, 
+   },
    "CFStreamCreateBoundPair": {
     "args": {
-     "0": {}, 
-     "1": { "type_modifier": "o" }, 
+     "0": {},
+     "1": { "type_modifier": "o" },
      "2": { "type_modifier": "o" }
     }
-   }, 
+   },
    "CFStreamCreatePairWithPeerSocketSignature": {
     "args": {
-     "0": {}, 
-     "1": { "type_modifier": "n" }, 
-     "2": { "type_modifier": "o" }, 
+     "0": {},
+     "1": { "type_modifier": "n" },
+     "2": { "type_modifier": "o" },
      "3": { "type_modifier": "o" }
     }
-   }, 
+   },
    "CFStreamCreatePairWithSocket": {
     "args": {
-     "0": {}, 
-     "2": { "type_modifier": "o" }, 
+     "0": {},
+     "2": { "type_modifier": "o" },
      "3": { "type_modifier": "o" }
     }
-   }, 
+   },
    "CFStreamCreatePairWithSocketToHost": {
     "args": {
-     "0": {}, 
-     "1": {}, 
-     "3": { "type_modifier": "o" }, 
+     "0": {},
+     "1": {},
+     "3": { "type_modifier": "o" },
      "4": { "type_modifier": "o" }
     }
-   }, 
+   },
    "CFStringAppend": {
     "args": {
-     "0": {}, 
+     "0": {},
      "1": {}
     }
-   }, 
+   },
    "CFStringAppendCString": {
     "args": {
-     "0": {}, 
+     "0": {},
      "1": { "c_array_delimited_by_null": true, "type_override": "^t", "type_modifier": "n" }
     }
-   }, 
+   },
    "CFStringAppendCharacters": {
     "args": {
-     "0": {}, 
+     "0": {},
      "1": { "c_array_length_in_arg": 2, "type_override": "^T", "type_modifier": "n" }
     }
-   }, 
+   },
    "CFStringAppendFormat": {
     "args": {
-     "0": {}, 
-     "1": {}, 
+     "0": {},
+     "1": {},
      "2": {
       "printf_format": true
      }
-    }, 
+    },
     "variadic": true
-   }, 
+   },
    "CFStringAppendFormatAndArguments": {
     "ignore": true,
     "comment": "va_list argument, use CFStringAppendFormat"
-   }, 
+   },
    "CFStringAppendPascalString": {
     "ignore": true,
     "comment": "Use CFStringAppend"
-   }, 
+   },
    "CFStringCapitalize": {
     "args": {
-     "0": {}, 
+     "0": {},
      "1": {}
     }
-   }, 
+   },
    "CFStringCompare": {
     "args": {
-     "0": {}, 
+     "0": {},
      "1": {}
     }
-   }, 
+   },
    "CFStringCompareWithOptions": {
     "args": {
-     "0": {}, 
+     "0": {},
      "1": {}
     }
-   }, 
+   },
    "CFStringCompareWithOptionsAndLocale": {
     "args": {
-     "0": {}, 
-     "1": {}, 
+     "0": {},
+     "1": {},
      "4": {}
     }
-   }, 
+   },
    "CFStringConvertEncodingToIANACharSetName": {
     "retval": {}
-   }, 
+   },
    "CFStringConvertIANACharSetNameToEncoding": {
     "args": {
      "0": {}
     }
-   }, 
+   },
    "CFStringCreateArrayBySeparatingStrings": {
     "args": {
-     "0": {}, 
-     "1": {}, 
+     "0": {},
+     "1": {},
      "2": {}
-    }, 
+    },
     "retval": {
      "already_cfretained": true
     }
-   }, 
+   },
    "CFStringCreateArrayWithFindResults": {
     "args": {
-     "0": {}, 
-     "1": {}, 
+     "0": {},
+     "1": {},
      "2": {}
-    }, 
+    },
     "retval": {
      "already_cfretained": true
     }
-   }, 
+   },
    "CFStringCreateByCombiningStrings": {
     "args": {
-     "0": {}, 
-     "1": {}, 
+     "0": {},
+     "1": {},
      "2": {}
-    }, 
+    },
     "retval": {
      "already_cfretained": true
     }
-   }, 
+   },
    "CFStringCreateCopy": {
     "args": {
-     "0": {}, 
+     "0": {},
      "1": {}
-    }, 
+    },
     "retval": {
      "already_cfretained": true
     }
-   }, 
+   },
    "CFStringCreateExternalRepresentation": {
     "args": {
-     "0": {}, 
+     "0": {},
      "1": {}
-    }, 
+    },
     "retval": {
      "already_cfretained": true
     }
-   }, 
+   },
    "CFStringCreateFromExternalRepresentation": {
     "args": {
-     "0": {}, 
+     "0": {},
      "1": {}
-    }, 
+    },
     "retval": {
      "already_cfretained": true
     }
-   }, 
+   },
    "CFStringCreateMutable": {
     "args": {
      "0": {}
-    }, 
+    },
     "retval": {
      "already_cfretained": true
     }
-   }, 
+   },
    "CFStringCreateMutableCopy": {
     "args": {
-     "0": {}, 
+     "0": {},
      "2": {}
-    }, 
+    },
     "retval": {
      "already_cfretained": true
     }
-   }, 
+   },
    "CFStringCreateMutableWithExternalCharactersNoCopy": {
     "args": {
-     "0": {}, 
-     "1": { "c_array_length_in_arg": 2, "type_modifier": "n", "type_override": "^T"  }, 
+     "0": {},
+     "1": { "c_array_length_in_arg": 2, "type_modifier": "n", "type_override": "^T"  },
      "4": {}
-    }, 
+    },
     "retval": {
      "already_cfretained": true
     }
-   }, 
+   },
    "CFStringCreateWithBytes": {
     "args": {
-     "0": {}, 
+     "0": {},
      "1": { "c_array_length_in_arg": 2, "type_modifier": "n", "type_override": "^t"  }
-    }, 
+    },
     "retval": {
      "already_cfretained": true
     }
-   }, 
+   },
    "CFStringCreateWithBytesNoCopy": {
     "args": {
-     "0": {}, 
-     "1": { "c_array_length_in_arg": 2, "type_modifier": "n", "type_override": "^t"  }, 
+     "0": {},
+     "1": { "c_array_length_in_arg": 2, "type_modifier": "n", "type_override": "^t"  },
      "5": {}
-    }, 
+    },
     "retval": {
      "already_cfretained": true
     }
-   }, 
+   },
    "CFStringCreateWithCString": {
     "args": {
-     "0": {}, 
+     "0": {},
      "1": { "c_array_delimited_by_null": true, "type_modifier": "n", "type_override": "^t" }
-    }, 
+    },
     "retval": {
      "already_cfretained": true
     }
-   }, 
+   },
    "CFStringCreateWithCStringNoCopy": {
     "args": {
-     "0": {}, 
-     "1": { "c_array_delimited_by_null": true, "type_modifier": "n", "type_override": "^t" }, 
+     "0": {},
+     "1": { "c_array_delimited_by_null": true, "type_modifier": "n", "type_override": "^t" },
      "3": {}
-    }, 
+    },
     "retval": {
      "already_cfretained": true
     }
-   }, 
+   },
    "CFStringCreateWithCharacters": {
     "args": {
-     "0": {}, 
+     "0": {},
      "1": { "c_array_delimited_by_null": true, "type_modifier": "n", "type_override": "^T"}
-    }, 
+    },
     "retval": {
      "already_cfretained": true
     }
-   }, 
+   },
    "CFStringCreateWithCharactersNoCopy": {
     "args": {
-     "0": {}, 
-     "1": { "c_array_delimited_by_null": true, "type_modifier": "n", "type_override": "^T"}, 
+     "0": {},
+     "1": { "c_array_delimited_by_null": true, "type_modifier": "n", "type_override": "^T"},
      "3": {}
-    }, 
+    },
     "retval": {
      "already_cfretained": true
     }
-   }, 
+   },
    "CFStringCreateWithFileSystemRepresentation": {
     "args": {
-     "0": {}, 
+     "0": {},
      "1": { "c_array_delimited_by_null": true, "type_modifier": "n", "type_override": "^t" }
-    }, 
+    },
     "retval": {
      "already_cfretained": true
     }
-   }, 
+   },
    "CFStringCreateWithFormat": {
     "args": {
-     "0": {}, 
-     "1": {}, 
+     "0": {},
+     "1": {},
      "2": {
       "printf_format": true
      }
-    }, 
+    },
     "retval": {
      "already_cfretained": true
-    }, 
+    },
     "variadic": true
-   }, 
+   },
    "CFStringCreateWithFormatAndArguments": {
     "ignore": true,
     "comment": "va_list argument, use CFStringCreateWithFormat"
-   }, 
+   },
    "CFStringCreateWithPascalString": {
     "ignore": true,
     "comment": "use CFStringCreate"
-   }, 
+   },
    "CFStringCreateWithPascalStringNoCopy": {
     "ignore": true,
     "comment": "use CFStringCreate"
-   }, 
+   },
    "CFStringCreateWithSubstring": {
     "args": {
-     "0": {}, 
+     "0": {},
      "1": {}
-    }, 
+    },
     "retval": {
      "already_cfretained": true
     }
-   }, 
+   },
    "CFStringDelete": {
     "args": {
      "0": {}
     }
-   }, 
+   },
    "CFStringFind": {
     "args": {
-     "0": {}, 
+     "0": {},
      "1": {}
     }
-   }, 
+   },
    "CFStringFindAndReplace": {
     "args": {
-     "0": {}, 
-     "1": {}, 
+     "0": {},
+     "1": {},
      "2": {}
     }
-   }, 
+   },
    "CFStringFindCharacterFromSet": {
     "args": {
-     "0": {}, 
-     "1": {}, 
+     "0": {},
+     "1": {},
      "4": { "type_modifier": "o"}
     }
-   }, 
+   },
    "CFStringFindWithOptions": {
     "args": {
-     "0": {}, 
-     "1": {}, 
+     "0": {},
+     "1": {},
      "4": { "type_modifier": "o" }
     }
-   }, 
+   },
    "CFStringFindWithOptionsAndLocale": {
     "args": {
-     "0": {}, 
-     "1": {}, 
-     "4": {}, 
+     "0": {},
+     "1": {},
+     "4": {},
      "5": { "type_modifier": "o" }
     }
-   }, 
+   },
    "CFStringFold": {
     "args": {
-     "0": {}, 
+     "0": {},
      "2": {}
     }
-   }, 
+   },
    "CFStringGetBytes": {
     "args": {
-     "0": {}, 
-     "5": { "c_array_length_in_arg":[6,7], "type_modifier": "o", "type_override": "^t" }, 
+     "0": {},
+     "5": { "c_array_length_in_arg":[6,7], "type_modifier": "o", "type_override": "^t" },
      "7": { "type_modifier": "o" }
     }
-   }, 
+   },
    "CFStringGetCString": {
     "args": {
-     "0": {}, 
+     "0": {},
      "1": { "c_array_length_in_arg": 2, "type_modifier": "o", "type_override": "^t" }
     }
-   }, 
+   },
    "CFStringGetCStringPtr": {
     "args": {
      "0": { "type_override": "@"}
-    }, 
+    },
     "retval": {"type_override": "^t", "c_array_delimited_by_null": true }
-   }, 
+   },
    "CFStringGetCharacterAtIndex": {
     "args": {
      "0": {}
     }
-   }, 
+   },
    "CFStringGetCharacterFromInlineBuffer": {
     "ignore": true
-   }, 
+   },
    "CFStringGetCharacters": {
     "args": {
-     "0": {}, 
+     "0": {},
      "2": { "type_modifier": "o", "c_array_length_in_arg": 1, "type_override": "^T" }
     }
-   }, 
+   },
    "CFStringGetCharactersPtr": {
     "args": {
      "0": {}
-    }, 
+    },
     "retval": { "c_array_delimited_by_null": true, "type_override": "^T" }
-   }, 
+   },
    "CFStringGetDoubleValue": {
     "args": {
      "0": {}
     }
-   }, 
+   },
    "CFStringGetFastestEncoding": {
     "args": {
      "0": {}
     }
-   }, 
+   },
    "CFStringGetFileSystemRepresentation": {
     "args": {
-     "0": {}, 
+     "0": {},
      "1": { "c_array_length_in_arg": 2, "type_modifier": "o", "type_override": "^t" }
     }
-   }, 
+   },
    "CFStringGetHyphenationLocationBeforeIndex": {
     "args": {
-     "0": {}, 
-     "4": {}, 
+     "0": {},
+     "4": {},
      "5": { "type_modifier": "o" }
     }
-   }, 
+   },
    "CFStringGetIntValue": {
     "args": {
      "0": {}
     }
-   }, 
+   },
    "CFStringGetLength": {
     "args": {
      "0": {}
     }
-   }, 
+   },
    "CFStringGetLineBounds": {
     "args": {
-     "0": {}, 
-     "2": { "type_modifier": "o" }, 
-     "3": { "type_modifier": "o" }, 
+     "0": {},
+     "2": { "type_modifier": "o" },
+     "3": { "type_modifier": "o" },
      "4": { "type_modifier": "o" }
     }
-   }, 
+   },
    "CFStringGetListOfAvailableEncodings": {
     "retval": { "c_array_of_variable_length": true }
-   }, 
+   },
    "CFStringGetMaximumSizeOfFileSystemRepresentation": {
     "args": {
      "0": {}
     }
-   }, 
+   },
    "CFStringGetNameOfEncoding": {
     "retval": {}
-   }, 
+   },
    "CFStringGetParagraphBounds": {
     "args": {
-     "0": {}, 
-     "2": { "type_modifier": "o" }, 
-     "3": { "type_modifier": "o" }, 
+     "0": {},
+     "2": { "type_modifier": "o" },
+     "3": { "type_modifier": "o" },
      "4": { "type_modifier": "o" }
     }
-   }, 
+   },
    "CFStringGetPascalString": {
     "ignore": true
-   }, 
+   },
    "CFStringGetPascalStringPtr": {
     "ignore": true
-   }, 
+   },
    "CFStringGetRangeOfComposedCharactersAtIndex": {
     "args": {
      "0": {}
     }
-   }, 
+   },
    "CFStringGetSmallestEncoding": {
     "args": {
      "0": {}
     }
-   }, 
+   },
    "CFStringGetSurrogatePairForLongCharacter": {
     "args": {
      "0": {},
      "1": { "type_modifier": "o", "c_array_of_fixed_length": 2 }
     }
-   }, 
+   },
    "CFStringHasPrefix": {
     "args": {
-     "0": {}, 
+     "0": {},
      "1": {}
     }
-   }, 
+   },
    "CFStringHasSuffix": {
     "args": {
-     "0": {}, 
+     "0": {},
      "1": {}
     }
-   }, 
+   },
    "CFStringInitInlineBuffer": {
     "ignore": true
-   }, 
+   },
    "CFStringInsert": {
     "args": {
-     "0": {}, 
+     "0": {},
      "2": {}
     }
-   }, 
+   },
    "CFStringIsHyphenationAvailableForLocale": {
     "args": {
      "0": {}
     }
-   }, 
+   },
    "CFStringLowercase": {
     "args": {
-     "0": {}, 
+     "0": {},
      "1": {}
     }
-   }, 
+   },
    "CFStringNormalize": {
     "args": {
      "0": {}
     }
-   }, 
+   },
    "CFStringPad": {
     "args": {
-     "0": {}, 
+     "0": {},
      "1": {}
     }
-   }, 
+   },
    "CFStringReplace": {
     "args": {
-     "0": {}, 
+     "0": {},
      "2": {}
     }
-   }, 
+   },
    "CFStringReplaceAll": {
     "args": {
-     "0": {}, 
+     "0": {},
      "1": {}
     }
-   }, 
+   },
    "CFStringSetExternalCharactersNoCopy": {
     "args": {
      "0": {},
      "1": { "c_array_length_in_arg": 3, "type_modifier": "n", "type_override": "^T" }
     }
-   }, 
+   },
    "CFStringTokenizerAdvanceToNextToken": {
     "args": {
      "0": {}
     }
-   }, 
+   },
    "CFStringTokenizerCopyBestStringLanguage": {
     "args": {
      "0": {}
-    }, 
+    },
     "retval": {
      "already_cfretained": true
     }
-   }, 
+   },
    "CFStringTokenizerCopyCurrentTokenAttribute": {
     "args": {
      "0": {}
     }
-   }, 
+   },
    "CFStringTokenizerCreate": {
     "args": {
-     "0": {}, 
-     "1": {}, 
+     "0": {},
+     "1": {},
      "4": {}
-    }, 
+    },
     "retval": {
      "already_cfretained": true
     }
-   }, 
+   },
    "CFStringTokenizerGetCurrentSubTokens": {
     "args": {
-     "0": {}, 
-     "1": { "c_array_length_in_result": true, "c_array_length_in_arg": 2, "type_modifier": "o" }, 
+     "0": {},
+     "1": { "c_array_length_in_result": true, "c_array_length_in_arg": 2, "type_modifier": "o" },
      "3": {}
     }
-   }, 
+   },
    "CFStringTokenizerGetCurrentTokenRange": {
     "args": {
      "0": {}
     }
-   }, 
+   },
    "CFStringTokenizerGoToTokenAtIndex": {
     "args": {
      "0": {}
     }
-   }, 
+   },
    "CFStringTokenizerSetString": {
     "args": {
-     "0": {}, 
+     "0": {},
      "1": {}
     }
-   }, 
+   },
    "CFStringTransform": {
     "args": {
-     "0": {}, 
-     "1": { "type_modifier": "N" }, 
+     "0": {},
+     "1": { "type_modifier": "N" },
      "2": {}
     }
-   }, 
+   },
    "CFStringTrim": {
     "args": {
-     "0": {}, 
+     "0": {},
      "1": {}
     }
-   }, 
+   },
    "CFStringTrimWhitespace": {
     "args": {
      "0": {}
     }
-   }, 
+   },
    "CFStringUppercase": {
     "args": {
-     "0": {}, 
+     "0": {},
      "1": {}
     }
-   }, 
+   },
    "CFTimeZoneCopyAbbreviation": {
     "args": {
      "0": {}
-    }, 
+    },
     "retval": {
      "already_cfretained": true
     }
-   }, 
+   },
    "CFTimeZoneCopyAbbreviationDictionary": {
     "retval": {
      "already_cfretained": true
     }
-   }, 
+   },
    "CFTimeZoneCopyDefault": {
     "retval": {
      "already_cfretained": true
     }
-   }, 
+   },
    "CFTimeZoneCopyKnownNames": {
     "retval": {
      "already_cfretained": true
     }
-   }, 
+   },
    "CFTimeZoneCopyLocalizedName": {
     "args": {
-     "0": {}, 
+     "0": {},
      "2": {}
-    }, 
+    },
     "retval": {
      "already_cfretained": true
     }
-   }, 
+   },
    "CFTimeZoneCopySystem": {
     "retval": {
      "already_cfretained": true
     }
-   }, 
+   },
    "CFTimeZoneCreate": {
     "args": {
-     "0": {}, 
-     "1": {}, 
+     "0": {},
+     "1": {},
      "2": {}
-    }, 
+    },
     "retval": {
      "already_cfretained": true
     }
-   }, 
+   },
    "CFTimeZoneCreateWithName": {
     "args": {
-     "0": {}, 
+     "0": {},
      "1": {}
-    }, 
+    },
     "retval": {
      "already_cfretained": true
     }
-   }, 
+   },
    "CFTimeZoneCreateWithTimeIntervalFromGMT": {
     "args": {
      "0": {}
-    }, 
+    },
     "retval": {
      "already_cfretained": true
     }
-   }, 
+   },
    "CFTimeZoneGetData": {
     "args": {
      "0": {}
-    }, 
+    },
     "retval": {}
-   }, 
+   },
    "CFTimeZoneGetDaylightSavingTimeOffset": {
     "args": {
      "0": {}
     }
-   }, 
+   },
    "CFTimeZoneGetName": {
     "args": {
      "0": {}
-    }, 
+    },
     "retval": {}
-   }, 
+   },
    "CFTimeZoneGetNextDaylightSavingTimeTransition": {
     "args": {
      "0": {}
     }
-   }, 
+   },
    "CFTimeZoneGetSecondsFromGMT": {
     "args": {
      "0": {}
     }
-   }, 
+   },
    "CFTimeZoneIsDaylightSavingTime": {
     "args": {
      "0": {}
     }
-   }, 
+   },
    "CFTimeZoneSetAbbreviationDictionary": {
     "args": {
      "0": {}
     }
-   }, 
+   },
    "CFTimeZoneSetDefault": {
     "args": {
      "0": {}
     }
-   }, 
+   },
    "CFTreeAppendChild": {
     "args": {
-     "0": {}, 
+     "0": {},
      "1": {}
     }
-   }, 
+   },
    "CFTreeApplyFunctionToChildren": {
     "args": {
-     "0": {}, 
+     "0": {},
      "1": {
       "callable_retained": false,
       "function": {
        "args": [
         {
          "typestr": "@"
-        }, 
+        },
         {
          "typestr": "@"
         }
-       ], 
+       ],
        "retval": {
         "typestr": "v"
        }
       }
-     }, 
+     },
      "2": { "type_override": "@" }
     }
-   }, 
+   },
    "CFTreeCreate": {
     "args": {
-     "0": {}, 
+     "0": {},
      "1": {}
-    }, 
+    },
     "retval": {
      "already_cfretained": true
     }
-   }, 
+   },
    "CFTreeFindRoot": {
     "args": {
      "0": {}
-    }, 
+    },
     "retval": {}
-   }, 
+   },
    "CFTreeGetChildAtIndex": {
     "args": {
      "0": {}
-    }, 
+    },
     "retval": {}
-   }, 
+   },
    "CFTreeGetChildCount": {
     "args": {
      "0": {}
     }
-   }, 
+   },
    "CFTreeGetChildren": {
     "args": {
-     "0": {}, 
+     "0": {},
      "1": { "c_array_of_variable_length": true, "type_modifier": "o" }
     }
-   }, 
+   },
    "CFTreeGetContext": {
     "args": {
-     "0": {}, 
+     "0": {},
      "1": {}
     }
-   }, 
+   },
    "CFTreeGetFirstChild": {
     "args": {
      "0": {}
-    }, 
+    },
     "retval": {}
-   }, 
+   },
    "CFTreeGetNextSibling": {
     "args": {
      "0": {}
-    }, 
+    },
     "retval": {}
-   }, 
+   },
    "CFTreeGetParent": {
     "args": {
      "0": {}
-    }, 
+    },
     "retval": {}
-   }, 
+   },
    "CFTreeInsertSibling": {
     "args": {
-     "0": {}, 
+     "0": {},
      "1": {}
     }
-   }, 
+   },
    "CFTreePrependChild": {
     "args": {
-     "0": {}, 
+     "0": {},
      "1": {}
     }
-   }, 
+   },
    "CFTreeRemove": {
     "args": {
      "0": {}
     }
-   }, 
+   },
    "CFTreeRemoveAllChildren": {
     "args": {
      "0": {}
     }
-   }, 
+   },
    "CFTreeSetContext": {
     "args": {
-     "0": {}, 
+     "0": {},
      "1": {}
     }
-   }, 
+   },
    "CFTreeSortChildren": {
     "args": {
-     "0": {}, 
+     "0": {},
      "1": {
       "callable_retained": false,
       "function": {
        "args": [
         {
          "typestr": "@"
-        }, 
+        },
         {
          "typestr": "@"
-        }, 
+        },
         {
          "typestr": "@"
         }
-       ], 
+       ],
        "retval": {
         "typestr": "l"
        }
       }
-     }, 
+     },
      "2": { "type_override": "@" }
     }
-   }, 
+   },
    "CFURLCanBeDecomposed": {
     "args": {
      "0": {}
     }
-   }, 
+   },
    "CFURLClearResourcePropertyCache": {
     "args": {
      "0": {}
     }
-   }, 
+   },
    "CFURLClearResourcePropertyCacheForKey": {
     "args": {
-     "0": {}, 
+     "0": {},
      "1": {}
     }
-   }, 
+   },
    "CFURLCopyAbsoluteURL": {
     "args": {
      "0": {}
-    }, 
+    },
     "retval": {
      "already_cfretained": true
     }
-   }, 
+   },
    "CFURLCopyFileSystemPath": {
     "args": {
      "0": {}
-    }, 
+    },
     "retval": {
      "already_cfretained": true
     }
-   }, 
+   },
    "CFURLCopyFragment": {
     "args": {
-     "0": {}, 
+     "0": {},
      "1": {}
-    }, 
+    },
     "retval": {
      "already_cfretained": true
     }
-   }, 
+   },
    "CFURLCopyHostName": {
     "args": {
      "0": {}
-    }, 
+    },
     "retval": {
      "already_cfretained": true
     }
-   }, 
+   },
    "CFURLCopyLastPathComponent": {
     "args": {
      "0": {}
-    }, 
+    },
     "retval": {
      "already_cfretained": true
     }
-   }, 
+   },
    "CFURLCopyNetLocation": {
     "args": {
      "0": {}
-    }, 
+    },
     "retval": {
      "already_cfretained": true
     }
-   }, 
+   },
    "CFURLCopyParameterString": {
     "args": {
-     "0": {}, 
+     "0": {},
      "1": {}
-    }, 
+    },
     "retval": {
      "already_cfretained": true
     }
-   }, 
+   },
    "CFURLCopyPassword": {
     "args": {
      "0": {}
-    }, 
+    },
     "retval": {
      "already_cfretained": true
     }
-   }, 
+   },
    "CFURLCopyPath": {
     "args": {
      "0": {}
-    }, 
+    },
     "retval": {
      "already_cfretained": true
     }
-   }, 
+   },
    "CFURLCopyPathExtension": {
     "args": {
      "0": {}
-    }, 
+    },
     "retval": {
      "already_cfretained": true
     }
-   }, 
+   },
    "CFURLCopyQueryString": {
     "args": {
-     "0": {}, 
+     "0": {},
      "1": {}
-    }, 
+    },
     "retval": {
      "already_cfretained": true
     }
-   }, 
+   },
    "CFURLCopyResourcePropertiesForKeys": {
     "args": {
-     "0": {}, 
-     "1": {}, 
+     "0": {},
+     "1": {},
      "2": {
-      "already_cfretained": true, 
-      "null_accepted": true, 
+      "already_cfretained": true,
+      "null_accepted": true,
       "type_modifier": "o"
      }
-    }, 
+    },
     "retval": {
      "already_cfretained": true
     }
-   }, 
+   },
    "CFURLCopyResourcePropertyForKey": {
     "args": {
-     "0": {}, 
-     "1": {}, 
-     "2": { "type_modifier": "o", "type_override": "^@", "already_cfretained": true }, 
+     "0": {},
+     "1": {},
+     "2": { "type_modifier": "o", "type_override": "^@", "already_cfretained": true },
      "3": {
-      "already_cfretained": true, 
-      "null_accepted": true, 
+      "already_cfretained": true,
+      "null_accepted": true,
       "type_modifier": "o"
      }
     }
-   }, 
+   },
    "CFURLCopyResourceSpecifier": {
     "args": {
      "0": {}
-    }, 
+    },
     "retval": {
      "already_cfretained": true
     }
-   }, 
+   },
    "CFURLCopyScheme": {
     "args": {
      "0": {}
-    }, 
+    },
     "retval": {
      "already_cfretained": true
     }
-   }, 
+   },
    "CFURLCopyStrictPath": {
     "args": {
-     "0": {}, 
+     "0": {},
      "1": { "type_modifier": "o" }
-    }, 
+    },
     "retval": {
      "already_cfretained": true
     }
-   }, 
+   },
    "CFURLCopyUserName": {
     "args": {
      "0": {}
-    }, 
+    },
     "retval": {
      "already_cfretained": true
     }
-   }, 
+   },
    "CFURLCreateAbsoluteURLWithBytes": {
     "args": {
-     "0": {}, 
-     "1": { "c_array_length_in_arg": 2, "type_modifier": "n", "type_override": "^v" }, 
+     "0": {},
+     "1": { "c_array_length_in_arg": 2, "type_modifier": "n", "type_override": "^v" },
      "4": {}
-    }, 
+    },
     "retval": {
      "already_cfretained": true
     }
-   }, 
+   },
    "CFURLCreateBookmarkData": {
     "args": {
-     "0": {}, 
-     "1": {}, 
-     "3": {}, 
-     "4": {}, 
+     "0": {},
+     "1": {},
+     "3": {},
+     "4": {},
      "5": {
-      "already_cfretained": true, 
-      "null_accepted": true, 
+      "already_cfretained": true,
+      "null_accepted": true,
       "type_modifier": "o"
      }
-    }, 
+    },
     "retval": {
      "already_cfretained": true
     }
-   }, 
+   },
    "CFURLCreateBookmarkDataFromAliasRecord": {
     "args": {
-     "0": {}, 
+     "0": {},
      "1": {}
-    }, 
+    },
     "retval": {
      "already_cfretained": true
     }
-   }, 
+   },
    "CFURLCreateBookmarkDataFromFile": {
     "args": {
-     "0": {}, 
-     "1": {}, 
+     "0": {},
+     "1": {},
      "2": {
-      "already_cfretained": true, 
-      "null_accepted": true, 
+      "already_cfretained": true,
+      "null_accepted": true,
       "type_modifier": "o"
      }
-    }, 
+    },
     "retval": {
      "already_cfretained": true
     }
-   }, 
+   },
    "CFURLCreateByResolvingBookmarkData": {
     "args": {
-     "0": {}, 
-     "1": {}, 
-     "3": {}, 
-     "4": {}, 
-     "5": { "type_modifier": "o" }, 
+     "0": {},
+     "1": {},
+     "3": {},
+     "4": {},
+     "5": { "type_modifier": "o" },
      "6": {
-      "already_cfretained": true, 
-      "null_accepted": true, 
+      "already_cfretained": true,
+      "null_accepted": true,
       "type_modifier": "o"
      }
-    }, 
+    },
     "retval": {
      "already_cfretained": true
     }
-   }, 
+   },
    "CFURLCreateCopyAppendingPathComponent": {
     "args": {
-     "0": {}, 
-     "1": {}, 
+     "0": {},
+     "1": {},
      "2": {}
-    }, 
+    },
     "retval": {
      "already_cfretained": true
     }
-   }, 
+   },
    "CFURLCreateCopyAppendingPathExtension": {
     "args": {
-     "0": {}, 
-     "1": {}, 
+     "0": {},
+     "1": {},
      "2": {}
-    }, 
+    },
     "retval": {
      "already_cfretained": true
     }
-   }, 
+   },
    "CFURLCreateCopyDeletingLastPathComponent": {
     "args": {
-     "0": {}, 
+     "0": {},
      "1": {}
-    }, 
+    },
     "retval": {
      "already_cfretained": true
     }
-   }, 
+   },
    "CFURLCreateCopyDeletingPathExtension": {
     "args": {
-     "0": {}, 
+     "0": {},
      "1": {}
-    }, 
+    },
     "retval": {
      "already_cfretained": true
     }
-   }, 
+   },
    "CFURLCreateData": {
     "args": {
-     "0": {}, 
+     "0": {},
      "1": {}
-    }, 
+    },
     "retval": {
      "already_cfretained": true
     }
-   }, 
+   },
    "CFURLCreateDataAndPropertiesFromResource": {
     "args": {
-     "0": {}, 
-     "1": {}, 
-     "2": { "type_modifier": "o" }, 
-     "3": { "type_modifier": "o" }, 
-     "4": {}, 
+     "0": {},
+     "1": {},
+     "2": { "type_modifier": "o" },
+     "3": { "type_modifier": "o" },
+     "4": {},
      "5": { "type_modifier": "o" }
     }
-   }, 
+   },
    "CFURLCreateFilePathURL": {
     "args": {
-     "0": {}, 
-     "1": {}, 
+     "0": {},
+     "1": {},
      "2": {
-      "already_cfretained": true, 
-      "null_accepted": true, 
+      "already_cfretained": true,
+      "null_accepted": true,
       "type_modifier": "o"
      }
-    }, 
+    },
     "retval": {
      "already_cfretained": true
     }
-   }, 
+   },
    "CFURLCreateFileReferenceURL": {
     "args": {
-     "0": {}, 
-     "1": {}, 
+     "0": {},
+     "1": {},
      "2": {
-      "already_cfretained": true, 
-      "null_accepted": true, 
+      "already_cfretained": true,
+      "null_accepted": true,
       "type_modifier": "o"
      }
-    }, 
+    },
     "retval": {
      "already_cfretained": true
     }
-   }, 
+   },
    "CFURLCreateFromFSRef": {
     "args": {
-     "0": {}, 
+     "0": {},
      "1": { "type_modifier": "n", "type_override": "^{FSRef=[80C]}" }
-    }, 
+    },
     "retval": {
      "already_cfretained": true
     }
-   }, 
+   },
    "CFURLCreateFromFileSystemRepresentation": {
     "args": {
-     "0": {}, 
+     "0": {},
      "1": { "c_array_delimited_by_null": true, "type_modifier": "n", "type_override": "^t" }
-    }, 
+    },
     "retval": {
      "already_cfretained": true
     }
-   }, 
+   },
    "CFURLCreateFromFileSystemRepresentationRelativeToBase": {
     "args": {
-     "0": {}, 
-     "1": { "c_array_delimited_by_null": true, "type_modifier": "n", "type_override": "^t" }, 
+     "0": {},
+     "1": { "c_array_delimited_by_null": true, "type_modifier": "n", "type_override": "^t" },
      "4": {}
-    }, 
+    },
     "retval": {
      "already_cfretained": true
     }
-   }, 
+   },
    "CFURLCreatePropertyFromResource": {
     "args": {
-     "0": {}, 
-     "1": {}, 
-     "2": {}, 
+     "0": {},
+     "1": {},
+     "2": {},
      "3": { "type_modifier": "o" }
     }
-   }, 
+   },
    "CFURLCreateResourcePropertiesForKeysFromBookmarkData": {
     "args": {
-     "0": {}, 
-     "1": {}, 
+     "0": {},
+     "1": {},
      "2": {}
-    }, 
+    },
     "retval": {
      "already_cfretained": true
     }
-   }, 
+   },
    "CFURLCreateResourcePropertyForKeyFromBookmarkData": {
     "args": {
-     "0": {}, 
-     "1": {}, 
+     "0": {},
+     "1": {},
      "2": {}
     }
-   }, 
+   },
    "CFURLCreateStringByAddingPercentEscapes": {
     "args": {
-     "0": {}, 
-     "1": {}, 
-     "2": {}, 
+     "0": {},
+     "1": {},
+     "2": {},
      "3": {}
-    }, 
+    },
     "retval": {
      "already_cfretained": true
     }
-   }, 
+   },
    "CFURLCreateStringByReplacingPercentEscapes": {
     "args": {
-     "0": {}, 
-     "1": {}, 
+     "0": {},
+     "1": {},
      "2": {}
-    }, 
+    },
     "retval": {
      "already_cfretained": true
     }
-   }, 
+   },
    "CFURLCreateStringByReplacingPercentEscapesUsingEncoding": {
     "args": {
-     "0": {}, 
-     "1": {}, 
+     "0": {},
+     "1": {},
      "2": {}
-    }, 
+    },
     "retval": {
      "already_cfretained": true
     }
-   }, 
+   },
    "CFURLCreateWithBytes": {
     "args": {
-     "0": {}, 
-     "1": { "c_array_length_in_arg": 2, "type_modifier": "n", "type_override": "^v" }, 
+     "0": {},
+     "1": { "c_array_length_in_arg": 2, "type_modifier": "n", "type_override": "^v" },
      "4": {}
-    }, 
+    },
     "retval": {
      "already_cfretained": true
     }
-   }, 
+   },
    "CFURLCreateWithFileSystemPath": {
     "args": {
-     "0": {}, 
+     "0": {},
      "1": {}
-    }, 
+    },
     "retval": {
      "already_cfretained": true
     }
-   }, 
+   },
    "CFURLCreateWithFileSystemPathRelativeToBase": {
     "args": {
-     "0": {}, 
-     "1": {}, 
+     "0": {},
+     "1": {},
      "4": {}
-    }, 
+    },
     "retval": {
      "already_cfretained": true
     }
-   }, 
+   },
    "CFURLCreateWithString": {
     "args": {
-     "0": {}, 
-     "1": {}, 
+     "0": {},
+     "1": {},
      "2": {}
-    }, 
+    },
     "retval": {
      "already_cfretained": true
     }
-   }, 
+   },
    "CFURLDestroyResource": {
     "args": {
-     "0": {}, 
+     "0": {},
      "1": { "type_modifier": "o" }
     }
-   }, 
+   },
    "CFURLEnumeratorCreateForDirectoryURL": {
     "args": {
-     "0": {}, 
-     "1": {}, 
+     "0": {},
+     "1": {},
      "3": {}
-    }, 
+    },
     "retval": {
      "already_cfretained": true
     }
-   }, 
+   },
    "CFURLEnumeratorCreateForMountedVolumes": {
     "args": {
-     "0": {}, 
+     "0": {},
      "2": {}
-    }, 
+    },
     "retval": {
      "already_cfretained": true
     }
-   }, 
+   },
    "CFURLEnumeratorGetDescendentLevel": {
     "args": {
      "0": {}
     }
-   }, 
+   },
    "CFURLEnumeratorGetNextURL": {
     "args": {
-     "0": {}, 
-     "1": { "type_modifier": "o" }, 
+     "0": {},
+     "1": { "type_modifier": "o" },
      "2": {
-      "already_cfretained": true, 
-      "null_accepted": true, 
+      "already_cfretained": true,
+      "null_accepted": true,
       "type_modifier": "o"
      }
     }
-   }, 
+   },
    "CFURLEnumeratorGetSourceDidChange": {
     "args": {
      "0": {}
     }
-   }, 
+   },
    "CFURLEnumeratorSkipDescendents": {
     "args": {
      "0": {}
     }
-   }, 
+   },
    "CFURLGetBaseURL": {
     "args": {
      "0": {}
-    }, 
+    },
     "retval": {}
-   }, 
+   },
    "CFURLGetByteRangeForComponent": {
     "args": {
-     "0": {}, 
+     "0": {},
      "2": { "type_modifier": "o" }
     }
-   }, 
+   },
    "CFURLGetBytes": {
     "args": {
-     "0": {}, 
+     "0": {},
      "1": { "c_array_length_in_arg": 2, "c_array_length_in_result": true, "type_modifier": "o" }
     }
-   }, 
+   },
    "CFURLGetFSRef": {
     "args": {
-     "0": {}, 
+     "0": {},
      "1": { "type_override": "^{FSRef=[80C]}", "type_modifier": "o" }
     }
-   }, 
+   },
    "CFURLGetFileSystemRepresentation": {
     "args": {
-     "0": {}, 
+     "0": {},
      "2": { "c_array_length_in_arg": 3, "c_array_delimited_by_null": true, "type_modifier": "o", "type_override": "^t" }
     }
-   }, 
+   },
    "CFURLGetPortNumber": {
     "args": {
      "0": {}
     }
-   }, 
+   },
    "CFURLGetString": {
     "args": {
      "0": {}
-    }, 
+    },
     "retval": {}
-   }, 
+   },
    "CFURLHasDirectoryPath": {
     "args": {
      "0": {}
     }
-   }, 
+   },
    "CFURLResourceIsReachable": {
     "args": {
-     "0": {}, 
+     "0": {},
      "1": {
-      "already_cfretained": true, 
-      "null_accepted": true, 
+      "already_cfretained": true,
+      "null_accepted": true,
       "type_modifier": "o"
      }
     }
-   }, 
+   },
    "CFURLSetResourcePropertiesForKeys": {
     "args": {
-     "0": {}, 
-     "1": {}, 
+     "0": {},
+     "1": {},
      "2": {
-      "already_cfretained": true, 
-      "null_accepted": true, 
+      "already_cfretained": true,
+      "null_accepted": true,
       "type_modifier": "o"
      }
     }
-   }, 
+   },
    "CFURLSetResourcePropertyForKey": {
     "args": {
-     "0": {}, 
-     "1": {}, 
+     "0": {},
+     "1": {},
      "3": {
-      "already_cfretained": true, 
-      "null_accepted": true, 
+      "already_cfretained": true,
+      "null_accepted": true,
       "type_modifier": "o"
      }
     }
-   }, 
+   },
    "CFURLSetTemporaryResourcePropertyForKey": {
     "args": {
-     "0": {}, 
+     "0": {},
      "1": {}
     }
-   }, 
+   },
    "CFURLWriteBookmarkDataToFile": {
     "args": {
-     "0": {}, 
-     "1": {}, 
+     "0": {},
+     "1": {},
      "3": {
-      "already_cfretained": true, 
-      "null_accepted": true, 
+      "already_cfretained": true,
+      "null_accepted": true,
       "type_modifier": "o"
      }
     }
-   }, 
+   },
    "CFURLWriteDataAndPropertiesToResource": {
     "args": {
-     "0": {}, 
-     "1": {}, 
-     "2": {}, 
+     "0": {},
+     "1": {},
+     "2": {},
      "3": { "type_modifier": "o" }
     }
-   }, 
+   },
    "CFUUIDCreate": {
     "args": {
      "0": {}
-    }, 
+    },
     "retval": {
      "already_cfretained": true
     }
-   }, 
+   },
    "CFUUIDCreateFromString": {
     "args": {
-     "0": {}, 
+     "0": {},
      "1": {}
-    }, 
+    },
     "retval": {
      "already_cfretained": true
     }
-   }, 
+   },
    "CFUUIDCreateFromUUIDBytes": {
     "args": {
      "0": {}
-    }, 
+    },
     "retval": {
      "already_cfretained": true
     }
-   }, 
+   },
    "CFUUIDCreateString": {
     "args": {
-     "0": {}, 
+     "0": {},
      "1": {}
-    }, 
+    },
     "retval": {
      "already_cfretained": true
     }
-   }, 
+   },
    "CFUUIDCreateWithBytes": {
     "args": {
      "0": {}
-    }, 
+    },
     "retval": {
      "already_cfretained": true
     }
-   }, 
+   },
    "CFUUIDGetConstantUUIDWithBytes": {
     "args": {
      "0": {}
-    }, 
+    },
     "retval": {}
-   }, 
+   },
    "CFUUIDGetUUIDBytes": {
     "args": {
      "0": {}
     }
-   }, 
+   },
    "CFUserNotificationCancel": {
     "args": {
      "0": {}
     }
-   }, 
+   },
    "CFUserNotificationCreate": {
     "args": {
-     "0": {}, 
-     "3": { "type_modifier": "o" }, 
+     "0": {},
+     "3": { "type_modifier": "o" },
      "4": {}
-    }, 
+    },
     "retval": {
      "already_cfretained": true
     }
-   }, 
+   },
    "CFUserNotificationCreateRunLoopSource": {
     "args": {
-     "0": {}, 
-     "1": {}, 
+     "0": {},
+     "1": {},
      "2": {
       "function_pointer_retained": true,
       "function": {
        "args": [
         {
          "typestr": "^{__CFUserNotification=}"
-        }, 
+        },
         {
          "typestr": ["i", "q"]
         }
-       ], 
+       ],
        "retval": {
         "typestr": "v"
        }
       }
      }
-    }, 
+    },
     "retval": {
      "already_cfretained": true
     }
-   }, 
+   },
    "CFUserNotificationDisplayAlert": {
     "args": {
-     "2": {}, 
-     "3": {}, 
-     "4": {}, 
-     "5": {}, 
-     "6": {}, 
-     "7": {}, 
-     "8": {}, 
-     "9": {}, 
+     "2": {},
+     "3": {},
+     "4": {},
+     "5": {},
+     "6": {},
+     "7": {},
+     "8": {},
+     "9": {},
      "10": { "type_modifier": "o" }
     }
-   }, 
+   },
    "CFUserNotificationDisplayNotice": {
     "args": {
-     "2": {}, 
-     "3": {}, 
-     "4": {}, 
-     "5": {}, 
-     "6": {}, 
+     "2": {},
+     "3": {},
+     "4": {},
+     "5": {},
+     "6": {},
      "7": {}
     }
-   }, 
+   },
    "CFUserNotificationGetResponseDictionary": {
     "args": {
      "0": {}
-    }, 
+    },
     "retval": {}
-   }, 
+   },
    "CFUserNotificationGetResponseValue": {
     "args": {
-     "0": {}, 
+     "0": {},
      "1": {}
-    }, 
+    },
     "retval": {}
-   }, 
+   },
    "CFUserNotificationReceiveResponse": {
     "args": {
-     "0": {}, 
+     "0": {},
      "2": { "type_modifier": "o" }
     }
-   }, 
+   },
    "CFUserNotificationUpdate": {
     "args": {
-     "0": {}, 
+     "0": {},
      "3": {}
     }
-   }, 
+   },
    "CFWriteStreamCanAcceptBytes": {
     "args": {
      "0": {}
     }
-   }, 
+   },
    "CFWriteStreamClose": {
     "args": {
      "0": {}
     }
-   }, 
+   },
    "CFWriteStreamCopyError": {
     "args": {
      "0": {}
-    }, 
+    },
     "retval": {
      "already_cfretained": true
     }
-   }, 
+   },
    "CFWriteStreamCopyProperty": {
     "args": {
-     "0": {}, 
+     "0": {},
      "1": {}
     }
-   }, 
+   },
    "CFWriteStreamCreateWithAllocatedBuffers": {
     "args": {
-     "0": {}, 
+     "0": {},
      "1": {}
-    }, 
+    },
     "retval": {
      "already_cfretained": true
     }
-   }, 
+   },
    "CFWriteStreamCreateWithBuffer": {
     "args": {
-     "0": {}, 
+     "0": {},
      "1": { "c_array_length_in_arg": 2, "type_modifier": "n", "type_override": "^v" }
-    }, 
+    },
     "retval": {
      "already_cfretained": true
     }
-   }, 
+   },
    "CFWriteStreamCreateWithFile": {
     "args": {
-     "0": {}, 
+     "0": {},
      "1": {}
-    }, 
+    },
     "retval": {
      "already_cfretained": true
     }
-   }, 
+   },
    "CFWriteStreamGetError": {
     "args": {
      "0": {}
     }
-   }, 
+   },
    "CFWriteStreamGetStatus": {
     "args": {
      "0": {}
     }
-   }, 
+   },
    "CFWriteStreamOpen": {
     "args": {
      "0": {}
     }
-   }, 
+   },
    "CFWriteStreamScheduleWithRunLoop": {
     "args": {
-     "0": {}, 
-     "1": {}, 
+     "0": {},
+     "1": {},
      "2": {}
     }
-   }, 
+   },
    "CFWriteStreamSetClient": {
     "args": {
-     "0": {}, 
+     "0": {},
      "2": {
       "function": {
        "args": [
         {
          "typestr": "^{__CFWriteStream=}"
-        }, 
+        },
         {
          "typestr": "Q"
-        }, 
+        },
         {
-         "typestr": "^v" 
+         "typestr": "^v"
         }
-       ], 
+       ],
        "retval": {
         "typestr": "v"
        }
       }
-     }, 
+     },
      "3": {}
     }
-   }, 
+   },
    "CFWriteStreamSetProperty": {
     "args": {
-     "0": {}, 
+     "0": {},
      "1": {}
     }
-   }, 
+   },
    "CFWriteStreamUnscheduleFromRunLoop": {
     "args": {
-     "0": {}, 
-     "1": {}, 
+     "0": {},
+     "1": {},
      "2": {}
     }
-   }, 
+   },
    "CFWriteStreamWrite": {
     "args": {
-     "0": {}, 
+     "0": {},
      "1": { "c_array_length_in_arg": 2, "type_modifier": "n", "type_override": "^v" }
     }
-   }, 
+   },
    "CFXMLCreateStringByEscapingEntities": {
     "args": {
-     "0": {}, 
-     "1": {}, 
+     "0": {},
+     "1": {},
      "2": {}
-    }, 
+    },
     "retval": {
      "already_cfretained": true
     }
-   }, 
+   },
    "CFXMLCreateStringByUnescapingEntities": {
     "args": {
-     "0": {}, 
-     "1": {}, 
+     "0": {},
+     "1": {},
      "2": {}
-    }, 
+    },
     "retval": {
      "already_cfretained": true
     }
-   }, 
+   },
    "CFXMLNodeCreate": {
     "args": {
-     "0": {}, 
-     "2": {}, 
+     "0": {},
+     "2": {},
      "3": {}
-    }, 
+    },
     "retval": {
      "already_cfretained": true
     }
-   }, 
+   },
    "CFXMLNodeCreateCopy": {
     "args": {
-     "0": {}, 
+     "0": {},
      "1": {}
-    }, 
+    },
     "retval": {
      "already_cfretained": true
     }
-   }, 
+   },
    "CFXMLNodeGetInfoPtr": {
     "args": {
      "0": {}
-    }, 
+    },
     "retval": {}
-   }, 
+   },
    "CFXMLNodeGetString": {
     "args": {
      "0": {}
-    }, 
+    },
     "retval": {}
-   }, 
+   },
    "CFXMLNodeGetTypeCode": {
     "args": {
      "0": {}
     }
-   }, 
+   },
    "CFXMLNodeGetVersion": {
     "args": {
      "0": {}
     }
-   }, 
+   },
    "CFXMLParserAbort": {
     "args": {
-     "0": {}, 
+     "0": {},
      "2": {}
     }
-   }, 
+   },
    "CFXMLParserCopyErrorDescription": {
     "args": {
      "0": {}
-    }, 
+    },
     "retval": {
      "already_cfretained": true
     }
-   }, 
+   },
    "CFXMLParserCreate": {
     "args": {
-     "0": {}, 
-     "1": {}, 
-     "2": {}, 
-     "5": {}, 
+     "0": {},
+     "1": {},
+     "2": {},
+     "5": {},
      "6": {}
-    }, 
+    },
     "retval": {
      "already_cfretained": true
     }
-   }, 
+   },
    "CFXMLParserCreateWithDataFromURL": {
     "args": {
-     "0": {}, 
-     "1": {}, 
-     "4": {}, 
+     "0": {},
+     "1": {},
+     "4": {},
      "5": {}
-    }, 
+    },
     "retval": {
      "already_cfretained": true
     }
-   }, 
+   },
    "CFXMLParserGetCallBacks": {
     "args": {
-     "0": {}, 
+     "0": {},
      "1": {}
     }
-   }, 
+   },
    "CFXMLParserGetContext": {
     "args": {
-     "0": {}, 
+     "0": {},
      "1": {}
     }
-   }, 
+   },
    "CFXMLParserGetDocument": {
     "args": {
      "0": {}
-    }, 
+    },
     "retval": {}
-   }, 
+   },
    "CFXMLParserGetLineNumber": {
     "args": {
      "0": {}
     }
-   }, 
+   },
    "CFXMLParserGetLocation": {
     "args": {
      "0": {}
     }
-   }, 
+   },
    "CFXMLParserGetSourceURL": {
     "args": {
      "0": {}
-    }, 
+    },
     "retval": {}
-   }, 
+   },
    "CFXMLParserGetStatusCode": {
     "args": {
      "0": {}
     }
-   }, 
+   },
    "CFXMLParserParse": {
     "args": {
      "0": {}
     }
-   }, 
+   },
    "CFXMLTreeCreateFromData": {
     "args": {
-     "0": {}, 
-     "1": {}, 
+     "0": {},
+     "1": {},
      "2": {}
-    }, 
+    },
     "retval": {
      "already_cfretained": true
     }
-   }, 
+   },
    "CFXMLTreeCreateFromDataWithError": {
     "args": {
-     "0": {}, 
-     "1": {}, 
-     "2": {}, 
+     "0": {},
+     "1": {},
+     "2": {},
      "5": { "type_modifier": "o" }
-    }, 
+    },
     "retval": {
      "already_cfretained": true
     }
-   }, 
+   },
    "CFXMLTreeCreateWithDataFromURL": {
     "args": {
-     "0": {}, 
+     "0": {},
      "1": {}
-    }, 
+    },
     "retval": {
      "already_cfretained": true
     }
-   }, 
+   },
    "CFXMLTreeCreateWithNode": {
     "args": {
-     "0": {}, 
+     "0": {},
      "1": {}
-    }, 
+    },
     "retval": {
      "already_cfretained": true
     }
-   }, 
+   },
    "CFXMLTreeCreateXMLData": {
     "args": {
-     "0": {}, 
+     "0": {},
      "1": {}
-    }, 
+    },
     "retval": {
      "already_cfretained": true
     }
-   }, 
+   },
    "CFXMLTreeGetNode": {
     "args": {
      "0": {}
-    }, 
+    },
     "retval": {}
    }
-  }, 
+  },
   "informal_protocols": {}
  }
 }

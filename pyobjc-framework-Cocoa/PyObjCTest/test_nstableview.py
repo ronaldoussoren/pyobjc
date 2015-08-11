@@ -12,7 +12,6 @@ class TestNSTableViewHelper (NSObject):
     def tableView_rowViewForRow_(self, a, b): pass
     def tableView_didAddRowView_forRow_(self, a, b, c): pass
     def tableView_didRemoveRowView_forRow_(self, a, b, c): pass
-    def tableView_pastboardWriterForRow_(self, a, b): pass
     def tableView_draggingSession_willBeginAtPoint_forRowIndexes_(self, a, b, c, d): pass
     def tableView_draggingSession_endedAtPoint_operation_(self, a, b, c, d): pass
 
@@ -40,6 +39,7 @@ class TestNSTableViewHelper (NSObject):
 
     def tableView_sizeToFitWidthOfColumn_(self, tv, c): return 1
     def tableView_shouldReorderColumn_toColumn_(self, tv, c1, c2): return 1
+    def tableView_pasteboardWriterForRow_(self, tv, r): return 1
 
 
 
@@ -96,6 +96,10 @@ class TestNSTableView (TestCase):
         self.assertIsInstance(NSTableViewRowViewKey, unicode)
 
         self.assertEqual(NSTableViewDashedHorizontalGridLineMask, 1<<3)
+
+    @min_os_level('10.9')
+    def testConstants10_9(self):
+        self.assertEqual(NSTableViewDraggingDestinationFeedbackStyleGap, 2)
 
     def testMethods(self):
         self.assertArgIsBOOL(NSTableView.setAllowsColumnReordering_, 0)
@@ -159,6 +163,11 @@ class TestNSTableView (TestCase):
         self.assertResultIsBOOL(NSTableView.floatsGroupRows)
         self.assertArgIsBOOL(NSTableView.setFloatsGroupRows_, 0)
 
+    @min_os_level('10.7')
+    def testMethods10_7(self):
+        self.assertResultIsBOOL(NSTableView.usesStaticContents)
+        self.assertArgIsBOOL(NSTableView.setUsesStaticContents_, 0)
+
     def testProtocols(self):
         self.assertResultHasType(TestNSTableViewHelper.numberOfRowsInTableView_, objc._C_NSInteger)
         self.assertArgHasType(TestNSTableViewHelper.tableView_objectValueForTableColumn_row_, 2, objc._C_NSInteger)
@@ -211,9 +220,9 @@ class TestNSTableView (TestCase):
         self.assertArgHasType(TestNSTableViewHelper.tableView_rowViewForRow_, 1, objc._C_NSInteger)
         self.assertArgHasType(TestNSTableViewHelper.tableView_didAddRowView_forRow_, 2, objc._C_NSInteger)
         self.assertArgHasType(TestNSTableViewHelper.tableView_didRemoveRowView_forRow_, 2, objc._C_NSInteger)
-        self.assertArgHasType(TestNSTableViewHelper.tableView_pastboardWriterForRow_, 1, objc._C_NSInteger)
         self.assertArgHasType(TestNSTableViewHelper.tableView_draggingSession_willBeginAtPoint_forRowIndexes_, 2, NSPoint.__typestr__)
         self.assertArgHasType(TestNSTableViewHelper.tableView_draggingSession_endedAtPoint_operation_, 2, NSPoint.__typestr__)
+
 
 
 if __name__ == "__main__":

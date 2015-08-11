@@ -9,6 +9,7 @@ except NameError:
 
 class PopoverHelper (AppKit.NSObject):
     def popoverShouldClose_(self, a): return 1
+    def popoverShouldDetach_(self, a): return 1
 
 class TestNSPopover (TestCase):
     @min_os_level('10.7')
@@ -41,6 +42,11 @@ class TestNSPopover (TestCase):
     @min_os_level('10.7')
     def testProtocols10_7(self):
         self.assertResultIsBOOL(PopoverHelper.popoverShouldClose_)
+
+    @min_os_level('10.10')
+    def testProtocols10_10(self):
+        objc.protocolNamed('NSPopoverDelegate')
+        self.assertResultIsBOOL(PopoverHelper.popoverShouldDetach_)
 
 
 if __name__ == "__main__":

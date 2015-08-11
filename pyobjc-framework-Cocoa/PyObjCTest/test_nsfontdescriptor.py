@@ -12,8 +12,11 @@ class TestNSFontDescriptor (TestCase):
         self.assertEqual(NSFontUnknownClass, (0 << 28))
         self.assertEqual(NSFontOldStyleSerifsClass, (1 << 28))
         self.assertEqual(NSFontModernSerifsClass, (3 << 28))
+        self.assertEqual(NSFontClarendonSerifsClass, (4 << 28))
         self.assertEqual(NSFontSlabSerifsClass, (5 << 28))
+        self.assertEqual(NSFontFreeformSerifsClass, (7 << 28))
         self.assertEqual(NSFontSansSerifClass, (8 << 28))
+        self.assertEqual(NSFontOrnamentalsClass, (9 << 28))
         self.assertEqual(NSFontScriptsClass, (10 << 28))
         self.assertEqual(NSFontSymbolicClass, (12 << 28))
 

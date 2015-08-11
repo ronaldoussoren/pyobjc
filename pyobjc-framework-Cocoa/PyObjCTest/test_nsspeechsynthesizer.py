@@ -112,6 +112,10 @@ class TestNSSpeechSynthesizer (TestCase):
     def testProtocol10_5(self):
         self.assertArgHasType(TestNSSpeechSynthesizerHelper.speechSynthesizer_didEncounterErrorAtIndex_ofString_message_, 1, objc._C_NSUInteger)
 
+    @min_sdk_level('10.9')
+    def testProtocol10_9(self):
+        objc.protocolNamed('NSSpeechSynthesizerDelegate')
+
 
 if __name__ == "__main__":
     main()

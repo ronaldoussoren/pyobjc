@@ -11,6 +11,8 @@ class Presenter (NSObject):
 class TestNSFilePresenter (TestCase):
     @min_os_level('10.7')
     def testProtocols(self):
+        objc.protocolNamed('NSFilePresenter')
+
         self.assertArgIsBlock(Presenter.relinquishPresentedItemToReader_, 0,
                 b'v@?') # FIXME: Cannot test exact signature at this time
         self.assertArgIsBlock(Presenter.relinquishPresentedItemToWriter_, 0,

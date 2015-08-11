@@ -83,46 +83,10 @@ class TestNSATSTypesetter (TestCase):
         self.assertEqual(m['retval']['type'], objc._C_FLT)
         self.assertEqual(m['arguments'][2]['type'], objc._C_NSUInteger)
 
-        #m = o.hyphenCharacterForGlyphAtIndex_.__metadata__()
-        #self.assertEqual(m['retval']['type'], objc._C_UINT)
-        #self.assertEqual(m['arguments'][2]['type'], objc._C_NSUInteger)
-
-        #m = o.boundingBoxForControlGlyphAtIndex_forTextContainer_proposedLineFragment_glyphPosition_characterIndex_.__metadata__()
-        #self.assertEqual(m['retval']['type'], NSRect.__typestr__)
-        #self.assertEqual(m['arguments'][2]['type'], objc._C_NSUInteger)
-        #self.assertEqual(m['arguments'][3]['type'], objc._C_ID)
-        #self.assertStartswith(m['arguments'][4]['type'], '{')
-        #self.assertStartswith(m['arguments'][5]['type'], '{')
-        #self.assertStartswith(m['arguments'][6]['type'], objc._C_NSUInteger)
-
-
-
-        #m = o.characterRangeForGlyphRange_actualGlyphRange_.__metadata__()
-        #self.assertStartswith(m['retval']['type'], '{')
-        #self.assertStartswith(m['arguments'][2]['type'], '{')
-        #self.assertStartswith(m['arguments'][3]['type'], 'o^{')
-
         m = o.glyphRangeForCharacterRange_actualCharacterRange_.__metadata__()
         self.assertStartswith(m['retval']['type'], b'{')
         self.assertStartswith(m['arguments'][2]['type'], b'{')
         self.assertStartswith(m['arguments'][3]['type'], b'o^{')
-
-        #m = o.getGlyphsInRange_glyphs_characterIndexes_glyphInscriptions_elasticBits_.__metadata__()
-        #self.assertEqual(m['retval']['type'], objc._C_NSUInteger)
-        #self.assertEqual(m['arguments'][2]['type'], NSRange.__typestr__)
-        #self.assertEqual(m['arguments'][3]['type'], 'o^S')
-        #self.assertEqual(m['arguments'][3]['c_array_length_in_arg'], 2)
-        #self.assertEqual(m['arguments'][4]['type'], objc._C_OUT + objc._C_PTR + objc._C_NSUInteger)
-        #self.assertEqual(m['arguments'][4]['c_array_length_in_arg'], 2)
-        #m = o.setLineFragmentRect_forGlyphRange_usedRect_baselineOffset_.__metadata__()
-        #m = o.substituteGlyphsInRange_withGlyphs_.__metadata__()
-        #m = o.insertGlyph_atGlyphIndex_characterIndex_.__metadata__()
-        #m = o.deleteGlyphsInRange_.__metadata__()
-        #m = o.setNotShownAttribute_forGlyphRange_.__metadata__()
-        #m = o.setLocation_withAdvancements_forStartOfGlyphRange_.__metadata__()
-        #m = o.setAttachmentSize_forGlyphRange_.__metadata__()
-        #m = o.setBidiLevels_forGlyphRange_.__metadata__()
-
 
         self.assertResultIsBOOL(NSATSTypesetter.usesFontLeading)
         self.assertArgIsBOOL(NSATSTypesetter.setUsesFontLeading_, 0)
@@ -138,9 +102,22 @@ class TestNSATSTypesetter (TestCase):
         self.assertArgSizeInArg(NSATSTypesetter.setBidiLevels_forGlyphRange_, 0, 1)
         self.assertArgSizeInArg(NSATSTypesetter.setBidiLevels_forGlyphRange_, 0, 1)
 
+        self.assertArgIsIn(NSATSTypesetter.substituteGlyphsInRange_withGlyphs_, 1)
+        self.assertArgSizeInArg(NSATSTypesetter.substituteGlyphsInRange_withGlyphs_, 1, 0)
+
     def testSubclassProtocols(self):
         self.assertResultIsBOOL(TestNSATSTypesetterHelper.shouldBreakLineByWordBeforeCharacterAtIndex_)
         self.assertResultIsBOOL(TestNSATSTypesetterHelper.shouldBreakLineByHyphenatingBeforeCharacterAtIndex_)
+
+        self.assertResultHasType(TestNSATSTypeSetterHelper.characterRangeForGlyphRange_actualGlyphRange_,
+                NSRange.__typestr__)
+        self.assertArgHasType(TestNSATSTypeSetterHelper.characterRangeForGlyphRange_actualGlyphRange_,
+                0, NSRange.__typestr__)
+        self.assertArgHasType(TestNSATSTypeSetterHelper.characterRangeForGlyphRange_actualGlyphRange_,
+                1, b'o^' + NSRange.__typestr__)
+
+        self.assertArgIsBOOL(TestNSATSTypeSetterHelper.setNotShownAttribute_forGlyphRange_, 0)
+        self.assertArgHasType(TestNSATSTypeSetterHelper.setNotShownAttribute_forGlyphRange_, 1, NSRange.__typestr__)
 
 
 

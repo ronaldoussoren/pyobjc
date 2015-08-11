@@ -81,6 +81,12 @@ class TestNSFileManager (TestCase):
     def testConstants10_8(self):
         self.assertIsInstance(NSUbiquityIdentityDidChangeNotification, unicode)
 
+    @min_os_level('10.10')
+    def testConstants10_10(self):
+        self.assertEqual(NSURLRelationshipContains, 0)
+        self.assertEqual(NSURLRelationshipSame, 1)
+        self.assertEqual(NSURLRelationshipOther, 2)
+
     @min_os_level('10.6')
     def testMethods10_6(self):
         self.assertArgIsOut(NSFileManager.contentsOfDirectoryAtURL_includingPropertiesForKeys_options_error_, 3)
@@ -131,6 +137,16 @@ class TestNSFileManager (TestCase):
         self.assertResultIsBOOL(NSFileManager.trashItemAtURL_resultingItemURL_error_)
         self.assertArgIsOut(NSFileManager.trashItemAtURL_resultingItemURL_error_, 1)
         self.assertArgIsOut(NSFileManager.trashItemAtURL_resultingItemURL_error_, 2)
+
+    @min_os_level('10.10')
+    def testMethods10_10(self):
+        self.assertResultIsBOOL(NSFileManager.getRelationship_ofDirectoryAtURL_toItemAtURL_error_)
+        self.assertArgIsOut(NSFileManager.getRelationship_ofDirectoryAtURL_toItemAtURL_error_, 0)
+        self.assertArgIsOut(NSFileManager.getRelationship_ofDirectoryAtURL_toItemAtURL_error_, 3)
+
+        self.assertResultIsBOOL(NSFileManager.getRelationship_ofDirectory_inDomain_toItemAtURL_error_)
+        self.assertArgIsOut(NSFileManager.getRelationship_ofDirectory_inDomain_toItemAtURL_error_, 0)
+        self.assertArgIsOut(NSFileManager.getRelationship_ofDirectory_inDomain_toItemAtURL_error_, 4)
 
     def testOutput(self):
         obj = NSFileManager.defaultManager()
@@ -297,6 +313,10 @@ class TestNSFileManager (TestCase):
         self.assertResultIsBOOL(TestNSFileManagerHelper.fileManager_shouldProceedAfterError_linkingItemAtURL_toURL_)
         self.assertResultIsBOOL(TestNSFileManagerHelper.fileManager_shouldRemoveItemAtURL_)
         self.assertResultIsBOOL(TestNSFileManagerHelper.fileManager_shouldProceedAfterError_removingItemAtURL_)
+
+    @min_sdk_level('10.10')
+    def testProtocols10_10(self):
+        objc.protocolNamed('NSFileManagerDelegate')
 
 if __name__ == '__main__':
     main()

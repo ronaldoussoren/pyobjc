@@ -8,7 +8,7 @@ class TestNSActionCell (TestCase):
         self.assertArgIsBOOL(NSActionCell.setBezeled_, 0)
         self.assertArgIsBOOL(NSActionCell.setEnabled_, 0)
         self.assertArgIsBOOL(NSActionCell.setFloatingPointFormat_left_right_, 0)
-
+        self.assertArgIsSEL(NSActionCell.setAction_, 0, b'v@:@')
 
 if __name__ == "__main__":
     main()

@@ -11,6 +11,7 @@ except NameError:
 class TestNSLayoutManagerHelper (NSObject):
     def layoutManager_shouldUseTemporaryAttributes_forDrawingToScreen_atCharacterIndex_effectiveRange_(self, a, b, c, d, e): return 1
     def layoutManager_didCompleteLayoutForTextContainer_atEnd_(self, a, b, c): return 1
+    def layoutOrientation(self): return 1
 
 class TestNSLayoutManager (TestCase):
     def testConstants(self):
@@ -29,6 +30,16 @@ class TestNSLayoutManager (TestCase):
         self.assertEqual(NSTypesetterBehavior_10_2, 2)
         self.assertEqual(NSTypesetterBehavior_10_3, 3)
         self.assertEqual(NSTypesetterBehavior_10_4, 4)
+
+        self.assertEqual(NSTextLayoutOrientationHorizontal, 0)
+        self.assertEqual(NSTextLayoutOrientationVertical, 1)
+
+    def testProtocols(self):
+        objc.protocolNamed('NSTextLayoutOrientationProvider')
+        self.assertResultHasType(TestNSLayoutManagerHelper.layoutOrientation, objc._C_NSInteger)
+
+        objc.protocolNamed('NSLayoutManagerDelegate')
+
 
     def testMethods(self):
         self.assertArgIsOut(NSLayoutManager.invalidateGlyphsForCharacterRange_changeInLength_actualCharacterRange_, 2)

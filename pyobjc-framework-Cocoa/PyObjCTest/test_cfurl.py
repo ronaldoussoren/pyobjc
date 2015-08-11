@@ -441,6 +441,23 @@ class TestURL (TestCase):
         self.assertEqual(kCFBookmarkResolutionWithoutMountingMask, 1 << 9)
         self.assertEqual(kCFURLBookmarkResolutionWithSecurityScope, 1 << 10)
 
+    @min_os_level('10.9')
+    def testConstants10_9(self):
+        self.assertIsInstance(kCFURLTagNamesKey, unicode)
+        self.assertIsInstance(kCFURLUbiquitousItemDownloadingStatusKey, unicode)
+        self.assertIsInstance(kCFURLUbiquitousItemDownloadingErrorKey, unicode)
+        self.assertIsInstance(kCFURLUbiquitousItemUploadingErrorKey, unicode)
+        self.assertIsInstance(kCFURLUbiquitousItemDownloadingStatusNotDownloaded, unicode)
+        self.assertIsInstance(kCFURLUbiquitousItemDownloadingStatusDownloaded, unicode)
+        self.assertIsInstance(kCFURLUbiquitousItemDownloadingStatusCurrent, unicode)
+
+    @min_os_level('10.10')
+    def testConstants10_10(self):
+        self.assertIsInstance(kCFURLGenerationIdentifierKey, unicode)
+        self.assertIsInstance(kCFURLDocumentIdentifierKey, unicode)
+        self.assertIsInstance(kCFURLAddedToDirectoryDateKey, unicode)
+        self.assertIsInstance(kCFURLQuarantinePropertiesKey, unicode)
+
 
     @min_os_level('10.6')
     def testConstants10_6(self):
@@ -540,6 +557,12 @@ class TestURL (TestCase):
         self.assertIsInstance(kCFURLUbiquitousItemIsUploadingKey, unicode)
         self.assertIsInstance(kCFURLUbiquitousItemPercentDownloadedKey, unicode)
         self.assertIsInstance(kCFURLUbiquitousItemPercentUploadedKey, unicode)
+
+    @min_os_level('10.9')
+    def testFunctions10_9(self):
+        self.assertResultIsBOOL(CFURLIsFileReferenceURL)
+
+
 
 if __name__ == "__main__":
     main()

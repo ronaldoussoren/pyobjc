@@ -10,6 +10,10 @@ class TestNSMapTable (TestCase):
         self.assertEqual(NSMapTableCopyIn, NSPointerFunctionsCopyIn)
         self.assertEqual(NSMapTableObjectPointerPersonality, NSPointerFunctionsObjectPointerPersonality)
 
+    @min_os_level('10.8')
+    def testConstants10_8(self):
+        self.assertEqual(NSMapTableWeakMemory, NSPointerFunctionsWeakMemory)
+
     @expectedFailure
     def testFunctions(self):
         self.fail("NSMapTable C-API is untested")

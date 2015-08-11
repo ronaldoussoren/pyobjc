@@ -94,9 +94,11 @@ class TestNSCell(TestCase):
         self.assertEqual(NSPositiveFloatType, 4)
         self.assertEqual(NSDoubleType, 6)
         self.assertEqual(NSPositiveDoubleType, 7)
+
         self.assertEqual(NSNullCellType, 0)
         self.assertEqual(NSTextCellType, 1)
         self.assertEqual(NSImageCellType, 2)
+
         self.assertEqual(NSCellDisabled, 0)
         self.assertEqual(NSCellState, 1)
         self.assertEqual(NSPushInCell, 2)
@@ -114,6 +116,7 @@ class TestNSCell(TestCase):
         self.assertEqual(NSCellChangesContents, 14)
         self.assertEqual(NSCellIsInsetButton, 15)
         self.assertEqual(NSCellAllowsMixedState, 16)
+
         self.assertEqual(NSNoImage, 0)
         self.assertEqual(NSImageOnly, 1)
         self.assertEqual(NSImageLeft, 2)
@@ -121,32 +124,40 @@ class TestNSCell(TestCase):
         self.assertEqual(NSImageBelow, 4)
         self.assertEqual(NSImageAbove, 5)
         self.assertEqual(NSImageOverlaps, 6)
+
         self.assertEqual(NSScaleProportionally, 0)
         self.assertEqual(NSScaleToFit, 1)
         self.assertEqual(NSScaleNone, 2)
+
         self.assertEqual(NSImageScaleProportionallyDown, 0)
         self.assertEqual(NSImageScaleAxesIndependently,1)
         self.assertEqual(NSImageScaleNone, 2)
         self.assertEqual(NSImageScaleProportionallyUpOrDown, 3)
+
         self.assertEqual(NSMixedState, -1)
         self.assertEqual(NSOffState,  0)
         self.assertEqual(NSOnState,  1)
+
         self.assertEqual(NSNoCellMask, 0)
         self.assertEqual(NSContentsCellMask, 1)
         self.assertEqual(NSPushInCellMask, 2)
         self.assertEqual(NSChangeGrayCellMask, 4)
         self.assertEqual(NSChangeBackgroundCellMask, 8)
+
         self.assertEqual(NSDefaultControlTint, 0)
         self.assertEqual(NSBlueControlTint, 1)
         self.assertEqual(NSGraphiteControlTint, 6)
         self.assertEqual(NSClearControlTint, 7)
+
         self.assertEqual(NSRegularControlSize, 0)
         self.assertEqual(NSSmallControlSize, 1)
         self.assertEqual(NSMiniControlSize, 2)
+
         self.assertEqual(NSCellHitNone, 0)
         self.assertEqual(NSCellHitContentArea, 1 << 0)
         self.assertEqual(NSCellHitEditableTextArea, 1 << 1)
         self.assertEqual(NSCellHitTrackableArea, 1 << 2)
+
         self.assertEqual(NSBackgroundStyleLight, 0)
         self.assertEqual(NSBackgroundStyleDark, 1)
         self.assertEqual(NSBackgroundStyleRaised, 2)

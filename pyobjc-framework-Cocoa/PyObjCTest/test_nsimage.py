@@ -38,6 +38,9 @@ class TestNSImage (TestCase):
         self.assertEqual(NSImageCacheBySize, 2)
         self.assertEqual(NSImageCacheNever, 3)
 
+        self.assertEqual(NSImageResizingModeStretch, 0)
+        self.assertEqual(NSImageResizingModeTile, 1)
+
 
     @min_os_level("10.5")
     def testConstants10_5(self):
@@ -111,9 +114,13 @@ class TestNSImage (TestCase):
         self.assertArgIsBOOL(NSImage.setTemplate_, 0)
 
     def testProtocols(self):
+
         self.assertArgHasType(TestNSImageHelper.image_didLoadPartOfRepresentation_withValidRows_, 2, objc._C_NSInteger)
         self.assertArgHasType(TestNSImageHelper.image_didLoadRepresentation_withStatus_, 2, objc._C_NSUInteger)
 
+    @min_sdk_level('10.10')
+    def testProtocolObjects(self):
+        objc.protocolNamed('NSImageDelegate')
 
     @min_os_level('10.6')
     def testMethods10_6(self):

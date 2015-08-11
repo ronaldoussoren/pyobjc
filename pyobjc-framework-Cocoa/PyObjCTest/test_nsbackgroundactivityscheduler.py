@@ -1,0 +1,28 @@
+from PyObjCTools.TestSupport import *
+from Foundation import *
+
+try:
+    unicode
+except NameError:
+    unicode = str
+
+class TestNSBackgroundActivityScheduler (TestCase):
+    @min_os_level('10.10')
+    def testConstants10_10(self):
+        self.assertEqual(NSBackgroundActivityResultFinished, 1)
+        self.assertEqual(NSBackgroundActivityResultDeferred, 2)
+
+    @min_os_level('10.10')
+    def testMethods10_10(self):
+        NSBackgroundActivityCompletionHandler = b'v' + objc._C_NSInteger
+
+        self.assertResultIsBOOL(NSBackgroundActivityScheduler.repeats)
+        self.assertArgIsBOOL(NSBackgroundActivityScheduler.setRepeats_, 0)
+        #self.assertArgIsBlock(NSBackgroundActivityScheduler.scheduleWithBlock_, 0, NSBackgroundActivityCompletionHandler)
+        self.assertResultIsBOOL(NSBackgroundActivityScheduler.shouldDefer)
+
+        self.fail("NSBackgroundActivityScheduler.scheduleWithBlock_: cannot write proper test description!")
+        self.assertArgIsBlock(NSBackgroundActivityScheduler.scheduleWithBlock_, 0, NSBackgroundActivityCompletionHandler)
+
+if __name__ == "__main__":
+    main()

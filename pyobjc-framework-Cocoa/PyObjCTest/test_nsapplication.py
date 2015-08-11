@@ -14,34 +14,25 @@ except NameError:
     long = int
 
 class TestNSApplicationHelper (NSObject):
-    def copyWithZone_(self, zone):
-        return self
-
-    def writeSelectionToPasteboard_types_(self, pb, tp):
-        return 1
-    def readSelectionFromPasteboard_(self, pb):
-        return 1
-    def application_openFile_(self, sender, file):
-        return 1
-    def application_openTempFile_(self, sender, file):
-        return 1
-    def applicationShouldOpenUntitledFile_(self, sender):
-        return 1
-    def application_openFileWithoutUI_(self, sender, file):
-        return 1
-    def application_printFile_(self, sender, file):
-        return 1
-    def application_printFiles_withSettings_showPrintPanels_(
-            self, a, f, s, sh):
-        return 1
-    def applicationShouldTerminateAfterLastWindowClosed_(self, sender):
-        return 1
-    def applicationShouldHandleReopen_hasVisibleWindows_(self, sender, flag):
-        return 1
+    def copyWithZone_(self, zone): return self
+    def writeSelectionToPasteboard_types_(self, pb, tp): return 1
+    def readSelectionFromPasteboard_(self, pb): return 1
+    def application_openFile_(self, sender, file): return 1
+    def application_openTempFile_(self, sender, file): return 1
+    def applicationShouldOpenUntitledFile_(self, sender): return 1
+    def application_openFileWithoutUI_(self, sender, file): return 1
+    def application_printFile_(self, sender, file): return 1
+    def application_printFiles_withSettings_showPrintPanels_(self, a, f, s, sh): return 1
+    def applicationShouldTerminateAfterLastWindowClosed_(self, sender): return 1
+    def applicationShouldHandleReopen_hasVisibleWindows_(self, sender, flag): return 1
+    def application_willContinueUserActivityWithType_(self, sender, tp): return 1
+    def application_continueUserActivity_restorationHandler_(self, sender, tp, h): return 1
 
 
 class TestNSApplication (TestCase):
     def testConstants(self):
+        self.assertIsInstance(NSAppKitVersionNumber, float)
+
         self.assertEqual(NSAppKitVersionNumber10_0, 577)
         self.assertEqual(NSAppKitVersionNumber10_1, 620)
         self.assertEqual(NSAppKitVersionNumber10_2, 663)
@@ -61,7 +52,15 @@ class TestNSApplication (TestCase):
         self.assertEqual(NSAppKitVersionNumber10_5_2, 949.27)
         self.assertEqual(NSAppKitVersionNumber10_5_3, 949.33)
         self.assertEqual(NSAppKitVersionNumber10_6, 1038)
-
+        self.assertEqual(NSAppKitVersionNumber10_7, 1138)
+        self.assertEqual(NSAppKitVersionNumber10_7_2, 1138.23)
+        self.assertEqual(NSAppKitVersionNumber10_7_3, 1138.32)
+        self.assertEqual(NSAppKitVersionNumber10_7_4, 1138.47)
+        self.assertEqual(NSAppKitVersionNumber10_8, 1187)
+        self.assertEqual(NSAppKitVersionNumber10_9, 1265)
+        self.assertEqual(NSAppKitVersionNumber10_10, 1343)
+        self.assertEqual(NSAppKitVersionNumber10_10_2, 1344)
+        self.assertEqual(NSAppKitVersionNumber10_10_3, 1347)
 
         self.assertIsInstance(NSModalPanelRunLoopMode, unicode)
         self.assertIsInstance(NSEventTrackingRunLoopMode, unicode)
@@ -123,7 +122,7 @@ class TestNSApplication (TestCase):
         self.assertIsInstance(NSPerformService("help", pboard), bool)
 
         v = TestNSApplicationHelper.alloc().init()
-        NSRegisterServicesProvider("foobar", v)
+        NSRegisterServicesProvider(v, "foobar")
         NSUnregisterServicesProvider("foobar")
 
     def testNSApp(self):
@@ -162,6 +161,8 @@ class TestNSApplication (TestCase):
         self.assertArgIsBOOL(NSApplication.addWindowsItem_title_filename_, 2)
         self.assertArgIsBOOL(NSApplication.changeWindowsItem_title_filename_, 2)
 
+        self.assertArgIsBOOL(NSApplication.nextEventMatchingMask_untilDate_inMode_dequeue_, 3)
+
     def testDelegateMethods(self):
         self.assertResultIsBOOL(TestNSApplicationHelper.application_openFile_)
         self.assertResultIsBOOL(TestNSApplicationHelper.application_openTempFile_)
@@ -175,6 +176,10 @@ class TestNSApplication (TestCase):
 
         self.assertResultIsBOOL(TestNSApplicationHelper.writeSelectionToPasteboard_types_)
         self.assertResultIsBOOL(TestNSApplicationHelper.readSelectionFromPasteboard_)
+
+        self.assertResultIsBOOL(TestNSApplicationHelper.application_willContinueUserActivityWithType_)
+        self.assertResultIsBOOL(TestNSApplicationHelper.application_continueUserActivity_restorationHandler_)
+        self.assertArgIsBlock(TestNSApplicationHelper.application_continueUserActivity_restorationHandler_, 2, b'v@')
 
 
     @min_os_level('10.6')
@@ -225,10 +230,20 @@ class TestNSApplication (TestCase):
         self.assertEqual(NSRemoteNotificationTypeSound, 2)
         self.assertEqual(NSRemoteNotificationTypeAlert, 4)
 
+    @min_os_level('10.9')
+    def testConstants10_9(self):
+        self.assertEqual(NSApplicationOcclusionStateVisible, 1 << 1)
+
+        self.assertIsInstance(NSApplicationDidChangeOcclusionStateNotification, unicode)
+
     @min_os_level('10.6')
     def testMethods10_6(self):
         self.assertResultIsBOOL(NSApplication.setActivationPolicy_)
         self.assertResultIsBOOL(NSApplication.isFullKeyboardAccessEnabled)
+
+    @min_sdk_level('10.10')
+    def testProtocols(self):
+        objc.protocolNamed("NSApplicationDelegate")
 
 
 

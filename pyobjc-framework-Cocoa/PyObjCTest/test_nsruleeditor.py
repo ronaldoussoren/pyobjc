@@ -43,6 +43,7 @@ class TestNSRuleEditor (TestCase):
         self.assertArgIsBOOL(NSRuleEditor.selectRowIndexes_byExtendingSelection_, 1)
 
     def testProtocols(self):
+        objc.protocolNamed('NSRuleEditorDelegate')
         self.assertResultHasType(TestNSRuleEditorHelper.ruleEditor_numberOfChildrenForCriterion_withRowType_, objc._C_NSInteger)
         self.assertArgHasType(TestNSRuleEditorHelper.ruleEditor_numberOfChildrenForCriterion_withRowType_, 2, objc._C_NSUInteger)
         self.assertArgHasType(TestNSRuleEditorHelper.ruleEditor_child_forCriterion_withRowType_, 1, objc._C_NSInteger)

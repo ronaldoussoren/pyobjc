@@ -177,18 +177,21 @@ class TestBadCreation(TestCase):
         self.assertEqual(NSTIFFCompressionNEXT, 32766)
         self.assertEqual(NSTIFFCompressionPackBits, 32773)
         self.assertEqual(NSTIFFCompressionOldJPEG, 32865)
+
         self.assertEqual(NSTIFFFileType, 0)
         self.assertEqual(NSBMPFileType, 1)
         self.assertEqual(NSGIFFileType, 2)
         self.assertEqual(NSJPEGFileType, 3)
         self.assertEqual(NSPNGFileType, 4)
         self.assertEqual(NSJPEG2000FileType, 5)
+
         self.assertEqual(NSImageRepLoadStatusUnknownType, -1)
         self.assertEqual(NSImageRepLoadStatusReadingHeader, -2)
         self.assertEqual(NSImageRepLoadStatusWillNeedAllData, -3)
         self.assertEqual(NSImageRepLoadStatusInvalidData, -4)
         self.assertEqual(NSImageRepLoadStatusUnexpectedEOF, -5)
         self.assertEqual(NSImageRepLoadStatusCompleted, -6)
+
         self.assertEqual(NSAlphaFirstBitmapFormat, 1 << 0)
         self.assertEqual(NSAlphaNonpremultipliedBitmapFormat, 1 << 1)
         self.assertEqual(NSFloatingPointSamplesBitmapFormat, 1 << 2)
@@ -208,6 +211,14 @@ class TestBadCreation(TestCase):
         self.assertIsInstance(NSImageEXIFData, unicode)
         self.assertIsInstance(NSImageFallbackBackgroundColor, unicode)
 
+    @min_os_level('10.10')
+    def testConstants10_10(self):
+        self.assertEqual(NS16BitLittleEndianBitmapFormat, (1 << 8))
+        self.assertEqual(NS32BitLittleEndianBitmapFormat, (1 << 9))
+        self.assertEqual(NS16BitBigEndianBitmapFormat, (1 << 10))
+        self.assertEqual(NS32BitBigEndianBitmapFormat, (1 << 11))
+
+
     def testTiffCompression(self):
         lst, nr = NSBitmapImageRep.getTIFFCompressionTypes_count_(None, None)
         self.assertIsInstance(lst, tuple)
@@ -223,7 +234,6 @@ class TestBadCreation(TestCase):
 
         self.assertArgIsOut(NSBitmapImageRep.getCompression_factor_, 0)
         self.assertArgIsOut(NSBitmapImageRep.getCompression_factor_, 1)
-
 
 
 if __name__ == '__main__':

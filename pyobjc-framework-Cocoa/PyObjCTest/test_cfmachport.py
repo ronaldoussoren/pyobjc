@@ -11,6 +11,8 @@ try:
 except NameError:
     long = int
 
+MachPortClasses = tuple(cls for cls in objc.getClassList() if cls.__name__ == "NSMachPort")
+
 
 class TestMachPort (TestCase):
     def testTypes(self):
@@ -25,7 +27,6 @@ class TestMachPort (TestCase):
         self.assertIsInstance(CFMachPortGetTypeID(), (int, long))
 
     @min_os_level('10.8')
-    @expectedFailureIf(os_release() == '10.8')
     def testCreate10_8(self):
         class Context: pass
         context = Context()
@@ -36,7 +37,7 @@ class TestMachPort (TestCase):
         port, shouldFree = CFMachPortCreate(None, callout, context, None)
 
         # On OSX 10.7 or earlier this test passed, on OSX 10.8 it doesn't???
-        self.assertIsInstance(port, Foundation.NSMachPort)
+        self.assertIsInstance(port, MachPortClasses)
 
     def testCreate(self):
 
@@ -53,8 +54,7 @@ class TestMachPort (TestCase):
 
         port, shouldFree = CFMachPortCreate(None, callout, context, None)
 
-        if os_release() < '10.8':
-            self.assertIsInstance(port, Foundation.NSMachPort)
+        self.assertIsInstance(port, MachPortClasses)
         self.assertIsInstance(port, Foundation.NSPort)
         self.assertTrue(shouldFree is True or shouldFree is False)
         idx = CFMachPortGetPort(port)

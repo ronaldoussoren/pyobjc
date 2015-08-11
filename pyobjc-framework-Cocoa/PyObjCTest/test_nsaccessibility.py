@@ -19,12 +19,39 @@ class TestNSAccessibilityHelper (NSObject):
     def accessibilitySetOverrideValue_forAttribute_(self, v, a):
         return 1
 
+    def accessibilityNotifiesWhenDestroyed(self): pass
+
+    def accessibilityIndexOfChild_(self, c): return 1
+    def accessibilityArrayAttributeCount_(self, c): return 1
+    def accessibilityArrayAttributeValues_index_maxCount_(self, v, i, c): return None
+
 class TestNSAccessibility (TestCase):
     def testInformal(self):
         self.assertResultIsBOOL(TestNSAccessibilityHelper.accessibilityIsAttributeSettable_)
         self.assertResultIsBOOL(TestNSAccessibilityHelper.accessibilityIsIgnored)
         self.assertArgHasType(TestNSAccessibilityHelper.accessibilityHitTest_, 0, NSPoint.__typestr__)
         self.assertResultIsBOOL(TestNSAccessibilityHelper.accessibilitySetOverrideValue_forAttribute_)
+        self.assertResultIsBOOL(TestNSAccessibilityHelper.accessibilityNotifiesWhenDestroyed)
+        sefl.assertResultHasType(TestNSAccessibilityHelper.accessibilityIndexOfChild_, objc._C_NSUInteger)
+        sefl.assertResultHasType(TestNSAccessibilityHelper.accessibilityArrayAttributeCount_, objc._C_NSUInteger)
+        sefl.assertResultHasType(TestNSAccessibilityHelper.accessibilityArrayAttributeCount_, objc._C_NSUInteger)
+        self.assertArgHasType(TestNSAccessibilityHelper.accessibilityArrayAttributeValues_index_maxCount_, 1, objc._C_NSInteger)
+        self.assertArgHasType(TestNSAccessibilityHelper.accessibilityArrayAttributeValues_index_maxCount_, 2, objc._C_NSInteger)
+
+    @min_os_level('10.10')
+    def testMethods10_10(self):
+        self.assertResultIsBOOL(NSWorkspace.accessibilityDisplayShouldIncreaseContrast)
+        self.assertResultIsBOOL(NSWorkspace.accessibilityDisplayShouldDifferentiateWithoutColor)
+        self.assertResultIsBOOL(NSWorkspace.accessibilityDisplayShouldReduceTransparency)
+
+    @min_os_level('10.10')
+    def testFunctions10_10(self):
+        NSAccessibilityFrameInView # Existence
+        NSAccessibilityPointInView # Existence
+
+    @min_os_level('10.10')
+    def testConstants10_10(self):
+        self.assertIsInstance(NSWorkspaceAccessibilityDisplayOptionsDidChangeNotification, unicode)
 
     def testFunction(self):
         v = NSAccessibilityRoleDescription(NSAccessibilityButtonRole, None)
@@ -53,6 +80,9 @@ class TestNSAccessibility (TestCase):
 
         v = NSAccessibilityPostNotification(b, "hello")
         self.assertIs(v, None)
+
+        self.assertArgIsBOOL(NSAccessibilitySetMayContainProtectedContent, 0)
+        self.assertResultIsBOOL(NSAccessibilitySetMayContainProtectedContent)
 
     def testConstants(self):
         self.assertIsInstance(NSAccessibilityErrorCodeExceptionInfo, unicode)
@@ -93,6 +123,7 @@ class TestNSAccessibility (TestCase):
         self.assertIsInstance(NSAccessibilitySelectedAttribute, unicode)
         self.assertIsInstance(NSAccessibilitySplittersAttribute, unicode)
         self.assertIsInstance(NSAccessibilityDocumentAttribute, unicode)
+        self.assertIsInstance(NSAccessibilityActivationPointAttribute, unicode)
         self.assertIsInstance(NSAccessibilityURLAttribute, unicode)
         self.assertIsInstance(NSAccessibilityIndexAttribute, unicode)
         self.assertIsInstance(NSAccessibilityRowCountAttribute, unicode)
@@ -130,6 +161,7 @@ class TestNSAccessibility (TestCase):
         self.assertIsInstance(NSAccessibilityAttachmentTextAttribute, unicode)
         self.assertIsInstance(NSAccessibilityLinkTextAttribute, unicode)
         self.assertIsInstance(NSAccessibilityMisspelledTextAttribute, unicode)
+        self.assertIsInstance(NSAccessibilityMarkedMisspelledTextAttribute, unicode)
         self.assertIsInstance(NSAccessibilityFontNameKey, unicode)
         self.assertIsInstance(NSAccessibilityFontFamilyKey, unicode)
         self.assertIsInstance(NSAccessibilityVisibleNameKey, unicode)
@@ -155,6 +187,7 @@ class TestNSAccessibility (TestCase):
         self.assertIsInstance(NSAccessibilityOrientationAttribute, unicode)
         self.assertIsInstance(NSAccessibilityVerticalOrientationValue, unicode)
         self.assertIsInstance(NSAccessibilityHorizontalOrientationValue, unicode)
+        self.assertIsInstance(NSAccessibilityUnknownOrientationValue, unicode)
         self.assertIsInstance(NSAccessibilityColumnTitlesAttribute, unicode)
         self.assertIsInstance(NSAccessibilitySearchButtonAttribute, unicode)
         self.assertIsInstance(NSAccessibilitySearchMenuAttribute, unicode)
@@ -309,7 +342,6 @@ class TestNSAccessibility (TestCase):
         self.assertIsInstance(NSAccessibilityWarningValueAttribute, unicode)
         self.assertIsInstance(NSAccessibilityCriticalValueAttribute, unicode)
         self.assertIsInstance(NSAccessibilityPlaceholderValueAttribute, unicode)
-        self.assertIsInstance(NSAccessibilityUnknownOrientationValue, unicode)
         self.assertIsInstance(NSAccessibilitySelectedCellsAttribute, unicode)
         self.assertIsInstance(NSAccessibilityVisibleCellsAttribute, unicode)
         self.assertIsInstance(NSAccessibilityRowHeaderUIElementsAttribute, unicode)
@@ -348,10 +380,61 @@ class TestNSAccessibility (TestCase):
         self.assertIsInstance(NSAccessibilityFullScreenButtonAttribute, unicode)
         self.assertIsInstance(NSAccessibilityPopoverRole, unicode)
         self.assertIsInstance(NSAccessibilityFullScreenButtonSubrole, unicode)
+        self.assertIsInstance(NSAccessibilityIdentifierAttribute, unicode)
+        self.assertIsInstance(NSAccessibilityAnnouncementRequestedNotification, unicode)
+        self.assertIsInstance(NSAccessibilityAnnouncementKey, unicode)
 
     @min_os_level('10.8')
     def testConstants10_8(self):
         self.assertIsInstance(NSAccessibilityExtrasMenuBarAttribute, unicode)
+
+    @min_os_level('10.9')
+    def testConstants10_9(self):
+        self.assertIsInstance(NSAccessibilityContainsProtectedContentAttribute, unicode)
+        self.assertIsInstance(NSAccessibilityShowAlternateUIAction, unicode)
+        self.assertIsInstance(NSAccessibilityShowDefaultUIAction, unicode)
+        self.assertIsInstance(NSAccessibilityLayoutChangedNotification, unicode)
+        self.assertIsInstance(NSAccessibilityToggleSubrole, unicode)
+        self.assertIsInstance(NSAccessibilitySwitchSubrole, unicode)
+        self.assertIsInstance(NSAccessibilityDescriptionListSubrole, unicode)
+        self.assertIsInstance(NSAccessibilityUIElementsKey, unicode)
+        self.assertIsInstance(NSAccessibilityPriorityKey, unicode)
+
+        self.assertEqual(NSAccessibilityPriorityLow, 10)
+        self.assertEqual(NSAccessibilityPriorityMedium, 50)
+        self.assertEqual(NSAccessibilityPriorityHigh, 90)
+
+    @min_os_level('10.10')
+    def testConstants10_10(self):
+        self.assertIsInstance(NSAccessibilitySharedFocusElementsAttribute, unicode)
+        self.assertIsInstance(NSAccessibilityAlternateUIVisibleAttribute, unicode)
+
+        self.assertEqual(NSAccessibilityOrientationUnknown, 0)
+        self.assertEqual(NSAccessibilityOrientationVertical, 1)
+        self.assertEqual(NSAccessibilityOrientationHorizontal, 2)
+
+        self.assertEqual(NSAccessibilitySortDirectionUnknown, 0)
+        self.assertEqual(NSAccessibilitySortDirectionAscending, 1)
+        self.assertEqual(NSAccessibilitySortDirectionDescending, 2)
+
+        self.assertEqual(NSAccessibilityRulerMarkerTypeUnknown, 0)
+        self.assertEqual(NSAccessibilityRulerMarkerTypeTabStopLeft, 1)
+        self.assertEqual(NSAccessibilityRulerMarkerTypeTabStopRight, 2)
+        self.assertEqual(NSAccessibilityRulerMarkerTypeTabStopCenter, 3)
+        self.assertEqual(NSAccessibilityRulerMarkerTypeTabStopDecimal, 4)
+        self.assertEqual(NSAccessibilityRulerMarkerTypeIndentHead, 5)
+        self.assertEqual(NSAccessibilityRulerMarkerTypeIndentTail, 6)
+        self.assertEqual(NSAccessibilityRulerMarkerTypeIndentFirstLine, 7)
+
+        self.assertEqual(NSAccessibilityUnitsUnknown, 0)
+        self.assertEqual(NSAccessibilityUnitsInches, 1)
+        self.assertEqual(NSAccessibilityUnitsCentimeters, 2)
+        self.assertEqual(NSAccessibilityUnitsPoints, 3)
+        self.assertEqual(NSAccessibilityUnitsPicas, 4)
+
+    @min_os_level('10.7')
+    def testFunctions10_7(self):
+        self.assertIsInstance(NSAccessibilityPostNotificationWithUserInfo, objc.function)
 
 if __name__ == "__main__":
     main()

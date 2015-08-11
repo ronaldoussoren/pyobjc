@@ -8,6 +8,13 @@ except NameError:
     unicode = str
 
 class TestNSSharingService (TestCase):
+    @min_os_level('10.9')
+    def testConstants10_9(self):
+        self.assertIsInstance(AppKit.NSSharingServiceNamePostOnTencentWeibo, unicode)
+        self.assertIsInstance(AppKit.NSSharingServiceNamePostOnLinkedIn, unicode)
+        self.assertIsInstance(AppKit.NSSharingServiceNameUseAsFacebookProfileImage, unicode)
+        self.assertIsInstance(AppKit.NSSharingServiceNameUseAsLinkedInProfileImage, unicode)
+
     @min_os_level('10.8')
     def testConstants10_8(self):
         self.assertIsInstance(AppKit.NSSharingServiceNamePostOnFacebook, unicode)
@@ -34,6 +41,10 @@ class TestNSSharingService (TestCase):
     def testMethods10_8(self):
         self.assertArgIsBlock(AppKit.NSSharingService.initWithTitle_image_alternateImage_handler_, 3, b'v')
         self.assertResultIsBOOL(AppKit.NSSharingService.canPerformWithItems_)
+
+    def testProtocol(self):
+        objc.protocolNamed('NSSharingServiceDelegate')
+        objc.protocolNamed('NSSharingServicePickerDelegate')
 
 
 if __name__ == "__main__":

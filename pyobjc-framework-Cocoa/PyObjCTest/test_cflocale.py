@@ -125,6 +125,11 @@ class TestLocale (TestCase):
         self.assertIsInstance(kCFIndianCalendar, unicode)
         self.assertIsInstance(kCFISO8601Calendar, unicode)
 
+    @min_os_level('10.10')
+    def testConstants10_10(self):
+        self.assertIsInstance(kCFIslamicTabularCalendar, unicode)
+        self.assertIsInstance(kCFIslamicUmmAlQuraCalendar, unicode)
+
     @min_os_level('10.6')
     def testFunctions10_6(self):
         v = CFLocaleGetWindowsLocaleCodeFromLocaleIdentifier('nl_NL')
@@ -139,7 +144,6 @@ class TestLocale (TestCase):
 
         v = CFLocaleGetLanguageLineDirection('NL')
         self.assertEqual(v, kCFLocaleLanguageDirectionTopToBottom)
-
 
 if __name__ == "__main__":
     main()

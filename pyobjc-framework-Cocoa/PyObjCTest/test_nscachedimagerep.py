@@ -6,6 +6,5 @@ class TestNSCachedImageRep (TestCase):
         self.assertArgIsBOOL(NSCachedImageRep.initWithSize_depth_separate_alpha_, 2)
         self.assertArgIsBOOL(NSCachedImageRep.initWithSize_depth_separate_alpha_, 3)
 
-
 if __name__ == "__main__":
     main()

@@ -32,6 +32,12 @@ class TestOpenPanel (TestCase):
         self.assertArgIsSEL(panel.beginForDirectory_file_types_modelessDelegate_didEndSelector_contextInfo_, 4, b'v@:@'+objc._C_NSInteger+b'^v')
         self.assertArgHasType(panel.beginForDirectory_file_types_modelessDelegate_didEndSelector_contextInfo_, 5, b'^v')
 
+    @min_os_level('10.10')
+    def testMethods10_10(self):
+        self.assertResultIsBOOL(NSOpenPanel.canResolveUbiquitousConflicts)
+        self.assertArgIsBOOL(NSOpenPanel.setCanResolveUbiquitousConflicts_, 0)
+        self.assertResultIsBOOL(NSOpenPanel.canDownloadUbiquitousContents)
+        self.assertArgIsBOOL(NSOpenPanel.setCanDownloadUbiquitousContents_, 0)
 
 
 if __name__ == "__main__":

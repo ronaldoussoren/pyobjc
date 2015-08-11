@@ -14,8 +14,10 @@ class TestNSOpenGL (TestCase):
         self.assertEqual(NSOpenGLGOClearFormatCache, 502)
         self.assertEqual(NSOpenGLGORetainRenderers, 503)
         self.assertEqual(NSOpenGLGOResetLibrary, 504)
+        self.assertEqual(NSOpenGLGOUseBuildCache, 506)
 
         self.assertEqual(NSOpenGLPFAAllRenderers,   1)
+        self.assertEqual(NSOpenGLPFATripleBuffer,   3)
         self.assertEqual(NSOpenGLPFADoubleBuffer,   5)
         self.assertEqual(NSOpenGLPFAStereo,   6)
         self.assertEqual(NSOpenGLPFAAuxBuffers,   7)
@@ -58,6 +60,14 @@ class TestNSOpenGL (TestCase):
         self.assertEqual(NSOpenGLCPSurfaceOrder, 235)
         self.assertEqual(NSOpenGLCPSurfaceOpacity, 236)
         self.assertEqual(NSOpenGLCPStateValidation, 301)
+        self.assertEqual(NSOpenGLCPSurfaceBackingSize, 304)
+        self.assertEqual(NSOpenGLCPReclaimResources, 308)
+        self.assertEqual(NSOpenGLCPCurrentRendererID, 309)
+        self.assertEqual(NSOpenGLCPGPUVertexProcessing, 310)
+        self.assertEqual(NSOpenGLCPGPUFragmentProcessing, 311)
+        self.assertEqual(NSOpenGLCPHasDrawable, 314)
+        self.assertEqual(NSOpenGLCPMPSwapsInFlight, 315)
+        self.assertEqual(NSOpenGLCPSurfaceSurfaceVolatile, 306)
 
     @min_os_level("10.5")
     def testConstants10_5(self):
@@ -68,6 +78,10 @@ class TestNSOpenGL (TestCase):
         self.assertEqual(NSOpenGLPFAOpenGLProfile, 99)
         self.assertEqual(NSOpenGLProfileVersionLegacy, 0x1000)
         self.assertEqual(NSOpenGLProfileVersion3_2Core, 0x3200)
+
+    @min_os_level("10.10")
+    def testConstants10_10(self):
+        self.assertEqual(NSOpenGLProfileVersion4_1Core, 0x4100)
 
 
     def testFunctions(self):

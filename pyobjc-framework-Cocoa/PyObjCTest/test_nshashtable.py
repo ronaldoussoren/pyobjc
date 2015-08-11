@@ -10,6 +10,10 @@ class TestNSHashTable (TestCase):
         self.assertEqual(NSHashTableCopyIn, NSPointerFunctionsCopyIn)
         self.assertEqual(NSHashTableObjectPointerPersonality, NSPointerFunctionsObjectPointerPersonality)
 
+    @min_os_level('10.8')
+    def testConstants(self):
+        self.assertEqual(NSHashTableWeakMemory, NSPointerFunctionsWeakMemory)
+
     @expectedFailure
     def testFunctions(self):
         self.fail("NSHasTable functions")

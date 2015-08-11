@@ -12,8 +12,12 @@ class TestNSButtonCell (TestCase):
         self.assertEqual(NSMomentaryChangeButton, 5)
         self.assertEqual(NSOnOffButton, 6)
         self.assertEqual(NSMomentaryPushInButton, 7)
+        self.assertEqual(NSAcceleratorButton, 8)
+        self.assertEqual(NSMultiLevelAcceleratorButton, 9)
+
         self.assertEqual(NSMomentaryPushButton, 0)
         self.assertEqual(NSMomentaryLight, 7)
+
         self.assertEqual(NSRoundedBezelStyle, 1)
         self.assertEqual(NSRegularSquareBezelStyle, 2)
         self.assertEqual(NSThickSquareBezelStyle, 3)

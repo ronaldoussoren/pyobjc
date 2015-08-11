@@ -50,6 +50,11 @@ class TestNSSpellChecker (TestCase):
         self.assertResultIsBOOL(NSSpellChecker.isAutomaticTextReplacementEnabled)
         self.assertResultIsBOOL(NSSpellChecker.isAutomaticSpellingCorrectionEnabled)
 
+    @min_os_level('10.9')
+    def testMethods10_9(self):
+        self.assertResultIsBOOL(NSSpellChecker.isAutomaticQuoteSubstitutionEnabled)
+        self.assertResultIsBOOL(NSSpellChecker.isAutomaticDashSubstitutionEnabled)
+
 
     @min_os_level('10.6')
     def testConstants10_6(self):
@@ -68,7 +73,21 @@ class TestNSSpellChecker (TestCase):
         self.assertIsInstance(NSSpellCheckerDidChangeAutomaticSpellingCorrectionNotification, unicode)
         self.assertIsInstance(NSSpellCheckerDidChangeAutomaticTextReplacementNotification, unicode)
 
+        self.assertEqual(NSCorrectionResponseNone, 0)
+        self.assertEqual(NSCorrectionResponseAccepted, 1)
+        self.assertEqual(NSCorrectionResponseRejected, 2)
+        self.assertEqual(NSCorrectionResponseIgnored, 3)
+        self.assertEqual(NSCorrectionResponseEdited, 4)
+        self.assertEqual(NSCorrectionResponseReverted, 5)
 
+        self.assertEqual(NSCorrectionIndicatorTypeDefault, 0)
+        self.assertEqual(NSCorrectionIndicatorTypeReversion, 1)
+        self.assertEqual(NSCorrectionIndicatorTypeGuesses, 2)
+
+    @min_os_level('10.9')
+    def testConstants10_9(self):
+        self.assertIsInstance(NSSpellCheckerDidChangeAutomaticQuoteSubstitutionNotification, unicode)
+        self.assertIsInstance(NSSpellCheckerDidChangeAutomaticDashSubstitutionNotification, unicode)
 
 
 if __name__ == "__main__":

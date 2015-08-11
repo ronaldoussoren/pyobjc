@@ -9,5 +9,9 @@ class TestNSDockTile (TestCase):
     def testConstants(self):
         self.assertEqual(NSAppKitVersionNumberWithDockTilePlugInSupport, 1001.0)
 
+    @min_sdk_level('10.10')
+    def testProtocol(self):
+        objc.protocolNamed('NSDockTilePlugIn')
+
 if __name__ == "__main__":
     main()

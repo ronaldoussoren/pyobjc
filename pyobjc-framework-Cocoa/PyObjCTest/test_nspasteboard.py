@@ -98,5 +98,10 @@ class TestNSPasteboard (TestCase):
         self.assertResultIsBOOL(NSPasteboard.setPropertyList_forType_)
         self.assertResultIsBOOL(NSPasteboard.setString_forType_)
 
+    def testProtocols(self):
+        objc.protocolNamed('NSPasteboardWriting')
+        objc.protocolNamed('NSPasteboardReading')
+
+
 if __name__ == "__main__":
     main()

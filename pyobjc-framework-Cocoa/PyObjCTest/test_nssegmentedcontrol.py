@@ -11,6 +11,7 @@ class TestNSSegmentedControl (TestCase):
         self.assertEqual(NSSegmentStyleTexturedSquare, 4)
         self.assertEqual(NSSegmentStyleCapsule, 5)
         self.assertEqual(NSSegmentStyleSmallSquare, 6)
+        self.assertEqual(NSSegmentStyleSeparated, 8)
 
     def testMethods(self):
         self.assertResultIsBOOL(NSSegmentedControl.selectSegmentWithTag_)

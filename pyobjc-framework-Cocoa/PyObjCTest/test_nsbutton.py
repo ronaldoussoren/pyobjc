@@ -15,6 +15,12 @@ class TestNSButton (TestCase):
         self.assertArgIsBOOL(NSButton.setAllowsMixedState_, 0)
         self.assertArgIsBOOL(NSButton.setShowsBorderOnlyWhileMouseInside_, 0)
         self.assertResultIsBOOL(NSButton.showsBorderOnlyWhileMouseInside)
+        self.assertArgIsBOOL(NSButton.highlight_, 0)
+
+    @min_os_level('10.10')
+    def testMethods10_10(self):
+        self.assertResultIsBOOL(NSButton.isSpringLoaded)
+        self.assertArgIsBOOL(NSButton.setSpringLoaded_, 0)
 
 if __name__ == "__main__":
     main()

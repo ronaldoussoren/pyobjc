@@ -11,7 +11,8 @@ class TestNSPasteboardItem (TestCase):
         self.assertResultIsBOOL(NSPasteboardItem.setString_forType_)
         self.assertResultIsBOOL(NSPasteboardItem.setPropertyList_forType_)
 
-
+    def testProtocols(self):
+        objc.protocolNamed('NSPasteboardItemDataProvider')
 
 if __name__ == "__main__":
     main()

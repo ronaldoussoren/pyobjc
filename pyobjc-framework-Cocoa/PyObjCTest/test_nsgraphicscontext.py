@@ -24,6 +24,7 @@ class TestNSGraphicsContext (TestCase):
         self.assertEqual(NSImageInterpolationNone, 1)
         self.assertEqual(NSImageInterpolationLow, 2)
         self.assertEqual(NSImageInterpolationHigh, 3)
+        self.assertEqual(NSImageInterpolationMedium, 4)
 
         self.assertEqual(NSColorRenderingIntentDefault, 0)
         self.assertEqual(NSColorRenderingIntentAbsoluteColorimetric, 1)
@@ -51,6 +52,9 @@ class TestNSGraphicsContext (TestCase):
         self.assertArgHasType(NSGraphicsContext.graphicsContextWithGraphicsPort_flipped_, 0, b'^{CGContext=}')
         self.assertResultHasType(NSGraphicsContext.graphicsPort, b'^{CGContext=}')
 
+    @min_os_level('10.10')
+    def testMethods10_10(self):
+        self.assertArgIsBOOL(NSGraphicsContext.graphicsContextWithCGContext_flipped_, 1)
 
 if __name__ == "__main__":
     main()

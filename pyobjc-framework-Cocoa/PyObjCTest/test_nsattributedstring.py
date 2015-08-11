@@ -25,6 +25,7 @@ class TestNSAttributedString (TestCase):
         self.assertResultIsBOOL(NSAttributedString.isEqualToAttributedString_)
 
     def testConstantsAppKit(self):
+        self.assertIsInstance(NSManagerDocumentAttribute, unicode)
         self.assertIsInstance(NSFontAttributeName, unicode)
         self.assertIsInstance(NSParagraphStyleAttributeName, unicode)
         self.assertIsInstance(NSForegroundColorAttributeName, unicode)
@@ -60,6 +61,8 @@ class TestNSAttributedString (TestCase):
         self.assertEqual(NSUnderlinePatternDash, 0x0200)
         self.assertEqual(NSUnderlinePatternDashDot, 0x0300)
         self.assertEqual(NSUnderlinePatternDashDotDot, 0x0400)
+
+        self.assertIsInstance(NSUnderlineByWordMask, (int, long))
 
         self.assertEqual(NSSpellingStateSpellingFlag, 1)
         self.assertEqual(NSSpellingStateGrammarFlag, 2)
@@ -170,6 +173,16 @@ class TestNSAttributedString (TestCase):
         self.assertIsInstance(NSTextLayoutSectionOrientation, unicode)
         self.assertIsInstance(NSTextLayoutSectionRange, unicode)
         self.assertIsInstance(NSTextLayoutSectionsAttribute, unicode)
+
+    @min_os_level('10.8')
+    def testConstants10_8(self):
+        self.assertIsInstance(NSTextAlternativesAttributeName, unicode)
+        self.assertIsInstance(NSUsesScreenFontsDocumentAttribute, unicode)
+
+    @min_os_level('10.10')
+    def testConstants10_10(self):
+        self.assertIsInstance(NSTextEffectAttributeName, unicode)
+        self.assertIsInstance(NSTextEffectLetterpressStyle, unicode)
 
     @min_os_level('10.6')
     def testMethods10_6(self):

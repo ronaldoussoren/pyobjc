@@ -424,5 +424,16 @@ class TestStream (TestCase):
         self.assertIs(state[0][2], data)
         self.assertEqual(state[0][1], kCFStreamEventCanAcceptBytes)
 
+    @min_os_level('10.9')
+    def testFunctions10_9(self):
+        CFReadStreamSetDispatchQueue # Nothing to test
+        CFWriteStreamSetDispatchQueue # Nothing to test
+        CFReadStreamCopyDispatchQueue # Nothing to test
+        CFWriteStreamCopyDispatchQueue # Nothing to test
+
+
+
+
+
 if __name__ == "__main__":
     main()

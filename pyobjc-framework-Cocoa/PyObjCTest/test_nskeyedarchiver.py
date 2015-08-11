@@ -13,6 +13,10 @@ class TestNSKeyedArchiver (TestCase):
         self.assertIsInstance(NSInvalidArchiveOperationException, unicode)
         self.assertIsInstance(NSInvalidUnarchiveOperationException, unicode)
 
+    @min_os_level('10.9')
+    def testConstants10_9(self):
+        self.assertIsInstance(NSKeyedArchiveRootObjectKey, unicode)
+
     def testOutput(self):
         o = NSKeyedUnarchiver.alloc().initForReadingWithData_(
                 NSKeyedArchiver.archivedDataWithRootObject_(b"foobar".decode('ascii')))
@@ -45,6 +49,10 @@ class TestNSKeyedArchiver (TestCase):
         self.assertResultHasType(NSCoder.decodePointForKey_, NSPoint.__typestr__)
         self.assertResultHasType(NSCoder.decodeSizeForKey_, NSSize.__typestr__)
         self.assertResultHasType(NSCoder.decodeRectForKey_, NSRect.__typestr__)
+
+    def testMethods10_8(self):
+        self.assertArgIsBOOL(NSKeyedArchiver.setRequiresSecureCoding_, 0)
+        self.assertArgIsBOOL(NSKeyedUnarchiver.setRequiresSecureCoding_, 0)
 
 
 if __name__ == "__main__":

@@ -2,6 +2,7 @@ from PyObjCTools.TestSupport import *
 
 from Foundation import *
 import Foundation
+import AppKit
 
 try:
     unicode
@@ -25,6 +26,11 @@ class TestNSBundle (TestCase):
         self.assertResultIsBOOL(b.load)
         self.assertResultIsBOOL(b.isLoaded)
         self.assertResultIsBOOL(b.unload)
+
+    @min_os_level('10.8')
+    def testMethods10_8(self):
+        self.assertResultIsBOOL(NSBundle.loadNibNamed_owner_topLevelObjects_)
+        self.assertArgIsOut(NSBundle.loadNibNamed_owner_topLevelObjects_, 2)
 
     @min_os_level('10.5')
     def testMethods10_5(self):

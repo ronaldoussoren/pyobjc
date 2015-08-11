@@ -83,6 +83,7 @@ class TestNSEvent (TestCase):
         self.assertEqual(NSMouseEventSubtype, 0)
         self.assertEqual(NSTabletPointEventSubtype, 1)
         self.assertEqual(NSTabletProximityEventSubtype, 2)
+        self.assertEqual(NSTouchEventSubtype, 3)
 
         self.assertEqual(NSUpArrowFunctionKey, unichr(0xF700))
         self.assertEqual(NSDownArrowFunctionKey, unichr(0xF701))

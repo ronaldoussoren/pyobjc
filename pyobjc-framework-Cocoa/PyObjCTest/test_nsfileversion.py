@@ -24,5 +24,11 @@ class TestNSFileVersion (TestCase):
         self.assertArgIsBOOL(NSFileVersion.setDiscardable_, 0)
         self.assertResultIsBOOL(NSFileVersion.isDiscardable)
 
+    @min_os_level('10.10')
+    def testMethods10_10(self):
+        self.assertArgIsBlock(NSFileVersion.getNonlocalVersionsOfItemAtURL_completionHandler_, 1, b'v@@')
+        self.assertResultIsBOOL(NSFileVersion.hasLocalContents)
+        self.assertResultIsBOOL(NSFileVersion.hasThumbnail)
+
 if __name__ == "__main__":
     main()

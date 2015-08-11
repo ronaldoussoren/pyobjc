@@ -25,9 +25,13 @@ class TestNSWindowHelper (NSObject):
     def window_willPositionSheet_usingRect_(self, w, a, b): return 1
     def window_shouldPopUpDocumentPathMenu_(self, w, a): return 1
     def window_shouldDragDocumentWithEvent_from_withPasteboard_(self, w, a, b, c): return 1
+    def window_startCustomAnimationToEnterFullScreenOnScreen_withDuration_(self, w, a, d): pass
 
 class TestNSWindow (TestCase):
     def testConstants(self):
+        self.assertEqual(NSAppKitVersionNumberWithCustomSheetPosition,686.0)
+        self.assertEqual(NSAppKitVersionNumberWithDeferredWindowDisplaySupport, 1019.0)
+
         self.assertEqual(NSBorderlessWindowMask, 0)
         self.assertEqual(NSTitledWindowMask, 1 << 0)
         self.assertEqual(NSClosableWindowMask, 1 << 1)
@@ -54,7 +58,6 @@ class TestNSWindow (TestCase):
         self.assertEqual(NSWindowCollectionBehaviorDefault, 0)
         self.assertEqual(NSWindowCollectionBehaviorCanJoinAllSpaces, 1 << 0)
         self.assertEqual(NSWindowCollectionBehaviorMoveToActiveSpace, 1 << 1)
-
 
         self.assertEqual(NSDirectSelection, 0)
         self.assertEqual(NSSelectingNext, 1)
@@ -124,6 +127,21 @@ class TestNSWindow (TestCase):
         self.assertIsInstance(NSWindowDidEnterVersionBrowserNotification, unicode)
         self.assertIsInstance(NSWindowWillExitVersionBrowserNotification, unicode)
         self.assertIsInstance(NSWindowDidExitVersionBrowserNotification, unicode)
+
+    @min_os_level('10.9')
+    def testConstants10_9(self):
+        self.assertEqual(NSModalResponseOK, 1)
+        self.assertEqual(NSModalResponseCancel, 0)
+        self.assertEqual(NSWindowOcclusionStateVisible, 2)
+
+        self.assertIsInstance(NSWindowDidChangeOcclusionStateNotification, unicode)
+
+    @min_os_level('10.10')
+    def testConstants10_10(self):
+        self.assertEqual(NSFullSizeContentViewWindowMask, 1<<15)
+
+        self.assertEqual(NSWindowTitleVisible, 0)
+        self.assertEqual(NSWindowTitleHidden, 1)
 
     @onlyIf(have_Quartz)
     def testMagicConstants(self):
@@ -229,6 +247,19 @@ class TestNSWindow (TestCase):
 
         self.assertArgHasType(NSWindow.windowNumberAtPoint_belowWindowWithWindowNumber_, 0, NSPoint.__typestr__)
 
+    @min_os_level('10.9')
+    def testMethods10_9(self):
+        self.assertArgIsBlock(NSWindow.beginSheet_completionHandler_, 1, b'v' + objc._C_NSInteger)
+        self.assertArgIsBlock(NSWindow.beginCriticalSheet_completionHandler_, 1, b'v' + objc._C_NSInteger)
+
+
+    @min_os_level('10.10')
+    def testMethods10_10(self):
+        self.assertResultIsBOOL(NSWindow.titlebarAppearsTransparent)
+        self.assertArgIsBOOL(NSWindow.setTitlebarAppearsTransparent_, 0)
+
+        self.assertArgIsBlock(NSWindow.trackEventsMatchingMask_timeout_mode_handler_, 3, b'v@o^Z')
+
     def testProtocols(self):
         self.assertResultIsBOOL(TestNSWindowHelper.windowShouldClose_)
         self.assertResultHasType(TestNSWindowHelper.windowWillResize_toSize_, NSSize.__typestr__)
@@ -254,6 +285,9 @@ class TestNSWindow (TestCase):
         self.assertArgHasType(TestNSWindowHelper.window_willResizeForVersionBrowserWithMaxPreferredSize_maxAllowedSize_, 1, NSSize.__typestr__)
         self.assertArgHasType(TestNSWindowHelper.window_willResizeForVersionBrowserWithMaxPreferredSize_maxAllowedSize_, 2, NSSize.__typestr__)
 
+    @min_os_level('10.9')
+    def testProtocols10_9(self):
+        self.assertArgHasType(TestNSWindowHelper.window_startCustomAnimationToEnterFullScreenOnScreen_withDuration_, 2, objc._C_DBL)
 
 if __name__ == "__main__":
     main()

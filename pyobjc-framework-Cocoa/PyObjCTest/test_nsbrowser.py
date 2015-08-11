@@ -8,6 +8,10 @@ except NameError:
     unicode = str
 
 class TestNSBrowserHelper (NSObject):
+    def browser_namesOfPromisedFilesDroppedAtDestination_forDraggedRowsWithIndexes_inColumn_(self, b, n, i, c): pass
+    def browser_willDisplayCell_atRow_column_(self, b, cl, r, c): pass
+    def browser_numberOfChildrenOfItem_(self, b, i): return 1
+    def browser_child_ofItem_(self, b, c, i): return None
     def browser_selectCellWithString_inColumn_(self, b, c, s): return 1
     def browser_selectRow_inColumn_(self, b, r, c): return 1
     def browser_isColumnValid_(self, b, c): return 1
@@ -23,6 +27,12 @@ class TestNSBrowserHelper (NSObject):
     def browser_numberOfRowsInColumn_(self, b, c): return 1
     def browser_createRowsForColumn_inMatrix_(self, b, c, m): return 1
     def browser_selectionIndexesForProposedSelection_inColumn_(self, b, s, c): return 1
+    def browser_sizeToFitWidthOfColumn_(self, b, c): return 1
+    def browser_draggingImageForRowsWithIndexes_inColumn_withEvent_offset_(self, b, ixs, c, e, o): return 1
+    def browser_validateDrop_proposedRow_column_dropOperation_(self, b, dp, r, c, o): return 1
+    def browser_typeSelectStringForRow_inColumn_(self, b, r, c): return 1
+    def browser_nextTypeSelectMatchFromRow_toRow_inColumn_forString_(self, b, r, r2, c, s): return 1
+    def browser_didChangeLastColumn_toColumn_(self, b, c1, c2): pass
 
 class TestNSBrowser (TestCase):
     def testConstants(self):
@@ -70,6 +80,7 @@ class TestNSBrowser (TestCase):
         self.assertArgIsBOOL(NSBrowser.setAllowsTypeSelect_, 0)
 
     def testDelegate(self):
+        objc.protocolNamed('NSBrowserDelegate')
         self.assertResultIsBOOL(TestNSBrowserHelper.browser_selectCellWithString_inColumn_)
         self.assertResultIsBOOL(TestNSBrowserHelper.browser_selectRow_inColumn_)
         self.assertResultIsBOOL(TestNSBrowserHelper.browser_isColumnValid_)
@@ -78,8 +89,30 @@ class TestNSBrowser (TestCase):
         self.assertResultIsBOOL(TestNSBrowserHelper.browser_writeRowsWithIndexes_inColumn_toPasteboard_)
         self.assertResultIsBOOL(TestNSBrowserHelper.browser_canDragRowsWithIndexes_inColumn_withEvent_)
         self.assertResultIsBOOL(TestNSBrowserHelper.browser_acceptDrop_atRow_column_dropOperation_)
+        self.assertArgHasType(TestNSBrowserHelper.browser_namesOfPromisedFilesDroppedAtDestination_forDraggedRowsWithIndexes_inColumn_, 3, objc._C_NSInteger)
 
         self.assertResultIsBOOL(TestNSBrowserHelper.browser_shouldTypeSelectForEvent_withCurrentSearchString_)
+        self.assertResultHasType(TestNSBrowserHelper.browser_sizeToFitWidthOfColumn_, objc._C_CGFloat)
+        self.assertArgHasType(TestNSBrowserHelper.browser_sizeToFitWidthOfColumn_, 1, objc._C_NSInteger)
+        self.assertArgHasType(TestNSBrowserHelper.browser_draggingImageForRowsWithIndexes_inColumn_withEvent_offset_, 2, objc._C_NSInteger)
+        self.assertArgHasType(TestNSBrowserHelper.browser_draggingImageForRowsWithIndexes_inColumn_withEvent_offset_, 4, b'N^' + NSPoint.__typestr__)
+        self.assertArgHasType(TestNSBrowserHelper.browser_validateDrop_proposedRow_column_dropOperation_, 2, b'N^' + objc._C_NSInteger)
+        self.assertArgHasType(TestNSBrowserHelper.browser_validateDrop_proposedRow_column_dropOperation_, 3, b'N^' + objc._C_NSInteger)
+        self.assertArgHasType(TestNSBrowserHelper.browser_validateDrop_proposedRow_column_dropOperation_, 4, b'N^' + objc._C_NSUInteger)
+        self.assertResultHasType(TestNSBrowserHelper.browser_validateDrop_proposedRow_column_dropOperation_, objc._C_NSUInteger)
+
+        self.assertArgHasType(TestNSBrowserHelper.browser_typeSelectStringForRow_inColumn_, 1, objc._C_NSInteger)
+        self.assertArgHasType(TestNSBrowserHelper.browser_typeSelectStringForRow_inColumn_, 2, objc._C_NSInteger)
+
+        self.assertResultHasType(TestNSBrowserHelper.browser_nextTypeSelectMatchFromRow_toRow_inColumn_forString_, objc._C_NSUInteger)
+        self.assertArgHasType(TestNSBrowserHelper.browser_nextTypeSelectMatchFromRow_toRow_inColumn_forString_, 1, objc._C_NSInteger)
+        self.assertArgHasType(TestNSBrowserHelper.browser_nextTypeSelectMatchFromRow_toRow_inColumn_forString_, 2, objc._C_NSInteger)
+        self.assertArgHasType(TestNSBrowserHelper.browser_nextTypeSelectMatchFromRow_toRow_inColumn_forString_, 3, objc._C_NSInteger)
+
+        self.assertArgHasType(TestNSBrowserHelper.browser_didChangeLastColumn_toColumn_, 1, objc._C_NSInteger)
+        self.assertArgHasType(TestNSBrowserHelper.browser_didChangeLastColumn_toColumn_, 2, objc._C_NSInteger)
+
+        # XXX: Redo testcase for delegate
 
     @min_os_level('10.6')
     def testMethods10_6(self):
@@ -103,6 +136,12 @@ class TestNSBrowser (TestCase):
         self.assertResultHasType(TestNSBrowserHelper.browser_numberOfRowsInColumn_, objc._C_NSInteger)
         self.assertArgHasType(TestNSBrowserHelper.browser_numberOfRowsInColumn_, 1, objc._C_NSInteger)
         self.assertArgHasType(TestNSBrowserHelper.browser_createRowsForColumn_inMatrix_, 1, objc._C_NSInteger)
+
+        self.assertResultHasType(TestNSBrowserHelper.browser_numberOfChildrenOfItem_, objc._C_NSInteger)
+        self.assertArgHasType(TestNSBrowserHelper.browser_child_ofItem_, 1, objc._C_NSInteger)
+
+        self.assertArgHasType(TestNSBrowserHelper.browser_willDisplayCell_atRow_column_, 2, objc._C_NSInteger)
+        self.assertArgHasType(TestNSBrowserHelper.browser_willDisplayCell_atRow_column_, 3, objc._C_NSInteger)
 
 
 

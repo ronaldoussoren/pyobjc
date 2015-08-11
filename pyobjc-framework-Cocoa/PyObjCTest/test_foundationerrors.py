@@ -60,5 +60,22 @@ class FoundationErrorsTest (TestCase):
         self.assertEqual(NSXPCConnectionErrorMinimum, 4096)
         self.assertEqual(NSXPCConnectionErrorMaximum, 4224)
 
+    @min_os_level('10.9')
+    def testConstants10_9(self):
+        self.assertEqual(NSUbiquitousFileUnavailableError, 4353)
+        self.assertEqual(NSUbiquitousFileNotUploadedDueToQuotaError, 4354)
+        self.assertEqual(NSUbiquitousFileUbiquityServerNotAvailable, 4355)
+        self.assertEqual(NSUbiquitousFileErrorMinimum, 4352)
+        self.assertEqual(NSUbiquitousFileErrorMaximum, 4607)
+
+    @min_os_level('10.10')
+    def testConstants10_10(self):
+        self.assertEqual(NSUserActivityHandoffFailedError, 4608)
+        self.assertEqual(NSUserActivityConnectionUnavailableError, 4609)
+        self.assertEqual(NSUserActivityRemoteApplicationTimedOutError, 4610)
+        self.assertEqual(NSUserActivityHandoffUserInfoTooLargeError, 4611)
+        self.assertEqual(NSUserActivityErrorMinimum, 4608)
+        self.assertEqual(NSUserActivityErrorMaximum, 4863)
+
 if __name__ == "__main__":
     main()

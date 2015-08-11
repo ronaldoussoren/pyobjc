@@ -304,7 +304,13 @@ class TestRunLoop (TestCase):
             self.assertEqual(a, ref)
 
 
-
+    @min_os_level('10.9')
+    def testFunctions10_9(self):
+        l = []
+        ref = CFRunLoopTimerCreateWithHandler(None,
+                CFAbsoluteTimeGetCurrent() + 2.9, 0.0, 0, 0, lambda x: l.append(x))
+        self.assertIsInstance(ref, CFRunLoopTimerRef)
+        CFRunLoopTimerSetTolerance(ref, 5.0)
 
 if __name__ == "__main__":
     main()

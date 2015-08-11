@@ -8,6 +8,8 @@ except NameError:
     unicode = str
 
 class TestNSPrintPanel (TestCase):
+    def testProtocols(self):
+        objc.protocolNamed('NSPrintPanelAccessorizing')
 
     def testConstants(self):
         self.assertEqual(NSPrintPanelShowsCopies, 0x01)

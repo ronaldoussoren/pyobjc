@@ -13,7 +13,9 @@ class TestNSColorSpace (TestCase):
         self.assertEqual(NSIndexedColorSpaceModel, 5)
         self.assertEqual(NSPatternColorSpaceModel, 6)
 
-
+    def testMethods(self):
+        self.assertArgHasType(NSColorSpace.initWithColorSyncProfile_, 0, b"^{OpaqueCMProfileRef=}")
+        self.assertResultHasType(NSColorSpace.colorSyncProfile, b"^{OpaqueCMProfileRef=}")
 
 if __name__ == "__main__":
     main()

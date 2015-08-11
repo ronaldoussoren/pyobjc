@@ -90,6 +90,10 @@ class TestHeader (TestCase):
         self.assertIsInstance(NSDefinitionPresentationTypeOverlay, unicode)
         self.assertIsInstance(NSDefinitionPresentationTypeDictionaryApplication, unicode)
 
+    @min_os_level('10.9')
+    def testConstants10_9(self):
+        self.assertEqual(NSViewLayerContentsRedrawCrossfade, 4)
+
     def testMethods(self):
         self.assertResultIsBOOL(NSView.isDescendantOf_)
         self.assertResultIsBOOL(NSView.isHidden)
@@ -187,6 +191,17 @@ class TestHeader (TestCase):
     def testMethods10_8(self):
         self.assertResultIsBOOL(NSView.wantsUpdateLayer)
 
+    @min_os_level('10.9')
+    def testMethods10_9(self):
+        self.assertResultIsBOOL(NSView.canDrawSubviewsIntoLayer)
+        self.assertArgIsBOOL(NSView.setCanDrawSubviewsIntoLayer_, 0)
+        self.assertResultIsBOOL(NSView.layerUsesCoreImageFilters)
+        self.assertArgIsBOOL(NSView.setLayerUsesCoreImageFilters_, 0)
+        self.assertResultIsBOOL(NSView.isCompatibleWithResponsiveScrolling)
+
+    @min_os_level('10.10')
+    def testMethods10_10(self):
+        self.assertResultIsBOOL(NSView.allowsVibrancy)
 
     def testProtocol(self):
         self.assertArgHasType(TestNSViewHelper.view_stringForToolTip_point_userData_, 2, NSPoint.__typestr__)

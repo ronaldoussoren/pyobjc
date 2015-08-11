@@ -15,6 +15,13 @@ class TestNSTableRowView (TestCase):
         self.assertArgIsBOOL(AppKit.NSTableRowView.setFloating_, 0)
         self.assertResultIsBOOL(AppKit.NSTableRowView.isTargetForDropOperation)
         self.assertArgIsBOOL(AppKit.NSTableRowView.setTargetForDropOperation_, 0)
+        self.assertResultIsBOOL(AppKit.NSTableRowView.isNextRowSelected)
+        self.assertArgIsBOOL(AppKit.NSTableRowView.setNextRowSelected_, 0)
+
+    @min_os_level('10.10')
+    def testMethods10_10(self):
+        self.assertResultIsBOOL(AppKit.NSTableRowView.isPreviousRowSelected)
+        self.assertArgIsBOOL(AppKit.NSTableRowView.setPreviousRowSelected_, 0)
 
 if __name__ == "__main__":
     main()

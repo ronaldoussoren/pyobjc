@@ -2,6 +2,7 @@ from PyObjCTools.TestSupport import *
 
 from Foundation import *
 import Foundation
+from AppKit import *
 
 
 class TestNSGeometry (TestCase):
@@ -37,6 +38,15 @@ class TestNSGeometry (TestCase):
         self.assertHasAttr(Foundation, 'NSPointToCGPoint')
         self.assertHasAttr(Foundation, 'NSSizeFromCGSize')
         self.assertHasAttr(Foundation, 'NSSizeToCGSize')
+
+    @min_os_level('10.8')
+    def testInlines10_8(self):
+        v = NSEdgeInsetsMake(1, 2, 3, 4)
+        self.assertIsInstance(v, NSEdgeInsets)
+        self.assertEqual(v.top, 1.0)
+        self.assertEqual(v.left, 2.0)
+        self.assertEqual(v.bottom, 3.0)
+        self.assertEqual(v.right, 4.0)
 
     def testFunctions(self):
         p1 = NSPoint(1, 2)
@@ -137,6 +147,10 @@ class TestNSGeometry (TestCase):
         self.assertArgHasType(NSCoder.encodeRect_forKey_, 0, NSRect.__typestr__)
         self.assertResultHasType(NSCoder.decodeRectForKey_, NSRect.__typestr__)
 
+    @min_os_level('10.10')
+    def testConstants10_10(self):
+        self.assertIsInstance(NSEdgeInsetsZero, NSEdgeInsets)
+
     @min_os_level('10.7')
     def testConstants10_7(self):
         self.assertEqual(NSAlignMinXInward, 1 << 0)
@@ -167,6 +181,10 @@ class TestNSGeometry (TestCase):
         r2 = NSRect(NSPoint(4.5, 5.5), NSSize(7.5, 8.5))
         r = NSIntegralRectWithOptions(r2, NSAlignAllEdgesNearest)
         self.assertIsInstance(r, NSRect)
+
+    @min_os_level('10.10')
+    def testFunctions10_10(self):
+        self.assertResultIsBOOL(NSEdgeInsetsEqual)
 
 if __name__ == "__main__":
     main()

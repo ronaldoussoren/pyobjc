@@ -15,16 +15,6 @@ except NameError:
 
 
 class TestBase (TestCase):
-    @min_os_level('10.8')
-    def testConstants10_8(self):
-        self.assertEqual(kCFCoreFoundationVersionNumber10_6_6, 550.42)
-        self.assertEqual(kCFCoreFoundationVersionNumber10_6_7, 550.42)
-        self.assertEqual(kCFCoreFoundationVersionNumber10_6_8, 550.43)
-        self.assertEqual(kCFCoreFoundationVersionNumber10_7, 635.00)
-        self.assertEqual(kCFCoreFoundationVersionNumber10_7_1, 635.00)
-        self.assertEqual(kCFCoreFoundationVersionNumber10_7_2, 635.15)
-        self.assertEqual(kCFCoreFoundationVersionNumber10_7_3, 635.19)
-        self.assertEqual(kCFCoreFoundationVersionNumber10_7_4, 635.21)
 
 
     def testConstants(self):
@@ -80,14 +70,30 @@ class TestBase (TestCase):
         self.assertEqual(kCFCoreFoundationVersionNumber10_5_5,    476.15)
         self.assertEqual(kCFCoreFoundationVersionNumber10_5_6,    476.17)
         self.assertEqual(kCFCoreFoundationVersionNumber10_5_7,    476.18)
-        #XXX
-        #self.assertEqual(CFCoreFoundationVersionNumber10_5_8,    476.19)
+        self.assertEqual(kCFCoreFoundationVersionNumber10_5_8,    476.19)
         self.assertEqual(kCFCoreFoundationVersionNumber10_6,      550.00)
         self.assertEqual(kCFCoreFoundationVersionNumber10_6_1,    550.00)
         self.assertEqual(kCFCoreFoundationVersionNumber10_6_2,    550.13)
         self.assertEqual(kCFCoreFoundationVersionNumber10_6_3,    550.19)
         self.assertEqual(kCFCoreFoundationVersionNumber10_6_4,    550.29)
         self.assertEqual(kCFCoreFoundationVersionNumber10_6_5,    550.42)
+        self.assertEqual(kCFCoreFoundationVersionNumber10_6_6, 550.42)
+        self.assertEqual(kCFCoreFoundationVersionNumber10_6_7, 550.42)
+        self.assertEqual(kCFCoreFoundationVersionNumber10_6_8, 550.43)
+        self.assertEqual(kCFCoreFoundationVersionNumber10_7, 635.00)
+        self.assertEqual(kCFCoreFoundationVersionNumber10_7_1, 635.00)
+        self.assertEqual(kCFCoreFoundationVersionNumber10_7_2, 635.15)
+        self.assertEqual(kCFCoreFoundationVersionNumber10_7_3, 635.19)
+        self.assertEqual(kCFCoreFoundationVersionNumber10_7_4, 635.21)
+        self.assertEqual(kCFCoreFoundationVersionNumber10_7_5, 635.21)
+        self.assertEqual(kCFCoreFoundationVersionNumber10_8, 744.00)
+        self.assertEqual(kCFCoreFoundationVersionNumber10_8_1, 744.00)
+        self.assertEqual(kCFCoreFoundationVersionNumber10_8_2, 744.12)
+        self.assertEqual(kCFCoreFoundationVersionNumber10_8_3, 744.18)
+        self.assertEqual(kCFCoreFoundationVersionNumber10_8_4, 744.19)
+        self.assertEqual(kCFCoreFoundationVersionNumber10_9, 855.11)
+        self.assertEqual(kCFCoreFoundationVersionNumber10_9_1, 855.11)
+        self.assertEqual(kCFCoreFoundationVersionNumber10_9_2, 855.14)
 
 
         self.assertEqual(kCFCompareLessThan, -1)
@@ -186,6 +192,13 @@ class TestBase (TestCase):
         self.assertEqual(kCFCoreFoundationVersionNumber10_5_4, 476.14)
         self.assertEqual(kCFCoreFoundationVersionNumber10_5_5, 476.15)
         self.assertEqual(kCFCoreFoundationVersionNumber10_5_6, 476.17)
+
+    @min_os_level('10.9')
+    def testFunctions10_9(self):
+        obj = CFURLCreateWithString(None, b"http://www.apple.com/".decode('ascii'), None)
+        CFRetain(obj)
+        CFAutorelease(obj)
+        del obj
 
 
 if __name__ == "__main__":

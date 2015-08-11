@@ -25,5 +25,9 @@ class TestNSScreen (TestCase):
         self.assertResultHasType(NSScreen.backingAlignedRect_options_, NSRect.__typestr__)
         self.assertArgHasType(NSScreen.backingAlignedRect_options_, 0, NSRect.__typestr__)
 
+    @min_os_level('10.9')
+    def testMethods10_9(self):
+        self.assertResultIsBOOL(NSScreen.screensHaveSeparateSpaces)
+
 if __name__ == "__main__":
     main()

@@ -30,5 +30,9 @@ class TestNSDatePickerCell (TestCase):
         self.assertResultIsBOOL(NSDatePickerCell.drawsBackground)
         self.assertArgIsBOOL(NSDatePickerCell.setDrawsBackground_, 0)
 
+    @min_sdk_level('10.10')
+    def testProtocols(self):
+        objc.protocolNamed('NSDatePickerCellDelegate')
+
 if __name__ == "__main__":
     main()

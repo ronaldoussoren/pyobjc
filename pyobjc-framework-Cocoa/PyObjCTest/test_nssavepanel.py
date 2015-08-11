@@ -37,6 +37,7 @@ class TestNSSavePanel (TestCase):
         self.assertArgHasType(NSSavePanel.beginSheetForDirectory_file_modalForWindow_modalDelegate_didEndSelector_contextInfo_, 5, b'^v')
 
     def testProtocol(self):
+        objc.protocolNamed('NSOpenSavePanelDelegate')
         self.assertResultIsBOOL(TestNSSavePanelHelper.panel_shouldShowFilename_)
         self.assertResultHasType(TestNSSavePanelHelper.panel_compareFilename_with_caseSensitive_, objc._C_NSInteger)
         self.assertArgIsBOOL(TestNSSavePanelHelper.panel_compareFilename_with_caseSensitive_, 3)
@@ -54,6 +55,11 @@ class TestNSSavePanel (TestCase):
 
         self.assertArgIsBlock(NSSavePanel.beginSheetModalForWindow_completionHandler_, 1, b'v'+objc._C_NSInteger)
         self.assertArgIsBlock(NSSavePanel.beginWithCompletionHandler_, 0, b'v'+objc._C_NSInteger)
+
+    @min_os_level('10.9')
+    def testMethods10_9(self):
+        self.assertArgIsBOOL(NSSavePanel.setShowsTagField_, 0)
+        self.assertResultIsBOOL(NSSavePanel.showsTagField)
 
 if __name__ == "__main__":
     main()

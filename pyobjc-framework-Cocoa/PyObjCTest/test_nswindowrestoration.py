@@ -13,7 +13,6 @@ class RestorationHelper (AppKit.NSObject):
 
 class TestNSWindowRestoration (TestCase):
     @min_os_level('10.7')
-    @expectedFailure
     def testProtocol10_7(self):
         self.assertArgIsBlock(RestorationHelper.restoreWindowWithIdentifier_state_completionHandler_, 2, b'v@@')
 

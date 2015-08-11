@@ -29,6 +29,8 @@ class TestNSAttributedString (TestCase):
         self.assertIsInstance(NSStrokeColorAttributeName, unicode)
         self.assertIsInstance(NSUnderlineColorAttributeName, unicode)
         self.assertIsInstance(NSStrikethroughStyleAttributeName, unicode)
+        self.assertIsInstance(NSUnderlineStyleAttributeName, unicode)
+        self.assertIsInstance(NSObliquenessAttributeName, unicode)
         self.assertIsInstance(NSStrikethroughColorAttributeName, unicode)
         self.assertIsInstance(NSShadowAttributeName, unicode)
         self.assertIsInstance(NSExpansionAttributeName, unicode)
@@ -49,7 +51,9 @@ class TestNSAttributedString (TestCase):
         self.assertEqual(NSUnderlinePatternDashDot, 0x0300)
         self.assertEqual(NSUnderlinePatternDashDotDot, 0x0400)
 
-        self.assertIsInstance(NSUnderlineByWordMask, (int, long))
+        self.assertEqual(NSUnderlineByWordMask, 0x8000)
+        self.assertEqual(NSWritingDirectionEmbedding, 0<<1)
+        self.assertEqual(NSWritingDirectionOverride, 1<<1)
 
         self.assertIsInstance(NSSpellingStateAttributeName, unicode)
 
@@ -84,9 +88,13 @@ class TestNSAttributedString (TestCase):
         self.assertIsInstance(NSDefaultTabIntervalDocumentAttribute, unicode)
         self.assertIsInstance(NSCharacterEncodingDocumentAttribute, unicode)
         self.assertIsInstance(NSTitleDocumentAttribute, unicode)
+        self.assertIsInstance(NSCompanyDocumentAttribute, unicode)
+        self.assertIsInstance(NSCopyrightDocumentAttribute, unicode)
+        self.assertIsInstance(NSSubjectDocumentAttribute, unicode)
         self.assertIsInstance(NSAuthorDocumentAttribute, unicode)
         self.assertIsInstance(NSKeywordsDocumentAttribute, unicode)
         self.assertIsInstance(NSCommentDocumentAttribute, unicode)
+        self.assertIsInstance(NSEditorDocumentAttribute, unicode)
         self.assertIsInstance(NSCreationTimeDocumentAttribute, unicode)
         self.assertIsInstance(NSModificationTimeDocumentAttribute, unicode)
         self.assertIsInstance(NSExcludedElementsDocumentAttribute, unicode)
@@ -108,11 +116,18 @@ class TestNSAttributedString (TestCase):
 
         self.assertIsInstance(NSUnderlineStrikethroughMask, (int, long))
 
+        self.assertIsInstance(NSAttachmentAttributeName, unicode)
+        self.assertIsInstance(NSCursorAttributeName, unicode)
+
     def testMethods(self):
         self.assertArgIsOut(NSAttributedString.initWithURL_options_documentAttributes_error_, 2)
         self.assertArgIsOut(NSAttributedString.initWithURL_options_documentAttributes_error_, 3)
         self.assertArgIsOut(NSAttributedString.initWithData_options_documentAttributes_error_, 2)
         self.assertArgIsOut(NSAttributedString.initWithData_options_documentAttributes_error_, 3)
+
+        self.assertArgIsOut(NSAttributedString.dataFromRange_errror_, 1)
+        self.assertArgIsOut(NSAttributedString.fileWrapperFromRange_documentAttributes_error_, 2)
+
         self.assertArgIsOut(NSAttributedString.initWithPath_documentAttributes_, 1)
         self.assertArgIsOut(NSAttributedString.initWithURL_documentAttributes_, 1)
         self.assertArgIsOut(NSAttributedString.initWithRTF_documentAttributes_, 1)
@@ -139,6 +154,15 @@ class TestNSAttributedString (TestCase):
 
         self.assertArgHasType(NSAttributedString.URLAtIndex_effectiveRange_, 1, b'o^' + NSRange.__typestr__)
 
+        self.assertArgIsBOOL(NSMutableAttributedString.nextWordFromIndex_forward_, 1)
+        self.assertResultIsBOOL(NSAttributedString.containsAttachments)
+
+
+    @min_os_level(10.11)
+    def testMethods10_11(self)
+        self.assertResultIsBOOL(NSMutableAttributedString.containsAttachmentsInRange_)
+
+
     @min_os_level('10.5')
     def testConstants10_5(self):
         self.assertIsInstance(NSManagerDocumentAttribute, unicode)
@@ -149,6 +173,27 @@ class TestNSAttributedString (TestCase):
         self.assertIsInstance(NSFileTypeDocumentAttribute, unicode)
         self.assertIsInstance(NSCategoryDocumentAttribute, unicode)
         self.assertIsInstance(NSFileTypeDocumentOption, unicode)
+
+    @min_os_level('10.7')
+    def testConstants10_7(self):
+        self.assertIsInstance(NSVerticalGlyphFormAttributeName, unicode)
+        self.assertIsInstance(NSTextLayoutSectionOrientation, unicode)
+        self.assertIsInstance(NSTextLayoutSectionRange, unicode)
+        self.assertIsInstance(NSTextLayoutSectionsAttribute, unicode)
+
+    @min_os_level('10.8')
+    def testConstants10_8(self):
+        self.assertIsInstance(NSTextAlternativesAttributeName, unicode)
+        self.assertIsInstance(NSUsesScreenFontsDocumentAttribute, unicode)
+
+    @min_os_level('10.10')
+    def testConstants10_10(self):
+        self.assertIsInstance(NSTextEffectAttributeName, unicode)
+        self.assertIsInstance(NSTextEffectLetterpressStyle, unicode)
+
+    @min_os_level('10.11')
+    def testConstants10_11(self):
+        self.assertIsInstance(NSDefaultAttributesDocumentAttribute, unicode)
 
 
 
