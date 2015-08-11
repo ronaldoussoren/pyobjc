@@ -2608,7 +2608,7 @@ PyObjCClass_ListProperties(PyObject* aClass)
         return NULL;
     }
 
-    if (class_copyPropertyList == NULL) {
+    if (&class_copyPropertyList == NULL) {
         /* System without the 2.0 runtime and hence without
          * native properties
          */
