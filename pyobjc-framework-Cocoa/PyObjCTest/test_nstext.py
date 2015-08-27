@@ -28,11 +28,18 @@ class TestNSText (TestCase):
         self.assertEqual(NSDeleteCharacter,  unichr(0x007f))
         self.assertEqual(NSLineSeparatorCharacter, unichr(0x2028))
         self.assertEqual(NSParagraphSeparatorCharacter, unichr(0x2029))
+
         self.assertEqual(NSLeftTextAlignment, 0)
         self.assertEqual(NSRightTextAlignment, 1)
         self.assertEqual(NSCenterTextAlignment, 2)
         self.assertEqual(NSJustifiedTextAlignment, 3)
         self.assertEqual(NSNaturalTextAlignment, 4)
+
+        self.assertEqual(NSTextAlignmentLeft, 0)
+        self.assertEqual(NSTextAlignmentRight, 1)
+        self.assertEqual(NSTextAlignmentCenter, 2)
+        self.assertEqual(NSTextAlignmentJustified, 3)
+        self.assertEqual(NSTextAlignmentNatural, 4)
 
         self.assertEqual(NSWritingDirectionNatural, -1)
         self.assertEqual(NSWritingDirectionLeftToRight, 0)
@@ -58,7 +65,7 @@ class TestNSText (TestCase):
         self.assertEqual(NSTextWritingDirectionEmbedding, 0<<1)
         self.assertEqual(NSTextWritingDirectionOverride,  1<<1)
 
-    def testMehods(self):
+    def testMethods(self):
         self.assertResultIsBOOL(NSText.writeRTFDToFile_atomically_)
         self.assertArgIsBOOL(NSText.writeRTFDToFile_atomically_, 1)
         self.assertResultIsBOOL(NSText.readRTFDFromFile_)
@@ -83,6 +90,7 @@ class TestNSText (TestCase):
         self.assertArgIsBOOL(NSText.setVerticallyResizable_, 0)
 
     def testProtocols(self):
+        objc.protocolNamed('NSTextDelegate')
         self.assertResultIsBOOL(TestNSTextHelper.textShouldBeginEditing_)
         self.assertResultIsBOOL(TestNSTextHelper.textShouldEndEditing_)
 

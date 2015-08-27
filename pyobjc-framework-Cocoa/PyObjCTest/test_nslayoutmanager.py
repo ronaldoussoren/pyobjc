@@ -12,6 +12,15 @@ class TestNSLayoutManagerHelper (NSObject):
     def layoutManager_shouldUseTemporaryAttributes_forDrawingToScreen_atCharacterIndex_effectiveRange_(self, a, b, c, d, e): return 1
     def layoutManager_didCompleteLayoutForTextContainer_atEnd_(self, a, b, c): return 1
     def layoutOrientation(self): return 1
+    def layoutManager_shouldGenerateGlyphs_properties_characterIndexes_forGlyphRange_(self, l, g, p, c, r): pass
+    def layoutManager_lineSpacingAfterGlyphAtIndex_withProposedLineFragmentRect_(self, l, i, r): return 1
+    def layoutManager_paragraphSpacingBeforeGlyphAtIndex_withProposedLineFragmentRect(self, l, i, r): return 1
+    def layoutManager_paragraphSpacingAfterGlyphAtIndex_withProposedLineFragmentRect(self, l, i, r): return 1
+    def layoutManager_shouldUseAction_forControlCharacterAtIndex_(self, l, a, i): return 1
+    def layoutManager_shouldBreakLineByWordBeforeCharacterAtIndex_(self, l, i): return 1
+    def layoutManager_shouldBreakLineByHyphenatingBeforeCharacterAtIndex_(self, l, i): return 1
+    def layoutManager_boundingBoxForControlGlyphAtIndex_forTextContainer_proposedLineFragment_glyphPosition_characterIndex_(self, l, i, c, f, p, i2): return 1
+    def layoutManager_textContainer_didChangeGeometryFromSize_(self, l, c, s): pass
 
 class TestNSLayoutManager (TestCase):
     def testConstants(self):
@@ -19,11 +28,13 @@ class TestNSLayoutManager (TestCase):
         self.assertEqual(NSGlyphAttributeElastic, 1)
         self.assertEqual(NSGlyphAttributeBidiLevel, 2)
         self.assertEqual(NSGlyphAttributeInscribe, 5)
+
         self.assertEqual(NSGlyphInscribeBase, 0)
         self.assertEqual(NSGlyphInscribeBelow, 1)
         self.assertEqual(NSGlyphInscribeAbove, 2)
         self.assertEqual(NSGlyphInscribeOverstrike, 3)
         self.assertEqual(NSGlyphInscribeOverBelow, 4)
+
         self.assertEqual(NSTypesetterLatestBehavior, -1)
         self.assertEqual(NSTypesetterOriginalBehavior, 0)
         self.assertEqual(NSTypesetterBehavior_10_2_WithCompatibility, 1)
@@ -34,18 +45,87 @@ class TestNSLayoutManager (TestCase):
         self.assertEqual(NSTextLayoutOrientationHorizontal, 0)
         self.assertEqual(NSTextLayoutOrientationVertical, 1)
 
+        # OSX 10.11:
+        self.assertEqual(NSGlyphPropertyNull, 1<<0)
+        self.assertEqual(NSGlyphPropertyControlCharacter, 1 << 1)
+        self.assertEqual(NSGlyphPropertyElastic, 1 << 2)j
+        self.assertEqual(NSGlyphPropertyNonBaseCharacter, 1 << 3)
+
+        self.assertEqual(NSControlCharacterActionZeroAdvancement, 1 << 0)
+        self.assertEqual(NSControlCharacterActionWhitespace, 1 << 1)
+        self.assertEqual(NSControlCharacterActionHorizontalTab, 1 << 2)
+        self.assertEqual(NSControlCharacterActionLineBreak, 1 << 3)
+        self.assertEqual(NSControlCharacterActionParagraphBreak, 1 << 4)
+        self.assertEqual(NSControlCharacterActionContainerBreak, 1 << 5)
+
     def testProtocols(self):
         objc.protocolNamed('NSTextLayoutOrientationProvider')
         self.assertResultHasType(TestNSLayoutManagerHelper.layoutOrientation, objc._C_NSInteger)
 
         objc.protocolNamed('NSLayoutManagerDelegate')
 
+        self.assertArgHasType(TestNSLayoutManagerHelper.layoutManager_shouldGenerateGlyphs_properties_characterIndexes_forGlyphRange_, 1, b'n^H')
+        self.assertArgHasType(TestNSLayoutManagerHelper.layoutManager_shouldGenerateGlyphs_properties_characterIndexes_forGlyphRange_, 2, b'n^' + objc._C_NSUInteger)
+        self.assertArgHasType(TestNSLayoutManagerHelper.layoutManager_shouldGenerateGlyphs_properties_characterIndexes_forGlyphRange_, 3, b'n^' + objc._C_NSUInteger)
+        self.assertArgHasType(TestNSLayoutManagerHelper.layoutManager_shouldGenerateGlyphs_properties_characterIndexes_forGlyphRange_, 5, NSRange.__typestr__)
+        self.assertArgSizeInArg(TestNSLayoutManagerHelper.layoutManager_shouldGenerateGlyphs_properties_characterIndexes_forGlyphRange_, 1, 5)
+        self.assertArgSizeInArg(TestNSLayoutManagerHelper.layoutManager_shouldGenerateGlyphs_properties_characterIndexes_forGlyphRange_, 2, 5)
+        self.assertArgSizeInArg(TestNSLayoutManagerHelper.layoutManager_shouldGenerateGlyphs_properties_characterIndexes_forGlyphRange_, 3, 5)
+
+        self.assertResultHasType(TestNSLayoutManagerHelper.layoutManager_lineSpacingAfterGlyphAtIndex_withProposedLineFragmentRect_, objc._C_CGFloat)
+        self.assertArgHasType(TestNSLayoutManagerHelper.layoutManager_lineSpacingAfterGlyphAtIndex_withProposedLineFragmentRect_, 1, objc._C_NSUInteger)
+        self.assertArgHasType(TestNSLayoutManagerHelper.layoutManager_lineSpacingAfterGlyphAtIndex_withProposedLineFragmentRect_, 2, NSRect.__typestr__)
+
+        self.assertResultHasType(TestNSLayoutManagerHelper.layoutManager_paragraphSpacingBeforeGlyphAtIndex_withProposedLineFragmentRect_, objc._C_CGFloat)
+        self.assertArgHasType(TestNSLayoutManagerHelper.layoutManager_paragraphSpacingBeforeGlyphAtIndex_withProposedLineFragmentRect_, 1, objc._C_NSUInteger)
+        self.assertArgHasType(TestNSLayoutManagerHelper.layoutManager_paragraphSpacingBeforeGlyphAtIndex_withProposedLineFragmentRect_, 2, NSRect.__typestr__)
+
+        self.assertResultHasType(TestNSLayoutManagerHelper.layoutManager_paragraphSpacingAfterGlyphAtIndex_withProposedLineFragmentRect_, objc._C_CGFloat)
+        self.assertArgHasType(TestNSLayoutManagerHelper.layoutManager_paragraphSpacingAfterGlyphAtIndex_withProposedLineFragmentRect_, 1, objc._C_NSUInteger)
+        self.assertArgHasType(TestNSLayoutManagerHelper.layoutManager_paragraphSpacingAfterGlyphAtIndex_withProposedLineFragmentRect_, 2, NSRect.__typestr__)
+
+        self.assertResultHasType(TestNSLayoutManagerHelper.layoutManager_shouldUseAction_forControlCharacterAtIndex_, objc._C_NSUInteger)
+        self.assertArgHasType(TestNSLayoutManagerHelper.layoutManager_shouldUseAction_forControlCharacterAtIndex_, 1, objc._C_NSUInteger)
+        self.assertArgHasType(TestNSLayoutManagerHelper.layoutManager_shouldUseAction_forControlCharacterAtIndex_, 2, objc._C_NSUInteger)
+
+        self.assertResultHasType(TestNSLayoutManagerHelper.layoutManager_shouldBreakLineByWordBeforeCharacterAtIndex_, objc._C_NSBOOL)
+        self.assertArgHasType(TestNSLayoutManagerHelper.layoutManager_shouldBreakLineByWordBeforeCharacterAtIndex_, 1, objc._C_NSUInteger)
+
+        self.assertResultHasType(TestNSLayoutManagerHelper.layoutManager_shouldBreakLineByHyphenatingBeforeCharacterAtIndex_, objc._C_NSBOOL)
+        self.assertArgHasType(TestNSLayoutManagerHelper.layoutManager_shouldBreakLineByWordBeforeCharacterAtIndex_, 1, objc._C_NSUInteger)
+
+        self.assertResultHasType(TestNSLayoutManagerHelper.layoutManager_boundingBoxForControlGlyphAtIndex_forTextContainer_proposedLineFragment_glyphPosition_characterIndex_, NSRect.__typestr__)
+        self.assertArgHasType(TestNSLayoutManagerHelper.layoutManager_boundingBoxForControlGlyphAtIndex_forTextContainer_proposedLineFragment_glyphPosition_characterIndex_, 1, objc._C_NSUInteger)
+        self.assertArgHasType(TestNSLayoutManagerHelper.layoutManager_boundingBoxForControlGlyphAtIndex_forTextContainer_proposedLineFragment_glyphPosition_characterIndex_, 3, NSRect.__typestr__)
+        self.assertArgHasType(TestNSLayoutManagerHelper.layoutManager_boundingBoxForControlGlyphAtIndex_forTextContainer_proposedLineFragment_glyphPosition_characterIndex_, 4, NSPoint.__typestr__)
+        self.assertArgHasType(TestNSLayoutManagerHelper.layoutManager_boundingBoxForControlGlyphAtIndex_forTextContainer_proposedLineFragment_glyphPosition_characterIndex_, 5, objc._C_NSUInteger.__typestr__)
+
+        self.assertArgHasType(TestNSLayoutManagerHelper.layoutManager_textContainer_didChangeGeometryFromSize_, 2, NSSize.__typestr__)
+
 
     def testMethods(self):
+        self.assertResultIsBOOL(NSLayoutManager.usesScreenFonts)
+        self.assertArgIsBOOL(NSLayoutManager.setUsesScreenFonts_, 0)
+
+        self.assertArgSizeInArg(NSLayoutManager.insertGlyphs_length_forStartingGlyphAtIndex_characterIndex_, 0, 1)
+        self.assertArgIsIn(NSLayoutManager.insertGlyphs_length_forStartingGlyphAtIndex_characterIndex_, 0)
+
         self.assertArgIsOut(NSLayoutManager.invalidateGlyphsForCharacterRange_changeInLength_actualCharacterRange_, 2)
         self.assertArgIsOut(NSLayoutManager.invalidateLayoutForCharacterRange_isSoft_actualCharacterRange_, 2)
         self.assertArgIsOut(NSLayoutManager.getGlyphs_range_, 0)
         self.assertArgSizeInArg(NSLayoutManager.getGlyphs_range_, 0, 1)
+
+        self.assertResultIsBOOL(NSLayoutManager.showsInvisibleCharacters)
+        self.assertArgIsBOOL(NSLayoutManager.setShowsInvisibleCharacters_, 0)
+
+        self.assertResultIsBOOL(NSLayoutManager.showsControlCharacters)
+        self.assertArgIsBOOL(NSLayoutManager.setShowsControlCharacters_, 0)
+
+        self.assertResultIsBOOL(NSLayoutManager.usesFontLeading)
+        self.assertArgIsBOOL(NSLayoutManager.setUsesFontLeading_, 0)
+
+        self.assertResultIsBOOL(NSLayoutManager.backgroundLayoutEnabled)
+        self.assertArgIsBOOL(NSLayoutManager.setBackgroundLayoutEnabled_, 0)
 
         self.assertArgIsOut(NSLayoutManager.textContainerForGlyphAtIndex_effectiveRange_, 1)
         self.assertArgIsOut(NSLayoutManager.lineFragmentRectForGlyphAtIndex_effectiveRange_, 1)
@@ -91,9 +171,24 @@ class TestNSLayoutManager (TestCase):
         self.assertArgHasType(NSLayoutManager.showPackedGlyphs_length_glyphRange_atPoint_font_color_printingAdjustment_, 0, b'n^v')
         self.assertArgSizeInArg(NSLayoutManager.showPackedGlyphs_length_glyphRange_atPoint_font_color_printingAdjustment_, 0, 1)
 
+        self.assertArgHasType(NSLayoutManager.CGGlyphAtIndex_isValidIndex_, 1, b'o^Z')
+        self.assertResultIsBOOL(NSLayoutManager.isValidGlyphIndex_)
+
+        self.assertArgIsBOOL(NSLayoutManager.setNotShownAttribute_forGlyphAtIndex_, 0)
+        self.assertArgIsBOOL(NSLayoutManager.setDrawsOutsideLineFragment_forGlyphAtIndex_, 0)
+
+        self.assertResultIsBOOL(NSLayoutManager.notShownAttributeForGlyphAtIndex_)
+        self.assertResultIsBOOL(NSLayoutManager.drawsOutsideLineFragmentForGlyphAtIndex_)
+
 
     @min_os_level("10.5")
     def testMethods10_5(self):
+        self.assertResultIsBOOL(NSLayoutManager.allowsNonContiguousLayout)
+        self.assertArgIsBOOL(NSLayoutManager.setAllowsNonContiguousLayout_, 0)
+
+        self.assertResultIsBOOL(NSLayoutManager.hasNonContiguousLayout)
+        self.assertArgIsBOOL(NSLayoutManager.setHasNonContiguousLayout_, 0)
+
         self.assertArgIsOut(NSLayoutManager.invalidateGlyphsForCharacterRange_changeInLength_actualCharacterRange_, 2)
         self.assertArgHasType(NSLayoutManager.glyphAtIndex_isValidIndex_, 1, b'o^' + objc._C_NSBOOL)
 
@@ -116,6 +211,18 @@ class TestNSLayoutManager (TestCase):
         self.assertArgIsBOOL(NSLayoutManager.getLineFragmentInsertionPointsForCharacterAtIndex_alternatePositions_inDisplayOrder_positions_characterIndexes_, 2)
         self.assertArgIsOut(NSLayoutManager.getLineFragmentInsertionPointsForCharacterAtIndex_alternatePositions_inDisplayOrder_positions_characterIndexes_, 3)
         self.assertArgIsOut(NSLayoutManager.getLineFragmentInsertionPointsForCharacterAtIndex_alternatePositions_inDisplayOrder_positions_characterIndexes_, 4)
+
+        self.assertArgIsOut(NSLayoutManager.getGlyphsInRange_glyphs_properties_characterIndexes_bidiLevels_, 1)
+        self.assertArgIsOut(NSLayoutManager.getGlyphsInRange_glyphs_properties_characterIndexes_bidiLevels_, 2)
+        self.assertArgIsOut(NSLayoutManager.getGlyphsInRange_glyphs_properties_characterIndexes_bidiLevels_, 3)
+        self.assertArgIsOut(NSLayoutManager.getGlyphsInRange_glyphs_properties_characterIndexes_bidiLevels_, 4)
+        self.assertArgSizeInArg(NSLayoutManager.getGlyphsInRange_glyphs_properties_characterIndexes_bidiLevels_, 1, 0)
+        self.assertArgSizeInArg(NSLayoutManager.getGlyphsInRange_glyphs_properties_characterIndexes_bidiLevels_, 2, 0)
+        self.assertArgSizeInArg(NSLayoutManager.getGlyphsInRange_glyphs_properties_characterIndexes_bidiLevels_, 3, 0)
+        self.assertArgSizeInArg(NSLayoutManager.getGlyphsInRange_glyphs_properties_characterIndexes_bidiLevels_, 4, 0)
+
+        self.assertArgIsBOOL(NSLayoutManager.rulerAccessoryViewForTextView_paragraphStyle_ruler_enabled_, 3)
+        self.assertResultIsBOOL(NSLayoutManager.layoutManagerOwnsFirstResponderInWindow_)
 
     @min_os_level('10.5')
     @expectedFailure
@@ -141,9 +248,14 @@ class TestNSLayoutManager (TestCase):
         self.assertArgIsIn(NSLayoutManager.showCGGlyphs_positions_count_font_matrix_attributes_inContext_, 1)
         self.assertArgSizeInArg(NSLayoutManager.showCGGlyphs_positions_count_font_matrix_attributes_inContext_, 1, 2)
 
+    @min_os_level('10.11')
+    def testMethods10_11(self):
+        self.assertArgSizeInArg(NSLayoutManager.setGlyphs_properties_characterIndexes_font_forGlyphRnage_, 0, 4)
+        self.assertArgSizeInArg(NSLayoutManager.setGlyphs_properties_characterIndexes_font_forGlyphRnage_, 1, 4)
+        self.assertArgSizeInArg(NSLayoutManager.setGlyphs_properties_characterIndexes_font_forGlyphRnage_, 2, 4)
 
-
-
+        self.assertArgIsBlock(NSLayoutManager.enumerateLineFragmentsForGlyphRange_usingBlock_, 1, b'v' + NSRect.__typestr__ + NSRect.__typestr__ + b'@' + NSRange.__typestr__ + b'o^Z')
+        self.assertArgIsBlock(NSLayoutManager.enumerateEnclosingRectsForGlyphRange_withinSelectedGlyphRange_inTextContainer_usingBlock_, 3, b'v' + NSRect.__typestr__ + b'o^Z')
 
 
 if __name__ == "__main__":

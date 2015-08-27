@@ -11,6 +11,7 @@ class TestNSFontDescriptor (TestCase):
     def testConstants(self):
         self.assertEqual(NSFontUnknownClass, (0 << 28))
         self.assertEqual(NSFontOldStyleSerifsClass, (1 << 28))
+        self.assertEqual(NSFontTransitionalSerifsClass, (2 << 28))
         self.assertEqual(NSFontModernSerifsClass, (3 << 28))
         self.assertEqual(NSFontClarendonSerifsClass, (4 << 28))
         self.assertEqual(NSFontSlabSerifsClass, (5 << 28))
@@ -55,6 +56,18 @@ class TestNSFontDescriptor (TestCase):
         self.assertIsInstance(NSFontVariationAxisNameKey, unicode)
         self.assertIsInstance(NSFontFeatureTypeIdentifierKey, unicode)
         self.assertIsInstance(NSFontFeatureSelectorIdentifierKey, unicode)
+
+    @min_os_level('10.11')
+    def testConstants10_11(self):
+        self.assertIsInstance(NSFontWeightUltraLight, float)
+        self.assertIsInstance(NSFontWeightThin, float)
+        self.assertIsInstance(NSFontWeightLight, float)
+        self.assertIsInstance(NSFontWeightRegular, float)
+        self.assertIsInstance(NSFontWeightMedium, float)
+        self.assertIsInstance(NSFontWeightSemibold, float)
+        self.assertIsInstance(NSFontWeightBold, float)
+        self.assertIsInstance(NSFontWeightHeavy, float)
+        self.assertIsInstance(NSFontWeightBlack, float)
 
 
 if __name__ == "__main__":

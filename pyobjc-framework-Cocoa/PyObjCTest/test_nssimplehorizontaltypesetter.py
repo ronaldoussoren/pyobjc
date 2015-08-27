@@ -6,7 +6,7 @@ if is32Bit():
         def willSetLineFragmentRect_forGlyphRange_usedRect_(self, a, b, c): return 1
 
 class TestNSSimpleHorizontalTypesetter (TestCase):
-    @onlyOn32Bit
+    #@onlyOn32Bit
     def testConstants(self):
         self.assertEqual(NSLayoutNotDone, 0)
         self.assertEqual(NSLayoutDone, 1)
@@ -23,10 +23,12 @@ class TestNSSimpleHorizontalTypesetter (TestCase):
         self.assertEqual(NSBaselineNotSet, -1.0)
         self.assertEqual(NumGlyphsToGetEachTime, 20)
 
-    @onlyOn32Bit
+    #@onlyOn32Bit
     def testMethods(self):
         self.assertArgIsOut(NSSimpleHorizontalTypesetter.layoutGlyphsInLayoutManager_startingAtGlyphIndex_maxNumberOfLineFragments_nextGlyphIndex_, 3)
         self.assertArgIsInOut(NSSimpleHorizontalTypesetter.layoutGlyphsInHorizontalLineFragment_baseline_, 1)
+        self.assertArgIsInBOOL(NSSimpleHorizontalTypesetter.growGlyphCaches_fillGlyphInfo_, 1)
+
         self.assertArgIsInOut(TestNSSimpleHorizontalTypesetterHelper.willSetLineFragmentRect_forGlyphRange_usedRect_, 2)
         self.assertArgHasType(TestNSSimpleHorizontalTypesetterHelper.willSetLineFragmentRect_forGlyphRange_usedRect_, 2, b'N^' + NSRect.__typestr__)
         self.assertArgHasType(TestNSSimpleHorizontalTypesetterHelper.willSetLineFragmentRect_forGlyphRange_usedRect_, 1, NSRange.__typestr__)

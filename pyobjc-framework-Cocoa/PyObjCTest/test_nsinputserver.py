@@ -18,14 +18,16 @@ class TestNSInputServerHelper (NSObject):
 class TestNSInputServer (TestCase):
     def testProtocols(self):
         objc.protocolNamed('NSInputServiceProvider')
-        objc.protocolNamed('NSInputServerMouseTracker')
         self.assertArgIsSEL(TestNSInputServerHelper.doCommandBySelector_client_, 0, b'v@:@')
         self.assertArgHasType(TestNSInputServerHelper.markedTextSelectionChanged_client_, 0, NSRange.__typestr__)
         self.assertResultIsBOOL(TestNSInputServerHelper.canBeDisabled)
         self.assertResultIsBOOL(TestNSInputServerHelper.wantsToInterpretAllKeystrokes)
         self.assertResultIsBOOL(TestNSInputServerHelper.wantsToHandleMouseEvents)
+        self.assertResultIsBOOL(TestNSInputServerHelper.wantsToDelayTextChangeNotifications)
         self.assertArgHasType(TestNSInputServerHelper.activeConversationWillChange_fromOldConversation_, 1, objc._C_NSInteger)
         self.assertArgHasType(TestNSInputServerHelper.activeConversationChanged_toNewConversation_, 1, objc._C_NSInteger)
+
+        objc.protocolNamed('NSInputServerMouseTracker')
 
         self.assertResultIsBOOL(TestNSInputServerHelper.mouseDownOnCharacterIndex_atCoordinate_withModifier_client_)
         self.assertArgHasType(TestNSInputServerHelper.mouseDownOnCharacterIndex_atCoordinate_withModifier_client_, 0, objc._C_NSUInteger)
@@ -41,7 +43,6 @@ class TestNSInputServer (TestCase):
         self.assertArgHasType(TestNSInputServerHelper.mouseUpOnCharacterIndex_atCoordinate_withModifier_client_, 0, objc._C_NSUInteger)
         self.assertArgHasType(TestNSInputServerHelper.mouseUpOnCharacterIndex_atCoordinate_withModifier_client_, 1, NSPoint.__typestr__)
         self.assertArgHasType(TestNSInputServerHelper.mouseUpOnCharacterIndex_atCoordinate_withModifier_client_, 2, objc._C_NSUInteger)
-
 
 
 if __name__ == "__main__":

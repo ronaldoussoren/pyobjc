@@ -35,8 +35,9 @@ class TestNSWorkspace(TestCase):
         self.assertEqual(NSWorkspaceLaunchNewInstance, 0x00080000)
         self.assertEqual(NSWorkspaceLaunchAndHide, 0x00100000)
         self.assertEqual(NSWorkspaceLaunchAndHideOthers, 0x00200000)
-        self.assertEqual(NSWorkspaceLaunchDefault, (
-                NSWorkspaceLaunchAsync | NSWorkspaceLaunchAllowingClassicStartup))
+        #self.assertEqual(NSWorkspaceLaunchDefault, (
+        #        NSWorkspaceLaunchAsync | NSWorkspaceLaunchAllowingClassicStartup))
+        self.assertEqual(NSWorkspaceLaunchDefault, NSWorkspaceLaunchAsync)
 
         self.assertEqual(NSExcludeQuickDrawElementsIconCreationOption, 1 << 1)
         self.assertEqual(NSExclude10_4ElementsIconCreationOption, 1 << 2)
@@ -68,6 +69,7 @@ class TestNSWorkspace(TestCase):
         self.assertIsInstance(NSWorkspaceDestroyOperation, unicode)
         self.assertIsInstance(NSWorkspaceRecycleOperation, unicode)
         self.assertIsInstance(NSWorkspaceDuplicateOperation, unicode)
+
     @min_os_level('10.6')
     def testConstants10_6(self):
         self.assertIsInstance(NSWorkspaceDesktopImageScalingKey, unicode)

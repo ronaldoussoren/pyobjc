@@ -49,6 +49,7 @@ class TestHeader (TestCase):
         self.assertEqual(NSViewMinYMargin,  8)
         self.assertEqual(NSViewHeightSizable, 16)
         self.assertEqual(NSViewMaxYMargin, 32)
+
         self.assertEqual(NSNoBorder, 0)
         self.assertEqual(NSLineBorder, 1)
         self.assertEqual(NSBezelBorder, 2)
@@ -64,6 +65,7 @@ class TestHeader (TestCase):
         self.assertIsInstance(NSFullScreenModeAllScreens, unicode)
         self.assertIsInstance(NSFullScreenModeSetting, unicode)
         self.assertIsInstance(NSFullScreenModeWindowLevel, unicode)
+        self.assertIsInstance(NSFullScreenModeApplicationPresentationOptions, unicode)
         self.assertIsInstance(NSViewDidUpdateTrackingAreasNotification, unicode)
 
     @min_os_level('10.6')

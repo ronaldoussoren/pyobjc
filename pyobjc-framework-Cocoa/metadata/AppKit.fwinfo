@@ -3,42 +3,95 @@
 {
  "definitions": {
   "enums": {
+   "NSVisualEffectMaterialMenu": { "value": 5 },
+   "NSVisualEffectMaterialPopover": { "value": 6 },
+   "NSVisualEffectMaterialSidebar": { "value": 7 },
+   "NSVisualEffectMaterialMediumLight": { "value": 8 },
+   "NSVisualEffectMaterialUltraDark": { "value": 9 },
+   "NSUserInterfaceLayoutDirectionLeftToRight": { "value": 0 },
+   "NSUserInterfaceLayoutDirectionRightToLeft": { "value": 1 },
+   "NSUserInterfaceLayoutOrientationHorizontal": { "value": 0 },
+   "NSUserInterfaceLayoutOrientationVertical": { "value": 1 },
+   "NSTokenStyleDefault": { "value": 0 },
+   "NSTokenStyleNone": { "value": 1 },
+   "NSTokenStyleRounded": { "value": 2 },
+   "NSTokenStyleSquared": { "value": 3 },
+   "NSTokenStylePlainSquared": { "value": 4 },
+   "NSTextAlignmentLeft": { "value": 0 },
+   "NSTextAlignmentRight": { "value": 1 },
+   "NSTextAlignmentCenter": { "value": 2 },
+   "NSTextAlignmentJustified": { "value": 3 },
+   "NSTextAlignmentNatural": { "value": 4 },
+   "NSTableViewRowActionStyleRegular": { "value": 0 },
+   "NSTableViewRowActionStyleDestructive": { "value": 1 },
+   "NSTableRowActionEdgeLeading": { "value": 0 },
+   "NSTableRowActionEdgeTrailing": { "value": 1 },
+   "NSStackViewDistributionGravityAreas": { "value": -1 },
+   "NSStackViewDistributionFill": { "value": 0 },
+   "NSStackViewDistributionFillEqually": { "value": 1 },
+   "NSStackViewDistributionFillProportionally": { "value": 2 },
+   "NSStackViewDistributionEqualSpacing": { "value": 3 },
+   "NSStackViewDistributionEqualCentering": { "value": 4 },
+   "NSHapticFeedbackPatternGeneric": { "value": 0 },
+   "NSHapticFeedbackPatternAlignment": { "value": 1 },
+   "NSHapticFeedbackPatternLevelChange": { "value": 2 },
+   "NSHapticFeedbackPerformanceTimeDefault": { "value": 0 },
+   "NSHapticFeedbackPerformanceTimeNow": { "value": 1 },
+   "NSHapticFeedbackPerformanceTimeDrawCompleted": { "value": 2 },
    "NSCollectionViewItemHighlightNone": { "value": 0 },
    "NSCollectionViewItemHighlightForSelection": { "value": 1 },
    "NSCollectionViewItemHighlightForDeselection": { "value": 2 },
-   "NSCollectionViewItemHighlightAsDropTarget": { "value": 3 }
+   "NSCollectionViewItemHighlightAsDropTarget": { "value": 3 },
+   "NSCollectionViewScrollDirectionVertical": { "value": 0 },
+   "NSCollectionViewScrollDirectionHorizontal": { "value": 1 },
+   "NSCollectionElementCategoryItem": { "value": 0 },
+   "NSCollectionElementCategorySupplementaryView": { "value": 1 },
+   "NSCollectionElementCategoryDecorationView": { "value": 2 },
+   "NSCollectionElementCategoryInterItemGap": { "value": 3 },
+   "NSCollectionUpdateActionInsert": { "value": 0 },
+   "NSCollectionUpdateActionDelete": { "value": 1 },
+   "NSCollectionUpdateActionReload": { "value": 2 },
+   "NSCollectionUpdateActionMove": { "value": 3 },
+   "NSCollectionUpdateActionNone": { "value": 4 },
+   "NSSpringLoadingHighlightNone": { "value": 0 },
+   "NSSpringLoadingHighlightStandard": { "value": 1 },
+   "NSSpringLoadingHighlightEmphasized": { "value": 2 },
+   "NSSpringLoadingDisabled": { "value":  0 },
+   "NSSpringLoadingEnabled": { "value":  1 },
+   "NSSpringLoadingContinuousActivation": { "value":  2 },
+   "NSSpringLoadingNoHover": { "value":  4 },
+   "NSEventTypePressure": { "value":  34 },
+   "NSPressureBehaviorUnknown": { "value": -1 },
+   "NSPressureBehaviorPrimaryDefault": { "value": 0 },
+   "NSPressureBehaviorPrimaryClick": { "value": 1 },
+   "NSPressureBehaviorPrimaryGeneric": { "value": 2 },
+   "NSPressureBehaviorPrimaryAccelerator": { "value": 3 },
+   "NSPressureBehaviorPrimaryDeepClick": { "value": 5 },
+   "NSPressureBehaviorPrimaryDeepDrag": { "value": 6 }
   },
   "externs": {
-    "NSPrintFaxJob": {
-      "typestr": "@"
-    },
-    "NSPrintFaxUseCoverSheet": {
-      "typestr": "@"
-    },
-    "NSPrintFaxTrimPageEnds": {
-      "typestr": "@"
-    },
-    "NSPrintFaxSendTime": {
-      "typestr": "@"
-    },
-    "NSPrintFaxReturnReceipt": {
-      "typestr": "@"
-    },
-    "NSPrintFaxReceiverNumbers": {
-      "typestr": "@"
-    },
-    "NSPrintFaxReceiverNames": {
-      "typestr": "@"
-    },
-    "NSPrintFaxModem": {
-      "typestr": "@"
-    },
-    "NSPrintFaxCoverSheetName": {
-      "typestr": "@"
-    },
-    "NSPrintFaxHighResolution": {
-      "typestr": "@"
-    }
+   "NSCollectionElementKindInterItemGapIndicator": { "typestr": "@" },
+   "NSCollectionElementKindSectionHeader": { "typestr": "@" },
+   "NSCollectionElementKindSectionFooter": { "typestr": "@" },
+   "NSPrintFaxJob": { "typestr": "@" },
+   "NSPrintFaxUseCoverSheet": { "typestr": "@" },
+   "NSPrintFaxTrimPageEnds": { "typestr": "@" },
+   "NSPrintFaxSendTime": { "typestr": "@" },
+   "NSPrintFaxReturnReceipt": { "typestr": "@" },
+   "NSPrintFaxReceiverNumbers": { "typestr": "@" },
+   "NSPrintFaxReceiverNames": { "typestr": "@" },
+   "NSPrintFaxModem": { "typestr": "@" },
+   "NSPrintFaxCoverSheetName": { "typestr": "@" },
+   "NSPrintFaxHighResolution": { "typestr": "@" },
+   "NSFontWeightUltraLight": { "typestr": ["f", "d"] },
+   "NSFontWeightThin": { "typestr": ["f", "d"] },
+   "NSFontWeightLight": { "typestr": ["f", "d"] },
+   "NSFontWeightRegular": { "typestr": ["f", "d"] },
+   "NSFontWeightMedium": { "typestr": ["f", "d"] },
+   "NSFontWeightSemibold": { "typestr": ["f", "d"] },
+   "NSFontWeightBold": { "typestr": ["f", "d"] },
+   "NSFontWeightHeavy": { "typestr": ["f", "d"] },
+   "NSFontWeightBlack": { "typestr": ["f", "d"] }
   },
   "cftypes": {
    "NSModalSession": {

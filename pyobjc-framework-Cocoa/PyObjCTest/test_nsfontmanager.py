@@ -19,7 +19,9 @@ class TestNSFontManager (TestCase):
         self.assertEqual(NSCompressedFontMask, 0x00000200)
         self.assertEqual(NSFixedPitchFontMask, 0x00000400)
         self.assertEqual(NSUnitalicFontMask, 0x01000000)
+
         self.assertEqual(NSFontCollectionApplicationOnlyMask, 1 << 0)
+
         self.assertEqual(NSNoFontChangeAction, 0)
         self.assertEqual(NSViaPanelFontAction, 1)
         self.assertEqual(NSAddTraitFontAction, 2)
@@ -41,6 +43,8 @@ class TestNSFontManager (TestCase):
         self.assertResultIsBOOL(NSFontManager.addCollection_options_)
         self.assertResultIsBOOL(NSFontManager.removeCollection_)
         self.assertResultIsBOOL(NSFontManager.fontNamed_hasTraits_)
+
+        self.assertArgIsBOOL(NSFontManager.convertWeight_ofFont_, 0)
 
     def testProtocols(self):
         self.assertResultIsBOOL(TestNSFontManagerHelper.fontManager_willIncludeFont_)

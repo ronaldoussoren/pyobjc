@@ -35,8 +35,10 @@ class TestNSTextView (TestCase):
         self.assertEqual(NSSelectByCharacter, 0)
         self.assertEqual(NSSelectByWord, 1)
         self.assertEqual(NSSelectByParagraph, 2)
+
         self.assertEqual(NSSelectionAffinityUpstream, 0)
         self.assertEqual(NSSelectionAffinityDownstream, 1)
+
         self.assertEqual(NSFindPanelActionShowFindPanel, 1)
         self.assertEqual(NSFindPanelActionNext, 2)
         self.assertEqual(NSFindPanelActionPrevious, 3)
@@ -66,6 +68,8 @@ class TestNSTextView (TestCase):
 
 
     def testMethods(self):
+        self.assertResultIsBOOL(NSTextView.shouldDrawInsertionPoint)
+        self.assertArgIsBOOL(NSTextView.setShouldDrawInsertionPoint_, 0)
         self.assertResultIsBOOL(NSTextView.rulerView_shouldMoveMarker_)
         self.assertResultIsBOOL(NSTextView.rulerView_shouldAddMarker_)
         self.assertResultIsBOOL(NSTextView.rulerView_shouldRemoveMarker_)
@@ -116,6 +120,7 @@ class TestNSTextView (TestCase):
         self.assertResultIsBOOL(NSTextView.usesFontPanel)
         self.assertArgIsBOOL(NSTextView.setUsesFontPanel_, 0)
         self.assertResultIsBOOL(NSTextView.isRulerVisible)
+        self.assertArgIsBOOL(NSTextView.setRulerVisible_, 0)
         self.assertResultIsBOOL(NSTextView.smartInsertDeleteEnabled)
         self.assertArgIsBOOL(NSTextView.setSmartInsertDeleteEnabled_, 0)
 
@@ -148,6 +153,7 @@ class TestNSTextView (TestCase):
 
 
     def testProtocols(self):
+        objc.protocolNamed('NSTextViewDelegate')
         self.assertResultIsBOOL(TestNSTextViewHelper.textView_clickedOnLink_atIndex_)
         self.assertArgHasType(TestNSTextViewHelper.textView_clickedOnLink_atIndex_, 2, objc._C_NSUInteger)
         self.assertArgHasType(TestNSTextViewHelper.textView_clickedOnCell_inRect_atIndex_, 2, NSRect.__typestr__)

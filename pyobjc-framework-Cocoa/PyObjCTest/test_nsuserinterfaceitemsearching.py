@@ -5,6 +5,9 @@ class TestNSUserInterfaceItemSearchingHelper (NSObject):
     def searchForItemsWithSearchString_resultLimit_matchedItemHandler_(self, s, l, h): pass
 
 class TestNSUserInterfaceItemSearching (TestCase):
+    def testProtocols(self):
+        objc.protocolNamed('NSUserInterfaceItemSearching')
+
     @min_os_level('10.6')
     def testMethods(self):
         self.assertArgHasType(TestNSUserInterfaceItemSearchingHelper.searchForItemsWithSearchString_resultLimit_matchedItemHandler_,

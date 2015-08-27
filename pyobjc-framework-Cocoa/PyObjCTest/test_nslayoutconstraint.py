@@ -11,12 +11,18 @@ class TestNSLayoutContraintManual (TestCase):
 
         self.assertRaises(KeyError, NSDictionaryOfVariableBindings, 'var1', 'var3')
 
+    @min_os_level('10.11')
+    def testConstants10_11(self):
+        self.assertIsInstance(NSViewNoIntrinsicMetric, float)
+
     @min_os_level('10.7')
     def testConstants10_7(self):
         self.assertIsInstance(NSViewNoInstrinsicMetric, float)
+
         self.assertEqual(NSLayoutRelationLessThanOrEqual, -1)
         self.assertEqual(NSLayoutRelationEqual, 0)
         self.assertEqual(NSLayoutRelationGreaterThanOrEqual, 1)
+
         self.assertEqual(NSLayoutAttributeLeft, 1)
         self.assertEqual(NSLayoutAttributeRight, 2)
         self.assertEqual(NSLayoutAttributeTop, 3)
@@ -28,7 +34,10 @@ class TestNSLayoutContraintManual (TestCase):
         self.assertEqual(NSLayoutAttributeCenterX, 9)
         self.assertEqual(NSLayoutAttributeCenterY, 10)
         self.assertEqual(NSLayoutAttributeBaseline, 11)
+        self.assertEqual(NSLayoutAttributeLastBaseline, NSLayoutAttributeBaseline)
+        self.assertEqual(NSLayoutAttributeFirstBaseline, 12)
         self.assertEqual(NSLayoutAttributeNotAnAttribute, 0)
+
         self.assertEqual(NSLayoutFormatAlignAllLeft, (1 << NSLayoutAttributeLeft))
         self.assertEqual(NSLayoutFormatAlignAllRight, (1 << NSLayoutAttributeRight))
         self.assertEqual(NSLayoutFormatAlignAllTop, (1 << NSLayoutAttributeTop))
@@ -38,6 +47,9 @@ class TestNSLayoutContraintManual (TestCase):
         self.assertEqual(NSLayoutFormatAlignAllCenterX, (1 << NSLayoutAttributeCenterX))
         self.assertEqual(NSLayoutFormatAlignAllCenterY, (1 << NSLayoutAttributeCenterY))
         self.assertEqual(NSLayoutFormatAlignAllBaseline, (1 << NSLayoutAttributeBaseline))
+        self.assertEqual(NSLayoutFormatAlignAllLastBaseline, (1 << NSLayoutAttributeBaseline))
+        self.assertEqual(NSLayoutFormatAlignAllFirstBaseline, (1 << NSLayoutAttributeFirstBaseline))
+
         self.assertEqual(NSLayoutFormatAlignmentMask, 0xFFFF)
 
         self.assertEqual(NSLayoutFormatDirectionLeadingToTrailing, 0 << 16)
@@ -45,6 +57,7 @@ class TestNSLayoutContraintManual (TestCase):
         self.assertEqual(NSLayoutFormatDirectionRightToLeft, 2 << 16)
 
         self.assertEqual(NSLayoutFormatDirectionMask, 0x3 << 16)
+
         self.assertEqual(NSLayoutConstraintOrientationHorizontal, 0)
         self.assertEqual(NSLayoutConstraintOrientationVertical, 1)
 
@@ -89,6 +102,7 @@ class TestNSLayoutContraintManual (TestCase):
 
         self.assertResultIsBOOL(NSView.translatesAutoresizingMaskIntoConstraints)
         self.assertArgIsBOOL(NSView.setTranslatesAutoresizingMaskIntoConstraints_, 0)
+
         self.assertResultIsBOOL(NSView.requiresConstraintBasedLayout)
         self.assertResultIsBOOL(NSView.hasAmbiguousLayout)
 

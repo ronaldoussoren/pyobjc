@@ -16,8 +16,6 @@ class TestNSDraggingHelper (NSObject):
     def draggingSession_endedAtPoint_operation_(self, a, b, c): pass
     def ignoreModifierKeysForDraggingSession_(self, a): return 1
 
-
-
     def draggingSourceOperationMask(self): return 1
     def draggingLocation(self): return 1
     def draggedImageLocation(self): return 1
@@ -40,6 +38,10 @@ class TestNSDraggingHelper (NSObject):
     def draggedImage_movedTo_(self, v, v2): pass
     def ignoreModifierKeysWhileDragging(self): return 1
     def draggedImage_endedAt_deposited_(self, i, p, f): pass
+
+    def springLoadingActivated_draggingInfo_(self, a, i): pass
+    def springLoadingEntered_(self, a, i): pass
+    def springLoadingUpdated_(self, a, i): pass
 
 class TestNSDragging (TestCase):
     def testConstants(self):
@@ -69,10 +71,24 @@ class TestNSDragging (TestCase):
         self.assertEqual(NSDraggingItemEnumerationConcurrent, NSEnumerationConcurrent)
         self.assertEqual(NSDraggingItemEnumerationClearNonenumeratedImages, 1<<16)
 
+    @min_os_level('10.11')
+    def testConstant10_11(self):
+        self.assertEqual(NSSpringLoadingHighlightNone, 0)
+        self.assertEqual(NSSpringLoadingHighlightStandard, 1)
+        self.assertEqual(NSSpringLoadingHighlightEmphasized, 2)
+
+        self.assertEqual(NSSpringLoadingDisabled, 0)
+        self.assertEqual(NSSpringLoadingEnabled, 1)
+        self.assertEqual(NSSpringLoadingContinuousActivation, 2)
+        self.assertEqual(NSSpringLoadingNoHover, 4)
+
 
     def testProtocols(self):
         objc.protocolNamed('NSDraggingDestination')
         objc.protocolNamed('NSDraggingSource')
+
+    def testProtocols10_11(self):
+        objc.protocolNamed('NSSpringLoadingDestination')
 
     def testProtocolImplementations(self):
         self.assertResultHasType(TestNSDraggingHelper.draggingSourceOperationMask, objc._C_NSUInteger)
@@ -97,6 +113,9 @@ class TestNSDragging (TestCase):
         self.assertArgHasType(TestNSDraggingHelper.draggedImage_endedAt_deposited_, 1, NSPoint.__typestr__)
         self.assertArgIsBOOL(TestNSDraggingHelper.draggedImage_endedAt_deposited_, 2)
 
+        self.assertResultHasType(TestNSDraggingHelper.draggingSession_sourceOperationMaskForDraggingContext_, objc._C_NSInteger)
+        self.assertArgHasType(TestNSDraggingHelper.draggingSession_sourceOperationMaskForDraggingContext_, 1, objc._C_NSInteger)
+
     @min_os_level('10.7')
     def testProtocols10_7(self):
         self.assertResultIsBOOL(TestNSDraggingHelper.animatesToDestination)
@@ -118,6 +137,12 @@ class TestNSDragging (TestCase):
         self.assertArgHasType(TestNSDraggingHelper.draggingSession_endedAtPoint_operation_, 2, objc._C_NSUInteger)
 
         self.assertResultIsBOOL(TestNSDraggingHelper.ignoreModifierKeysForDraggingSession_)
+
+    @min_os_level('10.11')
+    def testProtocols10_11(self):
+        self.assertArgIsBOOL(TestNSDraggingHelper.springLoadingActivated_draggingInfo_, 0)
+        self.assertResultHasType(TestNSDraggingHelper.springLoadingEntered_, objc._C_NSInteger)
+        self.assertResultHasType(TestNSDraggingHelper.springLoadingUpdated_, objc._C_NSInteger)
 
 if __name__ == "__main__":
     main()

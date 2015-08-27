@@ -15,5 +15,7 @@ class TestNSTabViewController (TestCase):
 
         self.assertResultIsBOOL(NSTabViewController.tabView_shouldSelectTabViewItem_)
 
+        self.assertArgIsBOOL(NSTabViewController.toolbar_itemForItemIdentifier_willBeInsertedIntoToolbar_, 2)
+
 if __name__ == "__main__":
     main()

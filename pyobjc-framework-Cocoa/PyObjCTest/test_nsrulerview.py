@@ -34,5 +34,11 @@ class TestNSRulerView (TestCase):
         self.assertResultHasType(TestNSRulerViewHelper.rulerView_willAddMarker_atLocation_, objc._C_CGFloat)
         self.assertArgHasType(TestNSRulerViewHelper.rulerView_willAddMarker_atLocation_, 2, objc._C_CGFloat)
 
+        self.assertResultHasType(TestNSRulerViewHelper.rulerView_locationForPoint_, objc._C_CGFloat)
+        self.assertArgHasType(TestNSRulerViewHelper.rulerView_locationForPoint_, NSPoint.__typestr__)
+
+        self.assertResultHasType(TestNSRulerViewHelper.rulerView_pointForLocation_, NSPoint.__typestr__)
+        self.assertArgHasType(TestNSRulerViewHelper.rulerView_pointForLocation_, objc._C_CGFloat)
+
 if __name__ == "__main__":
     main()

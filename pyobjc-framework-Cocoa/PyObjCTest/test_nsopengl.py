@@ -114,6 +114,15 @@ class TestNSOpenGL (TestCase):
         self.assertResultHasType(NSOpenGLContext.CGLContextObj,
                 b'^{_CGLContextObj}')
 
+        self.assertArgIsIn(NSOpenGLContext.setValues_forParameter_, 0)
+        self.assertArgIsVariableSize(NSOpenGLContext.setValues_forParameter_, 0)
+
+        self.assertArgIsOut(NSOpenGLContext.setValues_forParameter_, 0)
+        self.assertArgIsVariableSize(NSOpenGLContext.setValues_forParameter_, 0)
+
+        self.assertArgIsIn(NSOpenGLContext.setOffScreen_width_height_rowbytes_, 0)
+        self.assertArgIsVariableSize(NSOpenGLContext.setOffScreen_width_height_rowbytes_, 0)
+
     @min_os_level('10.6')
     def testMethods10_6(self):
         self.assertArgHasType(NSOpenGLPixelFormat.initWithCGLPixelFormatObj_, 0, b'^{_CGLPixelFormatObject}')

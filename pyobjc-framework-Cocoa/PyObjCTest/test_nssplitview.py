@@ -41,7 +41,13 @@ class TestNSSplitView (TestCase):
         self.assertResultIsBOOL(NSSplitView.isPaneSplitter)
         self.assertArgIsBOOL(NSSplitView.setIsPaneSplitter_, 0)
 
+    @min_os_level('10.11')
+    def testMethods10_11(self):
+        self.assertResultIsBOOL(NSSplitView.arrangesAllSubviews)
+        self.assertArgIsBOOL(NSSplitView.setArrangesAllSubviews_, 0)
+
     def testProtocol(self):
+        objc.protocolNamed('NSSplitViewDelegate')
         self.assertResultIsBOOL(TestNSSplitViewHelper.splitView_canCollapseSubview_)
         self.assertResultIsBOOL(TestNSSplitViewHelper.splitView_shouldCollapseSubview_forDoubleClickOnDividerAtIndex_)
         self.assertArgHasType(TestNSSplitViewHelper.splitView_shouldCollapseSubview_forDoubleClickOnDividerAtIndex_, 2, objc._C_NSInteger)

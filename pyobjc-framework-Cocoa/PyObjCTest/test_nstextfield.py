@@ -21,5 +21,13 @@ class TestNSTextField (TestCase):
         self.assertResultIsBOOL(NSTextField.importsGraphics)
         self.assertArgIsBOOL(NSTextField.setImportsGraphics_, 0)
 
+    @min_os_level('10.11')
+    def testMethods10_11(self):
+        self.assertResultIsBOOL(NSTextField.allowsDefaultTighteningForTruncation)
+        self.assertArgIsBOOL(NSTextField.setAllowsDefaultTighteningForTruncation_, 0)
+
+    def testProtocols(self):
+        objc.protocolNamed('NSTextFieldDelegate')
+
 if __name__ == "__main__":
     main()

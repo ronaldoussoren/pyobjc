@@ -8,6 +8,9 @@ except NameError:
     unicode = str
 
 class FindHelper (AppKit.NSObject):
+    def rectsForCharacterRange_(self, r): return 1
+    def replaceCharactersInRange_withString_(self, r, s): pass
+    def stringLength(self): return 0
     def isSelectable(self): pass
     def allowsMultipleSelection(self): pass
     def isEditable(self): pass
@@ -57,6 +60,7 @@ class TestNSTextFinder (TestCase):
 
     @min_os_level('10.7')
     def testProtocol10_7(self):
+        objc.protocolNamed('NSTextFinderClient')
         self.assertResultIsBOOL(FindHelper.isSelectable)
         self.assertResultIsBOOL(FindHelper.allowsMultipleSelection)
         self.assertResultIsBOOL(FindHelper.isEditable)
@@ -65,12 +69,18 @@ class TestNSTextFinder (TestCase):
         self.assertArgHasType(FindHelper.stringAtIndex_effectiveRange_endswithSearchBoundary_, 1, b'o^' + AppKit.NSRange.__typestr__)
         self.assertArgHasType(FindHelper.stringAtIndex_effectiveRange_endswithSearchBoundary_, 2, b'o^' + objc._C_NSBOOL)
 
+        self.assertResultHasType(FindHelper.stringLength, objc._C_NSUInteger)
+
         self.assertResultHasType(FindHelper.firstSelectedRange, AppKit.NSRange.__typestr__)
         self.assertArgHasType(FindHelper.scrollRangeToVisible_, 0, AppKit.NSRange.__typestr__)
         self.assertResultIsBOOL(FindHelper.shouldReplaceCharactersInRanges_withStrings_)
+        self.assertArgHasType(FindHelper.replaceCharactersInRange_withString_, 0, AppKit.NSRange.__typestr__)
+        self.assertArgHasType(FindHelper.rectsForCharacterRange_, 0, AppKit.NSRange.__typestr__)
         self.assertArgHasType(FindHelper.contentViewAtIndex_effectiveCharacterRange_, 0, objc._C_NSUInteger)
         self.assertArgHasType(FindHelper.contentViewAtIndex_effectiveCharacterRange_, 1, b'o^' + AppKit.NSRange.__typestr__)
         self.assertArgHasType(FindHelper.drawCharactersInRange_forContentView_, 0, AppKit.NSRange.__typestr__)
+
+        objc.protocolNamed('NSTextFinderBarContainer')
 
         self.assertResultIsBOOL(FindHelper.isFindBarVisible)
         self.assertArgIsBOOL(FindHelper.setFindBarVisible_, 0)

@@ -105,20 +105,22 @@ class TestNSFont(TestCase):
         self.assertIsInstance(NSAFMItalicAngle, unicode)
         self.assertIsInstance(NSAFMMappingScheme, unicode)
 
-
-
     @min_os_level('10.7')
     def testMethods10_7(self):
         self.assertResultIsBOOL(NSFont.isVertical)
 
     def testMethods(self):
         self.assertResultIsBOOL(NSFont.isFixedPitch)
+        self.assertArgIsOut(NSFont.getBoundingRects_forGlyphs_count_, 0)
         self.assertArgHasType(NSFont.getBoundingRects_forGlyphs_count_, 1, b'n^I')
         self.assertArgSizeInArg(NSFont.getBoundingRects_forGlyphs_count_, 0, 2)
         self.assertArgSizeInArg(NSFont.getBoundingRects_forGlyphs_count_, 1, 2)
+        self.assertArgIsOut(NSFont.getAdvancements_forGlyphs_count_, 0)
         self.assertArgHasType(NSFont.getAdvancements_forGlyphs_count_, 1, b'n^I')
         self.assertArgSizeInArg(NSFont.getAdvancements_forGlyphs_count_, 0, 2)
         self.assertArgSizeInArg(NSFont.getAdvancements_forGlyphs_count_, 1, 2)
+        self.assertArgIsOut(NSFont.getAdvancements_forPackedGlyphs_count_, 0)
+        self.assertArgIsIn(NSFont.getAdvancements_forPackedGlyphs_count_, 1)
         self.assertArgSizeInArg(NSFont.getAdvancements_forPackedGlyphs_length_, 0, 2)
         self.assertArgSizeInArg(NSFont.getAdvancements_forPackedGlyphs_length_, 1, 2)
 

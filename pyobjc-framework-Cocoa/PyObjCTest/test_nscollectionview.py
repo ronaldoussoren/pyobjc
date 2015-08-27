@@ -16,6 +16,7 @@ class TestNSCollectionViewHelper (NSObject):
     def collectionView_acceptDrop_index_dropOperation_(self, v, d, i, o): return 1
     def collectionView_pasteboardWriterForItemAtIndex_(self, v, i): pass
     def collectionView_draggingSession_willBeginAtPoint_forItemsAtIndexes_(self, v, i, j, p): pass
+    def collectionView_draggingSession_willBeginAtPoint_forItemsAtIndexPaths_(self, v, i, j, p): pass
     def collectionView_draggingSession_endedAtPoint_draggingOperation_(self, a, b, c, d): pass
 
 
@@ -74,6 +75,8 @@ class TestNSCollectionView (TestCase):
 
         self.assertArgIsInOut(NSCollectionView.draggingImageForItemsAtIndexPaths_withEvent_offset_, 2)
 
+        self.assertArgIsBlock(NSSet.enumerateIndexPathsWithOptions_usingBlock_, 1, b'v@o^Z')
+
     def testConstants(self):
         self.assertEqual(NSCollectionViewScrollPositionNone, 0)
         self.assertEqual(NSCollectionViewScrollPositionTop, 1 << 0)
@@ -124,6 +127,14 @@ class TestNSCollectionView (TestCase):
 
         self.assertResultIsBOOL(TestNSCollectionViewHelper.collectionView_acceptDrop_indexPath_dropOperation_)
         self.assertArgHasType(TestNSCollectionViewHelper.collectionView_acceptDrop_indexPath_dropOperation_, 3, objc._C_NSInteger)
+        self.assertArgHasType(TestNSCollectionViewHelper.collectionView_draggingSession_willBeginAtPoint_forItemsAtIndexPaths__,
+                2, NSPoint.__typestr__)
+
+        self.assertArgHasType(TestNSCollectionViewHelper.collectionView_shouldChangeItemsAtIndexPaths_toHighlightState_,
+                2, objc._C_NSInteger)
+        self.assertArgHasType(TestNSCollectionViewHelper.collectionView_didChangeItemsAtIndexPaths_toHighlightState_,
+                2, objc._C_NSInteger)
+
 
 
 

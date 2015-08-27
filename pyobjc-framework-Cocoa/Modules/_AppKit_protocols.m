@@ -105,5 +105,6 @@ static void __attribute__((__used__)) use_protocols(void)
 #if PyObjC_BUILD_RELEASE >= 1011
     p = PyObjC_IdToPython(@protocol(NSAlignmentFeedbackToken)); Py_XDECREF(p);
     p = PyObjC_IdToPython(@protocol(NSCollectionViewElement)); Py_XDECREF(p);
+    p = PyObjC_IdToPython(@protocol(NSCollectionViewDelegateFlowLayout)); Py_XDECREF(p);
 #endif
 }

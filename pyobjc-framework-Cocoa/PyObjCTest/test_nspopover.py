@@ -39,6 +39,11 @@ class TestNSPopover (TestCase):
 
         self.assertArgHasType(AppKit.NSPopover.showRelativeToRect_ofView_preferredEdge_, 0, AppKit.NSRect.__typestr__)
 
+    @min_os_level('10.10')
+    def testMethods10_10(self):
+        self.assertResultIsBOOL(AppKit.NSPopover.isDetached)
+        self.assertArgIsBOOL(AppKit.NSPopover.setDetached_, 0)
+
     @min_os_level('10.7')
     def testProtocols10_7(self):
         self.assertResultIsBOOL(PopoverHelper.popoverShouldClose_)

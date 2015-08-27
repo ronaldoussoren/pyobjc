@@ -197,6 +197,19 @@ class TestNSEvent (TestCase):
         self.assertEqual(NSEventTypeQuickLook, 33)
         self.assertEqual(NSEventMaskSmartMagnify, 1<<32)
 
+    @min_os_level('10.10')
+    def testConstants10_10(self):
+        self.assertEqual(NSEventTypePressure, 34)
+        self.assertEqual(NSEventMaskPressure, 1<<34)
+
+        self.assertEqual(NSPressureBehaviorUnknown, -1)
+        self.assertEqual(NSPressureBehaviorPrimaryDefault, 0)
+        self.assertEqual(NSPressureBehaviorPrimaryClick, 1)
+        self.assertEqual(NSPressureBehaviorPrimaryGeneric, 2)
+        self.assertEqual(NSPressureBehaviorPrimaryAccelerator, 3)
+        self.assertEqual(NSPressureBehaviorPrimaryDeepClick, 5)
+        self.assertEqual(NSPressureBehaviorPrimaryDeepDrag, 6)
+
     def testFunctions(self):
         v = NSEventMaskFromType(NSLeftMouseDown)
         self.assertEqual(v, NSLeftMouseDownMask)
@@ -215,7 +228,6 @@ class TestNSEvent (TestCase):
 
         self.assertArgIsBOOL(NSEvent.keyEventWithType_location_modifierFlags_timestamp_windowNumber_context_characters_charactersIgnoringModifiers_isARepeat_keyCode_, 8)
         self.assertArgHasType(NSEvent.enterExitEventWithType_location_modifierFlags_timestamp_windowNumber_context_eventNumber_trackingNumber_userData_, 8, b'^v')
-
 
         self.assertResultHasType(NSEvent.userData, b'^v')
 

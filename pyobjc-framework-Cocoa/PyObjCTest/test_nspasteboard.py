@@ -7,6 +7,10 @@ try:
 except NameError:
     unicode = str
 
+class TestNSPasteboardHelper (NSObject):
+    def writingOptionsForType_pasteboard_(self, t, p): return 1
+    def readingOptionsForType_pasteboard_(self, t, p): return 1
+
 class TestNSPasteboard (TestCase):
     def testConstants(self):
         self.assertIsInstance(NSStringPboardType, unicode)
@@ -100,7 +104,11 @@ class TestNSPasteboard (TestCase):
 
     def testProtocols(self):
         objc.protocolNamed('NSPasteboardWriting')
+        self.assertResultHasType(TestNSPasteboardHelper.writingOptionsForType_pasteboard_, objc._C_NSUInteger)
+
         objc.protocolNamed('NSPasteboardReading')
+        self.assertResultHasType(TestNSPasteboardHelper.readingOptionsForType_pasteboard_, objc._C_NSUInteger)
+
 
 
 if __name__ == "__main__":

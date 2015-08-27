@@ -12,6 +12,7 @@ class TestNSPopUpButton (TestCase):
         self.assertIsInstance(NSPopUpButtonWillPopUpNotification, unicode)
 
     def testMethods(self):
+        self.assertArgIsBOOL(NSPopUpButton.initWithFrame_pullsDown_, 1)
         self.assertResultIsBOOL(NSPopUpButton.pullsDown)
         self.assertArgIsBOOL(NSPopUpButton.setPullsDown_, 0)
         self.assertResultIsBOOL(NSPopUpButton.autoenablesItems)

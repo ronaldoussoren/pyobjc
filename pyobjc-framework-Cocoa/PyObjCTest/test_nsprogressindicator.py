@@ -8,6 +8,7 @@ class TestNSProgressIndicator (TestCase):
         self.assertEqual(NSProgressIndicatorPreferredSmallThickness, 10)
         self.assertEqual(NSProgressIndicatorPreferredLargeThickness, 18)
         self.assertEqual(NSProgressIndicatorPreferredAquaThickness, 12)
+
         self.assertEqual(NSProgressIndicatorBarStyle, 0)
         self.assertEqual(NSProgressIndicatorSpinningStyle, 1)
 

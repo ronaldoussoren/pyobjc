@@ -11,6 +11,7 @@ class TestNSGestureRecognizerHelper (NSObject):
     def gestureRecognizer_shouldRecognizeSimultaneouslyWithGestureRecognizer_(self, g, a): return 1
     def gestureRecognizer_shouldRequireFailureOfGestureRecognizer_(self, g, a): return 1
     def gestureRecognizer_shouldBeRequiredToFailByGestureRecognizer_(self, g, a): return 1
+    def gestureRecognizer_shouldAttemptToRecognizeWithEvent_(self, g, e): return 1
 
 class TestNSGestureRecognizer (TestCase):
     def testConstants(self):
@@ -55,6 +56,10 @@ class TestNSGestureRecognizer (TestCase):
         self.assertResultIsBOOL(TestNSGestureRecognizerHelper.gestureRecognizer_shouldRecognizeSimultaneouslyWithGestureRecognizer_)
         self.assertResultIsBOOL(TestNSGestureRecognizerHelper.gestureRecognizer_shouldRequireFailureOfGestureRecognizer_)
         self.assertResultIsBOOL(TestNSGestureRecognizerHelper.gestureRecognizer_shouldBeRequiredToFailByGestureRecognizer_)
+
+    @min_sdk_level('10.11')
+    def testProtocols10_11(self):
+        self.assertResultIsBOOL(TestNSGestureRecognizerHelper.gestureRecognizer_shouldAttemptToRecognizeWithEvent_)
 
 
 if __name__ == "__main__":

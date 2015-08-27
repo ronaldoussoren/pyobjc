@@ -9,5 +9,17 @@ class TestNSSearchField (TestCase):
         self.assertResultIsBOOL(NSSearchField.sendsSearchStringImmediately)
         self.assertArgIsBOOL(NSSearchField.setSendsSearchStringImmediately_, 0)
 
+    @min_os_level('10.11')
+    def testMethods10_11(self):
+        self.assertArgIsBOOL(NSSearchField.rectForSearchTextWhenCentered_, 0)
+        self.assertArgIsBOOL(NSSearchField.rectForSearchButtonWhenCentered_, 0)
+        self.assertArgIsBOOL(NSSearchField.rectForCancelButtonWhenCentered, 0)
+        self.assertResultIsBOOL(NSSearchField.centersPlaceholder)
+        self.assertArgIsBOOL(NSSearchField.setCentersPlaceholder_, 0)
+
+    def testProtocols(self):
+        objc.protocolNamed('NSSearchFieldDelegate')
+
+
 if __name__ == "__main__":
     main()

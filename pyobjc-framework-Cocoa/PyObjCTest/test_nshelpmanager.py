@@ -17,6 +17,10 @@ class TestNSHelpManager (TestCase):
         self.assertArgIsBOOL(NSHelpManager.setContextHelpModeActive_, 0)
         self.assertResultIsBOOL(NSHelpManager.showContextHelpForObject_locationHint_)
 
+    @min_os_level('10.11')
+    def testMethods10_6(self):
+        self.assertResultIsBOOL(NSHelpManager.registerBooksInBundle_)
+
 
 if __name__ == "__main__":
     main()

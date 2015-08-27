@@ -12,8 +12,10 @@ class TestNSDatePickerCell (TestCase):
         self.assertEqual(NSTextFieldAndStepperDatePickerStyle, 0)
         self.assertEqual(NSClockAndCalendarDatePickerStyle, 1)
         self.assertEqual(NSTextFieldDatePickerStyle, 2)
+
         self.assertEqual(NSSingleDateMode, 0)
         self.assertEqual(NSRangeDateMode, 1)
+
         self.assertEqual(NSHourMinuteDatePickerElementFlag, 0x000c)
         self.assertEqual(NSHourMinuteSecondDatePickerElementFlag, 0x000e)
         self.assertEqual(NSTimeZoneDatePickerElementFlag, 0x0010)

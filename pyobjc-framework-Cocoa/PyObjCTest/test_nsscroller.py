@@ -13,9 +13,11 @@ class TestNSScroller (TestCase):
         self.assertEqual(NSScrollerArrowsMinEnd, 1)
         self.assertEqual(NSScrollerArrowsDefaultSetting, 0)
         self.assertEqual(NSScrollerArrowsNone, 2)
+
         self.assertEqual(NSNoScrollerParts, 0)
         self.assertEqual(NSOnlyScrollerArrows, 1)
         self.assertEqual(NSAllScrollerParts, 2)
+
         self.assertEqual(NSScrollerNoPart, 0)
         self.assertEqual(NSScrollerDecrementPage, 1)
         self.assertEqual(NSScrollerKnob, 2)
@@ -23,6 +25,7 @@ class TestNSScroller (TestCase):
         self.assertEqual(NSScrollerDecrementLine, 4)
         self.assertEqual(NSScrollerIncrementLine, 5)
         self.assertEqual(NSScrollerKnobSlot, 6)
+
         self.assertEqual(NSScrollerIncrementArrow, 0)
         self.assertEqual(NSScrollerDecrementArrow, 1)
 

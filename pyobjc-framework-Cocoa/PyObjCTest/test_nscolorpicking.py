@@ -8,11 +8,15 @@ class TestNSColorPickingHelper (NSObject):
     def provideNewView_(self, i):
         return None
 
+    def initWithPickerMask_colorPanel_(self, m, p): return 1
+
 
 class TestNSColorPicking (TestCase):
     def testMethods(self):
         self.assertResultIsBOOL(TestNSColorPickingHelper.supportsMode_)
         self.assertArgIsBOOL(TestNSColorPickingHelper.provideNewView_, 0)
+
+        self.assertArgHasType(TestNSColorPickingHelper.initWithPickerMask_colorPanel_, 0, objc._C_NSUInteger)
 
     def testProtocols(self):
         objc.protocolNamed('NSColorPickingCustom')

@@ -57,6 +57,7 @@ class TesNSScrollView (TestCase):
         self.assertEqual(NSScrollElasticityAutomatic, 0)
         self.assertEqual(NSScrollElasticityNone, 1)
         self.assertEqual(NSScrollElasticityAllowed, 2)
+
         self.assertEqual(NSScrollViewFindBarPositionAboveHorizontalRuler, 0)
         self.assertEqual(NSScrollViewFindBarPositionAboveContent, 1)
         self.assertEqual(NSScrollViewFindBarPositionBelowContent, 2)

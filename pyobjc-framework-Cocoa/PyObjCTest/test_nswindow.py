@@ -1,5 +1,6 @@
 from PyObjCTools.TestSupport import *
 from AppKit import *
+import sys
 
 try:
     unicode
@@ -29,6 +30,7 @@ class TestNSWindowHelper (NSObject):
 
 class TestNSWindow (TestCase):
     def testConstants(self):
+        self.assertEqual(NSEventDurationForever, sys.float_info.max)
         self.assertEqual(NSAppKitVersionNumberWithCustomSheetPosition,686.0)
         self.assertEqual(NSAppKitVersionNumberWithDeferredWindowDisplaySupport, 1019.0)
 
@@ -132,6 +134,7 @@ class TestNSWindow (TestCase):
     def testConstants10_9(self):
         self.assertEqual(NSModalResponseOK, 1)
         self.assertEqual(NSModalResponseCancel, 0)
+
         self.assertEqual(NSWindowOcclusionStateVisible, 2)
 
         self.assertIsInstance(NSWindowDidChangeOcclusionStateNotification, unicode)
@@ -142,6 +145,11 @@ class TestNSWindow (TestCase):
 
         self.assertEqual(NSWindowTitleVisible, 0)
         self.assertEqual(NSWindowTitleHidden, 1)
+
+    @min_os_level('10.11')
+    def testConstants10_11(self):
+        self.assertEqual(NSWindowCollectionBehaviorFullScreenAllowsTiling, 1<<11)
+        self.assertEqual(NSWindowCollectionBehaviorFullScreenDisallowsTiling, 1<<12)
 
     @onlyIf(have_Quartz)
     def testMagicConstants(self):
@@ -157,6 +165,7 @@ class TestNSWindow (TestCase):
         self.assertEqual(NSScreenSaverWindowLevel, kCGScreenSaverWindowLevel)
 
     def testMethods(self):
+        self.assertArgIsBOOL(NSWindow.nextEventMatchingMask_untilDate_inMode_dequeue_, 3)
         self.assertArgIsBOOL(NSWindow.initWithContentRect_styleMask_backing_defer_, 3)
         self.assertArgIsBOOL(NSWindow.initWithContentRect_styleMask_backing_defer_screen_, 3)
         self.assertArgIsBOOL(NSWindow.setExcludedFromWindowsMenu_, 0)
@@ -187,7 +196,6 @@ class TestNSWindow (TestCase):
         self.assertArgIsBOOL(NSWindow.setHidesOnDeactivate_, 0)
         self.assertResultIsBOOL(NSWindow.canHide)
         self.assertArgIsBOOL(NSWindow.setCanHide_, 0)
-        self.assertResultIsBOOL(NSWindow.isDocumentEdited)
         self.assertArgIsBOOL(NSWindow.setDocumentEdited_, 0)
         self.assertResultIsBOOL(NSWindow.isDocumentEdited)
         self.assertResultIsBOOL(NSWindow.isVisible)
@@ -216,6 +224,7 @@ class TestNSWindow (TestCase):
         self.assertResultIsBOOL(NSWindow.setFrameAutosaveName_)
         self.assertArgIsBOOL(NSWindow.postEvent_atStart_, 1)
         self.assertResultIsBOOL(NSWindow.acceptsMouseMovedEvents)
+        self.assertArgIsBOOL(NSWindow.setAcceptsMouseMovedEvents_, 0)
         self.assertArgIsBOOL(NSWindow.setIgnoresMouseEvents_, 0)
         self.assertResultIsBOOL(NSWindow.ignoresMouseEvents)
         self.assertResultIsBOOL(NSWindow.isSheet)
@@ -261,6 +270,7 @@ class TestNSWindow (TestCase):
         self.assertArgIsBlock(NSWindow.trackEventsMatchingMask_timeout_mode_handler_, 3, b'v@o^Z')
 
     def testProtocols(self):
+        objc.protocolNamed('NSWindowDelegate')
         self.assertResultIsBOOL(TestNSWindowHelper.windowShouldClose_)
         self.assertResultHasType(TestNSWindowHelper.windowWillResize_toSize_, NSSize.__typestr__)
         self.assertArgHasType(TestNSWindowHelper.windowWillResize_toSize_, 1, NSSize.__typestr__)

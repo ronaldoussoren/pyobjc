@@ -8,6 +8,7 @@ class TestNSTextContainer (TestCase):
         self.assertEqual(NSLineSweepRight, 1)
         self.assertEqual(NSLineSweepDown, 2)
         self.assertEqual(NSLineSweepUp, 3)
+
         self.assertEqual(NSLineDoesntMove, 0)
         self.assertEqual(NSLineMovesLeft, 1)
         self.assertEqual(NSLineMovesRight, 2)
@@ -21,6 +22,10 @@ class TestNSTextContainer (TestCase):
         self.assertArgIsBOOL(NSTextContainer.setHeightTracksTextView_, 0)
         self.assertResultIsBOOL(NSTextContainer.isSimpleRectangularTextContainer)
         self.assertResultIsBOOL(NSTextContainer.containsPoint_)
+
+    @min_os_level('10.11')
+    def testMethods10_11(self):
+        self.assertArgIsOut(NSTextContainer.lineFragmentRectForProposedRect_atIndex_writingDirection_remainingRect_, 3)
 
 
 if __name__ == "__main__":

@@ -86,6 +86,7 @@ class TestNSOutlineView (TestCase):
 
     def testProtocols(self):
         objc.protocolNamed('NSOutlineViewDelegate')
+        objc.protocolNamed('NSOutlineViewDataSource')
 
         self.assertArgHasType(TestNSOutlineViewHelper.outlineView_child_ofItem_, 1, objc._C_NSInteger)
         self.assertResultIsBOOL(TestNSOutlineViewHelper.outlineView_isItemExpandable_)
@@ -93,6 +94,7 @@ class TestNSOutlineView (TestCase):
         self.assertResultIsBOOL(TestNSOutlineViewHelper.outlineView_writeItems_toPasteboard_)
         self.assertResultHasType(TestNSOutlineViewHelper.outlineView_validateDrop_proposedItem_proposedChildIndex_, objc._C_NSUInteger)
         self.assertArgHasType(TestNSOutlineViewHelper.outlineView_validateDrop_proposedItem_proposedChildIndex_, 3, objc._C_NSInteger)
+        self.assertResultIsBOOL(TestNSOutlineViewHelper.outlineView_acceptDrop_item_childIndex_)
         self.assertResultIsBOOL(TestNSOutlineViewHelper.outlineView_shouldEditTableColumn_item_)
         self.assertResultIsBOOL(TestNSOutlineViewHelper.selectionShouldChangeInOutlineView_)
         self.assertResultIsBOOL(TestNSOutlineViewHelper.outlineView_shouldSelectItem_)

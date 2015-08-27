@@ -44,15 +44,19 @@ class TestNSGraphics (TestCase):
         self.assertEqual(NSCompositeSaturation, 26)
         self.assertEqual(NSCompositeColor, 27)
         self.assertEqual(NSCompositeLuminosity, 28)
+
         self.assertEqual(NSBackingStoreRetained, 0)
         self.assertEqual(NSBackingStoreNonretained, 1)
         self.assertEqual(NSBackingStoreBuffered, 2)
+
         self.assertEqual(NSWindowAbove,  1)
         self.assertEqual(NSWindowBelow, -1)
         self.assertEqual(NSWindowOut,  0)
+
         self.assertEqual(NSFocusRingOnly, 0)
         self.assertEqual(NSFocusRingBelow, 1)
         self.assertEqual(NSFocusRingAbove, 2)
+
         self.assertEqual(NSFocusRingTypeDefault, 0)
         self.assertEqual(NSFocusRingTypeNone, 1)
         self.assertEqual(NSFocusRingTypeExterior, 2)

@@ -41,6 +41,7 @@ class TestNSToolbar (TestCase):
         self.assertArgIsBOOL(NSToolbar.setAllowsExtensionItems_, 0)
 
     def testProtocols(self):
+        objc.protocolNamed('NSToolbarDelegate')
         self.assertArgIsBOOL(TestNSToolbarHelper.toolbar_itemForItemIdentifier_willBeInsertedIntoToolbar_, 2)
 
 if __name__ == "__main__":

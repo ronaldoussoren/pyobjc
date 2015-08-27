@@ -19,6 +19,12 @@ class TestNSTokenFieldCell (TestCase):
         self.assertEqual(NSPlainTextTokenStyle, 1) # Deprecated
         self.assertEqual(NSRoundedTokenStyle, 2) # Deprecated
 
+        self.assertEqual(NSTokenStyleDefault, 0)
+        self.assertEqual(NSTokenStyleNone, 1)
+        self.assertEqual(NSTokenStyleRounded, 2)
+        self.assertEqual(NSTokenStyleSquared, 3)
+        self.assertEqual(NSTokenStylePlainSquared, 4)
+
     @min_os_level('10.10')
     def testContants10_10(self):
         self.assertEqual(NSTokenStyleSquared, 3)
@@ -26,6 +32,7 @@ class TestNSTokenFieldCell (TestCase):
 
 
     def testProtocols(self):
+        objc.protocolNamed('NSTokenFieldCellDelegate')
         self.assertArgHasType(TestNSTokenFieldCellHelper.tokenFieldCell_completionsForSubstring_indexOfToken_indexOfSelectedItem_, 2, objc._C_NSInteger)
         self.assertArgHasType(TestNSTokenFieldCellHelper.tokenFieldCell_completionsForSubstring_indexOfToken_indexOfSelectedItem_, 3, b'o^'+ objc._C_NSInteger)
         self.assertArgHasType(TestNSTokenFieldCellHelper.tokenFieldCell_shouldAddObjects_atIndex_, 2, objc._C_NSUInteger)

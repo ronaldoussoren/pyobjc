@@ -8,6 +8,7 @@ class TestNSSliderCell (TestCase):
         self.assertEqual(NSTickMarkAbove, 1)
         self.assertEqual(NSTickMarkLeft, NSTickMarkAbove)
         self.assertEqual(NSTickMarkRight, NSTickMarkBelow)
+
         self.assertEqual(NSLinearSlider, 0)
         self.assertEqual(NSCircularSlider, 1)
 

@@ -22,6 +22,7 @@ class TestNSTextInputClient (TestCase):
 
     @min_os_level("10.5")
     def testMethods(self):
+        objc.protocolNamed('NSTextInputClient')
         self.assertArgHasType(TestNSTextInputClientHelper.insertText_replacementRange_, 1, NSRange.__typestr__)
         self.assertArgHasType(TestNSTextInputClientHelper.doCommandBySelector_, 0,  objc._C_SEL)
         self.assertArgHasType(TestNSTextInputClientHelper.setMarkedText_selectedRange_replacementRange_, 1, NSRange.__typestr__)

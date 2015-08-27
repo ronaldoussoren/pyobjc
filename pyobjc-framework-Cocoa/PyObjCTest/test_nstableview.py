@@ -8,6 +8,7 @@ except NameError:
     unicode = str
 
 class TestNSTableViewHelper (NSObject):
+    def tableView_rowActionsForRow_edge_(self, a, b, c): pass
     def tableView_viewForTableColumn_row_(self, a, b, c): pass
     def tableView_rowViewForRow_(self, a, b): pass
     def tableView_didAddRowView_forRow_(self, a, b, c): pass
@@ -26,6 +27,7 @@ class TestNSTableViewHelper (NSObject):
     def tableView_willDisplayCell_forTableColumn_row_(self, tv, c, tc, r): return 1
     def tableView_shouldEditTableColumn_row_(self, tv, tc, r): return 1
     def selectionShouldChangeInTableView_(self, tv): return 1
+    def tableView_shouldSelectRow_(self, tv, r): return 1
     def tableView_shouldSelectTableColumn_(self, tv, tc): return 1
     def tableView_toolTipForCell_rect_tableColumn_row_mouseLocation_(self, tv, c, re, tc, r, l): return 1
     def tableView_heightOfRow_(self, tv, r): return 1
@@ -79,6 +81,7 @@ class TestNSTableView (TestCase):
     @min_os_level('10.7')
     def testConstants10_7(self):
         self.assertEqual(NSTableViewDashedHorizontalGridLineMask, 1<<3)
+
         self.assertEqual(NSTableViewRowSizeStyleDefault, -1)
         self.assertEqual(NSTableViewRowSizeStyleCustom, 0)
         self.assertEqual(NSTableViewRowSizeStyleSmall, 1)
@@ -100,6 +103,11 @@ class TestNSTableView (TestCase):
     @min_os_level('10.9')
     def testConstants10_9(self):
         self.assertEqual(NSTableViewDraggingDestinationFeedbackStyleGap, 2)
+
+    @min_os_level('10.11')
+    def testConstants10_11(self):
+        self.assertEqual(NSTableRowActionEdgeLeading, 0)
+        self.assertEqual(NSTableRowActionEdgeTrailing, 1)
 
     def testMethods(self):
         self.assertArgIsBOOL(NSTableView.setAllowsColumnReordering_, 0)
@@ -132,8 +140,6 @@ class TestNSTableView (TestCase):
 
         self.assertArgHasType(NSTableView.drawBackgroundInClipRect_, 0, NSRect.__typestr__)
 
-
-
         self.assertArgIsBOOL(NSTableView.setDrawsGrid_, 0)
         self.assertResultIsBOOL(NSTableView.drawsGrid)
         self.assertArgIsBOOL(NSTableView.selectColumn_byExtendingSelection_, 1)
@@ -163,12 +169,19 @@ class TestNSTableView (TestCase):
         self.assertResultIsBOOL(NSTableView.floatsGroupRows)
         self.assertArgIsBOOL(NSTableView.setFloatsGroupRows_, 0)
 
-    @min_os_level('10.7')
-    def testMethods10_7(self):
+    @min_os_level('10.10')
+    def testMethods10_10(self):
         self.assertResultIsBOOL(NSTableView.usesStaticContents)
         self.assertArgIsBOOL(NSTableView.setUsesStaticContents_, 0)
 
+    @min_os_level('10.11')
+    def testMethods10_11(self):
+        self.assertResultIsBOOL(NSTableView.rowActionsVisible)
+        self.assertArgIsBOOL(NSTableView.setRowActionsVisible_, 0)
+
     def testProtocols(self):
+        objc.protocolNamed('NSTableViewDelegate')
+        objc.protocolNamed('NSTableViewDataSource')
         self.assertResultHasType(TestNSTableViewHelper.numberOfRowsInTableView_, objc._C_NSInteger)
         self.assertArgHasType(TestNSTableViewHelper.tableView_objectValueForTableColumn_row_, 2, objc._C_NSInteger)
         self.assertArgHasType(TestNSTableViewHelper.tableView_setObjectValue_forTableColumn_row_, 3, objc._C_NSInteger)
@@ -186,6 +199,7 @@ class TestNSTableView (TestCase):
         self.assertResultIsBOOL(TestNSTableViewHelper.tableView_shouldEditTableColumn_row_)
         self.assertArgHasType(TestNSTableViewHelper.tableView_shouldEditTableColumn_row_, 2, objc._C_NSInteger)
         self.assertResultIsBOOL(TestNSTableViewHelper.selectionShouldChangeInTableView_)
+        self.assertResultIsBOOL(TestNSTableViewHelper.tableView_shouldSelectRow_)
         self.assertResultIsBOOL(TestNSTableViewHelper.tableView_shouldSelectTableColumn_)
         self.assertArgHasType(TestNSTableViewHelper.tableView_toolTipForCell_rect_tableColumn_row_mouseLocation_, 2, b'N^' + NSRect.__typestr__)
         self.assertArgHasType(TestNSTableViewHelper.tableView_toolTipForCell_rect_tableColumn_row_mouseLocation_, 4, objc._C_NSInteger)
@@ -206,7 +220,7 @@ class TestNSTableView (TestCase):
         self.assertArgHasType(TestNSTableViewHelper.tableView_isGroupRow_, 1, objc._C_NSInteger)
 
     @min_os_level('10.6')
-    def testProtococols10_6(self):
+    def testProtocols10_6(self):
         self.assertResultHasType(TestNSTableViewHelper.tableView_sizeToFitWidthOfColumn_, objc._C_CGFloat)
         self.assertArgHasType(TestNSTableViewHelper.tableView_sizeToFitWidthOfColumn_, 1, objc._C_NSInteger)
 
@@ -215,7 +229,8 @@ class TestNSTableView (TestCase):
         self.assertArgHasType(TestNSTableViewHelper.tableView_shouldReorderColumn_toColumn_, 2, objc._C_NSInteger)
 
     @min_os_level('10.7')
-    def testProtococols10_7(self):
+    def testProtocols10_7(self):
+        sefl.assertArgHasType(TestNSTableViewHelper.tableView_tableView_pasteboardWriterForRow_, 2, objc._C_NSInteger)
         self.assertArgHasType(TestNSTableViewHelper.tableView_viewForTableColumn_row_, 2, objc._C_NSInteger)
         self.assertArgHasType(TestNSTableViewHelper.tableView_rowViewForRow_, 1, objc._C_NSInteger)
         self.assertArgHasType(TestNSTableViewHelper.tableView_didAddRowView_forRow_, 2, objc._C_NSInteger)
@@ -223,6 +238,10 @@ class TestNSTableView (TestCase):
         self.assertArgHasType(TestNSTableViewHelper.tableView_draggingSession_willBeginAtPoint_forRowIndexes_, 2, NSPoint.__typestr__)
         self.assertArgHasType(TestNSTableViewHelper.tableView_draggingSession_endedAtPoint_operation_, 2, NSPoint.__typestr__)
 
+    @min_os_level('10.11')
+    def testProtococols10_11(self):
+        self.assertArgHasType(TestNSTableViewHelper.tableView_rowActionsForRow_edge_, 1, objc._C_NSInteger)
+        self.assertArgHasType(TestNSTableViewHelper.tableView_rowActionsForRow_edge_, 2, objc._C_NSInteger)
 
 
 if __name__ == "__main__":

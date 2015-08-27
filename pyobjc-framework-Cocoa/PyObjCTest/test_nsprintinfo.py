@@ -12,6 +12,9 @@ class TestNSPrintInfo (TestCase):
         self.assertEqual(NSPortraitOrientation, 0)
         self.assertEqual(NSLandscapeOrientation, 1)
 
+        self.assertEqual(NSPaperOrientationPortrait, 0)
+        self.assertEqual(NSPaperOrientationLandscape, 1)
+
         self.assertEqual(NSAutoPagination, 0)
         self.assertEqual(NSFitPagination, 1)
         self.assertEqual(NSClipPagination, 2)
@@ -20,10 +23,12 @@ class TestNSPrintInfo (TestCase):
         self.assertIsInstance(NSPrintPreviewJob, unicode)
         self.assertIsInstance(NSPrintSaveJob, unicode)
         self.assertIsInstance(NSPrintCancelJob, unicode)
+
         self.assertIsInstance(NSPrintPaperName, unicode)
         self.assertIsInstance(NSPrintPaperSize, unicode)
         self.assertIsInstance(NSPrintOrientation, unicode)
         self.assertIsInstance(NSPrintScalingFactor, unicode)
+
         self.assertIsInstance(NSPrintLeftMargin, unicode)
         self.assertIsInstance(NSPrintRightMargin, unicode)
         self.assertIsInstance(NSPrintTopMargin, unicode)
@@ -32,6 +37,7 @@ class TestNSPrintInfo (TestCase):
         self.assertIsInstance(NSPrintVerticallyCentered, unicode)
         self.assertIsInstance(NSPrintHorizontalPagination, unicode)
         self.assertIsInstance(NSPrintVerticalPagination, unicode)
+
         self.assertIsInstance(NSPrintPrinter, unicode)
         self.assertIsInstance(NSPrintCopies, unicode)
         self.assertIsInstance(NSPrintAllPages, unicode)
@@ -47,6 +53,7 @@ class TestNSPrintInfo (TestCase):
         self.assertIsInstance(NSPrintDetailedErrorReporting, unicode)
         self.assertIsInstance(NSPrintFaxNumber, unicode)
         self.assertIsInstance(NSPrintPrinterName, unicode)
+
         self.assertIsInstance(NSPrintHeaderAndFooter, unicode)
 
         self.assertIsInstance(NSPrintFormName, unicode)
@@ -54,6 +61,7 @@ class TestNSPrintInfo (TestCase):
         self.assertIsInstance(NSPrintManualFeed, unicode)
         self.assertIsInstance(NSPrintPagesPerSheet, unicode)
         self.assertIsInstance(NSPrintPaperFeed, unicode)
+
         self.assertIsInstance(NSPrintFaxCoverSheetName, unicode)
         self.assertIsInstance(NSPrintFaxHighResolution, unicode)
         self.assertIsInstance(NSPrintFaxModem, unicode)

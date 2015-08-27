@@ -23,5 +23,10 @@ class TestNSParagraphStyle (TestCase):
 
         self.assertIsInstance(NSTabColumnTerminatorsAttributeName, unicode)
 
+    @min_os_level('10.11')
+    def testMethods10_11(self):
+        self.assertResultIsBOOL(NSParagraphStyle.allowsDefaultTighteningForTruncation)
+        self.assertArgIsBOOL(NSMutableParagraphStyle.setAllowsDefaultTighteningForTruncation_, 0)
+
 if __name__ == "__main__":
     main()

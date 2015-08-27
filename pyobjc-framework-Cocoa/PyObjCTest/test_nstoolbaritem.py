@@ -20,6 +20,7 @@ class TestNSToolbarItem (TestCase):
         self.assertIsInstance(NSToolbarSeparatorItemIdentifier, unicode)
         self.assertIsInstance(NSToolbarSpaceItemIdentifier, unicode)
         self.assertIsInstance(NSToolbarFlexibleSpaceItemIdentifier, unicode)
+
         self.assertIsInstance(NSToolbarShowColorsItemIdentifier, unicode)
         self.assertIsInstance(NSToolbarShowFontsItemIdentifier, unicode)
         self.assertIsInstance(NSToolbarCustomizeToolbarItemIdentifier, unicode)

@@ -16,6 +16,8 @@ class TestNSNib (TestCase):
         self.assertResultIsBOOL(NSNib.instantiateNibWithOwner_topLevelObjects_)
         self.assertArgIsOut(NSNib.instantiateNibWithOwner_topLevelObjects_, 1)
 
+        self.assertResultIsBOOL(NSNib.instantiateNibWithExternalNameTable_)
+
     @min_os_level('10.8')
     def testMethods10_8(self):
         self.assertResultIsBOOL(NSNib.instantiateWithOwner_topLevelObjects_)

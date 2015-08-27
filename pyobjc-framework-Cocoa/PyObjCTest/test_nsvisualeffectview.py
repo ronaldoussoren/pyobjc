@@ -9,6 +9,11 @@ class TestNSVisualEffectView (TestCase):
         self.assertEqual(NSVisualEffectMaterialLight, 1)
         self.assertEqual(NSVisualEffectMaterialDark, 2)
         self.assertEqual(NSVisualEffectMaterialTitlebar, 3)
+        self.assertEqual(NSVisualEffectMaterialMenu, 5)
+        self.assertEqual(NSVisualEffectMaterialPopover, 6)
+        self.assertEqual(NSVisualEffectMaterialSidebar, 7)
+        self.assertEqual(NSVisualEffectMaterialMediumLight, 8)
+        self.assertEqual(NSVisualEffectMaterialUltraDark, 9)
 
         self.assertEqual(NSVisualEffectBlendingModeBehindWindow, 0)
         self.assertEqual(NSVisualEffectBlendingModeWithinWindow, 1)
