@@ -428,10 +428,10 @@ class TestCFOpenDirectoryConstants (TestCase):
     def testConstants10_8(self):
         self.assertIsInstance(CFOpenDirectory.kODNodeOptionsQuerySkippedSubnode, unicode)
 
-    @min_os_level('10.9')
-    @expectedFailure
+    @min_os_level('10.11')
     def testConstants10_9_missing(self):
         # Constants declared in headers, but missing on the system. Radar #19360668
+        # Available on OSX 10.11
         self.assertIsInstance(CFOpenDirectory.kODModuleConfigOptionQueryTimeout, unicode)
         self.assertIsInstance(CFOpenDirectory.kODModuleConfigOptionConnectionSetupTimeout, unicode)
         self.assertIsInstance(CFOpenDirectory.kODModuleConfigOptionConnectionIdleDisconnect, unicode)
