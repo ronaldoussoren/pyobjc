@@ -8,6 +8,9 @@
   "externs": {
     "kCFHTTPVersion2_0": {
       "typestr": "^{__CFString=}"
+    },
+    "kCFStreamPropertySocketExtendedBackgroundIdleMode": {
+      "typestr": "^{__CFString=}"
     }
   },
   "cftypes": {
