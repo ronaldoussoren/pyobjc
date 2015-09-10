@@ -5,8 +5,8 @@
   "enum": {
    "PHAssetMediaTypeUnknown": { "value": 0 },
    "PHAssetMediaTypeImage": { "value": 1 },
-   "PHAssetMediaTypeVide": { "value": 2  },
-   "PHAssetMediaTypeAudi": { "value": 3  },
+   "PHAssetMediaTypeVideo": { "value": 2  },
+   "PHAssetMediaTypeAudio": { "value": 3  },
    "PHAssetMediaSubtypeNone": { "value": 0 },
    "PHAssetMediaSubtypePhotoPanorama": { "value": 1 },
    "PHAssetMediaSubtypePhotoHDR": { "value": 2 },
