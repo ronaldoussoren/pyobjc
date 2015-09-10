@@ -6,9 +6,27 @@
    "MKDirectionsTransportTypeTransit": { "value": 4 },
    "MKMapTypeSatelliteFlyover": { "value": 4 },
    "MKMapTypeHybridFlyover": { "value": 5 }
-
+  },
+  "externs": {
+   "MKLaunchOptionsDirectionsModeTransit": { "typestr": "@" }
   },
   "classes": {
+   "MKMapView": {
+    "methods": [
+     {
+      "class_method": false,
+      "selector": "showsTraffic",
+      "retval": { "type_override": "Z" }
+     },
+     {
+      "class_method": false,
+      "selector": "setShowsTraffic:",
+      "args": {
+       "0": { "type_override": "Z" }
+      }
+     }
+    ]
+   },
    "MKDirections": {
      "methods": [
        {
