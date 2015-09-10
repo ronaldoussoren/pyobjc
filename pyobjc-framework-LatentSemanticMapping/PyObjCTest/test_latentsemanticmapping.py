@@ -72,7 +72,7 @@ class TestLatentSemanticMapping (TestCase):
 
         LSMMapSetProperties(map, {b"key".decode('latin1'): b"value".decode('latin1')})
         v = LSMMapGetProperties(map)
-        self.assertIsInstance(v, CFDictionaryRef)
+        self.assertIsInstance(v, (CFDictionaryRef, dict))
 
         v = LSMMapStartTraining(map)
         self.assertIsInstance(v, (int, long))
