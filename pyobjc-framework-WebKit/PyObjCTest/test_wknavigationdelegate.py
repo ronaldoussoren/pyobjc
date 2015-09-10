@@ -14,6 +14,7 @@ class TestWKNavigationDelegateHelper (NSObject):
 
 
 class TestWKNavigationDelegate (TestCase):
+    @onlyOn64Bit
     @min_os_level('10.10')
     def testConstants10_10(self):
         self.assertIsInstance(WKErrorDomain, unicode)
@@ -24,6 +25,7 @@ class TestWKNavigationDelegate (TestCase):
         self.assertEqual(WKNavigationResponsePolicyCancel, 0)
         self.assertEqual(WKNavigationResponsePolicyAllow, 1)
 
+    @onlyOn64Bit
     @min_os_level('10.10')
     def testProtocols(self):
         p = objc.protocolNamed('WKNavigationDelegate')

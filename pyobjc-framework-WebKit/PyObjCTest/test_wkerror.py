@@ -8,6 +8,7 @@ except NameError:
 
 
 class TestWKError (TestCase):
+    @onlyOn64Bit
     @min_os_level('10.10')
     def testConstants10_10(self):
         self.assertIsInstance(WKErrorDomain, unicode)

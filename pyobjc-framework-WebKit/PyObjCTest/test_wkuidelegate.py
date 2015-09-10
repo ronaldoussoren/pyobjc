@@ -8,6 +8,7 @@ class TestWKUIDelegateHelper (NSObject):
     def webView_runJavaScriptTextInputPanelWithPrompt_defaultText_initiatedByFrame_completionHandler_(self, w, p, d, f, h): pass
 
 class TestWKUIDelegate (TestCase):
+    @onlyOn64Bit
     @min_os_level('10.10')
     def testProtocols10_10(self):
         p = objc.protocolNamed("WKUIDelegate")

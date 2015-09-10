@@ -8,6 +8,7 @@ except NameError:
 
 
 class TestWKPreferences (TestCase):
+    @onlyOn64Bit
     @min_os_level('10.10')
     def testMethods10_10(self):
         self.assertResultIsBOOL(WKPreferences.javaScriptEnabled)
