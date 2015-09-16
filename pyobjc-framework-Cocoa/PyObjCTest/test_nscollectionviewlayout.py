@@ -31,7 +31,7 @@ class TestNSCollectionViewLayout (TestCase):
         self.assertResultIsBOOL(NSCollectionViewLayoutInvalidationContext.invalidateDataSourceCounts)
 
         self.assertResultIsBOOL(NSCollectionViewLayout.shouldInvalidateLayoutForBoundsChange_)
-        self.assertResultIsBOOL(NSCollectionViewLayout.shouldInvalidateLayoutForPreferredLayoutAttributes_withOriginalAttributes_))
+        self.assertResultIsBOOL(NSCollectionViewLayout.shouldInvalidateLayoutForPreferredLayoutAttributes_withOriginalAttributes_)
 
 if __name__ == "__main__":
     main()

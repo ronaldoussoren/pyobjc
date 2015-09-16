@@ -32,11 +32,11 @@ class TestNSAccessibility (TestCase):
         self.assertArgHasType(TestNSAccessibilityHelper.accessibilityHitTest_, 0, NSPoint.__typestr__)
         self.assertResultIsBOOL(TestNSAccessibilityHelper.accessibilitySetOverrideValue_forAttribute_)
         self.assertResultIsBOOL(TestNSAccessibilityHelper.accessibilityNotifiesWhenDestroyed)
-        sefl.assertResultHasType(TestNSAccessibilityHelper.accessibilityIndexOfChild_, objc._C_NSUInteger)
-        sefl.assertResultHasType(TestNSAccessibilityHelper.accessibilityArrayAttributeCount_, objc._C_NSUInteger)
-        sefl.assertResultHasType(TestNSAccessibilityHelper.accessibilityArrayAttributeCount_, objc._C_NSUInteger)
-        self.assertArgHasType(TestNSAccessibilityHelper.accessibilityArrayAttributeValues_index_maxCount_, 1, objc._C_NSInteger)
-        self.assertArgHasType(TestNSAccessibilityHelper.accessibilityArrayAttributeValues_index_maxCount_, 2, objc._C_NSInteger)
+        self.assertResultHasType(TestNSAccessibilityHelper.accessibilityIndexOfChild_, objc._C_NSUInteger)
+        self.assertResultHasType(TestNSAccessibilityHelper.accessibilityArrayAttributeCount_, objc._C_NSUInteger)
+        self.assertResultHasType(TestNSAccessibilityHelper.accessibilityArrayAttributeCount_, objc._C_NSUInteger)
+        self.assertArgHasType(TestNSAccessibilityHelper.accessibilityArrayAttributeValues_index_maxCount_, 1, objc._C_NSUInteger)
+        self.assertArgHasType(TestNSAccessibilityHelper.accessibilityArrayAttributeValues_index_maxCount_, 2, objc._C_NSUInteger)
 
     @min_os_level('10.10')
     def testMethods10_10(self):

@@ -230,7 +230,7 @@ class TestNSTableView (TestCase):
 
     @min_os_level('10.7')
     def testProtocols10_7(self):
-        sefl.assertArgHasType(TestNSTableViewHelper.tableView_tableView_pasteboardWriterForRow_, 2, objc._C_NSInteger)
+        self.assertArgHasType(TestNSTableViewHelper.tableView_tableView_pasteboardWriterForRow_, 2, objc._C_NSInteger)
         self.assertArgHasType(TestNSTableViewHelper.tableView_viewForTableColumn_row_, 2, objc._C_NSInteger)
         self.assertArgHasType(TestNSTableViewHelper.tableView_rowViewForRow_, 1, objc._C_NSInteger)
         self.assertArgHasType(TestNSTableViewHelper.tableView_didAddRowView_forRow_, 2, objc._C_NSInteger)

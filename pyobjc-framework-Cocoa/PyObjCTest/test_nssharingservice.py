@@ -7,7 +7,7 @@ try:
 except NameError:
     unicode = str
 
-class TestNSSharingServiceHelper (NSObject):
+class TestNSSharingServiceHelper (AppKit.NSObject):
     def showRelativeToRect_ofView_preferredEdge_(self, r, v, e): pass
 
 class TestNSSharingService (TestCase):
@@ -47,7 +47,7 @@ class TestNSSharingService (TestCase):
 
     def testProtocol(self):
         objc.protocolNamed('NSSharingServiceDelegate')
-        self.assertArgHasType(TestNSSharingServiceHelper.showRelativeToRect_ofView_preferredEdge_, 0, NSRect.__typestr__)
+        self.assertArgHasType(TestNSSharingServiceHelper.showRelativeToRect_ofView_preferredEdge_, 0, AppKit.NSRect.__typestr__)
         self.assertArgHasType(TestNSSharingServiceHelper.showRelativeToRect_ofView_preferredEdge_, 2, objc._C_NSUInteger)
 
         objc.protocolNamed('NSSharingServicePickerDelegate')

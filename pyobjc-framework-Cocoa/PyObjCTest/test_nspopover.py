@@ -42,7 +42,7 @@ class TestNSPopover (TestCase):
     @min_os_level('10.10')
     def testMethods10_10(self):
         self.assertResultIsBOOL(AppKit.NSPopover.isDetached)
-        self.assertArgIsBOOL(AppKit.NSPopover.setDetached_, 0)
+        #self.assertArgIsBOOL(AppKit.NSPopover.setDetached_, 0)
 
     @min_os_level('10.7')
     def testProtocols10_7(self):

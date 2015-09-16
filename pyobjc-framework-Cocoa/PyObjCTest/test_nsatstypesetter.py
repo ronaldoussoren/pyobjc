@@ -109,15 +109,15 @@ class TestNSATSTypesetter (TestCase):
         self.assertResultIsBOOL(TestNSATSTypesetterHelper.shouldBreakLineByWordBeforeCharacterAtIndex_)
         self.assertResultIsBOOL(TestNSATSTypesetterHelper.shouldBreakLineByHyphenatingBeforeCharacterAtIndex_)
 
-        self.assertResultHasType(TestNSATSTypeSetterHelper.characterRangeForGlyphRange_actualGlyphRange_,
+        self.assertResultHasType(TestNSATSTypesetterHelper.characterRangeForGlyphRange_actualGlyphRange_,
                 NSRange.__typestr__)
-        self.assertArgHasType(TestNSATSTypeSetterHelper.characterRangeForGlyphRange_actualGlyphRange_,
+        self.assertArgHasType(TestNSATSTypesetterHelper.characterRangeForGlyphRange_actualGlyphRange_,
                 0, NSRange.__typestr__)
-        self.assertArgHasType(TestNSATSTypeSetterHelper.characterRangeForGlyphRange_actualGlyphRange_,
+        self.assertArgHasType(TestNSATSTypesetterHelper.characterRangeForGlyphRange_actualGlyphRange_,
                 1, b'o^' + NSRange.__typestr__)
 
-        self.assertArgIsBOOL(TestNSATSTypeSetterHelper.setNotShownAttribute_forGlyphRange_, 0)
-        self.assertArgHasType(TestNSATSTypeSetterHelper.setNotShownAttribute_forGlyphRange_, 1, NSRange.__typestr__)
+        self.assertArgIsBOOL(TestNSATSTypesetterHelper.setNotShownAttribute_forGlyphRange_, 0)
+        self.assertArgHasType(TestNSATSTypesetterHelper.setNotShownAttribute_forGlyphRange_, 1, NSRange.__typestr__)
 
 
 

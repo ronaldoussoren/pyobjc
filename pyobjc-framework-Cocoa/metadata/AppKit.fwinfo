@@ -7844,6 +7844,42 @@
      {
       "args": {
        "1": {
+        "c_array_length_in_arg": 0,
+        "type_modifier": "o",
+        "type_override": "^I"
+       },
+       "2": {
+        "c_array_length_in_arg": 0,
+        "type_modifier": "o",
+        "type_override": "^I"
+       },
+       "3": {
+        "c_array_length_in_arg": 0,
+        "type_modifier": "o",
+        "type_override": "^I"
+       },
+       "4": {
+        "c_array_length_in_arg": 0,
+        "type_modifier": "o",
+        "type_override": "^I"
+       }
+      },
+      "class_method": false,
+      "selector": "getGlyphsInRange:glyphs:properties:characterIndexes:bidiLevels:"
+     },
+     {
+      "args": {
+       "1": {
+        "type_modifier": "o",
+        "type_override": "^Z"
+       }
+      },
+      "class_method": false,
+      "selector": "CGGlyphAtIndex:isValidIndex:"
+     },
+     {
+      "args": {
+       "1": {
         "type_modifier": "o",
         "type_override": "^Z"
        }
@@ -12472,6 +12508,24 @@
       },
       "class_method": false,
       "selector": "layoutManager:didCompleteLayoutForTextContainer:atEnd:"
+     },
+     {
+      "args": {
+       "1": {
+        "type_override": "n^S"
+       },
+       "2": {
+        "type_override": [ "n^I", "n^Q" ]
+       },
+       "3": {
+        "type_override": [ "n^I", "n^Q" ]
+       },
+       "4": {
+        "type_override": [ "^{_NSRange=II}", "^{_NSRange=QQ}" ]
+       }
+      },
+      "class_method": false,
+      "selector": "layoutManager:shouldGenerateGlyphs:properties:characterIndexes:forGlyphRange:"
      },
      {
       "args": {
@@ -24675,6 +24729,33 @@
    }
   },
   "enum": {
+    "NSAppKitVersionNumber10_10_2": { "value": 1344 },
+    "NSAppKitVersionNumber10_10_3": { "value": 1347 },
+    "NSWritingDirectionEmbedding": { "value": 0 },
+    "NSCollectionViewScrollPositionNone": { "value": 0 },
+    "NSPressureBehaviorUnknown": { "value": -1 },
+    "NSGlyphPropertyNull": { "value": 0 },
+    "NSSplitViewItemBehaviorDefault": { "value": 0 },
+    "NSTableViewRowActionStyleRegular": { "value": 0 },
+    "NSTextAlignmentLeft": { "value": 0 },
+    "NSVisualEffectMaterialMenu": { "value": 5 },
+    "NSStackViewDistributionGravityAreas": { "value": -1 },
+    "NSWritingDirectionOverride": { "value": 2 },
+    "NSCollectionViewScrollPositionTop": { "value": 0 },
+    "NSLayoutAttributeFirstBaseline": { "value": 12 },
+    "NSLayoutFormatAlignAllFirstBaseline": { "value": 4096 },
+    "NSSplitViewItemBehaviorSidebar": { "value": 1 },
+    "NSSplitViewItemBehaviorContentList": { "value": 2 },
+    "NSGlyphPropertyNull": { "value": 1 },
+    "NSGlyphPropertyControlCharacter": { "value": 2 },
+    "NSGlyphPropertyElastic": { "value": 4 },
+    "NSGlyphPropertyNonBaseCharacter": { "value": 8 },
+    "NSControlCharacterActionZeroAdvancement": { "value": 1 },
+    "NSControlCharacterActionWhitespace": { "value": 2 },
+    "NSControlCharacterActionHorizontalTab": { "value": 4 },
+    "NSControlCharacterActionLineBreak": { "value": 8 },
+    "NSControlCharacterActionParagraphBreak": { "value": 16 },
+    "NSControlCharacterActionContainerBreak": { "value": 32 },
     "NSNormalWindowLevel": { "value": 0, "comment": "Aliases for values from CoreGraphics" },
     "NSFloatingWindowLevel": { "value": 3 },
     "NSSubmenuWindowLevel": { "value": 3 },
@@ -24761,7 +24842,9 @@
    "NSPressureBehaviorPrimaryDeepDrag": { "value": 6 }
   },
   "aliases": {
-   "NSStackViewSpacingUseDefault": { "alias": "FLT_MAX" }
+   "NSStackViewSpacingUseDefault": { "alias": "FLT_MAX" },
+   "NSLayoutAttributeLastBaseline": { "alias": "NSLayoutAttributeBaseline" },
+   "NSLayoutFormatAlignAllLastBaseline": { "alias": "NSLayoutFormatAlignAllBaseline" }
   },
   "formal_protocols": {
    "NSWindowRestoration": {

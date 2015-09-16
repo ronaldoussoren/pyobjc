@@ -119,8 +119,9 @@ class TestNSFont(TestCase):
         self.assertArgHasType(NSFont.getAdvancements_forGlyphs_count_, 1, b'n^I')
         self.assertArgSizeInArg(NSFont.getAdvancements_forGlyphs_count_, 0, 2)
         self.assertArgSizeInArg(NSFont.getAdvancements_forGlyphs_count_, 1, 2)
-        self.assertArgIsOut(NSFont.getAdvancements_forPackedGlyphs_count_, 0)
-        self.assertArgIsIn(NSFont.getAdvancements_forPackedGlyphs_count_, 1)
+        if hasattr(NSFont, 'getAdvancements_forPackedGlyphs_count_'):
+            self.assertArgIsOut(NSFont.getAdvancements_forPackedGlyphs_count_, 0)
+            self.assertArgIsIn(NSFont.getAdvancements_forPackedGlyphs_count_, 1)
         self.assertArgSizeInArg(NSFont.getAdvancements_forPackedGlyphs_length_, 0, 2)
         self.assertArgSizeInArg(NSFont.getAdvancements_forPackedGlyphs_length_, 1, 2)
 

@@ -125,7 +125,7 @@ class TestNSAttributedString (TestCase):
         self.assertArgIsOut(NSAttributedString.initWithData_options_documentAttributes_error_, 2)
         self.assertArgIsOut(NSAttributedString.initWithData_options_documentAttributes_error_, 3)
 
-        self.assertArgIsOut(NSAttributedString.dataFromRange_errror_, 1)
+        self.assertArgIsOut(NSAttributedString.dataFromRange_documentAttributes_error_, 2)
         self.assertArgIsOut(NSAttributedString.fileWrapperFromRange_documentAttributes_error_, 2)
 
         self.assertArgIsOut(NSAttributedString.initWithPath_documentAttributes_, 1)
@@ -158,8 +158,8 @@ class TestNSAttributedString (TestCase):
         self.assertResultIsBOOL(NSAttributedString.containsAttachments)
 
 
-    @min_os_level(10.11)
-    def testMethods10_11(self)
+    @min_os_level('10.11')
+    def testMethods10_11(self):
         self.assertResultIsBOOL(NSMutableAttributedString.containsAttachmentsInRange_)
 
 

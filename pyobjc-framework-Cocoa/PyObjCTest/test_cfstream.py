@@ -276,7 +276,7 @@ class TestStream (TestCase):
 
         del readStream, writeStream
 
-    @onlyIf(onTheNetwork)
+    @onlyIf(onTheNetwork(), "Test requires a working Internet connection")
     def testSockets(self):
         with contextlib.closing(socket.socket(socket.AF_INET, socket.SOCK_STREAM)) as sd:
             sd.connect(('www.apple.com', 80))

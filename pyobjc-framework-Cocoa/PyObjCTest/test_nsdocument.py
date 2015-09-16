@@ -129,7 +129,7 @@ class TestNSDocument (TestCase):
         self.assertArgIsOut(NSDocument.duplicateAndReturnError_, 0)
         self.assertResultIsBOOL(NSDocument.isInViewingMode)
 
-        self.assertArgIsBlock(NSDocument.saveToURL_forSaveOperation_completionHandler_, 2, b'v@')
+        self.assertArgIsBlock(NSDocument.saveToURL_ofType_forSaveOperation_completionHandler_, 3, b'v@')
 
     @min_os_level('10.8')
     def testMethods10_8(self):

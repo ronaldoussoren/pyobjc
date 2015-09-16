@@ -40,8 +40,8 @@ class TestNSDraggingHelper (NSObject):
     def draggedImage_endedAt_deposited_(self, i, p, f): pass
 
     def springLoadingActivated_draggingInfo_(self, a, i): pass
-    def springLoadingEntered_(self, a, i): pass
-    def springLoadingUpdated_(self, a, i): pass
+    def springLoadingEntered_(self, a): pass
+    def springLoadingUpdated_(self, a): pass
 
 class TestNSDragging (TestCase):
     def testConstants(self):

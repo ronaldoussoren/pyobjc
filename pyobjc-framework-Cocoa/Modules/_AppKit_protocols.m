@@ -106,5 +106,6 @@ static void __attribute__((__used__)) use_protocols(void)
     p = PyObjC_IdToPython(@protocol(NSAlignmentFeedbackToken)); Py_XDECREF(p);
     p = PyObjC_IdToPython(@protocol(NSCollectionViewElement)); Py_XDECREF(p);
     p = PyObjC_IdToPython(@protocol(NSCollectionViewDelegateFlowLayout)); Py_XDECREF(p);
+    p = PyObjC_IdToPython(@protocol(NSSearchFieldDelegate)); Py_XDECREF(p);
 #endif
 }

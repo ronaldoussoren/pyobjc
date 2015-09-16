@@ -17,6 +17,7 @@ class TestNSSearchField (TestCase):
         self.assertResultIsBOOL(NSSearchField.centersPlaceholder)
         self.assertArgIsBOOL(NSSearchField.setCentersPlaceholder_, 0)
 
+    @min_sdk_level('10.11')
     def testProtocols(self):
         objc.protocolNamed('NSSearchFieldDelegate')
 

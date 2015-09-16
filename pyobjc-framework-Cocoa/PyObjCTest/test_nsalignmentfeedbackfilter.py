@@ -1,10 +1,6 @@
 from PyObjCTools.TestSupport import *
 from AppKit import *
 
-class TestNSAlertHelper (NSObject):
-    def alertShowHelp_(self, alert):
-        return 1
-
 class TestNSAlignmentFeedbackFilter (TestCase):
     @min_os_level('10.11')
     def testProtocols(self):

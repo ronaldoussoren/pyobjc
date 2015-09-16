@@ -20,13 +20,27 @@ try:
 except NameError:
     buffer = memoryview
 
+cached_info = None
 def onTheNetwork():
+    global cached_info
+    if cached_info is not None:
+        return cached_info
+
     try:
         socket.gethostbyname('www.apple.com')
 
-    except socket.gaierror:
+        sd = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        sd.settimeout(1.0)
+        try:
+            sd.connect(('www.apple.com', 80))
+        finally:
+            sd.close()
+
+    except socket.error:
+        cached_info = False
         return False
 
+    cached_info = True
     return True
 
 
@@ -78,7 +92,7 @@ class TestSocket (TestCase):
 
         CFSocketSetDefaultNameRegistryPortNumber(p1)
 
-    @onlyIf(onTheNetwork(), "cannot test without internet connection")
+    @onlyIf(onTheNetwork(), "Test requires a working Internet connection")
     def testSocketFunctions(self):
         data = {}
         state = []

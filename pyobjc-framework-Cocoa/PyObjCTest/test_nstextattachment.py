@@ -33,8 +33,12 @@ class TestNSTextAttachment (TestCase):
         self.assertResultIsBOOL(NSTextAttachmentCell.trackMouse_inRect_ofView_atCharacterIndex_untilMouseUp_)
         self.assertArgIsBOOL(NSTextAttachmentCell.trackMouse_inRect_ofView_atCharacterIndex_untilMouseUp_, 4)
 
-    def testProtocols(self):
+    @min_sdk_level('10.11')
+    def testProtocolObjects(self):
         objc.protocolNamed('NSTextAttachmentContainer')
+        objc.protocolNamed('NSTextAttachmentCell')
+
+    def testProtocols(self):
         self.assertArgHasType(TestNSTextAttachmentHelper.imageForBounds_textContainer_characterIndex_, 0, NSRect.__typestr__)
         self.assertArgHasType(TestNSTextAttachmentHelper.imageForBounds_textContainer_characterIndex_, 2, objc._C_NSUInteger)
 
@@ -42,7 +46,6 @@ class TestNSTextAttachment (TestCase):
         self.assertArgHasType(TestNSTextAttachmentHelper.attachmentBoundsForTextContainer_proposedLineFragment_glyphPosition_characterIndex_, 2, CGPoint.__typestr__)
         self.assertArgHasType(TestNSTextAttachmentHelper.attachmentBoundsForTextContainer_proposedLineFragment_glyphPosition_characterIndex_, 3, objc._C_NSUInteger)
 
-        objc.protocolNamed('NSTextAttachmentCell')
         self.assertArgHasType(TestNSTextAttachmentHelper.drawWithFrame_inView_, 0, NSRect.__typestr__)
         self.assertResultIsBOOL(TestNSTextAttachmentHelper.wantsToTrackMouse)
         self.assertArgIsBOOL(TestNSTextAttachmentHelper.highlight_withFrame_inView_, 0)

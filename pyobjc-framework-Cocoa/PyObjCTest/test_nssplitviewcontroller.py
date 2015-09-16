@@ -16,7 +16,7 @@ class TestNSSplitViewController (TestCase):
         self.assertArgIsBOOL(NSSplitViewItem.setCanCollapse_, 0)
 
         self.assertResultIsBOOL(NSSplitViewController.splitView_canCollapseSubview_)
-        self.assertResultIsBOOL(NSSplitViewController.splitView_shouldCollapseSubview_)
+        self.assertResultIsBOOL(NSSplitViewController.splitView_shouldCollapseSubview_forDoubleClickOnDividerAtIndex_)
         self.assertResultIsBOOL(NSSplitViewController.splitView_shouldHideDividerAtIndex_)
 
     @min_os_level('10.11')
