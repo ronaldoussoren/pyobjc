@@ -19,6 +19,9 @@ if sys.maxsize > 2 ** 32:
             self.assertEqual(LocalAuthentication.LAErrorPasscodeNotSet, LocalAuthentication.kLAErrorPasscodeNotSet)
             self.assertEqual(LocalAuthentication.LAErrorTouchIDNotAvailable, LocalAuthentication.kLAErrorTouchIDNotAvailable)
             self.assertEqual(LocalAuthentication.LAErrorTouchIDNotEnrolled, LocalAuthentication.kLAErrorTouchIDNotEnrolled)
+            self.assertEqual(LocalAuthentication.LAErrorTouchIDLockout, LocalAuthentication.kLAErrorTouchIDLockout)
+            self.assertEqual(LocalAuthentication.LAErrorAppCancel, LocalAuthentication.kLAErrorAppCancel)
+            self.assertEqual(LocalAuthentication.LAErrorInvalidContext, LocalAuthentication.kLAErrorInvalidContext)
 
             self.assertIsInstance(LocalAuthentication.LAErrorDomain, unicode)
 

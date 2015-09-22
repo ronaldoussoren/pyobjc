@@ -7,9 +7,40 @@
     "unicode": true
    }
   },
+  "enum": {
+   "LAPolicyDeviceOwnerAuthentication": { "value": 2 },
+   "kLAPolicyDeviceOwnerAuthentication": { "value": 2 },
+   "LACredentialTypeApplicationPassword": { "value": 0 },
+   "LAAccessControlOperationCreateItem": { "value": 0 },
+   "LAAccessControlOperationUseItem": { "value": 1 },
+   "LAAccessControlOperationCreateKey": { "value": 2 },
+   "LAAccessControlOperationUseKeySign": { "value": 3 },
+   "kLAErrorInvalidContext": { "value": -10 },
+   "kLAErrorAppCancel": { "value": -9 },
+   "kLAErrorTouchIDLockout": { "value": -8 },
+   "LAErrorInvalidContext": { "value": -10 },
+   "LAErrorAppCancel": { "value": -9 },
+   "LAErrorTouchIDLockout": { "value": -8 }
+  },
   "classes": {
    "LAContext": {
     "methods": [
+     {
+      "args": {
+       "3": {
+        "callable": {
+	 "arguments": {
+	  "0": { "typestr": "^v" },
+	  "1": { "typestr": "Z" },
+	  "2": { "typestr": "@" }
+	 },
+	 "retval": { "typestr": "v" }
+	}
+       }
+      },
+      "class_method": false,
+      "selector": "evaluatePolicy:operation:localizedReason:reply:"
+     },
      {
       "args": {
        "2": {
@@ -46,6 +77,16 @@
       },
       "class_method": false,
       "selector": "setFallbackButtonVisible:"
+     },
+     {
+      "retval": { "type_override": "Z" },
+      "class_method": false,
+      "selector": "isCredentialSet:"
+     },
+     {
+      "retval": { "type_override": "Z" },
+      "class_method": false,
+      "selector": "setCredential:type:"
      },
      {
       "retval": { "type_override": "Z" },
