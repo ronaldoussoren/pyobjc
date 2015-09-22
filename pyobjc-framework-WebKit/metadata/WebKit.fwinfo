@@ -2,9 +2,24 @@
 # for information on how to update this file.
 {
  "definitions": {
+  "externs": {
+   "WKWebsiteDataTypeDiskCache": { "typestr": "@" },
+   "WKWebsiteDataTypeMemoryCache": { "typestr": "@" },
+   "WKWebsiteDataTypeOfflineWebApplicationCache": { "typestr": "@" },
+   "WKWebsiteDataTypeCookies": { "typestr": "@" },
+   "WKWebsiteDataTypeSessionStorage": { "typestr": "@" },
+   "WKWebsiteDataTypeLocalStorage": { "typestr": "@" },
+   "WKWebsiteDataTypeWebSQLDatabases": { "typestr": "@" },
+   "WKWebsiteDataTypeIndexedDBDatabases": { "typestr": "@" }
+  },
   "enum": {
     "DOM_WEBKIT_KEYFRAMES_RULE": { "value": 7 },
-    "DOM_WEBKIT_KEYFRAME_RULE": { "value": 8 }
+    "DOM_WEBKIT_KEYFRAME_RULE": { "value": 8 },
+    "DOM_KEYFRAMES_RULE": { "value": 7 },
+    "DOM_KEYFRAME_RULE": { "value": 8 },
+    "DOM_SUPPORTS_RULE": { "value": 12 },
+    "DOM_WEBKIT_REGION_RULE": { "value": 16 },
+    "WKErrorJavaScriptResultTypeIsUnsupported": { "value": 5 }
   },
   "aliases": {
     "AVAILABLE_AFTER_WEBKIT_VERSION_4_0": { "ignore": true },
@@ -2479,6 +2494,77 @@
 	}
        }
       }
+     }
+    ]
+   },
+   "WKWebsiteDataStore": {
+    "methods": [
+     {
+      "selector": "fetchDataRecordsOfTypes:completionHandler:",
+      "class_method": false,
+      "args": {
+       "1": {
+        "callable": {
+	 "arguments": {
+	  "0": { "type": "^v" },
+	  "1": { "type": "@" }
+	 },
+         "retval": {
+          "type": "v"
+         }
+	}
+       }
+      }
+     },
+     {
+      "selector": "removeDataOfTypes:forDataRecords:completionHandler:",
+      "class_method": false,
+      "args": {
+       "2": {
+        "callable": {
+	 "arguments": {
+	  "0": { "type": "^v" }
+	 },
+         "retval": {
+          "type": "v"
+         }
+	}
+       }
+      }
+     },
+     {
+      "selector": "removeDataOfTypes:modifiedSince:completionHandler:",
+      "class_method": false,
+      "args": {
+       "2": {
+        "callable": {
+	 "arguments": {
+	  "0": { "type": "^v" }
+	 },
+         "retval": {
+          "type": "v"
+         }
+	}
+       }
+      }
+     }
+    ]
+   },
+   "WKWebViewConfiguration": {
+    "methods": [
+     {
+      "class_method": false,
+      "retval": {
+       "type_override": "Z"
+      },
+      "selector": "allowsPictureInPictureMediaPlayback"
+     },
+     {
+      "class_method": false,
+      "args": {
+       "0": { "type_override": "Z" }
+      },
+      "selector": "setAllowsPictureInPictureMediaPlayback:"
      }
     ]
    }

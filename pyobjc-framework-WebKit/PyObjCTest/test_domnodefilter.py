@@ -6,8 +6,17 @@ class TestDOMNodeFilterHelper (NSObject):
     def acceptNode_(self, n): return 1
 
 class TestDOMNodeFilter (TestCase):
+    @min_sdk_level('10.11')
+    def testProtocols(self):
+        objc.protocolNamed('DOMNodeFilter')
+
     def testMethods(self):
         self.assertResultHasType(TestDOMNodeFilterHelper.acceptNode_, objc._C_SHT)
+        self.assertResultIsBOOL(DOMNodeIterator.expandEntityReferences)
+
+    @min_os_level('10.5')
+    def testMethods10_5(self):
+        self.assertResultIsBOOL(DOMNodeIterator.pointerBeforeReferenceNode)
 
     def testConstants(self):
         self.assertEqual(DOM_FILTER_ACCEPT, 1)

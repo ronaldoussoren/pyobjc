@@ -14,6 +14,10 @@ class TestWebEditingDelegateHelper (NSObject):
     def webView_doCommandBySelector_(self, a, b): return 1
 
 class TestWebEditingDelegate (TestCase):
+    @min_sdk_level('10.11')
+    def testProtocols(self):
+        objc.protocolNamed('WebEditingDelegate')
+
     def testConstants(self):
         self.assertEqual(WebViewInsertActionTyped, 0)
         self.assertEqual(WebViewInsertActionPasted, 1)

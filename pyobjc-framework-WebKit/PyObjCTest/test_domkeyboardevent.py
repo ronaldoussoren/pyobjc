@@ -9,13 +9,16 @@ class TestDOMKeyboardEvent (TestCase):
         self.assertEqual(DOM_KEY_LOCATION_RIGHT, 2)
         self.assertEqual(DOM_KEY_LOCATION_NUMPAD, 3)
 
+    @min_os_level('10.5')
+    def testMethods10_5(self):
+        self.assertResultIsBOOL(DOMKeyboardEvent.altGraphKey)
+
     def testMethods(self):
         self.assertResultIsBOOL(DOMKeyboardEvent.ctrlKey)
         self.assertResultIsBOOL(DOMKeyboardEvent.shiftKey)
         self.assertResultIsBOOL(DOMKeyboardEvent.altKey)
         self.assertResultIsBOOL(DOMKeyboardEvent.metaKey)
         self.assertResultIsBOOL(DOMKeyboardEvent.getModifierState_)
-        self.assertResultIsBOOL(DOMKeyboardEvent.altGraphKey)
 
         self.assertArgIsBOOL(DOMKeyboardEvent.initKeyboardEvent_canBubble_cancelable_view_keyIdentifier_keyLocation_ctrlKey_altKey_shiftKey_metaKey_altGraphKey_, 1)
         self.assertArgIsBOOL(DOMKeyboardEvent.initKeyboardEvent_canBubble_cancelable_view_keyIdentifier_keyLocation_ctrlKey_altKey_shiftKey_metaKey_altGraphKey_, 2)

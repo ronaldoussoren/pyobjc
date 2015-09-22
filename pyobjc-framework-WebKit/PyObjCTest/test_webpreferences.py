@@ -59,5 +59,10 @@ class TestWebPreferences (TestCase):
         self.assertArgIsBOOL(WebPreferences.setSuppressesIncrementalRendering_, 0)
 
 
+    @min_os_level('10.11')
+    def testMethods10_11(self):
+        self.assertResultIsBOOL(WebPreferences.allowsAirPlayForMediaPlayback)
+        self.assertArgIsBOOL(WebPreferences.setAllowsAirPlayForMediaPlayback_, 0)
+
 if __name__ == "__main__":
     main()

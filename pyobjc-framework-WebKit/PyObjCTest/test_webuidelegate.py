@@ -6,6 +6,7 @@ import sys
 UINT_MAX = cast_uint(-1)
 
 class TestWebUIDelegateHelper (NSObject):
+    def webView_willPerformDragDestinationAction_forDraggingInfo_(self, wv, a, i): pass
     def webViewAreToolbarsVisible_(self, a): return 1
     def webView_setToolbarsVisible_(self, a, b): pass
     def webViewIsStatusBarVisible_(self, a): return 1
@@ -81,6 +82,12 @@ class TestWebUIDelegate (TestCase):
         self.assertEqual(WebDragSourceActionSelection, 8)
         self.assertEqual(WebDragSourceActionAny, UINT_MAX)
 
+    def testProtocols(self):
+        objc.protocolNamed('WebOpenPanelResultListener')
+
+    @min_sdk_level('10.11')
+    def testProtocols10_11(self):
+        objc.protocolNamed('WebUIDelegate')
 
     def testMethods(self):
         self.assertResultIsBOOL(TestWebUIDelegateHelper.webViewAreToolbarsVisible_)
@@ -106,10 +113,12 @@ class TestWebUIDelegate (TestCase):
         self.assertResultIsBOOL(TestWebUIDelegateHelper.webView_runJavaScriptConfirmPanelWithMessage_)
         self.assertArgHasType(TestWebUIDelegateHelper.webView_setContentRect_, 1, NSRect.__typestr__)
         self.assertResultHasType(TestWebUIDelegateHelper.webViewContentRect_, NSRect.__typestr__)
+        self.assertArgHasType(TestWebUIDelegateHelper.webView_willPerformDragDestinationAction_forDraggingInfo_, 1, objc._C_NSUInteger)
 
     @min_os_level('10.6')
     def testMethods10_6(self):
         self.assertArgIsBOOL(TestWebUIDelegateHelper.webView_runOpenPanelForFileButtonWithResultListener_allowMultipleFiles_, 2)
         self.assertResultIsBOOL(TestWebUIDelegateHelper.webView_runJavaScriptConfirmPanelWithMessage_)
+
 if __name__ == "__main__":
     main()

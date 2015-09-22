@@ -17,6 +17,7 @@ class TestWKError (TestCase):
         self.assertEqual(WKErrorWebContentProcessTerminated, 2)
         self.assertEqual(WKErrorWebViewInvalidated, 3)
         self.assertEqual(WKErrorJavaScriptExceptionOccurred, 4)
+        self.assertEqual(WKErrorJavaScriptResultTypeIsUnsupported, 5)
 
 
 if __name__ == "__main__":

@@ -25,6 +25,10 @@ class TestWebPolicyDelegate (TestCase):
     def testProtocols(self):
         self.assertIsInstance(objc.protocolNamed("WebPolicyDecisionListener"), objc.formal_protocol)
 
+    @min_sdk_level('10.11')
+    def testProtocols10_11(self):
+        self.assertIsInstance(objc.protocolNamed("WebPolicyDelegate"), objc.formal_protocol)
+
 
 if __name__ == "__main__":
     main()

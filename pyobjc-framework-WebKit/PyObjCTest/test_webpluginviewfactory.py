@@ -18,5 +18,8 @@ class TestWebPluginViewFactory (TestCase):
     def testConstants10_6(self):
         self.assertIsInstance(WebPlugInShouldLoadMainResourceKey, unicode)
 
+    def testProtocols(self):
+        objc.protocolNamed('WebPlugInViewFactory')
+
 if __name__ == "__main__":
     main()
