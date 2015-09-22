@@ -29,6 +29,13 @@ class TestJSValue (TestCase):
         self.assertResultIsBOOL(JavaScriptCore.JSValue.isInstanceOf_)
 
     @onlyOn64Bit
+    @min_os_level('10.11')
+    def test_classes10_11(self):
+        self.assertResultIsBOOL(JavaScriptCore.JSValue.isArray)
+        self.assertResultIsBOOL(JavaScriptCore.JSValue.isDate)
+
+
+    @onlyOn64Bit
     @min_os_level('10.9')
     def test_contants(self):
         self.assertIsInstance(JavaScriptCore.JSPropertyDescriptorWritableKey, unicode)

@@ -5,7 +5,13 @@
  "externs": {
    "kJSClassDefinitionEmpty": {
     "ignore": true
-   }
+   },
+   "JSPropertyDescriptorWritableKey": { "typestr": "@" },
+   "JSPropertyDescriptorEnumerableKey": { "typestr": "@" },
+   "JSPropertyDescriptorConfigurableKey": { "typestr": "@" },
+   "JSPropertyDescriptorValueKey": { "typestr": "@" },
+   "JSPropertyDescriptorGetKey": { "typestr": "@" },
+   "JSPropertyDescriptorSetKey": { "typestr": "@" }
   },
   "classes": {
    "JSContext": {
@@ -100,6 +106,20 @@
      {
       "class_method": false,
       "selector": "isString",
+      "retval": {
+       "type_override": "Z"
+      }
+     },
+     {
+      "class_method": false,
+      "selector": "isArray",
+      "retval": {
+       "type_override": "Z"
+      }
+     },
+     {
+      "class_method": false,
+      "selector": "isDate",
       "retval": {
        "type_override": "Z"
       }
@@ -231,6 +251,37 @@
     "WTF_EXPORT_PRIVATE": { "ignore": true }
   },
   "functions": {
+   "JSValueIsArray": {
+    "args": {
+     "0": {
+      "name": "ctx",
+      "typestr": "^{OpaqueJSContext=}"
+     },
+     "1": {
+      "name": "value",
+      "typestr": "^{OpaqueJSValue=}"
+     }
+    },
+    "retval": {
+     "typestr": "B"
+    }
+   },
+   "JSValueIsDate": {
+    "args": {
+     "0": {
+      "name": "ctx",
+      "typestr": "^{OpaqueJSContext=}"
+     },
+     "1": {
+      "name": "value",
+      "typestr": "^{OpaqueJSValue=}"
+     }
+    },
+    "retval": {
+     "typestr": "B"
+    }
+   },
+
    "JSCheckScriptSyntax": {
     "args": {
      "0": {},

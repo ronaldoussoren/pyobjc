@@ -41,5 +41,10 @@ class TestJSValueRef (TestCase):
         self.assertArgHasType(JavaScriptCore.JSValueProtect, 0, JavaScriptCore.JSContextRef.__typestr__)
         self.assertArgHasType(JavaScriptCore.JSValueUnprotect, 0, JavaScriptCore.JSContextRef.__typestr__)
 
+
+    @min_os_level('10.11')
+    def testFunctions10_11(self):
+        self.assertResultHasType(JavaScriptCore.JSValueIsArray, objc._C_BOOL)
+        self.assertResultHasType(JavaScriptCore.JSValueIsDate, objc._C_BOOL)
 if __name__ == "__main__":
     main()

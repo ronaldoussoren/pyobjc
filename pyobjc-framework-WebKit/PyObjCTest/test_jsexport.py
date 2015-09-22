@@ -9,5 +9,7 @@ class TestJSExport (TestCase):
     def test_protocols(self):
         self.assertIsInstance(objc.protocolNamed('JSExport'), objc.formal_protocol)
 
+    # XXX: JSExportAs support
+
 if __name__ == "__main__":
     main()
