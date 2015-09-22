@@ -15,6 +15,8 @@ if sys.maxsize > 2 ** 32:
         def session_didReceiveCertificate_fromPeer_certificateHandler_(self, s, c, p, h):
             pass
 
+        def session_peer_didChangeState_(self, session, peer, state): pass
+
     class TestMCSession (TestCase):
         @min_os_level("10.10")
         def testClasses(self):
@@ -31,6 +33,8 @@ if sys.maxsize > 2 ** 32:
         @min_os_level("10.10")
         def testProtocols(self):
             self.assertIsInstance(objc.protocolNamed("MCSessionDelegate"), objc.formal_protocol)
+
+            self.assertArgHasType(TestMCSessionHelper.session_peer_didChangeState_, 2, objc._C_NSUInteger)
 
             self.assertArgIsBlock(
                 TestMCSessionHelper.session_didReceiveCertificate_fromPeer_certificateHandler_,

@@ -86,6 +86,13 @@
       },
       "class_method": false,
       "selector": "advertiser:didReceiveInvitationFromPeer:withContext:invitationHandler:"
+     },
+     {
+      "args": {
+       "2": { "type_override": "Q" }
+      },
+      "class_method": false,
+      "selector": "session:peer:didChangeState:"
      }
     ]
    }
