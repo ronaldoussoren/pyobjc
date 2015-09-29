@@ -170,11 +170,52 @@
     ]
    },
    "CATextLayer": {
-    "methods": [],
+    "methods": [
+     {
+      "args": {
+       "0": { "type_override": "Z" }
+      },
+      "class_method": false,
+      "selector": "setAllowsFontSubpixelQuantization:"
+     },
+     {
+      "retval": { "type_override": "Z" },
+      "class_method": false,
+      "selector": "allowsFontSubpixelQuantization"
+     }
+    ],
     "properties": [
      {
       "attributes": [],
       "name": "foregroundColor"
+     }
+    ]
+   },
+   "CAMetalLayer": {
+    "methods": [
+     {
+      "args": {
+       "0": { "type_override": "Z" }
+      },
+      "class_method": false,
+      "selector": "setFramebufferOnly:"
+     },
+     {
+      "retval": { "type_override": "Z" },
+      "class_method": false,
+      "selector": "framebufferOnly"
+     },
+     {
+      "args": {
+       "0": { "type_override": "Z" }
+      },
+      "class_method": false,
+      "selector": "setPresentsWithTransaction:"
+     },
+     {
+      "retval": { "type_override": "Z" },
+      "class_method": false,
+      "selector": "presentsWithTransaction"
      }
     ]
    },

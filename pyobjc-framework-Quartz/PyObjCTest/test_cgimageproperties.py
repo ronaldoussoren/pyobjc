@@ -320,7 +320,7 @@ class TestCGImageProperties (TestCase):
         self.assertIsInstance(kCGImagePropertyPNGTitle, unicode)
 
     @min_os_level('10.7')
-    @expectedFailure
+    @expectedFailureIf(os_level_key(os_release()) <= os_level_key('10.9'))
     def testConstants10_7_broken(self):
         # The constants in this testcase are defined in headers and documentation,
         # but aren't exported by the framework...

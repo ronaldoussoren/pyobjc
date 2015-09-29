@@ -14,6 +14,9 @@ class TestCATextLayer (TestCase):
         self.assertResultIsBOOL(CATextLayer.isWrapped)
         self.assertArgIsBOOL(CATextLayer.setWrapped_, 0)
 
+        self.assertResultIsBOOL(CATextLayer.allowsFontSubpixelQuantization)
+        self.assertArgIsBOOL(CATextLayer.setAllowsFontSubpixelQuantization_, 0)
+
     @min_os_level('10.5')
     def testConstants(self):
         self.assertIsInstance(kCATruncationNone, unicode)

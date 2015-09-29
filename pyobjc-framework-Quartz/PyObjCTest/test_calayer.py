@@ -62,6 +62,9 @@ class TestCALayer (TestCase):
 
         self.assertResultHasType(TestCALayerHelper.preferredSizeOfLayer_, CGSize.__typestr__)
 
+        self.assertResultIsBOOL(CALayer.shouldRasterize)
+        self.assertArgIsBOOL(CALayer.setShouldRasterize_, 0)
+
     @min_os_level('10.6')
     def testMethods10_6(self):
         self.assertResultIsBOOL(CALayer.needsDisplayForKey_)
@@ -73,6 +76,11 @@ class TestCALayer (TestCase):
         self.assertArgHasType(CALayer.setContentsCenter_, 0, CGRect.__typestr__)
         self.assertResultIsBOOL(CALayer.needsDisplay)
         self.assertResultIsBOOL(CALayer.needsLayout)
+
+    @min_os_level('10.8')
+    def testMethods10_8(self):
+        self.assertResultIsBOOL(CALayer.drawsAsynchronously)
+        self.assertArgIsBOOL(CALayer.setDrawsAsynchronously_, 0)
 
     @min_os_level('10.6')
     def testConstants10_6(self):
