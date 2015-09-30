@@ -2,6 +2,19 @@
 # for information on how to update this file.
 {
  "definitions": {
+  "externs": {
+   "kCVImageBufferYCbCrMatrix_DCI_P3": { "typestr": "@" },
+   "kCVImageBufferYCbCrMatrix_P3_D65": { "typestr": "@" },
+   "kCVImageBufferYCbCrMatrix_ITU_R_2020": { "typestr": "@" },
+   "kCVImageBufferColorPrimaries_DCI_P3": { "typestr": "@" },
+   "kCVImageBufferColorPrimaries_P3_D65": { "typestr": "@" },
+   "kCVImageBufferColorPrimaries_ITU_R_2020": { "typestr": "@" },
+   "kCVImageBufferTransferFunction_ITU_R_2020": { "typestr": "@" },
+   "kCVMetalTextureCacheMaximumTextureAgeKey": { "typestr": "@" },
+   "kCVPixelBufferMetalCompatibilityKey": { "typestr": "@" },
+   "kCVPixelBufferOpenGLTextureCacheCompatibilityKey": { "typestr": "@" },
+   "kCVPixelBufferOpenGLESTextureCacheCompatibilityKey": { "typestr": "@" }
+  },
   "cftypes": {
    "CVBufferRef": {
     "gettypeid_func": "CVBufferGetTypeID"
@@ -38,6 +51,65 @@
   "classes": {},
   "formal_protocols": {},
   "functions": {
+   "CVMetalTextureGetTypeID": {
+    "retval": { "typestr": "L" }
+   },
+   "CVMetalTextureCacheGetTypeID": {
+    "retval": { "typestr": "L" }
+   },
+   "CVMetalTextureCacheCreate": {
+    "retval": { "typestr": "i" },
+    "args": {
+     "0": { "typestr": "@" },
+     "1": { "typestr": "@" },
+     "2": { "typestr": "@" },
+     "3": { "typestr": "@" },
+     "4": { "typestr": "^{__CVBuffer=}" }
+    }
+   },
+   "CVMetalTextureCacheCreateTextureFromImage": {
+    "retval": { "typestr": "i" },
+    "args": {
+     "0": { "typestr": "@" },
+     "1": { "typestr": "@" },
+     "2": { "typestr": "^{__CVBuffer=}" },
+     "3": { "typestr": "@" },
+     "4": { "typestr": "Q" },
+     "5": { "typestr": "L" },
+     "6": { "typestr": "L" },
+     "7": { "typestr": "L" },
+     "8": { "typestr": "^^{__CVBuffer=}", "type_modifier": "o" }
+    }
+   },
+   "CVMetalTextureCacheFlush": {
+    "retval": { "typestr": "v" },
+    "args": {
+     "0": { "typestr": "@" },
+     "1": { "typestr": "Q" }
+    }
+   },
+   "CVMetalTextureGetTexture": {
+    "retval": { "typestr": "@" },
+    "args": {
+     "0": { "typestr": "^{__CVBuffer=}" }
+    }
+   },
+   "CVMetalTextureIsFlipped": {
+    "retval": { "typestr": "Z" },
+    "args": {
+     "0": { "typestr": "^{__CVBuffer=}" }
+    }
+   },
+   "CVMetalTextureGetCleanTexCoords": {
+    "retval": { "typestr": "v" },
+    "args": {
+     "0": { "typestr": "^{__CVBuffer=}" },
+     "1": { "typestr": "^f", "type_modifier": "o", "c_array_of_fixed_length": 2  },
+     "2": { "typestr": "^f", "type_modifier": "o", "c_array_of_fixed_length": 2  },
+     "3": { "typestr": "^f", "type_modifier": "o", "c_array_of_fixed_length": 2  },
+     "4": { "typestr": "^f", "type_modifier": "o", "c_array_of_fixed_length": 2  }
+    }
+   },
    "CVBufferGetAttachment": {
     "args": {
      "0": {},
