@@ -40,6 +40,8 @@ class TestCVPixelBuffer (TestCase):
         self.assertEqual(kCVPixelFormatType_422YpCbCr8, fourcc(b'2vuy'))
         self.assertEqual(kCVPixelFormatType_4444YpCbCrA8, fourcc(b'v408'))
         self.assertEqual(kCVPixelFormatType_4444YpCbCrA8R, fourcc(b'r408'))
+        self.assertEqual(kCVPixelFormatType_4444AYpCbCr8, fourcc(b'y408'))
+        self.assertEqual(kCVPixelFormatType_4444AYpCbCr16, fourcc(b'y416'))
         self.assertEqual(kCVPixelFormatType_444YpCbCr8, fourcc(b'v308'))
         self.assertEqual(kCVPixelFormatType_422YpCbCr16, fourcc(b'v216'))
         self.assertEqual(kCVPixelFormatType_422YpCbCr10, fourcc(b'v210'))
@@ -142,11 +144,19 @@ class TestCVPixelBuffer (TestCase):
         rv = CVPixelBufferUnlockBaseAddress(buf, 0)
         self.assertEqual(rv, 0)
 
+        v = CVPixelBufferGetWidth(buf)
+        self.assertIsInstance(v, (int, long))
+
+        v = CVPixelBufferGetHeight(buf)
+        self.assertIsInstance(v, (int, long))
+
         v = CVPixelBufferGetBytesPerRow(buf)
         self.assertIsInstance(v, (int, long))
 
         v = CVPixelBufferGetDataSize(buf)
         self.assertIsInstance(v, (int, long))
+
+        self.assertResultIsBOOL(CVPixelBufferIsPlanar)
 
         v = CVPixelBufferGetPlaneCount(buf)
         self.assertIsInstance(v, (int, long))
@@ -210,6 +220,12 @@ class TestCVPixelBuffer (TestCase):
         self.assertIsInstance(kCVPixelBufferIOSurfaceOpenGLTextureCompatibilityKey, unicode)
         self.assertIsInstance(kCVPixelBufferIOSurfaceOpenGLFBOCompatibilityKey, unicode)
         self.assertIsInstance(kCVPixelBufferIOSurfaceCoreAnimationCompatibilityKey, unicode)
+
+    @min_os_level('10.11')
+    def testConstants10_11(self):
+        self.assertIsInstance(kCVPixelBufferMetalCompatibilityKey, unicode)
+        self.assertIsInstance(kCVPixelBufferOpenGLTextureCacheCompatibilityKey, unicode)
+        self.assertIsInstance(kCVPixelBufferOpenGLESTextureCacheCompatibilityKey, unicode)
 
     @min_os_level('10.6')
     def testFunctions10_6(self):

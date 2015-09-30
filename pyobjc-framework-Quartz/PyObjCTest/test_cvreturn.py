@@ -8,6 +8,7 @@ class TestCVReturn (TestCase):
         self.assertEqual(kCVReturnError, -6660)
         self.assertEqual(kCVReturnInvalidArgument, -6661)
         self.assertEqual(kCVReturnAllocationFailed, -6662)
+        self.assertEqual(kCVReturnUnsupported, -6663)
         self.assertEqual(kCVReturnInvalidDisplay, -6670)
         self.assertEqual(kCVReturnDisplayLinkAlreadyRunning, -6671)
         self.assertEqual(kCVReturnDisplayLinkNotRunning, -6672)
@@ -20,6 +21,7 @@ class TestCVReturn (TestCase):
         self.assertEqual(kCVReturnWouldExceedAllocationThreshold, -6689)
         self.assertEqual(kCVReturnPoolAllocationFailed, -6690)
         self.assertEqual(kCVReturnInvalidPoolAttributes, -6691)
+        self.assertEqual(kCVReturnLast, -6699)
 
 if __name__ == "__main__":
     main()

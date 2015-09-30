@@ -10,6 +10,13 @@ class TestCVDisplayLink (TestCase):
     def testTypes(self):
         self.assertIsCFType(CVDisplayLinkRef)
 
+    @min_os_level('10.11')
+    def testFunctions10_11(self):
+        # XXX: headers claim this is generally available ??
+        self.assertArgIsBlock(CVDisplayLinkSetOutputHandler, 1,
+                b'i^{__CVDisplayLink=}n^{_CVTimeStamp=IiqQdq{CVSMPTETime=ssIIIssss}QQ}n^{_CVTimeStamp=IiqQdq{CVSMPTETime=ssIIIssss}QQ}Qo^Q')
+
+
     def testFunctions(self):
         self.assertIsInstance(CVDisplayLinkGetTypeID(), (int, long))
 
@@ -45,7 +52,6 @@ class TestCVDisplayLink (TestCase):
         rv = CVDisplayLinkSetCurrentCGDisplay(link, mainID)
         self.assertEqual(rv, 0)
 
-        # FIXME
         CVDisplayLinkSetCurrentCGDisplayFromOpenGLContext
 
         v = CVDisplayLinkGetCurrentCGDisplay(link)

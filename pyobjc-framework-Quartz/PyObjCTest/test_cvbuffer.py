@@ -18,6 +18,11 @@ class TestCVBuffer (TestCase):
         self.assertEqual(kCVAttachmentMode_ShouldNotPropagate, 0)
         self.assertEqual(kCVAttachmentMode_ShouldPropagate, 1)
 
+    @expectedFailure
+    def testTypes(self):
+        # Needs work...
+        self.assertIsCFType(CVBufferRef)
+
     def testFunctions(self):
         rv, buf = CVOpenGLBufferCreate(None, 100, 100, {"a":"b"}, None)
         self.assertEqual(rv, 0)

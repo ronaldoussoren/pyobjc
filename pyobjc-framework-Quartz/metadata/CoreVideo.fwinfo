@@ -13,7 +13,15 @@
    "kCVMetalTextureCacheMaximumTextureAgeKey": { "typestr": "@" },
    "kCVPixelBufferMetalCompatibilityKey": { "typestr": "@" },
    "kCVPixelBufferOpenGLTextureCacheCompatibilityKey": { "typestr": "@" },
-   "kCVPixelBufferOpenGLESTextureCacheCompatibilityKey": { "typestr": "@" }
+   "kCVPixelBufferOpenGLESTextureCacheCompatibilityKey": { "typestr": "@" },
+   "kCVPixelFormatComponentRange": { "typestr": "@" },
+   "kCVPixelFormatComponentRange_VideoRange": { "typestr": "@" },
+   "kCVPixelFormatComponentRange_FullRange": { "typestr": "@" },
+   "kCVPixelFormatComponentRange_WideRange": { "typestr": "@" },
+   "kCVPixelBufferPoolFlushExcessBuffers": { "typestr": "@" }
+  },
+  "enum": {
+   "kCVReturnUnsupported": { "value": -6663 }
   },
   "cftypes": {
    "CVBufferRef": {
@@ -79,6 +87,25 @@
      "6": { "typestr": "L" },
      "7": { "typestr": "L" },
      "8": { "typestr": "^^{__CVBuffer=}", "type_modifier": "o" }
+    }
+   },
+   "CVDisplayLinkSetOutputHandler": {
+    "retval": { "typestr": "i" },
+    "args": {
+     "0": { "typestr": "^{__CVDisplayLink=}" },
+     "1": { "typestr": "@?" ,
+         "callable": {
+	  "retval": { "typestr": "i" },
+	  "arguments": {
+	   "0": { "typestr": "^v" },
+	   "1": { "typestr": "^{__CVDisplayLink=}" },
+	   "2": { "type_modifier": "n", "typestr": "^{_CVTimeStamp=IiqQdq{CVSMPTETime=ssIIIssss}QQ}" },
+	   "3": { "type_modifier": "n", "typestr": "^{_CVTimeStamp=IiqQdq{CVSMPTETime=ssIIIssss}QQ}" },
+	   "4": { "typestr": "Q" },
+	   "5": { "typestr": "o^Q" }
+	  }
+	 }
+     }
     }
    },
    "CVMetalTextureCacheFlush": {

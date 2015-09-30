@@ -69,6 +69,13 @@ class TestCVPixelFormatDescription (TestCase):
         self.assertIsInstance(kCVPixelFormatContainsYCbCr, unicode)
         self.assertIsInstance(kCVPixelFormatContainsRGB, unicode)
 
+    @min_os_level('10.11')
+    def testConstants10_11(self):
+        self.assertIsInstance(kCVPixelFormatComponentRange, unicode)
+        self.assertIsInstance(kCVPixelFormatComponentRange_VideoRange, unicode)
+        self.assertIsInstance(kCVPixelFormatComponentRange_FullRange, unicode)
+        self.assertIsInstance(kCVPixelFormatComponentRange_WideRange, unicode)
+
 
 
 if __name__ == "__main__":

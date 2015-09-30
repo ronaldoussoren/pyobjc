@@ -9,15 +9,12 @@ except NameError:
 
 class TestCVImageBuffer (TestCase):
 
-    def testFunctions(self):
-        self.assertResultHasType(CVImageBufferGetEncodedSize, CGSize.__typestr__)
-        self.assertResultHasType(CVImageBufferGetDisplaySize, CGSize.__typestr__)
-        self.assertResultHasType(CVImageBufferGetCleanRect, CGRect.__typestr__)
 
     @expectedFailure
     def testsMissing(self):
         # FIXME
         CVImageBufferGetColorSpace
+        CVImageBufferRef
         self.fail("Reimplement function tests using an actual buffer")
 
     def testConstants(self):
@@ -85,6 +82,24 @@ class TestCVImageBuffer (TestCase):
     @min_os_level('10.10')
     def testConstants10_10(self):
         self.assertIsInstance(kCVImageBufferAlphaChannelIsOpaque, unicode)
+
+    @min_os_level('10.11')
+    def testConstants10_11(self):
+        self.assertIsInstance(kCVImageBufferYCbCrMatrix_DCI_P3, unicode)
+        self.assertIsInstance(kCVImageBufferYCbCrMatrix_P3_D65, unicode)
+        self.assertIsInstance(kCVImageBufferYCbCrMatrix_ITU_R_2020, unicode)
+
+        self.assertIsInstance(kCVImageBufferColorPrimaries_DCI_P3, unicode)
+        self.assertIsInstance(kCVImageBufferColorPrimaries_P3_D65, unicode)
+        self.assertIsInstance(kCVImageBufferColorPrimaries_ITU_R_2020, unicode)
+
+        self.assertIsInstance(kCVImageBufferTransferFunction_ITU_R_2020, unicode)
+
+    def testFunctions(self):
+        self.assertResultHasType(CVImageBufferGetEncodedSize, CGSize.__typestr__)
+        self.assertResultHasType(CVImageBufferGetDisplaySize, CGSize.__typestr__)
+        self.assertResultHasType(CVImageBufferGetCleanRect, CGRect.__typestr__)
+        self.assertResultHasType(CVImageBufferIsFlipped, objc._C_NSBOOL)
 
     @min_os_level('10.8')
     def testFunctions10_8(self):
