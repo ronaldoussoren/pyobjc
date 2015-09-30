@@ -25,12 +25,17 @@ class TestCGImageSource (TestCase):
         self.assertIsInstance(Quartz.kCGImageSourceShouldCache, unicode)
         self.assertIsInstance(Quartz.kCGImageSourceShouldAllowFloat, unicode)
         self.assertIsInstance(Quartz.kCGImageSourceCreateThumbnailFromImageIfAbsent, unicode)
+        self.assertIsInstance(Quartz.kCGImageSourceCreateThumbnailFromImageAlways, unicode)
         self.assertIsInstance(Quartz.kCGImageSourceThumbnailMaxPixelSize, unicode)
         self.assertIsInstance(Quartz.kCGImageSourceCreateThumbnailWithTransform, unicode)
 
     @min_os_level('10.9')
     def testConstants10_9(self):
         self.assertIsInstance(Quartz.kCGImageSourceShouldCacheImmediately, unicode)
+
+    @min_os_level('10.11')
+    def testConstants10_11(self):
+        self.assertIsInstance(Quartz.kCGImageSourceSubsampleFactor, unicode)
 
     def testTypes(self):
         self.assertIsCFType(Quartz.CGImageSourceRef)

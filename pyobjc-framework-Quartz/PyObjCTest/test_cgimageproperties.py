@@ -10,6 +10,14 @@ except NameError:
 class TestCGImageProperties (TestCase):
 
     def testConstants(self):
+        self.assertEqual(IMAGEIO_PNG_NO_FILTERS, 0x00)
+        self.assertEqual(IMAGEIO_PNG_FILTER_NONE, 0x08)
+        self.assertEqual(IMAGEIO_PNG_FILTER_SUB, 0x10)
+        self.assertEqual(IMAGEIO_PNG_FILTER_UP, 0x20)
+        self.assertEqual(IMAGEIO_PNG_FILTER_AVG, 0x40)
+        self.assertEqual(IMAGEIO_PNG_FILTER_PAETH, 0x80)
+        self.assertEqual(IMAGEIO_PNG_ALL_FILTERS, IMAGEIO_PNG_FILTER_NONE | IMAGEIO_PNG_FILTER_SUB | IMAGEIO_PNG_FILTER_UP | IMAGEIO_PNG_FILTER_AVG | IMAGEIO_PNG_FILTER_PAETH)
+
         self.assertIsInstance(kCGImagePropertyTIFFDictionary, unicode)
         self.assertIsInstance(kCGImagePropertyGIFDictionary, unicode)
         self.assertIsInstance(kCGImagePropertyJFIFDictionary, unicode)
@@ -329,12 +337,18 @@ class TestCGImageProperties (TestCase):
         self.assertIsInstance(kCGImagePropertyExifLensSpecification, unicode)
         self.assertIsInstance(kCGImagePropertyExifLensMake, unicode)
         self.assertIsInstance(kCGImagePropertyExifLensModel, unicode)
-        #self.assertIsInstance(kCGImagePropertyExifLensSerialNumber, unicode)
+        self.assertIsInstance(kCGImagePropertyExifLensSerialNumber, unicode)
 
     @min_os_level('10.9')
     def testConstants10_9(self):
         self.assertIsInstance(kCGImagePropertyOpenEXRDictionary, unicode)
         self.assertIsInstance(kCGImagePropertyOpenEXRAspectRatio, unicode)
+        self.assertIsInstance(kCGImagePropertyExifSensitivityType, unicode)
+        self.assertIsInstance(kCGImagePropertyExifStandardOutputSensitivity, unicode)
+        self.assertIsInstance(kCGImagePropertyExifRecommendedExposureIndex, unicode)
+        self.assertIsInstance(kCGImagePropertyExifISOSpeed, unicode)
+        self.assertIsInstance(kCGImagePropertyExifISOSpeedLatitudeyyy, unicode)
+        self.assertIsInstance(kCGImagePropertyExifISOSpeedLatitudezzz, unicode)
 
     @min_os_level('10.10')
     def testConstants10_10(self):
@@ -344,6 +358,12 @@ class TestCGImageProperties (TestCase):
         self.assertIsInstance(kCGImagePropertyAPNGUnclampedDelayTime, unicode)
         self.assertIsInstance(kCGImagePropertyGPSHPositioningError, unicode)
         self.assertIsInstance(kCGImageProperty8BIMVersion, unicode)
+
+    @min_os_level('10.11')
+    def testConstants10_11(self):
+        self.assertIsInstance(kCGImagePropertyTIFFTileWidth, unicode)
+        self.assertIsInstance(kCGImagePropertyTIFFTileLength, unicode)
+        self.assertIsInstance(kCGImagePropertyPNGCompressionFilter, unicode)
 
 if __name__ == "__main__":
     main()

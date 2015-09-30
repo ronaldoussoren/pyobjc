@@ -2,179 +2,194 @@
 # for information on how to update this file.
 {
  "definitions": {
+  "externs": {
+   "kCGImagePropertyTIFFTileWidth": { "typestr": "@" },
+   "kCGImagePropertyTIFFTileLength": { "typestr": "@" },
+   "kCGImagePropertyPNGCompressionFilter": { "typestr": "@" },
+   "kCGImageSourceSubsampleFactor": { "typestr": "@" }
+  },
+  "enum": {
+   "IMAGEIO_PNG_NO_FILTERS": { "value": 0 },
+   "IMAGEIO_PNG_FILTER_NONE": { "value": 8 },
+   "IMAGEIO_PNG_FILTER_SUB": { "value": 16 },
+   "IMAGEIO_PNG_FILTER_UP": { "value": 32 },
+   "IMAGEIO_PNG_FILTER_AVG": { "value": 64 },
+   "IMAGEIO_PNG_FILTER_PAETH": { "value": 128 },
+   "IMAGEIO_PNG_ALL_FILTERS": { "value": 248 }
+  },
   "cftypes": {
    "CGImageDestinationRef": {
-    "gettypeid_func": "CGImageDestinationGetTypeID", 
+    "gettypeid_func": "CGImageDestinationGetTypeID",
     "typestr": "^{CGImageDestination=}"
-   }, 
+   },
    "CGImageSourceRef": {
-    "gettypeid_func": "CGImageSourceGetTypeID", 
+    "gettypeid_func": "CGImageSourceGetTypeID",
     "typestr": "^{CGImageSource=}"
    },
    "CGImageMetadataRef": {
-    "gettypeid_func": "CGImageMetadataGetTypeID", 
+    "gettypeid_func": "CGImageMetadataGetTypeID",
     "typestr": "^{CGImageMetadata=}"
    },
    "CGImageMetadataTagRef": {
-    "gettypeid_func": "CGImageMetadataTagGetTypeID", 
+    "gettypeid_func": "CGImageMetadataTagGetTypeID",
     "typestr": "^{CGImageMetadataTag=}"
    }
-  }, 
-  "classes": {}, 
-  "formal_protocols": {}, 
+  },
+  "classes": {},
+  "formal_protocols": {},
   "functions": {
    "CGImageDestinationAddImage": {
     "args": {
-     "0": {}, 
-     "1": {}, 
+     "0": {},
+     "1": {},
      "2": {}
     }
-   }, 
+   },
    "CGImageDestinationAddImageAndMetadata": {
     "args": {
-     "0": {}, 
-     "1": {}, 
-     "2": {}, 
+     "0": {},
+     "1": {},
+     "2": {},
      "3": {}
     }
-   }, 
+   },
    "CGImageDestinationAddImageFromSource": {
     "args": {
-     "0": {}, 
-     "1": {}, 
+     "0": {},
+     "1": {},
      "3": {}
     }
-   }, 
+   },
    "CGImageDestinationCopyImageSource": {
     "args": {
-     "0": {}, 
-     "1": {}, 
-     "2": {}, 
+     "0": {},
+     "1": {},
+     "2": {},
      "3": {
-      "already_cfretained": true, 
-      "null_accepted": true, 
+      "already_cfretained": true,
+      "null_accepted": true,
       "type_modifier": "o"
      }
     }
-   }, 
+   },
    "CGImageDestinationCopyTypeIdentifiers": {
     "retval": {
      "already_cfretained": true
     }
-   }, 
+   },
    "CGImageDestinationCreateWithData": {
     "args": {
-     "0": {}, 
-     "1": {}, 
+     "0": {},
+     "1": {},
      "3": {}
-    }, 
+    },
     "retval": {
      "already_cfretained": true
     }
-   }, 
+   },
    "CGImageDestinationCreateWithDataConsumer": {
     "args": {
-     "0": {}, 
-     "1": {}, 
+     "0": {},
+     "1": {},
      "3": {}
-    }, 
+    },
     "retval": {
      "already_cfretained": true
     }
-   }, 
+   },
    "CGImageDestinationCreateWithURL": {
     "args": {
-     "0": {}, 
-     "1": {}, 
+     "0": {},
+     "1": {},
      "3": {}
-    }, 
+    },
     "retval": {
      "already_cfretained": true
     }
-   }, 
+   },
    "CGImageDestinationFinalize": {
     "args": {
      "0": {}
     }
-   }, 
+   },
    "CGImageDestinationSetProperties": {
     "args": {
-     "0": {}, 
+     "0": {},
      "1": {}
     }
-   }, 
+   },
    "CGImageMetadataCopyStringValueWithPath": {
     "args": {
-     "0": {}, 
-     "1": {}, 
+     "0": {},
+     "1": {},
      "2": {}
-    }, 
+    },
     "retval": {
      "already_cfretained": true
     }
-   }, 
+   },
    "CGImageMetadataCopyTagMatchingImageProperty": {
     "args": {
-     "0": {}, 
-     "1": {}, 
+     "0": {},
+     "1": {},
      "2": {}
-    }, 
+    },
     "retval": {
      "already_cfretained": true
     }
-   }, 
+   },
    "CGImageMetadataCopyTagWithPath": {
     "args": {
-     "0": {}, 
-     "1": {}, 
+     "0": {},
+     "1": {},
      "2": {}
-    }, 
+    },
     "retval": {
      "already_cfretained": true
     }
-   }, 
+   },
    "CGImageMetadataCopyTags": {
     "args": {
      "0": {}
-    }, 
+    },
     "retval": {
      "already_cfretained": true
     }
-   }, 
+   },
    "CGImageMetadataCreateFromXMPData": {
     "args": {
      "0": {}
-    }, 
+    },
     "retval": {
      "already_cfretained": true
     }
-   }, 
+   },
    "CGImageMetadataCreateMutable": {
     "retval": {
      "already_cfretained": true
     }
-   }, 
+   },
    "CGImageMetadataCreateMutableCopy": {
     "args": {
      "0": {}
-    }, 
+    },
     "retval": {
      "already_cfretained": true
     }
-   }, 
+   },
    "CGImageMetadataCreateXMPData": {
     "args": {
-     "0": {}, 
+     "0": {},
      "1": {}
-    }, 
+    },
     "retval": {
      "already_cfretained": true
     }
-   }, 
+   },
    "CGImageMetadataEnumerateTagsUsingBlock": {
     "args": {
-     "0": {}, 
-     "1": {}, 
+     "0": {},
+     "1": {},
      "2": {},
      "3": { "callable": {
        "arguments": {
@@ -185,219 +200,219 @@
        "retval": { "typestr": "B" }
      }}
     }
-   }, 
+   },
    "CGImageMetadataRegisterNamespaceForPrefix": {
     "args": {
-     "0": {}, 
-     "1": {}, 
-     "2": {}, 
+     "0": {},
+     "1": {},
+     "2": {},
      "3": {
-      "already_cfretained": true, 
-      "null_accepted": true, 
+      "already_cfretained": true,
+      "null_accepted": true,
       "type_modifier": "o"
      }
     }
-   }, 
+   },
    "CGImageMetadataRemoveTagWithPath": {
     "args": {
-     "0": {}, 
-     "1": {}, 
+     "0": {},
+     "1": {},
      "2": {}
     }
-   }, 
+   },
    "CGImageMetadataSetTagWithPath": {
     "args": {
-     "0": {}, 
-     "1": {}, 
-     "2": {}, 
+     "0": {},
+     "1": {},
+     "2": {},
      "3": {}
     }
-   }, 
+   },
    "CGImageMetadataSetValueMatchingImageProperty": {
     "args": {
-     "0": {}, 
-     "1": {}, 
+     "0": {},
+     "1": {},
      "2": {}
     }
-   }, 
+   },
    "CGImageMetadataSetValueWithPath": {
     "args": {
-     "0": {}, 
-     "1": {}, 
+     "0": {},
+     "1": {},
      "2": {}
     }
-   }, 
+   },
    "CGImageMetadataTagCopyName": {
     "args": {
      "0": {}
-    }, 
+    },
     "retval": {
      "already_cfretained": true
     }
-   }, 
+   },
    "CGImageMetadataTagCopyNamespace": {
     "args": {
      "0": {}
-    }, 
+    },
     "retval": {
      "already_cfretained": true
     }
-   }, 
+   },
    "CGImageMetadataTagCopyPrefix": {
     "args": {
      "0": {}
-    }, 
+    },
     "retval": {
      "already_cfretained": true
     }
-   }, 
+   },
    "CGImageMetadataTagCopyQualifiers": {
     "args": {
      "0": {}
-    }, 
+    },
     "retval": {
      "already_cfretained": true
     }
-   }, 
+   },
    "CGImageMetadataTagCopyValue": {
     "args": {
      "0": {}
     }
-   }, 
+   },
    "CGImageMetadataTagCreate": {
     "args": {
-     "0": {}, 
-     "1": {}, 
+     "0": {},
+     "1": {},
      "2": {}
-    }, 
+    },
     "retval": {
      "already_cfretained": true
     }
-   }, 
+   },
    "CGImageMetadataTagGetType": {
     "args": {
      "0": {}
     }
-   }, 
+   },
    "CGImageSourceCopyMetadataAtIndex": {
     "args": {
-     "0": {}, 
+     "0": {},
      "2": {}
-    }, 
+    },
     "retval": {
      "already_cfretained": true
     }
-   }, 
+   },
    "CGImageSourceCopyProperties": {
     "args": {
-     "0": {}, 
+     "0": {},
      "1": {}
-    }, 
+    },
     "retval": {
      "already_cfretained": true
     }
-   }, 
+   },
    "CGImageSourceCopyPropertiesAtIndex": {
     "args": {
-     "0": {}, 
+     "0": {},
      "2": {}
-    }, 
+    },
     "retval": {
      "already_cfretained": true
     }
-   }, 
+   },
    "CGImageSourceCopyTypeIdentifiers": {
     "retval": {
      "already_cfretained": true
     }
-   }, 
+   },
    "CGImageSourceCreateImageAtIndex": {
     "args": {
-     "0": {}, 
+     "0": {},
      "2": {}
-    }, 
+    },
     "retval": {
      "already_cfretained": true
     }
-   }, 
+   },
    "CGImageSourceCreateIncremental": {
     "args": {
      "0": {}
-    }, 
+    },
     "retval": {
      "already_cfretained": true
     }
-   }, 
+   },
    "CGImageSourceCreateThumbnailAtIndex": {
     "args": {
-     "0": {}, 
+     "0": {},
      "2": {}
-    }, 
+    },
     "retval": {
      "already_cfretained": true
     }
-   }, 
+   },
    "CGImageSourceCreateWithData": {
     "args": {
-     "0": {}, 
+     "0": {},
      "1": {}
-    }, 
+    },
     "retval": {
      "already_cfretained": true
     }
-   }, 
+   },
    "CGImageSourceCreateWithDataProvider": {
     "args": {
-     "0": {}, 
+     "0": {},
      "1": {}
-    }, 
+    },
     "retval": {
      "already_cfretained": true
     }
-   }, 
+   },
    "CGImageSourceCreateWithURL": {
     "args": {
-     "0": {}, 
+     "0": {},
      "1": {}
-    }, 
+    },
     "retval": {
      "already_cfretained": true
     }
-   }, 
+   },
    "CGImageSourceGetCount": {
     "args": {
      "0": {}
     }
-   }, 
+   },
    "CGImageSourceGetStatus": {
     "args": {
      "0": {}
     }
-   }, 
+   },
    "CGImageSourceGetStatusAtIndex": {
     "args": {
      "0": {}
     }
-   }, 
+   },
    "CGImageSourceGetType": {
     "args": {
      "0": {}
-    }, 
+    },
     "retval": {}
-   }, 
+   },
    "CGImageSourceUpdateData": {
     "args": {
-     "0": {}, 
+     "0": {},
      "1": {}
     }
-   }, 
+   },
    "CGImageSourceUpdateDataProvider": {
     "args": {
-     "0": {}, 
+     "0": {},
      "1": {}
     }
    }
-  }, 
+  },
   "informal_protocols": {}
  }
 }
