@@ -166,6 +166,17 @@ class TestCGImage (TestCase):
         v = CGImageGetBitmapInfo(image)
         self.assertIsInstance(v, (int, long))
 
+    @min_os_level('10.11')
+    def testFunctions10_11(self):
+        provider = CGDataProviderCreateWithCFData(buffer("1" * 4 * 100 * 80))
+        self.assertArgHasType(CGImageCreate, 9, objc._C_BOOL)
+        self.assertResultIsCFRetained(CGImageCreate)
+        image = CGImageCreate(100, 80, 8, 32, 400, CGColorSpaceCreateDeviceRGB(), kCGImageAlphaPremultipliedLast,
+                provider, None, False, kCGRenderingIntentDefault)
+        self.assertIsInstance(image, CGImageRef)
+
+        v = CGImageGetUTType(image)
+        self.assertIsInstance(v, unicode)
 
 if __name__ == "__main__":
     main()

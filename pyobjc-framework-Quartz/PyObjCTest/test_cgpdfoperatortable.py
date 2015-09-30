@@ -12,5 +12,8 @@ class TestCGPDFOperatorTable (TestCase):
 
         self.assertArgIsFunction(CGPDFOperatorTableSetCallback, 2, CGPDFOperatorCallback, True)
 
+        CGPDFOperatorTableRetain
+        CGPDFOperatorTableRelease
+
 if __name__ == "__main__":
     main()

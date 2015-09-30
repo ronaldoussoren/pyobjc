@@ -5,6 +5,14 @@
   "enum": {
    "CGGlyphMax": { "value": 65534 }
   },
+  "externs": {
+   "kCGColorSpaceGenericXYZ": { "typestr": "@" },
+   "kCGColorSpaceITUR_709": { "typestr": "@" },
+   "kCGColorSpaceITUR_2020": { "typestr": "@" },
+   "kCGColorSpaceROMMRGB": { "typestr": "@" },
+   "kCGColorSpaceDCIP3": { "typestr": "@" },
+   "kCGColorSpaceACESCGLinear": { "typestr": "@" }
+  },
   "cftypes": {
    "CGColorRef": {
     "gettypeid_func": "CGColorGetTypeID",
@@ -1276,9 +1284,19 @@
      "already_cfretained": true
     }
    },
+   "CGImageGetUTType": {
+     "retval": {
+       "typestr": "@"
+     },
+     "args": {
+      "0": {
+        "typestr": "@"
+      }
+     }
+   },
    "CGDataProviderCreateWithFilename": {
     "args": {
-     "0": {}
+     "0": { "type_modifier": "n", "c_array_delimited_by_null": true }
     },
     "retval": {
      "already_cfretained": true
@@ -2781,8 +2799,8 @@
    "CGPDFDocumentGetVersion": {
     "args": {
      "0": {},
-     "1": {},
-     "2": {}
+     "1": { "type_modifier": "o" },
+     "2": { "type_modifier": "o" }
     }
    },
    "CGPDFDocumentIsEncrypted": {
@@ -2932,55 +2950,55 @@
    "CGPDFScannerPopArray": {
     "args": {
      "0": {},
-     "1": {}
+     "1": { "type_modifier": "o" }
     }
    },
    "CGPDFScannerPopBoolean": {
     "args": {
      "0": {},
-     "1": {}
+     "1": { "type_modifier": "o" }
     }
    },
    "CGPDFScannerPopDictionary": {
     "args": {
      "0": {},
-     "1": {}
+     "1": { "type_modifier": "o" }
     }
    },
    "CGPDFScannerPopInteger": {
     "args": {
      "0": {},
-     "1": {}
+     "1": { "type_modifier": "o" }
     }
    },
    "CGPDFScannerPopName": {
     "args": {
      "0": {},
-     "1": {}
+     "1": { "type_modifier": "o" }
     }
    },
    "CGPDFScannerPopNumber": {
     "args": {
      "0": {},
-     "1": {}
+     "1": { "type_modifier": "o" }
     }
    },
    "CGPDFScannerPopObject": {
     "args": {
      "0": {},
-     "1": { "type_override": "^{CGPDFObject=}" }
+     "1": { "type_override": "^^{CGPDFObject=}", "type_modifier": "o" }
     }
    },
    "CGPDFScannerPopStream": {
     "args": {
      "0": {},
-     "1": {}
+     "1": { "type_modifier": "o" }
     }
    },
    "CGPDFScannerPopString": {
     "args": {
      "0": {},
-     "1": {}
+     "1": { "type_modifier": "o" }
     }
    },
    "CGPDFScannerRelease": {
@@ -3002,10 +3020,16 @@
    "CGPDFStreamCopyData": {
     "args": {
      "0": {},
-     "1": {}
+     "1": { "type_modifier": "o" }
     },
     "retval": {
      "already_cfretained": true
+    }
+   },
+   "CGDirectDisplayCopyCurrentMetalDevice": {
+    "retval": { "already_cfretained": true, "typestr": "@" },
+    "args": {
+      "0": { "typestr": "I" }
     }
    },
    "CGPDFStreamGetDictionary": {

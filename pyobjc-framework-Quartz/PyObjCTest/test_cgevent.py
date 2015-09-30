@@ -89,10 +89,16 @@ class TestCGEvent (TestCase):
         self.assertArgHasType(CGEventPostToPSN, 0, b'n^{ProcessSerialNumber=II}')
         self.assertArgHasType(CGEventPostToPSN, 1, b'^{__CGEvent=}')
 
+    @min_os_level('10.11')
+    def testFunctions10_11(self):
+        CGEventPostToPid
+
 
     @expectedFailure
     def testMissing(self):
         self.fail("CGEventTapCreateForPSN")
+        self.fail("CGEventTapCreate")
+        self.fail("CGEventTapCreateForPid")
 
 
     def testFunctions(self):

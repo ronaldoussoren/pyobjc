@@ -59,6 +59,7 @@ class TestCGRemoteOperation (TestCase):
         # FIXME: This complete hangs the interpreter, don't have
         # time to investigate this.
         #
+        CGWaitForScreenRefreshRects
         #err, rects, count = CGWaitForScreenRefreshRects(None, None)
         #self.assertEqual(err, 0)
         #self.assertIsInstance(rects, tuple)
@@ -114,6 +115,9 @@ class TestCGRemoteOperation (TestCase):
     @expectedFailure
     def testMissing(self):
 
+        self.fail("CGScreenRegisterMoveCallback")
+        self.fail("CGScreenUnregisterMoveCallback")
+        self.fail("CGReleaseScreenRefreshRects")
         self.fail("CGWaitForScreenUpdateRects")
         self.fail("CGWaitForScreenRefreshRects")
 

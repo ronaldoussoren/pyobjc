@@ -20,6 +20,9 @@ class TestCGPath (TestCase):
         path = CGPathCreateMutable()
         self.assertIsInstance(path, CGPathRef)
 
+        path = CGPathCreateWithRect(CGRectMake(1,2,3,4), CGAffineTransformIdentity)
+        self.assertIsInstance(path, CGPathRef)
+
         self.assertResultIsCFRetained(CGPathCreateCopy)
         v = CGPathCreateCopy(path)
         self.assertIsInstance(v, CGPathRef)

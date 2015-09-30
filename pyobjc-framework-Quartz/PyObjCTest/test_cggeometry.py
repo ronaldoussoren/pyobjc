@@ -53,7 +53,6 @@ class TestCGGeometry (TestCase):
         self.assertEqual(v.width, 2.5)
         self.assertEqual(v.height, 3.5)
 
-
         v = CGRectMake(2.5, 3.5, 15.5, 25.5)
         self.assertIsInstance(v, CGRect)
         self.assertEqual(v.origin.x, 2.5)

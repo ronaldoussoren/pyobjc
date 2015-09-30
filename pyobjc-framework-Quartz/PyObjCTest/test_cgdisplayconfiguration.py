@@ -98,6 +98,9 @@ class TestCGDisplayConfiguration (TestCase):
         v = CGDisplayIsInHWMirrorSet(CGMainDisplayID())
         self.assertIsInstance(v, (int, long))
 
+        v = CGDisplayUsesOpenGLAcceleration(CGMainDisplayID())
+        self.assertIsInstance(v, (int, long))
+
         v = CGDisplayMirrorsDisplay(CGMainDisplayID())
         self.assertIsInstance(v, (int, long))
 

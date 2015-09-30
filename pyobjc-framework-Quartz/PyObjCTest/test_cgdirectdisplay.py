@@ -56,6 +56,8 @@ class TestCGDirectDisplay (TestCase):
 
         self.assertNotHasAttr(CoreGraphics, 'kCGDirectMainDisplay')
 
+        self.assertEqual(CGDisplayNoErr, kCGErrorSuccess)
+
     def testFunctions(self):
         self.assertIsInstance(CGMainDisplayID(), (int, long))
 

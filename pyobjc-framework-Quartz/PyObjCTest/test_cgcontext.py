@@ -128,6 +128,8 @@ class TestCGContext (TestCase):
             CGContextDrawRadialGradient(context, gradient, (10, 15),
                     30, (50, 70), 99.5, kCGGradientDrawsAfterEndLocation)
 
+            CGContextDrawShading
+
             def evaluate(info, input, output):
                 return input * 4
 
@@ -238,6 +240,8 @@ class TestCGContext (TestCase):
             self.assertIsInstance(path, CGPathRef)
             CGContextAddPath(context, path)
 
+            CGContextReplacePathWithStrokedPath(context)
+
             self.assertResultHasType(CGContextIsPathEmpty, objc._C_BOOL)
             self.assertTrue(CGContextIsPathEmpty(context) is False)
 
@@ -246,6 +250,9 @@ class TestCGContext (TestCase):
 
             box = CGContextGetPathBoundingBox(context)
             self.assertIsInstance(box, CGRect)
+
+            p = CGContextCopyPath(context)
+            self.assertIsInstance(p, CGPathRef)
 
             self.assertResultHasType(CGContextPathContainsPoint, objc._C_BOOL)
             self.assertIsInstance(CGContextPathContainsPoint(context, pt, kCGPathStroke), bool)
@@ -359,6 +366,11 @@ class TestCGContext (TestCase):
             self.assertArgHasType(CGContextSetShouldSmoothFonts, 1, objc._C_BOOL)
             CGContextSetShouldSmoothFonts(context, True)
 
+            self.assertArgHasType(CGContextSetAllowsFontSmoothing, 1, objc._C_BOOL)
+            CGContextSetAllowsFontSmoothing(context, True)
+
+            self.assertArgHasType(CGContextSetAllowsFontSubpixelQuantization, 1, objc._C_BOOL)
+            CGContextSetAllowsFontSubpixelQuantization(context, True)
 
             CGContextBeginTransparencyLayer(context, None)
             CGContextEndTransparencyLayer(context)

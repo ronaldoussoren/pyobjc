@@ -11,11 +11,15 @@ if sys.version_info[0] != 2:
             return value
         return value.encode('latin1')
 
+    long = int
+
 class TestCGDataProvider (TestCase):
     def testTypes(self):
         self.assertIsCFType(CGDataProviderRef)
 
     def testFunctions(self):
+        self.assertIsInstance(CGDataProviderGetTypeID(), (int, long))
+
         provider = CGDataProviderCreateWithCFData(buffer("data"))
         self.assertIsInstance(provider, CGDataProviderRef)
 
@@ -26,6 +30,9 @@ class TestCGDataProvider (TestCase):
                 fn, kCFURLPOSIXPathStyle, False)
 
         provider = CGDataProviderCreateWithURL(url)
+        self.assertIsInstance(provider, CGDataProviderRef)
+
+        provider = CGDataProviderCreateWithFilename(fn.encode('ascii'))
         self.assertIsInstance(provider, CGDataProviderRef)
 
         v = CGDataProviderRetain(provider)

@@ -33,6 +33,7 @@ class TestCGDisplayStream (TestCase):
         self.assertEqual(Quartz.kCGDisplayStreamFrameStatusStopped, 3)
 
         self.assertIsInstance(Quartz.kCGDisplayStreamSourceRect, unicode)
+        self.assertIsInstance(Quartz.kCGDisplayStreamDestinationRect, unicode)
         self.assertIsInstance(Quartz.kCGDisplayStreamPreserveAspectRatio, unicode)
         self.assertIsInstance(Quartz.kCGDisplayStreamColorSpace, unicode)
         self.assertIsInstance(Quartz.kCGDisplayStreamMinimumFrameTime, unicode)

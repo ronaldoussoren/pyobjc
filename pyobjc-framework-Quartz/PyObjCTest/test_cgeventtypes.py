@@ -12,11 +12,13 @@ class TestCGEventTypes (TestCase):
         self.assertEqual(kCGMomentumScrollPhaseBegin, 1)
         self.assertEqual(kCGMomentumScrollPhaseContinue, 2)
         self.assertEqual(kCGMomentumScrollPhaseEnd, 3)
+
         self.assertEqual(kCGScrollPhaseBegan, 1)
         self.assertEqual(kCGScrollPhaseChanged, 2)
         self.assertEqual(kCGScrollPhaseEnded, 4)
         self.assertEqual(kCGScrollPhaseCancelled, 8)
         self.assertEqual(kCGScrollPhaseMayBegin, 128)
+
         self.assertEqual(kCGGesturePhaseNone, 0)
         self.assertEqual(kCGGesturePhaseBegan, 1)
         self.assertEqual(kCGGesturePhaseChanged, 2)
@@ -27,8 +29,10 @@ class TestCGEventTypes (TestCase):
         self.assertEqual(kCGMouseButtonLeft, 0)
         self.assertEqual(kCGMouseButtonRight, 1)
         self.assertEqual(kCGMouseButtonCenter, 2)
+
         self.assertEqual(kCGScrollEventUnitPixel, 0)
         self.assertEqual(kCGScrollEventUnitLine, 1)
+
         self.assertEqual(kCGEventFlagMaskAlphaShift, 0x00010000)
         self.assertEqual(kCGEventFlagMaskShift, 0x00020000)
         self.assertEqual(kCGEventFlagMaskControl, 0x00040000)
@@ -38,6 +42,7 @@ class TestCGEventTypes (TestCase):
         self.assertEqual(kCGEventFlagMaskSecondaryFn, 0x00800000)
         self.assertEqual(kCGEventFlagMaskNumericPad, 0x00200000)
         self.assertEqual(kCGEventFlagMaskNonCoalesced, 0x00000100)
+
         self.assertEqual(kCGEventNull, 0)
         self.assertEqual(kCGEventLeftMouseDown, 1)
         self.assertEqual(kCGEventLeftMouseUp, 2)
@@ -57,6 +62,7 @@ class TestCGEventTypes (TestCase):
         self.assertEqual(kCGEventOtherMouseDragged, 27)
         self.assertEqual(kCGEventTapDisabledByTimeout, 0xFFFFFFFE)
         self.assertEqual(kCGEventTapDisabledByUserInput, 0xFFFFFFFF)
+
         self.assertEqual(kCGMouseEventNumber, 0)
         self.assertEqual(kCGMouseEventClickState, 1)
         self.assertEqual(kCGMouseEventPressure, 2)
@@ -115,16 +121,21 @@ class TestCGEventTypes (TestCase):
         self.assertEqual(kCGScrollWheelEventIsContinuous, 88)
         self.assertEqual(kCGMouseEventWindowUnderMousePointer, 91)
         self.assertEqual(kCGMouseEventWindowUnderMousePointerThatCanHandleThisEvent, 92)
+
         self.assertEqual(kCGEventMouseSubtypeDefault, 0)
         self.assertEqual(kCGEventMouseSubtypeTabletPoint, 1)
         self.assertEqual(kCGEventMouseSubtypeTabletProximity, 2)
+
         self.assertEqual(kCGHIDEventTap, 0)
         self.assertEqual(kCGSessionEventTap, 1)
         self.assertEqual(kCGAnnotatedSessionEventTap, 2)
+
         self.assertEqual(kCGHeadInsertEventTap, 0)
         self.assertEqual(kCGTailAppendEventTap, 1)
+
         self.assertEqual(kCGEventTapOptionDefault, 0x00000000)
         self.assertEqual(kCGEventTapOptionListenOnly, 0x00000001)
+
 
         self.assertEqual(kCGNotifyEventTapAdded, b"com.apple.coregraphics.eventTapAdded")
         self.assertEqual(kCGNotifyEventTapRemoved, b"com.apple.coregraphics.eventTapRemoved")
@@ -132,6 +143,7 @@ class TestCGEventTypes (TestCase):
         self.assertEqual(kCGEventSourceStatePrivate, -1)
         self.assertEqual(kCGEventSourceStateCombinedSessionState, 0)
         self.assertEqual(kCGEventSourceStateHIDSystemState, 1)
+
         self.assertEqual(kCGAnyInputEventType, 0xffffffff)
         self.assertEqual(kCGEventMaskForAllEvents, 0xffffffffffffffff)
 
