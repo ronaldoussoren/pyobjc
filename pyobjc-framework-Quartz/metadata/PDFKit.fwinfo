@@ -2,64 +2,70 @@
 # for information on how to update this file.
 {
  "definitions": {
+  "aliases": {
+   "kPDFImageArea": { "alias": "FLT_MX" }
+  },
+  "enum": {
+   "kPDFImageArea": { "value": 256 }
+  },
   "classes": {
    "NSObject": {
     "methods": [
      {
-      "class_method": false, 
-      "retval": {}, 
+      "class_method": false,
+      "retval": {},
       "selector": "classForPage"
-     }, 
+     },
      {
       "args": {
        "0": {}
-      }, 
-      "class_method": false, 
-      "retval": {}, 
+      },
+      "class_method": false,
+      "retval": {},
       "selector": "classForAnnotationClass:"
      }
     ]
-   }, 
+   },
    "PDFDocument": {
     "methods": [
      {
-      "class_method": false, 
-      "retval": {}, 
+      "class_method": false,
+      "retval": {},
       "selector": "documentRef"
-     }, 
+     },
      {
-      "class_method": false, 
-      "retval": {}, 
+      "class_method": false,
+      "retval": {},
       "selector": "pageClass"
      }
     ]
-   }, 
+   },
    "PDFPage": {
     "methods": [
      {
-      "class_method": false, 
-      "retval": {}, 
+      "class_method": false,
+      "retval": {},
       "selector": "pageRef"
      }
     ]
    }
-  }, 
-  "formal_protocols": {}, 
-  "functions": {}, 
+  },
+  "formal_protocols": {},
+  "functions": {},
   "informal_protocols": {
    "PDFDocumentDelegate": {
     "methods": [
      {
-      "class_method": false, 
-      "retval": {}, 
+      "class_method": false,
+      "retval": {},
       "selector": "classForPage"
-     }, 
+     },
      {
       "args": {
        "0": {}
-      }, 
-      "class_method": false, 
-      "retval": {}, 
+      },
+      "class_method": false,
+      "retval": {},
       "selector": "classForAnnotationClass:"
      }
     ]

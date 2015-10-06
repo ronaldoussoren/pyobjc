@@ -32,6 +32,7 @@ class TestPDFView (TestCase):
         self.assertEqual(kPDFTextFieldArea, 32)
         self.assertEqual(kPDFIconArea, 64)
         self.assertEqual(kPDFPopupArea, 128)
+        self.assertEqual(kPDFImageArea, 256)
 
         self.assertIsInstance(PDFViewDocumentChangedNotification, unicode)
         self.assertIsInstance(PDFViewChangedHistoryNotification, unicode)
@@ -40,6 +41,7 @@ class TestPDFView (TestCase):
         self.assertIsInstance(PDFViewAnnotationHitNotification, unicode)
         self.assertIsInstance(PDFViewCopyPermissionNotification, unicode)
         self.assertIsInstance(PDFViewPrintPermissionNotification, unicode)
+        self.assertIsInstance(PDFViewVisiblePagesChangedNotification, unicode)
 
     @min_os_level('10.5')
     def testConstants10_5(self):
