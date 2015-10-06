@@ -31,6 +31,7 @@ class TestImageKitDeprecated (TestCase):
 
         self.assertIsInstance(IKPictureTakerShowAddressBookPicture, unicode)
         self.assertIsInstance(IKPictureTakerShowEmptyPicture, unicode)
+        self.assertIsInstance(IKPictureTakerCropAreaSizeKey, unicode)
 
     @min_os_level('10.5')
     def testMethods(self):

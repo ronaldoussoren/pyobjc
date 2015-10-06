@@ -12,6 +12,7 @@ class TestIKImageEditPanel (TestCase):
     @min_os_level('10.5')
     def no_testProtocols(self):
         self.assertIsInstance(objc.protocolNamed('IKImageEditPanel'), objc.formal_protocol)
+        self.assertIsInstance(objc.protocolNamed('IKImageEditPanelDataSource'), objc.formal_protocol)
 
     @min_os_level('10.5')
     def testProtocolMethods(self):

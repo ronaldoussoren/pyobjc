@@ -13,6 +13,7 @@ class TestIKDeviceBrowserView (TestCase):
     def testMethods10_6(self):
         self.assertResultIsBOOL(IKDeviceBrowserView.displaysLocalCameras)
         self.assertArgIsBOOL(IKDeviceBrowserView.setDisplaysLocalCameras_, 0)
+
         self.assertResultIsBOOL(IKDeviceBrowserView.displaysNetworkCameras)
         self.assertArgIsBOOL(IKDeviceBrowserView.setDisplaysNetworkCameras_, 0)
 

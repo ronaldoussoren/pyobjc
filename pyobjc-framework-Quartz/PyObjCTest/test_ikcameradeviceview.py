@@ -24,11 +24,11 @@ class TestIKCameraDeviceView (TestCase):
 
         self.assertResultIsBOOL(IKCameraDeviceView.displaysPostProcessApplicationControl)
         self.assertArgIsBOOL(IKCameraDeviceView.setDisplaysPostProcessApplicationControl_, 0)
+
         self.assertResultIsBOOL(IKCameraDeviceView.canRotateSelectedItemsLeft)
         self.assertResultIsBOOL(IKCameraDeviceView.canRotateSelectedItemsRight)
         self.assertResultIsBOOL(IKCameraDeviceView.canDeleteSelectedItems)
-        self.assertResultIsBOOL(IKCameraDeviceView.canDeleteSelectedItems)
-
+        self.assertResultIsBOOL(IKCameraDeviceView.canDownloadSelectedItems)
 
         self.assertArgIsBOOL(IKCameraDeviceView.selectIndexes_byExtendingSelection_, 1)
 

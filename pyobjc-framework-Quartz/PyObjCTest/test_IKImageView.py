@@ -26,6 +26,27 @@ class TestIKImageView (TestCase):
         self.assertIsInstance(IKToolModeSelectLasso, unicode)
 
 
+    def testMethods(self):
+        self.assertResultIsBOOL(IKImageView.autoresizes)
+        self.assertArgIsBOOL(IKImageView.setAutoresizes_, 0)
+
+        self.assertResultIsBOOL(IKImageView.hasHorizontalScroller)
+        self.assertArgIsBOOL(IKImageView.setHasHorizontalScroller_, 0)
+
+        self.assertResultIsBOOL(IKImageView.hasVerticalScroller)
+        self.assertArgIsBOOL(IKImageView.setHasVerticalScroller_, 0)
+
+        self.assertResultIsBOOL(IKImageView.autohidesScrollers)
+        self.assertArgIsBOOL(IKImageView.setAutohidesScrollers_, 0)
+
+        self.assertResultIsBOOL(IKImageView.supportsDragAndDrop)
+        self.assertArgIsBOOL(IKImageView.setSupportsDragAndDrop_, 0)
+
+        self.assertResultIsBOOL(IKImageView.editable)
+        self.assertArgIsBOOL(IKImageView.setEditable_, 0)
+
+        self.assertResultIsBOOL(IKImageView.doubleClickOpensImageEditPanel)
+        self.assertArgIsBOOL(IKImageView.setDoubleClickOpensImageEditPanel_, 0)
 
 
 
