@@ -6,6 +6,7 @@ autom4te.cache
 htmlcov
 .coverage
 new-bindings
+.eggs
 
 syntax: glob
 *.so

@@ -2504,19 +2504,15 @@ PyObjC_MODULE_INIT(_objc)
         PyObjC_INITERROR();
     }
     if (PyModule_AddObject(m, "_FLT_MIN", v) < 0) {
-        Py_DECREF(v);
         PyObjC_INITERROR();
     }
-    Py_DECREF(v);
 
     if ((v = PyFloat_FromDouble(FLT_MAX)) == NULL) {
         PyObjC_INITERROR();
     }
     if (PyModule_AddObject(m, "_FLT_MAX", v) < 0) {
-        Py_DECREF(v);
         PyObjC_INITERROR();
     }
-    Py_DECREF(v);
 
     if (PyModule_AddStringConstant(m, "platform", "MACOSX") < 0) {
         PyObjC_INITERROR();

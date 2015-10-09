@@ -2,6 +2,7 @@
 #include <Python.h>
 #include "pyobjc-api.h"
 
+#import <Foundation/Foundation.h>
 #import <AddressBook/AddressBook.h>
 
 /* We include the source code here instead of

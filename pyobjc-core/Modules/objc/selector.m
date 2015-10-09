@@ -25,6 +25,13 @@ PyObjCSelector_GetMetadata(PyObject* _self)
 {
     PyObjCSelector* self = (PyObjCSelector*)_self;
 
+    if (self->sel_methinfo != NULL
+            /* XXX: && PyObjCNativeSelector_Check(self) */
+            && self->sel_mappingcount != PyObjC_MappingCount) {
+        Py_DECREF(self->sel_methinfo);
+        self->sel_methinfo = NULL;
+    }
+
     if (self->sel_methinfo == NULL) {
         self->sel_methinfo = PyObjCMethodSignature_ForSelector(
             self->sel_class,

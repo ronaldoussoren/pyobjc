@@ -6,6 +6,8 @@ An overview of the relevant changes in new, and older, releases.
 Version 3.1
 -----------
 
+* Fix value of ``FLT_MAX`` and ``FLT_MIN`` in framework bindings.
+
 * Fix for the functions in ``PyObjCTools.AppHelper``: those functions didn't work
   correctly when the calling thread didn't have a runloop.
 

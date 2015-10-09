@@ -10,6 +10,7 @@
 #define PyObjCSelector_kHIDDEN                0x000002
 #define PyObjCSelector_kREQUIRED              0x000004
 #define PyObjCSelector_kRETURNS_UNINITIALIZED 0x000010
+#define PyObjCSelector_kNATIVE		      0x000020
 
 
 
@@ -32,6 +33,7 @@ typedef struct {
     Class sel_class;
     int sel_flags;
     PyObjCMethodSignature* sel_methinfo;
+    Py_ssize_t	sel_mappingcount;
 } PyObjCSelector;
 
 typedef struct {

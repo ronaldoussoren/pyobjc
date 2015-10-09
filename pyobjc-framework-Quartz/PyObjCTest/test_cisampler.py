@@ -20,6 +20,7 @@ class TestCISampler (TestCase):
         self.assertIsInstance(kCISamplerWrapClamp, unicode)
         self.assertIsInstance(kCISamplerFilterNearest, unicode)
         self.assertIsInstance(kCISamplerFilterLinear, unicode)
+        self.assertIsInstance(kCISamplerColorSpace, unicode)
 
 
 if __name__ == "__main__":

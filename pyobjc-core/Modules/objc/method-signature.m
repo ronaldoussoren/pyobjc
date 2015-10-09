@@ -282,6 +282,7 @@ determine_if_shortcut(PyObjCMethodSignature* methinfo)
     }
 
     methinfo->shortcut_signature = YES;
+    methinfo->shortcut_signature = NO; /* XXX */
     methinfo->shortcut_argbuf_size = (unsigned int)argbuf_len;
     return 0;
 }
@@ -913,6 +914,7 @@ setup_descr(struct _PyObjC_ArgDescr* descr, PyObject* meta, BOOL is_native)
             /* The new signature is not compatible enough, ignore the
              * override.
              */
+            printf("Types not compatible: %s   %s\n", descr->type, type);
             type = descr->type;
         }
 

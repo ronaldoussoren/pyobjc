@@ -773,7 +773,9 @@ Decimal_New(NSDecimal* aDecimal)
 PyObject*
 pythonify_nsdecimal(void* value)
 {
-    return Decimal_New((NSDecimal*)value);
+    PyObject* v;
+    v = Decimal_New((NSDecimal*)value);
+    return v;
 }
 
 int
@@ -1064,35 +1066,6 @@ PyObjC_setup_nsdecimal(PyObject* m)
 
     if (PyModule_AddObject(m, "NSDecimal", (PyObject*)&Decimal_Type) == -1) {
         return -1;
-    }
-
-    /* Also register some variations of the encoded name because NSDecimal
-     * doesn't have a struct tag and the metadata generators make up one
-     * when creating the metadata.
-     */
-    if (@encode(NSDecimal)[1] == '?') {
-        char buffer[1024];
-
-        buffer[0] = _C_CONST;
-        buffer[1] = _C_PTR;
-        buffer[2] = _C_STRUCT_B;
-
-            snprintf(buffer+3, sizeof(buffer) - 3, "_NSDecimal");
-            snprintf(buffer+2+sizeof("_NSDecimal"),
-                sizeof(buffer)-2-sizeof("_NSDecimal"),
-                "%s", @encode(NSDecimal) + 2);
-
-        if (PyObjCPointerWrapper_Register("NSDecimal*", buffer+1,
-                pythonify_nsdecimal,
-                depythonify_nsdecimal) < 0) {
-            return -1;
-        }
-
-        if (PyObjCPointerWrapper_Register("NSDecimal*", buffer,
-                pythonify_nsdecimal,
-                depythonify_nsdecimal) < 0) {
-            return -1;
-        }
     }
 
     Class classNSDecimalNumber = objc_lookUpClass("NSDecimalNumber");
