@@ -29,6 +29,9 @@ class TestQuartzFilterManager (TestCase):
         self.assertIsInstance(kQuartzFilterPDFWorkflowDomain, unicode)
         self.assertIsInstance(kQuartzFilterPrintingDomain, unicode)
 
+    @expectedFailure
+    def testGlobalUpdateOK(self):
+        self.fail("Not yet supported")
 
 if __name__ == "__main__":
     main()

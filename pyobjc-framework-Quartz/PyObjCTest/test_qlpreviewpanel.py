@@ -34,6 +34,7 @@ class TestQLPreviewPanel (TestCase):
 
     @min_os_level('10.6')
     def testProtocols(self):
+        objc.protocolNamed('QLPreviewPanelDataSource')
         objc.protocolNamed('QLPreviewPanelDelegate')
 
 
