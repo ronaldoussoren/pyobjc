@@ -15,6 +15,9 @@ class TestQCRenderer (TestCase):
         self.assertIsInstance(QCRendererEventKey, unicode)
         self.assertIsInstance(QCRendererMouseLocationKey, unicode)
 
+    def testProtocols(self):
+        objc.protocolNamed('QCCompositionRenderer')
+
     def testMethods(self):
         self.assertResultIsBOOL(TestQCRendererHelper.setValue_forInputKey_)
 

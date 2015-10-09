@@ -67,5 +67,6 @@ class TestQCPlugIn (TestCase):
         objc.protocolNamed('QCPlugInOutputImageProvider')
         self.fail("Test interface for QCPlugInContext")
 
+
 if __name__ == "__main__":
     main()
