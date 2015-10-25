@@ -1,0 +1,22 @@
+API Notes: SceneKit framework
+=============================
+
+Apple documentation
+-------------------
+
+The full API is described in `Apple's documentation`__, both
+the C and Objective-C APIs are available (but see the `API Notes`_ below).
+
+.. __: https://developer.apple.com/library/mac/documentation/UserExperience/Conceptual/SceneKit/SceneKit.html
+
+
+API Notes
+---------
+
+The full API for the SceneKit framework is available from Python, except for methods that have a
+vector_float3 or vector_float4 as one of their arguments or as a return value (those require changes
+to PyObjC's core bridge).
+
+.. note::
+
+   This framework is only available on OSX 10.8 and later.

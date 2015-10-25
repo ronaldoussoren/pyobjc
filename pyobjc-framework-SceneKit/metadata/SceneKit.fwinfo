@@ -1,0 +1,127 @@
+// objective.metadata exceptions file, see its document
+// for information on how to update this file.
+{
+ "definitions": {
+  "classes": {
+   "SCNAction": {
+    "methods": [
+     {
+      "args": {
+       "1": {}
+      }, 
+      "class_method": true, 
+      "selector": "runBlock:queue:"
+     }
+    ]
+   }, 
+   "SCNGeometrySource": {
+    "methods": [
+     {
+      "args": {
+       "0": {}
+      }, 
+      "class_method": true, 
+      "selector": "geometrySourceWithVertices:count:"
+     }, 
+     {
+      "args": {
+       "0": {}
+      }, 
+      "class_method": true, 
+      "selector": "geometrySourceWithNormals:count:"
+     }, 
+     {
+      "args": {
+       "0": {}
+      }, 
+      "class_method": true, 
+      "selector": "geometrySourceWithTextureCoordinates:count:"
+     }
+    ]
+   }, 
+   "SCNRenderer": {
+    "methods": [
+     {
+      "args": {
+       "0": {}
+      }, 
+      "class_method": true, 
+      "selector": "rendererWithContext:options:"
+     }
+    ]
+   }, 
+   "SCNScene": {
+    "methods": [
+     {
+      "args": {
+       "2": {}
+      }, 
+      "class_method": true, 
+      "selector": "sceneWithURL:options:error:"
+     }
+    ]
+   }, 
+   "SCNSceneSource": {
+    "methods": [
+     {
+      "args": {
+       "1": {}
+      }, 
+      "class_method": false, 
+      "selector": "sceneWithOptions:error:"
+     }
+    ]
+   }
+  }, 
+  "formal_protocols": {
+   "SCNBoundingVolume": {
+    "methods": [
+     {
+      "args": {
+       "0": {}, 
+       "1": {}
+      }, 
+      "class_method": false, 
+      "selector": "getBoundingBoxMin:max:"
+     }, 
+     {
+      "args": {
+       "0": {}, 
+       "1": {}
+      }, 
+      "class_method": false, 
+      "selector": "getBoundingSphereCenter:radius:"
+     }, 
+     {
+      "args": {
+       "0": {}, 
+       "1": {}
+      }, 
+      "class_method": false, 
+      "selector": "setBoundingBoxMin:max:"
+     }
+    ]
+   }, 
+   "SCNSceneRenderer": {
+    "methods": [
+     {
+      "class_method": false, 
+      "retval": {}, 
+      "selector": "context"
+     }
+    ], 
+    "properties": [
+     {
+      "attributes": [
+       "nonatomic", 
+       "readonly"
+      ], 
+      "name": "context"
+     }
+    ]
+   }
+  }, 
+  "functions": {}, 
+  "informal_protocols": {}
+ }
+}
