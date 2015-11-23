@@ -27,6 +27,7 @@ FRAMEWORKS_WRAPPERS=[
         ('Cocoa',                   None,               None        ),
         ('Collaboration',           '10.5',             None        ),
         ('Contacts',                '10.11',            None        ),
+        ('ContactsUI',              '10.11',            None        ),
         ('CoreBluetooth',           '10.10',            None        ),
         ('CoreData',                None,               None        ),
         ('CoreLocation',            '10.6',             None        ),
