@@ -14,7 +14,6 @@ class TestAVAssetExportSession (TestCase):
         self.assertIsInstance(AVFoundation.AVAssetExportPreset960x540, unicode)
         self.assertIsInstance(AVFoundation.AVAssetExportPreset1280x720, unicode)
         self.assertIsInstance(AVFoundation.AVAssetExportPreset1920x1080, unicode)
-        self.assertIsInstance(AVFoundation.AVAssetExportPreset3840x2160, unicode)
         self.assertIsInstance(AVFoundation.AVAssetExportPresetAppleM4A, unicode)
         self.assertIsInstance(AVFoundation.AVAssetExportPresetPassthrough, unicode)
         self.assertIsInstance(AVFoundation.AVAssetExportPresetAppleM4VCellular, unicode)
@@ -32,6 +31,16 @@ class TestAVAssetExportSession (TestCase):
         self.assertEqual(AVFoundation.AVAssetExportSessionStatusCompleted, 3)
         self.assertEqual(AVFoundation.AVAssetExportSessionStatusFailed, 4)
         self.assertEqual(AVFoundation.AVAssetExportSessionStatusCancelled, 5)
+
+    @min_os_level('10.10')
+    def testConstants10_10(self):
+        self.assertIsInstance(AVFoundation.AVAssetExportPreset3840x2160, unicode)
+
+    @min_os_level('10.11')
+    def testConstants10_11(self):
+        self.assertIsInstance(AVFoundation.AVAssetExportPresetLowQuality, unicode)
+        self.assertIsInstance(AVFoundation.AVAssetExportPresetMediumQuality, unicode)
+        self.assertIsInstance(AVFoundation.AVAssetExportPresetHighestQuality, unicode)
 
     @min_os_level('10.7')
     def testMethods(self):

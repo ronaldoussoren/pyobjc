@@ -14,6 +14,7 @@ VERSION="3.1b1"
 FRAMEWORKS_WRAPPERS=[
         # Name                      Introcuded          Removed
         ('AVKit',                   '10.9',             None        ),
+        ('AVFoundation',            '10.7',             None        ),
         ('Accounts',                '10.8',             None        ),
         ('AddressBook',             None,               None        ),
         ('AppleScriptKit',          None,               None        ),
@@ -76,7 +77,7 @@ FRAMEWORKS_WRAPPERS=[
 #        ('GLKit',                   '10.8',             None        ),
 #        ('GameKit',                 '10.8',             None        ),
 #        ('MediaToolbox',            '10.8',             None        ),
-#        ('SceneKit',                '10.8',             None        ),
+        ('SceneKit',                '10.7',             None        ),
 #        ('SpriteKit',               '10.9',             None        ),
 #        ('VideoToolbox',            '10.8',             None        ),
 ]
