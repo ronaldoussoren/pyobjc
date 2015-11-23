@@ -5,7 +5,9 @@
   "classes": {},
   "enum": {
    "kFSEventStreamCreateFlagMarkSelf": { "value": 32 },
-   "kFSEventStreamEventFlagOwnEvent": { "value": 524288 }
+   "kFSEventStreamEventFlagOwnEvent": { "value": 524288 },
+   "kFSEventStreamEventFlagItemIsHardlink": { "value": 1048576 },
+   "kFSEventStreamEventFlagItemIsLastHardlink": { "value": 2097152 }
   },
   "cftypes": {
     "ConstFSEventStreamRef": {

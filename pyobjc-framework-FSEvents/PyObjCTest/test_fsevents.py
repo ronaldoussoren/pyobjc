@@ -47,6 +47,8 @@ class TestFSEvents (TestCase):
             ('kFSEventStreamEventFlagItemIsDir', 0x00020000),
             ('kFSEventStreamEventFlagItemIsSymlink', 0x00040000),
             ('kFSEventStreamEventFlagOwnEvent', 0x00080000),
+            ('kFSEventStreamEventFlagItemIsHardlink', 0x00100000),
+            ('kFSEventStreamEventFlagItemIsLastHardlink', 0x00200000),
             ):
 
             self.assertHasAttr(FSEvents, k)
