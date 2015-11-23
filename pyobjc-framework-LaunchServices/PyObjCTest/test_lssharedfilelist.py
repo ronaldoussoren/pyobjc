@@ -2,6 +2,8 @@
 from PyObjCTools.TestSupport import *
 from LaunchServices import *
 
+import os
+
 try:
     long
 except NameError:
@@ -84,8 +86,13 @@ class TestLSSharedFileList (TestCase):
         self.assertIsInstance(seed, (int,long))
 
         self.assertResultIsCFRetained(LSSharedFileListInsertItemURL)
-        item = LSSharedFileListInsertItemURL(lst, kLSSharedFileListItemLast, b"PyObjC.Test".decode('latin1'), None,
-                CFURLCreateWithString(None, "file:///etc/hosts", None), {}, [])
+        url = CFURLCreateWithString(None, "file://" + os.path.expanduser('~'), None)
+        title = b"PyObjC.Test".decode("latin1")
+        # XXX
+        #item = LSSharedFileListInsertItemFSRef(lst, kLSSharedFileListItemLast, title, None, objc.FSRef.from_pathname(os.path.expanduser('~')), None, None)
+        self.assertIsInstance(item, LSSharedFileListItemRef)
+
+        #item = LSSharedFileListInsertItemURL(lst, kLSSharedFileListItemLast, title, None, url, None, None)
         self.assertIsInstance(item, LSSharedFileListItemRef)
 
         v = LSSharedFileListItemGetID(item)
@@ -121,8 +128,7 @@ class TestLSSharedFileList (TestCase):
         v = LSSharedFileListItemRemove(lst, item)
         self.assertIsInstance(v, (int, long))
 
-        v = LSSharedFileListRemoveAllItems(lst)
-        self.assertIsInstance(v, (int, long))
+        LSSharedFileListRemoveAllItems
 
     @expectedFailure
     def testMissing(self):

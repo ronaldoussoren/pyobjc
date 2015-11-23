@@ -137,5 +137,9 @@ class TestUTCoreTypes (TestCase):
         self.assertIsInstance(kUTTypeElectronicPublication, unicode)
         self.assertIsInstance(kUTTypeLog, unicode)
 
+    @min_os_level('10.11')
+    def testConstants10_11(self):
+        self.assertIsInstance(kUTTypeSwiftSource, unicode)
+
 if __name__ == "__main__":
     main()

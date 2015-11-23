@@ -13,7 +13,7 @@ from LaunchServices import _metadata
 
 sys.modules['LaunchServices'] = mod = objc.ObjCLazyModule(
     "LaunchServices",
-    "com.apple.LaunchServices",
+    "com.apple.CoreServices",
     objc.pathForFramework('/System/Library/Frameworks/CoreServices.framework/CoreServices'),
     _metadata.__dict__, None, {
     '__doc__': __doc__,
