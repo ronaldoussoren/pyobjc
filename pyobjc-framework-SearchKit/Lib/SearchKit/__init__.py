@@ -25,105 +25,101 @@ del sys.modules['SearchKit._metadata']
 
 
 
-try:
-    mod.SKIndexGetTypeID
-    mod.SKDocumentRef
+# SKIndexGetTypeID is documented, but not actually exported by Leopard. Try to
+# emulate the missing functionality.
+#
+# See also radar:6525606.
+#
+# UPDATE 20151123: The workaround is still necessary on OSX 10.11
+def workaround():
+    from Foundation import NSMutableData, NSAutoreleasePool
 
-except AttributeError:
-    # SKIndexGetTypeID is documented, but not actually exported by Leopard. Try to
-    # emulate the missing functionality.
-    #
-    # See also radar:6525606.
-    #
-    def workaround():
-        from Foundation import NSMutableData, NSAutoreleasePool
+    pool = NSAutoreleasePool.alloc().init()
+    try:
+        rI = mod.SKIndexCreateWithMutableData(NSMutableData.data(),
+                None, mod.kSKIndexInverted, None)
 
-        pool = NSAutoreleasePool.alloc().init()
-        try:
-            rI = mod.SKIndexCreateWithMutableData(NSMutableData.data(),
-                    None, mod.kSKIndexInverted, None)
+        indexID = mod.CFGetTypeID(rI)
 
-            indexID = mod.CFGetTypeID(rI)
+        r = mod.SKIndexDocumentIteratorCreate(rI, None)
+        iterID = mod.CFGetTypeID(r)
+        del r
 
-            r = mod.SKIndexDocumentIteratorCreate(rI, None)
-            iterID = mod.CFGetTypeID(r)
-            del r
+        r = mod.SKSearchGroupCreate([rI])
+        groupID = mod.CFGetTypeID(r)
 
-            r = mod.SKSearchGroupCreate([rI])
-            groupID = mod.CFGetTypeID(r)
+        r = mod.SKSearchResultsCreateWithQuery(r, ".*", mod.kSKSearchRanked, 1, None, None)
+        resultID = mod.CFGetTypeID(r)
 
-            r = mod.SKSearchResultsCreateWithQuery(r, ".*", mod.kSKSearchRanked, 1, None, None)
-            resultID = mod.CFGetTypeID(r)
+        if mod.SKSearchGetTypeID() == 0:
+            # Type doesn't get registered unless you try to use it.
+            # That's no good for PyObjC, therefore forcefully create
+            # a SKSearch object
+            mod.SKSearchCreate(rI, "q", 0)
+            searchref = objc.registerCFSignature(
+                    "SKSearchRef", b"^{__SKSearch=}", mod.SKSearchGetTypeID())
+        else:
+            searchref = mod.SKSearchRef
 
-            if mod.SKSearchGetTypeID() == 0:
-                # Type doesn't get registered unless you try to use it.
-                # That's no good for PyObjC, therefore forcefully create
-                # a SKSearch object
-                mod.SKSearchCreate(rI, "q", 0)
-                searchref = objc.registerCFSignature(
-                        "SKSearchRef", b"^{__SKSearch=}", mod.SKSearchGetTypeID())
-            else:
-                searchref = mod.SKSearchRef
+        del r
+        del rI
 
-            del r
-            del rI
+        r = mod.SKSummaryCreateWithString("foo")
+        summaryID = mod.CFGetTypeID(r)
+        del r
 
-            r = mod.SKSummaryCreateWithString("foo")
-            summaryID = mod.CFGetTypeID(r)
-            del r
+    finally:
+        del pool
 
-        finally:
-            del pool
+    def SKIndexGetTypeID():
+        return indexID
 
-        def SKIndexGetTypeID():
-            return indexID
+    def SKIndexDocumentIteratorGetTypeID():
+        return iterID
 
-        def SKIndexDocumentIteratorGetTypeID():
-            return iterID
+    def SKSearchGroupGetTypeID():
+        return groupID
 
-        def SKSearchGroupGetTypeID():
-            return groupID
+    def SKSearchResultsGetTypeID():
+        return resultID
 
-        def SKSearchResultsGetTypeID():
-            return resultID
+    def SKSummaryGetTypeID():
+        return summaryID
 
-        def SKSummaryGetTypeID():
-            return summaryID
-
-        indexType = objc.registerCFSignature(
-                "SKIndexRef", b"^{__SKIndex=}", indexID)
-        iterType = objc.registerCFSignature(
-                "SKIndexDocumentIteratorRef", b"^{__SKIndexDocumentIterator=}", iterID)
-        groupType = objc.registerCFSignature(
-                "SKSearchGroupRef", b"^{__SKSearchGroup=}", groupID)
-        resultType = objc.registerCFSignature(
-                "SKSearchResultsRef", b"^{__SKSearchResults=}", resultID)
-        summaryType = objc.registerCFSignature(
-                "SKSummaryRef", b"^{__SKSummary=}", summaryID)
+    indexType = objc.registerCFSignature(
+            "SKIndexRef", b"^{__SKIndex=}", indexID)
+    iterType = objc.registerCFSignature(
+            "SKIndexDocumentIteratorRef", b"^{__SKIndexDocumentIterator=}", iterID)
+    groupType = objc.registerCFSignature(
+            "SKSearchGroupRef", b"^{__SKSearchGroup=}", groupID)
+    resultType = objc.registerCFSignature(
+            "SKSearchResultsRef", b"^{__SKSearchResults=}", resultID)
+    summaryType = objc.registerCFSignature(
+            "SKSummaryRef", b"^{__SKSummary=}", summaryID)
 
 
-        # For some reason SKDocumentGetTypeID doesn't return the right value
-        # when the framework loader calls it the first time around,
-        # by this time the framework is fully initialized and we get
-        # the correct result.
-        SKDocumentRef = objc.registerCFSignature(
-                "SKDocumentRef", b"@", mod.SKDocumentGetTypeID())
+    # For some reason SKDocumentGetTypeID doesn't return the right value
+    # when the framework loader calls it the first time around,
+    # by this time the framework is fully initialized and we get
+    # the correct result.
+    SKDocumentRef = objc.registerCFSignature(
+            "SKDocumentRef", b"@", mod.SKDocumentGetTypeID())
 
 
-        return (SKIndexGetTypeID, indexType, SKIndexDocumentIteratorGetTypeID, iterType,
-                SKSearchGroupGetTypeID, groupType, SKSearchResultsGetTypeID, resultType,
-                SKSummaryGetTypeID, summaryType, iterType,
-                SKDocumentRef, searchref)
+    return (SKIndexGetTypeID, indexType, SKIndexDocumentIteratorGetTypeID, iterType,
+            SKSearchGroupGetTypeID, groupType, SKSearchResultsGetTypeID, resultType,
+            SKSummaryGetTypeID, summaryType, iterType,
+            SKDocumentRef, searchref)
 
-    (mod.SKIndexGetTypeID, mod.SKIndexRef,
-        mod.SKIndexDocumentIteratorGetTypeID, mod.SKIndexDocumentRef,
-        mod.SKSearchGroupGetTypeID, mod.SKSearchGroupRef,
-        mod.SKSearchResultsGetTypeID, mod.SKSearchResultsRef,
-        mod.SKSummaryGetTypeID, mod.SKSummaryRef,
-        mod.SKIndexDocumentIteratorRef,
-        mod.SKDocumentRef, mod.SKSearchRef,
-    ) = workaround()
+(mod.SKIndexGetTypeID, mod.SKIndexRef,
+    mod.SKIndexDocumentIteratorGetTypeID, mod.SKIndexDocumentRef,
+    mod.SKSearchGroupGetTypeID, mod.SKSearchGroupRef,
+    mod.SKSearchResultsGetTypeID, mod.SKSearchResultsRef,
+    mod.SKSummaryGetTypeID, mod.SKSummaryRef,
+    mod.SKIndexDocumentIteratorRef,
+    mod.SKDocumentRef, mod.SKSearchRef,
+) = workaround()
 
-    del workaround
+del workaround
 
 sys.modules['SearchKit']  = mod
