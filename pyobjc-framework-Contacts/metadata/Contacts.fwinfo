@@ -1,0 +1,299 @@
+{
+ "definitions": {
+  "enum": {
+   "CNContactTypePerson": { "value": 0 },
+   "CNContactTypeOrganization": { "value": 1 },
+   "CNContactSortOrderNone": { "value": 0 },
+   "CNContactSortOrderUserDefault": { "value": 1 },
+   "CNContactSortOrderGivenName": { "value": 2 },
+   "CNContactSortOrderFamilyName": { "value": 3 },
+   "CNContactFormatterStyleFullName": { "value": 0 },
+   "CNContactFormatterStylePhoneticFullName": { "value": 1 },
+   "CNContactDisplayNameOrderUserDefault": { "value": 0 },
+   "CNContactDisplayNameOrderGivenNameFirst": { "value": 1 },
+   "CNContactDisplayNameOrderFamilyNameFirst": { "value": 2 },
+   "CNEntityTypeContacts": { "value": 0 },
+   "CNAuthorizationStatusNotDetermined": { "value": 0 },
+   "CNAuthorizationStatusRestricted": { "value": 1 },
+   "CNAuthorizationStatusDenied": { "value": 2 },
+   "CNAuthorizationStatusAuthorized": { "value": 3 },
+   "CNContainerTypeUnassigned": { "value": 0 },
+   "CNContainerTypeLocal": { "value": 1 },
+   "CNContainerTypeExchange": { "value": 2 },
+   "CNContainerTypeCardDAV": { "value": 3 },
+   "CNErrorCodeCommunicationError": { "value": 1 },
+   "CNErrorCodeDataAccessError": { "value": 2 },
+   "CNErrorCodeAuthorizationDenied": { "value": 100 },
+   "CNErrorCodeRecordDoesNotExist": { "value": 200 },
+   "CNErrorCodeInsertedRecordAlreadyExists": { "value": 201 },
+   "CNErrorCodeContainmentCycle": { "value": 202 },
+   "CNErrorCodeContainmentScope": { "value": 203 },
+   "CNErrorCodeParentRecordDoesNotExist": { "value": 204 },
+   "CNErrorCodeValidationMultipleErrors": { "value": 300 },
+   "CNErrorCodeValidationTypeMismatch": { "value": 301 },
+   "CNErrorCodeValidationConfigurationError": { "value": 302 },
+   "CNErrorCodePredicateInvalid": { "value": 400 },
+   "CNErrorCodePolicyViolation": { "value": 500 },
+   "CNPostalAddressFormatterStyleMailingAddress": { "value": 0 }
+  },
+  "externs": {
+   "CNErrorDomain": { "typestr": "@" },
+   "CNContactPropertyNotFetchedExceptionName": { "typestr": "@" },
+   "CNContactIdentifierKey": { "typestr": "@" },
+   "CNContactNamePrefixKey": { "typestr": "@" },
+   "CNContactGivenNameKey": { "typestr": "@" },
+   "CNContactMiddleNameKey": { "typestr": "@" },
+   "CNContactFamilyNameKey": { "typestr": "@" },
+   "CNContactPreviousFamilyNameKey": { "typestr": "@" },
+   "CNContactNameSuffixKey": { "typestr": "@" },
+   "CNContactNicknameKey": { "typestr": "@" },
+   "CNContactPhoneticGivenNameKey": { "typestr": "@" },
+   "CNContactPhoneticMiddleNameKey": { "typestr": "@" },
+   "CNContactPhoneticFamilyNameKey": { "typestr": "@" },
+   "CNContactOrganizationNameKey": { "typestr": "@" },
+   "CNContactDepartmentNameKey": { "typestr": "@" },
+   "CNContactJobTitleKey": { "typestr": "@" },
+   "CNContactBirthdayKey": { "typestr": "@" },
+   "CNContactNonGregorianBirthdayKey": { "typestr": "@" },
+   "CNContactNoteKey": { "typestr": "@" },
+   "CNContactImageDataKey": { "typestr": "@" },
+   "CNContactThumbnailImageDataKey": { "typestr": "@" },
+   "CNContactImageDataAvailableKey": { "typestr": "@" },
+   "CNContactTypeKey": { "typestr": "@" },
+   "CNContactPhoneNumbersKey": { "typestr": "@" },
+   "CNContactEmailAddressesKey": { "typestr": "@" },
+   "CNContactPostalAddressesKey": { "typestr": "@" },
+   "CNContactDatesKey": { "typestr": "@" },
+   "CNContactUrlAddressesKey": { "typestr": "@" },
+   "CNContactRelationsKey": { "typestr": "@" },
+   "CNContactSocialProfilesKey": { "typestr": "@" },
+   "CNContactInstantMessageAddressesKey": { "typestr": "@" },
+   "CNContactPropertyAttribute": { "typestr": "@" },
+   "CNLabelContactRelationFather": { "typestr": "@" },
+   "CNLabelContactRelationMother": { "typestr": "@" },
+   "CNLabelContactRelationParent": { "typestr": "@" },
+   "CNLabelContactRelationBrother": { "typestr": "@" },
+   "CNLabelContactRelationSister": { "typestr": "@" },
+   "CNLabelContactRelationChild": { "typestr": "@" },
+   "CNLabelContactRelationFriend": { "typestr": "@" },
+   "CNLabelContactRelationSpouse": { "typestr": "@" },
+   "CNLabelContactRelationPartner": { "typestr": "@" },
+   "CNLabelContactRelationAssistant": { "typestr": "@" },
+   "CNLabelContactRelationManager": { "typestr": "@" },
+   "CNContactStoreDidChangeNotification": { "typestr": "@" },
+   "CNContainerIdentifierKey": { "typestr": "@" },
+   "CNContainerNameKey": { "typestr": "@" },
+   "CNContainerTypeKey": { "typestr": "@" },
+   "CNErrorUserInfoAffectedRecordsKey": { "typestr": "@" },
+   "CNErrorUserInfoAffectedRecordIdentifiersKey": { "typestr": "@" },
+   "CNErrorUserInfoValidationErrorsKey": { "typestr": "@" },
+   "CNErrorUserInfoKeyPathsKey": { "typestr": "@" },
+   "CNGroupIdentifierKey": { "typestr": "@" },
+   "CNGroupNameKey": { "typestr": "@" },
+   "CNInstantMessageAddressUsernameKey": { "typestr": "@" },
+   "CNInstantMessageAddressServiceKey": { "typestr": "@" },
+   "CNInstantMessageServiceAIM": { "typestr": "@" },
+   "CNInstantMessageServiceFacebook": { "typestr": "@" },
+   "CNInstantMessageServiceGaduGadu": { "typestr": "@" },
+   "CNInstantMessageServiceGoogleTalk": { "typestr": "@" },
+   "CNInstantMessageServiceICQ": { "typestr": "@" },
+   "CNInstantMessageServiceJabber": { "typestr": "@" },
+   "CNInstantMessageServiceMSN": { "typestr": "@" },
+   "CNInstantMessageServiceQQ": { "typestr": "@" },
+   "CNInstantMessageServiceSkype": { "typestr": "@" },
+   "CNInstantMessageServiceYahoo": { "typestr": "@" },
+   "CNLabelHome": { "typestr": "@" },
+   "CNLabelWork": { "typestr": "@" },
+   "CNLabelOther": { "typestr": "@" },
+   "CNLabelEmailiCloud": { "typestr": "@" },
+   "CNLabelURLAddressHomePage": { "typestr": "@" },
+   "CNLabelDateAnniversary": { "typestr": "@" },
+   "CNLabelPhoneNumberiPhone": { "typestr": "@" },
+   "CNLabelPhoneNumberMobile": { "typestr": "@" },
+   "CNLabelPhoneNumberMain": { "typestr": "@" },
+   "CNLabelPhoneNumberHomeFax": { "typestr": "@" },
+   "CNLabelPhoneNumberWorkFax": { "typestr": "@" },
+   "CNLabelPhoneNumberOtherFax": { "typestr": "@" },
+   "CNLabelPhoneNumberPager": { "typestr": "@" },
+   "CNPostalAddressStreetKey": { "typestr": "@" },
+   "CNPostalAddressCityKey": { "typestr": "@" },
+   "CNPostalAddressStateKey": { "typestr": "@" },
+   "CNPostalAddressPostalCodeKey": { "typestr": "@" },
+   "CNPostalAddressCountryKey": { "typestr": "@" },
+   "CNPostalAddressISOCountryCodeKey": { "typestr": "@" },
+   "CNPostalAddressPropertyAttribute": { "typestr": "@" },
+   "CNPostalAddressLocalizedPropertyNameAttribute": { "typestr": "@" },
+   "CNSocialProfileURLStringKey": { "typestr": "@" },
+   "CNSocialProfileUsernameKey": { "typestr": "@" },
+   "CNSocialProfileUserIdentifierKey": { "typestr": "@" },
+   "CNSocialProfileServiceKey": { "typestr": "@" },
+   "CNSocialProfileServiceFacebook": { "typestr": "@" },
+   "CNSocialProfileServiceFlickr": { "typestr": "@" },
+   "CNSocialProfileServiceLinkedIn": { "typestr": "@" },
+   "CNSocialProfileServiceMySpace": { "typestr": "@" },
+   "CNSocialProfileServiceSinaWeibo": { "typestr": "@" },
+   "CNSocialProfileServiceTencentWeibo": { "typestr": "@" },
+   "CNSocialProfileServiceTwitter": { "typestr": "@" },
+   "CNSocialProfileServiceYelp": { "typestr": "@" },
+   "CNSocialProfileServiceGameCenter": { "typestr": "@" }
+  },
+  "classes": {
+   "CNContact": {
+    "methods": [
+     {
+      "selector": "isKeyAvailable:",
+      "class_method": false,
+      "retval": {
+       "type_override": "Z"
+      }
+     },
+     {
+      "selector": "areKeysAvailable:",
+      "class_method": false,
+      "retval": {
+       "type_override": "Z"
+      }
+     },
+     {
+      "selector": "isUnifiedWithContactWithIdentifier:",
+      "class_method": false,
+      "retval": {
+       "type_override": "Z"
+      }
+     }
+    ]
+   },
+   "CNContactFetchRequest": {
+    "methods": [
+     {
+      "selector": "mutableObjects",
+      "class_method": false,
+      "retval": {
+       "type_override": "Z"
+      }
+     },
+     {
+      "selector": "setMutableObjects:",
+      "class_method": false,
+      "args": {
+       "0": { "type_override": "Z" }
+      }
+     },
+     {
+      "selector": "unifyResults",
+      "class_method": false,
+      "retval": {
+       "type_override": "Z"
+      }
+     },
+     {
+      "selector": "setUnifyResults:",
+      "class_method": false,
+      "args": {
+       "0": { "type_override": "Z" }
+      }
+     }
+    ]
+   },
+   "CNContactStore": {
+    "methods": [
+     {
+      "selector": "groupsMatchingPredicate:error:",
+      "class_method": false,
+      "args": {
+       "1": { "type_modifier": "o" }
+      }
+     },
+     {
+      "selector": "containersMatchingPredicate:error:",
+      "class_method": false,
+      "args": {
+       "1": { "type_modifier": "o" }
+      }
+     },
+     {
+      "selector": "executeSaveRequest:error:",
+      "class_method": false,
+      "args": {
+       "1": { "type_modifier": "o" }
+      },
+      "retval": { "type_override": "Z" }
+     },
+     {
+      "selector": "enumerateContactsWithFetchRequest:error:usingBlock:",
+      "class_method": false,
+      "args": {
+       "1": { "type_modifier": "o" },
+       "2": {
+        "callable": {
+         "arguments": {
+ 	  "0": { "typestr": "^v" },
+ 	  "1": { "typestr": "@" },
+	  "2": { "typestr": "o^Z" }
+         },
+	 "retval": { "typestr": "v" }
+	}
+       }
+      },
+      "retval": { "type_override": "Z" }
+     },
+     {
+      "selector": "unifiedContactsMatchingPredicate:keysToFetch:error:",
+      "class_method": false,
+      "args": {
+       "2": { "type_modifier": "o" }
+      }
+     },
+     {
+      "selector": "unifiedContactWithIdentifier:keysToFetch:error:",
+      "class_method": false,
+      "args": {
+       "2": { "type_modifier": "o" }
+      }
+     },
+     {
+      "selector": "unifiedMeContactWithKeysToFetch:error:",
+      "class_method": false,
+      "args": {
+       "1": { "type_modifier": "o" }
+      }
+     },
+     {
+      "selector": "requestAccessForEntityType:completionHandler:",
+      "class_method": false,
+      "args": {
+       "1": {
+        "callable": {
+         "arguments": {
+	  "0": { "typestr": "^v" },
+	  "1": { "typestr": "Z" },
+	  "2": { "typestr": "@" }
+	 },
+         "retval": { "typestr": "v" }
+	}
+       }
+      }
+     }
+    ]
+   },
+   "CNContactVCardSerialization": {
+    "methods": [
+     {
+      "selector": "dataWithContacts:error:",
+      "class_method": false,
+      "args": {
+       "1": { "type_modifier": "o" }
+      }
+     },
+     {
+      "selector": "contactsWithData:error:",
+      "class_method": false,
+      "args": {
+       "1": { "type_modifier": "o" }
+      }
+     }
+    ]
+   }
+  }
+ }
+}
