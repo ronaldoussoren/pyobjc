@@ -21,9 +21,9 @@ class TestDASession (TestCase):
         self.assertIsInstance(obj, DiskArbitration.DASessionRef)
 
         rl = DiskArbitration.CFRunLoopGetCurrent()
-        DiskArbitration.DASessionScheduleWithRunLoop(obj, rl, DiskArbitration.CFCommonRunLoopModes)
+        DiskArbitration.DASessionScheduleWithRunLoop(obj, rl, DiskArbitration.kCFRunLoopCommonModes)
 
-        DiskArbitration.DASessionUnscheduleFromRunLoop(obj, rl, DiskArbitration.CFCommonRunLoopModes)
+        DiskArbitration.DASessionUnscheduleFromRunLoop(obj, rl, DiskArbitration.kCFRunLoopCommonModes)
 
         DiskArbitration.DASessionSetDispatchQueue
 
@@ -33,8 +33,8 @@ class TestDASession (TestCase):
         ses = DiskArbitration.DAApprovalSessionCreate(None)
         self.assertIsInstance(ses, DiskArbitration.DAApprovalSessionRef)
 
-        DAApprovalSessionScheduleWithRunLoop(ses, rl, DiskArbitration.CFCommonRunLoopModes)
-        DAApprovalSessionUnscheduleFromRunLoop(ses, rl, DiskArbitration.CFCommonRunLoopModes)
+        DiskArbitration.DAApprovalSessionScheduleWithRunLoop(ses, rl, DiskArbitration.kCFRunLoopCommonModes)
+        DiskArbitration.DAApprovalSessionUnscheduleFromRunLoop(ses, rl, DiskArbitration.kCFRunLoopCommonModes)
 
 if __name__ == "__main__":
     main()

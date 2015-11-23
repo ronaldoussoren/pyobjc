@@ -150,6 +150,8 @@ class TestCallbackFor (TestCase):
         self.assertIsInstance(meta, dict)
         self.assertEqual(len(meta['arguments']), 2)
 
+        self.assertIsInstance(objc.callbackPointer(function), (int, long))
+        self.assertRaises(ValueError, objc.callbackPointer, None)
 
         @objc.callbackFor(OC_CallbackTest.selWithCallback2_)
         def function():

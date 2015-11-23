@@ -4,9 +4,9 @@ Python <-> Objective-C bridge (PyObjC)
 This module defines the core interfaces of the Python<->Objective-C bridge.
 """
 
-__all__ = ['IBOutlet', 'IBAction', 'accessor', 'Accessor', 'typedAccessor', 'callbackFor', 'selectorFor', 'synthesize', 'namedselector', 'typedSelector', 'namedSelector', 'instancemethod', 'signature', 'IBInspectable', 'IB_DESIGNABLE' ]
+__all__ = ['IBOutlet', 'IBAction', 'accessor', 'Accessor', 'typedAccessor', 'callbackFor', 'selectorFor', 'synthesize', 'namedselector', 'typedSelector', 'namedSelector', 'instancemethod', 'signature', 'IBInspectable', 'IB_DESIGNABLE', 'callbackPointer']
 
-from objc._objc import ivar, selector, _makeClosure, selector, _C_SEL, _C_ID, _C_NSUInteger, _C_NSBOOL
+from objc._objc import ivar, selector, _makeClosure, selector, _C_SEL, _C_ID, _C_NSUInteger, _C_NSBOOL, _closurePointer
 import sys, textwrap
 import warnings
 from inspect import getargspec
@@ -206,6 +206,17 @@ def callbackFor(callable, argIndex=-1):
         return function
 
     return addClosure
+
+def callbackPointer(closure):
+    """
+    Return a value for "closure" that can be passed to a function
+    expecting a "void *" argument.
+    """
+    if not hasattr(closure, 'pyobjc_closure'):
+        raise ValueError("Object is not decorated with 'callbackFor'")
+
+    return _closurePointer(closure.pyobjc_closure)
+
 
 def selectorFor(callable, argIndex=-1):
     """

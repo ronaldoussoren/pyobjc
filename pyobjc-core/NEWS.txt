@@ -54,6 +54,8 @@ Version 3.1
 
 * Add bindings for Contacts, ContactsUI, Photos, PhotosUI (new in OSX 10.11)
 
+* Added function ``objc.callbackPointer``.
+
 * Updated bindings for AppKit, CoreData, CoreFoundation, CoreGraphics,
   CoreLocation, CoreText, CoreVideo, CoreWLAN, EventKit, FSEvents,
   ImageIO, ImageKit, JavaScriptCore, LaunchServices, OpenDirectory,

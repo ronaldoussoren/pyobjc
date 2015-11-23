@@ -1479,6 +1479,12 @@ Descriptors
       NSArray won't store a reference to the compare function that
       is used after 'sortedArrayUsingFunction_context\_' returns.
 
+.. function:: callbackPointer(closure)
+
+   Returns a value that can be passed to a function expecting
+   a ``void *`` argument. The value for *closure* must be a function
+   that's decorated with :func:`callbackFor`.
+
 .. function:: selectorFor(callable[, argIndex])
 
    Decorator to tell that this is the "callback" selector for another

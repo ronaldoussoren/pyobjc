@@ -68,6 +68,8 @@ class TestDADisk (TestCase):
         self.assertResultIsCFRetained(DiskArbitration.DADiskCopyDescription)
         self.assertResultIsCFRetained(DiskArbitration.DADiskCopyWholeDisk)
 
+        DiskArbitration.DADiskCopyIOMedia
+
 
 
 if __name__ == "__main__":

@@ -32,9 +32,38 @@ class TestDiskArbitration (TestCase):
         # XXX: Tests cannot actually call most functions, some of them require admin privileges
         #      and can destroy information. Create separate test scripts that can be used to
         #      perform tests in a VM (with protection against running them accidently!)
-        self.fail('DARegisterDiskAppearedCallback')
-        self.fail('DARegisterDiskDescriptionChangedCallback')
-        self.fail('...')
+        DADiskRef = '^{__DADisk=}'
+        DADissenterRef = '^{__DADissenter=}'
+
+        self.assertArgIsFunction(DiskArbitration.DARegisterDiskAppearedCallback, 2, b'v' + DADiskRef + b'^v', True)
+        self.assertArgIsFunction(DiskArbitration.DARegisterDiskDescriptionChangedCallback, 3, b'v' + DADiskRef + b'^{__CFArray=}^v', True)
+        self.assertArgIsFunction(DiskArbitration.DARegisterDiskDisappearedCallback, 2, b'v' + DADiskRef + b'^v', True)
+        self.assertArgIsFunction(DiskArbitration.DADiskMount, 3, b'v' + DADiskRef + DADissenterRef + b'^v', True)
+
+        self.assertArgIsFunction(DiskArbitration.DADiskMountWithArguments, 3, b'v' + DADiskRef + DADissenterRef + b'^v', True)
+        self.assertArgIsIn(DiskArbitration.DADiskMountWithArguments, 4)
+        self.assertArgIsNullTerminated(DiskArbitration.DADiskMountWithArguments, 4)
+
+        self.assertArgIsFunction(DiskArbitration.DARegisterDiskMountApprovalCallback, 2, DADissenterRef + DADiskRef + b'^v', True)
+        self.assertArgIsFunction(DiskArbitration.DADiskRename, 3, b'v' + DADiskRef + DADissenterRef + b'^v', True)
+        self.assertArgIsFunction(DiskArbitration.DADiskUnmount, 2, b'v' + DADiskRef + DADissenterRef + b'^v', True)
+        self.assertArgIsFunction(DiskArbitration.DARegisterDiskUnmountApprovalCallback, 2, DADissenterRef + DADiskRef + b'^v', True)
+        self.assertArgIsFunction(DiskArbitration.DADiskEject, 2, b'v' + DADiskRef + DADissenterRef + b'^v', True)
+        self.assertArgIsFunction(DiskArbitration.DARegisterDiskEjectApprovalCallback, 2, DADissenterRef + DADiskRef + b'^v', True)
+
+        self.assertArgIsFunction(DiskArbitration.DADiskClaim, 2, DADissenterRef + DADiskRef + b'^v', True)
+        self.assertArgIsFunction(DiskArbitration.DADiskClaim, 4, b'v' + DADiskRef + DADissenterRef + b'^v', True)
+
+        self.assertResultIsBOOL(DiskArbitration.DADiskIsClaimed)
+        DiskArbitration.DADiskUnclaim
+
+        self.assertArgIsFunction(DiskArbitration.DARegisterDiskPeekCallback, 3, b'v' + DADiskRef + b'^v', True)
+
+        DiskArbitration.DADiskGetOptions
+        self.assertArgIsBOOL(DiskArbitration.DADiskSetOptions, 2)
+
+        DiskArbitration.DAUnregisterCallback
+        DiskArbitration.DAUnregisterApprovalCallback
 
 if __name__ == "__main__":
     main()

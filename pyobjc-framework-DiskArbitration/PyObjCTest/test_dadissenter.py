@@ -20,16 +20,18 @@ class TestDADissenter (TestCase):
         self.assertEqual(DiskArbitration.kDAReturnUnsupported, 0xF8DA000C)
 
     def test_types(self):
-        self.assertIsCFType(DiskArbitration.DADissenterRef)
+        # XXX: DADissenterRef isn't a separate CF Type
+        #self.assertIsCFType(DiskArbitration.DADissenterRef)
+        pass
 
     def test_functions(self):
         self.assertResultIsCFRetained(DiskArbitration.DADissenterCreate)
 
         obj = DiskArbitration.DADissenterCreate(None, 42, "hello world")
-        self.assertIsInstance(obj, DiskArbitration.DADissenterRef)
+        self.assertIsInstance(obj, objc.objc_object)
 
-        self.assertIsEqual(DiskArbitration.DADissenterGetStatus(obj), 42)
-        self.assertIsEqual(DiskArbitration.DADissenterGetStatusString(obj), "hello world")
+        self.assertEqual(DiskArbitration.DADissenterGetStatus(obj), 42)
+        self.assertEqual(DiskArbitration.DADissenterGetStatusString(obj), "hello world")
 
 if __name__ == "__main__":
     main()

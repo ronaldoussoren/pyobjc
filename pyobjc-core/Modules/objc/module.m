@@ -1342,6 +1342,36 @@ static char* keywords[] = { "callable", "closureFor", "argIndex", NULL };
     return Py_BuildValue("NN", retval, PyObjCMethodSignature_AsDict(methinfo->argtype[argIndex]->callable));
 }
 
+PyDoc_STRVAR(_closurePointer_doc,
+  "_closurePointer(closure)\n"
+  CLINIC_SEP
+  "\n"
+  "Returns an integer that corresponds to the numeric value of the C pointer\n"
+  "for the closure."
+ );
+static PyObject*
+_closurePointer(
+    PyObject* self __attribute__((__unused__)),
+    PyObject* args,
+    PyObject* kwds)
+{
+static char* keywords[] = { "closure", NULL };
+    PyObject* closure;
+    void*     pointer;
+
+
+    if (!PyArg_ParseTupleAndKeywords(args, kwds, "O",
+        keywords, &closure)) {
+        return NULL;
+    }
+
+    pointer = PyCapsule_GetPointer(closure, "objc.__imp__");
+    if (pointer == NULL && PyErr_Occurred()) {
+        return NULL;
+    }
+    return PyLong_FromVoidPtr(pointer);
+}
+
 static PyObject*
 ivar_dict(PyObject* self __attribute__((__unused__)))
 {
@@ -1944,6 +1974,12 @@ static PyMethodDef mod_methods[] = {
         .ml_meth    = (PyCFunction)_makeClosure,
         .ml_flags   = METH_VARARGS|METH_KEYWORDS,
         .ml_doc     = _makeClosure_doc
+    },
+    {
+        .ml_name    = "_closurePointer",
+        .ml_meth    = (PyCFunction)_closurePointer,
+        .ml_flags   = METH_VARARGS|METH_KEYWORDS,
+        .ml_doc     = _closurePointer_doc
     },
     {
         .ml_name    = "_ivar_dict",
