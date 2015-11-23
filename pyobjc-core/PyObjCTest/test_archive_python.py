@@ -153,7 +153,16 @@ class TestKeyedArchiveSimple (TestCase):
 
             o = TestKeyedArchiveSimple
             buf = self.archiverClass.archivedDataWithRootObject_(o)
-            self.assertRaises(pickle.UnpicklingError, self.unarchiverClass.unarchiveObjectWithData_, buf)
+
+            if os_level_key(os_release()) >= os_level_key('10.11'):
+                # On OSX 10.11 (un)archivers modify exceptions, which looses
+                # enough information that PyObjC can no longer reconstruct
+                # the correct Python exception
+                exception = objc.error
+            else:
+                exception = pickle.UnpicklingError
+
+            self.assertRaises(exception, self.unarchiverClass.unarchiveObjectWithData_, buf)
 
 
         finally:
@@ -244,7 +253,15 @@ class TestKeyedArchiveSimple (TestCase):
             self.assertIs(v, o)
 
             copyreg.remove_extension(a_newstyle_class.__module__, a_newstyle_class.__name__, 42)
-            self.assertRaises(ValueError, self.unarchiverClass.unarchiveObjectWithData_, buf)
+
+            if os_level_key(os_release()) >= os_level_key('10.11'):
+                # On OSX 10.11 (un)archivers modify exceptions, which looses
+                # enough information that PyObjC can no longer reconstruct
+                # the correct Python exception
+                exception = objc.error
+            else:
+                exception = ValueError
+            self.assertRaises(exception, self.unarchiverClass.unarchiveObjectWithData_, buf)
 
         finally:
             mystr = orig
@@ -274,7 +291,17 @@ class TestKeyedArchiveSimple (TestCase):
         v = myobject()
         buf = self.archiverClass.archivedDataWithRootObject_(v)
         self.assertIsInstance(buf, NSData)
-        self.assertRaises(TypeError, self.unarchiverClass.unarchiveObjectWithData_, buf)
+
+        if os_level_key(os_release()) >= os_level_key('10.11'):
+            # On OSX 10.11 (un)archivers modify exceptions, which looses
+            # enough information that PyObjC can no longer reconstruct
+            # the correct Python exception
+            exception = objc.error
+        else:
+            exception = (objc.error, TypeError)
+
+
+        self.assertRaises(exception, self.unarchiverClass.unarchiveObjectWithData_, buf)
 
     def test_class_with_slots(self):
         # Test dumpling a class with slots
@@ -1023,6 +1050,11 @@ class TestArchivePlainPython (TestKeyedArchivePlainPython):
     def test_recursive_dict(self):
         # See 'TestArchiveNative'
         test.pickletester.AbstractPickleTests.test_recursive_dict(self)
+
+    @expectedFailure
+    def test_recursive_dict_key(self):
+        # See 'TestArchiveNative'
+        test.pickletester.AbstractPickleTests.test_recursive_dict_key(self)
 
     @expectedFailure
     def test_recursive_set(self):

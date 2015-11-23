@@ -163,7 +163,11 @@ class TestDyld (TestCase):
                     (p.decode('utf-8') if sys.version_info[0] == 3 else p),
                     'usr', 'lib')
             os.environ['DYLD_IMAGE_SUFFIX'] = "_debug"
-            self.assertEqual(dyld.dyld_library('/usr/lib/libSystem.dylib', 'libSystem.dylib'),
+
+            # The OSX 10.11 SDK no longer contains ".dylib" files, which makes the test useless when running up-to-date
+            # tools on OSX 10.10 or later.
+            if os_level_key(os_release()) < os_level_key('10.10'):
+                self.assertEqual(dyld.dyld_library('/usr/lib/libSystem.dylib', 'libSystem.dylib'),
                     os.path.join(os.environ['DYLD_LIBRARY_PATH'], 'libSystem_debug.dylib'))
 
 

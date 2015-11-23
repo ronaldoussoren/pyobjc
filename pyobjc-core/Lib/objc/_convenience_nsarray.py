@@ -301,9 +301,12 @@ def nsmutablearray_new(cls, sequence=None):
         return NSMutableArray.arrayWithArray_(list(sequence))
 
     else:
-        if not isinstance(sequence, (list, tuple)):
+        if type(sequence) not in (list, tuple):
             return NSMutableArray.arrayWithArray_(list(sequence))
 
+        # This is only valid when ``sequence`` is an built-in list or tuple,
+        # otherwise arrayWithArray might access the sequence differently
+        # then expected from a Python sequence initializer.
         return NSMutableArray.arrayWithArray_(sequence)
 
 

@@ -44,6 +44,8 @@ Version 3.1
 
 * Add bindings for IMServicePlugIn, introduced in OSX 10.7.
 
+* Add bindings for SceneKit, introduced in OSX 10.8.
+
 * Add bindings for CoreBluetooth, MapKit, AVKit, MediaLibrary,
   MediaAccessibility, GameController (all new in OSX 10.9)
 
