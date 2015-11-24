@@ -2,7 +2,48 @@
 // for information on how to update this file.
 {
  "definitions": {
+  "structs": {
+   "AVBeatRange": {
+    "fieldnames": [
+     "start",
+     "length"
+    ],
+    "special": false,
+    "typestr": "{_AVBeatRange=dd}"
+   }
+  },
+  "enum": {
+   "AVErrorVideoCompositorFailed": { "value": -11858 },
+   "AVAudio3DMixingRenderingAlgorithmEqualPowerPanning": { "value": 0 },
+   "AVAudio3DMixingRenderingAlgorithmSphericalHead": { "value": 1 },
+   "AVAudio3DMixingRenderingAlgorithmHRTF": { "value": 2 },
+   "AVAudio3DMixingRenderingAlgorithmSoundField": { "value": 3 },
+   "AVAudio3DMixingRenderingAlgorithmStereoPassThrough": { "value": 5 },
+   "AVAudioPlayerNodeBufferLoops": { "value": 1 },
+   "AVAudioPlayerNodeBufferInterrupts": { "value": 2 },
+   "AVAudioPlayerNodeBufferInterruptsAtLoop": { "value": 4 },
+   "AVMusicSequenceLoadSMF_PreserveTracks": { "value": 0 },
+   "AVMusicSequenceLoadSMF_ChannelsToTracks": { "value": 1 },
+   "AVMusicTrackLoopCountForever": { "value": -1 },
+   "AVAudioQualityMin": { "value": 0 },
+   "AVAudioQualityLow": { "value": 32 },
+   "AVAudioQualityMedium": { "value": 64 },
+   "AVAudioQualityHigh": { "value": 96 },
+   "AVAudioQualityMax": { "value": 127 },
+   "AVMovieWritingAddMovieHeaderToDestination": { "value": 0 },
+   "AVMovieWritingTruncateDestinationToMovieHeaderOnly": { "value": 1 }
+  },
   "externs": {
+   "AVMetadataIdentifierQuickTimeMetadataDetectedFace": { "typestr": "@" },
+   "AVMetadataIdentifierQuickTimeMetadataVideoOrientation": { "typestr": "@" },
+   "AVMetadataIdentifierQuickTimeMetadataContentIdentifier": { "typestr": "@" },
+   "AVMetadataIdentifierID3MetadataCommercial": { "typestr": "@" },
+   "AVMetadataQuickTimeMetadataKeyContentIdentifier": { "typestr": "@" },
+   "AVMetadataID3MetadataKeyCommercial": { "typestr": "@" },
+   "AVMetadataExtraAttributeInfoKey": { "typestr": "@" },
+   "AVAudioTimePitchAlgorithmTimeDomain": { "typestr": "@" },
+   "AVAudioTimePitchAlgorithmSpectral": { "typestr": "@" },
+   "AVAudioTimePitchAlgorithmVarispeed": { "typestr": "@" },
    "AVAssetDurationDidChangeNotification": { "typestr": "@" },
    "AVAssetContainsFragmentsDidChangeNotification": { "typestr": "@" },
    "AVAssetWasDefragmentedNotification": { "typestr": "@" },
@@ -10,7 +51,32 @@
    "AVAssetMediaSelectionGroupsDidChangeNotification": { "typestr": "@" },
    "AVAssetExportPresetLowQuality": { "typestr": "@" },
    "AVAssetExportPresetMediumQuality": { "typestr": "@" },
-   "AVAssetExportPresetHighestQuality": { "typestr": "@" }
+   "AVAssetExportPresetHighestQuality": { "typestr": "@" },
+   "AVFormatIDKey": { "typestr": "@" },
+   "AVSampleRateKey": { "typestr": "@" },
+   "AVNumberOfChannelsKey": { "typestr": "@" },
+   "AVLinearPCMBitDepthKey": { "typestr": "@" },
+   "AVLinearPCMIsBigEndianKey": { "typestr": "@" },
+   "AVLinearPCMIsFloatKey": { "typestr": "@" },
+   "AVLinearPCMIsNonInterleaved": { "typestr": "@" },
+   "AVEncoderAudioQualityKey": { "typestr": "@" },
+   "AVEncoderAudioQualityForVBRKey": { "typestr": "@" },
+   "AVEncoderBitRateKey": { "typestr": "@" },
+   "AVEncoderBitRatePerChannelKey": { "typestr": "@" },
+   "AVEncoderBitRateStrategyKey": { "typestr": "@" },
+   "AVEncoderBitDepthHintKey": { "typestr": "@" },
+   "AVSampleRateConverterAlgorithmKey": { "typestr": "@" },
+   "AVSampleRateConverterAudioQualityKey": { "typestr": "@" },
+   "AVChannelLayoutKey": { "typestr": "@" },
+   "AVAudioBitRateStrategy_Constant": { "typestr": "@" },
+   "AVAudioBitRateStrategy_LongTermAverage": { "typestr": "@" },
+   "AVAudioBitRateStrategy_VariableConstrained": { "typestr": "@" },
+   "AVAudioBitRateStrategy_Variable": { "typestr": "@" },
+   "AVSampleRateConverterAlgorithm_Normal": { "typestr": "@" },
+   "AVSampleRateConverterAlgorithm_Mastering": { "typestr": "@" }
+  },
+  "alias": {
+   "AVLinearPCMIsNonInterleavedKey": { "target": "AVLinearPCMIsNonInterleaved" }
   },
   "classes": {
    "AVAsset": {
@@ -524,9 +590,9 @@
     "methods": [
      {
       "args": {
-       "1": {},
-       "2": {},
-       "3": {}
+       "1": { "type_modifier": "o" },
+       "2": { "type_modifier": "o" },
+       "3": { "type_modifier": "o" }
       },
       "class_method": false,
       "selector": "getVolumeRampForTime:startVolume:endVolume:timeRange:"
@@ -1371,6 +1437,56 @@
      }
     ]
    },
+   "AVAudioNode": {
+    "methods": [
+     {
+      "args": {
+       "3": {
+        "callable": {
+	 "arguments": {
+	  "0": { "typestr": "^v" },
+	  "1": { "typestr": "@" },
+	  "2": { "typestr": "@" }
+	 },
+	 "retval": { "typestr": "v" }
+	}
+       }
+      },
+      "class_method": false,
+      "selector": "installTapOnBus:bufferSize:format:block:"
+     }
+    ]
+   },
+   "AVAudioPlayerNode": {
+    "methods": [
+     {
+      "retval": { "type_override": "Z" },
+      "args": {
+       "2": { "type_modifier": "o" }
+      },
+      "selector": "loadFromURL:options:error:",
+      "class_method": false
+     }
+    ]
+   },
+   "AVAudioPlayerNode": {
+    "methods": [
+     {
+      "args": {
+       "3": {
+        "callable": {
+	 "arguments": {
+	  "0": { "typestr": "^v" }
+	 },
+	 "retval": { "typestr": "v" }
+	}
+       }
+      },
+      "class_method": false,
+      "selector": "scheduleBuffer:completionHandler:"
+     }
+    ]
+   },
    "NSObject": {
     "methods": [
      {
@@ -1461,7 +1577,24 @@
     ]
    }
   },
-  "functions": {},
+  "functions": {
+   "AVMakeBeatRange": {
+    "args": {
+     "0": {
+      "name": "startBeat",
+      "typestr": "d"
+     },
+     "1": {
+      "name": "lenghtInBeats",
+      "typestr": "d"
+     }
+    },
+    "inline": true,
+    "retval": {
+     "typestr": "{_AVBeatRange=dd}"
+    }
+   }
+  },
   "informal_protocols": {}
  }
 }

@@ -11,12 +11,14 @@ import Foundation
 
 from AVFoundation import _metadata
 from AVFoundation._AVFoundation import *
+from AVFoundation._inlines import _inline_list_
+
 
 sys.modules['AVFoundation'] = mod = objc.ObjCLazyModule(
     "AVFoundation",
     "com.apple.avfoundation",
     objc.pathForFramework("/System/Library/Frameworks/AVFoundation.framework"),
-    _metadata.__dict__, None, {
+    _metadata.__dict__, _inline_list_, {
         '__doc__': __doc__,
         'objc': objc,
         '__path__': __path__,

@@ -26,6 +26,9 @@ setup(
     ],
     min_os_level="10.7",
     ext_modules = [
+        Extension('AVFoundation._inlines',
+            [ 'Modules/_AVFoundation_inlines.m' ],
+            extra_link_args=['-framework', 'AVFoundation']),
         Extension("AVFoundation._AVFoundation",
             [ "Modules/_AVFoundation.m" ],
             extra_link_args=["-framework", "AVFoundation"],
