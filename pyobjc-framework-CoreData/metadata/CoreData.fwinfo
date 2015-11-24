@@ -461,6 +461,11 @@
    "NSManagedObjectContext": {
     "methods": [
      {
+      "retval": { "type_override": "Z" },
+      "class_method": false,
+      "selector": "shouldHandleInaccessibleFault:forObjectID:triggeredByProperty:"
+     },
+     {
       "args": {
        "1": {
         "type_modifier": "o"
@@ -615,6 +620,20 @@
        "type_override": "Z"
       },
       "selector": "tryLock"
+     },
+     {
+      "class_method": false,
+      "retval": {
+       "type_override": "Z"
+      },
+      "selector": "shouldDeleteInaccessibleFaults"
+     },
+     {
+      "class_method": false,
+      "args": {
+       "0": { "type_override": "Z" }
+      },
+      "selector": "setShouldDeleteInaccessibleFaults:"
      }
     ]
    },
@@ -797,6 +816,14 @@
      },
      {
       "args": {
+       "3": { "type_modifier": "o" }
+      },
+      "retval": { "type_override": "Z" },
+      "class_method": true,
+      "selector": "destroyPersistentStoreAtURL:withType:options:error:"
+     },
+     {
+      "args": {
        "2": { "type_modifier": "o" }
       },
       "class_method": true,
@@ -908,6 +935,16 @@
        "type_override": "Z"
       },
       "selector": "tryLock"
+     },
+     {
+      "class_method": false,
+      "args": {
+       "5": { "type_modifier": "o" }
+      },
+      "retval": {
+       "type_override": "Z"
+      },
+      "selector": "replacePersistentStoreAtURL:destinationOptions:withPersistentStoreFromURL:sourceOptions:storeType:error:"
      }
     ]
    },
