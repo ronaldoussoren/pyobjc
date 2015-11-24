@@ -1,5 +1,6 @@
 from PyObjCTools.TestSupport import *
 import AddressBook
+import Cocoa
 
 class TestABPersonView (TestCase):
     @min_os_level('10.7')
@@ -9,8 +10,9 @@ class TestABPersonView (TestCase):
 
     @min_os_level('10.8')
     def testMethods(self):
-        self.assertResultIsBOOL(AddressBook.ABPersonView.shouldShowLinkedPeople)
-        self.assertArgIsBOOL(AddressBook.ABPersonView.setShouldShowLinkedPeople_, 0)
+        v = AddressBook.ABPersonView.alloc().init()
+        self.assertResultIsBOOL(v.shouldShowLinkedPeople)
+        self.assertArgIsBOOL(v.setShouldShowLinkedPeople_, 0)
 
 if __name__ == "__main__":
     main()
