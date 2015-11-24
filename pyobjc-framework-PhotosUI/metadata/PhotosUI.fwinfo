@@ -2,5 +2,37 @@
 # for information on how to update this file.
 {
  "definitions": {
+  "classes": {
+   "NSObject": {
+    "methods": [
+     {
+      "selector": "canHandleAdjustmentData:",
+      "class_method": false,
+      "retval": { "type_override": "Z" }
+     },
+     {
+      "selector": "shouldShowCancelConfirmation",
+      "class_method": false,
+      "retval": { "type_override": "Z" }
+     },
+     {
+      "selector": "finishContentEditingWithCompletionHandler:",
+      "class_method": false,
+      "args": {
+       "0": {
+        "type_override": "@?",
+	"callable": {
+	 "arguments": {
+	  "0": { "typestr": "^v" },
+	  "1": { "typestr": "@" }
+	 },
+	 "retval": { "typestr": "v" }
+	}
+       }
+      }
+     }
+    ]
+   }
+  }
  }
 }

@@ -36,10 +36,10 @@ if sys.maxsize > 2 ** 32:
 
         @min_os_level('10.11')
         def testMethods10_11(self):
-            self.assertResultIsBOOL(LocationAuthentication.LAContext.setCredential_type_)
-            self.assertResultIsBOOL(LocationAuthentication.LAContext.isCredentialSet_)
+            self.assertResultIsBOOL(LocalAuthentication.LAContext.setCredential_type_)
+            self.assertResultIsBOOL(LocalAuthentication.LAContext.isCredentialSet_)
 
-            self.assertArgIsBlock(LocalAuthentication.LAContext.evaluatePolicy_operation_localizedReason_reply_, 3, b"v" + objc._C_NSBOOL + b"@")
+            self.assertArgIsBlock(LocalAuthentication.LAContext.evaluatePolicy_localizedReason_reply_, 2, b"v" + objc._C_NSBOOL + b"@")
 
 if __name__ == "__main__":
     main()

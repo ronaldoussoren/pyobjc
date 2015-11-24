@@ -9,8 +9,8 @@ if sys.maxsize > 2 ** 32:
         def widgetList_viewControllerForRow_(self, wl, r): return 1
         def widgetList_shouldReorderRow_(self, wl, r): return 1
         def widgetList_didReorderRow_toRow_(self, wl, r, r2): pass
-        def widgetList_shouldRemoveRow(self, wl, r): return 1
-        def widgetList_didRemoveRow(self, wl, r): return 1
+        def widgetList_shouldRemoveRow_(self, wl, r): return 1
+        def widgetList_didRemoveRow_(self, wl, r): return 1
 
 
     class TestNCWidgetListViewController (TestCase):

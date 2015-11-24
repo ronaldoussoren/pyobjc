@@ -11,6 +11,52 @@
    "NSObject": {
     "methods": [
      {
+      "selector": "widgetList:didReorderRow:toRow:",
+      "class_method": false,
+      "args": {
+       "1": { "type_override": "Q" },
+       "2": { "type_override": "Q" }
+      }
+     },
+     {
+      "selector": "widgetList:viewControllerForRow:",
+      "class_method": false,
+      "args": {
+       "1": {
+        "type_override": "Q"
+       }
+      }
+     },
+     {
+      "selector": "widgetList:didRemoveRow:",
+      "class_method": false,
+      "args": {
+       "1": {
+        "type_override": "Q"
+       }
+      }
+     },
+     {
+      "selector": "widgetList:shouldReorderRow:",
+      "class_method": false,
+      "retval": { "type_override": "Z" },
+      "args": {
+       "1": {
+        "type_override": "Q"
+       }
+      }
+     },
+     {
+      "selector": "widgetList:shouldRemoveRow:",
+      "class_method": false,
+      "retval": { "type_override": "Z" },
+      "args": {
+       "1": {
+        "type_override": "Q"
+       }
+      }
+     },
+     {
       "selector": "widgetPerformUpdateWithCompletionHandler:",
       "class_method": false,
       "args": {

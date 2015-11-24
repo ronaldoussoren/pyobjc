@@ -4,9 +4,10 @@ import sys
 if sys.maxsize > 2 ** 32:
     import PhotosUI
 
-    class TestPHContentEditingControllerHelper (NSObject):
+    class TestPHContentEditingControllerHelper (PhotosUI.NSObject):
         def canHandleAdjustmentData_(self, d): return True
         def finishContentEditingWithCompletionHandler_(self, handler): pass
+        def shouldShowCancelConfirmation(self): return True
 
 
     class TestPHContentEditingController (TestCase):

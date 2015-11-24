@@ -4,8 +4,8 @@
  "definitions": {
   "enum": {
    "MKDirectionsTransportTypeTransit": { "value": 4 },
-   "MKMapTypeSatelliteFlyover": { "value": 4 },
-   "MKMapTypeHybridFlyover": { "value": 5 }
+   "MKMapTypeSatelliteFlyover": { "value": 3 },
+   "MKMapTypeHybridFlyover": { "value": 4 }
   },
   "externs": {
    "MKLaunchOptionsDirectionsModeTransit": { "typestr": "@" }

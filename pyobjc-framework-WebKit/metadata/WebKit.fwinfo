@@ -2026,6 +2026,13 @@
       "retval": {
        "type_override": "Z"
       },
+      "selector": "allowsAirPlayForMediaPlayback"
+     },
+     {
+      "class_method": false,
+      "retval": {
+       "type_override": "Z"
+      },
       "selector": "allowsAnimatedImageLooping"
      },
      {
@@ -2092,6 +2099,15 @@
       },
       "class_method": false,
       "selector": "setAllowsAnimatedImageLooping:"
+     },
+     {
+      "args": {
+       "0": {
+        "type_override": "Z"
+       }
+      },
+      "class_method": false,
+      "selector": "setAllowsAirPlayForMediaPlayback:"
      },
      {
       "args": {
@@ -2500,6 +2516,13 @@
    "WKWebsiteDataStore": {
     "methods": [
      {
+      "class_method": false,
+      "retval": {
+       "type_override": "Z"
+      },
+      "selector": "isPersistent"
+     },
+     {
       "selector": "fetchDataRecordsOfTypes:completionHandler:",
       "class_method": false,
       "args": {
@@ -2561,10 +2584,24 @@
      },
      {
       "class_method": false,
+      "retval": {
+       "type_override": "Z"
+      },
+      "selector": "allowsAirPlayForMediaPlayback"
+     },
+     {
+      "class_method": false,
       "args": {
        "0": { "type_override": "Z" }
       },
       "selector": "setAllowsPictureInPictureMediaPlayback:"
+     },
+     {
+      "class_method": false,
+      "args": {
+       "0": { "type_override": "Z" }
+      },
+      "selector": "setAllowsAirPlayForMediaPlayback:"
      }
     ]
    }

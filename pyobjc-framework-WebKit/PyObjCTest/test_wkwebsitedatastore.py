@@ -13,9 +13,9 @@ class TestWKWebsiteDataStore (TestCase):
     def testMethods10_11(self):
         self.assertResultIsBOOL(WKWebsiteDataStore.isPersistent)
 
-        self.assertResultIsBOOL(WKWebsiteDataStore.fetchDataRecordsOfTypes_completionHandler_, 1, b'v@')
-        self.assertResultIsBOOL(WKWebsiteDataStore.removeDataOfTypes_forDataRecords_completionHandler_, 2, b'v')
-        self.assertResultIsBOOL(WKWebsiteDataStore.removeDataOfTypes_modifiedSince_completionHandler_, 2, b'v')
+        self.assertArgIsBlock(WKWebsiteDataStore.fetchDataRecordsOfTypes_completionHandler_, 1, b'v@')
+        self.assertArgIsBlock(WKWebsiteDataStore.removeDataOfTypes_forDataRecords_completionHandler_, 2, b'v')
+        self.assertArgIsBlock(WKWebsiteDataStore.removeDataOfTypes_modifiedSince_completionHandler_, 2, b'v')
 
 if __name__ == "__main__":
     main()
