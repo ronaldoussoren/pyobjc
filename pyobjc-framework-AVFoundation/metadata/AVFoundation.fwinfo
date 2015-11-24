@@ -3,6 +3,9 @@
 {
  "definitions": {
   "structs": {
+   "AVAudio3DVector": {
+    "ignore": true
+   },
    "AVBeatRange": {
     "fieldnames": [
      "start",
@@ -31,9 +34,24 @@
    "AVAudioQualityHigh": { "value": 96 },
    "AVAudioQualityMax": { "value": 127 },
    "AVMovieWritingAddMovieHeaderToDestination": { "value": 0 },
-   "AVMovieWritingTruncateDestinationToMovieHeaderOnly": { "value": 1 }
+   "AVMovieWritingTruncateDestinationToMovieHeaderOnly": { "value": 1 },
+   "AVErrorAirPlayControllerRequiresInternet": { "value": -11856 },
+   "AVErrorAirPlayReceiverRequiresInternet": { "value": -11857 },
+   "AVCaptureAutoFocusRangeRestrictionFar": { "value": 2 },
+   "AVCaptureAutoFocusRangeRestrictionNear": { "value": 1 },
+   "AVCaptureAutoFocusRangeRestrictionNone": { "value": 0 }
   },
   "externs": {
+   "AVCaptureMaxAvailableTorchLevel": { "typestr": "f" },
+   "AVCaptureLensPositionCurrent": { "typestr": "f" },
+   "AVStreamingKeyDeliveryContentKeyType": { "typestr": "@" },
+   "AVStreamingKeyDeliveryPersistentContentKeyType": { "typestr": "@" },
+   "AVMediaCharacteristicVoiceOverTranslation": { "typestr": "@" },
+   "AVFileTypeEnhancedAC3": { "typestr": "@" },
+   "AVFileType3GPP": { "typestr": "@" },
+   "AVMediaCharacteristicLanguageTranslation": { "typestr": "@" },
+   "AVMediaCharacteristicDubbedTranslation": { "typestr": "@" },
+   "AVFragmentedMovieContainsMovieFragmentsDidChangeNotification": { "typestr": "@" },
    "AVMetadataIdentifierQuickTimeMetadataDetectedFace": { "typestr": "@" },
    "AVMetadataIdentifierQuickTimeMetadataVideoOrientation": { "typestr": "@" },
    "AVMetadataIdentifierQuickTimeMetadataContentIdentifier": { "typestr": "@" },
@@ -73,12 +91,23 @@
    "AVAudioBitRateStrategy_VariableConstrained": { "typestr": "@" },
    "AVAudioBitRateStrategy_Variable": { "typestr": "@" },
    "AVSampleRateConverterAlgorithm_Normal": { "typestr": "@" },
-   "AVSampleRateConverterAlgorithm_Mastering": { "typestr": "@" }
+   "AVSampleRateConverterAlgorithm_Mastering": { "typestr": "@" },
+   "AVFileType3GPP2": { "typestr": "@" }
   },
-  "alias": {
-   "AVLinearPCMIsNonInterleavedKey": { "target": "AVLinearPCMIsNonInterleaved" }
+  "aliases": {
+   "AVLinearPCMIsNonInterleavedKey": { "alias": "AVLinearPCMIsNonInterleaved" },
+   "AVAudio3DVector": { "alias": "AVAudio3DPoint" }
   },
   "classes": {
+   "AVMediaSelection": {
+    "methods": [
+     {
+      "retval": { "type_override": "Z" },
+      "class_method": false,
+      "selector": "mediaSelectionCriteriaCanBeAppliedAutomaticallyToMediaSelectionGroup:"
+     }
+    ]
+   },
    "AVAsset": {
     "methods": [
      {
@@ -703,14 +732,14 @@
     "methods": [
      {
       "args": {
-       "0": {}
+       "0": { "type_modifier": "n" }
       },
       "class_method": false,
       "selector": "initWithAudioTimeStamp:sampleRate:"
      },
      {
       "args": {
-       "0": {}
+       "0": { "type_modifier": "n" }
       },
       "class_method": true,
       "selector": "timeWithAudioTimeStamp:sampleRate:"
@@ -730,6 +759,23 @@
       "class_method": false,
       "retval": {},
       "selector": "audioUnit"
+     },
+     {
+      "args": {
+       "2": {
+        "type_override": "@?",
+        "callable": {
+	 "arguments": {
+	  "0": { "typestr": "^v" },
+	  "1": { "typestr": "@" },
+	  "2": { "typestr": "@" }
+	 },
+	 "retval": { "typestr": "v" }
+	}
+       }
+      },
+      "class_method": false,
+      "selector": "instantiateWithComponentDescription:options:completionHandler:"
      }
     ],
     "properties": [
@@ -739,6 +785,27 @@
        "readonly"
       ],
       "name": "audioUnit"
+     }
+    ]
+   },
+   "AVAudioUnitComponentManager": {
+    "methods": [
+     {
+      "args": {
+       "0": {
+        "type_override": "@?",
+        "callable": {
+	 "arguments": {
+	  "0": { "typestr": "^v" },
+	  "1": { "typestr": "@" },
+	  "2": { "typestr": "o^Z" }
+	 },
+	 "retval": { "typestr": "Z" }
+	}
+       }
+      },
+      "class_method": false,
+      "selector": "componentsPassingTest:"
      }
     ]
    },
@@ -814,7 +881,7 @@
     "methods": [
      {
       "args": {
-       "0": {}
+       "0": { "type_modifier": "o" }
       },
       "class_method": false,
       "selector": "lockForConfiguration:"
@@ -945,6 +1012,23 @@
       },
       "class_method": true,
       "selector": "jpegStillImageNSDataRepresentation:"
+     },
+     {
+      "args": {
+       "1": {
+        "type_override": "@?",
+        "callable": {
+	 "arguments": {
+	  "0": { "typestr": "^v" },
+	  "1": { "typestr": "@" },
+	  "2": { "typestr": "@" }
+	 },
+	 "retval": { "typestr": "v" }
+	}
+       }
+      },
+      "class_method": true,
+      "selector": "captureStillImageAsynchronouslyFromConnection:completionHandler:"
      }
     ]
    },
@@ -988,6 +1072,21 @@
       },
       "class_method": false,
       "selector": "initWithData:soundBankURL:error:"
+     },
+     {
+      "args": {
+       "0": {
+        "type_override": "@?",
+        "callable": {
+	 "arguments": {
+	  "0": { "typestr": "^v" }
+	 },
+	 "retval": { "typestr": "v" }
+	}
+       }
+      },
+      "class_method": false,
+      "selector": "play:"
      }
     ]
    },
@@ -999,6 +1098,22 @@
       },
       "class_method": false,
       "selector": "statusOfValueForKey:error:"
+     },
+     {
+      "args": {
+       "1": {
+        "type_override": "@?",
+        "callable": {
+	 "arguments": {
+	  "0": { "typestr": "^v" },
+	  "1": { "typestr": "@" }
+	 },
+	 "retval": { "typestr": "v" }
+	}
+       }
+      },
+      "class_method": false,
+      "selector": "metadataItemWithPropertiesOfMetadataItem:valueLoadingHandler:"
      }
     ]
    },
@@ -1132,8 +1247,247 @@
      }
     ]
    },
+   "AVMutableMovie": {
+    "methods": [
+     {
+      "class_method": false,
+      "retval": { "type_override": "Z" },
+      "args": {
+       "3": { "type_override": "Z" },
+       "4": { "type_modifier": "o" }
+      },
+      "selector": "insertTimeRange:ofAsset:atTime:copySampleData:error:"
+     },
+     {
+      "class_method": true,
+      "args": { "2": { "type_modifier": "o" } },
+      "selector": "movieWithSettingsFromMovie:options:error:"
+     },
+     {
+      "class_method": false,
+      "args": { "2": { "type_modifier": "o" } },
+      "selector": "initWithSettingsFromMovie:options:error:"
+     },
+     {
+      "class_method": true,
+      "args": { "2": { "type_modifier": "o" } },
+      "selector": "movieWithURL:options:error:"
+     },
+     {
+      "class_method": false,
+      "args": { "2": { "type_modifier": "o" } },
+      "selector": "initWithURL:options:error:"
+     },
+     {
+      "class_method": true,
+      "args": { "2": { "type_modifier": "o" } },
+      "selector": "movieWithData:options:error:"
+     },
+     {
+      "class_method": false,
+      "args": { "2": { "type_modifier": "o" } },
+      "selector": "initWithData:options:error:"
+     },
+     {
+      "class_method": false,
+      "retval": { "type_override": "Z" },
+      "selector": "isModified"
+     },
+     {
+      "class_method": false,
+      "args": { "0": { "type_override": "Z" } },
+      "selector": "setModified:"
+     }
+    ]
+   },
+   "AVMovie": {
+    "methods": [
+     {
+      "class_method": false,
+      "retval": { "type_override": "Z" },
+      "selector": "containsMovieFragments"
+     },
+     {
+      "class_method": false,
+      "args": {
+       "1": { "type_modifier": "o" }
+      },
+      "selector": "movieHeaderWithFileType:error:"
+     },
+     {
+      "class_method": false,
+      "retval": { "type_override": "Z" },
+      "args": {
+       "3": { "type_modifier": "o" }
+      },
+      "selector": "writeMovieHeaderToURL:fileType:options:error:"
+     }
+    ]
+   },
+   "AVMusicTrack": {
+    "methods": [
+     {
+      "class_method": false,
+      "retval": { "type_override": "Z" },
+      "selector": "isLoopingEnabled"
+     },
+     {
+      "class_method": false,
+      "args": { "0": { "type_override": "Z" } },
+      "selector": "setLoopingEnabled:"
+     },
+     {
+      "class_method": false,
+      "retval": { "type_override": "Z" },
+      "selector": "isMuted"
+     },
+     {
+      "class_method": false,
+      "args": { "0": { "type_override": "Z" } },
+      "selector": "setMuted:"
+     },
+     {
+      "class_method": false,
+      "retval": { "type_override": "Z" },
+      "selector": "isSoloed"
+     },
+     {
+      "class_method": false,
+      "args": { "0": { "type_override": "Z" } },
+      "selector": "setSoloed:"
+     }
+    ]
+   },
+   "AVMutableMovieTrack": {
+    "methods": [
+     {
+      "class_method": false,
+      "args": {
+       "2": { "type_modifier": "o" }
+      },
+      "selector": "movieWithURL:options:error:"
+     },
+     {
+      "class_method": false,
+      "retval": { "type_override": "Z" },
+      "args": {
+       "3": { "type_override": "Z" },
+       "4": { "type_modifier": "o" }
+      },
+      "selector": "insertTimeRange:ofTrack:atTime:copySampleData:error:"
+     },
+     {
+      "class_method": false,
+      "retval": { "type_override": "Z" },
+      "selector": "hasProtectedContent"
+     },
+     {
+      "class_method": false,
+      "retval": { "type_override": "Z" },
+      "selector": "isEnabled"
+     },
+     {
+      "args": {
+       "0": { "type_override": "Z" }
+      },
+      "class_method": false,
+      "selector": "setEnabled:"
+     },
+     {
+      "class_method": false,
+      "retval": { "type_override": "Z" },
+      "selector": "isModified"
+     },
+     {
+      "args": {
+       "0": { "type_override": "Z" }
+      },
+      "class_method": false,
+      "selector": "setModified:"
+     }
+    ]
+   },
    "AVPlayer": {
     "methods": [
+     {
+      "args": {
+       "1": {
+        "type_override": "@?",
+        "callable": {
+	 "arguments": {
+	  "0": { "typestr": "^v" },
+	  "1": { "typestr": "Z" }
+	 },
+	 "retval": { "typestr": "v" }
+	}
+       }
+      },
+      "class_method": false,
+      "selector": "prerollAtRate:completionHandler:"
+     },
+     {
+      "args": {
+       "3": {
+        "type_override": "@?",
+        "callable": {
+	 "arguments": {
+	  "0": { "typestr": "^v" },
+	  "1": { "typestr": "Z" }
+	 },
+	 "retval": { "typestr": "v" }
+	}
+       }
+      },
+      "class_method": false,
+      "selector": "seekToTime:toleranceBefore:toleranceAfter:completionHandler:"
+     },
+     {
+      "args": {
+       "1": {
+        "type_override": "@?",
+        "callable": {
+	 "arguments": {
+	  "0": { "typestr": "^v" },
+	  "1": { "typestr": "Z" }
+	 },
+	 "retval": { "typestr": "v" }
+	}
+       }
+      },
+      "class_method": false,
+      "selector": "seekToTime:completionHandler:"
+     },
+     {
+      "args": {
+       "1": {
+        "type_override": "@?",
+        "callable": {
+	 "arguments": {
+	  "0": { "typestr": "^v" },
+	  "1": { "typestr": "Z" }
+	 },
+	 "retval": { "typestr": "v" }
+	}
+       }
+      },
+      "class_method": false,
+      "selector": "seekToDate:completionHandler:"
+     },
+     {
+      "class_method": false,
+      "retval": { "type_override": "Z" },
+      "selector": "isExternalPlaybackActive"
+     },
+     {
+      "class_method": false,
+      "retval": { "type_override": "Z" },
+      "selector": "allowsExternalPlayback"
+     },
+     {
+      "class_method": false,
+      "args": { "0": { "type_override": "Z" } },
+      "selector": "setAllowsExternalPlayback:"
+     },
      {
       "class_method": false,
       "retval": {},
@@ -1148,14 +1502,29 @@
      },
      {
       "args": {
-       "1": {}
+       "2": {
+        "callable": {
+	 "arguments": {
+	  "0": { "typestr": "^v" },
+	  "1": { "typestr": "{_CMTime=qiIq}" }
+	 },
+	 "retval": { "typestr": "v" }
+	}
+       }
       },
       "class_method": false,
       "selector": "addPeriodicTimeObserverForInterval:queue:usingBlock:"
      },
      {
       "args": {
-       "1": {}
+       "2": {
+        "callable": {
+	 "arguments": {
+	  "0": { "typestr": "^v" }
+	 },
+	 "retval": { "typestr": "v" }
+	}
+       }
       },
       "class_method": false,
       "selector": "addBoundaryTimeObserverForTimes:queue:usingBlock:"
@@ -1174,9 +1543,80 @@
    "AVPlayerItem": {
     "methods": [
      {
+      "args": {
+       "3": {
+        "callable": {
+	 "arguments": {
+	  "0": { "typestr": "^v" },
+	  "1": { "typestr": "Z" }
+	 },
+	 "retval": { "typestr": "v" }
+	}
+       }
+      },
+      "class_method": true,
+      "selector": "seekToTime:toleranceBefore:toleranceAfter:completionHandler:"
+     },
+     {
+      "args": {
+       "1": {
+        "type_override": "@?",
+        "callable": {
+	 "arguments": {
+	  "0": { "typestr": "^v" },
+	  "1": { "typestr": "Z" }
+	 },
+	 "retval": { "typestr": "v" }
+	}
+       }
+      },
+      "class_method": false,
+      "selector": "seekToTime:completionHandler:"
+     },
+     {
+      "args": {
+       "1": {
+        "type_override": "@?",
+        "callable": {
+	 "arguments": {
+	  "0": { "typestr": "^v" },
+	  "1": { "typestr": "Z" }
+	 },
+	 "retval": { "typestr": "v" }
+	}
+       }
+      },
+      "class_method": false,
+      "selector": "seekToDate:completionHandler:"
+     },
+     {
+      "args": {
+       "1": {
+        "callable": {
+	 "arguments": {
+	  "0": { "typestr": "^v" }
+	 },
+	 "retval": { "typestr": "v" }
+	}
+       }
+      },
+      "class_method": true,
+      "selector": "requestContentAuthorizationAsynchronouslyWithTimeoutInterval:completionHandler:"
+     },
+     {
       "class_method": false,
       "retval": {},
       "selector": "timebase"
+     },
+     {
+      "class_method": false,
+      "retval": { "type_override": "Z" },
+      "selector": "canUseNetworkResourcesForLiveStreamingWhilePaused"
+     },
+     {
+      "class_method": false,
+      "args": { "0": { "type_override": "Z" } },
+      "selector": "setCanUseNetworkResourcesForLiveStreamingWhilePaused:"
      }
     ],
     "properties": [
@@ -1295,7 +1735,14 @@
      },
      {
       "args": {
-       "0": {}
+       "1": {
+        "callable": {
+	 "arguments": {
+	  "0": { "typestr": "^v" }
+	 },
+	 "retval": { "typestr": "v" }
+	}
+       }
       },
       "class_method": false,
       "selector": "requestMediaDataWhenReadyOnQueue:usingBlock:"
@@ -1326,7 +1773,16 @@
      },
      {
       "args": {
-       "0": {}
+       "1": {
+        "callable": {
+	 "arguments": {
+	  "0": { "typestr": "^v" },
+	  "1": { "typestr": "Z" },
+	  "2": { "typestr": "@" }
+	 },
+	 "retval": { "typestr": "v" }
+	}
+       }
       },
       "class_method": true,
       "selector": "notifyOfDataReadyForSampleBuffer:completionHandler:"
@@ -1337,14 +1793,14 @@
     "methods": [
      {
       "args": {
-       "1": {}
+       "1": { "type_modifier": "o" }
       },
       "class_method": false,
       "selector": "stepByDecodeTime:wasPinned:"
      },
      {
       "args": {
-       "1": {}
+       "1": { "type_modifier": "o" }
       },
       "class_method": false,
       "selector": "stepByPresentationTime:wasPinned:"
@@ -1369,6 +1825,25 @@
       "class_method": false,
       "retval": {},
       "selector": "copyFormatDescription"
+     }
+    ]
+   },
+   "AVVideoComposition": {
+    "methods": [
+     {
+      "args": {
+       "1": {
+        "callable": {
+	 "arguments": {
+	  "0": { "typestr": "^v" },
+	  "1": { "typestr": "@" }
+	 },
+	 "retval": { "typestr": "v" }
+	}
+       }
+      },
+      "class_method": false,
+      "selector": "videoCompositionWithAsset:applyingCIFiltersWithHandler:"
      }
     ]
    },
@@ -1401,27 +1876,27 @@
     "methods": [
      {
       "args": {
-       "1": {},
-       "2": {},
-       "3": {}
+       "1": { "type_modifier": "o" },
+       "2": { "type_modifier": "o" },
+       "3": { "type_modifier": "o" }
       },
       "class_method": false,
       "selector": "getTransformRampForTime:startTransform:endTransform:timeRange:"
      },
      {
       "args": {
-       "1": {},
-       "2": {},
-       "3": {}
+       "1": { "type_modifier": "o" },
+       "2": { "type_modifier": "o" },
+       "3": { "type_modifier": "o" }
       },
       "class_method": false,
       "selector": "getOpacityRampForTime:startOpacity:endOpacity:timeRange:"
      },
      {
       "args": {
-       "1": {},
-       "2": {},
-       "3": {}
+       "1": { "type_modifier": "o" },
+       "2": { "type_modifier": "o" },
+       "3": { "type_modifier": "o" }
       },
       "class_method": false,
       "selector": "getCropRectangleRampForTime:startCropRectangle:endCropRectangle:timeRange:"
@@ -1457,8 +1932,45 @@
      }
     ]
    },
-   "AVAudioPlayerNode": {
+   "AVAudioSequencer": {
     "methods": [
+     {
+      "retval": { "type_override": "Z" },
+      "args": {
+       "0": { "type_modifier": "o" }
+      },
+      "selector": "startAndReturnError:",
+      "class_method": false
+     },
+     {
+      "args": {
+       "1": { "type_modifier": "o" }
+      },
+      "selector": "beatsForHostTime:error:",
+      "class_method": false
+     },
+     {
+      "args": {
+       "1": { "type_modifier": "o" }
+      },
+      "selector": "hostTimeForBeats:error:",
+      "class_method": false
+     },
+     {
+      "args": {
+       "1": { "type_modifier": "o" }
+      },
+      "selector": "dataWithSMPTEResolution:error:",
+      "class_method": false
+     },
+     {
+      "retval": { "type_override": "Z" },
+      "args": {
+       "2": { "type_modifier": "o" }
+      },
+      "selector": "loadFromData:options:error:",
+      "class_method": false
+     },
      {
       "retval": { "type_override": "Z" },
       "args": {
@@ -1466,11 +1978,39 @@
       },
       "selector": "loadFromURL:options:error:",
       "class_method": false
+     },
+     {
+      "retval": { "type_override": "Z" },
+      "selector": "isPlaying",
+      "class_method": false
+     },
+     {
+      "retval": { "type_override": "Z" },
+      "args": {
+       "2": { "type_override": "Z" },
+       "3": { "type_modifier": "o" }
+      },
+      "class_method": false,
+      "selector": "writeToURL:SMPTEResolution:replaceExisting:error:"
      }
     ]
    },
    "AVAudioPlayerNode": {
     "methods": [
+     {
+      "args": {
+       "1": {
+        "callable": {
+	 "arguments": {
+	  "0": { "typestr": "^v" }
+	 },
+	 "retval": { "typestr": "v" }
+	}
+       }
+      },
+      "class_method": false,
+      "selector": "scheduleBuffer:completionHandler:"
+     },
      {
       "args": {
        "3": {
@@ -1483,7 +2023,43 @@
        }
       },
       "class_method": false,
-      "selector": "scheduleBuffer:completionHandler:"
+      "selector": "scheduleBuffer:atTime:options:completionHandler:"
+     },
+     {
+      "args": {
+       "2": {
+        "callable": {
+	 "arguments": {
+	  "0": { "typestr": "^v" }
+	 },
+	 "retval": { "typestr": "v" }
+	}
+       }
+      },
+      "class_method": false,
+      "selector": "scheduleFile:atTime:completionHandler:"
+     },
+     {
+      "args": {
+       "4": {
+        "callable": {
+	 "arguments": {
+	  "0": { "typestr": "^v" }
+	 },
+	 "retval": { "typestr": "v" }
+	}
+       }
+      },
+      "class_method": false,
+      "selector": "scheduleSegment:startingFrame:frameCount:atTime:completionHandler:"
+     },
+     {
+      "retval": { "type_override": "Z" },
+      "args": {
+       "2": { "type_modifier": "o" }
+      },
+      "selector": "loadFromURL:options:error:",
+      "class_method": false
      }
     ]
    },
@@ -1520,6 +2096,25 @@
       },
       "class_method": false,
       "selector": "statusOfValueForKey:error:"
+     },
+     {
+      "args": {
+       "1": { "type_override": "Q" }
+      },
+      "class_method": false,
+      "selector": "destinationForMixer:bus:"
+     },
+     {
+      "args": {
+       "0": { "type_override": "q" }
+      },
+      "class_method": false,
+      "selector": "setRenderingAlgorithm:"
+     },
+     {
+      "retval": { "type_override": "q" },
+      "class_method": false,
+      "selector": "setRenderingAlgorithm:"
      }
     ]
    }

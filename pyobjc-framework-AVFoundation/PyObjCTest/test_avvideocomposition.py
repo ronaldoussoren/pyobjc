@@ -31,10 +31,10 @@ class TestAVVideoComposition (TestCase):
         self.assertArgIsOut(AVFoundation.AVVideoCompositionLayerInstruction.getOpacityRampForTime_startOpacity_endOpacity_timeRange_, 2)
         self.assertArgIsOut(AVFoundation.AVVideoCompositionLayerInstruction.getOpacityRampForTime_startOpacity_endOpacity_timeRange_, 3)
 
-        self.assertResultIsBOOL(AVFoundation.AVVideoCompositionLayerInstruction.getCropRectangleRampForTime_startCropRectange_endCropRectangle_timeRange_)
-        self.assertArgIsOut(AVFoundation.AVVideoCompositionLayerInstruction.getCropRectangleRampForTime_startCropRectange_endCropRectangle_timeRange_, 1)
-        self.assertArgIsOut(AVFoundation.AVVideoCompositionLayerInstruction.getCropRectangleRampForTime_startCropRectange_endCropRectangle_timeRange_, 2)
-        self.assertArgIsOut(AVFoundation.AVVideoCompositionLayerInstruction.getCropRectangleRampForTime_startCropRectange_endCropRectangle_timeRange_, 3)
+        self.assertResultIsBOOL(AVFoundation.AVVideoCompositionLayerInstruction.getCropRectangleRampForTime_startCropRectangle_endCropRectangle_timeRange_)
+        self.assertArgIsOut(AVFoundation.AVVideoCompositionLayerInstruction.getCropRectangleRampForTime_startCropRectangle_endCropRectangle_timeRange_, 1)
+        self.assertArgIsOut(AVFoundation.AVVideoCompositionLayerInstruction.getCropRectangleRampForTime_startCropRectangle_endCropRectangle_timeRange_, 2)
+        self.assertArgIsOut(AVFoundation.AVVideoCompositionLayerInstruction.getCropRectangleRampForTime_startCropRectangle_endCropRectangle_timeRange_, 3)
 
 
         self.assertResultIsBOOL(TestAVVideoCompositionHelper.videoComposition_shouldContinueValidatingAfterFindingInvalidValueForKey_)

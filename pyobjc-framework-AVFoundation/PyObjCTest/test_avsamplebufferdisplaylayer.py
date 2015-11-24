@@ -21,7 +21,7 @@ class TestAVSampleBufferDisplayLayer (TestCase):
     @min_os_level('10.8')
     def testMethods(self):
         self.assertResultIsBOOL(AVFoundation.AVSampleBufferDisplayLayer.isReadyForMoreMediaData)
-        self.assertArgIsBlock(AVFoundation.AVSampleBufferDisplayLayer.XrequestMediaDataWhenReadyOnQueue_usingBlock_, 1, b'v')
+        self.assertArgIsBlock(AVFoundation.AVSampleBufferDisplayLayer.requestMediaDataWhenReadyOnQueue_usingBlock_, 1, b'v')
 
 if __name__ == "__main__":
     main()

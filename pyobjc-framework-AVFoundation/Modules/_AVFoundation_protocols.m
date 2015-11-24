@@ -11,13 +11,14 @@ static void __attribute__((__used__)) use_protocols(void)
     p = PyObjC_IdToPython(@protocol(AVAssetResourceLoaderDelegate)); Py_XDECREF(p);
     p = PyObjC_IdToPython(@protocol(AVAudioPlayerDelegate)); Py_XDECREF(p);
     p = PyObjC_IdToPython(@protocol(AVAudioRecorderDelegate)); Py_XDECREF(p);
-    p = PyObjC_IdToPython(@protocol(AVCaptureVideoDataOutputSampleBufferDelegate)); Py_XDECREF(p);
     p = PyObjC_IdToPython(@protocol(AVCaptureAudioDataOutputSampleBufferDelegate)); Py_XDECREF(p);
-    p = PyObjC_IdToPython(@protocol(AVCaptureFileOutputRecordingDelegate)); Py_XDECREF(p);
     p = PyObjC_IdToPython(@protocol(AVCaptureFileOutputDelegate)); Py_XDECREF(p);
+    p = PyObjC_IdToPython(@protocol(AVCaptureFileOutputRecordingDelegate)); Py_XDECREF(p);
     p = PyObjC_IdToPython(@protocol(AVCaptureMetadataOutputObjectsDelegate)); Py_XDECREF(p);
-    p = PyObjC_IdToPython(@protocol(AVPlayerItemOutputPullDelegate)); Py_XDECREF(p);
+    p = PyObjC_IdToPython(@protocol(AVCaptureVideoDataOutputSampleBufferDelegate)); Py_XDECREF(p);
     p = PyObjC_IdToPython(@protocol(AVPlayerItemLegibleOutputPushDelegate)); Py_XDECREF(p);
+    p = PyObjC_IdToPython(@protocol(AVPlayerItemMetadataOutputPushDelegate)); Py_XDECREF(p);
+    p = PyObjC_IdToPython(@protocol(AVPlayerItemOutputPullDelegate)); Py_XDECREF(p);
     p = PyObjC_IdToPython(@protocol(AVPlayerItemOutputPushDelegate)); Py_XDECREF(p);
     p = PyObjC_IdToPython(@protocol(AVVideoCompositionValidationHandling)); Py_XDECREF(p);
 #if PyObjC_BUILD_RELEASE >= 1009

@@ -9,6 +9,12 @@ except NameError:
 
 
 class TestAVCaptureDevice (TestCase):
+
+    @expectedFailure
+    def testMissingConstants(self):
+        # Present in header files, but not actually exposed
+        self.assertIsInstance(AVFoundation.AVCaptureMaxAvailableTorchLevel, float)
+
     @min_os_level('10.7')
     def testConstants(self):
         self.assertIsInstance(AVFoundation.AVCaptureDeviceWasConnectedNotification, unicode)
@@ -26,7 +32,6 @@ class TestAVCaptureDevice (TestCase):
         self.assertEqual(AVFoundation.AVCaptureTorchModeOn, 1)
         self.assertEqual(AVFoundation.AVCaptureTorchModeAuto, 2)
 
-        self.assertIsInstance(AVFoundation.AVCaptureMaxAvailableTorchLevel, float)
 
         self.assertEqual(AVFoundation.AVCaptureFocusModeLocked, 0)
         self.assertEqual(AVFoundation.AVCaptureFocusModeAutoFocus, 1)
@@ -35,8 +40,6 @@ class TestAVCaptureDevice (TestCase):
         self.assertEqual(AVFoundation.AVCaptureAutoFocusRangeRestrictionNone, 0)
         self.assertEqual(AVFoundation.AVCaptureAutoFocusRangeRestrictionNear, 1)
         self.assertEqual(AVFoundation.AVCaptureAutoFocusRangeRestrictionFar, 2)
-
-        self.assertIsInstance(AVFoundation.AVCaptureLensPositionCurrent, float)
 
         self.assertEqual(AVFoundation.AVCaptureExposureModeLocked, 0)
         self.assertEqual(AVFoundation.AVCaptureExposureModeAutoExpose, 1)

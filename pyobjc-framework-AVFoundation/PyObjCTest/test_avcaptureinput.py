@@ -25,8 +25,8 @@ class TestAVCaptureInput (TestCase):
 
     @min_os_level('10.8')
     def testMethods10_8(self):
-        self.assertResultIsBOOL(AVFoundation.AVCaptureScreenInput.capturesMouseCursor)
-        self.assertArgIsBOOL(AVFoundation.AVCaptureScreenInput.setCapturesMouseCursor_, 0)
+        self.assertResultIsBOOL(AVFoundation.AVCaptureScreenInput.capturesMouseClicks)
+        self.assertArgIsBOOL(AVFoundation.AVCaptureScreenInput.setCapturesMouseClicks_, 0)
 
         self.assertResultIsBOOL(AVFoundation.AVCaptureScreenInput.removesDuplicateFrames)
         self.assertArgIsBOOL(AVFoundation.AVCaptureScreenInput.setRemovesDuplicateFrames_, 0)

@@ -274,7 +274,7 @@ class TestAVMetadataIdentifiers (TestCase):
         self.assertIsInstance(AVFoundation.AVMetadataIdentifierIcyMetadataStreamURL, unicode)
 
     @min_os_level('10.11')
-    def testConstants10_11(self)
+    def testConstants10_11(self):
         self.assertIsInstance(AVFoundation.AVMetadataIdentifierQuickTimeMetadataDetectedFace, unicode)
         self.assertIsInstance(AVFoundation.AVMetadataIdentifierQuickTimeMetadataVideoOrientation, unicode)
         self.assertIsInstance(AVFoundation.AVMetadataIdentifierQuickTimeMetadataContentIdentifier, unicode)

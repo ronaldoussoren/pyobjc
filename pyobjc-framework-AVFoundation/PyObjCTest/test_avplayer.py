@@ -15,9 +15,9 @@ class TestAVPlayer (TestCase):
         self.assertEqual(AVFoundation.AVPlayerStatusReadyToPlay, 1)
         self.assertEqual(AVFoundation.AVPlayerStatusFailed, 2)
 
-        AVPlayerActionAtItemEndAdvance      = 0,
-                AVPlayerActionAtItemEndPause    = 1,
-                        AVPlayerActionAtItemEndNone             = 2,
+        self.assertEqual(AVFoundation.AVPlayerActionAtItemEndAdvance, 0)
+        self.assertEqual(AVFoundation.AVPlayerActionAtItemEndPause, 1)
+        self.assertEqual(AVFoundation.AVPlayerActionAtItemEndNone, 2)
 
 
     @min_os_level('10.7')

@@ -23,7 +23,7 @@ class TestAVCaptureOutput (TestCase):
         self.assertResultIsBOOL(TestAVCaptureOutputHelper.captureOutputShouldProvideSampleAccurateRecordingStart_)
 
         self.assertResultIsBOOL(AVFoundation.AVCaptureStillImageOutput.isCapturingStillImage)
-        self.assertArgIsBlock(AVFoundation.AVCaptureStillImageOutput.captureStillImageAsynchronouslyFromConnection_completionHandler_,
+        self.assertArgIsBlock(AVFoundation.AVCaptureStillImageOutput.captureStillImageAsynchronouslyFromConnection_completionHandler_, 1,
                 b'v@@')
 
     def testProtocols(self):

@@ -38,7 +38,7 @@ class TestAVAudioSequencer (TestCase):
         self.assertArgIsBOOL(AVFoundation.AVAudioSequencer.writeToURL_SMPTEResolution_replaceExisting_error_, 2)
         self.assertArgIsOut(AVFoundation.AVAudioSequencer.writeToURL_SMPTEResolution_replaceExisting_error_, 3)
 
-        self.assertArgIsOut(AVFoundation.AVAudioSequencer.drawWithSMPTEResolution_error_, 1)
+        self.assertArgIsOut(AVFoundation.AVAudioSequencer.dataWithSMPTEResolution_error_, 1)
 
         self.assertResultIsBOOL(AVFoundation.AVAudioSequencer.isPlaying)
 
@@ -46,16 +46,16 @@ class TestAVAudioSequencer (TestCase):
         self.assertArgIsOut(AVFoundation.AVAudioSequencer.beatsForHostTime_error_, 1)
 
         self.assertResultIsBOOL(AVFoundation.AVAudioSequencer.startAndReturnError_)
-        self.assertArgIsOut(AVFoundation.AVAudioSequencer.startAndReturnError_, 1)
+        self.assertArgIsOut(AVFoundation.AVAudioSequencer.startAndReturnError_, 0)
 
         self.assertResultIsBOOL(AVFoundation.AVMusicTrack.isLoopingEnabled)
-        self.assertArgIsBOOL(AVFoundation.AVMusicTrack.setLoopingEnabled_, 1)
+        self.assertArgIsBOOL(AVFoundation.AVMusicTrack.setLoopingEnabled_, 0)
 
         self.assertResultIsBOOL(AVFoundation.AVMusicTrack.isMuted)
-        self.assertArgIsBOOL(AVFoundation.AVMusicTrack.setMuted_, 1)
+        self.assertArgIsBOOL(AVFoundation.AVMusicTrack.setMuted_, 0)
 
         self.assertResultIsBOOL(AVFoundation.AVMusicTrack.isSoloed)
-        self.assertArgIsBOOL(AVFoundation.AVMusicTrack.setSoloed_, 1)
+        self.assertArgIsBOOL(AVFoundation.AVMusicTrack.setSoloed_, 0)
 
 if __name__ == "__main__":
     main()

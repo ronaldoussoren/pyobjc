@@ -75,6 +75,9 @@ Version 3.1
 
 * Fix hard crash with invalid type strings in metadata.
 
+* Default value for struct wrappers was incorrect for fields that have
+  a type encoding that's custom to PyObjC.
+
 Version 3.0.5
 -------------
 

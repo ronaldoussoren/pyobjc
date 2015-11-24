@@ -31,10 +31,10 @@ class TestAVCaptureSession (TestCase):
         self.assertIsInstance(AVFoundation.AVCaptureSessionPreset960x540, unicode)
         self.assertIsInstance(AVFoundation.AVCaptureSessionPreset1280x720, unicode)
 
-           AVVideoFieldModeBoth        = 0,
-               AVVideoFieldModeTopOnly     = 1,
-                   AVVideoFieldModeBottomOnly  = 2,
-                       AVVideoFieldModeDeinterlace = 3,
+        self.assertEqual(AVFoundation.AVVideoFieldModeBoth, 0)
+        self.assertEqual(AVFoundation.AVVideoFieldModeTopOnly, 1)
+        self.assertEqual(AVFoundation.AVVideoFieldModeBottomOnly, 2)
+        self.assertEqual(AVFoundation.AVVideoFieldModeDeinterlace, 3)
 
 
     @min_os_level('10.9')

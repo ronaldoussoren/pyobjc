@@ -38,8 +38,8 @@ class TestAkAudioMixing (TestCase):
         self.assertArgHasType(TestAVAudioMixingHelper.setPan_, 0, objc._C_FLT)
         self.assertResultHasType(TestAVAudioMixingHelper.pan, objc._C_FLT)
 
-        self.assertArgHasType(TestAVAudioMixingHelper.setRenderingAlgorithm_, 0, objc._C_NSUInteger)
-        self.assertResultHasType(TestAVAudioMixingHelper.renderingAlgorithm, objc._C_NSUInteger)
+        self.assertArgHasType(TestAVAudioMixingHelper.setRenderingAlgorithm_, 0, objc._C_NSInteger)
+        self.assertResultHasType(TestAVAudioMixingHelper.renderingAlgorithm, objc._C_NSInteger)
 
         self.assertArgHasType(TestAVAudioMixingHelper.setRate_, 0, objc._C_FLT)
         self.assertResultHasType(TestAVAudioMixingHelper.rate, objc._C_FLT)

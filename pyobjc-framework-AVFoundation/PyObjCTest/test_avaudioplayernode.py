@@ -19,7 +19,7 @@ class TestAVAudioPlayerNode (TestCase):
     def testMethods10_10(self):
         self.assertArgIsBlock(AVFoundation.AVAudioPlayerNode.scheduleBuffer_completionHandler_, 1, AVAudioNodeCompletionHandler)
         self.assertArgIsBlock(AVFoundation.AVAudioPlayerNode.scheduleBuffer_atTime_options_completionHandler_, 3, AVAudioNodeCompletionHandler)
-        self.assertArgIsBlock(AVFoundation.AVAudioPlayerNode.scheduleFile_atTime_competionHandler_, 2, AVAudioNodeCompletionHandler)
+        self.assertArgIsBlock(AVFoundation.AVAudioPlayerNode.scheduleFile_atTime_completionHandler_, 2, AVAudioNodeCompletionHandler)
         self.assertArgIsBlock(AVFoundation.AVAudioPlayerNode.scheduleSegment_startingFrame_frameCount_atTime_completionHandler_, 4, AVAudioNodeCompletionHandler)
         self.assertResultIsBOOL(AVFoundation.AVAudioPlayerNode.isPlaying)
 

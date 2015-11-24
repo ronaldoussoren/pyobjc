@@ -15,11 +15,11 @@ class TestAVVideoCompositingHelper (AVFoundation.NSObject):
 
 class TestAVVideoCompositing (TestCase):
     def testStructs(self):
-        v = AVPixelAspectRatio()
+        v = AVFoundation.AVPixelAspectRatio()
         self.assertIsInstance(v.horizontalSpacing, int)
         self.assertIsInstance(v.verticalSpacing, int)
 
-        v = AVEdgeWidths()
+        v = AVFoundation.AVEdgeWidths()
         self.assertIsInstance(v.left, float)
         self.assertIsInstance(v.top, float)
         self.assertIsInstance(v.right, float)
