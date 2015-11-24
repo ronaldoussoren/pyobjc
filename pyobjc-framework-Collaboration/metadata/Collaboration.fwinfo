@@ -10,33 +10,33 @@
        "0": {
         "type_override": "^{__CSIdentity=}"
        }
-      }, 
-      "class_method": true, 
+      },
+      "class_method": true,
       "selector": "identityWithCSIdentity:"
-     }, 
+     },
      {
-      "class_method": false, 
+      "class_method": false,
       "retval": {
        "type_override": "^{__CSIdentity=}"
-      }, 
+      },
       "selector": "CSIdentity"
-     }, 
+     },
      {
-      "class_method": false, 
+      "class_method": false,
       "retval": {
        "type_override": "Z"
-      }, 
+      },
       "selector": "isHidden"
-     }, 
+     },
      {
-      "class_method": false, 
+      "class_method": false,
       "retval": {
        "type_override": "Z"
-      }, 
+      },
       "selector": "isMemberOfGroup:"
      }
     ]
-   }, 
+   },
    "CBIdentityAuthority": {
     "methods": [
      {
@@ -44,82 +44,97 @@
        "0": {
         "type_override": "^{__CSIdentityAuthority=}"
        }
-      }, 
-      "class_method": true, 
+      },
+      "class_method": true,
       "selector": "identityAuthorityWithCSIdentityAuthority:"
-     }, 
+     },
      {
-      "class_method": false, 
+      "class_method": false,
       "retval": {
        "type_override": "^{__CSIdentityAuthority=}"
-      }, 
+      },
       "selector": "CSIdentityAuthority"
      }
     ]
-   }, 
+   },
    "CBIdentityPicker": {
     "methods": [
+     {
+      "selector": "runModalForWindow:completionHandler:",
+      "class_method": false,
+      "args": {
+       "1": {
+        "callable": {
+	 "arguments": {
+	  "0": { "typestr": "^v" },
+	  "1": { "typestr": "I" }
+	 },
+	 "retval": { "typestr": "v" }
+	}
+       }
+      }
+     },
      {
       "args": {
        "2": {
         "sel_of_type": [
-         "v@:@i^v", 
+         "v@:@i^v",
          "v@:@q^v"
         ]
-       }, 
+       },
        "3": {
         "type_override": "^v"
        }
-      }, 
-      "class_method": false, 
+      },
+      "class_method": false,
       "selector": "runModalForWindow:modalDelegate:didEndSelector:contextInfo:"
-     }, 
+     },
      {
-      "class_method": false, 
+      "class_method": false,
       "retval": {
        "type_override": "Z"
-      }, 
+      },
       "selector": "allowsMultipleSelection"
-     }, 
+     },
      {
       "args": {
        "0": {
         "type_override": "Z"
        }
-      }, 
-      "class_method": false, 
+      },
+      "class_method": false,
       "selector": "setAllowsMultipleSelection:"
      }
     ]
-   }, 
+   },
    "CBUserIdentity": {
     "methods": [
      {
-      "class_method": false, 
+      "class_method": false,
       "retval": {
        "type_override": "^{OpaqueSecCertificateRef=}"
-      }, 
+      },
       "selector": "certificate"
-     }, 
+     },
      {
-      "class_method": false, 
+      "class_method": false,
       "retval": {
        "type_override": "Z"
-      }, 
+      },
       "selector": "authenticateWithPassword:"
-     }, 
+     },
      {
-      "class_method": false, 
+      "class_method": false,
       "retval": {
        "type_override": "Z"
-      }, 
+      },
       "selector": "isEnabled"
      }
     ]
    }
-  }, 
-  "formal_protocols": {}, 
-  "functions": {}, 
+  },
+  "formal_protocols": {},
+  "functions": {},
   "informal_protocols": {}
  }
 }
