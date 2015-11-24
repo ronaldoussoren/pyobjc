@@ -2,7 +2,66 @@
 // for information on how to update this file.
 {
  "definitions": {
+  "enum": {
+   "TKSmartCardPINCharsetNumeric": { "value": 0 },
+   "TKSmartCardPINCharsetAlphanumeric": { "value": 1 },
+   "TKSmartCardPINCharsetUpperAlphanumeric": { "value": 2 },
+   "TKSmartCardPINEncodingBinary": { "value": 0 },
+   "TKSmartCardPINEncodingASCII": { "value": 1 },
+   "TKSmartCardPINEncodingBCD": { "value": 2 },
+   "TKSmartCardPINJustificationLeft": { "value": 0 },
+   "TKSmartCardPINJustificationRight": { "value": 1 },
+   "TKSmartCardPINCompletionKey": { "value": 2 },
+   "TKSmartCardPINCompletionTimeout": { "value": 4 },
+   "TKErrorCodeAuthenticationFailed": { "value": -5 },
+   "TKErrorCodeObjectNotFound": { "value": -6 },
+   "TKErrorCodeTokenNotFound": { "value": -7 },
+   "TKErrorCodeBadParameter": { "value": -8 },
+   "TKSmartCardPINCompletionMaxLength": { "value": 1 },
+   "TKSmartCardPINConfirmationNone": { "value": 0 },
+   "TKSmartCardPINConfirmationCurrent": { "value": 2 },
+   "TKSmartCardPINConfirmationNew": { "value": 1 }
+  },
   "classes": {
+   "TKSmartCardUserInteractionForConfirmation": {
+    "methods": [
+     {
+      "class_method": false,
+      "selector": "result",
+      "retval": { "type_override": "Z" }
+     },
+     {
+      "class_method": false,
+      "selector": "setResult:",
+      "args": { "0": { "type_override": "Z" } }
+     }
+    ]
+   },
+   "TKSmartCardUserInteraction": {
+    "methods": [
+     {
+      "class_method": false,
+      "selector": "cancel",
+      "retval": { "type_override": "Z" }
+     },
+     {
+      "class_method": false,
+      "selector": "runWithReply:",
+      "args": {
+       "0": {
+        "callable": {
+         "arguments": {
+	  "0": { "typestr": "^v" },
+	  "1": { "typestr": "Z" },
+	  "2": { "typestr": "@" }
+	 },
+	 "retval": { "typestr": "v" }
+	}
+       }
+      }
+     }
+    ]
+   },
    "TKSmartCardATR": {
     "methods": [
      {
