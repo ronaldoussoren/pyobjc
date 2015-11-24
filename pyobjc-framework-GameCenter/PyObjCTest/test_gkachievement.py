@@ -18,7 +18,7 @@ if sys.maxsize > 2 ** 32:
             self.assertArgIsBOOL(GameCenter.GKAchievement.setShowsCompletionBanner_, 0)
 
             self.assertArgIsBlock(GameCenter.GKAchievement.reportAchievementWithCompletionHandler_, 0, b'v@')
-            self.assertResultIsBOOL(GameCenter.GKAchievement.isHidden)
+            self.assertResultIsBOOL(GameCenter.GKAchievement.alloc().init().isHidden)
 
 if __name__ == "__main__":
     main()

@@ -4,7 +4,8 @@
  "definitions": {
   "enum": {
    "kCTFontManagerErrorSystemRequired": { "value": 203 },
-   "kCTLineBoundsIncludeLanguageExtents": { "value": 32 }
+   "kCTLineBoundsIncludeLanguageExtents": { "value": 32 },
+   "kCTVersionNumber10_11": { "value": 524288 }
   },
   "cftypes": {
    "CTFontCollectionRef": {
