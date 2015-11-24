@@ -2,6 +2,13 @@
 # for information on how to update this file.
 {
  "definitions": {
+  "enum": {
+   "ACErrorDeniedByPlugin": { "value": 17 },
+   "ACErrorCoreDataSaveFailed": { "value": 18 },
+   "ACErrorFailedSerializingAccountInfo": { "value": 19 },
+   "ACErrorInvalidCommand": { "value": 20 },
+   "ACErrorMissingTransportMessageID": { "value": 21 }
+  },
   "classes": {
      "ACAccountStore": {
        "methods": [
