@@ -2,7 +2,41 @@
 // for information on how to update this file.
 {
  "definitions": {
+  "externs": {
+   "AVAssetDurationDidChangeNotification": { "typestr": "@" },
+   "AVAssetContainsFragmentsDidChangeNotification": { "typestr": "@" },
+   "AVAssetWasDefragmentedNotification": { "typestr": "@" },
+   "AVAssetChapterMetadataGroupsDidChangeNotification": { "typestr": "@" },
+   "AVAssetMediaSelectionGroupsDidChangeNotification": { "typestr": "@" },
+   "AVAssetExportPresetLowQuality": { "typestr": "@" },
+   "AVAssetExportPresetMediumQuality": { "typestr": "@" },
+   "AVAssetExportPresetHighestQuality": { "typestr": "@" }
+  },
   "classes": {
+   "AVAsset": {
+    "methods": [
+     {
+      "retval": { "type_override": "Z" },
+      "class_method": false,
+      "selector": "isCompatibleWithAirPlayVideo"
+     },
+     {
+      "retval": { "type_override": "Z" },
+      "class_method": false,
+      "selector": "copyCGImageAtTime:actualTime:error:"
+     },
+     {
+      "retval": { "type_override": "Z" },
+      "class_method": false,
+      "selector": "canContainFragments"
+     },
+     {
+      "retval": { "type_override": "Z" },
+      "class_method": false,
+      "selector": "containsFragments"
+     }
+    ]
+   },
    "AVAssetImageGenerator": {
     "methods": [
      {
@@ -13,6 +47,24 @@
       "class_method": false,
       "retval": {},
       "selector": "copyCGImageAtTime:actualTime:error:"
+     },
+     {
+      "args": {
+       "1": {
+        "callable": {
+	 "arguments": {
+	  "0": { "typestr": "^v" },
+	  "1": { "typestr": "{_CMTime=qiIq}" },
+	  "2": { "typestr": "^{__CGImage}" },
+	  "3": { "typestr": "{_CMTime=qiIq}" },
+	  "4": { "typestr": "q" }
+	 },
+	 "retval": { "typestr": "v" }
+	}
+       }
+      },
+      "class_method": false,
+      "selector": "generateCGImagesAsynchronouslyForTimes:completionHandler:"
      }
     ]
    },
@@ -94,6 +146,71 @@
       },
       "class_method": false,
       "selector": "initWithURL:fileType:error:"
+     },
+     {
+      "args": {
+       "0": {
+        "callable": {
+	 "arguments": {
+	  "0": { "typestr": "^v" }
+	 },
+	 "retval": { "typestr": "v" }
+	}
+       }
+      },
+      "class_method": false,
+      "selector": "finishWritingWithCompletionHandler:"
+     }
+    ]
+   },
+   "AVAssetExportSession": {
+    "methods": [
+     {
+      "args": {
+       "3": {
+        "type_override": "@?",
+        "callable": {
+	 "arguments": {
+	  "0": { "typestr": "^v" },
+	  "1": { "typestr": "Z" }
+	 },
+	 "retval": { "typestr": "v" }
+	}
+       }
+      },
+      "class_method": false,
+      "selector": "determineCompatibilityOfExportPreset:withAsset:outputFileType:completionHandler:"
+     },
+     {
+      "args": {
+       "0": {
+        "type_override": "@?",
+        "callable": {
+	 "arguments": {
+	  "0": { "typestr": "^v" },
+	  "1": { "typestr": "@" }
+	 },
+	 "retval": { "typestr": "v" }
+	}
+       }
+      },
+      "class_method": false,
+      "selector": "determineCompatibleFileTypesWithCompletionHandler:"
+     },
+     {
+      "args": {
+       "0": {
+        "type_override": "@?",
+        "callable": {
+	 "arguments": {
+	  "0": { "typestr": "^v" }
+	 },
+	 "retval": { "typestr": "v" }
+	}
+       }
+      },
+      "class_method": false,
+      "selector": "exportAsynchronouslyWithCompletionHandler:"
      }
     ]
    },
@@ -357,21 +474,21 @@
     "methods": [
      {
       "args": {
-       "0": {}
+       "0": { "type_modifier": "n" }
       },
       "class_method": false,
       "selector": "initWithStreamDescription:"
      },
      {
       "args": {
-       "0": {}
+       "0": { "type_modifier": "n" }
       },
       "class_method": false,
       "selector": "initWithStreamDescription:channelLayout:"
      },
      {
       "class_method": false,
-      "retval": {},
+      "retval": { "c_array_of_fixed_length": 1 },
       "selector": "streamDescription"
      }
     ],
@@ -1251,6 +1368,42 @@
       "class_method": false,
       "retval": {},
       "selector": "newPixelBuffer"
+     }
+    ]
+   },
+   "NSObject": {
+    "methods": [
+     {
+      "args": {
+       "0": {},
+       "1": {
+        "callable": {
+	 "arguments": {
+	  "0": { "typestr": "^v" }
+	 },
+	 "retval": { "typestr": "v" }
+	}
+       }
+      },
+      "class_method": false,
+      "selector": "loadValuesAsynchronouslyForKeys:completionHandler:"
+     },
+     {
+      "retval": { "type_override": "Z" },
+      "class_method": false,
+      "selector": "isAssociatedWithFragmentMinder"
+     },
+     {
+      "retval": { "type_override": "Z" },
+      "class_method": false,
+      "selector": "isAssociatedWithFragmentMinder"
+     },
+     {
+      "args": {
+       "1": { "type_modifier": "o", "type_override": "^@" }
+      },
+      "class_method": false,
+      "selector": "statusOfValueForKey:error:"
      }
     ]
    }

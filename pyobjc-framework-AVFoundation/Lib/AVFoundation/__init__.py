@@ -10,6 +10,7 @@ import sys
 import Foundation
 
 from AVFoundation import _metadata
+from AVFoundation._AVFoundation import *
 
 sys.modules['AVFoundation'] = mod = objc.ObjCLazyModule(
     "AVFoundation",

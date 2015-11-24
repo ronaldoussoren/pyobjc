@@ -7,7 +7,8 @@ for general tips and tricks regarding the translation between Python
 and (Objective-)C frameworks
 '''
 
-from pyobjc_setup import setup
+from pyobjc_setup import setup, Extension
+import os
 
 setup(
     name='pyobjc-framework-AVFoundation',
@@ -24,4 +25,15 @@ setup(
         'pyobjc-framework-Quartz>=3.1b1',
     ],
     min_os_level="10.7",
+    ext_modules = [
+        Extension("AVFoundation._AVFoundation",
+            [ "Modules/_AVFoundation.m" ],
+            extra_link_args=["-framework", "AVFoundation"],
+            depends=[
+                os.path.join('Modules', fn)
+                for fn in os.listdir('Modules')
+                if fn.startswith('_AVFoundation')
+            ]
+        ),
+    ],
 )

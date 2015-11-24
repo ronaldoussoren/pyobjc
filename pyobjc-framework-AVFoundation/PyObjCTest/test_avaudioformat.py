@@ -19,18 +19,16 @@ class TestAVAudioFormat (TestCase):
 
     @min_os_level('10.10')
     def testMethods(self):
-        self.assertArgIsIn(AVFoundation.AVAudioFormat.initWithStreamDescription, 0)
+        self.assertArgIsIn(AVFoundation.AVAudioFormat.initWithStreamDescription_, 0)
         self.assertArgIsIn(AVFoundation.AVAudioFormat.initWithStreamDescription_channelLayout_, 0)
-        self.assertArgIsIn(AVFoundation.AVAudioFormat.initWithStreamDescription_channelLayout_, 1)
-        self.assertArgIsIn(AVFoundation.AVAudioFormat.initStandardFormatWithSampleRate_channelLayout_, 1)
+        self.assertArgIsIn(AVFoundation.AVAudioFormat.initWithStreamDescription_channelLayout_, 0)
         self.assertArgIsBOOL(AVFoundation.AVAudioFormat.initWithCommonFormat_sampleRate_channels_interleaved_, 3)
         self.assertArgIsBOOL(AVFoundation.AVAudioFormat.initWithCommonFormat_sampleRate_interleaved_channelLayout_, 2)
-        self.assertArgIsIn(AVFoundation.AVAudioFormat.initWithCommonFormat_sampleRate_interleaved_channelLayout_, 3)
         self.assertResultIsBOOL(AVFoundation.AVAudioFormat.isEqual_)
         self.assertResultIsBOOL(AVFoundation.AVAudioFormat.isStandard)
         self.assertResultIsBOOL(AVFoundation.AVAudioFormat.isInterleaved)
 
-        self.fail("streamDescription")
+        self.assertResultIsFixedSize(AVFoundation.AVAudioFormat.streamDescription, 1)
 
 
 if __name__ == "__main__":

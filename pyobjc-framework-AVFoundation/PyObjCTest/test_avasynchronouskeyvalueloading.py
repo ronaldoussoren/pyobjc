@@ -26,8 +26,8 @@ class TestAVAsynchronousKeyValueLoading (TestCase):
         objc.protocolNamed('AVAsynchronousKeyValueLoading')
 
         self.assertResultHasType(TestAVAsynchronousKeyValueLoadingHelper.statusOfValueForKey_error_, objc._C_NSInteger)
-        self.assertArgHasType(TestAVAsynchronousKeyValueLoadingHelper.statusOfValueForKey_error_, b'o^@')
-        self.assertIsBlock(TestAVAsynchronousKeyValueLoadingHelper.loadValuesAsynchronouslyForKeys_completionHandler_, b'v')
+        self.assertArgHasType(TestAVAsynchronousKeyValueLoadingHelper.statusOfValueForKey_error_, 1, b'o^@')
+        self.assertArgIsBlock(TestAVAsynchronousKeyValueLoadingHelper.loadValuesAsynchronouslyForKeys_completionHandler_, 1, b'v')
 
 
 if __name__ == "__main__":

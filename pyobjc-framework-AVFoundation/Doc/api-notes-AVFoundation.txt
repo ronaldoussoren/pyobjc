@@ -34,3 +34,8 @@ This method requires manual wrappers and is not yet available from Python.
 .....................................
 
 This method requires manual wrappers and is not yet available from Python.
+
+``[AVAudioFormat -streamDescription]``
+......................................
+
+The result is a tuple of size 1, the element is the actual description.

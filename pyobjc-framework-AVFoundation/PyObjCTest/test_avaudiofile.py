@@ -14,7 +14,7 @@ class TestAVAudioFile (TestCase):
         self.assertArgIsOut(AVFoundation.AVAudioFile.initForReading_error_, 1)
         self.assertArgIsBOOL(AVFoundation.AVAudioFile.initForReading_commonFormat_interleaved_error_, 2)
         self.assertArgIsOut(AVFoundation.AVAudioFile.initForReading_commonFormat_interleaved_error_, 3)
-        self.assertArgIsBOOL(AVFoundation.AVAudioFile.initForWriting_settings_error_, 2)
+        self.assertArgIsOut(AVFoundation.AVAudioFile.initForWriting_settings_error_, 2)
         self.assertArgIsBOOL(AVFoundation.AVAudioFile.initForWriting_settings_commonFormat_interleaved_error_, 3)
         self.assertArgIsOut(AVFoundation.AVAudioFile.initForWriting_settings_commonFormat_interleaved_error_, 4)
 

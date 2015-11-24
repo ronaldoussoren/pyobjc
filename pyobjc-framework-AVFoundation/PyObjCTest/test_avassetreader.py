@@ -18,8 +18,8 @@ class TestAVAssetReader (TestCase):
 
     @min_os_level('10.7')
     def testMethods(self):
-        self.assertArgIsOut(AVFoundatin.AVAssetReader.assetReaderWithAsset_error_, 1)
-        self.assertArgIsOut(AVFoundatin.AVAssetReader.initWithAsset_error_, 1)
+        self.assertArgIsOut(AVFoundation.AVAssetReader.assetReaderWithAsset_error_, 1)
+        self.assertArgIsOut(AVFoundation.AVAssetReader.initWithAsset_error_, 1)
         self.assertResultIsBOOL(AVFoundation.AVAssetReader.canAddOutput_)
         self.assertResultIsBOOL(AVFoundation.AVAssetReader.startReading)
 
