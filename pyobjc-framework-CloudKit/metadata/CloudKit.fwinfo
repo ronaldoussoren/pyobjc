@@ -2,6 +2,9 @@
 // for information on how to update this file.
 {
  "definitions": {
+  "externs": {
+   "CKAccountChangedNotification": { "typestr": "@" }
+  },
   "classes": {
     "CKFetchNotificationChangesOperation": {
       "methods": [
@@ -839,6 +842,46 @@
     },
     "CKFetchRecordChangesOperation": {
       "methods": [
+        {
+	 "selector": "setFetchAllChanges:",
+	 "class_method": false,
+	 "args": {
+	  "0": { "type_override": "Z" }
+	 }
+	},
+        {
+	 "selector": "fetchAllChanges",
+	 "class_method": false,
+	 "retval": { "type_override": "Z" }
+	},
+        {
+          "selector": "serverChangeTokenFetchedBlock",
+          "class_method": false,
+          "retval": {
+             "callable": {
+               "arguments": {
+                 "0": { "typestr": "^v" },
+                 "1": { "typestr": "@" }
+               },
+               "retval": { "typestr":  "v" }
+             }
+           }
+        },
+        {
+          "selector": "setServerChangeTokenFetchedBlock:",
+          "class_method": false,
+          "arguments": {
+           "2": {
+             "callable": {
+               "arguments": {
+                 "0": { "typestr": "^v" },
+                 "1": { "typestr": "@" }
+               },
+               "retval": { "typestr":  "v" }
+             }
+           }
+          }
+        },
         {
           "selector": "fetchRecordChangesCompletionBlock",
           "class_method": false,

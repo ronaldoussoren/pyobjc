@@ -31,7 +31,7 @@ if sys.maxsize > 2 ** 32:
 
         @min_os_level("10.11")
         def testConstants(self):
-            self.assertIsInstnace(CloudKit.CKAccountChangedNotification, unicode)
+            self.assertIsInstance(CloudKit.CKAccountChangedNotification, unicode)
 
         @min_os_level("10.10")
         def testMethods10_10(self):
