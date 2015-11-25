@@ -3,6 +3,9 @@
 import setuptools
 import os
 import platform
+from distutils.core import Command
+from distutils.errors import DistutilsError
+
 
 VERSION="3.1b1"
 
@@ -44,6 +47,7 @@ FRAMEWORKS_WRAPPERS=[
         ('GameController',          '10.9',             None        ),
         ('IMServicePlugIn',         '10.7',             None        ),
         ('InputMethodKit',          '10.5',             None        ),
+        ('ImageCaptureCore',        None,               None        ),
         ('InstallerPlugins',        None,               None        ),
         ('InstantMessage',          '10.5',             None        ),
         ('InterfaceBuilderKit',     '10.5',             '10.7'      ),
@@ -57,6 +61,7 @@ FRAMEWORKS_WRAPPERS=[
         ('MultipeerConnectivity',   '10.10',            None        ),
         ('NetFS',                   '10.6',             None        ),
         ('NotificationCenter',      '10.10',            None        ),
+        ('OpenDirectory',           None,               None        ),
         ('Photos',                  '10.11',            None        ),
         ('PhotosUI',                '10.11',            None        ),
         ('PreferencePanes',         None,               None        ),
@@ -69,6 +74,7 @@ FRAMEWORKS_WRAPPERS=[
         ('ServerNotification',      '10.6',             '10.9'      ),
         ('ServiceManagement',       '10.6',             None        ),
         ('Social',                  '10.8',             None        ),
+        ('SpriteKit',               '10.9',             None        ),
         ('StoreKit',                '10.7',             None        ),
         ('SyncServices',            None,               None        ),
         ('SystemConfiguration',     None,               None        ),
@@ -145,6 +151,31 @@ Topic :: Software Development :: Libraries :: Python Modules
 Topic :: Software Development :: User Interfaces
 """.splitlines())
 
+
+class oc_test (Command):
+    description = "run test suite"
+    user_options = []
+
+    def initialize_options(self):
+        pass
+
+    def finalize_options(self):
+        pass
+
+    def run(self):
+        all_names = set(nm.split('-')[-1] for nm in os.listdir('..') if nm.startswith('pyobjc-framework-'))
+        configured_names = set(x[0] for x in FRAMEWORKS_WRAPPERS)
+        ok = True
+        if all_names - configured_names:
+            print("Framework wrappers not mentioned in setup.py: %s"%(", ".join(all_names - configured_names)))
+            ok = False
+        if configured_names - all_names:
+            print("Framework mentioned in setup.py not in filesystem: %s"%(", ".join(configured_names - all_names)))
+            ok = False
+
+        if not ok:
+           raise DistutilsError("setup.py is not consistent with reality")
+
 dist = setup(
     name = "pyobjc",
     version = VERSION,
@@ -164,4 +195,7 @@ dist = setup(
     # workaround for setuptools 0.6b4 bug
     dependency_links = [],
     keywords=['Objective-C', 'bridge', 'Cocoa'],
+    cmdclass={
+        'test': oc_test
+    },
 )
