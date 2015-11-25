@@ -61,7 +61,7 @@ FRAMEWORKS_WRAPPERS=[
         ('MultipeerConnectivity',   '10.10',            None        ),
         ('NetFS',                   '10.6',             None        ),
         ('NotificationCenter',      '10.10',            None        ),
-        ('OpenDirectory',           None,               None        ),
+        ('OpenDirectory',           '10.6',             None        ),
         ('Photos',                  '10.11',            None        ),
         ('PhotosUI',                '10.11',            None        ),
         ('PreferencePanes',         None,               None        ),

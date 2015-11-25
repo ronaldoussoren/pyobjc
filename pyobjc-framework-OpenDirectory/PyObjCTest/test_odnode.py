@@ -25,7 +25,6 @@ class TestODNode (TestCase):
         self.assertArgIsOut(OpenDirectory.ODNode.customCall_sendData_error_, 2)
 
         self.assertArgIsOut(OpenDirectory.ODNode.createRecordWithRecordType_name_attributes_error_, 3)
-        self.assertArgIsOut(OpenDirectory.ODNode.customFunction_payload_error_, 2)
 
     @min_os_level('10.9')
     def testMethods10_9(self):
@@ -37,6 +36,7 @@ class TestODNode (TestCase):
         self.assertArgIsOut(OpenDirectory.ODNode.setPolicy_value_error_, 2)
         self.assertResultIsBOOL(OpenDirectory.ODNode.removePolicy_error_)
         self.assertArgIsOut(OpenDirectory.ODNode.removePolicy_error_, 1)
+        self.assertArgIsOut(OpenDirectory.ODNode.customFunction_payload_error_, 2)
 
     @min_os_level('10.10')
     def testMethods10_10(self):

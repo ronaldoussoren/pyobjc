@@ -21,7 +21,7 @@ This module exports functions that are useful when working with the
     Convert a method to a form that is suitable to use as the delegate callback
     for sheet methods.
 
-    :rtype: selector
+    :rtype: objc.selector
 
 .. function:: stopEventLoop()
 

@@ -18,7 +18,7 @@ class TestNSHapticFeedback (TestCase):
     @min_os_level('10.11')
     def testProtocols10_11(self):
         objc.protocolNamed('NSHapticFeedbackPerformer')
-        self.assertArgHasType(TestNSHapticFeedbackHelper.performFeedbackPattern_performanceTime_, 1, objc._C_NSUinteger)
+        self.assertArgHasType(TestNSHapticFeedbackHelper.performFeedbackPattern_performanceTime_, 1, objc._C_NSUInteger)
 
 if __name__ == "__main__":
     main()

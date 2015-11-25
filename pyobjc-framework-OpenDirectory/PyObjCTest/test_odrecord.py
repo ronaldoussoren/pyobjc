@@ -76,6 +76,9 @@ class TestODRecord (TestCase):
         self.assertResultIsBOOL(OpenDirectory.ODRecord.setPolicy_value_error_)
         self.assertArgIsOut(OpenDirectory.ODRecord.setPolicy_value_error_, 2)
 
+        self.assertResultIsBOOL(OpenDirectory.ODRecord.removePolicy_error_)
+        self.assertArgIsOut(OpenDirectory.ODRecord.removePolicy_error_, 1)
+
     @min_os_level('10.10')
     def testMethods10_10(self):
         self.assertResultIsBOOL(OpenDirectory.ODRecord.addAccountPolicy_toCategory_error_)

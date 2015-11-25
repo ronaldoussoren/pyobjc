@@ -2,6 +2,11 @@
 # for information on how to update this file.
 {
  "definitions": {
+  "externs": {
+   "kODPolicyKeyContentDescription": { "typestr": "@" },
+   "kODPolicyKeyEvaluationDetails": { "typestr": "@" },
+   "kODPolicyKeyPolicySatisfied": { "typestr": "@" }
+  },
   "classes": {},
   "formal_protocols": {},
   "cftypes": {

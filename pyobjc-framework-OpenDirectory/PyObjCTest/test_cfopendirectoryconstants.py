@@ -407,6 +407,7 @@ class TestCFOpenDirectoryConstants (TestCase):
         self.assertEqual(CFOpenDirectory.kODErrorPluginOperationTimeout, 10003)
         self.assertEqual(CFOpenDirectory.kODErrorPolicyUnsupported, 6000)
         self.assertEqual(CFOpenDirectory.kODErrorPolicyOutOfRange, 6001)
+        self.assertIsInstance(CFOpenDirectory.kODAuthenticationTypeSecureHash, unicode)
 
     @min_os_level('10.7')
     def testConstants10_7(self):
@@ -417,7 +418,6 @@ class TestCFOpenDirectoryConstants (TestCase):
         self.assertIsInstance(CFOpenDirectory.kODAttributeTypeNetworkInterfaces, unicode)
         self.assertIsInstance(CFOpenDirectory.kODAttributeTypeParentLocales, unicode)
         self.assertIsInstance(CFOpenDirectory.kODAttributeTypePrimaryLocale, unicode)
-        self.assertIsInstance(CFOpenDirectory.kODAuthenticationTypeSecureHash, unicode)
 
     @expectedFailure
     @min_os_level('10.7')
@@ -440,8 +440,6 @@ class TestCFOpenDirectoryConstants (TestCase):
         self.assertIsInstance(CFOpenDirectory.kODModuleConfigOptionPacketEncryption, unicode)
         self.assertIsInstance(CFOpenDirectory.kODModuleConfigOptionManInTheMiddle, unicode)
         self.assertIsInstance(CFOpenDirectory.kODAttributeTypeNodeSASLRealm, unicode)
-        self.assertIsInstance(CFOpenDirectory.kODPolicyTypeAccountMaximumMinutesUntilDisabled, unicode)
-        self.assertIsInstance(CFOpenDirectory.kODPolicyTypeAccountMinutesUntilFailedLoginReset, unicode)
 
     @min_os_level('10.9')
     def testConstants10_9(self):
@@ -461,6 +459,8 @@ class TestCFOpenDirectoryConstants (TestCase):
         self.assertIsInstance(CFOpenDirectory.kODPolicyTypeAccountExpiresOnDate, unicode)
         self.assertIsInstance(CFOpenDirectory.kODPolicyTypeAccountMaximumFailedLogins, unicode)
         self.assertIsInstance(CFOpenDirectory.kODPolicyTypeAccountMaximumMinutesOfNonUse, unicode)
+        self.assertIsInstance(CFOpenDirectory.kODPolicyTypeAccountMaximumMinutesUntilDisabled, unicode)
+        self.assertIsInstance(CFOpenDirectory.kODPolicyTypeAccountMinutesUntilFailedLoginReset, unicode)
 
         self.assertEqual(CFOpenDirectory.kODExpirationTimeExpired, 0)
         self.assertEqual(CFOpenDirectory.kODExpirationTimeNeverExpires, -1)
@@ -498,6 +498,12 @@ class TestCFOpenDirectoryConstants (TestCase):
         self.assertIsInstance(CFOpenDirectory.kODPolicyAttributeEnableAtTimeOfDay, unicode)
         self.assertIsInstance(CFOpenDirectory.kODPolicyAttributeExpiresAtTimeOfDay, unicode)
         self.assertIsInstance(CFOpenDirectory.kODPolicyAttributeDaysUntilExpiration, unicode)
+
+    @min_os_level('10.11')
+    def testConstants10_11(self):
+        self.assertIsInstance(CFOpenDirectory.kODPolicyKeyContentDescription, unicode)
+        self.assertIsInstance(CFOpenDirectory.kODPolicyKeyEvaluationDetails, unicode)
+        self.assertIsInstance(CFOpenDirectory.kODPolicyKeyPolicySatisfied, unicode)
 
 if __name__ == "__main__":
     main()

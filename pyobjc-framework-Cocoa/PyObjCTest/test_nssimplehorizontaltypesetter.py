@@ -23,7 +23,7 @@ class TestNSSimpleHorizontalTypesetter (TestCase):
         self.assertEqual(NSBaselineNotSet, -1.0)
         self.assertEqual(NumGlyphsToGetEachTime, 20)
 
-    #@onlyOn32Bit
+    @onlyOn32Bit
     def testMethods(self):
         self.assertArgIsOut(NSSimpleHorizontalTypesetter.layoutGlyphsInLayoutManager_startingAtGlyphIndex_maxNumberOfLineFragments_nextGlyphIndex_, 3)
         self.assertArgIsInOut(NSSimpleHorizontalTypesetter.layoutGlyphsInHorizontalLineFragment_baseline_, 1)

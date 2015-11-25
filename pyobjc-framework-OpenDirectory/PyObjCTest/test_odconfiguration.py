@@ -13,6 +13,7 @@ class TestODConfiguration (TestCase):
         self.assertEqual(OpenDirectory.ODPacketSigningDisabled, 0)
         self.assertEqual(OpenDirectory.ODPacketSigningAllow, 1)
         self.assertEqual(OpenDirectory.ODPacketSigningRequired, 2)
+
         self.assertEqual(OpenDirectory.ODPacketEncryptionDisabled, 0)
         self.assertEqual(OpenDirectory.ODPacketEncryptionAllow, 1)
         self.assertEqual(OpenDirectory.ODPacketEncryptionRequired, 2)

@@ -2,7 +2,14 @@
 # for information on how to update this file.
 {
  "definitions": {
+  "enum": {
+   "NSWindowCollectionBehaviorFullScreenAllowsTiling": { "value": 2048 }
+  },
   "externs": {
+   "NSDefaultAttributesDocumentAttribute": { "typestr": "@" },
+   "NSFontWeightUltraLight": { "typestr": "f" },
+   "NSViewNoIntrinsicMetric": { "typestr": "f" },
+   "NSSplitViewControllerAutomaticDimension": { "typestr": "f" },
    "NSCollectionElementKindInterItemGapIndicator": { "typestr": "@" },
    "NSCollectionElementKindSectionHeader": { "typestr": "@" },
    "NSCollectionElementKindSectionFooter": { "typestr": "@" },
@@ -1365,6 +1372,13 @@
        ]
       },
       "selector": "boundingRectWithSize:options:"
+     },
+     {
+      "class_method": false,
+      "retval": {
+       "type_override": "Z"
+      },
+      "selector": "containsAttachmentsInRange:"
      },
      {
       "class_method": false,
@@ -3727,6 +3741,13 @@
        ]
       },
       "selector": "frameForItemAtIndex:"
+     },
+     {
+      "class_method": false,
+      "retval": {
+       "type_override": "Z"
+      },
+      "selector": "allowsEmptySelection"
      },
      {
       "class_method": false,
@@ -10707,6 +10728,43 @@
    },
    "NSObject": {
     "methods": [
+     {
+      "args": {
+       "0": {
+        "type_override": [
+         "{_NSRect={_NSPoint=ff}{_NSSize=ff}}",
+         "{CGRect={CGPoint=dd}{CGSize=dd}}"
+        ]
+       }
+      },
+      "selector": "showRelativeToRect:ofView:preferredEdge:",
+      "class_method": false
+     },
+     {
+      "args": {
+       "1": { "type_override": [ "I", "Q" ] },
+       "2": { "type_override": [ "{_NSRange=II}", "{_NSRange=QQ}" ] },
+       "3": { "type_override": [ "I", "Q" ] }
+      },
+      "class_method": false,
+      "selector": "textStorage:willProcessEditing:range:changeInLength:"
+     },
+       {
+         "args": {
+	  "2": {
+	    "callable": {
+	     "arguments": {
+	      "0": { "typestr": "^v" },
+	       "1": { "typestr": "@" },
+	       "2": { "typestr": "@" }
+	     },
+	     "retval": { "typestr": "v" }
+	   }
+	  }
+	 },
+         "class_method": false,
+	 "selector": "restoreWindowWithIdentifier:state:completionHandler:"
+       },
        {
          "args": {
 	  "5": {
@@ -10935,6 +10993,13 @@
        ]
       },
       "selector": "confinementRectForMenu:onScreen:"
+     },
+     {
+      "class_method": false,
+      "retval": {
+       "type_override": ["I", "Q" ]
+      },
+      "selector": "collectionView:numerOfItemsInSection:"
      },
      {
       "class_method": false,
@@ -13521,6 +13586,14 @@
      },
      {
       "class_method": false,
+      "args": {
+       "1": { "type_override": ["i", "q"]},
+       "2": { "type_override": ["i", "q"]}
+      },
+      "selector": "tableView:rowActionsForRow:edge:"
+     },
+     {
+      "class_method": false,
       "args": { "1": { "type_override": ["i", "q"]} },
       "selector": "tableView:pasteboardWriterForRow:"
      },
@@ -14636,6 +14709,13 @@
     "methods": [
      {
       "args": {
+       "0": { "type_modifier": "n" }
+      },
+      "class_method": false,
+      "selector": "setValues:forParameter:"
+     },
+     {
+      "args": {
        "0": {}
       },
       "class_method": false,
@@ -14681,7 +14761,7 @@
     "methods": [
      {
       "args": {
-       "3": {}
+       "3": { "type_modifier": "n" }
       },
       "class_method": false,
       "retval": {
@@ -15008,6 +15088,17 @@
        ]
       },
       "selector": "boundingBox"
+     }
+    ]
+   },
+   "NSParagraphStyle": {
+    "methods": [
+     {
+      "class_method": false,
+      "retval": {
+       "type_override": "Z"
+      },
+      "selector": "allowsDefaultTighteningForTruncation"
      }
     ]
    },
@@ -16994,6 +17085,17 @@
      }
     ]
    },
+   "NSSearchField": {
+    "methods": [
+     {
+      "class_method": false,
+      "args": {
+       "0": { "type_override": "Z" }
+      },
+      "selector": "rectForSearchTextWhenCentered:"
+     }
+    ]
+   },
    "NSSearchFieldCell": {
     "methods": [
      {
@@ -17892,6 +17994,20 @@
       "retval": {
        "type_override": "Z"
       },
+      "selector": "arrangesAllSubviews"
+     },
+     {
+      "class_method": false,
+      "retval": {
+       "type_override": "Z"
+      },
+      "selector": "isSpringLoaded"
+     },
+     {
+      "class_method": false,
+      "retval": {
+       "type_override": "Z"
+      },
       "selector": "isPaneSplitter"
      },
      {
@@ -18367,6 +18483,13 @@
    },
    "NSTableView": {
     "methods": [
+     {
+      "class_method": false,
+      "retval": {
+       "type_override": "Z"
+      },
+      "selector": "rowActionsVisible"
+     },
      {
       "args": {
        "0": {
@@ -19300,6 +19423,13 @@
      },
      {
       "class_method": false,
+      "args": {
+       "3": { "type_modifier": "o" }
+      },
+      "selector": "lineFragmentRectForProposedRect:atIndex:writingDirection:remainingRect"
+     },
+     {
+      "class_method": false,
       "retval": {
        "type_override": [
         "{_NSSize=ff}",
@@ -19390,6 +19520,13 @@
    },
    "NSTextField": {
     "methods": [
+     {
+      "class_method": false,
+      "retval": {
+       "type_override": "Z"
+      },
+      "selector": "allowsDefaultTighteningForTruncation"
+     },
      {
       "class_method": false,
       "retval": {
@@ -24741,7 +24878,9 @@
     "NSVisualEffectMaterialMenu": { "value": 5 },
     "NSStackViewDistributionGravityAreas": { "value": -1 },
     "NSWritingDirectionOverride": { "value": 2 },
-    "NSCollectionViewScrollPositionTop": { "value": 0 },
+    "NSCollectionViewScrollPositionTop": { "value": 1 },
+    "NSCollectionViewScrollPositionCenteredVertically": { "value": 2 },
+    "NSCollectionViewScrollPositionBottom": { "value": 4 },
     "NSLayoutAttributeFirstBaseline": { "value": 12 },
     "NSLayoutFormatAlignAllFirstBaseline": { "value": 4096 },
     "NSSplitViewItemBehaviorSidebar": { "value": 1 },
@@ -25108,6 +25247,17 @@
       },
       "class_method": false,
       "selector": "outlineView:toolTipForCell:rect:tableColumn:item:mouseLocation:"
+     }
+    ]
+   },
+   "NSStackView": {
+    "methods": [
+     {
+      "class_method": false,
+      "retval": {
+       "type_override": "Z"
+      },
+      "selector": "detachesHiddenViews"
      }
     ]
    },

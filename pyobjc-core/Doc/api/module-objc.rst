@@ -1485,6 +1485,8 @@ Descriptors
    a ``void *`` argument. The value for *closure* must be a function
    that's decorated with :func:`callbackFor`.
 
+   .. versionadded:: 3.1
+
 .. function:: selectorFor(callable[, argIndex])
 
    Decorator to tell that this is the "callback" selector for another
