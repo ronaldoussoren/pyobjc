@@ -112,8 +112,9 @@ class TestLatentSemanticMapping (TestCase):
         v = LSMMapAddText(map, text, cat)
         self.assertIsInstance(v, (int, long))
 
-        fn = __file__
-        fn = os.path.splitext(fn)[0] + ".py"
+        #fn = __file__
+        #fn = os.path.splitext(fn)[0] + ".py"
+        fn = '/usr/share/dict/README'
         with open(fn, 'r') as fp:
             for line in fp:
                 t = LSMTextCreate(None, map)
@@ -132,13 +133,13 @@ class TestLatentSemanticMapping (TestCase):
         v = LSMTextAddWords(text3, "foo the bar and worlds away",
                 CFLocaleCopyCurrent(), 0)
 
-        if 0:
+        if 1:
             self.assertResultIsCFRetained(LSMMapCreateClusters)
-            clusters = LSMMapCreateClusters(None, map, None, 3,  0)
-            self.assertIsInstance(clusters, CFArrayRef)
+            clusters = LSMMapCreateClusters(None, map, None, 2,  0)
+            self.assertIsInstance(clusters, (CFArrayRef, type(None)))
 
             v = LSMMapApplyClusters(map, clusters);
-            self.assertIsInstance(clusters, (int, long))
+            self.assertIsInstance(v, (int, long))
 
         v = LSMMapStartTraining(map)
 
@@ -152,65 +153,72 @@ class TestLatentSemanticMapping (TestCase):
         # FIXME: Tests crash, probably due to misuse of the
         # APIs. I haven't found usable API docs for this
         # framework :-(
-        return
+        #return
+
+
 
         self.assertResultIsCFRetained(LSMResultCreate)
-        res = LSMResultCreate(None, map, mytext, 2, 0)
-        self.assertIsInstance(res, LSMResultRef)
+        #res = LSMResultCreate(None, map, mytext, 2, 0)
+        #self.assertIsInstance(res, LSMResultRef)
 
-        v = LSMResultGetCount(res);
-        self.assertIsInstance(v, (int, long))
-        self.assertTrue(v)
+        LSMResultGetCount
+        #v = LSMResultGetCount(res);
+        #self.assertIsInstance(v, (int, long))
+        #self.assertTrue(v)
 
 
-        v = LSMResultGetCategory(res, 0)
-        self.assertIsInstance(v, (int, long))
+        LSMResultGetCategory
+        #v = LSMResultGetCategory(res, 0)
+        #self.assertIsInstance(v, (int, long))
 
-        v = LSMResultGetScore(res, 0)
-        self.assertIsInstance(v, float)
+        LSMResultGetScore
+        #v = LSMResultGetScore(res, 0)
+        #self.assertIsInstance(v, float)
 
 
         self.assertResultIsCFRetained(LSMResultCopyWord)
-        v = LSMResultCopyWord(res, 0)
-        self.assertIsInstance(v, unicode)
+        #v = LSMResultCopyWord(res, 0)
+        #self.assertIsInstance(v, unicode)
 
         self.assertResultIsCFRetained(LSMResultCopyToken)
-        v = LSMResultCopyToken(res, 0)
-        self.assertIsInstance(v, CFDataRef)
+        #v = LSMResultCopyToken(res, 0)
+        #self.assertIsInstance(v, CFDataRef)
 
         v = LSMMapStartTraining(map)
         mytext = LSMTextCreate(None, map)
 
-        v = LSMTextAddToken(mytext, v)
+        v = LSMTextAddToken(mytext, NSData.data())
         self.assertIsInstance(v, (int, long))
 
         self.assertResultIsCFRetained(LSMResultCopyWordCluster)
-        v = LSMResultCopyWordCluster(res, 0)
-        self.assertIsInstance(v, CFArrayRef)
+        #v = LSMResultCopyWordCluster(res, 0)
+        #self.assertIsInstance(v, CFArrayRef)
 
         self.assertResultIsCFRetained(LSMResultCopyTokenCluster)
-        v = LSMResultCopyTokenCluster(res, 0)
-        self.assertIsInstance(v, CFArrayRef)
+        #v = LSMResultCopyTokenCluster(res, 0)
+        #self.assertIsInstance(v, CFArrayRef)
 
-        fn = '/tmp/pyobjc.test'
-        url = CFURLCreateWithFileSystemPath(None, fn, kCFURLPOSIXPathStyle, False)
-        self.assertIsInstance(url, CFURLRef)
-        v = LSMMapWriteToURL(map, url, 0)
-        self.assertIsInstance(v, (int, long))
+        LSMMapWriteToURL
+        #fn = '/tmp/pyobjc.test'
+        #url = CFURLCreateWithFileSystemPath(None, fn, kCFURLPOSIXPathStyle, False)
+        #self.assertIsInstance(url, CFURLRef)
+        #v = LSMMapWriteToURL(map, url, 0)
+        #self.assertIsInstance(v, (int, long))
 
         self.assertResultIsCFRetained(LSMMapCreateFromURL)
-        map2 = LSMMapCreateFromURL(None, url, 0)
-        self.assertIsInstance(map2, LSMMapRef)
+        #map2 = LSMMapCreateFromURL(None, url, 0)
+        #self.assertIsInstance(map2, LSMMapRef)
 
-        if os.path.exists(fn):
-            os.unlink(fn)
+        #if os.path.exists(fn):
+        #    os.unlink(fn)
 
-        fp = CFWriteStreamCreateWithAllocatedBuffers(None, None)
-        self.assertIsInstance(fp, CFWriteStreamRef)
-        CFWriteStreamOpen(fp)
+        #fp = CFWriteStreamCreateWithAllocatedBuffers(None, None)
+        #self.assertIsInstance(fp, CFWriteStreamRef)
+        #CFWriteStreamOpen(fp)
 
-        v = LSMMapWriteToStream(map, text, fp, 0)
-        sel.assertIsInstance(v, (int, long))
+        LSMMapWriteToStream
+        #v = LSMMapWriteToStream(map, text, fp, 0)
+        #sel.assertIsInstance(v, (int, long))
 
 if __name__ == "__main__":
     main()
