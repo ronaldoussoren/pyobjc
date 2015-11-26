@@ -46,6 +46,8 @@ extern NSString * const NSUnknownKeyException; /* Radar #3336042 */
 -(id)initWithPyObject:(PyObject *) obj
 {
     PyObjC_BEGIN_WITH_GIL
+	if (PyLong_Check(obj)) abort();
+
         if (pyObject) {
             PyObjC_UnregisterObjCProxy(pyObject, self);
         }

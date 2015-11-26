@@ -52,7 +52,7 @@ class TestNSNumber (TestCase):
         v = NSNumber.numberWithUnsignedLongLong_(2 ** 63 + 5000)
         self.assertIsInstance(v, long)
 
-        if os_level_key(os_release()) <= os_level_key('10.5'):
+        if os_level_key(os_release()) < os_level_key('10.5'):
             self.assertEqual(v.description(), str(-2**63+5000))
         else:
             self.assertEqual(v.description(), str(2**63+5000))
@@ -97,7 +97,7 @@ class TestNSNumber (TestCase):
         data = pickle.dumps(v)
 
         w = pickle.loads(data)
-        if os_level_key(os_release()) <= os_level_key('10.5'):
+        if os_level_key(os_release()) < os_level_key('10.5'):
             self.assertEqual(w, {
                 'long': -2**63 + 5000,
                 'int': 42,
@@ -189,10 +189,14 @@ class TestNSNumber (TestCase):
         self.assertEqual(OC_TestNumber.numberAsUnsignedShort_(v), 40487)
 
     def testDoubleConversions(self):
+        print(1)
         v = NSNumber.numberWithDouble_(75.5)
+        print(2)
         self.assertEqual(v.stringValue(), '75.5')
-
+        print(type(v))
+        print(3)
         self.assertEqual(OC_TestNumber.numberAsBOOL_(v), 1)
+        print(4)
         self.assertEqual(OC_TestNumber.numberAsChar_(v), 75)
         self.assertEqual(OC_TestNumber.numberAsShort_(v), 75)
         self.assertEqual(OC_TestNumber.numberAsInt_(v), 75)
@@ -472,10 +476,10 @@ class TestPyNumber (TestCase):
         else:
             self.assertEqual(OC_TestNumber.numberAsUnsignedLong_(v), 18446744073709551489)
 
-        if sys.byteorder == 'big':
-            self.assertEqual(OC_TestNumber.numberAsUnsignedLongLong_(v), 4294967169)
-        else:
-            self.assertEqual(OC_TestNumber.numberAsUnsignedLongLong_(v), 18446744073709551489)
+        #if sys.byteorder == 'big':
+        #    self.assertEqual(OC_TestNumber.numberAsUnsignedLongLong_(v), 4294967169)
+        #else:
+        self.assertEqual(OC_TestNumber.numberAsUnsignedLongLong_(v), 18446744073709551489)
 
         self.assertEqual(OC_TestNumber.numberAsDouble_(v), -127.6)
 

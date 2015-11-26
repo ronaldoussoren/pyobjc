@@ -33,7 +33,7 @@ def make_test(name):
         # parts of the unittests that trigger the bug.
         def test_CheckNSInvoke(self):
             try:
-                ctests.CheckNSInvoke()
+                ctests['CheckNSInvoke']()
             except AssertionError:
                 return
 

@@ -250,6 +250,10 @@ determine_if_shortcut(PyObjCMethodSignature* methinfo)
     Py_ssize_t byref_in_count = 0, byref_out_count = 0, plain_count = 0, argbuf_len = 0;
     BOOL variadic_args = NO;
 
+    if (methinfo == 0) {
+        PyErr_SetString(PyObjCExc_InternalError, "methinfo not set");
+        return -1;
+    }
     methinfo->shortcut_signature = NO;
     methinfo->shortcut_argbuf_size = 0;
 

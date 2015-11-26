@@ -66,6 +66,10 @@
 
 +(BOOL)numberAsBOOL:(NSNumber*)number
 {
+#if 1
+    NSLog(@"number: %@ %ld", [number class], (long)(void*)number);
+#endif
+
     return [number boolValue];
 }
 

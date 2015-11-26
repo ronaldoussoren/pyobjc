@@ -54,7 +54,6 @@ int main(int argc, char** argv)
                      options:NSPropertyListMutableContainersAndLeaves
                        error:&error];
 #else /* PyObjC_BUILD_RELEASE < 1006 */
-#error PyObjC_BUILD_RELEASE
     NSString* error = nil;
     NSData* data = [NSPropertyListSerialization
         dataFromPropertyList:value

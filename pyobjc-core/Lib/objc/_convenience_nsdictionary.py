@@ -242,6 +242,14 @@ def nsdict_fromkeys(cls, keys, value=None):
 
     return cls.dictionaryWithObjects_forKeys_(values, keys)
 
+# XXX: 'nsdict_fromkeys' doesn't work on OSX 10.5
+def nsmutabledict_fromkeys(cls, keys, value=None):
+    value = container_wrap(value)
+
+    result = cls.alloc().init()
+    for k in keys:
+       result[container_wrap(k)] = value
+    return result
 
 def nsdict_new(cls, *args, **kwds):
     if len(args) == 0:
@@ -384,6 +392,10 @@ else:  # pragma: no 3.x cover
         ('iterkeys', nsdict_iterkeys),
         ('iteritems', nsdict_iteritems),
         ('itervalues', nsdict_itervalues),
+    ))
+
+    addConvenienceForClass('NSMutableDictionary', (
+        ('fromkeys', classmethod(nsmutabledict_fromkeys)),
     ))
 
 

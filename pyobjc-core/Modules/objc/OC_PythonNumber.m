@@ -77,7 +77,7 @@
 
     PyObjC_BEGIN_WITH_GIL
         PyObjC_UnregisterObjCProxy(value, self);
-        Py_XDECREF(value);
+        Py_CLEAR(value);
 
     PyObjC_END_WITH_GIL
 
@@ -109,6 +109,9 @@
                     PyObjC_GIL_RETURN(@encode(unsigned long long));
                 }
                 PyErr_Clear();
+
+		/* Wrap on overflow */
+	        PyObjC_GIL_RETURN(@encode(long long));
             }
         }
     PyObjC_END_WITH_GIL
@@ -132,7 +135,6 @@
 -(void)getValue:(void*)buffer forType:(const char*)type
 {
     int r;
-    NSLog(@"getValue %p forType %s", buffer, type);
     PyObjC_BEGIN_WITH_GIL
         r = depythonify_c_value(type, value, buffer);
         if (r == -1) {

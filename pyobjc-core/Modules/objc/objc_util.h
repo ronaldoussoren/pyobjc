@@ -82,8 +82,9 @@ static inline Py_ssize_t align(Py_ssize_t offset, Py_ssize_t alignment)
 #define SET_FIELD_INCREF(op, value)             \
     do {                                        \
         PyObject* _py_tmp = (PyObject*)(op);    \
-        Py_XINCREF(value);                      \
-        (op) = value;                           \
+        PyObject* _py_val = (PyObject*)(value); \
+        Py_XINCREF(_py_val);                    \
+        (op) = _py_val;                         \
         Py_XDECREF(_py_tmp);                    \
     } while(0)
 
