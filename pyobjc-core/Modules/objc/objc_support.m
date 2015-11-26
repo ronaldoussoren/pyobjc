@@ -422,14 +422,17 @@ PyObjCRT_SkipTypeSpec(const char *type)
 
         while (isdigit(*++type));
         type = PyObjCRT_SkipTypeSpec(type);
-        PyObjC_Assert(type == NULL || *type == _C_ARY_E, NULL);
+        if (type && *type != _C_ARY_E) {
+            PyErr_Format(PyObjCExc_InternalError, "Invalid array definition in type signature");
+            return NULL;
+        }
         if (type) type++;
         break;
 
     case _C_STRUCT_B:
         /* skip name, and elements until closing '}'  */
-        while (*type != _C_STRUCT_E && *type++ != '=');
-        while (type && *type != _C_STRUCT_E) {
+        while (*type && *type != _C_STRUCT_E && *type++ != '=');
+        while (type && *type && *type != _C_STRUCT_E) {
             if (*type == '"') {
                 /* embedded field names */
                 type = strchr(type+1, '"');
@@ -441,13 +444,17 @@ PyObjCRT_SkipTypeSpec(const char *type)
             }
             type = PyObjCRT_SkipTypeSpec(type);
         }
+        if (type && *type != _C_STRUCT_E) {
+            PyErr_Format(PyObjCExc_InternalError, "Invalid struct definition in type signature");
+            return NULL;
+        }
         if (type) type++;
         break;
 
     case _C_UNION_B:
         /* skip name, and elements until closing ')'  */
-        while (*type != _C_UNION_E && *type++ != '=');
-        while (type && *type != _C_UNION_E) {
+        while (*type && *type != _C_UNION_E && *type++ != '=');
+        while (type && *type && *type != _C_UNION_E) {
             if (*type == '"') {
                 /* embedded field names */
                 type = strchr(type+1, '"');
@@ -458,6 +465,10 @@ PyObjCRT_SkipTypeSpec(const char *type)
                 }
             }
             type = PyObjCRT_SkipTypeSpec(type);
+        }
+        if (type && *type != _C_UNION_E) {
+            PyErr_Format(PyObjCExc_InternalError, "Invalid union definition in type signature");
+            return NULL;
         }
         if (type) type++;
         break;
@@ -558,8 +569,8 @@ PyObjCRT_NextField(const char *type)
 
     case _C_STRUCT_B:
         /* skip name, and elements until closing '}'  */
-        while (*type != _C_STRUCT_E && *type++ != '=');
-        while (type && *type != _C_STRUCT_E) {
+        while (*type && *type != _C_STRUCT_E && *type++ != '=');
+        while (type && *type && *type != _C_STRUCT_E) {
             if (*type == '"') {
                 /* embedded field names */
                 type = strchr(type+1, '"');
@@ -582,13 +593,13 @@ PyObjCRT_NextField(const char *type)
                 "PyObjCRT_SkipTypeSpec: Got '0x%x' at end of struct encoding, expecting '0x%x'", *type, _C_STRUCT_E);
             return NULL;
         }
-        type++;
+        if (type) type++;
         break;
 
     case _C_UNION_B:
         /* skip name, and elements until closing ')'  */
-        while (*type != _C_UNION_E && *type++ != '=');
-        while (type && *type != _C_UNION_E) {
+        while (*type && *type != _C_UNION_E && *type++ != '=');
+        while (type && *type && *type != _C_UNION_E) {
             if (*type == '"') {
                 /* embedded field names */
                 type = strchr(type+1, '"');
@@ -611,7 +622,6 @@ PyObjCRT_NextField(const char *type)
                 "PyObjCRT_SkipTypeSpec: Got '0x%x' at end of union encoding, expecting '0x%x'", *type, _C_UNION_E);
             return NULL;
         }
-        type++;
         break;
 
     case _C_PTR:
