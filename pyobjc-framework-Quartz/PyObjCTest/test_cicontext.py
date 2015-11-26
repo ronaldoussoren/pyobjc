@@ -12,6 +12,8 @@ class TestCIContext (TestCase):
         self.assertIsInstance(kCIContextWorkingColorSpace, unicode)
         self.assertIsInstance(kCIContextUseSoftwareRenderer, unicode)
 
+        self.assertIsInstance(kCIContextWorkingFormat, unicode)
+
 
     def testMethods(self):
         self.assertArgIsOut(CIContext.render_toBitmap_rowBytes_bounds_format_colorSpace_, 1)

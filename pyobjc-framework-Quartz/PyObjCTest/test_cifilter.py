@@ -42,7 +42,6 @@ class TestCIFilter (TestCase):
         self.assertIsInstance(kCICategoryTransition, unicode)
         self.assertIsInstance(kCICategoryTileEffect, unicode)
         self.assertIsInstance(kCICategoryGenerator, unicode)
-        self.assertIsInstance(kCICategoryReduction, unicode)
         self.assertIsInstance(kCICategoryGradient, unicode)
         self.assertIsInstance(kCICategoryStylize, unicode)
         self.assertIsInstance(kCICategorySharpen, unicode)
@@ -61,6 +60,7 @@ class TestCIFilter (TestCase):
 
     @min_os_level('10.5')
     def testConstants10_5(self):
+        self.assertIsInstance(kCICategoryReduction, unicode)
         self.assertIsInstance(kCIAttributeDescription, unicode)
         self.assertIsInstance(kCIAttributeReferenceDocumentation, unicode)
         self.assertIsInstance(kCIUIParameterSet, unicode)
@@ -96,10 +96,27 @@ class TestCIFilter (TestCase):
         self.assertIsInstance(kCIInputTargetImageKey, unicode)
         self.assertIsInstance(kCIInputExtentKey, unicode)
 
+    @min_os_level('10.11')
+    def testConstants10_11(self):
+        self.assertIsInstance(kCIAttributeFilterAvailable_Mac, unicode)
+        self.assertIsInstance(kCIAttributeFilterAvailable_iOS, unicode)
+        self.assertIsInstance(kCIAttributeTypeColor, unicode)
+        self.assertIsInstance(kCIAttributeTypeImage, unicode)
+        self.assertIsInstance(kCIAttributeTypeTransform, unicode)
+        self.assertIsInstance(kCIInputVersionKey, unicode)
+
     def testMethods(self):
         self.assertIsNullTerminated(CIFilter.apply_)
         self.assertIsNullTerminated(CIFilter.filterWithName_keysAndValues_)
 
+    @min_os_level('10.5')
+    def testMethods10_5(self):
+        self.assertResultIsBOOL(CIFilter.isEnabled)
+        self.assertArgIsBOOL(CIFilter.setEnabled_, 0)
+
+    @min_os_level('10.9')
+    def testMethods10_9(self):
+        self.assertArgIsOut(CIFilter.filterArrayFromSerializedXMP_inputImageExtent_error_, 2)
 
 if __name__ == "__main__":
     main()

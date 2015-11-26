@@ -85,8 +85,6 @@ class TestCVImageBuffer (TestCase):
 
     @min_os_level('10.11')
     def testConstants10_11(self):
-        self.assertIsInstance(kCVImageBufferYCbCrMatrix_DCI_P3, unicode)
-        self.assertIsInstance(kCVImageBufferYCbCrMatrix_P3_D65, unicode)
         self.assertIsInstance(kCVImageBufferYCbCrMatrix_ITU_R_2020, unicode)
 
         self.assertIsInstance(kCVImageBufferColorPrimaries_DCI_P3, unicode)

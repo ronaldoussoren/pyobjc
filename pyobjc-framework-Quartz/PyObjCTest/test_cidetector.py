@@ -32,6 +32,11 @@ class TestCIDetector (TestCase):
         self.assertIsInstance(CIDetectorFocalLength, unicode)
         self.assertIsInstance(CIDetectorAspectRatio, unicode)
 
+    @min_os_level('10.11')
+    def testConstants10_11(self):
+        self.assertIsInstance(CIDetectorTypeText, unicode)
+        self.assertIsInstance(CIDetectorNumberOfAngles, unicode)
+
 
 if __name__ == "__main__":
     main()

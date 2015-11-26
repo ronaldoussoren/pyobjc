@@ -53,10 +53,10 @@ class TestCVPixelBufferPool (TestCase):
         CVPixelBufferPoolRelease(pool)
 
         v = CVPixelBufferPoolGetAttributes(pool)
-        self.assertIsInstance(v, CFDictionaryRef)
+        self.assertIsInstance(v, (dict, CFDictionaryRef))
 
         v = CVPixelBufferPoolGetPixelBufferAttributes(pool)
-        self.assertIsInstance(v, CFDictionaryRef)
+        self.assertIsInstance(v, (dict, CFDictionaryRef))
 
         self.assertArgIsOut(CVPixelBufferPoolCreatePixelBuffer, 2)
         rv, image = CVPixelBufferPoolCreatePixelBuffer(None, pool, None)

@@ -78,6 +78,10 @@ Version 3.1
 * Default value for struct wrappers was incorrect for fields that have
   a type encoding that's custom to PyObjC.
 
+* Fix a type string validation error that could cause PyObjC to continue
+  processing beyond the end of a type string (which can effectively hang
+  the python interpreter with 100% CPU usage)
+
 Version 3.0.5
 -------------
 

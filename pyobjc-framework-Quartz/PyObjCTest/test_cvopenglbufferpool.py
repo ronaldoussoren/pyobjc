@@ -38,10 +38,10 @@ class TestCVOpenGLBufferPool (TestCase):
         CVOpenGLBufferPoolRelease(v)
 
         v = CVOpenGLBufferPoolGetAttributes(pool)
-        self.assertIsInstance(v, CFDictionaryRef)
+        self.assertIsInstance(v, (dict, CFDictionaryRef))
 
         v = CVOpenGLBufferPoolGetOpenGLBufferAttributes(pool)
-        self.assertIsInstance(v, CFDictionaryRef)
+        self.assertIsInstance(v, (dict, CFDictionaryRef))
 
         self.assertArgIsOut(CVOpenGLBufferPoolCreateOpenGLBuffer, 2)
         self.assertArgIsCFRetained(CVOpenGLBufferPoolCreateOpenGLBuffer, 2)

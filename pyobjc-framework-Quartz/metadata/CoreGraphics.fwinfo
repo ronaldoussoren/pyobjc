@@ -115,6 +115,22 @@
   },
   "formal_protocols": {},
   "functions": {
+   "CGEventPostToPid": {
+    "args": {
+     "0": { "typestr": "i" },
+     "1": { "typestr": "^{__CGEvent=}" }
+    },
+    "retval": { "typestr": "v" }
+   },
+   "CGColorCreateCopyByMatchingToColorSpace": {
+    "args": {
+     "0": { "typestr": "^{CGColorSpace=}" },
+     "1": { "typestr": "i" },
+     "2": { "typestr": "^{CGColor=}" },
+     "3": { "typestr": "^{__CFDictionary=}" }
+    },
+    "retval": { "typestr": "^{CGColor=}", "already_cfretained": true }
+   },
    "CGPathCreateWithRoundedRect": {
     "args": {
      "3": { "type_modifier": "n" }

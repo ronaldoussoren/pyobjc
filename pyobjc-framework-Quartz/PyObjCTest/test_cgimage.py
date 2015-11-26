@@ -168,11 +168,15 @@ class TestCGImage (TestCase):
 
     @min_os_level('10.11')
     def testFunctions10_11(self):
-        provider = CGDataProviderCreateWithCFData(buffer("1" * 4 * 100 * 80))
-        self.assertArgHasType(CGImageCreate, 9, objc._C_BOOL)
-        self.assertResultIsCFRetained(CGImageCreate)
-        image = CGImageCreate(100, 80, 8, 32, 400, CGColorSpaceCreateDeviceRGB(), kCGImageAlphaPremultipliedLast,
-                provider, None, False, kCGRenderingIntentDefault)
+        fn = '/System/Library/CoreServices/DefaultDesktop.jpg'
+        if not os.path.exists(fn):
+            fn = '/System/Library/CoreServices/DefaultDesktopServer.jpg'
+        with open(fn, 'rb') as fp:
+            data = fp.read()
+        provider = CGDataProviderCreateWithCFData(buffer(data))
+        self.assertResultIsCFRetained(CGImageCreateWithJPEGDataProvider)
+        self.assertArgHasType(CGImageCreateWithJPEGDataProvider, 2, objc._C_BOOL)
+        image = CGImageCreateWithJPEGDataProvider(provider, None, True, kCGRenderingIntentDefault)
         self.assertIsInstance(image, CGImageRef)
 
         v = CGImageGetUTType(image)

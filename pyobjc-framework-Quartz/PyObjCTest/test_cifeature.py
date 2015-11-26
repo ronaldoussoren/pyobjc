@@ -10,6 +10,8 @@ class TestCIFeature (TestCase):
     def testConstants(self):
         self.assertIsInstance(CIFeatureTypeFace, unicode)
         self.assertIsInstance(CIFeatureTypeRectangle, unicode)
+        self.assertIsInstance(CIFeatureTypeQRCode, unicode)
+        self.assertIsInstance(CIFeatureTypeText, unicode)
 
     def testMethods(self):
         self.assertResultIsBOOL(CIFaceFeature.hasLeftEyePosition)

@@ -225,7 +225,6 @@ class TestCVPixelBuffer (TestCase):
     def testConstants10_11(self):
         self.assertIsInstance(kCVPixelBufferMetalCompatibilityKey, unicode)
         self.assertIsInstance(kCVPixelBufferOpenGLTextureCacheCompatibilityKey, unicode)
-        self.assertIsInstance(kCVPixelBufferOpenGLESTextureCacheCompatibilityKey, unicode)
 
     @min_os_level('10.6')
     def testFunctions10_6(self):

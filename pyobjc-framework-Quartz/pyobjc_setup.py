@@ -125,8 +125,12 @@ class oc_test (test.test):
             meta = self.distribution.metadata
             name = meta.get_name()
             test_pkg = name + "_tests"
+            if self.verbosity:
+                print("Loading tests")
             suite = loader_class().loadTestsFromName(self.distribution.test_suite)
 
+            if self.verbosity:
+                print("Starting testrunner")
             runner = unittest.TextTestRunner(verbosity=self.verbosity)
             result = runner.run(suite)
 

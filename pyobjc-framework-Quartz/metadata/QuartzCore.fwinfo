@@ -2,6 +2,34 @@
 # for information on how to update this file.
 {
  "definitions": {
+  "externs": {
+   "kCIAttributeFilterAvailable_Mac": { "typestr": "@" },
+   "kCIAttributeFilterAvailable_iOS": { "typestr": "@" },
+   "kCIContextWorkingFormat": { "typestr": "@" },
+   "CIFeatureTypeQRCode": { "typestr": "@" },
+   "CIFeatureTypeText": { "typestr": "@" },
+   "kCIAttributeTypeColor": { "typestr": "@" },
+   "kCIAttributeTypeImage": { "typestr": "@" },
+   "kCIAttributeTypeTransform": { "typestr": "@" },
+   "kCIInputVersionKey": { "typestr": "@" },
+   "CIDetectorTypeText": { "typestr": "@" },
+   "CIDetectorNumberOfAngles": { "typestr": "@" },
+   "kCIFormatBGRA8": { "typestr": "i" },
+   "kCIFormatABGR8": { "typestr": "i" },
+   "kCIFormatRGBA8": { "typestr": "i" },
+   "kCIFormatA8": { "typestr": "i" },
+   "kCIFormatA16": { "typestr": "i" },
+   "kCIFormatAh": { "typestr": "i" },
+   "kCIFormatAf": { "typestr": "i" },
+   "kCIFormatR8": { "typestr": "i" },
+   "kCIFormatR16": { "typestr": "i" },
+   "kCIFormatRh": { "typestr": "i" },
+   "kCIFormatRf": { "typestr": "i" },
+   "kCIFormatRG8": { "typestr": "i" },
+   "kCIFormatRG16": { "typestr": "i" },
+   "kCIFormatRGh": { "typestr": "i" },
+   "kCIFormatRGf": { "typestr": "i" }
+  },
   "classes": {
    "CAEmitterCell": {
     "methods": [],
@@ -358,6 +386,13 @@
    "CIFilter": {
     "methods": [
      {
+      "selector": "filterArrayFromSerializedXMP:inputImageExtent:error:",
+      "class_method": false,
+      "args": {
+       "2": { "type_modifier": "o" }
+      }
+     },
+     {
       "c_array_delimited_by_null": true,
       "class_method": false,
       "selector": "apply:",
@@ -580,8 +615,52 @@
      }
     ]
    },
+   "CIWarpKernel": {
+    "methods": [
+     {
+      "selector": "applyWithExtent:roiCallback:inputImage:arguments:",
+      "class_method": false,
+      "args": {
+       "1": {
+        "callable": {
+         "arguments": {
+          "0": { "type": "^v" },
+	  "1": { "type": "i" },
+	  "2": { "type": [
+           "{CGRect={CGPoint=ff}{CGSize=ff}}", "{CGRect={CGPoint=dd}{CGSize=dd}}"
+	  ] }
+	 },
+	 "retval": { "typestr": [
+           "{CGRect={CGPoint=ff}{CGSize=ff}}", "{CGRect={CGPoint=dd}{CGSize=dd}}"
+	 ] }
+	}
+       }
+      }
+     }
+    ]
+   },
    "CIKernel": {
     "methods": [
+     {
+      "selector": "applyWithExtent:roiCallback:arguments:",
+      "class_method": false,
+      "args": {
+       "1": {
+        "callable": {
+         "arguments": {
+          "0": { "type": "^v" },
+	  "1": { "type": "i" },
+	  "2": { "type": [
+           "{CGRect={CGPoint=ff}{CGSize=ff}}", "{CGRect={CGPoint=dd}{CGSize=dd}}"
+	  ] }
+	 },
+	 "retval": { "typestr": [
+           "{CGRect={CGPoint=ff}{CGSize=ff}}", "{CGRect={CGPoint=dd}{CGSize=dd}}"
+	 ] }
+	}
+       }
+      }
+     },
      {
       "args": {
        "0": {

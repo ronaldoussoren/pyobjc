@@ -3,8 +3,6 @@
 {
  "definitions": {
   "externs": {
-   "kCVImageBufferYCbCrMatrix_DCI_P3": { "typestr": "@" },
-   "kCVImageBufferYCbCrMatrix_P3_D65": { "typestr": "@" },
    "kCVImageBufferYCbCrMatrix_ITU_R_2020": { "typestr": "@" },
    "kCVImageBufferColorPrimaries_DCI_P3": { "typestr": "@" },
    "kCVImageBufferColorPrimaries_P3_D65": { "typestr": "@" },
@@ -13,7 +11,6 @@
    "kCVMetalTextureCacheMaximumTextureAgeKey": { "typestr": "@" },
    "kCVPixelBufferMetalCompatibilityKey": { "typestr": "@" },
    "kCVPixelBufferOpenGLTextureCacheCompatibilityKey": { "typestr": "@" },
-   "kCVPixelBufferOpenGLESTextureCacheCompatibilityKey": { "typestr": "@" },
    "kCVPixelFormatComponentRange": { "typestr": "@" },
    "kCVPixelFormatComponentRange_VideoRange": { "typestr": "@" },
    "kCVPixelFormatComponentRange_FullRange": { "typestr": "@" },
@@ -21,7 +18,8 @@
    "kCVPixelBufferPoolFlushExcessBuffers": { "typestr": "@" }
   },
   "enum": {
-   "kCVReturnUnsupported": { "value": -6663 }
+   "kCVReturnUnsupported": { "value": -6663 },
+   "kCVPixelBufferPoolFlushExcessBuffers": { "value": 1 }
   },
   "cftypes": {
    "CVBufferRef": {
@@ -60,10 +58,19 @@
   "formal_protocols": {},
   "functions": {
    "CVMetalTextureGetTypeID": {
+    "args": { },
     "retval": { "typestr": "L" }
    },
    "CVMetalTextureCacheGetTypeID": {
+    "args": { },
     "retval": { "typestr": "L" }
+   },
+   "CVPixelBufferPoolFlush": {
+    "args": {
+     "0": { "typestr": "^{__CVPixelBufferPool=}" },
+     "1": { "typestr": "L" }
+    },
+    "retval": { "typestr": "v" }
    },
    "CVMetalTextureCacheCreate": {
     "retval": { "typestr": "i" },
@@ -97,12 +104,12 @@
          "callable": {
 	  "retval": { "typestr": "i" },
 	  "arguments": {
-	   "0": { "typestr": "^v" },
-	   "1": { "typestr": "^{__CVDisplayLink=}" },
-	   "2": { "type_modifier": "n", "typestr": "^{_CVTimeStamp=IiqQdq{CVSMPTETime=ssIIIssss}QQ}" },
-	   "3": { "type_modifier": "n", "typestr": "^{_CVTimeStamp=IiqQdq{CVSMPTETime=ssIIIssss}QQ}" },
-	   "4": { "typestr": "Q" },
-	   "5": { "typestr": "o^Q" }
+	   "0": { "type": "^v" },
+	   "1": { "type": "^{__CVDisplayLink=}" },
+	   "2": { "type_modifier": "n", "type": "^{_CVTimeStamp=IiqQdq{CVSMPTETime=ssIIIssss}QQ}" },
+	   "3": { "type_modifier": "n", "type": "^{_CVTimeStamp=IiqQdq{CVSMPTETime=ssIIIssss}QQ}" },
+	   "4": { "type": "Q" },
+	   "5": { "type": "o^Q" }
 	  }
 	 }
      }
