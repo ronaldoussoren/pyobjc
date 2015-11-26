@@ -854,7 +854,7 @@ static ffi_cif* init_cif = NULL;
         signature = PyObjCMethodSignature_FromSignature("i^v^v^v", YES);
         init_cif = PyObjCFFI_CIFForSignature(signature);
         Py_DECREF(signature);
-        PyMem_Free(typestr);
+        PyMem_Free((void*)typestr);
         if (init_cif == NULL) {
             return NULL;
         }
@@ -862,14 +862,14 @@ static ffi_cif* init_cif = NULL;
 
     cl = PyObjC_malloc_closure();
     if (cl == NULL) {
-        PyMem_Free(typestr);
+        PyMem_Free((void*)typestr);
         return NULL;
     }
 
     rv = ffi_prep_closure(cl, init_cif, struct_init, (char*)typestr);
     if (rv != FFI_OK) {
         PyObjC_free_closure(cl);
-        PyMem_Free(typestr);
+        PyMem_Free((void*)typestr);
         PyErr_Format(PyExc_RuntimeError,
             "Cannot create FFI closure: %d", rv);
         return NULL;
