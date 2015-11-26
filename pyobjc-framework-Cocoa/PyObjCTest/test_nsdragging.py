@@ -113,8 +113,8 @@ class TestNSDragging (TestCase):
         self.assertArgHasType(TestNSDraggingHelper.draggedImage_endedAt_deposited_, 1, NSPoint.__typestr__)
         self.assertArgIsBOOL(TestNSDraggingHelper.draggedImage_endedAt_deposited_, 2)
 
-        self.assertResultHasType(TestNSDraggingHelper.draggingSession_sourceOperationMaskForDraggingContext_, objc._C_NSInteger)
-        self.assertArgHasType(TestNSDraggingHelper.draggingSession_sourceOperationMaskForDraggingContext_, 1, objc._C_NSInteger)
+        self.assertResultHasType(TestNSDraggingHelper.draggingSession_sourceOperationMaskForDraggingContext_, objc._C_NSUInteger)
+        self.assertArgHasType(TestNSDraggingHelper.draggingSession_sourceOperationMaskForDraggingContext_, 1, objc._C_NSUInteger)
 
     @min_os_level('10.7')
     def testProtocols10_7(self):

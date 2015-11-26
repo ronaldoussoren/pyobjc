@@ -19,6 +19,7 @@ class TestNSTextAttachmentHelper (NSObject):
     def wantsToTrackMouseForEvent_inRect_ofView_atCharacterIndex_(self, ev, fr, vi, i): return 1
     def trackMouse_inRect_ofView_atCharacterIndex_untilMouseUp_(self, ev, fr, vi, i, fl): return 1
     def cellFrameForTextContainer_proposedLineFragment_glyphPosition_characterIndex_(self, tc, fr, po, i): return 1
+    def imageForBounds_textContainer_characterIndex_(self, b, c, i): return 1
 
 class TestNSTextAttachment (TestCase):
     def testConstants(self):

@@ -7,6 +7,12 @@ class TestNSTypesetterHelper (NSTypesetter):
     def getGlyphsInRange_glyphs_characterIndexes_glyphInscriptions_elasticBits_bidiLevels_(self, a, b, c, d, e, f): return 1
     def getLineFragmentRect_usedRect_remainingRect_forStartingGlyphAtIndex_proposedRect_lineSpacing_paragraphSpacingBefore_paragraphSpacingAfter_(self, a, b, c, d, e, f, g, h): return 1
 
+    def shouldBreakLineByWordBeforeCharacterAtIndex_(self, i): return False
+    def shouldBreakLineByHyphenatingBeforeCharacterAtIndex_(self, i): return False
+    def hyphenationFactorForGlyphAtIndex_(self, i): return 1.0
+    def hyphenCharacterForGlyphAtIndex_(self, i): return 1
+    def boundingBoxForControlGlyphAtIndex_forTextContainer_proposedLineFragment_glyphPosition_characterIndex_(self, i, c, f, p, idx): pass
+
 class TestNSTypesetter (TestCase):
     def testConstants(self):
         self.assertEqual(NSTypesetterZeroAdvancementAction, (1 << 0))
@@ -23,8 +29,24 @@ class TestNSTypesetter (TestCase):
         self.assertArgSizeInArg(NSTypesetter.setLocation_withAdvancements_forStartOfGlyphRange_, 1, 2)
         self.assertArgIsBOOL(NSTypesetter.setNotShownAttribute_forGlyphRange_, 0)
         self.assertArgIsBOOL(NSTypesetter.setDrawsOutsideLineFragment_forGlyphRange_, 0)
-        self.assertResultIsBOOL(NSTypesetter.shouldBreakLineByWordBeforeCharacterAtIndex_)
-        self.assertResultIsBOOL(NSTypesetter.shouldBreakLineByHyphenatingBeforeCharacterAtIndex_)
+        self.assertResultIsBOOL(TestNSTypesetterHelper.shouldBreakLineByWordBeforeCharacterAtIndex_)
+        self.assertArgHasType(TestNSTypesetterHelper.shouldBreakLineByWordBeforeCharacterAtIndex_, 0, objc._C_NSUInteger)
+
+        self.assertResultIsBOOL(TestNSTypesetterHelper.shouldBreakLineByHyphenatingBeforeCharacterAtIndex_)
+        self.assertArgHasType(TestNSTypesetterHelper.shouldBreakLineByHyphenatingBeforeCharacterAtIndex_, 0, objc._C_NSUInteger)
+
+        self.assertResultHasType(TestNSTypesetterHelper.hyphenationFactorForGlyphAtIndex_, objc._C_FLT)
+        self.assertArgHasType(TestNSTypesetterHelper.hyphenationFactorForGlyphAtIndex_, 0, objc._C_NSUInteger)
+
+        self.assertResultHasType(TestNSTypesetterHelper.boundingBoxForControlGlyphAtIndex_forTextContainer_proposedLineFragment_glyphPosition_characterIndex_, NSRect.__typestr__)
+        self.assertArgHasType(TestNSTypesetterHelper.boundingBoxForControlGlyphAtIndex_forTextContainer_proposedLineFragment_glyphPosition_characterIndex_, 0, objc._C_NSUInteger)
+        self.assertArgHasType(TestNSTypesetterHelper.boundingBoxForControlGlyphAtIndex_forTextContainer_proposedLineFragment_glyphPosition_characterIndex_, 2, NSRect.__typestr__)
+        self.assertArgHasType(TestNSTypesetterHelper.boundingBoxForControlGlyphAtIndex_forTextContainer_proposedLineFragment_glyphPosition_characterIndex_, 3, NSPoint.__typestr__)
+        self.assertArgHasType(TestNSTypesetterHelper.boundingBoxForControlGlyphAtIndex_forTextContainer_proposedLineFragment_glyphPosition_characterIndex_, 4, objc._C_NSUInteger)
+
+        self.assertResultHasType(TestNSTypesetterHelper.hyphenCharacterForGlyphAtIndex_, objc._C_INT)
+        self.assertArgHasType(TestNSTypesetterHelper.hyphenCharacterForGlyphAtIndex_, 0, objc._C_NSUInteger)
+
         self.assertArgIsBOOL(NSTypesetter.setHardInvalidation_forGlyphRange_, 0)
         self.assertResultIsBOOL(NSTypesetter.usesFontLeading)
         self.assertArgIsBOOL(NSTypesetter.setUsesFontLeading_, 0)

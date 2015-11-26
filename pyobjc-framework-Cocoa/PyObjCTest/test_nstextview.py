@@ -69,7 +69,7 @@ class TestNSTextView (TestCase):
 
     def testMethods(self):
         self.assertResultIsBOOL(NSTextView.shouldDrawInsertionPoint)
-        self.assertArgIsBOOL(NSTextView.setShouldDrawInsertionPoint_, 0)
+        #self.assertArgIsBOOL(NSTextView.setShouldDrawInsertionPoint_, 0)
         self.assertResultIsBOOL(NSTextView.rulerView_shouldMoveMarker_)
         self.assertResultIsBOOL(NSTextView.rulerView_shouldAddMarker_)
         self.assertResultIsBOOL(NSTextView.rulerView_shouldRemoveMarker_)

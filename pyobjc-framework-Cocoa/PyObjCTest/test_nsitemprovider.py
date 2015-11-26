@@ -26,7 +26,7 @@ class TestNSItemProvider (TestCase):
     @min_os_level('10.10')
     def testMethods10_10(self):
         NSItemProviderCompletionHandler = b'v@@'
-        NSItemProviderLoadHandler = b'v@!#@'
+        NSItemProviderLoadHandler = b'v@?#@'
 
         self.assertResultIsBOOL(NSItemProvider.hasItemConformingToTypeIdentifier_)
         self.assertArgIsBlock(NSItemProvider.loadItemForTypeIdentifier_options_completionHandler_, 2, NSItemProviderCompletionHandler)

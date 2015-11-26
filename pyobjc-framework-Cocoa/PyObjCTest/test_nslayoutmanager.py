@@ -256,9 +256,9 @@ class TestNSLayoutManager (TestCase):
 
     @min_os_level('10.11')
     def testMethods10_11(self):
-        self.assertArgSizeInArg(NSLayoutManager.setGlyphs_properties_characterIndexes_font_forGlyphRnage_, 0, 4)
-        self.assertArgSizeInArg(NSLayoutManager.setGlyphs_properties_characterIndexes_font_forGlyphRnage_, 1, 4)
-        self.assertArgSizeInArg(NSLayoutManager.setGlyphs_properties_characterIndexes_font_forGlyphRnage_, 2, 4)
+        self.assertArgSizeInArg(NSLayoutManager.setGlyphs_properties_characterIndexes_font_forGlyphRange_, 0, 4)
+        self.assertArgSizeInArg(NSLayoutManager.setGlyphs_properties_characterIndexes_font_forGlyphRange_, 1, 4)
+        self.assertArgSizeInArg(NSLayoutManager.setGlyphs_properties_characterIndexes_font_forGlyphRange_, 2, 4)
 
         self.assertArgIsBlock(NSLayoutManager.enumerateLineFragmentsForGlyphRange_usingBlock_, 1, b'v' + NSRect.__typestr__ + NSRect.__typestr__ + b'@' + NSRange.__typestr__ + b'o^Z')
         self.assertArgIsBlock(NSLayoutManager.enumerateEnclosingRectsForGlyphRange_withinSelectedGlyphRange_inTextContainer_usingBlock_, 3, b'v' + NSRect.__typestr__ + b'o^Z')

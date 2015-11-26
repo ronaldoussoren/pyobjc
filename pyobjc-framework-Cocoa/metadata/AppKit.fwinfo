@@ -2,14 +2,20 @@
 # for information on how to update this file.
 {
  "definitions": {
-  "enum": {
-   "NSWindowCollectionBehaviorFullScreenAllowsTiling": { "value": 2048 }
-  },
   "externs": {
    "NSDefaultAttributesDocumentAttribute": { "typestr": "@" },
+   "NSFontWeightLight": { "typestr": "f" },
+   "NSFontWeightRegular": { "typestr": "f" },
+   "NSFontWeightMedium": { "typestr": "f" },
+   "NSFontWeightSemibold": { "typestr": "f" },
+   "NSFontWeightBold": { "typestr": "f" },
+   "NSFontWeightHeavy": { "typestr": "f" },
+   "NSFontWeightBlack": { "typestr": "f" },
+   "NSFontWeightThin": { "typestr": "f" },
    "NSFontWeightUltraLight": { "typestr": "f" },
    "NSViewNoIntrinsicMetric": { "typestr": "f" },
    "NSSplitViewControllerAutomaticDimension": { "typestr": "f" },
+   "NSSplitViewItemUnspecifiedDimension": { "typestr": "f" },
    "NSCollectionElementKindInterItemGapIndicator": { "typestr": "@" },
    "NSCollectionElementKindSectionHeader": { "typestr": "@" },
    "NSCollectionElementKindSectionFooter": { "typestr": "@" },
@@ -3712,6 +3718,35 @@
      }
     ]
    },
+   "NSCollectionViewLayoutAttributes": {
+    "methods": [
+     {
+      "class_method": false,
+      "retval": {
+       "type_override": "Z"
+      },
+      "selector": "isHidden"
+     },
+     {
+      "class_method": false,
+      "args": {
+       "0": { "type_override": "Z" }
+      },
+      "selector": "setHidden:"
+     }
+    ]
+   },
+   "NSCollectionViewFlowLayout": {
+    "methods": [
+     {
+      "class_method": false,
+      "retval": {
+       "type_override": "Z"
+      },
+      "selector": "invalidateFlowLayoutDelegateMetrics"
+     }
+    ]
+   },
    "NSCollectionView": {
     "methods": [
      {
@@ -3741,6 +3776,13 @@
        ]
       },
       "selector": "frameForItemAtIndex:"
+     },
+     {
+      "class_method": false,
+      "args": {
+       "0": { "type_override": "Z" }
+      },
+      "selector": "setAllowsEmptySelection:"
      },
      {
       "class_method": false,
@@ -6954,7 +6996,7 @@
 	 "arguments": {
 	  "0": { "typestr": "^v" },
 	  "1": {
-	   "typestr": "@!",
+	   "typestr": "@?",
 	   "callable": {
 	     "args": {
 	      "0": { "typestr": "^@" },
@@ -10729,6 +10771,21 @@
    "NSObject": {
     "methods": [
      {
+      "selector": "application:continueUserActivity:restorationHandler:",
+      "class_method": false,
+      "args": {
+       "2": {
+	"callable": {
+	 "arguments": {
+	  "0": { "typestr": "^v" },
+	  "1": { "typestr": "@" }
+	 },
+	 "retval": { "typestr": "v" }
+        }
+       }
+      }
+     },
+     {
       "args": {
        "0": {
         "type_override": [
@@ -10996,8 +11053,18 @@
      },
      {
       "class_method": false,
+      "selector": "collectionView:layout:sizeForItemAtIndexPath:",
       "retval": {
-       "type_override": ["I", "Q" ]
+       "type_override": [
+         "{_NSRect={_NSPoint=ff}{_NSSize=ff}}",
+         "{CGRect={CGPoint=dd}{CGSize=dd}}"
+       ]
+      }
+     },
+     {
+      "class_method": false,
+      "retval": {
+       "type_override": ["i", "q" ]
       },
       "selector": "collectionView:numerOfItemsInSection:"
      },
@@ -12586,7 +12653,7 @@
         "type_override": [ "n^I", "n^Q" ]
        },
        "4": {
-        "type_override": [ "^{_NSRange=II}", "^{_NSRange=QQ}" ]
+        "type_override": [ "{_NSRange=II}", "{_NSRange=QQ}" ]
        }
       },
       "class_method": false,
@@ -14598,7 +14665,28 @@
       "retval": {
        "type_override": "Z"
       },
+      "selector": "gestureRecognizer:shouldAttemptToRecognizeWithEvent:"
+     },
+     {
+      "class_method": false,
+      "retval": {
+       "type_override": "Z"
+      },
       "selector": "writeSelectionToPasteboard:types:"
+     },
+     {
+      "class_method": false,
+      "args": {
+       "0": { "type_override": "Z" }
+      },
+      "selector": "springLoadingActivated:draggingInfo:"
+     },
+     {
+      "class_method": false,
+      "args": {
+       "1": { "type_override": ["I", "Q"] }
+      },
+      "selector": "performFeedbackPattern:performanceTime:"
      }
     ]
    },
@@ -14709,7 +14797,7 @@
     "methods": [
      {
       "args": {
-       "0": { "type_modifier": "n" }
+       "0": { "type_modifier": "n", "c_array_of_variable_length": true }
       },
       "class_method": false,
       "selector": "setValues:forParameter:"
@@ -14771,7 +14859,7 @@
      },
      {
       "args": {
-       "3": {}
+       "3": { "type_modifier": "n" }
       },
       "class_method": false,
       "selector": "drawInOpenGLContext:pixelFormat:forLayerTime:displayTime:"
@@ -15099,6 +15187,17 @@
        "type_override": "Z"
       },
       "selector": "allowsDefaultTighteningForTruncation"
+     }
+    ]
+   },
+   "NSMutableParagraphStyle": {
+    "methods": [
+     {
+      "class_method": false,
+      "args": {
+       "0": { "type_override": "Z" }
+      },
+      "selector": "setAllowsDefaultTighteningForTruncation:"
      }
     ]
    },
@@ -17093,6 +17192,13 @@
        "0": { "type_override": "Z" }
       },
       "selector": "rectForSearchTextWhenCentered:"
+     },
+     {
+      "class_method": false,
+      "args": {
+       "0": { "type_override": "Z" }
+      },
+      "selector": "rectForSearchButtonWhenCentered:"
      }
     ]
    },
@@ -18041,6 +18147,35 @@
       },
       "class_method": false,
       "selector": "setVertical:"
+     },
+     {
+      "args": {
+       "0": {
+        "type_override": "Z"
+       }
+      },
+      "class_method": false,
+      "selector": "setArrangesAllSubviews:"
+     }
+    ]
+   },
+   "NSSplitViewItem": {
+    "methods": [
+     {
+      "class_method": false,
+      "retval": {
+       "type_override": "Z"
+      },
+      "selector": "isSpringLoaded"
+     },
+     {
+      "args": {
+       "0": {
+        "type_override": "Z"
+       }
+      },
+      "class_method": false,
+      "selector": "setSpringLoaded:"
      }
     ]
    },
@@ -18489,6 +18624,13 @@
        "type_override": "Z"
       },
       "selector": "rowActionsVisible"
+     },
+     {
+      "class_method": false,
+      "retval": {
+       "0": { "type_override": "Z" }
+      },
+      "selector": "setRowActionsVisible:"
      },
      {
       "args": {
@@ -19520,6 +19662,13 @@
    },
    "NSTextField": {
     "methods": [
+     {
+      "class_method": false,
+      "args": {
+       "0": { "type_override": "Z" }
+      },
+      "selector": "setAllowsDefaultTighteningForTruncation:"
+     },
      {
       "class_method": false,
       "retval": {
@@ -24866,53 +25015,62 @@
    }
   },
   "enum": {
-    "NSAppKitVersionNumber10_10_2": { "value": 1344 },
-    "NSAppKitVersionNumber10_10_3": { "value": 1347 },
-    "NSWritingDirectionEmbedding": { "value": 0 },
-    "NSCollectionViewScrollPositionNone": { "value": 0 },
-    "NSPressureBehaviorUnknown": { "value": -1 },
-    "NSGlyphPropertyNull": { "value": 0 },
-    "NSSplitViewItemBehaviorDefault": { "value": 0 },
-    "NSTableViewRowActionStyleRegular": { "value": 0 },
-    "NSTextAlignmentLeft": { "value": 0 },
-    "NSVisualEffectMaterialMenu": { "value": 5 },
-    "NSStackViewDistributionGravityAreas": { "value": -1 },
-    "NSWritingDirectionOverride": { "value": 2 },
-    "NSCollectionViewScrollPositionTop": { "value": 1 },
-    "NSCollectionViewScrollPositionCenteredVertically": { "value": 2 },
-    "NSCollectionViewScrollPositionBottom": { "value": 4 },
-    "NSLayoutAttributeFirstBaseline": { "value": 12 },
-    "NSLayoutFormatAlignAllFirstBaseline": { "value": 4096 },
-    "NSSplitViewItemBehaviorSidebar": { "value": 1 },
-    "NSSplitViewItemBehaviorContentList": { "value": 2 },
-    "NSGlyphPropertyNull": { "value": 1 },
-    "NSGlyphPropertyControlCharacter": { "value": 2 },
-    "NSGlyphPropertyElastic": { "value": 4 },
-    "NSGlyphPropertyNonBaseCharacter": { "value": 8 },
-    "NSControlCharacterActionZeroAdvancement": { "value": 1 },
-    "NSControlCharacterActionWhitespace": { "value": 2 },
-    "NSControlCharacterActionHorizontalTab": { "value": 4 },
-    "NSControlCharacterActionLineBreak": { "value": 8 },
-    "NSControlCharacterActionParagraphBreak": { "value": 16 },
-    "NSControlCharacterActionContainerBreak": { "value": 32 },
-    "NSNormalWindowLevel": { "value": 0, "comment": "Aliases for values from CoreGraphics" },
-    "NSFloatingWindowLevel": { "value": 3 },
-    "NSSubmenuWindowLevel": { "value": 3 },
-    "NSTornOffMenuWindowLevel": { "value": 3 },
-    "NSMainMenuWindowLevel": { "value": 24 },
-    "NSStatusWindowLevel": { "value": 25 },
-    "NSDockWindowLevel": { "value": 20 },
-    "NSModalPanelWindowLevel": { "value": 8 },
-    "NSPopUpMenuWindowLevel": { "value": 101 },
-    "NSScreenSaverWindowLevel": { "value": 1000 },
-    "NSFontScriptsClass": { "value": 2684354560 },
-    "NSFontOrnamentalsClass": { "value": 2415919104 },
-    "NSFontSansSerifClass": { "value": 2147483648 },
-    "NSFontSymbolicClass": { "value": 3221225472 },
-    "NSAttachmentCharacter": { "type": "unicode" },
-    "NSStackViewVisibilityPriorityMustHold": { "value": 1000 },
-    "NSStackViewVisibilityPriorityDetachOnlyIfNecessary": { "value": 900 },
-    "NSStackViewVisibilityPriorityNotVisible": { "value": 0 },
+   "NSWindowCollectionBehaviorFullScreenAllowsTiling": { "value": 2048 },
+   "NSWindowCollectionBehaviorFullScreenDisallowsTiling": { "value": 4096 },
+   "NSCollectionViewScrollPositionNearestHorizontalEdge": { "value": 512 },
+   "NSCollectionViewScrollPositionLeft": { "value": 8 },
+   "NSCollectionViewScrollPositionCenteredHorizontally": { "value": 16 },
+   "NSCollectionViewScrollPositionRight": { "value": 32 },
+   "NSCollectionViewScrollPositionLeadingEdge": { "value": 64 },
+   "NSCollectionViewScrollPositionTrailingEdge": { "value": 128 },
+   "NSCollectionViewScrollPositionNearestVerticalEdge": { "value": 256 },
+   "NSAppKitVersionNumber10_10_2": { "value": 1344 },
+   "NSAppKitVersionNumber10_10_3": { "value": 1347 },
+   "NSWritingDirectionEmbedding": { "value": 0 },
+   "NSCollectionViewScrollPositionNone": { "value": 0 },
+   "NSPressureBehaviorUnknown": { "value": -1 },
+   "NSGlyphPropertyNull": { "value": 0 },
+   "NSSplitViewItemBehaviorDefault": { "value": 0 },
+   "NSTableViewRowActionStyleRegular": { "value": 0 },
+   "NSTextAlignmentLeft": { "value": 0 },
+   "NSVisualEffectMaterialMenu": { "value": 5 },
+   "NSStackViewDistributionGravityAreas": { "value": -1 },
+   "NSWritingDirectionOverride": { "value": 2 },
+   "NSCollectionViewScrollPositionTop": { "value": 1 },
+   "NSCollectionViewScrollPositionCenteredVertically": { "value": 2 },
+   "NSCollectionViewScrollPositionBottom": { "value": 4 },
+   "NSLayoutAttributeFirstBaseline": { "value": 12 },
+   "NSLayoutFormatAlignAllFirstBaseline": { "value": 4096 },
+   "NSSplitViewItemBehaviorSidebar": { "value": 1 },
+   "NSSplitViewItemBehaviorContentList": { "value": 2 },
+   "NSGlyphPropertyNull": { "value": 1 },
+   "NSGlyphPropertyControlCharacter": { "value": 2 },
+   "NSGlyphPropertyElastic": { "value": 4 },
+   "NSGlyphPropertyNonBaseCharacter": { "value": 8 },
+   "NSControlCharacterActionZeroAdvancement": { "value": 1 },
+   "NSControlCharacterActionWhitespace": { "value": 2 },
+   "NSControlCharacterActionHorizontalTab": { "value": 4 },
+   "NSControlCharacterActionLineBreak": { "value": 8 },
+   "NSControlCharacterActionParagraphBreak": { "value": 16 },
+   "NSControlCharacterActionContainerBreak": { "value": 32 },
+   "NSNormalWindowLevel": { "value": 0, "comment": "Aliases for values from CoreGraphics" },
+   "NSFloatingWindowLevel": { "value": 3 },
+   "NSSubmenuWindowLevel": { "value": 3 },
+   "NSTornOffMenuWindowLevel": { "value": 3 },
+   "NSMainMenuWindowLevel": { "value": 24 },
+   "NSStatusWindowLevel": { "value": 25 },
+   "NSDockWindowLevel": { "value": 20 },
+   "NSModalPanelWindowLevel": { "value": 8 },
+   "NSPopUpMenuWindowLevel": { "value": 101 },
+   "NSScreenSaverWindowLevel": { "value": 1000 },
+   "NSFontScriptsClass": { "value": 2684354560 },
+   "NSFontOrnamentalsClass": { "value": 2415919104 },
+   "NSFontSansSerifClass": { "value": 2147483648 },
+   "NSFontSymbolicClass": { "value": 3221225472 },
+   "NSAttachmentCharacter": { "type": "unicode" },
+   "NSStackViewVisibilityPriorityMustHold": { "value": 1000 },
+   "NSStackViewVisibilityPriorityDetachOnlyIfNecessary": { "value": 900 },
+   "NSStackViewVisibilityPriorityNotVisible": { "value": 0 },
    "NSWorkspaceLaunchDefault": { "value": 65536 },
    "NSVisualEffectMaterialMenu": { "value": 5 },
    "NSVisualEffectMaterialPopover": { "value": 6 },
@@ -25258,6 +25416,13 @@
        "type_override": "Z"
       },
       "selector": "detachesHiddenViews"
+     },
+     {
+      "class_method": false,
+      "args": {
+       "0": { "type_override": "Z" }
+      },
+      "selector": "setDetachesHiddenViews:"
      }
     ]
    },
