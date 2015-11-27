@@ -7,16 +7,6 @@ import ctypes
 from PyObjCTools import TestSupport
 
 try:
-    long
-except NameError:
-    long = int
-
-try:
-    unicode
-except NameError:
-    unicode = str
-
-try:
     from StringIO import StringIO
 
 except ImportError:

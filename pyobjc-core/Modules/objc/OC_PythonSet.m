@@ -23,6 +23,10 @@
 
 -(PyObject*)__pyobjc_PythonObject__
 {
+    if (unlikely(value == NULL)) {
+        PyErr_SetString(PyObjCExc_InternalError, "NULL OC_PythonSet");
+        return NULL;
+    }
     Py_INCREF(value);
     return value;
 }
@@ -30,7 +34,7 @@
 -(PyObject*)__pyobjc_PythonTransient__:(int*)cookie
 {
     *cookie = 0;
-    Py_INCREF(value);
+    Py_XINCREF(value);
     return value;
 }
 
@@ -61,7 +65,7 @@
 
     PyObjC_BEGIN_WITH_GIL
         PyObjC_UnregisterObjCProxy(value, self);
-        Py_XDECREF(value);
+        Py_CLEAR(value);
 
     PyObjC_END_WITH_GIL
 

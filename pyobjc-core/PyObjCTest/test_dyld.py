@@ -5,12 +5,6 @@ import sys
 
 import objc._dyld as dyld
 
-try:
-    unicode
-except NameError:
-    unicode = str
-
-
 class TestDyld (TestCase):
     def setUp(self):
         self.orig_environ = os.environ

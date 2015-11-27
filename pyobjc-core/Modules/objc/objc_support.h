@@ -56,7 +56,7 @@ extern int depythonify_c_value (const char *type,
 extern int depythonify_c_return_value (const char *type,
                     PyObject *arg,
                     void *datum);
-
+extern int depythonify_python_object(PyObject* argument, id* datum);
 extern int depythonify_c_return_array_count(const char* rettype, Py_ssize_t count, PyObject* arg, void* resp, BOOL already_retained, BOOL already_cfretained);
 extern int depythonify_c_return_array_nullterminated(const char* rettype, PyObject* arg, void* resp, BOOL already_retained, BOOL already_cfretained);
 

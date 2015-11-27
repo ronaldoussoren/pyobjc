@@ -11,17 +11,6 @@ import subprocess
 
 import xml.etree.ElementTree as ET
 
-
-try:
-    basestring
-except NameError:
-    basestring = str
-
-try:
-    long
-except NameError:
-    long = int
-
 IDENTIFIER=re.compile(r"^[A-Za-z_][A-Za-z0-9_]*$")
 
 TEST_XML=b"""\

@@ -35,6 +35,11 @@ try:
 except NameError:
     long = int
 
+try:
+    basestring
+except NameError:
+    basestring = str
+
 def _typemap(tp): # XXX: Is this needed?
     if tp is None: return None
     return tp.replace(b'_NSRect', b'CGRect').replace(b'_NSPoint', b'CGPoint').replace(b'_NSSize', b'CGSize')

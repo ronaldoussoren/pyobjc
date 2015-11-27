@@ -2367,7 +2367,7 @@ static const char uintType[] = { _C_UINT, 0 };
 #endif
 }
 
-static int
+int
 depythonify_python_object(PyObject* argument, id* datum)
 {
     PyObject* anObject;

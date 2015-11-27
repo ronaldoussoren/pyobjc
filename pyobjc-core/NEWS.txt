@@ -82,6 +82,12 @@ Version 3.1
   processing beyond the end of a type string (which can effectively hang
   the python interpreter with 100% CPU usage)
 
+* Fix edge-case in NSCoding support that causes PyObjC to use proxy objects
+  of the wrong type in some cases.
+
+* Fix incompatibility with Python 3.6 (where ``inspect.getargspec`` no longer
+  exists)
+
 Version 3.0.5
 -------------
 

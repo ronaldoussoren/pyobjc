@@ -11,11 +11,6 @@ import operator
 import objc
 import decimal
 
-try:
-    unicode
-except NameError:
-    unicode = str
-
 class TestNSDecimalWrapper (TestCase):
     def test_creation(self):
         d = objc.NSDecimal(0)

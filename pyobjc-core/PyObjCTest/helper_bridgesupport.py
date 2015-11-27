@@ -7,11 +7,6 @@ if not objc.__file__.startswith(sys.argv[1]):
     print("Loaded objc from unexpected path")
     sys.exit(1)
 
-try:
-    unicode
-except NameError:
-    unicode = str
-
 passed = True
 g = {}
 objc.initFrameworkWrapper("AddressBook",

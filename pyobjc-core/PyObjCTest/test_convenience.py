@@ -496,7 +496,10 @@ class TestBasicConveniences (TestCase):
         o._['key2'] = 2
 
         self.assertEqual(o, {'key1': 1, 'key2': 2 })
-        self.assertRaises(AttributeError, getattr, o._, 'nosuchattr')
+
+        # At least on OSX 10.11 the KVC accessor for NSDictionary returns
+        # nil for non-existing keys.
+        #self.assertRaises(AttributeError, getattr, o._, 'nosuchattr')
         self.assertRaises(TypeError, o._.__setitem__, 42, 1)
 
         o = OC_WithHash.alloc().initWithHash_(1)

@@ -189,14 +189,9 @@ class TestNSNumber (TestCase):
         self.assertEqual(OC_TestNumber.numberAsUnsignedShort_(v), 40487)
 
     def testDoubleConversions(self):
-        print(1)
         v = NSNumber.numberWithDouble_(75.5)
-        print(2)
         self.assertEqual(v.stringValue(), '75.5')
-        print(type(v))
-        print(3)
         self.assertEqual(OC_TestNumber.numberAsBOOL_(v), 1)
-        print(4)
         self.assertEqual(OC_TestNumber.numberAsChar_(v), 75)
         self.assertEqual(OC_TestNumber.numberAsShort_(v), 75)
         self.assertEqual(OC_TestNumber.numberAsInt_(v), 75)
@@ -364,6 +359,25 @@ class TestPyNumber (TestCase):
         self.assertEqual(OC_TestNumber.numberAsShort_(v), -25049)
         self.assertEqual(OC_TestNumber.numberAsUnsignedChar_(v), 39)
         self.assertEqual(OC_TestNumber.numberAsUnsignedShort_(v), 40487)
+
+
+        # Python long
+        v = long(42)
+
+        self.assertEqual(OC_TestNumber.numberAsBOOL_(v), 1)
+        self.assertEqual(OC_TestNumber.numberAsChar_(v), 42)
+        self.assertEqual(OC_TestNumber.numberAsShort_(v), 42)
+        self.assertEqual(OC_TestNumber.numberAsInt_(v), 42)
+        self.assertEqual(OC_TestNumber.numberAsLong_(v), 42)
+        self.assertEqual(OC_TestNumber.numberAsLongLong_(v), 42)
+        self.assertEqual(OC_TestNumber.numberAsUnsignedChar_(v), 42)
+        self.assertEqual(OC_TestNumber.numberAsUnsignedShort_(v), 42)
+        self.assertEqual(OC_TestNumber.numberAsUnsignedInt_(v), 42)
+        self.assertEqual(OC_TestNumber.numberAsUnsignedLong_(v), 42)
+        self.assertEqual(OC_TestNumber.numberAsUnsignedLongLong_(v), 42)
+        self.assertEqual(OC_TestNumber.numberAsUnsignedLongLong_(v), 42)
+        self.assertEqual(OC_TestNumber.numberAsFloat_(v), 42.0)
+        self.assertEqual(OC_TestNumber.numberAsDouble_(v), 42.0)
 
     def testPythonLongConversions(self):
         if sys.version_info[0] == 2:

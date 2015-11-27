@@ -11,12 +11,6 @@ try:
 except ImportError:
     cPickle = None
 
-try:
-    long
-except NameError:
-    # Python 3.x
-    long = int
-
 class TestPickleNumber (TestCase):
 
     def testPickleInt(self):

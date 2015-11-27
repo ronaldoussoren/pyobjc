@@ -9,7 +9,16 @@ __all__ = ['IBOutlet', 'IBAction', 'accessor', 'Accessor', 'typedAccessor', 'cal
 from objc._objc import ivar, selector, _makeClosure, selector, _C_SEL, _C_ID, _C_NSUInteger, _C_NSBOOL, _closurePointer
 import sys, textwrap
 import warnings
-from inspect import getargspec
+
+try:
+    from inspect import getargspec
+except ImportError:
+    getargspec = None
+
+try:
+    from inspect import getfullargspec
+except ImportError:
+    getfullargspec = None
 
 _C_NSRange = [b"{_NSRange=II}", b"{_NSRange=QQ}"][sys.maxsize > 2**32]
 
@@ -61,14 +70,18 @@ def accessor(func, typeSignature=b'@'):
     Return an Objective-C method object that is conformant with key-value coding
     and key-value observing.
     """
-    args, varargs, varkw, defaults = getargspec(func)
+    if getfullargspec is not None:
+        args, varargs, varkw, defaults, kwonlyargs, kwonlydefaults, annotations = getfullargspec(func)
+    else:
+        args, varargs, varkw, defaults = getargspec(func)
+        kwonlyargs = kwonlydefaults = annotations = None
     funcName = func.__name__
     maxArgs = len(args)
     minArgs = maxArgs - len(defaults or ())
     # implicit self
     selArgs = 1 + funcName.count('_')
-    if varargs is not None or varkw is not None:
-        raise TypeError('%s can not be an accessor because it accepts varargs or varkw' % (funcName,))
+    if varargs is not None or varkw is not None or kwonlyargs:
+        raise TypeError('%s can not be an accessor because it accepts varargs, varkw or kwonly' % (funcName,))
 
     if not (minArgs <= selArgs <= maxArgs):
         if minArgs == maxArgs:

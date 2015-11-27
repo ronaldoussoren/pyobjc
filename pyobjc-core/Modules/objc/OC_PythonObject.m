@@ -1083,9 +1083,23 @@ static PyObject* setKeyFunc = NULL;
                 PyObjC_GIL_FORWARD_EXC();
             }
 
-            SET_FIELD(pyObject, v);
+            /* To make life more interesting the correct proxy
+             * type for 'v' might not be OC_PythonObject, in particular
+             * when introducing new proxy types in new versions
+             * of PyObjC, and in some error cases.
+             */
+            NSObject* temp;
+            if (depythonify_python_object(v, &temp) == -1) {
+                Py_DECREF(v);
+                PyObjC_GIL_FORWARD_EXC();
+            }
 
-            self = PyObjC_FindOrRegisterObjCProxy(pyObject, self);
+            if (temp != (NSObject*)self) {
+                [temp retain];
+                [self release];
+                self = (OC_PythonObject*)temp;
+            }
+            Py_DECREF(pyObject);
 
         PyObjC_END_WITH_GIL
 

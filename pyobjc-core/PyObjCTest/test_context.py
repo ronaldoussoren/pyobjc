@@ -2,11 +2,6 @@ from PyObjCTools.TestSupport import *
 
 import objc
 
-try:
-    long
-except NameError:
-    long = int
-
 class TestContext (TestCase):
     def test_context(self):
         self.assertEqual(objc.context._registry, {})
