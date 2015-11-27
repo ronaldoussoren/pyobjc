@@ -16,8 +16,7 @@ class TestNSBackgroundActivityScheduler (TestCase):
         #self.assertArgIsBlock(NSBackgroundActivityScheduler.scheduleWithBlock_, 0, NSBackgroundActivityCompletionHandler)
         self.assertResultIsBOOL(NSBackgroundActivityScheduler.shouldDefer)
 
-        self.fail("NSBackgroundActivityScheduler.scheduleWithBlock_: cannot write proper test description!")
-        self.assertArgIsBlock(NSBackgroundActivityScheduler.scheduleWithBlock_, 0, NSBackgroundActivityCompletionHandler)
+        self.assertArgIsBlock(NSBackgroundActivityScheduler.scheduleWithBlock_, 0, b'v' + objc._C_NSInteger)
 
 if __name__ == "__main__":
     main()

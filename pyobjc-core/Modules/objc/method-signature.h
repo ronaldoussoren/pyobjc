@@ -71,6 +71,9 @@ extern int
 PyObjC_registerMetaData(PyObject*, PyObject*, PyObject*);
 
 extern PyObject*
+PyObjC_copyMetadataRegistry(void);
+
+extern PyObject*
 PyObjCMethodSignature_AsDict(PyObjCMethodSignature* methinfo);
 
 #define PyObjCMethodSignature_FromSignature(sig, is_native) \

@@ -1720,3 +1720,9 @@ error:
     Py_XDECREF(result);
     return NULL;
 }
+
+PyObject*
+PyObjC_copyMetadataRegistry(void)
+{
+    return PyObjC_CopyRegistry(registry, (PyObjC_ItemTransform)PyObjCMethodSignature_AsDict);
+}

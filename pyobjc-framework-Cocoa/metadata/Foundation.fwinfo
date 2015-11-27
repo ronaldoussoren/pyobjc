@@ -138,6 +138,25 @@
     }
   },
   "classes": {
+   "NSBackgroundActivityScheduler": {
+    "methods": [
+     {
+      "selector": "scheduleWithBlock:",
+      "class_method": false,
+      "args": {
+       "0": {
+        "callable": {
+	 "arguments": {
+	   "0": { "typestr": "^v" },
+	   "1": { "typestr": [ "i", "q" ] }
+	 },
+	 "retval": { "typestr": "v" }
+	}
+       }
+      }
+     }
+    ]
+   },
    "NSXPCConnection": {
     "methods": [
      {
@@ -4204,6 +4223,64 @@
       },
       "class_method": true,
       "selector": "setHostCacheEnabled:"
+     }
+    ]
+   },
+   "NSItemProvider": {
+    "methods": [
+     {
+      "selector": "previewImageHandler",
+      "class_method": false,
+      "retval": {
+       "type_override": "@?",
+       "callable": {
+        "arguments": {
+	 "0": { "type": "^v" },
+	 "1": {
+	  "type": "@?",
+	  "callable": {
+	   "arguments": {
+	    "0": { "type": "^v" },
+	    "1": { "type": "@" },
+	    "2": { "type": "@" }
+	   },
+	   "retval": { "type": "v" }
+	  }
+	 },
+	 "2": { "type": "#" },
+	 "3": { "type": "@" }
+	},
+	"retval": { "type": "v" }
+       }
+      }
+     },
+     {
+      "selector": "setPreviewImageHandler:",
+      "class_method": false,
+      "args": {
+       "0": {
+        "type_override": "@?",
+        "callable": {
+         "arguments": {
+	  "0": { "type": "^v" },
+	  "1": {
+	   "type": "@?",
+	   "callable": {
+	    "arguments": {
+	     "0": { "type": "^v" },
+	     "1": { "type": "@" },
+	     "2": { "type": "@" }
+	    },
+	    "retval": { "type": "v" }
+	   }
+	  },
+	  "2": { "type": "#" },
+	  "3": { "type": "@" }
+	 },
+	 "retval": { "type": "v" }
+	}
+       }
+      }
      }
     ]
    },

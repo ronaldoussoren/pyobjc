@@ -8,7 +8,7 @@ class TestNSCollectionViewHelper (NSObject):
     def collectionView_writeItemsAtIndexPaths_toPasteboard_(self, v, p, p2): return True
     def collectionView_canDragItemsAtIndexPaths_withEvent_(self, c, p, e): return True
     def numberOfSectionsInCollectionView_(self, v): return 1
-    def collectionView_numerOfItemsInSection_(self, v, s): return 1
+    def collectionView_numberOfItemsInSection_(self, v, s): return 1
     def collectionView_canDragItemsAtIndexes_withEvent_(self, v, i, e): return 1
     def collectionView_writeItemsAtIndexes_toPasteboard_(self, v, i, p): return 1
     def collectionView_draggingImageForItemsAtIndexes_withEvent_offset_(self, v, i, e, o): return 1
@@ -111,8 +111,8 @@ class TestNSCollectionView (TestCase):
         objc.protocolNamed('NSCollectionViewElement')
 
         objc.protocolNamed('NSCollectionViewDataSource')
-        self.assertResultHasType(TestNSCollectionViewHelper.collectionView_numerOfItemsInSection_, objc._C_NSInteger)
-        self.assertArgHasType(TestNSCollectionViewHelper.collectionView_numerOfItemsInSection_, 1, objc._C_NSInteger)
+        self.assertResultHasType(TestNSCollectionViewHelper.collectionView_numberOfItemsInSection_, objc._C_NSInteger)
+        self.assertArgHasType(TestNSCollectionViewHelper.collectionView_numberOfItemsInSection_, 1, objc._C_NSInteger)
 
         self.assertResultHasType(TestNSCollectionViewHelper.numberOfSectionsInCollectionView_, objc._C_NSInteger)
 

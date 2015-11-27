@@ -114,7 +114,7 @@ class TestNSDragging (TestCase):
         self.assertArgIsBOOL(TestNSDraggingHelper.draggedImage_endedAt_deposited_, 2)
 
         self.assertResultHasType(TestNSDraggingHelper.draggingSession_sourceOperationMaskForDraggingContext_, objc._C_NSUInteger)
-        self.assertArgHasType(TestNSDraggingHelper.draggingSession_sourceOperationMaskForDraggingContext_, 1, objc._C_NSUInteger)
+        self.assertArgHasType(TestNSDraggingHelper.draggingSession_sourceOperationMaskForDraggingContext_, 1, objc._C_NSInteger)
 
     @min_os_level('10.7')
     def testProtocols10_7(self):
@@ -141,8 +141,8 @@ class TestNSDragging (TestCase):
     @min_os_level('10.11')
     def testProtocols10_11(self):
         self.assertArgIsBOOL(TestNSDraggingHelper.springLoadingActivated_draggingInfo_, 0)
-        self.assertResultHasType(TestNSDraggingHelper.springLoadingEntered_, objc._C_NSInteger)
-        self.assertResultHasType(TestNSDraggingHelper.springLoadingUpdated_, objc._C_NSInteger)
+        self.assertResultHasType(TestNSDraggingHelper.springLoadingEntered_, objc._C_NSUInteger)
+        self.assertResultHasType(TestNSDraggingHelper.springLoadingUpdated_, objc._C_NSUInteger)
 
 if __name__ == "__main__":
     main()

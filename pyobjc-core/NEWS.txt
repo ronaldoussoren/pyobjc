@@ -88,6 +88,14 @@ Version 3.1
 * Fix incompatibility with Python 3.6 (where ``inspect.getargspec`` no longer
   exists)
 
+* Added (private) function ``objc._copyMetadataRegistry``. This function returns
+  a copy of the internal registry that's used to find additional information
+  about method signatures.
+
+  Note that the data structure returned by this function is subject to change,
+  that the data structure is undocumented and that modifying it does not affect
+  the data used by PyObjC.
+
 Version 3.0.5
 -------------
 

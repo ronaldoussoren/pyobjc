@@ -885,6 +885,22 @@ static char* keywords[] = { "name", "typestr", "doc", NULL };
     return PyObjCCreateOpaquePointerType(name, typestr, docstr);
 }
 
+PyDoc_STRVAR(copyMetadataRegistry_doc,
+    "_copyMetadataRegistry()"
+    CLINIC_SEP
+    "\n"
+    "Return a copy of the metdata registry.");
+static PyObject*
+copyMetadataRegistry(PyObject* self __attribute__((__unused__)), PyObject* args, PyObject* kwds)
+{
+static char* keywords[] = { NULL };
+
+    if (!PyArg_ParseTupleAndKeywords(args, kwds, "", keywords)) {
+        return NULL;
+    }
+    return PyObjC_copyMetadataRegistry();
+}
+
 PyDoc_STRVAR(registerMetaData_doc,
     "registerMetaDataForSelector(classObject, selector, metadata)\n"
     CLINIC_SEP
@@ -1962,6 +1978,12 @@ static PyMethodDef mod_methods[] = {
         .ml_meth    = (PyCFunction)registerMetaData,
         .ml_flags   = METH_VARARGS|METH_KEYWORDS,
         .ml_doc     = registerMetaData_doc
+    },
+    {
+        .ml_name    = "_copyMetadataRegistry",
+        .ml_meth    = (PyCFunction)copyMetadataRegistry,
+        .ml_flags   = METH_VARARGS|METH_KEYWORDS,
+        .ml_doc     = copyMetadataRegistry_doc
     },
     {
         .ml_name    = "_updatingMetadata",

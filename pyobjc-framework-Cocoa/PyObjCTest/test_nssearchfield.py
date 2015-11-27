@@ -13,7 +13,7 @@ class TestNSSearchField (TestCase):
     def testMethods10_11(self):
         self.assertArgIsBOOL(NSSearchField.rectForSearchTextWhenCentered_, 0)
         self.assertArgIsBOOL(NSSearchField.rectForSearchButtonWhenCentered_, 0)
-        self.assertArgIsBOOL(NSSearchField.rectForCancelButtonWhenCentered, 0)
+        self.assertArgIsBOOL(NSSearchField.rectForCancelButtonWhenCentered_, 0)
         self.assertResultIsBOOL(NSSearchField.centersPlaceholder)
         self.assertArgIsBOOL(NSSearchField.setCentersPlaceholder_, 0)
 

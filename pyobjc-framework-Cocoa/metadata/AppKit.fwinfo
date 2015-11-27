@@ -768,6 +768,7 @@
      {
       "args": {
        "2": {
+        "type_override": "@?",
         "callable": {
 	 "arguments": {
 	  "0": { "typestr": "^v" },
@@ -3747,6 +3748,42 @@
      }
     ]
    },
+   "NSCollectionViewLayoutInvalidationContext": {
+    "methods": [
+     {
+      "class_method": false,
+      "retval": {
+       "type_override": "Z"
+      },
+      "selector": "invalidateEverything"
+     },
+     {
+      "class_method": false,
+      "retval": {
+       "type_override": "Z"
+      },
+      "selector": "invalidateDataSourceCounts"
+     }
+    ]
+   },
+   "NSCollectionViewFlowLayoutInvalidationContext": {
+    "methods": [
+     {
+      "class_method": false,
+      "retval": {
+       "type_override": "Z"
+      },
+      "selector": "invalidateFlowLayoutDelegateMetrics"
+     },
+     {
+      "class_method": false,
+      "args": {
+       "0": { "type_override": "Z" }
+      },
+      "selector": "setInvalidateFlowLayoutDelegateMetrics:"
+     }
+    ]
+   },
    "NSCollectionView": {
     "methods": [
      {
@@ -3766,6 +3803,15 @@
       },
       "class_method": false,
       "selector": "setDraggingSourceOperationMask:forLocal:"
+     },
+     {
+      "args": {
+       "2": {
+        "type_modifier": "N"
+       }
+      },
+      "class_method": false,
+      "selector": "draggingImageForItemsAtIndexPaths:withEvent:offset:"
      },
      {
       "class_method": false,
@@ -3873,6 +3919,49 @@
       },
       "class_method": false,
       "selector": "setSelectable:"
+     },
+     {
+      "args": {
+       "0": {
+        "callable": {
+	 "arguments": {
+	  "0": { "typestr": "^v" }
+	 },
+	 "retval": {"typestr": "v" }
+	}
+       },
+       "1": {
+        "callable": {
+	 "arguments": {
+	  "0": { "typestr": "^v" },
+	  "1": { "typestr": "Z" }
+	 },
+	 "retval": {"typestr": "v" }
+        }
+       }
+      },
+      "class_method": false,
+      "selector": "performBatchUpdates:completionHandler:"
+     }
+    ]
+   },
+   "NSSet": {
+    "methods": [
+     {
+      "args": {
+       "2": {
+        "callable": {
+	 "arguments": {
+	  "0": { "typestr": "^v" },
+	  "1": { "typestr": "@" },
+	  "2": { "typestr": "o^Z" }
+	 },
+	 "retval": {"typestr": "v" }
+        }
+       }
+      },
+      "class_method": false,
+      "selector": "enumerateIndexPathsWithOptions:usingBlock:"
      }
     ]
    },
@@ -7826,6 +7915,15 @@
    "NSLayoutManager": {
     "methods": [
      {
+      "selector": "setGlyphs:properties:characterIndexes:font:forGlyphRange:",
+      "class_method": false,
+      "args": {
+       "0": { "type_modifier": "n", "c_array_length_in_arg": 4 },
+       "1": { "type_modifier": "n", "c_array_length_in_arg": 4 },
+       "2": { "type_modifier": "n", "c_array_length_in_arg": 4 }
+      }
+     },
+     {
       "args": {
        "0": {
         "type_override": [
@@ -9260,6 +9358,27 @@
        "type_override": "Z"
       },
       "selector": "usesScreenFonts"
+     },
+     {
+      "class_method": false,
+      "selector": "enumerateLineFragmentsForGlyphRange:usingBlock",
+      "args": {
+       "0": {
+        "callable": {
+         "arguments": {
+          "0": { "type": "^v" },
+          "1": { "type": [ "{_NSRect={_NSPoint=ff}{_NSSize=ff}}", "{CGRect={CGPoint=dd}{CGSize=dd}}" ] },
+          "2": { "type": [ "{_NSRect={_NSPoint=ff}{_NSSize=ff}}", "{CGRect={CGPoint=dd}{CGSize=dd}}" ] },
+          "3": { "type": "@" },
+          "4": { "type": [ "{_NSRange=II}", "{_NSRange=QQ}" ] },
+          "5": { "type": "o^Z" }
+         },
+         "retval": {
+          "type": "v"
+         }
+        }
+       }
+      }
      }
     ]
    },
@@ -10771,6 +10890,32 @@
    "NSObject": {
     "methods": [
      {
+      "selector": "springLoadingEntered:",
+      "class_method": false,
+      "retval": {
+       "type_override": [ "I", "Q" ]
+      }
+     },
+     {
+      "selector": "springLoadingUpdated:",
+      "class_method": false,
+      "retval": {
+       "type_override": [ "I", "Q" ]
+      }
+     },
+     {
+      "selector": "draggingSession:sourceOperationMaskForDraggingContext",
+      "class_method": false,
+      "args": {
+       "1": {
+        "type_override": [ "i", "q" ]
+       }
+      },
+      "retval": {
+       "type_override": [ "I", "Q" ]
+      }
+     },
+     {
       "selector": "application:continueUserActivity:restorationHandler:",
       "class_method": false,
       "args": {
@@ -10792,7 +10937,8 @@
          "{_NSRect={_NSPoint=ff}{_NSSize=ff}}",
          "{CGRect={CGPoint=dd}{CGSize=dd}}"
         ]
-       }
+       },
+       "2": { "type_override": ["I", "Q" ] }
       },
       "selector": "showRelativeToRect:ofView:preferredEdge:",
       "class_method": false
@@ -10801,27 +10947,38 @@
       "args": {
        "1": { "type_override": [ "I", "Q" ] },
        "2": { "type_override": [ "{_NSRange=II}", "{_NSRange=QQ}" ] },
-       "3": { "type_override": [ "I", "Q" ] }
+       "3": { "type_override": [ "i", "q" ] }
       },
       "class_method": false,
       "selector": "textStorage:willProcessEditing:range:changeInLength:"
      },
-       {
-         "args": {
-	  "2": {
-	    "callable": {
-	     "arguments": {
-	      "0": { "typestr": "^v" },
-	       "1": { "typestr": "@" },
-	       "2": { "typestr": "@" }
-	     },
-	     "retval": { "typestr": "v" }
-	   }
-	  }
-	 },
-         "class_method": false,
-	 "selector": "restoreWindowWithIdentifier:state:completionHandler:"
-       },
+     {
+      "selector": "hyphenationFactorForGlyphAtIndex:",
+      "class_method": false,
+      "retval": {
+       "type_override": "f"
+      },
+      "args": {
+       "0": { "type_override": [ "I", "Q" ] }
+      }
+     },
+     {
+      "args": {
+       "2": {
+	"type_override": "@?",
+	"callable": {
+	"arguments": {
+	 "0": { "typestr": "^v" },
+	 "1": { "typestr": "@" },
+	 "2": { "typestr": "@" }
+	},
+	"retval": { "typestr": "v" }
+       }
+      }
+     },
+     "class_method": false,
+     "selector": "restoreWindowWithIdentifier:state:completionHandler:"
+    },
        {
          "args": {
 	  "5": {
@@ -10974,6 +11131,24 @@
       "args": {
        "2": {
         "type_override": [
+         "{_NSRect={_NSPoint=ff}{_NSSize=ff}}",
+         "{CGRect={CGPoint=dd}{CGSize=dd}}"
+        ]
+       }
+      },
+      "class_method": false,
+      "retval": {
+       "type_override": [
+        "{_NSRect={_NSPoint=ff}{_NSSize=ff}}",
+        "{CGRect={CGPoint=dd}{CGSize=dd}}"
+       ]
+      },
+      "selector": "rulerView:locationForPoint:"
+     },
+     {
+      "args": {
+       "2": {
+        "type_override": [
          "f",
          "d"
         ]
@@ -11053,11 +11228,24 @@
      },
      {
       "class_method": false,
+      "selector": "collectionView:layout:insetForSectionAtIndex:",
+      "retval": {
+       "type_override": [
+         "{NSEdgeInsets=ffff}",
+         "{NSEdgeInsets=dddd}"
+       ]
+      },
+      "args": {
+       "2": { "type_override": [ "I", "Q" ] }
+      }
+     },
+     {
+      "class_method": false,
       "selector": "collectionView:layout:sizeForItemAtIndexPath:",
       "retval": {
        "type_override": [
-         "{_NSRect={_NSPoint=ff}{_NSSize=ff}}",
-         "{CGRect={CGPoint=dd}{CGSize=dd}}"
+         "{_NSSize=ff}",
+         "{CGSize=dd}"
        ]
       }
      },
@@ -11066,7 +11254,19 @@
       "retval": {
        "type_override": ["i", "q" ]
       },
-      "selector": "collectionView:numerOfItemsInSection:"
+      "args": {
+       "1": {
+        "type_override": [ "i", "q" ]
+       }
+      },
+      "selector": "collectionView:numberOfItemsInSection:"
+     },
+     {
+      "class_method": false,
+      "retval": {
+       "type_override": ["i", "q" ]
+      },
+      "selector": "numberOfSectionsInCollectionView:"
      },
      {
       "class_method": false,
@@ -11074,6 +11274,13 @@
        "type_override": "Z"
       },
       "selector": "collectionView:canDragItemsAtIndexes:withEvent:"
+     },
+     {
+      "class_method": false,
+      "retval": {
+       "type_override": "Z"
+      },
+      "selector": "collectionView:canDragItemsAtIndexPaths:withEvent:"
      },
      {
       "class_method": false,
@@ -14812,7 +15019,8 @@
      {
       "args": {
        "0": {
-        "c_array_of_variable_length": true
+        "c_array_of_variable_length": true,
+	"type_modifier": "n"
        }
       },
       "class_method": false,
@@ -17191,7 +17399,26 @@
       "args": {
        "0": { "type_override": "Z" }
       },
+      "selector": "setCentersPlaceholder:"
+     },
+     {
+      "class_method": false,
+      "retval": { "type_override": "Z" },
+      "selector": "centersPlaceholder:"
+     },
+     {
+      "class_method": false,
+      "args": {
+       "0": { "type_override": "Z" }
+      },
       "selector": "rectForSearchTextWhenCentered:"
+     },
+     {
+      "class_method": false,
+      "args": {
+       "0": { "type_override": "Z" }
+      },
+      "selector": "rectForCancelButtonWhenCentered:"
      },
      {
       "class_method": false,
@@ -19542,6 +19769,13 @@
    },
    "NSTextContainer": {
     "methods": [
+     {
+      "selector": "lineFragmentRectForProposedRect:atIndex:writingDirection:remainingRect:",
+      "class_method": false,
+      "args": {
+       "3": { "type_modifier": "o" }
+      }
+     },
      {
       "args": {
        "0": {

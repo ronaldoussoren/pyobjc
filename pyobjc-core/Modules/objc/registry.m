@@ -121,3 +121,47 @@ PyObjC_FindInRegistry(PyObject* registry, Class cls, SEL selector)
 
     return found_value;
 }
+
+PyObject*
+PyObjC_CopyRegistry(PyObject* registry, PyObjC_ItemTransform value_transform)
+{
+    PyObject* result = PyDict_New();
+    PyObject* key;
+    PyObject* sublist;
+    Py_ssize_t pos = 0;
+    if (result == NULL) {
+        return NULL;
+    }
+
+    while (PyDict_Next(registry, &pos, &key, &sublist)) {
+        Py_ssize_t i, len;
+        PyObject* sl_new;
+        len = PyList_Size(sublist);
+        sl_new = PyList_New(len);
+        if (sl_new == NULL) goto error;
+        if (PyDict_SetItem(result, key, sl_new) == -1) {
+            Py_DECREF(sl_new);
+            goto error;
+        }
+        Py_DECREF(sl_new);
+
+        for (i = 0; i < len; i++) {
+            PyObject* item;
+            PyObject* new_item;
+
+            item = PyList_GET_ITEM(sublist, i);
+            new_item = Py_BuildValue("(ON)",
+                    PyTuple_GET_ITEM(item, 0),
+                    value_transform(PyTuple_GET_ITEM(item, 1)));
+            if (new_item == NULL) goto error;
+
+            PyList_SET_ITEM(sl_new, i, new_item);
+        }
+    }
+
+    return result;
+
+error:
+    Py_DECREF(result);
+    return NULL;
+}

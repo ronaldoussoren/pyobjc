@@ -112,7 +112,7 @@ class TestNSOpenGL (TestCase):
         self.assertArgIsIn(NSOpenGLContext.setValues_forParameter_, 0)
         self.assertArgIsVariableSize(NSOpenGLContext.setValues_forParameter_, 0)
 
-        self.assertArgIsOut(NSOpenGLContext.setValues_forParameter_, 0)
+        self.assertArgIsIn(NSOpenGLContext.setValues_forParameter_, 0)
         self.assertArgIsVariableSize(NSOpenGLContext.setValues_forParameter_, 0)
 
         self.assertArgIsIn(NSOpenGLContext.setOffScreen_width_height_rowbytes_, 0)
