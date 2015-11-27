@@ -672,7 +672,7 @@ setup_descr(struct _PyObjC_ArgDescr* descr, PyObject* meta, BOOL is_native)
         if (d) {
             if (descr == NULL || descr->tmpl) return -2;
 
-            /* Make up a dummy signature, will be overridden bij
+            /* Make up a dummy signature, will be overridden by
              * the metadata.
              */
             char buffer[64];
