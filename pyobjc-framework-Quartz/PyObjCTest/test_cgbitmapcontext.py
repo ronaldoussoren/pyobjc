@@ -3,11 +3,6 @@ from PyObjCTools.TestSupport import *
 from Quartz.CoreGraphics import *
 import array
 
-try:
-    long
-except NameError:
-    long = int
-
 class TestCGBitmapContext (TestCase):
     def testFunctions(self):
         bytes_val = array.array('B', (0 for i in range(100*80*4)))

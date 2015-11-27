@@ -1,11 +1,6 @@
 from PyObjCTools.TestSupport import *
 from Foundation import *
 
-try:
-    unicode
-except NameError:
-    unicode = str
-
 class TestNSBackgroundActivityScheduler (TestCase):
     @min_os_level('10.10')
     def testConstants10_10(self):

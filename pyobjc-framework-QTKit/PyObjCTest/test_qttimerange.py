@@ -2,11 +2,6 @@
 from PyObjCTools.TestSupport import *
 from QTKit import *
 
-try:
-    unicode
-except NameError:
-    unicode = str
-
 class TestQTTimeRange (TestCase):
     def testStructs(self):
         v = QTTimeRange()

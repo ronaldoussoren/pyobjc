@@ -2,11 +2,6 @@ from PyObjCTools.TestSupport import *
 
 import AVFoundation
 
-try:
-    unicode
-except NameError:
-    unicode = str
-
 class TestAVAudioRecorderHelper (AVFoundation.NSObject):
     def audioRecorderDidFinishRecording_successfully_(self, a, b): pass
 

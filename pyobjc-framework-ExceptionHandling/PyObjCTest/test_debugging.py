@@ -5,11 +5,6 @@ import objc
 from PyObjCTools.TestSupport import *
 from PyObjCTools import Debugging
 
-try:
-    long
-except NameError:
-    long = int
-
 class TestDebugging (TestCase):
     def testConstants(self):
         for nm in (

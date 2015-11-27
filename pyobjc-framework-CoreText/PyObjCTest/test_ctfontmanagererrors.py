@@ -1,11 +1,6 @@
 from PyObjCTools.TestSupport import *
 from CoreText import *
 
-try:
-    unicode
-except NameError:
-    unicode = str
-
 class TestCTFontManagerErrors (TestCase):
     @min_os_level("10.6")
     def testConstants10_6(self):

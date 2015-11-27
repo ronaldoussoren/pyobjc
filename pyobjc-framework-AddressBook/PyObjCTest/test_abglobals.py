@@ -2,11 +2,6 @@
 from PyObjCTools.TestSupport import *
 from AddressBook import *
 
-try:
-    unicode
-except NameError:
-    unicode = str
-
 class TestABGlobals (TestCase):
     @min_os_level('10.9')
     def testConstants10_9(self):

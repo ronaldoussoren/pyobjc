@@ -4,16 +4,6 @@ from SearchKit import *
 from Foundation import NSMutableData
 import os
 
-try:
-    unicode
-except NameError:
-    unicode = str
-
-try:
-    long
-except NameError:
-    long = int
-
 class TestSKIndex (TestCase):
     def testTypes(self):
         self.assertIsCFType(SKIndexRef)

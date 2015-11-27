@@ -5,11 +5,6 @@ import socket
 from PyObjCTest.test_scnetwork import resolver_available
 import contextlib
 
-try:
-    long
-except NameError:
-    long = int
-
 class TestSCNetworkReachability (TestCase):
     def testTypes(self):
         self.assertIsInstance(SCNetworkReachabilityRef, objc.objc_class)

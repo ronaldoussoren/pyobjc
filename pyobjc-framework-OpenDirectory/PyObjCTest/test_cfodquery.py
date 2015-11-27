@@ -1,11 +1,6 @@
 from PyObjCTools.TestSupport import *
 import CFOpenDirectory
 
-try:
-    long
-except NameError:
-    long = int
-
 class TestCFODNode (TestCase):
     def testMethods(self):
         self.assertIsInstance(CFOpenDirectory.ODQueryGetTypeID(), (int, long))

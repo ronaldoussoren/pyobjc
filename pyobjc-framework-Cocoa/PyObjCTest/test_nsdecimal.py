@@ -7,11 +7,6 @@ import operator
 import objc
 import sys
 
-try:
-    long
-except NameError:
-    long = int
-
 if 0:
     class TestNSDecimal (TestCase):
         def testConstants(self):

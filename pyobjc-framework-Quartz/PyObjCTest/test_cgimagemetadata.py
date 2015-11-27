@@ -2,16 +2,6 @@ from PyObjCTools.TestSupport import *
 
 import Quartz
 
-try:
-    long
-except NameError:
-    long = int
-
-try:
-    unicode
-except NameError:
-    unicode = str
-
 class TestCGImageMetadata (TestCase):
     @min_os_level('10.8')
     def testTypes10_8(self):

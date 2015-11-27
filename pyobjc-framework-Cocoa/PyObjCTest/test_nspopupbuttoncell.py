@@ -2,11 +2,6 @@
 from PyObjCTools.TestSupport import *
 from AppKit import *
 
-try:
-    unicode
-except NameError:
-    unicode = str
-
 class TestNSPopUpButtonCell (TestCase):
     def testConstants(self):
         self.assertEqual(NSPopUpNoArrow, 0)

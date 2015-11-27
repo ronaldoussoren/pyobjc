@@ -1,11 +1,6 @@
 from PyObjCTools.TestSupport import *
 from Quartz.QuartzCore import *
 
-try:
-    unicode
-except NameError:
-    unicode = str
-
 class TestCAMetalLayer (TestCase):
     @min_os_level('10.11')
     def testProtocols(self):

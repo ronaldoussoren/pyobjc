@@ -2,11 +2,6 @@
 from PyObjCTools.TestSupport import *
 from QTKit import *
 
-try:
-    unicode
-except NameError:
-    unicode = str
-
 class TestQTFormatDescription (TestCase):
     def testConstants(self):
         self.assertIsInstance(QTFormatDescriptionAudioStreamBasicDescriptionAttribute, unicode)

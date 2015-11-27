@@ -2,11 +2,6 @@ from Foundation import *
 from PyObjCTools.TestSupport import *
 import Foundation
 
-try:
-    unicode
-except NameError:
-    unicode = str
-
 class TestHelper (NSObject):
     def incFoo_(self, foo):
         foo[0] += 1

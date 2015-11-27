@@ -2,11 +2,6 @@
 from PyObjCTools.TestSupport import *
 from Quartz import *
 
-try:
-    unicode
-except NameError:
-    unicode = str
-
 class TestCVBuffer (TestCase):
     def testConstants(self):
         self.assertIsInstance(kCVBufferPropagatedAttachmentsKey, unicode)

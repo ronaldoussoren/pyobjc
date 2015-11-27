@@ -4,16 +4,6 @@ from LaunchServices import *
 
 import os
 
-try:
-    long
-except NameError:
-    long = int
-
-try:
-    unicode
-except NameError:
-    unicode = str
-
 class TestLSSharedFileList (TestCase):
     def testTypes(self):
         self.assertIsCFType(LSSharedFileListRef)

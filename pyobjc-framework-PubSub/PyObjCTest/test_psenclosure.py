@@ -2,11 +2,6 @@
 from PyObjCTools.TestSupport import *
 from PubSub import *
 
-try:
-    unicode
-except NameError:
-    unicode = str
-
 
 class TestPSEnclosure (TestCase):
     def testConstants(self):

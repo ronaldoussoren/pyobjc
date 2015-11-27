@@ -3,16 +3,6 @@ from PyObjCTools.TestSupport import *
 import Foundation
 
 
-try:
-    long
-except NameError:
-    long = int
-
-
-try:
-    unicode
-except NameError:
-    unicode = str
 
 class TestCFBundle (TestCase):
 

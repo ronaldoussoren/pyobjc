@@ -1,16 +1,6 @@
 import HIServices
 from PyObjCTools.TestSupport import *
 
-try:
-    unicode
-except NameError:
-    unicode = str
-
-try:
-    long
-except NameError:
-    long = int
-
 class TestAXUIElement (TestCase):
     def testTypes(self):
         self.assertIsCFType(HIServices.AXUIElementRef)

@@ -6,11 +6,6 @@ if sys.maxsize > 2 ** 32:
     import GameCenter
     import objc
 
-    try:
-        unicode
-    except NameError:
-        unicode = str
-
     class TestGKTurnBasedMatchHelper (GameCenter.NSObject):
         def player_receivedTurnEventForMatch_didBecomeActive_(self, p, m, a): pass
 

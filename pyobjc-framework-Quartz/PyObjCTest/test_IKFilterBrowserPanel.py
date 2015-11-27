@@ -2,11 +2,6 @@
 from PyObjCTools.TestSupport import *
 from Quartz import *
 
-try:
-    unicode
-except NameError:
-    unicode = str
-
 class TestIKFilterBrowserPanel (TestCase):
     @min_os_level('10.5')
     def testMethods(self):

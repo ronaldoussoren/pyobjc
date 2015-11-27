@@ -2,11 +2,6 @@
 from PyObjCTools.TestSupport import *
 from AppKit import *
 
-try:
-    unicode
-except NameError:
-    unicode = str
-
 class TestNSSpeechSynthesizerHelper (NSObject):
     def speechSynthesizer_didFinishSpeaking_(self, ss, b): pass
     def speechSynthesizer_willSpeakWord_ofString_(self, ss, w, s): pass

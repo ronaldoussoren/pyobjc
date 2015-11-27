@@ -2,11 +2,6 @@
 from PyObjCTools.TestSupport import *
 from SyncServices import *
 
-try:
-    unicode
-except NameError:
-    unicode = str
-
 class TestISyncManager (TestCase):
     def testMethods(self):
         self.assertResultIsBOOL(ISyncManager.isEnabled)

@@ -3,11 +3,6 @@ import objc
 
 import SceneKit
 
-try:
-    unicode
-except NameError:
-    unicode = str
-
 class TestSceneKitTypes (TestCase):
     def testTypes(self):
         v = SceneKit.SCNVector3()

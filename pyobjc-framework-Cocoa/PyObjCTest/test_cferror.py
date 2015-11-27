@@ -2,21 +2,6 @@ from PyObjCTools.TestSupport import *
 from CoreFoundation import *
 from Foundation import *
 
-try:
-    unicode
-except NameError:
-    unicode = str
-
-
-try:
-    long
-except NameError:
-    long = int
-
-try:
-    unichr
-except NameError:
-    unichr = chr
 
 
 class TestError (TestCase):

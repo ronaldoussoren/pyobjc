@@ -2,11 +2,6 @@ from PyObjCTools.TestSupport import *
 
 import AVFoundation
 
-try:
-    unicode
-except NameError:
-    unicode = str
-
 class TestAVCaptureOutputHelper (AVFoundation.NSObject):
     def captureOutputShouldProvideSampleAccurateRecordingStart_(self, a): return 1
 

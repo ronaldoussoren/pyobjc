@@ -2,11 +2,6 @@
 from PyObjCTools.TestSupport import *
 from Automator import *
 
-try:
-    unicode
-except NameError:
-    unicode = str
-
 class TestAutomatorErrors (TestCase):
     def testConstants(self):
         self.assertEqual(AMAutomatorErrorDomain, "com.apple.Automator")

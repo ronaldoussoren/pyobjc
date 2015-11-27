@@ -2,11 +2,6 @@
 from PyObjCTools.TestSupport import *
 from Quartz.PDFKit import *
 
-try:
-    unicode
-except NameError:
-    unicode = str
-
 class TestPDFViewHelper (NSObject):
     def PDFViewWillChangeScaleFactor_toScale_(self, f, s): return 1.0
     def PDFViewWillClickOnLink_withURL_(self, s, u): pass

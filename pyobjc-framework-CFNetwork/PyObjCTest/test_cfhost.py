@@ -7,11 +7,6 @@ if sys.version_info[0] != 2:
     def buffer(value):
         return value.encode('latin1')
 
-try:
-    long
-except NameError:
-    long = int
-
 class TestCFHost (TestCase):
     def testTypes(self):
         self.assertIsCFType(CFHostRef)

@@ -4,16 +4,6 @@ from Quartz.CoreGraphics import *
 import array
 import sys
 
-try:
-    long
-except NameError:
-    long = int
-
-try:
-    unicode
-except NameError:
-    unicode = str
-
 if sys.version_info[0] != 2:
     def buffer(value):
         if isinstance(value, bytes):

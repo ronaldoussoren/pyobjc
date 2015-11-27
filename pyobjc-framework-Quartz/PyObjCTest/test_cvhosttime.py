@@ -1,11 +1,6 @@
 from PyObjCTools.TestSupport import *
 from Quartz import *
 
-try:
-    long
-except NameError:
-    long = int
-
 class TestCVHostTime (TestCase):
     def testFunctions(self):
         v = CVGetCurrentHostTime()

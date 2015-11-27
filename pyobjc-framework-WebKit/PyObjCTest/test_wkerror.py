@@ -1,11 +1,6 @@
 from PyObjCTools.TestSupport import *
 from WebKit import *
 
-try:
-    unicode
-except NameError:
-    unicode = str
-
 
 class TestWKError (TestCase):
     @onlyOn64Bit

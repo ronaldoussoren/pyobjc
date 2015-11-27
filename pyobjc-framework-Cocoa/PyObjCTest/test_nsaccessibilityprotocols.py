@@ -1,11 +1,6 @@
 from PyObjCTools.TestSupport import *
 from AppKit import *
 
-try:
-    unicode
-except NameError:
-    unicode = str
-
 class TestNSAccessibilityProtocolsHelper (NSObject):
     def accessibilityOrientation(self): return 1
     def setAccessibilityOrientation_(self, v): pass

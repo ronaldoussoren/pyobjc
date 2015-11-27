@@ -1,11 +1,6 @@
 from PyObjCTools.TestSupport import *
 from WebKit import *
 
-try:
-    unicode
-except NameError:
-    unicode = str
-
 
 class TestWKNavigationAction (TestCase):
     @min_os_level('10.10')

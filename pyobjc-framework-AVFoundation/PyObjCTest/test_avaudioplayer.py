@@ -2,11 +2,6 @@ from PyObjCTools.TestSupport import *
 
 import AVFoundation
 
-try:
-    unicode
-except NameError:
-    unicode = str
-
 class TestAVAudioPlayerHelper (AVFoundation.NSObject):
     def audioPlayerDidFinishPlaying_successfully_(self, a, b): pass
 

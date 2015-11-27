@@ -4,11 +4,6 @@ from Foundation import NSArray, NSMutableArray
 
 import sys
 
-try:
-    long
-except NameError:
-    long = int
-
 if sys.version_info[0] == 3:
     def cmp(a, b):
         if a < b:

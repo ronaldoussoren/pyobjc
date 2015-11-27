@@ -3,11 +3,6 @@ import objc
 
 import SceneKit
 
-try:
-    unicode
-except NameError:
-    unicode = str
-
 class TestSCNMaterial (TestCase):
     def testConstants(self):
         self.assertIsInstance(SceneKit.SCNLightingModelPhong, unicode)

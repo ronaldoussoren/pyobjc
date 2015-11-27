@@ -1,11 +1,6 @@
 from PyObjCTools.TestSupport import *
 from SystemConfiguration import *
 
-try:
-    unicode
-except NameError:
-    unicode = str
-
 class TestSCSchemaDefinitions (TestCase):
     @min_os_level('10.5')
     def testConstants10_5(self):

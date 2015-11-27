@@ -6,11 +6,6 @@ from Foundation import *
 import Foundation
 #NSZonePtr = getattr(Foundation, 'NSZone*')
 
-try:
-    long
-except NameError:
-    long = int
-
 
 class TestNSZone (TestCase):
     def testWithZones(self):

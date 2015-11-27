@@ -3,11 +3,6 @@ from PyObjCTools.TestSupport import *
 from Quartz.CoreGraphics import *
 from Quartz.QuartzCore import *
 
-try:
-    unicode
-except NameError:
-    unicode = str
-
 class TestCALayerHelper (NSObject):
     def preferredSizeOfLayer_(self, layer): return 1
 

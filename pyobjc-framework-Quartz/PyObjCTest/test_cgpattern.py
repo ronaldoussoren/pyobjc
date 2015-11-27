@@ -4,11 +4,6 @@ from Quartz import *
 import Quartz
 import os
 
-try:
-    long
-except NameError:
-    long = int
-
 class TestCGPattern (TestCase):
     def testConstants(self):
         self.assertEqual(kCGPatternTilingNoDistortion, 0)

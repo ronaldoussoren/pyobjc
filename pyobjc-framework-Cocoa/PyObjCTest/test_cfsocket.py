@@ -4,21 +4,6 @@ from CoreFoundation import *
 import CoreFoundation
 import sys
 
-try:
-    unicode
-except NameError:
-    unicode = str
-
-
-try:
-    long
-except NameError:
-    long = int
-
-try:
-    buffer
-except NameError:
-    buffer = memoryview
 
 cached_info = None
 def onTheNetwork():

@@ -2,11 +2,6 @@
 from PyObjCTools.TestSupport import *
 from WebKit import *
 
-try:
-    unicode
-except NameError:
-    unicode = str
-
 class TestWebHistory (TestCase):
     def testConstants(self):
         self.assertIsInstance(WebHistoryItemsAddedNotification, unicode)

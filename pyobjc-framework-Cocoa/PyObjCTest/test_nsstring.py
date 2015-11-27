@@ -5,11 +5,6 @@ import sys
 
 from Foundation import *
 
-try:
-    unicode
-except NameError:
-    unicode = str
-
 class TestNSString(TestCase):
     def testClassTree(self):
         self.assertTrue(issubclass(objc.pyobjc_unicode, unicode))

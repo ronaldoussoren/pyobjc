@@ -2,16 +2,6 @@
 from PyObjCTools.TestSupport import *
 from AppKit import *
 
-try:
-    unicode
-except NameError:
-    unicode = str
-
-
-try:
-    long
-except NameError:
-    long = int
 
 class TestNSInterfaceStyle (TestCase):
     def testConstants(self):

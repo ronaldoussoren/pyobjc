@@ -5,16 +5,6 @@ import objc
 from PyObjCTools.TestSupport import *
 from DictionaryServices import *
 
-try:
-    unicode
-except NameError:
-    unicode = str
-
-try:
-    long
-except NameError:
-    long = int
-
 class TestDictionaryServices (TestCase):
     def testClasses(self):
         self.assertIsCFType(DCSDictionaryRef)

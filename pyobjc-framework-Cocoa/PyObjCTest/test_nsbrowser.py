@@ -2,11 +2,6 @@
 from PyObjCTools.TestSupport import *
 from AppKit import *
 
-try:
-    unicode
-except NameError:
-    unicode = str
-
 class TestNSBrowserHelper (NSObject):
     def browser_namesOfPromisedFilesDroppedAtDestination_forDraggedRowsWithIndexes_inColumn_(self, b, n, i, c): pass
     def browser_willDisplayCell_atRow_column_(self, b, cl, r, c): pass

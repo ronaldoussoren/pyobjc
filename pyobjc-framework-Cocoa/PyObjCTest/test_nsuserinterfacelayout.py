@@ -1,11 +1,6 @@
 from AppKit import *
 from PyObjCTools.TestSupport import *
 
-try:
-    unicode
-except NameError:
-    unicode = str
-
 class TestNSUserInterfaceLayout (TestCase):
     def testConstants(self):
         self.assertEqual(NSUserInterfaceLayoutDirectionLeftToRight, 0)

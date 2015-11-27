@@ -3,11 +3,6 @@ import objc
 
 from AppKit import *
 
-try:
-    unicode
-except NameError:
-    unicode = str
-
 class TestNSCell(TestCase):
     def testUnicode(self):
         u = b'\xc3\xbc\xc3\xb1\xc3\xae\xc3\xa7\xc3\xb8d\xc3\xa8'.decode('latin1')

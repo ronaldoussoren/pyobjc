@@ -6,11 +6,6 @@ if sys.maxsize > 2 ** 32:
     import GameCenter
     import objc
 
-    try:
-        unicode
-    except NameError:
-        unicode = str
-
     class GKMatchDelegateHelper (GameCenter.NSObject):
         def match_player_didChangeConnectionState_(self, m, p, s): pass
         def match_player_didChangeState_(self, m, p, s): pass

@@ -2,11 +2,6 @@
 from PyObjCTools.TestSupport import *
 from Quartz.CoreGraphics import *
 
-try:
-    long
-except NameError:
-    long = int
-
 class TestCGEventSource (TestCase):
     def testTypes(self):
         self.assertIsCFType(CGEventSourceRef)

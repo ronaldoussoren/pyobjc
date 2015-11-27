@@ -1,11 +1,6 @@
 from PyObjCTools.TestSupport import *
 from QTKit import *
 
-try:
-    unicode
-except NameError:
-    unicode = str
-
 class TestQTError (TestCase):
     @min_os_level('10.9')
     def testConstants(self):

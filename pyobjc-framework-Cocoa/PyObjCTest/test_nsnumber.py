@@ -5,11 +5,6 @@ import sys
 import operator
 import os
 
-try:
-    long
-except NameError:
-    long = int
-
 
 from Foundation import *
 

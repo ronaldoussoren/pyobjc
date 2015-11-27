@@ -4,16 +4,6 @@ from Quartz import *
 from CoreFoundation import CFArrayRef
 from Foundation import NSMutableData
 
-try:
-    unicode
-except NameError:
-    unicode = str
-
-try:
-    long
-except NameError:
-    long = int
-
 import sys, os
 
 if sys.version_info[0] != 2:

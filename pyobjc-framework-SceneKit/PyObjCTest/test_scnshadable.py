@@ -3,11 +3,6 @@ import objc
 
 import SceneKit
 
-try:
-    unicode
-except NameError:
-    unicode = str
-
 SCNBufferBindingBlock = b'v@@@@'
 SCNBindingBlock = b'v' + objc._C_UINT + objc._C_UINT + b'@@'
 

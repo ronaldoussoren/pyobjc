@@ -3,11 +3,6 @@ import objc
 
 import SceneKit
 
-try:
-    unicode
-except NameError:
-    unicode = str
-
 class TestSCNMaterialProperty (TestCase):
     def testConstants(self):
         self.assertEqual(SceneKit.SCNFilterModeNone, 0)

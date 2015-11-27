@@ -40,6 +40,16 @@ try:
 except NameError:
     basestring = str
 
+try:
+    bytes
+except NameError:
+    bytes = str
+
+try:
+    unichr
+except NameError:
+    unichr = chr
+
 def _typemap(tp): # XXX: Is this needed?
     if tp is None: return None
     return tp.replace(b'_NSRect', b'CGRect').replace(b'_NSPoint', b'CGPoint').replace(b'_NSSize', b'CGSize')

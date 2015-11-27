@@ -2,11 +2,6 @@
 from PyObjCTools.TestSupport import *
 from CoreData import *
 
-try:
-    unicode
-except NameError:
-    unicode = str
-
 class TestNSEntityMigrationPolicy (TestCase):
     @min_os_level("10.5")
     def testConstants(self):

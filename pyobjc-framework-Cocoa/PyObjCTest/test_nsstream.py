@@ -1,11 +1,6 @@
 from PyObjCTools.TestSupport import *
 from Foundation import *
 
-try:
-    unicode
-except NameError:
-    unicode = str
-
 class TestNSStreamHelper (NSObject):
     def stream_handleEvent_(self, a, b): pass
 

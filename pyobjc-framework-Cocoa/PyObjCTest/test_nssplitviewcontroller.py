@@ -2,11 +2,6 @@
 from PyObjCTools.TestSupport import *
 from AppKit import *
 
-try:
-    unicode
-except NameError:
-    unicode = str
-
 class TestNSSplitViewController (TestCase):
     @min_os_level('10.10')
     def testMethods(self):

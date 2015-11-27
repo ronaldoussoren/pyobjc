@@ -1,11 +1,6 @@
 import HIServices
 from PyObjCTools.TestSupport import *
 
-try:
-    long
-except NameError:
-    long = int
-
 class TestTranslationServices (TestCase):
     def testConstants(self):
         self.assertEqual(HIServices.badTranslationRefErr, -3031)

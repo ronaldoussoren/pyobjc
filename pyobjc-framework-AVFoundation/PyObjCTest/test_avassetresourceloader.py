@@ -3,11 +3,6 @@ from PyObjCTools.TestSupport import *
 import AVFoundation
 import objc
 
-try:
-    unicode
-except NameError:
-    unicode = str
-
 class TestAVAssetResourceLoaderHelper (AVFoundation.NSObject):
     def resourceLoader_shouldWaitForLoadingOfRequestedResource_(self, rl, r): return 1
     def resourceLoader_shouldWaitForRenewalOfRequestedResource_(self, rl, r): return 1

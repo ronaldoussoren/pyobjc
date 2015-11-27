@@ -2,11 +2,6 @@
 from PyObjCTools.TestSupport import *
 from XgridFoundation import *
 
-try:
-    unicode
-except NameError:
-    unicode = str
-
 class TestXGConnection (TestCase):
     def testConstants(self):
         self.assertEqual(XGConnectionStateClosed, 0)

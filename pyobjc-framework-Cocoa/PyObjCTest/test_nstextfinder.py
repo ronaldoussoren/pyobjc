@@ -2,11 +2,6 @@ from PyObjCTools.TestSupport import *
 
 import AppKit
 
-try:
-    unicode
-except NameError:
-    unicode = str
-
 class FindHelper (AppKit.NSObject):
     def rectsForCharacterRange_(self, r): return 1
     def replaceCharactersInRange_withString_(self, r, s): pass

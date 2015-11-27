@@ -5,11 +5,6 @@ import Quartz
 from Foundation import NSMutableData
 import os
 
-try:
-    long
-except NameError:
-    long = int
-
 class TestCGDataConsumer (TestCase):
     def testTypes(self):
         self.assertIsCFType(CGDataConsumerRef)

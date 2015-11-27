@@ -1,11 +1,6 @@
 from PyObjCTools.TestSupport import *
 from AppKit import *
 
-try:
-    unicode
-except NameError:
-    unicode = str
-
 class TestNSGestureRecognizerHelper (NSObject):
     def gestureRecognizerShouldBegin_(self, g): return 1
     def gestureRecognizer_shouldRecognizeSimultaneouslyWithGestureRecognizer_(self, g, a): return 1

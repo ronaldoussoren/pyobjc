@@ -2,11 +2,6 @@ from PyObjCTools.TestSupport import *
 
 import Foundation
 
-try:
-    unicode
-except NameError:
-    unicode = str
-
 class UserNotificationHelper (Foundation.NSObject):
     def userNotificationCenter_shouldPresentNotification_(self, a, b): pass
 

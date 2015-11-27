@@ -2,11 +2,6 @@ from PyObjCTools.TestSupport import *
 
 import AVFoundation
 
-try:
-    unicode
-except NameError:
-    unicode = str
-
 class TestAVPlayerOutputHelper (AVFoundation.NSObject):
     def legibleOutput_didOutputAttributedStrings_nativeSampleBuffers_forItemTime_(self, a, b, c, d):
         pass

@@ -2,11 +2,6 @@
 from PyObjCTools.TestSupport import *
 from AppKit import *
 
-try:
-    unicode
-except NameError:
-    unicode = str
-
 class TestNSPopUpButton (TestCase):
     def testConstants(self):
         self.assertIsInstance(NSPopUpButtonWillPopUpNotification, unicode)

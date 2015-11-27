@@ -1,11 +1,6 @@
 from PyObjCTools.TestSupport import *
 from InstantMessage import *
 
-try:
-    unicode
-except NameError:
-    unicode = str
-
 class TestIMControl (TestCase):
     @min_os_level('10.6')
     def testMethods(self):

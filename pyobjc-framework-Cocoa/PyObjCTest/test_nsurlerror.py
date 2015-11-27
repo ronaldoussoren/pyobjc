@@ -2,11 +2,6 @@ from Foundation import *
 from PyObjCTools.TestSupport import *
 
 try:
-    unicode
-except NameError:
-    unicode = str
-
-try:
     import CFNetwork
 except ImportError:
     CFNetwork = None

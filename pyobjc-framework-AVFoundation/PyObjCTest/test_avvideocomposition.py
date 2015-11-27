@@ -2,11 +2,6 @@ from PyObjCTools.TestSupport import *
 
 import AVFoundation
 
-try:
-    unicode
-except NameError:
-    unicode = str
-
 class TestAVVideoCompositionHelper (AVFoundation.NSObject):
     def videoComposition_shouldContinueValidatingAfterFindingInvalidValueForKey_(self, a, b): return 1
     def videoComposition_shouldContinueValidatingAfterFindingEmptyTimeRange_(self, a, b): return 1

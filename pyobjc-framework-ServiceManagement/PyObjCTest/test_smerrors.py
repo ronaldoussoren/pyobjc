@@ -2,11 +2,6 @@
 from PyObjCTools.TestSupport import *
 from ServiceManagement import *
 
-try:
-    unicode
-except NameError:
-    unicode = str
-
 class TestSMErrors (TestCase):
     @min_os_level('10.6')
     def testConstants(self):

@@ -4,11 +4,6 @@ from Foundation import *
 import Foundation
 import AppKit
 
-try:
-    unicode
-except NameError:
-    unicode = str
-
 class TestNSBundle (TestCase):
     def testOutput(self):
         obj = NSBundle.mainBundle()

@@ -4,11 +4,6 @@ import os
 
 from AppKit import *
 
-try:
-    unicode
-except NameError:
-    unicode = str
-
 
 class TestNSWorkspace(TestCase):
     def testInfoForFile(self):

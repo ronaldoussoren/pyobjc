@@ -2,16 +2,6 @@ from PyObjCTools.TestSupport import *
 from CoreFoundation import *
 import CoreFoundation
 
-try:
-    unicode
-except NameError:
-    unicode = str
-
-
-try:
-    long
-except NameError:
-    long = int
 
 class TestRunLoop (TestCase):
 

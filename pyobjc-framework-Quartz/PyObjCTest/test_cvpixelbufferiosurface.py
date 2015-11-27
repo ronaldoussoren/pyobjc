@@ -2,11 +2,6 @@ from PyObjCTools.TestSupport import *
 
 import Quartz
 
-try:
-    unicode
-except NameError:
-    unicode = str
-
 class TestCVPixelBufferIOSurface (TestCase):
 
     @min_os_level('10.6')

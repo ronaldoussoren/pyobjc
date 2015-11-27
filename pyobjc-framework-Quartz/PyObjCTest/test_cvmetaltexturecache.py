@@ -1,16 +1,6 @@
 from PyObjCTools.TestSupport import *
 from Quartz import *
 
-try:
-    unicode
-except NameError:
-    unicode = str
-
-try:
-    long
-except NameError:
-    long = int
-
 class TestCVMetalTextureCache (TestCase):
 
     @min_os_level('10.11')

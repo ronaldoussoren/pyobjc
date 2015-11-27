@@ -5,21 +5,6 @@ import CoreFoundation
 import sys
 import AppKit
 
-try:
-    unicode
-except NameError:
-    unicode = str
-
-
-try:
-    long
-except NameError:
-    long = int
-
-try:
-    unichr
-except NameError:
-    unichr = chr
 
 try:
     from Foundation import __NSCFString as NSCFString

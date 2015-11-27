@@ -1,11 +1,6 @@
 from PyObjCTools.TestSupport import *
 from AppKit import *
 
-try:
-    unicode
-except NameError:
-    unicode = str
-
 class TestNSAccessibilityHelper (NSObject):
     def accessibilityIsAttributeSettable_(self, arg):
         return 1

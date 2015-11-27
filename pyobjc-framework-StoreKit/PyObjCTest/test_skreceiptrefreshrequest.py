@@ -2,11 +2,6 @@ from PyObjCTools.TestSupport import *
 
 import StoreKit
 
-try:
-    unicode
-except NameError:
-    unicode = str
-
 class TestSKReceiptRefreshRequest (TestCase):
     @min_os_level('10.9')
     def test_constants(self):

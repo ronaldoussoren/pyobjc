@@ -2,11 +2,6 @@ from PyObjCTools.TestSupport import *
 from SystemConfiguration import *
 
 #from SecurityFoundation import SFAuthorization
-try:
-    long
-except NameError:
-    long = int
-
 class TestSCPreferences (TestCase):
     def testConstants(self):
         self.assertEqual(kSCPreferencesNotificationCommit, 1<<0)

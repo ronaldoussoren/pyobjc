@@ -4,16 +4,6 @@ from CoreFoundation import *
 from Foundation import NSDictionary, NSString, NSMutableDictionary
 import sys
 
-try:
-    unicode
-except NameError:
-    unicode = str
-
-
-try:
-    long
-except NameError:
-    long = int
 
 
 class TestTimeZone (TestCase):

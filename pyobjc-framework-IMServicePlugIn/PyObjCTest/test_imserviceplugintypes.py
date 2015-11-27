@@ -2,11 +2,6 @@ from PyObjCTools.TestSupport import *
 import IMServicePlugIn
 import objc
 
-try:
-    unicode
-except NameError:
-    unicode = str
-
 class TestIMServicePlugInChatRoomSupport (TestCase):
     @expectedFailure # Definitions are likely part of the host application
     def testConstantsStr(self):

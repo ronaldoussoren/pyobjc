@@ -2,11 +2,6 @@ from PyObjCTools.TestSupport import *
 import objc
 import sys
 
-try:
-    unicode
-except NameError:
-    unicode = str
-
 if sys.maxsize > 2 ** 32:
     import GameCenter
 

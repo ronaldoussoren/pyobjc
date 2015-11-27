@@ -2,11 +2,6 @@
 from PyObjCTools.TestSupport import *
 from SearchKit import *
 
-try:
-    unicode
-except NameError:
-    unicode = str
-
 class TestSKAnalysis (TestCase):
     def testConstants(self):
         self.assertIsInstance(kSKLanguageTypes, unicode)

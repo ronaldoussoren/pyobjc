@@ -4,11 +4,6 @@ import objc
 
 import SceneKit
 
-try:
-    unicode
-except NameError:
-    unicode = str
-
 class TestSCNMorpher (TestCase):
     def testConstants(self):
         self.assertEqual(SceneKit.SCNMorpherCalculationModeNormalized, 0)

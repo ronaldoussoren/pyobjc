@@ -2,11 +2,6 @@
 from PyObjCTools.TestSupport import *
 from Quartz.QuartzCore import *
 
-try:
-    unicode
-except NameError:
-    unicode = str
-
 class TestCAScrollLayer (TestCase):
     @min_os_level('10.5')
     def testConstants(self):

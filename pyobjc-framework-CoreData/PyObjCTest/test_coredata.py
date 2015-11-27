@@ -5,16 +5,6 @@ import objc
 from PyObjCTools.TestSupport import *
 import CoreData
 
-try:
-    unicode
-except NameError:
-    unicode = str
-
-try:
-    long
-except NameError:
-    long = int
-
 class TestCoreData (TestCase):
     def testClasses(self):
         self.assert_( hasattr(CoreData, 'NSAttributeDescription') )

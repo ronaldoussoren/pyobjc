@@ -2,11 +2,6 @@ from PyObjCTools.TestSupport import *
 from CoreFoundation import *
 
 
-try:
-    long
-except NameError:
-    long = int
-
 
 class TestPropertyList (TestCase):
     def testFunctions(self):

@@ -2,11 +2,6 @@
 from PyObjCTools.TestSupport import *
 from AppKit import *
 
-try:
-    unicode
-except NameError:
-    unicode = str
-
 class TestNSTableViewHelper (NSObject):
     def tableView_rowActionsForRow_edge_(self, a, b, c): pass
     def tableView_viewForTableColumn_row_(self, a, b, c): pass

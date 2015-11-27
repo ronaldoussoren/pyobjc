@@ -6,11 +6,6 @@ from CoreFoundation import *
 import Foundation
 
 
-try:
-    long
-except NameError:
-    long = int
-
 MachPortClasses = tuple(cls for cls in objc.getClassList() if cls.__name__ == "NSMachPort")
 
 

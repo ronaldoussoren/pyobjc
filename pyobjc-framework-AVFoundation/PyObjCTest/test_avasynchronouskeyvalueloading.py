@@ -3,11 +3,6 @@ from PyObjCTools.TestSupport import *
 import AVFoundation
 import objc
 
-try:
-    unicode
-except NameError:
-    unicode = str
-
 class TestAVAsynchronousKeyValueLoadingHelper (AVFoundation.NSObject):
     def statusOfValueForKey_error_(self, k, e): return 1
     def loadValuesAsynchronouslyForKeys_completionHandler_(self, k, h): pass

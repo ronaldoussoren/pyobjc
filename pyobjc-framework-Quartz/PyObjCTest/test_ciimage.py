@@ -2,16 +2,6 @@
 from PyObjCTools.TestSupport import *
 from Quartz.QuartzCore import *
 
-try:
-    long
-except NameError:
-    long = int
-
-try:
-    unicode
-except NameError:
-    unicode = str
-
 class TestCIImage (TestCase):
     def testConstants(self):
         self.assertIsInstance(kCIFormatARGB8, (int, long))

@@ -5,16 +5,6 @@ import contextlib
 
 from .test_cfsocket import onTheNetwork
 
-try:
-    long
-except NameError:
-    long = int
-
-try:
-    unicode
-except NameError:
-    unicode = str
-
 
 class TestStream (TestCase):
     def testTypes(self):

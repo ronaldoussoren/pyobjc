@@ -4,11 +4,6 @@ import objc
 from Foundation import *
 import Foundation
 
-try:
-    unicode
-except NameError:
-    unicode = str
-
 class TestNSExceptionInteraction(TestCase):
     def testRepeatedAllocInit(self):
         for i in range(1,1000):

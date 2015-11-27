@@ -3,11 +3,6 @@ from PyObjCTools.TestSupport import *
 from AppKit import *
 
 try:
-    unicode
-except NameError:
-    unicode = str
-
-try:
     import Quartz
 except ImportError:
     Quartz = None

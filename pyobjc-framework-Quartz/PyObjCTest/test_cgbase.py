@@ -2,11 +2,6 @@
 from PyObjCTools.TestSupport import *
 from Quartz.CoreGraphics import *
 
-try:
-    long
-except NameError:
-    long = int
-
 class TestCGBase (TestCase):
     def testConstants(self):
         self.assertIsInstance(CGFLOAT_MIN, float)

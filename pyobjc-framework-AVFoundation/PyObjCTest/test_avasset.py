@@ -2,11 +2,6 @@ from PyObjCTools.TestSupport import *
 
 import AVFoundation
 
-try:
-    unicode
-except NameError:
-    unicode = str
-
 class TestAVAssetHelper (AVFoundation.NSObject):
     def isAssociatedWithFragmentMinder(self): return True
 

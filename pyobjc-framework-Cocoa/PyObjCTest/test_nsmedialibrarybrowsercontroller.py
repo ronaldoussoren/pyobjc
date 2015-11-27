@@ -1,11 +1,6 @@
 from PyObjCTools.TestSupport import *
 from AppKit import *
 
-try:
-    unicode
-except NameError:
-    unicode = str
-
 class TestNSMediaLibraryBrowserController (TestCase):
     def testConstants(self):
         self.assertEqual(NSMediaLibraryAudio, 1 << 0)

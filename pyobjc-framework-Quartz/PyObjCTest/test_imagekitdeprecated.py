@@ -2,11 +2,6 @@
 from PyObjCTools.TestSupport import *
 from Quartz import *
 
-try:
-    unicode
-except NameError:
-    unicode = str
-
 
 class TestImageKitDeprecatedHelper (NSObject):
     def numberOfCellsInImageBrowser_(self, b): return 1

@@ -2,16 +2,6 @@
 from PyObjCTools.TestSupport import *
 from AddressBook import *
 
-try:
-    long
-except NameError:
-    long = int
-
-try:
-    unicode
-except NameError:
-    unicode = str
-
 _C_ABAddressBookRef = b'^{__ABAddressBookRef=}'
 _C_ABMultiValueRef = b'^{__ABMultiValue=}'
 _C_ABPersonRef = b'^{__ABPerson=}'

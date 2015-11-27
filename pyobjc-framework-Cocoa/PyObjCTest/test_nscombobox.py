@@ -2,11 +2,6 @@
 from PyObjCTools.TestSupport import *
 from AppKit import *
 
-try:
-    unicode
-except NameError:
-    unicode = str
-
 class TestNSComboBoxHelper (NSObject):
     def numberOfItemsInComboBox_(self, b): return 1
     def comboBox_objectValueForItemAtIndex_(self, b, i): return 1

@@ -2,11 +2,6 @@ from PyObjCTools.TestSupport import *
 
 import AVFoundation
 
-try:
-    unicode
-except NameError:
-    unicode = str
-
 AVAudioNodeCompletionHandler = b'v'
 
 class TestAVAudioPlayerNode (TestCase):

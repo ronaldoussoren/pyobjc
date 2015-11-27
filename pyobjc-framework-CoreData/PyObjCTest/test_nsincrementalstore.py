@@ -2,16 +2,6 @@ import objc
 from PyObjCTools.TestSupport import *
 import CoreData
 
-try:
-    unicode
-except NameError:
-    unicode = str
-
-try:
-    long
-except NameError:
-    long = int
-
 class TestNSIncrementalStore (TestCase):
     @min_os_level("10.7")
     def testMethods10_7(self):

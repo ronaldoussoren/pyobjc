@@ -2,11 +2,6 @@
 from PyObjCTools.TestSupport import *
 from Quartz import *
 
-try:
-    unicode
-except NameError:
-    unicode = str
-
 class TestIKImageBrowserViewHelper (NSObject):
     # IKImageBrowserDataSource
     def numberOfItemsInImageBrowser_(self, b): return 1

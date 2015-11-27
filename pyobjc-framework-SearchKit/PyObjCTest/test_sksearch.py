@@ -3,16 +3,6 @@ from PyObjCTools.TestSupport import *
 from SearchKit import *
 from Foundation import NSMutableData
 
-try:
-    unicode
-except NameError:
-    unicode = str
-
-try:
-    long
-except NameError:
-    long = int
-
 class TestSKSearch (TestCase):
     def testTypes(self):
         self.assertIsInstance(SKSearchGroupRef, objc.objc_class)

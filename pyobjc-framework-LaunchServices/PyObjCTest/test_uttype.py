@@ -2,11 +2,6 @@
 from PyObjCTools.TestSupport import *
 from LaunchServices import *
 
-try:
-    unicode
-except NameError:
-    unicode = str
-
 class TestUTType (TestCase):
     def testConstants(self):
         self.assertIsInstance(kUTExportedTypeDeclarationsKey, unicode)

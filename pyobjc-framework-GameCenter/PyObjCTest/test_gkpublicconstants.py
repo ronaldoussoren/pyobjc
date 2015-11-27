@@ -5,11 +5,6 @@ import sys
 if sys.maxsize > 2 ** 32:
     import GameCenter
 
-    try:
-        unicode
-    except NameError:
-        unicode = str
-
     class TestGKError (TestCase):
         @min_os_level('10.8')
         def testConstants10_8(self):

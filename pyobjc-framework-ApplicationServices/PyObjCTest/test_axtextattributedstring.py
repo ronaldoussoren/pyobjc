@@ -1,11 +1,6 @@
 import HIServices
 from PyObjCTools.TestSupport import *
 
-try:
-    unicode
-except NameError:
-    unicode = str
-
 class TestAXTextAttributedString (TestCase):
     def testConstants(self):
         self.assertIsInstance(HIServices.kAXFontTextAttribute, unicode)

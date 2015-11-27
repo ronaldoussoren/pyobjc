@@ -4,11 +4,6 @@ from LaunchServices import *
 import sys
 import os
 
-try:
-    long
-except NameError:
-    long = int
-
 class TestLSOpen (TestCase):
     def setUp(self):
         self.path = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'dummy.txt')

@@ -2,11 +2,6 @@
 from PyObjCTools.TestSupport import *
 from AppKit import *
 
-try:
-    unicode
-except NameError:
-    unicode = str
-
 class TestNSPasteboardHelper (NSObject):
     def writingOptionsForType_pasteboard_(self, t, p): return 1
     def readingOptionsForType_pasteboard_(self, t, p): return 1

@@ -1,10 +1,5 @@
 import sys
 
-try:
-    unicode
-except NameError:
-    unicode = str
-
 from PyObjCTools.TestSupport import *
 import CoreBluetooth
 

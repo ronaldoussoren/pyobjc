@@ -1,11 +1,6 @@
 from PyObjCTools.TestSupport import *
 from AppKit import *
 
-try:
-    unicode
-except NameError:
-    unicode = str
-
 class TestNSStoryboardSegueHelper (NSObject):
     def shouldPerformSegueWithIdentifier_sender_(self, i, s): return 1
 

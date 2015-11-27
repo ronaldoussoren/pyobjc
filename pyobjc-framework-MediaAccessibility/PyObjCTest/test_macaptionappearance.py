@@ -1,11 +1,6 @@
 import sys
 from PyObjCTools.TestSupport import *
 
-try:
-    unicode
-except NameError:
-    unicode = str
-
 
 import MediaAccessibility
 

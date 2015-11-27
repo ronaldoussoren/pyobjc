@@ -4,11 +4,6 @@ from PyObjCTools.TestSupport import *
 
 from Foundation import *
 
-try:
-    unicode
-except NameError:
-    unicode = str
-
 
 class TestNSKeyValueObserving (TestCase):
 

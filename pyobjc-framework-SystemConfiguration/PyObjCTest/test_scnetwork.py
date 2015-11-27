@@ -2,11 +2,6 @@ from PyObjCTools.TestSupport import *
 
 from SystemConfiguration import *
 import socket, sys
-try:
-    long
-except NameError:
-    long = int
-
 def resolver_available():
     try:
         socket.gethostbyname('www.python.org')

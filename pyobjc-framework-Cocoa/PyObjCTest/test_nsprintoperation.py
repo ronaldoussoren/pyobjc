@@ -2,11 +2,6 @@
 from PyObjCTools.TestSupport import *
 from AppKit import *
 
-try:
-    unicode
-except NameError:
-    unicode = str
-
 class TestNSPrintOperation (TestCase):
     def testConstants(self):
         self.assertEqual(NSDescendingPageOrder, -1)

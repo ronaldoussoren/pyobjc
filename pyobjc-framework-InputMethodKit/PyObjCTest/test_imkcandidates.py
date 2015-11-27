@@ -2,11 +2,6 @@
 from PyObjCTools.TestSupport import *
 from InputMethodKit import *
 
-try:
-    unicode
-except NameError:
-    unicode = str
-
 class TestIMKCandidates (TestCase):
     def testConstants(self):
         self.assertEqual(kIMKSingleColumnScrollingCandidatePanel, 1)

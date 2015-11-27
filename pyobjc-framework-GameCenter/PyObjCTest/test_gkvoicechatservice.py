@@ -5,11 +5,6 @@ import sys
 if sys.maxsize > 2 ** 32:
     import GameCenter
 
-    try:
-        unicode
-    except NameError:
-        unicode = str
-
     class TestGKVoiceChatService (TestCase):
         # NOTE: Class GKVoiceChatService is not available on OSX
 

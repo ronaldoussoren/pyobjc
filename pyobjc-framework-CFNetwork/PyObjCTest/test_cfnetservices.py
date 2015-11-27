@@ -7,16 +7,6 @@ if sys.version_info[0] != 2:
     def buffer(value):
         return value.encode('latin1')
 
-try:
-    long
-except NameError:
-    long = int
-
-try:
-    unicode
-except NameError:
-    unicode = str
-
 class TestCFNetServices (TestCase):
     def testTypes(self):
         self.assertIsCFType(CFNetServiceRef)

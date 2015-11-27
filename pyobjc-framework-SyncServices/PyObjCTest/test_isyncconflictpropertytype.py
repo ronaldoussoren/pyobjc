@@ -2,11 +2,6 @@
 from PyObjCTools.TestSupport import *
 import SyncServices
 
-try:
-    unicode
-except NameError:
-    unicode = str
-
 class TestISyncConflictPropertyTypeHelper (SyncServices.NSObject):
     def isRelationship(self): return 1
     def isToMany(self): return 1

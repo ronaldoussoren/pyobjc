@@ -2,16 +2,6 @@
 from PyObjCTools.TestSupport import *
 from AddressBook import *
 
-try:
-    long
-except NameError:
-    long = int
-
-try:
-    unicode
-except NameError:
-    unicode = str
-
 class TestABPeoplePickerC (TestCase):
     def testConstants(self):
         self.assertEqual(kABPickerSingleValueSelection, 1 << 0)

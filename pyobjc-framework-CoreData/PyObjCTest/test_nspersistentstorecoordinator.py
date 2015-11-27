@@ -2,11 +2,6 @@
 from PyObjCTools.TestSupport import *
 from CoreData import *
 
-try:
-    unicode
-except NameError:
-    unicode = str
-
 class TestNSPersistentStoreCoordinator (TestCase):
     def testConstants(self):
         self.assertIsInstance(NSSQLiteStoreType, unicode)

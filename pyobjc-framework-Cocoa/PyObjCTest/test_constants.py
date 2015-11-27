@@ -2,11 +2,6 @@ from PyObjCTools.TestSupport import *
 import AppKit
 import objc
 
-try:
-    unicode
-except NameError:
-    unicode = str
-
 class ContantTest (TestCase):
 
     def testNSFloatingWindowLevel(self):

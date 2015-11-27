@@ -1,11 +1,6 @@
 from PyObjCTools.TestSupport import *
 from AppKit import *
 
-try:
-    unichr
-except NameError:
-    unichr = chr
-
 class TestNSEvent (TestCase):
     def testConstants(self):
         self.assertEqual(NSLeftMouseDown, 1)

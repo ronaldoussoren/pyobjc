@@ -3,11 +3,6 @@ from PyObjCTools.TestSupport import *
 import JavaScriptCore
 import objc
 
-try:
-    unicode
-except NameError:
-    unicode = str
-
 class TestJSValue (TestCase):
     @onlyOn64Bit
     @min_os_level('10.9')

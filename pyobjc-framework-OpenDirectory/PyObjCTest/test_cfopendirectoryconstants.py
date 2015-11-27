@@ -6,11 +6,6 @@ import CFOpenDirectory
 
 from PyObjCTools.TestSupport import *
 
-try:
-    unicode
-except NameError:
-    unicode = str
-
 class TestCFOpenDirectoryConstants (TestCase):
     def testConstants(self):
         self.assertIsInstance(CFOpenDirectory.kODSessionProxyAddress, unicode)

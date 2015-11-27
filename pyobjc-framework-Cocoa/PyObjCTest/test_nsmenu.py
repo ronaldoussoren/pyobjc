@@ -2,11 +2,6 @@
 from PyObjCTools.TestSupport import *
 from AppKit import *
 
-try:
-    unicode
-except NameError:
-    unicode = str
-
 class TestNSMenuHelper (NSObject):
     def validateMenuItem_(self, item): return 1
     def numberOfItemsInMenu_(self, menu): return 1

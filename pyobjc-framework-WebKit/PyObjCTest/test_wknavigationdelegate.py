@@ -1,11 +1,6 @@
 from PyObjCTools.TestSupport import *
 from WebKit import *
 
-try:
-    unicode
-except NameError:
-    unicode = str
-
 class TestWKNavigationDelegateHelper (NSObject):
     def webView_decidePolicyForNavigationAction_decisionHandler_(self, w, a, h): pass
     def webView_decidePolicyForNavigationResponse_decisionHandler_(self, w, r, h): pass

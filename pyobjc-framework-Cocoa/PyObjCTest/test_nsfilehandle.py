@@ -2,11 +2,6 @@ from PyObjCTools.TestSupport import *
 
 from Foundation import *
 
-try:
-    unicode
-except NameError:
-    unicode = str
-
 class TestNSFileHandle (TestCase):
     def testConstants(self):
         self.assertIsInstance(NSFileHandleOperationException, unicode)

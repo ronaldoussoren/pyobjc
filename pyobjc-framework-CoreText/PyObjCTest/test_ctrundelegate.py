@@ -3,11 +3,6 @@ from CoreText import *
 from Foundation import NSDictionary
 from Quartz import *
 
-try:
-    long
-except NameError:
-    long = int
-
 class TestCTRunDelegate (TestCase):
     @min_os_level('10.5')
     def testTypes(self):

@@ -2,11 +2,6 @@ from PyObjCTools.TestSupport import *
 
 import StoreKit
 
-try:
-    unicode
-except NameError:
-    unicode = str
-
 class TestSKError (TestCase):
 
     def test_constants(self):

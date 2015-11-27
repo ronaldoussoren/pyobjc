@@ -2,11 +2,6 @@ from PyObjCTools.TestSupport import *
 
 import JavaScriptCore
 
-try:
-    unicode
-except NameError:
-    unicode = str
-
 
 class TestJSStrintRefCF (TestCase):
 

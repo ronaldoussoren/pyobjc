@@ -2,11 +2,6 @@
 from PyObjCTools.TestSupport import *
 from AppKit import *
 
-try:
-    unicode
-except NameError:
-    unicode = str
-
 class TestNSToolbarItemHelper (NSObject):
     def validateToolbarItem_(self, a): return
 

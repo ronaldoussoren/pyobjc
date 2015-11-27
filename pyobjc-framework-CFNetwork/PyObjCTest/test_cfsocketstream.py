@@ -1,16 +1,6 @@
 from PyObjCTools.TestSupport import *
 from CFNetwork import *
 
-try:
-    long
-except NameError:
-    long = int
-
-try:
-    unicode
-except NameError:
-    unicode = str
-
 
 class TestCFSocketStream (TestCase):
     @min_os_level('10.9')

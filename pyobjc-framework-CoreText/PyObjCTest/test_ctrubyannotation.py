@@ -2,16 +2,6 @@ from PyObjCTools.TestSupport import *
 from CoreText import *
 from Quartz import *
 
-try:
-    unicode
-except NameError:
-    unicode = str
-
-try:
-    long
-except NameError:
-    long = int
-
 class TestCTRubyAnnotation (TestCase):
     def testTypes(self):
         self.assertIsInstance(CTRubyAnnotationRef, objc.objc_class)

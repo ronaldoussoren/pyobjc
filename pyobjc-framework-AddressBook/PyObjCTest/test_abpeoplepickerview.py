@@ -2,11 +2,6 @@
 from PyObjCTools.TestSupport import *
 from AddressBook import *
 
-try:
-    unicode
-except NameError:
-    unicode = str
-
 class TestABPeoplePickerView (TestCase):
     def testConstants(self):
         self.assertEqual(ABNoValueSelection, 0)

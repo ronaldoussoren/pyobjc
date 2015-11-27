@@ -1,16 +1,6 @@
 from CFNetwork import *
 from PyObjCTools.TestSupport import *
 
-try:
-    long
-except NameError:
-    long = int
-
-try:
-    unicode
-except NameError:
-    unicode = str
-
 class TestCFNetwork (TestCase):
     def testTypes(self):
         # XXX: CFNetDiagnosticsRef is not actually a proper type

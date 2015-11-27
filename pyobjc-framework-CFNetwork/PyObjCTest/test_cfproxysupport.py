@@ -2,16 +2,6 @@ from PyObjCTools.TestSupport import *
 from CFNetwork import *
 import os
 
-try:
-    long
-except NameError:
-    long = int
-
-try:
-    unicode
-except NameError:
-    unicode = str
-
 SCRIPT="""
 function FindProxyForURL(url, host) {
    if (shExpMatch(host, "*.apple.com")) {

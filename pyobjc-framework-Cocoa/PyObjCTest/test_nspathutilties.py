@@ -3,11 +3,6 @@ from PyObjCTools.TestSupport import *
 from objc import *
 from Foundation import *
 
-try:
-    unicode
-except NameError:
-    unicode = str
-
 class TestNSPathUtilities(TestCase):
     def testSearchPaths(self):
         self.assert_(

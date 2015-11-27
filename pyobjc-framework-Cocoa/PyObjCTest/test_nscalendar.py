@@ -3,11 +3,6 @@ from PyObjCTools.TestSupport import *
 from Foundation import *
 import Foundation
 
-try:
-    unicode
-except NameError:
-    unicode = str
-
 
 class TestNSCalendar (TestCase):
     def testConstants(self):

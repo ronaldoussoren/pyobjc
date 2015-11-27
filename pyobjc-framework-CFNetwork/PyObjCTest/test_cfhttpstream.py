@@ -2,16 +2,6 @@ from CFNetwork import *
 from PyObjCTools.TestSupport import *
 import os
 
-try:
-    long
-except NameError:
-    long = int
-
-try:
-    unicode
-except NameError:
-    unicode = str
-
 class TestCFHTTPStream (TestCase):
     @min_os_level('10.5')
     def testConstants10_5(self):

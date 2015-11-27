@@ -2,11 +2,6 @@
 from PyObjCTools.TestSupport import *
 from Message import *
 
-try:
-    unicode
-except NameError:
-    unicode = str
-
 class TestNSMailDelivery (TestCase):
 
     @onlyOn32Bit

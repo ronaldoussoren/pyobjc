@@ -2,11 +2,6 @@
 from PyObjCTools.TestSupport import *
 from QTKit import *
 
-try:
-    unicode
-except NameError:
-    unicode = str
-
 class TestQTDataReference (TestCase):
     def testConstants(self):
         self.assertIsInstance(QTDataReferenceTypeFile, unicode)

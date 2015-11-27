@@ -2,11 +2,6 @@
 from PyObjCTools.TestSupport import *
 from PreferencePanes import *
 
-try:
-    unicode
-except NameError:
-    unicode = str
-
 class TestNSPreferencePane (TestCase):
     def testConstants(self):
         self.assertEqual(NSUnselectCancel, 0)

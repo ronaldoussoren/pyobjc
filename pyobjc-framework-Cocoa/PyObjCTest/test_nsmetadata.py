@@ -1,11 +1,6 @@
 from Foundation import *
 from PyObjCTools.TestSupport import *
 
-try:
-    unicode
-except NameError:
-    unicode = str
-
 class TestNSMetaData (TestCase):
     def testConstants(self):
         self.assertIsInstance(NSMetadataQueryDidStartGatheringNotification, unicode)

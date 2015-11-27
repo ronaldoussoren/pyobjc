@@ -1,11 +1,6 @@
 from PyObjCTools.TestSupport import *
 from Foundation import *
 
-try:
-    unicode
-except NameError:
-    unicode = str
-
 class TestNSTextCheckingResult (TestCase):
     @min_os_level('10.6')
     def testConstants(self):

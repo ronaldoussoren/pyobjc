@@ -2,11 +2,6 @@ from PyObjCTools.TestSupport import *
 
 import AppKit
 
-try:
-    unicode
-except NameError:
-    unicode = str
-
 class RestorationHelper (AppKit.NSObject):
     def restoreWindowWithIdentifier_state_completionHandler_(self, a, b, c): pass
 

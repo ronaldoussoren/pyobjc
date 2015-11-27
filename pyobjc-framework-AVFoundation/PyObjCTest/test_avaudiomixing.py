@@ -2,11 +2,6 @@ from PyObjCTools.TestSupport import *
 
 import AVFoundation
 
-try:
-    unicode
-except NameError:
-    unicode = str
-
 class TestAVAudioMixingHelper (AVFoundation.NSObject):
     def destinationForMixer_bus_(self, a, b): return 1
     def setVolume_(self, a): pass

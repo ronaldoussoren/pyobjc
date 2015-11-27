@@ -3,11 +3,6 @@ import objc
 
 import SceneKit
 
-try:
-    unicode
-except NameError:
-    unicode = str
-
 class TestSCNParametricGeometry (TestCase):
     def testConstants(self):
         self.assertEqual(SceneKit.SCNChamferModeBoth, 0)

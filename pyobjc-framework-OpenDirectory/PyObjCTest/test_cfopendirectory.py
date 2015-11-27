@@ -5,11 +5,6 @@ from PyObjCTools.TestSupport import *
 import objc
 import CFOpenDirectory
 
-try:
-    unicode
-except NameError:
-    unicode = str
-
 class TestCFOpenDirectory (TestCase):
     def testClasses(self):
         self.assertIsCFType(CFOpenDirectory.ODContextRef)

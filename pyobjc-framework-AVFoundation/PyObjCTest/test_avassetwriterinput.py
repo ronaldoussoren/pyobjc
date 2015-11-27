@@ -2,12 +2,6 @@ from PyObjCTools.TestSupport import *
 
 import AVFoundation
 
-try:
-    unicode
-except NameError:
-    unicode = str
-
-
 class TestAVAssetWriterInput (TestCase):
     @min_os_level('10.10')
     def testMethods10_10(self):

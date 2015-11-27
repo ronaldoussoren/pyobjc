@@ -2,11 +2,6 @@
 from PyObjCTools.TestSupport import *
 from AddressBook import *
 
-try:
-    unicode
-except NameError:
-    unicode = str
-
 class TestABAddressBook (TestCase):
     def testMethods(self):
         self.assertResultIsBOOL(ABAddressBook.save)

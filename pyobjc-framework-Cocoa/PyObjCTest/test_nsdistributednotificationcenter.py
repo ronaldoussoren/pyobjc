@@ -2,11 +2,6 @@ from PyObjCTools.TestSupport import *
 
 from Foundation import *
 
-try:
-    unicode
-except NameError:
-    unicode = str
-
 
 class TestNSDistributedNotificationCenter (TestCase):
     def testConstants(self):

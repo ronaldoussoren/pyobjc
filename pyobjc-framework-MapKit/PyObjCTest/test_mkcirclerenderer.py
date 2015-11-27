@@ -1,10 +1,5 @@
 import sys
 
-try:
-    unicode
-except NameError:
-    unicode = str
-
 from PyObjCTools.TestSupport import *
 
 if sys.maxsize > 2 ** 32:

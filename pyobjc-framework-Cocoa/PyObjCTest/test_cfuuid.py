@@ -2,16 +2,6 @@ from PyObjCTools.TestSupport import *
 import re
 from CoreFoundation import *
 
-try:
-    unicode
-except NameError:
-    unicode = str
-
-
-try:
-    long
-except NameError:
-    long = int
 
 
 class TestCFUUIDAPI (TestCase):

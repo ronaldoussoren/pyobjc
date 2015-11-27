@@ -4,11 +4,6 @@ import sys
 
 import SceneKit
 
-try:
-    unicode
-except NameError:
-    unicode = str
-
 class TestSCNPhysicsShape (TestCase):
     @min_os_level('10.10')
     def test_constants10_10(self):

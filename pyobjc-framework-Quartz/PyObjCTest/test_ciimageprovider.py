@@ -3,11 +3,6 @@ from PyObjCTools.TestSupport import *
 from Quartz.QuartzCore import *
 import os
 
-try:
-    unicode
-except NameError:
-    unicode = str
-
 class TestCIImageProviderHelper (NSObject):
 
     @objc.namedSelector(b'provideImageData:bytesPerRow:origin::size::userInfo:')

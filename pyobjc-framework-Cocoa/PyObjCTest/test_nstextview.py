@@ -2,11 +2,6 @@
 from PyObjCTools.TestSupport import *
 from AppKit import *
 
-try:
-    unicode
-except NameError:
-    unicode = str
-
 class TestNSTextViewHelper (NSObject):
     def textView_URLForContentsOfTextAttachment_atIndex_(self, a, b, c): pass
     def textView_clickedOnLink_atIndex_(self, tv, a, b): return 1

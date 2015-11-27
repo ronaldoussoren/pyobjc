@@ -2,16 +2,6 @@ from PyObjCTools.TestSupport import *
 from Quartz.CoreGraphics import *
 from Quartz import CoreGraphics
 
-try:
-    long
-except NameError:
-    long = int
-
-try:
-    unicode
-except NameError:
-    unicode = str
-
 class TestCGDirectDisplayMetal (TestCase):
 
     @min_os_level('10.11')

@@ -2,11 +2,6 @@ from PyObjCTools.TestSupport import *
 from CoreFoundation import *
 from Foundation import NSCFAttributedString
 
-try:
-    long
-except NameError:
-    long = int
-
 
 
 class TestAttributedString (TestCase):

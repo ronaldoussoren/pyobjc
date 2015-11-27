@@ -3,16 +3,6 @@ from PyObjCTools.TestSupport import *
 from LatentSemanticMapping import *
 import os
 
-try:
-    long
-except NameError:
-    long = int
-
-try:
-    unicode
-except NameError:
-    unicode = str
-
 class TestLatentSemanticMapping (TestCase):
     def testConstants(self):
         self.assertEqual(kLSMMapOutOfState, -6640)

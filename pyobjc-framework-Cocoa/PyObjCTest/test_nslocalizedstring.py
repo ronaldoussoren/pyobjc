@@ -4,11 +4,6 @@ import objc
 
 from Foundation import NSLocalizedString, NSAutoreleasePool
 
-try:
-    unicode
-except NameError:
-    unicode = str
-
 class TestNSLocalizedString(TestCase):
     def testBasic(self):
         # This is mostly a regression tests, the function used to crash on

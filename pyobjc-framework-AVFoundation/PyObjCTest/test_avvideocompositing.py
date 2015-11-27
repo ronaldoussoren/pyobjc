@@ -2,11 +2,6 @@ from PyObjCTools.TestSupport import *
 
 import AVFoundation
 
-try:
-    unicode
-except NameError:
-    unicode = str
-
 class TestAVVideoCompositingHelper (AVFoundation.NSObject):
     def enablePostProcessing(self): return 1
     def containsTweening(self): return 1

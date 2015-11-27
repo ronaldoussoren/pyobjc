@@ -2,11 +2,6 @@ from PyObjCTools.TestSupport import *
 import sys
 from CoreFoundation import *
 
-try:
-    long
-except NameError:
-    long = int
-
 
 class TestCFNumber (TestCase):
     def testCFNumberGetValue(self):

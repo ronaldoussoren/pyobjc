@@ -4,16 +4,6 @@ from Foundation import *
 from AppKit import *
 import Foundation
 
-try:
-    unicode
-except NameError:
-    unicode = str
-
-
-try:
-    long
-except NameError:
-    long = int
 
 class TestNSAttributedString (TestCase):
     def testOutput(self):

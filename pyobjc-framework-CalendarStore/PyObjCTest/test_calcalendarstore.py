@@ -2,11 +2,6 @@
 from PyObjCTools.TestSupport import *
 from CalendarStore import *
 
-try:
-    unicode
-except NameError:
-    unicode = str
-
 class TestCalCalendarStore (TestCase):
     def testConstants(self):
         self.assertEqual(CalSpanThisEvent, 0)

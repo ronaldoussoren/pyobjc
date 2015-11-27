@@ -3,11 +3,6 @@ from AppKit import *
 import array
 import sys
 
-try:
-    unicode
-except NameError:
-    unicode = str
-
 class TestRegressions (TestCase):
     def testQualifiersInSignature(self):
         NSColor.redColor().getRed_green_blue_alpha_(None, None, None, None)

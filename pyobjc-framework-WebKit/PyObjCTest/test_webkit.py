@@ -5,16 +5,6 @@ import objc
 from PyObjCTools.TestSupport import *
 import WebKit
 
-try:
-    unicode
-except NameError:
-    unicode = str
-
-try:
-    long
-except NameError:
-    long = int
-
 class TestWebKit (TestCase):
     def testClasses(self):
         self.assert_( hasattr(WebKit, 'WebResource') )

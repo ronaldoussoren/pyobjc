@@ -2,11 +2,6 @@ from PyObjCTools.TestSupport import *
 
 import OpenDirectory
 
-try:
-    unicode
-except NameError:
-    unicode = str
-
 class TestODSession (TestCase):
     def testConstants(self):
         self.assertIsInstance(OpenDirectory.ODSessionProxyAddress, unicode)

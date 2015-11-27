@@ -3,11 +3,6 @@ from AppKit import *
 import sys
 
 try:
-    unicode
-except NameError:
-    unicode = str
-
-try:
     from Quartz.CoreGraphics import *
     have_Quartz = 1
 except ImportError:

@@ -2,16 +2,6 @@
 from PyObjCTools.TestSupport import *
 from CoreText import *
 
-try:
-    unicode
-except NameError:
-    unicode = str
-
-try:
-    long
-except NameError:
-    long = int
-
 class TestCTTextTab (TestCase):
     def testTypes(self):
         self.assertIsCFType(CTTextTabRef)

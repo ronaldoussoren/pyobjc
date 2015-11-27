@@ -2,11 +2,6 @@ from PyObjCTools.TestSupport import *
 from SystemConfiguration import *
 from Foundation import NSMutableDictionary
 
-try:
-    unicode
-except NameError:
-    unicode = str
-
 class TestSCPreferencesPath (TestCase):
 
     def testFunctions(self):

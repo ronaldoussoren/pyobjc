@@ -2,11 +2,6 @@
 from PyObjCTools.TestSupport import *
 from Quartz.CoreGraphics import *
 
-try:
-    long
-except NameError:
-    long = int
-
 class TestCGDisplayFade (TestCase):
     def testConstants(self):
         self.assertEqual(kCGDisplayFadeReservationInvalidToken, 0)

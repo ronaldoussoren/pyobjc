@@ -2,16 +2,6 @@ from PyObjCTools.TestSupport import *
 
 from Foundation import *
 
-try:
-    unicode
-except NameError:
-    unicode = str
-
-try:
-    bytes
-except NameError:
-    bytes = str
-
 class Behaviour (NSObject):
     def scale(self): return 1
     def roundingMode(self): return 1

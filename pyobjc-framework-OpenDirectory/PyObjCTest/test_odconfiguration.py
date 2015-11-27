@@ -2,11 +2,6 @@ from PyObjCTools.TestSupport import *
 
 import OpenDirectory
 
-try:
-    unicode
-except NameError:
-    unicode = str
-
 class TestODConfiguration (TestCase):
     @min_os_level('10.9')
     def testConstants(self):

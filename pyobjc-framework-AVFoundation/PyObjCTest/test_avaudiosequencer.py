@@ -2,12 +2,6 @@ from PyObjCTools.TestSupport import *
 
 import AVFoundation
 
-try:
-    unicode
-except NameError:
-    unicode = str
-
-
 class TestAVAudioSequencer (TestCase):
     def testConstants(self):
         self.assertEqual(AVFoundation.AVMusicSequenceLoadSMF_PreserveTracks, 0)

@@ -2,16 +2,6 @@ from PyObjCTools.TestSupport import *
 import sys
 from Foundation import *
 
-try:
-    unicode
-except NameError:
-    unicode = str
-
-
-try:
-    long
-except NameError:
-    long = int
 
 
 class TestNSObjCRuntime (TestCase):

@@ -2,16 +2,6 @@
 from PyObjCTools.TestSupport import *
 from Quartz import *
 
-try:
-    unicode
-except NameError:
-    unicode = str
-
-
-try:
-    long
-except NameError:
-    long = int
 class TestCVPixelFormatDescription (TestCase):
     def testConstants(self):
         self.assertIsInstance(kCVPixelFormatName, unicode)

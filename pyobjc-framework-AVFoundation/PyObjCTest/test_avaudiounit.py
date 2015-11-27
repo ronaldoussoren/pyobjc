@@ -2,12 +2,6 @@ from PyObjCTools.TestSupport import *
 
 import AVFoundation
 
-try:
-    unicode
-except NameError:
-    unicode = str
-
-
 class TestAVAudioUnit (TestCase):
     @min_os_level('10.11')
     def testMethods10_11(self):

@@ -2,16 +2,6 @@
 from PyObjCTools.TestSupport import *
 from CoreText import *
 
-try:
-    unicode
-except NameError:
-    unicode = str
-
-try:
-    long
-except NameError:
-    long = int
-
 class TestCTFontCollection (TestCase):
     def testTypes(self):
         self.assertIsInstance(CTFontCollectionRef, objc.objc_class)

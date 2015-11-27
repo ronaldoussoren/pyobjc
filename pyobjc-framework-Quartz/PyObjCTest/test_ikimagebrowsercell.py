@@ -1,11 +1,6 @@
 from Quartz import *
 from PyObjCTools.TestSupport import *
 
-try:
-    unicode
-except NameError:
-    unicode = str
-
 class TestIKImageBrowserCell (TestCase):
     @min_os_level('10.6')
     def testConstants10_6(self):

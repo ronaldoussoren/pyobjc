@@ -3,11 +3,6 @@ import objc
 
 import SceneKit
 
-try:
-    unicode
-except NameError:
-    unicode = str
-
 class TestSCNLight (TestCase):
     @min_os_level('10.8')
     def testConstants(self):

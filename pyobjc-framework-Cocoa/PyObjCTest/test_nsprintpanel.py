@@ -2,11 +2,6 @@
 from PyObjCTools.TestSupport import *
 from AppKit import *
 
-try:
-    unicode
-except NameError:
-    unicode = str
-
 class TestNSPrintPanel (TestCase):
     def testProtocols(self):
         objc.protocolNamed('NSPrintPanelAccessorizing')

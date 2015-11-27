@@ -2,11 +2,6 @@ from CoreFoundation import *
 from Foundation import NSDictionary, NSMutableDictionary, NSCFDictionary
 from PyObjCTools.TestSupport import *
 
-try:
-    long
-except NameError:
-    long = int
-
 
 class TestCFDictionary (TestCase):
 

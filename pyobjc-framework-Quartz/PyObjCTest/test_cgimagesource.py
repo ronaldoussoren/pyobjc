@@ -2,16 +2,6 @@ from PyObjCTools.TestSupport import *
 
 import Quartz
 
-try:
-    unicode
-except NameError:
-    unicode = str
-
-try:
-    long
-except NameError:
-    long = int
-
 class TestCGImageSource (TestCase):
     def testConstants(self):
         self.assertEqual(Quartz.kCGImageStatusUnexpectedEOF, -5)

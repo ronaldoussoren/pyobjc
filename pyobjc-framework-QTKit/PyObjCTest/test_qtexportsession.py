@@ -1,11 +1,6 @@
 from PyObjCTools.TestSupport import *
 from QTKit import *
 
-try:
-    unicode
-except NameError:
-    unicode = str
-
 class TestQTExportSessionHelper (NSObject):
     def exportSession_didReachProgess_(self, e, p): pass
 

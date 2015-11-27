@@ -2,11 +2,6 @@
 from PyObjCTools.TestSupport import *
 from AppKit import *
 
-try:
-    unicode
-except NameError:
-    unicode = str
-
 class TestNSTextStorageHelper (NSObject):
     def textStorage_willProcessEditing_range_changeInLength_(self, s, e, r, l): pass
     def textStorage_didProcessEditing_range_changeInLength_(self, s, e, r, l): pass

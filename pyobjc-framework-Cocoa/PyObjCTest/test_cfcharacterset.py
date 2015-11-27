@@ -2,16 +2,6 @@ from PyObjCTools.TestSupport import *
 from CoreFoundation import *
 import sys
 
-try:
-    long
-except NameError:
-    long = int
-
-try:
-    unichr
-except NameError:
-    unichr = chr
-
 
 class TestCharacterSet (TestCase):
     def testTypes(self):

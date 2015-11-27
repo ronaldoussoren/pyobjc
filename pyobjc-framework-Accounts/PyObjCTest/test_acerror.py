@@ -4,11 +4,6 @@ if sys.maxsize > 2**32:
     from PyObjCTools.TestSupport import *
     import Accounts
 
-    try:
-        unicode
-    except NameError:
-        unicode = str
-
     class TestACError (TestCase):
         @min_os_level("10.9")
         def testConstants10_9(self):

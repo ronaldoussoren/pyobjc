@@ -2,11 +2,6 @@
 from PyObjCTools.TestSupport import *
 from SyncServices import *
 
-try:
-    unicode
-except NameError:
-    unicode = str
-
 class TestISyncChange (TestCase):
     def testConstants(self):
         self.assertEqual(ISyncChangeTypeNone, 0)

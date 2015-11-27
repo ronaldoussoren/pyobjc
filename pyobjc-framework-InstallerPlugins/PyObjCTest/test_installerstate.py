@@ -2,11 +2,6 @@
 from PyObjCTools.TestSupport import *
 from InstallerPlugins import *
 
-try:
-    unicode
-except NameError:
-    unicode = str
-
 class TestInstallerState (TestCase):
     def testConstants(self):
         self.assertIsInstance(InstallerState_Choice_Identifier, unicode)

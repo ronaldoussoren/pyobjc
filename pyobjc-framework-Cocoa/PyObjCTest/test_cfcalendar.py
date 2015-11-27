@@ -2,11 +2,6 @@ from PyObjCTools.TestSupport import *
 from CoreFoundation import *
 import datetime
 
-try:
-    long
-except NameError:
-    long = int
-
 
 class TestCFCalendarVariadic (TestCase):
     def testTypes(self):

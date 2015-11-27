@@ -2,11 +2,6 @@ from CoreFoundation import *
 
 from PyObjCTools.TestSupport import *
 
-try:
-    long
-except NameError:
-    long = int
-
 
 class TestCFBinaryHeap (TestCase):
     def testTypes(self):

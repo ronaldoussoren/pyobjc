@@ -2,11 +2,6 @@ from PyObjCTools.TestSupport import *
 
 import DiskArbitration
 
-try:
-    long
-except NameError:
-    long = int
-
 class TestDASession (TestCase):
     def test_types(self):
         self.assertIsCFType(DiskArbitration.DASessionRef)

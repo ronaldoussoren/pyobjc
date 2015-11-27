@@ -2,16 +2,6 @@
 from PyObjCTools.TestSupport import *
 from Quartz import *
 
-try:
-    long
-except NameError:
-    long = int
-
-try:
-    unicode
-except NameError:
-    unicode = str
-
 class TestCVPixelBuffer (TestCase):
     def testConstants(self):
         self.assertEqual(kCVPixelFormatType_1Monochrome, 0x00000001)

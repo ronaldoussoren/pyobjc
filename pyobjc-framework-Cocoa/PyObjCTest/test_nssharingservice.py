@@ -2,11 +2,6 @@ from PyObjCTools.TestSupport import *
 
 import AppKit
 
-try:
-    unicode
-except NameError:
-    unicode = str
-
 class TestNSSharingServiceHelper (AppKit.NSObject):
     def showRelativeToRect_ofView_preferredEdge_(self, r, v, e): pass
 

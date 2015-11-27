@@ -2,11 +2,6 @@
 from PyObjCTools.TestSupport import *
 from Quartz.QuartzCore import *
 
-try:
-    unicode
-except NameError:
-    unicode = str
-
 if os_level_key(os_release()) >= os_level_key('10.5'):
     class TestCAMediaTimingHelper (NSObject):
         __pyobjc_protocols__ = [objc.protocolNamed('CAMediaTiming')]

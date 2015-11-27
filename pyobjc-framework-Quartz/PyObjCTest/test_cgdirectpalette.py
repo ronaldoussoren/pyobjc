@@ -2,11 +2,6 @@
 from PyObjCTools.TestSupport import *
 from Quartz.CoreGraphics import *
 
-try:
-    long
-except NameError:
-    long = int
-
 class TestCGDirectPalette (TestCase):
     def testStructs(self):
         v = CGDeviceByteColor()

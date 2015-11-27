@@ -1,11 +1,6 @@
 from PyObjCTools.TestSupport import *
 import CoreFoundation
 
-try:
-    long
-except NameError:
-    long = int
-
 
 class TestCFFileSecurity (TestCase):
     @min_os_level('10.7')

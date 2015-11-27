@@ -1,12 +1,5 @@
 import sys
 
-try:
-    unicode
-    long
-except NameError:
-    unicode = str
-    long = int
-
 if sys.maxsize > 2 ** 32:
     from PyObjCTools.TestSupport import *
     import CloudKit

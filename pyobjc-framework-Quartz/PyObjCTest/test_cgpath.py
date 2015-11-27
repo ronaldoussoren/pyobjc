@@ -3,11 +3,6 @@ from PyObjCTools.TestSupport import *
 from Quartz.CoreGraphics import *
 from Quartz import CoreGraphics
 
-try:
-    long
-except NameError:
-    long = int
-
 class TestCGPath (TestCase):
     def testTypes(self):
         self.assertIsCFType(CGPathRef)

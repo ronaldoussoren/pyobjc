@@ -3,11 +3,6 @@ from PyObjCTools.TestSupport import *
 from Foundation import *
 import Foundation
 
-try:
-    long
-except NameError:
-    long = int
-
 
 class TestNSInvocation (TestCase):
     def test_dummy(self):

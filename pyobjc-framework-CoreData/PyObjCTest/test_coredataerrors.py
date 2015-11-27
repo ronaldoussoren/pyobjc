@@ -2,11 +2,6 @@
 from PyObjCTools.TestSupport import *
 from CoreData import *
 
-try:
-    unicode
-except NameError:
-    unicode = str
-
 class TestCoreDataErrors (TestCase):
 
     @min_os_level('10.6')

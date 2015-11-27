@@ -4,16 +4,6 @@ from CoreFoundation import *
 import os
 from Foundation import NSURL
 
-try:
-    unicode
-except NameError:
-    unicode = str
-
-
-try:
-    long
-except NameError:
-    long = int
 
 
 class TestURL (TestCase):

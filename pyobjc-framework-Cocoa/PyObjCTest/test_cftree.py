@@ -1,11 +1,6 @@
 from CoreFoundation import *
 from PyObjCTools.TestSupport import *
 
-try:
-    long
-except NameError:
-    long = int
-
 
 import sys
 if sys.version_info[0] == 3:

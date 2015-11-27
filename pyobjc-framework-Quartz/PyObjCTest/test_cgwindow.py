@@ -2,16 +2,6 @@
 from PyObjCTools.TestSupport import *
 from Quartz.CoreGraphics import *
 
-try:
-    unicode
-except NameError:
-    unicode = str
-
-
-try:
-    long
-except NameError:
-    long = int
 class TestCGWindow (TestCase):
     def testConstants(self):
         self.assertEqual(kCGWindowIDCFNumberType, kCFNumberSInt32Type)

@@ -2,11 +2,6 @@
 from PyObjCTools.TestSupport import *
 from Quartz.QuartzCore import *
 
-try:
-    unicode
-except NameError:
-    unicode = str
-
 class TestCAAnimationHelper (NSObject):
     def animationDidStop_finished_(self, a, f): pass
 
