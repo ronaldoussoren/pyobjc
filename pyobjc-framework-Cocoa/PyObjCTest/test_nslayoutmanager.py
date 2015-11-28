@@ -9,8 +9,8 @@ class TestNSLayoutManagerHelper (NSObject):
     def layoutOrientation(self): return 1
     def layoutManager_shouldGenerateGlyphs_properties_characterIndexes_forGlyphRange_(self, l, g, p, c, r): pass
     def layoutManager_lineSpacingAfterGlyphAtIndex_withProposedLineFragmentRect_(self, l, i, r): return 1
-    def layoutManager_paragraphSpacingBeforeGlyphAtIndex_withProposedLineFragmentRect(self, l, i, r): return 1
-    def layoutManager_paragraphSpacingAfterGlyphAtIndex_withProposedLineFragmentRect(self, l, i, r): return 1
+    def layoutManager_paragraphSpacingBeforeGlyphAtIndex_withProposedLineFragmentRect_(self, l, i, r): return 1
+    def layoutManager_paragraphSpacingAfterGlyphAtIndex_withProposedLineFragmentRect_(self, l, i, r): return 1
     def layoutManager_shouldUseAction_forControlCharacterAtIndex_(self, l, a, i): return 1
     def layoutManager_shouldBreakLineByWordBeforeCharacterAtIndex_(self, l, i): return 1
     def layoutManager_shouldBreakLineByHyphenatingBeforeCharacterAtIndex_(self, l, i): return 1
@@ -80,9 +80,9 @@ class TestNSLayoutManager (TestCase):
         self.assertArgHasType(TestNSLayoutManagerHelper.layoutManager_paragraphSpacingAfterGlyphAtIndex_withProposedLineFragmentRect_, 1, objc._C_NSUInteger)
         self.assertArgHasType(TestNSLayoutManagerHelper.layoutManager_paragraphSpacingAfterGlyphAtIndex_withProposedLineFragmentRect_, 2, NSRect.__typestr__)
 
-        self.assertResultHasType(TestNSLayoutManagerHelper.layoutManager_shouldUseAction_forControlCharacterAtIndex_, objc._C_NSUInteger)
+        self.assertResultHasType(TestNSLayoutManagerHelper.layoutManager_shouldUseAction_forControlCharacterAtIndex_, objc._C_NSInteger)
         self.assertArgHasType(TestNSLayoutManagerHelper.layoutManager_shouldUseAction_forControlCharacterAtIndex_, 1, objc._C_NSUInteger)
-        self.assertArgHasType(TestNSLayoutManagerHelper.layoutManager_shouldUseAction_forControlCharacterAtIndex_, 2, objc._C_NSUInteger)
+        self.assertArgHasType(TestNSLayoutManagerHelper.layoutManager_shouldUseAction_forControlCharacterAtIndex_, 2, objc._C_NSInteger)
 
         self.assertResultHasType(TestNSLayoutManagerHelper.layoutManager_shouldBreakLineByWordBeforeCharacterAtIndex_, objc._C_NSBOOL)
         self.assertArgHasType(TestNSLayoutManagerHelper.layoutManager_shouldBreakLineByWordBeforeCharacterAtIndex_, 1, objc._C_NSUInteger)
@@ -94,7 +94,7 @@ class TestNSLayoutManager (TestCase):
         self.assertArgHasType(TestNSLayoutManagerHelper.layoutManager_boundingBoxForControlGlyphAtIndex_forTextContainer_proposedLineFragment_glyphPosition_characterIndex_, 1, objc._C_NSUInteger)
         self.assertArgHasType(TestNSLayoutManagerHelper.layoutManager_boundingBoxForControlGlyphAtIndex_forTextContainer_proposedLineFragment_glyphPosition_characterIndex_, 3, NSRect.__typestr__)
         self.assertArgHasType(TestNSLayoutManagerHelper.layoutManager_boundingBoxForControlGlyphAtIndex_forTextContainer_proposedLineFragment_glyphPosition_characterIndex_, 4, NSPoint.__typestr__)
-        self.assertArgHasType(TestNSLayoutManagerHelper.layoutManager_boundingBoxForControlGlyphAtIndex_forTextContainer_proposedLineFragment_glyphPosition_characterIndex_, 5, objc._C_NSUInteger.__typestr__)
+        self.assertArgHasType(TestNSLayoutManagerHelper.layoutManager_boundingBoxForControlGlyphAtIndex_forTextContainer_proposedLineFragment_glyphPosition_characterIndex_, 5, objc._C_NSUInteger)
 
         self.assertArgHasType(TestNSLayoutManagerHelper.layoutManager_textContainer_didChangeGeometryFromSize_, 2, NSSize.__typestr__)
 
@@ -176,8 +176,8 @@ class TestNSLayoutManager (TestCase):
         self.assertResultIsBOOL(NSLayoutManager.drawsOutsideLineFragmentForGlyphAtIndex_)
 
 
-    @expectedFailure
-    def testMethods_missing(self):
+    @min_os_level('10.11')
+    def testMethods_missing_10_10(self):
         # Document, but not present on 10.10??
         self.assertArgHasType(NSLayoutManager.CGGlyphAtIndex_isValidIndex_, 1, b'o^Z')
 

@@ -14,6 +14,7 @@ class TestNSRulerViewHelper (NSView):
     def rulerView_handleMouseDown_(self, rv , ev): pass
     def rulerView_willSetClientView_(self, rv, vw): pass
     def rulerView_locationForPoint_(self, rv, vw): return 1
+    def rulerView_pointForLocation_(self, rv, vw): return 1
 
 class TestNSRulerView (TestCase):
     def testConstants(self):
@@ -36,10 +37,10 @@ class TestNSRulerView (TestCase):
         self.assertArgHasType(TestNSRulerViewHelper.rulerView_willAddMarker_atLocation_, 2, objc._C_CGFloat)
 
         self.assertResultHasType(TestNSRulerViewHelper.rulerView_locationForPoint_, objc._C_CGFloat)
-        self.assertArgHasType(TestNSRulerViewHelper.rulerView_locationForPoint_, 0, NSPoint.__typestr__)
+        self.assertArgHasType(TestNSRulerViewHelper.rulerView_locationForPoint_, 1, NSPoint.__typestr__)
 
         self.assertResultHasType(TestNSRulerViewHelper.rulerView_pointForLocation_, NSPoint.__typestr__)
-        self.assertArgHasType(TestNSRulerViewHelper.rulerView_pointForLocation_, 0, objc._C_CGFloat)
+        self.assertArgHasType(TestNSRulerViewHelper.rulerView_pointForLocation_, 1, objc._C_CGFloat)
 
 if __name__ == "__main__":
     main()

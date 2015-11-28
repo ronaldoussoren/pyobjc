@@ -52,7 +52,7 @@ class TestNSTypesetter (TestCase):
         self.assertArgIsBOOL(NSTypesetter.setUsesFontLeading_, 0)
         self.assertResultIsBOOL(NSTypesetter.bidiProcessingEnabled)
         self.assertArgIsBOOL(NSTypesetter.setBidiProcessingEnabled_, 0)
-        self.assertArgIsInOut(NSTypesetter.layoutParagraphAtPoint_, 1)
+        self.assertArgIsInOut(NSTypesetter.layoutParagraphAtPoint_, 0)
         self.assertArgIsOut(NSTypesetter.characterRangeForGlyphRange_actualGlyphRange_, 1)
         self.assertArgIsOut(NSTypesetter.glyphRangeForCharacterRange_actualCharacterRange_, 1)
         self.assertArgHasType(NSTypesetter.setBidiLevels_forGlyphRange_, 0, b'n^' + objc._C_CHAR_AS_INT)

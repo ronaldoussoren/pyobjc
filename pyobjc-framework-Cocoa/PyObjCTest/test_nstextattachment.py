@@ -15,6 +15,7 @@ class TestNSTextAttachmentHelper (NSObject):
     def trackMouse_inRect_ofView_atCharacterIndex_untilMouseUp_(self, ev, fr, vi, i, fl): return 1
     def cellFrameForTextContainer_proposedLineFragment_glyphPosition_characterIndex_(self, tc, fr, po, i): return 1
     def imageForBounds_textContainer_characterIndex_(self, b, c, i): return 1
+    def attachmentBoundsForTextContainer_proposedLineFragment_glyphPosition_characterIndex_(self, c, f, p, i): return 1
 
 class TestNSTextAttachment (TestCase):
     def testConstants(self):
@@ -39,7 +40,7 @@ class TestNSTextAttachment (TestCase):
         self.assertArgHasType(TestNSTextAttachmentHelper.imageForBounds_textContainer_characterIndex_, 2, objc._C_NSUInteger)
 
         self.assertArgHasType(TestNSTextAttachmentHelper.attachmentBoundsForTextContainer_proposedLineFragment_glyphPosition_characterIndex_, 1, NSRect.__typestr__)
-        self.assertArgHasType(TestNSTextAttachmentHelper.attachmentBoundsForTextContainer_proposedLineFragment_glyphPosition_characterIndex_, 2, CGPoint.__typestr__)
+        self.assertArgHasType(TestNSTextAttachmentHelper.attachmentBoundsForTextContainer_proposedLineFragment_glyphPosition_characterIndex_, 2, NSPoint.__typestr__)
         self.assertArgHasType(TestNSTextAttachmentHelper.attachmentBoundsForTextContainer_proposedLineFragment_glyphPosition_characterIndex_, 3, objc._C_NSUInteger)
 
         self.assertArgHasType(TestNSTextAttachmentHelper.drawWithFrame_inView_, 0, NSRect.__typestr__)

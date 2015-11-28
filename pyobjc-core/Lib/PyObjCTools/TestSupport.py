@@ -781,7 +781,7 @@ class TestCase (_unittest.TestCase):
             offset = 0
         info = method.__metadata__()
         type = info['arguments'][argno+offset]['type']
-        if not type.startswith(b'o^'):
+        if not type.startswith(b'o^') and not type.startswith('o*'):
             self.fail(message or "arg %d of %s is not an 'out' argument"%(
                 argno, method))
 
@@ -792,7 +792,7 @@ class TestCase (_unittest.TestCase):
             offset = 0
         info = method.__metadata__()
         type = info['arguments'][argno+offset]['type']
-        if not type.startswith(b'N^'):
+        if not type.startswith(b'N^') and not type.startswith('N*'):
             self.fail(message or "arg %d of %s is not an 'inout' argument"%(
                 argno, method))
 
@@ -803,7 +803,7 @@ class TestCase (_unittest.TestCase):
             offset = 0
         info = method.__metadata__()
         type = info['arguments'][argno+offset]['type']
-        if not type.startswith(b'n^'):
+        if not type.startswith(b'n^') and not type.startswith('n*'):
             self.fail(message or "arg %d of %s is not an 'in' argument"%(
                 argno, method))
 

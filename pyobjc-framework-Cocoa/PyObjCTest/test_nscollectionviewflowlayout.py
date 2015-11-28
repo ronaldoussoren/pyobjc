@@ -40,7 +40,7 @@ class TestNSCollectionViewFlowLayout (TestCase):
         self.assertArgHasType(TestNSCollectionViewFlowLayoutHelper.collectionView_layout_insetForSectionAtIndex_, 2, objc._C_NSInteger)
 
         self.assertResultHasType(TestNSCollectionViewFlowLayoutHelper.collectionView_layout_minimumLineSpacingForSectionAtIndex_, objc._C_CGFloat)
-        self.assertArgHasType(TestNSCollectionViewFlowLayoutHelper.collectionView_layout_minimumLineSpacingForSectionAtIndex_, objc._C_CGFloat)
+        self.assertArgHasType(TestNSCollectionViewFlowLayoutHelper.collectionView_layout_minimumLineSpacingForSectionAtIndex_, 2, objc._C_NSInteger)
 
         self.assertResultHasType(TestNSCollectionViewFlowLayoutHelper.collectionView_layout_minimumInteritemSpacingForSectionAtIndex_, objc._C_CGFloat)
         self.assertArgHasType(TestNSCollectionViewFlowLayoutHelper.collectionView_layout_minimumInteritemSpacingForSectionAtIndex_, 2, objc._C_NSInteger)

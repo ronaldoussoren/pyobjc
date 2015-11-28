@@ -891,6 +891,9 @@ setup_descr(struct _PyObjC_ArgDescr* descr, PyObject* meta, BOOL is_native)
 
         if (descr == NULL || descr->tmpl) return -2;
 
+        descr->modifier = typeModifier;
+
+
         if (PyUnicode_Check(d)) {
             bytes = PyUnicode_AsEncodedString(d, NULL, NULL);
             if (bytes == NULL) {
