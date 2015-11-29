@@ -886,7 +886,7 @@ static char* keywords[] = { "name", "typestr", "doc", NULL };
 }
 
 PyDoc_STRVAR(copyMetadataRegistry_doc,
-    "_copyMetadataRegistry()"
+    "_copyMetadataRegistry()\n"
     CLINIC_SEP
     "\n"
     "Return a copy of the metdata registry.");
