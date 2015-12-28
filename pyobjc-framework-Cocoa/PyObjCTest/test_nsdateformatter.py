@@ -47,6 +47,5 @@ class TestNSDateFormatter (TestCase):
         self.assertArgIsBOOL(NSDateFormatter.setDoesRelativeDateFormatting_, 0)
 
 
-
 if __name__ == "__main__":
     main()

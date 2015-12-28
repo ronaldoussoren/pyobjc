@@ -3,17 +3,13 @@ from PyObjCTools.TestSupport import *
 import Foundation
 
 class TestNSDebug (TestCase):
-    def testNoUnsupportedSymbols(self):
-        self.assertNotHasAttr(Foundation, 'NSDebugEnabled')
-        self.assertNotHasAttr(Foundation, 'NSZombieEnabled')
-        self.assertNotHasAttr(Foundation, 'NSDeallocateZombies')
-        self.assertNotHasAttr(Foundation, 'NSHangOnUncaughtException')
-        self.assertNotHasAttr(Foundation, 'NSKeepAllocationStatistics')
-        self.assertNotHasAttr(Foundation, 'NSFrameAddress')
-        self.assertNotHasAttr(Foundation, 'NSReturnAddress')
-        self.assertNotHasAttr(Foundation, 'NSCountFrames')
-        self.assertHasAttr(Foundation, 'NSIsFreedObject')
-        self.assertHasAttr(Foundation, 'NSRecordAllocationEvent')
+    def testFunctions(self):
+        self.assertResultIsBOOL(Foundation.NSIsFreedObject)
+        Foundation.NSRecordAllocationEvent
+        Foundation.NSFrameAddress
+        Foundation.NSReturnAddress
+        Foundation.NSCountFrames
+        Foundation.NSRecordAllocationEvent
 
     def testConstants(self):
         self.assertEqual(Foundation.NSObjectAutoreleasedEvent, 3)
@@ -21,6 +17,12 @@ class TestNSDebug (TestCase):
         self.assertEqual(Foundation.NSObjectExtraRefDecrementedEvent, 5)
         self.assertEqual(Foundation.NSObjectInternalRefIncrementedEvent, 6)
         self.assertEqual(Foundation.NSObjectInternalRefDecrementedEvent, 7)
+
+        self.assertIsInstance(Foundation.NSDebugEnabled, bool)
+        self.assertIsInstance(Foundation.NSZombieEnabled, bool)
+        self.assertIsInstance(Foundation.NSDeallocateZombies, bool)
+        self.assertIsInstance(Foundation.NSHangOnUncaughtException, bool)
+        self.assertIsInstance(Foundation.NSKeepAllocationStatistics, bool)
 
 
 if __name__ == "__main__":

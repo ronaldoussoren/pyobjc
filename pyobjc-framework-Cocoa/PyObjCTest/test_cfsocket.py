@@ -4,6 +4,11 @@ from CoreFoundation import *
 import CoreFoundation
 import sys
 
+try:
+    buffer
+except NameError:
+    buffer = memoryview
+
 
 cached_info = None
 def onTheNetwork():

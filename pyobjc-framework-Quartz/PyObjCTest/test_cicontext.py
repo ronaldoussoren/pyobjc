@@ -9,6 +9,9 @@ class TestCIContext (TestCase):
 
         self.assertIsInstance(kCIContextWorkingFormat, unicode)
 
+    def testConstants10_11(self):
+        self.assertIsInstance(kCIContextHighQualityDownsample, unicode)
+
 
     def testMethods(self):
         self.assertArgIsOut(CIContext.render_toBitmap_rowBytes_bounds_format_colorSpace_, 1)

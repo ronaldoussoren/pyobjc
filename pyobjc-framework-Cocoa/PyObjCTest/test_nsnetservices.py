@@ -11,7 +11,6 @@ class TestNSNetServicesHelper (NSObject):
 
 class TestNSNetservices (TestCase):
     def testConstants(self):
-
         self.assertIsInstance(NSNetServicesErrorCode, unicode)
         self.assertIsInstance(NSNetServicesErrorDomain, unicode)
         self.assertEqual(NSNetServicesUnknownError, -72000)
@@ -23,6 +22,10 @@ class TestNSNetservices (TestCase):
         self.assertEqual(NSNetServicesInvalidError, -72006)
         self.assertEqual(NSNetServicesTimeoutError, -72007)
         self.assertEqual(NSNetServiceNoAutoRename, 1)
+
+    @min_os_level('10.9')
+    def testConstants10_9(self):
+        self.assertEqual(NSNetServiceListenForConnections, 1<<1)
 
     def testOutput(self):
         o = NSNetService.alloc().init()
@@ -42,6 +45,18 @@ class TestNSNetservices (TestCase):
         self.assertArgIsBOOL(TestNSNetServicesHelper.netServiceBrowser_didFindService_moreComing_, 2)
         self.assertArgIsBOOL(TestNSNetServicesHelper.netServiceBrowser_didRemoveDomain_moreComing_, 2)
         self.assertArgIsBOOL(TestNSNetServicesHelper.netServiceBrowser_didRemoveService_moreComing_, 2)
+
+    @min_os_level('10.10')
+    def testMethods10_10(self):
+        self.assertResultIsBOOL(NSNetService.includesPeerToPeer)
+        self.assertArgIsBOOL(NSNetService.setIncludesPeerToPeer_, 0)
+
+        self.assertResultIsBOOL(NSNetServiceBrowser.includesPeerToPeer)
+        self.assertArgIsBOOL(NSNetServiceBrowser.setIncludesPeerToPeer_, 0)
+
+    def testProtocols(self):
+        objc.protocolNamed('NSNetServiceDelegate')
+        objc.protocolNamed('NSNetServiceBrowserDelegate')
 
 if __name__ == "__main__":
     main()

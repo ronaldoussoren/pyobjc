@@ -14,5 +14,8 @@ class TestCAMetalLayer (TestCase):
         self.assertResultIsBOOL(CAMetalLayer.presentsWithTransaction)
         self.assertArgIsBOOL(CAMetalLayer.setPresentsWithTransaction_, 0)
 
+        self.assertResultIsBOOL(CAMetalLayer.wantsExtendedDynamicRangeContent)
+        self.assertArgIsBOOL(CAMetalLayer.setWantsExtendedDynamicRangeContent_, 0)
+
 if __name__ == "__main__":
     main()

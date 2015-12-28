@@ -11,7 +11,9 @@
     "MLPhotosBurstGroupTypeIdentifier": { "typestr": "@" },
     "MLPhotosFacesAlbumTypeIdentifier": { "typestr": "@" },
     "MLPhotosAllPhotosAlbumTypeIdentifier": { "typestr": "@" },
-    "MLPhotosTimelapseGroupTypeIdentifier": { "typestr": "@" }
+    "MLPhotosTimelapseGroupTypeIdentifier": { "typestr": "@" },
+    "MLPhotosFrontCameraGroupTypeIdentifier": { "typestr": "@" },
+    "MLPhotosScreenshotGroupTypeIdentifier": { "typestr": "@" }
   }
  }
 }

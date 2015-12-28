@@ -51,6 +51,9 @@ class TestNSApplication (TestCase):
         self.assertEqual(NSAppKitVersionNumber10_10, 1343)
         self.assertEqual(NSAppKitVersionNumber10_10_2, 1344)
         self.assertEqual(NSAppKitVersionNumber10_10_3, 1347)
+        self.assertEqual(NSAppKitVersionNumber10_10_4, 1348)
+        self.assertEqual(NSAppKitVersionNumber10_10_5, 1348)
+        self.assertEqual(NSAppKitVersionNumber10_10_Max, 1349)
 
         self.assertIsInstance(NSModalPanelRunLoopMode, unicode)
         self.assertIsInstance(NSEventTrackingRunLoopMode, unicode)
@@ -225,6 +228,10 @@ class TestNSApplication (TestCase):
         self.assertEqual(NSApplicationOcclusionStateVisible, 1 << 1)
 
         self.assertIsInstance(NSApplicationDidChangeOcclusionStateNotification, unicode)
+
+    @min_os_level('10.11')
+    def testConstants10_11(self):
+        self.assertEqual(NSApplicationPresentationDisableCursorLocationAssistance, 1 << 12)
 
     @min_os_level('10.6')
     def testMethods10_6(self):

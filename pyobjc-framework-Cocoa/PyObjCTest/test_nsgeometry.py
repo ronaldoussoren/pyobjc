@@ -12,6 +12,11 @@ class TestNSGeometry (TestCase):
         self.assertEqual(NSMaxXEdge, 2)
         self.assertEqual(NSMaxYEdge, 3)
 
+        self.assertEqual(NSRectEdgeMinX, 0)
+        self.assertEqual(NSRectEdgeMinY, 1)
+        self.assertEqual(NSRectEdgeMaxX, 2)
+        self.assertEqual(NSRectEdgeMaxY, 3)
+
         self.assertEqual(NSZeroPoint, NSPoint())
         self.assertEqual(NSZeroSize, NSSize())
         self.assertEqual(NSZeroRect, NSRect())

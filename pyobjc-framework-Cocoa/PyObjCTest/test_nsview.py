@@ -195,6 +195,11 @@ class TestHeader (TestCase):
     def testMethods10_10(self):
         self.assertResultIsBOOL(NSView.allowsVibrancy)
 
+    @min_os_level('10.11')
+    def testMethods10_11(self):
+        self.assertResultIsBOOL(NSView.wantsExtendedDynamicRangeOpenGLSurface)
+        self.assertArgIsBOOL(NSView.setWantsExtendedDynamicRangeOpenGLSurface_, 0)
+
     def testProtocol(self):
         self.assertArgHasType(TestNSViewHelper.view_stringForToolTip_point_userData_, 2, NSPoint.__typestr__)
         self.assertArgHasType(TestNSViewHelper.view_stringForToolTip_point_userData_, 3, b'^v')

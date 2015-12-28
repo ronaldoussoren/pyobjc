@@ -13,6 +13,12 @@ class TestNSOperation (TestCase):
         self.assertIsInstance(NSInvocationOperationCancelledException, unicode)
         self.assertEqual(NSOperationQueueDefaultMaxConcurrentOperationCount, -1)
 
+        self.assertEqual(NSOperationQualityOfServiceUserInteractive, NSQualityOfServiceUserInteractive)
+        self.assertEqual(NSOperationQualityOfServiceUserInitiated, NSQualityOfServiceUserInitiated)
+        self.assertEqual(NSOperationQualityOfServiceUtility, NSQualityOfServiceUtility)
+        self.assertEqual(NSOperationQualityOfServiceBackground, NSQualityOfServiceBackground)
+
+
     def testMethods(self):
         self.assertResultIsBOOL(NSOperation.isCancelled)
         self.assertResultIsBOOL(NSOperation.isExecuting)
@@ -34,6 +40,10 @@ class TestNSOperation (TestCase):
 
         self.assertArgIsBOOL(NSOperationQueue.addOperations_waitUntilFinished_, 1)
         self.assertArgIsBlock(NSOperationQueue.addOperationWithBlock_, 0, b'v')
+
+    @min_os_level('10.8')
+    def testMethods10_8(self):
+        self.assertResultIsBOOL(NSOperation.isAsynchronous)
 
 if __name__ == "__main__":
     main()

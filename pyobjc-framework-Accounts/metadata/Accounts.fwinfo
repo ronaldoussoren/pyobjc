@@ -7,7 +7,9 @@
    "ACErrorCoreDataSaveFailed": { "value": 18 },
    "ACErrorFailedSerializingAccountInfo": { "value": 19 },
    "ACErrorInvalidCommand": { "value": 20 },
-   "ACErrorMissingTransportMessageID": { "value": 21 }
+   "ACErrorMissingTransportMessageID": { "value": 21 },
+   "ACErrorCredentialItemNotFound": { "value": 22 },
+   "ACErrorCredentialItemNotExpired": { "value": 23 }
   },
   "classes": {
      "ACAccountStore": {

@@ -64,12 +64,28 @@ class TestNSURLError (TestCase):
         self.assertEqual(NSURLErrorClientCertificateRequired, -1206)
 
     @min_os_level('10.7')
-    @onlyIf(CFNetwork is not None)
     def testConstants10_7(self):
-        self.assertEqual(NSURLErrorInternationalRoamingOff, CFNetwork.kCFURLErrorInternationalRoamingOff)
-        self.assertEqual(NSURLErrorCallIsActive, CFNetwork.kCFURLErrorCallIsActive)
-        self.assertEqual(NSURLErrorDataNotAllowed, CFNetwork.kCFURLErrorDataNotAllowed)
-        self.assertEqual(NSURLErrorRequestBodyStreamExhausted, CFNetwork.kCFURLErrorRequestBodyStreamExhausted)
+        self.assertEqual(NSURLErrorInternationalRoamingOff, -1018)
+        self.assertEqual(NSURLErrorCallIsActive, -1019)
+        self.assertEqual(NSURLErrorDataNotAllowed, -1020)
+        self.assertEqual(NSURLErrorRequestBodyStreamExhausted, -1021)
+
+
+    @min_os_level('10.10')
+    def testConstants10_10(self):
+        self.assertIsInstance(NSURLErrorBackgroundTaskCancelledReasonKey, unicode)
+
+        self.assertEqual(NSURLErrorCancelledReasonUserForceQuitApplication, 0)
+        self.assertEqual(NSURLErrorCancelledReasonBackgroundUpdatesDisabled, 1)
+        self.assertEqual(NSURLErrorCancelledReasonInsufficientSystemResources, 2)
+
+        self.assertEqual(NSURLErrorBackgroundSessionRequiresSharedContainer, -995)
+        self.assertEqual(NSURLErrorBackgroundSessionInUseByAnotherProcess, -996)
+        self.assertEqual(NSURLErrorBackgroundSessionWasDisconnected, -997)
+
+    @min_os_level('10.11')
+    def testConstants10_11(self):
+        self.assertEqual(NSURLErrorAppTransportSecurityRequiresSecureConnection, -1022)
 
 if __name__ == "__main__":
     main()

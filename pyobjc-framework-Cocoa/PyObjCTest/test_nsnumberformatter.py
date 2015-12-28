@@ -28,6 +28,14 @@ class TestNSNumberFormatter (TestCase):
         self.assertEqual(NSNumberFormatterRoundHalfDown, kCFNumberFormatterRoundHalfDown)
         self.assertEqual(NSNumberFormatterRoundHalfUp, kCFNumberFormatterRoundHalfUp)
 
+    @min_os_level('10.11')
+    def testConstants(self):
+        self.assertEqual(NSNumberFormatterOrdinalStyle, kCFNumberFormatterOrdinalStyle)
+        self.assertEqual(NSNumberFormatterCurrencyISOCodeStyle, kCFNumberFormatterCurrencyISOCodeStyle)
+        self.assertEqual(NSNumberFormatterCurrencyPluralStyle, kCFNumberFormatterCurrencyPluralStyle)
+        self.assertEqual(NSNumberFormatterCurrencyAccountingStyle, kCFNumberFormatterCurrencyAccountingStyle)
+
+
 
     def testOutput(self):
         self.assertResultIsBOOL(NSNumberFormatter.getObjectValue_forString_range_error_)

@@ -63,6 +63,10 @@ static PyObjC_function_map function_map[] = {
     {"NSSwapLongLong", (PyObjC_Function_Pointer)&NSSwapLongLong },
     {"NSSwapShort", (PyObjC_Function_Pointer)&NSSwapShort },
     {"NSWidth", (PyObjC_Function_Pointer)&NSWidth },
+#if PyObjC_BUILD_RELEASE >= 1007
+    {"CFBridgingRetain", (PyObjC_Function_Pointer)&CFBridgingRetain },
+    {"CFBridgingRelease", (PyObjC_Function_Pointer)&CFBridgingRelease },
+#endif
 
 #ifndef NO_OBJC2_RUNTIME
     {"NSMakeCollectable", (PyObjC_Function_Pointer)&NSMakeCollectable },

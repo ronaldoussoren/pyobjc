@@ -82,6 +82,13 @@ class TestNSFileManager (TestCase):
         self.assertEqual(NSURLRelationshipSame, 1)
         self.assertEqual(NSURLRelationshipOther, 2)
 
+    @min_os_level('10.11')
+    def testConstants10_11(self):
+        self.assertEqual(NSFileManagerUnmountAllPartitionsAndEjectDisk, 1<<0)
+        self.assertEqual(NSFileManagerUnmountWithoutUI, 1<<1)
+
+        self.assertIsInstance(NSFileManagerUnmountDissentingProcessIdentifierErrorKey, unicode)
+
     @min_os_level('10.6')
     def testMethods10_6(self):
         self.assertArgIsOut(NSFileManager.contentsOfDirectoryAtURL_includingPropertiesForKeys_options_error_, 3)
@@ -229,6 +236,7 @@ class TestNSFileManager (TestCase):
         self.assertEqual(m['retval']['type'] , 'Z')
         m = obj.fileManager_shouldProceedAfterError_removingItemAtPath_.__metadata__()
         self.assertEqual(m['retval']['type'] , 'Z')
+
     @min_os_level('10.5')
     def testMethods10_5(self):
         self.assertResultIsBOOL(NSFileManager.setAttributes_ofItemAtPath_error_)
@@ -285,6 +293,10 @@ class TestNSFileManager (TestCase):
         self.assertResultIsBOOL(NSDictionary.fileIsImmutable)
         self.assertResultIsBOOL(NSDictionary.fileIsAppendOnly)
         self.assertResultIsBOOL(NSDictionary.fileExtensionHidden)
+
+    @min_os_level('10.11')
+    def testMethods10_11(self):
+        self.assertArgIsBlock(NSFileManager.unmountVolumeAtURL_options_completionHandler_, 2, b'v@')
 
     def testProtocols(self):
         self.assertResultIsBOOL(TestNSFileManagerHelper.fileManager_shouldProceedAfterError_)

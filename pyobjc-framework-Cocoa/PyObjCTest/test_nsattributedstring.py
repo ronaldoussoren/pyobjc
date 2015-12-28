@@ -6,9 +6,8 @@ import Foundation
 
 
 class TestNSAttributedString (TestCase):
-    def testOutput(self):
+    def testMethodsFoundation(self):
         self.assertArgIsOut(NSAttributedString.attributesAtIndex_effectiveRange_, 1)
-        self.assertArgIsOut(NSAttributedString.attribute_atIndex_effectiveRange_, 2)
         self.assertArgIsOut(NSAttributedString.attributesAtIndex_longestEffectiveRange_inRange_, 1)
         self.assertArgIsOut(NSAttributedString.attribute_atIndex_longestEffectiveRange_inRange_, 2)
 

@@ -3,6 +3,9 @@
 {
  "definitions": {
   "externs": {
+   "kCIContextHighQualityDownsample": { "typestr": "@" },
+   "CIDetectorReturnSubFeatures": { "typestr": "@" },
+   "kCIInputWeightsKey": { "typestr": "@" },
    "kCIAttributeFilterAvailable_Mac": { "typestr": "@" },
    "kCIAttributeFilterAvailable_iOS": { "typestr": "@" },
    "kCIContextWorkingFormat": { "typestr": "@" },
@@ -98,6 +101,18 @@
    },
    "CAOpenGLLayer": {
     "methods": [
+     {
+      "args": {
+       "0": { "type_override": "Z" }
+      },
+      "class_method": false,
+      "selector": "setWantsExtendedDynamicRangeContent:"
+     },
+     {
+      "retval": { "type_override": "Z" },
+      "class_method": false,
+      "selector": "wantsExtendedDynamicRangeContent"
+     },
      {
       "args": {
        "0": {},
@@ -221,6 +236,18 @@
    },
    "CAMetalLayer": {
     "methods": [
+     {
+      "args": {
+       "0": { "type_override": "Z" }
+      },
+      "class_method": false,
+      "selector": "setWantsExtendedDynamicRangeContent:"
+     },
+     {
+      "retval": { "type_override": "Z" },
+      "class_method": false,
+      "selector": "wantsExtendedDynamicRangeContent"
+     },
      {
       "args": {
        "0": { "type_override": "Z" }

@@ -56,5 +56,10 @@ class TestNSPanel (TestCase):
         self.assertResultIsBOOL(NSPanel.worksWhenModal)
         self.assertArgIsBOOL(NSPanel.setWorksWhenModal_, 0)
 
+    @min_os_level('10.11')
+    def testMethods10_11(self):
+        self.assertResultIsBOOL(NSOpenPanel.isAccessoryViewDisclosed)
+        self.assertArgIsBOOL(NSOpenPanel.setAccessoryViewDisclosed_, 0)
+
 if __name__ == "__main__":
     main()

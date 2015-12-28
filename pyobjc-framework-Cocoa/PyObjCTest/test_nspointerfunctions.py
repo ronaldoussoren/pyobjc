@@ -36,5 +36,9 @@ class TestNSPointerFunctions (TestCase):
         v = o.usesWeakReadAndWriteBarriers()
         self.assertTrue((v is True) or (v is False) )
 
+    @expectedFailure
+    def testCallbacks(self):
+        self.fail("pointer personality functions")
+
 if __name__ == "__main__":
     main()

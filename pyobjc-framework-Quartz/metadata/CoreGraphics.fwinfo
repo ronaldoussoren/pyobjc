@@ -6,6 +6,7 @@
    "CGGlyphMax": { "value": 65534 }
   },
   "externs": {
+   "kCGColorSpaceDisplayP3": { "typestr": "@" },
    "kCGColorSpaceGenericXYZ": { "typestr": "@" },
    "kCGColorSpaceITUR_709": { "typestr": "@" },
    "kCGColorSpaceITUR_2020": { "typestr": "@" },

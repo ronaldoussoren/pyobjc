@@ -91,11 +91,16 @@ class TestSubclassingUndo(TestCase):
         self.assertResultIsBOOL(NSUndoManager.isRedoing)
         self.assertArgIsSEL(NSUndoManager.registerUndoWithTarget_selector_object_, 1, b'v@:@')
 
+
     @min_os_level('10.7')
     def testMethods10_7(self):
         self.assertArgIsBOOL(NSUndoManager.setActionIsDiscardable_, 0)
         self.assertResultIsBOOL(NSUndoManager.undoActionIsDiscardable)
         self.assertResultIsBOOL(NSUndoManager.redoActionIsDiscardable)
+
+    @min_os_level('10.11')
+    def testMethods10_11(self):
+        self.assertArgIsBlock(NSUndoManager.registerUndoWithTarget_handler_, 1, b'v@')
 
 if __name__ == '__main__':
     main( )

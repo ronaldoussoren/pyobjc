@@ -99,6 +99,7 @@ class TestCIFilter (TestCase):
         self.assertIsInstance(kCIAttributeTypeImage, unicode)
         self.assertIsInstance(kCIAttributeTypeTransform, unicode)
         self.assertIsInstance(kCIInputVersionKey, unicode)
+        self.assertIsInstance(kCIInputWeightsKey, unicode)
 
     def testMethods(self):
         self.assertIsNullTerminated(CIFilter.apply_)

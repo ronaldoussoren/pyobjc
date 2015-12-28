@@ -204,6 +204,7 @@ class TestPickle(TestCase):
         self.assertEqual(NSBackwardsSearch, 4)
         self.assertEqual(NSAnchoredSearch, 8)
         self.assertEqual(NSNumericSearch, 64)
+
         self.assertEqual(NSASCIIStringEncoding, 1)
         self.assertEqual(NSNEXTSTEPStringEncoding, 2)
         self.assertEqual(NSJapaneseEUCStringEncoding, 3)
@@ -227,6 +228,7 @@ class TestPickle(TestCase):
         self.assertEqual(NSUTF32StringEncoding, cast_uint(0x8c000100))
         self.assertEqual(NSUTF32BigEndianStringEncoding, cast_uint(0x98000100))
         self.assertEqual(NSUTF32LittleEndianStringEncoding, cast_uint(0x9c000100))
+
         self.assertEqual(NSStringEncodingConversionAllowLossy, 1)
         self.assertEqual(NSStringEncodingConversionExternalRepresentation, 2)
 
@@ -363,6 +365,47 @@ class TestPickle(TestCase):
         self.assertArgIsBlock(NSString.enumerateSubstringsInRange_options_usingBlock_, 2, b'v@'+NSRange.__typestr__+NSRange.__typestr__+b'o^'+objc._C_NSBOOL)
         self.assertArgIsBlock(NSString.enumerateLinesUsingBlock_, 0, b'v@o^'+objc._C_NSBOOL)
 
+    @min_os_level('10.10')
+    def testConstants10_10(self):
+        self.assertIsInstance(NSStringEncodingDetectionSuggestedEncodingsKey, unicode)
+        self.assertIsInstance(NSStringEncodingDetectionDisallowedEncodingsKey, unicode)
+        self.assertIsInstance(NSStringEncodingDetectionUseOnlySuggestedEncodingsKey, unicode)
+        self.assertIsInstance(NSStringEncodingDetectionAllowLossyKey, unicode)
+        self.assertIsInstance(NSStringEncodingDetectionFromWindowsKey, unicode)
+        self.assertIsInstance(NSStringEncodingDetectionLossySubstitutionKey, unicode)
+        self.assertIsInstance(NSStringEncodingDetectionLikelyLanguageKey, unicode)
+
+    @min_os_level('10.10')
+    def testMethods10_10(self):
+        self.assertArgHasType(NSString.stringEncodingForData_encodingOptions_convertedString_usedLossyConversion_, 2, b'o^@')
+        self.assertArgHasType(NSString.stringEncodingForData_encodingOptions_convertedString_usedLossyConversion_, 3, b'o^Z')
+
+    @min_os_level('10.11')
+    def testConstants10_11(self):
+        self.assertIsInstance(NSStringTransformLatinToKatakana, unicode)
+        self.assertIsInstance(NSStringTransformLatinToHiragana, unicode)
+        self.assertIsInstance(NSStringTransformLatinToHangul, unicode)
+        self.assertIsInstance(NSStringTransformLatinToArabic, unicode)
+        self.assertIsInstance(NSStringTransformLatinToHebrew, unicode)
+        self.assertIsInstance(NSStringTransformLatinToThai, unicode)
+        self.assertIsInstance(NSStringTransformLatinToCyrillic, unicode)
+        self.assertIsInstance(NSStringTransformLatinToGreek, unicode)
+        self.assertIsInstance(NSStringTransformToLatin, unicode)
+        self.assertIsInstance(NSStringTransformMandarinToLatin, unicode)
+        self.assertIsInstance(NSStringTransformHiraganaToKatakana, unicode)
+        self.assertIsInstance(NSStringTransformFullwidthToHalfwidth, unicode)
+        self.assertIsInstance(NSStringTransformToXMLHex, unicode)
+        self.assertIsInstance(NSStringTransformToUnicodeName, unicode)
+        self.assertIsInstance(NSStringTransformStripCombiningMarks, unicode)
+        self.assertIsInstance(NSStringTransformStripDiacritics, unicode)
+
+    @min_os_level('10.11')
+    def testMethods10_11(self):
+        self.assertResultIsBOOL(NSString.localizedStandardContainsString_)
+        self.assertArgIsBOOL(NSString.stringByApplyingTransform_reverse_, 1)
+
+        self.assertArgIsBOOL(NSMutableString.applyTransform_reverse_range_updatedRange_, 1)
+        self.assertArgIsOut(NSMutableString.applyTransform_reverse_range_updatedRange_, 3)
 
 
 if __name__ == '__main__':

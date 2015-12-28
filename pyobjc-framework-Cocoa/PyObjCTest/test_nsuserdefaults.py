@@ -21,7 +21,9 @@ class PythonListAsValue (TestCase):
         self.assertIsInstance(NSGlobalDomain, unicode)
         self.assertIsInstance(NSArgumentDomain, unicode)
         self.assertIsInstance(NSRegistrationDomain, unicode)
+
         self.assertIsInstance(NSUserDefaultsDidChangeNotification, unicode)
+
         self.assertIsInstance(NSWeekDayNameArray, unicode)
         self.assertIsInstance(NSShortWeekDayNameArray, unicode)
         self.assertIsInstance(NSMonthNameArray, unicode)

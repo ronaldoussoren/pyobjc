@@ -5,15 +5,6 @@ import Foundation
 import AppKit
 
 class TestNSBundle (TestCase):
-    def testOutput(self):
-        obj = NSBundle.mainBundle()
-
-        m = obj.preflightAndReturnError_.__metadata__()
-        self.assertTrue(m['arguments'][2]['type'].startswith(b'o^'))
-
-        m = obj.loadAndReturnError_.__metadata__()
-        self.assertTrue(m['arguments'][2]['type'].startswith(b'o^'))
-
     def testMethods(self):
         b = NSBundle.mainBundle()
         # Test on an instance because NSBundle has class methods

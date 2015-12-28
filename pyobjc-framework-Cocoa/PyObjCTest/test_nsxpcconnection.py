@@ -8,6 +8,11 @@ class XPCHelper (Foundation.NSObject):
 
 class TestNSXPCConnection (TestCase):
     @min_os_level('10.8')
+    def testProtocolObjects(self):
+        objc.protocolNamed('NSXPCProxyCreating')
+        objc.protocolNamed('NSXPCListenerDelegate')
+
+    @min_os_level('10.8')
     def testConstants10_8(self):
         self.assertEqual(Foundation.NSXPCConnectionPrivileged, 1<<12)
 

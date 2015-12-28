@@ -427,6 +427,12 @@ class TestNSAccessibility (TestCase):
         self.assertEqual(NSAccessibilityUnitsPoints, 3)
         self.assertEqual(NSAccessibilityUnitsPicas, 4)
 
+    @min_os_level('10.11')
+    def testConstants10_11(self):
+        self.assertIsInstance(NSAccessibilityListItemPrefixTextAttribute, unicode)
+        self.assertIsInstance(NSAccessibilityListItemIndexTextAttribute, unicode)
+        self.assertIsInstance(NSAccessibilityListItemLevelTextAttribute, unicode)
+
     @min_os_level('10.7')
     def testFunctions10_7(self):
         self.assertIsInstance(NSAccessibilityPostNotificationWithUserInfo, objc.function)

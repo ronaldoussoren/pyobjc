@@ -9,6 +9,9 @@ class TestNSObjectHelper (NSObject):
     def isContentDiscarded(self): return 1
     def beginContentAccess(self): return 1
 
+    @classmethod
+    def supportsSecureCoding(self): return 1
+
     def retainWeakReference(self): return 0
     def allowsWeakReference(self): return 0
 
@@ -47,6 +50,11 @@ class TestNSObjectFunctions (TestCase):
         v = NSExtraRefCount(o)
         self.assertEqual(v, cnt)
 
+    @min_os_level('10.7')
+    def testFunctions10_7(self):
+        # No further testing needed:
+        CFBridgingRetain
+        CFBridgingRelease
 
 
 class TestNSObjectInteraction(TestCase):
@@ -57,29 +65,29 @@ class TestNSObjectInteraction(TestCase):
     def testNSObjectClassMethod(self):
         # Check that -class is accesible as 'class__' and 'class' (the latter
         # only through getattr because it is a Python keyword)
-        self.assert_(hasattr(NSObject, 'class__'))
-        self.assert_(isinstance(NSObject.class__, objc.selector))
+        self.assertTrue(hasattr(NSObject, 'class__'))
+        self.assertTrue(isinstance(NSObject.class__, objc.selector))
         o = NSObject.alloc().init()
-        self.assert_(o.class__() is o.__class__)
+        self.assertTrue(o.class__() is o.__class__)
 
-        self.assert_(hasattr(NSObject, 'class'))
-        self.assert_(isinstance(getattr(NSObject, 'class'), objc.selector))
-        self.assert_(getattr(o, 'class')() is o.__class__)
+        self.assertTrue(hasattr(NSObject, 'class'))
+        self.assertTrue(isinstance(getattr(NSObject, 'class'), objc.selector))
+        self.assertTrue(getattr(o, 'class')() is o.__class__)
 
     def testNSObjectClass(self):
-        self.assert_( NSObject.instancesRespondToSelector_( "description" ), "NSObject class claims it doesn't respond to a selector that it does." )
-        self.assert_( hasattr(NSObject, "description"), "NSObject class claims it doesn't respond to a selector that it does." )
-        # self.assert_( NSObject.description(), "NSObject class failed to respond to +description selector." )
+        self.assertTrue( NSObject.instancesRespondToSelector_( "description" ), "NSObject class claims it doesn't respond to a selector that it does." )
+        self.assertTrue( hasattr(NSObject, "description"), "NSObject class claims it doesn't respond to a selector that it does." )
+        # self.assertTrue( NSObject.description(), "NSObject class failed to respond to +description selector." )
 
     def testNSObjectInstance(self):
         instance = NSObject.new()
 
-        self.assert_( instance, "Failed to instantiate an instance" )
-        self.assert_( instance.description(), "NSObject instance didn't respond to -description selector." )
-        self.assert_( not instance.isProxy(), "Instance of NSObject claimed it was a proxy.   That seems odd." )
-        self.assert_( isinstance( instance, NSObject ), "Instantiated object not an instance of NSObject." )
+        self.assertTrue( instance, "Failed to instantiate an instance" )
+        self.assertTrue( instance.description(), "NSObject instance didn't respond to -description selector." )
+        self.assertTrue( not instance.isProxy(), "Instance of NSObject claimed it was a proxy.   That seems odd." )
+        self.assertTrue( isinstance( instance, NSObject ), "Instantiated object not an instance of NSObject." )
         self.assertEqual( instance, instance, "Python identity check failed." )
-        self.assert_( instance.isEqual_( instance ), "Obj-C identity check failed." )
+        self.assertTrue( instance.isEqual_( instance ), "Obj-C identity check failed." )
 
     def testRepeatedAllocInit(self):
         for i in range(1,1000):
@@ -120,6 +128,16 @@ class TestNSObjectInteraction(TestCase):
     def testMethods10_7(self):
         self.assertResultIsBOOL(TestNSObjectHelper.allowsWeakReference)
         self.assertResultIsBOOL(TestNSObjectHelper.retainWeakReference)
+
+        self.assertResultIsBOOL(TestNSObjectHelper.supportsSecureCoding)
+
+    def testProtocols(self):
+        objc.protocolNamed('NSCopying')
+        objc.protocolNamed('NSMutableCopying')
+        objc.protocolNamed('NSCoding')
+        objc.protocolNamed('NSSecureCoding')
+        objc.protocolNamed('NSDiscardableContent')
+
 
 if __name__ == '__main__':
     main( )

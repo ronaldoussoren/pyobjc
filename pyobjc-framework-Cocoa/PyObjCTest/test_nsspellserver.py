@@ -39,5 +39,9 @@ class TestNSSpellServer (TestCase):
         self.assertArgHasType(TestNSSpellServerHelper.spellServer_checkString_offset_types_options_orthography_wordCount_, 3, objc._C_NSInteger)
         self.assertArgHasType(TestNSSpellServerHelper.spellServer_checkString_offset_types_options_orthography_wordCount_, 6, b'o^' + objc._C_NSInteger)
 
+
+    def testProtocols(self):
+        objc.protocolNamed('NSSpellServerDelegate')
+
 if __name__ == "__main__":
     main()

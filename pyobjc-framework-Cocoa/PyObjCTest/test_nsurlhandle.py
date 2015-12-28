@@ -28,5 +28,8 @@ class TestNSURLHandle (TestCase):
         self.assertResultIsBOOL(NSURLHandle.writeProperty_forKey_)
         self.assertResultIsBOOL(NSURLHandle.writeData_)
 
+    def testProtocols(self):
+        objc.protocolNamed('NSURLHandleClient')
+
 if __name__ == "__main__":
     main()

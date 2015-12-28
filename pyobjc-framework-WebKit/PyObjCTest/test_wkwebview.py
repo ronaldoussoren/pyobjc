@@ -16,6 +16,11 @@ class TestWKWebView (TestCase):
         self.assertArgIsBOOL(WKWebView.setAllowsMagnification_, 0)
         self.assertArgIsBlock(WKWebView.evaluateJavaScript_completionHandler_, 1, b"v@@")
 
+    @onlyOn64Bit
+    @min_os_level('10.11')
+    def testMethods10_11(self):
+        self.assertResultIsBOOL(WKWebView.allowsLinkPreview)
+        self.assertArgIsBOOL(WKWebView.setAllowsLinkPreview_, 0)
 
 if __name__ == "__main__":
     main()

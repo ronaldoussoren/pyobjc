@@ -20,6 +20,8 @@ if sys.maxsize > 2**32:
             self.assertEqual(Accounts.ACErrorFailedSerializingAccountInfo, 19)
             self.assertEqual(Accounts.ACErrorInvalidCommand, 20)
             self.assertEqual(Accounts.ACErrorMissingTransportMessageID, 21)
+            self.assertEqual(Accounts.ACErrorCredentialItemNotFound, 22)
+            self.assertEqual(Accounts.ACErrorCredentialItemNotExpired, 23)
 
         @min_os_level("10.8")
         def testConstants(self):

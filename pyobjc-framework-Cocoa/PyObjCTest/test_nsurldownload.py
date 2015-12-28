@@ -18,6 +18,9 @@ class TestNSURLDownload (TestCase):
         self.assertResultIsBOOL(NSURLDownload.deletesFileUponFailure)
 
 
+    def testProtocolObjects(self):
+        objc.protocolNamed('NSURLDownloadDelegate')
+
     def testProtocols(self):
         self.assertArgHasType(TestNSURLDownloadHelper.download_willResumeWithResponse_fromByte_, 2, objc._C_LNG_LNG)
         self.assertArgHasType(TestNSURLDownloadHelper.download_didReceiveDataOfLength_, 1, objc._C_NSUInteger)

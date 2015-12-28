@@ -132,5 +132,11 @@ class TestPythonCoder(TestCase):
     def testMethods10_8(self):
         self.assertResultIsBOOL(NSCoder.requiresSecureCoding)
 
+    @min_os_level('10.11')
+    def testMethods10_11(self):
+        self.assertArgIsOut(NSCoder.decodeTopLevelObjectAndReturnError_, 0)
+        self.assertArgIsOut(NSCoder.decodeTopLevelObjectOfClass_forKey_error_, 2)
+
+
 if __name__ == '__main__':
     main( )

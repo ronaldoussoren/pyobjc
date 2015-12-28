@@ -79,7 +79,7 @@ configured to store objects (as opposed to arbitrary pointers).
     len(path) <==> path.length()
     path + 4 <==> path.indexPathByAddingIndex_(4)
 
-  
+
 ``NSMapTable``
 ..............
 
@@ -103,14 +103,14 @@ Accessing properties of this class is not supported.
 ``NSMachPort``
 ..............
 
-The delegate protocol of ``NSMachPort`` is not supported at 
+The delegate protocol of ``NSMachPort`` is not supported at
 the moment.
 
 
 ``NSPredicate``
 ...............
 
-* ``-predicateWithFormat:arguments:`` 
+* ``-predicateWithFormat:arguments:``
 
   This method is not supported.
 
@@ -118,7 +118,7 @@ the moment.
 ``NSProcessInfo``
 .................
 
-PyObjC defines a context named ``NSDisabledSuddenTermination``. This can be used to 
+PyObjC defines a context named ``NSDisabledSuddenTermination``. This can be used to
 disable sudden termination for a block of code. The context works on all versions of
 OSX, but only has a real side effect on OSX 10.6 or later.
 
@@ -128,7 +128,7 @@ Usage::
 	    # sudden termination is disabled here
 	    pass
 
-PyObjC defines a context named ``NSDisabledAutomaticTermination``. This can be used to 
+PyObjC defines a context named ``NSDisabledAutomaticTermination``. This can be used to
 disable automatic termination for a block of code. The context works on all versions of
 OSX, but only has a real side effect on OSX 10.6 or later.
 
@@ -137,7 +137,7 @@ Usage::
 	with NSDisabledAutomaticTermination("Updating status"):
 	    # sudden termination is disabled here
 	    pass
-	
+
 
 ``NSSet``
 .........
@@ -172,7 +172,7 @@ Usage::
 
   This method is not supported
 
-  
+
 ``NSGetUncaughtExceptionHandler``
 .................................
 

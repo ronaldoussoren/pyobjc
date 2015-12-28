@@ -31,6 +31,7 @@ class TestCIDetector (TestCase):
     def testConstants10_11(self):
         self.assertIsInstance(CIDetectorTypeText, unicode)
         self.assertIsInstance(CIDetectorNumberOfAngles, unicode)
+        self.assertIsInstance(CIDetectorReturnSubFeatures, unicode)
 
 
 if __name__ == "__main__":
