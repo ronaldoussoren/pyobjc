@@ -3,7 +3,7 @@ from WebKit import *
 
 class TestDOMEventListener (TestCase):
 
-    @min_os_level('10.4')
+    @min_os_level('10.10')
     def testProtocols(self):
         objc.protocolNamed('DOMEventListener')
 

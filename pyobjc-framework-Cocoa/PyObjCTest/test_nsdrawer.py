@@ -22,8 +22,11 @@ class TestNSDrawer (TestCase):
     def testMethods(self):
         self.assertArgHasType(NSDrawer.setMinContentSize_, 0, NSSize.__typestr__)
 
-    def testProtocols(self):
+    @min_sdk_level('10.6')
+    def testProtocolObjects(self):
         objc.protocolNamed('NSDrawerDelegate')
+
+    def testProtocols(self):
         self.assertResultIsBOOL(TestNSDrawerHelper.drawerShouldOpen_)
         self.assertResultIsBOOL(TestNSDrawerHelper.drawerShouldClose_)
         self.assertResultHasType(TestNSDrawerHelper.drawerWillResizeContents_toSize_, NSSize.__typestr__)

@@ -27,7 +27,7 @@ class TestNSSimpleHorizontalTypesetter (TestCase):
     def testMethods(self):
         self.assertArgIsOut(NSSimpleHorizontalTypesetter.layoutGlyphsInLayoutManager_startingAtGlyphIndex_maxNumberOfLineFragments_nextGlyphIndex_, 3)
         self.assertArgIsInOut(NSSimpleHorizontalTypesetter.layoutGlyphsInHorizontalLineFragment_baseline_, 1)
-        self.assertArgIsInBOOL(NSSimpleHorizontalTypesetter.growGlyphCaches_fillGlyphInfo_, 1)
+        self.assertArgIsBOOL(NSSimpleHorizontalTypesetter.growGlyphCaches_fillGlyphInfo_, 1)
 
         self.assertArgIsInOut(TestNSSimpleHorizontalTypesetterHelper.willSetLineFragmentRect_forGlyphRange_usedRect_, 2)
         self.assertArgHasType(TestNSSimpleHorizontalTypesetterHelper.willSetLineFragmentRect_forGlyphRange_usedRect_, 2, b'N^' + NSRect.__typestr__)

@@ -76,8 +76,6 @@ class TestNSAccessibility (TestCase):
         v = NSAccessibilityPostNotification(b, "hello")
         self.assertIs(v, None)
 
-        self.assertArgIsBOOL(NSAccessibilitySetMayContainProtectedContent, 0)
-        self.assertResultIsBOOL(NSAccessibilitySetMayContainProtectedContent)
 
     def testConstants(self):
         self.assertIsInstance(NSAccessibilityErrorCodeExceptionInfo, unicode)
@@ -118,7 +116,6 @@ class TestNSAccessibility (TestCase):
         self.assertIsInstance(NSAccessibilitySelectedAttribute, unicode)
         self.assertIsInstance(NSAccessibilitySplittersAttribute, unicode)
         self.assertIsInstance(NSAccessibilityDocumentAttribute, unicode)
-        self.assertIsInstance(NSAccessibilityActivationPointAttribute, unicode)
         self.assertIsInstance(NSAccessibilityURLAttribute, unicode)
         self.assertIsInstance(NSAccessibilityIndexAttribute, unicode)
         self.assertIsInstance(NSAccessibilityRowCountAttribute, unicode)
@@ -182,7 +179,6 @@ class TestNSAccessibility (TestCase):
         self.assertIsInstance(NSAccessibilityOrientationAttribute, unicode)
         self.assertIsInstance(NSAccessibilityVerticalOrientationValue, unicode)
         self.assertIsInstance(NSAccessibilityHorizontalOrientationValue, unicode)
-        self.assertIsInstance(NSAccessibilityUnknownOrientationValue, unicode)
         self.assertIsInstance(NSAccessibilityColumnTitlesAttribute, unicode)
         self.assertIsInstance(NSAccessibilitySearchButtonAttribute, unicode)
         self.assertIsInstance(NSAccessibilitySearchMenuAttribute, unicode)
@@ -334,6 +330,7 @@ class TestNSAccessibility (TestCase):
 
     @min_os_level('10.6')
     def testConstants10_6(self):
+        self.assertIsInstance(NSAccessibilityUnknownOrientationValue, unicode)
         self.assertIsInstance(NSAccessibilityWarningValueAttribute, unicode)
         self.assertIsInstance(NSAccessibilityCriticalValueAttribute, unicode)
         self.assertIsInstance(NSAccessibilityPlaceholderValueAttribute, unicode)
@@ -401,6 +398,8 @@ class TestNSAccessibility (TestCase):
 
     @min_os_level('10.10')
     def testConstants10_10(self):
+        self.assertIsInstance(NSAccessibilityActivationPointAttribute, unicode)
+
         self.assertIsInstance(NSAccessibilitySharedFocusElementsAttribute, unicode)
         self.assertIsInstance(NSAccessibilityAlternateUIVisibleAttribute, unicode)
 
@@ -436,6 +435,11 @@ class TestNSAccessibility (TestCase):
     @min_os_level('10.7')
     def testFunctions10_7(self):
         self.assertIsInstance(NSAccessibilityPostNotificationWithUserInfo, objc.function)
+
+    @min_os_level('10.9')
+    def testFunctions10_9(self):
+        self.assertArgIsBOOL(NSAccessibilitySetMayContainProtectedContent, 0)
+        self.assertResultIsBOOL(NSAccessibilitySetMayContainProtectedContent)
 
 if __name__ == "__main__":
     main()

@@ -79,10 +79,12 @@ class TestNSOutlineView (TestCase):
         self.assertResultIsBOOL(NSOutlineView.autosaveExpandedItems)
         self.assertArgIsBOOL(NSOutlineView.setAutosaveExpandedItems_, 0)
 
-    def testProtocols(self):
+    @min_sdk_level('10.6')
+    def testProtocolObjects(self):
         objc.protocolNamed('NSOutlineViewDelegate')
         objc.protocolNamed('NSOutlineViewDataSource')
 
+    def testProtocols(self):
         self.assertArgHasType(TestNSOutlineViewHelper.outlineView_child_ofItem_, 1, objc._C_NSInteger)
         self.assertResultIsBOOL(TestNSOutlineViewHelper.outlineView_isItemExpandable_)
         self.assertResultHasType(TestNSOutlineViewHelper.outlineView_numberOfChildrenOfItem_, objc._C_NSInteger)

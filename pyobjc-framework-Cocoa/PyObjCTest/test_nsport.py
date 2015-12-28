@@ -27,6 +27,7 @@ class TestNSPort (TestCase):
 
         self.assertArgHasType(PortDelegate.handleMachMessage_, 0, b'^v')
 
+    @min_sdk_level('10.6')
     def testProtocols(self):
         objc.protocolNamed('NSPortDelegate')
         objc.protocolNamed('NSMachPortDelegate')

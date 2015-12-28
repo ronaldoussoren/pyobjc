@@ -40,12 +40,15 @@ class TestNSSharingService (TestCase):
         self.assertArgIsBlock(AppKit.NSSharingService.initWithTitle_image_alternateImage_handler_, 3, b'v')
         self.assertResultIsBOOL(AppKit.NSSharingService.canPerformWithItems_)
 
-    def testProtocol(self):
+    @min_sdk_level('10.6')
+    def testProtocolObjects(self):
         objc.protocolNamed('NSSharingServiceDelegate')
+        objc.protocolNamed('NSSharingServicePickerDelegate')
+
+    def testProtocol(self):
         self.assertArgHasType(TestNSSharingServiceHelper.showRelativeToRect_ofView_preferredEdge_, 0, AppKit.NSRect.__typestr__)
         self.assertArgHasType(TestNSSharingServiceHelper.showRelativeToRect_ofView_preferredEdge_, 2, objc._C_NSUInteger)
 
-        objc.protocolNamed('NSSharingServicePickerDelegate')
 
 
 if __name__ == "__main__":

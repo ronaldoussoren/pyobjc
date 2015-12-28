@@ -30,9 +30,11 @@ class TestNSTokenFieldCell (TestCase):
         self.assertEqual(NSTokenStyleSquared, 3)
         self.assertEqual(NSTokenStylePlainSquared, 4)
 
+    @min_sdk_level('10.6')
+    def testProtocolObjects(self):
+        objc.protocolNamed('NSTokenFieldCellDelegate')
 
     def testProtocols(self):
-        objc.protocolNamed('NSTokenFieldCellDelegate')
         self.assertArgHasType(TestNSTokenFieldCellHelper.tokenFieldCell_completionsForSubstring_indexOfToken_indexOfSelectedItem_, 2, objc._C_NSInteger)
         self.assertArgHasType(TestNSTokenFieldCellHelper.tokenFieldCell_completionsForSubstring_indexOfToken_indexOfSelectedItem_, 3, b'o^'+ objc._C_NSInteger)
         self.assertArgHasType(TestNSTokenFieldCellHelper.tokenFieldCell_shouldAddObjects_atIndex_, 2, objc._C_NSUInteger)

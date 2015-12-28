@@ -2,19 +2,33 @@ from PyObjCTools.TestSupport import *
 
 from Foundation import *
 
-class TestNSURLSessionStreamTaskHelper (NSURLSessionStreamTask):
-    def readDataOfMinLength_maxLength_timeout_completionHandler_(self, mn, mx, t, c): pass
-    def writeData_timeout_completionHandler_(self, d, t, c): pass
+try:
+    NSURLSessionStreamTask
 
-class TestNSURLSessionConfigurationHelper (NSURLSessionConfiguration):
-    def shouldUseExtendedBackgroundIdleMode(self): return 1
-    def setShouldUseExtendedBackgroundIdleMode_(self, v): pass
-    def isDiscretionary(self): return 1
-    def setDiscretionary_(self, v): pass
-    def HTTPShouldUsePipelining(self): return 1
-    def setHTTPShouldUsePipelining_(self, v): pass
-    def HTTPShouldSetCookies(self): return 1
-    def setHTTPShouldSetCookies_(self, v): pass
+except NameError:
+    pass
+
+else:
+    class TestNSURLSessionStreamTaskHelper (NSURLSessionStreamTask):
+        def readDataOfMinLength_maxLength_timeout_completionHandler_(self, mn, mx, t, c): pass
+        def writeData_timeout_completionHandler_(self, d, t, c): pass
+
+try:
+    NSURLSessionConfiguration
+
+except NameError:
+    pass
+
+else:
+    class TestNSURLSessionConfigurationHelper (NSURLSessionConfiguration):
+        def shouldUseExtendedBackgroundIdleMode(self): return 1
+        def setShouldUseExtendedBackgroundIdleMode_(self, v): pass
+        def isDiscretionary(self): return 1
+        def setDiscretionary_(self, v): pass
+        def HTTPShouldUsePipelining(self): return 1
+        def setHTTPShouldUsePipelining_(self, v): pass
+        def HTTPShouldSetCookies(self): return 1
+        def setHTTPShouldSetCookies_(self, v): pass
 
 class TestNSURLSessionHelper (NSObject):
     def URLSession_didReceiveChallenge_completionHandler_(self, a, b, c): pass

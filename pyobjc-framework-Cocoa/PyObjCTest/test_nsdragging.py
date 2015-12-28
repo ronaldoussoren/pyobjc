@@ -83,10 +83,12 @@ class TestNSDragging (TestCase):
         self.assertEqual(NSSpringLoadingNoHover, 4)
 
 
+    @min_sdk_level('10.6')
     def testProtocols(self):
         objc.protocolNamed('NSDraggingDestination')
         objc.protocolNamed('NSDraggingSource')
 
+    @min_sdk_level('10.11')
     def testProtocols10_11(self):
         objc.protocolNamed('NSSpringLoadingDestination')
 

@@ -35,6 +35,7 @@ class TestWebKit (TestCase):
         self.assert_( hasattr(WebKit, 'WebConvertNSImageToCGImageRef') )
         self.assert_(isinstance(WebKit.WebConvertNSImageToCGImageRef, objc.function) )
 
+    @min_sdk_level('10.6')
     def testProtocols(self):
         objc.protocolNamed('DOMEventListener')
         objc.protocolNamed('DOMEventTarget')

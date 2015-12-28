@@ -74,8 +74,11 @@ class TestNSBrowser (TestCase):
         self.assertResultIsBOOL(NSBrowser.allowsTypeSelect)
         self.assertArgIsBOOL(NSBrowser.setAllowsTypeSelect_, 0)
 
-    def testDelegate(self):
+    @min_sdk_level('10.6')
+    def testProtocolObjects(self):
         objc.protocolNamed('NSBrowserDelegate')
+
+    def testDelegate(self):
         self.assertResultIsBOOL(TestNSBrowserHelper.browser_selectCellWithString_inColumn_)
         self.assertResultIsBOOL(TestNSBrowserHelper.browser_selectRow_inColumn_)
         self.assertResultIsBOOL(TestNSBrowserHelper.browser_isColumnValid_)

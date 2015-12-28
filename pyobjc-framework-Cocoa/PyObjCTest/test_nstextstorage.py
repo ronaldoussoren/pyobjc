@@ -17,9 +17,11 @@ class TestNSTextStorage (TestCase):
     def testMethods(self):
         self.assertResultIsBOOL(NSTextStorage.fixesAttributesLazily)
 
-    def testProtocols(self):
+    @min_sdk_level('10.6')
+    def testProtocolObjects(self):
         objc.protocolNamed('NSTextStorageDelegate')
 
+    def testProtocols(self):
         self.assertArgHasType(TestNSTextStorageHelper.textStorage_willProcessEditing_range_changeInLength_, 1, objc._C_NSUInteger)
         self.assertArgHasType(TestNSTextStorageHelper.textStorage_willProcessEditing_range_changeInLength_, 2, NSRange.__typestr__)
         self.assertArgHasType(TestNSTextStorageHelper.textStorage_willProcessEditing_range_changeInLength_, 3, objc._C_NSInteger)

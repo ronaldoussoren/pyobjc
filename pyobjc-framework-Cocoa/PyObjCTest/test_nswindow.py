@@ -264,8 +264,11 @@ class TestNSWindow (TestCase):
 
         self.assertArgIsBlock(NSWindow.trackEventsMatchingMask_timeout_mode_handler_, 3, b'v@o^Z')
 
-    def testProtocols(self):
+    @min_sdk_level('10.6')
+    def testProtocolObjects(self):
         objc.protocolNamed('NSWindowDelegate')
+
+    def testProtocols(self):
         self.assertResultIsBOOL(TestNSWindowHelper.windowShouldClose_)
         self.assertResultHasType(TestNSWindowHelper.windowWillResize_toSize_, NSSize.__typestr__)
         self.assertArgHasType(TestNSWindowHelper.windowWillResize_toSize_, 1, NSSize.__typestr__)

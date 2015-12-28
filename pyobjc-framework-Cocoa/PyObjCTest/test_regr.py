@@ -74,6 +74,7 @@ class TestRegr (TestCase):
                 (AppKit.NSOpenGLPFAAccelerated,
                 AppKit.NSOpenGLPFANoRecovery, AppKit.NSOpenGLPFAColorSize, 32))
 
+    @min_os_level('10.6')
     def testBinaryPlist(self):
         pl = {
             'key': 2 ** 64 - 1,

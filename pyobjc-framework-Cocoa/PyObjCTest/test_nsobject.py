@@ -135,6 +135,9 @@ class TestNSObjectInteraction(TestCase):
         objc.protocolNamed('NSCopying')
         objc.protocolNamed('NSMutableCopying')
         objc.protocolNamed('NSCoding')
+
+    @min_sdk_level('10.6')
+    def testProtocols10_6(self):
         objc.protocolNamed('NSSecureCoding')
         objc.protocolNamed('NSDiscardableContent')
 

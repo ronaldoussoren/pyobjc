@@ -147,8 +147,11 @@ class TestNSTextView (TestCase):
         self.assertArgIsBOOL(NSTextView.setAutomaticLinkDetectionEnabled_, 0)
 
 
-    def testProtocols(self):
+    @min_sdk_level('10.6')
+    def testProtocolObjects(self):
         objc.protocolNamed('NSTextViewDelegate')
+
+    def testProtocols(self):
         self.assertResultIsBOOL(TestNSTextViewHelper.textView_clickedOnLink_atIndex_)
         self.assertArgHasType(TestNSTextViewHelper.textView_clickedOnLink_atIndex_, 2, objc._C_NSUInteger)
         self.assertArgHasType(TestNSTextViewHelper.textView_clickedOnCell_inRect_atIndex_, 2, NSRect.__typestr__)

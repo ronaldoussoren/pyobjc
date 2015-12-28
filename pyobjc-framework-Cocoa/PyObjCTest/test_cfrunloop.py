@@ -15,6 +15,11 @@ class TestRunLoop (TestCase):
                 return
         except objc.error:
             pass
+        try:
+            if objc.lookUpClass('NSCFTimer') is CFRunLoopTimerRef:
+                return
+        except objc.error:
+            pass
         self.assertIsCFType(CFRunLoopTimerRef)
 
     def testConstants(self):

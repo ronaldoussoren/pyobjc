@@ -45,12 +45,14 @@ class TestNSKeyedArchiver (TestCase):
         self.assertResultHasType(NSCoder.decodeSizeForKey_, NSSize.__typestr__)
         self.assertResultHasType(NSCoder.decodeRectForKey_, NSRect.__typestr__)
 
+    @min_os_level('10.8')
     def testMethods10_8(self):
         self.assertResultIsBOOL(NSKeyedArchiver.requiresSecureCoding)
         self.assertArgIsBOOL(NSKeyedArchiver.setRequiresSecureCoding_, 0)
         self.assertResultIsBOOL(NSKeyedUnarchiver.requiresSecureCoding)
         self.assertArgIsBOOL(NSKeyedUnarchiver.setRequiresSecureCoding_, 0)
 
+    @min_sdk_level('10.6')
     def testProtocols(self):
         objc.protocolNamed('NSKeyedArchiverDelegate')
         objc.protocolNamed('NSKeyedUnarchiverDelegate')

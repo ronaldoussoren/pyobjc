@@ -21,9 +21,12 @@ class TestNSPathControl (TestCase):
 
         self.assertArgIsBOOL(NSPathControl.setDraggingSourceOperationMask_forLocal_, 1)
 
+    @min_sdk_level('10.6')
+    def testProtocolObjects(self):
+        objc.protocolNamed('NSPathControlDelegate')
+
     @min_os_level('10.5')
     def testProtocols(self):
-        objc.protocolNamed('NSPathControlDelegate')
 
         self.assertResultIsBOOL(TestNSPathControlHelper.pathControl_shouldDragItem_withPasteboard_)
         self.assertResultIsBOOL(TestNSPathControlHelper.pathControl_shouldDragPathComponentCell_withPasteboard_)

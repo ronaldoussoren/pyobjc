@@ -12,13 +12,21 @@ class TestStream (TestCase):
             if objc.lookUpClass('__NSCFInputStream') is not CFReadStreamRef:
                 self.assertIsCFType(CFReadStreamRef)
         except objc.error:
-            self.assertIsCFType(CFReadStreamRef)
+            try:
+                if objc.lookUpClass('NSCFInputStream') is not CFReadStreamRef:
+                    self.assertIsCFType(CFReadStreamRef)
+            except objc.error:
+                self.assertIsCFType(CFReadStreamRef)
 
         try:
             if objc.lookUpClass('__NSCFOutputStream') is not CFWriteStreamRef:
                 self.assertIsCFType(CFWriteStreamRef)
         except objc.error:
-            self.assertIsCFType(CFWriteStreamRef)
+            try:
+                if objc.lookUpClass('NSCFOutputStream') is not CFWriteStreamRef:
+                    self.assertIsCFType(CFWriteStreamRef)
+            except objc.error:
+                self.assertIsCFType(CFWriteStreamRef)
 
 
     def testConstants(self):

@@ -17,8 +17,11 @@ class TestNSComboBoxCell (TestCase):
         self.assertResultIsBOOL(NSComboBoxCell.completes)
         self.assertArgIsBOOL(NSComboBoxCell.setCompletes_, 0)
 
-    def testProtocol(self):
+    @min_sdk_level('10.6')
+    def testProtocolObjects(self):
         objc.protocolNamed('NSComboBoxCellDataSource')
+
+    def testProtocol(self):
         self.assertResultHasType(TestNSComboBoxCellHelper.numberOfItemsInComboBoxCell_, objc._C_NSInteger)
         self.assertArgHasType(TestNSComboBoxCellHelper.comboBoxCell_objectValueForItemAtIndex_, 1, objc._C_NSInteger)
         self.assertResultHasType(TestNSComboBoxCellHelper.comboBoxCell_indexOfItemWithStringValue_, objc._C_NSUInteger)

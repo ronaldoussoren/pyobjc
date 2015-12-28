@@ -54,11 +54,14 @@ class TestNSLayoutManager (TestCase):
         self.assertEqual(NSControlCharacterActionParagraphBreak, 1 << 4)
         self.assertEqual(NSControlCharacterActionContainerBreak, 1 << 5)
 
-    def testProtocols(self):
+    @min_sdk_level('10.6')
+    def testProtocolObjects(self):
         objc.protocolNamed('NSTextLayoutOrientationProvider')
+        objc.protocolNamed('NSLayoutManagerDelegate')
+
+    def testProtocols(self):
         self.assertResultHasType(TestNSLayoutManagerHelper.layoutOrientation, objc._C_NSInteger)
 
-        objc.protocolNamed('NSLayoutManagerDelegate')
 
         # XXX: check interface!
         self.assertArgHasType(TestNSLayoutManagerHelper.layoutManager_shouldGenerateGlyphs_properties_characterIndexes_forGlyphRange_, 1, b'n^' + objc._C_USHT)
@@ -220,6 +223,12 @@ class TestNSLayoutManager (TestCase):
         self.assertArgIsOut(NSLayoutManager.getLineFragmentInsertionPointsForCharacterAtIndex_alternatePositions_inDisplayOrder_positions_characterIndexes_, 3)
         self.assertArgIsOut(NSLayoutManager.getLineFragmentInsertionPointsForCharacterAtIndex_alternatePositions_inDisplayOrder_positions_characterIndexes_, 4)
 
+
+        self.assertArgIsBOOL(NSLayoutManager.rulerAccessoryViewForTextView_paragraphStyle_ruler_enabled_, 3)
+        self.assertResultIsBOOL(NSLayoutManager.layoutManagerOwnsFirstResponderInWindow_)
+
+    @min_os_level('10.6')
+    def testMethods10_5_not_available(self):
         self.assertArgIsOut(NSLayoutManager.getGlyphsInRange_glyphs_properties_characterIndexes_bidiLevels_, 1)
         self.assertArgIsOut(NSLayoutManager.getGlyphsInRange_glyphs_properties_characterIndexes_bidiLevels_, 2)
         self.assertArgIsOut(NSLayoutManager.getGlyphsInRange_glyphs_properties_characterIndexes_bidiLevels_, 3)
@@ -228,9 +237,6 @@ class TestNSLayoutManager (TestCase):
         self.assertArgSizeInArg(NSLayoutManager.getGlyphsInRange_glyphs_properties_characterIndexes_bidiLevels_, 2, 0)
         self.assertArgSizeInArg(NSLayoutManager.getGlyphsInRange_glyphs_properties_characterIndexes_bidiLevels_, 3, 0)
         self.assertArgSizeInArg(NSLayoutManager.getGlyphsInRange_glyphs_properties_characterIndexes_bidiLevels_, 4, 0)
-
-        self.assertArgIsBOOL(NSLayoutManager.rulerAccessoryViewForTextView_paragraphStyle_ruler_enabled_, 3)
-        self.assertResultIsBOOL(NSLayoutManager.layoutManagerOwnsFirstResponderInWindow_)
 
     @min_os_level('10.5')
     @expectedFailure

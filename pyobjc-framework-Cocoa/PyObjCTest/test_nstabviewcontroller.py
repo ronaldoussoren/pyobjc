@@ -8,7 +8,8 @@ class TestNSTabViewController (TestCase):
         self.assertEqual(NSTabViewControllerTabStyleSegmentedControlOnBottom, 1)
         self.assertEqual(NSTabViewControllerTabStyleToolbar, 2)
         self.assertEqual(NSTabViewControllerTabStyleUnspecified, -1)
-
+    
+    @min_os_level('10.10')
     def testMethods(self):
         self.assertResultIsBOOL(NSTabViewController.canPropagateSelectedChildViewControllerTitle)
         self.assertArgIsBOOL(NSTabViewController.setCanPropagateSelectedChildViewControllerTitle_, 0)

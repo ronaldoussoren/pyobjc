@@ -39,6 +39,7 @@ class TestNSURLConnection (TestCase):
         self.assertArgIsBlock(NSURLConnection.sendAsynchronousRequest_queue_completionHandler_,
                 2, b'v@@')
 
+    @min_sdk_level('10.6')
     def testProtocols(self):
         objc.protocolNamed('NSURLConnectionDelegate')
         objc.protocolNamed('NSURLConnectionDataDelegate')

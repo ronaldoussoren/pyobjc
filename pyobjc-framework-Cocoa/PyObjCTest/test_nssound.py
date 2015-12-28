@@ -23,8 +23,11 @@ class TestNSSound (TestCase):
         self.assertResultIsBOOL(NSSound.loops)
         self.assertArgIsBOOL(NSSound.setLoops_, 0)
 
-    def testProtocols(self):
+    @min_os_level('10.6')
+    def testProtocolObjects(self):
         objc.protocolNamed('NSSoundDelegate')
+
+    def testProtocols(self):
         self.assertArgIsBOOL(TestNSSoundHelper.sound_didFinishPlaying_, 1)
 
 if __name__ == "__main__":

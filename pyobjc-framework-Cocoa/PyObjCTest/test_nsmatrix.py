@@ -62,7 +62,8 @@ class TestNSMatrix (TestCase):
     def testMethods10_8(self):
         self.assertArgIsBOOL(NSMatrix.setAutorecalculatesCellSize_, 0)
         self.assertResultIsBOOL(NSMatrix.autorecalculatesCellSize)
-
+    
+    @min_sdk_level('10.6')
     def testProtocols(self):
         objc.protocolNamed('NSMatrixDelegate')
 

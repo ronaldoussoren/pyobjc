@@ -55,11 +55,12 @@ class TestHeader (TestCase):
         self.assertIsInstance(NSFullScreenModeAllScreens, unicode)
         self.assertIsInstance(NSFullScreenModeSetting, unicode)
         self.assertIsInstance(NSFullScreenModeWindowLevel, unicode)
-        self.assertIsInstance(NSFullScreenModeApplicationPresentationOptions, unicode)
         self.assertIsInstance(NSViewDidUpdateTrackingAreasNotification, unicode)
 
     @min_os_level('10.6')
     def testConstants10_6(self):
+        self.assertIsInstance(NSFullScreenModeApplicationPresentationOptions, unicode)
+
         self.assertEqual(NSViewLayerContentsRedrawNever, 0)
         self.assertEqual(NSViewLayerContentsRedrawOnSetNeedsDisplay, 1)
         self.assertEqual(NSViewLayerContentsRedrawDuringViewResize, 2)

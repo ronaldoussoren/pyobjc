@@ -50,6 +50,8 @@ class TestWebPreferences (TestCase):
         self.assertResultIsBOOL(WebPreferences.usesPageCache)
         self.assertArgIsBOOL(WebPreferences.setUsesPageCache_, 0)
 
+    @min_os_level('10.8')
+    def testMethods10_8(self):
         self.assertResultIsBOOL(WebPreferences.suppressesIncrementalRendering)
         self.assertArgIsBOOL(WebPreferences.setSuppressesIncrementalRendering_, 0)
 

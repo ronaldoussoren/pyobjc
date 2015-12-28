@@ -99,29 +99,42 @@ class TestNSAccessibilityProtocolsHelper (NSObject):
     def setAccessibilityVerticalUnits_(self, v): pass
     def setAccessibilityVisibleCharacterRange_(self, v): pass
 
-class TestNSAccessibilityProtocols (TestCase):
-    def testProtocols(self):
+class TestNSAccessibilityProtocols (TestCase):    
+
+    @min_sdk_level('10.6')
+    def testProtocolObjects(self):
+        self.assertIsInstance(objc.protocolNamed('NSAccessibilityGroup'), objc.formal_protocol)
         self.assertIsInstance(objc.protocolNamed('NSAccessibilityElement'), objc.formal_protocol)
+        self.assertIsInstance(objc.protocolNamed('NSAccessibilityButton'), objc.formal_protocol)
+        self.assertIsInstance(objc.protocolNamed('NSAccessibilitySwitch'), objc.formal_protocol)
+        self.assertIsInstance(objc.protocolNamed('NSAccessibilityRadioButton'), objc.formal_protocol)
+        self.assertIsInstance(objc.protocolNamed('NSAccessibilityCheckBox'), objc.formal_protocol)
+        self.assertIsInstance(objc.protocolNamed('NSAccessibilityStaticText'), objc.formal_protocol)
+        self.assertIsInstance(objc.protocolNamed('NSAccessibilityNavigableStaticText'), objc.formal_protocol)
+        self.assertIsInstance(objc.protocolNamed('NSAccessibilityProgressIndicator'), objc.formal_protocol)
+        self.assertIsInstance(objc.protocolNamed('NSAccessibilityStepper'), objc.formal_protocol)
+        self.assertIsInstance(objc.protocolNamed('NSAccessibilitySlider'), objc.formal_protocol)
+        self.assertIsInstance(objc.protocolNamed('NSAccessibilityImage'), objc.formal_protocol)
+        self.assertIsInstance(objc.protocolNamed('NSAccessibilityContainsTransientUI'), objc.formal_protocol)
+        self.assertIsInstance(objc.protocolNamed('NSAccessibilityTable'), objc.formal_protocol)
+        self.assertIsInstance(objc.protocolNamed('NSAccessibilityOutline'), objc.formal_protocol)
+        self.assertIsInstance(objc.protocolNamed('NSAccessibilityList'), objc.formal_protocol)
+        self.assertIsInstance(objc.protocolNamed('NSAccessibilityRow'), objc.formal_protocol)
+        self.assertIsInstance(objc.protocolNamed('NSAccessibilityLayoutArea'), objc.formal_protocol)
+        self.assertIsInstance(objc.protocolNamed('NSAccessibilityLayoutItem'), objc.formal_protocol)
+        self.assertIsInstance(objc.protocolNamed('NSAccessibility'), objc.formal_protocol)
+
+    def testProtocols(self):
         self.assertResultIsBOOL(TestNSAccessibilityProtocolsHelper.isAccessibilityFocused)
         self.assertResultHasType(TestNSAccessibilityProtocolsHelper.accessibilityFrame, NSRect.__typestr__)
 
-        self.assertIsInstance(objc.protocolNamed('NSAccessibilityGroup'), objc.formal_protocol)
-
-        self.assertIsInstance(objc.protocolNamed('NSAccessibilityButton'), objc.formal_protocol)
         self.assertResultIsBOOL(TestNSAccessibilityProtocolsHelper.accessibilityPerformPress)
 
-        self.assertIsInstance(objc.protocolNamed('NSAccessibilitySwitch'), objc.formal_protocol)
         self.assertResultIsBOOL(TestNSAccessibilityProtocolsHelper.accessibilityPerformIncrement)
         self.assertResultIsBOOL(TestNSAccessibilityProtocolsHelper.accessibilityPerformDecrement)
 
-        self.assertIsInstance(objc.protocolNamed('NSAccessibilityRadioButton'), objc.formal_protocol)
-
-        self.assertIsInstance(objc.protocolNamed('NSAccessibilityCheckBox'), objc.formal_protocol)
-
-        self.assertIsInstance(objc.protocolNamed('NSAccessibilityStaticText'), objc.formal_protocol)
         self.assertResultHasType(TestNSAccessibilityProtocolsHelper.accessibilityVisibleCharacterRange, NSRange.__typestr__)
 
-        self.assertIsInstance(objc.protocolNamed('NSAccessibilityNavigableStaticText'), objc.formal_protocol)
         self.assertArgHasType(TestNSAccessibilityProtocolsHelper.accessibilityFrameForRange_, 0, NSRange.__typestr__)
         self.assertResultHasType(TestNSAccessibilityProtocolsHelper.accessibilityFrameForRange_, NSRect.__typestr__)
         self.assertArgHasType(TestNSAccessibilityProtocolsHelper.accessibilityStringForRange_, 0, NSRange.__typestr__)
@@ -130,41 +143,24 @@ class TestNSAccessibilityProtocols (TestCase):
         self.assertArgHasType(TestNSAccessibilityProtocolsHelper.accessibilityRangeForLine_, 0, objc._C_NSInteger)
         self.assertResultHasType(TestNSAccessibilityProtocolsHelper.accessibilityRangeForLine_, NSRange.__typestr__)
 
-        self.assertIsInstance(objc.protocolNamed('NSAccessibilityProgressIndicator'), objc.formal_protocol)
         self.assertResultIsBOOL(TestNSAccessibilityProtocolsHelper.accessibilityPerformIncrement)
         self.assertResultIsBOOL(TestNSAccessibilityProtocolsHelper.accessibilityPerformDecrement)
 
-        self.assertIsInstance(objc.protocolNamed('NSAccessibilityStepper'), objc.formal_protocol)
         self.assertResultIsBOOL(TestNSAccessibilityProtocolsHelper.accessibilityPerformIncrement)
         self.assertResultIsBOOL(TestNSAccessibilityProtocolsHelper.accessibilityPerformDecrement)
 
-        self.assertIsInstance(objc.protocolNamed('NSAccessibilitySlider'), objc.formal_protocol)
         self.assertResultIsBOOL(TestNSAccessibilityProtocolsHelper.accessibilityPerformIncrement)
         self.assertResultIsBOOL(TestNSAccessibilityProtocolsHelper.accessibilityPerformDecrement)
 
-        self.assertIsInstance(objc.protocolNamed('NSAccessibilityImage'), objc.formal_protocol)
-
-        self.assertIsInstance(objc.protocolNamed('NSAccessibilityContainsTransientUI'), objc.formal_protocol)
         self.assertResultIsBOOL(TestNSAccessibilityProtocolsHelper.accessibilityPerformShowAlternateUI)
         self.assertResultIsBOOL(TestNSAccessibilityProtocolsHelper.accessibilityPerformShowDefaultUI)
         self.assertResultIsBOOL(TestNSAccessibilityProtocolsHelper.isAccessibilityAlternateUIVisible)
 
-        self.assertIsInstance(objc.protocolNamed('NSAccessibilityTable'), objc.formal_protocol)
-
-        self.assertIsInstance(objc.protocolNamed('NSAccessibilityOutline'), objc.formal_protocol)
-
-        self.assertIsInstance(objc.protocolNamed('NSAccessibilityList'), objc.formal_protocol)
-
-        self.assertIsInstance(objc.protocolNamed('NSAccessibilityRow'), objc.formal_protocol)
         self.assertResultHasType(TestNSAccessibilityProtocolsHelper.accessibilityIndex, objc._C_NSInteger)
         self.assertResultHasType(TestNSAccessibilityProtocolsHelper.accessibilityDisclosureLevel, objc._C_NSInteger)
 
-        self.assertIsInstance(objc.protocolNamed('NSAccessibilityLayoutArea'), objc.formal_protocol)
-
-        self.assertIsInstance(objc.protocolNamed('NSAccessibilityLayoutItem'), objc.formal_protocol)
         self.assertArgHasType(TestNSAccessibilityProtocolsHelper.setAccessibilityFrame_, 0, NSRect.__typestr__)
 
-        self.assertIsInstance(objc.protocolNamed('NSAccessibility'), objc.formal_protocol)
         self.assertResultIsBOOL(TestNSAccessibilityProtocolsHelper.isAccessibilityElement)
         self.assertArgIsBOOL(TestNSAccessibilityProtocolsHelper.setAccessibilityElement_, 0)
         self.assertResultHasType(TestNSAccessibilityProtocolsHelper.accessibilityFrame, NSRect.__typestr__)

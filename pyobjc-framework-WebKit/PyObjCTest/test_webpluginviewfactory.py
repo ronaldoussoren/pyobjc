@@ -13,6 +13,7 @@ class TestWebPluginViewFactory (TestCase):
     def testConstants10_6(self):
         self.assertIsInstance(WebPlugInShouldLoadMainResourceKey, unicode)
 
+    @min_sdk_level('10.6')
     def testProtocols(self):
         objc.protocolNamed('WebPlugInViewFactory')
 

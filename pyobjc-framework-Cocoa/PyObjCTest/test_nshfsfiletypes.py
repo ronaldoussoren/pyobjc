@@ -16,6 +16,8 @@ class TestNSHFSFileTypes (TestCase):
         fname = '/Library/Documentation/Acknowledgements.rtf'
         if not os.path.exists(fname):
             fname = '/Library/Documentation/AirPort Acknowledgements.rtf'
+        if not os.path.exists(fname):
+            fname = '/Library/Documentation//iPod/Acknowledgements.rtf'
 
         if not os.path.exists(fname):
             self.fail("test file doesn't exist")

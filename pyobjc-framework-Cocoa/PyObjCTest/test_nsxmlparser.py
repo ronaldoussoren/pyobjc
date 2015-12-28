@@ -113,6 +113,7 @@ class TestNSXMLParser (TestCase):
         self.assertResultIsBOOL(NSXMLParser.shouldResolveExternalEntities)
         self.assertResultIsBOOL(NSXMLParser.parse)
 
+    @min_sdk_level('10.6')
     def testProtocols(self):
         objc.protocolNamed('NSXMLParserDelegate')
 

@@ -79,8 +79,11 @@ class TestNSText (TestCase):
         self.assertResultIsBOOL(NSText.isVerticallyResizable)
         self.assertArgIsBOOL(NSText.setVerticallyResizable_, 0)
 
-    def testProtocols(self):
+    @min_sdk_level('10.6')
+    def testProtocolObjects(self):
         objc.protocolNamed('NSTextDelegate')
+
+    def testProtocols(self):
         self.assertResultIsBOOL(TestNSTextHelper.textShouldBeginEditing_)
         self.assertResultIsBOOL(TestNSTextHelper.textShouldEndEditing_)
 

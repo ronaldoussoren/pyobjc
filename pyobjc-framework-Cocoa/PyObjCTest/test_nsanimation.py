@@ -33,12 +33,16 @@ class TestNSAnimation (TestCase):
 
     def testMethods(self):
         self.assertResultIsBOOL(NSAnimation.isAnimating)
+ 
 
+    @min_sdk_level('10.6')
     def testProtocol(self):
         objc.protocolNamed('NSAnimationDelegate')
+        objc.protocolNamed('NSAnimatablePropertyContainer')
+
+    def testProtocol(self):
         self.assertResultIsBOOL(TestNSAnimationHelper.animationShouldStart_)
 
-        objc.protocolNamed('NSAnimatablePropertyContainer')
         self.assertResultHasType(TestNSAnimationHelper.animation_valueForProgress_, objc._C_FLT)
         self.assertArgHasType(TestNSAnimationHelper.animation_valueForProgress_, 1, objc._C_FLT)
         self.assertArgHasType(TestNSAnimationHelper.animation_didReachProgressMark_, 1, objc._C_FLT)

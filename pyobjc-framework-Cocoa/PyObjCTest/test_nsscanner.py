@@ -73,7 +73,8 @@ class TestNSScannerUsage(TestCase):
         self.assertArgIsOut(NSScanner.scanUpToCharactersFromSet_intoString_, 1)
         self.assertResultIsBOOL(NSScanner.isAtEnd)
 
-    def testMethods(self):
+    @min_os_level('10.9')
+    def testMethods10_9(self):
         self.assertResultIsBOOL(NSScanner.scanUnsignedLongLong_)
         self.assertArgIsOut(NSScanner.scanUnsignedLongLong_, 0)
 

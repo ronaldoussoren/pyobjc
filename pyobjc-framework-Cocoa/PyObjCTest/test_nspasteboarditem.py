@@ -11,6 +11,7 @@ class TestNSPasteboardItem (TestCase):
         self.assertResultIsBOOL(NSPasteboardItem.setString_forType_)
         self.assertResultIsBOOL(NSPasteboardItem.setPropertyList_forType_)
 
+    @min_sdk_level('10.6')
     def testProtocols(self):
         objc.protocolNamed('NSPasteboardItemDataProvider')
 

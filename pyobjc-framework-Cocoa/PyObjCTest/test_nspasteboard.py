@@ -97,11 +97,14 @@ class TestNSPasteboard (TestCase):
         self.assertResultIsBOOL(NSPasteboard.setPropertyList_forType_)
         self.assertResultIsBOOL(NSPasteboard.setString_forType_)
 
-    def testProtocols(self):
+    @min_sdk_level('10.6')
+    def testProtocolObjects(self):
         objc.protocolNamed('NSPasteboardWriting')
+        objc.protocolNamed('NSPasteboardReading')
+
+    def testProtocols(self):
         self.assertResultHasType(TestNSPasteboardHelper.writingOptionsForType_pasteboard_, objc._C_NSUInteger)
 
-        objc.protocolNamed('NSPasteboardReading')
         self.assertResultHasType(TestNSPasteboardHelper.readingOptionsForType_pasteboard_, objc._C_NSUInteger)
 
 

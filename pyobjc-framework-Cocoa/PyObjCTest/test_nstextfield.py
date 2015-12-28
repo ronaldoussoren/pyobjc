@@ -26,6 +26,7 @@ class TestNSTextField (TestCase):
         self.assertResultIsBOOL(NSTextField.allowsDefaultTighteningForTruncation)
         self.assertArgIsBOOL(NSTextField.setAllowsDefaultTighteningForTruncation_, 0)
 
+    @min_sdk_level('10.6')
     def testProtocols(self):
         objc.protocolNamed('NSTextFieldDelegate')
 

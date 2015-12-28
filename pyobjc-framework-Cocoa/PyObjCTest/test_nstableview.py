@@ -174,9 +174,13 @@ class TestNSTableView (TestCase):
         self.assertResultIsBOOL(NSTableView.rowActionsVisible)
         self.assertArgIsBOOL(NSTableView.setRowActionsVisible_, 0)
 
-    def testProtocols(self):
+
+    @min_sdk_level('10.6')
+    def testProtocolObjects(self):
         objc.protocolNamed('NSTableViewDelegate')
         objc.protocolNamed('NSTableViewDataSource')
+
+    def testProtocols(self):
         self.assertResultHasType(TestNSTableViewHelper.numberOfRowsInTableView_, objc._C_NSInteger)
         self.assertArgHasType(TestNSTableViewHelper.tableView_objectValueForTableColumn_row_, 2, objc._C_NSInteger)
         self.assertArgHasType(TestNSTableViewHelper.tableView_setObjectValue_forTableColumn_row_, 3, objc._C_NSInteger)

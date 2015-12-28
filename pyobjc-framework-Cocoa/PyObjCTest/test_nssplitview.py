@@ -41,8 +41,11 @@ class TestNSSplitView (TestCase):
         self.assertResultIsBOOL(NSSplitView.arrangesAllSubviews)
         self.assertArgIsBOOL(NSSplitView.setArrangesAllSubviews_, 0)
 
-    def testProtocol(self):
+    @min_sdk_level('10.6')
+    def testProtocolObjects(self):
         objc.protocolNamed('NSSplitViewDelegate')
+
+    def testProtocol(self):
         self.assertResultIsBOOL(TestNSSplitViewHelper.splitView_canCollapseSubview_)
         self.assertResultIsBOOL(TestNSSplitViewHelper.splitView_shouldCollapseSubview_forDoubleClickOnDividerAtIndex_)
         self.assertArgHasType(TestNSSplitViewHelper.splitView_shouldCollapseSubview_forDoubleClickOnDividerAtIndex_, 2, objc._C_NSInteger)

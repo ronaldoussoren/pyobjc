@@ -11,7 +11,11 @@ class TestDate (TestCase):
             cls = objc.lookUpClass('__NSDate')
             self.assertIs(cls, CFDateRef)
         except objc.error:
-            self.assertIsCFType(CFDateRef)
+            try:
+                cls = objc.lookUpClass('__NSCFDate')
+                self.assertIs(cls, CFDateRef)
+            except objc.error:
+                self.assertIsCFType(CFDateRef)
 
         try:
             cls = objc.lookUpClass('NSTimeZone')

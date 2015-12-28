@@ -10,8 +10,11 @@ class TestNSTokenFieldHelper (NSObject):
 
 
 class TestNSTokenField (TestCase):
-    def testProtocols(self):
+    @min_sdk_level('10.6')
+    def testProtocolObjects(self):
         objc.protocolNamed('NSTokenFieldDelegate')
+
+    def testProtocols(self):
         self.assertArgHasType(TestNSTokenFieldHelper.tokenField_completionsForSubstring_indexOfToken_indexOfSelectedItem_, 2, objc._C_NSInteger)
         self.assertArgHasType(TestNSTokenFieldHelper.tokenField_completionsForSubstring_indexOfToken_indexOfSelectedItem_, 3, b'o^' + objc._C_NSInteger)
         self.assertArgHasType(TestNSTokenFieldHelper.tokenField_shouldAddObjects_atIndex_, 2, objc._C_NSUInteger)

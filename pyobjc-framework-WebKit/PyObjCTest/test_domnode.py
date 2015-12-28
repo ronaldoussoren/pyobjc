@@ -26,11 +26,6 @@ class TestDOMNode (TestCase):
         self.assertEqual(DOM_DOCUMENT_POSITION_CONTAINED_BY, 16)
         self.assertEqual(DOM_DOCUMENT_POSITION_IMPLEMENTATION_SPECIFIC, 32)
 
-    @min_os_level('10.5')
-    def testConstants10_5(self):
-        self.assertResultIsBOOL(DOMNode.isDefaultNamespace_)
-        self.assertResultIsBOOL(DOMNode.contains_)
-
     def testMethods(self):
         self.assertResultIsBOOL(DOMNode.hasChildNodes)
         self.assertArgIsBOOL(DOMNode.cloneNode_, 0)
@@ -41,6 +36,14 @@ class TestDOMNode (TestCase):
         self.assertResultIsBOOL(DOMNode.isEqualNode_)
 
         self.assertResultIsBOOL(DOMNode.isContentEditable)
+
+    @min_os_level('10.5')
+    def testMethods10_5(self):
+        self.assertResultIsBOOL(DOMNode.isDefaultNamespace_)
+
+    @min_os_level('10.6')
+    def testMethods10_6(self):
+        self.assertResultIsBOOL(DOMNode.contains_)
 
 if __name__ == "__main__":
     main()

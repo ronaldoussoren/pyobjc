@@ -16,6 +16,9 @@ class TestNSControl (TestCase):
         self.assertResultIsBOOL(NSControl.usesSingleLineMode)
         self.assertArgIsBOOL(NSControl.setUsesSingleLineMode_, 0)
 
+        self.assertResultIsBOOL(NSControl.isHighlighted)
+        self.assertArgIsBOOL(NSControl.setHighlighted_, 0)
+
     @min_os_level('10.8')
     def testMethods10_8(self):
         self.assertResultIsBOOL(NSControl.allowsExpansionToolTips)
@@ -36,10 +39,8 @@ class TestNSControl (TestCase):
         self.assertResultIsBOOL(NSControl.refusesFirstResponder)
         self.assertArgIsBOOL(NSControl.setRefusesFirstResponder_, 0)
 
-    def testMethods(self):
-        self.assertResultIsBOOL(NSControl.isHighlighted)
-        self.assertArgIsBOOL(NSControl.setHighlighted_, 0)
 
+    @min_sdk_level('10.6')
     def testProtocols(self):
         objc.protocolNamed('NSControlTextEditingDelegate')
 
