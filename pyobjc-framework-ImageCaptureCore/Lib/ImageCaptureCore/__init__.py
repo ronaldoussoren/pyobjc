@@ -8,7 +8,7 @@ import sys
 import objc
 import Foundation
 
-from ImageCaptureCore import _metadata
+from ImageCaptureCore import _metadata, _ImageCaptureCore
 
 sys.modules['ImageCaptureCore'] = mod = objc.ObjCLazyModule('ImageCaptureCore',
     "com.apple.ImageCaptureCoreFramework",

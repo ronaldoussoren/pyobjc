@@ -1,0 +1,51 @@
+from PyObjCTools.TestSupport import *
+
+from ImageCaptureCore import *
+
+class TestICCameraDevice (TestCase):
+    def testConstants(self):
+        self.assertEqual(ICEXIFOrientation1, 1)
+        self.assertEqual(ICEXIFOrientation2, 2)
+        self.assertEqual(ICEXIFOrientation3, 3)
+        self.assertEqual(ICEXIFOrientation4, 4)
+        self.assertEqual(ICEXIFOrientation5, 5)
+        self.assertEqual(ICEXIFOrientation6, 6)
+        self.assertEqual(ICEXIFOrientation7, 7)
+        self.assertEqual(ICEXIFOrientation8, 8)
+
+        self.assertEqual(ICReturnSuccess, 0)
+        self.assertEqual(ICReturnInvalidParam, -9922)
+        self.assertEqual(ICReturnCommunicationTimedOut, -9923)
+        self.assertEqual(ICReturnScanOperationCanceled, -9924)
+        self.assertEqual(ICReturnScannerInUseByLocalUser, -9925)
+        self.assertEqual(ICReturnScannerInUseByRemoteUser, -9926)
+        self.assertEqual(ICReturnDeviceFailedToOpenSession, -9927)
+        self.assertEqual(ICReturnDeviceFailedToCloseSession, -9928)
+        self.assertEqual(ICReturnScannerFailedToSelectFunctionalUnit, -9929)
+        self.assertEqual(ICReturnScannerFailedToCompleteOverviewScan, -9930)
+        self.assertEqual(ICReturnScannerFailedToCompleteScan, -9931)
+        self.assertEqual(ICReturnReceivedUnsolicitedScannerStatusInfo, -9932)
+        self.assertEqual(ICReturnReceivedUnsolicitedScannerErrorInfo, -9933)
+        self.assertEqual(ICReturnDownloadFailed, -9934)
+        self.assertEqual(ICReturnUploadFailed, -9935)
+        self.assertEqual(ICReturnFailedToCompletePassThroughCommand, -9936)
+        self.assertEqual(ICReturnDownloadCanceled, -9937)
+        self.assertEqual(ICReturnFailedToEnabeTethering, -9938)
+        self.assertEqual(ICReturnFailedToDisabeTethering, -9939)
+        self.assertEqual(ICReturnFailedToCompleteSendMessageRequest, -9940)
+        self.assertEqual(ICReturnDeleteFilesFailed, -9941)
+        self.assertEqual(ICReturnDeleteFilesCanceled, -9942)
+        self.assertEqual(ICReturnDeviceIsPasscodeLocked, -9943)
+        self.assertEqual(ICReturnDeviceFailedToTakePicture, -9944)
+        self.assertEqual(ICReturnDeviceSoftwareNotInstalled, -9945)
+        self.assertEqual(ICReturnDeviceSoftwareIsBeingInstalled, -9946)
+        self.assertEqual(ICReturnDeviceSoftwareInstallationCompleted, -9947)
+        self.assertEqual(ICReturnDeviceSoftwareInstallationCanceled, -9948)
+        self.assertEqual(ICReturnDeviceSoftwareInstallationFailed, -9949)
+        self.assertEqual(ICReturnDeviceSoftwareNotAvailable, -9950)
+        self.assertEqual(ICReturnDeviceCouldNotPair, -9951)
+        self.assertEqual(ICReturnDeviceCouldNotUnpair, -9952)
+        self.assertEqual(ICReturnDeviceNeedsCredentials, -9953)
+
+if __name__ == "__main__":
+    main()
