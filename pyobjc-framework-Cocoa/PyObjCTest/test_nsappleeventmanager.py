@@ -12,5 +12,8 @@ class TestEAManager (TestCase):
         self.assertHasAttr(Foundation, 'NSAppleEventManagerSuspensionID')
         self.assertHasAttr(NSAppleEventManagerSuspensionID, '__pointer__')
 
+    def testMethods(self):
+        self.assertArgIsSEL(NSAppleEventManager.setEventHandler_andSelector_forEventClass_andEventID_, 1, b'v@:@@')
+
 if __name__ == "__main__":
     main()

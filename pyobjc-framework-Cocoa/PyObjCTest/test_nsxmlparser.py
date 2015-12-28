@@ -99,6 +99,11 @@ class TestNSXMLParser (TestCase):
 
         self.assertIsInstance(NSXMLParserErrorDomain, unicode)
 
+        self.assertEqual(NSXMLParserResolveExternalEntitiesNever, 0)
+        self.assertEqual(NSXMLParserResolveExternalEntitiesNoNetwork, 1)
+        self.assertEqual(NSXMLParserResolveExternalEntitiesSameOriginOnly, 2)
+        self.assertEqual(NSXMLParserResolveExternalEntitiesAlways, 3)
+
     def testMethods(self):
         self.assertArgIsBOOL(NSXMLParser.setShouldProcessNamespaces_, 0)
         self.assertArgIsBOOL(NSXMLParser.setShouldReportNamespacePrefixes_, 0)
@@ -107,6 +112,9 @@ class TestNSXMLParser (TestCase):
         self.assertResultIsBOOL(NSXMLParser.shouldReportNamespacePrefixes)
         self.assertResultIsBOOL(NSXMLParser.shouldResolveExternalEntities)
         self.assertResultIsBOOL(NSXMLParser.parse)
+
+    def testProtocols(self):
+        objc.protocolNamed('NSXMLParserDelegate')
 
 if __name__ == "__main__":
     main()

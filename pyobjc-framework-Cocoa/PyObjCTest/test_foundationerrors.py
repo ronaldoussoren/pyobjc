@@ -76,6 +76,21 @@ class FoundationErrorsTest (TestCase):
         self.assertEqual(NSUserActivityHandoffUserInfoTooLargeError, 4611)
         self.assertEqual(NSUserActivityErrorMinimum, 4608)
         self.assertEqual(NSUserActivityErrorMaximum, 4863)
+        self.assertEqual(NSPropertyListWriteInvalidError, 3852)
+
+    @min_os_level('10.11')
+    def testConstants10_11(self):
+        self.assertEqual(NSFileManagerUnmountUnknownError, 768)
+        self.assertEqual(NSFileManagerUnmountBusyError, 769)
+
+        self.assertEqual(NSCoderReadCorruptError, 4864)
+        self.assertEqual(NSCoderValueNotFoundError, 4865)
+        self.assertEqual(NSCoderErrorMinimum, 4864)
+        self.assertEqual(NSCoderErrorMaximum, 4991)
+
+        self.assertEqual(NSBundleErrorMinimum, 4992)
+        self.assertEqual(NSBundleErrorMaximum, 5119)
+
 
 if __name__ == "__main__":
     main()

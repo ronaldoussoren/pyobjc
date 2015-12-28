@@ -23,18 +23,18 @@ class TestNSExpression (TestCase):
     def testConstants10_9(self):
         self.assertEqual(NSAnyKeyExpressionType, 15)
 
+    @min_os_level('10.11')
+    def testConstants10_11(self):
+        self.assertEqual(NSConditionalExpressionType, 20)
+
     @min_os_level('10.6')
     def testMethods10_6(self):
         self.assertArgIsBlock(NSExpression.expressionForBlock_arguments_, 0, b'@@@@')
         self.assertResultIsBlock(NSExpression.expressionBlock, b'@@@@')
 
-    @expectedFailure
     @min_os_level('10.6')
     def testMethod10_6_unsupported(self):
-        # There is no documentation for this method, it is therefore unclear what kind
-        # of format string is used
-        self.fail('expressionWithFormat:fmt, ...')
-
+        self.assertArgIsPrintf(NSExpression.expressionWithFormat_, 0)
 
 
 if __name__ == "__main__":

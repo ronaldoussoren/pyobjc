@@ -4,20 +4,28 @@ from PyObjCTools.TestSupport import *
 class TestNSXMLNodeOptions (TestCase):
     def testConstants(self):
         self.assertEqual(NSXMLNodeOptionsNone, 0)
+
         self.assertEqual(NSXMLNodeIsCDATA, 1 << 0)
         self.assertEqual(NSXMLNodeExpandEmptyElement, 1 << 1)
         self.assertEqual(NSXMLNodeCompactEmptyElement,  1 << 2)
         self.assertEqual(NSXMLNodeUseSingleQuotes, 1 << 3)
         self.assertEqual(NSXMLNodeUseDoubleQuotes, 1 << 4)
+        self.assertEqual(NSXMLNodeNeverEscapeContents, 1 << 5)
+
         self.assertEqual(NSXMLDocumentTidyHTML, 1 << 9)
         self.assertEqual(NSXMLDocumentTidyXML, 1 << 10)
+
         self.assertEqual(NSXMLDocumentValidate, 1 << 13)
+
         self.assertEqual(NSXMLNodeLoadExternalEntitiesAlways, 1 << 14)
         self.assertEqual(NSXMLNodeLoadExternalEntitiesSameOriginOnly, 1 << 15)
         self.assertEqual(NSXMLNodeLoadExternalEntitiesNever, 1 << 19)
+
         self.assertEqual(NSXMLDocumentXInclude, 1 << 16)
+
         self.assertEqual(NSXMLNodePrettyPrint, 1 << 17)
         self.assertEqual(NSXMLDocumentIncludeContentTypeDeclaration, 1 << 18)
+
         self.assertEqual(NSXMLNodePreserveNamespaceOrder, 1 << 20)
         self.assertEqual(NSXMLNodePreserveAttributeOrder, 1 << 21)
         self.assertEqual(NSXMLNodePreserveEntities, 1 << 22)
@@ -26,6 +34,8 @@ class TestNSXMLNodeOptions (TestCase):
         self.assertEqual(NSXMLNodePreserveWhitespace, 1 << 25)
         self.assertEqual(NSXMLNodePreserveDTD, 1 << 26)
         self.assertEqual(NSXMLNodePreserveCharacterReferences, 1 << 27)
+        self.assertEqual(NSXMLNodePromoteSignificantWhitespace, 1 << 28)
+
         self.assertEqual(NSXMLNodePreserveEmptyElements, (
             NSXMLNodeExpandEmptyElement | NSXMLNodeCompactEmptyElement))
         self.assertEqual(NSXMLNodePreserveQuotes, (NSXMLNodeUseSingleQuotes | NSXMLNodeUseDoubleQuotes))

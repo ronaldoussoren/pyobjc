@@ -11,6 +11,12 @@ class TestNSErrorHelper (NSObject):
 class TestNSError (TestCase):
     def testConstants(self):
         self.assertIsInstance(NSCocoaErrorDomain, unicode)
+
+        self.assertIsInstance(NSPOSIXErrorDomain, unicode)
+        self.assertIsInstance(NSOSStatusErrorDomain, unicode)
+
+        self.assertIsInstance(NSUnderlyingErrorKey, unicode)
+
         self.assertIsInstance(NSFilePathErrorKey, unicode)
         self.assertIsInstance(NSHelpAnchorErrorKey, unicode)
         self.assertIsInstance(NSLocalizedDescriptionKey, unicode)
@@ -18,12 +24,9 @@ class TestNSError (TestCase):
         self.assertIsInstance(NSLocalizedRecoveryOptionsErrorKey, unicode)
         self.assertIsInstance(NSLocalizedRecoverySuggestionErrorKey, unicode)
         self.assertIsInstance(NSMachErrorDomain, unicode)
-        self.assertIsInstance(NSOSStatusErrorDomain, unicode)
-        self.assertIsInstance(NSPOSIXErrorDomain, unicode)
         self.assertIsInstance(NSRecoveryAttempterErrorKey, unicode)
         self.assertIsInstance(NSStringEncodingErrorKey, unicode)
         self.assertIsInstance(NSURLErrorKey, unicode)
-        self.assertIsInstance(NSUnderlyingErrorKey, unicode)
         self.assertIsInstance(NSAbortModalException, unicode)
         self.assertIsInstance(NSAbortPrintingException, unicode)
         self.assertIsInstance(NSAccessibilityException, unicode)
@@ -61,8 +64,6 @@ class TestNSError (TestCase):
         self.assertIsInstance(NSWordTablesReadException, unicode)
         self.assertIsInstance(NSWordTablesWriteException, unicode)
 
-
-
     def testAttemptRecovery(self):
         self.assertArgHasType(TestNSErrorHelper.attemptRecoveryFromError_optionIndex_delegate_didRecoverSelector_contextInfo_, 1, objc._C_NSUInteger)
         self.assertArgIsSEL(TestNSErrorHelper.attemptRecoveryFromError_optionIndex_delegate_didRecoverSelector_contextInfo_, 3, b'v@:' + objc._C_NSBOOL + b'^v')
@@ -70,6 +71,12 @@ class TestNSError (TestCase):
 
         self.assertResultIsBOOL(TestNSErrorHelper.attemptRecoveryFromError_optionIndex_)
         self.assertArgHasType(TestNSErrorHelper.attemptRecoveryFromError_optionIndex_, 1, objc._C_NSUInteger)
+
+    @min_os_level('10.11')
+    def testMethods10_11(self):
+        self.assertArgIsBlock(NSError.setUserInfoValueProviderForDomain_provider_, 1, b'@@@')
+        self.assertResutlISBlock(NSError.userInfoValueProviderForDomain_, b'@@@')
+
 
 if __name__ == "__main__":
     main()

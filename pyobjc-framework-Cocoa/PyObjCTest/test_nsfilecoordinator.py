@@ -41,7 +41,7 @@ class TestNSFileCoordinator (TestCase):
 
         self.assertArgIsOut(  Foundation.NSFileCoordinator.prepareForReadingItemsAtURLs_options_writingItemsAtURLs_options_error_byAccessor_, 4)
         self.assertArgIsBlock(Foundation.NSFileCoordinator.prepareForReadingItemsAtURLs_options_writingItemsAtURLs_options_error_byAccessor_,
-                5, b'v@?') # FIXME: Cannot represent this completion handler!
+                5, b'v@?') # FIXME: Need test for the "nested" block
 
 if __name__ == "__main__":
     main()

@@ -28,6 +28,7 @@ class TestNSConnection (TestCase):
         self.assertResultIsBOOL(TestNSConnectionHelper.connection_shouldMakeNewConnection_)
         self.assertResultIsBOOL(TestNSConnectionHelper.authenticateComponents_withData_)
         self.assertResultIsBOOL(TestNSConnectionHelper.connection_handleRequest_)
+
     @min_sdk_level('10.10')
     def testProtocolObjects(self):
         objc.protocolNamed('NSConnectionDelegate')

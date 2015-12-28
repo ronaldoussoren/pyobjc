@@ -47,6 +47,10 @@ class TestNSData(TestCase):
         self.assertArgIsOut(NSData.dataWithContentsOfURL_options_error_, 2)
         self.assertArgIsOut(NSData.initWithContentsOfFile_options_error_, 2)
         self.assertArgIsOut(NSData.initWithContentsOfURL_options_error_, 2)
+        self.assertArgIsIn(NSData.dataWithBytesNoCopy_length_, 0)
+        self.assertArgSizeInArg(NSData.dataWithBytes_length_, 0, 1)
+        self.assertArgIsIn(NSData.initWithBytesNoCopy_length_, 0)
+        self.assertArgSizeInArg(NSData.initWithBytes_length_, 0, 1)
 
     def testConstants(self):
         self.assertEqual(NSMappedRead, 1)

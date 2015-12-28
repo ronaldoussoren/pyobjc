@@ -53,8 +53,20 @@ class TestNSOrderedSet (TestCase):
         self.assertArgIsBlock(NSMutableOrderedSet.sortRange_options_usingComparator_, 2,
                 objc._C_NSInteger + b'@@')
 
+        self.assertArgIsBlock(NSOrderedSet.sortedArrayUsingComparator_, 0, objc._C_NSInteger + b'@@')
+        self.assertArgIsBlock(NSOrderedSet.sortedArrayWithOptions_usingComparator_, 1, objc._C_NSInteger + b'@@')
+
     @min_os_level('10.7')
     def testCreation(self):
+        self.assertArgIsBOOL(NSOrderedSet.orderedSetWithOrderedSet_range_copyItems_, 2)
+        self.assertArgIsBOOL(NSOrderedSet.orderedSetWithArray_range_copyItems_, 2)
+        self.assertArgIsBOOL(NSOrderedSet.orderedSetWithSet_copyItems_, 1)
+        self.assertArgIsBOOL(NSOrderedSet.initWithOrderedSet_copyItems_, 1)
+        self.assertArgIsBOOL(NSOrderedSet.initWithOrderedSet_range_copyItems_, 2)
+        self.assertArgIsBOOL(NSOrderedSet.initWithArray_copyItems_, 1)
+        self.assertArgIsBOOL(NSOrderedSet.initWithArray_range_copyItems_, 2)
+        self.assertArgIsBOOL(NSOrderedSet.initWithSet_copyItems_, 1)
+
         obj = NSOrderedSet.orderedSet()
         self.assertIsInstance(obj, NSOrderedSet)
 

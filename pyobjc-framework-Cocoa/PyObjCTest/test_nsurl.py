@@ -14,6 +14,42 @@ class TestNSURL (TestCase):
         self.assertResultIsBOOL(NSURL.setProperty_forKey_)
         self.assertArgIsBOOL(NSURL.URLHandleUsingCache_, 0)
 
+    @min_os_level('10.7')
+    def testMethods10_7(self):
+        self.assertResultIsBOOL(NSURL.startAccessingSecurityScopedResource)
+
+    @min_os_level('10.9')
+    def testMethods10_9(self):
+        self.assertArgIsIn(NSURL.initFileURLWithFileSystemRepresentation_isDirectory_relativeToURL_, 0)
+        self.assertArgIsBOOL(NSURL.initFileURLWithFileSystemRepresentation_isDirectory_relativeToURL_, 1)
+
+        self.assertArgIsIn(NSURL.fileURLWithFileSystemRepresentation_isDirectory_relativeToURL_, 0)
+        self.assertArgIsBOOL(NSURL.fileURLWithFileSystemRepresentation_isDirectory_relativeToURL_, 1)
+
+        self.assertResultIsBOOL(NSURL.getFileSystemRepresentation_maxLength_)
+        self.assertArgIsOut(NSURL.getFileSystemRepresentation_maxLength_, 0)
+        self.assertArgSizeInArg(NSURL.getFileSystemRepresentation_maxLength_, 0, 1)
+
+        self.assertArgIsBOOL(NSURLComponents.initWithURL_resolvingAgainstBaseURL_, 1)
+        self.assertArgIsBOOL(NSURLComponents.componentsWithURL_resolvingAgainstBaseURL_, 1)
+
+    @min_os_level('10.10')
+    def testMethods10_10(self):
+        self.assertArgIsOut(NSURL.URLByResolvingAliasFileAtURL_options_error_, 2)
+
+        self.assertResultIsBOOL(NSURL.getPromisedItemResourceValue_forKey_error_)
+        self.assertArgIsOut(NSURL.getPromisedItemResourceValue_forKey_error_, 2)
+        self.assertArgIsOut(NSURL.promisedItemResourceValuesForKeys_error_, 1)
+
+        self.assertResultIsBOOL(NSURL.checkPromisedItemIsReachableAndReturnError_)
+        self.assertArgIsOut(NSURL.checkPromisedItemIsReachableAndReturnError_, 0)
+
+    @min_os_level('10.11')
+    def testMethods10_11(self):
+        self.assertArgIsBOOL(NSURL.initFileURLWithPath_isDirectory_relativeToURL_, 1)
+        self.assertArgIsBOOL(NSURL.fileURLWithPath_isDirectory_relativeToURL_, 1)
+        self.assertResultIsBOOL(NSURL.hasDirectoryPath)
+
     def testConstants(self):
         self.assertIsInstance(NSURLFileScheme, unicode)
 
@@ -72,6 +108,10 @@ class TestNSURL (TestCase):
 
     @min_os_level('10.7')
     def testConstants10_7(self):
+        self.assertEqual(NSURLBookmarkCreationWithSecurityScope, ( 1 << 11 ))
+        self.assertEqual(NSURLBookmarkCreationSecurityScopeAllowOnlyReadAccess, ( 1 << 12 ))
+        self.assertEqual(NSURLBookmarkResolutionWithSecurityScope, ( 1 << 10 ))
+
         self.assertIsInstance(NSURLKeysOfUnsetValuesKey, unicode)
 
         self.assertIsInstance(NSURLFileResourceIdentifierKey, unicode)
@@ -124,6 +164,33 @@ class TestNSURL (TestCase):
     def testConstants10_8(self):
         self.assertIsInstance(NSURLIsExcludedFromBackupKey, unicode)
         self.assertIsInstance(NSURLPathKey, unicode)
+
+    @min_os_level('10.9')
+    def testConstants10_9(self):
+        self.assertIsInstance(NSURLTagNamesKey, unicode)
+        self.assertIsInstance(NSURLUbiquitousItemDownloadingStatusKey, unicode)
+        self.assertIsInstance(NSURLUbiquitousItemDownloadingErrorKey, unicode)
+        self.assertIsInstance(NSURLUbiquitousItemUploadingErrorKey, unicode)
+        self.assertIsInstance(NSURLUbiquitousItemDownloadingStatusNotDownloaded, unicode)
+        self.assertIsInstance(NSURLUbiquitousItemDownloadingStatusDownloaded, unicode)
+        self.assertIsInstance(NSURLUbiquitousItemDownloadingStatusCurrent, unicode)
+
+    @min_os_level('10.10')
+    def testConstants10_10(self):
+        self.assertIsInstance(NSURLGenerationIdentifierKey, unicode)
+        self.assertIsInstance(NSURLDocumentIdentifierKey, unicode)
+        self.assertIsInstance(NSURLAddedToDirectoryDateKey, unicode)
+        self.assertIsInstance(NSURLQuarantinePropertiesKey, unicode)
+        self.assertIsInstance(NSURLThumbnailDictionaryKey, unicode)
+        self.assertIsInstance(NSURLThumbnailKey, unicode)
+        self.assertIsInstance(NSThumbnail1024x1024SizeKey, unicode)
+        self.assertIsInstance(NSURLUbiquitousItemDownloadRequestedKey, unicode)
+        self.assertIsInstance(NSURLUbiquitousItemContainerDisplayNameKey, unicode)
+
+    @min_os_level('10.11')
+    def testConstants10_11(self):
+        self.assertIsInstance(NSURLIsApplicationKey, unicode)
+        self.assertIsInstance(NSURLApplicationIsScriptableKey, unicode)
 
     @min_os_level('10.6')
     def testMethods10_6(self):

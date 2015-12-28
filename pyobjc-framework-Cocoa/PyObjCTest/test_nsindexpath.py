@@ -13,6 +13,11 @@ class TestNSIndexPath (TestCase):
         self.assertArgIsOut(NSIndexPath.getIndexes_, 0)
         self.assertArgIsVariableSize(NSIndexPath.getIndexes_, 0)
 
+    @min_os_level('10.9')
+    def testMethods10_9(self):
+        self.assertArgIsOut(NSIndexPath.getIndexes_range_, 0)
+        self.assertArgSizeInArg(NSIndexPath.getIndexes_range_, 0, 1)
+
     def testConvenience(self):
         path = NSIndexPath.indexPathWithIndexes_length_([0, 1, 4], 3)
 

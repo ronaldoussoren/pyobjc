@@ -34,12 +34,31 @@ class TestNSMetaData (TestCase):
         self.assertIsInstance(NSMetadataUbiquitousItemPercentDownloadedKey, unicode)
         self.assertIsInstance(NSMetadataUbiquitousItemPercentUploadedKey, unicode)
 
+    @min_os_level('10.9')
+    def testConstants10_9(self):
+        self.assertIsInstance(NSMetadataQueryUpdateAddedItemsKey, unicode)
+        self.assertIsInstance(NSMetadataQueryUpdateChangedItemsKey, unicode)
+        self.assertIsInstance(NSMetadataQueryUpdateRemovedItemsKey, unicode)
+        self.assertIsInstance(NSMetadataQueryIndexedLocalComputerScope, unicode)
+        self.assertIsInstance(NSMetadataQueryIndexedNetworkScope, unicode)
+
+    @min_os_level('10.10')
+    def testConstants10_10(self):
+        self.assertIsInstance(NSMetadataQueryAccessibleUbiquitousExternalDocumentsScope, unicode)
+
     def testMethods(self):
         self.assertResultIsBOOL(NSMetadataQuery.startQuery)
         self.assertResultIsBOOL(NSMetadataQuery.isStarted)
         self.assertResultIsBOOL(NSMetadataQuery.isGathering)
         self.assertResultIsBOOL(NSMetadataQuery.isStopped)
 
+    @min_os_level('10.9')
+    def testMethods10_9(self):
+        self.assertArgIsBlock(NSMetadataQuery.enumerateResultsUsingBlock_, 0, b'v@' + objc._C_NSUInteger + b'o^Z')
+        self.assertArgIsBlock(NSMetadataQuery.enumerateResultsWithOptions_usingBlock_, 1, b'v@' + objc._C_NSUInteger + b'o^Z')
+
+    def testProtocols(self):
+        objc.protocolNamed('NSMetadataQueryDelegate')
 
 if __name__ == "__main__":
     main()

@@ -7,7 +7,7 @@ class TestNSURLCredential (TestCase):
         self.assertEqual(NSURLCredentialPersistenceNone, 0)
         self.assertEqual(NSURLCredentialPersistenceForSession, 1)
         self.assertEqual(NSURLCredentialPersistencePermanent, 2)
-
+        self.assertEqual(NSURLCredentialPersistenceSynchronizable, 3)
 
     def testMethods(self):
         self.assertResultIsBOOL(NSURLCredential.hasPassword)

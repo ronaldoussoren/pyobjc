@@ -42,10 +42,9 @@ class TestNSException (TestCase):
     def testConstants10_6(self):
         self.assertIsInstance(NSAssertionHandlerKey, unicode)
 
-    @expectedFailure
     def testUncaughtExceptionHandler(self):
-        self.fail("NSSetUncaughtExceptionHandler")
-        self.fail("NSGetUncaughtExceptionHandler")
+        self.assertArgIsFunction(NSSetUncaughtExceptionHandler, 0, b'v@', True)
+        self.assertResultIsFunction(NSGetUncaughtExceptionHandler, b'v@')
 
     def testNoAssert(self):
         self.assertNotHasAttr(Foundation, 'NSAssert5')

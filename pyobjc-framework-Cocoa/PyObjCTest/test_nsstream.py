@@ -17,8 +17,8 @@ class TestNSStreamUsage(TestCase):
                 None
         )
 
-        self.assert_(isinstance(inputStream, NSInputStream))
-        self.assert_(isinstance(outputStream, NSOutputStream))
+        self.assertIsInstance(inputStream, NSInputStream)
+        self.assertIsInstance(outputStream, NSOutputStream)
 
         inputStream.close()
         outputStream.close()
@@ -89,6 +89,10 @@ class TestNSStreamUsage(TestCase):
         self.assertArgHasType(NSOutputStream.outputStreamToBuffer_capacity_, 0, b'o^v')
         self.assertArgSizeInArg(NSOutputStream.outputStreamToBuffer_capacity_, 0, 1)
 
+        self.assertArgIsOut(NSInputStream.getBuffer_length_, 0)
+        self.assertArgIsOut(NSInputStream.getBuffer_length_, 1)
+        self.assertArgSizeInArg(NSInputStream.getBuffer_length_, 0, 1)
+
     def testDelegate(self):
         self.assertArgHasType(TestNSStreamHelper.stream_handleEvent_, 1, objc._C_NSUInteger)
 
@@ -100,6 +104,18 @@ class TestNSStreamUsage(TestCase):
         finally:
             b = b.initToMemory()
         self.assertArgIsBOOL(NSOutputStream.outputStreamWithURL_append_, 1)
+
+    @min_os_level('10.10')
+    def testMethods10_10(self):
+        self.assertArgIsOut(NSStream.getStreamsToHostWithName_port_inputStream_outputStream_, 2)
+        self.assertArgIsOut(NSStream.getStreamsToHostWithName_port_inputStream_outputStream_, 3)
+
+        self.assertArgIsOut(NSStream.getBoundStreamsWithBufferSize_inputStream_outputStream_, 1)
+        self.assertArgIsOut(NSStream.getBoundStreamsWithBufferSize_inputStream_outputStream_, 2)
+
+
+    def testProtocols(self):
+        objc.protocolNamed('NSStreamDelegate')
 
 if __name__ == '__main__':
     main()

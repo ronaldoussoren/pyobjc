@@ -2,7 +2,14 @@
 # for information on how to update this file.
 {
  "definitions": {
+  "expressions": {
+   "NSAppleEventSendDefaultOptions": { "value": "NSAppleEventSendWaitForReply | NSAppleEventSendCanInteract" }
+  },
   "aliases": {
+    "NSOperationQualityOfServiceUserInteractive": { "alias": "NSQualityOfServiceUserInteractive" },
+    "NSOperationQualityOfServiceUserInitiated": { "alias": "NSQualityOfServiceUserInitiated" },
+    "NSOperationQualityOfServiceUtility": { "alias": "NSQualityOfServiceUtility" },
+    "NSOperationQualityOfServiceBackground": { "alias": "NSQualityOfServiceBackground" },
     "NSDayCalendarUnit": { "alias": "NSCalendarUnitDay" },
     "NSHourCalendarUnit": { "alias": "NSCalendarUnitHour" },
     "NSMinuteCalendarUnit": { "alias": "NSCalendarUnitMinute" },
@@ -16,10 +23,71 @@
     "NSWrapCalendarComponents": { "alias": "NSCalendarWrapComponents" },
     "NSYearCalendarUnit": { "alias": "NSCalendarUnitYear" },
     "NSYearForWeekOfYearCalendarUnit": { "alias": "NSCalendarUnitYearForWeekOfYear" },
-    "NSEraCalendarUnit": { "alias": "NSCalendarUnitEra" }
+    "NSEraCalendarUnit": { "alias": "NSCalendarUnitEra" },
+    "NSNumberFormatterOrdinalStyle": { "alias": "kCFNumberFormatterOrdinalStyle" },
+    "NSNumberFormatterCurrencyISOCodeStyle": { "alias": "kCFNumberFormatterCurrencyISOCodeStyle" },
+    "NSNumberFormatterCurrencyPluralStyle": { "alias": "kCFNumberFormatterCurrencyPluralStyle" },
+    "NSNumberFormatterCurrencyAccountingStyle": { "alias": "kCFNumberFormatterCurrencyAccountingStyle" },
+    "NSNumberFormatterOrdinalStyle": { "alias": "kCFNumberFormatterOrdinalStyle" },
+    "NSNumberFormatterCurrencyISOCodeStyle": { "alias": "kCFNumberFormatterCurrencyISOCodeStyle" },
+    "NSNumberFormatterCurrencyPluralStyle": { "alias": "kCFNumberFormatterCurrencyPluralStyle" },
+    "NSNumberFormatterCurrencyAccountingStyle": { "alias": "kCFNumberFormatterCurrencyAccountingStyle" },
+    "NSRectEdgeMinX": { "alias": "NSMinXEdge" },
+    "NSRectEdgeMinY": { "alias": "NSMinYEdge" },
+    "NSRectEdgeMaxX": { "alias": "NSMaxXEdge" },
+    "NSRectEdgeMaxY": { "alias": "NSMaxYEdge" }
   },
   "enum": {
+    "NSURLSessionResponseBecomeStream": { "value": 3 },
+    "NSURLErrorAppTransportSecurityRequiresSecureConnection": { "value": -1022 },
+    "NSProcessInfoThermalStateNominal": { "value": 0 },
+    "NSProcessInfoThermalStateFair": { "value": 1 },
+    "NSProcessInfoThermalStateSerious": { "value": 2 },
+    "NSProcessInfoThermalStateCritical": { "value": 3 },
+    "NSDistributedNotificationDeliverImmediately": { "value": 1 },
+    "NSDistributedNotificationPostToAllSessions": { "value": 2 },
+    "NSFileManagerUnmountUnknownError": { "value": 768 },
     "NSURLErrorCancelled": { "value": -999, "comment": "List of values that are aliases from CFNetwork" },
+    "NSPersonNameComponentsFormatterStyleDefault": { "value": 0 },
+    "NSPersonNameComponentsFormatterStyleShort": { "value": 1 },
+    "NSPersonNameComponentsFormatterStyleMedium": { "value": 2 },
+    "NSPersonNameComponentsFormatterStyleLong": { "value": 3 },
+    "NSPersonNameComponentsFormatterStyleAbbreviated": { "value": 4 },
+    "NSPersonNameComponentsFormatterPhonetic": { "value": 2 },
+    "NSFoundationVersionNumber10_8": { "value": 945.00 },
+    "NSFoundationVersionNumber10_8_1": { "value": 945.00 },
+    "NSFoundationVersionNumber10_8_2": { "value": 945.11 },
+    "NSFoundationVersionNumber10_8_3": { "value": 945.16 },
+    "NSFoundationVersionNumber10_8_4": { "value": 945.18 },
+    "NSFoundationVersionNumber10_9": { "value": 1056 },
+    "NSFoundationVersionNumber10_9_1": { "value": 1056 },
+    "NSFoundationVersionNumber10_9_2": { "value": 1056.13 },
+    "NSFoundationVersionNumber10_10": { "value": 1151.16 },
+    "NSFoundationVersionNumber10_10_1": { "value": 1151.16 },
+    "NSFoundationVersionNumber10_10_2": { "value": 1152.14 },
+    "NSFoundationVersionNumber10_10_3": { "value": 1153.20 },
+    "NSItemProviderValueUnavailableCoercionError": { "value": -1200 },
+    "NSFileManagerUnmountWithoutUI": { "value": 2 },
+    "NSFileManagerUnmountAllPartitionsAndEjectDisk": { "value": 1 },
+    "NSConditionalExpressionType": { "value": 20 },
+    "NSFileManagerUnmountBusyError": { "value": 769 },
+    "NSCoderReadCorruptError": { "value": 4864 },
+    "NSCoderValueNotFoundError": { "value": 4865 },
+    "NSCoderErrorMinimum": { "value": 4864 },
+    "NSCoderErrorMaximum": { "value": 4991 },
+    "NSBundleErrorMinimum": { "value": 4992 },
+    "NSBundleErrorMaximum": { "value": 5119 },
+    "NSAppleEventSendNoReply": { "value": 1 },
+    "NSAppleEventSendQueueReply": { "value": 2 },
+    "NSAppleEventSendWaitForReply": { "value": 3 },
+    "NSAppleEventSendNeverInteract": { "value": 16 },
+    "NSAppleEventSendCanInteract": { "value": 32 },
+    "NSAppleEventSendAlwaysInteract": { "value": 48 },
+    "NSAppleEventSendCanSwitchLayer": { "value": 64 },
+    "NSAppleEventSendDontRecord": { "value": 4096 },
+    "NSAppleEventSendDontExecute": { "value": 8192 },
+    "NSAppleEventSendDontAnnotate": { "value": 65536 },
+    "NSFileManagerUnmountUnknownError": { "value": 768 },
     "NSURLErrorClientCertificateRequired": { "value": -1206 },
     "NSURLErrorDataLengthExceedsMaximum": { "value": -1103 },
     "NSURLErrorBadURL": { "value": -1000 },
@@ -138,6 +206,319 @@
     }
   },
   "classes": {
+   "NSUserActivity": {
+    "methods": [
+     {
+      "selector": "getContinuationStreamsWithCompletionHandler:",
+      "class_method": false,
+      "args": {
+       "0": {
+        "type_override": "@?",
+	"callable": {
+	 "retval": { "typestr": "v" },
+	 "arguments": {
+	  "0": { "typestr": "^v" },
+	  "1": { "typestr": "@" },
+	  "2": { "typestr": "@" },
+	  "3": { "typestr": "@" }
+	 }
+	}
+       }
+      }
+     },
+     {
+      "selector": "isEligibleForHandoff",
+      "class_method": false,
+      "retval": { "type_override": "Z" }
+     },
+     {
+      "selector": "setEligibleForHandoff:",
+      "class_method": false,
+      "args": {
+       "0": { "type_override": "Z" }
+      }
+     },
+     {
+      "selector": "isEligibleForSearch",
+      "class_method": false,
+      "retval": { "type_override": "Z" }
+     },
+     {
+      "selector": "setEligibleForSearch:",
+      "class_method": false,
+      "args": {
+       "0": { "type_override": "Z" }
+      }
+     },
+     {
+      "selector": "isEligibleForPublicIndexing",
+      "class_method": false,
+      "retval": { "type_override": "Z" }
+     },
+     {
+      "selector": "setEligibleForPublicIndexing:",
+      "class_method": false,
+      "args": {
+       "0": { "type_override": "Z" }
+      }
+     }
+    ]
+   },
+   "NSURLSessionConfiguration": {
+    "methods": [
+     {
+      "selector": "isDiscretionary",
+      "class_method": false,
+      "retval": { "type_override": "Z" }
+     },
+     {
+      "selector": "setDiscretionary:",
+      "class_method": false,
+      "args": {
+       "0": { "type_override": "Z" }
+      }
+     },
+     {
+      "selector": "shouldUseExtendedBackgroundIdleMode",
+      "class_method": false,
+      "retval": { "type_override": "Z" }
+     },
+     {
+      "selector": "setShouldUseExtendedBackgroundIdleMode:",
+      "class_method": false,
+      "args": {
+       "0": { "type_override": "Z" }
+      }
+     }
+    ]
+   },
+   "NSURLSessionStreamTask": {
+    "methods": [
+     {
+      "selector": "writeData:timeout:completionHandler:",
+      "class_method": false,
+      "args": {
+       "1": { "type_override": [ "f", "d" ] },
+       "2": {
+        "type_override": "@?",
+	"callable": {
+	 "retval": { "typestr": "v" },
+	 "arguments": {
+	  "0": { "typestr": "^v" },
+	  "1": { "typestr": "@" }
+	 }
+	}
+       }
+      }
+     },
+     {
+      "selector": "readDataOfMinLength:maxLength:timeout:completionHandler:",
+      "class_method": false,
+      "args": {
+       "0": { "type_override": [ "I", "Q" ] },
+       "1": { "type_override": [ "I", "Q" ] },
+       "2": { "type_override": [ "f", "d" ] },
+       "3": {
+        "type_override": "@?",
+	"callable": {
+	 "arguments": {
+	  "0": { "typestr": "^v" },
+	  "1": { "typestr": "@" },
+	  "2": { "typestr": "Z" },
+	  "3": { "typestr": "@" }
+         },
+	 "retval": { "typestr": "v" }
+	}
+       }
+      }
+     }
+    ]
+   },
+   "NSURLSessionDownloadTask": {
+    "methods": [
+     {
+      "selector": "cancelByProducingResumeData:",
+      "class_method": false,
+      "args": {
+       "0": {
+        "callable": {
+	 "arguments": {
+	  "0": { "typestr": "^v" },
+	  "1": { "typestr": "@" }
+	 },
+	 "retval": { "typestr": "v" }
+	}
+       }
+      }
+     }
+    ]
+   },
+   "NSURLSession": {
+    "methods": [
+     {
+      "selector": "downloadTaskWithResumeData:completionHandler:",
+      "class_method": false,
+      "args": {
+       "1": {
+        "callable": {
+	 "arguments": {
+	  "0": { "typestr": "^v" },
+	  "1": { "typestr": "@" },
+	  "2": { "typestr": "@" },
+	  "3": { "typestr": "@" }
+	 },
+	 "retval": { "typestr": "v" }
+	}
+       }
+      }
+     },
+     {
+      "selector": "downloadTaskWithURL:completionHandler:",
+      "class_method": false,
+      "args": {
+       "1": {
+        "callable": {
+	 "arguments": {
+	  "0": { "typestr": "^v" },
+	  "1": { "typestr": "@" },
+	  "2": { "typestr": "@" },
+	  "3": { "typestr": "@" }
+	 },
+	 "retval": { "typestr": "v" }
+	}
+       }
+      }
+     },
+     {
+      "selector": "uploadTaskWithRequest:fromData:completionHandler:",
+      "class_method": false,
+      "args": {
+       "2": {
+        "callable": {
+	 "arguments": {
+	  "0": { "typestr": "^v" },
+	  "1": { "typestr": "@" },
+	  "2": { "typestr": "@" },
+	  "3": { "typestr": "@" }
+	 },
+	 "retval": { "typestr": "v" }
+	}
+       }
+      }
+     },
+     {
+      "selector": "uploadTaskWithRequest:fromFile:completionHandler:",
+      "class_method": false,
+      "args": {
+       "2": {
+        "callable": {
+	 "arguments": {
+	  "0": { "typestr": "^v" },
+	  "1": { "typestr": "@" },
+	  "2": { "typestr": "@" },
+	  "3": { "typestr": "@" }
+	 },
+	 "retval": { "typestr": "v" }
+	}
+       }
+      }
+     },
+     {
+      "selector": "dataTaskWithURL:completionHandler:",
+      "class_method": false,
+      "args": {
+       "1": {
+        "callable": {
+	 "arguments": {
+	  "0": { "typestr": "^v" },
+	  "1": { "typestr": "@" },
+	  "2": { "typestr": "@" },
+	  "3": { "typestr": "@" }
+	 },
+	 "retval": { "typestr": "v" }
+	}
+       }
+      }
+     },
+     {
+      "selector": "dataTaskWithRequest:completionHandler:",
+      "class_method": false,
+      "args": {
+       "1": {
+        "callable": {
+	 "arguments": {
+	  "0": { "typestr": "^v" },
+	  "1": { "typestr": "@" },
+	  "2": { "typestr": "@" },
+	  "3": { "typestr": "@" }
+	 },
+	 "retval": { "typestr": "v" }
+	}
+       }
+      }
+     },
+     {
+      "selector": "getTasksWithCompletionHandler:",
+      "class_method": false,
+      "args": {
+       "0": {
+        "callable": {
+	 "arguments": {
+	  "0": { "typestr": "^v" },
+	  "1": { "typestr": "@" },
+	  "2": { "typestr": "@" },
+	  "3": { "typestr": "@" }
+	 },
+	 "retval": { "typestr": "v" }
+	}
+       }
+      }
+     },
+     {
+      "selector": "getAllTasksWithCompletionHandler:",
+      "class_method": false,
+      "args": {
+       "0": {
+        "callable": {
+	 "arguments": {
+	  "0": { "typestr": "^v" },
+	  "1": { "typestr": "@" }
+	 },
+	 "retval": { "typestr": "v" }
+	}
+       }
+      }
+     },
+     {
+      "selector": "flushWithCompletionHandler:",
+      "class_method": false,
+      "args": {
+       "0": {
+        "callable": {
+	 "arguments": {
+	  "0": { "typestr": "^v" }
+	 },
+	 "retval": { "typestr": "v" }
+	}
+       }
+      }
+     },
+     {
+      "selector": "resetWithCompletionHandler:",
+      "class_method": false,
+      "args": {
+       "0": {
+        "callable": {
+	 "arguments": {
+	  "0": { "typestr": "^v" }
+	 },
+	 "retval": { "typestr": "v" }
+	}
+       }
+      }
+     }
+    ]
+   },
    "NSBackgroundActivityScheduler": {
     "methods": [
      {
@@ -284,6 +665,11 @@
    },
    "NSAppleEventDescriptor": {
     "methods": [
+     {
+      "selector": "isRecordDescriptor",
+      "class_method": false,
+      "retval": { "type_override": "Z" }
+     },
      {
       "args": {
        "1": {
@@ -1610,6 +1996,20 @@
    },
    "NSCoder": {
     "methods": [
+     {
+      "selector": "decodeTopLevelObjectAndReturnError:",
+      "class_method": false,
+      "args": {
+       "0": { "type_modifier": "o" }
+      }
+     },
+     {
+      "selector": "decodeTopLevelObjectOfClass:forKey:error:",
+      "class_method": false,
+      "args": {
+       "2": { "type_modifier": "o" }
+      }
+     },
      {
       "args": {
        "0": {
@@ -2986,12 +3386,12 @@
      {
       "class_method": true,
       "selector": "expressionWithFormat:",
-      "variadic": true
+      "variadic": true,
+      "args": {
+       "0": { "printf_format": true }
+      }
      },
      {
-      "args": {
-       "1": {}
-      },
       "class_method": true,
       "selector": "expressionWithFormat:arguments:"
      },
@@ -3353,6 +3753,21 @@
    },
    "NSFileManager": {
     "methods": [
+     {
+      "selector": "unmountVolumeAtURL:options:completionHandler:",
+      "class_method": false,
+      "args": {
+       "2": {
+        "callable": {
+	 "arguments": {
+	  "0": { "typestr": "^v" },
+	  "1": { "typestr": "@" }
+	 },
+	 "retval": { "typestr": "v" }
+	}
+       }
+      }
+     },
      {
       "args": {
        "0": {
@@ -4037,6 +4452,40 @@
      }
     ]
    },
+   "NSPersonNameComponentsFormatter": {
+    "methods": [
+     {
+      "args": {
+       "0": {
+        "null_accepted": false,
+        "type_modifier": "o"
+       },
+       "2": {
+        "type_modifier": "o"
+       }
+      },
+      "class_method": false,
+      "retval": {
+       "type_override": "Z"
+      },
+      "selector": "getObjectValue:forString:errorDescription:"
+     },
+     {
+      "selector": "setPhonetic:",
+      "class_method": false,
+      "args": {
+       "0": { "type_override": "Z" }
+      }
+     },
+     {
+      "selector": "isPhonetic",
+      "class_method": false,
+      "retval": {
+       "type_override": "Z"
+      }
+     }
+    ]
+   },
    "NSFormatter": {
     "methods": [
      {
@@ -4139,6 +4588,25 @@
        "type_override": "Z"
       },
       "selector": "isEnabled"
+     }
+    ]
+   },
+   "NSHTTPCookieStorage": {
+    "methods": [
+     {
+      "selector": "getCookiesForTask:completionHandler:",
+      "class_method": false,
+      "args": {
+       "1": {
+        "callable": {
+	 "arguments": {
+	  "0": { "type": "^v" },
+	  "1": { "type": "@" }
+	 },
+	 "retval": { "type": "v" }
+	}
+       }
+      }
      }
     ]
    },
@@ -4335,7 +4803,21 @@
       },
       "class_method": false,
       "selector": "getIndexes:",
-      "suggestion": "Use -indexAtPosition instead"
+      "suggestion": "Use -getIndexes:range: or -indexAtPosition: instead"
+     },
+     {
+      "args": {
+       "0": {
+        "c_array_length_in_arg": 1,
+        "type_modifier": "o",
+        "type_override": [
+         "^I",
+         "^Q"
+        ]
+       }
+      },
+      "class_method": false,
+      "selector": "getIndexes:range:"
      }
     ]
    },
@@ -4823,13 +5305,16 @@
      {
       "args": {
        "0": {
-        "type_override": "^*"
+        "type_override": "^*",
+        "c_array_length_in_arg": 1,
+	"type_modifier": "o"
        },
        "1": {
         "type_override": [
          "^I",
          "^Q"
-        ]
+        ],
+	"type_modifier": "o"
        }
       },
       "class_method": false,
@@ -5212,6 +5697,40 @@
    },
    "NSMetadataQuery": {
     "methods": [
+     {
+      "selector": "enumerateResultsWithOptions:usingBlock:",
+      "class_method": false,
+      "args": {
+       "1": {
+        "callable": {
+	 "arguments": {
+	  "0": { "typestr": "^v" },
+	  "1": { "typestr": "@" },
+	  "2": { "typestr": [ "I", "Q" ] },
+	  "3": { "typestr": "o^Z" }
+	 },
+	 "retval": { "typestr": "v" }
+	}
+       }
+      }
+     },
+     {
+      "selector": "enumerateResultsUsingBlock:",
+      "class_method": false,
+      "args": {
+       "0": {
+        "callable": {
+	 "arguments": {
+	  "0": { "typestr": "^v" },
+	  "1": { "typestr": "@" },
+	  "2": { "typestr": [ "I", "Q" ] },
+	  "3": { "typestr": "o^Z" }
+	 },
+	 "retval": { "typestr": "v" }
+	}
+       }
+      }
+     },
      {
       "class_method": false,
       "retval": {
@@ -5822,6 +6341,14 @@
    "NSMutableString": {
     "methods": [
      {
+      "selector": "applyTransform:reverse:range:updatedRange:",
+      "class_method": false,
+      "args": {
+       "1": { "type_override": "Z" },
+       "3": { "type_modifier": "o" }
+      }
+     },
+     {
       "args": {
        "0": {
         "printf_format": true,
@@ -5892,6 +6419,24 @@
      }
     ]
    },
+   "NSNetServiceBrowser": {
+    "methods": [
+     {
+      "class_method": false,
+      "retval": {
+       "type_override": "Z"
+      },
+      "selector": "includesPeerToPeer"
+     },
+     {
+      "class_method": false,
+      "retval": {
+       "type_override": "Z"
+      },
+      "selector": "setIncludesPeerToPeer:"
+     }
+    ]
+   },
    "NSNetService": {
     "methods": [
      {
@@ -5917,6 +6462,20 @@
        "type_override": "Z"
       },
       "selector": "setTXTRecordData:"
+     },
+     {
+      "class_method": false,
+      "retval": {
+       "type_override": "Z"
+      },
+      "selector": "includesPeerToPeer"
+     },
+     {
+      "class_method": false,
+      "retval": {
+       "type_override": "Z"
+      },
+      "selector": "setIncludesPeerToPeer:"
      }
     ]
    },
@@ -6217,6 +6776,98 @@
    },
    "NSObject": {
     "methods": [
+     {
+      "selector": "URLSession:dataTask:willCacheResponse:completionHandler:",
+      "class_method": false,
+      "args": {
+       "3": {
+        "callable": {
+	 "arguments": {
+	  "0": { "typestr": "^v" },
+	  "1": { "typestr": "@" }
+	 },
+	 "retval": { "typestr": "v" }
+	}
+       }
+      }
+     },
+     {
+      "selector": "URLSession:dataTask:didReceiveResponse:completionHandler:",
+      "class_method": false,
+      "args": {
+       "3": {
+        "callable": {
+	 "arguments": {
+	  "0": { "typestr": "^v" },
+	  "1": { "typestr": [ "I", "Q" ] }
+	 },
+	 "retval": { "typestr": "v" }
+	}
+       }
+      }
+     },
+     {
+      "selector": "URLSession:task:needNewBodyStream:",
+      "class_method": false,
+      "args": {
+       "2": {
+        "callable": {
+	 "arguments": {
+	  "0": { "typestr": "^v" },
+	  "1": { "typestr": "@" }
+	 },
+	 "retval": { "typestr": "v" }
+	}
+       }
+      }
+     },
+     {
+      "selector": "URLSession:task:didReceiveChallenge:completionHandler:",
+      "class_method": false,
+      "args": {
+       "3": {
+        "callable": {
+	 "arguments": {
+	  "0": { "typestr": "^v" },
+	  "1": { "typestr": [ "I", "Q" ] },
+	  "2": { "typestr": "@" }
+	 },
+	 "retval": { "typestr": "v" }
+	}
+       }
+      }
+     },
+     {
+      "selector": "URLSession:task:willPerformHTTPRedirection:newRequest:completionHandler:",
+      "class_method": false,
+      "args": {
+       "4": {
+        "callable": {
+	 "arguments": {
+	  "0": { "typestr": "^v" },
+	  "1": { "typestr": "@" }
+	 },
+	 "retval": { "typestr": "v" }
+	}
+       }
+      }
+     },
+     {
+      "selector": "URLSession:didReceiveChallenge:completionHandler:",
+      "class_method": false,
+      "args": {
+       "2": {
+        "callable": {
+	 "arguments": {
+	  "0": { "typestr": "^v" },
+	  "1": { "typestr": [ "I", "Q" ] },
+	  "2": { "typestr": "@" }
+	 },
+	 "retval": { "typestr": "v" }
+	}
+       }
+      }
+     },
      {
       "args": {
        "0": { "type_override": "o" }
@@ -6999,7 +7650,7 @@
      {
       "args": {
        "2": {
-        "type_override": "I"
+        "type_override": ["I", "Q"]
        }
       },
       "class_method": false,
@@ -8328,6 +8979,13 @@
       "selector": "useStoredAccessor"
      },
      {
+      "class_method": true,
+      "retval": {
+       "type_override": "Z"
+      },
+      "selector": "supportsSecureCoding"
+     },
+     {
       "args": {
        "0": {
         "type_override": [
@@ -8921,7 +9579,7 @@
           }
          },
          "retval": {
-          "typestr": "l"
+          "typestr": [ "i", "q" ]
          }
         }
        }
@@ -8945,7 +9603,7 @@
           }
          },
          "retval": {
-          "typestr": "l"
+          "typestr": ["i", "q" ]
          }
         }
        }
@@ -9447,7 +10105,138 @@
     ]
    },
    "NSProcessInfo": {
-    "methods": []
+    "methods": [
+     {
+      "selector": "performActivityWithOptions:reason:usingBlock:",
+      "class_method": false,
+      "args": {
+       "2": {
+        "callable": {
+         "arguments": {
+          "0": {
+           "typestr": "^v"
+          }
+         },
+         "retval": {
+          "typestr": "v"
+         }
+        }
+       }
+      }
+     }
+    ]
+   },
+   "NSProgress": {
+    "methods": [
+     {
+      "selector": "pausingHandler",
+      "class_method": false,
+      "retval": {
+       "callable": {
+        "arguments": {
+	 "0": { "typestr": "^v" }
+	},
+	"retval": { "typestr": "v" }
+       }
+      }
+     },
+     {
+      "selector": "setPausingHandler:",
+      "class_method": false,
+      "args": {
+       "0": {
+        "callable": {
+         "arguments": {
+	  "0": { "typestr": "^v" }
+	 },
+	 "retval": { "typestr": "v" }
+	}
+       }
+      }
+     },
+     {
+      "selector": "cancellationHandler",
+      "class_method": false,
+      "retval": {
+       "callable": {
+        "arguments": {
+	 "0": { "typestr": "^v" }
+	},
+	"retval": { "typestr": "v" }
+       }
+      }
+     },
+     {
+      "selector": "setCancellationHandler:",
+      "class_method": false,
+      "args": {
+       "0": {
+        "callable": {
+         "arguments": {
+	  "0": { "typestr": "^v" }
+	 },
+	 "retval": { "typestr": "v" }
+	}
+       }
+      }
+     },
+     {
+      "selector": "resumingHandler",
+      "class_method": false,
+      "retval": {
+       "callable": {
+        "arguments": {
+	 "0": { "typestr": "^v" }
+	},
+	"retval": { "typestr": "v" }
+       }
+      }
+     },
+     {
+      "selector": "setResumingHandler:",
+      "class_method": false,
+      "args": {
+       "0": {
+        "callable": {
+         "arguments": {
+	  "0": { "typestr": "^v" }
+	 },
+ 	 "retval": { "typestr": "v" }
+	}
+       }
+      }
+     },
+     {
+      "selector": "addSubscriberForFileURL:withPublishingHandler:",
+      "class_method": false,
+      "args": {
+       "1": {
+        "type_override": "@?",
+        "callable": {
+         "arguments": {
+          "0": {
+           "typestr": "^v"
+          },
+          "1": {
+           "typestr": "@"
+          }
+         },
+         "retval": {
+          "typestr": "@?",
+	  "callable": {
+	   "arguments": {
+	    "0": { "typestr": "^v" }
+	   },
+	   "retval": {
+	    "typestr": "v"
+	   }
+	  }
+         }
+        }
+       }
+      }
+     }
+    ]
    },
    "NSPropertyListSerialization": {
     "methods": [
@@ -9772,6 +10561,19 @@
        "type_override": "Z"
       },
       "selector": "scanLongLong:"
+     },
+     {
+      "args": {
+       "0": {
+        "null_accepted": false,
+        "type_modifier": "o"
+       }
+      },
+      "class_method": false,
+      "retval": {
+       "type_override": "Z"
+      },
+      "selector": "scanUnsignedLongLong:"
      },
      {
       "args": {
@@ -10456,6 +11258,22 @@
    "NSStream": {
     "methods": [
      {
+      "selector": "getBoundStreamsWithBufferSize:inputStream:outputStream:",
+      "class_method": false,
+      "args": {
+       "1": { "type_modifier": "o" },
+       "2": { "type_modifier": "o" }
+      }
+     },
+     {
+      "selector": "getStreamsToHostWithName:port:inputStream:outputStream:",
+      "class_method": false,
+      "args": {
+       "2": { "type_modifier": "o" },
+       "3": { "type_modifier": "o" }
+      }
+     },
+     {
       "args": {
        "2": {
         "null_accepted": false,
@@ -10480,6 +11298,26 @@
    },
    "NSString": {
     "methods": [
+     {
+      "selector": "stringEncodingForData:encodingOptions:convertedString:usedLossyConversion:",
+      "class_method": true,
+      "args": {
+       "2": { "type_modifier": "o" },
+       "3": { "type_modifier": "o" }
+      }
+     },
+     {
+      "selector": "localizedStandardContainsString:",
+      "class_method": false,
+      "retval": {  "type_override": "Z" }
+     },
+     {
+      "selector": "stringByApplyingTransform:reverse:",
+      "class_method": false,
+      "args": {
+       "1": {  "type_override": "Z" }
+      }
+     },
      {
       "args": {
        "0": {
@@ -12002,6 +12840,62 @@
      {
       "args": {
        "0": {
+        "c_array_length_in_arg": 1,
+        "type_modifier": "o",
+        "type_override": "^t"
+       }
+      },
+      "class_method": false,
+      "retval": {
+       "type_override": "Z"
+      },
+      "selector": "getFileSystemRepresentation:maxLength:"
+     },
+     {
+      "selector": "hasDirectoryPath",
+      "class_method": false,
+      "retval": { "type_override": "Z" }
+     },
+     {
+      "selector": "URLByResolvingAliasFileAtURL:options:error:",
+      "class_method": false,
+      "args": {
+       "2": { "type_modifier": "o" }
+      }
+     },
+     {
+      "selector": "fileURLWithFileSystemRepresentation:isDirectory:relativeToURL:",
+      "class_method": true,
+      "args": {
+       "0": { "type_modifier": "n", "c_array_delimited_by_null": true },
+       "1": { "type_override": "Z" }
+      }
+     },
+     {
+      "selector": "initFileURLWithFileSystemRepresentation:isDirectory:relativeToURL:",
+      "class_method": false,
+      "args": {
+       "0": { "type_modifier": "n", "c_array_delimited_by_null": true },
+       "1": { "type_override": "Z" }
+      }
+     },
+     {
+      "selector": "promisedItemResourceValuesForKeys:error:",
+      "class_method": false,
+      "args": {
+       "1": { "type_modifier": "o" }
+      }
+     },
+     {
+      "selector": "checkPromisedItemIsReachableAndReturnError:",
+      "class_method": false,
+      "args": {
+       "0": { "type_modifier": "o" }
+      }
+     },
+     {
+      "args": {
+       "0": {
         "type_modifier": "o"
        },
        "2": {
@@ -12155,8 +13049,26 @@
         "type_override": "Z"
        }
       },
+      "class_method": true,
+      "selector": "fileURLWithPath:isDirectory:relativeToURL:"
+     },
+     {
+      "args": {
+       "1": {
+        "type_override": "Z"
+       }
+      },
       "class_method": false,
       "selector": "initFileURLWithPath:isDirectory:"
+     },
+     {
+      "args": {
+       "1": {
+        "type_override": "Z"
+       }
+      },
+      "class_method": false,
+      "selector": "initFileURLWithPath:isDirectory:relativeToURL:"
      },
      {
       "class_method": false,
@@ -12196,6 +13108,25 @@
        "type_override": "Z"
       },
       "selector": "setResourceData:"
+     }
+    ]
+   },
+   "NSURLCache": {
+    "methods": [
+     {
+      "selector": "getCachedResponseForDataTask:completionHandler:",
+      "class_method": false,
+      "args": {
+       "1": {
+        "callable": {
+	 "arguments": {
+	  "0": { "typestr": "^v" },
+	  "1": { "typestr": "@" }
+	 },
+	 "retval": { "typestr": "v" }
+        }
+       }
+      }
      }
     ]
    },
@@ -12252,6 +13183,40 @@
       },
       "class_method": true,
       "selector": "sendAsynchronousRequest:queue:completionHandler:"
+     }
+    ]
+   },
+   "NSURLCredentialStorage": {
+    "methods": [
+     {
+      "selector": "getCredentialsForProtectionSpace:task:completionHandler:",
+      "class_method": false,
+      "args": {
+       "2": {
+        "callable": {
+	 "arguments": {
+	  "0": { "typestr": "^v" },
+	  "1": { "typestr": "@" }
+	 },
+	 "retval": { "typestr": "v" }
+	}
+       }
+      }
+     },
+     {
+      "selector": "getDefaultCredentialForProtectionSpace:task:completionHandler:",
+      "class_method": false,
+      "args": {
+       "2": {
+        "callable": {
+	 "arguments": {
+	  "0": { "typestr": "^v" },
+	  "1": { "typestr": "@" }
+	 },
+	 "retval": { "typestr": "v" }
+	}
+       }
+      }
      }
     ]
    },
@@ -12522,6 +13487,21 @@
    },
    "NSUndoManager": {
     "methods": [
+     {
+      "selector": "registerUndoWithTarget:handler:",
+      "class_method": false,
+      "args": {
+       "1": {
+        "callable": {
+	 "arguments": {
+	  "0": { "typestr": "^v" },
+	  "1": { "typestr": "@" }
+	 },
+	 "retval": { "typestr": "v" }
+	}
+       }
+      }
+     },
      {
       "args": {
        "1": {
@@ -13212,23 +14192,48 @@
    }
   },
   "externs": {
+   "NSUserActivityContentUserActionPlay": { "value": "@" },
+   "NSUserActivityContentUserActionRecord": { "value": "@" },
+   "NSUserActivityContentUserActionCall": { "value": "@" },
+   "NSUserActivityContentUserActionNavigate": { "value": "@" },
+   "NSUserActivityContentUserActionMessage": { "value": "@" },
+   "NSUserActivityContentUserActionFacetime": { "value": "@" },
+   "NSUserActivityContentUserActionSchedule": { "value": "@" },
+   "NSURLIsApplicationKey": { "typestr": "@" },
+   "NSURLApplicationIsScriptableKey": { "typestr": "@" },
+   "NSStringTransformLatinToKatakana": { "typestr": "@" },
+   "NSStringTransformLatinToHiragana": { "typestr": "@" },
+   "NSStringTransformLatinToHangul": { "typestr": "@" },
+   "NSStringTransformLatinToArabic": { "typestr": "@" },
+   "NSStringTransformLatinToHebrew": { "typestr": "@" },
+   "NSStringTransformLatinToThai": { "typestr": "@" },
+   "NSStringTransformLatinToCyrillic": { "typestr": "@" },
+   "NSStringTransformLatinToGreek": { "typestr": "@" },
+   "NSStringTransformToLatin": { "typestr": "@" },
+   "NSStringTransformMandarinToLatin": { "typestr": "@" },
+   "NSStringTransformHiraganaToKatakana": { "typestr": "@" },
+   "NSStringTransformFullwidthToHalfwidth": { "typestr": "@" },
+   "NSStringTransformToXMLHex": { "typestr": "@" },
+   "NSStringTransformToUnicodeName": { "typestr": "@" },
+   "NSStringTransformStripCombiningMarks": { "typestr": "@" },
+   "NSStringTransformStripDiacritics": { "typestr": "@" },
+   "NSProcessInfoThermalStateDidChangeNotification": { "typestr": "@" },
+   "NSPersonNameComponentKey": { "typestr": "@" },
+   "NSPersonNameComponentGivenName": { "typestr": "@" },
+   "NSPersonNameComponentFamilyName": { "typestr": "@" },
+   "NSPersonNameComponentMiddleName": { "typestr": "@" },
+   "NSPersonNameComponentPrefix": { "typestr": "@" },
+   "NSPersonNameComponentSuffix": { "typestr": "@" },
+   "NSPersonNameComponentNickname": { "typestr": "@" },
+   "NSPersonNameComponentDelimiter": { "typestr": "@" },
+   "NSFileManagerUnmountDissentingProcessIdentifierErrorKey": { "typestr": "@" },
+   "NSDebugEnabled": { "typestr": "Z" },
+   "NSZombieEnabled": { "typestr": "Z" },
+   "NSDeallocateZombies": { "typestr": "Z" },
+   "NSHangOnUncaughtException": { "typestr": "Z" },
+   "NSKeepAllocationStatistics": { "typestr": "Z" },
    "NSMetadataQueryLocalDocumentsScope": {
      "typestr": "@"
-   },
-   "NSDebugEnabled": {
-     "ignore": true
-   },
-   "NSZombieEnabled": {
-     "ignore": true
-   },
-   "NSDeallocateZombies": {
-     "ignore": true
-   },
-   "NSHangOnUncaughtException": {
-     "ignore": true
-   },
-   "NSKeepAllocationStatistics": {
-     "ignore": true
    },
    "NSIntHashCallBacks": {
     "ignore": true
@@ -13652,9 +14657,6 @@
      "0": {}
     }
    },
-   "NSFrameAddress": {
-    "ignore": true
-   },
    "NSGetSizeAndAlignment": {
     "args": {
      "0": { "c_array_delimited_by_null": true, "type_modifier": "n"},
@@ -13664,7 +14666,16 @@
     "retval": { "c_array_delimited_by_null": true }
    },
    "NSGetUncaughtExceptionHandler": {
-    "retval": {}
+    "retval": {
+     "callable": {
+      "arguments": {
+       "0": { "type": "@" }
+      },
+      "retval": {
+       "type": "v"
+      }
+     }
+    }
    },
    "NSHashGet": {
     "args": {
@@ -13760,15 +14771,19 @@
      "0": {}
     }
    },
-   "NSReturnAddress": {
-    "ignore": true
-   },
-   "NSCountFrames": {
-    "ignore": true
-   },
    "NSSetUncaughtExceptionHandler": {
     "args": {
-     "0": {}
+     "0": {
+      "callable": {
+       "arguments": {
+        "0": { "typestr": "@" }
+       },
+       "retval": {
+        "typestr": "v"
+       }
+      },
+      "callable_retained": true
+     }
     }
    },
    "NSSetZoneName": {
@@ -13854,6 +14869,40 @@
        "type_override": "#"
       },
       "selector": "classForPortCoder"
+     }
+    ]
+   },
+   "NSError": {
+    "methods": [
+     {
+      "selector": "setUserInfoValueProviderForDomain:provider:",
+      "class_method": true,
+      "args": {
+       "1": {
+        "callable": {
+	 "arguments": {
+	   "0": { "typestr": "^v" },
+	   "1": { "typestr": "@" },
+	   "1": { "typestr": "@" }
+	 },
+	 "retval": { "typestr": "@" }
+	}
+       }
+      }
+     },
+     {
+      "selector": "userInfoValueProviderForDomain:",
+      "class_method": false,
+      "retval": {
+       "callable": {
+	"arguments": {
+	  "0": { "typestr": "^v" },
+	  "1": { "typestr": "@" },
+	  "1": { "typestr": "@" }
+	},
+	"retval": { "typestr": "@" }
+       }
+      }
      }
     ]
    },

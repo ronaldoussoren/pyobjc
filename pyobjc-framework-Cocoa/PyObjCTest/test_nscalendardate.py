@@ -8,13 +8,13 @@ class TestNSCalendarDate (TestCase):
         obj2 = NSCalendarDate.dateWithYear_month_day_hour_minute_second_timeZone_(
                 2007, 9, 8, 19, 12, 10, NSTimeZone.systemTimeZone())
 
-        m = obj.years_months_days_hours_minutes_seconds_sinceDate_.__metadata__()
-        self.assertTrue(m['arguments'][2]['type'].startswith(b'o^'))
-        self.assertTrue(m['arguments'][3]['type'].startswith(b'o^'))
-        self.assertTrue(m['arguments'][4]['type'].startswith(b'o^'))
-        self.assertTrue(m['arguments'][5]['type'].startswith(b'o^'))
-        self.assertTrue(m['arguments'][6]['type'].startswith(b'o^'))
-        self.assertTrue(m['arguments'][7]['type'].startswith(b'o^'))
+        m = obj.years_months_days_hours_minutes_seconds_sinceDate_
+        self.assertArgIsOut(m, 0)
+        self.assertArgIsOut(m, 1)
+        self.assertArgIsOut(m, 2)
+        self.assertArgIsOut(m, 3)
+        self.assertArgIsOut(m, 4)
+        self.assertArgIsOut(m, 5)
 
         years, months, days, hours, minutes, seconds = obj.years_months_days_hours_minutes_seconds_sinceDate_(None, None, None, None, None, None, obj2)
         self.assertEqual(years, 1)

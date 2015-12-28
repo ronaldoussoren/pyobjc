@@ -46,9 +46,14 @@ class TestNSKeyedArchiver (TestCase):
         self.assertResultHasType(NSCoder.decodeRectForKey_, NSRect.__typestr__)
 
     def testMethods10_8(self):
+        self.assertResultIsBOOL(NSKeyedArchiver.requiresSecureCoding)
         self.assertArgIsBOOL(NSKeyedArchiver.setRequiresSecureCoding_, 0)
+        self.assertResultIsBOOL(NSKeyedUnarchiver.requiresSecureCoding)
         self.assertArgIsBOOL(NSKeyedUnarchiver.setRequiresSecureCoding_, 0)
 
+    def testProtocols(self):
+        objc.protocolNamed('NSKeyedArchiverDelegate')
+        objc.protocolNamed('NSKeyedUnarchiverDelegate')
 
 if __name__ == "__main__":
     main()
