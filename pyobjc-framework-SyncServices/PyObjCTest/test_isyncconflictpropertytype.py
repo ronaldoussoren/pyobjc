@@ -14,7 +14,7 @@ class TestISyncConflictPropertyType (TestCase):
         self.assertResultIsBOOL(TestISyncConflictPropertyTypeHelper.isToMany)
         self.assertResultIsBOOL(TestISyncConflictPropertyTypeHelper.isRequired)
 
-    @min_os_level('10.6')
+    @min_os_level('10.7')
     def testProtocolObjects(self):
         objc.protocolNamed('ISyncConflictPropertyType')
 

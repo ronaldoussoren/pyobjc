@@ -16,7 +16,6 @@ class TestICCameraDevice (TestCase):
         self.assertIsInstance(ICCameraDeviceCanSyncClock, unicode)
         self.assertIsInstance(ICCameraDeviceCanReceiveFile, unicode)
         self.assertIsInstance(ICCameraDeviceCanAcceptPTPCommands, unicode)
-        self.assertIsInstance(ICCameraDeviceSupportsFastPTP, unicode)
         self.assertIsInstance(ICDownloadsDirectoryURL, unicode)
         self.assertIsInstance(ICSaveAsFilename, unicode)
         self.assertIsInstance(ICSavedFilename, unicode)
@@ -25,8 +24,15 @@ class TestICCameraDevice (TestCase):
         self.assertIsInstance(ICDeleteAfterSuccessfulDownload, unicode)
         self.assertIsInstance(ICDownloadSidecarFiles, unicode)
 
+    @min_os_level('10.11')
+    def testConstants10_11(self):
+        self.assertIsInstance(ICCameraDeviceSupportsFastPTP, unicode)
+
     def testProtocolObjects(self):
         objc.protocolNamed('ICCameraDeviceDelegate')
+
+    @min_sdk_level('10.7')
+    def testProtocolObjects10_7(self):
         objc.protocolNamed('ICCameraDeviceDownloadDelegate')
 
     def testProtocolMethods(self):

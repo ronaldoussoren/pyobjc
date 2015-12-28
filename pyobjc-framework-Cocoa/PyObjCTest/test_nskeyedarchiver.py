@@ -52,7 +52,7 @@ class TestNSKeyedArchiver (TestCase):
         self.assertResultIsBOOL(NSKeyedUnarchiver.requiresSecureCoding)
         self.assertArgIsBOOL(NSKeyedUnarchiver.setRequiresSecureCoding_, 0)
 
-    @min_sdk_level('10.6')
+    @min_sdk_level('10.7')
     def testProtocols(self):
         objc.protocolNamed('NSKeyedArchiverDelegate')
         objc.protocolNamed('NSKeyedUnarchiverDelegate')

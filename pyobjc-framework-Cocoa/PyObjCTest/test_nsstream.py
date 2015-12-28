@@ -114,7 +114,7 @@ class TestNSStreamUsage(TestCase):
         self.assertArgIsOut(NSStream.getBoundStreamsWithBufferSize_inputStream_outputStream_, 2)
 
 
-    @min_sdk_level('10.6')
+    @min_sdk_level('10.7')
     def testProtocols(self):
         objc.protocolNamed('NSStreamDelegate')
 

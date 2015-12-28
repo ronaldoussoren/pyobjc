@@ -41,7 +41,7 @@ class TestNSSplitView (TestCase):
         self.assertResultIsBOOL(NSSplitView.arrangesAllSubviews)
         self.assertArgIsBOOL(NSSplitView.setArrangesAllSubviews_, 0)
 
-    @min_sdk_level('10.6')
+    @min_sdk_level('10.7')
     def testProtocolObjects(self):
         objc.protocolNamed('NSSplitViewDelegate')
 

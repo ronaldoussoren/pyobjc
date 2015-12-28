@@ -4,7 +4,7 @@ import CoreWLAN
 
 class TestCoreWLANConstants (TestCase):
     @min_os_level('10.7')
-    def testMethods10_7(self):
+    def testConstants10_7(self):
         self.assertIsInstance(CoreWLAN.CWErrorDomain, unicode)
         self.assertIsInstance(CoreWLAN.CWScanCacheDidUpdateNotification, unicode)
         self.assertIsInstance(CoreWLAN.CWLinkQualityDidChangeNotification, unicode)
@@ -13,13 +13,7 @@ class TestCoreWLANConstants (TestCase):
         self.assertIsInstance(CoreWLAN.CWServiceDidChangeNotification, unicode)
 
     @min_os_level('10.6')
-    def testMethods10_6(self):
-        self.assertIsInstance(CoreWLAN.CWPowerDidChangeNotification, unicode)
-        self.assertIsInstance(CoreWLAN.CWSSIDDidChangeNotification, unicode)
-        self.assertIsInstance(CoreWLAN.CWBSSIDDidChangeNotification, unicode)
-        self.assertIsInstance(CoreWLAN.CWLinkDidChangeNotification, unicode)
-        self.assertIsInstance(CoreWLAN.CWModeDidChangeNotification, unicode)
-        self.assertIsInstance(CoreWLAN.CWCountryCodeDidChangeNotification, unicode)
+    def testConstants10_6(self):
         self.assertIsInstance(CoreWLAN.kCWErrorDomain, unicode)
         self.assertIsInstance(CoreWLAN.kCWPowerDidChangeNotification, unicode)
         self.assertIsInstance(CoreWLAN.kCWSSIDDidChangeNotification, unicode)
@@ -38,6 +32,15 @@ class TestCoreWLANConstants (TestCase):
         self.assertIsInstance(CoreWLAN.kCWScanKeyScanType, unicode)
         self.assertIsInstance(CoreWLAN.kCWScanKeyDwellTime, unicode)
         self.assertIsInstance(CoreWLAN.kCWScanKeyRestTime, unicode)
+
+    @min_os_level('10.7')
+    def testConstants10_7(self):
+        self.assertIsInstance(CoreWLAN.CWPowerDidChangeNotification, unicode)
+        self.assertIsInstance(CoreWLAN.CWSSIDDidChangeNotification, unicode)
+        self.assertIsInstance(CoreWLAN.CWBSSIDDidChangeNotification, unicode)
+        self.assertIsInstance(CoreWLAN.CWLinkDidChangeNotification, unicode)
+        self.assertIsInstance(CoreWLAN.CWModeDidChangeNotification, unicode)
+        self.assertIsInstance(CoreWLAN.CWCountryCodeDidChangeNotification, unicode)
 
 if __name__ == "__main__":
     main()

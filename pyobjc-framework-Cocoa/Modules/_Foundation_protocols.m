@@ -10,7 +10,7 @@ static void __attribute__((__used__)) use_protocols(void)
 #if PyObjC_BUILD_RELEASE >= 1005
     p = PyObjC_IdToPython(@protocol(NSObject)); Py_XDECREF(p);
 #endif /* PyObjC_BUILD_RELEASE >= 1005 */
-#if PyObjC_BUILD_RELEASE >= 1006
+#if PyObjC_BUILD_RELEASE >= 1007
     p = PyObjC_IdToPython(@protocol(NSProgressReporting)); Py_XDECREF(p);
     p = PyObjC_IdToPython(@protocol(NSURLSessionStreamDelegate)); Py_XDECREF(p);
 #endif /* PyObjC_BUILD_RELEASE >= 1006 */

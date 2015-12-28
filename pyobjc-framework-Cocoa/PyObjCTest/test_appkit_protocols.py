@@ -22,6 +22,9 @@ class TestProtocolsExisting (TestCase):
         objc.protocolNamed('NSTokenFieldCellDelegate')
         objc.protocolNamed('NSTokenFieldDelegate')
         objc.protocolNamed('NSUserInterfaceItemSearching')
+        objc.protocolNamed('NSComboBoxCellDataSource')
+        objc.protocolNamed('NSSplitViewDelegate')
+        objc.protocolNamed('NSTabViewDelegate')
 
     @min_os_level('10.6')
     def testProtocols10_6(self):
@@ -31,7 +34,6 @@ class TestProtocolsExisting (TestCase):
         objc.protocolNamed('NSChangeSpelling')
         objc.protocolNamed('NSColorPickingCustom')
         objc.protocolNamed('NSColorPickingDefault')
-        objc.protocolNamed('NSComboBoxCellDataSource')
         objc.protocolNamed('NSComboBoxDataSource')
         objc.protocolNamed('NSComboBoxDelegate')
         objc.protocolNamed('NSControlTextEditingDelegate')
@@ -52,8 +54,6 @@ class TestProtocolsExisting (TestCase):
         objc.protocolNamed('NSPathControlDelegate')
         objc.protocolNamed('NSPrintPanelAccessorizing')
         objc.protocolNamed('NSRuleEditorDelegate')
-        objc.protocolNamed('NSSplitViewDelegate')
-        objc.protocolNamed('NSTabViewDelegate')
         objc.protocolNamed('NSTableViewDataSource')
         objc.protocolNamed('NSTableViewDelegate')
         objc.protocolNamed('NSTextAttachmentCell')

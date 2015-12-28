@@ -50,6 +50,9 @@ class TestIKSlideshow (TestCase):
         self.assertIsInstance(IKSlideshowPDFDisplaysAsBook, unicode)
         self.assertIsInstance(IK_ApertureBundleIdentifier, unicode)
         self.assertIsInstance(IK_MailBundleIdentifier, unicode)
+
+    @min_os_level('10.7')
+    def testConstants10_7(self):
         self.assertIsInstance(IK_PhotosBundleIdentifier, unicode)
 
 

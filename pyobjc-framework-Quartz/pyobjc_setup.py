@@ -125,12 +125,8 @@ class oc_test (test.test):
             meta = self.distribution.metadata
             name = meta.get_name()
             test_pkg = name + "_tests"
-            if self.verbosity:
-                print("Loading tests")
             suite = loader_class().loadTestsFromName(self.distribution.test_suite)
 
-            if self.verbosity:
-                print("Starting testrunner")
             runner = unittest.TextTestRunner(verbosity=self.verbosity)
             result = runner.run(suite)
 
@@ -275,6 +271,12 @@ def _fixup_compiler():
         # CC is in the environment, always use explicit
         # overrides.
         return
+
+    try:
+        import _osx_support
+        _osx_support.customize_compiler(get_config_vars())  
+    except (ImportError, NameError):
+        pass
 
     cc = oldcc = get_config_var('CC').split()[0]
     cc = _find_executable(cc)

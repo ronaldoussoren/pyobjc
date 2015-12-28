@@ -16,6 +16,8 @@ class TestCGPDFContentStream (TestCase):
             pdf_path = "/Library/Documentation/WebObjects/Acknowlegdements.pdf"
         elif os.path.exists("/Library/Documentation/License.lpdf/Contents/Resources/English.lproj/License.pdf"):
             pdf_path = "/Library/Documentation/License.lpdf/Contents/Resources/English.lproj/License.pdf"
+        elif os.path.exists("/Library/Documentation//MacOSXServer/Server Acknowledgments.pdf"):
+            pdf_path = "/Library/Documentation//MacOSXServer/Server Acknowledgments.pdf"
         else:
             self.fail("No test PDF file found")
 

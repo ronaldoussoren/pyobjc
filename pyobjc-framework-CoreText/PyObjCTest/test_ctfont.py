@@ -414,7 +414,7 @@ class TestCTFont (TestCase):
         self.assertIsInstance(v, CTFontRef)
 
 
-    #@expectedFailure
+    @expectedFailureIf(os_release() == '10.6')
     @min_os_level('10.6')
     def testFunctions10_6_crash(self):
         descr = CTFontDescriptorCreateWithNameAndSize(
@@ -424,7 +424,8 @@ class TestCTFont (TestCase):
         self.assertResultIsCFRetained(CTFontCreateWithFontDescriptorAndOptions)
 
         # FIXME: this crashes the interpreter, without a clear reason
-        #self.fail("hard crash...")
+        if os_release() == '10.6':
+            self.fail("hard crash in test for CTFontCreateWithFontDescriptorAndOptions")
         v = CTFontCreateWithFontDescriptorAndOptions(descr, 14.0, None, 0)
         self.assertIsInstance(v, CTFontRef)
 

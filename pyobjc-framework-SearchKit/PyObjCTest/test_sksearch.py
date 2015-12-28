@@ -63,7 +63,7 @@ class TestSKSearch (TestCase):
         res = SKSearchResultsCreateWithDocuments(
                 grp, [doc], 10, ctx, callback)
         self.assertIsInstance(res, SKSearchResultsRef)
-        self.assertEqual(len(l), 2)
+        self.assertGreaterEqual(len(l), 2)
         self.assertEqual(l[0][0], index)
         self.assertIsInstance(l[0][1], SKDocumentRef)
         self.assertEqual(l[0][2], ctx)

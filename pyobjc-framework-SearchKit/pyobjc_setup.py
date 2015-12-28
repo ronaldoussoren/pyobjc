@@ -272,6 +272,12 @@ def _fixup_compiler():
         # overrides.
         return
 
+    try:
+        import _osx_support
+        _osx_support.customize_compiler(get_config_vars())  
+    except (ImportError, NameError):
+        pass
+
     cc = oldcc = get_config_var('CC').split()[0]
     cc = _find_executable(cc)
     if cc is not None and os.path.basename(cc).startswith('gcc'):

@@ -101,7 +101,7 @@ class TestNSAccessibilityProtocolsHelper (NSObject):
 
 class TestNSAccessibilityProtocols (TestCase):    
 
-    @min_sdk_level('10.6')
+    @min_sdk_level('10.7')
     def testProtocolObjects(self):
         self.assertIsInstance(objc.protocolNamed('NSAccessibilityGroup'), objc.formal_protocol)
         self.assertIsInstance(objc.protocolNamed('NSAccessibilityElement'), objc.formal_protocol)

@@ -54,7 +54,7 @@ class TestNSLayoutManager (TestCase):
         self.assertEqual(NSControlCharacterActionParagraphBreak, 1 << 4)
         self.assertEqual(NSControlCharacterActionContainerBreak, 1 << 5)
 
-    @min_sdk_level('10.6')
+    @min_sdk_level('10.7')
     def testProtocolObjects(self):
         objc.protocolNamed('NSTextLayoutOrientationProvider')
         objc.protocolNamed('NSLayoutManagerDelegate')
@@ -227,7 +227,7 @@ class TestNSLayoutManager (TestCase):
         self.assertArgIsBOOL(NSLayoutManager.rulerAccessoryViewForTextView_paragraphStyle_ruler_enabled_, 3)
         self.assertResultIsBOOL(NSLayoutManager.layoutManagerOwnsFirstResponderInWindow_)
 
-    @min_os_level('10.6')
+    @min_os_level('10.7')
     def testMethods10_5_not_available(self):
         self.assertArgIsOut(NSLayoutManager.getGlyphsInRange_glyphs_properties_characterIndexes_bidiLevels_, 1)
         self.assertArgIsOut(NSLayoutManager.getGlyphsInRange_glyphs_properties_characterIndexes_bidiLevels_, 2)

@@ -54,7 +54,7 @@ class TestNSNetservices (TestCase):
         self.assertResultIsBOOL(NSNetServiceBrowser.includesPeerToPeer)
         self.assertArgIsBOOL(NSNetServiceBrowser.setIncludesPeerToPeer_, 0)
 
-    @min_sdk_level('10.6')
+    @min_sdk_level('10.7')
     def testProtocols(self):
         objc.protocolNamed('NSNetServiceDelegate')
         objc.protocolNamed('NSNetServiceBrowserDelegate')

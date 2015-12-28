@@ -50,7 +50,6 @@ class TestCFOpenDirectoryConstants (TestCase):
         self.assertIsInstance(CFOpenDirectory.kODRecordTypePrinters, unicode)
         self.assertIsInstance(CFOpenDirectory.kODRecordTypeProtocols, unicode)
         self.assertIsInstance(CFOpenDirectory.kODRecordTypeQTSServer, unicode)
-        self.assertIsInstance(CFOpenDirectory.kODRecordTypeQueryInformation, unicode)
         self.assertIsInstance(CFOpenDirectory.kODRecordTypeRecordTypes, unicode)
         self.assertIsInstance(CFOpenDirectory.kODRecordTypeResources, unicode)
         self.assertIsInstance(CFOpenDirectory.kODRecordTypeRPC, unicode)
@@ -63,9 +62,6 @@ class TestCFOpenDirectoryConstants (TestCase):
         self.assertIsInstance(CFOpenDirectory.kODAttributeTypeAllAttributes, unicode)
         self.assertIsInstance(CFOpenDirectory.kODAttributeTypeStandardOnly, unicode)
         self.assertIsInstance(CFOpenDirectory.kODAttributeTypeNativeOnly, unicode)
-        self.assertIsInstance(CFOpenDirectory.kODAttributeTypeMetaAmbiguousName, unicode)
-        self.assertIsInstance(CFOpenDirectory.kODAttributeTypeMetaAugmentedAttributes, unicode)
-        self.assertIsInstance(CFOpenDirectory.kODAttributeTypeMetaRecordName, unicode)
         self.assertIsInstance(CFOpenDirectory.kODAttributeTypeAdminLimits, unicode)
         self.assertIsInstance(CFOpenDirectory.kODAttributeTypeAltSecurityIdentities, unicode)
         self.assertIsInstance(CFOpenDirectory.kODAttributeTypeAuthenticationHint, unicode)
@@ -94,7 +90,6 @@ class TestCFOpenDirectoryConstants (TestCase):
         self.assertIsInstance(CFOpenDirectory.kODAttributeTypeHomeLocOwner, unicode)
         self.assertIsInstance(CFOpenDirectory.kODAttributeTypeInternetAlias, unicode)
         self.assertIsInstance(CFOpenDirectory.kODAttributeTypeKDCConfigData, unicode)
-        self.assertIsInstance(CFOpenDirectory.kODAttributeTypeKerberosServices, unicode)
         self.assertIsInstance(CFOpenDirectory.kODAttributeTypeLastName, unicode)
         self.assertIsInstance(CFOpenDirectory.kODAttributeTypeLDAPSearchBaseSuffix, unicode)
         self.assertIsInstance(CFOpenDirectory.kODAttributeTypeLocation, unicode)
@@ -154,7 +149,6 @@ class TestCFOpenDirectoryConstants (TestCase):
         self.assertIsInstance(CFOpenDirectory.kODAttributeTypeSetupLocation, unicode)
         self.assertIsInstance(CFOpenDirectory.kODAttributeTypeSetupOccupation, unicode)
         self.assertIsInstance(CFOpenDirectory.kODAttributeTypeTimeToLive, unicode)
-        self.assertIsInstance(CFOpenDirectory.kODAttributeTypeTrustInformation, unicode)
         self.assertIsInstance(CFOpenDirectory.kODAttributeTypeUniqueID, unicode)
         self.assertIsInstance(CFOpenDirectory.kODAttributeTypeUserCertificate, unicode)
         self.assertIsInstance(CFOpenDirectory.kODAttributeTypeUserPKCS12Data, unicode)
@@ -406,6 +400,12 @@ class TestCFOpenDirectoryConstants (TestCase):
 
     @min_os_level('10.7')
     def testConstants10_7(self):
+        self.assertIsInstance(CFOpenDirectory.kODAttributeTypeMetaAmbiguousName, unicode)
+        self.assertIsInstance(CFOpenDirectory.kODAttributeTypeMetaAugmentedAttributes, unicode)
+        self.assertIsInstance(CFOpenDirectory.kODAttributeTypeMetaRecordName, unicode)
+        self.assertIsInstance(CFOpenDirectory.kODAttributeTypeKerberosServices, unicode)
+        self.assertIsInstance(CFOpenDirectory.kODAttributeTypeTrustInformation, unicode)
+
         self.assertIsInstance(CFOpenDirectory.kODAttributeTypeNodeOptions, unicode)
         self.assertIsInstance(CFOpenDirectory.kODAttributeTypeAdvertisedServices, unicode)
         self.assertIsInstance(CFOpenDirectory.kODAttributeTypeLocaleRelay, unicode)
@@ -422,6 +422,7 @@ class TestCFOpenDirectoryConstants (TestCase):
     @min_os_level('10.8')
     def testConstants10_8(self):
         self.assertIsInstance(CFOpenDirectory.kODNodeOptionsQuerySkippedSubnode, unicode)
+        self.assertIsInstance(CFOpenDirectory.kODRecordTypeQueryInformation, unicode)
 
     @min_os_level('10.11')
     def testConstants10_9_missing(self):

@@ -13,6 +13,8 @@ class TestCAOpenGLLayer (TestCase):
 
         self.assertArgIsIn(CAOpenGLLayer.drawInCGLContext_pixelFormat_forLayerTime_displayTime_, 3)
 
+    @min_os_level('10.11')
+    def testMethods(self):
         self.assertResultIsBOOL(CAOpenGLLayer.wantsExtendedDynamicRangeContent)
         self.assertArgIsBOOL(CAOpenGLLayer.setWantsExtendedDynamicRangeContent_, 0)
 

@@ -35,8 +35,9 @@ class TestCTTypesetter (TestCase):
         v = CTTypesetterSuggestClusterBreak(ref, 0, 100.0)
         self.assertIsInstance(v, (int, long))
 
-    @min_os_level('10.6')
+    @min_os_level('10.7')
     def testFunctions10_6(self):
+	# FIXME: For some reason these aren't avaible on OSX 10.6...
         self.assertResultIsCFRetained(CTTypesetterCreateLineWithOffset)
         CTTypesetterSuggestLineBreakWithOffset
         CTTypesetterSuggestLineBreak

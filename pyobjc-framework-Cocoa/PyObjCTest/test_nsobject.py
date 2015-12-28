@@ -138,8 +138,11 @@ class TestNSObjectInteraction(TestCase):
 
     @min_sdk_level('10.6')
     def testProtocols10_6(self):
-        objc.protocolNamed('NSSecureCoding')
         objc.protocolNamed('NSDiscardableContent')
+
+    @min_sdk_level('10.7')
+    def testProtocols10_7(self):
+        objc.protocolNamed('NSSecureCoding')
 
 
 if __name__ == '__main__':

@@ -40,7 +40,7 @@ class TestNSSharingService (TestCase):
         self.assertArgIsBlock(AppKit.NSSharingService.initWithTitle_image_alternateImage_handler_, 3, b'v')
         self.assertResultIsBOOL(AppKit.NSSharingService.canPerformWithItems_)
 
-    @min_sdk_level('10.6')
+    @min_sdk_level('10.7')
     def testProtocolObjects(self):
         objc.protocolNamed('NSSharingServiceDelegate')
         objc.protocolNamed('NSSharingServicePickerDelegate')

@@ -41,8 +41,8 @@ class TestDOMNode (TestCase):
     def testMethods10_5(self):
         self.assertResultIsBOOL(DOMNode.isDefaultNamespace_)
 
-    @min_os_level('10.6')
-    def testMethods10_6(self):
+    @min_os_level('10.7')
+    def testMethods10_7(self):
         self.assertResultIsBOOL(DOMNode.contains_)
 
 if __name__ == "__main__":

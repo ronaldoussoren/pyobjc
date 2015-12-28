@@ -184,7 +184,7 @@ class TestCGDirectDisplay (TestCase):
         self.assertIsInstance(err, (int, long))
         self.assertIsInstance(count, (int, long))
         self.assertEqual(err, 0)
-        self.failIfEqual(count, 0)
+        self.assertNotEqual(count, 0)
 
 
         err = CGSetDisplayTransferByTable(CGMainDisplayID(), count,
@@ -206,7 +206,7 @@ class TestCGDirectDisplay (TestCase):
 
         v = CGDisplayIsCaptured(CGMainDisplayID())
         self.assertIsInstance(v, int)
-        self.failIf(v)
+        self.assertFalse(v)
 
         err = CGDisplayCapture(CGMainDisplayID())
         self.assertEqual(err, 0)
@@ -255,7 +255,7 @@ class TestCGDirectDisplay (TestCase):
         v = CGDisplayAddressForPosition(CGMainDisplayID(), 100, 100)
         if v is not objc.NULL:
             self.assertIsInstance(v, objc.varlist)
-            self.assertIsInstance(v[0], str)
+            self.assertIsInstance(v[0], bytes)
 
         err = CGDisplayHideCursor(CGMainDisplayID())
         self.assertEqual(err, 0)
@@ -336,11 +336,12 @@ class TestCGDirectDisplay (TestCase):
         CGDisplayModeRelease(mode)
 
         self.assertResultIsCFRetained(CGDisplayCreateImage)
-        v = CGDisplayCreateImage(mainID)
-        self.assertIsInstance(v, CGImageRef)
+        # FIXME: Crashes on an OSX 10.6  test VM
+        #v = CGDisplayCreateImage(mainID)
+        #self.assertIsInstance(v, CGImageRef)
         self.assertResultIsCFRetained(CGDisplayCreateImageForRect)
-        v = CGDisplayCreateImageForRect(mainID, ((0, 0), (100, 100)))
-        self.assertIsInstance(v, CGImageRef)
+        #v = CGDisplayCreateImageForRect(mainID, ((0, 0), (100, 100)))
+        #self.assertIsInstance(v, CGImageRef)
 
 
 

@@ -35,9 +35,12 @@ class TestICDevice (TestCase):
         self.assertIsInstance(ICButtonTypePrint, unicode)
         self.assertIsInstance(ICButtonTypeTransfer, unicode)
         self.assertIsInstance(ICStatusNotificationKey, unicode)
-        self.assertIsInstance(ICStatusCodeKey, unicode)
         self.assertIsInstance(ICLocalizedStatusNotificationKey, unicode)
         self.assertIsInstance(ICDeviceCanEjectOrDisconnect, unicode)
+
+    @min_os_level('10.8')
+    def testConstants10_8(self):
+        self.assertIsInstance(ICStatusCodeKey, unicode)
 
     def testProtocolObjects(self):
         objc.protocolNamed('ICDeviceDelegate')

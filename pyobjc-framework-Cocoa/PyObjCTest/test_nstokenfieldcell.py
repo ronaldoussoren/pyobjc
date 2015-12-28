@@ -30,7 +30,7 @@ class TestNSTokenFieldCell (TestCase):
         self.assertEqual(NSTokenStyleSquared, 3)
         self.assertEqual(NSTokenStylePlainSquared, 4)
 
-    @min_sdk_level('10.6')
+    @min_sdk_level('10.7')
     def testProtocolObjects(self):
         objc.protocolNamed('NSTokenFieldCellDelegate')
 

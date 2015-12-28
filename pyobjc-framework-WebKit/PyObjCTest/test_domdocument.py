@@ -30,6 +30,9 @@ class TestDOMDocument (TestCase):
         self.assertResultIsBOOL(DOMDocument.queryCommandIndeterm_)
         self.assertResultIsBOOL(DOMDocument.queryCommandState_)
         self.assertResultIsBOOL(DOMDocument.queryCommandSupported_)
+
+    @min_os_level('10.7')
+    def testMethods10_7(self):
         self.assertResultIsBOOL(DOMDocument.hasFocus)
 
 

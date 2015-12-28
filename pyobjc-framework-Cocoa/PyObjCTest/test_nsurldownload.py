@@ -17,7 +17,7 @@ class TestNSURLDownload (TestCase):
         self.assertArgIsBOOL(NSURLDownload.setDeletesFileUponFailure_, 0)
         self.assertResultIsBOOL(NSURLDownload.deletesFileUponFailure)
 
-    @min_sdk_level('10.6')
+    @min_sdk_level('10.7')
     def testProtocolObjects(self):
         objc.protocolNamed('NSURLDownloadDelegate')
 

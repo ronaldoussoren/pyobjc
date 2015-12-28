@@ -9,6 +9,7 @@ class TestCIContext (TestCase):
 
         self.assertIsInstance(kCIContextWorkingFormat, unicode)
 
+    @min_os_level('10.11')
     def testConstants10_11(self):
         self.assertIsInstance(kCIContextHighQualityDownsample, unicode)
 

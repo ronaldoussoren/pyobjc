@@ -130,6 +130,9 @@ class TestICScannerFunctionalUnits (TestCase):
         self.assertResultIsBOOL(ICScannerFunctionalUnitDocumentFeeder.duplexScanningEnabled)
         self.assertArgIsBOOL(ICScannerFunctionalUnitDocumentFeeder.setDuplexScanningEnabled_, 0)
         self.assertResultIsBOOL(ICScannerFunctionalUnitDocumentFeeder.documentLoaded)
+
+    @min_os_level('10.7')
+    def testMethods10_7(self):
         self.assertResultIsBOOL(ICScannerFunctionalUnitDocumentFeeder.reverseFeederPageOrder)
 
 if __name__ == "__main__":

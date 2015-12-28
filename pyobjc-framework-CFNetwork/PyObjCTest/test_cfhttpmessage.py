@@ -12,20 +12,16 @@ class TestCFHTTPMessage (TestCase):
     def testConstants10_9(self):
         self.assertIsInstance(kCFHTTPAuthenticationSchemeOAuth1, unicode)
 
-    @min_os_level('10.6')
-    def testConstants10_6(self):
+    @min_os_level('10.7')
+    def testConstants10_7(self):
         self.assertIsInstance(kCFHTTPAuthenticationSchemeNegotiate2, unicode)
         self.assertIsInstance(kCFHTTPAuthenticationSchemeXMobileMeAuthToken, unicode)
+        self.assertIsInstance(kCFHTTPAuthenticationSchemeKerberos, unicode)
 
     @min_os_level('10.5')
     def testConstants10_5(self):
         self.assertIsInstance(kCFHTTPAuthenticationSchemeNTLM, unicode)
         self.assertIsInstance(kCFHTTPAuthenticationSchemeNegotiate, unicode)
-
-    @expectedFailure
-    @min_os_level('10.5')
-    def testConstants10_5_failure(self):
-        self.assertIsInstance(kCFHTTPAuthenticationSchemeKerberos, unicode)
 
     @expectedFailure
     @min_os_level('10.10')

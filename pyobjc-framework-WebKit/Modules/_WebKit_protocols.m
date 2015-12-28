@@ -15,8 +15,8 @@ static void __attribute__((__used__)) use_protocols(void)
     p = PyObjC_IdToPython(@protocol(WebDownloadDelegate)); Py_XDECREF(p);
     p = PyObjC_IdToPython(@protocol(WebFrameLoadDelegate)); Py_XDECREF(p);
 #endif /* PyObjC_BUILD_RELEASE >= 1011 */
-#if PyObjC_BUILD_RELEASE >= 1010
     p = PyObjC_IdToPython(@protocol(DOMEventListener)); Py_XDECREF(p);
+#if PyObjC_BUILD_RELEASE >= 1010
     p = PyObjC_IdToPython(@protocol(DOMEventTarget)); Py_XDECREF(p);
     p = PyObjC_IdToPython(@protocol(DOMNodeFilter)); Py_XDECREF(p);
     p = PyObjC_IdToPython(@protocol(DOMXPathNSResolver)); Py_XDECREF(p);
@@ -25,9 +25,9 @@ static void __attribute__((__used__)) use_protocols(void)
     p = PyObjC_IdToPython(@protocol(WebDocumentText)); Py_XDECREF(p);
     p = PyObjC_IdToPython(@protocol(WebDocumentView)); Py_XDECREF(p);
     p = PyObjC_IdToPython(@protocol(WebOpenPanelResultListener)); Py_XDECREF(p);
-    p = PyObjC_IdToPython(@protocol(WebPlugInViewFactory)); Py_XDECREF(p);
     p = PyObjC_IdToPython(@protocol(WebPolicyDecisionListener)); Py_XDECREF(p);
 #endif /* PyObjC_BUILD_RELEASE >= 1010 */
+    p = PyObjC_IdToPython(@protocol(WebPlugInViewFactory)); Py_XDECREF(p);
 #if defined(__LP64__) && PyObjC_BUILD_RELEASE >= 1010
     p = PyObjC_IdToPython(@protocol(WKNavigationDelegate)); Py_XDECREF(p);
     p = PyObjC_IdToPython(@protocol(WKScriptMessageHandler)); Py_XDECREF(p);

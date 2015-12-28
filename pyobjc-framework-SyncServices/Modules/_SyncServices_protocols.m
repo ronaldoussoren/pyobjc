@@ -4,7 +4,7 @@
  * Last update: Wed Jan 16 13:12:13 2013
  */
 
-#if PyObjC_BUILD_RELEASE >= 1006
+#if PyObjC_BUILD_RELEASE >= 1007
 #import <SyncServices/ISyncConflictPropertyType.h>
 #endif
 
@@ -16,7 +16,7 @@ static void __attribute__((__used__)) use_protocols(void)
     p = PyObjC_IdToPython(@protocol(ISyncSessionDriverDataSource)); Py_XDECREF(p);
     p = PyObjC_IdToPython(@protocol(NSPersistentStoreCoordinatorSyncing)); Py_XDECREF(p);
 #endif /* PyObjC_BUILD_RELEASE >= 1005 */
-#if PyObjC_BUILD_RELEASE >= 1006
+#if PyObjC_BUILD_RELEASE >= 1007
     p = PyObjC_IdToPython(@protocol(ISyncConflictPropertyType)); Py_XDECREF(p);
-#endif /* PyObjC_BUILD_RELEASE >= 1006 */
+#endif /* PyObjC_BUILD_RELEASE >= 1007 */
 }

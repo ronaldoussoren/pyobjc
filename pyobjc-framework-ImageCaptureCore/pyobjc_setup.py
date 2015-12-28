@@ -21,8 +21,8 @@ from setuptools.command import test
 from setuptools.command import build_py
 from distutils.sysconfig import get_config_var, get_config_vars
 
-
 from distutils import log
+import shlex
 
 class oc_build_py (build_py.build_py):
     def build_packages(self):
@@ -55,6 +55,9 @@ class oc_test (test.test):
 
 
     def cleanup_environment(self):
+        from pkg_resources import add_activation_listener
+        add_activation_listener(lambda dist: dist.activate())
+
         ei_cmd = self.get_finalized_command('egg_info')
         egg_name = ei_cmd.egg_name.replace('-', '_')
 
@@ -69,8 +72,6 @@ class oc_test (test.test):
                 dirname,))
             sys.path.remove(dirname)
 
-        from pkg_resources import add_activation_listener
-        add_activation_listener(lambda dist: dist.activate())
         working_set.__init__()
 
     def add_project_to_sys_path(self):
@@ -185,6 +186,24 @@ def get_os_level():
     v = pl['ProductVersion']
     return '.'.join(v.split('.')[:2])
 
+def get_sdk_level():
+    cflags = get_config_var('CFLAGS')
+    cflags = shlex.split(cflags)
+    for i, val in enumerate(cflags):
+        if val == '-isysroot':
+            sdk = cflags[i+1]
+            break
+    else:
+        return None
+
+    if sdk == '/':
+        return get_os_level()
+
+    sdk = os.path.basename(sdk)
+    assert sdk.startswith('MacOSX')
+    assert sdk.endswith('.sdk')
+    return sdk[6:-4]
+
 class pyobjc_install_lib (install_lib.install_lib):
     def get_exclusions(self):
         result = install_lib.install_lib.get_exclusions(self)
@@ -219,7 +238,7 @@ def _find_executable(executable):
     return None
 
 def _working_compiler(executable):
-    import tempfile, subprocess, shlex
+    import tempfile, subprocess
     with tempfile.NamedTemporaryFile(mode='w', suffix='.c') as fp:
         fp.write('#include <stdarg.h>\nint main(void) { return 0; }\n')
         fp.flush()
@@ -252,6 +271,12 @@ def _fixup_compiler():
         # CC is in the environment, always use explicit
         # overrides.
         return
+
+    try:
+        import _osx_support
+        _osx_support.customize_compiler(get_config_vars())  
+    except (ImportError, NameError):
+        pass
 
     cc = oldcc = get_config_var('CC').split()[0]
     cc = _find_executable(cc)
@@ -337,7 +362,10 @@ def Extension(*args, **kwds):
     Simple wrapper about distutils.core.Extension that adds additional PyObjC
     specific flags.
     """
-    os_level = get_os_level()
+    os_level = get_sdk_level()
+    if os_level is None:
+        os_level = get_os_level()
+
     cflags =  ["-DPyObjC_BUILD_RELEASE=%02d%02d"%(tuple(map(int, os_level.split('.'))))]
     ldflags = []
     if 'clang' in get_config_var('CC'):
@@ -376,7 +404,9 @@ def setup(
 
     k = kwds.copy()
 
-    os_level = get_os_level()
+    os_level = get_sdk_level()
+    if os_level is None:
+        os_level = get_os_level()
     os_compatible = True
     if sys.platform != 'darwin':
         os_compatible = False

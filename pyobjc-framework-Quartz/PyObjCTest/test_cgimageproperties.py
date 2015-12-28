@@ -291,14 +291,19 @@ class TestCGImageProperties (TestCase):
         self.assertIsInstance(kCGImagePropertyExifAuxFlashCompensation, unicode)
         self.assertIsInstance(kCGImagePropertyExifAuxOwnerName, unicode)
         self.assertIsInstance(kCGImagePropertyExifAuxFirmware, unicode)
+
+    @min_os_level('10.5')
+    @expectedFailureIf(os_release() == '10.6')
+    def testConstants10_5_bad_on_10_6(self):
         self.assertIsInstance(kCGImagePropertyMakerMinoltaDictionary, unicode)
         self.assertIsInstance(kCGImagePropertyMakerFujiDictionary, unicode)
         self.assertIsInstance(kCGImagePropertyMakerOlympusDictionary, unicode)
         self.assertIsInstance(kCGImagePropertyMakerPentaxDictionary, unicode)
 
 
-    @min_os_level('10.6')
+    @min_os_level('10.7')
     def testConstants10_6(self):
+	# Contants aren't actually available on OSX 10.6
         self.assertIsInstance(kCGImagePropertyIPTCCreatorContactInfo, unicode)
         self.assertIsInstance(kCGImagePropertyIPTCRightsUsageTerms, unicode)
         self.assertIsInstance(kCGImagePropertyIPTCScene, unicode)

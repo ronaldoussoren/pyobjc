@@ -60,10 +60,6 @@ class TestNetFS (TestCase):
         self.assertEqual(NetFS.kNetFSMountAtMountDirKey, "MountAtMountDir")
         self.assertEqual(NetFS.kNetFSMountedURLKey, "MountedURL")
 
-    def testFunctions(self):
-        NetFS.NetFSMountURLProbe
-
-        self.assertResultIsCFRetained(NetFS.NetFSCopyURLForRemountingVolume)
 
     @min_os_level('10.8')
     def testFunctions10_8(self):
@@ -75,6 +71,14 @@ class TestNetFS (TestCase):
         self.assertArgIsBlock(NetFS.NetFSMountURLAsync, 8, NetFSMountURLBlock)
 
         NetFS.NetFSMountURLCancel
+
+    @min_os_level('10.9')
+    def testFunctions10_9(self):
+        NetFS.NetFSMountURLProbe
+
+    @min_os_level('10.10')
+    def testFunctions10_10(self):
+        self.assertResultIsCFRetained(NetFS.NetFSCopyURLForRemountingVolume)
 
 if __name__ == "__main__":
     main()
