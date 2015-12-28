@@ -66,7 +66,7 @@
     "NSFoundationVersionNumber10_10_1": { "value": 1151.16 },
     "NSFoundationVersionNumber10_10_2": { "value": 1152.14 },
     "NSFoundationVersionNumber10_10_3": { "value": 1153.20 },
-    "NSItemProviderValueUnavailableCoercionError": { "value": -1200 },
+    "NSItemProviderUnavailableCoercionError": { "value": -1200 },
     "NSFileManagerUnmountWithoutUI": { "value": 2 },
     "NSFileManagerUnmountAllPartitionsAndEjectDisk": { "value": 1 },
     "NSConditionalExpressionType": { "value": 20 },
@@ -14192,13 +14192,6 @@
    }
   },
   "externs": {
-   "NSUserActivityContentUserActionPlay": { "value": "@" },
-   "NSUserActivityContentUserActionRecord": { "value": "@" },
-   "NSUserActivityContentUserActionCall": { "value": "@" },
-   "NSUserActivityContentUserActionNavigate": { "value": "@" },
-   "NSUserActivityContentUserActionMessage": { "value": "@" },
-   "NSUserActivityContentUserActionFacetime": { "value": "@" },
-   "NSUserActivityContentUserActionSchedule": { "value": "@" },
    "NSURLIsApplicationKey": { "typestr": "@" },
    "NSURLApplicationIsScriptableKey": { "typestr": "@" },
    "NSStringTransformLatinToKatakana": { "typestr": "@" },

@@ -6,6 +6,40 @@
    "CKAccountChangedNotification": { "typestr": "@" }
   },
   "classes": {
+    "CKFetchWebAuthTokenOperation": {
+     "methods": [
+      {
+       "selector": "fetchWebAuthTokenCompletionBlock",
+       "class_method": false,
+       "retval": {
+        "callable": {
+	 "arguments": {
+          "0": { "typestr": "^v" },
+          "1": { "typestr": "@" },
+          "2": { "typestr": "@" }
+         },
+         "retval": { "typestr":  "v" }
+        }
+       }
+      },
+      {
+       "selector": "setFetchWebAuthTokenCompletionBlock:",
+       "class_method": false,
+       "args": {
+        "0": {
+         "callable": {
+	  "arguments": {
+           "0": { "typestr": "^v" },
+           "1": { "typestr": "@" },
+           "2": { "typestr": "@" }
+          },
+          "retval": { "typestr":  "v" }
+         }
+        }
+       }
+      }
+     ]
+    },
     "CKFetchNotificationChangesOperation": {
       "methods": [
         {

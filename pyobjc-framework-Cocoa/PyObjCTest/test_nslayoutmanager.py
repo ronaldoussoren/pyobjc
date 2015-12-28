@@ -16,6 +16,7 @@ class TestNSLayoutManagerHelper (NSObject):
     def layoutManager_shouldBreakLineByHyphenatingBeforeCharacterAtIndex_(self, l, i): return 1
     def layoutManager_boundingBoxForControlGlyphAtIndex_forTextContainer_proposedLineFragment_glyphPosition_characterIndex_(self, l, i, c, f, p, i2): return 1
     def layoutManager_textContainer_didChangeGeometryFromSize_(self, l, c, s): pass
+    def layoutManager_shouldSetLineFragmentRect_lineFragmentUsedRect_baselineOffset_inTextContainer_forGlyphRange_(self, l, fr, ur, o, c, r): return 1
 
 class TestNSLayoutManager (TestCase):
     def testConstants(self):
@@ -97,6 +98,12 @@ class TestNSLayoutManager (TestCase):
         self.assertArgHasType(TestNSLayoutManagerHelper.layoutManager_boundingBoxForControlGlyphAtIndex_forTextContainer_proposedLineFragment_glyphPosition_characterIndex_, 5, objc._C_NSUInteger)
 
         self.assertArgHasType(TestNSLayoutManagerHelper.layoutManager_textContainer_didChangeGeometryFromSize_, 2, NSSize.__typestr__)
+
+        self.assertResultIsBOOL(TestNSLayoutManagerHelper.layoutManager_shouldSetLineFragmentRect_lineFragmentUsedRect_baselineOffset_inTextContainer_forGlyphRange_)
+        self.assertArgHasType(TestNSLayoutManagerHelper.layoutManager_shouldSetLineFragmentRect_lineFragmentUsedRect_baselineOffset_inTextContainer_forGlyphRange_, 1, b'N^' + NSRect.__typestr__)
+        self.assertArgHasType(TestNSLayoutManagerHelper.layoutManager_shouldSetLineFragmentRect_lineFragmentUsedRect_baselineOffset_inTextContainer_forGlyphRange_, 2, b'N^' + NSRect.__typestr__)
+        self.assertArgHasType(TestNSLayoutManagerHelper.layoutManager_shouldSetLineFragmentRect_lineFragmentUsedRect_baselineOffset_inTextContainer_forGlyphRange_, 3, b'N^' + objc._C_CGFloat)
+        self.assertArgHasType(TestNSLayoutManagerHelper.layoutManager_shouldSetLineFragmentRect_lineFragmentUsedRect_baselineOffset_inTextContainer_forGlyphRange_, 5, NSRange.__typestr__)
 
 
     def testMethods(self):
@@ -257,6 +264,8 @@ class TestNSLayoutManager (TestCase):
 
         self.assertArgIsBlock(NSLayoutManager.enumerateLineFragmentsForGlyphRange_usingBlock_, 1, b'v' + NSRect.__typestr__ + NSRect.__typestr__ + b'@' + NSRange.__typestr__ + b'o^Z')
         self.assertArgIsBlock(NSLayoutManager.enumerateEnclosingRectsForGlyphRange_withinSelectedGlyphRange_inTextContainer_usingBlock_, 3, b'v' + NSRect.__typestr__ + b'o^Z')
+
+        self.assertResultIsBOOL
 
 
 if __name__ == "__main__":

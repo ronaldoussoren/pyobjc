@@ -3,6 +3,10 @@
 {
  "definitions": {
   "externs": {
+   "NSToolbarToggleSidebarItemIdentifier": { "typestr": "@" },
+   "NSAccessibilityListItemPrefixTextAttribute": { "typestr": "@" },
+   "NSAccessibilityListItemIndexTextAttribute": { "typestr": "@" },
+   "NSAccessibilityListItemLevelTextAttribute": { "typestr": "@" },
    "NSDefaultAttributesDocumentAttribute": { "typestr": "@" },
    "NSFontWeightLight": { "typestr": "f" },
    "NSFontWeightRegular": { "typestr": "f" },
@@ -13141,6 +13145,31 @@
       "selector": "layoutManager:didCompleteLayoutForTextContainer:atEnd:"
      },
      {
+      "args": {
+       "1": {
+        "type_override": [
+         "N^{_NSRect={_NSPoint=ff}{_NSSize=ff}}",
+         "N^{CGRect={CGPoint=dd}{CGSize=dd}}"
+	]
+       },
+       "2": {
+        "type_override": [
+         "N^{_NSRect={_NSPoint=ff}{_NSSize=ff}}",
+         "N^{CGRect={CGPoint=dd}{CGSize=dd}}"
+	]
+       },
+       "3": {
+        "type_override": [ "N^f", "N^d" ]
+       },
+       "5": {
+        "type_override": [ "{_NSRange=II}", "{_NSRange=QQ}" ]
+       }
+      },
+      "retval": { "type_override": "Z" },
+      "class_method": false,
+      "selector": "layoutManager:shouldSetLineFragmentRect:lineFragmentUsedRect:baselineOffset:inTextContainer:forGlyphRange:"
+     },
+     {
       "retval": { "type_override": [ "f", "d" ] },
       "args": {
        "1": { "type_override": [ "I", "Q" ] },
@@ -15601,6 +15630,13 @@
       "selector": "resolvesAliases"
      },
      {
+      "class_method": false,
+      "retval": {
+       "type_override": "Z"
+      },
+      "selector": "isAccessoryViewDisclosed"
+     },
+     {
       "args": {
        "0": {
         "type_override": "Z"
@@ -15635,6 +15671,15 @@
       },
       "class_method": false,
       "selector": "setResolvesAliases:"
+     },
+     {
+      "args": {
+       "0": {
+        "type_override": "Z"
+       }
+      },
+      "class_method": false,
+      "selector": "setAccessoryViewDisclosed:"
      }
     ]
    },
@@ -23948,6 +23993,20 @@
       },
       "class_method": false,
       "selector": "context:"
+     },
+     {
+      "args": {
+       "0": { "type_override": "Z" }
+      },
+      "class_method": false,
+      "selector": "setWantsExtendedDynamicRangeOpenGLSurface:"
+     },
+     {
+      "retval": {
+       "type_override": "Z"
+      },
+      "class_method": false,
+      "selector": "wantsExtendedDynamicRangeOpenGLSurface"
      }
     ]
    },
@@ -25675,6 +25734,14 @@
    }
   },
   "enum": {
+   "NSSplitViewItemCollapseBehaviorDefault": { "value": 0 },
+   "NSSplitViewItemCollapseBehaviorPreferResizingSplitViewWithFixedSiblings": { "value": 1 },
+   "NSSplitViewItemCollapseBehaviorPreferResizingSiblingsWithFixedSplitView": { "value": 2 },
+   "NSSplitViewItemCollapseBehaviorUseConstraints": { "value": 3 },
+   "NSApplicationPresentationDisableCursorLocationAssistance": { "value": 4096 },
+   "NSAppKitVersionNumber10_10_4": { "value": 1348 },
+   "NSAppKitVersionNumber10_10_5": { "value": 1348 },
+   "NSAppKitVersionNumber10_10_Max": { "value": 1349 },
    "NSWindowCollectionBehaviorFullScreenAllowsTiling": { "value": 2048 },
    "NSWindowCollectionBehaviorFullScreenDisallowsTiling": { "value": 4096 },
    "NSCollectionViewScrollPositionNearestHorizontalEdge": { "value": 512 },

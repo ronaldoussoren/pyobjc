@@ -19,7 +19,7 @@ class TestNSItemProvider (TestCase):
 
     @min_os_level('10.11')
     def testConstants10_11(self):
-        self.assertEqual(NSItemProviderValueUnavailableCoercionError, -1200)
+        self.assertEqual(NSItemProviderUnavailableCoercionError, -1200)
 
     @min_os_level('10.10')
     def testMethods10_10(self):

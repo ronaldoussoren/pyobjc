@@ -13,5 +13,8 @@ class TestCAOpenGLLayer (TestCase):
 
         self.assertArgIsIn(CAOpenGLLayer.drawInCGLContext_pixelFormat_forLayerTime_displayTime_, 3)
 
+        self.assertResultIsBOOL(CAOpenGLLayer.wantsExtendedDynamicRangeContent)
+        self.assertArgIsBOOL(CAOpenGLLayer.setWantsExtendedDynamicRangeContent_, 0)
+
 if __name__ == "__main__":
     main()

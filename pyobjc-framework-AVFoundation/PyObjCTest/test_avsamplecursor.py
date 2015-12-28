@@ -6,8 +6,8 @@ import AVFoundation
 class TestAVSampleCursor (TestCase):
     @min_os_level('10.10')
     def testMethods10_10(self):
-        self.assertArgHasType(AVFoundation.AVSampleCursor.stepByDecodeTime_wasPinned_, 1, 'o^Z')
-        self.assertArgHasType(AVFoundation.AVSampleCursor.stepByPresentationTime_wasPinned_, 1, 'o^Z')
+        self.assertArgHasType(AVFoundation.AVSampleCursor.stepByDecodeTime_wasPinned_, 1, b'o^Z')
+        self.assertArgHasType(AVFoundation.AVSampleCursor.stepByPresentationTime_wasPinned_, 1, b'o^Z')
 
         self.assertResultIsBOOL(AVFoundation.AVSampleCursor.samplesWithEarlierDecodeTimeStampsMayHaveLaterPresentationTimeStampsThanCursor_)
         self.assertResultIsBOOL(AVFoundation.AVSampleCursor.samplesWithLaterDecodeTimeStampsMayHaveEarlierPresentationTimeStampsThanCursor_)

@@ -7,17 +7,6 @@ class TestNSUserActivity (TestCase):
         self.assertIsInstance(NSUserActivityDocumentURLKey, unicode)
         self.assertIsInstance(NSUserActivityTypeBrowsingWeb, unicode)
 
-    @min_os_level('10.11')
-    def testConstants10_11(self):
-        self.assertIsInstance(NSUserActivityContentUserActionPlay, unicode)
-        self.assertIsInstance(NSUserActivityContentUserActionRecord, unicode)
-        self.assertIsInstance(NSUserActivityContentUserActionCall, unicode)
-        self.assertIsInstance(NSUserActivityContentUserActionNavigate, unicode)
-        self.assertIsInstance(NSUserActivityContentUserActionMessage, unicode)
-        self.assertIsInstance(NSUserActivityContentUserActionFacetime, unicode)
-        self.assertIsInstance(NSUserActivityContentUserActionSchedule, unicode)
-
-
     @min_os_level('10.10')
     def testMethods_10(self):
         self.assertResultIsBOOL(NSUserActivity.needsSave)

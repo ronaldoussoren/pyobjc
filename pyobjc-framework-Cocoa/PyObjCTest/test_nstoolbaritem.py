@@ -21,6 +21,10 @@ class TestNSToolbarItem (TestCase):
         self.assertIsInstance(NSToolbarCustomizeToolbarItemIdentifier, unicode)
         self.assertIsInstance(NSToolbarPrintItemIdentifier, unicode)
 
+    @min_os_level('10.11')
+    def testConstants10_11(self):
+        self.assertIsInstance(NSToolbarToggleSidebarItemIdentifier, unicode)
+
     def testMethods(self):
         self.assertResultIsBOOL(NSToolbarItem.isEnabled)
         self.assertArgIsBOOL(NSToolbarItem.setEnabled_, 0)

@@ -21,6 +21,8 @@ class TestAVMovie (TestCase):
 
     @min_os_level('10.11')
     def testMethods10_11(self):
+        self.assertResultIsBOOL(AVFoundation.AVMovie.isCompatibleWithFileType_)
+
         self.assertResultIsBOOL(AVFoundation.AVMovie.containsMovieFragments)
         self.assertArgIsOut(AVFoundation.AVMovie.movieHeaderWithFileType_error_, 1)
 

@@ -1303,6 +1303,11 @@
    "AVMovie": {
     "methods": [
      {
+      "class_method": true,
+      "retval": { "type_override": "Z" },
+      "selector": "isCompatibleWithFileType:"
+     },
+     {
       "class_method": false,
       "retval": { "type_override": "Z" },
       "selector": "containsMovieFragments"

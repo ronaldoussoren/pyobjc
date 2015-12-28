@@ -29,7 +29,10 @@ class TestNSSplitViewController (TestCase):
         self.assertIsInstance(NSSplitViewControllerAutomaticDimension, float)
         self.assertIsInstance(NSSplitViewItemUnspecifiedDimension, float)
 
-
+        self.assertEqual(NSSplitViewItemCollapseBehaviorDefault, 0)
+        self.assertEqual(NSSplitViewItemCollapseBehaviorPreferResizingSplitViewWithFixedSiblings, 1)
+        self.assertEqual(NSSplitViewItemCollapseBehaviorPreferResizingSiblingsWithFixedSplitView, 2)
+        self.assertEqual(NSSplitViewItemCollapseBehaviorUseConstraints, 3)
 
 
 if __name__ == "__main__":
