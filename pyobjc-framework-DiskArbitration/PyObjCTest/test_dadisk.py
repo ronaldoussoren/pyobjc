@@ -4,6 +4,7 @@ import DiskArbitration
 
 
 class TestDADisk (TestCase):
+    @min_os_level('10.10')
     def test_constants(self):
         self.assertIsInstance(DiskArbitration.kDADiskDescriptionVolumeKindKey, unicode)
         self.assertIsInstance(DiskArbitration.kDADiskDescriptionVolumeMountableKey, unicode)
@@ -40,9 +41,11 @@ class TestDADisk (TestCase):
         self.assertIsInstance(DiskArbitration.kDADiskDescriptionBusNameKey, unicode)
         self.assertIsInstance(DiskArbitration.kDADiskDescriptionBusPathKey, unicode)
 
+    @min_os_level('10.10')
     def test_types(self):
         self.assertIsCFType(DiskArbitration.DADiskRef)
 
+    @min_os_level('10.10')
     def test_functions(self):
         self.assertIsInstance(DiskArbitration.DADiskGetTypeID(), (int, long))
 

@@ -415,6 +415,7 @@ class TestCTFont (TestCase):
 
 
     #@expectedFailure
+    @min_os_level('10.6')
     def testFunctions10_6_crash(self):
         descr = CTFontDescriptorCreateWithNameAndSize(
                 b"Courier".decode('latin1'), 14.0)

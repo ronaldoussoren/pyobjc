@@ -273,7 +273,7 @@ def min_sdk_level(release):
             def testSnowLeopardSDK(self):
                 pass
     """
-    v = (objc.PyObjC_BUILD_RELEASE / 100, objc.PyObjC_BUILD_RELEASE % 100)
+    v = (objc.PyObjC_BUILD_RELEASE // 100, objc.PyObjC_BUILD_RELEASE % 100)
     return onlyIf(v >= os_level_key(release), "Requires build with SDK %s or later"%(release,))
 
 def max_sdk_level(release):
@@ -781,7 +781,7 @@ class TestCase (_unittest.TestCase):
             offset = 0
         info = method.__metadata__()
         type = info['arguments'][argno+offset]['type']
-        if not type.startswith(b'o^') and not type.startswith('o*'):
+        if not type.startswith(b'o^') and not type.startswith(b'o*'):
             self.fail(message or "arg %d of %s is not an 'out' argument"%(
                 argno, method))
 
@@ -792,7 +792,7 @@ class TestCase (_unittest.TestCase):
             offset = 0
         info = method.__metadata__()
         type = info['arguments'][argno+offset]['type']
-        if not type.startswith(b'N^') and not type.startswith('N*'):
+        if not type.startswith(b'N^') and not type.startswith(b'N*'):
             self.fail(message or "arg %d of %s is not an 'inout' argument"%(
                 argno, method))
 
@@ -803,7 +803,7 @@ class TestCase (_unittest.TestCase):
             offset = 0
         info = method.__metadata__()
         type = info['arguments'][argno+offset]['type']
-        if not type.startswith(b'n^') and not type.startswith('n*'):
+        if not type.startswith(b'n^') and not type.startswith(b'n*'):
             self.fail(message or "arg %d of %s is not an 'in' argument"%(
                 argno, method))
 

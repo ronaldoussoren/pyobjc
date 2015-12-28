@@ -12,6 +12,7 @@ class TestQTCaptureFileOutput (TestCase):
         self.assertEqual(QTCaptureFileOutputBufferDestinationNewFile, 1)
         self.assertEqual(QTCaptureFileOutputBufferDestinationOldFile, 2)
 
+    @min_os_level('10.6')
     def testMethods(self):
         self.assertResultIsBOOL(QTCaptureFileOutput.isRecordingPaused)
 

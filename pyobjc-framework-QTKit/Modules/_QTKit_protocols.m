@@ -4,10 +4,14 @@
  * Last update: Mon Aug 10 09:56:10 2015
  */
 
+#if PyObjC_BUILD_RELEASE >= 1006
 #import <QTKit/QTExportSession.h>
+#endif
 
 static void __attribute__((__used__)) use_protocols(void)
 {
     PyObject* p __attribute__((__unused__));
+#if PyObjC_BUILD_RELEASE >= 1006
     p = PyObjC_IdToPython(@protocol(QTExportSessionDelegate)); Py_XDECREF(p);
+#endif
 }

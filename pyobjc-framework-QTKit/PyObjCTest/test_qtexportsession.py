@@ -5,7 +5,7 @@ class TestQTExportSessionHelper (NSObject):
     def exportSession_didReachProgess_(self, e, p): pass
 
 class TestQTExportSession (TestCase):
-    @min_os_level('10.5')
+    @min_os_level('10.7')
     def testMethods(self):
         self.assertResultIsBOOL(QTExportSession.isRunning)
         self.assertResultIsBOOL(QTExportSession.isFinished)
@@ -16,7 +16,7 @@ class TestQTExportSession (TestCase):
         self.assertResultIsBOOL(QTExportSession.waitUntilFinished_)
         self.assertArgIsOut(QTExportSession.waitUntilFinished_, 0)
 
-    @min_os_level('10.5')
+    @min_os_level('10.7')
     def testProtocols(self):
         objc.protocolNamed('QTExportSessionDelegate')
 

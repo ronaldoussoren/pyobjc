@@ -31,7 +31,8 @@ class TestIKCameraDeviceView (TestCase):
         self.assertResultIsBOOL(IKCameraDeviceView.canDownloadSelectedItems)
 
         self.assertArgIsBOOL(IKCameraDeviceView.selectIndexes_byExtendingSelection_, 1)
-
+    
+    @min_sdk_level('10.10')
     def testProtocols(self):
         objc.protocolNamed('IKCameraDeviceViewDelegate')
 

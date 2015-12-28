@@ -22,7 +22,6 @@ class TestCIRAWFilter (TestCase):
         self.assertIsInstance(kCIInputEnableChromaticNoiseTrackingKey, unicode)
         self.assertIsInstance(kCIInputBoostShadowAmountKey, unicode)
         self.assertIsInstance(kCIInputBiasKey, unicode)
-        self.assertIsInstance(kCIOutputNativeSizeKey, unicode)
 
     @min_os_level('10.7')
     def testConstants10_7(self):
@@ -38,6 +37,7 @@ class TestCIRAWFilter (TestCase):
         self.assertIsInstance(kCIInputNoiseReductionSharpnessAmountKey, unicode)
         self.assertIsInstance(kCIInputNoiseReductionContrastAmountKey, unicode)
         self.assertIsInstance(kCIInputNoiseReductionDetailAmountKey, unicode)
+        self.assertIsInstance(kCIOutputNativeSizeKey, unicode)
 
 if __name__ == "__main__":
     main()

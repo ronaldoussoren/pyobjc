@@ -1,11 +1,11 @@
 '''
 Some simple tests to check that the framework is properly wrapped.
 '''
+from PyObjCTools.TestSupport import *
 import objc
-import unittest
 import InputMethodKit
 
-class TestInputMethodKit (unittest.TestCase):
+class TestInputMethodKit (TestCase):
     def testClasses(self):
 
         self.assertTrue( hasattr(InputMethodKit, 'IMKInputController') )
@@ -35,4 +35,4 @@ class TestInputMethodKit (unittest.TestCase):
 
 
 if __name__ == "__main__":
-    unittest.main()
+    main()

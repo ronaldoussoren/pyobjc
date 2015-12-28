@@ -20,6 +20,8 @@ class TestDiskArbitration (TestCase):
         self.assertEqual(DiskArbitration.kDADiskOptionMountAutomaticNoDefer, 0x00000020)
         self.assertEqual(DiskArbitration.kDADiskOptionPrivate, 0x00000100)
 
+    @min_os_level('10.10')
+    def test_constants10_10(self):
         self.assertIsInstance(DiskArbitration.kDADiskDescriptionMatchMediaUnformatted, NSDictionary)
         self.assertIsInstance(DiskArbitration.kDADiskDescriptionMatchMediaWhole, NSDictionary)
         self.assertIsInstance(DiskArbitration.kDADiskDescriptionMatchVolumeMountable, NSDictionary)
@@ -32,8 +34,8 @@ class TestDiskArbitration (TestCase):
         # XXX: Tests cannot actually call most functions, some of them require admin privileges
         #      and can destroy information. Create separate test scripts that can be used to
         #      perform tests in a VM (with protection against running them accidently!)
-        DADiskRef = '^{__DADisk=}'
-        DADissenterRef = '^{__DADissenter=}'
+        DADiskRef = b'^{__DADisk=}'
+        DADissenterRef = b'^{__DADissenter=}'
 
         self.assertArgIsFunction(DiskArbitration.DARegisterDiskAppearedCallback, 2, b'v' + DADiskRef + b'^v', True)
         self.assertArgIsFunction(DiskArbitration.DARegisterDiskDescriptionChangedCallback, 3, b'v' + DADiskRef + b'^{__CFArray=}^v', True)

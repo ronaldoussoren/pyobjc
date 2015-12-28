@@ -6,7 +6,11 @@ class TestABGlobals (TestCase):
     @min_os_level('10.9')
     def testConstants10_9(self):
         self.assertIsInstance(kABSocialProfileServiceTencentWeibo, unicode)
+
+    @min_os_level('10.10')
+    def testConstants10_10(self):
         self.assertIsInstance(kABSocialProfileServiceYelp, unicode)
+        self.assertIsInstance(kABAlternateBirthdayComponentsProperty, unicode)
 
     @min_os_level('10.8')
     def testConstants10_8(self):
@@ -76,7 +80,6 @@ class TestABGlobals (TestCase):
         self.assertIsInstance(kABNicknameProperty, unicode)
         self.assertIsInstance(kABMaidenNameProperty, unicode)
         self.assertIsInstance(kABBirthdayProperty, unicode)
-        self.assertIsInstance(kABAlternateBirthdayComponentsProperty, unicode)
 
         self.assertIsInstance(kABOrganizationProperty, unicode)
         self.assertIsInstance(kABJobTitleProperty, unicode)

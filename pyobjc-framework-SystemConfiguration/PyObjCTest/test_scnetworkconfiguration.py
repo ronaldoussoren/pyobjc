@@ -52,10 +52,11 @@ class TestSCNetworkConfiguration (TestCase):
         self.assertTrue(isinstance(kSCNetworkProtocolTypeProxies, unicode))
         self.assertTrue(isinstance(kSCNetworkProtocolTypeSMB, unicode))
 
-    @min_os_level('10.5')
+    @min_os_level('10.6')
     def testConstants10_5(self):
         self.assertIsInstance(kSCNetworkInterfaceTypeIPSec, unicode)
 
+    @onlyIf(sys.byteorder == 'little', "Explained crashes on PPC")
     def testFunctions(self):
         r = SCNetworkInterfaceGetTypeID()
         self.assertTrue(isinstance(r, (int, long)))
@@ -67,6 +68,7 @@ class TestSCNetworkConfiguration (TestCase):
         for iface in r:
             if SCNetworkInterfaceGetBSDName(iface).startswith('en'):
                 break
+        
         r = SCNetworkInterfaceGetSupportedInterfaceTypes(iface)
         self.assertTrue(isinstance(r, CFArrayRef))
         self.assertTrue(isinstance(r[0], unicode))
@@ -101,6 +103,7 @@ class TestSCNetworkConfiguration (TestCase):
 
         r = SCNetworkInterfaceSetConfiguration(iface, {})
         self.assertTrue(r is True or r is False)
+
 
         r = SCNetworkInterfaceSetExtendedConfiguration(iface, "OC", {})
         self.assertTrue(r is True or r is False)

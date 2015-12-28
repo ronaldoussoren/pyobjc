@@ -14,7 +14,6 @@ class TestSCSchemaDefinitions (TestCase):
         self.assertIsInstance(kSCPropNetIPSecLocalCertificate, unicode)
         self.assertIsInstance(kSCValNetIPSecAuthenticationMethodSharedSecret, unicode)
         self.assertIsInstance(kSCValNetIPSecAuthenticationMethodCertificate, unicode)
-        self.assertIsInstance(kSCValNetIPSecAuthenticationMethodHybrid, unicode)
         self.assertIsInstance(kSCValNetIPSecSharedSecretEncryptionKeychain, unicode)
         self.assertIsInstance(kSCValNetIPSecLocalIdentifierTypeKeyID, unicode)
         self.assertIsInstance(kSCPropNetModemAccessPointName, unicode)
@@ -32,6 +31,10 @@ class TestSCSchemaDefinitions (TestCase):
         self.assertIsInstance(kSCValNetSMBNetBIOSNodeTypePeer, unicode)
         self.assertIsInstance(kSCValNetSMBNetBIOSNodeTypeMixed, unicode)
         self.assertIsInstance(kSCValNetSMBNetBIOSNodeTypeHybrid, unicode)
+
+    @min_os_level('10.6')
+    def testConstants10_5_missing(self):
+        self.assertIsInstance(kSCValNetIPSecAuthenticationMethodHybrid, unicode)
 
     def testConstants(self):
         self.assertIsInstance(kSCResvLink, unicode)

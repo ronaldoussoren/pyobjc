@@ -35,4 +35,5 @@ setup(
             ]
         ),
     ],
+    min_os_level="10.9",
 )

@@ -1,4 +1,4 @@
-
+import sys
 from PyObjCTools.TestSupport import *
 from Quartz.CoreGraphics import *
 
@@ -145,7 +145,10 @@ class TestCGEventTypes (TestCase):
         self.assertEqual(kCGEventSourceStateHIDSystemState, 1)
 
         self.assertEqual(kCGAnyInputEventType, 0xffffffff)
-        self.assertEqual(kCGEventMaskForAllEvents, 0xffffffffffffffff)
+        if sys.maxsize > 2**32:
+            self.assertEqual(kCGEventMaskForAllEvents, 0xffffffffffffffff)
+        else:
+            self.assertEqual(kCGEventMaskForAllEvents, 0xffffffff)
 
     def testStructs(self):
         v = CGEventTapInformation()

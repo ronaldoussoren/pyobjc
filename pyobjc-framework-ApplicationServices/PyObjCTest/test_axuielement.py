@@ -67,9 +67,6 @@ class TestAXUIElement (TestCase):
         self.assertArgIsOut(HIServices.AXObserverCreate, 2)
         self.assertArgIsCFRetained(HIServices.AXObserverCreate, 2)
 
-        self.assertArgIsFunction(HIServices.AXObserverCreateWithInfoCallback, 1, AXObserverCallbackWithInfo, True)
-        self.assertArgIsOut(HIServices.AXObserverCreateWithInfoCallback, 2)
-        self.assertArgIsCFRetained(HIServices.AXObserverCreateWithInfoCallback, 2)
 
         HIServices.AXObserverAddNotification
         HIServices.AXObserverRemoveNotification
@@ -80,6 +77,10 @@ class TestAXUIElement (TestCase):
     @min_os_level('10.9')
     def testFunctions10_9(self):
         self.assertResultIsBOOL(HIServices.AXIsProcessTrustedWithOptions)
+
+        self.assertArgIsFunction(HIServices.AXObserverCreateWithInfoCallback, 1, AXObserverCallbackWithInfo, True)
+        self.assertArgIsOut(HIServices.AXObserverCreateWithInfoCallback, 2)
+        self.assertArgIsCFRetained(HIServices.AXObserverCreateWithInfoCallback, 2)
 
     def testConstants(self):
         self.assertEqual(HIServices.kAXCopyMultipleAttributeOptionStopOnError, 1)

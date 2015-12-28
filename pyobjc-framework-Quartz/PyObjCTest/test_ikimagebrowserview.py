@@ -55,6 +55,8 @@ class TestIKImageBrowserView (TestCase):
         self.assertResultIsBOOL(IKImageBrowserView.animates)
         self.assertArgIsBOOL(IKImageBrowserView.setAnimates_, 0)
 
+    @min_os_level('10.10')
+    def testMethods10_10(self):
         # Method does not exist?
         view = IKImageBrowserView.alloc().init()
         self.assertResultIsBOOL(view.isGroupExpandedAtIndex_)

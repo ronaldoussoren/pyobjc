@@ -9,11 +9,14 @@ class TestISyncConflictPropertyTypeHelper (SyncServices.NSObject):
 
 class TestISyncConflictPropertyType (TestCase):
     def testProtocols(self):
-        objc.protocolNamed('ISyncConflictPropertyType')
 
         self.assertResultIsBOOL(TestISyncConflictPropertyTypeHelper.isRelationship)
         self.assertResultIsBOOL(TestISyncConflictPropertyTypeHelper.isToMany)
         self.assertResultIsBOOL(TestISyncConflictPropertyTypeHelper.isRequired)
+
+    @min_os_level('10.6')
+    def testProtocolObjects(self):
+        objc.protocolNamed('ISyncConflictPropertyType')
 
 if __name__ == "__main__":
     main()

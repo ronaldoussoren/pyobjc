@@ -267,6 +267,8 @@ m_CTParagraphStyleCreate(PyObject* self __attribute__((__unused__)),
 }
 
 
+#if PyObjC_BUILD_RELEASE >= 1009
+
 static void
 m_CTRunDelegateDeallocateCallback(void* refCon)
 {
@@ -424,6 +426,8 @@ m_CTRunDelegateCreate(PyObject* self __attribute__((__unused__)), PyObject* args
     CFRelease(delegate);
     return py_delegate;
 }
+#endif /* PyObjC_BUILD_RELEASE >= 1009 */
+
 
 
 static PyMethodDef mod_methods[] = {
@@ -445,6 +449,7 @@ static PyMethodDef mod_methods[] = {
         METH_VARARGS,
         NULL,
     },
+#if PyObjC_BUILD_RELEASE >= 1009
     {
         "CTRunDelegateGetRefCon",
         (PyCFunction)m_CTRunDelegateGetRefCon,
@@ -457,6 +462,8 @@ static PyMethodDef mod_methods[] = {
         METH_VARARGS,
         "CTRunDelegateCreate((getAscent, getDescent, getWidth), info) -> runDelegate",
     },
+#endif /* PyObjC_BUILD_RELEASE >= 1009 */
+
     { 0, 0, 0, }
 };
 

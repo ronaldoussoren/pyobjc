@@ -3,12 +3,12 @@ from PyObjCTools.TestSupport import *
 from QTKit import *
 
 class TestQTCaptureDecompressedVideoOutput (TestCase):
-    #def testInformalProtocols(self):
-        #self.assertIsInstance(protocols.QTCaptureDecompressedVideoOutput_Delegate, objc.informal_protocol)
-    pass
+
+    @min_os_level('10.6')
     def test_methods(self):
-        self.assertResultIsBOOL(QTCaptureDecompressedVideoOutput.automaticallyDropsLateVideoFrames)
-        self.assertArgIsBOOL(QTCaptureDecompressedVideoOutput.setAutomaticallyDropsLateVideoFrames_, 0)
+        o = QTCaptureDecompressedVideoOutput.alloc().init()
+        self.assertResultIsBOOL(o.automaticallyDropsLateVideoFrames)
+        self.assertArgIsBOOL(o.setAutomaticallyDropsLateVideoFrames_, 0)
 
 if __name__ == "__main__":
     main()

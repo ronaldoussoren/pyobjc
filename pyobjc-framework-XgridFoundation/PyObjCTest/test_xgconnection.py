@@ -17,8 +17,5 @@ class TestXGConnection (TestCase):
         self.assertResultIsBOOL(XGConnection.isOpened)
         self.assertResultIsBOOL(XGConnection.isClosed)
 
-    def testProtocols(self):
-        self.assertIsInstance(protocols.XGConnectionDelegate, objc.informal_protocol)
-
 if __name__ == "__main__":
     main()

@@ -24,4 +24,5 @@ setup(
         'pyobjc-framework-Cocoa>=3.1b1',
         'pyobjc-framework-Quartz>=3.1b1',
     ],
+    min_os_level='10.9',
 )

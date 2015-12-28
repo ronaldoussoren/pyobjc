@@ -4,16 +4,16 @@ from Foundation import NSDictionary
 from Quartz import *
 
 class TestCTRunDelegate (TestCase):
-    @min_os_level('10.5')
+    @min_os_level('10.9')
     def testTypes(self):
         self.assertIsCFType(CTRunDelegateRef)
 
-    @min_os_level('10.5')
+    @min_os_level('10.9')
     def testConstants(self):
         self.assertEqual(kCTRunDelegateVersion1, 1)
         self.assertEqual(kCTRunDelegateCurrentVersion, kCTRunDelegateVersion1)
 
-    @min_os_level('10.5')
+    @min_os_level('10.9')
     def testFunctions(self):
         self.assertIsInstance(CTRunDelegateGetTypeID(), (int, long))
 

@@ -17,8 +17,6 @@ class TestAXTextAttributedString (TestCase):
         self.assertIsInstance(HIServices.kAXNaturalLanguageTextAttribute, unicode)
         self.assertIsInstance(HIServices.kAXReplacementStringTextAttribute, unicode)
         self.assertIsInstance(HIServices.kAXMisspelledTextAttribute, unicode)
-        self.assertIsInstance(HIServices.kAXMarkedMisspelledTextAttribute, unicode)
-        self.assertIsInstance(HIServices.kAXAutocorrectedTextAttribute, unicode)
         self.assertIsInstance(HIServices.kAXFontNameKey, unicode)
         self.assertIsInstance(HIServices.kAXFontFamilyKey, unicode)
         self.assertIsInstance(HIServices.kAXVisibleNameKey, unicode)
@@ -30,6 +28,13 @@ class TestAXTextAttributedString (TestCase):
         self.assertEqual(HIServices.kAXUnderlineStyleThick, 0x2)
         self.assertEqual(HIServices.kAXUnderlineStyleDouble, 0x9)
 
+    @min_os_level('10.7')
+    def testConstants10_7(self):
+        self.assertIsInstance(HIServices.kAXAutocorrectedTextAttribute, unicode)
+
+    @min_os_level('10.9')
+    def testConstants10_9(self):
+        self.assertIsInstance(HIServices.kAXMarkedMisspelledTextAttribute, unicode)
 
 
 

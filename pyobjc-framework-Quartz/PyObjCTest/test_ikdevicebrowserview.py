@@ -23,6 +23,7 @@ class TestIKDeviceBrowserView (TestCase):
         self.assertResultIsBOOL(IKDeviceBrowserView.displaysNetworkScanners)
         self.assertArgIsBOOL(IKDeviceBrowserView.setDisplaysNetworkScanners_, 0)
 
+    @min_os_level('10.10')
     def testProtocols(self):
         objc.protocolNamed('IKDeviceBrowserViewDelegate')
 

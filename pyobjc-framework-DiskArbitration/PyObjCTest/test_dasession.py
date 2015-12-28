@@ -3,10 +3,12 @@ from PyObjCTools.TestSupport import *
 import DiskArbitration
 
 class TestDASession (TestCase):
+    @min_os_level('10.10')
     def test_types(self):
         self.assertIsCFType(DiskArbitration.DASessionRef)
         self.assertIsCFType(DiskArbitration.DAApprovalSessionRef)
 
+    @min_os_level('10.10')
     def test_functions(self):
         self.assertIsInstance(DiskArbitration.DASessionGetTypeID(), (int, long))
 
@@ -20,7 +22,6 @@ class TestDASession (TestCase):
 
         DiskArbitration.DASessionUnscheduleFromRunLoop(obj, rl, DiskArbitration.kCFRunLoopCommonModes)
 
-        DiskArbitration.DASessionSetDispatchQueue
 
         self.assertIsInstance(DiskArbitration.DAApprovalSessionGetTypeID(), (int, long))
 
@@ -30,6 +31,8 @@ class TestDASession (TestCase):
 
         DiskArbitration.DAApprovalSessionScheduleWithRunLoop(ses, rl, DiskArbitration.kCFRunLoopCommonModes)
         DiskArbitration.DAApprovalSessionUnscheduleFromRunLoop(ses, rl, DiskArbitration.kCFRunLoopCommonModes)
+
+        DiskArbitration.DASessionSetDispatchQueue
 
 if __name__ == "__main__":
     main()

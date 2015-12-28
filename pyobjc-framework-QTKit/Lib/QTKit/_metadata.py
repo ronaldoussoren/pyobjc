@@ -165,6 +165,8 @@ try:
     r(b'QTSampleBuffer', b'duration', {'retval': {'type': sel32or64(b'{_QTTime=qll}', b'{_QTTime=qqq}')}})
     r(b'QTSampleBuffer', b'getAudioStreamPacketDescriptions:inRange:', {'retval': {'type': 'Z'}})
     r(b'QTSampleBuffer', b'presentationTime', {'retval': {'type': sel32or64(b'{_QTTime=qll}', b'{_QTTime=qqq}')}})
+    r(b'QTTrack', b'trackWithQuickTimeTrack:error:', {'arguments': {3: {'type_modifier': b'o'}}})
+    r(b'QTTrack', b'initWithQuickTimeTrack:error:', {'arguments': {3: {'type_modifier': b'o'}}})
     r(b'QTTrack', b'addImage:forDuration:withAttributes:', {'arguments': {3: {'type': sel32or64(b'{_QTTime=qll}', b'{_QTTime=qqq}')}}})
     r(b'QTTrack', b'deleteSegment:', {'arguments': {2: {'type': sel32or64(b'{_QTTimeRange={_QTTime=qll}{_QTTime=qll}}', b'{_QTTimeRange={_QTTime=qqq}{_QTTime=qqq}}')}}})
     r(b'QTTrack', b'insertEmptySegmentAt:', {'arguments': {2: {'type': sel32or64(b'{_QTTimeRange={_QTTime=qll}{_QTTime=qll}}', b'{_QTTimeRange={_QTTime=qqq}{_QTTime=qqq}}')}}})
