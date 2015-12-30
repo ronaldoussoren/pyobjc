@@ -36,8 +36,8 @@ class TestNSStackView (TestCase):
         self.assertResultIsBOOL(NSStackView.detachesHiddenViews)
         self.assertArgIsBOOL(NSStackView.setDetachesHiddenViews_, 0)
 
-    @min_sdk_level('10.9')
-    def testProtocols(self):
+    @min_sdk_level('10.10')
+    def testProtocolObjects(self):
         objc.protocolNamed('NSStackViewDelegate')
 
 

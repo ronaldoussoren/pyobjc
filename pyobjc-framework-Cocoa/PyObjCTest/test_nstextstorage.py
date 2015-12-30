@@ -17,7 +17,7 @@ class TestNSTextStorage (TestCase):
     def testMethods(self):
         self.assertResultIsBOOL(NSTextStorage.fixesAttributesLazily)
 
-    @min_sdk_level('10.7')
+    @min_sdk_level('10.10')
     def testProtocolObjects(self):
         objc.protocolNamed('NSTextStorageDelegate')
 

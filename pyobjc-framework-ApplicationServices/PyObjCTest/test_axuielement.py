@@ -76,6 +76,8 @@ class TestAXUIElement (TestCase):
 
     @min_os_level('10.9')
     def testFunctions10_9(self):
+        AXObserverCallbackWithInfo = b'v^{__AXObserver=}^{__AXUIElement=}^{__CFString=}^{__CFDictionary=}^v'
+
         self.assertResultIsBOOL(HIServices.AXIsProcessTrustedWithOptions)
 
         self.assertArgIsFunction(HIServices.AXObserverCreateWithInfoCallback, 1, AXObserverCallbackWithInfo, True)

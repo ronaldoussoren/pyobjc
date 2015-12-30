@@ -36,7 +36,7 @@ class TestNSUserNotification (TestCase):
         self.assertResultIsBOOL(UserNotificationHelper.userNotificationCenter_shouldPresentNotification_)
 
 
-    @min_os_level('10.8')
+    @min_os_level('10.10')
     def testProtocolsObjects(self):
         objc.protocolNamed('NSUserNotificationCenterDelegate')
 

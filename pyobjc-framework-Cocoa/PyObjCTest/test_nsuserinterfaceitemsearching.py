@@ -5,8 +5,8 @@ class TestNSUserInterfaceItemSearchingHelper (NSObject):
     def searchForItemsWithSearchString_resultLimit_matchedItemHandler_(self, s, l, h): pass
 
 class TestNSUserInterfaceItemSearching (TestCase):
-    @min_sdk_level('10.7')
-    def testProtocols(self):
+    @min_sdk_level('10.10')
+    def testProtocolObjects(self):
         objc.protocolNamed('NSUserInterfaceItemSearching')
 
     @min_os_level('10.6')

@@ -40,8 +40,11 @@ class TestNSURLConnection (TestCase):
                 2, b'v@@')
 
     @min_sdk_level('10.7')
-    def testProtocols(self):
+    def testProtocolObjects(self):
         objc.protocolNamed('NSURLConnectionDelegate')
+
+    @min_sdk_level('10.10')
+    def testProtocolObjects10_10(self):
         objc.protocolNamed('NSURLConnectionDataDelegate')
         objc.protocolNamed('NSURLConnectionDownloadDelegate')
 
