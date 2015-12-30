@@ -152,7 +152,7 @@
 	  "1": { "typestr": "{_CMTime=qiIq}" },
 	  "2": { "typestr": "^{__CGImage}" },
 	  "3": { "typestr": "{_CMTime=qiIq}" },
-	  "4": { "typestr": "q" }
+	  "4": { "typestr": ["i", "q"] }
 	 },
 	 "retval": { "typestr": "v" }
 	}
@@ -2104,20 +2104,20 @@
      },
      {
       "args": {
-       "1": { "type_override": "Q" }
+       "1": { "type_override": ["I", "Q"] }
       },
       "class_method": false,
       "selector": "destinationForMixer:bus:"
      },
      {
       "args": {
-       "0": { "type_override": "q" }
+       "0": { "type_override": ["i", "q"] }
       },
       "class_method": false,
       "selector": "setRenderingAlgorithm:"
      },
      {
-      "retval": { "type_override": "q" },
+      "retval": { "type_override": ["i", "q"] },
       "class_method": false,
       "selector": "setRenderingAlgorithm:"
      }
