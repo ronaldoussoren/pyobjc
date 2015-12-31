@@ -72,7 +72,6 @@ class TestNSURLSession (TestCase):
         self.assertArgIsBlock(NSURLSession.resetWithCompletionHandler_, 0, b'v')
         self.assertArgIsBlock(NSURLSession.flushWithCompletionHandler_, 0, b'v')
         self.assertArgIsBlock(NSURLSession.getTasksWithCompletionHandler_, 0, b'v@@@')
-        self.assertArgIsBlock(NSURLSession.getAllTasksWithCompletionHandler_, 0, b'v@')
 
         self.assertArgIsBlock(NSURLSession.dataTaskWithRequest_completionHandler_, 1, b'v@@@')
         self.assertArgIsBlock(NSURLSession.dataTaskWithURL_completionHandler_, 1, b'v@@@')
@@ -97,23 +96,24 @@ class TestNSURLSession (TestCase):
         self.assertArgIsBlock(TestNSURLSessionHelper.URLSession_task_didReceiveChallenge_completionHandler_, 3, b'v' + objc._C_NSUInteger + b'@')
         self.assertArgIsBlock(TestNSURLSessionHelper.URLSession_task_needNewBodyStream_, 2, b'v@')
 
-        self.assertArgHasType(TestNSURLSessionHelper.URLSession_task_didSendBodyData_totalBytesSent_totalBytesExpectedToSend_, 2, objc._C_LNG)
-        self.assertArgHasType(TestNSURLSessionHelper.URLSession_task_didSendBodyData_totalBytesSent_totalBytesExpectedToSend_, 3, objc._C_LNG)
-        self.assertArgHasType(TestNSURLSessionHelper.URLSession_task_didSendBodyData_totalBytesSent_totalBytesExpectedToSend_, 4, objc._C_LNG)
+        self.assertArgHasType(TestNSURLSessionHelper.URLSession_task_didSendBodyData_totalBytesSent_totalBytesExpectedToSend_, 2, objc._C_LNG_LNG)
+        self.assertArgHasType(TestNSURLSessionHelper.URLSession_task_didSendBodyData_totalBytesSent_totalBytesExpectedToSend_, 3, objc._C_LNG_LNG)
+        self.assertArgHasType(TestNSURLSessionHelper.URLSession_task_didSendBodyData_totalBytesSent_totalBytesExpectedToSend_, 4, objc._C_LNG_LNG)
 
         self.assertArgIsBlock(TestNSURLSessionHelper.URLSession_dataTask_didReceiveResponse_completionHandler_, 3, b'v' + objc._C_NSUInteger)
         self.assertArgIsBlock(TestNSURLSessionHelper.URLSession_dataTask_willCacheResponse_completionHandler_, 3, b'v@')
         self.assertArgIsBlock(TestNSURLSessionHelper.URLSession_dataTask_willCacheResponse_completionHandler_, 3, b'v@')
 
-        self.assertArgHasType(TestNSURLSessionHelper.URLSession_downloadTask_didWriteData_totalBytesWritten_totalBytesExpectedToWrite_, 2, objc._C_LNG)
-        self.assertArgHasType(TestNSURLSessionHelper.URLSession_downloadTask_didWriteData_totalBytesWritten_totalBytesExpectedToWrite_, 3, objc._C_LNG)
-        self.assertArgHasType(TestNSURLSessionHelper.URLSession_downloadTask_didWriteData_totalBytesWritten_totalBytesExpectedToWrite_, 4, objc._C_LNG)
+        self.assertArgHasType(TestNSURLSessionHelper.URLSession_downloadTask_didWriteData_totalBytesWritten_totalBytesExpectedToWrite_, 2, objc._C_LNG_LNG)
+        self.assertArgHasType(TestNSURLSessionHelper.URLSession_downloadTask_didWriteData_totalBytesWritten_totalBytesExpectedToWrite_, 3, objc._C_LNG_LNG)
+        self.assertArgHasType(TestNSURLSessionHelper.URLSession_downloadTask_didWriteData_totalBytesWritten_totalBytesExpectedToWrite_, 4, objc._C_LNG_LNG)
 
-        self.assertArgHasType(TestNSURLSessionHelper.URLSession_downloadTask_didResumeAtOffset_expectedTotalBytes_, 2, objc._C_LNG)
-        self.assertArgHasType(TestNSURLSessionHelper.URLSession_downloadTask_didResumeAtOffset_expectedTotalBytes_, 3, objc._C_LNG)
+        self.assertArgHasType(TestNSURLSessionHelper.URLSession_downloadTask_didResumeAtOffset_expectedTotalBytes_, 2, objc._C_LNG_LNG)
+        self.assertArgHasType(TestNSURLSessionHelper.URLSession_downloadTask_didResumeAtOffset_expectedTotalBytes_, 3, objc._C_LNG_LNG)
 
     @min_os_level('10.11')
     def testMethods10_11(self):
+        self.assertArgIsBlock(NSURLSession.getAllTasksWithCompletionHandler_, 0, b'v@')
         self.assertArgIsBlock(TestNSURLSessionStreamTaskHelper.readDataOfMinLength_maxLength_timeout_completionHandler_, 3, b'v@Z@')
         self.assertArgIsBlock(TestNSURLSessionStreamTaskHelper.writeData_timeout_completionHandler_, 2, b'v@')
 

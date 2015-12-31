@@ -3,6 +3,7 @@ from AppKit import *
 
 class TestNSItemProvider (TestCase):
     @min_os_level('10.10')
+    @onlyOn64Bit
     def testConstants10_10(self):
         self.assertIsInstance(NSTypeIdentifierDateText, unicode)
         self.assertIsInstance(NSTypeIdentifierAddressText, unicode)
@@ -18,10 +19,12 @@ class TestNSItemProvider (TestCase):
         self.assertEqual(NSItemProviderUnexpectedValueClassError, -1100)
 
     @min_os_level('10.11')
+    @onlyOn64Bit
     def testConstants10_11(self):
         self.assertEqual(NSItemProviderUnavailableCoercionError, -1200)
 
     @min_os_level('10.10')
+    @onlyOn64Bit
     def testMethods10_10(self):
         NSItemProviderCompletionHandler = b'v@@'
         NSItemProviderLoadHandler = b'v@?#@'

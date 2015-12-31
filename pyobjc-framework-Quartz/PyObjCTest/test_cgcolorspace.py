@@ -41,17 +41,14 @@ class TestCGColorSpace (TestCase):
         self.assertIsInstance(kCGColorSpaceAdobeRGB1998, unicode)
         self.assertIsInstance(kCGColorSpaceSRGB, unicode)
 
-
     @min_os_level('10.6')
     def testConstants10_6(self):
         self.assertIsInstance(kCGColorSpaceGenericGrayGamma2_2, unicode)
 
-    @min_os_level('10.10')
-    def testConstants10_10(self):
-        self.assertIsInstance(kCGColorSpaceDisplayP3, unicode)
-
     @min_os_level('10.11')
     def testConstants10_11(self):
+        self.assertIsInstance(kCGColorSpaceDisplayP3, unicode)
+
         self.assertIsInstance(kCGColorSpaceGenericXYZ, unicode)
         self.assertIsInstance(kCGColorSpaceACESCGLinear, unicode)
         self.assertIsInstance(kCGColorSpaceITUR_709, unicode)
