@@ -152,7 +152,11 @@ def os_release():
     if _os_release is not None:
         return _os_release
 
-    pl = _pl.readPlist('/System/Library/CoreServices/SystemVersion.plist')
+    if hasattr(_pl, 'load'):
+        with open('/System/Library/CoreServices/SystemVersion.plist', 'rb') as fp:
+            pl = _pl.load(fp)
+    else:
+        pl = _pl.readPlist('/System/Library/CoreServices/SystemVersion.plist')
     v = pl['ProductVersion']
     return '.'.join(v.split('.')[:2])
 

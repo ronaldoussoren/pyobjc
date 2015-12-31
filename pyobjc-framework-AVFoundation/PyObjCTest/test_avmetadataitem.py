@@ -8,7 +8,7 @@ class TestAVMetadataItem (TestCase):
     def testMethods(self):
         self.assertArgIsBlock(AVFoundation.AVMetadataItem.loadValuesAsynchronouslyForKeys_completionHandler_, 1, b'v')
 
-    @min_os_level('10.7')
+    @min_os_level('10.10')
     def testMethods(self):
         self.assertArgIsBlock(AVFoundation.AVMetadataItem.metadataItemWithPropertiesOfMetadataItem_valueLoadingHandler_, 1, b'v@')
 

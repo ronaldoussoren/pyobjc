@@ -5,3 +5,7 @@ API Notes
 ---------
 
 The entire "Social" framework on MacOSX 10.8 (or later) is available from Python.
+
+.. note::
+
+   This framework is 64-bit only.

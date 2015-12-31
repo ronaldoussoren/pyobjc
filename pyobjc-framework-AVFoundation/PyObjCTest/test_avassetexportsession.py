@@ -45,7 +45,7 @@ class TestAVAssetExportSession (TestCase):
         self.assertArgIsBlock(AVFoundation.AVAssetExportSession.determineCompatibleFileTypesWithCompletionHandler_, 0, b'v@')
         self.assertArgIsBlock(AVFoundation.AVAssetExportSession.exportAsynchronouslyWithCompletionHandler_, 0, b'v')
 
-    @min_os_level('10.7')
+    @min_os_level('10.10')
     def testMethods10_10(self):
         self.assertResultIsBOOL(AVFoundation.AVAssetExportSession.canPerformMultiplePassesOverSourceMediaData)
         self.assertArgIsBOOL(AVFoundation.AVAssetExportSession.setCanPerformMultiplePassesOverSourceMediaData_, 0)

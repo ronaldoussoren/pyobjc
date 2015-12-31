@@ -53,9 +53,12 @@ class TestNSTextFinder (TestCase):
         self.assertResultIsBOOL(AppKit.NSTextFinder.incrementalSearchingShouldDimContentView)
         self.assertArgIsBOOL(AppKit.NSTextFinder.setIncrementalSearchingShouldDimContentView_, 0)
 
+    @min_os_level('10.10')
+    def testProtocolObjects(self):
+        objc.protocolNamed('NSTextFinderClient')
+
     @min_os_level('10.7')
     def testProtocol10_7(self):
-        objc.protocolNamed('NSTextFinderClient')
         self.assertResultIsBOOL(FindHelper.isSelectable)
         self.assertResultIsBOOL(FindHelper.allowsMultipleSelection)
         self.assertResultIsBOOL(FindHelper.isEditable)

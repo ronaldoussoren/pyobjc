@@ -5,7 +5,9 @@
 
 
 static PyObjC_function_map function_map[] = {
+#if PyObjC_BUILD_RELEASE >= 1011
     { "AVMakeBeatRange", (PyObjC_Function_Pointer)&AVMakeBeatRange },
+#endif
     { "AVAudioMake3DPoint", (PyObjC_Function_Pointer)&AVAudioMake3DPoint },
     { "AVAudioMake3DVector", (PyObjC_Function_Pointer)&AVAudioMake3DVector },
     { "AVAudioMake3DVectorOrientation", (PyObjC_Function_Pointer)&AVAudioMake3DVectorOrientation },

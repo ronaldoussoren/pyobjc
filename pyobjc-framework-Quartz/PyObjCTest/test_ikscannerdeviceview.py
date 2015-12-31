@@ -2,8 +2,8 @@ from Quartz import *
 from PyObjCTools.TestSupport import *
 
 class TestIKScannerDeviceView (TestCase):
-    @min_os_level('10.7')
-    def testProtocols10_7(self):
+    @min_os_level('10.10')
+    def testProtocolObjects(self):
         objc.protocolNamed('IKScannerDeviceViewDelegate')
 
     @min_os_level('10.6')

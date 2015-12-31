@@ -455,11 +455,15 @@ class TestCFOpenDirectoryConstants (TestCase):
         self.assertIsInstance(CFOpenDirectory.kODPolicyTypeAccountExpiresOnDate, unicode)
         self.assertIsInstance(CFOpenDirectory.kODPolicyTypeAccountMaximumFailedLogins, unicode)
         self.assertIsInstance(CFOpenDirectory.kODPolicyTypeAccountMaximumMinutesOfNonUse, unicode)
-        self.assertIsInstance(CFOpenDirectory.kODPolicyTypeAccountMaximumMinutesUntilDisabled, unicode)
-        self.assertIsInstance(CFOpenDirectory.kODPolicyTypeAccountMinutesUntilFailedLoginReset, unicode)
 
         self.assertEqual(CFOpenDirectory.kODExpirationTimeExpired, 0)
         self.assertEqual(CFOpenDirectory.kODExpirationTimeNeverExpires, -1)
+
+    @expectedFailureIf(os_release() == '10.9')
+    @min_os_level('10.9')
+    def testConstants10_9_missing(self):
+        self.assertIsInstance(CFOpenDirectory.kODPolicyTypeAccountMaximumMinutesUntilDisabled, unicode)
+        self.assertIsInstance(CFOpenDirectory.kODPolicyTypeAccountMinutesUntilFailedLoginReset, unicode)
 
     @min_os_level('10.10')
     def testConstants10_10(self):

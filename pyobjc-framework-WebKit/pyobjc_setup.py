@@ -108,6 +108,7 @@ class oc_test (test.test):
 
     def run(self):
         import unittest
+        import time
 
         # Ensure that build directory is on sys.path (py3k)
         import sys
@@ -125,10 +126,14 @@ class oc_test (test.test):
             meta = self.distribution.metadata
             name = meta.get_name()
             test_pkg = name + "_tests"
+
+            time_before = time.time()
             suite = loader_class().loadTestsFromName(self.distribution.test_suite)
 
             runner = unittest.TextTestRunner(verbosity=self.verbosity)
             result = runner.run(suite)
+
+            time_after = time.time()
 
             # Print out summary. This is a structured format that
             # should make it easy to use this information in scripts.
@@ -139,6 +144,7 @@ class oc_test (test.test):
                 xfails=len(getattr(result, 'expectedFailures', [])),
                 xpass=len(getattr(result, 'unexpectedSuccesses', [])),
                 skip=len(getattr(result, 'skipped', [])),
+                testSeconds=(time_after - time_before),
             )
             print("SUMMARY: %s"%(summary,))
             if not result.wasSuccessful():
@@ -447,7 +453,7 @@ def setup(
         class no_test (oc_test):
             def run(self, msg=msg):
                 print("WARNING: %s\n"%(msg,))
-                print("SUMMARY: {'count': 0, 'fails': 0, 'errors': 0, 'xfails': 0, 'skip': 65, 'xpass': 0, 'message': %r }"%(msg,))
+                print("SUMMARY: {'testSeconds': 0.0, 'count': 0, 'fails': 0, 'errors': 0, 'xfails': 0, 'skip': 65, 'xpass': 0, 'message': %r }"%(msg,))
 
         cmdclass['build'] = create_command_subclass(build.build)
         cmdclass['test'] = no_test

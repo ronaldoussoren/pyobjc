@@ -57,8 +57,8 @@ class TestNSMetaData (TestCase):
         self.assertArgIsBlock(NSMetadataQuery.enumerateResultsUsingBlock_, 0, b'v@' + objc._C_NSUInteger + b'o^Z')
         self.assertArgIsBlock(NSMetadataQuery.enumerateResultsWithOptions_usingBlock_, 1, b'v@' + objc._C_NSUInteger + b'o^Z')
 
-    @min_sdk_level('10.7')
-    def testProtocols(self):
+    @min_sdk_level('10.10')
+    def testProtocolObjects(self):
         objc.protocolNamed('NSMetadataQueryDelegate')
 
 if __name__ == "__main__":

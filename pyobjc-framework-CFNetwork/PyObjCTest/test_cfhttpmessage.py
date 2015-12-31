@@ -16,7 +16,7 @@ class TestCFHTTPMessage (TestCase):
     def testConstants10_7(self):
         self.assertIsInstance(kCFHTTPAuthenticationSchemeNegotiate2, unicode)
         self.assertIsInstance(kCFHTTPAuthenticationSchemeXMobileMeAuthToken, unicode)
-        self.assertIsInstance(kCFHTTPAuthenticationSchemeKerberos, unicode)
+
 
     @min_os_level('10.5')
     def testConstants10_5(self):
@@ -27,6 +27,7 @@ class TestCFHTTPMessage (TestCase):
     @min_os_level('10.10')
     def testConstants10_10(self):
         self.assertIsInstance(kCFHTTPVersion2_0, unicode)
+        self.assertIsInstance(kCFHTTPAuthenticationSchemeKerberos, unicode)
 
     def testConstants(self):
         self.assertIsInstance(kCFHTTPVersion1_0, unicode)

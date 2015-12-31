@@ -34,6 +34,9 @@ class TestAVAsset (TestCase):
 
         self.assertIsInstance(AVFoundation.AVURLAssetPreferPreciseDurationAndTimingKey, unicode)
         self.assertIsInstance(AVFoundation.AVURLAssetReferenceRestrictionsKey, unicode)
+
+    @min_os_level('10.10')
+    def testConstants10_10(self):
         self.assertIsInstance(AVFoundation.AVURLAssetHTTPCookiesKey, unicode)
 
     @min_os_level('10.11')
