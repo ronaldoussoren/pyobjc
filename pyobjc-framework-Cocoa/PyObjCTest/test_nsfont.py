@@ -18,17 +18,17 @@ class TestNSFont(TestCase):
     def testMatrixMethods(self):
         o = AppKit.NSFont.boldSystemFontOfSize_(10);
         m = o.matrix()
-        self.assert_(isinstance(m, tuple))
+        self.assertTrue(isinstance(m, tuple))
         self.assertEqual(len(m), 6)
 
         nm = o.fontName()
 
         o = AppKit.NSFont.fontWithName_matrix_(
                 nm, AppKit.NSFontIdentityMatrix)
-        self.assert_(o is not None)
+        self.assertTrue(o is not None)
 
         m = o.matrix()
-        self.assert_(isinstance(m, tuple))
+        self.assertIsInstance(m, tuple)
         self.assertEqual(len(m), 6)
 
         self.matrixEquals(m, (1.0, 0.0, 0.0, 1.0, 0.0, 0.0))
@@ -37,10 +37,10 @@ class TestNSFont(TestCase):
         # same thing happens in pure ObjC code.
         #o = AppKit.NSFont.fontWithName_matrix_(nm, (1.0, 2.0, 3.0, 4.0, 5.0, 6.0))
         o = AppKit.NSFont.fontWithName_matrix_(nm, (12.0, 0.0, 0.0, 12.0, 0.0, 0.0))
-        self.assert_(o is not None)
+        self.assertTrue(o is not None)
 
         m = o.matrix()
-        self.assert_(isinstance(m, tuple))
+        self.assertIsInstance(m, tuple)
         self.assertEqual(len(m), 6)
 
         #self.matrixEquals(m, (1.0, 2.0, 3.0, 4.0, 5.0, 6.0))
@@ -131,8 +131,10 @@ class TestNSFont(TestCase):
 
         self.assertArgHasType(NSFont.positionOfGlyph_struckOverGlyph_metricsExist_, 2, b'o^' + objc._C_NSBOOL)
         self.assertArgHasType(NSFont.positionOfGlyph_struckOverRect_metricsExist_, 2, b'o^' + objc._C_NSBOOL)
-        self.assertArgHasType(NSFont.positionOfGlyph_withRelation_toBaseGlyph_totalAdvancement_metricsExist_, 3, b'o^' + NSSize.__typestr__)
-        self.assertArgHasType(NSFont.positionOfGlyph_withRelation_toBaseGlyph_totalAdvancement_metricsExist_, 4, b'o^' + objc._C_NSBOOL)
+
+        if os_release() != '10.10':
+            self.assertArgHasType(NSFont.positionOfGlyph_withRelation_toBaseGlyph_totalAdvancement_metricsExist_, 3, b'o^' + NSSize.__typestr__)
+            self.assertArgHasType(NSFont.positionOfGlyph_withRelation_toBaseGlyph_totalAdvancement_metricsExist_, 4, b'o^' + objc._C_NSBOOL)
 
 
     def testFunctions(self):

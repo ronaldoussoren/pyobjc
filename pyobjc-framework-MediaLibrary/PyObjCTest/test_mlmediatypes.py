@@ -142,15 +142,18 @@ if sys.maxsize > 2 ** 32:
             self.assertIsInstance(MediaLibrary.MLPhotosMyPhotoStreamTypeIdentifier, unicode)
             self.assertIsInstance(MediaLibrary.MLPhotosSharedPhotoStreamTypeIdentifier, unicode)
             self.assertIsInstance(MediaLibrary.MLPhotosFavoritesGroupTypeIdentifier, unicode)
-            self.assertIsInstance(MediaLibrary.MLPhotosFrontCameraGroupTypeIdentifier, unicode)
             self.assertIsInstance(MediaLibrary.MLPhotosPanoramasGroupTypeIdentifier, unicode)
             self.assertIsInstance(MediaLibrary.MLPhotosVideosGroupTypeIdentifier, unicode)
             self.assertIsInstance(MediaLibrary.MLPhotosSloMoGroupTypeIdentifier, unicode)
             self.assertIsInstance(MediaLibrary.MLPhotosTimelapseGroupTypeIdentifier, unicode)
             self.assertIsInstance(MediaLibrary.MLPhotosBurstGroupTypeIdentifier, unicode)
-            self.assertIsInstance(MediaLibrary.MLPhotosScreenshotGroupTypeIdentifier, unicode)
             self.assertIsInstance(MediaLibrary.MLPhotosFacesAlbumTypeIdentifier, unicode)
             self.assertIsInstance(MediaLibrary.MLPhotosAllPhotosAlbumTypeIdentifier, unicode)
+
+        @min_os_level("10.11")
+        def testConstants10_11(self):
+            self.assertIsInstance(MediaLibrary.MLPhotosFrontCameraGroupTypeIdentifier, unicode)
+            self.assertIsInstance(MediaLibrary.MLPhotosScreenshotGroupTypeIdentifier, unicode)
 
 if __name__ == "__main__":
     main()
