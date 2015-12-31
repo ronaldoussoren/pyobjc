@@ -26,6 +26,7 @@ if sys.maxsize > 2 ** 32:
             self.assertEqual(GameCenter.GKMatchTypeHosted, 1)
             self.assertEqual(GameCenter.GKMatchTypeTurnBased, 2)
 
+        @expectedFailureIf(os_release() == '10.9')
         @min_os_level('10.8')
         def testMethods10_8(self):
             self.assertResultIsBOOL(GameCenter.GKInvite.isHosted)
@@ -41,6 +42,7 @@ if sys.maxsize > 2 ** 32:
 
             self.assertArgIsBlock(GameCenter.GKMatchmaker.findPlayersForHostedMatchRequest_withCompletionHandler_, 1, b'v@@')
 
+        @expectedFailureIf(os_release() == '10.9')
         @min_os_level('10.9')
         def testMethods10_9(self):
             self.assertArgIsBlock(GameCenter.GKMatchmaker.startBrowsingForNearbyPlayersWithReachableHandler_, 0, b'v@Z')

@@ -23,7 +23,6 @@ if sys.maxsize > 2 ** 32:
             self.assertIsInstance(MediaLibrary.MLiTunesPlaylistTypeIdentifier, unicode)
             self.assertIsInstance(MediaLibrary.MLiTunesPurchasedPlaylistTypeIdentifier, unicode)
             self.assertIsInstance(MediaLibrary.MLiTunesPodcastPlaylistTypeIdentifier, unicode)
-            self.assertIsInstance(MediaLibrary.MLiTunesVideoPlaylistTypeIdentifier, unicode)
             self.assertIsInstance(MediaLibrary.MLiTunesSmartPlaylistTypeIdentifier, unicode)
             self.assertIsInstance(MediaLibrary.MLiTunesFolderPlaylistTypeIdentifier, unicode)
             self.assertIsInstance(MediaLibrary.MLiTunesMoviesPlaylistTypeIdentifier, unicode)
@@ -125,6 +124,7 @@ if sys.maxsize > 2 ** 32:
 
         @min_os_level("10.10")
         def testConstants10_10(self):
+            self.assertIsInstance(MediaLibrary.MLiTunesVideoPlaylistTypeIdentifier, unicode)
             self.assertIsInstance(MediaLibrary.MLPhotosRootGroupTypeIdentifier, unicode)
             self.assertIsInstance(MediaLibrary.MLPhotosSharedGroupTypeIdentifier, unicode)
             self.assertIsInstance(MediaLibrary.MLPhotosAlbumsGroupTypeIdentifier, unicode)

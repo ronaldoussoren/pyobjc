@@ -22,6 +22,7 @@ if sys.maxsize > 2 ** 32:
             self.assertEqual(GameCenter.GKPlayerStateConnected, 1)
             self.assertEqual(GameCenter.GKPlayerStateDisconnected, 2)
 
+        @expectedFailureIf(os_release() == '10.9')
         @min_os_level('10.8')
         def testMethods10_8(self):
             self.assertResultIsBOOL(GameCenter.GKMatch.sendData_toPlayers_dataMode_error_)
@@ -33,6 +34,7 @@ if sys.maxsize > 2 ** 32:
             self.assertArgIsBlock(GameCenter.GKMatch.chooseBestHostingPlayerWithCompletionHandler_, 0, b'v@')
             self.assertArgIsBlock(GameCenter.GKMatch.rematchWithCompletionHandler_, 0, b'v@@')
 
+        @expectedFailureIf(os_release() == '10.9')
         @min_os_level('10.9')
         def testMethods10_9(self):
             self.assertArgIsBlock(GameCenter.GKMatch.chooseBestHostPlayerWithCompletionHandler_, 0, b'v@')
