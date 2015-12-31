@@ -13,24 +13,24 @@ class TestSCNMaterialProperty (TestCase):
         self.assertIsInstance(SceneKit.SCNModelViewProjectionTransform, unicode)
 
     def testMethods(self):
-        self.assertResultIsBOOL(SceneKit.SCNMaterialProperty.isHidden)
-        self.assertArgIsBOOL(SceneKit.SCNMaterialProperty.setHidden_, 0)
+        self.assertResultIsBOOL(SceneKit.SCNNode.isHidden)
+        self.assertArgIsBOOL(SceneKit.SCNNode.setHidden_, 0)
 
-        self.assertArgIsBOOL(SceneKit.SCNMaterialProperty.childNodeWithName_recursively_, 1)
+        self.assertArgIsBOOL(SceneKit.SCNNode.childNodeWithName_recursively_, 1)
 
-        self.assertArgIsBlock(SceneKit.SCNMaterialProperty.childNodesPassingTest_, 0, b'Z@o^Z')
+        self.assertArgIsBlock(SceneKit.SCNNode.childNodesPassingTest_, 0, b'Z@o^Z')
 
     @min_os_level('10.10')
     def testMethods10_10(self):
-        self.assertResultIsBOOL(SceneKit.SCNMaterialProperty.castsShadow)
-        self.assertArgIsBOOL(SceneKit.SCNMaterialProperty.setCastsShadow_, 0)
+        self.assertResultIsBOOL(SceneKit.SCNNode.castsShadow)
+        self.assertArgIsBOOL(SceneKit.SCNNode.setCastsShadow_, 0)
 
-        self.assertArgIsBlock(SceneKit.SCNMaterialProperty.enumerateChildNodesUsingBlock_, 0, b'v@o^Z')
+        self.assertArgIsBlock(SceneKit.SCNNode.enumerateChildNodesUsingBlock_, 0, b'v@o^Z')
 
-        self.assertResultIsBOOL(SceneKit.SCNMaterialProperty.isPaused)
-        self.assertArgIsBOOL(SceneKit.SCNMaterialProperty.setPaused_, 0)
+        self.assertResultIsBOOL(SceneKit.SCNNode.isPaused)
+        self.assertArgIsBOOL(SceneKit.SCNNode.setPaused_, 0)
 
-    def testProtocols(self):
+    def testProtocolObjects(self):
         objc.protocolNamed('SCNNodeRendererDelegate')
 
 if __name__ == "__main__":

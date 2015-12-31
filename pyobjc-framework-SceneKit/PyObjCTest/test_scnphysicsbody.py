@@ -31,7 +31,7 @@ class TestSCNPhysicsBody (TestCase):
         self.assertResultIsBOOL(SceneKit.SCNPhysicsBody.usesDefaultMomentOfInertia)
 
         self.assertArgIsBOOL(SceneKit.SCNPhysicsBody.setAffectedByGravity_, 0)
-        self.assertResultIsBOOL(SceneKit.SCNPhysicsBody.affectedByGravity)
+        self.assertResultIsBOOL(SceneKit.SCNPhysicsBody.isAffectedByGravity)
 
 if __name__ == "__main__":
     main()

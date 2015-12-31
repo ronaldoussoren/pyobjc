@@ -32,8 +32,8 @@ class TestSCNAction (TestCase):
         self.assertArgIsBlock(SceneKit.SCNAction.customActionWithDuration_actionBlock_, 1, b'v@' + objc._C_CGFloat)
 
         self.assertArgIsBlock(TestSCNActionHelper.runAction_completionHandler_, 1, b'v')
-        self.assertArgIsBlock(TestSCNActionHelper.runAction_forKey_completionHandler_, 1, b'v')
-        self.assertResultIsBOOL(TestSCNActionHelper.hasAction)
+        self.assertArgIsBlock(TestSCNActionHelper.runAction_forKey_completionHandler_, 2, b'v')
+        self.assertResultIsBOOL(TestSCNActionHelper.hasActions)
 
     @min_os_level('10.11')
     def testMethods10_11(self):

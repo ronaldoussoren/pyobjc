@@ -100,6 +100,112 @@
      },
      {
       "class_method": false,
+      "selector": "presentScene:withTransition:incomingPointOfView:completionHandler:",
+      "args": {
+       "3": {
+        "type_override": "@?",
+	"callable": {
+         "arguments": {
+	  "0": { "typestr": "^v" }
+	 },
+	 "retval": { "typestr": "v" }
+	}
+       }
+      }
+     },
+     {
+      "class_method": false,
+      "selector": "prepareObject:shouldAbortBlock:",
+      "args": {
+       "1": {
+        "type_override": "@?",
+	"callable": {
+         "arguments": {
+	  "0": { "typestr": "^v" }
+	 },
+	 "retval": { "typestr": "Z" }
+	}
+       }
+      }
+     },
+     {
+      "class_method": false,
+      "selector": "prepareObjects:withCompletionHandler:",
+      "args": {
+       "1": {
+        "type_override": "@?",
+	"callable": {
+         "arguments": {
+	  "0": { "typestr": "^v" },
+	  "1": { "typestr": "Z" }
+	 },
+	 "retval": { "typestr": "v" }
+	}
+       }
+      }
+     },
+     {
+      "class_method": false,
+      "selector": "debugOptions",
+      "retval": { "type_override": ["I", "Q"] }
+     },
+     {
+      "class_method": false,
+      "selector": "setDebugOptions:",
+      "args": {
+       "0": { "type_override": ["I", "Q"] }
+      }
+     },
+     {
+      "class_method": false,
+      "selector": "renderingAPI",
+      "retval": { "type_override": ["I", "Q"] }
+     },
+     {
+      "class_method": false,
+      "selector": "setRenderingAPI:",
+      "args": {
+       "0": { "type_override": ["I", "Q"] }
+      }
+     },
+     {
+      "class_method": false,
+      "selector": "colorPixelFormat",
+      "retval": { "type_override": ["I", "Q"] }
+     },
+     {
+      "class_method": false,
+      "selector": "setColorPixelFormat:",
+      "args": {
+       "0": { "type_override": ["I", "Q"] }
+      }
+     },
+     {
+      "class_method": false,
+      "selector": "depthPixelFormat",
+      "retval": { "type_override": ["I", "Q"] }
+     },
+     {
+      "class_method": false,
+      "selector": "setDepthPixelFormat:",
+      "args": {
+       "0": { "type_override": ["I", "Q"] }
+      }
+     },
+     {
+      "class_method": false,
+      "selector": "stencilPixelFormat",
+      "retval": { "type_override": ["I", "Q"] }
+     },
+     {
+      "class_method": false,
+      "selector": "setStencilPixelFormat:",
+      "args": {
+       "0": { "type_override": ["I", "Q"] }
+      }
+     },
+     {
+      "class_method": false,
       "selector": "handleUnbindingOfSymbol:usingBlock:",
       "args": {
        "1": {
@@ -119,8 +225,83 @@
      },
      {
       "class_method": false,
+      "selector": "runAction:forKey:completionHandler:",
+      "args": {
+       "2": {
+        "type_override": "@?",
+	"callable": {
+         "arguments": {
+	  "0": { "typestr": "^v" }
+	 },
+	 "retval": { "typestr": "v" }
+	}
+       }
+      }
+     },
+     {
+      "class_method": false,
+      "selector": "runAction:completionHandler:",
+      "args": {
+       "1": {
+        "type_override": "@?",
+	"callable": {
+         "arguments": {
+	  "0": { "typestr": "^v" }
+	 },
+	 "retval": { "typestr": "v" }
+	}
+       }
+      }
+     },
+     {
+      "class_method": false,
       "selector": "program:unbindValueForSymbol:atLocation:programID:renderer:",
       "retval": { "type_override": "Z" }
+     }
+    ]
+   },
+   "SCNReferenceNode": {
+    "methods": [
+     {
+      "class_method": false,
+      "selector": "isLoaded",
+      "retval": { "type_override": "Z" }
+     }
+    ]
+   },
+   "SCNNode": {
+    "methods": [
+     {
+      "class_method": false,
+      "selector": "enumerateChildNodesUsingBlock:",
+      "args": {
+       "0": {
+        "callable": {
+         "arguments": {
+	  "0": { "typestr": "^v" },
+	  "1": { "typestr": "@" },
+	  "2": { "typestr": "o^Z" }
+	 },
+	 "retval": { "typestr": "v" }
+	}
+       }
+      }
+     },
+     {
+      "class_method": false,
+      "selector": "childNodesPassingTest:",
+      "args": {
+       "0": {
+        "callable": {
+         "arguments": {
+	  "0": { "typestr": "^v" },
+	  "1": { "typestr": "@" },
+	  "2": { "typestr": "o^Z" }
+	 },
+	 "retval": { "typestr": "Z" }
+	}
+       }
+      }
      }
     ]
    },
@@ -637,7 +818,16 @@
   },
   "functions": {
    "SCNVector3ToFloat3": { "ignore": true },
-   "SCNVector3FromFloat3": { "ignore": true }
+   "SCNVector3FromFloat3": { "ignore": true },
+   "SCNExportJavaScriptModule": {
+    "args": {
+     "0": {
+      "name": "context",
+       "typestr": "@"
+     }
+    },
+    "retval": { "typestr": "v" }
+   }
   },
   "informal_protocols": {}
  }

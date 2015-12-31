@@ -10,8 +10,8 @@ class TestSCNReferenceNode (TestCase):
 
     @min_os_level('10.11')
     def testMethods(self):
-        self.assertArgIsBOOL(SceneKit.SCNReferenceNode.setLoaded_, 0)
-        self.assertResultIsBOOL(SceneKit.SCN.isLoaded)
+        #self.assertArgIsBOOL(SceneKit.SCNReferenceNode.setLoaded_, 0)
+        self.assertResultIsBOOL(SceneKit.SCNReferenceNode.isLoaded)
 
 
 if __name__ == "__main__":
