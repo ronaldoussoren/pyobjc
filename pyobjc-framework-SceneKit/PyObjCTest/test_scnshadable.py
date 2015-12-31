@@ -42,12 +42,12 @@ class TestSCNShadable (TestCase):
         self.assertArgIsBlock(TestSCNShadableHelper.handleUnbindingOfSymbol_usingBlock_, 1, SCNBindingBlock)
 
         self.assertResultIsBOOL(TestSCNShadableHelper.program_bindValueForSymbol_atLocation_programID_renderer_)
-        self.assertArgIsBOOL(TestSCNShadableHelper.program_bindValueForSymbol_atLocation_programID_renderer_, 2, objc._C_UINT)
-        self.assertArgIsBOOL(TestSCNShadableHelper.program_bindValueForSymbol_atLocation_programID_renderer_, 3, objc._C_UINT)
+        self.assertArgHasType(TestSCNShadableHelper.program_bindValueForSymbol_atLocation_programID_renderer_, 2, objc._C_UINT)
+        self.assertArgHasType(TestSCNShadableHelper.program_bindValueForSymbol_atLocation_programID_renderer_, 3, objc._C_UINT)
 
         self.assertResultIsBOOL(TestSCNShadableHelper.program_unbindValueForSymbol_atLocation_programID_renderer_)
-        self.assertArgIsBOOL(TestSCNShadableHelper.program_unbindValueForSymbol_atLocation_programID_renderer_, 2, objc._C_UINT)
-        self.assertArgIsBOOL(TestSCNShadableHelper.program_unbindValueForSymbol_atLocation_programID_renderer_, 3, objc._C_UINT)
+        self.assertArgHasType(TestSCNShadableHelper.program_unbindValueForSymbol_atLocation_programID_renderer_, 2, objc._C_UINT)
+        self.assertArgHasType(TestSCNShadableHelper.program_unbindValueForSymbol_atLocation_programID_renderer_, 3, objc._C_UINT)
 
         self.assertResultIsBOOL(TestSCNShadableHelper.programIsOpaque_)
 

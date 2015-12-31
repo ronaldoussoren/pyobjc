@@ -21,7 +21,7 @@ class TestSceneKitTypes (TestCase):
 
     def testConstants(self):
         self.assertIsInstance(SceneKit.SCNErrorDomain, unicode)
-        self.asertEqual(SceneKit.SCNProgramCompilationError, 1)
+        self.assertEqual(SceneKit.SCNProgramCompilationError, 1)
 
     @min_os_level('10.10')
     def testConstants10_10(self):
@@ -61,6 +61,8 @@ class TestSceneKitTypes (TestCase):
         w = SceneKit.SCNMatrix4Translate(v, 6, 7, 8)
         self.assertIsInstance(w, SceneKit.SCNMatrix4)
 
+    @expectedFailure
+    def testFunctions_unsupported(self):
         # XXX
         SceneKit.SCNVector3FromGLKVector3
         SceneKit.SCNVector3ToGLKVector3
@@ -70,25 +72,28 @@ class TestSceneKitTypes (TestCase):
 
     @min_os_level('10.10')
     def testFunctions10_10(self):
-        v = SceneKit.SCNMatrix4MakeRotation(1, 2, 3)
-        self.assertIsInstance(v, SCNMatrix4)
+        v = SceneKit.SCNMatrix4MakeRotation(1, 2, 3, 4)
+        self.assertIsInstance(v, SceneKit.SCNMatrix4)
 
         v = SceneKit.SCNMatrix4Scale(v, 1, 2, 3)
-        self.assertIsInstance(v, SCNMatrix4)
+        self.assertIsInstance(v, SceneKit.SCNMatrix4)
 
-        v = SceneKit.SCNMatrix4Rotate(v, 1, 2, 3)
-        self.assertIsInstance(v, SCNMatrix4)
+        v = SceneKit.SCNMatrix4Rotate(v, 1, 2, 3, 4)
+        self.assertIsInstance(v, SceneKit.SCNMatrix4)
 
         v = SceneKit.SCNMatrix4Invert(v)
-        self.assertIsInstance(v, SCNMatrix4)
+        self.assertIsInstance(v, SceneKit.SCNMatrix4)
 
-        v = SceneKit.SCNMatrix4Invert(v, v)
-        self.assertIsInstance(v, SCNMatrix4)
+        v = SceneKit.SCNMatrix4Invert(v)
+        self.assertIsInstance(v, SceneKit.SCNMatrix4)
 
         self.assertResultHasType(SceneKit.SCNMatrix4IsIdentity, objc._C_BOOL)
         self.assertResultHasType(SceneKit.SCNMatrix4EqualToMatrix4, objc._C_BOOL)
 
-        # XXX
+    @min_os_level('10.10')
+    @expectedFailure
+    def testFunctions10_10_unsup(self):
+        # vector types
         SceneKit.SCNMatrix4ToGLKMatrix4
         SceneKit.SCNMatrix4FromGLKMatrix4
 

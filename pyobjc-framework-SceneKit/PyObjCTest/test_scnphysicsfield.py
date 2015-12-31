@@ -5,8 +5,8 @@ import sys
 import SceneKit
 
 SCNFieldForceEvaluator = (SceneKit.SCNVector3.__typestr__
-        + SCNVector3.__typestr__
-        + SCNVector3.__typestr__
+        + SceneKit.SCNVector3.__typestr__
+        + SceneKit.SCNVector3.__typestr__
         + objc._C_FLT
         + objc._C_FLT
         + objc._C_DBL)

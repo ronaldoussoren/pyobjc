@@ -71,7 +71,7 @@ class TestSCNSceneRenderer (TestCase):
     def test_constants10_9(self):
         self.assertIsInstance(SceneKit.SCNHitTestIgnoreHiddenNodesKey, unicode)
 
-    def testProtocols(self):
+    def testProtocolObjects(self):
         objc.protocolNamed('SCNSceneRenderer')
         objc.protocolNamed('SCNSceneRendererDelegate')
 

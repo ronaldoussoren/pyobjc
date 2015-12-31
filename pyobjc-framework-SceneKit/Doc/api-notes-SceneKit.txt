@@ -17,6 +17,10 @@ The full API for the SceneKit framework is available from Python, except for met
 vector_float3 or vector_float4 as one of their arguments or as a return value (those require changes
 to PyObjC's core bridge).
 
+This means ``SCNVector3ToFloat3`` and ``SCNVector3FromFloat3`` are not available from Python.
+
+The type "SCNVector3FromGLKVector3" is also not available at the moment.
+
 .. note::
 
    This framework is only available on OSX 10.8 and later.

@@ -4,8 +4,9 @@ import objc
 import SceneKit
 
 
-SCNParticleEventBlock = b'XXXX' # FIXME: needs smarter metadata than what PyObjCTest supports!
-#typedef void (^SCNParticleEventBlock)(void * __nonnull * __nonnull data, size_t * __nonnull dataStride, uint32_t * __nullable indices, NSInteger count);
+# FIXME: needs smarter metadata than what PyObjCTest supports!
+SCNParticleEventBlock = b'v^^v^' + objc._C_NSUInteger + b'^' + objc._C_NSUInteger + objc._C_NSInteger
+SCNParticleModifierBlock = b'v^^v^' + objc._C_NSUInteger + objc._C_NSInteger + objc._C_NSInteger + objc._C_FLT
 
 
 class TestSCNParticleSystem (TestCase):
@@ -59,9 +60,10 @@ class TestSCNParticleSystem (TestCase):
         self.assertEqual(SceneKit.SCNParticleImageSequenceAnimationModeRepeat, 0)
         self.assertEqual(SceneKit.SCNParticleImageSequenceAnimationModeClamp, 1)
         self.assertEqual(SceneKit.SCNParticleImageSequenceAnimationModeAutoReverse, 2)
-        self.assertEqual(SceneKit.SCNParticleInputModeOverLife, 3)
-        self.assertEqual(SceneKit.SCNParticleInputModeOverDistance, 4)
-        self.assertEqual(SceneKit.SCNParticleInputModeOverOtherProperty, 5)
+
+        self.assertEqual(SceneKit.SCNParticleInputModeOverLife, 0)
+        self.assertEqual(SceneKit.SCNParticleInputModeOverDistance, 1)
+        self.assertEqual(SceneKit.SCNParticleInputModeOverOtherProperty, 2)
 
         self.assertEqual(SceneKit.SCNParticleModifierStagePreDynamics, 0)
         self.assertEqual(SceneKit.SCNParticleModifierStagePostDynamics, 1)

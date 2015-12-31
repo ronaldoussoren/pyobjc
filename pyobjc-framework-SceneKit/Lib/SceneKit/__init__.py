@@ -12,12 +12,14 @@ import Cocoa
 
 from SceneKit import _metadata
 from SceneKit import _SceneKit
+from SceneKit._inlines import _inline_list_
+
 
 sys.modules['SceneKit'] = mod = objc.ObjCLazyModule(
     "SceneKit",
     "com.apple.SceneKit",
     objc.pathForFramework("/System/Library/Frameworks/SceneKit.framework"),
-    _metadata.__dict__, None, {
+    _metadata.__dict__, _inline_list_, {
         '__doc__': __doc__,
         'objc': objc,
         '__path__': __path__,

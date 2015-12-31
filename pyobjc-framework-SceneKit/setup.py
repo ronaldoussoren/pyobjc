@@ -34,6 +34,10 @@ setup(
                 if fn.startswith('_SceneKit')
             ]
         ),
+        Extension("SceneKit._inlines",
+            [ "Modules/_SceneKit_inlines.m" ],
+            extra_link_args=["-framework", "SceneKit"],
+        ),
     ],
     min_os_level="10.7"
 )

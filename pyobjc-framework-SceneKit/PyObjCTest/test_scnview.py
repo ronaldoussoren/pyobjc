@@ -13,9 +13,9 @@ class TestSCNView (TestCase):
 
     @min_os_level('10.11')
     def testConstants10_11(self):
-        self.assertEqual(SceneKit.SCNPreferredRenderingAPIKey, unicode)
-        self.assertEqual(SceneKit.SCNPreferredDeviceKey, unicode)
-        self.assertEqual(SceneKit.SCNPreferLowPowerDeviceKey, unicode)
+        self.assertIsInstance(SceneKit.SCNPreferredRenderingAPIKey, unicode)
+        self.assertIsInstance(SceneKit.SCNPreferredDeviceKey, unicode)
+        self.assertIsInstance(SceneKit.SCNPreferLowPowerDeviceKey, unicode)
 
     @min_os_level('10.8')
     def testMethods10_8(self):

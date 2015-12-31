@@ -20,7 +20,7 @@ class TestSCNScene (TestCase):
         self.assertIsInstance(SceneKit.SCNSceneUpAxisAttributeKey, unicode)
 
     def testMethods(self):
-        self.assertResultIsOut(SceneKit.SCNScene.sceneWithURL_options_error_, 2)
+        self.assertArgIsOut(SceneKit.SCNScene.sceneWithURL_options_error_, 2)
 
     @min_os_level('10.9')
     def testMethods10_9(self):

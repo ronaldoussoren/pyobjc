@@ -16,9 +16,9 @@ class TestSCNConstraint (TestCase):
         self.assertResultIsBOOL(SceneKit.SCNLookAtConstraint.gimbalLockEnabled)
         self.assertArgIsBOOL(SceneKit.SCNLookAtConstraint.setGimbalLockEnabled_, 0)
 
-        self.assertArgIsBOOL(SceneKit.SCNTransformConstraint.transformConstraintInWorldSpace_withBlock, 0)
-        self.assertArgIsBlock(SceneKit.SCNTransformConstraint.transformConstraintInWorldSpace_withBlock, 1,
-            SceneKit.SNMatrix4.__typestr__ + b'@' + SceneKit.SCNMatrix4.__typestr__)
+        self.assertArgIsBOOL(SceneKit.SCNTransformConstraint.transformConstraintInWorldSpace_withBlock_, 0)
+        self.assertArgIsBlock(SceneKit.SCNTransformConstraint.transformConstraintInWorldSpace_withBlock_, 1,
+            SceneKit.SCNMatrix4.__typestr__ + b'@' + SceneKit.SCNMatrix4.__typestr__)
 
 
 if __name__ == "__main__":
