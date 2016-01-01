@@ -10,20 +10,28 @@ if sys.maxsize > 2 ** 32:
         def testClasses(self):
             self.assertIsInstance(SpriteKit.SK3DNode, objc.objc_class)
 
-            self.assertResultHasType(SpriteKit.SK3DNode.projectPoint_, objc._C_VECTOR_FLOAT3)
-            self.assertArgHasType(SpriteKit.SK3DNode.projectPoint_, 0, objc._C_VECTOR_FLOAT3)
-
-            self.assertResultHasType(SpriteKit.SK3DNode.unprojectPoint_, objc._C_VECTOR_FLOAT3)
-            self.assertArgHasType(SpriteKit.SK3DNode.unprojectPoint_, 0, objc._C_VECTOR_FLOAT3)
-
             self.assertResultIsBOOL(SpriteKit.SK3DNode.isPlaying)
-            self.assertArgIsBOOL(SpriteKit.SK3DNode.setPlaying_)
+            self.assertArgIsBOOL(SpriteKit.SK3DNode.setPlaying_, 0)
 
             self.assertResultIsBOOL(SpriteKit.SK3DNode.loops)
-            self.assertArgIsBOOL(SpriteKit.SK3DNode.setLoops_)
+            self.assertArgIsBOOL(SpriteKit.SK3DNode.setLoops_, 0)
 
             self.assertResultIsBOOL(SpriteKit.SK3DNode.autoenablesDefaultLighting)
-            self.assertArgIsBOOL(SpriteKit.SK3DNode.setAutoenablesDefaultLighting_)
+            self.assertArgIsBOOL(SpriteKit.SK3DNode.setAutoenablesDefaultLighting_, 0)
+
+            node = SpriteKit.SK3DNode.alloc().initWithViewportSize_((100, 200))
+            v = node.projectPoint_((10,20,30))
+            self.assertIsInstance(v, tuple)
+            self.assertEqual(len(v), 3)
+            self.assertTrue(all(isinstance(i, float) for i in v))
+            print (v)
+
+            v = node.unprojectPoint_((10,20,30))
+            self.assertIsInstance(v, tuple)
+            self.assertEqual(len(v), 3)
+            self.assertTrue(all(isinstance(i, float) for i in v))
+            print (v)
+
 
 if __name__ == "__main__":
     main()

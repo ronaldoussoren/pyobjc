@@ -17,8 +17,13 @@ if sys.maxsize > 2 ** 32:
             self.assertArgIsBlock(SpriteKit.SKPhysicsWorld.enumerateBodiesAlongRayStart_end_usingBlock_, 2,
                     b'v@' + Quartz.CGPoint.__typestr__ + Quartz.CGVector.__typestr__ + b'o^Z')
 
-            self.assertArgHasType(SpriteKit.SKPhysicsWorld.sampleFieldsAt_, 0, objc._C_VECTOR_FLOAT3)
-            self.assertResultHasType(SpriteKit.SKPhysicsWorld.sampleFieldsAt_, objc._C_VECTOR_FLOAT3)
+            o = SpriteKit.SKPhysicsWorld.alloc().init()
+            v = o.sampleFieldsAt_((9, 10, 11))
+            self.assertIsInstance(v, tuple)
+            self.assertEqual(len(v), 3)
+            self.assertIsInstance(v[0], float)
+            self.assertIsInstance(v[1], float)
+            self.assertIsInstance(v[2], float)
 
         @min_os_level('10.10')
         def testProtocols(self):

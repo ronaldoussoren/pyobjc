@@ -15,15 +15,20 @@ if sys.maxsize > 2 ** 32:
             self.assertArgIsBOOL(SpriteKit.SKFieldNode.setExclusive_, 0)
             self.assertResultIsBOOL(SpriteKit.SKFieldNode.isExclusive)
 
-            self.assertArgHasType(SpriteKit.SKFieldNode.linearGravityFieldWithVector_, 0, objc._C_VECTOR_FLOAT3)
-            self.assertArgHasType(SpriteKit.SKFieldNode.velocityFieldWithVector_, 0, objc._C_VECTOR_FLOAT3)
+            obj = SpriteKit.SKFieldNode.linearGravityFieldWithVector_((1,2,3))
+            self.assertIsInstance(obj, SpriteKit.SKFieldNode)
+            self.assertEqual(obj.direction(), (1,2,3))
 
-            self.assertArgIsBlock(SpriteKit.SKFieldNode.customFieldWithEvaluationBlock_, 0,
-                    objc._C_VECTOR_FLOAT3 + objc._C_VECTOR_FLOAT3 + objc._C_FLOAT_VECTOR3 + objc._C_FLT + objc._C_FLT + objc._C_DBL)
+            obj = SpriteKit.SKFieldNode.velocityFieldWithVector_((1,2,3))
+            self.assertIsInstance(obj, SpriteKit.SKFieldNode)
+            self.assertEqual(obj.direction(), (1,2,3))
 
+            # FIXME
+            #self.assertArgIsBlock(SpriteKit.SKFieldNode.customFieldWithEvaluationBlock_, 0,
+            #        objc._C_VECTOR_FLOAT3 + objc._C_VECTOR_FLOAT3 + objc._C_FLOAT_VECTOR3 + objc._C_FLT + objc._C_FLT + objc._C_DBL)
 
-            self.assertArgHasType(SpriteKit.SKFieldNode.setDirection_, 0, objc._C_VECTOR_FLOAT3)
-            self.assertResultHasType(SpriteKit.SKFieldNode.direction, objc._C_VECTOR_FLOAT3)
+            obj.setDirection_((9,10,11))
+            self.assertEqual(obj.direction(), (9,10,11))
 
 if __name__ == "__main__":
     main()

@@ -366,6 +366,26 @@
    "SKPhysicsWorld": {
     "methods": [
      {
+      "selector": "enumerateBodiesAlongRayStart:end:usingBlock:",
+      "class_method": false,
+      "args": {
+       "2": {
+        "callable": {
+	 "arguments": {
+	  "0": { "typestr": "^v" },
+	  "1": { "typestr": "@" },
+	  "2": { "typestr": "{CGPoint=dd}" },
+	  "3": { "typestr": "{CGVector=dd}" },
+	  "4": { "typestr": "o^Z" }
+	 },
+	 "retval": {
+	  "typestr": "v"
+	 }
+	}
+       }
+      }
+     },
+     {
       "args": {
        "1": {
         "callable": {

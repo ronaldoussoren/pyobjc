@@ -27,9 +27,5 @@ sys.modules['SpriteKit'] = mod = objc.ObjCLazyModule(
 
 import sys, objc
 
-# A number of metadata updates that cannot yet be done through metadata
-# (that's primarily because "vector_float3" doesn't @encode() at all)
 mod = sys.modules['SpriteKit']
-mod.SK3DNode.projectPoint_.signature = objc._C_VECTOR_FLOAT3 + b'@:' + objc._C_VECTOR_FLOAT3
-mod.SK3DNode.unprojectPoint_.signature = objc._C_VECTOR_FLOAT3 + b'@:' + objc._C_VECTOR_FLOAT3
 del sys.modules['SpriteKit._metadata']
