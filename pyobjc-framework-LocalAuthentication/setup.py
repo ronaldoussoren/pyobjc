@@ -11,16 +11,16 @@ from pyobjc_setup import setup
 
 setup(
     name='pyobjc-framework-LocalAuthentication',
-    version="3.1",
+    version="3.2a1",
     description = "Wrappers for the framework LocalAuthentication on Mac OS X",
     long_description=__doc__,
     packages = [ "LocalAuthentication" ],
     setup_requires = [
-        'pyobjc-core>=3.1',
+        'pyobjc-core>=3.2a1',
     ],
     install_requires = [
-        'pyobjc-core>=3.1',
-        'pyobjc-framework-Cocoa>=3.1',
+        'pyobjc-core>=3.2a1',
+        'pyobjc-framework-Cocoa>=3.2a1',
     ],
     min_os_level="10.10",
 )
