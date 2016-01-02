@@ -274,6 +274,11 @@ class TestString (TestCase):
 
     def testMutableFunctions(self):
         s = CFStringCreateMutable(None, 0)
+        s = s.nsstring()
+        CFStringAppend(s, b'hello'.decode('ascii'))
+        self.assertEqual(s, b'hello'.decode('ascii'))
+
+        s = CFStringCreateMutable(None, 0)
         # Ensure that we actually see updates:
         s = s.nsstring()
 

@@ -75,7 +75,7 @@ class TestNSError (TestCase):
     @min_os_level('10.11')
     def testMethods10_11(self):
         self.assertArgIsBlock(NSError.setUserInfoValueProviderForDomain_provider_, 1, b'@@@')
-        self.assertResutlISBlock(NSError.userInfoValueProviderForDomain_, b'@@@')
+        self.assertResultIsBlock(NSError.userInfoValueProviderForDomain_, b'@@@')
 
 
 if __name__ == "__main__":

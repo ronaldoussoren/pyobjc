@@ -23,6 +23,8 @@ class TestTimeZone (TestCase):
         zone = CFTimeZoneCopySystem()
         self.assertIsInstance(zone, CFTimeZoneRef)
 
+        CFTimeZoneSetDefault
+
     def testResetSystem(self):
         v = CFTimeZoneResetSystem()
         self.assertIs(v, None )

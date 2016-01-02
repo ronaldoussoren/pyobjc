@@ -95,6 +95,10 @@ class TestCFFileSecurity (TestCase):
 
         CoreFoundation.CFFileSecurityClearProperties(security, CoreFoundation.kCFFileSecurityClearGroup)
 
+    @min_os_level('10.7')
+    def testFunctions_unsupported(self):
+        self.assertFalse(hasattr(CoreFoundation, 'CFFileSecurityCopyAccessControlList'))
+        self.assertFalse(hasattr(CoreFoundation, 'CFFileSecuritySetAccessControlList'))
 
 if __name__ == "__main__":
     main()

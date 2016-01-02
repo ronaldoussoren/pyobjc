@@ -81,6 +81,10 @@ class TestXMLNode (TestCase):
 
         self.assertResultIsCFRetained(CFXMLNodeCreateCopy)
         self.assertResultIsCFRetained(CFXMLTreeCreateWithNode)
+        CFXMLNodeGetTypeCode
+        CFXMLNodeGetString
+        CFXMLNodeGetVersion
+        CFXMLTreeGetNode
 
     @expectedFailure
     def testMissingWrappers(self):

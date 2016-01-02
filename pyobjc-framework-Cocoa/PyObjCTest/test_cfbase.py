@@ -84,6 +84,10 @@ class TestBase (TestCase):
         self.assertEqual(kCFCoreFoundationVersionNumber10_9, 855.11)
         self.assertEqual(kCFCoreFoundationVersionNumber10_9_1, 855.11)
         self.assertEqual(kCFCoreFoundationVersionNumber10_9_2, 855.14)
+        self.assertEqual(kCFCoreFoundationVersionNumber10_10, 1151.16)
+        self.assertEqual(kCFCoreFoundationVersionNumber10_10_1, 1151.16)
+        self.assertEqual(kCFCoreFoundationVersionNumber10_10_2, 1152)
+        self.assertEqual(kCFCoreFoundationVersionNumber10_10_3, 1153.18)
 
 
         self.assertEqual(kCFCompareLessThan, -1)
@@ -148,6 +152,8 @@ class TestBase (TestCase):
         v = CFCopyTypeIDDescription(CFAllocatorGetTypeID())
         self.assertIsInstance(v, unicode)
         obj = CFURLCreateWithString(None, b"http://www.apple.com/".decode('ascii'), None)
+        i = CFGetTypeID(obj)
+        self.assertIsInstance(i, (int, long))
         i = CFGetRetainCount(obj)
         self.assertIsInstance(i, (int, long))
         CFRetain(obj)

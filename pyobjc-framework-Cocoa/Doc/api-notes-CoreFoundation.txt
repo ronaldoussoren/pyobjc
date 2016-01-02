@@ -11,7 +11,7 @@ API Notes: CoreFoundation framework
 Containers
 ----------
 
-Container datastructures, such as ``CFArray`` and ``CFTree``, are only 
+Container datastructures, such as ``CFArray`` and ``CFTree``, are only
 supported when the contain only ``CFTypeRef`` values even when the actual
 C API supports arbitrary pointer values.
 
@@ -30,19 +30,19 @@ API Notes
 CFArrayRef
 ..........
 
-This type is only supported when the ``callbacks`` are 
-``kCFTypeArrayCallBacks``, accessing other ``CFArray`` values from Python is 
+This type is only supported when the ``callbacks`` are
+``kCFTypeArrayCallBacks``, accessing other ``CFArray`` values from Python is
 not supported and will crash your interpreter.
 
 Note that all ``CFArrayRef`` instances are instances of ``NSArray`` or
-``NSMutableArray`` as well.  
+``NSMutableArray`` as well.
 
 
 * ``CFArrayCreate``, ``CFArrayCreateMutable``
 
   The ``callbacks`` argument must be ``kCFTypeArrayCallbacks``.
 
-* The ``context`` argument for ``CFArrayApplyFunction``, 
+* The ``context`` argument for ``CFArrayApplyFunction``,
   ``CFArrayBSearchValues`` and ``CFArraySortValues``  can be an arbitrary
   object (unlike the ``context`` or ``userdata`` argument in a lot of other
   API's).
@@ -51,13 +51,13 @@ Note that all ``CFArrayRef`` instances are instances of ``NSArray`` or
 CFBagRef
 ........
 
-This type is only supported when the ``callbacks`` are 
+This type is only supported when the ``callbacks`` are
 ``kCFTypeBagCallBacks``, accessing other ``CFBag`` values from Python is not
 supported.
 
 * ``CFBagCreate``, ``CFBagCreateMutable``
 
-  These function don't have a ``callBacks`` argument in Python and will always 
+  These function don't have a ``callBacks`` argument in Python and will always
   use the ``kCFTypeBagCallBacks`` value for that argument in C.
 
 * The ``context`` argument for ``CFBagApplyFunction`` can be an arbitrary
@@ -73,7 +73,7 @@ types or Objective-C classes.
 * ``CFBinaryHeapCreate``
 
   The ``callbacks`` argument is not present in Python and is automaticly
-  set to a value that allows arbitrary objects that implement the 
+  set to a value that allows arbitrary objects that implement the
   ``compare:`` method.
 
   The ``compareContext`` argument is also not present in Python.
@@ -86,7 +86,7 @@ types or Objective-C classes.
 CFBundle
 ........
 
-* ``CFBundleGetFunctionPointerForName``, 
+* ``CFBundleGetFunctionPointerForName``,
   ``CFBundleGetFunctionPointersForNames``,
   ``CFBundleGetDataPointerForName`` and
   ``CFBundleGetDataPointersForNames``: these functions are not supported,
@@ -97,7 +97,7 @@ CFData
 ......
 
 * ``CFDataGetBytePtr``, ``CFDataGetMutableBytePtr``: these functions return
-  an ``objc.varlist`` of bytes. A varlist doesn't implement the buffer 
+  an ``objc.varlist`` of bytes. A varlist doesn't implement the buffer
   interface, but can be used to peek into the buffer (and poke bytes into
   the buffer when you're using ``CFDataGetMutableBytePtr``).
 
@@ -131,19 +131,19 @@ CFMachPort
 
 .. note::
 
-   The current bindings for the CFMachPort API are probably useless, as 
+   The current bindings for the CFMachPort API are probably useless, as
    there doesn't seem to be a proper binding of the low-level API's.
 
-* The ``context`` argument for ``CFMachPortCreate``  and 
-  ``CFMachPortCreateWithPort`` is a python object, the 
+* The ``context`` argument for ``CFMachPortCreate``  and
+  ``CFMachPortCreateWithPort`` is a python object, the
   ``CFMachPortContext`` is automaticly added by the bridge.
 
 * The ``CFMachPortGetContext`` results the python object that was
   used in ``CFMachPortContext``, not a ``CFMachPortContext``
   structure.
-  
-  .. note:: 
-  
+
+  .. note::
+
      This means it is unsafe to call ``CFMachPortContext`` on
      objects that weren't created in Python code.
 
@@ -153,7 +153,7 @@ CFMessagePort
 * ``CFMessagePortSetDispatchQueue``: not supported yet because there
   are no wrappers for dispatch_queue_t yet.
 
-* ``CFMessagePortInvalidationCallback``: The second argument of the 
+* ``CFMessagePortInvalidationCallback``: The second argument of the
   callback is an integer that should be ignored. The context value
   can be retrieved using ``CFMessagePortGetContext`` (for local
   ports, remote ports don't have a context).
@@ -170,7 +170,7 @@ That said, all CFNumber API's do actually work.
 CFNumberFormatter
 .................
 
-* ``CFNumberFormatterCreateStringWithValue``: this function is not 
+* ``CFNumberFormatterCreateStringWithValue``: this function is not
   supported at the moment, use ``CFNumberFormatterCreateStringWithNumber``
   instead.
 
@@ -187,7 +187,7 @@ CFNumberFormatter
 CFPlugin
 ........
 
-The ``CFPlugin`` API's are not supported at the moment. Likewise for the 
+The ``CFPlugin`` API's are not supported at the moment. Likewise for the
 COM interface support in CoreFoundation.
 
 
@@ -239,7 +239,7 @@ several effects:
 * Do not try to access the context of sockets that aren't created in Python
 
 * The ``context`` argument for ``CFSocketCreate``, ``CFSocketCreateWithNative``,
-  ``CFSocketCreateWithSocketSignature``, 
+  ``CFSocketCreateWithSocketSignature``,
   ``CFSocketCreateConnectedToSocketSignature`` is an arbitrary python object.
 
 * The function ``CFSocketGetContext`` returns that python object and will crash
@@ -249,7 +249,7 @@ several effects:
 CFStream
 ........
 
-* You can use any Python object as the client context for ``CFReadStreamSetClient`` 
+* You can use any Python object as the client context for ``CFReadStreamSetClient``
   and ``CFWriteStreamSetClient``. Use ``objc.NULL`` to remove a client.
 
 
@@ -259,9 +259,9 @@ CFString
 * The 'Pascal String' API's are not supported (that is,
   ``CFStringAppendPascalString``, ``CFStringCreateWithPascalString``,
   ``CFStringCreateWithPascalStringNoCopy``, ``CFStringGetPascalString``, and
-  ``CFStringGetPascalStringPtr``). 
-  Use the regular Python string API's instead (or access the string 
-  contents using the ``CString`` functions, use as 
+  ``CFStringGetPascalStringPtr``).
+  Use the regular Python string API's instead (or access the string
+  contents using the ``CString`` functions, use as
   ``CFStringCreateWithCString``).
 
 
@@ -281,3 +281,8 @@ CFXMLParser, CFXMLNode
   uninttests for the automaticly created bindings.
 
 * Use a Python XML parser (such as ElementTree) instead.
+
+CFFileSecurityCopyAccessControlList
+...................................
+
+This function is not supported.

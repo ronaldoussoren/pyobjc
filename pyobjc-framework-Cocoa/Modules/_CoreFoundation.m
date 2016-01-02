@@ -16,6 +16,7 @@
 #include "_CoreFoundation_CFMachPort.m"
 #include "_CoreFoundation_CFMessagePort.m"
 #include "_CoreFoundation_CFNumber.m"
+#include "_CoreFoundation_CFNumberFormatter.m"
 #include "_CoreFoundation_CFReadStream.m"
 #include "_CoreFoundation_CFRunLoopObserver.m"
 #include "_CoreFoundation_CFRunLoopSource.m"
@@ -38,6 +39,7 @@ static PyMethodDef mod_methods[] = {
     COREFOUNDATION_MACHPORT_METHODS
     COREFOUNDATION_MESSAGEPORT_METHODS
     COREFOUNDATION_NUMBER_METHODS
+    COREFOUNDATION_NUMBERFORMATTER_METHODS
     COREFOUNDATION_READSTREAM_METHODS
     COREFOUNDATION_RUNLOOP_METHODS
     COREFOUNDATION_RUNLOOPSOURCE_METHODS

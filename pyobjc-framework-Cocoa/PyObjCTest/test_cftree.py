@@ -131,11 +131,5 @@ class TestCFTree (TestCase):
         self.assertEqual(CFTreeGetChildCount(root), 0)
 
 
-
-
-
-
-
-
 if __name__ == "__main__":
     main()

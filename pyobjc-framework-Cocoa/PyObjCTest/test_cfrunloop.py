@@ -306,6 +306,8 @@ class TestRunLoop (TestCase):
                 CFAbsoluteTimeGetCurrent() + 2.9, 0.0, 0, 0, lambda x: l.append(x))
         self.assertIsInstance(ref, CFRunLoopTimerRef)
         CFRunLoopTimerSetTolerance(ref, 5.0)
+        v = CFRunLoopTimerGetTolerance(ref)
+        self.assertIsInstance(v, float)
 
 if __name__ == "__main__":
     main()

@@ -26,7 +26,15 @@ class TestNumberFormatter (TestCase):
         v = CFNumberFormatterCreateStringWithNumber(None, fmt, 42.5)
         self.assertIsInstance(v, unicode)
         self.assertEqual(v , b'42.5'.decode('ascii'))
+
+        v = CFNumberFormatterCreateStringWithValue(None, fmt, kCFNumberDoubleType, 42.5)
+        self.assertIsInstance(v, unicode)
+        self.assertEqual(v , b'42.5'.decode('ascii'))
         num, rng = CFNumberFormatterCreateNumberFromString(None, fmt, b"42.0a".decode('ascii'), (0, 5), 0)
+        self.assertEqual(num , 42.0)
+        self.assertEqual(rng , (0, 4))
+        ok, rng, num = CFNumberFormatterGetValueFromString(fmt, b"42.0a".decode('ascii'), (0, 5), kCFNumberDoubleType, None)
+        self.assertEqual(ok, True)
         self.assertEqual(num , 42.0)
         self.assertEqual(rng , (0, 4))
         num, rng = CFNumberFormatterCreateNumberFromString(None, fmt, b"42.0a".decode('ascii'), (0, 5), kCFNumberFormatterParseIntegersOnly)
@@ -45,6 +53,7 @@ class TestNumberFormatter (TestCase):
         self.assertEqual(ok, True)
         self.assertEqual(frac, 2)
         self.assertEqual(rnd, 0.0)
+
 
     def testConstants(self):
         self.assertEqual(kCFNumberFormatterNoStyle, 0)
@@ -110,6 +119,13 @@ class TestNumberFormatter (TestCase):
         self.assertIsInstance(kCFNumberFormatterUseSignificantDigits, unicode)
         self.assertIsInstance(kCFNumberFormatterMinSignificantDigits, unicode)
         self.assertIsInstance(kCFNumberFormatterMaxSignificantDigits, unicode)
+
+    @min_os_level('10.11')
+    def testConstants(self):
+        self.assertEqual(kCFNumberFormatterOrdinalStyle, 6)
+        self.assertEqual(kCFNumberFormatterCurrencyISOCodeStyle, 8)
+        self.assertEqual(kCFNumberFormatterCurrencyPluralStyle, 9)
+        self.assertEqual(kCFNumberFormatterCurrencyAccountingStyle, 10)
 
 if __name__ == "__main__":
     main()

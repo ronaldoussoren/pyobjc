@@ -206,6 +206,40 @@
     }
   },
   "classes": {
+   "NSError": {
+    "methods": [
+     {
+      "selector": "setUserInfoValueProviderForDomain:provider:",
+      "class_method": true,
+      "args": {
+       "1": {
+        "callable": {
+	 "arguments": {
+	   "0": { "typestr": "^v" },
+	   "1": { "typestr": "@" },
+	   "2": { "typestr": "@" }
+	 },
+	 "retval": { "typestr": "@" }
+	}
+       }
+      }
+     },
+     {
+      "selector": "userInfoValueProviderForDomain:",
+      "class_method": false,
+      "retval": {
+       "callable": {
+	"arguments": {
+	  "0": { "typestr": "^v" },
+	  "1": { "typestr": "@" },
+	  "2": { "typestr": "@" }
+	},
+	"retval": { "typestr": "@" }
+       }
+      }
+     }
+    ]
+   },
    "NSUserActivity": {
     "methods": [
      {
@@ -2452,8 +2486,8 @@
      {
       "selector": "initWithBytesNoCopy:length:deallocator:",
       "class_method": false,
-      "arguments": {
-       "4": {
+      "args": {
+       "2": {
         "callable": {
          "arguments": {
           "0": {
@@ -2478,8 +2512,8 @@
      {
       "selector": "enumerateByteRangesUsingBlock:",
       "class_method": false,
-      "arguments": {
-       "2": {
+      "args": {
+       "0": {
         "callable": {
          "arguments": {
           "0": {
@@ -14862,40 +14896,6 @@
        "type_override": "#"
       },
       "selector": "classForPortCoder"
-     }
-    ]
-   },
-   "NSError": {
-    "methods": [
-     {
-      "selector": "setUserInfoValueProviderForDomain:provider:",
-      "class_method": true,
-      "args": {
-       "1": {
-        "callable": {
-	 "arguments": {
-	   "0": { "typestr": "^v" },
-	   "1": { "typestr": "@" },
-	   "1": { "typestr": "@" }
-	 },
-	 "retval": { "typestr": "@" }
-	}
-       }
-      }
-     },
-     {
-      "selector": "userInfoValueProviderForDomain:",
-      "class_method": false,
-      "retval": {
-       "callable": {
-	"arguments": {
-	  "0": { "typestr": "^v" },
-	  "1": { "typestr": "@" },
-	  "1": { "typestr": "@" }
-	},
-	"retval": { "typestr": "@" }
-       }
-      }
      }
     ]
    },

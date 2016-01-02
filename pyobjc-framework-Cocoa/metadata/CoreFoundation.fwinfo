@@ -8,62 +8,38 @@
     }
   },
   "enum": {
+   "kCFNumberFormatterOrdinalStyle": { "value": 6 },
+   "kCFNumberFormatterCurrencyISOCodeStyle": { "value": 8 },
+   "kCFNumberFormatterCurrencyPluralStyle": { "value": 9 },
+   "kCFNumberFormatterCurrencyAccountingStyle": { "value": 10 },
+   "kCFCoreFoundationVersionNumber10_10": { "value": 1151.16 },
+   "kCFCoreFoundationVersionNumber10_10_1": { "value": 1151.16 },
+   "kCFCoreFoundationVersionNumber10_10_2": { "value": 1152 },
+   "kCFCoreFoundationVersionNumber10_10_3": { "value": 1153.18 },
    "kCFNumberFormatterOrdinalStyle": { "value": "6" },
    "kCFNumberFormatterCurrencyISOCodeStyle": { "value": "8" },
    "kCFNumberFormatterCurrencyPluralStyle": { "value": "9" },
    "kCFNumberFormatterCurrencyAccountingStyle": { "value": "10" }
   },
   "externs": {
-    "kCFTypeSetCallBacks": {
-      "ignore": true
-    },
-    "kCFTypeDictionaryValueCallBacks": {
-      "ignore": true
-    },
-    "kCFPlugInDynamicRegistrationKey": {
-      "ignore": true
-    },
-    "kCFPlugInDynamicRegisterFunctionKey": {
-      "ignore": true
-    },
-    "kCFPlugInUnloadFunctionKey": {
-      "ignore": true
-    },
-    "kCFPlugInFactoriesKey": {
-      "ignore": true
-    },
-    "kCFPlugInTypesKey": {
-      "ignore": true
-    },
-    "kCFLocaleCountryCodeKey": {
-      "typestr": "@",
-      "comment": "XXX: These should be in headers"
-    },
-    "kCFLocaleLanguageCodeKey": {
-      "typestr": "@",
-      "comment": "XXX: These should be in headers"
-    },
-    "kCFCopyStringBagCallBacks": {
-      "ignore": true
-    },
-    "kCFCopyStringDictionaryKeyCallBacks": {
-      "ignore": true
-    },
-    "kCFCopyStringSetCallBacks": {
-      "ignore": true
-    },
-    "kCFStringBinaryHeapCallBacks": {
-      "ignore": true
-    },
-    "kCFTypeArrayCallBacks": {
-      "ignore": true
-    },
-    "kCFTypeDictionaryKeyCallBacks": {
-      "ignore": true
-    },
-    "kCFTypeBagCallBacks": {
-      "ignore": true
-    }
+    "kCFTypeSetCallBacks": { "ignore": true },
+    "kCFTypeDictionaryValueCallBacks": { "ignore": true },
+    "kCFPlugInDynamicRegistrationKey": { "ignore": true },
+    "kCFPlugInDynamicRegisterFunctionKey": { "ignore": true },
+    "kCFPlugInUnloadFunctionKey": { "ignore": true },
+    "kCFPlugInFactoriesKey": { "ignore": true },
+    "kCFPlugInTypesKey": { "ignore": true },
+    "kCFLocaleCountryCodeKey": { "typestr": "@", "comment": "XXX: These should be in headers" },
+    "kCFLocaleLanguageCodeKey": { "typestr": "@", "comment": "XXX: These should be in headers" },
+    "kCFCopyStringBagCallBacks": { "ignore": true },
+    "kCFCopyStringDictionaryKeyCallBacks": { "ignore": true },
+    "kCFCopyStringSetCallBacks": { "ignore": true },
+    "kCFStringBinaryHeapCallBacks": { "ignore": true },
+    "kCFTypeArrayCallBacks": { "ignore": true },
+    "kCFTypeDictionaryKeyCallBacks": { "ignore": true },
+    "kCFTypeBagCallBacks": { "ignore": true },
+    "kCFURLIsApplicationKey": { "typestr": "@" },
+    "kCFURLApplicationIsScriptableKey": { "typestr": "@" }
   },
   "cftypes": {
    "CFAllocatorRef": {
@@ -2057,6 +2033,7 @@
     }
    },
    "CFFileSecurityCopyAccessControlList": {
+    "ignore": true,
     "args": {
      "0": {},
      "1": { "type_modifier": "o" }
@@ -2110,6 +2087,7 @@
     }
    },
    "CFFileSecuritySetAccessControlList": {
+    "ignore": true,
     "args": {
      "0": {},
      "1": {}
@@ -2668,6 +2646,7 @@
     }
    },
    "CFNumberFormatterCreateStringWithValue": {
+    "ignore": true,
     "args": {
      "0": {},
      "1": {},
@@ -2702,6 +2681,7 @@
     }
    },
    "CFNumberFormatterGetValueFromString": {
+    "ignore": true,
     "args": {
      "0": {},
      "1": {},

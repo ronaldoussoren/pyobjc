@@ -420,6 +420,7 @@ class TestURL (TestCase):
     @min_os_level('10.8')
     def testFunctions10_8(self):
         self.assertResultIsBOOL(CFURLStartAccessingSecurityScopedResource)
+        CFURLStopAccessingSecurityScopedResource
 
     @min_os_level('10.8')
     def testConstants10_8(self):
@@ -447,6 +448,11 @@ class TestURL (TestCase):
         self.assertIsInstance(kCFURLDocumentIdentifierKey, unicode)
         self.assertIsInstance(kCFURLAddedToDirectoryDateKey, unicode)
         self.assertIsInstance(kCFURLQuarantinePropertiesKey, unicode)
+
+    @min_os_level('10.11')
+    def testConstants10_11(self):
+        self.assertIsInstance(kCFURLIsApplicationKey, unicode)
+        self.assertIsInstance(kCFURLApplicationIsScriptableKey, unicode)
 
 
     @min_os_level('10.6')
@@ -499,8 +505,15 @@ class TestURL (TestCase):
         self.assertEqual(kCFBookmarkResolutionWithoutUIMask, 1<<8)
         self.assertEqual(kCFBookmarkResolutionWithoutMountingMask, 1<<9)
 
+        self.assertEqual(kCFURLBookmarkResolutionWithoutUIMask, 1<<8)
+        self.assertEqual(kCFURLBookmarkResolutionWithoutMountingMask, 1<<9)
+
     @min_os_level('10.7')
     def testConstants10_7(self):
+        self.assertEqual(kCFURLBookmarkCreationWithSecurityScope, 1<<11)
+        self.assertEqual(kCFURLBookmarkCreationSecurityScopeAllowOnlyReadAccess, 1<<12)
+        self.assertEqual(kCFURLBookmarkResolutionWithSecurityScope, 1<<10)
+
         self.assertIsInstance(kCFURLKeysOfUnsetValuesKey, unicode)
         self.assertIsInstance(kCFURLFileResourceIdentifierKey, unicode)
         self.assertIsInstance(kCFURLVolumeIdentifierKey, unicode)

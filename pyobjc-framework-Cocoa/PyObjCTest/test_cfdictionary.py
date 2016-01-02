@@ -114,5 +114,6 @@ class TestCFDictionary (TestCase):
         CFDictionaryRemoveAllValues(dct)
         self.assertFalse(CFDictionaryContainsKey(dct, b"key2".decode('ascii')))
         self.assertEqual(CFDictionaryGetCount(dct) , 0)
+
 if __name__ == "__main__":
     main()
