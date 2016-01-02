@@ -12,18 +12,18 @@ import os
 
 setup(
     name='pyobjc-framework-AVKit',
-    version="3.1b1",
+    version="3.1",
     description = "Wrappers for the framework AVKit on Mac OS X",
     long_description=__doc__,
     packages = [ "AVKit" ],
     min_os_level="10.9",
     setup_requires = [
-        'pyobjc-core>=3.1b1',
+        'pyobjc-core>=3.1',
     ],
     install_requires = [
-        'pyobjc-core>=3.1b1',
-        'pyobjc-framework-Cocoa>=3.1b1',
-        'pyobjc-framework-Quartz>=3.1b1',
+        'pyobjc-core>=3.1',
+        'pyobjc-framework-Cocoa>=3.1',
+        'pyobjc-framework-Quartz>=3.1',
     ],
     ext_modules = [
         Extension("AVKit._AVKit",

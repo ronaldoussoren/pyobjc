@@ -11,16 +11,16 @@ from pyobjc_setup import setup, Extension
 
 setup(
     name='pyobjc-framework-ImageCaptureCore',
-    version="3.0.4",
+    version="3.1",
     description = "Wrappers for the framework ImageCaptureCore on Mac OS X",
     long_description=__doc__,
     packages = [ "ImageCaptureCore" ],
     setup_requires = [
-        'pyobjc-core>=3.0.4',
+        'pyobjc-core>=3.1',
     ],
     install_requires = [
-        'pyobjc-core>=3.0.4',
-        'pyobjc-framework-Cocoa>=3.0.4',
+        'pyobjc-core>=3.1',
+        'pyobjc-framework-Cocoa>=3.1',
     ],
     ext_modules = [
         Extension("ImageCaptureCore._ImageCaptureCore",

@@ -13,15 +13,15 @@ from pyobjc_setup import *
 
 setup(
     name='pyobjc-framework-InstallerPlugins',
-    version="3.1b1",
+    version="3.1",
     description = "Wrappers for the framework InstallerPlugins on Mac OS X",
     long_description=__doc__,
     packages = [ "InstallerPlugins" ],
     setup_requires = [
-        'pyobjc-core>=3.1b1',
+        'pyobjc-core>=3.1',
     ],
     install_requires = [
-        'pyobjc-core>=3.1b1',
-        'pyobjc-framework-Cocoa>=3.1b1',
+        'pyobjc-core>=3.1',
+        'pyobjc-framework-Cocoa>=3.1',
     ],
 )
