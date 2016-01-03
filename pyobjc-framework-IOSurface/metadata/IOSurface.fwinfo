@@ -1,0 +1,339 @@
+# objective.metada exceptions file, see its document
+# for information on how to update this file.
+{
+ "definitions": {
+  "cftypes": {
+   "IOSurfaceRef": {
+    "gettypeid_func": "IOSurfaceGetTypeID"
+   }
+  },
+  "classes": {},
+  "formal_protocols": {},
+  "functions": {
+   "IOSurfaceAlignProperty": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFString=}"
+     }
+    }
+   },
+   "IOSurfaceCopyValue": {
+    "args": {
+     "0": {
+      "type_override": "^{__IOSurface=}"
+     },
+     "1": {
+      "type_override": "^{__CFString=}"
+     }
+    }
+   },
+   "IOSurfaceCreate": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFDictionary=}"
+     }
+    },
+    "retval": {
+     "already_cfretained": true,
+     "already_retained": true,
+     "type_override": "^{__IOSurface=}"
+    }
+   },
+   "IOSurfaceCreateMachPort": {
+    "args": {
+     "0": {
+      "type_override": "^{__IOSurface=}"
+     }
+    }
+   },
+   "IOSurfaceCreateXPCObject": {
+    "args": {
+     "0": {
+      "type_override": "^{__IOSurface=}"
+     }
+    },
+    "retval": {
+     "already_cfretained": true,
+     "type_override": "@"
+    }
+   },
+   "IOSurfaceDecrementUseCount": {
+    "args": {
+     "0": {
+      "type_override": "^{__IOSurface=}"
+     }
+    }
+   },
+   "IOSurfaceGetAllocSize": {
+    "args": {
+     "0": {
+      "type_override": "^{__IOSurface=}"
+     }
+    }
+   },
+   "IOSurfaceGetBaseAddress": {
+    "args": {
+     "0": {
+      "type_override": "^{__IOSurface=}"
+     }
+    },
+    "retval": {
+     "c_array_of_variable_length": true,
+     "type_override": "^v"
+    }
+   },
+   "IOSurfaceSetValues": {
+    "args": {
+     "0": { "type_override": "^{__IOSurface=}" },
+     "1": { "type_override": "^{__CFDictionary=}" }
+    },
+    "retval": { "type_override": "v" }
+   },
+   "IOSurfaceCopyAllValues": {
+    "args": {
+     "0": {
+      "type_override": "^{__IOSurface=}"
+     }
+    },
+    "retval": {
+     "type_override": "^{__CFDictionary=}",
+     "already_cfretained": true
+    }
+   },
+   "IOSurfaceRemoveAllValues": {
+    "args": {
+     "0": {
+      "type_override": "^{__IOSurface=}"
+     }
+    },
+    "retval": {
+     "type_override": "v"
+    }
+   },
+   "IOSurfaceGetBaseAddressOfPlane": {
+    "args": {
+     "0": {
+      "type_override": "^{__IOSurface=}"
+     }
+    },
+    "retval": {
+     "c_array_of_variable_length": true,
+     "type_override": "^v"
+    }
+   },
+   "IOSurfaceGetBytesPerElement": {
+    "args": {
+     "0": {
+      "type_override": "^{__IOSurface=}"
+     }
+    }
+   },
+   "IOSurfaceGetBytesPerElementOfPlane": {
+    "args": {
+     "0": {
+      "type_override": "^{__IOSurface=}"
+     }
+    }
+   },
+   "IOSurfaceGetBytesPerRow": {
+    "args": {
+     "0": {
+      "type_override": "^{__IOSurface=}"
+     }
+    }
+   },
+   "IOSurfaceGetBytesPerRowOfPlane": {
+    "args": {
+     "0": {
+      "type_override": "^{__IOSurface=}"
+     }
+    }
+   },
+   "IOSurfaceGetElementHeight": {
+    "args": {
+     "0": {
+      "type_override": "^{__IOSurface=}"
+     }
+    }
+   },
+   "IOSurfaceGetElementHeightOfPlane": {
+    "args": {
+     "0": {
+      "type_override": "^{__IOSurface=}"
+     }
+    }
+   },
+   "IOSurfaceGetElementWidth": {
+    "args": {
+     "0": {
+      "type_override": "^{__IOSurface=}"
+     }
+    }
+   },
+   "IOSurfaceGetElementWidthOfPlane": {
+    "args": {
+     "0": {
+      "type_override": "^{__IOSurface=}"
+     }
+    }
+   },
+   "IOSurfaceGetHeight": {
+    "args": {
+     "0": {
+      "type_override": "^{__IOSurface=}"
+     }
+    }
+   },
+   "IOSurfaceGetHeightOfPlane": {
+    "args": {
+     "0": {
+      "type_override": "^{__IOSurface=}"
+     }
+    }
+   },
+   "IOSurfaceGetID": {
+    "args": {
+     "0": {
+      "type_override": "^{__IOSurface=}"
+     }
+    }
+   },
+   "IOSurfaceGetPixelFormat": {
+    "args": {
+     "0": {
+      "type_override": "^{__IOSurface=}"
+     }
+    }
+   },
+   "IOSurfaceGetPlaneCount": {
+    "args": {
+     "0": {
+      "type_override": "^{__IOSurface=}"
+     }
+    }
+   },
+   "IOSurfaceGetPropertyAlignment": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFString=}"
+     }
+    }
+   },
+   "IOSurfaceGetPropertyMaximum": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFString=}"
+     }
+    }
+   },
+   "IOSurfaceGetSeed": {
+    "args": {
+     "0": {
+      "type_override": "^{__IOSurface=}"
+     }
+    }
+   },
+   "IOSurfaceGetUseCount": {
+    "args": {
+     "0": {
+      "type_override": "^{__IOSurface=}"
+     }
+    }
+   },
+   "IOSurfaceGetWidth": {
+    "args": {
+     "0": {
+      "type_override": "^{__IOSurface=}"
+     }
+    }
+   },
+   "IOSurfaceGetWidthOfPlane": {
+    "args": {
+     "0": {
+      "type_override": "^{__IOSurface=}"
+     }
+    }
+   },
+   "IOSurfaceIncrementUseCount": {
+    "args": {
+     "0": {
+      "type_override": "^{__IOSurface=}"
+     }
+    }
+   },
+   "IOSurfaceIsInUse": {
+    "args": {
+     "0": {
+      "type_override": "^{__IOSurface=}"
+     }
+    }
+   },
+   "IOSurfaceLock": {
+    "args": {
+     "0": {
+      "type_override": "^{__IOSurface=}"
+     },
+     "2": {
+      "type_override": "^I",
+      "type_modifier": "N"
+     }
+    }
+   },
+   "IOSurfaceLookup": {
+    "retval": {
+     "already_cfretained": true,
+     "type_override": "^{__IOSurface=}"
+    }
+   },
+   "IOSurfaceLookupFromMachPort": {
+    "retval": {
+     "already_cfretained": true,
+     "type_override": "^{__IOSurface=}"
+    }
+   },
+   "IOSurfaceLookupFromXPCObject": {
+    "args": {
+     "0": {
+      "type_override": "@"
+     }
+    },
+    "retval": {
+     "already_cfretained": true,
+     "type_override": "^{__IOSurface=}"
+    }
+   },
+   "IOSurfaceRemoveValue": {
+    "args": {
+     "0": {
+      "type_override": "^{__IOSurface=}"
+     },
+     "1": {
+      "type_override": "^{__CFString=}"
+     }
+    }
+   },
+   "IOSurfaceSetValue": {
+    "args": {
+     "0": {
+      "type_override": "^{__IOSurface=}"
+     },
+     "1": {
+      "type_override": "^{__CFString=}"
+     }
+    }
+   },
+   "IOSurfaceUnlock": {
+    "args": {
+     "0": {
+      "type_override": "^{__IOSurface=}"
+     },
+     "2": {
+      "type_modifier": "N",
+      "type_override": "^I"
+     }
+    }
+   }
+  },
+  "informal_protocols": {}
+ }
+}

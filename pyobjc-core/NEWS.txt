@@ -6,7 +6,7 @@ An overview of the relevant changes in new, and older, releases.
 Version 3.2
 -----------
 
-*
+* Added bindings for the IOSurface framework (pyobjc-framework-IOSurface)
 
 Version 3.1
 -----------
