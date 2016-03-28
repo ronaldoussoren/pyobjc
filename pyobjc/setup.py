@@ -60,6 +60,7 @@ FRAMEWORKS_WRAPPERS=[
         ('Message',                 None,               '10.9'      ),
         ('MultipeerConnectivity',   '10.10',            None        ),
         ('NetFS',                   '10.6',             None        ),
+        ('NetworkExtension',        '10.11',            None        ),
         ('NotificationCenter',      '10.10',            None        ),
         ('OpenDirectory',           '10.6',             None        ),
         ('Photos',                  '10.11',            None        ),

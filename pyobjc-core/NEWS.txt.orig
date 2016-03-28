@@ -8,8 +8,6 @@ Version 3.2
 
 * Added bindings for the IOSurface framework (pyobjc-framework-IOSurface)
 
-* Added bindings for the NetworkExtension framework (pyobjc-framework-NetworkExtension)
-
 Version 3.1.1
 -------------
 
