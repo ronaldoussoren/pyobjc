@@ -12,19 +12,22 @@ Note that this framework is deprecated in OSX 10.9, use the Social framework
 instead if you target that OSX release.
 '''
 from pyobjc_setup import setup
+
+VERSION="3.2a1"
+
 setup(
     min_os_level='10.5',
     name='pyobjc-framework-InstantMessage',
-    version="3.2a1",
+    version=VERSION,
     description = "Wrappers for the framework InstantMessage on Mac OS X",
     long_description=__doc__,
     packages = [ "InstantMessage" ],
     setup_requires = [
-        'pyobjc-core>=3.2a1',
+        'pyobjc-core>=' + VERSION,
     ],
     install_requires = [
-        'pyobjc-core>=3.2a1',
-        'pyobjc-framework-Cocoa>=3.2a1',
-        'pyobjc-framework-Quartz>=3.2a1',
+        'pyobjc-core>=' + VERSION,
+        'pyobjc-framework-Cocoa>=' + VERSION,
+        'pyobjc-framework-Quartz>=' + VERSION,
     ],
 )

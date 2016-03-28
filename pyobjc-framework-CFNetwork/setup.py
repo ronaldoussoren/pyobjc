@@ -14,18 +14,20 @@ and (Objective-)C frameworks
 '''
 from pyobjc_setup import setup, Extension
 
+VERSION="3.2a1"
+
 setup(
     name='pyobjc-framework-CFNetwork',
-    version="3.2a1",
+    version=VERSION,
     description = "Wrappers for the framework CFNetwork on Mac OS X",
     long_description=__doc__,
     packages = [ "CFNetwork" ],
     setup_requires = [
-        'pyobjc-core>=3.2a1',
+        'pyobjc-core>=' + VERSION,
     ],
     install_requires = [
-        'pyobjc-core>=3.2a1',
-        'pyobjc-framework-Cocoa>=3.2a1',
+        'pyobjc-core>=' + VERSION,
+        'pyobjc-framework-Cocoa>=' + VERSION,
     ],
     ext_modules = [
         Extension("CFNetwork._manual",

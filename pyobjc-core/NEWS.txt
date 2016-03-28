@@ -3,11 +3,19 @@ What's new in PyObjC
 
 An overview of the relevant changes in new, and older, releases.
 
+<<<<<<< local
 Version 3.2
 -----------
 
 * Added bindings for the IOSurface framework (pyobjc-framework-IOSurface)
 
+=======
+Version 3.1.1
+-------------
+
+* Sigh... A number for sdists were incomplete due to missing MANIFEST.in files.
+
+>>>>>>> other
 Version 3.1
 -----------
 

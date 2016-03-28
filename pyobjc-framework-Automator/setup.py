@@ -11,17 +11,19 @@ and (Objective-)C frameworks
 '''
 from pyobjc_setup import setup
 
+VERSION="3.2a1"
+
 setup(
     name='pyobjc-framework-Automator',
-    version="3.2a1",
+    version=VERSION,
     description = "Wrappers for the framework Automator on Mac OS X",
     long_description=__doc__,
     packages = [ "Automator" ],
     setup_requires = [
-        'pyobjc-core>=3.2a1',
+        'pyobjc-core>=' + VERSION,
     ],
     install_requires = [
-        'pyobjc-core>=3.2a1',
-        'pyobjc-framework-Cocoa>=3.2a1',
+        'pyobjc-core>=' + VERSION,
+        'pyobjc-framework-Cocoa>=' + VERSION,
     ],
 )

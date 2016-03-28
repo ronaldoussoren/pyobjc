@@ -27,17 +27,19 @@ NOTE: This wrapper is not complete, this will change in a future version.
 '''
 from pyobjc_setup import setup
 
+VERSION="3.2a1"
+
 setup(
     name='pyobjc-framework-LaunchServices',
-    version="3.2a1",
+    version=VERSION,
     description = "Wrappers for the framework LaunchServices on Mac OS X",
     long_description=__doc__,
     packages = [ "LaunchServices" ],
     setup_requires = [
-        'pyobjc-core>=3.2a1',
+        'pyobjc-core>=' + VERSION,
     ],
     install_requires = [
-        'pyobjc-core>=3.2a1',
-        'pyobjc-framework-Cocoa>=3.2a1',
+        'pyobjc-core>=' + VERSION,
+        'pyobjc-framework-Cocoa>=' + VERSION,
     ],
 )

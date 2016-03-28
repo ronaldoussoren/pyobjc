@@ -10,18 +10,20 @@ and (Objective-)C frameworks
 '''
 from pyobjc_setup import setup
 
+VERSION="3.2a1"
+
 setup(
     name='pyobjc-framework-ApplicationServices',
-    version="3.2a1",
+    version=VERSION,
     description = "Wrappers for the framework ApplicationServices on Mac OS X",
     long_description=__doc__,
     packages = [ "ApplicationServices", "HIServices" ],
     setup_requires = [
-        'pyobjc-core>=3.2a1',
+        'pyobjc-core>=' + VERSION,
     ],
     install_requires = [
-        'pyobjc-core>=3.2a1',
-        'pyobjc-framework-Cocoa>=3.2a1',
-        'pyobjc-framework-Quartz>=3.2a1',
+        'pyobjc-core>=' + VERSION,
+        'pyobjc-framework-Cocoa>=' + VERSION,
+        'pyobjc-framework-Quartz>=' + VERSION,
     ],
 )

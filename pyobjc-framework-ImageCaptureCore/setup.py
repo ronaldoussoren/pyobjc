@@ -9,18 +9,20 @@ and (Objective-)C frameworks
 import os
 from pyobjc_setup import setup, Extension
 
+VERSION="3.2a1"
+
 setup(
     name='pyobjc-framework-ImageCaptureCore',
-    version="3.2a1",
+    version=VERSION,
     description = "Wrappers for the framework ImageCaptureCore on Mac OS X",
     long_description=__doc__,
     packages = [ "ImageCaptureCore" ],
     setup_requires = [
-        'pyobjc-core>=3.2a1',
+        'pyobjc-core>=' + VERSION,
     ],
     install_requires = [
-        'pyobjc-core>=3.2a1',
-        'pyobjc-framework-Cocoa>=3.2a1',
+        'pyobjc-core>=' + VERSION,
+        'pyobjc-framework-Cocoa>=' + VERSION,
     ],
     ext_modules = [
         Extension("ImageCaptureCore._ImageCaptureCore",

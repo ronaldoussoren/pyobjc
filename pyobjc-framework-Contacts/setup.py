@@ -10,19 +10,21 @@ and (Objective-)C frameworks
 from pyobjc_setup import setup, Extension
 import os
 
+VERSION="3.2a1"
+
 setup(
     name='pyobjc-framework-Contacts',
     min_os_level='10.11',
-    version="3.2a1",
+    version=VERSION,
     description = "Wrappers for the framework Contacts on Mac OS X",
     long_description=__doc__,
     packages = [ "Contacts" ],
     setup_requires = [
-        'pyobjc-core>=3.2a1',
+        'pyobjc-core>=' + VERSION,
     ],
     install_requires = [
-        'pyobjc-core>=3.2a1',
-        'pyobjc-framework-Cocoa>=3.2a1',
+        'pyobjc-core>=' + VERSION,
+        'pyobjc-framework-Cocoa>=' + VERSION,
     ],
     ext_modules = [
         Extension("Contacts._Contacts",

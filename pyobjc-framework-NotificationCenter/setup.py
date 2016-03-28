@@ -10,9 +10,11 @@ and (Objective-)C frameworks
 from pyobjc_setup import setup, Extension
 import os
 
+VERSION="3.2a1"
+
 setup(
     name='pyobjc-framework-NotificationCenter',
-    version="3.2a1",
+    version=VERSION,
     description = "Wrappers for the framework NotificationCenter on Mac OS X",
     long_description=__doc__,
     packages = [ "NotificationCenter" ],
@@ -28,11 +30,11 @@ setup(
         ),
     ],
     setup_requires = [
-        'pyobjc-core>=3.2a1',
+        'pyobjc-core>=' + VERSION,
     ],
     install_requires = [
-        'pyobjc-core>=3.2a1',
-        'pyobjc-framework-Cocoa>=3.2a1',
+        'pyobjc-core>=' + VERSION,
+        'pyobjc-framework-Cocoa>=' + VERSION,
     ],
     min_os_level="10.10",
 )

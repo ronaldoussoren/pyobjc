@@ -10,18 +10,20 @@ and (Objective-)C frameworks
 from pyobjc_setup import setup, Extension
 import os
 
+VERSION="3.2a1"
+
 setup(
     name='pyobjc-framework-Cocoa',
-    version="3.2a1",
+    version=VERSION,
     description = "Wrappers for the Cocoa frameworks on Mac OS X",
     long_description=__doc__,
     packages = [ "Cocoa", "CoreFoundation", "Foundation", "AppKit", "PyObjCTools" ],
     namespace_packages = ['PyObjCTools'],
     setup_requires = [
-        'pyobjc-core>=3.2a1',
+        'pyobjc-core>=' + VERSION,
     ],
     install_requires = [
-        'pyobjc-core>=3.2a1',
+        'pyobjc-core>=' + VERSION,
     ],
     ext_modules = [
         # CoreFoundation

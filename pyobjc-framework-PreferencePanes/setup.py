@@ -8,17 +8,20 @@ for general tips and tricks regarding the translation between Python
 and (Objective-)C frameworks
 '''
 from pyobjc_setup import *
+
+VERSION="3.2a1"
+
 setup(
     name='pyobjc-framework-PreferencePanes',
-    version="3.2a1",
+    version=VERSION,
     description = "Wrappers for the framework PreferencePanes on Mac OS X",
     long_description=__doc__,
     packages = [ "PreferencePanes" ],
     setup_requires = [
-        'pyobjc-core>=3.2a1',
+        'pyobjc-core>=' + VERSION,
     ],
     install_requires = [
-        'pyobjc-core>=3.2a1',
-        'pyobjc-framework-Cocoa>=3.2a1',
+        'pyobjc-core>=' + VERSION,
+        'pyobjc-framework-Cocoa>=' + VERSION,
     ],
 )
