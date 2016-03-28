@@ -3,6 +3,11 @@ What's new in PyObjC
 
 An overview of the relevant changes in new, and older, releases.
 
+Version 3.1.1
+-------------
+
+* Sigh... A number for sdists were incomplete due to missing MANIFEST.in files.
+
 Version 3.1
 -----------
 

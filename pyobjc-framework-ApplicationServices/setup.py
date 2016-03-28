@@ -12,16 +12,16 @@ from pyobjc_setup import setup
 
 setup(
     name='pyobjc-framework-ApplicationServices',
-    version="3.1",
+    version="3.1.1",
     description = "Wrappers for the framework ApplicationServices on Mac OS X",
     long_description=__doc__,
     packages = [ "ApplicationServices", "HIServices" ],
     setup_requires = [
-        'pyobjc-core>=3.1',
+        'pyobjc-core>=3.1.1',
     ],
     install_requires = [
-        'pyobjc-core>=3.1',
-        'pyobjc-framework-Cocoa>=3.1',
-        'pyobjc-framework-Quartz>=3.1',
+        'pyobjc-core>=3.1.1',
+        'pyobjc-framework-Cocoa>=3.1.1',
+        'pyobjc-framework-Quartz>=3.1.1',
     ],
 )
