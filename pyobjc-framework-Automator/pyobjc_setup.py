@@ -280,7 +280,7 @@ def _fixup_compiler():
 
     try:
         import _osx_support
-        _osx_support.customize_compiler(get_config_vars())  
+        _osx_support.customize_compiler(get_config_vars())
     except (ImportError, NameError):
         pass
 
@@ -466,6 +466,14 @@ def setup(
         cmdclass['install_lib'] = pyobjc_install_lib
         cmdclass['test'] = oc_test
         cmdclass['build_py'] = oc_build_py
+
+    if 'ext_modules' not in k:
+        # No extension modules, can bulid universal wheel
+        k['options'] = {
+            'bdist_wheel': {
+                'universal': 1,
+            }
+        }
 
     plat_name = "MacOS X"
     plat_versions = []
