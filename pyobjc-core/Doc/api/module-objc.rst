@@ -748,6 +748,103 @@ Types
 
    * *__isSlot__*: :data:`True` if the variable is a Python slot.
 
+
+   The :class:`ivar` has convenience class methods for creating :class:`ivar` objects
+   for specific C types:
+
+   .. method:: bool([name])
+
+      Create an instance variable that stores a value of C type ``bool``. See the
+      class description for a description of the *name* argument.
+
+   .. method:: char([name])
+
+      Create an instance variable that stores a value of C type ``char``. See the
+      class description for a description of the *name* argument. In general it
+      is better to use :meth:`char_text` or :meth:`char_int`.
+
+   .. method:: int([name])
+
+      Create an instance variable that stores a value of C type ``int``. See the
+      class description for a description of the *name* argument.
+
+   .. method:: short([name])
+
+      Create an instance variable that stores a value of C type ``short``. See the
+      class description for a description of the *name* argument.
+
+   .. method:: long([name])
+
+      Create an instance variable that stores a value of C type ``long``. See the
+      class description for a description of the *name* argument.
+
+   .. method:: long_long([name])
+
+      Create an instance variable that stores a value of C type ``long long``. See the
+      class description for a description of the *name* argument.
+
+   .. method:: unsigned_char([name])
+
+      Create an instance variable that stores a value of C type ``unsigned char``. See the
+      class description for a description of the *name* argument.
+
+   .. method:: unsigned_int([name])
+
+      Create an instance variable that stores a value of C type ``unsigned int``. See the
+      class description for a description of the *name* argument.
+
+   .. method:: unsigned_short([name])
+
+      Create an instance variable that stores a value of C type ``unsigned short``. See the
+      class description for a description of the *name* argument.
+
+   .. method:: unsigned_long([name])
+
+      Create an instance variable that stores a value of C type ``unsigned long``. See the
+      class description for a description of the *name* argument.
+
+   .. method:: unsigned_long_long([name])
+
+      Create an instance variable that stores a value of C type ``unsigned long long``. See the
+      class description for a description of the *name* argument.
+
+   .. method:: float([name])
+
+      Create an instance variable that stores a value of C type ``float``. See the
+      class description for a description of the *name* argument.
+
+   .. method:: double([name])
+
+      Create an instance variable that stores a value of C type ``double``. See the
+      class description for a description of the *name* argument.
+
+   .. method:: BOOL([name])
+
+      Create an instance variable that stores a value of C type ``BOOL``. See the
+      class description for a description of the *name* argument.
+
+   .. method:: UniChar([name])
+
+      Create an instance variable that stores a value of C type ``UniChar``. See the
+      class description for a description of the *name* argument. Values are
+      (unicode) strings of length 1.
+
+   .. method:: char_text([name])
+
+      Create an instance variable that stores a value of C type ``char``. See the
+      class description for a description of the *name* argument. Values are
+      byte-strings of length 1.
+
+   .. method:: char_int([name])
+
+      Create an instance variable that stores a value of C type ``char``. See the
+      class description for a description of the *name* argument. Values are
+      integers in the range of a ``signed char`` in C.
+
+   Framework bindings introduce new class methods for creating instance variables whose type
+   is a particular C struct, as an example the Foundation bindings introduce a class method
+   named ``NSRange`` with the same signature as the methods mentioned earlier.
+
    .. note::
 
       You cannot access these attributes  through an Objective-C instance, you have to access

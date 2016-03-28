@@ -782,6 +782,10 @@ def _structConvenience(structname, structencoding):
             return objc.ivar(type=structencoding)
         else:
             return objc.ivar(name=name, type=structencoding)
+    makevar.__name__ = structname
+    makevar.__doc__ = "Create *ivar* for type encoding %r" % (structencoding,)
+    if hasattr(objc.ivar, '__qualname__'):
+        makevar.__qualname__ = objc.ivar.__qualname__ + "." + structname
     _ivar_dict[structname] = classmethod(makevar)
 
 
