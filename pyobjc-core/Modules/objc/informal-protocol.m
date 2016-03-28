@@ -339,7 +339,7 @@ PyObjCInformalProtocol_CheckClass(
 
         } else {
             if (!PyObjCRT_SignaturesEqual(PyObjCSelector_Signature(m),
-                PyObjCSelector_Signature(cur)) != 0) {
+                PyObjCSelector_Signature(cur))) {
 
                 PyErr_Format(PyExc_TypeError,
                     "class %s does not correctly implement "
