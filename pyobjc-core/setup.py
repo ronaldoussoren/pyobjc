@@ -23,11 +23,13 @@ from pkg_resources import working_set, normalize_path, add_activation_listener, 
 from setuptools import setup, Extension, find_packages
 from distutils import log
 from distutils.core import Command
-from distutils.sysconfig import get_config_var
+from distutils.sysconfig import get_config_var as _get_config_var
 from distutils.errors import DistutilsPlatformError, DistutilsSetupError, DistutilsError
 from setuptools.command import build_py, test, egg_info
 from setuptools.command import build_ext, install_lib
 
+def get_config_var(var):
+    return _get_config_var(var) or ''
 
 
 # We need at least Python 2.7
@@ -117,7 +119,7 @@ OBJC_LDFLAGS = [
 #   be (slightly) faster.
 #
 
-from distutils.sysconfig import get_config_var, get_config_vars
+from distutils.sysconfig import get_config_vars
 
 if '-O0' in get_config_var('CFLAGS'):
     # -O0 doesn't work with some (older?) compilers, unconditionally
@@ -201,6 +203,9 @@ def verify_platform():
 
     if sys.version_info[:2] < (2, 7):
         raise DistutilsPlatformError("PyObjC requires Python 2.7 or later to build")
+
+    if hasattr(sys, 'pypy_version_info'):
+        raise DistutilsPlatformError("PyObjC cannot be build with PyPy")
 
 
 class oc_build_py (build_py.build_py):
