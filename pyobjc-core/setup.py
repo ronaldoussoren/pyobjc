@@ -205,7 +205,7 @@ def verify_platform():
         raise DistutilsPlatformError("PyObjC requires Python 2.7 or later to build")
 
     if hasattr(sys, 'pypy_version_info'):
-        raise DistutilsPlatformError("PyObjC cannot be build with PyPy")
+        print("WARNING: PyPy is not a supported platform for PyObjC")
 
 
 class oc_build_py (build_py.build_py):
@@ -461,7 +461,7 @@ def _fixup_compiler():
         # the compiler mess w.r.t. various versions of Apple's SDKs
         import _osx_support
         _osx_support.customize_compiler(get_config_vars())
-    except (ImportError, AttributeError):
+    except (ImportError, AttributeError, KeyError):
         pass
 
     cc = oldcc = get_config_var('CC').split()[0]
