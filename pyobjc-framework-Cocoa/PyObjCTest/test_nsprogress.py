@@ -31,7 +31,7 @@ class TestNSProgress(TestCase):
         self.assertArgIsBlock(NSProgress.setResumingHandler_, 0, b'v')
 
 
-    @min_os_level('10.10')
+    @min_sdk_level('10.11')
     def testProtocolObjects(self):
         objc.protocolNamed('NSProgressReporting')
 

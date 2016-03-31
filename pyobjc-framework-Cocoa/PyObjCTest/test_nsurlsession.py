@@ -120,12 +120,15 @@ class TestNSURLSession (TestCase):
         self.assertResultIsBOOL(TestNSURLSessionConfigurationHelper.shouldUseExtendedBackgroundIdleMode)
         self.assertArgIsBOOL(TestNSURLSessionConfigurationHelper.setShouldUseExtendedBackgroundIdleMode_, 0)
 
-    @min_os_level('10.10')
+    @min_sdk_level('10.10')
     def testProtocols(self):
         objc.protocolNamed('NSURLSessionDelegate')
         objc.protocolNamed('NSURLSessionTaskDelegate')
         objc.protocolNamed('NSURLSessionDataDelegate')
         objc.protocolNamed('NSURLSessionDownloadDelegate')
+
+    @min_sdk_level('10.11')
+    def testProtocols10_11(self):
         objc.protocolNamed('NSURLSessionStreamDelegate')
 
 if __name__ == "__main__":
