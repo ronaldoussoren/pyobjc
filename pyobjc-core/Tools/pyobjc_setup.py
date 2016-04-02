@@ -327,28 +327,29 @@ class pyobjc_build_ext (build_ext.build_ext):
         # Ensure that the PyObjC header files are available
         # in 2.3 and later the headers are in the egg,
         # before that we ship a copy.
-        dist, = pkg_resources.require('pyobjc-core')
+        if not os.path.isfile('Modules/pyobjc-api.h'):
+            dist, = pkg_resources.require('pyobjc-core')
 
-        include_root = os.path.join(self.build_temp, 'pyobjc-include')
-        if os.path.exists(include_root):
-            shutil.rmtree(include_root)
+            include_root = os.path.join(self.build_temp, 'pyobjc-include')
+            if os.path.exists(include_root):
+                shutil.rmtree(include_root)
 
-        os.makedirs(include_root)
-        if dist.has_metadata('include'):
-            for fn in dist.metadata_listdir('include'):
-                data = dist.get_metadata('include/%s'%(fn,))
-                fp = open(os.path.join(include_root, fn), 'w')
-                try:
-                    fp.write(data)
-                finally:
-                    fp.close()
+            os.makedirs(include_root)
+            if dist.has_metadata('include'):
+                for fn in dist.metadata_listdir('include'):
+                    data = dist.get_metadata('include/%s'%(fn,))
+                    fp = open(os.path.join(include_root, fn), 'w')
+                    try:
+                        fp.write(data)
+                    finally:
+                        fp.close()
 
-        else:
-            raise SystemExit("pyobjc-core egg-info does not include header files")
+            else:
+                raise SystemExit("pyobjc-core egg-info does not include header files")
 
-        for e in self.extensions:
-            if include_root not in e.include_dirs:
-                e.include_dirs.append(include_root)
+            for e in self.extensions:
+                if include_root not in e.include_dirs:
+                    e.include_dirs.append(include_root)
 
         # Run the actual build
         build_ext.build_ext.run(self)
@@ -486,6 +487,11 @@ def setup(
             plat_versions.append("<=%s"%(max_os_level,))
     if plat_versions:
         plat_name += " (%s)"%(", ".join(plat_versions),)
+
+    if os.path.isfile('Modules/pyobjc-api.h') or 'ext_modules' not in k:
+        if 'setup_requires' in k:
+            if len(k['setup_requires']) == 1 and k['setup_requires'][0].startswith('pyobjc-core'):
+                del k['setup_requires']
 
     _setup(
         cmdclass=cmdclass,
