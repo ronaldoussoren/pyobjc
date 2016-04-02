@@ -1,8 +1,8 @@
 import sys
 from PyObjCTools import AppHelper
 
-from twisted.internet._threadedselect import install
-reactor = install()
+from twisted.internet import cfreactor
+cfreactor.install()
 
 # import classes required to start application
 import WSTApplicationDelegateClass
