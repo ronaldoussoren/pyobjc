@@ -523,6 +523,7 @@ class oc_build_ext (build_ext.build_ext):
         if not self.use_system_libffi:
             self.use_system_libffi = '--with-system-ffi' in get_config_var("CONFIG_ARGS")
 
+        self.sdk_root = os.environ.get('SDKROOT', None)
         if self.sdk_root is None:
             if os.path.exists('/usr/bin/xcodebuild'):
                 self.sdk_root = subprocess.check_output(
