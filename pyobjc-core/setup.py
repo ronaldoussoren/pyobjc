@@ -503,9 +503,9 @@ def _fixup_compiler():
 
 class oc_build_ext (build_ext.build_ext):
     user_options = [
-        ('use-system-libffi=', None, "print what tests are run"),
-        ('deployment-target=', None, "deployment target to use"),
-        ('sdk-root=', None, "Path to the SDK to use, or 'python'"),
+        ('use-system-libffi=', None, "use the system installation of libffi"),
+        ('deployment-target=', None, "deployment target to use (can also be set using ${MACOSX_DEPLOYMENT_TARGET})"),
+        ('sdk-root=', None, "Path to the SDK to use (can also be set using ${SDKROOT})"),
     ]
     boolean_options = [ 'use-system-libffi' ]
 
