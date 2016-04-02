@@ -1,6 +1,6 @@
 #include "Python.h"
 #include "pyobjc-api.h"
-#import <MApKit/MApKit.h>
+#import <MapKit/MapKit.h>
 
 
 static PyObjC_function_map function_map[] = {
