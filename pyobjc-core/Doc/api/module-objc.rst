@@ -691,6 +691,11 @@ Types
    Use this as a decorator in a Cocoa class definition to avoid creating a
    selector object for a method.
 
+   This is used to add "normal" python methods to a class that's inheriting
+   from a Cocoa class and makes it possible to use normal Python idioms in
+   the part of the class that does not have to interact with the Objective-C
+   world.
+
    For example::
 
        class MyClass (NSObject):
