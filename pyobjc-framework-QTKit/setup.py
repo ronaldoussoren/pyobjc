@@ -27,7 +27,7 @@ setup(
     ],
     install_requires = [
         'pyobjc-core>=' + VERSION,
-        'pyobjc-framework-Cocoa>>=' + VERSION,
+        'pyobjc-framework-Cocoa>=' + VERSION,
         'pyobjc-framework-Quartz>=' + VERSION,
     ],
     ext_modules = [
