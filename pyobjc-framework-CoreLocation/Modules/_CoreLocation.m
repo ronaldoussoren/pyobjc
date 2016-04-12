@@ -2,6 +2,14 @@
 #include <Python.h>
 #include "pyobjc-api.h"
 
+#if defined(MAC_OS_X_VERSION_10_5) && MAC_OS_X_VERSION_MIN_REQUIRED <= MAC_OS_X_VERSION_10_6
+ /* For some reason the CoreLocation headers don't work properly when
+  * the deployment target is 10.5 (using the 10.11 SDK).
+  */
+#undef NS_ENUM_AVAILABLE
+#define NS_ENUM_AVAILABLE(a, b)
+#endif
+
 #import <CoreLocation/CoreLocation.h>
 
 /* We include the source code here instead of
