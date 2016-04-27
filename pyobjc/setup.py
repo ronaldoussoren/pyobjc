@@ -92,7 +92,6 @@ FRAMEWORKS_WRAPPERS=[
 
 
 BASE_REQUIRES=[
-        'py2app>=0.10',
         'pyobjc-core=='+VERSION,
 ]
 
