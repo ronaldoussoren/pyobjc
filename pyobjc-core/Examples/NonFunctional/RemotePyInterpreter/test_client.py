@@ -1,3 +1,4 @@
+from __future__ import print_function
 try:
     import fcntl
 except:
@@ -6,16 +7,15 @@ import os
 import sys
 from subprocess import Popen, PIPE
 import socket
-from StringIO import StringIO
 from netrepr import NetRepr, RemoteObjectPool, RemoteObjectReference
 
 IMPORT_MODULES = ['netrepr', 'remote_console', 'remote_pipe', 'remote_bootstrap']
-source = StringIO()
+source = []
 for fn in IMPORT_MODULES:
-    for line in file(fn+'.py', 'rU'):
-        source.write(line)
-    source.write('\n\n')
-SOURCE = repr(source.getvalue()) + '\n'
+    for line in open(fn+'.py', 'rU'):
+        source.append(line)
+    source.append('\n\n')
+SOURCE = repr(''.join(source)) + '\n'
 
 def ensure_utf8(s):
     if isinstance(s, unicode):
@@ -55,7 +55,7 @@ def start_client(clientsock):
 
 def client_loop(f):
     def writecode(code):
-        #print '[code: %r]' % (code,)
+        #print('[code: %r]' % (code,))
         f.write(repr(code) + '\n')
     pool = RemoteObjectPool(writecode)
     netRepr = NetRepr(pool)
@@ -91,13 +91,13 @@ def client_loop(f):
                     elif isinstance(obj, RemoteObjectReference):
                         writecode('interp.write(repr(%s) + "\\n")' % (netrepr(obj),))
                     else:
-                        print repr(obj)
+                        print(repr(obj))
                 elif name.startswith('RemoteFileLike.'):
                     fh = getattr(sys, args[0])
                     meth = getattr(fh, name[len('RemoteFileLike.'):])
                     rval = meth(*map(ensure_utf8, args[1:]))
                 else:
-                    print name, args
+                    print(name, args)
                 if code is None:
                     code = '__result__[%r] = %r' % (seq, rval)
                 writecode(code)
@@ -113,8 +113,8 @@ def main():
         f.close()
         clientsock.close()
         proc.stdin.close()
-        print '[stdout]', proc.stdout.read()
-        print '[stderr]', proc.stderr.read()
+        print('[stdout]', proc.stdout.read())
+        print('[stderr]', proc.stderr.read())
 
 if __name__ == '__main__':
     main()

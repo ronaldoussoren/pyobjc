@@ -1,3 +1,5 @@
+from __future__ import print_function
+
 __all__ = ['ConsoleReactor']
 
 import sys
@@ -70,17 +72,17 @@ class ConsoleReactor(NSObject):
         code = '__result__[%r] = %s' % (seq, nr.netrepr(rval))
         self.writeCode_(code)
 
-    def sendException_sequence_(self, e):
+    def sendException_sequence_(self, e, seq):
         nr = self.netReprCenter
         code = 'raise ' + nr.netrepr_exception(e)
-        print "forwarding:", code
+        print("forwarding:", code)
         self.writeCode_(code)
 
     def doCallback_sequence_args_(self, callback, seq, args):
         nr = self.netReprCenter
         try:
             rval = callback(*args)
-        except Exception, e:
+        except Exception as e:
             self.sendException_sequence_(e, seq)
         else:
             self.sendResult_sequence_(rval, seq)
@@ -104,7 +106,7 @@ class ConsoleReactor(NSObject):
         elif name == 'RemoteConsole.displayhook':
             obj = args[0]
             def displayhook_respond(reprobject):
-                print reprobject
+                print(reprobject)
             def displayhook_local(obj):
                 if obj is not None:
                     displayhook_respond(repr(obj))

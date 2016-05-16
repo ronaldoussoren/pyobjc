@@ -7,18 +7,17 @@ except:
 import os
 import sys
 import socket
-from StringIO import StringIO
 from netrepr import NetRepr, RemoteObjectPool, RemoteObjectReference
 import objc
 from Foundation import *
 
 IMPORT_MODULES = ['netrepr', 'remote_console', 'remote_pipe', 'remote_bootstrap']
-source = StringIO()
+source = []
 for fn in IMPORT_MODULES:
-    for line in file(fn+'.py', 'rU'):
-        source.write(line)
-    source.write('\n\n')
-SOURCE = repr(source.getvalue()) + '\n'
+    for line in open(fn+'.py', 'rU'):
+        source.append(line)
+    source.append('\n\n')
+SOURCE = repr(''.join(source)) + '\n'
 
 def bind_and_listen(hostport):
     if isinstance(hostport, str):

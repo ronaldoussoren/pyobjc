@@ -9,7 +9,7 @@ def as_unicode(s, encoding='utf-8'):
     elif issubclass(typ, str):
         s = unicode(s, encoding, 'replace')
     else:
-        raise TypeError, 'expecting basestring, not %s' % (typ.__name__,)
+        raise TypeError('expecting basestring, not %s' % (typ.__name__,))
     return s
 
 
@@ -22,7 +22,7 @@ def as_str(s, encoding='utf-8'):
     elif issubclass(typ, unicode):
         s = s.encode(encoding)
     else:
-        raise TypeError, 'expecting basestring, not %s' % (typ.__name__,)
+        raise TypeError('expecting basestring, not %s' % (typ.__name__,))
     return s
 
 

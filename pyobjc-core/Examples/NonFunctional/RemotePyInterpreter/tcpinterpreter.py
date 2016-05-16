@@ -8,13 +8,13 @@ import sys, socket, os
 def runsocketcode(clientfile, g):
     try:
         source = clientfile.readline().rstrip()
-    except Exception, e:
+    except Exception as e:
         raise SystemExit
     if not source:
         raise SystemExit
     source = eval(source)
     co = compile(source+'\n', '<remote-source>', 'exec')
-    exec co in g
+    exec(co, g)
 
 def serveonce(clientsock, name='stdin'):
     clientfile = clientsock.makefile('r+b', 0)

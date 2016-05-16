@@ -1,13 +1,11 @@
 import sys
 import traceback
-import sets
 import keyword
 import time
 from Foundation import *
 from AppKit import *
-from PyObjCTools import NibClassBuilder, AppHelper
+from PyObjCTools import AppHelper
 
-NibClassBuilder.extractClasses("RemotePyInterpreterDocument.nib")
 
 from AsyncPythonInterpreter import *
 from ConsoleReactor import *
@@ -18,9 +16,11 @@ def ensure_unicode(s):
         s = unicode(s, 'utf-8', 'replace')
     return s
 
-class RemotePyInterpreterReactor(NibClassBuilder.AutoBaseClass):
+class RemotePyInterpreterReactor (ConsoleReactor):
+    delegate = objc.IBOutlet()
+
     def handleExpectCommand_(self, command):
-        print command
+        print(command)
         seq = command[0]
         name = command[1]
         args = command[2:]
@@ -124,11 +124,15 @@ PASSTHROUGH = (
    'moveLeft:',
 )
 
-class RemotePyInterpreterDocument(NibClassBuilder.AutoBaseClass):
+class RemotePyInterpreterDocument (NSDocument):
     """
     PyInterpreter is a delegate/controller for a NSTextView,
     turning it into a full featured interactive Python interpreter.
     """
+
+    commandReactor = objc.IBOutlet()
+    interpreter = objc.IBOutlet()
+    textView = objc.IBOutlet()
 
     def expectCodeInput_withPrompt_(self, callback, prompt):
         self.writeString_forOutput_(prompt, u'code')
@@ -328,13 +332,14 @@ class RemotePyInterpreterDocument(NibClassBuilder.AutoBaseClass):
     #  NSTextViewDelegate methods
     #
 
-    def textView_completions_forPartialWordRange_indexOfSelectedItem_(self, aTextView, completions, (begin, length), index):
+    def textView_completions_forPartialWordRange_indexOfSelectedItem_(self, aTextView, completions, begin_length, index):
         # XXX
         # this will probably have to be tricky in order to be asynchronous..
         # either by:
         #     nesting a run loop (bleh)
         #     polling the subprocess (bleh)
         #     returning nothing and calling self.textView.complete_ later
+        begin, length = begin_length
         return None, 0
 
         if False:
@@ -388,7 +393,7 @@ class RemotePyInterpreterDocument(NibClassBuilder.AutoBaseClass):
             return True
         else:
             if DEBUG_DELEGATE and aSelector not in PASSTHROUGH:
-                print aSelector
+                print(aSelector)
             return False
 
     #

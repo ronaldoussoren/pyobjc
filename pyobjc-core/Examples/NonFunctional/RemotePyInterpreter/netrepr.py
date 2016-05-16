@@ -1,4 +1,4 @@
-import types, itertools, exceptions
+import types, itertools
 
 def type_string(obj):
     objType = type(obj)
@@ -76,7 +76,7 @@ class BaseObjectPool(object):
 
     def autorelease(self, ref):
         if not self.pools:
-            raise RuntimeError, "no autoreleasepool for %r" % (ref,)
+            raise RuntimeError("no autoreleasepool for %r" % (ref,))
         pool = self.pools[-1]
         pool[ref] = pool.get(ref, 0) + 1
 
@@ -86,14 +86,14 @@ class BaseObjectPool(object):
 
     def pop(self):
         if not self.pools:
-            raise RuntimeError, "popped too many pools"
+            raise RuntimeError("popped too many pools")
         #print "popped pool"
         pool = self.pools.pop()
         for ref, count in pool.iteritems():
             ref.release(count)
 
     def referenceForObject(self, obj):
-        raise TypeError, "Can not create a reference to %r, the bridge is unidirectional" % (obj,)
+        raise TypeError("Can not create a reference to %r, the bridge is unidirectional" % (obj,))
 
 
 class RemoteObjectPool(BaseObjectPool):
@@ -167,7 +167,7 @@ class BaseObjectReference(object):
         if newCount == 0:
             self.dealloc()
         elif newCount < 0:
-            raise ValueError, "Reference %r over-released (%r -> %r)" % (self, self.retainCount, newCount)
+            raise ValueError("Reference %r over-released (%r -> %r)" % (self, self.retainCount, newCount))
         self.retainCount = newCount
         return self
 

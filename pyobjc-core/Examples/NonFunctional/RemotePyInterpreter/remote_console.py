@@ -1,15 +1,13 @@
 import sys
 import os
-import __builtin__
+try:
+    import __builtin__
+except ImportError:
+    import builtins as __builtin__
 import traceback
 import keyword
 import time
 from code import InteractiveConsole, softspace
-from StringIO import StringIO
-try:
-    set
-except NameError:
-    from sets import Set as set
 
 class RemoteConsole(InteractiveConsole):
     def __init__(self, pipe, **kw):
@@ -38,7 +36,7 @@ class RemoteConsole(InteractiveConsole):
 
     def runcode(self, code):
         try:
-            exec code in self.locals
+            exec(code, self.locals)
         except SystemExit:
             raise
         except:
@@ -105,7 +103,7 @@ class RemoteConsole(InteractiveConsole):
                 check = filter(lambda s:s.lower().startswith(wordlower), dir(obj))
         else:
             # no dots, must be in the normal namespaces.. no eval necessary
-            check = sets.Set(dir(__builtins__))
+            check = set(dir(__builtin__))
             check.update(keyword.kwlist)
             check.update(self.locals)
             wordlower = parts[-1].lower()
