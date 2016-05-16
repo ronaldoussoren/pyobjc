@@ -4,6 +4,7 @@ Check if NSModalSessions are properly wrapped.
 XXX: This is not a proper unittest, it requires human eyes to check if the
 output is correct.
 """
+from __future__ import print_function
 import objc
 from Foundation import *
 from AppKit import *
@@ -18,7 +19,7 @@ def doTest():
                 "Please wait", "Bla bla bla", None, None, None)
         modalSession = app.beginModalSessionForWindow_(alertPanel)
 
-        print modalSession, modalSession.pointer
+        print(modalSession, modalSession.__pointer__)
         time.sleep(1)
     finally:
         if modalSession is not None:
