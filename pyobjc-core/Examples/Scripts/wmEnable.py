@@ -11,11 +11,11 @@ import objc
 from Foundation import *
 
 def S(*args):
-    return ''.join(args)
+    return b''.join(args)
 
 OSErr = objc._C_SHT
-OUTPSN = 'o^{ProcessSerialNumber=LL}'
-INPSN = 'n^{ProcessSerialNumber=LL}'
+OUTPSN = b'o^{ProcessSerialNumber=LL}'
+INPSN = b'n^{ProcessSerialNumber=LL}'
 
 FUNCTIONS=[
     # These two are public API
@@ -27,7 +27,7 @@ FUNCTIONS=[
 ]
 
 def WMEnable(name='Python'):
-    if isinstance(name, unicode):
+    if not isinstance(name, bytes):
         name = name.encode('utf8')
     mainBundle = NSBundle.mainBundle()
     bPath = os.path.split(os.path.split(os.path.split(sys.executable)[0])[0])[0]
@@ -43,7 +43,7 @@ def WMEnable(name='Python'):
         if fn not in d:
             print >>sys.stderr, 'Missing', fn
             return False
-    err, psn = d['GetCurrentProcess']()
+    err, psn = d['GetCurrentProcess'](None)
     if err:
         print >>sys.stderr, 'GetCurrentProcess', (err, psn)
         return False
@@ -75,4 +75,4 @@ if __name__ == "__main__":
         app.setDelegate_(delegate)
         app.run()
     else:
-        print 'WM was not enabled'
+        print('WM was not enabled')

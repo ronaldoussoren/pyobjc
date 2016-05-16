@@ -1,3 +1,5 @@
+#!/usr/bin/python
+from __future__ import print_function
 from Foundation import *
 from PyObjCTools import AppHelper
 
@@ -53,14 +55,14 @@ def prompt():
 
 def gotLine(observer, aLine):
     if aLine:
-        print "you wrote:", aLine.rstrip()
+        print("you wrote:", aLine.rstrip())
         prompt()
     else:
-        print ""
+        print("")
         AppHelper.stopEventLoop()
 
 def gotError(observer, err):
-    print "error:", err
+    print("error:", err)
     AppHelper.stopEventLoop()
 
 if __name__ == '__main__':

@@ -35,7 +35,7 @@ class NotificationHandler(NSObject):
                 # Found a readme file, try to open it using the Workspace API
 
                 fullPath = os.path.join(path, aFile)
-                success, app, None = workspace.getInfoForFile_application_type_(
+                success, app, _ = workspace.getInfoForFile_application_type_(
                         fullPath)
                 if not success:
                     NSLog("Failed to find application to open file %s",

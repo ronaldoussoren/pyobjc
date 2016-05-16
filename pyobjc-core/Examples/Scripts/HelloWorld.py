@@ -29,10 +29,10 @@ from PyObjCTools import AppHelper
 
 class AppDelegate (NSObject):
     def applicationDidFinishLaunching_(self, aNotification):
-        print "Hello, World!"
+        print("Hello, World!")
 
     def sayHello_(self, sender):
-        print "Hello again, World!"
+        print("Hello again, World!")
 
 def main():
     app = NSApplication.sharedApplication()
