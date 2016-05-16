@@ -49,16 +49,16 @@ class WhereIsMyMacAppDelegate (Cocoa.NSObject):
 
     @objc.IBAction
     def openInDefaultBrowser_(self, sender):
-        currentLocation = locationManager.location()
+        currentLocation = self.locationManager.location()
 
         externalBrowserURL = Cocoa.NSURL.URLWithString_(
                 "http://maps.google.com/maps?ll=%f,%f&amp;spn=%f,%f"%(
-                    currentLocation.coordinate.latitude,
-                    currentLocation.coordinate.longitude,
+                    currentLocation.coordinate().latitude,
+                    currentLocation.coordinate().longitude,
                     WhereIsMyMacAppDelegate.latitudeRangeForLocation_(currentLocation),
                     WhereIsMyMacAppDelegate.longitudeRangeForLocation_(currentLocation)))
 
-        Cocoa.NSWorkspace.sharedWorkspace.openURL_(externalBrowserURL)
+        Cocoa.NSWorkspace.sharedWorkspace().openURL_(externalBrowserURL)
 
     def locationManager_didUpdateToLocation_fromLocation_(self,
             manager, newLocation, oldLocation):
