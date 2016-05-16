@@ -3,6 +3,7 @@ Adds WWDC 2007 to the 'Work' calendar
 """
 from __future__ import print_function
 from CalendarStore import CalCalendarStore, CalEvent
+from Foundation import NSURL, NSDate
 import textwrap
 
 store = CalCalendarStore.defaultCalendarStore()
