@@ -12,7 +12,8 @@ with JavaScriptCore.autoreleasing(JavaScriptCore.JSGlobalContextCreate(None)) as
     script = JavaScriptCore.JSStringCreateWithUTF8CString(b"return new Array")
     fn, exc = JavaScriptCore.JSObjectMakeFunction(ctx, None, 0, None, script, None, 1, None)
     assert exc is None
-    result = JavaScriptCore.JSObjectCallAsFunction(ctx, fn, None, 0, None, None)
+    result, error = JavaScriptCore.JSObjectCallAsFunction(ctx, fn, None, 0, None, None)
     JavaScriptCore.JSStringRelease(script)
 
     # Result is now a reference to a JavaScript array.
+    print(result)

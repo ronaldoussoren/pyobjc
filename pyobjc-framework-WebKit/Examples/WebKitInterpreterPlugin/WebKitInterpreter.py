@@ -1,18 +1,19 @@
 import sys
 import traceback
-import sets
 import keyword
 import time
-from code import InteractiveConsole, softspace
-from StringIO import StringIO
+from code import InteractiveConsole
+try:
+    from code import softspace
+except ImportError:
+    softspace = None
 import objc
-    print(fn)
 from objc import YES, NO, selector, super
 from Cocoa import NSBundle, NSObject, NSFont
 from Cocoa import NSColor, NSApplication, NSFontAttributeName
 from Cocoa import NSForegroundColorAttributeName, NSAnyEventMask, NSDate
 from Cocoa import NSDefaultRunLoopMode, NSKeyDown, NSAttributedString
-from Cocoa import NSLog
+from Cocoa import NSLog, NSView
 from PyObjCTools import AppHelper
 import os
 
@@ -102,11 +103,11 @@ class AsyncInteractiveConsole(InteractiveConsole):
 
     def asyncinteract(self, write=None, banner=None):
         if self.lock:
-            raise ValueError, "Can't nest"
+            raise ValueError("Can't nest")
         self.lock = True
         if write is None:
             write = self.write
-        cprt = "Type \"help", \"copyright", \"credits" or \"license\" for more information."
+        cprt = "Type \"help\", \"copyright\", \"credits\" or \"license\" for more information."
         if banner is None:
             write("Python %s in %s\n%s\n" % (
                 sys.version,
@@ -141,13 +142,13 @@ class AsyncInteractiveConsole(InteractiveConsole):
 
     def runcode(self, code):
         try:
-            exec code in self.locals
+            exec(code, self.locals)
         except SystemExit:
             raise
         except:
             self.showtraceback()
         else:
-            if softspace(sys.stdout, 0):
+            if softspace is not None and softspace(sys.stdout, 0):
                 print
 
 
@@ -179,7 +180,7 @@ class AsyncInteractiveConsole(InteractiveConsole):
                 check = filter(lambda s:s.lower().startswith(wordlower), dir(obj))
         else:
             # no dots, must be in the normal namespaces.. no eval necessary
-            check = sets.Set(dir(__builtins__))
+            check = set(dir(__builtins__))
             check.update(keyword.kwlist)
             check.update(self.locals)
             wordlower = parts[-1].lower()
@@ -287,6 +288,7 @@ class PyInterpreter(NSObject):
     #  Interpreter functions
     #
 
+    @objc.python_method
     def _executeWithRedirectedIO(self, fn, *args, **kwargs):
         old = sys.stdin, sys.stdout, sys.stderr
         if self._stdin is not None:
@@ -311,11 +313,11 @@ class PyInterpreter(NSObject):
         self._more = self._interp()
 
     def executeInteractiveLine_(self, line):
-        self.setIsInteracting(True)
+        self.setIsInteracting_(True)
         try:
             self.executeLine_(line)
         finally:
-            self.setIsInteracting(False)
+            self.setIsInteracting_(False)
 
     def replaceLineWithCode_(self, s):
         idx = self.characterIndexForInput()
@@ -443,13 +445,13 @@ class PyInterpreter(NSObject):
     def isInteracting(self):
         return self._isInteracting
 
-    def setIsInteracting(self, v):
+    def setIsInteracting_(self, v):
         self._isInteracting = v
 
     def isAutoScroll(self):
         return self._autoScroll
 
-    def setAutoScroll(self, v):
+    def setAutoScroll_(self, v):
         self._autoScroll = v
 
 
@@ -478,7 +480,8 @@ class PyInterpreter(NSObject):
     #  NSTextViewDelegate methods
     #
 
-    def textView_completions_forPartialWordRange_indexOfSelectedItem_(self, aTextView, completions, (begin, length), index):
+    def textView_completions_forPartialWordRange_indexOfSelectedItem_(self, aTextView, completions, begin_length, index):
+        begin, length = begin_length
         txt = self.textView.textStorage().mutableString()
         end = begin+length
         while (begin>0) and (txt[begin].isalnum() or txt[begin] in "._"):
@@ -528,7 +531,7 @@ class PyInterpreter(NSObject):
             return YES
         else:
             if DEBUG_DELEGATE and aSelector not in PASSTHROUGH:
-                print aSelector
+                print(aSelector)
             return NO
 
     #
