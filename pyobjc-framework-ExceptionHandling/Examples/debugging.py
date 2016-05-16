@@ -13,7 +13,7 @@ class FooTester(NSObject):
 
     def doBadThingsNow_(self, aTimer):
         AppHelper.stopEventLoop()
-        raise ValueError, "doing bad things"
+        raise ValueError("doing bad things")
 
 foo = FooTester.alloc().init()
 NSTimer.scheduledTimerWithTimeInterval_target_selector_userInfo_repeats_(

@@ -26,7 +26,7 @@ import os
 ENVPLIST="~/.MacOSX/environment.plist"
 
 # Template for new keys
-NEWTMPL=NSLocalizedString("New_Variable_%d", "")
+NEWTMPL=Cocoa.NSLocalizedString("New_Variable_%d", "")
 
 class EnvironmentPane (PreferencePanes.NSPreferencePane):
     """
@@ -215,6 +215,7 @@ class EnvironmentPane (PreferencePanes.NSPreferencePane):
         else:
             self.deleteButton.setEnabled_(True)
 
+    @objc.python_method
     def runAlertSheet(self, title, message):
         """ Run an alertsheet without callbacks """
         Cocoa.NSBeginAlertSheet(title,
