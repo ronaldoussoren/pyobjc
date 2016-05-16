@@ -252,6 +252,7 @@ class WSTConnectionWindowController (AppKit.NSWindowController):
         self.setStatusTextFieldMessage_("Retrieving method list...")
         self.getMethods(url)
 
+    @objc.python_method
     def getMethods(self, url):
         _server = self.k_server = Proxy(url.encode('utf8'))
         self.startWorking()
@@ -272,6 +273,7 @@ class WSTConnectionWindowController (AppKit.NSWindowController):
             lambda n:self.stopWorking()
         )
 
+    @objc.python_method
     def receivedMethodsFailure(self, why, method):
         self.k_server = None
         self.k_methodPrefix = None
@@ -282,6 +284,7 @@ class WSTConnectionWindowController (AppKit.NSWindowController):
         #log.err(why)
         self.methodDescriptionTextView.setString_(why.getTraceback())
 
+    @objc.python_method
     def receivedMethods(self, _methods, _server, _methodPrefix):
         self.k_server = _server
         self.k_methods = {}
@@ -311,6 +314,7 @@ class WSTConnectionWindowController (AppKit.NSWindowController):
             lambda ig: self.setStatusTextFieldMessage_(None)
         )
 
+    @objc.python_method
     def fetchMethodSignature(self, ignore, index, aMethod):
         self.setStatusTextFieldMessage_(
             "Retrieving signature for method %s (%d of %d)."
@@ -321,6 +325,7 @@ class WSTConnectionWindowController (AppKit.NSWindowController):
             aMethod.methodName().encode('utf-8')
         )
 
+    @objc.python_method
     def processSignatureForMethod(self, methodSignature, index, aMethod):
         signatures = None
         if not len(methodSignature):
@@ -338,6 +343,7 @@ class WSTConnectionWindowController (AppKit.NSWindowController):
         aMethod.setMethodSignature_(signatures)
         self.replaceObjectInMethodArrayAtIndex_withObject_(index, aMethod)
 
+    @objc.python_method
     def couldntProcessSignatureForMethod(self, why, index, aMethod):
         #log.err(why)
         aMethod.setMethodSignature_("<error> %s %s" % (aMethod.methodName(), why.getBriefTraceback()))

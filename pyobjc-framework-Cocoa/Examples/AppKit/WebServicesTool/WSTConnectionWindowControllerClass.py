@@ -340,6 +340,7 @@ class WSTConnectionWindowController(Cocoa.NSWindowController):
         self.startWorking()
         self._workerThread.scheduleWork(self.getMethods, url)
 
+    @objc.python_method
     def getMethods(self, url):
         self._server = ServerProxy(url)
         pool = Cocoa.NSAutoreleasePool.alloc().init()  # use an extra pool to get rid of intermediates

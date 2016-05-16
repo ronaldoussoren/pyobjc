@@ -11,7 +11,7 @@ sources or nibs.)
 
 See also the iClass demo.
 """
-
+import sys
 from PyObjCTools import AppHelper
 from objc import getClassList, objc_object
 import objc

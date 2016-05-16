@@ -94,6 +94,7 @@ class CGraphController(Cocoa.NSObject):
         self.setNormalizedField(2, sender.floatValue())
         self.drawGraph()
 
+    @objc.python_method
     def setNormalizedField(self, t, v):
         if self.fieldNormalizeCheck.intValue():
             f = [0, 0, 0]

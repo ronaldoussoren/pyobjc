@@ -43,9 +43,10 @@ class CGraphView (Cocoa.NSView):
     def awakeFromNib(self):
         self.setCrossCursor()
         self.mapVisibleSlider.setFloatValue_(self.mapVisible)
-        self.setAzmuth(125)
+        self.setAzmuth_(125)
         self.setMapRect()
 
+    @objc.python_method
     def setCrossCursor(self):
         crosshairImage = Cocoa.NSImage.imageNamed_("CrossCursor")
         imageSize = crosshairImage.size()
@@ -53,26 +54,33 @@ class CGraphView (Cocoa.NSView):
         rect = self.bounds()
         self.trackingRect = self.addTrackingRect_owner_userData_assumeInside_(self.bounds(), self, 0, 0)
 
+    @objc.python_method
     def setGridColor(self, color=Cocoa.NSColor.greenColor()):
         self.gridColor = color
 
+    @objc.python_method
     def setRmsColor(self, color=Cocoa.NSColor.blueColor()):
         self.rmsColor = color
 
+    @objc.python_method
     def setGraphColor(self, color=Cocoa.NSColor.blackColor()):
         self.graphColor = color
 
+    @objc.python_method
     def setGain(self, gain, total):
         self.gain = gain
         self.totalField = total
 
+    @objc.python_method
     def setLines(self, lines):
         self.lines = lines
 
+    @objc.python_method
     def setMapImage(self, mapImage):
         self.mapImage = mapImage
         self.mapRect = ((0, 0), mapImage.size())
 
+    @objc.python_method
     def setPath(self, path, maxMag):
         self.path = path
         self.maxMag = maxMag
@@ -114,10 +122,10 @@ class CGraphView (Cocoa.NSView):
 
     def drawGrid(self):
         self.gridColor.set()
-        self.drawCircle(1.0)
+        self.drawCircle_(1.0)
         self.drawAxisLines()
 
-    def drawCircle(self, scale):
+    def drawCircle_(self, scale):
         center = self.graphCenter
         radius = self.graphRadius*scale
         x, y = 0, 1
@@ -128,7 +136,7 @@ class CGraphView (Cocoa.NSView):
 
     def drawRMS(self):
         self.rmsColor.set()
-        self.drawCircle(self.gain)
+        self.drawCircle_(self.gain)
 
     def drawAxisLines(self):
         center = self.graphCenter
@@ -172,13 +180,13 @@ class CGraphView (Cocoa.NSView):
 
     @objc.IBAction
     def azmuthDisplay_(self, sender):
-        self.setAzmuth(sender.floatValue())
+        self.setAzmuth_(sender.floatValue())
 
     @objc.IBAction
     def azmuthSlider_(self, sender):
-        self.setAzmuth(sender.floatValue())
+        self.setAzmuth_(sender.floatValue())
 
-    def setAzmuth(self, value):
+    def setAzmuth_(self, value):
         self.azmuth = degToRad(value)
         self.azmuthSlider.setFloatValue_(value)
         self.azmuthDisplay.setFloatValue_(value)

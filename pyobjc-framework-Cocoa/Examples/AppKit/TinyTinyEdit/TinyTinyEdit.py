@@ -18,7 +18,7 @@ class TinyTinyDocument(Cocoa.NSDocument):
             self.path = path
         else:
             # "revert"
-            self.readFromUTF8(path)
+            self.readFromUTF8_(path)
         return True
 
     def writeToFile_ofType_(self, path, tp):
@@ -31,9 +31,9 @@ class TinyTinyDocument(Cocoa.NSDocument):
 
     def windowControllerDidLoadNib_(self, controller):
         if self.path:
-            self.readFromUTF8(self.path)
+            self.readFromUTF8_(self.path)
 
-    def readFromUTF8(self, path):
+    def readFromUTF8_(self, path):
         with open(path, 'r') as f:
             text = f.read()
 

@@ -32,6 +32,7 @@ class CGraphModel(NSObject):
 
         return path, maxMag;
 
+    @objc.python_method
     def fieldGain(self):
         gain = 0
         Et = self.field[0] + self.field[1] + self.field[2]
@@ -47,6 +48,7 @@ class CGraphModel(NSObject):
         self.RMSGain = gain
         return gain
 
+    @objc.python_method
     def fieldValue(self, a):
         # The intermedate values are used to more closely match standard field equations nomenclature
         E0 = self.field[0]
@@ -63,20 +65,26 @@ class CGraphModel(NSObject):
         return mag
 
 
+    @objc.python_method
     def setField(self, tower, field):
         self.field[tower] = field
 
+    @objc.python_method
     def getField(self, tower):
         return self.field[tower]
 
+    @objc.python_method
     def setPhase(self, tower, phase):
         self.phase[tower] = phase
 
+    @objc.python_method
     def getPhase(self, tower):
         return self.phase[tower]
 
+    @objc.python_method
     def setSpacing(self, spacing):
         self.spacing = spacing
 
+    @objc.python_method
     def getSpacing(self):
         return self.spacing

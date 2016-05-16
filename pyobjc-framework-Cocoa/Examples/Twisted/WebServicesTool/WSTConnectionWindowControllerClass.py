@@ -276,6 +276,7 @@ class WSTConnectionWindowController (Cocoa.NSWindowController):
         self.setStatusTextFieldMessage_("Retrieving method list...")
         self.getMethods(url)
 
+    @objc.python_method
     def getMethods(self, url):
         _server = self._server = Proxy(url.encode('utf8'))
         self.startWorking()
@@ -296,6 +297,7 @@ class WSTConnectionWindowController (Cocoa.NSWindowController):
             lambda n:self.stopWorking()
         )
 
+    @objc.python_method
     def receivedMethodsFailure(self, why, method):
         self._server = None
         self._methodPrefix = None
@@ -306,6 +308,7 @@ class WSTConnectionWindowController (Cocoa.NSWindowController):
         #log.err(why)
         self.methodDescriptionTextView.setString_(why.getTraceback())
 
+    @objc.python_method
     def receivedMethods(self, _methods, _server, _methodPrefix):
         self._server = _server
         self._methods = _methods
@@ -335,6 +338,7 @@ class WSTConnectionWindowController (Cocoa.NSWindowController):
             lambda ig: self.reloadData()
         )
 
+    @objc.python_method
     def fetchMethodSignature(self, ignore, index, aMethod):
         if (index % 5)==0:
             self.reloadData()
@@ -348,6 +352,7 @@ class WSTConnectionWindowController (Cocoa.NSWindowController):
         )
 
 
+    @objc.python_method
     def processSignatureForMethod(self, methodSignature, index, aMethod):
         signatures = None
         if not len(methodSignature):
@@ -363,6 +368,7 @@ class WSTConnectionWindowController (Cocoa.NSWindowController):
             signatures = signature
         self._methodSignatures[aMethod] = signatures
 
+    @objc.python_method
     def couldntProcessSignatureForMethod(self, why, index, aMethod):
 
         #log.err(why)
@@ -385,6 +391,7 @@ class WSTConnectionWindowController (Cocoa.NSWindowController):
             self.methodDescriptionTextView.setString_(methodDescription)
         self.fetchMethodDescription(selectedMethod).addCallback(displayMethod)
 
+    @objc.python_method
     def fetchMethodDescription(self, aMethod):
         desc = self._methodDescriptions
         if aMethod in desc:

@@ -6,7 +6,7 @@ from AppKit import NSObject, NSApplicationMain
 
 
 class Converter (NSObject):
-    def convertAmount(self, amt, rate):
+    def convertAmount_atRate_(self, amt, rate):
         return amt*rate
 
 
@@ -30,7 +30,7 @@ class ConverterController (NSObject):
         rate = self.rateField.floatValue()
         amt = self.dollarField.floatValue()
 
-        total = self.converter.convertAmount(rate, amt)
+        total = self.converter.convertAmount_atRate_(rate, amt)
         self.totalField.setFloatValue_(total)
         self.rateField.selectText_(self)
 

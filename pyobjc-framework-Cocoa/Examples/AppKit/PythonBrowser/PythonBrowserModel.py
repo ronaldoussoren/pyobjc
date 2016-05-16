@@ -28,7 +28,7 @@ class PythonBrowserModel(NSObject):
     def outlineView_child_ofItem_(self, view, child, item):
         if item is None:
             item = self.root
-        return item.getChild(child)
+        return item.getChild_(child)
 
     def outlineView_isItemExpandable_(self, view, item):
         if item is None:
@@ -51,7 +51,7 @@ class PythonBrowserModel(NSObject):
             print("XXX Error:", sys.exc_info())
             print("XXX      :", repr(value))
         else:
-            item.setValue(obj)
+            item.setValue_(obj)
 
     # delegate method
     def outlineView_shouldEditTableColumn_item_(self, view, col, item):
@@ -153,7 +153,7 @@ class PythonItem(NSObject):
             self.childrenEditable = 1  # XXX we don't know that...
         self._childRefs = {}
 
-    def setValue(self, value):
+    def setValue_(self, value):
         self._setValue(self.parent, self.realName, value)
         self.__init__(self.realName, value, self.parent, self._setValue)
 
@@ -163,7 +163,7 @@ class PythonItem(NSObject):
     def isExpandable(self):
         return self._getChild is not None
 
-    def getChild(self, child):
+    def getChild_(self, child):
         if child in self._childRefs:
             return self._childRefs[child]
 

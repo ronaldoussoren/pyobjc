@@ -326,7 +326,7 @@ class JoystickView (NSView):
         self.setValue_forKey_(0, key)
 
 
-    def validateMaxOffset_error(self, ioValue):
+    def validateMaxOffset_error_(self, ioValue, error):
         if ioValue is None:
             # trap this in setNilValueForKey
             # alternative might be to create new NSNumber with value 0 here
@@ -337,9 +337,8 @@ class JoystickView (NSView):
                    "validation: zero maxOffset error")
             userInfoDict = { NSLocalizedDescriptionKey : errorString }
             error = NSError.alloc().initWithDomain_code_userInfo_("JoystickView", 1, userInfoDict)
-            outError = error
-            return False
-        return True
+            return False, error
+        return True, None
 
 
 JoystickView.exposeBinding_("offset")

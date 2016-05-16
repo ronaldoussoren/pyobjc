@@ -301,11 +301,11 @@ class PyInterpreter(NSObject):
         self._more = self._interp()
 
     def executeInteractiveLine_(self, line):
-        self.setIsInteracting(True)
+        self.setIsInteracting_(True)
         try:
             self.executeLine_(line)
         finally:
-            self.setIsInteracting(False)
+            self.setIsInteracting_(False)
 
     def replaceLineWithCode_(self, s):
         idx = self.characterIndexForInput()
@@ -433,13 +433,13 @@ class PyInterpreter(NSObject):
     def isInteracting(self):
         return self._isInteracting
 
-    def setIsInteracting(self, v):
+    def setIsInteracting_(self, v):
         self._isInteracting = v
 
     def isAutoScroll(self):
         return self._autoScroll
 
-    def setAutoScroll(self, v):
+    def setAutoScroll_(self, v):
         self._autoScroll = v
 
 
