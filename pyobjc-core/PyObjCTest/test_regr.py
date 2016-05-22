@@ -267,29 +267,46 @@ class TestInitMemoryLeak (TestCase):
         self.assertEqual(v.objectForKey_("foo"), "ofk2: foo")
         self.assertEqual(v["foo"], "gi: foo")
 
-    def testExceptionOnWrapper(self):
-        # NOTE: I'm not to happy about the type error and will
-        #       likely change PyObjC. The test primarily checks
-        #       that this code doesn't crash the interpreter.
+    def testAllowDecorators(self):
 
         def decorator(function):
             @functools.wraps(function)
             def wrapper(*args, **kwds):
-                return function(*args, **kwds)
+                return function(*args, **kwds) * 2
 
             return wrapper
 
-        try:
-            class OCTestRegrWithWrapped (NSObject):
-                @decorator
-                def someMethod(self):
-                    pass
+        class OCTestRegrWithWrapped (NSObject):
+            @decorator
+            def someMethod(self):
+                return 42
 
-        except TypeError:
-            pass
+        o = OCTestRegrWithWrapped.alloc().init()
+        v = o.someMethod()
+        self.assertEqual(v, 84)
 
-        else:
-            self.fail("TypeError not raised")
+
+    def testDefaultSignatures(self):
+        def meth(): pass
+        s = objc.selector(meth)
+        self.assertEqual(s.selector, b'meth')
+        self.assertEqual(s.signature, b'v@:')
+
+        def meth__(): pass
+        s = objc.selector(meth__)
+        self.assertEqual(s.selector, b'meth::')
+        self.assertEqual(s.signature, b'v@:@@')
+
+        def meth(): return 1
+        s = objc.selector(meth)
+        self.assertEqual(s.selector, b'meth')
+        self.assertEqual(s.signature, b'@@:')
+
+        def meth__(): return 1
+        s = objc.selector(meth__)
+        self.assertEqual(s.selector, b'meth::')
+        self.assertEqual(s.signature, b'@@:@@')
+
 
 if __name__ == '__main__':
     main()

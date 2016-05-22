@@ -778,6 +778,7 @@ PyObjCRT_AlignOfType(const char *type)
     {
         Py_ssize_t maxalign = 0;
         type++;
+        while(*type != _C_STRUCT_E && *type++ != '=') /* do nothing */;
         while (*type != _C_UNION_E)
         {
             Py_ssize_t item_align = PyObjCRT_AlignOfType(type);

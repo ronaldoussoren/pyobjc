@@ -104,14 +104,10 @@ class TestInheritedProtoype (TestCase):
         except objc.BadPrototypeError:
             pass
 
-        try:
-            class OC_InPro_TooMany4 (NSObject):
-                def replacementObjectForArchiver_(self, archiver, opt=3):
-                    pass
+        class OC_InPro_TooMany4 (NSObject):
+            def replacementObjectForArchiver_(self, archiver, opt=3):
+                pass
 
-            self.fail()
-        except objc.BadPrototypeError:
-            pass
 
     def testBadOverriddenSignature(self):
         # BAD: signature doesn't match super class signature
@@ -230,35 +226,52 @@ class TestExplicitPrototype (TestCase):
         # OK: the signature specifies more arguments than the implicit or
         # explicit selector seems to need.
 
-        class OC_ExplProto_ColonVsCount1 (NSObject):
-            def twoargmethod(self, arg1, arg2):
-                pass
-            twoargmethod = objc.selector(twoargmethod)
+        try:
+            class OC_ExplProto_ColonVsCount1 (NSObject):
+                def twoargmethod(self, arg1, arg2):
+                    pass
+                twoargmethod = objc.selector(twoargmethod)
+
+            self.fail("should not be able to define this method")
+        except objc.BadPrototypeError:
+            pass
 
         class OC_ExplProto_ColonVsCount2 (NSObject):
             def twoargmethod(self, arg1, arg2):
                 pass
             twoargmethod = objc.selector(twoargmethod, signature=b'v@:@@')
 
-        class OC_ExplProto_ColonVsCount3 (NSObject):
-            def twoargmethod(self, arg1, arg2):
+        try:
+            class OC_ExplProto_ColonVsCount3 (NSObject):
+                def twoargmethod(self, arg1, arg2):
+                    pass
+                twoargmethod = objc.selector(twoargmethod, selector=b'twoargs')
+            self.fail("should not be able to define this method")
+        except objc.BadPrototypeError:
+            pass
+
+        try:
+            class OC_ExplProto_ColonVsCount4 (NSObject):
+                def noargmethod_(self):
+                    pass
+                noargmethod_ = objc.selector(noargmethod_)
+            self.fail("should not be able to define this method")
+        except objc.BadPrototypeError:
+            pass
+
+        class OC_ExplProto_ColonVsCount5 (NSObject):
+            def noargmethod_(self):
                 pass
-            twoargmethod = objc.selector(twoargmethod, selector=b'twoargs')
+            noargmethod_ = objc.selector(noargmethod_, signature=b'v@:')
 
-        #class OC_ExplProto_ColonVsCount4 (NSObject):
-        #    def noargmethod_(self):
-        #        pass
-        #    noargmethod_ = objc.selector(noargmethod_)
-
-        #class OC_ExplProto_ColonVsCount5 (NSObject):
-        #    def noargmethod_(self):
-        #        pass
-        #    noargmethod_ = objc.selector(noargmethod_, signature=b'v@:')
-
-        #class OC_ExplProto_ColonVsCount6 (NSObject):
-        #    def noargmethod_(self):
-        #        pass
-        #    noargmethod_ = objc.selector(noargmethod_, selector='doit:')
+        try:
+            class OC_ExplProto_ColonVsCount6 (NSObject):
+                def noargmethod_(self):
+                    pass
+                noargmethod_ = objc.selector(noargmethod_, selector=b'doit:')
+            self.fail("should not be able to define this method")
+        except objc.BadPrototypeError:
+            pass
 
 
     def testTooFewArguments(self):
@@ -405,10 +418,10 @@ class TestImplicitSignature (TestCase):
         # conventions for methods that won't be called from Objective-C,
         # that keeps Python code as nice as possible.
         class OC_ImplProto_TooFew1 (NSObject):
-            def myMethod(self, arg1, arg2=4):
+            def myMethod_(self, arg1, arg2=4):
                 pass
-        self.assertEqual(OC_ImplProto_TooFew1.myMethod.selector, b'myMethod')
-        self.assertEqual(OC_ImplProto_TooFew1.myMethod.signature, b'v@:@@')
+        self.assertEqual(OC_ImplProto_TooFew1.myMethod_.selector, b'myMethod:')
+        self.assertEqual(OC_ImplProto_TooFew1.myMethod_.signature, b'v@:@')
 
     def testTooManyColons(self):
         # OK: the number of implied colons is larger than the actual number
@@ -450,16 +463,12 @@ class TestImplicitSignature (TestCase):
         except objc.BadPrototypeError:
             pass
 
-        try:
-            class OC_ImplProto_TooMany2 (NSObject):
-                def setFoo_(self, value, other=3):
-                    pass
-            self.fail()
-        except objc.BadPrototypeError:
-            pass
+        class OC_ImplProto_TooMany3 (NSObject):
+            def setFoo_(self, value, other=3):
+                pass
 
         try:
-            class OC_ImplProto_TooMany3 (NSObject):
+            class OC_ImplProto_TooMany4 (NSObject):
                 def setFoo_(self, value, *rest):
                     pass
             self.fail()
@@ -467,7 +476,7 @@ class TestImplicitSignature (TestCase):
             pass
 
         try:
-            class OC_ImplProto_TooMany4 (NSObject):
+            class OC_ImplProto_TooMany5 (NSObject):
                 def setFoo_(self, value, **rest):
                     pass
             self.fail()
@@ -487,7 +496,7 @@ class TestImplicitSignature (TestCase):
             def method2(self): return 1
             def method1_(self, arg): pass
             def methodWithX_andY_(self, x, y): pass
-            def method_with_embedded_underscores(self, a): pass
+            def method_with_embedded_underscores(self): pass
             def __magic__(self): pass
             def _leadingColon(self): pass
             def _leadingColon_(self, arg): return 1
@@ -509,7 +518,7 @@ class TestImplicitSignature (TestCase):
         self.assertEqual(OC_ImplProto_Variations.method2.signature, b"@@:")
         self.assertEqual(OC_ImplProto_Variations.method1_.signature, b"v@:@")
         self.assertEqual(OC_ImplProto_Variations.methodWithX_andY_.signature, b"v@:@@")
-        self.assertEqual(OC_ImplProto_Variations.method_with_embedded_underscores.signature, b"v@:@")
+        self.assertEqual(OC_ImplProto_Variations.method_with_embedded_underscores.signature, b"v@:")
         #self.assertEqual(OC_ImplProto_Variations.__magic__.signature, b"v@:")
         self.assertEqual(OC_ImplProto_Variations._leadingColon.signature, b"v@:")
         self.assertEqual(OC_ImplProto_Variations._leadingColon_.signature, b"@@:@")

@@ -1256,6 +1256,8 @@ _type_lookup(PyTypeObject* tp, PyObject* name
             descr = PyObjCMetaClass_TryResolveSelector(base, name, sel);
             if (descr != NULL) {
                 break;
+            } else if (PyErr_Occurred()) {
+                return NULL;
             }
         }
     }
@@ -1700,6 +1702,8 @@ class_getattro(PyObject* self, PyObject* name)
             result = descr;
             Py_INCREF(result);
             goto done;
+        } else if (PyErr_Occurred()) {
+            return NULL;
         }
     }
 
@@ -1716,6 +1720,9 @@ class_getattro(PyObject* self, PyObject* name)
             ) {
             f = Py_TYPE(descr)->tp_descr_get;
         }
+        if (PyErr_Occurred()) {
+            return NULL;
+        }
     }
 
     if (descr == NULL) {
@@ -1730,6 +1737,9 @@ class_getattro(PyObject* self, PyObject* name)
 #endif
             ) {
             f = Py_TYPE(descr)->tp_descr_get;
+        }
+        if (PyErr_Occurred()) {
+            return NULL;
         }
     }
 
@@ -2932,6 +2942,8 @@ PyObjCClass_FindSelector(PyObject* cls, SEL selector, BOOL class_method)
             if (value != NULL) {
                 Py_INCREF(value);
                 return value;
+            } else if (PyErr_Occurred()) {
+                return NULL;
             }
         }
     }

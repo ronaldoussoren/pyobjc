@@ -404,6 +404,9 @@ new_methodsignature(const char* signature)
         }
         nargs++;
     }
+    if (cur == NULL && PyErr_Occurred()) {
+        return NULL;
+    }
 
     retval = PyObject_NewVar(PyObjCMethodSignature,
             &PyObjCMethodSignature_Type, nargs /*+1*/);

@@ -12,10 +12,12 @@ class TestKVOPropHelper (NSObject):
         self.accessing = []
         return self
 
+    @objc.python_method
     def get_helper(self):
         self.accessing.append(('get_helper',))
         return self.__helper
 
+    @objc.python_method
     def set_helper(self, value):
         self.accessing.append(('set_helper', value))
         self.__helper = value

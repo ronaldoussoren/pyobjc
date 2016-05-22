@@ -9,7 +9,7 @@
 #include <objc/Object.h>
 
 
-static char* pysel_default_signature(PyObject* callable);
+static char* pysel_default_signature(SEL selector, PyObject* callable);
 static PyObject* pysel_new(PyTypeObject* type, PyObject* args, PyObject* kwds);
 
 /*
@@ -652,6 +652,10 @@ objcsel_descr_get(PyObject* _self, PyObject* obj, PyObject* class)
             meth->sel_call_func = PyObjC_FindCallFunc(meth->base.sel_class,
                 meth->base.sel_selector);
         }
+        if (meth->sel_call_func == NULL) {
+            Py_DECREF(result);
+            return NULL;
+        }
     }
     result->sel_call_func = meth->sel_call_func;
 
@@ -899,7 +903,7 @@ PyObjCSelector_New(PyObject* callable,
         if (len > 30 && strcmp(selname+len-30, "DidEnd:returnCode:contextInfo:") == 0) {
             signature = PyObjCUtil_Strdup(gSheetMethodSignature);
         } else {
-            signature = pysel_default_signature(callable);
+            signature = pysel_default_signature(selector, callable);
         }
     } else {
         signature = PyObjCUtil_Strdup(signature);
@@ -1314,7 +1318,7 @@ pysel_call(PyObject* _self, PyObject* args, PyObject* kwargs)
 }
 
 static char*
-pysel_default_signature(PyObject* callable)
+pysel_default_signature(SEL selector, PyObject* callable)
 {
     PyCodeObject* func_code;
     Py_ssize_t arg_count;
@@ -1323,6 +1327,7 @@ pysel_default_signature(PyObject* callable)
     Py_ssize_t buffer_len;
     Py_ssize_t i;
     int was_none;
+    const char* selname = sel_getName(selector);
 
     if (PyFunction_Check(callable)) {
         func_code = (PyCodeObject*)PyFunction_GetCode(callable);
@@ -1336,26 +1341,32 @@ pysel_default_signature(PyObject* callable)
         return NULL;
     }
 
-    arg_count = func_code->co_argcount;
-    if (arg_count < 1) {
-        PyErr_SetString(PyExc_TypeError,
-            "Objective-C callable methods must take at least one argument");
+    if (selname == NULL) {
+        PyErr_SetString(PyExc_ValueError,
+                "Cannot extract string from selector");
         return NULL;
     }
 
+    arg_count = 0;
+
+    selname = strchr(selname, ':');
+    while (selname) {
+        arg_count ++;
+        selname = strchr(selname+1, ':');
+    }
 
     /* arguments + return-type + selector */
-    result = PyMem_Malloc(arg_count+3);
+    result = PyMem_Malloc(arg_count+4);
     if (result == 0) {
         PyErr_NoMemory();
         return NULL;
     }
 
     /* We want: v@:@... (final sequence of arg_count-1 @-chars) */
-    memset(result, _C_ID, arg_count+2);
+    memset(result, _C_ID, arg_count+3);
     result[0] = _C_VOID;
     result[2] = _C_SEL;
-    result[arg_count+2] = '\0';
+    result[arg_count+3] = '\0';
 
     if (PyObject_AsReadBuffer(func_code->co_code, (const void **)&buffer, &buffer_len)) {
         return NULL;
@@ -1413,6 +1424,13 @@ pysel_default_selector(PyObject* callable)
         return NULL;
     }
 
+    if (buf[strlen(buf)-1] != '_') {
+        /* Method name doesn't end with an underscore,
+         * the default selector cannot be a multi-segment
+         * one. Hence don't try to translate.
+         */
+        return sel_registerName(buf);
+    }
 
     cur = strchr(buf, '_');
     while (cur != NULL) {
@@ -1637,7 +1655,11 @@ pysel_descr_get(PyObject* _meth, PyObject* obj, PyObject* class)
     }
 
     result->base.sel_methinfo = PyObjCSelector_GetMetadata((PyObject*)meth);
-    Py_XINCREF(result->base.sel_methinfo);
+    if (result->base.sel_methinfo == NULL) {
+        PyErr_Clear();
+    } else {
+        Py_INCREF(result->base.sel_methinfo);
+    }
     result->argcount = meth->argcount;
     result->numoutput = meth->numoutput;
 

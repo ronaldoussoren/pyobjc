@@ -34,11 +34,13 @@ class OCObserve (NSObject):
         return { v[1]: v[2]['new'] for v in self.values }
 
 
+    @objc.python_method
     def register(self, object, keypath):
         object.addObserver_forKeyPath_options_context_(
                 self, keypath, 0x3, None)
         self.registrations.append((object, keypath))
 
+    @objc.python_method
     def unregister(self, object, keypath):
         object.removeObserver_forKeyPath_(self, keypath)
 

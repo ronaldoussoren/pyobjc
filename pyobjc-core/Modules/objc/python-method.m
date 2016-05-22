@@ -93,6 +93,12 @@ meth_dealloc(PyObject* self)
     Py_TYPE(self)->tp_free(self);
 }
 
+static PyObject*
+meth_call(PyObject* self, PyObject* args, PyObject* kwds)
+{
+    return PyObject_Call(((PyObjCPythonMethod*)self)->callable, args, kwds);
+}
+
 PyDoc_STRVAR(meth_doc,
     "objc.python_method(callable)\n"
     CLINIC_SEP
@@ -115,4 +121,5 @@ PyTypeObject PyObjCPythonMethod_Type = {
     .tp_descr_get   = meth_descr_get,
     .tp_traverse    = meth_traverse,
     .tp_clear       = meth_clear,
+    .tp_call        = meth_call,
 };

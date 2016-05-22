@@ -6,9 +6,97 @@ An overview of the relevant changes in new, and older, releases.
 Version 3.2
 -----------
 
+**Backward compatibility note:** Due to a change in the way the default
+method signature is calculated PyObjC is now more strict in enforcing
+the Python<->Objective-C mapping for selectors and a number of code patterns
+that were allowed before are no longer allowed, in particular the following
+method definitions raise ``objc.BadPrototypeError``::
+
+   class MyObject (NSObject):
+      def mymethod(self, a, b): ...
+      def method_arg_(self, a, b, c): ...
+
+If these methods are only used from Python and are never used from Objective-C
+the error can be avoided by decorating these methods with ``objc.python_method``::
+
+   class MyObject (NSObject):
+      @objc.python_method
+      def mymethod(self, a, b): ...
+
+This cannnot be used for methods used from Objective-C, for those you will
+have to rename the method or you will have to provide an appropriate selector
+explictly.
+
+* Don't force the installation of py2app.
+
+* Fix build failure using the OSX 10.10 SDK.
+
+* Issue #21: Tweak build procedure for PyObjC to avoid building pyobjc-core
+  multiple times when using ``pip install pyobjc``.
+
+* Issue #123: Use Twisted's cfreactor module in the examples using Twisted.
+
+* Issue #148: Fix build issue for the MapKit bindings on a case
+  sensitive filesystem.
+
 * Added bindings for the IOSurface framework (pyobjc-framework-IOSurface)
 
 * Added bindings for the NetworkExtension framework (pyobjc-framework-NetworkExtension)
+
+* Issue #149: Fix compile problems with Anaconda
+
+* Fix SystemError for accessing a method whose ``__metadata__`` cannot be calculated,
+  found while researching issue #122.
+
+* Issue #146: Don't hang when running ``python setup.py build`` using PyPy.
+
+  Note that PyPy still doesn't work, this just ensures that the build fails instead
+  of hanging indefinely.
+
+* Issue #143: Fix calculation of default type signature for selectors
+
+  Due to this change it is possible to use decorators like this::
+
+     def decorator(func):
+        @functools.wraps(func)
+	def wrapper(*args, **kwds):
+	    return func(*args, **kwds)
+	return decorator
+
+  Before this patch PyObjC gave an error due to the signature of ``wrapper``,
+  and if ``wrapper`` was defined with an explicit ``self`` argument PyObjC would
+  not give an error but would calculate the wrong method signature for wrapped
+  methods.
+
+  An unfortunate side effect of this change is that the argument count
+  of methods must now match the implied argument count of the selector, that is
+  a method with name ``someMethod_`` must now have exactly two arguments (``self``
+  and the argument implied by the underscore at the end).
+
+  Use ``objc.python_method`` as a decorator for python methods that don't use
+  this convention and do no need to be registered with the Objective-C runtime
+  as Objective-C selectors.
+
+* The bridge now considers the default arguments for a function when determining
+  if the Python signature of a function is compatible with the Objective-C
+  signature, that is the following method definition is valid::
+
+    class MyObject (NSObject):
+       def someMethod_(self, a, b=2): pass
+
+* The default selector calculated for Python methods with embedded underscores and
+  without a closing underscore has changed, the embedded underscores are not translated
+  to colons because the resulting Objective-C selector would not be valid.
+
+  That is, in earlier versions the default selector for "some_method" would be
+  "some:method", and from this version on the default for selector for this
+  method is "some_method".
+
+* (Python 3) Methods and functions with keyword-only arguments that don't have defaults
+  cause a ``objc.BadPrototypeError`` exception when proxied to Objective-C
+  because those can never be called from Objective-C without causing an
+  exception.
+
 
 Version 3.1.1
 -------------

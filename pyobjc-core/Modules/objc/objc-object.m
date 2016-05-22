@@ -742,6 +742,10 @@ object_getattro(PyObject* obj, PyObject* name)
             ) {
             f = Py_TYPE(descr)->tp_descr_get;
         }
+        if (descr == NULL && PyErr_Occurred()) {
+            return NULL;
+        }
+
     }
 
     if (f != NULL) {

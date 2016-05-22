@@ -1872,29 +1872,42 @@ error:
  */
 
 static Py_ssize_t
-_argcount(PyObject* callable, BOOL* haveVarArgs, BOOL* haveVarKwds)
+_argcount(PyObject* callable, BOOL* haveVarArgs, BOOL* haveVarKwds, BOOL* haveKwOnly, Py_ssize_t* defaultCount)
 {
     PyCodeObject *func_code;
+    PyFunctionObject* func;
 
-    if (PyFunction_Check(callable)) {
-        func_code = (PyCodeObject *)PyFunction_GetCode(callable);
+    if (PyFunction_Check(callable) || PyMethod_Check(callable)) {
+        if (PyFunction_Check(callable)) {
+            func = (PyFunctionObject*)callable;
+        } else {
+            func = (PyFunctionObject*) PyMethod_Function(callable);
+        }
+
+        func_code = (PyCodeObject *)PyFunction_GetCode((PyObject*)func);
         *haveVarArgs = (func_code->co_flags & CO_VARARGS) != 0;
         *haveVarKwds = (func_code->co_flags & CO_VARKEYWORDS) != 0;
-        return func_code->co_argcount;
+        *haveKwOnly = NO;
+#if PY_MAJOR_VERSION > 2
+        if (func->func_kwdefaults == NULL) {
+            *haveKwOnly = (func_code->co_kwonlyargcount != 0);
+        } else {
+            *haveKwOnly = (func_code->co_kwonlyargcount != PyDict_Size(func->func_kwdefaults));
+        }
+#endif
+        *defaultCount = 0;
+        if (func->func_defaults != NULL) {
+            *defaultCount = PyTuple_Size(func->func_defaults);
+        }
 
-    } else if (PyMethod_Check(callable)) {
-        func_code = (PyCodeObject *)PyFunction_GetCode(
-            PyMethod_Function (callable));
-        *haveVarArgs = (func_code->co_flags & CO_VARARGS) != 0;
-        *haveVarKwds = (func_code->co_flags & CO_VARKEYWORDS) != 0;
-        if (PyMethod_Self(callable) == NULL) {
+        if (!PyMethod_Check(callable) || PyMethod_Self(callable) == NULL) {
             return func_code->co_argcount;
         } else {
             return func_code->co_argcount - 1;
         }
 
     } else if (PyObjCPythonSelector_Check(callable)) {
-        Py_ssize_t result = _argcount(((PyObjCPythonSelector*)callable)->callable, haveVarArgs, haveVarKwds);
+        Py_ssize_t result = _argcount(((PyObjCPythonSelector*)callable)->callable, haveVarArgs, haveVarKwds, haveKwOnly, defaultCount);
         if (((PyObjCSelector*)callable)->sel_self != NULL) {
             result -= 1;
         }
@@ -1903,6 +1916,10 @@ _argcount(PyObject* callable, BOOL* haveVarArgs, BOOL* haveVarKwds)
     } else if (PyObjCNativeSelector_Check(callable)) {
         PyObjCMethodSignature* sig = PyObjCSelector_GetMetadata(callable);
         Py_ssize_t result = Py_SIZE(sig) - 1;
+        *haveVarArgs = NO;
+        *haveVarKwds = NO;
+        *haveKwOnly = NO;
+        *defaultCount = 0;
 
         Py_DECREF(sig);
         if (((PyObjCSelector*)callable)->sel_self != NULL) {
@@ -1937,16 +1954,25 @@ PyObjCFFI_MakeFunctionClosure(PyObjCMethodSignature* methinfo, PyObject* callabl
     if (callable) {
         BOOL haveVarArgs = NO;
         BOOL haveVarKwds = NO;
+        BOOL haveKwOnly = NO;
+        Py_ssize_t defaultCount = 0;
 
-        stubUserdata->argCount = _argcount(callable, &haveVarArgs, &haveVarKwds);
+        stubUserdata->argCount = _argcount(callable, &haveVarArgs, &haveVarKwds, &haveKwOnly, &defaultCount);
         if (stubUserdata->argCount == -1) {
             Py_DECREF(methinfo);
             PyMem_Free(stubUserdata);
             return NULL;
         }
 
+        if (haveKwOnly) {
+            PyErr_Format(PyObjCExc_BadPrototypeError, "%R has keyword-only arguments without defaults", callable);
+            Py_DECREF(methinfo);
+            PyMem_Free(stubUserdata);
+            return NULL;
+        }
 
-        if (stubUserdata->argCount == Py_SIZE(methinfo) && !haveVarArgs && !haveVarKwds) {
+
+        if (((stubUserdata->argCount - defaultCount) <= Py_SIZE(methinfo)) && (stubUserdata->argCount >= Py_SIZE(methinfo)) && !haveVarArgs && !haveVarKwds) {
             /* OK */
 
         } else if ((stubUserdata->argCount <= 1) && (haveVarArgs || haveVarKwds)) {
@@ -2018,14 +2044,23 @@ PyObjCFFI_MakeIMPForSignature(PyObjCMethodSignature* methinfo, SEL sel, PyObject
     if (callable) {
         BOOL haveVarArgs = NO;
         BOOL haveVarKwds = NO;
-        stubUserdata->argCount = _argcount(callable, &haveVarArgs, &haveVarKwds);
+        BOOL haveKwOnly = NO;
+        Py_ssize_t defaultCount = 0;
+        stubUserdata->argCount = _argcount(callable, &haveVarArgs, &haveVarKwds, &haveKwOnly, &defaultCount);
         if (stubUserdata->argCount == -1) {
             Py_DECREF(methinfo);
             PyMem_Free(stubUserdata);
             return NULL;
         }
 
-        if (stubUserdata->argCount == Py_SIZE(methinfo) - 1 && !haveVarArgs && !haveVarKwds) {
+        if (haveKwOnly) {
+            PyErr_Format(PyObjCExc_BadPrototypeError, "%R has keyword-only arguments without defaults", callable);
+            Py_DECREF(methinfo);
+            PyMem_Free(stubUserdata);
+            return NULL;
+        }
+
+        if (((stubUserdata->argCount - defaultCount) <= Py_SIZE(methinfo) - 1) && (stubUserdata->argCount >= Py_SIZE(methinfo) - 1) && !haveVarArgs && !haveVarKwds) {
             /* OK */
 
         } else if ((stubUserdata->argCount <= 1) && haveVarArgs && haveVarKwds) {
@@ -2033,10 +2068,17 @@ PyObjCFFI_MakeIMPForSignature(PyObjCMethodSignature* methinfo, SEL sel, PyObject
 
         } else {
             /* Wrong number of arguments, raise an error */
-            PyErr_Format(PyObjCExc_BadPrototypeError,
-                "Objective-C expects %"PY_FORMAT_SIZE_T"d arguments, Python argument has %d arguments for %R",
-                Py_SIZE(methinfo) - 1, stubUserdata->argCount,
-                callable);
+            if (defaultCount) {
+                PyErr_Format(PyObjCExc_BadPrototypeError,
+                    "Objective-C expects %"PY_FORMAT_SIZE_T"d arguments, Python argument has from %d to %d arguments for %R",
+                    Py_SIZE(methinfo) - 1, stubUserdata->argCount - defaultCount, stubUserdata->argCount,
+                    callable);
+            } else {
+                PyErr_Format(PyObjCExc_BadPrototypeError,
+                    "Objective-C expects %"PY_FORMAT_SIZE_T"d arguments, Python argument has %d arguments for %R",
+                    Py_SIZE(methinfo) - 1, stubUserdata->argCount,
+                    callable);
+            }
             Py_DECREF(methinfo);
             PyMem_Free(stubUserdata);
             return NULL;
@@ -2046,7 +2088,7 @@ PyObjCFFI_MakeIMPForSignature(PyObjCMethodSignature* methinfo, SEL sel, PyObject
             /* Check if the number of colons is correct */
             int cc= _coloncount(sel);
 
-            if (cc != 0 && stubUserdata->argCount - 1 != cc) {
+            if (cc != 0 && ! ((stubUserdata->argCount - defaultCount - 1 <= cc) && (stubUserdata->argCount >= cc))) {
                 PyErr_Format(PyObjCExc_BadPrototypeError,
                     "Python signature doesn't match implied Objective-C signature for %R",
                     callable);
@@ -2142,8 +2184,10 @@ PyObjCFFI_MakeBlockFunction(PyObjCMethodSignature* methinfo, PyObject* callable)
     if (callable) {
         BOOL haveVarArgs = NO;
         BOOL haveVarKwds = NO;
+        BOOL haveKwOnly = NO;
+        Py_ssize_t defaultCount;
 
-        stubUserdata->argCount = _argcount(callable, &haveVarArgs, &haveVarKwds);
+        stubUserdata->argCount = _argcount(callable, &haveVarArgs, &haveVarKwds, &haveKwOnly, &defaultCount);
 
         if (stubUserdata->argCount == -1) {
             Py_DECREF(methinfo);
@@ -2151,7 +2195,14 @@ PyObjCFFI_MakeBlockFunction(PyObjCMethodSignature* methinfo, PyObject* callable)
             return NULL;
         }
 
-        if (stubUserdata->argCount == Py_SIZE(methinfo) -1 && !haveVarArgs && !haveVarKwds) {
+        if (haveKwOnly) {
+            PyErr_Format(PyObjCExc_BadPrototypeError, "%R has keyword-only arguments without defaults", callable);
+            Py_DECREF(methinfo);
+            PyMem_Free(stubUserdata);
+            return NULL;
+        }
+
+        if (((stubUserdata->argCount - defaultCount) <= Py_SIZE(methinfo) - 1) && (stubUserdata->argCount >= Py_SIZE(methinfo) - 1) && !haveVarArgs && !haveVarKwds) {
             /* OK */
 
         } else if ((stubUserdata->argCount <= 1) && haveVarArgs && haveVarKwds) {
