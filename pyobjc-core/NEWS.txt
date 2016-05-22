@@ -27,6 +27,8 @@ This cannnot be used for methods used from Objective-C, for those you will
 have to rename the method or you will have to provide an appropriate selector
 explictly.
 
+* Issue #153: Add missing metadata file to ApplicationServices bindings
+
 * Don't force the installation of py2app.
 
 * Fix build failure using the OSX 10.10 SDK.
