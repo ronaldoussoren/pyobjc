@@ -20,7 +20,7 @@ import HIServices
 sys.modules['ApplicationServices'] = mod = objc.ObjCLazyModule('ApplicationServices',
     "com.apple.ApplicationServices",
     objc.pathForFramework("/System/Library/Frameworks/ApplicationServices.framework"),
-    _metadata.__dict__, None, {
+    {}, None, {
        '__doc__': __doc__,
        '__path__': __path__,
        '__loader__': globals().get('__loader__', None),
