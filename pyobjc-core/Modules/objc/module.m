@@ -2547,7 +2547,13 @@ PyObjC_MODULE_INIT(_objc)
     if (PyModule_AddIntConstant(m, "MAC_OS_X_VERSION_10_11", MAC_OS_X_VERSION_10_11) < 0) {
         PyObjC_INITERROR();
     }
-#endif /* MAC_OS_X_VERSION_10_10 */
+#endif /* MAC_OS_X_VERSION_10_11 */
+
+#ifdef MAC_OS_X_VERSION_10_12
+    if (PyModule_AddIntConstant(m, "MAC_OS_X_VERSION_10_12", MAC_OS_X_VERSION_10_12) < 0) {
+        PyObjC_INITERROR();
+    }
+#endif /* MAC_OS_X_VERSION_10_12 */
 
     if (PyModule_AddIntConstant(m, "PyObjC_BUILD_RELEASE", PyObjC_BUILD_RELEASE) < 0) {
         PyObjC_INITERROR();
