@@ -121,7 +121,7 @@ class ObjCLazyModule (ModuleType):
             self.__dict__[name] = value
             return value
 
-        # First try parent module, as we had done
+        # First try parent module, as if we had done
         # 'from parents import *'
         for p in self.__parents:
             try:
