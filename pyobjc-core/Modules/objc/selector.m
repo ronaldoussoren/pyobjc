@@ -1375,8 +1375,29 @@ pysel_default_signature(SEL selector, PyObject* callable)
     /*
        Scan bytecode to find return statements. If any non-bare return
        statement exists, then set the return type to @ (id).
+
+       In Python 3.6 the interpreter switched to a 16-bit word-code instead
+       of 8-bit bytecode, hence the two code paths
     */
     was_none = 0;
+
+#if PY_VERSION_HEX >= 0x03060000
+    PyObjC_Assert (buffer_len % 2 == 0, NULL);
+
+    for (i=0; i<buffer_len; i+=2) {
+        int op = buffer[i];
+        if (op == LOAD_CONST && buffer[i+1] == 0) {
+            was_none = 1;
+        } else {
+            if (op == RETURN_VALUE && !was_none) {
+                result[0] = _C_ID;
+                break;
+            }
+            was_none = 0;
+        }
+    }
+
+#else /* PY_VERSION_HEX < 0x03060000 */
     for (i=0; i<buffer_len; ++i) {
         int op = buffer[i];
         if (op == LOAD_CONST && buffer[i+1] == 0 && buffer[i+2] == 0) {
@@ -1394,6 +1415,8 @@ pysel_default_signature(SEL selector, PyObject* callable)
             i += 2;
         }
     }
+#endif /* PY_VERSION_HEX < 0x03060000 */
+
     return result;
 }
 
