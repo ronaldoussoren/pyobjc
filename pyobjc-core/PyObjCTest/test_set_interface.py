@@ -106,13 +106,29 @@ class TestSet (test.test_set.TestJointOps, TestCase):
     thetype = NSSet
     basetype = NSSet
 
+    @onlyIf(0, "test irrelevant for NSMutableSet")
     def test_cyclical_print(self): pass
+
+    @onlyIf(0, "test irrelevant for NSMutableSet")
     def test_cyclical_repr(self): pass
+
+    @onlyIf(0, "test irrelevant for NSMutableSet")
     def test_pickling(self): pass
+
+    @onlyIf(0, "test irrelevant for NSMutableSet")
     def test_do_not_rehash_dict_keys(self): pass
+
+    @onlyIf(0, "test irrelevant for NSMutableSet")
     def test_badcmp(self): pass
+
+    @onlyIf(0, "test irrelevant for NSMutableSet")
     def test_subclass_with_custom_hash(self): pass
+
+    @onlyIf(0, "test irrelevant for NSMutableSet")
     def test_iterator_pickling(self): pass
+
+    @onlyIf(0, "test irrelevant for NSMutableSet")
+    def test_free_after_iterating(self): pass
 
     def test_deepcopy(self):
         # XXX: is it possible to get this to work?
@@ -241,10 +257,20 @@ class TestMutableSet (TestSet, test.test_set.TestSet):
         self.assertIsInstance(dup, self.basetype)
 
     # Tests from 'TestSet'
+    @onlyIf(0, "test irrelevant for NSMutableSet")
     def test_init(self): pass
+
+    @onlyIf(0, "test irrelevant for NSMutableSet")
     def test_hash(self): pass
+
+    @onlyIf(0, "test irrelevant for NSMutableSet")
     def test_weakref(self): pass
+
+    @onlyIf(0, "test irrelevant for NSMutableSet")
     def test_iterator_pickling(self): pass
+
+    @onlyIf(0, "test irrelevant for NSMutableSet")
+    def test_free_after_iterating(self): pass
 
 class TestBasicOpsEmpty (test.test_set.TestBasicOps):
     def setUp(self):
