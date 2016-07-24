@@ -25,4 +25,4 @@ sys.modules['ApplicationServices'] = mod = objc.ObjCLazyModule('ApplicationServi
        '__path__': __path__,
        '__loader__': globals().get('__loader__', None),
        'objc': objc,
-    }, ( 'Quartz.ImageIO', 'Quartz.CoreGraphics', 'HIServices', 'CoreText' ))
+    }, ( Quartz.ImageIO, Quartz.CoreGraphics, HIServices, CoreText ))
