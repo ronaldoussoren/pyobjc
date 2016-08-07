@@ -284,6 +284,9 @@ def _fixup_compiler():
     except (ImportError, NameError):
         pass
 
+
+
+
     cc = oldcc = get_config_var('CC').split()[0]
     cc = _find_executable(cc)
     if cc is not None and os.path.basename(cc).startswith('gcc'):
@@ -378,13 +381,18 @@ def Extension(*args, **kwds):
     if 'clang' in get_config_var('CC'):
         cflags.append('-Wno-deprecated-declarations')
 
-    if os_level != '10.4':
-        if os.path.exists('/usr/include/stdio.h'):
-            # only tweak the SDK when using the command-line tools
-            # FIXME: This should be properly fixed
-            cflags.extend(['-isysroot','/'])
-            ldflags.extend(['-isysroot','/'])
-    else:
+    CFLAGS = get_config_var('CFLAGS')
+    if '-isysroot' not in CFLAGS and os.path.exists('/usr/include/stdio.h'):
+        # We're likely on a system with de Xcode Command Line Tools.
+        # Explicitly use the most recent problems to avoid compile problems.
+        data = os.popen('xcodebuild -version -sdk macosx Path').read()
+        data = data.strip()
+        if data:
+            cflags.append('-isysroot')
+            cflags.append(data)
+
+
+    if os_level == '10.4':
         cflags.append('-DNO_OBJC2_RUNTIME')
 
     if 'extra_compile_args' in kwds:
