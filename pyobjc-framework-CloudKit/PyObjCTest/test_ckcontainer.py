@@ -58,7 +58,7 @@ if sys.maxsize > 2 ** 32:
             self.assertArgIsBlock(CloudKit.CKContainer.fetchShareMetadataWithURL_completionHandler_, 1, b"v@@")
             self.assertArgIsBlock(CloudKit.CKContainer.acceptShareMetadata_completionHandler_, 1, b"v@@")
 
-            self.assertArgIsBlock(CloudKit.CKContainer.fetchAllLongLivedOperationIDsWithCompletionHandler, 1, b"v@@@")
+            self.assertArgIsBlock(CloudKit.CKContainer.fetchAllLongLivedOperationIDsWithCompletionHandler_, 0, b"v@@@")
             self.assertArgIsBlock(CloudKit.CKContainer.fetchLongLivedOperationWithID_completionHandler_, 1, b"v@@")
 
 if __name__ == "__main__":

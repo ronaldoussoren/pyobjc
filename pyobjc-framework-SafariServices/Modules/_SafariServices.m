@@ -3,15 +3,12 @@
 #include "pyobjc-api.h"
 
 #import <Foundation/Foundation.h>
-
-#ifdef __LP64__
-#import <Intents/Intents.h>
-#endif
+#import <SafariServices/SafariServices.h>
 
 /* We include the source code here instead of
  * using the linker due to limitations in pyobjc-api.h
  */
-#include "_Intents_protocols.m"
+#include "_SafariServices_protocols.m"
 
 
 static PyMethodDef mod_methods[] = {
@@ -20,10 +17,10 @@ static PyMethodDef mod_methods[] = {
 
 
 /* Python glue */
-PyObjC_MODULE_INIT(_Intents)
+PyObjC_MODULE_INIT(_SafariServices)
 {
     PyObject* m;
-    m = PyObjC_MODULE_CREATE(_Intents)
+    m = PyObjC_MODULE_CREATE(_SafariServices)
     if (!m) {
         PyObjC_INITERROR();
     }

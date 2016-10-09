@@ -9,7 +9,7 @@ class TestNSFetchedResultsController (TestCase):
     @min_os_level('10.12')
     def testMethods(self):
         self.assertResultIsBOOL(NSFetchedResultsController.performFetch_)
-        self.assertArgIsOut(NSFetchedResultsController.performFetch_, 1)
+        self.assertArgIsOut(NSFetchedResultsController.performFetch_, 0)
 
     @min_sdk_level('10.12')
     def testProtocols(self):

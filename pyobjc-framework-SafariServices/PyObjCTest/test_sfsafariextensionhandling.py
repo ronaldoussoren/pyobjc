@@ -14,7 +14,7 @@ if sys.maxsize > 2 ** 32:
 
         @min_os_level('10.12')
         def testMethods(self):
-            self.assertArgIsBlock(TestSFSafariExtensionHandlingHelper.validateToolbarItemInWindow_validationHandler_, b'vZ@')
+            self.assertArgIsBlock(TestSFSafariExtensionHandlingHelper.validateToolbarItemInWindow_validationHandler_, 1, b'vZ@')
 
 
 

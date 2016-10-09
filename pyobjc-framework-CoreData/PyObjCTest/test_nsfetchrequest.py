@@ -38,7 +38,7 @@ class TestNSFetchRequest (TestCase):
 
     @min_os_level("10.12")
     def testMethods10_12(self):
-        self.assertArgIsOut(NSFetchRequest.execute_)
+        self.assertArgIsOut(NSFetchRequest.execute_, 0)
 
 if __name__ == "__main__":
     main()

@@ -9,6 +9,7 @@ class TestABPersonView (TestCase):
         self.assertArgIsBOOL(AddressBook.ABPersonView.setEditing_, 0)
 
     @min_os_level('10.8')
+    @max_os_level('10.11')
     def testMethods(self):
         v = AddressBook.ABPersonView.alloc().init()
         self.assertResultIsBOOL(v.shouldShowLinkedPeople)

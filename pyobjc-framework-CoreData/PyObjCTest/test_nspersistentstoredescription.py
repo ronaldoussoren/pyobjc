@@ -13,7 +13,7 @@ class TestNSPersistentStoreDescription (TestCase):
         self.assertArgIsBOOL(NSPersistentStoreDescription.setShouldMigrateStoreAutomatically_, 0)
         self.assertResultIsBOOL(NSPersistentStoreDescription.shouldMigrateStoreAutomatically)
 
-        self.assertArgIsBOOL(NSPersistentStoreDescription.setShouldInferMappingModelAutomaticall_, 0)
+        self.assertArgIsBOOL(NSPersistentStoreDescription.setShouldInferMappingModelAutomatically_, 0)
         self.assertResultIsBOOL(NSPersistentStoreDescription.shouldInferMappingModelAutomatically)
 
 

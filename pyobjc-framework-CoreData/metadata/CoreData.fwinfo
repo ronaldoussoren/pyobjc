@@ -24,6 +24,18 @@
    "NSManagedObjectContextQueryGenerationKey": { "typestr": "@" }
   },
   "classes": {
+   "NSFetchedResultsController": {
+    "methods": [
+     {
+      "selector": "performFetch:",
+      "class_method": false,
+      "retval": { "type_override": "Z" },
+      "args": {
+       "0": { "type_modifier": "o" }
+      }
+     }
+    ]
+   },
    "NSObject": {
     "methods": [
      {

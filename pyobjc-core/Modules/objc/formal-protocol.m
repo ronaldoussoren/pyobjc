@@ -118,7 +118,8 @@ static char* keywords[] = { "name", "supers", "selectors", NULL };
         }
     }
 
-    if (&objc_allocateProtocol == NULL) {
+#if (MAC_OS_X_VERSION_MIN_REQUIRED < MAC_OS_X_VERSION_10_7)
+    if (objc_allocateProtocol == NULL) {
         /* Protocol creation API is new in OSX 10.7, can will be weak-linked when
          * building on OSX 10.7 with a 10.6 deployment target.
          */
@@ -126,6 +127,7 @@ static char* keywords[] = { "name", "supers", "selectors", NULL };
         PyErr_SetString(PyObjCExc_Error, "Cannot create formal protocols on this platform");
         return NULL;
     }
+#endif
 
     theProtocol = objc_allocateProtocol(name);
     if (theProtocol == NULL) {

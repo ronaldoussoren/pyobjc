@@ -25,7 +25,7 @@ setup(
         'pyobjc-core>=' + VERSION,
         'pyobjc-framework-Cocoa>=' + VERSION,
     ],
-    min_os_level="10.12",
+    min_os_level="10.11",
     ext_modules = [
         Extension("SafariServices._SafariServices",
             [ "Modules/_SafariServices.m" ],

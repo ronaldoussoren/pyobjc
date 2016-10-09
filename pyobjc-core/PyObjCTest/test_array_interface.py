@@ -132,6 +132,10 @@ class ArrayTests (seq_tests.CommonTest):
         # See test_contains_fake
         pass
 
+    @onlyIf(0, "test irrelevant for NSArray")
+    def test_free_after_iterating(self):
+        pass
+
 class MutableArrayTest (list_tests.CommonTest):
     type2test = NSMutableArray
 
