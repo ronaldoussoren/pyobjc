@@ -31,3 +31,7 @@ API Notes
 
   These functions will crash hard when the parameters are inconsistent,
   for example when the rounded corners don't fit in the rectangle.
+
+* ``CGColorConversionInfoCreateFromList``
+
+  This function is not yet supported.

@@ -19,6 +19,7 @@ if sys.maxsize > 2 ** 32:
             self.assertEqual(CloudKit.CKNotificationTypeQuery, 1)
             self.assertEqual(CloudKit.CKNotificationTypeRecordZone, 2)
             self.assertEqual(CloudKit.CKNotificationTypeReadNotification, 3)
+            self.assertEqual(CloudKit.CKNotificationTypeDatabase, 4)
             self.assertEqual(CloudKit.CKQueryNotificationReasonRecordCreated, 1)
             self.assertEqual(CloudKit.CKQueryNotificationReasonRecordUpdated, 2)
             self.assertEqual(CloudKit.CKQueryNotificationReasonRecordDeleted, 3)

@@ -11,6 +11,19 @@ class TestJSValueRef (TestCase):
         self.assertEqual(JavaScriptCore.kJSTypeString, 4)
         self.assertEqual(JavaScriptCore.kJSTypeObject, 5)
 
+        self.assertEqual(JavaScriptCore.kJSTypedArrayTypeInt8Array, 0)
+        self.assertEqual(JavaScriptCore.kJSTypedArrayTypeInt16Array, 1)
+        self.assertEqual(JavaScriptCore.kJSTypedArrayTypeInt32Array, 2)
+        self.assertEqual(JavaScriptCore.kJSTypedArrayTypeUint8Array, 3)
+        self.assertEqual(JavaScriptCore.kJSTypedArrayTypeUint8ClampedArray, 4)
+        self.assertEqual(JavaScriptCore.kJSTypedArrayTypeUint16Array, 5)
+        self.assertEqual(JavaScriptCore.kJSTypedArrayTypeUint32Array, 6)
+        self.assertEqual(JavaScriptCore.kJSTypedArrayTypeFloat32Array, 7)
+        self.assertEqual(JavaScriptCore.kJSTypedArrayTypeFloat64Array, 8)
+        self.assertEqual(JavaScriptCore.kJSTypedArrayTypeArrayBuffer, 9)
+        self.assertEqual(JavaScriptCore.kJSTypedArrayTypeNone, 10)
+
+
     def test_functions(self):
         self.assertArgHasType(JavaScriptCore.JSValueGetType, 0, JavaScriptCore.JSContextRef.__typestr__)
 
@@ -46,5 +59,12 @@ class TestJSValueRef (TestCase):
     def testFunctions10_11(self):
         self.assertResultHasType(JavaScriptCore.JSValueIsArray, objc._C_BOOL)
         self.assertResultHasType(JavaScriptCore.JSValueIsDate, objc._C_BOOL)
+
+    @min_os_level('10.12')
+    def testFunctions10_11(self):
+        self.assertResultHasType(JavaScriptCore.JSValueGetTypedArrayType, objc._C_INT)
+        self.assertArgIsOut(JavaScriptCore.JSValueGetTypedArrayType, 2)
+
+
 if __name__ == "__main__":
     main()

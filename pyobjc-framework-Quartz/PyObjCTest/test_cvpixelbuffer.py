@@ -51,6 +51,11 @@ class TestCVPixelBuffer (TestCase):
         self.assertEqual(kCVPixelFormatType_TwoComponent32Float, fourcc(b'2C0f'))
         self.assertEqual(kCVPixelFormatType_64RGBAHalf, fourcc(b'RGhA'))
         self.assertEqual(kCVPixelFormatType_128RGBAFloat, fourcc(b'RGfA'))
+        self.assertEqual(kCVPixelFormatType_30RGBLEPackedWideGamut, fourcc(b'w30r'))
+        self.assertEqual(kCVPixelFormatType_14Bayer_GRBG, fourcc(b'grb4'))
+        self.assertEqual(kCVPixelFormatType_14Bayer_RGGB, fourcc(b'rgg4'))
+        self.assertEqual(kCVPixelFormatType_14Bayer_BGGR, fourcc(b'bgg4'))
+        self.assertEqual(kCVPixelFormatType_14Bayer_GBRG, fourcc(b'gbr4'))
 
         self.assertIsInstance(kCVPixelBufferPixelFormatTypeKey, unicode)
         self.assertIsInstance(kCVPixelBufferMemoryAllocatorKey, unicode)

@@ -1,0 +1,564 @@
+{
+ "definitions": {
+  "alias": {
+   "INIntentHandlingStatusDone": { "alias": "INIntentHandlingStatusSuccess" }
+  },
+  "enum": {
+   "INStartVideoCallIntentResponseCodeUnspecified": { "value": 0 },
+   "INStartVideoCallIntentResponseCodeReady": { "value": 1 },
+   "INStartVideoCallIntentResponseCodeContinueInApp": { "value": 2 },
+   "INStartVideoCallIntentResponseCodeFailure": { "value": 3 },
+   "INStartVideoCallIntentResponseCodeFailureRequiringAppLaunch": { "value": 4 },
+   "INStartAudioCallIntentResponseCodeUnspecified": { "value": 0 },
+   "INStartAudioCallIntentResponseCodeReady": { "value": 1 },
+   "INStartAudioCallIntentResponseCodeContinueInApp": { "value": 2 },
+   "INStartAudioCallIntentResponseCodeFailure": { "value": 3 },
+   "INStartAudioCallIntentResponseCodeFailureRequiringAppLaunch": { "value": 4 },
+   "INSendMessageIntentResponseCodeUnspecified": { "value": 0 },
+   "INSendMessageIntentResponseCodeReady": { "value": 1 },
+   "INSendMessageIntentResponseCodeInProgress": { "value": 2 },
+   "INSendMessageIntentResponseCodeSuccess": { "value": 3 },
+   "INSendMessageIntentResponseCodeFailure": { "value": 4 },
+   "INSendMessageIntentResponseCodeFailureRequiringAppLaunc": { "value": 5 },
+   "INSearchForMessagesIntentResponseCodeUnspecified": { "value": 0 },
+   "INSearchForMessagesIntentResponseCodeReady": { "value": 1 },
+   "INSearchForMessagesIntentResponseCodeInProgress": { "value": 2 },
+   "INSearchForMessagesIntentResponseCodeSuccess": { "value": 3 },
+   "INSearchForMessagesIntentResponseCodeFailure": { "value": 4 },
+   "INSearchForMessagesIntentResponseCodeFailureRequiringAppLaunch": { "value": 5 },
+   "INSearchForMessagesIntentResponseCodeFailureMessageServiceNotAvailable": { "value": 6 },
+   "INSearchCallHistoryIntentResponseCodeUnspecified": { "value": 0 },
+   "INSearchCallHistoryIntentResponseCodeReady": { "value": 1 },
+   "INSearchCallHistoryIntentResponseCodeContinueInApp": { "value": 2 },
+   "INSearchCallHistoryIntentResponseCodeFailure": { "value": 3 },
+   "INSearchCallHistoryIntentResponseCodeFailureRequiringAppLaunc": { "value": 4 },
+   "INPersonHandleTypeUnknown": { "value": 0 },
+   "INPersonHandleTypeEmailAddress": { "value": 1 },
+   "INPersonHandleTypePhoneNumber": { "value": 2 },
+   "INPersonSuggestionTypeSocialProfile": { "value": 1 },
+   "INPersonSuggestionTypeInstantMessageAddres": { "value": 2 },
+   "INMessageAttributeOptionRead": { "value": 1 },
+   "INMessageAttributeOptionUnread": { "value": 2 },
+   "INMessageAttributeOptionFlagged": { "value": 4 },
+   "INMessageAttributeOptionUnflagged": { "value": 8 },
+   "INIntentHandlingStatusUnspecified": { "value": 0 },
+   "INIntentHandlingStatusReady": { "value": 1 },
+   "INIntentHandlingStatusInProgress": { "value": 2 },
+   "INIntentHandlingStatusSuccess": { "value": 3 },
+   "INIntentHandlingStatusFailure": { "value": 4 },
+   "INIntentHandlingStatusDeferredToApplication": { "value": 5 },
+   "INInteractionDirectionUnspecified": { "value": 0 },
+   "INInteractionDirectionOutgoing": { "value": 1 },
+   "INInteractionDirectionIncoming": { "value": 2 },
+   "INIntentErrorInteractionOperationNotSupported": { "value": 1900 },
+   "INIntentErrorAddingInteraction": { "value": 1901 },
+   "INIntentErrorDeletingAllInteractions": { "value": 1902 },
+   "INIntentErrorDeletingInteractionWithIdentifiers": { "value": 1903 },
+   "INIntentErrorDeletingInteractionWithGroupIdentifier": { "value": 1904 },
+   "INIntentErrorIntentSupportedByMultipleExtension": { "value": 2001 },
+   "INIntentErrorRestrictedIntentsNotSupportedByExtension": { "value": 2002 },
+   "INIntentErrorNoHandlerProvidedForIntent": { "value": 2003 },
+   "INIntentErrorInvalidIntentName": { "value": 2004 },
+   "INIntentErrorRequestTimedOut": { "value": 3001 },
+   "INCallCapabilityOptionAudioCall": { "value": 1 },
+   "INCallCapabilityOptionVideoCall": { "value": 2 },
+   "INCallRecordTypeUnknown": { "value": 0 },
+   "INCallRecordTypeOutgoing": { "value": 1 },
+   "INCallRecordTypeMissed": { "value": 2 },
+   "INCallRecordTypeReceived": { "value": 3 },
+   "INConditionalOperatorAll": { "value": 0 },
+   "INConditionalOperatorAny": { "value": 1 },
+   "INConditionalOperatorNone": { "value": 2 }
+  },
+  "classes": {
+   "INInteraction": {
+    "methods": [
+     {
+      "class_method": false,
+      "selector": "donateInteractionWithCompletion:",
+      "args": {
+       "0": {
+        "callable": {
+	 "arguments": {
+	  "0": { "typestr": "^v" },
+	  "1": { "typestr": "@" }
+	 },
+	 "retval": { "typestr": "v" }
+	}
+       }
+      }
+     },
+     {
+      "class_method": false,
+      "selector": "deleteAllInteractionsWithCompletion:",
+      "args": {
+       "0": {
+        "callable": {
+	 "arguments": {
+	  "0": { "typestr": "^v" },
+	  "1": { "typestr": "@" }
+	 },
+	 "retval": { "typestr": "v" }
+	}
+       }
+      }
+     },
+     {
+      "class_method": false,
+      "selector": "deleteInteractionsWithIdentifiers:completionHandler:",
+      "args": {
+       "1": {
+        "callable": {
+	 "arguments": {
+	  "0": { "typestr": "^v" },
+	  "1": { "typestr": "@" }
+	 },
+	 "retval": { "typestr": "v" }
+	}
+       }
+      }
+     }
+    ]
+   },
+   "NSObject": {
+    "methods": [
+     {
+      "class_method": false,
+      "selector": "resolveCallTypeForSearchCallHistory:withCompletion:",
+      "args": {
+       "1": {
+        "callable": {
+	 "arguments": {
+	  "0": { "typestr": "^v" },
+	  "1": { "typestr": "@" }
+	 },
+	 "retval": { "typestr": "v" }
+	}
+       }
+      }
+     },
+     {
+      "class_method": false,
+      "selector": "resolveDateCreatedForSearchCallHistory:withCompletion:",
+      "args": {
+       "1": {
+        "callable": {
+	 "arguments": {
+	  "0": { "typestr": "^v" },
+	  "1": { "typestr": "@" }
+	 },
+	 "retval": { "typestr": "v" }
+	}
+       }
+      }
+     },
+     {
+      "class_method": false,
+      "selector": "resolveRecipientForSearchCallHistory:withCompletion:",
+      "args": {
+       "1": {
+        "callable": {
+	 "arguments": {
+	  "0": { "typestr": "^v" },
+	  "1": { "typestr": "@" }
+	 },
+	 "retval": { "typestr": "v" }
+	}
+       }
+      }
+     },
+     {
+      "class_method": false,
+      "selector": "resolveCallCapabilitiesForSearchCallHistory:withCompletion:",
+      "args": {
+       "1": {
+        "callable": {
+	 "arguments": {
+	  "0": { "typestr": "^v" },
+	  "1": { "typestr": "@" }
+	 },
+	 "retval": { "typestr": "v" }
+	}
+       }
+      }
+     },
+     {
+      "class_method": false,
+      "selector": "handleSearchCallHistory:completion:",
+      "args": {
+       "1": {
+        "callable": {
+	 "arguments": {
+	  "0": { "typestr": "^v" },
+	  "1": { "typestr": "@" }
+	 },
+	 "retval": { "typestr": "v" }
+	}
+       }
+      }
+     },
+     {
+      "class_method": false,
+      "selector": "confirmSearchCallHistory:completion:",
+      "args": {
+       "1": {
+        "callable": {
+	 "arguments": {
+	  "0": { "typestr": "^v" },
+	  "1": { "typestr": "@" }
+	 },
+	 "retval": { "typestr": "v" }
+	}
+       }
+      }
+     },
+     {
+      "class_method": false,
+      "selector": "handleSearchForMessages:completion:",
+      "args": {
+       "1": {
+        "callable": {
+	 "arguments": {
+	  "0": { "typestr": "^v" },
+	  "1": { "typestr": "@" }
+	 },
+	 "retval": { "typestr": "v" }
+	}
+       }
+      }
+     },
+     {
+      "class_method": false,
+      "selector": "confirmSearchForMessages:completion:",
+      "args": {
+       "1": {
+        "callable": {
+	 "arguments": {
+	  "0": { "typestr": "^v" },
+	  "1": { "typestr": "@" }
+	 },
+	 "retval": { "typestr": "v" }
+	}
+       }
+      }
+     },
+     {
+      "class_method": false,
+      "selector": "resolveRecipientsForSearchForMessages:withCompletion:",
+      "args": {
+       "1": {
+        "callable": {
+	 "arguments": {
+	  "0": { "typestr": "^v" },
+	  "1": { "typestr": "@" }
+	 },
+	 "retval": { "typestr": "v" }
+	}
+       }
+      }
+     },
+     {
+      "class_method": false,
+      "selector": "resolveSendersForSearchForMessages:withCompletion:",
+      "args": {
+       "1": {
+        "callable": {
+	 "arguments": {
+	  "0": { "typestr": "^v" },
+	  "1": { "typestr": "@" }
+	 },
+	 "retval": { "typestr": "v" }
+	}
+       }
+      }
+     },
+     {
+      "class_method": false,
+      "selector": "resolveSearchTermsForSearchForMessages:withCompletion:",
+      "args": {
+       "1": {
+        "callable": {
+	 "arguments": {
+	  "0": { "typestr": "^v" },
+	  "1": { "typestr": "@" }
+	 },
+	 "retval": { "typestr": "v" }
+	}
+       }
+      }
+     },
+     {
+      "class_method": false,
+      "selector": "resolveAttributesForSearchForMessages:withCompletion:",
+      "args": {
+       "1": {
+        "callable": {
+	 "arguments": {
+	  "0": { "typestr": "^v" },
+	  "1": { "typestr": "@" }
+	 },
+	 "retval": { "typestr": "v" }
+	}
+       }
+      }
+     },
+     {
+      "class_method": false,
+      "selector": "resolveDateTimeRangeForSearchForMessages:withCompletion:",
+      "args": {
+       "1": {
+        "callable": {
+	 "arguments": {
+	  "0": { "typestr": "^v" },
+	  "1": { "typestr": "@" }
+	 },
+	 "retval": { "typestr": "v" }
+	}
+       }
+      }
+     },
+     {
+      "class_method": false,
+      "selector": "resolveIdentifiersForSearchForMessages:withCompletion:",
+      "args": {
+       "1": {
+        "callable": {
+	 "arguments": {
+	  "0": { "typestr": "^v" },
+	  "1": { "typestr": "@" }
+	 },
+	 "retval": { "typestr": "v" }
+	}
+       }
+      }
+     },
+     {
+      "class_method": false,
+      "selector": "resolveNotificationIdentifiersForSearchForMessages:withCompletion:",
+      "args": {
+       "1": {
+        "callable": {
+	 "arguments": {
+	  "0": { "typestr": "^v" },
+	  "1": { "typestr": "@" }
+	 },
+	 "retval": { "typestr": "v" }
+	}
+       }
+      }
+     },
+     {
+      "class_method": false,
+      "selector": "resolveGroupNamesForSearchForMessages:withCompletion:",
+      "args": {
+       "1": {
+        "callable": {
+	 "arguments": {
+	  "0": { "typestr": "^v" },
+	  "1": { "typestr": "@" }
+	 },
+	 "retval": { "typestr": "v" }
+	}
+       }
+      }
+     },
+     {
+      "class_method": false,
+      "selector": "handleSendMessage:completion:",
+      "args": {
+       "1": {
+        "callable": {
+	 "arguments": {
+	  "0": { "typestr": "^v" },
+	  "1": { "typestr": "@" }
+	 },
+	 "retval": { "typestr": "v" }
+	}
+       }
+      }
+     },
+     {
+      "class_method": false,
+      "selector": "confirmSendMessage:completion:",
+      "args": {
+       "1": {
+        "callable": {
+	 "arguments": {
+	  "0": { "typestr": "^v" },
+	  "1": { "typestr": "@" }
+	 },
+	 "retval": { "typestr": "v" }
+	}
+       }
+      }
+     },
+     {
+      "class_method": false,
+      "selector": "resolveRecipientsForSendMessage:withCompletion:",
+      "args": {
+       "1": {
+        "callable": {
+	 "arguments": {
+	  "0": { "typestr": "^v" },
+	  "1": { "typestr": "@" }
+	 },
+	 "retval": { "typestr": "v" }
+	}
+       }
+      }
+     },
+     {
+      "class_method": false,
+      "selector": "resolveContentForSendMessage:withCompletion:",
+      "args": {
+       "1": {
+        "callable": {
+	 "arguments": {
+	  "0": { "typestr": "^v" },
+	  "1": { "typestr": "@" }
+	 },
+	 "retval": { "typestr": "v" }
+	}
+       }
+      }
+     },
+     {
+      "class_method": false,
+      "selector": "resolveGroupNameForSendMessage:withCompletion:",
+      "args": {
+       "1": {
+        "callable": {
+	 "arguments": {
+	  "0": { "typestr": "^v" },
+	  "1": { "typestr": "@" }
+	 },
+	 "retval": { "typestr": "v" }
+	}
+       }
+      }
+     },
+     {
+      "class_method": false,
+      "selector": "resolveServiceNameForSendMessage:withCompletion:",
+      "args": {
+       "1": {
+        "callable": {
+	 "arguments": {
+	  "0": { "typestr": "^v" },
+	  "1": { "typestr": "@" }
+	 },
+	 "retval": { "typestr": "v" }
+	}
+       }
+      }
+     },
+     {
+      "class_method": false,
+      "selector": "resolveSenderForSendMessage:withCompletion:",
+      "args": {
+       "1": {
+        "callable": {
+	 "arguments": {
+	  "0": { "typestr": "^v" },
+	  "1": { "typestr": "@" }
+	 },
+	 "retval": { "typestr": "v" }
+	}
+       }
+      }
+     },
+     {
+      "class_method": false,
+      "selector": "handleStartAudioCall:completion:",
+      "args": {
+       "1": {
+        "callable": {
+	 "arguments": {
+	  "0": { "typestr": "^v" },
+	  "1": { "typestr": "@" }
+	 },
+	 "retval": { "typestr": "v" }
+	}
+       }
+      }
+     },
+     {
+      "class_method": false,
+      "selector": "confirmStartAudioCall:completion:",
+      "args": {
+       "1": {
+        "callable": {
+	 "arguments": {
+	  "0": { "typestr": "^v" },
+	  "1": { "typestr": "@" }
+	 },
+	 "retval": { "typestr": "v" }
+	}
+       }
+      }
+     },
+     {
+      "class_method": false,
+      "selector": "resolveContactsForStartAudioCall:withCompletion:",
+      "args": {
+       "1": {
+        "callable": {
+	 "arguments": {
+	  "0": { "typestr": "^v" },
+	  "1": { "typestr": "@" }
+	 },
+	 "retval": { "typestr": "v" }
+	}
+       }
+      }
+     },
+     {
+      "class_method": false,
+      "selector": "handleStartVideoCall:completion:",
+      "args": {
+       "1": {
+        "callable": {
+	 "arguments": {
+	  "0": { "typestr": "^v" },
+	  "1": { "typestr": "@" }
+	 },
+	 "retval": { "typestr": "v" }
+	}
+       }
+      }
+     },
+     {
+      "class_method": false,
+      "selector": "confirmStartVideoCall:completion:",
+      "args": {
+       "1": {
+        "callable": {
+	 "arguments": {
+	  "0": { "typestr": "^v" },
+	  "1": { "typestr": "@" }
+	 },
+	 "retval": { "typestr": "v" }
+	}
+       }
+      }
+     },
+     {
+      "class_method": false,
+      "selector": "resolveContactsForStartVideoCall:withCompletion:",
+      "args": {
+       "1": {
+        "callable": {
+	 "arguments": {
+	  "0": { "typestr": "^v" },
+	  "1": { "typestr": "@" }
+	 },
+	 "retval": { "typestr": "v" }
+	}
+       }
+      }
+     }
+    ]
+   }
+  }
+ }
+}

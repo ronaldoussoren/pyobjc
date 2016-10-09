@@ -67,6 +67,13 @@ class TestNSURLSession (TestCase):
 
         self.assertIsInstance(NSURLSessionDownloadTaskResumeData, unicode)
 
+    @min_os_level('10.12')
+    def testConstants10_12(self):
+        self.assertEqual(NSURLSessionTaskMetricsResourceFetchTypeUnknown, 0)
+        self.assertEqual(NSURLSessionTaskMetricsResourceFetchTypeNetworkLoad, 1)
+        self.assertEqual(NSURLSessionTaskMetricsResourceFetchTypeServerPush, 2)
+        self.assertEqual(NSURLSessionTaskMetricsResourceFetchTypeLocalCache, 3)
+
     @min_os_level('10.10')
     def testMethods10_10(self):
         self.assertArgIsBlock(NSURLSession.resetWithCompletionHandler_, 0, b'v')
@@ -119,6 +126,11 @@ class TestNSURLSession (TestCase):
 
         self.assertResultIsBOOL(TestNSURLSessionConfigurationHelper.shouldUseExtendedBackgroundIdleMode)
         self.assertArgIsBOOL(TestNSURLSessionConfigurationHelper.setShouldUseExtendedBackgroundIdleMode_, 0)
+
+    @min_os_level('10.12')
+    def testMethods10_12(self):
+        self.assertResultIsBOOL(NSURLSessionTaskTransactionMetrics.isProxyConnection)
+        self.assertResultIsBOOL(NSURLSessionTaskTransactionMetrics.isReusedConnection)
 
     @min_sdk_level('10.10')
     def testProtocols(self):

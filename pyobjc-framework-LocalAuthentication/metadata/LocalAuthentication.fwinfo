@@ -8,6 +8,9 @@
    }
   },
   "enum": {
+   "kLACredentialTypePasscode": { "value": -1 },
+   "kLACredentialTypePassphrase": { "value": -2 },
+   "kLACredentialCTKPIN": { "value": -3 },
    "LAPolicyDeviceOwnerAuthentication": { "value": 2 },
    "kLAPolicyDeviceOwnerAuthentication": { "value": 2 },
    "LACredentialTypeApplicationPassword": { "value": 0 },

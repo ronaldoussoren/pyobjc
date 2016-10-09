@@ -12,8 +12,9 @@ if sys.maxsize > 2 ** 32:
 
         @min_os_level("10.8")
         def testConstants(self):
-            self.assertEqual(CloudKit.CKRecordZoneCapabilityFetchChanges, 1)
-            self.assertEqual(CloudKit.CKRecordZoneCapabilityAtomic, 2)
+            self.assertEqual(CloudKit.CKRecordZoneCapabilityFetchChanges, 1<<0)
+            self.assertEqual(CloudKit.CKRecordZoneCapabilityAtomic, 1<<1)
+            self.assertEqual(CloudKit.CKRecordZoneCapabilitySharing, 1<<2)
             self.assertIsInstance(CloudKit.CKRecordZoneDefaultName, unicode)
 
 

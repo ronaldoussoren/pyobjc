@@ -6,7 +6,49 @@
    "kPDFImageArea": { "alias": "FLT_MX" }
   },
   "enum": {
-   "kPDFImageArea": { "value": 256 }
+   "kPDFImageArea": { "value": 256 },
+   "kPDFWidgetMixedState": { "value": -1 },
+   "kPDFWidgetOffState": { "value": 0 },
+   "kPDFWidgetOnState": { "value": 1 }
+  },
+  "externs": {
+   "kPDFAnnotationKey_AppearanceDictionary": { "typestr": "@" },
+   "kPDFAnnotationKey_AppearanceState": { "typestr": "@" },
+   "kPDFAnnotationKey_Border": { "typestr": "@" },
+   "kPDFAnnotationKey_Color": { "typestr": "@" },
+   "kPDFAnnotationKey_Contents": { "typestr": "@" },
+   "kPDFAnnotationKey_Flags": { "typestr": "@" },
+   "kPDFAnnotationKey_Date": { "typestr": "@" },
+   "kPDFAnnotationKey_Name": { "typestr": "@" },
+   "kPDFAnnotationKey_Page": { "typestr": "@" },
+   "kPDFAnnotationKey_Rect": { "typestr": "@" },
+   "kPDFAnnotationKey_Subtype": { "typestr": "@" },
+   "kPDFAnnotationKey_Action": { "typestr": "@" },
+   "kPDFAnnotationKey_AdditionalActions": { "typestr": "@" },
+   "kPDFAnnotationKey_AppleExtras": { "typestr": "@" },
+   "kPDFAnnotationKey_BorderStyle": { "typestr": "@" },
+   "kPDFAnnotationKey_DefaultAppearance": { "typestr": "@" },
+   "kPDFAnnotationKey_Destination": { "typestr": "@" },
+   "kPDFAnnotationKey_HighlightingMode": { "typestr": "@" },
+   "kPDFAnnotationKey_Inklist": { "typestr": "@" },
+   "kPDFAnnotationKey_InteriorColor": { "typestr": "@" },
+   "kPDFAnnotationKey_LinePoints": { "typestr": "@" },
+   "kPDFAnnotationKey_LineEndingStyles": { "typestr": "@" },
+   "kPDFAnnotationKey_IconName": { "typestr": "@" },
+   "kPDFAnnotationKey_Open": { "typestr": "@" },
+   "kPDFAnnotationKey_Parent": { "typestr": "@" },
+   "kPDFAnnotationKey_Popup": { "typestr": "@" },
+   "kPDFAnnotationKey_Quadding": { "typestr": "@" },
+   "kPDFAnnotationKey_QuadPoints": { "typestr": "@" },
+   "kPDFAnnotationKey_TextLabel": { "typestr": "@" },
+   "kPDFAnnotationKey_WidgetDefaultValue": { "typestr": "@" },
+   "kPDFAnnotationKey_WidgetFieldFlags": { "typestr": "@" },
+   "kPDFAnnotationKey_WidgetFieldType": { "typestr": "@" },
+   "kPDFAnnotationKey_WidgetAppearanceDictionary": { "typestr": "@" },
+   "kPDFAnnotationKey_WidgetMaxLen": { "typestr": "@" },
+   "kPDFAnnotationKey_WidgetOptions": { "typestr": "@" },
+   "kPDFAnnotationKey_WidgetTextLabelUI": { "typestr": "@" },
+   "kPDFAnnotationKey_WidgetValue": { "typestr": "@" }
   },
   "classes": {
    "NSObject": {
@@ -23,6 +65,34 @@
       "class_method": false,
       "retval": {},
       "selector": "classForAnnotationClass:"
+     }
+    ]
+   },
+   "PDFAnnotation": {
+    "methods": [
+     {
+      "selector": "setValue:forAnnotationKey:",
+      "class_method": "false",
+      "retval": {
+       "type_override": "Z"
+      }
+     },
+     {
+      "selector": "setBoolean:forAnnotationKey:",
+      "class_method": "false",
+      "args": {
+       "0": { "type_override": "Z" }
+      },
+      "retval": {
+       "type_override": "Z"
+      }
+     },
+     {
+      "selector": "setRect:forAnnotationKey:",
+      "class_method": "false",
+      "retval": {
+       "type_override": "Z"
+      }
      }
     ]
    },

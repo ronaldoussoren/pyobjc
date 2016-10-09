@@ -12,6 +12,16 @@ class TestNSSliderCell (TestCase):
         self.assertEqual(NSLinearSlider, 0)
         self.assertEqual(NSCircularSlider, 1)
 
+        self.assertEqual(NSTickMarkPositionBelow, 0)
+        self.assertEqual(NSTickMarkPositionAbove, 1)
+        self.assertEqual(NSTickMarkPositionLeading, NSTickMarkPositionAbove)
+        self.assertEqual(NSTickMarkPositionTrailing, NSTickMarkPositionBelow)
+
+        self.assertEqual(NSSliderTypeLinear, 0)
+        self.assertEqual(NSSliderTypeCircular, 1)
+
+
+
     def testMethods(self):
         self.assertResultIsBOOL(NSSliderCell.prefersTrackingUntilMouseUp)
         self.assertArgIsBOOL(NSSliderCell.knobRectFlipped_, 0)

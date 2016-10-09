@@ -561,6 +561,16 @@ class TestURL (TestCase):
         self.assertIsInstance(kCFURLUbiquitousItemPercentDownloadedKey, unicode)
         self.assertIsInstance(kCFURLUbiquitousItemPercentUploadedKey, unicode)
 
+    @min_os_level('10.12')
+    def testConstants10_12(self):
+        self.assertIsInstance(kCFURLVolumeLocalizedNameKey, unicode)
+        self.assertIsInstance(kCFURLVolumeIsEncryptedKey, unicode)
+        self.assertIsInstance(kCFURLVolumeIsRootFileSystemKey, unicode)
+        self.assertIsInstance(kCFURLVolumeSupportsCompressionKey, unicode)
+        self.assertIsInstance(kCFURLVolumeSupportsFileCloningKey, unicode)
+        self.assertIsInstance(kCFURLVolumeSupportsSwapRenamingKey, unicode)
+        self.assertIsInstance(kCFURLVolumeSupportsExclusiveRenamingKey, unicode)
+
     @min_os_level('10.9')
     def testFunctions10_9(self):
         self.assertResultIsBOOL(CFURLIsFileReferenceURL)

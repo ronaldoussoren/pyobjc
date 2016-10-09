@@ -4,7 +4,7 @@ from AppKit import *
 
 class TestNSDraggingHelper (NSObject):
     def draggingFormation(self): return 1
-    def setDraggingFormation(self, v): return 1
+    def setDraggingFormation_(self, v): return 1
     def animatesToDestination(self): return 1
     def setAnimatesToDestination_(self, v): return 1
     def numberOfValidItemsForDrop(self): return 1

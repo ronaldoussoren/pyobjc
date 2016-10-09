@@ -6,6 +6,7 @@ class TestWKUIDelegateHelper (NSObject):
     def webView_runJavaScriptAlertPanelWithMessage_initiatedByFrame_completionHandler_(self, w, m, f, h): pass
     def webView_runJavaScriptConfirmPanelWithMessage_initiatedByFrame_completionHandler_(self, w, m, f, h): pass
     def webView_runJavaScriptTextInputPanelWithPrompt_defaultText_initiatedByFrame_completionHandler_(self, w, p, d, f, h): pass
+    def webView_runOpenPanelWithParameters_initiatedByFrame_completionHandler_(self, w, p, f, c): pass
 
 class TestWKUIDelegate (TestCase):
     @onlyOn64Bit
@@ -18,6 +19,7 @@ class TestWKUIDelegate (TestCase):
         self.assertArgIsBlock(TestWKUIDelegateHelper.webView_runJavaScriptAlertPanelWithMessage_initiatedByFrame_completionHandler_, 3, b"v")
         self.assertArgIsBlock(TestWKUIDelegateHelper.webView_runJavaScriptConfirmPanelWithMessage_initiatedByFrame_completionHandler_, 3, b"v")
         self.assertArgIsBlock(TestWKUIDelegateHelper.webView_runJavaScriptTextInputPanelWithPrompt_defaultText_initiatedByFrame_completionHandler_, 4, b"v")
+        self.assertArgIsBlock(TestWKUIDelegateHelper.webView_runOpenPanelWithParameters_initiatedByFrame_completionHandler_, 3, b"v@")
 
 if __name__ == "__main__":
     main()

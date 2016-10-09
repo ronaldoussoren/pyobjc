@@ -21,6 +21,13 @@ class TestNSPreferencePane (TestCase):
         self.assertIsInstance(NSPrefPaneHelpMenuTitleKey, unicode)
         self.assertIsInstance(NSPrefPaneHelpMenuAnchorKey, unicode)
 
+    #@min_os_level('10.12')
+    # Added in 10.12, but available before that
+    def testConstants10_12(self):
+        self.assertIsInstance(NSPreferencePaneSwitchToPaneNotification, unicode)
+        self.assertIsInstance(NSPreferencePrefPaneIsAvailableNotification, unicode)
+        self.assertIsInstance(NSPreferencePaneUpdateHelpMenuNotification, unicode)
+
     def testClasses(self):
         self.assertArgIsBOOL(NSPreferencePane.replyToShouldUnselect_, 0)
         self.assertResultIsBOOL(NSPreferencePane.autoSaveTextFields)

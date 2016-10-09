@@ -6,6 +6,10 @@ class TestIOSurfaceAPI (TestCase):
     def testCFTypes(self):
         self.assertIsCFType(IOSurface.IOSurfaceRef)
 
+    @min_os_level('10.12')
+    def testConstants10_12(self):
+        self.assertIsInstance(IOSurface.kIOSurfacePixelSizeCastingAllowed, unicode)
+
     @min_os_level('10.6')
     def testConstants(self):
         self.assertIsInstance(IOSurface.kIOSurfaceAllocSize, unicode)
@@ -103,6 +107,9 @@ class TestIOSurfaceAPI (TestCase):
 
         self.assertResultIsCFRetained(IOSurface.IOSurfaceLookupFromXPCObject)
 
+    @min_os_level('10.12')
+    def testFunctions10_12(self):
+        self.assertResultIsBOOL(IOSurface.IOSurfaceAllowsPixelSizeCasting)
 
 
 if __name__ == "__main__":

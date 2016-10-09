@@ -32,6 +32,15 @@ if sys.maxsize > 2 ** 32:
             self.assertResultIsBOOL(CryptoTokenKit.TKSmartCardUserInteractionForConfirmation.result)
             self.assertArgIsBOOL(CryptoTokenKit.TKSmartCardUserInteractionForConfirmation.setResult_, 0)
 
+        @min_os_level("10.12")
+        def testMethods10_12(self):
+            self.assertResultIsBOOL(CryptoTokenKit.TKSmartCard.inSessionWithError_executeBlock_)
+            self.assertArgIsOut(CryptoTokenKit.TKSmartCard.inSessionWithError_executeBlock_, 0)
+            self.assertArgIsBlock(CryptoTokenKit.TKSmartCard.inSessionWithError_executeBlock_, 1, b'Zo^@')
+
+            self.assertArgIsOut(CryptoTokenKit.TKSmartCard.sendIns_p1_p2_data_le_sw_error_, 5)
+            self.assertArgIsOut(CryptoTokenKit.TKSmartCard.sendIns_p1_p2_data_le_sw_error_, 6)
+
         @min_os_level("10.11")
         @expectedFailure
         def testMethods10_11_missing(self):

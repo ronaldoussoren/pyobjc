@@ -108,4 +108,9 @@ static void __attribute__((__used__)) use_protocols(void)
     p = PyObjC_IdToPython(@protocol(NSCollectionViewDelegateFlowLayout)); Py_XDECREF(p);
     p = PyObjC_IdToPython(@protocol(NSSearchFieldDelegate)); Py_XDECREF(p);
 #endif
+#if PyObjC_BUILD_RELEASE >= 1012
+    p = PyObjC_IdToPython(@protocol(NSCollectionViewSectionHeaderView)); Py_XDECREF(p);
+    p = PyObjC_IdToPython(@protocol(NSFilePromiseProviderDelegate)); Py_XDECREF(p);
+    p = PyObjC_IdToPython(@protocol(NSCloudSharingServiceDelegate)); Py_XDECREF(p);
+#endif
 }

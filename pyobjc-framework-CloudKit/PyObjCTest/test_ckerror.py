@@ -4,7 +4,7 @@ if sys.maxsize > 2 ** 32:
     from PyObjCTools.TestSupport import *
     import CloudKit
 
-    class TestCKAsset (TestCase):
+    class TestCKError (TestCase):
         @min_os_level("10.10")
         def testConstants(self):
             self.assertIsInstance(CloudKit.CKErrorDomain, unicode)
@@ -42,6 +42,11 @@ if sys.maxsize > 2 ** 32:
             self.assertEqual(CloudKit.CKErrorZoneNotFound, 26)
             self.assertEqual(CloudKit.CKErrorLimitExceeded, 27)
             self.assertEqual(CloudKit.CKErrorUserDeletedZone, 28)
+            self.assertEqual(CloudKit.CKErrorTooManyParticipants, 29)
+            self.assertEqual(CloudKit.CKErrorAlreadyShared, 30)
+            self.assertEqual(CloudKit.CKErrorReferenceViolation, 31)
+            self.assertEqual(CloudKit.CKErrorManagedAccountRestricted, 32)
+            self.assertEqual(CloudKit.CKErrorParticipantMayNeedVerification, 33)
 
 if __name__ == "__main__":
     main()

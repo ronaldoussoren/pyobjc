@@ -20,7 +20,8 @@ class TestCLLocationManager (TestCase):
         self.assertEqual(kCLAuthorizationStatusNotDetermined, 0)
         self.assertEqual(kCLAuthorizationStatusRestricted, 1)
         self.assertEqual(kCLAuthorizationStatusDenied, 2)
-        self.assertEqual(kCLAuthorizationStatusAuthorized, 3)
+        self.assertEqual(kCLAuthorizationStatusAuthorizedAlways, 3)
+        self.assertEqual(kCLAuthorizationStatusAuthorized, kCLAuthorizationStatusAuthorizedAlways)
 
         self.assertEqual(CLActivityTypeOther, 1)
         self.assertEqual(CLActivityTypeAutomotiveNavigation, 2)

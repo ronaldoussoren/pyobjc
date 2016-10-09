@@ -7,7 +7,22 @@
       "ignore": true
     }
   },
+  "expressions": {
+   "kCFISO8601DateFormatWithFullDate": { "value": "kCFISO8601DateFormatWithYear | kCFISO8601DateFormatWithMonth | kCFISO8601DateFormatWithDay | kCFISO8601DateFormatWithDashSeparatorInDate" },
+   "kCFISO8601DateFormatWithFullTime": { "value": "kCFISO8601DateFormatWithTime | kCFISO8601DateFormatWithColonSeparatorInTime | kCFISO8601DateFormatWithTimeZone | kCFISO8601DateFormatWithColonSeparatorInTimeZone" },
+   "kCFISO8601DateFormatWithInternetDateTime": { "value": "kCFISO8601DateFormatWithFullDate | kCFISO8601DateFormatWithFullTime" }
+  },
   "enum": {
+   "kCFISO8601DateFormatWithYear": { "value": 1 },
+   "kCFISO8601DateFormatWithMonth": { "value": 2 },
+   "kCFISO8601DateFormatWithWeekOfYear": { "value": 4 },
+   "kCFISO8601DateFormatWithDay": { "value": 16 },
+   "kCFISO8601DateFormatWithTime": { "value": 32 },
+   "kCFISO8601DateFormatWithTimeZone": { "value": 64 },
+   "kCFISO8601DateFormatWithSpaceBetweenDateAndTime": { "value": 128 },
+   "kCFISO8601DateFormatWithDashSeparatorInDate": { "value": 256 },
+   "kCFISO8601DateFormatWithColonSeparatorInTime": { "value": 512 },
+   "kCFISO8601DateFormatWithColonSeparatorInTimeZone": { "value": 1024 },
    "kCFNumberFormatterOrdinalStyle": { "value": 6 },
    "kCFNumberFormatterCurrencyISOCodeStyle": { "value": 8 },
    "kCFNumberFormatterCurrencyPluralStyle": { "value": 9 },
@@ -16,12 +31,27 @@
    "kCFCoreFoundationVersionNumber10_10_1": { "value": 1151.16 },
    "kCFCoreFoundationVersionNumber10_10_2": { "value": 1152 },
    "kCFCoreFoundationVersionNumber10_10_3": { "value": 1153.18 },
+   "kCFCoreFoundationVersionNumber10_10_4": { "value": 1153.18 },
+   "kCFCoreFoundationVersionNumber10_10_5": { "value": 1153.18 },
+   "kCFCoreFoundationVersionNumber10_10_Max": { "value": 1199 },
+   "kCFCoreFoundationVersionNumber10_11": { "value": 1253 },
+   "kCFCoreFoundationVersionNumber10_11_1": { "value": 1255.1 },
+   "kCFCoreFoundationVersionNumber10_11_2": { "value": 1256.14 },
+   "kCFCoreFoundationVersionNumber10_11_3": { "value": 1256.14 },
+   "kCFCoreFoundationVersionNumber10_11_4": { "value": 1258.1 },
+   "kCFCoreFoundationVersionNumber10_11_Max": { "value": 1299 },
    "kCFNumberFormatterOrdinalStyle": { "value": "6" },
    "kCFNumberFormatterCurrencyISOCodeStyle": { "value": "8" },
    "kCFNumberFormatterCurrencyPluralStyle": { "value": "9" },
    "kCFNumberFormatterCurrencyAccountingStyle": { "value": "10" }
   },
   "externs": {
+    "kCFURLVolumeIsEncryptedKey": { "ignore": true },
+    "kCFURLVolumeIsRootFileSystemKey": { "ignore": true },
+    "kCFURLVolumeSupportsCompressionKey": { "ignore": true },
+    "kCFURLVolumeSupportsFileCloningKey": { "ignore": true },
+    "kCFURLVolumeSupportsSwapRenamingKey": { "ignore": true },
+    "kCFURLVolumeSupportsExclusiveRenamingKey": { "ignore": true },
     "kCFTypeSetCallBacks": { "ignore": true },
     "kCFTypeDictionaryValueCallBacks": { "ignore": true },
     "kCFPlugInDynamicRegistrationKey": { "ignore": true },
@@ -236,6 +266,16 @@
   "classes": {},
   "formal_protocols": {},
   "functions": {
+   "CFDateFormatterCreateISO8601Formatter": {
+    "args": {
+     "0": { "typestr": "@" },
+     "1": { "typestr": "L" }
+    },
+    "retval": {
+     "typestr": "@",
+     "already_cfretained": true
+    }
+   },
    "_CFAutoreleasePoolPrintPools": {
      "args": {},
      "retval": {

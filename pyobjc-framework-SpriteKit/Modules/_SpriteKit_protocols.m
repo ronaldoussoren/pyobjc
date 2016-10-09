@@ -11,4 +11,8 @@ static void __attribute__((__used__)) use_protocols(void)
     p = PyObjC_IdToPython(@protocol(SKPhysicsContactDelegate)); Py_XDECREF(p);
     p = PyObjC_IdToPython(@protocol(SKSceneDelegate)); Py_XDECREF(p);
 #endif /* defined(__LP64__) && PyObjC_BUILD_RELEASE >= 1010 */
+#if defined(__LP64__) && PyObjC_BUILD_RELEASE >= 1012
+    p = PyObjC_IdToPython(@protocol(SKViewDelegate)); Py_XDECREF(p);
+#endif /* defined(__LP64__) && PyObjC_BUILD_RELEASE >= 1012 */
+
 }

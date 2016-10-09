@@ -6,6 +6,9 @@ import objc
 if sys.maxsize > 2 ** 32:
     import SpriteKit
 
+    class TestSKViewHelper (SpriteKit.NSObject):
+        def view_shouldRenderAtTime_(self, v, t): return 1
+
     class TestSKView (TestCase):
         @min_os_level("10.9")
         def testMethods10_9(self):
@@ -34,6 +37,14 @@ if sys.maxsize > 2 ** 32:
             self.assertResultIsBOOL(SpriteKit.SKView.allowsTransparency)
             self.assertArgIsBOOL(SpriteKit.SKView.setShouldCullNonVisibleNodes_, 0)
             self.assertResultIsBOOL(SpriteKit.SKView.shouldCullNonVisibleNodes)
+
+        @min_sdk_level("10.12")
+        def testProtocols(self):
+            objc.protocolNamed("SKViewDelegate")
+
+            self.assertResultIsBOOL(TestSKViewHelper.view_shouldRenderAtTime_)
+            self.assertArgHasType(TestSKViewHelper.view_shouldRenderAtTime_, 1, objc._C_DBL)
+
 
 if __name__ == "__main__":
     main()

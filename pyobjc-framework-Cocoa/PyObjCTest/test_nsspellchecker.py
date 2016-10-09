@@ -50,6 +50,12 @@ class TestNSSpellChecker (TestCase):
         self.assertResultIsBOOL(NSSpellChecker.isAutomaticQuoteSubstitutionEnabled)
         self.assertResultIsBOOL(NSSpellChecker.isAutomaticDashSubstitutionEnabled)
 
+    @min_os_level('10.12')
+    def testMethods10_12(self):
+        self.assertResultIsBOOL(NSSpellChecker.preventsAutocorrectionBeforeString_language_)
+        self.assertResultIsBOOL(NSSpellChecker.isAutomaticCapitalizationEnabled)
+        self.assertResultIsBOOL(NSSpellChecker.isAutomaticPeriodSubstitutionEnabled)
+
 
     @min_os_level('10.6')
     def testConstants10_6(self):
@@ -83,6 +89,12 @@ class TestNSSpellChecker (TestCase):
     def testConstants10_9(self):
         self.assertIsInstance(NSSpellCheckerDidChangeAutomaticQuoteSubstitutionNotification, unicode)
         self.assertIsInstance(NSSpellCheckerDidChangeAutomaticDashSubstitutionNotification, unicode)
+
+    @min_os_level('10.12')
+    def testConstants10_12(self):
+        self.assertIsInstance(NSTextCheckingSelectedRangeKey, unicode)
+        self.assertIsInstance(NSSpellCheckerDidChangeAutomaticCapitalizationNotification, unicode)
+        self.assertIsInstance(NSSpellCheckerDidChangeAutomaticPeriodSubstitutionNotification, unicode)
 
 
 if __name__ == "__main__":

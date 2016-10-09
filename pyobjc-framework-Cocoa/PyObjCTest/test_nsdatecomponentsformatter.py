@@ -14,6 +14,7 @@ class TestNSDateComponentsFormatter (TestCase):
         self.assertEqual(NSDateComponentsFormatterUnitsStyleShort, 2)
         self.assertEqual(NSDateComponentsFormatterUnitsStyleFull, 3)
         self.assertEqual(NSDateComponentsFormatterUnitsStyleSpellOut, 4)
+        self.assertEqual(NSDateComponentsFormatterUnitsStyleBrief, 5)
 
         self.assertEqual(NSDateComponentsFormatterZeroFormattingBehaviorNone, 0)
         self.assertEqual(NSDateComponentsFormatterZeroFormattingBehaviorDefault, 1 << 0)

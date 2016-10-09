@@ -39,6 +39,11 @@ class TestNSAccessibility (TestCase):
         self.assertResultIsBOOL(NSWorkspace.accessibilityDisplayShouldDifferentiateWithoutColor)
         self.assertResultIsBOOL(NSWorkspace.accessibilityDisplayShouldReduceTransparency)
 
+    @min_os_level('10.12')
+    def testMethods10_12(self):
+        self.assertResultIsBOOL(NSWorkspace.accessibilityDisplayShouldReduceMotion)
+        self.assertResultIsBOOL(NSWorkspace.accessibilityDisplayShouldInvertColors)
+
     @min_os_level('10.10')
     def testFunctions10_10(self):
         NSAccessibilityFrameInView # Existence
@@ -431,6 +436,12 @@ class TestNSAccessibility (TestCase):
         self.assertIsInstance(NSAccessibilityListItemPrefixTextAttribute, unicode)
         self.assertIsInstance(NSAccessibilityListItemIndexTextAttribute, unicode)
         self.assertIsInstance(NSAccessibilityListItemLevelTextAttribute, unicode)
+
+    @min_os_level('10.12')
+    def testConstants10_12(self):
+        self.assertIsInstance(NSAccessibilityRequiredAttribute, unicode)
+        self.assertIsInstance(NSAccessibilityMenuBarItemRole, unicode)
+        self.assertIsInstance(NSAccessibilityTextAlignmentAttribute, unicode)
 
     @min_os_level('10.7')
     def testFunctions10_7(self):

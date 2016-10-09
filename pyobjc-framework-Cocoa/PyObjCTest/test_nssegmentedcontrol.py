@@ -30,5 +30,10 @@ class TestNSSegmentedControl (TestCase):
         self.assertResultIsBOOL(NSSegmentedControl.isSpringLoaded)
         self.assertArgIsBOOL(NSSegmentedControl.setSpringLoaded_, 0)
 
+    @min_os_level('10.12')
+    def testMethods10_12(self):
+        self.assertArgIsSEL(NSSegmentedControl.segmentedControlWithLabels_trackingMode_target_action_, 3, b'v@:@')
+        self.assertArgIsSEL(NSSegmentedControl.segmentedControlWithImages_trackingMode_target_action_, 3, b'v@:@')
+
 if __name__ == "__main__":
     main()

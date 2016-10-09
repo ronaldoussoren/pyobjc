@@ -2,6 +2,10 @@
 # for information on how to update this file.
 {
  "definitions": {
+  "enum": {
+   "CWEventTypeVirtualInterfaceStateChanged": { "value": 9 },
+   "CWEventTypeRangingReportEvent": { "value": 10 }
+  },
   "classes": {
    "CWInterface": {
     "methods": [

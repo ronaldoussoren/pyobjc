@@ -9,6 +9,7 @@ for general tips and tricks regarding the translation between Python
 and (Objective-)C frameworks
 '''
 from pyobjc_setup import *
+import os
 
 VERSION="3.2a1"
 
@@ -25,4 +26,16 @@ setup(
         'pyobjc-core>=' + VERSION,
         'pyobjc-framework-Cocoa>=' + VERSION,
     ],
+    ext_modules = [
+        Extension("CoreData._CoreData",
+            [ "Modules/_CoreData.m" ],
+            extra_link_args=["-framework", "CoreData"],
+            depends=[
+                os.path.join('Modules', fn)
+                for fn in os.listdir('Modules')
+                if fn.startswith('_CoreData')
+            ]
+        ),
+    ],
+
 )

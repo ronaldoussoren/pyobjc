@@ -64,6 +64,22 @@ class TestNSOpenGL (TestCase):
         self.assertEqual(NSOpenGLCPMPSwapsInFlight, 315)
         self.assertEqual(NSOpenGLCPSurfaceSurfaceVolatile, 306)
 
+        self.assertEqual(NSOpenGLContextParameterSwapInterval, 222)
+        self.assertEqual(NSOpenGLContextParameterSurfaceOrder, 235)
+        self.assertEqual(NSOpenGLContextParameterSurfaceOpacity, 236)
+        self.assertEqual(NSOpenGLContextParameterSurfaceBackingSize, 304)
+        self.assertEqual(NSOpenGLContextParameterReclaimResources, 308)
+        self.assertEqual(NSOpenGLContextParameterCurrentRendererID, 309)
+        self.assertEqual(NSOpenGLContextParameterGPUVertexProcessing, 310)
+        self.assertEqual(NSOpenGLContextParameterGPUFragmentProcessing, 311)
+        self.assertEqual(NSOpenGLContextParameterHasDrawable, 314)
+        self.assertEqual(NSOpenGLContextParameterMPSwapsInFlight, 315)
+        self.assertEqual(NSOpenGLContextParameterSwapRectangle, 200)
+        self.assertEqual(NSOpenGLContextParameterSwapRectangleEnable, 201)
+        self.assertEqual(NSOpenGLContextParameterRasterizationEnable, 221)
+        self.assertEqual(NSOpenGLContextParameterStateValidation, 301)
+        self.assertEqual(NSOpenGLContextParameterSurfaceSurfaceVolatile, 306)
+
     @min_os_level("10.5")
     def testConstants10_5(self):
         self.assertEqual(NSOpenGLPFAAllowOfflineRenderers, 96)

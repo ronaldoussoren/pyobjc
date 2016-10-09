@@ -106,9 +106,11 @@ class KeyValueClass4 (NSObject):
 
     # Definition for property 'bar'. Use odd names for the methods
     # because the KeyValue support recognizes the usual names.
+    @objc.python_method
     def read_bar(self):
         return self.foo + self.foo
 
+    @objc.python_method
     def write_bar (self, value):
         self.foo = value + value
 

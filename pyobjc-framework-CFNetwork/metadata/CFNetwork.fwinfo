@@ -6,6 +6,9 @@
    "kCFURLErrorAppTransportSecurityRequiresSecureConnection": { "value": -1022 }
   },
   "externs": {
+    "kCFStreamNetworkServiceTypeCallSignaling": {
+      "typestr": "^{__CFString=}"
+    },
     "kCFHTTPVersion2_0": {
       "typestr": "^{__CFString=}"
     },

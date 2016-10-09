@@ -24,5 +24,9 @@ class TestNSScreen (TestCase):
     def testMethods10_9(self):
         self.assertResultIsBOOL(NSScreen.screensHaveSeparateSpaces)
 
+    @min_os_level('10.12')
+    def testMethods10_12(self):
+        self.assertResultIsBOOL(NSScreen.canRepresentDisplayGamut_)
+
 if __name__ == "__main__":
     main()

@@ -35,6 +35,29 @@ class TestNSWindow (TestCase):
         self.assertEqual(NSMiniaturizableWindowMask, 1 << 2)
         self.assertEqual(NSResizableWindowMask, 1 << 3)
 
+        self.assertEqual(NSWindowStyleMaskBorderless, 0)
+        self.assertEqual(NSWindowStyleMaskTitled, 1 << 0)
+        self.assertEqual(NSWindowStyleMaskClosable, 1 << 1)
+        self.assertEqual(NSWindowStyleMaskMiniaturizable, 1 << 2)
+        self.assertEqual(NSWindowStyleMaskResizable, 1 << 3)
+        self.assertEqual(NSWindowStyleMaskTexturedBackground, 1 << 8)
+        self.assertEqual(NSWindowStyleMaskUnifiedTitleAndToolbar, 1 << 12)
+        self.assertEqual(NSWindowStyleMaskFullScreen, 1 << 14)
+        self.assertEqual(NSWindowStyleMaskFullSizeContentView, 1 << 15)
+        self.assertEqual(NSWindowStyleMaskUtilityWindow, 1 << 4)
+        self.assertEqual(NSWindowStyleMaskDocModalWindow, 1 << 6)
+        self.assertEqual(NSWindowStyleMaskNonactivatingPanel, 1 << 7)
+        self.assertEqual(NSWindowStyleMaskHUDWindow, 1 << 13)
+        self.assertEqual(NSWindowCollectionBehaviorFullScreenNone, 1 << 9)
+
+        self.assertEqual(NSWindowUserTabbingPreferenceManual, 0)
+        self.assertEqual(NSWindowUserTabbingPreferenceAlways, 1)
+        self.assertEqual(NSWindowUserTabbingPreferenceInFullScreen, 2)
+
+        self.assertEqual(NSWindowTabbingModeAutomatic, 0)
+        self.assertEqual(NSWindowTabbingModePreferred, 1)
+        self.assertEqual(NSWindowTabbingModeDisallowed, 2)
+
         self.assertEqual(NSTexturedBackgroundWindowMask, 1 << 8)
 
         self.assertEqual(NSUnscaledWindowMask, 1 << 11)
@@ -263,6 +286,13 @@ class TestNSWindow (TestCase):
         self.assertArgIsBOOL(NSWindow.setTitlebarAppearsTransparent_, 0)
 
         self.assertArgIsBlock(NSWindow.trackEventsMatchingMask_timeout_mode_handler_, 3, b'v@o^Z')
+
+    @min_os_level('10.12')
+    def testMethods10_12(self):
+        self.assertResultIsBOOL(NSWindow.canRepresentDisplayGamut_)
+
+        self.assertResultIsBOOL(NSWindow.allowsAutomaticWindowTabbing)
+        self.assertArgIsBOOL(NSWindow.setAllowsAutomaticWindowTabbing_)
 
     @min_sdk_level('10.6')
     def testProtocolObjects(self):

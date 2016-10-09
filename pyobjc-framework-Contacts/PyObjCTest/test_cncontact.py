@@ -6,6 +6,11 @@ if sys.maxsize > 2**32:
     import Contacts
 
     class TestCNContact (TestCase):
+        @min_os_level("10.12")
+        def testConstants10_12(self):
+            self.assertIsInstance(Contacts.CNContactPhoneticOrganizationNameKey, unicode)
+            self.assertIsInstance(Contacts.CNContactImageDataAvailableKey, unicode)
+
         @min_os_level("10.11")
         def testConstants(self):
             self.assertEqual(Contacts.CNContactTypePerson, 0)

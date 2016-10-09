@@ -40,6 +40,33 @@ class TestNSButtonCell (TestCase):
         self.assertEqual(NSGradientConvexWeak, 3)
         self.assertEqual(NSGradientConvexStrong, 4)
 
+        self.assertEqual(NSButtonTypeMomentaryLight, 0)
+        self.assertEqual(NSButtonTypePushOnPushOff, 1)
+        self.assertEqual(NSButtonTypeToggle, 2)
+        self.assertEqual(NSButtonTypeSwitch, 3)
+        self.assertEqual(NSButtonTypeRadio, 4)
+        self.assertEqual(NSButtonTypeMomentaryChange, 5)
+        self.assertEqual(NSButtonTypeOnOff, 6)
+        self.assertEqual(NSButtonTypeMomentaryPushIn, 7)
+        self.assertEqual(NSButtonTypeAccelerator, 8)
+        self.assertEqual(NSButtonTypeMultiLevelAccelerator, 9)
+
+        self.assertEqual(NSBezelStyleRounded, 1)
+        self.assertEqual(NSBezelStyleRegularSquare, 2)
+        self.assertEqual(NSBezelStyleDisclosure, 5)
+        self.assertEqual(NSBezelStyleShadowlessSquare, 6)
+        self.assertEqual(NSBezelStyleCircular, 7)
+        self.assertEqual(NSBezelStyleTexturedSquare, 8)
+        self.assertEqual(NSBezelStyleHelpButton, 9)
+        self.assertEqual(NSBezelStyleSmallSquare, 10)
+        self.assertEqual(NSBezelStyleTexturedRounded, 11)
+        self.assertEqual(NSBezelStyleRoundRect, 12)
+        self.assertEqual(NSBezelStyleRecessed, 13)
+        self.assertEqual(NSBezelStyleRoundedDisclosure, 14)
+        self.assertEqual(NSBezelStyleInline, 15)
+
+
+
 
     @min_os_level('10.7')
     def testConstants10_7(self):

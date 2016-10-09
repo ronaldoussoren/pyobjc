@@ -39,7 +39,21 @@
    "kNetFSMountedByUserKey": { "unicode": true },
    "kNetFSMountedByGuestKey": { "unicode": true },
    "kNetFSMountedMultiUserKey": { "unicode": true },
-   "kNetFSMountedByKerberosKey": { "unicode": true }
+   "kNetFSMountedByKerberosKey": { "unicode": true },
+   "kNetFSGetAccessRightsKey": { "unicode": true },
+   "kNetFSAlreadyMountedKey": { "unicode": true },
+   "kNetFSMountPathKey": { "unicode": true },
+   "kNetFSHasPasswordKey": { "unicode": true },
+   "kNetFSIsHiddenKey": { "unicode": true },
+   "kNetFSPrinterShareKey": { "unicode": true },
+   "kNetFSAccessRightsKey": { "unicode": true },
+   "kNetFSDisplayNameKey": { "unicode": true },
+   "kNetFSSoftMountKey": { "unicode": true },
+   "kNetFSMountFlagsKey": { "unicode": true },
+   "kNetFSAllowSubMountsKey": { "unicode": true },
+   "kNetFSMountAtMountDirKey": { "unicode": true },
+   "kNetFSMountedURLKey": { "unicode": true },
+   "kNetFSOpenURLMountKey": { "value": "OpenURLMount", "unicode": true }
   },
   "functions": {
    "NetFSCFStringtoCString": {

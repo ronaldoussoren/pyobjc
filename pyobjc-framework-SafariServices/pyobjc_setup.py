@@ -1,0 +1,1 @@
+../pyobjc-core/Tools/pyobjc_setup.py

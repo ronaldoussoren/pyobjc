@@ -16,6 +16,7 @@ class TestNSURLRequest (TestCase):
         self.assertEqual(NSURLNetworkServiceTypeVideo, 2)
         self.assertEqual(NSURLNetworkServiceTypeBackground, 3)
         self.assertEqual(NSURLNetworkServiceTypeVoice, 4)
+        self.assertEqual(NSURLNetworkServiceTypeCallSignaling, 5)
 
     def testMethods(self):
         self.assertResultIsBOOL(NSURLRequest.HTTPShouldHandleCookies)

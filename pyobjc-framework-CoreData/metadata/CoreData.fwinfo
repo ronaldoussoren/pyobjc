@@ -3,6 +3,10 @@
 {
  "definitions": {
   "enum": {
+   "NSFetchedResultsChangeInsert": { "value": 1 },
+   "NSFetchedResultsChangeDelete": { "value": 2 },
+   "NSFetchedResultsChangeMove": { "value": 3 },
+   "NSFetchedResultsChangeUpdate": { "value": 4 },
    "NSCoreDataVersionNumber10_10": { "value": 526.0 },
    "NSCoreDataVersionNumber10_10_2": { "value": 526.1 },
    "NSCoreDataVersionNumber10_10_3": { "value": 526.2 },
@@ -15,9 +19,30 @@
    "NSMigrationConstraintViolationError": { "value": 134111 }
   },
   "externs": {
-   "NSPersistentStoreForceDestroyOption": { "typestr": "@" }
+   "NSPersistentStoreForceDestroyOption": { "typestr": "@" },
+   "NSPersistentStoreConnectionPoolMaxSizeKey": { "typestr": "@" },
+   "NSManagedObjectContextQueryGenerationKey": { "typestr": "@" }
   },
   "classes": {
+   "NSObject": {
+    "methods": [
+     {
+      "class_method": false,
+      "selector": "controller:didChangeObject:atIndexPath:forChangeType:newIndexPath:",
+      "args": {
+       "3": { "type_override": [ "I", "Q" ] }
+      }
+     },
+     {
+      "class_method": false,
+      "selector": "controller:didChangeSection:atIndex:forChangeType:",
+      "args": {
+       "2": { "type_override": [ "I", "Q" ] },
+       "3": { "type_override": [ "I", "Q" ] }
+      }
+     }
+    ]
+   },
    "NSAtomicStore": {
     "methods": [
      {
@@ -161,6 +186,44 @@
      }
     ]
    },
+   "NSPersistentContainer": {
+    "methods": [
+     {
+      "args": {
+        "0": {
+	  "callable": {
+	    "arguments": {
+	      "0": { "typestr": "^v" },
+	      "1": { "typestr": "@" },
+	      "2": { "typestr": "@" }
+	    },
+	    "retval": {
+	      "typestr": "v"
+	    }
+	  }
+	}
+       },
+       "class_method": false,
+       "selector": "loadPersistentStoresWithCompletionHandler:"
+     },
+     {
+      "args": {
+        "0": {
+	  "callable": {
+	    "arguments": {
+	      "0": { "typestr": "^v" }
+	    },
+	    "retval": {
+	      "typestr": "v"
+	    }
+	  }
+	}
+       },
+       "class_method": false,
+       "selector": "performBackgroundTask:"
+     }
+    ]
+   },
    "NSAsynchronousFetchRequest": {
     "methods": [
      {
@@ -197,6 +260,13 @@
    },
    "NSFetchRequest": {
     "methods": [
+     {
+      "class_method": false,
+      "selector": "execute:",
+      "args": {
+       "0": { "type_modifier": "o" }
+      }
+     },
      {
       "class_method": false,
       "retval": {
@@ -460,6 +530,24 @@
    },
    "NSManagedObjectContext": {
     "methods": [
+     {
+      "class_method": false,
+      "selector": "automaticallyMergesChangesFromParent",
+      "retval": { "type_override": "Z" }
+     },
+     {
+      "class_method": false,
+      "selector": "setAutomaticallyMergesChangesFromParent:",
+      "args": { "0": { "type_override": "Z" } }
+     },
+     {
+      "class_method": false,
+      "selector": "setQueryGenerationFromToken:error:",
+      "retval": { "type_override": "Z" },
+      "args": {
+       "1": { "type_modifier": "o" }
+      }
+     },
      {
       "retval": { "type_override": "Z" },
       "class_method": false,
@@ -780,8 +868,71 @@
      }
     ]
    },
+   "NSPersistentStoreDescription": {
+    "methods": [
+     {
+      "class_method": false,
+      "selector": "isReadOnly",
+      "retval": { "type_override": "Z" }
+     },
+     {
+      "class_method": false,
+      "selector": "shouldAddStoreAsynchronously",
+      "retval": { "type_override": "Z" }
+     },
+     {
+      "class_method": false,
+      "selector": "shouldMigrateStoreAutomatically",
+      "retval": { "type_override": "Z" }
+     },
+     {
+      "class_method": false,
+      "selector": "shouldInferMappingModelAutomatically",
+      "retval": { "type_override": "Z" }
+     },
+     {
+      "class_method": false,
+      "selector": "setReadOnly:",
+      "args": { "0": { "type_override": "Z" } }
+     },
+     {
+      "class_method": false,
+      "selector": "setShouldAddStoreAsynchronously:",
+      "args": { "0": { "type_override": "Z" } }
+     },
+     {
+      "class_method": false,
+      "selector": "setShouldMigrateStoreAutomatically:",
+      "args": { "0": { "type_override": "Z" } }
+     },
+     {
+      "class_method": false,
+      "selector": "setShouldInferMappingModelAutomatically:",
+      "args": { "0": { "type_override": "Z" } }
+     }
+
+    ]
+   },
    "NSPersistentStoreCoordinator": {
     "methods": [
+     {
+      "args": {
+        "1": {
+	  "callable": {
+	    "arguments": {
+	      "0": { "typestr": "^v" },
+	      "1": { "typestr": "@" },
+	      "2": { "typestr": "@" }
+	    },
+	    "retval": {
+	      "typestr": "v"
+	    }
+	  }
+	}
+       },
+       "class_method": false,
+       "selector": "addPersistentStoreWithDescription:completionHandler:"
+     },
      {
       "args": {
         "0": {
@@ -826,6 +977,7 @@
       "args": {
        "2": { "type_modifier": "o" }
       },
+      "retval": { "type_override": "Z" },
       "class_method": true,
       "selector": "removeUbiquitousContentAndPersistentStoreAtURL:options:error:"
      },

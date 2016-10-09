@@ -6,6 +6,19 @@
    "NSAppleEventSendDefaultOptions": { "value": "NSAppleEventSendWaitForReply | NSAppleEventSendCanInteract" }
   },
   "aliases": {
+    "NSISO8601DateFormatWithYear": { "alias": "kCFISO8601DateFormatWithYear" },
+    "NSISO8601DateFormatWithMonth": { "alias": "kCFISO8601DateFormatWithMonth" },
+    "NSISO8601DateFormatWithWeekOfYear": { "alias": "kCFISO8601DateFormatWithWeekOfYear" },
+    "NSISO8601DateFormatWithDay": { "alias": "kCFISO8601DateFormatWithDay" },
+    "NSISO8601DateFormatWithTime": { "alias": "kCFISO8601DateFormatWithTime" },
+    "NSISO8601DateFormatWithTimeZone": { "alias": "kCFISO8601DateFormatWithTimeZone" },
+    "NSISO8601DateFormatWithSpaceBetweenDateAndTime": { "alias": "kCFISO8601DateFormatWithSpaceBetweenDateAndTime" },
+    "NSISO8601DateFormatWithDashSeparatorInDate": { "alias": "kCFISO8601DateFormatWithDashSeparatorInDate" },
+    "NSISO8601DateFormatWithColonSeparatorInTime": { "alias": "kCFISO8601DateFormatWithColonSeparatorInTime" },
+    "NSISO8601DateFormatWithColonSeparatorInTimeZone": { "alias": "kCFISO8601DateFormatWithColonSeparatorInTimeZone" },
+    "NSISO8601DateFormatWithFullDate": { "alias": "kCFISO8601DateFormatWithFullDate" },
+    "NSISO8601DateFormatWithFullTime": { "alias": "kCFISO8601DateFormatWithFullTime" },
+    "NSISO8601DateFormatWithInternetDateTime": { "alias": "kCFISO8601DateFormatWithInternetDateTime" },
     "NSOperationQualityOfServiceUserInteractive": { "alias": "NSQualityOfServiceUserInteractive" },
     "NSOperationQualityOfServiceUserInitiated": { "alias": "NSQualityOfServiceUserInitiated" },
     "NSOperationQualityOfServiceUtility": { "alias": "NSQualityOfServiceUtility" },
@@ -38,6 +51,26 @@
     "NSRectEdgeMaxY": { "alias": "NSMaxYEdge" }
   },
   "enum": {
+    "NSURLSessionTaskMetricsResourceFetchTypeUnknown": { "value": 0 },
+    "NSURLSessionTaskMetricsResourceFetchTypeNetworkLoad": { "value": 1 },
+    "NSURLSessionTaskMetricsResourceFetchTypeServerPush": { "value": 2 },
+    "NSURLSessionTaskMetricsResourceFetchTypeLocalCache": { "value": 3 },
+    "NSURLNetworkServiceTypeCallSignaling": { "value": 5 },
+    "NSFoundationVersionNumber10_10_4": { "value": 1153.20 },
+    "NSFoundationVersionNumber10_10_5": { "value": 1154.0 },
+    "NSFoundationVersionNumber10_10_Max": { "value": 1199.0 },
+    "NSFoundationVersionNumber10_11": { "value":   1252.0 },
+    "NSFoundationVersionNumber10_11_1": { "value": 1255.1 },
+    "NSFoundationVersionNumber10_11_2": { "value": 1256.1 },
+    "NSFoundationVersionNumber10_11_3": { "value": 1256.1 },
+    "NSFoundationVersionNumber10_11_4": { "value": 1258.0 },
+    "NSFoundationVersionNumber10_11_Max": { "value": 1299.0 },
+    "NSMeasurementFormatterUnitOptionsProvidedUnit": { "value": 1 },
+    "NSMeasurementFormatterUnitOptionsNaturalScale": { "value": 2 },
+    "NSMeasurementFormatterUnitOptionsTemperatureWithoutUnit": { "value": 4 },
+    "NSDateComponentsFormatterUnitsStyleBrief": { "value": 5 },
+    "NSDecodingFailurePolicyRaiseException": { "value": 0 },
+    "NSDecodingFailurePolicySetErrorAndReturn": { "value": 1 },
     "NSURLSessionResponseBecomeStream": { "value": 3 },
     "NSURLErrorAppTransportSecurityRequiresSecureConnection": { "value": -1022 },
     "NSProcessInfoThermalStateNominal": { "value": 0 },
@@ -206,6 +239,39 @@
     }
   },
   "classes": {
+   "NSURLSessionTaskTransactionMetrics": {
+    "methods": [
+     {
+      "class_method": false,
+      "selector": "isProxyConnection",
+      "retval": { "type_override": "Z" }
+     },
+     {
+      "class_method": false,
+      "selector": "isReusedConnection",
+      "retval": { "type_override": "Z" }
+     }
+    ]
+   },
+   "NSDateInterval": {
+    "methods": [
+     {
+      "selector": "isEqualToDateInterval:",
+      "class_method": false,
+      "retval": { "type_override": "Z" }
+     },
+     {
+      "selector": "intersectsDateInterval:",
+      "class_method": false,
+      "retval": { "type_override": "Z" }
+     },
+     {
+      "selector": "containsDate:",
+      "class_method": false,
+      "retval": { "type_override": "Z" }
+     }
+    ]
+   },
    "NSError": {
     "methods": [
      {
@@ -5718,6 +5784,17 @@
      }
     ]
    },
+   "NSMeasurement": {
+    "methods": [
+     {
+      "class_method": false,
+      "retval": {
+       "type_override": "Z"
+      },
+      "selector": "canBeConvertedToUnit:"
+     }
+    ]
+   },
    "NSMachBootstrapServer": {
     "methods": [
      {
@@ -10468,6 +10545,42 @@
    "NSRunLoop": {
     "methods": [
      {
+      "args": {
+       "0": {
+        "callable": {
+         "arguments": {
+          "0": {
+           "typestr": "^v"
+          }
+         },
+         "retval": {
+          "typestr": "v"
+         }
+        }
+       }
+      },
+      "class_method": false,
+      "selector": "performBlock:"
+     },
+     {
+      "args": {
+       "1": {
+        "callable": {
+         "arguments": {
+          "0": {
+           "typestr": "^v"
+          }
+         },
+         "retval": {
+          "typestr": "v"
+         }
+        }
+       }
+      },
+      "class_method": false,
+      "selector": "performInModes:block:"
+     },
+     {
       "class_method": false,
       "retval": {},
       "selector": "getCFRunLoop"
@@ -12711,6 +12824,34 @@
    "NSThread": {
     "methods": [
      {
+      "selector": "initWithBlock:",
+      "class_method": false,
+      "args": {
+       "0": {
+        "callable": {
+	 "arguments": {
+	  "0": { "typestr": "^v" }
+	 },
+	 "retval": { "typestr": "v" }
+        }
+       }
+      }
+     },
+     {
+      "selector": "detachNewThreadWithBlock:",
+      "class_method": false,
+      "args": {
+       "0": {
+        "callable": {
+	 "arguments": {
+	  "0": { "typestr": "^v" }
+	 },
+	 "retval": { "typestr": "v" }
+        }
+       }
+      }
+     },
+     {
       "args": {
        "0": {
         "sel_of_type": "v@:@"
@@ -12806,6 +12947,54 @@
    },
    "NSTimer": {
     "methods": [
+     {
+      "selector": "initWithFireDate:interval:repeats:block:",
+      "class_method": false,
+      "args": {
+       "2": { "type_override": "Z" },
+       "3": {
+        "callable": {
+	 "arguments": {
+	  "0": { "typestr": "^v" },
+	  "1": { "typestr": "@" }
+	 },
+	 "retval": { "typestr": "v" }
+        }
+       }
+      }
+     },
+     {
+      "selector": "scheduledTimerWithTimeInterval:repeats:block:",
+      "class_method": false,
+      "args": {
+       "1": { "type_override": "Z" },
+       "2": {
+        "callable": {
+	 "arguments": {
+	  "0": { "typestr": "^v" },
+	  "1": { "typestr": "@" }
+	 },
+	 "retval": { "typestr": "v" }
+        }
+       }
+      }
+     },
+     {
+      "selector": "timerWithTimeInterval:repeats:block:",
+      "class_method": false,
+      "args": {
+       "1": { "type_override": "Z" },
+       "2": {
+        "callable": {
+	 "arguments": {
+	  "0": { "typestr": "^v" },
+	  "1": { "typestr": "@" }
+	 },
+	 "retval": { "typestr": "v" }
+        }
+       }
+      }
+     },
      {
       "args": {
        "3": {
@@ -14226,6 +14415,13 @@
    }
   },
   "externs": {
+   "NSURLVolumeIsEncryptedKey": { "typestr": "@" },
+   "NSURLVolumeIsRootFileSystemKey": { "typestr": "@" },
+   "NSURLVolumeSupportsCompressionKey": { "typestr": "@" },
+   "NSURLVolumeSupportsFileCloningKey": { "typestr": "@" },
+   "NSURLVolumeSupportsSwapRenamingKey": { "typestr": "@" },
+   "NSURLVolumeSupportsExclusiveRenamingKey": { "typestr": "@" },
+   "NSStreamNetworkServiceTypeCallSignaling": { "typestr": "@" },
    "NSURLIsApplicationKey": { "typestr": "@" },
    "NSURLApplicationIsScriptableKey": { "typestr": "@" },
    "NSStringTransformLatinToKatakana": { "typestr": "@" },

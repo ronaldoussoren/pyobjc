@@ -19,13 +19,19 @@
     "DOM_KEYFRAME_RULE": { "value": 8 },
     "DOM_SUPPORTS_RULE": { "value": 12 },
     "DOM_WEBKIT_REGION_RULE": { "value": 16 },
-    "WKErrorJavaScriptResultTypeIsUnsupported": { "value": 5 }
+    "WKErrorJavaScriptResultTypeIsUnsupported": { "value": 5 },
+    "WKUserInterfaceDirectionPolicyContent": { "value": 0 },
+    "WKUserInterfaceDirectionPolicySystem": { "value": 1 },
+    "WKAudiovisualMediaTypeNone": { "value": 0 },
+    "WKAudiovisualMediaTypeAudio": { "value": 1 },
+    "WKAudiovisualMediaTypeVideo": { "value": 2 }
   },
   "aliases": {
     "AVAILABLE_AFTER_WEBKIT_VERSION_4_0": { "ignore": true },
     "AVAILABLE_AFTER_WEBKIT_VERSION_4_0_BUT_DEPRECATED": { "ignore": true },
     "AVAILABLE_IN_WEBKIT_VERSION_4_0": { "ignore": true },
-    "AVAILABLE_IN_WEBKIT_VERSION_4_0_BUT_DEPRECATED": { "ignore": true }
+    "AVAILABLE_IN_WEBKIT_VERSION_4_0_BUT_DEPRECATED": { "ignore": true },
+    "WKAudiovisualMediaTypeAll": { "alias": "NSUIntegerMax" }
   },
   "classes": {
    "DOMAttr": {
@@ -1471,10 +1477,28 @@
     "methods": [
      {
       "class_method": false,
+      "selector": "webView:runOpenPanelWithParameters:initiatedByFrame:completionHandler:",
+      "args": {
+        "3": {
+	 "type_override": "@?",
+	 "callable": {
+	  "arguments": {
+	   "0": { "typestr": "^v" },
+	   "1": { "typestr": "@" }
+	 },
+	 "retval": {
+	  "typestr": "v"
+	 }
+	}
+       }
+      }
+     },
+     {
+      "class_method": false,
       "selector": "webView:runJavaScriptTextInputPanelWithPrompt:defaultText:initiatedByFrame:completionHandler:",
       "args": {
         "4": {
-	 "typestr_override": "@?",
+	 "type_override": "@?",
 	 "callable": {
 	  "arguments": {
 	   "0": { "typestr": "^v" }
@@ -1491,7 +1515,7 @@
       "selector": "webView:decidePolicyForNavigationAction:decisionHandler:",
       "args": {
         "2": {
-	 "typestr_override": "@?",
+	 "type_override": "@?",
 	 "callable": {
 	  "arguments": {
 	   "0": { "typestr": "^v" },
@@ -1509,7 +1533,7 @@
       "selector": "webView:decidePolicyForNavigationResponse:decisionHandler:",
       "args": {
         "2": {
-	 "typestr_override": "@?",
+	 "type_override": "@?",
 	 "callable": {
 	  "arguments": {
 	   "0": { "typestr": "^v" },
@@ -1527,7 +1551,7 @@
       "selector": "webView:didReceiveAuthenticationChallenge:completionHandler:",
       "args": {
         "2": {
-	 "typestr_override": "@?",
+	 "type_override": "@?",
 	 "callable": {
 	  "arguments": {
 	   "0": { "typestr": "^v" },
@@ -1546,7 +1570,7 @@
       "selector": "webView:runJavaScriptAlertPanelWithMessage:initiatedByFrame:completionHandler:",
       "args": {
         "3": {
-	 "typestr_override": "@?",
+	 "type_override": "@?",
 	 "callable": {
 	  "arguments": {
 	   "0": { "typestr": "^v" }
@@ -1563,7 +1587,7 @@
       "selector": "webView:runJavaScriptConfirmPanelWithMessage:initiatedByFrame:completionHandler:",
       "args": {
         "3": {
-	 "typestr_override": "@?",
+	 "type_override": "@?",
 	 "callable": {
 	  "arguments": {
 	   "0": { "typestr": "^v" }

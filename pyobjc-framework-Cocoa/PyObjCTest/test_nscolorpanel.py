@@ -7,6 +7,9 @@ class TestNSColorPanel (TestCase):
     def testConstants10_5(self):
         self.assertEqual(NSNoModeColorPanel, -1)
 
+        self.assertEqual(NSColorPanelModeNone, -1)
+
+
     def testConstants(self):
         self.assertEqual(NSGrayModeColorPanel, 0)
         self.assertEqual(NSRGBModeColorPanel, 1)
@@ -16,6 +19,16 @@ class TestNSColorPanel (TestCase):
         self.assertEqual(NSColorListModeColorPanel, 5)
         self.assertEqual(NSWheelModeColorPanel, 6)
         self.assertEqual(NSCrayonModeColorPanel, 7)
+
+        self.assertEqual(NSColorPanelModeGray, 0)
+        self.assertEqual(NSColorPanelModeRGB, 1)
+        self.assertEqual(NSColorPanelModeCMYK, 2)
+        self.assertEqual(NSColorPanelModeHSB, 3)
+        self.assertEqual(NSColorPanelModeCustomPalette, 4)
+        self.assertEqual(NSColorPanelModeColorList, 5)
+        self.assertEqual(NSColorPanelModeWheel, 6)
+        self.assertEqual(NSColorPanelModeCrayon, 7)
+
         self.assertEqual(NSColorPanelGrayModeMask, 0x00000001)
         self.assertEqual(NSColorPanelRGBModeMask, 0x00000002)
         self.assertEqual(NSColorPanelCMYKModeMask, 0x00000004)

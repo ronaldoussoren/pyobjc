@@ -32,5 +32,9 @@ if sys.maxsize > 2 ** 32:
         def testConstants10_11(self):
             self.assertIsInstance(MapKit.MKLaunchOptionsDirectionsModeTransit, unicode)
 
+        @min_os_level("10.12")
+        def testConstants10_12(self):
+            self.assertIsInstance(MapKit.MKLaunchOptionsDirectionsModeDefault, unicode)
+
 if __name__ == "__main__":
     main()

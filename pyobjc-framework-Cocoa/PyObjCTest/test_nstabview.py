@@ -15,6 +15,17 @@ class TestNSTabView (TestCase):
         self.assertEqual(NSNoTabsLineBorder,  5)
         self.assertEqual(NSNoTabsNoBorder,  6)
 
+        self.assertEqual(NSTabPositionNone, 0)
+        self.assertEqual(NSTabPositionTop, 1)
+        self.assertEqual(NSTabPositionLeft, 2)
+        self.assertEqual(NSTabPositionBottom, 3)
+        self.assertEqual(NSTabPositionRight, 4)
+
+        self.assertEqual(NSTabViewBorderTypeNone, 0)
+        self.assertEqual(NSTabViewBorderTypeLine, 1)
+        self.assertEqual(NSTabViewBorderTypeBezel, 2)
+
+
     def testMethods(self):
         self.assertResultIsBOOL(NSTabView.allowsTruncatedLabels)
         self.assertResultIsBOOL(NSTabView.drawsBackground)

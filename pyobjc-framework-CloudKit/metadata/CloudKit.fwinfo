@@ -2,10 +2,718 @@
 // for information on how to update this file.
 {
  "definitions": {
+  "enum": {
+   "CKQuerySubscriptionOptionsFiresOnRecordCreation": { "value": 1 },
+   "CKQuerySubscriptionOptionsFiresOnRecordUpdate": { "value": 2 },
+   "CKQuerySubscriptionOptionsFiresOnRecordDeletion": { "value": 4 },
+   "CKQuerySubscriptionOptionsFiresOnce": { "value": 8 },
+   "CKSubscriptionTypeDatabase":  { "value": 3 },
+   "CKDatabaseScopePublic":  { "value": 1 },
+   "CKDatabaseScopePrivate":  { "value": 2 },
+   "CKDatabaseScopeShared":  { "value": 3 },
+   "CKErrorTooManyParticipants": { "value": 29 },
+   "CKErrorAlreadyShared": { "value": 30 },
+   "CKErrorReferenceViolation": { "value": 31 },
+   "CKErrorManagedAccountRestricted": { "value": 32 },
+   "CKErrorParticipantMayNeedVerification": { "value": 33 },
+   "CKNotificationTypeDatabase": { "value": 4 },
+   "CKRecordZoneCapabilitySharing": { "value": 4 },
+   "CKShareParticipantAcceptanceStatusUnknown": { "value": 0 },
+   "CKShareParticipantAcceptanceStatusPending": { "value": 1 },
+   "CKShareParticipantAcceptanceStatusAccepted": { "value": 2 },
+   "CKShareParticipantAcceptanceStatusRemoved": { "value": 3 },
+   "CKShareParticipantPermissionUnknown": { "value": 0 },
+   "CKShareParticipantPermissionNone": { "value": 1 },
+   "CKShareParticipantPermissionReadOnly": { "value": 2 },
+   "CKShareParticipantPermissionReadWrite": { "value": 3 },
+   "CKShareParticipantTypeUnknown": { "value": 0 },
+   "CKShareParticipantTypeOwner": { "value": 1 },
+   "CKShareParticipantTypePrivateUser": { "value": 3 },
+   "CKShareParticipantTypePublicUser": { "value": 4 }
+  },
   "externs": {
-   "CKAccountChangedNotification": { "typestr": "@" }
+   "CKAccountChangedNotification": { "typestr": "@" },
+   "CKRecordTypeShare": { "typestr": "@" },
+   "CKShareTitleKey": { "typestr": "@" },
+   "CKShareThumbnailImageDataKey": { "typestr": "@" },
+   "CKShareTypeKey": { "typestr": "@" }
   },
   "classes": {
+    "CKUserIdentity": {
+     "methods": [
+      {
+       "selector": "hasiCloudAccount",
+       "class_method": false,
+       "retval": { "type_override": "Z" }
+      }
+     ]
+    },
+    "CKFetchShareParticipantsOperation": {
+     "methods": [
+      {
+       "selector": "shareParticipantFetchedBlock",
+       "class_method": false,
+       "retval": {
+        "callable": {
+	 "arguments": {
+          "0": { "typestr": "^v" },
+          "1": { "typestr": "@" }
+         },
+         "retval": { "typestr":  "v" }
+        }
+       }
+      },
+      {
+       "selector": "setShareParticipantFetchedBlock:",
+       "class_method": false,
+       "args": {
+        "0": {
+         "callable": {
+	  "arguments": {
+           "0": { "typestr": "^v" },
+           "1": { "typestr": "@" }
+          },
+          "retval": { "typestr":  "v" }
+         }
+        }
+       }
+      },
+      {
+       "selector": "fetchShareParticipantsCompletionBlock",
+       "class_method": false,
+       "retval": {
+        "callable": {
+	 "arguments": {
+          "0": { "typestr": "^v" },
+          "1": { "typestr": "@" }
+         },
+         "retval": { "typestr":  "v" }
+        }
+       }
+      },
+      {
+       "selector": "setFetchShareParticipantsCompletionBlock:",
+       "class_method": false,
+       "args": {
+        "0": {
+         "callable": {
+	  "arguments": {
+           "0": { "typestr": "^v" },
+           "1": { "typestr": "@" }
+          },
+          "retval": { "typestr":  "v" }
+         }
+        }
+       }
+      }
+     ]
+    },
+    "CKOperation": {
+     "methods": [
+        {
+	 "selector": "setLongLived:",
+	 "class_method": false,
+	 "args": {
+	  "0": { "type_override": "Z" }
+	 }
+	},
+        {
+	 "selector": "isLongLived",
+	 "class_method": false,
+	 "retval": { "type_override": "Z" }
+	},
+      {
+       "selector": "longLivedOperationWasPersistedBlock",
+       "class_method": false,
+       "retval": {
+        "callable": {
+	 "arguments": {
+          "0": { "typestr": "^v" }
+         },
+         "retval": { "typestr":  "v" }
+        }
+       }
+      },
+      {
+       "selector": "setLongLivedOperationWasPersistedBlock:",
+       "class_method": false,
+       "args": {
+        "0": {
+         "callable": {
+	  "arguments": {
+           "0": { "typestr": "^v" }
+          },
+          "retval": { "typestr":  "v" }
+         }
+        }
+       }
+      }
+     ]
+    },
+    "CKFetchShareMetadataOperation": {
+     "methods": [
+        {
+	 "selector": "setShouldFetchRootRecord:",
+	 "class_method": false,
+	 "args": {
+	  "0": { "type_override": "Z" }
+	 }
+	},
+        {
+	 "selector": "shouldFetchRootRecord",
+	 "class_method": false,
+	 "retval": { "type_override": "Z" }
+	},
+      {
+       "selector": "perShareMetadataBlock",
+       "class_method": false,
+       "retval": {
+        "callable": {
+	 "arguments": {
+          "0": { "typestr": "^v" },
+          "1": { "typestr": "@" },
+          "2": { "typestr": "@" },
+          "3": { "typestr": "@" }
+         },
+         "retval": { "typestr":  "v" }
+        }
+       }
+      },
+      {
+       "selector": "setPerShareMetadataBlock:",
+       "class_method": false,
+       "args": {
+        "0": {
+         "callable": {
+	  "arguments": {
+           "0": { "typestr": "^v" },
+           "1": { "typestr": "@" },
+           "2": { "typestr": "@" },
+           "3": { "typestr": "@" }
+          },
+          "retval": { "typestr":  "v" }
+         }
+        }
+       }
+      },
+      {
+       "selector": "fetchShareMetadataCompletionBlock",
+       "class_method": false,
+       "retval": {
+        "callable": {
+	 "arguments": {
+          "0": { "typestr": "^v" },
+          "1": { "typestr": "@" }
+         },
+         "retval": { "typestr":  "v" }
+        }
+       }
+      },
+      {
+       "selector": "setFetchShareMetadataCompletionBlock:",
+       "class_method": false,
+       "args": {
+        "0": {
+         "callable": {
+	  "arguments": {
+           "0": { "typestr": "^v" },
+           "1": { "typestr": "@" }
+          },
+          "retval": { "typestr":  "v" }
+         }
+        }
+       }
+      }
+     ]
+    },
+    "CKFetchRecordZoneChangesOperation": {
+     "methods": [
+        {
+	 "selector": "setFetchAllChanges:",
+	 "class_method": false,
+	 "args": {
+	  "0": { "type_override": "Z" }
+	 }
+	},
+        {
+	 "selector": "fetchAllChanges",
+	 "class_method": false,
+	 "retval": { "type_override": "Z" }
+	},
+      {
+       "selector": "recordChangedBlock",
+       "class_method": false,
+       "retval": {
+        "callable": {
+	 "arguments": {
+          "0": { "typestr": "^v" },
+          "1": { "typestr": "@" }
+         },
+         "retval": { "typestr":  "v" }
+        }
+       }
+      },
+      {
+       "selector": "setRecordChangedBlock:",
+       "class_method": false,
+       "args": {
+        "0": {
+         "callable": {
+	  "arguments": {
+           "0": { "typestr": "^v" },
+           "1": { "typestr": "@" }
+          },
+          "retval": { "typestr":  "v" }
+         }
+        }
+       }
+      },
+      {
+       "selector": "recordWithIDWasDeletedBlock",
+       "class_method": false,
+       "retval": {
+        "callable": {
+	 "arguments": {
+          "0": { "typestr": "^v" },
+          "1": { "typestr": "@" },
+          "2": { "typestr": "@" }
+         },
+         "retval": { "typestr":  "v" }
+        }
+       }
+      },
+      {
+       "selector": "setRecordWithIDWasDeletedBlock:",
+       "class_method": false,
+       "args": {
+        "0": {
+         "callable": {
+	  "arguments": {
+           "0": { "typestr": "^v" },
+           "1": { "typestr": "@" },
+           "2": { "typestr": "@" }
+          },
+          "retval": { "typestr":  "v" }
+         }
+        }
+       }
+      },
+      {
+       "selector": "recordZoneChangeTokensUpdatedBlock",
+       "class_method": false,
+       "retval": {
+        "callable": {
+	 "arguments": {
+          "0": { "typestr": "^v" },
+          "1": { "typestr": "@" },
+          "2": { "typestr": "@" },
+          "3": { "typestr": "@" }
+         },
+         "retval": { "typestr":  "v" }
+        }
+       }
+      },
+      {
+       "selector": "setRecordZoneChangeTokensUpdatedBlock:",
+       "class_method": false,
+       "args": {
+        "0": {
+         "callable": {
+	  "arguments": {
+           "0": { "typestr": "^v" },
+           "1": { "typestr": "@" },
+           "2": { "typestr": "@" },
+           "3": { "typestr": "@" }
+          },
+          "retval": { "typestr":  "v" }
+         }
+        }
+       }
+      },
+      {
+       "selector": "recordZoneFetchCompletionBlock",
+       "class_method": false,
+       "retval": {
+        "callable": {
+	 "arguments": {
+          "0": { "typestr": "^v" },
+          "1": { "typestr": "@" },
+          "2": { "typestr": "@" },
+          "3": { "typestr": "@" },
+          "4": { "typestr": "Z" },
+          "5": { "typestr": "@" }
+         },
+         "retval": { "typestr":  "v" }
+        }
+       }
+      },
+      {
+       "selector": "setRecordZoneFetchCompletionBlock:",
+       "class_method": false,
+       "args": {
+        "0": {
+         "callable": {
+	  "arguments": {
+           "0": { "typestr": "^v" },
+           "1": { "typestr": "@" },
+           "2": { "typestr": "@" },
+           "3": { "typestr": "@" },
+           "4": { "typestr": "Z" },
+           "5": { "typestr": "@" }
+          },
+          "retval": { "typestr":  "v" }
+         }
+        }
+       }
+      },
+      {
+       "selector": "fetchRecordZoneChangesCompletionBlock",
+       "class_method": false,
+       "retval": {
+        "callable": {
+	 "arguments": {
+          "0": { "typestr": "^v" },
+          "1": { "typestr": "@" }
+         },
+         "retval": { "typestr":  "v" }
+        }
+       }
+      },
+      {
+       "selector": "setFetchRecordZoneChangesCompletionBlock:",
+       "class_method": false,
+       "args": {
+        "0": {
+         "callable": {
+	  "arguments": {
+           "0": { "typestr": "^v" },
+           "1": { "typestr": "@" }
+          },
+          "retval": { "typestr":  "v" }
+         }
+        }
+       }
+      }
+     ]
+    },
+    "CKFetchDatabaseChangesOperation": {
+     "methods": [
+        {
+	 "selector": "setFetchAllChanges:",
+	 "class_method": false,
+	 "args": {
+	  "0": { "type_override": "Z" }
+	 }
+	},
+        {
+	 "selector": "fetchAllChanges",
+	 "class_method": false,
+	 "retval": { "type_override": "Z" }
+	},
+      {
+       "selector": "recordZoneWithIDChangedBlock",
+       "class_method": false,
+       "retval": {
+        "callable": {
+	 "arguments": {
+          "0": { "typestr": "^v" },
+          "1": { "typestr": "@" }
+         },
+         "retval": { "typestr":  "v" }
+        }
+       }
+      },
+      {
+       "selector": "setRecordZoneWithIDChangedBlock:",
+       "class_method": false,
+       "args": {
+        "0": {
+         "callable": {
+	  "arguments": {
+           "0": { "typestr": "^v" },
+           "1": { "typestr": "@" }
+          },
+          "retval": { "typestr":  "v" }
+         }
+        }
+       }
+      },
+      {
+       "selector": "recordZoneWithIDWasDeletedBlock",
+       "class_method": false,
+       "retval": {
+        "callable": {
+	 "arguments": {
+          "0": { "typestr": "^v" },
+          "1": { "typestr": "@" }
+         },
+         "retval": { "typestr":  "v" }
+        }
+       }
+      },
+      {
+       "selector": "setRecordZoneWithIDWasDeletedBlock:",
+       "class_method": false,
+       "args": {
+        "0": {
+         "callable": {
+	  "arguments": {
+           "0": { "typestr": "^v" },
+           "1": { "typestr": "@" }
+          },
+          "retval": { "typestr":  "v" }
+         }
+        }
+       }
+      },
+      {
+       "selector": "changeTokenUpdatedBlock",
+       "class_method": false,
+       "retval": {
+        "callable": {
+	 "arguments": {
+          "0": { "typestr": "^v" },
+          "1": { "typestr": "@" }
+         },
+         "retval": { "typestr":  "v" }
+        }
+       }
+      },
+      {
+       "selector": "setChangeTokenUpdatedBlock:",
+       "class_method": false,
+       "args": {
+        "0": {
+         "callable": {
+	  "arguments": {
+           "0": { "typestr": "^v" },
+           "1": { "typestr": "@" }
+          },
+          "retval": { "typestr":  "v" }
+         }
+        }
+       }
+      },
+      {
+       "selector": "fetchDatabaseChangesCompletionBlock",
+       "class_method": false,
+       "retval": {
+        "callable": {
+	 "arguments": {
+          "0": { "typestr": "^v" },
+          "1": { "typestr": "@" },
+          "2": { "typestr": "Z" },
+          "3": { "typestr": "@" }
+         },
+         "retval": { "typestr":  "v" }
+        }
+       }
+      },
+      {
+       "selector": "setFetchDatabaseChangesCompletionBlock:",
+       "class_method": false,
+       "args": {
+        "0": {
+         "callable": {
+	  "arguments": {
+           "0": { "typestr": "^v" },
+           "1": { "typestr": "@" },
+           "2": { "typestr": "Z" },
+           "3": { "typestr": "@" }
+          },
+          "retval": { "typestr":  "v" }
+         }
+        }
+       }
+      }
+     ]
+    },
+    "CKDiscoverUserIdentitiesOperation": {
+     "methods": [
+      {
+       "selector": "userIdentityDiscoveredBlock",
+       "class_method": false,
+       "retval": {
+        "callable": {
+	 "arguments": {
+          "0": { "typestr": "^v" },
+          "1": { "typestr": "@" },
+          "2": { "typestr": "@" }
+         },
+         "retval": { "typestr":  "v" }
+        }
+       }
+      },
+      {
+       "selector": "setUserIdentityDiscoveredBlock:",
+       "class_method": false,
+       "args": {
+        "0": {
+         "callable": {
+	  "arguments": {
+           "0": { "typestr": "^v" },
+           "1": { "typestr": "@" },
+           "2": { "typestr": "@" }
+          },
+          "retval": { "typestr":  "v" }
+         }
+        }
+       }
+      },
+      {
+       "selector": "discoverUserIdentitiesCompletionBlock",
+       "class_method": false,
+       "retval": {
+        "callable": {
+	 "arguments": {
+          "0": { "typestr": "^v" },
+          "1": { "typestr": "@" }
+         },
+         "retval": { "typestr":  "v" }
+        }
+       }
+      },
+      {
+       "selector": "setDiscoverUserIdentitiesCompletionBlock:",
+       "class_method": false,
+       "args": {
+        "0": {
+         "callable": {
+	  "arguments": {
+           "0": { "typestr": "^v" },
+           "1": { "typestr": "@" }
+          },
+          "retval": { "typestr":  "v" }
+         }
+        }
+       }
+      }
+     ]
+    },
+    "CKDiscoverAllUserIdentitiesOperation": {
+     "methods": [
+      {
+       "selector": "userIdentityDiscoveredBlock",
+       "class_method": false,
+       "retval": {
+        "callable": {
+	 "arguments": {
+          "0": { "typestr": "^v" },
+          "1": { "typestr": "@" }
+         },
+         "retval": { "typestr":  "v" }
+        }
+       }
+      },
+      {
+       "selector": "setUserIdentityDiscoveredBlock:",
+       "class_method": false,
+       "args": {
+        "0": {
+         "callable": {
+	  "arguments": {
+           "0": { "typestr": "^v" },
+           "1": { "typestr": "@" }
+          },
+          "retval": { "typestr":  "v" }
+         }
+        }
+       }
+      },
+      {
+       "selector": "discoverAllUserIdentitiesCompletionBlock",
+       "class_method": false,
+       "retval": {
+        "callable": {
+	 "arguments": {
+          "0": { "typestr": "^v" },
+          "1": { "typestr": "@" }
+         },
+         "retval": { "typestr":  "v" }
+        }
+       }
+      },
+      {
+       "selector": "setDiscoverAllUserIdentitiesCompletionBlock:",
+       "class_method": false,
+       "args": {
+        "0": {
+         "callable": {
+	  "arguments": {
+           "0": { "typestr": "^v" },
+           "1": { "typestr": "@" }
+          },
+          "retval": { "typestr":  "v" }
+         }
+        }
+       }
+      }
+     ]
+    },
+    "CKAcceptSharesOperation": {
+     "methods": [
+      {
+       "selector": "perShareCompletionBlock",
+       "class_method": false,
+       "retval": {
+        "callable": {
+	 "arguments": {
+          "0": { "typestr": "^v" },
+          "1": { "typestr": "@" },
+          "2": { "typestr": "@" },
+          "3": { "typestr": "@" }
+         },
+         "retval": { "typestr":  "v" }
+        }
+       }
+      },
+      {
+       "selector": "setPerShareCompletionBlock:",
+       "class_method": false,
+       "args": {
+        "0": {
+         "callable": {
+	  "arguments": {
+           "0": { "typestr": "^v" },
+           "1": { "typestr": "@" },
+           "2": { "typestr": "@" },
+           "3": { "typestr": "@" }
+          },
+          "retval": { "typestr":  "v" }
+         }
+        }
+       }
+      },
+      {
+       "selector": "acceptSharesCompletionBlock",
+       "class_method": false,
+       "retval": {
+        "callable": {
+	 "arguments": {
+          "0": { "typestr": "^v" },
+          "1": { "typestr": "@" }
+         },
+         "retval": { "typestr":  "v" }
+        }
+       }
+      },
+      {
+       "selector": "setAcceptSharesCompletionBlock:",
+       "class_method": false,
+       "args": {
+        "0": {
+         "callable": {
+	  "arguments": {
+           "0": { "typestr": "^v" },
+           "1": { "typestr": "@" }
+          },
+          "retval": { "typestr":  "v" }
+         }
+        }
+       }
+      }
+     ]
+    },
     "CKFetchWebAuthTokenOperation": {
      "methods": [
       {
@@ -369,10 +1077,123 @@
     "CKContainer": {
       "methods": [
         {
+          "selector": "fetchShareParticipantWithEmailAddress:completionHandler:",
+          "class_method": false,
+          "args": {
+           "1": {
+             "callable": {
+	       "arguments": {
+                 "0": { "typestr": "^v" },
+                 "1": { "typestr": "@" },
+                 "2": { "typestr": "@" }
+               },
+               "retval": { "typestr":  "v" }
+             }
+           }
+          }
+        },
+        {
+          "selector": "fetchShareParticipantWithPhoneNumber:completionHandler:",
+          "class_method": false,
+          "args": {
+           "1": {
+             "callable": {
+	       "arguments": {
+                 "0": { "typestr": "^v" },
+                 "1": { "typestr": "@" },
+                 "2": { "typestr": "@" }
+               },
+               "retval": { "typestr":  "v" }
+             }
+           }
+          }
+        },
+        {
+          "selector": "fetchShareParticipantWithUserRecordID:completionHandler:",
+          "class_method": false,
+          "args": {
+           "1": {
+             "callable": {
+	       "arguments": {
+                 "0": { "typestr": "^v" },
+                 "1": { "typestr": "@" },
+                 "2": { "typestr": "@" }
+               },
+               "retval": { "typestr":  "v" }
+             }
+           }
+          }
+        },
+        {
+          "selector": "fetchShareMetadataWithURL:completionHandler:",
+          "class_method": false,
+          "args": {
+           "1": {
+             "callable": {
+	       "arguments": {
+                 "0": { "typestr": "^v" },
+                 "1": { "typestr": "@" },
+                 "2": { "typestr": "@" }
+               },
+               "retval": { "typestr":  "v" }
+             }
+           }
+          }
+        },
+        {
+          "selector": "acceptShareMetadata:completionHandler:",
+          "class_method": false,
+          "args": {
+           "1": {
+             "callable": {
+	       "arguments": {
+                 "0": { "typestr": "^v" },
+                 "1": { "typestr": "@" },
+                 "2": { "typestr": "@" }
+               },
+               "retval": { "typestr":  "v" }
+             }
+           }
+          }
+        },
+        {
+          "selector": "fetchAllLongLivedOperationIDsWithCompletionHandler:",
+          "class_method": false,
+          "args": {
+           "0": {
+             "callable": {
+	       "arguments": {
+                 "0": { "typestr": "^v" },
+                 "1": { "typestr": "@" },
+                 "2": { "typestr": "@" },
+                 "3": { "typestr": "@" }
+               },
+               "retval": { "typestr":  "v" }
+             }
+           }
+          }
+        },
+        {
+          "selector": "fetchLongLivedOperationWithID:completionHandler:",
+          "class_method": false,
+          "args": {
+           "1": {
+             "callable": {
+	       "arguments": {
+                 "0": { "typestr": "^v" },
+                 "1": { "typestr": "@" },
+                 "2": { "typestr": "@" }
+               },
+               "retval": { "typestr":  "v" }
+             }
+           }
+          }
+        },
+        {
           "selector": "discoverUserInfoWithUserRecordID:completionHandler:",
           "class_method": false,
-          "arguments": {
-           "3": {
+          "args": {
+           "1": {
              "callable": {
 	       "arguments": {
                  "0": { "typestr": "^v" },
@@ -387,8 +1208,8 @@
         {
           "selector": "discoverUserInfoWithEmailAddress:completionHandler:",
           "class_method": false,
-          "arguments": {
-           "3": {
+          "args": {
+           "1": {
              "callable": {
 	       "arguments": {
                  "0": { "typestr": "^v" },
@@ -403,8 +1224,8 @@
         {
           "selector": "discoverAllContactUserInfosWithCompletionHandler:",
           "class_method": false,
-          "arguments": {
-           "2": {
+          "args": {
+           "0": {
              "callable": {
 	       "arguments": {
                  "0": { "typestr": "^v" },
@@ -419,8 +1240,8 @@
         {
           "selector": "fetchUserRecordIDWithCompletionHandler:",
           "class_method": false,
-          "arguments": {
-           "2": {
+          "args": {
+           "0": {
              "callable": {
 	       "arguments": {
                  "0": { "typestr": "^v" },
@@ -435,8 +1256,8 @@
         {
           "selector": "accountStatusWithCompletionHandler:",
           "class_method": false,
-          "arguments": {
-           "2": {
+          "args": {
+           "0": {
              "callable": {
 	       "arguments": {
                  "0": { "typestr": "^v" },
@@ -451,8 +1272,8 @@
         {
           "selector": "statusForApplicationPermission:completionHandler:",
           "class_method": false,
-          "arguments": {
-           "3": {
+          "args": {
+           "1": {
              "callable": {
 	       "arguments": {
                  "0": { "typestr": "^v" },
@@ -467,8 +1288,8 @@
         {
           "selector": "requestApplicationPermission:completionHandler:",
           "class_method": false,
-          "arguments": {
-           "3": {
+          "args": {
+           "1": {
              "callable": {
 	       "arguments": {
                  "0": { "typestr": "^v" },
@@ -904,7 +1725,7 @@
         {
           "selector": "setServerChangeTokenFetchedBlock:",
           "class_method": false,
-          "arguments": {
+          "args": {
            "2": {
              "callable": {
                "arguments": {
@@ -993,7 +1814,7 @@
         {
           "selector": "setPerRecordProgressBlock:",
           "class_method": false,
-          "arguments": {
+          "args": {
            "2": {
              "callable": {
                "arguments": {
@@ -1009,8 +1830,8 @@
         {
           "selector": "setRecordWithIDWasDeletedBlock:",
           "class_method": false,
-          "arguments": {
-           "2": {
+          "args": {
+           "0": {
              "callable": {
                "arguments": {
                  "0": { "typestr": "^v" },

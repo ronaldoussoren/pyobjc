@@ -128,5 +128,9 @@ class TestCoreWLANTypes (TestCase):
         self.assertEqual(CoreWLAN.CWEventTypeScanCacheUpdated, 8)
         self.assertEqual(CoreWLAN.CWEventTypeUnknown, Foundation.NSIntegerMax)
 
+        # Introduced in 10.12
+        self.assertEqual(CoreWLAN.CWEventTypeVirtualInterfaceStateChanged, 9)
+        self.assertEqual(CoreWLAN.CWEventTypeRangingReportEvent, 10)
+
 if __name__ == "__main__":
     main()

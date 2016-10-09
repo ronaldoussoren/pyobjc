@@ -58,6 +58,7 @@ class TestNetFS (TestCase):
         self.assertEqual(NetFS.kNetFSMountFlagsKey, "MountFlags")
         self.assertEqual(NetFS.kNetFSAllowSubMountsKey, "AllowSubMounts")
         self.assertEqual(NetFS.kNetFSMountAtMountDirKey, "MountAtMountDir")
+        self.assertEqual(NetFS.kNetFSOpenURLMountKey, "OpenURLMount")
         self.assertEqual(NetFS.kNetFSMountedURLKey, "MountedURL")
 
 

@@ -30,6 +30,16 @@ class TestNSCollectionViewFlowLayout (TestCase):
         self.assertResultIsBOOL(NSCollectionViewFlowLayoutInvalidationContext.invalidateFlowLayoutAttributes)
         self.assertArgIsBOOL(NSCollectionViewFlowLayoutInvalidationContext.setInvalidateFlowLayoutAttributes_, 0)
 
+    @min_os_level('10.12')
+    def testMethods10_12(self):
+        self.assertResultIsBOOL(NSCollectionViewFlowLayout.sectionHeadersPinToVisibleBounds)
+        self.assertArgIsBOOL(NSCollectionViewFlowLayout.setSectionHeadersPinToVisibleBounds_, 0)
+
+        self.assertResultIsBOOL(NSCollectionViewFlowLayout.sectionFootersPinToVisibleBounds)
+        self.assertArgIsBOOL(NSCollectionViewFlowLayout.setSectionFootersPinToVisibleBounds_, 0)
+
+        self.assertResultIsBOOL(NSCollectionViewFlowLayout.sectionAtIndexIsCollapsed_)
+
     @min_os_level('10.11')
     def testProtocols10_11(self):
         objc.protocolNamed('NSCollectionViewDelegateFlowLayout')

@@ -88,7 +88,15 @@ class TestBase (TestCase):
         self.assertEqual(kCFCoreFoundationVersionNumber10_10_1, 1151.16)
         self.assertEqual(kCFCoreFoundationVersionNumber10_10_2, 1152)
         self.assertEqual(kCFCoreFoundationVersionNumber10_10_3, 1153.18)
-
+        self.assertEqual(kCFCoreFoundationVersionNumber10_10_4, 1153.18)
+        self.assertEqual(kCFCoreFoundationVersionNumber10_10_5, 1153.18)
+        self.assertEqual(kCFCoreFoundationVersionNumber10_10_Max, 1199)
+        self.assertEqual(kCFCoreFoundationVersionNumber10_11, 1253)
+        self.assertEqual(kCFCoreFoundationVersionNumber10_11_1, 1255.1)
+        self.assertEqual(kCFCoreFoundationVersionNumber10_11_2, 1256.14)
+        self.assertEqual(kCFCoreFoundationVersionNumber10_11_3, 1256.14)
+        self.assertEqual(kCFCoreFoundationVersionNumber10_11_4, 1258.1)
+        self.assertEqual(kCFCoreFoundationVersionNumber10_11_Max, 1299)
 
         self.assertEqual(kCFCompareLessThan, -1)
         self.assertEqual(kCFCompareEqualTo, 0)

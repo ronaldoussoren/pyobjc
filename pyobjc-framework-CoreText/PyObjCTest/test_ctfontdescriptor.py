@@ -84,6 +84,10 @@ class TestCTFontDescriptor (TestCase):
         self.assertIsInstance(kCTFontDescriptorMatchingTotalAssetSize, unicode)
         self.assertIsInstance(kCTFontDescriptorMatchingError, unicode)
 
+    @min_os_level('10.12')
+    def testConstants10_12(self):
+        self.assertIsInstance(kCTFontDownloadedAttribute, unicode)
+
     @min_os_level('10.9')
     def testFunctions10_9(self):
         CTFontDescriptorProgressHandler = objc_C_BOOL + objc._C_UINT + objc._C_ID

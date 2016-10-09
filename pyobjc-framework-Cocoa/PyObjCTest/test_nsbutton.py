@@ -22,5 +22,16 @@ class TestNSButton (TestCase):
         self.assertResultIsBOOL(NSButton.isSpringLoaded)
         self.assertArgIsBOOL(NSButton.setSpringLoaded_, 0)
 
+    @min_os_level('10.12')
+    def testMethods10_12(self):
+        self.assertResultIsBOOL(NSButton.imageHugsTitle)
+        self.assertArgIsBOOL(NSButton.setImageHugsTitle_, 0)
+
+        self.assertArgIsSEL(NSButton.buttonWithTitle_image_target_action_, 3, b'v@:@')
+        self.assertArgIsSEL(NSButton.buttonWithTitle_target_action_, 2, b'v@:@')
+        self.assertArgIsSEL(NSButton.buttonWithImage_target_action_, 2, b'v@:@')
+        self.assertArgIsSEL(NSButton.checkboxWithTitle_target_action_, 2, b'v@:@')
+        self.assertArgIsSEL(NSButton.radioButtonWithTitle_target_action_, 2, b'v@:@')
+
 if __name__ == "__main__":
     main()

@@ -27,6 +27,10 @@ class TestNSThread (TestCase):
         self.assertArgIsBOOL(NSThread.performSelector_onThread_withObject_waitUntilDone_, 3)
         self.assertArgIsSEL(NSThread.performSelectorInBackground_withObject_, 0, b'v@:@')
 
+    @min_os_level('10.12')
+    def testMethods10_12(self):
+        self.assertArgIsBlock(NSThread.detachNewThreadWithBlock_, 0, b'v')
+        self.assertArgIsBlock(NSThread.initWithBlock_, 0, b'v')
 
     def testConstants(self):
         self.assertIsInstance(NSWillBecomeMultiThreadedNotification, unicode)

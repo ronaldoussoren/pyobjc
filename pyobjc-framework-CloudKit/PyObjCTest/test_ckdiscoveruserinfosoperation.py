@@ -4,7 +4,7 @@ if sys.maxsize > 2 ** 32:
     from PyObjCTools.TestSupport import *
     import CloudKit
 
-    class TestCKAsset (TestCase):
+    class TestCKDiscoverUserInfosOperation (TestCase):
         @min_os_level("10.10")
         def testClasses(self):
             self.assertHasAttr(CloudKit, "CKDiscoverUserInfosOperation")

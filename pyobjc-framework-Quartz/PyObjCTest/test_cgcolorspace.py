@@ -56,6 +56,14 @@ class TestCGColorSpace (TestCase):
         self.assertIsInstance(kCGColorSpaceROMMRGB, unicode)
         self.assertIsInstance(kCGColorSpaceDCIP3, unicode)
 
+    @min_os_level('10.12')
+    def testConstants10_12(self):
+        self.assertIsInstance(kCGColorSpaceExtendedSRGB, unicode)
+        self.assertIsInstance(kCGColorSpaceLinearSRGB, unicode)
+        self.assertIsInstance(kCGColorSpaceExtendedLinearSRGB, unicode)
+        self.assertIsInstance(kCGColorSpaceExtendedGray, unicode)
+        self.assertIsInstance(kCGColorSpaceLinearGray, unicode)
+        self.assertIsInstance(kCGColorSpaceExtendedLinearGray, unicode)
 
     def testFunctions(self):
         self.assertResultIsCFRetained(CGColorSpaceCreateDeviceGray)
@@ -159,6 +167,11 @@ class TestCGColorSpace (TestCase):
         v = CGColorSpaceCopyName(csp)
         self.assertIsInstance(v, unicode)
 
+    @min_os_level('10.12')
+    def testFunctions10_12(self):
+        self.assertResultIsCFRetained(CGColorSpaceCopyICCData)
+        self.assertResultHasType(CGColorSpaceIsWideGamutRGB, objc._C_BOOL)
+        self.assertResultHasType(CGColorSpaceSupportsOutput, objc._C_BOOL)
 
 if __name__ == "__main__":
     main()

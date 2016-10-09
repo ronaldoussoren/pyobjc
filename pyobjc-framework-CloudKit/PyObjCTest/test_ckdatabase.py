@@ -25,6 +25,10 @@ if sys.maxsize > 2 ** 32:
             self.assertArgIsBlock(CloudKit.CKDatabase.saveSubscription_completionHandler_, 1, b"v@@")
             self.assertArgIsBlock(CloudKit.CKDatabase.deleteSubscriptionWithID_completionHandler_, 1, b"v@@")
 
+        def testConstants(self):
+            self.assertEqual(CloudKit.CKDatabaseScopePublic, 1)
+            self.assertEqual(CloudKit.CKDatabaseScopePrivate, 2)
+            self.assertEqual(CloudKit.CKDatabaseScopeShared, 3)
 
 if __name__ == "__main__":
     main()

@@ -175,6 +175,22 @@ class TestBadCreation(TestCase):
         self.assertEqual(NSPNGFileType, 4)
         self.assertEqual(NSJPEG2000FileType, 5)
 
+        self.assertEqual(NSBitmapImageFileTypeTIFF, 0)
+        self.assertEqual(NSBitmapImageFileTypeBMP, 1)
+        self.assertEqual(NSBitmapImageFileTypeGIF, 2)
+        self.assertEqual(NSBitmapImageFileTypeJPEG, 3)
+        self.assertEqual(NSBitmapImageFileTypePNG, 4)
+        self.assertEqual(NSBitmapImageFileTypeJPEG2000, 5)
+
+        self.assertEqual(NSBitmapFormatAlphaFirst, 1 << 0)
+        self.assertEqual(NSBitmapFormatAlphaNonpremultiplied, 1 << 1)
+        self.assertEqual(NSBitmapFormatFloatingPointSamples, 1 << 2)
+        self.assertEqual(NSBitmapFormatSixteenBitLittleEndian, 1 << 8)
+        self.assertEqual(NSBitmapFormatThirtyTwoBitLittleEndian, 1 << 9)
+        self.assertEqual(NSBitmapFormatSixteenBitBigEndian, 1 << 10)
+        self.assertEqual(NSBitmapFormatThirtyTwoBitBigEndian, 1 << 11)
+
+
         self.assertEqual(NSImageRepLoadStatusUnknownType, -1)
         self.assertEqual(NSImageRepLoadStatusReadingHeader, -2)
         self.assertEqual(NSImageRepLoadStatusWillNeedAllData, -3)

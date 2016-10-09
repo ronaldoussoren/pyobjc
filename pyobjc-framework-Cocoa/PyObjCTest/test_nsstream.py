@@ -67,6 +67,10 @@ class TestNSStreamUsage(TestCase):
         self.assertIsInstance(NSStreamNetworkServiceTypeBackground, unicode)
         self.assertIsInstance(NSStreamNetworkServiceTypeVoice, unicode)
 
+    @min_os_level('10.12')
+    def testConstants10_12(self):
+        self.assertIsInstance(NSStreamNetworkServiceTypeCallSignaling, unicode)
+
     def testMethods(self):
         self.assertResultIsBOOL(NSStream.setProperty_forKey_)
 

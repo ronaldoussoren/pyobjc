@@ -5,7 +5,15 @@
   "enum": {
    "kCTFontManagerErrorSystemRequired": { "value": 203 },
    "kCTLineBoundsIncludeLanguageExtents": { "value": 32 },
-   "kCTVersionNumber10_11": { "value": 524288 }
+   "kCTVersionNumber10_11": { "value": 524288 },
+   "kCTVersionNumber10_12": { "value": 589824 }
+  },
+  "externs": {
+   "kCTRubyAnnotationSizeFactorAttributeName": { "typestr": "@" },
+   "kCTRubyAnnotationScaleToFitAttributeName": { "typestr": "@" },
+   "kCTFontDownloadedAttribute": { "typestr": "@" },
+   "kCTBackgroundColorAttributeName": { "typestr": "@" },
+   "kCTHorizontalInVerticalFormsAttributeName": { "typestr": "@" }
   },
   "cftypes": {
    "CTFontCollectionRef": {
@@ -1774,6 +1782,19 @@
    "CTTypesetterSuggestLineBreakWithOffset": {
     "args": {
      "0": {}
+    }
+   },
+   "CTRubyAnnotationCreateWithAttributes": {
+    "args": {
+     "0": { "type_override": "L" },
+     "1": { "type_override": "L" },
+     "2": { "type_override": "L" },
+     "3": { "type_override": "@" },
+     "4": { "type_override": "@" }
+    },
+    "retval": {
+     "type_override": "@",
+     "already_cfretained": true
     }
    },
    "CTLineEnumerateCaretOffsets": {

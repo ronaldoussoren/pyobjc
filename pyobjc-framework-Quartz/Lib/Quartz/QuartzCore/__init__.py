@@ -9,6 +9,7 @@ import objc
 import Foundation
 
 from Quartz.QuartzCore import _metadata
+import Quartz.QuartzCore._quartzcore
 
 # XXX: addConvenienceFor... should be metadata
 def CIVector__getitem__(self, idx):

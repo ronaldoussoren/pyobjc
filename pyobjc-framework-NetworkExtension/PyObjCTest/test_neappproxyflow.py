@@ -6,6 +6,7 @@ if sys.maxsize >= 2 ** 32:
     import NetworkExtension
 
     class TestNEAppProxyFlow (TestCase):
+
         @min_os_level('10.11')
         def testConstants(self):
             self.assertEqual(NetworkExtension.NEAppProxyFlowErrorNotConnected, 1)
@@ -16,6 +17,8 @@ if sys.maxsize >= 2 ** 32:
             self.assertEqual(NetworkExtension.NEAppProxyFlowErrorRefused, 6)
             self.assertEqual(NetworkExtension.NEAppProxyFlowErrorTimedOut, 7)
             self.assertEqual(NetworkExtension.NEAppProxyFlowErrorInternal, 8)
+            self.assertEqual(NetworkExtension.NEAppProxyFlowErrorDatagramTooLarge, 9)
+            self.assertEqual(NetworkExtension.NEAppProxyFlowErrorReadAlreadyPending, 10)
 
             self.assertIsInstance(NetworkExtension.NEAppProxyErrorDomain, unicode)
 

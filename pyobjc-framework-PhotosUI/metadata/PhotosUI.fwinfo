@@ -2,9 +2,45 @@
 # for information on how to update this file.
 {
  "definitions": {
+  "enum": {
+   "PHLivePhotoViewPlaybackStyleUndefined": { "value": 0 },
+   "PHLivePhotoViewPlaybackStyleFull": { "value": 1 },
+   "PHLivePhotoViewPlaybackStyleHint": { "value": 2 },
+   "PHLivePhotoViewContentModeAspectFit": { "value": 0 },
+   "PHLivePhotoViewContentModeAspectFill": { "value": 1 }
+  },
   "classes": {
+   "PHLivePhotoView": {
+    "methods": [
+     {
+      "selector": "isMuted",
+      "class_method": false,
+      "retval": { "type_override": "Z" }
+     },
+     {
+      "selector": "setMuted:",
+      "class_method": false,
+      "args": { "0": { "type_override": "Z" } }
+     },
+     {
+      "selector": "stopPlaybackAnimated:",
+      "class_method": false,
+      "args": { "0": { "type_override": "Z" } }
+     }
+    ]
+   },
    "NSObject": {
     "methods": [
+     {
+      "selector": "livePhotoView:willBeginPlaybackWithStyle:",
+      "class_method": false,
+      "args": { "1": { "type_override": ["i", "q"] } }
+     },
+     {
+      "selector": "livePhotoView:didEndPlaybackWithStyle:",
+      "class_method": false,
+      "args": { "1": { "type_override": ["i", "q"] } }
+     },
      {
       "selector": "canHandleAdjustmentData:",
       "class_method": false,

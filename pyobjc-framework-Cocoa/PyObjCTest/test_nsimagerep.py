@@ -9,6 +9,10 @@ class TestNSImageRep (TestCase):
         self.assertEqual(NSImageRepRegistryChangedNotification, NSImageRepRegistryDidChangeNotification)
         self.assertIsInstance(NSImageRepRegistryDidChangeNotification, unicode)
 
+        self.assertEqual(NSImageLayoutDirectionUnspecified, -1)
+        self.assertEqual(NSImageLayoutDirectionLeftToRight, 2)
+        self.assertEqual(NSImageLayoutDirectionRightToLeft, 3)
+
 
     def testMethods(self):
         self.assertResultIsBOOL(NSImageRep.draw)

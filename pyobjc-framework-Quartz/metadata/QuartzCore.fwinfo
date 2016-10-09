@@ -3,6 +3,10 @@
 {
  "definitions": {
   "externs": {
+   "kCIContextCacheIntermediates": { "typestr": "@" },
+   "kCIContextPriorityRequestLow": { "typestr": "@" },
+   "kCIContextOutputPremultiplied": { "typestr": "@" },
+   "kCAEmitterBehaviorSimpleAttractor": { "typestr": "@" },
    "kCIContextHighQualityDownsample": { "typestr": "@" },
    "CIDetectorReturnSubFeatures": { "typestr": "@" },
    "kCIInputWeightsKey": { "typestr": "@" },
@@ -342,8 +346,39 @@
      }
     ]
    },
+   "CIImageProcessorKernel": {
+    "methods": [
+     {
+      "class_method": true,
+      "selector": "processWithInputs:arguments:output:error:",
+      "args": {
+       "3": { "type_modifier": "o" }
+      },
+      "retval": {
+       "type_override": "Z"
+      }
+     },
+     {
+      "class_method": true,
+      "selector": "applyWithExtent:inputs:arguments:error:",
+      "args": {
+       "3": { "type_modifier": "o" }
+      }
+     }
+    ]
+   },
    "CIContext": {
     "methods": [
+     {
+      "args": {
+       "4": { "type_override": "Z" }
+      },
+      "retval": {
+       "alread_cfretained": true
+      },
+      "class_method": true,
+      "selector": "createCGImage:fromRect:format:colorSpace:deferred:"
+     },
      {
       "args": {
        "0": {},

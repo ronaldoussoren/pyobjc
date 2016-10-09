@@ -82,5 +82,7 @@ setup(
             [ 'Modules/_coregraphics.m' ], extra_link_args=["-framework", "ApplicationServices"]),
         Extension('Quartz.ImageKit._imagekit',
             [ 'Modules/_imagekit.m' ], extra_link_args=["-framework", "Quartz"]),
+        Extension('Quartz.QuartzCore._quartzcore',
+            [ 'Modules/_quartzcore.m' ], extra_link_args=["-framework", "QuartzCore"]),
     ],
 )

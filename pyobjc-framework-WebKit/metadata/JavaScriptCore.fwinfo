@@ -2,6 +2,19 @@
 # for information on how to update this file.
 {
  "definitions": {
+ "enum": {
+  "kJSTypedArrayTypeInt8Array": { "value": 0 },
+  "kJSTypedArrayTypeInt16Array": { "value": 1 },
+  "kJSTypedArrayTypeInt32Array": { "value": 2 },
+  "kJSTypedArrayTypeUint8Array": { "value": 3 },
+  "kJSTypedArrayTypeUint8ClampedArray": { "value": 4 },
+  "kJSTypedArrayTypeUint16Array": { "value": 5 },
+  "kJSTypedArrayTypeUint32Array": { "value": 6 },
+  "kJSTypedArrayTypeFloat32Array": { "value": 7 },
+  "kJSTypedArrayTypeFloat64Array": { "value": 8 },
+  "kJSTypedArrayTypeArrayBuffer": { "value": 9 },
+  "kJSTypedArrayTypeNone": { "value": 10 }
+ },
  "externs": {
    "kJSClassDefinitionEmpty": {
     "ignore": true
@@ -35,8 +48,8 @@
      {
       "class_method": false,
       "selector": "setExceptionHandler:",
-      "arguments": {
-       "2": {
+      "args": {
+       "0": {
         "callable": {
          "arguments": {
 	  "0": { "typestr": "^v" },

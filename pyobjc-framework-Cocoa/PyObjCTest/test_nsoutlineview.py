@@ -79,6 +79,11 @@ class TestNSOutlineView (TestCase):
         self.assertResultIsBOOL(NSOutlineView.autosaveExpandedItems)
         self.assertArgIsBOOL(NSOutlineView.setAutosaveExpandedItems_, 0)
 
+    @min_os_level('10.12')
+    def testMethods10_12(self):
+        self.assertResultIsBOOL(NSOutlineView.stronglyReferencesItems)
+        self.assertArgIsBOOL(NSOutlineView.setStronglyReferencesItems_, 0)
+
     @min_sdk_level('10.6')
     def testProtocolObjects(self):
         objc.protocolNamed('NSOutlineViewDelegate')

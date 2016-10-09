@@ -3,12 +3,16 @@ from CFNetwork import *
 
 
 class TestCFSocketStream (TestCase):
+    @min_os_level('10.12')
+    def testConstants10_12(self):
+        self.assertIsInstance(kCFStreamNetworkServiceTypeCallSignaling, unicode)
+
     @min_os_level('10.9')
     def testConstants10_9(self):
         self.assertIsInstance(kCFStreamPropertySSLContext, unicode)
 
     @min_os_level('10.8')
-    def testConstants10_9(self):
+    def testConstants10_8(self):
         self.assertIsInstance(kCFStreamPropertyNoCellular, unicode)
         self.assertIsInstance(kCFStreamPropertyConnectionIsCellular, unicode)
 

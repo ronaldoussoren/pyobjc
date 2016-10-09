@@ -69,6 +69,10 @@ class TestNSPersistentStoreCoordinator (TestCase):
         self.assertIsInstance(NSPersistentStoreUbiquitousContainerIdentifierKey, unicode)
         self.assertIsInstance(NSPersistentStoreRebuildFromUbiquitousContentOption, unicode)
 
+    @min_os_level("10.12")
+    def testConstants10_12(self):
+        self.assertIsInstance(NSPersistentStoreConnectionPoolMaxSizeKey, unicode)
+
     def testMethods(self):
         self.assertArgIsOut(NSPersistentStoreCoordinator.addPersistentStoreWithType_configuration_URL_options_error_, 4)
         self.assertResultIsBOOL(NSPersistentStoreCoordinator.removePersistentStore_error_)
@@ -112,6 +116,10 @@ class TestNSPersistentStoreCoordinator (TestCase):
 
         self.assertArgIsOut(NSPersistentStoreCoordinator.replacePersistentStoreAtURL_destinationOptions_withPersistentStoreFromURL_sourceOptions_storeType_error_, 5)
         self.assertResultIsBOOL(NSPersistentStoreCoordinator.replacePersistentStoreAtURL_destinationOptions_withPersistentStoreFromURL_sourceOptions_storeType_error_)
+
+    @min_os_level('10.12')
+    def testMethods10_12(self):
+        self.assertArgIsBlock(NSPersistentStoreCoordinator.addPersistentStoreWithDescription_completionHandler_, 1, b'v@@')
 
 if __name__ == "__main__":
     main()

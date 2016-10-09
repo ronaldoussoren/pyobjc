@@ -16,6 +16,7 @@ class TestCAEmitterBehavior (TestCase):
         self.assertIsInstance(kCAEmitterBehaviorColorOverLife, unicode)
         self.assertIsInstance(kCAEmitterBehaviorLight, unicode)
         self.assertIsInstance(kCAEmitterBehaviorAttractor, unicode)
+        self.assertIsInstance(kCAEmitterBehaviorSimpleAttractor, unicode)
 
 
 if __name__ == "__main__":

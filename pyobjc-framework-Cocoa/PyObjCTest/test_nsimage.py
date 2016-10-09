@@ -167,5 +167,11 @@ class TestNSImage (TestCase):
     def testConstants10_8(self):
         self.assertIsInstance(NSImageNameShareTemplate, unicode)
 
+    @min_os_level('10.12')
+    def testConstants10_12(self):
+        self.assertIsInstance(NSImageHintUserInterfaceLayoutDirection, unicode)
+        self.assertIsInstance(NSImageNameGoForwardTemplate, unicode)
+        self.assertIsInstance(NSImageNameGoBackTemplate, unicode)
+
 if __name__ == "__main__":
     main()

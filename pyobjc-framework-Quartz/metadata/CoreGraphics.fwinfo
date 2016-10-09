@@ -3,9 +3,27 @@
 {
  "definitions": {
   "enum": {
-   "CGGlyphMax": { "value": 65534 }
+   "CGGlyphMax": { "value": 65534 },
+   "kCGColorConversionTransformFromSpace": { "value": 0 },
+   "kCGColorConversionTransformToSpace": { "value": 1 },
+   "kCGColorConversionTransformApplySpace": { "value": 2 },
+   "kCGColorConverterTransformFromSpace": { "value": 0 },
+   "kCGColorConverterTransformToSpace": { "value": 1 },
+   "kCGColorConverterTransformApplySpace": { "value": 2 },
+   "kCGImageByteOrderMask": { "value": 28672 },
+   "kCGImageByteOrder16Little": { "value": 4096 },
+   "kCGImageByteOrder32Little": { "value": 8192 },
+   "kCGImageByteOrder16Big": { "value": 12288 },
+   "kCGImageByteOrder32Big": { "value": 16384 }
   },
   "externs": {
+   "kCGColorSpaceExtendedSRGB": { "typestr": "@" },
+   "kCGColorSpaceLinearSRGB": { "typestr": "@" },
+   "kCGColorSpaceExtendedLinearSRGB": { "typestr": "@" },
+   "kCGColorSpaceExtendedGray": { "typestr": "@" },
+   "kCGColorSpaceLinearGray": { "typestr": "@" },
+   "kCGColorSpaceExtendedLinearGray": { "typestr": "@" },
+   "kCGColorConversionBlackPointCompensation": { "typestr": "@" },
    "kCGColorSpaceDisplayP3": { "typestr": "@" },
    "kCGColorSpaceGenericXYZ": { "typestr": "@" },
    "kCGColorSpaceITUR_709": { "typestr": "@" },
@@ -151,6 +169,38 @@
     "args": {
      "0": { "type_modifier": "o" }
     }
+   },
+   "CGColorConversionInfoCreate": {
+    "args": {
+     "0": { "type_override": "^{CGColorSpace=}" },
+     "1": { "type_override": "^{CGColorSpace=}" }
+    },
+    "retval": {
+     "already_cfretained": true,
+     "type_override": "^{CGColorConversionInfo=}"
+    }
+   },
+   "CGColorConverterCreateSimple": {
+    "args": {
+     "0": { "type_override": "^{CGColorSpace=}" },
+     "1": { "type_override": "^{CGColorSpace=}" }
+    },
+    "retval": {
+     "already_cfretained": true,
+     "type_override": "^{CGColorConversionInfo=}"
+    }
+   },
+   "CGColorConverterRetain": {
+    "args": {
+     "0": { "type_override": "^{CGColorConversionInfo=}" }
+    },
+    "retval": { "type_override": "^{CGColorConversionInfo=}" }
+   },
+   "CGColorConverterRelease": {
+    "args": {
+     "0": { "type_override": "^{CGColorConversionInfo=}" }
+    },
+    "retval": { "type_override": "v" }
    },
    "CGBitmapContextCreate": {
     "args": {
@@ -362,6 +412,31 @@
     },
     "retval": {
      "already_cfretained": true
+    }
+   },
+   "CGColorSpaceCopyICCData": {
+    "args": {
+     "0": { "typestr": "^{CGColorSpace=}" }
+    },
+    "retval": {
+     "already_cfretained": true,
+     "typestr": "^{__CFData=}"
+    }
+   },
+   "CGColorSpaceIsWideGamutRGB": {
+    "args": {
+     "0": { "typestr": "^{CGColorSpace=}" }
+    },
+    "retval": {
+     "typestr": "B"
+    }
+   },
+   "CGColorSpaceSupportsOutput": {
+    "args": {
+     "0": { "typestr": "^{CGColorSpace=}" }
+    },
+    "retval": {
+     "typestr": "B"
     }
    },
    "CGColorSpaceCopyName": {

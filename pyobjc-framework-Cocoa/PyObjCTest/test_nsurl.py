@@ -192,6 +192,15 @@ class TestNSURL (TestCase):
         self.assertIsInstance(NSURLIsApplicationKey, unicode)
         self.assertIsInstance(NSURLApplicationIsScriptableKey, unicode)
 
+    @min_os_level('10.12')
+    def testConstants10_12(self):
+        self.assertIsInstance(NSURLVolumeIsEncryptedKey, unicode)
+        self.assertIsInstance(NSURLVolumeIsRootFileSystemKey, unicode)
+        self.assertIsInstance(NSURLVolumeSupportsCompressionKey, unicode)
+        self.assertIsInstance(NSURLVolumeSupportsFileCloningKey, unicode)
+        self.assertIsInstance(NSURLVolumeSupportsSwapRenamingKey, unicode)
+        self.assertIsInstance(NSURLVolumeSupportsExclusiveRenamingKey, unicode)
+
     @min_os_level('10.6')
     def testMethods10_6(self):
         self.assertArgIsBOOL(NSURL.URLByAppendingPathComponent_isDirectory_, 1)

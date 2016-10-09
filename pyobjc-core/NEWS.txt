@@ -27,7 +27,24 @@ This cannnot be used for methods used from Objective-C, for those you will
 have to rename the method or you will have to provide an appropriate selector
 explictly.
 
+* Issue #100:Building with the Command Line Tools for Xcode installed caused build errors
+  on OSX 10.10
+
+* Python 3.6 made a change to the bytecode format that affected the way
+  PyObjC calculates the default method signature for Python methods.
+
+  Earlier versions of PyObjC will therefore not work properly with Python 3.6.
+
+* Update metadata for macOS 10.12.
+  (in progress)
+
+*  Added bindings for SafariServices and Intents frameworks, both introducted in macOS 10.12.
+
 * Issue #153: Add missing metadata file to ApplicationServices bindings
+
+* Issue #157: Bad reference to "_metadata" in ApplicationServices bindings
+
+* ApplicationServices framework didn't do "from ... import *" as was intended.
 
 * Don't force the installation of py2app.
 

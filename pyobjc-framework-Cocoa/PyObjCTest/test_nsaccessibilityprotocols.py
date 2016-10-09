@@ -98,8 +98,9 @@ class TestNSAccessibilityProtocolsHelper (NSObject):
     def setAccessibilityUnits_(self, v): pass
     def setAccessibilityVerticalUnits_(self, v): pass
     def setAccessibilityVisibleCharacterRange_(self, v): pass
+    def isAccessibilityRequired(self): return 1
 
-class TestNSAccessibilityProtocols (TestCase):    
+class TestNSAccessibilityProtocols (TestCase):
 
     @min_sdk_level('10.10')
     def testProtocolObjects(self):
@@ -270,6 +271,7 @@ class TestNSAccessibilityProtocols (TestCase):
         self.assertResultIsBOOL(TestNSAccessibilityProtocolsHelper.accessibilityPerformShowDefaultUI)
         self.assertResultIsBOOL(TestNSAccessibilityProtocolsHelper.accessibilityPerformShowMenu)
         self.assertResultIsBOOL(TestNSAccessibilityProtocolsHelper.isAccessibilitySelectorAllowed_)
+        self.assertResultIsBOOL(TestNSAccessibilityProtocolsHelper.isAccessibilityRequired)
 
 if __name__ == "__main__":
     main()

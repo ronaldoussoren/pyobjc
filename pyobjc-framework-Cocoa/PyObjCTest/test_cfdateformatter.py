@@ -42,6 +42,20 @@ class TestDateFormatter (TestCase):
         self.assertIsInstance(kCFDateFormatterShortStandaloneQuarterSymbols, unicode)
         self.assertIsInstance(kCFDateFormatterGregorianStartDate, unicode)
 
+        self.assertEqual(kCFISO8601DateFormatWithYear, 1 << 0)
+        self.assertEqual(kCFISO8601DateFormatWithMonth, 1 << 1)
+        self.assertEqual(kCFISO8601DateFormatWithWeekOfYear, 1 << 2)
+        self.assertEqual(kCFISO8601DateFormatWithDay, 1 << 4)
+        self.assertEqual(kCFISO8601DateFormatWithTime, 1 << 5)
+        self.assertEqual(kCFISO8601DateFormatWithTimeZone, 1 << 6)
+        self.assertEqual(kCFISO8601DateFormatWithSpaceBetweenDateAndTime, 1 << 7)
+        self.assertEqual(kCFISO8601DateFormatWithDashSeparatorInDate, 1 << 8)
+        self.assertEqual(kCFISO8601DateFormatWithColonSeparatorInTime, 1 << 9)
+        self.assertEqual(kCFISO8601DateFormatWithColonSeparatorInTimeZone, 1 << 10)
+        self.assertEqual(kCFISO8601DateFormatWithFullDate, kCFISO8601DateFormatWithYear | kCFISO8601DateFormatWithMonth | kCFISO8601DateFormatWithDay | kCFISO8601DateFormatWithDashSeparatorInDate)
+        self.assertEqual(kCFISO8601DateFormatWithFullTime, kCFISO8601DateFormatWithTime | kCFISO8601DateFormatWithColonSeparatorInTime | kCFISO8601DateFormatWithTimeZone | kCFISO8601DateFormatWithColonSeparatorInTimeZone)
+        self.assertEqual(kCFISO8601DateFormatWithInternetDateTime, kCFISO8601DateFormatWithFullDate | kCFISO8601DateFormatWithFullTime)
+
     @min_os_level('10.6')
     def testConstants10_6(self):
         self.assertIsInstance(kCFDateFormatterDoesRelativeDateFormattingKey, unicode)
@@ -51,6 +65,10 @@ class TestDateFormatter (TestCase):
         self.assertResultIsCFRetained(CFDateFormatterCreateDateFormatFromTemplate)
         r = CFDateFormatterCreateDateFormatFromTemplate(None, "%Y-%m-%d", 0, None)
         self.assertIsInstance(r, unicode)
+
+    @min_os_level('10.12')
+    def testFunctions10_12(self):
+        self.assertResultIsCFRetained(CFDateFormatterCreateISO8601Formatter)
 
     def testTypes(self):
         self.assertIsCFType(CFDateFormatterRef)

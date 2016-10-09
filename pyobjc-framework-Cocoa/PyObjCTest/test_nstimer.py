@@ -67,5 +67,16 @@ class TestNSTimer(TestCase):
 
         self.assertResultIsBOOL(NSTimer.isValid)
 
+    @min_os_level('10.12')
+    def testMethods10_12(self):
+        self.assertArgIsBOOL(NSTimer.timerWithTimeInterval_repeats_block_, 1)
+        self.assertArgIsBlock(NSTimer.timerWithTimeInterval_repeats_block_, 2, b'v@')
+
+        self.assertArgIsBOOL(NSTimer.scheduledTimerWithTimeInterval_repeats_block_, 1)
+        self.assertArgIsBlock(NSTimer.scheduledTimerWithTimeInterval_repeats_block_, 2, b'v@')
+
+        self.assertArgIsBOOL(NSTimer.initWithFireDate_interval_repeats_block_, 2)
+        self.assertArgIsBlock(NSTimer.initWithFireDate_interval_repeats_block_, 3, b'v@')
+
 if __name__ == '__main__':
     main( )

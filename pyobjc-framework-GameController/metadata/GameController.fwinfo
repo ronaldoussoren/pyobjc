@@ -3,12 +3,74 @@
 {
  "definitions": {
   "classes": {
+   "GCMicroGamepad": {
+    "methods": [
+     {
+      "class_method": false,
+      "selector": "allowsRotation",
+      "retval": {
+       "type_override": "Z"
+      }
+     },
+     {
+      "class_method": false,
+      "selector": "setAllowsRotation:",
+      "args": {
+       "0": { "type_override": "Z" }
+      }
+     },
+     {
+      "class_method": false,
+      "selector": "reportsAbsoluteDpadValues",
+      "retval": {
+       "type_override": "Z"
+      }
+     },
+     {
+      "class_method": false,
+      "selector": "setReportsAbsoluteDpadValues:",
+      "args": {
+       "0": { "type_override": "Z" }
+      }
+     },
+     {
+      "class_method": false,
+      "selector": "valueChangedHandler",
+      "retval": {
+       "callable": {
+        "arguments": {
+	 "0": { "typestr": "^v" },
+	 "1": { "typestr": "@" },
+	 "2": { "typestr": "@" }
+	},
+	"retval": { "typestr": "v" }
+       }
+      }
+     },
+     {
+      "class_method": false,
+      "selector": "setValueChangedHandler",
+      "args": {
+       "0": {
+        "callable": {
+         "arguments": {
+ 	  "0": { "typestr": "^v" },
+ 	  "1": { "typestr": "@" },
+ 	  "2": { "typestr": "@" }
+ 	 },
+ 	 "retval": { "typestr": "v" }
+        }
+       }
+      }
+     }
+    ]
+   },
    "GCController": {
      "methods": [
        {
          "class_method": false,
 	 "selector": "startWirelessControllerDiscoveryWithCompletionHandler:",
-	 "arguments": {
+	 "args": {
 	  "2": {
 	   "callable": {
 	     "arguments": {
@@ -324,6 +386,29 @@
   },
   "formal_protocols": {},
   "functions": {
+   "NSDataFromGCMicroGamepadSnapShotDataV100": {
+    "retval": {
+     "typestr": "@"
+    },
+    "args": {
+     "0": {
+      "typestr": "n^{_GCMicroGamepadSnapShotDataV100=}"
+     }
+    }
+   },
+   "GCMicroGamepadSnapShotDataV100FromNSData": {
+    "retval": {
+     "typestr": "Z"
+    },
+    "args": {
+     "0": {
+      "typestr": "o^{_GCMicroGamepadSnapShotDataV100=}"
+     },
+     "1": {
+      "typestr": "@"
+     }
+    }
+   },
    "GCExtendedGamepadSnapShotDataV100FromNSData": {
     "args": {
      "0": { "type_modifier": "o" }
@@ -346,6 +431,18 @@
    }
   },
   "structs": {
+    "GCMicroGamepadSnapShotDataV100": {
+       "pack": 1,
+       "fieldnames": [
+	"version",
+	"size",
+	"dpadX",
+	"dpadY",
+	"buttonA",
+	"buttonX"
+       ],
+       "typestr": "{_GCMicroGamepadSnapShotDataV100=HHffff}"
+    },
     "GCExtendedGamepadSnapShotDataV100": {
        "pack": 1
     },

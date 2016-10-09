@@ -12,6 +12,10 @@ class TestNSAlert (TestCase):
         self.assertEqual(NSInformationalAlertStyle, 1)
         self.assertEqual(NSCriticalAlertStyle, 2)
 
+        self.assertEqual(NSAlertStyleWarning, 0)
+        self.assertEqual(NSAlertStyleInformational, 1)
+        self.assertEqual(NSAlertStyleCritical, 2)
+
         self.assertEqual(NSAlertFirstButtonReturn, 1000)
         self.assertEqual(NSAlertSecondButtonReturn, 1001)
         self.assertEqual(NSAlertThirdButtonReturn, 1002)

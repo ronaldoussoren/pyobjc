@@ -19,6 +19,7 @@ if sys.maxsize > 2 ** 32:
             self.assertEqual(CryptoTokenKit.TKErrorTokenNotFound, -7)
             self.assertEqual(CryptoTokenKit.TKErrorCodeTokenNotFound, -7)
             self.assertEqual(CryptoTokenKit.TKErrorCodeBadParameter, -8)
+            self.assertEqual(CryptoTokenKit.TKErrorCodeAuthenticationNeeded, -9)
 
 
 if __name__ == "__main__":

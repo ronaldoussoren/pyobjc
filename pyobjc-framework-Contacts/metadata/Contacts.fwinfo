@@ -59,6 +59,7 @@
    "CNContactImageDataKey": { "typestr": "@" },
    "CNContactThumbnailImageDataKey": { "typestr": "@" },
    "CNContactImageDataAvailableKey": { "typestr": "@" },
+   "CNContactPhoneticOrganizationNameKey": { "typestr": "@" },
    "CNContactTypeKey": { "typestr": "@" },
    "CNContactPhoneNumbersKey": { "typestr": "@" },
    "CNContactEmailAddressesKey": { "typestr": "@" },

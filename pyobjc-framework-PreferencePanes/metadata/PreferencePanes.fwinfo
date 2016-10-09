@@ -2,37 +2,42 @@
 # for information on how to update this file.
 {
  "definitions": {
+  "externs": {
+   "NSPreferencePaneSwitchToPaneNotification": { "typestr": "@" },
+   "NSPreferencePrefPaneIsAvailableNotification": { "typestr": "@" },
+   "NSPreferencePaneUpdateHelpMenuNotification": { "typestr": "@" }
+  },
   "classes": {
    "NSPreferencePane": {
     "methods": [
      {
-      "class_method": false, 
+      "class_method": false,
       "retval": {
        "type_override": "Z"
-      }, 
+      },
       "selector": "autoSaveTextFields"
-     }, 
+     },
      {
-      "class_method": false, 
+      "class_method": false,
       "retval": {
        "type_override": "Z"
-      }, 
+      },
       "selector": "isSelected"
-     }, 
+     },
      {
       "args": {
        "0": {
         "type_override": "Z"
        }
-      }, 
-      "class_method": false, 
+      },
+      "class_method": false,
       "selector": "replyToShouldUnselect:"
      }
     ]
    }
-  }, 
-  "formal_protocols": {}, 
-  "functions": {}, 
+  },
+  "formal_protocols": {},
+  "functions": {},
   "informal_protocols": {}
  }
 }

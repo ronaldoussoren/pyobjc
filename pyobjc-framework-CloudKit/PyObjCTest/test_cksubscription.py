@@ -16,11 +16,18 @@ if sys.maxsize > 2 ** 32:
         def testConstants(self):
             self.assertEqual(CloudKit.CKSubscriptionTypeQuery, 1)
             self.assertEqual(CloudKit.CKSubscriptionTypeRecordZone, 2)
+            self.assertEqual(CloudKit.CKSubscriptionTypeDatabase, 3)
 
             self.assertEqual(CloudKit.CKSubscriptionOptionsFiresOnRecordCreation, 1)
             self.assertEqual(CloudKit.CKSubscriptionOptionsFiresOnRecordUpdate, 2)
             self.assertEqual(CloudKit.CKSubscriptionOptionsFiresOnRecordDeletion, 4)
             self.assertEqual(CloudKit.CKSubscriptionOptionsFiresOnce, 8)
+
+            self.assertEqual(CloudKit.CKQuerySubscriptionOptionsFiresOnRecordCreation, 1 << 0)
+            self.assertEqual(CloudKit.CKQuerySubscriptionOptionsFiresOnRecordUpdate, 1 << 1)
+            self.assertEqual(CloudKit.CKQuerySubscriptionOptionsFiresOnRecordDeletion, 1 << 2)
+            self.assertEqual(CloudKit.CKQuerySubscriptionOptionsFiresOnce, 1 << 3)
+
 
         @min_os_level("10.10")
         def testMethods(self):

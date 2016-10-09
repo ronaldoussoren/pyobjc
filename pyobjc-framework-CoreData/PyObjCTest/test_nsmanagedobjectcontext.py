@@ -3,6 +3,10 @@ from PyObjCTools.TestSupport import *
 from CoreData import *
 
 class TestNSManagedObjectContext (TestCase):
+    @min_os_level("10.12")
+    def testConstants10_12(self):
+        self.assertIsInstance(NSManagedObjectContextQueryGenerationKey, unicode)
+
     @min_os_level("10.5")
     def testConstants10_5(self):
         self.assertIsInstance(NSRefreshedObjectsKey, unicode)
@@ -67,6 +71,12 @@ class TestNSManagedObjectContext (TestCase):
 
         self.assertResultIsBOOL(NSManagedObjectContext.shouldHandleInaccessibleFault_forObjectID_triggeredByProperty_)
 
+    @min_os_level('10.12')
+    def testMethods10_12(self):
+        self.assertResultIsBOOL(NSManagedObjectContext.setQueryGenerationFromToken_error_)
+        self.assertArgIsOut(NSManagedObjectContext.setQueryGenerationFromToken_error_, 1)
+        self.assertResultIsBOOL(NSManagedObjectContext.automaticallyMergesChangesFromParent)
+        self.assertArgIsBOOL(NSManagedObjectContext.setAutomaticallyMergesChangesFromParent_, 0)
 
 if __name__ == "__main__":
     main()

@@ -3,6 +3,10 @@ from PyObjCTools.TestSupport import *
 from AddressBook import *
 
 class TestABGlobals (TestCase):
+    @min_os_level('10.12')
+    def testConstants10_12(self):
+        self.assertIsInstance(kABOrganizationPhoneticProperty, unicode)
+
     @min_os_level('10.9')
     def testConstants10_9(self):
         self.assertIsInstance(kABSocialProfileServiceTencentWeibo, unicode)

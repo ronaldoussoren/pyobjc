@@ -3,6 +3,11 @@
 {
  "definitions": {
   "enum": {
+   "TKTokenOperationNone": { "value": 0 },
+   "TKTokenOperationReadData": { "value": 1 },
+   "TKTokenOperationSignData": { "value": 2 },
+   "TKTokenOperationDecryptData": { "value": 3 },
+   "TKTokenOperationPerformKeyExchange": { "value": 4 },
    "TKSmartCardPINCharsetNumeric": { "value": 0 },
    "TKSmartCardPINCharsetAlphanumeric": { "value": 1 },
    "TKSmartCardPINCharsetUpperAlphanumeric": { "value": 2 },
@@ -17,6 +22,7 @@
    "TKErrorCodeObjectNotFound": { "value": -6 },
    "TKErrorCodeTokenNotFound": { "value": -7 },
    "TKErrorCodeBadParameter": { "value": -8 },
+   "TKErrorCodeAuthenticationNeeded": { "value": -9 },
    "TKSmartCardPINCompletionMaxLength": { "value": 1 },
    "TKSmartCardPINConfirmationNone": { "value": 0 },
    "TKSmartCardPINConfirmationCurrent": { "value": 2 },
@@ -100,8 +106,87 @@
      }
     ]
    },
+   "TKTokenWatcher": {
+    "methods": [
+     {
+      "class_method": false,
+      "selector": "initWithInsertionHandler:",
+      "args": {
+       "0": {
+        "callable": {
+         "arguments": {
+	  "0": { "typestr": "^v" },
+	  "1": { "typestr": "@" }
+	 },
+	 "retval": { "typestr": "v" }
+	}
+       }
+      }
+     },
+     {
+      "class_method": false,
+      "selector": "addRemovalHandler:forTokenID:",
+      "args": {
+       "0": {
+        "callable": {
+         "arguments": {
+	  "0": { "typestr": "^v" },
+	  "1": { "typestr": "@" }
+	 },
+	 "retval": { "typestr": "v" }
+	}
+       }
+      }
+     }
+    ]
+   },
+   "TKTokenKeychainContents": {
+    "methods": [
+     {
+      "class_method": false,
+      "selector": "keyForObjectID:error:",
+      "args": {
+       "1": { "type_modifier": "o" }
+      }
+     },
+     {
+      "class_method": false,
+      "selector": "certificateForObjectID:error:",
+      "args": {
+       "1": { "type_modifier": "o" }
+      }
+     }
+    ]
+   },
    "TKSmartCard": {
     "methods": [
+     {
+      "class_method": false,
+      "selector": "sendIns:p1:p2:data:le:sw:error:",
+      "args": {
+       "5": { "type_modifier": "o" },
+       "6": { "type_modifier": "o" }
+      }
+     },
+     {
+      "class_method": false,
+      "selector": "inSessionWithError:executeBlock:",
+      "args": {
+       "0": { "type_modifier": "o" },
+       "1": {
+        "callable": {
+	 "arguments": {
+	  "0": { "typestr": "^v" },
+	  "1": { "typestr": "o^@" }
+	 },
+	 "retval": { "typestr": "Z" }
+	}
+       }
+      },
+      "retval": {
+       "type_override": "Z"
+      }
+     },
      {
       "class_method": false,
       "selector": "sendIns:p1:p2:data:le:reply:",
@@ -149,6 +234,115 @@
 	 "retval": { "typestr": "v" }
 	}
        }
+      }
+     }
+    ]
+   },
+   "TKTokenKeyAlgorithm": {
+    "methods": [
+     {
+      "class_method": false,
+      "selector": "isAlgorithm:",
+      "retval": { "type_override": "Z" }
+     },
+     {
+      "class_method": false,
+      "selector": "supportsAlgorithm:",
+      "retval": { "type_override": "Z" }
+     }
+    ]
+   },
+   "TKTokenKeychainKey": {
+    "methods": [
+     {
+      "class_method": false,
+      "selector": "canDecrypt",
+      "retval": { "type_override": "Z" }
+     },
+     {
+      "class_method": false,
+      "selector": "canSign",
+      "retval": { "type_override": "Z" }
+     },
+     {
+      "class_method": false,
+      "selector": "canPerformKeyExchange",
+      "retval": { "type_override": "Z" }
+     },
+     {
+      "class_method": false,
+      "selector": "isSuitableForLogin",
+      "retval": { "type_override": "Z" }
+     },
+     {
+      "class_method": false,
+      "selector": "setCanDecrypt:",
+      "args": { "0": { "type_override": "Z" } }
+     },
+     {
+      "class_method": false,
+      "selector": "setCanSign:",
+      "args": { "0": { "type_override": "Z" } }
+     },
+     {
+      "class_method": false,
+      "selector": "setCanPerformKeyExchange:",
+      "args": { "0": { "type_override": "Z" } }
+     },
+     {
+      "class_method": false,
+      "selector": "setSuitableForLogin:",
+      "args": { "0": { "type_override": "Z" } }
+     }
+    ]
+   },
+   "NSObject": {
+    "methods": [
+     {
+      "class_method": false,
+      "selector": "tokenDriver:createTokenForSmartCard:AID:error:",
+      "args": {
+       "3": { "type_override": "o^@" }
+      }
+     },
+     {
+      "class_method": false,
+      "selector": "tokenSession:beginAuthForOperation:constraint:error:",
+      "args": {
+       "3": { "type_override": "o^@" }
+      }
+     },
+     {
+      "class_method": false,
+      "selector": "tokenSession:supportsOperation:usingKey:algorithm:",
+      "retval": { "type_override": "Z" }
+     },
+     {
+      "class_method": false,
+      "selector": "tokenSession:signData:usingKey:algorithm:error:",
+      "args": {
+       "4": { "type_override": "o^@" }
+      }
+     },
+     {
+      "class_method": false,
+      "selector": "tokenSession:decryptData:usingKey:algorithm:error:",
+      "args": {
+       "4": { "type_override": "o^@" }
+      }
+     },
+     {
+      "class_method": false,
+      "selector": "tokenSession:performKeyExchangeWithPublicKey:usingKey:algorithm:parameters:error:",
+      "args": {
+       "5": { "type_override": "o^@" }
+      }
+     },
+     {
+      "class_method": false,
+      "selector": "token:createSessionWithError:",
+      "args": {
+       "1": { "type_override": "o^@" }
       }
      }
     ]

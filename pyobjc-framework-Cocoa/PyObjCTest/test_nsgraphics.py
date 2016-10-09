@@ -35,6 +35,36 @@ class TestNSGraphics (TestCase):
         self.assertEqual(NSCompositeColor, 27)
         self.assertEqual(NSCompositeLuminosity, 28)
 
+        self.assertEqual(NSCompositingOperationClear, 0)
+        self.assertEqual(NSCompositingOperationCopy, 1)
+        self.assertEqual(NSCompositingOperationSourceOver, 2)
+        self.assertEqual(NSCompositingOperationSourceIn, 3)
+        self.assertEqual(NSCompositingOperationSourceOut, 4)
+        self.assertEqual(NSCompositingOperationSourceAtop, 5)
+        self.assertEqual(NSCompositingOperationDestinationOver, 6)
+        self.assertEqual(NSCompositingOperationDestinationIn, 7)
+        self.assertEqual(NSCompositingOperationDestinationOut, 8)
+        self.assertEqual(NSCompositingOperationDestinationAtop, 9)
+        self.assertEqual(NSCompositingOperationXOR, 10)
+        self.assertEqual(NSCompositingOperationPlusDarker, 11)
+        self.assertEqual(NSCompositingOperationHighlight, 12)
+        self.assertEqual(NSCompositingOperationPlusLighter, 13)
+        self.assertEqual(NSCompositingOperationMultiply, 14)
+        self.assertEqual(NSCompositingOperationScreen, 15)
+        self.assertEqual(NSCompositingOperationOverlay, 16)
+        self.assertEqual(NSCompositingOperationDarken, 17)
+        self.assertEqual(NSCompositingOperationLighten, 18)
+        self.assertEqual(NSCompositingOperationColorDodge, 19)
+        self.assertEqual(NSCompositingOperationColorBurn, 20)
+        self.assertEqual(NSCompositingOperationSoftLight, 21)
+        self.assertEqual(NSCompositingOperationHardLight, 22)
+        self.assertEqual(NSCompositingOperationDifference, 23)
+        self.assertEqual(NSCompositingOperationExclusion, 24)
+        self.assertEqual(NSCompositingOperationHue, 25)
+        self.assertEqual(NSCompositingOperationSaturation, 26)
+        self.assertEqual(NSCompositingOperationColor, 27)
+        self.assertEqual(NSCompositingOperationLuminosity, 28)
+
         self.assertEqual(NSBackingStoreRetained, 0)
         self.assertEqual(NSBackingStoreNonretained, 1)
         self.assertEqual(NSBackingStoreBuffered, 2)
@@ -74,6 +104,10 @@ class TestNSGraphics (TestCase):
         self.assertIsInstance(NSDeviceSize, unicode)
         self.assertEqual(NSAnimationEffectDisappearingItemDefault, 0)
         self.assertEqual(NSAnimationEffectPoof, 10)
+
+        self.assertEqual(NSDisplayGamutSRGB, 1)
+        self.assertEqual(NSDisplayGamutP3, 2)
+
 
 
     def testFunctions(self):

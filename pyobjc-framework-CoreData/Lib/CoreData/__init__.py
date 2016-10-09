@@ -10,6 +10,7 @@ import objc
 import Foundation
 
 from CoreData import _metadata
+from CoreData._CoreData import *
 import CoreData._convenience
 
 sys.modules['CoreData'] = objc.ObjCLazyModule(

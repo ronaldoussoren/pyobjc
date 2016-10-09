@@ -27,6 +27,7 @@ if sys.maxsize >= 2 ** 32:
             self.assertEqual(NetworkExtension.NEVPNIKEv2DeadPeerDetectionRateHigh, 3)
 
             self.assertEqual(NetworkExtension.NEVPNIKEv2DiffieHellmanGroup0, 0)
+            self.assertEqual(NetworkExtension.NEVPNIKEv2DiffieHellmanGroupInvalid, 0)
             self.assertEqual(NetworkExtension.NEVPNIKEv2DiffieHellmanGroup1, 1)
             self.assertEqual(NetworkExtension.NEVPNIKEv2DiffieHellmanGroup2, 2)
             self.assertEqual(NetworkExtension.NEVPNIKEv2DiffieHellmanGroup5, 5)

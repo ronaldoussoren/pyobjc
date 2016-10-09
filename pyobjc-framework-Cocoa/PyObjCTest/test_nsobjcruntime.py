@@ -79,7 +79,15 @@ class TestNSObjCRuntime (TestCase):
         self.assertEqual(NSFoundationVersionNumber10_10_1, 1151.16)
         self.assertEqual(NSFoundationVersionNumber10_10_2, 1152.14)
         self.assertEqual(NSFoundationVersionNumber10_10_3, 1153.20)
-
+        self.assertEqual(NSFoundationVersionNumber10_10_4, 1153.20)
+        self.assertEqual(NSFoundationVersionNumber10_10_5, 1154)
+        self.assertEqual(NSFoundationVersionNumber10_10_Max, 1199)
+        self.assertEqual(NSFoundationVersionNumber10_11,   1252)
+        self.assertEqual(NSFoundationVersionNumber10_11_1, 1255.1)
+        self.assertEqual(NSFoundationVersionNumber10_11_2, 1256.1)
+        self.assertEqual(NSFoundationVersionNumber10_11_3, 1256.1)
+        self.assertEqual(NSFoundationVersionNumber10_11_4, 1258)
+        self.assertEqual(NSFoundationVersionNumber10_11_Max, 1299)
 
 
         self.assertIsInstance(NSFoundationVersionNumber, float)

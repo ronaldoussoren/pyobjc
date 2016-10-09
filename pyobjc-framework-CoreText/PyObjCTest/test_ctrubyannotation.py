@@ -27,6 +27,11 @@ class TestCTRubyAnnotation (TestCase):
         self.assertEqual(kCTRubyPositionInterCharacter, 2)
         self.assertEqual(kCTRubyPositionInline, 3)
 
+    @min_os_level('10.12')
+    def testConstants10_12(self):
+        self.assertIsInstance(kCTRubyAnnotationSizeFactorAttributeName, unicode)
+        self.assertIsInstance(kCTRubyAnnotationScaleToFitAttributeName, unicode)
+
     @min_os_level('10.10')
     def testFunctions(self):
         self.assertIsInstance(CTRubyAnnotationGetTypeID(), (int, long))
@@ -44,6 +49,10 @@ class TestCTRubyAnnotation (TestCase):
         CTRubyAnnotationGetSizeFactor
 
         self.assertResultIsNotCFRetained(CTRubyAnnotationGetTextForPosition)
+
+    @min_os_level('10.12')
+    def testFunctions10_12(self):
+        self.assertResultIsCFRetained(CTRubyAnnotationCreateWithAttributes)
 
 if __name__ == "__main__":
     main()

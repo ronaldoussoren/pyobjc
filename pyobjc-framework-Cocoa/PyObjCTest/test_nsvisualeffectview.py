@@ -9,6 +9,7 @@ class TestNSVisualEffectView (TestCase):
         self.assertEqual(NSVisualEffectMaterialLight, 1)
         self.assertEqual(NSVisualEffectMaterialDark, 2)
         self.assertEqual(NSVisualEffectMaterialTitlebar, 3)
+        self.assertEqual(NSVisualEffectMaterialSelection, 4)
         self.assertEqual(NSVisualEffectMaterialMenu, 5)
         self.assertEqual(NSVisualEffectMaterialPopover, 6)
         self.assertEqual(NSVisualEffectMaterialSidebar, 7)
@@ -22,7 +23,10 @@ class TestNSVisualEffectView (TestCase):
         self.assertEqual(NSVisualEffectStateActive, 1)
         self.assertEqual(NSVisualEffectStateInactive, 2)
 
-
+    @min_os_level('10.12')
+    def testMethods10_12(self):
+        self.assertResultIsBOOL(NSVisualEffectView.isEmphasized)
+        self.assertArgIsBOOL(NSVisualEffectView.setEmphasized_, 0)
 
 if __name__ == "__main__":
     main()

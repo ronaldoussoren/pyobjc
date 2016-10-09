@@ -9,6 +9,11 @@ class TestPDFAnnotationButtonWidget (TestCase):
         self.assertEqual(kPDFWidgetRadioButtonControl, 1)
         self.assertEqual(kPDFWidgetCheckBoxControl, 2)
 
+        self.assertEqual(kPDFWidgetMixedState, -1)
+        self.assertEqual(kPDFWidgetOffState, 0)
+        self.assertEqual(kPDFWidgetOnState, 1)
+
+
     @min_os_level('10.5')
     def testMethods(self):
         self.assertResultIsBOOL(PDFAnnotationButtonWidget.isHighlighted)

@@ -29,6 +29,18 @@ if sys.maxsize > 2 ** 32:
             self.assertEqual(LocalAuthentication.LAPolicyDeviceOwnerAuthentication, LocalAuthentication.kLAPolicyDeviceOwnerAuthentication)
             self.assertEqual(LocalAuthentication.LACredentialTypeApplicationPassword, 0)
 
+        @min_os_level("10.11")
+        def testConstants10_11(self):
+            self.assertEqual(LocalAuthentication.LAAccessControlOperationCreateItem, 0)
+            self.assertEqual(LocalAuthentication.LAAccessControlOperationUseItem, 1)
+            self.assertEqual(LocalAuthentication.LAAccessControlOperationCreateKey, 2)
+            self.assertEqual(LocalAuthentication.LAAccessControlOperationUseKeySign, 3)
+
+        @min_os_level("10.12")
+        def testConstants10_12(self):
+            self.assertEqual(LocalAuthentication.LAAccessControlOperationUseKeyDecrypt, 4)
+            self.assertEqual(LocalAuthentication.LAAccessControlOperationUseKeyKeyExchange, 5)
+
         @min_os_level('10.11')
         def testMethods10_11(self):
             self.assertResultIsBOOL(LocalAuthentication.LAContext.setCredential_type_)

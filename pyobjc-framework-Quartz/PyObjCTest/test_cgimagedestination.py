@@ -89,6 +89,10 @@ class TestCGImageDestination (TestCase):
         self.assertIsInstance(kCGImageDestinationEmbedThumbnail, unicode)
         self.assertIsInstance(kCGImageMetadataShouldExcludeGPS, unicode)
 
+    @min_os_level('10.12')
+    def testConstants10_12(self):
+        self.assertIsInstance(kCGImageDestinationOptimizeColorForSharing, unicode)
+
     @min_os_level('10.8')
     def testFunctions10_8(self):
         CGImageDestinationAddImageAndMetadata

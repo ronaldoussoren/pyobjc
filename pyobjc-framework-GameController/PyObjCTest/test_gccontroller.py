@@ -20,6 +20,11 @@ if sys.maxsize > 2 ** 32:
 
             self.assertArgIsBlock(GameController.GCController.startWirelessControllerDiscoveryWithCompletionHandler_, 0, b"v")
 
+        @min_os_level("10.11")
+        def testMethods10_11(self):
+            self.assertResultIsBOOL(GameController.GCEventViewController.controllerUserInteractionEnabled)
+            self.assertArgIsBOOL(GameController.GCEventViewController.setControllerUserInteractionEnabled_, 0)
+
         @min_os_level("10.9")
         def test_constants(self):
             self.assertIsInstance(GameController.GCControllerDidConnectNotification, unicode)

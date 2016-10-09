@@ -137,6 +137,10 @@ class TestPythonCoder(TestCase):
         self.assertArgIsOut(NSCoder.decodeTopLevelObjectAndReturnError_, 0)
         self.assertArgIsOut(NSCoder.decodeTopLevelObjectOfClass_forKey_error_, 2)
 
+    @min_os_level('10.11')
+    def testConstants(self):
+        self.assertEqual(NSDecodingFailurePolicyRaiseException, 0)
+        self.assertEqual(NSDecodingFailurePolicySetErrorAndReturn, 1)
 
 if __name__ == '__main__':
     main( )

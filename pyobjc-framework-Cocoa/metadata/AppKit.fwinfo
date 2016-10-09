@@ -1,8 +1,17 @@
-# objective.metada exceptions file, see its document
-# for information on how to update this file.
 {
  "definitions": {
   "externs": {
+   "NSSpellCheckerDidChangeAutomaticCapitalizationNotification": { "typestr": "@" },
+   "NSSpellCheckerDidChangeAutomaticPeriodSubstitutionNotification": { "typestr": "@" },
+   "NSTextCheckingSelectedRangeKey": { "typestr": "@" },
+   "NSSharingServiceNameCloudSharing": { "typestr": "@" },
+   "NSImageHintUserInterfaceLayoutDirection": { "typestr": "@" },
+   "NSImageNameGoForwardTemplate": { "typestr": "@" },
+   "NSImageNameGoBackTemplate": { "typestr": "@" },
+   "NSGridViewSizeForContent": { "typestr": [ "f", "d" ] },
+   "NSAccessibilityRequiredAttribute": { "typestr": "@" },
+   "NSAccessibilityTextAlignmentAttribute": { "typestr": "@" },
+   "NSAccessibilityMenuBarItemRole": { "typestr": "@" },
    "NSToolbarToggleSidebarItemIdentifier": { "typestr": "@" },
    "NSAccessibilityListItemPrefixTextAttribute": { "typestr": "@" },
    "NSAccessibilityListItemIndexTextAttribute": { "typestr": "@" },
@@ -41,6 +50,31 @@
    }
   },
   "classes": {
+   "NSVisualEffectView": {
+    "methods": [
+     {
+      "selector": "isEmphasized",
+      "class_method": false,
+      "retval": { "type_override": "Z" }
+     },
+     {
+      "selector": "setEmphasized:",
+      "class_method": false,
+      "args": {
+       "0": { "type_override": "Z" }
+      }
+     }
+    ]
+   },
+   "NSLayoutGuide": {
+    "methods": [
+     {
+      "selector": "hasAmbiguousLayout",
+      "class_method": false,
+      "retval": { "type_override": "Z" }
+     }
+    ]
+   },
    "CIImage": {
     "methods": [
      {
@@ -772,6 +806,22 @@
    },
    "NSApplication": {
     "methods": [
+     {
+      "args": {
+       "1": {
+        "callable": {
+	 "arguments": {
+	  "0": { "typestr": "^v" },
+	  "1": { "typestr": "@" },
+	  "2": { "typestr": "o^Z" }
+	 },
+	 "retval": { "typestr": "v" }
+	}
+       }
+      },
+      "class_method": false,
+      "selector": "enumerateWindowsWithOptions:usingBlock:"
+     },
      {
       "args": {
        "2": {
@@ -2684,6 +2734,53 @@
    "NSButton": {
     "methods": [
      {
+      "selector": "imageHugsTitle",
+      "class_method": false,
+      "retval": { "type_override": "Z" }
+     },
+     {
+      "selector": "setImageHugsTitle:",
+      "class_method": false,
+      "args": {
+       "0": { "type_override": "Z" }
+      }
+     },
+     {
+      "selector": "buttonWithTitle:image:target:action:",
+      "class_method": false,
+      "args": {
+       "3": { "sel_of_type": "v@:@" }
+      }
+     },
+     {
+      "selector": "buttonWithTitle:target:action:",
+      "class_method": false,
+      "args": {
+       "2": { "sel_of_type": "v@:@" }
+      }
+     },
+     {
+      "selector": "buttonWithImage:target:action:",
+      "class_method": false,
+      "args": {
+       "2": { "sel_of_type": "v@:@" }
+      }
+     },
+     {
+      "selector": "checkboxWithTitle:target:action:",
+      "class_method": false,
+      "args": {
+       "2": { "sel_of_type": "v@:@" }
+      }
+     },
+     {
+      "selector": "radioButtonWithTitle:target:action:",
+      "class_method": false,
+      "args": {
+       "2": { "sel_of_type": "v@:@" }
+      }
+     },
+     {
       "args": {
        "0": {
         "type_modifier": "o"
@@ -3751,6 +3848,45 @@
       "retval": {
        "type_override": "Z"
       },
+      "selector": "sectionAtIndexIsCollapsed:"
+     },
+     {
+      "class_method": false,
+      "retval": {
+       "type_override": "Z"
+      },
+      "selector": "sectionFootersPinToVisibleBounds"
+     },
+     {
+      "class_method": false,
+      "retval": {
+       "type_override": "Z"
+      },
+      "selector": "sectionHeadersPinToVisibleBounds"
+     },
+     {
+      "class_method": false,
+      "args": {
+       "0": {
+        "type_override": "Z"
+       }
+      },
+      "selector": "setSectionFootersPinToVisibleBounds:"
+     },
+     {
+      "class_method": false,
+      "args": {
+       "0": {
+        "type_override": "Z"
+       }
+      },
+      "selector": "setSectionHeadersPinToVisibleBounds:"
+     },
+     {
+      "class_method": false,
+      "retval": {
+       "type_override": "Z"
+      },
       "selector": "invalidateFlowLayoutDelegateMetrics"
      },
      {
@@ -3840,6 +3976,22 @@
       },
       "class_method": false,
       "selector": "draggingImageForItemsAtIndexes:withEvent:offset:"
+     },
+     {
+      "args": {
+       "0": {
+        "type_override": "Z"
+       }
+      },
+      "class_method": false,
+      "selector": "setBackgroundViewScrollsWithContent:"
+     },
+     {
+      "retval": {
+       "type_modifier": "N"
+      },
+      "class_method": false,
+      "selector": "backgroundViewScrollsWithContent"
      },
      {
       "args": {
@@ -10969,8 +11121,49 @@
      }
     ]
    },
+   "NSFilePromiseReceiver": {
+    "methods": [
+     {
+      "selector": "receivePromisedFilesAtDestination:options:operationQueue:reader:",
+      "class_method": false,
+      "args": {
+       "3": {
+	"callable": {
+	 "arguments": {
+	  "0": { "typestr": "^v" },
+	  "1": { "typestr": "@" },
+	  "2": { "typestr": "@" }
+	 },
+	 "retval": { "typestr": "v" }
+        }
+       }
+      }
+     }
+    ]
+   },
    "NSObject": {
     "methods": [
+     {
+      "selector": "filePromiseProvider:writePromiseToURL:completionHandler:",
+      "class_method": false,
+      "args": {
+       "2": {
+        "type_override": "@?",
+	"callable": {
+	 "arguments": {
+	  "0": { "typestr": "^v" },
+	  "1": { "typestr": "@" }
+	 },
+	 "retval": { "typestr": "v" }
+        }
+       }
+      }
+     },
+     {
+      "selector": "isAccessibilityRequired",
+      "class_method": false,
+      "retval": { "type_override": "Z" }
+     },
      {
       "selector": "attachmentBoundsForTextContainer:proposedLineFragment:glyphPosition:characterIndex:",
       "class_method": false,
@@ -17516,6 +17709,11 @@
    "NSScreen": {
     "methods": [
      {
+      "selector": "canRepresentDisplayGamut:",
+      "class_method": false,
+      "retval": { "type_override": "Z" }
+     },
+     {
       "class_method": false,
       "retval": {
        "c_array_delimited_by_null": true
@@ -18036,6 +18234,20 @@
    "NSSegmentedControl": {
     "methods": [
      {
+      "selector": "segmentedControlWithLabels:trackingMode:target:action:",
+      "class_method": false,
+      "args": {
+       "3": { "sel_of_type": "v@:@" }
+      }
+     },
+     {
+      "selector": "segmentedControlWithImages:trackingMode:target:action:",
+      "class_method": false,
+      "args": {
+       "3": { "sel_of_type": "v@:@" }
+      }
+     },
+     {
       "class_method": false,
       "retval": {
        "type_override": "Z"
@@ -18191,6 +18403,20 @@
    "NSSlider": {
     "methods": [
      {
+      "selector": "sliderWithValue:minValue:maxValue:target:action:",
+      "class_method": true,
+      "args": {
+       "4": { "sel_of_type": "v@:@" }
+      }
+     },
+     {
+      "class_method": false,
+      "retval": {
+       "type_override": "Z"
+      },
+      "selector": "isVertical"
+     },
+     {
       "class_method": false,
       "retval": {
        "type_override": "Z"
@@ -18234,11 +18460,34 @@
       },
       "class_method": false,
       "selector": "setAllowsTickMarkValuesOnly:"
+     },
+     {
+      "args": {
+       "0": {
+        "type_override": "Z"
+       }
+      },
+      "class_method": false,
+      "selector": "setVertical:"
      }
     ]
    },
    "NSSliderCell": {
     "methods": [
+     {
+      "class_method": false,
+      "retval": {
+       "type_override": "Z"
+      },
+      "selector": "isVertical"
+     },
+     {
+      "class_method": false,
+      "args": {
+       "0": { "type_override": "Z" }
+      },
+      "selector": "setVertical:"
+     },
      {
       "class_method": false,
       "retval": {
@@ -18567,6 +18816,21 @@
    "NSSpellChecker": {
     "methods": [
      {
+      "selector": "preventsAutocorrectionBeforeString:language:",
+      "class_method": true,
+      "retval": { "type_override": "Z" }
+     },
+     {
+      "selector": "isAutomaticCapitalizationEnabled",
+      "class_method": false,
+      "retval": { "type_override": "Z" }
+     },
+     {
+      "selector": "isAutomaticPeriodSubstitutionEnabled",
+      "class_method": false,
+      "retval": { "type_override": "Z" }
+     },
+     {
       "args": {
        "5": {
         "callable": {
@@ -18888,6 +19152,13 @@
       "selector": "isEnabled"
      },
      {
+      "class_method": false,
+      "retval": {
+       "type_override": "Z"
+      },
+      "selector": "isVisible"
+     },
+     {
       "args": {
        "0": {
         "sel_of_type": "v@:@"
@@ -18913,6 +19184,15 @@
       },
       "class_method": false,
       "selector": "setEnabled:"
+     },
+     {
+      "args": {
+       "0": {
+        "type_override": "Z"
+       }
+      },
+      "class_method": false,
+      "selector": "setVisible:"
      },
      {
       "args": {
@@ -24137,6 +24417,27 @@
       "selector": "windowNumberAtPoint:belowWindowWithNumber:"
      },
      {
+      "class_method": true,
+      "retval": {
+       "type_override": "Z"
+      },
+      "selector": "allowsAutomaticWindowTabbing"
+     },
+     {
+      "class_method": true,
+      "args": {
+       "0": { "type_override": "Z" }
+      },
+      "selector": "setAllowsAutomaticWindowTabbing:"
+     },
+     {
+      "class_method": false,
+      "retval": {
+       "type_override": "Z"
+      },
+      "selector": "canRepresentDisplayGamut:"
+     },
+     {
       "class_method": false,
       "retval": {
        "type_override": "Z"
@@ -25384,6 +25685,16 @@
    "NSWorkspace": {
     "methods": [
      {
+      "selector": "accessibilityDisplayShouldReduceMotion",
+      "class_method": false,
+      "retval": { "type_override": "Z" }
+     },
+     {
+      "selector": "accessibilityDisplayShouldInvertColors",
+      "class_method": false,
+      "retval": { "type_override": "Z" }
+     },
+     {
       "args": {
        "3": {
         "type_modifier": "o"
@@ -25734,6 +26045,257 @@
    }
   },
   "enum": {
+   "NSColorPanelModeNone": { "value": -1 },
+   "NSWindowUserTabbingPreferenceManual": { "value": 0 },
+   "NSWindowUserTabbingPreferenceAlways": { "value": 1 },
+   "NSWindowUserTabbingPreferenceInFullScreen": { "value": 2 },
+   "NSWindowTabbingModeAutomatic": { "value": 0 },
+   "NSWindowTabbingModePreferred": { "value": 1 },
+   "NSWindowTabbingModeDisallowed": { "value": 2 },
+   "NSWindowStyleMaskBorderless": { "value": 0 },
+   "NSWindowStyleMaskTitled": { "value": 1 },
+   "NSWindowStyleMaskClosable": { "value": 2 },
+   "NSWindowStyleMaskMiniaturizable": { "value": 4 },
+   "NSWindowStyleMaskResizable": { "value": 8 },
+   "NSWindowStyleMaskTexturedBackground": { "value": 256 },
+   "NSWindowStyleMaskUnifiedTitleAndToolbar": { "value": 4096 },
+   "NSWindowStyleMaskFullScreen": { "value": 16384 },
+   "NSWindowStyleMaskFullSizeContentView": { "value": 32768 },
+   "NSWindowStyleMaskUtilityWindow": { "value": 16 },
+   "NSWindowStyleMaskDocModalWindow": { "value": 64 },
+   "NSWindowStyleMaskNonactivatingPanel": { "value": 128 },
+   "NSWindowStyleMaskHUDWindow": { "value": 8192 },
+   "NSWindowCollectionBehaviorFullScreenNone": { "value": 512},
+   "NSTabViewBorderTypeNone": { "value": 0 },
+   "NSTabViewBorderTypeLine": { "value": 1 },
+   "NSTabViewBorderTypeBezel": { "value": 2 },
+   "NSVisualEffectMaterialSelection": { "value": 4 },
+   "NSTabPositionNone": { "value": 0 },
+   "NSTabPositionTop": { "value": 1 },
+   "NSTabPositionLeft": { "value": 2 },
+   "NSTabPositionBottom": { "value": 3 },
+   "NSTabPositionRight": { "value": 4 },
+   "NSStatusItemBehaviorRemovalAllowed": { "value": 2 },
+   "NSStatusItemBehaviorTerminationOnRemoval": { "value": 4 },
+   "NSSplitViewItemCollapseBehaviorDefault": { "value": 0 },
+   "NSSplitViewItemCollapseBehaviorPreferResizingSplitViewWithFixedSiblings": { "value": 1 },
+   "NSSplitViewItemCollapseBehaviorPreferResizingSiblingsWithFixedSplitView": { "value": 2 },
+   "NSSplitViewItemCollapseBehaviorUseConstraints": { "value": 3 },
+   "NSSplitViewItemBehaviorDefault": { "value": 0 },
+   "NSSplitViewItemBehaviorSidebar": { "value": 1 },
+   "NSSplitViewItemBehaviorContentList": { "value": 2 },
+   "NSTickMarkPositionBelow": { "value": 0 },
+   "NSTickMarkPositionAbove": { "value": 1 },
+   "NSTickMarkPositionLeading": { "value": 1 },
+   "NSTickMarkPositionTrailing": { "value": 0 },
+   "NSCloudKitSharingServiceStandard": { "value": 0 },
+   "NSSliderTypeLinear": { "value": 0 },
+   "NSSliderTypeCircular": { "value": 1 },
+   "NSCloudKitSharingServiceAllowPublic": { "value": 1 },
+   "NSCloudKitSharingServiceAllowPrivate": { "value": 2 },
+   "NSCloudKitSharingServiceAllowReadOnly": { "value": 16 },
+   "NSCloudKitSharingServiceAllowReadWrite": { "value": 32 },
+   "NSOpenGLContextParameterSwapInterval": { "value": 222 },
+   "NSOpenGLContextParameterSurfaceOrder": { "value": 235 },
+   "NSOpenGLContextParameterSurfaceOpacity": { "value": 236 },
+   "NSOpenGLContextParameterSurfaceBackingSize": { "value": 304 },
+   "NSOpenGLContextParameterReclaimResources": { "value": 308 },
+   "NSOpenGLContextParameterCurrentRendererID": { "value": 309 },
+   "NSOpenGLContextParameterGPUVertexProcessing": { "value": 310 },
+   "NSOpenGLContextParameterGPUFragmentProcessing": { "value": 311 },
+   "NSOpenGLContextParameterHasDrawable": { "value": 314 },
+   "NSOpenGLContextParameterMPSwapsInFlight": { "value": 315 },
+   "NSOpenGLContextParameterSwapRectangle": { "value": 200 },
+   "NSOpenGLContextParameterSwapRectangleEnable": { "value": 201 },
+   "NSOpenGLContextParameterRasterizationEnable": { "value": 221 },
+   "NSOpenGLContextParameterStateValidation": { "value": 301 },
+   "NSOpenGLContextParameterSurfaceSurfaceVolatile": { "value": 306 },
+   "NSImageLayoutDirectionUnspecified": { "value": -1 },
+   "NSImageLayoutDirectionLeftToRight": { "value": 2 },
+   "NSImageLayoutDirectionRightToLeft": { "value": 3 },
+   "NSGridRowAlignmentInherited": { "value": 0 },
+   "NSGridRowAlignmentNone": { "value": 1 },
+   "NSGridRowAlignmentFirstBaseline": { "value": 2 },
+   "NSGridRowAlignmentLastBaseline": { "value": 3 },
+   "NSGridCellPlacementInherited": { "value": 0 },
+   "NSGridCellPlacementNone": { "value": 1 },
+   "NSGridCellPlacementLeading": { "value": 2 },
+   "NSGridCellPlacementTop": { "value": 2 },
+   "NSGridCellPlacementTrailing": { "value": 3 },
+   "NSGridCellPlacementBottom": { "value": 3 },
+   "NSGridCellPlacementCenter": { "value": 4 },
+   "NSGridCellPlacementFill": { "value": 5 },
+   "NSDisplayGamutSRGB": { "value": 1 },
+   "NSDisplayGamutP3": { "value": 2 },
+   "NSCompositingOperationClear": { "value": 0 },
+   "NSCompositingOperationCopy": { "value": 1 },
+   "NSCompositingOperationSourceOver": { "value": 2 },
+   "NSCompositingOperationSourceIn": { "value": 3 },
+   "NSCompositingOperationSourceOut": { "value": 4 },
+   "NSCompositingOperationSourceAtop": { "value": 5 },
+   "NSCompositingOperationDestinationOver": { "value": 6 },
+   "NSCompositingOperationDestinationIn": { "value": 7 },
+   "NSCompositingOperationDestinationOut": { "value": 8 },
+   "NSCompositingOperationDestinationAtop": { "value": 9 },
+   "NSCompositingOperationXOR": { "value": 10 },
+   "NSCompositingOperationPlusDarker": { "value": 11 },
+   "NSCompositingOperationHighlight": { "value": 12 },
+   "NSCompositingOperationPlusLighter": { "value": 13 },
+   "NSCompositingOperationMultiply": { "value": 14 },
+   "NSCompositingOperationScreen": { "value": 15 },
+   "NSCompositingOperationOverlay": { "value": 16 },
+   "NSCompositingOperationDarken": { "value": 17 },
+   "NSCompositingOperationLighten": { "value": 18 },
+   "NSCompositingOperationColorDodge": { "value": 19 },
+   "NSCompositingOperationColorBurn": { "value": 20 },
+   "NSCompositingOperationSoftLight": { "value": 21 },
+   "NSCompositingOperationHardLight": { "value": 22 },
+   "NSCompositingOperationDifference": { "value": 23 },
+   "NSCompositingOperationExclusion": { "value": 24 },
+   "NSCompositingOperationHue": { "value": 25 },
+   "NSCompositingOperationSaturation": { "value": 26 },
+   "NSCompositingOperationColor": { "value": 27 },
+   "NSCompositingOperationLuminosity": { "value": 28 },
+   "NSEventSubtypeMouseEvent": { "value": 0 },
+   "NSEventSubtypeTabletPoint": { "value": 1 },
+   "NSEventSubtypeTabletProximity": { "value": 2 },
+   "NSEventSubtypeTouch": { "value": 3 },
+   "NSEventSubtypeWindowExposed": { "value": 0 },
+   "NSEventSubtypeApplicationActivated": { "value": 1 },
+   "NSEventSubtypeApplicationDeactivated": { "value": 2 },
+   "NSEventSubtypeWindowMoved": { "value": 4 },
+   "NSEventSubtypeScreenChanged": { "value": 8 },
+   "NSEventSubtypePowerOff": { "value": 1 },
+   "NSEventButtonMaskPenTip": { "value": 1 },
+   "NSEventButtonMaskPenLowerSide": { "value": 2 },
+   "NSEventButtonMaskPenUpperSide": { "value": 4 },
+   "NSPointingDeviceTypeUnknown": { "value": 0 },
+   "NSPointingDeviceTypePen": { "value": 1 },
+   "NSPointingDeviceTypeCursor": { "value": 2 },
+   "NSPointingDeviceTypeEraser": { "value": 3 },
+   "NSEventModifierFlagCapsLock": { "value": 65536 },
+   "NSEventModifierFlagShift": { "value": 131072 },
+   "NSEventModifierFlagControl": { "value": 262144 },
+   "NSEventModifierFlagOption": { "value": 524288 },
+   "NSEventModifierFlagCommand": { "value": 1048576 },
+   "NSEventModifierFlagNumericPad": { "value": 2097152 },
+   "NSEventModifierFlagHelp": { "value": 4194304 },
+   "NSEventModifierFlagFunction": { "value": 8388608 },
+   "NSEventModifierFlagDeviceIndependentFlagsMask": { "value": 4294901760 },
+   "NSEventMaskLeftMouseDown": { "value": 2 },
+   "NSEventMaskLeftMouseUp": { "value": 4 },
+   "NSEventMaskRightMouseDown": { "value": 8 },
+   "NSEventMaskRightMouseUp": { "value": 16 },
+   "NSEventMaskMouseMoved": { "value": 32 },
+   "NSEventMaskLeftMouseDragged": { "value": 64 },
+   "NSEventMaskRightMouseDragged": { "value": 128 },
+   "NSEventMaskMouseEntered": { "value": 256 },
+   "NSEventMaskMouseExited": { "value": 512 },
+   "NSEventMaskKeyDown": { "value": 1024 },
+   "NSEventMaskKeyUp": { "value": 2048 },
+   "NSEventMaskFlagsChanged": { "value": 4096 },
+   "NSEventMaskAppKitDefined": { "value": 8192 },
+   "NSEventMaskSystemDefined": { "value": 16384 },
+   "NSEventMaskApplicationDefined": { "value": 32768 },
+   "NSEventMaskPeriodic": { "value": 65536 },
+   "NSEventMaskCursorUpdate": { "value": 131072 },
+   "NSEventMaskScrollWheel": { "value": 4194304 },
+   "NSEventMaskTabletPoint": { "value": 8388608 },
+   "NSEventMaskTabletProximity": { "value": 16777216 },
+   "NSEventMaskOtherMouseDown": { "value": 33554432 },
+   "NSEventMaskOtherMouseUp": { "value": 67108864 },
+   "NSEventMaskOtherMouseDragged": { "value": 134217728 },
+   "NSEventTypeLeftMouseDown": { "value": 1 },
+   "NSEventTypeLeftMouseUp": { "value": 2 },
+   "NSEventTypeRightMouseDown": { "value": 3 },
+   "NSEventTypeRightMouseUp": { "value": 4 },
+   "NSEventTypeMouseMoved": { "value": 5 },
+   "NSEventTypeLeftMouseDragged": { "value": 6 },
+   "NSEventTypeRightMouseDragged": { "value": 7 },
+   "NSEventTypeMouseEntered": { "value": 8 },
+   "NSEventTypeMouseExited": { "value": 9 },
+   "NSEventTypeKeyDown": { "value": 10 },
+   "NSEventTypeKeyUp": { "value": 11 },
+   "NSEventTypeFlagsChanged": { "value": 12 },
+   "NSEventTypeAppKitDefined": { "value": 13 },
+   "NSEventTypeSystemDefined": { "value": 14 },
+   "NSEventTypeApplicationDefined": { "value": 15 },
+   "NSEventTypePeriodic": { "value": 16 },
+   "NSEventTypeCursorUpdate": { "value": 17 },
+   "NSEventTypeScrollWheel": { "value": 22 },
+   "NSEventTypeTabletPoint": { "value": 23 },
+   "NSEventTypeTabletProximity": { "value": 24 },
+   "NSEventTypeOtherMouseDown": { "value": 25 },
+   "NSEventTypeOtherMouseUp": { "value": 26 },
+   "NSEventTypeOtherMouseDragged": { "value": 27 },
+   "NSColorSpaceModelUnknown": { "value": -1 },
+   "NSColorSpaceModelGray": { "value": 0 },
+   "NSColorSpaceModelRGB": { "value": 1 },
+   "NSColorSpaceModelCMYK": { "value": 2 },
+   "NSColorSpaceModelLAB": { "value": 3 },
+   "NSColorSpaceModelDeviceN": { "value": 4 },
+   "NSColorSpaceModelIndexed": { "value": 5 },
+   "NSColorSpaceModelPatterned": { "value": 6 },
+   "NSColorPanelModeGray": { "value": 0 },
+   "NSColorPanelModeRGB": { "value": 1 },
+   "NSColorPanelModeCMYK": { "value": 2 },
+   "NSColorPanelModeHSB": { "value": 3 },
+   "NSColorPanelModeCustomPalette": { "value": 4 },
+   "NSColorPanelModeColorList": { "value": 5 },
+   "NSColorPanelModeWheel": { "value": 6 },
+   "NSColorPanelModeCrayon": { "value": 7 },
+   "NSControlSizeRegular": { "value": 0 },
+   "NSControlSizeSmall": { "value": 1 },
+   "NSControlSizeMini": { "value": 2 },
+   "NSControlStateMixed": { "value": -1 },
+   "NSControlStateOff": { "value": 0 },
+   "NSControlStateOn": { "value": 1 },
+   "NSImageLeading": { "value": 7 },
+   "NSImageTrailing": { "value": 8 },
+   "NSBezelStyleRounded": { "value": 1 },
+   "NSBezelStyleRegularSquare": { "value": 2 },
+   "NSBezelStyleDisclosure": { "value": 5 },
+   "NSBezelStyleShadowlessSquare": { "value": 6 },
+   "NSBezelStyleCircular": { "value": 7 },
+   "NSBezelStyleTexturedSquare": { "value": 8 },
+   "NSBezelStyleHelpButton": { "value": 9 },
+   "NSBezelStyleSmallSquare": { "value": 10 },
+   "NSBezelStyleTexturedRounded": { "value": 11 },
+   "NSBezelStyleRoundRect": { "value": 12 },
+   "NSBezelStyleRecessed": { "value": 13 },
+   "NSBezelStyleRoundedDisclosure": { "value": 14 },
+   "NSBezelStyleInline": { "value": 15 },
+   "NSButtonTypeMomentaryLight": { "value": 0 },
+   "NSButtonTypePushOnPushOff": { "value": 1 },
+   "NSButtonTypeToggle": { "value": 2 },
+   "NSButtonTypeSwitch": { "value": 3 },
+   "NSButtonTypeRadio": { "value": 4 },
+   "NSButtonTypeMomentaryChange": { "value": 5 },
+   "NSButtonTypeOnOff": { "value": 6 },
+   "NSButtonTypeMomentaryPushIn": { "value": 7 },
+   "NSButtonTypeAccelerator": { "value": 8 },
+   "NSButtonTypeMultiLevelAccelerator": { "value": 9 },
+   "NSBitmapFormatAlphaFirst": { "value": 1 },
+   "NSBitmapFormatAlphaNonpremultiplied": { "value": 2 },
+   "NSBitmapFormatFloatingPointSamples": { "value": 4 },
+   "NSBitmapFormatSixteenBitLittleEndian": { "value": 256 },
+   "NSBitmapFormatThirtyTwoBitLittleEndian": { "value": 512 },
+   "NSBitmapFormatSixteenBitBigEndian": { "value": 1024 },
+   "NSBitmapFormatThirtyTwoBitBigEndian": { "value": 2048 },
+   "NSBitmapImageFileTypeTIFF": { "value": 0 },
+   "NSBitmapImageFileTypeBMP": { "value": 1 },
+   "NSBitmapImageFileTypeGIF": { "value": 2 },
+   "NSBitmapImageFileTypeJPEG": { "value": 3 },
+   "NSBitmapImageFileTypePNG": { "value": 4 },
+   "NSBitmapImageFileTypeJPEG2000": { "value": 5 },
+   "NSAppKitVersionNumber10_11": { "value": 1404.0 },
+   "NSAppKitVersionNumber10_11_1": { "value": 1404.13 },
+   "NSAppKitVersionNumber10_11_2": { "value": 1404.34 },
+   "NSAppKitVersionNumber10_11_3": { "value": 1404.34 },
+   "NSWindowListOrderedFrontToBack": { "value": 1 },
+   "NSAlertStyleWarning": { "value": 0 },
+   "NSAlertStyleInformational": { "value": 1 },
+   "NSAlertStyleCritical": { "value": 2 },
    "NSSplitViewItemCollapseBehaviorDefault": { "value": 0 },
    "NSSplitViewItemCollapseBehaviorPreferResizingSplitViewWithFixedSiblings": { "value": 1 },
    "NSSplitViewItemCollapseBehaviorPreferResizingSiblingsWithFixedSplitView": { "value": 2 },

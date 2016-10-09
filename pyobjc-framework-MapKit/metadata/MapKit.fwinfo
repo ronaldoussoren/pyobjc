@@ -5,12 +5,24 @@
   "enum": {
    "MKDirectionsTransportTypeTransit": { "value": 4 },
    "MKMapTypeSatelliteFlyover": { "value": 3 },
-   "MKMapTypeHybridFlyover": { "value": 4 }
+   "MKMapTypeHybridFlyover": { "value": 4 },
+   "MKSearchCompletionFilterTypeLocationsAndQueries": { "value": 0 },
+   "MKSearchCompletionFilterTypeLocationsOnly": { "value": 1 }
   },
   "externs": {
-   "MKLaunchOptionsDirectionsModeTransit": { "typestr": "@" }
+   "MKLaunchOptionsDirectionsModeTransit": { "typestr": "@" },
+   "MKLaunchOptionsDirectionsModeDefault": { "typestr": "@" }
   },
   "classes": {
+   "MKLocalSearchCompleter": {
+    "methods": [
+     {
+      "class_method": false,
+      "selector": "isSearching",
+      "retval": { "type_override": "Z" }
+     }
+    ]
+   },
    "MKMapView": {
     "methods": [
      {

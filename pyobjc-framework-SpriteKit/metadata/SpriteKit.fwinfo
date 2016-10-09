@@ -2,6 +2,25 @@
 // for information on how to update this file.
 {
  "definitions": {
+  "enum": {
+   "SKTileSetTypeGrid": { "value": 0 },
+   "SKTileSetTypeIsometric": { "value": 1 },
+   "SKTileSetTypeHexagonalFlat": { "value": 2 },
+   "SKTileSetTypeHexagonalPointy": { "value": 3 },
+   "SKTileDefinitionRotation0": { "value": 0 },
+   "SKTileDefinitionRotation90": { "value": 1 },
+   "SKTileDefinitionRotation180": { "value": 2 },
+   "SKTileDefinitionRotation27": { "value": 3 },
+   "SKAttributeTypeNone": { "value": 0 },
+   "SKAttributeTypeFloat": { "value": 1 },
+   "SKAttributeTypeVectorFloat2": { "value": 2 },
+   "SKAttributeTypeVectorFloat3": { "value": 3 },
+   "SKAttributeTypeVectorFloat4": { "value": 4 },
+   "SKAttributeTypeHalfFloat": { "value": 5 },
+   "SKAttributeTypeVectorHalfFloat2": { "value": 6 },
+   "SKAttributeTypeVectorHalfFloat3": { "value": 7 },
+   "SKAttributeTypeVectorHalfFloat4": { "value": 8 }
+  },
   "classes": {
    "SKTextureAtlas": {
     "methods": [
@@ -434,6 +453,18 @@
       },
       "selector": "enumerateBodiesInRect:usingBlock:",
       "class_method": false
+     }
+    ]
+   },
+   "NSObject": {
+    "methods": [
+     {
+      "class_method": false,
+      "selector: "view:shouldRenderAtTime:",
+      "args": {
+       "1": { "type_override": "d" }
+      },
+      "retval": { "type_override": "Z" }
      }
     ]
    }

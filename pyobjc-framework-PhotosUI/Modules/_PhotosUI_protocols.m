@@ -10,4 +10,7 @@ static void __attribute__((__used__)) use_protocols(void)
 #if PyObjC_BUILD_RELEASE >= 1011
     p = PyObjC_IdToPython(@protocol(PHContentEditingController)); Py_XDECREF(p);
 #endif /* PyObjC_BUILD_RELEASE >= 1010 */
+#if PyObjC_BUILD_RELEASE >= 1012
+    p = PyObjC_IdToPython(@protocol(PHLivePhotoViewDelegate)); Py_XDECREF(p);
+#endif /* PyObjC_BUILD_RELEASE >= 1010 */
 }

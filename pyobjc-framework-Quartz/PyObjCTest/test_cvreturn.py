@@ -21,6 +21,7 @@ class TestCVReturn (TestCase):
         self.assertEqual(kCVReturnWouldExceedAllocationThreshold, -6689)
         self.assertEqual(kCVReturnPoolAllocationFailed, -6690)
         self.assertEqual(kCVReturnInvalidPoolAttributes, -6691)
+        self.assertEqual(kCVReturnRetry, -6692)
         self.assertEqual(kCVReturnLast, -6699)
 
 if __name__ == "__main__":

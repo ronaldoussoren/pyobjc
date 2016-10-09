@@ -2,7 +2,54 @@
 # for information on how to update this file.
 {
  "definitions": {
+  "aliases": {
+   "PHCollectionListSubtypeAny": { "alias": "NSIntegerMax" },
+   "PHImageContentModeDefault": { "alias": "PHImageContentModeAspectFit" },
+   "PHAssetCollectionSubtypeAny": { "alias": "NSIntegerMax" }
+  },
   "enum": {
+   "PHCollectionEditOperationDeleteContent": { "value": 1 },
+   "PHCollectionEditOperationRemoveContent": { "value": 2 },
+   "PHCollectionEditOperationAddContent": { "value": 3 },
+   "PHCollectionEditOperationCreateContent": { "value": 4 },
+   "PHCollectionEditOperationRearrangeContent": { "value": 5 },
+   "PHCollectionEditOperationDelete": { "value": 6 },
+   "PHCollectionEditOperationRename": { "value": 7 },
+   "PHAssetCollectionTypeAlbum": { "value": 1 },
+   "PHAssetCollectionTypeSmartAlbum": { "value": 2 },
+   "PHAssetCollectionTypeMoment": { "value": 3 },
+   "PHAssetCollectionSubtypeAlbumRegular": { "value": 2 },
+   "PHAssetCollectionSubtypeAlbumSyncedEvent": { "value": 3 },
+   "PHAssetCollectionSubtypeAlbumSyncedFaces": { "value": 4 },
+   "PHAssetCollectionSubtypeAlbumSyncedAlbum": { "value": 5 },
+   "PHAssetCollectionSubtypeAlbumImported": { "value": 6 },
+   "PHAssetCollectionSubtypeAlbumMyPhotoStream": { "value": 100 },
+   "PHAssetCollectionSubtypeAlbumCloudShared": { "value": 101 },
+   "PHAssetCollectionSubtypeSmartAlbumGeneric": { "value": 200 },
+   "PHAssetCollectionSubtypeSmartAlbumPanoramas": { "value": 201 },
+   "PHAssetCollectionSubtypeSmartAlbumVideos": { "value": 202 },
+   "PHAssetCollectionSubtypeSmartAlbumFavorites": { "value": 203 },
+   "PHAssetCollectionSubtypeSmartAlbumTimelapses": { "value": 204 },
+   "PHAssetCollectionSubtypeSmartAlbumAllHidden": { "value": 205 },
+   "PHAssetCollectionSubtypeSmartAlbumRecentlyAdded": { "value": 206 },
+   "PHAssetCollectionSubtypeSmartAlbumBursts": { "value": 207 },
+   "PHAssetCollectionSubtypeSmartAlbumSlomoVideos": { "value": 208 },
+   "PHAssetCollectionSubtypeSmartAlbumUserLibrary": { "value": 209 },
+   "PHAssetCollectionSubtypeSmartAlbumSelfPortraits": { "value": 210 },
+   "PHAssetCollectionSubtypeSmartAlbumScreenshots": { "value": 211 },
+   "PHAssetEditOperationDelete": { "value": 1 },
+   "PHAssetEditOperationContent": { "value": 2 },
+   "PHAssetEditOperationProperties": { "value": 3 },
+   "PHImageContentModeAspectFit": { "value": 0 },
+   "PHImageContentModeAspectFill": { "value": 1 },
+   "PHCollectionListTypeMomentList": { "value": 1 },
+   "PHCollectionListTypeFolder": { "value": 2 },
+   "PHCollectionListTypeSmartFolder": { "value": 3 },
+   "PHCollectionListSubtypeMomentListCluster": { "value": 1 },
+   "PHCollectionListSubtypeMomentListYear": { "value": 2 },
+   "PHCollectionListSubtypeRegularFolder": { "value": 100 },
+   "PHCollectionListSubtypeSmartFolderEvents": { "value": 200 },
+   "PHCollectionListSubtypeSmartFolderFaces": { "value": 201 },
    "PHAssetMediaTypeUnknown": { "value": 0 },
    "PHAssetMediaTypeImage": { "value": 1 },
    "PHAssetMediaTypeVideo": { "value": 2  },
@@ -13,7 +60,96 @@
    "PHAssetMediaSubtypePhotoScreenshot": { "value": 4 },
    "PHAssetMediaSubtypeVideoStreamed": { "value": 65536 },
    "PHAssetMediaSubtypeVideoHighFrameRate": { "value": 131072 },
-   "PHAssetMediaSubtypeVideoTimelapse": { "value": 262144 }
+   "PHAssetMediaSubtypeVideoTimelapse": { "value": 262144 },
+   "PHLivePhotoFrameTypePhoto": { "value": 0 },
+   "PHLivePhotoFrameTypeVideo": { "value": 1 },
+   "PHLivePhotoEditingErrorCodeUnknown": { "value": 0 },
+   "PHLivePhotoEditingErrorCodeAborted": { "value": 1 },
+   "PHAssetMediaSubtypePhotoLive": { "value": 8 },
+   "PHAssetBurstSelectionTypeNone": { "value": 0 },
+   "PHAssetBurstSelectionTypeAutoPick": { "value": 1 },
+   "PHAssetBurstSelectionTypeUserPick": { "value": 2 },
+   "PHAssetSourceTypeNone": { "value": 0 },
+   "PHAssetSourceTypeUserLibrary": { "value": 1 },
+   "PHAssetSourceTypeCloudShared": { "value": 2 },
+   "PHAssetSourceTypeiTunesSynced": { "value": 4 },
+   "PHAssetResourceTypePhoto": { "value": 1 },
+   "PHAssetResourceTypeVideo": { "value": 2 },
+   "PHAssetResourceTypeAudio": { "value": 3 },
+   "PHAssetResourceTypeAlternatePhoto": { "value": 4 },
+   "PHAssetResourceTypeFullSizePhoto": { "value": 5 },
+   "PHAssetResourceTypeFullSizeVideo": { "value": 6 },
+   "PHAssetResourceTypeAdjustmentData": { "value": 7 },
+   "PHAssetResourceTypeAdjustmentBasePhoto": { "value": 8 },
+   "PHAssetResourceTypePairedVideo": { "value": 9 }
+  },
+  "class": {
+   "PHLivePhotoEditingContext": {
+    "methods": [
+     {
+      "selector": "frameProcessor",
+      "class_methods": false,
+      "retval": {
+       "callable": {
+        "retval": { "typestr": "@" },
+	"arguments": {
+	 "0": { "typestr": "^v" },
+	 "1": { "typestr": "@" },
+	 "2": { "typestr": "o^@" }
+	}
+       }
+      }
+     },
+     {
+      "selector": "setFrameProcessor:",
+      "class_methods": false,
+      "args": {
+       "0": {
+        "callable": {
+         "retval": { "typestr": "@" },
+	 "arguments": {
+	  "0": { "typestr": "^v" },
+	  "1": { "typestr": "@" },
+	  "2": { "typestr": "o^@" }
+	 }
+	}
+       }
+      }
+     },
+     {
+      "selector": "prepareLivePhotoForPlaybackWithTargetSize:options:completionHandler:",
+      "class_methods": false,
+      "args": {
+       "2": {
+        "callable": {
+         "retval": { "typestr": "v" },
+	 "arguments": {
+	  "0": { "typestr": "^v" },
+	  "1": { "typestr": "Z" },
+	  "2": { "typestr": "@" }
+	 }
+	}
+       }
+      }
+     },
+     {
+      "selector": "saveLivePhotoToOutput:options:completionHandler:",
+      "class_methods": false,
+      "args": {
+       "2": {
+        "callable": {
+         "retval": { "typestr": "v" },
+	 "arguments": {
+	  "0": { "typestr": "^v" },
+	  "1": { "typestr": "Z" },
+	  "2": { "typestr": "@" }
+	 }
+	}
+       }
+      }
+     }
+    ]
+   }
   }
  }
 }

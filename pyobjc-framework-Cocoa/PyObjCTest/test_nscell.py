@@ -119,6 +119,8 @@ class TestNSCell(TestCase):
         self.assertEqual(NSImageBelow, 4)
         self.assertEqual(NSImageAbove, 5)
         self.assertEqual(NSImageOverlaps, 6)
+        self.assertEqual(NSImageLeading, 7)
+        self.assertEqual(NSImageTrailing, 8)
 
         self.assertEqual(NSScaleProportionally, 0)
         self.assertEqual(NSScaleToFit, 1)
@@ -132,6 +134,10 @@ class TestNSCell(TestCase):
         self.assertEqual(NSMixedState, -1)
         self.assertEqual(NSOffState,  0)
         self.assertEqual(NSOnState,  1)
+
+        self.assertEqual(NSControlStateMixed, -1)
+        self.assertEqual(NSControlStateOff,  0)
+        self.assertEqual(NSControlStateOn,  1)
 
         self.assertEqual(NSNoCellMask, 0)
         self.assertEqual(NSContentsCellMask, 1)
@@ -147,6 +153,10 @@ class TestNSCell(TestCase):
         self.assertEqual(NSRegularControlSize, 0)
         self.assertEqual(NSSmallControlSize, 1)
         self.assertEqual(NSMiniControlSize, 2)
+
+        self.assertEqual(NSControlSizeRegular, 0)
+        self.assertEqual(NSControlSizeSmall, 1)
+        self.assertEqual(NSControlSizeMini, 2)
 
         self.assertEqual(NSCellHitNone, 0)
         self.assertEqual(NSCellHitContentArea, 1 << 0)

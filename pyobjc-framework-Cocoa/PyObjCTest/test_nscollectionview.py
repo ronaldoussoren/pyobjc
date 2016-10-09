@@ -79,6 +79,11 @@ class TestNSCollectionView (TestCase):
 
         self.assertArgIsBlock(NSSet.enumerateIndexPathsWithOptions_usingBlock_, 1, b'v@o^Z')
 
+    @min_os_level('10.12')
+    def testMethods10_12(self):
+        self.assertResultIsBOOL(NSCollectionView.backgroundViewScrollsWithContent)
+        self.assertArgIsBOOL(NSCollectionView.setBackgroundViewScrollsWithContent_, 0)
+
     def testConstants(self):
         self.assertEqual(NSCollectionViewScrollPositionNone, 0)
         self.assertEqual(NSCollectionViewScrollPositionTop, 1 << 0)
@@ -136,7 +141,9 @@ class TestNSCollectionView (TestCase):
         self.assertArgHasType(TestNSCollectionViewHelper.collectionView_didChangeItemsAtIndexPaths_toHighlightState_,
                 2, objc._C_NSInteger)
 
-
+    @min_sdk_level('10.12')
+    def testProtocol10_12(self):
+        objc.protocolNamed('NSCollectionViewSectionHeaderView')
 
 
 if __name__ == "__main__":

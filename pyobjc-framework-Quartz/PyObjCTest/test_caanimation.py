@@ -43,6 +43,10 @@ class TestCAAnimation (TestCase):
         self.assertIsInstance(kCAAnimationCubic, unicode)
         self.assertIsInstance(kCAAnimationCubicPaced, unicode)
 
+    @min_sdk_level('10.12')
+    def testProtocols(self):
+        objc.protocolNamed('CAAnimationDelegate')
+
 
 if __name__ == "__main__":
     main()

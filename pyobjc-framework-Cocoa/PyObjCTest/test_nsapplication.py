@@ -54,6 +54,10 @@ class TestNSApplication (TestCase):
         self.assertEqual(NSAppKitVersionNumber10_10_4, 1348)
         self.assertEqual(NSAppKitVersionNumber10_10_5, 1348)
         self.assertEqual(NSAppKitVersionNumber10_10_Max, 1349)
+        self.assertEqual(NSAppKitVersionNumber10_11, 1404)
+        self.assertEqual(NSAppKitVersionNumber10_11_1, 1404.13)
+        self.assertEqual(NSAppKitVersionNumber10_11_2, 1404.34)
+        self.assertEqual(NSAppKitVersionNumber10_11_3, 1404.34)
 
         self.assertIsInstance(NSModalPanelRunLoopMode, unicode)
         self.assertIsInstance(NSEventTrackingRunLoopMode, unicode)
@@ -94,6 +98,8 @@ class TestNSApplication (TestCase):
         self.assertIsInstance(NSApplicationWillUpdateNotification, unicode)
         self.assertIsInstance(NSApplicationWillTerminateNotification, unicode)
         self.assertIsInstance(NSApplicationDidChangeScreenParametersNotification, unicode)
+
+        self.assertEqual(NSWindowListOrderedFrontToBack, 1<<0)
 
 
     def testFunctions(self):
@@ -237,6 +243,10 @@ class TestNSApplication (TestCase):
     def testMethods10_6(self):
         self.assertResultIsBOOL(NSApplication.setActivationPolicy_)
         self.assertResultIsBOOL(NSApplication.isFullKeyboardAccessEnabled)
+
+    @min_os_level('10.12')
+    def testMethods10_12(self):
+        self.assertArgIsBlock(NSApplication.enumerateWindowsWithOptions_usingBlock_, 1, b'v@o^Z')
 
     @min_sdk_level('10.10')
     def testProtocols(self):

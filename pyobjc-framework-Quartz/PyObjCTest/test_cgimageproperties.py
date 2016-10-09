@@ -365,5 +365,28 @@ class TestCGImageProperties (TestCase):
         self.assertIsInstance(kCGImagePropertyTIFFTileLength, unicode)
         self.assertIsInstance(kCGImagePropertyPNGCompressionFilter, unicode)
 
+    @min_os_level('10.12')
+    def testConstants10_12(self):
+        self.assertIsInstance(kCGImagePropertyDNGBlackLevel, unicode)
+        self.assertIsInstance(kCGImagePropertyDNGWhiteLevel, unicode)
+        self.assertIsInstance(kCGImagePropertyDNGCalibrationIlluminant1, unicode)
+        self.assertIsInstance(kCGImagePropertyDNGCalibrationIlluminant2, unicode)
+        self.assertIsInstance(kCGImagePropertyDNGColorMatrix1, unicode)
+        self.assertIsInstance(kCGImagePropertyDNGColorMatrix2, unicode)
+        self.assertIsInstance(kCGImagePropertyDNGCameraCalibration1, unicode)
+        self.assertIsInstance(kCGImagePropertyDNGCameraCalibration2, unicode)
+        self.assertIsInstance(kCGImagePropertyDNGAsShotNeutral, unicode)
+        self.assertIsInstance(kCGImagePropertyDNGAsShotWhiteXY, unicode)
+        self.assertIsInstance(kCGImagePropertyDNGBaselineExposure, unicode)
+        self.assertIsInstance(kCGImagePropertyDNGBaselineNoise, unicode)
+        self.assertIsInstance(kCGImagePropertyDNGBaselineSharpness, unicode)
+        self.assertIsInstance(kCGImagePropertyDNGPrivateData, unicode)
+        self.assertIsInstance(kCGImagePropertyDNGCameraCalibrationSignature, unicode)
+        self.assertIsInstance(kCGImagePropertyDNGProfileCalibrationSignature, unicode)
+        self.assertIsInstance(kCGImagePropertyDNGNoiseProfile, unicode)
+        self.assertIsInstance(kCGImagePropertyDNGWarpRectilinear, unicode)
+        self.assertIsInstance(kCGImagePropertyDNGWarpFisheye, unicode)
+        self.assertIsInstance(kCGImagePropertyDNGFixVignetteRadial, unicode)
+
 if __name__ == "__main__":
     main()

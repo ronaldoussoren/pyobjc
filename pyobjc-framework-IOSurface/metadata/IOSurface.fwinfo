@@ -7,7 +7,65 @@
     "gettypeid_func": "IOSurfaceGetTypeID"
    }
   },
-  "classes": {},
+  "externs": {
+   "kIOSurfacePixelSizeCastingAllowed": { "typestr": "@" },
+   "IOSurfacePropertyAllocSizeKey": { "typestr": "@" },
+   "IOSurfacePropertyKeyWidth": { "typestr": "@" },
+   "IOSurfacePropertyKeyHeight": { "typestr": "@" },
+   "IOSurfacePropertyKeyBytesPerRow": { "typestr": "@" },
+   "IOSurfacePropertyKeyBytesPerElement": { "typestr": "@" },
+   "IOSurfacePropertyKeyElementWidth": { "typestr": "@" },
+   "IOSurfacePropertyKeyElementHeight": { "typestr": "@" },
+   "IOSurfacePropertyKeyOffset": { "typestr": "@" },
+   "IOSurfacePropertyKeyPlaneInfo": { "typestr": "@" },
+   "IOSurfacePropertyKeyPlaneWidth": { "typestr": "@" },
+   "IOSurfacePropertyKeyPlaneHeight": { "typestr": "@" },
+   "IOSurfacePropertyKeyPlaneBytesPerRow": { "typestr": "@" },
+   "IOSurfacePropertyKeyPlaneOffset": { "typestr": "@" },
+   "IOSurfacePropertyKeyPlaneSize": { "typestr": "@" },
+   "IOSurfacePropertyKeyPlaneBase": { "typestr": "@" },
+   "IOSurfacePropertyKeyPlaneBytesPerElement": { "typestr": "@" },
+   "IOSurfacePropertyKeyPlaneElementWidth": { "typestr": "@" },
+   "IOSurfacePropertyKeyPlaneElementHeight": { "typestr": "@" },
+   "IOSurfacePropertyKeyCacheMode": { "typestr": "@" },
+   "IOSurfacePropertyKeyPixelFormat": { "typestr": "@" },
+   "IOSurfacePropertyKeyPixelSizeCastingAllowed": { "typestr": "@" }
+  },
+  "classes": {
+   "IOSurface": {
+    "methods": [
+     {
+      "selector": "lockWithOptions:seed:",
+      "class_method": false,
+      "args": {
+       "1": { "type_modifier": "o" }
+      }
+     },
+     {
+      "selector": "unlockWithOptions:seed:",
+      "class_method": false,
+      "args": {
+       "1": { "type_modifier": "o" }
+      }
+     },
+     {
+      "selector": "allowsPixelSizeCasting",
+      "class_method": false,
+      "retval": { "type_override": "Z" }
+     },
+     {
+      "selector": "isInUse",
+      "class_method": false,
+      "retval": { "type_override": "Z" }
+     },
+     {
+      "selector": "baseAddressOfPlaneAtIndex",
+      "class_method": false,
+      "retval": { "c_array_of_variable_size": true }
+     }
+    ]
+   }
+  },
   "formal_protocols": {},
   "functions": {
    "IOSurfaceAlignProperty": {
@@ -331,6 +389,16 @@
       "type_modifier": "N",
       "type_override": "^I"
      }
+    }
+   },
+   "IOSurfaceAllowsPixelSizeCasting": {
+    "args": {
+     "0": {
+      "type_override": "^{__IOSurface=}"
+     }
+    },
+    "retval": {
+     "type_override": "Z"
     }
    }
   },

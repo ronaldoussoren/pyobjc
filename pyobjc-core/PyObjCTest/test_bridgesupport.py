@@ -452,10 +452,11 @@ class TestBridgeSupportParser (TestCase):
         with filterWarnings("ignore", RuntimeWarning):
             # Check that all system bridgesupport files can be processed correctly
             for fn in self.iter_system_bridgesupport_files():
-                with open(fn, 'r') as fp:
-                    xmldata = fp.read()
+                with self.subTest(fn):
+                    with open(fn, 'rb') as fp:
+                        xmldata = fp.read()
 
-                self.assert_valid_bridgesupport(os.path.basename(fn).split('.')[0], xmldata)
+                    self.assert_valid_bridgesupport(os.path.basename(fn).split('.')[0], xmldata)
 
     def test_xml_structure_variants(self):
         # Run 'verify_xml_structure' for all cpu variant
