@@ -921,7 +921,10 @@ PyObjCSelector_New(PyObject* callable,
         return NULL;
     }
 
-    PyObjC_RemoveInternalTypeCodes((char*)result->base.sel_native_signature);
+    if (PyObjC_RemoveInternalTypeCodes((char*)result->base.sel_native_signature) == -1) {
+        Py_DECREF(result);
+        return NULL;
+    }
 
     result->base.sel_self = NULL;
     result->base.sel_class = cls;

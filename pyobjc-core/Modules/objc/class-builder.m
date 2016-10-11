@@ -310,7 +310,7 @@ exit:
     case _C_STRUCT_B:
         while (*buf != _C_STRUCT_E && *buf && *buf++ != '=') {
         }
-        while (*buf && *buf != _C_STRUCT_E) {
+        while (buf && *buf && *buf != _C_STRUCT_E) {
             if (*buf == '"') {
                 /* embedded field name */
                 buf = strchr(buf+1, '"');
@@ -327,7 +327,7 @@ exit:
     case _C_UNION_B:
         while (*buf != _C_UNION_E && *buf && *buf++ != '=') {
         }
-        while (*buf && *buf != _C_UNION_E) {
+        while (buf && *buf && *buf != _C_UNION_E) {
             if (*buf == '"') {
                 /* embedded field name */
                 buf = strchr(buf+1, '"');
@@ -348,13 +348,15 @@ exit:
     }
 }
 
-void
+int
 PyObjC_RemoveInternalTypeCodes(char* buf)
 {
    while(buf && *buf) {
       tc2tc(buf);
       buf = (char*)PyObjCRT_SkipTypeSpec(buf);
+      if (buf == NULL) return -1;
    }
+   return 0;
 }
 
 static BOOL
