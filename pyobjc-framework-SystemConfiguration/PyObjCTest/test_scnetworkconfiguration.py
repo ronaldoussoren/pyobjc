@@ -45,12 +45,15 @@ class TestSCNetworkConfiguration (TestCase):
         self.assertTrue(isinstance(kSCBondStatusDeviceCollecting, unicode))
         self.assertTrue(isinstance(kSCBondStatusDeviceDistributing, unicode))
 
-        self.assertTrue(isinstance(kSCNetworkProtocolTypeAppleTalk, unicode))
         self.assertTrue(isinstance(kSCNetworkProtocolTypeDNS, unicode))
         self.assertTrue(isinstance(kSCNetworkProtocolTypeIPv4, unicode))
         self.assertTrue(isinstance(kSCNetworkProtocolTypeIPv6, unicode))
         self.assertTrue(isinstance(kSCNetworkProtocolTypeProxies, unicode))
         self.assertTrue(isinstance(kSCNetworkProtocolTypeSMB, unicode))
+
+    @max_os_level('10.11')
+    def testConstantsUpto10_12(self):
+        self.assertTrue(isinstance(kSCNetworkProtocolTypeAppleTalk, unicode))
 
     @min_os_level('10.6')
     def testConstants10_5(self):
@@ -214,7 +217,7 @@ class TestSCNetworkConfiguration (TestCase):
             self.assertIs(r, True)
 
             t = SCVLANInterfaceGetOptions(iface)
-            self.assertTrue(isinstance(t, CFDictionaryRef))
+            self.assertIsInstance(t, (dict, CFDictionaryRef))
 
             r = SCVLANInterfaceRemove(iface)
             self.assertTrue(r is True)
