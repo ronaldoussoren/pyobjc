@@ -127,6 +127,7 @@ class TestNSURLSession (TestCase):
         self.assertResultIsBOOL(TestNSURLSessionConfigurationHelper.shouldUseExtendedBackgroundIdleMode)
         self.assertArgIsBOOL(TestNSURLSessionConfigurationHelper.setShouldUseExtendedBackgroundIdleMode_, 0)
 
+    @expectedFailure # For some reason these aren't present on 10.12 after all.
     @min_os_level('10.12')
     def testMethods10_12(self):
         self.assertResultIsBOOL(NSURLSessionTaskTransactionMetrics.isProxyConnection)

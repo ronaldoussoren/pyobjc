@@ -50,6 +50,78 @@
    }
   },
   "classes": {
+   "NSGridColumn": {
+    "methods": [
+     {
+      "class_method": false,
+      "args": {
+       "0": { "type_override": "Z" }
+      },
+      "selector": "setHidden:"
+     },
+     {
+      "class_method": false,
+      "retval": {
+       "type_override": "Z"
+      },
+      "selector": "isHidden"
+     }
+    ]
+   },
+   "NSGridRow": {
+    "methods": [
+     {
+      "class_method": false,
+      "args": {
+       "0": { "type_override": "Z" }
+      },
+      "selector": "setHidden:"
+     },
+     {
+      "class_method": false,
+      "retval": {
+       "type_override": "Z"
+      },
+      "selector": "isHidden"
+     }
+    ]
+   },
+   "NSTitlebarAccessoryViewController": {
+    "methods": [
+     {
+      "class_method": false,
+      "args": {
+       "0": { "type_override": "Z" }
+      },
+      "selector": "setHidden:"
+     },
+     {
+      "class_method": false,
+      "retval": {
+       "type_override": "Z"
+      },
+      "selector": "isHidden"
+     }
+    ]
+   },
+   "NSGridView": {
+    "methods": [
+     {
+      "class_method": false,
+      "args": {
+       "0": { "type_override": "Z" }
+      },
+      "selector": "setHidden:"
+     },
+     {
+      "class_method": false,
+      "retval": {
+       "type_override": "Z"
+      },
+      "selector": "isHidden"
+     }
+    ]
+   },
    "NSVisualEffectView": {
     "methods": [
      {
@@ -3988,7 +4060,7 @@
      },
      {
       "retval": {
-       "type_modifier": "N"
+       "type_override": "Z"
       },
       "class_method": false,
       "selector": "backgroundViewScrollsWithContent"
@@ -15878,6 +15950,20 @@
    },
    "NSOutlineView": {
     "methods": [
+     {
+      "class_method": false,
+      "retval": {
+       "type_override": "Z"
+      },
+      "selector": "stronglyReferencesItems"
+     },
+     {
+      "class_method": false,
+      "args": {
+       "0": { "type_override": "Z" }
+      },
+      "selector": "setStronglyReferencesItems:"
+     },
      {
       "class_method": false,
       "retval": {

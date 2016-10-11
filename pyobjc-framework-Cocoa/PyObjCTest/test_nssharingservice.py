@@ -10,11 +10,11 @@ class TestNSSharingService (TestCase):
     def testConstants10_12(self):
         self.assertIsInstance(AppKit.NSSharingServiceNameCloudSharing, unicode)
 
-        self.assertEqual(NSCloudKitSharingServiceStandard, 0)
-        self.assertEqual(NSCloudKitSharingServiceAllowPublic, 1 << 0)
-        self.assertEqual(NSCloudKitSharingServiceAllowPrivate, 1 << 1)
-        self.assertEqual(NSCloudKitSharingServiceAllowReadOnly, 1 << 4)
-        self.assertEqual(NSCloudKitSharingServiceAllowReadWrite, 1 << 5)
+        self.assertEqual(AppKit.NSCloudKitSharingServiceStandard, 0)
+        self.assertEqual(AppKit.NSCloudKitSharingServiceAllowPublic, 1 << 0)
+        self.assertEqual(AppKit.NSCloudKitSharingServiceAllowPrivate, 1 << 1)
+        self.assertEqual(AppKit.NSCloudKitSharingServiceAllowReadOnly, 1 << 4)
+        self.assertEqual(AppKit.NSCloudKitSharingServiceAllowReadWrite, 1 << 5)
 
     @min_os_level('10.9')
     def testConstants10_9(self):

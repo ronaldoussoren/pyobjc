@@ -46,12 +46,12 @@
    "kCFNumberFormatterCurrencyAccountingStyle": { "value": "10" }
   },
   "externs": {
-    "kCFURLVolumeIsEncryptedKey": { "ignore": true },
-    "kCFURLVolumeIsRootFileSystemKey": { "ignore": true },
-    "kCFURLVolumeSupportsCompressionKey": { "ignore": true },
-    "kCFURLVolumeSupportsFileCloningKey": { "ignore": true },
-    "kCFURLVolumeSupportsSwapRenamingKey": { "ignore": true },
-    "kCFURLVolumeSupportsExclusiveRenamingKey": { "ignore": true },
+    "kCFURLVolumeIsEncryptedKey": { "typestr": "@" },
+    "kCFURLVolumeIsRootFileSystemKey": { "typestr": "@" },
+    "kCFURLVolumeSupportsCompressionKey": { "typestr": "@" },
+    "kCFURLVolumeSupportsFileCloningKey": { "typestr": "@" },
+    "kCFURLVolumeSupportsSwapRenamingKey": { "typestr": "@" },
+    "kCFURLVolumeSupportsExclusiveRenamingKey": { "typestr": "@" },
     "kCFTypeSetCallBacks": { "ignore": true },
     "kCFTypeDictionaryValueCallBacks": { "ignore": true },
     "kCFPlugInDynamicRegistrationKey": { "ignore": true },

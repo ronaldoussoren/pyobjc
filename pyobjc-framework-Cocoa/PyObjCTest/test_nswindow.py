@@ -292,7 +292,7 @@ class TestNSWindow (TestCase):
         self.assertResultIsBOOL(NSWindow.canRepresentDisplayGamut_)
 
         self.assertResultIsBOOL(NSWindow.allowsAutomaticWindowTabbing)
-        self.assertArgIsBOOL(NSWindow.setAllowsAutomaticWindowTabbing_)
+        self.assertArgIsBOOL(NSWindow.setAllowsAutomaticWindowTabbing_, 0)
 
     @min_sdk_level('10.6')
     def testProtocolObjects(self):
