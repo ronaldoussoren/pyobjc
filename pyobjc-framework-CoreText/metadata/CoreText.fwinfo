@@ -1803,7 +1803,7 @@
      	"type_override": "^{__CTLine=}"
      },
      "1": {
-      "type_override": "@!",
+      "type_override": "@?",
       "callable": {
        "arguments": {
         "0": { "type": "^v" },
@@ -1815,7 +1815,8 @@
        "retval": { "type": "v" }
       }
      }
-    }
+    },
+    "retval": { "type": "v" }
    }
   },
   "informal_protocols": {}

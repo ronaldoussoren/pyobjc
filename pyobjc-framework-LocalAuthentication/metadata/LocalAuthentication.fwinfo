@@ -8,6 +8,8 @@
    }
   },
   "enum": {
+   "LAAccessControlOperationUseKeyDecrypt": { value: 4 },
+   "LAAccessControlOperationUseKeyKeyExchange": { value: 5 },
    "kLACredentialTypePasscode": { "value": -1 },
    "kLACredentialTypePassphrase": { "value": -2 },
    "kLACredentialCTKPIN": { "value": -3 },

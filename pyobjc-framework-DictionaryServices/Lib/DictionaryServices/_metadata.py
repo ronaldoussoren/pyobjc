@@ -18,7 +18,7 @@ misc = {
 constants = '''$$'''
 enums = '''$$'''
 misc.update({})
-functions={'DCSDictionaryGetTypeID': (b'l', '', {'comment': 'Function not present in header files'}), 'DCSGetTermRangeInString': (sel32or64(b'{_CFRange=ll}^{__DCSDictionary=}^{__CFString=}l', b'{_CFRange=qq}^{__DCSDictionary=}^{__CFString=}l'),), 'DCSCopyTextDefinition': (sel32or64(b'^{__CFString=}^{__DCSDictionary=}^{__CFString=}{_CFRange=ll}', b'^{__CFString=}^{__DCSDictionary=}^{__CFString=}{_CFRange=qq}'), '', {'retval': {'already_retained': True, 'already_cfretained': True}})}
+functions={'DCSDictionaryGetTypeID': (b'l', '', {'comment': 'Function not present in header files'}), 'DCSGetTermRangeInString': (sel32or64(b'{_CFRange=ll}^{__DCSDictionary=}^{__CFString=}i', b'{_CFRange=qq}^{__DCSDictionary=}^{__CFString=}q'),), 'DCSCopyTextDefinition': (sel32or64(b'^{__CFString=}^{__DCSDictionary=}^{__CFString=}{_CFRange=ll}', b'^{__CFString=}^{__DCSDictionary=}^{__CFString=}{_CFRange=qq}'), '', {'retval': {'already_retained': True, 'already_cfretained': True}})}
 cftypes=[('DCSDictionaryRef', b'^{__DCSDictionary=}', 'DCSDictionaryGetTypeID', None)]
 expressions = {}
 

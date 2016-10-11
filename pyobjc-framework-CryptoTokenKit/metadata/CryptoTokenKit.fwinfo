@@ -29,6 +29,18 @@
    "TKSmartCardPINConfirmationNew": { "value": 1 }
   },
   "classes": {
+   "TKTokenAuthOperation": {
+    "methods": [
+     {
+      "class_method": false,
+      "selector": "finishWithError:",
+      "args": {
+       "0": { "type_modifier": "o" }
+      },
+      "retval": { "type_override": "Z" }
+     }
+    ]
+   },
    "TKSmartCardUserInteractionForConfirmation": {
     "methods": [
      {

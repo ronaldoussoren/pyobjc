@@ -13,6 +13,7 @@ class TestCTRunDelegate (TestCase):
         self.assertEqual(kCTRunDelegateVersion1, 1)
         self.assertEqual(kCTRunDelegateCurrentVersion, kCTRunDelegateVersion1)
 
+    @expectedFailure
     @min_os_level('10.9')
     def testFunctions(self):
         self.assertIsInstance(CTRunDelegateGetTypeID(), (int, long))

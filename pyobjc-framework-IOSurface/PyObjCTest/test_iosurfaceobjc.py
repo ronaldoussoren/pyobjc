@@ -34,9 +34,9 @@ class TestIOSurfaceObjC (TestCase):
     def testMethods(self):
         self.assertArgIsOut(IOSurface.IOSurface.lockWithOptions_seed_, 1)
         self.assertArgIsOut(IOSurface.IOSurface.unlockWithOptions_seed_, 1)
-        self.fail(IOSurface.IOSurface.baseAddressOfPlaneAtIndex) # Buffer
         self.assertResultIsBOOL(IOSurface.IOSurface.isInUse)
         self.assertResultIsBOOL(IOSurface.IOSurface.allowsPixelSizeCasting)
+        self.fail(IOSurface.IOSurface.baseAddressOfPlaneAtIndex_) # Buffer
 
 if __name__ == "__main__":
     main()

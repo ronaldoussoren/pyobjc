@@ -7,6 +7,9 @@
    "PHImageContentModeDefault": { "alias": "PHImageContentModeAspectFit" },
    "PHAssetCollectionSubtypeAny": { "alias": "NSIntegerMax" }
   },
+  "externs": {
+   "PHLivePhotoEditingErrorDomain": { "typestr": "@" }
+  },
   "enum": {
    "PHCollectionEditOperationDeleteContent": { "value": 1 },
    "PHCollectionEditOperationRemoveContent": { "value": 2 },
@@ -83,12 +86,31 @@
    "PHAssetResourceTypeAdjustmentBasePhoto": { "value": 8 },
    "PHAssetResourceTypePairedVideo": { "value": 9 }
   },
-  "class": {
+  "classes": {
+   "NSObject": {
+    "methods": [
+     {
+      "class_method": false,
+      "selector": "renderScale",
+      "retval": { "type_override": [ "f", "d" ] }
+     },
+     {
+      "class_method": false,
+      "selector": "type",
+      "retval": { "type_override": [ "i", "q" ] }
+     },
+     {
+      "class_method": false,
+      "selector": "time",
+      "retval": { "type_override": "{_CMTime=qiIq}" }
+     }
+    ]
+   },
    "PHLivePhotoEditingContext": {
     "methods": [
      {
       "selector": "frameProcessor",
-      "class_methods": false,
+      "class_method": false,
       "retval": {
        "callable": {
         "retval": { "typestr": "@" },
@@ -102,7 +124,7 @@
      },
      {
       "selector": "setFrameProcessor:",
-      "class_methods": false,
+      "class_method": false,
       "args": {
        "0": {
         "callable": {
@@ -118,7 +140,7 @@
      },
      {
       "selector": "prepareLivePhotoForPlaybackWithTargetSize:options:completionHandler:",
-      "class_methods": false,
+      "class_method": false,
       "args": {
        "2": {
         "callable": {
@@ -134,7 +156,7 @@
      },
      {
       "selector": "saveLivePhotoToOutput:options:completionHandler:",
-      "class_methods": false,
+      "class_method": false,
       "args": {
        "2": {
         "callable": {

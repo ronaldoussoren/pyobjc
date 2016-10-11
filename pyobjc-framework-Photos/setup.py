@@ -6,8 +6,8 @@ for information on how to use this framework and PyObjC's documentation
 for general tips and tricks regarding the translation between Python
 and (Objective-)C frameworks
 '''
-
-from pyobjc_setup import setup
+from pyobjc_setup import setup, Extension
+import os
 
 VERSION="3.2a1"
 
@@ -25,4 +25,16 @@ setup(
         'pyobjc-framework-Cocoa>=' + VERSION,
     ],
     min_os_level="10.11",
+    ext_modules = [
+        Extension("Photos._Photos",
+            [ "Modules/_Photos.m" ],
+            extra_link_args=["-framework", "Photos"],
+            depends=[
+                os.path.join('Modules', fn)
+                for fn in os.listdir('Modules')
+                if fn.startswith('_Photos')
+            ]
+        ),
+    ],
+
 )

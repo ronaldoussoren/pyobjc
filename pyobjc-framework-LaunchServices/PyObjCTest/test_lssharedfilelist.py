@@ -78,8 +78,7 @@ class TestLSSharedFileList (TestCase):
         self.assertResultIsCFRetained(LSSharedFileListInsertItemURL)
         url = CFURLCreateWithString(None, "file://" + os.path.expanduser('~'), None)
         title = b"PyObjC.Test".decode("latin1")
-        # XXX
-        #item = LSSharedFileListInsertItemFSRef(lst, kLSSharedFileListItemLast, title, None, objc.FSRef.from_pathname(os.path.expanduser('~')), None, None)
+        item = LSSharedFileListInsertItemFSRef(lst, kLSSharedFileListItemLast, title, None, objc.FSRef.from_pathname(os.path.expanduser('~')), None, None)
         self.assertIsInstance(item, LSSharedFileListItemRef)
 
         #item = LSSharedFileListInsertItemURL(lst, kLSSharedFileListItemLast, title, None, url, None, None)

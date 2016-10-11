@@ -10,6 +10,7 @@ import sys
 import Foundation
 
 from Photos import _metadata
+import Photos._Photos
 
 sys.modules['Photos'] = mod = objc.ObjCLazyModule(
     "Photos",

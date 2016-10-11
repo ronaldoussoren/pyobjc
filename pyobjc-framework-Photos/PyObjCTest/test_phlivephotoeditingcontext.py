@@ -15,13 +15,13 @@ if sys.maxsize > 2 ** 32:
         def testMethods(self):
             PHLivePhotoFrameProcessingBlock = b'@@o^@'
 
-            self.assertResultIsBlock(Photes.PHLivePhotoEditingContext.frameProcessor, PHLivePhotoFrameProcessingBlock)
-            self.assertArgIsBlock(Photes.PHLivePhotoEditingContext.setFrameProcessor_, 0, PHLivePhotoFrameProcessingBlock)
+            self.assertResultIsBlock(Photos.PHLivePhotoEditingContext.frameProcessor, PHLivePhotoFrameProcessingBlock)
+            self.assertArgIsBlock(Photos.PHLivePhotoEditingContext.setFrameProcessor_, 0, PHLivePhotoFrameProcessingBlock)
 
-            self.assertArgIsBlock(Photes.PHLivePhotoEditingContext.prepareLivePhotoForPlaybackWithTargetSize_options_completionHandler_, 2, b'vZ@')
-            self.assertArgIsBlock(Photes.PHLivePhotoEditingContext.saveLivePhotoToOutput_options_completionHandler_, 2, b'vZ@')
+            self.assertArgIsBlock(Photos.PHLivePhotoEditingContext.prepareLivePhotoForPlaybackWithTargetSize_options_completionHandler_, 2, b'vZ@')
+            self.assertArgIsBlock(Photos.PHLivePhotoEditingContext.saveLivePhotoToOutput_options_completionHandler_, 2, b'vZ@')
 
-            self.assertResultHasType(TestPHLivePhotoEditingContextHelper.time, Photos.CMTime.__typestr__)
+            self.assertResultHasType(TestPHLivePhotoEditingContextHelper.time, b'{_CMTime=qiIq}') # Photos.CMTime.__typestr__
             self.assertResultHasType(TestPHLivePhotoEditingContextHelper.type, objc._C_NSInteger)
             self.assertResultHasType(TestPHLivePhotoEditingContextHelper.renderScale, objc._C_CGFloat)
 

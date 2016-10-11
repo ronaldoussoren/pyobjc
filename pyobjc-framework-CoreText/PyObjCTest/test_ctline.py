@@ -112,7 +112,7 @@ class TestCTLine (TestCase):
 
     @min_os_level("10.11")
     def testFunctions10_11(self):
-        self.assertArgIsBlock(CTLineEnumerateCaretOffsets, 1, b'vdIBo^B')
+        self.assertArgIsBlock(CTLineEnumerateCaretOffsets, 1, b'vdLBo^B')
 
 if __name__ == "__main__":
     main()

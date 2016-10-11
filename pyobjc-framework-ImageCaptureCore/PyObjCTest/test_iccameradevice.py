@@ -24,7 +24,7 @@ class TestICCameraDevice (TestCase):
         self.assertIsInstance(ICDeleteAfterSuccessfulDownload, unicode)
         self.assertIsInstance(ICDownloadSidecarFiles, unicode)
 
-    @min_os_level('10.11')
+    @os_level_between('10.11', '10.11')
     def testConstants10_11(self):
         self.assertIsInstance(ICCameraDeviceSupportsFastPTP, unicode)
 

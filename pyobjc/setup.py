@@ -52,6 +52,7 @@ FRAMEWORKS_WRAPPERS=[
         ('InstallerPlugins',        None,               None        ),
         ('InstantMessage',          '10.5',             None        ),
         ('InterfaceBuilderKit',     '10.5',             '10.7'      ),
+        ('IOSurface',               '10.6',             None        ),
         ('LatentSemanticMapping',   None,               None        ),
         ('LaunchServices',          None,               None        ),
         ('LocalAuthentication',     '10.10',            None        ),

@@ -5,7 +5,7 @@ if sys.maxsize > 2 ** 32:
     import CryptoTokenKit
 
     class TestTKTokenHelper (CryptoTokenKit.NSObject):
-        def tokenSession_beginAuthForOperation_contraint_error_(self, s, o, c, e): return 1
+        def tokenSession_beginAuthForOperation_constraint_error_(self, s, o, c, e): return 1
         def tokenSession_supportsOperation_usingKey_algorithm_(self, s, o, k, a): return 1
         def tokenSession_signData_usingKey_algorithm_error_(self, s, d, k, a, e): return 1
         def tokenSession_decryptData_usingKey_algorithm_error_(self, s, d, k, a, e): return 1
@@ -38,7 +38,7 @@ if sys.maxsize > 2 ** 32:
 
         @min_sdk_level('10.12')
         def testProtocolMethods(self):
-            self.assertArgHasType(TestTKTokenHelper.tokenSession_beginAuthForOperation_contraint_error_, 3, b'o^@')
+            self.assertArgHasType(TestTKTokenHelper.tokenSession_beginAuthForOperation_constraint_error_, 3, b'o^@')
             self.assertResultIsBOOL(TestTKTokenHelper.tokenSession_supportsOperation_usingKey_algorithm_)
             self.assertArgHasType(TestTKTokenHelper.tokenSession_signData_usingKey_algorithm_error_, 4, b'o^@')
             self.assertArgHasType(TestTKTokenHelper.tokenSession_decryptData_usingKey_algorithm_error_, 4, b'o^@')
