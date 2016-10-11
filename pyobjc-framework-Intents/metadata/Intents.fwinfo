@@ -1,6 +1,6 @@
 {
  "definitions": {
-  "alias": {
+  "aliases": {
    "INIntentHandlingStatusDone": { "alias": "INIntentHandlingStatusSuccess" }
   },
   "enum": {
@@ -19,7 +19,7 @@
    "INSendMessageIntentResponseCodeInProgress": { "value": 2 },
    "INSendMessageIntentResponseCodeSuccess": { "value": 3 },
    "INSendMessageIntentResponseCodeFailure": { "value": 4 },
-   "INSendMessageIntentResponseCodeFailureRequiringAppLaunc": { "value": 5 },
+   "INSendMessageIntentResponseCodeFailureRequiringAppLaunch": { "value": 5 },
    "INSearchForMessagesIntentResponseCodeUnspecified": { "value": 0 },
    "INSearchForMessagesIntentResponseCodeReady": { "value": 1 },
    "INSearchForMessagesIntentResponseCodeInProgress": { "value": 2 },
@@ -31,12 +31,12 @@
    "INSearchCallHistoryIntentResponseCodeReady": { "value": 1 },
    "INSearchCallHistoryIntentResponseCodeContinueInApp": { "value": 2 },
    "INSearchCallHistoryIntentResponseCodeFailure": { "value": 3 },
-   "INSearchCallHistoryIntentResponseCodeFailureRequiringAppLaunc": { "value": 4 },
+   "INSearchCallHistoryIntentResponseCodeFailureRequiringAppLaunch": { "value": 4 },
    "INPersonHandleTypeUnknown": { "value": 0 },
    "INPersonHandleTypeEmailAddress": { "value": 1 },
    "INPersonHandleTypePhoneNumber": { "value": 2 },
    "INPersonSuggestionTypeSocialProfile": { "value": 1 },
-   "INPersonSuggestionTypeInstantMessageAddres": { "value": 2 },
+   "INPersonSuggestionTypeInstantMessageAddress": { "value": 2 },
    "INMessageAttributeOptionRead": { "value": 1 },
    "INMessageAttributeOptionUnread": { "value": 2 },
    "INMessageAttributeOptionFlagged": { "value": 4 },
@@ -117,6 +117,21 @@
 	}
        }
       }
+     },
+     {
+      "class_method": false,
+      "selector": "deleteInteractionsWithGroupIdentifier:completion:",
+      "args": {
+       "1": {
+        "callable": {
+	 "arguments": {
+	  "0": { "typestr": "^v" },
+	  "1": { "typestr": "@" }
+	 },
+	 "retval": { "typestr": "v" }
+	}
+       }
+      }
      }
     ]
    },
@@ -127,6 +142,7 @@
       "selector": "resolveCallTypeForSearchCallHistory:withCompletion:",
       "args": {
        "1": {
+        "type_override": "@?",
         "callable": {
 	 "arguments": {
 	  "0": { "typestr": "^v" },
@@ -142,6 +158,7 @@
       "selector": "resolveDateCreatedForSearchCallHistory:withCompletion:",
       "args": {
        "1": {
+        "type_override": "@?",
         "callable": {
 	 "arguments": {
 	  "0": { "typestr": "^v" },
@@ -157,6 +174,7 @@
       "selector": "resolveRecipientForSearchCallHistory:withCompletion:",
       "args": {
        "1": {
+        "type_override": "@?",
         "callable": {
 	 "arguments": {
 	  "0": { "typestr": "^v" },
@@ -172,6 +190,7 @@
       "selector": "resolveCallCapabilitiesForSearchCallHistory:withCompletion:",
       "args": {
        "1": {
+        "type_override": "@?",
         "callable": {
 	 "arguments": {
 	  "0": { "typestr": "^v" },
@@ -187,6 +206,7 @@
       "selector": "handleSearchCallHistory:completion:",
       "args": {
        "1": {
+        "type_override": "@?",
         "callable": {
 	 "arguments": {
 	  "0": { "typestr": "^v" },
@@ -202,6 +222,7 @@
       "selector": "confirmSearchCallHistory:completion:",
       "args": {
        "1": {
+        "type_override": "@?",
         "callable": {
 	 "arguments": {
 	  "0": { "typestr": "^v" },
@@ -217,6 +238,7 @@
       "selector": "handleSearchForMessages:completion:",
       "args": {
        "1": {
+        "type_override": "@?",
         "callable": {
 	 "arguments": {
 	  "0": { "typestr": "^v" },
@@ -232,6 +254,7 @@
       "selector": "confirmSearchForMessages:completion:",
       "args": {
        "1": {
+        "type_override": "@?",
         "callable": {
 	 "arguments": {
 	  "0": { "typestr": "^v" },
@@ -247,6 +270,7 @@
       "selector": "resolveRecipientsForSearchForMessages:withCompletion:",
       "args": {
        "1": {
+        "type_override": "@?",
         "callable": {
 	 "arguments": {
 	  "0": { "typestr": "^v" },
@@ -262,6 +286,7 @@
       "selector": "resolveSendersForSearchForMessages:withCompletion:",
       "args": {
        "1": {
+        "type_override": "@?",
         "callable": {
 	 "arguments": {
 	  "0": { "typestr": "^v" },
@@ -277,6 +302,7 @@
       "selector": "resolveSearchTermsForSearchForMessages:withCompletion:",
       "args": {
        "1": {
+        "type_override": "@?",
         "callable": {
 	 "arguments": {
 	  "0": { "typestr": "^v" },
@@ -292,6 +318,7 @@
       "selector": "resolveAttributesForSearchForMessages:withCompletion:",
       "args": {
        "1": {
+        "type_override": "@?",
         "callable": {
 	 "arguments": {
 	  "0": { "typestr": "^v" },
@@ -307,6 +334,7 @@
       "selector": "resolveDateTimeRangeForSearchForMessages:withCompletion:",
       "args": {
        "1": {
+        "type_override": "@?",
         "callable": {
 	 "arguments": {
 	  "0": { "typestr": "^v" },
@@ -322,6 +350,7 @@
       "selector": "resolveIdentifiersForSearchForMessages:withCompletion:",
       "args": {
        "1": {
+        "type_override": "@?",
         "callable": {
 	 "arguments": {
 	  "0": { "typestr": "^v" },
@@ -337,6 +366,7 @@
       "selector": "resolveNotificationIdentifiersForSearchForMessages:withCompletion:",
       "args": {
        "1": {
+        "type_override": "@?",
         "callable": {
 	 "arguments": {
 	  "0": { "typestr": "^v" },
@@ -352,6 +382,7 @@
       "selector": "resolveGroupNamesForSearchForMessages:withCompletion:",
       "args": {
        "1": {
+        "type_override": "@?",
         "callable": {
 	 "arguments": {
 	  "0": { "typestr": "^v" },
@@ -367,6 +398,7 @@
       "selector": "handleSendMessage:completion:",
       "args": {
        "1": {
+        "type_override": "@?",
         "callable": {
 	 "arguments": {
 	  "0": { "typestr": "^v" },
@@ -382,6 +414,7 @@
       "selector": "confirmSendMessage:completion:",
       "args": {
        "1": {
+        "type_override": "@?",
         "callable": {
 	 "arguments": {
 	  "0": { "typestr": "^v" },
@@ -397,6 +430,7 @@
       "selector": "resolveRecipientsForSendMessage:withCompletion:",
       "args": {
        "1": {
+        "type_override": "@?",
         "callable": {
 	 "arguments": {
 	  "0": { "typestr": "^v" },
@@ -412,6 +446,7 @@
       "selector": "resolveContentForSendMessage:withCompletion:",
       "args": {
        "1": {
+        "type_override": "@?",
         "callable": {
 	 "arguments": {
 	  "0": { "typestr": "^v" },
@@ -427,6 +462,7 @@
       "selector": "resolveGroupNameForSendMessage:withCompletion:",
       "args": {
        "1": {
+        "type_override": "@?",
         "callable": {
 	 "arguments": {
 	  "0": { "typestr": "^v" },
@@ -442,6 +478,7 @@
       "selector": "resolveServiceNameForSendMessage:withCompletion:",
       "args": {
        "1": {
+        "type_override": "@?",
         "callable": {
 	 "arguments": {
 	  "0": { "typestr": "^v" },
@@ -457,6 +494,7 @@
       "selector": "resolveSenderForSendMessage:withCompletion:",
       "args": {
        "1": {
+        "type_override": "@?",
         "callable": {
 	 "arguments": {
 	  "0": { "typestr": "^v" },
@@ -472,6 +510,7 @@
       "selector": "handleStartAudioCall:completion:",
       "args": {
        "1": {
+        "type_override": "@?",
         "callable": {
 	 "arguments": {
 	  "0": { "typestr": "^v" },
@@ -487,6 +526,7 @@
       "selector": "confirmStartAudioCall:completion:",
       "args": {
        "1": {
+        "type_override": "@?",
         "callable": {
 	 "arguments": {
 	  "0": { "typestr": "^v" },
@@ -502,6 +542,7 @@
       "selector": "resolveContactsForStartAudioCall:withCompletion:",
       "args": {
        "1": {
+        "type_override": "@?",
         "callable": {
 	 "arguments": {
 	  "0": { "typestr": "^v" },
@@ -517,6 +558,7 @@
       "selector": "handleStartVideoCall:completion:",
       "args": {
        "1": {
+        "type_override": "@?",
         "callable": {
 	 "arguments": {
 	  "0": { "typestr": "^v" },
@@ -532,6 +574,7 @@
       "selector": "confirmStartVideoCall:completion:",
       "args": {
        "1": {
+        "type_override": "@?",
         "callable": {
 	 "arguments": {
 	  "0": { "typestr": "^v" },
@@ -547,6 +590,7 @@
       "selector": "resolveContactsForStartVideoCall:withCompletion:",
       "args": {
        "1": {
+        "type_override": "@?",
         "callable": {
 	 "arguments": {
 	  "0": { "typestr": "^v" },
