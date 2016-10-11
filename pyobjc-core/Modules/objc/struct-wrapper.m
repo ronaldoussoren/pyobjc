@@ -1453,7 +1453,9 @@ PyObjC_RegisterStructType(
     }
 
     /* Register again using the typecode used in the ObjC runtime */
-    PyObjC_RemoveInternalTypeCodes((char*)signature);
+    if (PyObjC_RemoveInternalTypeCodes((char*)signature) == -1) {
+        return NULL;
+    }
     r = PyDict_SetItemString(structRegistry, signature, structType);
     if (r == -1) {
         return NULL;
@@ -1489,7 +1491,9 @@ PyObjC_RegisterStructAlias(const char* signature, PyObject* structType)
     }
 
     /* Register again using the typecode used in the ObjC runtime */
-    PyObjC_RemoveInternalTypeCodes(buf);
+    if (PyObjC_RemoveInternalTypeCodes(buf) == -1) {
+        return -1;
+    }
     r = PyDict_SetItemString(structRegistry, buf, structType);
     if (r == -1) {
         return -1;

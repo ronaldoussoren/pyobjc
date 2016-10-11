@@ -3194,7 +3194,9 @@ PyObjCClass_AddMethods(PyObject* classObject, PyObject** methods, Py_ssize_t met
         objcMethod->type = strdup(
                 PyObjCSelector_Signature(aMethod));
 
-        PyObjC_RemoveInternalTypeCodes((char*)(objcMethod->type));
+        if (PyObjC_RemoveInternalTypeCodes((char*)(objcMethod->type)) == -1)  {
+            goto cleanup_and_return_error;
+        }
         if (objcMethod->type == NULL) {
             goto cleanup_and_return_error;
         }
