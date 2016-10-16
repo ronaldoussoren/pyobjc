@@ -264,6 +264,26 @@
     "WTF_EXPORT_PRIVATE": { "ignore": true }
   },
   "functions": {
+   "JSValueGetTypedArrayType": {
+    "args": {
+     "0": {
+      "name": "ctx",
+      "typestr": "^{OpaqueJSContext=}"
+     },
+     "1": {
+      "name": "value",
+      "typestr": "^{OpaqueJSValue=}"
+     },
+     "2": {
+      "name": "exception",
+      "typestr": "^^{OpaqueJSValue=}",
+      "type_modifier": "o"
+     }
+    },
+    "retval": {
+     "typestr": "i"
+    }
+   },
    "JSValueIsArray": {
     "args": {
      "0": {
@@ -413,6 +433,82 @@
      "3": { "type_modifier": "o" }
     }
    },
+   "JSObjectGetArrayBufferBytesPtr": {
+    "args": {
+     "0": { "typestr": "^{OpaqueJSContext=}" },
+     "1": { "typestr": "^{OpaqueJSValue=}" },
+     "2": { "typestr": "^^{OpaqueJSValue=}", "type_modifier": "o" }
+    },
+    "retval": { "typestr": "^v", "c_array_of_variable_length": true }
+   },
+   "JSObjectGetArrayBufferByteLength": {
+    "args": {
+     "0": { "typestr": "^{OpaqueJSContext=}" },
+     "1": { "typestr": "^{OpaqueJSValue=}" },
+     "2": { "typestr": "^^{OpaqueJSValue=}", "type_modifier": "o" }
+    },
+    "retval": { "typestr": "L" }
+   },
+   "JSObjectGetTypedArrayBytesPtr": {
+    "args": {
+     "0": { "typestr": "^{OpaqueJSContext=}" },
+     "1": { "typestr": "^{OpaqueJSValue=}" },
+     "2": { "typestr": "^^{OpaqueJSValue=}", "type_modifier": "o" }
+    },
+    "retval": { "typestr": "^v", "c_array_of_variable_length": true }
+   },
+   "JSObjectGetTypedArrayLength": {
+    "args": {
+     "0": { "typestr": "^{OpaqueJSContext=}" },
+     "1": { "typestr": "^{OpaqueJSValue=}" },
+     "2": { "typestr": "^^{OpaqueJSValue=}", "type_modifier": "o" }
+    },
+    "retval": { "typestr": "L" }
+   },
+   "JSObjectGetTypedArrayByteLength": {
+    "args": {
+     "0": { "typestr": "^{OpaqueJSContext=}" },
+     "1": { "typestr": "^{OpaqueJSValue=}" },
+     "2": { "typestr": "^^{OpaqueJSValue=}", "type_modifier": "o" }
+    },
+    "retval": { "typestr": "L" }
+   },
+   "JSObjectGetTypedArrayByteOffset": {
+    "args": {
+     "0": { "typestr": "^{OpaqueJSContext=}" },
+     "1": { "typestr": "^{OpaqueJSValue=}" },
+     "2": { "typestr": "^^{OpaqueJSValue=}", "type_modifier": "o" }
+    },
+    "retval": { "typestr": "L" }
+   },
+   "JSObjectGetTypedArrayBuffer": {
+    "args": {
+     "0": { "typestr": "^{OpaqueJSContext=}" },
+     "1": { "typestr": "^{OpaqueJSValue=}" },
+     "2": { "typestr": "^^{OpaqueJSValue=}", "type_modifier": "o" }
+    },
+    "retval": { "typestr": "^{OpaqueJSValue=}" }
+   },
+   "JSObjectMakeArrayBufferWithBytesNoCopy": {
+    "args": {
+     "0": { "typestr": "^{OpaqueJSContext=}" },
+     "1": { "typestr": "n^v", "c_array_lenght_in_arg": "2" },
+     "2": { "typestr": "L" },
+     "3": { "typestr": "^?",
+      "callable": {
+       "retval": { "typestr": "v" },
+       "arguments": {
+        "0": { "type": "n^v" },
+	"1": { "type": "^v" }
+       }
+      },
+      "callable_retained": true
+     },
+     "4": { "typestr": "^v" },
+     "5": { "typestr": "^^{OpaqueJSValue=}", "type_modifier": "o" }
+    },
+    "retval": { "typestr": "^{OpaqueJSValue=}" }
+   },
    "JSObjectGetPrivate": {
     "args": {
      "0": {}
@@ -477,6 +573,55 @@
      "3": { "type_modifier": "o" }
     },
     "retval": {}
+   },
+   "JSObjectMakeTypedArray": {
+    "args": {
+     "0": { "typestr": "^{OpaqueJSContext=}" },
+     "1": { "typestr": "i" },
+     "2": { "typestr": "L" },
+     "3": { "type_modifier": "o", "typestr": "^^{OpaqueJSValue=}" }
+    },
+    "retval": { "typestr": "^{OpaqueJSValue=}" }
+   },
+   "JSObjectMakeTypedArrayWithArrayBuffer": {
+    "args": {
+     "0": { "typestr": "^{OpaqueJSContext=}" },
+     "1": { "typestr": "i" },
+     "2": { "typestr": "^{OpaqueJSValue=}" },
+     "3": { "type_modifier": "o", "typestr": "^^{OpaqueJSValue=}" }
+    },
+    "retval": { "typestr": "^{OpaqueJSValue=}" }
+   },
+   "JSObjectMakeTypedArrayWithArrayBufferAndOffset": {
+    "args": {
+     "0": { "typestr": "^{OpaqueJSContext=}" },
+     "1": { "typestr": "i" },
+     "2": { "typestr": "^{OpaqueJSValue=}" },
+     "3": { "typestr": "L" },
+     "4": { "type_modifier": "o", "typestr": "^^{OpaqueJSValue=}" }
+    },
+    "retval": { "typestr": "^{OpaqueJSValue=}" }
+   },
+   "JSObjectMakeTypedArrayWithBytesNoCopy": {
+    "args": {
+     "0": { "typestr": "^{OpaqueJSContext=}" },
+     "1": { "typestr": "i" },
+     "2": { "typestr": "n^v", "c_array_lenght_in_arg": 3 },
+     "3": { "typestr": "L" },
+     "4": { "typestr": "^?",
+      "callable": {
+       "retval": { "typestr": "v" },
+       "arguments": {
+        "0": { "type": "n^v" },
+	"1": { "type": "^v" }
+       }
+      },
+      "callable_retained": true
+     },
+     "5": { "typestr": "^v" },
+     "6": { "type_modifier": "o", "typestr": "^^{OpaqueJSValue=}" }
+    },
+    "retval": { "typestr": "^{OpaqueJSValue=}" }
    },
    "JSObjectMakeConstructor": {
     "args": {
