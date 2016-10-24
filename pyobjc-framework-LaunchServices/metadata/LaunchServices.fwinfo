@@ -32,10 +32,12 @@
   "externs": {
      "kUTTypeSwiftSource": { "typestr": "@" },
      "kLSSharedFileListItemBeforeFirst": {
-        "magic_cookie": true
+        "magic_cookie": true,
+        "indirect": true
      },
      "kLSSharedFileListItemLast": {
-        "magic_cookie": true
+        "magic_cookie": true,
+        "indirect": true,
      }
   },
   "functions": {

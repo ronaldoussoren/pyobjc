@@ -27,6 +27,8 @@ This cannnot be used for methods used from Objective-C, for those you will
 have to rename the method or you will have to provide an appropriate selector
 explictly.
 
+* Fix crash when using some APIs in the LaunchServices framework.
+
 * Issue #100:Building with the Command Line Tools for Xcode installed caused build errors
   on OSX 10.10
 

@@ -175,9 +175,16 @@ class ObjCLazyModule (ModuleType):
                     self.__dict__[nm] = dct[nm]
 
             for nm, tp in self.__varmap_dct.items():
-                if tp.startswith('='):
+                if nm == 'kLSSharedFileListItemLast': print(nm, tp)
+                if tp.startswith('=='):
                     try:
-                        self.__dict__[nm] = objc._loadConstant(nm, tp[1:], True)
+                        self.__dict__[nm] = objc._loadConstant(nm, tp[2:], 2)
+                    except AttributeError:
+                        raise
+                        pass
+                elif tp.startswith('='):
+                    try:
+                        self.__dict__[nm] = objc._loadConstant(nm, tp[1:], 1)
                     except AttributeError:
                         pass
 
@@ -202,7 +209,10 @@ class ObjCLazyModule (ModuleType):
 
             for nm, tp in specials:
                 try:
-                    self.__dict__[nm] = objc._loadConstant(nm, tp, True)
+                    if tp.startswith('='):
+                        self.__dict__[nm] = objc._loadConstant(nm, tp[1:], 2)
+                    else:
+                        self.__dict__[nm] = objc._loadConstant(nm, tp, 1)
                 except AttributeError:
                     pass
 
@@ -287,11 +297,14 @@ class ObjCLazyModule (ModuleType):
         if self.__varmap_dct:
             if name in self.__varmap_dct:
                 tp = self.__varmap_dct.pop(name)
-                if tp.startswith('='):
+                if tp.startswith('=='):
+                    tp = tp[2:]
+                    magic = 2
+                elif tp.startswith('='):
                     tp = tp[1:]
-                    magic = True
+                    magic = 1
                 else:
-                    magic = False
+                    magic = 0
                 result = objc._loadConstant(name, tp, magic)
                 return result
 
@@ -305,11 +318,14 @@ class ObjCLazyModule (ModuleType):
                     tp = tp[1:]
 
                 d = {}
-                if tp.startswith('='):
+                if tp.startswith('=='):
+                    magic = 2
+                    tp = tp[2:]
+                elif tp.startswith('='):
                     tp = tp[1:]
-                    magic = True
+                    magic = 1
                 else:
-                    magic = False
+                    magic = 0
 
                 return objc._loadConstant(name, tp, magic)
 

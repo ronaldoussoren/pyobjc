@@ -1687,7 +1687,11 @@ static char* keywords[] = { "name", "type", "magic", NULL };
     PyObject* v;
 
     if (magic) {
-        v = PyObjCCF_NewSpecial(type, buf);
+        if (magic == 2) {
+            v = PyObjCCF_NewSpecial(type, *(void**)buf);
+        } else {
+            v = PyObjCCF_NewSpecial(type, buf);
+        }
     } else {
         v = pythonify_c_value(type, buf);
     }

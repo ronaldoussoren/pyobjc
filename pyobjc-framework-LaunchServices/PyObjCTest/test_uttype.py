@@ -64,7 +64,7 @@ class TestUTType (TestCase):
     def testFunctions10_10(self):
         self.assertResultIsCFRetained(UTTypeCopyAllTagsWithClass)
         v = UTTypeCopyAllTagsWithClass(kUTTypeArchive, kUTTagClassFilenameExtension)
-        self.assertIsInstance(v, CFArrayRef)
+        self.assertIsInstance(v, (CFArrayRef, type(None)))
 
         self.assertResultIsBOOL(UTTypeConformsTo)
         v = UTTypeIsDeclared("public.python-script")

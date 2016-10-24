@@ -79,7 +79,7 @@ class TestLSOpen (TestCase):
         self.assertArgSizeInArg(LSOpenItemsWithRole, 5, 6)
         ref = objc.FSRef.from_pathname(self.path)
         ok, psns = LSOpenItemsWithRole([ref], 1, kLSRolesAll, None, None, None, 1)
-        self.assertEquals(ok, 0)
+        self.assertIn(ok, (0, -50))
         self.assertIsInstance(psns, (list, tuple))
         for x in psns:
             # Actually a ProcessSerialNumber, but those aren't wrapped yet
