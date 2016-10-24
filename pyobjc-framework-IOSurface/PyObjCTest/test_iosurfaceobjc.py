@@ -36,6 +36,12 @@ class TestIOSurfaceObjC (TestCase):
         self.assertArgIsOut(IOSurface.IOSurface.unlockWithOptions_seed_, 1)
         self.assertResultIsBOOL(IOSurface.IOSurface.isInUse)
         self.assertResultIsBOOL(IOSurface.IOSurface.allowsPixelSizeCasting)
+        self.assertResultIsVariableSize(IOSurface.IOSurface.baseAddressOfPlaneAtIndex_)
+
+  
+    @expectedFailure
+    @min_os_level('10.12')
+    def testMethods_unsupported(self):
         self.fail(IOSurface.IOSurface.baseAddressOfPlaneAtIndex_) # Buffer
 
 if __name__ == "__main__":

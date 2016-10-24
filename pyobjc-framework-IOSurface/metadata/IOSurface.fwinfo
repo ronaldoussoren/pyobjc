@@ -59,9 +59,9 @@
       "retval": { "type_override": "Z" }
      },
      {
-      "selector": "baseAddressOfPlaneAtIndex",
+      "selector": "baseAddressOfPlaneAtIndex:",
       "class_method": false,
-      "retval": { "c_array_of_variable_size": true }
+      "retval": { "c_array_of_variable_length": true }
      }
     ]
    }
