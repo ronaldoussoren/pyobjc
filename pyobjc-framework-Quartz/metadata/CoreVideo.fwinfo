@@ -20,12 +20,14 @@
   },
   "enum": {
    "kCVReturnUnsupported": { "value": -6663 },
+   "kCVReturnRetry": { "value": -6692 },
+   "kCVReturnLast": { "value": -6699 },
    "kCVPixelBufferPoolFlushExcessBuffers": { "value": 1 },
    "kCVPixelFormatType_30RGBLEPackedWideGamut": { "value": 1999843442 },
    "kCVPixelFormatType_14Bayer_GRBG": { "value": 1735549492 },
    "kCVPixelFormatType_14Bayer_RGGB": { "value": 1919379252 },
    "kCVPixelFormatType_14Bayer_BGGR": { "value": 1650943796 },
-   "kCVPixelFormatType_14Bayer_GBRG": { "value": 1735549492 },
+   "kCVPixelFormatType_14Bayer_GBRG": { "value": 1734505012 },
    "kReturnRetry": { "value": -6692 }
   },
   "cftypes": {

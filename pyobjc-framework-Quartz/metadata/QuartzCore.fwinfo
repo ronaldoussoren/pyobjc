@@ -71,6 +71,18 @@
     "methods": [
      {
       "args": {
+       "0": { "type_override": "Z" }
+      },
+      "class_method": false,
+      "selector": "setWantsExtendedDynamicRangeContent:"
+     },
+     {
+      "retval": { "type_override": "Z" },
+      "class_method": false,
+      "selector": "wantsExtendedDynamicRangeContent"
+     },
+     {
+      "args": {
        "0": {}
       },
       "class_method": false,
@@ -374,9 +386,9 @@
        "4": { "type_override": "Z" }
       },
       "retval": {
-       "alread_cfretained": true
+       "already_cfretained": true
       },
-      "class_method": true,
+      "class_method": false,
       "selector": "createCGImage:fromRect:format:colorSpace:deferred:"
      },
      {
@@ -421,7 +433,7 @@
        "1": {}
       },
       "class_method": false,
-      "retval": {},
+      "retval": { "already_cfretained": true },
       "selector": "createCGLayerWithSize:info:"
      },
      {
@@ -779,6 +791,30 @@
    },
    "NSObject": {
     "methods": [
+     {
+      "retval": { "type_override": [
+         "{CGRect={CGPoint=ff}{CGSize=ff}}",
+	 "{CGRect={CGPoint=dd}{CGSize=dd}}"
+       ]
+      },
+      "selector": "region",
+      "class_method": false
+     },
+     {
+      "retval": { "type_override": "L" },
+      "selector": "bytesPerRow",
+      "class_method": false
+     },
+     {
+      "retval": { "type_override": ["i", "q"] },
+      "selector": "format",
+      "class_method": false
+     },
+     {
+      "retval": { "type_override": "^v", "c_array_of_variable_length": true },
+      "selector": "baseAddress",
+      "class_method": false
+     },
      {
       "args": {
        "0": {

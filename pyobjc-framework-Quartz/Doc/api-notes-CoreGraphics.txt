@@ -7,6 +7,12 @@ API Notes
 * See :doc:`/api/coregraphics-context-managers` for some extensions
   to the CoreGraphics API.
 
+* ``CGColorConversionInfoCreateFromList``: This function requires a manual
+  wrapper and is not yet supported.
+
+* ``CGColorConverterCreate``: This function requires a manual
+  wrapper and is not yet supported.
+
 * ``CGColorSpaceCreateWithPlatformColorSpace``,
   ``CGColorSpaceCreateWithPlatformColorSpace``.
 

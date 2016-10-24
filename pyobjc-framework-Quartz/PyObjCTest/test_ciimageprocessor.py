@@ -1,5 +1,6 @@
 from PyObjCTools.TestSupport import *
 from Quartz.QuartzCore import *
+from Quartz import CGRect
 
 class TestCIImageProcessorHelper (NSObject):
     def region(self): return 1
@@ -13,8 +14,8 @@ class TestCIImageProcessor (TestCase):
         self.assertResultIsBOOL(CIImageProcessorKernel.processWithInputs_arguments_output_error_)
         self.assertArgIsOut(CIImageProcessorKernel.processWithInputs_arguments_output_error_, 3)
 
-        self.assertResultHasType(CIImageProcessorKernel.roiForInput_arguments_outputRrect_, CGRect.__typestr__)
-        self.assertArgHasType(CIImageProcessorKernel.roiForInput_arguments_outputRrect_, 2, CGRect.__typestr__)
+        self.assertResultHasType(CIImageProcessorKernel.roiForInput_arguments_outputRect_, CGRect.__typestr__)
+        self.assertArgHasType(CIImageProcessorKernel.roiForInput_arguments_outputRect_, 2, CGRect.__typestr__)
 
         self.assertArgIsOut(CIImageProcessorKernel.applyWithExtent_inputs_arguments_error_, 3)
 

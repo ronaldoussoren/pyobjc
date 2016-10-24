@@ -14,7 +14,7 @@ class TestPDFAnnotation (TestCase):
     def testMethods10_12(self):
         self.assertResultIsBOOL(PDFAnnotation.setValue_forAnnotationKey_)
         self.assertResultIsBOOL(PDFAnnotation.setBoolean_forAnnotationKey_)
-        self.assertArgIsBOOL(PDFAnnotation.setBoolean_forAnnotationKey_, e)
+        self.assertArgIsBOOL(PDFAnnotation.setBoolean_forAnnotationKey_, 0)
         self.assertResultIsBOOL(PDFAnnotation.setRect_forAnnotationKey_)
 
     def testConstants(self):

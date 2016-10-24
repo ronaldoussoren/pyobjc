@@ -18,6 +18,7 @@ class TestCGColorConversion (TestCase):
     def testFunctions(self):
         self.assertResultIsCFRetained(CGColorConversionInfoCreate)
 
+    @expectedFailure
     @min_os_level('10.12')
     def testFunctionHard(self):
         self.fail("CGColorConversionInfoCreateFromList") # Varargs with annoying signature
