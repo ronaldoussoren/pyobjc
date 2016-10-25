@@ -11,8 +11,8 @@ import Foundation
 from DictionaryServices import _metadata
 
 sys.modules['DictionaryServices'] = mod = objc.ObjCLazyModule('DictionaryServices',
-    "com.apple.DictionaryServices",
-    objc.pathForFramework("/System/Library/Frameworks/CoreServices.framework/Frameworks/DictionaryServices.framework"),
+    "com.apple.CoreServices",
+    objc.pathForFramework("/System/Library/Frameworks/CoreServices.framework"),
     _metadata.__dict__, None, {
        '__doc__': __doc__,
        '__path__': __path__,
