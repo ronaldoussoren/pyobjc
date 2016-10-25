@@ -2,6 +2,8 @@
 #include <Python.h>
 #include "pyobjc-api.h"
 
+#include <objc/objc-runtime.h>
+
 #import <SpriteKit/SpriteKit.h>
 
 /* We include the source code here instead of
@@ -27,7 +29,6 @@ call_vF3_vF3(PyObject* method, PyObject* self, PyObject* arguments)
         PyObjC_InitSuper(&super,
             PyObjCSelector_GetClass(method),
             PyObjCObject_GetObject(self));
-
         vec = ((vector_float3(*)(struct objc_super*, SEL, vector_float3))objc_msgSendSuper)(&super, PyObjCSelector_GetSelector(method), vec);
 
     PyObjC_HANDLER
@@ -42,6 +43,7 @@ call_vF3_vF3(PyObject* method, PyObject* self, PyObject* arguments)
     return Py_BuildValue("(fff)", vec[0], vec[1], vec[2]);
 }
 
+#if 0
 static PyObject*
 call_id_vF3(PyObject* method, PyObject* self, PyObject* arguments)
 {
@@ -61,6 +63,41 @@ call_id_vF3(PyObject* method, PyObject* self, PyObject* arguments)
         PyObjC_InitSuper(&super,
             PyObjCSelector_GetClass(method),
             PyObjCObject_GetObject(self));
+
+        result = ((id(*)(struct objc_super*, SEL, vector_float3))objc_msgSendSuper)(&super, PyObjCSelector_GetSelector(method), vec);
+
+    PyObjC_HANDLER
+        PyObjCErr_FromObjC(localException);
+
+    PyObjC_ENDHANDLER
+
+    if (PyErr_Occurred()) {
+        return NULL;
+    }
+
+    return PyObjC_IdToPython(result);
+}
+#endif
+
+static PyObject*
+callC_id_vF3(PyObject* method, PyObject* self, PyObject* arguments)
+{
+    /* calling of method that returns id and has a vector_float3 as an argument */
+    float f1, f2, f3;
+    struct objc_super super;
+    id result;
+
+
+    if (!PyArg_ParseTuple(arguments, "(fff)", &f1, &f2, &f3)) {
+        return 0;
+    }
+
+    vector_float3 vec = (vector_float3){f1, f2, f3};
+
+    PyObjC_DURING
+        PyObjC_InitSuper(&super,
+            object_getClass(PyObjCSelector_GetClass(method)),
+            PyObjCClass_GetClass(self));
 
         result = ((id(*)(struct objc_super*, SEL, vector_float3))objc_msgSendSuper)(&super, PyObjCSelector_GetSelector(method), vec);
 
@@ -149,6 +186,7 @@ static PyMethodDef mod_methods[] = {
 #define imp_v_vF3 PyObjCUnsupportedMethod_IMP
 #define imp_vF3_v PyObjCUnsupportedMethod_IMP
 #define imp_id_vF3 PyObjCUnsupportedMethod_IMP
+#define impC_id_vF3 PyObjCUnsupportedMethod_IMP
 
 /* Python glue */
 PyObjC_MODULE_INIT(_SpriteKit)
@@ -204,16 +242,16 @@ PyObjC_MODULE_INIT(_SpriteKit)
             if (PyObjC_RegisterMethodMapping(
                     classSKFieldNode,
                     @selector(linearGravityFieldWithVector:),
-                    call_id_vF3,
-                    imp_id_vF3) < 0) {
+                    callC_id_vF3,
+                    impC_id_vF3) < 0) {
                 PyObjC_INITERROR();
             }
 
             if (PyObjC_RegisterMethodMapping(
                     classSKFieldNode,
                     @selector(velocityFieldWithVector:),
-                    call_id_vF3,
-                    imp_id_vF3) < 0) {
+                    callC_id_vF3,
+                    impC_id_vF3) < 0) {
                 PyObjC_INITERROR();
             }
         }

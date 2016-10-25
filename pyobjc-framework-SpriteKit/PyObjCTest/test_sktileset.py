@@ -129,15 +129,5 @@ if sys.maxsize > 2 ** 32:
                 SpriteKit.SKTileAdjacencyUpperLeft)
 
 
-
-        @min_os_level('10.12')
-        def testMethods(self):
-            self.assertResultIsBOOL(SpriteKit.SKTileDefinition.flipVertically)
-            self.assertArgIsBOOL(SpriteKit.SKTileDefinition.setFlipVertically_, 0)
-
-            self.assertResultIsBOOL(SpriteKit.SKTileDefinition.flipHorizontally)
-            self.assertArgIsBOOL(SpriteKit.SKTileDefinition.setFlipHorizontally_, 0)
-
-
 if __name__ == "__main__":
     main()

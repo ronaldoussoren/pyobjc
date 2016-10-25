@@ -1,8 +1,43 @@
-// objective.metadata exceptions file, see its document
-// for information on how to update this file.
 {
  "definitions": {
+  "expressions": {
+   "SKTileAdjacencyUpEdge": { "value": "SKTileAdjacencyRight | SKTileAdjacencyLowerRight | SKTileAdjacencyDown | SKTileAdjacencyLowerLeft | SKTileAdjacencyLeft" },
+   "SKTileAdjacencyUpperRightEdge": { "value": "SKTileAdjacencyDown | SKTileAdjacencyLowerLeft | SKTileAdjacencyLeft" },
+   "SKTileAdjacencyRightEdge": { "value": "SKTileAdjacencyDown | SKTileAdjacencyLowerLeft | SKTileAdjacencyLeft | SKTileAdjacencyUpperLeft | SKTileAdjacencyUp" },
+   "SKTileAdjacencyLowerRightEdge": { "value": "SKTileAdjacencyLeft | SKTileAdjacencyUpperLeft | SKTileAdjacencyUp" },
+   "SKTileAdjacencyDownEdge": { "value": "SKTileAdjacencyUp | SKTileAdjacencyUpperRight | SKTileAdjacencyRight | SKTileAdjacencyLeft | SKTileAdjacencyUpperLeft" },
+   "SKTileAdjacencyLowerLeftEdge": { "value": "SKTileAdjacencyUp | SKTileAdjacencyUpperRight | SKTileAdjacencyRight" },
+   "SKTileAdjacencyLeftEdge": { "value": "SKTileAdjacencyUp | SKTileAdjacencyUpperRight | SKTileAdjacencyRight | SKTileAdjacencyLowerRight | SKTileAdjacencyDown" },
+   "SKTileAdjacencyUpperLeftEdge": { "value": "SKTileAdjacencyRight | SKTileAdjacencyLowerRight | SKTileAdjacencyDown" },
+   "SKTileAdjacencyUpperRightCorner": { "value": "SKTileAdjacencyUp | SKTileAdjacencyUpperRight | SKTileAdjacencyRight | SKTileAdjacencyLowerRight | SKTileAdjacencyDown | SKTileAdjacencyLeft | SKTileAdjacencyUpperLeft" },
+   "SKTileAdjacencyLowerRightCorner": { "value": "SKTileAdjacencyUp | SKTileAdjacencyUpperRight | SKTileAdjacencyRight | SKTileAdjacencyLowerRight | SKTileAdjacencyDown | SKTileAdjacencyLowerLeft | SKTileAdjacencyLeft" },
+   "SKTileAdjacencyLowerLeftCorner": { "value": "SKTileAdjacencyUp | SKTileAdjacencyRight | SKTileAdjacencyLowerRight | SKTileAdjacencyDown | SKTileAdjacencyLowerLeft | SKTileAdjacencyLeft | SKTileAdjacencyUpperLeft" },
+   "SKTileAdjacencyUpperLeftCorner": { "value": "SKTileAdjacencyUp | SKTileAdjacencyUpperRight | SKTileAdjacencyRight | SKTileAdjacencyDown | SKTileAdjacencyLowerLeft | SKTileAdjacencyLeft | SKTileAdjacencyUpperLeft" }
+  },
   "enum": {
+   "SKTileAdjacencyUp": { "value": 1 },
+   "SKTileAdjacencyUpperRight": { "value": 2 },
+   "SKTileAdjacencyRight": { "value": 4 },
+   "SKTileAdjacencyLowerRight": { "value": 8 },
+   "SKTileAdjacencyDown": { "value": 16 },
+   "SKTileAdjacencyLowerLeft": { "value": 32 },
+   "SKTileAdjacencyLeft": { "value": 64 },
+   "SKTileAdjacencyUpperLeft": { "value": 128 },
+   "SKTileAdjacencyAll": { "value": 255 },
+   "SKTileHexFlatAdjacencyUp": { "value": 1 },
+   "SKTileHexFlatAdjacencyUpperRight": { "value": 2 },
+   "SKTileHexFlatAdjacencyLowerRight": { "value": 4 },
+   "SKTileHexFlatAdjacencyDown": { "value": 8 },
+   "SKTileHexFlatAdjacencyLowerLeft": { "value": 16 },
+   "SKTileHexFlatAdjacencyUpperLeft": { "value": 32 },
+   "SKTileHexFlatAdjacencyAll": { "value": 63 },
+   "SKTileHexPointyAdjacencyUpperLeft": { "value": 1 },
+   "SKTileHexPointyAdjacencyUpperRight": { "value": 2 },
+   "SKTileHexPointyAdjacencyRight": { "value": 4 },
+   "SKTileHexPointyAdjacencyLowerRight": { "value": 8 },
+   "SKTileHexPointyAdjacencyLowerLeft": { "value": 16 },
+   "SKTileHexPointyAdjacencyLeft": { "value": 32 },
+   "SKTileHexPointyAdjacencyAdd": { "value": 63 },
    "SKTileSetTypeGrid": { "value": 0 },
    "SKTileSetTypeIsometric": { "value": 1 },
    "SKTileSetTypeHexagonalFlat": { "value": 2 },
@@ -10,7 +45,7 @@
    "SKTileDefinitionRotation0": { "value": 0 },
    "SKTileDefinitionRotation90": { "value": 1 },
    "SKTileDefinitionRotation180": { "value": 2 },
-   "SKTileDefinitionRotation27": { "value": 3 },
+   "SKTileDefinitionRotation270": { "value": 3 },
    "SKAttributeTypeNone": { "value": 0 },
    "SKAttributeTypeFloat": { "value": 1 },
    "SKAttributeTypeVectorFloat2": { "value": 2 },
@@ -22,6 +57,30 @@
    "SKAttributeTypeVectorHalfFloat4": { "value": 8 }
   },
   "classes": {
+   "SKTileDefinition": {
+    "methods": [
+     {
+      "selector": "flipVertically",
+      "class_method": false,
+      "retval": { "type_override": "Z" }
+     },
+     {
+      "selector": "flipHorizontally",
+      "class_method": false,
+      "retval": { "type_override": "Z" }
+     },
+     {
+      "selector": "setFlipVertically:",
+      "class_method": false,
+      "args": { "0": { "type_override": "Z" } }
+     },
+     {
+      "selector": "setFlipHorizontally:",
+      "class_method": false,
+      "args": { "0": { "type_override": "Z" } }
+     }
+    ]
+   },
    "SKTextureAtlas": {
     "methods": [
      {
@@ -141,6 +200,70 @@
    },
    "SKAction": {
     "methods": [
+     {
+      "args": {
+       "1": {
+        "callable": {
+         "arguments": {
+          "0": {
+           "typestr": "^v"
+          },
+          "1": {
+           "typestr": "@"
+          },
+          "2": {
+           "typestr": [ "f", "d" ]
+          }
+         },
+         "retval": {
+          "typestr": "v"
+         }
+        }
+       }
+      },
+      "selector": "customActionWithDuration:actionBlock:",
+      "class_method": false
+     },
+     {
+      "args": {
+       "0": {
+        "callable": {
+         "arguments": {
+          "0": {
+           "typestr": "^v"
+          },
+          "1": {
+           "typestr": "f"
+          }
+         },
+         "retval": {
+          "typestr": "f"
+         }
+        }
+       }
+      },
+      "selector": "setTimingFunction:",
+      "class_method": false
+     },
+     {
+      "retval": {
+       "callable": {
+         "arguments": {
+          "0": {
+           "typestr": "^v"
+          },
+          "1": {
+           "typestr": "f"
+          }
+         },
+         "retval": {
+          "typestr": "f"
+         }
+       }
+      },
+      "selector": "timingFunction",
+      "class_method": false
+     },
      {
       "args": {
        "0": {}
@@ -460,7 +583,7 @@
     "methods": [
      {
       "class_method": false,
-      "selector: "view:shouldRenderAtTime:",
+      "selector": "view:shouldRenderAtTime:",
       "args": {
        "1": { "type_override": "d" }
       },

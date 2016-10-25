@@ -24,13 +24,11 @@ if sys.maxsize > 2 ** 32:
             self.assertIsInstance(v, tuple)
             self.assertEqual(len(v), 3)
             self.assertTrue(all(isinstance(i, float) for i in v))
-            print (v)
 
             v = node.unprojectPoint_((10,20,30))
             self.assertIsInstance(v, tuple)
             self.assertEqual(len(v), 3)
             self.assertTrue(all(isinstance(i, float) for i in v))
-            print (v)
 
 
 if __name__ == "__main__":

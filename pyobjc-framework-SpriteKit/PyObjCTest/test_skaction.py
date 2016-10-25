@@ -45,7 +45,7 @@ if sys.maxsize > 2 ** 32:
         @min_os_level('10.10')
         def testMethods10_10(self):
             self.assertResultIsBlock(SpriteKit.SKAction.timingFunction, SKActionTimingFunction)
-            self.assertArgIsBlock(SpriteKit.SKAction.setTimingFunction_, SKActionTimingFunction)
+            self.assertArgIsBlock(SpriteKit.SKAction.setTimingFunction_, 0, SKActionTimingFunction)
 
 if __name__ == "__main__":
     main()
