@@ -33,11 +33,11 @@
      "kUTTypeSwiftSource": { "typestr": "@" },
      "kLSSharedFileListItemBeforeFirst": {
         "magic_cookie": true,
-        "indirect": true
+	"indirect": true
      },
      "kLSSharedFileListItemLast": {
         "magic_cookie": true,
-        "indirect": true,
+	"indirect": true
      }
   },
   "functions": {
