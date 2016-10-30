@@ -43,6 +43,15 @@ class TestSCNSceneSource (TestCase):
         self.assertEqual(SceneKit.SCNSceneSourceStatusProcessing, 12)
         self.assertEqual(SceneKit.SCNSceneSourceStatusComplete, 16)
 
+        self.assertIs(SceneKit.SCNSceneSourceLoadingOptionCreateNormalsIfAbsent, SceneKit.SCNSceneSourceCreateNormalsIfAbsentKey)
+        self.assertIs(SceneKit.SCNSceneSourceLoadingOptionCheckConsistency, SceneKit.SCNSceneSourceCheckConsistencyKey)
+        self.assertIs(SceneKit.SCNSceneSourceLoadingOptionFlattenScene, SceneKit.SCNSceneSourceFlattenSceneKey)
+        self.assertIs(SceneKit.SCNSceneSourceLoadingOptionUseSafeMode, SceneKit.SCNSceneSourceUseSafeModeKey)
+        self.assertIs(SceneKit.SCNSceneSourceLoadingOptionAssetDirectoryURLs, SceneKit.SCNSceneSourceAssetDirectoryURLsKey)
+        self.assertIs(SceneKit.SCNSceneSourceLoadingOptionOverrideAssetURLs, SceneKit.SCNSceneSourceOverrideAssetURLsKey)
+        self.assertIs(SceneKit.SCNSceneSourceLoadingOptionStrictConformance, SceneKit.SCNSceneSourceStrictConformanceKey)
+
+
     @min_os_level('10.10')
     def test_constants10_10(self):
         self.assertIsInstance(SceneKit.SCNSceneSourceConvertUnitsToMetersKey, unicode)
@@ -53,6 +62,11 @@ class TestSCNSceneSource (TestCase):
         self.assertIsInstance(SceneKit.SCNSceneSourceAnimationImportPolicyPlayRepeatedly, unicode)
         self.assertIsInstance(SceneKit.SCNSceneSourceAnimationImportPolicyDoNotPlay, unicode)
         self.assertIsInstance(SceneKit.SCNSceneSourceAnimationImportPolicyPlayUsingSceneTimeBase, unicode)
+
+        self.assertIs(SceneKit.SCNSceneSourceLoadingOptionConvertUnitsToMeters, SceneKit.SCNSceneSourceConvertUnitsToMetersKey)
+        self.assertIs(SceneKit.SCNSceneSourceLoadingOptionConvertToYUp, SceneKit.SCNSceneSourceConvertToYUpKey)
+        self.assertIs(SceneKit.SCNSceneSourceLoadingOptionAnimationImportPolicy, SceneKit.SCNSceneSourceAnimationImportPolicyKey)
+
 
     def testMethods(self):
         self.assertArgIsBlock(SceneKit.SCNSceneSource.sceneWithOptions_statusHandler_, 1, SCNSceneSourceStatusHandler)

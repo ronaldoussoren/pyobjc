@@ -13,7 +13,8 @@
     "MLPhotosAllPhotosAlbumTypeIdentifier": { "typestr": "@" },
     "MLPhotosTimelapseGroupTypeIdentifier": { "typestr": "@" },
     "MLPhotosFrontCameraGroupTypeIdentifier": { "typestr": "@" },
-    "MLPhotosScreenshotGroupTypeIdentifier": { "typestr": "@" }
+    "MLPhotosScreenshotGroupTypeIdentifier": { "typestr": "@" },
+    "MLPhotosDepthEffectGroupTypeIdentifier": { "typestr": "@" }
   }
  }
 }

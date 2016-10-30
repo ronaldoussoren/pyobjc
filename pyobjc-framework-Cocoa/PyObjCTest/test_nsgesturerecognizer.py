@@ -56,6 +56,10 @@ class TestNSGestureRecognizer (TestCase):
     def testProtocols10_11(self):
         self.assertResultIsBOOL(TestNSGestureRecognizerHelper.gestureRecognizer_shouldAttemptToRecognizeWithEvent_)
 
+    @min_sdk_level('10.12')
+    def testProtocols10_12(self):
+        self.assertResultIsBOOL(TestNSGestureRecognizerHelper.gestureRecognizer_shouldReceiveTouch_)
+
 
 if __name__ == "__main__":
     main()

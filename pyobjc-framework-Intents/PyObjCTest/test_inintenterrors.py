@@ -8,7 +8,7 @@ if sys.maxsize > 2 ** 32:
         @min_os_level('10.12')
         def testConstants(self):
             self.assertEqual(Intents.INIntentErrorInteractionOperationNotSupported, 1900)
-            self.assertEqual(Intents.INIntentErrorAddingInteraction, 1901)
+            self.assertEqual(Intents.INIntentErrorDonatingInteraction, 1901)
             self.assertEqual(Intents.INIntentErrorDeletingAllInteractions, 1902)
             self.assertEqual(Intents.INIntentErrorDeletingInteractionWithIdentifiers, 1903)
             self.assertEqual(Intents.INIntentErrorDeletingInteractionWithGroupIdentifier, 1904)
@@ -17,6 +17,7 @@ if sys.maxsize > 2 ** 32:
             self.assertEqual(Intents.INIntentErrorNoHandlerProvidedForIntent, 2003)
             self.assertEqual(Intents.INIntentErrorInvalidIntentName, 2004)
             self.assertEqual(Intents.INIntentErrorRequestTimedOut, 3001)
+            self.assertEqual(Intents.INIntentErrorInvalidUserVocabularyFileLocation, 4000)
 
 
 if __name__ == "__main__":

@@ -155,5 +155,9 @@ if sys.maxsize > 2 ** 32:
             self.assertIsInstance(MediaLibrary.MLPhotosFrontCameraGroupTypeIdentifier, unicode)
             self.assertIsInstance(MediaLibrary.MLPhotosScreenshotGroupTypeIdentifier, unicode)
 
+        @min_os_level("10.12")
+        def testConstants10_12(self):
+            self.assertIsInstance(MediaLibrary.MLPhotosDepthEffectGroupTypeIdentifier, unicode)
+
 if __name__ == "__main__":
     main()

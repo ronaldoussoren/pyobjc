@@ -68,6 +68,15 @@
      }
     ]
    },
+   "PDFAnnotationStamp": {
+    "methods": [
+     {
+      "selector": "isSignature",
+      "class_method": false,
+      "retval": { "type_override": "Z" }
+     }
+    ]
+   },
    "PDFAnnotation": {
     "methods": [
      {

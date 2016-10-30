@@ -15,6 +15,15 @@ class TestSCNPhysicsShape (TestCase):
         self.assertIsInstance(SceneKit.SCNPhysicsTestSearchModeClosest, unicode)
         self.assertIsInstance(SceneKit.SCNPhysicsTestSearchModeAll, unicode)
 
+    @min_os_level('10.12')
+    def test_constants10_12(self):
+        self.assertIsInstance(SceneKit.SCNPhysicsTestOptionBackfaceCulling, unicode)
+
+        self.assertIs(SceneKit.SCNPhysicsTestOptionCollisionBitMask, SceneKit.SCNPhysicsTestCollisionBitMaskKey)
+        self.assertIs(SceneKit.SCNPhysicsTestOptionSearchMode, SceneKit.SCNPhysicsTestSearchModeKey)
+        self.assertIs(SceneKit.SCNPhysicsTestOptionBackfaceCulling, SceneKit.SCNPhysicsTestBackfaceCullingKey)
+
+
     @min_sdk_level('10.10')
     def testProtocols(self):
         objc.protocolNamed('SCNPhysicsContactDelegate')

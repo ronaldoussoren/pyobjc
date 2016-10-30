@@ -25,6 +25,10 @@ class TestNSTextViewHelper (NSObject):
     def textView_willCheckTextInRange_options_types_(self, tv, a, b, c): return 1
     def textView_didCheckTextInRange_types_options_results_orthography_wordCount_(self, tv, r, t, o, rs, ort, wc): return 1
 
+    def textView_candidatesForSelectedRange_(self, tv, r): return 1
+    def textView_candidates_forSelectedRange_(self, tv, c, r): return 1
+    def textView_shouldSelectCandidateAtIndex_(self, tv, i): return 1
+
 class TestNSTextView (TestCase):
     def testConstants(self):
         self.assertEqual(NSSelectByCharacter, 0)
@@ -60,6 +64,16 @@ class TestNSTextView (TestCase):
         self.assertIsInstance(NSTextViewWillChangeNotifyingTextViewNotification, unicode)
         self.assertIsInstance(NSTextViewDidChangeSelectionNotification, unicode)
         self.assertIsInstance(NSTextViewDidChangeTypingAttributesNotification, unicode)
+
+    @min_os_level('10.12')
+    def testConstants10_12(self):
+        self.assertIsInstance(NSTouchBarItemIdentifierCharacterPicker, unicode)
+        self.assertIsInstance(NSTouchBarItemIdentifierTextColorPicker, unicode)
+        self.assertIsInstance(NSTouchBarItemIdentifierTextStyle, unicode)
+        self.assertIsInstance(NSTouchBarItemIdentifierTextAlignment, unicode)
+        self.assertIsInstance(NSTouchBarItemIdentifierTextList, unicode)
+        self.assertIsInstance(NSTouchBarItemIdentifierTextFormat, unicode)
+
 
 
     def testMethods(self):
@@ -200,6 +214,13 @@ class TestNSTextView (TestCase):
         self.assertArgHasType(NSTextView.checkTextInRange_types_options_, 0, NSRange.__typestr__)
         self.assertArgHasType(NSTextView.handleTextCheckingResults_forRange_types_options_orthography_wordCount_, 1, NSRange.__typestr__)
 
+    @min_os_level('10.12')
+    def testMethods10_12(self):
+        self.assertResultIsBOOL(NSTextView.stronglyReferencesTextStorage)
+
+        self.assertResultIsBOOL(NSTextView.allowsCharacterPickerTouchBarItem)
+        self.assertArgIsBOOL(NSTextView.setAllowsCharacterPickerTouchBarItem_, 0)
+
     @min_os_level('10.6')
     def testProtocols10_6(self):
         self.assertArgHasType(TestNSTextViewHelper.textView_willCheckTextInRange_options_types_, 1, NSRange.__typestr__)
@@ -212,6 +233,13 @@ class TestNSTextView (TestCase):
     @min_os_level('10.7')
     def testProtocols10_7(self):
         self.assertArgHasType(TestNSTextViewHelper.textView_URLForContentsOfTextAttachment_atIndex_, 2, objc._C_NSUInteger)
+
+    @min_os_level('10.12')
+    def testProtocols10_12(self):
+        self.assertArgHasType(textView_candidatesForSelectedRange_, 1, NSRange.__typestr__)
+        self.assertArgHasType(textView_candidates_forSelectedRange_, 2, NSRange.__typestr__)
+        self.assertArgHasType(textView_shouldSelectCandidateAtIndex_, 1, objc._C_NSUInteger)
+        self.assertResultIsBOOL(textView_shouldSelectCandidateAtIndex_)
 
 
 

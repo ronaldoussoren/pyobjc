@@ -167,6 +167,21 @@
    "SFSafariApplication": {
     "methods": [
      {
+      "selector": "showPreferencesForExtensionWithIdentifier:completionHandler:",
+      "class_method": true,
+      "args": {
+       "1": {
+        "callable": {
+         "arguments": {
+ 	 "0": { "typestr": "^v" },
+ 	 "1": { "typestr": "@" }
+ 	},
+ 	"retval": { "typestr": "v" }
+        }
+       }
+      }
+     },
+     {
       "selector": "getActiveWindowWithCompletionHandler:",
       "class_method": false,
       "args": {

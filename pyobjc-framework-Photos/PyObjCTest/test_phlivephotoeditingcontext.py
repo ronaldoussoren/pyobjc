@@ -32,6 +32,7 @@ if sys.maxsize > 2 ** 32:
             self.assertEqual(Photos.PHLivePhotoFrameTypeVideo, 1)
 
             self.assertIsInstance(Photos.PHLivePhotoEditingErrorDomain, unicode)
+            self.assertIsInstance(Photos.PHLivePhotoShouldRenderAtPlaybackTime, unicode)
 
             self.assertEqual(Photos.PHLivePhotoEditingErrorCodeUnknown, 0)
             self.assertEqual(Photos.PHLivePhotoEditingErrorCodeAborted, 1)

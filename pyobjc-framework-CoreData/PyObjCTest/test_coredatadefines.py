@@ -37,5 +37,10 @@ class TestCoreDataDefines (TestCase):
         self.assertEqual(NSCoreDataVersionNumber10_10_2, 526.1)
         self.assertEqual(NSCoreDataVersionNumber10_10_3, 526.2)
 
+    @min_os_level('10.11')
+    def testConstants10_11(self):
+        self.assertEqual(NSCoreDataVersionNumber10_11, 640.0)
+        self.assertEqual(NSCoreDataVersionNumber10_11_3, 641.3)
+
 if __name__ == "__main__":
     main()

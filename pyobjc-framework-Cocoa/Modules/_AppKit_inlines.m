@@ -4,6 +4,9 @@
 
 
 static PyObjC_function_map function_map[] = {
+#if PyObjC_BUILD_RELEASE >= 1012
+    { "NSTouchTypeMaskFromType", (PyObjC_Function_Pointer)&NSTouchTypeMaskFromType },
+#endif
 #if PyObjC_BUILD_RELEASE >= 1008
     { "NSEdgeInsetsMake", (PyObjC_Function_Pointer)&NSEdgeInsetsMake },
 #endif

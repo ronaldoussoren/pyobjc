@@ -17,6 +17,14 @@ class TestSCNPhysicsShape (TestCase):
 
         self.assertIsInstance(SceneKit.SCNPhysicsShapeScaleKey, unicode)
 
+    @min_os_level('10.12')
+    def test_constants10_12(self):
+        self.assertIsInstance(SceneKit.SCNPhysicsShapeOptionCollisionMargin, unicode)
+
+        self.assertIs(SceneKit.SCNPhysicsShapeOptionType, SCNPhysicsShapeTypeKey)
+        self.assertIs(SceneKit.SCNPhysicsShapeOptionKeepAsCompound, SCNPhysicsShapeKeepAsCompoundKey)
+        self.assertIs(SceneKit.SCNPhysicsShapeOptionScale, SCNPhysicsShapeScaleKey)
+
 
 if __name__ == "__main__":
     main()

@@ -51,6 +51,14 @@
     "NSRectEdgeMaxY": { "alias": "NSMaxYEdge" }
   },
   "enum": {
+    "NSCloudSharingNetworkFailureError": { "value": 5120 },
+    "NSCloudSharingQuotaExceededError": { "value": 5121 },
+    "NSCloudSharingTooManyParticipantsError": { "value": 5122 },
+    "NSCloudSharingConflictError": { "value": 5123 },
+    "NSCloudSharingNoPermissionError": { "value": 5124 },
+    "NSCloudSharingOtherError": { "value": 5375 },
+    "NSCloudSharingErrorMinimum": { "value": 5120 },
+    "NSCloudSharingErrorMaximum": { "value": 5375 },
     "NSURLSessionTaskMetricsResourceFetchTypeUnknown": { "value": 0 },
     "NSURLSessionTaskMetricsResourceFetchTypeNetworkLoad": { "value": 1 },
     "NSURLSessionTaskMetricsResourceFetchTypeServerPush": { "value": 2 },

@@ -112,5 +112,6 @@ static void __attribute__((__used__)) use_protocols(void)
     p = PyObjC_IdToPython(@protocol(NSCollectionViewSectionHeaderView)); Py_XDECREF(p);
     p = PyObjC_IdToPython(@protocol(NSFilePromiseProviderDelegate)); Py_XDECREF(p);
     p = PyObjC_IdToPython(@protocol(NSCloudSharingServiceDelegate)); Py_XDECREF(p);
+    p = PyObjC_IdToPython(@protocol(NSCloudSharingValidation)); Py_XDECREF(p);
 #endif
 }

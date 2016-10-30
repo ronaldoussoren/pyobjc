@@ -22,8 +22,8 @@ if sys.maxsize > 2 ** 32:
             self.assertArgIsBlock(TestINSendMessageIntentHelper.resolveContentForSendMessage_withCompletion_, 1, b'v@')
             self.assertArgIsBlock(TestINSendMessageIntentHelper.resolveContentForSendMessage_withCompletion_, 1, b'v@')
             self.assertArgIsBlock(TestINSendMessageIntentHelper.resolveGroupNameForSendMessage_withCompletion_, 1, b'v@')
-            self.assertArgIsBlock(TestINSendMessageIntentHelper.resolveServiceNameForSendMessage_withCompletion_, 1, b'v@')
-            self.assertArgIsBlock(TestINSendMessageIntentHelper.resolveSenderForSendMessage_withCompletion_, 1, b'v@')
+            #self.assertArgIsBlock(TestINSendMessageIntentHelper.resolveServiceNameForSendMessage_withCompletion_, 1, b'v@')
+            #self.assertArgIsBlock(TestINSendMessageIntentHelper.resolveSenderForSendMessage_withCompletion_, 1, b'v@')
 
         @min_sdk_level('10.12')
         def testProtocols(self):

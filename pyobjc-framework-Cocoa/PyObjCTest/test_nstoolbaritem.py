@@ -25,6 +25,10 @@ class TestNSToolbarItem (TestCase):
     def testConstants10_11(self):
         self.assertIsInstance(NSToolbarToggleSidebarItemIdentifier, unicode)
 
+    @min_os_level('10.12')
+    def testConstants10_12(self):
+        self.assertIsInstance(NSToolbarCloudSharingItemIdentifier, unicode)
+
     def testMethods(self):
         self.assertResultIsBOOL(NSToolbarItem.isEnabled)
         self.assertArgIsBOOL(NSToolbarItem.setEnabled_, 0)
@@ -35,6 +39,9 @@ class TestNSToolbarItem (TestCase):
     def testProtocols(self):
         self.assertResultIsBOOL(TestNSToolbarItemHelper.validateToolbarItem_)
 
+    @min_sdk_level('10.12')
+    def testProtocolObject(self):
+        objc.protocolNamed('NSCloudSharingValidation')
 
 if __name__ == "__main__":
     main()

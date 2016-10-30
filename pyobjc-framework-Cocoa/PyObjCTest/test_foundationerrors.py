@@ -91,6 +91,17 @@ class FoundationErrorsTest (TestCase):
         self.assertEqual(NSBundleErrorMinimum, 4992)
         self.assertEqual(NSBundleErrorMaximum, 5119)
 
+    @min_os_level('10.12')
+    def testConstants10_12(self):
+        self.assertEqual(NSCloudSharingNetworkFailureError, 5120)
+        self.assertEqual(NSCloudSharingQuotaExceededError, 5121)
+        self.assertEqual(NSCloudSharingTooManyParticipantsError, 5122)
+        self.assertEqual(NSCloudSharingConflictError, 5123)
+        self.assertEqual(NSCloudSharingNoPermissionError, 5124)
+        self.assertEqual(NSCloudSharingOtherError, 5375)
+        self.assertEqual(NSCloudSharingErrorMinimum, 5120)
+        self.assertEqual(NSCloudSharingErrorMaximum, 5375)
+
 
 if __name__ == "__main__":
     main()

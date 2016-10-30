@@ -18,7 +18,8 @@ if sys.maxsize > 2 ** 32:
             self.assertArgIsBlock(TestINSearchCallHistoryIntentHelper.confirmSearchCallHistory_completion_, 1, b'v@')
             self.assertArgIsBlock(TestINSearchCallHistoryIntentHelper.resolveCallTypeForSearchCallHistory_withCompletion_, 1, b'v@')
             self.assertArgIsBlock(TestINSearchCallHistoryIntentHelper.resolveRecipientForSearchCallHistory_withCompletion_, 1, b'v@')
-            self.assertArgIsBlock(TestINSearchCallHistoryIntentHelper.resolveCallCapabilitiesForSearchCallHistory_withCompletion_, 1, b'v@')
+            # Removed in Xcode 8.1
+            #self.assertArgIsBlock(TestINSearchCallHistoryIntentHelper.resolveCallCapabilitiesForSearchCallHistory_withCompletion_, 1, b'v@')
 
         @min_sdk_level('10.12')
         def testProtocols(self):

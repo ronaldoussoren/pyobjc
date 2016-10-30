@@ -152,5 +152,11 @@ class TestNSDocument (TestCase):
         self.assertResultIsBOOL(NSDocument.isLocked)
         self.assertResultIsBOOL(NSDocument.usesUbiquitousStorage)
 
+    @min_os_level('10.12')
+    def testMethods10_12(self):
+        self.assertResultIsBOOL(NSDocument.isBrowsingVersions)
+
+        self.assertArgIsBlock(NSDocument.stopBrowsingVersionsWithCompletionHandler_, 0, b'v')
+
 if __name__ == "__main__":
     main()

@@ -1,8 +1,5 @@
 {
  "definitions": {
-  "aliases": {
-   "INIntentHandlingStatusDone": { "alias": "INIntentHandlingStatusSuccess" }
-  },
   "enum": {
    "INStartVideoCallIntentResponseCodeUnspecified": { "value": 0 },
    "INStartVideoCallIntentResponseCodeReady": { "value": 1 },
@@ -20,6 +17,7 @@
    "INSendMessageIntentResponseCodeSuccess": { "value": 3 },
    "INSendMessageIntentResponseCodeFailure": { "value": 4 },
    "INSendMessageIntentResponseCodeFailureRequiringAppLaunch": { "value": 5 },
+   "INSendMessageIntentResponseCodeFailureMessageServiceNotAvailable": { "value": 6 },
    "INSearchForMessagesIntentResponseCodeUnspecified": { "value": 0 },
    "INSearchForMessagesIntentResponseCodeReady": { "value": 1 },
    "INSearchForMessagesIntentResponseCodeInProgress": { "value": 2 },
@@ -51,7 +49,7 @@
    "INInteractionDirectionOutgoing": { "value": 1 },
    "INInteractionDirectionIncoming": { "value": 2 },
    "INIntentErrorInteractionOperationNotSupported": { "value": 1900 },
-   "INIntentErrorAddingInteraction": { "value": 1901 },
+   "INIntentErrorDonatingInteraction": { "value": 1901 },
    "INIntentErrorDeletingAllInteractions": { "value": 1902 },
    "INIntentErrorDeletingInteractionWithIdentifiers": { "value": 1903 },
    "INIntentErrorDeletingInteractionWithGroupIdentifier": { "value": 1904 },
@@ -60,6 +58,7 @@
    "INIntentErrorNoHandlerProvidedForIntent": { "value": 2003 },
    "INIntentErrorInvalidIntentName": { "value": 2004 },
    "INIntentErrorRequestTimedOut": { "value": 3001 },
+   "INIntentErrorInvalidUserVocabularyFileLocation": { "value": 4000 },
    "INCallCapabilityOptionAudioCall": { "value": 1 },
    "INCallCapabilityOptionVideoCall": { "value": 2 },
    "INCallRecordTypeUnknown": { "value": 0 },

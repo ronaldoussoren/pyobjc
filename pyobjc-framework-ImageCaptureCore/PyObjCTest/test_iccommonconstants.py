@@ -46,6 +46,8 @@ class TestICCameraDevice (TestCase):
         self.assertEqual(ICReturnDeviceCouldNotPair, -9951)
         self.assertEqual(ICReturnDeviceCouldNotUnpair, -9952)
         self.assertEqual(ICReturnDeviceNeedsCredentials, -9953)
+        self.assertEqual(ICReturnDeviceIsBusyEnumerating, -9954)
+        self.assertEqual(ICReturnDeviceCommandGeneralFailure, -9955)
 
 if __name__ == "__main__":
     main()

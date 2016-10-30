@@ -24,11 +24,11 @@ if sys.maxsize > 2 ** 32:
 
             self.assertArgIsBlock(TestINSearchForMessagesIntentHelper.resolveRecipientsForSearchForMessages_withCompletion_, 1, b'v@')
             self.assertArgIsBlock(TestINSearchForMessagesIntentHelper.resolveSendersForSearchForMessages_withCompletion_, 1, b'v@')
-            self.assertArgIsBlock(TestINSearchForMessagesIntentHelper.resolveSearchTermsForSearchForMessages_withCompletion_, 1, b'v@')
+            #self.assertArgIsBlock(TestINSearchForMessagesIntentHelper.resolveSearchTermsForSearchForMessages_withCompletion_, 1, b'v@')
             self.assertArgIsBlock(TestINSearchForMessagesIntentHelper.resolveAttributesForSearchForMessages_withCompletion_, 1, b'v@')
             self.assertArgIsBlock(TestINSearchForMessagesIntentHelper.resolveDateTimeRangeForSearchForMessages_withCompletion_, 1, b'v@')
-            self.assertArgIsBlock(TestINSearchForMessagesIntentHelper.resolveIdentifiersForSearchForMessages_withCompletion_, 1, b'v@')
-            self.assertArgIsBlock(TestINSearchForMessagesIntentHelper.resolveNotificationIdentifiersForSearchForMessages_withCompletion_, 1, b'v@')
+            #self.assertArgIsBlock(TestINSearchForMessagesIntentHelper.resolveIdentifiersForSearchForMessages_withCompletion_, 1, b'v@')
+            #self.assertArgIsBlock(TestINSearchForMessagesIntentHelper.resolveNotificationIdentifiersForSearchForMessages_withCompletion_, 1, b'v@')
             self.assertArgIsBlock(TestINSearchForMessagesIntentHelper.resolveGroupNamesForSearchForMessages_withCompletion_, 1, b'v@')
 
         @min_sdk_level('10.12')

@@ -87,6 +87,10 @@ class TestNSPasteboard (TestCase):
         self.assertEqual(NSPasteboardReadingAsPropertyList, 1<<1)
         self.assertEqual(NSPasteboardReadingAsKeyedArchive, 1<<2)
 
+    @min_os_level('10.12')
+    def testConstants10_6(self):
+        self.assertIsInstance(NSPasteboardContentsCurrentHostOnly, 1<<0)
+
 
     @min_os_level('10.6')
     def testMethods10_6(self):

@@ -33,6 +33,10 @@ class TestCIDetector (TestCase):
         self.assertIsInstance(CIDetectorNumberOfAngles, unicode)
         self.assertIsInstance(CIDetectorReturnSubFeatures, unicode)
 
+    @min_os_level('10.12')
+    def testConstants10_12(self):
+        self.assertIsInstance(CIDetectorMaxFeatureCount, unicode)
+
 
 if __name__ == "__main__":
     main()

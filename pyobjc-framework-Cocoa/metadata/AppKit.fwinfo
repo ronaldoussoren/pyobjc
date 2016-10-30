@@ -1,8 +1,92 @@
 {
  "definitions": {
   "externs": {
+   "NSToolbarCloudSharingItemIdentifier": { "typestr": "@" },
+   "NSTouchBarItemIdentifierCharacterPicker": { "typestr": "@" },
+   "NSTouchBarItemIdentifierTextColorPicker": { "typestr": "@" },
+   "NSTouchBarItemIdentifierTextStyle": { "typestr": "@" },
+   "NSTouchBarItemIdentifierTextAlignment": { "typestr": "@" },
+   "NSTouchBarItemIdentifierTextList": { "typestr": "@" },
+   "NSTouchBarItemIdentifierTextFormat": { "typestr": "@" },
+   "NSImageNameTouchBarAddDetailTemplate": { "typestr": "@" },
+   "NSImageNameTouchBarAddTemplate": { "typestr": "@" },
+   "NSImageNameTouchBarAlarmTemplate": { "typestr": "@" },
+   "NSImageNameTouchBarAudioInputMuteTemplate": { "typestr": "@" },
+   "NSImageNameTouchBarAudioInputTemplate": { "typestr": "@" },
+   "NSImageNameTouchBarAudioOutputMuteTemplate": { "typestr": "@" },
+   "NSImageNameTouchBarAudioOutputVolumeHighTemplate": { "typestr": "@" },
+   "NSImageNameTouchBarAudioOutputVolumeLowTemplate": { "typestr": "@" },
+   "NSImageNameTouchBarAudioOutputVolumeMediumTemplate": { "typestr": "@" },
+   "NSImageNameTouchBarAudioOutputVolumeOffTemplate": { "typestr": "@" },
+   "NSImageNameTouchBarBookmarksTemplate": { "typestr": "@" },
+   "NSImageNameTouchBarColorPickerFill": { "typestr": "@" },
+   "NSImageNameTouchBarColorPickerFont": { "typestr": "@" },
+   "NSImageNameTouchBarColorPickerStroke": { "typestr": "@" },
+   "NSImageNameTouchBarCommunicationAudioTemplate": { "typestr": "@" },
+   "NSImageNameTouchBarCommunicationVideoTemplate": { "typestr": "@" },
+   "NSImageNameTouchBarComposeTemplate": { "typestr": "@" },
+   "NSImageNameTouchBarDeleteTemplate": { "typestr": "@" },
+   "NSImageNameTouchBarDownloadTemplate": { "typestr": "@" },
+   "NSImageNameTouchBarEnterFullScreenTemplate": { "typestr": "@" },
+   "NSImageNameTouchBarExitFullScreenTemplate": { "typestr": "@" },
+   "NSImageNameTouchBarFastForwardTemplate": { "typestr": "@" },
+   "NSImageNameTouchBarFolderCopyToTemplate": { "typestr": "@" },
+   "NSImageNameTouchBarFolderMoveToTemplate": { "typestr": "@" },
+   "NSImageNameTouchBarFolderTemplate": { "typestr": "@" },
+   "NSImageNameTouchBarGetInfoTemplate": { "typestr": "@" },
+   "NSImageNameTouchBarGoBackTemplate": { "typestr": "@" },
+   "NSImageNameTouchBarGoDownTemplate": { "typestr": "@" },
+   "NSImageNameTouchBarGoForwardTemplate": { "typestr": "@" },
+   "NSImageNameTouchBarGoUpTemplate": { "typestr": "@" },
+   "NSImageNameTouchBarHistoryTemplate": { "typestr": "@" },
+   "NSImageNameTouchBarIconViewTemplate": { "typestr": "@" },
+   "NSImageNameTouchBarListViewTemplate": { "typestr": "@" },
+   "NSImageNameTouchBarMailTemplate": { "typestr": "@" },
+   "NSImageNameTouchBarNewFolderTemplate": { "typestr": "@" },
+   "NSImageNameTouchBarNewMessageTemplate": { "typestr": "@" },
+   "NSImageNameTouchBarOpenInBrowserTemplate": { "typestr": "@" },
+   "NSImageNameTouchBarPauseTemplate": { "typestr": "@" },
+   "NSImageNameTouchBarPlayheadTemplate": { "typestr": "@" },
+   "NSImageNameTouchBarPlayPauseTemplate": { "typestr": "@" },
+   "NSImageNameTouchBarPlayTemplate": { "typestr": "@" },
+   "NSImageNameTouchBarQuickLookTemplate": { "typestr": "@" },
+   "NSImageNameTouchBarRecordStartTemplate": { "typestr": "@" },
+   "NSImageNameTouchBarRecordStopTemplate": { "typestr": "@" },
+   "NSImageNameTouchBarRefreshTemplate": { "typestr": "@" },
+   "NSImageNameTouchBarRewindTemplate": { "typestr": "@" },
+   "NSImageNameTouchBarRotateLeftTemplate": { "typestr": "@" },
+   "NSImageNameTouchBarRotateRightTemplate": { "typestr": "@" },
+   "NSImageNameTouchBarSearchTemplate": { "typestr": "@" },
+   "NSImageNameTouchBarShareTemplate": { "typestr": "@" },
+   "NSImageNameTouchBarSidebarTemplate": { "typestr": "@" },
+   "NSImageNameTouchBarSkipAhead15SecondsTemplate": { "typestr": "@" },
+   "NSImageNameTouchBarSkipAhead30SecondsTemplate": { "typestr": "@" },
+   "NSImageNameTouchBarSkipAheadTemplate": { "typestr": "@" },
+   "NSImageNameTouchBarSkipBack15SecondsTemplate": { "typestr": "@" },
+   "NSImageNameTouchBarSkipBack30SecondsTemplate": { "typestr": "@" },
+   "NSImageNameTouchBarSkipBackTemplate": { "typestr": "@" },
+   "NSImageNameTouchBarSkipToEndTemplate": { "typestr": "@" },
+   "NSImageNameTouchBarSkipToStartTemplate": { "typestr": "@" },
+   "NSImageNameTouchBarSlideshowTemplate": { "typestr": "@" },
+   "NSImageNameTouchBarTagIconTemplate": { "typestr": "@" },
+   "NSImageNameTouchBarTextBoldTemplate": { "typestr": "@" },
+   "NSImageNameTouchBarTextBoxTemplate": { "typestr": "@" },
+   "NSImageNameTouchBarTextCenterAlignTemplate": { "typestr": "@" },
+   "NSImageNameTouchBarTextItalicTemplate": { "typestr": "@" },
+   "NSImageNameTouchBarTextJustifiedAlignTemplate": { "typestr": "@" },
+   "NSImageNameTouchBarTextLeftAlignTemplate": { "typestr": "@" },
+   "NSImageNameTouchBarTextListTemplate": { "typestr": "@" },
+   "NSImageNameTouchBarTextRightAlignTemplate": { "typestr": "@" },
+   "NSImageNameTouchBarTextStrikethroughTemplate": { "typestr": "@" },
+   "NSImageNameTouchBarTextUnderlineTemplate": { "typestr": "@" },
+   "NSImageNameTouchBarUserAddTemplate": { "typestr": "@" },
+   "NSImageNameTouchBarUserGroupTemplate": { "typestr": "@" },
+   "NSImageNameTouchBarUserTemplate": { "typestr": "@" },
+   "NSImageNameTouchBarVolumeDownTemplate": { "typestr": "@" },
+   "NSImageNameTouchBarVolumeUpTemplate": { "typestr": "@" },
    "NSSpellCheckerDidChangeAutomaticCapitalizationNotification": { "typestr": "@" },
    "NSSpellCheckerDidChangeAutomaticPeriodSubstitutionNotification": { "typestr": "@" },
+   "NSSpellCheckerDidChangeAutomaticTextCompletionNotification": { "typestr": "@" },
    "NSTextCheckingSelectedRangeKey": { "typestr": "@" },
    "NSSharingServiceNameCloudSharing": { "typestr": "@" },
    "NSImageHintUserInterfaceLayoutDirection": { "typestr": "@" },
@@ -4395,6 +4479,16 @@
        "type_override": "Z"
       },
       "selector": "writeToFile:"
+     },
+     {
+      "class_method": false,
+      "retval": {
+       "type_override": "Z"
+      },
+      "args": {
+       "1": { "type_modifier": "o" }
+      },
+      "selector": "writeToURL:error:"
      }
     ]
    },
@@ -5147,6 +5241,25 @@
    },
    "NSDocument": {
     "methods": [
+     {
+      "selector": "stopBrowsingVersionsWithCompletionHandler:",
+      "class_method": false,
+      "args": {
+       "0": {
+        "callable": {
+	 "arguments": {
+	  "0": { "typestr": "^v" }
+	 },
+	 "retval": { "typestr": "v" }
+	}
+       }
+      }
+     },
+     {
+      "retval": { "type_override": "Z" },
+      "selector": "isBrowsingVersions",
+      "class_method": false
+     },
      {
       "args": {
        "0": {
@@ -11216,6 +11329,49 @@
    "NSObject": {
     "methods": [
      {
+      "selector": "textView:candidatesForSelectedRange:",
+      "class_method": false,
+      "args": {
+       "1": { "type_override": [ "{_NSRange=II}", "{_NSRange=QQ}" ] }
+      }
+     },
+     {
+      "selector": "textView:candidates:forSelectedRange:",
+      "class_method": false,
+      "args": {
+       "2": { "type_override": [ "{_NSRange=II}", "{_NSRange=QQ}" ] }
+      }
+     },
+     {
+      "selector": "textView:candidates:forSelectedRange:",
+      "class_method": false,
+      "args": {
+       "2": { "type_override": [ "{_NSRange=II}", "{_NSRange=QQ}" ] }
+      }
+     },
+     {
+      "selector": "textField:textView:candidatesForSelectedRange:",
+      "class_method": false,
+      "args": {
+       "2": { "type_override": [ "{_NSRange=II}", "{_NSRange=QQ}" ] }
+      }
+     },
+     {
+      "selector": "textField:textView:candidates:forSelectedRange:",
+      "class_method": false,
+      "args": {
+       "3": { "type_override": [ "{_NSRange=II}", "{_NSRange=QQ}" ] }
+      }
+     },
+     {
+      "selector": "textField:textView:shouldSelectCandidateAtIndex:",
+      "class_method": false,
+      "retval": { "type_override": "Z" },
+      "args": {
+       "2": { "type_override": [ "I", "Q" ] }
+      }
+     },
+     {
       "selector": "filePromiseProvider:writePromiseToURL:completionHandler:",
       "class_method": false,
       "args": {
@@ -15559,6 +15715,13 @@
       "retval": {
        "type_override": "Z"
       },
+      "selector": "gestureRecognizer:shouldReceiveTouch:"
+     },
+     {
+      "class_method": false,
+      "retval": {
+       "type_override": "Z"
+      },
       "selector": "writeSelectionToPasteboard:types:"
      },
      {
@@ -18933,6 +19096,32 @@
      },
      {
       "args": {
+       "5": {
+        "callable": {
+	 "arguments": {
+	  "0": { "typestr": "^v" },
+	  "1": { "typestr": ["i", "q"] },
+	  "2": { "typestr": "@" }
+	 },
+	 "retval": { "typestr": "v" }
+	}
+       }
+      },
+      "class_method": false,
+      "selector": "requestCandidatesForSelectedRange:inString:types:options:inSpellDocumentWithTag:completionHandler:"
+     },
+     {
+      "selector": "deletesAutospaceBetweenString:andString:language:",
+      "class_method": "Z",
+      "retval": { "type_override": "Z" }
+     },
+     {
+      "selector": "isAutomaticTextCompletionEnabled",
+      "class_method": "Z",
+      "retval": { "type_override": "Z" }
+     },
+     {
+      "args": {
        "3": {
         "type_override": "Z"
        },
@@ -20735,6 +20924,20 @@
       "args": {
        "0": { "type_override": "Z" }
       },
+      "selector": "setAllowsCharacterPickerTouchBarItem:"
+     },
+     {
+      "class_method": false,
+      "args": {
+       "0": { "type_override": "Z" }
+      },
+      "selector": "setAutomaticTextCompletionEnabled:"
+     },
+     {
+      "class_method": false,
+      "args": {
+       "0": { "type_override": "Z" }
+      },
       "selector": "setAllowsDefaultTighteningForTruncation:"
      },
      {
@@ -20743,6 +20946,20 @@
        "type_override": "Z"
       },
       "selector": "allowsDefaultTighteningForTruncation"
+     },
+     {
+      "class_method": false,
+      "retval": {
+       "type_override": "Z"
+      },
+      "selector": "isAutomaticTextCompletionEnabled"
+     },
+     {
+      "class_method": false,
+      "retval": {
+       "type_override": "Z"
+      },
+      "selector": "allowsCharacterPickerTouchBarItem"
      },
      {
       "class_method": false,
@@ -21120,6 +21337,23 @@
    },
    "NSTextView": {
     "methods": [
+     {
+      "selector": "allowsCharacterPickerTouchBarItem",
+      "class_method": false,
+      "retval": { "type_override": "Z" }
+     },
+     {
+      "selector": "setAllowsCharacterPickerTouchBarItem:",
+      "class_method": false,
+      "args": {
+       "0": { "type_override": "Z" }
+      }
+     },
+     {
+      "selector": "stronglyReferencesTextStorage",
+      "class_method": true,
+      "retval": { "type_override": "Z" }
+     },
      {
       "args": {
        "0": {
@@ -26131,6 +26365,14 @@
    }
   },
   "enum": {
+   "NSTouchTypeDirect": { "value": 0 },
+   "NSTouchTypeIndirect": { "value": 1 },
+   "NSTouchTypeMaskDirect": { "value": 1 },
+   "NSTouchTypeMaskIndirect": { "value": 2 },
+   "NSPasteboardContentsCurrentHostOnly": { "value": 1 },
+   "NSEventTypeDirectTouch": { "value": 37 },
+   "NSEventMaskDirectTouch": { "value": 137438953472 },
+   "NSAppKitVersionNumber10_12": { "value": 1504 },
    "NSColorPanelModeNone": { "value": -1 },
    "NSWindowUserTabbingPreferenceManual": { "value": 0 },
    "NSWindowUserTabbingPreferenceAlways": { "value": 1 },
@@ -26966,6 +27208,13 @@
    }
   },
   "functions": {
+   "NSTouchTypeMaskFromType": {
+    "inline": true,
+    "args": {
+     "0": { "typestr": [ "I", "Q" ] }
+    },
+    "retval": { "typestr": [ "I", "Q" ] }
+   },
    "NSApplicationMain": {
     "args": {
      "1": {}

@@ -10,6 +10,8 @@
    "NSCoreDataVersionNumber10_10": { "value": 526.0 },
    "NSCoreDataVersionNumber10_10_2": { "value": 526.1 },
    "NSCoreDataVersionNumber10_10_3": { "value": 526.2 },
+   "NSCoreDataVersionNumber10_11": { "value": 640.0 },
+   "NSCoreDataVersionNumber10_11_3": { "value": 641.3 },
    "NSBatchDeleteRequestType": { "value": 7 },
    "NSBatchDeleteResultTypeStatusOnly": { "value": 0 },
    "NSBatchDeleteResultTypeObjectIDs": { "value": 1 },

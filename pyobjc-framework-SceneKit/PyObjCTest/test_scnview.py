@@ -17,6 +17,10 @@ class TestSCNView (TestCase):
         self.assertIsInstance(SceneKit.SCNPreferredDeviceKey, unicode)
         self.assertIsInstance(SceneKit.SCNPreferLowPowerDeviceKey, unicode)
 
+        self.assertIs(SceneKit.SCNViewOptionPreferredRenderingAPI, SceneKit.SCNPreferredRenderingAPIKey)
+        self.assertIs(SceneKit.SCNViewOptionPreferredDevice, SceneKit.SCNPreferredDeviceKey)
+        self.assertIs(SceneKit.SCNViewOptionPreferLowPowerDevice, SceneKit.SCNPreferLowPowerDeviceKey)
+
     @min_os_level('10.8')
     def testMethods10_8(self):
         self.assertArgIsBOOL(SceneKit.SCNView.setAllowsCameraControl_, 0)

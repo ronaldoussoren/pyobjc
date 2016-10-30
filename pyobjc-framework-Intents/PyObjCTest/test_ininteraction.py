@@ -13,7 +13,6 @@ if sys.maxsize > 2 ** 32:
             self.assertEqual(Intents.INIntentHandlingStatusSuccess, 3)
             self.assertEqual(Intents.INIntentHandlingStatusFailure, 4)
             self.assertEqual(Intents.INIntentHandlingStatusDeferredToApplication, 5)
-            self.assertEqual(Intents.INIntentHandlingStatusDone, Intents.INIntentHandlingStatusSuccess)
 
             self.assertEqual(Intents.INInteractionDirectionUnspecified, 0)
             self.assertEqual(Intents.INInteractionDirectionOutgoing, 1)

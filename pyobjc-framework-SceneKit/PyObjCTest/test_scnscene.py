@@ -11,6 +11,11 @@ class TestSCNScene (TestCase):
         self.assertIsInstance(SceneKit.SCNSceneEndTimeAttributeKey, unicode)
         self.assertIsInstance(SceneKit.SCNSceneFrameRateAttributeKey, unicode)
 
+        self.assertIs(SceneKit.SCNSceneAttributeStartTime, SceneKit.SCNSceneStartTimeAttributeKey)
+        self.assertIs(SceneKit.SCNSceneAttributeEndTime, SceneKit.SCNSceneEndTimeAttributeKey)
+        self.assertIs(SceneKit.SCNSceneAttributeFrameRate, SceneKit.SCNSceneFrameRateAttributeKey)
+
+
     @min_os_level('10.9')
     def test_constants10_9(self):
         self.assertIsInstance(SceneKit.SCNSceneExportDestinationURL, unicode)
@@ -18,6 +23,9 @@ class TestSCNScene (TestCase):
     @min_os_level('10.10')
     def test_constants10_10(self):
         self.assertIsInstance(SceneKit.SCNSceneUpAxisAttributeKey, unicode)
+
+        self.assertIs(SceneKit.SCNSceneAttributeUpAxis, SceneKit.SCNSceneUpAxisAttributeKey)
+
 
     def testMethods(self):
         self.assertArgIsOut(SceneKit.SCNScene.sceneWithURL_options_error_, 2)

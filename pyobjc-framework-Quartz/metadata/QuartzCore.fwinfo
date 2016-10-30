@@ -3,6 +3,9 @@
 {
  "definitions": {
   "externs": {
+   "CIDetectorMaxFeatureCount": { "typestr": "@" },
+   "kCIInputBaselineExposureKey": { "typestr": "@" },
+   "kCIInputDisableGamutMapKey": { "typestr": "@" },
    "kCIContextCacheIntermediates": { "typestr": "@" },
    "kCIContextPriorityRequestLow": { "typestr": "@" },
    "kCIContextOutputPremultiplied": { "typestr": "@" },

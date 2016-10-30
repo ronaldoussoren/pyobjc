@@ -279,7 +279,9 @@ class TestNSEvent (TestCase):
     @min_os_level('10.10')
     def testConstants10_10(self):
         self.assertEqual(NSEventTypePressure, 34)
+        self.assertEqual(NSEventTypeDirectTouch, 37)
         self.assertEqual(NSEventMaskPressure, 1<<34)
+        self.assertEqual(NSEventMaskDirectTouch, 1<<37)
 
         self.assertEqual(NSPressureBehaviorUnknown, -1)
         self.assertEqual(NSPressureBehaviorPrimaryDefault, 0)

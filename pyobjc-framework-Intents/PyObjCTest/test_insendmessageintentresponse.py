@@ -13,6 +13,7 @@ if sys.maxsize > 2 ** 32:
             self.assertEqual(Intents.INSendMessageIntentResponseCodeSuccess, 3)
             self.assertEqual(Intents.INSendMessageIntentResponseCodeFailure, 4)
             self.assertEqual(Intents.INSendMessageIntentResponseCodeFailureRequiringAppLaunch, 5)
+            self.assertEqual(Intents.INSendMessageIntentResponseCodeFailureMessageServiceNotAvailable, 6)
 
 
 if __name__ == "__main__":

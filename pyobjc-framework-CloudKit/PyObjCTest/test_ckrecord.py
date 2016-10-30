@@ -14,5 +14,10 @@ if sys.maxsize > 2 ** 32:
         def testConstants(self):
             self.assertIsInstance(CloudKit.CKRecordTypeUserRecord, unicode)
 
+        @min_os_level("10.12")
+        def testConstants(self):
+            self.assertIsInstance(CloudKit.CKRecordParentKey, unicode)
+            self.assertIsInstance(CloudKit.CKRecordShareKey, unicode)
+
 if __name__ == "__main__":
     main()

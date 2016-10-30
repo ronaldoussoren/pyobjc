@@ -66,10 +66,23 @@ class TestSCNSceneRenderer (TestCase):
         self.assertEqual(SceneKit.SCNDebugOptionShowPhysicsFields, 1 << 4)
         self.assertEqual(SceneKit.SCNDebugOptionShowWireframe, 1 << 5)
 
+        self.assertIs(SceneKit.SCNHitTestOptionFirstFoundOnly, SceneKit.SCNHitTestFirstFoundOnlyKey)
+        self.assertIs(SceneKit.SCNHitTestOptionSortResults, SceneKit.SCNHitTestSortResultsKey)
+        self.assertIs(SceneKit.SCNHitTestOptionClipToZRange, SceneKit.SCNHitTestClipToZRangeKey)
+        self.assertIs(SceneKit.SCNHitTestOptionBackFaceCulling, SceneKit.SCNHitTestBackFaceCullingKey)
+        self.assertIs(SceneKit.SCNHitTestOptionBoundingBoxOnly, SceneKit.SCNHitTestBoundingBoxOnlyKey)
+        self.assertIs(SceneKit.SCNHitTestOptionIgnoreChildNodes, SceneKit.SCNHitTestIgnoreChildNodesKey)
+        self.assertIs(SceneKit.SCNHitTestOptionRootNode, SceneKit.SCNHitTestRootNodeKey)
+        self.assertIs(SceneKit.SCNHitTestOptionIgnoreHiddenNodes, SceneKit.SCNHitTestIgnoreHiddenNodesKey)
+
 
     @min_os_level('10.9')
     def test_constants10_9(self):
         self.assertIsInstance(SceneKit.SCNHitTestIgnoreHiddenNodesKey, unicode)
+
+    @min_os_level('10.12')
+    def test_constants10_12(self):
+        self.assertIsInstance(SceneKit.SCNHitTestOptionCategoryBitMask, unicode)
 
     def testProtocolObjects(self):
         objc.protocolNamed('SCNSceneRenderer')

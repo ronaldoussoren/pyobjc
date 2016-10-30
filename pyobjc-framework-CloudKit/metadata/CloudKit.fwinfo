@@ -32,6 +32,8 @@
    "CKShareParticipantTypePublicUser": { "value": 4 }
   },
   "externs": {
+   "CKRecordParentKey": { "typestr": "@" },
+   "CKRecordShareKey": { "typestr": "@" },
    "CKCurrentUserDefaultName": { "typestr": "@" },
    "CKAccountChangedNotification": { "typestr": "@" },
    "CKRecordTypeShare": { "typestr": "@" },

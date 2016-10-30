@@ -55,6 +55,9 @@ class TestNSSpellChecker (TestCase):
         self.assertResultIsBOOL(NSSpellChecker.preventsAutocorrectionBeforeString_language_)
         self.assertResultIsBOOL(NSSpellChecker.isAutomaticCapitalizationEnabled)
         self.assertResultIsBOOL(NSSpellChecker.isAutomaticPeriodSubstitutionEnabled)
+        self.assertResultIsBOOL(NSSpellChecker.isAutomaticTextCompletionEnabled)
+
+        sefl.assertArgIsBlock(NSSpellChecker.requestCandidatesForSelectedRange_inString_types_options_inSpellDocumentWithTag_completionHandler_, 5, b'v' + objc._C_NSInteger + b'@')
 
 
     @min_os_level('10.6')
@@ -95,6 +98,7 @@ class TestNSSpellChecker (TestCase):
         self.assertIsInstance(NSTextCheckingSelectedRangeKey, unicode)
         self.assertIsInstance(NSSpellCheckerDidChangeAutomaticCapitalizationNotification, unicode)
         self.assertIsInstance(NSSpellCheckerDidChangeAutomaticPeriodSubstitutionNotification, unicode)
+        self.assertIsInstance(NSSpellCheckerDidChangeAutomaticTextCompletionNotification, unicode)
 
 
 if __name__ == "__main__":
