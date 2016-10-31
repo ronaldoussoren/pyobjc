@@ -21,9 +21,9 @@ class TestSCNPhysicsShape (TestCase):
     def test_constants10_12(self):
         self.assertIsInstance(SceneKit.SCNPhysicsShapeOptionCollisionMargin, unicode)
 
-        self.assertIs(SceneKit.SCNPhysicsShapeOptionType, SCNPhysicsShapeTypeKey)
-        self.assertIs(SceneKit.SCNPhysicsShapeOptionKeepAsCompound, SCNPhysicsShapeKeepAsCompoundKey)
-        self.assertIs(SceneKit.SCNPhysicsShapeOptionScale, SCNPhysicsShapeScaleKey)
+        self.assertIs(SceneKit.SCNPhysicsShapeOptionType, SceneKit.SCNPhysicsShapeTypeKey)
+        self.assertIs(SceneKit.SCNPhysicsShapeOptionKeepAsCompound, SceneKit.SCNPhysicsShapeKeepAsCompoundKey)
+        self.assertIs(SceneKit.SCNPhysicsShapeOptionScale, SceneKit.SCNPhysicsShapeScaleKey)
 
 
 if __name__ == "__main__":

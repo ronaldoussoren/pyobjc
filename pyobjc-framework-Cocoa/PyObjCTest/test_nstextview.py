@@ -236,10 +236,10 @@ class TestNSTextView (TestCase):
 
     @min_os_level('10.12')
     def testProtocols10_12(self):
-        self.assertArgHasType(textView_candidatesForSelectedRange_, 1, NSRange.__typestr__)
-        self.assertArgHasType(textView_candidates_forSelectedRange_, 2, NSRange.__typestr__)
-        self.assertArgHasType(textView_shouldSelectCandidateAtIndex_, 1, objc._C_NSUInteger)
-        self.assertResultIsBOOL(textView_shouldSelectCandidateAtIndex_)
+        self.assertArgHasType(TestNSTextViewHelper.textView_candidatesForSelectedRange_, 1, NSRange.__typestr__)
+        self.assertArgHasType(TestNSTextViewHelper.textView_candidates_forSelectedRange_, 2, NSRange.__typestr__)
+        self.assertArgHasType(TestNSTextViewHelper.textView_shouldSelectCandidateAtIndex_, 1, objc._C_NSUInteger)
+        self.assertResultIsBOOL(TestNSTextViewHelper.textView_shouldSelectCandidateAtIndex_)
 
 
 

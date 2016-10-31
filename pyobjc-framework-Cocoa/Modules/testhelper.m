@@ -98,8 +98,11 @@
     switch (idx) {
     case 0: return [object valueForKey: key];
     case 1: return [object valueForKeyPath: key];
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
     case 2: return [object storedValueForKey: key];
     case 3: return [object valuesForKeys: key];
+#pragma clang diagnostic pop
     }
     return nil;
 }
@@ -107,10 +110,13 @@
 +(void)setKeyValue:(int)idx forObject: object key: key value: value
 {
     switch (idx) {
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
     case 0: [object takeValue: value forKey: key]; break;
     case 1: [object takeValue: value forKeyPath: key]; break;
     case 2: [object takeStoredValue: value forKey: key]; break;
     case 3: [object takeValuesFromDictionary: value]; break;
+#pragma clang diagnostic pop
 #if defined (MAC_OS_X_VERSION_10_3) && (MAC_OS_X_VERSION_MAX_ALLOWED >= MAC_OS_X_VERSION_10_3)
 
     case 4: [object setValue: value forKey: key]; break;

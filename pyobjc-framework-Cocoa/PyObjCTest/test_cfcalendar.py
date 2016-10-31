@@ -25,12 +25,12 @@ class TestCFCalendarVariadic (TestCase):
         success, at = CFCalendarComposeAbsoluteTime(
                 calendar, None, b"")
         self.assertEqual(success, True)
-        self.assert_(isinstance(at, float))
+        self.assertIsInstance(at, float)
 
         success, at = CFCalendarComposeAbsoluteTime(
                 calendar, None, b"yMdHms", 1965, 1, 6, 14, 10, 0)
         self.assertEqual(success, True)
-        self.assert_(isinstance(at, float))
+        self.assertIsInstance(at, float)
 
     def testCFCalendarAddComponents(self):
         calendar = CFCalendarCreateWithIdentifier(
@@ -40,12 +40,12 @@ class TestCFCalendarVariadic (TestCase):
         success, at = CFCalendarComposeAbsoluteTime(
                 calendar, None, b"yMdHms", 1965, 1, 6, 14, 10, 0)
         self.assertEqual(success, True)
-        self.assert_(isinstance(at, float))
+        self.assertIsInstance(at, float)
 
         success, at2 = CFCalendarAddComponents(
                 calendar, at, 0, b"yH", 2, 3)
         self.assertEqual(success, True)
-        self.assert_(isinstance(at2, float))
+        self.assertIsInstance(at2, float)
 
         success, y, H = CFCalendarGetComponentDifference(
                 calendar, at, at2, 0, b"yH")
@@ -56,12 +56,12 @@ class TestCFCalendarVariadic (TestCase):
     def testCFCalendarDecomposeAbsoluteTime(self):
         calendar = CFCalendarCreateWithIdentifier(
                 None, kCFGregorianCalendar)
-        self.assert_(calendar is not None)
+        self.assertTrue(calendar is not None)
 
         success, at = CFCalendarComposeAbsoluteTime(
                 calendar, None, b"yMdHms", 1965, 1, 6, 14, 10, 0)
         self.assertEqual(success, True)
-        self.assert_(isinstance(at, float))
+        self.assertIsInstance(at, float)
 
         success, y, M, d, H, m, s = CFCalendarDecomposeAbsoluteTime(
                 calendar, at, b"yMdHms")
@@ -75,17 +75,17 @@ class TestCFCalendarVariadic (TestCase):
     def testCFCalendarGetComponentDifference(self):
         calendar = CFCalendarCreateWithIdentifier(
                 None, kCFGregorianCalendar)
-        self.assert_(calendar is not None)
+        self.assertTrue(calendar is not None)
 
         success, at1 = CFCalendarComposeAbsoluteTime(
                 calendar, None, b"yMdHms", 1965, 1, 6, 14, 10, 0)
         self.assertEqual(success, True)
-        self.assert_(isinstance(at1, float))
+        self.assertIsInstance(at1, float)
 
         success, at2 = CFCalendarComposeAbsoluteTime(
                 calendar, None, b"yMdHms", 1967, 2, 6, 14, 10, 0)
         self.assertEqual(success, True)
-        self.assert_(isinstance(at2, float))
+        self.assertIsInstance(at2, float)
 
         success, y, M = CFCalendarGetComponentDifference(
                 calendar, at1, at2, 0, b"yM")
@@ -143,7 +143,7 @@ class TestCFCalendarVariadic (TestCase):
         self.assertIs(ok, True)
         self.assertIsInstance(startp, float)
         self.assertIsInstance(tip, float)
-        self.assertEqual(tip , 86400.0)
+        self.assertIn(tip , (86400.0, 90000.0, 82800)) # 1 day, remove DST, add DST
 
     def testMutation(self):
         cal = CFCalendarCreateWithIdentifier(None, kCFBuddhistCalendar)

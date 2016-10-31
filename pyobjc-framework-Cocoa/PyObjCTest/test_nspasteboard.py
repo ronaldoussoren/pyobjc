@@ -89,7 +89,7 @@ class TestNSPasteboard (TestCase):
 
     @min_os_level('10.12')
     def testConstants10_6(self):
-        self.assertIsInstance(NSPasteboardContentsCurrentHostOnly, 1<<0)
+        self.assertEqual(NSPasteboardContentsCurrentHostOnly, 1<<0)
 
 
     @min_os_level('10.6')

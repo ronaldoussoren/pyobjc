@@ -57,7 +57,7 @@ class TestNSSpellChecker (TestCase):
         self.assertResultIsBOOL(NSSpellChecker.isAutomaticPeriodSubstitutionEnabled)
         self.assertResultIsBOOL(NSSpellChecker.isAutomaticTextCompletionEnabled)
 
-        sefl.assertArgIsBlock(NSSpellChecker.requestCandidatesForSelectedRange_inString_types_options_inSpellDocumentWithTag_completionHandler_, 5, b'v' + objc._C_NSInteger + b'@')
+        self.assertArgIsBlock(NSSpellChecker.requestCandidatesForSelectedRange_inString_types_options_inSpellDocumentWithTag_completionHandler_, 5, b'v' + objc._C_NSInteger + b'@')
 
 
     @min_os_level('10.6')

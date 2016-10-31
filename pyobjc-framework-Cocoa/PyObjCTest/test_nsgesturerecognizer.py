@@ -7,6 +7,7 @@ class TestNSGestureRecognizerHelper (NSObject):
     def gestureRecognizer_shouldRequireFailureOfGestureRecognizer_(self, g, a): return 1
     def gestureRecognizer_shouldBeRequiredToFailByGestureRecognizer_(self, g, a): return 1
     def gestureRecognizer_shouldAttemptToRecognizeWithEvent_(self, g, e): return 1
+    def gestureRecognizer_shouldReceiveTouch_(self, r, t): return 1
 
 class TestNSGestureRecognizer (TestCase):
     def testConstants(self):

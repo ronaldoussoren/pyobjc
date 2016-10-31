@@ -70,12 +70,12 @@
    "SCNViewOptionPreferLowPowerDevice": { "alias": "SCNPreferLowPowerDeviceKey" }
   },
   "externs": {
+   "SCNPhysicsShapeTypeKey": { "typestr": "@" },
    "SCNPreferredRenderingAPIKey": { "typestr": "@" },
    "SCNPreferredDeviceKey": { "typestr": "@" },
    "SCNPreferLowPowerDeviceKey": { "typestr": "@" },
    "SCNHitTestOptionCategoryBitMask": { "typestr": "@" },
    "SCNPhysicsShapeOptionCollisionMargin": { "typestr": "@" },
-   "SCNPhysicsTestOptionBackfaceCulling": { "typestr": "@" },
    "SCNHitTestFirstFoundOnlyKey": { "typestr": "@" }
   },
   "classes": {

@@ -11347,7 +11347,8 @@
       "class_method": false,
       "args": {
        "1": { "type_override": [ "I", "Q" ] }
-      }
+      },
+      "retval": { "type_override": "Z" }
      },
      {
       "selector": "textField:textView:candidatesForSelectedRange:",

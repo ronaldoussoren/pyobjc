@@ -41,7 +41,7 @@ if sys.maxsize > 2 ** 32:
             self.assertEqual(LocalAuthentication.LAAccessControlOperationUseKeyDecrypt, 4)
             self.assertEqual(LocalAuthentication.LAAccessControlOperationUseKeyKeyExchange, 5)
 
-            self.assertIsInstance(LocationAuthentication.LATouchIDAuthenticationMaximumAllowableReuseDuration, float)
+            self.assertIsInstance(LocalAuthentication.LATouchIDAuthenticationMaximumAllowableReuseDuration, float)
 
         @min_os_level('10.11')
         def testMethods10_11(self):

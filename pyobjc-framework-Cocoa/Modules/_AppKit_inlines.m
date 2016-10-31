@@ -5,6 +5,9 @@
 
 static PyObjC_function_map function_map[] = {
 #if PyObjC_BUILD_RELEASE >= 1012
+#ifndef NSAppKitVersionNumber10_12
+# error "Install Xcode 8.1"
+#endif
     { "NSTouchTypeMaskFromType", (PyObjC_Function_Pointer)&NSTouchTypeMaskFromType },
 #endif
 #if PyObjC_BUILD_RELEASE >= 1008

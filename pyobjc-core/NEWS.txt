@@ -37,8 +37,9 @@ explictly.
 
   Earlier versions of PyObjC will therefore not work properly with Python 3.6.
 
-* Update metadata for macOS 10.12.
-  (in progress)
+* Update metadata for macOS 10.12.1
+
+  Note: Building PyObjC on macOS 10.12 requires Xcode 8.1 (or a later version)
 
 *  Added bindings for SafariServices and Intents frameworks, both introducted in macOS 10.12.
 
