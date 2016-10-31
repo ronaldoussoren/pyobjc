@@ -292,7 +292,7 @@ class TestKeyedArchiveSimple (TestCase):
         buf = self.archiverClass.archivedDataWithRootObject_(v)
         self.assertIsInstance(buf, NSData)
 
-        if os_level_key(os_release()) >= os_level_key('10.11'):
+        if os_level_key(os_release()) >= os_level_key('10.10'):
             # On OSX 10.11 (un)archivers modify exceptions, which looses
             # enough information that PyObjC can no longer reconstruct
             # the correct Python exception

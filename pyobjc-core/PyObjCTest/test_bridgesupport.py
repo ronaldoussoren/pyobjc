@@ -452,7 +452,13 @@ class TestBridgeSupportParser (TestCase):
         with filterWarnings("ignore", RuntimeWarning):
             # Check that all system bridgesupport files can be processed correctly
             for fn in self.iter_system_bridgesupport_files():
-                with self.subTest(fn):
+		if hasattr(self, 'subTest'):
+                    with self.subTest(fn):
+                        with open(fn, 'rb') as fp:
+                            xmldata = fp.read()
+
+                        self.assert_valid_bridgesupport(os.path.basename(fn).split('.')[0], xmldata)
+                else:
                     with open(fn, 'rb') as fp:
                         xmldata = fp.read()
 
