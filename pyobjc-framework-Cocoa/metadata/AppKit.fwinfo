@@ -1,16 +1,5 @@
 {
  "definitions": {
-  "enum": {
-   "NSScrubberModeFixed": { "value": 0 },
-   "NSScrubberModeFree": { "value": 1 },
-   "NSScrubberAlignmentNone": { "value": 0 },
-   "NSScrubberAlignmentLeading": { "value": 1 },
-   "NSScrubberAlignmentTrailing": { "value": 2 },
-   "NSScrubberAlignmentCenter": { "value": 3 },
-   "NSTouchBarItemPriorityHigh": { "value": 1000.0 },
-   "NSTouchBarItemPriorityNormal": { "value": 0.0 },
-   "NSTouchBarItemPriorityLow": { "value": -1000.0 }
-  },
   "externs": {
    "NSTouchBarItemIdentifierFixedSpaceSmall": { "typestr": "@" },
    "NSTouchBarItemIdentifierFixedSpaceLarge": { "typestr": "@" },
@@ -162,7 +151,7 @@
 	  "0": { "typestr": "^v" },
 	  "1": { "typestr": "@" }
 	 },
-	 "retval": { "typestr": "@" }
+	 "retval": { "typestr": "v" }
 	}
        }
       }
@@ -174,13 +163,13 @@
      {
       "class_method": false,
       "selector": "isVisible",
-      "retval": { "typestr": "Z" }
+      "retval": { "type_override": "Z" }
      },
      {
       "class_method": false,
       "selector": "setVisible:",
       "args": {
-       "0": { "typestr": "Z" }
+       "0": { "type_override": "Z" }
       }
      }
     ]
@@ -190,13 +179,13 @@
      {
       "class_method": false,
       "selector": "isVisible",
-      "retval": { "typestr": "Z" }
+      "retval": { "type_override": "Z" }
      },
      {
       "class_method": false,
       "selector": "setVisible:",
       "args": {
-       "0": { "typestr": "Z" }
+       "0": { "type_override": "Z" }
       }
      }
     ]
@@ -206,13 +195,13 @@
      {
       "class_method": false,
       "selector": "isEnabled",
-      "retval": { "typestr": "Z" }
+      "retval": { "type_override": "Z" }
      },
      {
       "class_method": false,
       "selector": "setEnabled:",
       "args": {
-       "0": { "typestr": "Z" }
+       "0": { "type_override": "Z" }
       }
      }
     ]
@@ -222,13 +211,13 @@
      {
       "class_method": false,
       "selector": "isEnabled",
-      "retval": { "typestr": "Z" }
+      "retval": { "type_override": "Z" }
      },
      {
       "class_method": false,
       "selector": "setEnabled:",
       "args": {
-       "0": { "typestr": "Z" }
+       "0": { "type_override": "Z" }
       }
      }
     ]
@@ -340,10 +329,12 @@
       "selector": "performSequentialBatchUpdates:",
       "args": {
        "0": {
-        "arguments": {
-	 "0": { "typestr": "^v" }
-	},
-	"retval": { "typestr": "v" }
+        "callable": {
+         "arguments": {
+	  "0": { "typestr": "^v" }
+	 },
+	 "retval": { "typestr": "v" }
+	}
        }
       }
      }
@@ -461,7 +452,7 @@
 	 "2": { "typestr": [ "i", "q" ] }
 	},
         "retval": {
-         "typestr": "v"
+         "typestr": "@"
 	}
        }
       }
@@ -478,7 +469,7 @@
 	  "2": { "typestr": [ "i", "q" ] }
 	 },
          "retval": {
-          "typestr": "v"
+          "typestr": "@"
          }
 	}
        }
@@ -26802,6 +26793,15 @@
    }
   },
   "enum": {
+   "NSScrubberModeFixed": { "value": 0 },
+   "NSScrubberModeFree": { "value": 1 },
+   "NSScrubberAlignmentNone": { "value": 0 },
+   "NSScrubberAlignmentLeading": { "value": 1 },
+   "NSScrubberAlignmentTrailing": { "value": 2 },
+   "NSScrubberAlignmentCenter": { "value": 3 },
+   "NSTouchBarItemPriorityHigh": { "value": 1000.0 },
+   "NSTouchBarItemPriorityNormal": { "value": 0.0 },
+   "NSTouchBarItemPriorityLow": { "value": -1000.0 },
    "NSTouchTypeDirect": { "value": 0 },
    "NSTouchTypeIndirect": { "value": 1 },
    "NSTouchTypeMaskDirect": { "value": 1 },

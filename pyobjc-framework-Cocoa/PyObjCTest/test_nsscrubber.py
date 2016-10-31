@@ -22,10 +22,10 @@ class TestNSScrubber (TestCase):
     @min_os_level('10.12')
     def testMethods(self):
         self.assertResultHasType(TestNSScrubberHelper.numberOfItemsForScrubber_, objc._C_NSInteger)
-        self.assertArgHasType(TestNSScrubberHelper.scrubber_viewForItemAtIndex_, 0, objc._C_NSInteger)
-        self.assertArgHasType(TestNSScrubberHelper.scrubber_didSelectItemAtIndex_, 0, objc._C_NSInteger)
-        self.assertArgHasType(TestNSScrubberHelper.scrubber_didHighlightItemAtIndex_, 0, objc._C_NSInteger)
-        self.assertArgHasType(TestNSScrubberHelper.scrubber_didChangeVisibleRange_, 0, NSRange.__typestr__)
+        self.assertArgHasType(TestNSScrubberHelper.scrubber_viewForItemAtIndex_, 1, objc._C_NSInteger)
+        self.assertArgHasType(TestNSScrubberHelper.scrubber_didSelectItemAtIndex_, 1, objc._C_NSInteger)
+        self.assertArgHasType(TestNSScrubberHelper.scrubber_didHighlightItemAtIndex_, 1, objc._C_NSInteger)
+        self.assertArgHasType(TestNSScrubberHelper.scrubber_didChangeVisibleRange_, 1, NSRange.__typestr__)
 
         self.assertResultIsBOOL(NSScrubber.isContinuous)
         self.assertArgIsBOOL(NSScrubber.setContinuous_, 0)

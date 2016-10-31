@@ -5,7 +5,7 @@ class TestNSTouchBarItem (TestCase):
     @min_os_level('10.12')
     def testMethods(self):
         self.assertResultIsBOOL(NSTouchBarItem.isVisible)
-        self.assertArgIsBOOL(NSTouchBarItem.setVisible_, 0)
+        #self.assertArgIsBOOL(NSTouchBarItem.setVisible_, 0)
 
     @min_sdk_level('10.12')
     def testConstants(self):

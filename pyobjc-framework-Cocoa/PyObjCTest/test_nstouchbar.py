@@ -5,7 +5,7 @@ class TestNSTouchBar (TestCase):
     @min_os_level('10.12')
     def testMethods(self):
         self.assertResultIsBOOL(NSTouchBar.isVisible)
-        self.assertArgIsBOOL(NSTouchBar.setVisible_, 0)
+        #self.assertArgIsBOOL(NSTouchBar.setVisible_, 0)
 
         self.assertResultIsBOOL(NSApplication.isAutomaticCustomizeTouchBarMenuItemEnabled)
         self.assertArgIsBOOL(NSApplication.setAutomaticCustomizeTouchBarMenuItemEnabled_, 0)

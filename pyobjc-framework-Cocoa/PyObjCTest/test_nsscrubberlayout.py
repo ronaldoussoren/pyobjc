@@ -12,8 +12,8 @@ class TestNSScrubberLayout (TestCase):
         self.assertResultIsBOOL(NSScrubberLayout.shouldInvalidateLayoutForChangeFromVisibleRect_toVisibleRect_)
         self.assertResultIsBOOL(NSScrubberLayout.automaticallyMirrorsInRightToLeftLayout)
 
-        self.assertResultHasType(TestNSScrubberHelper.scrubber_layout_sizeForItemAtIndex_, NSSize.__typestr__)
-        self.assertArgHasType(TestNSScrubberHelper.scrubber_layout_sizeForItemAtIndex_, 2, objc._C_NSInteger)
+        self.assertResultHasType(TestNSScrubberLayoutHelper.scrubber_layout_sizeForItemAtIndex_, NSSize.__typestr__)
+        self.assertArgHasType(TestNSScrubberLayoutHelper.scrubber_layout_sizeForItemAtIndex_, 2, objc._C_NSInteger)
 
     @min_sdk_level('10.12')
     def testProtocols(self):
