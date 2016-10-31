@@ -30,6 +30,7 @@ class TestSCNMaterialProperty (TestCase):
         self.assertResultIsBOOL(SceneKit.SCNNode.isPaused)
         self.assertArgIsBOOL(SceneKit.SCNNode.setPaused_, 0)
 
+    @min_sdk_level('10.10')
     def testProtocolObjects(self):
         objc.protocolNamed('SCNNodeRendererDelegate')
 

@@ -30,6 +30,9 @@ class TestSCNShadable (TestCase):
 
     def testProtocols(self):
         objc.protocolNamed('SCNShadable')
+
+    @min_sdk_level('10.10')
+    def testProtocols10_10(self):
         objc.protocolNamed('SCNProgramDelegate')
 
     @min_sdk_level('10.11')

@@ -17,6 +17,8 @@ if sys.maxsize > 2 ** 32:
             self.assertArgIsBlock(SpriteKit.SKPhysicsWorld.enumerateBodiesAlongRayStart_end_usingBlock_, 2,
                     b'v@' + Quartz.CGPoint.__typestr__ + Quartz.CGVector.__typestr__ + b'o^Z')
 
+        @min_os_level("10.10")
+        def testMethods10_10(self):
             o = SpriteKit.SKPhysicsWorld.alloc().init()
             v = o.sampleFieldsAt_((9, 10, 11))
             self.assertIsInstance(v, tuple)

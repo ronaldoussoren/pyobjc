@@ -21,7 +21,7 @@ class TestAVAudioTypes (TestCase):
         self.assertIsInstance(v.pitch, float)
         self.assertIsInstance(v.roll, float)
 
-    @min_os_level('10.7')
+    @min_os_level('10.10')
     def testFunctions(self):
         v = AVFoundation.AVAudioMake3DPoint(1.5, 2.5, 3.5)
         self.assertIsInstance(v, AVFoundation.AVAudio3DPoint)

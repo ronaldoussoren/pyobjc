@@ -14,7 +14,6 @@ if sys.maxsize > 2 ** 32:
 
         @min_os_level("10.9")
         def testMethods10_9(self):
-            self.assertArgIsBOOL(SpriteKit.SKTexture.textureWithData_size_flipped_, 2)
             self.assertArgIsBOOL(SpriteKit.SKTexture.setUsesMipmaps_, 0)
             self.assertResultIsBOOL(SpriteKit.SKTexture.usesMipmaps)
 
@@ -23,6 +22,7 @@ if sys.maxsize > 2 ** 32:
 
         @min_os_level("10.10")
         def testMethods10_10(self):
+            self.assertArgIsBOOL(SpriteKit.SKTexture.textureWithData_size_flipped_, 2)
             self.assertArgIsBOOL(SpriteKit.SKTexture.textureNoiseWithSmoothness_size_grayscale_, 2)
 
 if __name__ == "__main__":

@@ -86,6 +86,9 @@ class TestSCNSceneRenderer (TestCase):
 
     def testProtocolObjects(self):
         objc.protocolNamed('SCNSceneRenderer')
+   
+    @min_sdk_level('10.10')
+    def testProtocolObjects10_10(self):
         objc.protocolNamed('SCNSceneRendererDelegate')
 
 

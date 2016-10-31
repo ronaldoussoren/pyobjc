@@ -29,3 +29,19 @@ sys.modules['SceneKit'] = mod = objc.ObjCLazyModule(
 
 import sys
 del sys.modules['SceneKit._metadata']
+
+if not hasattr(mod, 'SCNMatrix4Identity'):
+   # Two "inline" functions that use a symbol that is available on 10.10 or later,
+   # avoid crashes by removing the inline function wrappers when that symbol
+   # is not available.
+   try:
+      mod.SCNMatrix4MakeTranslation
+      del mod.SCNMatrix4MakeTranslation
+   except AttributeError:
+      pass
+
+   try:
+      mod.SCNMatrix4MakeScale
+      del mod.SCNMatrix4MakeScale
+   except AttributeError:
+      pass

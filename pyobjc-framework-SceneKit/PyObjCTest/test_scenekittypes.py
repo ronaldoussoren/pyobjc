@@ -23,6 +23,7 @@ class TestSceneKitTypes (TestCase):
         self.assertEqual(SceneKit.SCNProgramCompilationError, 1)
 
     @expectedFailureIf(os_release() == '10.10')
+    @min_os_level('10.10')
     def testConstantsFail10_10(self):
         self.assertIsInstance(SceneKit.SCNErrorDomain, unicode)
 
@@ -32,6 +33,7 @@ class TestSceneKitTypes (TestCase):
         self.assertIsInstance(SceneKit.SCNVector3Zero, SceneKit.SCNVector3)
         self.assertIsInstance(SceneKit.SCNVector4Zero, SceneKit.SCNVector4)
 
+    @min_os_level('10.10')
     def testFunctions(self):
         self.assertResultHasType(SceneKit.SCNVector3EqualToVector3, objc._C_BOOL)
         self.assertResultHasType(SceneKit.SCNVector4EqualToVector4, objc._C_BOOL)

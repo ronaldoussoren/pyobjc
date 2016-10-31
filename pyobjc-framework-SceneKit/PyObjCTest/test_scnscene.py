@@ -40,7 +40,7 @@ class TestSCNScene (TestCase):
         self.assertResultIsBOOL(SceneKit.SCNScene.isPaused)
         self.assertArgIsBOOL(SceneKit.SCNScene.setPaused_, 0)
 
-    @min_os_level('10.9')
+    @min_sdk_level('10.10')
     def testProtocols(self):
         objc.protocolNamed('SCNSceneExportDelegate')
 
