@@ -11343,10 +11343,10 @@
       }
      },
      {
-      "selector": "textView:candidates:forSelectedRange:",
+      "selector": "textView:shouldSelectCandidateAtIndex:",
       "class_method": false,
       "args": {
-       "2": { "type_override": [ "{_NSRange=II}", "{_NSRange=QQ}" ] }
+       "1": { "type_override": [ "I", "Q" ] }
       }
      },
      {
