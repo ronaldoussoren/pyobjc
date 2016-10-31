@@ -17,6 +17,9 @@ class TestNSSplitViewItem (TestCase):
     def testConstants10_11(self):
         self.assertIsInstance(NSSplitViewItemUnspecifiedDimension, float)
 
+        self.assertResultIsBOOL(NSSplitViewItem.isSpringLoaded)
+        self.assertArgIsBOOL(NSSplitViewItem.setSpringLoaded_, 0)
+
     @min_os_level('10.10')
     def testMethods10_10(self):
         self.assertResultIsBOOL(NSSplitViewItem.isCollapsed)
@@ -24,9 +27,6 @@ class TestNSSplitViewItem (TestCase):
 
         self.assertResultIsBOOL(NSSplitViewItem.canCollapse)
         self.assertArgIsBOOL(NSSplitViewItem.setCanCollapse_, 0)
-
-        self.assertResultIsBOOL(NSSplitViewItem.isSpringLoaded)
-        self.assertArgIsBOOL(NSSplitViewItem.setSpringLoaded_, 0)
 
 if __name__ == "__main__":
     main()

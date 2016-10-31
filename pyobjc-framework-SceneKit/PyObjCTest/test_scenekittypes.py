@@ -20,8 +20,11 @@ class TestSceneKitTypes (TestCase):
         self.assertTrue(SceneKit.SCNMatrix4 is SceneKit.CATransform3D)
 
     def testConstants(self):
-        self.assertIsInstance(SceneKit.SCNErrorDomain, unicode)
         self.assertEqual(SceneKit.SCNProgramCompilationError, 1)
+
+    @expectedFailureIf(os_release() == '10.10')
+    def testConstantsFail10_10(self):
+        self.assertIsInstance(SceneKit.SCNErrorDomain, unicode)
 
     @min_os_level('10.10')
     def testConstants10_10(self):

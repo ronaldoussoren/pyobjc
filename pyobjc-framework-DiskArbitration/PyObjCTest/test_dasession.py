@@ -3,6 +3,7 @@ from PyObjCTools.TestSupport import *
 import DiskArbitration
 
 class TestDASession (TestCase):
+    @expectedFailureIf(os_release() == '10.10')
     @min_os_level('10.10')
     def test_types(self):
         self.assertIsCFType(DiskArbitration.DASessionRef)

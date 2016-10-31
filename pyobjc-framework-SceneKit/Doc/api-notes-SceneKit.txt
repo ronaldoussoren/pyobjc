@@ -24,3 +24,8 @@ The type "SCNVector3FromGLKVector3" is also not available at the moment.
 .. note::
 
    This framework is only available on OSX 10.8 and later.
+
+
+* ``SCNErrorDomain``
+
+  This variable is documented to exist on OSX 10.10, but isn't actually available there.
