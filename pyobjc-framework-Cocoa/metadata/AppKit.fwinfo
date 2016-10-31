@@ -1,6 +1,22 @@
 {
  "definitions": {
+  "enum": {
+   "NSScrubberModeFixed": { "value": 0 },
+   "NSScrubberModeFree": { "value": 1 },
+   "NSScrubberAlignmentNone": { "value": 0 },
+   "NSScrubberAlignmentLeading": { "value": 1 },
+   "NSScrubberAlignmentTrailing": { "value": 2 },
+   "NSScrubberAlignmentCenter": { "value": 3 },
+   "NSTouchBarItemPriorityHigh": { "value": 1000.0 },
+   "NSTouchBarItemPriorityNormal": { "value": 0.0 },
+   "NSTouchBarItemPriorityLow": { "value": -1000.0 }
+  },
   "externs": {
+   "NSTouchBarItemIdentifierFixedSpaceSmall": { "typestr": "@" },
+   "NSTouchBarItemIdentifierFixedSpaceLarge": { "typestr": "@" },
+   "NSTouchBarItemIdentifierFlexibleSpace": { "typestr": "@" },
+   "NSTouchBarItemIdentifierOtherItemsProxy": { "typestr": "@" },
+   "NSTouchBarItemIdentifierCandidateList": { "typestr": "@" },
    "NSToolbarCloudSharingItemIdentifier": { "typestr": "@" },
    "NSTouchBarItemIdentifierCharacterPicker": { "typestr": "@" },
    "NSTouchBarItemIdentifierTextColorPicker": { "typestr": "@" },
@@ -134,6 +150,342 @@
    }
   },
   "classes": {
+   "NSSliderAccessoryBehavior": {
+    "methods": [
+     {
+      "selector": "behaviorWithHandler:",
+      "class_method": true,
+      "args": {
+       "0": {
+        "callable": {
+	 "arguments": {
+	  "0": { "typestr": "^v" },
+	  "1": { "typestr": "@" }
+	 },
+	 "retval": { "typestr": "@" }
+	}
+       }
+      }
+     }
+    ]
+   },
+   "NSTouchBarItem": {
+    "methods": [
+     {
+      "class_method": false,
+      "selector": "isVisible",
+      "retval": { "typestr": "Z" }
+     },
+     {
+      "class_method": false,
+      "selector": "setVisible:",
+      "args": {
+       "0": { "typestr": "Z" }
+      }
+     }
+    ]
+   },
+   "NSTouchBar": {
+    "methods": [
+     {
+      "class_method": false,
+      "selector": "isVisible",
+      "retval": { "typestr": "Z" }
+     },
+     {
+      "class_method": false,
+      "selector": "setVisible:",
+      "args": {
+       "0": { "typestr": "Z" }
+      }
+     }
+    ]
+   },
+   "NSSliderAccessory": {
+    "methods": [
+     {
+      "class_method": false,
+      "selector": "isEnabled",
+      "retval": { "typestr": "Z" }
+     },
+     {
+      "class_method": false,
+      "selector": "setEnabled:",
+      "args": {
+       "0": { "typestr": "Z" }
+      }
+     }
+    ]
+   },
+   "NSSharingServicePickerTouchBarItem": {
+    "methods": [
+     {
+      "class_method": false,
+      "selector": "isEnabled",
+      "retval": { "typestr": "Z" }
+     },
+     {
+      "class_method": false,
+      "selector": "setEnabled:",
+      "args": {
+       "0": { "typestr": "Z" }
+      }
+     }
+    ]
+   },
+   "NSScrubberLayout": {
+    "methods": [
+     {
+      "class_method": false,
+      "selector": "shouldInvalidateLayoutForSelectionChange",
+      "retval": { "type_override": "Z" }
+     },
+     {
+      "class_method": false,
+      "selector": "shouldInvalidateLayoutForHighlightChange",
+      "retval": { "type_override": "Z" }
+     },
+     {
+      "class_method": false,
+      "selector": "shouldInvalidateLayoutForChangeFromVisibleRect:toVisibleRect:",
+      "retval": { "type_override": "Z" }
+     },
+     {
+      "class_method": false,
+      "selector": "automaticallyMirrorsInRightToLeftLayout",
+      "retval": { "type_override": "Z" }
+     }
+    ]
+   },
+   "NSScrubberArrangedView": {
+    "methods": [
+     {
+      "class_method": false,
+      "selector": "isSelected",
+      "retval": { "type_override": "Z" }
+     },
+     {
+      "class_method": false,
+      "selector": "setSelected:",
+      "args": {
+       "0": { "type_override": "Z" }
+      }
+     },
+     {
+      "class_method": false,
+      "selector": "isHighlighted",
+      "retval": { "type_override": "Z" }
+     },
+     {
+      "class_method": false,
+      "selector": "setHighlighted:",
+      "args": {
+       "0": { "type_override": "Z" }
+      }
+     }
+    ]
+   },
+   "NSScrubber": {
+    "methods": [
+     {
+      "class_method": false,
+      "selector": "isContinuous",
+      "retval": { "type_override": "Z" }
+     },
+     {
+      "class_method": false,
+      "selector": "setContinuous:",
+      "args": {
+       "0": { "type_override": "Z" }
+      }
+     },
+     {
+      "class_method": false,
+      "selector": "floatsSelectionViews",
+      "retval": { "type_override": "Z" }
+     },
+     {
+      "class_method": false,
+      "selector": "setFloatsSelectionViews:",
+      "args": {
+       "0": { "type_override": "Z" }
+      }
+     },
+     {
+      "class_method": false,
+      "selector": "showsArrowButtons",
+      "retval": { "type_override": "Z" }
+     },
+     {
+      "class_method": false,
+      "selector": "setShowsArrowButtons:",
+      "args": {
+       "0": { "type_override": "Z" }
+      }
+     },
+     {
+      "class_method": false,
+      "selector": "showsAdditionalContentIndicators",
+      "retval": { "type_override": "Z" }
+     },
+     {
+      "class_method": false,
+      "selector": "setShowsAdditionalContentIndicators:",
+      "args": {
+       "0": { "type_override": "Z" }
+      }
+     },
+     {
+      "class_method": false,
+      "selector": "performSequentialBatchUpdates:",
+      "args": {
+       "0": {
+        "arguments": {
+	 "0": { "typestr": "^v" }
+	},
+	"retval": { "typestr": "v" }
+       }
+      }
+     }
+    ]
+   },
+   "NSPopoverTouchBarItem": {
+    "methods": [
+     {
+      "class_method": false,
+      "selector": "showsCloseButton",
+      "retval": { "type_override": "Z" }
+     },
+     {
+      "class_method": false,
+      "selector": "setShowsCloseButton:",
+      "args": {
+       "0": { "type_override": "Z" }
+      }
+     }
+    ]
+   },
+   "NSColorPickerTouchBarItem": {
+    "methods": [
+     {
+      "class_method": false,
+      "selector": "showsAlpha",
+      "retval": { "type_override": "Z" }
+     },
+     {
+      "class_method": false,
+      "selector": "setShowsAlpha:",
+      "args": {
+       "0": { "type_override": "Z" }
+      }
+     },
+     {
+      "class_method": false,
+      "selector": "isEnabled",
+      "retval": { "type_override": "Z" }
+     },
+     {
+      "class_method": false,
+      "selector": "setEnabled:",
+      "args": {
+       "0": { "type_override": "Z" }
+      }
+     }
+    ]
+   },
+   "NSCandidateListTouchBarItem": {
+    "methods": [
+     {
+      "class_method": false,
+      "selector": "isCollapsed",
+      "retval": { "type_override": "Z" }
+     },
+     {
+      "class_method": false,
+      "selector": "setCollapsed:",
+      "args": {
+       "0": { "type_override": "Z" }
+      }
+     },
+     {
+      "class_method": false,
+      "selector": "allowsCollapsing",
+      "retval": { "type_override": "Z" }
+     },
+     {
+      "class_method": false,
+      "selector": "setAllowsCollapsing:",
+      "args": {
+       "0": { "type_override": "Z" }
+      }
+     },
+     {
+      "class_method": false,
+      "selector": "isCandidateListVisible",
+      "retval": { "type_override": "Z" }
+     },
+     {
+      "class_method": false,
+      "selector": "setCandidateListVisible:",
+      "args": {
+       "0": { "type_override": "Z" }
+      }
+     },
+     {
+      "class_method": false,
+      "selector": "updateWithInsertionPointVisibility:",
+      "args": {
+       "0": { "type_override": "Z" }
+      }
+     },
+     {
+      "class_method": false,
+      "selector": "allowsTextInputContextCandidates",
+      "retval": { "type_override": "Z" }
+     },
+     {
+      "class_method": false,
+      "selector": "setAllowsTextInputContextCandidates:",
+      "args": {
+       "0": { "type_override": "Z" }
+      }
+     },
+     {
+      "class_method": false,
+      "selector": "attributedStringForCandidate",
+      "retval": {
+       "callable": {
+        "arguments": {
+	 "0": { "typestr": "^v" },
+	 "1": { "typestr": "@" },
+	 "2": { "typestr": [ "i", "q" ] }
+	},
+        "retval": {
+         "typestr": "v"
+	}
+       }
+      }
+     },
+     {
+      "class_method": false,
+      "selector": "setAttributedStringForCandidate:",
+      "args": {
+       "0": {
+        "callable": {
+         "arguments": {
+	  "0": { "typestr": "^v" },
+	  "1": { "typestr": "@" },
+	  "2": { "typestr": [ "i", "q" ] }
+	 },
+         "retval": {
+          "typestr": "v"
+         }
+	}
+       }
+      }
+     }
+    ]
+   },
    "NSGridColumn": {
     "methods": [
      {
@@ -962,6 +1314,18 @@
    },
    "NSApplication": {
     "methods": [
+     {
+      "selector": "isAutomaticCustomizeTouchBarMenuItemEnabled",
+      "class_method": false,
+      "retval": { "type_override": "Z" }
+     },
+     {
+      "selector": "setAutomaticCustomizeTouchBarMenuItemEnabled:",
+      "class_method": false,
+      "args": {
+       "0": { "type_override": "Z" }
+      }
+     },
      {
       "args": {
        "1": {
@@ -11328,6 +11692,78 @@
    },
    "NSObject": {
     "methods": [
+     {
+      "selector": "numberOfItemsForScrubber:",
+      "class_method": false,
+      "retval": { "type_override": [ "i", "q" ] }
+     },
+     {
+      "selector": "scrubber:layout:sizeForItemAtIndex:",
+      "class_method": false,
+      "args": {
+       "2": { "type_override": [ "i", "q" ] }
+      },
+      "retval": {
+       "type_override": [ "{_NSSize=ff}", "{CGSize=dd}" ]
+      }
+     },
+     {
+      "selector": "scrubber:viewForItemAtIndex:",
+      "class_method": false,
+      "args": {
+       "1": { "type_override": [ "i", "q" ] }
+      }
+     },
+     {
+      "selector": "scrubber:didSelectItemAtIndex:",
+      "class_method": false,
+      "args": {
+       "1": { "type_override": [ "i", "q" ] }
+      }
+     },
+     {
+      "selector": "scrubber:didHighlightItemAtIndex:",
+      "class_method": false,
+      "args": {
+       "1": { "type_override": [ "i", "q" ] }
+      }
+     },
+     {
+      "selector": "scrubber:didChangeVisibleRange:",
+      "class_method": false,
+      "args": {
+       "1": { "type_override": [ "{_NSRange=II}", "{_NSRange=QQ}" ] }
+      }
+     },
+     {
+      "selector": "candidateListTouchBarItem:beginSelectingCandidateAtIndex:",
+      "class_method": false,
+      "args": {
+       "1": { "type_override": [ "i", "q" ] }
+      }
+     },
+     {
+      "selector": "candidateListTouchBarItem:endSelectingCandidateAtIndex:",
+      "class_method": false,
+      "args": {
+       "1": { "type_override": [ "i", "q" ] }
+      }
+     },
+     {
+      "selector": "candidateListTouchBarItem:changeSelectionFromCandidateAtIndex:toIndex:",
+      "class_method": false,
+      "args": {
+       "1": { "type_override": [ "i", "q" ] },
+       "2": { "type_override": [ "i", "q" ] }
+      }
+     },
+     {
+      "selector": "candidateListTouchBarItem:changedCandidateListVisibility:",
+      "class_method": false,
+      "args": {
+       "1": { "type_override": "Z" }
+      }
+     },
      {
       "selector": "textView:candidatesForSelectedRange:",
       "class_method": false,

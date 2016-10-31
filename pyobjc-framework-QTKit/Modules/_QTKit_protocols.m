@@ -4,7 +4,22 @@
  * Last update: Mon Aug 10 09:56:10 2015
  */
 
-#if PyObjC_BUILD_RELEASE >= 1007
+#if PyObjC_BUILD_RELEASE >= 1011
+
+/* Headers are no longer present in the 10.12 SDK, inline
+ * the protocol definition to enable building with the 10.12
+ * SDK.
+ */
+
+@protocol QTExportSessionDelegate
+-(void)exportSessionDidSucceed:(id)session;
+-(void)exportSession:(id)session didFailWithError:(id)error;
+-(void)exportSessionWasCancelled:(id)session;
+-(void)exportSession:(id)session didReachProgress:(double)p;
+@end
+
+
+#elif PyObjC_BUILD_RELEASE >= 1007
 #import <QTKit/QTExportSession.h>
 #endif
 

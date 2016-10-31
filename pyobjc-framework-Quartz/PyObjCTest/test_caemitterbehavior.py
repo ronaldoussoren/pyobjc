@@ -16,6 +16,9 @@ class TestCAEmitterBehavior (TestCase):
         self.assertIsInstance(kCAEmitterBehaviorColorOverLife, unicode)
         self.assertIsInstance(kCAEmitterBehaviorLight, unicode)
         self.assertIsInstance(kCAEmitterBehaviorAttractor, unicode)
+
+    @min_os_level('10.12')
+    def testConstants10_12(self):
         self.assertIsInstance(kCAEmitterBehaviorSimpleAttractor, unicode)
 
 

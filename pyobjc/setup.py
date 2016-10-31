@@ -69,7 +69,7 @@ FRAMEWORKS_WRAPPERS=[
         ('PhotosUI',                '10.11',            None        ),
         ('PreferencePanes',         None,               None        ),
         ('PubSub',                  '10.5',             None        ),
-        ('QTKit',                   '10.5',             '10.11'     ),
+        ('QTKit',                   '10.5',             None        ),
         ('Quartz',                  None,               None        ),
         ('SafariServices',          '10.11',            None        ),
         ('ScreenSaver',             None,               None        ),

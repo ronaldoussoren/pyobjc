@@ -41,5 +41,4 @@ setup(
             ]
         ),
     ],
-    max_os_level='10.11',
 )

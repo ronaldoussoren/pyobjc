@@ -113,5 +113,12 @@ static void __attribute__((__used__)) use_protocols(void)
     p = PyObjC_IdToPython(@protocol(NSFilePromiseProviderDelegate)); Py_XDECREF(p);
     p = PyObjC_IdToPython(@protocol(NSCloudSharingServiceDelegate)); Py_XDECREF(p);
     p = PyObjC_IdToPython(@protocol(NSCloudSharingValidation)); Py_XDECREF(p);
+    p = PyObjC_IdToPython(@protocol(NSCandidateListTouchBarItemDelegate)); Py_XDECREF(p);
+    p = PyObjC_IdToPython(@protocol(NSScrubberDataSource)); Py_XDECREF(p);
+    p = PyObjC_IdToPython(@protocol(NSScrubberDelegate)); Py_XDECREF(p);
+    p = PyObjC_IdToPython(@protocol(NSScrubberFlowLayoutDelegate)); Py_XDECREF(p);
+    p = PyObjC_IdToPython(@protocol(NSSharingServicePickerTouchBarItemDelegate)); Py_XDECREF(p);
+    p = PyObjC_IdToPython(@protocol(NSTouchBarDelegate)); Py_XDECREF(p);
+    p = PyObjC_IdToPython(@protocol(NSTouchBarProvider)); Py_XDECREF(p);
 #endif
 }

@@ -6,6 +6,7 @@ if sys.maxsize > 2 ** 32:
     import GameController
 
     class TestGCMicroGamepadSnapshot (TestCase):
+        @expectedFailureIf(os_release() == '10.11')
         @min_os_level("10.11")
         def testClasses(self):
             self.assertIsInstance(GameController.GCMicroGamepadSnapshot, objc.objc_class)
@@ -22,6 +23,7 @@ if sys.maxsize > 2 ** 32:
             self.assertIsInstance(v.buttonA, float)
             self.assertIsInstance(v.buttonX, float)
 
+        @expectedFailureIf(os_release() == '10.11')
         @min_os_level("10.9")
         def testFunctions(self):
             self.assertResultIsBOOL(GameController.GCMicroGamepadSnapShotDataV100FromNSData)

@@ -17,6 +17,7 @@ class TestPDFAnnotation (TestCase):
         self.assertArgIsBOOL(PDFAnnotation.setBoolean_forAnnotationKey_, 0)
         self.assertResultIsBOOL(PDFAnnotation.setRect_forAnnotationKey_)
 
+    @min_os_level('10.12')
     def testConstants(self):
         self.assertIsInstance(kPDFAnnotationKey_AppearanceDictionary, unicode)
         self.assertIsInstance(kPDFAnnotationKey_AppearanceState, unicode)

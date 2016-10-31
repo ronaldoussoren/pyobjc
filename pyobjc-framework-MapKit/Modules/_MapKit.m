@@ -10,7 +10,7 @@
 #define NS_ENUM_AVAILABLE(a, b)
 #endif
 
-#if PyObjC_BUILD_RELEASE >= 1012 && !defined(__LP64__)
+#if PyObjC_BUILD_RELEASE >= 1011 && !defined(__LP64__)
 /* Class not available on 32-bit builds causes issues
  * when building this extension.
  */
