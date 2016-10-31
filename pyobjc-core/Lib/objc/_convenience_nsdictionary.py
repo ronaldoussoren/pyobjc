@@ -8,7 +8,7 @@ from objc._convenience import container_wrap, container_unwrap, addConvenienceFo
 from objc._objc import lookUpClass
 
 import collections
-import sys
+import sys, os
 
 NSDictionary = lookUpClass('NSDictionary')
 NSMutableDictionary = lookUpClass('NSMutableDictionary')
@@ -236,20 +236,39 @@ collections.Mapping.register(NSDictionary)
 collections.MutableMapping.register(NSMutableDictionary)
 
 
-def nsdict_fromkeys(cls, keys, value=None):
-    keys = [container_wrap(k) for k in keys]
-    values = [container_wrap(value)]*len(keys)
+if int(os.uname()[2].split('.')[0]) <= 10:
+    # Limited functionality on OSX 10.6 and earlier
 
-    return cls.dictionaryWithObjects_forKeys_(values, keys)
+    def nsdict_fromkeys(cls, keys, value=None):
+        keys = [container_wrap(k) for k in keys]
+        values = [container_wrap(value)]*len(keys)
 
-# XXX: 'nsdict_fromkeys' doesn't work on OSX 10.5
-def nsmutabledict_fromkeys(cls, keys, value=None):
-    value = container_wrap(value)
+        return NSDictionary.dictionaryWithObjects_forKeys_(values, keys)
 
-    result = cls.alloc().init()
-    for k in keys:
-       result[container_wrap(k)] = value
-    return result
+    # XXX: 'nsdict_fromkeys' doesn't work on OSX 10.5
+    def nsmutabledict_fromkeys(cls, keys, value=None):
+        value = container_wrap(value)
+    
+        result = NSMutableDictionary.alloc().init()
+        for k in keys:
+           result[container_wrap(k)] = value
+        return result
+
+else:
+    def nsdict_fromkeys(cls, keys, value=None):
+        keys = [container_wrap(k) for k in keys]
+        values = [container_wrap(value)]*len(keys)
+
+        return cls.dictionaryWithObjects_forKeys_(values, keys)
+
+    def nsmutabledict_fromkeys(cls, keys, value=None):
+        value = container_wrap(value)
+    
+        result = cls.alloc().init()
+        for k in keys:
+           result[container_wrap(k)] = value
+        return result
+
 
 def nsdict_new(cls, *args, **kwds):
     if len(args) == 0:

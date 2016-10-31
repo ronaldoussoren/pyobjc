@@ -1345,6 +1345,7 @@ class TestArchiveNative (TestCase):
         self.assertEqual(a, b)
         self.assertIsInstance(b, float_subclass)
 
+    @expectedFailureIf(os_level_key(os_release()) <= os_level_key('10.6'))
     def test_more_state(self):
         a = with_getstate(1.5)
         self.assertEqual(a.value, 1.5)
