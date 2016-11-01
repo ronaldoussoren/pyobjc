@@ -1,0 +1,452 @@
+{
+ "definitions": {
+  "externs": {
+   "MPLanguageOptionCharacteristicIsMainProgramContent": { "typestr": "@" },
+   "MPLanguageOptionCharacteristicIsAuxiliaryContent": { "typestr": "@" },
+   "MPLanguageOptionCharacteristicContainsOnlyForcedSubtitles": { "typestr": "@" },
+   "MPLanguageOptionCharacteristicTranscribesSpokenDialog": { "typestr": "@" },
+   "MPLanguageOptionCharacteristicDescribesMusicAndSound": { "typestr": "@" },
+   "MPLanguageOptionCharacteristicEasyToRead": { "typestr": "@" },
+   "MPLanguageOptionCharacteristicDescribesVideo": { "typestr": "@" },
+   "MPLanguageOptionCharacteristicLanguageTranslation": { "typestr": "@" },
+   "MPLanguageOptionCharacteristicDubbedTranslation": { "typestr": "@" },
+   "MPLanguageOptionCharacteristicVoiceOverTranslation": { "typestr": "@" },
+   "MPNowPlayingInfoPropertyElapsedPlaybackTime": { "typestr": "@" },
+   "MPNowPlayingInfoPropertyPlaybackRate": { "typestr": "@" },
+   "MPNowPlayingInfoPropertyDefaultPlaybackRate": { "typestr": "@" },
+   "MPNowPlayingInfoPropertyPlaybackQueueIndex": { "typestr": "@" },
+   "MPNowPlayingInfoPropertyPlaybackQueueCount": { "typestr": "@" },
+   "MPNowPlayingInfoPropertyChapterNumber": { "typestr": "@" },
+   "MPNowPlayingInfoPropertyChapterCount": { "typestr": "@" },
+   "MPNowPlayingInfoPropertyIsLiveStream": { "typestr": "@" },
+   "MPNowPlayingInfoPropertyAvailableLanguageOptions": { "typestr": "@" },
+   "MPNowPlayingInfoPropertyCurrentLanguageOptions": { "typestr": "@" },
+   "MPNowPlayingInfoCollectionIdentifier": { "typestr": "@" },
+   "MPNowPlayingInfoPropertyExternalContentIdentifier": { "typestr": "@" },
+   "MPNowPlayingInfoPropertyExternalUserProfileIdentifier": { "typestr": "@" },
+   "MPNowPlayingInfoPropertyPlaybackProgress": { "typestr": "@" },
+   "MPNowPlayingInfoPropertyMediaType": { "typestr": "@" },
+   "MPErrorDomain": { "typestr": "@" },
+   "MPMediaEntityPropertyPersistentID": { "typestr": "@" },
+   "MPMediaItemPropertyPersistentID": { "typestr": "@" },
+   "MPMediaItemPropertyMediaType": { "typestr": "@" },
+   "MPMediaItemPropertyTitle": { "typestr": "@" },
+   "MPMediaItemPropertyAlbumTitle": { "typestr": "@" },
+   "MPMediaItemPropertyAlbumPersistentID": { "typestr": "@" },
+   "MPMediaItemPropertyArtist": { "typestr": "@" },
+   "MPMediaItemPropertyArtistPersistentID": { "typestr": "@" },
+   "MPMediaItemPropertyAlbumArtist": { "typestr": "@" },
+   "MPMediaItemPropertyAlbumArtistPersistentID": { "typestr": "@" },
+   "MPMediaItemPropertyAlbumArtist": { "typestr": "@" },
+   "MPMediaItemPropertyAlbumArtistPersistentID": { "typestr": "@" },
+   "MPMediaItemPropertyGenre": { "typestr": "@" },
+   "MPMediaItemPropertyGenrePersistentID": { "typestr": "@" },
+   "MPMediaItemPropertyComposer": { "typestr": "@" },
+   "MPMediaItemPropertyComposerPersistentID": { "typestr": "@" },
+   "MPMediaItemPropertyPlaybackDuration": { "typestr": "@" },
+   "MPMediaItemPropertyAlbumTrackNumber": { "typestr": "@" },
+   "MPMediaItemPropertyAlbumTrackCount": { "typestr": "@" },
+   "MPMediaItemPropertyDiscNumber": { "typestr": "@" },
+   "MPMediaItemPropertyDiscCount": { "typestr": "@" },
+   "MPMediaItemPropertyArtwork": { "typestr": "@" },
+   "MPMediaItemPropertyIsExplicit": { "typestr": "@" },
+   "MPMediaItemPropertyLyrics": { "typestr": "@" },
+   "MPMediaItemPropertyIsCompilation": { "typestr": "@" },
+   "MPMediaItemPropertyReleaseDate": { "typestr": "@" },
+   "MPMediaItemPropertyBeatsPerMinute": { "typestr": "@" },
+   "MPMediaItemPropertyComments": { "typestr": "@" },
+   "MPMediaItemPropertyAssetURL": { "typestr": "@" },
+   "MPMediaItemPropertyIsCloudItem": { "typestr": "@" },
+   "MPMediaItemPropertyHasProtectedAsset": { "typestr": "@" },
+   "MPMediaItemPropertyPodcastTitle": { "typestr": "@" },
+   "MPMediaItemPropertyPodcastPersistentID": { "typestr": "@" },
+   "MPMediaItemPropertyPlayCount": { "typestr": "@" },
+   "MPMediaItemPropertySkipCount": { "typestr": "@" },
+   "MPMediaItemPropertyRating": { "typestr": "@" },
+   "MPMediaItemPropertyLastPlayedDate": { "typestr": "@" },
+   "MPMediaItemPropertyUserGrouping": { "typestr": "@" },
+   "MPMediaItemPropertyBookmarkTime": { "typestr": "@" },
+   "MPMediaItemPropertyDateAdded": { "typestr": "@" }
+  },
+  "enum": {
+   "MPShuffleTypeOff": { "value": 0 },
+   "MPShuffleTypeItems": { "value": 1 },
+   "MPShuffleTypeCollections": { "value": 2 },
+   "MPRepeatTypeOff": { "value": 0 },
+   "MPRepeatTypeOne": { "value": 1 },
+   "MPRepeatTypeAll": { "value": 2 },
+   "MPChangeLanguageOptionSettingNone": { "value": 0 },
+   "MPChangeLanguageOptionSettingNowPlayingItemOnly": { "value": 1 },
+   "MPChangeLanguageOptionSettingPermanent": { "value": 2 },
+   "MPSeekCommandEventTypeBeginSeeking": { "value": 0 },
+   "MPSeekCommandEventTypeEndSeeking": { "value": 1 },
+   "MPRemoteCommandHandlerStatusSuccess": { "value": 0 },
+   "MPRemoteCommandHandlerStatusNoSuchContent": { "value": 100 },
+   "MPRemoteCommandHandlerStatusNoActionableNowPlayingItem": { "value": 110 },
+   "MPRemoteCommandHandlerStatusCommandFailed": { "value": 200 },
+   "MPNowPlayingInfoLanguageOptionTypeAudible": { "value":  0 },
+   "MPNowPlayingInfoLanguageOptionTypeLegible": { "value":  1 },
+   "MPNowPlayingInfoMediaTypeNone": { "value": 0 },
+   "MPNowPlayingInfoMediaTypeAudio": { "value": 1 },
+   "MPNowPlayingInfoMediaTypeVideo": { "value": 2 },
+   "MPNowPlayingPlaybackStateUnknown": { "value": 0 },
+   "MPNowPlayingPlaybackStatePlaying": { "value": 1 },
+   "MPNowPlayingPlaybackStatePaused": { "value": 2 },
+   "MPNowPlayingPlaybackStateStopped": { "value": 3 },
+   "MPNowPlayingPlaybackStateInterrupted": { "value": 4 },
+   "MPMediaTypeMusic": { "value": 1 },
+   "MPMediaTypePodcast": { "value": 2 },
+   "MPMediaTypeAudioBook": { "value": 4 },
+   "MPMediaTypeAudioITunesU": { "value": 8 },
+   "MPMediaTypeAnyAudio": { "value": 255 },
+   "MPMediaTypeMovie": { "value": 256 },
+   "MPMediaTypeTVShow": { "value": 512 },
+   "MPMediaTypeVideoPodcast": { "value": 1024 },
+   "MPMediaTypeMusicVideo": { "value": 2048 },
+   "MPMediaTypeVideoITunesU": { "value": 4096 },
+   "MPMediaTypeHomeVideo": { "value": 8192 },
+   "MPMediaTypeAnyVideo": { "value": 65280 },
+   "MPMediaTypeAny": { "value": 18446744073709551615 }
+  },
+  "classes": {
+   "MPMediaItem": {
+    "methods": [
+     {
+      "selector": "isExplicitItem",
+      "class_method": false,
+      "retval": { "type_override": "Z" }
+     },
+     {
+      "selector": "setExplicitItem:",
+      "class_method": false,
+      "args": {
+       "0": { "type_override": "Z" }
+      }
+     },
+     {
+      "selector": "isCompilation",
+      "class_method": false,
+      "retval": { "type_override": "Z" }
+     },
+     {
+      "selector": "setCompilation:",
+      "class_method": false,
+      "args": {
+       "0": { "type_override": "Z" }
+      }
+     },
+     {
+      "selector": "isCloudItem",
+      "class_method": false,
+      "retval": { "type_override": "Z" }
+     },
+     {
+      "selector": "setCloudItem:",
+      "class_method": false,
+      "args": {
+       "0": { "type_override": "Z" }
+      }
+     },
+     {
+      "selector": "hasProtectedAsset",
+      "class_method": false,
+      "retval": { "type_override": "Z" }
+     },
+     {
+      "selector": "setHasProtectedAsset:",
+      "class_method": false,
+      "args": {
+       "0": { "type_override": "Z" }
+      }
+     }
+    ]
+   },
+   "MPChangeRepeatModeCommandEvent": {
+    "methods": [
+     {
+      "selector": "preservesRepeatMode",
+      "class_method": false,
+      "retval": { "type_override": "Z" }
+     },
+     {
+      "selector": "setPreservesRepeatMode:",
+      "class_method": false,
+      "args": {
+       "0": { "type_override": "Z" }
+      }
+     }
+    ]
+   },
+   "MPChangeShuffleModeCommandEvent": {
+    "methods": [
+     {
+      "selector": "preservesShuffleMode",
+      "class_method": false,
+      "retval": { "type_override": "Z" }
+     },
+     {
+      "selector": "setPreservesShuffleMode:",
+      "class_method": false,
+      "args": {
+       "0": { "type_override": "Z" }
+      }
+     }
+    ]
+   },
+   "MPFeedbackCommandEvent": {
+    "methods": [
+     {
+      "selector": "isNegative",
+      "class_method": false,
+      "retval": { "type_override": "Z" }
+     },
+     {
+      "selector": "setNegative:",
+      "class_method": false,
+      "args": {
+       "0": { "type_override": "Z" }
+      }
+     }
+    ]
+   },
+   "MPFeedbackCommand": {
+    "methods": [
+     {
+      "selector": "isActive",
+      "class_method": false,
+      "retval": { "type_override": "Z" }
+     },
+     {
+      "selector": "setActive:",
+      "class_method": false,
+      "args": {
+       "0": { "type_override": "Z" }
+      }
+     }
+    ]
+   },
+   "MPRemoteCommand": {
+    "methods": [
+     {
+      "selector": "isEnabled",
+      "class_method": false,
+      "retval": { "type_override": "Z" }
+     },
+     {
+      "selector": "setEnabled:",
+      "class_method": false,
+      "args": {
+       "0": { "type_override": "Z" }
+      }
+     },
+     {
+      "selector": "addTargetWithHandler:",
+      "class_method": false,
+      "args": {
+       "0": {
+        "callable": {
+	 "arguments": {
+	  "0": { "typestr": "^v" },
+	  "1": { "typestr": "@" }
+	 },
+	 "retval": { "typestr": [ "i", "q" ] }
+	}
+       }
+      }
+     }
+    ]
+   },
+   "MPPlayableContentManagerContext": {
+    "methods": [
+     {
+      "selector": "contentLimitsEnforced",
+      "class_method": false,
+      "retval": { "type_override": "Z" }
+     },
+     {
+      "selector": "contentLimitsEnabled",
+      "class_method": false,
+      "retval": { "type_override": "Z" }
+     },
+     {
+      "selector": "setContentLimitsEnforced:",
+      "class_method": false,
+      "args": {
+       "0": { "type_override": "Z" }
+      }
+     },
+     {
+      "selector": "setContentLimitsEnabled:",
+      "class_method": false,
+      "args": {
+       "0": { "type_override": "Z" }
+      }
+     },
+     {
+      "selector": "endpointAvailable",
+      "class_method": false,
+      "retval": { "type_override": "Z" }
+     },
+     {
+      "selector": "setEndpointAvailable:",
+      "class_method": false,
+      "args": {
+       "0": { "type_override": "Z" }
+      }
+     }
+    ]
+   },
+   "MPNowPlayingInfoLanguageOptionGroup": {
+    "methods": [
+     {
+      "selector": "allowEmptySelection",
+      "class_method": false,
+      "retval": { "type_override": "Z" }
+     },
+     {
+      "selector": "setAllowEmptySelection:",
+      "class_method": false,
+      "args": {
+       "0": { "type_override": "Z" }
+      }
+     },
+     {
+      "selector": "initWithLanguageOptions:defaultLanguageOption:allowEmptySelection:",
+      "class_method": false,
+      "args": {
+       "2": { "type_override": "Z" }
+      }
+     }
+    ]
+   },
+   "MPNowPlayingInfoLanguageOption": {
+    "methods": [
+     {
+      "selector": "isAutomaticLegibleLanguageOption",
+      "class_method": false,
+      "retval": { "type_override": "Z" }
+     },
+     {
+      "selector": "isAutomaticAudibleLanguageOption",
+      "class_method": false,
+      "retval": { "type_override": "Z" }
+     }
+    ]
+   },
+   "MPMediaItemArtwork": {
+    "methods": [
+     {
+      "selector": "initWithBoundsSize:requestHandler:",
+      "class_method": false,
+      "args": {
+       "1": {
+        "callable": {
+	 "arguments": {
+	  "0": { "typestr": "^v" },
+	  "1": { "typestr": [ "{CGSize=ff}", "{CGSize=dd}" ] }
+	 },
+	 "retval": { "typestr": "@" }
+	}
+       }
+      }
+     }
+    ]
+   },
+   "MPMediaEntity": {
+    "methods": [
+     {
+      "selector": "enumerateValuesForProperties:usingBlock:",
+      "class_method": false,
+      "args": {
+       "1": {
+        "callable": {
+	 "arguments": {
+	  "0": { "typestr": "^v" },
+	  "1": { "typestr": "@" },
+	  "2": { "typestr": "@" },
+	  "3": { "typestr": "o^Z" }
+	 },
+	 "retval": { "typestr": "v" }
+	}
+       }
+      }
+     },
+     {
+      "selector": "canFilterByProperty:",
+      "class_method": true,
+      "retval": { "type_override": "Z" }
+     },
+     {
+      "selector": "enumerateValuesForProperties:usingBlock::",
+      "class_method": true,
+      "args": {
+       "1": {
+        "callable": {
+	 "arguments": {
+	  "0": { "typestr": "^v" },
+	  "1": { "typestr": "@" },
+	  "2": { "typestr": "@" },
+	  "3": { "typestr": "o^Z" }
+	 },
+	 "retval": { "typestr": "v" }
+	}
+       }
+      }
+     }
+    ]
+   },
+   "MPContentItem": {
+    "methods": [
+     {
+      "selector": "isStreamingContent",
+      "class_method": false,
+      "retval": { "type_override": "Z" }
+     },
+     {
+      "selector": "setStreamingContent:",
+      "class_method": false,
+      "args": {
+       "0": { "type_override": "Z" }
+      }
+     },
+     {
+      "selector": "isExplicitContent",
+      "class_method": false,
+      "retval": { "type_override": "Z" }
+     },
+     {
+      "selector": "setExplicitContent:",
+      "class_method": false,
+      "args": {
+       "0": { "type_override": "Z" }
+      }
+     },
+     {
+      "selector": "isContainer",
+      "class_method": false,
+      "retval": { "type_override": "Z" }
+     },
+     {
+      "selector": "setContainer:",
+      "class_method": false,
+      "args": {
+       "0": { "type_override": "Z" }
+      }
+     },
+     {
+      "selector": "isPlayable",
+      "class_method": false,
+      "retval": { "type_override": "Z" }
+     },
+     {
+      "selector": "setPlayable:",
+      "class_method": false,
+      "args": {
+       "0": { "type_override": "Z" }
+      }
+     }
+    ]
+   }
+  }
+ }
+}

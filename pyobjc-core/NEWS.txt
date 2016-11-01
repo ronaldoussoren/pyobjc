@@ -41,7 +41,9 @@ explictly.
 
   Note: Building PyObjC on macOS 10.12 requires Xcode 8.1 (or a later version)
 
-*  Added bindings for SafariServices and Intents frameworks, both introducted in macOS 10.12.
+* Added bindings for the SafariServices and Intents frameworks, both introducted in macOS 10.12.
+
+* Added bindings for the MediaPlayer framework, introducted in macOS 10.12.1.
 
 * Issue #153: Add missing metadata file to ApplicationServices bindings
 
