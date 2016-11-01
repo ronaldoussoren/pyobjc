@@ -59,6 +59,7 @@ FRAMEWORKS_WRAPPERS=[
         ('MapKit',                  '10.9',             None        ),
         ('MediaAccessibility',      '10.9',             None        ),
         ('MediaLibrary',            '10.9',             None        ),
+        ('MediaPlayer',             '10.12',            None        ),
         ('Message',                 None,               '10.9'      ),
         ('MultipeerConnectivity',   '10.10',            None        ),
         ('NetFS',                   '10.6',             None        ),
@@ -164,6 +165,7 @@ class oc_test (Command):
         pass
 
     def run(self):
+        print("Validating framework list...")
         all_names = set(nm.split('-')[-1] for nm in os.listdir('..') if nm.startswith('pyobjc-framework-'))
         configured_names = set(x[0] for x in FRAMEWORKS_WRAPPERS)
         ok = True
