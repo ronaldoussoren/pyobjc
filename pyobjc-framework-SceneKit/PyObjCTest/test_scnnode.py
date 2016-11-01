@@ -12,6 +12,9 @@ class TestSCNMaterialProperty (TestCase):
         self.assertIsInstance(SceneKit.SCNModelViewTransform, unicode)
         self.assertIsInstance(SceneKit.SCNModelViewProjectionTransform, unicode)
 
+        self.assertEqual(SceneKit.SCNMovabilityHintFixed, 0)
+        self.assertEqual(SceneKit.SCNMovabilityHintMovable, 1)
+
     def testMethods(self):
         self.assertResultIsBOOL(SceneKit.SCNNode.isHidden)
         self.assertArgIsBOOL(SceneKit.SCNNode.setHidden_, 0)
@@ -29,6 +32,10 @@ class TestSCNMaterialProperty (TestCase):
 
         self.assertResultIsBOOL(SceneKit.SCNNode.isPaused)
         self.assertArgIsBOOL(SceneKit.SCNNode.setPaused_, 0)
+
+    @min_os_level('10.12')
+    def testMethods10_12(self):
+        self.assertArgIsBlock(SceneKit.SCNNode.enumerateHierarchyUsingBlock_, 0, b'v@o^Z')
 
     @min_sdk_level('10.10')
     def testProtocolObjects(self):

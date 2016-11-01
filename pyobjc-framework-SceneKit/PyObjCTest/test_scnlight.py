@@ -23,6 +23,10 @@ class TestSCNLight (TestCase):
         self.assertIsInstance(SceneKit.SCNLightShadowNearClippingKey, unicode)
         self.assertIsInstance(SceneKit.SCNLightShadowFarClippingKey, unicode)
 
+    @min_os_level('10.12')
+    def testConstants(self):
+        self.assertIsInstance(SceneKit.SCNLightTypeIES, unicode)
+        self.assertIsInstance(SceneKit.SCNLightTypeProbe, unicode)
 
     def testMethods(self):
         self.assertResultIsBOOL(SceneKit.SCNLight.castsShadow)

@@ -9,6 +9,7 @@ class TestSCNGeometry (TestCase):
         self.assertEqual(SceneKit.SCNGeometryPrimitiveTypeTriangleStrip, 1)
         self.assertEqual(SceneKit.SCNGeometryPrimitiveTypeLine, 2)
         self.assertEqual(SceneKit.SCNGeometryPrimitiveTypePoint, 3)
+        self.assertEqual(SceneKit.SCNGeometryPrimitiveTypePolygon, 4)
 
         self.assertIsInstance(SceneKit.SCNGeometrySourceSemanticVertex, unicode)
         self.assertIsInstance(SceneKit.SCNGeometrySourceSemanticNormal, unicode)
@@ -21,6 +22,10 @@ class TestSCNGeometry (TestCase):
         self.assertIsInstance(SceneKit.SCNGeometrySourceSemanticEdgeCrease, unicode)
         self.assertIsInstance(SceneKit.SCNGeometrySourceSemanticBoneWeights, unicode)
         self.assertIsInstance(SceneKit.SCNGeometrySourceSemanticBoneIndices, unicode)
+
+    @min_os_level('10.12')
+    def testConstants(self):
+        self.assertIsInstance(SceneKit.SCNGeometrySourceSemanticTangent, unicode)
 
 
     def testMethods(self):

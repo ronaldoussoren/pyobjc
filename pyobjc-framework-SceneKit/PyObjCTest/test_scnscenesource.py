@@ -18,7 +18,6 @@ class TestSCNSceneSource (TestCase):
         self.assertIsInstance(SceneKit.SCNSceneSourceAssetUnitNameKey, unicode)
         self.assertIsInstance(SceneKit.SCNSceneSourceAssetUnitMeterKey, unicode)
         self.assertIsInstance(SceneKit.SCNSceneSourceCreateNormalsIfAbsentKey, unicode)
-        self.assertIsInstance(SceneKit.SCNSceneSourceCreateNormalsIfAbsentKey, unicode)
         self.assertIsInstance(SceneKit.SCNSceneSourceCheckConsistencyKey, unicode)
         self.assertIsInstance(SceneKit.SCNSceneSourceFlattenSceneKey, unicode)
         self.assertIsInstance(SceneKit.SCNSceneSourceUseSafeModeKey, unicode)
@@ -67,6 +66,9 @@ class TestSCNSceneSource (TestCase):
         self.assertIs(SceneKit.SCNSceneSourceLoadingOptionConvertToYUp, SceneKit.SCNSceneSourceConvertToYUpKey)
         self.assertIs(SceneKit.SCNSceneSourceLoadingOptionAnimationImportPolicy, SceneKit.SCNSceneSourceAnimationImportPolicyKey)
 
+    @min_os_level('10.12')
+    def test_constants10_12(self):
+        self.assertIsInstance(SceneKit.SCNSceneSourceLoadingOptionPreserveOriginalTopology, unicode)
 
     def testMethods(self):
         self.assertArgIsBlock(SceneKit.SCNSceneSource.sceneWithOptions_statusHandler_, 1, SCNSceneSourceStatusHandler)

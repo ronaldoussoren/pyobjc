@@ -3,6 +3,9 @@
 {
  "definitions": {
   "enum": {
+   "SCNMovabilityHintFixed": { "value": 0 },
+   "SCNMovabilityHintMovable": { "value": 1 },
+   "SCNGeometryPrimitiveTypePolygon": { "value": 4 },
    "SCNBillboardAxisX": { "value": 1 },
    "SCNBillboardAxisY": { "value": 2 },
    "SCNBillboardAxisZ": { "value": 4 },
@@ -70,6 +73,11 @@
    "SCNViewOptionPreferLowPowerDevice": { "alias": "SCNPreferLowPowerDeviceKey" }
   },
   "externs": {
+   "SCNSceneSourceLoadingOptionPreserveOriginalTopology": { "typestr": "@" },
+   "SCNLightingModelPhysicallyBased": { "typestr": "@" },
+   "SCNLightTypeIES": { "typestr": "@" },
+   "SCNLightTypeProbe": { "typestr": "@" },
+   "SCNGeometrySourceSemanticTangent": { "typestr": "@" },
    "SCNPhysicsShapeTypeKey": { "typestr": "@" },
    "SCNPreferredRenderingAPIKey": { "typestr": "@" },
    "SCNPreferredDeviceKey": { "typestr": "@" },
@@ -99,8 +107,43 @@
      }
     ]
    },
+   "SCNCamera": {
+    "methods": [
+     {
+      "class_method": false,
+      "selector": "wantsExposureAdaptation",
+      "retval": { "type_override": "Z" }
+     },
+     {
+      "class_method": false,
+      "selector": "setWantsExposureAdaptation:",
+      "args": {
+       "0" { "type_override": "Z" }
+      }
+     },
+     {
+      "class_method": false,
+      "selector": "wantsHDR",
+      "retval": { "type_override": "Z" }
+     },
+     {
+      "class_method": false,
+      "selector": "setWantsHDR:",
+      "args": {
+       "0" { "type_override": "Z" }
+      }
+     }
+    ]
+   },
    "NSObject": {
     "methods": [
+     {
+      "class_method": false,
+      "selector": "setSpeed:forAnimationKey:",
+      "args": {
+       "0": { "type_override": [ "f", "d" ] }
+      }
+     },
      {
       "class_method": false,
       "selector": "handleBindingOfSymbol:usingBlock:",
@@ -324,6 +367,22 @@
    },
    "SCNNode": {
     "methods": [
+     {
+      "class_method": false,
+      "selector": "enumerateHierarchyUsingBlock:",
+      "args": {
+       "0": {
+        "callable": {
+         "arguments": {
+	  "0": { "typestr": "^v" },
+	  "1": { "typestr": "@" },
+	  "2": { "typestr": "o^Z" }
+	 },
+	 "retval": { "typestr": "v" }
+	}
+       }
+      }
+     },
      {
       "class_method": false,
       "selector": "enumerateChildNodesUsingBlock:",

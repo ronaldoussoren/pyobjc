@@ -23,6 +23,9 @@ class TestSCNMaterial (TestCase):
         self.assertEqual(SceneKit.SCNBlendModeScreen, 4)
         self.assertEqual(SceneKit.SCNBlendModeReplace, 5)
 
+    @min_os_level('10.12')
+    def testConstants10_12(self):
+        self.assertIsInstance(SceneKit.SCNLightingModelPhysicallyBased, unicode)
 
     def testMethods(self):
         self.assertResultIsBOOL(SceneKit.SCNMaterial.isLitPerPixel)

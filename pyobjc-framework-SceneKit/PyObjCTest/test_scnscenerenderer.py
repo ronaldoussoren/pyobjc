@@ -73,12 +73,12 @@ class TestSCNSceneRenderer (TestCase):
         self.assertIs(SceneKit.SCNHitTestOptionBoundingBoxOnly, SceneKit.SCNHitTestBoundingBoxOnlyKey)
         self.assertIs(SceneKit.SCNHitTestOptionIgnoreChildNodes, SceneKit.SCNHitTestIgnoreChildNodesKey)
         self.assertIs(SceneKit.SCNHitTestOptionRootNode, SceneKit.SCNHitTestRootNodeKey)
-        self.assertIs(SceneKit.SCNHitTestOptionIgnoreHiddenNodes, SceneKit.SCNHitTestIgnoreHiddenNodesKey)
 
 
     @min_os_level('10.9')
     def test_constants10_9(self):
         self.assertIsInstance(SceneKit.SCNHitTestIgnoreHiddenNodesKey, unicode)
+        self.assertIs(SceneKit.SCNHitTestOptionIgnoreHiddenNodes, SceneKit.SCNHitTestIgnoreHiddenNodesKey)
 
     @min_os_level('10.12')
     def test_constants10_12(self):
@@ -86,7 +86,7 @@ class TestSCNSceneRenderer (TestCase):
 
     def testProtocolObjects(self):
         objc.protocolNamed('SCNSceneRenderer')
-   
+
     @min_sdk_level('10.10')
     def testProtocolObjects10_10(self):
         objc.protocolNamed('SCNSceneRendererDelegate')

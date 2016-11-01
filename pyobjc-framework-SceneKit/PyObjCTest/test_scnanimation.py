@@ -8,6 +8,7 @@ SCNAnimationEventBlock = b'v@@Z'
 class TestSCNAnimationHelper (SceneKit.NSObject):
     def isAnimationForKeyPaused_(self, k): return 1
     def removeAnimationForKey_fadeOutDuration_(self, k, d): pass
+    def setSpeed_forAnimationKey_(self, s, k): pass
 
 class TestSCNAnimation (TestCase):
     @min_os_level('10.10')
@@ -18,6 +19,7 @@ class TestSCNAnimation (TestCase):
     def testProtocolMethods(self):
         self.assertResultIsBOOL(TestSCNAnimationHelper.isAnimationForKeyPaused_)
         self.assertArgHasType(TestSCNAnimationHelper.removeAnimationForKey_fadeOutDuration_, 1, objc._C_CGFloat)
+        self.assertArgHasType(TestSCNAnimationHelper.setSpeed_forAnimationKey_, 0, objc._C_CGFloat)
 
     def testMethods(self):
         self.assertArgIsBOOL(SceneKit.CAAnimation.setUsesSceneTimeBase_, 0)
