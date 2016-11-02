@@ -19,21 +19,21 @@ class TestNSCandidateListTouchBarItem (TestCase):
     @min_os_level('10.12')
     def testMethods10_12(self):
         self.assertResultIsBOOL(NSCandidateListTouchBarItem.isCollapsed)
-        self.assertArgIsBOOL(NSCandidateListTouchBarItem.setCollapsed_)
+        self.assertArgIsBOOL(NSCandidateListTouchBarItem.setCollapsed_, 0)
 
         self.assertResultIsBOOL(NSCandidateListTouchBarItem.allowsCollapsing)
-        self.assertArgIsBOOL(NSCandidateListTouchBarItem.setAllowsCollapsing_)
+        self.assertArgIsBOOL(NSCandidateListTouchBarItem.setAllowsCollapsing_, 0)
 
         self.assertResultIsBOOL(NSCandidateListTouchBarItem.isCandidateListVisible)
-        self.assertArgIsBOOL(NSCandidateListTouchBarItem.setCandidateListVisible_)
+        #self.assertArgIsBOOL(NSCandidateListTouchBarItem.setCandidateListVisible_, 0)
 
-        self.assertArgIsBOOL(NSCandidateListTouchBarItem.updateWithInsertionPointVisibility_)
+        self.assertArgIsBOOL(NSCandidateListTouchBarItem.updateWithInsertionPointVisibility_, 0)
 
         self.assertResultIsBOOL(NSCandidateListTouchBarItem.allowsTextInputContextCandidates)
-        self.assertArgIsBOOL(NSCandidateListTouchBarItem.setAllowsTextInputContextCandidates_)
+        self.assertArgIsBOOL(NSCandidateListTouchBarItem.setAllowsTextInputContextCandidates_, 0)
 
         self.assertResultIsBlock(NSCandidateListTouchBarItem.attributedStringForCandidate, b'@@' + objc._C_NSInteger)
-        self.assertArgIsBlock(NSCandidateListTouchBarItem.setAttributedStringForCandidate_, b'@@' + objc._C_NSInteger)
+        self.assertArgIsBlock(NSCandidateListTouchBarItem.setAttributedStringForCandidate_, 0, b'@@' + objc._C_NSInteger)
 
         self.assertArgHasType(TestNSCandidateListTouchBarItemHelper.candidateListTouchBarItem_beginSelectingCandidateAtIndex_, 1, objc._C_NSInteger)
         self.assertArgHasType(TestNSCandidateListTouchBarItemHelper.candidateListTouchBarItem_changeSelectionFromCandidateAtIndex_toIndex_, 1, objc._C_NSInteger)

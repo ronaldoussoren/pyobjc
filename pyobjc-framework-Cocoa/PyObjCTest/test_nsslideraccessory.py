@@ -7,7 +7,7 @@ class TestNSSliderAccessory (TestCase):
         self.assertResultIsBOOL(NSSliderAccessory.isEnabled)
         self.assertArgIsBOOL(NSSliderAccessory.setEnabled_, 0)
 
-        self.assertArgIsBlock(NSSliderAccessoryBehavior.behaviorWithHandler_, b'v@')
+        self.assertArgIsBlock(NSSliderAccessoryBehavior.behaviorWithHandler_, 0, b'v@')
 
 if __name__ == "__main__":
     main()
