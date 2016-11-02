@@ -1,0 +1,722 @@
+{
+ "definitions": {
+  "externs": {
+   "MDLVertexAttributeAnisotropy": { "typestr": "@" },
+   "MDLVertexAttributeBinormal": { "typestr": "@" },
+   "MDLVertexAttributeBitangent": { "typestr": "@" },
+   "MDLVertexAttributeColor": { "typestr": "@" },
+   "MDLVertexAttributeEdgeCrease": { "typestr": "@" },
+   "MDLVertexAttributeJointIndices": { "typestr": "@" },
+   "MDLVertexAttributeJointWeights": { "typestr": "@" },
+   "MDLVertexAttributeNormal": { "typestr": "@" },
+   "MDLVertexAttributeOcclusionValue": { "typestr": "@" },
+   "MDLVertexAttributePosition": { "typestr": "@" },
+   "MDLVertexAttributeShadingBasisU": { "typestr": "@" },
+   "MDLVertexAttributeShadingBasisV": { "typestr": "@" },
+   "MDLVertexAttributeSubdivisionStencil": { "typestr": "@" },
+   "MDLVertexAttributeTangent": { "typestr": "@" },
+   "MDLVertexAttributeTextureCoordinate": { "typestr": "@" },
+   "kUTTypeAlembic": { "typestr": "@" },
+   "kUTType3dObject": { "typestr": "@" },
+   "kUTTypePolygon": { "typestr": "@" },
+   "kUTTypeStereolithography": { "typestr": "@" },
+   "kUTTypeUniversalSceneDescription": { "typestr": "@" }
+  },
+  "enum": {
+   "MDLVertexFormatChar": { "value": 131073 },
+   "MDLVertexFormatChar2": { "value": 131074 },
+   "MDLVertexFormatChar2Normalized": { "value": 262146 },
+   "MDLVertexFormatChar3": { "value": 131075 },
+   "MDLVertexFormatChar3Normalized": { "value": 262147 },
+   "MDLVertexFormatChar4": { "value": 131076 },
+   "MDLVertexFormatChar4Normalized": { "value": 262148 },
+   "MDLVertexFormatCharBits": { "value": 131072 },
+   "MDLVertexFormatCharNormalized": { "value": 262145 },
+   "MDLVertexFormatCharNormalizedBits": { "value": 262144 },
+   "MDLVertexFormatFloat": { "value": 786433 },
+   "MDLVertexFormatFloat2": { "value": 786434 },
+   "MDLVertexFormatFloat3": { "value": 786435 },
+   "MDLVertexFormatFloat4": { "value": 786436 },
+   "MDLVertexFormatFloatBits": { "value": 786432 },
+   "MDLVertexFormatHalf": { "value": 720897 },
+   "MDLVertexFormatHalf2": { "value": 720898 },
+   "MDLVertexFormatHalf3": { "value": 720899 },
+   "MDLVertexFormatHalf4": { "value": 720900 },
+   "MDLVertexFormatHalfBits": { "value": 720896 },
+   "MDLVertexFormatInt": { "value": 655361 },
+   "MDLVertexFormatInt1010102Normalized": { "value": 659460 },
+   "MDLVertexFormatInt2": { "value": 655362 },
+   "MDLVertexFormatInt3": { "value": 655363 },
+   "MDLVertexFormatInt4": { "value": 655364 },
+   "MDLVertexFormatIntBits": { "value": 655360 },
+   "MDLVertexFormatInvalid": { "value": 0 },
+   "MDLVertexFormatPackedBit": { "value": 4096 },
+   "MDLVertexFormatShort": { "value": 393217 },
+   "MDLVertexFormatShort2": { "value": 393218 },
+   "MDLVertexFormatShort2Normalized": { "value": 524290 },
+   "MDLVertexFormatShort3": { "value": 393219 },
+   "MDLVertexFormatShort3Normalized": { "value": 524291 },
+   "MDLVertexFormatShort4": { "value": 393220 },
+   "MDLVertexFormatShort4Normalized": { "value": 524292 },
+   "MDLVertexFormatShortBits": { "value": 393216 },
+   "MDLVertexFormatShortNormalized": { "value": 524289 },
+   "MDLVertexFormatShortNormalizedBits": { "value": 524288 },
+   "MDLVertexFormatUChar": { "value": 65537 },
+   "MDLVertexFormatUChar2": { "value": 65538 },
+   "MDLVertexFormatUChar2Normalized": { "value": 196610 },
+   "MDLVertexFormatUChar3": { "value": 65539 },
+   "MDLVertexFormatUChar3Normalized": { "value": 196611 },
+   "MDLVertexFormatUChar4": { "value": 65540 },
+   "MDLVertexFormatUChar4Normalized": { "value": 196612 },
+   "MDLVertexFormatUCharBits": { "value": 65536 },
+   "MDLVertexFormatUCharNormalized": { "value": 196609 },
+   "MDLVertexFormatUCharNormalizedBits": { "value": 196608 },
+   "MDLVertexFormatUInt": { "value": 589825 },
+   "MDLVertexFormatUInt1010102Normalized": { "value": 593924 },
+   "MDLVertexFormatUInt2": { "value": 589826 },
+   "MDLVertexFormatUInt3": { "value": 589827 },
+   "MDLVertexFormatUInt4": { "value": 589828 },
+   "MDLVertexFormatUIntBits": { "value": 589824 },
+   "MDLVertexFormatUShort": { "value": 327681 },
+   "MDLVertexFormatUShort2": { "value": 327682 },
+   "MDLVertexFormatUShort2Normalized": { "value": 458754 },
+   "MDLVertexFormatUShort3": { "value": 327683 },
+   "MDLVertexFormatUShort3Normalized": { "value": 458755 },
+   "MDLVertexFormatUShort4": { "value": 327684 },
+   "MDLVertexFormatUShort4Normalized": { "value": 458756 },
+   "MDLVertexFormatUShortBits": { "value": 327680 },
+   "MDLVertexFormatUShortNormalized": { "value": 458753 },
+   "MDLVertexFormatUShortNormalizedBits": { "value": 458752 },
+   "MDLIndexBitDepthInvalid": { "value": 0 },
+   "MDLIndexBitDepthUInt8": { "value": 8 },
+   "MDLIndexBitDepthUint8": { "value": 8 },
+   "MDLIndexBitDepthUInt16": { "value": 16 },
+   "MDLIndexBitDepthUint16": { "value": 16 },
+   "MDLIndexBitDepthUInt32": { "value": 32 },
+   "MDLIndexBitDepthUint32": { "value": 32 },
+   "MDLGeometryTypePoints": { "value": 0 },
+   "MDLGeometryTypeLines": { "value": 1 },
+   "MDLGeometryTypeTriangles": { "value": 2 },
+   "MDLGeometryTypeTriangleStrips": { "value": 3 },
+   "MDLGeometryTypeQuads": { "value": 4 },
+   "MDLGeometryTypeVariableTopology": { "value": 5 },
+   "MDLProbePlacementUniformGrid": { "value": 0 },
+   "MDLProbePlacementIrradianceDistribution": { "value": 1 },
+   "MDLTextureChannelEncodingUInt8": { "value": 1 },
+   "MDLTextureChannelEncodingUint8": { "value": 1 },
+   "MDLTextureChannelEncodingUInt16": { "value": 2 },
+   "MDLTextureChannelEncodingUint16": { "value": 2 },
+   "MDLTextureChannelEncodingUInt24": { "value": 3 },
+   "MDLTextureChannelEncodingUint24": { "value": 3 },
+   "MDLTextureChannelEncodingUInt32": { "value": 4 },
+   "MDLTextureChannelEncodingUint32": { "value": 4 },
+   "MDLTextureChannelEncodingFloat16": { "value": 258 },
+   "MDLTextureChannelEncodingFloat32": { "value": 260 },
+   "MDLMeshBufferTypeVertex": { "value": 1 },
+   "MDLMeshBufferTypeIndex": { "value": 2 },
+   "MDLMaterialFaceFront": { "value": 0 },
+   "MDLMaterialFaceBack": { "value": 1 },
+   "MDLMaterialFaceDoubleSided": { "value": 2 },
+   "MDLMaterialTextureWrapModeClamp": { "value": 0 },
+   "MDLMaterialTextureWrapModeRepeat": { "value": 1 },
+   "MDLMaterialTextureWrapModeMirror": { "value": 2 },
+   "MDLMaterialTextureFilterModeNearest": { "value": 0 },
+   "MDLMaterialTextureFilterModeLinear": { "value": 1 },
+   "MDLMaterialMipMapFilterModeNearest": { "value": 0 },
+   "MDLMaterialMipMapFilterModeLinear": { "value": 1 },
+   "MDLMaterialPropertyTypeNone": { "value": 0 },
+   "MDLMaterialPropertyTypeString": { "value": 1 },
+   "MDLMaterialPropertyTypeURL": { "value": 2 },
+   "MDLMaterialPropertyTypeTexture": { "value": 3 },
+   "MDLMaterialPropertyTypeColor": { "value": 4 },
+   "MDLMaterialPropertyTypeFloat": { "value": 5 },
+   "MDLMaterialPropertyTypeFloat2": { "value": 6 },
+   "MDLMaterialPropertyTypeFloat3": { "value": 7 },
+   "MDLMaterialPropertyTypeFloat4": { "value": 8 },
+   "MDLMaterialPropertyTypeMatrix44": { "value": 9 },
+   "MDLMaterialSemanticBaseColor": { "value": 0 },
+   "MDLMaterialSemanticSubsurface": { "value": 1 },
+   "MDLMaterialSemanticMetallic": { "value": 2 },
+   "MDLMaterialSemanticSpecular": { "value": 3 },
+   "MDLMaterialSemanticSpecularExponent": { "value": 4 },
+   "MDLMaterialSemanticSpecularTint": { "value": 5 },
+   "MDLMaterialSemanticRoughness": { "value": 6 },
+   "MDLMaterialSemanticAnisotropic": { "value": 7 },
+   "MDLMaterialSemanticAnisotropicRotation": { "value": 8 },
+   "MDLMaterialSemanticSheen": { "value": 9 },
+   "MDLMaterialSemanticSheenTint": { "value": 10 },
+   "MDLMaterialSemanticClearcoat": { "value": 11 },
+   "MDLMaterialSemanticClearcoatGloss": { "value": 12 },
+   "MDLMaterialSemanticEmission": { "value": 13 },
+   "MDLMaterialSemanticBump": { "value": 14 },
+   "MDLMaterialSemanticOpacity": { "value": 15 },
+   "MDLMaterialSemanticInterfaceIndexOfRefraction": { "value": 16 },
+   "MDLMaterialSemanticMaterialIndexOfRefraction": { "value": 17 },
+   "MDLMaterialSemanticObjectSpaceNormal": { "value": 18 },
+   "MDLMaterialSemanticTangentSpaceNormal": { "value": 19 },
+   "MDLMaterialSemanticDisplacement": { "value": 20 },
+   "MDLMaterialSemanticDisplacementScale": { "value": 21 },
+   "MDLMaterialSemanticAmbientOcclusion": { "value": 22 },
+   "MDLMaterialSemanticAmbientOcclusionScale": { "value": 23 },
+   "MDLMaterialSemanticNone": { "value": 32768 },
+   "MDLMaterialSemanticUserDefined": { "value": 32769 },
+   "MDLLightTypeUnknown": { "value": 0 },
+   "MDLLightTypeAmbient": { "value": 1 },
+   "MDLLightTypeDirectional": { "value": 2 },
+   "MDLLightTypeSpot": { "value": 3 },
+   "MDLLightTypePoint": { "value": 4 },
+   "MDLLightTypeLinear": { "value": 5 },
+   "MDLLightTypeDiscArea": { "value": 6 },
+   "MDLLightTypeRectangularArea": { "value": 7 },
+   "MDLLightTypeSuperElliptical": { "value": 8 },
+   "MDLLightTypePhotometric": { "value": 9 },
+   "MDLLightTypeProbe": { "value": 10 },
+   "MDLLightTypeEnvironment": { "value": 11 },
+   "MDLCameraProjectionPerspective": { "value": 0 },
+   "MDLCameraProjectionOrthographic": { "value": 1 }
+  },
+  "classes": {
+   "MDLVoxelArray": {
+    "methods": [
+     {
+      "selector": "voxelExistsAtIndex:allowAnyX:allowAnyY:allowAnyZ:allowAnyShell:",
+      "class_method": false,
+      "retval": { "type_override": "Z" },
+      "args": {
+       "1": { "type_override": "Z" },
+       "2": { "type_override": "Z" },
+       "3": { "type_override": "Z" },
+       "4": { "type_override": "Z" }
+      }
+     },
+     {
+      "selector": "isValidSignedShellField",
+      "class_method": false,
+      "retval": { "type_override": "Z" }
+     },
+     {
+      "selector": "setIsValidSignedShellField:",
+      "class_method": false,
+      "args": {
+       "0": { "type_override": "Z" }
+      }
+     }
+    ]
+   },
+   "MDLTransform": {
+    "methods": [
+     {
+      "selector": "initWithTransformComponent:resetsTransform:",
+      "class_method": false,
+      "args": {
+       "1": { "type_override": "Z" }
+      }
+     },
+     {
+      "selector": "initWithMatrix:resetsTransform:",
+      "class_method": false,
+      "args": {
+       "1": { "type_override": "Z" }
+      }
+     }
+    ]
+   },
+   "MDLObject": {
+    "methods": [
+     {
+      "selector": "resetsTransform",
+      "class_method": false,
+      "retval": { "type_override": "Z" }
+     },
+     {
+      "selector": "setResetsTransform:",
+      "class_method": false,
+      "args": {
+       "0": { "type_override": "Z" }
+      }
+     }
+    ]
+   },
+   "MDLNoiseTexture": {
+    "methods": [
+     {
+      "selector": "initScalarNoiseWithSmoothness:name:textureDimensions:channelCount:channelEncoding:grayScale:",
+      "class_method": false,
+      "args": {
+       "5": { "type_override": "Z" }
+      }
+     }
+    ]
+   },
+   "MDLTexture": {
+    "methods": [
+     {
+      "selector": "initWithData:topLeftOrigin:name:dimensions:rowStride:channelCount:channelEncoding:isCube:",
+      "class_method": false,
+      "args": {
+       "1": { "type_override": "Z" },
+       "7": { "type_override": "Z" }
+      }
+     },
+     {
+      "selector": "writeToURL:",
+      "class_method": false,
+      "retval": { "type_override": "Z" }
+     },
+     {
+      "selector": "writeToURL:type:",
+      "class_method": false,
+      "retval": { "type_override": "Z" }
+     },
+     {
+      "selector": "texelDataWithTopLeftOriginAtMipLevel:create:",
+      "class_method": false,
+      "args": {
+       "1": { "type_override": "Z" }
+      }
+     },
+     {
+      "selector": "texelDataWithBottomLeftOriginAtMipLevel:create:",
+      "class_method": false,
+      "args": {
+       "1": { "type_override": "Z" }
+      }
+     },
+     {
+      "selector": "isCube",
+      "class_method": false,
+      "retval": { "type_override": "Z" }
+     },
+     {
+      "selector": "setIsCube:",
+      "class_method": false,
+      "args": {
+       "0": { "type_override": "Z" }
+      }
+     },
+     {
+      "selector": "hasAlphaValues",
+      "class_method": false,
+      "retval": { "type_override": "Z" }
+     },
+     {
+      "selector": "setHasAlphaValues:",
+      "class_method": false,
+      "args": {
+       "0": { "type_override": "Z" }
+      }
+     }
+    ]
+   },
+   "MDLObject": {
+    "methods": [
+     {
+      "class_method": false,
+      "selector": "hidden",
+      "retval": { "type_override": "Z" }
+     },
+     {
+      "class_method": false,
+      "selector": "setHidden:",
+      "args": {
+       "0": { "type_override": "Z" }
+      }
+     }
+    ]
+   },
+   "MDLMeshBufferMap": {
+    "methods": [
+     {
+      "selector": "initWithBytes:deallocator:",
+      "class_method": false,
+      "args": {
+       "0": { "c_array_of_variable_length": true, "type_modifier": "n" },
+       "1": {
+        "callable": {
+	 "arguments": {
+	  "0": { "typestr": "^v" }
+	 },
+	 "retval": { "typestr": "v" }
+	}
+       }
+      }
+     },
+     {
+      "selector": "bytes",
+      "class_method": false,
+      "retval": { "c_array_of_variable_length": true }
+     }
+    ]
+   },
+   "MDLMesh": {
+    "methods": [
+     {
+      "selector": "initBoxWithExtent:segments:inwardNormals:geometryType:allocator:",
+      "class_method": false,
+      "args": {
+       "2": { "type_override": "Z" }
+      }
+     },
+     {
+      "selector": "initSphereWithExtent:segments:inwardNormals:geometryType:allocator:",
+      "class_method": false,
+      "args": {
+       "2": { "type_override": "Z" }
+      }
+     },
+     {
+      "selector": "initHemisphereWithExtent:segments:inwardNormals:cap:geometryType:allocator:",
+      "class_method": false,
+      "args": {
+       "2": { "type_override": "Z" },
+       "3": { "type_override": "Z" }
+      }
+     },
+     {
+      "selector": "initCylinderWithExtent:segments:inwardNormals:topCap:bottomCap:cap:geometryType:allocator:",
+      "class_method": false,
+      "args": {
+       "2": { "type_override": "Z" },
+       "3": { "type_override": "Z" },
+       "4": { "type_override": "Z" }
+      }
+     },
+     {
+      "selector": "initCapsuleWithExtent:cylinderSegments:hemisphereSegments:inwardNormals:geometryType:allocator:",
+      "class_method": false,
+      "args": {
+       "3": { "type_override": "Z" }
+      }
+     },
+     {
+      "selector": "initConeWithExtent:segments:inwardNormals:cap:geometryType:allocator:",
+      "class_method": false,
+      "args": {
+       "2": { "type_override": "Z" },
+       "3": { "type_override": "Z" }
+      }
+     },
+     {
+      "selector": "initIcosahedronWithExtent:inwardNormals:segments:geometryType:allocator:",
+      "class_method": false,
+      "args": {
+       "1": { "type_override": "Z" }
+      }
+     },
+     {
+      "selector": "newBoxWithDimensions:segments:geometryType:inwardNormals:allocator:",
+      "class_method": true,
+      "args": {
+       "3": { "type_override": "Z" }
+      }
+     },
+     {
+      "selector": "newEllipsoidWithRadii:radialSegments:verticalSegments:geometryType:inwardNormals:hemisphere:allocator:",
+      "class_method": true,
+      "args": {
+       "4": { "type_override": "Z" },
+       "5": { "type_override": "Z" }
+      }
+     },
+     {
+      "selector": "newCylinderWithHeight:radii:radialSegments:verticalSegments:geometryType:inwardNormals:allocator:",
+      "class_method": true,
+      "args": {
+       "5": { "type_override": "Z" }
+      }
+     },
+     {
+      "selector": "newEllipticalConeWithHeight:radii:radialSegments:verticalSegments:geometryType:inwardNormals:allocator:",
+      "class_method": true,
+      "args": {
+       "5": { "type_override": "Z" }
+      }
+     },
+     {
+      "selector": "newIcosahedronWithRadius:inwardNormals:allocator:",
+      "class_method": false,
+      "args": {
+       "1": { "type_override": "Z" }
+      }
+     },
+     {
+      "selector": "generateAmbientOcclusionTextureWithSize:raysPerSample:attenuationFactor:objectsToConsider:vertexAttributeNamed:materialPropertyNamed:",
+      "class_method": false,
+      "retval": { "type_override": "Z" }
+     },
+     {
+      "selector": "generateAmbientOcclusionTextureWithQuality:attenuationFactor:objectsToConsider:vertexAttributeNamed:materialPropertyNamed:",
+      "class_method": false,
+      "retval": { "type_override": "Z" }
+     },
+     {
+      "selector": "generateAmbientOcclusionVertexColorsWithRaysPerSample:attenuationFactor:objectsToConsider:vertexAttributeNamed:",
+      "class_method": false,
+      "retval": { "type_override": "Z" }
+     },
+     {
+      "selector": "generateAmbientOcclusionVertexColorsWithQuality:attenuationFactor:objectsToConsider:vertexAttributeNamed:",
+      "class_method": false,
+      "retval": { "type_override": "Z" }
+     },
+     {
+      "selector": "generateLightMapTextureWithTextureSize:lightsToCondider:objectsToConsider:vertexAttributeNamed:materialPropertyNamed:",
+      "class_method": false,
+      "retval": { "type_override": "Z" }
+     },
+     {
+      "selector": "generateLightMapTextureWithQuality:lightsToCondider:objectsToConsider:vertexAttributeNamed:materialPropertyNamed:",
+      "class_method": false,
+      "retval": { "type_override": "Z" }
+     },
+     {
+      "selector": "generateLightMapVertexColorsWithLightsToConsider:objectsToConsider:vertexAttributeNamed:",
+      "class_method": false,
+      "retval": { "type_override": "Z" }
+     }
+    ]
+   },
+   "MDLVertexAttributeData": {
+    "methods": [
+     {
+      "selector": "dataStart",
+      "class_method": false,
+      "retval": { "c_array_of_variable_length": true }
+     },
+     {
+      "selector": "setDataStart:",
+      "class_method": false,
+      "args": {
+       "0": { "c_array_of_variable_length": true }
+      }
+     }
+    ]
+   },
+   "MDLMaterialPropertyNode": {
+    "methods": [
+     {
+      "class_method": false,
+      "selector": "initWithInputs:outputs:evaluationFunction:",
+      "args": {
+       "2": {
+        "callable": {
+	 "arguments": {
+	  "0": { "typestr": "^v" },
+	  "1": { "typestr": "@" }
+	 },
+	 "retval": { "typestr": "v" }
+	}
+       }
+      }
+     },
+     {
+      "class_method": false,
+      "selector": "setEvaluationFunction:",
+      "args": {
+       "0": {
+        "callable": {
+	 "arguments": {
+	  "0": { "typestr": "^v" },
+	  "1": { "typestr": "@" }
+	 },
+	 "retval": { "typestr": "v" }
+	}
+       }
+      }
+     },
+     {
+      "class_method": false,
+      "selector": "evaluationFunction",
+      "retval": {
+       "callable": {
+	"arguments": {
+	 "0": { "typestr": "^v" },
+	 "1": { "typestr": "@" }
+	},
+	"retval": { "typestr": "v" }
+       }
+      }
+     }
+    ]
+   },
+   "MDLCamera": {
+    "methods": [
+     {
+      "selector": "frameBoundingBox:setNearAndFar:",
+      "class_method": false,
+      "args": {
+       "1": { "type_override": "Z" }
+      }
+     }
+    ]
+   },
+   "MDLAsset": {
+    "methods": [
+     {
+      "selector": "initWithURL:vertexDescriptor:bufferAllocator:preserveTopology:error:",
+      "class_method": false,
+      "args": {
+       "3": { "type_override": "Z" },
+       "4": { "type_modifier": "o" }
+      }
+     },
+     {
+      "selector": "canExportFileExtension:",
+      "class_method": false,
+      "retval": { "type_override": "Z" }
+     },
+     {
+      "selector": "canImportFileExtension:",
+      "class_method": false,
+      "retval": { "type_override": "Z" }
+     },
+     {
+      "selector": "exportAssetToURL:",
+      "class_method": false,
+      "retval": { "type_override": "Z" }
+     },
+     {
+      "selector": "exportAssetToURL:error:",
+      "class_method": false,
+      "args": {
+       "1": { "type_modifier": "o" }
+      },
+      "retval": { "type_override": "Z" }
+     }
+    ]
+   },
+   "NSObject": {
+    "methods": [
+     {
+      "selector": "minimumTime",
+      "class_method": false,
+      "retval": { "type_override": "d" }
+     },
+     {
+      "selector": "maximumTime",
+      "class_method": false,
+      "retval": { "type_override": "d" }
+     },
+     {
+      "selector": "setMinimumTime:",
+      "class_method": false,
+      "args": {
+       "0": { "type_override": "d" }
+      }
+     },
+     {
+      "selector": "setMaximumTime:",
+      "class_method": false,
+      "args": {
+       "0": { "type_override": "d" }
+      }
+     },
+     {
+      "selector": "localTransformAtTime:",
+      "class_method": false,
+      "args": {
+       "0": { "type_override": "d" }
+      }
+     },
+     {
+      "selector": "globalTransformWithObject:atTime",
+      "class_method": false,
+      "args": {
+       "1": { "type_override": "d" }
+      }
+     },
+     {
+      "selector": "setLocalTransform:forTime:",
+      "class_method": false,
+      "args": {
+       "1": { "type_override": "d" }
+      }
+     },
+     {
+      "selector": "resetsTransform",
+      "class_method": false,
+      "retval": { "type_override": "Z" }
+     },
+     {
+      "selector": "setResetsTransform:",
+      "class_method": false,
+      "args": {
+       "0": { "type_override": "Z" }
+      }
+     },
+     {
+      "selector": "sphericalHarmonicsLevel",
+      "class_method": false,
+      "retval": { "type_override": [ "I", "Q" ] }
+     },
+     {
+      "selector": "setSphericalHarmonicsLevel:",
+      "class_method": false,
+      "args": {
+       "0": { "type_override": [ "I", "Q" ] }
+      }
+     },
+     {
+      "selector": "fillData:offset:",
+      "class_method": false,
+      "args": {
+       "1": { "type_override": [ "I", "Q" ] }
+      }
+     },
+     {
+      "selector": "length",
+      "class_method": false,
+      "retval": { "type_override": [ "I", "Q" ] }
+     },
+     {
+      "selector": "type",
+      "class_method": false,
+      "retval": { "type_override": [ "I", "Q" ] }
+     },
+     {
+      "selector": "capacity",
+      "class_method": false,
+      "retval": { "type_override": [ "I", "Q" ] }
+     },
+     {
+      "selector": "newZone:",
+      "class_method": false,
+      "args": {
+       "0": { "type_override": [ "I", "Q" ] }
+      }
+     },
+     {
+      "selector": "newBuffer:type:",
+      "class_method": false,
+      "args": {
+       "0": { "type_override": [ "I", "Q" ] },
+       "1": { "type_override": [ "I", "Q" ] }
+      }
+     },
+     {
+      "selector": "newBufferWithData:type:",
+      "class_method": false,
+      "args": {
+       "1": { "type_override": [ "I", "Q" ] }
+      }
+     },
+     {
+      "selector": "newBufferFromZone:length:type:",
+      "class_method": false,
+      "args": {
+       "1": { "type_override": [ "I", "Q" ] },
+       "2": { "type_override": [ "I", "Q" ] }
+      }
+     },
+     {
+      "selector": "newBufferFromZone:data:type:",
+      "class_method": false,
+      "args": {
+       "2": { "type_override": [ "I", "Q" ] }
+      }
+     }
+    ]
+   }
+  }
+ }
+}

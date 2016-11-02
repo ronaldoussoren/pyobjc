@@ -43,6 +43,8 @@ explictly.
 
 *  Added bindings for SafariServices and Intents frameworks, both introducted in macOS 10.12.
 
+* Add bindings for the ModelIO framework, introduced in OSX 10.11.
+
 * Issue #153: Add missing metadata file to ApplicationServices bindings
 
 * Issue #157: Bad reference to "_metadata" in ApplicationServices bindings

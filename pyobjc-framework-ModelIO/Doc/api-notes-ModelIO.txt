@@ -1,0 +1,19 @@
+API Notes: ModelIO framework
+============================
+
+Apple documentation
+-------------------
+
+The full API is described in `Apple's documentation`__, both
+the C and Objective-C APIs are available (but see the `API Notes`_ below).
+
+.. __: https://developer.apple.com/library/mac/documentation/UserExperience/Conceptual/ModelIO/ModelIO.html
+
+
+API Notes
+---------
+
+The full API for the ModelIO framework is available from Python, except
+for methods that have a SIMD types as one of their arguments or as a return
+value (those require changes to PyObjC's core bridge).  Because of this these
+bindings are not very usefull at this time.

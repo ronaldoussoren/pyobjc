@@ -61,6 +61,7 @@ FRAMEWORKS_WRAPPERS=[
         ('MediaLibrary',            '10.9',             None        ),
         ('MediaPlayer',             '10.12',            None        ),
         ('Message',                 None,               '10.9'      ),
+        ('ModelIO',                 '10.11',            None        ),
         ('MultipeerConnectivity',   '10.10',            None        ),
         ('NetFS',                   '10.6',             None        ),
         ('NetworkExtension',        '10.11',            None        ),
