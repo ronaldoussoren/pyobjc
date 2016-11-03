@@ -470,7 +470,7 @@ Plugin bundles
 
    During module initialization this function returns an NSBundle object for
    the current bundle. This works for application as well as plug-ins created
-   using `py2app <http://packages.python.org/py2app>`_.
+   using `py2app <https://pythonhosted.org/py2app/>`_.
 
    After module initialization use ``NSBundle.bundleForClass_(ClassInYourBundle)``
    to get the bundle.

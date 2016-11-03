@@ -1,12 +1,12 @@
 API notes: LocalAuthentication framework
 =========================================
 
-Apple Documentation
--------------------
+The full API is described in `Apple's documentation`__, both
+the C and Objective-C APIs are available (but see the `API Notes`_ below).
 
-The framework is documented on `Apple's developer website`__
+.. __: https://developer.apple.com/localauthentication/
 
-.. __: http://developer.apple.com/library/mac/#documentation/LocalAuthentication/Reference/LocalAuthenticationFrameworkRef/_index.html
+These bindings are accessed through the ``LocalAuthentication`` package (that is, ``import LocalAuthentication``).
 
 API Notes
 ---------

@@ -1,6 +1,9 @@
 API Notes: InstallerPlugins framework
 =====================================
 
+These bindings are accessed through the ``InstallerPlugins`` package (that is, ``import InstallerPlugins``).
+
+
 API Notes
 ---------
 

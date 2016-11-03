@@ -1,12 +1,12 @@
 API Notes: GameCenter framework
 ===============================
 
-Apple documentation
--------------------
+The full API is described in `Apple's documentation`__, both
+the C and Objective-C APIs are available (but see the `API Notes`_ below).
 
-The full API is described in `Apple's documentation`__.
+.. __: https://developer.apple.com/gamecenter
 
-.. __: https://developer.apple.com/library/mac/documentation/UserExperience/Conceptual/GameCenter/GameCenter.html
+These bindings are accessed through the ``GameCenter`` package (that is, ``import GameCenter``).
 
 
 API Notes

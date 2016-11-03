@@ -1,12 +1,11 @@
 API Notes: NetFS framework
 ==========================
 
-Apple documentation
--------------------
+These bindings are accessed through the ``NetFS`` package (that is, ``import NetFS``).
 
-The full API is described in `Apple's documentation`__.
+.. note::
 
-.. __: https://developer.apple.com/library/mac/documentation/UserExperience/Conceptual/NetFS/NetFS.html
+   I cannot find the API reference for this framework on Apple's developer website.
 
 
 API Notes

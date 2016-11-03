@@ -7,7 +7,10 @@ Apple documentation
 The full API is described in `Apple's documentation`__, both
 the C and Objective-C APIs are available (but see the `API Notes`_ below).
 
-.. __: https://developer.apple.com/library/mac/documentation/UserExperience/Conceptual/Contacts/Contacts.html
+.. __: https://developer.apple.com/contacts/
+
+These bindings are accessed through the ``AppKit`` package (that is, ``import AppKit``).
+
 
 
 API Notes

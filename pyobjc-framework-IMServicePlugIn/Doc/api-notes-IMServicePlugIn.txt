@@ -1,12 +1,12 @@
 API Notes: IMServicePlugIn framework
 ====================================
 
-Apple documentation
--------------------
+The full API is described in `Apple's documentation`__, both
+the C and Objective-C APIs are available (but see the `API Notes`_ below).
 
-The full API is described in `Apple's documentation`__.
+.. __: https://developer.apple.com/imserviceplugin
 
-.. __: https://developer.apple.com/library/mac/documentation/UserExperience/Conceptual/IMServicePlugIn/IMServicePlugIn.html
+These bindings are accessed through the ``IMServicePlugin`` package (that is, ``import IMServicePlugin``).
 
 
 API Notes

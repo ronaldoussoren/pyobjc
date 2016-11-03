@@ -1,12 +1,13 @@
 API notes: FinderSync framework
 ===============================
 
-Apple Documentation
--------------------
+The full API is described in `Apple's documentation`__, both
+the C and Objective-C APIs are available (but see the `API Notes`_ below).
 
-The framework is documented on `Apple's developer website`__
+.. __: https://developer.apple.com/findersync
 
-.. __: http://developer.apple.com/library/mac/#documentation/FinderSync/Reference/FinderSyncFrameworkRef/_index.html
+These bindings are accessed through the ``FinderSync`` package (that is, ``import FinderSync``).
+
 
 API Notes
 ---------

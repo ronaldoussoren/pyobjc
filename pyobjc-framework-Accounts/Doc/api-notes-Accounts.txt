@@ -6,7 +6,10 @@ Apple Documentation
 
 The framework is documented on `Apple's developer website`__
 
-.. __: http://developer.apple.com/library/mac/#documentation/Accounts/Reference/AccountsFrameworkRef/_index.html
+.. __: https://developer.apple.com/reference/accounts?language=objc
+
+These bindings are accessed through the ``Accounts`` package (that is, ``import Accounts``).
+
 
 API Notes
 ---------

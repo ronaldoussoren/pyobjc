@@ -6,7 +6,7 @@ Apple Documentation
 
 The framework is documented on `Apple's developer website`__
 
-.. __: http://developer.apple.com/library/mac/#documentation/CloudKit/Reference/CloudKitFrameworkRef/_index.html
+.. __: https://developer.apple.com/reference/cloudkit
 
 API Notes
 ---------

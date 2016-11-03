@@ -1,13 +1,12 @@
 API Notes: MediaPlayer framework
 ================================
 
-Apple documentation
--------------------
-
 The full API is described in `Apple's documentation`__, both
 the C and Objective-C APIs are available (but see the `API Notes`_ below).
 
-.. __: https://developer.apple.com/library/mac/documentation/UserExperience/Conceptual/MediaPlayer/MediaPlayer.html
+.. __: https://developer.apple.com/mediaplayer/
+
+These bindings are accessed through the ``MediaPlayer`` package (that is, ``import MediaPlayer``).
 
 
 API Notes

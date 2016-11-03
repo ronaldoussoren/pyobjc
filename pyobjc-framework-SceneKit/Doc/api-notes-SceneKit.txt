@@ -1,13 +1,12 @@
 API Notes: SceneKit framework
 =============================
 
-Apple documentation
--------------------
-
 The full API is described in `Apple's documentation`__, both
 the C and Objective-C APIs are available (but see the `API Notes`_ below).
 
-.. __: https://developer.apple.com/library/mac/documentation/UserExperience/Conceptual/SceneKit/SceneKit.html
+.. __: https://developer.apple.com/scenekit/
+
+These bindings are accessed through the ``SceneKit`` package (that is, ``import SceneKit``).
 
 
 API Notes

@@ -123,7 +123,7 @@ wrappers.
    This is similar to :class:`warnings.catch_warnings`.
 
 
-.. _`leaks(1)`: https://developer.apple.com/library/mac/#documentation/Darwin/Reference/ManPages/man1/leaks.1.html
+.. _`leaks(1)`: https://developer.apple.com/legacy/library/documentation/Darwin/Reference/ManPages/man1/leaks.1.html
 
 .. class:: TestCase
 

@@ -4,10 +4,10 @@ API Notes: AppleScriptObjC framework
 Apple documentation
 -------------------
 
-The full API is described in `Apple's documentation`__, both
-the C and Objective-C APIs are available (but see the `API Notes`_ below).
+The full API is described in Apple's documentation, both the C and Objective-C APIs are available.
 
-.. __: https://developer.apple.com/library/mac/documentation/UserExperience/Conceptual/AppleScriptObjC/AppleScriptObjC.html
+These bindings are accessed through the ``AppleScriptKit`` package (that is, ``import AppleScriptKit``).
+
 
 
 API Notes

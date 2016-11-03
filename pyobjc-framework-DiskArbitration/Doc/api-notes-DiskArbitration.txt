@@ -1,6 +1,14 @@
 API Notes: DiskArbitration framework
 ====================================
 
+The full API is described in `Apple's documentation`__, both
+the C and Objective-C APIs are available (but see the `API Notes`_ below).
+
+.. __: https://developer.apple.com/diskarbitration/
+
+These bindings are accessed through the ``DiskArbitration`` package (that is, ``import DiskArbitration``).
+
+
 
 API Notes
 ---------

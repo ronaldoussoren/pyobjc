@@ -51,7 +51,7 @@ explictly.
 
 * Issue #157: Bad reference to "_metadata" in ApplicationServices bindings
 
-* ApplicationServices framework didn't do "from ... import *" as was intended.
+* ApplicationServices framework didn't do "from ... import \*" as was intended.
 
 * Don't force the installation of py2app.
 
@@ -1560,7 +1560,7 @@ Version 2.2 (2009-11-24)
     such as an ``NSArray``, and there are no direct references to the block from
     Python.
 
-.. __: https://llvm.org/viewvc/llvm-project/cfe/trunk/docs/Block-ABI-Apple.txt?revision=HEAD
+.. __: http://clang.llvm.org/docs/Block-ABI-Apple.html
 
 - ``objc.inject`` is no longer support. This was code that had no real relation
   to the rest of PyObjC and was only working in 32-bit mode with little reason

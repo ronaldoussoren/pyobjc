@@ -1,13 +1,12 @@
 API Notes: SafariServices framework
 ===================================
 
-Apple documentation
--------------------
-
 The full API is described in `Apple's documentation`__, both
 the C and Objective-C APIs are available (but see the `API Notes`_ below).
 
-.. __: https://developer.apple.com/library/mac/documentation/UserExperience/Conceptual/SafariServices/SafariServices.html
+.. __: https://developer.apple.com/safariservices/
+
+These bindings are accessed through the ``SafariServices`` package (that is, ``import SafariServices``).
 
 
 API Notes

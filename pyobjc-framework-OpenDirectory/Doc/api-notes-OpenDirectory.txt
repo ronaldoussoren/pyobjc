@@ -1,6 +1,14 @@
 API Notes: OpenDirectory and CFOpenDirectory frameworks
 =======================================================
 
+The full API is described in `Apple's documentation`__, both
+the C and Objective-C APIs are available (but see the `API Notes`_ below).
+
+.. __: https://developer.apple.com/opendirectory/
+
+These bindings are accessed through the ``OpenDirectory`` package (that is, ``import OpenDirectory``).
+
+
 API Notes
 ---------
 

@@ -7,7 +7,7 @@ Apple documentation
 The full API is described in `Apple's documentation`__, both
 the C and Objective-C APIs are available (but see the `API Notes`_ below).
 
-.. __: https://developer.apple.com/library/mac/documentation/UserExperience/Conceptual/ApplicationServices/ApplicationServices.html
+.. __: https://developer.apple.com/reference/applicationservices
 
 
 API Notes
