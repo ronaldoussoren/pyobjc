@@ -166,7 +166,7 @@ class oc_test (Command):
         pass
 
     def run(self):
-        print("Validating framework list...")
+        print("  validating framework list...")
         all_names = set(nm.split('-')[-1] for nm in os.listdir('..') if nm.startswith('pyobjc-framework-'))
         configured_names = set(x[0] for x in FRAMEWORKS_WRAPPERS)
         ok = True
@@ -176,6 +176,58 @@ class oc_test (Command):
         if configured_names - all_names:
             print("Framework mentioned in setup.py not in filesystem: %s"%(", ".join(configured_names - all_names)))
             ok = False
+
+        print("  validating framework Modules/ directories...")
+        header_files = ("pyobjc-api.h", "pyobjc-compat.h")
+        templates = {}
+        for fn in header_files:
+            with open(os.path.join('../pyobjc-core/Modules/objc', fn), 'rb') as fp:
+                templates[fn] = fp.read()
+
+        for nm in all_names:
+            subdir = "../pyobjc-framework-" + nm + "/Modules"
+            if not os.path.exists(subdir): continue
+
+            for fn in header_files:
+                if not os.path.exists(os.path.join(subdir, fn)):
+                    print("Framework wrapper for %s does not contain %s"%(
+                        nm, fn))
+                    ok = False
+
+                else:
+                    with open(os.path.join(subdir, fn), 'rb') as fp:
+                        data = fp.read()
+
+                    if data != templates[fn]:
+                        print("Framework wrapper for %s contains stale %s"%(
+                            nm, fn))
+                        ok = False
+
+
+        print("  validating framework setup files...")
+        with open('../pyobjc-core/Tools/pyobjc_setup.py', 'rb') as fp:
+            pyobjc_setup = fp.read()
+
+        for nm in all_names:
+            subdir = "../pyobjc-framework-" + nm
+            if not os.path.exists(os.path.join(subdir, "setup.py")):
+                print("Framework wrapper for %s does not contain setup.py"%(
+                    nm))
+                ok = False
+
+            if not os.path.exists(os.path.join(subdir, "pyobjc_setup.py")):
+                print("Framework wrapper for %s does not contain pyobjc_setup.py"%(
+                    nm))
+                ok = False
+
+            else:
+                with open(os.path.join(subdir, "pyobjc_setup.py"), 'rb') as fp:
+                    data = fp.read()
+                if data != pyobjc_setup:
+                    print("Framework wrapper for %s contains stale pyobjc_setup.py"%(
+                        nm))
+                    ok = False
+
 
         if not ok:
            raise DistutilsError("setup.py is not consistent with reality")
