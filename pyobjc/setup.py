@@ -6,8 +6,14 @@ import platform
 from distutils.core import Command
 from distutils.errors import DistutilsError
 
+import shutil
+import subprocess
+import glob
+import tarfile
+import sys
 
-VERSION="3.2"
+
+VERSION="3.2.1b1"
 
 # Table with all framework wrappers and the OSX releases where they are
 # first supported, and where support was removed. The introduced column
@@ -166,7 +172,7 @@ class oc_test (Command):
         pass
 
     def run(self):
-        print("Validating framework list...")
+        print("  validating framework list...")
         all_names = set(nm.split('-')[-1] for nm in os.listdir('..') if nm.startswith('pyobjc-framework-'))
         configured_names = set(x[0] for x in FRAMEWORKS_WRAPPERS)
         ok = True
@@ -176,6 +182,101 @@ class oc_test (Command):
         if configured_names - all_names:
             print("Framework mentioned in setup.py not in filesystem: %s"%(", ".join(configured_names - all_names)))
             ok = False
+
+        print("  validating framework Modules/ directories...")
+        header_files = ("pyobjc-api.h", "pyobjc-compat.h")
+        templates = {}
+        for fn in header_files:
+            with open(os.path.join('../pyobjc-core/Modules/objc', fn), 'rb') as fp:
+                templates[fn] = fp.read()
+
+        for nm in all_names:
+            subdir = "../pyobjc-framework-" + nm + "/Modules"
+            if not os.path.exists(subdir): continue
+
+            for fn in header_files:
+                if not os.path.exists(os.path.join(subdir, fn)):
+                    print("Framework wrapper for %s does not contain %s"%(
+                        nm, fn))
+                    ok = False
+
+                else:
+                    with open(os.path.join(subdir, fn), 'rb') as fp:
+                        data = fp.read()
+
+                    if data != templates[fn]:
+                        print("Framework wrapper for %s contains stale %s"%(
+                            nm, fn))
+                        ok = False
+
+
+        print("  validating framework setup files...")
+        with open('../pyobjc-core/Tools/pyobjc_setup.py', 'rb') as fp:
+            pyobjc_setup = fp.read()
+
+        for nm in all_names:
+            subdir = "../pyobjc-framework-" + nm
+            if not os.path.exists(os.path.join(subdir, "MANIFEST.in")):
+                print("Framework wrapper for %s does not contain MANIFEST.in"%(
+                    nm))
+                ok = False
+
+            if not os.path.exists(os.path.join(subdir, "setup.py")):
+                print("Framework wrapper for %s does not contain setup.py"%(
+                    nm))
+                ok = False
+
+            if not os.path.exists(os.path.join(subdir, "pyobjc_setup.py")):
+                print("Framework wrapper for %s does not contain pyobjc_setup.py"%(
+                    nm))
+                ok = False
+
+            else:
+                with open(os.path.join(subdir, "pyobjc_setup.py"), 'rb') as fp:
+                    data = fp.read()
+                if data != pyobjc_setup:
+                    print("Framework wrapper for %s contains stale pyobjc_setup.py"%(
+                        nm))
+                    ok = False
+
+        print("  validating sdists...")
+        devnull = open('/dev/null', 'a')
+        for nm in ('pyobjc-core',) + tuple(nm for nm in os.listdir('..') if nm.startswith('pyobjc-framework-')):
+            print("    %s"%(nm,))
+            subdir = os.path.join('..', nm)
+            if os.path.exists(os.path.join(subdir, 'dist')):
+                shutil.rmtree(os.path.join(subdir, 'dist'))
+                p = subprocess.check_call(
+                    [ sys.executable, 'setup.py', 'sdist' ],
+                    cwd=subdir,
+                    stdout=devnull, stderr=devnull
+                    )
+                files = glob.glob(
+                    os.path.join(subdir, 'dist', '*.tar.gz'))
+
+                if not files:
+                    print("No sdist in %s"%(nm,))
+                    ok = False
+
+                elif len(files) > 1:
+                    print("Too many sdist in %s"%(nm,))
+                    ok = False
+
+                else:
+                    t = tarfile.open(files[0], 'r:gz')
+                    for fn in t.getnames():
+                        if fn.startswith('/'):
+                            print("Absolute path in sdist for %s"%(nm,))
+                            ok = False
+
+                        for p in (
+                            '__pycache__', '.pyc', '.pyo', '.so',
+                            '.dSYM', '.eggs', '.app', '/build/', '/dist/'):
+
+                            if p in fn:
+                                print("Unwanted pattern %r in sdist for %s: %s"%(
+                                    p, nm, fn))
+                                ok = False
 
         if not ok:
            raise DistutilsError("setup.py is not consistent with reality")

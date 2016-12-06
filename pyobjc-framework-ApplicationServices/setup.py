@@ -14,16 +14,16 @@ VERSION="3.2a1"
 
 setup(
     name='pyobjc-framework-ApplicationServices',
-    version="3.2",
+    version="3.2.1b1",
     description = "Wrappers for the framework ApplicationServices on Mac OS X",
     long_description=__doc__,
     packages = [ "ApplicationServices", "HIServices" ],
     setup_requires = [
-        'pyobjc-core>=3.2',
+        'pyobjc-core>=3.2.1b1',
     ],
     install_requires = [
-        'pyobjc-core>=3.2',
-        'pyobjc-framework-Cocoa>=3.2',
-        'pyobjc-framework-Quartz>=3.2',
+        'pyobjc-core>=3.2.1b1',
+        'pyobjc-framework-Cocoa>=3.2.1b1',
+        'pyobjc-framework-Quartz>=3.2.1b1',
     ],
 )

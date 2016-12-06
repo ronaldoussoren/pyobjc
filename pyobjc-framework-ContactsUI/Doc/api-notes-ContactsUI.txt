@@ -7,7 +7,7 @@ Apple documentation
 The full API is described in `Apple's documentation`__, both
 the C and Objective-C APIs are available (but see the `API Notes`_ below).
 
-.. __: https://developer.apple.com/contactsui/
+.. __: https://developer.apple.com/reference/contactsui/
 
 These bindings are accessed through the ``ContactsUI`` package (that is, ``import ContactsUI``).
 

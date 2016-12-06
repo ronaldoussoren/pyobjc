@@ -16,16 +16,16 @@ VERSION="3.2a1"
 
 setup(
     name='pyobjc-framework-GameCenter',
-    version="3.2",
+    version="3.2.1b1",
     description = "Wrappers for the framework GameCenter on Mac OS X",
     long_description=__doc__,
     packages = [ "GameCenter" ],
     setup_requires = [
-        'pyobjc-core>=3.2',
+        'pyobjc-core>=3.2.1b1',
     ],
     install_requires = [
-        'pyobjc-core>=3.2',
-        'pyobjc-framework-Cocoa>=3.2',
+        'pyobjc-core>=3.2.1b1',
+        'pyobjc-framework-Cocoa>=3.2.1b1',
     ],
     ext_modules = [
         Extension("GameCenter._GameCenter",

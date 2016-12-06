@@ -46,7 +46,7 @@ is that the application code should be split into three parts:
     when the user presses the "Convert" button, which gets the data from the
     "amount" and "rate" fields of the View, passes them to the Model for
     computation and sends the result back to the View.
-  
+
 To summarize: the Model knows nothing about the user, the View knows nothing
 about the data and operations, and the Controller only knows how to relate
 the Model and the View.  For really tiny applications, such as the currency
@@ -79,7 +79,7 @@ toolkits: almost all of the boilerplate code is replaced by the NIB.
 The source of Cocoa programs that do little work, especially example programs,
 will typically be much shorter than the equivalent with other toolkits.
 
-The NIB file is *not* a description of dialogs and menus and buttons, as you 
+The NIB file is *not* a description of dialogs and menus and buttons, as you
 would get out of interface-builders for other toolkits.  A NIB file is more:
 it contains a archived object graph that represents the GUI, conceptually
 similar to a pickle in Python.  You tell Interface Builder
@@ -107,7 +107,7 @@ applications:
 
 *   Attributes that reference other objects are not typically set explicitly,
     but are done by the NIB file during unarchival.
-	
+
 This also explains why you want separate NIB files for each MVC trio:
 the objects and classes in a NIB file are all unarchived together.  In other
 words, if you had created your document window in your application NIB
@@ -121,7 +121,7 @@ contains enough information to recreate the view objects, but a NIB can also
 contain a large proportion of the setup for your Model and Controller
 functionality.  This is especially true when using `Cocoa Bindings`__.
 
-.. __: http://developer.apple.com/documentation/Cocoa/Conceptual/CocoaBindings/
+.. __: https://developer.apple.com/library/content/documentation/Cocoa/Conceptual/CocoaBindings/CocoaBindings.html
 
 Delegates
 ---------
@@ -172,9 +172,9 @@ again you can arrange for these to be called on instances of your
 
 So let us now look at the connections for our ``ConverterController``
 *instance*.  Select the "Instances" tab in the main window, select
-``ConverterController`` and set the info window to show "Connections".  You 
-now see all the outlets defined in the class.  Select one, and in the lower 
-half of the info window you will see which object it connects to.  Moreover, a 
+``ConverterController`` and set the info window to show "Connections".  You
+now see all the outlets defined in the class.  Select one, and in the lower
+half of the info window you will see which object it connects to.  Moreover, a
 blue line will also link the object representations in the main window and
 in the dialog preview window.
 
@@ -184,11 +184,11 @@ that its ``target`` action will go to the ``ConverterController.convert_``
 method.
 
 Luckily there is a way to find such incoming connections without reverting to
-guessing.  For instance, you will be hard put to find who, if anyone, calls 
+guessing.  For instance, you will be hard put to find who, if anyone, calls
 ``ConverterController.invertRate_``.  The solution: go to the "MainMenu.nib"
 window and look at the top of the vertical scrollbar.  There are two little
 icons there, one with lines and one with squares, with the squares being
-highlighted.  Press it.  The view will change to a scrollable list with objects 
+highlighted.  Press it.  The view will change to a scrollable list with objects
 in the left column and an indication of connections in the right column.  You
 can now see our ConverterController object has four outgoing connections (the
 ones we found earlier) and two incoming connections.  Click on the incoming

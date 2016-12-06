@@ -5,7 +5,7 @@ API Notes: SpriteKit framework
 The full API is described in `Apple's documentation`__, both
 the C and Objective-C APIs are available (but see the `API Notes`_ below).
 
-.. __: https://developer.apple.com/spritekit/
+.. __: https://developer.apple.com/reference/spritekit/
 
 These bindings are accessed through the ``SpriteKit`` package (that is, ``import SpriteKit``).
 

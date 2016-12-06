@@ -7,18 +7,18 @@ BridgeSupport XML files
 Introduction
 ------------
 
-PyObjC 2.0 introduced a way to load enhanced API descriptions 
+PyObjC 2.0 introduced a way to load enhanced API descriptions
 from XML "bridgesupport" files. The format of this file is shared
 between a number of bridges, although later releases of PyObjC added
 more capabilities that aren't in the official format.
 
-As of PyObjC 2.4 [1]_ use of bridgesupport files is deprecated, the 
+As of PyObjC 2.4 [1]_ use of bridgesupport files is deprecated, the
 :doc:`compiled metadata system <compiled>` allows for faster and lazy loading.
 
 Basic structure and use
 -----------------------
 
-Bridgesupport files are XML files with a root element "signatures" 
+Bridgesupport files are XML files with a root element "signatures"
 that has child elements for various kind of API descriptions. The API
 descriptions contain information that cannot be extracted at runtime,
 such as the names and types of global variables (constants), enum labels,
@@ -28,13 +28,13 @@ PyObjC supports loading bridgesupport files when initializing a module
 using :func:`initFrameworkWrapper`, as well as parsing the contents of
 bridgesupport files using :func:`parseBridgeSupport`.
 
-The function :func:`initFrameworkWrapper` is basicly a one-step 
+The function :func:`initFrameworkWrapper` is basicly a one-step
 solution for wrapping a framework: it loads the framework bundle
 and bridgesupport file and then initializes the contents of the wrapper
 module.   Bridgesupport files are located using a search path:
 
  1. "PyObjC.brigesupport" next to the module calling
-    :func:`initFrameworkWrapper`. 
+    :func:`initFrameworkWrapper`.
 
  2. A resource file inside the framework itself (with suffix
     ".bridgesupport" and the same basename as the framework,
@@ -58,7 +58,7 @@ to the module that called :func:`initFrameworkWrapper`.
 Creating a library wrapper
 --------------------------
 
-The easiest way to create a framework wrapper using 
+The easiest way to create a framework wrapper using
 bridgesupport files is to use a python package where
 the "__init__.py" contains a call of :func:`initFrameworkWrapper`
 
@@ -74,7 +74,7 @@ the "__init__.py" contains a call of :func:`initFrameworkWrapper`
 The framework name, identifier and path should be replaced by the
 information for the framework you are wrapping.
 
-The :func:`initFrameworkWrapper`  will load bridgesupport files from 
+The :func:`initFrameworkWrapper`  will load bridgesupport files from
 a file named "PyObjC.bridgesupport" next to the "__init__.py" when
 such a file exist, and otherwise from the default location in the
 framework itself.
@@ -82,8 +82,8 @@ framework itself.
 .. note::
 
    The call to :func:`objc.pathForFramework` ensures that the wrapper does the right thing
-   when DYLD environment variables are 
-   set (see `dyld(1) <http://developer.apple.com/library/mac/#documentation/Darwin/Reference/Manpages/man1/dyld.1.html>`_ for
+   when DYLD environment variables are
+   set (see `dyld(1) <https://developer.apple.com/legacy/library/documentation/Darwin/Reference/ManPages/man1/dyld.1.html>`_ for
    more information on those).
 
 
@@ -93,7 +93,7 @@ Detailed file structure
 This section describes the BridgeSupport file as supported by PyObjC. PyObjC supports a slightly different dialect of those files
 than what is described in `Apple's manual page for BridgeSupport`_.
 
-The file is an XML document with a toplevel element named "signatures". The standard proscribes an attribute named version, that 
+The file is an XML document with a toplevel element named "signatures". The standard proscribes an attribute named version, that
 attribute is ignored by PyObjC. A minimal BridgeSupport file is:
 
 .. sourcecode:: xml
@@ -101,7 +101,7 @@ attribute is ignored by PyObjC. A minimal BridgeSupport file is:
    <signature version='1.0'>
    </signatures>
 
-The document root has children that contain the metadata for various types of objects. 
+The document root has children that contain the metadata for various types of objects.
 
 * *<cftype>*:   Describes a Core Foundation type
 
@@ -109,7 +109,7 @@ The document root has children that contain the metadata for various types of ob
   all information about the class, only those bits that cannot be extracted from the Objective-C runtime.
 
 * *<constant>*: Describes a (constant) external variable
- 
+
 * *<enum>*: A numeric constant, used for enum labels and #define's that expand into an integer or
   float literal.
 
@@ -141,7 +141,7 @@ globals dictionary.
 
 .. seealso::
 
-   `BridgeSupport(5)`_ 
+   `BridgeSupport(5)`_
      Apple manual page describing the metadata format
 
 Type encodings
@@ -175,7 +175,7 @@ type encodings when communicating with the Objective-C runtime (or other Objecti
 Boolean attributes
 ..................
 
-A number of elements that are described below have attributes that are booleans. When the documentation 
+A number of elements that are described below have attributes that are booleans. When the documentation
 says that an attribute is a boolean attribute the value of the attribute is either *true* or *false*:
 
 .. sourcecode:: xml
@@ -189,7 +189,7 @@ interpretation).
 <cftype>
 .........
 
-Nodes of this type define a CoreFoundation type, such :c:type:`CFURLRef`. These elements are used to 
+Nodes of this type define a CoreFoundation type, such :c:type:`CFURLRef`. These elements are used to
 define a Python proxy for the CoreFoundation type and to register that type with the bridge. The proxy
 type is a subclass of :class:`objc_object`.
 
@@ -200,7 +200,7 @@ type is a subclass of :class:`objc_object`.
 These elements do not have child elements, all information is encoded in attributes:
 
  * *name*:           the name of the Objetive-C type (such as :c:type:`CFURLRef`
- * *type*, *type64*: the type encoding for the Objective-C type, *type64* contains the encoding for use 
+ * *type*, *type64*: the type encoding for the Objective-C type, *type64* contains the encoding for use
    in 64-bit mode when that encoding is different from the encoding used in 32-bit mode.
  * *gettypeid_func*: (optional) the name of a C function for retrieving the type ID of the type, the default is derived
    from the name (strip "Ref" from the end of *name*, then add "GetTypeID")
@@ -233,29 +233,29 @@ A *<method>* element has the following attributes:
 
 * *selector*: The selector for this method
 
-* *class_method*: A boolean attribute that indicates if this method is a class method (default: *false*). 
+* *class_method*: A boolean attribute that indicates if this method is a class method (default: *false*).
 
 * *variadic*: Boolean attribute that tells if the method has a variable number of
   arguments (default: *false*)
 
 * *c_array_delimited_by_null*: Boolean attribute that tells if a variadic function
-  has an argument list that is ended by a null value (default: *false*). 
+  has an argument list that is ended by a null value (default: *false*).
 
 * *c_array_length_in_arg*: For a variadic function the argument with this index contains
-  the number of variadic arguments. 
+  the number of variadic arguments.
 
 * *suggestion*: Indicates that this method should not be used from Python code. The value contains
   a message to add to the Python exception that's raised when trying to use the method.
 
 Method's have 0 or more *<arg>* and *<retval>* child elements that describe additional
 information about the method prototype (information that cannot be extracted from
-the Objective-C runtime).  The structure of *<arg>* and *<retval>* elements is described 
+the Objective-C runtime).  The structure of *<arg>* and *<retval>* elements is described
 in the section `describing function and method prototypes`_.
 
 <constant>
 ..........
 
-This element defines a C constant/variable definition. 
+This element defines a C constant/variable definition.
 
 .. sourcecode:: xml
 
@@ -263,7 +263,7 @@ This element defines a C constant/variable definition.
 
 This element does not have children, all information is encoded in attributes.
 
-* *name*: The name of the variable. This name is bound to the proxied value 
+* *name*: The name of the variable. This name is bound to the proxied value
   in the globals dictionary.
 
 * *type*, *type64*: The type encoding of the variable. The attribute
@@ -275,14 +275,14 @@ This element does not have children, all information is encoded in attributes.
   magic cookie that cannot be accessed like a normal object.
 
 The bridge will ignore constants that have a type that is a struct type with
-embedded function pointers. 
+embedded function pointers.
 
 .. note::
 
    Due to the way these values are exposed to Python they will behave like constants
    in Python, the Python representation will not change when the value of the C
    variable would change. This means that *<constant>* definitions aren't useful to
-   expose variable definitions that aren't effectively constant (such as the 
+   expose variable definitions that aren't effectively constant (such as the
    :c:data:`NSApp` variable).
 
 <enum>
@@ -307,14 +307,14 @@ This element does not have children, all information is encoded in attributes.
 
 The value attribute can contain a numeric constant in a number of formats:
 
-* An integer with or without a sign, in the format of a decimal integer C constant without a size 
+* An integer with or without a sign, in the format of a decimal integer C constant without a size
   suffix (such as 'L'). Examples are *42*, *-32*. These are converted to a Python integral type (:class:`int`
   or :class:`long`).
 
 * A C floating point constant in a decimal representation, without a size suffix. Examples
   are *1.0*, *-1.5e30*. These are converted to a Python floating point type (:class:`float`).
 
-* A C floating point constant in a hexadecimal representation, without a size suffix. An 
+* A C floating point constant in a hexadecimal representation, without a size suffix. An
   example is *0x1.77p+10*. These are converted to a Python floating point type (:class:`float`).
 
 When the value cannot be parsed the definition is ignored.
@@ -341,9 +341,9 @@ about arguments is encoded using *<arg>* elements.
   arguments (default: *false*)
 
 * *c_array_delimited_by_null*: Boolean attribute that tells if a variadic function
-  has an argument list that is ended by a null value (default: *false*). When the 
+  has an argument list that is ended by a null value (default: *false*). When the
   function is variadic and this attribute is true the last *<arg>* child contains information
-  about all variadic arguments (that is, there can be 0 or more instances of the 
+  about all variadic arguments (that is, there can be 0 or more instances of the
   argument described by that node present in the actual argument list).
 
 * *c_array_length_in_arg*: For a variadic function the argument with this index contains
@@ -354,7 +354,7 @@ The structure of *<arg>* and *<retval>* elements is described in the section
 `describing function and method prototypes`_.
 
 .. note::
-   
+
    Variadic functions are only supported when the bridge has enough information to
    construct a valid argument list using one of the arguments described above or a
    *printf_format* attribute on one of the *<arg>* children.
@@ -363,7 +363,7 @@ The structure of *<arg>* and *<retval>* elements is described in the section
 <function_pointer>
 ..................
 
-This element is intended to be used to define function aliases, that is an alternative name for a *<function>* element. 
+This element is intended to be used to define function aliases, that is an alternative name for a *<function>* element.
 Due to the way PyObjC is implemented the element can also be used to define an alias for other elements (for example
 *<enum>* or *<constant>* elements).
 
@@ -461,11 +461,11 @@ These elements do not have child elements, all information is encoded in attribu
 
 * *name*: Name of the constant
 
-* *value*, *value64*: The value of the constant. The attribute *value64* can be used when the 
+* *value*, *value64*: The value of the constant. The attribute *value64* can be used when the
   value for the 64-bit runtime is different from the value for the 32-bit runtime.
 
 * *nsstring*: Boolean attribute, defaults to :data:`False`. When this value is :data:`True`
-  the Python representation is a unicode string (:class:`unicode`), otherwise the Python 
+  the Python representation is a unicode string (:class:`unicode`), otherwise the Python
   representation is a byte string (:class:`bytes`).
 
 
@@ -488,17 +488,17 @@ These elements do not have child elements, all information is encoded in attribu
 
   The encoding should be for a structure type and must include embedded field names,
   when the field names are not present the definition is ignored. A structure type
-  contains embedded field names with the encoding contains a (double-)quoted field 
+  contains embedded field names with the encoding contains a (double-)quoted field
   name just before the type encoding of that field. In the example above the field
   names are *x* and *y*.
 
 * *alias*: Name of a Python type that should be used for the Python representation
-  of this structure. That type should be created using :func:`createStructType` 
+  of this structure. That type should be created using :func:`createStructType`
   (or a *<struct>* element in a bridgesupport file). The value of the attribute is
   a fully qualified name.
 
   One example for using this is to map the Objective-C types :c:type:`NSPoint` and
-  :c:type:`CGPoint` to the same Python type. 
+  :c:type:`CGPoint` to the same Python type.
 
 
 Describing function and method prototypes
@@ -521,7 +521,7 @@ also ignore definitions with multiple *<retval>* elements.
 The following attributes can be used with *<arg>* and *<retval>* elements:
 
 * *index*: For *<arg>* children of *<method>* elements only. Contains the argument index, where index 0 is
-  the first explicit method argument (that is, the two implicit arguments cannot not present in the 
+  the first explicit method argument (that is, the two implicit arguments cannot not present in the
   bridgesupport file).
 
 * *type*, *type64*: Type of the argument or return value. Required for children of *<function>*, and optional for children
@@ -534,17 +534,17 @@ The following attributes can be used with *<arg>* and *<retval>* elements:
   When none of the *c_array_...* attributes are used the argument is a pass-by-reference argument (single value), otherwise
   the argument is a buffer (C array).
 
-* *already_cfretained*: Boolean attribute (default :data:`False`). When :data:`True`, the return value, or pass-by-reference 
-  output parameter, is an object that is returned with an increased retain count (that is, the Objective-C caller must call 
+* *already_cfretained*: Boolean attribute (default :data:`False`). When :data:`True`, the return value, or pass-by-reference
+  output parameter, is an object that is returned with an increased retain count (that is, the Objective-C caller must call
   :c:func:`CFRelease` when it no longer needs to access the value).
 
-* *already_retained*: Boolean attribute (default :data:`False`). When :data:`True`, the return value, or pass-by-reference 
-  output parameter, is an object that is returned with an increased retain count (that is, the Objective-C caller must call 
+* *already_retained*: Boolean attribute (default :data:`False`). When :data:`True`, the return value, or pass-by-reference
+  output parameter, is an object that is returned with an increased retain count (that is, the Objective-C caller must call
   the retain method when it no longer needs to access the value).
 
   Metadata where both *already_retained* and *already_cfretained* are true is invalid and will be ignored.
 
-* *c_array_length_in_result*: Boolean attribute (default :data:`False`). When true the *<arg>* is a pointer argument that 
+* *c_array_length_in_result*: Boolean attribute (default :data:`False`). When true the *<arg>* is a pointer argument that
   points to a buffer of values where the number of values is in the return value of the function or method. This is commonly
   used with output parameters (see *type_modifier*), and with an argument that is used to specify the size of the buffer that
   needs to be allocated before calling the function or method.
@@ -567,7 +567,7 @@ The following attributes can be used with *<arg>* and *<retval>* elements:
   is described by child elements of this element.
 
 * *function_pointer_retained*: Boolean attribute (default :data:`False`). When true and either *function_pointer* or *block* is true,
-  the function pointer argument will be stored by the called function. The bridge cannot create a temporary C bridge for the 
+  the function pointer argument will be stored by the called function. The bridge cannot create a temporary C bridge for the
   function that's cleaned up after the call.
 
 * *free_result*: The return value in C is a buffer that should be freed using the function :c:func:`free`.
@@ -584,9 +584,9 @@ The following attributes can be used with *<arg>* and *<retval>* elements:
   separated by a comma, in those cases the first value is the argument that contains the array length that should be passed to the
   function while the second value the argument that contains the usuable length of the array when the function returns.
 
-.. _`BridgeSupport(5)`: http://developer.apple.com/library/mac/#documentation/Darwin/Reference/ManPages/man5/BridgeSupport.5.html>`
+.. _`BridgeSupport(5)`: https://developer.apple.com/legacy/library/documentation/Darwin/Reference/ManPages/man5/BridgeSupport.5.html
 
-.. _`Apple's manual page for BridgeSupport`: http://developer.apple.com/library/mac/#documentation/Darwin/Reference/ManPages/man5/BridgeSupport.5.html>`
+.. _`Apple's manual page for BridgeSupport`: https://developer.apple.com/legacy/library/documentation/Darwin/Reference/ManPages/man5/BridgeSupport.5.html
 
 
 API description
@@ -595,23 +595,23 @@ API description
 .. function:: parseBridgeSupport(xmldata, globals, frameworkName[, dylib_path[, inlineTab]])
 
    :param xmldata: A string with the bridgesupport XML document
-   :param globals:  Globals dictionary for the wrapper module, usually 
+   :param globals:  Globals dictionary for the wrapper module, usually
                     the result of :func:`globals <__builtins__.globals>`.
    :param frameworkName: Name of the framework, it is assumed that the Python
                          module for the wrapper has the same name.
    :param dylib_path: (Optional) filesystem path for a shared library with
                       additional function definitions. Used by the system
-                      bridgesupport files to provide access to inline 
+                      bridgesupport files to provide access to inline
                       functions.
    :param inlineTab: (Optional) A capsule object with function pointers,
                      see :func:`loadFunctionList` for more information on
                      this parameter.
 
-   Load a `BridgeSupport XML file <http://developer.apple.com/library/mac/#documentation/Darwin/Reference/ManPages/man5/BridgeSupport.5.html>`_
+   Load a `BridgeSupport XML file <https://developer.apple.com/legacy/library/documentation/Darwin/Reference/ManPages/man5/BridgeSupport.5.html>`_
    with metadata for a framework.
 
    The definitions from the framework will be added to the *globals* dictionary.
-                  
+
    .. note::
 
       This function is primarily present for backward compatibility and for users that need an easy way to wrap their own Objective-C code.
@@ -631,7 +631,7 @@ API description
                          module for the wrapper has the same name.
    :param frameworkPath: Filesystem path for the framework bundle
    :param frameworkIdentifier: Bundle identifier for the framework
-   :param globals:  Globals dictionary for the wrapper module, usually 
+   :param globals:  Globals dictionary for the wrapper module, usually
                     the result of :func:`globals <__builtins__.globals>`.
    :param inlineTab: (Optional) A capsule object with function pointers,
                      see :func:`loadFunctionList` for more information on
@@ -657,11 +657,11 @@ API description
    .. versionchanged:: 2.5
       The function is available again.
 
-.. _`pkg_resources.resource_string()`: http://packages.python.org/distribute/pkg_resources.html#resourcemanager-api
+.. _`pkg_resources.resource_string()`: http://setuptools.readthedocs.io/en/latest/pkg_resources.html
 
 .. rubric:: Footnotes
 
-.. [1] Technically, deprecation started in PyObjC 2.5, the bridgesupport 
+.. [1] Technically, deprecation started in PyObjC 2.5, the bridgesupport
        system was temporarily removed in PyObjC 2.4.
 
 .. _`Apple's Objective-C Runtime Programming Guide`: https://developer.apple.com/library/mac/#documentation/Cocoa/Conceptual/ObjCRuntimeGuide/Articles/ocrtTypeEncodings.html#//apple_ref/doc/uid/TP40008048-CH100-SW1

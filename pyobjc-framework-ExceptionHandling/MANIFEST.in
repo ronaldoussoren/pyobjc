@@ -12,3 +12,5 @@ global-exclude *.pyo
 global-exclude __pycache__
 global-exclude __pycache__/*
 global-exclude *.so
+prune Lib/*/*.dSYM
+prune PyObjCTest/*.dSYM
