@@ -4,7 +4,7 @@ API Notes: InputMethodKit framework
 The full API is described in `Apple's documentation`__, both
 the C and Objective-C APIs are available (but see the `API Notes`_ below).
 
-.. __: https://developer.apple.com/inputmethodkit
+.. __: https://developer.apple.com/reference/inputmethodkit
 
 These bindings are accessed through the ``InputMethodKit`` package (that is, ``import InputMethodKit``).
 

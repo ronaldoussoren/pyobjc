@@ -3,7 +3,7 @@ Creating your first PyObjC application.
 =======================================
 
 .. warning::
-   
+
    This document is old and hasn't been updated for modern versions of
    PyObjC and Apple's developer tools.
 
@@ -37,37 +37,36 @@ Getting Started
    ``/usr/local/bin/python`` but Apple's ``/usr/bin/python`` comes first in
    your ``$PATH``.  Make sure you use the right python wherever it says
    ``python`` in this tutorial.
-   
+
 2. Start Interface Builder, select *Cocoa Application*
    in the new file dialog, save this file as ``src/MainMenu.nib``.
-   
+
 3. Proceed with the instructions as lined out in Apple's
-   `Developing Cocoa Objective-C Applications: a Tutorial`_, `chapter 3`_,
+   `Developing Cocoa Objective-C Applications: a Tutorial`_, chapter 3,
    just after the section "*Creating the Currency Converter Interface*".
    Work through "Defining the Classes of Currency Converter", "Connecting
    ConverterController to the Interface", and stop at
    "*Implementing the Classes of Currency Converter*", as we are going to do
    this in Python, not Objective-C.  Your nib file should now be the same as
    *step3-MainMenu.nib*.
-   
-.. _`Developing Cocoa Objective-C Applications: a Tutorial`: http://developer.apple.com/documentation/Cocoa/Conceptual/ObjCTutorial/index.html
-.. _`chapter 3`: http://developer.apple.com/documentation/Cocoa/Conceptual/ObjCTutorial/index.html?http://developer.apple.com/documentation/Cocoa/Conceptual/ObjCTutorial/chapter03/chapter_3_section_1.html
+
+.. _`Developing Cocoa Objective-C Applications: a Tutorial`: https://developer.apple.com/library/content/documentation/Cocoa/Conceptual/ProgrammingWithObjectiveC/Introduction/Introduction.html
 
 4. Create the skeleton Python script by running the ``nibclassbuilder`` script.
    ``nibclassbuilder`` will parse the NIB file and create a skeleton module for
    you.  Invoke it as follows (from the ``src`` directory):
 
    .. sourcecode:: sh
-   
+
        $ python -c "import PyObjCScripts.nibclassbuilder" MainMenu.nib > CurrencyConverter.py
-               
+
    Depending on your installation, the ``nibclassbuilder`` script may be on your ``$PATH``.
    If so, it can be invoked as such:
 
    .. sourcecode:: sh
 
        $ nibclassbuilder MainMenu.nib > CurrencyConverter.py
-   
+
    The result of this can be seen in *step4-CurrencyConverter.py*.
 
 Testing the user interface
@@ -78,7 +77,7 @@ Testing the user interface
 
    .. sourcecode:: python
       :linenos:
-   
+
         from distutils.core import setup
         import py2app
 
@@ -95,8 +94,8 @@ Testing the user interface
    .. sourcecode:: sh
 
         $ python setup.py py2app -A
-      
-   Note that we use the ``-A`` argument to create an alias bundle at 
+
+   Note that we use the ``-A`` argument to create an alias bundle at
    ``dist/CurrencyConverter.app``.  Alias bundles contain an alias to the
    main script (``CurrencyConverter.py``) and symlinks to the data files
    (``MainMenu.nib``), rather than including them and their dependencies
@@ -104,7 +103,7 @@ Testing the user interface
    the source files without having to rebuild the application.  This alias
    bundle is similar to a ZeroLink executable for Xcode - it is for
    DEVELOPMENT ONLY, and will not work on other machines.
-   
+
 7. Run the program.  This can be done in three ways:
 
    - double-click ``dist/CurrencyConverter`` from the Finder
@@ -113,29 +112,29 @@ Testing the user interface
    - open it from the terminal with:
 
      .. sourcecode:: sh
-   
+
         $ open dist/CurrencyConverter.app
-       
+
    - run it directly from the Terminal, as:
 
      .. sourcecode:: sh
-   
+
         $ ./dist/CurrencyConverter.app/Contents/MacOS/CurrencyConverter
-       
+
    The last method is typically the best to use for development: it leaves
    stdout and stderr connected to your terminal session so you can see what
    is going on if there are errors, and it allows you to interact with ``pdb``
    if you are using it to debug your application.  Note that your application
    will likely appear in the background, so you will have to cmd-tab or click
    on its dock icon to see its user interface.
-   
+
    The other methods cause stdout and stderr to go to the Console log, which
    can be viewed with ``/Applications/Utilities/Console.app``.
-   
+
    When you run your script as it is now it should behave identically as when
    you tested your interface in Interface Builder in step 3, only now the
    skeleton is in Python, not Objective-C.
-   
+
 
 Writing the code
 ----------------
@@ -158,7 +157,7 @@ Writing the code
    .. sourcecode:: python
 
         anObject.modifyArg_andAnother_(arg1, arg2)
-   
+
    Note that we don't do this mangling for ``Converter.convertAmount()``: this
    method is only called by other Python code, so there is no need to go
    through the name mangling.  Also, if we would want to make this method
@@ -166,10 +165,10 @@ Writing the code
    the types of the arguments, so it could do the conversion.  This is beyond
    the scope of this first tutorial, *An introduction to PyObjC* has a little
    more detail on this.
-   
+
    The application should now be fully functional, try it.  The results of what
    we have up to now can be seen in *step8-CurrencyConverter.py*.
-   
+
 Extending the functionality
 ---------------------------
 
@@ -180,19 +179,19 @@ Extending the functionality
     "invert rate" command, because I always get this wrong: instead of typing
     in the exchange rate from dollars to euros I type in the rate to convert
     from euros to dollars.
-   
+
     Open ``MainMenu.nib`` in Interface Builder.  Select the *Classes* view and
     then select the ``ConverterController`` class.  In the info panel select
     the *Attributes* from the popup.  Select the *Actions* tab, and add an
     action ``invertRate:``.  You have now told Interface Builder that instances
     of the ``ConverterController`` class have grown a new method
     ``invertRate_()``.
-   
+
     In the ``MainMenu.nib main`` window open the *MainMenu* menubar.  Select
     the ``Edit`` menu.  Make sure the *Menus* palette is open and selected,
     drag a separator to the ``Edit`` menu and then drag an ``Item`` there.
     Double-click the item and set the text to ``Invert Exchange Rate``.
-   
+
     Make the connection by control-dragging from the new
     ``Invert Exchange Rate`` menu item to the ``ConverterController`` instance
     in the Instances tab in the ``MainMenu.nib`` main window.
@@ -201,8 +200,8 @@ Extending the functionality
     class.
 
     In the *Info* panel, *Connections* section, select ``invertRate:`` and
-    press *Connect*. 
-   
+    press *Connect*.
+
 10. We know our program can't invert rates yet, because we haven't actually
     written the code to do it, but we are going to try it anyway, just to see
     what sort of spectacular crash we get.  Alas, nothing spectacular about it:
@@ -211,15 +210,15 @@ Extending the functionality
     ``ConverterController`` class and it gives an error message:
 
     .. sourcecode:: sh
-       
-       $ ./dist/CurrencyConverter.app/Contents/MacOS/CurrencyConverter 
-       2004-12-09 03:29:09.957 CurrencyConverter[4454] Could not connect the action 
+
+       $ ./dist/CurrencyConverter.app/Contents/MacOS/CurrencyConverter
+       2004-12-09 03:29:09.957 CurrencyConverter[4454] Could not connect the action
        invertRate: to target of class ConverterController
-   
+
     Moreover, it has disabled the ``Invert Exchange Rate`` menu command and
     continues, so the program works as it did before, only with one more
     (disabled) menu item.
-   
+
 Debugging
 ---------
 
@@ -229,8 +228,8 @@ Debugging
     and now the menu entry is enabled.  After trying it with a couple of
     non-zero exchange rates we try it with an exchange rate of zero (or empty,
     which is the same).  We get a dialog box giving the Python exception, and
-    offering the choice of continuing or quitting. 
-    
+    offering the choice of continuing or quitting.
+
     To debug this application with pdb, start the application with the
     following command line:
 
@@ -241,10 +240,10 @@ Debugging
     When running in this mode, we will get a ``pdb.post_mortem(...)`` console
     in the terminal instead of the alert panel.  You can see this in action if
     you try and invert an exchange rate of ``0``.
-      
+
 12. Fix the final bug by testing for ``rate == 0.0`` in ``invertRate_()``.
     The result is in the *step12-src* directory.
-   
+
 Creating a redistributable application
 --------------------------------------
 

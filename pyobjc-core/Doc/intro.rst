@@ -12,7 +12,7 @@ Preface
 
 PyObjC is a bridge between Python and Objective-C.  It allows Python
 scripts to use and extend existing Objective-C class libraries;
-most importantly the `Cocoa libraries`_ by `Apple`_.
+most importantly the Cocoa libraries by `Apple`_.
 
 This document describes how to use Objective-C class libraries from Python
 scripts and how to interpret the documentation of those libraries from the
@@ -737,8 +737,8 @@ a sequence of values (and simularly for ``NSMutableDictionary`` instead of
 ``dict``).
 
 .. _`Cocoa Bindings`: https://developer.apple.com/library/mac/#documentation/Cocoa/Conceptual/CocoaBindings/CocoaBindings.html
-.. _`Key-Value Coding`: https://developer.apple.com/library/mac/#documentation/Cocoa/Conceptual/KeyValueCoding/Articles/KeyValueCoding.html
-.. _`Key-Value Observing`: https://developer.apple.com/library/mac/#documentation/Cocoa/Conceptual/KeyValueObserving/KeyValueObserving.html
+.. _`Key-Value Coding`: https://developer.apple.com/library/content/documentation/Cocoa/Conceptual/KeyValueCoding/index.html#//apple_ref/doc/uid/10000107i
+.. _`Key-Value Observing`: https://developer.apple.com/library/content/documentation/Cocoa/Conceptual/KeyValueObserving/KeyValueObserving.html#//apple_ref/doc/uid/10000177i
 
 NOTE: Key-Value Observing is not supported for "pure" python objects, that
 is instances of classes that don't inherit from ``NSObject``. Adding such
@@ -865,8 +865,6 @@ More information on Cocoa programming can be found at:
 * Your local bookstore or library
 
 .. :doc:`PyObjC Example index </examples/index>`:
-
-..  _`Cocoa libraries`: https://developer.apple.com/library/mac/#documentation/Cocoa/Conceptual/CocoaFundamentals/Introduction/Introduction.html#//apple_ref/doc/uid/TP40002974
 
 ..  _`Cocoa documentation at the Apple developer website`: https://developer.apple.com/library/mac/navigation/index.html#section=Frameworks&topic=Cocoa%20Layer
 

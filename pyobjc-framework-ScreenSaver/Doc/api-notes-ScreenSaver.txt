@@ -4,7 +4,7 @@ API Notes: ScreenSaver framework
 The full API is described in `Apple's documentation`__, both
 the C and Objective-C APIs are available (but see the `API Notes`_ below).
 
-.. __: https://developer.apple.com/screensaver/
+.. __: https://developer.apple.com/reference/screensaver/
 
 These bindings are accessed through the ``ScreenSaver`` package (that is, ``import ScreenSaver``).
 
@@ -35,7 +35,3 @@ for i386 (32-bit Intel) is needed.
 
 See the section on "Binary Compatibility" in `Apple's documentation`_
 for more information.
-
-
-.. _`Screen Saver framework Reference on Apple's site`: https://developer.apple.com/library/mac/#documentation/UserExperience/Reference/ScreenSaver/ObjC_classic/_index.html
-.. _`Apple's documentation`: https://developer.apple.com/library/mac/#documentation/UserExperience/Reference/ScreenSaver/ObjC_classic/Intro/IntroScreenSaver.html

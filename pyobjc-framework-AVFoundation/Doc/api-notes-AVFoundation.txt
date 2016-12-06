@@ -7,7 +7,7 @@ Apple documentation
 The full API is described in `Apple's documentation`__, both
 the C and Objective-C APIs are available (but see the `API Notes`_ below).
 
-.. __: https://developer.apple.com/av-foundation/
+.. __: https://developer.apple.com/av-foundation/?language=objc
 
 These bindings are accessed through the ``AVFoundation`` package (that is, ``import AVFoundation``).
 
