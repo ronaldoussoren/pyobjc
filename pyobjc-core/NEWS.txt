@@ -8,7 +8,8 @@ Version 3.2.1
 
 Bugfixes:
 
-* (None yet)
+* Avoid build error with Python 2.7 when using the OSX 10.12 SDK, triggered
+  when Python was build using MacPython support.
 
 Version 3.2
 -----------
