@@ -12,16 +12,16 @@ VERSION="3.2a1"
 
 setup(
     name='pyobjc-framework-SystemConfiguration',
-    version="3.2",
+    version="3.2.1b1",
     description = "Wrappers for the framework SystemConfiguration on Mac OS X",
     long_description=__doc__,
     packages = [ "SystemConfiguration" ],
     setup_requires = [
-        'pyobjc-core>=3.2',
+        'pyobjc-core>=3.2.1b1',
     ],
     install_requires = [
-        'pyobjc-core>=3.2',
-        'pyobjc-framework-Cocoa>=3.2',
+        'pyobjc-core>=3.2.1b1',
+        'pyobjc-framework-Cocoa>=3.2.1b1',
     ],
     ext_modules = [
         Extension('SystemConfiguration._manual',

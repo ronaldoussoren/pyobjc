@@ -13,7 +13,7 @@ import tarfile
 import sys
 
 
-VERSION="3.2"
+VERSION="3.2.1b1"
 
 # Table with all framework wrappers and the OSX releases where they are
 # first supported, and where support was removed. The introduced column
