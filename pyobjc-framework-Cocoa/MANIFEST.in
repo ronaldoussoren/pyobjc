@@ -10,7 +10,7 @@ global-exclude .DS_Store
 global-exclude *.pyc
 global-exclude *.pyo
 global-exclude *.so
-global-exclude *.dSYM
-global-exclude *.dSYM/*
 global-exclude __pycache__
 global-exclude __pycache__/*
+prune Lib/*/*.dSYM
+prune PyObjCTest/*.dSYM

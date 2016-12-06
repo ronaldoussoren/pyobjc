@@ -6,6 +6,12 @@ import platform
 from distutils.core import Command
 from distutils.errors import DistutilsError
 
+import shutil
+import subprocess
+import glob
+import tarfile
+import sys
+
 
 VERSION="3.2"
 
@@ -210,6 +216,11 @@ class oc_test (Command):
 
         for nm in all_names:
             subdir = "../pyobjc-framework-" + nm
+            if not os.path.exists(os.path.join(subdir, "MANIFEST.in")):
+                print("Framework wrapper for %s does not contain MANIFEST.in"%(
+                    nm))
+                ok = False
+
             if not os.path.exists(os.path.join(subdir, "setup.py")):
                 print("Framework wrapper for %s does not contain setup.py"%(
                     nm))
@@ -228,6 +239,44 @@ class oc_test (Command):
                         nm))
                     ok = False
 
+        print("  validating sdists...")
+        devnull = open('/dev/null', 'a')
+        for nm in ('pyobjc-core',) + tuple(nm for nm in os.listdir('..') if nm.startswith('pyobjc-framework-')):
+            print("    %s"%(nm,))
+            subdir = os.path.join('..', nm)
+            if os.path.exists(os.path.join(subdir, 'dist')):
+                shutil.rmtree(os.path.join(subdir, 'dist'))
+                p = subprocess.check_call(
+                    [ sys.executable, 'setup.py', 'sdist' ],
+                    cwd=subdir,
+                    stdout=devnull, stderr=devnull
+                    )
+                files = glob.glob(
+                    os.path.join(subdir, 'dist', '*.tar.gz'))
+
+                if not files:
+                    print("No sdist in %s"%(nm,))
+                    ok = False
+
+                elif len(files) > 1:
+                    print("Too many sdist in %s"%(nm,))
+                    ok = False
+
+                else:
+                    t = tarfile.open(files[0], 'r:gz')
+                    for fn in t.getnames():
+                        if fn.startswith('/'):
+                            print("Absolute path in sdist for %s"%(nm,))
+                            ok = False
+
+                        for p in (
+                            '__pycache__', '.pyc', '.pyo', '.so',
+                            '.dSYM', '.eggs', '.app', '/build/', '/dist/'):
+
+                            if p in fn:
+                                print("Unwanted pattern %r in sdist for %s: %s"%(
+                                    p, nm, fn))
+                                ok = False
 
         if not ok:
            raise DistutilsError("setup.py is not consistent with reality")

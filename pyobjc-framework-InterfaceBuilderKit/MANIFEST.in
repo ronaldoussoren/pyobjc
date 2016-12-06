@@ -11,3 +11,5 @@ graft Exceptions
 global-exclude .DS_Store
 global-exclude *.pyc
 global-exclude *.so
+prune Lib/*/*.dSYM
+prune PyObjCTest/*.dSYM
