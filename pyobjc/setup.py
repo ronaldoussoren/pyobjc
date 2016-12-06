@@ -7,7 +7,7 @@ from distutils.core import Command
 from distutils.errors import DistutilsError
 
 
-VERSION="3.2a1"
+VERSION="3.2"
 
 # Table with all framework wrappers and the OSX releases where they are
 # first supported, and where support was removed. The introduced column

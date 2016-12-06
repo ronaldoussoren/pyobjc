@@ -13,19 +13,19 @@ VERSION="3.2a1"
 
 setup(
     name='pyobjc-framework-CloudKit',
-    version=VERSION,
+    version="3.2",
     description = "Wrappers for the framework CloudKit on Mac OS X",
     long_description=__doc__,
     packages = [ "CloudKit" ],
     setup_requires = [
-        'pyobjc-core>=' + VERSION,
+        'pyobjc-core>=3.2',
     ],
     install_requires = [
-        'pyobjc-core>=' + VERSION,
-        'pyobjc-framework-Cocoa>=' + VERSION,
-        'pyobjc-framework-CoreLocation>=' + VERSION,
-        'pyobjc-framework-CoreData>=' + VERSION,
-        'pyobjc-framework-Accounts>=' + VERSION,
+        'pyobjc-core>=3.2',
+        'pyobjc-framework-Cocoa>=3.2',
+        'pyobjc-framework-CoreLocation>=3.2',
+        'pyobjc-framework-CoreData>=3.2',
+        'pyobjc-framework-Accounts>=3.2',
     ],
     min_os_level="10.10",
 )

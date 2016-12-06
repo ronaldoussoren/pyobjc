@@ -15,15 +15,15 @@ VERSION="3.2a1"
 setup(
     min_os_level='10.5',
     name='pyobjc-framework-Collaboration',
-    version=VERSION,
+    version="3.2",
     description = "Wrappers for the framework Collaboration on Mac OS X",
     long_description=__doc__,
     packages = [ "Collaboration" ],
     setup_requires = [
-        'pyobjc-core>=' + VERSION,
+        'pyobjc-core>=3.2',
     ],
     install_requires = [
-        'pyobjc-core>=' + VERSION,
-        'pyobjc-framework-Cocoa>=' + VERSION,
+        'pyobjc-core>=3.2',
+        'pyobjc-framework-Cocoa>=3.2',
     ],
 )

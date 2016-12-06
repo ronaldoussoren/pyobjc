@@ -19,17 +19,17 @@ VERSION="3.2a1"
 
 setup(
     name='pyobjc-framework-SyncServices',
-    version=VERSION,
+    version="3.2",
     description = "Wrappers for the framework SyncServices on Mac OS X",
     long_description=__doc__,
     packages = [ "SyncServices" ],
     setup_requires = [
-        'pyobjc-core>=' + VERSION,
+        'pyobjc-core>=3.2',
     ],
     install_requires = [
-        'pyobjc-core>=' + VERSION,
-        'pyobjc-framework-Cocoa>=' + VERSION,
-        'pyobjc-framework-CoreData>=' + VERSION,
+        'pyobjc-core>=3.2',
+        'pyobjc-framework-Cocoa>=3.2',
+        'pyobjc-framework-CoreData>=3.2',
     ],
     ext_modules = [
         Extension("SyncServices._SyncServices",
