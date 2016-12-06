@@ -12,8 +12,7 @@ These bindings are accessed through the ``ScreenSaver`` package (that is, ``impo
 API Notes
 ---------
 
-The PyObjC bindings for the ScreenSaver framework are complete. The
-API for this framework is described in the `Screen Saver framework Reference on Apple's site`_
+The PyObjC bindings for the ScreenSaver framework are complete.
 
 
 Platform limitations
@@ -33,5 +32,5 @@ For OSX 10.6 or later on Intel CPUs the binary must contain support
 for the x86_64 (64-bit Intel) code, on earlier OSX releases support
 for i386 (32-bit Intel) is needed.
 
-See the section on "Binary Compatibility" in `Apple's documentation`_
+See the section on "Binary Compatibility" in Apple's documentation
 for more information.

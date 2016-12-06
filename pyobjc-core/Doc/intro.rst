@@ -481,7 +481,7 @@ be globally unique per process, including across Python modules.  That is,
 it is *not* possible to have two Python modules that define a class with the
 same name.  It is conventional to choose class names with a short prefix that
 uniquely identify your project or company.  For example, Apple uses ``NS``
-as the prefix for all classes in the `Cocoa libraries`_.  Note that the ``NS``
+as the prefix for all classes in the Cocoa libraries.  Note that the ``NS``
 prefix made much more sense when it was called NeXTstep, but persists to this
 day for compatibility reasons.
 
