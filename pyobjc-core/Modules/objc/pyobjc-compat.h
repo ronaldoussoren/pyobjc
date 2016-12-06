@@ -347,6 +347,11 @@ typedef unsigned int NSUInteger;
 #   endif /* Python < 2.7 */
 
 #ifdef OBJC_VERSION
+
+# ifdef PyErr_Format
+#   undef PyErr_Format
+# endif
+
 #   define PyErr_Format PyObjCErr_Format
 #endif
 
