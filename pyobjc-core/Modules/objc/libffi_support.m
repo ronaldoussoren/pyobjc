@@ -723,9 +723,8 @@ parse_printf_args(
         /* And finally the info we're after: the actual format character */
         switch (*format) {
         case 'c': case 'C':
-#if SIZEOF_WCHAR_T != 4
-#    error "Unexpected wchar_t size"
-#endif
+          {
+            STATIC_ASSERT(sizeof(wchar_t) == 4, "size of wchar_t must be 4");
 
             byref[curarg] = PyMem_Malloc(sizeof(int));
             arglist[curarg] = signature_to_ffi_type(@encode(int));
@@ -757,7 +756,8 @@ parse_printf_args(
 
             argoffset++;
             curarg++;
-            break;
+          }
+          break;
 
         case 'd': case 'i': case 'D':
             /* INT */
@@ -1896,6 +1896,7 @@ _argcount(PyObject* callable, BOOL* haveVarArgs, BOOL* haveVarKwds, BOOL* haveKw
         }
 #endif
         *defaultCount = 0;
+
         if (func->func_defaults != NULL) {
             *defaultCount = PyTuple_Size(func->func_defaults);
         }
@@ -2133,7 +2134,7 @@ PyObjCFFI_FreeIMP(IMP imp)
 IMP
 PyObjCFFI_MakeIMPForPyObjCSelector(PyObjCSelector *aSelector)
 {
-    if (PyObjCNativeSelector_Check(aSelector)) {
+    if (PyObjCNativeSelector_Check((PyObject*)aSelector)) {
         PyObjCNativeSelector *nativeSelector =
             (PyObjCNativeSelector *) aSelector;
         Method aMeth;
@@ -2156,7 +2157,7 @@ PyObjCFFI_MakeIMPForPyObjCSelector(PyObjCSelector *aSelector)
                 (pythonSelector->base.sel_flags & PyObjCSelector_kCLASS_METHOD) != 0,
                 pythonSelector->base.sel_selector,
                 pythonSelector->base.sel_python_signature,
-                PyObjCNativeSelector_Check(pythonSelector));
+                PyObjCNativeSelector_Check((PyObject*)pythonSelector));
 
         result = PyObjCFFI_MakeIMPForSignature(methinfo, pythonSelector->base.sel_selector, pythonSelector->callable);
         Py_DECREF(methinfo);
