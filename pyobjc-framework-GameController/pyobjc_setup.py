@@ -475,7 +475,7 @@ def setup(
         cmdclass['build_py'] = oc_build_py
 
     if 'ext_modules' not in k:
-        # No extension modules, can bulid universal wheel
+        # No extension modules, can build universal wheel
         k['options'] = {
             'bdist_wheel': {
                 'universal': 1,

@@ -13,6 +13,12 @@
 #  define __has_extension(x) __has_feature(x)
 #endif
 
+#if __has_extension(c_static_assert)
+# define STATIC_ASSERT(test, message) _Static_assert(test, message)
+#else
+# define STATIC_ASSERT(test, message) switch(0){ case 0: case test:;}
+#endif
+
 #if !__has_feature(objc_instancetype)
 #  define instancetype id
 #endif
@@ -347,6 +353,11 @@ typedef unsigned int NSUInteger;
 #   endif /* Python < 2.7 */
 
 #ifdef OBJC_VERSION
+
+# ifdef PyErr_Format
+#   undef PyErr_Format
+# endif
+
 #   define PyErr_Format PyObjCErr_Format
 #endif
 
@@ -546,6 +557,7 @@ static inline PyObject* _PyObjCTuple_GetItem(PyObject* tuple, Py_ssize_t idx)
 #define PyObjC_END_WITH_GIL \
         PyGILState_Release(_GILState); \
     }
+
 
 
 #endif /* PyObjC_COMPAT_H */
