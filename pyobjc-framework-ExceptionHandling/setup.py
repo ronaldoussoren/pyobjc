@@ -17,16 +17,16 @@ VERSION="3.2a1"
 
 setup(
     name='pyobjc-framework-ExceptionHandling',
-    version="3.2.1b1",
+    version="3.3a0",
     description = "Wrappers for the framework ExceptionHandling on Mac OS X",
     long_description=__doc__,
     packages = [ "PyObjCTools", "ExceptionHandling" ],
     namespace_packages = [ "PyObjCTools" ],
     setup_requires = [
-        'pyobjc-core>=3.2.1b1',
+        'pyobjc-core>=3.3a0',
     ],
     install_requires = [
-        'pyobjc-core>=3.2.1b1',
-        'pyobjc-framework-Cocoa>=3.2.1b1',
+        'pyobjc-core>=3.3a0',
+        'pyobjc-framework-Cocoa>=3.3a0',
     ],
 )
