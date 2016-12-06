@@ -4,6 +4,12 @@
 #include "pyobjc.h"
 #import <CoreServices/CoreServices.h>
 
+#if PyObjC_BUILD_RELEASE >= 1011
+ /* The SDK for OSX 10.12 no longer includes QuickTime headers
+  *   * and that cause problems when using MacPython toolbox glue.
+  *     */
+  #undef USE_TOOLBOX_OBJECT_GLUE
+#endif
 
 #if USE_TOOLBOX_OBJECT_GLUE
 #include "pymactoolbox.h"
