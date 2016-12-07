@@ -437,7 +437,13 @@ def setup(
     else:
         cmdclass = cmdclass.copy()
 
-    if not os_compatible:
+    if os_compatible or ('bdist_wheel' in sys.argv and 'ext_modules' not in k):
+        cmdclass['build_ext'] = pyobjc_build_ext
+        cmdclass['install_lib'] = pyobjc_install_lib
+        cmdclass['test'] = oc_test
+        cmdclass['build_py'] = oc_build_py
+
+    else:
         if min_os_level != None:
             if max_os_level != None:
                 msg = "This distribution is only supported on MacOSX versions %s upto and including %s"%(
@@ -468,11 +474,6 @@ def setup(
         cmdclass['install_lib'] = create_command_subclass(pyobjc_install_lib)
         cmdclass['develop'] = create_command_subclass(develop.develop)
         cmdclass['build_py'] = create_command_subclass(oc_build_py)
-    else:
-        cmdclass['build_ext'] = pyobjc_build_ext
-        cmdclass['install_lib'] = pyobjc_install_lib
-        cmdclass['test'] = oc_test
-        cmdclass['build_py'] = oc_build_py
 
     if 'ext_modules' not in k:
         # No extension modules, can bulid universal wheel
