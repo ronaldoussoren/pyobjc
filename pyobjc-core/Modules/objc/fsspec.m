@@ -4,15 +4,18 @@
 #include "pyobjc.h"
 #import <CoreServices/CoreServices.h>
 
-#if PyObjC_BUILD_RELEASE >= 1011
- /* The SDK for OSX 10.12 no longer includes QuickTime headers
-  *   * and that cause problems when using MacPython toolbox glue.
-  *     */
-  #undef USE_TOOLBOX_OBJECT_GLUE
-#endif
-
 #if USE_TOOLBOX_OBJECT_GLUE
-#include "pymactoolbox.h"
+  /* As of the 10.12 SDK it is no longer safe to inlcude pymactoolbox.h
+   * (due to an include that can no longer be resolved). Therefore provide
+   * local declarations.
+   */
+
+  /* #include "pymactoolbox.h" */
+
+extern PyObject *PyMac_Error(OSErr);                   /* Uses PyMac_GetOSErrException */
+extern int PyMac_GetFSSpec(PyObject *, FSSpec *);      /* argument parser for FSSpec */
+extern PyObject *PyMac_BuildFSSpec(FSSpec *);          /* Convert FSSpec to PyObject */
+
 #endif
 
 /*
