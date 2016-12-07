@@ -6,6 +6,13 @@ An overview of the relevant changes in new, and older, releases.
 Version 3.2.1
 -------------
 
+Updates:
+
+* Small change to the shared setup.py code for framework wrappers to allow
+  building wheels for wrappers without a C exention on any system.
+
+  This was mostly done to make it easier to provide wheels in future releases.
+
 Bugfixes:
 
 * Avoid build error with Python 2.7 when using the OSX 10.12 SDK, triggered
