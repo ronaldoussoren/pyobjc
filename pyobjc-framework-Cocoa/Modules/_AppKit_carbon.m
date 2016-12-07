@@ -5,19 +5,14 @@
 
 #if PY_MAJOR_VERSION == 2 && defined(USE_TOOLBOX_OBJECT_GLUE)
 
-#ifndef __LP64__
-
-#include "pymactoolbox.h"
-
-#else
     /* FIXME: the bits of pymactoolbox.h that we need,
-     * because said header doesn't work in 64-bit mode
+     * because said header doesn't work in 64-bit mode,
+     * or with recent SDK versions.
      */
 extern PyObject *WinObj_New(WindowPtr);
 extern int WinObj_Convert(PyObject *, WindowPtr *);
 extern PyObject *WinObj_WhichWindow(WindowPtr);
 
-#endif
 
 static int
 py2window(PyObject* obj, void* output)
