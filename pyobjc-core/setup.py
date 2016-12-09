@@ -72,11 +72,8 @@ def get_sdk_level():
 
 # CFLAGS for the objc._objc extension:
 CFLAGS = [
-    "-DPyObjC_STRICT_DEBUGGING",
-    "-DMACOSX", # For libffi
     "-DPyObjC_BUILD_RELEASE=%02d%02d"%(
         tuple(map(int, (get_sdk_level() or get_os_level()).split('.')))),
-    "-DMACOSX",
     "-g",
     "-fexceptions",
 
@@ -89,9 +86,7 @@ CFLAGS = [
     "-W",
     "-Wno-import",
     "-Wno-unknown-pragmas",
-    #"-fvisibility=protected",
     "-Wshorten-64-to-32",
-    #"-Werror",
 ]
 
 # CFLAGS for other (test) extensions:
@@ -103,7 +98,7 @@ OBJC_LDFLAGS = [
     '-framework', 'Foundation',
     '-framework', 'Carbon',
     '-fvisibility=protected',
-    '-g', '-O1', # XXX
+    '-g', '-O3',
 ]
 
 

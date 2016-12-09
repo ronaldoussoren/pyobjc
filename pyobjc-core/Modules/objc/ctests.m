@@ -496,10 +496,7 @@ BEGIN_UNITTEST(TestTypeCode)
     /* These are manually defined on some platforms */
     ASSERT_EQUALS(@encode(long long)[0], 'q', "%c");
     ASSERT_EQUALS(@encode(unsigned long long)[0], 'Q', "%c");
-
-#if defined(MACOSX) && MAC_OS_X_VERSION_MAX_ALLOWED > MAC_OS_X_VERSION_10_1
     ASSERT_EQUALS(@encode(bool)[0], 'B', "%#x");
-#endif
 
 END_UNITTEST
 
