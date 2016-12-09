@@ -401,14 +401,32 @@ class TestDict (test.test_dict.DictTest, TestCase):
             fail("KeyError not raised")
         self.assertEqual(exc.args, ((1,),))
 
+    @onlyIf(0, "Test not relevant for PyObjC")
     def test_bad_key(self): pass
+
+    @onlyIf(0, "Test not relevant for PyObjC")
     def test_resize1(self): pass
+
+    @onlyIf(0, "Test not relevant for PyObjC")
     def test_resize2(self): pass
+
+    @onlyIf(0, "Test not relevant for PyObjC")
     def test_empty_presized_dict_in_freelist(self): pass
+
+    @onlyIf(0, "Test not relevant for PyObjC")
     def test_container_iterator(self): pass
+
+    @onlyIf(0, "Test not relevant for PyObjC")
     def test_track_literals(self): pass
+
+    @onlyIf(0, "Test not relevant for PyObjC")
     def test_track_dynamic(self): pass
+
+    @onlyIf(0, "Test not relevant for PyObjC")
     def test_track_subtypes(self): pass
+
+    @onlyIf(0, "Test not relevant for PyObjC")
+    def test_free_after_iterating(self): pass
 
 class GeneralMappingTests (test.test_dict.GeneralMappingTests):
     type2test = NSMutableDictionary
