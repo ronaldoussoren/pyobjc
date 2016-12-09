@@ -31,6 +31,14 @@ class TestInformalProtocols(TestCase):
 
     def testIncompleteClass(self):
         self.assertRaises(TypeError, self.doIncompleteClass)
+        self.assertRaises(objc.error, objc.lookUpClass, 'ProtoClass2')
+
+        for cls in objc.getClassList():
+            if cls.__name__ == "ProtoClass2":
+                #print cls.__name__
+                print dir(cls)
+                print cls.__dict__
+            self.assertNotEqual(cls.__name__, 'ProtoClass2')
 
 
     @onlyIf(sys.version_info[:2] < (3,2), "not valid for python 3.3 and later")

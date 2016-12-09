@@ -74,7 +74,7 @@ PyObjCClass_UnbuildClass(Class objc_class __attribute__((__unused__)))
     PyObjC_Assert(objc_class != nil, -1);
     PyObjC_Assert(objc_lookUpClass(class_getName(objc_class)) == nil, -1);
 
-    NSLog(@"Leaking partial class definition for %s", class_getName(objc_class));
+    objc_disposeClassPair(objc_class);
     return 0;
 }
 
@@ -1412,7 +1412,7 @@ object_method_respondsToSelector(
     id self = *(id*)args[0];
     SEL _meth = *(SEL*)args[1];
     SEL aSelector = *(SEL*)args[2];
-    int* pres = (int*)retval; // Actually BOOL.
+    int* pres = (int*)retval; /* Actually BOOL. */
 
     struct objc_super spr;
     PyObject* pyself;

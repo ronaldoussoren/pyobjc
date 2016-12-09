@@ -21,6 +21,11 @@ Bugfixes:
 * Compatibility definitions for MAC_OS_X_VERSION_10_10, MAC_OS_X_VERSION_10_11
   and MAC_OS_X_VERSION_10_12 were wrong, adjusted these.
 
+* Fix obscure crash in test suite of pyobjc-core: the definition of a class
+  that claims to conform to a protocol but didn't actually conform could
+  result in having a partial class definition in the Objective-C runtime.
+
+
 Version 3.2
 -----------
 
