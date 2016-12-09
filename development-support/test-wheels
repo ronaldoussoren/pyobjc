@@ -1,0 +1,68 @@
+#!/usr/bin/env python3 -B
+"""
+Run basic tests on the wheels archives.
+
+Run this after running "collect-dist-archives"
+"""
+import subprocess
+import shutil
+import os
+import sys
+
+from _common_definitions import PY_VERSIONS, TOP_DIR, DIST_DIR, virtualenv
+
+def pyobjc_ver():
+    for nm in os.listdir(DIST_DIR):
+        if nm.startswith('pyobjc-core'):
+            ver = nm.split('-')[-1].replace('.tar.gz', '')
+            return ver
+
+    raise RuntimeError("Cannot determine version of PyObjC")
+
+
+def main():
+    failed = []
+
+    for ver in PY_VERSIONS:
+        with virtualenv("python{}".format(ver)) as interpreter:
+            log = subprocess.check_output([
+                interpreter, "-mpip",
+                    "install", "-f", DIST_DIR, "--no-index", "--no-cache-dir",
+                        "pyobjc=={}".format(pyobjc_ver())]).decode('utf-8')
+
+            sys.stdout.write(log)
+            if 'Building wheels for collected packages' in log:
+                print("WARNING: non-wheel install: {}".format(ver))
+                sys.exit(1)
+            for ln in log.splitlines():
+                if 'Running setup.py install' in ln and 'Running setup.py install for pyobjc:' not in ln:
+                    print("WARNING: non-wheel install: {}".format(ver))
+                    sys.exit(1)
+
+
+            subprocess.check_call([
+                interpreter, "wheel-smoke-test.py"
+            ])
+
+
+    for path in ['/usr/local/bin/python', '/usr/local/bin/python3']:
+        with virtualenv(path) as interpreter:
+            log = subprocess.check_output([
+                interpreter, "-mpip",
+                    "install", "-f", DIST_DIR, "--no-index", "--no-cache-dir",
+                        "pyobjc=={}".format(pyobjc_ver())]).decode('utf-8')
+            sys.stdout.write(log)
+            if 'Building wheels for collected packages' in log:
+                print("WARNING: non-wheel install: {}".format(path))
+                sys.exit(1)
+            for ln in log.splitlines():
+                if 'Running setup.py install' in ln and 'Running setup.py install for pyobjc:' not in ln:
+                    print("WARNING: non-wheel install: {}".format(path))
+                    sys.exit(1)
+
+            subprocess.check_call([
+                interpreter, "wheel-smoke-test.py"
+            ])
+
+if __name__ == "__main__":
+    main()
