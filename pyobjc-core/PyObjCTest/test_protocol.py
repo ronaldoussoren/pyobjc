@@ -34,10 +34,6 @@ class TestInformalProtocols(TestCase):
         self.assertRaises(objc.error, objc.lookUpClass, 'ProtoClass2')
 
         for cls in objc.getClassList():
-            if cls.__name__ == "ProtoClass2":
-                #print cls.__name__
-                print dir(cls)
-                print cls.__dict__
             self.assertNotEqual(cls.__name__, 'ProtoClass2')
 
 
