@@ -102,15 +102,15 @@ typedef unsigned int NSUInteger;
 #endif
 
 #ifndef MAC_OS_X_VERSION_10_10
-#define MAC_OS_X_VERSION_10_10 1010
+#define MAC_OS_X_VERSION_10_10 101000
 #endif
 
 #ifndef MAC_OS_X_VERSION_10_11
-#define MAC_OS_X_VERSION_10_11 1011
+#define MAC_OS_X_VERSION_10_11 101100
 #endif
 
 #ifndef MAC_OS_X_VERSION_10_12
-#define MAC_OS_X_VERSION_10_12 1012
+#define MAC_OS_X_VERSION_10_12 101200
 #endif
 
 #if PyObjC_BUILD_RELEASE <= 1005
