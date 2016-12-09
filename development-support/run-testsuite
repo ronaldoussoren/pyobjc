@@ -130,11 +130,11 @@ def run_tests(interpreter, arch, project, state_dir):
         fp.write(stderr)
 
 
-def test_summary(state_dir):
+def test_summary(fp_out, state_dir):
     print("Build information")
     print("=================")
     with open(os.path.join(state_dir, "build-info.txt")) as fp:
-        sys.stdout.write(fp.read())
+        fp_out.write(fp.read())
 
 
     results = collections.defaultdict(dict)
@@ -154,9 +154,9 @@ def test_summary(state_dir):
     keys = tuple(sorted(results[next(iter(results))].keys()))
 
     fmt = "%26s" + " | %10s" * len(keys)
-    print(); print()
-    print(fmt % (("Project",) + keys))
-    print((fmt % ((len(keys)+1)  * ("",))).replace(" ", "=").replace("|", "+"))
+    print(file=fp_out); print()
+    print(fmt % (("Project",) + keys), file=fp_out)
+    print((fmt % ((len(keys)+1)  * ("",))).replace(" ", "=").replace("|", "+"), file=fp_out)
 
     ok = True
     for proj in sorted(results):
@@ -167,7 +167,7 @@ def test_summary(state_dir):
                 row.append("E:{}".format(info["errors"]))
                 ok = False
             elif info.get("fails"):
-                row.append("F:{}".format(info["errors"]))
+                row.append("F:{}".format(info["fails"]))
                 ok = False
             elif 'count' not in info and info.get("message"):
                 row.append("CRASH")
@@ -175,7 +175,7 @@ def test_summary(state_dir):
             else:
                 row.append("")
 
-        print(fmt % tuple(row))
+        print(fmt % tuple(row), file=fp_out)
     return ok
 
 
@@ -211,8 +211,10 @@ def main():
                     run_tests(interpreter, arch, project, state_dir)
 
     lg.info("done")
+    with open(os.path.join(osx_dir, "summary.txt"), "w") as fp:
+        test_summary(fp, osx_dir)
 
-    ok = test_summary(osx_dir)
+    ok = test_summary(sys.stdout, osx_dir)
     if not ok:
         print()
         print("ERROR: some tests have failures")
