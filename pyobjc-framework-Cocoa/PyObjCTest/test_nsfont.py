@@ -132,7 +132,7 @@ class TestNSFont(TestCase):
         self.assertArgHasType(NSFont.positionOfGlyph_struckOverGlyph_metricsExist_, 2, b'o^' + objc._C_NSBOOL)
         self.assertArgHasType(NSFont.positionOfGlyph_struckOverRect_metricsExist_, 2, b'o^' + objc._C_NSBOOL)
 
-        if os_release() not in ('10.10', '10.11'):
+        if os_level_key(os_release()) < os_level_key('10.10'):
             self.assertArgHasType(NSFont.positionOfGlyph_withRelation_toBaseGlyph_totalAdvancement_metricsExist_, 3, b'o^' + NSSize.__typestr__)
             self.assertArgHasType(NSFont.positionOfGlyph_withRelation_toBaseGlyph_totalAdvancement_metricsExist_, 4, b'o^' + objc._C_NSBOOL)
 
