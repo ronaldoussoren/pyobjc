@@ -274,7 +274,7 @@ class TestCGContext (TestCase):
             CGContextStrokeEllipseInRect(context, ((10, 10), (50, 30)))
 
             CGContextStrokeLineSegments(context,
-                    [ (0, 0), (10, 15), (15, 10) ], 3)
+                    [ (0, 0), (10, 15), (15, 10), (0, 0) ], 4)
             self.assertRaises(ValueError, CGContextStrokeLineSegments, context,
                     [ (0, 0), (10, 15), (15, 10) ], 4)
 
