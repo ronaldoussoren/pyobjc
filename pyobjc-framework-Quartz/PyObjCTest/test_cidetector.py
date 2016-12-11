@@ -29,8 +29,12 @@ class TestCIDetector (TestCase):
 
     @min_os_level('10.11')
     def testConstants10_11(self):
-        self.assertIsInstance(CIDetectorTypeText, unicode)
         self.assertIsInstance(CIDetectorNumberOfAngles, unicode)
+
+    @onlyOn64Bit
+    @min_os_level('10.11')
+    def testConstants10_11_64bit(self):
+        self.assertIsInstance(CIDetectorTypeText, unicode)
         self.assertIsInstance(CIDetectorReturnSubFeatures, unicode)
 
     @min_os_level('10.12')
