@@ -25,6 +25,10 @@ Bugfixes:
   that claims to conform to a protocol but didn't actually conform could
   result in having a partial class definition in the Objective-C runtime.
 
+* Updated implementation for ``NSMutableArray.extend``. This both avoids an
+  error with the list interface tests in Python 3.6, and avoids unnecessary
+  memory usage with large arguments.
+
 
 Version 3.2
 -----------

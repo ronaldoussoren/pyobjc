@@ -29,7 +29,8 @@ class TestInspectSignatures (TestCase):
             class_list.append(objc.WeakRef)
         for cls in class_list:
             for nm in dir(cls):
-                if nm in ('__new__', '__subclasshook__', '__abstractmethods__', '__prepare__'):
+                if nm in ('__new__', '__subclasshook__', '__abstractmethods__',
+                        '__prepare__', '__init_subclass__'):
                     continue
                 obj = getattr(cls, nm)
                 if isinstance(obj, types.BuiltinMethodType):

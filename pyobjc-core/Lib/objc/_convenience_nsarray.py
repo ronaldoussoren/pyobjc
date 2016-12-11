@@ -64,7 +64,8 @@ def nsarray_reverse(self):
 
 
 def nsarray_extend(self, anArray):
-    self.addObjectsFromArray_(_ensure_array(anArray))
+    for item in anArray:
+        self.addObject_(container_wrap(item))
 
 
 _index_sentinel=object()
