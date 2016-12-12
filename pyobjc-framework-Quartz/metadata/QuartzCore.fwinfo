@@ -704,11 +704,11 @@
           "0": { "type": "^v" },
 	  "1": { "type": "i" },
 	  "2": { "type": [
-           "{CGRect={CGPoint=ff}{CGSize=ff}}", "{CGRect={CGPoint=dd}{CGSize=dd}}"
+           "{_NSRect={_NSPoint=ff}{_NSSize=ff}}", "{CGRect={CGPoint=dd}{CGSize=dd}}"
 	  ] }
 	 },
 	 "retval": { "typestr": [
-           "{CGRect={CGPoint=ff}{CGSize=ff}}", "{CGRect={CGPoint=dd}{CGSize=dd}}"
+           "{_NSRect={_NSPoint=ff}{_NSSize=ff}}", "{CGRect={CGPoint=dd}{CGSize=dd}}"
 	 ] }
 	}
        }
@@ -728,11 +728,11 @@
           "0": { "type": "^v" },
 	  "1": { "type": "i" },
 	  "2": { "type": [
-           "{CGRect={CGPoint=ff}{CGSize=ff}}", "{CGRect={CGPoint=dd}{CGSize=dd}}"
+           "{_NSRect={_NSPoint=ff}{_NSSize=ff}}", "{CGRect={CGPoint=dd}{CGSize=dd}}"
 	  ] }
 	 },
 	 "retval": { "typestr": [
-           "{CGRect={CGPoint=ff}{CGSize=ff}}", "{CGRect={CGPoint=dd}{CGSize=dd}}"
+           "{_NSRect={_NSPoint=ff}{_NSSize=ff}}", "{CGRect={CGPoint=dd}{CGSize=dd}}"
 	 ] }
 	}
        }

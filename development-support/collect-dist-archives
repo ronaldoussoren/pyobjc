@@ -1,0 +1,93 @@
+#!/usr/bin/env python3 -B
+"""
+Script for collecting distribution archives needed for doing a release.
+
+This collects "sdist" and "wheel" archives, the latter for a number of
+Python versions (see below).
+"""
+
+import subprocess
+import os
+import sys
+import shutil
+import fnmatch
+
+from _common_definitions import PY_VERSIONS, TOP_DIR, DIST_DIR, system_report
+
+def files_matching(pattern, dirname):
+    return fnmatch.filter(os.listdir(dirname), pattern)
+
+def main():
+    if os.path.exists(DIST_DIR):
+       shutil.rmtree(DIST_DIR)
+    os.mkdir(DIST_DIR)
+
+    # Information about this build:
+    system_report(os.path.join(DIR_DIR, "build-info.txt")
+
+    # Collect the list of subprojects to build
+    names = ['pyobjc', 'pyobjc-core']
+    for nm in sorted(os.listdir(TOP_DIR)):
+        if nm.startswith('pyobjc-framework-'):
+            names.append(nm)
+
+    failed = []
+    for nm in names:
+        # Collect sdist archive with most recent python version.
+        status = subprocess.call([
+            'python{}'.format(PY_VERSIONS[-1]), 'setup.py',
+                'sdist', '--dist-dir={}'.format(DIST_DIR),
+            ],
+            cwd=os.path.join(TOP_DIR, nm))
+        if status != 0:
+            print("WARNING: Building wheel for {} failed".format(nm))
+            failed.append((nm, 'sdist', ''))
+
+        if nm != 'pyobjc':
+            # Create wheels for anything but the 'pyobjc' package,
+            # as that package contains logic that runs at "setup.py"
+            # time to tune the dependencies for the current machine.
+            #
+            # XXX: It should be possible to tweak that setup.py to
+            # generate a useable wheel, but that can wait until later.
+            for ver in PY_VERSIONS:
+                status = subprocess.call([
+                    'python{}'.format(ver), 'setup.py',
+                        'bdist_wheel', '--dist-dir={}'.format(DIST_DIR),
+                    ],
+                    cwd=os.path.join(TOP_DIR, nm))
+
+                if status != 0:
+                    print("WARNING: Building wheel for {} failed (python {})".format(nm, ver))
+                    failed.append((nm, 'wheel', ver))
+
+    print()
+    print("Collected files")
+    print("===============")
+    print()
+    for nm in names:
+        if nm == 'pyobjc': continue
+        pattern = nm.replace('-', '?') + '-*'
+        print("{}:".format(nm))
+        for fn in files_matching(pattern, DIST_DIR):
+            print("  {}".format(fn))
+        print()
+
+
+    if failed:
+        print()
+        print("Build failures")
+        print("==============")
+        print()
+        for nm, command, ver in failed:
+            if ver:
+                print("{} {}@{}"%(nm, command, ver))
+            else:
+                print("{} {}"%(nm, command, ver))
+
+        sys.exit(1)
+
+    sys.exit(0)
+
+if __name__ == "__main__":
+    main()

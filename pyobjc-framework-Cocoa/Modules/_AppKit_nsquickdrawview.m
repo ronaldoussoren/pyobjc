@@ -5,9 +5,9 @@
  * declarations we use instead of using the pymactoolbox.h
  * header file.
  */
-
 extern PyObject *GrafObj_New(GrafPtr);
 extern int GrafObj_Convert(PyObject *, GrafPtr *);
+
 
 static PyObject*
 call_NSQuickDrawView_qdport(

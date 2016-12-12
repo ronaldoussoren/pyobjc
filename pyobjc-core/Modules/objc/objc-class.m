@@ -438,7 +438,8 @@ static PyObject*
 class_new(PyTypeObject* type __attribute__((__unused__)),
         PyObject* args, PyObject* kwds)
 {
-static    char* keywords[] = { "name", "bases", "dict", "protocols", NULL };
+static PyObject* all_python_classes = NULL;
+static char* keywords[] = { "name", "bases", "dict", "protocols", NULL };
     char* name;
     PyObject* bases;
     PyObject* dict;
@@ -1068,7 +1069,17 @@ static    char* keywords[] = { "name", "bases", "dict", "protocols", NULL };
     }
 
     /* This is an "extra" ref */
-    Py_INCREF(res);
+    if (all_python_classes == NULL) {
+        all_python_classes = PyList_New(0);
+        if (all_python_classes == NULL) {
+            Py_FatalError("Cannot create internal list");
+        }
+    }
+    if (PyList_Append(all_python_classes, res) < 0) {
+        Py_FatalError("Cannot store generated class");
+    }
+
+    //Py_INCREF(res);
     return res;
 }
 

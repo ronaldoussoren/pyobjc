@@ -10,7 +10,6 @@
  * declarations we use instead of using the pymactoolbox.h
  * header file.
  */
-
 extern PyObject *WinObj_New(WindowPtr);
 extern int WinObj_Convert(PyObject *, WindowPtr *);
 extern PyObject *WinObj_WhichWindow(WindowPtr);

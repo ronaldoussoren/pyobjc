@@ -30,6 +30,18 @@ Bugfixes:
 * Avoid build error with Python 2.7 when using the OSX 10.12 SDK, triggered
   when Python was build using MacPython support.
 
+* Compatibility definitions for MAC_OS_X_VERSION_10_10, MAC_OS_X_VERSION_10_11
+  and MAC_OS_X_VERSION_10_12 were wrong, adjusted these.
+
+* Fix obscure crash in test suite of pyobjc-core: the definition of a class
+  that claims to conform to a protocol but didn't actually conform could
+  result in having a partial class definition in the Objective-C runtime.
+
+* Updated implementation for ``NSMutableArray.extend``. This both avoids an
+  error with the list interface tests in Python 3.6, and avoids unnecessary
+  memory usage with large arguments.
+
+
 Version 3.2
 -----------
 

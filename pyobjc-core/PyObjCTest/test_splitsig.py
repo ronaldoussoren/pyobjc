@@ -93,19 +93,22 @@ class SplitSignatureTest (TestCase):
         ]
 
         for cls in objc.getClassList():
-            #if cls.__name__.startswith('OC_'): continue
-            if cls.__name__.startswith('OC'): continue
+            if cls.__name__.startswith('OC'):
+                continue
             for selName in cls.__dict__.keys():
                 self.assertIsInstance(selName, str)
-                if selName in EXCEPTIONS: continue
-                if selName.startswith('__') and selName.endswith('__'): continue
+                if selName in EXCEPTIONS:
+                    continue
+                if selName.startswith('__') and selName.endswith('__'):
+                    continue
 
                 try:
                     sel = getattr(cls, selName)
                 except (AttributeError, TypeError):
                     continue
 
-                if not isinstance(sel, objc.selector): continue
+                if not isinstance(sel, objc.selector):
+                    continue
                 elems = objc.splitSignature(sel.signature)
 
                 argcount = len(elems) - 3 # retval, self, _sel

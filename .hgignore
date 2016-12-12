@@ -8,6 +8,8 @@ htmlcov
 new-bindings
 .eggs
 wheel-dir
+test-results
+test-env
 
 syntax: glob
 *.so
