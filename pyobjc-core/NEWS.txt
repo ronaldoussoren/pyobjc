@@ -14,6 +14,12 @@ Bugfixes:
 
 * (None yet)
 
+Version 3.2.2
+-------------
+
+Bugfixes:
+
+* (None)
 
 Version 3.2.1
 -------------

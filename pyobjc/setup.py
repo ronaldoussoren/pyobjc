@@ -12,7 +12,6 @@ import glob
 import tarfile
 import sys
 
-
 VERSION="3.3a0"
 
 # Table with all framework wrappers and the OSX releases where they are
