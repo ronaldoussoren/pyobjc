@@ -140,7 +140,7 @@ def test_summary(fp_out, state_dir):
     results = collections.defaultdict(dict)
 
     for nm in os.listdir(state_dir):
-        if nm == "build-info.txt": continue
+        if nm.endswith(".txt"): continue
 
         sd = os.path.join(state_dir, nm)
         for fn in os.listdir(sd):
