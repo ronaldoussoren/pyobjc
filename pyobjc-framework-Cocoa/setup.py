@@ -10,21 +10,13 @@ and (Objective-)C frameworks
 from pyobjc_setup import setup, Extension
 import os
 
-VERSION="3.2a1"
+VERSION="3.3a0"
 
 setup(
     name='pyobjc-framework-Cocoa',
-    version="3.3a0",
     description = "Wrappers for the Cocoa frameworks on Mac OS X",
-    long_description=__doc__,
     packages = [ "Cocoa", "CoreFoundation", "Foundation", "AppKit", "PyObjCTools" ],
     namespace_packages = ['PyObjCTools'],
-    setup_requires = [
-        'pyobjc-core>=3.3a0',
-    ],
-    install_requires = [
-        'pyobjc-core>=3.3a0',
-    ],
     ext_modules = [
         # CoreFoundation
         Extension('CoreFoundation._inlines',
@@ -70,4 +62,9 @@ setup(
             [ "Modules/testhelper.m"],
             extra_link_args=["-framework", "Foundation"]),
     ],
+    version=VERSION,
+    install_requires = [
+        'pyobjc-core>='+VERSION,
+    ],
+    long_description=__doc__,
 )

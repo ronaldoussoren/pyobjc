@@ -10,19 +10,16 @@ and (Objective-)C frameworks
 from pyobjc_setup import setup, Extension
 import os
 
-VERSION="3.2a1"
+VERSION="3.3a0"
 
 setup(
     name='pyobjc-framework-GameController',
-    version="3.3a0",
     description = "Wrappers for the framework GameController on Mac OS X",
-    long_description=__doc__,
     packages = [ "GameController" ],
-    setup_requires = [
-        'pyobjc-core>=3.3a0',
-    ],
+    version=VERSION,
     install_requires = [
-        'pyobjc-core>=3.3a0',
-        'pyobjc-framework-Cocoa>=3.3a0',
+        'pyobjc-core>='+VERSION,
+        'pyobjc-framework-Cocoa>='+VERSION,
     ],
+    long_description=__doc__,
 )

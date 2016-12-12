@@ -57,13 +57,6 @@ for subdir in os.listdir(topdir):
 
     print ("Updating '%s'"%(subdir,))
     fn = os.path.join(topdir, subdir, "setup.py")
-    r = re.compile('^\s*version=.*$', re.MULTILINE)
-    data = r.sub('    version="%s",'%(VERSION,), load_file(fn))
-
-    r = re.compile('^\s*\'pyobjc-core>=.*$', re.MULTILINE)
-    data = r.sub('        \'pyobjc-core>=%s\','%(VERSION,), data)
-
-    r = re.compile('^\s*\'pyobjc-framework-([^>]*)>=.*$', re.MULTILINE)
-    data = r.sub('        \'pyobjc-framework-\\1>=%s\','%(VERSION,), data)
-   
+    r = re.compile('^VERSION=.*$', re.MULTILINE)
+    data = r.sub('VERSION="%s"'%(VERSION,), load_file(fn))
     save_file(fn, data)

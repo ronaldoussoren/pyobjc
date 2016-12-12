@@ -10,21 +10,18 @@ and (Objective-)C frameworks
 from pyobjc_setup import setup, Extension
 import os
 
-VERSION="3.2a1"
+VERSION="3.3a0"
 
 setup(
     name='pyobjc-framework-MediaLibrary',
-    version="3.3a0",
     description = "Wrappers for the framework MediaLibrary on Mac OS X",
-    long_description=__doc__,
-    packages = [ "MediaLibrary" ],
-    setup_requires = [
-        'pyobjc-core>=3.3a0',
-    ],
-    install_requires = [
-        'pyobjc-core>=3.3a0',
-        'pyobjc-framework-Cocoa>=3.3a0',
-        'pyobjc-framework-Quartz>=3.3a0',
-    ],
     min_os_level='10.9',
+    packages = [ "MediaLibrary" ],
+    version=VERSION,
+    install_requires = [
+        'pyobjc-core>='+VERSION,
+        'pyobjc-framework-Cocoa>='+VERSION,
+        'pyobjc-framework-Quartz>='+VERSION,
+    ],
+    long_description=__doc__,
 )

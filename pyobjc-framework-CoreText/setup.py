@@ -10,14 +10,12 @@ and (Objective-)C frameworks
 '''
 from pyobjc_setup import setup, Extension
 
-VERSION="3.2a1"
+VERSION="3.3a0"
 
 setup(
-    min_os_level='10.5',
     name='pyobjc-framework-CoreText',
-    version="3.3a0",
     description = "Wrappers for the framework CoreText on Mac OS X",
-    long_description=__doc__,
+    min_os_level='10.5',
     packages = [ "CoreText" ],
     ext_modules = [
             Extension('CoreText._manual',
@@ -25,12 +23,11 @@ setup(
                 extra_link_args=['-framework', 'CoreServices'],
             ),
     ],
-    setup_requires = [
-        'pyobjc-core>=3.3a0',
-    ],
+    version=VERSION,
     install_requires = [
-        'pyobjc-core>=3.3a0',
-        'pyobjc-framework-Cocoa>=3.3a0',
-        'pyobjc-framework-Quartz>=3.3a0',
+        'pyobjc-core>='+VERSION,
+        'pyobjc-framework-Cocoa>='+VERSION,
+        'pyobjc-framework-Quartz>='+VERSION,
     ],
+    long_description=__doc__,
 )

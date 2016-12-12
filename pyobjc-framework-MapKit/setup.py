@@ -10,13 +10,12 @@ and (Objective-)C frameworks
 from pyobjc_setup import setup, Extension
 import os
 
-VERSION="3.2a1"
+VERSION="3.3a0"
 
 setup(
     name='pyobjc-framework-MapKit',
-    version="3.3a0",
     description = "Wrappers for the framework MapKit on Mac OS X",
-    long_description=__doc__,
+    min_os_level="10.9",
     packages = [ "MapKit" ],
     ext_modules = [
         Extension("MapKit._MapKit",
@@ -32,14 +31,12 @@ setup(
             [ "Modules/_MapKit_inlines.m" ],
         ),
     ],
-    setup_requires = [
-        'pyobjc-core>=3.3a0',
-    ],
+    version=VERSION,
     install_requires = [
-        'pyobjc-core>=3.3a0',
-        'pyobjc-framework-Cocoa>=3.3a0',
-        'pyobjc-framework-CoreLocation>=3.3a0',
-        'pyobjc-framework-Quartz>=3.3a0',
+        'pyobjc-core>='+VERSION,
+        'pyobjc-framework-Cocoa>='+VERSION,
+        'pyobjc-framework-CoreLocation>='+VERSION,
+        'pyobjc-framework-Quartz>='+VERSION,
     ],
-    min_os_level="10.9",
+    long_description=__doc__,
 )

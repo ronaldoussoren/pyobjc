@@ -10,20 +10,17 @@ and (Objective-)C frameworks
 '''
 from pyobjc_setup import setup
 
-VERSION="3.2a1"
+VERSION="3.3a0"
 
 setup(
-    min_os_level='10.6',
     name='pyobjc-framework-ServiceManagement',
-    version="3.3a0",
     description = "Wrappers for the framework ServiceManagement on Mac OS X",
-    long_description=__doc__,
+    min_os_level='10.6',
     packages = [ "ServiceManagement" ],
-    setup_requires = [
-        'pyobjc-core>=3.3a0',
-    ],
+    version=VERSION,
     install_requires = [
-        'pyobjc-core>=3.3a0',
-        'pyobjc-framework-Cocoa>=3.3a0',
+        'pyobjc-core>='+VERSION,
+        'pyobjc-framework-Cocoa>='+VERSION,
     ],
+    long_description=__doc__,
 )

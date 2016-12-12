@@ -11,6 +11,7 @@ import subprocess
 import glob
 import tarfile
 import sys
+import ast
 
 VERSION="3.3a0"
 
@@ -159,6 +160,34 @@ Topic :: Software Development :: Libraries :: Python Modules
 Topic :: Software Development :: User Interfaces
 """.splitlines())
 
+_SETUP_KEYS=(
+    'name',
+    'description',
+    'min_os_level',
+    'max_os_level',
+    'packages',
+    'namespace_packages',
+    'ext_modules',
+    'version',
+    'install_requires',
+    'long_description',
+)
+_SETUP_OPTIONAL=(
+    'min_os_level',
+    'max_os_level',
+    'ext_modules',
+    'namespace_packages',
+)
+
+def same_order(lst1, lst2):
+    idx = 0
+    for k in lst1:
+        try:
+            while lst2[idx] != k:
+                idx+=1
+        except IndexError:
+            return False
+    return True
 
 class oc_test (Command):
     description = "run test suite"
@@ -213,7 +242,7 @@ class oc_test (Command):
         with open('../pyobjc-core/Tools/pyobjc_setup.py', 'rb') as fp:
             pyobjc_setup = fp.read()
 
-        for nm in all_names:
+        for nm in sorted(all_names):
             subdir = "../pyobjc-framework-" + nm
             if not os.path.exists(os.path.join(subdir, "MANIFEST.in")):
                 print("Framework wrapper for %s does not contain MANIFEST.in"%(
@@ -238,7 +267,50 @@ class oc_test (Command):
                         nm))
                     ok = False
 
-        print("  validating sdists...")
+            if not os.path.exists(os.path.join(subdir, "setup.py")):
+                print("Framework wrapper for %s does not contain setup.py"%(nm))
+                ok = False
+            else:
+                with open(os.path.join(subdir, "setup.py")) as fp:
+                    contents = fp.read()
+
+                if "setup_requires" in contents:
+                    print("Framework wrapper for %s has setup_requires"%(nm))
+                    ok = False
+
+                a = compile(contents, subdir, 'exec', ast.PyCF_ONLY_AST)
+                try:
+                    args = [ v.arg for v in a.body[-1].value.keywords ]
+
+                    if a.body[-1].value.func.id != 'setup':
+                        print("Unexpected setup.py structure in wrapper for %s"%(nm))
+                        ok = False
+
+                    elif a.body[-1].value.args:
+                        print("Unexpected setup.py structure in wrapper for %s"%(nm))
+
+                    for n in a.body:
+                        if isinstance(n, ast.Assign):
+                            if n.targets[0].id == 'VERSION':
+                                found_version = n.value.s
+
+                except AttributeError:
+                    print("Unexpected setup.py structure in wrapper for %s"%(nm))
+                    ok = False
+
+                if not same_order(args, _SETUP_KEYS):
+                    print("Unexpected order of setup.py keyword args in wrapper for %s"%(nm,))
+                    ok = False
+
+                for k in set(_SETUP_KEYS) - set(_SETUP_OPTIONAL):
+                    if k not in args:
+                        print("Missing %r in setup.py keyword args in wrapper for %s"%(k, nm,))
+                        ok = False
+
+                if found_version != VERSION:
+                    print("Bad version in wrapper for %s"%(nm,))
+                    ok = False
+
         devnull = open('/dev/null', 'a')
         for nm in ('pyobjc-core',) + tuple(nm for nm in os.listdir('..') if nm.startswith('pyobjc-framework-')):
             print("    %s"%(nm,))

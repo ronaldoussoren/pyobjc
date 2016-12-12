@@ -10,21 +10,13 @@ and (Objective-)C frameworks
 from pyobjc_setup import setup, Extension
 import os
 
+VERSION="3.3a0"
+
 setup(
     name='pyobjc-framework-AVFoundation',
-    version="3.3a0",
     description = "Wrappers for the framework AVFoundation on Mac OS X",
-    long_description=__doc__,
-    packages = [ "AVFoundation" ],
-    setup_requires = [
-        'pyobjc-core>=3.3a0',
-    ],
-    install_requires = [
-        'pyobjc-core>=3.3a0',
-        'pyobjc-framework-Cocoa>=3.3a0',
-        'pyobjc-framework-Quartz>=3.3a0',
-    ],
     min_os_level="10.7",
+    packages = [ "AVFoundation" ],
     ext_modules = [
         Extension('AVFoundation._inlines',
             [ 'Modules/_AVFoundation_inlines.m' ],
@@ -39,4 +31,11 @@ setup(
             ]
         ),
     ],
+    version=VERSION,
+    install_requires = [
+        'pyobjc-core>='+VERSION,
+        'pyobjc-framework-Cocoa>='+VERSION,
+        'pyobjc-framework-Quartz>='+VERSION,
+    ],
+    long_description=__doc__,
 )

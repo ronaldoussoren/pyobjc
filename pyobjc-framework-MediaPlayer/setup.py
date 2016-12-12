@@ -10,20 +10,17 @@ and (Objective-)C frameworks
 from pyobjc_setup import setup, Extension
 import os
 
-VERSION="3.2a1"
+VERSION="3.3a0"
 
 setup(
     name='pyobjc-framework-MediaPlayer',
-    version="3.3a0",
     description = "Wrappers for the framework MediaPlayer on Mac OS X",
-    long_description=__doc__,
-    packages = [ "MediaPlayer" ],
-    setup_requires = [
-        'pyobjc-core>=3.3a0',
-    ],
-    install_requires = [
-        'pyobjc-core>=3.3a0',
-        'pyobjc-framework-AVFoundation>=3.3a0',
-    ],
     min_os_level="10.12",
+    packages = [ "MediaPlayer" ],
+    version=VERSION,
+    install_requires = [
+        'pyobjc-core>='+VERSION,
+        'pyobjc-framework-AVFoundation>='+VERSION,
+    ],
+    long_description=__doc__,
 )

@@ -10,22 +10,13 @@ and (Objective-)C frameworks
 from pyobjc_setup import setup, Extension
 import os
 
-VERSION="3.2a1"
+VERSION="3.3a0"
 
 setup(
     name='pyobjc-framework-NetworkExtension',
-    version="3.3a0",
     description = "Wrappers for the framework NetworkExtension on Mac OS X",
-    long_description=__doc__,
-    packages = [ "NetworkExtension" ],
-    setup_requires = [
-        'pyobjc-core>=3.3a0',
-    ],
-    install_requires = [
-        'pyobjc-core>=3.3a0',
-        'pyobjc-framework-Cocoa>=3.3a0',
-    ],
     min_os_level="10.11",
+    packages = [ "NetworkExtension" ],
     ext_modules = [
         Extension("NetworkExtension._NetworkExtension",
             [ "Modules/_NetworkExtension.m" ],
@@ -37,4 +28,10 @@ setup(
             ]
         ),
     ],
+    version=VERSION,
+    install_requires = [
+        'pyobjc-core>='+VERSION,
+        'pyobjc-framework-Cocoa>='+VERSION,
+    ],
+    long_description=__doc__,
 )

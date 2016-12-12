@@ -8,24 +8,21 @@ and (Objective-)C frameworks
 '''
 from pyobjc_setup import setup, Extension
 
-VERSION="3.2a1"
+VERSION="3.3a0"
 
 setup(
     name='pyobjc-framework-SystemConfiguration',
-    version="3.3a0",
     description = "Wrappers for the framework SystemConfiguration on Mac OS X",
-    long_description=__doc__,
     packages = [ "SystemConfiguration" ],
-    setup_requires = [
-        'pyobjc-core>=3.3a0',
-    ],
-    install_requires = [
-        'pyobjc-core>=3.3a0',
-        'pyobjc-framework-Cocoa>=3.3a0',
-    ],
     ext_modules = [
         Extension('SystemConfiguration._manual',
-                 [ 'Modules/_manual.m' ],
+             [ 'Modules/_manual.m' ],
         ),
     ],
+    version=VERSION,
+    install_requires = [
+        'pyobjc-core>='+VERSION,
+        'pyobjc-framework-Cocoa>='+VERSION,
+    ],
+    long_description=__doc__,
 )

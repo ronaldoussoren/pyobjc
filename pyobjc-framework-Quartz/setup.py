@@ -49,21 +49,12 @@ import os
 
 subpackages = [ "Quartz.%s"%(fn,) for fn in os.listdir('Lib/Quartz') if os.path.exists(os.path.join('Lib/Quartz', fn, "__init__.py"))]
 
-VERSION="3.2a1"
+VERSION="3.3a0"
 
 setup(
     name='pyobjc-framework-Quartz',
-    version="3.3a0",
     description = "Wrappers for the Quartz frameworks on Mac OS X",
-    long_description=__doc__,
     packages = [ "Quartz" ] + subpackages,
-    setup_requires = [
-        'pyobjc-core>=3.3a0',
-    ],
-    install_requires = [
-        'pyobjc-core>=3.3a0',
-        'pyobjc-framework-Cocoa>=3.3a0',
-    ],
     ext_modules = [
         # CoreVideo
         Extension('Quartz.CoreVideo._CVPixelBuffer',
@@ -85,4 +76,10 @@ setup(
         Extension('Quartz.QuartzCore._quartzcore',
             [ 'Modules/_quartzcore.m' ], extra_link_args=["-framework", "QuartzCore"]),
     ],
+    version=VERSION,
+    install_requires = [
+        'pyobjc-core>='+VERSION,
+        'pyobjc-framework-Cocoa>='+VERSION,
+    ],
+    long_description=__doc__,
 )
