@@ -23,7 +23,7 @@ def main():
     os.mkdir(DIST_DIR)
 
     # Information about this build:
-    system_report(os.path.join(DIR_DIR, "build-info.txt")
+    system_report(os.path.join(TOP_DIR, "build-info.txt"))
 
     # Collect the list of subprojects to build
     names = ['pyobjc', 'pyobjc-core']

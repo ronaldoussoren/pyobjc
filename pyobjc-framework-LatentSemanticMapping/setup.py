@@ -18,15 +18,15 @@ VERSION="3.2a1"
 setup(
     min_os_level='10.5',
     name='pyobjc-framework-LatentSemanticMapping',
-    version="3.2.1b1",
+    version="3.2.1",
     description = "Wrappers for the framework LatentSemanticMapping on Mac OS X",
     long_description=__doc__,
     packages = [ "LatentSemanticMapping" ],
     setup_requires = [
-        'pyobjc-core>=3.2.1b1',
+        'pyobjc-core>=3.2.1',
     ],
     install_requires = [
-        'pyobjc-core>=3.2.1b1',
-        'pyobjc-framework-Cocoa>=3.2.1b1',
+        'pyobjc-core>=3.2.1',
+        'pyobjc-framework-Cocoa>=3.2.1',
     ],
 )

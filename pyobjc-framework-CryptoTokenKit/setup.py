@@ -14,16 +14,16 @@ VERSION="3.2a1"
 
 setup(
     name='pyobjc-framework-CryptoTokenKit',
-    version="3.2.1b1",
+    version="3.2.1",
     description = "Wrappers for the framework CryptoTokenKit on Mac OS X",
     long_description=__doc__,
     packages = [ "CryptoTokenKit" ],
     setup_requires = [
-        'pyobjc-core>=3.2.1b1',
+        'pyobjc-core>=3.2.1',
     ],
     install_requires = [
-        'pyobjc-core>=3.2.1b1',
-        'pyobjc-framework-Cocoa>=3.2.1b1',
+        'pyobjc-core>=3.2.1',
+        'pyobjc-framework-Cocoa>=3.2.1',
     ],
     min_os_level="10.10",
     ext_modules = [

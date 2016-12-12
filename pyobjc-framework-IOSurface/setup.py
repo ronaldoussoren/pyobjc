@@ -14,16 +14,16 @@ VERSION="3.2a1"
 
 setup(
     name='pyobjc-framework-IOSurface',
-    version="3.2.1b1",
+    version="3.2.1",
     description = "Wrappers for the framework IOSurface on Mac OS X",
     long_description=__doc__,
     packages = [ "IOSurface" ],
     setup_requires = [
-        'pyobjc-core>=3.2.1b1',
+        'pyobjc-core>=3.2.1',
     ],
     install_requires = [
-        'pyobjc-core>=3.2.1b1',
-        'pyobjc-framework-Cocoa>=3.2.1b1',
+        'pyobjc-core>=3.2.1',
+        'pyobjc-framework-Cocoa>=3.2.1',
     ],
     min_os_level="10.6",
 )
