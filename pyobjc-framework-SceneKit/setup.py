@@ -14,17 +14,17 @@ VERSION="3.2a1"
 
 setup(
     name='pyobjc-framework-SceneKit',
-    version="3.2.1",
+    version="3.2.2b1",
     description = "Wrappers for the framework SceneKit on Mac OS X",
     long_description=__doc__,
     packages = [ "SceneKit" ],
     setup_requires = [
-        'pyobjc-core>=3.2.1',
+        'pyobjc-core>=3.2.2b1',
     ],
     install_requires = [
-        'pyobjc-core>=3.2.1',
-        'pyobjc-framework-Cocoa>=3.2.1',
-        'pyobjc-framework-Quartz>=3.2.1',
+        'pyobjc-core>=3.2.2b1',
+        'pyobjc-framework-Cocoa>=3.2.2b1',
+        'pyobjc-framework-Quartz>=3.2.2b1',
     ],
     ext_modules = [
         Extension("SceneKit._SceneKit",

@@ -13,16 +13,16 @@ VERSION="3.2a1"
 
 setup(
     name='pyobjc-framework-Message',
-    version="3.2.1",
+    version="3.2.2b1",
     description = "Wrappers for the framework Message on Mac OS X",
     long_description=__doc__,
     packages = [ "Message" ],
     setup_requires = [
-        'pyobjc-core>=3.2.1',
+        'pyobjc-core>=3.2.2b1',
     ],
     install_requires = [
-        'pyobjc-core>=3.2.1',
-        'pyobjc-framework-Cocoa>=3.2.1',
+        'pyobjc-core>=3.2.2b1',
+        'pyobjc-framework-Cocoa>=3.2.2b1',
     ],
     max_os_level="10.8",
 )
