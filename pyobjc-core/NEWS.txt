@@ -8,7 +8,8 @@ Version 3.3
 
 New features:
 
-* (None yet)
+* Updated framework wrappers for the API changes in the SDK shipped with
+  Xcode 8.2
 
 Bugfixes:
 

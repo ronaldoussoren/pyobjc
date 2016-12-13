@@ -12,6 +12,8 @@ if sys.maxsize > 2 ** 32:
             self.assertEqual(Intents.INStartVideoCallIntentResponseCodeContinueInApp, 2)
             self.assertEqual(Intents.INStartVideoCallIntentResponseCodeFailure, 3)
             self.assertEqual(Intents.INStartVideoCallIntentResponseCodeFailureRequiringAppLaunch, 4)
+            self.assertEqual(Intents.INStartVideoCallIntentResponseCodeFailureAppConfigurationRequired, 5)
+            self.assertEqual(Intents.INStartVideoCallIntentResponseCodeFailureCallingServiceNotAvailable, 6)
 
 if __name__ == "__main__":
     main()

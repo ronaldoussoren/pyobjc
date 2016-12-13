@@ -26793,6 +26793,7 @@
    }
   },
   "enum": {
+   "NSAppKitVersionNumber10_12_1": { "value": 1504.60 },
    "NSScrubberModeFixed": { "value": 0 },
    "NSScrubberModeFree": { "value": 1 },
    "NSScrubberAlignmentNone": { "value": 0 },

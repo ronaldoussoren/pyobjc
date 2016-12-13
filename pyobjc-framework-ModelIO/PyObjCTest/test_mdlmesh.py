@@ -52,6 +52,9 @@ if sys.maxsize > 2**32:
             #self.assertArgIsBOOL(ModelIO.MDLMesh.initConeWithExtent_segments_inwardNormals_cap_geometryType_allocator_, 3)
 
             #self.assertArgIsBOOL(ModelIO.MDLMesh.initIcosahedronWithExtent_inwardNormals_geometryType_allocator_, 1)
+
+            #self.assertArgIsBOOL(ModelIO.MDLMesh.newCapsuleWithHeight_radii_radialSegments_verticalSegments_hemisphereSegments_geometryType_inwardNormals_allocator_, 5)
+
             pass
 
 if __name__ == "__main__":

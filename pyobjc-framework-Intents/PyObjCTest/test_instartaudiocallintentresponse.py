@@ -12,6 +12,8 @@ if sys.maxsize > 2 ** 32:
             self.assertEqual(Intents.INStartAudioCallIntentResponseCodeContinueInApp, 2)
             self.assertEqual(Intents.INStartAudioCallIntentResponseCodeFailure, 3)
             self.assertEqual(Intents.INStartAudioCallIntentResponseCodeFailureRequiringAppLaunch, 4)
+            self.assertEqual(Intents.INStartAudioCallIntentResponseCodeFailureAppConfigurationRequired, 5)
+            self.assertEqual(Intents.INStartAudioCallIntentResponseCodeFailureCallingServiceNotAvailable, 6)
 
 
 if __name__ == "__main__":

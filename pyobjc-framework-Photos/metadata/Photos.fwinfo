@@ -70,6 +70,7 @@
    "PHLivePhotoEditingErrorCodeUnknown": { "value": 0 },
    "PHLivePhotoEditingErrorCodeAborted": { "value": 1 },
    "PHAssetMediaSubtypePhotoLive": { "value": 8 },
+   "PHAssetMediaSubtypePhotoDepthEffect": { "value": 16 },
    "PHAssetBurstSelectionTypeNone": { "value": 0 },
    "PHAssetBurstSelectionTypeAutoPick": { "value": 1 },
    "PHAssetBurstSelectionTypeUserPick": { "value": 2 },

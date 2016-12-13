@@ -12,6 +12,7 @@ if sys.maxsize > 2 ** 32:
             self.assertEqual(Intents.INSearchCallHistoryIntentResponseCodeContinueInApp, 2)
             self.assertEqual(Intents.INSearchCallHistoryIntentResponseCodeFailure, 3)
             self.assertEqual(Intents.INSearchCallHistoryIntentResponseCodeFailureRequiringAppLaunch, 4)
+            self.assertEqual(Intents.INSearchCallHistoryIntentResponseCodeFailureAppConfigurationRequired, 5)
 
 
 if __name__ == "__main__":

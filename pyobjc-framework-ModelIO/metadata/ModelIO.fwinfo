@@ -224,6 +224,22 @@
    "MDLObject": {
     "methods": [
      {
+      "selector": "enumerateChildObjectsOfClass:root:usingBlock:stopPointer:",
+      "class_method": false,
+      "args": {
+       "2": {
+        "callable": {
+	 "arguments": {
+	  "0": { "typestr": "^v" },
+	  "1": { "typestr": "o^Z" }
+	 },
+	 "retval": { "typestr": "v" }
+	}
+       },
+       "3": { "type_override": "N^Z" }
+      }
+     },
+     {
       "selector": "resetsTransform",
       "class_method": false,
       "retval": { "type_override": "Z" }
@@ -416,6 +432,13 @@
       "args": {
        "4": { "type_override": "Z" },
        "5": { "type_override": "Z" }
+      }
+     },
+     {
+      "selector": "newCapsuleWithHeight:radii:radialSegments:verticalSegments:hemisphereSegments:geometryType:inwardNormals:allocator:",
+      "class_method": true,
+      "args": {
+       "6": { "type_override": "Z" }
       }
      },
      {

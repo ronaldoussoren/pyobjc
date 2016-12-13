@@ -6,11 +6,16 @@
    "INStartVideoCallIntentResponseCodeContinueInApp": { "value": 2 },
    "INStartVideoCallIntentResponseCodeFailure": { "value": 3 },
    "INStartVideoCallIntentResponseCodeFailureRequiringAppLaunch": { "value": 4 },
+   "INStartVideoCallIntentResponseCodeFailureAppConfigurationRequired": { "value": 5 },
+   "INStartVideoCallIntentResponseCodeFailureCallingServiceNotAvailable": { "value": 6 },
+   "INSearchCallHistoryIntentResponseCodeFailureAppConfigurationRequired": { "value": 5 },
    "INStartAudioCallIntentResponseCodeUnspecified": { "value": 0 },
    "INStartAudioCallIntentResponseCodeReady": { "value": 1 },
    "INStartAudioCallIntentResponseCodeContinueInApp": { "value": 2 },
    "INStartAudioCallIntentResponseCodeFailure": { "value": 3 },
    "INStartAudioCallIntentResponseCodeFailureRequiringAppLaunch": { "value": 4 },
+   "INStartAudioCallIntentResponseCodeFailureAppConfigurationRequired": { "value": 5 },
+   "INStartAudioCallIntentResponseCodeFailureCallingServiceNotAvailable": { "value": 6 },
    "INSendMessageIntentResponseCodeUnspecified": { "value": 0 },
    "INSendMessageIntentResponseCodeReady": { "value": 1 },
    "INSendMessageIntentResponseCodeInProgress": { "value": 2 },
@@ -69,7 +74,29 @@
    "INConditionalOperatorAny": { "value": 1 },
    "INConditionalOperatorNone": { "value": 2 }
   },
-  "classes": {
+  "externs": {
+   "INPersonHandleLabelHome": { "typestr": "@" },
+   "INPersonHandleLabelWork": { "typestr": "@" },
+   "INPersonHandleLabeliPhone": { "typestr": "@" },
+   "INPersonHandleLabelMobile": { "typestr": "@" },
+   "INPersonHandleLabelMain": { "typestr": "@" },
+   "INPersonHandleLabelHomeFax": { "typestr": "@" },
+   "INPersonHandleLabelWorkFax": { "typestr": "@" },
+   "INPersonHandleLabelPager": { "typestr": "@" },
+   "INPersonHandleLabelOther": { "typestr": "@" },
+   "INPersonRelationshipFather": { "typestr": "@" },
+   "INPersonRelationshipMother": { "typestr": "@" },
+   "INPersonRelationshipParent": { "typestr": "@" },
+   "INPersonRelationshipBrother": { "typestr": "@" },
+   "INPersonRelationshipSister": { "typestr": "@" },
+   "INPersonRelationshipChild": { "typestr": "@" },
+   "INPersonRelationshipFriend": { "typestr": "@" },
+   "INPersonRelationshipSpouse": { "typestr": "@" },
+   "INPersonRelationshipPartner": { "typestr": "@" },
+   "INPersonRelationshipAssistant": { "typestr": "@" },
+   "INPersonRelationshipManager": { "typestr": "@" }
+ },
+ "classes": {
    "INInteraction": {
     "methods": [
      {

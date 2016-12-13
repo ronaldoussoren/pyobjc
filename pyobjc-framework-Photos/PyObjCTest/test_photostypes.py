@@ -19,6 +19,7 @@ if sys.maxsize > 2 ** 32:
             self.assertEqual(Photos.PHAssetMediaSubtypePhotoHDR, (1 << 1))
             self.assertEqual(Photos.PHAssetMediaSubtypePhotoScreenshot, (1 << 2))
             self.assertEqual(Photos.PHAssetMediaSubtypePhotoLive, (1 << 3))
+            self.assertEqual(Photos.PHAssetMediaSubtypePhotoDepthEffect, (1 << 4))
 
             self.assertEqual(Photos.PHAssetMediaSubtypeVideoStreamed, (1 << 16))
             self.assertEqual(Photos.PHAssetMediaSubtypeVideoHighFrameRate, (1 << 17))
