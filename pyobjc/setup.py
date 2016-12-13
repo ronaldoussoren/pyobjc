@@ -307,6 +307,12 @@ class oc_test (Command):
                         print("Missing %r in setup.py keyword args in wrapper for %s"%(k, nm,))
                         ok = False
 
+                if 'ext_modules' not in args:
+                    if os.path.exists(os.path.join(subdir, 'Modules')):
+                        print("No ext_modules in setup.py, but Modules subdir, in wrapper for %s"%(nm,))
+                        ok = False
+
+
                 if found_version != VERSION:
                     print("Bad version in wrapper for %s"%(nm,))
                     ok = False
