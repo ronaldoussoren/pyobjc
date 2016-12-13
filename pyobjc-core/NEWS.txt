@@ -19,7 +19,11 @@ Version 3.2.2
 
 Bugfixes:
 
-* (None)
+* Issue #162: Fix conversion of unicode python string to Objective-C "UniChar"
+  array, it used to do the wrong thing when converting characters outside of
+  the BMP.
+
+  Fix by Ted Morin and Benoit Pierre.
 
 Version 3.2.1
 -------------
