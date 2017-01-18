@@ -13,7 +13,9 @@ New features:
 
 Bugfixes:
 
-* (None yet)
+* The OC_Python* Objective-C classes used to expose Python objects to
+  Objective-C don't support secure coding, added a
+  "supportsSecureCoding" implementation to make this explicit.
 
 Version 3.2.2
 -------------
