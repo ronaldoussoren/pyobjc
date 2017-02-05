@@ -26,6 +26,11 @@
 -(int(^)(NSString*))getObjectBlock;
 -(int(^)(NSString*, NSString*))getObjectBlock2;
 
+-(id)signatureForBlock1:(double(^)(double, double))block;
+-(id)signatureForBlock2:(id(^)(id))block;
+-(id)signatureForBlock3:(id(^)(short))block;
+-(id)signatureForBlock4:(char(^)(int,int,float))block;
+
 #endif
 
 
@@ -106,6 +111,63 @@
     } else {
         return block(value);
     }
+}
+
+#define BLOCK_HAS_COPY_DISPOSE (1 << 25)
+#define BLOCK_HAS_SIGNATURE (1 << 30)
+
+struct block_descriptor {
+    unsigned long int reserved;
+    unsigned long int size;
+    void (*copy_helper)(void* dst, void*src);
+    void (*dispose_helper)(void* src);
+    const char* signature;
+};
+
+struct block_literal {
+    void* isa;
+    int flags;
+    int reserved;
+    void (*invoke)(void*, ...);
+    struct block_descriptor* descriptor;
+};
+
+
+
+static id signature_for_block(id _block)
+{
+    struct block_literal* block = (struct block_literal*)_block;
+
+    if (block->flags & BLOCK_HAS_SIGNATURE) {
+        const char* signature_loc = (void*)(block->descriptor);
+        signature_loc += sizeof(unsigned long) * 2;
+        if (block->flags & BLOCK_HAS_COPY_DISPOSE) {
+            signature_loc += sizeof(void(*)(void)) * 2;
+        }
+        return [NSString stringWithUTF8String:*(const char**)signature_loc];
+    }
+
+    return nil;
+}
+
+-(id)signatureForBlock1:(double(^)(double, double))block
+{
+    return signature_for_block(block);
+}
+
+-(id)signatureForBlock2:(id(^)(id))block
+{
+    return signature_for_block(block);
+}
+
+-(id)signatureForBlock3:(id(^)(short))block
+{
+    return signature_for_block(block);
+}
+
+-(id)signatureForBlock4:(char(^)(int,int,float))block
+{
+    return signature_for_block(block);
 }
 
 #endif

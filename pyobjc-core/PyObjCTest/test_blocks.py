@@ -65,6 +65,33 @@ objc.parseBridgeSupport('''\
               <arg type='d' />
           </arg>
         </method>
+        <method selector='signatureForBlock1:'>
+          <arg index='0' block='true'>
+           <retval type='d' />
+           <arg type='d' />
+           <arg type='d' />
+          </arg>
+        </method>
+        <method selector='signatureForBlock2:'>
+          <arg index='0' block='true'>
+           <retval type='@' />
+           <arg type='@' />
+          </arg>
+        </method>
+        <method selector='signatureForBlock3:'>
+          <arg index='0' block='true'>
+           <retval type='@' />
+           <arg type='s' />
+          </arg>
+        </method>
+        <method selector='signatureForBlock4:'>
+          <arg index='0' block='true'>
+           <retval type='c' />
+           <arg type='i' />
+           <arg type='i' />
+           <arg type='f' />
+          </arg>
+        </method>
       </class>
       <class name='NSObject'>
         <method selector='processBlock:'>
@@ -270,6 +297,33 @@ class TestBlocks (TestCase):
         block = obj.getObjectBlock2()
         value = block("hello", "world");
         self.assertEqual(value, 10)
+
+BLOCK_SELF_TYPE=objc._C_PTR + objc._C_VOID
+class TestBlockRuntimeSignature (TestCase):
+    @onlyIf(blocksEnabled, "no blocks")
+    def testBlock1(self):
+        obj = OCTestBlock.alloc().init()
+        signature = obj.signatureForBlock1_(lambda a, b: a*b)
+        self.assertEqual(signature, (objc._C_DBL + BLOCK_SELF_TYPE + objc._C_DBL + objc._C_DBL).decode('utf-8'))
+
+    @onlyIf(blocksEnabled, "no blocks")
+    def testBlock2(self):
+        obj = OCTestBlock.alloc().init()
+        signature = obj.signatureForBlock2_(lambda a: a)
+        self.assertEqual(signature, (objc._C_ID + BLOCK_SELF_TYPE + objc._C_ID).decode('utf-8'))
+
+    @onlyIf(blocksEnabled, "no blocks")
+    def testBlock3(self):
+        obj = OCTestBlock.alloc().init()
+        signature = obj.signatureForBlock3_(lambda a: a)
+        self.assertEqual(signature, (objc._C_ID + BLOCK_SELF_TYPE + objc._C_SHT).decode('utf-8'))
+
+    @onlyIf(blocksEnabled, "no blocks")
+    def testBlock4(self):
+        obj = OCTestBlock.alloc().init()
+        signature = obj.signatureForBlock4_(lambda a, b, c: a)
+        self.assertEqual(signature, (objc._C_CHR + BLOCK_SELF_TYPE + objc._C_INT + objc._C_INT + objc._C_FLT).decode('utf-8'))
+
 
 
 if __name__ == "__main__":

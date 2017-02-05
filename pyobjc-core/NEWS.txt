@@ -17,6 +17,11 @@ Bugfixes:
   Objective-C don't support secure coding, added a
   "supportsSecureCoding" implementation to make this explicit.
 
+* Issue #182: The block signature registered in the ObjC runtime
+  datastructures for Python blocks was wrong, which confuses Objective-C
+  code that looks at the runtime data.
+
+
 Version 3.2.2
 -------------
 

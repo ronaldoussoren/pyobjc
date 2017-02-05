@@ -372,14 +372,16 @@ PyObjCBlock_Create(PyObjCMethodSignature* signature, PyObject* callable)
     *block = gLiteralTemplate;
     block->descriptor = (struct block_descriptor*)(((char*)block) + sizeof(struct block_literal));
     *(block->descriptor) = *(gLiteralTemplate.descriptor);
-    if (signature->signature == NULL) {
-        signature->signature = block_signature(signature);
-        if (signature->signature == NULL) {
-            PyMem_Free(block);
-            return NULL;
-        }
+
+    /* The value of "signature->signature" cannot be trusted, it
+     * contains the raw signature without any updates from metadata.
+     * Futhermore the value is bogus for block signatures in metadata.
+     */
+    block->descriptor->signature = block_signature(signature);
+    if (block->descriptor->signature == NULL) {
+        PyMem_Free(block);
+        return NULL;
     }
-    block->descriptor->signature = signature->signature;
     block->flags |= BLOCK_HAS_SIGNATURE;
     block->isa = gStackBlockClass;
     block->invoke = PyObjCFFI_MakeBlockFunction(signature, callable);
@@ -403,6 +405,7 @@ PyObjCBlock_Release(void* _block)
 {
     struct block_literal* block = (struct block_literal*)_block;
     Py_CLEAR(block->invoke_cleanup);
+    PyMem_Free((void*)(block->descriptor->signature));
     PyMem_Free(block);
 }
 
