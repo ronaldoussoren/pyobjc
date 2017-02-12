@@ -1,6 +1,7 @@
 {
  "definitions": {
   "externs": {
+   "MPNowPlayingInfoPropertyAssetURL": { "typestr": "@" },
    "MPLanguageOptionCharacteristicIsMainProgramContent": { "typestr": "@" },
    "MPLanguageOptionCharacteristicIsAuxiliaryContent": { "typestr": "@" },
    "MPLanguageOptionCharacteristicContainsOnlyForcedSubtitles": { "typestr": "@" },

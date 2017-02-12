@@ -87,5 +87,9 @@ class TestNSURLError (TestCase):
     def testConstants10_11(self):
         self.assertEqual(NSURLErrorAppTransportSecurityRequiresSecureConnection, -1022)
 
+    @min_os_level('10.12')
+    def testConstants10_12(self):
+        self.assertEqual(NSURLErrorFileOutsideSafeArea, -1104)
+
 if __name__ == "__main__":
     main()

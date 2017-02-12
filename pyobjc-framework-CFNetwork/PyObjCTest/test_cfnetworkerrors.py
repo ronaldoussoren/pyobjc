@@ -107,6 +107,7 @@ class TestCFNetwork (TestCase):
         self.assertEqual(kCFURLErrorBackgroundSessionInUseByAnotherProcess, -996)
         self.assertEqual(kCFURLErrorBackgroundSessionWasDisconnected, -997)
         self.assertEqual(kCFURLErrorAppTransportSecurityRequiresSecureConnection, -1022)
+        self.assertEqual(kCFURLErrorFileOutsideSafeArea, -1104)
 
 
 

@@ -17,6 +17,7 @@
     "DOM_WEBKIT_KEYFRAME_RULE": { "value": 8 },
     "DOM_KEYFRAMES_RULE": { "value": 7 },
     "DOM_KEYFRAME_RULE": { "value": 8 },
+    "DOM_NAMESPACE_RULE": { "value": 10 },
     "DOM_SUPPORTS_RULE": { "value": 12 },
     "DOM_WEBKIT_REGION_RULE": { "value": 16 },
     "WKErrorJavaScriptResultTypeIsUnsupported": { "value": 5 },
@@ -2512,6 +2513,24 @@
        "type_override": "Z"
       },
       "selector": "supportsTextEncoding"
+     }
+    ]
+   },
+   "WKPreferences": {
+    "methods": [
+     {
+      "class_method": false,
+      "args": {
+       "0": { "type_override": "Z" }
+      },
+      "selector": "setTabFocusesLinks:"
+     },
+     {
+      "class_method": false,
+      "retval": {
+       "type_override": "Z"
+      },
+      "selector": "tabFocusesLinks"
      }
     ]
    },

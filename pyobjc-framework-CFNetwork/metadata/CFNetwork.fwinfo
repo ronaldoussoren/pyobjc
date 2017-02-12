@@ -3,7 +3,8 @@
 {
  "definitions": {
   "enum": {
-   "kCFURLErrorAppTransportSecurityRequiresSecureConnection": { "value": -1022 }
+   "kCFURLErrorAppTransportSecurityRequiresSecureConnection": { "value": -1022 },
+   "kCFURLErrorFileOutsideSafeArea": { "value": -1104 }
   },
   "externs": {
     "kCFStreamNetworkServiceTypeCallSignaling": {

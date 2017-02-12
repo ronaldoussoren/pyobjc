@@ -52,6 +52,7 @@ class TestCVPixelBuffer (TestCase):
         self.assertEqual(kCVPixelFormatType_64RGBAHalf, fourcc(b'RGhA'))
         self.assertEqual(kCVPixelFormatType_128RGBAFloat, fourcc(b'RGfA'))
         self.assertEqual(kCVPixelFormatType_30RGBLEPackedWideGamut, fourcc(b'w30r'))
+        self.assertEqual(kCVPixelFormatType_ARGB2101010LEPacked, fourcc(b'l10r'))
         self.assertEqual(kCVPixelFormatType_14Bayer_GRBG, fourcc(b'grb4'))
         self.assertEqual(kCVPixelFormatType_14Bayer_RGGB, fourcc(b'rgg4'))
         self.assertEqual(kCVPixelFormatType_14Bayer_BGGR, fourcc(b'bgg4'))

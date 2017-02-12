@@ -11,6 +11,8 @@ if sys.maxsize > 2 ** 32:
             self.assertArgIsBlock(SafariServices.SFSafariApplication.openWindowWithURL_completionHandler_, 1, b'v@')
             self.assertArgIsBlock(SafariServices.SFSafariApplication.showPreferencesForExtensionWithIdentifier_completionHandler_, 1, b'v@')
 
+            self.assertArgIsBlock(SafariServices.SFSafariApplication.dispatchMessageWithName_toExtensionWithIdentifier_userInfo_completionHandler_, 3, b'v@')
+
 
 if __name__ == "__main__":
     main()

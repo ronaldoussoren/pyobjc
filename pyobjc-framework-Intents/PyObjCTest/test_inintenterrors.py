@@ -19,6 +19,9 @@ if sys.maxsize > 2 ** 32:
             self.assertEqual(Intents.INIntentErrorRequestTimedOut, 3001)
             self.assertEqual(Intents.INIntentErrorInvalidUserVocabularyFileLocation, 4000)
 
+            self.assertEqual(Intents.INIntentErrorExtensionLaunchingTimeout, 5000)
+            self.assertEqual(Intents.INIntentErrorExtensionBringUpFailed, 5001)
+
 
 if __name__ == "__main__":
     main()

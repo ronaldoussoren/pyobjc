@@ -1,6 +1,8 @@
 {
  "definitions": {
   "enum": {
+   "INIntentErrorExtensionLaunchingTimeout": { "value": 5000 },
+   "INIntentErrorExtensionBringUpFailed": { "value": 5001 },
    "INStartVideoCallIntentResponseCodeUnspecified": { "value": 0 },
    "INStartVideoCallIntentResponseCodeReady": { "value": 1 },
    "INStartVideoCallIntentResponseCodeContinueInApp": { "value": 2 },

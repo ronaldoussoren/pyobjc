@@ -24,6 +24,7 @@
    "kCVReturnLast": { "value": -6699 },
    "kCVPixelBufferPoolFlushExcessBuffers": { "value": 1 },
    "kCVPixelFormatType_30RGBLEPackedWideGamut": { "value": 1999843442 },
+   "kCVPixelFormatType_ARGB2101010LEPacked": { "value": 1815162994 },
    "kCVPixelFormatType_14Bayer_GRBG": { "value": 1735549492 },
    "kCVPixelFormatType_14Bayer_RGGB": { "value": 1919379252 },
    "kCVPixelFormatType_14Bayer_BGGR": { "value": 1650943796 },

@@ -31,6 +31,7 @@ if sys.maxsize > 2**32:
             self.assertIsInstance(MediaPlayer.MPNowPlayingInfoPropertyExternalUserProfileIdentifier, unicode)
             self.assertIsInstance(MediaPlayer.MPNowPlayingInfoPropertyPlaybackProgress, unicode)
             self.assertIsInstance(MediaPlayer.MPNowPlayingInfoPropertyMediaType, unicode)
+            self.assertIsInstance(MediaPlayer.MPNowPlayingInfoPropertyAssetURL, unicode)
 
 if __name__ == "__main__":
     main()

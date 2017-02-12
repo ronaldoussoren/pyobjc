@@ -19,5 +19,7 @@ class TestDOMCSSRule (TestCase):
         self.assertEqual(DOM_SUPPORTS_RULE, 12)
         self.assertEqual(DOM_WEBKIT_REGION_RULE, 16)
 
+        self.assertEqual(DOM_NAMESPACE_RULE, 10)
+
 if __name__ == "__main__":
     main()

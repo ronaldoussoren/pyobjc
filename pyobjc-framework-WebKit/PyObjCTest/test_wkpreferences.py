@@ -15,6 +15,12 @@ class TestWKPreferences (TestCase):
         self.assertResultIsBOOL(WKPreferences.plugInsEnabled)
         self.assertArgIsBOOL(WKPreferences.setPlugInsEnabled_, 0)
 
+    @onlyOn64Bit
+    @min_os_level('10.12')
+    def testMethods10_12(self):
+        self.assertResultIsBOOL(WKPreferences.tabFocusesLinks)
+        self.assertArgIsBOOL(WKPreferences.setTabFocusesLinks_, 0)
+
 
 if __name__ == "__main__":
     main()

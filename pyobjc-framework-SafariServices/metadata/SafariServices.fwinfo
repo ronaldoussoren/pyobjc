@@ -3,11 +3,30 @@
   "enum": {
    "SFErrorNoExtensionFound": { "value": 1 },
    "SFErrorNoAttachmentFound": { "value": 2 },
-   "SFErrorLoadingInterrupted": { "value": 3 }
+   "SFErrorLoadingInterrupted": { "value": 3 },
+   "SFSafariServicesVersion10_0": { "value": 0 },
+   "SFSafariServicesVersion10_1": { "value": 1 }
   },
   "classes": {
    "NSObject": {
     "methods": [
+     {
+      "selector": "validateContextMenuItemWithCommand:inPage:userInfo:validationHandler:",
+      "class_method": false,
+      "args": {
+       "3": {
+        "type_override": "@?",
+        "callable": {
+	 "arguments": {
+	  "0": { "typestr": "^v" },
+	  "1": { "typestr": "Z" },
+	  "2": { "typestr": "@" }
+	 },
+	 "retval": { "typestr": "v" }
+	}
+       }
+      }
+     },
      {
       "selector": "validateToolbarItemInWindow:validationHandler:",
       "class_method": false,
@@ -167,6 +186,21 @@
    "SFSafariApplication": {
     "methods": [
      {
+      "selector": "dispatchMessageWithName:toExtensionWithIdentifier:userInfo:completionHandler:",
+      "class_method": true,
+      "args": {
+       "3": {
+        "callable": {
+         "arguments": {
+ 	 "0": { "typestr": "^v" },
+ 	 "1": { "typestr": "@" }
+ 	},
+ 	"retval": { "typestr": "v" }
+        }
+       }
+      }
+     },
+     {
       "selector": "showPreferencesForExtensionWithIdentifier:completionHandler:",
       "class_method": true,
       "args": {
@@ -291,6 +325,13 @@
     "methods": [
      {
       "selector": "setEnabled:withBadgeText:",
+      "class_method": false,
+      "args": {
+       "0": { "type_override": "Z" }
+      }
+     },
+     {
+      "selector": "setEnabled:",
       "class_method": false,
       "args": {
        "0": { "type_override": "Z" }

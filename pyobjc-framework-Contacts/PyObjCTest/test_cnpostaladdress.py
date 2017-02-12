@@ -15,5 +15,8 @@ if sys.maxsize > 2**32:
             self.assertIsInstance(Contacts.CNPostalAddressCountryKey, unicode)
             self.assertIsInstance(Contacts.CNPostalAddressISOCountryCodeKey, unicode)
 
+            self.assertIsInstance(Contacts.CNPostalAddressSubLocalityKey, unicode)
+            self.assertIsInstance(Contacts.CNPostalAddressSubAdministrativeAreaKey, unicode)
+
 if __name__ == "__main__":
     main()

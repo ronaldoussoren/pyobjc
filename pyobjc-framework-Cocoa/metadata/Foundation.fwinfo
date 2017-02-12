@@ -131,6 +131,7 @@
     "NSFileManagerUnmountUnknownError": { "value": 768 },
     "NSURLErrorClientCertificateRequired": { "value": -1206 },
     "NSURLErrorDataLengthExceedsMaximum": { "value": -1103 },
+    "NSURLErrorFileOutsideSafeArea": { "value": -1104 },
     "NSURLErrorBadURL": { "value": -1000 },
     "NSURLErrorTimedOut": { "value":-1001 },
     "NSURLErrorUnsupportedURL": { "value":-1002 },
