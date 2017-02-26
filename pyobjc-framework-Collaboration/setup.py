@@ -20,7 +20,7 @@ setup(
     version=VERSION,
     install_requires = [
         'pyobjc-core>='+VERSION,
-        'pyobjc-framework-'+VERSION,
+        'pyobjc-framework-Cocoa>='+VERSION,
     ],
     long_description=__doc__,
 )
