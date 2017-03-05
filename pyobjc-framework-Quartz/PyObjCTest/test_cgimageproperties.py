@@ -364,6 +364,7 @@ class TestCGImageProperties (TestCase):
         self.assertIsInstance(kCGImagePropertyTIFFTileWidth, unicode)
         self.assertIsInstance(kCGImagePropertyTIFFTileLength, unicode)
         self.assertIsInstance(kCGImagePropertyPNGCompressionFilter, unicode)
+        self.assertIsInstance(kCGImagePropertyExifSubsecTimeOriginal, unicode)
 
     @min_os_level('10.12')
     def testConstants10_12(self):

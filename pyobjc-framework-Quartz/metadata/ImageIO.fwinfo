@@ -3,6 +3,7 @@
 {
  "definitions": {
   "externs": {
+   "kCGImagePropertyExifSubsecTimeOriginal": { "typestr": "@" },
    "kCGImagePropertyTIFFTileWidth": { "typestr": "@" },
    "kCGImagePropertyTIFFTileLength": { "typestr": "@" },
    "kCGImagePropertyPNGCompressionFilter": { "typestr": "@" },
