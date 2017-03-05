@@ -21,6 +21,10 @@ Bugfixes:
   datastructures for Python blocks was wrong, which confuses Objective-C
   code that looks at the runtime data.
 
+* Fix requirement info in Collaboration setup.py.
+
+  Patch by Alex Chekunkov.
+
 
 Version 3.2.2
 -------------
