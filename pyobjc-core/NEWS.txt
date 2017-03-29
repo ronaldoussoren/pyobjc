@@ -9,7 +9,7 @@ Version 3.3
 New features:
 
 * Updated framework wrappers for the API changes in the SDK shipped with
-  Xcode 8.3(beta 3)
+  Xcode 8.3
 
 Bugfixes:
 
