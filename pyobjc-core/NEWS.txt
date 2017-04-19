@@ -11,6 +11,12 @@ New features:
 * Updated framework wrappers for the API changes in the SDK shipped with
   Xcode 8.3.2.
 
+* Added new framework wrapper: "pyobjc-framework-CoreServices".
+
+  This exposes no new functionality for now, but makes it possible to access
+  the functionality exposed by the "CoreServices" framework by using "import
+  CoreServices", instead of directly importing the name of the subframework.
+
 Bugfixes:
 
 * The OC_Python* Objective-C classes used to expose Python objects to
