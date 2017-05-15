@@ -17,6 +17,13 @@ New features:
   the functionality exposed by the "CoreServices" framework by using "import
   CoreServices", instead of directly importing the name of the subframework.
 
+* Issue #178: Add basic example for the Contacts framework
+
+  The Contacts framwork now contains a very simple example that shows how
+  to fetch contacts from the contact store.  Apple's documentation on
+  the framework contains more comprehensive sample code, which should make
+  it clear how to use the framework.
+
 Bugfixes:
 
 * The OC_Python* Objective-C classes used to expose Python objects to
