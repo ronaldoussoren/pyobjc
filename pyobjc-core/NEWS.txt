@@ -31,6 +31,12 @@ Bugfixes:
 
   Patch by Alex Chekunkov.
 
+* Issue #189: Invalid invocation of "atos" command on recent macOS versions
+
+  The Objective-C exception logging code in pyobjc-framework-ExceptionHandling
+  calls out to the "atos" command to get readable stack traces, that
+  invocation caused problems on recent macOS versions.
+
 
 Version 3.2.2
 -------------
