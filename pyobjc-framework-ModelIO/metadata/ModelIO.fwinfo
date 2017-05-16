@@ -221,38 +221,6 @@
      }
     ]
    },
-   "MDLObject": {
-    "methods": [
-     {
-      "selector": "enumerateChildObjectsOfClass:root:usingBlock:stopPointer:",
-      "class_method": false,
-      "args": {
-       "2": {
-        "callable": {
-	 "arguments": {
-	  "0": { "typestr": "^v" },
-	  "1": { "typestr": "o^Z" }
-	 },
-	 "retval": { "typestr": "v" }
-	}
-       },
-       "3": { "type_override": "N^Z" }
-      }
-     },
-     {
-      "selector": "resetsTransform",
-      "class_method": false,
-      "retval": { "type_override": "Z" }
-     },
-     {
-      "selector": "setResetsTransform:",
-      "class_method": false,
-      "args": {
-       "0": { "type_override": "Z" }
-      }
-     }
-    ]
-   },
    "MDLNoiseTexture": {
     "methods": [
      {
@@ -326,6 +294,35 @@
    },
    "MDLObject": {
     "methods": [
+     {
+      "selector": "enumerateChildObjectsOfClass:root:usingBlock:stopPointer:",
+      "class_method": false,
+      "args": {
+       "2": {
+        "callable": {
+	 "arguments": {
+	  "0": { "typestr": "^v" },
+	  "1": { "typestr": "@" },
+	  "2": { "typestr": "o^Z" }
+	 },
+	 "retval": { "typestr": "v" }
+	}
+       },
+       "3": { "type_override": "N^Z" }
+      }
+     },
+     {
+      "selector": "resetsTransform",
+      "class_method": false,
+      "retval": { "type_override": "Z" }
+     },
+     {
+      "selector": "setResetsTransform:",
+      "class_method": false,
+      "args": {
+       "0": { "type_override": "Z" }
+      }
+     },
      {
       "class_method": false,
       "selector": "hidden",
