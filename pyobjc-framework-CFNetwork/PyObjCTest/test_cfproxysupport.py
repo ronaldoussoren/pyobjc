@@ -52,7 +52,7 @@ class TestCFProxySupport (TestCase):
         rl = CFRunLoopGetCurrent()
         CFRunLoopAddSource(rl, rls,  kCFRunLoopCommonModes)
 
-        CFRunLoopRunInMode(kCFRunLoopDefaultMode, 1.0, True)
+        CFRunLoopRunInMode(kCFRunLoopDefaultMode, 1.0, False)
 
         CFRunLoopRemoveSource(rl, rls,  kCFRunLoopCommonModes)
 
