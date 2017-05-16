@@ -138,6 +138,34 @@ func_call(PyObject* s, PyObject* args, PyObject* kwds)
 
     PyObject* retval;
 
+    if (PyObjC_DeprecationVersion && self->methinfo->deprecated && self->methinfo->deprecated <= PyObjC_DeprecationVersion) {
+        char buf[128];
+
+#if PY_MAJOR_VERSION == 2
+        if (PyString_Check(self->name)) {
+            snprintf(buf, 128, "%s() is a deprecated API", PyString_AsString(self->name));
+        } else
+#endif
+        if (PyUnicode_Check(self->name)) {
+#if PY_VERSION_HEX >= 0x03030000
+            snprintf(buf, 128, "%s() is a deprecated API", PyUnicode_AsUTF8(self->name));
+#else
+            PyObject* temp = PyUnicode_AsUTF8String(self->name);
+            if (temp == NULL) {
+                return NULL;
+            }
+            snprintf(buf, 128, "%s() is a deprecated API", PyString_AsString(temp));
+            Py_DECREF(temp);
+#endif
+        } else {
+            snprintf(buf, 128, "function is a deprecated API");
+        }
+
+        if (PyErr_Warn(PyObjCExc_DeprecationWarning, buf) < 0) {
+            return NULL;
+        }
+    }
+
     if (self->methinfo->suggestion != NULL) {
         PyErr_SetObject(PyExc_TypeError, self->methinfo->suggestion);
         return NULL;

@@ -476,6 +476,8 @@ objcsel_call(PyObject* _self, PyObject* args, PyObject* kwds)
     PyObjC_CallFunc execute = NULL;
     PyObject* res;
     PyObject* pyres;
+    PyObjCMethodSignature* methinfo;
+
 
     if (kwds != NULL && PyObject_Size(kwds) != 0) {
         PyErr_SetString(PyExc_TypeError,
@@ -494,6 +496,28 @@ objcsel_call(PyObject* _self, PyObject* args, PyObject* kwds)
 
         pyself = PyTuple_GET_ITEM(args, 0);
         if (pyself == NULL) {
+            return NULL;
+        }
+    }
+
+    methinfo = PyObjCSelector_GetMetadata(_self);
+    if (methinfo == NULL) {
+        return NULL;
+    }
+
+    if (PyObjC_DeprecationVersion && methinfo->deprecated && methinfo->deprecated <= PyObjC_DeprecationVersion) {
+        char buf[128];
+        Class cls = PyObjCSelector_GetClass(_self);
+        SEL sel = PyObjCSelector_GetSelector(_self);
+
+        assert(cls);
+        assert(sel);
+
+        snprintf(buf, 128, "%c[%s %s] is a deprecated API",
+                PyObjCSelector_IsClassMethod(_self) ? '+' : '-',
+                class_getName(cls),
+                sel_getName(sel));
+        if (PyErr_Warn(PyObjCExc_DeprecationWarning, buf) < 0) {
             return NULL;
         }
     }

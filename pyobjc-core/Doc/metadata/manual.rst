@@ -49,6 +49,9 @@ The metadata is a Python dictionary with a particular structure (all keys are op
 * *suggestion*: For methods only: the method should not be called from Python, and calling it will raise and exception
   with the *suggestion* value in the exception message.
 
+* *deprecated*: 0 when not deprecated (the default), otherwise the release where the method is deprecated (one of the
+  :data:`MAC_OS_X_VERSION_10_N <objc.MAC_OS_X_VERSION_10_N>` constants).
+
 * *variadic*: If present and the value is :data:`True` the function or method takes a variable number of arguments. PyObjC
   can only call such functions when either on of the arguments is a *printf_format*, or the dictionary contains information
   on the argument array (as described by keys further on in this list).

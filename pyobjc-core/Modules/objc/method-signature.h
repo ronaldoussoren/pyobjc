@@ -52,6 +52,7 @@ struct _PyObjCMethodSignature {
     unsigned char shortcut_signature:1;
     unsigned int shortcut_argbuf_size:12;
     int16_t arrayArg;
+    int     deprecated;
     struct _PyObjC_ArgDescr* rettype;
     struct _PyObjC_ArgDescr* argtype[1];
 };

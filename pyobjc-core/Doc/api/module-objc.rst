@@ -75,6 +75,19 @@ Bridge options
          the :class:`str` class in Python 2) are bridged as instances
          of a subclass of *NSData*.
 
+   .. data:: objc.options.deprecation_warnings
+
+      When 0 (the default) the bridge will not emit deprecation warnings,
+      otherwise the value should be one of the :data:`MAC_OS_X_VERSION_10_N`
+      constants and the bridge will emit a deprecation warning for APIs
+      that were deprecated in the SDK (or earlier).
+
+      Deprecation warnings are emitted using the :mod:`warnings` module,
+      using the warning :class:`objc.ApiDeprecationWarning`.
+
+      .. versionadded:: 3.3
+
+
 Deprecated functions for changing options
 .........................................
 

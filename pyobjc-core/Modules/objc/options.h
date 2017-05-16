@@ -9,6 +9,7 @@ extern BOOL PyObjCPointer_RaiseException;
 extern BOOL PyObjC_StrBridgeEnabled;
 #endif
 
+extern int PyObjC_DeprecationVersion;
 extern Py_ssize_t PyObjC_MappingCount;
 extern int PyObjC_NSCoding_Version;
 extern PyObject* PyObjC_Encoder;

@@ -110,6 +110,28 @@ static int _nscoding_version_set(PyObject* s __attribute__((__unused__)),
     return 0;
 }
 
+int PyObjC_DeprecationVersion = 0;
+
+static PyObject* deprecation_warnings_get(PyObject* s __attribute__((__unused__)),
+        void *c __attribute__((__unused__)))
+{
+    return PyInt_FromLong(PyObjC_DeprecationVersion);
+}
+
+static int deprecation_warnings_set(PyObject* s __attribute__((__unused__)),
+        PyObject* newVal, void* c __attribute__((__unused__)))
+{
+    if (newVal == NULL) {
+        PyErr_SetString(PyExc_TypeError, "Cannot delete option 'deprecation_level'");
+        return -1;
+    }
+    if (PyArg_Parse(newVal, "i", &PyObjC_DeprecationVersion) < 0) {
+        return -1;
+    }
+
+    return 0;
+}
+
 Py_ssize_t PyObjC_MappingCount = 0;
 
 static PyObject* _mapping_count_get(PyObject* s __attribute__((__unused__)),
@@ -178,6 +200,7 @@ static PyGetSetDef object_getset[] = {
 #if PY_VERSION_HEX >= 0x03030000
     GETSET(_callable_signature,     "Private helper function for generating __signature__ for selectors"),
 #endif /* PY_VERSION_HEX >= 0x03030000 */
+    GETSET(deprecation_warnings,       "If not 0 give deprecation warnings for the given SDK version"),
 
     { 0, 0, 0, 0, 0 } /* Sentinel */
 };

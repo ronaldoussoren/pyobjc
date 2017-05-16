@@ -24,6 +24,20 @@ New features:
   the framework contains more comprehensive sample code, which should make
   it clear how to use the framework.
 
+* Add initial support for deprecation warnings in metadata
+
+  Metadata files can now contain information for deprecation warnings for
+  methods and functions. Users can turn on deprecation warnings using::
+
+    import objc
+    objc.deprecation_warnings = objc.MAC_OS_X_VERSION_10_6
+
+  This will emit deprecation warnings for APIs that were deprecated in
+  macOS 10.6 (or earlier).
+
+  Note that this version does have metadata that uses the new functionality,
+  that will be added in a future release.
+
 Bugfixes:
 
 * The OC_Python* Objective-C classes used to expose Python objects to

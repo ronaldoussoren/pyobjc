@@ -423,6 +423,7 @@ new_methodsignature(const char* signature)
     Py_SIZE(retval) = nargs;
     retval->suggestion = NULL;
     retval->variadic = NO;
+    retval->deprecated = 0;
     retval->free_result = NO;
     retval->shortcut_signature = NO;
     retval->shortcut_argbuf_size = 0;
@@ -1093,6 +1094,21 @@ process_metadata_dict(PyObjCMethodSignature* methinfo, PyObject* metadata, BOOL 
             Py_INCREF(v);
         }
 
+        v = PyDict_GetItemString(metadata, "deprecated");
+        if (v) {
+            if (PyLong_Check(v)) {
+                methinfo->deprecated = (int)PyLong_AsLong(v);
+                if (PyErr_Occurred()) {
+                    return -1;
+                }
+            }
+#if PY_MAJOR_VERSION == 2
+            else if (PyInt_Check(v)) {
+                methinfo->deprecated = (int)PyInt_AsLong(v);
+            }
+#endif
+        }
+
         methinfo->null_terminated_array = NO;
         v = PyDict_GetItemString(metadata, "c_array_delimited_by_null");
         if (v && PyObject_IsTrue(v)) {
@@ -1417,6 +1433,7 @@ process_metadata_object(PyObjCMethodSignature* methinfo, PyObjCMethodSignature* 
     methinfo->null_terminated_array = metadata->null_terminated_array;
     methinfo->free_result = metadata->free_result;
     methinfo->arrayArg = metadata->arrayArg;
+    methinfo->deprecated = metadata->deprecated;
 
     if (methinfo->rettype->tmpl && metadata->rettype != NULL && metadata->rettype->modifier != '\0' && is_default_descr(metadata->rettype)) {
         const char* withoutModifiers = PyObjCRT_SkipTypeQualifiers(methinfo->rettype->type);
