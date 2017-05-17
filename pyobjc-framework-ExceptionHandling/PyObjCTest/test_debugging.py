@@ -41,12 +41,68 @@ class TestDebugging (TestCase):
         except Exception as exc:
             self.assertFalse(Debugging.isPythonException(exc))
 
+        else:
+            self.fail("Exception not raised")
+
+
+        try:
+            cls = objc.lookUpClass('NSException')
+            cls.exceptionWithName_reason_userInfo_('FooBar', 'hello world', None).raise__()
+        except Exception as exc:
+            self.assertFalse(Debugging.isPythonException(exc))
+
+        else:
+            self.fail("Exception not raised")
+
         try:
             a = []
             a[42]
 
         except Exception as exc:
             self.assertTrue(Debugging.isPythonException(exc))
+
+    def testAtos(self):
+        NSThread = objc.lookUpClass('NSThread')
+        v = ' '.join(hex(x) for x in NSThread.callStackReturnAddresses())
+        fp = Debugging._run_atos(v)
+        value = fp.read()
+        fp.close()
+
+        self.assertIn('_objc.cpython', value)
+
+    def testInstallExceptionHandler(self):
+        self.assertFalse(Debugging.handlerInstalled())
+        try:
+            Debugging.installExceptionHandler(verbosity=Debugging.LOGSTACKTRACE, mask=Debugging.EVERYTHINGMASK)
+            self.assertTrue(Debugging.handlerInstalled())
+
+            try:
+                cls = objc.lookUpClass('NSException')
+                cls.exceptionWithName_reason_userInfo_('FooBar', 'hello world', None).raise__()
+            except Exception as exc:
+                self.assertFalse(Debugging.isPythonException(exc))
+
+            else:
+                self.fail("Exception not raised")
+
+            try:
+                cls = objc.lookUpClass('NSArray')
+
+                def test(value, idx, stop):
+                    raise ValueError("42")
+                a = cls.alloc().initWithArray_([1,2,3,4])
+                a.indexOfObjectPassingTest_(test)
+
+
+            except Exception as exc:
+                self.assertTrue(Debugging.isPythonException(exc))
+
+            else:
+                self.fail("Exception not raised")
+
+        finally:
+            Debugging.removeExceptionHandler()
+            self.assertFalse(Debugging.handlerInstalled())
 
     @expectedFailure
     def testMisc(self):

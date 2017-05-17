@@ -78,18 +78,39 @@ def _run_atos(stack):
     return os.popen('%s -p %s %s'%(_atos_command, os.getpid(), stack))
 
 def nsLogObjCException(exception):
-    userInfo = exception.userInfo()
-    stack = userInfo.get(NSStackTraceKey)
-    if not stack:
-        return True
+    stacktrace = None
 
-    pipe = _run_atos(stack)
-    if pipe is None:
-        return True
+    try:
+        stacktrace = exception.callStackSymbols()
 
+    except AttributeError:
+        pass
 
-    stacktrace = pipe.readlines()
-    stacktrace.reverse()
+    if stacktrace is None:
+        stack = exception.callStackReturnAddresses()
+        if stack:
+            pipe = _run_atos(" ".join(hex(v) for v in stack))
+            if pipe is None:
+                return True
+
+            stacktrace = pipe.readlines()
+            stacktrace.reverse()
+            pipe.close()
+
+    if stacktrace is None:
+        userInfo = exception.userInfo()
+        stack = userInfo.get(NSStackTraceKey)
+        if not stack:
+            return True
+
+        pipe = _run_atos(stack)
+        if pipe is None:
+            return True
+
+        stacktrace = pipe.readlines()
+        stacktrace.reverse()
+        pipe.close()
+
     NSLog("%@", "*** ObjC exception '%s' (reason: '%s') discarded\n" % (
             exception.name(), exception.reason(),
         ) +
