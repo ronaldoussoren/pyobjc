@@ -17,6 +17,12 @@ New features:
   the functionality exposed by the "CoreServices" framework by using "import
   CoreServices", instead of directly importing the name of the subframework.
 
+* Added new framework wrapper: "pyobjc-framework-iTunesLibrary"
+
+  This is a wrapper for the iTunesLibrary framework located in
+  "/Library/Frameworks", which is a framework installed by iTunes that
+  can be used to (read-only) access information about an iTunes library.
+
 * Issue #178: Add basic example for the Contacts framework
 
   The Contacts framwork now contains a very simple example that shows how
