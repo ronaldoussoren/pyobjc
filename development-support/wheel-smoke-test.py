@@ -25,6 +25,8 @@ from CoreData import *
 from DiskArbitration import *
 from ExceptionHandling import *
 from GameController import *
+from iTunesLibrary import *
+from CoreServices import *
 
 if sys_version >= LooseVersion('10.5'):
     from CalendarStore import *
