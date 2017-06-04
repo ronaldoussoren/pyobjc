@@ -8,6 +8,9 @@ Version 3.3
 
 New features:
 
+* "pip install pyobjc" should now fail with a better error message when
+  installing on a system that isn't running macOS.
+
 * Updated framework wrappers for the API changes in the SDK shipped with
   Xcode 8.3.2.
 

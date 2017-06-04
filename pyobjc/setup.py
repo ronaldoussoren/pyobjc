@@ -114,6 +114,9 @@ def version_key(version):
     return tuple(int(x) for x in version.split('.'))
 
 def framework_requires():
+    if sys.platform != 'darwin':
+        raise SystemExit("ERROR: Requires macOS to install or build")
+
     build_platform = platform.mac_ver()[0]
     result = []
 
