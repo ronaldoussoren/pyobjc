@@ -7,6 +7,11 @@
   "functions": {},
   "informal_protocols": {},
   "externs": {
+    "MLPhotosLivePhotosGroupTypeIdentifier": { "typestr": "@" },
+    "MLPhotosLongExposureGroupTypeIdentifier": { "typestr": "@" },
+    "MLPhotosAnimatedGroupTypeIdentifier": { "typestr": "@" },
+    "MLPhotosSloMoGroupTypeIdentifier": { "typestr": "@" },
+    "MLPhotosSloMoGroupTypeIdentifier": { "typestr": "@" },
     "MLPhotosSloMoGroupTypeIdentifier": { "typestr": "@" },
     "MLPhotosBurstGroupTypeIdentifier": { "typestr": "@" },
     "MLPhotosFacesAlbumTypeIdentifier": { "typestr": "@" },

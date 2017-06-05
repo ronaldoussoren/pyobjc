@@ -3,6 +3,24 @@ What's new in PyObjC
 
 An overview of the relevant changes in new, and older, releases.
 
+Version 4.0
+-----------
+
+* Add availability macro ``MAC_OS_X_VERSION_10_13`` to ``objc``.
+
+* metadata updates (beta 1):
+
+  - MediaLibrary
+  - AddressBook
+  - ScreenSaver
+  - SystemConfiguration
+  - CoreWLAN
+  - JavaScriptCore
+  - Accounts
+  - ApplicationServices
+  - MultipeerConnectivity
+  - MediaPlayer
+
 Version 3.3
 -----------
 
