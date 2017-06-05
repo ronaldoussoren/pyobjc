@@ -1,6 +1,17 @@
 Welcome to the PyObjC repository
 ================================
 
+Branch 'macos10.13-support'
+---------------------------
+
+The branch 'macos10.13-support' is an unstable branch that will
+be used to add support for macOS 10.13 (High Sierra), primarily
+for metadata.
+
+
+Introduction
+------------
+
 This repository contains a number of Python packages/distributions
 for the PyObjC project:
 
