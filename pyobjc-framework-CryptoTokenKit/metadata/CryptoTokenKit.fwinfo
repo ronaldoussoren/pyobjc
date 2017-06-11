@@ -122,6 +122,21 @@
     "methods": [
      {
       "class_method": false,
+      "selector": "setInsertionHandler:",
+      "args": {
+       "0": {
+        "callable": {
+         "arguments": {
+	  "0": { "typestr": "^v" },
+	  "1": { "typestr": "@" }
+	 },
+	 "retval": { "typestr": "v" }
+	}
+       }
+      }
+     },
+     {
+      "class_method": false,
       "selector": "initWithInsertionHandler:",
       "args": {
        "0": {

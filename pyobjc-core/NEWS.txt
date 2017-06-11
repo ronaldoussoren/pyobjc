@@ -10,18 +10,30 @@ Version 4.0
 
 * metadata updates (beta 1):
 
-  - FinderSync
   - Accounts
   - AddressBook
   - ApplicationServices
   - Automator
   - CFNetwork
+  - Contacts
   - CoreWLAN
+  - CryptoTokenKit
+  - EventKit
+  - FinderSync
+  - GameController
+  - IMServicePlugIn
+  - IMServicePlugIn
+  - ImageCaptureCore
+  - ImageCaptureCore
   - JavaScriptCore
+  - MapKit
   - MediaLibrary
   - MediaPlayer
   - MultipeerConnectivity
+  - OpenDirectory
   - QTKit
+  - QTKit
+  - QuickLook
   - QuickLook
   - SafariServices
   - ScreenSaver
