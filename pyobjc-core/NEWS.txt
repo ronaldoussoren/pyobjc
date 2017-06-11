@@ -8,6 +8,11 @@ Version 3.3
 
 New features:
 
+* Issue #192: 32/64-bit issue with AppHelper.endSheetMethod
+
+  This helper decorator used the wrong signature string, which happens to
+  work on 32-bit systems but not on 64-bit ones.
+
 * "pip install pyobjc" should now fail with a better error message when
   installing on a system that isn't running macOS.
 

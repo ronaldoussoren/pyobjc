@@ -184,7 +184,7 @@ def endSheetMethod(meth):
     Return a selector that can be used as the delegate callback for
     sheet methods
     """
-    return objc.selector(meth, signature=b'v@:@ii')
+    return objc.selector(meth, signature=b'v@:@' + objc._C_NSInteger + objc._C_NSInteger)
 
 
 def unexpectedErrorAlertPanel():
