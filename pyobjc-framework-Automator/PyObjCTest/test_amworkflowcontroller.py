@@ -9,5 +9,9 @@ class TestAMWorkflowController (TestCase):
         self.assertResultIsBOOL(AMWorkflowController.isRunning)
         self.assertResultIsBOOL(AMWorkflowController.isPaused)
 
+    @min_sdk_level('10.13')
+    def testProtocols(self):
+        objc.protocolNamed('AMWorkflowControllerDelegate')
+
 if __name__ == "__main__":
     main()

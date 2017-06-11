@@ -10,16 +10,22 @@ Version 4.0
 
 * metadata updates (beta 1):
 
-  - MediaLibrary
+  - FinderSync
+  - Accounts
   - AddressBook
-  - ScreenSaver
-  - SystemConfiguration
+  - ApplicationServices
+  - Automator
+  - CFNetwork
   - CoreWLAN
   - JavaScriptCore
-  - Accounts
-  - ApplicationServices
-  - MultipeerConnectivity
+  - MediaLibrary
   - MediaPlayer
+  - MultipeerConnectivity
+  - QTKit
+  - QuickLook
+  - SafariServices
+  - ScreenSaver
+  - SystemConfiguration
 
 Version 3.3
 -----------

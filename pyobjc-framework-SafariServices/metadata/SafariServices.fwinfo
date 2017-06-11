@@ -5,7 +5,8 @@
    "SFErrorNoAttachmentFound": { "value": 2 },
    "SFErrorLoadingInterrupted": { "value": 3 },
    "SFSafariServicesVersion10_0": { "value": 0 },
-   "SFSafariServicesVersion10_1": { "value": 1 }
+   "SFSafariServicesVersion10_1": { "value": 1 },
+   "SFSafariServicesVersion11_0": { "value": 2 }
   },
   "classes": {
    "NSObject": {

@@ -9,6 +9,7 @@ if sys.maxsize > 2 ** 32:
         def testConstants(self):
             self.assertEqual(SafariServices.SFSafariServicesVersion10_0, 0)
             self.assertEqual(SafariServices.SFSafariServicesVersion10_1, 1)
+            self.assertEqual(SafariServices.SFSafariServicesVersion11_0, 2)
 
 if __name__ == "__main__":
     main()
