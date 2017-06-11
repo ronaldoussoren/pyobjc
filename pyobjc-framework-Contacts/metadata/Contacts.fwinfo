@@ -34,6 +34,8 @@
    "CNErrorCodeValidationConfigurationError": { "value": 302 },
    "CNErrorCodePredicateInvalid": { "value": 400 },
    "CNErrorCodePolicyViolation": { "value": 500 },
+   "CNErrorCodeClientIdentifierInvalid": { "value": 600 },
+   "CNErrorCodeClientIdentifierDoesNotExist": { "value": 601 },
    "CNPostalAddressFormatterStyleMailingAddress": { "value": 0 }
   },
   "externs": {

@@ -505,5 +505,9 @@ class TestCFOpenDirectoryConstants (TestCase):
         self.assertIsInstance(CFOpenDirectory.kODPolicyKeyEvaluationDetails, unicode)
         self.assertIsInstance(CFOpenDirectory.kODPolicyKeyPolicySatisfied, unicode)
 
+    @min_os_level('10.13')
+    def testConstants10_13(self):
+        self.assertIsInstance(CFOpenDirectory.kODAuthenticationTypeClearTextReadOnly, unicode)
+
 if __name__ == "__main__":
     main()
