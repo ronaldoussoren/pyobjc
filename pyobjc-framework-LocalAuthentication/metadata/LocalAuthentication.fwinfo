@@ -23,6 +23,9 @@
    "LAAccessControlOperationUseItem": { "value": 1 },
    "LAAccessControlOperationCreateKey": { "value": 2 },
    "LAAccessControlOperationUseKeySign": { "value": 3 },
+   "kLACredentialTypeApplicationPassword": { "value": 1 },
+   "LAErrorNotInteractive": { "value":  -1004 },
+   "kLAErrorNotInteractive": { "value":  -1004 },
    "kLAErrorInvalidContext": { "value": -10 },
    "kLAErrorAppCancel": { "value": -9 },
    "kLAErrorTouchIDLockout": { "value": -8 },
@@ -33,6 +36,32 @@
   "classes": {
    "LAContext": {
     "methods": [
+     {
+      "retval": { "type_override": "Z"  },
+      "class_method": false,
+      "selector": "interactionNotAllowed:"
+     },
+     {
+      "args": {
+       "0": { "type_override": "Z"  }
+      },
+      "class_method": false,
+      "selector": "setInteractionNotAllowed:"
+     },
+     {
+      "args": {
+       "0": {
+        "callable": {
+	 "arguments": {
+	  "0": { "typestr": "^v" }
+	 },
+	 "retval": { "typestr": "v" }
+	}
+       }
+      },
+      "class_method": false,
+      "selector": "withCurrentContextExecute:queue:"
+     },
      {
       "args": {
        "3": {

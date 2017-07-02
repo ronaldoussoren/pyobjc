@@ -99,6 +99,10 @@ class TestCGImageDestination (TestCase):
         self.assertResultHasType(CGImageDestinationCopyImageSource, objc._C_BOOL)
         self.assertArgIsOut(CGImageDestinationCopyImageSource, 3)
 
+    @min_os_level('10.13')
+    def testFunctions10_13(self):
+        CGImageDestinationAddAuxiliaryDataInfo
+
 
 if __name__ == "__main__":
     main()

@@ -389,5 +389,26 @@ class TestCGImageProperties (TestCase):
         self.assertIsInstance(kCGImagePropertyDNGWarpFisheye, unicode)
         self.assertIsInstance(kCGImagePropertyDNGFixVignetteRadial, unicode)
 
+    @min_os_level('10.13')
+    def testConstants10_13(self):
+        self.assertIsInstance(kCGImagePropertyFileContentsDictionary, unicode)
+        self.assertIsInstance(kCGImageAuxiliaryDataTypeDepth, unicode)
+        self.assertIsInstance(kCGImageAuxiliaryDataTypeDisparity, unicode)
+
+        self.assertIsInstance(kCGImageAuxiliaryDataInfoData, unicode)
+        self.assertIsInstance(kCGImageAuxiliaryDataInfoDataDescription, unicode)
+        self.assertIsInstance(kCGImageAuxiliaryDataInfoMetadata, unicode)
+        self.assertIsInstance(kCGImagePropertyImageCount, unicode)
+        self.assertIsInstance(kCGImagePropertyWidth, unicode)
+        self.assertIsInstance(kCGImagePropertyHeight, unicode)
+        self.assertIsInstance(kCGImagePropertyBytesPerRow, unicode)
+        self.assertIsInstance(kCGImagePropertyNamedColorSpace, unicode)
+        self.assertIsInstance(kCGImagePropertyPixelFormat, unicode)
+        self.assertIsInstance(kCGImagePropertyImages, unicode)
+        self.assertIsInstance(kCGImagePropertyThumbnailImages, unicode)
+        self.assertIsInstance(kCGImagePropertyAuxiliaryData, unicode)
+        self.assertIsInstance(kCGImagePropertyAuxiliaryDataType, unicode)
+
+
 if __name__ == "__main__":
     main()

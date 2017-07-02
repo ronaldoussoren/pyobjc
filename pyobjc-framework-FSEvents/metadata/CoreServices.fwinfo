@@ -3,7 +3,19 @@
 {
  "definitions": {
   "classes": {},
+  "literals": {
+   "kFSEventStreamEventExtendedDataPathKey": {
+    "unicode": true,
+    "value": "path"
+   },
+   "kFSEventStreamEventExtendedFileIDKey": {
+    "unicode": true,
+    "value": "fileID"
+   }
+  },
   "enum": {
+   "kFSEventStreamEventFlagItemCloned": { "value": 4194304 },
+   "kFSEventStreamCreateFlagUseExtendedData": { "value": 64 },
    "kFSEventStreamCreateFlagMarkSelf": { "value": 32 },
    "kFSEventStreamEventFlagOwnEvent": { "value": 524288 },
    "kFSEventStreamEventFlagItemIsHardlink": { "value": 1048576 },

@@ -3,12 +3,30 @@
 {
  "definitions": {
   "enum": {
+   "kCTFontTableCBDT": { "value": 1128416340 },
+   "kCTFontTableCBLC": { "value": 1128418371 },
+   "kCTFontTableCFF": { "value": 1128678944 },
+   "kCTFontTableCFF2": { "value": 1128678962 },
+   "kCTFontTableCOLR": { "value": 1129270354 },
+   "kCTFontTableCPAL": { "value": 1129333068 },
+   "kCTFontTableMERG": { "value": 1296388679 },
+   "kCTFontTableMVAR": { "value": 1297498450 },
+   "kCTFontTableSTAT": { "value": 1398030676 },
+   "kCTFontTableSVG": { "value": 1398163232 },
+   "kCTFontTableVVAR": { "value": 1448493394 },
+   "kCTFontTableCidg": { "value": 1667851367 },
+   "kCTFontTableFond": { "value": 1718578788 },
+   "kCTFontTableMeta": { "value": 1835365473 },
+   "kCTFontTableXref": { "value": 2020762982 },
+   "kCTFontTableHVAR": { "value": 1213612370 },
    "kCTFontManagerErrorSystemRequired": { "value": 203 },
    "kCTLineBoundsIncludeLanguageExtents": { "value": 32 },
    "kCTVersionNumber10_11": { "value": 524288 },
-   "kCTVersionNumber10_12": { "value": 589824 }
+   "kCTVersionNumber10_12": { "value": 589824 },
+   "kCTVersionNumber10_13": { "value": 655360 }
   },
   "externs": {
+   "kCTBaselineOffsetAttributeName": { "typestr": "@" },
    "kCTRubyAnnotationSizeFactorAttributeName": { "typestr": "@" },
    "kCTRubyAnnotationScaleToFitAttributeName": { "typestr": "@" },
    "kCTFontDownloadedAttribute": { "typestr": "@" },

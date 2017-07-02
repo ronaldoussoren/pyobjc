@@ -10,8 +10,24 @@
   "externs": {
    "PHLivePhotoEditingErrorDomain": { "typestr": "@" },
    "PHLivePhotoShouldRenderAtPlaybackTime": { "typestr": "@" }
+   "PHImageManagerMaximumSize": { "typestr": "@", "comment": "FIXME" },
+   "PHImageResultIsInCloudKey": { "typestr": "@" },
+   "PHImageResultIsDegradedKey": { "typestr": "@" },
+   "PHImageResultRequestIDKey": { "typestr": "@" },
+   "PHImageCancelledKey": { "typestr": "@" },
+   "PHImageErrorKey": { "typestr": "@" }
   },
   "enum": {
+   "PHInvalidImageRequestID": { "value": 0 },
+   "PHImageRequestOptionsResizeModeNone": { "value": 0 },
+   "PHImageRequestOptionsResizeModeFast": { "value": 1 },
+   "PHImageRequestOptionsResizeModeExact": { "value": 2 },
+   "PHImageRequestOptionsVersionCurrent": { "value": 0 },
+   "PHImageRequestOptionsVersionUnadjusted": { "value": 1 },
+   "PHImageRequestOptionsVersionOriginal": { "value": 2 },
+   "PHImageRequestOptionsDeliveryModeOpportunistic": { "value": 0 },
+   "PHImageRequestOptionsDeliveryModeHighQualityFormat": { "value": 1 },
+   "PHImageRequestOptionsDeliveryModeFastFormat": { "value": 2 },
    "PHCollectionEditOperationDeleteContent": { "value": 1 },
    "PHCollectionEditOperationRemoveContent": { "value": 2 },
    "PHCollectionEditOperationAddContent": { "value": 3 },
@@ -89,6 +105,138 @@
    "PHAssetResourceTypePairedVideo": { "value": 9 }
   },
   "classes": {
+   "PHImageRequestOptions": {
+    "methods": [
+     {
+      "class_method": false,
+      "selector": "isNetworkAccessAllowed",
+      "retval": { "type_override": "Z" }
+     },
+     {
+      "class_method": false,
+      "selector": "setNetworkAccessAllowed:",
+      "args": {
+       "0": { "type_override": "Z" }
+      }
+     },
+     {
+      "class_method": false,
+      "selector": "isSynchronous",
+      "retval": { "type_override": "Z" }
+     },
+     {
+      "class_method": false,
+      "selector": "setSynchronous:",
+      "args": {
+       "0": { "type_override": "Z" }
+      }
+     },
+     {
+      "class_method": false,
+      "selector": "progressHandler",
+      "retval": {
+       "callable": {
+        "arguments": {
+	 "0": { "typestr": "^v" },
+	 "1", { "typestr": "d" },
+	 "2": { "typestr": "@" },
+	 "3": { "typestr": "o^Z" },
+	 "4": { "typestr": "@" }
+	},
+	"retval": { "typestr": "v" }
+       }
+      }
+     },
+     {
+      "class_method": false,
+      "selector": "setProgressHandler:",
+      "args": {
+       "0": {
+        "callable": {
+         "arguments": {
+	  "0": { "typestr": "^v" },
+	  "1", { "typestr": "d" },
+	  "2": { "typestr": "@" },
+	  "3": { "typestr": "o^Z" },
+	  "4": { "typestr": "@" }
+	 },
+	 "retval": { "typestr": "v" }
+	}
+       }
+      }
+     }
+    ]
+   },
+   "PHObjectChangeDetails": {
+    "method": [
+     {
+      "class_method": false,
+      "selector":  "assetContentChanged",
+      "retval": { "type_override": "Z" }
+     },
+     {
+      "class_method": false,
+      "selector":  "objectWasDeleted",
+      "retval": { "type_override": "Z" }
+     }
+    ]
+   },
+   "PHFetchOptions": {
+    "method": [
+     {
+      "class_method": false,
+      "selector":  "includeHiddenAssets",
+      "retval": { "type_override": "Z" }
+     },
+     {
+      "class_method": false,
+      "selector":  "setIncludeHiddenAssets:",
+      "args":
+       "0": { "type_override": "Z" }
+      }
+     },
+     {
+      "class_method": false,
+      "selector":  "wantsIncrementalChangeDetails",
+      "retval": { "type_override": "Z" }
+     },
+     {
+      "class_method": false,
+      "selector":  "setWantsIncrementalChangeDetails:",
+      "args":
+       "0": { "type_override": "Z" }
+      }
+     }
+    ]
+   },
+   "PHFetchResultChangeDetails": {
+    "method": [
+     {
+      "class_method": false,
+      "selector":  "hasIncrementalChanges",
+      "retval": { "type_override": "Z" }
+     },
+     {
+      "class_method": false,
+      "selector":  "hasMoves",
+      "retval": { "type_override": "Z" }
+     }
+    ]
+   },
+   "PHAsset": {
+    "method": [
+     {
+      "class_method": false,
+      "selector":  "isHidden",
+      "retval": { "type_override": "Z" }
+     },
+     {
+      "class_method": false,
+      "selector":  "isFavorite",
+      "retval": { "type_override": "Z" }
+     }
+    ]
+   },
    "NSObject": {
     "methods": [
      {
@@ -105,6 +253,61 @@
       "class_method": false,
       "selector": "time",
       "retval": { "type_override": "{_CMTime=qiIq}" }
+     }
+    ]
+   },
+   "PHFetchResult": {
+    "methods": [
+     {
+      "selector": "enumerateObjectsUsingBlock:",
+      "class_method": false,
+      "args": {
+       "0": {
+        "callable": {
+         "retval": { "typestr": "v" },
+	 "arguments": {
+	  "0": { "typestr": "^v" },
+	  "1": { "typestr": "@" },
+	  "2": { "typestr": ["I", "Q"] },
+	  "3": { "typestr": "o^@" }
+	 }
+	}
+       }
+      }
+     },
+     {
+      "selector": "enumerateObjectsWithOptions:usingBlock:",
+      "class_method": false,
+      "args": {
+       "1": {
+        "callable": {
+         "retval": { "typestr": "v" },
+	 "arguments": {
+	  "0": { "typestr": "^v" },
+	  "1": { "typestr": "@" },
+	  "2": { "typestr": ["I", "Q"] },
+	  "3": { "typestr": "o^@" }
+	 }
+	}
+       }
+      }
+     },
+     {
+      "selector": "enumerateObjectsAtIndexes:options:usingBlock:",
+      "class_method": false,
+      "args": {
+       "2": {
+        "callable": {
+         "retval": { "typestr": "v" },
+	 "arguments": {
+	  "0": { "typestr": "^v" },
+	  "1": { "typestr": "@" },
+	  "2": { "typestr": ["I", "Q"] },
+	  "3": { "typestr": "o^@" }
+	 }
+	}
+       }
+      }
      }
     ]
    },

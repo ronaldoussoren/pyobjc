@@ -6,6 +6,18 @@
     "AVPlayerView": {
        "methods": [
          {
+	  "class_method": false,
+	  "selector": "updatesNowPlayingInfoCenter",
+	  "retval": { "type_override": "Z" }
+	 },
+         {
+	  "class_method": false,
+	  "selector": "setUpdatesNowPlayingInfoCenter:",
+	  "args": {
+	   "0": { "type_override": "Z" }
+	  }
+	 },
+         {
 	   "class_method": false,
 	   "selector": "beginTrimmingWithCompletionHandler:",
 	   "args": {

@@ -25,8 +25,13 @@ if sys.maxsize > 2 ** 32:
         @min_os_level("10.9")
         @expectedFailure
         def testMethods10_9_missing(self):
-            #self.assertArgIsBOOL(AVKit.AVCaptureView.setReadyForDisplay_, 0)
             self.assertResultIsBOOL(AVKit.AVCaptureView.alloc().init().isReadyForDisplay)
+            self.assertArgIsBOOL(AVKit.AVCaptureView.setReadyForDisplay_, 0)
+
+        @min_os_level("10.13")
+        def testMethods10_13(self):
+            self.assertArgIsBOOL(AVKit.AVPlayerView.setUpdatesNowPlayingInfoCenter_, 0)
+            self.assertResultIsBOOL(AVKit.AVPlayerView.updatesNowPlayingInfoCenter)
 
         @min_os_level("10.9")
         def test_constants(self):

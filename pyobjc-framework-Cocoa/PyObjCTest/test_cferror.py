@@ -92,5 +92,9 @@ class TestError (TestCase):
         self.assertIsInstance(kCFErrorURLKey, unicode)
         self.assertIsInstance(kCFErrorFilePathKey, unicode)
 
+    @min_os_level('10.13')
+    def testConstants10_13(self):
+        self.assertIsInstance(kCFErrorLocalizedFailureKey, unicode)
+
 if __name__ == "__main__":
     main()

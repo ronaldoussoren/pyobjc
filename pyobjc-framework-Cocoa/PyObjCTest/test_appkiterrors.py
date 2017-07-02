@@ -19,6 +19,9 @@ class TestAppKitErrors (TestCase):
         self.assertEqual(NSSharingServiceNotConfiguredError, 67072)
         self.assertEqual(NSSharingServiceErrorMinimum, 67072)
         self.assertEqual(NSSharingServiceErrorMaximum, 67327)
+        self.assertEqual(NSFontAssetDownloadError, 66304)
+        self.assertEqual(NSFontErrorMinimum, 66304)
+        self.assertEqual(NSFontErrorMaximum, 66335)
 
 if __name__ == "__main__":
     main()

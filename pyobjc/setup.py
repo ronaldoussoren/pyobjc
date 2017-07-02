@@ -35,7 +35,7 @@ FRAMEWORKS_WRAPPERS=[
         ('CloudKit',                '10.10',            None        ),
         ('Cocoa',                   None,               None        ),
         ('Collaboration',           '10.5',             None        ),
-        #('ColorSync',               '10.13',            None        ),
+        ('ColorSync',               '10.13',            None        ),
         ('Contacts',                '10.11',            None        ),
         ('ContactsUI',              '10.11',            None        ),
         ('CoreBluetooth',           '10.10',            None        ),

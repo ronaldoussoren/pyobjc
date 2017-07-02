@@ -21,6 +21,11 @@ class TestCBUUID (TestCase):
         self.assertIsInstance(CoreBluetooth.CBUUIDPeripheralPreferredConnectionParametersString, unicode)
         self.assertIsInstance(CoreBluetooth.CBUUIDServiceChangedString, unicode)
 
+    @min_os_level('10.13')
+    def testConstants10_13(self):
+        self.assertIsInstance(CoreBluetooth.CBUUIDCharacteristicValidRangeString, unicode)
+        self.assertIsInstance(CoreBluetooth.CBUUIDL2CAPPSMCharacteristicString, unicode)
+
     @min_os_level("10.9")
     def testClasses(self):
         self.assertIsInstance(CoreBluetooth.CBUUID, objc.objc_class)

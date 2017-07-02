@@ -46,6 +46,11 @@
    "kCFNumberFormatterCurrencyAccountingStyle": { "value": "10" }
   },
   "externs": {
+    "kCFURLVolumeAvailableCapacityForImportantUsageKey": { "typestr": "@" },
+    "kCFURLVolumeAvailableCapacityForOpportunisticUsageKey": { "typestr": "@" },
+    "kCFURLVolumeSupportsImmutableFilesKey": { "typestr": "@" },
+    "kCFURLVolumeSupportsAccessPermissionsKey": { "typestr": "@" },
+    "kCFErrorLocalizedFailureKey": { "typestr": "@" },
     "kCFURLVolumeIsEncryptedKey": { "typestr": "@" },
     "kCFURLVolumeIsRootFileSystemKey": { "typestr": "@" },
     "kCFURLVolumeSupportsCompressionKey": { "typestr": "@" },

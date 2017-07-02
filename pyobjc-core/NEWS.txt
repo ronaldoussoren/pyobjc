@@ -10,22 +10,32 @@ Version 4.0
 
 * metadata updates (beta 1):
 
+  - PhotosUI
   - Accounts
   - AddressBook
   - ApplicationServices
   - Automator
+  - AVKit
   - CFNetwork
   - Contacts
+  - CoreBluetooth
+  - CoreFoundation
+  - CoreLocation
+  - CoreServices
+  - CoreText
   - CoreWLAN
   - CryptoTokenKit
   - EventKit
   - FinderSync
+  - FSEvents
   - GameController
   - IMServicePlugIn
   - IMServicePlugIn
   - ImageCaptureCore
   - ImageCaptureCore
+  - ImageIO
   - JavaScriptCore
+  - LocalAuthentication
   - MapKit
   - MediaLibrary
   - MediaPlayer

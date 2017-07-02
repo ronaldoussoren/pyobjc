@@ -7,6 +7,9 @@ if sys.maxsize > 2 ** 32:
     class TestLAPublicDefines (TestCase):
         @min_os_level("10.10")
         def testConstants(self):
+            self.assertEqual(LocalAuthentication.kLACredentialTypeApplicationPassword, 1)
+            self.assertEqual(LocalAuthentication.kLAErrorNotInteractive, -1004)
+
             self.assertEqual(LocalAuthentication.kLAPolicyDeviceOwnerAuthenticationWithBiometrics, 1)
             self.assertEqual(LocalAuthentication.kLAPolicyDeviceOwnerAuthentication, 2)
             self.assertEqual(LocalAuthentication.kLAOptionUserFallback, 1)

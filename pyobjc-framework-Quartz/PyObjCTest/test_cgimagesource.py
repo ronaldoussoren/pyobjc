@@ -60,5 +60,9 @@ class TestCGImageSource (TestCase):
     def testFunctions10_9(self):
         Quartz.CGImageSourceRemoveCacheAtIndex
 
+    @min_os_level('10.13')
+    def testFunctions10_13(self):
+        self.assertResultIsCFRetaind(Quartz.CGImageSourceCopyAuxiliaryDataInfoAtIndex)
+
 if __name__ == "__main__":
     main()
