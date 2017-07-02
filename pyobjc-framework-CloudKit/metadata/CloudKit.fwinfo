@@ -3,6 +3,14 @@
 {
  "definitions": {
   "enum": {
+   "CKOperationGroupTransferSizeUnknown": { "value": 0 },
+   "CKOperationGroupTransferSizeKilobytes": { "value": 1 },
+   "CKOperationGroupTransferSizeMegabytes": { "value": 2 },
+   "CKOperationGroupTransferSizeTensOfMegabytes": { "value": 3 },
+   "CKOperationGroupTransferSizeHundredsOfMegabytes": { "value": 4 },
+   "CKOperationGroupTransferSizeGigabytes": { "value": 5 },
+   "CKOperationGroupTransferSizeTensOfGigabytes": { "value": 6 },
+   "CKOperationGroupTransferSizeHundredsOfGigabytes": { "value": 7 },
    "CKQuerySubscriptionOptionsFiresOnRecordCreation": { "value": 1 },
    "CKQuerySubscriptionOptionsFiresOnRecordUpdate": { "value": 2 },
    "CKQuerySubscriptionOptionsFiresOnRecordDeletion": { "value": 4 },
@@ -16,6 +24,7 @@
    "CKErrorReferenceViolation": { "value": 31 },
    "CKErrorManagedAccountRestricted": { "value": 32 },
    "CKErrorParticipantMayNeedVerification": { "value": 33 },
+   "CKErrorServerResponseLost": { "value": 34 },
    "CKNotificationTypeDatabase": { "value": 4 },
    "CKRecordZoneCapabilitySharing": { "value": 4 },
    "CKShareParticipantAcceptanceStatusUnknown": { "value": 0 },
@@ -42,6 +51,22 @@
    "CKShareTypeKey": { "typestr": "@" }
   },
   "classes": {
+    "CKNotificationInfo": {
+     "methods": [
+      {
+       "selector": "shouldSendMutableContent",
+       "class_method": false,
+       "retval": { "type_override": "Z" }
+      },
+      {
+       "selector": "setShouldSendMutableContent:",
+       "class_method": false,
+       "args": {
+        "0": { "type_override": "Z" }
+       }
+      }
+     ]
+    },
     "CKUserIdentity": {
      "methods": [
       {
@@ -109,6 +134,34 @@
         }
        }
       }
+     ]
+    },
+    "CKOperationConfiguration": {
+     "method": [
+        {
+	 "selector": "setAllowsCellularAccess:",
+	 "class_method": false,
+	 "args": {
+	  "0": { "type_override": "Z" }
+	 }
+	},
+        {
+	 "selector": "allowsCellularAccess",
+	 "class_method": false,
+	 "retval": { "type_override": "Z" }
+	},
+        {
+	 "selector": "setLongLived:",
+	 "class_method": false,
+	 "args": {
+	  "0": { "type_override": "Z" }
+	 }
+	},
+        {
+	 "selector": "isLongLived",
+	 "class_method": false,
+	 "retval": { "type_override": "Z" }
+	}
      ]
     },
     "CKOperation": {
@@ -443,6 +496,34 @@
       },
       {
        "selector": "recordZoneWithIDWasDeletedBlock",
+       "class_method": false,
+       "retval": {
+        "callable": {
+	 "arguments": {
+          "0": { "typestr": "^v" },
+          "1": { "typestr": "@" }
+         },
+         "retval": { "typestr":  "v" }
+        }
+       }
+      },
+      {
+       "selector": "setRecordZoneWithIDWasPurgedBlock:",
+       "class_method": false,
+       "args": {
+        "0": {
+         "callable": {
+	  "arguments": {
+           "0": { "typestr": "^v" },
+           "1": { "typestr": "@" }
+          },
+          "retval": { "typestr":  "v" }
+         }
+        }
+       }
+      },
+      {
+       "selector": "recordZoneWithIDWasPurgedBlock",
        "class_method": false,
        "retval": {
         "callable": {

@@ -17,6 +17,7 @@ Version 4.0
   - Automator
   - AVKit
   - CFNetwork
+  - CloudKit
   - Contacts
   - CoreBluetooth
   - CoreFoundation
