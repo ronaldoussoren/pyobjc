@@ -8,6 +8,10 @@ Version 4.0
 
 * Add availability macro ``MAC_OS_X_VERSION_10_13`` to ``objc``.
 
+* New framework wrappers:
+
+  - ExternalAccessory (new in macOS 10.13)
+
 * metadata updates (beta 1):
 
   - PhotosUI
@@ -35,6 +39,7 @@ Version 4.0
   - ImageCaptureCore
   - ImageCaptureCore
   - ImageIO
+  - Intents
   - JavaScriptCore
   - LocalAuthentication
   - MapKit
@@ -44,11 +49,14 @@ Version 4.0
   - OpenDirectory
   - QTKit
   - QTKit
+  - QuartzCore
   - QuickLook
   - QuickLook
   - SafariServices
   - ScreenSaver
+  - SpriteKit
   - SystemConfiguration
+  - WebKit
 
 Version 3.3
 -----------

@@ -2,7 +2,14 @@
 # for information on how to update this file.
 {
  "definitions": {
+  "enum": {
+   "kCALayerMinXMinYCorner": { "value": 1 },
+   "kCALayerMaxXMinYCorner": { "value": 2 },
+   "kCALayerMinXMaxYCorner": { "value": 4 },
+   "kCALayerMaxXMaxYCorner": { "value": 8 }
+  },
   "externs": {
+   "kCARendererColorSpace": { "typestr": "@" },
    "CIDetectorMaxFeatureCount": { "typestr": "@" },
    "kCIInputBaselineExposureKey": { "typestr": "@" },
    "kCIInputDisableGamutMapKey": { "typestr": "@" },
@@ -255,6 +262,30 @@
    },
    "CAMetalLayer": {
     "methods": [
+     {
+      "args": {
+       "0": { "type_override": "Z" }
+      },
+      "class_method": false,
+      "selector": "setAllowsNextDrawableTimeout:"
+     },
+     {
+      "retval": { "type_override": "Z" },
+      "class_method": false,
+      "selector": "allowsNextDrawableTimeout"
+     },
+     {
+      "args": {
+       "0": { "type_override": "Z" }
+      },
+      "class_method": false,
+      "selector": "setDisplaySyncEnabled::"
+     },
+     {
+      "retval": { "type_override": "Z" },
+      "class_method": false,
+      "selector": "displaySyncEnabled"
+     },
      {
       "args": {
        "0": { "type_override": "Z" }

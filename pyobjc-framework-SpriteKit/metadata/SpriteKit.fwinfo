@@ -375,6 +375,94 @@
      }
     ]
    },
+   "SKRenderer": {
+    "methods": [
+     {
+      "class_method": false,
+      "selector": "ignoresSiblingOrder",
+      "retval": { "type_override": "Z" }
+     },
+     {
+      "class_method": false,
+      "selector": "setIgnoresSiblingOrder:",
+      "args": {
+       "0": { "type_override": "Z" }
+      }
+     },
+     {
+      "class_method": false,
+      "selector": "shouldCullNonVisibleNodes",
+      "retval": { "type_override": "Z" }
+     },
+     {
+      "class_method": false,
+      "selector": "setShouldCullNonVisibleNodes:",
+      "args": {
+       "0": { "type_override": "Z" }
+      }
+     },
+     {
+      "class_method": false,
+      "selector": "showsDrawCount",
+      "retval": { "type_override": "Z" }
+     },
+     {
+      "class_method": false,
+      "selector": "setShowsDrawCount:",
+      "args": {
+       "0": { "type_override": "Z" }
+      }
+     },
+     {
+      "class_method": false,
+      "selector": "showsNodeCount",
+      "retval": { "type_override": "Z" }
+     },
+     {
+      "class_method": false,
+      "selector": "setShowsNodeCount:",
+      "args": {
+       "0": { "type_override": "Z" }
+      }
+     },
+     {
+      "class_method": false,
+      "selector": "showsQuadCount",
+      "retval": { "type_override": "Z" }
+     },
+     {
+      "class_method": false,
+      "selector": "setShowsQuadCount:",
+      "args": {
+       "0": { "type_override": "Z" }
+      }
+     },
+     {
+      "class_method": false,
+      "selector": "showsPhysics",
+      "retval": { "type_override": "Z" }
+     },
+     {
+      "class_method": false,
+      "selector": "setShowsPhysics:",
+      "args": {
+       "0": { "type_override": "Z" }
+      }
+     },
+     {
+      "class_method": false,
+      "selector": "showsFields",
+      "retval": { "type_override": "Z" }
+     },
+     {
+      "class_method": false,
+      "selector": "setShowsFields:",
+      "args": {
+       "0": { "type_override": "Z" }
+      }
+     }
+    ]
+   },
    "SKRegion": {
     "methods": [
      {

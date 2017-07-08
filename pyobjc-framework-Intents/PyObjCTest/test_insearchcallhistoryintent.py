@@ -10,6 +10,8 @@ if sys.maxsize > 2 ** 32:
         def resolveCallTypeForSearchCallHistory_withCompletion_(self, intent, completion): pass
         def resolveRecipientForSearchCallHistory_withCompletion_(self, intent, completion): pass
         def resolveCallCapabilitiesForSearchCallHistory_withCompletion_(self, intent, completion): pass
+        def resolveCallTypesForSearchCallHistory_withCompletion_(self, intent, completion): pass
+        def resolveUnseenForSearchCallHistory_withCompletion_(self, intent, completion): pass
 
     class TestINSearchCallHistoryIntent (TestCase):
         @min_os_level('10.12')
@@ -20,6 +22,11 @@ if sys.maxsize > 2 ** 32:
             self.assertArgIsBlock(TestINSearchCallHistoryIntentHelper.resolveRecipientForSearchCallHistory_withCompletion_, 1, b'v@')
             # Removed in Xcode 8.1
             #self.assertArgIsBlock(TestINSearchCallHistoryIntentHelper.resolveCallCapabilitiesForSearchCallHistory_withCompletion_, 1, b'v@')
+
+        @min_os_level('10.13')
+        def testMethods10_13(self):
+            self.assertArgIsBlock(TestINSearchCallHistoryIntentHelper.resolveCallTypesForSearchCallHistory_withCompletion_, 1, b'v@')
+            self.assertArgIsBlock(TestINSearchCallHistoryIntentHelper.resolveUnseenForSearchCallHistory_withCompletion_, 1, b'v@')
 
         @min_sdk_level('10.12')
         def testProtocols(self):

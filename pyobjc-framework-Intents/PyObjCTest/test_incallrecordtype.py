@@ -12,6 +12,10 @@ if sys.maxsize > 2 ** 32:
             self.assertEqual(Intents.INCallRecordTypeMissed, 2)
             self.assertEqual(Intents.INCallRecordTypeReceived, 3)
 
+            self.assertEqual(Intents.INCallRecordTypeLatest, 4)
+            self.assertEqual(Intents.INCallRecordTypeUnseen, 5)
+            self.assertEqual(Intents.INCallRecordTypeVoicemail, 6)
+
 
 if __name__ == "__main__":
     main()

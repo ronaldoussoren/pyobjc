@@ -51,7 +51,7 @@ FRAMEWORKS_WRAPPERS=[
         ('DiskArbitration',         None,               None        ),
         ('EventKit',                '10.8',             None        ),
         ('ExceptionHandling',       None,               None        ),
-        #('ExternalAccessory',       '10.13',            None        ),
+        ('ExternalAccessory',       '10.13',            None        ),
         ('FSEvents',                '10.5',             None        ),
         ('FinderSync',              '10.10',            None        ),
         ('GameCenter',              '10.8',             None        ),

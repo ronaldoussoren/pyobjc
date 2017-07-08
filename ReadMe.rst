@@ -8,6 +8,8 @@ The branch 'macos10.13-support' is an unstable branch that will
 be used to add support for macOS 10.13 (High Sierra), primarily
 for metadata.
 
+Warning: I have not tested this branch on macOS 10.13 at all.
+
 
 Introduction
 ------------

@@ -12,6 +12,7 @@ if sys.maxsize > 2 ** 32:
         def resolveGroupNameForSendMessage_withCompletion_(self, intent, completion): pass
         def resolveServiceNameForSendMessage_withCompletion_(self, intent, completion): pass
         def resolveSenderForSendMessage_withCompletion_(self, intent, completion): pass
+        def resolveSpeakableGroupNameForSendMessage_withCompletion_(self, intent, completion): pass
 
     class TestINSendMessageIntent (TestCase):
         @min_os_level('10.12')
@@ -24,6 +25,7 @@ if sys.maxsize > 2 ** 32:
             self.assertArgIsBlock(TestINSendMessageIntentHelper.resolveGroupNameForSendMessage_withCompletion_, 1, b'v@')
             #self.assertArgIsBlock(TestINSendMessageIntentHelper.resolveServiceNameForSendMessage_withCompletion_, 1, b'v@')
             #self.assertArgIsBlock(TestINSendMessageIntentHelper.resolveSenderForSendMessage_withCompletion_, 1, b'v@')
+            self.assertArgIsBlock(TestINSendMessageIntentHelper.resolveSpeakableGroupNameForSendMessage_withCompletion_, 1, b'v@')
 
         @min_sdk_level('10.12')
         def testProtocols(self):

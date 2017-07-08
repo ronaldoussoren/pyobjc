@@ -13,6 +13,10 @@ class TestWKError (TestCase):
         self.assertEqual(WKErrorWebViewInvalidated, 3)
         self.assertEqual(WKErrorJavaScriptExceptionOccurred, 4)
         self.assertEqual(WKErrorJavaScriptResultTypeIsUnsupported, 5)
+        self.assertEqual(WKErrorContentRuleListStoreCompileFailed, 6)
+        self.assertEqual(WKErrorContentRuleListStoreLookUpFailed, 7)
+        self.assertEqual(WKErrorContentRuleListStoreRemoveFailed, 8)
+        self.assertEqual(WKErrorContentRuleListStoreVersionMismatch, 9)
 
 
 if __name__ == "__main__":

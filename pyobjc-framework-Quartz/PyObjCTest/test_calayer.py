@@ -39,6 +39,11 @@ class TestCALayer (TestCase):
         self.assertIsInstance(kCAOnOrderOut, unicode)
         self.assertIsInstance(kCATransition, unicode)
 
+        self.assertEqual(kCALayerMinXMinYCorner, 1<<0)
+        self.assertEqual(kCALayerMaxXMinYCorner, 1<<1)
+        self.assertEqual(kCALayerMinXMaxYCorner, 1<<2)
+        self.assertEqual(kCALayerMaxXMaxYCorner, 1<<3)
+
 
     @min_os_level('10.5')
     def testMethods(self):
