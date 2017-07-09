@@ -15,6 +15,8 @@ class TestNSAttributeDescription (TestCase):
         self.assertEqual(NSBooleanAttributeType, 800)
         self.assertEqual(NSDateAttributeType, 900)
         self.assertEqual(NSBinaryDataAttributeType, 1000)
+        self.assertEqual(NSUUIDAttributeType, 1100)
+        self.assertEqual(NSURIAttributeType, 1200)
 
     @min_os_level("10.5")
     def testConstants10_5(self):

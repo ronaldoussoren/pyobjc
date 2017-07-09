@@ -24,6 +24,7 @@ Version 4.0
   - CloudKit
   - Contacts
   - CoreBluetooth
+  - CoreData
   - CoreFoundation
   - CoreLocation
   - CoreServices
