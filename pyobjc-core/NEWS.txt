@@ -47,6 +47,8 @@ Version 4.0
   - MediaPlayer
   - MultipeerConnectivity
   - OpenDirectory
+  - Photos
+  - PhotosUI
   - QTKit
   - QTKit
   - QuartzCore

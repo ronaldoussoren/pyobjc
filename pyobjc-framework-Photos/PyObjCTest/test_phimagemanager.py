@@ -42,5 +42,8 @@ if sys.maxsize > 2 ** 32:
             self.assertResultIsBlock(Photos.PHImageRequestOptions.progressHandler, PHAssetImageProgressHandler)
             self.assertArgIsBlock(Photos.PHImageRequestOptions.setProgressHandler_, 0, PHAssetImageProgressHandler)
 
+            self.assertArgIsBlock(Photos.PHImageManager.requestImageForAsset_targetSize_contentMode_options_resultHandler_, 4, b'v@@')
+            self.assertArgIsBlock(Photos.PHImageManager.requestImageForAsset_options_resultHandler_, 2, b'v@I@')
+
 if __name__ == "__main__":
     main()

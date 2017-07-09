@@ -56,6 +56,7 @@ if sys.maxsize > 2 ** 32:
             self.assertEqual(Photos.PHAssetCollectionSubtypeAlbumSyncedFaces, 4)
             self.assertEqual(Photos.PHAssetCollectionSubtypeAlbumSyncedAlbum, 5)
             self.assertEqual(Photos.PHAssetCollectionSubtypeAlbumImported, 6)
+            self.assertEqual(Photos.PHAssetCollectionSubtypeAlbumImportHistory, 6)
             self.assertEqual(Photos.PHAssetCollectionSubtypeAlbumMyPhotoStream, 100)
             self.assertEqual(Photos.PHAssetCollectionSubtypeAlbumCloudShared, 101)
             self.assertEqual(Photos.PHAssetCollectionSubtypeSmartAlbumGeneric, 200)
@@ -70,6 +71,8 @@ if sys.maxsize > 2 ** 32:
             self.assertEqual(Photos.PHAssetCollectionSubtypeSmartAlbumUserLibrary, 209)
             self.assertEqual(Photos.PHAssetCollectionSubtypeSmartAlbumSelfPortraits, 210)
             self.assertEqual(Photos.PHAssetCollectionSubtypeSmartAlbumScreenshots, 211)
+            self.assertEqual(Photos.PHAssetCollectionSubtypeSmartAlbumDepthEffect, 212)
+            self.assertEqual(Photos.PHAssetCollectionSubtypeSmartAlbumLivePhotos, 213)
             self.assertEqual(Photos.PHAssetCollectionSubtypeAny, sys.maxsize)
 
             self.assertEqual(Photos.PHAssetEditOperationDelete, 1)
@@ -94,6 +97,14 @@ if sys.maxsize > 2 ** 32:
             self.assertEqual(Photos.PHAssetResourceTypeAdjustmentData, 7)
             self.assertEqual(Photos.PHAssetResourceTypeAdjustmentBasePhoto, 8)
             self.assertEqual(Photos.PHAssetResourceTypePairedVideo, 9)
+
+            self.assertEqual(Photos.PHAssetPlaybackStyleUnsupported, 0)
+            self.assertEqual(Photos.PHAssetPlaybackStyleImage, 1)
+            self.assertEqual(Photos.PHAssetPlaybackStyleImageAnimated, 2)
+            self.assertEqual(Photos.PHAssetPlaybackStyleLivePhoto, 3)
+            self.assertEqual(Photos.PHAssetPlaybackStyleVideo, 4)
+            self.assertEqual(Photos.PHAssetPlaybackStyleVideoLooping, 5)
+
 
 
 if __name__ == "__main__":
