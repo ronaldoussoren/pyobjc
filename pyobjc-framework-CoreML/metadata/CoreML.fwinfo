@@ -1,0 +1,132 @@
+{
+ "definitions": {
+  "enum": {
+   "MLMultiArrayDataTypeDouble": { "value": 65600 },
+   "MLMultiArrayDataTypeFloat32": { "value": 65568 },
+   "MLMultiArrayDataTypeInt32": { "value": 131104 },
+   "MLModelErrorGeneric": { "value": 0 },
+   "MLModelErrorFeatureType": { "value": 1 },
+   "MLModelErrorDescriptionMismatch": { "value": 2 },
+   "MLModelErrorIO": { "value": 3 },
+   "MLFeatureTypeInvalid": { "value": 0 },
+   "MLFeatureTypeInt64": { "value": 1 },
+   "MLFeatureTypeDouble": { "value": 2 },
+   "MLFeatureTypeString": { "value": 3 },
+   "MLFeatureTypeImage": { "value": 4 },
+   "MLFeatureTypeMultiArray": { "value": 5 },
+   "MLFeatureTypeDictionary": { "value": 6 }
+  },
+  "externs": {
+   "MLModelDescriptionKey": { "typestr": "@" },
+   "MLModelVersionStringKey": { "typestr": "@" },
+   "MLModelAuthorKey": { "typestr": "@" },
+   "MLModelLicenseKey": { "typestr": "@" }
+  },
+  "classes": {
+   "MLDictionaryFeatureProvider": {
+    "methods": [
+     {
+      "selector": "initWithDictionary:error:",
+      "class_method": false,
+      "args": {
+       "1": { "type_modifier": "o" }
+      }
+     }
+    ]
+   },
+   "MLFeatureDescription": {
+    "methods": [
+     {
+      "selector": "setOptional:",
+      "class_method": false,
+      "args": {
+       "0": { "type_override": "Z" }
+      }
+     },
+     {
+      "selector": "isOptional:",
+      "class_method": false,
+      "retval": { "type_override": "Z" }
+     },
+     {
+      "selector": "isAllowedValue:",
+      "class_method": false,
+      "retval": { "type_override": "Z" }
+     }
+    ]
+   },
+   "MLFeatureValue": {
+    "methods": [
+     {
+      "selector": "isUndefined",
+      "class_method": false,
+      "retval": { "type_override": "Z" }
+     },
+     {
+      "selector": "isEqualToFeatureValue:",
+      "class_method": false,
+      "retval": { "type_override": "Z" }
+     },
+     {
+      "selector": "featureValueWithDictionary:error:",
+      "class_method": true,
+      "args": {
+       "1": { "type_modifier": "o" }
+      }
+     }
+    ]
+   },
+   "MLModel": {
+    "methods": [
+     {
+      "selector": "modelWithContentsOfURL:error:",
+      "class_method": true,
+      "args": {
+       "1": { "type_modifier": "o" }
+      }
+     },
+     {
+      "selector": "predictionFromFeatures:error:",
+      "class_method": false,
+      "args": {
+       "1": { "type_modifier": "o" }
+      }
+     }
+    ]
+   },
+   "MLMultiArray": {
+    "methods": [
+     {
+      "selector": "dataPointer",
+      "class_method": false,
+      "retval": { "c_array_of_variable_length": true }
+     },
+     {
+      "selector": "initiWithShape:dataType:error:",
+      "class_method": false,
+      "args": {
+       "2": { "type_modifier": "o" }
+      }
+     },
+     {
+      "selector": "initWithDataPointer:shape:dataType:strides:deallocator:error:",
+      "class_method": false,
+      "args": {
+       "0": { "c_array_of_variable_length": true, "type_modifier": "n" },
+       "4": {
+        "callable": {
+	 "arguments": {
+	  "0": { "typestr": "^v" },
+	  "1": { "typestr": "^v" }
+	 },
+	 "retval": { "typestr": "v" }
+	}
+       },
+       "5": { "type_modifier": "o" }
+      }
+     }
+    ]
+   }
+  }
+ }
+}

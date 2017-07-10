@@ -41,7 +41,7 @@ FRAMEWORKS_WRAPPERS=[
         ('CoreBluetooth',           '10.10',            None        ),
         ('CoreData',                None,               None        ),
         ('CoreLocation',            '10.6',             None        ),
-        #('CoreML',                  '10.13',            None        ),
+        ('CoreML',                  '10.13',            None        ),
         ('CoreServices',            None,               None        ),
         #('CoreSpotlight',           '10.13',            None        ),
         ('CoreText',                None,               None        ),
