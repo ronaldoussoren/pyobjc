@@ -83,6 +83,8 @@ struct options {
 BOOL_PROP(verbose, PyObjC_Verbose, NO)
 BOOL_PROP(use_kvo, PyObjC_UseKVO, YES)
 BOOL_PROP(unknown_pointer_raises, PyObjCPointer_RaiseException, NO)
+BOOL_PROP(structs_indexable, PyObjC_StructsIndexable, YES)
+BOOL_PROP(structs_writable, PyObjC_StructsWritable, YES)
 
 #if PY_MAJOR_VERSION == 2
 BOOL_PROP(strbridge_enabled, PyObjC_StrBridgeEnabled, YES)
@@ -178,6 +180,8 @@ static PyGetSetDef object_getset[] = {
     GETSET(verbose,                 "If True the bridge is more verbose"),
     GETSET(use_kvo,                 "The default value for __useKVO__ for new classes"),
     GETSET(unknown_pointer_raises,  "If True the bridge raises an exception instead of creating an ObjCPointer"),
+    GETSET(structs_indexable,       "If True wrappers for C structs can be used as a sequence"),
+    GETSET(structs_writable,       "If True wrappers for C structs can be modified"),
 
 #if PY_MAJOR_VERSION == 2
     GETSET(strbridge_enabled,       "If True the transparent str() bridge is enabled"),

@@ -26,7 +26,7 @@ else:
 
 
 #
-# NSInvocation in MacOS X 10.2 doesn't like some struct definition, it
+# NSInvocation in macOS 10.2 doesn't like some struct definition, it
 # garbles the contents of those structs. These unittests disable NSInvocation
 # tests that fail because of this problem.
 #

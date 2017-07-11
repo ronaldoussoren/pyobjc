@@ -6,10 +6,26 @@ An overview of the relevant changes in new, and older, releases.
 Version 4.0
 -----------
 
+* Using wrappers for C structs as sequences is deprecated, this
+  feature was introduced a long while ago when the framework wrappers
+  were very incomplete and is no longer usefull.
+
+* Add ``objc.options.structs_indexable``. When this option is True
+  (the default) wrappers for C structs behave as before, when the
+  option is False these wrappers can no longer be used as writable
+  tuples, that is all "sequence" methods will raise ``TypeError``.
+
+* Add ``objc.options.structs_writable``. When this option is True
+  (the default) wrappers for C structs behave as before, when the
+  option is False these wrappers can no longer be modified.
+
+  XXX: Need tests for these 3 items.
+
 * Add availability macro ``MAC_OS_X_VERSION_10_13`` to ``objc``.
 
 * New framework wrappers:
 
+  - CoreML (new in macOS 10.13)
   - ExternalAccessory (new in macOS 10.13)
 
 * metadata updates (beta 1):

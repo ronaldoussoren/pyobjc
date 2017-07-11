@@ -50,15 +50,34 @@ struct_sq_length(PyObject* self)
     /* The object contains the generic PyObject header followed by an
      * array of PyObject*-s.
      */
+    if (!PyObjC_StructsIndexable) {
+        PyErr_Format(PyExc_TypeError,
+            "Instances of '%s' are not sequences", Py_TYPE(self)->tp_name);
+        return -1;
+    }
+    if (PyErr_Warn(PyExc_DeprecationWarning, "Using struct wrapper as sequence") < 0) {
+        return -1;
+    }
     return (Py_TYPE(self)->tp_basicsize - sizeof(PyObject)) / sizeof(PyObject*);
 }
 
 static PyObject*
 struct_sq_item(PyObject* self, Py_ssize_t offset)
 {
-    Py_ssize_t len = struct_sq_length(self);
+    Py_ssize_t len;
     PyMemberDef* member;
     PyObject* res;
+
+    if (!PyObjC_StructsIndexable) {
+        PyErr_Format(PyExc_TypeError,
+            "Instances of '%s' are not sequences", Py_TYPE(self)->tp_name);
+        return NULL;
+    }
+    if (PyErr_Warn(PyExc_DeprecationWarning, "Using struct wrapper as sequence") < 0) {
+        return NULL;
+    }
+
+    len = struct_sq_length(self);
 
     if (offset < 0 || offset >= len) {
         PyErr_Format(PyExc_IndexError,
@@ -79,6 +98,15 @@ struct_sq_slice(PyObject* self, Py_ssize_t ilow, Py_ssize_t ihigh)
 {
     PyObject* result;
     Py_ssize_t i, len;
+
+    if (!PyObjC_StructsIndexable) {
+        PyErr_Format(PyExc_TypeError,
+            "Instances of '%s' are not sequences", Py_TYPE(self)->tp_name);
+        return NULL;
+    }
+    if (PyErr_Warn(PyExc_DeprecationWarning, "Using struct wrapper as sequence") < 0) {
+        return NULL;
+    }
 
     len = struct_sq_length(self);
     if (ilow < 0) ilow = 0;
@@ -103,6 +131,20 @@ struct_sq_ass_item(PyObject* self, Py_ssize_t offset, PyObject* newVal)
 {
     Py_ssize_t len;
     PyMemberDef* member;
+
+    if (!PyObjC_StructsIndexable) {
+        PyErr_Format(PyExc_TypeError,
+            "Instances of '%s' are not sequences", Py_TYPE(self)->tp_name);
+        return -1;
+    }
+    if (!PyObjC_StructsWritable) {
+        PyErr_Format(PyExc_TypeError,
+            "Instances of '%s' are read-only", Py_TYPE(self)->tp_name);
+        return -1;
+    }
+    if (PyErr_Warn(PyExc_DeprecationWarning, "Using struct wrapper as sequence") < 0) {
+        return -1;
+    }
 
     if (newVal == NULL) {
         PyErr_Format(PyExc_TypeError,
@@ -129,6 +171,20 @@ struct_sq_ass_slice(PyObject* self, Py_ssize_t ilow, Py_ssize_t ihigh, PyObject*
 {
     PyObject* seq;
     Py_ssize_t i, len;
+
+    if (!PyObjC_StructsIndexable) {
+        PyErr_Format(PyExc_TypeError,
+            "Instances of '%s' are not sequences", Py_TYPE(self)->tp_name);
+        return -1;
+    }
+    if (!PyObjC_StructsWritable) {
+        PyErr_Format(PyExc_TypeError,
+            "Instances of '%s' are read-only", Py_TYPE(self)->tp_name);
+        return -1;
+    }
+    if (PyErr_Warn(PyExc_DeprecationWarning, "Using struct wrapper as sequence") < 0) {
+        return -1;
+    }
 
     if (v == NULL) {
         PyErr_Format(PyExc_TypeError,
@@ -181,6 +237,15 @@ static int
 struct_sq_contains(PyObject* self, PyObject* value)
 {
     PyMemberDef* member = Py_TYPE(self)->tp_members;
+
+    if (!PyObjC_StructsIndexable) {
+        PyErr_Format(PyExc_TypeError,
+            "Instances of '%s' are not sequences", Py_TYPE(self)->tp_name);
+        return -1;
+    }
+    if (PyErr_Warn(PyExc_DeprecationWarning, "Using struct wrapper as sequence") < 0) {
+        return -1;
+    }
 
     while (member && member->name) {
         int r;
@@ -341,6 +406,15 @@ struct_asdict(PyObject* self)
 static PyObject*
 struct_mp_subscript(PyObject* self, PyObject* item)
 {
+    if (!PyObjC_StructsIndexable) {
+        PyErr_Format(PyExc_TypeError,
+            "Instances of '%s' are not sequences", Py_TYPE(self)->tp_name);
+        return NULL;
+    }
+    if (PyErr_Warn(PyExc_DeprecationWarning, "Using struct wrapper as sequence") < 0) {
+        return NULL;
+    }
+
     if (PyIndex_Check(item)) {
         Py_ssize_t i;
         i = PyNumber_AsSsize_t(item, PyExc_IndexError);
@@ -396,6 +470,20 @@ struct_mp_subscript(PyObject* self, PyObject* item)
 static int
 struct_mp_ass_subscript(PyObject* self, PyObject* item, PyObject* value)
 {
+    if (!PyObjC_StructsIndexable) {
+        PyErr_Format(PyExc_TypeError,
+            "Instances of '%s' are not sequences", Py_TYPE(self)->tp_name);
+        return -1;
+    }
+    if (!PyObjC_StructsWritable) {
+        PyErr_Format(PyExc_TypeError,
+            "Instances of '%s' are read-only", Py_TYPE(self)->tp_name);
+        return -1;
+    }
+    if (PyErr_Warn(PyExc_DeprecationWarning, "Using struct wrapper as sequence") < 0) {
+        return -1;
+    }
+
     if (PyIndex_Check(item)) {
         Py_ssize_t i = PyNumber_AsSsize_t(item, PyExc_IndexError);
 
@@ -524,6 +612,11 @@ static PyMethodDef struct_methods[] = {
 static int
 struct_setattro(PyObject* self, PyObject* name, PyObject* value)
 {
+    if (!PyObjC_StructsWritable) {
+        PyErr_Format(PyExc_TypeError,
+            "Instances of '%s' are read-only", Py_TYPE(self)->tp_name);
+        return -1;
+    }
     if (value == NULL) {
         PyErr_Format(PyExc_TypeError, "Cannot delete attributes of %s",
                 Py_TYPE(self)->tp_name);

@@ -87,6 +87,20 @@ Bridge options
 
       .. versionadded:: 3.3
 
+  .. data:: objc.options.structs_indexable
+
+     When True (the default) PyObjC's wrappers for C structs can be indexed
+     as if they are (writable) tuples. When False this isn't possible.
+
+     .. note:: This option will default to False in a future version of PyObjC, and will be removed some time after that.
+
+  .. data:: objc.options.structs_writable
+
+     When True (the default) PyObjC's wrappers for C structs are writable,
+     otherwise they are read-only.
+
+     .. note:: This is an experimental option. I don't know yet if making structs read-only will be a better.
+
 
 Deprecated functions for changing options
 .........................................

@@ -163,7 +163,7 @@ for k in cfg_vars:
 EMBEDDED_FFI_CFLAGS=['-Ilibffi-src/include', '-Ilibffi-src/powerpc']
 
 # The list below includes the source files for all CPU types that we run on
-# this makes it easier to build fat binaries on Mac OS X.
+# this makes it easier to build fat binaries on macOS
 EMBEDDED_FFI_SOURCE=[
     "libffi-src/ffi.c",
     "libffi-src/types.c",
@@ -194,7 +194,7 @@ del UnixCCompiler
 
 def verify_platform():
     if sys.platform != 'darwin':
-        raise DistutilsPlatformError("PyObjC requires Mac OS X to build")
+        raise DistutilsPlatformError("PyObjC requires macOS to build")
 
     if sys.version_info[:2] < (2, 7):
         raise DistutilsPlatformError("PyObjC requires Python 2.7 or later to build")
