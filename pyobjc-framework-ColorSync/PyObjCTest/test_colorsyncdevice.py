@@ -35,6 +35,15 @@ if sys.maxsize > 2 ** 32:
             self.assertIsInstance(ColorSync.kColorSyncProfileRepositoryChangeNotification, unicode)
             self.assertIsInstance(ColorSync.CFStringRef kColorSyncRegistrationUpdateWindowServer, unicode)
 
+    def testFunctions(self):
+        ColorSync.ColorSyncRegisterDevice
+        ColorSync.ColorSyncUnregisterDevice
+        ColorSync.ColorSyncDeviceSetCustomProfiles
+        self.assertResultIsCFRetained(ColorSync.ColorSyncDeviceCopyDeviceInfo)
+        self.assertArgIsFunction(ColorSync.ColorSyncIterateDeviceProfiles, 0, objc._C_BOOL + b'@^v', False)
+        self.assertResultIsCFRetained(ColorSync.CGDisplayCreateUUIDFromDisplayID)
+
+
 
 if __name__ == "__main__":
     main()

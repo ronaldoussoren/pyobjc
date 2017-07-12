@@ -1,5 +1,5 @@
 '''
-Wrappers for the "ExceptionHandling" framework on MacOSX. The ExceptionHandling
+Wrappers for the "ExceptionHandling" framework on macOS. The ExceptionHandling
 framework provides facilities for monitoring and debugging exceptional
 conditions in Cocoa programs.
 
@@ -17,7 +17,7 @@ VERSION="3.3a0"
 
 setup(
     name='pyobjc-framework-ExceptionHandling',
-    description = "Wrappers for the framework ExceptionHandling on Mac OS X",
+    description = "Wrappers for the framework ExceptionHandling on macOS",
     packages = [ "PyObjCTools", "ExceptionHandling" ],
     namespace_packages = [ "PyObjCTools" ],
     version=VERSION,

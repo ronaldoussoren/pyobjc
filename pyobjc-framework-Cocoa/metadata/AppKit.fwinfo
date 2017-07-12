@@ -1,6 +1,48 @@
 {
  "definitions": {
   "externs": {
+   "NSTextListMarkerBox": { "typestr": "@" },
+   "NSTextListMarkerCheck": { "typestr": "@" },
+   "NSTextListMarkerCircle": { "typestr": "@" },
+   "NSTextListMarkerDiamond": { "typestr": "@" },
+   "NSTextListMarkerDisc": { "typestr": "@" },
+   "NSTextListMarkerHyphen": { "typestr": "@" },
+   "NSTextListMarkerSquare": { "typestr": "@" },
+   "NSTextListMarkerLowercaseHexadecimal": { "typestr": "@" },
+   "NSTextListMarkerUppercaseHexadecimal": { "typestr": "@" },
+   "NSTextListMarkerOctal": { "typestr": "@" },
+   "NSTextListMarkerLowercaseAlpha": { "typestr": "@" },
+   "NSTextListMarkerUppercaseAlpha": { "typestr": "@" },
+   "NSTextListMarkerLowercaseLatin": { "typestr": "@" },
+   "NSTextListMarkerUppercaseLatin": { "typestr": "@" },
+   "NSTextListMarkerLowercaseRoman": { "typestr": "@" },
+   "NSTextListMarkerUppercaseRoman": { "typestr": "@" },
+   "NSTextListMarkerDecimal": { "typestr": "@" },
+   "NSTextMovementUserInfoKey": { "typestr": "@" },
+   "NSRulerViewUnitInches": { "typestr": "@" },
+   "NSRulerViewUnitCentimeters": { "typestr": "@" },
+   "NSRulerViewUnitPoints": { "typestr": "@" },
+   "NSRulerViewUnitPicas": { "typestr": "@" },
+   "NSPasteboardNameGeneral": { "typestr": "@" },
+   "NSPasteboardNameFont": { "typestr": "@" },
+   "NSPasteboardNameRuler": { "typestr": "@" },
+   "NSPasteboardNameFind": { "typestr": "@" },
+   "NSPasteboardNameDrag": { "typestr": "@" },
+   "NSAboutPanelOptionCredits": { "typestr": "@" },
+   "NSAboutPanelOptionApplicationName": { "typestr": "@" },
+   "NSAboutPanelOptionApplicationIcon": { "typestr": "@" },
+   "NSAboutPanelOptionVersion": { "typestr": "@" },
+   "NSAboutPanelOptionApplicationVersion": { "typestr": "@" },
+   "NSAccessibilityPageRole": { "typestr": "@" },
+   "NSAccessibilityTabButtonSubrole": { "typestr": "@" },
+   "NSAccessibilityCollectionListSubrole": { "typestr": "@" },
+   "NSAccessibilitySectionListSubrole": { "typestr": "@" },
+   "NSAccessibilityLanguageTextAttribute": { "typestr": "@" },
+   "NSAccessibilityCustomTextAttribute": { "typestr": "@" },
+   "NSAccessibilityAnnotationTextAttribute": { "typestr": "@" },
+   "NSAccessibilityAnnotationLabel": { "typestr": "@" },
+   "NSAccessibilityAnnotationElement": { "typestr": "@" },
+   "NSAccessibilityAnnotationLocation": { "typestr": "@" },
    "NSTouchBarItemIdentifierFixedSpaceSmall": { "typestr": "@" },
    "NSTouchBarItemIdentifierFixedSpaceLarge": { "typestr": "@" },
    "NSTouchBarItemIdentifierFlexibleSpace": { "typestr": "@" },
@@ -139,6 +181,162 @@
    }
   },
   "classes": {
+   "NSWindowTabGroup": {
+    "methods": [
+     {
+      "selector": "isOverviewVisible",
+      "class_method": false,
+      "retval": { "type_override": "Z" }
+     },
+     {
+      "selector": "setOverviewVisible:",
+      "class_method": false,
+      "args": {
+       "0": { "type_override": "Z" }
+      }
+     },
+     {
+      "selector": "isTabBarVisible",
+      "class_method": false,
+      "retval": { "type_override": "Z" }
+     },
+     {
+      "selector": "setTabBarVisible:",
+      "class_method": false,
+      "args": {
+       "0": { "type_override": "Z" }
+      }
+     }
+    ]
+   },
+   "NSUserInterfaceCompressionOptions": {
+    "methods": [
+     {
+      "selector": "containsOptions:",
+      "class_method": false,
+      "retval": { "type_override": "Z" }
+     },
+     {
+      "selector": "intersectsOptions:",
+      "class_method": false,
+      "retval": { "type_override": "Z" }
+     },
+     {
+      "selector": "isEmpty",
+      "class_method": false,
+      "retval": { "type_override": "Z" }
+     },
+     {
+      "selector": "setEmpty:",
+      "class_method": false,
+      "args": {
+       "0": { "type_override": "Z" }
+      }
+     }
+    ]
+   },
+   "NSGroupTouchBarItem": {
+    "methods": [
+     {
+      "selector": "prefersEqualWidths",
+      "class_method": false,
+      "retval": { "type_override": "Z" }
+     },
+     {
+      "selector": "setPrefersEqualWidths:",
+      "class_method": false,
+      "args": {
+       "0": { "type_override": "Z" }
+      }
+     }
+    ]
+   },
+   "NSFontDescriptor": {
+    "methods": [
+     {
+      "selector": "requiresFontAssetRequest",
+      "class_method": false,
+      "retval": { "type_override": "Z" }
+     },
+     {
+      "selector": "setRequiresFontAssetRequest:",
+      "class_method": false,
+      "args": {
+       "0": { "type_override": "Z" }
+      }
+     }
+    ]
+   },
+   "NSFontAssetRequest": {
+    "methods": [
+     {
+      "selector": "downloadFontAssetsWithCompletionHandler:",
+      "class_method": false,
+      "args": {
+       "1": {
+        "callable": {
+	 "arguments": {
+	  "0": { "typestr": "^v" },
+	  "1": { "typestr": "@" }
+	 },
+	 "retval": { "typestr": "Z" }
+	}
+       }
+      }
+     }
+    ]
+   },
+   "NSAccessibilityCustomAction": {
+    "methods": [
+     {
+      "selector": "initWithName:handler:",
+      "class_method": true,
+      "args": {
+       "1": {
+        "callable": {
+	 "arguments": {
+	  "0": { "typestr": "^v" }
+	 },
+	 "retval": { "typestr": "Z" }
+	}
+       }
+      }
+     },
+     {
+      "selector": "setHandler:",
+      "class_method": true,
+      "args": {
+       "0": {
+        "callable": {
+	 "arguments": {
+	  "0": { "typestr": "^v" }
+	 },
+	 "retval": { "typestr": "Z" }
+	}
+       }
+      }
+     },
+     {
+      "selector": "handler",
+      "class_method": true,
+      "retval": {
+       "callable": {
+	 "arguments": {
+	 "0": { "typestr": "^v" }
+	},
+	"retval": { "typestr": "Z" }
+       }
+      }
+     },
+     {
+      "selector": "initWithName:target:selector:",
+      "class_method": false,
+      "args": {
+       "2": { "sel_of_type": "Z@:" }
+      }
+     }
+    ]
+   },
    "NSSliderAccessoryBehavior": {
     "methods": [
      {
@@ -5597,6 +5795,21 @@
    "NSDocument": {
     "methods": [
      {
+      "selector": "shareDocumentWithSharingService:completionHandler",
+      "class_method": false,
+      "args": {
+       "1": {
+        "callable": {
+	 "arguments": {
+	  "0": { "typestr": "^v" },
+	  "1": { "typestr": "Z" }
+	 },
+	 "retval": { "typestr": "v" }
+	}
+       }
+      }
+     },
+     {
       "selector": "stopBrowsingVersionsWithCompletionHandler:",
       "class_method": false,
       "args": {
@@ -5609,6 +5822,11 @@
 	}
        }
       }
+     },
+     {
+      "retval": { "type_override": "Z" },
+      "selector": "allowsDocumentSharing",
+      "class_method": false
      },
      {
       "retval": { "type_override": "Z" },
@@ -6359,6 +6577,18 @@
    "NSDocumentController": {
     "methods": [
      {
+      "selector": "allowsAutomaticShareMenu",
+      "class_method": false,
+      "retval": { "type_override": "Z" }
+     },
+     {
+      "selector": "setAllowsAutomaticShareMenu:",
+      "class_method": false,
+      "args": {
+       "0": { "type_override": "Z" }
+      }
+     },
+     {
       "args": {
        "2": {
         "callable": {
@@ -7069,6 +7299,22 @@
    },
    "NSFont": {
     "methods": [
+     {
+      "selector": "getBoundingRects:forCGGlyphs:count:",
+      "class_method": false,
+      "args": {
+       "0": { "type_modifier": "o", "c_array_length_in_arg": 2 },
+       "1": { "type_modifier": "n", "c_array_length_in_arg": 2 }
+      }
+     },
+     {
+      "selector": "getAdvancements:forCGGlyphs:count:",
+      "class_method": false,
+      "args": {
+       "0": { "type_modifier": "o", "c_array_length_in_arg": 2 },
+       "1": { "type_modifier": "n", "c_array_length_in_arg": 2 }
+      }
+     },
      {
       "args": {
        "1": {
@@ -10149,6 +10395,18 @@
        ]
       },
       "selector": "rectOfTickMarkAtIndex:"
+     },
+     {
+      "selector": "drawsTieredCapacityLevels",
+      "class_method": false,
+      "retval": { "type_override": "Z" }
+     },
+     {
+      "selector": "setDrawsTieredCapacityLevels:",
+      "class_method": false,
+      "args": {
+       "0": { "type_override": "Z" }
+      }
      }
     ]
    },
@@ -10818,6 +11076,13 @@
       "selector": "isSeparatorItem"
      },
      {
+      "class_method": false,
+      "retval": {
+       "type_override": "Z"
+      },
+      "selector": "allowsKeyEquivalentWhenHidden"
+     },
+     {
       "args": {
        "0": {
         "sel_of_type": "v@:@"
@@ -10852,6 +11117,15 @@
       },
       "class_method": false,
       "selector": "setHidden:"
+     },
+     {
+      "args": {
+       "0": {
+        "type_override": "Z"
+       }
+      },
+      "class_method": false,
+      "selector": "setAllowsKeyEquivalentWhenHidden:"
      },
      {
       "args": {
@@ -18962,6 +19236,20 @@
       },
       "class_method": false,
       "selector": "setSelected:forSegment:"
+     },
+     {
+      "args": {
+       "0": {
+        "type_override": "Z"
+       }
+      },
+      "class_method": false,
+      "selector": "setShowsMenuIndicator:forSegment:"
+     },
+     {
+      "retval": { "type_override": "Z" },
+      "class_method": false,
+      "selector": "showsMenuIndicatorForSegment:"
      }
     ]
    },
@@ -19714,6 +20002,17 @@
      }
     ]
    },
+   "NSSplitViewController": {
+    "methods": [
+     {
+      "class_method": false,
+      "retval": {
+       "type_override": "Z"
+      },
+      "selector": "validateUserInterfaceItem:"
+     }
+    ]
+   },
    "NSSplitView": {
     "methods": [
      {
@@ -20267,6 +20566,20 @@
    },
    "NSTableView": {
     "methods": [
+     {
+      "class_method": false,
+      "retval": {
+       "type_override": "Z"
+      },
+      "selector": "usesAutomaticRowHeights"
+     },
+     {
+      "class_method": false,
+      "args": {
+       "0": { "type_override": "Z" }
+      },
+      "selector": "setUsesAutomaticRowHeights:"
+     },
      {
       "class_method": false,
       "retval": {
@@ -26433,6 +26746,16 @@
    "NSWorkspace": {
     "methods": [
      {
+      "selector": "isVoiceOverEnabled",
+      "class_method": false,
+      "retval": { "type_override": "Z" }
+     },
+     {
+      "selector": "isSwitchControlEnabled",
+      "class_method": false,
+      "retval": { "type_override": "Z" }
+     },
+     {
       "selector": "accessibilityDisplayShouldReduceMotion",
       "class_method": false,
       "retval": { "type_override": "Z" }
@@ -26793,6 +27116,98 @@
    }
   },
   "enum": {
+   "NSTextMovementReturn": { "value": 16 },
+   "NSTextMovementTab": { "value": 17 },
+   "NSTextMovementBacktab": { "value": 18 },
+   "NSTextMovementLeft": { "value": 19 },
+   "NSTextMovementRight": { "value": 20 },
+   "NSTextMovementUp": { "value": 21 },
+   "NSTextMovementDown": { "value": 22 },
+   "NSTextMovementCancel": { "value": 23 },
+   "NSTextMovementOther": { "value": 0 },
+   "NSSegmentDistributionFit": { "value": 0 },
+   "NSSegmentDistributionFill": { "value": 1 },
+   "NSSegmentDistributionFillEqually": { "value": 2 },
+   "NSSegmentDistributionFillProportionally": { "value": 3 },
+   "NSProgressIndicatorStyleBar": { "value": 0 },
+   "NSProgressIndicatorStyleSpinning": { "value": 1 },
+   "NSLevelIndicatorStyleRelevancy": { "value": 0 },
+   "NSLevelIndicatorStyleContinuousCapacity": { "value": 1 },
+   "NSLevelIndicatorStyleDiscreteCapacity": { "value": 2 },
+   "NSLevelIndicatorStyleRating": { "value": 3 },
+   "NSLevelIndicatorPlaceholderVisibilityAutomatic": { "value": 0 },
+   "NSLevelIndicatorPlaceholderVisibilityAlways": { "value": 1 },
+   "NSLevelIndicatorPlaceholderVisibilityWhileEditing": { "value": 2 },
+   "NSFontPanelModeMaskFace": { "value": 1 },
+   "NSFontPanelModeMaskSize": { "value": 2 },
+   "NSFontPanelModeMaskCollection": { "value": 4 },
+   "NSFontPanelModeMaskUnderlineEffect": { "value": 256 },
+   "NSFontPanelModeMaskStrikethroughEffect": { "value": 512 },
+   "NSFontPanelModeMaskTextColorEffect": { "value": 1024 },
+   "NSFontPanelModeMaskDocumentColorEffect": { "value": 2048 },
+   "NSFontPanelModeMaskShadowEffect": { "value": 4096 },
+   "NSFontPanelModeMaskAllEffects": { "value": 1048320 },
+   "NSFontPanelModesMaskStandardModes": { "value": 65535 },
+   "NSFontPanelModesMaskAllModes": { "value": 4294967295 },
+   "NSFontDescriptorClassUnknown": { "value": 0 },
+   "NSFontDescriptorClassOldStyleSerifs": { "value": 268435456 },
+   "NSFontDescriptorClassTransitionalSerifs": { "value": 536870912 },
+   "NSFontDescriptorClassModernSerifs": { "value": 805306368 },
+   "NSFontDescriptorClassClarendonSerifs": { "value": 1073741824 },
+   "NSFontDescriptorClassSlabSerifs": { "value": 1342177280 },
+   "NSFontDescriptorClassFreeformSerifs": { "value": 1879048192 },
+   "NSFontDescriptorClassSansSerif": { "value": 2147483648 },
+   "NSFontDescriptorClassOrnamentals": { "value": 2415919104 },
+   "NSFontDescriptorClassScripts": { "value": 2684354560 },
+   "NSFontDescriptorClassSymbolic": { "value": 3221225472 },
+   "NSFontDescriptorTraitItalic": { "value": 1 },
+   "NSFontDescriptorTraitBold": { "value": 2 },
+   "NSFontDescriptorTraitExpanded": { "value": 32 },
+   "NSFontDescriptorTraitCondensed": { "value": 64 },
+   "NSFontDescriptorTraitMonoSpace": { "value": 1024 },
+   "NSFontDescriptorTraitVertical": { "value": 2048 },
+   "NSFontDescriptorTraitUIOptimized": { "value": 4096 },
+   "NSFontDescriptorTraitTightLeading": { "value": 32768 },
+   "NSFontDescriptorTraitLooseLeading": { "value": 65536 },
+   "NSFontAssetRequestOptionUsesStandardUI": { "value": 1 },
+   "NSFontDescriptorClassMask": { "value": 4026531840 },
+   "NSColorTypeComponentBased": { "value": 0 },
+   "NSColorTypePattern": { "value": 1 },
+   "NSColorTypeCatalog": { "value": 2 },
+   "NSControlStateValueMixed": { "value": -1 },
+   "NSControlStateValueOff": { "value": 0 },
+   "NSControlStateValueOn": { "value": 1 },
+   "NSSpellingStateSpellingFlag": { "value": 1 },
+   "NSSpellingStateGrammarFlag": { "value": 2 },
+   "NSAccessibilityCustomRotorTypeCustom": { "value": 0 },
+   "NSAccessibilityCustomRotorTypeAny": { "value": 1 },
+   "NSAccessibilityCustomRotorTypeAnnotation": { "value": 2 },
+   "NSAccessibilityCustomRotorTypeBoldText": { "value": 3 },
+   "NSAccessibilityCustomRotorTypeHeading": { "value": 4 },
+   "NSAccessibilityCustomRotorTypeHeadingLevel1": { "value": 5 },
+   "NSAccessibilityCustomRotorTypeHeadingLevel2": { "value": 6 },
+   "NSAccessibilityCustomRotorTypeHeadingLevel3": { "value": 7 },
+   "NSAccessibilityCustomRotorTypeHeadingLevel4": { "value": 8 },
+   "NSAccessibilityCustomRotorTypeHeadingLevel5": { "value": 9 },
+   "NSAccessibilityCustomRotorTypeHeadingLevel6": { "value": 10 },
+   "NSAccessibilityCustomRotorTypeImage": { "value": 11 },
+   "NSAccessibilityCustomRotorTypeItalicText": { "value": 12 },
+   "NSAccessibilityCustomRotorTypeLandmark": { "value": 13 },
+   "NSAccessibilityCustomRotorTypeLink": { "value": 14 },
+   "NSAccessibilityCustomRotorTypeList": { "value": 15 },
+   "NSAccessibilityCustomRotorTypeMisspelledWord": { "value": 16 },
+   "NSAccessibilityCustomRotorTypeTable": { "value": 17 },
+   "NSAccessibilityCustomRotorTypeTextField": { "value": 18 },
+   "NSAccessibilityCustomRotorTypeUnderlinedText": { "value": 19 },
+   "NSAccessibilityCustomRotorTypeVisitedLink": { "value": 20 },
+   "NSAccessibilityCustomRotorSearchDirectionPrevious": { "value": 0 },
+   "NSAccessibilityCustomRotorSearchDirectionNext": { "value": 1 },
+   "NSFontAssetDownloadError": { "value": 66304 },
+   "NSFontErrorMinimum": { "value": 66304 },
+   "NSFontErrorMaximum": { "value": 66335 },
+   "NSAccessibilityAnnotationPositionFullRange": { "value": 0 },
+   "NSAccessibilityAnnotationPositionStart": { "value": 1 },
+   "NSAccessibilityAnnotationPositionEnd": { "value": 2 },
    "NSFontAssetDownloadError": { "value": 66304 },
    "NSFontErrorMinimum": { "value": 66304 },
    "NSFontErrorMaximum": { "value": 66335 },

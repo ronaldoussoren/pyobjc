@@ -12,7 +12,7 @@ VERSION="3.3a0"
 
 setup(
     name='pyobjc-framework-SystemConfiguration',
-    description = "Wrappers for the framework SystemConfiguration on Mac OS X",
+    description = "Wrappers for the framework SystemConfiguration on macOS",
     packages = [ "SystemConfiguration" ],
     ext_modules = [
         Extension('SystemConfiguration._manual',

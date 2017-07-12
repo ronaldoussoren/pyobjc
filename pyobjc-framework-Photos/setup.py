@@ -1,5 +1,5 @@
 '''
-Wrappers for the "Photos" framework on MacOS X.
+Wrappers for the "Photos" framework on macOS.
 
 These wrappers don't include documentation, please check Apple's documention
 for information on how to use this framework and PyObjC's documentation
@@ -13,7 +13,7 @@ VERSION="3.3a0"
 
 setup(
     name='pyobjc-framework-Photos',
-    description = "Wrappers for the framework Photos on Mac OS X",
+    description = "Wrappers for the framework Photos on macOS",
     min_os_level="10.11",
     packages = [ "Photos" ],
     ext_modules = [

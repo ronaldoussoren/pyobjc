@@ -1,5 +1,5 @@
 '''
-Wrappers for the "SyncServices" framework on MacOSX.
+Wrappers for the "SyncServices" framework on macOS.
 
 Sync Services is a framework containing all the components you need
 to sync your applications and devices. If your application uses
@@ -19,7 +19,7 @@ VERSION="3.3a0"
 
 setup(
     name='pyobjc-framework-SyncServices',
-    description = "Wrappers for the framework SyncServices on Mac OS X",
+    description = "Wrappers for the framework SyncServices on macOS",
     packages = [ "SyncServices" ],
     ext_modules = [
         Extension("SyncServices._SyncServices",

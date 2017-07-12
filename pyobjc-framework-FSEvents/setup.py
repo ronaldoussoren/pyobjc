@@ -1,5 +1,5 @@
 '''
-Wrappers for the "FSEvents" API in MacOS X. The functions in this framework
+Wrappers for the "FSEvents" API in macOS. The functions in this framework
 allow you to reliably observe changes to the filesystem, even when your
 program is not running al the time.
 
@@ -14,7 +14,7 @@ VERSION="3.3a0"
 
 setup(
     name='pyobjc-framework-FSEvents',
-    description = "Wrappers for the framework FSEvents on Mac OS X",
+    description = "Wrappers for the framework FSEvents on macOS",
     min_os_level='10.5',
     packages = [ "FSEvents" ],
     ext_modules = [

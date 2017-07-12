@@ -22,6 +22,9 @@ class TestAppKitErrors (TestCase):
         self.assertEqual(NSFontAssetDownloadError, 66304)
         self.assertEqual(NSFontErrorMinimum, 66304)
         self.assertEqual(NSFontErrorMaximum, 66335)
+        self.assertEqual(NSFontAssetDownloadError, 66304)
+        self.assertEqual(NSFontErrorMinimum, 66304)
+        self.assertEqual(NSFontErrorMaximum, 66335)
 
 if __name__ == "__main__":
     main()

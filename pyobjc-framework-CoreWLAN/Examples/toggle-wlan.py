@@ -3,7 +3,7 @@
 A simple script for toggling the power to the WLAN adaptor
 
 NOTE: Running this script might require administrator
-      privileges (depending on the Mac OS X settings)
+      privileges (depending on the macOS settings)
 """
 
 import CoreWLAN

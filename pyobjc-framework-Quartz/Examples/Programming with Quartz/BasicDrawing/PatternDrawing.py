@@ -33,7 +33,7 @@ def myDrawRedBlackCheckerBoardPattern(info, patternCellContext):
     #
     # This code uses Quartz.CGColorRefs which are available in Panther
     # and later only. Patterns are available in all versions of
-    # Mac OS X but this code uses Quartz.CGColorRefs for convenience
+    # macOS but this code uses Quartz.CGColorRefs for convenience
     # and efficiency.
 
     # Paint a black checkerboard box.

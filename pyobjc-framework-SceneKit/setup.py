@@ -1,5 +1,5 @@
 '''
-Wrappers for the "SceneKit" framework on MacOS X introduced in Mac OS X 10.8.
+Wrappers for the "SceneKit" framework on macOS introduced in macOS 10.8.
 
 These wrappers don't include documentation, please check Apple's documention
 for information on how to use this framework and PyObjC's documentation
@@ -14,7 +14,7 @@ VERSION="3.3a0"
 
 setup(
     name='pyobjc-framework-SceneKit',
-    description = "Wrappers for the framework SceneKit on Mac OS X",
+    description = "Wrappers for the framework SceneKit on macOS",
     min_os_level="10.7",
     packages = [ "SceneKit" ],
     ext_modules = [

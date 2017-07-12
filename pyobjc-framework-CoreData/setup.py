@@ -1,5 +1,5 @@
 '''
-Wrappers for the "CoreData" framework on MacOSX. The Core Data framework
+Wrappers for the "CoreData" framework on macOS. The Core Data framework
 provides generalized and automated solutions to common tasks associated
 with object life-cycle and object graph management, including persistence.
 
@@ -15,7 +15,7 @@ VERSION="3.3a0"
 
 setup(
     name='pyobjc-framework-CoreData',
-    description = "Wrappers for the framework CoreData on Mac OS X",
+    description = "Wrappers for the framework CoreData on macOS",
     packages = [ "CoreData" ],
     ext_modules = [
         Extension("CoreData._CoreData",

@@ -145,6 +145,9 @@ class TestNSCollectionView (TestCase):
     def testProtocol10_12(self):
         objc.protocolNamed('NSCollectionViewSectionHeaderView')
 
+    @min_sdk_level('10.13')
+    def testProtocol10_13(self):
+        objc.protocolNamed('NSCollectionViewPrefetching')
 
 if __name__ == "__main__":
     main()

@@ -25,6 +25,7 @@ Version 4.0
 
 * New framework wrappers:
 
+  - ColorSync (new in macOS 10.13)
   - CoreML (new in macOS 10.13)
   - ExternalAccessory (new in macOS 10.13)
 

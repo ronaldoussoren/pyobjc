@@ -95,6 +95,18 @@ class TestNSFont(TestCase):
         self.assertIsInstance(NSAFMItalicAngle, unicode)
         self.assertIsInstance(NSAFMMappingScheme, unicode)
 
+    @min_os_level('10.13')
+    def testMethods10_13(self):
+        self.assertArgIsOut(NSFont.getBoundingRects_forCGGlyphs_count_, 0)
+        self.assertArgIsIn(NSFont.getBoundingRects_forCGGlyphs_count_, 1)
+        self.assertArgSizeInArg(NSFont.getBoundingRects_forCGGlyphs_count_, 0, 2)
+        self.assertArgSizeInArg(NSFont.getBoundingRects_forCGGlyphs_count_, 1, 2)
+
+        self.assertArgIsOut(NSFont.getAdvancements_forCGGlyphs_count_, 0)
+        self.assertArgIsIn(NSFont.getAdvancements_forCGGlyphs_count_, 1)
+        self.assertArgSizeInArg(NSFont.getAdvancements_forCGGlyphs_count_, 0, 2)
+        self.assertArgSizeInArg(NSFont.getAdvancements_forCGGlyphs_count_, 1, 2)
+
     @min_os_level('10.7')
     def testMethods10_7(self):
         self.assertResultIsBOOL(NSFont.isVertical)

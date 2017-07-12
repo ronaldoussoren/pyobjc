@@ -190,7 +190,7 @@ class TestSocket (TestCase):
 
     def testSocketNameServer(self):
         # The documentation says:
-        #   Name server functionality is currently inoperable in Mac OS X.
+        #   Name server functionality is currently inoperable in macOS.
         #
         # Therefore these functions are not available from Python
         self.assertNotHasAttr(CoreFoundation, 'CFSocketCopyRegisteredSocketSignature')

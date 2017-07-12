@@ -1,5 +1,5 @@
 '''
-Wrappers for framework 'ServiceManagement' on MacOSX 10.6. This framework
+Wrappers for framework 'ServiceManagement' on macOS 10.6. This framework
 provides an interface to the system services subsystem, which basicly means
 a this provides a secure and object-oriented interface from launchd.
 
@@ -14,7 +14,7 @@ VERSION="3.3a0"
 
 setup(
     name='pyobjc-framework-ServiceManagement',
-    description = "Wrappers for the framework ServiceManagement on Mac OS X",
+    description = "Wrappers for the framework ServiceManagement on macOS",
     min_os_level='10.6',
     packages = [ "ServiceManagement" ],
     version=VERSION,

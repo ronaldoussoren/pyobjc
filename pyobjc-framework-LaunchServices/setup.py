@@ -1,5 +1,5 @@
 '''
-Wrappers for the "LaunchServices" framework on MacOSX. The API's in this
+Wrappers for the "LaunchServices" framework on macOS. The API's in this
 framework enable applications to open other applictions or their document
 files, simularly to how the Dock or Finder do that.
 
@@ -31,7 +31,7 @@ VERSION="3.3a0"
 
 setup(
     name='pyobjc-framework-LaunchServices',
-    description = "Wrappers for the framework LaunchServices on Mac OS X",
+    description = "Wrappers for the framework LaunchServices on macOS",
     packages = [ "LaunchServices" ],
     version=VERSION,
     install_requires = [

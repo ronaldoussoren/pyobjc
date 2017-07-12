@@ -168,6 +168,10 @@ class TestNSCell(TestCase):
         self.assertEqual(NSBackgroundStyleRaised, 2)
         self.assertEqual(NSBackgroundStyleLowered, 3)
 
+        self.assertEqual(NSControlStateValueMixed, -1)
+        self.assertEqual(NSControlStateValueOff, 0)
+        self.assertEqual(NSControlStateValueOn, 1)
+
     @min_os_level('10.6')
     def testMethods10_6(self):
         self.assertResultIsBOOL(NSCell.usesSingleLineMode)

@@ -1,5 +1,5 @@
 '''
-Wrappers for the "Quartz" related frameworks on MacOSX. These frameworks
+Wrappers for the "Quartz" related frameworks on macOS. These frameworks
 provide a number of graphics related API's.
 
 The frameworks wrapped by this package are:
@@ -53,7 +53,7 @@ VERSION="3.3a0"
 
 setup(
     name='pyobjc-framework-Quartz',
-    description = "Wrappers for the Quartz frameworks on Mac OS X",
+    description = "Wrappers for the Quartz frameworks on macOS",
     packages = [ "Quartz" ] + subpackages,
     ext_modules = [
         # CoreVideo

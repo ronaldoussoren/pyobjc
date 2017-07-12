@@ -1,5 +1,5 @@
 '''
-Wrappers for the framework "InterfaceBuilderKit" on MacOSX. This framework
+Wrappers for the framework "InterfaceBuilderKit" on macOS. This framework
 is only available when you've installed Xcode 3.x, but not with earlier or
 later releases of Xcode.
 
@@ -27,7 +27,7 @@ VERSION="3.3a0"
 
 setup(
     name='pyobjc-framework-InterfaceBuilderKit',
-    description = "Wrappers for the framework InterfaceBuilderKit on Mac OS X",
+    description = "Wrappers for the framework InterfaceBuilderKit on macOS",
     min_os_level='10.5',
     max_os_level='10.6',
     packages = [ "InterfaceBuilderKit" ],

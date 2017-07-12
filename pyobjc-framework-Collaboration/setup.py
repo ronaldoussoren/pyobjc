@@ -1,5 +1,5 @@
 '''
-Wrappers for the "Collaboration" framework in MacOSX 10.5 or later. The
+Wrappers for the "Collaboration" framework in macOS 10.5 or later. The
 Collaboration framework provides access to identities, and manages
 user interface elements for selecting identities.
 
@@ -14,7 +14,7 @@ VERSION="3.3a0"
 
 setup(
     name='pyobjc-framework-Collaboration',
-    description = "Wrappers for the framework Collaboration on Mac OS X",
+    description = "Wrappers for the framework Collaboration on macOS",
     min_os_level='10.5',
     packages = [ "Collaboration" ],
     version=VERSION,

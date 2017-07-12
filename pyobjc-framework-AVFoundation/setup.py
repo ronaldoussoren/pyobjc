@@ -1,5 +1,5 @@
 '''
-Wrappers for the "AVFoundation" framework on MacOS X.
+Wrappers for the "AVFoundation" framework on macOS.
 
 These wrappers don't include documentation, please check Apple's documention
 for information on how to use this framework and PyObjC's documentation
@@ -14,7 +14,7 @@ VERSION="3.3a0"
 
 setup(
     name='pyobjc-framework-AVFoundation',
-    description = "Wrappers for the framework AVFoundation on Mac OS X",
+    description = "Wrappers for the framework AVFoundation on macOS",
     min_os_level="10.7",
     packages = [ "AVFoundation" ],
     ext_modules = [

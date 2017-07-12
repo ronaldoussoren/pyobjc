@@ -1,0 +1,538 @@
+{
+ "definitions": {
+  "aliases": {
+   "ColorSyncMutableProfileRef": { "alias": "ColorSyncProfileRef" }
+  },
+  "cftypes": {
+   "ColorSyncCMMRef": {
+    "gettypeid_func": "ColorSyncCMMGetTypeID",
+    "typestr": "^{ColorSyncCMM=}"
+   },
+   "ColorSyncProfileRef": {
+    "gettypeid_func": "ColorSyncProfileGetTypeID",
+    "typestr": "^{ColorSyncProfile=}"
+   },
+   "ColorSyncTransformRef": {
+    "gettypeid_func": "ColorSyncTransformGetTypeID",
+    "typestr": "^{ColorSyncTransform=}"
+   }
+  },
+  "literals": {
+   "COLORSYNC_PROFILE_INSTALL_ENTITLEMENT": { "value": "com.apple.developer.ColorSync.profile.install", "unicode": false }
+  },
+  "structs": {
+   "ColorSyncMD5": {
+    "fieldnames": [
+     "digest"
+    ],
+    "typestr": "{_ColorSyncMD5=[8C]}"
+   }
+  },
+  "enum": {
+    "COLORSYNC_MD5_LENGTH": { "value": 16 },
+    "kColorSync1BitGamut": { "value": 1 },
+    "kColorSync8BitInteger": { "value": 2 },
+    "kColorSync16BitInteger": { "value": 3 },
+    "kColorSync16BitFloat": { "value": 4 },
+    "kColorSync32BitInteger": { "value": 5 },
+    "kColorSync32BitNamedColorIndex": { "value": 6 },
+    "kColorSync32BitFloat": { "value": 7 },
+    "kColorSync10BitInteger": { "value": 8 },
+    "kColorSyncAlphaNone": { "value": 0 },
+    "kColorSyncAlphaPremultipliedLast": { "value": 1 },
+    "kColorSyncAlphaPremultipliedFirst": { "value": 2 },
+    "kColorSyncAlphaLast": { "value": 3 },
+    "kColorSyncAlphaFirst": { "value": 4 },
+    "kColorSyncAlphaNoneSkipLast": { "value": 5 },
+    "kColorSyncAlphaNoneSkipFirst": { "value": 6 },
+    "kColorSyncAlphaInfoMask": { "value": 31 },
+    "kColorSyncByteOrderMask": { "value": 28672 },
+    "kColorSyncByteOrderDefault": { "value": 0 },
+    "kColorSyncByteOrder16Little": { "value": 4096 },
+    "kColorSyncByteOrder32Little": { "value": 8192 },
+    "kColorSyncByteOrder16Big": { "value": 12288 },
+    "kColorSyncByteOrder32Big": { "value": 16384 }
+  },
+  "externs": {
+   "kColorSyncDeviceID": { "typestr": "@" },
+   "kColorSyncDeviceClass": { "typestr": "@" },
+   "kColorSyncCameraDeviceClass": { "typestr": "@" },
+   "kColorSyncDisplayDeviceClass": { "typestr": "@" },
+   "kColorSyncPrinterDeviceClass": { "typestr": "@" },
+   "kColorSyncScannerDeviceClass": { "typestr": "@" },
+   "kColorSyncDeviceProfileURL": { "typestr": "@" },
+   "kColorSyncDeviceDescription": { "typestr": "@" },
+   "kColorSyncDeviceDescriptions": { "typestr": "@" },
+   "kColorSyncFactoryProfiles": { "typestr": "@" },
+   "kColorSyncCustomProfiles": { "typestr": "@" },
+   "kColorSyncDeviceModeDescription": { "typestr": "@" },
+   "kColorSyncDeviceModeDescriptions": { "typestr": "@" },
+   "kColorSyncDeviceDefaultProfileID": { "typestr": "@" },
+   "kColorSyncDeviceHostScope": { "typestr": "@" },
+   "kColorSyncDeviceUserScope": { "typestr": "@" },
+   "kColorSyncProfileHostScope": { "typestr": "@" },
+   "kColorSyncProfileUserScope": { "typestr": "@" },
+   "kColorSyncDeviceProfileIsFactory": { "typestr": "@" },
+   "kColorSyncDeviceProfileIsDefault": { "typestr": "@" },
+   "kColorSyncDeviceProfileIsCurrent": { "typestr": "@" },
+   "kColorSyncDeviceProfileID": { "typestr": "@" },
+   "kColorSyncDeviceRegisteredNotification": { "typestr": "@" },
+   "kColorSyncDeviceUnregisteredNotification": { "typestr": "@" },
+   "kColorSyncDeviceProfilesNotification": { "typestr": "@" },
+   "kColorSyncDisplayDeviceProfilesNotification": { "typestr": "@" },
+   "kColorSyncProfileRepositoryChangeNotification": { "typestr": "@" },
+   "kColorSyncRegistrationUpdateWindowServer": { "typestr": "@" },
+   "kColorSyncGenericGrayProfile": { "typestr": "@" },
+   "kColorSyncGenericGrayGamma22Profile": { "typestr": "@" },
+   "kColorSyncGenericRGBProfile": { "typestr": "@" },
+   "kColorSyncGenericCMYKProfile": { "typestr": "@" },
+   "kColorSyncDisplayP3Profile": { "typestr": "@" },
+   "kColorSyncSRGBProfile": { "typestr": "@" },
+   "kColorSyncAdobeRGB1998Profile": { "typestr": "@" },
+   "kColorSyncGenericLabProfile": { "typestr": "@" },
+   "kColorSyncGenericXYZProfile": { "typestr": "@" },
+   "kColorSyncACESCGLinearProfile": { "typestr": "@" },
+   "kColorSyncDCIP3Profile": { "typestr": "@" },
+   "kColorSyncITUR709Profile": { "typestr": "@" },
+   "kColorSyncITUR2020Profile": { "typestr": "@" },
+   "kColorSyncROMMRGBProfile": { "typestr": "@" },
+   "kColorSyncProfileHeader": { "typestr": "@" },
+   "kColorSyncProfileClass": { "typestr": "@" },
+   "kColorSyncProfileColorSpace": { "typestr": "@" },
+   "kColorSyncProfilePCS": { "typestr": "@" },
+   "kColorSyncProfileURL": { "typestr": "@" },
+   "kColorSyncProfileDescription": { "typestr": "@" },
+   "kColorSyncProfileMD5Digest": { "typestr": "@" },
+   "kColorSyncSigAToB0Tag": { "typestr": "@" },
+   "kColorSyncSigAToB1Tag": { "typestr": "@" },
+   "kColorSyncSigAToB2Tag": { "typestr": "@" },
+   "kColorSyncSigBToA0Tag": { "typestr": "@" },
+   "kColorSyncSigBToA1Tag": { "typestr": "@" },
+   "kColorSyncSigBToA2Tag": { "typestr": "@" },
+   "kColorSyncSigCmykData": { "typestr": "@" },
+   "kColorSyncSigGrayData": { "typestr": "@" },
+   "kColorSyncSigLabData": { "typestr": "@" },
+   "kColorSyncSigRgbData": { "typestr": "@" },
+   "kColorSyncSigXYZData": { "typestr": "@" },
+   "kColorSyncSigAbstractClass": { "typestr": "@" },
+   "kColorSyncSigBlueTRCTag": { "typestr": "@" },
+   "kColorSyncSigBlueColorantTag": { "typestr": "@" },
+   "kColorSyncSigMediaBlackPointTag": { "typestr": "@" },
+   "kColorSyncSigCopyrightTag": { "typestr": "@" },
+   "kColorSyncSigProfileDescriptionTag": { "typestr": "@" },
+   "kColorSyncSigDeviceModelDescTag": { "typestr": "@" },
+   "kColorSyncSigDeviceMfgDescTag": { "typestr": "@" },
+   "kColorSyncSigGreenTRCTag": { "typestr": "@" },
+   "kColorSyncSigGreenColorantTag": { "typestr": "@" },
+   "kColorSyncSigGamutTag": { "typestr": "@" },
+   "kColorSyncSigGrayTRCTag": { "typestr": "@" },
+   "kColorSyncSigLinkClass": { "typestr": "@" },
+   "kColorSyncSigDisplayClass": { "typestr": "@" },
+   "kColorSyncSigNamedColor2Tag": { "typestr": "@" },
+   "kColorSyncSigNamedColorClass": { "typestr": "@" },
+   "kColorSyncSigPreview0Tag": { "typestr": "@" },
+   "kColorSyncSigPreview1Tag": { "typestr": "@" },
+   "kColorSyncSigPreview2Tag": { "typestr": "@" },
+   "kColorSyncSigOutputClass": { "typestr": "@" },
+   "kColorSyncSigProfileSequenceDescTag": { "typestr": "@" },
+   "kColorSyncSigRedTRCTag": { "typestr": "@" },
+   "kColorSyncSigRedColorantTag": { "typestr": "@" },
+   "kColorSyncSigInputClass": { "typestr": "@" },
+   "kColorSyncSigColorSpaceClass": { "typestr": "@" },
+   "kColorSyncSigTechnologyTag": { "typestr": "@" },
+   "kColorSyncSigViewingConditionsTag": { "typestr": "@" },
+   "kColorSyncSigViewingCondDescTag": { "typestr": "@" },
+   "kColorSyncSigMediaWhitePointTag": { "typestr": "@" },
+   "kColorSyncProfileComputerDomain": { "typestr": "@" },
+   "kColorSyncProfileUserDomain": { "typestr": "@" },
+   "kColorSyncProfile": { "typestr": "@" },
+   "kColorSyncRenderingIntent": { "typestr": "@" },
+   "kColorSyncRenderingIntentPerceptual": { "typestr": "@" },
+   "kColorSyncRenderingIntentRelative": { "typestr": "@" },
+   "kColorSyncRenderingIntentSaturation": { "typestr": "@" },
+   "kColorSyncRenderingIntentAbsolute": { "typestr": "@" },
+   "kColorSyncRenderingIntentUseProfileHeader": { "typestr": "@" },
+   "kColorSyncTransformTag": { "typestr": "@" },
+   "kColorSyncTransformDeviceToPCS": { "typestr": "@" },
+   "kColorSyncTransformPCSToPCS": { "typestr": "@" },
+   "kColorSyncTransformPCSToDevice": { "typestr": "@" },
+   "kColorSyncTransformDeviceToDevice": { "typestr": "@" },
+   "kColorSyncTransformGamutCheck": { "typestr": "@" },
+   "kColorSyncBlackPointCompensation": { "typestr": "@" },
+   "kColorSyncPreferredCMM": { "typestr": "@" },
+   "kColorSyncConvertQuality": { "typestr": "@" },
+   "kColorSyncBestQuality": { "typestr": "@" },
+   "kColorSyncNormalQuality": { "typestr": "@" },
+   "kColorSyncDraftQuality": { "typestr": "@" },
+   "kColorSyncConvertThreadCount": { "typestr": "@" },
+   "kColorSyncConvertUseVectorUnit": { "typestr": "@" },
+   "kColorSyncConvertUseExtendedRange": { "typestr": "@" },
+   "kColorSyncTranformInfo": { "typestr": "@" },
+   "kColorSyncTransformCreator": { "typestr": "@" },
+   "kColorSyncTransformSrcSpace": { "typestr": "@" },
+   "kColorSyncTransformDstSpace": { "typestr": "@" },
+   "kColorSyncTransformCodeFragmentType": { "typestr": "@" },
+   "kColorSyncTransformCodeFragmentMD5": { "typestr": "@" },
+   "kColorSyncTransformFullConversionData": { "typestr": "@" },
+   "kColorSyncTransformSimplifiedConversionData": { "typestr": "@" },
+   "kColorSyncTransformParametricConversionData": { "typestr": "@" },
+   "kColorSyncConversionParamCurve0": { "typestr": "@" },
+   "kColorSyncConversionParamCurve1": { "typestr": "@" },
+   "kColorSyncConversionParamCurve2": { "typestr": "@" },
+   "kColorSyncConversionParamCurve3": { "typestr": "@" },
+   "kColorSyncConversionParamCurve4": { "typestr": "@" },
+   "kColorSyncConversion1DLut": { "typestr": "@" },
+   "kColorSyncConversionGridPoints": { "typestr": "@" },
+   "kColorSyncConversionChannelID": { "typestr": "@" },
+   "kColorSyncConversion3DLut": { "typestr": "@" },
+   "kColorSyncConversionNDLut": { "typestr": "@" },
+   "kColorSyncConversionInpChan": { "typestr": "@" },
+   "kColorSyncConversionOutChan": { "typestr": "@" },
+   "kColorSyncConversionBPC": { "typestr": "@" },
+   "kColorSyncFixedPointRange": { "typestr": "@" }
+  },
+  "functions": {
+   "ColorSyncCMMGetTypeID": {
+    "args": {
+    },
+    "retval": { "typestr": ["I", "Q"] }
+   },
+   "ColorSyncProfileGetTypeID": {
+    "args": {
+    },
+    "retval": { "typestr": ["I", "Q"] }
+   },
+   "ColorSyncTransformGetTypeID": {
+    "args": {
+    },
+    "retval": { "typestr": ["I", "Q"] }
+   },
+   "ColorSyncCMMCreate": {
+    "retval": { "typestr": "^{ColorSyncCMM=}", "already_cfretained": true },
+    "args": {
+     "0": { "typestr": "^{__CFBundle=}" }
+    }
+   },
+   "ColorSyncCMMGetBundle": {
+    "retval": { "typestr": "^{__CFBundle=}" },
+    "args": {
+     "0": { "typestr": "^{ColorSyncCMM=}" }
+    }
+   },
+   "ColorSyncCMMCopyLocalizedName": {
+    "retval": { "typestr": "^{__CFString=}", "already_cfretained": true },
+    "args": {
+     "0": { "typestr": "^{ColorSyncCMM=}" }
+    }
+   },
+   "ColorSyncCMMCopyCMMIdentifier": {
+    "retval": { "typestr": "^{__CFString=}", "already_cfretained": true },
+    "args": {
+     "0": { "typestr": "^{ColorSyncCMM=}" }
+    }
+   },
+   "ColorSyncIterateInstalledCMMs": {
+    "retval": { "typestr": "v" },
+    "args": {
+     "0": {
+      "typestr": "^?",
+      "callable_retained": false,
+      "function": {
+       "args": {
+        "0": { "typestr": "^{ColorSyncCMM=}" },
+	"1": { "typestr": "^v" }
+       },
+       "retval": { "typestr": "B" }
+      }
+     },
+     "1": { "typestr": "^v" }
+    }
+   },
+   "ColorSyncRegisterDevice": {
+    "retval": { "typestr": "B" },
+    "args": {
+     "0": { "typestr": "^{__CFString=}" },
+     "1": { "typestr": "^{__CFUUID=}" },
+     "2": { "typestr": "^{__CFDictionary=}" }
+    }
+   },
+   "ColorSyncUnregisterDevice": {
+    "retval": { "typestr": "B" },
+    "args": {
+     "0": { "typestr": "^{__CFString=}" },
+     "1": { "typestr": "^{__CFUUID=}" }
+    }
+   },
+   "ColorSyncDeviceCopyDeviceInfo": {
+    "retval": { "typestr": "^{__CFDictionary=}", "already_cfretained": true },
+    "args": {
+     "0": { "typestr": "^{__CFString=}" },
+     "1": { "typestr": "^{__CFUUID=}" }
+    }
+   },
+   "ColorSyncIterateDeviceProfiles": {
+    "retval": { "typestr": "v" },
+    "args": {
+     "0": {
+      "typestr": "^?",
+      "callable_retained": false,
+      "function": {
+       "args": {
+        "0": { "typestr": "^{__CFDictionary=}" },
+	"1": { "typestr": "^v" }
+       },
+       "retval": { "typestr": "B" }
+      }
+     },
+     "1": { "typestr": "^v" }
+    }
+   },
+   "CGDisplayCreateUUIDFromDisplayID": {
+    "retval": { "typestr": "^{__CFUUID=}", "already_cfretained": true },
+    "args": {
+     "0": { "typestr": "I" }
+    }
+   },
+   "CGDisplayGetDisplayIDFromUUID": {
+    "retval": { "typestr": "I"  },
+    "args": {
+     "0": { "typestr": "^{__CFUUID=}" }
+    }
+   },
+   "ColorSyncProfileCreate": {
+    "retval": { "typestr": "^{ColorSyncProfile=}", "already_cfretained": true },
+    "args": {
+     "0": { "typestr": "^{__CFData=}" },
+     "1": { "typestr": "o^{__CFError=}" }
+    }
+   },
+   "ColorSyncProfileCreateWithURL": {
+    "retval": { "typestr": "^{ColorSyncProfile=}", "already_cfretained": true },
+    "args": {
+     "0": { "typestr": "^{__CFURL=}" },
+     "1": { "typestr": "o^{__CFError=}" }
+    }
+   },
+   "ColorSyncProfileCreateWithName": {
+    "retval": { "typestr": "^{ColorSyncProfile=}", "already_cfretained": true },
+    "args": {
+     "0": { "typestr": "^{__CFString=}" }
+    }
+   },
+   "ColorSyncProfileCreateWithDisplayID": {
+    "retval": { "typestr": "^{ColorSyncProfile=}", "already_cfretained": true },
+    "args": {
+     "0": { "typestr": "I" }
+    }
+   },
+   "ColorSyncProfileCreateDeviceProfile": {
+    "retval": { "typestr": "^{ColorSyncProfile=}", "already_cfretained": true },
+    "args": {
+     "0": { "typestr": "^{__CFString=}" },
+     "1": { "typestr": "^{__CFUUID=}" },
+     "2": { "typestr": "@", "comment": "CFTypeRef" }
+    }
+   },
+   "ColorSyncProfileCreateMutable": {
+    "retval": { "typestr": "^{ColorSyncProfile=}", "already_cfretained": true }
+   },
+   "ColorSyncProfileCreateMutableCopy": {
+    "retval": { "typestr": "^{ColorSyncProfile=}", "already_cfretained": true },
+    "args": {
+     "0": { "typestr": "^{ColorSyncProfile=}" }
+    }
+   },
+   "ColorSyncProfileCreateLink": {
+    "retval": { "typestr": "^{ColorSyncProfile=}", "already_cfretained": true },
+    "args": {
+     "0": { "typestr": "^{__CFArray=}" },
+     "1": { "typestr": "^{__CFDictionary=}" }
+    }
+   },
+   "ColorSyncProfileVerify": {
+    "retval": { "typestr": "B" },
+    "args": {
+     "0": { "typestr": "^{ColorSyncProfile=}" },
+     "1": { "typestr": "o^{__CFError=}" },
+     "2": { "typestr": "o^{__CFError=}" }
+    }
+   },
+   "ColorSyncProfileEstimateGammaWithDisplayID": {
+    "retval": { "typestr": "f" },
+    "args": {
+     "0": { "typestr": "I" },
+     "1": { "typestr": "o^{__CFError=}" }
+    }
+   },
+   "ColorSyncProfileEstimateGamma": {
+    "retval": { "typestr": "f" },
+    "args": {
+     "0": { "typestr": "^{ColorSyncProfile=}" },
+     "1": { "typestr": "o^{__CFError=}" }
+    }
+   },
+   "ColorSyncProfileGetMD5": {
+    "retval": { "typestr": "{_ColorSyncMD5}" },
+    "args": {
+     "0": { "typestr": "^{ColorSyncProfile=}" }
+    }
+   },
+   "ColorSyncProfileCopyData": {
+    "retval": { "typestr": "^{__CFData=}", "already_cfretained": true },
+    "args": {
+     "0": { "typestr": "^{ColorSyncProfile=}" },
+     "1": { "typestr": "o^{__CFError=}" }
+    }
+   },
+   "ColorSyncProfileGetURL": {
+    "retval": { "typestr": "^{__CFData=}" },
+    "args": {
+     "0": { "typestr": "^{ColorSyncProfile=}" },
+     "1": { "typestr": "o^{__CFError=}" }
+    }
+   },
+   "ColorSyncProfileCopyHeader": {
+    "retval": { "typestr": "^{__CFData=}", "already_cfretained": true },
+    "args": {
+     "0": { "typestr": "^{ColorSyncProfile=}" }
+    }
+   },
+   "ColorSyncProfileSetHeader": {
+    "retval": { "typestr": "v" },
+    "args": {
+     "0": { "typestr": "^{ColorSyncProfile=}" },
+     "1": { "typestr": "^{__CFData=}" }
+    }
+   },
+   "ColorSyncProfileCopyDescriptionString": {
+    "retval": { "typestr": "^{__CFString=}", "already_cfretained": true },
+    "args": {
+     "0": { "typestr": "^{ColorSyncProfile=}" }
+    }
+   },
+   "ColorSyncProfileCopyTagSignatures": {
+    "retval": { "typestr": "^{__CFArray=}", "already_cfretained": true },
+    "args": {
+     "0": { "typestr": "^{ColorSyncProfile=}" }
+    }
+   },
+   "ColorSyncProfileContainsTag": {
+    "retval": { "typestr": "B" },
+    "args": {
+     "0": { "typestr": "^{ColorSyncProfile=}" },
+     "1": { "typestr": "^{__CFString=}" }
+    }
+   },
+   "ColorSyncProfileContainsTag": {
+    "retval": { "typestr": "^{__CFData=}", "already_cfretained": true },
+    "args": {
+     "0": { "typestr": "^{ColorSyncProfile=}" },
+     "1": { "typestr": "^{__CFString=}" }
+    }
+   },
+   "ColorSyncProfileSetTag": {
+    "retval": { "typestr": "v" },
+    "args": {
+     "0": { "typestr": "^{ColorSyncProfile=}" },
+     "1": { "typestr": "^{__CFString=}" },
+     "2": { "typestr": "^{__CFData=}" }
+    }
+   },
+   "ColorSyncProfileRemoveTag": {
+    "retval": { "typestr": "v" },
+    "args": {
+     "0": { "typestr": "^{ColorSyncProfile=}" },
+     "1": { "typestr": "^{__CFString=}" }
+    }
+   },
+   "ColorSyncProfileGetDisplayTransferFormulaFromVCGT": {
+    "retval": { "typestr": "B" },
+    "args": {
+     "0": { "typestr": "^{ColorSyncProfile=}" },
+     "1": { "typestr": "o^f" },
+     "2": { "typestr": "o^f" },
+     "3": { "typestr": "o^f" },
+     "4": { "typestr": "o^f" },
+     "5": { "typestr": "o^f" },
+     "6": { "typestr": "o^f" },
+     "7": { "typestr": "o^f" },
+     "8": { "typestr": "o^f" },
+     "9": { "typestr": "o^f" }
+    }
+   },
+   "ColorSyncProfileCreateDisplayTransferTablesFromVCGT": {
+    "retval": { "typestr": "B" },
+    "args": {
+     "0": { "typestr": "^{ColorSyncProfile=}" },
+     "1": { "typestr": "n^L", "comment": "Unclear if this is correct" }
+    }
+   },
+   "ColorSyncIterateInstalledProfiles": {
+    "retval": { "typestr": "v" },
+    "args": {
+     "0": { "typestr": "N^I" },
+     "1": {
+      "typestr": "^?",
+      "callable_retained": false,
+      "function": {
+       "args": {
+        "0": { "typestr": "^{__CFDictionary=}" },
+	"1": { "typestr": "^v" }
+       },
+       "retval": { "typestr": "B" }
+      }
+     },
+     "2": { "typestr": "^v" },
+     "3": { "typestr": "^{__CFError=}" }
+    }
+   },
+   "ColorSyncProfileInstall": {
+    "retval": { "typestr": "B" },
+    "args": {
+     "0": { "typestr": "^{ColorSyncProfile=}" },
+     "1": { "typestr": "o^{__CFError=}" }
+    }
+   },
+   "ColorSyncTransformCreate": {
+    "retval": { "typestr": "^{ColorSyncTransform=}", "already_cfretained": true },
+    "args": {
+     "0": { "typestr": "^{__CFArray=}" },
+     "1": { "typestr": "^{__CFDictionary=}" }
+    }
+   },
+   "ColorSyncTransformCopyProperty": {
+    "retval": { "typestr": "@", "already_cfretained": true },
+    "args": {
+     "0": { "typestr": "^{ColorSyncTransform=}" },
+     "1": { "typestr": "@" },
+     "2": { "typestr": "^{__CFDictionary=}" }
+    }
+   },
+   "ColorSyncTransformSetProperty": {
+    "retval": { "typestr": "v" },
+    "args": {
+     "0": { "typestr": "^{ColorSyncTransform=}" },
+     "1": { "typestr": "@" },
+     "2": { "typestr": "@" }
+    }
+   },
+   "ColorSyncTransformConvert": {
+    "retval": { "typestr": "B" },
+    "args": {
+     "0": { "name": "transform", "typestr": "^{ColorSyncTransform=}" },
+     "1": { "name": "widht", "typestr": "L" },
+     "2": { "name": "height", "typestr": "L" },
+     "3": { "name": "dst", "typestr": "^v", "c_array_of_variable_length": true, "type_modifier": "o" },
+     "4": { "name": "dstDepth", "typestr": "i" },
+     "5": { "name": "dstLayout", "typestr": "i" },
+     "6": { "name": "dstBytesPerRow", "typestr": "L" },
+     "7": { "name": "src", "typestr": "^v", "c_array_of_variable_length": true, "type_modifier": "o" },
+     "8": { "name": "srcDepth", "typestr": "i" },
+     "9": { "name": "srcLayout", "typestr": "i" },
+     "10": { "name": "srcBytesPerRow", "typestr": "L" },
+     "11": { "name": "options", "typestr": "^{__CFDictionary=}" }
+    }
+   }
+  }
+ }
+}

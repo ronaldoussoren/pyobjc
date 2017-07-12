@@ -54,5 +54,9 @@ class TestRegressions (TestCase):
 
         self.assertEqual(NSAppKitVersionNumberWithPatternColorLeakFix, 641.0)
 
+        self.assertEqual(NSColorTypeComponentBased, 0)
+        self.assertEqual(NSColorTypePattern, 1)
+        self.assertEqual(NSColorTypeCatalog, 2)
+
 if __name__ == "__main__":
     main()

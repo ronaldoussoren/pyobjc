@@ -1,5 +1,5 @@
 '''
-Wrappers for the "ApplicationServices" framework on MacOSX 10.5 or later. Core Text is an
+Wrappers for the "ApplicationServices" framework on macOS 10.5 or later. Core Text is an
 advanced, low-level technology for laying out text and handling fonts. It is
 designed for high performance and ease of use.
 
@@ -14,7 +14,7 @@ VERSION="3.3a0"
 
 setup(
     name='pyobjc-framework-ApplicationServices',
-    description = "Wrappers for the framework ApplicationServices on Mac OS X",
+    description = "Wrappers for the framework ApplicationServices on macOS",
     packages = [ "ApplicationServices", "HIServices" ],
     version=VERSION,
     install_requires = [

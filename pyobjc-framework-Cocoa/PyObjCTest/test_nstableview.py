@@ -174,6 +174,10 @@ class TestNSTableView (TestCase):
         self.assertResultIsBOOL(NSTableView.rowActionsVisible)
         self.assertArgIsBOOL(NSTableView.setRowActionsVisible_, 0)
 
+    @min_os_level('10.13')
+    def testMethods10_13(self):
+        self.assertResultIsBOOL(NSTableView.usesAutomaticRowHeights)
+        self.assertArgIsBOOL(NSTableView.setUsesAutomaticRowHeights_, 0)
 
     @min_sdk_level('10.6')
     def testProtocolObjects(self):

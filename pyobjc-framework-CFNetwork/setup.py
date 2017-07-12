@@ -1,6 +1,6 @@
 '''
 PyObjC wrappers for the framework "CFNetwork", part of "CoreServices" on
-MacOSX.
+macOS.
 
 The CFNetwork framework provides a library of abstractions for networking
 protocols. The most interesting bits for Python programmers are the
@@ -18,7 +18,7 @@ VERSION="3.3a0"
 
 setup(
     name='pyobjc-framework-CFNetwork',
-    description = "Wrappers for the framework CFNetwork on Mac OS X",
+    description = "Wrappers for the framework CFNetwork on macOS",
     packages = [ "CFNetwork" ],
     ext_modules = [
         Extension("CFNetwork._manual",

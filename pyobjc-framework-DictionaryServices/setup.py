@@ -1,5 +1,5 @@
 '''
-Wrappers for the "DictionaryServices" framework on MacOSX 10.5 or later.
+Wrappers for the "DictionaryServices" framework on macOS 10.5 or later.
 
 Dictionary Services lets you create your own custom dictionaries that users
 can access through the Dictionary application. You also use these services to
@@ -18,7 +18,7 @@ VERSION="3.3a0"
 
 setup(
     name='pyobjc-framework-DictionaryServices',
-    description = "Wrappers for the framework DictionaryServices on Mac OS X",
+    description = "Wrappers for the framework DictionaryServices on macOS",
     min_os_level='10.5',
     packages = [ "DictionaryServices" ],
     version=VERSION,

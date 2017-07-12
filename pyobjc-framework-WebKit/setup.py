@@ -1,5 +1,5 @@
 '''
-Wrappers for the "WebKit" and "JavaScriptCore" frameworks on MacOSX. The
+Wrappers for the "WebKit" and "JavaScriptCore" frameworks on macOS. The
 WebKit framework contains the views and support classes for creating a
 browser. The JavaScriptCore framework implements a JavaScript interpreter.
 
@@ -15,7 +15,7 @@ VERSION="3.3a0"
 
 setup(
     name='pyobjc-framework-WebKit',
-    description = "Wrappers for the framework WebKit on Mac OS X",
+    description = "Wrappers for the framework WebKit on macOS",
     packages = [ "WebKit", "JavaScriptCore" ],
     ext_modules = [
         Extension("WebKit._WebKit",

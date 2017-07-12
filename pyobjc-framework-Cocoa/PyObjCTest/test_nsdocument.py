@@ -158,5 +158,10 @@ class TestNSDocument (TestCase):
 
         self.assertArgIsBlock(NSDocument.stopBrowsingVersionsWithCompletionHandler_, 0, b'v')
 
+    @min_os_level('10.13')
+    def testMethods10_13(self):
+        self.assertResultIsBOOL(NSDocument.allowsDocumentSharing)
+        self.assertArgIsBlock(NSDocument.shareDocumentWithSharingService_completionHandler_, 1, b'vZ')
+
 if __name__ == "__main__":
     main()

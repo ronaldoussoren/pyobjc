@@ -118,7 +118,7 @@ def addEncryptionKeys(dict):
         dict[Quartz.kCGPDFContextAllowsPrinting] = False
 
     else:
-        print("Encrypted PDF not available in this version of Mac OS X!")
+        print("Encrypted PDF not available in this version of macOS!")
 
 def myCreate2PagePDFDocumentAtURL(url):
     red = [1., 0., 0., 1.]

@@ -1,5 +1,5 @@
 '''
-Wrappers for the "ModelIO" framework on MacOS X.
+Wrappers for the "ModelIO" framework on macOS.
 
 These wrappers don't include documentation, please check Apple's documention
 for information on how to use this framework and PyObjC's documentation
@@ -14,7 +14,7 @@ VERSION="3.3a0"
 
 setup(
     name='pyobjc-framework-ModelIO',
-    description = "Wrappers for the framework ModelIO on Mac OS X",
+    description = "Wrappers for the framework ModelIO on macOS",
     min_os_level="10.11",
     packages = [ "ModelIO" ],
     ext_modules = [

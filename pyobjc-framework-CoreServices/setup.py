@@ -12,7 +12,7 @@ VERSION="3.3a0"
 
 setup(
     name='pyobjc-framework-CoreServices',
-    description = "Wrappers for the framework CoreServices on Mac OS X",
+    description = "Wrappers for the framework CoreServices on macOS",
     packages = [ "CoreServices" ],
     version=VERSION,
     install_requires = [

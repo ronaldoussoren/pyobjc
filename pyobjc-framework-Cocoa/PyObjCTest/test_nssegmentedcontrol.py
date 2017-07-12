@@ -18,6 +18,11 @@ class TestNSSegmentedControl (TestCase):
         self.assertEqual(NSSegmentSwitchTrackingMomentary, 2)
         self.assertEqual(NSSegmentSwitchTrackingMomentaryAccelerator, 3)
 
+        self.assertEqual(NSSegmentDistributionFit, 0)
+        self.assertEqual(NSSegmentDistributionFill, 1)
+        self.assertEqual(NSSegmentDistributionFillEqually, 2)
+        self.assertEqual(NSSegmentDistributionFillProportionally, 3)
+
     def testMethods(self):
         self.assertResultIsBOOL(NSSegmentedControl.selectSegmentWithTag_)
         self.assertArgIsBOOL(NSSegmentedControl.setSelected_forSegment_, 0)
@@ -34,6 +39,11 @@ class TestNSSegmentedControl (TestCase):
     def testMethods10_12(self):
         self.assertArgIsSEL(NSSegmentedControl.segmentedControlWithLabels_trackingMode_target_action_, 3, b'v@:@')
         self.assertArgIsSEL(NSSegmentedControl.segmentedControlWithImages_trackingMode_target_action_, 3, b'v@:@')
+
+    @min_os_level('10.13')
+    def testMethods10_13(self):
+        self.assertArgIsBOOL(NSSegmentedControl.setShowsMenuIndicator_forSegment_, 0)
+        self.assertResultIsBOOL(NSSegmentedControl.showsMenuIndicatorForSegment_)
 
 if __name__ == "__main__":
     main()

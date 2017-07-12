@@ -9,7 +9,7 @@ from Foundation import *
 
 
 class TestNSDictionarySubclassing(TestCase):
-    # These tests seem to be specific for MacOSX
+    # These tests seem to be specific for macOS
     def testExceptionInInit(self):
         if objc.platform != 'MACOSX': return
 

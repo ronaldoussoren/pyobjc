@@ -1,5 +1,5 @@
 '''
-Wrappers for framework 'ServerNotification' on MacOSX 10.6. This framework
+Wrappers for framework 'ServerNotification' on macOS 10.6. This framework
 contains the class NSServerNotificationCenter which provides distributed
 notifications over the Extensible Messaging and Presence Protocol (XMPP).
 
@@ -14,7 +14,7 @@ VERSION="3.3a0"
 
 setup(
     name='pyobjc-framework-ServerNotification',
-    description = "Wrappers for the framework ServerNotification on Mac OS X",
+    description = "Wrappers for the framework ServerNotification on macOS",
     min_os_level='10.6',
     max_os_level='10.8',
     packages = [ "ServerNotification" ],

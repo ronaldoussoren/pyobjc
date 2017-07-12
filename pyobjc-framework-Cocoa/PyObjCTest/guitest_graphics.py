@@ -1,7 +1,7 @@
 """
 Some tests for difficult wrapped graphics functions and methods
 
-NOTE: These require a WindowServer connection on MacOS X
+NOTE: These require a WindowServer connection on macOS
 """
 from PyObjCTools.TestSupport import *
 from AppKit import *

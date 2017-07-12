@@ -1,5 +1,5 @@
 '''
-Wrappers for the "SafariServices" framework on MacOS X.
+Wrappers for the "SafariServices" framework on macOS.
 
 These wrappers don't include documentation, please check Apple's documention
 for information on how to use this framework and PyObjC's documentation
@@ -14,7 +14,7 @@ VERSION="3.3a0"
 
 setup(
     name='pyobjc-framework-SafariServices',
-    description = "Wrappers for the framework SafariServices on Mac OS X",
+    description = "Wrappers for the framework SafariServices on macOS",
     min_os_level="10.11",
     packages = [ "SafariServices" ],
     ext_modules = [

@@ -1,5 +1,5 @@
 '''
-Wrappers for the "Message" framework on MacOSX. This framework contains a
+Wrappers for the "Message" framework on macOS. This framework contains a
 number of utilities for sending e-mail.
 
 These wrappers don't include documentation, please check Apple's documention
@@ -13,7 +13,7 @@ VERSION="3.3a0"
 
 setup(
     name='pyobjc-framework-Message',
-    description = "Wrappers for the framework Message on Mac OS X",
+    description = "Wrappers for the framework Message on macOS",
     max_os_level="10.8",
     packages = [ "Message" ],
     version=VERSION,

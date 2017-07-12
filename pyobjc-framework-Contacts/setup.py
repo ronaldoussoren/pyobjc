@@ -1,5 +1,5 @@
 '''
-Wrappers for the "Contacts" framework on MacOS X 10.11.
+Wrappers for the "Contacts" framework on macOS 10.11.
 
 These wrappers don't include documentation, please check Apple's documention
 for information on how to use this framework and PyObjC's documentation
@@ -14,7 +14,7 @@ VERSION="3.3a0"
 
 setup(
     name='pyobjc-framework-Contacts',
-    description = "Wrappers for the framework Contacts on Mac OS X",
+    description = "Wrappers for the framework Contacts on macOS",
     min_os_level='10.11',
     packages = [ "Contacts" ],
     ext_modules = [

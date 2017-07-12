@@ -50,10 +50,24 @@ class TestNSText (TestCase):
         self.assertIsInstance(NSTextDidEndEditingNotification, unicode)
         self.assertIsInstance(NSTextDidChangeNotification, unicode)
 
+        self.assertEqual(NSTextMovementReturn, 0x10)
+        self.assertEqual(NSTextMovementTab, 0x11)
+        self.assertEqual(NSTextMovementBacktab, 0x12)
+        self.assertEqual(NSTextMovementLeft, 0x13)
+        self.assertEqual(NSTextMovementRight, 0x14)
+        self.assertEqual(NSTextMovementUp, 0x15)
+        self.assertEqual(NSTextMovementDown, 0x16)
+        self.assertEqual(NSTextMovementCancel, 0x17)
+        self.assertEqual(NSTextMovementOther, 0)
+
     @min_os_level('10.6')
     def testConstants10_6(self):
         self.assertEqual(NSTextWritingDirectionEmbedding, 0<<1)
         self.assertEqual(NSTextWritingDirectionOverride,  1<<1)
+
+    @min_os_level('10.13')
+    def testConstants10_13(self):
+        self.assertIsInstance(NSTextMovementUserInfoKey, unicode)
 
     def testMethods(self):
         self.assertResultIsBOOL(NSText.writeRTFDToFile_atomically_)

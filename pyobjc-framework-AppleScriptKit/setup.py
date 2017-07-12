@@ -12,7 +12,7 @@ VERSION="3.3a0"
 
 setup(
     name='pyobjc-framework-AppleScriptKit',
-    description = "Wrappers for the framework AppleScriptKit on Mac OS X",
+    description = "Wrappers for the framework AppleScriptKit on macOS",
     packages = [ "AppleScriptKit" ],
     version=VERSION,
     install_requires = [

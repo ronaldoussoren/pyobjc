@@ -1,5 +1,5 @@
 '''
-Wrappers for the "AVKit" framework on MacOS X introduced in Mac OS X 10.9.
+Wrappers for the "AVKit" framework on macOS introduced in macOS 10.9.
 
 These wrappers don't include documentation, please check Apple's documention
 for information on how to use this framework and PyObjC's documentation
@@ -14,7 +14,7 @@ VERSION="3.3a0"
 
 setup(
     name='pyobjc-framework-AVKit',
-    description = "Wrappers for the framework AVKit on Mac OS X",
+    description = "Wrappers for the framework AVKit on macOS",
     min_os_level="10.9",
     packages = [ "AVKit" ],
     ext_modules = [

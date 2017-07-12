@@ -18,6 +18,7 @@ class TestNSSplitViewController (TestCase):
     def testMethods10_11(self):
         self.assertResultIsBOOL(NSSplitViewItem.isSpringLoaded)
         self.assertArgIsBOOL(NSSplitViewItem.setSpringLoaded_, 0)
+        self.assertResultIsBOOL(NSSplitViewController.validateUserInterfaceItem_)
 
     def testConstants(self):
         self.assertEqual(NSSplitViewItemBehaviorDefault, 0)
