@@ -3,6 +3,11 @@
 {
  "definitions": {
   "externs": {
+   "kCVImageBufferTransferFunction_SMPTE_ST_2084_PQ": { "typestr": "@" },
+   "kCVImageBufferTransferFunction_ITU_R_2100_HLG": { "typestr": "@" },
+   "kCVImageBufferMasteringDisplayColorVolumeKey": { "typestr": "@" },
+   "kCVImageBufferContentLightLevelInfoKey": { "typestr": "@" },
+   "kCVMetalTextureUsage": { "typestr": "@" },
    "kCVImageBufferTransferFunction_SMPTE_ST_428_1": { "typestr": "@" },
    "kCVImageBufferYCbCrMatrix_ITU_R_2020": { "typestr": "@" },
    "kCVImageBufferColorPrimaries_DCI_P3": { "typestr": "@" },
@@ -19,6 +24,16 @@
    "kCVPixelBufferPoolFlushExcessBuffers": { "typestr": "@" }
   },
   "enum": {
+   "kCVPixelFormatType_DisparityFloat16": { "value": 1751411059 },
+   "kCVPixelFormatType_DisparityFloat32": { "value": 1717856627 },
+   "kCVPixelFormatType_DepthFloat16": { "value": 1751410032 },
+   "kCVPixelFormatType_DepthFloat32": { "value": 1717855600 },
+   "kCVPixelFormatType_420YpCbCr10BiPlanarVideoRange": { "value": 2016686640 },
+   "kCVPixelFormatType_422YpCbCr10BiPlanarVideoRange": { "value": 2016686642 },
+   "kCVPixelFormatType_444YpCbCr10BiPlanarVideoRange": { "value": 2016687156 },
+   "kCVPixelFormatType_420YpCbCr10BiPlanarFullRange": { "value": 2019963440 },
+   "kCVPixelFormatType_422YpCbCr10BiPlanarFullRange": { "value": 2019963442 },
+   "kCVPixelFormatType_444YpCbCr10BiPlanarFullRange": { "value": 2019963956 },
    "kCVReturnUnsupported": { "value": -6663 },
    "kCVReturnRetry": { "value": -6692 },
    "kCVReturnLast": { "value": -6699 },

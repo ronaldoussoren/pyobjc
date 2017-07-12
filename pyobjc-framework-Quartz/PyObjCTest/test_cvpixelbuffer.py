@@ -71,6 +71,17 @@ class TestCVPixelBuffer (TestCase):
         self.assertIsInstance(kCVPixelBufferCGImageCompatibilityKey, unicode)
         self.assertIsInstance(kCVPixelBufferOpenGLCompatibilityKey, unicode)
 
+        self.assertEqual(kCVPixelFormatType_DisparityFloat16, fourcc(b'hdis'))
+        self.assertEqual(kCVPixelFormatType_DisparityFloat32, fourcc(b'fdis'))
+        self.assertEqual(kCVPixelFormatType_DepthFloat16, fourcc(b'hdep'))
+        self.assertEqual(kCVPixelFormatType_DepthFloat32, fourcc(b'fdep'))
+        self.assertEqual(kCVPixelFormatType_420YpCbCr10BiPlanarVideoRange, fourcc(b'x420'))
+        self.assertEqual(kCVPixelFormatType_422YpCbCr10BiPlanarVideoRange, fourcc(b'x422'))
+        self.assertEqual(kCVPixelFormatType_444YpCbCr10BiPlanarVideoRange, fourcc(b'x444'))
+        self.assertEqual(kCVPixelFormatType_420YpCbCr10BiPlanarFullRange, fourcc(b'xf20'))
+        self.assertEqual(kCVPixelFormatType_422YpCbCr10BiPlanarFullRange, fourcc(b'xf22'))
+        self.assertEqual(kCVPixelFormatType_444YpCbCr10BiPlanarFullRange, fourcc(b'xf44'))
+
     def testTypes(self):
         self.assertIsCFType(CVPixelBufferRef)
 

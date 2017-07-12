@@ -92,6 +92,14 @@ class TestCVImageBuffer (TestCase):
     def testConstants10_12(self):
         self.assertIsInstance(kCVImageBufferTransferFunction_SMPTE_ST_428_1, unicode)
 
+    @min_os_level('10.13')
+    def testConstants10_12(self):
+        self.assertIsInstance(kCVImageBufferTransferFunction_SMPTE_ST_2084_PQ, unicode)
+        self.assertIsInstance(kCVImageBufferTransferFunction_ITU_R_2100_HLG, unicode)
+        self.assertIsInstance(kCVImageBufferMasteringDisplayColorVolumeKey, unicode)
+        self.assertIsInstance(kCVImageBufferContentLightLevelInfoKey, unicode)
+        self.assertIsInstance(kCVMetalTextureUsage, unicode)
+
     def testFunctions(self):
         self.assertResultHasType(CVImageBufferGetEncodedSize, CGSize.__typestr__)
         self.assertResultHasType(CVImageBufferGetDisplaySize, CGSize.__typestr__)
