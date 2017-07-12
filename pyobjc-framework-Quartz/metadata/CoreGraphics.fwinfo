@@ -17,9 +17,22 @@
    "kCGImageByteOrder16Little": { "value": 4096 },
    "kCGImageByteOrder32Little": { "value": 8192 },
    "kCGImageByteOrder16Big": { "value": 12288 },
-   "kCGImageByteOrder32Big": { "value": 16384 }
+   "kCGImageByteOrder32Big": { "value": 16384 },
+   "kCGPDFAllowsLowQualityPrinting": { "value": 1 },
+   "kCGPDFAllowsHighQualityPrinting": { "value": 2 },
+   "kCGPDFAllowsDocumentChanges": { "value": 4 },
+   "kCGPDFAllowsDocumentAssembly": { "value": 8 },
+   "kCGPDFAllowsContentCopying": { "value": 16 },
+   "kCGPDFAllowsContentAccessibility": { "value": 32 },
+   "kCGPDFAllowsCommenting": { "value": 64 },
+   "kCGPDFAllowsFormFieldEntry": { "value": 128 }
   },
   "externs": {
+   "kCGPDFOutlineTitle": { "typestr": "@" },
+   "kCGPDFOutlineChildren": { "typestr": "@" },
+   "kCGPDFOutlineDestination": { "typestr": "@" },
+   "kCGPDFOutlineDestinationRect": { "typestr": "@" },
+   "kCGPDFContextAccessPermissions": { "typestr": "@" },
    "kCGColorSpaceExtendedSRGB": { "typestr": "@" },
    "kCGColorSpaceLinearSRGB": { "typestr": "@" },
    "kCGColorSpaceExtendedLinearSRGB": { "typestr": "@" },
@@ -141,6 +154,41 @@
   },
   "formal_protocols": {},
   "functions": {
+   "CGPathApplyWithBlock": {
+    "retval": { "typestr": "v" },
+    "args": {
+     "0": { "typestr": "^{CGPath=}" },
+     "1": {
+      "typestr": "@?",
+      "callable": {
+       "arguments": {
+        "0": { "typestr": "^v" },
+        "1": { "typestr": "^{CGPathElement=}" }
+       },
+       "retval": { "typestr": "v" }
+      }
+     }
+    }
+   },
+   "CGPDFDocumentGetAccessPermissions": {
+    "retval": { "typestr": "I" },
+    "args": {
+     "0": { "typestr": "^{CGPDFDocument=}" }
+    }
+   },
+   "CGPDFDocumentGetOutline": {
+    "retval": { "typestr": "^{__CFDictionary=}" },
+    "args": {
+     "0": { "typestr": "^{CGPDFDocument=}" }
+    }
+   },
+   "CGPDFContextSetOutline": {
+    "retval": { "typestr": "v" },
+    "args": {
+     "0": { "typestr": "^{CGContext=}" },
+     "1": { "typestr": "^{__CFDictionary=" }
+    }
+   },
    "CGColorConversionInfoGetTypeID": {
     "retval": { "typestr": [ "I", "Q" ] },
     "args": {
@@ -524,6 +572,15 @@
      "already_cfretained": true
     }
    },
+   "CGColorSpaceCreateWithICCData": {
+    "args": {
+     "0": { "typestr": "@" }
+    },
+    "retval": {
+     "typestr": "@",
+     "already_cfretained": true
+    }
+   },
    "CGColorSpaceCreateWithName": {
     "args": {
      "0": {}
@@ -614,6 +671,18 @@
      "0": {},
      "2": {},
      "3": {}
+    }
+   },
+   "CGDataProviderGetInfo": {
+    "retval": { "typestr": "v" },
+    "args": {
+     "0": { "typestr": "^{CGDataProvider=}" }
+    }
+   },
+   "CGContextResetClip": {
+    "retval": { "typestr": "v" },
+    "args": {
+     "0": { "typestr": "^{CGContext=}" }
     }
    },
    "CGContextAddArc": {

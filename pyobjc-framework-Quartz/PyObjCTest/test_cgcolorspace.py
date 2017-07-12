@@ -172,6 +172,7 @@ class TestCGColorSpace (TestCase):
         self.assertResultIsCFRetained(CGColorSpaceCopyICCData)
         self.assertResultHasType(CGColorSpaceIsWideGamutRGB, objc._C_BOOL)
         self.assertResultHasType(CGColorSpaceSupportsOutput, objc._C_BOOL)
+        self.assertResultIsCFRetained(CGColorSpaceCreateWithICCData)
 
 if __name__ == "__main__":
     main()

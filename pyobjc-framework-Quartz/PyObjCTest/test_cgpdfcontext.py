@@ -6,22 +6,6 @@ from Foundation import NSMutableData
 
 class TestCGPDFContext (TestCase):
 
-    @min_os_level('10.7')
-    def testFunctions10_7(self):
-        data = NSMutableData.data()
-        consumer = CGDataConsumerCreateWithCFData(data)
-        context = CGPDFContextCreate(consumer, None, None)
-
-        metadata = b'''<?xpacket begin='' id='W5M0MpCehiHzreSzNTczkc9d'?><?xpacket end='w'?>'''
-        CGPDFContextAddDocumentMetadata(context,
-                NSMutableData.dataWithBytes_length_(metadata, len(metadata)))
-
-
-    @min_os_level('10.5')
-    def testFunctions10_5(self):
-        # Note actual test is in the function below this one.
-        CGPDFContextClose
-
     def testFunctions(self):
         data = NSMutableData.data()
         self.assertIsInstance(data, CFMutableDataRef)
@@ -54,9 +38,25 @@ class TestCGPDFContext (TestCase):
 
         if hasattr(Quartz, 'CGPDFContextClose'): CGPDFContextClose(context)
 
+
     @min_os_level('10.5')
-    def testConstants10_5(self):
-        self.assertIsInstance(kCGPDFContextSubject, unicode)
+    def testFunctions10_5(self):
+        # Note actual test is in the function below this one.
+        CGPDFContextClose
+
+    @min_os_level('10.7')
+    def testFunctions10_7(self):
+        data = NSMutableData.data()
+        consumer = CGDataConsumerCreateWithCFData(data)
+        context = CGPDFContextCreate(consumer, None, None)
+
+        metadata = b'''<?xpacket begin='' id='W5M0MpCehiHzreSzNTczkc9d'?><?xpacket end='w'?>'''
+        CGPDFContextAddDocumentMetadata(context,
+                NSMutableData.dataWithBytes_length_(metadata, len(metadata)))
+
+    @min_os_level('10.13')
+    def testFunctions10_13(self):
+        CGPDFContextSetOutline
 
     def testConstants(self):
         self.assertIsInstance(kCGPDFContextMediaBox, unicode)
@@ -82,6 +82,13 @@ class TestCGPDFContext (TestCase):
         self.assertIsInstance(kCGPDFXDestinationOutputProfile, unicode)
         self.assertIsInstance(kCGPDFContextOutputIntents, unicode)
 
+    @min_os_level('10.5')
+    def testConstants10_5(self):
+        self.assertIsInstance(kCGPDFContextSubject, unicode)
+
+    @min_os_level('10.13')
+    def testConstants10_13(self):
+        self.assertIsInstance(kCGPDFContextAccessPermissions, unicode)
 
 
 

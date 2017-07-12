@@ -40,7 +40,27 @@ class TestCGPDFDocument (TestCase):
         CGPDFDocumentGetArtBox
         CGPDFDocumentGetRotationAngle
 
+    @min_os_level('10.13')
+    def testFunctions(self):
+        CGPDFDocumentGetOutline
+        CGPDFDocumentGetAccessPermissions
 
+    def testConstants(self):
+        self.assertEqual(kCGPDFAllowsLowQualityPrinting, 1 << 0)
+        self.assertEqual(kCGPDFAllowsHighQualityPrinting, 1 << 1)
+        self.assertEqual(kCGPDFAllowsDocumentChanges, 1 << 2)
+        self.assertEqual(kCGPDFAllowsDocumentAssembly, 1 << 3)
+        self.assertEqual(kCGPDFAllowsContentCopying, 1 << 4)
+        self.assertEqual(kCGPDFAllowsContentAccessibility, 1 << 5)
+        self.assertEqual(kCGPDFAllowsCommenting, 1 << 6)
+        self.assertEqual(kCGPDFAllowsFormFieldEntry, 1 << 7)
+
+    @min_os_level('10.13')
+    def testConstants10_13(self):
+        self.assertIsInstance(kCGPDFOutlineTitle, unicode)
+        self.assertIsInstance(kCGPDFOutlineChildren, unicode)
+        self.assertIsInstance(kCGPDFOutlineDestination, unicode)
+        self.assertIsInstance(kCGPDFOutlineDestinationRect, unicode)
 
 if __name__ == "__main__":
     main()

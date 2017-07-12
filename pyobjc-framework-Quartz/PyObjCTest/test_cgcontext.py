@@ -527,5 +527,8 @@ class TestCGContext (TestCase):
             if os.path.exists("/tmp/pyobjc.test.pdf"):
                 os.unlink("/tmp/pyobjc.test.pdf")
 
+    def testFunctions_n(self):
+         CGContextResetClip
+
 if __name__ == "__main__":
     main()

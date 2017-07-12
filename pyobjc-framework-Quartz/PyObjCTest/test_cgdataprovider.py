@@ -60,5 +60,9 @@ class TestCGDataProvider (TestCase):
         self.fail("CGDataProviderCreate") # + callbacks
         self.fail("CGDataProviderCreateDirectAccess") # + callbacks
 
+    @min_os_level('10.13')
+    def testFunctions10_13(self):
+        CGDataProviderGetInfo
+
 if __name__ == "__main__":
     main()

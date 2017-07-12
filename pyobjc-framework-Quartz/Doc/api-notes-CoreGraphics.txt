@@ -41,3 +41,8 @@ API Notes
 * ``CGColorConversionInfoCreateFromList``
 
   This function is not yet supported.
+
+* ``CGColorConversionInfoCreateFromListWithArguments``
+
+  This function is not supported. Use
+  ``CGColorConversionInfoCreateFromList`` instead.
