@@ -58,11 +58,13 @@ Version 4.0
   - ImageCaptureCore
   - ImageIO
   - Intents
+  - IOSurface
   - JavaScriptCore
   - LocalAuthentication
   - MapKit
   - MediaLibrary
   - MediaPlayer
+  - ModelIO
   - MultipeerConnectivity
   - OpenDirectory
   - Photos

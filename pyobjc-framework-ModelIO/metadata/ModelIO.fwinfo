@@ -23,6 +23,23 @@
    "kUTTypeUniversalSceneDescription": { "typestr": "@" }
   },
   "enum": {
+   "MDLTransformOpRotationOrderXYZ": { "value": 1 },
+   "MDLTransformOpRotationOrderXZY": { "value": 2 },
+   "MDLTransformOpRotationOrderYXZ": { "value": 3 },
+   "MDLTransformOpRotationOrderYZX": { "value": 4 },
+   "MDLTransformOpRotationOrderZXY": { "value": 5 },
+   "MDLTransformOpRotationOrderZYX": { "value": 6 },
+   "MDLPrimitiveTypeCube": { "value": 0 },
+   "MDLPrimitiveTypeSphere": { "value": 1 },
+   "MDLPrimitiveTypeCone": { "value": 2 },
+   "MDLPrimitiveTypeCapsule": { "value": 3 },
+   "MDLPrimitiveTypeCylinder": { "value": 4 },
+   "MDLPrimitiveTypeNone": { "value": 5 },
+   "MDLAnimatedValueInterpolationConstant": { "value": 0 },
+   "MDLAnimatedValueInterpolationLinear": { "value": 1 },
+   "MDLDataPrecisionUndefined": { "value": 0 },
+   "MDLDataPrecisionFloat": { "value": 1 },
+   "MDLDataPrecisionDouble": { "value": 2 },
    "MDLVertexFormatChar": { "value": 131073 },
    "MDLVertexFormatChar2": { "value": 131074 },
    "MDLVertexFormatChar2Normalized": { "value": 262146 },
@@ -111,6 +128,7 @@
    "MDLTextureChannelEncodingUInt32": { "value": 4 },
    "MDLTextureChannelEncodingUint32": { "value": 4 },
    "MDLTextureChannelEncodingFloat16": { "value": 258 },
+   "MDLTextureChannelEncodingFloat16SR": { "value": 770 },
    "MDLTextureChannelEncodingFloat32": { "value": 260 },
    "MDLMeshBufferTypeVertex": { "value": 1 },
    "MDLMeshBufferTypeIndex": { "value": 2 },
@@ -176,6 +194,244 @@
    "MDLCameraProjectionOrthographic": { "value": 1 }
   },
   "classes": {
+   "MDLAnimatedScalarArray": {
+    "methods": [
+     {
+      "selector": "setFloatArray:count:atTime:",
+      "class_method": false,
+      "args": {
+       "0": { "type_modifier": "n", "c_array_length_in_arg": 1 }
+      }
+     },
+     {
+      "selector": "setDoubleArray:count:atTime:",
+      "class_method": false,
+      "args": {
+       "0": { "type_modifier": "n", "c_array_length_in_arg": 1 }
+      }
+     },
+     {
+      "selector": "resetWithFloatArray:atTimes:count:",
+      "class_method": false,
+      "args": {
+       "0": { "type_modifier": "n", "c_array_length_in_arg": 2 },
+       "1": { "type_modifier": "n", "c_array_length_in_arg": 2 }
+      }
+     },
+     {
+      "selector": "resetWithDoubleArray:count:atTimes:count:",
+      "class_method": false,
+      "args": {
+       "0": { "type_modifier": "n", "c_array_length_in_arg": 2 },
+       "1": { "type_modifier": "n", "c_array_length_in_arg": 2 }
+      }
+     },
+     {
+      "selector": "copyFloatArrayInto:maxCount:",
+      "class_method": false,
+      "args": {
+       "0": { "type_modifier": "o", "c_array_length_in_arg": 1, "c_array_length_in_result": true }
+      }
+     },
+     {
+      "selector": "copyDoubleArrayInto:maxCount:",
+      "class_method": false,
+      "args": {
+       "0": { "type_modifier": "o", "c_array_length_in_arg": 1, "c_array_length_in_result": true }
+      }
+     }
+    ]
+   },
+   "MDLAnimatedScalar": {
+    "methods": [
+     {
+      "selector": "resetWithFloatArray:count:atTimes:count:",
+      "class_method": false,
+      "args": {
+       "0": { "type_modifier": "n", "c_array_length_in_arg": 1 },
+       "2": { "type_modifier": "n", "c_array_length_in_arg": 3 }
+      }
+     },
+     {
+      "selector": "resetWithDoubleArray:count:atTimes:count:",
+      "class_method": false,
+      "args": {
+       "0": { "type_modifier": "n", "c_array_length_in_arg": 1 },
+       "2": { "type_modifier": "n", "c_array_length_in_arg": 3 }
+      }
+     },
+     {
+      "selector": "copyFloatArrayInto:maxCount:",
+      "class_method": false,
+      "args": {
+       "0": { "type_modifier": "o", "c_array_length_in_arg": 1, "c_array_length_in_result": true }
+      }
+     },
+     {
+      "selector": "copyDoubleArrayInto:maxCount:",
+      "class_method": false,
+      "args": {
+       "0": { "type_modifier": "o", "c_array_length_in_arg": 1, "c_array_length_in_result": true }
+      }
+     }
+    ]
+   },
+   "MDLAnimatedVector2": {
+    "comment": "vector_... types!",
+    "methods": [
+     {
+      "selector": "resetWithFloat2Array:count:atTimes:count:",
+      "class_method": false,
+      "args": {
+       "0": { "type_modifier": "n", "c_array_length_in_arg": 1 },
+       "2": { "type_modifier": "n", "c_array_length_in_arg": 3 }
+      }
+     },
+     {
+      "selector": "resetWithDouble2Array:count:atTimes:count:",
+      "class_method": false,
+      "args": {
+       "0": { "type_modifier": "n", "c_array_length_in_arg": 1 },
+       "2": { "type_modifier": "n", "c_array_length_in_arg": 3 }
+      }
+     },
+     {
+      "selector": "copyFloat2ArrayInto:maxCount:",
+      "class_method": false,
+      "args": {
+       "0": { "type_modifier": "o", "c_array_length_in_arg": 1, "c_array_length_in_result": true }
+      }
+     },
+     {
+      "selector": "copyDouble2ArrayInto:maxCount:",
+      "class_method": false,
+      "args": {
+       "0": { "type_modifier": "o", "c_array_length_in_arg": 1, "c_array_length_in_result": true }
+      }
+     }
+    ]
+   },
+   "MDLAnimatedVector3": {
+    "comment": "vector_... types!",
+    "methods": [
+     {
+      "selector": "resetWithFloat3Array:count:atTimes:count:",
+      "class_method": false,
+      "args": {
+       "0": { "type_modifier": "n", "c_array_length_in_arg": 1 },
+       "2": { "type_modifier": "n", "c_array_length_in_arg": 3 }
+      }
+     },
+     {
+      "selector": "resetWithDouble3Array:count:atTimes:count:",
+      "class_method": false,
+      "args": {
+       "0": { "type_modifier": "n", "c_array_length_in_arg": 1 },
+       "2": { "type_modifier": "n", "c_array_length_in_arg": 3 }
+      }
+     },
+     {
+      "selector": "copyFloat3ArrayInto:maxCount:",
+      "class_method": false,
+      "args": {
+       "0": { "type_modifier": "o", "c_array_length_in_arg": 1, "c_array_length_in_result": true }
+      }
+     },
+     {
+      "selector": "copyDouble3ArrayInto:maxCount:",
+      "class_method": false,
+      "args": {
+       "0": { "type_modifier": "o", "c_array_length_in_arg": 1, "c_array_length_in_result": true }
+      }
+     }
+    ]
+   },
+   "MDLAnimatedVector4": {
+    "comment": "vector_... types!",
+    "methods": [
+     {
+      "selector": "resetWithFloat4Array:count:atTimes:count:",
+      "class_method": false,
+      "args": {
+       "0": { "type_modifier": "n", "c_array_length_in_arg": 1 },
+       "2": { "type_modifier": "n", "c_array_length_in_arg": 3 }
+      }
+     },
+     {
+      "selector": "resetWithDouble4Array:count:atTimes:count:",
+      "class_method": false,
+      "args": {
+       "0": { "type_modifier": "n", "c_array_length_in_arg": 1 },
+       "2": { "type_modifier": "n", "c_array_length_in_arg": 3 }
+      }
+     },
+     {
+      "selector": "copyFloat4ArrayInto:maxCount:",
+      "class_method": false,
+      "args": {
+       "0": { "type_modifier": "o", "c_array_length_in_arg": 1, "c_array_lengt_in_result": true }
+      }
+     },
+     {
+      "selector": "copyDouble4ArrayInto:maxCount:",
+      "class_method": false,
+      "args": {
+       "0": { "type_modifier": "o", "c_array_length_in_arg": 1, "c_array_lengt_in_result": true }
+      }
+     }
+    ]
+   },
+   "MDLAnimatedMatrix4x4": {
+    "comment": "vector_... types!",
+    "methods": [
+     {
+      "selector": "resetWithFloat4x4Array:count:atTimes:count:",
+      "class_method": false,
+      "args": {
+       "0": { "type_modifier": "n", "c_array_length_in_arg": 1 },
+       "2": { "type_modifier": "n", "c_array_length_in_arg": 3 }
+      }
+     },
+     {
+      "selector": "resetWithDouble4x4Array:count:atTimes:count:",
+      "class_method": false,
+      "args": {
+       "0": { "type_modifier": "n", "c_array_length_in_arg": 1 },
+       "2": { "type_modifier": "n", "c_array_length_in_arg": 3 }
+      }
+     },
+     {
+      "selector": "copyFloat4x4ArrayInto:maxCount:",
+      "class_method": false,
+      "args": {
+       "0": { "type_modifier": "o", "c_array_length_in_arg": 1, "c_array_lengt_in_result": true }
+      }
+     },
+     {
+      "selector": "copyDouble4x4ArrayInto:maxCount:",
+      "class_method": false,
+      "args": {
+       "0": { "type_modifier": "o", "c_array_length_in_arg": 1, "c_array_lengt_in_result": true }
+      }
+     }
+    ]
+   },
+   "MDLAnimatedValue": {
+    "methods": [
+     {
+      "selector": "isAnimated",
+      "class_method": false,
+      "retval": { "type_override": "Z" }
+     },
+     {
+      "selector": "copyTimesInto:maxCount:",
+      "class_method": false,
+      "args": {
+       "0": { "type_modifier": "o", "c_array_length_in_arg": 1, "c_array_lengt_in_result": true }
+      }
+     }
+    ]
+   },
    "MDLVoxelArray": {
     "methods": [
      {
@@ -244,6 +500,16 @@
      },
      {
       "selector": "writeToURL:",
+      "class_method": false,
+      "retval": { "type_override": "Z" }
+     },
+     {
+      "selector": "writeToURL:level:",
+      "class_method": false,
+      "retval": { "type_override": "Z" }
+     },
+     {
+      "selector": "writeToURL:type:level:",
       "class_method": false,
       "retval": { "type_override": "Z" }
      },
@@ -361,8 +627,56 @@
      }
     ]
    },
+   "MDLMorphDeformer": {
+    "methods": [
+     {
+      "selector": "initWithTargetShapes:shapeSetTargetWeights:count:shapeSetTargetCounts:count:",
+      "class_method": false,
+      "args": {
+       "1": { "type_modifier": "n", "c_array_length_in_arg": 2 },
+       "3": { "type_modifier": "n", "c_array_length_in_arg": 4 }
+      }
+     },
+     {
+      "selector": "copyShapeSetTargetWeightsInto:maxCount:",
+      "class_method": false,
+      "args": {
+       "1": { "type_modifier": "n", "c_array_length_in_arg": 2, "c_array_lenght_in_result": true }
+      }
+     },
+     {
+      "selector": "copyShapeSetTargetWeightsInto:maxCount:",
+      "class_method": false,
+      "args": {
+       "1": { "type_modifier": "n", "c_array_length_in_arg": 2, "c_array_lenght_in_result": true }
+      }
+     }
+    ]
+   },
    "MDLMesh": {
     "methods": [
+     {
+      "selector": "makeVerticesUniqueAndReturnError:",
+      "class_method": false,
+      "retval": { "type_override": "Z" },
+      "args": {
+       "2": { "type_modifier": "o" }
+      }
+     },
+     {
+      "selector": "initMeshWithPrimitive:segments:inwardNormals:geometryType:allocator:",
+      "class_method": false,
+      "args": {
+       "2": { "type_override": "Z" }
+      }
+     },
+     {
+      "selector": "newMeshWithPrimitive:segments:inwardNormals:geometryType:allocator:",
+      "class_method": true,
+      "args": {
+       "2": { "type_override": "Z" }
+      }
+     },
      {
       "selector": "initBoxWithExtent:segments:inwardNormals:geometryType:allocator:",
       "class_method": false,
@@ -573,6 +887,14 @@
    "MDLAsset": {
     "methods": [
      {
+      "selector": "initWithURL:bufferAllocator:preserveIndexing:error:",
+      "class_method": false,
+      "args": {
+       "3": { "type_override": "Z" },
+       "3": { "type_modifier": "o" }
+      }
+     },
+     {
       "selector": "initWithURL:vertexDescriptor:bufferAllocator:preserveTopology:error:",
       "class_method": false,
       "args": {
@@ -605,8 +927,47 @@
      }
     ]
    },
+   "MDLSkinDeformer": {
+    "methods": [
+     {
+      "selector": "copyJointBindTransformsInto:maxCount:",
+      "class_method": false,
+      "retval": { "type_override": ["I", "Q"] },
+      "args": {
+       "0": { "type_override": "?", "comment": "matrix_float4x4" },
+       "1": { "type_override": ["I", "Q"] }
+      }
+     }
+    ]
+   },
    "NSObject": {
     "methods": [
+     {
+      "selector": "copyJointBindTransformsInto:maxCount:",
+      "class_method": false,
+      "retval": { "type_override": ["I", "Q"] },
+      "args": {
+       "0": { "type_override": "?", "comment": "matrix_float4x4" },
+       "1": { "type_override": ["I", "Q"] }
+      }
+     },
+     {
+      "selector": "primitiveType",
+      "class_method": false,
+      "retval": { "type_override": ["I", "Q"] }
+     },
+     {
+      "selector": "setPrimitiveType:",
+      "class_method": false,
+      "args": {
+       "0": { "type_override": ["I", "Q"] }
+      }
+     },
+     {
+      "selector": "canResolveAssetNamed:",
+      "class_method": false,
+      "retval": { "type_override": "Z" }
+     },
      {
       "selector": "minimumTime",
       "class_method": false,

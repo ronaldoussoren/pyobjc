@@ -15,6 +15,7 @@ if sys.maxsize > 2**32:
             self.assertEqual(ModelIO.MDLTextureChannelEncodingUInt32, 4)
             self.assertEqual(ModelIO.MDLTextureChannelEncodingUint32, 4)
             self.assertEqual(ModelIO.MDLTextureChannelEncodingFloat16, 0x102)
+            self.assertEqual(ModelIO.MDLTextureChannelEncodingFloat16SR, 0x302)
             self.assertEqual(ModelIO.MDLTextureChannelEncodingFloat32, 0x104)
 
         def testMethods(self):
@@ -37,6 +38,11 @@ if sys.maxsize > 2**32:
         def testMethods10_12(self):
             self.assertResultIsBOOL(ModelIO.MDLTexture.hasAlphaValues)
             self.assertArgIsBOOL(ModelIO.MDLTexture.setHasAlphaValues_, 0)
+
+        @min_os_level('10.13')
+        def testMethods10_13(self):
+            self.assertResultIsBOOL(ModelIO.MDLTexture.writeToURL_level_)
+            self.assertResultIsBOOL(ModelIO.MDLTexture.writeToURL_type_level_)
 
 if __name__ == "__main__":
     main()
