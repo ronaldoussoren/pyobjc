@@ -7,7 +7,52 @@
     "gettypeid_func": "IOSurfaceGetTypeID"
    }
   },
+  "enum": {
+   "kIOSurfacePurgeableNonVolatile": { "value": 0 },
+   "kIOSurfacePurgeableVolatile": { "value": 1 },
+   "kIOSurfacePurgeableEmpty": { "value": 2 },
+   "kIOSurfacePurgeableKeepCurrent": { "value": 3 },
+   "kIOSurfaceDefaultCache": { "value": 0 },
+   "kIOSurfaceInhibitCache": { "value": 1 },
+   "kIOSurfaceWriteThruCache": { "value": 2 },
+   "kIOSurfaceCopybackCache": { "value": 3 },
+   "kIOSurfaceWriteCombineCache": { "value": 4 },
+   "kIOSurfaceCopybackInnerCache": { "value": 5 },
+   "kIOSurfaceMapCacheShift": { "value": 8 },
+   "kIOSurfaceMapDefaultCache": { "value": 0 },
+   "kIOSurfaceMapInhibitCache": { "value": 256 },
+   "kIOSurfaceMapWriteThruCache": { "value": 512 },
+   "kIOSurfaceMapCopybackCache": { "value": 768 },
+   "kIOSurfaceMapWriteCombineCache": { "value": 1024 },
+   "kIOSurfaceMapCopybackInnerCache": { "value": 1280 },
+   "kIOSurfaceComponentTypeUnknown": { "value": 0 },
+   "kIOSurfaceComponentTypeUnsignedInteger": { "value": 1 },
+   "kIOSurfaceComponentTypeSignedInteger": { "value": 2 },
+   "kIOSurfaceComponentTypeFloat": { "value": 3 },
+   "kIOSurfaceComponentRangeUnknown": { "value": 0 },
+   "kIOSurfaceComponentRangeFullRange": { "value": 1 },
+   "kIOSurfaceComponentRangeVideoRange": { "value": 2 },
+   "kIOSurfaceComponentRangeWideRange": { "value": 3 },
+   "kIOSurfaceSubsamplingUnknown": { "value": 0 },
+   "kIOSurfaceSubsamplingNone": { "value": 1 },
+   "kIOSurfaceSubsampling422": { "value": 2 },
+   "kIOSurfaceSubsampling420": { "value": 3 },
+   "kIOSurfaceSubsampling411": { "value": 4 },
+   "kIOSurfaceComponentNameUnknown": { "value": 0 },
+   "kIOSurfaceComponentNameAlpha": { "value": 1 },
+   "kIOSurfaceComponentNameRed": { "value": 2 },
+   "kIOSurfaceComponentNameGreen": { "value": 3 },
+   "kIOSurfaceComponentNameBlue": { "value": 4 },
+   "kIOSurfaceComponentNameLuma": { "value": 5 },
+   "kIOSurfaceComponentNameChromaRed": { "value": 6 },
+   "kIOSurfaceComponentNameChromaBlue": { "value": 7 }
+  },
   "externs": {
+   "kIOSurfaceSubsampling": { "typestr": "@" },
+   "kIOSurfacePlaneComponentNames": { "typestr": "@" },
+   "kIOSurfacePlaneBitsPerElement": { "typestr": "@" },
+   "kIOSurfacePlaneComponentBitDepths": { "typestr": "@" },
+   "kIOSurfacePlaneComponentBitOffsets": { "typestr": "@" },
    "kIOSurfacePixelSizeCastingAllowed": { "typestr": "@" },
    "IOSurfacePropertyAllocSizeKey": { "typestr": "@" },
    "IOSurfacePropertyKeyWidth": { "typestr": "@" },
@@ -34,6 +79,13 @@
   "classes": {
    "IOSurface": {
     "methods": [
+     {
+      "selector": "setPurgeable:oldState:",
+      "class_method": false,
+      "args": {
+       "1": { "type_modifier": "o" }
+      }
+     },
      {
       "selector": "lockWithOptions:seed:",
       "class_method": false,
@@ -68,6 +120,67 @@
   },
   "formal_protocols": {},
   "functions": {
+   "IOSurfaceGetNumberOfComponentsOfPlane": {
+    "args": {
+     "0": { "typestr": "^{__IOSurface=}" },
+     "1": { "typestr": "I" }
+    },
+    "retval": { "typestr": "I" }
+   },
+   "IOSurfaceGetNameOfComponentOfPlane": {
+    "args": {
+     "0": { "typestr": "^{__IOSurface=}" },
+     "1": { "typestr": "I" },
+     "2": { "typestr": "I" }
+    },
+    "retval": { "typestr": "i" }
+   },
+   "IOSurfaceGetTypeOfComponentOfPlane": {
+    "args": {
+     "0": { "typestr": "^{__IOSurface=}" },
+     "1": { "typestr": "I" },
+     "2": { "typestr": "I" }
+    },
+    "retval": { "typestr": "i" }
+   },
+   "IOSurfaceGetTypeOfComponentOfPlane": {
+    "args": {
+     "0": { "typestr": "^{__IOSurface=}" },
+     "1": { "typestr": "I" },
+     "2": { "typestr": "I" }
+    },
+    "retval": { "typestr": "i" }
+   },
+   "IOSurfaceGetRangeOfComponentOfPlane": {
+    "args": {
+     "0": { "typestr": "^{__IOSurface=}" },
+     "1": { "typestr": "I" },
+     "2": { "typestr": "I" }
+    },
+    "retval": { "typestr": "i" }
+   },
+   "IOSurfaceGetBitDepthOfComponentOfPlane": {
+    "args": {
+     "0": { "typestr": "^{__IOSurface=}" },
+     "1": { "typestr": "I" },
+     "2": { "typestr": "I" }
+    },
+    "retval": { "typestr": "I" }
+   },
+   "IOSurfaceGetBitOffsetOfComponentOfPlane": {
+    "args": {
+     "0": { "typestr": "^{__IOSurface=}" },
+     "1": { "typestr": "I" },
+     "2": { "typestr": "I" }
+    },
+    "retval": { "typestr": "I" }
+   },
+   "IOSurfaceGetSubsampling": {
+    "args": {
+     "0": { "typestr": "^{__IOSurface=}" }
+    },
+    "retval": { "typestr": "i" }
+   },
    "IOSurfaceAlignProperty": {
     "args": {
      "0": {

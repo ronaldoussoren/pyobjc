@@ -37,6 +37,59 @@ class TestIOSurfaceAPI (TestCase):
         self.assertEqual(IOSurface.kIOSurfaceLockReadOnly, 0x00000001)
         self.assertEqual(IOSurface.kIOSurfaceLockAvoidSync, 0x00000002)
 
+        self.assertEqual(IOSurface.kIOSurfaceComponentNameUnknown, 0)
+        self.assertEqual(IOSurface.kIOSurfaceComponentNameAlpha, 1)
+        self.assertEqual(IOSurface.kIOSurfaceComponentNameRed, 2)
+        self.assertEqual(IOSurface.kIOSurfaceComponentNameGreen, 3)
+        self.assertEqual(IOSurface.kIOSurfaceComponentNameBlue, 4)
+        self.assertEqual(IOSurface.kIOSurfaceComponentNameLuma, 5)
+        self.assertEqual(IOSurface.kIOSurfaceComponentNameChromaRed, 6)
+        self.assertEqual(IOSurface.kIOSurfaceComponentNameChromaBlue, 7)
+
+        self.assertEqual(IOSurface.kIOSurfaceComponentTypeUnknown, 0)
+        self.assertEqual(IOSurface.kIOSurfaceComponentTypeUnsignedInteger, 1)
+        self.assertEqual(IOSurface.kIOSurfaceComponentTypeSignedInteger, 2)
+        self.assertEqual(IOSurface.kIOSurfaceComponentTypeFloat, 3)
+
+        self.assertEqual(IOSurface.kIOSurfaceComponentRangeUnknown, 0)
+        self.assertEqual(IOSurface.kIOSurfaceComponentRangeFullRange, 1)
+        self.assertEqual(IOSurface.kIOSurfaceComponentRangeVideoRange, 2)
+        self.assertEqual(IOSurface.kIOSurfaceComponentRangeWideRange, 3)
+
+        self.assertEqual(IOSurface.kIOSurfaceSubsamplingUnknown, 0)
+        self.assertEqual(IOSurface.kIOSurfaceSubsamplingNone, 1)
+        self.assertEqual(IOSurface.kIOSurfaceSubsampling422, 2)
+        self.assertEqual(IOSurface.kIOSurfaceSubsampling420, 3)
+        self.assertEqual(IOSurface.kIOSurfaceSubsampling411, 4)
+
+        self.assertEqual(IOSurface.kIOSurfacePurgeableNonVolatile, 0)
+        self.assertEqual(IOSurface.kIOSurfacePurgeableVolatile, 1)
+        self.assertEqual(IOSurface.kIOSurfacePurgeableEmpty, 2)
+        self.assertEqual(IOSurface.kIOSurfacePurgeableKeepCurrent, 3)
+
+        self.assertEqual(IOSurface.kIOSurfaceDefaultCache, 0)
+        self.assertEqual(IOSurface.kIOSurfaceInhibitCache, 1)
+        self.assertEqual(IOSurface.kIOSurfaceWriteThruCache, 2)
+        self.assertEqual(IOSurface.kIOSurfaceCopybackCache, 3)
+        self.assertEqual(IOSurface.kIOSurfaceWriteCombineCache, 4)
+        self.assertEqual(IOSurface.kIOSurfaceCopybackInnerCache, 5)
+
+        self.assertEqual(IOSurface.kIOSurfaceMapCacheShift, 8)
+        self.assertEqual(IOSurface.kIOSurfaceMapDefaultCache, IOSurface.kIOSurfaceDefaultCache       << IOSurface.kIOSurfaceMapCacheShift)
+        self.assertEqual(IOSurface.kIOSurfaceMapInhibitCache, IOSurface.kIOSurfaceInhibitCache       << IOSurface.kIOSurfaceMapCacheShift)
+        self.assertEqual(IOSurface.kIOSurfaceMapWriteThruCache, IOSurface.kIOSurfaceWriteThruCache     << IOSurface.kIOSurfaceMapCacheShift)
+        self.assertEqual(IOSurface.kIOSurfaceMapCopybackCache, IOSurface.kIOSurfaceCopybackCache      << IOSurface.kIOSurfaceMapCacheShift)
+        self.assertEqual(IOSurface.kIOSurfaceMapWriteCombineCache, IOSurface.kIOSurfaceWriteCombineCache  << IOSurface.kIOSurfaceMapCacheShift)
+        self.assertEqual(IOSurface.kIOSurfaceMapCopybackInnerCache, IOSurface.kIOSurfaceCopybackInnerCache << IOSurface.kIOSurfaceMapCacheShift)
+
+    @min_os_level('10.13')
+    def testConstants10_13(self):
+        self.assertIsInstance(IOSurface.kIOSurfacePlaneBitsPerElement, unicode)
+        self.assertIsInstance(IOSurface.kIOSurfacePlaneComponentBitDepths, unicode)
+        self.assertIsInstance(IOSurface.kIOSurfacePlaneComponentBitOffsets, unicode)
+        self.assertIsInstance(IOSurface.kIOSurfacePlaneComponentNames, unicode)
+        self.assertIsInstance(IOSurface.kIOSurfaceSubsampling, unicode)
+
     @min_os_level('10.6')
     def testFunctions(self):
         self.assertIsInstance(IOSurface.IOSurfaceGetTypeID(), (int, long))
@@ -109,6 +162,18 @@ class TestIOSurfaceAPI (TestCase):
 
     @min_os_level('10.12')
     def testFunctions10_12(self):
+        self.assertResultIsBOOL(IOSurface.IOSurfaceAllowsPixelSizeCasting)
+
+    @min_os_level('10.13')
+    def testFunctions10_13(self):
+        IOSurface.IOSurfaceGetNumberOfComponentsOfPlane
+        IOSurface.IOSurfaceGetNameOfComponentOfPlane
+        IOSurface.IOSurfaceGetTypeOfComponentOfPlane
+        IOSurface.IOSurfaceGetRangeOfComponentOfPlane
+        IOSurface.IOSurfaceGetBitDepthOfComponentOfPlane
+        IOSurface.IOSurfaceGetBitOffsetOfComponentOfPlane
+        IOSurface.IOSurfaceSubsampling
+
         self.assertResultIsBOOL(IOSurface.IOSurfaceAllowsPixelSizeCasting)
 
 

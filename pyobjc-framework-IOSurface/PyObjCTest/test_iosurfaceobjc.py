@@ -38,7 +38,11 @@ class TestIOSurfaceObjC (TestCase):
         self.assertResultIsBOOL(IOSurface.IOSurface.allowsPixelSizeCasting)
         self.assertResultIsVariableSize(IOSurface.IOSurface.baseAddressOfPlaneAtIndex_)
 
-  
+    @min_os_level('10.13')
+    def testMethods10_13(self):
+        self.assertArgIsOut(IOSurface.IOSurface.setPurgeable_oldState_, 1)
+
+
     @expectedFailure
     @min_os_level('10.12')
     def testMethods_unsupported(self):
