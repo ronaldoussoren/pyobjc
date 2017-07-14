@@ -9,6 +9,7 @@ import objc
 import AppKit
 
 from Quartz.PDFKit import _metadata
+from Quartz.PDFKit import _PDFKit
 
 sys.modules['Quartz.PDFKit'] = mod = objc.ObjCLazyModule('Quartz.PDFKit',
     "com.apple.PDFKit",

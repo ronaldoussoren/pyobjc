@@ -17,6 +17,11 @@ class TestPDFAnnotation (TestCase):
         self.assertArgIsBOOL(PDFAnnotation.setBoolean_forAnnotationKey_, 0)
         self.assertResultIsBOOL(PDFAnnotation.setRect_forAnnotationKey_)
 
+    @min_os_level('10.13')
+    def testMethods10_13(self):
+        self.assertResultIsBOOL(PDFAnnotation.isHighlighted)
+        self.assertArgIsBOOL(PDFAnnotation.setHighlighted_, 0)
+
     @min_os_level('10.12')
     def testConstants(self):
         self.assertIsInstance(kPDFAnnotationKey_AppearanceDictionary, unicode)
@@ -56,6 +61,53 @@ class TestPDFAnnotation (TestCase):
         self.assertIsInstance(kPDFAnnotationKey_WidgetOptions, unicode)
         self.assertIsInstance(kPDFAnnotationKey_WidgetTextLabelUI, unicode)
         self.assertIsInstance(kPDFAnnotationKey_WidgetValue, unicode)
+
+    @min_os_level('10.13')
+    def testConstants10_13(self):
+        self.assertIsInstance(PDFAnnotationKeyAppearanceDictionary, unicode)
+        self.assertIsInstance(PDFAnnotationKeyAppearanceState, unicode)
+        self.assertIsInstance(PDFAnnotationKeyBorder, unicode)
+        self.assertIsInstance(PDFAnnotationKeyColor, unicode)
+        self.assertIsInstance(PDFAnnotationKeyContents, unicode)
+        self.assertIsInstance(PDFAnnotationKeyFlags, unicode)
+        self.assertIsInstance(PDFAnnotationKeyDate, unicode)
+        self.assertIsInstance(PDFAnnotationKeyName, unicode)
+        self.assertIsInstance(PDFAnnotationKeyPage, unicode)
+        self.assertIsInstance(PDFAnnotationKeyRect, unicode)
+        self.assertIsInstance(PDFAnnotationKeySubtype, unicode)
+
+        self.assertIsInstance(PDFAnnotationKeyAction, unicode)
+        self.assertIsInstance(PDFAnnotationKeyAdditionalActions, unicode)
+        self.assertIsInstance(PDFAnnotationKeyBorderStyle, unicode)
+        self.assertIsInstance(PDFAnnotationKeyDefaultAppearance, unicode)
+        self.assertIsInstance(PDFAnnotationKeyDestination, unicode)
+        self.assertIsInstance(PDFAnnotationKeyHighlightingMode, unicode)
+        self.assertIsInstance(PDFAnnotationKeyInklist, unicode)
+        self.assertIsInstance(PDFAnnotationKeyInteriorColor, unicode)
+        self.assertIsInstance(PDFAnnotationKeyLinePoints, unicode)
+        self.assertIsInstance(PDFAnnotationKeyLineEndingStyles, unicode)
+        self.assertIsInstance(PDFAnnotationKeyIconName, unicode)
+        self.assertIsInstance(PDFAnnotationKeyOpen, unicode)
+        self.assertIsInstance(PDFAnnotationKeyParent, unicode)
+        self.assertIsInstance(PDFAnnotationKeyPopup, unicode)
+        self.assertIsInstance(PDFAnnotationKeyQuadding, unicode)
+        self.assertIsInstance(PDFAnnotationKeyQuadPoints, unicode)
+        self.assertIsInstance(PDFAnnotationKeyTextLabel, unicode)
+
+        self.assertIsInstance(PDFAnnotationKeyWidgetDownCaption, unicode)
+        self.assertIsInstance(PDFAnnotationKeyWidgetBorderColor, unicode)
+        self.assertIsInstance(PDFAnnotationKeyWidgetBackgroundColor, unicode)
+        self.assertIsInstance(PDFAnnotationKeyWidgetCaption, unicode)
+        self.assertIsInstance(PDFAnnotationKeyWidgetDefaultValue, unicode)
+        self.assertIsInstance(PDFAnnotationKeyWidgetFieldFlags, unicode)
+        self.assertIsInstance(PDFAnnotationKeyWidgetFieldType, unicode)
+        self.assertIsInstance(PDFAnnotationKeyWidgetAppearanceDictionary, unicode)
+        self.assertIsInstance(PDFAnnotationKeyWidgetMaxLen, unicode)
+        self.assertIsInstance(PDFAnnotationKeyWidgetOptions, unicode)
+        self.assertIsInstance(PDFAnnotationKeyWidgetRotation, unicode)
+        self.assertIsInstance(PDFAnnotationKeyWidgetRolloverCaption, unicode)
+        self.assertIsInstance(PDFAnnotationKeyWidgetTextLabelUI, unicode)
+        self.assertIsInstance(PDFAnnotationKeyWidgetValue, unicode)
 
 
 if __name__ == "__main__":

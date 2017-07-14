@@ -2,6 +2,11 @@
 from PyObjCTools.TestSupport import *
 from Quartz.PDFKit import *
 
+class TestPDFDocumentHelper (NSObject):
+    def classForPage(self): return 1
+    def classForAnnotationType_(self, a): return 1
+    def classForAnnotationClass_(self, a): return 1
+
 class TestPDFDocument (TestCase):
     def testConstants(self):
         self.assertEqual(kPDFPrintPageScaleNone, 0)
@@ -37,11 +42,21 @@ class TestPDFDocument (TestCase):
         self.assertResultIsBOOL(PDFDocument.unlockWithPassword_)
         self.assertResultIsBOOL(PDFDocument.allowsPrinting)
         self.assertResultIsBOOL(PDFDocument.allowsCopying)
+        self.assertResultIsBOOL(PDFDocument.allowsFormFieldEntry)
         self.assertResultIsBOOL(PDFDocument.writeToFile_)
         self.assertResultIsBOOL(PDFDocument.writeToFile_withOptions_)
         self.assertResultIsBOOL(PDFDocument.writeToURL_)
         self.assertResultIsBOOL(PDFDocument.writeToURL_withOptions_)
         self.assertResultIsBOOL(PDFDocument.isFinding)
+
+        self.assertResultIsBOOL(PDFDocument.allowsDocumentChanges)
+        self.assertResultIsBOOL(PDFDocument.allowsDocumentAssembly)
+        self.assertResultIsBOOL(PDFDocument.allowsContentAccessibility)
+        self.assertResultIsBOOL(PDFDocument.allowsCommenting)
+
+        self.assertResultHasType(TestPDFDocumentHelper.classForPage, objc._C_CLASS)
+        self.assertResultHasType(TestPDFDocumentHelper.classForAnnotationType_, objc._C_CLASS)
+        self.assertResultHasType(TestPDFDocumentHelper.classForAnnotationClass_, objc._C_CLASS)
 
     @min_os_level('10.7')
     def testMethods(self):

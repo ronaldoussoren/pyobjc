@@ -71,6 +71,7 @@ Version 4.0
   - PhotosUI
   - QTKit
   - QTKit
+  - Quartz (updates to PDFKit and QuickLookUI)
   - QuartzCore
   - QuickLook
   - QuickLook
