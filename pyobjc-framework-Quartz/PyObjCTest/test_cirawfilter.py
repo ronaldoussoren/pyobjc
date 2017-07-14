@@ -44,5 +44,9 @@ class TestCIRAWFilter (TestCase):
         self.assertIsInstance(kCIInputBaselineExposureKey, unicode)
         self.assertIsInstance(kCIInputDisableGamutMapKey, unicode)
 
+    @min_os_level('10.13')
+    def testConstants10_13(self):
+        self.assertIsInstance(kCIInputMoireAmountKey, unicode)
+
 if __name__ == "__main__":
     main()

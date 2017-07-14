@@ -43,6 +43,7 @@ Version 4.0
   - CoreBluetooth
   - CoreData
   - CoreFoundation
+  - CoreImage
   - CoreLocation
   - CoreServices
   - CoreText
