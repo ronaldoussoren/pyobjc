@@ -1,23 +1,26 @@
 from PyObjCTools.TestSupport import *
+import sys
 
-import CoreSpotlight
+if sys.maxsize > 2**32:
 
-class TestCSSearchableItemAttributeSet (TestCase):
-    def testMethods(self):
-        self.assertArgIsBOOL(CoreSpotlight.CSCustomAttributeKey.initWithKeyName_searchable_searchableByDefault_unique_multiValued_, 1)
-        self.assertArgIsBOOL(CoreSpotlight.CSCustomAttributeKey.initWithKeyName_searchable_searchableByDefault_unique_multiValued_, 2)
-        self.assertArgIsBOOL(CoreSpotlight.CSCustomAttributeKey.initWithKeyName_searchable_searchableByDefault_unique_multiValued_, 3)
-        self.assertArgIsBOOL(CoreSpotlight.CSCustomAttributeKey.initWithKeyName_searchable_searchableByDefault_unique_multiValued_, 4)
+    import CoreSpotlight
 
-        self.assertArgIsBOOL(CoreSpotlight.CSCustomAttributeKey.setSearchable_, 0)
-        self.assertArgIsBOOL(CoreSpotlight.CSCustomAttributeKey.setSearchableByDefault_, 0)
-        self.assertArgIsBOOL(CoreSpotlight.CSCustomAttributeKey.setUnique_, 0)
-        self.assertArgIsBOOL(CoreSpotlight.CSCustomAttributeKey.setMultiValued_, 0)
+    class TestCSSearchableItemAttributeSet (TestCase):
+        def testMethods(self):
+            self.assertArgIsBOOL(CoreSpotlight.CSCustomAttributeKey.initWithKeyName_searchable_searchableByDefault_unique_multiValued_, 1)
+            self.assertArgIsBOOL(CoreSpotlight.CSCustomAttributeKey.initWithKeyName_searchable_searchableByDefault_unique_multiValued_, 2)
+            self.assertArgIsBOOL(CoreSpotlight.CSCustomAttributeKey.initWithKeyName_searchable_searchableByDefault_unique_multiValued_, 3)
+            self.assertArgIsBOOL(CoreSpotlight.CSCustomAttributeKey.initWithKeyName_searchable_searchableByDefault_unique_multiValued_, 4)
 
-        self.assertResultsBOOL(CoreSpotlight.CSCustomAttributeKey.isSearchable)
-        self.assertResultsBOOL(CoreSpotlight.CSCustomAttributeKey.isSearchableByDefault)
-        self.assertResultsBOOL(CoreSpotlight.CSCustomAttributeKey.isUnique)
-        self.assertResultsBOOL(CoreSpotlight.CSCustomAttributeKey.isMultiValued)
+            self.assertArgIsBOOL(CoreSpotlight.CSCustomAttributeKey.setSearchable_, 0)
+            self.assertArgIsBOOL(CoreSpotlight.CSCustomAttributeKey.setSearchableByDefault_, 0)
+            self.assertArgIsBOOL(CoreSpotlight.CSCustomAttributeKey.setUnique_, 0)
+            self.assertArgIsBOOL(CoreSpotlight.CSCustomAttributeKey.setMultiValued_, 0)
+
+            self.assertResultsBOOL(CoreSpotlight.CSCustomAttributeKey.isSearchable)
+            self.assertResultsBOOL(CoreSpotlight.CSCustomAttributeKey.isSearchableByDefault)
+            self.assertResultsBOOL(CoreSpotlight.CSCustomAttributeKey.isUnique)
+            self.assertResultsBOOL(CoreSpotlight.CSCustomAttributeKey.isMultiValued)
 
 if __name__ == "__main__":
     main()

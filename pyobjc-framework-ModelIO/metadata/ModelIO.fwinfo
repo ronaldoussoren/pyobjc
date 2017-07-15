@@ -261,14 +261,14 @@
       }
      },
      {
-      "selector": "copyFloatArrayInto:maxCount:",
+      "selector": "copyFloatArrayInto:maxCount:atTime:",
       "class_method": false,
       "args": {
        "0": { "type_modifier": "o", "c_array_length_in_arg": 1, "c_array_length_in_result": true }
       }
      },
      {
-      "selector": "copyDoubleArrayInto:maxCount:",
+      "selector": "copyDoubleArrayInto:maxCount:atTime:",
       "class_method": false,
       "args": {
        "0": { "type_modifier": "o", "c_array_length_in_arg": 1, "c_array_length_in_result": true }
@@ -427,7 +427,7 @@
       "selector": "copyTimesInto:maxCount:",
       "class_method": false,
       "args": {
-       "0": { "type_modifier": "o", "c_array_length_in_arg": 1, "c_array_lengt_in_result": true }
+       "0": { "type_modifier": "o", "c_array_length_in_arg": 1, "c_array_length_in_result": true }
       }
      }
     ]
@@ -641,14 +641,14 @@
       "selector": "copyShapeSetTargetWeightsInto:maxCount:",
       "class_method": false,
       "args": {
-       "1": { "type_modifier": "n", "c_array_length_in_arg": 2, "c_array_lenght_in_result": true }
+       "0": { "type_modifier": "o", "c_array_length_in_arg": 1, "c_array_length_in_result": true }
       }
      },
      {
-      "selector": "copyShapeSetTargetWeightsInto:maxCount:",
+      "selector": "copyShapeSetTargetCountsInto:maxCount:",
       "class_method": false,
       "args": {
-       "1": { "type_modifier": "n", "c_array_length_in_arg": 2, "c_array_lenght_in_result": true }
+       "0": { "type_modifier": "o", "c_array_length_in_arg": 1, "c_array_length_in_result": true }
       }
      }
     ]
@@ -660,7 +660,7 @@
       "class_method": false,
       "retval": { "type_override": "Z" },
       "args": {
-       "2": { "type_modifier": "o" }
+       "0": { "type_modifier": "o" }
       }
      },
      {
@@ -890,7 +890,7 @@
       "selector": "initWithURL:bufferAllocator:preserveIndexing:error:",
       "class_method": false,
       "args": {
-       "3": { "type_override": "Z" },
+       "2": { "type_override": "Z" },
        "3": { "type_modifier": "o" }
       }
      },

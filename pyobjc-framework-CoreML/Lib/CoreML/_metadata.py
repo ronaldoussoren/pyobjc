@@ -23,7 +23,7 @@ objc._updatingMetadata(True)
 try:
     r(b'MLDictionaryFeatureProvider', b'initWithDictionary:error:', {'arguments': {3: {'type_modifier': b'o'}}})
     r(b'MLFeatureDescription', b'isAllowedValue:', {'retval': {'type': 'Z'}})
-    r(b'MLFeatureDescription', b'isOptional:', {'retval': {'type': 'Z'}})
+    r(b'MLFeatureDescription', b'isOptional', {'retval': {'type': 'Z'}})
     r(b'MLFeatureDescription', b'setOptional:', {'arguments': {2: {'type': 'Z'}}})
     r(b'MLFeatureValue', b'featureValueWithDictionary:error:', {'arguments': {3: {'type_modifier': b'o'}}})
     r(b'MLFeatureValue', b'isEqualToFeatureValue:', {'retval': {'type': 'Z'}})
@@ -32,7 +32,7 @@ try:
     r(b'MLModel', b'predictionFromFeatures:error:', {'arguments': {3: {'type_modifier': b'o'}}})
     r(b'MLMultiArray', b'dataPointer', {'retval': {'c_array_of_variable_length': True}})
     r(b'MLMultiArray', b'initWithDataPointer:shape:dataType:strides:deallocator:error:', {'arguments': {2: {'type_modifier': b'n', 'c_array_of_variable_length': True}, 6: {'callable': {'retval': {'type': b'v'}, 'arguments': {0: {'type': b'^v'}, 1: {'type': b'^v'}}}}, 7: {'type_modifier': b'o'}}})
-    r(b'MLMultiArray', b'initiWithShape:dataType:error:', {'arguments': {4: {'type_modifier': b'o'}}})
+    r(b'MLMultiArray', b'initWithShape:dataType:error:', {'arguments': {4: {'type_modifier': b'o'}}})
 finally:
     objc._updatingMetadata(False)
 expressions = {}

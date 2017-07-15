@@ -44,7 +44,7 @@
       }
      },
      {
-      "selector": "isOptional:",
+      "selector": "isOptional",
       "class_method": false,
       "retval": { "type_override": "Z" }
      },
@@ -102,7 +102,7 @@
       "retval": { "c_array_of_variable_length": true }
      },
      {
-      "selector": "initiWithShape:dataType:error:",
+      "selector": "initWithShape:dataType:error:",
       "class_method": false,
       "args": {
        "2": { "type_modifier": "o" }

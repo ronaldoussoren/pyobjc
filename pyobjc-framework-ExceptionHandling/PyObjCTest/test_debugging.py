@@ -68,7 +68,7 @@ class TestDebugging (TestCase):
         value = fp.read()
         fp.close()
 
-        self.assertIn('_objc.cpython', value)
+        self.assertIn('_objc.', value)
 
     def testInstallExceptionHandler(self):
         self.assertFalse(Debugging.handlerInstalled())

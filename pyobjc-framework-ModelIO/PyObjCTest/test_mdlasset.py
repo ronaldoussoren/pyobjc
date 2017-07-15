@@ -35,8 +35,8 @@ if sys.maxsize > 2**32:
 
         @min_os_level('10.13')
         def testMethods10_13(self):
-            self.assertArgIsBOOL(ModelIO.MDLAsset.initWithURL_bufferAllocator_preserveIndex_error_, 2)
-            self.assertArgIsOut(ModelIO.MDLAsset.initWithURL_bufferAllocator_preserveIndex_error_, 3)
+            self.assertArgIsBOOL(ModelIO.MDLAsset.initWithURL_bufferAllocator_preserveIndexing_error_, 2)
+            self.assertArgIsOut(ModelIO.MDLAsset.initWithURL_bufferAllocator_preserveIndexing_error_, 3)
 
         def testProtocolObjects(self):
             objc.protocolNamed('MDLLightProbeIrradianceDataSource')

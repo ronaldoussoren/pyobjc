@@ -21,8 +21,8 @@ misc.update({})
 r = objc.registerMetaDataForSelector
 objc._updatingMetadata(True)
 try:
-    r(b'FIFinderSyncController', b'setLastUsedDate:forItemWithURL:completion:', {'arguments': {4: {'callable': {'retval': {'type': b'@'}, 'arguments': {0: {'type': b'^v'}, 1: {'type': b'@'}}}}}})
-    r(b'FIFinderSyncController', b'setTagData:forItemWithURL:completion:', {'arguments': {4: {'callable': {'retval': {'type': b'@'}, 'arguments': {0: {'type': b'^v'}, 1: {'type': b'@'}}}}}})
+    r(b'FIFinderSyncController', b'setLastUsedDate:forItemWithURL:completion:', {'arguments': {4: {'callable': {'retval': {'type': b'v'}, 'arguments': {0: {'type': b'^v'}, 1: {'type': b'@'}}}}}})
+    r(b'FIFinderSyncController', b'setTagData:forItemWithURL:completion:', {'arguments': {4: {'callable': {'retval': {'type': b'v'}, 'arguments': {0: {'type': b'^v'}, 1: {'type': b'@'}}}}}})
     r(b'NSObject', b'beginObservingDirectoryAtURL:', {'required': False, 'retval': {'type': b'v'}, 'arguments': {2: {'type': b'@'}}})
     r(b'NSObject', b'endObservingDirectoryAtURL:', {'required': False, 'retval': {'type': b'v'}, 'arguments': {2: {'type': b'@'}}})
     r(b'NSObject', b'exportedObjectForMessageInterface:itemURL:error:', {'arguments': {4: {'type': 'o^@'}}})

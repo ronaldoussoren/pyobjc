@@ -15,7 +15,7 @@
 	  "0": { "typestr": "^v" },
 	  "1": { "typestr": "@" }
 	 },
-	 "retval": { "typestr": "@" }
+	 "retval": { "typestr": "v" }
 	}
        }
       }
@@ -30,7 +30,7 @@
 	  "0": { "typestr": "^v" },
 	  "1": { "typestr": "@" }
 	 },
-	 "retval": { "typestr": "@" }
+	 "retval": { "typestr": "v" }
 	}
        }
       }

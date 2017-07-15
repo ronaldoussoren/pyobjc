@@ -17,7 +17,7 @@ sys.modules['CoreSpotlight'] = mod = objc.ObjCLazyModule(
     "CoreSpotlight",
     "com.apple.CoreSpotlight",
     objc.pathForFramework("/System/Library/Frameworks/CoreSpotlight.framework"),
-    _metadata.__dict__, _inline_list_, {
+    _metadata.__dict__, None, {
         '__doc__': __doc__,
         'objc': objc,
         '__path__': __path__,

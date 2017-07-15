@@ -30,7 +30,7 @@ try:
     r(b'NSAttributeDescription', b'setAllowsExternalBinaryDataStorage:', {'arguments': {2: {'type': b'Z'}}})
     r(b'NSBatchUpdateRequest', b'includesSubentities', {'retval': {'type': b'Z'}})
     r(b'NSBatchUpdateRequest', b'setIncludesSubentities:', {'arguments': {2: {'type': b'Z'}}})
-    r(b'NSCoreDataCoreSpotlightDelegate', b'searchableIndex:reindexSearchableItemsWithIdentifiers:acknowledgementHandler::', {'arguments': {4: {'callable': {'retval': {'type': b'v'}, 'arguments': {0: {'type': b'^v'}}}}}})
+    r(b'NSCoreDataCoreSpotlightDelegate', b'searchableIndex:reindexSearchableItemsWithIdentifiers:acknowledgementHandler:', {'arguments': {4: {'callable': {'retval': {'type': b'v'}, 'arguments': {0: {'type': b'^v'}}}}}})
     r(b'NSEntityDescription', b'isAbstract', {'retval': {'type': 'Z'}})
     r(b'NSEntityDescription', b'isKindOfEntity:', {'retval': {'type': 'Z'}})
     r(b'NSEntityDescription', b'setAbstract:', {'arguments': {2: {'type': 'Z'}}})
