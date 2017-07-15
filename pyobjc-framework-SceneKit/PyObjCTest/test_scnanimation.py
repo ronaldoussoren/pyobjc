@@ -7,6 +7,8 @@ if os_level_key(os_release()) < os_level_key('10.12') or sys.maxsize >= 2**32:
     import SceneKit
 
     SCNAnimationEventBlock = b'v@@Z'
+    SCNAnimationDidStartBlock = b'v@@'
+    SCNAnimationDidStopBlock = b'v@@Z'
 
     class TestSCNAnimationHelper (SceneKit.NSObject):
         def isAnimationForKeyPaused_(self, k): return 1

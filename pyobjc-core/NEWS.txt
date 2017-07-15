@@ -28,6 +28,7 @@ Version 4.0
   - ColorSync (new in macOS 10.13)
   - CoreML (new in macOS 10.13)
   - ExternalAccessory (new in macOS 10.13)
+  - CoreSpotlight (new in macOS 10.13)
 
 * metadata updates (beta 1):
 

@@ -43,7 +43,7 @@ FRAMEWORKS_WRAPPERS=[
         ('CoreLocation',            '10.6',             None        ),
         ('CoreML',                  '10.13',            None        ),
         ('CoreServices',            None,               None        ),
-        #('CoreSpotlight',           '10.13',            None        ),
+        ('CoreSpotlight',           '10.13',            None        ),
         ('CoreText',                None,               None        ),
         ('CoreWLAN',                '10.6',             None        ),
         ('CryptoTokenKit',          '10.10',            None        ),
