@@ -292,6 +292,7 @@
       "selector": "positionConstraintInWorldSpace:withBlock:",
       "class_method": true,
       "args": {
+       "0": { "type_override": "Z" },
        "1": {
         "callable": {
          "arguments": {
@@ -308,6 +309,7 @@
       "selector": "orientationConstraintInWorldSpace:withBlock:",
       "class_method": true,
       "args": {
+       "0": { "type_override": "Z" },
        "1": {
         "callable": {
          "arguments": {
@@ -719,7 +721,9 @@
      {
       "selector": "setRendersContinuously:",
       "class_method": false,
-      "retval": { "type_override": "Z" }
+      "args": {
+       "0": { "type_override": "Z" }
+      }
      },
      {
       "selector": "allowsCameraControl",
@@ -787,17 +791,23 @@
      {
       "selector": "setFillsBackward:",
       "class_method": false,
-      "retval": { "type_override": "Z" }
+      "args": {
+       "0": { "type_override": "Z" }
+      }
      },
      {
       "selector": "fillsForward",
       "class_method": false,
-      "retval": { "type_override": "Z" }
+      "args": {
+       "0": { "type_override": "Z" }
+      }
      },
      {
       "selector": "setFillsForward:",
       "class_method": false,
-      "retval": { "type_override": "Z" }
+      "args": {
+       "0": { "type_override": "Z" }
+      }
      },
      {
       "selector": "autoreverses",
@@ -817,14 +827,14 @@
      {
       "selector": "setAppliedOnCompletion:",
       "class_method": false,
-      "retval": { "type_override": "Z" }
+      "args": {
+       "0": { "type_override": "Z" }
+      }
      },
      {
       "selector": "isRemovedOnCompletion",
       "class_method": false,
-      "args": {
-       "0": { "type_override": "Z" }
-      }
+      "retval": { "type_override": "Z" }
      },
      {
       "selector": "setRemovedOnCompletion:",

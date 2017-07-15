@@ -2,6 +2,15 @@
 #include <Python.h>
 #include "pyobjc-api.h"
 
+#if !defined(__LP64__) && PyObjC_BUILD_RELEASE >= 1013
+
+/* The headers PhotosUI headers use a class that's
+ * only available in 64bit mode without and guard...
+ */
+@interface NSExtensionContext : NSObject { }
+@end
+#endif
+
 #import <PhotosUI/PhotosUI.h>
 
 /* We include the source code here instead of

@@ -18,9 +18,6 @@ setup(
     min_os_level="10.13",
     packages = [ "ExternalAccessory" ],
     ext_modules = [
-        Extension('ExternalAccessory._inlines',
-            [ 'Modules/_ExternalAccessory_inlines.m' ],
-            extra_link_args=['-framework', 'ExternalAccessory']),
         Extension("ExternalAccessory._ExternalAccessory",
             [ "Modules/_ExternalAccessory.m" ],
             extra_link_args=["-framework", "ExternalAccessory"],

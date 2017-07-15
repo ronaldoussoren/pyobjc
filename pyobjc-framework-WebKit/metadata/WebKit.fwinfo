@@ -76,7 +76,7 @@
      },
      {
       "class_method": false,
-      "selector": "deleteCookie:completionHandler::",
+      "selector": "deleteCookie:completionHandler:",
       "args": {
         "1": {
 	 "callable": {

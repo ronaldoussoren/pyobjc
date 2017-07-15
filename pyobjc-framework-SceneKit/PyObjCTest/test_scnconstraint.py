@@ -42,9 +42,9 @@ if os_level_key(os_release()) < os_level_key('10.12') or sys.maxsize >= 2**32:
             self.assertResultIsBOOL(SceneKit.SCNReplicatorConstraint.replicatesOrientation)
             self.assertResultIsBOOL(SceneKit.SCNReplicatorConstraint.replicatesPosition)
             self.assertResultIsBOOL(SceneKit.SCNReplicatorConstraint.replicatesScale)
-            self.assertArgIsBOOL(SceneKit.SCNReplicatorConstraint.setReplicatesOrientation_)
-            self.assertArgIsBOOL(SceneKit.SCNReplicatorConstraint.setReplicatesPosition_)
-            self.assertArgIsBOOL(SceneKit.SCNReplicatorConstraint.setReplicatesScale_)
+            self.assertArgIsBOOL(SceneKit.SCNReplicatorConstraint.setReplicatesOrientation_, 0)
+            self.assertArgIsBOOL(SceneKit.SCNReplicatorConstraint.setReplicatesPosition_, 0)
+            self.assertArgIsBOOL(SceneKit.SCNReplicatorConstraint.setReplicatesScale_, 0)
 
 
         @min_sdk_level('10.13')

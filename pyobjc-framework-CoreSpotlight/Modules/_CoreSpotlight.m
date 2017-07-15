@@ -2,6 +2,9 @@
 #include <Python.h>
 #include "pyobjc-api.h"
 
+#ifdef __LP64__
+/* Framework is 64-bit only */
+
 #import <Foundation/Foundation.h>
 #import <CoreSpotlight/CoreSpotlight.h>
 
@@ -10,6 +13,7 @@
  */
 #include "_CoreSpotlight_protocols.m"
 
+#endif
 
 static PyMethodDef mod_methods[] = {
     { 0, 0, 0, 0 } /* sentinel */

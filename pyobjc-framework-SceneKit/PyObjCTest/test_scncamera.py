@@ -26,7 +26,7 @@ if os_level_key(os_release()) < os_level_key('10.12') or sys.maxsize >= 2**32:
         @min_os_level('10.13')
         def testMethods10_13(self):
             self.assertResultIsBOOL(SceneKit.SCNCamera.wantsDepthOfField)
-            self.assertArgIsBOOL(SceneKit.SCNCamera.setWantsDepthOfField, 0)
+            self.assertArgIsBOOL(SceneKit.SCNCamera.setWantsDepthOfField_, 0)
 
         def testConstants(self):
             self.assertEqual(SceneKit.SCNCameraProjectionDirectionVertical, 0)

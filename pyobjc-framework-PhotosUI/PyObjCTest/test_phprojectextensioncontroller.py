@@ -7,7 +7,7 @@ if sys.maxsize > 2 ** 32:
     class TestPHProjectExtensionControllerHelper (PhotosUI.NSObject):
         def beginProjectWithExtensionContext_projectInfo_completion_(self, ec, pi, c): pass
         def resumeProjectWithExtensionContext_completion_(self, ec, c): pass
-        def finishProjectWithCompletionHandler(self, c): pass
+        def finishProjectWithCompletionHandler_(self, c): pass
 
 
     class TestPHProjectExtensionController (TestCase):

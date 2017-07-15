@@ -32,7 +32,13 @@ int main(int argc, char** argv)
             value = [NSKeyedUnarchiver unarchiveObjectWithFile:path];
 
         } else {
+            /* NSUnarchiver is deprecated as of the macOS 10.13 SDK */
+            #pragma clang diagnostic push
+            #pragma clang diagnostic ignored "-Wdeprecated-declarations"
+
             value = [NSUnarchiver unarchiveObjectWithFile:path];
+
+            #pragma clang diagnostic pop
         }
     } @catch (NSException* localException) {
         printf("Exception during unarchiving: %s\n", [[localException description] UTF8String]);

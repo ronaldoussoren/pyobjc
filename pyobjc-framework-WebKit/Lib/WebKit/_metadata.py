@@ -352,7 +352,7 @@ try:
     r(b'WKContentRuleListStore', b'lookUpContentRuleListForIdentifier:completionHandler:', {'arguments': {3: {'callable': {'retval': {'type': b'v'}, 'arguments': {0: {'type': b'^v'}, 1: {'type': b'@'}, 2: {'type': b'@'}}}}}})
     r(b'WKContentRuleListStore', b'removeContentRuleListForIdentifier:completionHandler:', {'arguments': {3: {'callable': {'retval': {'type': b'v'}, 'arguments': {0: {'type': b'^v'}, 1: {'type': b'@'}}}}}})
     r(b'WKFrameInfo', b'isMainFrame', {'retval': {'type': b'Z'}})
-    r(b'WKHTTPCookieStore', b'deleteCookie:completionHandler::', {'arguments': {3: {'callable': {'retval': {'type': b'v'}, 'arguments': {0: {'type': b'^v'}}}}}})
+    r(b'WKHTTPCookieStore', b'deleteCookie:completionHandler:', {'arguments': {3: {'callable': {'retval': {'type': b'v'}, 'arguments': {0: {'type': b'^v'}}}}}})
     r(b'WKHTTPCookieStore', b'getAllCookies:', {'arguments': {2: {'callable': {'retval': {'type': b'v'}, 'arguments': {0: {'type': b'^v'}, 1: {'type': b'@'}}}}}})
     r(b'WKHTTPCookieStore', b'setCookie:completionHandler:', {'arguments': {3: {'callable': {'retval': {'type': b'v'}, 'arguments': {0: {'type': b'^v'}}}}}})
     r(b'WKNavigationResponse', b'canShowMIMEType', {'retval': {'type': b'Z'}})

@@ -3,6 +3,7 @@ from WebKit import *
 
 
 class TestWKContentRuleListStore (TestCase):
+    @onlyOn64Bit
     @min_os_level('10.13')
     def testMethods(self):
         self.assertArgIsBlock(WKContentRuleListStore.compileContentRuleListForIdentifier_encodedContentRuleList_completionHandler_, 2, b'v@@')

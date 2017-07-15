@@ -22,9 +22,9 @@ if sys.maxsize >= 2**32:
         @min_os_level('10.13')
         def testMethods(self):
             self.assertResultIsBOOL(SceneKit.SCNCameraController.automaticTarget)
-            self.assertArgIsBOOL(SceneKit.SCNCameraController.setAutomaticTarget_)
+            self.assertArgIsBOOL(SceneKit.SCNCameraController.setAutomaticTarget_, 0)
             self.assertResultIsBOOL(SceneKit.SCNCameraController.inertiaEnabled)
-            self.assertArgIsBOOL(SceneKit.SCNCameraController.setInertiaEnabled_)
+            self.assertArgIsBOOL(SceneKit.SCNCameraController.setInertiaEnabled_, 0)
             self.assertResultIsBOOL(SceneKit.SCNCameraController.isInertiaRunning)
 
 if __name__ == "__main__":

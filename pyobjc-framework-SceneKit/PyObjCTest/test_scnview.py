@@ -69,7 +69,7 @@ if os_level_key(os_release()) < os_level_key('10.12') or sys.maxsize >= 2**32:
 
         @min_sdk_level('10.13')
         def testProtocols(self):
-            objc.protocolNamed(SCNCameraControlConfiguration)
+            objc.protocolNamed('SCNCameraControlConfiguration')
 
 if __name__ == "__main__":
     main()
