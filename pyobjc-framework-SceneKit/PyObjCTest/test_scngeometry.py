@@ -19,6 +19,11 @@ if os_level_key(os_release()) < os_level_key('10.12') or sys.maxsize >= 2**32:
             self.assertIsInstance(SceneKit.SCNGeometrySourceSemanticColor, unicode)
             self.assertIsInstance(SceneKit.SCNGeometrySourceSemanticTexcoord, unicode)
 
+            self.assertEqual(SceneKit.SCNTessellationSmoothingModeNone, 0)
+            self.assertEqual(SceneKit.SCNTessellationSmoothingModePNTriangles, 1)
+            self.assertEqual(SceneKit.SCNTessellationSmoothingModePhong, 2)
+
+
         @min_os_level('10.10')
         def testConstants(self):
             self.assertIsInstance(SceneKit.SCNGeometrySourceSemanticVertexCrease, unicode)
@@ -45,6 +50,16 @@ if os_level_key(os_release()) < os_level_key('10.12') or sys.maxsize >= 2**32:
 
             self.assertResultIsBOOL(SceneKit.SCNGeometrySource.floatComponents)
 
+        @min_os_level('10.13')
+        def testMethods10_13(self):
+            self.assertResultIsBOOL(SceneKit.SCNGeometry.wantsAdaptiveSubdivision)
+            self.assertArgIsBOOL(SceneKit.SCNGeometry.setWantsAdaptiveSubdivision_, 0)
+
+            self.assertResultIsBOOL(SceneKit.SCNGeometryTessellator.isAdaptive)
+            self.assertArgIsBOOL(SceneKit.SCNGeometryTessellator.setAdaptive_, 0)
+
+            self.assertResultIsBOOL(SceneKit.SCNGeometryTessellator.isScreenSpace)
+            self.assertArgIsBOOL(SceneKit.SCNGeometryTessellator.setScreenSpace_, 0)
 
 if __name__ == "__main__":
     main()

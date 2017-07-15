@@ -22,5 +22,8 @@ static void __attribute__((__used__)) use_protocols(void)
 #endif /* PyObjC_BUILD_RELEASE >= 1010 */
 #if PyObjC_BUILD_RELEASE >= 1013
     p = PyObjC_IdToPython(@protocol(SCNAnimation)); Py_XDECREF(p);
+    p = PyObjC_IdToPython(@protocol(SCNCameraControllerDelegate)); Py_XDECREF(p);
+    p = PyObjC_IdToPython(@protocol(SCNAvoidOccluderConstraintDelegate)); Py_XDECREF(p);
+    p = PyObjC_IdToPython(@protocol(SCNCameraControlConfiguration)); Py_XDECREF(p);
 #endif
 }

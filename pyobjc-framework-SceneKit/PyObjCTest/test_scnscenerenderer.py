@@ -68,6 +68,11 @@ if os_level_key(os_release()) < os_level_key('10.12') or sys.maxsize >= 2**32:
             self.assertEqual(SceneKit.SCNDebugOptionShowLightExtents, 1 << 3)
             self.assertEqual(SceneKit.SCNDebugOptionShowPhysicsFields, 1 << 4)
             self.assertEqual(SceneKit.SCNDebugOptionShowWireframe, 1 << 5)
+            self.assertEqual(SceneKit.SCNDebugOptionRenderAsWireframe, 1 << 6)
+            self.assertEqual(SceneKit.SCNDebugOptionShowSkeletons, 1 << 7)
+            self.assertEqual(SceneKit.SCNDebugOptionShowCreases, 1 << 8)
+            self.assertEqual(SceneKit.SCNDebugOptionShowConstraints, 1 << 9)
+            self.assertEqual(SceneKit.SCNDebugOptionShowCameras, 1 << 10)
 
             self.assertIs(SceneKit.SCNHitTestOptionFirstFoundOnly, SceneKit.SCNHitTestFirstFoundOnlyKey)
             self.assertIs(SceneKit.SCNHitTestOptionSortResults, SceneKit.SCNHitTestSortResultsKey)
