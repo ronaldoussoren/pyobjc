@@ -363,6 +363,7 @@ PyObjCRT_SkipTypeQualifiers(const char* type)
 const char *
 PyObjCRT_SkipTypeSpec(const char *type)
 {
+    const char* start_type = type;
     PyObjC_Assert(type != NULL, NULL);
 
     type = PyObjCRT_SkipTypeQualifiers(type);
@@ -423,7 +424,7 @@ PyObjCRT_SkipTypeSpec(const char *type)
         while (isdigit(*++type));
         type = PyObjCRT_SkipTypeSpec(type);
         if (type && *type != _C_ARY_E) {
-            PyErr_Format(PyObjCExc_InternalError, "Invalid array definition in type signature");
+            PyErr_Format(PyObjCExc_InternalError, "Invalid array definition in type signature: %s", start_type);
             return NULL;
         }
         if (type) type++;
@@ -445,7 +446,7 @@ PyObjCRT_SkipTypeSpec(const char *type)
             type = PyObjCRT_SkipTypeSpec(type);
         }
         if (type && *type != _C_STRUCT_E) {
-            PyErr_Format(PyObjCExc_InternalError, "Invalid struct definition in type signature");
+            PyErr_Format(PyObjCExc_InternalError, "Invalid struct definition in type signature: %s", start_type);
             return NULL;
         }
         if (type) type++;
@@ -467,7 +468,7 @@ PyObjCRT_SkipTypeSpec(const char *type)
             type = PyObjCRT_SkipTypeSpec(type);
         }
         if (type && *type != _C_UNION_E) {
-            PyErr_Format(PyObjCExc_InternalError, "Invalid union definition in type signature");
+            PyErr_Format(PyObjCExc_InternalError, "Invalid union definition in type signature: %s", start_type);
             return NULL;
         }
         if (type) type++;
