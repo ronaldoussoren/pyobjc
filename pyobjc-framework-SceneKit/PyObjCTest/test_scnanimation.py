@@ -45,7 +45,7 @@ if os_level_key(os_release()) < os_level_key('10.12') or sys.maxsize >= 2**32:
             self.assertResultIsBOOL(SceneKit.SCNAnimation.isAppliedOnCompletion)
             self.assertArgIsBOOL(SceneKit.SCNAnimation.setAppliedOnCompletion_, 0)
             self.assertResultIsBOOL(SceneKit.SCNAnimation.autoreverses)
-            self.assertArgIsBOOL(SceneKit.SCNAnimation.setAautoreverses_, 0)
+            self.assertArgIsBOOL(SceneKit.SCNAnimation.setAutoreverses_, 0)
             self.assertResultIsBOOL(SceneKit.SCNAnimation.fillsForward)
             self.assertArgIsBOOL(SceneKit.SCNAnimation.setFillsForward_, 0)
             self.assertResultIsBOOL(SceneKit.SCNAnimation.fillsBackward)
@@ -57,8 +57,8 @@ if os_level_key(os_release()) < os_level_key('10.12') or sys.maxsize >= 2**32:
             self.assertResultIsBOOL(SceneKit.SCNAnimation.isCumulative)
             self.assertArgIsBOOL(SceneKit.SCNAnimation.setCumulative_, 0)
 
-            self.assertResultIsBOOL(SceneKit.SCNAnimationPlayer.pauzed)
-            self.assertArgIsBOOL(SceneKit.SCNAnimationPlayer.setPauzed_, 0)
+            self.assertResultIsBOOL(SceneKit.SCNAnimationPlayer.paused)
+            self.assertArgIsBOOL(SceneKit.SCNAnimationPlayer.setPaused_, 0)
 
 if __name__ == "__main__":
     main()

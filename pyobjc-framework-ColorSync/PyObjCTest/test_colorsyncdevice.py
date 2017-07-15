@@ -33,7 +33,7 @@ if sys.maxsize > 2 ** 32:
             self.assertIsInstance(ColorSync.kColorSyncDeviceProfilesNotification, unicode)
             self.assertIsInstance(ColorSync.kColorSyncDisplayDeviceProfilesNotification, unicode)
             self.assertIsInstance(ColorSync.kColorSyncProfileRepositoryChangeNotification, unicode)
-            self.assertIsInstance(ColorSync.CFStringRef kColorSyncRegistrationUpdateWindowServer, unicode)
+            self.assertIsInstance(ColorSync.kColorSyncRegistrationUpdateWindowServer, unicode)
 
     def testFunctions(self):
         ColorSync.ColorSyncRegisterDevice

@@ -41,7 +41,7 @@ class TestQTError (TestCase):
         self.assertIsInstance(QTErrorTimeKey, unicode)
         self.assertIsInstance(QTErrorFileSizeKey, unicode)
 
-    @expectedFailureIf(os_release() in ('10.6', '10.10', '10.11', '10.12'))
+    @expectedFailureIf(os_release() in ('10.6', '10.10', '10.11', '10.12', '10.13'))
     @min_os_level('10.6')
     def testConstants10_6_fail(self):
         self.assertIsInstance(QTErrorRecordingSuccessfullyFinishedKey, unicode)

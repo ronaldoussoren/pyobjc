@@ -747,7 +747,9 @@
      {
       "selector": "setPaused:",
       "class_method": false,
-      "retval": { "type_override": "Z" }
+      "args": {
+       "0": { "type_override": "Z" }
+      }
      }
     ]
    },
@@ -761,7 +763,9 @@
      {
       "selector": "setCumulative:",
       "class_method": false,
-      "retval": { "type_override": "Z" }
+      "args": {
+       "0": { "type_override": "Z" }
+      }
      },
      {
       "selector": "isAdditive",
@@ -771,7 +775,9 @@
      {
       "selector": "setAdditive:",
       "class_method": false,
-      "retval": { "type_override": "Z" }
+      "args": {
+       "0": { "type_override": "Z" }
+      }
      },
      {
       "selector": "usesSceneTimeBase",
@@ -781,7 +787,9 @@
      {
       "selector": "setUsesSceneTimeBase:",
       "class_method": false,
-      "retval": { "type_override": "Z" }
+      "args": {
+       "0": { "type_override": "Z" }
+      }
      },
      {
       "selector": "fillsBackward",
@@ -798,9 +806,7 @@
      {
       "selector": "fillsForward",
       "class_method": false,
-      "args": {
-       "0": { "type_override": "Z" }
-      }
+      "retval": { "type_override": "Z" }
      },
      {
       "selector": "setFillsForward:",
@@ -817,7 +823,9 @@
      {
       "selector": "setAutoreverses:",
       "class_method": false,
-      "retval": { "type_override": "Z" }
+      "args": {
+       "0": { "type_override": "Z" }
+      }
      },
      {
       "selector": "isAppliedOnCompletion",

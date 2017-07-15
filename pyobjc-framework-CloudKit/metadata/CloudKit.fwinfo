@@ -137,7 +137,7 @@
      ]
     },
     "CKOperationConfiguration": {
-     "method": [
+     "methods": [
         {
 	 "selector": "setAllowsCellularAccess:",
 	 "class_method": false,

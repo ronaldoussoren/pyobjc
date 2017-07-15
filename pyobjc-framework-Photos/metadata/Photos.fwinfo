@@ -8,9 +8,10 @@
    "PHAssetCollectionSubtypeAny": { "alias": "NSIntegerMax" }
   },
   "externs": {
+   "PHLocalIdentifierNotFound": { "typestr": "@" },
    "PHLivePhotoEditingErrorDomain": { "typestr": "@" },
    "PHLivePhotoShouldRenderAtPlaybackTime": { "typestr": "@" },
-   "PHImageManagerMaximumSize": { "typestr": "@", "comment": "FIXME" },
+   "PHImageManagerMaximumSize": { "typestr": "{CGSize=dd}" },
    "PHImageResultIsInCloudKey": { "typestr": "@" },
    "PHImageResultIsDegradedKey": { "typestr": "@" },
    "PHImageResultRequestIDKey": { "typestr": "@" },
@@ -137,7 +138,7 @@
      },
      {
       "class_method": false,
-      "selector": "performChanges_completionHandler_:",
+      "selector": "performChanges:completionHandler:",
       "args": {
        "1": {
         "callable": {
@@ -262,7 +263,7 @@
     ]
    },
    "PHObjectChangeDetails": {
-    "method": [
+    "methods": [
      {
       "class_method": false,
       "selector":  "assetContentChanged",
@@ -276,7 +277,7 @@
     ]
    },
    "PHFetchOptions": {
-    "method": [
+    "methods": [
      {
       "class_method": false,
       "selector":  "includeHiddenAssets",
@@ -304,7 +305,7 @@
     ]
    },
    "PHFetchResultChangeDetails": {
-    "method": [
+    "methods": [
      {
       "class_method": false,
       "selector":  "hasIncrementalChanges",
@@ -318,7 +319,7 @@
     ]
    },
    "PHAsset": {
-    "method": [
+    "methods": [
      {
       "class_method": false,
       "selector":  "isHidden",
@@ -363,7 +364,7 @@
 	  "0": { "typestr": "^v" },
 	  "1": { "typestr": "@" },
 	  "2": { "typestr": ["I", "Q"] },
-	  "3": { "typestr": "o^@" }
+	  "3": { "typestr": "o^Z" }
 	 }
 	}
        }
@@ -380,11 +381,16 @@
 	  "0": { "typestr": "^v" },
 	  "1": { "typestr": "@" },
 	  "2": { "typestr": ["I", "Q"] },
-	  "3": { "typestr": "o^@" }
+	  "3": { "typestr": "o^Z" }
 	 }
 	}
        }
       }
+     },
+     {
+      "selector": "containsObject:",
+      "class_method": false,
+      "retval": { "type_override": "Z" }
      },
      {
       "selector": "enumerateObjectsAtIndexes:options:usingBlock:",
@@ -397,7 +403,7 @@
 	  "0": { "typestr": "^v" },
 	  "1": { "typestr": "@" },
 	  "2": { "typestr": ["I", "Q"] },
-	  "3": { "typestr": "o^@" }
+	  "3": { "typestr": "o^Z" }
 	 }
 	}
        }

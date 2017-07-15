@@ -186,7 +186,7 @@
     "retval": { "typestr": "v" },
     "args": {
      "0": { "typestr": "^{CGContext=}" },
-     "1": { "typestr": "^{__CFDictionary=" }
+     "1": { "typestr": "^{__CFDictionary=}" }
     }
    },
    "CGColorConversionInfoGetTypeID": {

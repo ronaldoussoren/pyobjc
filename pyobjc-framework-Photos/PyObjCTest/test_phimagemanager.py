@@ -3,6 +3,7 @@ import sys
 
 if sys.maxsize > 2 ** 32:
     import Photos
+    import Quartz
 
     PHAssetImageProgressHandler = b'vd@o^Z@'
 
@@ -21,9 +22,9 @@ if sys.maxsize > 2 ** 32:
             self.assertEqual(Photos.PHImageRequestOptionsResizeModeFast, 1)
             self.assertEqual(Photos.PHImageRequestOptionsResizeModeExact, 2)
 
-            self.assertEqual(PHInvalidImageRequestID, 0)
+            self.assertEqual(Photos.PHInvalidImageRequestID, 0)
 
-            self.assertIsInstance(Photos.PHImageManagerMaximumSize, Photos.CGSize)
+            self.assertIsInstance(Photos.PHImageManagerMaximumSize, Quartz.CGSize)
 
             self.assertIsInstance(Photos.PHImageResultIsInCloudKey, unicode)
             self.assertIsInstance(Photos.PHImageResultIsDegradedKey, unicode)
@@ -43,7 +44,7 @@ if sys.maxsize > 2 ** 32:
             self.assertArgIsBlock(Photos.PHImageRequestOptions.setProgressHandler_, 0, PHAssetImageProgressHandler)
 
             self.assertArgIsBlock(Photos.PHImageManager.requestImageForAsset_targetSize_contentMode_options_resultHandler_, 4, b'v@@')
-            self.assertArgIsBlock(Photos.PHImageManager.requestImageForAsset_options_resultHandler_, 2, b'v@I@')
+            self.assertArgIsBlock(Photos.PHImageManager.requestImageDataForAsset_options_resultHandler_, 2, b'v@@I@')
 
 if __name__ == "__main__":
     main()

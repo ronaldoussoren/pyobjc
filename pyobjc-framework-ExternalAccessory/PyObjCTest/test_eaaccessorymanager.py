@@ -19,7 +19,9 @@ if sys.maxsize > 2 ** 32:
             self.assertIsInstance(ExternalAccessory.EAAccessoryKey, unicode)
 
         def testMethods(self):
-            self.assertArgIsBlock(ExternalAccessory.EAAccessoryManager.showBluetoothAccessoryPickerWithNameFilter_completion_, 1, b'v@')
+            # Not on macOS:
+            #self.assertArgIsBlock(ExternalAccessory.EAAccessoryManager.showBluetoothAccessoryPickerWithNameFilter_completion_, 1, b'v@')
+            pass
 
 if __name__ == "__main__":
     main()
