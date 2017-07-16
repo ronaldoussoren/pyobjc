@@ -121,12 +121,12 @@ class TestCTFont (TestCase):
 
 
         self.assertEqual(kCTFontTableBASE, fourcc(b'BASE'))
-        self.assertEqual(kCTFontTableCBDT, fourcc('CBDT'))
-        self.assertEqual(kCTFontTableCBLC, fourcc('CBLC'))
-        self.assertEqual(kCTFontTableCFF, fourcc('CFF '))
-        self.assertEqual(kCTFontTableCFF2, fourcc('CFF2'))
-        self.assertEqual(kCTFontTableCOLR, fourcc('COLR'))
-        self.assertEqual(kCTFontTableCPAL, fourcc('CPAL'))
+        self.assertEqual(kCTFontTableCBDT, fourcc(b'CBDT'))
+        self.assertEqual(kCTFontTableCBLC, fourcc(b'CBLC'))
+        self.assertEqual(kCTFontTableCFF, fourcc(b'CFF '))
+        self.assertEqual(kCTFontTableCFF2, fourcc(b'CFF2'))
+        self.assertEqual(kCTFontTableCOLR, fourcc(b'COLR'))
+        self.assertEqual(kCTFontTableCPAL, fourcc(b'CPAL'))
         self.assertEqual(kCTFontTableCFF, fourcc(b'CFF '))
         self.assertEqual(kCTFontTableDSIG, fourcc(b'DSIG'))
         self.assertEqual(kCTFontTableEBDT, fourcc(b'EBDT'))
