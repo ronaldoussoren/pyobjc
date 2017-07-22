@@ -8,6 +8,7 @@
   "informal_protocols": {},
   "externs": {
     "MLPhotosLivePhotosGroupTypeIdentifier": { "typestr": "@" },
+    "MLiTunesMusicVideosPlaylistTypeIdentifier": { "typestr": "@" },
     "MLPhotosLongExposureGroupTypeIdentifier": { "typestr": "@" },
     "MLPhotosAnimatedGroupTypeIdentifier": { "typestr": "@" },
     "MLPhotosSloMoGroupTypeIdentifier": { "typestr": "@" },

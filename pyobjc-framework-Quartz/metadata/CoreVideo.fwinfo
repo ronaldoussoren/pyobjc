@@ -3,6 +3,7 @@
 {
  "definitions": {
   "externs": {
+   "kCVImageBufferTransferFunction_sRGB": { "typestr": "@" },
    "kCVImageBufferTransferFunction_SMPTE_ST_2084_PQ": { "typestr": "@" },
    "kCVImageBufferTransferFunction_ITU_R_2100_HLG": { "typestr": "@" },
    "kCVImageBufferMasteringDisplayColorVolumeKey": { "typestr": "@" },
@@ -82,6 +83,42 @@
   "classes": {},
   "formal_protocols": {},
   "functions": {
+   "CVYCbCrMatrixGetIntegerCodePointForString": {
+    "args": {
+     "0": { "typestr": "^{__CFString=}" }
+    },
+    "retval": { "typestr": "i" }
+   },
+   "CVColorPrimariesGetIntegerCodePointForString": {
+    "args": {
+     "0": { "typestr": "^{__CFString=}" }
+    },
+    "retval": { "typestr": "i" }
+   },
+   "CVTransferFunctionGetIntegerCodePointForString": {
+    "args": {
+     "0": { "typestr": "^{__CFString=}" }
+    },
+    "retval": { "typestr": "i" }
+   },
+   "CVYCbCrMatrixGetStringForIntegerCodePoint": {
+    "args": {
+     "0": { "typestr": "i" }
+    },
+    "retval": { "typestr": "^{__CFString=}" }
+   },
+   "CVColorPrimariesGetStringForIntegerCodePoint": {
+    "args": {
+     "0": { "typestr": "i" }
+    },
+    "retval": { "typestr": "^{__CFString=}" }
+   },
+   "CVTransferFunctionGetStringForIntegerCodePoint": {
+    "args": {
+     "0": { "typestr": "i" }
+    },
+    "retval": { "typestr": "^{__CFString=}" }
+   },
    "CVMetalTextureGetTypeID": {
     "args": { },
     "retval": { "typestr": "L" }

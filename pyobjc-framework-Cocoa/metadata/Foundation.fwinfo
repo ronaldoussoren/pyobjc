@@ -49,6 +49,7 @@
     "NSRectEdgeMaxY": { "alias": "NSMaxYEdge" }
   },
   "enum": {
+   "NSCoderInvalidValueError": { "value": 4866 },
    "NSURLSessionDelayedRequestContinueLoading": { "value": 0 },
    "NSURLSessionDelayedRequestUseNewRequest": { "value": 1 },
    "NSURLSessionDelayedRequestCancel": { "value": 2 },
@@ -7173,6 +7174,13 @@
    },
    "NSObject": {
     "methods": [
+     {
+      "selector": "objectWithItemProviderData:typeIdentifier:error:",
+      "class_method": true,
+      "args": {
+       "2": { "type_modifier": "o", "type_override": "^@" }
+      }
+     },
      {
       "selector": "initWithItemProviderData:typeIdentifier:error:",
       "class_method": false,

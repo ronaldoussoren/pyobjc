@@ -24,9 +24,10 @@ if sys.maxsize > 2 ** 32:
 
         @min_os_level("10.13")
         def testMethods(self):
-            self.assertArgIsBlock(LocalAuthentication.LAContext.withCurrentContextExecute_queue_, 0, b"v")
             self.assertArgIsBOOL(LocalAuthentication.LAContext.setInteractionNotAllowed_, 0)
             self.assertResultIsBOOL(LocalAuthentication.LAContext.interactionNotAllowed)
+
+            #self.assertArgIsBlock(LocalAuthentication.LAContext.withCurrentContextExecute_queue_, 0, b"v")
 
         @min_os_level("10.10")
         def testConstants(self):

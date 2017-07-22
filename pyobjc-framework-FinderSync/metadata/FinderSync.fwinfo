@@ -40,6 +40,13 @@
    "NSObject": {
     "methods": [
      {
+      "selector": "makeListenerEndpointForServiceName:itemURL:andReturnError:",
+      "class_method": false,
+      "args": {
+       "2": { "type_modifier": "o", "type_override": "^@" }
+      }
+     },
+     {
       "selector": "exportedObjectForMessageInterface:itemURL:error:",
       "class_method": false,
       "args": {

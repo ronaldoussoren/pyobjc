@@ -1833,6 +1833,21 @@
      "already_cfretained": true
     }
    },
+   "CGEventCreateScrollWheelEvent2": {
+    "args": {
+     "0": { "typestr": "^{__CGEventSource=}" },
+     "1": { "typestr": "i" },
+     "2": { "typestr": "I" },
+     "3": { "typestr": "i" },
+     "4": { "typestr": "i" },
+     "5": { "typestr": "i" }
+    },
+    "retval": {
+     "already_cfretained": true
+    },
+    "variadic": true,
+    "c_array_length_in_arg": 2
+   },
    "CGEventCreateScrollWheelEvent": {
     "args": {
      "0": {}

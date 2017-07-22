@@ -50,20 +50,6 @@
      },
      {
       "args": {
-       "0": {
-        "callable": {
-	 "arguments": {
-	  "0": { "typestr": "^v" }
-	 },
-	 "retval": { "typestr": "v" }
-	}
-       }
-      },
-      "class_method": false,
-      "selector": "withCurrentContextExecute:queue:"
-     },
-     {
-      "args": {
        "3": {
         "callable": {
 	 "arguments": {

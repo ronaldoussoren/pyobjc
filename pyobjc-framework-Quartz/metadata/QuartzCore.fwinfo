@@ -22,6 +22,9 @@
    "CIRenderDestinationAlphaUnpremultiplied": { "value": 2 }
   },
   "externs": {
+   "kCIImageApplyOrientationProperty": { "typestr": "@" },
+   "kCIInputDepthImageKey": { "typestr": "@" },
+   "kCIInputDisparityImageKey": { "typestr": "@" },
    "kCIImageNearestSampling": { "typestr": "@" },
    "kCIInputMoireAmountKey": { "typestr": "@" },
    "kCIImageAuxiliaryDepth": { "typestr": "@" },

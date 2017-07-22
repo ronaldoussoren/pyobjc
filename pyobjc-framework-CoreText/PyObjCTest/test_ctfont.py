@@ -480,5 +480,9 @@ class TestCTFont (TestCase):
         self.assertIsInstance(kCTFontOpenTypeFeatureTag, unicode)
         self.assertIsInstance(kCTFontOpenTypeFeatureValue, unicode)
 
+    @min_os_level('10.13')
+    def testConstants10_13(self):
+        self.assertIsInstance(kCTFontVariationAxisHiddenKey, unicode)
+
 if __name__ == "__main__":
     main()

@@ -410,6 +410,127 @@ error:
 }
 
 static PyObject*
+call_NSCoder_decodeValueOfObjCType_at_size_(
+    PyObject* method, PyObject* self, PyObject* arguments)
+{
+    char* typestr;
+    PyObject* value;
+    void* buf;
+    Py_ssize_t size, typestr_len;
+    struct objc_super super;
+    PyObject* py_buf;
+
+    if (!PyArg_ParseTuple(arguments, Py_ARG_BYTES "#On", &typestr, &typestr_len, &py_buf, &size)) {
+        return NULL;
+    }
+
+    if (py_buf != Py_None) {
+        PyErr_SetString(PyExc_ValueError, "buffer must be None");
+        return NULL;
+    }
+
+    buf = PyMem_Malloc(size);
+    if (buf == NULL) {
+        PyErr_NoMemory();
+        return NULL;
+    }
+
+    int isIMP = PyObjCIMP_Check(method);
+    PyObjC_DURING
+        if (isIMP) {
+            ((void(*)(id,SEL, char*,void*, NSUInteger))
+                (PyObjCIMP_GetIMP(method)))(
+                    PyObjCObject_GetObject(self),
+                    PyObjCIMP_GetSelector(method),
+                    typestr, buf, size);
+
+        } else {
+            objc_superSetReceiver(super, PyObjCObject_GetObject(self));
+            objc_superSetClass(super, PyObjCSelector_GetClass(method));
+
+            (void)objc_msgSendSuper(&super,
+                    PyObjCSelector_GetSelector(method),
+                    typestr, buf, size);
+        }
+
+    PyObjC_HANDLER
+        PyObjCErr_FromObjC(localException);
+
+    PyObjC_ENDHANDLER
+
+    if (PyErr_Occurred()) {
+        PyMem_Free(buf);
+        return NULL;
+    }
+
+    value = pythonify_c_value(typestr, buf);
+    PyMem_Free(buf);
+    if (value == NULL) {
+        return NULL;
+    }
+
+    return value;
+}
+
+static void
+imp_NSCoder_decodeValueOfObjCType_at_size_(
+    ffi_cif* cif __attribute__((__unused__)),
+    void* resp __attribute__((__unused__)),
+    void** args,
+    void* callable)
+{
+    id self = *(id*)args[0];
+    char* typestr = *(char**)args[2];
+    void* buf = *(void**)args[3];
+    NSUInteger size = *(NSUInteger*)args[4];
+
+    PyObject* result = NULL;
+    PyObject* arglist = NULL;
+    PyObject* v;
+    int err;
+    PyObject* pyself = NULL;
+    int cookie = 0;
+
+    PyGILState_STATE state = PyGILState_Ensure();
+
+    arglist = PyTuple_New(3);
+    if (arglist == NULL) goto error;
+
+    pyself = PyObjCObject_NewTransient(self, &cookie);
+    if (pyself == NULL) goto error;
+    PyTuple_SetItem(arglist, 0, pyself);
+    Py_INCREF(pyself);
+
+    v = PyBytes_FromString(typestr);
+    if (v == NULL) goto error;
+    PyTuple_SetItem(arglist, 1, v);
+
+    v = PyLong_FromLong(size);
+    if (v == NULL) goto error;
+    PyTuple_SetItem(arglist, 2, v);
+
+    result = PyObject_Call((PyObject*)callable, arglist, NULL);
+    Py_DECREF(arglist); arglist = NULL;
+    PyObjCObject_ReleaseTransient(pyself, cookie); pyself = NULL;
+    if (result == NULL) goto error;
+
+    err = depythonify_c_value(typestr, result, buf); // XXX
+    Py_DECREF(result);
+    if (err == -1) goto error;
+
+    PyGILState_Release(state);
+    return;
+
+error:
+    Py_XDECREF(arglist);
+    if (pyself) {
+        PyObjCObject_ReleaseTransient(pyself, cookie);
+    }
+    PyObjCErr_ToObjCWithGILState(&state);
+    return;
+}
+
+static PyObject*
 call_NSCoder_decodeArrayOfObjCType_count_at_(
     PyObject* method, PyObject* self, PyObject* arguments)
 {
@@ -1164,6 +1285,14 @@ int PyObjC_setup_nscoder(void)
             @selector(decodeValueOfObjCType:at:),
             call_NSCoder_decodeValueOfObjCType_at_,
             imp_NSCoder_decodeValueOfObjCType_at_) < 0) {
+        return -1;
+    }
+
+    if (PyObjC_RegisterMethodMapping(
+            classNSCoder,
+            @selector(decodeValueOfObjCType:at:size:),
+            call_NSCoder_decodeValueOfObjCType_at_size_,
+            imp_NSCoder_decodeValueOfObjCType_at_size_) < 0) {
         return -1;
     }
 

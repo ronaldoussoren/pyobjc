@@ -407,6 +407,27 @@
    "NSObject": {
     "methods": [
      {
+      "selector": "renderer:didApplyConstraintsAtTime:atTime:",
+      "class_method": false,
+      "args": {
+       "2": { "type_override": "d" }
+      }
+     },
+     {
+      "selector": "renderer:willRenderScene:atTime:",
+      "class_method": false,
+      "args": {
+       "2": { "type_override": "d" }
+      }
+     },
+     {
+      "selector": "renderer:didRenderScene:atTime:",
+      "class_method": false,
+      "args": {
+       "2": { "type_override": "d" }
+      }
+     },
+     {
       "class_method": false,
       "selector": "setAutoSwitchToFreeCamera:",
       "args": {

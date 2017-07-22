@@ -47,8 +47,7 @@
    "PHAssetCollectionSubtypeAlbumSyncedEvent": { "value": 3 },
    "PHAssetCollectionSubtypeAlbumSyncedFaces": { "value": 4 },
    "PHAssetCollectionSubtypeAlbumSyncedAlbum": { "value": 5 },
-   "PHAssetCollectionSubtypeAlbumImported": { "value": 6, "comment": "to be removed" },
-   "PHAssetCollectionSubtypeAlbumImportHistory": { "value": 6 },
+   "PHAssetCollectionSubtypeAlbumImported": { "value": 6 },
    "PHAssetCollectionSubtypeSmartAlbumDepthEffect": { "value": 212 },
    "PHAssetCollectionSubtypeSmartAlbumLivePhotos": { "value": 213 },
    "PHAssetPlaybackStyleUnsupported": { "value": 0 },
@@ -320,6 +319,11 @@
    },
    "PHAsset": {
     "methods": [
+     {
+      "class_method": false,
+      "selector":  "isSyncFailureHidden",
+      "retval": { "type_override": "Z" }
+     },
      {
       "class_method": false,
       "selector":  "isHidden",

@@ -42,6 +42,9 @@ if os_level_key(os_release()) < os_level_key('10.12') or sys.maxsize >= 2**32:
         def renderer_didApplyAnimationsAtTime_(self, r, t): pass
         def renderer_didSimulatePhysicsAtTime_(self, r, t): pass
         def renderer_didRenderScene_atTime_(self, r, s, t): pass
+        def renderer_didApplyConstraintsAtTime_atTime_(self, r, s, t): pass
+        def renderer_willRenderScene_atTime_(self, r, s, t): pass
+        def renderer_didRenderScene_atTime_(self, r, s, t): pass
 
 
 
@@ -139,6 +142,10 @@ if os_level_key(os_release()) < os_level_key('10.12') or sys.maxsize >= 2**32:
             self.assertArgHasType(TestSCNSceneRendererHelper.renderer_updateAtTime_, 1, objc._C_DBL)
             self.assertArgHasType(TestSCNSceneRendererHelper.renderer_didApplyAnimationsAtTime_, 1, objc._C_DBL)
             self.assertArgHasType(TestSCNSceneRendererHelper.renderer_didSimulatePhysicsAtTime_, 1, objc._C_DBL)
+
+            self.assertArgHasType(TestSCNSceneRendererHelper.renderer_didApplyConstraintsAtTime_atTime_, 2, objc._C_DBL)
+            self.assertArgHasType(TestSCNSceneRendererHelper.renderer_willRenderScene_atTime_, 2, objc._C_DBL)
+            self.assertArgHasType(TestSCNSceneRendererHelper.renderer_didRenderScene_atTime_, 2, objc._C_DBL)
 
 
 if __name__ == "__main__":

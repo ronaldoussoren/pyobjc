@@ -11,8 +11,7 @@ if sys.maxsize > 2 ** 32:
             self.assertEqual(Intents.INCallRecordTypeOptionMissed, 1 << 1)
             self.assertEqual(Intents.INCallRecordTypeOptionReceived, 1 << 2)
             self.assertEqual(Intents.INCallRecordTypeOptionLatest, 1 << 3)
-            self.assertEqual(Intents.INCallRecordTypeOptionUnseen, 1 << 4)
-            self.assertEqual(Intents.INCallRecordTypeOptionVoicemail, 1 << 5)
+            self.assertEqual(Intents.INCallRecordTypeOptionVoicemail, 1 << 4)
 
 
 

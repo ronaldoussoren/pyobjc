@@ -95,6 +95,9 @@ class TestPDFView (TestCase):
         self.assertResultIsBOOL(PDFView.displaysRTL)
         self.assertArgIsBOOL(PDFView.setDisplaysRTL_, 0)
 
+        self.assertResultIsBOOL(PDFView.acceptsDraggedFiles)
+        self.assertArgIsBOOL(PDFView.setAcceptsDraggedFiles_, 0)
+
     def testProtocols(self):
         #self.assertIsInstance(protocols.PDFViewDelegate, objc.informal_protocol)
 

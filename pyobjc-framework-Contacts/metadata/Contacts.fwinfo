@@ -39,6 +39,8 @@
    "CNPostalAddressFormatterStyleMailingAddress": { "value": 0 }
   },
   "externs": {
+   "CNLabelContactRelationSon": { "typestr": "@" },
+   "CNLabelContactRelationDaughter": { "typestr": "@" },
    "CNErrorDomain": { "typestr": "@" },
    "CNContactPropertyNotFetchedExceptionName": { "typestr": "@" },
    "CNContactIdentifierKey": { "typestr": "@" },

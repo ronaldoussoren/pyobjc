@@ -1,6 +1,8 @@
 {
  "definitions": {
   "externs": {
+   "NSPasteboardTypeURL": { "typestr": "@" },
+   "NSPasteboardTypeFileURL": { "typestr": "@" },
    "NSTextListMarkerBox": { "typestr": "@" },
    "NSTextListMarkerCheck": { "typestr": "@" },
    "NSTextListMarkerCircle": { "typestr": "@" },
@@ -56,6 +58,7 @@
    "NSTouchBarItemIdentifierTextList": { "typestr": "@" },
    "NSTouchBarItemIdentifierTextFormat": { "typestr": "@" },
    "NSImageNameTouchBarAddDetailTemplate": { "typestr": "@" },
+   "NSImageNameTouchBarRemoveTemplate": { "typestr": "@" },
    "NSImageNameTouchBarAddTemplate": { "typestr": "@" },
    "NSImageNameTouchBarAlarmTemplate": { "typestr": "@" },
    "NSImageNameTouchBarAudioInputMuteTemplate": { "typestr": "@" },
@@ -139,7 +142,7 @@
    "NSImageHintUserInterfaceLayoutDirection": { "typestr": "@" },
    "NSImageNameGoForwardTemplate": { "typestr": "@" },
    "NSImageNameGoBackTemplate": { "typestr": "@" },
-   "NSGridViewSizeForContent": { "typestr": [ "f", "d" ] },
+   "NSGridViewSizeForContent": { "typestr": "d" },
    "NSAccessibilityRequiredAttribute": { "typestr": "@" },
    "NSAccessibilityTextAlignmentAttribute": { "typestr": "@" },
    "NSAccessibilityMenuBarItemRole": { "typestr": "@" },
@@ -10403,6 +10406,18 @@
      },
      {
       "selector": "setDrawsTieredCapacityLevels:",
+      "class_method": false,
+      "args": {
+       "0": { "type_override": "Z" }
+      }
+     },
+     {
+      "selector": "isEditable",
+      "class_method": false,
+      "retval": { "type_override": "Z" }
+     },
+     {
+      "selector": "setEditable:",
       "class_method": false,
       "args": {
        "0": { "type_override": "Z" }

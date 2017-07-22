@@ -6,30 +6,30 @@
    "CKAcceptSharesOperation": {
     "methods": [
      {
-      "class_method": false, 
+      "class_method": false,
       "retval": {
        "callable": {
         "arguments": {
          "0": {
           "typestr": "^v"
-         }, 
+         },
          "1": {
           "typestr": "@"
-         }, 
+         },
          "2": {
           "typestr": "@"
-         }, 
+         },
          "3": {
           "typestr": "@"
          }
-        }, 
+        },
         "retval": {
          "typestr": "v"
         }
        }
-      }, 
+      },
       "selector": "perShareCompletionBlock"
-     }, 
+     },
      {
       "args": {
        "0": {
@@ -37,45 +37,45 @@
          "arguments": {
           "0": {
            "typestr": "^v"
-          }, 
+          },
           "1": {
            "typestr": "@"
-          }, 
+          },
           "2": {
            "typestr": "@"
-          }, 
+          },
           "3": {
            "typestr": "@"
           }
-         }, 
+         },
          "retval": {
           "typestr": "v"
          }
         }
        }
-      }, 
-      "class_method": false, 
+      },
+      "class_method": false,
       "selector": "setPerShareCompletionBlock:"
-     }, 
+     },
      {
-      "class_method": false, 
+      "class_method": false,
       "retval": {
        "callable": {
         "arguments": {
          "0": {
           "typestr": "^v"
-         }, 
+         },
          "1": {
           "typestr": "@"
          }
-        }, 
+        },
         "retval": {
          "typestr": "v"
         }
        }
-      }, 
+      },
       "selector": "acceptSharesCompletionBlock"
-     }, 
+     },
      {
       "args": {
        "0": {
@@ -83,22 +83,22 @@
          "arguments": {
           "0": {
            "typestr": "^v"
-          }, 
+          },
           "1": {
            "typestr": "@"
           }
-         }, 
+         },
          "retval": {
           "typestr": "v"
          }
         }
        }
-      }, 
-      "class_method": false, 
+      },
+      "class_method": false,
       "selector": "setAcceptSharesCompletionBlock:"
      }
     ]
-   }, 
+   },
    "CKContainer": {
     "methods": [
      {
@@ -108,23 +108,23 @@
          "arguments": {
           "0": {
            "typestr": "^v"
-          }, 
+          },
           "1": {
            "typestr": "@"
-          }, 
+          },
           "2": {
            "typestr": "@"
           }
-         }, 
+         },
          "retval": {
           "typestr": "v"
          }
         }
        }
-      }, 
-      "class_method": false, 
+      },
+      "class_method": false,
       "selector": "fetchShareParticipantWithEmailAddress:completionHandler:"
-     }, 
+     },
      {
       "args": {
        "1": {
@@ -132,23 +132,23 @@
          "arguments": {
           "0": {
            "typestr": "^v"
-          }, 
+          },
           "1": {
            "typestr": "@"
-          }, 
+          },
           "2": {
            "typestr": "@"
           }
-         }, 
+         },
          "retval": {
           "typestr": "v"
          }
         }
        }
-      }, 
-      "class_method": false, 
+      },
+      "class_method": false,
       "selector": "fetchShareParticipantWithPhoneNumber:completionHandler:"
-     }, 
+     },
      {
       "args": {
        "1": {
@@ -156,23 +156,23 @@
          "arguments": {
           "0": {
            "typestr": "^v"
-          }, 
+          },
           "1": {
            "typestr": "@"
-          }, 
+          },
           "2": {
            "typestr": "@"
           }
-         }, 
+         },
          "retval": {
           "typestr": "v"
          }
         }
        }
-      }, 
-      "class_method": false, 
+      },
+      "class_method": false,
       "selector": "fetchShareParticipantWithUserRecordID:completionHandler:"
-     }, 
+     },
      {
       "args": {
        "1": {
@@ -180,23 +180,23 @@
          "arguments": {
           "0": {
            "typestr": "^v"
-          }, 
+          },
           "1": {
            "typestr": "@"
-          }, 
+          },
           "2": {
            "typestr": "@"
           }
-         }, 
+         },
          "retval": {
           "typestr": "v"
          }
         }
        }
-      }, 
-      "class_method": false, 
+      },
+      "class_method": false,
       "selector": "fetchShareMetadataWithURL:completionHandler:"
-     }, 
+     },
      {
       "args": {
        "1": {
@@ -204,23 +204,23 @@
          "arguments": {
           "0": {
            "typestr": "^v"
-          }, 
+          },
           "1": {
            "typestr": "@"
-          }, 
+          },
           "2": {
            "typestr": "@"
           }
-         }, 
+         },
          "retval": {
           "typestr": "v"
          }
         }
        }
-      }, 
-      "class_method": false, 
+      },
+      "class_method": false,
       "selector": "acceptShareMetadata:completionHandler:"
-     }, 
+     },
      {
       "args": {
        "0": {
@@ -228,26 +228,26 @@
          "arguments": {
           "0": {
            "typestr": "^v"
-          }, 
+          },
           "1": {
            "typestr": "@"
-          }, 
+          },
           "2": {
            "typestr": "@"
-          }, 
+          },
           "3": {
            "typestr": "@"
           }
-         }, 
+         },
          "retval": {
           "typestr": "v"
          }
         }
        }
-      }, 
-      "class_method": false, 
+      },
+      "class_method": false,
       "selector": "fetchAllLongLivedOperationIDsWithCompletionHandler:"
-     }, 
+     },
      {
       "args": {
        "1": {
@@ -255,23 +255,23 @@
          "arguments": {
           "0": {
            "typestr": "^v"
-          }, 
+          },
           "1": {
            "typestr": "@"
-          }, 
+          },
           "2": {
            "typestr": "@"
           }
-         }, 
+         },
          "retval": {
           "typestr": "v"
          }
         }
        }
-      }, 
-      "class_method": false, 
+      },
+      "class_method": false,
       "selector": "fetchLongLivedOperationWithID:completionHandler:"
-     }, 
+     },
      {
       "args": {
        "1": {
@@ -279,23 +279,23 @@
          "arguments": {
           "0": {
            "typestr": "^v"
-          }, 
+          },
           "1": {
            "typestr": "@"
-          }, 
+          },
           "2": {
            "typestr": "@"
           }
-         }, 
+         },
          "retval": {
           "typestr": "v"
          }
         }
        }
-      }, 
-      "class_method": false, 
+      },
+      "class_method": false,
       "selector": "discoverUserInfoWithUserRecordID:completionHandler:"
-     }, 
+     },
      {
       "args": {
        "1": {
@@ -303,23 +303,23 @@
          "arguments": {
           "0": {
            "typestr": "^v"
-          }, 
+          },
           "1": {
            "typestr": "@"
-          }, 
+          },
           "2": {
            "typestr": "@"
           }
-         }, 
+         },
          "retval": {
           "typestr": "v"
          }
         }
        }
-      }, 
-      "class_method": false, 
+      },
+      "class_method": false,
       "selector": "discoverUserInfoWithEmailAddress:completionHandler:"
-     }, 
+     },
      {
       "args": {
        "0": {
@@ -327,23 +327,23 @@
          "arguments": {
           "0": {
            "typestr": "^v"
-          }, 
+          },
           "1": {
            "typestr": "@"
-          }, 
+          },
           "2": {
            "typestr": "@"
           }
-         }, 
+         },
          "retval": {
           "typestr": "v"
          }
         }
        }
-      }, 
-      "class_method": false, 
+      },
+      "class_method": false,
       "selector": "discoverAllContactUserInfosWithCompletionHandler:"
-     }, 
+     },
      {
       "args": {
        "0": {
@@ -351,23 +351,23 @@
          "arguments": {
           "0": {
            "typestr": "^v"
-          }, 
+          },
           "1": {
            "typestr": "@"
-          }, 
+          },
           "2": {
            "typestr": "@"
           }
-         }, 
+         },
          "retval": {
           "typestr": "v"
          }
         }
        }
-      }, 
-      "class_method": false, 
+      },
+      "class_method": false,
       "selector": "fetchUserRecordIDWithCompletionHandler:"
-     }, 
+     },
      {
       "args": {
        "0": {
@@ -375,23 +375,23 @@
          "arguments": {
           "0": {
            "typestr": "^v"
-          }, 
+          },
           "1": {
            "typestr": "q"
-          }, 
+          },
           "2": {
            "typestr": "@"
           }
-         }, 
+         },
          "retval": {
           "typestr": "v"
          }
         }
        }
-      }, 
-      "class_method": false, 
+      },
+      "class_method": false,
       "selector": "accountStatusWithCompletionHandler:"
-     }, 
+     },
      {
       "args": {
        "1": {
@@ -399,23 +399,23 @@
          "arguments": {
           "0": {
            "typestr": "^v"
-          }, 
+          },
           "1": {
            "typestr": "q"
-          }, 
+          },
           "2": {
            "typestr": "@"
           }
-         }, 
+         },
          "retval": {
           "typestr": "v"
          }
         }
        }
-      }, 
-      "class_method": false, 
+      },
+      "class_method": false,
       "selector": "statusForApplicationPermission:completionHandler:"
-     }, 
+     },
      {
       "args": {
        "1": {
@@ -423,25 +423,25 @@
          "arguments": {
           "0": {
            "typestr": "^v"
-          }, 
+          },
           "1": {
            "typestr": "q"
-          }, 
+          },
           "2": {
            "typestr": "@"
           }
-         }, 
+         },
          "retval": {
           "typestr": "v"
          }
         }
        }
-      }, 
-      "class_method": false, 
+      },
+      "class_method": false,
       "selector": "requestApplicationPermission:completionHandler:"
      }
     ]
-   }, 
+   },
    "CKDatabase": {
     "methods": [
      {
@@ -451,23 +451,23 @@
          "arguments": {
           "0": {
            "typestr": "^v"
-          }, 
+          },
           "1": {
            "typestr": "@"
-          }, 
+          },
           "2": {
            "typestr": "@"
           }
-         }, 
+         },
          "retval": {
           "typestr": "v"
          }
         }
        }
-      }, 
-      "class_method": false, 
+      },
+      "class_method": false,
       "selector": "deleteSubscriptionWithID:completionHandler:"
-     }, 
+     },
      {
       "arguments": {
        "3": {
@@ -475,23 +475,23 @@
          "arguments": {
           "0": {
            "typestr": "^v"
-          }, 
+          },
           "1": {
            "typestr": "@"
-          }, 
+          },
           "2": {
            "typestr": "@"
           }
-         }, 
+         },
          "retval": {
           "typestr": "v"
          }
         }
        }
-      }, 
-      "class_method": false, 
+      },
+      "class_method": false,
       "selector": "saveSubscription:completionHandler:"
-     }, 
+     },
      {
       "arguments": {
        "2": {
@@ -499,23 +499,23 @@
          "arguments": {
           "0": {
            "typestr": "^v"
-          }, 
+          },
           "1": {
            "typestr": "@"
-          }, 
+          },
           "2": {
            "typestr": "@"
           }
-         }, 
+         },
          "retval": {
           "typestr": "v"
          }
         }
        }
-      }, 
-      "class_method": false, 
+      },
+      "class_method": false,
       "selector": "fetchAllSubscriptionsWithCompletionHandler:"
-     }, 
+     },
      {
       "arguments": {
        "3": {
@@ -523,23 +523,23 @@
          "arguments": {
           "0": {
            "typestr": "^v"
-          }, 
+          },
           "1": {
            "typestr": "@"
-          }, 
+          },
           "2": {
            "typestr": "@"
           }
-         }, 
+         },
          "retval": {
           "typestr": "v"
          }
         }
        }
-      }, 
-      "class_method": false, 
+      },
+      "class_method": false,
       "selector": "fetchSubscriptionWithID:completionHandler:"
-     }, 
+     },
      {
       "arguments": {
        "3": {
@@ -547,23 +547,23 @@
          "arguments": {
           "0": {
            "typestr": "^v"
-          }, 
+          },
           "1": {
            "typestr": "@"
-          }, 
+          },
           "2": {
            "typestr": "@"
           }
-         }, 
+         },
          "retval": {
           "typestr": "v"
          }
         }
        }
-      }, 
-      "class_method": false, 
+      },
+      "class_method": false,
       "selector": "deleteRecordZoneWithID:completionHandler:"
-     }, 
+     },
      {
       "arguments": {
        "3": {
@@ -571,23 +571,23 @@
          "arguments": {
           "0": {
            "typestr": "^v"
-          }, 
+          },
           "1": {
            "typestr": "@"
-          }, 
+          },
           "2": {
            "typestr": "@"
           }
-         }, 
+         },
          "retval": {
           "typestr": "v"
          }
         }
        }
-      }, 
-      "class_method": false, 
+      },
+      "class_method": false,
       "selector": "saveRecordZone:completionHandler:"
-     }, 
+     },
      {
       "arguments": {
        "3": {
@@ -595,23 +595,23 @@
          "arguments": {
           "0": {
            "typestr": "^v"
-          }, 
+          },
           "1": {
            "typestr": "@"
-          }, 
+          },
           "2": {
            "typestr": "@"
           }
-         }, 
+         },
          "retval": {
           "typestr": "v"
          }
         }
        }
-      }, 
-      "class_method": false, 
+      },
+      "class_method": false,
       "selector": "fetchRecordZoneWithID:completionHandler:"
-     }, 
+     },
      {
       "arguments": {
        "2": {
@@ -619,23 +619,23 @@
          "arguments": {
           "0": {
            "typestr": "^v"
-          }, 
+          },
           "1": {
            "typestr": "@"
-          }, 
+          },
           "2": {
            "typestr": "@"
           }
-         }, 
+         },
          "retval": {
           "typestr": "v"
          }
         }
        }
-      }, 
-      "class_method": false, 
+      },
+      "class_method": false,
       "selector": "fetchAllRecordZonesWithCompletionHandler:"
-     }, 
+     },
      {
       "arguments": {
        "4": {
@@ -643,23 +643,23 @@
          "arguments": {
           "0": {
            "typestr": "^v"
-          }, 
+          },
           "1": {
            "typestr": "@"
-          }, 
+          },
           "2": {
            "typestr": "@"
           }
-         }, 
+         },
          "retval": {
           "typestr": "v"
          }
         }
        }
-      }, 
-      "class_method": false, 
+      },
+      "class_method": false,
       "selector": "performQuery:inZoneWithID:completionHandler:"
-     }, 
+     },
      {
       "arguments": {
        "3": {
@@ -667,23 +667,23 @@
          "arguments": {
           "0": {
            "typestr": "^v"
-          }, 
+          },
           "1": {
            "typestr": "@"
-          }, 
+          },
           "2": {
            "typestr": "@"
           }
-         }, 
+         },
          "retval": {
           "typestr": "v"
          }
         }
        }
-      }, 
-      "class_method": false, 
+      },
+      "class_method": false,
       "selector": "deleteRecordWithID:completionHandler:"
-     }, 
+     },
      {
       "arguments": {
        "3": {
@@ -691,23 +691,23 @@
          "arguments": {
           "0": {
            "typestr": "^v"
-          }, 
+          },
           "1": {
            "typestr": "@"
-          }, 
+          },
           "2": {
            "typestr": "@"
           }
-         }, 
+         },
          "retval": {
           "typestr": "v"
          }
         }
        }
-      }, 
-      "class_method": false, 
+      },
+      "class_method": false,
       "selector": "saveRecord:completionHandler:"
-     }, 
+     },
      {
       "arguments": {
        "3": {
@@ -715,25 +715,25 @@
          "arguments": {
           "0": {
            "typestr": "^v"
-          }, 
+          },
           "1": {
            "typestr": "@"
-          }, 
+          },
           "2": {
            "typestr": "@"
           }
-         }, 
+         },
          "retval": {
           "typestr": "v"
          }
         }
        }
-      }, 
-      "class_method": false, 
+      },
+      "class_method": false,
       "selector": "fetchRecordWithID:completionHandler:"
      }
     ]
-   }, 
+   },
    "CKDiscoverAllContactsOperation": {
     "methods": [
      {
@@ -743,62 +743,62 @@
          "arguments": {
           "0": {
            "typestr": "^v"
-          }, 
+          },
           "1": {
            "typestr": "@"
           }
-         }, 
+         },
          "retval": {
           "typestr": "@"
          }
         }
        }
-      }, 
-      "class_method": false, 
+      },
+      "class_method": false,
       "selector": "setDiscoverAllContactsCompletionBlock:"
-     }, 
+     },
      {
-      "class_method": false, 
+      "class_method": false,
       "retval": {
        "callable": {
         "arguments": {
          "0": {
           "typestr": "^v"
-         }, 
+         },
          "1": {
           "typestr": "@"
          }
-        }, 
+        },
         "retval": {
          "typestr": "@"
         }
        }
-      }, 
+      },
       "selector": "discoverAllContactsCompletionBlock"
      }
     ]
-   }, 
+   },
    "CKDiscoverAllUserIdentitiesOperation": {
     "methods": [
      {
-      "class_method": false, 
+      "class_method": false,
       "retval": {
        "callable": {
         "arguments": {
          "0": {
           "typestr": "^v"
-         }, 
+         },
          "1": {
           "typestr": "@"
          }
-        }, 
+        },
         "retval": {
          "typestr": "v"
         }
        }
-      }, 
+      },
       "selector": "userIdentityDiscoveredBlock"
-     }, 
+     },
      {
       "args": {
        "0": {
@@ -806,39 +806,39 @@
          "arguments": {
           "0": {
            "typestr": "^v"
-          }, 
+          },
           "1": {
            "typestr": "@"
           }
-         }, 
+         },
          "retval": {
           "typestr": "v"
          }
         }
        }
-      }, 
-      "class_method": false, 
+      },
+      "class_method": false,
       "selector": "setUserIdentityDiscoveredBlock:"
-     }, 
+     },
      {
-      "class_method": false, 
+      "class_method": false,
       "retval": {
        "callable": {
         "arguments": {
          "0": {
           "typestr": "^v"
-         }, 
+         },
          "1": {
           "typestr": "@"
          }
-        }, 
+        },
         "retval": {
          "typestr": "v"
         }
        }
-      }, 
+      },
       "selector": "discoverAllUserIdentitiesCompletionBlock"
-     }, 
+     },
      {
       "args": {
        "0": {
@@ -846,46 +846,46 @@
          "arguments": {
           "0": {
            "typestr": "^v"
-          }, 
+          },
           "1": {
            "typestr": "@"
           }
-         }, 
+         },
          "retval": {
           "typestr": "v"
          }
         }
        }
-      }, 
-      "class_method": false, 
+      },
+      "class_method": false,
       "selector": "setDiscoverAllUserIdentitiesCompletionBlock:"
      }
     ]
-   }, 
+   },
    "CKDiscoverUserIdentitiesOperation": {
     "methods": [
      {
-      "class_method": false, 
+      "class_method": false,
       "retval": {
        "callable": {
         "arguments": {
          "0": {
           "typestr": "^v"
-         }, 
+         },
          "1": {
           "typestr": "@"
-         }, 
+         },
          "2": {
           "typestr": "@"
          }
-        }, 
+        },
         "retval": {
          "typestr": "v"
         }
        }
-      }, 
+      },
       "selector": "userIdentityDiscoveredBlock"
-     }, 
+     },
      {
       "args": {
        "0": {
@@ -893,42 +893,42 @@
          "arguments": {
           "0": {
            "typestr": "^v"
-          }, 
+          },
           "1": {
            "typestr": "@"
-          }, 
+          },
           "2": {
            "typestr": "@"
           }
-         }, 
+         },
          "retval": {
           "typestr": "v"
          }
         }
        }
-      }, 
-      "class_method": false, 
+      },
+      "class_method": false,
       "selector": "setUserIdentityDiscoveredBlock:"
-     }, 
+     },
      {
-      "class_method": false, 
+      "class_method": false,
       "retval": {
        "callable": {
         "arguments": {
          "0": {
           "typestr": "^v"
-         }, 
+         },
          "1": {
           "typestr": "@"
          }
-        }, 
+        },
         "retval": {
          "typestr": "v"
         }
        }
-      }, 
+      },
       "selector": "discoverUserIdentitiesCompletionBlock"
-     }, 
+     },
      {
       "args": {
        "0": {
@@ -936,22 +936,22 @@
          "arguments": {
           "0": {
            "typestr": "^v"
-          }, 
+          },
           "1": {
            "typestr": "@"
           }
-         }, 
+         },
          "retval": {
           "typestr": "v"
          }
         }
        }
-      }, 
-      "class_method": false, 
+      },
+      "class_method": false,
       "selector": "setDiscoverUserIdentitiesCompletionBlock:"
      }
     ]
-   }, 
+   },
    "CKDiscoverUserInfosOperation": {
     "methods": [
      {
@@ -961,53 +961,53 @@
          "arguments": {
           "0": {
            "typestr": "^v"
-          }, 
+          },
           "1": {
            "typestr": "@"
-          }, 
+          },
           "2": {
            "typestr": "@"
-          }, 
+          },
           "3": {
            "typestr": "@"
           }
-         }, 
+         },
          "retval": {
           "typestr": "v"
          }
         }
        }
-      }, 
-      "class_method": false, 
+      },
+      "class_method": false,
       "selector": "setDiscoverUserInfosCompletionBlock:"
-     }, 
+     },
      {
-      "class_method": false, 
+      "class_method": false,
       "retval": {
        "callable": {
         "arguments": {
          "0": {
           "typestr": "^v"
-         }, 
+         },
          "1": {
           "typestr": "@"
-         }, 
+         },
          "2": {
           "typestr": "@"
-         }, 
+         },
          "3": {
           "typestr": "@"
          }
-        }, 
+        },
         "retval": {
          "typestr": "v"
         }
        }
-      }, 
+      },
       "selector": "discoverUserInfosCompletionBlock"
      }
     ]
-   }, 
+   },
    "CKFetchDatabaseChangesOperation": {
     "methods": [
      {
@@ -1015,36 +1015,36 @@
        "0": {
         "type_override": "Z"
        }
-      }, 
-      "class_method": false, 
+      },
+      "class_method": false,
       "selector": "setFetchAllChanges:"
-     }, 
+     },
      {
-      "class_method": false, 
+      "class_method": false,
       "retval": {
        "type_override": "Z"
-      }, 
+      },
       "selector": "fetchAllChanges"
-     }, 
+     },
      {
-      "class_method": false, 
+      "class_method": false,
       "retval": {
        "callable": {
         "arguments": {
          "0": {
           "typestr": "^v"
-         }, 
+         },
          "1": {
           "typestr": "@"
          }
-        }, 
+        },
         "retval": {
          "typestr": "v"
         }
        }
-      }, 
+      },
       "selector": "recordZoneWithIDChangedBlock"
-     }, 
+     },
      {
       "args": {
        "0": {
@@ -1052,39 +1052,39 @@
          "arguments": {
           "0": {
            "typestr": "^v"
-          }, 
+          },
           "1": {
            "typestr": "@"
           }
-         }, 
+         },
          "retval": {
           "typestr": "v"
          }
         }
        }
-      }, 
-      "class_method": false, 
+      },
+      "class_method": false,
       "selector": "setRecordZoneWithIDChangedBlock:"
-     }, 
+     },
      {
-      "class_method": false, 
+      "class_method": false,
       "retval": {
        "callable": {
         "arguments": {
          "0": {
           "typestr": "^v"
-         }, 
+         },
          "1": {
           "typestr": "@"
          }
-        }, 
+        },
         "retval": {
          "typestr": "v"
         }
        }
-      }, 
+      },
       "selector": "recordZoneWithIDWasDeletedBlock"
-     }, 
+     },
      {
       "args": {
        "0": {
@@ -1092,39 +1092,39 @@
          "arguments": {
           "0": {
            "typestr": "^v"
-          }, 
+          },
           "1": {
            "typestr": "@"
           }
-         }, 
+         },
          "retval": {
           "typestr": "v"
          }
         }
        }
-      }, 
-      "class_method": false, 
+      },
+      "class_method": false,
       "selector": "setRecordZoneWithIDWasPurgedBlock:"
-     }, 
+     },
      {
-      "class_method": false, 
+      "class_method": false,
       "retval": {
        "callable": {
         "arguments": {
          "0": {
           "typestr": "^v"
-         }, 
+         },
          "1": {
           "typestr": "@"
          }
-        }, 
+        },
         "retval": {
          "typestr": "v"
         }
        }
-      }, 
+      },
       "selector": "recordZoneWithIDWasPurgedBlock"
-     }, 
+     },
      {
       "args": {
        "0": {
@@ -1132,39 +1132,39 @@
          "arguments": {
           "0": {
            "typestr": "^v"
-          }, 
+          },
           "1": {
            "typestr": "@"
           }
-         }, 
+         },
          "retval": {
           "typestr": "v"
          }
         }
        }
-      }, 
-      "class_method": false, 
+      },
+      "class_method": false,
       "selector": "setRecordZoneWithIDWasDeletedBlock:"
-     }, 
+     },
      {
-      "class_method": false, 
+      "class_method": false,
       "retval": {
        "callable": {
         "arguments": {
          "0": {
           "typestr": "^v"
-         }, 
+         },
          "1": {
           "typestr": "@"
          }
-        }, 
+        },
         "retval": {
          "typestr": "v"
         }
        }
-      }, 
+      },
       "selector": "changeTokenUpdatedBlock"
-     }, 
+     },
      {
       "args": {
        "0": {
@@ -1172,45 +1172,45 @@
          "arguments": {
           "0": {
            "typestr": "^v"
-          }, 
+          },
           "1": {
            "typestr": "@"
           }
-         }, 
+         },
          "retval": {
           "typestr": "v"
          }
         }
        }
-      }, 
-      "class_method": false, 
+      },
+      "class_method": false,
       "selector": "setChangeTokenUpdatedBlock:"
-     }, 
+     },
      {
-      "class_method": false, 
+      "class_method": false,
       "retval": {
        "callable": {
         "arguments": {
          "0": {
           "typestr": "^v"
-         }, 
+         },
          "1": {
           "typestr": "@"
-         }, 
+         },
          "2": {
           "typestr": "Z"
-         }, 
+         },
          "3": {
           "typestr": "@"
          }
-        }, 
+        },
         "retval": {
          "typestr": "v"
         }
        }
-      }, 
+      },
       "selector": "fetchDatabaseChangesCompletionBlock"
-     }, 
+     },
      {
       "args": {
        "0": {
@@ -1218,28 +1218,28 @@
          "arguments": {
           "0": {
            "typestr": "^v"
-          }, 
+          },
           "1": {
            "typestr": "@"
-          }, 
+          },
           "2": {
            "typestr": "Z"
-          }, 
+          },
           "3": {
            "typestr": "@"
           }
-         }, 
+         },
          "retval": {
           "typestr": "v"
          }
         }
        }
-      }, 
-      "class_method": false, 
+      },
+      "class_method": false,
       "selector": "setFetchDatabaseChangesCompletionBlock:"
      }
     ]
-   }, 
+   },
    "CKFetchNotificationChangesOperation": {
     "methods": [
      {
@@ -1249,45 +1249,45 @@
          "arguments": {
           "0": {
            "typestr": "^v"
-          }, 
+          },
           "1": {
            "typestr": "@"
-          }, 
+          },
           "2": {
            "typestr": "@"
           }
-         }, 
+         },
          "retval": {
           "typestr": "v"
          }
         }
        }
-      }, 
-      "class_method": false, 
+      },
+      "class_method": false,
       "selector": "setFetchNotificationChangesCompletionBlock:"
-     }, 
+     },
      {
-      "class_method": false, 
+      "class_method": false,
       "retval": {
        "callable": {
         "arguments": {
          "0": {
           "typestr": "^v"
-         }, 
+         },
          "1": {
           "typestr": "@"
-         }, 
+         },
          "2": {
           "typestr": "@"
          }
-        }, 
+        },
         "retval": {
          "typestr": "v"
         }
        }
-      }, 
+      },
       "selector": "fetchNotificationChangesCompletionBlock"
-     }, 
+     },
      {
       "arguments": {
        "2": {
@@ -1295,41 +1295,41 @@
          "arguments": {
           "0": {
            "typestr": "^v"
-          }, 
+          },
           "1": {
            "typestr": "@"
           }
-         }, 
+         },
          "retval": {
           "typestr": "v"
          }
         }
        }
-      }, 
-      "class_method": false, 
+      },
+      "class_method": false,
       "selector": "setNotificationChangedBlock:"
-     }, 
+     },
      {
-      "class_method": false, 
+      "class_method": false,
       "retval": {
        "callable": {
         "arguments": {
          "0": {
           "typestr": "^v"
-         }, 
+         },
          "1": {
           "typestr": "@"
          }
-        }, 
+        },
         "retval": {
          "typestr": "v"
         }
        }
-      }, 
+      },
       "selector": "notificationChangedBlock"
      }
     ]
-   }, 
+   },
    "CKFetchRecordChangesOperation": {
     "methods": [
      {
@@ -1337,36 +1337,36 @@
        "0": {
         "type_override": "Z"
        }
-      }, 
-      "class_method": false, 
+      },
+      "class_method": false,
       "selector": "setFetchAllChanges:"
-     }, 
+     },
      {
-      "class_method": false, 
+      "class_method": false,
       "retval": {
        "type_override": "Z"
-      }, 
+      },
       "selector": "fetchAllChanges"
-     }, 
+     },
      {
-      "class_method": false, 
+      "class_method": false,
       "retval": {
        "callable": {
         "arguments": {
          "0": {
           "typestr": "^v"
-         }, 
+         },
          "1": {
           "typestr": "@"
          }
-        }, 
+        },
         "retval": {
          "typestr": "v"
         }
        }
-      }, 
+      },
       "selector": "serverChangeTokenFetchedBlock"
-     }, 
+     },
      {
       "args": {
        "2": {
@@ -1374,45 +1374,45 @@
          "arguments": {
           "0": {
            "typestr": "^v"
-          }, 
+          },
           "1": {
            "typestr": "@"
           }
-         }, 
+         },
          "retval": {
           "typestr": "v"
          }
         }
        }
-      }, 
-      "class_method": false, 
+      },
+      "class_method": false,
       "selector": "setServerChangeTokenFetchedBlock:"
-     }, 
+     },
      {
-      "class_method": false, 
+      "class_method": false,
       "retval": {
        "callable": {
         "arguments": {
          "0": {
           "typestr": "^v"
-         }, 
+         },
          "1": {
           "typestr": "@"
-         }, 
+         },
          "2": {
           "typestr": "@"
-         }, 
+         },
          "3": {
           "typestr": "@"
          }
-        }, 
+        },
         "retval": {
          "typestr": "v"
         }
        }
-      }, 
+      },
       "selector": "fetchRecordChangesCompletionBlock"
-     }, 
+     },
      {
       "arguments": {
        "2": {
@@ -1420,45 +1420,45 @@
          "arguments": {
           "0": {
            "typestr": "^v"
-          }, 
+          },
           "1": {
            "typestr": "@"
-          }, 
+          },
           "2": {
            "typestr": "@"
-          }, 
+          },
           "3": {
            "typestr": "@"
           }
-         }, 
+         },
          "retval": {
           "typestr": "v"
          }
         }
        }
-      }, 
-      "class_method": false, 
+      },
+      "class_method": false,
       "selector": "setFetchRecordChangesCompletionBlock:"
-     }, 
+     },
      {
-      "class_method": false, 
+      "class_method": false,
       "retval": {
        "callable": {
         "arguments": {
          "0": {
           "typestr": "^v"
-         }, 
+         },
          "1": {
           "typestr": "@"
          }
-        }, 
+        },
         "retval": {
          "typestr": "v"
         }
        }
-      }, 
+      },
       "selector": "recordChangedBlock"
-     }, 
+     },
      {
       "arguments": {
        "2": {
@@ -1466,42 +1466,42 @@
          "arguments": {
           "0": {
            "typestr": "^v"
-          }, 
+          },
           "1": {
            "typestr": "@"
           }
-         }, 
+         },
          "retval": {
           "typestr": "v"
          }
         }
        }
-      }, 
-      "class_method": false, 
+      },
+      "class_method": false,
       "selector": "setRecordChangedBlock:"
-     }, 
+     },
      {
-      "class_method": false, 
+      "class_method": false,
       "retval": {
        "callable": {
         "arguments": {
          "0": {
           "typestr": "^v"
-         }, 
+         },
          "1": {
           "typestr": "@"
-         }, 
+         },
          "2": {
           "typestr": "d"
          }
-        }, 
+        },
         "retval": {
          "typestr": "v"
         }
        }
-      }, 
+      },
       "selector": "perRecordProgressBlock"
-     }, 
+     },
      {
       "args": {
        "2": {
@@ -1509,23 +1509,23 @@
          "arguments": {
           "0": {
            "typestr": "^v"
-          }, 
+          },
           "1": {
            "typestr": "@"
-          }, 
+          },
           "2": {
            "typestr": "d"
           }
-         }, 
+         },
          "retval": {
           "typestr": "v"
          }
         }
        }
-      }, 
-      "class_method": false, 
+      },
+      "class_method": false,
       "selector": "setPerRecordProgressBlock:"
-     }, 
+     },
      {
       "args": {
        "0": {
@@ -1533,41 +1533,41 @@
          "arguments": {
           "0": {
            "typestr": "^v"
-          }, 
+          },
           "1": {
            "typestr": "@"
           }
-         }, 
+         },
          "retval": {
           "typestr": "v"
          }
         }
        }
-      }, 
-      "class_method": false, 
+      },
+      "class_method": false,
       "selector": "setRecordWithIDWasDeletedBlock:"
-     }, 
+     },
      {
-      "class_method": false, 
+      "class_method": false,
       "retval": {
        "callable": {
         "arguments": {
          "0": {
           "typestr": "^v"
-         }, 
+         },
          "1": {
           "typestr": "@"
          }
-        }, 
+        },
         "retval": {
          "typestr": "v"
         }
        }
-      }, 
+      },
       "selector": "recordWithIDWasDeletedBlock"
      }
     ]
-   }, 
+   },
    "CKFetchRecordZoneChangesOperation": {
     "methods": [
      {
@@ -1575,36 +1575,36 @@
        "0": {
         "type_override": "Z"
        }
-      }, 
-      "class_method": false, 
+      },
+      "class_method": false,
       "selector": "setFetchAllChanges:"
-     }, 
+     },
      {
-      "class_method": false, 
+      "class_method": false,
       "retval": {
        "type_override": "Z"
-      }, 
+      },
       "selector": "fetchAllChanges"
-     }, 
+     },
      {
-      "class_method": false, 
+      "class_method": false,
       "retval": {
        "callable": {
         "arguments": {
          "0": {
           "typestr": "^v"
-         }, 
+         },
          "1": {
           "typestr": "@"
          }
-        }, 
+        },
         "retval": {
          "typestr": "v"
         }
        }
-      }, 
+      },
       "selector": "recordChangedBlock"
-     }, 
+     },
      {
       "args": {
        "0": {
@@ -1612,42 +1612,42 @@
          "arguments": {
           "0": {
            "typestr": "^v"
-          }, 
+          },
           "1": {
            "typestr": "@"
           }
-         }, 
+         },
          "retval": {
           "typestr": "v"
          }
         }
        }
-      }, 
-      "class_method": false, 
+      },
+      "class_method": false,
       "selector": "setRecordChangedBlock:"
-     }, 
+     },
      {
-      "class_method": false, 
+      "class_method": false,
       "retval": {
        "callable": {
         "arguments": {
          "0": {
           "typestr": "^v"
-         }, 
+         },
          "1": {
           "typestr": "@"
-         }, 
+         },
          "2": {
           "typestr": "@"
          }
-        }, 
+        },
         "retval": {
          "typestr": "v"
         }
        }
-      }, 
+      },
       "selector": "recordWithIDWasDeletedBlock"
-     }, 
+     },
      {
       "args": {
        "0": {
@@ -1655,48 +1655,48 @@
          "arguments": {
           "0": {
            "typestr": "^v"
-          }, 
+          },
           "1": {
            "typestr": "@"
-          }, 
+          },
           "2": {
            "typestr": "@"
           }
-         }, 
+         },
          "retval": {
           "typestr": "v"
          }
         }
        }
-      }, 
-      "class_method": false, 
+      },
+      "class_method": false,
       "selector": "setRecordWithIDWasDeletedBlock:"
-     }, 
+     },
      {
-      "class_method": false, 
+      "class_method": false,
       "retval": {
        "callable": {
         "arguments": {
          "0": {
           "typestr": "^v"
-         }, 
+         },
          "1": {
           "typestr": "@"
-         }, 
+         },
          "2": {
           "typestr": "@"
-         }, 
+         },
          "3": {
           "typestr": "@"
          }
-        }, 
+        },
         "retval": {
          "typestr": "v"
         }
        }
-      }, 
+      },
       "selector": "recordZoneChangeTokensUpdatedBlock"
-     }, 
+     },
      {
       "args": {
        "0": {
@@ -1704,57 +1704,57 @@
          "arguments": {
           "0": {
            "typestr": "^v"
-          }, 
+          },
           "1": {
            "typestr": "@"
-          }, 
+          },
           "2": {
            "typestr": "@"
-          }, 
+          },
           "3": {
            "typestr": "@"
           }
-         }, 
+         },
          "retval": {
           "typestr": "v"
          }
         }
        }
-      }, 
-      "class_method": false, 
+      },
+      "class_method": false,
       "selector": "setRecordZoneChangeTokensUpdatedBlock:"
-     }, 
+     },
      {
-      "class_method": false, 
+      "class_method": false,
       "retval": {
        "callable": {
         "arguments": {
          "0": {
           "typestr": "^v"
-         }, 
+         },
          "1": {
           "typestr": "@"
-         }, 
+         },
          "2": {
           "typestr": "@"
-         }, 
+         },
          "3": {
           "typestr": "@"
-         }, 
+         },
          "4": {
           "typestr": "Z"
-         }, 
+         },
          "5": {
           "typestr": "@"
          }
-        }, 
+        },
         "retval": {
          "typestr": "v"
         }
        }
-      }, 
+      },
       "selector": "recordZoneFetchCompletionBlock"
-     }, 
+     },
      {
       "args": {
        "0": {
@@ -1762,51 +1762,51 @@
          "arguments": {
           "0": {
            "typestr": "^v"
-          }, 
+          },
           "1": {
            "typestr": "@"
-          }, 
+          },
           "2": {
            "typestr": "@"
-          }, 
+          },
           "3": {
            "typestr": "@"
-          }, 
+          },
           "4": {
            "typestr": "Z"
-          }, 
+          },
           "5": {
            "typestr": "@"
           }
-         }, 
+         },
          "retval": {
           "typestr": "v"
          }
         }
        }
-      }, 
-      "class_method": false, 
+      },
+      "class_method": false,
       "selector": "setRecordZoneFetchCompletionBlock:"
-     }, 
+     },
      {
-      "class_method": false, 
+      "class_method": false,
       "retval": {
        "callable": {
         "arguments": {
          "0": {
           "typestr": "^v"
-         }, 
+         },
          "1": {
           "typestr": "@"
          }
-        }, 
+        },
         "retval": {
          "typestr": "v"
         }
        }
-      }, 
+      },
       "selector": "fetchRecordZoneChangesCompletionBlock"
-     }, 
+     },
      {
       "args": {
        "0": {
@@ -1814,46 +1814,46 @@
          "arguments": {
           "0": {
            "typestr": "^v"
-          }, 
+          },
           "1": {
            "typestr": "@"
           }
-         }, 
+         },
          "retval": {
           "typestr": "v"
          }
         }
        }
-      }, 
-      "class_method": false, 
+      },
+      "class_method": false,
       "selector": "setFetchRecordZoneChangesCompletionBlock:"
      }
     ]
-   }, 
+   },
    "CKFetchRecordZonesOperation": {
     "methods": [
      {
-      "class_method": false, 
+      "class_method": false,
       "retval": {
        "callable": {
         "arguments": {
          "0": {
           "typestr": "^v"
-         }, 
+         },
          "1": {
           "typestr": "@"
-         }, 
+         },
          "2": {
           "typestr": "@"
          }
-        }, 
+        },
         "retval": {
          "typestr": "v"
         }
        }
-      }, 
+      },
       "selector": "fetchRecordZonesCompletionBlock"
-     }, 
+     },
      {
       "arguments": {
        "2": {
@@ -1861,49 +1861,49 @@
          "arguments": {
           "0": {
            "typestr": "^v"
-          }, 
+          },
           "1": {
            "typestr": "@"
-          }, 
+          },
           "2": {
            "typestr": "@"
           }
-         }, 
+         },
          "retval": {
           "typestr": "v"
          }
         }
        }
-      }, 
-      "class_method": false, 
+      },
+      "class_method": false,
       "selector": "setFetchRecordZonesCompletionBlock:"
      }
     ]
-   }, 
+   },
    "CKFetchRecordsOperation": {
     "methods": [
      {
-      "class_method": false, 
+      "class_method": false,
       "retval": {
        "callable": {
         "arguments": {
          "0": {
           "typestr": "^v"
-         }, 
+         },
          "1": {
           "typestr": "@"
-         }, 
+         },
          "2": {
           "typestr": "d"
          }
-        }, 
+        },
         "retval": {
          "typestr": "v"
         }
        }
-      }, 
+      },
       "selector": "perRecordProgressBlock"
-     }, 
+     },
      {
       "arguments": {
        "2": {
@@ -1911,48 +1911,48 @@
          "arguments": {
           "0": {
            "typestr": "^v"
-          }, 
+          },
           "1": {
            "typestr": "@"
-          }, 
+          },
           "2": {
            "typestr": "d"
           }
-         }, 
+         },
          "retval": {
           "typestr": "v"
          }
         }
        }
-      }, 
-      "class_method": false, 
+      },
+      "class_method": false,
       "selector": "setPerRecordProgressBlock:"
-     }, 
+     },
      {
-      "class_method": false, 
+      "class_method": false,
       "retval": {
        "callable": {
         "arguments": {
          "0": {
           "typestr": "^v"
-         }, 
+         },
          "1": {
           "typestr": "@"
-         }, 
+         },
          "2": {
           "typestr": "@"
-         }, 
+         },
          "3": {
           "typestr": "@"
          }
-        }, 
+        },
         "retval": {
          "typestr": "v"
         }
        }
-      }, 
+      },
       "selector": "perRecordCompletionBlock"
-     }, 
+     },
      {
       "arguments": {
        "2": {
@@ -1960,48 +1960,48 @@
          "arguments": {
           "0": {
            "typestr": "^v"
-          }, 
+          },
           "1": {
            "typestr": "@"
-          }, 
+          },
           "2": {
            "typestr": "@"
-          }, 
+          },
           "3": {
            "typestr": "@"
           }
-         }, 
+         },
          "retval": {
           "typestr": "v"
          }
         }
        }
-      }, 
-      "class_method": false, 
+      },
+      "class_method": false,
       "selector": "setPerRecordCompletionBlock:"
-     }, 
+     },
      {
-      "class_method": false, 
+      "class_method": false,
       "retval": {
        "callable": {
         "arguments": {
          "0": {
           "typestr": "^v"
-         }, 
+         },
          "1": {
           "typestr": "@"
-         }, 
+         },
          "2": {
           "typestr": "@"
          }
-        }, 
+        },
         "retval": {
          "typestr": "v"
         }
        }
-      }, 
+      },
       "selector": "fetchRecordsCompletionBlock"
-     }, 
+     },
      {
       "arguments": {
        "2": {
@@ -2009,25 +2009,25 @@
          "arguments": {
           "0": {
            "typestr": "^v"
-          }, 
+          },
           "1": {
            "typestr": "@"
-          }, 
+          },
           "2": {
            "typestr": "@"
           }
-         }, 
+         },
          "retval": {
           "typestr": "v"
          }
         }
        }
-      }, 
-      "class_method": false, 
+      },
+      "class_method": false,
       "selector": "setFetchRecordsCompletionBlock:"
      }
     ]
-   }, 
+   },
    "CKFetchShareMetadataOperation": {
     "methods": [
      {
@@ -2035,42 +2035,42 @@
        "0": {
         "type_override": "Z"
        }
-      }, 
-      "class_method": false, 
+      },
+      "class_method": false,
       "selector": "setShouldFetchRootRecord:"
-     }, 
+     },
      {
-      "class_method": false, 
+      "class_method": false,
       "retval": {
        "type_override": "Z"
-      }, 
+      },
       "selector": "shouldFetchRootRecord"
-     }, 
+     },
      {
-      "class_method": false, 
+      "class_method": false,
       "retval": {
        "callable": {
         "arguments": {
          "0": {
           "typestr": "^v"
-         }, 
+         },
          "1": {
           "typestr": "@"
-         }, 
+         },
          "2": {
           "typestr": "@"
-         }, 
+         },
          "3": {
           "typestr": "@"
          }
-        }, 
+        },
         "retval": {
          "typestr": "v"
         }
        }
-      }, 
+      },
       "selector": "perShareMetadataBlock"
-     }, 
+     },
      {
       "args": {
        "0": {
@@ -2078,45 +2078,45 @@
          "arguments": {
           "0": {
            "typestr": "^v"
-          }, 
+          },
           "1": {
            "typestr": "@"
-          }, 
+          },
           "2": {
            "typestr": "@"
-          }, 
+          },
           "3": {
            "typestr": "@"
           }
-         }, 
+         },
          "retval": {
           "typestr": "v"
          }
         }
        }
-      }, 
-      "class_method": false, 
+      },
+      "class_method": false,
       "selector": "setPerShareMetadataBlock:"
-     }, 
+     },
      {
-      "class_method": false, 
+      "class_method": false,
       "retval": {
        "callable": {
         "arguments": {
          "0": {
           "typestr": "^v"
-         }, 
+         },
          "1": {
           "typestr": "@"
          }
-        }, 
+        },
         "retval": {
          "typestr": "v"
         }
        }
-      }, 
+      },
       "selector": "fetchShareMetadataCompletionBlock"
-     }, 
+     },
      {
       "args": {
        "0": {
@@ -2124,43 +2124,43 @@
          "arguments": {
           "0": {
            "typestr": "^v"
-          }, 
+          },
           "1": {
            "typestr": "@"
           }
-         }, 
+         },
          "retval": {
           "typestr": "v"
          }
         }
        }
-      }, 
-      "class_method": false, 
+      },
+      "class_method": false,
       "selector": "setFetchShareMetadataCompletionBlock:"
      }
     ]
-   }, 
+   },
    "CKFetchShareParticipantsOperation": {
     "methods": [
      {
-      "class_method": false, 
+      "class_method": false,
       "retval": {
        "callable": {
         "arguments": {
          "0": {
           "typestr": "^v"
-         }, 
+         },
          "1": {
           "typestr": "@"
          }
-        }, 
+        },
         "retval": {
          "typestr": "v"
         }
        }
-      }, 
+      },
       "selector": "shareParticipantFetchedBlock"
-     }, 
+     },
      {
       "args": {
        "0": {
@@ -2168,39 +2168,39 @@
          "arguments": {
           "0": {
            "typestr": "^v"
-          }, 
+          },
           "1": {
            "typestr": "@"
           }
-         }, 
+         },
          "retval": {
           "typestr": "v"
          }
         }
        }
-      }, 
-      "class_method": false, 
+      },
+      "class_method": false,
       "selector": "setShareParticipantFetchedBlock:"
-     }, 
+     },
      {
-      "class_method": false, 
+      "class_method": false,
       "retval": {
        "callable": {
         "arguments": {
          "0": {
           "typestr": "^v"
-         }, 
+         },
          "1": {
           "typestr": "@"
          }
-        }, 
+        },
         "retval": {
          "typestr": "v"
         }
        }
-      }, 
+      },
       "selector": "fetchShareParticipantsCompletionBlock"
-     }, 
+     },
      {
       "args": {
        "0": {
@@ -2208,22 +2208,22 @@
          "arguments": {
           "0": {
            "typestr": "^v"
-          }, 
+          },
           "1": {
            "typestr": "@"
           }
-         }, 
+         },
          "retval": {
           "typestr": "v"
          }
         }
        }
-      }, 
-      "class_method": false, 
+      },
+      "class_method": false,
       "selector": "setFetchShareParticipantsCompletionBlock:"
      }
     ]
-   }, 
+   },
    "CKFetchSubscriptionsOperation": {
     "methods": [
      {
@@ -2233,71 +2233,71 @@
          "arguments": {
           "0": {
            "typestr": "^v"
-          }, 
+          },
           "1": {
            "typestr": "@"
-          }, 
+          },
           "2": {
            "typestr": "@"
           }
-         }, 
+         },
          "retval": {
           "typestr": "v"
          }
         }
        }
-      }, 
-      "class_method": false, 
+      },
+      "class_method": false,
       "selector": "setFetchSubscriptionCompletionBlock:"
-     }, 
+     },
      {
-      "class_method": false, 
+      "class_method": false,
       "retval": {
        "callable": {
         "arguments": {
          "0": {
           "typestr": "^v"
-         }, 
+         },
          "1": {
           "typestr": "@"
-         }, 
+         },
          "2": {
           "typestr": "@"
          }
-        }, 
+        },
         "retval": {
          "typestr": "v"
         }
        }
-      }, 
+      },
       "selector": "fetchSubscriptionCompletionBlock"
      }
     ]
-   }, 
+   },
    "CKFetchWebAuthTokenOperation": {
     "methods": [
      {
-      "class_method": false, 
+      "class_method": false,
       "retval": {
        "callable": {
         "arguments": {
          "0": {
           "typestr": "^v"
-         }, 
+         },
          "1": {
           "typestr": "@"
-         }, 
+         },
          "2": {
           "typestr": "@"
          }
-        }, 
+        },
         "retval": {
          "typestr": "v"
         }
        }
-      }, 
+      },
       "selector": "fetchWebAuthTokenCompletionBlock"
-     }, 
+     },
      {
       "args": {
        "0": {
@@ -2305,49 +2305,49 @@
          "arguments": {
           "0": {
            "typestr": "^v"
-          }, 
+          },
           "1": {
            "typestr": "@"
-          }, 
+          },
           "2": {
            "typestr": "@"
           }
-         }, 
+         },
          "retval": {
           "typestr": "v"
          }
         }
        }
-      }, 
-      "class_method": false, 
+      },
+      "class_method": false,
       "selector": "setFetchWebAuthTokenCompletionBlock:"
      }
     ]
-   }, 
+   },
    "CKMarkNotificationsReadOperation": {
     "methods": [
      {
-      "class_method": false, 
+      "class_method": false,
       "retval": {
        "callable": {
         "arguments": {
          "0": {
           "typestr": "^v"
-         }, 
+         },
          "1": {
           "typestr": "@"
-         }, 
+         },
          "2": {
           "typestr": "@"
          }
-        }, 
+        },
         "retval": {
          "typestr": "v"
         }
        }
-      }, 
+      },
       "selector": "markNotificationsReadCompletionBlock"
-     }, 
+     },
      {
       "arguments": {
        "2": {
@@ -2355,25 +2355,25 @@
          "arguments": {
           "0": {
            "typestr": "^v"
-          }, 
+          },
           "1": {
            "typestr": "@"
-          }, 
+          },
           "2": {
            "typestr": "@"
           }
-         }, 
+         },
          "retval": {
           "typestr": "v"
          }
         }
        }
-      }, 
-      "class_method": false, 
+      },
+      "class_method": false,
       "selector": "setMarkNotificationsReadCompletionBlock:"
      }
     ]
-   }, 
+   },
    "CKModifyBadgeOperation": {
     "methods": [
      {
@@ -2383,68 +2383,68 @@
          "arguments": {
           "0": {
            "typestr": "^v"
-          }, 
+          },
           "1": {
            "typestr": "@"
           }
-         }, 
+         },
          "retval": {
           "typestr": "v"
          }
         }
        }
-      }, 
-      "class_method": false, 
+      },
+      "class_method": false,
       "selector": "setModifyBadgeCompletionBlock:"
-     }, 
+     },
      {
-      "class_method": false, 
+      "class_method": false,
       "retval": {
        "callable": {
         "arguments": {
          "0": {
           "typestr": "^v"
-         }, 
+         },
          "1": {
           "typestr": "@"
          }
-        }, 
+        },
         "retval": {
          "typestr": "v"
         }
        }
-      }, 
+      },
       "selector": "modifyBadgeCompletionBlock"
      }
     ]
-   }, 
+   },
    "CKModifyRecordZonesOperation": {
     "methods": [
      {
-      "class_method": false, 
+      "class_method": false,
       "retval": {
        "callable": {
         "arguments": {
          "0": {
           "typestr": "^v"
-         }, 
+         },
          "1": {
           "typestr": "@"
-         }, 
+         },
          "2": {
           "typestr": "@"
-         }, 
+         },
          "3": {
           "typestr": "@"
          }
-        }, 
+        },
         "retval": {
          "typestr": "v"
         }
        }
-      }, 
+      },
       "selector": "modifyRecordZonesCompletionBlock"
-     }, 
+     },
      {
       "arguments": {
        "2": {
@@ -2452,55 +2452,55 @@
          "arguments": {
           "0": {
            "typestr": "^v"
-          }, 
+          },
           "1": {
            "typestr": "@"
-          }, 
+          },
           "2": {
            "typestr": "@"
-          }, 
+          },
           "3": {
            "typestr": "@"
           }
-         }, 
+         },
          "retval": {
           "typestr": "v"
          }
         }
        }
-      }, 
-      "class_method": false, 
+      },
+      "class_method": false,
       "selector": "setModifyRecordZonesCompletionBlock:"
      }
     ]
-   }, 
+   },
    "CKModifyRecordsOperation": {
     "methods": [
      {
-      "class_method": false, 
+      "class_method": false,
       "retval": {
        "callable": {
         "arguments": {
          "0": {
           "typestr": "^v"
-         }, 
+         },
          "1": {
           "typestr": "@"
-         }, 
+         },
          "2": {
           "typestr": "@"
-         }, 
+         },
          "3": {
           "typestr": "@"
          }
-        }, 
+        },
         "retval": {
          "typestr": "v"
         }
        }
-      }, 
+      },
       "selector": "modifyRecordsCompletionBlock"
-     }, 
+     },
      {
       "arguments": {
        "2": {
@@ -2508,45 +2508,45 @@
          "arguments": {
           "0": {
            "typestr": "^v"
-          }, 
+          },
           "1": {
            "typestr": "@"
-          }, 
+          },
           "2": {
            "typestr": "@"
-          }, 
+          },
           "3": {
            "typestr": "@"
           }
-         }, 
+         },
          "retval": {
           "typestr": "v"
          }
         }
        }
-      }, 
-      "class_method": false, 
+      },
+      "class_method": false,
       "selector": "setModifyRecordsCompletionBlock:"
-     }, 
+     },
      {
-      "class_method": false, 
+      "class_method": false,
       "retval": {
        "callable": {
         "arguments": {
          "0": {
           "typestr": "^v"
-         }, 
+         },
          "1": {
           "typestr": "@"
          }
-        }, 
+        },
         "retval": {
          "typestr": "v"
         }
        }
-      }, 
+      },
       "selector": "perRecordCompletionBlock"
-     }, 
+     },
      {
       "arguments": {
        "2": {
@@ -2554,42 +2554,42 @@
          "arguments": {
           "0": {
            "typestr": "^v"
-          }, 
+          },
           "1": {
            "typestr": "@"
           }
-         }, 
+         },
          "retval": {
           "typestr": "v"
          }
         }
        }
-      }, 
-      "class_method": false, 
+      },
+      "class_method": false,
       "selector": "setPerRecordCompletionBlock:"
-     }, 
+     },
      {
-      "class_method": false, 
+      "class_method": false,
       "retval": {
        "callable": {
         "arguments": {
          "0": {
           "typestr": "^v"
-         }, 
+         },
          "1": {
           "typestr": "@"
-         }, 
+         },
          "2": {
           "typestr": "d"
          }
-        }, 
+        },
         "retval": {
          "typestr": "v"
         }
        }
-      }, 
+      },
       "selector": "perRecordProgressBlock"
-     }, 
+     },
      {
       "arguments": {
        "2": {
@@ -2597,52 +2597,52 @@
          "arguments": {
           "0": {
            "typestr": "^v"
-          }, 
+          },
           "1": {
            "typestr": "@"
-          }, 
+          },
           "2": {
            "typestr": "d"
           }
-         }, 
+         },
          "retval": {
           "typestr": "v"
          }
         }
        }
-      }, 
-      "class_method": false, 
+      },
+      "class_method": false,
       "selector": "setPerRecordProgressBlock:"
      }
     ]
-   }, 
+   },
    "CKModifySubscriptionsOperation": {
     "methods": [
      {
-      "class_method": false, 
+      "class_method": false,
       "retval": {
        "callable": {
         "arguments": {
          "0": {
           "typestr": "^v"
-         }, 
+         },
          "1": {
           "typestr": "@"
-         }, 
+         },
          "2": {
           "typestr": "@"
-         }, 
+         },
          "3": {
           "typestr": "@"
          }
-        }, 
+        },
         "retval": {
          "typestr": "v"
         }
        }
-      }, 
+      },
       "selector": "modifySubscriptionsCompletionBlock"
-     }, 
+     },
      {
       "arguments": {
        "2": {
@@ -2650,48 +2650,48 @@
          "arguments": {
           "0": {
            "typestr": "^v"
-          }, 
+          },
           "1": {
            "typestr": "@"
-          }, 
+          },
           "2": {
            "typestr": "@"
-          }, 
+          },
           "3": {
            "typestr": "@"
           }
-         }, 
+         },
          "retval": {
           "typestr": "v"
          }
         }
        }
-      }, 
-      "class_method": false, 
+      },
+      "class_method": false,
       "selector": "setModifySubscriptionsCompletionBlock:"
      }
     ]
-   }, 
+   },
    "CKNotificationInfo": {
     "methods": [
      {
-      "class_method": false, 
+      "class_method": false,
       "retval": {
        "type_override": "Z"
-      }, 
+      },
       "selector": "shouldSendMutableContent"
-     }, 
+     },
      {
       "args": {
        "0": {
         "type_override": "Z"
        }
-      }, 
-      "class_method": false, 
+      },
+      "class_method": false,
       "selector": "setShouldSendMutableContent:"
      }
     ]
-   }, 
+   },
    "CKOperation": {
     "methods": [
      {
@@ -2699,33 +2699,33 @@
        "0": {
         "type_override": "Z"
        }
-      }, 
-      "class_method": false, 
+      },
+      "class_method": false,
       "selector": "setLongLived:"
-     }, 
+     },
      {
-      "class_method": false, 
+      "class_method": false,
       "retval": {
        "type_override": "Z"
-      }, 
+      },
       "selector": "isLongLived"
-     }, 
+     },
      {
-      "class_method": false, 
+      "class_method": false,
       "retval": {
        "callable": {
         "arguments": {
          "0": {
           "typestr": "^v"
          }
-        }, 
+        },
         "retval": {
          "typestr": "v"
         }
        }
-      }, 
+      },
       "selector": "longLivedOperationWasPersistedBlock"
-     }, 
+     },
      {
       "args": {
        "0": {
@@ -2734,18 +2734,18 @@
           "0": {
            "typestr": "^v"
           }
-         }, 
+         },
          "retval": {
           "typestr": "v"
          }
         }
        }
-      }, 
-      "class_method": false, 
+      },
+      "class_method": false,
       "selector": "setLongLivedOperationWasPersistedBlock:"
      }
     ]
-   }, 
+   },
    "CKOperationConfiguration": {
     "methods": [
      {
@@ -2753,35 +2753,35 @@
        "0": {
         "type_override": "Z"
        }
-      }, 
-      "class_method": false, 
+      },
+      "class_method": false,
       "selector": "setAllowsCellularAccess:"
-     }, 
+     },
      {
-      "class_method": false, 
+      "class_method": false,
       "retval": {
        "type_override": "Z"
-      }, 
+      },
       "selector": "allowsCellularAccess"
-     }, 
+     },
      {
       "args": {
        "0": {
         "type_override": "Z"
        }
-      }, 
-      "class_method": false, 
+      },
+      "class_method": false,
       "selector": "setLongLived:"
-     }, 
+     },
      {
-      "class_method": false, 
+      "class_method": false,
       "retval": {
        "type_override": "Z"
-      }, 
+      },
       "selector": "isLongLived"
      }
     ]
-   }, 
+   },
    "CKQueryOperation": {
     "methods": [
      {
@@ -2791,45 +2791,45 @@
          "arguments": {
           "0": {
            "typestr": "^v"
-          }, 
+          },
           "1": {
            "typestr": "@"
-          }, 
+          },
           "2": {
            "typestr": "@"
           }
-         }, 
+         },
          "retval": {
           "typestr": "v"
          }
         }
        }
-      }, 
-      "class_method": false, 
+      },
+      "class_method": false,
       "selector": "setQueryCompletionBlock:"
-     }, 
+     },
      {
-      "class_method": false, 
+      "class_method": false,
       "retval": {
        "callable": {
         "arguments": {
          "0": {
           "typestr": "^v"
-         }, 
+         },
          "1": {
           "typestr": "@"
-         }, 
+         },
          "2": {
           "typestr": "@"
          }
-        }, 
+        },
         "retval": {
          "typestr": "v"
         }
        }
-      }, 
+      },
       "selector": "queryCompletionBlock"
-     }, 
+     },
      {
       "arguments": {
        "2": {
@@ -2837,191 +2837,191 @@
          "arguments": {
           "0": {
            "typestr": "^v"
-          }, 
+          },
           "1": {
            "typestr": "@"
           }
-         }, 
+         },
          "retval": {
           "typestr": "v"
          }
         }
        }
-      }, 
-      "class_method": false, 
+      },
+      "class_method": false,
       "selector": "setRecordFetchedBlock:"
-     }, 
+     },
      {
-      "class_method": false, 
+      "class_method": false,
       "retval": {
        "callable": {
         "arguments": {
          "0": {
           "typestr": "^v"
-         }, 
+         },
          "1": {
           "typestr": "@"
          }
-        }, 
+        },
         "retval": {
          "typestr": "v"
         }
        }
-      }, 
+      },
       "selector": "recordFetchedBlock"
      }
     ]
-   }, 
+   },
    "CKUserIdentity": {
     "methods": [
      {
-      "class_method": false, 
+      "class_method": false,
       "retval": {
        "type_override": "Z"
-      }, 
+      },
       "selector": "hasiCloudAccount"
      }
     ]
    }
-  }, 
+  },
   "enum": {
    "CKDatabaseScopePrivate": {
     "value": 2
-   }, 
+   },
    "CKDatabaseScopePublic": {
     "value": 1
-   }, 
+   },
    "CKDatabaseScopeShared": {
     "value": 3
-   }, 
+   },
    "CKErrorAlreadyShared": {
     "value": 30
-   }, 
+   },
    "CKErrorManagedAccountRestricted": {
     "value": 32
-   }, 
+   },
    "CKErrorParticipantMayNeedVerification": {
     "value": 33
-   }, 
+   },
    "CKErrorReferenceViolation": {
     "value": 31
-   }, 
+   },
    "CKErrorServerResponseLost": {
     "value": 34
-   }, 
+   },
    "CKErrorTooManyParticipants": {
     "value": 29
-   }, 
+   },
    "CKNotificationTypeDatabase": {
     "value": 4
-   }, 
+   },
    "CKOperationGroupTransferSizeGigabytes": {
     "value": 5
-   }, 
+   },
    "CKOperationGroupTransferSizeHundredsOfGigabytes": {
     "value": 7
-   }, 
+   },
    "CKOperationGroupTransferSizeHundredsOfMegabytes": {
     "value": 4
-   }, 
+   },
    "CKOperationGroupTransferSizeKilobytes": {
     "value": 1
-   }, 
+   },
    "CKOperationGroupTransferSizeMegabytes": {
     "value": 2
-   }, 
+   },
    "CKOperationGroupTransferSizeTensOfGigabytes": {
     "value": 6
-   }, 
+   },
    "CKOperationGroupTransferSizeTensOfMegabytes": {
     "value": 3
-   }, 
+   },
    "CKOperationGroupTransferSizeUnknown": {
     "value": 0
-   }, 
+   },
    "CKQuerySubscriptionOptionsFiresOnRecordCreation": {
     "value": 1
-   }, 
+   },
    "CKQuerySubscriptionOptionsFiresOnRecordDeletion": {
     "value": 4
-   }, 
+   },
    "CKQuerySubscriptionOptionsFiresOnRecordUpdate": {
     "value": 2
-   }, 
+   },
    "CKQuerySubscriptionOptionsFiresOnce": {
     "value": 8
-   }, 
+   },
    "CKRecordZoneCapabilitySharing": {
     "value": 4
-   }, 
+   },
    "CKShareParticipantAcceptanceStatusAccepted": {
     "value": 2
-   }, 
+   },
    "CKShareParticipantAcceptanceStatusPending": {
     "value": 1
-   }, 
+   },
    "CKShareParticipantAcceptanceStatusRemoved": {
     "value": 3
-   }, 
+   },
    "CKShareParticipantAcceptanceStatusUnknown": {
     "value": 0
-   }, 
+   },
    "CKShareParticipantPermissionNone": {
     "value": 1
-   }, 
+   },
    "CKShareParticipantPermissionReadOnly": {
     "value": 2
-   }, 
+   },
    "CKShareParticipantPermissionReadWrite": {
     "value": 3
-   }, 
+   },
    "CKShareParticipantPermissionUnknown": {
     "value": 0
-   }, 
+   },
    "CKShareParticipantTypeOwner": {
     "value": 1
-   }, 
+   },
    "CKShareParticipantTypePrivateUser": {
     "value": 3
-   }, 
+   },
    "CKShareParticipantTypePublicUser": {
     "value": 4
-   }, 
+   },
    "CKShareParticipantTypeUnknown": {
     "value": 0
-   }, 
+   },
    "CKSubscriptionTypeDatabase": {
     "value": 3
    }
-  }, 
+  },
   "externs": {
    "CKAccountChangedNotification": {
     "typestr": "@"
-   }, 
+   },
    "CKCurrentUserDefaultName": {
     "typestr": "@"
-   }, 
+   },
    "CKRecordParentKey": {
     "typestr": "@"
-   }, 
+   },
    "CKRecordShareKey": {
     "typestr": "@"
-   }, 
+   },
    "CKRecordTypeShare": {
     "typestr": "@"
-   }, 
+   },
    "CKShareThumbnailImageDataKey": {
     "typestr": "@"
-   }, 
+   },
    "CKShareTitleKey": {
     "typestr": "@"
-   }, 
+   },
    "CKShareTypeKey": {
     "typestr": "@"
    }
-  }, 
-  "formal_protocols": {}, 
-  "functions": {}, 
+  },
+  "formal_protocols": {},
+  "functions": {},
   "informal_protocols": {}
  }
 }

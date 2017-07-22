@@ -142,5 +142,9 @@ class TestCGEvent (TestCase):
         v = CGEventGetUnflippedLocation(evt)
         self.assertIsInstance(v, CGPoint)
 
+    @min_os_level('10.13')
+    def testFunctions10_13(self):
+        CGEventCreateScrollWheelEvent2
+
 if __name__ == "__main__":
     main()
