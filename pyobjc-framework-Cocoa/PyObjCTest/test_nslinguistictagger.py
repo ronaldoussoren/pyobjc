@@ -49,6 +49,13 @@ class TestNSLinguisticTagger (TestCase):
         self.assertEqual(NSLinguisticTaggerOmitOther, 1 << 3)
         self.assertEqual(NSLinguisticTaggerJoinNames, 1 << 4)
 
+        self.assertEqual(NSLinguisticTaggerUnitWord, 0)
+        self.assertEqual(NSLinguisticTaggerUnitSentence, 1)
+        self.assertEqual(NSLinguisticTaggerUnitParagraph, 2)
+        self.assertEqual(NSLinguisticTaggerUnitDocument, 3)
+
+
+
     @min_os_level('10.7')
     def testMethods(self):
         self.assertArgHasType(NSLinguisticTagger.orthographyAtIndex_effectiveRange_,
@@ -76,6 +83,20 @@ class TestNSLinguisticTagger (TestCase):
 
         self.assertArgIsBlock(NSString.enumerateLinguisticTagsInRange_scheme_options_orthography_usingBlock_,
                 4, b'v@' + NSRange.__typestr__ + NSRange.__typestr__ + b'o^' + objc._C_NSBOOL)
+
+    @min_os_level('10.13')
+    def testMethods10_13(self):
+        self.assertArgHasType(NSLinguisticTagger.enumerateTagsInRange_unit_scheme_options_usingBlock_, 0, NSRange.__typestr__)
+        self.assertArgIsBlock(NSLinguisticTagger.enumerateTagsInRange_unit_scheme_options_usingBlock_, 4, b'v@' + NSRange.__typestr__ + b'o^Z')
+        self.assertArgHasType(NSLinguisticTagger.tagAtIndex_unit_scheme_tokenRange_, 3, b'o^' + NSRange.__typestr__)
+        self.assertArgHasType(NSLinguisticTagger.tagsInRange_unit_scheme_tokenRanges_, 0, NSRange.__typestr__)
+        self.assertArgIsOut(NSLinguisticTagger.tagsInRange_unit_scheme_tokenRanges_, 3)
+        self.assertArgIsOut(NSLinguisticTagger.tagForString_atIndex_unit_scheme_orthography_tokenRange_, 5)
+        self.assertArgHasType(NSLinguisticTagger.tagsForString_range_unit_scheme_options_orthography_tokenRanges_, 1, NSRange.__typestr__)
+        self.assertArgIsOut(NSLinguisticTagger.tagsForString_range_unit_scheme_options_orthography_tokenRanges_, 6)
+        self.assertArgHasType(NSLinguisticTagger.enumerateTagsForString_range_unit_scheme_options_orthography_usingBlock_, 1, NSRange.__typestr__)
+        self.assertArgIsBlock(NSLinguisticTagger.enumerateTagsForString_range_unit_scheme_options_orthography_usingBlock_, 6, b'v@' + NSRange.__typestr__ + b'o^Z')
+
 
 if __name__ == "__main__":
     main()

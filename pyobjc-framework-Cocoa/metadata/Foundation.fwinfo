@@ -1,5 +1,3 @@
-# objective.metada exceptions file, see its document
-# for information on how to update this file.
 {
  "definitions": {
   "expressions": {
@@ -51,6 +49,22 @@
     "NSRectEdgeMaxY": { "alias": "NSMaxYEdge" }
   },
   "enum": {
+   "NSURLSessionDelayedRequestContinueLoading": { "value": 0 },
+   "NSURLSessionDelayedRequestUseNewRequest": { "value": 1 },
+   "NSURLSessionDelayedRequestCancel": { "value": 2 },
+   "NSURLSessionMultipathServiceTypeNone": { "value": 0 },
+   "NSURLSessionMultipathServiceTypeHandover": { "value": 1 },
+   "NSURLSessionMultipathServiceTypeInteractive": { "value": 2 },
+   "NSURLSessionMultipathServiceTypeAggregate": { "value": 3 },
+    "NSLinguisticTaggerUnitWord": { "value": 0 },
+    "NSLinguisticTaggerUnitSentence": { "value": 1 },
+    "NSLinguisticTaggerUnitParagraph": { "value": 2 },
+    "NSLinguisticTaggerUnitDocument": { "value": 3 },
+    "NSJSONWritingSortedKeys": { "value": 2 },
+    "NSItemProviderFileOptionOpenInPlace": { "value": 1 },
+    "NSItemProviderRepresentationVisibilityAll": { "value": 0 },
+    "NSItemProviderRepresentationVisibilityGroup": { "value": 2 },
+    "NSItemProviderRepresentationVisibilityOwnProcess": { "value": 3 },
     "NSCloudSharingNetworkFailureError": { "value": 5120 },
     "NSCloudSharingQuotaExceededError": { "value": 5121 },
     "NSCloudSharingTooManyParticipantsError": { "value": 5122 },
@@ -375,6 +389,18 @@
    },
    "NSURLSessionConfiguration": {
     "methods": [
+     {
+      "selector": "waitsForConnectivity",
+      "class_method": false,
+      "retval": { "type_override": "Z" }
+     },
+     {
+      "selector": "setWaitsForConnectivity:",
+      "class_method": false,
+      "args": {
+       "0": { "type_override": "Z" }
+      }
+     },
      {
       "selector": "isDiscretionary",
       "class_method": false,
@@ -3061,6 +3087,28 @@
    "NSDictionary": {
     "methods": [
      {
+      "selector": "dictionaryWithContentsOfURL:error:",
+      "class_method": true,
+      "args": {
+       "1": { "type_modifier": "o" }
+      }
+     },
+     {
+      "selector": "initWithContentsOfURL:error:",
+      "class_method": false,
+      "args": {
+       "1": { "type_modifier": "o" }
+      }
+     },
+     {
+      "selector": "writeToURL:error:",
+      "class_method": false,
+      "args": {
+       "1": { "type_modifier": "o" }
+      },
+      "retval": { "type_override": "Z" }
+     },
+     {
       "args": {
        "0": {
         "type_override": "^@"
@@ -4383,6 +4431,22 @@
        "type_override": "Z"
       },
       "selector": "isUbiquitousItemAtURL:"
+     },
+     {
+      "class_method": false,
+      "selector": "getFileProviderMessageInterfacesForItemAtURL:completionHandler:",
+      "args": {
+       "1": {
+        "callable": {
+	 "arguments": {
+	  "0": { "typestr": "^v" },
+	  "1": { "typestr": "@" },
+	  "2": { "typestr": "@" }
+	 },
+	 "retval": { "typestr": "v" }
+	}
+       }
+      }
      }
     ]
    },
@@ -4805,6 +4869,157 @@
    },
    "NSItemProvider": {
     "methods": [
+     {
+      "selector": "canLoadObjectOfClass:",
+      "class_method": false,
+      "retval": { "type_override": "Z" }
+     },
+     {
+      "selector": "loadDataRepresentationForTypeIdentifier:completionHandler:",
+      "class_method": false,
+      "args": {
+       "1": {
+        "callable": {
+	 "arguments": {
+	  "0": { "typestr": "^v" },
+	  "1": { "typestr": "@" },
+	  "2": { "typestr": "@" }
+	 },
+	 "retval": { "typestr": "v" }
+	}
+       }
+      }
+     },
+     {
+      "selector": "loadDataRepresentationForTypeIdentifier:completionHandler:",
+      "class_method": false,
+      "args": {
+       "1": {
+        "callable": {
+	 "arguments": {
+	  "0": { "typestr": "^v" },
+	  "1": { "typestr": "@" },
+	  "2": { "typestr": "@" }
+	 },
+	 "retval": { "typestr": "v" }
+	}
+       }
+      }
+     },
+     {
+      "selector": "loadFileRepresentationForTypeIdentifier:completionHandler:",
+      "class_method": false,
+      "args": {
+       "1": {
+        "callable": {
+	 "arguments": {
+	  "0": { "typestr": "^v" },
+	  "1": { "typestr": "@" },
+	  "2": { "typestr": "@" }
+	 },
+	 "retval": { "typestr": "v" }
+	}
+       }
+      }
+     },
+     {
+      "selector": "loadInPlaceFileRepresentationForTypeIdentifier:completionHandler:",
+      "class_method": false,
+      "args": {
+       "1": {
+        "callable": {
+	 "arguments": {
+	  "0": { "typestr": "^v" },
+	  "1": { "typestr": "@" },
+	  "2": { "typestr": "Z" },
+	  "3": { "typestr": "@" }
+	 },
+	 "retval": { "typestr": "v" }
+	}
+       }
+      }
+     },
+     {
+      "selector": "registerObjectOfClass:visibility:loadHandler:",
+      "class_method": false,
+      "args": {
+       "2": {
+        "callable": {
+	 "arguments": {
+	  "0": { "typestr": "^v" },
+	  "1": {
+	   "typestr": "@?",
+	   "callable": {
+	    "arguments": {
+	     "0": { "typestr": "^v" },
+	     "1": { "typestr": "@" },
+	     "2": { "typestr": "@" }
+	    },
+	    "retval": { "typestr": "v" }
+	   }
+	  }
+	 },
+	 "retval": { "typestr": "@" }
+	}
+       }
+      }
+     },
+     {
+      "selector": "registerDataRepresentationForTypeIdentifier:visibility:loadHandler:",
+      "class_method": false,
+      "args": {
+       "2": {
+        "callable": {
+	 "arguments": {
+	  "0": { "typestr": "^v" },
+	  "1": {
+	   "typestr": "@?",
+	   "callable": {
+	    "arguments": {
+	     "0": { "typestr": "^v" },
+	     "1": { "typestr": "@" },
+	     "2": { "typestr": "@" }
+	    },
+	    "retval": { "typestr": "v" }
+	   }
+	  }
+	 },
+	 "retval": { "typestr": "@" }
+	}
+       }
+      }
+     },
+     {
+      "selector": "registerFileRepresentationForTypeIdentifier:fileOptions:visibility:loadHandler:",
+      "class_method": false,
+      "args": {
+       "3": {
+        "callable": {
+	 "arguments": {
+	  "0": { "typestr": "^v" },
+	  "1": {
+	   "typestr": "@?",
+	   "callable": {
+	    "arguments": {
+	     "0": { "typestr": "^v" },
+	     "1": { "typestr": "@" },
+	     "2": { "typestr": "Z" },
+	     "3": { "typestr": "@" }
+	    },
+	    "retval": { "typestr": "v" }
+	   }
+	  }
+	 },
+	 "retval": { "typestr": "@" }
+	}
+       }
+      }
+     },
+     {
+      "selector": "hasRepresentationConformingToTypeIdentifier:fileOptions:",
+      "class_method": false,
+      "retval": { "type_override": "Z" }
+     },
      {
       "selector": "loadPreviewImageWithOptions:completionHandler:",
       "class_method": false,
@@ -5671,6 +5886,68 @@
    },
    "NSLinguisticTagger": {
     "methods": [
+     {
+      "args": {
+       "3": { "type_modifier": "o" }
+      },
+      "class_method": false,
+      "selector": "tagAtIndex:unit:scheme:tokenRange:"
+     },
+     {
+      "args": {
+       "3": { "type_modifier": "o" }
+      },
+      "class_method": false,
+      "selector": "tagsInRange:unit:scheme:options:tokenRanges:"
+     },
+     {
+      "args": {
+       "5": { "type_modifier": "o" }
+      },
+      "class_method": false,
+      "selector": "tagForString:atIndex:unit:scheme:orthography:tokenRange:"
+     },
+     {
+      "args": {
+       "6": { "type_modifier": "o" }
+      },
+      "class_method": false,
+      "selector": "tagsForString:range:unit:scheme:options:orthography:tokenRanges:"
+     },
+     {
+      "args": {
+       "6": {
+        "callable": {
+	 "arguments": {
+	  "0": { "typestr": "^v" },
+	  "1": { "typestr": "@" },
+	  "2": { "typestr": [ "{_NSRange=II}", "{_NSRange=QQ}" ]},
+	  "3": { "typestr": "o^Z" }
+	 },
+	 "retval": { "typestr": "v" }
+	}
+       }
+      },
+      "class_method": false,
+      "selector": "enumerateTagsForString:range:unit:scheme:options:orthography:usingBlock:"
+     },
+     {
+      "args": {
+       "4": {
+        "callable": {
+	 "arguments": {
+	  "0": { "typestr": "^v" },
+	  "1": { "typestr": "@" },
+	  "2": { "typestr": [ "{_NSRange=II}", "{_NSRange=QQ}" ] },
+	  "3": { "typestr": "o^Z" }
+	 },
+	 "retval": { "typestr": "v" }
+	}
+       }
+      },
+      "class_method": false,
+      "selector": "enumerateTagsInRange:unit:scheme:options:usingBlock:"
+     },
      {
       "args": {
        "1": {
@@ -6896,6 +7173,46 @@
    },
    "NSObject": {
     "methods": [
+     {
+      "selector": "initWithItemProviderData:typeIdentifier:error:",
+      "class_method": false,
+      "args": {
+       "2": { "type_modifier": "o", "type_override": "^@" }
+      }
+     },
+     {
+      "selector": "loadDataWithTypeIdentifier:forItemProviderCompletionHandler:",
+      "class_method": false,
+      "args": {
+       "1": {
+        "type_override": "@?",
+        "callable": {
+	 "arguments": {
+	  "0": { "typestr": "^v" },
+	  "1": { "typestr": "@" },
+	  "2": { "typestr": "@" }
+	 },
+	 "retval": { "typestr": "v" }
+	}
+       }
+      }
+     },
+     {
+      "selector": "URLSession:task:willBeginDelayedRequest:completionHandler:",
+      "class_method": false,
+      "args": {
+       "3": {
+        "callable": {
+	 "arguments": {
+	  "0": { "typestr": "^v" },
+	  "2": { "typestr": ["i", "q"] },
+	  "1": { "typestr": "@" }
+	 },
+	 "retval": { "typestr": "v" }
+	}
+       }
+      }
+     },
      {
       "selector": "URLSession:dataTask:willCacheResponse:completionHandler:",
       "class_method": false,
@@ -10249,6 +10566,20 @@
    "NSProgress": {
     "methods": [
      {
+      "selector": "performAsCurrentWithPendingUnitCount:usingBlock:",
+      "class_method": false,
+      "args": {
+       "1": {
+        "callable": {
+         "arguments": {
+	  "0": { "typestr": "^v" }
+	 },
+	 "retval": { "typestr": "v" }
+	}
+       }
+      }
+     },
+     {
       "selector": "pausingHandler",
       "class_method": false,
       "retval": {
@@ -12594,6 +12925,28 @@
    "NSTask": {
     "methods": [
      {
+      "selector": "launchedTaskWithExecutableURL:arguments:error:terminationHandler:",
+      "class_method": true,
+      "args": {
+       "2": { "type_modifier": "o" },
+       "3": {
+        "callable": {
+         "arguments": {
+          "0": {
+           "typestr": "^v"
+          },
+          "1": {
+           "typestr": "@"
+          }
+         },
+         "retval": {
+          "typestr": "v"
+         }
+        }
+       }
+      }
+     },
+     {
       "class_method": false,
       "retval": {
        "callable": {
@@ -13069,6 +13422,28 @@
    },
    "NSURL": {
     "methods": [
+     {
+      "selector": "arrayWithContentsOfURL:error:",
+      "class_method": true,
+      "args": {
+       "1": { "type_modifier": "o" }
+      }
+     },
+     {
+      "selector": "initWithContentsOfURL:error:",
+      "class_method": false,
+      "args": {
+       "1": { "type_modifier": "o" }
+      }
+     },
+     {
+      "selector": "writeToURL:error:",
+      "class_method": false,
+      "args": {
+       "1": { "type_modifier": "o" }
+      },
+      "retval": { "type_override": "Z" }
+     },
      {
       "args": {
        "0": {
@@ -14424,6 +14799,29 @@
    }
   },
   "externs": {
+   "NSURLUbiquitousSharedItemPermissionsReadWrite": { "typestr": "@" },
+   "NSURLUbiquitousSharedItemPermissionsReadOnly": { "typestr": "@" },
+   "NSURLUbiquitousSharedItemRoleParticipant": { "typestr": "@" },
+   "NSURLUbiquitousSharedItemRoleOwner": { "typestr": "@" },
+   "NSURLUbiquitousItemIsSharedKey": { "typestr": "@" },
+   "NSURLUbiquitousSharedItemCurrentUserRoleKey": { "typestr": "@" },
+   "NSURLUbiquitousSharedItemCurrentUserPermissionsKey": { "typestr": "@" },
+   "NSURLUbiquitousSharedItemOwnerNameComponentsKey": { "typestr": "@" },
+   "NSURLUbiquitousSharedItemMostRecentEditorNameComponentsKey": { "typestr": "@" },
+   "NSURLVolumeAvailableCapacityForImportantUsageKey": { "typestr": "@" },
+   "NSURLVolumeAvailableCapacityForOpportunisticUsageKey": { "typestr": "@" },
+   "NSURLVolumeSupportsAccessPermissionsKey": { "typestr": "@" },
+   "NSURLVolumeSupportsImmutableFilesKey": { "typestr": "@" },
+   "NSURLCanonicalPathKey": { "typestr": "@" },
+   "NSMetadataUbiquitousSharedItemCurrentUserRoleKey": { "typestr": "@" },
+   "NSMetadataUbiquitousSharedItemCurrentUserPermissionsKey": { "typestr": "@" },
+   "NSMetadataUbiquitousSharedItemOwnerNameComponentsKey": { "typestr": "@" },
+   "NSMetadataUbiquitousSharedItemMostRecentEditorNameComponentsKey": { "typestr": "@" },
+   "NSMetadataUbiquitousSharedItemRoleOwner": { "typestr": "@" },
+   "NSMetadataUbiquitousSharedItemRoleParticipant": { "typestr": "@" },
+   "NSMetadataUbiquitousSharedItemPermissionsReadOnly": { "typestr": "@" },
+   "NSMetadataUbiquitousSharedItemPermissionsReadWrite": { "typestr": "@" },
+   "NSLocalizedFailureErrorKey": { "typestr": "@" },
    "NSURLVolumeIsEncryptedKey": { "typestr": "@" },
    "NSURLVolumeIsRootFileSystemKey": { "typestr": "@" },
    "NSURLVolumeSupportsCompressionKey": { "typestr": "@" },

@@ -56,4 +56,8 @@ static void __attribute__((__used__)) use_protocols(void)
     p = PyObjC_IdToPython(@protocol(NSExtensionRequestHandling)); Py_XDECREF(p);
     p = PyObjC_IdToPython(@protocol(NSUserActivityDelegate)); Py_XDECREF(p);
 #endif /* defined(__LP64__) && PyObjC_BUILD_RELEASE >= 1010 */
+#if PyObjC_BUILD_RELEASE >= 1013
+    p = PyObjC_IdToPython(@protocol(NSItemProviderWriting)); Py_XDECREF(p);
+    p = PyObjC_IdToPython(@protocol(NSItemProviderReading)); Py_XDECREF(p);
+#endif
 }

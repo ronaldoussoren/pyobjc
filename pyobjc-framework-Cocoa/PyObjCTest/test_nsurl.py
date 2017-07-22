@@ -200,6 +200,23 @@ class TestNSURL (TestCase):
         self.assertIsInstance(NSURLVolumeSupportsFileCloningKey, unicode)
         self.assertIsInstance(NSURLVolumeSupportsSwapRenamingKey, unicode)
         self.assertIsInstance(NSURLVolumeSupportsExclusiveRenamingKey, unicode)
+        self.assertIsInstance(NSURLCanonicalPathKey, unicode)
+        self.assertIsInstance(NSURLUbiquitousItemIsSharedKey, unicode)
+        self.assertIsInstance(NSURLUbiquitousSharedItemCurrentUserRoleKey, unicode)
+        self.assertIsInstance(NSURLUbiquitousSharedItemCurrentUserPermissionsKey, unicode)
+        self.assertIsInstance(NSURLUbiquitousSharedItemOwnerNameComponentsKey, unicode)
+        self.assertIsInstance(NSURLUbiquitousSharedItemMostRecentEditorNameComponentsKey, unicode)
+        self.assertIsInstance(NSURLUbiquitousSharedItemRoleOwner, unicode)
+        self.assertIsInstance(NSURLUbiquitousSharedItemRoleParticipant, unicode)
+        self.assertIsInstance(NSURLUbiquitousSharedItemPermissionsReadOnly, unicode)
+        self.assertIsInstance(NSURLUbiquitousSharedItemPermissionsReadWrite, unicode)
+
+    @min_os_level('10.13')
+    def testConstants10_13(self):
+        self.assertIsInstance(NSURLVolumeSupportsImmutableFilesKey, unicode)
+        self.assertIsInstance(NSURLVolumeSupportsAccessPermissionsKey, unicode)
+        self.assertIsInstance(NSURLVolumeAvailableCapacityForImportantUsageKey, unicode)
+        self.assertIsInstance(NSURLVolumeAvailableCapacityForOpportunisticUsageKey, unicode)
 
     @min_os_level('10.6')
     def testMethods10_6(self):

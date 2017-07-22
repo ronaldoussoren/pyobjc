@@ -32,11 +32,19 @@ try:
     r(b'PHFetchOptions', b'setWantsIncrementalChangeDetails:', {'arguments': {2: {'type': 'Z'}}})
     r(b'PHFetchOptions', b'wantsIncrementalChangeDetails', {'retval': {'type': 'Z'}})
     r(b'PHFetchResult', b'containsObject:', {'retval': {'type': 'Z'}})
+<<<<<<< working copy
+    r(b'PHFetchResult', b'enumerateObjectsAtIndexes:options:usingBlock:', {'arguments': {4: {'callable': {'retval': {'type': b'v'}, 'arguments': {0: {'type': b'^v'}, 1: {'type': b'@'}, 2: {'type': sel32or64(b'I', b'Q')}, 3: {'type': b'o^@'}}}}}})
+    r(b'PHFetchResult', b'enumerateObjectsUsingBlock:', {'arguments': {2: {'callable': {'retval': {'type': b'v'}, 'arguments': {0: {'type': b'^v'}, 1: {'type': b'@'}, 2: {'type': sel32or64(b'I', b'Q')}, 3: {'type': b'o^@'}}}}}})
+    r(b'PHFetchResult', b'enumerateObjectsWithOptions:usingBlock:', {'arguments': {3: {'callable': {'retval': {'type': b'v'}, 'arguments': {0: {'type': b'^v'}, 1: {'type': b'@'}, 2: {'type': sel32or64(b'I', b'Q')}, 3: {'type': b'o^@'}}}}}})
+    r(b'PHFetchResultChangeDetails', b'hasIncrementalChanges', {'retval': {'type': 'Z'}})
+    r(b'PHFetchResultChangeDetails', b'hasMoves', {'retval': {'type': 'Z'}})
+=======
     r(b'PHFetchResult', b'enumerateObjectsAtIndexes:options:usingBlock:', {'arguments': {4: {'callable': {'retval': {'type': b'v'}, 'arguments': {0: {'type': b'^v'}, 1: {'type': b'@'}, 2: {'type': sel32or64(b'I', b'Q')}, 3: {'type': b'o^Z'}}}}}})
     r(b'PHFetchResult', b'enumerateObjectsUsingBlock:', {'arguments': {2: {'callable': {'retval': {'type': b'v'}, 'arguments': {0: {'type': b'^v'}, 1: {'type': b'@'}, 2: {'type': sel32or64(b'I', b'Q')}, 3: {'type': b'o^Z'}}}}}})
     r(b'PHFetchResult', b'enumerateObjectsWithOptions:usingBlock:', {'arguments': {3: {'callable': {'retval': {'type': b'v'}, 'arguments': {0: {'type': b'^v'}, 1: {'type': b'@'}, 2: {'type': sel32or64(b'I', b'Q')}, 3: {'type': b'o^Z'}}}}}})
     r(b'PHFetchResultChangeDetails', b'hasIncrementalChanges', {'retval': {'type': 'Z'}})
     r(b'PHFetchResultChangeDetails', b'hasMoves', {'retval': {'type': 'Z'}})
+>>>>>>> destination
     r(b'PHImageManager', b'requestImageDataForAsset:options:resultHandler:', {'arguments': {4: {'callable': {'retval': {'type': b'v'}, 'arguments': {0: {'type': b'^v'}, 1: {'type': b'@'}, 2: {'type': b'@'}, 3: {'type': b'I'}, 4: {'type': b'@'}}}}}})
     r(b'PHImageManager', b'requestImageForAsset:targetSize:contentMode:options:resultHandler:', {'arguments': {6: {'callable': {'retval': {'type': b'v'}, 'arguments': {0: {'type': b'^v'}, 1: {'type': b'@'}, 2: {'type': b'@'}}}}}})
     r(b'PHImageRequestOptions', b'isNetworkAccessAllowed', {'retval': {'type': 'Z'}})

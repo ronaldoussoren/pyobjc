@@ -52,6 +52,7 @@ Version 4.0
   - CryptoTokenKit
   - EventKit
   - FinderSync
+  - Foundation
   - FSEvents
   - GameController
   - IMServicePlugIn
@@ -68,6 +69,7 @@ Version 4.0
   - MediaPlayer
   - ModelIO
   - MultipeerConnectivity
+  - NetworkExtension
   - OpenDirectory
   - Photos
   - PhotosUI
@@ -78,6 +80,7 @@ Version 4.0
   - QuickLook
   - QuickLook
   - SafariServices
+  - SceneKit
   - ScreenSaver
   - SpriteKit
   - SystemConfiguration

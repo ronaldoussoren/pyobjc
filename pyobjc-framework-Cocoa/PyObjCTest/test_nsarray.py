@@ -503,7 +503,13 @@ class TestNSArray (TestCase):
         self.assertArgIsBlock(NSMutableArray.sortWithOptions_usingComparator_,
                 1, objc._C_NSInteger + b'@@')
 
+    @min_os_level('10.13')
+    def testMethods10_13(self):
+        self.assertResultIsBOOL(NSArray.writeToURL_error_)
+        self.assertArgIsOut(NSArray.writeToURL_error_, 1)
 
+        self.assertArgIsOut(NSArray.initWithContentsOfURL_error_, 1)
+        self.assertArgIsOut(NSArray.arrayWithContentsOfURL_error_, 1)
 
     @min_os_level('10.6')
     def testConstants10_6(self):

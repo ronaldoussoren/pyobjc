@@ -1,6 +1,10 @@
 {
  "definitions": {
   "enum": {
+   "NEVPNIKEv2TLSVersionDefault": { "value": 0 },
+   "NEVPNIKEv2TLSVersion1_0": { "value": 1 },
+   "NEVPNIKEv2TLSVersion1_1": { "value": 2 },
+   "NEVPNIKEv2TLSVersion1_2": { "value": 3 },
    "NEVPNIKEv2DiffieHellmanGroupInvalid": { "value": 0 },
    "NEAppProxyFlowErrorDatagramTooLarge": { "value": 9 },
    "NEAppProxyFlowErrorReadAlreadyPending": { "value": 10 },

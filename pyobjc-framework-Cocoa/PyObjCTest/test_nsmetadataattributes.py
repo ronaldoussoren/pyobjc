@@ -181,5 +181,16 @@ class TestNSMetaDataAttributes (TestCase):
         self.assertIsInstance(NSMetadataUbiquitousItemContainerDisplayNameKey, unicode)
         self.assertIsInstance(NSMetadataUbiquitousItemURLInLocalContainerKey, unicode)
 
+    @min_os_level('10.12')
+    def testConstants10_10(self):
+        self.assertIsInstance(NSMetadataUbiquitousSharedItemCurrentUserRoleKey, unicode)
+        self.assertIsInstance(NSMetadataUbiquitousSharedItemCurrentUserPermissionsKey, unicode)
+        self.assertIsInstance(NSMetadataUbiquitousSharedItemOwnerNameComponentsKey, unicode)
+        self.assertIsInstance(NSMetadataUbiquitousSharedItemMostRecentEditorNameComponentsKey, unicode)
+        self.assertIsInstance(NSMetadataUbiquitousSharedItemRoleOwner, unicode)
+        self.assertIsInstance(NSMetadataUbiquitousSharedItemRoleParticipant, unicode)
+        self.assertIsInstance(NSMetadataUbiquitousSharedItemPermissionsReadOnly, unicode)
+        self.assertIsInstance(NSMetadataUbiquitousSharedItemPermissionsReadWrite, unicode)
+
 if __name__ == "__main__":
     main()

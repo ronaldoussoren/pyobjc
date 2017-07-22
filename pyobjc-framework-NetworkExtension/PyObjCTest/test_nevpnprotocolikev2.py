@@ -45,6 +45,11 @@ if sys.maxsize >= 2 ** 32:
             self.assertEqual(NetworkExtension.NEVPNIKEv2CertificateTypeECDSA384, 3)
             self.assertEqual(NetworkExtension.NEVPNIKEv2CertificateTypeECDSA521, 4)
 
+            self.assertEqual(NetworkExtension.NEVPNIKEv2TLSVersionDefault, 0)
+            self.assertEqual(NetworkExtension.NEVPNIKEv2TLSVersion1_0, 1)
+            self.assertEqual(NetworkExtension.NEVPNIKEv2TLSVersion1_1, 2)
+            self.assertEqual(NetworkExtension.NEVPNIKEv2TLSVersion1_2, 3)
+
 
         @min_os_level('10.11')
         def testMethods(self):

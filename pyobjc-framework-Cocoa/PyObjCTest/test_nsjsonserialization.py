@@ -8,6 +8,7 @@ class TestNSJSONSerialization (TestCase):
         self.assertEqual(NSJSONReadingMutableLeaves, (1 << 1))
         self.assertEqual(NSJSONReadingAllowFragments, (1 << 2))
         self.assertEqual(NSJSONWritingPrettyPrinted, (1 << 0))
+        self.assertEqual(NSJSONWritingSortedKeys, (1 << 1))
 
     @min_os_level('10.7')
     def testMethod10_7(self):
