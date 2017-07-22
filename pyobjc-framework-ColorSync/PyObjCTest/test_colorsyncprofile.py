@@ -7,8 +7,8 @@ if sys.maxsize > 2 ** 32:
     class TestColorSyncProfile (TestCase):
         @min_os_level('10.13')
         def testCFType(self):
-            self.assertCFType(ColorSync.ColorSyncProfileRef)
-            self.assertCFType(ColorSync.ColorSyncMutableProfileRef)
+            self.assertIsCFType(ColorSync.ColorSyncProfileRef)
+            self.assertIsCFType(ColorSync.ColorSyncMutableProfileRef)
 
         @min_os_level('10.13')
         def testFunctions(self):
@@ -54,19 +54,19 @@ if sys.maxsize > 2 ** 32:
             ColorSync.ColorSyncProfileSetTag
             ColorSync.ColorSyncProfileRemoveTag
 
-            self.assertArgIsOut(ColorSyncProfileGetDisplayTransferFormulaFromVCGT, 1)
-            self.assertArgIsOut(ColorSyncProfileGetDisplayTransferFormulaFromVCGT, 2)
-            self.assertArgIsOut(ColorSyncProfileGetDisplayTransferFormulaFromVCGT, 3)
-            self.assertArgIsOut(ColorSyncProfileGetDisplayTransferFormulaFromVCGT, 4)
-            self.assertArgIsOut(ColorSyncProfileGetDisplayTransferFormulaFromVCGT, 5)
-            self.assertArgIsOut(ColorSyncProfileGetDisplayTransferFormulaFromVCGT, 6)
-            self.assertArgIsOut(ColorSyncProfileGetDisplayTransferFormulaFromVCGT, 7)
-            self.assertArgIsOut(ColorSyncProfileGetDisplayTransferFormulaFromVCGT, 8)
-            self.assertArgIsOut(ColorSyncProfileGetDisplayTransferFormulaFromVCGT, 9)
+            self.assertArgIsOut(ColorSync.ColorSyncProfileGetDisplayTransferFormulaFromVCGT, 1)
+            self.assertArgIsOut(ColorSync.ColorSyncProfileGetDisplayTransferFormulaFromVCGT, 2)
+            self.assertArgIsOut(ColorSync.ColorSyncProfileGetDisplayTransferFormulaFromVCGT, 3)
+            self.assertArgIsOut(ColorSync.ColorSyncProfileGetDisplayTransferFormulaFromVCGT, 4)
+            self.assertArgIsOut(ColorSync.ColorSyncProfileGetDisplayTransferFormulaFromVCGT, 5)
+            self.assertArgIsOut(ColorSync.ColorSyncProfileGetDisplayTransferFormulaFromVCGT, 6)
+            self.assertArgIsOut(ColorSync.ColorSyncProfileGetDisplayTransferFormulaFromVCGT, 7)
+            self.assertArgIsOut(ColorSync.ColorSyncProfileGetDisplayTransferFormulaFromVCGT, 8)
+            self.assertArgIsOut(ColorSync.ColorSyncProfileGetDisplayTransferFormulaFromVCGT, 9)
 
-            self.assertArgIsOut(ColorSync.ColorSyncProfileCreateDisplayTransferTablesFromVCGT, 1)
+            self.assertArgIsIn(ColorSync.ColorSyncProfileCreateDisplayTransferTablesFromVCGT, 1)
 
-            self.assertArgIsFunction(ColorSync.ColorSyncIterateInstalledProfiles, 0, objc._C_BOOL + b'@^v')
+            self.assertArgIsFunction(ColorSync.ColorSyncIterateInstalledProfiles, 0, objc._C_BOOL + b'^{__CFDictionary=}^v', False)
             self.assertArgIsInOut(ColorSync.ColorSyncIterateInstalledProfiles, 1)
             self.assertArgIsOut(ColorSync.ColorSyncIterateInstalledProfiles, 3)
 

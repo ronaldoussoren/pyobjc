@@ -56,7 +56,7 @@ def sort_framework_wrappers():
     return frameworks
 
 
-def build_project(interpreter, project):
+def build_project(*, interpreter, py_ver, project):
     lg = logging.getLogger("build_project")
 
     proj_dir = os.path.join(TOP_DIR, project)
@@ -68,7 +68,7 @@ def build_project(interpreter, project):
         shutil.rmtree(os.path.join(proj_dir, 'dist'))
 
     # Actually build
-    lg.info("building %r using %r", project, interpreter)
+    lg.info("building %r using %r (%s)", project, interpreter, py_ver)
     status = subprocess.call(
             [interpreter, "setup.py", "install"],
             cwd=proj_dir)
@@ -85,12 +85,12 @@ def build_project(interpreter, project):
     return True
 
 
-def run_tests(interpreter, arch, project, state_dir):
+def run_tests(*, interpreter, arch, py_ver, project, state_dir):
     lg = logging.getLogger("run_tests")
 
     proj_dir = os.path.join(TOP_DIR, project)
 
-    lg.info("testing %r using %r (%7s)", project, interpreter, arch)
+    lg.info("testing %r using %r (%s, %7s)", project, interpreter, py_ver, arch)
     p = subprocess.Popen(
             ["/usr/bin/arch", "-%s"%(arch,), interpreter, "setup.py", "test", "--verbosity=3"],
             cwd=proj_dir,
@@ -200,7 +200,10 @@ def main():
         with virtualenv("python{}".format(py_ver)) as interpreter:
             # First install packages into the virtualenv
             for project in build_order:
-                build_project(interpreter, project)
+                build_project(
+                        interpreter=interpreter,
+                        py_ver=py_ver,
+                        project=project)
 
             # Then run tests for all supported architectures
             for arch in ('i386', 'x86_64'):
@@ -208,7 +211,12 @@ def main():
                 state_dir = os.path.join(osx_dir, "%s-%s"%(py_ver, arch))
 
                 for project in build_order:
-                    run_tests(interpreter, arch, project, state_dir)
+                    run_tests(
+                        interpreter=interpreter,
+                        arch=arch,
+                        py_ver=py_ver,
+                        project=project,
+                        state_dir=state_dir)
 
     lg.info("done")
     with open(os.path.join(osx_dir, "summary.txt"), "w") as fp:

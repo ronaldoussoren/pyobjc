@@ -172,7 +172,6 @@ class TestIOSurfaceAPI (TestCase):
         IOSurface.IOSurfaceGetRangeOfComponentOfPlane
         IOSurface.IOSurfaceGetBitDepthOfComponentOfPlane
         IOSurface.IOSurfaceGetBitOffsetOfComponentOfPlane
-        IOSurface.IOSurfaceSubsampling
 
         self.assertResultIsBOOL(IOSurface.IOSurfaceAllowsPixelSizeCasting)
 
