@@ -1,0 +1,6 @@
+static void __attribute__((__used__)) use_protocols(void)
+{
+#if defined(__LP64__) && PyObjC_BUILD_RELEASE >= 1013
+    p = PyObjC_IdToPython(@protocol(VNFaceObservationAccepting)); Py_XDECREF(p);
+#endif
+}

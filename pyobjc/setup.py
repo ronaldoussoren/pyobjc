@@ -104,7 +104,7 @@ FRAMEWORKS_WRAPPERS=[
         ('SceneKit',                '10.7',             None        ),
 #        ('SpriteKit',               '10.9',             None        ),
 #        ('VideoToolbox',            '10.8',             None        ),
-#        ('Vision',                  '10.13',            None        ),
+        ('Vision',                  '10.13',            None        ),
 
         # iTunes library is shipped with iTunes, not part of macOS 'core'
         ('iTunesLibrary',           None,               None        ),
