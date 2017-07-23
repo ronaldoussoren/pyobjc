@@ -3,9 +3,9 @@ graft Doc
 graft Examples
 graft Lib
 graft Modules
-graft metadata
 graft source-deps
 graft PyObjCTest
+graft metadata
 global-exclude .DS_Store
 global-exclude *.pyc
 global-exclude *.so

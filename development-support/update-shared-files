@@ -1,0 +1,39 @@
+#!/usr/bin/env python3
+
+import os, shutil
+
+from _common_definitions import TOP_DIR
+
+FILES=[
+    ('pyobjc-core/Modules/objc/pyobjc-api.h', 'Modules/pyobjc-api.h'),
+    ('pyobjc-core/Modules/objc/pyobjc-compat.h', 'Modules/pyobjc-compat.h'),
+    ('pyobjc-core/Tools/pyobjc_setup.py', 'pyobjc_setup.py'),
+    ('pyobjc-core/Tools/MANIFEST.in', 'MANIFEST.in'),
+]
+
+def contents(path):
+    with open(path, 'rb') as fp:
+        return fp.read()
+
+def main():
+    for nm in sorted(os.listdir(TOP_DIR), key=lambda x:x.lower()):
+        if not nm.startswith('pyobjc-framework-'): continue
+
+        for source, destination in FILES:
+            source = os.path.join(TOP_DIR, source)
+            destination = os.path.join(TOP_DIR, nm, destination)
+
+            if not os.path.exists(os.path.dirname(destination)):
+                continue
+
+            if not os.path.exists(destination):
+                print("Add missing: {}".format(destination))
+                shutil.copy(source, destination)
+
+            else:
+                if contents(source) != contents(destination):
+                    print("Update: {}".format(destination))
+                    shutil.copy(source, destination)
+
+if __name__ == "__main__":
+    main()

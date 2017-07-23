@@ -207,7 +207,7 @@ def main():
                 lg.info("running with Python %s (%7s) using %s", py_ver, arch, interpreter)
                 state_dir = os.path.join(osx_dir, "%s-%s"%(py_ver, arch))
 
-                for project in build_order:
+                for project in ['pyobjc'] + build_order:
                     run_tests(interpreter, arch, project, state_dir)
 
     lg.info("done")
