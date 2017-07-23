@@ -102,6 +102,12 @@ class _BridgeSupportParser (object):
     def typestr2typestr(self, typestr):
         typestr = _as_bytes(typestr)
 
+        # As of macOS 10.13 metadata files may contain
+        # typestring that end with property specific data;
+        # first remove that junk.
+        if b',' in typestr:
+            typestr = typestr.split(b',', 1)[0]
+
         result = []
         for item in objc.splitSignature(typestr):
             if item == objc._C_BOOL:

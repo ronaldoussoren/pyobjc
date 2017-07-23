@@ -152,7 +152,7 @@ class TestNSURLSession (TestCase):
 
     @min_os_level('10.13')
     def testMethods10_13(self):
-        self.assertResultIsBOOL(TestNSURLSessionConfigurationHelper.URLSession_task_willBeginDelayedRequest_completionHandler_, 3, b'v' + objc._C_NSInteger + b'@')
+        self.assertArgIsBlock(TestNSURLSessionHelper.URLSession_task_willBeginDelayedRequest_completionHandler_, 3, b'v' + objc._C_NSInteger + b'@')
 
     @min_sdk_level('10.12')
     def testProtocols10_12(self):

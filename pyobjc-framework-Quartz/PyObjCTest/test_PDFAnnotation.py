@@ -37,7 +37,6 @@ class TestPDFAnnotation (TestCase):
         self.assertIsInstance(kPDFAnnotationKey_Subtype, unicode)
         self.assertIsInstance(kPDFAnnotationKey_Action, unicode)
         self.assertIsInstance(kPDFAnnotationKey_AdditionalActions, unicode)
-        self.assertIsInstance(kPDFAnnotationKey_AppleExtras, unicode)
         self.assertIsInstance(kPDFAnnotationKey_BorderStyle, unicode)
         self.assertIsInstance(kPDFAnnotationKey_DefaultAppearance, unicode)
         self.assertIsInstance(kPDFAnnotationKey_Destination, unicode)
@@ -61,6 +60,10 @@ class TestPDFAnnotation (TestCase):
         self.assertIsInstance(kPDFAnnotationKey_WidgetOptions, unicode)
         self.assertIsInstance(kPDFAnnotationKey_WidgetTextLabelUI, unicode)
         self.assertIsInstance(kPDFAnnotationKey_WidgetValue, unicode)
+
+
+        # Not present in most recent SDK:
+        #self.assertIsInstance(kPDFAnnotationKey_AppleExtras, unicode)
 
     @min_os_level('10.13')
     def testConstants10_13(self):

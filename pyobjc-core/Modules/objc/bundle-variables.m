@@ -182,7 +182,13 @@ static char* keywords[] = { "bundle", "module_globals", "variableInfo", "skip_un
             }
 
         } else {
-            PyObject* py_val = pythonify_c_value(signature, value);
+            PyObject* py_val;
+
+            if (*signature == _C_CHARPTR) {
+                py_val = pythonify_c_value(signature, &value);
+            } else {
+                py_val = pythonify_c_value(signature, value);
+            }
             if (py_val == NULL) {
                 Py_DECREF(seq);
                 return NULL;

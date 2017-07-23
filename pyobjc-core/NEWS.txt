@@ -6,6 +6,13 @@ An overview of the relevant changes in new, and older, releases.
 Version 4.0
 -----------
 
+* Legacy BridgeSupport files on macOS 10.13 (which aren't used by default
+  by PyObjC) can contain junk data in typestring data. Cleanup that data
+  before using it.
+
+* Deal with loading bundle variables of a C string type, that used to crash
+  to do an oddity of locating that information.
+
 * Using wrappers for C structs as sequences is deprecated, this
   feature was introduced a long while ago when the framework wrappers
   were very incomplete and is no longer usefull.

@@ -62,7 +62,7 @@ class TestCGImageSource (TestCase):
 
     @min_os_level('10.13')
     def testFunctions10_13(self):
-        self.assertResultIsCFRetaind(Quartz.CGImageSourceCopyAuxiliaryDataInfoAtIndex)
+        self.assertResultIsCFRetained(Quartz.CGImageSourceCopyAuxiliaryDataInfoAtIndex)
 
 if __name__ == "__main__":
     main()

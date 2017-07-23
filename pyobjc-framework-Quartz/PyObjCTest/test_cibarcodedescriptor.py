@@ -17,8 +17,8 @@ class TestCIBarcodeDescriptor (TestCase):
 
     @min_os_level('10.13')
     def testMethods(self):
-        self.assertReturnsBOOL(CIAztecCodeDescriptor.isCompact)
-        self.assertReturnsBOOL(CIPDF417CodeDescriptor.isCompact)
+        self.assertResultIsBOOL(CIAztecCodeDescriptor.isCompact)
+        self.assertResultIsBOOL(CIPDF417CodeDescriptor.isCompact)
 
 if __name__ == "__main__":
     main()

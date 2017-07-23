@@ -3,6 +3,7 @@
 {
  "definitions": {
   "externs": {
+   "kCGImagePropertyAuxiliaryDataType": { "typestr": "@" },
    "kCGImagePropertyFileContentsDictionary": { "typestr": "@" },
    "kCGImageAuxiliaryDataInfoData": { "typestr": "@" },
    "kCGImageAuxiliaryDataInfoDataDescription": { "typestr": "@" },

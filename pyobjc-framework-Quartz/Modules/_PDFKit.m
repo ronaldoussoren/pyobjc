@@ -12,7 +12,7 @@ static PyMethodDef mod_methods[] = {
     { 0, 0, 0, }
 };
 
-PyObjC_MODULE_INIT(_imagekit)
+PyObjC_MODULE_INIT(_PDFKit)
 {
     PyObject* m = PyObjC_MODULE_CREATE(_PDFKit);
     if (!m) PyObjC_INITERROR();

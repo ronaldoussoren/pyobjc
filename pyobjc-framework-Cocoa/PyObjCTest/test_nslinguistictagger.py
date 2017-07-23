@@ -89,8 +89,10 @@ class TestNSLinguisticTagger (TestCase):
         self.assertArgHasType(NSLinguisticTagger.enumerateTagsInRange_unit_scheme_options_usingBlock_, 0, NSRange.__typestr__)
         self.assertArgIsBlock(NSLinguisticTagger.enumerateTagsInRange_unit_scheme_options_usingBlock_, 4, b'v@' + NSRange.__typestr__ + b'o^Z')
         self.assertArgHasType(NSLinguisticTagger.tagAtIndex_unit_scheme_tokenRange_, 3, b'o^' + NSRange.__typestr__)
-        self.assertArgHasType(NSLinguisticTagger.tagsInRange_unit_scheme_tokenRanges_, 0, NSRange.__typestr__)
-        self.assertArgIsOut(NSLinguisticTagger.tagsInRange_unit_scheme_tokenRanges_, 3)
+
+
+        self.assertArgHasType(NSLinguisticTagger.tagsInRange_unit_scheme_options_tokenRanges_, 0, NSRange.__typestr__)
+        self.assertArgIsOut(NSLinguisticTagger.tagsInRange_unit_scheme_options_tokenRanges_, 4)
         self.assertArgIsOut(NSLinguisticTagger.tagForString_atIndex_unit_scheme_orthography_tokenRange_, 5)
         self.assertArgHasType(NSLinguisticTagger.tagsForString_range_unit_scheme_options_orthography_tokenRanges_, 1, NSRange.__typestr__)
         self.assertArgIsOut(NSLinguisticTagger.tagsForString_range_unit_scheme_options_orthography_tokenRanges_, 6)

@@ -17,10 +17,10 @@ if sys.maxsize > 2**32:
             self.assertArgIsBOOL(CoreSpotlight.CSCustomAttributeKey.setUnique_, 0)
             self.assertArgIsBOOL(CoreSpotlight.CSCustomAttributeKey.setMultiValued_, 0)
 
-            self.assertResultsBOOL(CoreSpotlight.CSCustomAttributeKey.isSearchable)
-            self.assertResultsBOOL(CoreSpotlight.CSCustomAttributeKey.isSearchableByDefault)
-            self.assertResultsBOOL(CoreSpotlight.CSCustomAttributeKey.isUnique)
-            self.assertResultsBOOL(CoreSpotlight.CSCustomAttributeKey.isMultiValued)
+            self.assertResultIsBOOL(CoreSpotlight.CSCustomAttributeKey.isSearchable)
+            self.assertResultIsBOOL(CoreSpotlight.CSCustomAttributeKey.isSearchableByDefault)
+            self.assertResultIsBOOL(CoreSpotlight.CSCustomAttributeKey.isUnique)
+            self.assertResultIsBOOL(CoreSpotlight.CSCustomAttributeKey.isMultiValued)
 
 if __name__ == "__main__":
     main()

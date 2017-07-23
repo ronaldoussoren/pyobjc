@@ -29,7 +29,7 @@ if sys.maxsize > 2**32:
             self.assertArgIsBlock(CoreSpotlight.CSSearchableIndex.deleteAllSearchableItemsWithCompletionHandler_, 0, b'v@')
 
             self.assertArgIsBlock(CoreSpotlight.CSSearchableIndex.endIndexBatchWithClientState_completionHandler_, 1, b'v@')
-            self.assertArgIsBlock(CoreSpotlight.CSSearchableIndex.fetchLastClientStateWithCompletionHandler, 0, b'v@@')
+            self.assertArgIsBlock(CoreSpotlight.CSSearchableIndex.fetchLastClientStateWithCompletionHandler_, 0, b'v@@')
 
             self.assertArgIsBlock(TestCSSearchableIndexHelper.searchableIndex_reindexAllSearchableItemsWithAcknowledgementHandler_, 1, b'v')
             self.assertArgIsBlock(TestCSSearchableIndexHelper.searchableIndex_reindexSearchableItemsWithIdentifiers_acknowledgementHandler_, 2, b'v')

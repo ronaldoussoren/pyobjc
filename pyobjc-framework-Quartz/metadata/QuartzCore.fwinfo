@@ -384,7 +384,7 @@
        "0": { "type_override": "Z" }
       },
       "class_method": false,
-      "selector": "setDisplaySyncEnabled::"
+      "selector": "setDisplaySyncEnabled:"
      },
      {
       "retval": { "type_override": "Z" },
@@ -539,6 +539,30 @@
    "CIContext": {
     "methods": [
      {
+      "selector": "writePNGRepresentationOfImage:toURL:format:colorSpace:options:error:",
+      "class_method": false,
+      "args": {
+       "5": { "type_modifier": "o" }
+      },
+      "retval": { "type_override": "Z" }
+     },
+     {
+      "selector": "writeHEIFRepresentationOfImage:toURL:format:colorSpace:options:error:",
+      "class_method": false,
+      "args": {
+       "5": { "type_modifier": "o" }
+      },
+      "retval": { "type_override": "Z" }
+     },
+     {
+      "selector": "writeJPEGRepresentationOfImage:toURL:colorSpace:options:error:",
+      "class_method": false,
+      "args": {
+       "4": { "type_modifier": "o" }
+      },
+      "retval": { "type_override": "Z" }
+     },
+     {
       "selector": "startTaskToRender:fromRect:toDestination:atPoint:error:",
       "class_method": false,
       "args": {
@@ -669,10 +693,10 @@
    "CIImage": {
     "methods": [
      {
-      "selector": "writeJPEGRepresentationOfImage:toURL:format:colorSpace:options:error:",
+      "selector": "writeJPEGRepresentationOfImage:toURL:colorSpace:options:error:",
       "class_method": false,
       "args": {
-       "5": { "type_modifier": "o" }
+       "4": { "type_modifier": "o" }
       },
       "retval": { "type_override": "Z" }
      },
