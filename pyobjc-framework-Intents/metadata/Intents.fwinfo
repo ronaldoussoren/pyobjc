@@ -1,6 +1,13 @@
 {
  "definitions": {
   "enum": {
+   "INSendMessageRecipientUnsupportedReasonNoAccount": { "value": 1 },
+   "INSendMessageRecipientUnsupportedReasonOffline": { "value": 2 },
+   "INSendMessageRecipientUnsupportedReasonMessagingServiceNotEnabledForRecipient": { "value": 3 },
+   "INCallDestinationTypeNormal": { "value": 1 },
+   "INCallDestinationTypeEmergency": { "value": 2 },
+   "INCallDestinationTypeVoicemail": { "value": 3 },
+   "INCallDestinationTypeRedial": { "value": 4 },
    "INSearchForMessagesIntentResponseCodeFailureMessageTooManyResults": { "value": 7 },
    "INRecurrenceFrequencyUnknown": { "value": 0 },
    "INRecurrenceFrequencyMinute": { "value": 1 },
@@ -33,11 +40,9 @@
    "INCallRecordTypeOptionMissed": { "value": 2 },
    "INCallRecordTypeOptionReceived": { "value": 4 },
    "INCallRecordTypeOptionLatest": { "value": 8 },
-   "INCallRecordTypeOptionUnseen": { "value": 16 },
-   "INCallRecordTypeOptionVoicemail": { "value": 32 },
+   "INCallRecordTypeOptionVoicemail": { "value": 16 },
    "INCallRecordTypeLatest": { "value": 4 },
-   "INCallRecordTypeUnseen": { "value": 5 },
-   "INCallRecordTypeVoicemail": { "value": 6 },
+   "INCallRecordTypeVoicemail": { "value": 5 },
    "INCallDestinationTypeUnknown": { "value": 0 },
    "INCallDestinationTypeNormalDestination": { "value": 1 },
    "INCallDestinationTypeEmergencyDestination": { "value": 2 },
@@ -68,7 +73,7 @@
    "INStartAudioCallIntentResponseCodeFailureAppConfigurationRequired": { "value": 5 },
    "INStartAudioCallIntentResponseCodeFailureCallingServiceNotAvailable": { "value": 6 },
    "INStartAudioCallIntentResponseCodeFailureContactNotSupportedByApp": { "value": 7 },
-   "INStartAudioCallIntentResponseCodeFailureInvalidNumber": { "value": 8 },
+   "INStartAudioCallIntentResponseCodeFailureNoValidNumber": { "value": 8 },
    "INSendMessageIntentResponseCodeUnspecified": { "value": 0 },
    "INSendMessageIntentResponseCodeReady": { "value": 1 },
    "INSendMessageIntentResponseCodeInProgress": { "value": 2 },
@@ -571,6 +576,22 @@
      {
       "class_method": false,
       "selector": "confirmSendMessage:completion:",
+      "args": {
+       "1": {
+        "type_override": "@?",
+        "callable": {
+	 "arguments": {
+	  "0": { "typestr": "^v" },
+	  "1": { "typestr": "@" }
+	 },
+	 "retval": { "typestr": "v" }
+	}
+       }
+      }
+     },
+     {
+      "class_method": false,
+      "selector": "resolveRecipientsForSendMessage:completion:",
       "args": {
        "1": {
         "type_override": "@?",

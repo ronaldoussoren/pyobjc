@@ -62,6 +62,7 @@ class TestCIImage (TestCase):
         self.assertIsInstance(kCIImageNearestSampling, unicode)
         self.assertIsInstance(kCIImageAuxiliaryDepth, unicode)
         self.assertIsInstance(kCIImageAuxiliaryDisparity, unicode)
+        self.assertIsInstance(kCIImageApplyOrientationProperty, unicode)
 
     def testMethods(self):
         self.assertArgIsBOOL(CIImage.imageWithTexture_size_flipped_colorSpace_, 2)

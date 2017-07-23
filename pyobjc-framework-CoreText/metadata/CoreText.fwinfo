@@ -26,6 +26,7 @@
    "kCTVersionNumber10_13": { "value": 655360 }
   },
   "externs": {
+   "kCTFontVariationAxisHiddenKey": { "typestr": "@" },
    "kCTBaselineOffsetAttributeName": { "typestr": "@" },
    "kCTRubyAnnotationSizeFactorAttributeName": { "typestr": "@" },
    "kCTRubyAnnotationScaleToFitAttributeName": { "typestr": "@" },

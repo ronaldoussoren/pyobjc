@@ -2,7 +2,30 @@
 // for information on how to update this file.
 {
  "definitions": {
+  "enum": {
+   "AVRoutePickerViewButtonStateNormal": { "value": 0 },
+   "AVRoutePickerViewButtonStateNormalHighlighted": { "value": 1 },
+   "AVRoutePickerViewButtonStateActive": { "value": 2 },
+   "AVRoutePickerViewButtonStateActiveHighlighted": { "value": 3 }
+
+  },
   "classes": {
+    "AVKRoutePickerView": {
+     "methods": [
+         {
+	  "class_method": false,
+	  "selector": "isRoutePickerButtonBordered",
+	  "retval": { "type_override": "Z" }
+	 },
+         {
+	  "class_method": false,
+	  "selector": "setRoutePickerButtonBordered:",
+	  "args": {
+	   "0": { "type_override": "Z" }
+	  }
+	 }
+     ]
+    },
     "AVPlayerView": {
        "methods": [
          {

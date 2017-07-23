@@ -202,6 +202,21 @@
       }
      },
      {
+      "selector": "getHostApplicationWithCompletionHandler:",
+      "class_method": true,
+      "args": {
+       "0": {
+        "callable": {
+         "arguments": {
+ 	 "0": { "typestr": "^v" },
+ 	 "1": { "typestr": "@" }
+ 	},
+ 	"retval": { "typestr": "v" }
+        }
+       }
+      }
+     },
+     {
       "selector": "showPreferencesForExtensionWithIdentifier:completionHandler:",
       "class_method": true,
       "args": {

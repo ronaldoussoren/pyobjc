@@ -104,7 +104,7 @@ FRAMEWORKS_WRAPPERS=[
         ('SceneKit',                '10.7',             None        ),
 #        ('SpriteKit',               '10.9',             None        ),
 #        ('VideoToolbox',            '10.8',             None        ),
-#        ('Vision',                  '10.13',            None        ),
+        ('Vision',                  '10.13',            None        ),
 
         # iTunes library is shipped with iTunes, not part of macOS 'core'
         ('iTunesLibrary',           None,               None        ),
@@ -215,13 +215,14 @@ class oc_test (Command):
         print("  validating framework list...")
         all_names = set(nm.split('-')[-1] for nm in os.listdir('..') if nm.startswith('pyobjc-framework-'))
         configured_names = set(x[0] for x in FRAMEWORKS_WRAPPERS)
-        ok = True
+        failures = 0
+
         if all_names - configured_names:
             print("Framework wrappers not mentioned in setup.py: %s"%(", ".join(all_names - configured_names)))
-            ok = False
+            failures += 1
         if configured_names - all_names:
             print("Framework mentioned in setup.py not in filesystem: %s"%(", ".join(configured_names - all_names)))
-            ok = False
+            failures += 1
 
         print("  validating framework Modules/ directories...")
         header_files = ("pyobjc-api.h", "pyobjc-compat.h")
@@ -238,7 +239,7 @@ class oc_test (Command):
                 if not os.path.exists(os.path.join(subdir, fn)):
                     print("Framework wrapper for %s does not contain %s"%(
                         nm, fn))
-                    ok = False
+                    failures += 1
 
                 else:
                     with open(os.path.join(subdir, fn), 'rb') as fp:
@@ -247,7 +248,7 @@ class oc_test (Command):
                     if data != templates[fn]:
                         print("Framework wrapper for %s contains stale %s"%(
                             nm, fn))
-                        ok = False
+                        failures += 1
 
 
         print("  validating framework setup files...")
@@ -259,17 +260,17 @@ class oc_test (Command):
             if not os.path.exists(os.path.join(subdir, "MANIFEST.in")):
                 print("Framework wrapper for %s does not contain MANIFEST.in"%(
                     nm))
-                ok = False
+                failures += 1
 
             if not os.path.exists(os.path.join(subdir, "setup.py")):
                 print("Framework wrapper for %s does not contain setup.py"%(
                     nm))
-                ok = False
+                failures += 1
 
             if not os.path.exists(os.path.join(subdir, "pyobjc_setup.py")):
                 print("Framework wrapper for %s does not contain pyobjc_setup.py"%(
                     nm))
-                ok = False
+                failures += 1
 
             else:
                 with open(os.path.join(subdir, "pyobjc_setup.py"), 'rb') as fp:
@@ -277,18 +278,18 @@ class oc_test (Command):
                 if data != pyobjc_setup:
                     print("Framework wrapper for %s contains stale pyobjc_setup.py"%(
                         nm))
-                    ok = False
+                    failures += 1
 
             if not os.path.exists(os.path.join(subdir, "setup.py")):
                 print("Framework wrapper for %s does not contain setup.py"%(nm))
-                ok = False
+                failures += 1
             else:
                 with open(os.path.join(subdir, "setup.py")) as fp:
                     contents = fp.read()
 
                 if "setup_requires" in contents:
                     print("Framework wrapper for %s has setup_requires"%(nm))
-                    ok = False
+                    failures += 1
 
                 a = compile(contents, subdir, 'exec', ast.PyCF_ONLY_AST)
                 try:
@@ -296,10 +297,11 @@ class oc_test (Command):
 
                     if a.body[-1].value.func.id != 'setup':
                         print("Unexpected setup.py structure in wrapper for %s"%(nm))
-                        ok = False
+                        failures += 1
 
                     elif a.body[-1].value.args:
                         print("Unexpected setup.py structure in wrapper for %s"%(nm))
+                        failures += 1
 
                     for n in a.body:
                         if isinstance(n, ast.Assign):
@@ -308,26 +310,26 @@ class oc_test (Command):
 
                 except AttributeError:
                     print("Unexpected setup.py structure in wrapper for %s"%(nm))
-                    ok = False
+                    failures += 1
 
                 if not same_order(args, _SETUP_KEYS):
                     print("Unexpected order of setup.py keyword args in wrapper for %s"%(nm,))
-                    ok = False
+                    failures += 1
 
                 for k in set(_SETUP_KEYS) - set(_SETUP_OPTIONAL):
                     if k not in args:
                         print("Missing %r in setup.py keyword args in wrapper for %s"%(k, nm,))
-                        ok = False
+                        failures += 1
 
                 if 'ext_modules' not in args:
                     if os.path.exists(os.path.join(subdir, 'Modules')):
                         print("No ext_modules in setup.py, but Modules subdir, in wrapper for %s"%(nm,))
-                        ok = False
+                        failures += 1
 
 
                 if found_version != VERSION:
                     print("Bad version in wrapper for %s"%(nm,))
-                    ok = False
+                    failures += 1
 
         devnull = open('/dev/null', 'a')
         for nm in ('pyobjc-core',) + tuple(nm for nm in os.listdir('..') if nm.startswith('pyobjc-framework-')):
@@ -345,11 +347,11 @@ class oc_test (Command):
 
                 if not files:
                     print("No sdist in %s"%(nm,))
-                    ok = False
+                    failures += 1
 
                 elif len(files) > 1:
                     print("Too many sdist in %s"%(nm,))
-                    ok = False
+                    failures += 1
 
                 else:
                     t = tarfile.open(files[0], 'r:gz')
@@ -365,10 +367,11 @@ class oc_test (Command):
                             if p in fn:
                                 print("Unwanted pattern %r in sdist for %s: %s"%(
                                     p, nm, fn))
-                                ok = False
+                                failures += 1
 
-        if not ok:
-           raise DistutilsError("setup.py is not consistent with reality")
+        print("SUMMARY: {'testSeconds': 0.0, 'count': 0, 'fails': %d, 'errors': 0, 'xfails': 0, 'skip': 0, 'xpass': 0, }"%(failures,))
+        if failures:
+            sys.exit(1)
 
 dist = setup(
     name = "pyobjc",

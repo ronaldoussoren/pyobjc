@@ -12,6 +12,8 @@ class TestNSLevelIndicator (TestCase):
         self.assertResultIsBOOL(NSLevelIndicator.drawsTieredCapacityLevels)
         self.assertArgIsBOOL(NSLevelIndicator.setDrawsTieredCapacityLevels_, 0)
 
+        self.assertResultIsBOOL(NSLevelIndicator.isEditable)
+        self.assertArgIsBOOL(NSLevelIndicator.setEditable_, 0)
 
 if __name__ == "__main__":
     main()

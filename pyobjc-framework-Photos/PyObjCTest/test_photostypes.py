@@ -56,7 +56,6 @@ if sys.maxsize > 2 ** 32:
             self.assertEqual(Photos.PHAssetCollectionSubtypeAlbumSyncedFaces, 4)
             self.assertEqual(Photos.PHAssetCollectionSubtypeAlbumSyncedAlbum, 5)
             self.assertEqual(Photos.PHAssetCollectionSubtypeAlbumImported, 6)
-            self.assertEqual(Photos.PHAssetCollectionSubtypeAlbumImportHistory, 6)
             self.assertEqual(Photos.PHAssetCollectionSubtypeAlbumMyPhotoStream, 100)
             self.assertEqual(Photos.PHAssetCollectionSubtypeAlbumCloudShared, 101)
             self.assertEqual(Photos.PHAssetCollectionSubtypeSmartAlbumGeneric, 200)

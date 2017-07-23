@@ -124,6 +124,7 @@ if sys.maxsize > 2 ** 32:
 
         @min_os_level("10.10")
         def testConstants10_10(self):
+            self.assertIsInstance(MediaLibrary.MLiTunesMusicVideosPlaylistTypeIdentifier, unicode)
             self.assertIsInstance(MediaLibrary.MLiTunesVideoPlaylistTypeIdentifier, unicode)
             self.assertIsInstance(MediaLibrary.MLPhotosRootGroupTypeIdentifier, unicode)
             self.assertIsInstance(MediaLibrary.MLPhotosSharedGroupTypeIdentifier, unicode)

@@ -33,65 +33,70 @@ Version 4.0
 * New framework wrappers:
 
   - ColorSync (new in macOS 10.13)
-  - CoreML (new in macOS 10.13)
+  - CoreML (new in macOS 10.13)			(beta 3)
   - ExternalAccessory (new in macOS 10.13)
   - CoreSpotlight (new in macOS 10.13)
+  - Vision (new in macOS 10.13)			(beta 3)
 
 * metadata updates (beta 1):
 
   - PhotosUI
   - Accounts
   - AddressBook
+  - AppKit			(beta 3)
   - ApplicationServices
-  - Automator
-  - AVKit
+  - Automator			(beta 3)
+  - AVKit			(beta 3)
   - CFNetwork
-  - CloudKit
-  - Contacts
-  - CoreBluetooth
-  - CoreData
-  - CoreFoundation
-  - CoreImage
-  - CoreLocation
-  - CoreServices
-  - CoreText
-  - CoreWLAN
+  - CloudKit			(beta 3)
+  - Contacts			(beta 3)
+  - CoreBluetooth		(beta 3)
+  - CoreData			(beta 3)
+  - CoreFoundation		(beta 3)
+  - CoreGraphics		(beta 3)
+  - CoreImage			(beta 3)
+  - CoreLocation		(beta 3)
+  - CoreServices		(beta 3)
+  - CoreText			(beta 3)
+  - CoreVideo			(beta 3)
+  - CoreWLAN			(beta 3)
   - CryptoTokenKit
   - EventKit
-  - FinderSync
-  - Foundation
+  - FinderSync			(beta 3)
+  - Foundation			(beta 3)
   - FSEvents
-  - GameController
+  - GameController		(beta 3)
   - IMServicePlugIn
   - IMServicePlugIn
   - ImageCaptureCore
   - ImageCaptureCore
-  - ImageIO
-  - Intents
+  - ImageIO			(beta 3)
+  - Intents			(beta 3)
   - IOSurface
   - JavaScriptCore
-  - LocalAuthentication
+  - LocalAuthentication		(beta 3)
   - MapKit
-  - MediaLibrary
-  - MediaPlayer
-  - ModelIO
+  - MediaLibrary		(beta 3)
+  - MediaPlayer			(beta 3)
+  - ModelIO			(beta 3)
   - MultipeerConnectivity
-  - NetworkExtension
+  - NetFS			(beta 3)
+  - NetworkExtension		(beta 3)
   - OpenDirectory
-  - Photos
+  - Photos			(beta 3)
   - PhotosUI
   - QTKit
   - QTKit
-  - Quartz (updates to PDFKit and QuickLookUI)
+  - Quartz 			(beta 3)
   - QuartzCore
   - QuickLook
   - QuickLook
-  - SafariServices
-  - SceneKit
+  - SafariServices		(beta 3)
+  - SceneKit			(beta 3)
   - ScreenSaver
-  - SpriteKit
-  - SystemConfiguration
-  - WebKit
+  - SpriteKit			(beta 3)
+  - SystemConfiguration		(beta 3)
+  - WebKit			(beta 3)
 
 Version 3.3
 -----------

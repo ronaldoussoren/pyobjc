@@ -142,6 +142,18 @@
    "PDFView": {
     "methods": [
      {
+      "selector": "acceptsDraggedFiles",
+      "class_method": false,
+      "retval": { "type_override": "Z" }
+     },
+     {
+      "selector": "setAcceptsDraggedFiles:",
+      "class_method": false,
+      "args": {
+       "0": { "type_override": "Z" }
+      }
+     },
+     {
       "selector": "displaysRTL",
       "class_method": false,
       "retval": { "type_override": "Z" }

@@ -98,6 +98,8 @@ class TestNSPasteboard (TestCase):
         self.assertIsInstance(NSPasteboardNameRuler, unicode)
         self.assertIsInstance(NSPasteboardNameFind, unicode)
         self.assertIsInstance(NSPasteboardNameDrag, unicode)
+        self.assertIsInstance(NSPasteboardTypeURL, unicode)
+        self.assertIsInstance(NSPasteboardTypeFileURL, unicode)
 
 
     @min_os_level('10.6')
