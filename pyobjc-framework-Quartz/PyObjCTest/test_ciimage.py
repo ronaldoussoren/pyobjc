@@ -75,16 +75,16 @@ class TestCIImage (TestCase):
 
     @min_os_level('10.12')
     def testMethods10_12(self):
-        self.assertArgIsOut(CIImage.writeJPEGRepresentationOfImage_toURL_format_colorSpace_options_error_, 5)
-        self.assertResultIsBOOL(CIImage.writeJPEGRepresentationOfImage_toURL_format_colorSpace_options_error_)
+        self.assertArgIsOut(CIContext.writeJPEGRepresentationOfImage_toURL_colorSpace_options_error_, 4)
+        self.assertResultIsBOOL(CIContext.writeJPEGRepresentationOfImage_toURL_colorSpace_options_error_)
 
     @min_os_level('10.13')
     def testMethods10_13(self):
-        self.assertArgIsOut(CIImage.writePNGRepresentationOfImage_toURL_format_colorSpace_options_error_, 5)
-        self.assertResultIsBOOL(CIImage.writePNGRepresentationOfImage_toURL_format_colorSpace_options_error_)
+        self.assertArgIsOut(CIContext.writePNGRepresentationOfImage_toURL_format_colorSpace_options_error_, 5)
+        self.assertResultIsBOOL(CIContext.writePNGRepresentationOfImage_toURL_format_colorSpace_options_error_)
 
-        self.assertArgIsOut(CIImage.writeHEIFRepresentationOfImage_toURL_format_colorSpace_options_error_, 5)
-        self.assertResultIsBOOL(CIImage.writeHEIFRepresentationOfImage_toURL_format_colorSpace_options_error_)
+        self.assertArgIsOut(CIContext.writeHEIFRepresentationOfImage_toURL_format_colorSpace_options_error_, 5)
+        self.assertResultIsBOOL(CIContext.writeHEIFRepresentationOfImage_toURL_format_colorSpace_options_error_)
 
 if __name__ == "__main__":
     main()

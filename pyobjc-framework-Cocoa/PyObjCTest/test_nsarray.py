@@ -280,14 +280,14 @@ class TestNSMutableArrayInteraction(TestCase):
         a = NSMutableArray.arrayWithArray_(range(4))
         self.assertEqual(a, (0, 1, 2, 3))
 
-        t = objc.getVerbose()
-        objc.setVerbose(0)
+        t = objc.options.verbose
+        objc.options.verbose = True
         try:
             self.assertRaises(TypeError, a.sortUsingFunction_context_, dir)
             self.assertRaises(TypeError, a.sortUsingFunction_context_, dir, 1, 2)
             self.assertRaises(TypeError, a.sortUsingFunction_context_, lambda *args: cmp(*args), b'a'.decode('ascii'))
         finally:
-            objc.setVerbose(t)
+            objc.options.verbose = t
 
     def dont_testSort2(self):
         # sortUsingFunction:context:range: isn't documented an hence shouldn't be tested

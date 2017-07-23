@@ -1007,6 +1007,28 @@
    "NSArray": {
     "methods": [
      {
+      "selector": "arrayWithContentsOfURL:error:",
+      "class_method": true,
+      "args": {
+       "1": { "type_modifier": "o" }
+      }
+     },
+     {
+      "selector": "initWithContentsOfURL:error:",
+      "class_method": false,
+      "args": {
+       "1": { "type_modifier": "o" }
+      }
+     },
+     {
+      "selector": "writeToURL:error:",
+      "class_method": false,
+      "args": {
+       "1": { "type_modifier": "o" }
+      },
+      "retval": { "type_override": "Z" }
+     },
+     {
       "args": {
        "0": {
         "c_array_length_in_arg": 1,
@@ -5896,7 +5918,7 @@
      },
      {
       "args": {
-       "3": { "type_modifier": "o" }
+       "4": { "type_modifier": "o" }
       },
       "class_method": false,
       "selector": "tagsInRange:unit:scheme:options:tokenRanges:"
@@ -7210,11 +7232,12 @@
       "class_method": false,
       "args": {
        "3": {
+        "type_override": "@?",
         "callable": {
 	 "arguments": {
 	  "0": { "typestr": "^v" },
-	  "2": { "typestr": ["i", "q"] },
-	  "1": { "typestr": "@" }
+	  "1": { "typestr": ["i", "q"] },
+	  "2": { "typestr": "@" }
 	 },
 	 "retval": { "typestr": "v" }
 	}
@@ -13430,13 +13453,6 @@
    },
    "NSURL": {
     "methods": [
-     {
-      "selector": "arrayWithContentsOfURL:error:",
-      "class_method": true,
-      "args": {
-       "1": { "type_modifier": "o" }
-      }
-     },
      {
       "selector": "initWithContentsOfURL:error:",
       "class_method": false,

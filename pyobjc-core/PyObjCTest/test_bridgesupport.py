@@ -449,20 +449,45 @@ class TestBridgeSupportParser (TestCase):
             yield item
 
     def test_system_bridgesupport(self):
+        # NOTE: As of beta 1 of macOS 10.13 a number of system bridge support files are broken
+        BROKEN_FRAMEWORKS=('Vision.framework', 'TWAIN.framework', 'Tk.framework', 'Tcl.framework', 'System.framework', 'SpriteKit.framework',
+                'Security.framework', 'SceneKit.framework', 'Python.framework', 'ModelIO.framework', 'MetalPerformanceShaders.framework',
+                'Kerberos.framework', 'IOKit.framework', 'IOBluetooth.framework', 'GameplayKit.framework', 'CoreVideo.framework', 'CoreText.framework',
+                'CoreServices.framework', 'CoreServices.framework', 'CoreMIDI.framework', 'CoreAudio.framework', 'Carbon.framework',
+                'AVFoundation.framework', 'AudioToolbox.framework', 'ApplicationServices.framework', )
+
         with filterWarnings("ignore", RuntimeWarning):
             # Check that all system bridgesupport files can be processed correctly
             for fn in self.iter_system_bridgesupport_files():
                 if hasattr(self, 'subTest'):
-                    with self.subTest(fn):
+                    with self.subTest(fn) as subtest:
                         with open(fn, 'rb') as fp:
                             xmldata = fp.read()
 
-                        self.assert_valid_bridgesupport(os.path.basename(fn).split('.')[0], xmldata)
+                        try:
+                            self.assert_valid_bridgesupport(os.path.basename(fn).split('.')[0], xmldata)
+
+                        except:
+                            if any(x in fn for x in BROKEN_FRAMEWORKS):
+                                # It is not possible to mark a subtest as an expected failure
+                                self.skipTest('broken framework')
+
+                            else:
+                                raise
                 else:
                     with open(fn, 'rb') as fp:
                         xmldata = fp.read()
 
-                    self.assert_valid_bridgesupport(os.path.basename(fn).split('.')[0], xmldata)
+                    try:
+                        self.assert_valid_bridgesupport(os.path.basename(fn).split('.')[0], xmldata)
+
+                    except:
+                            if any(x in fn for x in BROKEN_FRAMEWORKS):
+                                # It is not possible to mark a subtest as an expected failure
+                                pass
+
+                            else:
+                                raise
 
     def test_xml_structure_variants(self):
         # Run 'verify_xml_structure' for all cpu variant

@@ -111,6 +111,10 @@
    "kPDFAnnotationKey_AdditionalActions": { "typestr": "@" },
    "kPDFAnnotationKey_AppleExtras": { "typestr": "@" },
    "kPDFAnnotationKey_BorderStyle": { "typestr": "@" },
+   "kPDFAnnotationKey_BorderStyle": { "typestr": "@" },
+   "PDFBorderKeyLineWidth": { "typestr": "@" },
+   "PDFBorderKeyStyle": { "typestr": "@" },
+   "PDFBorderKeyDashPattern": { "typestr": "@" },
    "kPDFAnnotationKey_DefaultAppearance": { "typestr": "@" },
    "kPDFAnnotationKey_Destination": { "typestr": "@" },
    "kPDFAnnotationKey_HighlightingMode": { "typestr": "@" },
@@ -201,6 +205,11 @@
    },
    "PDFAnnotation": {
     "methods": [
+     {
+      "selector": "isSignature",
+      "class_method": false,
+      "retval": { "type_override": "Z" }
+     },
      {
       "selector": "isOpen",
       "class_method": "false",

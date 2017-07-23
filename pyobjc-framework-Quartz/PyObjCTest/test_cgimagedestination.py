@@ -31,7 +31,7 @@ class TestCGImageDestination (TestCase):
         if v:
             self.assertIsInstance(v[0], unicode)
 
-        data = NSMutableData.data()
+        data = NSMutableData.dataWithCapacity_(1024*1024*50)
         self.assertResultIsCFRetained(CGImageDestinationCreateWithData)
         dest = CGImageDestinationCreateWithData(data, v[0], 1, None)
         self.assertIsInstance(dest, CGImageDestinationRef)
@@ -51,11 +51,14 @@ class TestCGImageDestination (TestCase):
 
         CGImageDestinationAddImage(dest, img, None)
 
-        image_path = "/System/Library//ColorSync/Calibrators/Display Calibrator.app/Contents/Resources/bullet.tif"
+        image_path = "/System/Library/ColorSync/Calibrators/Display Calibrator.app/Contents/Resources/bullet.tif"
         if not os.path.exists(image_path):
-            image_path = "/System/Library//ColorSync/Calibrators/Display Calibrator.app/Contents/Resources/brightness.png"
+            image_path = "/System/Library/ColorSync/Calibrators/Display Calibrator.app/Contents/Resources/brightness.png"
         if not os.path.exists(image_path):
-            image_path = "/System/Library//ColorSync/Calibrators/Display Calibrator.app/Contents/Resources/brightness.tiff"
+            image_path = "/System/Library/ColorSync/Calibrators/Display Calibrator.app/Contents/Resources/brightness.tiff"
+
+        if not os.path.exists(image_path):
+            1/0
         url = CFURLCreateWithFileSystemPath(None,
             image_path,
             kCFURLPOSIXPathStyle, False)
@@ -64,6 +67,7 @@ class TestCGImageDestination (TestCase):
         CGImageDestinationAddImageFromSource(dest,  isrc, 0, None)
 
         self.assertResultHasType(CGImageDestinationFinalize, objc._C_BOOL)
+        1/0 # XXX: Crash on 10.13 beta 1
         v = CGImageDestinationFinalize(dest)
         self.assertIsInstance(v, bool)
         self.assertIs(v, True)

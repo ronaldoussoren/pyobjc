@@ -65,7 +65,7 @@
       "selector": "dataForSearchableIndex:itemIdentifier:typeIdentifier:error:",
       "class_method": false,
       "args": {
-       "3": { "type_modifier": "o" }
+       "3": { "type_modifier": "o", "type_override": "^@" }
       }
      },
      {
@@ -73,7 +73,7 @@
       "class_method": false,
       "args": {
        "3": { "type_override": "Z" },
-       "4": { "type_modifier": "o" }
+       "4": { "type_modifier": "o", "type_override": "^@" }
       }
      }
 
@@ -279,6 +279,19 @@
      {
       "selector": "completionHandler",
       "class_method": false,
+      "retval": {
+       "callable": {
+        "arguments": {
+	 "0": { "typestr": "^v" },
+	 "1": { "typestr": "@" }
+	},
+	"retval": { "typestr": "v"  }
+       }
+      }
+     },
+     {
+      "selector": "setCompletionHandler:",
+      "class_method": false,
       "args": {
        "0": {
         "callable": {
@@ -288,19 +301,6 @@
 	 },
 	 "retval": { "typestr": "v"  }
 	}
-       }
-      }
-     },
-     {
-      "selector": "setCompletionHandler:",
-      "class_method": false,
-      "retval": {
-       "callable": {
-        "arguments": {
-	 "0": { "typestr": "^v" },
-	 "1": { "typestr": "@" }
-	},
-	"retval": { "typestr": "v"  }
        }
       }
      }

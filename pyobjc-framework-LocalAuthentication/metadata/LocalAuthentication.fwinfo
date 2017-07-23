@@ -39,7 +39,7 @@
      {
       "retval": { "type_override": "Z"  },
       "class_method": false,
-      "selector": "interactionNotAllowed:"
+      "selector": "interactionNotAllowed"
      },
      {
       "args": {

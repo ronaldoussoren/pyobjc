@@ -54,6 +54,11 @@
     "kColorSyncByteOrder32Big": { "value": 16384 }
   },
   "externs": {
+   "kColorSyncConversionMatrix": { "typestr": "@" },
+   "kCMMInitializeLinkProfileProcName": { "typestr": "@" },
+   "kCMMInitializeTransformProcName": { "typestr": "@" },
+   "kCMMApplyTransformProcName": { "typestr": "@" },
+   "kCMMCreateTransformPropertyProcName": { "typestr": "@" },
    "kColorSyncDeviceID": { "typestr": "@" },
    "kColorSyncDeviceClass": { "typestr": "@" },
    "kColorSyncCameraDeviceClass": { "typestr": "@" },
@@ -334,6 +339,8 @@
     }
    },
    "ColorSyncProfileCreateMutable": {
+    "args": {
+    },
     "retval": { "typestr": "^{ColorSyncProfile=}", "already_cfretained": true }
    },
    "ColorSyncProfileCreateMutableCopy": {
@@ -372,7 +379,7 @@
     }
    },
    "ColorSyncProfileGetMD5": {
-    "retval": { "typestr": "{_ColorSyncMD5}" },
+    "retval": { "typestr": "{_ColorSyncMD5=[8C]}" },
     "args": {
      "0": { "typestr": "^{ColorSyncProfile=}" }
     }
@@ -408,6 +415,13 @@
     "retval": { "typestr": "^{__CFString=}", "already_cfretained": true },
     "args": {
      "0": { "typestr": "^{ColorSyncProfile=}" }
+    }
+   },
+   "ColorSyncProfileCopyTag": {
+    "retval": { "typestr": "^{__CFData=}", "already_cfretained": true  },
+    "args": {
+     "0": { "typestr": "^{ColorSyncProfile=}" },
+     "1": { "typestr": "^{__CFString=}" }
     }
    },
    "ColorSyncProfileCopyTagSignatures": {
@@ -470,8 +484,7 @@
    "ColorSyncIterateInstalledProfiles": {
     "retval": { "typestr": "v" },
     "args": {
-     "0": { "typestr": "N^I" },
-     "1": {
+     "0": {
       "typestr": "^?",
       "callable_retained": false,
       "function": {
@@ -482,15 +495,25 @@
        "retval": { "typestr": "B" }
       }
      },
+     "1": { "typestr": "N^I" },
      "2": { "typestr": "^v" },
-     "3": { "typestr": "^{__CFError=}" }
+     "3": { "typestr": "^^{__CFError=}", "type_modifier": "o" }
     }
    },
    "ColorSyncProfileInstall": {
     "retval": { "typestr": "B" },
     "args": {
      "0": { "typestr": "^{ColorSyncProfile=}" },
-     "1": { "typestr": "o^{__CFError=}" }
+     "1": { "typestr": "^{__CFString=}" },
+     "2": { "typestr": "^{__CFString=}" },
+     "3": { "typestr": "o^^{__CFError=}" }
+    }
+   },
+   "ColorSyncProfileUninstall": {
+    "retval": { "typestr": "B" },
+    "args": {
+     "0": { "typestr": "^{ColorSyncProfile=}" },
+     "1": { "typestr": "o^^{__CFError=}" }
     }
    },
    "ColorSyncTransformCreate": {
@@ -526,7 +549,7 @@
      "4": { "name": "dstDepth", "typestr": "i" },
      "5": { "name": "dstLayout", "typestr": "i" },
      "6": { "name": "dstBytesPerRow", "typestr": "L" },
-     "7": { "name": "src", "typestr": "^v", "c_array_of_variable_length": true, "type_modifier": "o" },
+     "7": { "name": "src", "typestr": "^v", "c_array_of_variable_length": true, "type_modifier": "n" },
      "8": { "name": "srcDepth", "typestr": "i" },
      "9": { "name": "srcLayout", "typestr": "i" },
      "10": { "name": "srcBytesPerRow", "typestr": "L" },

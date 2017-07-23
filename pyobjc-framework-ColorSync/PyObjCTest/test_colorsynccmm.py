@@ -7,13 +7,13 @@ if sys.maxsize > 2 ** 32:
     class TestColorSyncCMM (TestCase):
         @min_os_level('10.13')
         def testCFType(self):
-            self.assertCFType(ColorSync.ColorSyncCMMRef)
+            self.assertIsCFType(ColorSync.ColorSyncCMMRef)
 
         @min_os_level('10.13')
         def testFunctions(self):
             self.assertIsInstance(ColorSync.ColorSyncCMMGetTypeID(), (int, long))
             self.assertResultIsCFRetained(ColorSync.ColorSyncCMMCreate)
-            ColorSyncCMMGetBundle
+            ColorSync.ColorSyncCMMGetBundle
             self.assertResultIsCFRetained(ColorSync.ColorSyncCMMCopyLocalizedName)
             self.assertResultIsCFRetained(ColorSync.ColorSyncCMMCopyCMMIdentifier)
 
@@ -21,10 +21,10 @@ if sys.maxsize > 2 ** 32:
 
         @min_os_level('10.13')
         def testConstants(self):
-            self.assertIsInstance(kCMMInitializeLinkProfileProcName, unicode)
-            self.assertIsInstance(kCMMInitializeTransformProcName, unicode)
-            self.assertIsInstance(kCMMApplyTransformProcName, unicode)
-            self.assertIsInstance(kCMMCreateTransformPropertyProcName, unicode)
+            self.assertIsInstance(ColorSync.kCMMInitializeLinkProfileProcName, unicode)
+            self.assertIsInstance(ColorSync.kCMMInitializeTransformProcName, unicode)
+            self.assertIsInstance(ColorSync.kCMMApplyTransformProcName, unicode)
+            self.assertIsInstance(ColorSync.kCMMCreateTransformPropertyProcName, unicode)
 
 if __name__ == "__main__":
     main()

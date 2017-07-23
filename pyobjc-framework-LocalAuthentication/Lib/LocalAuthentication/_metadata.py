@@ -21,10 +21,10 @@ misc.update({'kLAErrorDomain': b'com.apple.LocalAuthentication'.decode("utf-8")}
 r = objc.registerMetaDataForSelector
 objc._updatingMetadata(True)
 try:
+    r(b'LAContext', b'interactionNotAllowed', {'retval': {'type': 'Z'}})
     r(b'LAContext', b'canEvaluatePolicy:error:', {'retval': {'type': b'Z'}, 'arguments': {3: {'type_modifier': b'o'}}})
     r(b'LAContext', b'evaluatePolicy:localizedReason:reply:', {'arguments': {4: {'callable': {'retval': {'type': b'v'}, 'arguments': {0: {'type': b'^v'}, 1: {'type': b'Z'}, 2: {'type': b'@'}}}}}})
     r(b'LAContext', b'evaluatePolicy:operation:localizedReason:reply:', {'arguments': {5: {'callable': {'retval': {'type': b'v'}, 'arguments': {0: {'type': b'^v'}, 1: {'type': b'Z'}, 2: {'type': b'@'}}}}}})
-    r(b'LAContext', b'interactionNotAllowed:', {'retval': {'type': 'Z'}})
     r(b'LAContext', b'isCancelButtonVisible', {'retval': {'type': 'Z'}})
     r(b'LAContext', b'isCredentialSet:', {'retval': {'type': 'Z'}})
     r(b'LAContext', b'isFallbackButtonVisible', {'retval': {'type': 'Z'}})

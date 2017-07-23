@@ -7,7 +7,7 @@ if sys.maxsize > 2 ** 32:
     class TestColorSyncTransform (TestCase):
         @min_os_level('10.13')
         def testCFType(self):
-            self.assertCFType(ColorSync.ColorSyncTransformRef)
+            self.assertIsCFType(ColorSync.ColorSyncTransformRef)
 
         @min_os_level('10.13')
         def testFunctions(self):

@@ -1693,7 +1693,11 @@ static char* keywords[] = { "name", "type", "magic", NULL };
             v = PyObjCCF_NewSpecial(type, buf);
         }
     } else {
-        v = pythonify_c_value(type, buf);
+        if (*type == _C_CHARPTR) {
+            v = pythonify_c_value(type, &buf);
+        } else {
+            v = pythonify_c_value(type, buf);
+        }
     }
 
     return v;
