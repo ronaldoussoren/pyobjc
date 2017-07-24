@@ -197,6 +197,22 @@
    "MDLAnimatedScalarArray": {
     "methods": [
      {
+      "selector": "resetWithFloatArray:atTimes:count:",
+      "class_method": false,
+      "args": {
+       "0": { "type_modifier": "n", "c_array_length_in_arg": 2 },
+       "1": { "type_modifier": "n", "c_array_length_in_arg": 2 }
+      }
+     },
+     {
+      "selector": "resetWithDoubleArray:count:atTimes:count:",
+      "class_method": false,
+      "args": {
+       "0": { "type_modifier": "n", "c_array_length_in_arg": 2 },
+       "1": { "type_modifier": "n", "c_array_length_in_arg": 2 }
+      }
+     },
+     {
       "selector": "setFloatArray:count:atTime:",
       "class_method": false,
       "args": {
@@ -227,14 +243,14 @@
       }
      },
      {
-      "selector": "copyFloatArrayInto:maxCount:",
+      "selector": "copyFloatArrayInto:maxCount:atTime:",
       "class_method": false,
       "args": {
        "0": { "type_modifier": "o", "c_array_length_in_arg": 1, "c_array_length_in_result": true }
       }
      },
      {
-      "selector": "copyDoubleArrayInto:maxCount:",
+      "selector": "copyDoubleArrayInto:maxCount:atTime:",
       "class_method": false,
       "args": {
        "0": { "type_modifier": "o", "c_array_length_in_arg": 1, "c_array_length_in_result": true }

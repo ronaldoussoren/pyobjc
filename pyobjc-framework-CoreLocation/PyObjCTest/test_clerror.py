@@ -33,7 +33,7 @@ class TestCLError (TestCase):
             self.assertEqual(kCLErrorGeocodeCanceled, 10)
 
     @min_os_level('10.7')
-    @expectedFailure
+    @expectedFailureIf(os_level_key(os_release()) < os_level_key('10.13'))
     def testConstants10_7(self):
         self.assertIsInstance(kCLErrorUserInfoAlternateRegionKey, unicode)
 

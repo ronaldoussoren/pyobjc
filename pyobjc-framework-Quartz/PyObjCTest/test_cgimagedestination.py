@@ -57,8 +57,8 @@ class TestCGImageDestination (TestCase):
         if not os.path.exists(image_path):
             image_path = "/System/Library/ColorSync/Calibrators/Display Calibrator.app/Contents/Resources/brightness.tiff"
 
-        if not os.path.exists(image_path):
-            1/0
+        self.assertTrue(os.path.exists(image_path))
+
         url = CFURLCreateWithFileSystemPath(None,
             image_path,
             kCFURLPOSIXPathStyle, False)
@@ -67,7 +67,6 @@ class TestCGImageDestination (TestCase):
         CGImageDestinationAddImageFromSource(dest,  isrc, 0, None)
 
         self.assertResultHasType(CGImageDestinationFinalize, objc._C_BOOL)
-        1/0 # XXX: Crash on 10.13 beta 1
         v = CGImageDestinationFinalize(dest)
         self.assertIsInstance(v, bool)
         self.assertIs(v, True)
