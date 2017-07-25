@@ -6,7 +6,6 @@ if sys.maxsize > 2 ** 32:
 
 
     class TestFinderSyncHelper (FinderSync.NSObject):
-        def exportedObjectForMessageInterface_itemURL_error_(self, mi, iu, err): pass
         def valuesForAttributes_forItemWithURL_completion_(self, at, iu, com): pass
         def makeListenerEndpointForServiceName_itemURL_andReturnError_(self, a, b, c): pass
 
@@ -21,7 +20,6 @@ if sys.maxsize > 2 ** 32:
         def testProtocols(self):
             self.assertIsInstance(objc.protocolNamed("FIFinderSync"), objc.formal_protocol)
 
-            self.assertArgHasType(TestFinderSyncHelper.exportedObjectForMessageInterface_itemURL_error_, 2, b'o^@')
             self.assertArgIsBlock(TestFinderSyncHelper.valuesForAttributes_forItemWithURL_completion_, 2, b'v@@')
 
             self.assertArgIsOut(TestFinderSyncHelper.makeListenerEndpointForServiceName_itemURL_andReturnError_, 2)

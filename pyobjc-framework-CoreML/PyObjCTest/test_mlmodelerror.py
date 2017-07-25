@@ -8,7 +8,6 @@ if sys.maxsize > 2 ** 32:
         def testConstants(self):
             self.assertEqual(CoreML.MLModelErrorGeneric, 0)
             self.assertEqual(CoreML.MLModelErrorFeatureType, 1)
-            self.assertEqual(CoreML.MLModelErrorDescriptionMismatch, 2)
             self.assertEqual(CoreML.MLModelErrorIO, 3)
 
 

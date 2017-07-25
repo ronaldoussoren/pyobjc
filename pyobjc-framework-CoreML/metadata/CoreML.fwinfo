@@ -6,7 +6,6 @@
    "MLMultiArrayDataTypeInt32": { "value": 131104 },
    "MLModelErrorGeneric": { "value": 0 },
    "MLModelErrorFeatureType": { "value": 1 },
-   "MLModelErrorDescriptionMismatch": { "value": 2 },
    "MLModelErrorIO": { "value": 3 },
    "MLFeatureTypeInvalid": { "value": 0 },
    "MLFeatureTypeInt64": { "value": 1 },
@@ -31,6 +30,22 @@
       "args": {
        "1": { "type_modifier": "o" }
       }
+     }
+    ]
+   },
+   "MLPredictionOptions": {
+    "methods": [
+     {
+      "selector": "setUsesCPUOnly:",
+      "class_method": false,
+      "args": {
+       "0": { "type_override": "Z" }
+      }
+     },
+     {
+      "selector": "usesCPUOnly",
+      "class_method": false,
+      "retval": { "type_override": "Z" }
      }
     ]
    },
@@ -79,6 +94,13 @@
    "MLModel": {
     "methods": [
      {
+      "selector": "compileModelAtURL:error:",
+      "class_method": true,
+      "args": {
+       "1": { "type_modifier": "o" }
+      }
+     },
+     {
       "selector": "modelWithContentsOfURL:error:",
       "class_method": true,
       "args": {
@@ -90,6 +112,13 @@
       "class_method": false,
       "args": {
        "1": { "type_modifier": "o" }
+      }
+     },
+     {
+      "selector": "predictionFromFeatures:options:error:",
+      "class_method": false,
+      "args": {
+       "2": { "type_modifier": "o" }
       }
      }
     ]

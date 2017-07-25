@@ -9,6 +9,7 @@ if sys.maxsize > 2 ** 32:
         def testMethods10_13(self):
             self.assertArgIsOut(CoreML.MLModel.modelWithContentsOfURL_error_, 1)
             self.assertArgIsOut(CoreML.MLModel.predictionFromFeatures_error_, 1)
+            self.assertArgIsOut(CoreML.MLModel.predictionFromFeatures_options_error_, 2)
 
 if __name__ == "__main__":
     main()

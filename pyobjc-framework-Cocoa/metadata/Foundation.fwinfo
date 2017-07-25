@@ -7197,6 +7197,16 @@
    "NSObject": {
     "methods": [
      {
+      "selector": "itemProviderVisibilityForRepresentationWithTypeIdentifier:",
+      "class_method": false,
+      "retval": { "type_override": ["i", "q"] }
+     },
+     {
+      "selector": "itemProviderVisibilityForRepresentationWithTypeIdentifier:",
+      "class_method": false,
+      "retval": { "type_override": ["i", "q"] }
+     },
+     {
       "selector": "objectWithItemProviderData:typeIdentifier:error:",
       "class_method": true,
       "args": {

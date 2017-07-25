@@ -23,7 +23,7 @@
    "LAAccessControlOperationUseItem": { "value": 1 },
    "LAAccessControlOperationCreateKey": { "value": 2 },
    "LAAccessControlOperationUseKeySign": { "value": 3 },
-   "kLACredentialTypeApplicationPassword": { "value": 1 },
+   "kLACredentialTypeApplicationPassword": { "value": 0 },
    "LAErrorNotInteractive": { "value":  -1004 },
    "kLAErrorNotInteractive": { "value":  -1004 },
    "kLAErrorInvalidContext": { "value": -10 },

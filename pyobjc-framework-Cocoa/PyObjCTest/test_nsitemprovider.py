@@ -1,6 +1,15 @@
 from PyObjCTools.TestSupport import *
 from AppKit import *
 
+class TestNSItemProviderHelper (NSObject):
+    def itemProviderVisibilityForRepresentationWithTypeIdentifier_(self, a): return 1
+    def itemProviderVisibilityForRepresentationWithTypeIdentifier_(self, a): return 1
+    def loadDataWithTypeIdentifier_forItemProviderCompletionHandler_(self, a, b): pass
+
+    def objectWithItemProviderData_typeIdentifier_error_(self, a, b, c): return 1
+    def initWithItemProviderData_typeIdentifier_error_(self, a, b, c): return 1
+
+
 class TestNSItemProvider (TestCase):
     def testConstants(self):
         self.assertEqual(NSItemProviderRepresentationVisibilityAll, 0)
@@ -28,6 +37,13 @@ class TestNSItemProvider (TestCase):
     @onlyOn64Bit
     def testConstants10_11(self):
         self.assertEqual(NSItemProviderUnavailableCoercionError, -1200)
+
+    def testMethods(self):
+        self.assertResultHasType(NSItemProviderHelper.itemProviderVisibilityForRepresentationWithTypeIdentifier_, objc._C_NSInteger)
+        self.assertResultHasType(NSItemProviderHelper.itemProviderVisibilityForRepresentationWithTypeIdentifier_, objc._C_NSInteger)
+        self.assertArgIsBlock(NSItemProviderHelper.loadDataWithTypeIdentifier_forItemProviderCompletionHandler_, 1, b'v@@')
+        self.assertArgIsOut(NSItemProviderHelper.objectWithItemProviderData_typeIdentifier_error_, 2)
+        self.assertArgIsOut(NSItemProviderHelper.initWithItemProviderData_typeIdentifier_error_, 2)
 
     @min_os_level('10.10')
     @onlyOn64Bit
@@ -65,6 +81,11 @@ class TestNSItemProvider (TestCase):
         # XXX: Cannot properly test right now...
         self.assertArgIsBlock(NSItemProvider.registerItemForTypeIdentifier_loadHandler_, 2, b'@@?')
         self.assertArgIsBlock(NSItemProvider.loadItemForTypeIdentifier_options_completionHandler_, 2, NSItemProviderCompletionHandler)
+
+    @min_sdk_level('10.13')
+    def testProtocols10_13(self):
+        objc.protocolNamed('NSItemProviderWriting')
+        objc.protocolNamed('NSItemProviderReading')
 
 if __name__ == "__main__":
     main()

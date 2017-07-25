@@ -47,15 +47,6 @@
       }
      },
      {
-      "selector": "exportedObjectForMessageInterface:itemURL:error:",
-      "class_method": false,
-      "args": {
-       "2": {
-        "type_override": "o^@"
-       }
-      }
-     },
-     {
       "selector": "valuesForAttributes:forItemWithURL:completion:",
       "class_method": false,
       "args": {
