@@ -18,7 +18,7 @@ misc = {
 constants = '''$VNBarcodeSymbologyAztec$VNBarcodeSymbologyCODE128$VNBarcodeSymbologyCODE39$VNBarcodeSymbologyCODE39Checksum$VNBarcodeSymbologyCODE39FullASCII$VNBarcodeSymbologyCODE39FullASCIIChecksum$VNBarcodeSymbologyCODE93$VNBarcodeSymbologyCODE93i$VNBarcodeSymbologyDataMatrix$VNBarcodeSymbologyEAN13$VNBarcodeSymbologyEAN8$VNBarcodeSymbologyI2OF5$VNBarcodeSymbologyI2OF5Checksum$VNBarcodeSymbologyITF14$VNBarcodeSymbologyPDF417$VNBarcodeSymbologyQR$VNBarcodeSymbologyUPCE$VNImageOptionCameraIntrinsics$VNImageOptionProperties$VNNormalizedIdentityRect@{CGRect={CGPoint=dd}{CGSize=dd}}$VNVisionVersionNumber@d$'''
 enums = '''$VNErrorIOError@6$VNErrorInternalError@9$VNErrorInvalidArgument@14$VNErrorInvalidFormat@2$VNErrorInvalidImage@13$VNErrorInvalidModel@15$VNErrorInvalidOperation@12$VNErrorInvalidOption@5$VNErrorMissingOption@7$VNErrorNotImplemented@8$VNErrorOK@0$VNErrorOperationFailed@3$VNErrorOutOfBoundsError@4$VNErrorOutOfMemory@10$VNErrorRequestCancelled@1$VNErrorUnknownError@11$VNImageCropAndScaleOptionCenterCrop@0$VNImageCropAndScaleOptionScaleFill@2$VNImageCropAndScaleOptionScaleFit@1$VNRequestTrackingLevelAccurate@0$VNRequestTrackingLevelFast@1$'''
 misc.update({})
-functions={'VNImageRectForNormalizedRect': (b'{CGRect={CGPoint=dd}{CGSize=dd}}{CGRect={CGPoint=dd}{CGSize=dd}}L',), 'VNNormalizedRectIsIdentityRect': (b'B{CGRect={CGPoint=dd}{CGSize=dd}}',), 'VNImagePointForNormalizedPoint': (b'{CGPoint=dd}{CGPoint=dd}L',), 'VNNormalizedRectForImageRect': (b'{CGRect={CGPoint=dd}{CGSize=dd}}{CGRect={CGPoint=dd}{CGSize=dd}}L',)}
+functions={'VNImageRectForNormalizedRect': (b'{CGRect={CGPoint=dd}{CGSize=dd}}{CGRect={CGPoint=dd}{CGSize=dd}}LL',), 'VNNormalizedRectIsIdentityRect': (b'B{CGRect={CGPoint=dd}{CGSize=dd}}',), 'VNImagePointForNormalizedPoint': (b'{CGPoint=dd}{CGPoint=dd}LL',), 'VNNormalizedRectForImageRect': (b'{CGRect={CGPoint=dd}{CGSize=dd}}{CGRect={CGPoint=dd}{CGSize=dd}}LL',)}
 r = objc.registerMetaDataForSelector
 objc._updatingMetadata(True)
 try:
@@ -29,6 +29,7 @@ try:
     r(b'VNDetectTextRectanglesRequest', b'setReportCharacterBoxes:', {'arguments': {2: {'type': 'Z'}}})
     r(b'VNImageRequestHandler', b'performRequests:error:', {'retval': {'type': 'Z'}, 'arguments': {3: {'type_modifier': b'o'}}})
     r(b'VNRequest', b'initWithCompletionHandler:', {'arguments': {2: {'callable': {'retval': {'type': b'v'}, 'arguments': {0: {'type': b'^v'}, 1: {'type': b'@'}, 2: {'type': b'@'}}}}}})
+    r(b'VNRequest', b'completionHandler', {'retval': {'callable': {'retval': {'type': b'v'}, 'arguments': {0: {'type': b'^v'}, 1: {'type': b'@'}, 2: {'type': b'@'}}}}})
     r(b'VNRequest', b'preferBackgroundProcessing', {'retval': {'type': 'Z'}})
     r(b'VNRequest', b'setPreferBackgroundProcessing:', {'arguments': {2: {'type': 'Z'}}})
     r(b'VNSequenceRequestHandler', b'performRequests:onCGImage:error:', {'retval': {'type': 'Z'}, 'arguments': {4: {'type_modifier': b'o'}}})

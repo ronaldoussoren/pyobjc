@@ -205,6 +205,18 @@
    "VNRequest": {
     "methods": [
      {
+      "selector": "completionHandler",
+      "class_method": false,
+      "retval": {
+       "arguments": {
+        "0": { "typestr": "^v" },
+        "0": { "typestr": "@" },
+        "0": { "typestr": "@" }
+       },
+       "retval": { "typestr": "v" }
+      }
+     },
+     {
       "selector": "preferBackgroundProcessing",
       "class_method": false,
       "retval": { "type_override": "Z" }
@@ -454,7 +466,7 @@
     "args": {
      "0": { "typestr": "{CGPoint=dd}" },
      "1": { "typestr": "L" },
-     "1": { "typestr": "L" }
+     "2": { "typestr": "L" }
     },
     "retval": { "typestr": "{CGPoint=dd}" }
    },
@@ -462,7 +474,7 @@
     "args": {
      "0": { "typestr": "{CGRect={CGPoint=dd}{CGSize=dd}}" },
      "1": { "typestr": "L" },
-     "1": { "typestr": "L" }
+     "2": { "typestr": "L" }
     },
     "retval": { "typestr": "{CGRect={CGPoint=dd}{CGSize=dd}}" }
    },
@@ -470,7 +482,7 @@
     "args": {
      "0": { "typestr": "{CGRect={CGPoint=dd}{CGSize=dd}}" },
      "1": { "typestr": "L" },
-     "1": { "typestr": "L" }
+     "2": { "typestr": "L" }
     },
     "retval": { "typestr": "{CGRect={CGPoint=dd}{CGSize=dd}}" }
    },

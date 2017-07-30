@@ -77,6 +77,8 @@ setup(
             [ 'Modules/_PDFKit.m' ], extra_link_args=["-framework", "Quartz"]),
         Extension('Quartz.QuartzCore._quartzcore',
             [ 'Modules/_quartzcore.m' ], extra_link_args=["-framework", "QuartzCore"]),
+        Extension('Quartz.QuickLookUI._QuickLookUI',
+            [ 'Modules/_QuickLookUI.m' ], extra_link_args=["-framework", "Quartz"]),
     ],
     version=VERSION,
     install_requires = [

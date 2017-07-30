@@ -30,7 +30,7 @@ if sys.maxsize > 2 ** 32:
 
         @min_os_level('10.13')
         def testMethods10_13(self):
-            self.asertArgIsBlock(TestINSendMessageIntentHelper.resolveRecipientsForSendMessage_completion_, 1, b'v@')
+            self.assertArgIsBlock(TestINSendMessageIntentHelper.resolveRecipientsForSendMessage_completion_, 1, b'v@')
 
         @min_sdk_level('10.12')
         def testProtocols(self):

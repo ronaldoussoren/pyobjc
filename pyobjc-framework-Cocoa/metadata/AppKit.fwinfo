@@ -276,7 +276,7 @@
       "selector": "downloadFontAssetsWithCompletionHandler:",
       "class_method": false,
       "args": {
-       "1": {
+       "0": {
         "callable": {
 	 "arguments": {
 	  "0": { "typestr": "^v" },
@@ -5798,7 +5798,7 @@
    "NSDocument": {
     "methods": [
      {
-      "selector": "shareDocumentWithSharingService:completionHandler",
+      "selector": "shareDocumentWithSharingService:completionHandler:",
       "class_method": false,
       "args": {
        "1": {
@@ -8065,6 +8065,22 @@
    },
    "NSItemProvider": {
     "methods": [
+     {
+      "args": {
+       "1": {
+        "callable": {
+	 "arguments": {
+	  "0": { "typestr": "^v" },
+	  "1": { "typestr": "@" },
+	  "2": { "typestr": "@" }
+	 },
+	 "retval": { "typestr": "v" }
+	}
+       }
+      },
+      "class_method": true,
+      "selector": "loadObjectOfClass:completionHandler:"
+     },
      {
       "args": {
        "1": {

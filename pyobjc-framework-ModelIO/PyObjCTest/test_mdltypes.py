@@ -13,7 +13,7 @@ if sys.maxsize > 2**32:
 
             self.assertEqual(ModelIO.MDLDataPrecisionUndefined, 0)
             self.assertEqual(ModelIO.MDLDataPrecisionFloat, 1)
-            self.assertEqual(ModelIO.MDLDataPrecisionDouble 2)
+            self.assertEqual(ModelIO.MDLDataPrecisionDouble, 2)
 
             self.assertEqual(ModelIO.MDLIndexBitDepthInvalid, 0)
             self.assertEqual(ModelIO.MDLIndexBitDepthUInt8, 8)

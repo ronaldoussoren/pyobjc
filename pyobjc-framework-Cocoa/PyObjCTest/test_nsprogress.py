@@ -32,7 +32,7 @@ class TestNSProgress(TestCase):
 
     @min_os_level('10.13')
     def testMethods10_13(self):
-        self.assertArgIsBlock(NSProgress.performAsCurrentWithPendingUnitCount_usingBlock_, 0, b'v')
+        self.assertArgIsBlock(NSProgress.performAsCurrentWithPendingUnitCount_usingBlock_, 1, b'v')
 
     @min_sdk_level('10.11')
     def testProtocolObjects(self):

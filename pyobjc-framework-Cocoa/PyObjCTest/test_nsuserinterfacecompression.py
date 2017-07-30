@@ -10,7 +10,7 @@ class TestNSUserInterfaceCompression (TestCase):
         self.assertResultIsBOOL(NSUserInterfaceCompressionOptions.containsOptions_)
         self.assertResultIsBOOL(NSUserInterfaceCompressionOptions.intersectsOptions_)
         self.assertResultIsBOOL(NSUserInterfaceCompressionOptions.isEmpty)
-        self.assertArgIsBOOL(NSUserInterfaceCompressionOptions.setEmpty_)
+        #self.assertArgIsBOOL(NSUserInterfaceCompressionOptions.setEmpty_)
 
     @min_sdk_level('10.13')
     def testProtocols(self):

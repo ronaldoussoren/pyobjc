@@ -23,8 +23,8 @@ r = objc.registerMetaDataForSelector
 objc._updatingMetadata(True)
 try:
     r(b'AVCaptureView', b'setSession:showVideoPreview:showAudioPreview:', {'arguments': {3: {'type': b'Z'}, 4: {'type': b'Z'}}})
-    r(b'AVKRoutePickerView', b'isRoutePickerButtonBordered', {'retval': {'type': 'Z'}})
-    r(b'AVKRoutePickerView', b'setRoutePickerButtonBordered:', {'arguments': {2: {'type': 'Z'}}})
+    r(b'AVRoutePickerView', b'isRoutePickerButtonBordered', {'retval': {'type': 'Z'}})
+    r(b'AVRoutePickerView', b'setRoutePickerButtonBordered:', {'arguments': {2: {'type': 'Z'}}})
     r(b'AVPlayerView', b'beginTrimmingWithCompletionHandler:', {'arguments': {2: {'callable': {'retval': {'type': b'v'}, 'arguments': {0: {'type': b'^v'}, 1: {'type': b'q'}}}}}})
     r(b'AVPlayerView', b'canBeginTrimming', {'retval': {'type': b'Z'}})
     r(b'AVPlayerView', b'isReadyForDisplay', {'retval': {'type': b'Z'}})

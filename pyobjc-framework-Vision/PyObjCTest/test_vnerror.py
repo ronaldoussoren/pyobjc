@@ -6,22 +6,22 @@ if sys.maxsize >= 2**32:
 
     class TestVNError (TestCase):
         def testConstants(self):
-            self.asertEqual(Vision.VNErrorOK, 0)
-            self.asertEqual(Vision.VNErrorRequestCancelled, 1)
-            self.asertEqual(Vision.VNErrorInvalidFormat, 2)
-            self.asertEqual(Vision.VNErrorOperationFailed, 3)
-            self.asertEqual(Vision.VNErrorOutOfBoundsError, 4)
-            self.asertEqual(Vision.VNErrorInvalidOption, 5)
-            self.asertEqual(Vision.VNErrorIOError, 6)
-            self.asertEqual(Vision.VNErrorMissingOption, 7)
-            self.asertEqual(Vision.VNErrorNotImplemented, 8)
-            self.asertEqual(Vision.VNErrorInternalError, 9)
-            self.asertEqual(Vision.VNErrorOutOfMemory, 10)
-            self.asertEqual(Vision.VNErrorUnknownError, 11)
-            self.asertEqual(Vision.VNErrorInvalidOperation, 12)
-            self.asertEqual(Vision.VNErrorInvalidImage, 13)
-            self.asertEqual(Vision.VNErrorInvalidArgument, 14)
-            self.asertEqual(Vision.VNErrorInvalidModel, 15)
+            self.assertEqual(Vision.VNErrorOK, 0)
+            self.assertEqual(Vision.VNErrorRequestCancelled, 1)
+            self.assertEqual(Vision.VNErrorInvalidFormat, 2)
+            self.assertEqual(Vision.VNErrorOperationFailed, 3)
+            self.assertEqual(Vision.VNErrorOutOfBoundsError, 4)
+            self.assertEqual(Vision.VNErrorInvalidOption, 5)
+            self.assertEqual(Vision.VNErrorIOError, 6)
+            self.assertEqual(Vision.VNErrorMissingOption, 7)
+            self.assertEqual(Vision.VNErrorNotImplemented, 8)
+            self.assertEqual(Vision.VNErrorInternalError, 9)
+            self.assertEqual(Vision.VNErrorOutOfMemory, 10)
+            self.assertEqual(Vision.VNErrorUnknownError, 11)
+            self.assertEqual(Vision.VNErrorInvalidOperation, 12)
+            self.assertEqual(Vision.VNErrorInvalidImage, 13)
+            self.assertEqual(Vision.VNErrorInvalidArgument, 14)
+            self.assertEqual(Vision.VNErrorInvalidModel, 15)
 
 
 if __name__ == "__main__":

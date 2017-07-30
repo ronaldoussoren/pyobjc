@@ -9,6 +9,8 @@ class TestNSItemProviderHelper (NSObject):
     def objectWithItemProviderData_typeIdentifier_error_(self, a, b, c): return 1
     def initWithItemProviderData_typeIdentifier_error_(self, a, b, c): return 1
 
+NSItemProviderCompletionHandler = b'v@@'
+NSItemProviderLoadHandler = b'v@?#@'
 
 class TestNSItemProvider (TestCase):
     def testConstants(self):
@@ -39,17 +41,15 @@ class TestNSItemProvider (TestCase):
         self.assertEqual(NSItemProviderUnavailableCoercionError, -1200)
 
     def testMethods(self):
-        self.assertResultHasType(NSItemProviderHelper.itemProviderVisibilityForRepresentationWithTypeIdentifier_, objc._C_NSInteger)
-        self.assertResultHasType(NSItemProviderHelper.itemProviderVisibilityForRepresentationWithTypeIdentifier_, objc._C_NSInteger)
-        self.assertArgIsBlock(NSItemProviderHelper.loadDataWithTypeIdentifier_forItemProviderCompletionHandler_, 1, b'v@@')
-        self.assertArgIsOut(NSItemProviderHelper.objectWithItemProviderData_typeIdentifier_error_, 2)
-        self.assertArgIsOut(NSItemProviderHelper.initWithItemProviderData_typeIdentifier_error_, 2)
+        self.assertResultHasType(TestNSItemProviderHelper.itemProviderVisibilityForRepresentationWithTypeIdentifier_, objc._C_NSInteger)
+        self.assertResultHasType(TestNSItemProviderHelper.itemProviderVisibilityForRepresentationWithTypeIdentifier_, objc._C_NSInteger)
+        self.assertArgIsBlock(TestNSItemProviderHelper.loadDataWithTypeIdentifier_forItemProviderCompletionHandler_, 1, b'v@@')
+        self.assertArgIsOut(TestNSItemProviderHelper.objectWithItemProviderData_typeIdentifier_error_, 2)
+        self.assertArgIsOut(TestNSItemProviderHelper.initWithItemProviderData_typeIdentifier_error_, 2)
 
     @min_os_level('10.10')
     @onlyOn64Bit
     def testMethods10_10(self):
-        NSItemProviderCompletionHandler = b'v@@'
-        NSItemProviderLoadHandler = b'v@?#@'
 
         self.assertResultIsBOOL(NSItemProvider.hasItemConformingToTypeIdentifier_)
         self.assertArgIsBlock(NSItemProvider.loadItemForTypeIdentifier_options_completionHandler_, 2, NSItemProviderCompletionHandler)
@@ -67,7 +67,7 @@ class TestNSItemProvider (TestCase):
     def testMethods10_13(self):
         # XXX: Cannot properly test right now...
         self.assertArgIsBlock(NSItemProvider.registerDataRepresentationForTypeIdentifier_visibility_loadHandler_, 2, b'@@?')
-        self.assertArgIsBlock(NSItemProvider.registerFileRepresentationForTypeIdentifier_fileOptions_visibility_loadHandler_, 2, b'@@?')
+        self.assertArgIsBlock(NSItemProvider.registerFileRepresentationForTypeIdentifier_fileOptions_visibility_loadHandler_, 3, b'@@?')
         self.assertArgIsBlock(NSItemProvider.registerObjectOfClass_visibility_loadHandler_, 2, b'@@?')
 
         self.assertResultIsBOOL(NSItemProvider.hasRepresentationConformingToTypeIdentifier_fileOptions_)
@@ -79,7 +79,7 @@ class TestNSItemProvider (TestCase):
         self.assertResultIsBOOL(NSItemProvider.canLoadObjectOfClass_)
 
         # XXX: Cannot properly test right now...
-        self.assertArgIsBlock(NSItemProvider.registerItemForTypeIdentifier_loadHandler_, 2, b'@@?')
+        self.assertArgIsBlock(NSItemProvider.registerItemForTypeIdentifier_loadHandler_, 1, NSItemProviderLoadHandler)
         self.assertArgIsBlock(NSItemProvider.loadItemForTypeIdentifier_options_completionHandler_, 2, NSItemProviderCompletionHandler)
 
     @min_sdk_level('10.13')

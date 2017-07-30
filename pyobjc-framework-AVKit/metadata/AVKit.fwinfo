@@ -10,7 +10,7 @@
 
   },
   "classes": {
-    "AVKRoutePickerView": {
+    "AVRoutePickerView": {
      "methods": [
          {
 	  "class_method": false,
