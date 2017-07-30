@@ -2,17 +2,16 @@
 """
 Helper script for running the PyObjC test suite
 """
+import argparse
 import collections
 import contextlib
 import json
-import json
 import logging
 import os
-import os
 import platform
+import re
 import shutil
 import subprocess
-import sys
 import sys
 
 from _common_definitions import TOP_DIR, TEST_STATE_DIR, PY_VERSIONS
@@ -55,6 +54,29 @@ def sort_framework_wrappers():
     frameworks = topological_sort(frameworks, partial_order)
     return frameworks
 
+def parse_arguments():
+    parser = argparse.ArgumentParser(description="Run PyObjC testsuite")
+    parser.add_argument(
+        "--python-version",
+        dest='python_versions',
+        metavar='VER',
+        action='append',
+        default=[],
+        help='Select python version to test (%s)'%(", ".join(PY_VERSIONS)))
+
+    parser.add_argument(
+            '--state-dir',
+            dest='state_dir',
+            metavar='DIR',
+            default=TEST_STATE_DIR,
+            help='Directory to store test results (%(default)s)')
+
+
+    result = parser.parse_args()
+    if not result.python_versions:
+        result.python_versions=PY_VERSIONS
+
+    return result
 
 def build_project(*, interpreter, py_ver, project):
     lg = logging.getLogger("build_project")
@@ -84,7 +106,6 @@ def build_project(*, interpreter, py_ver, project):
 
     return True
 
-
 def run_tests(*, interpreter, arch, py_ver, project, state_dir):
     lg = logging.getLogger("run_tests")
 
@@ -112,7 +133,7 @@ def run_tests(*, interpreter, arch, py_ver, project, state_dir):
     except IndexError:
         status = {
             'message': 'Cannot fetch status line',
-            'stdout': stdout,
+            'stdout': stdout.decode('utf-8'),
         }
 
     status['exitcode'] = exitcode
@@ -179,16 +200,27 @@ def test_summary(fp_out, state_dir):
     return ok
 
 
+def supports_arch(interpreter, arch):
+    lines = subprocess.check_output(['/usr/bin/file', interpreter])
+    lines = lines.decode('utf-8').splitlines()
+    for ln in lines:
+        m = re.search('for architecture (\S+)\)', ln)
+        if m is not None:
+            if m.group(1) == arch:
+                return True
 
+    return False
 
 def main():
     logging.basicConfig(stream=sys.stdout, level=logging.DEBUG)
     lg = logging.getLogger("runtests")
 
+    options = parse_arguments()
+
     osx_release = platform.mac_ver()[0]
 
     lg.info("running PyObjC tests on OSX %s", osx_release)
-    osx_dir = os.path.join(TEST_STATE_DIR, ".".join(osx_release.split(".")[:2]))
+    osx_dir = os.path.join(options.state_dir, ".".join(osx_release.split(".")[:2]))
     if not os.path.exists(osx_dir):
         os.makedirs(osx_dir)
 
@@ -196,7 +228,7 @@ def main():
 
     build_order = ['pyobjc-core'] + sort_framework_wrappers()
 
-    for py_ver in PY_VERSIONS:
+    for py_ver in options.python_versions:
         with virtualenv("python{}".format(py_ver)) as interpreter:
             # First install packages into the virtualenv
             for project in build_order:
@@ -206,7 +238,11 @@ def main():
                         project=project)
 
             # Then run tests for all supported architectures
-            for arch in ('i386', 'x86_64'):
+            for arch in ('ppc', 'i386', 'x86_64'):
+                if not supports_arch(interpreter, arch):
+                    lg.info("skipping Python %s (%7s), unsupported architecture", py_ver, arch)
+                    continue
+
                 lg.info("running with Python %s (%7s) using %s", py_ver, arch, interpreter)
                 state_dir = os.path.join(osx_dir, "%s-%s"%(py_ver, arch))
 
