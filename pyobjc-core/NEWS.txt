@@ -6,6 +6,12 @@ An overview of the relevant changes in new, and older, releases.
 Version 4.0
 -----------
 
+* Building pyobjc-core using "python setup.py develop" will use 'ccache'
+  when available.
+
+* Building pyobjc-core will compile the source files from new to old files,
+  to speed up feedback while working on the source code.
+
 * Legacy BridgeSupport files on macOS 10.13 (which aren't used by default
   by PyObjC) can contain junk data in typestring data. Cleanup that data
   before using it.
@@ -26,7 +32,9 @@ Version 4.0
   (the default) wrappers for C structs behave as before, when the
   option is False these wrappers can no longer be modified.
 
-  XXX: Need tests for these 3 items.
+* Struct wrapper initializers (such as the initializer for ``NSSize``)
+  are now more strict about the number of arguments provided. That is,
+  ``NSSize(1)`` is no longer valid, you need to specify both arguments.
 
 * Add availability macro ``MAC_OS_X_VERSION_10_13`` to ``objc``.
 

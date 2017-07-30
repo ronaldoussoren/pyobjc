@@ -445,7 +445,7 @@ def _working_compiler(executable):
 
     return True
 
-def _fixup_compiler():
+def _fixup_compiler(use_ccache):
     if 'CC' in os.environ:
         # CC is in the environment, always use explicit
         # overrides.
@@ -485,6 +485,12 @@ def _fixup_compiler():
     if not _working_compiler(cc):
         raise DistutilsPlatformError("Cannot locate a working compiler")
 
+    if use_ccache:
+        p = _find_executable('ccache')
+        if p is not None:
+            log.info("Detected and using 'ccache'")
+            cc = '%s %s'%(p, cc)
+
     if cc != oldcc:
         log.info("Use '%s' instead of '%s' as the compiler"%(cc, oldcc))
 
@@ -494,6 +500,9 @@ def _fixup_compiler():
                 split = vars[env].split()
                 split[0] = cc if env != 'CXX' else cc + '++'
                 vars[env] = ' '.join(split)
+
+
+
 
 
 class oc_build_ext (build_ext.build_ext):
@@ -584,7 +593,7 @@ class oc_build_ext (build_ext.build_ext):
             cflags = cflags.replace('-mno-fused-madd', '')
             get_config_vars()['CFLAGS'] = cflags
 
-        _fixup_compiler()
+        _fixup_compiler(use_ccache='develop' in sys.argv)
 
         build_ext.build_ext.run(self)
         extensions = self.extensions
@@ -654,14 +663,19 @@ def package_version():
 # bits that require Python code to calculate or are needed to control
 # the working of distutils.
 #
+
+# Note: sorts source files with most recently modified
+# first, gives faster feedback when working on source code.
+sources = list(glob.glob(os.path.join('Modules', 'objc', '*.m')))
+sources.sort(key=lambda x: (-os.stat(x).st_mtime, x))
 setup(
     ext_modules = [
         Extension(
             "objc._objc",
-            list(glob.glob(os.path.join('Modules', 'objc', '*.m'))),
+            sources,
             extra_compile_args=CFLAGS,
             extra_link_args=OBJC_LDFLAGS,
-            depends=list(glob.glob(os.path.join('Modules', 'objc', '*.h'))),
+            depends=sources,
         ),
         Extension(
             "objc._machsignals",
