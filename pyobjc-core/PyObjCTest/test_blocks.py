@@ -6,6 +6,8 @@ from PyObjCTest.block import OCTestBlock
 import objc
 import sys
 
+print (objc.__file__)
+
 if sys.maxsize > 2 ** 32:
     NSRect_tp = b'{CGRect={CGPoint=dd}{CGSize=dd}}'
 else:
@@ -102,6 +104,12 @@ objc.parseBridgeSupport('''\
             <arg type='d' />
           </arg>
         </method>
+        <method selector='callWithCompletion:'>
+          <arg index='0' block='true' type='@?'>
+            <retval type='v'/>
+            <arg type='@' />
+          </arg>
+        </method>
         <method selector='optionalBlock:'>
           <retval type='@' />
           <arg index='0' block='true' type='@?'>
@@ -134,6 +142,19 @@ class BlocksHelper (objc.lookUpClass('NSObject')):
         else:
             return block("x")
 
+
+class BlocksCompletion (objc.lookUpClass('NSObject')):
+    def callWithCompletion_(self, completion):
+        completion('hello')
+        completion('world')
+
+class BlockWithStoredCompletion (objc.lookUpClass('NSObject')):
+    def callWithCompletion_(self, completion):
+        self.completion = completion
+
+    def performCompletions(self):
+        self.completion('hello')
+        self.completion('world')
 
 class TestBlocks (TestCase):
     @min_os_level('10.6')
@@ -193,6 +214,30 @@ class TestBlocks (TestCase):
         obj.callIntBlock_withValue_(helper.callback_, 43)
         self.assertEqual(len(helper.values), 2)
         self.assertEqual(helper.values, [42, 43])
+
+    @min_os_level('10.6')
+    @onlyIf(blocksEnabled, "no blocks")
+    def testStackBlocksWithDirectUse(self):
+        obj = OCTestBlock.alloc().init()
+        tester = BlocksCompletion.alloc().init()
+        a = []
+
+        obj.callCompletionOn_andArray_(tester, a)
+        self.assertEqual(a, ['hello', 'world'])
+
+    @min_os_level('10.6')
+    @onlyIf(blocksEnabled, "no blocks")
+    def testStackBlocksWithIndirectUse(self):
+        obj = OCTestBlock.alloc().init()
+        tester = BlockWithStoredCompletion.alloc().init()
+        a = []
+
+        obj.callCompletionOn_andArray_(tester, a)
+        self.assertEqual(a, [])
+
+        tester.performCompletions()
+
+        self.assertEqual(a, ['hello', 'world'])
 
     @min_os_level('10.6')
     @onlyIf(blocksEnabled, "no blocks")

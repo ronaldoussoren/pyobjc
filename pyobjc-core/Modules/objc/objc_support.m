@@ -1849,11 +1849,6 @@ pythonify_c_value(const char *type, void *datum)
             Py_INCREF (retobject);
 
         } else {
-            /* stack blocks must be copied in order to be used from python */
-            if (strcmp(object_getClassName(obj), "__NSStackBlock__") == 0) {
-                obj = Block_copy(obj);
-            }
-
             retobject = [obj  __pyobjc_PythonObject__];
         }
         break;

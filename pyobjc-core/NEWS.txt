@@ -13,6 +13,8 @@ New features:
   Patch by Max Bélanger.  Fixes a crash when a stackbased block is passed
   into python.
 
+  Later updated with tests and a different implementation.
+
 * Issue #192: 32/64-bit issue with AppHelper.endSheetMethod
 
   This helper decorator used the wrong signature string, which happens to
