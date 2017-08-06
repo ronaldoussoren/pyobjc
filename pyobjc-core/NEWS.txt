@@ -8,6 +8,11 @@ Version 3.3
 
 New features:
 
+* Pull request #15: Fix crash when handling stack blocks
+
+  Patch by Max Bélanger.  Fixes a crash when a stackbased block is passed
+  into python.
+
 * Issue #192: 32/64-bit issue with AppHelper.endSheetMethod
 
   This helper decorator used the wrong signature string, which happens to
