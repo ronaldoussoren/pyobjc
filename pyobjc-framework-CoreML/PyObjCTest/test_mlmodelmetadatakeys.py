@@ -11,6 +11,7 @@ if sys.maxsize > 2 ** 32:
             self.assertIsInstance(CoreML.MLModelVersionStringKey, unicode)
             self.assertIsInstance(CoreML.MLModelAuthorKey, unicode)
             self.assertIsInstance(CoreML.MLModelLicenseKey, unicode)
+            self.assertIsInstance(CoreML.MLModelCreatorDefinedKey, unicode)
 
 
 if __name__ == "__main__":

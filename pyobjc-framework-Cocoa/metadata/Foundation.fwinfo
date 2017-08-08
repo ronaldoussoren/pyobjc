@@ -4,6 +4,7 @@
    "NSAppleEventSendDefaultOptions": { "value": "NSAppleEventSendWaitForReply | NSAppleEventSendCanInteract" }
   },
   "aliases": {
+    "NSISO8601DateFormatWithFractionalSeconds": { "alias": "kCFISO8601DateFormatWithFractionalSeconds" },
     "NSISO8601DateFormatWithYear": { "alias": "kCFISO8601DateFormatWithYear" },
     "NSISO8601DateFormatWithMonth": { "alias": "kCFISO8601DateFormatWithMonth" },
     "NSISO8601DateFormatWithWeekOfYear": { "alias": "kCFISO8601DateFormatWithWeekOfYear" },

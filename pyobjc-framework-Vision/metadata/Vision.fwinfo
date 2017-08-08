@@ -11,11 +11,20 @@
    "VNBarcodeSymbologyCODE93": { "typestr": "@" },
    "VNBarcodeSymbologyCODE93i": { "typestr": "@" },
    "VNBarcodeSymbologyCODE128": { "typestr": "@" },
+   "VNBarcodeSymbologyCode39": { "typestr": "@" },
+   "VNBarcodeSymbologyCode39Checksum": { "typestr": "@" },
+   "VNBarcodeSymbologyCode39FullASCII": { "typestr": "@" },
+   "VNBarcodeSymbologyCode39FullASCIIChecksum": { "typestr": "@" },
+   "VNBarcodeSymbologyCode93": { "typestr": "@" },
+   "VNBarcodeSymbologyCode93i": { "typestr": "@" },
+   "VNBarcodeSymbologyCode128": { "typestr": "@" },
    "VNBarcodeSymbologyDataMatrix": { "typestr": "@" },
    "VNBarcodeSymbologyEAN8": { "typestr": "@" },
    "VNBarcodeSymbologyEAN13": { "typestr": "@" },
    "VNBarcodeSymbologyI2OF5": { "typestr": "@" },
    "VNBarcodeSymbologyI2OF5Checksum": { "typestr": "@" },
+   "VNBarcodeSymbologyI2of5": { "typestr": "@" },
+   "VNBarcodeSymbologyI2of5Checksum": { "typestr": "@" },
    "VNBarcodeSymbologyITF14": { "typestr": "@" },
    "VNBarcodeSymbologyPDF417": { "typestr": "@" },
    "VNBarcodeSymbologyQR": { "typestr": "@" },
@@ -47,6 +56,24 @@
    "VNErrorInvalidModel": { "value": 15 }
   },
   "classes": {
+   "VNFaceLandmarkRegion": {
+    "methods": [
+     {
+      "selector": "normalizedPoints",
+      "class_method": false,
+      "retval": {
+       "c_array_of_variable_length": true
+      }
+     },
+     {
+      "selector": "pointsInImageOfSize:",
+      "class_method": false,
+      "retval": {
+       "c_array_of_variable_length": true
+      }
+     }
+    ]
+   },
    "VNTrackingRequest": {
     "methods": [
      {
@@ -217,6 +244,18 @@
       }
      },
      {
+      "selector": "usesCPUOnly",
+      "class_method": false,
+      "retval": { "type_override": "Z" }
+     },
+     {
+      "selector": "setUsesCPUOnly:",
+      "class_method": false,
+      "args": {
+       "0": { "type_override": "Z" }
+      }
+     },
+     {
       "selector": "preferBackgroundProcessing",
       "class_method": false,
       "retval": { "type_override": "Z" }
@@ -249,6 +288,38 @@
    "VNTargetedImageRequest": {
     "methods": [
      {
+      "selector": "initWithTargetedCVPixelBuffer:orientation:options:completionHandler:",
+      "class_method": false,
+      "args": {
+       "3": {
+        "callable": {
+	 "arguments": {
+	  "0": { "typestr": "^v" },
+	  "1": { "typestr": "@" },
+	  "2": { "typestr": "@" }
+	 },
+	 "retval": { "typestr": "v" }
+	}
+       }
+      }
+     },
+     {
+      "selector": "initWithTargetedCVPixelBuffer:options:completionHandler:",
+      "class_method": false,
+      "args": {
+       "2": {
+        "callable": {
+	 "arguments": {
+	  "0": { "typestr": "^v" },
+	  "1": { "typestr": "@" },
+	  "2": { "typestr": "@" }
+	 },
+	 "retval": { "typestr": "v" }
+	}
+       }
+      }
+     },
+     {
       "selector": "initWithTargetedCVPixelBuffer:completionHandler:",
       "class_method": false,
       "args": {
@@ -265,10 +336,74 @@
       }
      },
      {
+      "selector": "initWithTargetedCGImage:orientation:options:completionHandler:",
+      "class_method": false,
+      "args": {
+       "2": {
+        "callable": {
+	 "arguments": {
+	  "0": { "typestr": "^v" },
+	  "1": { "typestr": "@" },
+	  "2": { "typestr": "@" }
+	 },
+	 "retval": { "typestr": "v" }
+	}
+       }
+      }
+     },
+     {
+      "selector": "initWithTargetedCGImage:options:completionHandler:",
+      "class_method": false,
+      "args": {
+       "2": {
+        "callable": {
+	 "arguments": {
+	  "0": { "typestr": "^v" },
+	  "1": { "typestr": "@" },
+	  "2": { "typestr": "@" }
+	 },
+	 "retval": { "typestr": "v" }
+	}
+       }
+      }
+     },
+     {
       "selector": "initWithTargetedCGImage:completionHandler:",
       "class_method": false,
       "args": {
        "1": {
+        "callable": {
+	 "arguments": {
+	  "0": { "typestr": "^v" },
+	  "1": { "typestr": "@" },
+	  "2": { "typestr": "@" }
+	 },
+	 "retval": { "typestr": "v" }
+	}
+       }
+      }
+     },
+     {
+      "selector": "initWithTargetedCIImage:orientation:options:completionHandler:",
+      "class_method": false,
+      "args": {
+       "3": {
+        "callable": {
+	 "arguments": {
+	  "0": { "typestr": "^v" },
+	  "1": { "typestr": "@" },
+	  "2": { "typestr": "@" }
+	 },
+	 "retval": { "typestr": "v" }
+	}
+       }
+      }
+     },
+     {
+      "selector": "initWithTargetedCIImage:options:completionHandler:",
+      "class_method": false,
+      "args": {
+       "2": {
         "callable": {
 	 "arguments": {
 	  "0": { "typestr": "^v" },
@@ -313,10 +448,74 @@
       }
      },
      {
+      "selector": "initWithTargetedImageURL:options:completionHandler:",
+      "class_method": false,
+      "args": {
+       "2": {
+        "callable": {
+	 "arguments": {
+	  "0": { "typestr": "^v" },
+	  "1": { "typestr": "@" },
+	  "2": { "typestr": "@" }
+	 },
+	 "retval": { "typestr": "v" }
+	}
+       }
+      }
+     },
+     {
+      "selector": "initWithTargetedImageURL:orientation:options:completionHandler:",
+      "class_method": false,
+      "args": {
+       "3": {
+        "callable": {
+	 "arguments": {
+	  "0": { "typestr": "^v" },
+	  "1": { "typestr": "@" },
+	  "2": { "typestr": "@" }
+	 },
+	 "retval": { "typestr": "v" }
+	}
+       }
+      }
+     },
+     {
       "selector": "initWithTargetedImageData:completionHandler:",
       "class_method": false,
       "args": {
        "1": {
+        "callable": {
+	 "arguments": {
+	  "0": { "typestr": "^v" },
+	  "1": { "typestr": "@" },
+	  "2": { "typestr": "@" }
+	 },
+	 "retval": { "typestr": "v" }
+	}
+       }
+      }
+     },
+     {
+      "selector": "initWithTargetedImageData:options:completionHandler:",
+      "class_method": false,
+      "args": {
+       "2": {
+        "callable": {
+	 "arguments": {
+	  "0": { "typestr": "^v" },
+	  "1": { "typestr": "@" },
+	  "2": { "typestr": "@" }
+	 },
+	 "retval": { "typestr": "v" }
+	}
+       }
+      }
+     },
+     {
+      "selector": "initWithTargetedImageData:orientation:options:completionHandler:",
+      "class_method": false,
+      "args": {
+       "3": {
         "callable": {
 	 "arguments": {
 	  "0": { "typestr": "^v" },

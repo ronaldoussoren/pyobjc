@@ -10,6 +10,8 @@ if sys.maxsize >= 2**32:
             self.assertArgIsBlock(Vision.VNRequest.initWithCompletionHandler_, 0, b'v@@')
             self.assertResultIsBOOL(Vision.VNRequest.preferBackgroundProcessing)
             self.assertArgIsBOOL(Vision.VNRequest.setPreferBackgroundProcessing_, 0)
+            self.assertResultIsBOOL(Vision.VNRequest.usesCPUOnly)
+            self.assertArgIsBOOL(Vision.VNRequest.setUsesCPUOnly_, 0)
             self.assertResultIsBlock(Vision.VNRequest.completionHandler, b'v@@')
 
 if __name__ == "__main__":

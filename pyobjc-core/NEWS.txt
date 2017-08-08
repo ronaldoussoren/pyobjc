@@ -41,30 +41,30 @@ Version 4.0
 * New framework wrappers:
 
   - ColorSync (new in macOS 10.13)
-  - CoreML (new in macOS 10.13)			(beta 3) (beta 4)
+  - CoreML (new in macOS 10.13)			(beta 3) (beta 4) (beta 5)
   - ExternalAccessory (new in macOS 10.13)
   - CoreSpotlight (new in macOS 10.13)
-  - Vision (new in macOS 10.13)			(beta 3)
+  - Vision (new in macOS 10.13)			(beta 3)          (beta 5)
 
 * metadata updates (beta 4):
 
   - PhotosUI
   - Accounts				 (beta 4)
   - AddressBook
-  - AppKit			(beta 3) (beta 4)
-  - ApplicationServices
+  - AppKit			(beta 3) (beta 4) (beta 5)
+  - ApplicationServices				  (beta 5)
   - Automator			(beta 3) (beta 4)
-  - AVKit			(beta 3)
+  - AVKit			(beta 3)	  (beta 5)
   - CalendarStore			 (beta 4)
   - CFNetwork
   - CloudKit			(beta 3)
-  - Contacts			(beta 3)
+  - Contacts			(beta 3)	  (beta 5)
   - CoreBluetooth		(beta 3)
-  - CoreData			(beta 3) (beta 4)
-  - CoreFoundation		(beta 3) (beta 4)
-  - CoreGraphics		(beta 3) (beta 4)
+  - CoreData			(beta 3) (beta 4) (beta 5)
+  - CoreFoundation		(beta 3) (beta 4) (beta 5)
+  - CoreGraphics		(beta 3) (beta 4) (beta 5)
   - CoreImage			(beta 3) (beta 4)
-  - CoreLocation		(beta 3) (beta 4)
+  - CoreLocation		(beta 3) (beta 4) (beta 5)
   - CoreServices		(beta 3)
   - CoreText			(beta 3) (beta 4)
   - CoreVideo			(beta 3)
@@ -72,7 +72,7 @@ Version 4.0
   - CryptoTokenKit
   - EventKit
   - FinderSync			(beta 3) (beta 4)
-  - Foundation			(beta 3) (beta 4)
+  - Foundation			(beta 3) (beta 4) (beta 5)
   - FSEvents
   - GameController		(beta 3) (beta 4)
   - IMServicePlugIn
@@ -80,30 +80,31 @@ Version 4.0
   - ImageCaptureCore
   - ImageCaptureCore			 (beta 4)
   - ImageIO			(beta 3)
-  - Intents			(beta 3) (beta 4)
+  - Intents			(beta 3) (beta 4) (beta 5)
   - IOSurface
   - JavaScriptCore
   - LocalAuthentication		(beta 3) (beta 4)
   - MapKit				 (beta 4)
   - MediaLibrary		(beta 3)
-  - MediaPlayer			(beta 3) (beta 4)
-  - ModelIO			(beta 3)
+  - MediaPlayer			(beta 3) (beta 4) (beta 5)
+  - ModelIO			(beta 3)          (beta 5)
   - MultipeerConnectivity
   - NetFS			(beta 3)
   - NetworkExtension		(beta 3) (beta 4)
   - OpenDirectory			 (beta 4)
-  - Photos			(beta 3)
+  - Photos			(beta 3)          (beta 5)
   - PhotosUI
   - QTKit
   - QTKit
-  - Quartz 			(beta 3) (beta 4)
+  - Quartz 			(beta 3) (beta 4) (beta 5)
   - QuartzCore
   - QuickLook
   - QuickLook
   - SafariServices		(beta 3)
-  - SceneKit			(beta 3) (beta 4)
+  - SceneKit			(beta 3) (beta 4) (beta 5)
   - ScreenSaver
-  - SpriteKit			(beta 3)
+  - Social                                        (beta 5)
+  - SpriteKit			(beta 3)          (beta 5)
   - SystemConfiguration		(beta 3) (beta 4)
   - WebKit			(beta 3) (beta 4)
 

@@ -10,6 +10,7 @@ if sys.maxsize > 2**32:
             self.assertEqual(MediaPlayer.MPRemoteCommandHandlerStatusSuccess, 0)
             self.assertEqual(MediaPlayer.MPRemoteCommandHandlerStatusNoSuchContent, 100)
             self.assertEqual(MediaPlayer.MPRemoteCommandHandlerStatusNoActionableNowPlayingItem, 110)
+            self.assertEqual(MediaPlayer.MPRemoteCommandHandlerStatusDeviceNotFound, 120)
             self.assertEqual(MediaPlayer.MPRemoteCommandHandlerStatusCommandFailed, 200)
 
         @min_os_level('10.12')

@@ -33,6 +33,7 @@
    "kCGPDFOutlineDestination": { "typestr": "@" },
    "kCGPDFOutlineDestinationRect": { "typestr": "@" },
    "kCGPDFContextAccessPermissions": { "typestr": "@" },
+   "kCGColorSpaceGenericLab": { "typestr": "@" },
    "kCGColorSpaceExtendedSRGB": { "typestr": "@" },
    "kCGColorSpaceLinearSRGB": { "typestr": "@" },
    "kCGColorSpaceExtendedLinearSRGB": { "typestr": "@" },
@@ -596,6 +597,12 @@
     "retval": {
      "already_cfretained": true
     }
+   },
+   "CGColorSpaceGetName": {
+    "args": {
+     "0": { "typestr":"^{CGColorSpace=}" }
+    },
+    "retval": { "typestr": "^{__CFString=}" }
    },
    "CGColorSpaceGetBaseColorSpace": {
     "args": {

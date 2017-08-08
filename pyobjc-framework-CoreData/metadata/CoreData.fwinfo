@@ -36,6 +36,8 @@
    "NSMigrationConstraintViolationError": { "value": 134111 }
   },
   "externs": {
+   "NSBinaryStoreSecureDecodingClasses": { "typestr": "@" },
+   "NSBinaryStoreInsecureDecodingCompatibilityOption": { "typestr": "@" },
    "NSPersistentHistoryTrackingKey": { "typestr": "@" },
    "NSPersistentStoreForceDestroyOption": { "typestr": "@" },
    "NSPersistentStoreConnectionPoolMaxSizeKey": { "typestr": "@" },

@@ -16,6 +16,7 @@
    "MLFeatureTypeDictionary": { "value": 6 }
   },
   "externs": {
+   "MLModelCreatorDefinedKey": { "typestr": "@" },
    "MLModelDescriptionKey": { "typestr": "@" },
    "MLModelVersionStringKey": { "typestr": "@" },
    "MLModelAuthorKey": { "typestr": "@" },

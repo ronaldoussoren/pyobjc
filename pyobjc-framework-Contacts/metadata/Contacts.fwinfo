@@ -1,6 +1,7 @@
 {
  "definitions": {
   "enum": {
+   "CNErrorCodeVCardMalformed": { "value": 700 },
    "CNContactTypePerson": { "value": 0 },
    "CNContactTypeOrganization": { "value": 1 },
    "CNContactSortOrderNone": { "value": 0 },

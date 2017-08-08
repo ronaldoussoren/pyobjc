@@ -76,6 +76,8 @@ class TestNSPersistentStoreCoordinator (TestCase):
     @min_os_level("10.13")
     def testConstants10_13(self):
         self.assertIsInstance(NSPersistentHistoryTrackingKey, unicode)
+        self.assertIsInstance(NSBinaryStoreSecureDecodingClasses, unicode)
+        self.assertIsInstance(NSBinaryStoreInsecureDecodingCompatibilityOption, unicode)
 
     def testMethods(self):
         self.assertArgIsOut(NSPersistentStoreCoordinator.addPersistentStoreWithType_configuration_URL_options_error_, 4)
