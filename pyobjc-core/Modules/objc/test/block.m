@@ -7,6 +7,7 @@
 @interface NSObject (IndirectBlockTest)
 -(double)processBlock:(double(^)(double, double))aBlock;
 -(id)optionalBlock:(id(^)(id))aBlock;
+-(void)callWithCompletion:(void(^)(id))aBlock;
 @end
 #endif
 
@@ -20,6 +21,7 @@
 -(void)callIntBlock:(void(^)(int))block withValue:(int)value;
 -(double)callDoubleBlock:(double(^)(double, double))block withValue:(double)v1 andValue:(double)v2;
 -(id)callOptionalBlock:(id(^)(id))block withValue:(id)value;
+-(void)callCompletionOn:(NSObject*)v andArray:(NSMutableArray*)w;
 
 -(int(^)(int))getIntBlock2;
 -(int(^)(int, int))getIntBlock3;
@@ -111,6 +113,11 @@
     } else {
         return block(value);
     }
+}
+
+-(void)callCompletionOn:(NSObject*)v andArray:(NSMutableArray*)w
+{
+    [v callWithCompletion:^(id value) { [w addObject:value]; }];
 }
 
 #define BLOCK_HAS_COPY_DISPOSE (1 << 25)

@@ -28,7 +28,7 @@ enum {
  * End of definitions.
  */
 
-static Class gStackBlockClass = nil;
+static Class gGlobalBlockClass = nil;
 
 struct block_descriptor {
     unsigned long int reserved;
@@ -358,7 +358,7 @@ PyObjCBlock_Create(PyObjCMethodSignature* signature, PyObject* callable)
 {
     struct block_literal* block;
 
-    if (gStackBlockClass == NULL) {
+    if (gGlobalBlockClass == NULL) {
         PyErr_SetString(PyObjCExc_Error, "Blocks not supported on this platform");
         return NULL;
     }
@@ -383,7 +383,7 @@ PyObjCBlock_Create(PyObjCMethodSignature* signature, PyObject* callable)
         return NULL;
     }
     block->flags |= BLOCK_HAS_SIGNATURE;
-    block->isa = gStackBlockClass;
+    block->isa = gGlobalBlockClass;
     block->invoke = PyObjCFFI_MakeBlockFunction(signature, callable);
     if (block->invoke == NULL) {
         PyMem_Free(block);
@@ -410,17 +410,81 @@ PyObjCBlock_Release(void* _block)
 }
 
 
-int
-PyObjCBlock_Setup(void)
-{
-    gStackBlockClass = objc_lookUpClass("__NSGlobalBlock__");
-
-    return 0;
-}
-
-
 _block_func_ptr
 PyObjCBlock_GetFunction(void* block)
 {
     return ((struct block_literal*)block)->invoke;
+}
+
+/*
+ * Support for converting blocks to python objects.
+ */
+
+static PyObject*
+pyobjc_PythonObject(NSObject* self, SEL _sel __attribute__((__unused__)))
+{
+    PyObject *rval;
+
+    /* Stack blocks are allocated on the stack and cause problems with
+     * Python's garbage collections. Therefore uncondationally copy them,
+     * which converts them to dynamicly allocated blocks.
+     */
+    self = [self copy];
+
+    rval = PyObjC_FindPythonProxy(self);
+
+    rval = (PyObject *)PyObjCObject_New(self, PyObjCObject_kDEFAULT, YES);
+    [self release];
+    if (rval == NULL) {
+        return NULL;
+    }
+
+    if (rval != NULL) {
+        PyObjC_RegisterPythonProxy(self, rval);
+    }
+
+    return rval;
+}
+
+static PyObject*
+pyobjc_PythonTransient(NSObject* self, SEL _sel __attribute__((__unused__)), int* cookie)
+{
+    /* Stack blocks are allocated on the stack and cause problems with
+     * Python's garbage collections. Therefore uncondationally copy them,
+     * which converts them to dynamicly allocated blocks.
+     */
+
+    self = [self copy];
+
+    PyObject* result = PyObjC_FindPythonProxy(self);
+    if (result) {
+        *cookie = 0;
+        return result;
+    }
+
+    *cookie = 1;
+    result = PyObjCObject_New(self, PyObjCObject_kDEFAULT, YES);
+    [self release];
+    return result;
+}
+
+int
+PyObjCBlock_Setup(void)
+{
+    Class StackBlock;
+    gGlobalBlockClass = objc_lookUpClass("__NSGlobalBlock__");
+
+    StackBlock = objc_lookUpClass("__NSStackBlock__");
+    if (StackBlock != Nil) {
+        if (!class_addMethod(StackBlock, @selector(__pyobjc_PythonObject__), (IMP)pyobjc_PythonObject, "^{_object}@:")) {
+            PyErr_SetString(PyObjCExc_InternalError, "Cannot initialize block support");
+            return -1;
+        }
+        if (!class_addMethod(StackBlock, @selector(__pyobjc_PythonTransient__:), (IMP)pyobjc_PythonTransient, "^{_object}@:^i")) {
+            PyErr_SetString(PyObjCExc_InternalError, "Cannot initialize block support");
+            return -1;
+        }
+    }
+
+    return 0;
 }
