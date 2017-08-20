@@ -428,66 +428,62 @@ TEST_XML=b"""\
 </signatures>
 """
 
+def iter_framework_dir(framework_dir):
+    for dn in os.listdir(framework_dir):
+        fn = os.path.join(framework_dir, dn, 'Resources', 'BridgeSupport', dn.replace('.framework', '.bridgesupport'))
+        if os.path.exists(fn):
+            yield fn
+
+        fn = os.path.join(framework_dir, dn, 'Frameworks')
+        if os.path.exists(fn):
+            for item in iter_framework_dir(fn):
+                yield item
+
+def iter_system_bridgesupport_files():
+    for item in iter_framework_dir('/System/Library/Frameworks'):
+        yield item
+
+def contains_any(name, fragments):
+    return any(x in name for x in fragments)
+
 class TestBridgeSupportParser (TestCase):
     def testInvalidToplevel(self):
         self.assertRaises(objc.error, bridgesupport._BridgeSupportParser, b'<signatures2></signatures2>', 'Cocoa')
         self.assertRaises(ET.ParseError, bridgesupport._BridgeSupportParser, b'<signatures2></signatures>', 'Cocoa')
 
-    def iter_framework_dir(self, framework_dir):
-        for dn in os.listdir(framework_dir):
-            fn = os.path.join(framework_dir, dn, 'Resources', 'BridgeSupport', dn.replace('.framework', '.bridgesupport'))
-            if os.path.exists(fn):
-                yield fn
+    # I'd like to use a test method with subTests here, but that doesn't support marking some subtests as expected failures
+    BROKEN_FRAMEWORKS=(
+            'AE.bridgesupport',             'ATS.bridgesupport',                    'AVFoundation.bridgesupport',
+            'AudioToolbox.bridgesupport',   'CarbonSound.bridgesupport',            'CommonPanels.bridgesupport',
+            'CoreAudio.bridgesupport',      'CoreMIDI.bridgesupport',               'CoreText.bridgesupport',
+            'CoreVideo.bridgesupport',      'GameplayKit.bridgesupport',            'HIServices.bridgesupport',
+            'HIToolbox.bridgesupport',      'IOBluetooth.bridgesupport',            'IOKit.bridgesupport',
+            'Kerberos.bridgesupport',       'LangAnalysis.bridgesupport',           'MPSImage.bridgesupport',
+            'ModelIO.bridgesupport',        'NavigationServices.bridgesupport',     'OSServices.bridgesupport',
+            'Python.bridgesupport',         'QD.bridgesupport',                     'SceneKit.bridgesupport',
+            'Security.bridgesupport',       'SpeechSynthesis.bridgesupport',        'SpriteKit.bridgesupport',
+            'System.bridgesupport',         'TWAIN.bridgesupport',                  'Tk.bridgesupport',
+            'Tcl.bridgesupport',            'Vision.bridgesupport',
+            )
 
-            fn = os.path.join(framework_dir, dn, 'Frameworks')
-            if os.path.exists(fn):
-                for item in self.iter_framework_dir(fn):
-                    yield item
+    for fn in iter_system_bridgesupport_files():
+        _test_name = 'test_' + fn.replace('/System/Library/Frameworks', '').replace('/', '_').replace('.bridgesupport', '').replace('.framework', '')
+        def test_func(self, fn=fn):
+            with open(fn, 'rb') as fp:
+                xmldata = fp.read()
 
-    def iter_system_bridgesupport_files(self):
-        for item in self.iter_framework_dir('/System/Library/Frameworks'):
-            yield item
+                self.assert_valid_bridgesupport(os.path.basename(fn).split('.')[0], xmldata)
 
-    def test_system_bridgesupport(self):
-        # NOTE: As of beta 1 of macOS 10.13 a number of system bridge support files are broken
-        BROKEN_FRAMEWORKS=('Vision.framework', 'TWAIN.framework', 'Tk.framework', 'Tcl.framework', 'System.framework', 'SpriteKit.framework',
-                'Security.framework', 'SceneKit.framework', 'Python.framework', 'ModelIO.framework', 'MetalPerformanceShaders.framework',
-                'Kerberos.framework', 'IOKit.framework', 'IOBluetooth.framework', 'GameplayKit.framework', 'CoreVideo.framework', 'CoreText.framework',
-                'CoreServices.framework', 'CoreServices.framework', 'CoreMIDI.framework', 'CoreAudio.framework', 'Carbon.framework',
-                'AVFoundation.framework', 'AudioToolbox.framework', 'ApplicationServices.framework', )
+        test_func.__name__ = _test_name
+        test_func.__doc__ = "System bridgesupport %r"%(fn,)
 
-        with filterWarnings("ignore", RuntimeWarning):
-            # Check that all system bridgesupport files can be processed correctly
-            for fn in self.iter_system_bridgesupport_files():
-                if hasattr(self, 'subTest'):
-                    with self.subTest(fn) as subtest:
-                        with open(fn, 'rb') as fp:
-                            xmldata = fp.read()
+        if contains_any(fn, BROKEN_FRAMEWORKS) and os_release() in ('10.13',):
+            locals()[_test_name] = expectedFailure(test_func)
+        else:
+            locals()[_test_name] = test_func
+        del test_func
+        del _test_name
 
-                        try:
-                            self.assert_valid_bridgesupport(os.path.basename(fn).split('.')[0], xmldata)
-
-                        except:
-                            if any(x in fn for x in BROKEN_FRAMEWORKS):
-                                # It is not possible to mark a subtest as an expected failure
-                                self.skipTest('broken framework')
-
-                            else:
-                                raise
-                else:
-                    with open(fn, 'rb') as fp:
-                        xmldata = fp.read()
-
-                    try:
-                        self.assert_valid_bridgesupport(os.path.basename(fn).split('.')[0], xmldata)
-
-                    except:
-                            if any(x in fn for x in BROKEN_FRAMEWORKS):
-                                # It is not possible to mark a subtest as an expected failure
-                                pass
-
-                            else:
-                                raise
 
     def test_xml_structure_variants(self):
         # Run 'verify_xml_structure' for all cpu variant

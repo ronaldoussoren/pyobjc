@@ -235,12 +235,14 @@
       "selector": "completionHandler",
       "class_method": false,
       "retval": {
-       "arguments": {
-        "0": { "typestr": "^v" },
-        "0": { "typestr": "@" },
-        "0": { "typestr": "@" }
-       },
-       "retval": { "typestr": "v" }
+       "callable": {
+        "arguments": {
+         "0": { "typestr": "^v" },
+         "1": { "typestr": "@" },
+         "2": { "typestr": "@" }
+        },
+        "retval": { "typestr": "v" }
+       }
       }
      },
      {
@@ -339,7 +341,7 @@
       "selector": "initWithTargetedCGImage:orientation:options:completionHandler:",
       "class_method": false,
       "args": {
-       "2": {
+       "3": {
         "callable": {
 	 "arguments": {
 	  "0": { "typestr": "^v" },

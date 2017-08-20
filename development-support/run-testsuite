@@ -220,7 +220,7 @@ def main():
     # The exceptionhandling testsuite calls atos and that can ask for a password.
     # Run the executable now to avoid problems later
     print('Please ignore the atos output below')
-    subprocess.call['/usr/bin/atos', '/bin/sh', '0x0'])
+    subprocess.call(['/usr/bin/atos', '/bin/sh', '0x0'])
 
     osx_release = platform.mac_ver()[0]
 

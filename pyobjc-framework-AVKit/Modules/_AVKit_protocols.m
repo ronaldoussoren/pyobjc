@@ -10,7 +10,4 @@ static void __attribute__((__used__)) use_protocols(void)
 #if defined(__x86_64__) && PyObjC_BUILD_RELEASE >= 1010
     p = PyObjC_IdToPython(@protocol(AVCaptureViewDelegate)); Py_XDECREF(p);
 #endif
-#if defined(__x86_64__) && PyObjC_BUILD_RELEASE >= 1013
-    p = PyObjC_IdToPython(@protocol(AVRoutePickerViewDelegate)); Py_XDECREF(p);
-#endif
 }

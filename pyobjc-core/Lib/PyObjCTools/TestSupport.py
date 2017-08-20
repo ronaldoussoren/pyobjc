@@ -16,6 +16,7 @@ import struct as _struct
 from distutils.sysconfig import get_config_var as _get_config_var
 import re as _re
 import warnings
+import contextlib
 
 # Ensure that methods in this module get filtered in the tracebacks
 # from unittest
@@ -53,6 +54,21 @@ except NameError:
 def _typemap(tp): # XXX: Is this needed?
     if tp is None: return None
     return tp.replace(b'_NSRect', b'CGRect').replace(b'_NSPoint', b'CGPoint').replace(b'_NSSize', b'CGSize')
+
+@contextlib.contextmanager
+def pyobjc_options(**kwds):
+    orig = {}
+    try:
+        for k in kwds:
+            orig[k] = getattr(objc.options, k)
+            setattr(objc.options, k, kwds[k])
+
+        yield
+
+    finally:
+        for k in orig:
+            setattr(objc.options, k, orig[k])
+
 
 def sdkForPython(_cache=[]):
     """

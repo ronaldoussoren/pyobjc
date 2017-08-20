@@ -203,13 +203,16 @@ def same_order(lst1, lst2):
 
 class oc_test (Command):
     description = "run test suite"
-    user_options = []
+    user_options = [
+        ('verbosity=', None, "print what tests are run"),
+    ]
 
     def initialize_options(self):
-        pass
+        self.verbosity=1
 
     def finalize_options(self):
-        pass
+        if isinstance(self.verbosity, str):
+            self.verbosity=int(self.verbosity)
 
     def run(self):
         print("  validating framework list...")

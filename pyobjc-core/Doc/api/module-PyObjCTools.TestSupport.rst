@@ -14,6 +14,11 @@ wrappers.
    This module is primarily used for testing PyObjC
    and the API isn't fully stable.
 
+.. function:: pyobjc_options(\**kwds)
+
+   Contextmanager that sets attributes of :data:`objc.options`
+   to the given values while running the body of the
+   block.
 
 .. function:: sdkForPython()
 

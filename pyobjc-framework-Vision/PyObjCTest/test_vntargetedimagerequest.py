@@ -11,7 +11,7 @@ if sys.maxsize >= 2**32:
             self.assertArgIsBlock(Vision.VNTargetedImageRequest.initWithTargetedCGImage_completionHandler_, 1, b'v@@')
             self.assertArgIsBlock(Vision.VNTargetedImageRequest.initWithTargetedCIImage_completionHandler_, 1, b'v@@')
             self.assertArgIsBlock(Vision.VNTargetedImageRequest.initWithTargetedCIImage_options_completionHandler_, 2, b'v@@')
-            self.assertArgIsBlock(Vision.VNTargetedImageRequest.initWithTargetedCIImage_orientation_options_completionHandler_, 2, b'v@@')
+            self.assertArgIsBlock(Vision.VNTargetedImageRequest.initWithTargetedCIImage_orientation_options_completionHandler_, 3, b'v@@')
             self.assertArgIsBlock(Vision.VNTargetedImageRequest.initWithTargetedImageURL_completionHandler_, 1, b'v@@')
             self.assertArgIsBlock(Vision.VNTargetedImageRequest.initWithTargetedImageURL_options_completionHandler_, 2, b'v@@')
             self.assertArgIsBlock(Vision.VNTargetedImageRequest.initWithTargetedImageURL_orientation_options_completionHandler_, 3, b'v@@')
