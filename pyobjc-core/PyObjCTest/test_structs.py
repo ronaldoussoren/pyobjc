@@ -42,6 +42,8 @@ class TestStructs (TestCase):
         self.assertIsInstance(v, objc.ivar)
         self.assertEqual(v.__typestr__, tp.__typestr__)
 
+        self.assertIsSubclass(tp, objc._structwrapper)
+
 
     def testNamedTupleAPI(self):
         Point = objc.createStructType("OCPoint", b"{_OCPoint=dd}", ["x", "y"])
@@ -261,7 +263,6 @@ class TestStructs (TestCase):
             self.assertEqual(v.first, 2)
             self.assertEqual(v.second, 3)
 
-            self.assertRaises(TypeError, tp0, 4)
             self.assertRaises(TypeError, tp0, 4, 5, 6)
 
 if __name__ == "__main__":

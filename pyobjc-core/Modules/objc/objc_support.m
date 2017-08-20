@@ -1287,7 +1287,7 @@ pythonify_c_struct(const char *type, void *datum)
 
             } else {
                 int r;
-                r = PySequence_SetItem(ret, itemidx, pyitem);
+                r = PyObjC_SetStructField(ret, itemidx, pyitem);
                 Py_DECREF(pyitem);
 
                 if (r == -1) {
@@ -1639,7 +1639,11 @@ depythonify_c_struct(const char *types, PyObject *arg, void *datum)
         type = PyObjCRT_SkipTypeSpec(type);
     }
 
-    seq = PySequence_Fast(arg, "depythonifying struct, got no sequence");
+    if (PyObjCStruct_Check(arg)) {
+        seq = StructAsTuple(arg);
+    } else {
+        seq = PySequence_Fast(arg, "depythonifying struct, got no sequence");
+    }
     if (seq == NULL) {
         return -1;
     }

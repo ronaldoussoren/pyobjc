@@ -40,6 +40,13 @@ SET_STRUCT_FIELD(PyObject* self, PyMemberDef* member, PyObject* val)
     Py_XDECREF(tmp);
 }
 
+
+static inline Py_ssize_t
+STRUCT_LENGTH(PyObject* self)
+{
+    return (Py_TYPE(self)->tp_basicsize - sizeof(PyObject)) / sizeof(PyObject*);
+}
+
 /*
  * Implementation of the sequence interface.
  */
@@ -52,13 +59,13 @@ struct_sq_length(PyObject* self)
      */
     if (!PyObjC_StructsIndexable) {
         PyErr_Format(PyExc_TypeError,
-            "Instances of '%s' are not sequences", Py_TYPE(self)->tp_name);
+            "Instances of '%s' are not sequences 1", Py_TYPE(self)->tp_name);
         return -1;
     }
     if (PyErr_Warn(PyExc_DeprecationWarning, "Using struct wrapper as sequence") < 0) {
         return -1;
     }
-    return (Py_TYPE(self)->tp_basicsize - sizeof(PyObject)) / sizeof(PyObject*);
+    return STRUCT_LENGTH(self);
 }
 
 static PyObject*
@@ -70,14 +77,14 @@ struct_sq_item(PyObject* self, Py_ssize_t offset)
 
     if (!PyObjC_StructsIndexable) {
         PyErr_Format(PyExc_TypeError,
-            "Instances of '%s' are not sequences", Py_TYPE(self)->tp_name);
+            "Instances of '%s' are not sequences 2", Py_TYPE(self)->tp_name);
         return NULL;
     }
     if (PyErr_Warn(PyExc_DeprecationWarning, "Using struct wrapper as sequence") < 0) {
         return NULL;
     }
 
-    len = struct_sq_length(self);
+    len = STRUCT_LENGTH(self);
 
     if (offset < 0 || offset >= len) {
         PyErr_Format(PyExc_IndexError,
@@ -101,14 +108,14 @@ struct_sq_slice(PyObject* self, Py_ssize_t ilow, Py_ssize_t ihigh)
 
     if (!PyObjC_StructsIndexable) {
         PyErr_Format(PyExc_TypeError,
-            "Instances of '%s' are not sequences", Py_TYPE(self)->tp_name);
+            "Instances of '%s' are not sequences 3", Py_TYPE(self)->tp_name);
         return NULL;
     }
     if (PyErr_Warn(PyExc_DeprecationWarning, "Using struct wrapper as sequence") < 0) {
         return NULL;
     }
 
-    len = struct_sq_length(self);
+    len = STRUCT_LENGTH(self);
     if (ilow < 0) ilow = 0;
     if (ihigh > len) ihigh = len;
 
@@ -134,7 +141,7 @@ struct_sq_ass_item(PyObject* self, Py_ssize_t offset, PyObject* newVal)
 
     if (!PyObjC_StructsIndexable) {
         PyErr_Format(PyExc_TypeError,
-            "Instances of '%s' are not sequences", Py_TYPE(self)->tp_name);
+            "Instances of '%s' are not sequences 4", Py_TYPE(self)->tp_name);
         return -1;
     }
     if (!PyObjC_StructsWritable) {
@@ -153,7 +160,7 @@ struct_sq_ass_item(PyObject* self, Py_ssize_t offset, PyObject* newVal)
         return -1;
     }
 
-    len = struct_sq_length(self);
+    len = STRUCT_LENGTH(self);
 
     if ((offset < 0) || (offset >= len)) {
         PyErr_Format(PyExc_IndexError,
@@ -174,7 +181,7 @@ struct_sq_ass_slice(PyObject* self, Py_ssize_t ilow, Py_ssize_t ihigh, PyObject*
 
     if (!PyObjC_StructsIndexable) {
         PyErr_Format(PyExc_TypeError,
-            "Instances of '%s' are not sequences", Py_TYPE(self)->tp_name);
+            "Instances of '%s' are not sequences 5", Py_TYPE(self)->tp_name);
         return -1;
     }
     if (!PyObjC_StructsWritable) {
@@ -194,7 +201,7 @@ struct_sq_ass_slice(PyObject* self, Py_ssize_t ilow, Py_ssize_t ihigh, PyObject*
     }
 
 
-    len = struct_sq_length(self);
+    len = STRUCT_LENGTH(self);
     if (ilow < 0) {
         ilow = 0;
     } else if (ilow > len) {
@@ -240,7 +247,7 @@ struct_sq_contains(PyObject* self, PyObject* value)
 
     if (!PyObjC_StructsIndexable) {
         PyErr_Format(PyExc_TypeError,
-            "Instances of '%s' are not sequences", Py_TYPE(self)->tp_name);
+            "Instances of '%s' are not sequences 6", Py_TYPE(self)->tp_name);
         return -1;
     }
     if (PyErr_Warn(PyExc_DeprecationWarning, "Using struct wrapper as sequence") < 0) {
@@ -268,7 +275,7 @@ struct_reduce(PyObject* self)
     PyObject* values;
     Py_ssize_t i, len;
 
-    len = struct_sq_length(self);
+    len = STRUCT_LENGTH(self);
     values = PyTuple_New(len);
     if (values == NULL) return NULL;
 
@@ -408,7 +415,7 @@ struct_mp_subscript(PyObject* self, PyObject* item)
 {
     if (!PyObjC_StructsIndexable) {
         PyErr_Format(PyExc_TypeError,
-            "Instances of '%s' are not sequences", Py_TYPE(self)->tp_name);
+            "Instances of '%s' are not sequences 7", Py_TYPE(self)->tp_name);
         return NULL;
     }
     if (PyErr_Warn(PyExc_DeprecationWarning, "Using struct wrapper as sequence") < 0) {
@@ -424,7 +431,7 @@ struct_mp_subscript(PyObject* self, PyObject* item)
         }
 
         if (i < 0) {
-            i += struct_sq_length(self);
+            i += STRUCT_LENGTH(self);
         }
         return struct_sq_item(self, i);
 
@@ -434,7 +441,7 @@ struct_mp_subscript(PyObject* self, PyObject* item)
         PyObject* it;
 
         if (PySlice_GetIndicesEx(SLICE_CAST(item),
-                struct_sq_length(self),
+                STRUCT_LENGTH(self),
                 &start, &stop, &step, &slicelength) < 0) {
             return NULL;
         }
@@ -472,7 +479,7 @@ struct_mp_ass_subscript(PyObject* self, PyObject* item, PyObject* value)
 {
     if (!PyObjC_StructsIndexable) {
         PyErr_Format(PyExc_TypeError,
-            "Instances of '%s' are not sequences", Py_TYPE(self)->tp_name);
+            "Instances of '%s' are not sequences 8", Py_TYPE(self)->tp_name);
         return -1;
     }
     if (!PyObjC_StructsWritable) {
@@ -492,14 +499,14 @@ struct_mp_ass_subscript(PyObject* self, PyObject* item, PyObject* value)
         }
 
         if (i < 0) {
-            i += struct_sq_length(self);
+            i += STRUCT_LENGTH(self);
         }
         return struct_sq_ass_item(self, i, value);
     } else if (PySlice_Check(item)) {
         Py_ssize_t start, stop, step, slicelength;
 
         if (PySlice_GetIndicesEx(SLICE_CAST(item),
-                struct_sq_length(self), &start, &stop,
+                STRUCT_LENGTH(self), &start, &stop,
                 &step, &slicelength) < 0) {
             return -1;
         }
@@ -769,12 +776,11 @@ static int set_defaults(PyObject* self, const char* typestr)
             return -1;
         }
 
-        r = PySequence_SetItem(self, i++, v);
+        r = PyObjC_SetStructField(self, i++, v);
         Py_DECREF(v);
-        if (r != 0) {
+        if (r < 0) {
             return -1;
         }
-
         typestr = next;
     }
 
@@ -828,11 +834,11 @@ struct_init(
         Py_ssize_t i, len;
 
         len = PyTuple_GET_SIZE(args);
-        if (len > struct_sq_length(self)) {
+        if (len > STRUCT_LENGTH(self)) {
             PyErr_Format(PyExc_TypeError,
                 "%s() takes at most %"PY_FORMAT_SIZE_T"d %sarguments (%"PY_FORMAT_SIZE_T"d given)",
                 Py_TYPE(self)->tp_name,
-                struct_sq_length(self),
+                STRUCT_LENGTH(self),
                 kwds?"non-keyword ":"", len);
             *(int*)retval = -1;
             return;
@@ -987,7 +993,81 @@ struct_richcompare(PyObject* self, PyObject* other, int op)
     PyObject* self_cur;
     PyObject* other_cur;
 
+    if (Py_TYPE(self) == Py_TYPE(other)) {
+        /* Other has same type, shortcut comparisions to avoid
+         * treating "other" as a generic sequence
+         */
+
+        len = STRUCT_LENGTH(self);
+
+        for (i = 0; i < len; i ++) {
+            int k;
+
+            self_cur = GET_STRUCT_FIELD(self, Py_TYPE(self)->tp_members+i);
+            other_cur = GET_STRUCT_FIELD(other, Py_TYPE(other)->tp_members+i);
+
+            k = PyObject_RichCompareBool(self_cur, other_cur, Py_EQ);
+            if (k < 0) {
+                return NULL;
+            }
+
+            if (!k) {
+                /* Not equal, result is the comparison of the last
+                 * item, we can do better for '==' and '!='.
+                 */
+                PyObject* v;
+
+                if (op == Py_EQ) {
+                    Py_INCREF(Py_False);
+                    return Py_False;
+                } else if (op == Py_NE) {
+                    Py_INCREF(Py_True);
+                    return Py_True;
+                }
+                v = PyObject_RichCompare(self_cur, other_cur, op);
+                return v;
+            }
+        }
+
+        /* All items are equal, compare using sizes */
+        switch (op) {
+        case Py_LT:
+        case Py_NE:
+        case Py_GT:
+            Py_INCREF(Py_False);
+            return Py_False;
+
+        case Py_LE:
+        case Py_EQ:
+        case Py_GE:
+            Py_INCREF(Py_True);
+            return Py_True;
+
+        default:
+            /* Should never happen */
+            PyErr_SetString(PyExc_TypeError, "Invalid comparion");
+            return NULL;
+        }
+    }
+
     if (!PySequence_Check(other)) {
+        if (op == Py_EQ) {
+            Py_INCREF(Py_False);
+            return Py_False;
+
+        } else if (op == Py_NE) {
+            Py_INCREF(Py_True);
+            return Py_True;
+
+        } else {
+            PyErr_Format(PyExc_TypeError,
+                "Cannot compare instances of %s and %s",
+                Py_TYPE(self)->tp_name,
+                Py_TYPE(other)->tp_name);
+            return NULL;
+        }
+
+    } else if (!PyObjC_StructsIndexable) {
         if (op == Py_EQ) {
             Py_INCREF(Py_False);
             return Py_False;
@@ -1005,7 +1085,7 @@ struct_richcompare(PyObject* self, PyObject* other, int op)
         }
     }
 
-    self_len = struct_sq_length(self);
+    self_len = STRUCT_LENGTH(self);
     other_len = PySequence_Length(other);
     len = self_len;
     if (other_len < len) {
@@ -1119,7 +1199,7 @@ struct_repr(PyObject* self)
     PyObject* cur;
     PyMemberDef* member;
 
-    len = struct_sq_length(self);
+    len = STRUCT_LENGTH(self);
     if (len == 0) {
         return PyText_FromFormat("<%s>",
                 Py_TYPE(self)->tp_name);
@@ -1158,6 +1238,15 @@ done:
     Py_ReprLeave(self);
     return cur;
 }
+
+
+PyTypeObject StructBase_Type = {
+    PyVarObject_HEAD_INIT(NULL, 0)
+    .tp_name    = "objc._structwrapper",
+    .tp_basicsize   = sizeof(PyObject),
+    .tp_itemsize    = 0,
+};
+
 
 struct StructTypeObject {
     PyTypeObject base;
@@ -1285,11 +1374,15 @@ PyObjC_MakeStructType(
 
     result->pack = pack;
 
+    result->base.tp_base = &StructBase_Type;
+    Py_INCREF(result->base.tp_base);
+
     if (PyType_Ready((PyTypeObject*)result) == -1) {
         PyMem_Free(result);
         PyMem_Free(members);
         return NULL;
     }
+
 
     return (PyObject*)result;
 }
@@ -1593,4 +1686,48 @@ PyObjC_RegisterStructAlias(const char* signature, PyObject* structType)
     }
 
     return 0;
+}
+
+int
+PyObjC_SetStructField(PyObject* self, Py_ssize_t offset, PyObject* newVal)
+{
+    Py_ssize_t len;
+    PyMemberDef* member;
+
+    if (newVal == NULL) {
+        PyErr_Format(PyExc_TypeError,
+            "Cannot delete item '%"PY_FORMAT_SIZE_T"d' in a %s instance",
+            offset, Py_TYPE(self)->tp_name);
+        return -1;
+    }
+
+    len = STRUCT_LENGTH(self);
+
+    if ((offset < 0) || (offset >= len)) {
+        PyErr_Format(PyExc_IndexError,
+                "%s index out of range",
+                Py_TYPE(self)->tp_name);
+        return -1;
+    }
+    member = Py_TYPE(self)->tp_members + offset;
+    SET_STRUCT_FIELD(self, member, newVal);
+    return 0;
+}
+
+PyObject*
+StructAsTuple(PyObject* strval)
+{
+    Py_ssize_t i, len = STRUCT_LENGTH(strval);
+    PyObject* retval = PyTuple_New(len);
+    if (retval == NULL) {
+        return 0;
+    }
+
+    for (i = 0; i < len; i++) {
+        PyObject* v;
+        v = GET_STRUCT_FIELD(strval, Py_TYPE(strval)->tp_members+i);
+        PyTuple_SET_ITEM(retval, i, v);
+        Py_INCREF(v);
+    }
+    return retval;
 }

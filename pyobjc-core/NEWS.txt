@@ -32,10 +32,6 @@ Version 4.0
   (the default) wrappers for C structs behave as before, when the
   option is False these wrappers can no longer be modified.
 
-* Struct wrapper initializers (such as the initializer for ``NSSize``)
-  are now more strict about the number of arguments provided. That is,
-  ``NSSize(1)`` is no longer valid, you need to specify both arguments.
-
 * Add availability macro ``MAC_OS_X_VERSION_10_13`` to ``objc``.
 
 * New framework wrappers:
