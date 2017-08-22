@@ -40,9 +40,9 @@ Version 4.0
   - CoreML (new in macOS 10.13)			(beta 3) (beta 4) (beta 5)
   - ExternalAccessory (new in macOS 10.13)
   - CoreSpotlight (new in macOS 10.13)
-  - Vision (new in macOS 10.13)			(beta 3)          (beta 5)
+  - Vision (new in macOS 10.13)			(beta 3)          (beta 5) (beta 6)
 
-* metadata updates (beta 4):
+* metadata updates (beta 6):
 
   - PhotosUI
   - Accounts				 (beta 4)
