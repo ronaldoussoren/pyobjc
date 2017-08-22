@@ -303,6 +303,20 @@
       "args": {
        "0": { "type_modifier": "o", "c_array_length_in_arg": 1, "c_array_length_in_result": true }
       }
+     },
+     {
+      "selector": "getFloatArray:maxCount:",
+      "class_method": false,
+      "args": {
+       "0": { "type_modifier": "o", "c_array_length_in_arg": 1, "c_array_length_in_result": true }
+      }
+     },
+     {
+      "selector": "getDoubleArray:maxCount:",
+      "class_method": false,
+      "args": {
+       "0": { "type_modifier": "o", "c_array_length_in_arg": 1, "c_array_length_in_result": true }
+      }
      }
     ]
    },
@@ -369,6 +383,69 @@
      }
     ]
    },
+   "MDLAnimatedQuaternionArray": {
+    "comment": "SIMD types",
+    "methods": [
+     {
+      "selector": "setFloatQuaternionArray:count:atTime:",
+      "class_method": false,
+      "args": {
+       "0": { "type_modifier": "n", "c_array_length_in_arg": 1 }
+      }
+     },
+     {
+      "selector": "setDoubleQuaternionArray:count:atTime:",
+      "class_method": false,
+      "args": {
+       "0": { "type_modifier": "n", "c_array_length_in_arg": 1 }
+      }
+     },
+     {
+      "selector": "getFloatQuaternionArray:maxCount:atTime:",
+      "class_method": false,
+      "args": {
+       "0": { "type_modifier": "o", "c_array_length_in_arg": 1, "c_array_length_in_result": true }
+      }
+     },
+     {
+      "selector": "getDoubleQuaternionArray:maxCount:atTime:",
+      "class_method": false,
+      "args": {
+       "0": { "type_modifier": "o", "c_array_length_in_arg": 1, "c_array_length_in_result": true }
+      }
+     },
+     {
+      "selector": "resetWithFloatQuaternionArray:count:atTimes:count:",
+      "class_method": false,
+      "args": {
+       "0": { "type_modifier": "n", "c_array_length_in_arg": 1 },
+       "2": { "type_modifier": "n", "c_array_length_in_arg": 3 }
+      }
+     },
+     {
+      "selector": "resetWithDoubleQuaternionArray:count:atTimes:count:",
+      "class_method": false,
+      "args": {
+       "0": { "type_modifier": "n", "c_array_length_in_arg": 1 },
+       "2": { "type_modifier": "n", "c_array_length_in_arg": 3 }
+      }
+     },
+     {
+      "selector": "getFloatQuaternionArray:maxCount:",
+      "class_method": false,
+      "args": {
+       "0": { "type_modifier": "o", "c_array_length_in_arg": 1, "c_array_length_in_result": true }
+      }
+     },
+     {
+      "selector": "getDoubleQuaternionArray:maxCount:",
+      "class_method": false,
+      "args": {
+       "0": { "type_modifier": "o", "c_array_length_in_arg": 1, "c_array_length_in_result": true }
+      }
+     }
+    ]
+   },
    "MDLAnimatedVector2": {
     "comment": "vector_... types!",
     "methods": [
@@ -397,6 +474,20 @@
      },
      {
       "selector": "copyDouble2ArrayInto:maxCount:",
+      "class_method": false,
+      "args": {
+       "0": { "type_modifier": "o", "c_array_length_in_arg": 1, "c_array_length_in_result": true }
+      }
+     },
+     {
+      "selector": "getFloat2Array:maxCount:",
+      "class_method": false,
+      "args": {
+       "0": { "type_modifier": "o", "c_array_length_in_arg": 1, "c_array_length_in_result": true }
+      }
+     },
+     {
+      "selector": "getDouble2Array:maxCount:",
       "class_method": false,
       "args": {
        "0": { "type_modifier": "o", "c_array_length_in_arg": 1, "c_array_length_in_result": true }
@@ -436,6 +527,20 @@
       "args": {
        "0": { "type_modifier": "o", "c_array_length_in_arg": 1, "c_array_length_in_result": true }
       }
+     },
+     {
+      "selector": "getFloat3Array:maxCount:",
+      "class_method": false,
+      "args": {
+       "0": { "type_modifier": "o", "c_array_length_in_arg": 1, "c_array_length_in_result": true }
+      }
+     },
+     {
+      "selector": "getDouble3Array:maxCount:",
+      "class_method": false,
+      "args": {
+       "0": { "type_modifier": "o", "c_array_length_in_arg": 1, "c_array_length_in_result": true }
+      }
      }
     ]
    },
@@ -471,6 +576,20 @@
       "args": {
        "0": { "type_modifier": "o", "c_array_length_in_arg": 1, "c_array_lengt_in_result": true }
       }
+     },
+     {
+      "selector": "getFloat4Array:maxCount:",
+      "class_method": false,
+      "args": {
+       "0": { "type_modifier": "o", "c_array_length_in_arg": 1, "c_array_lengt_in_result": true }
+      }
+     },
+     {
+      "selector": "getDouble4Array:maxCount:",
+      "class_method": false,
+      "args": {
+       "0": { "type_modifier": "o", "c_array_length_in_arg": 1, "c_array_lengt_in_result": true }
+      }
      }
     ]
    },
@@ -502,6 +621,20 @@
      },
      {
       "selector": "copyDouble4x4ArrayInto:maxCount:",
+      "class_method": false,
+      "args": {
+       "0": { "type_modifier": "o", "c_array_length_in_arg": 1, "c_array_lengt_in_result": true }
+      }
+     },
+     {
+      "selector": "getFloat4x4Array:maxCount:",
+      "class_method": false,
+      "args": {
+       "0": { "type_modifier": "o", "c_array_length_in_arg": 1, "c_array_lengt_in_result": true }
+      }
+     },
+     {
+      "selector": "getDouble4x4Array:maxCount:",
       "class_method": false,
       "args": {
        "0": { "type_modifier": "o", "c_array_length_in_arg": 1, "c_array_lengt_in_result": true }
@@ -1033,8 +1166,47 @@
      }
     ]
    },
+   "MDLMatrix4x4Array": {
+    "methods": [
+     {
+      "selector": "setFloat4x4Array:count:",
+      "class_method": false,
+      "args": {
+       "0": { "type_modifier": "n", "c_array_length_in_arg": 1 }
+      }
+     },
+     {
+      "selector": "setDouble4x4Array:count:",
+      "class_method": false,
+      "args": {
+       "0": { "type_modifier": "n", "c_array_length_in_arg": 1 }
+      }
+     },
+     {
+      "selector": "getFloat4x4Array:maxCount:",
+      "class_method": false,
+      "args": {
+       "0": { "type_modifier": "o", "c_array_length_in_arg": 1, "c_array_length_in_result": true }
+      }
+     },
+     {
+      "selector": "getDouble4x4Array:maxCount:",
+      "class_method": false,
+      "args": {
+       "0": { "type_modifier": "o", "c_array_length_in_arg": 1, "c_array_length_in_result": true }
+      }
+     }
+    ]
+   },
    "NSObject": {
     "methods": [
+     {
+      "selector": "objectAtIndexedSubscript:",
+      "class_method": false,
+      "args": {
+       "0": { "type_override": "Q" }
+      }
+     },
      {
       "selector": "copyJointBindTransformsInto:maxCount:",
       "class_method": false,

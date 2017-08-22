@@ -4,6 +4,9 @@ import sys
 if sys.maxsize > 2**32:
     import ModelIO
 
+    class TestMDLTypesHelper (ModelIO.NSObject):
+        def objectAtIndexedSubscript_(self, i): return 1
+
     class TestMDLTypes (TestCase):
         def testConstants(self):
             self.assertIsInstance(ModelIO.kUTTypeAlembic, unicode)
@@ -41,6 +44,9 @@ if sys.maxsize > 2**32:
             objc.protocolNamed('MDLNamed')
             objc.protocolNamed('MDLComponent')
             objc.protocolNamed('MDLObjectContainerComponent')
+
+        def testMethods(self):
+            self.assertArgHasType(TestMDLTypesHelper.objectAtIndexedSubscript_, 0, objc._C_NSUInteger)
 
         @expectedFailure
         def testStructs(self):
