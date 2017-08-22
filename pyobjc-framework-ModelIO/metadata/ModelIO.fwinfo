@@ -306,6 +306,69 @@
      }
     ]
    },
+   "MDLAnimatedVector3Array": {
+    "comment": "SIMD types",
+    "methods": [
+     {
+      "selector": "setFloat3Array:count:atTime:",
+      "class_method": false,
+      "args": {
+       "0": { "type_modifier": "n", "c_array_length_in_arg": 1 }
+      }
+     },
+     {
+      "selector": "setDouble3Array:count:atTime:",
+      "class_method": false,
+      "args": {
+       "0": { "type_modifier": "n", "c_array_length_in_arg": 1 }
+      }
+     },
+     {
+      "selector": "getFloat3Array:maxCount:atTime:",
+      "class_method": false,
+      "args": {
+       "0": { "type_modifier": "o", "c_array_length_in_arg": 1, "c_array_length_in_result": true }
+      }
+     },
+     {
+      "selector": "getDouble3Array:maxCount:atTime:",
+      "class_method": false,
+      "args": {
+       "0": { "type_modifier": "o", "c_array_length_in_arg": 1, "c_array_length_in_result": true }
+      }
+     },
+     {
+      "selector": "resetWithFloat3Array:count:atTimes:count:",
+      "class_method": false,
+      "args": {
+       "0": { "type_modifier": "n", "c_array_length_in_arg": 1 },
+       "2": { "type_modifier": "n", "c_array_length_in_arg": 3 }
+      }
+     },
+     {
+      "selector": "resetWithDouble3Array:count:atTimes:count:",
+      "class_method": false,
+      "args": {
+       "0": { "type_modifier": "n", "c_array_length_in_arg": 1 },
+       "2": { "type_modifier": "n", "c_array_length_in_arg": 3 }
+      }
+     },
+     {
+      "selector": "getFloat3Array:maxCount:",
+      "class_method": false,
+      "args": {
+       "0": { "type_modifier": "o", "c_array_length_in_arg": 1, "c_array_length_in_result": true }
+      }
+     },
+     {
+      "selector": "getDouble3Array:maxCount:",
+      "class_method": false,
+      "args": {
+       "0": { "type_modifier": "o", "c_array_length_in_arg": 1, "c_array_length_in_result": true }
+      }
+     }
+    ]
+   },
    "MDLAnimatedVector2": {
     "comment": "vector_... types!",
     "methods": [
