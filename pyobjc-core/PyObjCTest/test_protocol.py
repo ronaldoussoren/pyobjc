@@ -1,6 +1,5 @@
 from PyObjCTools.TestSupport import *
 import objc
-import warnings
 import sys
 import platform
 

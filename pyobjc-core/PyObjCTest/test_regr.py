@@ -6,6 +6,8 @@ from PyObjCTest import copying
 
 import objc, sys
 import functools
+import warnings
+import objc
 from PyObjCTest.fnd import NSObject, NSAutoreleasePool
 
 rct = structargs.StructArgClass.someRect.__metadata__()['retval']['type']
@@ -58,19 +60,14 @@ class TestRegressions(TestCase):
 
 
     def testDeallocUninit(self):
-        import objc
+        with warnings.catch_warnings():
+            warnings.filterwarnings('ignore',
+                category=objc.UninitializedDeallocWarning)
 
-        import warnings
-        warnings.filterwarnings('ignore',
-            category=objc.UninitializedDeallocWarning)
-
-        try:
             for clsName in [ 'NSURL', 'NSObject', 'NSArray' ]:
                 d = objc.lookUpClass(clsName).alloc()
                 del d
 
-        finally:
-            del warnings.filters[0]
 
         # Check that we generate a warning for unitialized objects that
         # get deallocated
@@ -79,19 +76,13 @@ class TestRegressions(TestCase):
             from StringIO import StringIO
         else:
             from io import StringIO
-        warnings.filterwarnings('always',
-            category=objc.UninitializedDeallocWarning)
-        sys.stderr = buf = StringIO()
-        try:
+
+        with warnings.catch_warnings(record=True) as w:
             d = NSObject.alloc()
             del d
 
-        finally:
-            del warnings.filters[0]
-            sys.stderr = sys.__stderr__
-
-        # A warning is three lines: location info, source code, empty line
-        self.assertEqual(len(buf.getvalue().split('\n')), 3)
+        self.assertTrue(len(w) == 1)
+        self.assertEqual(w[0].category, objc.UninitializedDeallocWarning)
 
     def testOneWayMethods(self):
         # This one should be in test_methods*.py
@@ -242,20 +233,13 @@ class TestInitMemoryLeak (TestCase):
 
     def testInitFailureLeaks(self):
         NSData = objc.lookUpClass('NSData')
-        import warnings
-        warnings.filterwarnings('error',
-            category=objc.UninitializedDeallocWarning)
 
-        try:
-            try:
-                v = NSData.alloc().initWithContentsOfFile_("/etc/no-such-file.txt")
-            finally:
-                del warnings.filters[0]
+        with warnings.catch_warnings(record=True) as w:
+            v = NSData.alloc().initWithContentsOfFile_("/etc/no-such-file.txt")
+            self.assertFalse(v is not None)
+            del v
 
-        except objc.UninitializedDeallocWarning:
-            self.fail("Unexpected raising of UninitializedDeallocWarning")
-
-        self.assertFalse(v is not None)
+        self.assertEqual(w, [])
 
     def testExplicitGetItem(self):
         v = OCTestRegrWithGetItem.alloc().init()

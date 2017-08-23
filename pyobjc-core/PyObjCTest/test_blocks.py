@@ -6,8 +6,6 @@ from PyObjCTest.block import OCTestBlock
 import objc
 import sys
 
-print (objc.__file__)
-
 if sys.maxsize > 2 ** 32:
     NSRect_tp = b'{CGRect={CGPoint=dd}{CGSize=dd}}'
 else:

@@ -181,6 +181,7 @@ class TestStructs (TestCase):
 
         with pyobjc_options(structs_indexable=True, structs_writable=True):
             with warnings.catch_warnings(record=True) as record:
+                warnings.simplefilter("always")
                 v = tp0()
                 v[0]
                 v[0] = 42

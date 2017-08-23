@@ -8,6 +8,7 @@ import imp
 import ctypes
 import objc
 import subprocess
+import warnings
 
 import xml.etree.ElementTree as ET
 
@@ -1611,12 +1612,15 @@ class TestInitFrameworkWrapper (TestCase):
             raise_exception = objc.internal_error
             update_globals = None
 
-            with filterWarnings("error", RuntimeWarning):
-                self.assertRaises(RuntimeWarning, bridgesupport._parseBridgeSupport, '', {}, 'TestFramework')
-
+            with warnings.catch_warnings(record=True) as w:
+                warnings.simplefilter("always")
+                bridgesupport._parseBridgeSupport( '', {}, 'TestFramework')
+            self.assertTrue(len(w) == 1)
+            self.assertEqual(w[0].category, RuntimeWarning)
             calls = []
 
-            with filterWarnings("ignore", RuntimeWarning):
+            with warnings.catch_warnings(record=True):
+                warnings.simplefilter("always")
                 g = {}
                 update_globals = {'foo': 42, 'bar': 33,  'protocols': MockModule() }
                 bridgesupport._parseBridgeSupport('', g, 'TestFramework')
@@ -2101,10 +2105,15 @@ class TestMisc (TestCase):
     def test_struct_alias(self):
         tp1 = objc.createStructType('TestStruct1', b'{TestStruct1="f1"d"f2"d}', None)
 
-        with filterWarnings("error", DeprecationWarning):
-            self.assertRaises(DeprecationWarning, objc.registerStructAlias, b'{TestStruct2=dd}', tp1)
+        with warnings.catch_warnings(record=True) as w:
+            warnings.simplefilter("always")
+            objc.registerStructAlias(b'{TestStruct2=dd}', tp1)
 
-        with filterWarnings("ignore", DeprecationWarning):
+        self.assertTrue(len(w) == 1)
+        self.assertEqual(w[0].category, DeprecationWarning)
+
+        with warnings.catch_warnings(record=True):
+            warnings.simplefilter("ignore")
             tp2 = objc.registerStructAlias(b'{TestStruct2=dd}', tp1)
             self.assertIs(tp1, tp2)
 

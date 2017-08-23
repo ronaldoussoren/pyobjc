@@ -418,9 +418,11 @@ struct_mp_subscript(PyObject* self, PyObject* item)
             "Instances of '%s' are not sequences 7", Py_TYPE(self)->tp_name);
         return NULL;
     }
+#if 0
     if (PyErr_Warn(PyExc_DeprecationWarning, "Using struct wrapper as sequence") < 0) {
         return NULL;
     }
+#endif
 
     if (PyIndex_Check(item)) {
         Py_ssize_t i;
@@ -487,9 +489,11 @@ struct_mp_ass_subscript(PyObject* self, PyObject* item, PyObject* value)
             "Instances of '%s' are read-only", Py_TYPE(self)->tp_name);
         return -1;
     }
+#if 0
     if (PyErr_Warn(PyExc_DeprecationWarning, "Using struct wrapper as sequence") < 0) {
         return -1;
     }
+#endif
 
     if (PyIndex_Check(item)) {
         Py_ssize_t i = PyNumber_AsSsize_t(item, PyExc_IndexError);

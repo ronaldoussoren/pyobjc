@@ -12,7 +12,6 @@ TODO:
 from __future__ import unicode_literals
 import objc
 from PyObjCTools.TestSupport import *
-import warnings
 import array
 import sys
 
