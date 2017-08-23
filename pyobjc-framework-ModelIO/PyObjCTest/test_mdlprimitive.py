@@ -17,9 +17,9 @@ if sys.maxsize > 2**32:
             self.assertEqual(ModelIO.MDLPrimitiveTypeCylinder, 4)
             self.assertEqual(ModelIO.MDLPrimitiveTypeNone, 5)
 
-        @min_sdk_level('10.13')
-        def testProtocols(self):
-            objc.protocolNamed('MDLPrimitiveComponent')
+        #@min_sdk_level('10.13')
+        #def testProtocols(self):
+        #    objc.protocolNamed('MDLPrimitiveComponent')
 
         def testMethods(self):
             self.assertResultHasType(TestMDLPrimitiveHelper.primitiveType, objc._C_NSUInteger)

@@ -33,19 +33,19 @@ if sys.maxsize > 2**32:
 
             self.assertArgIsOut(ModelIO.MDLAnimatedScalarArray.getFloatArray_maxCount_atTime_, 0)
             self.assertArgSizeInArg(ModelIO.MDLAnimatedScalarArray.getFloatArray_maxCount_atTime_, 0, 1)
-            self.assertArgSizeResult(ModelIO.MDLAnimatedScalarArray.getFloatArray_maxCount_atTime_, 0)
+            self.assertArgSizeInResult(ModelIO.MDLAnimatedScalarArray.getFloatArray_maxCount_atTime_, 0)
 
             self.assertArgIsOut(ModelIO.MDLAnimatedScalarArray.getDoubleArray_maxCount_atTime_, 0)
             self.assertArgSizeInArg(ModelIO.MDLAnimatedScalarArray.getDoubleArray_maxCount_atTime_, 0, 1)
-            self.assertArgSizeResult(ModelIO.MDLAnimatedScalarArray.getDoubleArray_maxCount_atTime_, 0)
+            self.assertArgSizeInResult(ModelIO.MDLAnimatedScalarArray.getDoubleArray_maxCount_atTime_, 0)
 
             self.assertArgIsOut(ModelIO.MDLAnimatedScalarArray.getFloatArray_maxCount_, 0)
             self.assertArgSizeInArg(ModelIO.MDLAnimatedScalarArray.getFloatArray_maxCount_, 0, 1)
-            self.assertArgSizeResult(ModelIO.MDLAnimatedScalarArray.getFloatArray_maxCount_, 0)
+            self.assertArgSizeInResult(ModelIO.MDLAnimatedScalarArray.getFloatArray_maxCount_, 0)
 
             self.assertArgIsOut(ModelIO.MDLAnimatedScalarArray.getDoubleArray_maxCount_, 0)
             self.assertArgSizeInArg(ModelIO.MDLAnimatedScalarArray.getDoubleArray_maxCount_, 0, 1)
-            self.assertArgSizeResult(ModelIO.MDLAnimatedScalarArray.getDoubleArray_maxCount_, 0)
+            self.assertArgSizeInResult(ModelIO.MDLAnimatedScalarArray.getDoubleArray_maxCount_, 0)
 
             #self.assertArgSizeInArg(ModelIO.MDLAnimatedScalarArray.copyFloatArrayInto_maxCount_atTime_, 0, 1)
             #self.assertArgSizeInResult(ModelIO.MDLAnimatedScalarArray.copyFloatArrayInto_maxCount_atTime_, 0)
