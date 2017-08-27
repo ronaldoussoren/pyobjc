@@ -28,6 +28,7 @@ import sys, os
 extensions = [
     'sphinx.ext.intersphinx', 'sphinx.ext.todo', 'sphinx.ext.ifconfig',
     'sphinx.ext.extlinks', 'sphinxcontrib.cheeseshop',
+    'rst2pdf.pdfbuilder',
 ]
 
 extlinks = {
