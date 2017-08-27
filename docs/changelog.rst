@@ -3,8 +3,8 @@ What's new in PyObjC
 
 An overview of the relevant changes in new, and older, releases.
 
-Version 4.0
------------
+Version 4.0b1
+-------------
 
 * Removed PyObjCTools.TestSupport.filterWarnings, use warnings.catch_warnings
   instead.

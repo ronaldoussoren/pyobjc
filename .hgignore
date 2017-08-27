@@ -10,6 +10,7 @@ new-bindings
 wheel-dir
 test-results
 test-env
+docs/examples
 
 syntax: glob
 *.so

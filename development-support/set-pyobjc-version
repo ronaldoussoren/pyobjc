@@ -60,3 +60,9 @@ for subdir in os.listdir(topdir):
     r = re.compile('^VERSION=.*$', re.MULTILINE)
     data = r.sub('VERSION="%s"'%(VERSION,), load_file(fn))
     save_file(fn, data)
+
+# documentation
+fn = os.path.join(topdir, "docs", "conf.py")
+r = re.compile('^version = .*$', re.MULTILINE)
+data = r.sub('version = "%s"'%(VERSION,), load_file(fn))
+save_file(fn, data)
