@@ -197,6 +197,22 @@
    "MDLAnimatedScalarArray": {
     "methods": [
      {
+      "selector": "resetWithFloatArray:count:atTimes:count:",
+      "class_method": false,
+      "args": {
+       "0": { "type_modifier": "n", "c_array_length_in_arg": 1 },
+       "2": { "type_modifier": "n", "c_array_length_in_arg": 3 }
+      }
+     },
+     {
+      "selector": "resetWithDoubleArray:count:atTimes:count:",
+      "class_method": false,
+      "args": {
+       "0": { "type_modifier": "n", "c_array_length_in_arg": 1 },
+       "2": { "type_modifier": "n", "c_array_length_in_arg": 3 }
+      }
+     },
+     {
       "selector": "resetWithFloatArray:atTimes:count:",
       "class_method": false,
       "args": {
@@ -257,6 +273,33 @@
       }
      },
      {
+      "selector": "getFloatArray:maxCount:atTime:",
+      "class_method": false,
+      "args": {
+       "0": { "type_modifier": "o", "c_array_length_in_arg": 1, "c_array_length_in_result": true }
+      }
+     },
+     {
+      "selector": "getDoubleArray:maxCount:atTime:",
+      "class_method": false,
+      "args": {
+       "0": { "type_modifier": "o", "c_array_length_in_arg": 1, "c_array_length_in_result": true }
+      },
+      {
+      "selector": "getFloatArray:maxCount:",
+      "class_method": false,
+      "args": {
+       "0": { "type_modifier": "o", "c_array_length_in_arg": 1, "c_array_length_in_result": true }
+      }
+     },
+     {
+      "selector": "getDoubleArray:maxCount:",
+      "class_method": false,
+      "args": {
+       "0": { "type_modifier": "o", "c_array_length_in_arg": 1, "c_array_length_in_result": true }
+      }
+     },
+     {
       "selector": "copyFloatArrayInto:maxCount:",
       "class_method": false,
       "args": {
@@ -275,19 +318,19 @@
    "MDLAnimatedScalar": {
     "methods": [
      {
-      "selector": "resetWithFloatArray:count:atTimes:count:",
+      "selector": "resetWithFloatArray:atTimes:count:",
       "class_method": false,
       "args": {
-       "0": { "type_modifier": "n", "c_array_length_in_arg": 1 },
-       "2": { "type_modifier": "n", "c_array_length_in_arg": 3 }
+       "0": { "type_modifier": "n", "c_array_length_in_arg": 2 },
+       "1": { "type_modifier": "n", "c_array_length_in_arg": 2 }
       }
      },
      {
-      "selector": "resetWithDoubleArray:count:atTimes:count:",
+      "selector": "resetWithDoubleArray:atTimes:count:",
       "class_method": false,
       "args": {
-       "0": { "type_modifier": "n", "c_array_length_in_arg": 1 },
-       "2": { "type_modifier": "n", "c_array_length_in_arg": 3 }
+       "0": { "type_modifier": "n", "c_array_length_in_arg": 2 },
+       "1": { "type_modifier": "n", "c_array_length_in_arg": 2 }
       }
      },
      {
@@ -651,6 +694,13 @@
      },
      {
       "selector": "copyTimesInto:maxCount:",
+      "class_method": false,
+      "args": {
+       "0": { "type_modifier": "o", "c_array_length_in_arg": 1, "c_array_length_in_result": true }
+      }
+     },
+     {
+      "selector": "getTimes:maxCount:",
       "class_method": false,
       "args": {
        "0": { "type_modifier": "o", "c_array_length_in_arg": 1, "c_array_length_in_result": true }

@@ -6,6 +6,9 @@ An overview of the relevant changes in new, and older, releases.
 Version 4.0
 -----------
 
+* Removed PyObjCTools.TestSupport.filterWarnings, use warnings.catch_warnings
+  instead.
+
 * Building pyobjc-core using "python setup.py develop" will use 'ccache'
   when available.
 

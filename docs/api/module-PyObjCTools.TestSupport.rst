@@ -120,13 +120,6 @@ wrappers.
    Decorator for enabling a test only when running on a old enough release
    of Mac OS X.
 
-.. class:: filterWarnings(kind, category)
-
-   A with-statement context that adds a filter to the warnings module
-   while the body of the statement is running.
-
-   This is similar to :class:`warnings.catch_warnings`.
-
 
 .. _`leaks(1)`: https://developer.apple.com/legacy/library/documentation/Darwin/Reference/ManPages/man1/leaks.1.html
 

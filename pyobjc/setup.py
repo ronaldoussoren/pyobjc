@@ -13,14 +13,14 @@ import tarfile
 import sys
 import ast
 
-VERSION="3.3a0"
+VERSION="4.0b1"
 
 # Table with all framework wrappers and the OSX releases where they are
 # first supported, and where support was removed. The introduced column
 # is ``None`` when the framework is supported on OSX 10.4 or later. The
 # removed column is ``None`` when the framework is present ont he latest
 # supported OSX release.
-FRAMEWORKS_WRAPPERS=[
+FRAMEWORK_WRAPPERS=[
         # Name                      Introcuded          Removed
         ('AVKit',                   '10.9',             None        ),
         ('AVFoundation',            '10.7',             None        ),
@@ -125,7 +125,7 @@ def framework_requires():
     build_platform = platform.mac_ver()[0]
     result = []
 
-    for name, introduced, removed in FRAMEWORKS_WRAPPERS:
+    for name, introduced, removed in FRAMEWORK_WRAPPERS:
         if introduced is not None and version_key(introduced) > version_key(build_platform):
             continue
         if removed is not None and version_key(removed) <= version_key(build_platform):
@@ -217,14 +217,14 @@ class oc_test (Command):
     def run(self):
         print("  validating framework list...")
         all_names = set(nm.split('-')[-1] for nm in os.listdir('..') if nm.startswith('pyobjc-framework-'))
-        configured_names = set(x[0] for x in FRAMEWORKS_WRAPPERS)
+        configured_names = set(x[0] for x in FRAMEWORK_WRAPPERS)
         failures = 0
 
         if all_names - configured_names:
-            print("Framework wrappers not mentioned in setup.py: %s"%(", ".join(all_names - configured_names)))
+            print("Framework wrappers not mentioned in setup.py: %s"%(", ".join(sorted(all_names - configured_names))))
             failures += 1
         if configured_names - all_names:
-            print("Framework mentioned in setup.py not in filesystem: %s"%(", ".join(configured_names - all_names)))
+            print("Framework mentioned in setup.py not in filesystem: %s"%(", ".join(sorted(configured_names - all_names))))
             failures += 1
 
         print("  validating framework Modules/ directories...")
@@ -234,7 +234,7 @@ class oc_test (Command):
             with open(os.path.join('../pyobjc-core/Modules/objc', fn), 'rb') as fp:
                 templates[fn] = fp.read()
 
-        for nm in all_names:
+        for nm in sorted(all_names):
             subdir = "../pyobjc-framework-" + nm + "/Modules"
             if not os.path.exists(subdir): continue
 
@@ -334,8 +334,9 @@ class oc_test (Command):
                     print("Bad version in wrapper for %s"%(nm,))
                     failures += 1
 
+        print("  validating sdist archives...")
         devnull = open('/dev/null', 'a')
-        for nm in ('pyobjc-core',) + tuple(nm for nm in os.listdir('..') if nm.startswith('pyobjc-framework-')):
+        for nm in ('pyobjc-core',) + tuple(sorted(nm for nm in os.listdir('..') if nm.startswith('pyobjc-framework-'))):
             print("    %s"%(nm,))
             subdir = os.path.join('..', nm)
             if os.path.exists(os.path.join(subdir, 'dist')):

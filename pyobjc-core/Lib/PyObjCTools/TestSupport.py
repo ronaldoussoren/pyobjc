@@ -1015,16 +1015,3 @@ def expectedFailureIf(condition):
         return expectedFailure
     else:
         return lambda func: func
-
-# NOTE: filterwarnings relies on implementation details of
-#       the warnings module
-class filterWarnings (object):
-    def __init__(self, kind, category):
-        self._kind = kind
-        self._category = category
-
-    def __enter__(self):
-        warnings.filterwarnings(self._kind, category=self._category)
-
-    def __exit__(self, type, value, tp):
-        del warnings.filters[0]

@@ -15,7 +15,6 @@ from PyObjCTools.TestSupport import *
 
 from PyObjCTest.metadata import *
 import PyObjCTest.test_metadata # to get the right metadata
-import warnings
 
 import sys
 if sys.version_info[0] == 3:
