@@ -15,7 +15,7 @@ This is a literal for a block that takes no arguments and prints a value when
 called.
 
 PyObjC supports blocks, but only when compiled using a compiler that supports
-blocks in Objective-C.
+blocks in Objective-C (all Apple compilers on macOS 10.6 or later).
 
 Calling blocks from Python
 --------------------------
@@ -63,5 +63,6 @@ which means that PyObjC must be taught about the signatures of blocks.  This
 is done using the :doc:`metadata system </metadata/index>`.
 
 .. versionchanged:: 2.5
+
    For basic blocks and (Objective-)C code compiled using a recent enough
    compiler the bridge can extract the block signature from the runtime.

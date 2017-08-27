@@ -4,49 +4,20 @@ Installing PyObjC
 Supported versions
 ------------------
 
-PyObjC is regularly tested with Python 2.7, 3.4, 3.5 and the CPython trunk.
+PyObjC is regularly tested with Python 2.7, 3.4, 3.5 and 3.6.
 PyObjC does not support other python implementation such as PyPy and Jython.
 
-PyObjC is regularly tested on Mac OS X 10.11 and should work on Mac OS X
+PyObjC is regularly tested on Mac OS X 10.12 and should work on Mac OS X
 10.5 or later for the i386, x86_64 and ppc architectures. PPC64 (64-bit
 on PowerMac G5 or iMac G5 systems) is not supported.
-
-Requirements
-------------
-
-PyObjC contains extensions and is distributed as source code. You therefore
-need a compiler to install PyObjC. The easiest way to get a compiler is do
-download `Xcode from the Mac App Store <https://itunes.apple.com/us/app/xcode/id497799835?mt=12>`_.
-
-Depending on the Python release you may need to install the Command Line
-Tools for Xcode. To install the Command Line Tools first install Xcode from
-the Mac App Store. The next action depends on the OSX release you are using.
-
-If you use OSX 10.8 or earlier, open Xcode and then open
-the Xcode preferences.  The downloads tab contains an option "components" and
-that list contains an option to install the "Command Line Tools".
-
-If you use OSX 10.9 or later, open a Terminal window and run ``xcode-select --install``.
-
-.. note::
-
-   The Command Line Tools package may not be automaticly updated when you install
-   a new version of Xcode. Every time Xcode is updated through the Mac App Store
-   you need to start Xcode to check if there is a new version of the Command Line Tools.
-
-.. todo::
-
-   describe which python versions need the command-line tools, and why
-   you should or shouldn't install them.
 
 
 Installation
 ------------
 
-PyObjC is distributed as a collection of Python packages that use distribute
-and can be installed using both `pip`_ and `easy_install`_. Manual installation
-is also supported, but is a lot more work and is therefore more of a power-user
-feature.
+PyObjC is distributed as a collection of Python packages and can be installed
+using `pip`_.  Manual installation is also supported, but is a lot more work and is
+therefore more of a power-user feature.
 
 Installation using pip
 .......................
@@ -59,51 +30,6 @@ Installing or upgrading PyObjC using `pip`_ is easy:
 
 For most users this will install PyObjC using `wheel <https://pypi.python.org/pypi/wheel>`_ binary
 archives, which means you don't have to have a compiler on your machine.
-
-Installation using easy_install
-...............................
-
-Installing or upgrading PyObjC using `easy_install`_ is easy:
-
-.. sourcecode:: sh
-
-   $ easy_install -U pyobjc
-
-
-.. note::
-
-   With PyObjC 3.1 or earlier installing PyObjC takes quite some
-   time due to :issue:`21`. To avoid this problem install ``pyobjc-core``
-   before install the rest of PyObjC:
-
-   .. sourcecode:: sh
-
-      $ easy_install -U pyobjc-core
-      $ easy_install -U pyobjc
-
-
-.. warning::
-
-   Building on OSX 10.7 or 10.8 might give a compiler error when using
-   Xcode 4 and a binary installer for Python. When installing fails because
-   a compiler named 'gcc-4.2' cannot find the header 'stdarg.h' you have
-   to install using a slightly different procedure::
-
-     $ env CC=clang easy_install -U pyobjc-core
-     $ env CC=clang easy_install -U pyobjc
-
-
-Upgrades with pip or easy_install
-.................................
-
-Running ``easy_install -U`` or ``pip install -U`` to update an existing installation
-of PyObjC can fail with an error message about conflicting versions. This is due
-to :issue:`21` and is not something that can easily be fixed in PyObjC itself.
-
-The easiest workaround is to first update "pyobjc-core" and only then perform the
-full update.
-
-
 
 Manual installation
 ...................
@@ -135,6 +61,30 @@ Manual installation is slightly involved, but still pretty easy.
   - :pypi:`pyobjc-framework-Quartz`
 
   - all other packages (in arbitrary order)
+
+
+Requirements for building from source
+-------------------------------------
+
+PyObjC contains extensions and is distributed as source code. You therefore
+need a compiler to install PyObjC. The easiest way to get a compiler is do
+download `Xcode from the Mac App Store <https://itunes.apple.com/us/app/xcode/id497799835?mt=12>`_.
+
+Depending on the Python release you may need to install the Command Line
+Tools for Xcode. To install the Command Line Tools first install Xcode from
+the Mac App Store. The next action depends on the OSX release you are using.
+
+If you use OSX 10.8 or earlier, open Xcode and then open
+the Xcode preferences.  The downloads tab contains an option "components" and
+that list contains an option to install the "Command Line Tools".
+
+If you use OSX 10.9 or later, open a Terminal window and run ``xcode-select --install``.
+
+.. note::
+
+   The Command Line Tools package may not be automaticly updated when you install
+   a new version of Xcode. Every time Xcode is updated through the Mac App Store
+   you need to start Xcode to check if there is a new version of the Command Line Tools.
 
 
 Advanced installation options
@@ -171,7 +121,5 @@ version of Mac OS X than the one you used for the build
      You might still end up with an application that won't run on earlier
      releases when you use another extension module that (accidently) hard links
      to an API that is not available in the earlier release.
-
-.. _easy_install: https://setuptools.readthedocs.io/en/latest/easy_install.html
 
 .. _pip: https://pypi.python.org/pypi/pip/
