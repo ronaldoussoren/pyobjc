@@ -47,7 +47,7 @@
    "VNErrorInvalidModel": { "value": 15 }
   },
   "classes": {
-   "VNFaceLandmarkRegion": {
+   "VNFaceLandmarkRegion2D": {
     "methods": [
      {
       "selector": "normalizedPoints",
