@@ -13,10 +13,51 @@ import re
 import shutil
 import subprocess
 import sys
+import configparser
+from http.client import HTTPSConnection
+from urllib.parse import urlencode
+import ssl
 
 from _common_definitions import TOP_DIR, TEST_STATE_DIR, PY_VERSIONS
 from _common_definitions import virtualenv, system_report
 from _topsort import topological_sort
+
+
+def load_pushover_keys():
+    cfg = configparser.ConfigParser()
+    cfg.read([os.path.expanduser("~/.pushover-key")])
+
+    result = {}
+
+    if not cfg.has_section('pushover'): return result
+
+    if cfg.has_option('pushover', 'app'):
+        result['app'] = cfg.get('pushover', 'app')
+
+    if cfg.has_option('pushover', 'user'):
+        result['user'] = cfg.get('pushover', 'user')
+
+    return result
+
+def send_pushover(keys, message):
+    if 'app' not in keys or 'user' not in keys:
+        return
+
+    body = {
+        'priority': 1,
+        'token':    keys['app'],
+        'user':     keys['user'],
+        'message':  message,
+    }
+
+    context = ssl.create_default_context()
+    context.check_hostname = False
+    context.verify_mode = ssl.CERT_NONE
+    conn = HTTPSConnection('api.pushover.net:443', context=context)
+    conn.request('POST', '/1/messages.json',
+                 urlencode(body),
+                 {'Content-Type': 'application/x-www-form-urlencoded'})
+    conn.getresponse()
 
 
 def sort_framework_wrappers():
@@ -264,6 +305,10 @@ def main():
         test_summary(fp, osx_dir)
 
     ok = test_summary(sys.stdout, osx_dir)
+
+    keys = load_pushover_keys()
+    send_pushover(keys, 'Testsuite finished' if ok else 'Testsuite finished with errors')
+
     if not ok:
         print()
         print("ERROR: some tests have failures")
