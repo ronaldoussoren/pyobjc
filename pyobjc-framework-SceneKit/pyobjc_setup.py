@@ -504,7 +504,7 @@ def setup(
         cmdclass=cmdclass,
         author='Ronald Oussoren',
         author_email='pyobjc-dev@lists.sourceforge.net',
-        url='http://pyobjc.sourceforge.net',
+        url='https://bitbucket.org/ronaldoussoren/pyobjc',
         platforms = [ plat_name ],
         package_dir = { '': 'Lib', 'PyObjCTest': 'PyObjCTest' },
         dependency_links = [],
