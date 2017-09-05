@@ -4,13 +4,11 @@ from Quartz.CoreGraphics import *
 
 class TestCGPDFScanner (TestCase):
 
-    @expectedFailure
-    def testIncomplete(self):
-        self.fail("Add header tests for <CoreGraphics/CGPDFScanner.h>")
-        # CGPDFScanner type (is it opaque or CF)
+    def testTypes(self):
+        self.assertIsOpaquePointer(CGPDFScannerRef)
 
     def testFunctions(self):
-        self.assertResultIsCFRetained(CGPDFScannerCreate)
+        self.assertResultIsNotCFRetained(CGPDFScannerCreate)
 
         CGPDFScannerRetain
         CGPDFScannerRelease

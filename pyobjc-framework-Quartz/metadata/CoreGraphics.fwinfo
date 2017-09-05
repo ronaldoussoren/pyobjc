@@ -2821,7 +2821,9 @@
       "function": {
        "args": [
         {
-         "typestr": "^c"
+         "typestr": "^t",
+	 "c_array_delimeted_by_null": true,
+	 "type_modifier": "n"
         },
         {
          "typestr": "^{CGPDFObject=}"
@@ -2841,15 +2843,15 @@
    "CGPDFDictionaryGetArray": {
     "args": {
      "0": {},
-     "1": {},
-     "2": {}
+     "1": { "type_modifier": "n", "c_array_delimited_by_null": true },
+     "2": { "type_modifier": "o" }
     }
    },
    "CGPDFDictionaryGetBoolean": {
     "args": {
      "0": {},
-     "1": {},
-     "2": {}
+     "1": { "type_modifier": "n", "c_array_delimited_by_null": true },
+     "2": { "type_modifier": "o" }
     }
    },
    "CGPDFDictionaryGetCount": {
@@ -2860,50 +2862,50 @@
    "CGPDFDictionaryGetDictionary": {
     "args": {
      "0": {},
-     "1": {},
-     "2": {}
+     "1": { "type_modifier": "n", "c_array_delimited_by_null": true },
+     "2": { "type_modifier": "o" }
     }
    },
    "CGPDFDictionaryGetInteger": {
     "args": {
      "0": {},
-     "1": {},
-     "2": {}
+     "1": { "type_modifier": "n", "c_array_delimited_by_null": true },
+     "2": { "type_modifier": "o" }
     }
    },
    "CGPDFDictionaryGetName": {
     "args": {
      "0": {},
-     "1": {},
-     "2": {}
+     "1": { "type_modifier": "n", "c_array_delimited_by_null": true },
+     "2": { "type_modifier": "o" }
     }
    },
    "CGPDFDictionaryGetNumber": {
     "args": {
      "0": {},
-     "1": {},
-     "2": {}
+     "1": { "type_modifier": "n", "c_array_delimited_by_null": true },
+     "2": { "type_modifier": "o" }
     }
    },
    "CGPDFDictionaryGetObject": {
     "args": {
      "0": {},
-     "1": {},
+     "1": { "type_modifier": "n", "c_array_delimited_by_null": true },
      "2": { "type_override": "^{CGPDFObject=}", "type_modifier": "o" }
     }
    },
    "CGPDFDictionaryGetStream": {
     "args": {
      "0": {},
-     "1": {},
-     "2": {}
+     "1": { "type_modifier": "n", "c_array_delimited_by_null": true },
+     "2": { "type_modifier": "o" }
     }
    },
    "CGPDFDictionaryGetString": {
     "args": {
      "0": {},
-     "1": {},
-     "2": {}
+     "1": { "type_modifier": "n", "c_array_delimited_by_null": true },
+     "2": { "type_modifier": "o" }
     }
    },
    "CGPDFDocumentAllowsCopying": {
@@ -3133,7 +3135,6 @@
      "2": {}
     },
     "retval": {
-     "already_cfretained": true
     }
    },
    "CGPDFScannerGetContentStream": {
@@ -3253,7 +3254,7 @@
     "args": {
      "0": {}
     },
-    "retval": {}
+    "retval": { "c_array_of_variable_length": true }
    },
    "CGPDFStringGetLength": {
     "args": {
@@ -4015,6 +4016,18 @@
    },
    "CGPDFArrayRef": {
     "typestr": "^{CGPDFArray=}"
+   },
+   "CGPDFDictionaryRef": {
+    "typestr": "^{CGPDFDictionary=}"
+   },
+   "CGPDFScannerRef": {
+    "typestr": "^{CGPDFScanner=}"
+   },
+   "CGPDFStreamRef": {
+    "typestr": "^{CGPDFStream=}"
+   },
+   "CGPDFStringRef": {
+    "typestr": "^{CGPDFString=}"
    },
    "CGPDFContentStreamRef": {
     "typestr": "^{CGPDFContentStream=}"
