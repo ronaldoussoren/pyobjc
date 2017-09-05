@@ -3,6 +3,13 @@ What's new in PyObjC
 
 An overview of the relevant changes in new, and older, releases.
 
+Version 4.0b2
+-------------
+
+* Fix #202: Add bindings for ``CGPDFDictionaryRef``, ``CGPDFScannerRef``
+  ``CGPDFStreamRef`` and ``CGPDFStringRef`` to the Quartz bindings (including
+  some minor updates to function metadata)
+
 Version 4.0b1
 -------------
 
@@ -40,72 +47,72 @@ Version 4.0b1
 * New framework wrappers:
 
   - ColorSync (new in macOS 10.13)
-  - CoreML (new in macOS 10.13)			(beta 3) (beta 4) (beta 5)
+  - CoreML (new in macOS 10.13)
   - ExternalAccessory (new in macOS 10.13)
   - CoreSpotlight (new in macOS 10.13)
-  - Vision (new in macOS 10.13)			(beta 3)          (beta 5) (beta 6)
+  - Vision (new in macOS 10.13)
 
 * metadata updates (beta 6):
 
   - PhotosUI
-  - Accounts				 (beta 4)
+  - Accounts
   - AddressBook
-  - AppKit			(beta 3) (beta 4) (beta 5)
-  - ApplicationServices				  (beta 5)
-  - Automator			(beta 3) (beta 4)
-  - AVKit			(beta 3)	  (beta 5)
-  - CalendarStore			 (beta 4)
+  - AppKit
+  - ApplicationServices
+  - Automator
+  - AVKit
+  - CalendarStore
   - CFNetwork
-  - CloudKit			(beta 3)
-  - Contacts			(beta 3)	  (beta 5)
-  - CoreBluetooth		(beta 3)
-  - CoreData			(beta 3) (beta 4) (beta 5)
-  - CoreFoundation		(beta 3) (beta 4) (beta 5)
-  - CoreGraphics		(beta 3) (beta 4) (beta 5)
-  - CoreImage			(beta 3) (beta 4)
-  - CoreLocation		(beta 3) (beta 4) (beta 5)
-  - CoreServices		(beta 3)
-  - CoreText			(beta 3) (beta 4)
-  - CoreVideo			(beta 3)
-  - CoreWLAN			(beta 3) (beta 4)
+  - CloudKit
+  - Contacts
+  - CoreBluetooth
+  - CoreData
+  - CoreFoundation
+  - CoreGraphics
+  - CoreImage
+  - CoreLocation
+  - CoreServices
+  - CoreText
+  - CoreVideo
+  - CoreWLAN
   - CryptoTokenKit
   - EventKit
-  - FinderSync			(beta 3) (beta 4)
-  - Foundation			(beta 3) (beta 4) (beta 5)
+  - FinderSync
+  - Foundation
   - FSEvents
-  - GameController		(beta 3) (beta 4)
+  - GameController
   - IMServicePlugIn
   - IMServicePlugIn
   - ImageCaptureCore
-  - ImageCaptureCore			 (beta 4)
-  - ImageIO			(beta 3)
-  - Intents			(beta 3) (beta 4) (beta 5)
+  - ImageCaptureCore
+  - ImageIO
+  - Intents
   - IOSurface
   - JavaScriptCore
-  - LocalAuthentication		(beta 3) (beta 4)
-  - MapKit				 (beta 4)
-  - MediaLibrary		(beta 3)
-  - MediaPlayer			(beta 3) (beta 4) (beta 5)
-  - ModelIO			(beta 3)          (beta 5)
+  - LocalAuthentication
+  - MapKit
+  - MediaLibrary
+  - MediaPlayer
+  - ModelIO
   - MultipeerConnectivity
-  - NetFS			(beta 3)
-  - NetworkExtension		(beta 3) (beta 4)
-  - OpenDirectory			 (beta 4)
-  - Photos			(beta 3)          (beta 5)
+  - NetFS
+  - NetworkExtension
+  - OpenDirectory
+  - Photos
   - PhotosUI
   - QTKit
   - QTKit
-  - Quartz 			(beta 3) (beta 4) (beta 5)
+  - Quartz
   - QuartzCore
   - QuickLook
   - QuickLook
-  - SafariServices		(beta 3)
-  - SceneKit			(beta 3) (beta 4) (beta 5)
+  - SafariServices
+  - SceneKit
   - ScreenSaver
-  - Social                                        (beta 5)
-  - SpriteKit			(beta 3)          (beta 5)
-  - SystemConfiguration		(beta 3) (beta 4)
-  - WebKit			(beta 3) (beta 4)
+  - Social
+  - SpriteKit
+  - SystemConfiguration
+  - WebKit
 
 Version 3.3
 -----------
