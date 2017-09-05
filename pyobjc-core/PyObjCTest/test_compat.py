@@ -63,7 +63,7 @@ class TestCompatFunctions (TestCase):
         try:
             with warnings.catch_warnings(record=True) as w:
                 warnings.simplefilter("always")
-                objc.setStrBridgeEnabled(False)
+                objc.setStrBridgeEnabled(orig)
                 objc.getStrBridgeEnabled()
             self.assertEqual(len(w), 2)
             self.assertEqual(w[0].category, DeprecationWarning)
