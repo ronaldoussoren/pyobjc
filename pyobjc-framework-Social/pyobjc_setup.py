@@ -374,13 +374,13 @@ def Extension(*args, **kwds):
     if os_level is None:
         os_level = get_os_level()
 
-    cflags =  ["-DPyObjC_BUILD_RELEASE=%02d%02d"%(tuple(map(int, os_level.split('.'))))]
+    cflags =  []
     ldflags = []
     if 'clang' in get_config_var('CC'):
         cflags.append('-Wno-deprecated-declarations')
 
     CFLAGS = get_config_var('CFLAGS')
-    if '-isysroot' not in CFLAGS and os.path.exists('/usr/include/stdio.h'):
+    if '-isysroot' not in CFLAGS: # and os.path.exists('/usr/include/stdio.h'):
         # We're likely on a system with de Xcode Command Line Tools.
         # Explicitly use the most recent problems to avoid compile problems.
         data = os.popen('xcodebuild -version -sdk macosx Path').read()
@@ -388,6 +388,10 @@ def Extension(*args, **kwds):
         if data:
             cflags.append('-isysroot')
             cflags.append(data)
+            cflags.append("-DPyObjC_BUILD_RELEASE=%02d%02d"%(tuple(map(int, os.path.basename(data)[6:-4].split('.')))))
+
+    else:
+            cflags.append("-DPyObjC_BUILD_RELEASE=%02d%02d"%(tuple(map(int, os_level.split('.')))))
 
 
     if os_level == '10.4':

@@ -50,30 +50,20 @@ def get_os_level():
     v = pl['ProductVersion']
     return '.'.join(v.split('.')[:2])
 
-def get_sdk_level():
-    cflags = get_config_var('CFLAGS')
-    cflags = shlex.split(cflags)
-    for i, val in enumerate(cflags):
-        if val == '-isysroot':
-            sdk = cflags[i+1]
-            break
-    else:
-        return None
-
+def get_sdk_level(sdk):
     if sdk == '/':
         return get_os_level()
 
     sdk = os.path.basename(sdk)
     assert sdk.startswith('MacOSX')
     assert sdk.endswith('.sdk')
-    return sdk[6:-4]
+    sdk =  sdk[6:-4]
+    return sdk
 
 
 
 # CFLAGS for the objc._objc extension:
 CFLAGS = [
-    "-DPyObjC_BUILD_RELEASE=%02d%02d"%(
-        tuple(map(int, (get_sdk_level() or get_os_level()).split('.')))),
     "-g",
     "-fexceptions",
 
@@ -592,6 +582,8 @@ class oc_build_ext (build_ext.build_ext):
         if '-mno-fused-madd' in cflags:
             cflags = cflags.replace('-mno-fused-madd', '')
             get_config_vars()['CFLAGS'] = cflags
+
+        CFLAGS.append("-DPyObjC_BUILD_RELEASE=%02d%02d"%( tuple(map(int, get_sdk_level(self.sdk_root).split('.')))))
 
         _fixup_compiler(use_ccache='develop' in sys.argv)
 
