@@ -3135,6 +3135,7 @@
      "2": {}
     },
     "retval": {
+      "already_cfretained": false
     }
    },
    "CGPDFScannerGetContentStream": {

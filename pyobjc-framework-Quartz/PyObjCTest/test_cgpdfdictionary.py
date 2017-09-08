@@ -9,7 +9,7 @@ class TestCGPDFDictionary (TestCase):
 
     def assertIsPDFGetter(self, function):
         self.assertArgIsIn(function, 1)
-        self.assertArgIsNullterminated(function, 1)
+        self.assertArgIsNullTerminated(function, 1)
         self.assertArgIsOut(function, 2)
 
     def testIncomplete(self):
@@ -23,7 +23,8 @@ class TestCGPDFDictionary (TestCase):
         self.assertIsPDFGetter(CGPDFDictionaryGetDictionary)
         self.assertIsPDFGetter(CGPDFDictionaryGetStream)
 
-        self.assertArgIsFunction(CGPDFDictionaryApplyFunction, 1, b"vn^t^{CGPDFObject=}^v", False)
+        #self.assertArgIsFunction(CGPDFDictionaryApplyFunction, 1, b"vn^t^{CGPDFObject=}^v", False)
+        self.assertFalse(isinstance(CGPDFDictionaryApplyFunction, objc.function))
 
     def testFunctions(self):
         CGPDFDictionaryGetCount
