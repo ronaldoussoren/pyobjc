@@ -9,7 +9,7 @@ and (Objective-)C frameworks
 '''
 from pyobjc_setup import setup
 
-VERSION="4.0b1"
+VERSION="4.0b2"
 
 setup(
     name='pyobjc-framework-OpenDirectory',
