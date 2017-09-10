@@ -584,6 +584,7 @@ class oc_build_ext (build_ext.build_ext):
             get_config_vars()['CFLAGS'] = cflags
 
         CFLAGS.append("-DPyObjC_BUILD_RELEASE=%02d%02d"%( tuple(map(int, get_sdk_level(self.sdk_root).split('.')))))
+        EXT_CFLAGS.append("-DPyObjC_BUILD_RELEASE=%02d%02d"%( tuple(map(int, get_sdk_level(self.sdk_root).split('.')))))
 
         _fixup_compiler(use_ccache='develop' in sys.argv)
 
