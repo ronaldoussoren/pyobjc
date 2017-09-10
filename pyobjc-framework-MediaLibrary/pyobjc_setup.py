@@ -18,6 +18,7 @@ except ImportError:
     sys.exit(1)
 
 from setuptools.command import test
+from setuptools.command import egg_info
 from setuptools.command import build_py
 from distutils.sysconfig import get_config_var, get_config_vars
 
@@ -37,6 +38,15 @@ class oc_build_py (build_py.build_py):
 
 from pkg_resources import working_set, normalize_path, add_activation_listener, require
 from distutils.errors import DistutilsPlatformError, DistutilsError
+
+class oc_egg_info (egg_info.egg_info):
+    def run(self):
+        egg_info.egg_info.run(self)
+
+        path = os.path.join(self.egg_info, 'PKG-INFO')
+        with open(path, 'a+') as fp:
+            fp.write('Project-URL: Documentation, https://pyobjc.readthedocs.io/en/latest/\n')
+            fp.write('Project-URL: Issue tracker, https://bitbucket.org/ronaldoussoren/pyobjc/issues?status=new&status=open\n')
 
 class oc_test (test.test):
     description = "run test suite"
@@ -443,6 +453,7 @@ def setup(
 
     if os_compatible or ('bdist_wheel' in sys.argv and 'ext_modules' not in k):
         cmdclass['build_ext'] = pyobjc_build_ext
+        cmdclass['egg_info'] = oc_egg_info
         cmdclass['install_lib'] = pyobjc_install_lib
         cmdclass['test'] = oc_test
         cmdclass['build_py'] = oc_build_py

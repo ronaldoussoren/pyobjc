@@ -360,6 +360,11 @@ class oc_egg_info (egg_info.egg_info):
 
         egg_info.egg_info.run(self)
 
+        path = os.path.join(self.egg_info, 'PKG-INFO')
+        with open(path, 'a+') as fp:
+            fp.write('Project-URL: Documentation, https://pyobjc.readthedocs.io/en/latest/\n')
+            fp.write('Project-URL: Issue tracker, https://bitbucket.org/ronaldoussoren/pyobjc/issues?status=new&status=open\n')
+
     def write_header(self, basename, filename):
         with open(os.path.join('Modules/objc/', os.path.basename(basename)), 'rU') as fp:
             data = fp.read()
