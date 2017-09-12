@@ -993,6 +993,17 @@ Types
 
       Returns a tuple containing the first *count* elements of the array.
 
+   .. method:: as_buffer(count)
+
+      Returns a writable :class:`memoryview` referencing the memory for the first *count*
+      elements of the array.
+
+      .. note::
+
+         The returned :class:`memoryview` is currently always a byte view, future
+         versions might return a view with a *format* attribute that's appropriate
+         for the :data:`__typestr__` of the varlist object.
+
    .. method:: __getitem__(index)
 
       Returns the value of the *index*-th element of the array. Supports numeric

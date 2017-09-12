@@ -10,6 +10,16 @@ Version 4.0b2
   ``CGPDFStreamRef`` and ``CGPDFStringRef`` to the Quartz bindings (including
   some minor updates to function metadata)
 
+* Issue #205: Add ability to read bytes from ``objc.varlist``
+
+  Instances of ``objc.varlist`` now have a method to return a memoryview
+  that refers to the first section of the list::
+
+     def as_buffer(self, count : int) -> memoryview
+
+  This returns a memoryview the references the underlying memory for
+  the first *count* elements in the list.
+
 Version 4.0b1
 -------------
 

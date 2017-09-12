@@ -46,6 +46,38 @@ static char* keywords[] = { "count", NULL };
     return result;
 }
 
+PyDoc_STRVAR(object_as_buffer_doc,
+    "as_buffer(count)\n"
+    CLINIC_SEP
+    "\n"
+    "Return a memoryview referencing the memory for the first ``count`` "
+    "elements of this list."
+);
+
+static PyObject*
+object_as_buffer(PyObject* _self, PyObject* args, PyObject* kwds)
+{
+static char* keywords[] = { "count", NULL };
+
+    PyObjC_VarList* self = (PyObjC_VarList*)_self;
+
+    Py_ssize_t buffer_size, length;
+    PyObject* result;
+
+    if (!PyArg_ParseTupleAndKeywords(args, kwds, "n", keywords, &length)) {
+        return NULL;
+    }
+
+    buffer_size = length * self->itemsize;
+
+    Py_buffer info;
+    if (PyBuffer_FillInfo(&info, _self, self->array, buffer_size, 0, PyBUF_FULL) < 0) {
+        return NULL;
+    }
+    result = PyMemoryView_FromBuffer(&info);
+
+    return result;
+}
 
 static PyObject*
 object__getitem__(PyObject* _self, Py_ssize_t idx)
@@ -319,6 +351,12 @@ static PyMethodDef object_methods[] = {
         .ml_meth    = (PyCFunction)object_as_tuple,
         .ml_flags   = METH_VARARGS|METH_KEYWORDS,
         .ml_doc     = object_as_tuple_doc
+    },
+    {
+        .ml_name    = "as_buffer",
+        .ml_meth    = (PyCFunction)object_as_buffer,
+        .ml_flags   = METH_VARARGS|METH_KEYWORDS,
+        .ml_doc     = object_as_buffer_doc
     },
     {
         .ml_name    = NULL /* SENTINEL */
