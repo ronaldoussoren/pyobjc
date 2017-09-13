@@ -100,6 +100,7 @@ FRAMEWORK_WRAPPERS=[
 #        ('AudioVideoBridging',      '10.8',             None        ),
 #        ('GLKit',                   '10.8',             None        ),
         ('GameKit',                 '10.8',             None        ),
+        ('GameplayKit',             '10.11',            None        ),
 #        ('MediaToolbox',            '10.8',             None        ),
         ('SceneKit',                '10.7',             None        ),
 #        ('SpriteKit',               '10.9',             None        ),

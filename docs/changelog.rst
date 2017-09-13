@@ -22,6 +22,12 @@ Version 4.0b2
 
 * Added bindings for the GameKit framework introduced in macOS 10.8.
 
+* Added bindings for the GameplayKit framework introduced in macOS 10.11.
+
+  Note that these bindings are less useful than they could be because
+  PyObjC currently does not support "vector" types that are used in
+  some APIs.
+
 Version 4.0b1
 -------------
 

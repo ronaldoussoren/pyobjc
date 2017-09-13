@@ -1,0 +1,113 @@
+// objective.metadata exceptions file, see its document
+// for information on how to update this file.
+{
+ "definitions": {
+  "enum": {
+   "GKGameModelMaxScore": { "value": 16777216 },
+   "GKGameModelMinScore": { "value": -16777216 }
+  },
+  "classes": {
+   "NSObject": {
+    "methods": [
+     {
+      "selector": "playerId",
+      "class_method": false,
+      "retval": {
+       "type_override": [ "i", "q" ]
+      }
+     },
+     {
+      "selector": "setPlayerId:",
+      "class_method": false,
+      "args": {
+       "0": {
+        "type_override": [ "i", "q" ]
+       }
+      }
+     }
+    ]
+   },
+   "GKPath": {
+    "methods": [
+     {
+      "args": {
+       "0": { "type_override": "n", "arg_size_in_arg": 1 }
+      },
+      "class_method": true,
+      "selector": "pathWithPoints:count:radius:cyclical:"
+     },
+     {
+      "args": {
+       "0": { "type_override": "n", "arg_size_in_arg": 1 }
+      },
+      "class_method": false,
+      "selector": "initWithPoints:count:radius:cyclical:"
+     },
+     {
+      "args": {
+       "0": { "type_override": "n", "arg_size_in_arg": 1 }
+      },
+      "class_method": true,
+      "selector": "pathWithFloat3Points:count:radius:cyclical:"
+     },
+     {
+      "args": {
+       "0": { "type_override": "n", "arg_size_in_arg": 1 }
+      },
+      "class_method": false,
+      "selector": "initWithFloat3Points:count:radius:cyclical:"
+     }
+    ]
+   },
+   "GKRule": {
+    "methods": [
+     {
+      "selector": "ruleWithBlockPredicate:action:",
+      "class_method": true,
+      "args": {
+       "0": {
+        "callable": {
+	 "arguments": {
+	  "0": { "typestr": "^v" },
+	  "1": { "typestr": "@" }
+	 },
+	 "retval": { "typestr": "Z" }
+	}
+       },
+       "1": {
+        "callable": {
+	 "arguments": {
+	  "0": { "typestr": "^v" },
+	  "1": { "typestr": "@" }
+	 },
+	 "retval": { "typestr": "v" }
+	}
+       }
+      }
+     }
+    ]
+   },
+   "GKPolygonObstacle": {
+    "methods": [
+     {
+      "args": {
+       "0": { "type_override": "n", "arg_size_in_arg": 1 }
+      },
+      "class_method": true,
+      "selector": "obstacleWithPoints:count:"
+     },
+     {
+      "args": {
+       "0": { "type_override": "n", "arg_size_in_arg": 1 }
+      },
+      "class_method": false,
+      "selector": "initWithPoints:count:"
+     }
+    ]
+   }
+  },
+  "formal_protocols": {},
+  "functions": {},
+  "informal_protocols": {}
+ }
+}

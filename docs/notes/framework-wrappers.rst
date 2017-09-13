@@ -157,7 +157,7 @@ The framework name links to API notes for that framework, the python packages li
 +--------------------------------+---------------------------------------------+-----------------------------------------+
 | `GameKit`_                     | `pyobjc-framework-GameKit`_                 |                                         |
 +--------------------------------+---------------------------------------------+-----------------------------------------+
-| GameplayKit                    | -                                           | Not yet wrapped                         |
+| `GameplayKit`                    | `pyobjc-framework-GameplayKit`_                                           |                                         |
 +--------------------------------+---------------------------------------------+-----------------------------------------+
 | Hypervisor                     | -                                           | Will not be wrapped, too low level.     |
 +--------------------------------+---------------------------------------------+-----------------------------------------+
@@ -332,17 +332,17 @@ Frameworks that are marked as "Will not be wrapped" will not be wrapped, mostly 
 usefull for Python programmers. Frameworks that are marked with "Not wrapped yet" will be wrapped in some future
 version of PyObjC although there is no explicit roadmap for this.
 
-.. _PyAL: https://pypi.python.org/pypi/PyAL
+.. _PyAL: https://pypi.org/pypi/PyAL
 
-.. _PyOpenGL: https://pypi.python.org/pypi/PyOpenGL
+.. _PyOpenGL: https://pypi.org/pypi/PyOpenGL
 
-.. _appscript: https://pypi.python.org/pypi/appscript
+.. _appscript: https://pypi.org/pypi/appscript
 
-.. _gssapi: https://pypi.python.org/pypi/gssapi
+.. _gssapi: https://pypi.org/pypi/gssapi
 
-.. _python-ldap: https://pypi.python.org/pypi/python-ldap
+.. _python-ldap: https://pypi.org/pypi/python-ldap
 
-.. _pyopencl: https://pypi.python.org/pypi/pyopencl
+.. _pyopencl: https://pypi.org/pypi/pyopencl
 
 .. _AVFoundation: ../apinotes/AVFoundation.html
 .. _`AVKit`: ../apinotes/AVKit.html
@@ -384,6 +384,7 @@ version of PyObjC although there is no explicit roadmap for this.
 .. _`GameCenter`: ../apinotes/GameCenter.html
 .. _`GameController`: ../apinotes/GameController.html
 .. _`GameKit`: ../apinotes/GameKit.html
+.. _`GameplayKit`: ../apinotes/GameplayKit.html
 .. _`IMServicePlugIn`: ../apinotes/IMServicePlugIn.html
 .. _`IOSurface`: ../apinotes/IOSurface.html
 .. _`ImageCaptureCore`: ../apinotes/ImageCaptureCore.html
@@ -431,72 +432,73 @@ version of PyObjC although there is no explicit roadmap for this.
 .. _`SystemConfiguration`: ../apinotes/SystemConfiguration.html
 .. _`WebKit`: ../apinotes/WebKit.html
 .. _`XgridFoundation`: ../apinotes/XgridFoundation.html
-.. _`pyobjc-framework-AVKit`: https://pypi.python.org/pypi/pyobjc-framework-AVKit/
-.. _`pyobjc-framework-Accounts`: https://pypi.python.org/pypi/pyobjc-framework-Accounts/
-.. _`pyobjc-framework-AddressBook`: https://pypi.python.org/pypi/pyobjc-framework-AddressBook/
-.. _`pyobjc-framework-AppleScriptKit`: https://pypi.python.org/pypi/pyobjc-framework-AppleScriptKit/
-.. _`pyobjc-framework-CoreServices`: https://pypi.python.org/pypi/pyobjc-framework-CoreServices/
-.. _`pyobjc-framework-AppleScriptObjC`: https://pypi.python.org/pypi/pyobjc-framework-AppleScriptObjC/
-.. _`pyobjc-framework-ApplicationServices`: https://pypi.python.org/pypi/pyobjc-framework-ApplicationServices/
-.. _`pyobjc-framework-Automator`: https://pypi.python.org/pypi/pyobjc-framework-Automator/
-.. _`pyobjc-framework-CFNetwork`: https://pypi.python.org/pypi/pyobjc-framework-CFNetwork/
-.. _`pyobjc-framework-CalendarStore`: https://pypi.python.org/pypi/pyobjc-framework-CalendarStore/
-.. _`pyobjc-framework-GameCenter`: https://pypi.python.org/pypi/pyobjc-framework-GameCenter/
-.. _`pyobjc-framework-CloudKit`: https://pypi.python.org/pypi/pyobjc-framework-CloudKit/
-.. _`pyobjc-framework-Cocoa`: https://pypi.python.org/pypi/pyobjc-framework-Cocoa/
-.. _`pyobjc-framework-Collaboration`: https://pypi.python.org/pypi/pyobjc-framework-Collaboration/
-.. _`pyobjc-framework-ContactsUI`: https://pypi.python.org/pypi/pyobjc-framework-ContactsUI/
-.. _`pyobjc-framework-Contacts`: https://pypi.python.org/pypi/pyobjc-framework-Contacts/
-.. _`pyobjc-framework-CoreBluetooth`: https://pypi.python.org/pypi/pyobjc-framework-CoreBluetooth/
-.. _`pyobjc-framework-CoreData`: https://pypi.python.org/pypi/pyobjc-framework-CoreData/
-.. _`pyobjc-framework-CoreLocation`: https://pypi.python.org/pypi/pyobjc-framework-CoreLocation/
-.. _`pyobjc-framework-CoreText`: https://pypi.python.org/pypi/pyobjc-framework-CoreText/
-.. _`pyobjc-framework-CoreWLAN`: https://pypi.python.org/pypi/pyobjc-framework-CoreWLAN/
-.. _`pyobjc-framework-CryptoTokenKit`: https://pypi.python.org/pypi/pyobjc-framework-CryptoTokenKit/
-.. _`pyobjc-framework-DiskArbitration`: https://pypi.python.org/pypi/pyobjc-framework-DiskArbitration/
-.. _`pyobjc-framework-EventKit`: https://pypi.python.org/pypi/pyobjc-framework-EventKit/
-.. _`pyobjc-framework-ExceptionHandling`: https://pypi.python.org/pypi/pyobjc-framework-ExceptionHandling/
-.. _`pyobjc-framework-FSEvents`: https://pypi.python.org/pypi/pyobjc-framework-FSEvents/
-.. _`pyobjc-framework-FinderSync`: https://pypi.python.org/pypi/pyobjc-framework-FinderSync/
-.. _`pyobjc-framework-GameController`: https://pypi.python.org/pypi/pyobjc-framework-GameController/
-.. _`pyobjc-framework-GameKit`: https://pypi.python.org/pypi/pyobjc-framework-GameKit/
-.. _`pyobjc-framework-IMServicePlugIn`: https://pypi.python.org/pypi/pyobjc-framework-IMServicePlugIn/
-.. _`pyobjc-framework-IOSurface`: https://pypi.python.org/pypi/pyobjc-framework-IOSurface/
-.. _`pyobjc-framework-ImageCaptureCore`: https://pypi.python.org/pypi/pyobjc-framework-ImageCaptureCore/
-.. _`pyobjc-framework-InputMethodKit`: https://pypi.python.org/pypi/pyobjc-framework-InputMethodKit/
-.. _`pyobjc-framework-InstallerPlugins`: https://pypi.python.org/pypi/pyobjc-framework-InstallerPlugins/
-.. _`pyobjc-framework-InstantMessage`: https://pypi.python.org/pypi/pyobjc-framework-InstantMessage/
-.. _`pyobjc-framework-Intents`: https://pypi.python.org/pypi/pyobjc-framework-Intents/
-.. _`pyobjc-framework-LatentSemanticMapping`: https://pypi.python.org/pypi/pyobjc-framework-LatentSemanticMapping/
-.. _`pyobjc-framework-LaunchServices`: https://pypi.python.org/pypi/pyobjc-framework-LaunchServices/
-.. _`pyobjc-framework-LocalAuthentication`: https://pypi.python.org/pypi/pyobjc-framework-LocalAuthentication/
-.. _`pyobjc-framework-MapKit`: https://pypi.python.org/pypi/pyobjc-framework-MapKit/
-.. _`pyobjc-framework-MediaAccessibility`: https://pypi.python.org/pypi/pyobjc-framework-MediaAccessibility/
-.. _`pyobjc-framework-MediaLibrary`: https://pypi.python.org/pypi/pyobjc-framework-MediaLibrary/
-.. _`pyobjc-framework-MediaPlayer`: https://pypi.python.org/pypi/pyobjc-framework-MediaPlayer/
-.. _`pyobjc-framework-Message`: https://pypi.python.org/pypi/pyobjc-framework-Message/
-.. _`pyobjc-framework-ModelIO`: https://pypi.python.org/pypi/pyobjc-framework-ModelIO/
-.. _`pyobjc-framework-MultipeerConnectivity`: https://pypi.python.org/pypi/pyobjc-framework-MultipeerConnectivity/
-.. _`pyobjc-framework-NetFS`: https://pypi.python.org/pypi/pyobjc-framework-NetFS/
-.. _`pyobjc-framework-NotificationCenter`: https://pypi.python.org/pypi/pyobjc-framework-NotificationCenter/
-.. _`pyobjc-framework-OpenDirectory`: https://pypi.python.org/pypi/pyobjc-framework-OpenDirectory/
-.. _`pyobjc-framework-PhotosUI`: https://pypi.python.org/pypi/pyobjc-framework-PhotosUI/
-.. _`pyobjc-framework-Photos`: https://pypi.python.org/pypi/pyobjc-framework-Photos/
-.. _`pyobjc-framework-PreferencePanes`: https://pypi.python.org/pypi/pyobjc-framework-PreferencePanes/
-.. _`pyobjc-framework-PubSub`: https://pypi.python.org/pypi/pyobjc-framework-PubSub/
-.. _`pyobjc-framework-QTKit`: https://pypi.python.org/pypi/pyobjc-framework-QTKit/
-.. _`pyobjc-framework-Quartz`: https://pypi.python.org/pypi/pyobjc-framework-Quartz/
-.. _`pyobjc-framework-SafariServices`: https://pypi.python.org/pypi/pyobjc-framework-SafariServices/
-.. _`pyobjc-framework-SceneKit`: https://pypi.python.org/pypi/pyobjc-framework-SceneKit/
-.. _`pyobjc-framework-ScreenSaver`: https://pypi.python.org/pypi/pyobjc-framework-ScreenSaver/
-.. _`pyobjc-framework-ScriptingBridge`: https://pypi.python.org/pypi/pyobjc-framework-ScriptingBridge/
-.. _`pyobjc-framework-ServerNotification`: https://pypi.python.org/pypi/pyobjc-framework-ServerNotification/
-.. _`pyobjc-framework-ServiceManagement`: https://pypi.python.org/pypi/pyobjc-framework-ServiceManagement/
-.. _`pyobjc-framework-Social`: https://pypi.python.org/pypi/pyobjc-framework-Social/
-.. _`pyobjc-framework-SpriteKit`: https://pypi.python.org/pypi/pyobjc-framework-SpriteKit/
-.. _`pyobjc-framework-StoreKit`: https://pypi.python.org/pypi/pyobjc-framework-StoreKit/
-.. _`pyobjc-framework-SyncServices`: https://pypi.python.org/pypi/pyobjc-framework-SyncServices/
-.. _`pyobjc-framework-SystemConfiguration`: https://pypi.python.org/pypi/pyobjc-framework-SystemConfiguration/
-.. _`pyobjc-framework-WebKit`: https://pypi.python.org/pypi/pyobjc-framework-WebKit/
-.. _`pyobjc-framework-XgridFoundation`: https://pypi.python.org/pypi/pyobjc-framework-XgridFoundation/
-.. _pyobjc-framework-AVFoundation: https://pypi.python.org/pypi/pyobjc-framework-AVFoundation/
+.. _`pyobjc-framework-AVKit`: https://pypi.org/pypi/pyobjc-framework-AVKit/
+.. _`pyobjc-framework-Accounts`: https://pypi.org/pypi/pyobjc-framework-Accounts/
+.. _`pyobjc-framework-AddressBook`: https://pypi.org/pypi/pyobjc-framework-AddressBook/
+.. _`pyobjc-framework-AppleScriptKit`: https://pypi.org/pypi/pyobjc-framework-AppleScriptKit/
+.. _`pyobjc-framework-CoreServices`: https://pypi.org/pypi/pyobjc-framework-CoreServices/
+.. _`pyobjc-framework-AppleScriptObjC`: https://pypi.org/pypi/pyobjc-framework-AppleScriptObjC/
+.. _`pyobjc-framework-ApplicationServices`: https://pypi.org/pypi/pyobjc-framework-ApplicationServices/
+.. _`pyobjc-framework-Automator`: https://pypi.org/pypi/pyobjc-framework-Automator/
+.. _`pyobjc-framework-CFNetwork`: https://pypi.org/pypi/pyobjc-framework-CFNetwork/
+.. _`pyobjc-framework-CalendarStore`: https://pypi.org/pypi/pyobjc-framework-CalendarStore/
+.. _`pyobjc-framework-GameCenter`: https://pypi.org/pypi/pyobjc-framework-GameCenter/
+.. _`pyobjc-framework-CloudKit`: https://pypi.org/pypi/pyobjc-framework-CloudKit/
+.. _`pyobjc-framework-Cocoa`: https://pypi.org/pypi/pyobjc-framework-Cocoa/
+.. _`pyobjc-framework-Collaboration`: https://pypi.org/pypi/pyobjc-framework-Collaboration/
+.. _`pyobjc-framework-ContactsUI`: https://pypi.org/pypi/pyobjc-framework-ContactsUI/
+.. _`pyobjc-framework-Contacts`: https://pypi.org/pypi/pyobjc-framework-Contacts/
+.. _`pyobjc-framework-CoreBluetooth`: https://pypi.org/pypi/pyobjc-framework-CoreBluetooth/
+.. _`pyobjc-framework-CoreData`: https://pypi.org/pypi/pyobjc-framework-CoreData/
+.. _`pyobjc-framework-CoreLocation`: https://pypi.org/pypi/pyobjc-framework-CoreLocation/
+.. _`pyobjc-framework-CoreText`: https://pypi.org/pypi/pyobjc-framework-CoreText/
+.. _`pyobjc-framework-CoreWLAN`: https://pypi.org/pypi/pyobjc-framework-CoreWLAN/
+.. _`pyobjc-framework-CryptoTokenKit`: https://pypi.org/pypi/pyobjc-framework-CryptoTokenKit/
+.. _`pyobjc-framework-DiskArbitration`: https://pypi.org/pypi/pyobjc-framework-DiskArbitration/
+.. _`pyobjc-framework-EventKit`: https://pypi.org/pypi/pyobjc-framework-EventKit/
+.. _`pyobjc-framework-ExceptionHandling`: https://pypi.org/pypi/pyobjc-framework-ExceptionHandling/
+.. _`pyobjc-framework-FSEvents`: https://pypi.org/pypi/pyobjc-framework-FSEvents/
+.. _`pyobjc-framework-FinderSync`: https://pypi.org/pypi/pyobjc-framework-FinderSync/
+.. _`pyobjc-framework-GameController`: https://pypi.org/pypi/pyobjc-framework-GameController/
+.. _`pyobjc-framework-GameKit`: https://pypi.org/pypi/pyobjc-framework-GameKit/
+.. _`pyobjc-framework-GameplayKit`: https://pypi.org/pypi/pyobjc-framework-GameplayKit/
+.. _`pyobjc-framework-IMServicePlugIn`: https://pypi.org/pypi/pyobjc-framework-IMServicePlugIn/
+.. _`pyobjc-framework-IOSurface`: https://pypi.org/pypi/pyobjc-framework-IOSurface/
+.. _`pyobjc-framework-ImageCaptureCore`: https://pypi.org/pypi/pyobjc-framework-ImageCaptureCore/
+.. _`pyobjc-framework-InputMethodKit`: https://pypi.org/pypi/pyobjc-framework-InputMethodKit/
+.. _`pyobjc-framework-InstallerPlugins`: https://pypi.org/pypi/pyobjc-framework-InstallerPlugins/
+.. _`pyobjc-framework-InstantMessage`: https://pypi.org/pypi/pyobjc-framework-InstantMessage/
+.. _`pyobjc-framework-Intents`: https://pypi.org/pypi/pyobjc-framework-Intents/
+.. _`pyobjc-framework-LatentSemanticMapping`: https://pypi.org/pypi/pyobjc-framework-LatentSemanticMapping/
+.. _`pyobjc-framework-LaunchServices`: https://pypi.org/pypi/pyobjc-framework-LaunchServices/
+.. _`pyobjc-framework-LocalAuthentication`: https://pypi.org/pypi/pyobjc-framework-LocalAuthentication/
+.. _`pyobjc-framework-MapKit`: https://pypi.org/pypi/pyobjc-framework-MapKit/
+.. _`pyobjc-framework-MediaAccessibility`: https://pypi.org/pypi/pyobjc-framework-MediaAccessibility/
+.. _`pyobjc-framework-MediaLibrary`: https://pypi.org/pypi/pyobjc-framework-MediaLibrary/
+.. _`pyobjc-framework-MediaPlayer`: https://pypi.org/pypi/pyobjc-framework-MediaPlayer/
+.. _`pyobjc-framework-Message`: https://pypi.org/pypi/pyobjc-framework-Message/
+.. _`pyobjc-framework-ModelIO`: https://pypi.org/pypi/pyobjc-framework-ModelIO/
+.. _`pyobjc-framework-MultipeerConnectivity`: https://pypi.org/pypi/pyobjc-framework-MultipeerConnectivity/
+.. _`pyobjc-framework-NetFS`: https://pypi.org/pypi/pyobjc-framework-NetFS/
+.. _`pyobjc-framework-NotificationCenter`: https://pypi.org/pypi/pyobjc-framework-NotificationCenter/
+.. _`pyobjc-framework-OpenDirectory`: https://pypi.org/pypi/pyobjc-framework-OpenDirectory/
+.. _`pyobjc-framework-PhotosUI`: https://pypi.org/pypi/pyobjc-framework-PhotosUI/
+.. _`pyobjc-framework-Photos`: https://pypi.org/pypi/pyobjc-framework-Photos/
+.. _`pyobjc-framework-PreferencePanes`: https://pypi.org/pypi/pyobjc-framework-PreferencePanes/
+.. _`pyobjc-framework-PubSub`: https://pypi.org/pypi/pyobjc-framework-PubSub/
+.. _`pyobjc-framework-QTKit`: https://pypi.org/pypi/pyobjc-framework-QTKit/
+.. _`pyobjc-framework-Quartz`: https://pypi.org/pypi/pyobjc-framework-Quartz/
+.. _`pyobjc-framework-SafariServices`: https://pypi.org/pypi/pyobjc-framework-SafariServices/
+.. _`pyobjc-framework-SceneKit`: https://pypi.org/pypi/pyobjc-framework-SceneKit/
+.. _`pyobjc-framework-ScreenSaver`: https://pypi.org/pypi/pyobjc-framework-ScreenSaver/
+.. _`pyobjc-framework-ScriptingBridge`: https://pypi.org/pypi/pyobjc-framework-ScriptingBridge/
+.. _`pyobjc-framework-ServerNotification`: https://pypi.org/pypi/pyobjc-framework-ServerNotification/
+.. _`pyobjc-framework-ServiceManagement`: https://pypi.org/pypi/pyobjc-framework-ServiceManagement/
+.. _`pyobjc-framework-Social`: https://pypi.org/pypi/pyobjc-framework-Social/
+.. _`pyobjc-framework-SpriteKit`: https://pypi.org/pypi/pyobjc-framework-SpriteKit/
+.. _`pyobjc-framework-StoreKit`: https://pypi.org/pypi/pyobjc-framework-StoreKit/
+.. _`pyobjc-framework-SyncServices`: https://pypi.org/pypi/pyobjc-framework-SyncServices/
+.. _`pyobjc-framework-SystemConfiguration`: https://pypi.org/pypi/pyobjc-framework-SystemConfiguration/
+.. _`pyobjc-framework-WebKit`: https://pypi.org/pypi/pyobjc-framework-WebKit/
+.. _`pyobjc-framework-XgridFoundation`: https://pypi.org/pypi/pyobjc-framework-XgridFoundation/
+.. _pyobjc-framework-AVFoundation: https://pypi.org/pypi/pyobjc-framework-AVFoundation/
