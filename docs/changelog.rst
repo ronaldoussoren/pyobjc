@@ -20,6 +20,8 @@ Version 4.0b2
   This returns a memoryview the references the underlying memory for
   the first *count* elements in the list.
 
+* Added bindings for the GameKit framework introduced in macOS 10.8.
+
 Version 4.0b1
 -------------
 

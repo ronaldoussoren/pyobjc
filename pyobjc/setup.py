@@ -99,7 +99,7 @@ FRAMEWORK_WRAPPERS=[
         ('XgridFoundation',         None,               '10.8'      ),
 #        ('AudioVideoBridging',      '10.8',             None        ),
 #        ('GLKit',                   '10.8',             None        ),
-#        ('GameKit',                 '10.8',             None        ),
+        ('GameKit',                 '10.8',             None        ),
 #        ('MediaToolbox',            '10.8',             None        ),
         ('SceneKit',                '10.7',             None        ),
 #        ('SpriteKit',               '10.9',             None        ),
