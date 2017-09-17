@@ -6,6 +6,8 @@ An overview of the relevant changes in new, and older, releases.
 Version 4.0b2
 -------------
 
+* Updated metadata for Xcode 9 GM.
+
 * Fix #202: Add bindings for ``CGPDFDictionaryRef``, ``CGPDFScannerRef``
   ``CGPDFStreamRef`` and ``CGPDFStringRef`` to the Quartz bindings (including
   some minor updates to function metadata)
@@ -27,6 +29,7 @@ Version 4.0b2
   Note that these bindings are less useful than they could be because
   PyObjC currently does not support "vector" types that are used in
   some APIs.
+
 
 Version 4.0b1
 -------------
@@ -70,7 +73,7 @@ Version 4.0b1
   - CoreSpotlight (new in macOS 10.13)
   - Vision (new in macOS 10.13)
 
-* metadata updates (beta 6):
+* metadata updates:
 
   - PhotosUI
   - Accounts

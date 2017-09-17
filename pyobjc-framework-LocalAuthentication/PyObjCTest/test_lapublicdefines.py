@@ -31,5 +31,9 @@ if sys.maxsize > 2 ** 32:
             self.assertEqual(LocalAuthentication.kLAErrorInvalidContext, -10)
             self.assertEqual(LocalAuthentication.kLAErrorDomain, "com.apple.LocalAuthentication")
 
+            self.assertEqual(LocalAuthentication.kLAErrorBiometryNotAvailable, LocalAuthentication.kLAErrorTouchIDNotAvailable)
+            self.assertEqual(LocalAuthentication.kLAErrorBiometryNotEnrolled, LocalAuthentication.kLAErrorTouchIDNotEnrolled)
+            self.assertEqual(LocalAuthentication.kLAErrorBiometryLockout, LocalAuthentication.kLAErrorTouchIDLockout)
+
 if __name__ == "__main__":
     main()

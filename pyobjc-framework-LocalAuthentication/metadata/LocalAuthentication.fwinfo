@@ -2,6 +2,14 @@
 // for information on how to update this file.
 {
  "definitions": {
+  "aliases": {
+   "kLAErrorBiometryNotAvailable": { "alias": "kLAErrorTouchIDNotAvailable" },
+   "kLAErrorBiometryNotEnrolled": { "alias": "kLAErrorTouchIDNotEnrolled" },
+   "kLAErrorBiometryLockout": { "alias": "kLAErrorTouchIDLockout" },
+   "LAErrorBiometryNotAvailable": { "alias": "kLAErrorBiometryNotAvailable" },
+   "LAErrorBiometryNotEnrolled": { "alias": "kLAErrorBiometryNotEnrolled" },
+   "LAErrorBiometryLockout": { "alias": "kLAErrorBiometryLockout" }
+  },
   "literals": {
    "kLAErrorDomain": {
     "unicode": true

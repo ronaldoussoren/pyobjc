@@ -19,6 +19,10 @@ if sys.maxsize > 2 ** 32:
             self.assertEqual(LocalAuthentication.LAErrorInvalidContext, LocalAuthentication.kLAErrorInvalidContext)
             self.assertEqual(LocalAuthentication.LAErrorNotInteractive, LocalAuthentication.kLAErrorNotInteractive)
 
+            self.assertEqual(LocalAuthentication.LAErrorBiometryNotAvailable, LocalAuthentication.kLAErrorBiometryNotAvailable)
+            self.assertEqual(LocalAuthentication.LAErrorBiometryNotEnrolled, LocalAuthentication.kLAErrorBiometryNotEnrolled)
+            self.assertEqual(LocalAuthentication.LAErrorBiometryLockout, LocalAuthentication.kLAErrorBiometryLockout)
+
             self.assertIsInstance(LocalAuthentication.LAErrorDomain, unicode)
 
 if __name__ == "__main__":
