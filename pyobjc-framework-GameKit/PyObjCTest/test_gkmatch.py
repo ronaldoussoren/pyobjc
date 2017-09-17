@@ -32,15 +32,15 @@ class TestGKMatch (TestCase):
 
     @min_os_level('10.9')
     def testMethods10_9(self):
-        self.assertArgIsBlock(GameKit.GKMatch.rematchWithCompletionHandler_, 0, 'v@@')
-        self.assertArgIsBlock(GameKit.GKMatch.chooseBestHostPlayerWithCompletionHandler_, 0, 'v@')
+        self.assertArgIsBlock(GameKit.GKMatch.rematchWithCompletionHandler_, 0, b'v@@')
+        self.assertArgIsBlock(GameKit.GKMatch.chooseBestHostPlayerWithCompletionHandler_, 0, b'v@')
 
         self.assertResultIsBOOL(GameKit.GKMatch.sendData_toPlayers_withDataMode_error_)
         self.assertArgIsOut(GameKit.GKMatch.sendData_toPlayers_withDataMode_error_, 3)
 
     @min_os_level('10.10')
     def testMethods10_10(self):
-        self.assertArgIsBlock(GameKit.GKMatch.chooseBestHostingPlayerWithCompletionHandler_, 0, 'v@')
+        self.assertArgIsBlock(GameKit.GKMatch.chooseBestHostingPlayerWithCompletionHandler_, 0, b'v@')
 
     def testProtocols(self):
         objc.protocolNamed('GKMatchDelegate')
