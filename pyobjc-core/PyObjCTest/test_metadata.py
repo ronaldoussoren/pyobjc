@@ -1168,9 +1168,15 @@ class TestVariableLengthValue (TestCase):
         self.assertEqual(v[8], 8)
 
         data = v.as_buffer(4)
-        self.assertEqual(data[0], 0)
+        if sys.version_info[0] == 2:
+            self.assertEqual(data[0], '\x00')
+        else:
+            self.assertEqual(data[0], 0)
         v[0] = 0xffffff
-        self.assertEqual(data[0], 0xff)
+        if sys.version_info[0] == 2:
+            self.assertEqual(data[0], '\xff')
+        else:
+            self.assertEqual(data[0], 0xff)
         data[4] = 0
         if sys.byteorder == 'big':
             self.assertEqual(v[0], 0xffffff00)
