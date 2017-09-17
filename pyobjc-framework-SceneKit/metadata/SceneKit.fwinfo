@@ -281,9 +281,9 @@
          "arguments": {
  	  "0": { "typestr": "^v" },
  	  "1": { "typestr": "@" },
- 	  "2": { "typestr": "{CATransform3D=dddddddddddddddd}" }
+ 	  "2": { "typestr": [ "{CATransform3D=ffffffffffffffff}", "{CATransform3D=dddddddddddddddd}" ] }
  	 },
-	 "retval": { "typestr": "{CATransform3D=dddddddddddddddd}" }
+	 "retval": { "typestr": [ "{CATransform3D=ffffffffffffffff}", "{CATransform3D=dddddddddddddddd}" ]  }
         }
        }
       }

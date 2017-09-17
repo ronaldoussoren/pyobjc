@@ -34,6 +34,7 @@ class TestIKCameraDeviceView (TestCase):
     
     @min_sdk_level('10.10')
     def testProtocols(self):
+	# XXX: Require minimal deployment target of 10.6
         objc.protocolNamed('IKCameraDeviceViewDelegate')
 
 if __name__ == "__main__":

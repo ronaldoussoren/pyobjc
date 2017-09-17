@@ -4,6 +4,7 @@ import objc
 import GameKit
 
 class TestGKGameSessionEventListener (TestCase):
+    @min_sdk_level('10.11')
     def testProtocols(self):
         objc.protocolNamed('GKGameSessionEventListener')
 

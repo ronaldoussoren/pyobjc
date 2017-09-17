@@ -91,12 +91,8 @@ class TestITMediaItem (TestCase):
         self.assertIsInstance(iTunesLibrary.ITLibMediaItemPropertyVolumeNormalizationEnergy, unicode)
         self.assertIsInstance(iTunesLibrary.ITLibMediaItemPropertyPlayCount, unicode)
         self.assertIsInstance(iTunesLibrary.ITLibMediaItemPropertyLastPlayDate, unicode)
-        self.assertIsInstance(iTunesLibrary.ITLibMediaItemPropertyPlayStatus, unicode)
         self.assertIsInstance(iTunesLibrary.ITLibMediaItemPropertyIsDRMProtected, unicode)
         self.assertIsInstance(iTunesLibrary.ITLibMediaItemPropertyIsPurchased, unicode)
-        self.assertIsInstance(iTunesLibrary.ITLibMediaItemPropertyMovementCount, unicode)
-        self.assertIsInstance(iTunesLibrary.ITLibMediaItemPropertyMovementName, unicode)
-        self.assertIsInstance(iTunesLibrary.ITLibMediaItemPropertyMovementNumber, unicode)
         self.assertIsInstance(iTunesLibrary.ITLibMediaItemPropertyRating, unicode)
         self.assertIsInstance(iTunesLibrary.ITLibMediaItemPropertyRatingComputed, unicode)
         self.assertIsInstance(iTunesLibrary.ITLibMediaItemPropertyReleaseDate, unicode)
@@ -112,11 +108,18 @@ class TestITMediaItem (TestCase):
         self.assertIsInstance(iTunesLibrary.ITLibMediaItemPropertyLocationType, unicode)
         self.assertIsInstance(iTunesLibrary.ITLibMediaItemPropertyVoiceOverLanguage, unicode)
         self.assertIsInstance(iTunesLibrary.ITLibMediaItemPropertyVolumeAdjustment, unicode)
-        self.assertIsInstance(iTunesLibrary.ITLibMediaItemPropertyWork, unicode)
         self.assertIsInstance(iTunesLibrary.ITLibMediaItemPropertyYear, unicode)
         self.assertIsInstance(iTunesLibrary.ITLibMediaItemPropertyMediaKind, unicode)
         self.assertIsInstance(iTunesLibrary.ITLibMediaItemPropertyLocation, unicode)
         self.assertIsInstance(iTunesLibrary.ITLibMediaItemPropertyArtwork, unicode)
+
+    @min_os_level('10.10')
+    def testConstants10_10(self):
+        self.assertIsInstance(iTunesLibrary.ITLibMediaItemPropertyPlayStatus, unicode)
+        self.assertIsInstance(iTunesLibrary.ITLibMediaItemPropertyMovementCount, unicode)
+        self.assertIsInstance(iTunesLibrary.ITLibMediaItemPropertyMovementName, unicode)
+        self.assertIsInstance(iTunesLibrary.ITLibMediaItemPropertyMovementNumber, unicode)
+        self.assertIsInstance(iTunesLibrary.ITLibMediaItemPropertyWork, unicode)
 
     @expectedFailure
     def testConstants_missing(self):

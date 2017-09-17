@@ -111,12 +111,15 @@ class TestCVImageBuffer (TestCase):
     def testFunctions10_8(self):
         self.assertResultIsCFRetained(CVImageBufferCreateColorSpaceFromAttachments)
 
+    @min_os_level('10.13')
+    def testFunctions10_13(self):
         CVYCbCrMatrixGetIntegerCodePointForString
         CVColorPrimariesGetIntegerCodePointForString
         CVTransferFunctionGetIntegerCodePointForString
         CVYCbCrMatrixGetStringForIntegerCodePoint
         CVColorPrimariesGetStringForIntegerCodePoint
         CVTransferFunctionGetStringForIntegerCodePoint
+
 
 if __name__ == "__main__":
     main()

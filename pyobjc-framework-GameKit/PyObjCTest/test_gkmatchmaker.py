@@ -24,22 +24,28 @@ class TestGKMatchMaker (TestCase):
         self.assertEqual(GameKit.GKMatchTypeTurnBased, 2)
 
 
+    @onlyOn64Bit
     def testMethods(self):
-        self.assertArgIsBlock(GameKit.GKMatchmaker.matchForInvite_completionHandler_, 1, b'v@@')
         self.assertArgIsBlock(GameKit.GKMatchmaker.addPlayersToMatch_matchRequest_completionHandler_, 2, b'v@')
         self.assertArgIsBlock(GameKit.GKMatchmaker.queryPlayerGroupActivity_withCompletionHandler_, 1, b'v' + objc._C_NSInteger + b'@')
         self.assertArgIsBlock(GameKit.GKMatchmaker.queryActivityWithCompletionHandler_, 0, b'v' + objc._C_NSInteger + b'@')
 
+    @onlyOn64Bit
     @min_os_level('10.8')
     def testMethods10_8(self):
+	# XXX: These aren't available on 10.9, even though the SDK claims they are
         self.assertResultIsBlock(GameKit.GKMatchmaker.inviteHandler, b'v@@')
         self.assertArgIsBlock(GameKit.GKMatchmaker.setInviteHandler_, 0, b'v@@')
 
         self.assertArgIsBlock(GameKit.GKMatchmaker.findPlayersForHostedMatchRequest_withCompletionHandler_, 1, b'v@@')
 
 
+    @onlyOn64Bit
     @min_os_level('10.9')
-    def testMethods10_9(self):
+    def testMethods10_9(self):	
+	# XXX: These aren't available on 10.9, even though the SDK claims they are
+        self.assertArgIsBlock(GameKit.GKMatchmaker.matchForInvite_completionHandler_, 1, b'v@@')
+
         self.assertArgIsBlock(GameKit.GKMatchmaker.matchForInvite_completionHandler_, 1, b'v@@')
 
         self.assertArgIsBlock(GameKit.GKMatchmaker.startBrowsingForNearbyPlayersWithReachableHandler_, 0, b'v@Z')

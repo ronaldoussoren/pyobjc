@@ -26,12 +26,13 @@ if os_level_key(os_release()) < os_level_key('10.12') or sys.maxsize >= 2**32:
             self.assertArgIsBlock(SceneKit.SCNTransformConstraint.transformConstraintInWorldSpace_withBlock_, 1,
                 SceneKit.SCNMatrix4.__typestr__ + b'@' + SceneKit.SCNMatrix4.__typestr__)
 
-            self.assertResultIsBOOL(SceneKit.SCNConstraint.isEnabled)
-            self.assertArgIsBOOL(SceneKit.SCNConstraint.setEnabled_, 0)
 
 
         @min_os_level('10.13')
         def testMethods10_13(self):
+            self.assertResultIsBOOL(SceneKit.SCNConstraint.isEnabled)
+            self.assertArgIsBOOL(SceneKit.SCNConstraint.setEnabled_, 0)
+
             self.assertResultIsBOOL(SceneKit.SCNConstraint.isIncremental)
             self.assertArgIsBOOL(SceneKit.SCNConstraint.setIncremental_, 0)
 

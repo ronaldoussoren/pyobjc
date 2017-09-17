@@ -289,7 +289,21 @@ try:
     r(b'SCNTransaction', b'setDisableActions:', {'arguments': {2: {'type': b'Z'}}})
     r(b'SCNTransformConstraint', b'orientationConstraintInWorldSpace:withBlock:', {'arguments': {2: {'type': 'Z'}, 3: {'callable': {'retval': {'type': sel32or64(b'{SCNVector4=ffff}', b'{SCNVector4=dddd}')}, 'arguments': {0: {'type': b'^v'}, 1: {'type': b'@'}, 2: {'type': sel32or64(b'{SCNVector4=ffff}', b'{SCNVector4=dddd}')}}}}}})
     r(b'SCNTransformConstraint', b'positionConstraintInWorldSpace:withBlock:', {'arguments': {2: {'type': 'Z'}, 3: {'callable': {'retval': {'type': sel32or64(b'{SCNVector3=fff}', b'{SCNVector3=ddd}')}, 'arguments': {0: {'type': b'^v'}, 1: {'type': b'@'}, 2: {'type': sel32or64(b'{SCNVector3=fff}', b'{SCNVector3=ddd}')}}}}}})
-    r(b'SCNTransformConstraint', b'transformConstraintInWorldSpace:withBlock:', {'arguments': {2: {'type': b'Z'}, 3: {'callable': {'retval': {'type': b'{CATransform3D=dddddddddddddddd}'}, 'arguments': {0: {'type': b'^v'}, 1: {'type': b'@'}, 2: {'type': b'{CATransform3D=dddddddddddddddd}'}}}}}})
+    r(b'SCNTransformConstraint', b'transformConstraintInWorldSpace:withBlock:', {
+		'arguments': {
+			2: {'type': b'Z'}, 
+			3: {
+				'callable': {
+					'retval': {'type': sel32or64('{CATransform3D=ffffffffffffffff}', '{CATransform3D=dddddddddddddddd}')}, 
+					'arguments': {
+						0: {'type': b'^v'}, 
+						1: {'type': b'@'}, 
+						2: {'type': sel32or64('{CATransform3D=ffffffffffffffff}', '{CATransform3D=dddddddddddddddd}')}
+					}	
+				}
+			}
+		}
+	})
     r(b'SCNView', b'allowsCameraControl', {'retval': {'type': 'Z'}})
     r(b'SCNView', b'rendersContinuously', {'retval': {'type': 'Z'}})
     r(b'SCNView', b'setAllowsCameraControl:', {'retval': {'type': 'Z'}, 'arguments': {2: {'type': b'Z'}}})

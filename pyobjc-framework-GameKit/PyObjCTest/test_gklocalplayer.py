@@ -6,6 +6,8 @@ class TestGKLocalPlayerHelper (GameKit.GKLocalPlayer):
     def isUnderage(self): return 1
 
 class TestGKLocalPlayer (TestCase):
+
+    @onlyOn64Bit
     def testMethods(self):
         self.assertResultIsBOOL(GameKit.GKLocalPlayer.isAuthenticated)
         self.assertResultIsBOOL(TestGKLocalPlayerHelper.isUnderage)
@@ -15,6 +17,7 @@ class TestGKLocalPlayer (TestCase):
         self.assertArgIsBlock(GameKit.GKLocalPlayer.loadFriendsWithCompletionHandler_, 0, b'v@@')
         self.assertArgIsBlock(GameKit.GKLocalPlayer.authenticateWithCompletionHandler_, 0, b'v@')
 
+    @onlyOn64Bit
     @min_os_level('10.9')
     def testMethods10_9(self):
         self.assertResultIsBlock(GameKit.GKLocalPlayer.authenticateHandler, b'v@@')

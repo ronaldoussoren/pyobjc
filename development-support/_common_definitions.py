@@ -65,7 +65,7 @@ def py_version(ver):
     ).decode("utf-8").splitlines()[0]
 
 
-def system_report(path):
+def system_report(path, py_versions):
     with open(path, "w") as fp:
        fp.write("Build at:           {}\n".format(time.ctime()))
        fp.write("macOS version:      {}\n".format(mac_ver()))
@@ -74,7 +74,7 @@ def system_report(path):
        fp.write("Status of checkout: {}\n".format(repository_commit_state()))
        fp.write("\n")
 
-       for ver in PY_VERSIONS:
+       for ver in py_versions:
            fp.write("Python {}:         {}\n".format(ver, py_version(ver)))
 
 @contextlib.contextmanager

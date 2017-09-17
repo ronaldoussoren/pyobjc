@@ -12,6 +12,7 @@ class TestGKLeaderboard (TestCase):
         self.assertEqual(GameKit.GKLeaderboardPlayerScopeGlobal, 0)
         self.assertEqual(GameKit.GKLeaderboardPlayerScopeFriendsOnly, 1)
 
+    @onlyOn64Bit
     def testMethods(self):
         self.assertResultIsBOOL(GameKit.GKLeaderboard.isLoading)
         self.assertArgIsBlock(GameKit.GKLeaderboard.loadScoresWithCompletionHandler_, 0, b'v@@')

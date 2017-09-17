@@ -39,6 +39,7 @@ class TestPDFAnnotationUtilities (TestCase):
         self.assertIsInstance(PDFAnnotationHighlightingModeOutline, unicode)
         self.assertIsInstance(PDFAnnotationHighlightingModePush, unicode)
 
+    @min_os_level('10.13')
     def testMethods(self):
         self.assertResultIsBOOL(PDFAnnotation.isMultiline)
         self.assertArgIsBOOL(PDFAnnotation.setMultiline_, 0)

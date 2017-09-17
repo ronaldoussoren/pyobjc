@@ -252,7 +252,7 @@ def supports_arch(interpreter, arch):
     for ln in lines:
         m = re.search('for architecture (\S+)\)', ln)
         if m is not None:
-            if m.group(1) == arch:
+            if m.group(1).startswith(arch):
                 return True
 
     return False
@@ -275,7 +275,7 @@ def main():
     if not os.path.exists(osx_dir):
         os.makedirs(osx_dir)
 
-    system_report(os.path.join(osx_dir, "build-info.txt"))
+    system_report(os.path.join(osx_dir, "build-info.txt"), options.python_versions)
 
     build_order = ['pyobjc-core'] + sort_framework_wrappers()
 

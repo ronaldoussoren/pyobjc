@@ -5,7 +5,6 @@ import GameKit
 class TestGKError (TestCase):
 
     def testConstants(self):
-        self.assertIsInstance(GameKit.GKGameSessionErrorDomain, unicode)
 
         self.assertEqual(GameKit.GKGameSessionErrorUnknown, 1)
         self.assertEqual(GameKit.GKGameSessionErrorNotAuthenticated, 2)
@@ -24,6 +23,9 @@ class TestGKError (TestCase):
         self.assertEqual(GameKit.GKGameSessionErrorCloudDriveDisabled, 15)
         self.assertEqual(GameKit.GKGameSessionErrorInvalidSession, 16)
 
+    @min_os_level('10.12')
+    def testConstants10_12(self):
+        self.assertIsInstance(GameKit.GKGameSessionErrorDomain, unicode)
 
 if __name__ == "__main__":
     main()

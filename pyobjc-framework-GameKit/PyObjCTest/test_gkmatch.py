@@ -18,6 +18,7 @@ class TestGKMatch (TestCase):
         self.assertEqual(GameKit.GKPlayerStateConnected, 1)
         self.assertEqual(GameKit.GKPlayerStateDisconnected, 2)
 
+    @onlyOn64Bit
     def testMethods(self):
         self.assertResultIsBOOL(GameKit.GKMatch.sendData_toPlayers_dataMode_error_)
         self.assertArgIsOut(GameKit.GKMatch.sendData_toPlayers_dataMode_error_, 3)
@@ -25,11 +26,13 @@ class TestGKMatch (TestCase):
         self.assertResultIsBOOL(GameKit.GKMatch.sendDataToAllPlayers_withDataMode_error_)
         self.assertArgIsOut(GameKit.GKMatch.sendDataToAllPlayers_withDataMode_error_, 2)
 
+    def testProtocolMethods(self):
         self.assertArgHasType(GameKit.TestGKMatchHelper.match_player_didChangeConnectionState_, 2, objc._C_NSInteger)
         self.assertArgHasType(GameKit.TestGKMatchHelper.match_player_didChangeState_, 2, objc._C_NSInteger)
         self.assertResultIsBOOL(GameKit.TestGKMatchHelper.match_shouldReinviteDisconnectedPlayer_)
         self.assertResultIsBOOL(GameKit.TestGKMatchHelper.match_shouldReinvitePlayer_)
 
+    @onlyOn64Bit
     @min_os_level('10.9')
     def testMethods10_9(self):
         self.assertArgIsBlock(GameKit.GKMatch.rematchWithCompletionHandler_, 0, b'v@@')
