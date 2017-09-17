@@ -6,11 +6,17 @@ An overview of the relevant changes in new, and older, releases.
 Version 4.0b2
 -------------
 
+* Issue #204: Metadata for CGPDFDictionaryGetObject was wrong
+
+  Reported by Nickolas Pohilets.
+
 * Updated metadata for Xcode 9 GM.
 
 * Fix #202: Add bindings for ``CGPDFDictionaryRef``, ``CGPDFScannerRef``
   ``CGPDFStreamRef`` and ``CGPDFStringRef`` to the Quartz bindings (including
   some minor updates to function metadata)
+
+  Reported by Nickolas Pohilets.
 
 * Issue #205: Add ability to read bytes from ``objc.varlist``
 
@@ -21,6 +27,8 @@ Version 4.0b2
 
   This returns a memoryview the references the underlying memory for
   the first *count* elements in the list.
+
+  Reported by Nickolas Pohilets.
 
 * Added bindings for the GameKit framework introduced in macOS 10.8.
 
