@@ -1175,7 +1175,7 @@ class TestVariableLengthValue (TestCase):
         v[0] = 0xffffff
         if sys.version_info[0] == 2:
             self.assertEqual(data[0], b'\xff')
-            data[4] = '\x00'
+            data[4] = b'\x00'
 
         else:
             self.assertEqual(data[0], 0xff)
