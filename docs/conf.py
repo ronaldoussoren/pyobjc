@@ -57,7 +57,7 @@ copyright = u'2017, Ronald Oussoren'
 # built documents.
 #
 # The short X.Y version.
-version = "4.0rc1"
+version = "4.0"
 # The full version, including alpha/beta/rc tags.
 release = version
 
@@ -119,7 +119,7 @@ html_theme_options = dict(
 
 # The name for this set of Sphinx documents.  If None, it defaults to
 # "<project> v<release> documentation".
-html_title = u"PyObjC — the Python ⟷  Objective-C bridge"
+html_title = u"PyObjC - the Python to Objective-C bridge"
 
 html_add_permalinks = ""
 

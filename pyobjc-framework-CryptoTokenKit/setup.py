@@ -10,7 +10,7 @@ and (Objective-)C frameworks
 from pyobjc_setup import setup, Extension
 import os
 
-VERSION="4.0rc1"
+VERSION="4.0"
 
 setup(
     name='pyobjc-framework-CryptoTokenKit',
