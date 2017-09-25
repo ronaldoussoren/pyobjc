@@ -15,7 +15,7 @@ Release information
 
 .. raw:: html
 
-   <p>PyObjC <span id="release_version">X.Y</span> was released on <span id="release_date">YYYY-MM-DD</span>.
+   <p>PyObjC <span id="release_version">4.0</span> was released on <span id="release_date">2017-09-25</span>.
    See the <a href="changelog.html">changelog</a> for more information.
    <script type="text/javascript">
       $.getJSON('https://pypi.python.org/pypi/pyobjc/json?callback=?', function(data) {
