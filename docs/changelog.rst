@@ -3,8 +3,8 @@ What's new in PyObjC
 
 An overview of the relevant changes in new, and older, releases.
 
-Version 4.0rc1
---------------
+Version 4.0
+-----------
 
 * Issue #204: Metadata for CGPDFDictionaryGetObject was wrong
 
