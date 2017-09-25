@@ -13,7 +13,7 @@ import tarfile
 import sys
 import ast
 
-VERSION="4.0"
+VERSION="4.0.1b1"
 
 # Table with all framework wrappers and the OSX releases where they are
 # first supported, and where support was removed. The introduced column
