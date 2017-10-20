@@ -146,7 +146,7 @@ from Python and to mix in Objective-C, C and C++ source.
 
 This package is a pseudo-package that will install all pyobjc related
 packages (that is, pyobjc-core as well as wrapppers for frameworks on
-OSX)
+macOS)
 """
 
 from setuptools import setup, Extension, find_packages
