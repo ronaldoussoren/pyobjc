@@ -1,6 +1,9 @@
 Welcome to the PyObjC repository
 ================================
 
+Introduction
+------------
+
 This repository contains a number of Python packages/distributions
 for the PyObjC project:
 

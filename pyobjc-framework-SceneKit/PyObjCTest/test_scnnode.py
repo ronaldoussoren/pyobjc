@@ -18,6 +18,10 @@ if os_level_key(os_release()) < os_level_key('10.12') or sys.maxsize >= 2**32:
             self.assertEqual(SceneKit.SCNMovabilityHintFixed, 0)
             self.assertEqual(SceneKit.SCNMovabilityHintMovable, 1)
 
+            self.assertEqual(SceneKit.SCNNodeFocusBehaviorNone, 0)
+            self.assertEqual(SceneKit.SCNNodeFocusBehaviorOccluding, 1)
+            self.assertEqual(SceneKit.SCNNodeFocusBehaviorFocusable, 2)
+
         def testMethods(self):
             self.assertResultIsBOOL(SceneKit.SCNNode.isHidden)
             self.assertArgIsBOOL(SceneKit.SCNNode.setHidden_, 0)

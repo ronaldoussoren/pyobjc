@@ -1,5 +1,5 @@
 '''
-Wrappers for the "GameController" framework on MacOS X introduced in Mac OS X 10.9.
+Wrappers for the "GameController" framework on macOS introduced in macOS 10.9.
 
 These wrappers don't include documentation, please check Apple's documention
 for information on how to use this framework and PyObjC's documentation
@@ -10,11 +10,11 @@ and (Objective-)C frameworks
 from pyobjc_setup import setup, Extension
 import os
 
-VERSION="3.3a0"
+VERSION="4.0.1b1"
 
 setup(
     name='pyobjc-framework-GameController',
-    description = "Wrappers for the framework GameController on Mac OS X",
+    description = "Wrappers for the framework GameController on macOS",
     packages = [ "GameController" ],
     version=VERSION,
     install_requires = [

@@ -1,16 +1,23 @@
 from PyObjCTools.TestSupport import *
 
 import objc
+import warnings
 
 class TestCompatFunctions (TestCase):
     def test_verbose(self):
         orig = objc.options.verbose
         try:
-            with filterWarnings("error", DeprecationWarning):
-                self.assertRaises(DeprecationWarning, objc.setVerbose, False)
-                self.assertRaises(DeprecationWarning, objc.getVerbose)
+            with warnings.catch_warnings(record=True) as w:
+                warnings.simplefilter("always")
+                objc.setVerbose(False)
+                objc.getVerbose()
 
-            with filterWarnings("ignore", DeprecationWarning):
+            self.assertEqual(len(w), 2)
+            self.assertEqual(w[0].category, DeprecationWarning)
+            self.assertEqual(w[1].category, DeprecationWarning)
+
+            with warnings.catch_warnings(record=True):
+                warnings.simplefilter("ignore")
                 self.assertEqual(objc.getVerbose(), orig)
 
                 objc.setVerbose(False)
@@ -27,11 +34,16 @@ class TestCompatFunctions (TestCase):
     def test_use_kvo(self):
         orig = objc.options.use_kvo
         try:
-            with filterWarnings("error", DeprecationWarning):
-                self.assertRaises(DeprecationWarning, objc.setUseKVOForSetattr, False)
-                self.assertRaises(DeprecationWarning, objc.getUseKVOForSetattr)
+            with warnings.catch_warnings(record=True) as w:
+                warnings.simplefilter("always")
+                objc.setUseKVOForSetattr(orig)
+                objc.getUseKVOForSetattr()
+            self.assertEqual(len(w), 2)
+            self.assertEqual(w[0].category, DeprecationWarning)
+            self.assertEqual(w[1].category, DeprecationWarning)
 
-            with filterWarnings("ignore", DeprecationWarning):
+            with warnings.catch_warnings(record=True):
+                warnings.simplefilter("ignore")
                 self.assertEqual(objc.getUseKVOForSetattr(), orig)
 
                 objc.setUseKVOForSetattr(False)
@@ -49,11 +61,16 @@ class TestCompatFunctions (TestCase):
     def test_strbridge_enabled(self):
         orig = objc.options.strbridge_enabled
         try:
-            with filterWarnings("error", DeprecationWarning):
-                self.assertRaises(DeprecationWarning, objc.setStrBridgeEnabled, False)
-                self.assertRaises(DeprecationWarning, objc.getStrBridgeEnabled)
+            with warnings.catch_warnings(record=True) as w:
+                warnings.simplefilter("always")
+                objc.setStrBridgeEnabled(orig)
+                objc.getStrBridgeEnabled()
+            self.assertEqual(len(w), 2)
+            self.assertEqual(w[0].category, DeprecationWarning)
+            self.assertEqual(w[1].category, DeprecationWarning)
 
-            with filterWarnings("ignore", DeprecationWarning):
+            with warnings.catch_warnings():
+                warnings.simplefilter("ignore")
                 self.assertEqual(objc.getStrBridgeEnabled(), orig)
 
                 objc.setStrBridgeEnabled(False)

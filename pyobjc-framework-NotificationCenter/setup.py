@@ -1,5 +1,5 @@
 '''
-Wrappers for the "NotificationCenter" framework on MacOS X.
+Wrappers for the "NotificationCenter" framework on macOS.
 
 These wrappers don't include documentation, please check Apple's documention
 for information on how to use this framework and PyObjC's documentation
@@ -10,11 +10,11 @@ and (Objective-)C frameworks
 from pyobjc_setup import setup, Extension
 import os
 
-VERSION="3.3a0"
+VERSION="4.0.1b1"
 
 setup(
     name='pyobjc-framework-NotificationCenter',
-    description = "Wrappers for the framework NotificationCenter on Mac OS X",
+    description = "Wrappers for the framework NotificationCenter on macOS",
     min_os_level="10.10",
     packages = [ "NotificationCenter" ],
     ext_modules = [

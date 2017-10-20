@@ -2,6 +2,14 @@
 // for information on how to update this file.
 {
  "definitions": {
+  "aliases": {
+   "kLAErrorBiometryNotAvailable": { "alias": "kLAErrorTouchIDNotAvailable" },
+   "kLAErrorBiometryNotEnrolled": { "alias": "kLAErrorTouchIDNotEnrolled" },
+   "kLAErrorBiometryLockout": { "alias": "kLAErrorTouchIDLockout" },
+   "LAErrorBiometryNotAvailable": { "alias": "kLAErrorBiometryNotAvailable" },
+   "LAErrorBiometryNotEnrolled": { "alias": "kLAErrorBiometryNotEnrolled" },
+   "LAErrorBiometryLockout": { "alias": "kLAErrorBiometryLockout" }
+  },
   "literals": {
    "kLAErrorDomain": {
     "unicode": true
@@ -23,6 +31,9 @@
    "LAAccessControlOperationUseItem": { "value": 1 },
    "LAAccessControlOperationCreateKey": { "value": 2 },
    "LAAccessControlOperationUseKeySign": { "value": 3 },
+   "kLACredentialTypeApplicationPassword": { "value": 0 },
+   "LAErrorNotInteractive": { "value":  -1004 },
+   "kLAErrorNotInteractive": { "value":  -1004 },
    "kLAErrorInvalidContext": { "value": -10 },
    "kLAErrorAppCancel": { "value": -9 },
    "kLAErrorTouchIDLockout": { "value": -8 },
@@ -33,6 +44,18 @@
   "classes": {
    "LAContext": {
     "methods": [
+     {
+      "retval": { "type_override": "Z"  },
+      "class_method": false,
+      "selector": "interactionNotAllowed"
+     },
+     {
+      "args": {
+       "0": { "type_override": "Z"  }
+      },
+      "class_method": false,
+      "selector": "setInteractionNotAllowed:"
+     },
      {
       "args": {
        "3": {

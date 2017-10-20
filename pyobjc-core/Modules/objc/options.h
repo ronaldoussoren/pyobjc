@@ -4,6 +4,8 @@
 extern BOOL PyObjC_Verbose;
 extern BOOL PyObjC_UseKVO;
 extern BOOL PyObjCPointer_RaiseException;
+extern BOOL PyObjC_StructsIndexable;
+extern BOOL PyObjC_StructsWritable;
 
 #if PY_MAJOR_VERSION == 2
 extern BOOL PyObjC_StrBridgeEnabled;

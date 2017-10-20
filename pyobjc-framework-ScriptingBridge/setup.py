@@ -1,11 +1,11 @@
 '''
-Wrappers for the "ScriptingBrige" framework on MacOSX 10.5 or later. This
+Wrappers for the "ScriptingBrige" framework on macOS 10.5 or later. This
 framework provides an easy way to use the scripting functionality of
 applications ("AppleScript") from Cocoa applications.
 
 The functionality of this framework is comparable to that off "appscript",
 although the latter is better tuned for use in Python applications and is
-available on MacOSX 10.4 as well.
+available on macOS 10.4 as well.
 
 These wrappers don't include documentation, please check Apple's documention
 for information on how to use this framework and PyObjC's documentation
@@ -15,11 +15,11 @@ and (Objective-)C frameworks
 from pyobjc_setup import setup, Extension
 import os
 
-VERSION="3.3a0"
+VERSION="4.0.1b1"
 
 setup(
     name='pyobjc-framework-ScriptingBridge',
-    description = "Wrappers for the framework ScriptingBridge on Mac OS X",
+    description = "Wrappers for the framework ScriptingBridge on macOS",
     min_os_level='10.5',
     packages = [ "ScriptingBridge" ],
     ext_modules = [

@@ -1,6 +1,56 @@
 {
  "definitions": {
   "enum": {
+   "INSendMessageRecipientUnsupportedReasonNoAccount": { "value": 1 },
+   "INSendMessageRecipientUnsupportedReasonOffline": { "value": 2 },
+   "INSendMessageRecipientUnsupportedReasonMessagingServiceNotEnabledForRecipient": { "value": 3 },
+   "INCallDestinationTypeNormal": { "value": 1 },
+   "INCallDestinationTypeEmergency": { "value": 2 },
+   "INCallDestinationTypeVoicemail": { "value": 3 },
+   "INCallDestinationTypeRedial": { "value": 4 },
+   "INSearchForMessagesIntentResponseCodeFailureMessageTooManyResults": { "value": 7 },
+   "INRecurrenceFrequencyUnknown": { "value": 0 },
+   "INRecurrenceFrequencyMinute": { "value": 1 },
+   "INRecurrenceFrequencyHourly": { "value": 2 },
+   "INRecurrenceFrequencyDaily": { "value": 3 },
+   "INRecurrenceFrequencyWeekly": { "value": 4 },
+   "INRecurrenceFrequencyMonthly": { "value": 5 },
+   "INRecurrenceFrequencyYearly": { "value": 6 },
+   "INMessageAttributeOptionPlayed": { "value": 16 },
+   "INMessageTypeUnspecified": { "value": 0 },
+   "INMessageTypeText": { "value": 1 },
+   "INMessageTypeAudio": { "value": 2 },
+   "INMessageTypeDigitalTouch": { "value": 3 },
+   "INMessageTypeHandwriting": { "value": 4 },
+   "INMessageTypeSticker": { "value": 5 },
+   "INMessageTypeTapbackLiked": { "value": 6 },
+   "INMessageTypeTapbackDisliked": { "value": 7 },
+   "INMessageTypeTapbackEmphasized": { "value": 8 },
+   "INMessageTypeTapbackLoved": { "value": 9 },
+   "INMessageTypeTapbackQuestioned": { "value": 10 },
+   "INMessageTypeTapbackLaughed": { "value": 11 },
+   "INMessageTypeMediaCalendar": { "value": 12 },
+   "INMessageTypeMediaLocation": { "value": 13 },
+   "INMessageTypeMediaAddressCard": { "value": 14 },
+   "INMessageTypeMediaImage": { "value": 15 },
+   "INMessageTypeMediaVideo": { "value": 16 },
+   "INMessageTypeMediaPass": { "value": 17 },
+   "INMessageTypeMediaAudio": { "value": 18 },
+   "INCallRecordTypeOptionOutgoing": { "value": 1 },
+   "INCallRecordTypeOptionMissed": { "value": 2 },
+   "INCallRecordTypeOptionReceived": { "value": 4 },
+   "INCallRecordTypeOptionLatest": { "value": 8 },
+   "INCallRecordTypeOptionVoicemail": { "value": 16 },
+   "INCallRecordTypeLatest": { "value": 4 },
+   "INCallRecordTypeVoicemail": { "value": 5 },
+   "INCallDestinationTypeUnknown": { "value": 0 },
+   "INCallDestinationTypeNormalDestination": { "value": 1 },
+   "INCallDestinationTypeEmergencyDestination": { "value": 2 },
+   "INCallDestinationTypeVoicemailDestination": { "value": 3 },
+   "INCallDestinationTypeRedialDestination": { "value": 4 },
+   "INCallCapabilityUnknown": { "value": 0 },
+   "INCallCapabilityAudioCall": { "value": 1 },
+   "INCallCapabilityVideoCall": { "value": 2 },
    "INIntentErrorExtensionLaunchingTimeout": { "value": 5000 },
    "INIntentErrorExtensionBringUpFailed": { "value": 5001 },
    "INStartVideoCallIntentResponseCodeUnspecified": { "value": 0 },
@@ -10,7 +60,11 @@
    "INStartVideoCallIntentResponseCodeFailureRequiringAppLaunch": { "value": 4 },
    "INStartVideoCallIntentResponseCodeFailureAppConfigurationRequired": { "value": 5 },
    "INStartVideoCallIntentResponseCodeFailureCallingServiceNotAvailable": { "value": 6 },
+   "INStartVideoCallIntentResponseCodeFailureContactNotSupportedByApp": { "value": 7 },
+   "INStartVideoCallIntentResponseCodeFailureInvalidNumber": { "value": 8 },
    "INSearchCallHistoryIntentResponseCodeFailureAppConfigurationRequired": { "value": 5 },
+   "INSearchCallHistoryIntentResponseCodeInProgress": { "value": 6 },
+   "INSearchCallHistoryIntentResponseCodeSuccess": { "value": 7 },
    "INStartAudioCallIntentResponseCodeUnspecified": { "value": 0 },
    "INStartAudioCallIntentResponseCodeReady": { "value": 1 },
    "INStartAudioCallIntentResponseCodeContinueInApp": { "value": 2 },
@@ -18,6 +72,8 @@
    "INStartAudioCallIntentResponseCodeFailureRequiringAppLaunch": { "value": 4 },
    "INStartAudioCallIntentResponseCodeFailureAppConfigurationRequired": { "value": 5 },
    "INStartAudioCallIntentResponseCodeFailureCallingServiceNotAvailable": { "value": 6 },
+   "INStartAudioCallIntentResponseCodeFailureContactNotSupportedByApp": { "value": 7 },
+   "INStartAudioCallIntentResponseCodeFailureNoValidNumber": { "value": 8 },
    "INSendMessageIntentResponseCodeUnspecified": { "value": 0 },
    "INSendMessageIntentResponseCodeReady": { "value": 1 },
    "INSendMessageIntentResponseCodeInProgress": { "value": 2 },
@@ -165,6 +221,86 @@
    },
    "NSObject": {
     "methods": [
+     {
+      "class_method": false,
+      "selector": "resolveSpeakableGroupNamesForSearchForMessages:withCompletion:",
+      "args": {
+       "1": {
+        "type_override": "@?",
+        "callable": {
+	 "arguments": {
+	  "0": { "typestr": "^v" },
+	  "1": { "typestr": "@" }
+	 },
+	 "retval": { "typestr": "v" }
+	}
+       }
+      }
+     },
+     {
+      "class_method": false,
+      "selector": "resolveDestinationTypeForStartAudioCall:withCompletion:",
+      "args": {
+       "1": {
+        "type_override": "@?",
+        "callable": {
+	 "arguments": {
+	  "0": { "typestr": "^v" },
+	  "1": { "typestr": "@" }
+	 },
+	 "retval": { "typestr": "v" }
+	}
+       }
+      }
+     },
+     {
+      "class_method": false,
+      "selector": "resolveSpeakableGroupNameForSendMessage:withCompletion:",
+      "args": {
+       "1": {
+        "type_override": "@?",
+        "callable": {
+	 "arguments": {
+	  "0": { "typestr": "^v" },
+	  "1": { "typestr": "@" }
+	 },
+	 "retval": { "typestr": "v" }
+	}
+       }
+      }
+     },
+     {
+      "class_method": false,
+      "selector": "resolveUnseenForSearchCallHistory:withCompletion:",
+      "args": {
+       "1": {
+        "type_override": "@?",
+        "callable": {
+	 "arguments": {
+	  "0": { "typestr": "^v" },
+	  "1": { "typestr": "@" }
+	 },
+	 "retval": { "typestr": "v" }
+	}
+       }
+      }
+     },
+     {
+      "class_method": false,
+      "selector": "resolveCallTypesForSearchCallHistory:withCompletion:",
+      "args": {
+       "1": {
+        "type_override": "@?",
+        "callable": {
+	 "arguments": {
+	  "0": { "typestr": "^v" },
+	  "1": { "typestr": "@" }
+	 },
+	 "retval": { "typestr": "v" }
+	}
+       }
+      }
+     },
      {
       "class_method": false,
       "selector": "resolveCallTypeForSearchCallHistory:withCompletion:",
@@ -440,6 +576,22 @@
      {
       "class_method": false,
       "selector": "confirmSendMessage:completion:",
+      "args": {
+       "1": {
+        "type_override": "@?",
+        "callable": {
+	 "arguments": {
+	  "0": { "typestr": "^v" },
+	  "1": { "typestr": "@" }
+	 },
+	 "retval": { "typestr": "v" }
+	}
+       }
+      }
+     },
+     {
+      "class_method": false,
+      "selector": "resolveRecipientsForSendMessage:completion:",
       "args": {
        "1": {
         "type_override": "@?",

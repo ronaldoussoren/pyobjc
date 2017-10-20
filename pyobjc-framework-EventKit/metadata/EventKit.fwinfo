@@ -20,7 +20,7 @@
    "EKParticipantScheduleStatusNoPrivileges": { "value": 5 },
    "EKParticipantScheduleStatusDeliveryFailed": { "value": 6 },
    "EKParticipantScheduleStatusCannotDeliver": { "value": 7 },
-   "EKParticipantScheduleStatusRecipientNotAllowed": { "value": 8 },
+   "EKParticipantScheduleStatusRecipientNotAllowed": { "value": 8 }
   },
   "expressions": {
    "DATE_COMPONENTS": { "ignore": true },
@@ -30,7 +30,6 @@
    "EKCalendarItem": {
     "methods": [
      {
-       "args": {},
        "retval": { "type": "Z" },
        "class_method": false,
        "selector": "isAllDay"

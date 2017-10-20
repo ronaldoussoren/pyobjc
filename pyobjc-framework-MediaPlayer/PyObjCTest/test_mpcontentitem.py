@@ -13,5 +13,11 @@ if sys.maxsize > 2**32:
             self.assertResultIsBOOL(MediaPlayer.MPContentItem.isPlayable)
             self.assertArgIsBOOL(MediaPlayer.MPContentItem.setPlayable_, 0)
 
+            self.assertResultIsBOOL(MediaPlayer.MPContentItem.isStreamingContent)
+            self.assertArgIsBOOL(MediaPlayer.MPContentItem.setStreamingContent_, 0)
+
+            self.assertResultIsBOOL(MediaPlayer.MPContentItem.isExplicitContent)
+            self.assertArgIsBOOL(MediaPlayer.MPContentItem.setExplicitContent_, 0)
+
 if __name__ == "__main__":
     main()

@@ -12,6 +12,9 @@ class TestNSProgressIndicator (TestCase):
         self.assertEqual(NSProgressIndicatorBarStyle, 0)
         self.assertEqual(NSProgressIndicatorSpinningStyle, 1)
 
+        self.assertEqual(NSProgressIndicatorStyleBar, 0)
+        self.assertEqual(NSProgressIndicatorStyleSpinning, 1)
+
     def testMethods(self):
         self.assertResultIsBOOL(NSProgressIndicator.isIndeterminate)
         self.assertArgIsBOOL(NSProgressIndicator.setIndeterminate_, 0)

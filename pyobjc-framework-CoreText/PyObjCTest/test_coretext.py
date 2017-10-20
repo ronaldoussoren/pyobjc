@@ -39,6 +39,10 @@ class TestCoreText (TestCase):
     def testConstants10_12(self):
         self.assertEqual(kCTVersionNumber10_12, 0x00090000)
 
+    @min_os_level('10.13')
+    def testConstants10_13(self):
+        self.assertEqual(kCTVersionNumber10_13, 0x000A0000)
+
     def testFunctions(self):
         v = CTGetCoreTextVersion()
         self.assertIsInstance(v, (int, long))

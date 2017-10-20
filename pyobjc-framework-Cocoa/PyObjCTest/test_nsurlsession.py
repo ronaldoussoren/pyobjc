@@ -29,6 +29,8 @@ else:
         def setHTTPShouldUsePipelining_(self, v): pass
         def HTTPShouldSetCookies(self): return 1
         def setHTTPShouldSetCookies_(self, v): pass
+        def waitsForConnectivity(self): return 1
+        def setWaitsForConnectivity_(self, v): pass
 
 class TestNSURLSessionHelper (NSObject):
     def URLSession_didReceiveChallenge_completionHandler_(self, a, b, c): pass
@@ -40,10 +42,21 @@ class TestNSURLSessionHelper (NSObject):
     def URLSession_dataTask_willCacheResponse_completionHandler_(self, a, b, c, d): pass
     def URLSession_downloadTask_didWriteData_totalBytesWritten_totalBytesExpectedToWrite_(self, a, b, c, d, e): pass
     def URLSession_downloadTask_didResumeAtOffset_expectedTotalBytes_(self, a, b, c, d): pass
+    def URLSession_task_willBeginDelayedRequest_completionHandler_(self, a, b, c, d): pass
 
 class TestNSURLSession (TestCase):
+    def testConstants(self):
+        self.assertEqual(NSURLSessionMultipathServiceTypeNone, 0)
+        self.assertEqual(NSURLSessionMultipathServiceTypeHandover, 1)
+        self.assertEqual(NSURLSessionMultipathServiceTypeInteractive, 2)
+        self.assertEqual(NSURLSessionMultipathServiceTypeAggregate, 3)
+
+        self.assertEqual(NSURLSessionDelayedRequestContinueLoading, 0)
+        self.assertEqual(NSURLSessionDelayedRequestUseNewRequest, 1)
+        self.assertEqual(NSURLSessionDelayedRequestCancel, 2)
+
     @min_os_level('10.10')
-    def testConsants10_10(self):
+    def testConstants10_10(self):
         self.assertIsInstance(NSURLSessionTransferSizeUnknown, (int, long))
 
         self.assertEqual(NSURLSessionTaskStateRunning, 0)
@@ -89,6 +102,9 @@ class TestNSURLSession (TestCase):
 
         self.assertArgIsBlock(NSURLSessionDownloadTask.cancelByProducingResumeData_, 0, b'v@')
 
+        self.assertResultIsBOOL(TestNSURLSessionConfigurationHelper.waitsForConnectivity)
+        self.assertArgIsBOOL(TestNSURLSessionConfigurationHelper.setWaitsForConnectivity_, 0)
+
         self.assertResultIsBOOL(TestNSURLSessionConfigurationHelper.isDiscretionary)
         self.assertArgIsBOOL(TestNSURLSessionConfigurationHelper.setDiscretionary_, 0)
 
@@ -133,9 +149,13 @@ class TestNSURLSession (TestCase):
         self.assertResultIsBOOL(NSURLSessionTaskTransactionMetrics.isProxyConnection)
         self.assertResultIsBOOL(NSURLSessionTaskTransactionMetrics.isReusedConnection)
 
-    @min_sdk_level('10.10')
-    def testProtocols(self):
-        objc.protocolNamed('NSURLSessionDelegate')
+
+    @min_os_level('10.13')
+    def testMethods10_13(self):
+        self.assertArgIsBlock(TestNSURLSessionHelper.URLSession_task_willBeginDelayedRequest_completionHandler_, 3, b'v' + objc._C_NSInteger + b'@')
+
+    @min_sdk_level('10.12')
+    def testProtocols10_12(self):
         objc.protocolNamed('NSURLSessionTaskDelegate')
         objc.protocolNamed('NSURLSessionDataDelegate')
         objc.protocolNamed('NSURLSessionDownloadDelegate')

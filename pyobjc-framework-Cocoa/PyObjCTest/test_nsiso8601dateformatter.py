@@ -19,6 +19,9 @@ class TestNSISO8601DateFormatter (TestCase):
         self.assertEqual(NSISO8601DateFormatWithFullTime, kCFISO8601DateFormatWithFullTime)
         self.assertEqual(NSISO8601DateFormatWithInternetDateTime, kCFISO8601DateFormatWithInternetDateTime)
 
+    @min_os_level('10.13')
+    def testConstants(self):
+        self.assertEqual(NSISO8601DateFormatWithFractionalSeconds, kCFISO8601DateFormatWithFractionalSeconds)
 
 if __name__ == "__main__":
     main()

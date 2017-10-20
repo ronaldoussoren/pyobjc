@@ -125,6 +125,10 @@ class TestNSAccessibilityProtocols (TestCase):
         self.assertIsInstance(objc.protocolNamed('NSAccessibilityLayoutItem'), objc.formal_protocol)
         self.assertIsInstance(objc.protocolNamed('NSAccessibility'), objc.formal_protocol)
 
+    @min_sdk_level('10.13')
+    def testProtocolObjects10_13(self):
+        self.assertIsInstance(objc.protocolNamed('NSAccessibilityElementLoading'), objc.formal_protocol)
+
     def testProtocols(self):
         self.assertResultIsBOOL(TestNSAccessibilityProtocolsHelper.isAccessibilityFocused)
         self.assertResultHasType(TestNSAccessibilityProtocolsHelper.accessibilityFrame, NSRect.__typestr__)

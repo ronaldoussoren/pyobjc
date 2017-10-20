@@ -203,8 +203,8 @@ def version_key(version):
 def main():
     for project in ['pyobjc-core'] + sorted_framework_wrappers():
         ok = build_project(project, sys.argv[1:])
-        if not ok:
-            break
+        #if not ok:
+        #    break
 
 if __name__ == "__main__":
     main()

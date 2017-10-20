@@ -1,5 +1,5 @@
 '''
-Wrappers for framework 'AppleScriptObjC' on MacOSX 10.6. This framework is
+Wrappers for framework 'AppleScriptObjC' on macOS 10.6. This framework is
 not useful for most users, it provides additional functionality for AppleScript
 based application bundles.
 
@@ -11,11 +11,11 @@ and (Objective-)C frameworks
 
 from pyobjc_setup import setup
 
-VERSION="3.3a0"
+VERSION="4.0.1b1"
 
 setup(
     name='pyobjc-framework-AppleScriptObjC',
-    description = "Wrappers for the framework AppleScriptObjC on Mac OS X",
+    description = "Wrappers for the framework AppleScriptObjC on macOS",
     min_os_level='10.6',
     packages = [ "AppleScriptObjC" ],
     version=VERSION,

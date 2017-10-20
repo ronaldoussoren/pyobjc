@@ -11,6 +11,7 @@ if sys.maxsize > 2 ** 32:
             self.assertEqual(Intents.INMessageAttributeOptionUnread, 1 << 1)
             self.assertEqual(Intents.INMessageAttributeOptionFlagged, 1 << 2)
             self.assertEqual(Intents.INMessageAttributeOptionUnflagged, 1 << 3)
+            self.assertEqual(Intents.INMessageAttributeOptionPlayed, 1 << 4)
 
 
 if __name__ == "__main__":

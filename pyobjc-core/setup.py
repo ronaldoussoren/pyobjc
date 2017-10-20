@@ -50,30 +50,20 @@ def get_os_level():
     v = pl['ProductVersion']
     return '.'.join(v.split('.')[:2])
 
-def get_sdk_level():
-    cflags = get_config_var('CFLAGS')
-    cflags = shlex.split(cflags)
-    for i, val in enumerate(cflags):
-        if val == '-isysroot':
-            sdk = cflags[i+1]
-            break
-    else:
-        return None
-
+def get_sdk_level(sdk):
     if sdk == '/':
         return get_os_level()
 
     sdk = os.path.basename(sdk)
     assert sdk.startswith('MacOSX')
     assert sdk.endswith('.sdk')
-    return sdk[6:-4]
+    sdk =  sdk[6:-4]
+    return sdk
 
 
 
 # CFLAGS for the objc._objc extension:
 CFLAGS = [
-    "-DPyObjC_BUILD_RELEASE=%02d%02d"%(
-        tuple(map(int, (get_sdk_level() or get_os_level()).split('.')))),
     "-g",
     "-fexceptions",
 
@@ -163,7 +153,7 @@ for k in cfg_vars:
 EMBEDDED_FFI_CFLAGS=['-Ilibffi-src/include', '-Ilibffi-src/powerpc']
 
 # The list below includes the source files for all CPU types that we run on
-# this makes it easier to build fat binaries on Mac OS X.
+# this makes it easier to build fat binaries on macOS
 EMBEDDED_FFI_SOURCE=[
     "libffi-src/ffi.c",
     "libffi-src/types.c",
@@ -194,7 +184,7 @@ del UnixCCompiler
 
 def verify_platform():
     if sys.platform != 'darwin':
-        raise DistutilsPlatformError("PyObjC requires Mac OS X to build")
+        raise DistutilsPlatformError("PyObjC requires macOS to build")
 
     if sys.version_info[:2] < (2, 7):
         raise DistutilsPlatformError("PyObjC requires Python 2.7 or later to build")
@@ -370,6 +360,11 @@ class oc_egg_info (egg_info.egg_info):
 
         egg_info.egg_info.run(self)
 
+        path = os.path.join(self.egg_info, 'PKG-INFO')
+        with open(path, 'a+') as fp:
+            fp.write('Project-URL: Documentation, https://pyobjc.readthedocs.io/en/latest/\n')
+            fp.write('Project-URL: Issue tracker, https://bitbucket.org/ronaldoussoren/pyobjc/issues?status=new&status=open\n')
+
     def write_header(self, basename, filename):
         with open(os.path.join('Modules/objc/', os.path.basename(basename)), 'rU') as fp:
             data = fp.read()
@@ -445,7 +440,7 @@ def _working_compiler(executable):
 
     return True
 
-def _fixup_compiler():
+def _fixup_compiler(use_ccache):
     if 'CC' in os.environ:
         # CC is in the environment, always use explicit
         # overrides.
@@ -485,6 +480,12 @@ def _fixup_compiler():
     if not _working_compiler(cc):
         raise DistutilsPlatformError("Cannot locate a working compiler")
 
+    if use_ccache:
+        p = _find_executable('ccache')
+        if p is not None:
+            log.info("Detected and using 'ccache'")
+            cc = '%s %s'%(p, cc)
+
     if cc != oldcc:
         log.info("Use '%s' instead of '%s' as the compiler"%(cc, oldcc))
 
@@ -494,6 +495,9 @@ def _fixup_compiler():
                 split = vars[env].split()
                 split[0] = cc if env != 'CXX' else cc + '++'
                 vars[env] = ' '.join(split)
+
+
+
 
 
 class oc_build_ext (build_ext.build_ext):
@@ -584,7 +588,10 @@ class oc_build_ext (build_ext.build_ext):
             cflags = cflags.replace('-mno-fused-madd', '')
             get_config_vars()['CFLAGS'] = cflags
 
-        _fixup_compiler()
+        CFLAGS.append("-DPyObjC_BUILD_RELEASE=%02d%02d"%( tuple(map(int, get_sdk_level(self.sdk_root).split('.')))))
+        EXT_CFLAGS.append("-DPyObjC_BUILD_RELEASE=%02d%02d"%( tuple(map(int, get_sdk_level(self.sdk_root).split('.')))))
+
+        _fixup_compiler(use_ccache='develop' in sys.argv)
 
         build_ext.build_ext.run(self)
         extensions = self.extensions
@@ -654,14 +661,19 @@ def package_version():
 # bits that require Python code to calculate or are needed to control
 # the working of distutils.
 #
+
+# Note: sorts source files with most recently modified
+# first, gives faster feedback when working on source code.
+sources = list(glob.glob(os.path.join('Modules', 'objc', '*.m')))
+sources.sort(key=lambda x: (-os.stat(x).st_mtime, x))
 setup(
     ext_modules = [
         Extension(
             "objc._objc",
-            list(glob.glob(os.path.join('Modules', 'objc', '*.m'))),
+            sources,
             extra_compile_args=CFLAGS,
             extra_link_args=OBJC_LDFLAGS,
-            depends=list(glob.glob(os.path.join('Modules', 'objc', '*.h'))),
+            depends=sources,
         ),
         Extension(
             "objc._machsignals",

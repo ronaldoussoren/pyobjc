@@ -20,6 +20,11 @@ class TestCIContext (TestCase):
         self.assertIsInstance(kCIContextCacheIntermediates, unicode)
         self.assertIsInstance(kCIContextPriorityRequestLow, unicode)
 
+    @min_os_level('10.13')
+    def testConstants10_13(self):
+        self.assertIsInstance(kCIImageRepresentationAVDepthData, unicode)
+        self.assertIsInstance(kCIImageRepresentationDepthImage, unicode)
+        self.assertIsInstance(kCIImageRepresentationDisparityImage, unicode)
 
     def testMethods(self):
         self.assertArgIsOut(CIContext.render_toBitmap_rowBytes_bounds_format_colorSpace_, 1)

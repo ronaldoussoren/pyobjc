@@ -24,6 +24,19 @@ if os_level_key(os_release()) < os_level_key('10.12') or sys.maxsize >= 2**32:
         def testConstants(self):
             self.assertEqual(SceneKit.SCNProgramCompilationError, 1)
 
+            self.assertEqual(SceneKit.SCNActionTimingModeLinear, 0)
+            self.assertEqual(SceneKit.SCNActionTimingModeEaseIn, 1)
+            self.assertEqual(SceneKit.SCNActionTimingModeEaseOut, 2)
+            self.assertEqual(SceneKit.SCNActionTimingModeEaseInEaseOut, 3)
+
+            self.assertEqual(SceneKit.SCNColorMaskNone, 0)
+            self.assertEqual(SceneKit.SCNColorMaskRed, 0x1 << 3)
+            self.assertEqual(SceneKit.SCNColorMaskGreen, 0x1 << 2)
+            self.assertEqual(SceneKit.SCNColorMaskBlue, 0x1 << 1)
+            self.assertEqual(SceneKit.SCNColorMaskAlpha, 0x1 << 0)
+            self.assertEqual(SceneKit.SCNColorMaskAll, 0xf)
+
+
         @expectedFailureIf(os_release() == '10.10')
         @min_os_level('10.10')
         def testConstantsFail10_10(self):

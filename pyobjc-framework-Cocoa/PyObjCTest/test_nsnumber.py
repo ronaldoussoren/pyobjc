@@ -24,7 +24,7 @@ PLIST=b"""\
 def stripDocType(val):
     """
     Strip non-significant information. This is needed because the proplists
-    on MacOS X 10.1 are slightly different from the ones on MacOS X 10.2 (
+    on macOS 10.1 are slightly different from the ones on macOS 10.2 (
     different DOCTYPE and version).
     """
     r =  re.sub(b'<!DOCTYPE [^>]*>'.decode('ascii'), b'<!DOCTYPE>'.decode('ascii'), val)

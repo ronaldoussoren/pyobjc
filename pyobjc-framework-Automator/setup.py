@@ -1,5 +1,5 @@
 '''
-Wrappers for the "Automator" framework on MacOSX. The Automator framework
+Wrappers for the "Automator" framework on macOS. The Automator framework
 supports the development of actions for the Automator application, as well
 as the ability to run a workflow in developer applications. An action is
 a bundle that, when loaded and run, performs a specific task.
@@ -11,11 +11,11 @@ and (Objective-)C frameworks
 '''
 from pyobjc_setup import setup
 
-VERSION="3.3a0"
+VERSION="4.0.1b1"
 
 setup(
     name='pyobjc-framework-Automator',
-    description = "Wrappers for the framework Automator on Mac OS X",
+    description = "Wrappers for the framework Automator on macOS",
     packages = [ "Automator" ],
     version=VERSION,
     install_requires = [

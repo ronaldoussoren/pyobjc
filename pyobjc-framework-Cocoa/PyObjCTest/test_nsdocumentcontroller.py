@@ -44,6 +44,9 @@ class TestNSDocumentController (TestCase):
         self.assertArgIsBlock(NSDocumentController.beginOpenPanelWithCompletionHandler_, 0, b'v@')
         self.assertArgIsBlock(NSDocumentController.beginOpenPanel_forTypes_completionHandler_, 2, b'v' + objc._C_NSInteger)
 
+    @min_os_level('10.13')
+    def testMethods10_13(self):
+        self.assertResultIsBOOL(NSDocumentController.allowsAutomaticShareMenu)
 
 
 if __name__ == "__main__":

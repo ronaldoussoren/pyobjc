@@ -6,6 +6,7 @@
    "kODPolicyKeyContentDescription": { "typestr": "@" },
    "kODPolicyKeyEvaluationDetails": { "typestr": "@" },
    "kODPolicyKeyPolicySatisfied": { "typestr": "@" }
+   "kODAuthenticationTypeClearTextReadOnly": { "typestr": "@" }
   },
   "classes": {},
   "formal_protocols": {},

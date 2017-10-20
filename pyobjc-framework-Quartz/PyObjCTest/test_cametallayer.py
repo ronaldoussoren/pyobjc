@@ -17,5 +17,13 @@ class TestCAMetalLayer (TestCase):
         self.assertResultIsBOOL(CAMetalLayer.wantsExtendedDynamicRangeContent)
         self.assertArgIsBOOL(CAMetalLayer.setWantsExtendedDynamicRangeContent_, 0)
 
+    @min_os_level('10.13')
+    def testMethods10_13(self):
+        self.assertResultIsBOOL(CAMetalLayer.displaySyncEnabled)
+        self.assertArgIsBOOL(CAMetalLayer.setDisplaySyncEnabled_, 0)
+
+        self.assertResultIsBOOL(CAMetalLayer.allowsNextDrawableTimeout)
+        self.assertArgIsBOOL(CAMetalLayer.setAllowsNextDrawableTimeout_, 0)
+
 if __name__ == "__main__":
     main()

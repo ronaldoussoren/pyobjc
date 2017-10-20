@@ -8,6 +8,7 @@ class TestCoreDataErrors (TestCase):
     def testConstants10_6(self):
         self.assertEqual(NSInferredMappingModelError, 134190)
         self.assertEqual(NSExternalRecordImportError, 134200)
+        self.assertEqual(NSPersistentHistoryTokenExpiredError, 134301)
 
 
     @min_os_level("10.5")
@@ -54,6 +55,7 @@ class TestCoreDataErrors (TestCase):
         self.assertEqual(NSValidationStringTooLongError, 1660)
         self.assertEqual(NSValidationStringTooShortError, 1670)
         self.assertEqual(NSValidationStringPatternMatchingError, 1680)
+        self.assertEqual(NSValidationInvalidURIError, 1690)
         self.assertEqual(NSManagedObjectContextLockingError, 132000)
         self.assertEqual(NSPersistentStoreCoordinatorLockingError, 132010)
         self.assertEqual(NSManagedObjectReferentialIntegrityError, 133000)

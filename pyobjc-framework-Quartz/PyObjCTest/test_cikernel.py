@@ -14,5 +14,10 @@ class TestCIKernel (TestCase):
         self.assertArgIsBlock(CIKernel.applyWithExtent_roiCallback_arguments_, 1, CIKernelROICallback)
         self.assertArgIsBlock(CIWarpKernel.applyWithExtent_roiCallback_inputImage_arguments_, 1, CIKernelROICallback)
 
+    @min_os_level('10.13')
+    def testMethods(self):
+        self.assertArgIsOut(CIKernel.kernelWithFunctionName_fromMetalLibraryData_error_, 2)
+        self.assertArgIsOut(CIKernel.kernelWithFunctionName_fromMetalLibraryData_outputPixelFormat_error_, 3)
+
 if __name__ == "__main__":
     main()

@@ -1,5 +1,5 @@
 '''
-Wrappers for the "ContactsUI" framework on MacOS X 10.11.
+Wrappers for the "ContactsUI" framework on macOS 10.11.
 
 These wrappers don't include documentation, please check Apple's documention
 for information on how to use this framework and PyObjC's documentation
@@ -10,11 +10,11 @@ and (Objective-)C frameworks
 from pyobjc_setup import setup, Extension
 import os
 
-VERSION="3.3a0"
+VERSION="4.0.1b1"
 
 setup(
     name='pyobjc-framework-ContactsUI',
-    description = "Wrappers for the framework ContactsUI on Mac OS X",
+    description = "Wrappers for the framework ContactsUI on macOS",
     min_os_level='10.11',
     packages = [ "ContactsUI" ],
     ext_modules = [

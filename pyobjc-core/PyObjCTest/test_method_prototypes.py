@@ -20,13 +20,13 @@ class TestInheritedProtoype (TestCase):
     # therefore have an explict method signature. The number of arguments in
     # the actual method implementation must match that signature.
     #
-    def setUp(self):
-        import warnings
-        warnings.filterwarnings('error', category=DeprecationWarning)
+    #def setUp(self):
+        #import warnings
+        #warnings.filterwarnings('error', category=DeprecationWarning)
 
-    def tearDown(self):
-        import warnings
-        del warnings.filters[0]
+    #def tearDown(self):
+        #import warnings
+        #del warnings.filters[0]
 
 
     def testCorrectArgCount(self):
@@ -195,13 +195,13 @@ class TestExplicitPrototype (TestCase):
     # These tests check for methods with an explict method signature in the
     # python code (not inheritted). The python code should match the provided
     # signature.
-    def setUp(self):
-        import warnings
-        warnings.filterwarnings('error', category=DeprecationWarning)
+    #def setUp(self):
+        #import warnings
+        #warnings.filterwarnings('error', category=DeprecationWarning)
 
-    def tearDown(self):
-        import warnings
-        del warnings.filters[0]
+    #def tearDown(self):
+        #import warnings
+        #del warnings.filters[0]
 
     def testCorrectArgCount(self):
         # OK: same number of arguments
@@ -388,13 +388,13 @@ class TestImplicitSignature (TestCase):
     # an explicit prototype either
     #
 
-    def setUp(self):
-        import warnings
-        warnings.filterwarnings('error', category=DeprecationWarning)
+    #def setUp(self):
+        #import warnings
+        #warnings.filterwarnings('error', category=DeprecationWarning)
 
-    def tearDown(self):
-        import warnings
-        del warnings.filters[0]
+    #def tearDown(self):
+        #import warnings
+        #del warnings.filters[0]
 
     def testColonMatch(self):
         # OK: the number of underscores matches the number of arguments

@@ -16,6 +16,13 @@ if sys.maxsize > 2 ** 32:
             self.assertEqual(MapKit.MKAnnotationViewDragStateCanceling, 3)
             self.assertEqual(MapKit.MKAnnotationViewDragStateEnding, 4)
 
+            self.assertEqual(MapKit.MKFeatureDisplayPriorityRequired, 1000)
+            self.assertEqual(MapKit.MKFeatureDisplayPriorityDefaultHigh, 750)
+            self.assertEqual(MapKit.MKFeatureDisplayPriorityDefaultLow, 250)
+
+            self.assertEqual(MapKit.MKAnnotationViewCollisionModeRectangle, 0)
+            self.assertEqual(MapKit.MKAnnotationViewCollisionModeCircle, 1)
+
         @min_os_level("10.9")
         def testClasses(self):
             self.assertIsInstance(MapKit.MKAnnotationView, objc.objc_class)

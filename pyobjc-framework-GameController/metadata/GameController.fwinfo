@@ -253,6 +253,11 @@
      "methods": [
        {
          "class_method": false,
+	 "selector": "hasAttitudeAndRotationRate",
+	 "retval": { "type_override": "Z" }
+       },
+       {
+         "class_method": false,
 	 "selector": "valueChangedHandler",
 	 "retval": {
 	   "callable": {

@@ -17,6 +17,7 @@ from .testbndl import ULLONG_MAX, LLONG_MAX, LLONG_MIN
 from .testbndl import DBL_MAX, DBL_MIN, DBL_EPSILON
 from .testbndl import FLT_MAX, FLT_MIN, FLT_EPSILON
 import objc
+import warnings
 import array, sys
 
 
@@ -184,16 +185,15 @@ class TestNumbers (TestCase):
             self.assertEqual(ULLONG_MAX, pyObjCPy(objc._C_ULNG_LNG, long(ULLONG_MAX)))
         self.assertEqual(0, pyObjCPy(objc._C_ULNG_LNG, float(0)))
 
-        with filterWarnings('error', DeprecationWarning):
-            try:
-                pyObjCPy(objc._C_ULNG_LNG, LLONG_MIN+100)
-            except DeprecationWarning:
-                pass
+        with warnings.catch_warnings(record=True) as w:
+            warnings.simplefilter("always")
+            pyObjCPy(objc._C_ULNG_LNG, LLONG_MIN+100)
 
-            else:
-                self.fail("No deprecation warning")
+        self.assertEqual(len(w), 1)
+        self.assertEqual(w[0].category, DeprecationWarning)
 
-        with filterWarnings('ignore', DeprecationWarning):
+        with warnings.catch_warnings(record=True):
+            warnings.simplefilter("ignore")
             self.assertEqual(-LLONG_MIN+100, pyObjCPy(objc._C_ULNG_LNG, LLONG_MIN+100))
 
         #self.assertRaises(ValueError, pyObjCPy, objc._C_ULNG_LNG, LLONG_MIN)

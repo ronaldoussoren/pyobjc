@@ -1,5 +1,5 @@
 '''
-Wrappers for the framework "LatentSemanticMapping" on MacOSX 10.5 or later.
+Wrappers for the framework "LatentSemanticMapping" on macOS 10.5 or later.
 
 The Latent Semantic Mapping framework supports the classification of text and other token-based content into developer-defined categories.
 
@@ -13,11 +13,11 @@ making it very hard to actually use the framework.
 '''
 from pyobjc_setup import setup
 
-VERSION="3.3a0"
+VERSION="4.0.1b1"
 
 setup(
     name='pyobjc-framework-LatentSemanticMapping',
-    description = "Wrappers for the framework LatentSemanticMapping on Mac OS X",
+    description = "Wrappers for the framework LatentSemanticMapping on macOS",
     min_os_level='10.5',
     packages = [ "LatentSemanticMapping" ],
     version=VERSION,

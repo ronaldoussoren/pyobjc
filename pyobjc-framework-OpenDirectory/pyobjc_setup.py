@@ -18,6 +18,7 @@ except ImportError:
     sys.exit(1)
 
 from setuptools.command import test
+from setuptools.command import egg_info
 from setuptools.command import build_py
 from distutils.sysconfig import get_config_var, get_config_vars
 
@@ -37,6 +38,15 @@ class oc_build_py (build_py.build_py):
 
 from pkg_resources import working_set, normalize_path, add_activation_listener, require
 from distutils.errors import DistutilsPlatformError, DistutilsError
+
+class oc_egg_info (egg_info.egg_info):
+    def run(self):
+        egg_info.egg_info.run(self)
+
+        path = os.path.join(self.egg_info, 'PKG-INFO')
+        with open(path, 'a+') as fp:
+            fp.write('Project-URL: Documentation, https://pyobjc.readthedocs.io/en/latest/\n')
+            fp.write('Project-URL: Issue tracker, https://bitbucket.org/ronaldoussoren/pyobjc/issues?status=new&status=open\n')
 
 class oc_test (test.test):
     description = "run test suite"
@@ -178,6 +188,7 @@ Programming Language :: Python :: 2.7
 Programming Language :: Python :: 3
 Programming Language :: Python :: 3.4
 Programming Language :: Python :: 3.5
+Programming Language :: Python :: 3.6
 Programming Language :: Python :: Implementation :: CPython
 Programming Language :: Objective C
 Topic :: Software Development :: Libraries :: Python Modules
@@ -374,13 +385,13 @@ def Extension(*args, **kwds):
     if os_level is None:
         os_level = get_os_level()
 
-    cflags =  ["-DPyObjC_BUILD_RELEASE=%02d%02d"%(tuple(map(int, os_level.split('.'))))]
+    cflags =  []
     ldflags = []
     if 'clang' in get_config_var('CC'):
         cflags.append('-Wno-deprecated-declarations')
 
     CFLAGS = get_config_var('CFLAGS')
-    if '-isysroot' not in CFLAGS and os.path.exists('/usr/include/stdio.h'):
+    if '-isysroot' not in CFLAGS: # and os.path.exists('/usr/include/stdio.h'):
         # We're likely on a system with de Xcode Command Line Tools.
         # Explicitly use the most recent problems to avoid compile problems.
         data = os.popen('xcodebuild -version -sdk macosx Path').read()
@@ -388,6 +399,10 @@ def Extension(*args, **kwds):
         if data:
             cflags.append('-isysroot')
             cflags.append(data)
+            cflags.append("-DPyObjC_BUILD_RELEASE=%02d%02d"%(tuple(map(int, os.path.basename(data)[6:-4].split('.')))))
+
+    else:
+            cflags.append("-DPyObjC_BUILD_RELEASE=%02d%02d"%(tuple(map(int, os_level.split('.')))))
 
 
     if os_level == '10.4':
@@ -439,6 +454,7 @@ def setup(
 
     if os_compatible or ('bdist_wheel' in sys.argv and 'ext_modules' not in k):
         cmdclass['build_ext'] = pyobjc_build_ext
+        cmdclass['egg_info'] = oc_egg_info
         cmdclass['install_lib'] = pyobjc_install_lib
         cmdclass['test'] = oc_test
         cmdclass['build_py'] = oc_build_py
@@ -504,7 +520,7 @@ def setup(
         cmdclass=cmdclass,
         author='Ronald Oussoren',
         author_email='pyobjc-dev@lists.sourceforge.net',
-        url='http://pyobjc.sourceforge.net',
+        url='https://bitbucket.org/ronaldoussoren/pyobjc',
         platforms = [ plat_name ],
         package_dir = { '': 'Lib', 'PyObjCTest': 'PyObjCTest' },
         dependency_links = [],

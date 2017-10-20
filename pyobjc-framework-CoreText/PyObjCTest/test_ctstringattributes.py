@@ -57,6 +57,9 @@ class TestCTStringAttributes (TestCase):
         self.assertIsInstance(kCTBackgroundColorAttributeName, unicode)
         self.assertIsInstance(kCTHorizontalInVerticalFormsAttributeName, unicode)
 
+    @min_os_level('10.13')
+    def testConstants10_12(self):
+        self.assertIsInstance(kCTBaselineOffsetAttributeName, unicode)
 
 if __name__ == "__main__":
     main()

@@ -3,10 +3,9 @@ from PyObjCTools.TestSupport import *
 from Quartz.CoreGraphics import *
 
 class TestCGPDFStream (TestCase):
-    @expectedFailure
-    def testIncomplete(self):
-        self.fail("Add header tests for <CoreGraphics/CGPDFStream.h>")
-        # XXX: What is CGPDFStreamRef: opaque or CF
+
+    def test_types(self):
+        self.assertIsOpaquePointer(CGPDFStreamRef)
 
     def testConstants(self):
         self.assertEqual(CGPDFDataFormatRaw, 0)

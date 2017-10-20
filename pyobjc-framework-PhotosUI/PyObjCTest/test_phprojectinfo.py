@@ -1,0 +1,33 @@
+from PyObjCTools.TestSupport import *
+import sys
+
+if sys.maxsize > 2 ** 32:
+    import PhotosUI
+
+    class TestPHProjectInfo (TestCase):
+        def testConstants(self):
+            self.assertEqual(PhotosUI.PHProjectCreationSourceUndefined, 0)
+            self.assertEqual(PhotosUI.PHProjectCreationSourceUserSelection, 1)
+            self.assertEqual(PhotosUI.PHProjectCreationSourceAlbum, 2)
+            self.assertEqual(PhotosUI.PHProjectCreationSourceMemory, 3)
+            self.assertEqual(PhotosUI.PHProjectCreationSourceMoment, 4)
+            self.assertEqual(PhotosUI.PHProjectCreationSourceProject, 20)
+            self.assertEqual(PhotosUI.PHProjectCreationSourceProjectBook, 21)
+            self.assertEqual(PhotosUI.PHProjectCreationSourceProjectCalendar, 22)
+            self.assertEqual(PhotosUI.PHProjectCreationSourceProjectCard, 23)
+            self.assertEqual(PhotosUI.PHProjectCreationSourceProjectPrintOrder, 24)
+            self.assertEqual(PhotosUI.PHProjectCreationSourceProjectSlideshow, 25)
+            self.assertEqual(PhotosUI.PHProjectCreationSourceProjectExtension, 26)
+
+            self.assertEqual(PhotosUI.PHProjectSectionTypeUndefined, 0)
+            self.assertEqual(PhotosUI.PHProjectSectionTypeCover, 1)
+            self.assertEqual(PhotosUI.PHProjectSectionTypeContent, 2)
+            self.assertEqual(PhotosUI.PHProjectSectionTypeAuxiliary, 3)
+
+            self.assertEqual(PhotosUI.PHProjectTextElementTypeBody, 0)
+            self.assertEqual(PhotosUI.PHProjectTextElementTypeTitle, 1)
+            self.assertEqual(PhotosUI.PHProjectTextElementTypeSubtitle, 2)
+
+
+if __name__ == "__main__":
+    main()

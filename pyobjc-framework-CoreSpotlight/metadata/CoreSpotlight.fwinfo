@@ -1,0 +1,311 @@
+{
+ "definitions": {
+  "enum": {
+   "CSSearchQueryErrorCodeUnknown": { "value": -2000 },
+   "CSSearchQueryErrorCodeIndexUnreachable": { "value": -2001 },
+   "CSSearchQueryErrorCodeInvalidQuery": { "value": -2002 },
+   "CSSearchQueryErrorCodeCancelled": { "value": -2003 },
+   "CSIndexErrorCodeUnknownError": { "value": -1 },
+   "CSIndexErrorCodeIndexUnavailableError": { "value": -1000 },
+   "CSIndexErrorCodeInvalidItemError": { "value": -1001 },
+   "CSIndexErrorCodeInvalidClientStateError": { "value": -1002 },
+   "CSIndexErrorCodeRemoteConnectionError": { "value": -1003 },
+   "CSIndexErrorCodeQuotaExceeded": { "value": -1004 },
+   "CSIndexErrorCodeIndexingUnsupported": { "value": -1005 }
+  },
+  "externs": {
+   "CoreSpotlightVersionNumber": { "typestr": "d" },
+   "CoreSpotlightVersionString": { "typestr": "*" },
+   "CSMailboxInbox": { "typestr": "@" },
+   "CSMailboxDrafts": { "typestr": "@" },
+   "CSMailboxSent": { "typestr": "@" },
+   "CSMailboxJunk": { "typestr": "@" },
+   "CSMailboxTrash": { "typestr": "@" },
+   "CSMailboxArchive": { "typestr": "@" },
+   "CSQueryContinuationActionType": { "typestr": "@" },
+   "CSSearchQueryString": { "typestr": "@" },
+   "CSSearchableItemActionType": { "typestr": "@" },
+   "CSSearchableItemActivityIdentifier": { "typestr": "@" },
+   "CSIndexErrorDomain": { "typestr": "@" }
+  },
+  "classes": {
+   "NSObject": {
+    "methods": [
+     {
+      "selector": "searchableIndex:reindexAllSearchableItemsWithAcknowledgementHandler:",
+      "class_method": false,
+      "args": {
+       "1": {
+        "type_override": "@?",
+	"callable": {
+	 "arguments": {
+	  "0": { "typestr": "^v" }
+	 },
+	 "retval": { "typestr": "v" }
+	}
+       }
+      }
+     },
+     {
+      "selector": "searchableIndex:reindexSearchableItemsWithIdentifiers:acknowledgementHandler:",
+      "class_method": false,
+      "args": {
+       "2": {
+        "type_override": "@?",
+	"callable": {
+	 "arguments": {
+	  "0": { "typestr": "^v" }
+	 },
+	 "retval": { "typestr": "v" }
+	}
+       }
+      }
+     },
+     {
+      "selector": "dataForSearchableIndex:itemIdentifier:typeIdentifier:error:",
+      "class_method": false,
+      "args": {
+       "3": { "type_modifier": "o", "type_override": "^@" }
+      }
+     },
+     {
+      "selector": "fileURLForSearchableIndex:itemIdentifier:typeIdentifier:inPlace:error:",
+      "class_method": false,
+      "args": {
+       "3": { "type_override": "Z" },
+       "4": { "type_modifier": "o", "type_override": "^@" }
+      }
+     }
+
+    ]
+   },
+   "CSCustomAttributeKey": {
+    "methods": [
+     {
+      "selector": "initWithKeyName:searchable:searchableByDefault:unique:multiValued:",
+      "class_method": false,
+      "args": {
+       "1": { "type_override": "Z" },
+       "2": { "type_override": "Z" },
+       "3": { "type_override": "Z" },
+       "4": { "type_override": "Z" }
+      }
+     },
+     {
+      "selector": "setSearchable:",
+      "class_method": false,
+      "args": {
+       "0": { "type_override": "Z" }
+      }
+     },
+     {
+      "selector": "isSearchable",
+      "class_method": false,
+      "retval": { "type_override": "Z" }
+     },
+     {
+      "selector": "setSearchableByDefault:",
+      "class_method": false,
+      "args": {
+       "0": { "type_override": "Z" }
+      }
+     },
+     {
+      "selector": "isSearchableByDefault",
+      "class_method": false,
+      "retval": { "type_override": "Z" }
+     },
+     {
+      "selector": "setUnique:",
+      "class_method": false,
+      "args": {
+       "0": { "type_override": "Z" }
+      }
+     },
+     {
+      "selector": "isUnique",
+      "class_method": false,
+      "retval": { "type_override": "Z" }
+     },
+     {
+      "selector": "setMultiValued:",
+      "class_method": false,
+      "args": {
+       "0": { "type_override": "Z" }
+      }
+     },
+     {
+      "selector": "isMultiValued",
+      "class_method": false,
+      "retval": { "type_override": "Z" }
+     }
+    ]
+   },
+   "CSSearchableIndex": {
+    "methods": [
+     {
+      "selector": "isIndexingAvailable",
+      "class_method": false,
+      "retval": { "type_override": "Z" }
+     },
+     {
+      "selector": "indexSearchableItems:completionHandler:",
+      "class_method": false,
+      "args": {
+       "1": {
+        "callable": {
+	 "arguments": {
+	  "0": { "typestr": "^v" },
+	  "1": { "typestr": "@" }
+	 },
+	 "retval": { "typestr": "v" }
+	}
+       }
+      }
+     },
+     {
+      "selector": "deleteSearchableItemsWithIdentifiers:completionHandler:",
+      "class_method": false,
+      "args": {
+       "1": {
+        "callable": {
+	 "arguments": {
+	  "0": { "typestr": "^v" },
+	  "1": { "typestr": "@" }
+	 },
+	 "retval": { "typestr": "v" }
+	}
+       }
+      }
+     },
+     {
+      "selector": "deleteSearchableItemsWithDomainIdentifiers:completionHandler:",
+      "class_method": false,
+      "args": {
+       "1": {
+        "callable": {
+	 "arguments": {
+	  "0": { "typestr": "^v" },
+	  "1": { "typestr": "@" }
+	 },
+	 "retval": { "typestr": "v" }
+	}
+       }
+      }
+     },
+     {
+      "selector": "deleteAllSearchableItemsWithCompletionHandler:",
+      "class_method": false,
+      "args": {
+       "0": {
+        "callable": {
+	 "arguments": {
+	  "0": { "typestr": "^v" },
+	  "1": { "typestr": "@" }
+	 },
+	 "retval": { "typestr": "v" }
+	}
+       }
+      }
+     },
+     {
+      "selector": "endIndexBatchWithClientState:completionHandler:",
+      "class_method": false,
+      "args": {
+       "1": {
+        "callable": {
+	 "arguments": {
+	  "0": { "typestr": "^v" },
+	  "1": { "typestr": "@" }
+	 },
+	 "retval": { "typestr": "v" }
+	}
+       }
+      }
+     },
+     {
+      "selector": "fetchLastClientStateWithCompletionHandler:",
+      "class_method": false,
+      "args": {
+       "0": {
+        "callable": {
+	 "arguments": {
+	  "0": { "typestr": "^v" },
+	  "1": { "typestr": "@" },
+	  "2": { "typestr": "@" }
+	 },
+	 "retval": { "typestr": "v" }
+	}
+       }
+      }
+     }
+    ]
+   },
+   "CSSearchQuery": {
+    "methods": [
+     {
+      "selector": "isCancelled",
+      "class_method": false,
+      "retval": { "type_override": "Z" }
+     },
+     {
+      "selector": "foundItemsHandler",
+      "class_method": false,
+      "retval": {
+       "callable": {
+        "arguments": {
+	 "0": { "typestr": "^v" },
+	 "1": { "typestr": "@" }
+	},
+	"retval": { "typestr": "v"  }
+       }
+      }
+     },
+     {
+      "selector": "setFoundItemsHandler:",
+      "class_method": false,
+      "args": {
+       "0": {
+        "callable": {
+         "arguments": {
+	  "0": { "typestr": "^v" },
+	  "1": { "typestr": "@" }
+	 },
+	 "retval": { "typestr": "v"  }
+	}
+       }
+      }
+     },
+     {
+      "selector": "completionHandler",
+      "class_method": false,
+      "retval": {
+       "callable": {
+        "arguments": {
+	 "0": { "typestr": "^v" },
+	 "1": { "typestr": "@" }
+	},
+	"retval": { "typestr": "v"  }
+       }
+      }
+     },
+     {
+      "selector": "setCompletionHandler:",
+      "class_method": false,
+      "args": {
+       "0": {
+        "callable": {
+         "arguments": {
+	  "0": { "typestr": "^v" },
+	  "1": { "typestr": "@" }
+	 },
+	 "retval": { "typestr": "v"  }
+	}
+       }
+      }
+     }
+    ]
+   }
+  }
+ }
+}

@@ -121,6 +121,12 @@ class TestCTFont (TestCase):
 
 
         self.assertEqual(kCTFontTableBASE, fourcc(b'BASE'))
+        self.assertEqual(kCTFontTableCBDT, fourcc(b'CBDT'))
+        self.assertEqual(kCTFontTableCBLC, fourcc(b'CBLC'))
+        self.assertEqual(kCTFontTableCFF, fourcc(b'CFF '))
+        self.assertEqual(kCTFontTableCFF2, fourcc(b'CFF2'))
+        self.assertEqual(kCTFontTableCOLR, fourcc(b'COLR'))
+        self.assertEqual(kCTFontTableCPAL, fourcc(b'CPAL'))
         self.assertEqual(kCTFontTableCFF, fourcc(b'CFF '))
         self.assertEqual(kCTFontTableDSIG, fourcc(b'DSIG'))
         self.assertEqual(kCTFontTableEBDT, fourcc(b'EBDT'))
@@ -129,13 +135,18 @@ class TestCTFont (TestCase):
         self.assertEqual(kCTFontTableGDEF, fourcc(b'GDEF'))
         self.assertEqual(kCTFontTableGPOS, fourcc(b'GPOS'))
         self.assertEqual(kCTFontTableGSUB, fourcc(b'GSUB'))
+        self.assertEqual(kCTFontTableHVAR, fourcc(b'HVAR'))
         self.assertEqual(kCTFontTableJSTF, fourcc(b'JSTF'))
         self.assertEqual(kCTFontTableLTSH, fourcc(b'LTSH'))
         self.assertEqual(kCTFontTableMATH, fourcc(b'MATH'))
+        self.assertEqual(kCTFontTableMVAR, fourcc(b'MVAR'))
         self.assertEqual(kCTFontTableOS2, fourcc(b'OS/2'))
         self.assertEqual(kCTFontTablePCLT, fourcc(b'PCLT'))
+        self.assertEqual(kCTFontTableSTAT, fourcc(b'STAT'))
+        self.assertEqual(kCTFontTableSVG, fourcc(b'SVG '))
         self.assertEqual(kCTFontTableVDMX, fourcc(b'VDMX'))
         self.assertEqual(kCTFontTableVORG, fourcc(b'VORG'))
+        self.assertEqual(kCTFontTableVVAR, fourcc(b'VVAR'))
         self.assertEqual(kCTFontTableZapf, fourcc(b'Zapf'))
         self.assertEqual(kCTFontTableAcnt, fourcc(b'acnt'))
         self.assertEqual(kCTFontTableAnkr, fourcc(b'ankr'))
@@ -144,12 +155,14 @@ class TestCTFont (TestCase):
         self.assertEqual(kCTFontTableBhed, fourcc(b'bhed'))
         self.assertEqual(kCTFontTableBloc, fourcc(b'bloc'))
         self.assertEqual(kCTFontTableBsln, fourcc(b'bsln'))
+        self.assertEqual(kCTFontTableCidg, fourcc(b'cidg'))
         self.assertEqual(kCTFontTableCmap, fourcc(b'cmap'))
         self.assertEqual(kCTFontTableCvar, fourcc(b'cvar'))
         self.assertEqual(kCTFontTableCvt, fourcc(b'cvt '))
         self.assertEqual(kCTFontTableFdsc, fourcc(b'fdsc'))
         self.assertEqual(kCTFontTableFeat, fourcc(b'feat'))
         self.assertEqual(kCTFontTableFmtx, fourcc(b'fmtx'))
+        self.assertEqual(kCTFontTableFond, fourcc(b'fond'))
         self.assertEqual(kCTFontTableFpgm, fourcc(b'fpgm'))
         self.assertEqual(kCTFontTableFvar, fourcc(b'fvar'))
         self.assertEqual(kCTFontTableGasp, fourcc(b'gasp'))
@@ -167,6 +180,7 @@ class TestCTFont (TestCase):
         self.assertEqual(kCTFontTableLtag, fourcc(b'ltag'))
         self.assertEqual(kCTFontTableLoca, fourcc(b'loca'))
         self.assertEqual(kCTFontTableMaxp, fourcc(b'maxp'))
+        self.assertEqual(kCTFontTableMeta, fourcc(b'meta'))
         self.assertEqual(kCTFontTableMort, fourcc(b'mort'))
         self.assertEqual(kCTFontTableMorx, fourcc(b'morx'))
         self.assertEqual(kCTFontTableName, fourcc(b'name'))
@@ -178,6 +192,7 @@ class TestCTFont (TestCase):
         self.assertEqual(kCTFontTableTrak, fourcc(b'trak'))
         self.assertEqual(kCTFontTableVhea, fourcc(b'vhea'))
         self.assertEqual(kCTFontTableVmtx, fourcc(b'vmtx'))
+        self.assertEqual(kCTFontTableXref, fourcc(b'xref'))
 
         self.assertEqual(kCTFontTableOptionNoOptions, 0)
         self.assertEqual(kCTFontTableOptionExcludeSynthetic, (1 << 0))
@@ -464,6 +479,10 @@ class TestCTFont (TestCase):
     def testConstants10_10(self):
         self.assertIsInstance(kCTFontOpenTypeFeatureTag, unicode)
         self.assertIsInstance(kCTFontOpenTypeFeatureValue, unicode)
+
+    @min_os_level('10.13')
+    def testConstants10_13(self):
+        self.assertIsInstance(kCTFontVariationAxisHiddenKey, unicode)
 
 if __name__ == "__main__":
     main()

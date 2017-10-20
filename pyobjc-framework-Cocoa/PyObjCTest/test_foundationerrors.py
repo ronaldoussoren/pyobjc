@@ -35,6 +35,7 @@ class FoundationErrorsTest (TestCase):
         self.assertEqual(NSFormattingErrorMinimum, 2048)
         self.assertEqual(NSFormattingErrorMaximum, 2559)
         self.assertEqual(NSFormattingError, 2048)
+        self.assertEqual(NSCoderInvalidValueError, 4866)
 
     @min_os_level('10.6')
     def testConstants10_6(self):

@@ -21,6 +21,13 @@ class TestNSRulerView (TestCase):
         self.assertEqual(NSHorizontalRuler, 0)
         self.assertEqual(NSVerticalRuler, 1)
 
+    @min_os_level('10.13')
+    def testConstants10_13(self):
+        self.assertIsInstance(NSRulerViewUnitInches, unicode)
+        self.assertIsInstance(NSRulerViewUnitCentimeters, unicode)
+        self.assertIsInstance(NSRulerViewUnitPoints, unicode)
+        self.assertIsInstance(NSRulerViewUnitPicas, unicode)
+
     def testMethods(self):
         self.assertResultIsBOOL(NSRulerView.trackMarker_withMouseEvent_)
         self.assertResultIsBOOL(NSRulerView.isFlipped)

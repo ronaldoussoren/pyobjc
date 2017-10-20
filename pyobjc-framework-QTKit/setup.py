@@ -1,5 +1,5 @@
 '''
-Wrappers for the "QTKit" framework on MacOSX.  QTKit is an modern,
+Wrappers for the "QTKit" framework on macOS.  QTKit is an modern,
 object-oriented framework for working with QuickTime media in Cocoa
 applications, and is a replacement for the older Carbon-based Quicktime
 framework.
@@ -14,11 +14,11 @@ Note that this framework is deprecated in OSX 10.9
 from pyobjc_setup import setup, Extension
 import os
 
-VERSION="3.3a0"
+VERSION="4.0.1b1"
 
 setup(
     name='pyobjc-framework-QTKit',
-    description = "Wrappers for the framework QTKit on Mac OS X",
+    description = "Wrappers for the framework QTKit on macOS",
     packages = [ "QTKit" ],
     ext_modules = [
         Extension("QTKit._QTKit",

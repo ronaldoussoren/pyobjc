@@ -57,5 +57,13 @@ if sys.maxsize > 2**32:
 
             pass
 
+        @min_os_level('10.13')
+        def testMethods10_13(self):
+            self.assertArgIsOut(ModelIO.MDLMesh.makeVerticesUniqueAndReturnError_, 0)
+
+            # Vectors..
+            #self.assertArgIsBOOL(ModelIO.MDLMesh.initMeshWithPrimitive_segments_inwardNormals_geometryType_allocator_, 2)
+            #self.assertArgIsBOOL(ModelIO.MDLMesh.newMeshWithPrimitive_segments_inwardNormals_geometryType_allocator_, 2)
+
 if __name__ == "__main__":
     main()

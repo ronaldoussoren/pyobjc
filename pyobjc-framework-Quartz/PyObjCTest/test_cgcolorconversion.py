@@ -23,6 +23,14 @@ class TestCGColorConversion (TestCase):
     def testFunctionHard(self):
         self.fail("CGColorConversionInfoCreateFromList") # Varargs with annoying signature
 
+    @min_os_level('10.13')
+    def testFunctions(self):
+        try:
+            CGColorConversionInfoCreateFromList
+        except NameError:
+            pass
+        else:
+            self.fail("CGColorConversionInfoCreateFromList is wrapped")
 
 if __name__ == "__main__":
     main()

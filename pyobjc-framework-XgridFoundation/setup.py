@@ -1,5 +1,5 @@
 '''
-Wrappers for the "XgridFoundation" framework on MacOSX. This framework
+Wrappers for the "XgridFoundation" framework on macOS. This framework
 supports the development of applications that monitor or control jobs
 processed by Xgrid clusters.
 
@@ -10,11 +10,11 @@ and (Objective-)C frameworks
 '''
 from pyobjc_setup import setup
 
-VERSION="3.3a0"
+VERSION="4.0.1b1"
 
 setup(
     name='pyobjc-framework-XgridFoundation',
-    description = "Wrappers for the framework XgridFoundation on Mac OS X",
+    description = "Wrappers for the framework XgridFoundation on macOS",
     max_os_level='10.7',
     packages = [ "XgridFoundation" ],
     version=VERSION,

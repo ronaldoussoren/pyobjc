@@ -23,6 +23,10 @@ if sys.maxsize > 2**32:
             self.assertEqual(Contacts.CNErrorCodeValidationConfigurationError, 302)
             self.assertEqual(Contacts.CNErrorCodePredicateInvalid, 400)
             self.assertEqual(Contacts.CNErrorCodePolicyViolation, 500)
+            self.assertEqual(Contacts.CNErrorCodeClientIdentifierInvalid, 600)
+            self.assertEqual(Contacts.CNErrorCodeClientIdentifierDoesNotExist, 601)
+
+            self.assertEqual(Contacts.CNErrorCodeVCardMalformed, 700)
 
             self.assertIsInstance(Contacts.CNErrorUserInfoAffectedRecordsKey, unicode)
             self.assertIsInstance(Contacts.CNErrorUserInfoAffectedRecordIdentifiersKey, unicode)

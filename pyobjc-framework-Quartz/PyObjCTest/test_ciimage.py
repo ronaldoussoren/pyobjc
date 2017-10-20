@@ -45,6 +45,25 @@ class TestCIImage (TestCase):
         self.assertIsInstance(kCIFormatRGh, (int, long))
         self.assertIsInstance(kCIFormatRGf, (int, long))
 
+    @min_os_level('10.12')
+    def testConstants10_12(self):
+        self.assertIsInstance(kCIFormatL8, (int, long))
+        self.assertIsInstance(kCIFormatL16, (int, long))
+        self.assertIsInstance(kCIFormatLh, (int, long))
+        self.assertIsInstance(kCIFormatLf, (int, long))
+
+        self.assertIsInstance(kCIFormatLA8, (int, long))
+        self.assertIsInstance(kCIFormatLA16, (int, long))
+        self.assertIsInstance(kCIFormatLAh, (int, long))
+        self.assertIsInstance(kCIFormatLAf, (int, long))
+
+    @min_os_level('10.13')
+    def testConstants10_13(self):
+        self.assertIsInstance(kCIImageNearestSampling, unicode)
+        self.assertIsInstance(kCIImageAuxiliaryDepth, unicode)
+        self.assertIsInstance(kCIImageAuxiliaryDisparity, unicode)
+        self.assertIsInstance(kCIImageApplyOrientationProperty, unicode)
+
     def testMethods(self):
         self.assertArgIsBOOL(CIImage.imageWithTexture_size_flipped_colorSpace_, 2)
         self.assertArgIsBOOL(CIImage.initWithTexture_size_flipped_colorSpace_, 2)
@@ -53,6 +72,19 @@ class TestCIImage (TestCase):
     def testMethods10_9(self):
         self.assertArgIsBOOL(CIImage.imageWithTexture_size_flipped_options_, 2)
         self.assertArgIsBOOL(CIImage.initWithTexture_size_flipped_options_, 2)
+
+    @min_os_level('10.12')
+    def testMethods10_12(self):
+        self.assertArgIsOut(CIContext.writeJPEGRepresentationOfImage_toURL_colorSpace_options_error_, 4)
+        self.assertResultIsBOOL(CIContext.writeJPEGRepresentationOfImage_toURL_colorSpace_options_error_)
+
+    @min_os_level('10.13')
+    def testMethods10_13(self):
+        self.assertArgIsOut(CIContext.writePNGRepresentationOfImage_toURL_format_colorSpace_options_error_, 5)
+        self.assertResultIsBOOL(CIContext.writePNGRepresentationOfImage_toURL_format_colorSpace_options_error_)
+
+        self.assertArgIsOut(CIContext.writeHEIFRepresentationOfImage_toURL_format_colorSpace_options_error_, 5)
+        self.assertResultIsBOOL(CIContext.writeHEIFRepresentationOfImage_toURL_format_colorSpace_options_error_)
 
 if __name__ == "__main__":
     main()

@@ -1,5 +1,5 @@
 '''
-Wrappers for the "AddressBook" framework on MacOS X. The Address Book is
+Wrappers for the "AddressBook" framework on macOS. The Address Book is
 a centralized database for contact and other information for people. Appliations
 that make use of the AddressBook framework all use the same database.
 
@@ -12,11 +12,11 @@ and (Objective-)C frameworks
 from pyobjc_setup import setup, Extension
 import os
 
-VERSION="3.3a0"
+VERSION="4.0.1b1"
 
 setup(
     name='pyobjc-framework-AddressBook',
-    description = "Wrappers for the framework AddressBook on Mac OS X",
+    description = "Wrappers for the framework AddressBook on macOS",
     packages = [ "AddressBook" ],
     ext_modules = [
         Extension("AddressBook._AddressBook",

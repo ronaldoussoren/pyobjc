@@ -1079,7 +1079,7 @@ static char* keywords[] = { "name", "bases", "dict", "protocols", NULL };
         Py_FatalError("Cannot store generated class");
     }
 
-    //Py_INCREF(res);
+    Py_INCREF(res);
     return res;
 }
 

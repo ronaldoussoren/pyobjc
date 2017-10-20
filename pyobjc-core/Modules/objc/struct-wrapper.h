@@ -127,6 +127,15 @@ int PyObjC_RegisterStructAlias(const char* signature, PyObject* type);
  *     This function will not set an error when it cannot find
  *     a wrapper for the specified Objective-C type.
  */
-PyObject* PyObjC_FindRegisteredStruct(const char* signature, Py_ssize_t len);
+extern PyObject* PyObjC_FindRegisteredStruct(const char* signature, Py_ssize_t len);
+
+
+extern int PyObjC_SetStructField(PyObject* strval, Py_ssize_t inde, PyObject* value);
+extern PyObject* StructAsTuple(PyObject* strval);
+
+
+extern PyTypeObject StructBase_Type;
+#define PyObjCStruct_Check(obj) PyObject_TypeCheck(obj, &StructBase_Type)
+
 
 #endif /* PyObjC_STRUCT_MEMBER */

@@ -124,6 +124,7 @@ if sys.maxsize > 2 ** 32:
 
         @min_os_level("10.10")
         def testConstants10_10(self):
+            self.assertIsInstance(MediaLibrary.MLiTunesMusicVideosPlaylistTypeIdentifier, unicode)
             self.assertIsInstance(MediaLibrary.MLiTunesVideoPlaylistTypeIdentifier, unicode)
             self.assertIsInstance(MediaLibrary.MLPhotosRootGroupTypeIdentifier, unicode)
             self.assertIsInstance(MediaLibrary.MLPhotosSharedGroupTypeIdentifier, unicode)
@@ -158,6 +159,12 @@ if sys.maxsize > 2 ** 32:
         @min_os_level("10.12")
         def testConstants10_12(self):
             self.assertIsInstance(MediaLibrary.MLPhotosDepthEffectGroupTypeIdentifier, unicode)
+
+        @min_os_level("10.13")
+        def testConstants10_13(self):
+            self.assertIsInstance(MediaLibrary.MLPhotosLivePhotosGroupTypeIdentifier, unicode)
+            self.assertIsInstance(MediaLibrary.MLPhotosLongExposureGroupTypeIdentifier, unicode)
+            self.assertIsInstance(MediaLibrary.MLPhotosAnimatedGroupTypeIdentifier, unicode)
 
 if __name__ == "__main__":
     main()

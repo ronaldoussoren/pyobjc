@@ -22,5 +22,9 @@ class TestCBCentralManager (TestCase):
     def testProtocols(self):
         self.assertIsInstance(objc.protocolNamed("CBCentralManagerDelegate"), objc.formal_protocol)
 
+    @min_os_level('10.13')
+    def testMethods10_13(self):
+        self.assertResultIsBOOL(CoreBluetooth.CBCentralManager.isScanning)
+
 if __name__ == "__main__":
     main()

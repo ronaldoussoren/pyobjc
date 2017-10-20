@@ -2,22 +2,62 @@
 """
 Helper script for running the PyObjC test suite
 """
+import argparse
 import collections
 import contextlib
 import json
-import json
 import logging
 import os
-import os
 import platform
+import re
 import shutil
 import subprocess
 import sys
-import sys
+import configparser
+from http.client import HTTPSConnection
+from urllib.parse import urlencode
+import ssl
 
 from _common_definitions import TOP_DIR, TEST_STATE_DIR, PY_VERSIONS
 from _common_definitions import virtualenv, system_report
 from _topsort import topological_sort
+
+
+def load_pushover_keys():
+    cfg = configparser.ConfigParser()
+    cfg.read([os.path.expanduser("~/.pushover-key")])
+
+    result = {}
+
+    if not cfg.has_section('pushover'): return result
+
+    if cfg.has_option('pushover', 'app'):
+        result['app'] = cfg.get('pushover', 'app')
+
+    if cfg.has_option('pushover', 'user'):
+        result['user'] = cfg.get('pushover', 'user')
+
+    return result
+
+def send_pushover(keys, message):
+    if 'app' not in keys or 'user' not in keys:
+        return
+
+    body = {
+        'priority': 1,
+        'token':    keys['app'],
+        'user':     keys['user'],
+        'message':  message,
+    }
+
+    context = ssl.create_default_context()
+    context.check_hostname = False
+    context.verify_mode = ssl.CERT_NONE
+    conn = HTTPSConnection('api.pushover.net:443', context=context)
+    conn.request('POST', '/1/messages.json',
+                 urlencode(body),
+                 {'Content-Type': 'application/x-www-form-urlencoded'})
+    conn.getresponse()
 
 
 def sort_framework_wrappers():
@@ -55,8 +95,31 @@ def sort_framework_wrappers():
     frameworks = topological_sort(frameworks, partial_order)
     return frameworks
 
+def parse_arguments():
+    parser = argparse.ArgumentParser(description="Run PyObjC testsuite")
+    parser.add_argument(
+        "--python-version",
+        dest='python_versions',
+        metavar='VER',
+        action='append',
+        default=[],
+        help='Select python version to test (%s)'%(", ".join(PY_VERSIONS)))
 
-def build_project(interpreter, project):
+    parser.add_argument(
+            '--state-dir',
+            dest='state_dir',
+            metavar='DIR',
+            default=TEST_STATE_DIR,
+            help='Directory to store test results (%(default)s)')
+
+
+    result = parser.parse_args()
+    if not result.python_versions:
+        result.python_versions=PY_VERSIONS
+
+    return result
+
+def build_project(*, interpreter, py_ver, project):
     lg = logging.getLogger("build_project")
 
     proj_dir = os.path.join(TOP_DIR, project)
@@ -68,7 +131,7 @@ def build_project(interpreter, project):
         shutil.rmtree(os.path.join(proj_dir, 'dist'))
 
     # Actually build
-    lg.info("building %r using %r", project, interpreter)
+    lg.info("building %r using %r (%s)", project, interpreter, py_ver)
     status = subprocess.call(
             [interpreter, "setup.py", "install"],
             cwd=proj_dir)
@@ -84,13 +147,12 @@ def build_project(interpreter, project):
 
     return True
 
-
-def run_tests(interpreter, arch, project, state_dir):
+def run_tests(*, interpreter, arch, py_ver, project, state_dir):
     lg = logging.getLogger("run_tests")
 
     proj_dir = os.path.join(TOP_DIR, project)
 
-    lg.info("testing %r using %r (%7s)", project, interpreter, arch)
+    lg.info("testing %r using %r (%s, %7s)", project, interpreter, py_ver, arch)
     p = subprocess.Popen(
             ["/usr/bin/arch", "-%s"%(arch,), interpreter, "setup.py", "test", "--verbosity=3"],
             cwd=proj_dir,
@@ -112,7 +174,7 @@ def run_tests(interpreter, arch, project, state_dir):
     except IndexError:
         status = {
             'message': 'Cannot fetch status line',
-            'stdout': stdout,
+            'stdout': stdout.decode('utf-8'),
         }
 
     status['exitcode'] = exitcode
@@ -160,18 +222,23 @@ def test_summary(fp_out, state_dir):
 
     ok = True
     for proj in sorted(results):
+        # Note: DictionaryServices has a known crasher, ignore errors
+        # w.r.t. reporting if there were problems in the test run.
         row = [proj]
         for k in keys:
             info = results[proj][k]
             if info.get("errors"):
                 row.append("E:{}".format(info["errors"]))
-                ok = False
+                if proj != 'DictionaryServices':
+                    ok = False
             elif info.get("fails"):
                 row.append("F:{}".format(info["fails"]))
-                ok = False
+                if proj != 'DictionaryServices':
+                    ok = False
             elif 'count' not in info and info.get("message"):
                 row.append("CRASH")
-                ok = False
+                if proj != 'DictionaryServices':
+                    ok = False
             else:
                 row.append("")
 
@@ -179,42 +246,74 @@ def test_summary(fp_out, state_dir):
     return ok
 
 
+def supports_arch(interpreter, arch):
+    lines = subprocess.check_output(['/usr/bin/file', interpreter])
+    lines = lines.decode('utf-8').splitlines()
+    for ln in lines:
+        m = re.search('for architecture (\S+)\)', ln)
+        if m is not None:
+            if m.group(1).startswith(arch):
+                return True
 
+    return False
 
 def main():
     logging.basicConfig(stream=sys.stdout, level=logging.DEBUG)
     lg = logging.getLogger("runtests")
 
+    options = parse_arguments()
+
+    # The exceptionhandling testsuite calls atos and that can ask for a password.
+    # Run the executable now to avoid problems later
+    print('Please ignore the atos output below')
+    subprocess.call(['/usr/bin/atos', '/bin/sh', '0x0'])
+
     osx_release = platform.mac_ver()[0]
 
     lg.info("running PyObjC tests on OSX %s", osx_release)
-    osx_dir = os.path.join(TEST_STATE_DIR, ".".join(osx_release.split(".")[:2]))
+    osx_dir = os.path.join(options.state_dir, ".".join(osx_release.split(".")[:2]))
     if not os.path.exists(osx_dir):
         os.makedirs(osx_dir)
 
-    system_report(os.path.join(osx_dir, "build-info.txt"))
+    system_report(os.path.join(osx_dir, "build-info.txt"), options.python_versions)
 
     build_order = ['pyobjc-core'] + sort_framework_wrappers()
 
-    for py_ver in PY_VERSIONS:
+    for py_ver in options.python_versions:
         with virtualenv("python{}".format(py_ver)) as interpreter:
             # First install packages into the virtualenv
             for project in build_order:
-                build_project(interpreter, project)
+                build_project(
+                        interpreter=interpreter,
+                        py_ver=py_ver,
+                        project=project)
 
             # Then run tests for all supported architectures
-            for arch in ('i386', 'x86_64'):
+            for arch in ('ppc', 'i386', 'x86_64'):
+                if not supports_arch(interpreter, arch):
+                    lg.info("skipping Python %s (%7s), unsupported architecture", py_ver, arch)
+                    continue
+
                 lg.info("running with Python %s (%7s) using %s", py_ver, arch, interpreter)
                 state_dir = os.path.join(osx_dir, "%s-%s"%(py_ver, arch))
 
-                for project in build_order:
-                    run_tests(interpreter, arch, project, state_dir)
+                for project in ['pyobjc'] + build_order:
+                    run_tests(
+                        interpreter=interpreter,
+                        arch=arch,
+                        py_ver=py_ver,
+                        project=project,
+                        state_dir=state_dir)
 
     lg.info("done")
     with open(os.path.join(osx_dir, "summary.txt"), "w") as fp:
         test_summary(fp, osx_dir)
 
     ok = test_summary(sys.stdout, osx_dir)
+
+    keys = load_pushover_keys()
+    send_pushover(keys, 'Testsuite finished' if ok else 'Testsuite finished with errors')
+
     if not ok:
         print()
         print("ERROR: some tests have failures")

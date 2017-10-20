@@ -38,6 +38,9 @@ class TestPDFView (TestCase):
         self.assertIsInstance(PDFViewPrintPermissionNotification, unicode)
         self.assertIsInstance(PDFViewVisiblePagesChangedNotification, unicode)
 
+        self.assertEqual(kPDFDisplayDirectionVertical, 0)
+        self.assertEqual(kPDFDisplayDirectionHorizontal, 1)
+
     @min_os_level('10.5')
     def testConstants10_5(self):
         self.assertIsInstance(PDFViewAnnotationWillHitNotification, unicode)
@@ -86,6 +89,14 @@ class TestPDFView (TestCase):
     def testMethods10_6(self):
         self.assertResultIsBOOL(PDFView.enableDataDetectors)
         self.assertArgIsBOOL(PDFView.setEnableDataDetectors_, 0)
+
+    @min_os_level('10.13')
+    def testMethods10_13(self):
+        self.assertResultIsBOOL(PDFView.displaysRTL)
+        self.assertArgIsBOOL(PDFView.setDisplaysRTL_, 0)
+
+        self.assertResultIsBOOL(PDFView.acceptsDraggedFiles)
+        self.assertArgIsBOOL(PDFView.setAcceptsDraggedFiles_, 0)
 
     def testProtocols(self):
         #self.assertIsInstance(protocols.PDFViewDelegate, objc.informal_protocol)

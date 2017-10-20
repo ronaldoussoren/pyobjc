@@ -88,8 +88,18 @@ class TestNSPasteboard (TestCase):
         self.assertEqual(NSPasteboardReadingAsKeyedArchive, 1<<2)
 
     @min_os_level('10.12')
-    def testConstants10_6(self):
+    def testConstants10_12(self):
         self.assertEqual(NSPasteboardContentsCurrentHostOnly, 1<<0)
+
+    @min_os_level('10.13')
+    def testConstants10_13(self):
+        self.assertIsInstance(NSPasteboardNameGeneral, unicode)
+        self.assertIsInstance(NSPasteboardNameFont, unicode)
+        self.assertIsInstance(NSPasteboardNameRuler, unicode)
+        self.assertIsInstance(NSPasteboardNameFind, unicode)
+        self.assertIsInstance(NSPasteboardNameDrag, unicode)
+        self.assertIsInstance(NSPasteboardTypeURL, unicode)
+        self.assertIsInstance(NSPasteboardTypeFileURL, unicode)
 
 
     @min_os_level('10.6')

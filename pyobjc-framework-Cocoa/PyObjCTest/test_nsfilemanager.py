@@ -298,6 +298,10 @@ class TestNSFileManager (TestCase):
     def testMethods10_11(self):
         self.assertArgIsBlock(NSFileManager.unmountVolumeAtURL_options_completionHandler_, 2, b'v@')
 
+    @min_os_level('10.13')
+    def testMethods10_13(self):
+        self.assertArgIsBlock(NSFileManager.getFileProviderMessageInterfacesForItemAtURL_completionHandler_, 1, b'v@@')
+
     def testProtocols(self):
         self.assertResultIsBOOL(TestNSFileManagerHelper.fileManager_shouldProceedAfterError_)
         self.assertResultIsBOOL(TestNSFileManagerHelper.fileManager_shouldCopyItemAtPath_toPath_)

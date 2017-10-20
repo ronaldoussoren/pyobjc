@@ -1,5 +1,5 @@
 '''
-Wrappers for the "NetFS" framework on MacOS X. The Address Book is
+Wrappers for the "NetFS" framework on macOS. The Address Book is
 a centralized database for contact and other information for people. Appliations
 that make use of the NetFS framework all use the same database.
 
@@ -12,11 +12,11 @@ and (Objective-)C frameworks
 from pyobjc_setup import setup
 import os
 
-VERSION="3.3a0"
+VERSION="4.0.1b1"
 
 setup(
     name='pyobjc-framework-NetFS',
-    description = "Wrappers for the framework NetFS on Mac OS X",
+    description = "Wrappers for the framework NetFS on macOS",
     min_os_level='10.6',
     packages = [ "NetFS" ],
     version=VERSION,

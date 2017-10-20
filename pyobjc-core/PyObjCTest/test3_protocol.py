@@ -1,7 +1,6 @@
 from PyObjCTools.TestSupport import *
 from PyObjCTest.protocol import OC_TestProtocol
 import objc
-import warnings
 import platform
 import sys
 

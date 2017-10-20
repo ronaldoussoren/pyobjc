@@ -2,7 +2,37 @@
 # for information on how to update this file.
 {
  "definitions": {
+  "enum": {
+   "CIDataMatrixCodeECCVersion000": { "value":   0 },
+   "CIDataMatrixCodeECCVersion050": { "value":  50 },
+   "CIDataMatrixCodeECCVersion080": { "value":  80 },
+   "CIDataMatrixCodeECCVersion100": { "value": 100 },
+   "CIDataMatrixCodeECCVersion140": { "value": 140 },
+   "CIDataMatrixCodeECCVersion200": { "value": 200 },
+   "CIQRCodeErrorCorrectionLevelL": { "value": 76 },
+   "CIQRCodeErrorCorrectionLevelM": { "value": 77 },
+   "CIQRCodeErrorCorrectionLevelQ": { "value": 81 },
+   "CIQRCodeErrorCorrectionLevelH": { "value": 72 },
+   "kCALayerMinXMinYCorner": { "value": 1 },
+   "kCALayerMaxXMinYCorner": { "value": 2 },
+   "kCALayerMinXMaxYCorner": { "value": 4 },
+   "kCALayerMaxXMaxYCorner": { "value": 8 },
+   "CIRenderDestinationAlphaNone": { "value": 0 },
+   "CIRenderDestinationAlphaPremultiplied": { "value": 1 },
+   "CIRenderDestinationAlphaUnpremultiplied": { "value": 2 }
+  },
   "externs": {
+   "kCIImageApplyOrientationProperty": { "typestr": "@" },
+   "kCIInputDepthImageKey": { "typestr": "@" },
+   "kCIInputDisparityImageKey": { "typestr": "@" },
+   "kCIImageNearestSampling": { "typestr": "@" },
+   "kCIInputMoireAmountKey": { "typestr": "@" },
+   "kCIImageAuxiliaryDepth": { "typestr": "@" },
+   "kCIImageAuxiliaryDisparity": { "typestr": "@" },
+   "kCIImageRepresentationAVDepthData": { "typestr": "@" },
+   "kCIImageRepresentationDepthImage": { "typestr": "@" },
+   "kCIImageRepresentationDisparityImage": { "typestr": "@" },
+   "kCARendererColorSpace": { "typestr": "@" },
    "CIDetectorMaxFeatureCount": { "typestr": "@" },
    "kCIInputBaselineExposureKey": { "typestr": "@" },
    "kCIInputDisableGamutMapKey": { "typestr": "@" },
@@ -24,6 +54,14 @@
    "kCIInputVersionKey": { "typestr": "@" },
    "CIDetectorTypeText": { "typestr": "@" },
    "CIDetectorNumberOfAngles": { "typestr": "@" },
+   "kCIFormatL8": { "typestr": "i" },
+   "kCIFormatL16": { "typestr": "i" },
+   "kCIFormatLh": { "typestr": "i" },
+   "kCIFormatLf": { "typestr": "i" },
+   "kCIFormatLA8": { "typestr": "i" },
+   "kCIFormatLA16": { "typestr": "i" },
+   "kCIFormatLAh": { "typestr": "i" },
+   "kCIFormatLAf": { "typestr": "i" },
    "kCIFormatBGRA8": { "typestr": "i" },
    "kCIFormatABGR8": { "typestr": "i" },
    "kCIFormatRGBA8": { "typestr": "i" },
@@ -41,6 +79,83 @@
    "kCIFormatRGf": { "typestr": "i" }
   },
   "classes": {
+   "CIRenderTask": {
+    "methods": [
+     {
+      "selector": "waitUntilCompletedAndReturnError:",
+      "class_method": false,
+      "args": {
+       "0": { "type_modifier": "o" }
+      }
+     }
+    ]
+   },
+   "CIRenderDestination": {
+    "methods": [
+     {
+      "selector": "blendsInDestinationColorSpace",
+      "class_method": false,
+      "retval": { "type_override": "Z" }
+     },
+     {
+      "selector": "setBlendsInDestinationColorSpace:",
+      "class_method": false,
+      "args": {
+       "0": { "type_override": "Z" }
+      }
+     },
+     {
+      "selector": "isClamped",
+      "class_method": false,
+      "retval": { "type_override": "Z" }
+     },
+     {
+      "selector": "setClamped:",
+      "class_method": false,
+      "args": {
+       "0": { "type_override": "Z" }
+      }
+     },
+     {
+      "selector": "isDithered",
+      "class_method": false,
+      "retval": { "type_override": "Z" }
+     },
+     {
+      "selector": "setDithered:",
+      "class_method": false,
+      "args": {
+       "0": { "type_override": "Z" }
+      }
+     },
+     {
+      "selector": "isFlipped",
+      "class_method": false,
+      "retval": { "type_override": "Z" }
+     },
+     {
+      "selector": "setFlipped:",
+      "class_method": false,
+      "args": {
+       "0": { "type_override": "Z" }
+      }
+     },
+     {
+      "selector": "initWithWidth:height:pixelFormat:commandBuffer:mtlTextureProvider:",
+      "class_method": false,
+      "args": {
+       "4": {
+        "callable": {
+	 "arguments": {
+	  "0": { "typestr": "^v" }
+	 },
+	 "retval": { "typestr": "@" }
+	}
+       }
+      }
+     }
+    ]
+   },
    "CAEmitterCell": {
     "methods": [],
     "properties": [
@@ -260,6 +375,30 @@
        "0": { "type_override": "Z" }
       },
       "class_method": false,
+      "selector": "setAllowsNextDrawableTimeout:"
+     },
+     {
+      "retval": { "type_override": "Z" },
+      "class_method": false,
+      "selector": "allowsNextDrawableTimeout"
+     },
+     {
+      "args": {
+       "0": { "type_override": "Z" }
+      },
+      "class_method": false,
+      "selector": "setDisplaySyncEnabled:"
+     },
+     {
+      "retval": { "type_override": "Z" },
+      "class_method": false,
+      "selector": "displaySyncEnabled"
+     },
+     {
+      "args": {
+       "0": { "type_override": "Z" }
+      },
+      "class_method": false,
       "selector": "setWantsExtendedDynamicRangeContent:"
      },
      {
@@ -331,6 +470,24 @@
      }
     ]
    },
+   "CIAztecCodeDescriptor": {
+    "methods": [
+     {
+      "selector": "isCompact",
+      "class_method": false,
+      "retval": { "type_override": "Z" }
+     }
+    ]
+   },
+   "CIPDF417CodeDescriptor": {
+    "methods": [
+     {
+      "selector": "isCompact",
+      "class_method": false,
+      "retval": { "type_override": "Z" }
+     }
+    ]
+   },
    "CIColor": {
     "methods": [
      {
@@ -384,6 +541,59 @@
    },
    "CIContext": {
     "methods": [
+     {
+      "selector": "writePNGRepresentationOfImage:toURL:format:colorSpace:options:error:",
+      "class_method": false,
+      "args": {
+       "5": { "type_modifier": "o" }
+      },
+      "retval": { "type_override": "Z" }
+     },
+     {
+      "selector": "writeHEIFRepresentationOfImage:toURL:format:colorSpace:options:error:",
+      "class_method": false,
+      "args": {
+       "5": { "type_modifier": "o" }
+      },
+      "retval": { "type_override": "Z" }
+     },
+     {
+      "selector": "writeJPEGRepresentationOfImage:toURL:colorSpace:options:error:",
+      "class_method": false,
+      "args": {
+       "4": { "type_modifier": "o" }
+      },
+      "retval": { "type_override": "Z" }
+     },
+     {
+      "selector": "startTaskToRender:fromRect:toDestination:atPoint:error:",
+      "class_method": false,
+      "args": {
+       "4": { "type_modifier": "o" }
+      }
+     },
+     {
+      "selector": "startTaskToRender:toDestination:error:",
+      "class_method": false,
+      "args": {
+       "2": { "type_modifier": "o" }
+      }
+     },
+     {
+      "selector": "startTaskToClear:error:",
+      "class_method": false,
+      "args": {
+       "1": { "type_modifier": "o" }
+      }
+     },
+     {
+      "selector": "prepareRender:fromRect:toDestination:atPoint:error:",
+      "class_method": false,
+      "args": {
+       "4": { "type_modifier": "o" }
+      },
+      "retval": { "type_override": "Z" }
+     },
      {
       "args": {
        "4": { "type_override": "Z" }
@@ -485,6 +695,30 @@
    },
    "CIImage": {
     "methods": [
+     {
+      "selector": "writeJPEGRepresentationOfImage:toURL:colorSpace:options:error:",
+      "class_method": false,
+      "args": {
+       "4": { "type_modifier": "o" }
+      },
+      "retval": { "type_override": "Z" }
+     },
+     {
+      "selector": "writePNGRepresentationOfImage:toURL:format:colorSpace:options:error:",
+      "class_method": false,
+      "args": {
+       "5": { "type_modifier": "o" }
+      },
+      "retval": { "type_override": "Z" }
+     },
+     {
+      "selector": "writeHEIFRepresentationOfImage:toURL:format:colorSpace:options:error:",
+      "class_method": false,
+      "args": {
+       "5": { "type_modifier": "o" }
+      },
+      "retval": { "type_override": "Z" }
+     },
      {
       "args": {
        "0": {}
@@ -718,6 +952,20 @@
    },
    "CIKernel": {
     "methods": [
+     {
+      "selector": "kernelWithFunctionName:fromMetalLibraryData:error:",
+      "class_method": true,
+      "args": {
+       "2": { "type_modifier": "o" }
+      }
+     },
+     {
+      "selector": "kernelWithFunctionName:fromMetalLibraryData:outputPixelFormat:error:",
+      "class_method": true,
+      "args": {
+       "3": { "type_modifier": "o" }
+      }
+     },
      {
       "selector": "applyWithExtent:roiCallback:arguments:",
       "class_method": false,

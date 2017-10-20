@@ -83,6 +83,10 @@ class TestNSAccessibility (TestCase):
 
 
     def testConstants(self):
+        self.assertEqual(NSAccessibilityAnnotationPositionFullRange, 0)
+        self.assertEqual(NSAccessibilityAnnotationPositionStart, 1)
+        self.assertEqual(NSAccessibilityAnnotationPositionEnd, 2)
+
         self.assertIsInstance(NSAccessibilityErrorCodeExceptionInfo, unicode)
         self.assertIsInstance(NSAccessibilityRoleAttribute, unicode)
         self.assertIsInstance(NSAccessibilityRoleDescriptionAttribute, unicode)
@@ -442,6 +446,20 @@ class TestNSAccessibility (TestCase):
         self.assertIsInstance(NSAccessibilityRequiredAttribute, unicode)
         self.assertIsInstance(NSAccessibilityMenuBarItemRole, unicode)
         self.assertIsInstance(NSAccessibilityTextAlignmentAttribute, unicode)
+
+    @min_os_level('10.13')
+    def testConstants10_13(self):
+        self.assertIsInstance(NSAccessibilityAnnotationLabel, unicode)
+        self.assertIsInstance(NSAccessibilityAnnotationElement, unicode)
+        self.assertIsInstance(NSAccessibilityAnnotationLocation, unicode)
+
+        self.assertIsInstance(NSAccessibilityLanguageTextAttribute, unicode)
+        self.assertIsInstance(NSAccessibilityCustomTextAttribute, unicode)
+        self.assertIsInstance(NSAccessibilityAnnotationTextAttribute, unicode)
+        self.assertIsInstance(NSAccessibilityPageRole, unicode)
+        self.assertIsInstance(NSAccessibilityTabButtonSubrole, unicode)
+        self.assertIsInstance(NSAccessibilityCollectionListSubrole, unicode)
+        self.assertIsInstance(NSAccessibilitySectionListSubrole, unicode)
 
     @min_os_level('10.7')
     def testFunctions10_7(self):

@@ -1,5 +1,5 @@
 '''
-Wrappers for the "Quartz" related frameworks on MacOSX. These frameworks
+Wrappers for the "Quartz" related frameworks on macOS. These frameworks
 provide a number of graphics related API's.
 
 The frameworks wrapped by this package are:
@@ -49,11 +49,11 @@ import os
 
 subpackages = [ "Quartz.%s"%(fn,) for fn in os.listdir('Lib/Quartz') if os.path.exists(os.path.join('Lib/Quartz', fn, "__init__.py"))]
 
-VERSION="3.3a0"
+VERSION="4.0.1b1"
 
 setup(
     name='pyobjc-framework-Quartz',
-    description = "Wrappers for the Quartz frameworks on Mac OS X",
+    description = "Wrappers for the Quartz frameworks on macOS",
     packages = [ "Quartz" ] + subpackages,
     ext_modules = [
         # CoreVideo
@@ -73,8 +73,12 @@ setup(
             [ 'Modules/_coregraphics.m' ], extra_link_args=["-framework", "ApplicationServices"]),
         Extension('Quartz.ImageKit._imagekit',
             [ 'Modules/_imagekit.m' ], extra_link_args=["-framework", "Quartz"]),
+        Extension('Quartz.PDFKit._PDFKit',
+            [ 'Modules/_PDFKit.m' ], extra_link_args=["-framework", "Quartz"]),
         Extension('Quartz.QuartzCore._quartzcore',
             [ 'Modules/_quartzcore.m' ], extra_link_args=["-framework", "QuartzCore"]),
+        Extension('Quartz.QuickLookUI._QuickLookUI',
+            [ 'Modules/_QuickLookUI.m' ], extra_link_args=["-framework", "Quartz"]),
     ],
     version=VERSION,
     install_requires = [

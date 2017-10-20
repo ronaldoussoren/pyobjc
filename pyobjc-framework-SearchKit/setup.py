@@ -1,5 +1,5 @@
 '''
-Wrappers for the "SearchKit" framework on MacOSX. SearchKit is a content
+Wrappers for the "SearchKit" framework on macOS. SearchKit is a content
 indexing and search solution.
 
 These wrappers don't include documentation, please check Apple's documention
@@ -13,11 +13,11 @@ the framework.
 '''
 from pyobjc_setup import setup
 
-VERSION="3.3a0"
+VERSION="4.0.1b1"
 
 setup(
     name='pyobjc-framework-SearchKit',
-    description = "Wrappers for the framework SearchKit on Mac OS X",
+    description = "Wrappers for the framework SearchKit on macOS",
     min_os_level='10.5',
     packages = [ "SearchKit" ],
     version=VERSION,

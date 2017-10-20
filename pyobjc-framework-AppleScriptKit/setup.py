@@ -8,11 +8,11 @@ and (Objective-)C frameworks
 '''
 from pyobjc_setup import setup
 
-VERSION="3.3a0"
+VERSION="4.0.1b1"
 
 setup(
     name='pyobjc-framework-AppleScriptKit',
-    description = "Wrappers for the framework AppleScriptKit on Mac OS X",
+    description = "Wrappers for the framework AppleScriptKit on macOS",
     packages = [ "AppleScriptKit" ],
     version=VERSION,
     install_requires = [

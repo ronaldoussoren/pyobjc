@@ -52,6 +52,30 @@ class TestNSFontDescriptor (TestCase):
         self.assertIsInstance(NSFontFeatureTypeIdentifierKey, unicode)
         self.assertIsInstance(NSFontFeatureSelectorIdentifierKey, unicode)
 
+        self.assertEqual(NSFontDescriptorTraitItalic, 1 << 0)
+        self.assertEqual(NSFontDescriptorTraitBold, 1 << 1)
+        self.assertEqual(NSFontDescriptorTraitExpanded, 1 << 5)
+        self.assertEqual(NSFontDescriptorTraitCondensed, 1 << 6)
+        self.assertEqual(NSFontDescriptorTraitMonoSpace, 1 << 10)
+        self.assertEqual(NSFontDescriptorTraitVertical, 1 << 11)
+        self.assertEqual(NSFontDescriptorTraitUIOptimized, 1 << 12)
+        self.assertEqual(NSFontDescriptorTraitTightLeading, 1 << 15)
+        self.assertEqual(NSFontDescriptorTraitLooseLeading, 1 << 16)
+        self.assertEqual(NSFontDescriptorClassMask, 0xF0000000)
+
+        self.assertEqual(NSFontDescriptorClassUnknown, 0 << 28)
+        self.assertEqual(NSFontDescriptorClassOldStyleSerifs, 1 << 28)
+        self.assertEqual(NSFontDescriptorClassTransitionalSerifs, 2 << 28)
+        self.assertEqual(NSFontDescriptorClassModernSerifs, 3 << 28)
+        self.assertEqual(NSFontDescriptorClassClarendonSerifs, 4 << 28)
+        self.assertEqual(NSFontDescriptorClassSlabSerifs, 5 << 28)
+        self.assertEqual(NSFontDescriptorClassFreeformSerifs, 7 << 28)
+        self.assertEqual(NSFontDescriptorClassSansSerif, 8 << 28)
+        self.assertEqual(NSFontDescriptorClassOrnamentals, 9 << 28)
+        self.assertEqual(NSFontDescriptorClassScripts, 10 << 28)
+        self.assertEqual(NSFontDescriptorClassSymbolic, 12 << 28)
+
+
     @min_os_level('10.11')
     def testConstants10_11(self):
         self.assertIsInstance(NSFontWeightUltraLight, float)
@@ -63,6 +87,10 @@ class TestNSFontDescriptor (TestCase):
         self.assertIsInstance(NSFontWeightBold, float)
         self.assertIsInstance(NSFontWeightHeavy, float)
         self.assertIsInstance(NSFontWeightBlack, float)
+
+    @min_os_level('10.13')
+    def testMethods10_13(self):
+        self.assertResultIsBOOL(NSFontDescriptor.requiresFontAssetRequest)
 
 
 if __name__ == "__main__":

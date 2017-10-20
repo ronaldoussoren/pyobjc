@@ -1,5 +1,5 @@
 """
-Module defining a topological sort function, see 
+Module defining a topological sort function, see
 <http://www.bitformation.com/art/python_toposort.html> for more
 information.
 
@@ -63,6 +63,7 @@ def topological_sort(items, partial_order):
         # that satisfy the input restrictions. We arbitrarily take one of
         # the roots using pop(). Note that for the algorithm to be efficient,
         # this operation must be done in O(1) time.
+        roots.sort(reverse=True)
         root = roots.pop()
         sorted.append(root)
         for child in graph[root][1:]:

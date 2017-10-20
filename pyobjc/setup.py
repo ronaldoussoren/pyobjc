@@ -13,14 +13,14 @@ import tarfile
 import sys
 import ast
 
-VERSION="3.3a0"
+VERSION="4.0.1b1"
 
 # Table with all framework wrappers and the OSX releases where they are
 # first supported, and where support was removed. The introduced column
 # is ``None`` when the framework is supported on OSX 10.4 or later. The
 # removed column is ``None`` when the framework is present ont he latest
 # supported OSX release.
-FRAMEWORKS_WRAPPERS=[
+FRAMEWORK_WRAPPERS=[
         # Name                      Introcuded          Removed
         ('AVKit',                   '10.9',             None        ),
         ('AVFoundation',            '10.7',             None        ),
@@ -35,12 +35,15 @@ FRAMEWORKS_WRAPPERS=[
         ('CloudKit',                '10.10',            None        ),
         ('Cocoa',                   None,               None        ),
         ('Collaboration',           '10.5',             None        ),
+        ('ColorSync',               '10.13',            None        ),
         ('Contacts',                '10.11',            None        ),
         ('ContactsUI',              '10.11',            None        ),
         ('CoreBluetooth',           '10.10',            None        ),
         ('CoreData',                None,               None        ),
         ('CoreLocation',            '10.6',             None        ),
+        ('CoreML',                  '10.13',            None        ),
         ('CoreServices',            None,               None        ),
+        ('CoreSpotlight',           '10.13',            None        ),
         ('CoreText',                None,               None        ),
         ('CoreWLAN',                '10.6',             None        ),
         ('CryptoTokenKit',          '10.10',            None        ),
@@ -48,6 +51,7 @@ FRAMEWORKS_WRAPPERS=[
         ('DiskArbitration',         None,               None        ),
         ('EventKit',                '10.8',             None        ),
         ('ExceptionHandling',       None,               None        ),
+        ('ExternalAccessory',       '10.13',            None        ),
         ('FSEvents',                '10.5',             None        ),
         ('FinderSync',              '10.10',            None        ),
         ('GameCenter',              '10.8',             None        ),
@@ -95,11 +99,13 @@ FRAMEWORKS_WRAPPERS=[
         ('XgridFoundation',         None,               '10.8'      ),
 #        ('AudioVideoBridging',      '10.8',             None        ),
 #        ('GLKit',                   '10.8',             None        ),
-#        ('GameKit',                 '10.8',             None        ),
+        ('GameKit',                 '10.8',             None        ),
+        ('GameplayKit',             '10.11',            None        ),
 #        ('MediaToolbox',            '10.8',             None        ),
         ('SceneKit',                '10.7',             None        ),
 #        ('SpriteKit',               '10.9',             None        ),
 #        ('VideoToolbox',            '10.8',             None        ),
+        ('Vision',                  '10.13',            None        ),
 
         # iTunes library is shipped with iTunes, not part of macOS 'core'
         ('iTunesLibrary',           None,               None        ),
@@ -120,7 +126,7 @@ def framework_requires():
     build_platform = platform.mac_ver()[0]
     result = []
 
-    for name, introduced, removed in FRAMEWORKS_WRAPPERS:
+    for name, introduced, removed in FRAMEWORK_WRAPPERS:
         if introduced is not None and version_key(introduced) > version_key(build_platform):
             continue
         if removed is not None and version_key(removed) <= version_key(build_platform):
@@ -162,6 +168,7 @@ Programming Language :: Python :: 2.7
 Programming Language :: Python :: 3
 Programming Language :: Python :: 3.4
 Programming Language :: Python :: 3.5
+Programming Language :: Python :: 3.6
 Programming Language :: Objective C
 Topic :: Software Development :: Libraries :: Python Modules
 Topic :: Software Development :: User Interfaces
@@ -198,25 +205,29 @@ def same_order(lst1, lst2):
 
 class oc_test (Command):
     description = "run test suite"
-    user_options = []
+    user_options = [
+        ('verbosity=', None, "print what tests are run"),
+    ]
 
     def initialize_options(self):
-        pass
+        self.verbosity=1
 
     def finalize_options(self):
-        pass
+        if isinstance(self.verbosity, str):
+            self.verbosity=int(self.verbosity)
 
     def run(self):
         print("  validating framework list...")
         all_names = set(nm.split('-')[-1] for nm in os.listdir('..') if nm.startswith('pyobjc-framework-'))
-        configured_names = set(x[0] for x in FRAMEWORKS_WRAPPERS)
-        ok = True
+        configured_names = set(x[0] for x in FRAMEWORK_WRAPPERS)
+        failures = 0
+
         if all_names - configured_names:
-            print("Framework wrappers not mentioned in setup.py: %s"%(", ".join(all_names - configured_names)))
-            ok = False
+            print("Framework wrappers not mentioned in setup.py: %s"%(", ".join(sorted(all_names - configured_names))))
+            failures += 1
         if configured_names - all_names:
-            print("Framework mentioned in setup.py not in filesystem: %s"%(", ".join(configured_names - all_names)))
-            ok = False
+            print("Framework mentioned in setup.py not in filesystem: %s"%(", ".join(sorted(configured_names - all_names))))
+            failures += 1
 
         print("  validating framework Modules/ directories...")
         header_files = ("pyobjc-api.h", "pyobjc-compat.h")
@@ -225,7 +236,7 @@ class oc_test (Command):
             with open(os.path.join('../pyobjc-core/Modules/objc', fn), 'rb') as fp:
                 templates[fn] = fp.read()
 
-        for nm in all_names:
+        for nm in sorted(all_names):
             subdir = "../pyobjc-framework-" + nm + "/Modules"
             if not os.path.exists(subdir): continue
 
@@ -233,7 +244,7 @@ class oc_test (Command):
                 if not os.path.exists(os.path.join(subdir, fn)):
                     print("Framework wrapper for %s does not contain %s"%(
                         nm, fn))
-                    ok = False
+                    failures += 1
 
                 else:
                     with open(os.path.join(subdir, fn), 'rb') as fp:
@@ -242,7 +253,7 @@ class oc_test (Command):
                     if data != templates[fn]:
                         print("Framework wrapper for %s contains stale %s"%(
                             nm, fn))
-                        ok = False
+                        failures += 1
 
 
         print("  validating framework setup files...")
@@ -254,17 +265,17 @@ class oc_test (Command):
             if not os.path.exists(os.path.join(subdir, "MANIFEST.in")):
                 print("Framework wrapper for %s does not contain MANIFEST.in"%(
                     nm))
-                ok = False
+                failures += 1
 
             if not os.path.exists(os.path.join(subdir, "setup.py")):
                 print("Framework wrapper for %s does not contain setup.py"%(
                     nm))
-                ok = False
+                failures += 1
 
             if not os.path.exists(os.path.join(subdir, "pyobjc_setup.py")):
                 print("Framework wrapper for %s does not contain pyobjc_setup.py"%(
                     nm))
-                ok = False
+                failures += 1
 
             else:
                 with open(os.path.join(subdir, "pyobjc_setup.py"), 'rb') as fp:
@@ -272,18 +283,18 @@ class oc_test (Command):
                 if data != pyobjc_setup:
                     print("Framework wrapper for %s contains stale pyobjc_setup.py"%(
                         nm))
-                    ok = False
+                    failures += 1
 
             if not os.path.exists(os.path.join(subdir, "setup.py")):
                 print("Framework wrapper for %s does not contain setup.py"%(nm))
-                ok = False
+                failures += 1
             else:
                 with open(os.path.join(subdir, "setup.py")) as fp:
                     contents = fp.read()
 
                 if "setup_requires" in contents:
                     print("Framework wrapper for %s has setup_requires"%(nm))
-                    ok = False
+                    failures += 1
 
                 a = compile(contents, subdir, 'exec', ast.PyCF_ONLY_AST)
                 try:
@@ -291,10 +302,11 @@ class oc_test (Command):
 
                     if a.body[-1].value.func.id != 'setup':
                         print("Unexpected setup.py structure in wrapper for %s"%(nm))
-                        ok = False
+                        failures += 1
 
                     elif a.body[-1].value.args:
                         print("Unexpected setup.py structure in wrapper for %s"%(nm))
+                        failures += 1
 
                     for n in a.body:
                         if isinstance(n, ast.Assign):
@@ -303,29 +315,30 @@ class oc_test (Command):
 
                 except AttributeError:
                     print("Unexpected setup.py structure in wrapper for %s"%(nm))
-                    ok = False
+                    failures += 1
 
                 if not same_order(args, _SETUP_KEYS):
                     print("Unexpected order of setup.py keyword args in wrapper for %s"%(nm,))
-                    ok = False
+                    failures += 1
 
                 for k in set(_SETUP_KEYS) - set(_SETUP_OPTIONAL):
                     if k not in args:
                         print("Missing %r in setup.py keyword args in wrapper for %s"%(k, nm,))
-                        ok = False
+                        failures += 1
 
                 if 'ext_modules' not in args:
                     if os.path.exists(os.path.join(subdir, 'Modules')):
                         print("No ext_modules in setup.py, but Modules subdir, in wrapper for %s"%(nm,))
-                        ok = False
+                        failures += 1
 
 
                 if found_version != VERSION:
                     print("Bad version in wrapper for %s"%(nm,))
-                    ok = False
+                    failures += 1
 
+        print("  validating sdist archives...")
         devnull = open('/dev/null', 'a')
-        for nm in ('pyobjc-core',) + tuple(nm for nm in os.listdir('..') if nm.startswith('pyobjc-framework-')):
+        for nm in ('pyobjc-core',) + tuple(sorted(nm for nm in os.listdir('..') if nm.startswith('pyobjc-framework-'))):
             print("    %s"%(nm,))
             subdir = os.path.join('..', nm)
             if os.path.exists(os.path.join(subdir, 'dist')):
@@ -340,11 +353,11 @@ class oc_test (Command):
 
                 if not files:
                     print("No sdist in %s"%(nm,))
-                    ok = False
+                    failures += 1
 
                 elif len(files) > 1:
                     print("Too many sdist in %s"%(nm,))
-                    ok = False
+                    failures += 1
 
                 else:
                     t = tarfile.open(files[0], 'r:gz')
@@ -360,10 +373,11 @@ class oc_test (Command):
                             if p in fn:
                                 print("Unwanted pattern %r in sdist for %s: %s"%(
                                     p, nm, fn))
-                                ok = False
+                                failures += 1
 
-        if not ok:
-           raise DistutilsError("setup.py is not consistent with reality")
+        print("SUMMARY: {'testSeconds': 0.0, 'count': 0, 'fails': %d, 'errors': 0, 'xfails': 0, 'skip': 0, 'xpass': 0, }"%(failures,))
+        if failures:
+            sys.exit(1)
 
 dist = setup(
     name = "pyobjc",
@@ -372,12 +386,11 @@ dist = setup(
     long_description = LONG_DESCRIPTION,
     author = "Ronald Oussoren",
     author_email = "pyobjc-dev@lists.sourceforge.net",
-    url = "http://pyobjc.sourceforge.net/",
-    platforms = [ 'MacOS X' ],
+    url = "https://bitbucket.org/ronaldoussoren/pyobjc",
+    platforms = [ 'macOS' ],
     packages = [],
     install_requires = BASE_REQUIRES + framework_requires(),
     setup_requires = [],
-    extra_path = "PyObjC",
     classifiers = CLASSIFIERS,
     license = 'MIT License',
     zip_safe = True,

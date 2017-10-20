@@ -1,5 +1,5 @@
 '''
-Wrappers for the "PreferencePanes" framework on MacOSX. This framework allows
+Wrappers for the "PreferencePanes" framework on macOS. This framework allows
 you to write Preference Panes for the "System Preferences" application.
 
 These wrappers don't include documentation, please check Apple's documention
@@ -9,11 +9,11 @@ and (Objective-)C frameworks
 '''
 from pyobjc_setup import *
 
-VERSION="3.3a0"
+VERSION="4.0.1b1"
 
 setup(
     name='pyobjc-framework-PreferencePanes',
-    description = "Wrappers for the framework PreferencePanes on Mac OS X",
+    description = "Wrappers for the framework PreferencePanes on macOS",
     packages = [ "PreferencePanes" ],
     version=VERSION,
     install_requires = [

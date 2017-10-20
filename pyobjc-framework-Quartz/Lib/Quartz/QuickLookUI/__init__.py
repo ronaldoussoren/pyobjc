@@ -9,6 +9,7 @@ import objc
 import Cocoa
 
 from Quartz.QuickLookUI import _metadata
+import Quartz.QuickLookUI._QuickLookUI
 
 sys.modules['Quartz.QuickLookUI'] = mod = objc.ObjCLazyModule('Quartz.QuickLookUI',
     "com.apple.QuickLookUIFramework",

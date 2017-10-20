@@ -9,7 +9,7 @@ from Foundation import *
 
 
 class TestNSDictionarySubclassing(TestCase):
-    # These tests seem to be specific for MacOSX
+    # These tests seem to be specific for macOS
     def testExceptionInInit(self):
         if objc.platform != 'MACOSX': return
 
@@ -286,6 +286,14 @@ class TestNSDictionary (TestCase):
 
         self.assertArgIsBlock(NSDictionary.keysOfEntriesPassingTest_, 0, objc._C_NSBOOL + b'@@o^' + objc._C_NSBOOL)
         self.assertArgIsBlock(NSDictionary.keysOfEntriesWithOptions_passingTest_, 1, objc._C_NSBOOL + b'@@o^' + objc._C_NSBOOL)
+
+    @min_os_level('10.13')
+    def testMethods10_13(self):
+        self.assertArgIsOut(NSDictionary.writeToURL_error_, 1)
+        self.assertResultIsBOOL(NSDictionary.writeToURL_error_)
+
+        self.assertArgIsOut(NSDictionary.initWithContentsOfURL_error_, 1)
+        self.assertArgIsOut(NSDictionary.dictionaryWithContentsOfURL_error_, 1)
 
 if __name__ == '__main__':
     main( )

@@ -20,5 +20,10 @@ class TestNSMenuItem (TestCase):
         self.assertArgIsBOOL(NSMenuItem.setHidden_, 0)
         self.assertResultIsBOOL(NSMenuItem.isHiddenOrHasHiddenAncestor)
 
+    @min_os_level('10.13')
+    def testMethods10_13(self):
+        self.assertResultIsBOOL(NSMenuItem.allowsKeyEquivalentWhenHidden)
+        self.assertArgIsBOOL(NSMenuItem.setAllowsKeyEquivalentWhenHidden_, 0)
+
 if __name__ == "__main__":
     main()

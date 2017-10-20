@@ -8,6 +8,9 @@ class TestCARenderer (TestCase):
         self.assertArgHasType(CARenderer.rendererWithCGLContext_options_, 0, b'^{_CGLContextObject=}')
         self.assertArgIsIn(CARenderer.beginFrameAtTime_timeStamp_, 1)
 
+    @min_os_level('10.6')
+    def testConstants(self):
+        self.assertIsInstance(kCARendererColorSpace, unicode)
 
 if __name__ == "__main__":
     main()

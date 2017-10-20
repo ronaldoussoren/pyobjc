@@ -242,6 +242,14 @@ class TestNSApplication (TestCase):
     def testConstants10_11(self):
         self.assertEqual(NSApplicationPresentationDisableCursorLocationAssistance, 1 << 12)
 
+    @min_os_level('10.13')
+    def testConstants10_13(self):
+        self.assertIsInstance(NSAboutPanelOptionCredits, unicode)
+        self.assertIsInstance(NSAboutPanelOptionApplicationName, unicode)
+        self.assertIsInstance(NSAboutPanelOptionApplicationIcon, unicode)
+        self.assertIsInstance(NSAboutPanelOptionVersion, unicode)
+        self.assertIsInstance(NSAboutPanelOptionApplicationVersion, unicode)
+
     @min_os_level('10.6')
     def testMethods10_6(self):
         self.assertResultIsBOOL(NSApplication.setActivationPolicy_)

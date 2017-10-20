@@ -37,5 +37,10 @@ if sys.maxsize > 2 ** 32:
             self.assertResultIsBOOL(CloudKit.CKNotificationInfo.shouldSendContentAvailable)
             self.assertArgIsBOOL(CloudKit.CKNotificationInfo.setShouldSendContentAvailable_, 0)
 
+        @min_os_level("10.13")
+        def testMethods10_13(self):
+            self.assertResultIsBOOL(CloudKit.CKNotificationInfo.shouldSendMutableContent)
+            self.assertArgIsBOOL(CloudKit.CKNotificationInfo.setShouldSendMutableContent_, 0)
+
 if __name__ == "__main__":
     main()

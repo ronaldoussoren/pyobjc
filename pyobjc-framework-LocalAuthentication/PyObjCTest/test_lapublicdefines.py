@@ -7,6 +7,9 @@ if sys.maxsize > 2 ** 32:
     class TestLAPublicDefines (TestCase):
         @min_os_level("10.10")
         def testConstants(self):
+            self.assertEqual(LocalAuthentication.kLACredentialTypeApplicationPassword, 0)
+            self.assertEqual(LocalAuthentication.kLAErrorNotInteractive, -1004)
+
             self.assertEqual(LocalAuthentication.kLAPolicyDeviceOwnerAuthenticationWithBiometrics, 1)
             self.assertEqual(LocalAuthentication.kLAPolicyDeviceOwnerAuthentication, 2)
             self.assertEqual(LocalAuthentication.kLAOptionUserFallback, 1)
@@ -27,6 +30,10 @@ if sys.maxsize > 2 ** 32:
             self.assertEqual(LocalAuthentication.kLAErrorAppCancel, -9)
             self.assertEqual(LocalAuthentication.kLAErrorInvalidContext, -10)
             self.assertEqual(LocalAuthentication.kLAErrorDomain, "com.apple.LocalAuthentication")
+
+            self.assertEqual(LocalAuthentication.kLAErrorBiometryNotAvailable, LocalAuthentication.kLAErrorTouchIDNotAvailable)
+            self.assertEqual(LocalAuthentication.kLAErrorBiometryNotEnrolled, LocalAuthentication.kLAErrorTouchIDNotEnrolled)
+            self.assertEqual(LocalAuthentication.kLAErrorBiometryLockout, LocalAuthentication.kLAErrorTouchIDLockout)
 
 if __name__ == "__main__":
     main()

@@ -25,5 +25,12 @@ if sys.maxsize > 2 ** 32:
             self.assertArgIsBlock(CloudKit.CKOperation.setLongLivedOperationWasPersistedBlock_, 0, b'v')
             self.assertResultIsBlock(CloudKit.CKOperation.longLivedOperationWasPersistedBlock, b'v')
 
+        @min_os_level('10.13')
+        def testMethods10_13(self):
+            self.assertResultIsBOOL(CloudKit.CKOperationConfiguration.allowsCellularAccess)
+            self.assertArgIsBOOL(CloudKit.CKOperationConfiguration.setAllowsCellularAccess_, 0)
+            self.assertResultIsBOOL(CloudKit.CKOperationConfiguration.isLongLived)
+            self.assertArgIsBOOL(CloudKit.CKOperationConfiguration.setLongLived_, 0)
+
 if __name__ == "__main__":
     main()

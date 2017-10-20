@@ -1238,31 +1238,6 @@ class TestTestSupport (TestCase):
         else:
             self.fail("unexpected test pass")
 
-    def test_filterWarnings(self):
-        class Warn1 (RuntimeWarning): pass
-        class Warn2 (RuntimeWarning): pass
-        class Warn3 (RuntimeWarning): pass
-
-        orig_stderr = sys.stderr
-        sys.stderr = StringIO()
-        try:
-            with filterWarnings('error', Warn1):
-                self.assertRaises(Warn1, warnings.warn, 'helper', category=Warn1)
-
-            self.assertEqual(sys.stderr.getvalue(), '')
-
-            with filterWarnings('ignore', Warn2):
-                warnings.warn('helper', category=Warn2)
-
-            self.assertEqual(sys.stderr.getvalue(), '')
-
-            warnings.warn('helper', category=Warn3)
-
-            self.assertNotEqual(sys.stderr.getvalue(), '')
-        finally:
-            sys.stderr = orig_stderr
-
-
     def test_running(self):
         orig_use    = TestSupport._usepool
         orig_class = TestSupport._poolclass

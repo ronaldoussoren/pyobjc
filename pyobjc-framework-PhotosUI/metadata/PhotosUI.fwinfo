@@ -2,12 +2,35 @@
 # for information on how to update this file.
 {
  "definitions": {
+  "externs": {
+   "PHProjectTypeUndefined": { "typestr": "@" }
+  },
   "enum": {
+   "PHProjectCreationSourceUndefined": { "value": 0 },
+   "PHProjectCreationSourceUserSelection": { "value": 1 },
+   "PHProjectCreationSourceAlbum": { "value": 2 },
+   "PHProjectCreationSourceMemory": { "value": 3 },
+   "PHProjectCreationSourceMoment": { "value": 4 },
+   "PHProjectCreationSourceProject": { "value": 20 },
+   "PHProjectCreationSourceProjectBook": { "value": 21 },
+   "PHProjectCreationSourceProjectCalendar": { "value": 22 },
+   "PHProjectCreationSourceProjectCard": { "value": 23 },
+   "PHProjectCreationSourceProjectPrintOrder": { "value": 24 },
+   "PHProjectCreationSourceProjectSlideshow": { "value": 25 },
+   "PHProjectCreationSourceProjectExtension": { "value": 26 },
    "PHLivePhotoViewPlaybackStyleUndefined": { "value": 0 },
    "PHLivePhotoViewPlaybackStyleFull": { "value": 1 },
    "PHLivePhotoViewPlaybackStyleHint": { "value": 2 },
    "PHLivePhotoViewContentModeAspectFit": { "value": 0 },
-   "PHLivePhotoViewContentModeAspectFill": { "value": 1 }
+   "PHLivePhotoViewContentModeAspectFill": { "value": 1 },
+   "PHProjectSectionTypeUndefined": { "value": 0 },
+   "PHProjectSectionTypeCover": { "value": 1 },
+   "PHProjectSectionTypeContent": { "value": 2 },
+   "PHProjectSectionTypeAuxiliary": { "value": 3 },
+   "PHProjectTextElementTypeBody": { "value": 0 },
+   "PHProjectTextElementTypeTitle": { "value": 1 },
+   "PHProjectTextElementTypeSubtitle": { "value": 2 }
+
   },
   "classes": {
    "PHLivePhotoView": {
@@ -50,6 +73,54 @@
       "selector": "shouldShowCancelConfirmation",
       "class_method": false,
       "retval": { "type_override": "Z" }
+     },
+     {
+      "selector": "beginProjectWithExtensionContext:projectInfo:completion:",
+      "class_method": false,
+      "args": {
+       "2": {
+        "type_override": "@?",
+	"callable": {
+	 "arguments": {
+	  "0": { "typestr": "^v" },
+	  "1": { "typestr": "@" }
+	 },
+	 "retval": { "typestr": "v" }
+	}
+       }
+      }
+     },
+     {
+      "selector": "resumeProjectWithExtensionContext:completion:",
+      "class_method": false,
+      "args": {
+       "1": {
+        "type_override": "@?",
+	"callable": {
+	 "arguments": {
+	  "0": { "typestr": "^v" },
+	  "1": { "typestr": "@" }
+	 },
+	 "retval": { "typestr": "v" }
+	}
+       }
+      }
+     },
+     {
+      "selector": "finishProjectWithCompletionHandler:",
+      "class_method": false,
+      "args": {
+       "0": {
+        "type_override": "@?",
+	"callable": {
+	 "arguments": {
+	  "0": { "typestr": "^v" },
+	  "1": { "typestr": "@" }
+	 },
+	 "retval": { "typestr": "v" }
+	}
+       }
+      }
      },
      {
       "selector": "finishContentEditingWithCompletionHandler:",

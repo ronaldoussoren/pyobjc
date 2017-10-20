@@ -11,9 +11,10 @@ import Foundation
 
 from CFOpenDirectory import _metadata
 
+# This actually loads the OpenDirectory framework instead of the embedded CFOpenDirectory framework
 sys.modules['CFOpenDirectory'] = mod = objc.ObjCLazyModule('CFOpenDirectory',
-    "com.apple.CFOpenDirectory",
-    objc.pathForFramework("/System/Library/Frameworks/OpenDirectory.framework/Frameworks/CFOpenDirectory.framework"),
+    "com.apple.OpenDirectory",
+    objc.pathForFramework("/System/Library/Frameworks/OpenDirectory.framework"),
     _metadata.__dict__, None, {
        '__doc__': __doc__,
        '__path__': __path__,

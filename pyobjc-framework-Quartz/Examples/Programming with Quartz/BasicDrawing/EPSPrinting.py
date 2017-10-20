@@ -119,7 +119,7 @@ def createEPSPreviewImage(url):
     return epsPreviewImage
 
 # This technique of handling EPS data is available in
-# Mac OS X v10.1 and later and is one alternative method
+# macOS v10.1 and later and is one alternative method
 # of supporting EPS data during printing as compared to
 # converting EPS data to PDF data using CGPSConverter which
 # is only available in Panther and later.

@@ -21,6 +21,10 @@
     "DOM_SUPPORTS_RULE": { "value": 12 },
     "DOM_WEBKIT_REGION_RULE": { "value": 16 },
     "WKErrorJavaScriptResultTypeIsUnsupported": { "value": 5 },
+    "WKErrorContentRuleListStoreCompileFailed": { "value": 6 },
+    "WKErrorContentRuleListStoreLookUpFailed": { "value": 7 },
+    "WKErrorContentRuleListStoreRemoveFailed": { "value": 8 },
+    "WKErrorContentRuleListStoreVersionMismatch": { "value": 9 },
     "WKUserInterfaceDirectionPolicyContent": { "value": 0 },
     "WKUserInterfaceDirectionPolicySystem": { "value": 1 },
     "WKAudiovisualMediaTypeNone": { "value": 0 },
@@ -35,6 +39,133 @@
     "WKAudiovisualMediaTypeAll": { "alias": "NSUIntegerMax" }
   },
   "classes": {
+   "WKHTTPCookieStore": {
+    "methods": [
+     {
+      "class_method": false,
+      "selector": "getAllCookies:",
+      "args": {
+        "0": {
+	 "callable": {
+	  "arguments": {
+	   "0": { "typestr": "^v" },
+	   "1": { "typestr": "@" }
+	 },
+	 "retval": {
+	  "typestr": "v"
+	 }
+	}
+       }
+      }
+     },
+     {
+      "class_method": false,
+      "selector": "setCookie:completionHandler:",
+      "args": {
+        "1": {
+	 "callable": {
+	  "arguments": {
+	   "0": { "typestr": "^v" }
+	 },
+	 "retval": {
+	  "typestr": "v"
+	 }
+	}
+       }
+      }
+     },
+     {
+      "class_method": false,
+      "selector": "deleteCookie:completionHandler:",
+      "args": {
+        "1": {
+	 "callable": {
+	  "arguments": {
+	   "0": { "typestr": "^v" }
+	 },
+	 "retval": {
+	  "typestr": "v"
+	 }
+	}
+       }
+      }
+     }
+    ]
+   },
+   "WKContentRuleListStore": {
+    "methods": [
+     {
+      "class_method": false,
+      "selector": "compileContentRuleListForIdentifier:encodedContentRuleList:completionHandler:",
+      "args": {
+        "2": {
+	 "callable": {
+	  "arguments": {
+	   "0": { "typestr": "^v" },
+	   "1": { "typestr": "@" },
+	   "2": { "typestr": "@" }
+	 },
+	 "retval": {
+	  "typestr": "v"
+	 }
+	}
+       }
+      }
+     },
+     {
+      "class_method": false,
+      "selector": "lookUpContentRuleListForIdentifier:completionHandler:",
+      "args": {
+        "1": {
+	 "callable": {
+	  "arguments": {
+	   "0": { "typestr": "^v" },
+	   "1": { "typestr": "@" },
+	   "2": { "typestr": "@" }
+	 },
+	 "retval": {
+	  "typestr": "v"
+	 }
+	}
+       }
+      }
+     },
+     {
+      "class_method": false,
+      "selector": "removeContentRuleListForIdentifier:completionHandler:",
+      "args": {
+        "1": {
+	 "callable": {
+	  "arguments": {
+	   "0": { "typestr": "^v" },
+	   "1": { "typestr": "@" }
+	 },
+	 "retval": {
+	  "typestr": "v"
+	 }
+	}
+       }
+      }
+     },
+     {
+      "class_method": false,
+      "selector": "getAvailableContentRuleListIdentifiers:",
+      "args": {
+        "0": {
+	 "callable": {
+	  "arguments": {
+	   "0": { "typestr": "^v" },
+	   "1": { "typestr": "@" }
+	 },
+	 "retval": {
+	  "typestr": "v"
+	 }
+	}
+       }
+      }
+     }
+    ]
+   },
    "DOMAttr": {
     "methods": [
      {
@@ -2549,6 +2680,31 @@
        "type_override": "Z"
       },
       "selector": "allowsLinkPreview"
+     },
+     {
+      "class_method": false,
+      "retval": {
+       "type_override": "Z"
+      },
+      "selector": "handlesURLScheme:"
+     },
+     {
+      "selector": "takeSnapshotWithConfiguration:completionHandler:",
+      "class_method": false,
+      "args": {
+       "1": {
+        "callable": {
+	 "arguments": {
+	  "0": { "type": "^v" },
+	  "1": { "type": "@" },
+	  "2": { "type": "@" }
+	 },
+         "retval": {
+          "type": "v"
+         }
+	}
+       }
+      }
      },
      {
       "selector": "evaluateJavaScript:completionHandler:",

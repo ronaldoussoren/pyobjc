@@ -2,93 +2,157 @@
 // for information on how to update this file.
 {
  "definitions": {
+  "enum": {
+   "CBPeripheralManagerAuthorizationStatusNotDetermined": { "value": 0 },
+   "CBPeripheralManagerAuthorizationStatusRestricted": { "value": 1 },
+   "CBPeripheralManagerAuthorizationStatusDenied": { "value": 2 },
+   "CBPeripheralManagerAuthorizationStatusAuthorized": { "value": 3 },
+   "CBManagerStateUnknown": { "value": 0 },
+   "CBManagerStateResetting": { "value": 1 },
+   "CBManagerStateUnsupported": { "value": 2 },
+   "CBManagerStateUnauthorized": { "value": 3 },
+   "CBManagerStatePoweredOff": { "value": 4 },
+   "CBManagerStatePoweredOn": { "value": 5 },
+   "CBErrorConnectionFailed": { "value": 10 },
+   "CBPeripheralStateDisconnecting": { "value": 3 },
+   "CBErrorConnectionLimitReached": { "value": 11 },
+   "CBErrorUnkownDevice": { "value": 12 }
+  },
+  "externs": {
+   "CBUUIDCharacteristicValidRangeString": { "typestr": "@" },
+   "CBUUIDL2CAPPSMCharacteristicString": { "typestr": "@" },
+   "CBPeripheralManagerOptionRestoreIdentifierKey": { "typestr": "@" },
+   "CBPeripheralManagerRestoredStateServicesKey": { "typestr": "@" },
+   "CBPeripheralManagerRestoredStateAdvertisementDataKey": { "typestr": "@" },
+   "CBCentralManagerRestoredStateScanOptionsKey": { "typestr": "@" },
+   "CBCentralManagerRestoredStateScanServicesKey": { "typestr": "@" },
+   "CBCentralManagerRestoredStatePeripheralsKey": { "typestr": "@" },
+   "CBConnectPeripheralOptionNotifyOnNotificationKey": { "typestr": "@" },
+   "CBCentralManagerOptionRestoreIdentifierKey": { "typestr": "@" },
+   "CBConnectPeripheralOptionNotifyOnConnectionKey": { "typestr": "@" }
+  },
   "classes": {
    "CBCentral": {
     "methods": [
      {
-      "class_method": false, 
-      "retval": {}, 
+      "class_method": false,
+      "retval": {},
       "selector": "UUID"
      }
-    ], 
+    ],
     "properties": [
      {
       "attributes": [
-       "nonatomic", 
+       "nonatomic",
        "readonly"
-      ], 
+      ],
       "name": "UUID"
      }
     ]
-   }, 
+   },
    "CBCentralManager": {
     "methods": [
      {
-      "args": {
-       "1": {}
-      }, 
-      "class_method": false, 
-      "selector": "initWithDelegate:queue:"
-     }, 
+      "retval": { "type_override": "Z" },
+      "class_method": false,
+      "selector": "isScanning"
+     },
      {
       "args": {
        "1": {}
-      }, 
-      "class_method": false, 
+      },
+      "class_method": false,
+      "selector": "initWithDelegate:queue:"
+     },
+     {
+      "args": {
+       "1": {}
+      },
+      "class_method": false,
       "selector": "initWithDelegate:queue:options:"
      }
     ]
-   }, 
+   },
    "CBPeripheral": {
     "methods": [
      {
-      "class_method": false, 
-      "retval": {}, 
+      "class_method": false,
+      "retval": { "type_override": "Z" },
+      "selector": "canSendWriteWithoutResponse"
+     },
+     {
+      "class_method": false,
+      "retval": {},
       "selector": "UUID"
      }
-    ], 
+    ],
     "properties": [
      {
       "attributes": [
-       "nonatomic", 
+       "nonatomic",
        "readonly"
-      ], 
+      ],
       "name": "UUID"
      }
     ]
-   }, 
+   },
    "CBPeripheralManager": {
     "methods": [
      {
       "args": {
        "1": {}
-      }, 
-      "class_method": false, 
+      },
+      "class_method": false,
       "selector": "initWithDelegate:queue:"
-     }, 
+     },
      {
       "args": {
        "1": {}
-      }, 
-      "class_method": false, 
+      },
+      "class_method": false,
       "selector": "initWithDelegate:queue:options:"
      }
     ]
-   }, 
+   },
    "CBUUID": {
     "methods": [
      {
       "args": {
        "0": {}
-      }, 
-      "class_method": true, 
+      },
+      "class_method": true,
       "selector": "UUIDWithCFUUID:"
      }
     ]
+   },
+   "NSObject": {
+    "methods": [
+     {
+      "class_method": false,
+      "selector": "peripheralManager:didPublishL2CAPChannel:error:",
+      "args": {
+       "1": { "type_override": "S" }
+      }
+     },
+     {
+      "class_method": false,
+      "selector": "peripheralManager:didOpenL2CAPChannel:error:",
+      "args": {
+       "1": { "type_override": "S" }
+      }
+     },
+     {
+      "class_method": false,
+      "selector": "peripheralManager:didUnpublishL2CAPChannel:error:",
+      "args": {
+       "1": { "type_override": "S" }
+      }
+     }
+    ]
    }
-  }, 
-  "formal_protocols": {}, 
-  "functions": {}, 
+  },
+  "formal_protocols": {},
+  "functions": {},
   "informal_protocols": {}
  }
 }

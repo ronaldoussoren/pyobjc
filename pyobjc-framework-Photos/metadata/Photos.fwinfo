@@ -8,10 +8,31 @@
    "PHAssetCollectionSubtypeAny": { "alias": "NSIntegerMax" }
   },
   "externs": {
+   "PHLocalIdentifierNotFound": { "typestr": "@" },
    "PHLivePhotoEditingErrorDomain": { "typestr": "@" },
-   "PHLivePhotoShouldRenderAtPlaybackTime": { "typestr": "@" }
+   "PHLivePhotoShouldRenderAtPlaybackTime": { "typestr": "@" },
+   "PHImageManagerMaximumSize": { "typestr": "{CGSize=dd}" },
+   "PHImageResultIsInCloudKey": { "typestr": "@" },
+   "PHImageResultIsDegradedKey": { "typestr": "@" },
+   "PHImageResultRequestIDKey": { "typestr": "@" },
+   "PHImageCancelledKey": { "typestr": "@" },
+   "PHImageErrorKey": { "typestr": "@" }
   },
   "enum": {
+   "PHAuthorizationStatusNotDetermined": { "value": 0 },
+   "PHAuthorizationStatusRestricted": { "value": 1 },
+   "PHAuthorizationStatusDenied": { "value": 2 },
+   "PHAuthorizationStatusAuthorized": { "value": 3 },
+   "PHInvalidImageRequestID": { "value": 0 },
+   "PHImageRequestOptionsResizeModeNone": { "value": 0 },
+   "PHImageRequestOptionsResizeModeFast": { "value": 1 },
+   "PHImageRequestOptionsResizeModeExact": { "value": 2 },
+   "PHImageRequestOptionsVersionCurrent": { "value": 0 },
+   "PHImageRequestOptionsVersionUnadjusted": { "value": 1 },
+   "PHImageRequestOptionsVersionOriginal": { "value": 2 },
+   "PHImageRequestOptionsDeliveryModeOpportunistic": { "value": 0 },
+   "PHImageRequestOptionsDeliveryModeHighQualityFormat": { "value": 1 },
+   "PHImageRequestOptionsDeliveryModeFastFormat": { "value": 2 },
    "PHCollectionEditOperationDeleteContent": { "value": 1 },
    "PHCollectionEditOperationRemoveContent": { "value": 2 },
    "PHCollectionEditOperationAddContent": { "value": 3 },
@@ -27,6 +48,14 @@
    "PHAssetCollectionSubtypeAlbumSyncedFaces": { "value": 4 },
    "PHAssetCollectionSubtypeAlbumSyncedAlbum": { "value": 5 },
    "PHAssetCollectionSubtypeAlbumImported": { "value": 6 },
+   "PHAssetCollectionSubtypeSmartAlbumDepthEffect": { "value": 212 },
+   "PHAssetCollectionSubtypeSmartAlbumLivePhotos": { "value": 213 },
+   "PHAssetPlaybackStyleUnsupported": { "value": 0 },
+   "PHAssetPlaybackStyleImage": { "value": 1 },
+   "PHAssetPlaybackStyleImageAnimated": { "value": 2 },
+   "PHAssetPlaybackStyleLivePhoto": { "value": 3 },
+   "PHAssetPlaybackStyleVideo": { "value": 4 },
+   "PHAssetPlaybackStyleVideoLooping": { "value": 5 },
    "PHAssetCollectionSubtypeAlbumMyPhotoStream": { "value": 100 },
    "PHAssetCollectionSubtypeAlbumCloudShared": { "value": 101 },
    "PHAssetCollectionSubtypeSmartAlbumGeneric": { "value": 200 },
@@ -89,6 +118,224 @@
    "PHAssetResourceTypePairedVideo": { "value": 9 }
   },
   "classes": {
+   "PHPhotoLibrary": {
+    "methods": [
+     {
+      "class_method": false,
+      "selector": "requestAuthorization:",
+      "args": {
+       "0": {
+        "callable": {
+         "arguments": {
+	  "0": { "typestr": "^v" },
+	  "1": { "typestr": ["i", "q"] }
+	 },
+	 "retval": { "typestr": "v" }
+	}
+       }
+      }
+     },
+     {
+      "class_method": false,
+      "selector": "performChanges:completionHandler:",
+      "args": {
+       "1": {
+        "callable": {
+         "arguments": {
+	  "0": { "typestr": "^v" },
+	  "1": { "typestr": "Z" },
+	  "2": { "typestr": "@" }
+	 },
+	 "retval": { "typestr": "v" }
+	}
+       }
+      }
+     },
+     {
+      "selector": "performChangesAndWait:error:",
+      "class_method": false,
+      "retval": { "type_override": "Z" },
+      "args": {
+       "1": { "type_modifier": "o" }
+      }
+     }
+    ]
+   },
+   "PHImageManager": {
+    "methods": [
+     {
+      "class_method": false,
+      "selector": "requestImageForAsset:targetSize:contentMode:options:resultHandler:",
+      "args": {
+       "4": {
+        "callable": {
+         "arguments": {
+	  "0": { "typestr": "^v" },
+	  "1": { "typestr": "@" },
+	  "2": { "typestr": "@" }
+	 },
+	 "retval": { "typestr": "v" }
+	}
+       }
+      }
+     },
+     {
+      "class_method": false,
+      "selector": "requestImageDataForAsset:options:resultHandler:",
+      "args": {
+       "2": {
+        "callable": {
+         "arguments": {
+	  "0": { "typestr": "^v" },
+	  "1": { "typestr": "@" },
+	  "2": { "typestr": "@" },
+	  "3": { "typestr": "I" },
+	  "4": { "typestr": "@" }
+	 },
+	 "retval": { "typestr": "v" }
+	}
+       }
+      }
+     }
+    ]
+   },
+   "PHImageRequestOptions": {
+    "methods": [
+     {
+      "class_method": false,
+      "selector": "isNetworkAccessAllowed",
+      "retval": { "type_override": "Z" }
+     },
+     {
+      "class_method": false,
+      "selector": "setNetworkAccessAllowed:",
+      "args": {
+       "0": { "type_override": "Z" }
+      }
+     },
+     {
+      "class_method": false,
+      "selector": "isSynchronous",
+      "retval": { "type_override": "Z" }
+     },
+     {
+      "class_method": false,
+      "selector": "setSynchronous:",
+      "args": {
+       "0": { "type_override": "Z" }
+      }
+     },
+     {
+      "class_method": false,
+      "selector": "progressHandler",
+      "retval": {
+       "callable": {
+        "arguments": {
+	 "0": { "typestr": "^v" },
+	 "1": { "typestr": "d" },
+	 "2": { "typestr": "@" },
+	 "3": { "typestr": "o^Z" },
+	 "4": { "typestr": "@" }
+	},
+	"retval": { "typestr": "v" }
+       }
+      }
+     },
+     {
+      "class_method": false,
+      "selector": "setProgressHandler:",
+      "args": {
+       "0": {
+        "callable": {
+         "arguments": {
+	  "0": { "typestr": "^v" },
+	  "1": { "typestr": "d" },
+	  "2": { "typestr": "@" },
+	  "3": { "typestr": "o^Z" },
+	  "4": { "typestr": "@" }
+	 },
+	 "retval": { "typestr": "v" }
+	}
+       }
+      }
+     }
+    ]
+   },
+   "PHObjectChangeDetails": {
+    "methods": [
+     {
+      "class_method": false,
+      "selector":  "assetContentChanged",
+      "retval": { "type_override": "Z" }
+     },
+     {
+      "class_method": false,
+      "selector":  "objectWasDeleted",
+      "retval": { "type_override": "Z" }
+     }
+    ]
+   },
+   "PHFetchOptions": {
+    "methods": [
+     {
+      "class_method": false,
+      "selector":  "includeHiddenAssets",
+      "retval": { "type_override": "Z" }
+     },
+     {
+      "class_method": false,
+      "selector": "setIncludeHiddenAssets:",
+      "args": {
+       "0": { "type_override": "Z" }
+      }
+     },
+     {
+      "class_method": false,
+      "selector":  "wantsIncrementalChangeDetails",
+      "retval": { "type_override": "Z" }
+     },
+     {
+      "class_method": false,
+      "selector":  "setWantsIncrementalChangeDetails:",
+      "args": {
+       "0": { "type_override": "Z" }
+      }
+     }
+    ]
+   },
+   "PHFetchResultChangeDetails": {
+    "methods": [
+     {
+      "class_method": false,
+      "selector":  "hasIncrementalChanges",
+      "retval": { "type_override": "Z" }
+     },
+     {
+      "class_method": false,
+      "selector":  "hasMoves",
+      "retval": { "type_override": "Z" }
+     }
+    ]
+   },
+   "PHAsset": {
+    "methods": [
+     {
+      "class_method": false,
+      "selector":  "isSyncFailureHidden",
+      "retval": { "type_override": "Z" }
+     },
+     {
+      "class_method": false,
+      "selector":  "isHidden",
+      "retval": { "type_override": "Z" }
+     },
+     {
+      "class_method": false,
+      "selector":  "isFavorite",
+      "retval": { "type_override": "Z" }
+     }
+    ]
+   },
    "NSObject": {
     "methods": [
      {
@@ -105,6 +352,66 @@
       "class_method": false,
       "selector": "time",
       "retval": { "type_override": "{_CMTime=qiIq}" }
+     }
+    ]
+   },
+   "PHFetchResult": {
+    "methods": [
+     {
+      "selector": "enumerateObjectsUsingBlock:",
+      "class_method": false,
+      "args": {
+       "0": {
+        "callable": {
+         "retval": { "typestr": "v" },
+	 "arguments": {
+	  "0": { "typestr": "^v" },
+	  "1": { "typestr": "@" },
+	  "2": { "typestr": ["I", "Q"] },
+	  "3": { "typestr": "o^Z" }
+	 }
+	}
+       }
+      }
+     },
+     {
+      "selector": "enumerateObjectsWithOptions:usingBlock:",
+      "class_method": false,
+      "args": {
+       "1": {
+        "callable": {
+         "retval": { "typestr": "v" },
+	 "arguments": {
+	  "0": { "typestr": "^v" },
+	  "1": { "typestr": "@" },
+	  "2": { "typestr": ["I", "Q"] },
+	  "3": { "typestr": "o^Z" }
+	 }
+	}
+       }
+      }
+     },
+     {
+      "selector": "containsObject:",
+      "class_method": false,
+      "retval": { "type_override": "Z" }
+     },
+     {
+      "selector": "enumerateObjectsAtIndexes:options:usingBlock:",
+      "class_method": false,
+      "args": {
+       "2": {
+        "callable": {
+         "retval": { "typestr": "v" },
+	 "arguments": {
+	  "0": { "typestr": "^v" },
+	  "1": { "typestr": "@" },
+	  "2": { "typestr": ["I", "Q"] },
+	  "3": { "typestr": "o^Z" }
+	 }
+	}
+       }
+      }
      }
     ]
    },

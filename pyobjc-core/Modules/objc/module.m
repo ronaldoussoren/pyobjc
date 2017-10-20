@@ -1693,7 +1693,11 @@ static char* keywords[] = { "name", "type", "magic", NULL };
             v = PyObjCCF_NewSpecial(type, buf);
         }
     } else {
-        v = pythonify_c_value(type, buf);
+        if (*type == _C_CHARPTR) {
+            v = pythonify_c_value(type, &buf);
+        } else {
+            v = pythonify_c_value(type, buf);
+        }
     }
 
     return v;
@@ -2229,6 +2233,9 @@ PyObjC_MODULE_INIT(_objc)
     if (PyType_Ready(&PyObjCPythonMethod_Type) < 0) {
         PyObjC_INITERROR();
     }
+    if (PyType_Ready(&StructBase_Type) < 0) {
+        PyObjC_INITERROR();
+    }
 
 #ifndef Py_HAVE_LOCAL_LOOKUP
     PyObjCSuper_Type.tp_doc = PySuper_Type.tp_doc;
@@ -2325,6 +2332,9 @@ PyObjC_MODULE_INIT(_objc)
         PyObjC_INITERROR();
     }
     if (PyDict_SetItemString(d, "python_method", (PyObject*)&PyObjCPythonMethod_Type) < 0) {
+        PyObjC_INITERROR();
+    }
+    if (PyDict_SetItemString(d, "_structwrapper", (PyObject*)&StructBase_Type) < 0) {
         PyObjC_INITERROR();
     }
 
@@ -2558,6 +2568,12 @@ PyObjC_MODULE_INIT(_objc)
         PyObjC_INITERROR();
     }
 #endif /* MAC_OS_X_VERSION_10_12 */
+
+#ifdef MAC_OS_X_VERSION_10_13
+    if (PyModule_AddIntConstant(m, "MAC_OS_X_VERSION_10_13", MAC_OS_X_VERSION_10_13) < 0) {
+        PyObjC_INITERROR();
+    }
+#endif /* MAC_OS_X_VERSION_10_13 */
 
     if (PyModule_AddIntConstant(m, "PyObjC_BUILD_RELEASE", PyObjC_BUILD_RELEASE) < 0) {
         PyObjC_INITERROR();

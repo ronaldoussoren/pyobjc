@@ -250,5 +250,9 @@ class TestNSImage (TestCase):
         self.assertIsInstance(NSImageNameTouchBarVolumeDownTemplate, unicode)
         self.assertIsInstance(NSImageNameTouchBarVolumeUpTemplate, unicode)
 
+    @min_os_level('10.13')
+    def testConstants10_13(self):
+        self.assertIsInstance(NSImageNameTouchBarRemoveTemplate, unicode)
+
 if __name__ == "__main__":
     main()

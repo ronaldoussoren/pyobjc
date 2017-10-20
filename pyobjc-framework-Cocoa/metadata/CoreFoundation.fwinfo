@@ -23,6 +23,7 @@
    "kCFISO8601DateFormatWithDashSeparatorInDate": { "value": 256 },
    "kCFISO8601DateFormatWithColonSeparatorInTime": { "value": 512 },
    "kCFISO8601DateFormatWithColonSeparatorInTimeZone": { "value": 1024 },
+   "kCFISO8601DateFormatWithFractionalSeconds": { "value": 2048 },
    "kCFNumberFormatterOrdinalStyle": { "value": 6 },
    "kCFNumberFormatterCurrencyISOCodeStyle": { "value": 8 },
    "kCFNumberFormatterCurrencyPluralStyle": { "value": 9 },
@@ -46,6 +47,11 @@
    "kCFNumberFormatterCurrencyAccountingStyle": { "value": "10" }
   },
   "externs": {
+    "kCFURLVolumeAvailableCapacityForImportantUsageKey": { "typestr": "@" },
+    "kCFURLVolumeAvailableCapacityForOpportunisticUsageKey": { "typestr": "@" },
+    "kCFURLVolumeSupportsImmutableFilesKey": { "typestr": "@" },
+    "kCFURLVolumeSupportsAccessPermissionsKey": { "typestr": "@" },
+    "kCFErrorLocalizedFailureKey": { "typestr": "@" },
     "kCFURLVolumeIsEncryptedKey": { "typestr": "@" },
     "kCFURLVolumeIsRootFileSystemKey": { "typestr": "@" },
     "kCFURLVolumeSupportsCompressionKey": { "typestr": "@" },

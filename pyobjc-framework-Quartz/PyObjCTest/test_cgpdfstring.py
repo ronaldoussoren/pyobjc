@@ -4,14 +4,13 @@ from Quartz.CoreGraphics import *
 
 class TestCGPDFString (TestCase):
 
-    @expectedFailure
-    def testIncomplete(self):
-        CGPDFStringGetBytePtr
-        self.fail("Add header tests for <CoreGraphics/CGPDFString.h>")
-        # XXX: type of CGPDFStringRef
+    def test_types(self):
+        self.assertIsOpaquePointer(CGPDFStringRef)
 
     def testFunctions(self):
         CGPDFStringGetLength
+
+        self.assertResultIsVariableSize(CGPDFStringGetBytePtr)
 
         self.assertResultIsCFRetained(CGPDFStringCopyTextString)
         self.assertResultIsCFRetained(CGPDFStringCopyDate)

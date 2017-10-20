@@ -36,5 +36,11 @@ if sys.maxsize > 2 ** 32:
         def testConstants10_12(self):
             self.assertIsInstance(MapKit.MKLaunchOptionsDirectionsModeDefault, unicode)
 
+        @min_os_level("10.13")
+        def testConstants10_13(self):
+            self.assertIsInstance(MapKit.MKMapItemTypeIdentifier, unicode)
+            self.assertIsInstance(MapKit.MKMapViewDefaultAnnotationViewReuseIdentifier, unicode)
+            self.assertIsInstance(MapKit.MKMapViewDefaultClusterAnnotationViewReuseIdentifier, unicode)
+
 if __name__ == "__main__":
     main()

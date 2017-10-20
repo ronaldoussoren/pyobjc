@@ -39,8 +39,9 @@ class TestCTFontManager (TestCase):
         self.assertResultHasType(CTFontManagerIsSupportedFont, objc._C_BOOL)
         self.assertResultIsCFRetained(CTFontManagerCreateFontRequestRunLoopSource)
         self.assertArgIsBlock(CTFontManagerCreateFontRequestRunLoopSource, 1, b"@@i")
-        v = CTFontManagerGetAutoActivationSetting(None)
-        CTFontManagerSetAutoActivationSetting(None, v)
+
+        CTFontManagerGetAutoActivationSetting
+        CTFontManagerSetAutoActivationSetting
 
     @min_os_level('10.7')
     def testFunctions10_7(self):

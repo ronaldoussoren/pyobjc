@@ -25,6 +25,7 @@ class TestFSEvents (TestCase):
             ('kFSEventStreamCreateFlagIgnoreSelf', 0x00000008),
             ('kFSEventStreamCreateFlagFileEvents', 0x00000010),
             ('kFSEventStreamCreateFlagMarkSelf', 0x00000020),
+            ('kFSEventStreamCreateFlagUseExtendedData', 0x00000040),
             ('kFSEventStreamEventFlagItemCreated', 0x00000100),
             ('kFSEventStreamEventFlagItemRemoved', 0x00000200),
             ('kFSEventStreamEventFlagItemInodeMetaMod', 0x00000400),
@@ -39,15 +40,22 @@ class TestFSEvents (TestCase):
             ('kFSEventStreamEventFlagOwnEvent', 0x00080000),
             ('kFSEventStreamEventFlagItemIsHardlink', 0x00100000),
             ('kFSEventStreamEventFlagItemIsLastHardlink', 0x00200000),
+            ('kFSEventStreamEventFlagItemCloned', 0x00400000),
             ):
 
             self.assertHasAttr(FSEvents, k)
             self.assertIsInstance(getattr(FSEvents, k), (int, long))
-            self.assertEquals( getattr(FSEvents, k), v )
+            self.assertEqual( getattr(FSEvents, k), v )
 
         self.assertHasAttr(FSEvents, 'kFSEventStreamEventIdSinceNow')
         self.assertIsInstance(FSEvents.kFSEventStreamEventIdSinceNow, (int, long))
-        self.assertEquals(FSEvents.kFSEventStreamEventIdSinceNow, 18446744073709551615)
+        self.assertEqual(FSEvents.kFSEventStreamEventIdSinceNow, 18446744073709551615)
+
+        self.assertEqual(FSEvents.kFSEventStreamEventExtendedDataPathKey, "path")
+        self.assertIsInstance(FSEvents.kFSEventStreamEventExtendedDataPathKey, unicode)
+
+        self.assertEqual(FSEvents.kFSEventStreamEventExtendedFileIDKey, "fileID")
+        self.assertIsInstance(FSEvents.kFSEventStreamEventExtendedFileIDKey, unicode)
 
 
 

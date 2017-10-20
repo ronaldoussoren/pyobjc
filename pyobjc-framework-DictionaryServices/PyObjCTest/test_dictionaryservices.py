@@ -20,7 +20,7 @@ class TestDictionaryServices (TestCase):
         self.assertIsInstance(r, (unicode, type(None)))
 
         v = DCSDictionaryGetTypeID()
-        self.assertIsInstance(v, (int, long))     
+        self.assertIsInstance(v, (int, long))
 
 
 if __name__ == "__main__":

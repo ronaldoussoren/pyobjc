@@ -7,7 +7,7 @@ if sys.maxsize > 2**32:
 
     class TestCNContactRelation (TestCase):
         @min_os_level("10.11")
-        def testConstants(self):
+        def testConstants10_11(self):
             self.assertIsInstance(Contacts.CNLabelContactRelationFather, unicode)
             self.assertIsInstance(Contacts.CNLabelContactRelationMother, unicode)
             self.assertIsInstance(Contacts.CNLabelContactRelationParent, unicode)
@@ -19,6 +19,11 @@ if sys.maxsize > 2**32:
             self.assertIsInstance(Contacts.CNLabelContactRelationPartner, unicode)
             self.assertIsInstance(Contacts.CNLabelContactRelationAssistant, unicode)
             self.assertIsInstance(Contacts.CNLabelContactRelationManager, unicode)
+
+        @min_os_level("10.13")
+        def testConstants10_13(self):
+            self.assertIsInstance(Contacts.CNLabelContactRelationSon, unicode)
+            self.assertIsInstance(Contacts.CNLabelContactRelationDaughter, unicode)
 
 if __name__ == "__main__":
     main()

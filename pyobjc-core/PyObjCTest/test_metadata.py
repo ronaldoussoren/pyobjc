@@ -12,7 +12,6 @@ TODO:
 from __future__ import unicode_literals
 import objc
 from PyObjCTools.TestSupport import *
-import warnings
 import array
 import sys
 
@@ -1167,6 +1166,25 @@ class TestVariableLengthValue (TestCase):
         self.assertEqual(v[0], 0)
         self.assertEqual(v[5], 5)
         self.assertEqual(v[8], 8)
+
+        data = v.as_buffer(4)
+        if sys.version_info[0] == 2:
+            self.assertEqual(data[0], b'\x00')
+        else:
+            self.assertEqual(data[0], 0)
+        v[0] = 0xffffff
+        if sys.version_info[0] == 2:
+            self.assertEqual(data[0], b'\xff')
+            data[4] = b'\x00'
+
+        else:
+            self.assertEqual(data[0], 0xff)
+            data[4] = 0
+
+        if sys.byteorder == 'big':
+            self.assertEqual(v[0], 0xffffff00)
+        else:
+            self.assertEqual(v[0], 0x00ffffff)
 
     def testInput(self):
         o = OC_MetaDataTest.alloc().init()

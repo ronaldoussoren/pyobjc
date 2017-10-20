@@ -15,6 +15,7 @@ if sys.maxsize > 2 ** 32:
         def resolveIdentifiersForSearchForMessages_withCompletion_(self, intent, completion): pass
         def resolveNotificationIdentifiersForSearchForMessages_withCompletion_(self, intent, completion): pass
         def resolveGroupNamesForSearchForMessages_withCompletion_(self, intent, completion): pass
+        def resolveSpeakableGroupNamesForSearchForMessages_withCompletion_(self, intent, completion): pass
 
     class TestINSearchForMessagesIntent (TestCase):
         @min_os_level('10.12')
@@ -30,6 +31,7 @@ if sys.maxsize > 2 ** 32:
             #self.assertArgIsBlock(TestINSearchForMessagesIntentHelper.resolveIdentifiersForSearchForMessages_withCompletion_, 1, b'v@')
             #self.assertArgIsBlock(TestINSearchForMessagesIntentHelper.resolveNotificationIdentifiersForSearchForMessages_withCompletion_, 1, b'v@')
             self.assertArgIsBlock(TestINSearchForMessagesIntentHelper.resolveGroupNamesForSearchForMessages_withCompletion_, 1, b'v@')
+            self.assertArgIsBlock(TestINSearchForMessagesIntentHelper.resolveSpeakableGroupNamesForSearchForMessages_withCompletion_, 1, b'v@')
 
         @min_sdk_level('10.12')
         def testProtocols(self):

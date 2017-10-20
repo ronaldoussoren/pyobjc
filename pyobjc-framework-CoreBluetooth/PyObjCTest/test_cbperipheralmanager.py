@@ -3,7 +3,13 @@ import sys
 from PyObjCTools.TestSupport import *
 import CoreBluetooth
 
-class TestCBAdvertisementData (TestCase):
+class TestCBPeriphalManagerHelper (CoreBluetooth.NSObject):
+    def peripheralManager_didPublishL2CAPChannel_error_(self, m, c, e): pass
+    def peripheralManager_didUnpublishL2CAPChannel_error_(self, m, c, e): pass
+    def peripheralManager_didOpenL2CAPChannel_error_(self, m, c, e): pass
+
+
+class TestCBPeriphicalManager (TestCase):
     @min_os_level("10.9")
     def testConstants(self):
         self.assertEqual(CoreBluetooth.CBPeripheralAuthorizationStatusNotDetermined, 0)
@@ -22,6 +28,11 @@ class TestCBAdvertisementData (TestCase):
         self.assertEqual(CoreBluetooth.CBPeripheralManagerConnectionLatencyMedium, 1)
         self.assertEqual(CoreBluetooth.CBPeripheralManagerConnectionLatencyHigh, 2)
 
+        self.assertEqual(CoreBluetooth.CBPeripheralManagerAuthorizationStatusNotDetermined, 0)
+        self.assertEqual(CoreBluetooth.CBPeripheralManagerAuthorizationStatusRestricted, 1)
+        self.assertEqual(CoreBluetooth.CBPeripheralManagerAuthorizationStatusDenied, 2)
+        self.assertEqual(CoreBluetooth.CBPeripheralManagerAuthorizationStatusAuthorized, 3)
+
     @min_os_level("10.9")
     def testClasses(self):
         self.assertIsInstance(CoreBluetooth.CBPeripheralManager, objc.objc_class)
@@ -36,6 +47,10 @@ class TestCBAdvertisementData (TestCase):
         self.assertResultIsBOOL(CoreBluetooth.CBPeripheralManager.updateValue_forCharacteristic_onSubscribedCentrals_)
 
         # XXX: A number of methods have a dispatch_queue as their argument
+
+        self.assertArgHasType(TestCBPeriphalManagerHelper.peripheralManager_didPublishL2CAPChannel_error_, 1, objc._C_USHT)
+        self.assertArgHasType(TestCBPeriphalManagerHelper.peripheralManager_didUnpublishL2CAPChannel_error_, 1, objc._C_USHT)
+        self.assertArgHasType(TestCBPeriphalManagerHelper.peripheralManager_didOpenL2CAPChannel_error_, 1, objc._C_USHT)
 
 
 if __name__ == "__main__":

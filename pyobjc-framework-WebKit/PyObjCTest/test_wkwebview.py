@@ -22,5 +22,11 @@ class TestWKWebView (TestCase):
         self.assertResultIsBOOL(WKWebView.allowsLinkPreview)
         self.assertArgIsBOOL(WKWebView.setAllowsLinkPreview_, 0)
 
+    @onlyOn64Bit
+    @min_os_level('10.13')
+    def testMethods10_13(self):
+        self.assertArgIsBlock(WKWebView.takeSnapshotWithConfiguration_completionHandler_, 1, b'v@@')
+        self.assertResultIsBOOL(WKWebView.handlesURLScheme_)
+
 if __name__ == "__main__":
     main()

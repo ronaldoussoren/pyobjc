@@ -3,6 +3,22 @@
 {
  "definitions": {
   "externs": {
+   "kCGImagePropertyAuxiliaryDataType": { "typestr": "@" },
+   "kCGImagePropertyFileContentsDictionary": { "typestr": "@" },
+   "kCGImageAuxiliaryDataInfoData": { "typestr": "@" },
+   "kCGImageAuxiliaryDataInfoDataDescription": { "typestr": "@" },
+   "kCGImageAuxiliaryDataInfoMetadata": { "typestr": "@" },
+   "kCGImagePropertyImageCount": { "typestr": "@" },
+   "kCGImagePropertyWidth": { "typestr": "@" },
+   "kCGImagePropertyHeight": { "typestr": "@" },
+   "kCGImagePropertyBytesPerRow": { "typestr": "@" },
+   "kCGImagePropertyNamedColorSpace": { "typestr": "@" },
+   "kCGImagePropertyPixelFormat": { "typestr": "@" },
+   "kCGImagePropertyImages": { "typestr": "@" },
+   "kCGImagePropertyThumbnailImages": { "typestr": "@" },
+   "kCGImagePropertyAuxiliaryData": { "typestr": "@" },
+   "kCGImageAuxiliaryDataTypeDepth": { "typestr": "@" },
+   "kCGImageAuxiliaryDataTypeDisparity": { "typestr": "@" },
    "kCGImagePropertyExifSubsecTimeOriginal": { "typestr": "@" },
    "kCGImagePropertyTIFFTileWidth": { "typestr": "@" },
    "kCGImagePropertyTIFFTileLength": { "typestr": "@" },
@@ -60,6 +76,22 @@
   "classes": {},
   "formal_protocols": {},
   "functions": {
+   "CGImageSourceCopyAuxiliaryDataInfoAtIndex": {
+    "args": {
+     "0": { "type_override": "^{CGImageSource=}" },
+     "1": { "type_override": "L" },
+     "2": { "type_override": "@" }
+    },
+    "retval": { "type_override": "@", "already_cfretained": true }
+   },
+   "CGImageDestinationAddAuxiliaryDataInfo": {
+    "args": {
+     "0": { "type_override": "^{CGImageDestination=}" },
+     "1": { "type_override": "@" },
+     "2": { "type_override": "@" }
+    },
+    "retval": { "type_override": "v" }
+   },
    "CGImageDestinationAddImage": {
     "args": {
      "0": {},

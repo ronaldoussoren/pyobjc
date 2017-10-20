@@ -64,6 +64,10 @@ class TestNSError (TestCase):
         self.assertIsInstance(NSWordTablesReadException, unicode)
         self.assertIsInstance(NSWordTablesWriteException, unicode)
 
+    @min_os_level('10.13')
+    def testConstants10_13(self):
+        self.assertIsInstance(NSLocalizedFailureErrorKey, unicode)
+
     def testAttemptRecovery(self):
         self.assertArgHasType(TestNSErrorHelper.attemptRecoveryFromError_optionIndex_delegate_didRecoverSelector_contextInfo_, 1, objc._C_NSUInteger)
         self.assertArgIsSEL(TestNSErrorHelper.attemptRecoveryFromError_optionIndex_delegate_didRecoverSelector_contextInfo_, 3, b'v@:' + objc._C_NSBOOL + b'^v')

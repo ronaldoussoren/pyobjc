@@ -8,6 +8,7 @@ import imp
 import ctypes
 import objc
 import subprocess
+import warnings
 
 import xml.etree.ElementTree as ET
 
@@ -428,41 +429,62 @@ TEST_XML=b"""\
 </signatures>
 """
 
+def iter_framework_dir(framework_dir):
+    for dn in os.listdir(framework_dir):
+        fn = os.path.join(framework_dir, dn, 'Resources', 'BridgeSupport', dn.replace('.framework', '.bridgesupport'))
+        if os.path.exists(fn):
+            yield fn
+
+        fn = os.path.join(framework_dir, dn, 'Frameworks')
+        if os.path.exists(fn):
+            for item in iter_framework_dir(fn):
+                yield item
+
+def iter_system_bridgesupport_files():
+    for item in iter_framework_dir('/System/Library/Frameworks'):
+        yield item
+
+def contains_any(name, fragments):
+    return any(x in name for x in fragments)
+
 class TestBridgeSupportParser (TestCase):
     def testInvalidToplevel(self):
         self.assertRaises(objc.error, bridgesupport._BridgeSupportParser, b'<signatures2></signatures2>', 'Cocoa')
         self.assertRaises(ET.ParseError, bridgesupport._BridgeSupportParser, b'<signatures2></signatures>', 'Cocoa')
 
-    def iter_framework_dir(self, framework_dir):
-        for dn in os.listdir(framework_dir):
-            fn = os.path.join(framework_dir, dn, 'Resources', 'BridgeSupport', dn.replace('.framework', '.bridgesupport'))
-            if os.path.exists(fn):
-                yield fn
+    # I'd like to use a test method with subTests here, but that doesn't support marking some subtests as expected failures
+    BROKEN_FRAMEWORKS=(
+            'AE.bridgesupport',             'ATS.bridgesupport',                    'AVFoundation.bridgesupport',
+            'AudioToolbox.bridgesupport',   'CarbonSound.bridgesupport',            'CommonPanels.bridgesupport',
+            'CoreAudio.bridgesupport',      'CoreMIDI.bridgesupport',               'CoreText.bridgesupport',
+            'CoreVideo.bridgesupport',      'GameplayKit.bridgesupport',            'HIServices.bridgesupport',
+            'HIToolbox.bridgesupport',      'IOBluetooth.bridgesupport',            'IOKit.bridgesupport',
+            'Kerberos.bridgesupport',       'LangAnalysis.bridgesupport',           'MPSImage.bridgesupport',
+            'ModelIO.bridgesupport',        'NavigationServices.bridgesupport',     'OSServices.bridgesupport',
+            'Python.bridgesupport',         'QD.bridgesupport',                     'SceneKit.bridgesupport',
+            'Security.bridgesupport',       'SpeechSynthesis.bridgesupport',        'SpriteKit.bridgesupport',
+            'System.bridgesupport',         'TWAIN.bridgesupport',                  'Tk.bridgesupport',
+            'Tcl.bridgesupport',            'Vision.bridgesupport',
+            )
 
-            fn = os.path.join(framework_dir, dn, 'Frameworks')
-            if os.path.exists(fn):
-                for item in self.iter_framework_dir(fn):
-                    yield item
+    for fn in iter_system_bridgesupport_files():
+        _test_name = 'test_' + fn.replace('/System/Library/Frameworks', '').replace('/', '_').replace('.bridgesupport', '').replace('.framework', '')
+        def test_func(self, fn=fn):
+            with open(fn, 'rb') as fp:
+                xmldata = fp.read()
 
-    def iter_system_bridgesupport_files(self):
-        for item in self.iter_framework_dir('/System/Library/Frameworks'):
-            yield item
+                self.assert_valid_bridgesupport(os.path.basename(fn).split('.')[0], xmldata)
 
-    def test_system_bridgesupport(self):
-        with filterWarnings("ignore", RuntimeWarning):
-            # Check that all system bridgesupport files can be processed correctly
-            for fn in self.iter_system_bridgesupport_files():
-                if hasattr(self, 'subTest'):
-                    with self.subTest(fn):
-                        with open(fn, 'rb') as fp:
-                            xmldata = fp.read()
+        test_func.__name__ = _test_name
+        test_func.__doc__ = "System bridgesupport %r"%(fn,)
 
-                        self.assert_valid_bridgesupport(os.path.basename(fn).split('.')[0], xmldata)
-                else:
-                    with open(fn, 'rb') as fp:
-                        xmldata = fp.read()
+        if contains_any(fn, BROKEN_FRAMEWORKS) and os_release() in ('10.13',):
+            locals()[_test_name] = expectedFailure(test_func)
+        else:
+            locals()[_test_name] = test_func
+        del test_func
+        del _test_name
 
-                    self.assert_valid_bridgesupport(os.path.basename(fn).split('.')[0], xmldata)
 
     def test_xml_structure_variants(self):
         # Run 'verify_xml_structure' for all cpu variant
@@ -1590,12 +1612,15 @@ class TestInitFrameworkWrapper (TestCase):
             raise_exception = objc.internal_error
             update_globals = None
 
-            with filterWarnings("error", RuntimeWarning):
-                self.assertRaises(RuntimeWarning, bridgesupport._parseBridgeSupport, '', {}, 'TestFramework')
-
+            with warnings.catch_warnings(record=True) as w:
+                warnings.simplefilter("always")
+                bridgesupport._parseBridgeSupport( '', {}, 'TestFramework')
+            self.assertTrue(len(w) == 1)
+            self.assertEqual(w[0].category, RuntimeWarning)
             calls = []
 
-            with filterWarnings("ignore", RuntimeWarning):
+            with warnings.catch_warnings(record=True):
+                warnings.simplefilter("always")
                 g = {}
                 update_globals = {'foo': 42, 'bar': 33,  'protocols': MockModule() }
                 bridgesupport._parseBridgeSupport('', g, 'TestFramework')
@@ -2080,10 +2105,15 @@ class TestMisc (TestCase):
     def test_struct_alias(self):
         tp1 = objc.createStructType('TestStruct1', b'{TestStruct1="f1"d"f2"d}', None)
 
-        with filterWarnings("error", DeprecationWarning):
-            self.assertRaises(DeprecationWarning, objc.registerStructAlias, b'{TestStruct2=dd}', tp1)
+        with warnings.catch_warnings(record=True) as w:
+            warnings.simplefilter("always")
+            objc.registerStructAlias(b'{TestStruct2=dd}', tp1)
 
-        with filterWarnings("ignore", DeprecationWarning):
+        self.assertTrue(len(w) == 1)
+        self.assertEqual(w[0].category, DeprecationWarning)
+
+        with warnings.catch_warnings(record=True):
+            warnings.simplefilter("ignore")
             tp2 = objc.registerStructAlias(b'{TestStruct2=dd}', tp1)
             self.assertIs(tp1, tp2)
 

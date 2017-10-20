@@ -1,5 +1,5 @@
 '''
-Wrappers for the "PubSub" framework on MacOSX 10.5 or later.  This framework
+Wrappers for the "PubSub" framework on macOS 10.5 or later.  This framework
 offers developers a way to subscribe to web feeds (RSS, Atom) from their
 applications.
 
@@ -12,11 +12,11 @@ Note that this framework is deprecated in OSX 10.9
 '''
 from pyobjc_setup import setup
 
-VERSION="3.3a0"
+VERSION="4.0.1b1"
 
 setup(
     name='pyobjc-framework-PubSub',
-    description = "Wrappers for the framework PubSub on Mac OS X",
+    description = "Wrappers for the framework PubSub on macOS",
     min_os_level='10.5',
     packages = [ "PubSub" ],
     version=VERSION,

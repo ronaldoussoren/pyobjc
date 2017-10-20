@@ -2,9 +2,72 @@
 // for information on how to update this file.
 {
  "definitions": {
-  "classes": {}, 
-  "formal_protocols": {}, 
-  "functions": {}, 
+  "classes": {
+   "FIFinderSyncController": {
+    "methods": [
+     {
+      "selector": "setLastUsedDate:forItemWithURL:completion:",
+      "class_method": false,
+      "args": {
+       "2": {
+        "callable": {
+	 "arguments": {
+	  "0": { "typestr": "^v" },
+	  "1": { "typestr": "@" }
+	 },
+	 "retval": { "typestr": "v" }
+	}
+       }
+      }
+     },
+     {
+      "selector": "setTagData:forItemWithURL:completion:",
+      "class_method": false,
+      "args": {
+       "2": {
+        "callable": {
+	 "arguments": {
+	  "0": { "typestr": "^v" },
+	  "1": { "typestr": "@" }
+	 },
+	 "retval": { "typestr": "v" }
+	}
+       }
+      }
+     }
+    ]
+   },
+   "NSObject": {
+    "methods": [
+     {
+      "selector": "makeListenerEndpointForServiceName:itemURL:andReturnError:",
+      "class_method": false,
+      "args": {
+       "2": { "type_modifier": "o", "type_override": "^@" }
+      }
+     },
+     {
+      "selector": "valuesForAttributes:forItemWithURL:completion:",
+      "class_method": false,
+      "args": {
+       "2": {
+        "type_override": "@?",
+	"callable": {
+	 "arguments": {
+	  "0": { "typestr": "^v" },
+	  "1": { "typestr": "@" },
+	  "2": { "typestr": "@" }
+	 },
+	 "retval": { "typestr": "v" }
+	}
+       }
+      }
+     }
+    ]
+   }
+  },
+  "formal_protocols": {},
+  "functions": {},
   "informal_protocols": {}
  }
 }

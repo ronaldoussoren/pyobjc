@@ -10,6 +10,7 @@ may have unwanted side-effects!
 import subprocess
 import os
 import socket
+import sys
 
 from _common_definitions import PY_VERSIONS
 

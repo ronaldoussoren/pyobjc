@@ -3,6 +3,21 @@
 {
  "definitions": {
   "enum": {
+   "NSPersistentHistoryResultTypeStatusOnly": { "value": 0 },
+   "NSPersistentHistoryResultTypeObjectIDs": { "value": 1 },
+   "NSPersistentHistoryResultTypeCount": { "value": 2 },
+   "NSPersistentHistoryResultTypeTransactionsOnly": { "value": 3 },
+   "NSPersistentHistoryResultTypeChangesOnly": { "value": 4 },
+   "NSPersistentHistoryResultTypeTransactionsAndChanges": { "value": 5 },
+   "NSPersistentHistoryChangeTypeInsert": { "value": 0 },
+   "NSPersistentHistoryChangeTypeUpdate": { "value": 1 },
+   "NSPersistentHistoryChangeTypeDelete": { "value": 2 },
+   "NSFetchIndexElementTypeBinary": { "value": 0 },
+   "NSFetchIndexElementTypeRTree": { "value": 1 },
+   "NSValidationInvalidURIError": { "value": 1690 },
+   "NSPersistentHistoryTokenExpiredError": { "value": 134301 },
+   "NSUUIDAttributeType": { "value": 1100 },
+   "NSURIAttributeType": { "value": 1200 },
    "NSFetchedResultsChangeInsert": { "value": 1 },
    "NSFetchedResultsChangeDelete": { "value": 2 },
    "NSFetchedResultsChangeMove": { "value": 3 },
@@ -21,11 +36,50 @@
    "NSMigrationConstraintViolationError": { "value": 134111 }
   },
   "externs": {
+   "NSBinaryStoreSecureDecodingClasses": { "typestr": "@" },
+   "NSBinaryStoreInsecureDecodingCompatibilityOption": { "typestr": "@" },
+   "NSPersistentHistoryTrackingKey": { "typestr": "@" },
    "NSPersistentStoreForceDestroyOption": { "typestr": "@" },
    "NSPersistentStoreConnectionPoolMaxSizeKey": { "typestr": "@" },
    "NSManagedObjectContextQueryGenerationKey": { "typestr": "@" }
   },
   "classes": {
+   "NSFetchIndexElementDescription": {
+    "methods": [
+     {
+      "class_method": false,
+      "selector": "isAscending",
+      "retval": { "type_override": "Z" }
+     },
+     {
+      "class_method": false,
+      "selector": "setAscending:",
+      "args": {
+       "0": { "type_override": "Z" }
+      }
+     }
+    ]
+   },
+   "NSCoreDataCoreSpotlightDelegate": {
+    "methods": [
+     {
+      "args": {
+        "2": {
+	  "callable": {
+	    "arguments": {
+	      "0": { "typestr": "^v" }
+	    },
+	    "retval": {
+	      "typestr": "v"
+	    }
+	  }
+	}
+       },
+       "class_method": false,
+       "selector": "searchableIndex:reindexSearchableItemsWithIdentifiers:acknowledgementHandler:"
+     }
+    ]
+   },
    "NSFetchedResultsController": {
     "methods": [
      {

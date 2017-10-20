@@ -84,6 +84,7 @@
    "MPRemoteCommandHandlerStatusSuccess": { "value": 0 },
    "MPRemoteCommandHandlerStatusNoSuchContent": { "value": 100 },
    "MPRemoteCommandHandlerStatusNoActionableNowPlayingItem": { "value": 110 },
+   "MPRemoteCommandHandlerStatusDeviceNotFound": { "value": 120 },
    "MPRemoteCommandHandlerStatusCommandFailed": { "value": 200 },
    "MPNowPlayingInfoLanguageOptionTypeAudible": { "value":  0 },
    "MPNowPlayingInfoLanguageOptionTypeLegible": { "value":  1 },

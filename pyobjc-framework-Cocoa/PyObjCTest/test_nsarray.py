@@ -280,14 +280,14 @@ class TestNSMutableArrayInteraction(TestCase):
         a = NSMutableArray.arrayWithArray_(range(4))
         self.assertEqual(a, (0, 1, 2, 3))
 
-        t = objc.getVerbose()
-        objc.setVerbose(0)
+        t = objc.options.verbose
+        objc.options.verbose = True
         try:
             self.assertRaises(TypeError, a.sortUsingFunction_context_, dir)
             self.assertRaises(TypeError, a.sortUsingFunction_context_, dir, 1, 2)
             self.assertRaises(TypeError, a.sortUsingFunction_context_, lambda *args: cmp(*args), b'a'.decode('ascii'))
         finally:
-            objc.setVerbose(t)
+            objc.options.verbose = t
 
     def dont_testSort2(self):
         # sortUsingFunction:context:range: isn't documented an hence shouldn't be tested
@@ -503,7 +503,13 @@ class TestNSArray (TestCase):
         self.assertArgIsBlock(NSMutableArray.sortWithOptions_usingComparator_,
                 1, objc._C_NSInteger + b'@@')
 
+    @min_os_level('10.13')
+    def testMethods10_13(self):
+        self.assertResultIsBOOL(NSArray.writeToURL_error_)
+        self.assertArgIsOut(NSArray.writeToURL_error_, 1)
 
+        self.assertArgIsOut(NSArray.initWithContentsOfURL_error_, 1)
+        self.assertArgIsOut(NSArray.arrayWithContentsOfURL_error_, 1)
 
     @min_os_level('10.6')
     def testConstants10_6(self):

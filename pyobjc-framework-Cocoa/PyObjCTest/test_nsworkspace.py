@@ -150,6 +150,10 @@ class TestNSWorkspace(TestCase):
         self.assertArgIsOut(NSWorkspace.openURL_options_configuration_error_, 3)
         self.assertArgIsOut(NSWorkspace.openURLs_withApplicationAtURL_options_configuration_error_, 4)
 
+    @min_os_level('10.13')
+    def testMethods10_13(self):
+        self.assertResultIsBOOL(NSWorkspace.isVoiceOverEnabled)
+        self.assertResultIsBOOL(NSWorkspace.isSwitchControlEnabled)
 
 if __name__ == '__main__':
     main( )

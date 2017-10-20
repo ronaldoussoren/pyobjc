@@ -1,0 +1,691 @@
+{
+ "definitions": {
+  "externs": {
+   "VNVisionVersionNumber": { "typestr": "d" },
+   "VNNormalizedIdentityRect": { "typestr": "{CGRect={CGPoint=dd}{CGSize=dd}}" },
+   "VNBarcodeSymbologyAztec": { "typestr": "@" },
+   "VNBarcodeSymbologyCode39": { "typestr": "@" },
+   "VNBarcodeSymbologyCode39Checksum": { "typestr": "@" },
+   "VNBarcodeSymbologyCode39FullASCII": { "typestr": "@" },
+   "VNBarcodeSymbologyCode39FullASCIIChecksum": { "typestr": "@" },
+   "VNBarcodeSymbologyCode93": { "typestr": "@" },
+   "VNBarcodeSymbologyCode93i": { "typestr": "@" },
+   "VNBarcodeSymbologyCode128": { "typestr": "@" },
+   "VNBarcodeSymbologyDataMatrix": { "typestr": "@" },
+   "VNBarcodeSymbologyEAN8": { "typestr": "@" },
+   "VNBarcodeSymbologyEAN13": { "typestr": "@" },
+   "VNBarcodeSymbologyI2of5": { "typestr": "@" },
+   "VNBarcodeSymbologyI2of5Checksum": { "typestr": "@" },
+   "VNBarcodeSymbologyITF14": { "typestr": "@" },
+   "VNBarcodeSymbologyPDF417": { "typestr": "@" },
+   "VNBarcodeSymbologyQR": { "typestr": "@" },
+   "VNBarcodeSymbologyUPCE": { "typestr": "@" },
+   "VNImageOptionProperties": { "typestr": "@" },
+   "VNImageOptionCameraIntrinsics": { "typestr": "@" }
+  },
+  "enum": {
+   "VNImageCropAndScaleOptionCenterCrop": { "value": 0 },
+   "VNImageCropAndScaleOptionScaleFit": { "value": 1 },
+   "VNImageCropAndScaleOptionScaleFill": { "value": 2 },
+   "VNRequestTrackingLevelAccurate": { "value": 0 },
+   "VNRequestTrackingLevelFast": { "value": 1 },
+   "VNErrorOK": { "value": 0 },
+   "VNErrorRequestCancelled": { "value": 1 },
+   "VNErrorInvalidFormat": { "value": 2 },
+   "VNErrorOperationFailed": { "value": 3 },
+   "VNErrorOutOfBoundsError": { "value": 4 },
+   "VNErrorInvalidOption": { "value": 5 },
+   "VNErrorIOError": { "value": 6 },
+   "VNErrorMissingOption": { "value": 7 },
+   "VNErrorNotImplemented": { "value": 8 },
+   "VNErrorInternalError": { "value": 9 },
+   "VNErrorOutOfMemory": { "value": 10 },
+   "VNErrorUnknownError": { "value": 11 },
+   "VNErrorInvalidOperation": { "value": 12 },
+   "VNErrorInvalidImage": { "value": 13 },
+   "VNErrorInvalidArgument": { "value": 14 },
+   "VNErrorInvalidModel": { "value": 15 }
+  },
+  "classes": {
+   "VNFaceLandmarkRegion2D": {
+    "methods": [
+     {
+      "selector": "normalizedPoints",
+      "class_method": false,
+      "retval": {
+       "c_array_of_variable_length": true
+      }
+     },
+     {
+      "selector": "pointsInImageOfSize:",
+      "class_method": false,
+      "retval": {
+       "c_array_of_variable_length": true
+      }
+     }
+    ]
+   },
+   "VNTrackingRequest": {
+    "methods": [
+     {
+      "selector": "isLastFrame",
+      "class_method": false,
+      "retval": { "type_override": "Z" }
+     },
+     {
+      "selector": "setLastFrame:",
+      "class_method": false,
+      "args": {
+       "0": { "type_override": "Z" }
+      }
+     },
+     {
+      "selector": "initWithCompletionHandler:",
+      "class_method": false,
+      "args": {
+       "0": {
+        "callable": {
+	 "arguments": {
+	  "0": { "typestr": "^v" },
+	  "1": { "typestr": "@" },
+	  "2": { "typestr": "@" }
+	 },
+	 "retval": { "typestr": "v" }
+	}
+       }
+      }
+     }
+    ]
+   },
+   "VNCoreMLModel": {
+    "methods": [
+     {
+      "selector": "modelForMLModel:error:",
+      "class_method": true,
+      "args": {
+       "1": { "type_modifier": "o" }
+      }
+     }
+    ]
+   },
+   "VNDetectTextRectanglesRequest": {
+    "methods": [
+     {
+      "selector": "reportCharacterBoxes",
+      "class_method": false,
+      "retval": { "type_override": "Z" }
+     },
+     {
+      "selector": "setReportCharacterBoxes:",
+      "class_method": false,
+      "args": {
+       "0": { "type_override": "Z" }
+      }
+     }
+    ]
+   },
+   "VNSequenceRequestHandler": {
+    "methods": [
+     {
+      "selector": "performRequests:onImageData:error:",
+      "class_method": false,
+      "retval": { "type_override": "Z" },
+      "args": {
+       "2": { "type_modifier": "o" }
+      }
+     },
+     {
+      "selector": "performRequests:onImageData:orientation:error:",
+      "class_method": false,
+      "retval": { "type_override": "Z" },
+      "args": {
+       "3": { "type_modifier": "o" }
+      }
+     },
+     {
+      "selector": "performRequests:onImageURL:error:",
+      "class_method": false,
+      "retval": { "type_override": "Z" },
+      "args": {
+       "2": { "type_modifier": "o" }
+      }
+     },
+     {
+      "selector": "performRequests:onImageURL:orientation:error:",
+      "class_method": false,
+      "retval": { "type_override": "Z" },
+      "args": {
+       "3": { "type_modifier": "o" }
+      }
+     },
+     {
+      "selector": "performRequests:onCIImage:error:",
+      "class_method": false,
+      "retval": { "type_override": "Z" },
+      "args": {
+       "2": { "type_modifier": "o" }
+      }
+     },
+     {
+      "selector": "performRequests:onCIImage:orientation:error:",
+      "class_method": false,
+      "retval": { "type_override": "Z" },
+      "args": {
+       "3": { "type_modifier": "o" }
+      }
+     },
+     {
+      "selector": "performRequests:onCGImage:error:",
+      "class_method": false,
+      "retval": { "type_override": "Z" },
+      "args": {
+       "2": { "type_modifier": "o" }
+      }
+     },
+     {
+      "selector": "performRequests:onCGImage:orientation:error:",
+      "class_method": false,
+      "retval": { "type_override": "Z" },
+      "args": {
+       "3": { "type_modifier": "o" }
+      }
+     },
+     {
+      "selector": "performRequests:onCVPixelBuffer:error:",
+      "class_method": false,
+      "retval": { "type_override": "Z" },
+      "args": {
+       "2": { "type_modifier": "o" }
+      }
+     },
+     {
+      "selector": "performRequests:onCVPixelBuffer:orientation:error:",
+      "class_method": false,
+      "retval": { "type_override": "Z" },
+      "args": {
+       "3": { "type_modifier": "o" }
+      }
+     }
+    ]
+   },
+   "VNImageRequestHandler": {
+    "methods": [
+     {
+      "selector": "performRequests:error:",
+      "class_method": false,
+      "retval": { "type_override": "Z" },
+      "args": {
+       "1": { "type_modifier": "o" }
+      }
+     }
+    ]
+   },
+   "VNRequest": {
+    "methods": [
+     {
+      "selector": "completionHandler",
+      "class_method": false,
+      "retval": {
+       "callable": {
+        "arguments": {
+         "0": { "typestr": "^v" },
+         "1": { "typestr": "@" },
+         "2": { "typestr": "@" }
+        },
+        "retval": { "typestr": "v" }
+       }
+      }
+     },
+     {
+      "selector": "usesCPUOnly",
+      "class_method": false,
+      "retval": { "type_override": "Z" }
+     },
+     {
+      "selector": "setUsesCPUOnly:",
+      "class_method": false,
+      "args": {
+       "0": { "type_override": "Z" }
+      }
+     },
+     {
+      "selector": "preferBackgroundProcessing",
+      "class_method": false,
+      "retval": { "type_override": "Z" }
+     },
+     {
+      "selector": "setPreferBackgroundProcessing:",
+      "class_method": false,
+      "args": {
+       "0": { "type_override": "Z" }
+      }
+     },
+     {
+      "selector": "initWithCompletionHandler:",
+      "class_method": false,
+      "args": {
+       "0": {
+        "callable": {
+	 "arguments": {
+	  "0": { "typestr": "^v" },
+	  "1": { "typestr": "@" },
+	  "2": { "typestr": "@" }
+	 },
+	 "retval": { "typestr": "v" }
+	}
+       }
+      }
+     }
+    ]
+   },
+   "VNTargetedImageRequest": {
+    "methods": [
+     {
+      "selector": "initWithTargetedCVPixelBuffer:orientation:options:completionHandler:",
+      "class_method": false,
+      "args": {
+       "3": {
+        "callable": {
+	 "arguments": {
+	  "0": { "typestr": "^v" },
+	  "1": { "typestr": "@" },
+	  "2": { "typestr": "@" }
+	 },
+	 "retval": { "typestr": "v" }
+	}
+       }
+      }
+     },
+     {
+      "selector": "initWithTargetedCVPixelBuffer:options:completionHandler:",
+      "class_method": false,
+      "args": {
+       "2": {
+        "callable": {
+	 "arguments": {
+	  "0": { "typestr": "^v" },
+	  "1": { "typestr": "@" },
+	  "2": { "typestr": "@" }
+	 },
+	 "retval": { "typestr": "v" }
+	}
+       }
+      }
+     },
+     {
+      "selector": "initWithTargetedCVPixelBuffer:completionHandler:",
+      "class_method": false,
+      "args": {
+       "1": {
+        "callable": {
+	 "arguments": {
+	  "0": { "typestr": "^v" },
+	  "1": { "typestr": "@" },
+	  "2": { "typestr": "@" }
+	 },
+	 "retval": { "typestr": "v" }
+	}
+       }
+      }
+     },
+     {
+      "selector": "initWithTargetedCGImage:orientation:options:completionHandler:",
+      "class_method": false,
+      "args": {
+       "3": {
+        "callable": {
+	 "arguments": {
+	  "0": { "typestr": "^v" },
+	  "1": { "typestr": "@" },
+	  "2": { "typestr": "@" }
+	 },
+	 "retval": { "typestr": "v" }
+	}
+       }
+      }
+     },
+     {
+      "selector": "initWithTargetedCGImage:options:completionHandler:",
+      "class_method": false,
+      "args": {
+       "2": {
+        "callable": {
+	 "arguments": {
+	  "0": { "typestr": "^v" },
+	  "1": { "typestr": "@" },
+	  "2": { "typestr": "@" }
+	 },
+	 "retval": { "typestr": "v" }
+	}
+       }
+      }
+     },
+     {
+      "selector": "initWithTargetedCGImage:completionHandler:",
+      "class_method": false,
+      "args": {
+       "1": {
+        "callable": {
+	 "arguments": {
+	  "0": { "typestr": "^v" },
+	  "1": { "typestr": "@" },
+	  "2": { "typestr": "@" }
+	 },
+	 "retval": { "typestr": "v" }
+	}
+       }
+      }
+     },
+     {
+      "selector": "initWithTargetedCIImage:orientation:options:completionHandler:",
+      "class_method": false,
+      "args": {
+       "3": {
+        "callable": {
+	 "arguments": {
+	  "0": { "typestr": "^v" },
+	  "1": { "typestr": "@" },
+	  "2": { "typestr": "@" }
+	 },
+	 "retval": { "typestr": "v" }
+	}
+       }
+      }
+     },
+     {
+      "selector": "initWithTargetedCIImage:options:completionHandler:",
+      "class_method": false,
+      "args": {
+       "2": {
+        "callable": {
+	 "arguments": {
+	  "0": { "typestr": "^v" },
+	  "1": { "typestr": "@" },
+	  "2": { "typestr": "@" }
+	 },
+	 "retval": { "typestr": "v" }
+	}
+       }
+      }
+     },
+     {
+      "selector": "initWithTargetedCIImage:completionHandler:",
+      "class_method": false,
+      "args": {
+       "1": {
+        "callable": {
+	 "arguments": {
+	  "0": { "typestr": "^v" },
+	  "1": { "typestr": "@" },
+	  "2": { "typestr": "@" }
+	 },
+	 "retval": { "typestr": "v" }
+	}
+       }
+      }
+     },
+     {
+      "selector": "initWithTargetedImageURL:completionHandler:",
+      "class_method": false,
+      "args": {
+       "1": {
+        "callable": {
+	 "arguments": {
+	  "0": { "typestr": "^v" },
+	  "1": { "typestr": "@" },
+	  "2": { "typestr": "@" }
+	 },
+	 "retval": { "typestr": "v" }
+	}
+       }
+      }
+     },
+     {
+      "selector": "initWithTargetedImageURL:options:completionHandler:",
+      "class_method": false,
+      "args": {
+       "2": {
+        "callable": {
+	 "arguments": {
+	  "0": { "typestr": "^v" },
+	  "1": { "typestr": "@" },
+	  "2": { "typestr": "@" }
+	 },
+	 "retval": { "typestr": "v" }
+	}
+       }
+      }
+     },
+     {
+      "selector": "initWithTargetedImageURL:orientation:options:completionHandler:",
+      "class_method": false,
+      "args": {
+       "3": {
+        "callable": {
+	 "arguments": {
+	  "0": { "typestr": "^v" },
+	  "1": { "typestr": "@" },
+	  "2": { "typestr": "@" }
+	 },
+	 "retval": { "typestr": "v" }
+	}
+       }
+      }
+     },
+     {
+      "selector": "initWithTargetedImageData:completionHandler:",
+      "class_method": false,
+      "args": {
+       "1": {
+        "callable": {
+	 "arguments": {
+	  "0": { "typestr": "^v" },
+	  "1": { "typestr": "@" },
+	  "2": { "typestr": "@" }
+	 },
+	 "retval": { "typestr": "v" }
+	}
+       }
+      }
+     },
+     {
+      "selector": "initWithTargetedImageData:options:completionHandler:",
+      "class_method": false,
+      "args": {
+       "2": {
+        "callable": {
+	 "arguments": {
+	  "0": { "typestr": "^v" },
+	  "1": { "typestr": "@" },
+	  "2": { "typestr": "@" }
+	 },
+	 "retval": { "typestr": "v" }
+	}
+       }
+      }
+     },
+     {
+      "selector": "initWithTargetedImageData:orientation:options:completionHandler:",
+      "class_method": false,
+      "args": {
+       "3": {
+        "callable": {
+	 "arguments": {
+	  "0": { "typestr": "^v" },
+	  "1": { "typestr": "@" },
+	  "2": { "typestr": "@" }
+	 },
+	 "retval": { "typestr": "v" }
+	}
+       }
+      }
+     },
+     {
+      "selector": "initWithCompletionHandler:",
+      "class_method": false,
+      "args": {
+       "0": {
+        "callable": {
+	 "arguments": {
+	  "0": { "typestr": "^v" },
+	  "1": { "typestr": "@" },
+	  "2": { "typestr": "@" }
+	 },
+	 "retval": { "typestr": "v" }
+	}
+       }
+      }
+     }
+    ]
+   },
+   "VNTrackRectangleRequest": {
+    "methods": [
+     {
+      "selector": "initWithRectangleObservation:completionHandler:",
+      "class_method": false,
+      "args": {
+       "1": {
+        "callable": {
+	 "arguments": {
+	  "0": { "typestr": "^v" },
+	  "1": { "typestr": "@" },
+	  "2": { "typestr": "@" }
+	 },
+	 "retval": { "typestr": "v" }
+	}
+       }
+      }
+     },
+     {
+      "selector": "initWithCompletionHandler:",
+      "class_method": false,
+      "args": {
+       "0": {
+        "callable": {
+	 "arguments": {
+	  "0": { "typestr": "^v" },
+	  "1": { "typestr": "@" },
+	  "2": { "typestr": "@" }
+	 },
+	 "retval": { "typestr": "v" }
+	}
+       }
+      }
+     }
+    ]
+   },
+   "VNTrackObjectRequest": {
+    "methods": [
+     {
+      "selector": "initWithDetectedObjectObservation:completionHandler:",
+      "class_method": false,
+      "args": {
+       "1": {
+        "callable": {
+	 "arguments": {
+	  "0": { "typestr": "^v" },
+	  "1": { "typestr": "@" },
+	  "2": { "typestr": "@" }
+	 },
+	 "retval": { "typestr": "v" }
+	}
+       }
+      }
+     },
+     {
+      "selector": "initWithCompletionHandler:",
+      "class_method": false,
+      "args": {
+       "0": {
+        "callable": {
+	 "arguments": {
+	  "0": { "typestr": "^v" },
+	  "1": { "typestr": "@" },
+	  "2": { "typestr": "@" }
+	 },
+	 "retval": { "typestr": "v" }
+	}
+       }
+      }
+     }
+    ]
+   },
+   "VNCoreMLRequest": {
+    "methods": [
+     {
+      "selector": "initWithModel:completionHandler:",
+      "class_method": false,
+      "args": {
+       "1": {
+        "callable": {
+	 "arguments": {
+	  "0": { "typestr": "^v" },
+	  "1": { "typestr": "@" },
+	  "2": { "typestr": "@" }
+	 },
+	 "retval": { "typestr": "v" }
+	}
+       }
+      }
+     },
+     {
+      "selector": "initWithCompletionHandler:",
+      "class_method": false,
+      "args": {
+       "0": {
+        "callable": {
+	 "arguments": {
+	  "0": { "typestr": "^v" },
+	  "1": { "typestr": "@" },
+	  "2": { "typestr": "@" }
+	 },
+	 "retval": { "typestr": "v" }
+	}
+       }
+      }
+     }
+    ]
+   }
+  },
+  "functions": {
+   "VNNormalizedRectIsIdentityRect": {
+    "args": {
+     "0": { "typestr": "{CGRect={CGPoint=dd}{CGSize=dd}}" }
+    },
+    "retval": { "typestr": "B" }
+   },
+   "VNImagePointForNormalizedPoint": {
+    "args": {
+     "0": { "typestr": "{CGPoint=dd}" },
+     "1": { "typestr": "L" },
+     "2": { "typestr": "L" }
+    },
+    "retval": { "typestr": "{CGPoint=dd}" }
+   },
+   "VNImageRectForNormalizedRect": {
+    "args": {
+     "0": { "typestr": "{CGRect={CGPoint=dd}{CGSize=dd}}" },
+     "1": { "typestr": "L" },
+     "2": { "typestr": "L" }
+    },
+    "retval": { "typestr": "{CGRect={CGPoint=dd}{CGSize=dd}}" }
+   },
+   "VNNormalizedRectForImageRect": {
+    "args": {
+     "0": { "typestr": "{CGRect={CGPoint=dd}{CGSize=dd}}" },
+     "1": { "typestr": "L" },
+     "2": { "typestr": "L" }
+    },
+    "retval": { "typestr": "{CGRect={CGPoint=dd}{CGSize=dd}}" }
+   },
+   "VNNormalizedFaceBoundingBoxPointForLandmarkPoint": {
+    "ignore": true,
+    "comment": "vector argument"
+   },
+   "VNImagePointForFaceLandmarkPoint": {
+    "ignore": true,
+    "comment": "vector argument"
+   }
+  }
+ }
+}

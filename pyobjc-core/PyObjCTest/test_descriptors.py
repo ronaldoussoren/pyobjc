@@ -2,6 +2,7 @@ from PyObjCTools.TestSupport import *
 
 import objc
 import sys
+import warnings
 
 #try:
 #    from  Foundation import NSRange
@@ -94,7 +95,7 @@ class TestBasicDescriptors (TestCase):
         self.assertRaises(TypeError, objc.namedSelector(b"foo:bar:", b"q@:qq"), 42)
 
     def testNamedselector(self):
-        with filterWarnings("ignore", RuntimeWarning):
+        with warnings.catch_warnings():
             @objc.namedselector(b'foo:bar:')
             def mymethod(self, a, b):
                 pass
@@ -463,7 +464,7 @@ class TestBasicDescriptors (TestCase):
         self.assertEqual(validateColor_error_.signature, objc._C_NSBOOL + b'@:N^@o^@')
 
     def test_Accessor(self):
-        with filterWarnings("ignore", DeprecationWarning):
+        with warnings.catch_warnings():
             # NOTE: the optional type argument is tested through the typedAccessor function
 
             # Basic properties:

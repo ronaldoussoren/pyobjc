@@ -11,7 +11,6 @@ TODO:
 """
 import objc
 from PyObjCTools.TestSupport import *
-import warnings
 
 from PyObjCTest.metadata import *
 

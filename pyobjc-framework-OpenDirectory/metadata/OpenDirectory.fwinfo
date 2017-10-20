@@ -899,6 +899,7 @@
    "kODAuthenticationTypeCRAM_MD5": { "ignore": true },
    "kODAuthenticationTypeChangePasswd": { "ignore": true },
    "kODAuthenticationTypeClearText": { "ignore": true },
+   "kODAuthenticationTypeClearTextReadOnly": { "ignore": true },
    "kODAuthenticationTypeCrypt": { "ignore": true },
    "kODAuthenticationTypeDIGEST_MD5": { "ignore": true },
    "kODAuthenticationTypeDeleteUser": { "ignore": true },

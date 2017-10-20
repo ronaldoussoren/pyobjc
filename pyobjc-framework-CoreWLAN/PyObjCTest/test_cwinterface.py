@@ -3,6 +3,14 @@ from PyObjCTools.TestSupport import *
 import CoreWLAN
 
 class TestCWInterface (TestCase):
+    @min_os_level('10.13')
+    def testMethods10_13(self):
+        self.assertArgIsBOOL(CoreWLAN.CWInterface.scanForNetworksWithName_includeHidden_error_, 1)
+        self.assertArgIsOut(CoreWLAN.CWInterface.scanForNetworksWithName_includeHidden_error_, 2)
+
+        self.assertArgIsBOOL(CoreWLAN.CWInterface.scanForNetworksWithSSID_includeHidden_error_, 1)
+        self.assertArgIsOut(CoreWLAN.CWInterface.scanForNetworksWithSSID_includeHidden_error_, 2)
+
     @min_os_level('10.7')
     def test_methods10_7(self):
         self.assertResultIsBOOL(CoreWLAN.CWInterface.powerOn);

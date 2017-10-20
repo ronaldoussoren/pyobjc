@@ -19,6 +19,9 @@ class TestCBAdvertisementData (TestCase):
         self.assertEqual(CoreBluetooth.CBErrorPeripheralDisconnected, 7)
         self.assertEqual(CoreBluetooth.CBErrorUUIDNotAllowed, 8)
         self.assertEqual(CoreBluetooth.CBErrorAlreadyAdvertising, 9)
+        self.assertEqual(CoreBluetooth.CBErrorConnectionFailed, 10)
+        self.assertEqual(CoreBluetooth.CBErrorConnectionLimitReached, 11)
+        self.assertEqual(CoreBluetooth.CBErrorUnkownDevice, 12)
 
         self.assertEqual(CoreBluetooth.CBATTErrorSuccess, 0x00)
         self.assertEqual(CoreBluetooth.CBATTErrorInvalidHandle, 0x01)

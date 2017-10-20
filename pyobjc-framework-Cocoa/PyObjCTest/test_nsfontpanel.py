@@ -26,6 +26,19 @@ class TestNSFontPanel (TestCase):
         self.assertEqual(NSFontPanelStandardModesMask, (0xFFFF))
         self.assertEqual(NSFontPanelAllModesMask, (0xFFFFFFFF))
 
+        self.assertEqual(NSFontPanelModeMaskFace, 1 << 0)
+        self.assertEqual(NSFontPanelModeMaskSize, 1 << 1)
+        self.assertEqual(NSFontPanelModeMaskCollection, 1 << 2)
+        self.assertEqual(NSFontPanelModeMaskUnderlineEffect, 1<<8)
+        self.assertEqual(NSFontPanelModeMaskStrikethroughEffect, 1<<9)
+        self.assertEqual(NSFontPanelModeMaskTextColorEffect, 1<< 10)
+        self.assertEqual(NSFontPanelModeMaskDocumentColorEffect, 1<<11)
+        self.assertEqual(NSFontPanelModeMaskShadowEffect, 1<<12)
+        self.assertEqual(NSFontPanelModeMaskAllEffects, 0XFFF00)
+        self.assertEqual(NSFontPanelModesMaskStandardModes, 0xFFFF)
+        self.assertEqual(NSFontPanelModesMaskAllModes, 0xFFFFFFFF)
+
+
     def testProtocols(self):
         self.assertResultHasType(TestNSFontPanelHelper.validModesForFontPanel_, objc._C_NSUInteger)
 

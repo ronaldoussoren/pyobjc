@@ -1,5 +1,5 @@
 '''
-Wrappers for the "ImageCaptureCore" framework on Mac OS X.
+Wrappers for the "ImageCaptureCore" framework on macOS.
 
 These wrappers don't include documentation, please check Apple's documention
 for information on how to use this framework and PyObjC's documentation
@@ -9,11 +9,11 @@ and (Objective-)C frameworks
 import os
 from pyobjc_setup import setup, Extension
 
-VERSION="3.3a0"
+VERSION="4.0.1b1"
 
 setup(
     name='pyobjc-framework-ImageCaptureCore',
-    description = "Wrappers for the framework ImageCaptureCore on Mac OS X",
+    description = "Wrappers for the framework ImageCaptureCore on macOS",
     packages = [ "ImageCaptureCore" ],
     ext_modules = [
         Extension("ImageCaptureCore._ImageCaptureCore",

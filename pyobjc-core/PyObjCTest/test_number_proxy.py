@@ -66,10 +66,12 @@ class TestNSNumber (TestCase):
 
         n = objc.lookUpClass('NSObject').alloc().init()
 
-        with filterWarnings("error", RuntimeWarning):
-            self.assertRaises(RuntimeWarning, numberWrapper, n)
+        with warnings.catch_warnings(record=True) as w:
+            numberWrapper(n)
+        self.assertEqual(len(w), 1)
+        self.assertEqual(w[0].category, RuntimeWarning)
 
-        with filterWarnings("ignore", RuntimeWarning):
+        with warnings.catch_warnings():
             self.assertIs(numberWrapper(n), n)
 
 

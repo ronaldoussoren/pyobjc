@@ -1,6 +1,6 @@
 '''
 Wrappers for the 'OpenDirectory' and 'CFOpenDirectory' frameworks on
-MacOSX 10.6 and later.
+macOS 10.6 and later.
 
 These wrappers don't include documentation, please check Apple's documention
 for information on how to use this framework and PyObjC's documentation
@@ -9,11 +9,11 @@ and (Objective-)C frameworks
 '''
 from pyobjc_setup import setup
 
-VERSION="3.3a0"
+VERSION="4.0.1b1"
 
 setup(
     name='pyobjc-framework-OpenDirectory',
-    description = "Wrappers for the framework OpenDirectory on Mac OS X",
+    description = "Wrappers for the framework OpenDirectory on macOS",
     min_os_level='10.6',
     packages = [ "OpenDirectory", "CFOpenDirectory" ],
     version=VERSION,

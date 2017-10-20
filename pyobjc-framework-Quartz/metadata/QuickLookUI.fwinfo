@@ -2,21 +2,43 @@
 # for information on how to update this file.
 {
  "definitions": {
-  "classes": {}, 
+  "classes": {},
   "formal_protocols": {
    "QLPreviewPanelDelegate": {
     "methods": [
      {
       "args": {
        "2": {}
-      }, 
-      "class_method": false, 
+      },
+      "class_method": false,
       "selector": "previewPanel:transitionImageForPreviewItem:contentRect:"
      }
     ]
    }
-  }, 
-  "functions": {}, 
+  },
+  "classes": {
+   "NSObject": {
+    "methods": [
+     {
+      "selector": "preparePreviewOfSearchableItemWithIdentifier:queryString:completionHandler:",
+      "class_method": false,
+      "args": {
+       "2": {
+        "type_override": "@?",
+	"callable": {
+	 "arguments": {
+	  "0": { "typestr": "^v" },
+	  "1": { "typestr": "@" }
+	 },
+	 "retval": { "typestr": "v" }
+	}
+       }
+      }
+     }
+    ]
+   }
+  },
+  "functions": {},
   "informal_protocols": {}
  }
 }

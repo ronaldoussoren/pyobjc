@@ -6,7 +6,6 @@ These tests are for global function
 from __future__ import unicode_literals
 import objc
 from PyObjCTools.TestSupport import *
-import warnings
 
 from PyObjCTest.metadatafunction import *
 

@@ -52,6 +52,7 @@ class TestDateFormatter (TestCase):
         self.assertEqual(kCFISO8601DateFormatWithDashSeparatorInDate, 1 << 8)
         self.assertEqual(kCFISO8601DateFormatWithColonSeparatorInTime, 1 << 9)
         self.assertEqual(kCFISO8601DateFormatWithColonSeparatorInTimeZone, 1 << 10)
+        self.assertEqual(kCFISO8601DateFormatWithFractionalSeconds, 1 << 11)
         self.assertEqual(kCFISO8601DateFormatWithFullDate, kCFISO8601DateFormatWithYear | kCFISO8601DateFormatWithMonth | kCFISO8601DateFormatWithDay | kCFISO8601DateFormatWithDashSeparatorInDate)
         self.assertEqual(kCFISO8601DateFormatWithFullTime, kCFISO8601DateFormatWithTime | kCFISO8601DateFormatWithColonSeparatorInTime | kCFISO8601DateFormatWithTimeZone | kCFISO8601DateFormatWithColonSeparatorInTimeZone)
         self.assertEqual(kCFISO8601DateFormatWithInternetDateTime, kCFISO8601DateFormatWithFullDate | kCFISO8601DateFormatWithFullTime)

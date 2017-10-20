@@ -1,5 +1,5 @@
 '''
-Wrappers for the "StoreKit" framework on MacOS X 10.7 or later.
+Wrappers for the "StoreKit" framework on macOS 10.7 or later.
 
 These wrappers don't include documentation, please check Apple's documention
 for information on how to use this framework and PyObjC's documentation
@@ -10,11 +10,11 @@ and (Objective-)C frameworks
 from pyobjc_setup import setup, Extension
 import os
 
-VERSION="3.3a0"
+VERSION="4.0.1b1"
 
 setup(
     name='pyobjc-framework-StoreKit',
-    description = "Wrappers for the framework StoreKit on Mac OS X",
+    description = "Wrappers for the framework StoreKit on macOS",
     min_os_level='10.7',
     packages = [ "StoreKit" ],
     ext_modules = [

@@ -571,6 +571,13 @@ class TestURL (TestCase):
         self.assertIsInstance(kCFURLVolumeSupportsSwapRenamingKey, unicode)
         self.assertIsInstance(kCFURLVolumeSupportsExclusiveRenamingKey, unicode)
 
+    @min_os_level('10.13')
+    def testConstants10_13(self):
+        self.assertIsInstance(kCFURLVolumeAvailableCapacityForImportantUsageKey, unicode)
+        self.assertIsInstance(kCFURLVolumeAvailableCapacityForOpportunisticUsageKey, unicode)
+        self.assertIsInstance(kCFURLVolumeSupportsImmutableFilesKey, unicode)
+        self.assertIsInstance(kCFURLVolumeSupportsAccessPermissionsKey, unicode)
+
     @min_os_level('10.9')
     def testFunctions10_9(self):
         self.assertResultIsBOOL(CFURLIsFileReferenceURL)
