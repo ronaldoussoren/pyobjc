@@ -161,8 +161,7 @@ def cast_ulonglong(value):
 _os_release = None
 def os_release():
     """
-    Returns '10.5' on all releases of Leopard, simularly for other
-    major releases.
+    Returns the release of macOS (for example 10.5.1).
     """
     global _os_release
     if _os_release is not None:
@@ -174,7 +173,7 @@ def os_release():
     else:
         pl = _pl.readPlist('/System/Library/CoreServices/SystemVersion.plist')
     v = pl['ProductVersion']
-    return '.'.join(v.split('.')[:2])
+    return '.'.join(v.split('.'))
 
 
 def is32Bit():
@@ -274,14 +273,21 @@ def min_python_release(version):
     return onlyIf(_sys.version_info[:2] >= parts, "Requires Python %s or later"%(version,))
 
 def _sort_key(version):
-   return tuple(int(x) for x in version.split('.'))
+    parts = version.split('.')
+    if len(parts) == 2:
+      parts.append('0')
+
+    if len(parts) != 3:
+       raise ValueError("Invalid version: %r"%(version,))
+
+    return tuple(int(x) for x in parts)
 
 
 def os_level_key(release):
     """
     Return an object that can be used to compare two releases.
     """
-    return tuple(int(x) for x in release.split('.'))
+    return _sort_key(release)
 
 
 def min_sdk_level(release):
@@ -293,7 +299,7 @@ def min_sdk_level(release):
             def testSnowLeopardSDK(self):
                 pass
     """
-    v = (objc.PyObjC_BUILD_RELEASE // 100, objc.PyObjC_BUILD_RELEASE % 100)
+    v = (objc.PyObjC_BUILD_RELEASE // 100, objc.PyObjC_BUILD_RELEASE % 100, 0)
     return onlyIf(v >= os_level_key(release), "Requires build with SDK %s or later"%(release,))
 
 def max_sdk_level(release):
@@ -305,7 +311,8 @@ def max_sdk_level(release):
             def testUntilLeopardSDK(self):
                 pass
     """
-    return onlyIf(objc.PyObjC_BUILD_RELEASE <= os_level_key(release), "Requires build with SDK %s or later"%(release,))
+    v = (objc.PyObjC_BUILD_RELEASE // 100, objc.PyObjC_BUILD_RELEASE % 100, 0)
+    return onlyIf(v <= os_level_key(release), "Requires build with SDK %s or later"%(release,))
 
 def min_os_level(release):
     """

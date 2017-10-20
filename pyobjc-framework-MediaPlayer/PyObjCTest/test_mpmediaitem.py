@@ -61,6 +61,10 @@ if sys.maxsize > 2**32:
             self.assertIsInstance(MediaPlayer.MPMediaItemPropertyBookmarkTime, unicode)
             self.assertIsInstance(MediaPlayer.MPMediaItemPropertyDateAdded, unicode)
 
+        @min_os_level('10.13.1')
+        def testConstants10_13(self):
+            self.assertIsInstance(MediaPlayer.MPNowPlayingInfoPropertyCurrentPlaybackDate, unicode)
+
         @min_os_level('10.12')
         def testMethods(self):
             self.assertResultIsBOOL(MediaPlayer.MPMediaItem.isExplicitItem)

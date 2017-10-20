@@ -3,6 +3,14 @@ What's new in PyObjC
 
 An overview of the relevant changes in new, and older, releases.
 
+Version 4.0.1
+-------------
+
+* Updated metadata for Xcode 9.1 (beta 2)
+
+* Changes to PyObjCTools.TestSupport to be able to include/exclude tests
+  based on the minor release of macOS.
+
 Version 4.0
 -----------
 

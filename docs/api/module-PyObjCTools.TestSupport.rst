@@ -60,9 +60,12 @@ wrappers.
 
 .. function:: os_release()
 
-   Returns the major release of Mac OS X on the current machine,
-   for example "10.5" on all systems running a version
-   of Leopard.
+   Returns the release of Mac OS X on the current machine.
+
+   .. note::
+
+      Before PyObjC 4.0.1 this returned the major release and
+      left out the patch level.
 
 .. function:: os_level_key(release)
 

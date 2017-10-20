@@ -98,7 +98,7 @@ class TestTestSupport (TestCase):
         self.assertEqual(os_release(), '10.10')
         TestSupport._os_release = None
 
-        self.assertEqual(TestSupport.os_release(), '.'.join(platform.mac_ver()[0].split('.')[:2]))
+        self.assertEqual(TestSupport.os_release(), '.'.join(platform.mac_ver()[0].split('.')))
 
     def test_fourcc(self):
         import struct
