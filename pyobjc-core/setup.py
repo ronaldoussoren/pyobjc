@@ -621,12 +621,17 @@ def parse_package_metadata():
     cfg.optionxform = lambda x: x
 
     metadata = {}
-    for opt in cfg.options('metadata'):
-        val = cfg.get('metadata', opt)
+    for opt in cfg.options('x-metadata'):
+        val = cfg.get('x-metadata', opt)
         if opt in ('classifiers',):
             metadata[opt] = [x for x in val.splitlines() if x]
         elif opt in ('long_description',):
-            metadata[opt] = val[1:]
+            # In python 2.7 empty lines in the long description are handled incorrectly,
+            # therefore setup.cfg uses '$' at the start of empty lines. Remove that
+            # character from the description
+            val = val[1:]
+            val = val.replace('$', '')
+            metadata[opt] = val
         elif opt in ('packages', 'namespace_packages', 'platforms', 'keywords'):
             metadata[opt] = [x.strip() for x in val.split(',')]
 
