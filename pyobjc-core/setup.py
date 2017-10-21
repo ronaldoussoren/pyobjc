@@ -615,10 +615,10 @@ def parse_package_metadata():
         from configparser import RawConfigParser
 
     cfg = RawConfigParser()
+    cfg.optionxform = lambda x: x
     with open('setup.cfg') as fp:
         cfg.readfp(fp)
 
-    cfg.optionxform = lambda x: x
 
     metadata = {}
     for opt in cfg.options('x-metadata'):
@@ -632,6 +632,15 @@ def parse_package_metadata():
             val = val[1:]
             val = val.replace('$', '')
             metadata[opt] = val
+
+            # Add links to interesting location to the long_description
+            metadata[opt] += "\n\nProject links\n"
+            metadata[opt] += "-------------\n"
+            metadata[opt] += "\n"
+            metadata[opt] += "* `Documetation <https://pyobjc.readthedocs.io/en/latest/>`_\n\n"
+            metadata[opt] += "* `Issue Tracker <https://bitbucket.org/ronaldoussoren/pyobjc/issues?status=new&status=open>`_\n\n"
+            metadata[opt] += "* `Repository <https://bitbucket.org/ronaldoussoren/pyobjc/>`_\n\n"
+
         elif opt in ('packages', 'namespace_packages', 'platforms', 'keywords'):
             metadata[opt] = [x.strip() for x in val.split(',')]
 
