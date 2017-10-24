@@ -11,6 +11,16 @@ Version 4.0.1
 * Changes to PyObjCTools.TestSupport to be able to include/exclude tests
   based on the minor release of macOS.
 
+* Some tweaks to fix test failures when running on OSX 10.5.
+
+.. note::
+
+   The stacktrace formatting of in ``PyObjCTools.Debugging`` (from the
+   ExceptionHandling bindings) don't work for PPC binaries because symbol
+   resolution doesn't work. 
+
+   This is a known issue that won't be fixed.
+
 Version 4.0
 -----------
 

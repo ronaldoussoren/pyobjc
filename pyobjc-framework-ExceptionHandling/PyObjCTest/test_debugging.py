@@ -2,6 +2,7 @@
 Some simple tests to check that the framework is properly wrapped.
 '''
 import objc
+import sys
 from PyObjCTools.TestSupport import *
 from PyObjCTools import Debugging
 
@@ -61,6 +62,7 @@ class TestDebugging (TestCase):
         except Exception as exc:
             self.assertTrue(Debugging.isPythonException(exc))
 
+    @expectedFailureIf(sys.byteorder == 'big')
     def testAtos(self):
         NSThread = objc.lookUpClass('NSThread')
         v = ' '.join(hex(x) for x in NSThread.callStackReturnAddresses())

@@ -228,7 +228,7 @@ class TestNSLayoutManager (TestCase):
         self.assertResultIsBOOL(NSLayoutManager.layoutManagerOwnsFirstResponderInWindow_)
 
     @expectedFailureIf(os_release() in ('10.5', '10.6', '10.7', '10.8', '10.9'))
-    @min_os_level('10.5')
+    @min_os_level('10.6')
     def testMethods10_5_not_available(self):
         self.assertArgIsOut(NSLayoutManager.getGlyphsInRange_glyphs_properties_characterIndexes_bidiLevels_, 1)
         self.assertArgIsOut(NSLayoutManager.getGlyphsInRange_glyphs_properties_characterIndexes_bidiLevels_, 2)

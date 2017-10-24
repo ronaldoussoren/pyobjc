@@ -7,6 +7,8 @@ try:
 except ImportError:
     pass
 
+from Foundation import NSObject
+
 QLPreviewItemLoadingBlock=b'v@'
 
 class TestQLPreviewingControllerHelper (NSObject):

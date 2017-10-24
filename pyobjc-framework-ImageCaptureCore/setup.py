@@ -14,6 +14,7 @@ VERSION="4.0.1b1"
 setup(
     name='pyobjc-framework-ImageCaptureCore',
     description = "Wrappers for the framework ImageCaptureCore on macOS",
+    min_os_level='10.6',
     packages = [ "ImageCaptureCore" ],
     ext_modules = [
         Extension("ImageCaptureCore._ImageCaptureCore",

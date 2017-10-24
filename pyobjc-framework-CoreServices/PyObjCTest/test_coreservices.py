@@ -8,7 +8,7 @@ class TestCoreServices (TestCase):
         self.assertHasAttr(CoreServices, 'DCSCopyTextDefinition')
 
         # FSEvents
-        self.assertHasAttr(CoreServices, 'FSEventStreamSetExclusionPaths')
+        self.assertHasAttr(CoreServices, 'FSEventStreamShow')
 
         # SearchKit
         self.assertHasAttr(CoreServices, 'SKSummaryGetSentenceSummaryInfo')

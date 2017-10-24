@@ -17,6 +17,7 @@ VERSION="4.0.1b1"
 setup(
     name='pyobjc-framework-iTunesLibrary',
     description = "Wrappers for the framework iTunesLibrary on macOS",
+    min_os_level='10.6',
     packages = [ "iTunesLibrary" ],
     version=VERSION,
     install_requires = [

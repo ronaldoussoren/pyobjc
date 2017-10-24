@@ -26,6 +26,12 @@ class TestCGDataProvider (TestCase):
         fn = "/Library/Documentation/Acknowledgements.rtf"
         if not os.path.exists(fn):
             fn = "/Library/Documentation/Airport Acknowledgements.rtf"
+        if not os.path.exists(fn):
+            fn = "/Library/Documentation//MacOSXServer/Server Acknowledgments.pdf"
+
+        if not os.path.exists(fn):
+            self.fail("Cannot find test file")
+           
         url = CFURLCreateWithFileSystemPath(None,
                 fn, kCFURLPOSIXPathStyle, False)
 

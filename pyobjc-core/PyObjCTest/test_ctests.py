@@ -26,7 +26,7 @@ def make_test(name):
     """
     result = { 'meth': ctests[name] }
 
-    if sys.platform == 'darwin' and name == 'CheckNSInvoke' and platform.machine() == 'Power Macintosh' and tuple(map(int, platform.mac_ver()[0].split('.'))) < (10, 6):
+    if sys.platform == 'darwin' and name == 'CheckNSInvoke' and platform.machine() == 'Power Macintosh' and tuple(map(int, platform.mac_ver()[0].split('.'))) < (10, 5):
         # There is a bug in Apple's implementation of NSInvocation
         # surpress the test failure until Apple fixes the class.
         # Don't change the C-code, the same function is used to disable

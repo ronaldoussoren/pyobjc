@@ -1172,19 +1172,20 @@ class TestVariableLengthValue (TestCase):
             self.assertEqual(data[0], b'\x00')
         else:
             self.assertEqual(data[0], 0)
-        v[0] = 0xffffff
+        v[0] = 0x0f0f0f0f
         if sys.version_info[0] == 2:
-            self.assertEqual(data[0], b'\xff')
-            data[4] = b'\x00'
+            self.assertEqual(data[0], b'\x0f')
+            data[0] = b'\x00'
 
         else:
-            self.assertEqual(data[0], 0xff)
-            data[4] = 0
+            self.assertEqual(data[0], 0x0f)
+            data[0] = 0
 
-        if sys.byteorder == 'big':
-            self.assertEqual(v[0], 0xffffff00)
+        if sys.byteorder == 'little':
+            self.assertEqual(v[0], 0x0f0f0f00)
+
         else:
-            self.assertEqual(v[0], 0x00ffffff)
+            self.assertEqual(v[0], 0x000f0f0f)
 
     def testInput(self):
         o = OC_MetaDataTest.alloc().init()

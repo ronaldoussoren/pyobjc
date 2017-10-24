@@ -148,7 +148,17 @@ class DgTestCase (unittest.TestCase):
 
     def runTestCase(self):
         os.environ['DYLD_BIND_AT_LAUNCH'] = '1'
-        fp = os.popen('/tmp/test.bin', 'r')
+        try:
+            signal.alarm(5)
+            def handler(signum, frame):
+                raise AssertionError("Test took too long")
+                
+            orig_handler = signal.signal(signal.SIGALRM, handler)
+            fp = os.popen('/tmp/test.bin', 'r')
+    
+        finally:
+            signal.alarm(0)
+            signal.signal(signal.SIGALRM, orig_handler)
         del os.environ['DYLD_BIND_AT_LAUNCH']
         data = fp.read()
         xit = fp.close()

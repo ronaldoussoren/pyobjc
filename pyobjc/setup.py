@@ -58,7 +58,7 @@ FRAMEWORK_WRAPPERS=[
         ('GameController',          '10.9',             None        ),
         ('IMServicePlugIn',         '10.7',             None        ),
         ('InputMethodKit',          '10.5',             None        ),
-        ('ImageCaptureCore',        None,               None        ),
+        ('ImageCaptureCore',        '10.6',             None        ),
         ('Intents',                 '10.12',            None        ),
         ('InstallerPlugins',        None,               None        ),
         ('InstantMessage',          '10.5',             None        ),
@@ -108,7 +108,8 @@ FRAMEWORK_WRAPPERS=[
         ('Vision',                  '10.13',            None        ),
 
         # iTunes library is shipped with iTunes, not part of macOS 'core'
-        ('iTunesLibrary',           None,               None        ),
+	# Requires iTunes 11 or later, which is not available on 10.5
+        ('iTunesLibrary',           '10.6',             None        ),
 ]
 
 

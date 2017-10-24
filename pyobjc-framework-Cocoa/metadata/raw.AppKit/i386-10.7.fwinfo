@@ -96296,7 +96296,7 @@
     ],
     "inline": true,
     "retval": {
-     "typestr": "Q"
+     "typestr": "I"
     }
    },
    "NSFrameRect": {

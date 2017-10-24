@@ -22,6 +22,24 @@ from _common_definitions import TOP_DIR, TEST_STATE_DIR, PY_VERSIONS
 from _common_definitions import virtualenv, system_report
 from _topsort import topological_sort
 
+_detected_versions = None
+def detect_pyversions():
+    global _detected_versions
+    if _detected_versions is not None:
+        return _detected_versions
+    
+    result = []
+    for ver in PY_VERSIONS:
+        if os.path.exists(os.path.join(
+            '/Library/Frameworks/Python.framework/Versions', ver)):
+
+            result.append(ver)
+
+    _detected_versions = result
+    return _detected_versions
+
+   
+
 
 def load_pushover_keys():
     cfg = configparser.ConfigParser()
@@ -103,7 +121,7 @@ def parse_arguments():
         metavar='VER',
         action='append',
         default=[],
-        help='Select python version to test (%s)'%(", ".join(PY_VERSIONS)))
+        help='Select python version to test (%s)'%(", ".join(detect_pyversions())))
 
     parser.add_argument(
             '--state-dir',
@@ -115,7 +133,7 @@ def parse_arguments():
 
     result = parser.parse_args()
     if not result.python_versions:
-        result.python_versions=PY_VERSIONS
+        result.python_versions=detect_pyversions()
 
     return result
 
@@ -153,11 +171,19 @@ def run_tests(*, interpreter, arch, py_ver, project, state_dir):
     proj_dir = os.path.join(TOP_DIR, project)
 
     lg.info("testing %r using %r (%s, %7s)", project, interpreter, py_ver, arch)
+    k = {}
+    if project == 'pyobjc-framework-InterfaceBuilderKit':
+        # The InterfaceBuilderKit framework requires additinal setup when testing.
+        k['env'] = os.environ.copy()
+        k['env']['DYLD_FRAMEWORK_PATH'] = subprocess.check_output(['xcode-select', '-print-path']).decode('utf-8').strip() + '/Library/PrivateFrameworks/'
+        print(k)
+
     p = subprocess.Popen(
             ["/usr/bin/arch", "-%s"%(arch,), interpreter, "setup.py", "test", "--verbosity=3"],
             cwd=proj_dir,
             stdout=subprocess.PIPE,
             stderr=subprocess.PIPE,
+            **k
     )
     stdout, stderr = p.communicate()
     exitcode = p.wait()

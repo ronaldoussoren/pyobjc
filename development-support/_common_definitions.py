@@ -57,8 +57,8 @@ def xcode_version():
     data = subprocess.check_output(["xcodebuild", "-version"])
     data = data.decode("utf-8")
     lines = data.splitlines()
-    assert len(lines) == 2
-    return "{} ({})".format(lines[0], lines[1])
+    assert len(lines) >= 2
+    return "{} ({})".format(lines[0], lines[-1])
 
 def py_version(ver):
     return subprocess.check_output(

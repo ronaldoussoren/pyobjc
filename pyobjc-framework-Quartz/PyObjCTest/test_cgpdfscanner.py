@@ -7,10 +7,13 @@ class TestCGPDFScanner (TestCase):
     def testTypes(self):
         self.assertIsOpaquePointer(CGPDFScannerRef)
 
+    @expectedFailureIf(os_release().startswith('10.5.'))
+    def testFunctionMissingOn10_5(self):
+        CGPDFScannerRetain
+
     def testFunctions(self):
         self.assertResultIsNotCFRetained(CGPDFScannerCreate)
 
-        CGPDFScannerRetain
         CGPDFScannerRelease
         self.assertResultHasType(CGPDFScannerScan, objc._C_BOOL)
         CGPDFScannerGetContentStream
