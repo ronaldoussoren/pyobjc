@@ -39,8 +39,7 @@ Manual installation is slightly involved, but still pretty easy.
 * First download the source code packages from the cheeseshop, you
   need at least :pypi:`pyobjc-core` and :pypi:`pyobjc-framework-Cocoa`.
   You do not need :pypi:`pyobjc`, that's a helper package that is only
-  used to pull in the other packages when installing using `easy_install`_
-  or `pip`_.
+  used to pull in the other packages when installing using `pip`_.
 
 * Extract the archives
 
