@@ -7,25 +7,30 @@ the Python programmer to take full advantage of the power provided by various
 Objective-C based toolkits and the Objective-C programmer transparent access
 to Python based functionality.
 
-The most important usage of this is writing Cocoa GUI applications on Mac OS X
+The most important usage of this is writing Cocoa GUI applications on macOS
 in pure Python. See our tutorial for an example of this.
 
 Release information
 -------------------
 
-.. raw:: html
+PyObjC 4.0 was released on 2017-09-25. See the `changelog <changelog.html>`_ for more information.
 
-   <p>PyObjC <span id="release_version">4.0</span> was released on <span id="release_date">2017-09-25</span>.
-   See the <a href="changelog.html">changelog</a> for more information.
-   <script type="text/javascript">
-      $.getJSON('https://pypi.python.org/pypi/pyobjc/json?callback=?', function(data) {
-         $('#release_version').text(data.info.version);
+Supported platforms
+-------------------
 
-         $.each(data.urls, function(idx, info) {
-                $('#release_date').text(info.upload_time.substring(0, 10));
-         });
-      });
-   </script>
+PyObjC is regularly tested with Python 2.7, 3.4, 3.5 and 3.6.
+PyObjC does not support other python implementation such as PyPy and Jython.
+
+PyObjC is regularly tested on macOS 10.13 and should work on macOS
+10.5 or later for the i386, x86_64 and ppc architectures. PPC64 (64-bit
+on PowerMac G5 or iMac G5 systems) is not supported at all.
+
+.. note::
+
+   PPC support, and support for versions of macOS before 10.9 is
+   no longer actively developed and may be removed in future versions
+   of PyObjC.
+
 
 
 General documentation
