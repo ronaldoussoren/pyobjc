@@ -1,6 +1,7 @@
 
 from PyObjCTools.TestSupport import *
 from Quartz import *
+import Quartz
 
 class TestCGImageProperties (TestCase):
 
@@ -295,6 +296,11 @@ class TestCGImageProperties (TestCase):
     @min_os_level('10.5')
     @expectedFailureIf(os_release() == '10.6')
     def testConstants10_5_bad_on_10_6(self):
+        self.assertTrue(hasattr(Quartz, 'kCGImagePropertyMakerMinoltaDictionary'))
+        self.assertTrue(hasattr(Quartz, 'kCGImagePropertyMakerFujiDictionary'))
+        self.assertTrue(hasattr(Quartz, 'kCGImagePropertyMakerOlympusDictionary'))
+        self.assertTrue(hasattr(Quartz, 'kCGImagePropertyMakerPentaxDictionary'))
+
         self.assertIsInstance(kCGImagePropertyMakerMinoltaDictionary, unicode)
         self.assertIsInstance(kCGImagePropertyMakerFujiDictionary, unicode)
         self.assertIsInstance(kCGImagePropertyMakerOlympusDictionary, unicode)

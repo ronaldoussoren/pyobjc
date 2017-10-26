@@ -44,7 +44,10 @@ class TestQTError (TestCase):
     @expectedFailureIf(os_release() in ('10.6', '10.10', '10.11', '10.12', '10.13'))
     @min_os_level('10.6')
     def testConstants10_6_fail(self):
-        self.assertIsInstance(QTErrorRecordingSuccessfullyFinishedKey, unicode)
+        try:
+            self.assertIsInstance(QTErrorRecordingSuccessfullyFinishedKey, unicode)
+        except NameError:
+            self.fail("QTErrorRecordingSuccessfullyFinishedKey not defined")
 
 if __name__ == "__main__":
     main()

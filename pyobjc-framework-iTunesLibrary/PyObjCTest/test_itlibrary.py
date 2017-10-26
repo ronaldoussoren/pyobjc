@@ -9,10 +9,13 @@ class TestITLibrary (TestCase):
 
     def testMethods(self):
         self.assertResultIsBOOL(iTunesLibrary.ITLibrary.shouldShowContentRating)
-        self.assertResultIsBOOL(iTunesLibrary.ITLibrary.reloadData)
 
         self.assertArgIsOut(iTunesLibrary.ITLibrary.libraryWithAPIVersion_error_, 1)
         self.assertArgIsOut(iTunesLibrary.ITLibrary.initWithAPIVersion_error_, 1)
+
+    @min_os_level('10.7')
+    def testMethods10_7(self):
+        #self.assertResultIsBOOL(iTunesLibrary.ITLibrary.reloadData)
 
     def testConstants(self):
         self.assertEqual(iTunesLibrary.ITLibExportFeatureNone, 0)

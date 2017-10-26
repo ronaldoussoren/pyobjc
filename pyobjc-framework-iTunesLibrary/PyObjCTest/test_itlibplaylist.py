@@ -49,6 +49,9 @@ class TestITLibPlaylist (TestCase):
         self.assertIsInstance(iTunesLibrary.ITLibPlaylistPropertyParentPersistentID, unicode)
         self.assertIsInstance(iTunesLibrary.ITLibPlaylistPropertyVisible, unicode)
         self.assertIsInstance(iTunesLibrary.ITLibPlaylistPropertyItems, unicode)
+
+    @min_os_level('10.7')
+    def testConstants10_7(self):
         self.assertIsInstance(iTunesLibrary.ITLibPlaylistPropertyKind, unicode)
 
 if __name__ == "__main__":

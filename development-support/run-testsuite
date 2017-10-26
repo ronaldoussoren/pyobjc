@@ -2,6 +2,7 @@
 """
 Helper script for running the PyObjC test suite
 """
+
 import argparse
 import collections
 import contextlib
@@ -37,8 +38,6 @@ def detect_pyversions():
 
     _detected_versions = result
     return _detected_versions
-
-   
 
 
 def load_pushover_keys():
@@ -176,7 +175,6 @@ def run_tests(*, interpreter, arch, py_ver, project, state_dir):
         # The InterfaceBuilderKit framework requires additinal setup when testing.
         k['env'] = os.environ.copy()
         k['env']['DYLD_FRAMEWORK_PATH'] = subprocess.check_output(['xcode-select', '-print-path']).decode('utf-8').strip() + '/Library/PrivateFrameworks/'
-        print(k)
 
     p = subprocess.Popen(
             ["/usr/bin/arch", "-%s"%(arch,), interpreter, "setup.py", "test", "--verbosity=3"],
@@ -283,6 +281,26 @@ def supports_arch(interpreter, arch):
 
     return False
 
+def compiler_supports_arch(arch):
+    if os.path.exists('/tmp/detect'):
+        os.unlink('/tmp/detect')
+    with open("/tmp/detect.c", "w") as fp:
+        fp.write("int main(void) { return 42; }\n");
+
+    try:
+        lines = subprocess.check_output(['cc', '-o', '/tmp/detect', '/tmp/detect.c', '-arch', arch])
+    except subprocess.CalledProcessError:
+        os.unlink('/tmp/detect.c')
+        return False
+
+    os.unlink('/tmp/detect.c')
+    if not os.path.exists('/tmp/detect'):
+       return False
+
+    os.unlink('/tmp/detect')
+    return True
+
+
 def main():
     logging.basicConfig(stream=sys.stdout, level=logging.DEBUG)
     lg = logging.getLogger("runtests")
@@ -296,7 +314,8 @@ def main():
 
     osx_release = platform.mac_ver()[0]
 
-    lg.info("running PyObjC tests on OSX %s", osx_release)
+    lg.info("running PyObjC tests on OSX %s with python versions %s", 
+	osx_release, ", ".join(options.python_versions))
     osx_dir = os.path.join(options.state_dir, ".".join(osx_release.split(".")[:2]))
     if not os.path.exists(osx_dir):
         os.makedirs(osx_dir)
@@ -319,6 +338,11 @@ def main():
                 if not supports_arch(interpreter, arch):
                     lg.info("skipping Python %s (%7s), unsupported architecture", py_ver, arch)
                     continue
+
+                if not compiler_supports_arch(arch):
+                    lg.info("skipping Python %s (%7s), compiler cannot build for architecture", py_ver, arch)
+                    continue
+                    
 
                 lg.info("running with Python %s (%7s) using %s", py_ver, arch, interpreter)
                 state_dir = os.path.join(osx_dir, "%s-%s"%(py_ver, arch))
