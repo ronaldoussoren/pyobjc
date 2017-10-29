@@ -32,7 +32,7 @@ The ``setup.py`` for a framework wrapper should defer most work to
    setup(
       name='pyobjc-framework-AddressBook',
       version="2.3"
-      description = "Wrappers for the framework AddressBook on Mac OS X",
+      description = "Wrappers for the framework AddressBook on macOS",
       packages = [ "AddressBook" ],
       install_requires = [
           'pyobjc-core>=2.3b1',

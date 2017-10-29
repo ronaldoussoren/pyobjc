@@ -533,8 +533,8 @@ custom Objective-C code in order to be accessible by Python.
 
 Wrapped/bridged methods (and functions) have the same number of arguments
 as the corresponding Objective-C method or function, unless otherwise noted
-in the documentation (:doc:`Notes on supported APIs and classes on Mac OS X </apinotes>` for
-Cocoa on Mac OS X).
+in the documentation (:doc:`Notes on supported APIs and classes on macOS </apinotes>` for
+Cocoa on macOS).
 
 Most methods or functions that take or return pointers to values will be an
 exception to this rule if it is callable from Python at all.  In Objective-C
@@ -671,7 +671,7 @@ Objective-C use explicit reference counting to manage memory.  The methods
 ``retain``, ``release`` and ``autorelease`` are used to manage these
 reference counts.  You won't have to manage reference counts in Python, the
 bridge does all that work for you (but see :doc:`Notes on supported APIs and classes
-on Mac OS X </apinotes>` for some advanced issues).
+on macOS </apinotes>` for some advanced issues).
 
 The only reasons reference counts are mentioned at all are to tell you about
 ignoring them, and more importantly to introduce you to some issues w.r.t.
@@ -692,7 +692,7 @@ object stays alive, but the proxy object as seen by the Objective-C code is
 actually an autoreleased object that will be cleaned up unless the Objective-C
 code increases its reference count.
 
-The document :doc:`Notes on supported APIs and classes on Mac OS X </apinotes>` contains
+The document :doc:`Notes on supported APIs and classes on macOS </apinotes>` contains
 information about classes that work with weak references.  The most important
 are notification centers and ``NSOutlineView``, to be exact: the outline view
 stores weak references to the objects return by the method
@@ -724,7 +724,7 @@ See :doc:`PyObjC protocol support <protocols>` for more information.
 Cocoa Bindings
 ..............
 
-In Mac OS X 10.3 Apple introduced `Cocoa Bindings`_, a method to make it easier
+In macOS 10.3 Apple introduced `Cocoa Bindings`_, a method to make it easier
 to create and use *Controller* objects using `Key-Value Observing`_ and
 `Key-Value Coding`_.  In order to create accessors compatible with this, you
 must use ``objc.accessor`` to create an appropriate selector descriptor.

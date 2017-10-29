@@ -10,10 +10,10 @@ supports the wrappers for these types in ``Carbon.File``. The wrappers in
 
    The wrappers for these types in ``Carbon.File`` should not be used,
    that module is not available in Python 3 and has been unmaintained
-   in Python 2.x with the introduction of Mac OS X.
+   in Python 2.x with the introduction of macOS.
 
    The types in this document are fully supported, and will be supported
-   as long as Mac OS X supports these types.
+   as long as macOS supports these types.
 
 .. class:: FSRef
 
@@ -21,7 +21,7 @@ supports the wrappers for these types in ``Carbon.File``. The wrappers in
 
     .. note::
 
-       All API's using the FSRef type are deprecated by Apple as of Mac OS X 10.8,
+       All API's using the FSRef type are deprecated by Apple as of macOS 10.8,
        for most of those APIs there are alternate APIs that use URL objects
        (:c:type:`NSURL` or :c:type:`CFURL`).
 

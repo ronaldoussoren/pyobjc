@@ -10,5 +10,5 @@ PyObjC's bindings for the SyncServices framework are complete.
 
 .. note::
 
-   The entire framework is deprecated starting Mac OS X 10.7, and it no longer
+   The entire framework is deprecated starting macOS 10.7, and it no longer
    documented on Apple's developer website.

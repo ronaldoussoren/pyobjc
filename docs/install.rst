@@ -99,29 +99,29 @@ PyObjC for PowerPC systems
 ..........................
 
 To build a version of PyObjC that runs on PowerPC systems you need a system
-running Mac OS X 10.6 (or earlier) running Xcode 3. The version of Xcode that
+running macOS 10.6 (or earlier) running Xcode 3. The version of Xcode that
 is available in the Mac App Store can not create PowerPC binaries.
 
 
-Distributing binaries to other Mac OS X releases
-.................................................
+Distributing binaries to other macOS releases
+.............................................
 
 It is possible to create self-contained application bundles for PyObjC based
 application using :pypi:`py2app`. You do need to take some care when
 you want to ship these applications to machines running a different
-version of Mac OS X than the one you used for the build
+version of macOS than the one you used for the build
 
-* Later versions of Mac OS X should work fine
+* Later versions of macOS should work fine
 
-* Earlier version of Mac OS X work fine, but you do need to ensure that
+* Earlier version of macOS work fine, but you do need to ensure that
   Python itself is build with ``MACOSX_DEPLOYMENT_TARGET`` set to the earliest
-  version of Mac OS X you want to support. PyObC, and other extension packages,
+  version of macOS you want to support. PyObC, and other extension packages,
   should automaticly pick up the deployment target from the Python build.
 
   .. note::
 
      PyObjC contains code that explictly weak-links to a number of APIs that
-     are not available on all Mac OS X releases.
+     are not available on all macOS releases.
 
      You might still end up with an application that won't run on earlier
      releases when you use another extension module that (accidently) hard links

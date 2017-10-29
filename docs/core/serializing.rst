@@ -58,7 +58,7 @@ state.
 
 .. note::
 
-   In Mac OS X 10.8, an likely other OSX releases as well, the
+   In macOS 10.8, an likely other OSX releases as well, the
    Cocoa collection classes cannot properly archive and unarchive
    object graphs with cycles between collections (like the
    code below).

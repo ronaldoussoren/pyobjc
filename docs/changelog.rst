@@ -17,7 +17,7 @@ Version 4.0.1
 
    The stacktrace formatting of in ``PyObjCTools.Debugging`` (from the
    ExceptionHandling bindings) don't work for PPC binaries because symbol
-   resolution doesn't work. 
+   resolution doesn't work.
 
    This is a known issue that won't be fixed.
 
@@ -998,10 +998,10 @@ Version 3.0
   available. This shouldn't affect normal code because these methods aren't
   part of the public API for PyObjC.
 
-* Added bindings to the CoreWLAN framework (Mac OS X 10.6 or later) in
+* Added bindings to the CoreWLAN framework (macOS 10.6 or later) in
   package "pyobjc-framework-CoreWLAN"
 
-* Added bindings to the AVFoundation framework (Mac OS X 10.7 or later) in
+* Added bindings to the AVFoundation framework (macOS 10.7 or later) in
   package "pyobjc-framework-AVFoundation"
 
 * The *__dict__* for ``anObject.pyobjc_instanceMethods`` and
@@ -1010,7 +1010,7 @@ Version 3.0
   Updates of *__dict__* already did not affect anything (the value is
   calculated on access).
 
-* Removed workarounds for KVO bugs in Mac OS X 10.3.9, which means KVO
+* Removed workarounds for KVO bugs in macOS 10.3.9, which means KVO
   will likely not work properly anymore on that release of OS X.
 
 * Earlier versions of PyObjC accidently exposed ``-[NSObject respondsToSelector:]``
@@ -1393,7 +1393,7 @@ Version 2.5
 
   Until PyObjC 2.5 the property setter for 'prop' would not be called when using KeyValueCoding.
 
-- Removed Mac OS X 10.2 (!) compatibility from :mod:`PyObjCTools.KeyValueCoding`.
+- Removed macOS 10.2 (!) compatibility from :mod:`PyObjCTools.KeyValueCoding`.
 
 - PyObjCTools.KeyValueCoding has undocumented attributes 'ArrayOperators' and 'arrayOperators',
   both will be removed in a future release.
@@ -2583,7 +2583,7 @@ Version 1.3.7 (2005-07-06)
 - New TinyURLService example in AppKit that demonstrates how to write
   a service that transforms URLs into their tinyurl.com equivalents.
 
-- Ported to Mac OS X on Intel. This is an initial, experimental port. The
+- Ported to macOS on Intel. This is an initial, experimental port. The
   Intel ABI has not been finalised yet. It is also possible to build fat
   binaries, that option should not be used in production builds.
 
@@ -2606,7 +2606,7 @@ Version 1.3.6 (2005-05-19)
 
 - Removed all references to Project Builder
 
-- Mac OS X 10.2 (Jaguar) no longer supported
+- macOS 10.2 (Jaguar) no longer supported
 
 Version 1.3.5 (2005-05-18)
 --------------------------
@@ -2647,7 +2647,7 @@ Version 1.3.5 (2005-05-18)
          return 0
 
 - ``PyObjCTools.KeyValueCoding.getKeyPath`` now supports all of the
-  Array Operators supported by Mac OS X 10.4.
+  Array Operators supported by macOS 10.4.
 
 - Key-Value Coding of Python objects (whether or not using an Objective-C
   base class) should act like Objective-C now.  In previous versions
@@ -2735,7 +2735,7 @@ Version 1.3.5 (2005-05-18)
   preserve the identity of ``str`` and ``unicode`` objects across
   the bridge.  The bridge for ``str`` now uses the default
   encoding of ``NSString``, rather than ``sys.getdefaultencoding()``
-  from Python.  For Mac OS X, this is typically MacRoman.  The reason
+  from Python.  For macOS, this is typically MacRoman.  The reason
   for this is that not all Python ``str`` instances could cross the
   bridge at all previously.  ``objc.setStrBridgeEnabled(False)`` will
   still trigger warnings, if you are attempting to track down an
@@ -2892,7 +2892,7 @@ Version 1.3 (2005-03-31)
 - New Inject folder in Examples, with an InjectInterpreter
   example that will inject a GUI Python interpreter into any process.
 
-- New ``objc.inject()`` function for Mac OS X 10.3 and later,
+- New ``objc.inject()`` function for macOS 10.3 and later,
   allows an arbitrary bundle to be loaded into another process
   using mach_inject.
 
@@ -3510,9 +3510,9 @@ Version 2000-11-14 (November 14, 2000)
 
 - GNU_RUNTIME is likely completely broken
 
-- Compiles on Mac OS X Server (python 2.0)
+- Compiles on macOS Server (python 2.0)
 
-- Compiles on Mac OS X (python 2.0)
+- Compiles on macOS (python 2.0)
 
 - Works as either a dynamically loadable module or statically built
   into a python executable

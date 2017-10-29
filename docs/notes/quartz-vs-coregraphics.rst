@@ -2,11 +2,11 @@
 ========================================
 
 There are currently two sets of bindings for the CoreGraphics API
-of Mac OS X. 
+of macOS
 
 * "import CoreGraphics"
-  
-  Apple ships a module named CoreGraphics that provides bindings 
+
+  Apple ships a module named CoreGraphics that provides bindings
   for a large subset of the CoreGraphics API. These bindings provide
   a fairly Object-Oriented API, but are only available when you
   use Apple distribution of Python ("/usr/bin/python")
@@ -18,5 +18,5 @@ of Mac OS X.
   (and the rest of Quartz), but does only provide a classic function-based
   API.
 
-  The PyObjC bindings are avaiable for all Python versions and Mac OS X
+  The PyObjC bindings are avaiable for all Python versions and macOS
   releases supported by PyObjC.

@@ -22,7 +22,7 @@ Screen savers are plugins for the screen saver engine, this means
 that a screen saver must contain compiled C code for the correct
 architectures.
 
-On Mac OS X 10.6 and Mac OS X 10.7 you cannot use PyObjC to write a screen saver
+On macOS 10.6 and macOS 10.7 you cannot use PyObjC to write a screen saver
 because the screen saver engine uses Objetive-C Garbage Collection and
 that is not supported by PyObjC.
 

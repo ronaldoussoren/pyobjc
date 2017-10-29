@@ -21,7 +21,7 @@ normal Python introspection methods to check which methods are available.
 
 There are several occasions when these method tables are rescanned, because
 classes can grow new methods when categories are loaded into the runtime.
-Additionally, it is known that some Cocoa frameworks in Mac OS X change
+Additionally, it is known that some Cocoa frameworks in macOS change
 their method tables when the first instance is created.
 
 Subclassing
@@ -34,8 +34,8 @@ an Objective-C object.
 
 The first Python subclass of an Objective-C class introduces a new instance
 variable in the Objective-C object to store the pointer to the Python half of
-the cluster.  This variable is always referenced by name.  The Python half is 
-a subclass of ``objc_object`` that already contains a pointer to an Objective-C 
+the cluster.  This variable is always referenced by name.  The Python half is
+a subclass of ``objc_object`` that already contains a pointer to an Objective-C
 object.  This first subclass also introduces a number of class and instance
 methods that the PyObjC bridge uses to maintain the illusion of a single
 object on both sides.  Check class-builder.m for details.
@@ -51,7 +51,7 @@ Examples/
   Example scripts and applets.
 
 Lib/
-  The pure Python parts of the packages that comprise PyObjC.  
+  The pure Python parts of the packages that comprise PyObjC.
 
 Modules/
   Extension modules related to the packages in 'Lib'.

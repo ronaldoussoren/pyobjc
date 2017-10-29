@@ -2,7 +2,7 @@
 ================================
 
 .. module:: objc
-   :platform: MacOS X
+   :platform: macOS
    :synopsis: The PyObjC bridge
 
 .. moduleauthor:: Ronald Oussoren <ronaldoussoren@mac.com>
@@ -176,7 +176,7 @@ Weak references
    proxy for such objects).
 
    PyObjC implements a zero-ing weakref object when running on
-   Mac OS X 10.7 or later. These objects more or less behave the
+   macOS 10.7 or later. These objects more or less behave the
    same as ``__weak`` variables in Objective-C.
 
    The *object* must be a Cocoa object, and must not be a CoreFoundation
@@ -205,7 +205,7 @@ Weak references
 Associated Objects
 ------------------
 
-On Mac OS X 10.6 or later the Objective-C runtime has an API for
+On macOS 10.6 or later the Objective-C runtime has an API for
 associated objects, which are more or less additional instance variables
 for objects.
 
@@ -377,7 +377,7 @@ Accessing classes and protocols
    Objective-C are defined using that syntax, especially properties in classes
    that were introduced before MacOSX 10.5.
 
-   This function always returns an empty list on MacOS X 10.4.
+   This function always returns an empty list on macOS 10.4.
 
    .. versionadded:: 2.3
 
@@ -921,11 +921,11 @@ Types
 
    .. note::
 
-      Constructing new protocols is supported on a subset of Mac OS X platforms:
+      Constructing new protocols is supported on a subset of macOS platforms:
 
       * All 32-bit programs
 
-      * 64-bit programs starting from Mac OS X 10.7, but only when PyObjC was build with
+      * 64-bit programs starting from macOS 10.7, but only when PyObjC was build with
         the 10.7 SDK (or later)
 
    .. data:: __name__
@@ -963,7 +963,7 @@ Types
    .. note::
 
       The interface of this class gives the impression that a protocol instance is an Objective-C
-      object. That was true in earlier versions of Mac OS X, but not in more recent versions.
+      object. That was true in earlier versions of macOS, but not in more recent versions.
 
 
 .. class:: varlist

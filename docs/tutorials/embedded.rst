@@ -12,7 +12,7 @@ To follow the tutorial you need:
  * PyObjC 1.3.1
  * py2app 0.2 or later (included in the binary installer for PyObjC)
  * Python 2.3 or later (note: PyObjC is NOT compatible with MacPython-OS9)
- * Mac OS X 10.3 or later
+ * macOS 10.3 or later
  * Xcode Tools
 
 If you do not have a ``/Developer`` folder, then you do not have Xcode Tools
@@ -29,7 +29,7 @@ the CD you are currently playing in iTunes you still have to retype
 album title, artist and genre.  This is what we are going to fix: we
 are going to add a button "ask iTunes", which will use Python's
 AppleScript support to ask iTunes about the currently playing track
-and fill in the fields for you.  
+and fill in the fields for you.
 
 Follow these steps:
 
@@ -39,26 +39,26 @@ Follow these steps:
    Let's call this ``SimpleComboBoxPlus``:
 
    .. sourcecode: sh
-   
+
       $ cp -R /Developer/Examples/AppKit/SimpleComboBox SimpleComboBoxPlus
 
   From this point on, all shell commands take place from this
   ``SimpleComboBoxPlus`` folder.
-    
+
 2. Open it in Xcode, build it, and see what it does.
 
 3. Open ``CDInfoDocument.nib``.  Select the Class View, ``NSObject``, subclass
    as ``ITunesCommunication``.  Give the class an ``askITunes:`` action.
    Instantiate the class as object ``ITunesCommunication``.  This wll be the
    class that we write in Python.
-   
+
 4. Go to the object view again, open the Window.
 
 5. Move the text box down a bit to make space, add a button "ask iTunes".
 
 6. Connect this button to the ``askITunes:`` action of the
    ``ITunesCommunication`` object.
-    
+
 7. We now need to write the code implementing the ``ITunesCommunication``
    class.  As this tutorial is about using PyObjC in existing ObjC programs
    and not about PyObjC itself, we are going to skip writing the code and
@@ -74,9 +74,9 @@ Follow these steps:
 
         setup(
             plugin = ['ITunesCommunication.py']
-        )   
+        )
 
-   You may also copy this file from ``setup.py``. 
+   You may also copy this file from ``setup.py``.
 
 9. Run the setup script to create a temporary plugin bundle for development:
 
@@ -121,7 +121,7 @@ Follow these steps:
 12. Build and run.  When you press the "Ask iTunes" the "CD Title" and
     "Band Name" fields will be filled with one of the best albums of the last
     few years :-)
-    
+
 13. Now we need to make the program talk to iTunes.  The current MacPython
     interface to the Open Scripting Architecture requires an extra step when
     compared to AppleScript: you need to manually generate a Python package
@@ -133,15 +133,15 @@ Follow these steps:
     which you should run in the ``SimpleComboBoxPlus`` directory:
 
     .. sourcecode:: sh
-    
+
         $ cd SimpleComboBoxPlus
         $ pythonw -c "from gensuitemodule import main;main()" \
             --output iTunes --creator hook --resource \
             /Applications/iTunes.app/Contents/Resources/iTunes.rsrc
-    
+
 14. Finally, add the code to ``ITunesCommunication.py`` to actually communicate
     with iTunes.  We cop out and copy it from ``ITunesCommunication_2.py``.
-    
+
 15. Build and run.  If you press the button when iTunes is playing the Title
     and Band names will be filled, otherwise they will be cleared.  In a real
     application you would disable the "Ask iTunes" button unless iTunes was
@@ -157,7 +157,7 @@ Follow these steps:
 
     Then, from Xcode, clean your project (shift-cmd-K), switch to Deployment
     mode, and rebuild.
- 
+
 A minor variation
 -----------------
 

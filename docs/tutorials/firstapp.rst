@@ -19,8 +19,8 @@ To follow the tutorial you need:
  * PyObjC 1.3.1
  * py2app 0.2 or later (included in the binary installer for PyObjC)
  * Python 2.3 or later (note: PyObjC is NOT compatible with MacPython-OS9)
- * Mac OS X 10.2 or later
- * Xcode Tools (was Developer Tools for Mac OS X 10.2)
+ * macOS 10.2 or later
+ * Xcode Tools (was Developer Tools for macOS 10.2)
 
 If you do not have a ``/Developer`` folder, then you do not have Xcode Tools
 installed.  See `Apple's developer website <https://developer.apple.com/xcode/>`
@@ -260,8 +260,8 @@ This can be done with the following steps from the ``src`` directory:
 
 Now the application bundle located at ``dist/CurrencyConverter.app`` is a fully
 standalone application that should run on any computer running the same major
-version of Mac OS X or later.  This means that applications built on
-Mac OS X 10.2 are compatible with Mac OS X 10.3, but NOT vice versa.  If you
+version of macOS or later.  This means that applications built on
+macOS 10.2 are compatible with macOS 10.3, but NOT vice versa.  If you
 are not using an Apple-supplied version of Python, a subset of your Python
 installation will be included in this application.
 

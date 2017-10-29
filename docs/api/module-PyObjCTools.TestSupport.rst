@@ -26,7 +26,7 @@ wrappers.
    or :data:`None` when no version can be calculated.
 
    The SDK version is a tupel with the major
-   and minor versions of Mac OS X (for example ``(10, 8)``).
+   and minor versions of macOS (for example ``(10, 8)``).
 
 .. function:: fourcc(value)
 
@@ -60,7 +60,7 @@ wrappers.
 
 .. function:: os_release()
 
-   Returns the release of Mac OS X on the current machine.
+   Returns the release of macOS on the current machine.
 
    .. note::
 
@@ -105,23 +105,23 @@ wrappers.
 .. function:: min_sdk_level(version)
 
    Decorator for enabling a test only when running with a build of PyObjC
-   that was done with a recent enough SDK for Mac OS X.
+   that was done with a recent enough SDK for macOS.
 
 .. function:: max_sdk_level(version)
 
    Decorator for enabling a test only when running with a build of PyObjC
-   that was done with an old enough SDK for Mac OS X.
+   that was done with an old enough SDK for macOS.
 
 .. function:: min_os_level(version)
 
    Decorator for enabling a test only when running on a recent enough release
-   of Mac OS X.
+   of macOS.
 
 
 .. function:: max_os_level(version)
 
    Decorator for enabling a test only when running on a old enough release
-   of Mac OS X.
+   of macOS.
 
 
 .. _`leaks(1)`: https://developer.apple.com/legacy/library/documentation/Darwin/Reference/ManPages/man1/leaks.1.html

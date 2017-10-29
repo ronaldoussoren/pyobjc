@@ -1,7 +1,7 @@
-Overview of Mac OS X frameworks and their wrappers
-==================================================
+Overview of macOS frameworks and their wrappers
+===============================================
 
-The table below lists all frameworks found within ``/System/Library/Frameworks`` on Mac OS X and what the
+The table below lists all frameworks found within ``/System/Library/Frameworks`` on macOS and what the
 name of the Python packages are for their wrappers. The table lists "-" as the name of the Python package when
 the framework is not wrapped, see the column with notes for more information.
 

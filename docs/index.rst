@@ -91,7 +91,7 @@ Important resources:
 
 * `Mailing list for the PythonMac SIG <https://www.python.org/community/sigs/current/pythonmac-sig/>`_
 
-  A mailing list for anyone developing with Python on Mac OS X.
+  A mailing list for anyone developing with Python on macOS.
 
 * `Repository browser <https://bitbucket.org/ronaldoussoren/pyobjc/src>`_
 
