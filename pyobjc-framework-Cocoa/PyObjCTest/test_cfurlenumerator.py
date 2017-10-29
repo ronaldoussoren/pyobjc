@@ -21,7 +21,7 @@ class TestCFURLEnumerator (TestCase):
         self.assertIsInstance(ref, CFURLEnumeratorRef)
 
         ref = CFURLEnumeratorCreateForMountedVolumes(
-                None, kCFURLEnumeratorDefaultBehavior, [kCFURLNameKey])
+                None, kCFURLEnumeratorDefaultBehavior, None) #[kCFURLNameKey])
         self.assertIsInstance(ref, CFURLEnumeratorRef)
 
         self.assertArgIsOut(CFURLEnumeratorGetNextURL, 1)

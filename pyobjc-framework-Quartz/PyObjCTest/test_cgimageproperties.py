@@ -294,7 +294,7 @@ class TestCGImageProperties (TestCase):
         self.assertIsInstance(kCGImagePropertyExifAuxFirmware, unicode)
 
     @min_os_level('10.5')
-    @expectedFailureIf(os_release() == '10.6')
+    @expectedFailureIf(os_release().rsplit('.', 1)[0] == '10.6')
     def testConstants10_5_bad_on_10_6(self):
         self.assertTrue(hasattr(Quartz, 'kCGImagePropertyMakerMinoltaDictionary'))
         self.assertTrue(hasattr(Quartz, 'kCGImagePropertyMakerFujiDictionary'))

@@ -118,7 +118,7 @@ class TestSubclass (TestCase):
         self.assertEqual(testValue, managedObject.valueForKey_(b'testAttribute'.decode('ascii')))
         self.assertEqual(testValue, managedObject._.testAttribute)
 
-    @onlyIf(os_release() != '10.6', "problems on OSX 10.6")
+    @onlyIf(os_release().rsplit('.', 1)[0] != '10.6', "problems on OSX 10.6")
     def testPythonicAttribute(self):
         #self.fail("research recursion problem")
         managedObject = CoreDataTestObject.alloc().initWithEntity_insertIntoManagedObjectContext_(self.entity, self.managedObjectContext)

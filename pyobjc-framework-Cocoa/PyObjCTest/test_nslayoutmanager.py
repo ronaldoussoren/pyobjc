@@ -227,9 +227,10 @@ class TestNSLayoutManager (TestCase):
         self.assertArgIsBOOL(NSLayoutManager.rulerAccessoryViewForTextView_paragraphStyle_ruler_enabled_, 3)
         self.assertResultIsBOOL(NSLayoutManager.layoutManagerOwnsFirstResponderInWindow_)
 
-    @expectedFailureIf(os_release() in ('10.5', '10.6', '10.7', '10.8', '10.9'))
-    @min_os_level('10.6')
+    @expectedFailureIf(os_release().rsplit('.', 1)[0] in ('10.5', '10.6', '10.7', '10.8', '10.9'))
+    @min_os_level('10.5')
     def testMethods10_5_not_available(self):
+        self.assertHasAttr(NSLayoutManager, 'getGlyphsInRange_glyphs_properties_characterIndexes_bidiLevels_')
         self.assertArgIsOut(NSLayoutManager.getGlyphsInRange_glyphs_properties_characterIndexes_bidiLevels_, 1)
         self.assertArgIsOut(NSLayoutManager.getGlyphsInRange_glyphs_properties_characterIndexes_bidiLevels_, 2)
         self.assertArgIsOut(NSLayoutManager.getGlyphsInRange_glyphs_properties_characterIndexes_bidiLevels_, 3)
