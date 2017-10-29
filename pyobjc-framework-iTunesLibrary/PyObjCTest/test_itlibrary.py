@@ -15,7 +15,7 @@ class TestITLibrary (TestCase):
 
     @min_os_level('10.7')
     def testMethods10_7(self):
-        #self.assertResultIsBOOL(iTunesLibrary.ITLibrary.reloadData)
+        self.assertResultIsBOOL(iTunesLibrary.ITLibrary.reloadData)
 
     def testConstants(self):
         self.assertEqual(iTunesLibrary.ITLibExportFeatureNone, 0)
