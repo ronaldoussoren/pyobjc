@@ -12,10 +12,8 @@ class TestMAAudibleMedia (TestCase):
         a = MediaAccessibility.MAAudibleMediaCopyPreferredCharacteristics()
         self.assertIsInstance(a, (MediaAccessibility.NSArray, type(None)))
 
-    @expectedFailureIf(os_release() == '10.9')
-    @min_os_level("10.9")
+    @min_os_level("10.10")
     def test_constants(self):
-        # Present in headers, but not actually exported?
         self.assertIsInstance(MediaAccessibility.kMAAudibleMediaSettingsChangedNotification, unicode)
 
     @min_os_level("10.10")

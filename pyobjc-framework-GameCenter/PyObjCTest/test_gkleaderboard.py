@@ -15,7 +15,7 @@ if sys.maxsize > 2 ** 32:
             self.assertEqual(GameCenter.GKLeaderboardPlayerScopeGlobal, 0)
             self.assertEqual(GameCenter.GKLeaderboardPlayerScopeFriendsOnly, 1)
 
-        @expectedFailureIf(os_release() == '10.9')
+        @expectedFailureIf(os_release().rsplit('.', 1)[0] == '10.9')
         @min_os_level('10.8')
         def testMethods10_8(self):
             self.assertResultIsBOOL(GameCenter.GKLeaderboard.isLoading)

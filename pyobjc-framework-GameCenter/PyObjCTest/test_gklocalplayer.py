@@ -6,7 +6,7 @@ if sys.maxsize > 2 ** 32:
     import GameCenter
 
     class TestGKLocalPlayer (TestCase):
-        @expectedFailureIf(os_release() == '10.9')
+        @expectedFailureIf(os_release().rsplit('.', 1)[0] == '10.9')
         @min_os_level('10.8')
         def testMethods10_8(self):
             self.assertIsInstance(GameCenter.GKLocalPlayer, objc.objc_class)
@@ -22,7 +22,7 @@ if sys.maxsize > 2 ** 32:
         def testMethods10_8_fail(self):
             self.assertResultIsBOOL(GameCenter.GKLocalPlayer.isUnderage)
 
-        @expectedFailureIf(os_release() == '10.9')
+        @expectedFailureIf(os_release().rsplit('.', 1)[0] == '10.9')
         @min_os_level('10.9')
         def testMethods10_9(self):
             self.assertResultIsBlock(GameCenter.GKLocalPlayer.authenticateHandler, b'v@@')

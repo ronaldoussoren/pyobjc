@@ -18,7 +18,7 @@ if sys.maxsize > 2 ** 32:
 
             self.assertArgIsBlock(GameCenter.GKAchievement.reportAchievementWithCompletionHandler_, 0, b'v@')
 
-        @expectedFailureIf(os_release() == '10.9')
+        @expectedFailureIf(os_release().rsplit('.', 1)[0] == '10.9')
         @min_os_level('10.8')
         def testClasses10_8_missing_10_9(self):
             self.assertResultIsBOOL(GameCenter.GKAchievement.showsCompletionBanner)

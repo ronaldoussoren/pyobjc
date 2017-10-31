@@ -14,7 +14,7 @@ if sys.maxsize > 2 ** 32:
             self.assertEqual(GameCenter.GKVoiceChatPlayerSilent, 3)
             self.assertEqual(GameCenter.GKVoiceChatPlayerConnecting, 4)
 
-        @expectedFailureIf(os_release() == '10.9')
+        @expectedFailureIf(os_release().rsplit('.', 1)[0] == '10.9')
         @min_os_level('10.8')
         def testMethods10_8(self):
             self.assertArgIsBOOL(GameCenter.GKVoiceChat.setPlayer_muted_, 1)

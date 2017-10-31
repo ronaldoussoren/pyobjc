@@ -11,7 +11,7 @@ Version 4.0.1
 * Changes to PyObjCTools.TestSupport to be able to include/exclude tests
   based on the minor release of macOS.
 
-* Some tweaks to fix test failures when running on OSX 10.5.
+* Some tweaks to fix test failures when running on OSX 10.5, 10.6, 10.9.
 
 .. note::
 

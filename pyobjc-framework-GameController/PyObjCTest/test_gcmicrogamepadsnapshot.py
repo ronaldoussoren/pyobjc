@@ -23,7 +23,7 @@ if sys.maxsize > 2 ** 32:
             self.assertIsInstance(v.buttonA, float)
             self.assertIsInstance(v.buttonX, float)
 
-        @expectedFailureIf(os_release() in ('10.9', '10.10', '10.11'))
+        @expectedFailureIf(os_release().rsplit('.', 1)[0] in ('10.9', '10.10', '10.11'))
         @min_os_level("10.9")
         def testFunctions(self):
             self.assertResultIsBOOL(GameController.GCMicroGamepadSnapShotDataV100FromNSData)
