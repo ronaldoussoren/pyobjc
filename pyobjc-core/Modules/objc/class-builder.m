@@ -32,7 +32,7 @@ struct method_info {
     { 0, "takeStoredValue:forKey:", "takeStoredValue_forKey_", "v@:@@", object_method_setValue_forKey_, NO, YES },
     { 0, "takeValue:forKey:", "takeValue_forKey_", "v@:@@", object_method_setValue_forKey_, NO, YES },
     { 0, "setValue:forKey:", "setValue_forKey_", "v@:@@", object_method_setValue_forKey_, NO, YES },
-    { 0, "forwardInvocation:", "forwardInvocation_", "v@:@@", object_method_forwardInvocation, NO, YES },
+    { 0, "forwardInvocation:", "forwardInvocation_", "v@:@", object_method_forwardInvocation, NO, YES },
     { 0, "methodSignatureForSelector:", "methodSignatureForSelector_", "@@::", object_method_methodSignatureForSelector, NO, YES },
     { 0, "respondsToSelector:", "respondsToSelector_", "c@::", object_method_respondsToSelector, NO, YES },
     { 0, "copyWithZone:", "copyWithZone_", "@@:^{_NSZone=}", object_method_copyWithZone_, YES, YES },

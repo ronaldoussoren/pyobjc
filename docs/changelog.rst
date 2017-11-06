@@ -6,7 +6,11 @@ An overview of the relevant changes in new, and older, releases.
 Version 4.0.1
 -------------
 
-* Updated metadata for Xcode 9.1 (beta 2)
+* Issue #213: Fix signature for ```-[NSObject forwardInvocation:]```
+
+  Reported by user "pyrocat"
+
+* Updated metadata for Xcode 9.1
 
 * Changes to PyObjCTools.TestSupport to be able to include/exclude tests
   based on the minor release of macOS.

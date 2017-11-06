@@ -292,5 +292,11 @@ class TestInitMemoryLeak (TestCase):
         self.assertEqual(s.signature, b'@@:@@')
 
 
+class TestNSInvocationBug (TestCase):
+    def testNSInvocationOveride(self):
+        class HelperNSInvocationTest (NSObject):
+            def forwardInvocation_(self, inv):
+                pass
+
 if __name__ == '__main__':
     main()
