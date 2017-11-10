@@ -178,8 +178,8 @@ class TestCGColorSpace (TestCase):
         self.assertResultHasType(CGColorSpaceSupportsOutput, objc._C_BOOL)
         self.assertResultIsCFRetained(CGColorSpaceCreateWithICCData)
 
-    @min_os_level('10.12')
-    def testFunctions10_12(self):
+    @min_os_level('10.13')
+    def testFunctions10_13(self):
         CGColorSpaceGetName
 
 if __name__ == "__main__":
