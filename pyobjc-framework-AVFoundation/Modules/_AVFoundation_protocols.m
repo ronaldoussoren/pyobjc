@@ -30,4 +30,7 @@ static void __attribute__((__used__)) use_protocols(void)
     p = PyObjC_IdToPython(@protocol(AVAudioStereoMixing)); Py_XDECREF(p);
     p = PyObjC_IdToPython(@protocol(AVAudio3DMixing)); Py_XDECREF(p);
 #endif
+#if PyObjC_BUILD_RELEASE >= 1011
+    p = PyObjC_IdToPython(@protocol(AVFragmentMinding)); Py_XDECREF(p);
+#endif
 }

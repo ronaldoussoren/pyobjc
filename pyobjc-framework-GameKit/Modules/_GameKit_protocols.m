@@ -10,7 +10,7 @@ static void __attribute__((__used__)) use_protocols(void)
     p = PyObjC_IdToPython(@protocol(GKFriendRequestComposeViewControllerDelegate)); Py_XDECREF(p);
     p = PyObjC_IdToPython(@protocol(GKGameCenterControllerDelegate)); Py_XDECREF(p);
 
-#if PyObjC_BUILD_RELEASE >= 1011
+#if PyObjC_BUILD_RELEASE >= 1012
     p = PyObjC_IdToPython(@protocol(GKGameSessionEventListener)); Py_XDECREF(p);
 #endif
     p = PyObjC_IdToPython(@protocol(GKLeaderboardViewControllerDelegate)); Py_XDECREF(p);

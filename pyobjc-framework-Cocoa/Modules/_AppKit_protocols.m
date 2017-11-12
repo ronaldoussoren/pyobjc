@@ -121,6 +121,10 @@ static void __attribute__((__used__)) use_protocols(void)
     p = PyObjC_IdToPython(@protocol(NSTouchBarDelegate)); Py_XDECREF(p);
     p = PyObjC_IdToPython(@protocol(NSTouchBarProvider)); Py_XDECREF(p);
 #endif
+#if PyObjC_BUILD_RELEASE >= 1011
+    p = PyObjC_IdToPython(@protocol(NSTextAttachmentContainer)); Py_XDECREF(p);
+    p = PyObjC_IdToPython(@protocol(NSCollectionViewDataSource)); Py_XDECREF(p);
+#endif
 #if PyObjC_BUILD_RELEASE >= 1013
     p = PyObjC_IdToPython(@protocol(NSAccessibilityElementLoading)); Py_XDECREF(p);
     p = PyObjC_IdToPython(@protocol(NSAccessibilityCustomRotorItemSearchDelegate)); Py_XDECREF(p);
