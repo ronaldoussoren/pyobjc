@@ -148,6 +148,13 @@ from Python and to mix in Objective-C, C and C++ source.
 This package is a pseudo-package that will install all pyobjc related
 packages (that is, pyobjc-core as well as wrapppers for frameworks on
 macOS)
+
+Project links
+-------------
+
+* `Documentation <https://pyobjc.readthedocs.io/en/latest/>`_
+* `Issue Tracker <https://bitbucket.org/ronaldoussoren/pyobjc/issues?status=new&status=open>`_
+* `Repository <https://bitbucket.org/ronaldoussoren/pyobjc/>`_
 """
 
 from setuptools import setup, Extension, find_packages
@@ -385,6 +392,7 @@ dist = setup(
     version = VERSION,
     description = "Python<->ObjC Interoperability Module",
     long_description = LONG_DESCRIPTION,
+    long_description_content_type = 'text/x-rst; charset=UTF-8',
     author = "Ronald Oussoren",
     author_email = "pyobjc-dev@lists.sourceforge.net",
     url = "https://bitbucket.org/ronaldoussoren/pyobjc",
