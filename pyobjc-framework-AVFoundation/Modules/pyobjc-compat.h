@@ -111,16 +111,60 @@ typedef unsigned int NSUInteger;
 #define MAC_OS_X_VERSION_10_10 101000
 #endif
 
+#ifndef MAC_OS_X_VERSION_10_10_2
+#define MAC_OS_X_VERSION_10_10_2 101002
+#endif
+
+#ifndef MAC_OS_X_VERSION_10_10_3
+#define MAC_OS_X_VERSION_10_10_3 101003
+#endif
+
 #ifndef MAC_OS_X_VERSION_10_11
 #define MAC_OS_X_VERSION_10_11 101100
+#endif
+
+#ifndef MAC_OS_X_VERSION_10_11_2
+#define MAC_OS_X_VERSION_10_11_2 101101
+#endif
+
+#ifndef MAC_OS_X_VERSION_10_11_2
+#define MAC_OS_X_VERSION_10_11_2 101102
+#endif
+
+#ifndef MAC_OS_X_VERSION_10_11_3
+#define MAC_OS_X_VERSION_10_11_3 101103
+#endif
+
+#ifndef MAC_OS_X_VERSION_10_11_4
+#define MAC_OS_X_VERSION_10_11_4 101104
 #endif
 
 #ifndef MAC_OS_X_VERSION_10_12
 #define MAC_OS_X_VERSION_10_12 101200
 #endif
 
+#ifndef MAC_OS_X_VERSION_10_12_1
+#define MAC_OS_X_VERSION_10_12_1 101201
+#endif
+
+#ifndef MAC_OS_X_VERSION_10_12_2
+#define MAC_OS_X_VERSION_10_12_2 101202
+#endif
+
+#ifndef MAC_OS_X_VERSION_10_12_4
+#define MAC_OS_X_VERSION_10_12_4 101204
+#endif
+
 #ifndef MAC_OS_X_VERSION_10_13
 #define MAC_OS_X_VERSION_10_13 101300
+#endif
+
+#ifndef MAC_OS_X_VERSION_10_13_1
+#define MAC_OS_X_VERSION_10_13_1 101301
+#endif
+
+#ifndef MAC_OS_X_VERSION_10_13_2
+#define MAC_OS_X_VERSION_10_13_2 101302
 #endif
 
 #if PyObjC_BUILD_RELEASE <= 1005

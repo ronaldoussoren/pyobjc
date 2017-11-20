@@ -3,6 +3,13 @@ What's new in PyObjC
 
 An overview of the relevant changes in new, and older, releases.
 
+Version 4.0.2
+-------------
+
+* Updated metadata for Xcode 9.2 (beta 2)
+
+* Added missing ```MAC_OS_X_VERSION_*``` constants
+
 Version 4.0.1
 -------------
 

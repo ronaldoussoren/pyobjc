@@ -16,6 +16,7 @@
    }
   },
   "enum": {
+   "AVErrorNoSourceTrack": { "value": -11866 },
    "AVErrorVideoCompositorFailed": { "value": -11858 },
    "AVAudio3DMixingRenderingAlgorithmEqualPowerPanning": { "value": 0 },
    "AVAudio3DMixingRenderingAlgorithmSphericalHead": { "value": 1 },
@@ -44,6 +45,7 @@
   "externs": {
    "AVCaptureMaxAvailableTorchLevel": { "typestr": "f" },
    "AVCaptureLensPositionCurrent": { "typestr": "f" },
+   "AVRouteDetectorMultipleRoutesDetectedDidChangeNotification": { "typestr": "@" },
    "AVStreamingKeyDeliveryContentKeyType": { "typestr": "@" },
    "AVStreamingKeyDeliveryPersistentContentKeyType": { "typestr": "@" },
    "AVMediaCharacteristicVoiceOverTranslation": { "typestr": "@" },
@@ -99,6 +101,27 @@
    "AVAudio3DVector": { "alias": "AVAudio3DPoint" }
   },
   "classes": {
+   "AVRouteDetector": {
+    "methods": [
+     {
+      "retval": { "type_override": "Z" },
+      "class_method": false,
+      "selector": "multipleRoutesDetected"
+     },
+     {
+      "retval": { "type_override": "Z" },
+      "class_method": false,
+      "selector": "isRouteDetectionEnabled"
+     },
+     {
+      "args": {
+       "0": { "type_override": "Z" }
+      },
+      "class_method": false,
+      "selector": "setRouteDetectionEnabled:"
+     }
+    ]
+   },
    "AVMediaSelection": {
     "methods": [
      {

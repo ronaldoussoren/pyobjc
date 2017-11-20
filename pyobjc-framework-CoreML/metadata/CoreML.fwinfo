@@ -1,6 +1,7 @@
 {
  "definitions": {
   "enum": {
+   "MLModelErrorCustomLayer": { "value": 4 },
    "MLMultiArrayDataTypeDouble": { "value": 65600 },
    "MLMultiArrayDataTypeFloat32": { "value": 65568 },
    "MLMultiArrayDataTypeInt32": { "value": 131104 },
@@ -120,6 +121,69 @@
       "class_method": false,
       "args": {
        "2": { "type_modifier": "o" }
+      }
+     }
+    ]
+   },
+   "NSObject": {
+    "methods": [
+     {
+      "selector": "encodeToCommandBuffer:inputs:outputs:error:",
+      "class_method": false,
+      "args": {
+       "3": {
+        "type_override": "^@",
+	"type_modifier": "o"
+       }
+      },
+      "retval": {
+       "type_override": "Z"
+      }
+     },
+     {
+      "selector": "evaluateOnCPUWithInputs:outputs:error:",
+      "class_method": false,
+      "args": {
+       "2": {
+        "type_override": "^@",
+	"type_modifier": "o"
+       }
+      },
+      "retval": {
+       "type_override": "Z"
+      }
+     },
+     {
+      "selector": "setWeightData:error:",
+      "class_method": false,
+      "args": {
+       "1": {
+        "type_override": "^@",
+	"type_modifier": "o"
+       }
+      },
+      "retval": {
+       "type_override": "Z"
+      }
+     },
+     {
+      "selector": "outputShapesForInputShapes:error:",
+      "class_method": false,
+      "args": {
+       "1": {
+        "type_override": "^@",
+	"type_modifier": "o"
+       }
+      }
+     },
+     {
+      "selector": "initWithParameterDictionary:error:",
+      "class_method": false,
+      "args": {
+       "1": {
+        "type_override": "^@",
+	"type_modifier": "o"
+       }
       }
      }
     ]

@@ -18,6 +18,7 @@ class TestAVError (TestCase):
 
         self.assertIsInstance(AVFoundation.AVErrorDiscontinuityFlagsKey, unicode)
 
+        self.assertEqual(AVFoundation.AVErrorNoSourceTrack, -11869)
         self.assertEqual(AVFoundation.AVErrorUnknown, -11800)
         self.assertEqual(AVFoundation.AVErrorOutOfMemory, -11801)
         self.assertEqual(AVFoundation.AVErrorSessionNotRunning, -11803)

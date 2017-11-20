@@ -5,6 +5,11 @@ if sys.maxsize > 2 ** 32:
     import LocalAuthentication
 
     class TestLAContext (TestCase):
+        def testConstants(self):
+            self.assertEqual(LocalAutentication.LABiometryTypeNone, 0)
+            self.assertEqual(LocalAutentication.LABiometryNone, 0)
+            self.assertEqual(LocalAutentication.LABiometryTypeTouchID, 1)
+
         @min_os_level("10.10")
         def testClasses(self):
             self.assertIsInstance(LocalAuthentication.LAContext, objc.objc_class)

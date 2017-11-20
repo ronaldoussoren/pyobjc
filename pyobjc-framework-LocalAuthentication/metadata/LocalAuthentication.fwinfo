@@ -19,6 +19,9 @@
      "LATouchIDAuthenticationMaximumAllowableReuseDuration": { "typestr": "d" }
   },
   "enum": {
+   "LABiometryTypeNone": { "value": 0 },
+   "LABiometryNone": { "value": 0 },
+   "LABiometryTypeTouchID": { "value": 1 },
    "LAAccessControlOperationUseKeyDecrypt": { "value": 4 },
    "LAAccessControlOperationUseKeyKeyExchange": { "value": 5 },
    "kLACredentialTypePasscode": { "value": -1 },

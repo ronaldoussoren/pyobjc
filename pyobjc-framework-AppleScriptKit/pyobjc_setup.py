@@ -520,7 +520,7 @@ def setup(
         k['long_description'] += "\n\nProject links\n"
         k['long_description'] += "-------------\n"
         k['long_description'] += "\n"
-        k['long_description'] += "* `Documetation <https://pyobjc.readthedocs.io/en/latest/>`_\n\n"
+        k['long_description'] += "* `Documentation <https://pyobjc.readthedocs.io/en/latest/>`_\n\n"
         k['long_description'] += "* `Issue Tracker <https://bitbucket.org/ronaldoussoren/pyobjc/issues?status=new&status=open>`_\n\n"
         k['long_description'] += "* `Repository <https://bitbucket.org/ronaldoussoren/pyobjc/>`_\n\n"
         k['long_description_content_type'] = 'text/x-rst; charset=UTF-8'

@@ -9,6 +9,7 @@ if sys.maxsize > 2 ** 32:
             self.assertEqual(CoreML.MLModelErrorGeneric, 0)
             self.assertEqual(CoreML.MLModelErrorFeatureType, 1)
             self.assertEqual(CoreML.MLModelErrorIO, 3)
+            self.assertEqual(CoreML.MLModelErrorCustomLayer, 4)
 
 
 if __name__ == "__main__":
