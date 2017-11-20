@@ -10,7 +10,7 @@ and (Objective-)C frameworks
 import os
 from pyobjc_setup import setup, Extension
 
-VERSION="4.0.1"
+VERSION="4.0.2b1"
 
 setup(
     name='pyobjc-framework-CoreWLAN',

@@ -14,7 +14,7 @@ and (Objective-)C frameworks
 from pyobjc_setup import setup, Extension
 import os
 
-VERSION="4.0.1"
+VERSION="4.0.2b1"
 
 setup(
     name='pyobjc-framework-DictionaryServices',
