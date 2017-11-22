@@ -28,12 +28,6 @@ DADiskCopyIOMedia
 This function cannot be called from Python because IOKit is not yet
 wrapped.
 
-DASessionSetDispatchQueue
-.........................
-
-This function cannot be called from Python because dispatch queues
-aren't avaible through PyObjC at the moment.
-
 
 ``DAUnregisterCallback`` and ``DAUnregisterApprovalCallback``
 .............................................................

@@ -158,9 +158,6 @@ CFMachPort
 CFMessagePort
 .............
 
-* ``CFMessagePortSetDispatchQueue``: not supported yet because there
-  are no wrappers for dispatch_queue_t yet.
-
 * ``CFMessagePortInvalidationCallback``: The second argument of the
   callback is an integer that should be ignored. The context value
   can be retrieved using ``CFMessagePortGetContext`` (for local
