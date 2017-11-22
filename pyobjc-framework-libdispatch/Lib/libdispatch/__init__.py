@@ -23,5 +23,10 @@ sys.modules['libdispatch'] = mod = objc.ObjCLazyModule(
         '__loader__': globals().get('__loader__', None),
     })
 
+import libdispatch._libdispatch as _manual
+for nm in dir(_manual):
+    if nm.startswith('__'): continue
+    setattr(mod, nm, getattr(_manual, nm))
+
 import sys
 del sys.modules['libdispatch._metadata']

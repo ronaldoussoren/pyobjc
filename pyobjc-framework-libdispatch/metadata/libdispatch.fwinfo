@@ -1,5 +1,11 @@
 {
  "definitions": {
+  "cftypes": {
+   "dispatch_source_t": {
+    "opaque": true,
+    "typestr": "^{dispatch_source_type_s=}"
+   }
+  },
   "structs": {
    "timespec": {
     "fieldnames": [
@@ -11,6 +17,23 @@
    }
   },
   "enum": {
+   "DISPATCH_MACH_SEND_DEAD": { "value": 1 },
+   "DISPATCH_TIMER_STRICT": { "value": 1 },
+   "DISPATCH_VNODE_DELETE": { "value": 1 },
+   "DISPATCH_VNODE_WRITE": { "value": 2 },
+   "DISPATCH_VNODE_EXTEND": { "value": 4 },
+   "DISPATCH_VNODE_ATTRIB": { "value": 8 },
+   "DISPATCH_VNODE_LINK": { "value": 16 },
+   "DISPATCH_VNODE_RENAME": { "value": 32 },
+   "DISPATCH_VNODE_REVOKE": { "value": 64 },
+   "DISPATCH_VNODE_FUNLOCK": { "value": 256 },
+   "DISPATCH_PROC_EXIT": { "value": 2147483648 },
+   "DISPATCH_PROC_FORK": { "value": 1073741824 },
+   "DISPATCH_PROC_EXEC": { "value": 536870912 },
+   "DISPATCH_PROC_SIGNAL": { "value": 134217728 },
+   "DISPATCH_MEMORYPRESSURE_NORMAL": { "value": 1 },
+   "DISPATCH_MEMORYPRESSURE_WARN": { "value": 2 },
+   "DISPATCH_MEMORYPRESSURE_CRITICAL": { "value": 4 },
    "DISPATCH_IO_STRICT_INTERVAL": { "value": 1 },
    "DISPATCH_IO_STOP": { "value": 1 },
    "DISPATCH_IO_STREAM": { "value": 0 },
@@ -38,10 +61,6 @@
    "DISPATCH_BLOCK_ENFORCE_QOS_CLASS": { "value": 32 }
   },
   "externs": {
-   "_PyObjC_DISPATCH_QUEUE_CONCURRENT": { "typestr": "@" },
-   "_PyObjC_dispatch_data_empty": { "typestr": "@" },
-   "_PyObjC_DISPATCH_DATA_DESTRUCTOR_FREE": { "typestr": "@" },
-   "_PyObjC_DISPATCH_DATA_DESTRUCTOR_MUNMAP": { "typestr": "@" }
   },
   "aliases": {
   },
@@ -52,15 +71,200 @@
    "DISPATCH_QUEUE_SERIAL": { "value": "None" },
    "DISPATCH_TARGET_QUEUE_DEFAULT": { "value": "None" },
    "DISPATCH_QUEUE_SERIAL_INACTIVE": { "value": "dispatch_queue_attr_make_initially_inactive(DISPATCH_QUEUE_SERIAL)" },
-   "DISPATCH_QUEUE_CONCURRENT": { "value": "_PyObjC_DISPATCH_QUEUE_CONCURRENT" },
-   "dispatch_data_empty": { "value": "_PyObjC_dispatch_data_empty" },
-   "DISPATCH_DATA_DESTRUCTOR_FREE": { "value": "_PyObjC_DISPATCH_DATA_DESTRUCTOR_FREE" },
-   "DISPATCH_DATA_DESTRUCTOR_MUNMAP": { "value": "_PyObjC_DISPATCH_DATA_DESTRUCTOR_MUNMAP" },
    "DISPATCH_QUEUE_CONCURRENT_INACTIVE": { "value": "dispatch_queue_attr_make_initially_inactive(DISPATCH_QUEUE_CONCURRENT)" },
    "DISPATCH_QUEUE_SERIAL_WITH_AUTORELEASE_POOL": { "value": "dispatch_queue_attr_make_with_autorelease_frequency(DISPATCH_QUEUE_SERIAL, DISPATCH_AUTORELEASE_FREQUENCY_WORK_ITEM)" },
    "DISPATCH_QUEUE_CONCURRENT_WITH_AUTORELEASE_POOL": { "value": "dispatch_queue_attr_make_with_autorelease_frequency(DISPATCH_QUEUE_CONCURRENT, DISPATCH_AUTORELEASE_FREQUENCY_WORK_ITEM)" }
   },
   "functions": {
+   "dispatch_source_set_registration_handler": {
+    "args": {
+     "0": { "type_override": "@" },
+     "1": {
+      "type_override": "@?",
+      "callable": {
+       "arguments": {
+        "0": { "type": "^v" }
+       },
+       "retval": {
+        "type": "v"
+       }
+      }
+     }
+    },
+    "retval": {
+     "type_override": "v"
+    }
+   },
+   "dispatch_source_set_registration_handler_f": {
+    "args": {
+     "0": { "type_override": "@" },
+     "1": {
+      "type_override": "^?",
+      "callable": {
+       "arguments": {
+        "0": { "type": "^v" }
+       },
+       "retval": {
+        "type": "v"
+       }
+      },
+      "callable_retained": true
+     }
+    },
+    "retval": {
+     "type_override": "v"
+    }
+   },
+   "dispatch_source_set_timer": {
+    "args": {
+     "0": { "type_override": "@" },
+     "1": { "type_override": "Q" },
+     "2": { "type_override": "Q" },
+     "3": { "type_override": "Q" }
+    },
+    "retval": {
+     "type_override": "v"
+    }
+   },
+   "dispatch_source_merge_data": {
+    "args": {
+     "0": { "type_override": "@" },
+     "1": { "type_override": "L" }
+    },
+    "retval": {
+     "type_override": "v"
+    }
+   },
+   "dispatch_source_get_data": {
+    "args": {
+     "0": { "type_override": "@" }
+    },
+    "retval": {
+     "type_override": "L"
+    }
+   },
+   "dispatch_source_get_mask": {
+    "args": {
+     "0": { "type_override": "@" }
+    },
+    "retval": {
+     "type_override": "L"
+    }
+   },
+   "dispatch_source_get_handle": {
+    "args": {
+     "0": { "type_override": "@" }
+    },
+    "retval": {
+     "type_override": "L"
+    }
+   },
+   "dispatch_source_testcancel": {
+    "args": {
+     "0": { "type_override": "@" }
+    },
+    "retval": {
+     "type_override": "l"
+    }
+   },
+   "dispatch_source_cancel": {
+    "args": {
+     "0": { "type_override": "@" }
+    },
+    "retval": {
+     "type_override": "v"
+    }
+   },
+   "dispatch_source_create": {
+    "args": {
+     "0": { "type_override": "^{dispatch_source_type_s=}" },
+     "1": { "type_override": "L" },
+     "2": { "type_override": "L" },
+     "3": { "type_override": "@" }
+    },
+    "retval": {
+     "type_override": "@",
+     "already_retained": true
+    }
+   },
+   "dispatch_source_set_cancel_handler": {
+    "args": {
+     "0": { "type_override": "@" },
+     "1": {
+      "type_override": "@?",
+      "callable": {
+       "arguments": {
+        "0": { "type": "^v" }
+       },
+       "retval": {
+        "type": "v"
+       }
+      }
+     }
+    },
+    "retval": {
+     "type_override": "v"
+    }
+   },
+   "dispatch_source_set_cancel_handler_f": {
+    "args": {
+     "0": { "type_override": "@" },
+     "1": {
+      "type_override": "^?",
+      "callable": {
+       "arguments": {
+        "0": { "type": "^v" }
+       },
+       "retval": {
+        "type": "v"
+       }
+      },
+      "callable_retained": true
+     }
+    },
+    "retval": {
+     "type_override": "v"
+    }
+   },
+   "dispatch_source_set_event_handler": {
+    "args": {
+     "0": { "type_override": "@" },
+     "1": {
+      "type_override": "@?",
+      "callable": {
+       "arguments": {
+        "0": { "type": "^v" }
+       },
+       "retval": {
+        "type": "v"
+       }
+      }
+     }
+    },
+    "retval": {
+     "type_override": "v"
+    }
+   },
+   "dispatch_source_set_event_handler_f": {
+    "args": {
+     "0": { "type_override": "@" },
+     "1": {
+      "type_override": "^?",
+      "callable": {
+       "arguments": {
+        "0": { "type": "^v" }
+       },
+       "retval": {
+        "type": "v"
+       }
+      },
+      "callable_retained": true
+     }
+    },
+    "retval": {
+     "type_override": "v"
+    }
+   },
    "dispatch_data_copy_region": {
     "args": {
      "0": { "type_override": "@" },

@@ -26,6 +26,7 @@ class TestDataAPI (TestCase):
         self.assertArgHasType(libdispatch.dispatch_data_get_size, 0, objc._C_ID)
 
         # FIXME: dispatch_data_create_map
+        self.assertIsInstance(libdispatch.dispatch_data_create_map, type(id))
 
         self.assertResultHasType(libdispatch.dispatch_data_create_concat, objc._C_ID)
         self.assertArgHasType(libdispatch.dispatch_data_create_concat, 0, objc._C_ID)
@@ -44,6 +45,41 @@ class TestDataAPI (TestCase):
         self.assertArgHasType(libdispatch.dispatch_data_copy_region, 0, objc._C_ID)
         self.assertArgHasType(libdispatch.dispatch_data_copy_region, 1, objc._C_ULNG)
         self.assertArgHasType(libdispatch.dispatch_data_copy_region, 2, objc._C_OUT + objc._C_PTR + objc._C_ULNG)
+
+class TestDataUsage (TestCase):
+    def test_basic(self):
+        d1 = libdispatch.dispatch_data_create(b"hello ", 6, None, libdispatch.DISPATCH_DATA_DESTRUCTOR_DEFAULT)
+        self.assertIsNot(d1, None)
+
+        d2 = libdispatch.dispatch_data_create(b"world", 5, None, libdispatch.DISPATCH_DATA_DESTRUCTOR_DEFAULT)
+        self.assertIsNot(d2, None)
+
+        self.assertEqual(libdispatch.dispatch_data_get_size(d1), 6)
+
+        d, b, s = libdispatch.dispatch_data_create_map(d1, None, None)
+        self.assertIsNot(d, None)
+        self.assertIsInstance(b, memoryview)
+        self.assertEqual(b.tobytes(), b"hello ")
+        self.assertEqual(s, 6)
+
+        con = libdispatch.dispatch_data_create_concat(d1, d2)
+
+        lst = []
+        def worker(region, offset, buf, size):
+            lst.append((region, offset, buf, size))
+            return True
+
+        ok = libdispatch.dispatch_data_apply(con, worker)
+        self.assertEqual(ok, True)
+        self.assertEqual(len(lst), 2)
+        self.assertEqual(lst[0][1:], (0, b'hello ', 6))
+        self.assertEqual(lst[1][1:], (6, b'world', 5))
+
+        d, b, s = libdispatch.dispatch_data_create_map(con, None, None)
+        self.assertIsNot(d, None)
+        self.assertIsInstance(b, memoryview)
+        self.assertEqual(b.tobytes(), b"hello world")
+        self.assertEqual(s, 11)
 
 if __name__ == "__main__":
     main()

@@ -82,3 +82,10 @@ These functions are not available.
 ..........................................................................................................
 
 These functions are not available.
+
+
+```dispatch_data_create```
+..........................
+
+Use *DISPATCH_DATA_DESTRUCTOR_DEFAULT* as the destructor.
+

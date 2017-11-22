@@ -3,12 +3,6 @@
 
 #import <dispatch/dispatch.h>
 
-dispatch_queue_attr_t _PyObjC_DISPATCH_QUEUE_CONCURRENT = DISPATCH_QUEUE_CONCURRENT;
-dispatch_data_t _PyObjC_dispatch_data_empty = dispatch_data_empty;
-dispatch_block_t _PyObjC_DISPATCH_DATA_DESTRUCTOR_FREE = nil;
-dispatch_block_t _PyObjC_DISPATCH_DATA_DESTRUCTOR_MUNMAP = nil;
-
-
 static PyObjC_function_map function_map[] = {
     { "dispatch_get_main_queue", (PyObjC_Function_Pointer)&dispatch_get_main_queue },
     { 0, 0 }
@@ -68,9 +62,6 @@ init_inlines(void)
         PyObjC_CreateInlineTab(function_map)) < 0) {
         INITERROR();
     }
-
-    _PyObjC_DISPATCH_DATA_DESTRUCTOR_FREE = DISPATCH_DATA_DESTRUCTOR_FREE;
-    _PyObjC_DISPATCH_DATA_DESTRUCTOR_MUNMAP = DISPATCH_DATA_DESTRUCTOR_MUNMAP;
 
     INITDONE();
 }

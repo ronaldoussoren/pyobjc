@@ -20,6 +20,8 @@ setup(
     ext_modules = [
         Extension('libdispatch._inlines',
             [ 'Modules/_libdispatch_inlines.m' ]),
+        Extension('libdispatch._libdispatch',
+            [ 'Modules/_libdispatch.m' ]),
     ],
     version=VERSION,
     install_requires = [
