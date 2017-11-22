@@ -10,7 +10,7 @@ Version 4.1
 
 * Added missing ```MAC_OS_X_VERSION_*``` constants
 
-* Added bindings to libdispatch.
+* #129: Added bindings to libdispatch.
 
   These bindings require macOS 10.10 or later, libdispatch was
   available earlier but macOS 10.10 changed the API in such a
