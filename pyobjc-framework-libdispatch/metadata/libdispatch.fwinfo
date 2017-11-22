@@ -1,8 +1,22 @@
 {
  "definitions": {
   "structs": {
+   "timespec": {
+    "fieldnames": [
+     "tv_sec",
+     "tv_nsec"
+    ],
+    "special": false,
+    "typestr": "{timespec=ll}"
+   }
   },
   "enum": {
+   "DISPATCH_TIME_NOW": { "value": 0 },
+   "DISPATCH_TIME_FOREVER": { "value": 18446744073709551615 },
+   "NSEC_PER_SEC": { "value": 1000000000 },
+   "NSEC_PER_MSEC": { "value": 1000000 },
+   "USEC_PER_SEC": { "value": 1000000 },
+   "NSEC_PER_USEC": { "value": 1000 },
    "DISPATCH_IO_STREAM": { "value": 0 },
    "DISPATCH_IO_RANDOM": { "value": 1 },
    "DISPATCH_BLOCK_BARRIER": { "value": 1 },
@@ -17,6 +31,136 @@
   "aliases": {
   },
   "functions": {
+   "dispatch_get_context": {
+    "args": {
+     "0": { "type_override": "@" }
+    },
+    "retval": {
+     "type_override": "^v"
+    }
+   },
+   "dispatch_set_context": {
+    "args": {
+     "0": { "type_override": "@" },
+     "1": { "type_override": "^v" }
+    },
+    "retval": {
+     "type_override": "v"
+    }
+   },
+   "dispatch_set_finalizer_f": {
+    "args": {
+     "0": { "type_override": "@" },
+     "1": {
+      "type_override": "^?",
+      "callable": {
+       "arguments": {
+        "0": { "type": "^v" }
+       },
+       "retval": {
+        "type": "v"
+       }
+      },
+      "callable_retained": true
+     }
+    },
+    "retval": {
+     "type_override": "v"
+    }
+   },
+   "dispatch_activate": {
+    "args": {
+     "0": { "type_override": "@" }
+    },
+    "retval": {
+     "type_override": "v"
+    }
+   },
+   "dispatch_suspend": {
+    "args": {
+     "0": { "type_override": "@" }
+    },
+    "retval": {
+     "type_override": "v"
+    }
+   },
+   "dispatch_resume": {
+    "args": {
+     "0": { "type_override": "@" }
+    },
+    "retval": {
+     "type_override": "v"
+    }
+   },
+   "dispatch_cancel": {
+    "args": {
+     "0": { "type_override": "@" }
+    },
+    "retval": {
+     "type_override": "v"
+    }
+   },
+   "dispatch_testcancel": {
+    "args": {
+     "0": { "type_override": "@" }
+    },
+    "retval": {
+     "type_override": "l"
+    }
+   },
+   "dispatch_wait": {
+    "args": {
+     "0": { "type_override": "@" },
+     "1": { "type_override": "Q" }
+    },
+    "retval": {
+     "type_override": "l"
+    }
+   },
+   "dispatch_notify": {
+    "args": {
+     "0": {
+      "type_override": "@?",
+      "callable": {
+       "arguments": {
+        "0": { "type": "^v" }
+       },
+       "retval": { "type": "v" }
+      }
+     },
+     "1": { "type_override": "@" },
+     "2": {
+      "type_override": "@?",
+      "callable": {
+       "arguments": {
+        "0": { "type": "^v" }
+       },
+       "retval": { "type": "v" }
+      }
+     }
+    },
+    "retval": {
+     "type_override": "v"
+    }
+   },
+   "dispatch_time": {
+    "args": {
+     "0": { "type_override": "Q" },
+     "1": { "type_override": "q" }
+    },
+    "retval": {
+     "type_override": "Q"
+    }
+   },
+   "dispatch_walltime": {
+    "args": {
+     "0": { "type_override": "n^{timespec=ll}" },
+     "1": { "type_override": "q" }
+    },
+    "retval": {
+     "type_override": "Q"
+    }
+   },
    "dispatch_block_create": {
     "args": {
      "0": { "type_override": "L" },

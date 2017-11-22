@@ -772,6 +772,7 @@ static int set_defaults(PyObject* self, const char* typestr)
             break;
 
         default:
+            printf("Setting default for type %s\n", typestr);
             v = Py_None;
             Py_INCREF(Py_None);
         }
