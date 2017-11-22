@@ -1,0 +1,15 @@
+to wrap: data.h
+to wrap: introspection.h
+
+to wrap: io.h
+to wrap: object.h
+to wrap: once.h
+to wrap: queue.h
+to wrap: semaphore.h
+to wrap: source.h
+to wrap: time.h
+
+Current tests are purely API "shape" tests, add
+some functional tests as well
+
+Add documentation to ../docs/apinotes/

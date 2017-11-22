@@ -22,6 +22,7 @@ VERSION="4.0.2b1"
 # supported OSX release.
 FRAMEWORK_WRAPPERS=[
         # Name                      Introcuded          Removed
+        ('libdispatch',             '10.10',            None        ),
         ('AVKit',                   '10.9',             None        ),
         ('AVFoundation',            '10.7',             None        ),
         ('Accounts',                '10.8',             None        ),
