@@ -7,7 +7,7 @@ Apple documentation
 The full API is described in `Apple's documentation`__, both
 the C and Objective-C APIs are available (but see the `API Notes`_ below).
 
-.. __: https://developer.apple.com/gameplaykit/?language=objc
+.. __: https://developer.apple.com/documentation/gameplaykit?language=objc
 
 These bindings are accessed through the ``GameplayKit`` package (that is, ``import GameplayKit``).
 

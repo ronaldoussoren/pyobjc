@@ -4,7 +4,7 @@ API Notes: SearchKit framework
 The full API is described in `Apple's documentation`__, both
 the C and Objective-C APIs are available (but see the `API Notes`_ below).
 
-.. __: https://developer.apple.com/reference/coreservices/1654560-searchkit?language=objc
+.. __: https://developer.apple.com/documentation/coreservices/searchkit?preferredLanguage=occ
 
 These bindings are accessed through the ``SearchKit`` package (that is, ``import SearchKit``).
 

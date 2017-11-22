@@ -4,7 +4,7 @@ API Notes: iTunesLibrary framework
 The full API is described in `Apple's documentation`__, both
 the C and Objective-C APIs are available (but see the `API Notes`_ below).
 
-.. __: https://developer.apple.com/reference/coredata/
+.. __: https://developer.apple.com/documentation/ituneslibrary/?preferredLanguage=occ
 
 These bindings are accessed through the ``iTunesLibrary`` package (that is,
 ``import iTunesLibrary``).

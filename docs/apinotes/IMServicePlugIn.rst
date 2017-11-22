@@ -1,10 +1,8 @@
 API Notes: IMServicePlugIn framework
 ====================================
 
-The full API is described in `Apple's documentation`__, both
-the C and Objective-C APIs are available (but see the `API Notes`_ below).
-
-.. __: https://developer.apple.com/reference/imserviceplugin
+This framework was deprecated in macOS 10.13, and there no longer is
+documentation on Apple's developer websites.
 
 These bindings are accessed through the ``IMServicePlugin`` package (that is, ``import IMServicePlugin``).
 

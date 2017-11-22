@@ -18,7 +18,7 @@ This document describes how to use Objective-C class libraries from Python
 scripts and how to interpret the documentation of those libraries from the
 point of view of a Python programmer.
 
-.. _`Apple`: http://www.apple.com/
+.. _`Apple`: https://www.apple.com/
 
 First Steps
 -----------
@@ -736,9 +736,9 @@ instead of Python lists for instance variables that will be observed and contain
 a sequence of values (and simularly for ``NSMutableDictionary`` instead of
 ``dict``).
 
-.. _`Cocoa Bindings`: https://developer.apple.com/library/mac/#documentation/Cocoa/Conceptual/CocoaBindings/CocoaBindings.html
-.. _`Key-Value Coding`: https://developer.apple.com/library/content/documentation/Cocoa/Conceptual/KeyValueCoding/index.html#//apple_ref/doc/uid/10000107i
-.. _`Key-Value Observing`: https://developer.apple.com/library/content/documentation/Cocoa/Conceptual/KeyValueObserving/KeyValueObserving.html#//apple_ref/doc/uid/10000177i
+.. _`Cocoa Bindings`: https://developer.apple.com/library/content/documentation/Cocoa/Conceptual/CocoaBindings/CocoaBindings.html
+.. _`Key-Value Coding`: https://developer.apple.com/library/content/documentation/Cocoa/Conceptual/KeyValueCoding/index.html
+.. _`Key-Value Observing`: https://developer.apple.com/library/content/documentation/Cocoa/Conceptual/KeyValueObserving/KeyValueObserving.html
 
 NOTE: Key-Value Observing is not supported for "pure" python objects, that
 is instances of classes that don't inherit from ``NSObject``. Adding such

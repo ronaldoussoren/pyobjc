@@ -1,0 +1,11 @@
+API Notes: PDFKit framework
+===========================
+
+Apple documentation
+-------------------
+
+The full API is described in `Apple's documentation`__.
+
+.. __: https://developer.apple.com/documentation/pdfkit?language=objc
+
+These bindings are accessed through the ``Quartz`` package (that is, ``import Quartz``).

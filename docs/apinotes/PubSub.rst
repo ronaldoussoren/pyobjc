@@ -1,10 +1,8 @@
 API Notes: PubSub framework
 ===========================
 
-The full API is described in `Apple's documentation`__, both
-the C and Objective-C APIs are available (but see the `API Notes`_ below).
-
-.. __: https://developer.apple.com/library/content/documentation/InternetWeb/Conceptual/PubSub/Introduction/Introduction.html
+This framework was deprecated by Apple and is no longer documentated on
+Apple's developer website.
 
 These bindings are accessed through the ``PubSub`` package (that is, ``import PubSub``).
 

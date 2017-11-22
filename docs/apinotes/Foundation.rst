@@ -4,7 +4,7 @@ API Notes: Foundation framework
 The full API is described in `Apple's documentation`__, both
 the C and Objective-C APIs are available (but see the `API Notes`_ below).
 
-.. __: https://developer.apple.com/reference/foundation/
+.. __: https://developer.apple.com/documentation/foundation/?preferredLanguage=occ
 
 These bindings are accessed through the ``AppKit`` package (that is, ``import AppKit``).
 

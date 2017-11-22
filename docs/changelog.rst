@@ -1251,7 +1251,7 @@ Version 2.5
 
 - Issue #30: Explicitly check if the compiler works, and try to
   fall back to clang if it doesn't. This uses a simular algoritm as
-  the fix for <http://bugs.python.org/issue13590> in Python's tracker.
+  the fix for <https://bugs.python.org/issue13590> in Python's tracker.
 
 - Issue #22: Reimplement support for bridgesupport files
 

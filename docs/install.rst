@@ -34,7 +34,7 @@ Installing or upgrading PyObjC using `pip`_ is easy:
 
    $ pip install -U pyobjc
 
-For most users this will install PyObjC using `wheel <https://pypi.python.org/pypi/wheel>`_ binary
+For most users this will install PyObjC using `wheel <https://pypi.org/project/wheel>`_ binary
 archives, which means you don't have to have a compiler on your machine.
 
 Manual installation
@@ -43,8 +43,9 @@ Manual installation
 Manual installation is slightly involved, but still pretty easy.
 
 * First download the source code packages from the cheeseshop, you
-  need at least :pypi:`pyobjc-core` and :pypi:`pyobjc-framework-Cocoa`.
-  You do not need :pypi:`pyobjc`, that's a helper package that is only
+  need at least `pyobjc-core <https://pypi.org/project/pyobjc>`_ and
+  `pyobjc-framework-Cocoa <https://pypi.org/project/pyobjc-framework-Cocoa>`_.
+  You do not need `pyobjc <https://pypi.org/project/pyobjc>`_, that's a helper package that is only
   used to pull in the other packages when installing using `pip`_.
 
 * Extract the archives
@@ -59,11 +60,11 @@ Manual installation is slightly involved, but still pretty easy.
   Due to package dependencies you need to install the packages in a
   particular order:
 
-  - :pypi:`pyobjc-core`
+  - `pyobjc-core <https://pypi.org/project/pyobjc-core>`_
 
-  - :pypi:`pyobjc-framework-Cocoa`
+  - `pyobjc-framework-Cocoa <https://pypi.org/project/pyobjc-framework-Cocoa>`_
 
-  - :pypi:`pyobjc-framework-Quartz`
+  - `pyobjc-framework-Quartz <https://pypi.org/project/pyobjc-framework-Quartz>`_
 
   - all other packages (in arbitrary order)
 
@@ -107,7 +108,7 @@ Distributing binaries to other macOS releases
 .............................................
 
 It is possible to create self-contained application bundles for PyObjC based
-application using :pypi:`py2app`. You do need to take some care when
+application using `py2app <https://pypi.org/project/py2app>`_. You do need to take some care when
 you want to ship these applications to machines running a different
 version of macOS than the one you used for the build
 
@@ -127,4 +128,4 @@ version of macOS than the one you used for the build
      releases when you use another extension module that (accidently) hard links
      to an API that is not available in the earlier release.
 
-.. _pip: https://pypi.python.org/pypi/pip/
+.. _pip: https://pypi.org/project/pip/

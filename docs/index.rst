@@ -13,7 +13,7 @@ in pure Python. See our tutorial for an example of this.
 Release information
 -------------------
 
-PyObjC 4.0.1 was released on 2017-11-20. See the `changelog <changelog.html>`_ for more information.
+PyObjC 4.0.1 was released on 2017-11-20. See the :doc:`changelog <changelog>` for more information.
 
 Supported platforms
 -------------------
@@ -85,7 +85,7 @@ Important resources:
 
 * `Issue tracker <https://bitbucket.org/ronaldoussoren/pyobjc/issues>`_
 
-* `PyObjC-dev mailing list <https://lists.sourceforge.net/lists/listinfo/pyobjc-dev>`_
+* `PyObjC-dev mailing list <https://sourceforge.net/projects/pyobjc/lists/pyobjc-dev>`_
 
   A low-volume mailinglist for PyObjC development.
 

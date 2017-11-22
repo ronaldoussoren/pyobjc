@@ -4,7 +4,7 @@ API Notes: ScreenSaver framework
 The full API is described in `Apple's documentation`__, both
 the C and Objective-C APIs are available (but see the `API Notes`_ below).
 
-.. __: https://developer.apple.com/reference/screensaver/
+.. __: https://developer.apple.com/documentation/screensaver/?preferredLanguage=occ
 
 These bindings are accessed through the ``ScreenSaver`` package (that is, ``import ScreenSaver``).
 

@@ -5,7 +5,7 @@ API Notes: CFNetwork framework
 The full API is described in `Apple's documentation`__, both
 the C and Objective-C APIs are available (but see the `API Notes`_ below).
 
-.. __: https://developer.apple.com/reference/cfnetwork
+.. __: https://developer.apple.com/documentation/cfnetwork?preferredLanguage=occ
 
 These bindings are accessed through the ``CFNetwork`` package (that is, ``import CFNetwork``).
 

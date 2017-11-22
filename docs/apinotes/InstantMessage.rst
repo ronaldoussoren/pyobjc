@@ -1,10 +1,8 @@
 API Notes: InstantMessage framework
 ===================================
 
-The full API is described in `Apple's documentation`__, both
-the C and Objective-C APIs are available (but see the `API Notes`_ below).
-
-.. __: https://developer.apple.com/reference/instantmessage/
+This framework was deprecated by Apple and documentation is no longer
+available on Apple's developer website.
 
 These bindings are accessed through the ``InstantMessage`` package (that is, ``import InstantMessage``).
 

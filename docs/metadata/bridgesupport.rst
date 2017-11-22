@@ -664,4 +664,4 @@ API description
 .. [1] Technically, deprecation started in PyObjC 2.5, the bridgesupport
        system was temporarily removed in PyObjC 2.4.
 
-.. _`Apple's Objective-C Runtime Programming Guide`: https://developer.apple.com/library/mac/#documentation/Cocoa/Conceptual/ObjCRuntimeGuide/Articles/ocrtTypeEncodings.html#//apple_ref/doc/uid/TP40008048-CH100-SW1
+.. _`Apple's Objective-C Runtime Programming Guide`: https://developer.apple.com/library/content/documentation/Cocoa/Conceptual/ObjCRuntimeGuide/Introduction/Introduction.html#//apple_ref/doc/uid/TP40008048?language=objc

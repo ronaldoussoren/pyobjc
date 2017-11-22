@@ -4,7 +4,7 @@ API Notes: DictionaryServices framework
 The full API is described in `Apple's documentation`__, both
 the C and Objective-C APIs are available (but see the `API Notes`_ below).
 
-.. __: https://developer.apple.com/reference/dictionaryservices/
+.. __: https://developer.apple.com/documentation/coreservices/?preferredLanguage=occ
 
 These bindings are accessed through the ``DictionaryServices`` package (that is, ``import DictionaryServices``).
 

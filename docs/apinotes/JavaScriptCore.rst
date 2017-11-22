@@ -5,7 +5,7 @@ API Notes: JavaScriptCore framework
 The full API is described in `Apple's documentation`__, both
 the C and Objective-C APIs are available (but see the `API Notes`_ below).
 
-.. __: https://developer.apple.com/reference/javascriptcore/
+.. __: https://developer.apple.com/documentation/javascriptcore/?preferredLanguage=occ
 
 These bindings are accessed through the ``JavaScriptCore`` package (that is, ``import JavaScriptCore``).
 

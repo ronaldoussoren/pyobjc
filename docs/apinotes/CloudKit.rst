@@ -6,7 +6,7 @@ Apple Documentation
 
 The framework is documented on `Apple's developer website`__
 
-.. __: https://developer.apple.com/reference/cloudkit
+.. __: https://developer.apple.com/documentation/cloudkit?preferredLanguage=occ
 
 API Notes
 ---------

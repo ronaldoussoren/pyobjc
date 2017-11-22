@@ -6,7 +6,7 @@ Apple Documentation
 
 The framework is documented on `Apple's developer website`__
 
-.. __: https://developer.apple.com/reference/accounts?language=objc
+.. __: https://developer.apple.com/documentation/accounts?preferredLanguage=occ
 
 These bindings are accessed through the ``Accounts`` package (that is, ``import Accounts``).
 

@@ -28,7 +28,7 @@ write code that does not follow the Model-View-Controller paradigm, but you
 would be on your own.  Cocoa and Interface Builder are designed to suit this
 model.
 
-.. __: https://developer.apple.com/library/mac/#documentation/General/Conceptual/MOSXAppProgrammingGuide/Introduction/Introduction.html
+.. __: https://developer.apple.com/library/content/documentation/General/Conceptual/MOSXAppProgrammingGuide/CoreAppDesign/CoreAppDesign.html
 
 Cocoa is built on the Model-View-Controller paradigm (MVC).  What this means
 is that the application code should be split into three parts:

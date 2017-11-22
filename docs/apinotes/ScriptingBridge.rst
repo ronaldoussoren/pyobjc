@@ -4,7 +4,7 @@ API Notes: ScriptingBridge framework
 The full API is described in `Apple's documentation`__, both
 the C and Objective-C APIs are available (but see the `API Notes`_ below).
 
-.. __: https://developer.apple.com/reference/scriptingbridge/
+.. __: https://developer.apple.com/documentation/scriptingbridge/?preferredLanguage=occ
 
 These bindings are accessed through the ``ScriptingBridge`` package (that is, ``import ScriptingBridge``).
 
