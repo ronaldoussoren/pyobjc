@@ -1,7 +1,9 @@
 #include "Python.h"
 #include "pyobjc-api.h"
 
-#import <AVFoundation/AVFoundation.h>
+#import <dispatch/dispatch.h>
+
+dispatch_queue_attr_t PyObjC_DISPATCH_QUEUE_CONCURRENT = DISPATCH_QUEUE_CONCURRENT;
 
 
 static PyObjC_function_map function_map[] = {

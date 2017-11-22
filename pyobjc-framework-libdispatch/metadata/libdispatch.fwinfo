@@ -34,8 +34,7 @@
    "DISPATCH_BLOCK_ENFORCE_QOS_CLASS": { "value": 32 }
   },
   "externs": {
-   "_dispatch_main_q": { "typestr": "@" },
-   "_dispatch_queue_attr_concurrent": { "typestr": "@" }
+   "PyObjC_DISPATCH_QUEUE_CONCURRENT": { "typestr": "@" }
   },
   "aliases": {
   },
@@ -45,7 +44,7 @@
    "DISPATCH_QUEUE_SERIAL": { "value": "None" },
    "DISPATCH_TARGET_QUEUE_DEFAULT": { "value": "None" },
    "DISPATCH_QUEUE_SERIAL_INACTIVE": { "value": "dispatch_queue_attr_make_initially_inactive(DISPATCH_QUEUE_SERIAL)" },
-   "DISPATCH_QUEUE_CONCURRENT": { "value": "_dispatch_queue_attr_concurrent" },
+   "DISPATCH_QUEUE_CONCURRENT": { "value": "PyObjC_DISPATCH_QUEUE_CONCURRENT" },
    "DISPATCH_QUEUE_CONCURRENT_INACTIVE": { "value": "dispatch_queue_attr_make_initially_inactive(DISPATCH_QUEUE_CONCURRENT)" },
    "DISPATCH_QUEUE_SERIAL_WITH_AUTORELEASE_POOL": { "value": "dispatch_queue_attr_make_with_autorelease_frequency(DISPATCH_QUEUE_SERIAL, DISPATCH_AUTORELEASE_FREQUENCY_WORK_ITEM)" },
    "DISPATCH_QUEUE_CONCURRENT_WITH_AUTORELEASE_POOL": { "value": "dispatch_queue_attr_make_with_autorelease_frequency(DISPATCH_QUEUE_CONCURRENT, DISPATCH_AUTORELEASE_FREQUENCY_WORK_ITEM)" }
