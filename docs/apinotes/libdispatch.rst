@@ -20,6 +20,10 @@ API Notes
    available on earlier releases of OSX, but in a way that is not compatbile with these
    bindings.
 
+The libraries exposes a number APIs in two variants: one that has a block as an argument,
+and one that has a function as an argument. Both can be used from Python, but in general
+the block version is more convenient to use.
+
 
 ```dispatch_retain```, ```dispatch_release```
 .............................................
@@ -48,3 +52,9 @@ an ```array.array``` instance as their first arguments:
 
    pred = array.array('l', [0])
    dispatch_one(pred, callable)
+
+
+```dispatch_assert_queue_debug```, ```dispatch_assert_queue_barrier_debug```, ```dispatch_assert_queue_not_debug```
+...................................................................................................................
+
+These functions are not available. Call the functions without the ```_debug``` suffix instead.

@@ -9,13 +9,14 @@ import objc
 import sys
 
 from libdispatch import _metadata
+from libdispatch._inlines import _inline_list_
 
 
 sys.modules['libdispatch'] = mod = objc.ObjCLazyModule(
     "libdispatch",
     None,
     None,
-    _metadata.__dict__, None, {
+    _metadata.__dict__, _inline_list_, {
         '__doc__': __doc__,
         'objc': objc,
         '__path__': __path__,

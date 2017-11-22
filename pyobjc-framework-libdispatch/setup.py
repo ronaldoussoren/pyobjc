@@ -7,7 +7,7 @@ for general tips and tricks regarding the translation between Python
 and (Objective-)C frameworks
 '''
 
-from pyobjc_setup import setup
+from pyobjc_setup import setup, Extension
 import os
 
 VERSION="4.0.2b1"
@@ -17,6 +17,10 @@ setup(
     description = "Wrappers for libdispatch on macOS",
     min_os_level="10.10",
     packages = [ "libdispatch" ],
+    ext_modules = [
+        Extension('libdispatch._inlines',
+            [ 'Modules/_libdispatch_inlines.m' ]),
+    ],
     version=VERSION,
     install_requires = [
         'pyobjc-core>='+VERSION,
