@@ -2,7 +2,6 @@ to wrap: data.h
 to wrap: introspection.h
 
 to wrap: io.h
-to wrap: once.h
 to wrap: queue.h
 to wrap: semaphore.h
 to wrap: source.h

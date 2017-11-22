@@ -37,3 +37,14 @@ These functions are not available.
 This functions are not available, use the specific variant for the type of object
 you are working with instead.
 
+
+```dispatch_once```, ```dispatch_once_f```
+..........................................
+
+These functions can be used from Python, but must be called with
+an ```array.array``` instance as their first arguments:
+
+::
+
+   pred = array.array('l', [0])
+   dispatch_one(pred, callable)

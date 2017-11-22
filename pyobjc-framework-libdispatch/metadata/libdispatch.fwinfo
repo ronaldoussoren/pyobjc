@@ -31,6 +31,46 @@
   "aliases": {
   },
   "functions": {
+   "dispatch_once": {
+    "args": {
+     "0": { "type_override": "N^l", "c_array_of_fixed_length": 1 },
+     "1": {
+      "type_override": "@?",
+      "callable": {
+       "arguments": {
+        "0": { "type": "^v" }
+       },
+       "retval": {
+        "type": "v"
+       }
+      }
+     }
+    },
+    "retval": {
+     "type_override": "v"
+    }
+   },
+   "dispatch_once_f": {
+    "args": {
+     "0": { "type_override": "N^l", "c_array_of_fixed_length": 1 },
+     "1": { "type_override": "^v" },
+     "2": {
+      "type_override": "^?",
+      "callable": {
+       "arguments": {
+        "0": { "type": "^v" }
+       },
+       "retval": {
+        "type": "v"
+       }
+      },
+      "callable_retained": false
+     }
+    },
+    "retval": {
+     "type_override": "v"
+    }
+   },
    "dispatch_get_context": {
     "args": {
      "0": { "type_override": "@" }
