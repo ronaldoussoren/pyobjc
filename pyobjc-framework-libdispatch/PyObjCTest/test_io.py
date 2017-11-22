@@ -2,7 +2,7 @@ from PyObjCTools.TestSupport import *
 
 import libdispatch
 
-dispatch_io_handler_t = b'vb@i'
+dispatch_io_handler_t = b'vB@i'
 
 class TestIoAPI (TestCase):
     def test_constants(self):

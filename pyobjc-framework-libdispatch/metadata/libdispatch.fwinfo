@@ -38,22 +38,125 @@
    "DISPATCH_BLOCK_ENFORCE_QOS_CLASS": { "value": 32 }
   },
   "externs": {
-   "PyObjC_DISPATCH_QUEUE_CONCURRENT": { "typestr": "@" }
+   "_PyObjC_DISPATCH_QUEUE_CONCURRENT": { "typestr": "@" },
+   "_PyObjC_dispatch_data_empty": { "typestr": "@" },
+   "_PyObjC_DISPATCH_DATA_DESTRUCTOR_FREE": { "typestr": "@" },
+   "_PyObjC_DISPATCH_DATA_DESTRUCTOR_MUNMAP": { "typestr": "@" }
   },
   "aliases": {
   },
   "expressions": {
+   "DISPATCH_DATA_DESTRUCTOR_DEFAULT": { "value": "None" },
    "DISPATCH_CURRENT_QUEUE_LABEL": { "value": "None" },
    "DISPATCH_APPLY_AUTO": { "value": "None" },
    "DISPATCH_QUEUE_SERIAL": { "value": "None" },
    "DISPATCH_TARGET_QUEUE_DEFAULT": { "value": "None" },
    "DISPATCH_QUEUE_SERIAL_INACTIVE": { "value": "dispatch_queue_attr_make_initially_inactive(DISPATCH_QUEUE_SERIAL)" },
-   "DISPATCH_QUEUE_CONCURRENT": { "value": "PyObjC_DISPATCH_QUEUE_CONCURRENT" },
+   "DISPATCH_QUEUE_CONCURRENT": { "value": "_PyObjC_DISPATCH_QUEUE_CONCURRENT" },
+   "dispatch_data_empty": { "value": "_PyObjC_dispatch_data_empty" },
+   "DISPATCH_DATA_DESTRUCTOR_FREE": { "value": "_PyObjC_DISPATCH_DATA_DESTRUCTOR_FREE" },
+   "DISPATCH_DATA_DESTRUCTOR_MUNMAP": { "value": "_PyObjC_DISPATCH_DATA_DESTRUCTOR_MUNMAP" },
    "DISPATCH_QUEUE_CONCURRENT_INACTIVE": { "value": "dispatch_queue_attr_make_initially_inactive(DISPATCH_QUEUE_CONCURRENT)" },
    "DISPATCH_QUEUE_SERIAL_WITH_AUTORELEASE_POOL": { "value": "dispatch_queue_attr_make_with_autorelease_frequency(DISPATCH_QUEUE_SERIAL, DISPATCH_AUTORELEASE_FREQUENCY_WORK_ITEM)" },
    "DISPATCH_QUEUE_CONCURRENT_WITH_AUTORELEASE_POOL": { "value": "dispatch_queue_attr_make_with_autorelease_frequency(DISPATCH_QUEUE_CONCURRENT, DISPATCH_AUTORELEASE_FREQUENCY_WORK_ITEM)" }
   },
   "functions": {
+   "dispatch_data_copy_region": {
+    "args": {
+     "0": { "type_override": "@" },
+     "1": { "type_override": "L" },
+     "2": { "type_override": "o^L" }
+    },
+    "retval": {
+     "type_override": "@",
+     "already_retained": true
+    }
+   },
+   "dispatch_data_create": {
+    "args": {
+     "0": { "type_override": "^v", "type_modifier": "n", "c_array_length_in_arg": 1 },
+     "1": { "type_override": "L" },
+     "2": { "type_override": "@" },
+     "3": {
+      "type_override": "@?",
+      "callable": {
+       "arguments": {
+        "0": { "type": "^v" }
+       },
+       "retval": {
+        "type": "v"
+       }
+      }
+     }
+    },
+    "retval": {
+     "type_override": "@",
+     "already_retained": true
+    }
+   },
+   "dispatch_data_get_size": {
+    "args": {
+     "0": { "type_override": "@" }
+    },
+    "retval": {
+     "type_override": "L"
+    }
+   },
+   "dispatch_data_create_map": {
+    "args": {
+     "0": { "type_override": "@" },
+     "1": { "type_override": "o^^v" },
+     "2": { "type_override": "o^L" }
+    },
+    "retval": {
+     "type_override": "@",
+     "already_retained": true
+    }
+   },
+   "dispatch_data_create_concat": {
+    "args": {
+     "0": { "type_override": "@" },
+     "1": { "type_override": "@" }
+    },
+    "retval": {
+     "type_override": "@",
+     "already_retained": true
+    }
+   },
+   "dispatch_data_create_subrange": {
+    "args": {
+     "0": { "type_override": "@" },
+     "1": { "type_override": "L" },
+     "2": { "type_override": "L" }
+    },
+    "retval": {
+     "type_override": "@",
+     "already_retained": true
+    }
+   },
+   "dispatch_data_apply": {
+    "args": {
+     "0": { "type_override": "@" },
+     "1": {
+      "type_override": "@?",
+      "callable": {
+       "arguments": {
+        "0": { "type": "^v" },
+        "1": { "type": "@" },
+        "2": { "type": "L" },
+        "3": { "type": "n^v", "c_array_length_in_arg": 4 },
+        "4": { "type": "L" }
+       },
+       "retval": {
+        "type": "B"
+       }
+      }
+     }
+    },
+    "retval": {
+     "type_override": "B"
+    }
+   },
    "dispatch_io_set_interval": {
     "args": {
      "0": { "type_override": "@" },
@@ -129,7 +232,7 @@
       "callable": {
        "arguments": {
         "0": { "type": "^v" },
-        "1": { "type": "b" },
+        "1": { "type": "B" },
         "2": { "type": "@" },
         "3": { "type": "i" }
        },
@@ -154,7 +257,7 @@
       "callable": {
        "arguments": {
         "0": { "type": "^v" },
-        "1": { "type": "b" },
+        "1": { "type": "B" },
         "2": { "type": "@" },
         "3": { "type": "i" }
        },

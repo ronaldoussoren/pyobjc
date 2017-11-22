@@ -58,3 +58,27 @@ an ```array.array``` instance as their first arguments:
 ...................................................................................................................
 
 These functions are not available. Call the functions without the ```_debug``` suffix instead.
+
+
+```dispatch_introspection_hook_queue_create```, ```dispatch_introspection_hook_queue_destroy```
+...............................................................................................
+
+These functions are not available.
+
+
+```dispatch_introspection_hook_queue_item_enqueue```, ```dispatch_introspection_hook_queue_item_dequeue```
+..........................................................................................................
+
+These functions are not available.
+
+
+```dispatch_introspection_hook_queue_item_complete```, ```dispatch_introspection_hook_queue_item_complete```
+............................................................................................................
+
+These functions are not available.
+
+
+```dispatch_introspection_hook_queue_callout_begin```, ```dispatch_introspection_hook_queue_callout_end```
+..........................................................................................................
+
+These functions are not available.

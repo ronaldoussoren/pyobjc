@@ -1,7 +1,6 @@
-to wrap: data.h
-to wrap: introspection.h
+to finish: data.h
+  - dispatch_data_create_map
 
-to wrap: io.h
 to wrap: source.h
 
 Current tests are purely API "shape" tests, add
