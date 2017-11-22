@@ -6,7 +6,7 @@ class TestGroupAPI (TestCase):
 
     @min_os_level('10.6')
     def test_functions(self):
-        self.assertResultHasType(libdispatch.dispatch_group_create, objc._C_VOID)
+        self.assertResultHasType(libdispatch.dispatch_group_create, objc._C_ID)
 
         self.assertResultHasType(libdispatch.dispatch_group_async, objc._C_VOID)
         self.assertArgHasType(libdispatch.dispatch_group_async, 0, objc._C_ID) # dispatch_group_t

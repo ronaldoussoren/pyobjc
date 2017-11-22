@@ -3,7 +3,6 @@ to wrap: introspection.h
 
 to wrap: io.h
 to wrap: queue.h
-to wrap: semaphore.h
 to wrap: source.h
 
 Current tests are purely API "shape" tests, add
