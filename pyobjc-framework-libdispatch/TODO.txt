@@ -6,5 +6,3 @@ to wrap: source.h
 
 Current tests are purely API "shape" tests, add
 some functional tests as well
-
-to fix: queue.h
