@@ -3,12 +3,24 @@ What's new in PyObjC
 
 An overview of the relevant changes in new, and older, releases.
 
-Version 4.0.2
--------------
+Version 4.1
+-----------
 
 * Updated metadata for Xcode 9.2 (beta 2)
 
 * Added missing ```MAC_OS_X_VERSION_*``` constants
+
+* Added bindings to libdispatch.
+
+  These bindings require macOS 10.10 or later, libdispatch was
+  available earlier but macOS 10.10 changed the API in such a
+  way that wrapping became a lot easier.
+
+  .. note::
+
+     Blocks scheduled using libdispatch are still subject to the
+     Python GIL: just one block implemented in Python can run
+     at any one time.
 
 Version 4.0.1
 -------------

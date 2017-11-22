@@ -28,7 +28,3 @@ decorator::
 
 The ``userInfo`` argument needs to be an integer.
 
-ODQuerySetDispatchQueue
-.......................
-
-This function is not supported because PyObjC doesn't interface with dispatch queues yet.

@@ -1,0 +1,1460 @@
+{
+ "definitions": {
+  "cftypes": {
+   "dispatch_source_t": {
+    "opaque": true,
+    "typestr": "^{dispatch_source_type_s=}"
+   }
+  },
+  "structs": {
+   "timespec": {
+    "fieldnames": [
+     "tv_sec",
+     "tv_nsec"
+    ],
+    "special": false,
+    "typestr": "{timespec=ll}"
+   }
+  },
+  "enum": {
+   "DISPATCH_MACH_SEND_DEAD": { "value": 1 },
+   "DISPATCH_TIMER_STRICT": { "value": 1 },
+   "DISPATCH_VNODE_DELETE": { "value": 1 },
+   "DISPATCH_VNODE_WRITE": { "value": 2 },
+   "DISPATCH_VNODE_EXTEND": { "value": 4 },
+   "DISPATCH_VNODE_ATTRIB": { "value": 8 },
+   "DISPATCH_VNODE_LINK": { "value": 16 },
+   "DISPATCH_VNODE_RENAME": { "value": 32 },
+   "DISPATCH_VNODE_REVOKE": { "value": 64 },
+   "DISPATCH_VNODE_FUNLOCK": { "value": 256 },
+   "DISPATCH_PROC_EXIT": { "value": 2147483648 },
+   "DISPATCH_PROC_FORK": { "value": 1073741824 },
+   "DISPATCH_PROC_EXEC": { "value": 536870912 },
+   "DISPATCH_PROC_SIGNAL": { "value": 134217728 },
+   "DISPATCH_MEMORYPRESSURE_NORMAL": { "value": 1 },
+   "DISPATCH_MEMORYPRESSURE_WARN": { "value": 2 },
+   "DISPATCH_MEMORYPRESSURE_CRITICAL": { "value": 4 },
+   "DISPATCH_IO_STRICT_INTERVAL": { "value": 1 },
+   "DISPATCH_IO_STOP": { "value": 1 },
+   "DISPATCH_IO_STREAM": { "value": 0 },
+   "DISPATCH_IO_RANDOM": { "value": 1 },
+   "DISPATCH_AUTORELEASE_FREQUENCY_INHERIT": { "value": 0 },
+   "DISPATCH_AUTORELEASE_FREQUENCY_WORK_ITEM": { "value": 1 },
+   "DISPATCH_AUTORELEASE_FREQUENCY_NEVER": { "value": 2 },
+   "DISPATCH_QUEUE_PRIORITY_HIGH": { "value": 2 },
+   "DISPATCH_QUEUE_PRIORITY_DEFAULT": { "value": 0 },
+   "DISPATCH_QUEUE_PRIORITY_LOW": { "value": -2 },
+   "DISPATCH_QUEUE_PRIORITY_BACKGROUND": { "value": -32768 },
+   "DISPATCH_TIME_NOW": { "value": 0 },
+   "DISPATCH_TIME_FOREVER": { "value": 18446744073709551615 },
+   "NSEC_PER_SEC": { "value": 1000000000 },
+   "NSEC_PER_MSEC": { "value": 1000000 },
+   "USEC_PER_SEC": { "value": 1000000 },
+   "NSEC_PER_USEC": { "value": 1000 },
+   "DISPATCH_IO_STREAM": { "value": 0 },
+   "DISPATCH_IO_RANDOM": { "value": 1 },
+   "DISPATCH_BLOCK_BARRIER": { "value": 1 },
+   "DISPATCH_BLOCK_DETACHED": { "value": 2 },
+   "DISPATCH_BLOCK_ASSIGN_CURRENT": { "value": 4 },
+   "DISPATCH_BLOCK_NO_QOS_CLASS": { "value": 8 },
+   "DISPATCH_BLOCK_INHERIT_QOS_CLASS": { "value": 16 },
+   "DISPATCH_BLOCK_ENFORCE_QOS_CLASS": { "value": 32 }
+  },
+  "externs": {
+  },
+  "aliases": {
+  },
+  "expressions": {
+   "DISPATCH_DATA_DESTRUCTOR_DEFAULT": { "value": "None" },
+   "DISPATCH_CURRENT_QUEUE_LABEL": { "value": "None" },
+   "DISPATCH_APPLY_AUTO": { "value": "None" },
+   "DISPATCH_QUEUE_SERIAL": { "value": "None" },
+   "DISPATCH_TARGET_QUEUE_DEFAULT": { "value": "None" },
+   "DISPATCH_QUEUE_SERIAL_INACTIVE": { "value": "dispatch_queue_attr_make_initially_inactive(DISPATCH_QUEUE_SERIAL)" },
+   "DISPATCH_QUEUE_CONCURRENT_INACTIVE": { "value": "dispatch_queue_attr_make_initially_inactive(DISPATCH_QUEUE_CONCURRENT)" },
+   "DISPATCH_QUEUE_SERIAL_WITH_AUTORELEASE_POOL": { "value": "dispatch_queue_attr_make_with_autorelease_frequency(DISPATCH_QUEUE_SERIAL, DISPATCH_AUTORELEASE_FREQUENCY_WORK_ITEM)" },
+   "DISPATCH_QUEUE_CONCURRENT_WITH_AUTORELEASE_POOL": { "value": "dispatch_queue_attr_make_with_autorelease_frequency(DISPATCH_QUEUE_CONCURRENT, DISPATCH_AUTORELEASE_FREQUENCY_WORK_ITEM)" }
+  },
+  "functions": {
+   "dispatch_source_set_registration_handler": {
+    "args": {
+     "0": { "type_override": "@" },
+     "1": {
+      "type_override": "@?",
+      "callable": {
+       "arguments": {
+        "0": { "type": "^v" }
+       },
+       "retval": {
+        "type": "v"
+       }
+      }
+     }
+    },
+    "retval": {
+     "type_override": "v"
+    }
+   },
+   "dispatch_source_set_registration_handler_f": {
+    "args": {
+     "0": { "type_override": "@" },
+     "1": {
+      "type_override": "^?",
+      "callable": {
+       "arguments": {
+        "0": { "type": "^v" }
+       },
+       "retval": {
+        "type": "v"
+       }
+      },
+      "callable_retained": true
+     }
+    },
+    "retval": {
+     "type_override": "v"
+    }
+   },
+   "dispatch_source_set_timer": {
+    "args": {
+     "0": { "type_override": "@" },
+     "1": { "type_override": "Q" },
+     "2": { "type_override": "Q" },
+     "3": { "type_override": "Q" }
+    },
+    "retval": {
+     "type_override": "v"
+    }
+   },
+   "dispatch_source_merge_data": {
+    "args": {
+     "0": { "type_override": "@" },
+     "1": { "type_override": "L" }
+    },
+    "retval": {
+     "type_override": "v"
+    }
+   },
+   "dispatch_source_get_data": {
+    "args": {
+     "0": { "type_override": "@" }
+    },
+    "retval": {
+     "type_override": "L"
+    }
+   },
+   "dispatch_source_get_mask": {
+    "args": {
+     "0": { "type_override": "@" }
+    },
+    "retval": {
+     "type_override": "L"
+    }
+   },
+   "dispatch_source_get_handle": {
+    "args": {
+     "0": { "type_override": "@" }
+    },
+    "retval": {
+     "type_override": "L"
+    }
+   },
+   "dispatch_source_testcancel": {
+    "args": {
+     "0": { "type_override": "@" }
+    },
+    "retval": {
+     "type_override": "l"
+    }
+   },
+   "dispatch_source_cancel": {
+    "args": {
+     "0": { "type_override": "@" }
+    },
+    "retval": {
+     "type_override": "v"
+    }
+   },
+   "dispatch_source_create": {
+    "args": {
+     "0": { "type_override": "^{dispatch_source_type_s=}" },
+     "1": { "type_override": "L" },
+     "2": { "type_override": "L" },
+     "3": { "type_override": "@" }
+    },
+    "retval": {
+     "type_override": "@",
+     "already_retained": true
+    }
+   },
+   "dispatch_source_set_cancel_handler": {
+    "args": {
+     "0": { "type_override": "@" },
+     "1": {
+      "type_override": "@?",
+      "callable": {
+       "arguments": {
+        "0": { "type": "^v" }
+       },
+       "retval": {
+        "type": "v"
+       }
+      }
+     }
+    },
+    "retval": {
+     "type_override": "v"
+    }
+   },
+   "dispatch_source_set_cancel_handler_f": {
+    "args": {
+     "0": { "type_override": "@" },
+     "1": {
+      "type_override": "^?",
+      "callable": {
+       "arguments": {
+        "0": { "type": "^v" }
+       },
+       "retval": {
+        "type": "v"
+       }
+      },
+      "callable_retained": true
+     }
+    },
+    "retval": {
+     "type_override": "v"
+    }
+   },
+   "dispatch_source_set_event_handler": {
+    "args": {
+     "0": { "type_override": "@" },
+     "1": {
+      "type_override": "@?",
+      "callable": {
+       "arguments": {
+        "0": { "type": "^v" }
+       },
+       "retval": {
+        "type": "v"
+       }
+      }
+     }
+    },
+    "retval": {
+     "type_override": "v"
+    }
+   },
+   "dispatch_source_set_event_handler_f": {
+    "args": {
+     "0": { "type_override": "@" },
+     "1": {
+      "type_override": "^?",
+      "callable": {
+       "arguments": {
+        "0": { "type": "^v" }
+       },
+       "retval": {
+        "type": "v"
+       }
+      },
+      "callable_retained": true
+     }
+    },
+    "retval": {
+     "type_override": "v"
+    }
+   },
+   "dispatch_data_copy_region": {
+    "args": {
+     "0": { "type_override": "@" },
+     "1": { "type_override": "L" },
+     "2": { "type_override": "o^L" }
+    },
+    "retval": {
+     "type_override": "@",
+     "already_retained": true
+    }
+   },
+   "dispatch_data_create": {
+    "args": {
+     "0": { "type_override": "^v", "type_modifier": "n", "c_array_length_in_arg": 1 },
+     "1": { "type_override": "L" },
+     "2": { "type_override": "@" },
+     "3": {
+      "type_override": "@?",
+      "callable": {
+       "arguments": {
+        "0": { "type": "^v" }
+       },
+       "retval": {
+        "type": "v"
+       }
+      }
+     }
+    },
+    "retval": {
+     "type_override": "@",
+     "already_retained": true
+    }
+   },
+   "dispatch_data_get_size": {
+    "args": {
+     "0": { "type_override": "@" }
+    },
+    "retval": {
+     "type_override": "L"
+    }
+   },
+   "dispatch_data_create_map": {
+    "args": {
+     "0": { "type_override": "@" },
+     "1": { "type_override": "o^^v" },
+     "2": { "type_override": "o^L" }
+    },
+    "retval": {
+     "type_override": "@",
+     "already_retained": true
+    }
+   },
+   "dispatch_data_create_concat": {
+    "args": {
+     "0": { "type_override": "@" },
+     "1": { "type_override": "@" }
+    },
+    "retval": {
+     "type_override": "@",
+     "already_retained": true
+    }
+   },
+   "dispatch_data_create_subrange": {
+    "args": {
+     "0": { "type_override": "@" },
+     "1": { "type_override": "L" },
+     "2": { "type_override": "L" }
+    },
+    "retval": {
+     "type_override": "@",
+     "already_retained": true
+    }
+   },
+   "dispatch_data_apply": {
+    "args": {
+     "0": { "type_override": "@" },
+     "1": {
+      "type_override": "@?",
+      "callable": {
+       "arguments": {
+        "0": { "type": "^v" },
+        "1": { "type": "@" },
+        "2": { "type": "L" },
+        "3": { "type": "n^v", "c_array_length_in_arg": 4 },
+        "4": { "type": "L" }
+       },
+       "retval": {
+        "type": "B"
+       }
+      }
+     }
+    },
+    "retval": {
+     "type_override": "B"
+    }
+   },
+   "dispatch_io_set_interval": {
+    "args": {
+     "0": { "type_override": "@" },
+     "1": { "type_override": "Q" },
+     "2": { "type_override": "L" }
+    },
+    "retval": {
+     "type_override": "v"
+    }
+   },
+   "dispatch_io_set_low_water": {
+    "args": {
+     "0": { "type_override": "@" },
+     "1": { "type_override": "L" }
+    },
+    "retval": {
+     "type_override": "v"
+    }
+   },
+   "dispatch_io_set_high_water": {
+    "args": {
+     "0": { "type_override": "@" },
+     "1": { "type_override": "L" }
+    },
+    "retval": {
+     "type_override": "v"
+    }
+   },
+   "dispatch_io_get_descriptor": {
+    "args": {
+     "0": { "type_override": "@" }
+    },
+    "retval": {
+     "type_override": "i"
+    }
+   },
+   "dispatch_io_barrier": {
+    "args": {
+     "0": { "type_override": "@" },
+     "1": {
+      "type_override": "@?",
+      "callable": {
+       "arguments": {
+        "0": { "type": "^v" }
+       },
+       "retval": {
+        "type": "v"
+       }
+      }
+     }
+    },
+    "retval": {
+     "type_override": "v"
+    }
+   },
+   "dispatch_io_close": {
+    "args": {
+     "0": { "type_override": "@" },
+     "1": { "type_override": "L" }
+    },
+    "retval": {
+     "type_override": "v"
+    }
+   },
+   "dispatch_io_write": {
+    "args": {
+     "0": { "type_override": "@" },
+     "1": { "type_override": "q" },
+     "2": { "type_override": "@" },
+     "3": { "type_override": "@" },
+     "4": {
+      "type_override": "@?",
+      "callable": {
+       "arguments": {
+        "0": { "type": "^v" },
+        "1": { "type": "B" },
+        "2": { "type": "@" },
+        "3": { "type": "i" }
+       },
+       "retval": {
+        "type": "v"
+       }
+      }
+     }
+    },
+    "retval": {
+     "type_override": "v"
+    }
+   },
+   "dispatch_io_read": {
+    "args": {
+     "0": { "type_override": "@" },
+     "1": { "type_override": "q" },
+     "2": { "type_override": "L" },
+     "3": { "type_override": "@" },
+     "4": {
+      "type_override": "@?",
+      "callable": {
+       "arguments": {
+        "0": { "type": "^v" },
+        "1": { "type": "B" },
+        "2": { "type": "@" },
+        "3": { "type": "i" }
+       },
+       "retval": {
+        "type": "v"
+       }
+      }
+     }
+    },
+    "retval": {
+     "type_override": "v"
+    }
+   },
+   "dispatch_io_create_with_io": {
+    "args": {
+     "0": { "type_override": "L" },
+     "1": { "type_override": "@" },
+     "2": { "type_override": "@" },
+     "3": {
+      "type_override": "@?",
+      "callable": {
+       "arguments": {
+        "0": { "type": "^v" },
+        "1": { "type": "i" }
+       },
+       "retval": {
+        "type": "v"
+       }
+      }
+     }
+    },
+    "retval": {
+     "type_override": "@",
+     "already_retained": true
+    }
+   },
+   "dispatch_io_create_with_path": {
+    "args": {
+     "0": { "type_override": "L" },
+     "1": { "type_override": "^t", "type_modifier": "n", "c_array_delimited_by_null": true },
+     "2": { "type_override": "i" },
+     "3": { "type_override": "S" },
+     "4": { "type_override": "@" },
+     "5": {
+      "type_override": "@?",
+      "callable": {
+       "arguments": {
+        "0": { "type": "^v" },
+        "1": { "type": "i" }
+       },
+       "retval": {
+        "type": "v"
+       }
+      }
+     }
+    },
+    "retval": {
+     "type_override": "@",
+     "already_retained": true
+    }
+   },
+   "dispatch_io_create": {
+    "args": {
+     "0": { "type_override": "L" },
+     "1": { "type_override": "i" },
+     "2": { "type_override": "@" },
+     "3": {
+      "type_override": "@?",
+      "callable": {
+       "arguments": {
+        "0": { "type": "^v" },
+        "1": { "type": "i" }
+       },
+       "retval": {
+        "type": "v"
+       }
+      }
+     }
+    },
+    "retval": {
+     "type_override": "@",
+     "already_retained": true
+    }
+   },
+   "dispatch_read": {
+    "args": {
+     "0": { "type_override": "i" },
+     "1": { "type_override": "L" },
+     "2": { "type_override": "@" },
+     "3": {
+      "type_override": "@?",
+      "callable": {
+       "arguments": {
+        "0": { "type": "^v" },
+        "1": { "type": "@" },
+        "2": { "type": "i" }
+       },
+       "retval": {
+        "type": "v"
+       }
+      }
+     }
+    },
+    "retval": {
+     "type_override": "v"
+    }
+   },
+   "dispatch_assert_queue_not": {
+    "comment": "XXX: V2 API",
+    "args": {
+     "0": { "type_override": "@" }
+    },
+    "retval": {
+     "type_override": "v"
+    }
+   },
+   "dispatch_assert_queue_barrier": {
+    "args": {
+     "0": { "type_override": "@" }
+    },
+    "retval": {
+     "type_override": "v"
+    }
+   },
+   "dispatch_assert_queue": {
+    "args": {
+     "0": { "type_override": "@" }
+    },
+    "retval": {
+     "type_override": "v"
+    }
+   },
+   "dispatch_get_specific": {
+    "args": {
+     "0": { "type_override": "^v" }
+    },
+    "retval": {
+     "type_override": "^v"
+    }
+   },
+   "dispatch_queue_get_specific": {
+    "args": {
+     "0": { "type_override": "@" },
+     "1": { "type_override": "^v" }
+    },
+    "retval": {
+     "type_override": "^v"
+    }
+   },
+   "dispatch_queue_set_specific": {
+    "args": {
+     "0": { "type_override": "@" },
+     "1": { "type_override": "^v" },
+     "2": { "type_override": "^v" },
+     "3": {
+      "type_override": "^?",
+      "callable": {
+       "arguments": {
+        "0": { "type": "^v" }
+       },
+       "retval": {
+        "type": "v"
+       }
+      },
+      "callable_retained": true
+     }
+    },
+    "retval": {
+     "type_override": "v"
+    }
+   },
+   "dispatch_barrier_sync": {
+    "args": {
+     "0": { "type_override": "@" },
+     "1": {
+      "type_override": "@?",
+      "callable": {
+       "arguments": {
+        "0": { "type": "^v" }
+       },
+       "retval": {
+        "type": "v"
+       }
+      }
+     }
+    },
+    "retval": { "type_override": "v" }
+   },
+   "dispatch_barrier_sync_f": {
+    "args": {
+     "0": { "type_override": "@" },
+     "1": { "type_override": "^v" },
+     "2": {
+      "type_override": "^?",
+      "callable": {
+       "arguments": {
+        "0": { "type": "^v" }
+       },
+       "retval": {
+        "type": "v"
+       }
+      },
+      "callable_retained": false
+     }
+    },
+    "retval": { "type_override": "v" }
+   },
+   "dispatch_barrier_async": {
+    "args": {
+     "0": { "type_override": "@" },
+     "1": {
+      "type_override": "@?",
+      "callable": {
+       "arguments": {
+        "0": { "type": "^v" }
+       },
+       "retval": {
+        "type": "v"
+       }
+      }
+     }
+    },
+    "retval": { "type_override": "v" }
+   },
+   "dispatch_barrier_async_f": {
+    "args": {
+     "0": { "type_override": "@" },
+     "1": { "type_override": "^v" },
+     "2": {
+      "type_override": "^?",
+      "callable": {
+       "arguments": {
+        "0": { "type": "^v" }
+       },
+       "retval": {
+        "type": "v"
+       }
+      },
+      "callable_retained": true
+     }
+    },
+    "retval": { "type_override": "v" }
+   },
+   "dispatch_after_f": {
+    "args": {
+     "0": { "type_override": "Q" },
+     "1": { "type_override": "@" },
+     "2": { "type_override": "^v" },
+     "3": {
+      "type_override": "^?",
+      "callable": {
+       "arguments": {
+        "0": { "type": "^v" }
+       },
+       "retval": {
+        "type": "v"
+       }
+      },
+      "callable_retained": true
+     }
+    },
+    "retval": { "type_override": "v" }
+   },
+   "dispatch_after": {
+    "args": {
+     "0": { "type_override": "Q" },
+     "1": { "type_override": "@" },
+     "2": {
+      "type_override": "@?",
+      "callable": {
+       "arguments": {
+        "0": { "type": "^v" }
+       },
+       "retval": {
+        "type": "v"
+       }
+      }
+     }
+    },
+    "retval": { "type_override": "v" }
+   },
+   "dispatch_main": {
+    "args": {
+    },
+    "retval": { "type_override": "v" }
+   },
+   "dispatch_set_target_queue": {
+    "args": {
+     "0": { "type_override": "@" },
+     "1": { "type_override": "@" }
+    },
+    "retval": { "type_override": "v" }
+   },
+   "dispatch_queue_get_qos_class": {
+    "args": {
+     "0": { "type_override": "@" },
+     "1": { "type_override": "^i", "type_modifier": "o" }
+    },
+    "retval": { "type_override": "I" }
+   },
+   "dispatch_queue_get_label": {
+    "args": {
+     "0": { "type_override": "@" }
+    },
+    "retval": {
+     "type_override": "^t",
+     "c_array_delimited_by_null": true
+    }
+   },
+   "dispatch_queue_create": {
+    "args": {
+     "0": { "type_override": "^t", "type_modifier": "n", "c_array_delimited_by_null": true },
+     "1": { "type_override": "@" }
+    },
+    "retval": {
+     "type_override": "@"
+    }
+   },
+   "dispatch_queue_create_with_target": {
+    "comment": "XXX: V2 API",
+    "args": {
+     "0": { "type_override": "^t", "type_modifier": "n", "c_array_delimited_by_null": true },
+     "1": { "type_override": "@" },
+     "2": { "type_override": "@" }
+    },
+    "retval": {
+     "type_override": "@"
+    }
+   },
+   "dispatch_queue_attr_make_with_autorelease_frequency": {
+    "args": {
+     "0": { "type_override": "@" },
+     "1": { "type_override": "L" }
+    },
+    "retval": {
+     "type_override": "@"
+    }
+   },
+   "dispatch_queue_attr_make_with_qos_class": {
+    "args": {
+     "0": { "type_override": "@" },
+     "1": { "type_override": "I" },
+     "2": { "type_override": "i" }
+    },
+    "retval": {
+     "type_override": "@"
+    }
+   },
+   "dispatch_queue_attr_make_initially_inactive": {
+    "args": {
+     "0": { "type_override": "@" }
+    },
+    "retval": {
+     "type_override": "@"
+    }
+   },
+   "dispatch_get_global_queue": {
+    "args": {
+     "0": { "type_override": "l" },
+     "1": { "type_override": "L" }
+    },
+    "retval": {
+     "type_override": "@"
+    }
+   },
+   "dispatch_get_main_queue": {
+    "args": {
+    },
+    "retval": {
+     "type_override": "@"
+    }
+   },
+   "dispatch_get_current_queue": {
+    "args": {
+    },
+    "retval": {
+     "type_override": "@"
+    }
+   },
+   "dispatch_apply": {
+    "args": {
+     "0": { "type_override": "L" },
+     "1": { "type_override": "@" },
+     "2": {
+      "type_override": "@?",
+      "callable": {
+       "arguments": {
+        "0": { "type": "^v" },
+        "1": { "type": "L" }
+       },
+       "retval": {
+        "type": "v"
+       }
+      }
+     }
+    },
+    "retval": {
+     "type_override": "v"
+    }
+   },
+   "dispatch_apply_f": {
+    "args": {
+     "0": { "type_override": "L" },
+     "1": { "type_override": "@" },
+     "2": { "type_override": "^v" },
+     "3": {
+      "type_override": "^?",
+      "callable": {
+       "arguments": {
+        "0": { "type": "^v" },
+        "1": { "type": "L" }
+       },
+       "retval": {
+        "type": "v"
+       }
+      }
+     }
+    },
+    "retval": {
+     "type_override": "v"
+    }
+   },
+   "dispatch_sync": {
+    "args": {
+     "0": { "type_override": "@" },
+     "1": {
+      "type_override": "@?",
+      "callable": {
+       "arguments": {
+        "0": { "type": "^v" }
+       },
+       "retval": {
+        "type": "v"
+       }
+      }
+     }
+    },
+    "retval": {
+     "type_override": "v"
+    }
+   },
+   "dispatch_sync_f": {
+    "args": {
+     "0": { "type_override": "@" },
+     "1": { "type_override": "^v" },
+     "2": {
+      "type_override": "^?",
+      "callable": {
+       "arguments": {
+        "0": { "type": "^v" }
+       },
+       "retval": {
+        "type": "v"
+       }
+      },
+      "callable_retained": false
+     }
+    },
+    "retval": {
+     "type_override": "v"
+    }
+   },
+   "dispatch_async": {
+    "args": {
+     "0": { "type_override": "@" },
+     "1": {
+      "type_override": "@?",
+      "callable": {
+       "arguments": {
+        "0": { "type": "^v" }
+       },
+       "retval": {
+        "type": "v"
+       }
+      }
+     }
+    },
+    "retval": {
+     "type_override": "v"
+    }
+   },
+   "dispatch_async_f": {
+    "args": {
+     "0": { "type_override": "@" },
+     "1": { "type_override": "^v" },
+     "2": {
+      "type_override": "^?",
+      "callable": {
+       "arguments": {
+        "0": { "type": "^v" }
+       },
+       "retval": {
+        "type": "v"
+       }
+      },
+      "callable_retained": true
+     }
+    },
+    "retval": {
+     "type_override": "v"
+    }
+   },
+   "dispatch_semaphore_create": {
+    "args": {
+     "0": { "type_override": "l" }
+    },
+    "retval": {
+     "type_override": "@",
+     "already_retained": true
+    }
+   },
+   "dispatch_semaphore_wait": {
+    "args": {
+     "0": { "type_override": "@" },
+     "1": { "type_override": "Q" }
+    },
+    "retval": {
+     "type_override": "l"
+    }
+   },
+   "dispatch_semaphore_signal": {
+    "args": {
+     "0": { "type_override": "@" }
+    },
+    "retval": {
+     "type_override": "l"
+    }
+   },
+   "dispatch_once": {
+    "args": {
+     "0": { "type_override": "N^l", "c_array_of_fixed_length": 1 },
+     "1": {
+      "type_override": "@?",
+      "callable": {
+       "arguments": {
+        "0": { "type": "^v" }
+       },
+       "retval": {
+        "type": "v"
+       }
+      }
+     }
+    },
+    "retval": {
+     "type_override": "v"
+    }
+   },
+   "dispatch_once_f": {
+    "args": {
+     "0": { "type_override": "N^l", "c_array_of_fixed_length": 1 },
+     "1": { "type_override": "^v" },
+     "2": {
+      "type_override": "^?",
+      "callable": {
+       "arguments": {
+        "0": { "type": "^v" }
+       },
+       "retval": {
+        "type": "v"
+       }
+      },
+      "callable_retained": false
+     }
+    },
+    "retval": {
+     "type_override": "v"
+    }
+   },
+   "dispatch_get_context": {
+    "args": {
+     "0": { "type_override": "@" }
+    },
+    "retval": {
+     "type_override": "^v"
+    }
+   },
+   "dispatch_set_context": {
+    "args": {
+     "0": { "type_override": "@" },
+     "1": { "type_override": "^v" }
+    },
+    "retval": {
+     "type_override": "v"
+    }
+   },
+   "dispatch_set_finalizer_f": {
+    "args": {
+     "0": { "type_override": "@" },
+     "1": {
+      "type_override": "^?",
+      "callable": {
+       "arguments": {
+        "0": { "type": "^v" }
+       },
+       "retval": {
+        "type": "v"
+       }
+      },
+      "callable_retained": true
+     }
+    },
+    "retval": {
+     "type_override": "v"
+    }
+   },
+   "dispatch_activate": {
+    "args": {
+     "0": { "type_override": "@" }
+    },
+    "retval": {
+     "type_override": "v"
+    }
+   },
+   "dispatch_suspend": {
+    "args": {
+     "0": { "type_override": "@" }
+    },
+    "retval": {
+     "type_override": "v"
+    }
+   },
+   "dispatch_resume": {
+    "args": {
+     "0": { "type_override": "@" }
+    },
+    "retval": {
+     "type_override": "v"
+    }
+   },
+   "dispatch_cancel": {
+    "args": {
+     "0": { "type_override": "@" }
+    },
+    "retval": {
+     "type_override": "v"
+    }
+   },
+   "dispatch_testcancel": {
+    "args": {
+     "0": { "type_override": "@" }
+    },
+    "retval": {
+     "type_override": "l"
+    }
+   },
+   "dispatch_wait": {
+    "args": {
+     "0": { "type_override": "@" },
+     "1": { "type_override": "Q" }
+    },
+    "retval": {
+     "type_override": "l"
+    }
+   },
+   "dispatch_notify": {
+    "args": {
+     "0": {
+      "type_override": "@?",
+      "callable": {
+       "arguments": {
+        "0": { "type": "^v" }
+       },
+       "retval": { "type": "v" }
+      }
+     },
+     "1": { "type_override": "@" },
+     "2": {
+      "type_override": "@?",
+      "callable": {
+       "arguments": {
+        "0": { "type": "^v" }
+       },
+       "retval": { "type": "v" }
+      }
+     }
+    },
+    "retval": {
+     "type_override": "v"
+    }
+   },
+   "dispatch_time": {
+    "args": {
+     "0": { "type_override": "Q" },
+     "1": { "type_override": "q" }
+    },
+    "retval": {
+     "type_override": "Q"
+    }
+   },
+   "dispatch_walltime": {
+    "args": {
+     "0": { "type_override": "n^{timespec=ll}" },
+     "1": { "type_override": "q" }
+    },
+    "retval": {
+     "type_override": "Q"
+    }
+   },
+   "dispatch_block_create": {
+    "args": {
+     "0": { "type_override": "L" },
+     "1": {
+      "type_override": "@?",
+      "callable": {
+       "arguments": {
+        "0": { "type": "^v" }
+       },
+       "retval": { "type": "v" }
+      }
+     }
+    },
+    "retval": {
+     "type_override": "@?",
+     "already_retained": true,
+     "callable": {
+      "arguments": {
+       "0": { "type": "^v" }
+      },
+      "retval": { "type": "v" }
+     }
+    }
+   },
+   "dispatch_block_perform": {
+    "args": {
+     "0": { "type_override": "L" },
+     "1": {
+      "type_override": "@?",
+      "callable": {
+       "arguments": {
+        "0": { "type": "^v" }
+       },
+       "retval": { "type": "v" }
+      }
+     }
+    },
+    "retval": {
+     "type_override": "v"
+    }
+   },
+   "dispatch_block_create_with_qos_class": {
+    "args": {
+     "0": { "type_override": "L" },
+     "1": { "type_override": "I" },
+     "2": { "type_override": "i" },
+     "3": {
+      "type_override": "@?",
+      "callable": {
+       "arguments": {
+        "0": { "type": "^v" }
+       },
+       "retval": { "type": "v" }
+      }
+     }
+    },
+    "retval": {
+     "type_override": "@?",
+     "already_retained": true,
+     "callable": {
+      "arguments": {
+       "0": { "type": "^v" }
+      },
+      "retval": { "type": "v" }
+     }
+    }
+   },
+   "dispatch_block_wait": {
+    "args": {
+     "0": {
+      "type_override": "@?",
+      "callable": {
+       "arguments": {
+        "0": { "type": "^v" }
+       },
+       "retval": { "type": "v" }
+      }
+     },
+     "1": { "type_override": "Q" }
+    },
+    "retval": {
+     "type_override": "l"
+    }
+   },
+   "dispatch_block_notify": {
+    "args": {
+     "0": {
+      "type_override": "@?",
+      "callable": {
+       "arguments": {
+        "0": { "type": "^v" }
+       },
+       "retval": { "type": "v" }
+      }
+     },
+     "1": { "type_override": "@" },
+     "2": {
+      "type_override": "@?",
+      "callable": {
+       "arguments": {
+        "0": { "type": "^v" }
+       },
+       "retval": { "type": "v" }
+      }
+     }
+    },
+    "retval": {
+     "type_override": "v"
+    }
+   },
+   "dispatch_block_cancel": {
+    "args": {
+     "0": {
+      "type_override": "@?",
+      "callable": {
+       "arguments": {
+        "0": { "type": "^v" }
+       },
+       "retval": { "type": "v" }
+      }
+     }
+    },
+    "retval": {
+     "type_override": "v"
+    }
+   },
+   "dispatch_block_testcancel": {
+    "args": {
+     "0": {
+      "type_override": "@?",
+      "callable": {
+       "arguments": {
+        "0": { "type": "^v" }
+       },
+       "retval": { "type": "v" }
+      }
+     }
+    },
+    "retval": {
+     "type_override": "l"
+    }
+   },
+   "dispatch_group_create": {
+    "args": {
+    },
+    "retval": {
+     "type_override": "@",
+     "already_retained": true
+    }
+   },
+   "dispatch_group_async": {
+    "args": {
+     "0": { "type_override": "@" },
+     "1": { "type_override": "@" },
+     "2": {
+      "type_override": "@?",
+      "callable": {
+       "arguments": {
+        "0": { "type": "^v" }
+       },
+       "retval": { "type": "v" }
+      }
+     }
+    },
+    "retval": {
+     "type_override": "v"
+    }
+   },
+   "dispatch_group_async_f": {
+    "args": {
+     "0": { "type_override": "@" },
+     "1": { "type_override": "@" },
+     "2": { "type_override": "^v" },
+     "3": {
+      "type_override": "^?",
+      "callable": {
+       "arguments": {
+        "0": { "type": "^v" }
+       },
+       "retval": { "type": "v" }
+      }
+     }
+    },
+    "retval": {
+     "type_override": "v"
+    }
+   },
+   "dispatch_group_wait": {
+    "args": {
+     "0": { "type_override": "@" },
+     "1": { "type_override": "Q" }
+    },
+    "retval": {
+     "type_override": "l"
+    }
+   },
+   "dispatch_group_notify": {
+    "args": {
+     "0": { "type_override": "@" },
+     "1": { "type_override": "@" },
+     "2": {
+      "type_override": "@?",
+      "callable": {
+       "arguments": {
+        "0": { "type": "^v" }
+       },
+       "retval": { "type": "v" }
+      }
+     }
+    },
+    "retval": {
+     "type_override": "v"
+    }
+   },
+   "dispatch_group_notify_f": {
+    "args": {
+     "0": { "type_override": "@" },
+     "1": { "type_override": "@" },
+     "2": { "type_override": "^v" },
+     "3": {
+      "type_override": "^?",
+      "callable": {
+       "arguments": {
+        "0": { "type": "^v" }
+       },
+       "retval": { "type": "v" }
+      }
+     }
+    },
+    "retval": {
+     "type_override": "v"
+    }
+   },
+   "dispatch_group_enter": {
+    "args": {
+     "0": { "type_override": "@" }
+    },
+    "retval": {
+     "type_override": "v"
+    }
+   },
+   "dispatch_group_leave": {
+    "args": {
+     "0": { "type_override": "@" }
+    },
+    "retval": {
+     "type_override": "v"
+    }
+   },
+   "dispatch_read": {
+    "args": {
+     "0": { "type_override": "i" },
+     "1": { "type_override": "L" },
+     "2": { "type_override": "@" },
+     "3": {
+      "type_override": "@?",
+      "callable": {
+       "arguments": {
+        "0": { "type": "^v" },
+	"1": { "type": "@", "comment": "dispatch_data_t" },
+	"2": { "type": "i" }
+       },
+       "retval": {
+        "type": "v"
+       }
+      }
+     }
+    },
+    "retval": {
+     "type_override": "v"
+    }
+   },
+   "dispatch_write": {
+    "args": {
+     "0": { "type_override": "i" },
+     "1": { "type_override": "@", "comment": "dispatch_data_t" },
+     "2": { "type_override": "@" },
+     "3": {
+      "type_override": "@?",
+      "callable": {
+       "arguments": {
+        "0": { "type": "^v" },
+	"1": { "type": "@", "comment": "dispatch_data_t" },
+	"2": { "type": "i" }
+       },
+       "retval": {
+        "type": "v"
+       }
+      }
+     }
+    },
+    "retval": {
+     "type_override": "v"
+    }
+   }
+  }
+ }
+}

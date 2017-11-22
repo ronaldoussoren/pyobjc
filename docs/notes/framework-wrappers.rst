@@ -10,6 +10,8 @@ The framework name links to API notes for that framework, the python packages li
 +--------------------------------+---------------------------------------------+-----------------------------------------+
 | *Framework name*               | *Python package*                            | *Notes*                                 |
 +================================+=============================================+=========================================+
+| `dispatch`_                    | `pyobjc-framework-libdispatch`_             |                                         |
++--------------------------------+---------------------------------------------+-----------------------------------------+
 | AGL                            | -                                           | Not wrapped yet.                        |
 +--------------------------------+---------------------------------------------+-----------------------------------------+
 | `AVFoundation`_                | `pyobjc-framework-AVFoundation`_            |                                         |
@@ -344,7 +346,8 @@ version of PyObjC although there is no explicit roadmap for this.
 
 .. _pyopencl: https://pypi.org/pypi/pyopencl
 
-.. _AVFoundation: ../apinotes/AVFoundation.html
+.. _`dispatch`: ../apinotes/libdispatch.html
+.. _`AVFoundation`: ../apinotes/AVFoundation.html
 .. _`AVKit`: ../apinotes/AVKit.html
 .. _`Accounts`: ../apinotes/Accounts.html
 .. _`AddressBook`: ../apinotes/AddressBook.html
@@ -501,4 +504,5 @@ version of PyObjC although there is no explicit roadmap for this.
 .. _`pyobjc-framework-SystemConfiguration`: https://pypi.org/pypi/pyobjc-framework-SystemConfiguration/
 .. _`pyobjc-framework-WebKit`: https://pypi.org/pypi/pyobjc-framework-WebKit/
 .. _`pyobjc-framework-XgridFoundation`: https://pypi.org/pypi/pyobjc-framework-XgridFoundation/
-.. _pyobjc-framework-AVFoundation: https://pypi.org/pypi/pyobjc-framework-AVFoundation/
+.. _`pyobjc-framework-AVFoundation`: https://pypi.org/pypi/pyobjc-framework-AVFoundation/
+.. _`pyobjc-framework-libdispatch`: https://pypi.org/pypi/pyobjc-framework-libdispatch/

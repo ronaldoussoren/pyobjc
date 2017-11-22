@@ -13,7 +13,7 @@ import tarfile
 import sys
 import ast
 
-VERSION="4.0.2b1"
+VERSION="4.1b1"
 
 # Table with all framework wrappers and the OSX releases where they are
 # first supported, and where support was removed. The introduced column
@@ -22,6 +22,7 @@ VERSION="4.0.2b1"
 # supported OSX release.
 FRAMEWORK_WRAPPERS=[
         # Name                      Introcuded          Removed
+        ('libdispatch',             '10.10',            None        ),
         ('AVKit',                   '10.9',             None        ),
         ('AVFoundation',            '10.7',             None        ),
         ('Accounts',                '10.8',             None        ),
