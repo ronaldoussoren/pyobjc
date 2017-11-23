@@ -10,6 +10,13 @@ Version 4.1
 
 * Added missing ```MAC_OS_X_VERSION_*``` constants
 
+* Added bindings for framework SecurityFoundation
+
+  .. note::
+
+     These are not usefull without bindings to the other
+     security related frameworks, those will be added later.
+
 * #129: Added bindings to libdispatch.
 
   These bindings require macOS 10.10 or later, libdispatch was

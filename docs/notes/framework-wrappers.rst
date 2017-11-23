@@ -296,7 +296,7 @@ The framework name links to API notes for that framework, the python packages li
 +----------------------------------------------------------------+---------------------------------------------+-----------------------------------------+
 | Security                                                       | -                                           | Not wrapped yet                         |
 +----------------------------------------------------------------+---------------------------------------------+-----------------------------------------+
-| SecurityFoundation                                             | -                                           | Not wrapped yet                         |
+| :doc:`SecurityFoundation </apinotes/SecurityFoundation>`       | `pyobjc-framework-SecurityFoundation`_      |                                         |
 +----------------------------------------------------------------+---------------------------------------------+-----------------------------------------+
 | SecurityInterface                                              | -                                           | Not wrapped yet                         |
 +----------------------------------------------------------------+---------------------------------------------+-----------------------------------------+
@@ -416,6 +416,7 @@ version of PyObjC although there is no explicit roadmap for this.
 .. _`pyobjc-framework-SceneKit`: https://pypi.org/project/pyobjc-framework-SceneKit/
 .. _`pyobjc-framework-ScreenSaver`: https://pypi.org/project/pyobjc-framework-ScreenSaver/
 .. _`pyobjc-framework-ScriptingBridge`: https://pypi.org/project/pyobjc-framework-ScriptingBridge/
+.. _`pyobjc-framework-SecurityFoundation`: https://pypi.org/project/pyobjc-framework-SecurityFoundation/
 .. _`pyobjc-framework-ServerNotification`: https://pypi.org/project/pyobjc-framework-ServerNotification/
 .. _`pyobjc-framework-ServiceManagement`: https://pypi.org/project/pyobjc-framework-ServiceManagement/
 .. _`pyobjc-framework-Social`: https://pypi.org/project/pyobjc-framework-Social/

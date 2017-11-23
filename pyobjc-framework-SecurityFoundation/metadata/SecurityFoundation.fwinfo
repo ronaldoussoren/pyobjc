@@ -1,0 +1,36 @@
+// objective.metadata exceptions file, see its document
+// for information on how to update this file.
+{
+ "definitions": {
+  "classes": {
+   "SFAuthorization": {
+    "methods": [
+     {
+      "selector": "obtainWithRight:flags:error:",
+      "class_method": false,
+      "retval": {
+       "type_override": "Z"
+      },
+      "args": {
+       "2": { "type_modifier": "o" }
+      }
+     },
+     {
+      "selector": "obtainWithRights:flags:environment:authorizedRights:error:",
+      "class_method": false,
+      "retval": {
+       "type_override": "Z"
+      },
+      "args": {
+       "3": { "type_modifier": "o" },
+       "4": { "type_modifier": "o" }
+      }
+     }
+    ]
+   }
+  },
+  "formal_protocols": {},
+  "functions": {},
+  "informal_protocols": {}
+ }
+}
