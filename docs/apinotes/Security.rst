@@ -12,4 +12,7 @@ These bindings are accessed through the ``Security`` package (that is, ``import 
 API Notes
 ---------
 
-T.B.D.
+Plugin API
+..........
+
+The APIs related to authorization plugins are not exposed to python.
