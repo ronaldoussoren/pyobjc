@@ -3,21 +3,21 @@ What's new in PyObjC
 
 An overview of the relevant changes in new, and older, releases.
 
-Version 4.1
------------
+Version 4.1b1
+-------------
 
 * Updated metadata for Xcode 9.2 (beta 2)
 
 * Added missing ```MAC_OS_X_VERSION_*``` constants
 
-* Added bindings for framework SecurityFoundation and SecurityInterface
+* #135: Add bindings for framework SecurityFoundation and SecurityInterface
 
   .. note::
 
      These are not usefull without bindings to the Security
      frameworks, those will be added later.
 
-* #129: Added bindings to libdispatch.
+* #129: Add bindings to libdispatch.
 
   These bindings require macOS 10.10 or later, libdispatch was
   available earlier but macOS 10.10 changed the API in such a
