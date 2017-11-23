@@ -1,0 +1,176 @@
+// objective.metadata exceptions file, see its document
+// for information on how to update this file.
+{
+ "definitions": {
+  "classes": {
+   "SFAuthorizationPluginView": {
+    "methods": [
+     {
+      "args": {
+       "0": {},
+       "1": {}
+      },
+      "class_method": false,
+      "selector": "initWithCallbacks:andEngineRef:"
+     },
+     {
+      "class_method": false,
+      "retval": {},
+      "selector": "engineRef"
+     },
+     {
+      "class_method": false,
+      "retval": {},
+      "selector": "callbacks"
+     }
+    ]
+   },
+   "SFAuthorizationView": {
+    "methods": [
+     {
+      "args": {
+       "0": {}
+      },
+      "class_method": false,
+      "selector": "setString:"
+     },
+     {
+      "args": {
+       "0": {}
+      },
+      "class_method": false,
+      "selector": "setAuthorizationRights:"
+     },
+     {
+      "class_method": false,
+      "retval": {},
+      "selector": "authorizationRights"
+     }
+    ]
+   },
+   "SFCertificatePanel": {
+    "methods": [
+     {
+      "args": {
+       "0": {}
+      },
+      "class_method": false,
+      "selector": "runModalForTrust:showGroup:"
+     },
+     {
+      "args": {
+       "2": { "sel_of_type": ["v@:@i^v", "v@:@q^v"] },
+       "3": {},
+       "4": {}
+      },
+      "class_method": false,
+      "selector": "beginSheetForWindow:modalDelegate:didEndSelector:contextInfo:trust:showGroup:"
+     },
+     {
+      "args": {
+       "2": { "sel_of_type": ["v@:@i^v", "v@:@q^v"] },
+       "3": {}
+      },
+      "class_method": false,
+      "selector": "beginSheetForWindow:modalDelegate:didEndSelector:contextInfo:certificates:showGroup:"
+     }
+    ]
+   },
+   "SFCertificateTrustPanel": {
+    "methods": [
+     {
+      "args": {
+       "0": {}
+      },
+      "class_method": false,
+      "selector": "runModalForTrust:message:"
+     },
+     {
+      "args": {
+       "2": { "sel_of_type": ["v@:@i^v", "v@:@q^v"] },
+       "3": {},
+       "4": {}
+      },
+      "class_method": false,
+      "selector": "beginSheetForWindow:modalDelegate:didEndSelector:contextInfo:trust:message:"
+     }
+    ]
+   },
+   "SFCertificateView": {
+    "methods": [
+     {
+      "args": {
+       "0": {}
+      },
+      "class_method": false,
+      "selector": "setCertificate:"
+     },
+     {
+      "class_method": false,
+      "retval": {},
+      "selector": "certificate"
+     }
+    ]
+   },
+   "SFChooseIdentityPanel": {
+    "methods": [
+     {
+      "args": {
+       "2": { "sel_of_type": ["v@:@i^v", "v@:@q^v"] },
+       "3": {}
+      },
+      "class_method": false,
+      "selector": "beginSheetForWindow:modalDelegate:didEndSelector:contextInfo:identities:message:"
+     },
+     {
+      "class_method": false,
+      "retval": {},
+      "selector": "identity"
+     }
+    ]
+   },
+   "SFKeychainSavePanel": {
+    "methods": [
+     {
+      "class_method": false,
+      "retval": {},
+      "selector": "keychain"
+     },
+     {
+      "args": {
+       "4": { "sel_of_type": ["v@:@i^v", "v@:@q^v"] },
+       "5": {}
+      },
+      "class_method": false,
+      "selector": "beginSheetForDirectory:file:modalForWindow:modalDelegate:didEndSelector:contextInfo:"
+     }
+    ]
+   },
+   "SFKeychainSettingsPanel": {
+    "methods": [
+     {
+      "args": {
+       "0": {},
+       "1": {}
+      },
+      "class_method": false,
+      "selector": "runModalForSettings:keychain:"
+     },
+     {
+      "args": {
+       "2": { "sel_of_type": ["v@:@i^v", "v@:@q^v"] },
+       "3": {},
+       "4": {},
+       "5": {}
+      },
+      "class_method": false,
+      "selector": "beginSheetForWindow:modalDelegate:didEndSelector:contextInfo:settings:keychain:"
+     }
+    ]
+   }
+  },
+  "formal_protocols": {},
+  "functions": {},
+  "informal_protocols": {}
+ }
+}

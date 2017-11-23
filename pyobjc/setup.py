@@ -89,6 +89,7 @@ FRAMEWORK_WRAPPERS=[
         ('ScreenSaver',             None,               None        ),
         ('ScriptingBridge',         '10.5',             None        ),
         ('SecurityFoundation',      None,               None        ),
+        ('SecurityInterface',       None,               None        ),
         ('SearchKit',               None,               None        ),
         ('ServerNotification',      '10.6',             '10.9'      ),
         ('ServiceManagement',       '10.6',             None        ),
