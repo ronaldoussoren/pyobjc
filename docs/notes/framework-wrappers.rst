@@ -294,7 +294,7 @@ The framework name links to API notes for that framework, the python packages li
 +----------------------------------------------------------------+---------------------------------------------+-----------------------------------------+
 | :doc:`ScriptingBridge </apinotes/ScriptingBridge>`             | `pyobjc-framework-ScriptingBridge`_         |                                         |
 +----------------------------------------------------------------+---------------------------------------------+-----------------------------------------+
-| Security                                                       | -                                           | Not wrapped yet                         |
+| :doc:`Security </apinotes/Security>`                           | `pyobjc-framework-Security`_                |                                         |
 +----------------------------------------------------------------+---------------------------------------------+-----------------------------------------+
 | :doc:`SecurityFoundation </apinotes/SecurityFoundation>`       | `pyobjc-framework-SecurityFoundation`_      |                                         |
 +----------------------------------------------------------------+---------------------------------------------+-----------------------------------------+
@@ -416,6 +416,7 @@ version of PyObjC although there is no explicit roadmap for this.
 .. _`pyobjc-framework-SceneKit`: https://pypi.org/project/pyobjc-framework-SceneKit/
 .. _`pyobjc-framework-ScreenSaver`: https://pypi.org/project/pyobjc-framework-ScreenSaver/
 .. _`pyobjc-framework-ScriptingBridge`: https://pypi.org/project/pyobjc-framework-ScriptingBridge/
+.. _`pyobjc-framework-Security`: https://pypi.org/project/pyobjc-framework-Security/
 .. _`pyobjc-framework-SecurityFoundation`: https://pypi.org/project/pyobjc-framework-SecurityFoundation/
 .. _`pyobjc-framework-SecurityInterface`: https://pypi.org/project/pyobjc-framework-SecurityInterface/
 .. _`pyobjc-framework-ServerNotification`: https://pypi.org/project/pyobjc-framework-ServerNotification/

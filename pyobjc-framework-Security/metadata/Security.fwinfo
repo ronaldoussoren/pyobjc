@@ -1,0 +1,52 @@
+{
+ "definitions": {
+  "structs": {
+  },
+  "enum": {
+   "errAuthorizationInternal": { "value": -60008 },
+   "errAuthorizationInvalidFlags": { "value": -60011 },
+
+   "noSecuritySession": { "value": 0 },
+   "callerSecuritySession": { "value": -1 },
+   "sessionIsRoot": { "value": 1 },
+   "sessionHasGraphicAccess": { "value": 16 },
+   "sessionHasTTY": { "value": 32 },
+   "sessionIsRemote": { "value": 4096 },
+   "sessionKeepCurrentBootstrap": { "value": 32768  },
+   "errSessionSuccess": { "value": 0 },
+   "errSessionInvalidId": { "value": -60500 },
+   "errSessionInvalidAttributes": { "value": -60501 },
+   "errSessionAuthorizationDenied": { "value": -60502 },
+   "errSessionValueNotSet": { "value": -60503 }
+  },
+  "externs": {
+  },
+  "aliases": {
+   "errSessionInternal": { "alias": "errAuthorizationInternal" },
+   "errSessionInvalidFlags": { "alias": "errAuthorizationInvalidFlags" }
+  },
+  "classes": {
+  },
+  "functions": {
+   "SessionGetInfo": {
+    "args": {
+     "0": { "type_override": "I" },
+     "1": { "type_override": "^I", "type_modifier": "o" },
+     "2": { "type_override": "^I", "type_modifier": "o" }
+    },
+    "retval": {
+     "type_override": "i"
+    }
+   },
+   "SessionCreate": {
+    "args": {
+     "0": { "type_override": "I" },
+     "1": { "type_override": "I" }
+    },
+    "retval": {
+     "type_override": "i"
+    }
+   }
+  }
+ }
+}

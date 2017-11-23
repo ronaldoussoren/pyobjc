@@ -8,10 +8,9 @@ documentation for details on how to use these functions and classes.
 import objc
 import sys
 import AppKit
+import Security
 
 from SecurityInterface import _metadata
-#from SecurityInterface._SecurityInterface import *
-#from SecurityInterface._inlines import _inline_list_
 
 
 sys.modules['SecurityInterface'] = mod = objc.ObjCLazyModule(
@@ -23,7 +22,7 @@ sys.modules['SecurityInterface'] = mod = objc.ObjCLazyModule(
         'objc': objc,
         '__path__': __path__,
         '__loader__': globals().get('__loader__', None),
-    }, (AppKit,))
+    }, (AppKit, Security))
 
 import sys
 del sys.modules['SecurityInterface._metadata']
