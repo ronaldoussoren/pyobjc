@@ -2,7 +2,6 @@ Authorization.h 	- Partial metadata, needs manual work
 AuthorizationTags.h
 CMSDecoder.h
 CMSEncoder.h
-CSCommon.h
 CodeSigning.h
 SecACL.h
 SecAccess.h
