@@ -24,6 +24,8 @@
 
 #include <dlfcn.h>
 
+static int PyObjC_Initialized = 0;
+
 PyObject* PyObjCClass_DefaultModule = NULL;
 
 PyObject* PyObjC_TypeStr2CFTypeID = NULL;
@@ -2153,6 +2155,12 @@ PyObjC_MODULE_INIT(_objc)
 {
     PyObject *m, *d, *v;
 
+    if (PyObjC_Initialized) {
+        PyErr_SetString(PyExc_RuntimeError,
+            "Reload of objc._objc detected, this is not supported");
+        PyObjC_INITERROR();
+    }
+
     PyObjC_SetupRuntimeCompat();
     if (PyErr_Occurred()) {
         PyObjC_INITERROR();
@@ -2694,5 +2702,6 @@ PyObjC_MODULE_INIT(_objc)
     [NSUnarchiver decodeClassName:@"OC_PythonString" asClassName:@"OC_PythonUnicode"];
 #endif /* PY_MAJOR_VERSION == 3 */
 
+    PyObjC_Initialized = 1;
     PyObjC_INITDONE();
 }
