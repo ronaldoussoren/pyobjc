@@ -40,7 +40,6 @@ SecTrust.h
 SecTrustSettings.h
 SecTrustedApplication.h
 SecureTransport.h
-Security.h
 certextensions.h
 cssmaci.h
 cssmapi.h
