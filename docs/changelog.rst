@@ -10,6 +10,9 @@ Version 4.1b1
 
 * Added missing ```MAC_OS_X_VERSION_*``` constants
 
+* Fix memory error in struct wrappers which resulted in
+  a use-after-free error in the initializer for structs.
+
 * #135: Add bindings for frameworks Security, SecurityFoundation
   and SecurityInterface
 

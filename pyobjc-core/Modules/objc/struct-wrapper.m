@@ -699,8 +699,6 @@ static int set_defaults(PyObject* self, const char* typestr)
     int r;
     PyObject* v;
 
-    printf("set-defaults %s %s\n", PyUnicode_AsUTF8AndSize(PyObject_Repr(self), NULL), typestr);
-
     while(*typestr != _C_STRUCT_E && *typestr++ != '=');
     while(typestr && *typestr != _C_STRUCT_E) {
         const char* next;
@@ -782,7 +780,6 @@ static int set_defaults(PyObject* self, const char* typestr)
             return -1;
         }
 
-        printf("set value: %ld %s\n", i, PyUnicode_AsUTF8AndSize(PyObject_Repr(v), NULL));
         r = PyObjC_SetStructField(self, i++, v);
         Py_DECREF(v);
         if (r < 0) {
@@ -950,8 +947,6 @@ static ffi_cif* init_cif = NULL;
     ffi_closure* cl = NULL;
     ffi_status rv;
 
-    printf("make_init %s\n", typestr);
-
     typestr = PyObjCUtil_Strdup(typestr);
     if (typestr == NULL) {
         return NULL;
@@ -962,8 +957,8 @@ static ffi_cif* init_cif = NULL;
         signature = PyObjCMethodSignature_FromSignature("i^v^v^v", YES);
         init_cif = PyObjCFFI_CIFForSignature(signature);
         Py_DECREF(signature);
-        PyMem_Free((void*)typestr);
         if (init_cif == NULL) {
+            PyMem_Free((void*)typestr);
             return NULL;
         }
     }
@@ -974,7 +969,6 @@ static ffi_cif* init_cif = NULL;
         return NULL;
     }
 
-    printf("prep_closure %s\n", typestr);
     rv = ffi_prep_closure(cl, init_cif, struct_init, (char*)typestr);
     if (rv != FFI_OK) {
         PyObjC_free_closure(cl);
@@ -1308,8 +1302,6 @@ PyObjC_MakeStructType(
     PyObject* fields;
     Py_ssize_t i;
 
-    printf("make_struct_type %s %s\n", name, typestr);
-
     fields = PyTuple_New(numFields);
     if (fields == NULL) {
         return NULL;
@@ -1372,7 +1364,6 @@ PyObjC_MakeStructType(
 
     Py_CLEAR(fields);
 
-    printf("make_struct_type2 %s %s\n", name, typestr);
     if (tpinit) {
         result->base.tp_init = tpinit;
 
