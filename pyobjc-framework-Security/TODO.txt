@@ -39,7 +39,6 @@ SecTransformReadTransform.h
 SecTrust.h
 SecTrustSettings.h
 SecTrustedApplication.h
-SecureDownload.h
 SecureTransport.h
 Security.h
 certextensions.h

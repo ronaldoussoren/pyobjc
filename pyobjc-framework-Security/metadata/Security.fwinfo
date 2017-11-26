@@ -4,6 +4,10 @@
    "AuthorizationRef": {
     "typestr": "^{AuthorizationOpaqueRef=}",
     "opaque": true
+   },
+   "SecureDownloadRef": {
+    "typestr": "^{OpaqueSecureDownload=}",
+    "opaque": true
    }
   },
   "structs": {
@@ -12,6 +16,11 @@
    "AuthorizationExternalForm": { "comment": "FIXME: requires manual wrapping" }
   },
   "enum": {
+   "errSecureDownloadInvalidTicket": { "value": -20052 },
+   "errSecureDownloadInvalidDownload": { "value": -20053 },
+   "kSecureDownloadDoNotEvaluateSigner": { "value": 0 },
+   "kSecureDownloadEvaluateSigner": { "value": 1 },
+   "kSecureDownloadFailEvaluation": { "value": 2 },
    "errSecCSUnimplemented": { "value": -67072 },
    "errSecCSInvalidObjectRef": { "value": -67071 },
    "errSecCSInvalidFlags": { "value": -67070 },
@@ -355,6 +364,94 @@
   "classes": {
   },
   "functions": {
+   "SecureDownloadCreateWithTicket": {
+    "args": {
+     "0": { "type_override": "@" },
+     "1": {
+      "type_override": "^?",
+      "callable": {
+       "arguments": {
+        "0": { "type": "@" },
+        "1": { "type": "^v" }
+       },
+       "retval": { "type": "i" }
+      },
+      "callable_retained": true
+     },
+     "2": { "type_override": "^v" },
+     "3": {
+      "type_override": "^?",
+      "callable": {
+       "arguments": {
+        "0": { "type": "@" },
+        "1": { "type": "i" },
+        "2": { "type": "^v" }
+       },
+       "retval": { "type": "i" }
+      },
+      "callable_retained": true
+     },
+     "4": { "type_override": "^v" },
+     "5": { "type_override": "o^^{OpaqueSecureDownload=}" }
+    },
+    "retval": {
+     "type_override": "i"
+    }
+   },
+   "SecureDownloadRelease": {
+    "retval": { "type_override": "i" },
+    "args": {
+     "0": { "type_override": "^{OpaqueSecureDownload=}" }
+    }
+   },
+   "SecureDownloadFinished": {
+    "retval": { "type_override": "i" },
+    "args": {
+     "0": { "type_override": "^{OpaqueSecureDownload=}" }
+    }
+   },
+   "SecureDownloadUpdateWithData": {
+    "retval": { "type_override": "i" },
+    "args": {
+     "0": { "type_override": "^{OpaqueSecureDownload=}" },
+     "1": { "type_override": "@" }
+    }
+   },
+   "SecureDownloadCopyTicketLocation": {
+    "retval": { "type_override": "i" },
+    "args": {
+     "0": { "type_override": "^{OpaqueSecureDownload=}" },
+     "1": { "type_override": "o^@", "already_cfretained": true }
+    }
+   },
+   "SecureDownloadCopyURLs": {
+    "retval": { "type_override": "i" },
+    "args": {
+     "0": { "type_override": "^{OpaqueSecureDownload=}" },
+     "1": { "type_override": "o^@", "already_cfretained": true }
+    }
+   },
+   "SecureDownloadGetDownloadSize": {
+    "retval": { "type_override": "i" },
+    "args": {
+     "0": { "type_override": "^{OpaqueSecureDownload=}" },
+     "1": { "type_override": "o^q" }
+    }
+   },
+   "SecureDownloadCopyName": {
+    "retval": { "type_override": "i" },
+    "args": {
+     "0": { "type_override": "^{OpaqueSecureDownload=}" },
+     "1": { "type_override": "o^@", "already_cfretained": true }
+    }
+   },
+   "SecureDownloadCopyCreationDate": {
+    "retval": { "type_override": "i" },
+    "args": {
+     "0": { "type_override": "^{OpaqueSecureDownload=}" },
+     "1": { "type_override": "o^@", "already_cfretained": true }
+    }
+   },
    "AuthorizationRightRemove": {
     "args": {
      "0": { "type_override": "^{AuthorizationOpaqueRef=}" },
