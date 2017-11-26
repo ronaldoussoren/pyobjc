@@ -24,3 +24,8 @@ These CoreFoundation types are not available as named types in Python.
 
 That is, it is possible to use instances of these types but there is
 no Python object that represent the type itself.
+
+```SecKeyCreatePair```, ```SecKeyGenerate```, ```SecKeyGetCSSMKey```, ```SecKeyGetCSPHandle```, ```SecKeyGetCredentials```
+..........................................................................................................................
+
+These functions were deprecated in macOS 10.7 and are not available from Python.

@@ -22,7 +22,6 @@ SecIdentity.h
 SecIdentitySearch.h
 SecImportExport.h
 SecItem.h
-SecKey.h
 SecKeychain.h
 SecKeychainItem.h
 SecKeychainSearch.h

@@ -16,6 +16,63 @@
    "AuthorizationExternalForm": { "comment": "FIXME: requires manual wrapping" }
   },
   "enum": {
+   "kSecKeyOperationTypeSign": { "value": 0 },
+   "kSecKeyOperationTypeVerify": { "value": 1 },
+   "kSecKeyOperationTypeEncrypt": { "value": 2 },
+   "kSecKeyOperationTypeDecrypt": { "value": 3 },
+   "kSecKeyOperationTypeKeyExchange": { "value": 4 },
+   "kSecCredentialTypeDefault": { "value": 0 },
+   "kSecCredentialTypeWithUI": { "value": 1 },
+   "kSecCredentialTypeNoUI": { "value": 2 },
+   "kSecPaddingNone": { "value": 0 },
+   "kSecPaddingPKCS1": { "value": 1 },
+   "kSecPaddingOAEP": { "value": 2 },
+   "kSecPaddingSigRaw": { "value": 16384 },
+   "kSecPaddingPKCS1MD2": { "value": 32768 },
+   "kSecPaddingPKCS1MD5": { "value": 32769 },
+   "kSecPaddingPKCS1SHA1": { "value": 32770 },
+   "kSecPaddingPKCS1SHA224": { "value": 32771 },
+   "kSecPaddingPKCS1SHA256": { "value": 32772 },
+   "kSecPaddingPKCS1SHA384": { "value": 32773 },
+   "kSecPaddingPKCS1SHA512": { "value": 32774 },
+   "kSecDefaultKeySize": { "value": 0 },
+   "kSec3DES192": { "value": 192 },
+   "kSecAES128": { "value": 128 },
+   "kSecAES192": { "value": 192 },
+   "kSecAES256": { "value": 256 },
+   "kSecp192r1": { "value": 192 },
+   "kSecp256r1": { "value": 256 },
+   "kSecp384r1": { "value": 384 },
+   "kSecp521r1": { "value": 521 },
+   "kSecRSAMin": { "value": 1024 },
+   "kSecRSAMax": { "value": 4096 },
+   "kSecKeyKeyClass": { "value": 0 },
+   "kSecKeyPrintName": { "value": 1 },
+   "kSecKeyAlias": { "value": 2 },
+   "kSecKeyPermanent": { "value": 3 },
+   "kSecKeyPrivate": { "value": 4 },
+   "kSecKeyModifiable": { "value": 5 },
+   "kSecKeyLabel": { "value": 6 },
+   "kSecKeyApplicationTag": { "value": 7 },
+   "kSecKeyKeyCreator": { "value": 8 },
+   "kSecKeyKeyType": { "value": 9 },
+   "kSecKeyKeySizeInBits": { "value": 10 },
+   "kSecKeyEffectiveKeySize": { "value": 11 },
+   "kSecKeyStartDate": { "value": 12 },
+   "kSecKeyEndDate": { "value": 13 },
+   "kSecKeySensitive": { "value": 14 },
+   "kSecKeyAlwaysSensitive": { "value": 15 },
+   "kSecKeyExtractable": { "value": 16 },
+   "kSecKeyNeverExtractable": { "value": 17 },
+   "kSecKeyEncrypt": { "value": 18 },
+   "kSecKeyDecrypt": { "value": 19 },
+   "kSecKeyDerive": { "value": 20 },
+   "kSecKeySign": { "value": 21 },
+   "kSecKeyVerify": { "value": 22 },
+   "kSecKeySignRecover": { "value": 23 },
+   "kSecKeyVerifyRecover": { "value": 24 },
+   "kSecKeyWrap": { "value": 25 },
+   "kSecKeyUnwrap": { "value": 26 },
    "errSecureDownloadInvalidTicket": { "value": -20052 },
    "errSecureDownloadInvalidDownload": { "value": -20053 },
    "kSecureDownloadDoNotEvaluateSigner": { "value": 0 },
@@ -342,6 +399,86 @@
    "kAuthorizationEmptyEnvironment": { "value": "None" }
   },
   "externs": {
+   "kSecKeyKeyExchangeParameterRequestedSize": { "typestr": "@" },
+   "kSecKeyKeyExchangeParameterSharedInfo": { "typestr": "@" },
+   "kSecKeyAlgorithmRSASignatureRaw": { "typestr": "@" },
+   "kSecKeyAlgorithmRSASignatureDigestPKCS1v15Raw": { "typestr": "@" },
+   "kSecKeyAlgorithmRSASignatureDigestPKCS1v15SHA1": { "typestr": "@" },
+   "kSecKeyAlgorithmRSASignatureDigestPKCS1v15SHA224": { "typestr": "@" },
+   "kSecKeyAlgorithmRSASignatureDigestPKCS1v15SHA256": { "typestr": "@" },
+   "kSecKeyAlgorithmRSASignatureDigestPKCS1v15SHA384": { "typestr": "@" },
+   "kSecKeyAlgorithmRSASignatureDigestPKCS1v15SHA512": { "typestr": "@" },
+   "kSecKeyAlgorithmRSASignatureMessagePKCS1v15SHA1": { "typestr": "@" },
+   "kSecKeyAlgorithmRSASignatureMessagePKCS1v15SHA224": { "typestr": "@" },
+   "kSecKeyAlgorithmRSASignatureMessagePKCS1v15SHA256": { "typestr": "@" },
+   "kSecKeyAlgorithmRSASignatureMessagePKCS1v15SHA384": { "typestr": "@" },
+   "kSecKeyAlgorithmRSASignatureMessagePKCS1v15SHA512": { "typestr": "@" },
+   "kSecKeyAlgorithmRSASignatureDigestPSSSHA1": { "typestr": "@" },
+   "kSecKeyAlgorithmRSASignatureDigestPSSSHA224": { "typestr": "@" },
+   "kSecKeyAlgorithmRSASignatureDigestPSSSHA256": { "typestr": "@" },
+   "kSecKeyAlgorithmRSASignatureDigestPSSSHA384": { "typestr": "@" },
+   "kSecKeyAlgorithmRSASignatureDigestPSSSHA512": { "typestr": "@" },
+   "kSecKeyAlgorithmRSASignatureMessagePSSSHA1": { "typestr": "@" },
+   "kSecKeyAlgorithmRSASignatureMessagePSSSHA224": { "typestr": "@" },
+   "kSecKeyAlgorithmRSASignatureMessagePSSSHA256": { "typestr": "@" },
+   "kSecKeyAlgorithmRSASignatureMessagePSSSHA384": { "typestr": "@" },
+   "kSecKeyAlgorithmRSASignatureMessagePSSSHA512": { "typestr": "@" },
+   "kSecKeyAlgorithmECDSASignatureRFC4754": { "typestr": "@" },
+   "kSecKeyAlgorithmECDSASignatureDigestX962": { "typestr": "@" },
+   "kSecKeyAlgorithmECDSASignatureDigestX962SHA1": { "typestr": "@" },
+   "kSecKeyAlgorithmECDSASignatureDigestX962SHA224": { "typestr": "@" },
+   "kSecKeyAlgorithmECDSASignatureDigestX962SHA256": { "typestr": "@" },
+   "kSecKeyAlgorithmECDSASignatureDigestX962SHA384": { "typestr": "@" },
+   "kSecKeyAlgorithmECDSASignatureDigestX962SHA512": { "typestr": "@" },
+   "kSecKeyAlgorithmECDSASignatureMessageX962SHA1": { "typestr": "@" },
+   "kSecKeyAlgorithmECDSASignatureMessageX962SHA224": { "typestr": "@" },
+   "kSecKeyAlgorithmECDSASignatureMessageX962SHA256": { "typestr": "@" },
+   "kSecKeyAlgorithmECDSASignatureMessageX962SHA384": { "typestr": "@" },
+   "kSecKeyAlgorithmECDSASignatureMessageX962SHA512": { "typestr": "@" },
+   "kSecKeyAlgorithmRSAEncryptionRaw": { "typestr": "@" },
+   "kSecKeyAlgorithmRSAEncryptionPKCS1": { "typestr": "@" },
+   "kSecKeyAlgorithmRSAEncryptionOAEPSHA1": { "typestr": "@" },
+   "kSecKeyAlgorithmRSAEncryptionOAEPSHA224": { "typestr": "@" },
+   "kSecKeyAlgorithmRSAEncryptionOAEPSHA256": { "typestr": "@" },
+   "kSecKeyAlgorithmRSAEncryptionOAEPSHA384": { "typestr": "@" },
+   "kSecKeyAlgorithmRSAEncryptionOAEPSHA512": { "typestr": "@" },
+   "kSecKeyAlgorithmRSAEncryptionOAEPSHA1AESGCM": { "typestr": "@" },
+   "kSecKeyAlgorithmRSAEncryptionOAEPSHA224AESGCM": { "typestr": "@" },
+   "kSecKeyAlgorithmRSAEncryptionOAEPSHA256AESGCM": { "typestr": "@" },
+   "kSecKeyAlgorithmRSAEncryptionOAEPSHA384AESGCM": { "typestr": "@" },
+   "kSecKeyAlgorithmRSAEncryptionOAEPSHA512AESGCM": { "typestr": "@" },
+   "kSecKeyAlgorithmECIESEncryptionStandardX963SHA1AESGCM": { "typestr": "@" },
+   "kSecKeyAlgorithmECIESEncryptionStandardX963SHA224AESGCM": { "typestr": "@" },
+   "kSecKeyAlgorithmECIESEncryptionStandardX963SHA256AESGCM": { "typestr": "@" },
+   "kSecKeyAlgorithmECIESEncryptionStandardX963SHA384AESGCM": { "typestr": "@" },
+   "kSecKeyAlgorithmECIESEncryptionStandardX963SHA512AESGCM": { "typestr": "@" },
+   "kSecKeyAlgorithmECIESEncryptionCofactorX963SHA1AESGCM": { "typestr": "@" },
+   "kSecKeyAlgorithmECIESEncryptionCofactorX963SHA224AESGCM": { "typestr": "@" },
+   "kSecKeyAlgorithmECIESEncryptionCofactorX963SHA256AESGCM": { "typestr": "@" },
+   "kSecKeyAlgorithmECIESEncryptionCofactorX963SHA384AESGCM": { "typestr": "@" },
+   "kSecKeyAlgorithmECIESEncryptionCofactorX963SHA512AESGCM": { "typestr": "@" },
+   "kSecKeyAlgorithmECIESEncryptionStandardVariableIVX963SHA224AESGCM": { "typestr": "@" },
+   "kSecKeyAlgorithmECIESEncryptionStandardVariableIVX963SHA256AESGCM": { "typestr": "@" },
+   "kSecKeyAlgorithmECIESEncryptionStandardVariableIVX963SHA384AESGCM": { "typestr": "@" },
+   "kSecKeyAlgorithmECIESEncryptionStandardVariableIVX963SHA512AESGCM": { "typestr": "@" },
+   "kSecKeyAlgorithmECIESEncryptionCofactorVariableIVX963SHA224AESGCM": { "typestr": "@" },
+   "kSecKeyAlgorithmECIESEncryptionCofactorVariableIVX963SHA256AESGCM": { "typestr": "@" },
+   "kSecKeyAlgorithmECIESEncryptionCofactorVariableIVX963SHA384AESGCM": { "typestr": "@" },
+   "kSecKeyAlgorithmECIESEncryptionCofactorVariableIVX963SHA512AESGCM": { "typestr": "@" },
+   "kSecKeyAlgorithmECDHKeyExchangeStandard": { "typestr": "@" },
+   "kSecKeyAlgorithmECDHKeyExchangeStandardX963SHA1": { "typestr": "@" },
+   "kSecKeyAlgorithmECDHKeyExchangeStandardX963SHA224": { "typestr": "@" },
+   "kSecKeyAlgorithmECDHKeyExchangeStandardX963SHA256": { "typestr": "@" },
+   "kSecKeyAlgorithmECDHKeyExchangeStandardX963SHA384": { "typestr": "@" },
+   "kSecKeyAlgorithmECDHKeyExchangeStandardX963SHA512": { "typestr": "@" },
+   "kSecKeyAlgorithmECDHKeyExchangeCofactor": { "typestr": "@" },
+   "kSecKeyAlgorithmECDHKeyExchangeCofactorX963SHA1": { "typestr": "@" },
+   "kSecKeyAlgorithmECDHKeyExchangeCofactorX963SHA224": { "typestr": "@" },
+   "kSecKeyAlgorithmECDHKeyExchangeCofactorX963SHA256": { "typestr": "@" },
+   "kSecKeyAlgorithmECDHKeyExchangeCofactorX963SHA384": { "typestr": "@" },
+   "kSecKeyAlgorithmECDHKeyExchangeCofactorX963SHA512": { "typestr": "@" },
+   "kSecPrivateKeyAttrs": { "typestr": "@" },
+   "kSecPublicKeyAttrs": { "typestr": "@" },
    "kSecCFErrorArchitecture": { "typestr": "@" },
    "kSecCFErrorPattern": { "typestr": "@" },
    "kSecCFErrorResourceSeal": { "typestr": "@" },
@@ -364,6 +501,230 @@
   "classes": {
   },
   "functions": {
+   "SecKeyGeneratePairAsync": {
+    "args": {
+     "0": { "type_override": "@" },
+     "1": { "type_override": "^{dispatch_queue_s=}" },
+     "2": {
+      "type_override": "@?",
+      "callable": {
+       "arguments": {
+        "0": { "type": "^v" },
+	"1": { "type": "@" },
+	"2": { "type": "@" },
+	"3": { "type": "@" }
+       },
+       "retval": {
+        "type": "v"
+       }
+      }
+     }
+    },
+    "retval": {
+     "type_override": "v"
+    }
+   },
+   "SecKeyGeneratePair": {
+    "args": {
+     "0": { "type_override": "@" },
+     "1": { "type_override": "o^@", "already_cfretained": true },
+     "2": { "type_override": "o^@", "already_cfretained": true }
+    },
+    "retval": {
+     "type_override": "i"
+    }
+   },
+   "SecKeyVerifySignature": {
+    "args": {
+     "0": { "type_override": "@" },
+     "1": { "type_override": "@" },
+     "2": { "type_override": "@" },
+     "3": { "type_override": "@" },
+     "4": { "type_override": "o^@" }
+    },
+    "retval": {
+     "type_override": "Z"
+    }
+   },
+   "SecKeyIsAlgorithmSupported": {
+    "args": {
+     "0": { "type_override": "@" },
+     "1": { "type_override": [ "i", "q" ] },
+     "2": { "type_override": "@" }
+    },
+    "retval": {
+     "type_override": "Z"
+    }
+   },
+   "SecKeyCopyKeyExchangeResult": {
+    "args": {
+     "0": { "type_override": "@" },
+     "1": { "type_override": "@" },
+     "2": { "type_override": "@" },
+     "3": { "type_override": "@" },
+     "4": { "type_override": "o^@" }
+    },
+    "retval": {
+     "type_override": "@",
+     "already_cfretained": true
+    }
+   },
+   "SecKeyCreateDecryptedData": {
+    "args": {
+     "0": { "type_override": "@" },
+     "1": { "type_override": "@" },
+     "2": { "type_override": "@" },
+     "3": { "type_override": "o^@" }
+    },
+    "retval": {
+     "type_override": "@",
+     "already_cfretained": true
+    }
+   },
+   "SecKeyCreateEncryptedData": {
+    "args": {
+     "0": { "type_override": "@" },
+     "1": { "type_override": "@" },
+     "2": { "type_override": "@" },
+     "3": { "type_override": "o^@" }
+    },
+    "retval": {
+     "type_override": "@",
+     "already_cfretained": true
+    }
+   },
+   "SecKeyCreateSignature": {
+    "args": {
+     "0": { "type_override": "@" },
+     "1": { "type_override": "@" },
+     "2": { "type_override": "@" },
+     "3": { "type_override": "o^@" }
+    },
+    "retval": {
+     "type_override": "@",
+     "already_cfretained": true
+    }
+   },
+   "SecKeyCopyPublicKey": {
+    "args": {
+     "0": { "type_override": "@" }
+    },
+    "retval": {
+     "type_override": "@",
+     "already_cfretained": true
+    }
+   },
+   "SecKeyCopyAttributes": {
+    "args": {
+     "0": { "type_override": "@" }
+    },
+    "retval": {
+     "type_override": "@",
+     "already_cfretained": true
+    }
+   },
+   "SecKeyCopyExternalRepresentation": {
+    "args": {
+     "0": { "type_override": "@" },
+     "1": { "type_override": "o^@" }
+    },
+    "retval": {
+     "type_override": "@",
+     "already_cfretained": true
+    }
+   },
+   "SecKeyGetBlockSize": {
+    "args": {
+     "0": { "type_override": "@" }
+    },
+    "retval": {
+     "type_override": "L"
+    }
+   },
+   "SecKeyCreateWithData": {
+    "args": {
+     "0": { "type_override": "@" },
+     "1": { "type_override": "@" },
+     "2": { "type_override": "o^@" }
+    },
+    "retval": {
+     "type_override": "@",
+     "already_cfretained": true
+    }
+   },
+   "SecKeyCreateRandomKey": {
+    "args": {
+     "0": { "type_override": "@" },
+     "1": { "type_override": "o^@" }
+    },
+    "retval": {
+     "type_override": "@",
+     "already_cfretained": true
+    }
+   },
+   "SecKeyUnwrapSymmetric": {
+    "args": {
+     "0": { "type_override": "n^@" },
+     "1": { "type_override": "@" },
+     "2": { "type_override": "@" },
+     "3": { "type_override": "o^@" }
+    },
+    "retval": {
+     "type_override": "@",
+     "already_cfretained": true
+    }
+   },
+   "SecKeyWrapSymmetric": {
+    "args": {
+     "0": { "type_override": "@" },
+     "1": { "type_override": "@" },
+     "2": { "type_override": "@" },
+     "3": { "type_override": "o^@" }
+    },
+    "retval": {
+     "type_override": "@",
+     "already_cfretained": true
+    }
+   },
+   "SecKeyDeriveFromPassword": {
+    "args": {
+     "0": { "type_override": "@" },
+     "1": { "type_override": "@" },
+     "2": { "type_override": "o^@" }
+    },
+    "retval": {
+     "type_override": "@",
+     "already_cfretained": true
+    }
+   },
+   "SecKeyCreateFromData": {
+    "args": {
+     "0": { "type_override": "@" },
+     "1": { "type_override": "@" },
+     "2": { "type_override": "o^@" }
+    },
+    "retval": {
+     "type_override": "@",
+     "already_cfretained": true
+    }
+   },
+   "SecKeyGenerateSymmetric": {
+    "args": {
+     "0": { "type_override": "@" },
+     "1": { "type_override": "o^@" }
+    },
+    "retval": {
+     "type_override": "@",
+     "already_cfretained": true
+    }
+   },
+   "SecKeyGetTypeID": {
+    "args": {
+    },
+    "retval": {
+     "type_override": [ "I", "Q" ]
+    }
+   },
    "SecureDownloadCreateWithTicket": {
     "args": {
      "0": { "type_override": "@" },
