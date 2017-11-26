@@ -8,6 +8,8 @@ SecureDownloadTrustEvaluateCallback = b'i@i^v'
 SecKeyGeneratePairBlock = b'v@@@'
 
 class TestSecKey (TestCase):
+    def testTypes(self):
+        self.assertIsCFType(Security.SecKeyRef)
 
     def test_constants(self):
         self.assertEqual(Security.kSecKeyKeyClass, 0)

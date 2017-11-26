@@ -4,6 +4,10 @@ import Security
 
 class TestCSCommon (TestCase):
 
+    def test_types(self):
+        self.assertIsCFType(Security.SecCodeRef)
+        self.assertIsCFType(Security.SecRequirementRef)
+
     def test_constants(self):
         self.assertEqual(Security.errSecCSUnimplemented, -67072)
         self.assertEqual(Security.errSecCSInvalidObjectRef, -67071)

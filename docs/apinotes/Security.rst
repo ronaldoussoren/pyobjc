@@ -34,3 +34,9 @@ These functions were deprecated in macOS 10.7 and are not available from Python.
 .....................
 
 These functions were deprecated in macOS 10.7 and are not available from Python.
+
+``SecPolicyCreateWithOID``, ``SecPolicyGetOID``, ``SecPolicyGetValue``, ``SecPolicySetValue``, ``SecPolicyGetTPHandle``, ``SecPolicySetProperties``
+...................................................................................................................................................
+
+These functions were deprecated in macOS 10.7 and are not available from Python.
+

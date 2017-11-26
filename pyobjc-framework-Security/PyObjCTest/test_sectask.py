@@ -1,0 +1,41 @@
+from PyObjCTools.TestSupport import *
+
+import Security
+
+class TestSecTask (TestCase):
+
+    def test_types(self):
+        self.assertIsCFType(Security.SecTaskRef)
+
+    def test_functions(self):
+        self.assertIsInstance(Security.SecTaskGetTypeID(), (int, long))
+
+        self.assertResultHasType(Security.SecTaskCreateWithAuditToken, objc._C_ID)
+        self.assertResultIsCFRetained(Security.SecTaskCreateWithAuditToken)
+        self.assertArgHasType(Security.SecTaskCreateWithAuditToken, 0, objc._C_ID)
+        self.assertArgHasType(Security.SecTaskCreateWithAuditToken, 1, b'{?=[8I]}')
+
+        self.assertResultHasType(Security.SecTaskCreateFromSelf, objc._C_ID)
+        self.assertResultIsCFRetained(Security.SecTaskCreateFromSelf)
+        self.assertArgHasType(Security.SecTaskCreateFromSelf, 0, objc._C_ID)
+
+        self.assertResultHasType(Security.SecTaskCopyValueForEntitlement, objc._C_ID)
+        self.assertResultIsCFRetained(Security.SecTaskCopyValueForEntitlement)
+        self.assertArgHasType(Security.SecTaskCopyValueForEntitlement, 0, objc._C_ID)
+        self.assertArgHasType(Security.SecTaskCopyValueForEntitlement, 1, objc._C_ID)
+        self.assertArgHasType(Security.SecTaskCopyValueForEntitlement, 2, objc._C_OUT + objc._C_PTR + objc._C_ID)
+
+        self.assertResultHasType(Security.SecTaskCopyValuesForEntitlements, objc._C_ID)
+        self.assertResultIsCFRetained(Security.SecTaskCopyValuesForEntitlements)
+        self.assertArgHasType(Security.SecTaskCopyValuesForEntitlements, 0, objc._C_ID)
+        self.assertArgHasType(Security.SecTaskCopyValuesForEntitlements, 1, objc._C_ID)
+        self.assertArgHasType(Security.SecTaskCopyValuesForEntitlements, 2, objc._C_OUT + objc._C_PTR + objc._C_ID)
+
+        self.assertResultHasType(Security.SecTaskCopySigningIdentifier, objc._C_ID)
+        self.assertResultIsCFRetained(Security.SecTaskCopySigningIdentifier)
+        self.assertArgHasType(Security.SecTaskCopySigningIdentifier, 0, objc._C_ID)
+        self.assertArgHasType(Security.SecTaskCopySigningIdentifier, 1, objc._C_OUT + objc._C_PTR + objc._C_ID)
+
+
+if __name__ == "__main__":
+    main()
