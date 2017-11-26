@@ -2,7 +2,6 @@ Authorization.h 	- Partial metadata, needs manual work
 AuthorizationTags.h
 CMSDecoder.h
 CMSEncoder.h
-CodeSigning.h
 SecACL.h
 SecAccess.h
 SecAccessControl.h
@@ -44,7 +43,6 @@ SecureDownload.h
 SecureTransport.h
 Security.h
 certextensions.h
-cssm.h
 cssmaci.h
 cssmapi.h
 cssmapple.h
