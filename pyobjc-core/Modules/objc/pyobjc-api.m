@@ -113,6 +113,7 @@ struct pyobjc_api objc_api = {
     .dep_c_array_count          = depythonify_c_array_count2,
     .varlistnew                 = PyObjC_VarList_New,
     .pyobjcobject_convert       = PyObjCObject_Convert,
+    .register_id_alias          = PyObjCPointerWrapper_RegisterID,
 };
 
 int PyObjCAPI_Register(PyObject* module)

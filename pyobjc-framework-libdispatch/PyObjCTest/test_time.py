@@ -13,13 +13,14 @@ class TestTime (TestCase):
         self.assertEqual(libdispatch.DISPATCH_TIME_FOREVER, 0xFFFFFFFFFFFFFFFF)
 
     def test_structs(self):
-        tv = libdispatch.timespec()
-        self.assertEqual(tv.tv_sec, 0)
-        self.assertEqual(tv.tv_nsec, 0)
 
         tv = libdispatch.timespec(50, 100)
         self.assertEqual(tv.tv_sec, 50)
         self.assertEqual(tv.tv_nsec, 100)
+
+        tv = libdispatch.timespec()
+        self.assertEqual(tv.tv_sec, 0)
+        self.assertEqual(tv.tv_nsec, 0)
 
     @min_os_level('10.6')
     def test_functions(self):
@@ -28,7 +29,7 @@ class TestTime (TestCase):
         self.assertArgHasType(libdispatch.dispatch_time, 1, objc._C_LNGLNG)
 
         self.assertResultHasType(libdispatch.dispatch_walltime, objc._C_ULNGLNG)
-        self.assertArgHasType(libdispatch.dispatch_walltime, 0, 'n^{timespec=ll}')
+        self.assertArgHasType(libdispatch.dispatch_walltime, 0, b'n^{timespec=ll}')
         self.assertArgHasType(libdispatch.dispatch_walltime, 1, objc._C_LNGLNG)
 
 
