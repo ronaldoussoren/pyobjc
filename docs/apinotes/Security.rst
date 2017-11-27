@@ -28,34 +28,72 @@ no Python object that represent the type itself.
 ``SecKeyCreatePair``, ``SecKeyGenerate``, ``SecKeyGetCSSMKey``, ``SecKeyGetCSPHandle``, ``SecKeyGetCredentials``
 ................................................................................................................
 
-These functions were deprecated in macOS 10.7 and are not available from Python.
+These functions were deprecated in macOS and are not available from Python.
 
 ``MDS_*``, ``CSSM_*``
 .....................
 
-These functions were deprecated in macOS 10.7 and are not available from Python.
+These functions were deprecated in macOS and are not available from Python.
 
 ``SecPolicyCreateWithOID``, ``SecPolicyGetOID``, ``SecPolicyGetValue``, ``SecPolicySetValue``, ``SecPolicyGetTPHandle``, ``SecPolicySetProperties``
 ...................................................................................................................................................
 
-These functions were deprecated in macOS 10.7 and are not available from Python.
+These functions were deprecated in macOS and are not available from Python.
 
 ``SecIdentityCopyPreference``, ``SecIdentitySetPreference``
 ...........................................................
 
-These functions were deprecated in macOS 10.7 and are not available from Python.
+These functions were deprecated in macOS and are not available from Python.
 
 ``SecKeychainSearchGetTypeID``, ``SecKeychainSearchCreateFromAttributes``, ``SecKeychainSearchCopyNext``
 ........................................................................................................
 
-These functions were deprecated in macOS 10.7 and are not available from Python.
+These functions were deprecated in macOS and are not available from Python.
 
 ``SecPolicySearchGetTypeID``, ``SecPolicySearchCreate``, ``SecPolicySearchCopyNext``
 ....................................................................................
 
-These functions were deprecated in macOS 10.7 and are not available from Python.
+These functions were deprecated in macOS and are not available from Python.
 
 ``SecIdentitySearchCreate``, ``SecIdentitySearchCopyNext``
 ..........................................................
 
-These functions were deprecated in macOS 10.7 and are not available from Python.
+These functions were deprecated in macOS and are not available from Python.
+
+``SSLNewContext``, ``SSLDisposeContext``, ``SSLSetProtocolVersionEnabled``, ``SSLGetProtocolVersionEnabled``
+............................................................................................................
+
+These functions were deprecated in macOS and are not available from Python.
+
+``SSLSetProtocolVersion``, ``SSLGetProtocolVersion``
+....................................................
+
+These functions were deprecated in macOS and are not available from Python.
+
+``SSLSetEnableCertVerify``, ``SSLGetEnableCertVerify``, ``SSLSetAllowsExpiredCerts``, ``SSLGetAllowsExpiredCerts``
+..................................................................................................................
+
+These functions were deprecated in macOS and are not available from Python.
+
+
+``SSLSetAllowsExpiredRoots``, ``SSLGetAllowsExpiredRoots``, ``SSLSetAllowsAnyRoot``, ``SSLGetAllowsAnyRoot``
+.............................................................................................................
+
+These functions were deprecated in macOS and are not available from Python.
+
+
+``SSLSetTrustedRoots``, ``SSLCopyTrustedRoots``, ``SSLCopyPeerCertificates``
+............................................................................
+
+These functions were deprecated in macOS and are not available from Python.
+
+``SSLGetRsaBlinding``, ``SSLSetRsaBlinding``
+............................................
+
+These functions were deprecated in macOS and are not available from Python.
+
+``SecKeychainItemExport``, ``SecKeychainItemImport``
+....................................................
+
+These functions were deprecated in macOS and are not available from Python.
+
