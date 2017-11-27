@@ -40,3 +40,22 @@ These functions were deprecated in macOS 10.7 and are not available from Python.
 
 These functions were deprecated in macOS 10.7 and are not available from Python.
 
+``SecIdentityCopyPreference``, ``SecIdentitySetPreference``
+...........................................................
+
+These functions were deprecated in macOS 10.7 and are not available from Python.
+
+``SecKeychainSearchGetTypeID``, ``SecKeychainSearchCreateFromAttributes``, ``SecKeychainSearchCopyNext``
+........................................................................................................
+
+These functions were deprecated in macOS 10.7 and are not available from Python.
+
+``SecPolicySearchGetTypeID``, ``SecPolicySearchCreate``, ``SecPolicySearchCopyNext``
+....................................................................................
+
+These functions were deprecated in macOS 10.7 and are not available from Python.
+
+``SecIdentitySearchCreate``, ``SecIdentitySearchCopyNext``
+..........................................................
+
+These functions were deprecated in macOS 10.7 and are not available from Python.

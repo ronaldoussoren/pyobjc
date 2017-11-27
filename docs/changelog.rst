@@ -16,6 +16,10 @@ Version 4.1b1
 * #135: Add bindings for frameworks Security, SecurityFoundation
   and SecurityInterface
 
+  The bindings for the Security framework don't expose a
+  number of older APIs that were deprecated in macOS 10.7.
+
+
 * #129: Add bindings to libdispatch.
 
   These bindings require macOS 10.10 or later, libdispatch was

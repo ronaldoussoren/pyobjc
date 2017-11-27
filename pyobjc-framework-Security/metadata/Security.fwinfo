@@ -57,10 +57,6 @@
     "typestr": "^{OpaqueSecKeychainItemRef=}",
     "gettypeid_func": "SecKeyChainItemGetTypeID"
    },
-   "SecKeychainSearchRef": {
-    "typestr": "^{OpaqueSecKeychainSearchRef=}",
-    "gettypeid_func": "SecKeychainSearchGetTypeID"
-   },
    "SecTrustedApplicationRef": {
     "typestr": "^{OpaqueSecTrustedApplicationRef=}",
     "gettypeid_func": "SecTrustedApplicationGetTypeID"
@@ -76,14 +72,6 @@
    "SecPasswordRef": {
     "typestr": "^{OpaqueSecPasswordRef=}",
     "gettypeid_func": "SecPasswordGetTypeID"
-   },
-   "SecIdentitySearchRef": {
-    "typestr": "^{OpaqueSecIdentitySearchRef=}",
-    "gettypeid_func": "SecIdentityGetTypeID"
-   },
-   "SecPolicySearchRef": {
-    "typestr": "^{OpaquePolicySearchRef=}",
-    "gettypeid_func": "SecPolicyGetTypeID"
    },
    "SecTaskRef": {
     "typestr": "^{__SecTask=}",
@@ -104,6 +92,26 @@
    "AuthorizationExternalForm": { "comment": "FIXME: requires manual wrapping" }
   },
   "enum": {
+   "kSecTransformErrorAttributeNotFound": { "value": 1 },
+   "kSecTransformErrorInvalidOperation": { "value": 2 },
+   "kSecTransformErrorNotInitializedCorrectly": { "value": 3 },
+   "kSecTransformErrorMoreThanOneOutput": { "value": 4 },
+   "kSecTransformErrorInvalidInputDictionary": { "value": 5 },
+   "kSecTransformErrorInvalidAlgorithm": { "value": 6 },
+   "kSecTransformErrorInvalidLength": { "value": 7 },
+   "kSecTransformErrorInvalidType": { "value": 8 },
+   "kSecTransformErrorInvalidInput": { "value": 10 },
+   "kSecTransformErrorNameAlreadyRegistered": { "value": 11 },
+   "kSecTransformErrorUnsupportedAttribute": { "value": 12 },
+   "kSecTransformOperationNotSupportedOnGroup": { "value": 13 },
+   "kSecTransformErrorMissingParameter": { "value": 14 },
+   "kSecTransformErrorInvalidConnection": { "value": 15 },
+   "kSecTransformTransformIsExecuting": { "value": 16 },
+   "kSecTransformInvalidOverride": { "value": 17 },
+   "kSecTransformTransformIsNotRegistered": { "value": 18 },
+   "kSecTransformErrorAbortInProgress": { "value": 19 },
+   "kSecTransformErrorAborted": { "value": 20 },
+   "kSecTransformInvalidArgument": { "value": 21 },
    "kSecRevocationOCSPMethod": { "value": 1 },
    "kSecRevocationCRLMethod": { "value": 2 },
    "kSecRevocationPreferCRL": { "value": 4 },
@@ -956,6 +964,14 @@
    "kAuthorizationEmptyEnvironment": { "value": "None" }
   },
   "externs": {
+   "kSecTransformInputAttributeName": { "typestr": "@" },
+   "kSecTransformOutputAttributeName": { "typestr": "@" },
+   "kSecTransformDebugAttributeName": { "typestr": "@" },
+   "kSecTransformTransformName": { "typestr": "@" },
+   "kSecTransformAbortAttributeName": { "typestr": "@" },
+   "kSecTransformErrorDomain": { "typestr": "@" },
+   "kSecTransformPreviousErrorKey": { "typestr": "@" },
+   "kSecTransformAbortOriginatorKey": { "typestr": "@" },
    "kSecRandomDefault": { "typestr": "^{__SecRandom=}" },
    "kCMSEncoderDigestAlgorithmSHA1": { "typestr": "@" },
    "kCMSEncoderDigestAlgorithmSHA256": { "typestr": "@" },
@@ -1532,6 +1548,29 @@
      "type_override": "i"
     }
    },
+   "SecTransformExecuteAsync": {
+    "args": {
+     "0": { "type_override": "@" },
+     "1": { "type_override": "^{dispatch_queue_s=}" },
+     "2": {
+      "type_override": "@?",
+      "callable": {
+       "arguments": {
+        "0": { "type": "^v" },
+	"1": { "type": "@" },
+	"2": { "type": "@" },
+	"3": { "type": "Z" }
+       },
+       "retval": {
+        "type": "v"
+       }
+      }
+     }
+    },
+    "retval": {
+     "type_override": "v"
+    }
+   },
    "SecKeyGeneratePairAsync": {
     "args": {
      "0": { "type_override": "@" },
@@ -1553,6 +1592,41 @@
     },
     "retval": {
      "type_override": "v"
+    }
+   },
+   "SecItemDelete": {
+    "args": {
+     "0": { "type_override": "@" }
+    },
+    "retval": {
+     "type_override": "i"
+    }
+   },
+   "SecItemUpdate": {
+    "args": {
+     "0": { "type_override": "@" },
+     "1": { "type_override": "@" }
+    },
+    "retval": {
+     "type_override": "i"
+    }
+   },
+   "SecItemAdd": {
+    "args": {
+     "0": { "type_override": "@" },
+     "1": { "type_override": "o^@", "already_cfretained": true }
+    },
+    "retval": {
+     "type_override": "i"
+    }
+   },
+   "SecItemCopyMatching": {
+    "args": {
+     "0": { "type_override": "@" },
+     "1": { "type_override": "o^@", "already_cfretained": true }
+    },
+    "retval": {
+     "type_override": "i"
     }
    },
    "SecKeyGeneratePair": {
@@ -1888,6 +1962,27 @@
      "type_override": [ "I", "Q" ]
     }
    },
+   "SecTransformGetTypeID": {
+    "args": {
+    },
+    "retval": {
+     "type_override": [ "I", "Q" ]
+    }
+   },
+   "SecGroupTransformGetTypeID": {
+    "args": {
+    },
+    "retval": {
+     "type_override": [ "I", "Q" ]
+    }
+   },
+   "SecIdentityGetTypeID": {
+    "args": {
+    },
+    "retval": {
+     "type_override": [ "I", "Q" ]
+    }
+   },
    "SecureDownloadCreateWithTicket": {
     "args": {
      "0": { "type_override": "@" },
@@ -1920,6 +2015,146 @@
     },
     "retval": {
      "type_override": "i"
+    }
+   },
+   "SecIdentitySetSystemIdentity": {
+    "retval": { "type_override": "i" },
+    "args": {
+     "0": { "type_override": "@" },
+     "1": { "type_override": "o^@", "already_cfretained": true }
+    }
+   },
+   "SecIdentityCopySystemIdentity": {
+    "retval": { "type_override": "i" },
+    "args": {
+     "0": { "type_override": "@" },
+     "1": { "type_override": "o^@", "already_cfretained": true },
+     "2": { "type_override": "o^@", "already_cfretained": true }
+    }
+   },
+   "SecIdentitySetPreferred": {
+    "retval": { "type_override": "i" },
+    "args": {
+     "0": { "type_override": "@" },
+     "1": { "type_override": "@" },
+     "2": { "type_override": "@" }
+    }
+   },
+   "SecVerifyTransformCreate": {
+    "retval": { "type_override": "@", "already_cfretained": true },
+    "args": {
+     "0": { "type_override": "@" },
+     "1": { "type_override": "@" },
+     "2": { "type_override": "o^@" }
+    }
+   },
+   "SecSignTransformCreate": {
+    "retval": { "type_override": "@", "already_cfretained": true },
+    "args": {
+     "0": { "type_override": "@" },
+     "1": { "type_override": "o^@" }
+    }
+   },
+   "SecIdentityCopyPreferred": {
+    "retval": { "type_override": "@", "already_cfretained": true },
+    "args": {
+     "0": { "type_override": "@" },
+     "1": { "type_override": "@" },
+     "2": { "type_override": "@" }
+    }
+   },
+   "SecIdentityCopyPrivateKey": {
+    "retval": { "type_override": "i" },
+    "args": {
+     "0": { "type_override": "@" },
+     "1": { "type_override": "o^@", "already_cfretained": true }
+    }
+   },
+   "SecIdentityCopyCertificate": {
+    "retval": { "type_override": "i" },
+    "args": {
+     "0": { "type_override": "@" },
+     "1": { "type_override": "o^@", "already_cfretained": true }
+    }
+   },
+   "SecIdentityCreateWithCertificate": {
+    "retval": { "type_override": "i" },
+    "args": {
+     "0": { "type_override": "@" },
+     "1": { "type_override": "@" },
+     "2": { "type_override": "o^@", "already_cfretained": true }
+    }
+   },
+   "SecTransformCreateReadTransformWithReadStream": {
+    "retval": { "type_override": "@", "already_cfretained": true },
+    "args": {
+     "0": { "type_override": "@" }
+    }
+   },
+   "SecDecodeTransformCreate": {
+    "retval": { "type_override": "@", "already_cfretained": true },
+    "args": {
+     "0": { "type_override": "@" },
+     "1": { "type_override": "o^@" }
+    }
+   },
+   "SecTransformExecute": {
+    "retval": { "type_override": "@", "already_cfretained": true },
+    "args": {
+     "0": { "type_override": "@" },
+     "1": { "type_override": "o^@" }
+    }
+   },
+   "SecTransformFindByName": {
+    "retval": { "type_override": "@" },
+    "args": {
+     "0": { "type_override": "@" },
+     "1": { "type_override": "@" }
+    }
+   },
+   "SecTransformGetAttribute": {
+    "retval": { "type_override": "@" },
+    "args": {
+     "0": { "type_override": "@" },
+     "1": { "type_override": "@" }
+    }
+   },
+   "SecTransformSetAttribute": {
+    "retval": { "type_override": "Z" },
+    "args": {
+     "0": { "type_override": "@" },
+     "1": { "type_override": "@" },
+     "2": { "type_override": "@" },
+     "3": { "type_override": "o^@" }
+    }
+   },
+   "SecTransformConnectTransforms": {
+    "retval": { "type_override": "@" },
+    "args": {
+     "0": { "type_override": "@" },
+     "1": { "type_override": "@" },
+     "2": { "type_override": "@" },
+     "3": { "type_override": "@" },
+     "4": { "type_override": "@" },
+     "5": { "type_override": "o^@" }
+    }
+   },
+   "SecTransformCreateGroupTransform": {
+    "retval": { "type_override": "@", "already_cfretained": true },
+    "args": {
+    }
+   },
+   "SecTransformCopyExternalRepresentation": {
+    "retval": { "type_override": "@", "already_cfretained": true },
+    "args": {
+     "0": { "type_override": "@" }
+    }
+   },
+   "SecTransformCreateFromExternalRepresentation": {
+    "retval": { "type_override": "@", "already_cfretained": true },
+    "args": {
+     "0": { "type_override": "@" },
+     "1": { "type_override": "o^@" }
     }
    },
    "SecRequirementCopyString": {
