@@ -1,5 +1,5 @@
-PyObjC support for vector/SIMD types"
-=====================================
+PyObjC support for vector/SIMD types
+====================================
 
 Apple uses vector/SIMD types, like ``vector_float3``, in
 a number of APIs. These types are not yet supported by
