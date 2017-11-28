@@ -44,6 +44,7 @@ General documentation
    core/intro
    core/protocols
    core/blocks
+   core/vector-types
    core/typemapping
    core/fsref-fsspec
    core/type-wrapper

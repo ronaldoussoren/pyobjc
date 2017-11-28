@@ -302,6 +302,63 @@ m_SecKeychainFindGenericPassword(
     return Py_BuildValue("iINN", retval, password_length, py_passwordData, py_itemRef);
 }
 
+static int parse_itemset(PyObject* value, AuthorizationItemSet* itemset)
+{
+    itemset->items = NULL;
+
+    if (value == Py_None) {
+        return 1;
+
+    } else {
+        PyObject* seq = PySequence_Fast(value, "itemset must be a sequence or None");
+        Py_ssize_t i;
+        if (seq == NULL) {
+            return 0;
+        }
+        itemset->count = PySequence_Fast_GET_SIZE(seq);
+        itemset->items = PyMem_Malloc(sizeof(AuthorizationItem) * PySequence_Fast_GET_SIZE(seq));
+        if (itemset->items == NULL) {
+            PyErr_NoMemory();
+            return 0;
+        }
+
+        for (i = 0; i < PySequence_Fast_GET_SIZE(seq); i++) {
+            if (PyObjC_PythonToObjC("{_AuthorizationItem=^cL^vI}", PySequence_Fast_GET_ITEM(seq, i), itemset->items + i) < 0) {
+                PyMem_Free(itemset->items);
+                return 0;
+            }
+        }
+    }
+    return 1;
+}
+
+static PyObject* build_itemset(AuthorizationItemSet* itemset)
+{
+    PyObject* result;
+
+    if (itemset == NULL) {
+        Py_INCREF(Py_None);
+        return Py_None;
+
+    } else {
+        UInt32 i;
+        result = PyTuple_New(itemset->count);
+        if (result == NULL) {
+            return NULL;
+        }
+
+        for (i = 0; i < itemset->count; i++) {
+            PyObject* t = PyObjC_ObjCToPython("{_AuthorizationItem=^cL^vI}", itemset->items + i);
+            if (t == NULL) {
+                Py_DECREF(result);
+                return NULL;
+            }
+            PyTuple_SET_ITEM(result, i, t);
+        }
+    }
+    return result;
+}
+
 static PyObject*
 m_AuthorizationCreate(
         PyObject* module __attribute__((__unused__)),
@@ -322,54 +379,13 @@ m_AuthorizationCreate(
         return NULL;
     }
 
-    if (py_rights == Py_None) {
-        /* pass */
-
-    } else {
-        PyObject* seq = PySequence_Fast(py_rights, "rights must be a sequence");
-        Py_ssize_t i;
-        if (seq == NULL) {
-            return NULL;
-        }
-        rights.count = PySequence_Fast_GET_SIZE(seq);
-        rights.items = PyMem_Malloc(sizeof(AuthorizationItem) * PySequence_Fast_GET_SIZE(seq));
-        if (rights.items == NULL) {
-            PyErr_NoMemory();
-            return NULL;
-        }
-
-        for (i = 0; i < PySequence_Fast_GET_SIZE(seq); i++) {
-            if (PyObjC_PythonToObjC("{_AuthorizationItem=^cL^vI}", PySequence_Fast_GET_ITEM(seq, i), rights.items + i) < 0) {
-                PyMem_Free(rights.items);
-                return NULL;
-            }
-        }
+    if (!parse_itemset(py_rights, &rights)) {
+        return NULL;
     }
 
-    if (py_environment == Py_None) {
-        /* pass */
-
-    } else {
-        PyObject* seq = PySequence_Fast(py_environment, "environment must be a sequence");
-        Py_ssize_t i;
-        if (seq == NULL) {
-            return NULL;
-        }
-        environment.count = PySequence_Fast_GET_SIZE(seq);
-        environment.items = PyMem_Malloc(sizeof(AuthorizationItem) * PySequence_Fast_GET_SIZE(seq));
-        if (environment.items == NULL) {
-            PyMem_Free(rights.items);
-            PyErr_NoMemory();
-            return NULL;
-        }
-
-        for (i = 0; i < PySequence_Fast_GET_SIZE(seq); i++) {
-            if (PyObjC_PythonToObjC("{_AuthorizationItem=^cL^vI}", PySequence_Fast_GET_ITEM(seq, i), environment.items + i) < 0) {
-                PyMem_Free(rights.items);
-                PyMem_Free(environment.items);
-                return NULL;
-            }
-        }
+    if (!parse_itemset(py_environment, &environment)) {
+        PyMem_Free(rights.items);
+        return NULL;
     }
 
     if (py_authorization != Py_None) {
@@ -454,26 +470,272 @@ m_AuthorizationCopyInfo(
         return NULL;
     }
 
+    py_info = build_itemset(info);
     if (info != NULL) {
-        UInt32 i;
-        py_info = PyTuple_New(info->count);
-        if (py_info == NULL) {
-            AuthorizationFreeItemSet(info);
-            return NULL;
-        }
-
-        for (i = 0; i < info->count; i++) {
-            PyObject* t = PyObjC_ObjCToPython("{_AuthorizationItem=^cL^vI}", info->items + i);
-            if (t == NULL) {
-                Py_DECREF(py_info);
-                AuthorizationFreeItemSet(info);
-            }
-            PyTuple_SET_ITEM(py_info, i, t);
-        }
         AuthorizationFreeItemSet(info);
     }
 
     return Py_BuildValue("iN", retval, py_info);
+}
+
+static PyObject*
+m_AuthorizationCopyRights(
+        PyObject* module __attribute__((__unused__)),
+        PyObject* args)
+{
+    OSStatus retval;
+    AuthorizationRef authorization;
+    PyObject* py_authorization;
+    AuthorizationRights rights;
+    PyObject* py_rights;
+    AuthorizationEnvironment environment;
+    PyObject* py_environment;
+    AuthorizationFlags flags;
+    AuthorizationRights* authorizedRights;
+    PyObject*  py_authorizedRights;
+
+    if (!PyArg_ParseTuple(args, "OOOIO", &py_authorization, &py_rights, &py_environment, &flags, &py_authorizedRights)) {
+        return NULL;
+    }
+
+    if (PyObjC_PythonToObjC(@encode(AuthorizationRef), py_authorization, &authorization) == -1) {
+        return NULL;
+    }
+
+    if (!parse_itemset(py_rights, &rights)) {
+        return NULL;
+    }
+    if (!parse_itemset(py_environment, &environment)) {
+        PyMem_Free(rights.items);
+        return NULL;
+    }
+    if (py_authorizedRights != PyObjC_NULL && py_authorizedRights != Py_None) {
+        PyMem_Free(rights.items);
+        PyMem_Free(environment.items);
+        PyErr_SetString(PyExc_ValueError, "authorizedRights must be None or objc.NULL");
+        return NULL;
+    }
+
+    PyObjC_DURING
+        retval = AuthorizationCopyRights(authorization,
+                py_rights == Py_None?NULL:&rights,
+                py_environment == Py_None?NULL:&environment,
+                flags,
+                py_authorizedRights == PyObjC_NULL?NULL:&authorizedRights);
+
+    PyObjC_HANDLER
+        PyObjCErr_FromObjC(localException);
+
+    PyObjC_ENDHANDLER
+
+    PyMem_Free(rights.items);
+    PyMem_Free(environment.items);
+
+    if (PyErr_Occurred()) {
+        return NULL;
+    }
+
+    if (py_authorizedRights == PyObjC_NULL) {
+        Py_INCREF(py_authorizedRights);
+
+    } else {
+        py_authorizedRights = build_itemset(authorizedRights);
+        if (authorizedRights != NULL) {
+            AuthorizationFreeItemSet(authorizedRights);
+        }
+    }
+
+    return Py_BuildValue("iN", retval, py_authorizedRights);
+}
+
+static PyObject*
+m_AuthorizationCopyRightsAsync(
+        PyObject* module __attribute__((__unused__)),
+        PyObject* args)
+{
+    AuthorizationRef authorization;
+    PyObject* py_authorization;
+    AuthorizationRights rights;
+    PyObject* py_rights;
+    AuthorizationEnvironment environment;
+    PyObject* py_environment;
+    AuthorizationFlags flags;
+    PyObject*  py_callback;
+
+    if (!PyArg_ParseTuple(args, "OOOIO", &py_authorization, &py_rights, &py_environment, &flags, &py_callback)) {
+        return NULL;
+    }
+
+    if (PyObjC_PythonToObjC(@encode(AuthorizationRef), py_authorization, &authorization) == -1) {
+        return NULL;
+    }
+
+    if (!parse_itemset(py_rights, &rights)) {
+        return NULL;
+    }
+    if (!parse_itemset(py_environment, &environment)) {
+        PyMem_Free(rights.items);
+        return NULL;
+    }
+    if (!PyCallable_Check(py_callback)) {
+        PyMem_Free(rights.items);
+        PyMem_Free(environment.items);
+        PyErr_SetString(PyExc_ValueError, "callback must be callable");
+        return NULL;
+    }
+
+    Py_INCREF(py_callback);
+    PyObjC_DURING
+        AuthorizationCopyRightsAsync(authorization,
+                py_rights == Py_None?NULL:&rights,
+                py_environment == Py_None?NULL:&environment,
+                flags,
+                ^(OSStatus err, AuthorizationRights* authorizedRights) {
+                    PyObject* py_authorizedRights;
+                    PyObject* py_result;
+
+                    PyObjC_BEGIN_WITH_GIL
+
+                        if (authorizedRights == NULL) {
+                            py_authorizedRights = Py_None; Py_INCREF(Py_None);
+                        } else {
+                            py_authorizedRights = build_itemset(authorizedRights);
+                            if (authorizedRights != NULL) {
+                                AuthorizationFreeItemSet(authorizedRights);
+                            }
+                        }
+
+                        py_result = PyObject_CallFunction(py_callback, "iO", err, py_authorizedRights);
+                        if (py_result == NULL) {
+                            PyObjC_GIL_FORWARD_EXC();
+                        } else if (py_result != Py_None) {
+                            Py_DECREF(py_result);
+                            PyErr_SetString(PyExc_TypeError, "callbackBlock returned value");
+                            PyObjC_GIL_FORWARD_EXC();
+                        } else {
+                            Py_DECREF(py_result);
+                        }
+
+                        Py_DECREF(py_callback);
+                        PyMem_Free(rights.items);
+                        PyMem_Free(environment.items);
+
+                    PyObjC_END_WITH_GIL
+                });
+
+    PyObjC_HANDLER
+        PyObjCErr_FromObjC(localException);
+
+    PyObjC_ENDHANDLER
+
+    if (PyErr_Occurred()) {
+        Py_DECREF(py_callback);
+        return NULL;
+    }
+    Py_INCREF(Py_None);
+    return Py_None;
+}
+
+static PyObject*
+m_AuthorizationExecuteWithPrivileges(
+        PyObject* module __attribute__((__unused__)),
+        PyObject* args)
+{
+    OSStatus retval;
+    AuthorizationRef authorization;
+    PyObject* py_authorization;
+    const char* pathToTool;
+    AuthorizationFlags options;
+    PyObject* py_pathToTool;
+    char** arguments;
+    PyObject* py_arguments;
+    FILE* communicationsPipe;
+    PyObject* py_communicationsPipe;
+    PyObject* seq;
+    Py_ssize_t i;
+
+    if (!PyArg_ParseTuple(args, "OOIOO", &py_authorization, &py_pathToTool, &options, &py_arguments, &py_communicationsPipe)) {
+        return NULL;
+    }
+
+    if (PyObjC_PythonToObjC(@encode(AuthorizationRef), py_authorization, &authorization) == -1) {
+        return NULL;
+    }
+
+#if Py_MAJOR == 2
+    if (!PyString_Check(py_pathToTool)) {
+        PyErr_SetString(PyExc_ValueError, "pathToTool must be a bytes string");
+        return NULL;
+    }
+
+    pathToTool = PyString_AsString(py_pathToTool);
+
+#else
+    if (!PyBytes_Check(py_pathToTool)) {
+        PyErr_SetString(PyExc_ValueError, "pathToTool must be a bytes string");
+        return NULL;
+    }
+
+    pathToTool = PyBytes_AsString(py_pathToTool);
+#endif
+
+    seq = PySequence_Fast(py_arguments, "arguments must be a sequence of byte strings");
+    if (seq == NULL) {
+        return NULL;
+    }
+
+    arguments = PyMem_Malloc(sizeof(char*) * PySequence_Fast_GET_SIZE(seq)+1);
+    if (arguments == NULL) {
+        PyErr_NoMemory();
+        return NULL;
+    }
+
+    if (py_communicationsPipe != Py_None && py_communicationsPipe != PyObjC_NULL) {
+        PyErr_SetString(PyExc_ValueError, "communicationsPipe must be None or objc.NULL");
+        return NULL;
+    }
+
+    for (i = 0; i < PySequence_Fast_GET_SIZE(seq); i++) {
+        PyObject* t = PySequence_Fast_GET_ITEM(seq, i);
+
+#if Py_MAJOR == 2
+        if (!PyString_Check(t)) {
+            PyErr_SetString(PyExc_ValueError, "arguments must be a sequence of byte strings");
+            PyMem_Free(arguments);
+            Py_DECREF(seq);
+            return NULL;
+        }
+        arguments[i] = PyString_AsString(t);
+#else
+        if (!PyBytes_Check(t)) {
+            PyErr_SetString(PyExc_ValueError, "arguments must be a sequence of byte strings");
+            PyMem_Free(arguments);
+            Py_DECREF(seq);
+            return NULL;
+        }
+        arguments[i] = PyBytes_AsString(t);
+#endif
+    }
+    arguments[i] = NULL;
+    Py_DECREF(seq);
+
+    PyObjC_DURING
+        retval = AuthorizationExecuteWithPrivileges(
+                    authorization, pathToTool, options, arguments,
+                    py_communicationsPipe == PyObjC_NULL?NULL:&communicationsPipe);
+
+    PyObjC_HANDLER
+        PyObjCErr_FromObjC(localException);
+
+    PyObjC_ENDHANDLER
+
+    PyMem_Free(arguments);
+
+    if (PyErr_Occurred()) {
+        return NULL;
+    }
+
+    return Py_BuildValue("iO", retval, PyObjC_ObjCToPython(@encode(FILE*), &communicationsPipe));
 }
 
 
@@ -501,6 +763,24 @@ static PyMethodDef mod_methods[] = {
         m_AuthorizationCopyInfo,
         METH_VARARGS,
         "AuthorizationCopyInfo()"
+    },
+    {
+        "AuthorizationCopyRights",
+        m_AuthorizationCopyRights,
+        METH_VARARGS,
+        "AuthorizationCopyRights()"
+    },
+    {
+        "AuthorizationCopyRightsAsync",
+        m_AuthorizationCopyRightsAsync,
+        METH_VARARGS,
+        "AuthorizationCopyRightsAsync()"
+    },
+    {
+        "AuthorizationExecuteWithPrivileges",
+        m_AuthorizationExecuteWithPrivileges,
+        METH_VARARGS,
+        "AuthorizationExecuteWithPrivileges()"
     },
 
     { 0, 0, 0, 0 } /* sentinel */
