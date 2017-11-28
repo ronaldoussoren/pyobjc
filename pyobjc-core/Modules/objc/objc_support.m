@@ -1208,6 +1208,9 @@ pythonify_c_struct(const char *type, void *datum)
     if (IS_DECIMAL(type)) {
         return pythonify_nsdecimal(datum);
     }
+    if (IS_AUTHORIZATIONITEM(type)) {
+        return pythonify_authorizationitem(datum);
+    }
 
     /* The compiler adds useless digits at the end of the signature */
     while (type_end != type_start+1 && type_end[-1] != _C_STRUCT_E) {
@@ -1589,6 +1592,9 @@ depythonify_c_struct(const char *types, PyObject *arg, void *datum)
     /* Hacked in support for sockaddr structs */
     if (strncmp(types, @encode(struct sockaddr), sizeof(@encode(struct sockaddr))-1) == 0) {
         return PyObjC_SockAddrFromPython(arg, datum);
+    }
+    if (IS_AUTHORIZATIONITEM(types)) {
+        return depythonify_authorizationitem(arg, datum);
     }
 
     /* Extract struck packing value, need better way to fetch this */

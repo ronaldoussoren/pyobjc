@@ -302,6 +302,105 @@ m_SecKeychainFindGenericPassword(
     return Py_BuildValue("iINN", retval, password_length, py_passwordData, py_itemRef);
 }
 
+static PyObject*
+m_AuthorizationCreate(
+        PyObject* module __attribute__((__unused__)),
+        PyObject* args)
+{
+    OSStatus retval;
+    AuthorizationRights rights;
+    PyObject* py_rights;
+    AuthorizationEnvironment environment;
+    PyObject* py_environment;
+    AuthorizationFlags flags;
+    AuthorizationRef authorization = NULL;
+    PyObject* py_authorization;
+
+    rights.items = environment.items = NULL;
+
+    if (PyArg_ParseTuple(args, "OOIO", &py_rights, &py_environment, &flags, &py_authorization) == -1) {
+        return NULL;
+    }
+
+    if (py_rights == Py_None) {
+        /* pass */
+
+    } else {
+        PyObject* seq = PySequence_Fast(py_rights, "rights must be a sequence");
+        Py_ssize_t i;
+        if (seq == NULL) {
+            return NULL;
+        }
+        rights.count = PySequence_Fast_GET_SIZE(seq);
+        rights.items = PyMem_Malloc(sizeof(AuthorizationItem) * PySequence_Fast_GET_SIZE(seq));
+        if (rights.items == NULL) {
+            PyErr_NoMemory();
+            return NULL;
+        }
+
+        for (i = 0; i < PySequence_Fast_GET_SIZE(seq); i++) {
+            if (PyObjC_PythonToObjC("{_AuthorizationItem=^cL^vI}", PySequence_Fast_GET_ITEM(seq, i), rights.items + i) < 0) {
+                PyMem_Free(rights.items);
+                return NULL;
+            }
+        }
+    }
+
+    if (py_environment == Py_None) {
+        /* pass */
+
+    } else {
+        PyObject* seq = PySequence_Fast(py_environment, "environment must be a sequence");
+        Py_ssize_t i;
+        if (seq == NULL) {
+            return NULL;
+        }
+        environment.count = PySequence_Fast_GET_SIZE(seq);
+        environment.items = PyMem_Malloc(sizeof(AuthorizationItem) * PySequence_Fast_GET_SIZE(seq));
+        if (environment.items == NULL) {
+            PyMem_Free(rights.items);
+            PyErr_NoMemory();
+            return NULL;
+        }
+
+        for (i = 0; i < PySequence_Fast_GET_SIZE(seq); i++) {
+            if (PyObjC_PythonToObjC("{_AuthorizationItem=^cL^vI}", PySequence_Fast_GET_ITEM(seq, i), environment.items + i) < 0) {
+                PyMem_Free(rights.items);
+                PyMem_Free(environment.items);
+                return NULL;
+            }
+        }
+    }
+
+    if (py_authorization != Py_None) {
+        PyErr_SetString(PyExc_ValueError, "authorization must be None");
+        PyMem_Free(rights.items);
+        PyMem_Free(environment.items);
+        return NULL;
+    }
+
+    PyObjC_DURING
+        retval = AuthorizationCreate(
+            py_rights == Py_None?NULL:&rights,
+            py_environment == Py_None?NULL:&environment,
+            flags,
+            &authorization);
+
+    PyObjC_HANDLER
+        PyObjCErr_FromObjC(localException);
+
+    PyObjC_ENDHANDLER
+
+    PyMem_Free(rights.items);
+    PyMem_Free(environment.items);
+
+    if (PyErr_Occurred()) {
+        return NULL;
+    }
+
+    return Py_BuildValue("iN", retval, PyObjC_ObjCToPython(@encode(AuthorizationRef), &authorization));
+}
+
 
 static PyMethodDef mod_methods[] = {
     {
@@ -316,7 +415,12 @@ static PyMethodDef mod_methods[] = {
         METH_VARARGS,
         "SecKeychainFindGenericPassword()"
     },
-
+    {
+        "AuthorizationCreate",
+        m_AuthorizationCreate,
+        METH_VARARGS,
+        "AuthorizationCreate()"
+    },
 
     { 0, 0, 0, 0 } /* sentinel */
 };

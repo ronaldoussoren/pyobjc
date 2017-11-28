@@ -170,3 +170,13 @@ Legacy Keychain attribute API
 
 The following functions are not available from Python because they are legacy APIs (soft deprecated) that require manual wrapping:
 ``SecKeychainAttributeInfoForItemID``, ``SecKeychainFreeAttributeInfo``.
+
+``AuthorizationCreate``
+.......................
+
+The arguments *rights* and *environment* should be passed as tuples of *AuthorizationItem* values.
+
+``AuthorizationFreeItemSet``
+............................
+
+This function is automaticly called as needed by PyObjC and is not exposed to Python.

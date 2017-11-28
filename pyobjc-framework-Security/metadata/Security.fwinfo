@@ -91,7 +91,7 @@
    }
   },
   "structs": {
-   "AuthorizationItem": { "comment": "FIXME: requires manual wrapping" },
+   "AuthorizationItem": { "typestr": "{_AuthorizationItem=^cL^vI}", "fieldnames": [ "name", "valueLength", "value", "flags" ] },
    "AuthorizationItemSet": { "comment": "FIXME: requires manual wrapping" },
    "AuthorizationExternalForm": { "typestr": "{_AuthorizationExternalForm=[32C]}", "fieldnames": ["bytes"] },
    "SecItemImportExportKeyParameters": { "typestr": "{_SecItemImportExportKeyParameters=II@@@@@@}", "fieldnames": [ "version", "flags", "passphrase", "alertTitle", "alertPrompt", "accessRef", "keyUsage", "keyAttributes" ] },
