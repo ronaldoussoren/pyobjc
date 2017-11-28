@@ -14,12 +14,6 @@ class TestSecBase (TestCase):
         self.assertIsCFType(Security.SecACLRef)
 
     @expectedFailure
-    def test_types_manual(self):
-        self.fail("SecKeychainAttribute")
-        self.fail("SecKeychainAttributeList")
-        self.fail("SecKeychainAttributeInfo")
-
-    @expectedFailure
     def test_types_not_unique(self):
         self.assertIsCFType(Security.SecKeychainRef)
         self.assertIsCFType(Security.SecKeychainItemRef)

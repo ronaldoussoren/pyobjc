@@ -154,3 +154,19 @@ These functions were deprecated in macOS and are not available from Python.
 .......................................................................
 
 Don't call ``SecKeychainItemFreeContent`` to free the password data, PyObjC does this for you and returns a standard bytes object.
+
+Legacy KeychainItem API
+.......................
+
+The following functions are not available from Python because they are legacy APIs (soft deprecated) that require manual wrapping:
+``SecKeychainItemCopyAttributesAndData``, ``SecKeychainItemModifyAttributesAndData``, ``SecKeychainItemFreeAttributesAndData``,
+``SecKeychainItemCopyContent``, ``SecKeychainItemModifyContent``, ``SecKeychainItemFreeContent``.
+
+Please file an issue at `PyObjC's issue tracker <https://bitbucket.org/ronaldoussoren/pyobjc/issues?status=new&status=open>`_ when you have a
+usecase for these APIs.
+
+Legacy Keychain attribute API
+.............................
+
+The following functions are not available from Python because they are legacy APIs (soft deprecated) that require manual wrapping:
+``SecKeychainAttributeInfoForItemID``, ``SecKeychainFreeAttributeInfo``.

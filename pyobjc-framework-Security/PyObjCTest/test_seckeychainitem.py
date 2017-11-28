@@ -82,15 +82,14 @@ class TestKeychainitem (TestCase):
         self.assertArgHasType(Security.SecKeychainItemSetAccess, 0, objc._C_ID)
         self.assertArgHasType(Security.SecKeychainItemSetAccess, 1, objc._C_ID)
 
-    @expectedFailure
     def test_functions_manual(self):
-        self.fail("SecKeychainItemModifyAttributesAndData: SecKeychainAttributeList requires manual work")
-        self.fail("SecKeychainItemCreateFromContent: SecKeychainAttributeList requires manual work")
-        self.fail("SecKeychainItemModifyContent: SecKeychainAttributeList requires manual work")
-        self.fail("SecKeychainItemCopyContent: SecKeychainAttributeList requires manual work")
-        self.fail("SecKeychainItemFreeContent: SecKeychainAttributeList requires manual work")
-        self.fail("SecKeychainItemCopyAttributesAndData: SecKeychainAttributeList requires manual work")
-        self.fail("SecKeychainItemFreeAttributesAndData: SecKeychainAttributeList requires manual work")
+        # Legacy API, not wrapped:
+        self.assertFalse(hasattr(Security, 'SecKeychainItemCopyAttributesAndData'))
+        self.assertFalse(hasattr(Security, 'SecKeychainItemModifyAttributesAndData'))
+        self.assertFalse(hasattr(Security, 'SecKeychainItemFreeAttributesAndData'))
+        self.assertFalse(hasattr(Security, 'SecKeychainItemCopyContent'))
+        self.assertFalse(hasattr(Security, 'SecKeychainItemModifyContent'))
+        self.assertFalse(hasattr(Security, 'SecKeychainItemFreeContent'))
 
 if __name__ == "__main__":
     main()
