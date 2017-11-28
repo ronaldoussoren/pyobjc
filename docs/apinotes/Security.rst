@@ -35,6 +35,14 @@ These functions were deprecated in macOS and are not available from Python.
 
 These functions were deprecated in macOS and are not available from Python.
 
+``SecAsn1*``
+............
+
+This APIs are specialized and would require manual bindings. They are therefore not available from Python at this time.
+
+Please file an issue at `PyObjC's issue tracker <https://bitbucket.org/ronaldoussoren/pyobjc/issues?status=new&status=open>`_ when you have a
+usecase for these APIs.
+
 ``SecPolicyCreateWithOID``, ``SecPolicyGetOID``, ``SecPolicyGetValue``, ``SecPolicySetValue``, ``SecPolicyGetTPHandle``, ``SecPolicySetProperties``
 ...................................................................................................................................................
 
@@ -97,3 +105,32 @@ These functions were deprecated in macOS and are not available from Python.
 
 These functions were deprecated in macOS and are not available from Python.
 
+``CMSEncoderSetEncapsulatedContentType``, ``CMSEncode``
+.......................................................
+
+These functions were deprecated in macOS and are not available from Python.
+
+``SecACLCreateFromSimpleContents``, ``SecACLCopySimpleContents``, ``SecACLSetSimpleContents``, ``SecACLGetAuthorizations``, ``SecACLSetAuthorizations``
+.......................................................................................................................................................
+
+These functions were deprecated in macOS and are not available from Python.
+
+``SecAccessCreateFromOwnerAndACL``, ``SecAccessGetOwnerAndACL``, ``SecAccessCopySelectedACLList``
+..................................................................................................
+
+These functions were deprecated in macOS and are not available from Python.
+
+``SecCertificateCreateFromData``, ``SecCertificateGetData``, ``SecCertificateGetType``, ``SecCertificateGetSubject``, ``SecCertificateGetIssuer``
+.................................................................................................................................................
+
+These functions were deprecated in macOS and are not available from Python.
+
+``SecCertificateGetCLHandle``, ``SecCertificateGetAlgorithmID``, ``SecCertificateCopyPreference``, ``SecCertificateSetPreference``
+..................................................................................................................................
+
+These functions were deprecated in macOS and are not available from Python.
+
+``SecKeychainGetCSPHandle``, ``SecKeychainGetDLDBHandle``
+.........................................................
+
+These functions were deprecated in macOS and are not available from Python.

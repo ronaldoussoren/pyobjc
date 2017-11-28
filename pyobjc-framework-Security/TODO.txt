@@ -1,4 +1,5 @@
 Authorization.h 	- Partial metadata, needs manual work
+SecBase.h		- Needs manual wrapping
 CMSDecoder.h
 CMSEncoder.h
 SecACL.h
@@ -6,14 +7,11 @@ SecAccess.h
 SecAsn1Coder.h
 SecAsn1Templates.h
 SecAsn1Types.h
-SecBase.h
 SecCertificate.h
 SecCode.h
-SecCodeHost.h
 SecKeychain.h
 SecKeychainItem.h
 SecTrust.h
-SecTrustSettings.h
 eisl.h
 oids.h
 oidsbase.h
