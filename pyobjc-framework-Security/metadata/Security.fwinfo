@@ -93,7 +93,7 @@
   "structs": {
    "AuthorizationItem": { "comment": "FIXME: requires manual wrapping" },
    "AuthorizationItemSet": { "comment": "FIXME: requires manual wrapping" },
-   "AuthorizationExternalForm": { "comment": "FIXME: requires manual wrapping" },
+   "AuthorizationExternalForm": { "typestr": "{_AuthorizationExternalForm=[32C]}", "fieldnames": ["bytes"] },
    "SecItemImportExportKeyParameters": { "typestr": "{_SecItemImportExportKeyParameters=II@@@@@@}", "fieldnames": [ "version", "flags", "passphrase", "alertTitle", "alertPrompt", "accessRef", "keyUsage", "keyAttributes" ] },
    "SecKeychainSettings": { "typestr": "{SecKeychainSettings=IZZI}", "fieldnames": [ "version", "lockOnSleep", "useLockInterval", "lockInterval" ] },
    "SecKeychainCallbackInfo": { "typestr": "{SecKeychainCallbackInfo=I@@i}", "fieldnames": [ "version", "item", "keychain", "pid" ] }
@@ -1822,6 +1822,33 @@
   "classes": {
   },
   "functions": {
+   "AuthorizationFree": {
+    "retval": { "type_override": "i" },
+    "args": {
+     "0": { "type_override": "^{AuthorizationOpaqueRef=}" },
+     "1": { "type_override": "I" }
+    }
+   },
+   "AuthorizationMakeExternalForm": {
+    "retval": { "type_override": "i" },
+    "args": {
+     "0": { "type_override": "^{AuthorizationOpaqueRef=}" },
+     "1": { "type_override": "o^{_AuthorizationExternalForm=[32C]}" }
+    }
+   },
+   "AuthorizationCreateFromExternalForm": {
+    "retval": { "type_override": "i" },
+    "args": {
+     "0": { "type_override": "n^{_AuthorizationExternalForm=[32C]}" },
+     "1": { "type_override": "o^^{AuthorizationOpaqueRef=}" }
+    }
+   },
+   "AuthorizationCopyPrivilegedReference": {
+    "retval": { "type_override": "i" },
+    "args": {
+     "0": { "type_override": "o^^{AuthorizationOpaqueRef=}" }
+    }
+   },
    "SecKeychainItemDelete": {
     "retval": { "type_override": "i" },
     "args": {
