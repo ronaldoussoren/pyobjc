@@ -29,7 +29,7 @@ sys.path.append(os.path.abspath('example-collector'))
 # coming with Sphinx (named 'sphinx.ext.*') or your custom ones.
 extensions = [
     'sphinx.ext.intersphinx', 'sphinx.ext.todo', 'sphinx.ext.ifconfig',
-    'sphinx.ext.extlinks', 'sphinxcontrib.cheeseshop', 'examples'
+    'sphinx.ext.extlinks', 'examples'
 ]
 
 extlinks = {

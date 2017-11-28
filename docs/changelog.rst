@@ -18,8 +18,9 @@ Version 4.1b1
 * Fix memory error in struct wrappers which resulted in
   a use-after-free error in the initializer for structs.
 
-* #135: Add bindings for frameworks Security, SecurityFoundation
-  and SecurityInterface
+* #135: Add bindings for frameworks :doc:`Security </apinotes/Security>`,
+  :doc:`SecurityFoundation </apinotes/SecurityFoundation>` and
+  and :doc:`SecurityInterface </apinotes/SecurityInterface>`.
 
   The bindings for the Security framework don't expose a
   number of older APIs that were deprecated in macOS 10.7.
@@ -85,9 +86,9 @@ Version 4.0
 
   Reported by Nickolas Pohilets.
 
-* Added bindings for the GameKit framework introduced in macOS 10.8.
+* Added bindings for the :doc:`GameKit </apinotes/GameKit>` framework introduced in macOS 10.8.
 
-* Added bindings for the GameplayKit framework introduced in macOS 10.11.
+* Added bindings for the :doc:`GameplayKit </apinotes/GameplayKit>` framework introduced in macOS 10.11.
 
   Note that these bindings are less useful than they could be because
   PyObjC currently does not support "vector" types that are used in
@@ -130,73 +131,68 @@ Version 4.0b1
 
 * New framework wrappers:
 
-  - ColorSync (new in macOS 10.13)
-  - CoreML (new in macOS 10.13)
-  - ExternalAccessory (new in macOS 10.13)
-  - CoreSpotlight (new in macOS 10.13)
-  - Vision (new in macOS 10.13)
+  - :doc:`ColorSync </apinotes/ColorSync>` (new in macOS 10.13)
+  - :doc:`CoreML</apinotes/CoreML>`  (new in macOS 10.13)
+  - :doc:`ExternalAccessory</apinotes/ExernalAccssory>`  (new in macOS 10.13)
+  - :doc:`CoreSpotlight</apinotes/CoreSpotlight>`  (new in macOS 10.13)
+  - :doc:`Vision</apinotes/Vision>`  (new in macOS 10.13)
 
 * metadata updates:
 
-  - PhotosUI
-  - Accounts
-  - AddressBook
-  - AppKit
-  - ApplicationServices
-  - Automator
-  - AVKit
-  - CalendarStore
-  - CFNetwork
-  - CloudKit
-  - Contacts
-  - CoreBluetooth
-  - CoreData
-  - CoreFoundation
-  - CoreGraphics
-  - CoreImage
-  - CoreLocation
-  - CoreServices
-  - CoreText
-  - CoreVideo
-  - CoreWLAN
-  - CryptoTokenKit
-  - EventKit
-  - FinderSync
-  - Foundation
-  - FSEvents
-  - GameController
-  - IMServicePlugIn
-  - IMServicePlugIn
-  - ImageCaptureCore
-  - ImageCaptureCore
-  - ImageIO
-  - Intents
-  - IOSurface
-  - JavaScriptCore
-  - LocalAuthentication
-  - MapKit
-  - MediaLibrary
-  - MediaPlayer
-  - ModelIO
-  - MultipeerConnectivity
-  - NetFS
-  - NetworkExtension
-  - OpenDirectory
-  - Photos
-  - PhotosUI
-  - QTKit
-  - QTKit
-  - Quartz
-  - QuartzCore
-  - QuickLook
-  - QuickLook
-  - SafariServices
-  - SceneKit
-  - ScreenSaver
-  - Social
-  - SpriteKit
-  - SystemConfiguration
-  - WebKit
+  - :doc:`Accounts </apinotes/Accounts>`
+  - :doc:`AddressBook </apinotes/AddressBook>`
+  - :doc:`AppKit </apinotes/AppKit>`
+  - :doc:`ApplicationServices </apinotes/ApplicationServices>`
+  - :doc:`Automator </apinotes/Automator>`
+  - :doc:`AVKit </apinotes/AVKit>`
+  - :doc:`CalendarStore </apinotes/CalendarStore>`
+  - :doc:`CFNetwork </apinotes/CFNetwork>`
+  - :doc:`CloudKit </apinotes/CloudKit>`
+  - :doc:`Contacts </apinotes/Contacts>`
+  - :doc:`CoreBluetooth </apinotes/CoreBluetooth>`
+  - :doc:`CoreData </apinotes/CoreData>`
+  - :doc:`CoreFoundation </apinotes/CoreFoundation>`
+  - :doc:`CoreGraphics </apinotes/CoreGraphics>`
+  - :doc:`CoreImage </apinotes/CoreImage>`
+  - :doc:`CoreLocation </apinotes/CoreLocation>`
+  - :doc:`CoreServices </apinotes/CoreServices>`
+  - :doc:`CoreText </apinotes/CoreText>`
+  - :doc:`CoreVideo </apinotes/CoreVideo>`
+  - :doc:`CoreWLAN </apinotes/CoreWLAN>`
+  - :doc:`CryptoTokenKit </apinotes/CryptoTokenKit>`
+  - :doc:`EventKit </apinotes/EventKit>`
+  - :doc:`FinderSync </apinotes/FinderSync>`
+  - :doc:`Foundation </apinotes/Foundation>`
+  - :doc:`FSEvents </apinotes/FSEvents>`
+  - :doc:`GameController </apinotes/GameController>`
+  - :doc:`IMServicePlugIn </apinotes/IMServicePlugin>`
+  - :doc:`ImageCaptureCore </apinotes/ImageCaptureCore>`
+  - :doc:`ImageIO </apinotes/ImageIO>`
+  - :doc:`Intents </apinotes/Intents>`
+  - :doc:`IOSurface </apinotes/IOSurface>`
+  - :doc:`JavaScriptCore </apinotes/JavaScriptCore>`
+  - :doc:`LocalAuthentication </apinotes/LocalAuthentication>`
+  - :doc:`MapKit </apinotes/MapKit>`
+  - :doc:`MediaLibrary </apinotes/MediaLibrary>`
+  - :doc:`MediaPlayer </apinotes/MediaPlayer>`
+  - :doc:`ModelIO </apinotes/ModelIO>`
+  - :doc:`MultipeerConnectivity </apinotes/MultipeerConnectivity>`
+  - :doc:`NetFS </apinotes/NetFS>`
+  - :doc:`NetworkExtension </apinotes/NetworkExtension>`
+  - :doc:`OpenDirectory </apinotes/OpenDirectory>`
+  - :doc:`Photos </apinotes/Photos>`
+  - :doc:`PhotosUI </apinotes/PhotosUI>`
+  - :doc:`QTKit </apinotes/QTKit>`
+  - :doc:`Quartz </apinotes/Quartz>`
+  - :doc:`QuartzCore </apinotes/QuartzCore>`
+  - :doc:`QuickLook </apinotes/QuickLook>`
+  - :doc:`SafariServices </apinotes/SafariServices>`
+  - :doc:`SceneKit </apinotes/SceneKit>`
+  - :doc:`ScreenSaver </apinotes/ScreenSaver>`
+  - :doc:`Social </apinotes/Social>`
+  - :doc:`SpriteKit </apinotes/SpriteKit>`
+  - :doc:`SystemConfiguration </apinotes/SystemConfiguration>`
+  - :doc:`WebKit </apinotes/WebKit>`
 
 Version 3.3
 -----------
