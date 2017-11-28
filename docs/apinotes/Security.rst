@@ -176,6 +176,12 @@ The following functions are not available from Python because they are legacy AP
 
 The arguments *rights* and *environment* should be passed as tuples of *AuthorizationItem* values.
 
+``AuthorizationCopyInfo``
+.........................
+
+The information is returned as a tuple of *AuthorizationItem* (instead of specific type wrapping an ``AuthorizationItemSet``),
+and it is not necessary to call ``AuthorizationFreeItemSet``.
+
 ``AuthorizationFreeItemSet``
 ............................
 

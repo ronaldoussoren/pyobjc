@@ -44,7 +44,7 @@ m_SecKeychainFindInternetPassword(
     PyObject* py_itemRef;
     const char string = 't';
 
-    if (PyArg_ParseTuple(args, "OnOnOnOnOHIIOOO",
+    if (!PyArg_ParseTuple(args, "OnOnOnOnOHIIOOO",
             &py_keychainOrArray,
             &serverName_length, &py_serverName,
             &securityDomain_length, &py_securityDomain,
@@ -52,7 +52,7 @@ m_SecKeychainFindInternetPassword(
             &path_length, &py_path,
             &port, &protocol, &authenticationType,
             &py_password_length, &py_passwordData,
-            &py_itemRef) == -1) {
+            &py_itemRef)) {
         return NULL;
     }
 
@@ -203,12 +203,12 @@ m_SecKeychainFindGenericPassword(
     PyObject* py_itemRef;
     const char string = 't';
 
-    if (PyArg_ParseTuple(args, "OnOnOOOO",
+    if (!PyArg_ParseTuple(args, "OnOnOOOO",
             &py_keychainOrArray,
             &serviceName_length, &py_serviceName,
             &accountName_length, &py_accountName,
             &py_password_length, &py_passwordData,
-            &py_itemRef) == -1) {
+            &py_itemRef)) {
         return NULL;
     }
 
@@ -318,7 +318,7 @@ m_AuthorizationCreate(
 
     rights.items = environment.items = NULL;
 
-    if (PyArg_ParseTuple(args, "OOIO", &py_rights, &py_environment, &flags, &py_authorization) == -1) {
+    if (!PyArg_ParseTuple(args, "OOIO", &py_rights, &py_environment, &flags, &py_authorization)) {
         return NULL;
     }
 
@@ -401,6 +401,81 @@ m_AuthorizationCreate(
     return Py_BuildValue("iN", retval, PyObjC_ObjCToPython(@encode(AuthorizationRef), &authorization));
 }
 
+static PyObject*
+m_AuthorizationCopyInfo(
+        PyObject* module __attribute__((__unused__)),
+        PyObject* args)
+{
+    OSStatus retval;
+    AuthorizationRef authorization;
+    PyObject* py_authorization;
+    char* tag;
+    PyObject* py_tag;
+    AuthorizationItemSet* info = NULL;
+    PyObject* py_info;
+
+    if (!PyArg_ParseTuple(args, "OOO", &py_authorization, &py_tag, &py_info)) {
+        return NULL;
+    }
+
+    if (PyObjC_PythonToObjC(@encode(AuthorizationRef), py_authorization, &authorization) == -1) {
+        return NULL;
+    }
+
+    if (py_tag == Py_None) {
+        tag = NULL;
+
+#if Py_MAJOR == 2
+    } else if (PyString_Check(py_tag)) {
+#else
+    } else if (PyBytes_Check(py_tag)) {
+#endif
+        tag = PyBytes_AsString(py_tag);
+
+    } else {
+        PyErr_SetString(PyExc_ValueError, "tag must be byte string or None");
+        return NULL;
+    }
+
+    if (py_info != Py_None) {
+        PyErr_SetString(PyExc_ValueError, "info must be None");
+        return NULL;
+    }
+
+    PyObjC_DURING
+        retval = AuthorizationCopyInfo(authorization, tag, &info);
+
+    PyObjC_HANDLER
+        PyObjCErr_FromObjC(localException);
+
+    PyObjC_ENDHANDLER
+
+    if (PyErr_Occurred()) {
+        return NULL;
+    }
+
+    if (info != NULL) {
+        UInt32 i;
+        py_info = PyTuple_New(info->count);
+        if (py_info == NULL) {
+            AuthorizationFreeItemSet(info);
+            return NULL;
+        }
+
+        for (i = 0; i < info->count; i++) {
+            PyObject* t = PyObjC_ObjCToPython("{_AuthorizationItem=^cL^vI}", info->items + i);
+            if (t == NULL) {
+                Py_DECREF(py_info);
+                AuthorizationFreeItemSet(info);
+            }
+            PyTuple_SET_ITEM(py_info, i, t);
+        }
+        AuthorizationFreeItemSet(info);
+    }
+
+    return Py_BuildValue("iN", retval, py_info);
+}
+
 
 static PyMethodDef mod_methods[] = {
     {
@@ -420,6 +495,12 @@ static PyMethodDef mod_methods[] = {
         m_AuthorizationCreate,
         METH_VARARGS,
         "AuthorizationCreate()"
+    },
+    {
+        "AuthorizationCopyInfo",
+        m_AuthorizationCopyInfo,
+        METH_VARARGS,
+        "AuthorizationCopyInfo()"
     },
 
     { 0, 0, 0, 0 } /* sentinel */
