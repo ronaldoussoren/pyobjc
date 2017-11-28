@@ -10,7 +10,7 @@ import sys
 import Foundation
 
 from Security import _metadata
-
+from Security import _Security
 
 sys.modules['Security'] = mod = objc.ObjCLazyModule(
     "Security",
@@ -21,7 +21,7 @@ sys.modules['Security'] = mod = objc.ObjCLazyModule(
         'objc': objc,
         '__path__': __path__,
         '__loader__': globals().get('__loader__', None),
-    }, (Foundation,))
+    }, (_Security, Foundation,))
 
 import sys
 del sys.modules['Security._metadata']

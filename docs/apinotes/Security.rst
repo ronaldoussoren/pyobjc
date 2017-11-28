@@ -149,3 +149,8 @@ These functions were deprecated in macOS and are not available from Python.
 ......................................................................
 
 These functions were deprecated in macOS and are not available from Python.
+
+``SecKeychainFindInternetPassword``, ``SecKeychainFindGenericPassword``
+.......................................................................
+
+Don't call ``SecKeychainItemFreeContent`` to free the password data, PyObjC does this for you and returns a standard bytes object.

@@ -16,20 +16,12 @@ setup(
     name='pyobjc-framework-Security',
     description = "Wrappers for the framework Security on macOS",
     packages = [ "Security" ],
-    #ext_modules = [
-    #    Extension('Security._inlines',
-    #        [ 'Modules/_Security_inlines.m' ],
-    #        extra_link_args=['-framework', 'Security']),
-    #    Extension("Security._Security",
-    #        [ "Modules/_Security.m" ],
-    #        extra_link_args=["-framework", "Security"],
-    #        depends=[
-    #            os.path.join('Modules', fn)
-    #            for fn in os.listdir('Modules')
-    #            if fn.startswith('_Security')
-    #        ]
-    #    ),
-    #],
+    ext_modules = [
+        Extension("Security._Security",
+            [ "Modules/_Security.m" ],
+            extra_link_args=["-framework", "Security"]
+        ),
+    ],
     version=VERSION,
     install_requires = [
         'pyobjc-core>='+VERSION,

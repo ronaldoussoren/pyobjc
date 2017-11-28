@@ -272,12 +272,12 @@ class TestSecKeychain (TestCase):
 
     @expectedFailure
     def test_functions_manual(self):
-        self.fail("SecKeychainAttributeInfo")
+        # XXX: Testing these in unittests is annoyingly hard, hence the lame test below:
+        self.assertFalse(isinstance(Security.SecKeychainFindInternetPassword, objc.function))
+        self.assertFalse(isinstance(Security.SecKeychainFindGenericPassword, objc.function))
+
+        self.fail("SecKeychainAttributeInfoForItemID")
         self.fail("SecKeychainFreeAttributeInfo")
-
-        self.fail("SecKeychainFindInternetPassword") # Returns pointer to a password buffer by reference...
-        self.fail("SecKeychainFindGenericPassword") # Returns pointer to a password buffer by reference...
-
 
 
 if __name__ == "__main__":
