@@ -957,8 +957,8 @@ static ffi_cif* init_cif = NULL;
         signature = PyObjCMethodSignature_FromSignature("i^v^v^v", YES);
         init_cif = PyObjCFFI_CIFForSignature(signature);
         Py_DECREF(signature);
-        PyMem_Free((void*)typestr);
         if (init_cif == NULL) {
+            PyMem_Free((void*)typestr);
             return NULL;
         }
     }

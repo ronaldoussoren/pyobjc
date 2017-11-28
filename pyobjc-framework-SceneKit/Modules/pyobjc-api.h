@@ -80,6 +80,7 @@ struct pyobjc_api {
     int (*dep_c_array_count)(const char* type, Py_ssize_t count, BOOL strict, PyObject* value, void* datum);
     PyObject* (*varlistnew)(const char* tp, void* array);
     int (*pyobjcobject_convert)(PyObject*,void*);
+    int (*register_id_alias)(const char*, const char*);
 };
 
 #ifndef PYOBJC_BUILD
@@ -117,6 +118,7 @@ static struct pyobjc_api* PyObjC_API;
 #define PyObjC_DepythonifyCArray (PyObjC_API->dep_c_array_count)
 #define PyObjC_VarList_New (PyObjC_API->varlistnew)
 #define PyObjCObject_Convert (PyObjC_API->pyobjcobject_convert)
+#define PyObjCPointerWrapper_RegisterID (PyObjC_API->register_id_alias)
 
 typedef void (*PyObjC_Function_Pointer)(void);
 typedef struct PyObjC_function_map {

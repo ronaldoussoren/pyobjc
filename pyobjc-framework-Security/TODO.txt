@@ -1,0 +1,4 @@
+Authorization.h 	- Partial metadata, needs manual work
+SecBase.h		- Needs manual wrapping
+SecKeychain.h		- Needs some manual wrapping
+SecKeychainItem.h

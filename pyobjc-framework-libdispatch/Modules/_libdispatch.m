@@ -125,6 +125,15 @@ PyObjC_MODULE_INIT(_libdispatch)
     s = DISPATCH_SOURCE_TYPE_VNODE; if (add_constant(m, "DISPATCH_SOURCE_TYPE_VNODE", @encode(dispatch_source_type_t), &s) != 0) goto error;
     s = DISPATCH_SOURCE_TYPE_WRITE; if (add_constant(m, "DISPATCH_SOURCE_TYPE_WRITE", @encode(dispatch_source_type_t), &s) != 0) goto error;
 
+    /*
+     * Register a number of struct pointer types that are actually Objective-C objects
+     */
+    if (PyObjCPointerWrapper_RegisterID("dispatch_queue_t", "^{dispatch_queue_s=}") < 0) goto error;
+    if (PyObjCPointerWrapper_RegisterID("dispatch_data_t", "^{dispatch_data_s=}") < 0) goto error;
+    if (PyObjCPointerWrapper_RegisterID("dispatch_io_t", "^{dispatch_io_s=}") < 0) goto error;
+    if (PyObjCPointerWrapper_RegisterID("dispatch_queue_attr_t", "^{dispatch_queue_attr_s=}") < 0) goto error;
+    if (PyObjCPointerWrapper_RegisterID("dispatch_semaphore_t", "^{dispatch_semaphore_s=}") < 0) goto error;
+
     PyObjC_INITDONE();
 
 error:

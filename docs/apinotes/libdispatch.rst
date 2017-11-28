@@ -24,6 +24,9 @@ The libraries exposes a number APIs in two variants: one that has a block as an 
 and one that has a function as an argument. Both can be used from Python, but in general
 the block version is more convenient to use.
 
+This is a fairly low-level API and programming errors can result in hard crashes instead
+of exceptions or error returns.
+
 
 ```dispatch_retain```, ```dispatch_release```
 .............................................

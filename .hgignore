@@ -18,5 +18,6 @@ syntax: glob
 *.dSYM
 *.pyc
 *.pyo
+*.orig
 unittest2-*.egg
 *.swp

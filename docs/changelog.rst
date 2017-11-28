@@ -15,12 +15,15 @@ Version 4.1b1
 
 * Added missing ```MAC_OS_X_VERSION_*``` constants
 
-* #135: Add bindings for framework SecurityFoundation and SecurityInterface
+* Fix memory error in struct wrappers which resulted in
+  a use-after-free error in the initializer for structs.
 
-  .. note::
+* #135: Add bindings for frameworks Security, SecurityFoundation
+  and SecurityInterface
 
-     These are not usefull without bindings to the Security
-     frameworks, those will be added later.
+  The bindings for the Security framework don't expose a
+  number of older APIs that were deprecated in macOS 10.7.
+
 
 * #129: Add bindings to libdispatch.
 

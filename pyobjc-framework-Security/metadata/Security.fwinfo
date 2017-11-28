@@ -1,0 +1,4515 @@
+{
+ "definitions": {
+  "cftypes": {
+   "SecTransformImplementationRef": {
+    "typestr": "^{OpaqueSecTransformImplementation=}",
+    "opaque": true
+   },
+   "SecRandomRef": {
+    "typestr": "^{__SecRandom=}",
+    "opaque": true
+   },
+   "AuthorizationRef": {
+    "typestr": "^{AuthorizationOpaqueRef=}",
+    "opaque": true
+   },
+   "SecureDownloadRef": {
+    "typestr": "^{OpaqueSecureDownload=}",
+    "opaque": true
+   },
+   "CMSDecoderRef": {
+    "typestr": "^{_CMSDecoder=}",
+    "gettypeid_func": "CMSDecoderGetTypeID"
+   },
+   "CMSEncoderRef": {
+    "typestr": "^{_CMSEncoder=}",
+    "gettypeid_func": "CMSEncoderGetTypeID"
+   },
+   "SecCodeRef": {
+    "typestr": "^{__SecCode=}",
+    "gettypeid_func": "SecCodeGetTypeID"
+   },
+   "SecRequirementRef": {
+    "typestr": "^{__SecRequirement=}",
+    "gettypeid_func": "SecRequirementGetTypeID"
+   },
+   "SecCertificateRef": {
+    "typestr": "^{OpaqueSecCertificateRef=}",
+    "gettypeid_func": "SecCertificateGetTypeID"
+   },
+   "SecIdentityRef": {
+    "typestr": "^{OpaqueSecIdentityRef=}",
+    "gettypeid_func": "SecIdentityGetTypeID"
+   },
+   "SecKeyRef": {
+    "typestr": "^{OpaqueSecKeyRef=}",
+    "gettypeid_func": "SecKeyGetTypeID"
+   },
+   "SecPolicyRef": {
+    "typestr": "^{OpaqueSecPolicyRef=}",
+    "gettypeid_func": "SecPolicyGetTypeID"
+   },
+   "SecAccessControlRef": {
+    "typestr": "^{OpaqueSecAccessControlRef=}",
+    "gettypeid_func": "SecAccessControlGetTypeID"
+   },
+   "SecKeychainRef": {
+    "typestr": "^{OpaqueSecKeychainRef=}",
+    "gettypeid_func": "SecKeyChainGetTypeID"
+   },
+   "SecKeychainItemRef": {
+    "typestr": "^{OpaqueSecKeychainItemRef=}",
+    "gettypeid_func": "SecKeyChainItemGetTypeID"
+   },
+   "SecTrustedApplicationRef": {
+    "typestr": "^{OpaqueSecTrustedApplicationRef=}",
+    "gettypeid_func": "SecTrustedApplicationGetTypeID"
+   },
+   "SecAccessRef": {
+    "typestr": "^{OpaqueSecAccessRef=}",
+    "gettypeid_func": "SecAccessGetTypeID"
+   },
+   "SecACLRef": {
+    "typestr": "^{OpaqueSecTrustRef=}",
+    "gettypeid_func": "SecACLGetTypeID"
+   },
+   "SecPasswordRef": {
+    "typestr": "^{OpaqueSecPasswordRef=}",
+    "gettypeid_func": "SecPasswordGetTypeID"
+   },
+   "SecTaskRef": {
+    "typestr": "^{__SecTask=}",
+    "gettypeid_func": "SecTaskGetTypeID"
+   },
+   "SecTrustRef": {
+    "typestr": "^{__SecTrust=}",
+    "gettypeid_func": "SecTrustGetTypeID"
+   },
+   "SSLContextRef": {
+    "typestr": "^{SSLContext=}",
+    "gettypeid_func": "SSLContextGetTypeID"
+   }
+  },
+  "structs": {
+   "AuthorizationItem": { "comment": "FIXME: requires manual wrapping" },
+   "AuthorizationItemSet": { "comment": "FIXME: requires manual wrapping" },
+   "AuthorizationExternalForm": { "comment": "FIXME: requires manual wrapping" },
+   "SecItemImportExportKeyParameters": { "typestr": "{_SecItemImportExportKeyParameters=II@@@@@@}", "fieldnames": [ "version", "flags", "passphrase", "alertTitle", "alertPrompt", "accessRef", "keyUsage", "keyAttributes" ] },
+   "SecKeychainSettings": { "typestr": "{SecKeychainSettings=IZZI}", "fieldnames": [ "version", "lockOnSleep", "useLockInterval", "lockInterval" ] },
+   "SecKeychainCallbackInfo": { "typestr": "{SecKeychainCallbackInfo=I@@i}", "fieldnames": [ "version", "item", "keychain", "pid" ] }
+  },
+  "enum": {
+   "kSecCreationDateItemAttr": { "value": 1667522932 },
+   "kSecModDateItemAttr": { "value": 1835295092 },
+   "kSecDescriptionItemAttr": { "value": 1684370275 },
+   "kSecCommentItemAttr": { "value": 1768123764 },
+   "kSecCreatorItemAttr": { "value": 1668445298 },
+   "kSecTypeItemAttr": { "value": 1954115685 },
+   "kSecScriptCodeItemAttr": { "value": 1935897200 },
+   "kSecLabelItemAttr": { "value": 1818321516 },
+   "kSecInvisibleItemAttr": { "value": 1768846953 },
+   "kSecNegativeItemAttr": { "value": 1852139361 },
+   "kSecCustomIconItemAttr": { "value": 1668641641 },
+   "kSecAccountItemAttr": { "value": 1633903476 },
+   "kSecServiceItemAttr": { "value": 1937138533 },
+   "kSecGenericItemAttr": { "value": 1734700641 },
+   "kSecSecurityDomainItemAttr": { "value": 1935961454 },
+   "kSecServerItemAttr": { "value": 1936881266 },
+   "kSecAuthenticationTypeItemAttr": { "value": 1635023216 },
+   "kSecPortItemAttr": { "value": 1886351988 },
+   "kSecPathItemAttr": { "value": 1885434984 },
+   "kSecVolumeItemAttr": { "value": 1986817381 },
+   "kSecAddressItemAttr": { "value": 1633969266 },
+   "kSecSignatureItemAttr": { "value": 1936943463 },
+   "kSecProtocolItemAttr": { "value": 1886675820 },
+   "kSecCertificateType": { "value": 1668577648 },
+   "kSecCertificateEncoding": { "value": 1667591779 },
+   "kSecCrlType": { "value": 1668445296 },
+   "kSecCrlEncoding": { "value": 1668443747 },
+   "kSecAlias": { "value": 1634494835 },
+   "kSecInternetPasswordItemClass": { "value": 1768842612 },
+   "kSecGenericPasswordItemClass": { "value": 1734700656 },
+   "kSecAppleSharePasswordItemClass": { "value": 1634953328 },
+   "kSecCertificateItemClass": { "value": 2147487744 },
+   "kSecPublicKeyItemClass": { "value": 15 },
+   "kSecPrivateKeyItemClass": { "value": 16 },
+   "kSecSymmetricKeyItemClass": { "value": 17 },
+   "kSecTrustOptionAllowExpired": { "value": 1 },
+   "kSecTrustOptionLeafIsCA": { "value": 2 },
+   "kSecTrustOptionFetchIssuerFromNet": { "value": 4 },
+   "kSecTrustOptionAllowExpiredRoot": { "value": 8 },
+   "kSecTrustOptionRequireRevPerCert": { "value": 16 },
+   "kSecTrustOptionUseTrustSettings": { "value": 32 },
+   "kSecTrustOptionImplicitAnchors": { "value": 64 },
+   "kSecTrustResultInvalid": { "value": 0 },
+   "kSecTrustResultProceed": { "value": 1 },
+   "kSecTrustResultConfirm": { "value": 2 },
+   "kSecTrustResultDeny": { "value": 3 },
+   "kSecTrustResultUnspecified": { "value": 4 },
+   "kSecTrustResultRecoverableTrustFailure": { "value": 5 },
+   "kSecTrustResultFatalTrustFailure": { "value": 6 },
+   "kSecTrustResultOtherError": { "value": 7 },
+   "kSecPreferencesDomainUser": { "value": 0 },
+   "kSecPreferencesDomainSystem": { "value": 1 },
+   "kSecPreferencesDomainCommon": { "value": 2 },
+   "kSecPreferencesDomainDynamic": { "value": 3 },
+   "kSecLockEventMask": { "value": 2 },
+   "kSecUnlockEventMask": { "value": 4 },
+   "kSecAddEventMask": { "value": 8 },
+   "kSecDeleteEventMask": { "value": 16 },
+   "kSecUpdateEventMask": { "value": 32 },
+   "kSecPasswordChangedEventMask": { "value": 64 },
+   "kSecDefaultChangedEventMask": { "value": 512 },
+   "kSecDataAccessEventMask": { "value": 1024 },
+   "kSecKeychainListChangedMask": { "value": 2048 },
+   "kSecTrustSettingsChangedEventMask": { "value": 4096 },
+   "kSecEveryEventMask": { "value": 4294967295 },
+   "kSecAuthenticationTypeNTLM": { "value": 1835824238 },
+   "kSecAuthenticationTypeMSN": { "value": 1634628461 },
+   "kSecAuthenticationTypeDPA": { "value": 1633775716 },
+   "kSecAuthenticationTypeRPA": { "value": 1633775730 },
+   "kSecAuthenticationTypeHTTPBasic": { "value": 1886680168 },
+   "kSecAuthenticationTypeHTTPDigest": { "value": 1685353576 },
+   "kSecAuthenticationTypeHTMLForm": { "value": 1836216166 },
+   "kSecAuthenticationTypeDefault": { "value": 1953261156 },
+   "kSecAuthenticationTypeAny": { "value": 0 },
+   "kSecProtocolTypeFTP": { "value": 1718906912 },
+   "kSecProtocolTypeFTPAccount": { "value": 1718906977 },
+   "kSecProtocolTypeHTTP": { "value": 1752462448 },
+   "kSecProtocolTypeIRC": { "value": 1769104160 },
+   "kSecProtocolTypeNNTP": { "value": 1852732528 },
+   "kSecProtocolTypePOP3": { "value": 1886351411 },
+   "kSecProtocolTypeSMTP": { "value": 1936553072 },
+   "kSecProtocolTypeSOCKS": { "value": 1936685088 },
+   "kSecProtocolTypeIMAP": { "value": 1768776048 },
+   "kSecProtocolTypeLDAP": { "value": 1818517872 },
+   "kSecProtocolTypeAppleTalk": { "value": 1635019883 },
+   "kSecProtocolTypeAFP": { "value": 1634103328 },
+   "kSecProtocolTypeTelnet": { "value": 1952803950 },
+   "kSecProtocolTypeSSH": { "value": 1936943136 },
+   "kSecProtocolTypeFTPS": { "value": 1718906995 },
+   "kSecProtocolTypeHTTPS": { "value": 1752461427 },
+   "kSecProtocolTypeHTTPProxy": { "value": 1752461432 },
+   "kSecProtocolTypeHTTPSProxy": { "value": 1752462200 },
+   "kSecProtocolTypeFTPProxy": { "value": 1718907000 },
+   "kSecProtocolTypeCIFS": { "value": 1667851891 },
+   "kSecProtocolTypeSMB": { "value": 1936548384 },
+   "kSecProtocolTypeRTSP": { "value": 1920234352 },
+   "kSecProtocolTypeRTSPProxy": { "value": 1920234360 },
+   "kSecProtocolTypeDAAP": { "value": 1684103536 },
+   "kSecProtocolTypeEPPC": { "value": 1701867619 },
+   "kSecProtocolTypeIPP": { "value": 1768976416 },
+   "kSecProtocolTypeNNTPS": { "value": 1853124723 },
+   "kSecProtocolTypeLDAPS": { "value": 1818521715 },
+   "kSecProtocolTypeTelnetS": { "value": 1952803955 },
+   "kSecProtocolTypeIMAPS": { "value": 1768779891 },
+   "kSecProtocolTypeIRCS": { "value": 1769104243 },
+   "kSecProtocolTypePOP3S": { "value": 1886351475 },
+   "kSecProtocolTypeCVSpserver": { "value": 1668707184 },
+   "kSecProtocolTypeSVN": { "value": 1937141280 },
+   "kSecProtocolTypeAny": { "value": 0 },
+   "SEC_KEYCHAIN_SETTINGS_VERS1": { "value": 1 },
+   "kSecKeyUsageUnspecified": { "value": 0 },
+   "kSecKeyUsageDigitalSignature": { "value": 1 },
+   "kSecKeyUsageNonRepudiation": { "value": 2 },
+   "kSecKeyUsageContentCommitment": { "value": 2 },
+   "kSecKeyUsageKeyEncipherment": { "value": 4 },
+   "kSecKeyUsageDataEncipherment": { "value": 8 },
+   "kSecKeyUsageKeyAgreement": { "value": 16 },
+   "kSecKeyUsageKeyCertSign": { "value": 32 },
+   "kSecKeyUsageCRLSign": { "value": 64 },
+   "kSecKeyUsageEncipherOnly": { "value": 128 },
+   "kSecKeyUsageDecipherOnly": { "value": 256 },
+   "kSecKeyUsageCritical": { "value": 2147483648 },
+   "kSecKeyUsageAll": { "value": 2147483647 },
+   "kSecUseOnlyUID": { "value": 1 },
+   "kSecUseOnlyGID": { "value": 2 },
+   "kSecHonorRoot": { "value": 256 },
+   "kSecMatchBits": { "value": 3 },
+   "kSecKeychainPromptRequirePassphase": { "value": 1 },
+   "kSecKeychainPromptUnsigned": { "value": 16 },
+   "kSecKeychainPromptUnsignedAct": { "value": 32 },
+   "kSecKeychainPromptInvalid": { "value": 64 },
+   "kSecKeychainPromptInvalidAct": { "value": 128 },
+   "kCMSAttrNone": { "value": 0 },
+   "kCMSAttrSmimeCapabilities": { "value": 1 },
+   "kCMSAttrSmimeEncryptionKeyPrefs": { "value": 2 },
+   "kCMSAttrSmimeMSEncryptionKeyPrefs": { "value": 4 },
+   "kCMSAttrSigningTime": { "value": 8 },
+   "kCMSAttrAppleCodesigningHashAgility": { "value": 16 },
+   "kSecTrustSettingsKeyUseSignature": { "value": 1 },
+   "kSecTrustSettingsKeyUseEnDecryptData": { "value": 2 },
+   "kSecTrustSettingsKeyUseEnDecryptKey": { "value": 4 },
+   "kSecTrustSettingsKeyUseSignCert": { "value": 8 },
+   "kSecTrustSettingsKeyUseSignRevocation": { "value": 16 },
+   "kSecTrustSettingsKeyUseKeyExchange": { "value": 32 },
+   "kSecTrustSettingsKeyUseAny": { "value": 4294967295 },
+   "kSecTrustSettingsResultInvalid": { "value": 0 },
+   "kSecTrustSettingsResultTrustRoot": { "value": 1 },
+   "kSecTrustSettingsResultTrustAsRoot": { "value": 2 },
+   "kSecTrustSettingsResultDeny": { "value": 3 },
+   "kSecTrustSettingsResultUnspecified": { "value": 4 },
+   "kSecTrustSettingsDomainUser": { "value": 0 },
+   "kSecTrustSettingsDomainAdmin": { "value": 1 },
+   "kSecTrustSettingsDomainSystem": { "value": 2 },
+   "kSecTrustSettingsDefaultRootCertSetting": { "value": -1 },
+   "kSecItemPemArmour": { "value": 1 },
+   "kSecKeyImportOnlyOne": { "value": 1 },
+   "kSecKeySecurePassphrase": { "value": 2 },
+   "kSecKeyNoAccessControl": { "value": 4 },
+   "SEC_KEY_IMPORT_EXPORT_PARAMS_VERSION": { "value": 0 },
+   "kSSLServerSide": { "value": 0 },
+   "kSSLClientSide": { "value": 1 },
+   "kSSLStreamType": { "value": 0 },
+   "kSSLDatagramType": { "value": 1 },
+   "kSSLClientSide": { "value": 1 },
+   "errSSLProtocol": { "value": -9800 },
+   "errSSLNegotiation": { "value": -9801 },
+   "errSSLFatalAlert": { "value": -9802 },
+   "errSSLWouldBlock": { "value": -9803 },
+   "errSSLSessionNotFound": { "value": -9804 },
+   "errSSLClosedGraceful": { "value": -9805 },
+   "errSSLClosedAbort": { "value": -9806 },
+   "errSSLXCertChainInvalid": { "value": -9807 },
+   "errSSLBadCert": { "value": -9808 },
+   "errSSLCrypto": { "value": -9809 },
+   "errSSLInternal": { "value": -9810 },
+   "errSSLModuleAttach": { "value": -9811 },
+   "errSSLUnknownRootCert": { "value": -9812 },
+   "errSSLNoRootCert": { "value": -9813 },
+   "errSSLCertExpired": { "value": -9814 },
+   "errSSLCertNotYetValid": { "value": -9815 },
+   "errSSLClosedNoNotify": { "value": -9816 },
+   "errSSLBufferOverflow": { "value": -9817 },
+   "errSSLBadCipherSuite": { "value": -9818 },
+   "errSSLPeerUnexpectedMsg": { "value": -9819 },
+   "errSSLPeerBadRecordMac": { "value": -9820 },
+   "errSSLPeerDecryptionFail": { "value": -9821 },
+   "errSSLPeerRecordOverflow": { "value": -9822 },
+   "errSSLPeerDecompressFail": { "value": -9823 },
+   "errSSLPeerHandshakeFail": { "value": -9824 },
+   "errSSLPeerBadCert": { "value": -9825 },
+   "errSSLPeerUnsupportedCert": { "value": -9826 },
+   "errSSLPeerCertRevoked": { "value": -9827 },
+   "errSSLPeerCertExpired": { "value": -9828 },
+   "errSSLPeerCertUnknown": { "value": -9829 },
+   "errSSLIllegalParam": { "value": -9830 },
+   "errSSLPeerUnknownCA": { "value": -9831 },
+   "errSSLPeerAccessDenied": { "value": -9832 },
+   "errSSLPeerDecodeError": { "value": -9833 },
+   "errSSLPeerDecryptError": { "value": -9834 },
+   "errSSLPeerExportRestriction": { "value": -9835 },
+   "errSSLPeerProtocolVersion": { "value": -9836 },
+   "errSSLPeerInsufficientSecurity": { "value": -9837 },
+   "errSSLPeerInternalError": { "value": -9838 },
+   "errSSLPeerUserCancelled": { "value": -9839 },
+   "errSSLPeerNoRenegotiation": { "value": -9840 },
+   "errSSLPeerAuthCompleted": { "value": -9841 },
+   "errSSLClientCertRequested": { "value": -9842 },
+   "errSSLHostNameMismatch": { "value": -9843 },
+   "errSSLConnectionRefused": { "value": -9844 },
+   "errSSLDecryptionFail": { "value": -9845 },
+   "errSSLBadRecordMac": { "value": -9846 },
+   "errSSLRecordOverflow": { "value": -9847 },
+   "errSSLBadConfiguration": { "value": -9848 },
+   "errSSLUnexpectedRecord": { "value": -9849 },
+   "errSSLWeakPeerEphemeralDHKey": { "value": -9850 },
+   "errSSLClientHelloReceived": { "value": -9851 },
+   "kSSLClientCertNone": { "value": 0 },
+   "kSSLClientCertRequested": { "value": 1 },
+   "kSSLClientCertSent": { "value": 2 },
+   "kSSLClientCertRejected": { "value": 3 },
+   "kSSLProtocolUnknown": { "value": 0 },
+   "kSSLProtocol3": { "value": 2 },
+   "kTLSProtocol1": { "value": 4 },
+   "kTLSProtocol11": { "value": 7 },
+   "kTLSProtocol12": { "value": 8 },
+   "kDTLSProtocol1": { "value": 9 },
+   "kTLSProtocol13": { "value": 10 },
+   "kTLSProtocolMaxSupported": { "value": 999 },
+   "kSSLProtocol2": { "value": 1 },
+   "kSSLProtocol3Only": { "value": 3 },
+   "kTLSProtocol1Only": { "value": 5 },
+   "kSSLProtocolAll": { "value": 6 },
+   "kNeverAuthenticate": { "value": 0 },
+   "kSSLSessionOptionBreakOnServerAuth": { "value": 0 },
+   "kSSLSessionOptionBreakOnCertRequested": { "value": 1 },
+   "kSSLSessionOptionBreakOnClientAuth": { "value": 2 },
+   "kSSLSessionOptionFalseStart": { "value": 3 },
+   "kSSLSessionOptionSendOneByteRecord": { "value": 4 },
+   "kSSLSessionOptionAllowServerIdentityChange": { "value": 5 },
+   "kSSLSessionOptionFallback": { "value": 6 },
+   "kSSLSessionOptionBreakOnClientHello": { "value": 7 },
+   "kSSLSessionOptionAllowRenegotiation": { "value": 8 },
+   "kSSLSessionOptionEnableSessionTickets": { "value": 9 },
+   "kSSLIdle": { "value": 0 },
+   "kSSLHandshake": { "value": 1 },
+   "kSSLConnected": { "value": 2 },
+   "kSSLClosed": { "value": 3 },
+   "kSSLAborted": { "value": 4 },
+   "kAlwaysAuthenticate": { "value": 1 },
+   "kTryAuthenticate": { "value": 2 },
+   "kSecAccessControlUserPresence": { "value": 1 },
+   "kSecTransformErrorAttributeNotFound": { "value": 1 },
+   "kSecTransformErrorInvalidOperation": { "value": 2 },
+   "kSecTransformErrorNotInitializedCorrectly": { "value": 3 },
+   "kSecTransformErrorMoreThanOneOutput": { "value": 4 },
+   "kSecTransformErrorInvalidInputDictionary": { "value": 5 },
+   "kSecTransformErrorInvalidAlgorithm": { "value": 6 },
+   "kSecTransformErrorInvalidLength": { "value": 7 },
+   "kSecTransformErrorInvalidType": { "value": 8 },
+   "kSecTransformErrorInvalidInput": { "value": 10 },
+   "kSecTransformErrorNameAlreadyRegistered": { "value": 11 },
+   "kSecTransformErrorUnsupportedAttribute": { "value": 12 },
+   "kSecTransformOperationNotSupportedOnGroup": { "value": 13 },
+   "kSecTransformErrorMissingParameter": { "value": 14 },
+   "kSecTransformErrorInvalidConnection": { "value": 15 },
+   "kSecTransformTransformIsExecuting": { "value": 16 },
+   "kSecTransformInvalidOverride": { "value": 17 },
+   "kSecTransformTransformIsNotRegistered": { "value": 18 },
+   "kSecTransformErrorAbortInProgress": { "value": 19 },
+   "kSecTransformErrorAborted": { "value": 20 },
+   "kSecTransformInvalidArgument": { "value": 21 },
+   "kSecRevocationOCSPMethod": { "value": 1 },
+   "kSecRevocationCRLMethod": { "value": 2 },
+   "kSecRevocationPreferCRL": { "value": 4 },
+   "kSecRevocationRequirePositiveResponse": { "value": 8 },
+   "kSecRevocationNetworkAccessDisabled": { "value": 16 },
+   "kSecRevocationUseAnyAvailableMethod": { "value": 3 },
+   "kSecCSCheckAllArchitectures": { "value": 1 },
+   "kSecCSDoNotValidateExecutable": { "value": 2 },
+   "kSecCSDoNotValidateResources": { "value": 4 },
+   "kSecCSBasicValidateOnly": { "value": 6 },
+   "kSecCSCheckNestedCode": { "value": 8 },
+   "kSecCSStrictValidate": { "value": 16 },
+   "kSecCSFullReport": { "value": 32 },
+   "kSecCSCheckGatekeeperArchitectures": { "value": 65 },
+   "kSecCSRestrictSymlinks": { "value": 128 },
+   "kSecCSRestrictToAppLike": { "value": 256 },
+   "kSecCSRestrictSidebandData": { "value": 512 },
+   "kSecCSUseSoftwareSigningCert": { "value": 1024 },
+   "SSL_DHE_DSS_EXPORT_WITH_DES40_CBC_SHA": { "value":  17  },
+   "SSL_DHE_DSS_WITH_3DES_EDE_CBC_SHA": { "value":  19  },
+   "SSL_DHE_DSS_WITH_DES_CBC_SHA": { "value":  18  },
+   "SSL_DHE_RSA_EXPORT_WITH_DES40_CBC_SHA": { "value":  20  },
+   "SSL_DHE_RSA_WITH_3DES_EDE_CBC_SHA": { "value":  22  },
+   "SSL_DHE_RSA_WITH_DES_CBC_SHA": { "value":  21  },
+   "SSL_DH_DSS_EXPORT_WITH_DES40_CBC_SHA": { "value":  11  },
+   "SSL_DH_DSS_WITH_3DES_EDE_CBC_SHA": { "value":  13  },
+   "SSL_DH_DSS_WITH_DES_CBC_SHA": { "value":  12  },
+   "SSL_DH_RSA_EXPORT_WITH_DES40_CBC_SHA": { "value":  14  },
+   "SSL_DH_RSA_WITH_3DES_EDE_CBC_SHA": { "value":  16  },
+   "SSL_DH_RSA_WITH_DES_CBC_SHA": { "value":  15  },
+   "SSL_DH_anon_EXPORT_WITH_DES40_CBC_SHA": { "value":  25  },
+   "SSL_DH_anon_EXPORT_WITH_RC4_40_MD5": { "value":  23  },
+   "SSL_DH_anon_WITH_3DES_EDE_CBC_SHA": { "value":  27  },
+   "SSL_DH_anon_WITH_DES_CBC_SHA": { "value":  26  },
+   "SSL_DH_anon_WITH_RC4_128_MD5": { "value":  24  },
+   "SSL_FORTEZZA_DMS_WITH_FORTEZZA_CBC_SHA": { "value":  29  },
+   "SSL_FORTEZZA_DMS_WITH_NULL_SHA": { "value":  28  },
+   "SSL_NO_SUCH_CIPHERSUITE": { "value":  65535  },
+   "SSL_NULL_WITH_NULL_NULL": { "value":  0  },
+   "SSL_RSA_EXPORT_WITH_DES40_CBC_SHA": { "value":  8  },
+   "SSL_RSA_EXPORT_WITH_RC2_CBC_40_MD5": { "value":  6  },
+   "SSL_RSA_EXPORT_WITH_RC4_40_MD5": { "value":  3  },
+   "SSL_RSA_WITH_3DES_EDE_CBC_MD5": { "value":  65411  },
+   "SSL_RSA_WITH_3DES_EDE_CBC_SHA": { "value":  10  },
+   "SSL_RSA_WITH_DES_CBC_MD5": { "value":  65410  },
+   "SSL_RSA_WITH_DES_CBC_SHA": { "value":  9  },
+   "SSL_RSA_WITH_IDEA_CBC_MD5": { "value":  65409  },
+   "SSL_RSA_WITH_IDEA_CBC_SHA": { "value":  7  },
+   "SSL_RSA_WITH_NULL_MD5": { "value":  1  },
+   "SSL_RSA_WITH_NULL_SHA": { "value":  2  },
+   "SSL_RSA_WITH_RC2_CBC_MD5": { "value":  65408  },
+   "SSL_RSA_WITH_RC4_128_MD5": { "value":  4  },
+   "SSL_RSA_WITH_RC4_128_SHA": { "value":  5  },
+   "TLS_AES_128_CCM_8_SHA256": { "value":  4869  },
+   "TLS_AES_128_CCM_SHA256": { "value":  4868  },
+   "TLS_AES_128_GCM_SHA256": { "value":  4865  },
+   "TLS_AES_256_GCM_SHA384": { "value":  4866  },
+   "TLS_CHACHA20_POLY1305_SHA256": { "value":  4867  },
+   "TLS_DHE_DSS_WITH_3DES_EDE_CBC_SHA": { "value":  19  },
+   "TLS_DHE_DSS_WITH_AES_128_CBC_SHA": { "value":  50  },
+   "TLS_DHE_DSS_WITH_AES_128_CBC_SHA256": { "value":  64  },
+   "TLS_DHE_DSS_WITH_AES_128_GCM_SHA256": { "value":  162  },
+   "TLS_DHE_DSS_WITH_AES_256_CBC_SHA": { "value":  56  },
+   "TLS_DHE_DSS_WITH_AES_256_CBC_SHA256": { "value":  106  },
+   "TLS_DHE_DSS_WITH_AES_256_GCM_SHA384": { "value":  163  },
+   "TLS_DHE_PSK_WITH_3DES_EDE_CBC_SHA": { "value":  143  },
+   "TLS_DHE_PSK_WITH_AES_128_CBC_SHA": { "value":  144  },
+   "TLS_DHE_PSK_WITH_AES_128_CBC_SHA256": { "value":  178  },
+   "TLS_DHE_PSK_WITH_AES_128_GCM_SHA256": { "value":  170  },
+   "TLS_DHE_PSK_WITH_AES_256_CBC_SHA": { "value":  145  },
+   "TLS_DHE_PSK_WITH_AES_256_CBC_SHA384": { "value":  179  },
+   "TLS_DHE_PSK_WITH_AES_256_GCM_SHA384": { "value":  171  },
+   "TLS_DHE_PSK_WITH_NULL_SHA": { "value":  45  },
+   "TLS_DHE_PSK_WITH_NULL_SHA256": { "value":  180  },
+   "TLS_DHE_PSK_WITH_NULL_SHA384": { "value":  181  },
+   "TLS_DHE_PSK_WITH_RC4_128_SHA": { "value":  142  },
+   "TLS_DHE_RSA_WITH_3DES_EDE_CBC_SHA": { "value":  22  },
+   "TLS_DHE_RSA_WITH_AES_128_CBC_SHA": { "value":  51  },
+   "TLS_DHE_RSA_WITH_AES_128_CBC_SHA256": { "value":  103  },
+   "TLS_DHE_RSA_WITH_AES_128_GCM_SHA256": { "value":  158  },
+   "TLS_DHE_RSA_WITH_AES_256_CBC_SHA": { "value":  57  },
+   "TLS_DHE_RSA_WITH_AES_256_CBC_SHA256": { "value":  107  },
+   "TLS_DHE_RSA_WITH_AES_256_GCM_SHA384": { "value":  159  },
+   "TLS_DH_DSS_WITH_3DES_EDE_CBC_SHA": { "value":  13  },
+   "TLS_DH_DSS_WITH_AES_128_CBC_SHA": { "value":  48  },
+   "TLS_DH_DSS_WITH_AES_128_CBC_SHA256": { "value":  62  },
+   "TLS_DH_DSS_WITH_AES_128_GCM_SHA256": { "value":  164  },
+   "TLS_DH_DSS_WITH_AES_256_CBC_SHA": { "value":  54  },
+   "TLS_DH_DSS_WITH_AES_256_CBC_SHA256": { "value":  104  },
+   "TLS_DH_DSS_WITH_AES_256_GCM_SHA384": { "value":  165  },
+   "TLS_DH_RSA_WITH_3DES_EDE_CBC_SHA": { "value":  16  },
+   "TLS_DH_RSA_WITH_AES_128_CBC_SHA": { "value":  49  },
+   "TLS_DH_RSA_WITH_AES_128_CBC_SHA256": { "value":  63  },
+   "TLS_DH_RSA_WITH_AES_128_GCM_SHA256": { "value":  160  },
+   "TLS_DH_RSA_WITH_AES_256_CBC_SHA": { "value":  55  },
+   "TLS_DH_RSA_WITH_AES_256_CBC_SHA256": { "value":  105  },
+   "TLS_DH_RSA_WITH_AES_256_GCM_SHA384": { "value":  161  },
+   "TLS_DH_anon_WITH_3DES_EDE_CBC_SHA": { "value":  27  },
+   "TLS_DH_anon_WITH_AES_128_CBC_SHA": { "value":  52  },
+   "TLS_DH_anon_WITH_AES_128_CBC_SHA256": { "value":  108  },
+   "TLS_DH_anon_WITH_AES_128_GCM_SHA256": { "value":  166  },
+   "TLS_DH_anon_WITH_AES_256_CBC_SHA": { "value":  58  },
+   "TLS_DH_anon_WITH_AES_256_CBC_SHA256": { "value":  109  },
+   "TLS_DH_anon_WITH_AES_256_GCM_SHA384": { "value":  167  },
+   "TLS_DH_anon_WITH_RC4_128_MD5": { "value":  24  },
+   "TLS_ECDHE_ECDSA_WITH_3DES_EDE_CBC_SHA": { "value":  49160  },
+   "TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA": { "value":  49161  },
+   "TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA256": { "value":  49187  },
+   "TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256": { "value":  49195  },
+   "TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA": { "value":  49162  },
+   "TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA384": { "value":  49188  },
+   "TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384": { "value":  49196  },
+   "TLS_ECDHE_ECDSA_WITH_CHACHA20_POLY1305_SHA256": { "value":  52393  },
+   "TLS_ECDHE_ECDSA_WITH_NULL_SHA": { "value":  49158  },
+   "TLS_ECDHE_ECDSA_WITH_RC4_128_SHA": { "value":  49159  },
+   "TLS_ECDHE_RSA_WITH_3DES_EDE_CBC_SHA": { "value":  49170  },
+   "TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA": { "value":  49171  },
+   "TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256": { "value":  49191  },
+   "TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256": { "value":  49199  },
+   "TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA": { "value":  49172  },
+   "TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384": { "value":  49192  },
+   "TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384": { "value":  49200  },
+   "TLS_ECDHE_RSA_WITH_CHACHA20_POLY1305_SHA256": { "value":  52392  },
+   "TLS_ECDHE_RSA_WITH_NULL_SHA": { "value":  49168  },
+   "TLS_ECDHE_RSA_WITH_RC4_128_SHA": { "value":  49169  },
+   "TLS_ECDH_ECDSA_WITH_3DES_EDE_CBC_SHA": { "value":  49155  },
+   "TLS_ECDH_ECDSA_WITH_AES_128_CBC_SHA": { "value":  49156  },
+   "TLS_ECDH_ECDSA_WITH_AES_128_CBC_SHA256": { "value":  49189  },
+   "TLS_ECDH_ECDSA_WITH_AES_128_GCM_SHA256": { "value":  49197  },
+   "TLS_ECDH_ECDSA_WITH_AES_256_CBC_SHA": { "value":  49157  },
+   "TLS_ECDH_ECDSA_WITH_AES_256_CBC_SHA384": { "value":  49190  },
+   "TLS_ECDH_ECDSA_WITH_AES_256_GCM_SHA384": { "value":  49198  },
+   "TLS_ECDH_ECDSA_WITH_NULL_SHA": { "value":  49153  },
+   "TLS_ECDH_ECDSA_WITH_RC4_128_SHA": { "value":  49154  },
+   "TLS_ECDH_RSA_WITH_3DES_EDE_CBC_SHA": { "value":  49165  },
+   "TLS_ECDH_RSA_WITH_AES_128_CBC_SHA": { "value":  49166  },
+   "TLS_ECDH_RSA_WITH_AES_128_CBC_SHA256": { "value":  49193  },
+   "TLS_ECDH_RSA_WITH_AES_128_GCM_SHA256": { "value":  49201  },
+   "TLS_ECDH_RSA_WITH_AES_256_CBC_SHA": { "value":  49167  },
+   "TLS_ECDH_RSA_WITH_AES_256_CBC_SHA384": { "value":  49194  },
+   "TLS_ECDH_RSA_WITH_AES_256_GCM_SHA384": { "value":  49202  },
+   "TLS_ECDH_RSA_WITH_NULL_SHA": { "value":  49163  },
+   "TLS_ECDH_RSA_WITH_RC4_128_SHA": { "value":  49164  },
+   "TLS_ECDH_anon_WITH_3DES_EDE_CBC_SHA": { "value":  49175  },
+   "TLS_ECDH_anon_WITH_AES_128_CBC_SHA": { "value":  49176  },
+   "TLS_ECDH_anon_WITH_AES_256_CBC_SHA": { "value":  49177  },
+   "TLS_ECDH_anon_WITH_NULL_SHA": { "value":  49173  },
+   "TLS_ECDH_anon_WITH_RC4_128_SHA": { "value":  49174  },
+   "TLS_EMPTY_RENEGOTIATION_INFO_SCSV": { "value":  255  },
+   "TLS_NULL_WITH_NULL_NULL": { "value":  0  },
+   "TLS_PSK_WITH_3DES_EDE_CBC_SHA": { "value":  139  },
+   "TLS_PSK_WITH_AES_128_CBC_SHA": { "value":  140  },
+   "TLS_PSK_WITH_AES_128_CBC_SHA256": { "value":  174  },
+   "TLS_PSK_WITH_AES_128_GCM_SHA256": { "value":  168  },
+   "TLS_PSK_WITH_AES_256_CBC_SHA": { "value":  141  },
+   "TLS_PSK_WITH_AES_256_CBC_SHA384": { "value":  175  },
+   "TLS_PSK_WITH_AES_256_GCM_SHA384": { "value":  169  },
+   "TLS_PSK_WITH_NULL_SHA": { "value":  44  },
+   "TLS_PSK_WITH_NULL_SHA256": { "value":  176  },
+   "TLS_PSK_WITH_NULL_SHA384": { "value":  177  },
+   "TLS_PSK_WITH_RC4_128_SHA": { "value":  138  },
+   "TLS_RSA_PSK_WITH_3DES_EDE_CBC_SHA": { "value":  147  },
+   "TLS_RSA_PSK_WITH_AES_128_CBC_SHA": { "value":  148  },
+   "TLS_RSA_PSK_WITH_AES_128_CBC_SHA256": { "value":  182  },
+   "TLS_RSA_PSK_WITH_AES_128_GCM_SHA256": { "value":  172  },
+   "TLS_RSA_PSK_WITH_AES_256_CBC_SHA": { "value":  149  },
+   "TLS_RSA_PSK_WITH_AES_256_CBC_SHA384": { "value":  183  },
+   "TLS_RSA_PSK_WITH_AES_256_GCM_SHA384": { "value":  173  },
+   "TLS_RSA_PSK_WITH_NULL_SHA": { "value":  46  },
+   "TLS_RSA_PSK_WITH_NULL_SHA256": { "value":  184  },
+   "TLS_RSA_PSK_WITH_NULL_SHA384": { "value":  185  },
+   "TLS_RSA_PSK_WITH_RC4_128_SHA": { "value":  146  },
+   "TLS_RSA_WITH_3DES_EDE_CBC_SHA": { "value":  10  },
+   "TLS_RSA_WITH_AES_128_CBC_SHA": { "value":  47  },
+   "TLS_RSA_WITH_AES_128_CBC_SHA256": { "value":  60  },
+   "TLS_RSA_WITH_AES_128_GCM_SHA256": { "value":  156  },
+   "TLS_RSA_WITH_AES_256_CBC_SHA": { "value":  53  },
+   "TLS_RSA_WITH_AES_256_CBC_SHA256": { "value":  61  },
+   "TLS_RSA_WITH_AES_256_GCM_SHA384": { "value":  157  },
+   "TLS_RSA_WITH_NULL_MD5": { "value":  1  },
+   "TLS_RSA_WITH_NULL_SHA": { "value":  2  },
+   "TLS_RSA_WITH_NULL_SHA256": { "value":  59  },
+   "TLS_RSA_WITH_RC4_128_MD5": { "value":  4  },
+   "TLS_RSA_WITH_RC4_128_SHA": { "value":  5  },
+   "callerSecuritySession": { "value": -1 },
+   "errAuthorizationBadAddress": { "value": -60033 },
+   "errAuthorizationCanceled": { "value": -60006 },
+   "errAuthorizationDenied": { "value": -60005 },
+   "errAuthorizationExternalizeNotAllowed": { "value": -60009 },
+   "errAuthorizationInteractionNotAllowed": { "value": -60007 },
+   "errAuthorizationInternal": { "value": -60008 },
+   "errAuthorizationInternalizeNotAllowed": { "value": -60010 },
+   "errAuthorizationInvalidFlags": { "value": -60011 },
+   "errAuthorizationInvalidPointer": { "value": -60004 },
+   "errAuthorizationInvalidRef": { "value": -60002 },
+   "errAuthorizationInvalidSet": { "value": -60001 },
+   "errAuthorizationInvalidTag": { "value": -60003 },
+   "errAuthorizationSuccess": { "value": 0 },
+   "errAuthorizationToolEnvironmentError": { "value": -60032 },
+   "errAuthorizationToolExecuteFailure": { "value": -60031 },
+   "errSecACLAddFailed": { "value": -67698 },
+   "errSecACLChangeFailed": { "value": -67699 },
+   "errSecACLDeleteFailed": { "value": -67696 },
+   "errSecACLNotSimple": { "value": -25240 },
+   "errSecACLReplaceFailed": { "value": -67697 },
+   "errSecAddinLoadFailed": { "value": -67711 },
+   "errSecAddinUnloadFailed": { "value": -67714 },
+   "errSecAlgorithmMismatch": { "value": -67730 },
+   "errSecAllocate": { "value": -108 },
+   "errSecAlreadyLoggedIn": { "value": -67814 },
+   "errSecAppleAddAppACLSubject": { "value": -67589 },
+   "errSecAppleInvalidKeyEndDate": { "value": -67593 },
+   "errSecAppleInvalidKeyStartDate": { "value": -67592 },
+   "errSecApplePublicKeyIncomplete": { "value": -67590 },
+   "errSecAppleSSLv2Rollback": { "value": -67595 },
+   "errSecAppleSignatureMismatch": { "value": -67591 },
+   "errSecAttachHandleBusy": { "value": -67728 },
+   "errSecAttributeNotInContext": { "value": -67720 },
+   "errSecAuthFailed": { "value": -25293 },
+   "errSecBadReq": { "value": -909 },
+   "errSecBlockSizeMismatch": { "value": -67810 },
+   "errSecBufferTooSmall": { "value": -25301 },
+   "errSecCRLAlreadySigned": { "value": -67684 },
+   "errSecCRLBadURI": { "value": -67617 },
+   "errSecCRLExpired": { "value": -67613 },
+   "errSecCRLNotFound": { "value": -67615 },
+   "errSecCRLNotTrusted": { "value": -67620 },
+   "errSecCRLNotValidYet": { "value": -67614 },
+   "errSecCRLPolicyFailed": { "value": -67621 },
+   "errSecCRLServerDown": { "value": -67616 },
+   "errSecCSAmbiguousBundleFormat": { "value": -67011 },
+   "errSecCSBadBundleFormat": { "value": -67028 },
+   "errSecCSBadCallbackValue": { "value": -67020 },
+   "errSecCSBadDictionaryFormat": { "value": -67058 },
+   "errSecCSBadDiskImageFormat": { "value": -67001 },
+   "errSecCSBadFrameworkVersion": { "value": -67009 },
+   "errSecCSBadLVArch": { "value": -67017 },
+   "errSecCSBadMainExecutable": { "value": -67010 },
+   "errSecCSBadNestedCode": { "value": -67021 },
+   "errSecCSBadObjectFormat": { "value": -67049 },
+   "errSecCSBadResource": { "value": -67054 },
+   "errSecCSBadTeamIdentifier": { "value": -66997 },
+   "errSecCSCMSTooLarge": { "value": -67036 },
+   "errSecCSCancelled": { "value": -67006 },
+   "errSecCSDBAccess": { "value": -67032 },
+   "errSecCSDBDenied": { "value": -67033 },
+   "errSecCSDSStoreSymlink": { "value": -67012 },
+   "errSecCSDbCorrupt": { "value": -67024 },
+   "errSecCSFileHardQuarantined": { "value": -67026 },
+   "errSecCSGuestInvalid": { "value": -67063 },
+   "errSecCSHelperFailed": { "value": -67019 },
+   "errSecCSHostProtocolContradiction": { "value": -67043 },
+   "errSecCSHostProtocolDedicationError": { "value": -67042 },
+   "errSecCSHostProtocolInvalidAttribute": { "value": -67031 },
+   "errSecCSHostProtocolInvalidHash": { "value": -67035 },
+   "errSecCSHostProtocolNotProxy": { "value": -67041 },
+   "errSecCSHostProtocolRelativePath": { "value": -67044 },
+   "errSecCSHostProtocolStateError": { "value": -67040 },
+   "errSecCSHostProtocolUnrelated": { "value": -67039 },
+   "errSecCSHostReject": { "value": -67047 },
+   "errSecCSInfoPlistFailed": { "value": -67030 },
+   "errSecCSInternalError": { "value": -67048 },
+   "errSecCSInvalidAssociatedFileData": { "value": -66999 },
+   "errSecCSInvalidAttributeValues": { "value": -67066 },
+   "errSecCSInvalidFlags": { "value": -67070 },
+   "errSecCSInvalidObjectRef": { "value": -67071 },
+   "errSecCSInvalidPlatform": { "value": -67005 },
+   "errSecCSInvalidSymlink": { "value": -67003 },
+   "errSecCSInvalidTeamIdentifier": { "value": -66998 },
+   "errSecCSMultipleGuests": { "value": -67064 },
+   "errSecCSNoMainExecutable": { "value": -67029 },
+   "errSecCSNoMatches": { "value": -67027 },
+   "errSecCSNoSuchCode": { "value": -67065 },
+   "errSecCSNotAHost": { "value": -67046 },
+   "errSecCSNotAppLike": { "value": -67002 },
+   "errSecCSNotSupported": { "value": -67037 },
+   "errSecCSObjectRequired": { "value": -67069 },
+   "errSecCSOutdated": { "value": -67025 },
+   "errSecCSRegularFile": { "value": -67015 },
+   "errSecCSReqFailed": { "value": -67050 },
+   "errSecCSReqInvalid": { "value": -67052 },
+   "errSecCSReqUnsupported": { "value": -67051 },
+   "errSecCSResourceDirectoryFailed": { "value": -67023 },
+   "errSecCSResourceNotSupported": { "value": -67016 },
+   "errSecCSResourceRulesInvalid": { "value": -67053 },
+   "errSecCSResourcesInvalid": { "value": -67055 },
+   "errSecCSResourcesNotFound": { "value": -67056 },
+   "errSecCSResourcesNotSealed": { "value": -67057 },
+   "errSecCSSignatureFailed": { "value": -67061 },
+   "errSecCSSignatureInvalid": { "value": -67045 },
+   "errSecCSSignatureNotVerifiable": { "value": -67060 },
+   "errSecCSSignatureUnsupported": { "value": -67059 },
+   "errSecCSSignatureUntrusted": { "value": -66996 },
+   "errSecCSStaticCodeChanged": { "value": -67034 },
+   "errSecCSStaticCodeNotFound": { "value": -67068 },
+   "errSecCSTooBig": { "value": -67004 },
+   "errSecCSUnimplemented": { "value": -67072 },
+   "errSecCSUnsealedAppRoot": { "value": -67014 },
+   "errSecCSUnsealedFrameworkRoot": { "value": -67008 },
+   "errSecCSUnsigned": { "value": -67062 },
+   "errSecCSUnsignedNestedCode": { "value": -67022 },
+   "errSecCSUnsupportedDigestAlgorithm": { "value": -67000 },
+   "errSecCSUnsupportedGuestAttributes": { "value": -67067 },
+   "errSecCSVetoed": { "value": -67018 },
+   "errSecCSWeakResourceEnvelope": { "value": -67007 },
+   "errSecCSWeakResourceRules": { "value": -67013 },
+   "errSecCallbackFailed": { "value": -67695 },
+   "errSecCertificateCannotOperate": { "value": -67817 },
+   "errSecCertificateExpired": { "value": -67818 },
+   "errSecCertificateNotValidYet": { "value": -67819 },
+   "errSecCertificateRevoked": { "value": -67820 },
+   "errSecCertificateSuspended": { "value": -67821 },
+   "errSecCodeSigningBadCertChainLength": { "value": -67647 },
+   "errSecCodeSigningBadPathLengthConstraint": { "value": -67649 },
+   "errSecCodeSigningDevelopment": { "value": -67651 },
+   "errSecCodeSigningNoBasicConstraints": { "value": -67648 },
+   "errSecCodeSigningNoExtendedKeyUsage": { "value": -67650 },
+   "errSecConversionError": { "value": -67594 },
+   "errSecCoreFoundationUnknown": { "value": -4960 },
+   "errSecCreateChainFailed": { "value": -25318 },
+   "errSecDataNotAvailable": { "value": -25316 },
+   "errSecDataNotModifiable": { "value": -25317 },
+   "errSecDataTooLarge": { "value": -25302 },
+   "errSecDatabaseLocked": { "value": -67869 },
+   "errSecDatastoreIsOpen": { "value": -67870 },
+   "errSecDecode": { "value": -26275 },
+   "errSecDeviceError": { "value": -67727 },
+   "errSecDeviceFailed": { "value": -67588 },
+   "errSecDeviceReset": { "value": -67587 },
+   "errSecDeviceVerifyFailed": { "value": -67812 },
+   "errSecDiskFull": { "value": -34 },
+   "errSecDskFull": { "value": -34 },
+   "errSecDuplicateCallback": { "value": -25297 },
+   "errSecDuplicateItem": { "value": -25299 },
+   "errSecDuplicateKeychain": { "value": -25296 },
+   "errSecEMMLoadFailed": { "value": -67709 },
+   "errSecEMMUnloadFailed": { "value": -67710 },
+   "errSecEndOfData": { "value": -67634 },
+   "errSecEventNotificationCallbackNotFound": { "value": -67723 },
+   "errSecExtendedKeyUsageNotCritical": { "value": -67881 },
+   "errSecFieldSpecifiedMultiple": { "value": -67866 },
+   "errSecFileTooBig": { "value": -67597 },
+   "errSecFunctionFailed": { "value": -67677 },
+   "errSecFunctionIntegrityFail": { "value": -67670 },
+   "errSecHostNameMismatch": { "value": -67602 },
+   "errSecIDPFailure": { "value": -67622 },
+   "errSecIO": { "value": -36 },
+   "errSecInDarkWake": { "value": -25320 },
+   "errSecIncompatibleDatabaseBlob": { "value": -67600 },
+   "errSecIncompatibleFieldFormat": { "value": -67867 },
+   "errSecIncompatibleKeyBlob": { "value": -67601 },
+   "errSecIncompatibleVersion": { "value": -67704 },
+   "errSecIncompleteCertRevocationCheck": { "value": -67635 },
+   "errSecInputLengthError": { "value": -67724 },
+   "errSecInsufficientClientID": { "value": -67586 },
+   "errSecInsufficientCredentials": { "value": -67822 },
+   "errSecInteractionNotAllowed": { "value": -25308 },
+   "errSecInteractionRequired": { "value": -25315 },
+   "errSecInternalComponent": { "value": -2070 },
+   "errSecInternalError": { "value": -67671 },
+   "errSecInvaldCRLAuthority": { "value": -67827 },
+   "errSecInvalidACL": { "value": -67702 },
+   "errSecInvalidAccessCredentials": { "value": -67700 },
+   "errSecInvalidAccessRequest": { "value": -67876 },
+   "errSecInvalidAction": { "value": -67823 },
+   "errSecInvalidAddinFunctionTable": { "value": -67716 },
+   "errSecInvalidAlgorithm": { "value": -67747 },
+   "errSecInvalidAlgorithmParms": { "value": -67770 },
+   "errSecInvalidAttributeAccessCredentials": { "value": -67796 },
+   "errSecInvalidAttributeBase": { "value": -67788 },
+   "errSecInvalidAttributeBlockSize": { "value": -67764 },
+   "errSecInvalidAttributeDLDBHandle": { "value": -67794 },
+   "errSecInvalidAttributeEffectiveBits": { "value": -67778 },
+   "errSecInvalidAttributeEndDate": { "value": -67782 },
+   "errSecInvalidAttributeInitVector": { "value": -67750 },
+   "errSecInvalidAttributeIterationCount": { "value": -67792 },
+   "errSecInvalidAttributeKey": { "value": -67748 },
+   "errSecInvalidAttributeKeyLength": { "value": -67762 },
+   "errSecInvalidAttributeKeyType": { "value": -67774 },
+   "errSecInvalidAttributeLabel": { "value": -67772 },
+   "errSecInvalidAttributeMode": { "value": -67776 },
+   "errSecInvalidAttributeOutputSize": { "value": -67766 },
+   "errSecInvalidAttributePadding": { "value": -67754 },
+   "errSecInvalidAttributePassphrase": { "value": -67760 },
+   "errSecInvalidAttributePrime": { "value": -67786 },
+   "errSecInvalidAttributePrivateKeyFormat": { "value": -67800 },
+   "errSecInvalidAttributePublicKeyFormat": { "value": -67798 },
+   "errSecInvalidAttributeRandom": { "value": -67756 },
+   "errSecInvalidAttributeRounds": { "value": -67768 },
+   "errSecInvalidAttributeSalt": { "value": -67752 },
+   "errSecInvalidAttributeSeed": { "value": -67758 },
+   "errSecInvalidAttributeStartDate": { "value": -67780 },
+   "errSecInvalidAttributeSubprime": { "value": -67790 },
+   "errSecInvalidAttributeSymmetricKeyFormat": { "value": -67802 },
+   "errSecInvalidAttributeVersion": { "value": -67784 },
+   "errSecInvalidAttributeWrappedKeyFormat": { "value": -67804 },
+   "errSecInvalidAuthority": { "value": -67824 },
+   "errSecInvalidAuthorityKeyID": { "value": -67606 },
+   "errSecInvalidBaseACLs": { "value": -67851 },
+   "errSecInvalidBundleInfo": { "value": -67857 },
+   "errSecInvalidCRL": { "value": -67830 },
+   "errSecInvalidCRLEncoding": { "value": -67828 },
+   "errSecInvalidCRLGroup": { "value": -67816 },
+   "errSecInvalidCRLIndex": { "value": -67858 },
+   "errSecInvalidCRLType": { "value": -67829 },
+   "errSecInvalidCallback": { "value": -25298 },
+   "errSecInvalidCertAuthority": { "value": -67826 },
+   "errSecInvalidCertificateGroup": { "value": -67691 },
+   "errSecInvalidCertificateRef": { "value": -67690 },
+   "errSecInvalidContext": { "value": -67746 },
+   "errSecInvalidDBList": { "value": -67681 },
+   "errSecInvalidDBLocation": { "value": -67875 },
+   "errSecInvalidData": { "value": -67673 },
+   "errSecInvalidDatabaseBlob": { "value": -67598 },
+   "errSecInvalidDigestAlgorithm": { "value": -67815 },
+   "errSecInvalidEncoding": { "value": -67853 },
+   "errSecInvalidExtendedKeyUsage": { "value": -67609 },
+   "errSecInvalidFormType": { "value": -67831 },
+   "errSecInvalidGUID": { "value": -67679 },
+   "errSecInvalidHandle": { "value": -67680 },
+   "errSecInvalidHandleUsage": { "value": -67668 },
+   "errSecInvalidID": { "value": -67832 },
+   "errSecInvalidIDLinkage": { "value": -67610 },
+   "errSecInvalidIdentifier": { "value": -67833 },
+   "errSecInvalidIndex": { "value": -67834 },
+   "errSecInvalidIndexInfo": { "value": -67877 },
+   "errSecInvalidInputVector": { "value": -67744 },
+   "errSecInvalidItemRef": { "value": -25304 },
+   "errSecInvalidKeyAttributeMask": { "value": -67738 },
+   "errSecInvalidKeyBlob": { "value": -67599 },
+   "errSecInvalidKeyFormat": { "value": -67742 },
+   "errSecInvalidKeyHierarchy": { "value": -67713 },
+   "errSecInvalidKeyLabel": { "value": -67740 },
+   "errSecInvalidKeyRef": { "value": -67712 },
+   "errSecInvalidKeyUsageForPolicy": { "value": -67608 },
+   "errSecInvalidKeyUsageMask": { "value": -67736 },
+   "errSecInvalidKeychain": { "value": -25295 },
+   "errSecInvalidLoginName": { "value": -67813 },
+   "errSecInvalidModifyMode": { "value": -67879 },
+   "errSecInvalidName": { "value": -67689 },
+   "errSecInvalidNetworkAddress": { "value": -67683 },
+   "errSecInvalidNewOwner": { "value": -67878 },
+   "errSecInvalidNumberOfFields": { "value": -67685 },
+   "errSecInvalidOutputVector": { "value": -67745 },
+   "errSecInvalidOwnerEdit": { "value": -25244 },
+   "errSecInvalidPVC": { "value": -67708 },
+   "errSecInvalidParsingModule": { "value": -67868 },
+   "errSecInvalidPassthroughID": { "value": -67682 },
+   "errSecInvalidPasswordRef": { "value": -25261 },
+   "errSecInvalidPointer": { "value": -67675 },
+   "errSecInvalidPolicyIdentifiers": { "value": -67835 },
+   "errSecInvalidPrefsDomain": { "value": -25319 },
+   "errSecInvalidQuery": { "value": -67693 },
+   "errSecInvalidReason": { "value": -67837 },
+   "errSecInvalidRecord": { "value": -67701 },
+   "errSecInvalidRequestInputs": { "value": -67838 },
+   "errSecInvalidRequestor": { "value": -67855 },
+   "errSecInvalidResponseVector": { "value": -67839 },
+   "errSecInvalidRoot": { "value": -67612 },
+   "errSecInvalidSampleValue": { "value": -67703 },
+   "errSecInvalidScope": { "value": -67706 },
+   "errSecInvalidSearchRef": { "value": -25305 },
+   "errSecInvalidServiceMask": { "value": -67717 },
+   "errSecInvalidSignature": { "value": -67688 },
+   "errSecInvalidStopOnPolicy": { "value": -67840 },
+   "errSecInvalidSubServiceID": { "value": -67719 },
+   "errSecInvalidSubjectKeyID": { "value": -67607 },
+   "errSecInvalidSubjectName": { "value": -67655 },
+   "errSecInvalidTimeString": { "value": -67836 },
+   "errSecInvalidTrustSetting": { "value": -25242 },
+   "errSecInvalidTrustSettings": { "value": -25262 },
+   "errSecInvalidTuple": { "value": -67841 },
+   "errSecInvalidTupleCredendtials": { "value": -67852 },
+   "errSecInvalidTupleGroup": { "value": -67850 },
+   "errSecInvalidValidityPeriod": { "value": -67854 },
+   "errSecInvalidValue": { "value": -67694 },
+   "errSecItemNotFound": { "value": -25300 },
+   "errSecKeyBlobTypeIncorrect": { "value": -67732 },
+   "errSecKeyHeaderInconsistent": { "value": -67733 },
+   "errSecKeyIsSensitive": { "value": -25258 },
+   "errSecKeySizeNotAllowed": { "value": -25311 },
+   "errSecKeyUsageIncorrect": { "value": -67731 },
+   "errSecLibraryReferenceNotFound": { "value": -67715 },
+   "errSecMDSError": { "value": -67674 },
+   "errSecMemoryError": { "value": -67672 },
+   "errSecMissingAlgorithmParms": { "value": -67771 },
+   "errSecMissingAttributeAccessCredentials": { "value": -67797 },
+   "errSecMissingAttributeBase": { "value": -67789 },
+   "errSecMissingAttributeBlockSize": { "value": -67765 },
+   "errSecMissingAttributeDLDBHandle": { "value": -67795 },
+   "errSecMissingAttributeEffectiveBits": { "value": -67779 },
+   "errSecMissingAttributeEndDate": { "value": -67783 },
+   "errSecMissingAttributeInitVector": { "value": -67751 },
+   "errSecMissingAttributeIterationCount": { "value": -67793 },
+   "errSecMissingAttributeKey": { "value": -67749 },
+   "errSecMissingAttributeKeyLength": { "value": -67763 },
+   "errSecMissingAttributeKeyType": { "value": -67775 },
+   "errSecMissingAttributeLabel": { "value": -67773 },
+   "errSecMissingAttributeMode": { "value": -67777 },
+   "errSecMissingAttributeOutputSize": { "value": -67767 },
+   "errSecMissingAttributePadding": { "value": -67755 },
+   "errSecMissingAttributePassphrase": { "value": -67761 },
+   "errSecMissingAttributePrime": { "value": -67787 },
+   "errSecMissingAttributePrivateKeyFormat": { "value": -67801 },
+   "errSecMissingAttributePublicKeyFormat": { "value": -67799 },
+   "errSecMissingAttributeRandom": { "value": -67757 },
+   "errSecMissingAttributeRounds": { "value": -67769 },
+   "errSecMissingAttributeSalt": { "value": -67753 },
+   "errSecMissingAttributeSeed": { "value": -67759 },
+   "errSecMissingAttributeStartDate": { "value": -67781 },
+   "errSecMissingAttributeSubprime": { "value": -67791 },
+   "errSecMissingAttributeSymmetricKeyFormat": { "value": -67803 },
+   "errSecMissingAttributeVersion": { "value": -67785 },
+   "errSecMissingAttributeWrappedKeyFormat": { "value": -67805 },
+   "errSecMissingEntitlement": { "value": -34018 },
+   "errSecMissingRequiredExtension": { "value": -67880 },
+   "errSecMissingValue": { "value": -67871 },
+   "errSecMobileMeCSRVerifyFailure": { "value": -67665 },
+   "errSecMobileMeFailedConsistencyCheck": { "value": -67666 },
+   "errSecMobileMeNoRequestPending": { "value": -67664 },
+   "errSecMobileMeRequestAlreadyPending": { "value": -67663 },
+   "errSecMobileMeRequestQueued": { "value": -67657 },
+   "errSecMobileMeRequestRedirected": { "value": -67658 },
+   "errSecMobileMeServerAlreadyExists": { "value": -67661 },
+   "errSecMobileMeServerError": { "value": -67659 },
+   "errSecMobileMeServerNotAvailable": { "value": -67660 },
+   "errSecMobileMeServerServiceErr": { "value": -67662 },
+   "errSecModuleManagerInitializeFailed": { "value": -67721 },
+   "errSecModuleManagerNotFound": { "value": -67722 },
+   "errSecModuleManifestVerifyFailed": { "value": -67678 },
+   "errSecModuleNotLoaded": { "value": -67718 },
+   "errSecMultipleExecSegments": { "value": -66995 },
+   "errSecMultiplePrivKeys": { "value": -25259 },
+   "errSecMultipleValuesUnsupported": { "value": -67842 },
+   "errSecNetworkFailure": { "value": -67636 },
+   "errSecNoAccessForItem": { "value": -25243 },
+   "errSecNoBasicConstraints": { "value": -67604 },
+   "errSecNoBasicConstraintsCA": { "value": -67605 },
+   "errSecNoCertificateModule": { "value": -25313 },
+   "errSecNoDefaultAuthority": { "value": -67844 },
+   "errSecNoDefaultKeychain": { "value": -25307 },
+   "errSecNoFieldValues": { "value": -67859 },
+   "errSecNoPolicyModule": { "value": -25314 },
+   "errSecNoStorageModule": { "value": -25312 },
+   "errSecNoSuchAttr": { "value": -25303 },
+   "errSecNoSuchClass": { "value": -25306 },
+   "errSecNoSuchKeychain": { "value": -25294 },
+   "errSecNoTrustSettings": { "value": -25263 },
+   "errSecNotAvailable": { "value": -25291 },
+   "errSecNotInitialized": { "value": -67667 },
+   "errSecNotLoggedIn": { "value": -67729 },
+   "errSecNotSigner": { "value": -26267 },
+   "errSecNotTrusted": { "value": -67843 },
+   "errSecOCSPBadRequest": { "value": -67631 },
+   "errSecOCSPBadResponse": { "value": -67630 },
+   "errSecOCSPNoSigner": { "value": -67640 },
+   "errSecOCSPNotTrustedToAnchor": { "value": -67637 },
+   "errSecOCSPResponderInternalError": { "value": -67642 },
+   "errSecOCSPResponderMalformedReq": { "value": -67641 },
+   "errSecOCSPResponderSignatureRequired": { "value": -67644 },
+   "errSecOCSPResponderTryLater": { "value": -67643 },
+   "errSecOCSPResponderUnauthorized": { "value": -67645 },
+   "errSecOCSPResponseNonceMismatch": { "value": -67646 },
+   "errSecOCSPSignatureError": { "value": -67639 },
+   "errSecOCSPStatusUnrecognized": { "value": -67633 },
+   "errSecOCSPUnavailable": { "value": -67632 },
+   "errSecOpWr": { "value": -49 },
+   "errSecOutputLengthError": { "value": -67725 },
+   "errSecPVCAlreadyConfigured": { "value": -67707 },
+   "errSecPVCReferentNotFound": { "value": -67669 },
+   "errSecParam": { "value": -50 },
+   "errSecPassphraseRequired": { "value": -25260 },
+   "errSecPathLengthConstraintExceeded": { "value": -67611 },
+   "errSecPkcs12VerifyFailure": { "value": -25264 },
+   "errSecPolicyNotFound": { "value": -25241 },
+   "errSecPrivilegeNotGranted": { "value": -67705 },
+   "errSecPrivilegeNotSupported": { "value": -67726 },
+   "errSecPublicKeyInconsistent": { "value": -67811 },
+   "errSecQuerySizeUnknown": { "value": -67809 },
+   "errSecQuotaExceeded": { "value": -67596 },
+   "errSecReadOnly": { "value": -25292 },
+   "errSecReadOnlyAttr": { "value": -25309 },
+   "errSecRecordModified": { "value": -67638 },
+   "errSecRejectedForm": { "value": -67845 },
+   "errSecRequestDescriptor": { "value": -67856 },
+   "errSecRequestLost": { "value": -67846 },
+   "errSecRequestRejected": { "value": -67847 },
+   "errSecResourceSignBadCertChainLength": { "value": -67652 },
+   "errSecResourceSignBadExtKeyUsage": { "value": -67653 },
+   "errSecSMIMEBadExtendedKeyUsage": { "value": -67624 },
+   "errSecSMIMEBadKeyUsage": { "value": -67625 },
+   "errSecSMIMEEmailAddressesNotFound": { "value": -67623 },
+   "errSecSMIMEKeyUsageNotCritical": { "value": -67626 },
+   "errSecSMIMENoEmailAddress": { "value": -67627 },
+   "errSecSMIMESubjAltNameNotCritical": { "value": -67628 },
+   "errSecSSLBadExtendedKeyUsage": { "value": -67629 },
+   "errSecSelfCheckFailed": { "value": -67676 },
+   "errSecServiceNotAvailable": { "value": -67585 },
+   "errSecSigningTimeMissing": { "value": -67894 },
+   "errSecStagedOperationInProgress": { "value": -67806 },
+   "errSecStagedOperationNotStarted": { "value": -67807 },
+   "errSecSuccess": { "value": 0 },
+   "errSecTagNotFound": { "value": -67692 },
+   "errSecTimestampAddInfoNotAvailable": { "value": -67892 },
+   "errSecTimestampBadAlg": { "value": -67886 },
+   "errSecTimestampBadDataFormat": { "value": -67888 },
+   "errSecTimestampBadRequest": { "value": -67887 },
+   "errSecTimestampInvalid": { "value": -67883 },
+   "errSecTimestampMissing": { "value": -67882 },
+   "errSecTimestampNotTrusted": { "value": -67884 },
+   "errSecTimestampRejection": { "value": -67895 },
+   "errSecTimestampRevocationNotification": { "value": -67898 },
+   "errSecTimestampRevocationWarning": { "value": -67897 },
+   "errSecTimestampServiceNotAvailable": { "value": -67885 },
+   "errSecTimestampSystemFailure": { "value": -67893 },
+   "errSecTimestampTimeNotAvailable": { "value": -67889 },
+   "errSecTimestampUnacceptedExtension": { "value": -67891 },
+   "errSecTimestampUnacceptedPolicy": { "value": -67890 },
+   "errSecTimestampWaiting": { "value": -67896 },
+   "errSecTrustNotAvailable": { "value": -25245 },
+   "errSecTrustSettingDeny": { "value": -67654 },
+   "errSecUnimplemented": { "value": -4 },
+   "errSecUnknownCRLExtension": { "value": -67619 },
+   "errSecUnknownCertExtension": { "value": -67618 },
+   "errSecUnknownCriticalExtensionFlag": { "value": -67603 },
+   "errSecUnknownFormat": { "value": -25257 },
+   "errSecUnknownQualifiedCertStatement": { "value": -67656 },
+   "errSecUnknownTag": { "value": -67687 },
+   "errSecUnsupportedAddressType": { "value": -67848 },
+   "errSecUnsupportedFieldFormat": { "value": -67860 },
+   "errSecUnsupportedFormat": { "value": -25256 },
+   "errSecUnsupportedIndexInfo": { "value": -67861 },
+   "errSecUnsupportedKeyAttributeMask": { "value": -67739 },
+   "errSecUnsupportedKeyFormat": { "value": -67734 },
+   "errSecUnsupportedKeyLabel": { "value": -67741 },
+   "errSecUnsupportedKeySize": { "value": -67735 },
+   "errSecUnsupportedKeyUsageMask": { "value": -67737 },
+   "errSecUnsupportedLocality": { "value": -67862 },
+   "errSecUnsupportedNumAttributes": { "value": -67863 },
+   "errSecUnsupportedNumIndexes": { "value": -67864 },
+   "errSecUnsupportedNumRecordTypes": { "value": -67865 },
+   "errSecUnsupportedNumSelectionPreds": { "value": -67873 },
+   "errSecUnsupportedOperator": { "value": -67874 },
+   "errSecUnsupportedQueryLimits": { "value": -67872 },
+   "errSecUnsupportedService": { "value": -67849 },
+   "errSecUnsupportedVectorOfBuffers": { "value": -67743 },
+   "errSecUserCanceled": { "value": -128 },
+   "errSecVerificationFailure": { "value": -67686 },
+   "errSecVerifyActionFailed": { "value": -67825 },
+   "errSecVerifyFailed": { "value": -67808 },
+   "errSecWrPerm": { "value": -61 },
+   "errSecWrongSecVersion": { "value": -25310 },
+   "errSecureDownloadInvalidDownload": { "value": -20053 },
+   "errSecureDownloadInvalidTicket": { "value": -20052 },
+   "errSessionAuthorizationDenied": { "value": -60502 },
+   "errSessionInvalidAttributes": { "value": -60501 },
+   "errSessionInvalidId": { "value": -60500 },
+   "errSessionSuccess": { "value": 0 },
+   "errSessionValueNotSet": { "value": -60503 },
+   "errSessionValueNotSet": { "value": -60503 },
+   "kAuthorizationExternalFormLength": { "value": 32 },
+   "kAuthorizationFlagCanNotPreAuthorize": { "value": 1 },
+   "kAuthorizationFlagDefaults": { "value": 0 },
+   "kAuthorizationFlagDestroyRights": { "value": 8 },
+   "kAuthorizationFlagExtendRights": { "value": 2 },
+   "kAuthorizationFlagInteractionAllowed": { "value": 1 },
+   "kAuthorizationFlagNoData": { "value": 1048576 },
+   "kAuthorizationFlagPartialRights": { "value": 4 },
+   "kAuthorizationFlagPreAuthorize": { "value": 16 },
+   "kAuthorizationResultAllow": { "value": 0 },
+   "kAuthorizationResultDeny": { "value": 1 },
+   "kAuthorizationResultUndefined": { "value": 2 },
+   "kAuthorizationResultUserCanceled": { "value": 3 },
+   "kCMSCertificateChain": { "value": 2 },
+   "kCMSCertificateChainWithRoot": { "value": 3 },
+   "kCMSCertificateNone": { "value": 0 },
+   "kCMSCertificateSignerOnly": { "value": 1 },
+   "kCMSSignerInvalidCert": { "value": 4 },
+   "kCMSSignerInvalidIndex": { "value": 5 },
+   "kCMSSignerInvalidSignature": { "value": 3 },
+   "kCMSSignerNeedsDetachedContent": { "value": 2 },
+   "kCMSSignerUnsigned": { "value": 0 },
+   "kCMSSignerValid": { "value": 1 },
+   "kSec3DES192": { "value": 192 },
+   "kSecAES128": { "value": 128 },
+   "kSecAES192": { "value": 192 },
+   "kSecAES256": { "value": 256 },
+   "kSecAccessControlAnd": { "value": 32768 },
+   "kSecAccessControlApplicationPassword": { "value": 2147483648 },
+   "kSecAccessControlDevicePasscode": { "value": 16 },
+   "kSecAccessControlOr": { "value": 16384 },
+   "kSecAccessControlPrivateKeyUsage": { "value": 1073741824 },
+   "kSecAccessControlTouchIDAny": { "value": 2 },
+   "kSecAccessControlTouchIDCurrentSet": { "value": 8 },
+   "kSecAddEvent": { "value": 3 },
+   "kSecCSCheckTrustedAnchors": { "value": 134217728 },
+   "kSecCSConsiderExpiration": { "value": 2147483648 },
+   "kSecCSContentInformation": { "value": 16 },
+   "kSecCSDedicatedHost": { "value": 1 },
+   "kSecCSDefaultFlags": { "value": 0 },
+   "kSecCSDynamicInformation": { "value": 8 },
+   "kSecCSEnforceRevocationChecks": { "value": 1073741824 },
+   "kSecCSGenerateGuestHash": { "value": 2 },
+   "kSecCSInternalInformation": { "value": 1 },
+   "kSecCSNoNetworkAccess": { "value": 536870912 },
+   "kSecCSQuickCheck": { "value": 67108864 },
+   "kSecCSReportProgress": { "value": 268435456 },
+   "kSecCSRequirementInformation": { "value": 4 },
+   "kSecCSSigningInformation": { "value": 2 },
+   "kSecCSSkipResourceDirectory": { "value": 32 },
+   "kSecCSUseAllArchitectures": { "value": 1 },
+   "kSecCodeSignatureAdhoc": { "value": 2 },
+   "kSecCodeSignatureEnforcement": { "value": 4096 },
+   "kSecCodeSignatureForceExpiration": { "value": 1024 },
+   "kSecCodeSignatureForceHard": { "value": 256 },
+   "kSecCodeSignatureForceKill": { "value": 512 },
+   "kSecCodeSignatureHashSHA1": { "value": 1 },
+   "kSecCodeSignatureHashSHA256": { "value": 2 },
+   "kSecCodeSignatureHashSHA256Truncated": { "value": 3 },
+   "kSecCodeSignatureHashSHA384": { "value": 4 },
+   "kSecCodeSignatureHost": { "value": 1 },
+   "kSecCodeSignatureLibraryValidation": { "value": 8192 },
+   "kSecCodeSignatureNoHash": { "value": 0 },
+   "kSecCodeSignatureRestrict": { "value": 2048 },
+   "kSecCodeStatusHard": { "value": 256 },
+   "kSecCodeStatusKill": { "value": 512 },
+   "kSecCodeStatusValid": { "value": 1 },
+   "kSecCredentialTypeDefault": { "value": 0 },
+   "kSecCredentialTypeNoUI": { "value": 2 },
+   "kSecCredentialTypeWithUI": { "value": 1 },
+   "kSecDataAccessEvent": { "value": 10 },
+   "kSecDefaultChangedEvent": { "value": 9 },
+   "kSecDefaultKeySize": { "value": 0 },
+   "kSecDeleteEvent": { "value": 4 },
+   "kSecDesignatedRequirementType": { "value": 3 },
+   "kSecFormatBSAFE": { "value": 3 },
+   "kSecFormatNetscapeCertSequence": { "value": 13 },
+   "kSecFormatOpenSSL": { "value": 1 },
+   "kSecFormatPEMSequence": { "value": 10 },
+   "kSecFormatPKCS12": { "value":  12 },
+   "kSecFormatPKCS7": { "value": 11 },
+   "kSecFormatRawKey": { "value": 4 },
+   "kSecFormatSSH": { "value": 2 },
+   "kSecFormatSSHv2": { "value": 14 },
+   "kSecFormatUnknown": { "value": 0 },
+   "kSecFormatWrappedLSH": { "value": 8 },
+   "kSecFormatWrappedOpenSSL": { "value": 6 },
+   "kSecFormatWrappedPKCS8": { "value": 5 },
+   "kSecFormatWrappedSSH": { "value": 7 },
+   "kSecFormatX509Cert": { "value": 9 },
+   "kSecGuestRequirementType": { "value": 2 },
+   "kSecHostRequirementType": { "value": 1 },
+   "kSecInvalidRequirementType": { "value": 6 },
+   "kSecItemTypeAggregate": { "value": 5 },
+   "kSecItemTypeCertificate": { "value": 4 },
+   "kSecItemTypePrivateKey": { "value": 1 },
+   "kSecItemTypePublicKey": { "value": 2 },
+   "kSecItemTypeSessionKey": { "value": 3 },
+   "kSecItemTypeUnknown": { "value": 0 },
+   "kSecKeyAlias": { "value": 2 },
+   "kSecKeyAlwaysSensitive": { "value": 15 },
+   "kSecKeyApplicationTag": { "value": 7 },
+   "kSecKeyDecrypt": { "value": 19 },
+   "kSecKeyDerive": { "value": 20 },
+   "kSecKeyEffectiveKeySize": { "value": 11 },
+   "kSecKeyEncrypt": { "value": 18 },
+   "kSecKeyEndDate": { "value": 13 },
+   "kSecKeyExtractable": { "value": 16 },
+   "kSecKeyKeyClass": { "value": 0 },
+   "kSecKeyKeyCreator": { "value": 8 },
+   "kSecKeyKeySizeInBits": { "value": 10 },
+   "kSecKeyKeyType": { "value": 9 },
+   "kSecKeyLabel": { "value": 6 },
+   "kSecKeyModifiable": { "value": 5 },
+   "kSecKeyNeverExtractable": { "value": 17 },
+   "kSecKeyOperationTypeDecrypt": { "value": 3 },
+   "kSecKeyOperationTypeEncrypt": { "value": 2 },
+   "kSecKeyOperationTypeKeyExchange": { "value": 4 },
+   "kSecKeyOperationTypeSign": { "value": 0 },
+   "kSecKeyOperationTypeVerify": { "value": 1 },
+   "kSecKeyPermanent": { "value": 3 },
+   "kSecKeyPrintName": { "value": 1 },
+   "kSecKeyPrivate": { "value": 4 },
+   "kSecKeySensitive": { "value": 14 },
+   "kSecKeySign": { "value": 21 },
+   "kSecKeySignRecover": { "value": 23 },
+   "kSecKeyStartDate": { "value": 12 },
+   "kSecKeyUnwrap": { "value": 26 },
+   "kSecKeyVerify": { "value": 22 },
+   "kSecKeyVerifyRecover": { "value": 24 },
+   "kSecKeyWrap": { "value": 25 },
+   "kSecKeychainListChangedEvent": { "value": 11 },
+   "kSecLibraryRequirementType": { "value": 4 },
+   "kSecLockEvent": { "value": 1 },
+   "kSecNoGuest": { "value": 0 },
+   "kSecPaddingNone": { "value": 0 },
+   "kSecPaddingOAEP": { "value": 2 },
+   "kSecPaddingPKCS1": { "value": 1 },
+   "kSecPaddingPKCS1MD2": { "value": 32768 },
+   "kSecPaddingPKCS1MD5": { "value": 32769 },
+   "kSecPaddingPKCS1SHA1": { "value": 32770 },
+   "kSecPaddingPKCS1SHA224": { "value": 32771 },
+   "kSecPaddingPKCS1SHA256": { "value": 32772 },
+   "kSecPaddingPKCS1SHA384": { "value": 32773 },
+   "kSecPaddingPKCS1SHA512": { "value": 32774 },
+   "kSecPaddingSigRaw": { "value": 16384 },
+   "kSecPasswordChangedEvent": { "value": 6 },
+   "kSecPluginRequirementType": { "value": 5 },
+   "kSecRSAMax": { "value": 4096 },
+   "kSecRSAMin": { "value": 1024 },
+   "kSecReadPermStatus": { "value": 2 },
+   "kSecTransformMetaAttributeCanCycle": { "value": 7 },
+   "kSecTransformMetaAttributeDeferred": { "value": 5 },
+   "kSecTransformMetaAttributeExternalize": { "value": 8 },
+   "kSecTransformMetaAttributeHasInboundConnection": { "value": 10 },
+   "kSecTransformMetaAttributeHasOutboundConnections": { "value": 9 },
+   "kSecTransformMetaAttributeName": { "value": 1 },
+   "kSecTransformMetaAttributeRef": { "value": 2 },
+   "kSecTransformMetaAttributeRequired": { "value": 3 },
+   "kSecTransformMetaAttributeRequiresOutboundConnection": { "value": 4 },
+   "kSecTransformMetaAttributeStream": { "value": 6 },
+   "kSecTransformMetaAttributeValue": { "value": 0 },
+   "kSecTrustSettingsChangedEvent": { "value": 12 },
+   "kSecUnlockEvent": { "value": 2 },
+   "kSecUnlockStateStatus": { "value": 1 },
+   "kSecUpdateEvent": { "value": 5 },
+   "kSecWritePermStatus": { "value": 4 },
+   "kSecp192r1": { "value": 192 },
+   "kSecp256r1": { "value": 256 },
+   "kSecp384r1": { "value": 384 },
+   "kSecp521r1": { "value": 521 },
+   "kSecureDownloadDoNotEvaluateSigner": { "value": 0 },
+   "kSecureDownloadEvaluateSigner": { "value": 1 },
+   "kSecureDownloadFailEvaluation": { "value": 2 },
+   "noSecuritySession": { "value": 0 },
+   "sessionHasGraphicAccess": { "value": 16 },
+   "sessionHasTTY": { "value": 32 },
+   "sessionIsRemote": { "value": 4096 },
+   "sessionIsRoot": { "value": 1 },
+   "sessionKeepCurrentBootstrap": { "value": 32768  }
+  },
+  "literals": {
+   "kSecTrustSettingsPolicy": { "value": "kSecTrustSettingsPolicy", "unicode": true },
+   "kSecTrustSettingsApplication": { "value": "kSecTrustSettingsApplication", "unicode": true },
+   "kSecTrustSettingsPolicyString": { "value": "kSecTrustSettingsPolicyString", "unicode": true },
+   "kSecTrustSettingsKeyUsage": { "value": "kSecTrustSettingsKeyUsage", "unicode": true },
+   "kSecTrustSettingsAllowedError": { "value": "kSecTrustSettingsAllowedError", "unicode": true },
+   "kSecTrustSettingsResult": { "value": "kSecTrustSettingsResult", "unicode": true },
+   "kAuthorizationEnvironmentUsername": { "value": "username", "unicode": false },
+   "kAuthorizationEnvironmentPassword": { "value": "password", "unicode": false },
+   "kAuthorizationEnvironmentShared": { "value": "shared", "unicode": false },
+   "kAuthorizationRightExecute": { "value": "system.privilege.admin", "unicode": false },
+   "kAuthorizationEnvironmentPrompt": { "value": "prompt", "unicode": false },
+   "kAuthorizationEnvironmentIcon": { "value": "icon", "unicode": false },
+   "kAuthorizationComment": { "value": "comment", "unicode": false },
+   "kAuthorizationRightRule": { "value": "rule", "unicode": false },
+   "kAuthorizationRuleAuthenticateAsAdmin": { "value": "authenticate-admin", "unicode": false },
+   "kAuthorizationRuleAuthenticateAsSessionUser": { "value": "authenticate-session-owner", "unicode": false },
+   "kAuthorizationRuleClassAllow": { "value": "allow", "unicode": false },
+   "kAuthorizationRuleClassDeny": { "value": "deny", "unicode": false },
+   "kAuthorizationRuleIsAdmin": { "value": "is-admin", "unicode": false }
+  },
+  "expressions": {
+   "kAuthorizationEmptyEnvironment": { "value": "None" }
+  },
+  "externs": {
+   "kSecTransformActionCanExecute": { "typestr": "@" },
+   "kSecTransformActionStartingExecution": { "typestr": "@" },
+   "kSecTransformActionFinalize": { "typestr": "@" },
+   "kSecTransformActionExternalizeExtraData": { "typestr": "@" },
+   "kSecTransformActionProcessData": { "typestr": "@" },
+   "kSecTransformActionInternalizeExtraData": { "typestr": "@" },
+   "kSecTransformActionAttributeNotification": { "typestr": "@" },
+   "kSecTransformActionAttributeValidation": { "typestr": "@" },
+   "kSecTransformInputAttributeName": { "typestr": "@" },
+   "kSecTransformOutputAttributeName": { "typestr": "@" },
+   "kSecTransformDebugAttributeName": { "typestr": "@" },
+   "kSecTransformTransformName": { "typestr": "@" },
+   "kSecTransformAbortAttributeName": { "typestr": "@" },
+   "kSecTransformErrorDomain": { "typestr": "@" },
+   "kSecTransformPreviousErrorKey": { "typestr": "@" },
+   "kSecTransformAbortOriginatorKey": { "typestr": "@" },
+   "kSecRandomDefault": { "typestr": "^{__SecRandom=}" },
+   "kCMSEncoderDigestAlgorithmSHA1": { "typestr": "@" },
+   "kCMSEncoderDigestAlgorithmSHA256": { "typestr": "@" },
+   "kSecACLAuthorizationAny": { "typestr": "@" },
+   "kSecACLAuthorizationLogin": { "typestr": "@" },
+   "kSecACLAuthorizationGenKey": { "typestr": "@" },
+   "kSecACLAuthorizationDelete": { "typestr": "@" },
+   "kSecACLAuthorizationExportWrapped": { "typestr": "@" },
+   "kSecACLAuthorizationExportClear": { "typestr": "@" },
+   "kSecACLAuthorizationImportWrapped": { "typestr": "@" },
+   "kSecACLAuthorizationImportClear": { "typestr": "@" },
+   "kSecACLAuthorizationSign": { "typestr": "@" },
+   "kSecACLAuthorizationEncrypt": { "typestr": "@" },
+   "kSecACLAuthorizationDecrypt": { "typestr": "@" },
+   "kSecACLAuthorizationMAC": { "typestr": "@" },
+   "kSecACLAuthorizationDerive": { "typestr": "@" },
+   "kSecACLAuthorizationKeychainCreate": { "typestr": "@" },
+   "kSecACLAuthorizationKeychainDelete": { "typestr": "@" },
+   "kSecACLAuthorizationKeychainItemRead": { "typestr": "@" },
+   "kSecACLAuthorizationKeychainItemInsert": { "typestr": "@" },
+   "kSecACLAuthorizationKeychainItemModify": { "typestr": "@" },
+   "kSecACLAuthorizationKeychainItemDelete": { "typestr": "@" },
+   "kSecACLAuthorizationChangeACL": { "typestr": "@" },
+   "kSecACLAuthorizationChangeOwner": { "typestr": "@" },
+   "kSecACLAuthorizationPartitionID": { "typestr": "@" },
+   "kSecACLAuthorizationIntegrity": { "typestr": "@" },
+   "kSecPropertyKeyType": { "typestr": "@" },
+   "kSecPropertyKeyLabel": { "typestr": "@" },
+   "kSecPropertyKeyLocalizedLabel": { "typestr": "@" },
+   "kSecPropertyKeyValue": { "typestr": "@" },
+   "kSecPropertyTypeWarning": { "typestr": "@" },
+   "kSecPropertyTypeSuccess": { "typestr": "@" },
+   "kSecPropertyTypeSection": { "typestr": "@" },
+   "kSecPropertyTypeData": { "typestr": "@" },
+   "kSecPropertyTypeString": { "typestr": "@" },
+   "kSecPropertyTypeURL": { "typestr": "@" },
+   "kSecPropertyTypeDate": { "typestr": "@" },
+   "kSecOIDADC_CERT_POLICY": { "typestr": "@" },
+   "kSecOIDAPPLE_CERT_POLICY": { "typestr": "@" },
+   "kSecOIDAPPLE_EKU_CODE_SIGNING": { "typestr": "@" },
+   "kSecOIDAPPLE_EKU_CODE_SIGNING_DEV": { "typestr": "@" },
+   "kSecOIDAPPLE_EKU_ICHAT_ENCRYPTION": { "typestr": "@" },
+   "kSecOIDAPPLE_EKU_ICHAT_SIGNING": { "typestr": "@" },
+   "kSecOIDAPPLE_EKU_RESOURCE_SIGNING": { "typestr": "@" },
+   "kSecOIDAPPLE_EKU_SYSTEM_IDENTITY": { "typestr": "@" },
+   "kSecOIDAPPLE_EXTENSION": { "typestr": "@" },
+   "kSecOIDAPPLE_EXTENSION_ADC_APPLE_SIGNING": { "typestr": "@" },
+   "kSecOIDAPPLE_EXTENSION_ADC_DEV_SIGNING": { "typestr": "@" },
+   "kSecOIDAPPLE_EXTENSION_APPLE_SIGNING": { "typestr": "@" },
+   "kSecOIDAPPLE_EXTENSION_CODE_SIGNING": { "typestr": "@" },
+   "kSecOIDAPPLE_EXTENSION_INTERMEDIATE_MARKER": { "typestr": "@" },
+   "kSecOIDAPPLE_EXTENSION_WWDR_INTERMEDIATE": { "typestr": "@" },
+   "kSecOIDAPPLE_EXTENSION_ITMS_INTERMEDIATE": { "typestr": "@" },
+   "kSecOIDAPPLE_EXTENSION_AAI_INTERMEDIATE": { "typestr": "@" },
+   "kSecOIDAPPLE_EXTENSION_APPLEID_INTERMEDIATE": { "typestr": "@" },
+   "kSecOIDAuthorityInfoAccess": { "typestr": "@" },
+   "kSecOIDAuthorityKeyIdentifier": { "typestr": "@" },
+   "kSecOIDBasicConstraints": { "typestr": "@" },
+   "kSecOIDBiometricInfo": { "typestr": "@" },
+   "kSecOIDCSSMKeyStruct": { "typestr": "@" },
+   "kSecOIDCertIssuer": { "typestr": "@" },
+   "kSecOIDCertificatePolicies": { "typestr": "@" },
+   "kSecOIDClientAuth": { "typestr": "@" },
+   "kSecOIDCollectiveStateProvinceName": { "typestr": "@" },
+   "kSecOIDCollectiveStreetAddress": { "typestr": "@" },
+   "kSecOIDCommonName": { "typestr": "@" },
+   "kSecOIDCountryName": { "typestr": "@" },
+   "kSecOIDCrlDistributionPoints": { "typestr": "@" },
+   "kSecOIDCrlNumber": { "typestr": "@" },
+   "kSecOIDCrlReason": { "typestr": "@" },
+   "kSecOIDDOTMAC_CERT_EMAIL_ENCRYPT": { "typestr": "@" },
+   "kSecOIDDOTMAC_CERT_EMAIL_SIGN": { "typestr": "@" },
+   "kSecOIDDOTMAC_CERT_EXTENSION": { "typestr": "@" },
+   "kSecOIDDOTMAC_CERT_IDENTITY": { "typestr": "@" },
+   "kSecOIDDOTMAC_CERT_POLICY": { "typestr": "@" },
+   "kSecOIDDeltaCrlIndicator": { "typestr": "@" },
+   "kSecOIDDescription": { "typestr": "@" },
+   "kSecOIDEKU_IPSec": { "typestr": "@" },
+   "kSecOIDEmailAddress": { "typestr": "@" },
+   "kSecOIDEmailProtection": { "typestr": "@" },
+   "kSecOIDExtendedKeyUsage": { "typestr": "@" },
+   "kSecOIDExtendedKeyUsageAny": { "typestr": "@" },
+   "kSecOIDExtendedUseCodeSigning": { "typestr": "@" },
+   "kSecOIDGivenName": { "typestr": "@" },
+   "kSecOIDHoldInstructionCode": { "typestr": "@" },
+   "kSecOIDInvalidityDate": { "typestr": "@" },
+   "kSecOIDIssuerAltName": { "typestr": "@" },
+   "kSecOIDIssuingDistributionPoint": { "typestr": "@" },
+   "kSecOIDIssuingDistributionPoints": { "typestr": "@" },
+   "kSecOIDKERBv5_PKINIT_KP_CLIENT_AUTH": { "typestr": "@" },
+   "kSecOIDKERBv5_PKINIT_KP_KDC": { "typestr": "@" },
+   "kSecOIDKeyUsage": { "typestr": "@" },
+   "kSecOIDLocalityName": { "typestr": "@" },
+   "kSecOIDMS_NTPrincipalName": { "typestr": "@" },
+   "kSecOIDMicrosoftSGC": { "typestr": "@" },
+   "kSecOIDNameConstraints": { "typestr": "@" },
+   "kSecOIDNetscapeCertSequence": { "typestr": "@" },
+   "kSecOIDNetscapeCertType": { "typestr": "@" },
+   "kSecOIDNetscapeSGC": { "typestr": "@" },
+   "kSecOIDOCSPSigning": { "typestr": "@" },
+   "kSecOIDOrganizationName": { "typestr": "@" },
+   "kSecOIDOrganizationalUnitName": { "typestr": "@" },
+   "kSecOIDPolicyConstraints": { "typestr": "@" },
+   "kSecOIDPolicyMappings": { "typestr": "@" },
+   "kSecOIDPrivateKeyUsagePeriod": { "typestr": "@" },
+   "kSecOIDQC_Statements": { "typestr": "@" },
+   "kSecOIDSerialNumber": { "typestr": "@" },
+   "kSecOIDServerAuth": { "typestr": "@" },
+   "kSecOIDStateProvinceName": { "typestr": "@" },
+   "kSecOIDStreetAddress": { "typestr": "@" },
+   "kSecOIDSubjectAltName": { "typestr": "@" },
+   "kSecOIDSubjectDirectoryAttributes": { "typestr": "@" },
+   "kSecOIDSubjectEmailAddress": { "typestr": "@" },
+   "kSecOIDSubjectInfoAccess": { "typestr": "@" },
+   "kSecOIDSubjectKeyIdentifier": { "typestr": "@" },
+   "kSecOIDSubjectPicture": { "typestr": "@" },
+   "kSecOIDSubjectSignatureBitmap": { "typestr": "@" },
+   "kSecOIDSurname": { "typestr": "@" },
+   "kSecOIDTimeStamping": { "typestr": "@" },
+   "kSecOIDTitle": { "typestr": "@" },
+   "kSecOIDUseExemptions": { "typestr": "@" },
+   "kSecOIDX509V1CertificateIssuerUniqueId": { "typestr": "@" },
+   "kSecOIDX509V1CertificateSubjectUniqueId": { "typestr": "@" },
+   "kSecOIDX509V1IssuerName": { "typestr": "@" },
+   "kSecOIDX509V1IssuerNameCStruct": { "typestr": "@" },
+   "kSecOIDX509V1IssuerNameLDAP": { "typestr": "@" },
+   "kSecOIDX509V1IssuerNameStd": { "typestr": "@" },
+   "kSecOIDX509V1SerialNumber": { "typestr": "@" },
+   "kSecOIDX509V1Signature": { "typestr": "@" },
+   "kSecOIDX509V1SignatureAlgorithm": { "typestr": "@" },
+   "kSecOIDX509V1SignatureAlgorithmParameters": { "typestr": "@" },
+   "kSecOIDX509V1SignatureAlgorithmTBS": { "typestr": "@" },
+   "kSecOIDX509V1SignatureCStruct": { "typestr": "@" },
+   "kSecOIDX509V1SignatureStruct": { "typestr": "@" },
+   "kSecOIDX509V1SubjectName": { "typestr": "@" },
+   "kSecOIDX509V1SubjectNameCStruct": { "typestr": "@" },
+   "kSecOIDX509V1SubjectNameLDAP": { "typestr": "@" },
+   "kSecOIDX509V1SubjectNameStd": { "typestr": "@" },
+   "kSecOIDX509V1SubjectPublicKey": { "typestr": "@" },
+   "kSecOIDX509V1SubjectPublicKeyAlgorithm": { "typestr": "@" },
+   "kSecOIDX509V1SubjectPublicKeyAlgorithmParameters": { "typestr": "@" },
+   "kSecOIDX509V1SubjectPublicKeyCStruct": { "typestr": "@" },
+   "kSecOIDX509V1ValidityNotAfter": { "typestr": "@" },
+   "kSecOIDX509V1ValidityNotBefore": { "typestr": "@" },
+   "kSecOIDX509V1Version": { "typestr": "@" },
+   "kSecOIDX509V3Certificate": { "typestr": "@" },
+   "kSecOIDX509V3CertificateCStruct": { "typestr": "@" },
+   "kSecOIDX509V3CertificateExtensionCStruct": { "typestr": "@" },
+   "kSecOIDX509V3CertificateExtensionCritical": { "typestr": "@" },
+   "kSecOIDX509V3CertificateExtensionId": { "typestr": "@" },
+   "kSecOIDX509V3CertificateExtensionStruct": { "typestr": "@" },
+   "kSecOIDX509V3CertificateExtensionType": { "typestr": "@" },
+   "kSecOIDX509V3CertificateExtensionValue": { "typestr": "@" },
+   "kSecOIDX509V3CertificateExtensionsCStruct": { "typestr": "@" },
+   "kSecOIDX509V3CertificateExtensionsStruct": { "typestr": "@" },
+   "kSecOIDX509V3CertificateNumberOfExtensions": { "typestr": "@" },
+   "kSecOIDX509V3SignedCertificate": { "typestr": "@" },
+   "kSecOIDX509V3SignedCertificateCStruct": { "typestr": "@" },
+   "kSecOIDSRVName": { "typestr": "@" },
+   "kSecGuestAttributeCanonical": { "typestr": "@" },
+   "kSecGuestAttributeHash": { "typestr": "@" },
+   "kSecGuestAttributeMachPort": { "typestr": "@" },
+   "kSecGuestAttributePid": { "typestr": "@" },
+   "kSecGuestAttributeAudit": { "typestr": "@" },
+   "kSecGuestAttributeDynamicCode": { "typestr": "@" },
+   "kSecGuestAttributeDynamicCodeInfoPlist": { "typestr": "@" },
+   "kSecGuestAttributeArchitecture": { "typestr": "@" },
+   "kSecGuestAttributeSubarchitecture": { "typestr": "@" },
+   "kSecCodeInfoCertificates": { "typestr": "@" },
+   "kSecCodeInfoChangedFiles": { "typestr": "@" },
+   "kSecCodeInfoCMS": { "typestr": "@" },
+   "kSecCodeInfoDesignatedRequirement": { "typestr": "@" },
+   "kSecCodeInfoEntitlements": { "typestr": "@" },
+   "kSecCodeInfoEntitlementsDict": { "typestr": "@" },
+   "kSecCodeInfoFlags": { "typestr": "@" },
+   "kSecCodeInfoFormat": { "typestr": "@" },
+   "kSecCodeInfoDigestAlgorithm": { "typestr": "@" },
+   "kSecCodeInfoDigestAlgorithms": { "typestr": "@" },
+   "kSecCodeInfoPlatformIdentifier": { "typestr": "@" },
+   "kSecCodeInfoIdentifier": { "typestr": "@" },
+   "kSecCodeInfoImplicitDesignatedRequirement": { "typestr": "@" },
+   "kSecCodeInfoMainExecutable": { "typestr": "@" },
+   "kSecCodeInfoPList": { "typestr": "@" },
+   "kSecCodeInfoRequirements": { "typestr": "@" },
+   "kSecCodeInfoRequirementData": { "typestr": "@" },
+   "kSecCodeInfoSource": { "typestr": "@" },
+   "kSecCodeInfoStatus": { "typestr": "@" },
+   "kSecCodeInfoTeamIdentifier": { "typestr": "@" },
+   "kSecCodeInfoTime": { "typestr": "@" },
+   "kSecCodeInfoTimestamp": { "typestr": "@" },
+   "kSecCodeInfoTrust": { "typestr": "@" },
+   "kSecCodeInfoUnique": { "typestr": "@" },
+   "kSecCodeInfoCdHashes": { "typestr": "@" },
+   "kSecDecodeTypeAttribute": { "typestr": "@" },
+   "kSecDigestMD2": { "typestr": "@" },
+   "kSecDigestMD4": { "typestr": "@" },
+   "kSecDigestMD5": { "typestr": "@" },
+   "kSecDigestSHA1": { "typestr": "@" },
+   "kSecDigestSHA2": { "typestr": "@" },
+   "kSecDigestHMACMD5": { "typestr": "@" },
+   "kSecDigestHMACSHA1": { "typestr": "@" },
+   "kSecDigestHMACSHA2": { "typestr": "@" },
+   "kSecDigestTypeAttribute": { "typestr": "@" },
+   "kSecDigestLengthAttribute": { "typestr": "@" },
+   "kSecDigestHMACKeyAttribute": { "typestr": "@" },
+   "kSecBase64Encoding": { "typestr": "@" },
+   "kSecBase32Encoding": { "typestr": "@" },
+   "kSecZLibEncoding": { "typestr": "@" },
+   "kSecEncodeTypeAttribute": { "typestr": "@" },
+   "kSecLineLength64": { "typestr": "@" },
+   "kSecLineLength76": { "typestr": "@" },
+   "kSecEncodeLineLengthAttribute": { "typestr": "@" },
+   "kSecCompressionRatio": { "typestr": "@" },
+   "kSecPaddingNoneKey": { "typestr": "@" },
+   "kSecPaddingPKCS1Key": { "typestr": "@" },
+   "kSecPaddingPKCS5Key": { "typestr": "@" },
+   "kSecPaddingPKCS7Key": { "typestr": "@" },
+   "kSecPaddingOAEPKey": { "typestr": "@" },
+   "kSecModeNoneKey": { "typestr": "@" },
+   "kSecModeECBKey": { "typestr": "@" },
+   "kSecModeCBCKey": { "typestr": "@" },
+   "kSecModeCFBKey": { "typestr": "@" },
+   "kSecModeOFBKey": { "typestr": "@" },
+   "kSecEncryptKey": { "typestr": "@" },
+   "kSecPaddingKey": { "typestr": "@" },
+   "kSecIVKey": { "typestr": "@" },
+   "kSecEncryptionMode": { "typestr": "@" },
+   "kSecOAEPMessageLengthAttributeName": { "typestr": "@" },
+   "kSecOAEPEncodingParametersAttributeName": { "typestr": "@" },
+   "kSecOAEPMGF1DigestAlgorithmAttributeName": { "typestr": "@" },
+   "kSecIdentityDomainDefault": { "typestr": "@" },
+   "kSecIdentityDomainKerberosKDC": { "typestr": "@" },
+   "kSecImportExportPassphrase": { "typestr": "@" },
+   "kSecImportExportKeychain": { "typestr": "@" },
+   "kSecImportExportAccess": { "typestr": "@" },
+   "kSecImportItemLabel": { "typestr": "@" },
+   "kSecImportItemKeyID": { "typestr": "@" },
+   "kSecImportItemTrust": { "typestr": "@" },
+   "kSecImportItemCertChain": { "typestr": "@" },
+   "kSecImportItemIdentity": { "typestr": "@" },
+   "kSecClass": { "typestr": "@" },
+   "kSecClassInternetPassword": { "typestr": "@" },
+   "kSecClassGenericPassword": { "typestr": "@" },
+   "kSecClassCertificate": { "typestr": "@" },
+   "kSecClassKey": { "typestr": "@" },
+   "kSecClassIdentity": { "typestr": "@" },
+   "kSecAttrAccessible": { "typestr": "@" },
+   "kSecAttrAccess": { "typestr": "@" },
+   "kSecAttrAccessControl": { "typestr": "@" },
+   "kSecAttrAccessGroup": { "typestr": "@" },
+   "kSecAttrSynchronizable": { "typestr": "@" },
+   "kSecAttrSynchronizableAny": { "typestr": "@" },
+   "kSecAttrCreationDate": { "typestr": "@" },
+   "kSecAttrModificationDate": { "typestr": "@" },
+   "kSecAttrDescription": { "typestr": "@" },
+   "kSecAttrComment": { "typestr": "@" },
+   "kSecAttrCreator": { "typestr": "@" },
+   "kSecAttrType": { "typestr": "@" },
+   "kSecAttrLabel": { "typestr": "@" },
+   "kSecAttrIsInvisible": { "typestr": "@" },
+   "kSecAttrIsNegative": { "typestr": "@" },
+   "kSecAttrAccount": { "typestr": "@" },
+   "kSecAttrService": { "typestr": "@" },
+   "kSecAttrGeneric": { "typestr": "@" },
+   "kSecAttrSecurityDomain": { "typestr": "@" },
+   "kSecAttrServer": { "typestr": "@" },
+   "kSecAttrProtocol": { "typestr": "@" },
+   "kSecAttrAuthenticationType": { "typestr": "@" },
+   "kSecAttrPort": { "typestr": "@" },
+   "kSecAttrPath": { "typestr": "@" },
+   "kSecAttrSubject": { "typestr": "@" },
+   "kSecAttrIssuer": { "typestr": "@" },
+   "kSecAttrSerialNumber": { "typestr": "@" },
+   "kSecAttrSubjectKeyID": { "typestr": "@" },
+   "kSecAttrPublicKeyHash": { "typestr": "@" },
+   "kSecAttrCertificateType": { "typestr": "@" },
+   "kSecAttrCertificateEncoding": { "typestr": "@" },
+   "kSecAttrKeyClass": { "typestr": "@" },
+   "kSecAttrApplicationLabel": { "typestr": "@" },
+   "kSecAttrIsPermanent": { "typestr": "@" },
+   "kSecAttrIsSensitive": { "typestr": "@" },
+   "kSecAttrIsExtractable": { "typestr": "@" },
+   "kSecAttrApplicationTag": { "typestr": "@" },
+   "kSecAttrKeyType": { "typestr": "@" },
+   "kSecAttrPRF": { "typestr": "@" },
+   "kSecAttrSalt": { "typestr": "@" },
+   "kSecAttrRounds": { "typestr": "@" },
+   "kSecAttrKeySizeInBits": { "typestr": "@" },
+   "kSecAttrEffectiveKeySize": { "typestr": "@" },
+   "kSecAttrCanEncrypt": { "typestr": "@" },
+   "kSecAttrCanDecrypt": { "typestr": "@" },
+   "kSecAttrCanDerive": { "typestr": "@" },
+   "kSecAttrCanSign": { "typestr": "@" },
+   "kSecAttrCanVerify": { "typestr": "@" },
+   "kSecAttrCanWrap": { "typestr": "@" },
+   "kSecAttrCanUnwrap": { "typestr": "@" },
+   "kSecAttrSyncViewHint": { "typestr": "@" },
+   "kSecAttrTokenID": { "typestr": "@" },
+   "kSecAttrPersistantReference": { "typestr": "@" },
+   "kSecAttrPersistentReference": { "typestr": "@" },
+   "kSecAttrAccessibleWhenUnlocked": { "typestr": "@" },
+   "kSecAttrAccessibleAfterFirstUnlock": { "typestr": "@" },
+   "kSecAttrAccessibleAlways": { "typestr": "@" },
+   "kSecAttrAccessibleWhenPasscodeSetThisDeviceOnly": { "typestr": "@" },
+   "kSecAttrAccessibleWhenUnlockedThisDeviceOnly": { "typestr": "@" },
+   "kSecAttrAccessibleAfterFirstUnlockThisDeviceOnly": { "typestr": "@" },
+   "kSecAttrAccessibleAlwaysThisDeviceOnly": { "typestr": "@" },
+   "kSecAttrProtocolFTP": { "typestr": "@" },
+   "kSecAttrProtocolFTPAccount": { "typestr": "@" },
+   "kSecAttrProtocolHTTP": { "typestr": "@" },
+   "kSecAttrProtocolIRC": { "typestr": "@" },
+   "kSecAttrProtocolNNTP": { "typestr": "@" },
+   "kSecAttrProtocolPOP3": { "typestr": "@" },
+   "kSecAttrProtocolSMTP": { "typestr": "@" },
+   "kSecAttrProtocolSOCKS": { "typestr": "@" },
+   "kSecAttrProtocolIMAP": { "typestr": "@" },
+   "kSecAttrProtocolLDAP": { "typestr": "@" },
+   "kSecAttrProtocolAppleTalk": { "typestr": "@" },
+   "kSecAttrProtocolAFP": { "typestr": "@" },
+   "kSecAttrProtocolTelnet": { "typestr": "@" },
+   "kSecAttrProtocolSSH": { "typestr": "@" },
+   "kSecAttrProtocolFTPS": { "typestr": "@" },
+   "kSecAttrProtocolHTTPS": { "typestr": "@" },
+   "kSecAttrProtocolHTTPProxy": { "typestr": "@" },
+   "kSecAttrProtocolHTTPSProxy": { "typestr": "@" },
+   "kSecAttrProtocolFTPProxy": { "typestr": "@" },
+   "kSecAttrProtocolSMB": { "typestr": "@" },
+   "kSecAttrProtocolRTSP": { "typestr": "@" },
+   "kSecAttrProtocolRTSPProxy": { "typestr": "@" },
+   "kSecAttrProtocolDAAP": { "typestr": "@" },
+   "kSecAttrProtocolEPPC": { "typestr": "@" },
+   "kSecAttrProtocolIPP": { "typestr": "@" },
+   "kSecAttrProtocolNNTPS": { "typestr": "@" },
+   "kSecAttrProtocolLDAPS": { "typestr": "@" },
+   "kSecAttrProtocolTelnetS": { "typestr": "@" },
+   "kSecAttrProtocolIMAPS": { "typestr": "@" },
+   "kSecAttrProtocolIRCS": { "typestr": "@" },
+   "kSecAttrProtocolPOP3S": { "typestr": "@" },
+   "kSecAttrAuthenticationTypeNTLM": { "typestr": "@" },
+   "kSecAttrAuthenticationTypeMSN": { "typestr": "@" },
+   "kSecAttrAuthenticationTypeDPA": { "typestr": "@" },
+   "kSecAttrAuthenticationTypeRPA": { "typestr": "@" },
+   "kSecAttrAuthenticationTypeHTTPBasic": { "typestr": "@" },
+   "kSecAttrAuthenticationTypeHTTPDigest": { "typestr": "@" },
+   "kSecAttrAuthenticationTypeHTMLForm": { "typestr": "@" },
+   "kSecAttrAuthenticationTypeDefault": { "typestr": "@" },
+   "kSecAttrKeyClassPublic": { "typestr": "@" },
+   "kSecAttrKeyClassPrivate": { "typestr": "@" },
+   "kSecAttrKeyClassSymmetric": { "typestr": "@" },
+   "kSecAttrKeyTypeRSA": { "typestr": "@" },
+   "kSecAttrKeyTypeDSA": { "typestr": "@" },
+   "kSecAttrKeyTypeAES": { "typestr": "@" },
+   "kSecAttrKeyTypeDES": { "typestr": "@" },
+   "kSecAttrKeyType3DES": { "typestr": "@" },
+   "kSecAttrKeyTypeRC4": { "typestr": "@" },
+   "kSecAttrKeyTypeRC2": { "typestr": "@" },
+   "kSecAttrKeyTypeCAST": { "typestr": "@" },
+   "kSecAttrKeyTypeECDSA": { "typestr": "@" },
+   "kSecAttrKeyTypeEC": { "typestr": "@" },
+   "kSecAttrKeyTypeECSECPrimeRandom": { "typestr": "@" },
+   "kSecAttrPRFHmacAlgSHA1": { "typestr": "@" },
+   "kSecAttrPRFHmacAlgSHA224": { "typestr": "@" },
+   "kSecAttrPRFHmacAlgSHA256": { "typestr": "@" },
+   "kSecAttrPRFHmacAlgSHA384": { "typestr": "@" },
+   "kSecAttrPRFHmacAlgSHA512": { "typestr": "@" },
+   "kSecMatchPolicy": { "typestr": "@" },
+   "kSecMatchItemList": { "typestr": "@" },
+   "kSecMatchSearchList": { "typestr": "@" },
+   "kSecMatchIssuers": { "typestr": "@" },
+   "kSecMatchEmailAddressIfPresent": { "typestr": "@" },
+   "kSecMatchSubjectContains": { "typestr": "@" },
+   "kSecMatchSubjectStartsWith": { "typestr": "@" },
+   "kSecMatchSubjectEndsWith": { "typestr": "@" },
+   "kSecMatchSubjectWholeString": { "typestr": "@" },
+   "kSecMatchCaseInsensitive": { "typestr": "@" },
+   "kSecMatchDiacriticInsensitive": { "typestr": "@" },
+   "kSecMatchWidthInsensitive": { "typestr": "@" },
+   "kSecMatchTrustedOnly": { "typestr": "@" },
+   "kSecMatchValidOnDate": { "typestr": "@" },
+   "kSecMatchLimit": { "typestr": "@" },
+   "kSecMatchLimitOne": { "typestr": "@" },
+   "kSecMatchLimitAll": { "typestr": "@" },
+   "kSecReturnData": { "typestr": "@" },
+   "kSecReturnAttributes": { "typestr": "@" },
+   "kSecReturnRef": { "typestr": "@" },
+   "kSecReturnPersistentRef": { "typestr": "@" },
+   "kSecValueData": { "typestr": "@" },
+   "kSecValueRef": { "typestr": "@" },
+   "kSecValuePersistentRef": { "typestr": "@" },
+   "kSecUseItemList": { "typestr": "@" },
+   "kSecUseKeychain": { "typestr": "@" },
+   "kSecUseOperationPrompt": { "typestr": "@" },
+   "kSecUseNoAuthenticationUI": { "typestr": "@" },
+   "kSecUseAuthenticationUI": { "typestr": "@" },
+   "kSecUseAuthenticationContext": { "typestr": "@" },
+   "kSecUseAuthenticationUIAllow": { "typestr": "@" },
+   "kSecUseAuthenticationUIFail": { "typestr": "@" },
+   "kSecUseAuthenticationUISkip": { "typestr": "@" },
+   "kSecAttrTokenIDSecureEnclave": { "typestr": "@" },
+   "kSecAttrAccessGroupToken": { "typestr": "@" },
+   "kSecPolicyAppleX509Basic": { "typestr": "@" },
+   "kSecPolicyAppleSSL": { "typestr": "@" },
+   "kSecPolicyAppleSMIME": { "typestr": "@" },
+   "kSecPolicyAppleEAP": { "typestr": "@" },
+   "kSecPolicyAppleIPsec": { "typestr": "@" },
+   "kSecPolicyAppleiChat": { "typestr": "@" },
+   "kSecPolicyApplePKINITClient": { "typestr": "@" },
+   "kSecPolicyApplePKINITServer": { "typestr": "@" },
+   "kSecPolicyAppleCodeSigning": { "typestr": "@" },
+   "kSecPolicyMacAppStoreReceipt": { "typestr": "@" },
+   "kSecPolicyAppleIDValidation": { "typestr": "@" },
+   "kSecPolicyAppleTimeStamping": { "typestr": "@" },
+   "kSecPolicyAppleRevocation": { "typestr": "@" },
+   "kSecPolicyApplePassbookSigning": { "typestr": "@" },
+   "kSecPolicyApplePayIssuerEncryption": { "typestr": "@" },
+   "kSecPolicyOid": { "typestr": "@" },
+   "kSecPolicyName": { "typestr": "@" },
+   "kSecPolicyClient": { "typestr": "@" },
+   "kSecPolicyRevocationFlags": { "typestr": "@" },
+   "kSecPolicyTeamIdentifier": { "typestr": "@" },
+   "kSecPolicyKU_DigitalSignature": { "typestr": "@" },
+   "kSecPolicyKU_NonRepudiation": { "typestr": "@" },
+   "kSecPolicyKU_KeyEncipherment": { "typestr": "@" },
+   "kSecPolicyKU_DataEncipherment": { "typestr": "@" },
+   "kSecPolicyKU_KeyAgreement": { "typestr": "@" },
+   "kSecPolicyKU_KeyCertSign": { "typestr": "@" },
+   "kSecPolicyKU_CRLSign": { "typestr": "@" },
+   "kSecPolicyKU_EncipherOnly": { "typestr": "@" },
+   "kSecPolicyKU_DecipherOnly": { "typestr": "@" },
+   "kSecRandomDefault": { "typestr": "@" },
+   "kSecKeyAttributeName": { "typestr": "@" },
+   "kSecSignatureAttributeName": { "typestr": "@" },
+   "kSecInputIsAttributeName": { "typestr": "@" },
+   "kSecInputIsPlainText": { "typestr": "@" },
+   "kSecInputIsDigest": { "typestr": "@" },
+   "kSecInputIsRaw": { "typestr": "@" },
+   "kSecCodeAttributeArchitecture": { "typestr": "@" },
+   "kSecCodeAttributeSubarchitecture": { "typestr": "@" },
+   "kSecCodeAttributeUniversalFileOffset": { "typestr": "@" },
+   "kSecCodeAttributeBundleVersion": { "typestr": "@" },
+   "kSecPropertyTypeTitle": { "typestr": "@" },
+   "kSecPropertyTypeError": { "typestr": "@" },
+   "kSecTrustEvaluationDate": { "typestr": "@" },
+   "kSecTrustExtendedValidation": { "typestr": "@" },
+   "kSecTrustOrganizationName": { "typestr": "@" },
+   "kSecTrustResultValue": { "typestr": "@" },
+   "kSecTrustRevocationChecked": { "typestr": "@" },
+   "kSecTrustRevocationValidUntilDate": { "typestr": "@" },
+   "kSecTrustCertificateTransparency": { "typestr": "@" },
+   "kSecTrustCertificateTransparencyWhiteList": { "typestr": "@" },
+   "kSSLSessionConfig_default": { "typestr": "@" },
+   "kSSLSessionConfig_ATSv1": { "typestr": "@" },
+   "kSSLSessionConfig_ATSv1_noPFS": { "typestr": "@" },
+   "kSSLSessionConfig_standard": { "typestr": "@" },
+   "kSSLSessionConfig_RC4_fallback": { "typestr": "@" },
+   "kSSLSessionConfig_TLSv1_fallback": { "typestr": "@" },
+   "kSSLSessionConfig_TLSv1_RC4_fallback": { "typestr": "@" },
+   "kSSLSessionConfig_legacy": { "typestr": "@" },
+   "kSSLSessionConfig_legacy_DHE": { "typestr": "@" },
+   "kSSLSessionConfig_anonymous": { "typestr": "@" },
+   "kSSLSessionConfig_3DES_fallback": { "typestr": "@" },
+   "kSSLSessionConfig_TLSv1_3DES_fallback": { "typestr": "@" },
+   "kSecKeyKeyExchangeParameterRequestedSize": { "typestr": "@" },
+   "kSecKeyKeyExchangeParameterSharedInfo": { "typestr": "@" },
+   "kSecKeyAlgorithmRSASignatureRaw": { "typestr": "@" },
+   "kSecKeyAlgorithmRSASignatureDigestPKCS1v15Raw": { "typestr": "@" },
+   "kSecKeyAlgorithmRSASignatureDigestPKCS1v15SHA1": { "typestr": "@" },
+   "kSecKeyAlgorithmRSASignatureDigestPKCS1v15SHA224": { "typestr": "@" },
+   "kSecKeyAlgorithmRSASignatureDigestPKCS1v15SHA256": { "typestr": "@" },
+   "kSecKeyAlgorithmRSASignatureDigestPKCS1v15SHA384": { "typestr": "@" },
+   "kSecKeyAlgorithmRSASignatureDigestPKCS1v15SHA512": { "typestr": "@" },
+   "kSecKeyAlgorithmRSASignatureMessagePKCS1v15SHA1": { "typestr": "@" },
+   "kSecKeyAlgorithmRSASignatureMessagePKCS1v15SHA224": { "typestr": "@" },
+   "kSecKeyAlgorithmRSASignatureMessagePKCS1v15SHA256": { "typestr": "@" },
+   "kSecKeyAlgorithmRSASignatureMessagePKCS1v15SHA384": { "typestr": "@" },
+   "kSecKeyAlgorithmRSASignatureMessagePKCS1v15SHA512": { "typestr": "@" },
+   "kSecKeyAlgorithmRSASignatureDigestPSSSHA1": { "typestr": "@" },
+   "kSecKeyAlgorithmRSASignatureDigestPSSSHA224": { "typestr": "@" },
+   "kSecKeyAlgorithmRSASignatureDigestPSSSHA256": { "typestr": "@" },
+   "kSecKeyAlgorithmRSASignatureDigestPSSSHA384": { "typestr": "@" },
+   "kSecKeyAlgorithmRSASignatureDigestPSSSHA512": { "typestr": "@" },
+   "kSecKeyAlgorithmRSASignatureMessagePSSSHA1": { "typestr": "@" },
+   "kSecKeyAlgorithmRSASignatureMessagePSSSHA224": { "typestr": "@" },
+   "kSecKeyAlgorithmRSASignatureMessagePSSSHA256": { "typestr": "@" },
+   "kSecKeyAlgorithmRSASignatureMessagePSSSHA384": { "typestr": "@" },
+   "kSecKeyAlgorithmRSASignatureMessagePSSSHA512": { "typestr": "@" },
+   "kSecKeyAlgorithmECDSASignatureRFC4754": { "typestr": "@" },
+   "kSecKeyAlgorithmECDSASignatureDigestX962": { "typestr": "@" },
+   "kSecKeyAlgorithmECDSASignatureDigestX962SHA1": { "typestr": "@" },
+   "kSecKeyAlgorithmECDSASignatureDigestX962SHA224": { "typestr": "@" },
+   "kSecKeyAlgorithmECDSASignatureDigestX962SHA256": { "typestr": "@" },
+   "kSecKeyAlgorithmECDSASignatureDigestX962SHA384": { "typestr": "@" },
+   "kSecKeyAlgorithmECDSASignatureDigestX962SHA512": { "typestr": "@" },
+   "kSecKeyAlgorithmECDSASignatureMessageX962SHA1": { "typestr": "@" },
+   "kSecKeyAlgorithmECDSASignatureMessageX962SHA224": { "typestr": "@" },
+   "kSecKeyAlgorithmECDSASignatureMessageX962SHA256": { "typestr": "@" },
+   "kSecKeyAlgorithmECDSASignatureMessageX962SHA384": { "typestr": "@" },
+   "kSecKeyAlgorithmECDSASignatureMessageX962SHA512": { "typestr": "@" },
+   "kSecKeyAlgorithmRSAEncryptionRaw": { "typestr": "@" },
+   "kSecKeyAlgorithmRSAEncryptionPKCS1": { "typestr": "@" },
+   "kSecKeyAlgorithmRSAEncryptionOAEPSHA1": { "typestr": "@" },
+   "kSecKeyAlgorithmRSAEncryptionOAEPSHA224": { "typestr": "@" },
+   "kSecKeyAlgorithmRSAEncryptionOAEPSHA256": { "typestr": "@" },
+   "kSecKeyAlgorithmRSAEncryptionOAEPSHA384": { "typestr": "@" },
+   "kSecKeyAlgorithmRSAEncryptionOAEPSHA512": { "typestr": "@" },
+   "kSecKeyAlgorithmRSAEncryptionOAEPSHA1AESGCM": { "typestr": "@" },
+   "kSecKeyAlgorithmRSAEncryptionOAEPSHA224AESGCM": { "typestr": "@" },
+   "kSecKeyAlgorithmRSAEncryptionOAEPSHA256AESGCM": { "typestr": "@" },
+   "kSecKeyAlgorithmRSAEncryptionOAEPSHA384AESGCM": { "typestr": "@" },
+   "kSecKeyAlgorithmRSAEncryptionOAEPSHA512AESGCM": { "typestr": "@" },
+   "kSecKeyAlgorithmECIESEncryptionStandardX963SHA1AESGCM": { "typestr": "@" },
+   "kSecKeyAlgorithmECIESEncryptionStandardX963SHA224AESGCM": { "typestr": "@" },
+   "kSecKeyAlgorithmECIESEncryptionStandardX963SHA256AESGCM": { "typestr": "@" },
+   "kSecKeyAlgorithmECIESEncryptionStandardX963SHA384AESGCM": { "typestr": "@" },
+   "kSecKeyAlgorithmECIESEncryptionStandardX963SHA512AESGCM": { "typestr": "@" },
+   "kSecKeyAlgorithmECIESEncryptionCofactorX963SHA1AESGCM": { "typestr": "@" },
+   "kSecKeyAlgorithmECIESEncryptionCofactorX963SHA224AESGCM": { "typestr": "@" },
+   "kSecKeyAlgorithmECIESEncryptionCofactorX963SHA256AESGCM": { "typestr": "@" },
+   "kSecKeyAlgorithmECIESEncryptionCofactorX963SHA384AESGCM": { "typestr": "@" },
+   "kSecKeyAlgorithmECIESEncryptionCofactorX963SHA512AESGCM": { "typestr": "@" },
+   "kSecKeyAlgorithmECIESEncryptionStandardVariableIVX963SHA224AESGCM": { "typestr": "@" },
+   "kSecKeyAlgorithmECIESEncryptionStandardVariableIVX963SHA256AESGCM": { "typestr": "@" },
+   "kSecKeyAlgorithmECIESEncryptionStandardVariableIVX963SHA384AESGCM": { "typestr": "@" },
+   "kSecKeyAlgorithmECIESEncryptionStandardVariableIVX963SHA512AESGCM": { "typestr": "@" },
+   "kSecKeyAlgorithmECIESEncryptionCofactorVariableIVX963SHA224AESGCM": { "typestr": "@" },
+   "kSecKeyAlgorithmECIESEncryptionCofactorVariableIVX963SHA256AESGCM": { "typestr": "@" },
+   "kSecKeyAlgorithmECIESEncryptionCofactorVariableIVX963SHA384AESGCM": { "typestr": "@" },
+   "kSecKeyAlgorithmECIESEncryptionCofactorVariableIVX963SHA512AESGCM": { "typestr": "@" },
+   "kSecKeyAlgorithmECDHKeyExchangeStandard": { "typestr": "@" },
+   "kSecKeyAlgorithmECDHKeyExchangeStandardX963SHA1": { "typestr": "@" },
+   "kSecKeyAlgorithmECDHKeyExchangeStandardX963SHA224": { "typestr": "@" },
+   "kSecKeyAlgorithmECDHKeyExchangeStandardX963SHA256": { "typestr": "@" },
+   "kSecKeyAlgorithmECDHKeyExchangeStandardX963SHA384": { "typestr": "@" },
+   "kSecKeyAlgorithmECDHKeyExchangeStandardX963SHA512": { "typestr": "@" },
+   "kSecKeyAlgorithmECDHKeyExchangeCofactor": { "typestr": "@" },
+   "kSecKeyAlgorithmECDHKeyExchangeCofactorX963SHA1": { "typestr": "@" },
+   "kSecKeyAlgorithmECDHKeyExchangeCofactorX963SHA224": { "typestr": "@" },
+   "kSecKeyAlgorithmECDHKeyExchangeCofactorX963SHA256": { "typestr": "@" },
+   "kSecKeyAlgorithmECDHKeyExchangeCofactorX963SHA384": { "typestr": "@" },
+   "kSecKeyAlgorithmECDHKeyExchangeCofactorX963SHA512": { "typestr": "@" },
+   "kSecPrivateKeyAttrs": { "typestr": "@" },
+   "kSecPublicKeyAttrs": { "typestr": "@" },
+   "kSecCFErrorArchitecture": { "typestr": "@" },
+   "kSecCFErrorPattern": { "typestr": "@" },
+   "kSecCFErrorResourceSeal": { "typestr": "@" },
+   "kSecCFErrorResourceAdded": { "typestr": "@" },
+   "kSecCFErrorResourceAltered": { "typestr": "@" },
+   "kSecCFErrorResourceMissing": { "typestr": "@" },
+   "kSecCFErrorResourceSideband": { "typestr": "@" },
+   "kSecCFErrorInfoPlist": { "typestr": "@" },
+   "kSecCFErrorGuestAttributes": { "typestr": "@" },
+   "kSecCFErrorRequirementSyntax": { "typestr": "@" },
+   "kSecCFErrorPath": { "typestr": "@" }
+  },
+  "aliases": {
+   "SecTransformCustomGetAttribute": { "alias": "SecTranformCustomGetAttribute" },
+   "errSSLServerAuthCompleted": { "alias": "errSSLPeerAuthCompleted" },
+   "errSSLClientAuthCompleted": { "alias": "errSSLPeerAuthCompleted" },
+   "errSSLLast": { "alias": "errSSLUnexpectedRecord" },
+   "errSecCSSigDBDenied": { "alias": "errSecCSDBDenied" },
+   "errSecCSSigDBAccess": { "alias": "errSecCSDBAccess" },
+   "kSecRequirementTypeCount": { "alias": "kSecInvalidRequirementType" },
+   "errSessionInternal": { "alias": "errAuthorizationInternal" },
+   "errSessionInvalidFlags": { "alias": "errAuthorizationInvalidFlags" },
+   "kSecRequirementTypeCount": { "alias": "kSecInvalidRequirementType" }
+
+  },
+  "classes": {
+  },
+  "functions": {
+   "SecKeychainItemDelete": {
+    "retval": { "type_override": "i" },
+    "args": {
+     "0": { "type_override": "@" },
+     "1": { "type_override": "o^@", "already_cfretained": true }
+    }
+   },
+   "SecKeychainItemCopyKeychain": {
+    "retval": { "type_override": "i" },
+    "args": {
+     "0": { "type_override": "@" },
+     "1": { "type_override": "o^@", "already_cfretained": true }
+    }
+   },
+   "SecKeychainItemCreateCopy": {
+    "retval": { "type_override": "i" },
+    "args": {
+     "0": { "type_override": "@" },
+     "1": { "type_override": "@" },
+     "2": { "type_override": "@" },
+     "3": { "type_override": "o^@", "already_cfretained": true }
+    }
+   },
+   "SecKeychainItemCreatePersistentReference": {
+    "retval": { "type_override": "i" },
+    "args": {
+     "0": { "type_override": "@" },
+     "1": { "type_override": "o^@", "already_cfretained": true }
+    }
+   },
+   "SecKeychainItemCopyFromPersistentReference": {
+    "retval": { "type_override": "i" },
+    "args": {
+     "0": { "type_override": "@" },
+     "1": { "type_override": "o^@", "already_cfretained": true }
+    }
+   },
+   "SecKeychainItemCopyAccess": {
+    "retval": { "type_override": "i" },
+    "args": {
+     "0": { "type_override": "@" },
+     "1": { "type_override": "o^@", "already_cfretained": true }
+    }
+   },
+   "SecKeychainItemSetAccess": {
+    "retval": { "type_override": "i" },
+    "args": {
+     "0": { "type_override": "@" },
+     "1": { "type_override": "@" }
+    }
+   },
+   "SecTrustSetVerifyDate": {
+    "retval": { "type_override": "i" },
+    "args": {
+     "0": { "type_override": "@" },
+     "1": { "type_override": "@" }
+    }
+   },
+   "SecTrustSetExceptions": {
+    "retval": { "type_override": "B" },
+    "args": {
+     "0": { "type_override": "@" },
+     "1": { "type_override": "@" }
+    }
+   },
+   "SecTrustGetVerifyTime": {
+    "retval": { "type_override": "d" },
+    "args": {
+     "0": { "type_override": "@" }
+    }
+   },
+   "SecTrustEvaluate": {
+    "retval": { "type_override": "i" },
+    "args": {
+     "0": { "type_override": "@" },
+     "1": { "type_override": "o^I" }
+    }
+   },
+   "SecTrustSetOCSPResponse": {
+    "retval": { "type_override": "i" },
+    "args": {
+     "0": { "type_override": "@" },
+     "1": { "type_override": "@" }
+    }
+   },
+   "SecTrustSetOptions": {
+    "retval": { "type_override": "i" },
+    "args": {
+     "0": { "type_override": "@" },
+     "1": { "type_override": "I" }
+    }
+   },
+   "SecTrustSetKeychains": {
+    "retval": { "type_override": "i" },
+    "args": {
+     "0": { "type_override": "@" },
+     "1": { "type_override": "@" }
+    }
+   },
+   "SecTrustCopyAnchorCertificates": {
+    "retval": { "type_override": "i" },
+    "args": {
+     "0": { "type_override": "o^@", "already_cfretained": true }
+    }
+   },
+   "SecKeychainAddInternetPassword": {
+    "retval": { "type_override": "i" },
+    "args": {
+     "0": { "type_override": "@" },
+     "1": { "type_override": "I" },
+     "2": { "type_override": "n^t", "c_array_length_in_arg": 1 },
+     "3": { "type_override": "I" },
+     "4": { "type_override": "n^t", "c_array_length_in_arg": 3 },
+     "5": { "type_override": "I" },
+     "6": { "type_override": "n^t", "c_array_length_in_arg": 5 },
+     "7": { "type_override": "I" },
+     "8": { "type_override": "n^t", "c_array_length_in_arg": 7 },
+     "9": { "type_override": "S" },
+     "10": { "type_override": "I" },
+     "11": { "type_override": "I" },
+     "12": { "type_override": "I" },
+     "13": { "type_override": "n^v", "c_array_length_in_arg": 12 },
+     "14": { "type_override": "o^@", "already_cfretained": true }
+    }
+   },
+   "SecKeychainAddGenericPassword": {
+    "retval": { "type_override": "i" },
+    "args": {
+     "0": { "type_override": "@" },
+     "1": { "type_override": "I" },
+     "2": { "type_override": "n^t", "c_array_length_in_arg": 1 },
+     "3": { "type_override": "I" },
+     "4": { "type_override": "n^t", "c_array_length_in_arg": 3 },
+     "5": { "type_override": "I" },
+     "6": { "type_override": "n^v", "c_array_length_in_arg": 5 },
+     "7": { "type_override": "o^@", "already_cfretained": true }
+    }
+   },
+   "SecKeychainGetUserInteractionAllowed": {
+    "retval": { "type_override": "i" },
+    "args": {
+     "0": { "type_override": "o^Z" }
+    }
+   },
+   "SecKeychainSetUserInteractionAllowed": {
+    "retval": { "type_override": "i" },
+    "args": {
+     "0": { "type_override": "Z" }
+    }
+   },
+   "SecKeychainSetPreferenceDomain": {
+    "retval": { "type_override": "i" },
+    "args": {
+     "0": { "type_override": "i" }
+    }
+   },
+   "SecKeychainSetDomainDefault": {
+    "retval": { "type_override": "i" },
+    "args": {
+     "0": { "type_override": "i" },
+     "1": { "type_override": "@" }
+    }
+   },
+   "SecKeychainSetDomainSearchList": {
+    "retval": { "type_override": "i" },
+    "args": {
+     "0": { "type_override": "i" },
+     "1": { "type_override": "@" }
+    }
+   },
+   "SecKeychainGetStatus": {
+    "retval": { "type_override": "i" },
+    "args": {
+     "0": { "type_override": "@" },
+     "1": { "type_override": "o^I" }
+    }
+   },
+   "SecKeychainGetPreferenceDomain": {
+    "retval": { "type_override": "i" },
+    "args": {
+     "0": { "type_override": "o^i" }
+    }
+   },
+   "SecKeychainSetAccess": {
+    "retval": { "type_override": "i" },
+    "args": {
+     "0": { "type_override": "@" },
+     "1": { "type_override": "@" }
+    }
+   },
+   "SecTrustSetAnchorCertificates": {
+    "retval": { "type_override": "i" },
+    "args": {
+     "0": { "type_override": "@" },
+     "1": { "type_override": "@" }
+    }
+   },
+   "SecTrustGetNetworkFetchAllowed": {
+    "retval": { "type_override": "i" },
+    "args": {
+     "0": { "type_override": "@" },
+     "1": { "type_override": "o^Z" }
+    }
+   },
+   "SecTrustSetNetworkFetchAllowed": {
+    "retval": { "type_override": "i" },
+    "args": {
+     "0": { "type_override": "@" },
+     "1": { "type_override": "Z" }
+    }
+   },
+   "SecTrustSetAnchorCertificatesOnly": {
+    "retval": { "type_override": "i" },
+    "args": {
+     "0": { "type_override": "@" },
+     "1": { "type_override": "Z" }
+    }
+   },
+   "SecTrustCreateWithCertificates": {
+    "retval": { "type_override": "i" },
+    "args": {
+     "0": { "type_override": "@" },
+     "1": { "type_override": "@" },
+     "2": { "type_override": "o^@", "already_cfretained": true }
+    }
+   },
+   "SecTrustSetPolicies": {
+    "retval": { "type_override": "i" },
+    "args": {
+     "0": { "type_override": "@" },
+     "1": { "type_override": "@" }
+    }
+   },
+   "SecTrustCopyPolicies": {
+    "retval": { "type_override": "i" },
+    "args": {
+     "0": { "type_override": "@" },
+     "1": { "type_override": "o^@", "already_cfretained": true }
+    }
+   },
+   "SecTrustCopyCustomAnchorCertificates": {
+    "retval": { "type_override": "i" },
+    "args": {
+     "0": { "type_override": "@" },
+     "1": { "type_override": "o^@", "already_cfretained": true }
+    }
+   },
+   "SecKeychainCopyAccess": {
+    "retval": { "type_override": "i" },
+    "args": {
+     "0": { "type_override": "@" },
+     "1": { "type_override": "o^@", "already_cfretained": true }
+    }
+   },
+   "SecKeychainCopyDomainDefault": {
+    "retval": { "type_override": "i" },
+    "args": {
+     "0": { "type_override": "i" },
+     "1": { "type_override": "o^@", "already_cfretained": true }
+    }
+   },
+   "SecKeychainGetPath": {
+    "retval": { "type_override": "i" },
+    "args": {
+     "0": { "type_override": "@" },
+     "1": { "type_override": "N^I" },
+     "2": { "type_override": "o^t", "c_array_length_in_arg": 1 }
+    }
+   },
+   "SecKeychainCopyDomainSearchList": {
+    "retval": { "type_override": "i" },
+    "args": {
+     "0": { "type_override": "i" },
+     "1": { "type_override": "o^@", "already_cfretained": true }
+    }
+   },
+   "SecKeychainGetVersion": {
+    "retval": { "type_override": "i" },
+    "args": {
+     "0": { "type_override": "o^I" }
+    }
+   },
+   "SecKeychainOpen": {
+    "retval": { "type_override": "i" },
+    "args": {
+     "0": { "type_override": "n^t", "c_array_delimited_by_null": true },
+     "1": { "type_override": "o^@", "already_cfretained": true }
+    }
+   },
+   "SecKeychainUnlock": {
+    "retval": { "type_override": "i" },
+    "args": {
+     "0": { "type_override": "@" },
+     "1": { "type_override": "I" },
+     "2": { "type_override": "n^v", "c_array_length_in_arg": 1 },
+     "3": { "type_override": "Z" }
+    }
+   },
+   "SecKeychainCreate": {
+    "retval": { "type_override": "i" },
+    "args": {
+     "0": { "type_override": "n^t", "c_array_delimited_by_null": true },
+     "1": { "type_override": "I" },
+     "2": { "type_override": "n^v", "c_array_length_in_arg": 1 },
+     "3": { "type_override": "Z" },
+     "4": { "type_override": "@" },
+     "5": { "type_override": "o^@", "already_cfretained": true }
+    }
+   },
+   "SecKeychainLockAll": {
+    "retval": { "type_override": "i" },
+    "args": {
+    }
+   },
+   "SecKeychainLock": {
+    "retval": { "type_override": "i" },
+    "args": {
+     "0": { "type_override": "@" }
+    }
+   },
+   "SecKeychainDelete": {
+    "retval": { "type_override": "i" },
+    "args": {
+     "0": { "type_override": "@" }
+    }
+   },
+   "SecKeychainCopySettings": {
+    "retval": { "type_override": "i" },
+    "args": {
+     "0": { "type_override": "@" },
+     "1": { "type_override": "o^{SecKeychainSettings=IZZI}" }
+    }
+   },
+   "SecKeychainSetSettings": {
+    "retval": { "type_override": "i" },
+    "args": {
+     "0": { "type_override": "@" },
+     "1": { "type_override": "n^{SecKeychainSettings=IZZI}" }
+    }
+   },
+   "SecTrustGetCertificateCount": {
+    "retval": { "type_override": ["i", "q"] },
+    "args": {
+     "0": { "type_override": "@" }
+    }
+   },
+   "SecTrustGetCertificateAtIndex": {
+    "retval": { "type_override": "@" },
+    "args": {
+     "0": { "type_override": "@" },
+     "1": { "type_override": ["i", "q"] }
+    }
+   },
+   "SecTrustGetTrustResult": {
+    "retval": { "type_override": "i" },
+    "args": {
+     "0": { "type_override": "@" },
+     "1": { "type_override": "o^I" }
+    }
+   },
+   "SecTrustCopyPublicKey": {
+    "retval": { "type_override": "@", "already_cfretained": true },
+    "args": {
+     "0": { "type_override": "@" }
+    }
+   },
+   "SecTrustCopyExceptions": {
+    "retval": { "type_override": "@", "already_cfretained": true },
+    "args": {
+     "0": { "type_override": "@" }
+    }
+   },
+   "SecTrustCopyProperties": {
+    "retval": { "type_override": "@", "already_cfretained": true },
+    "args": {
+     "0": { "type_override": "@" }
+    }
+   },
+   "SecCertificateCopyNormalizedSubjectContent": {
+    "retval": { "type_override": "@", "already_cfretained": true },
+    "args": {
+     "0": { "type_override": "@" },
+     "1": { "type_override": "o^@" }
+    }
+   },
+   "SecKeychainSetSearchList": {
+    "retval": { "type_override": "i" },
+    "args": {
+     "0": { "type_override": "@" }
+    }
+   },
+   "SecKeychainSetDefault": {
+    "retval": { "type_override": "i" },
+    "args": {
+     "0": { "type_override": "@" }
+    }
+   },
+   "SecKeychainCopySearchList": {
+    "retval": { "type_override": "i" },
+    "args": {
+     "0": { "type_override": "o^@", "already_cfretained": true }
+    }
+   },
+   "SecKeychainCopyDefault": {
+    "retval": { "type_override": "i" },
+    "args": {
+     "0": { "type_override": "o^@", "already_cfretained": true }
+    }
+   },
+   "SecCertificateCopyNormalizedIssuerContent": {
+    "retval": { "type_override": "@", "already_cfretained": true },
+    "args": {
+     "0": { "type_override": "@" },
+     "1": { "type_override": "o^@" }
+    }
+   },
+   "SecCertificateCopyShortDescription": {
+    "retval": { "type_override": "@", "already_cfretained": true },
+    "args": {
+     "0": { "type_override": "@" },
+     "1": { "type_override": "@" },
+     "2": { "type_override": "o^@" }
+    }
+   },
+   "SecCertificateCopyLongDescription": {
+    "retval": { "type_override": "@", "already_cfretained": true },
+    "args": {
+     "0": { "type_override": "@" },
+     "1": { "type_override": "@" },
+     "2": { "type_override": "o^@" }
+    }
+   },
+   "SecCertificateCopyValues": {
+    "retval": { "type_override": "@", "already_cfretained": true },
+    "args": {
+     "0": { "type_override": "@" },
+     "1": { "type_override": "@" },
+     "2": { "type_override": "o^@" }
+    }
+   },
+   "SecCertificateCopyPreferred": {
+    "retval": { "type_override": "i" },
+    "args": {
+     "0": { "type_override": "@" },
+     "1": { "type_override": "@" },
+     "2": { "type_override": "@" }
+    }
+   },
+   "SecCertificateCopyPreferred": {
+    "retval": { "type_override": "@", "already_cfretained": true },
+    "args": {
+     "0": { "type_override": "@" },
+     "1": { "type_override": "@" }
+    }
+   },
+   "SecCertificateSetPreferred": {
+    "retval": { "type_override": "i" },
+    "args": {
+     "0": { "type_override": "@" },
+     "1": { "type_override": "@" },
+     "2": { "type_override": "@" }
+    }
+   },
+   "SecCertificateAddToKeychain": {
+    "retval": { "type_override": "i" },
+    "args": {
+     "0": { "type_override": "@" },
+     "1": { "type_override": "@" }
+    }
+   },
+   "SecCertificateCopySerialNumber": {
+    "retval": { "type_override": "@", "already_cfretained": true },
+    "args": {
+     "0": { "type_override": "@" },
+     "1": { "type_override": "o^@" }
+    }
+   },
+   "SecCertificateCopySerialNumberData": {
+    "retval": { "type_override": "@", "already_cfretained": true },
+    "args": {
+     "0": { "type_override": "@" },
+     "1": { "type_override": "o^@" }
+    }
+   },
+   "SecCertificateCopyPublicKey": {
+    "retval": { "type_override": "i" },
+    "args": {
+     "0": { "type_override": "@" },
+     "1": { "type_override": "o^@", "already_cfretained": true }
+    }
+   },
+   "SecCertificateCopyNormalizedSubjectSequence": {
+    "retval": { "type_override": "@", "already_cfretained": true },
+    "args": {
+     "0": { "type_override": "@" }
+    }
+   },
+   "SecCertificateCopyNormalizedIssuerSequence": {
+    "retval": { "type_override": "@", "already_cfretained": true },
+    "args": {
+     "0": { "type_override": "@" }
+    }
+   },
+   "SecCertificateCopyEmailAddresses": {
+    "retval": { "type_override": "i" },
+    "args": {
+     "0": { "type_override": "@" },
+     "1": { "type_override": "o^@", "already_cfretained": true }
+    }
+   },
+   "SecCertificateCopyCommonName": {
+    "retval": { "type_override": "i" },
+    "args": {
+     "0": { "type_override": "@" },
+     "1": { "type_override": "o^@", "already_cfretained": true }
+    }
+   },
+   "SecCertificateCopySubjectSummary": {
+    "retval": { "type_override": "@", "already_cfretained": true },
+    "args": {
+     "0": { "type_override": "@" }
+    }
+   },
+   "SecCertificateCopyData": {
+    "retval": { "type_override": "@", "already_cfretained": true },
+    "args": {
+     "0": { "type_override": "@" }
+    }
+   },
+   "SecCertificateCreateWithData": {
+    "retval": { "type_override": "@", "already_cfretained": true },
+    "args": {
+     "0": { "type_override": "@" },
+     "1": { "type_override": "@" }
+    }
+   },
+   "SecCodeCopySelf": {
+    "retval": { "type_override": "i" },
+    "args": {
+     "0": { "type_override": "I" },
+     "1": { "type_override": "o^@", "already_cfretained": true }
+    }
+   },
+   "SecCodeCopyStaticCode": {
+    "retval": { "type_override": "i" },
+    "args": {
+     "0": { "type_override": "@" },
+     "1": { "type_override": "I" },
+     "2": { "type_override": "o^@", "already_cfretained": true }
+    }
+   },
+   "SecCodeCopyHost": {
+    "retval": { "type_override": "i" },
+    "args": {
+     "0": { "type_override": "@" },
+     "1": { "type_override": "I" },
+     "2": { "type_override": "o^@", "already_cfretained": true }
+    }
+   },
+   "SecCodeCopyGuestWithAttributes": {
+    "retval": { "type_override": "i" },
+    "args": {
+     "0": { "type_override": "@" },
+     "1": { "type_override": "@" },
+     "2": { "type_override": "I" },
+     "3": { "type_override": "o^@", "already_cfretained": true }
+    }
+   },
+   "SecCodeCheckValidity": {
+    "retval": { "type_override": "i" },
+    "args": {
+     "0": { "type_override": "@" },
+     "1": { "type_override": "I" },
+     "2": { "type_override": "@" }
+    }
+   },
+   "SecCodeCheckValidityWithErrors": {
+    "retval": { "type_override": "i" },
+    "args": {
+     "0": { "type_override": "@" },
+     "1": { "type_override": "I" },
+     "2": { "type_override": "@" },
+     "3": { "type_override": "o^@", "already_cfretained": true }
+    }
+   },
+   "SecCodeCopyPath": {
+    "retval": { "type_override": "i" },
+    "args": {
+     "0": { "type_override": "@" },
+     "1": { "type_override": "I" },
+     "2": { "type_override": "o^@", "already_cfretained": true }
+    }
+   },
+   "SecCodeCopyDesignatedRequirement": {
+    "retval": { "type_override": "i" },
+    "args": {
+     "0": { "type_override": "@" },
+     "1": { "type_override": "I" },
+     "2": { "type_override": "o^@", "already_cfretained": true }
+    }
+   },
+   "SecCodeCopySigningInformation": {
+    "retval": { "type_override": "i" },
+    "args": {
+     "0": { "type_override": "@" },
+     "1": { "type_override": "I" },
+     "2": { "type_override": "o^@", "already_cfretained": true }
+    }
+   },
+   "SecCodeMapMemory": {
+    "retval": { "type_override": "i" },
+    "args": {
+     "0": { "type_override": "@" },
+     "1": { "type_override": "I" }
+    }
+   },
+   "SecAccessCopyACLList": {
+    "retval": { "type_override": "i" },
+    "args": {
+     "0": { "type_override": "@" },
+     "1": { "type_override": "o^@", "already_cfretained": true }
+    }
+   },
+   "SecAccessCopyOwnerAndACL": {
+    "retval": { "type_override": "i" },
+    "args": {
+     "0": { "type_override": "@" },
+     "1": { "type_override": "o^I" },
+     "2": { "type_override": "o^I" },
+     "3": { "type_override": "o^I" },
+     "4": { "type_override": "o^@", "already_cfretained": true }
+    }
+   },
+   "SecAccessCopyMatchingACLList": {
+    "retval": { "type_override": "@", "already_cfretained": true },
+    "args": {
+     "0": { "type_override": "@" },
+     "1": { "type_override": "@" }
+    }
+   },
+   "SecAccessCreateWithOwnerAndACL": {
+    "retval": { "type_override": "@", "already_cfretained": true },
+    "args": {
+     "0": { "type_override": "I" },
+     "1": { "type_override": "I" },
+     "2": { "type_override": "I" },
+     "3": { "type_override": "@" },
+     "4": { "type_override": "o^@" }
+    }
+   },
+   "SecACLCopyAuthorizations": {
+    "retval": { "type_override": "@", "already_cfretained": true },
+    "args": {
+     "0": { "type_override": "@" }
+    }
+   },
+   "SecACLRemove": {
+    "retval": { "type_override": "i" },
+    "args": {
+     "0": { "type_override": "@" }
+    }
+   },
+   "SecAccessCreate": {
+    "retval": { "type_override": "i" },
+    "args": {
+     "0": { "type_override": "@" },
+     "1": { "type_override": "@" },
+     "2": { "type_override": "o^@", "already_cfretained": true }
+    }
+   },
+   "SecACLCreateWithSimpleContents": {
+    "retval": { "type_override": "i" },
+    "args": {
+     "0": { "type_override": "@" },
+     "1": { "type_override": "@" },
+     "2": { "type_override": "@" },
+     "3": { "type_override": "S" },
+     "4": { "type_override": "o^@", "already_cfretained": true }
+    }
+   },
+   "SecACLCopyContents": {
+    "retval": { "type_override": "i" },
+    "args": {
+     "0": { "type_override": "@" },
+     "1": { "type_override": "o^@", "already_cfretained": true },
+     "2": { "type_override": "o^@", "already_cfretained": true },
+     "3": { "type_override": "o^S" }
+    }
+   },
+   "SecACLSetContents": {
+    "retval": { "type_override": "i" },
+    "args": {
+     "0": { "type_override": "@" },
+     "1": { "type_override": "@" },
+     "2": { "type_override": "@" },
+     "3": { "type_override": "S" }
+    }
+   },
+   "SecACLUpdateAuthorizations": {
+    "retval": { "type_override": "i" },
+    "args": {
+     "0": { "type_override": "@" },
+     "1": { "type_override": "@" }
+    }
+   },
+   "CMSEncoderGetCertificateChainMode": {
+    "retval": { "type_override": "i" },
+    "args": {
+     "0": { "type_override": "@" },
+     "1": { "type_override": "o^I" }
+    }
+   },
+   "CMSEncoderSetCertificateChainMode": {
+    "retval": { "type_override": "i" },
+    "args": {
+     "0": { "type_override": "@" },
+     "1": { "type_override": "I" }
+    }
+   },
+   "CMSEncoderAddSignedAttributes": {
+    "retval": { "type_override": "i" },
+    "args": {
+     "0": { "type_override": "@" },
+     "1": { "type_override": "I" }
+    }
+   },
+   "CMSEncoderCopySignerTimestampWithPolicy": {
+    "retval": { "type_override": "i" },
+    "args": {
+     "0": { "type_override": "@" },
+     "1": { "type_override": "@" },
+     "2": { "type_override": "L" },
+     "3": { "type_override": "o^d" }
+    }
+   },
+   "CMSEncoderCopySignerTimestamp": {
+    "retval": { "type_override": "i" },
+    "args": {
+     "0": { "type_override": "@" },
+     "1": { "type_override": "L" },
+     "2": { "type_override": "o^d" }
+    }
+   },
+   "CMSEncodeContent": {
+    "retval": { "type_override": "i" },
+    "args": {
+     "0": { "type_override": "@" },
+     "1": { "type_override": "@" },
+     "2": { "type_override": "@" },
+     "3": { "type_override": "Z" },
+     "4": { "type_override": "I" },
+     "5": { "type_override": "n^v", "c_array_length_in_arg": 6 },
+     "6": { "type_override": "L" },
+     "7": { "type_override": "o^@", "already_cfretained": true }
+    }
+   },
+   "CMSEncoderCopyEncodedContent": {
+    "retval": { "type_override": "i" },
+    "args": {
+     "0": { "type_override": "@" },
+     "1": { "type_override": "o^@", "already_cfretained": true }
+    }
+   },
+   "CMSEncoderCreate": {
+    "retval": { "type_override": "i" },
+    "args": {
+     "0": { "type_override": "o^@", "already_cfretained": true }
+    }
+   },
+   "CMSEncoderSetSignerAlgorithm": {
+    "retval": { "type_override": "i" },
+    "args": {
+     "0": { "type_override": "@" },
+     "1": { "type_override": "@" }
+    }
+   },
+   "CMSEncoderAddSigners": {
+    "retval": { "type_override": "i" },
+    "args": {
+     "0": { "type_override": "@" },
+     "1": { "type_override": "@" }
+    }
+   },
+   "CMSEncoderAddRecipients": {
+    "retval": { "type_override": "i" },
+    "args": {
+     "0": { "type_override": "@" },
+     "1": { "type_override": "@" }
+    }
+   },
+   "CMSEncoderSetHasDetachedContent": {
+    "retval": { "type_override": "i" },
+    "args": {
+     "0": { "type_override": "@" },
+     "1": { "type_override": "Z" }
+    }
+   },
+   "CMSEncoderGetHasDetachedContent": {
+    "retval": { "type_override": "i" },
+    "args": {
+     "0": { "type_override": "@" },
+     "1": { "type_override": "o^Z" }
+    }
+   },
+   "CMSEncoderSetEncapsulatedContentTypeOID": {
+    "retval": { "type_override": "i" },
+    "args": {
+     "0": { "type_override": "@" },
+     "1": { "type_override": "@" }
+    }
+   },
+   "CMSEncoderAddSupportingCerts": {
+    "retval": { "type_override": "i" },
+    "args": {
+     "0": { "type_override": "@" },
+     "1": { "type_override": "@" }
+    }
+   },
+   "CMSEncoderCopySupportingCerts": {
+    "retval": { "type_override": "i" },
+    "args": {
+     "0": { "type_override": "@" },
+     "1": { "type_override": "o^@", "already_cfretained": true }
+    }
+   },
+   "CMSEncoderCopyEncapsulatedContentType": {
+    "retval": { "type_override": "i" },
+    "args": {
+     "0": { "type_override": "@" },
+     "1": { "type_override": "o^@", "already_cfretained": true }
+    }
+   },
+   "CMSEncoderCopySigners": {
+    "retval": { "type_override": "i" },
+    "args": {
+     "0": { "type_override": "@" },
+     "1": { "type_override": "o^@", "already_cfretained": true }
+    }
+   },
+   "CMSEncoderCopyRecipients": {
+    "retval": { "type_override": "i" },
+    "args": {
+     "0": { "type_override": "@" },
+     "1": { "type_override": "o^@", "already_cfretained": true }
+    }
+   },
+   "CMSDecoderCreate": {
+    "retval": { "type_override": "i" },
+    "args": {
+     "0": { "type_override": "o^@", "already_cfretained": true }
+    }
+   },
+   "CMSEncoderUpdateContent": {
+    "retval": { "type_override": "i" },
+    "args": {
+     "0": { "type_override": "@" },
+     "1": { "type_override": "n^v", "c_array_length_in_arg": 2 },
+     "2": { "type_override": "L" }
+    }
+   },
+   "CMSDecoderUpdateMessage": {
+    "retval": { "type_override": "i" },
+    "args": {
+     "0": { "type_override": "@" },
+     "1": { "type_override": "n^v", "c_array_length_in_arg": 2 },
+     "2": { "type_override": "L" }
+    }
+   },
+   "CMSDecoderFinalizeMessage": {
+    "retval": { "type_override": "i" },
+    "args": {
+     "0": { "type_override": "@" }
+    }
+   },
+   "CMSDecoderSetDetachedContent": {
+    "retval": { "type_override": "i" },
+    "args": {
+     "0": { "type_override": "@" },
+     "1": { "type_override": "@" }
+    }
+   },
+   "CMSDecoderCopyDetachedContent": {
+    "retval": { "type_override": "i" },
+    "args": {
+     "0": { "type_override": "@" },
+     "1": { "type_override": "o^@", "already_cfretained": true }
+    }
+   },
+   "CMSDecoderSetSearchKeychain": {
+    "retval": { "type_override": "i" },
+    "args": {
+     "0": { "type_override": "@" },
+     "1": { "type_override": "@" }
+    }
+   },
+   "CMSDecoderGetNumSigners": {
+    "retval": { "type_override": "i" },
+    "args": {
+     "0": { "type_override": "@" },
+     "1": { "type_override": "o^L" }
+    }
+   },
+   "CMSDecoderCopySignerStatus": {
+    "retval": { "type_override": "i" },
+    "args": {
+     "0": { "type_override": "@" },
+     "1": { "type_override": "L" },
+     "2": { "type_override": "@" },
+     "3": { "type_override": "Z" },
+     "4": { "type_override": "o^I" },
+     "5": { "type_override": "o^i" }
+    }
+   },
+   "CMSDecoderCopySignerEmailAddress": {
+    "retval": { "type_override": "i" },
+    "args": {
+     "0": { "type_override": "@" },
+     "1": { "type_override": "L" },
+     "2": { "type_override": "o^@", "already_cfretained": true }
+    }
+   },
+   "CMSDecoderCopySignerCert": {
+    "retval": { "type_override": "i" },
+    "args": {
+     "0": { "type_override": "@" },
+     "1": { "type_override": "L" },
+     "2": { "type_override": "o^@", "already_cfretained": true }
+    }
+   },
+   "CMSDecoderIsContentEncrypted": {
+    "retval": { "type_override": "i" },
+    "args": {
+     "0": { "type_override": "@" },
+     "1": { "type_override": "o^Z" }
+    }
+   },
+   "CMSDecoderCopyEncapsulatedContentType": {
+    "retval": { "type_override": "i" },
+    "args": {
+     "0": { "type_override": "@" },
+     "1": { "type_override": "o^@", "already_cfretained": true }
+    }
+   },
+   "CMSDecoderCopyAllCerts": {
+    "retval": { "type_override": "i" },
+    "args": {
+     "0": { "type_override": "@" },
+     "1": { "type_override": "o^@", "already_cfretained": true }
+    }
+   },
+   "CMSDecoderCopyContent": {
+    "retval": { "type_override": "i" },
+    "args": {
+     "0": { "type_override": "@" },
+     "1": { "type_override": "o^@", "already_cfretained": true }
+    }
+   },
+   "CMSDecoderCopySignerSigningTime": {
+    "retval": { "type_override": "i" },
+    "args": {
+     "0": { "type_override": "@" },
+     "1": { "type_override": "L" },
+     "2": { "type_override": "o^d", "already_cfretained": true }
+    }
+   },
+   "CMSDecoderCopySignerTimestamp": {
+    "retval": { "type_override": "i" },
+    "args": {
+     "0": { "type_override": "@" },
+     "1": { "type_override": "L" },
+     "2": { "type_override": "o^d", "already_cfretained": true }
+    }
+   },
+   "CMSDecoderCopySignerTimestampWithPolicy": {
+    "retval": { "type_override": "i" },
+    "args": {
+     "0": { "type_override": "@" },
+     "1": { "type_override": "@" },
+     "2": { "type_override": "L" },
+     "3": { "type_override": "o^d", "already_cfretained": true }
+    }
+   },
+   "CMSDecoderCopySignerTimestampCertificates": {
+    "retval": { "type_override": "i" },
+    "args": {
+     "0": { "type_override": "@" },
+     "1": { "type_override": "L" },
+     "2": { "type_override": "o^@", "already_cfretained": true }
+    }
+   },
+   "SecHostCreateGuest": {
+    "retval": { "type_override": "i" },
+    "args": {
+     "0": { "type_override": "I" },
+     "1": { "type_override": "I" },
+     "2": { "type_override": "@" },
+     "3": { "type_override": "@" },
+     "4": { "type_override": "I" },
+     "5": { "type_override": "o^I" }
+    }
+   },
+   "SecHostRemoveGuest": {
+    "retval": { "type_override": "i" },
+    "args": {
+     "0": { "type_override": "I" },
+     "1": { "type_override": "I" },
+     "2": { "type_override": "I" }
+    }
+   },
+   "SecHostSelectGuest": {
+    "retval": { "type_override": "i" },
+    "args": {
+     "0": { "type_override": "I" },
+     "1": { "type_override": "I" }
+    }
+   },
+   "SecHostSelectedGuest": {
+    "retval": { "type_override": "i" },
+    "args": {
+     "0": { "type_override": "I" },
+     "1": { "type_override": "o^I" }
+    }
+   },
+   "SecHostSetGuestStatus": {
+    "retval": { "type_override": "i" },
+    "args": {
+     "0": { "type_override": "I" },
+     "1": { "type_override": "I" },
+     "2": { "type_override": "@" },
+     "3": { "type_override": "I" }
+    }
+   },
+   "SecHostSetHostingPort": {
+    "retval": { "type_override": "i" },
+    "args": {
+     "0": { "type_override": "I" },
+     "1": { "type_override": "I" }
+    }
+   },
+   "SecCopyErrorMessageString": {
+    "retval": { "type_override": "@", "already_cfretained": true },
+    "args": {
+     "0": { "type_override": "i" },
+     "1": { "type_override": "^v" }
+    }
+   },
+   "SecTrustSettingsRemoveTrustSettings": {
+    "retval": { "type_override": "i" },
+    "args": {
+     "0": { "type_override": "@" },
+     "1": { "type_override": "I" }
+    }
+   },
+   "SecTrustSettingsSetTrustSettings": {
+    "retval": { "type_override": "i" },
+    "args": {
+     "0": { "type_override": "@" },
+     "1": { "type_override": "I" },
+     "2": { "type_override": "@" }
+    }
+   },
+   "SecTrustSettingsImportExternalRepresentation": {
+    "retval": { "type_override": "i" },
+    "args": {
+     "0": { "type_override": "I" },
+     "1": { "type_override": "@" }
+    }
+   },
+   "SecTrustSettingsCreateExternalRepresentation": {
+    "retval": { "type_override": "i" },
+    "args": {
+     "0": { "type_override": "I" },
+     "1": { "type_override": "o^@", "already_cfretained": true }
+    }
+   },
+   "SecTrustSettingsCopyCertificates": {
+    "retval": { "type_override": "i" },
+    "args": {
+     "0": { "type_override": "I" },
+     "1": { "type_override": "o^@", "already_cfretained": true }
+    }
+   },
+   "SecTrustSettingsCopyModificationDate": {
+    "retval": { "type_override": "i" },
+    "args": {
+     "0": { "type_override": "@" },
+     "1": { "type_override": "I" },
+     "2": { "type_override": "o^@", "already_cfretained": true }
+    }
+   },
+   "SecTrustSettingsCopyTrustSettings": {
+    "retval": { "type_override": "i" },
+    "args": {
+     "0": { "type_override": "@" },
+     "1": { "type_override": "I" },
+     "2": { "type_override": "o^@", "already_cfretained": true }
+    }
+   },
+   "SecPKCS12Import": {
+    "retval": { "type_override": "i" },
+    "args": {
+     "0": { "type_override": "@" },
+     "1": { "type_override": "@" },
+     "2": { "type_override": "o^@", "already_cfretained": true }
+    }
+   },
+   "SecItemExport": {
+    "retval": { "type_override": "i" },
+    "args": {
+     "0": { "type_override": "@" },
+     "1": { "type_override": "I" },
+     "2": { "type_override": "I" },
+     "3": { "type_override": "n^{_SecItemImportExportKeyParameters=II@@@@@@}" },
+     "4": { "type_override": "o^@", "already_cfretained": true }
+    }
+   },
+   "SecItemImport": {
+    "retval": { "type_override": "i" },
+    "args": {
+     "0": { "type_override": "@" },
+     "1": { "type_override": "@" },
+     "2": { "type_override": "N^I" },
+     "3": { "type_override": "N^I" },
+     "4": { "type_override": "I" },
+     "5": { "type_override": "n^{_SecItemImportExportKeyParameters=II@@@@@@}" },
+     "6": { "type_override": "@" },
+     "7": { "type_override": "o^@", "already_cfretained": true }
+    }
+   },
+   "SecKeychainAddCallback": {
+    "args":  {
+     "0": {
+      "type_override": "^?",
+      "callable_retained": true,
+      "callable": {
+       "arguments": {
+        "0": { "type": "I" },
+	"1": { "type": "n^{SecKeychainCallbackInfo=I@@i}" },
+	"2": { "type": "^v" }
+       },
+       "retval": { "type": "i" }
+      }
+     },
+     "1": { "type_override": "I" },
+     "2": { "type_override": "^v" }
+    },
+    "retval": { "type_override": "i" }
+   },
+   "SecKeychainRemoveCallback": {
+    "args":  {
+     "0": {
+      "type_override": "^?",
+      "callable_retained": true,
+      "callable": {
+       "arguments": {
+        "0": { "type": "I" },
+	"1": { "type": "n^{SecKeychainCallbackInfo=I@@i}" },
+	"2": { "type": "^v" }
+       },
+       "retval": { "type": "i" }
+      }
+     }
+    },
+    "retval": { "type_override": "i" }
+   },
+   "SecTransformRegister": {
+    "args":  {
+     "0": { "type_override": "@" },
+     "1": {
+      "type_override": "^?",
+      "callable_retained": true,
+      "callable": {
+       "arguments": {
+        "0": { "type": "@" },
+	"1": { "type": "@" },
+	"2": { "type": "^{OpaqueSecTransformImplementation=}" }
+       },
+       "retval": {
+        "type": "@?",
+	"callable": {
+	 "arguments": {
+	  "0": {  "type": "^v" }
+	 },
+	 "retval": {
+	  "type": "@"
+	 }
+	}
+       }
+      }
+     },
+     "2": { "type_override": "o^@" }
+    },
+    "retval": { "type_override": "Z" }
+   },
+   "SecTrustEvaluateAsync": {
+    "args":  {
+     "0": { "type_override": "@" },
+     "1": { "type_override": "^{dispatch_queue_s}" },
+     "2": {
+      "type_override": "@?",
+      "callable": {
+       "arguments": {
+        "0": { "type": "^v" },
+        "1": { "type": "@" },
+        "2": { "type": "I" }
+       },
+       "retval": {
+        "type": "v"
+       }
+      }
+     }
+    },
+    "retval": { "type_override": "i" }
+   },
+   "SecTrustCopyResult": {
+    "retval": { "type_override": "@", "already_cfretained": true },
+    "args": {
+     "0": { "type_override": "@" }
+    }
+   },
+   "SecTransformSetDataAction": {
+    "args":  {
+     "0": { "type_override": "^{OpaqueSecTransformImplementation=}" },
+     "1": { "type_override": "@" },
+     "2": {
+      "type_override": "@?",
+      "callable": {
+       "arguments": {
+        "0": { "type": "^v" },
+        "1": { "type": "@" }
+       },
+       "retval": {
+        "type": "@"
+       }
+      }
+     }
+    },
+    "retval": { "type_override": "@" }
+   },
+   "SecTransformSetAttributeAction": {
+    "args":  {
+     "0": { "type_override": "^{OpaqueSecTransformImplementation=}" },
+     "1": { "type_override": "@" },
+     "2": { "type_override": "@" },
+     "3": {
+      "type_override": "@?",
+      "callable": {
+       "arguments": {
+        "0": { "type": "^v" },
+        "1": { "type": "@" },
+        "2": { "type": "@" }
+       },
+       "retval": {
+        "type": "@"
+       }
+      }
+     }
+    },
+    "retval": { "type_override": "@" }
+   },
+   "SecTransformSetTransformAction": {
+    "args":  {
+     "0": { "type_override": "^{OpaqueSecTransformImplementation=}" },
+     "1": { "type_override": "@" },
+     "2": {
+      "type_override": "@?",
+      "callable": {
+       "arguments": {
+        "0": { "type": "^v" }
+       },
+       "retval": {
+        "type": "@"
+       }
+      }
+     }
+    },
+    "retval": { "type_override": "@" }
+   },
+   "SecTranformCustomGetAttribute": {
+    "args":  {
+     "0": { "type_override": "^{OpaqueSecTransformImplementation=}" },
+     "1": { "type_override": "@" },
+     "2": { "type_override": ["i", "q"] }
+    },
+    "retval": { "type_override": "@" }
+   },
+   "SecTransformCustomSetAttribute": {
+    "args":  {
+     "0": { "type_override": "^{OpaqueSecTransformImplementation=}" },
+     "1": { "type_override": "@" },
+     "2": { "type_override": ["i", "q"] },
+     "3": { "type_override": "@" }
+    },
+    "retval": { "type_override": "@" }
+   },
+   "SecTransformPushbackAttribute": {
+    "args":  {
+     "0": { "type_override": "^{OpaqueSecTransformImplementation=}" },
+     "1": { "type_override": "@" },
+     "2": { "type_override": "@" }
+    },
+    "retval": { "type_override": "@" }
+   },
+   "SecTransformCreate": {
+    "args":  {
+     "0": { "type_override": "@" },
+     "1": { "type_override": "o^@" }
+    },
+    "retval": { "type_override": "@", "already_cfretained": true }
+   },
+   "SecTransformNoData": {
+    "args":  {
+    },
+    "retval": { "type_override": "@" }
+   },
+   "SSLSetClientSideAuthenticate": {
+    "args":  {
+     "0": { "type_override": "@" },
+     "1": { "type_override": "i" }
+    },
+    "retval": { "type_override": "i" }
+   },
+   "SecDigestTransformCreate": {
+    "args":  {
+     "0": { "type_override": "@" },
+     "1": { "type_override": ["i", "q"] },
+     "2": { "type_override": "o^@" }
+    },
+    "retval": { "type_override": "@", "already_cfretained": true }
+   },
+   "SecEncodeTransformCreate": {
+    "args":  {
+     "0": { "type_override": "@" },
+     "1": { "type_override": "o^@" }
+    },
+    "retval": { "type_override": "@", "already_cfretained": true }
+   },
+   "SecAccessControlCreateWithFlags": {
+    "args":  {
+     "0": { "type_override": "@" },
+     "1": { "type_override": "@" },
+     "2": { "type_override": ["I", "Q"] },
+     "3": { "type_override": "o^@" }
+    },
+    "retval": { "type_override": "@", "already_cfretained": true }
+   },
+   "SecRandomCopyBytes": {
+    "args": {
+     "0": { "type_override": "^{__SecRandom=}" },
+     "1": { "type_override": "L" },
+     "2": { "type_override": "^v", "c_array_length_in_arg": 1, "type_modifier": "o" }
+    },
+    "retval": {
+     "type_override": "i"
+    }
+   },
+   "SecTransformExecuteAsync": {
+    "args": {
+     "0": { "type_override": "@" },
+     "1": { "type_override": "^{dispatch_queue_s=}" },
+     "2": {
+      "type_override": "@?",
+      "callable": {
+       "arguments": {
+        "0": { "type": "^v" },
+	"1": { "type": "@" },
+	"2": { "type": "@" },
+	"3": { "type": "Z" }
+       },
+       "retval": {
+        "type": "v"
+       }
+      }
+     }
+    },
+    "retval": {
+     "type_override": "v"
+    }
+   },
+   "SecKeyGeneratePairAsync": {
+    "args": {
+     "0": { "type_override": "@" },
+     "1": { "type_override": "^{dispatch_queue_s=}" },
+     "2": {
+      "type_override": "@?",
+      "callable": {
+       "arguments": {
+        "0": { "type": "^v" },
+	"1": { "type": "@" },
+	"2": { "type": "@" },
+	"3": { "type": "@" }
+       },
+       "retval": {
+        "type": "v"
+       }
+      }
+     }
+    },
+    "retval": {
+     "type_override": "v"
+    }
+   },
+   "SecItemDelete": {
+    "args": {
+     "0": { "type_override": "@" }
+    },
+    "retval": {
+     "type_override": "i"
+    }
+   },
+   "SecItemUpdate": {
+    "args": {
+     "0": { "type_override": "@" },
+     "1": { "type_override": "@" }
+    },
+    "retval": {
+     "type_override": "i"
+    }
+   },
+   "SecItemAdd": {
+    "args": {
+     "0": { "type_override": "@" },
+     "1": { "type_override": "o^@", "already_cfretained": true }
+    },
+    "retval": {
+     "type_override": "i"
+    }
+   },
+   "SecItemCopyMatching": {
+    "args": {
+     "0": { "type_override": "@" },
+     "1": { "type_override": "o^@", "already_cfretained": true }
+    },
+    "retval": {
+     "type_override": "i"
+    }
+   },
+   "SecKeyGeneratePair": {
+    "args": {
+     "0": { "type_override": "@" },
+     "1": { "type_override": "o^@", "already_cfretained": true },
+     "2": { "type_override": "o^@", "already_cfretained": true }
+    },
+    "retval": {
+     "type_override": "i"
+    }
+   },
+   "SecKeyVerifySignature": {
+    "args": {
+     "0": { "type_override": "@" },
+     "1": { "type_override": "@" },
+     "2": { "type_override": "@" },
+     "3": { "type_override": "@" },
+     "4": { "type_override": "o^@" }
+    },
+    "retval": {
+     "type_override": "Z"
+    }
+   },
+   "SecKeyIsAlgorithmSupported": {
+    "args": {
+     "0": { "type_override": "@" },
+     "1": { "type_override": [ "i", "q" ] },
+     "2": { "type_override": "@" }
+    },
+    "retval": {
+     "type_override": "Z"
+    }
+   },
+   "SecPolicyCreateWithProperties": {
+    "args": {
+     "0": { "type_override": "@" },
+     "1": { "type_override": "@" }
+    },
+    "retval": {
+     "type_override": "@",
+     "already_cfretained": true
+    }
+   },
+   "SecPolicyCreateRevocation": {
+    "args": {
+     "0": { "type_override": ["I", "Q"] }
+    },
+    "retval": {
+     "type_override": "@",
+     "already_cfretained": true
+    }
+   },
+   "SecPolicyCreateSSL": {
+    "args": {
+     "0": { "type_override": "Z" },
+     "1": { "type_override": "@" }
+    },
+    "retval": {
+     "type_override": "@",
+     "already_cfretained": true
+    }
+   },
+   "SecPolicyCreateBasicX509": {
+    "args": {
+    },
+    "retval": {
+     "type_override": "@",
+     "already_cfretained": true
+    }
+   },
+   "SecPolicyCopyProperties": {
+    "args": {
+     "0": { "type_override": "@" }
+    },
+    "retval": {
+     "type_override": "@",
+     "already_cfretained": true
+    }
+   },
+   "SecKeyCopyKeyExchangeResult": {
+    "args": {
+     "0": { "type_override": "@" },
+     "1": { "type_override": "@" },
+     "2": { "type_override": "@" },
+     "3": { "type_override": "@" },
+     "4": { "type_override": "o^@" }
+    },
+    "retval": {
+     "type_override": "@",
+     "already_cfretained": true
+    }
+   },
+   "SecKeyCreateDecryptedData": {
+    "args": {
+     "0": { "type_override": "@" },
+     "1": { "type_override": "@" },
+     "2": { "type_override": "@" },
+     "3": { "type_override": "o^@" }
+    },
+    "retval": {
+     "type_override": "@",
+     "already_cfretained": true
+    }
+   },
+   "SecKeyCreateEncryptedData": {
+    "args": {
+     "0": { "type_override": "@" },
+     "1": { "type_override": "@" },
+     "2": { "type_override": "@" },
+     "3": { "type_override": "o^@" }
+    },
+    "retval": {
+     "type_override": "@",
+     "already_cfretained": true
+    }
+   },
+   "SecKeyCreateSignature": {
+    "args": {
+     "0": { "type_override": "@" },
+     "1": { "type_override": "@" },
+     "2": { "type_override": "@" },
+     "3": { "type_override": "o^@" }
+    },
+    "retval": {
+     "type_override": "@",
+     "already_cfretained": true
+    }
+   },
+   "SecKeyCopyPublicKey": {
+    "args": {
+     "0": { "type_override": "@" }
+    },
+    "retval": {
+     "type_override": "@",
+     "already_cfretained": true
+    }
+   },
+   "SecKeyCopyAttributes": {
+    "args": {
+     "0": { "type_override": "@" }
+    },
+    "retval": {
+     "type_override": "@",
+     "already_cfretained": true
+    }
+   },
+   "SecKeyCopyExternalRepresentation": {
+    "args": {
+     "0": { "type_override": "@" },
+     "1": { "type_override": "o^@" }
+    },
+    "retval": {
+     "type_override": "@",
+     "already_cfretained": true
+    }
+   },
+   "SecKeyGetBlockSize": {
+    "args": {
+     "0": { "type_override": "@" }
+    },
+    "retval": {
+     "type_override": "L"
+    }
+   },
+   "SecKeyCreateWithData": {
+    "args": {
+     "0": { "type_override": "@" },
+     "1": { "type_override": "@" },
+     "2": { "type_override": "o^@" }
+    },
+    "retval": {
+     "type_override": "@",
+     "already_cfretained": true
+    }
+   },
+   "SecKeyCreateRandomKey": {
+    "args": {
+     "0": { "type_override": "@" },
+     "1": { "type_override": "o^@" }
+    },
+    "retval": {
+     "type_override": "@",
+     "already_cfretained": true
+    }
+   },
+   "SecKeyUnwrapSymmetric": {
+    "args": {
+     "0": { "type_override": "n^@" },
+     "1": { "type_override": "@" },
+     "2": { "type_override": "@" },
+     "3": { "type_override": "o^@" }
+    },
+    "retval": {
+     "type_override": "@",
+     "already_cfretained": true
+    }
+   },
+   "SecKeyWrapSymmetric": {
+    "args": {
+     "0": { "type_override": "@" },
+     "1": { "type_override": "@" },
+     "2": { "type_override": "@" },
+     "3": { "type_override": "o^@" }
+    },
+    "retval": {
+     "type_override": "@",
+     "already_cfretained": true
+    }
+   },
+   "SecKeyDeriveFromPassword": {
+    "args": {
+     "0": { "type_override": "@" },
+     "1": { "type_override": "@" },
+     "2": { "type_override": "o^@" }
+    },
+    "retval": {
+     "type_override": "@",
+     "already_cfretained": true
+    }
+   },
+   "SecKeyCreateFromData": {
+    "args": {
+     "0": { "type_override": "@" },
+     "1": { "type_override": "@" },
+     "2": { "type_override": "o^@" }
+    },
+    "retval": {
+     "type_override": "@",
+     "already_cfretained": true
+    }
+   },
+   "SecKeyGenerateSymmetric": {
+    "args": {
+     "0": { "type_override": "@" },
+     "1": { "type_override": "o^@" }
+    },
+    "retval": {
+     "type_override": "@",
+     "already_cfretained": true
+    }
+   },
+   "SecACLGetTypeID": {
+    "args": {
+    },
+    "retval": {
+     "type_override": [ "I", "Q" ]
+    }
+   },
+   "SecRequirementGetTypeID": {
+    "args": {
+    },
+    "retval": {
+     "type_override": [ "I", "Q" ]
+    }
+   },
+   "SecTaskGetTypeID": {
+    "args": {
+    },
+    "retval": {
+     "type_override": [ "I", "Q" ]
+    }
+   },
+   "SecTaskCopySigningIdentifier": {
+    "args": {
+     "0": { "type_override": "@" },
+     "1": { "type_override": "o^@" }
+    },
+    "retval": {
+     "type_override": "@",
+     "already_cfretained": true
+    }
+   },
+   "SecTaskCopyValuesForEntitlements": {
+    "args": {
+     "0": { "type_override": "@" },
+     "1": { "type_override": "@" },
+     "2": { "type_override": "o^@" }
+    },
+    "retval": {
+     "type_override": "@",
+     "already_cfretained": true
+    }
+   },
+   "SecTaskCopyValueForEntitlement": {
+    "args": {
+     "0": { "type_override": "@" },
+     "1": { "type_override": "@" },
+     "2": { "type_override": "o^@" }
+    },
+    "retval": {
+     "type_override": "@",
+     "already_cfretained": true
+    }
+   },
+   "SecTaskCreateFromSelf": {
+    "args": {
+     "0": { "type_override": "@" }
+    },
+    "retval": {
+     "type_override": "@",
+     "already_cfretained": true
+    }
+   },
+   "SecTaskCreateWithAuditToken": {
+    "args": {
+     "0": { "type_override": "@" },
+     "1": { "type_override": "{?=[8I]}" }
+    },
+    "retval": {
+     "type_override": "@",
+     "already_cfretained": true
+    }
+   },
+   "SecCodeGetTypeID": {
+    "args": {
+    },
+    "retval": {
+     "type_override": [ "I", "Q" ]
+    }
+   },
+   "SecStaticCodeGetTypeID": {
+    "args": {
+    },
+    "retval": {
+     "type_override": [ "I", "Q" ]
+    }
+   },
+   "SecKeyGetTypeID": {
+    "args": {
+    },
+    "retval": {
+     "type_override": [ "I", "Q" ]
+    }
+   },
+   "SecPolicyGetTypeID": {
+    "args": {
+    },
+    "retval": {
+     "type_override": [ "I", "Q" ]
+    }
+   },
+   "SecTransformGetTypeID": {
+    "args": {
+    },
+    "retval": {
+     "type_override": [ "I", "Q" ]
+    }
+   },
+   "SecGroupTransformGetTypeID": {
+    "args": {
+    },
+    "retval": {
+     "type_override": [ "I", "Q" ]
+    }
+   },
+   "SecIdentityGetTypeID": {
+    "args": {
+    },
+    "retval": {
+     "type_override": [ "I", "Q" ]
+    }
+   },
+   "SecTrustedApplicationGetTypeID": {
+    "args": {
+    },
+    "retval": {
+     "type_override": [ "I", "Q" ]
+    }
+   },
+   "SecAccessControlGetTypeID": {
+    "args": {
+    },
+    "retval": {
+     "type_override": [ "I", "Q" ]
+    }
+   },
+   "SecDigestTransformGetTypeID": {
+    "args": {
+    },
+    "retval": {
+     "type_override": [ "I", "Q" ]
+    }
+   },
+   "SecDecryptTransformGetTypeID": {
+    "args": {
+    },
+    "retval": {
+     "type_override": [ "I", "Q" ]
+    }
+   },
+   "SecEncryptTransformGetTypeID": {
+    "args": {
+    },
+    "retval": {
+     "type_override": [ "I", "Q" ]
+    }
+   },
+   "CMSDecoderGetTypeID": {
+    "args": {
+    },
+    "retval": {
+     "type_override": [ "I", "Q" ]
+    }
+   },
+   "CMSEncoderGetTypeID": {
+    "args": {
+    },
+    "retval": {
+     "type_override": [ "I", "Q" ]
+    }
+   },
+   "SSLContextGetTypeID": {
+    "args": {
+    },
+    "retval": {
+     "type_override": [ "I", "Q" ]
+    }
+   },
+   "SecCodeGetTypeID": {
+    "args": {
+    },
+    "retval": {
+     "type_override": [ "I", "Q" ]
+    }
+   },
+   "SecCertificateGetTypeID": {
+    "args": {
+    },
+    "retval": {
+     "type_override": [ "I", "Q" ]
+    }
+   },
+   "SecKeychainItemGetTypeID": {
+    "args": {
+    },
+    "retval": {
+     "type_override": [ "I", "Q" ]
+    }
+   },
+   "SecKeychainGetTypeID": {
+    "args": {
+    },
+    "retval": {
+     "type_override": [ "I", "Q" ]
+    }
+   },
+   "SecTrustGetTypeID": {
+    "args": {
+    },
+    "retval": {
+     "type_override": [ "I", "Q" ]
+    }
+   },
+   "SecAccessGetTypeID": {
+    "args": {
+    },
+    "retval": {
+     "type_override": [ "I", "Q" ]
+    }
+   },
+   "SecureDownloadCreateWithTicket": {
+    "args": {
+     "0": { "type_override": "@" },
+     "1": {
+      "type_override": "^?",
+      "callable": {
+       "arguments": {
+        "0": { "type": "@" },
+        "1": { "type": "^v" }
+       },
+       "retval": { "type": "i" }
+      },
+      "callable_retained": true
+     },
+     "2": { "type_override": "^v" },
+     "3": {
+      "type_override": "^?",
+      "callable": {
+       "arguments": {
+        "0": { "type": "@" },
+        "1": { "type": "i" },
+        "2": { "type": "^v" }
+       },
+       "retval": { "type": "i" }
+      },
+      "callable_retained": true
+     },
+     "4": { "type_override": "^v" },
+     "5": { "type_override": "o^^{OpaqueSecureDownload=}" }
+    },
+    "retval": {
+     "type_override": "i"
+    }
+   },
+   "SecTrustedApplicationSetData": {
+    "retval": { "type_override": "i" },
+    "args": {
+     "0": { "type_override": "@" },
+     "1": { "type_override": "@" }
+    }
+   },
+   "SecTrustedApplicationCopyData": {
+    "retval": { "type_override": "i" },
+    "args": {
+     "0": { "type_override": "@" },
+     "1": { "type_override": "o^@", "already_cfretained": true }
+    }
+   },
+   "SecTrustedApplicationCreateFromPath": {
+    "retval": { "type_override": "i" },
+    "args": {
+     "0": { "type_override": "^t", "c_array_delimited_by_null": true, "type_modifier": "n" },
+     "1": { "type_override": "o^@", "already_cfretained": true }
+    }
+   },
+   "SSLSetIOFuncs": {
+    "args": {
+     "0": { "type_override": "@" },
+     "1": {
+      "type_override": "^?",
+      "callable": {
+       "arguments": {
+        "0": { "type": "@" },
+        "1": { "type": "o^v", "c_array_length_in_arg": 2 },
+	"2": { "type": "N^L" }
+       },
+       "retval": { "type": "i" }
+      },
+      "callable_retained": true
+     },
+     "2": {
+      "type_override": "^?",
+      "callable": {
+       "arguments": {
+        "0": { "type": "@" },
+        "1": { "type": "n^v", "c_array_length_in_arg": 2 },
+	"2": { "type": "N^L" }
+       },
+       "retval": { "type": "i" }
+      },
+      "callable_retained": true
+     }
+    },
+    "retval": { "type_override": "i" }
+   },
+   "SSLGetProtocolVersionMax": {
+    "retval": { "type_override": "i" },
+    "args": {
+     "0": { "type_override": "@" },
+     "1": { "type_override": "o^i" }
+    }
+   },
+   "SSLCopyRequestedPeerName": {
+    "retval": { "type_override": "i" },
+    "args": {
+     "0": { "type_override": "@" },
+     "1": { "type_override": "o^t", "c_array_length_in_arg": 2 },
+     "2": { "type_override": "N^L" }
+    }
+   },
+   "SSLCopyRequestedPeerNameLength": {
+    "retval": { "type_override": "i" },
+    "args": {
+     "0": { "type_override": "@" },
+     "1": { "type_override": "o^L" }
+    }
+   },
+   "SSLGetPeerDomainName": {
+    "retval": { "type_override": "i" },
+    "args": {
+     "0": { "type_override": "@" },
+     "1": { "type_override": "o^t", "c_array_length_in_arg": 2 },
+     "2": { "type_override": "N^L" }
+    }
+   },
+   "SSLGetPeerDomainNameLength": {
+    "retval": { "type_override": "i" },
+    "args": {
+     "0": { "type_override": "@" },
+     "1": { "type_override": "o^L" }
+    }
+   },
+   "SSLCopyPeerTrust": {
+    "retval": { "type_override": "i" },
+    "args": {
+     "0": { "type_override": "@" },
+     "1": { "type_override": "o^@", "already_cfretained": true }
+    }
+   },
+   "SSLSetSessionTicketsEnabled": {
+    "retval": { "type_override": "i" },
+    "args": {
+     "0": { "type_override": "@" },
+     "1": { "type_override": "Z" }
+    }
+   },
+   "SSLSetEnabledCiphers": {
+    "retval": { "type_override": "i" },
+    "args": {
+     "0": { "type_override": "@" },
+     "1": { "type_override": "n^i", "c_array_length_in_arg": 2 },
+     "2": { "type_override": "L" }
+    }
+   },
+   "SSLGetEnabledCiphers": {
+    "retval": { "type_override": "i" },
+    "args": {
+     "0": { "type_override": "@" },
+     "1": { "type_override": "o^i", "c_array_length_in_arg": 2 },
+     "2": { "type_override": "N^L" }
+    }
+   },
+   "SSLGetNumberEnabledCiphers": {
+    "retval": { "type_override": "i" },
+    "args": {
+     "0": { "type_override": "@" },
+     "1": { "type_override": "o^L" }
+    }
+   },
+   "SSLGetSupportedCiphers": {
+    "retval": { "type_override": "i" },
+    "args": {
+     "0": { "type_override": "@" },
+     "1": { "type_override": "o^i", "c_array_length_in_arg": 2 },
+     "2": { "type_override": "N^L" }
+    }
+   },
+   "SSLGetNumberSupportedCiphers": {
+    "retval": { "type_override": "i" },
+    "args": {
+     "0": { "type_override": "@" },
+     "1": { "type_override": "o^L" }
+    }
+   },
+   "SSLGetNegotiatedProtocolVersion": {
+    "retval": { "type_override": "i" },
+    "args": {
+     "0": { "type_override": "@" },
+     "1": { "type_override": "o^i" }
+    }
+   },
+   "SSLGetMaxDatagramRecordSize": {
+    "retval": { "type_override": "i" },
+    "args": {
+     "0": { "type_override": "@" },
+     "1": { "type_override": "o^L" }
+    }
+   },
+   "SSLSetMaxDatagramRecordSize": {
+    "retval": { "type_override": "i" },
+    "args": {
+     "0": { "type_override": "@" },
+     "1": { "type_override": "L" }
+    }
+   },
+   "SSLSetEncryptionCertificate": {
+    "retval": { "type_override": "i" },
+    "args": {
+     "0": { "type_override": "@" },
+     "1": { "type_override": "@" }
+    }
+   },
+   "SSLSetOCSPResponse": {
+    "retval": { "type_override": "i" },
+    "args": {
+     "0": { "type_override": "@" },
+     "1": { "type_override": "@" }
+    }
+   },
+   "SSLCopyALPNProtocols": {
+    "retval": { "type_override": "i" },
+    "args": {
+     "0": { "type_override": "@" },
+     "1": { "type_override": "o^@", "already_cfretained": true }
+    }
+   },
+   "SSLSetALPNProtocols": {
+    "retval": { "type_override": "i" },
+    "args": {
+     "0": { "type_override": "@" },
+     "1": { "type_override": "@" }
+    }
+   },
+   "SSLGetNegotiatedCipher": {
+    "retval": { "type_override": "i" },
+    "args": {
+     "0": { "type_override": "@" },
+     "1": { "type_override": "o^i" }
+    }
+   },
+   "SSLSetError": {
+    "retval": { "type_override": "i" },
+    "args": {
+     "0": { "type_override": "@" },
+     "1": { "type_override": "i" }
+    }
+   },
+   "SSLClose": {
+    "retval": { "type_override": "i" },
+    "args": {
+     "0": { "type_override": "@" }
+    }
+   },
+   "SSLGetDatagramWriteSize": {
+    "retval": { "type_override": "i" },
+    "args": {
+     "0": { "type_override": "@" },
+     "1": { "type_override": "o^L" }
+    }
+   },
+   "SSLGetBufferedReadSize": {
+    "retval": { "type_override": "i" },
+    "args": {
+     "0": { "type_override": "@" },
+     "1": { "type_override": "o^L" }
+    }
+   },
+   "SSLRead": {
+    "retval": { "type_override": "i" },
+    "args": {
+     "0": { "type_override": "@" },
+     "1": { "type_override": "o^v", "c_array_length_in_arg": [2, 3] },
+     "2": { "type_override": "L" },
+     "3": { "type_override": "o^L" }
+    }
+   },
+   "SSLWrite": {
+    "retval": { "type_override": "i" },
+    "args": {
+     "0": { "type_override": "@" },
+     "1": { "type_override": "n^v", "c_array_length_in_arg": 2 },
+     "2": { "type_override": "L" },
+     "3": { "type_override": "o^L" }
+    }
+   },
+   "SSLReHandshake": {
+    "retval": { "type_override": "i" },
+    "args": {
+     "0": { "type_override": "@" }
+    }
+   },
+   "SSLHandshake": {
+    "retval": { "type_override": "i" },
+    "args": {
+     "0": { "type_override": "@" }
+    }
+   },
+   "SSLGetDiffieHellmanParams": {
+    "retval": { "type_override": "i" },
+    "args": {
+     "0": { "type_override": "@" },
+     "1": { "type_override": "o^v", "c_array_length_in_arg": 2 },
+     "2": { "type_override": "N^L" }
+    }
+   },
+   "SSLGetPeerID": {
+    "retval": { "type_override": "i" },
+    "args": {
+     "0": { "type_override": "@" },
+     "1": { "type_override": "o^v", "c_array_length_in_arg": 2 },
+     "2": { "type_override": "N^L" }
+    }
+   },
+   "SSLGetConnection": {
+    "retval": { "type_override": "i" },
+    "args": {
+     "0": { "type_override": "@" },
+     "1": { "type_override": "o^@" }
+    }
+   },
+   "SSLGetClientCertificateState": {
+    "retval": { "type_override": "i" },
+    "args": {
+     "0": { "type_override": "@" },
+     "1": { "type_override": "o^i" }
+    }
+   },
+   "SSLCopyDistinguishedNames": {
+    "retval": { "type_override": "i" },
+    "args": {
+     "0": { "type_override": "@" },
+     "1": { "type_override": "o^@", "already_cfretained": true }
+    }
+   },
+   "SSLCopyCertificateAuthorities": {
+    "retval": { "type_override": "i" },
+    "args": {
+     "0": { "type_override": "@" },
+     "1": { "type_override": "o^@", "already_cfretained": true }
+    }
+   },
+   "SSLSetCertificateAuthorities": {
+    "retval": { "type_override": "i" },
+    "args": {
+     "0": { "type_override": "@" },
+     "1": { "type_override": "@" },
+     "2": { "type_override": "Z" }
+    }
+   },
+   "SSLSetDiffieHellmanParams": {
+    "retval": { "type_override": "i" },
+    "args": {
+     "0": { "type_override": "@" },
+     "1": { "type_override": "n^v", "c_array_length_in_arg": 2 },
+     "2": { "type_override": "L" }
+    }
+   },
+   "SSLAddDistinguishedName": {
+    "retval": { "type_override": "i" },
+    "args": {
+     "0": { "type_override": "@" },
+     "1": { "type_override": "n^v", "c_array_length_in_arg": 2 },
+     "2": { "type_override": "L" }
+    }
+   },
+   "SSLSetPeerID": {
+    "retval": { "type_override": "i" },
+    "args": {
+     "0": { "type_override": "@" },
+     "1": { "type_override": "n^v", "c_array_length_in_arg": 2 },
+     "2": { "type_override": "L" }
+    }
+   },
+   "SSLSetDatagramHelloCookie": {
+    "retval": { "type_override": "i" },
+    "args": {
+     "0": { "type_override": "@" },
+     "1": { "type_override": "n^v", "c_array_length_in_arg": 2 },
+     "2": { "type_override": "L" }
+    }
+   },
+   "SSLSetPeerDomainName": {
+    "retval": { "type_override": "i" },
+    "args": {
+     "0": { "type_override": "@" },
+     "1": { "type_override": "n^t", "c_array_length_in_arg": 2 },
+     "2": { "type_override": "L" }
+    }
+   },
+   "SSLSetConnection": {
+    "retval": { "type_override": "i" },
+    "args": {
+     "0": { "type_override": "@" },
+     "1": { "type_override": "o^@" }
+    }
+   },
+   "SSLSetConnection": {
+    "retval": { "type_override": "i" },
+    "args": {
+     "0": { "type_override": "@" },
+     "1": { "type_override": "@" }
+    }
+   },
+   "SSLSetCertificate": {
+    "retval": { "type_override": "i" },
+    "args": {
+     "0": { "type_override": "@" },
+     "1": { "type_override": "@" }
+    }
+   },
+   "SSLSetProtocolVersionMax": {
+    "retval": { "type_override": "i" },
+    "args": {
+     "0": { "type_override": "@" },
+     "1": { "type_override": "i" }
+    }
+   },
+   "SSLGetProtocolVersionMin": {
+    "retval": { "type_override": "i" },
+    "args": {
+     "0": { "type_override": "@" },
+     "1": { "type_override": "o^i" }
+    }
+   },
+   "SSLSetProtocolVersionMin": {
+    "retval": { "type_override": "i" },
+    "args": {
+     "0": { "type_override": "@" },
+     "1": { "type_override": "i" }
+    }
+   },
+   "SSLSetSessionConfig": {
+    "retval": { "type_override": "i" },
+    "args": {
+     "0": { "type_override": "@" },
+     "1": { "type_override": "@" }
+    }
+   },
+   "SSLGetSessionOption": {
+    "retval": { "type_override": "i" },
+    "args": {
+     "0": { "type_override": "@" },
+     "1": { "type_override": "i" },
+     "2": { "type_override": "o^Z" }
+    }
+   },
+   "SSLSetSessionOption": {
+    "retval": { "type_override": "i" },
+    "args": {
+     "0": { "type_override": "@" },
+     "1": { "type_override": "i" },
+     "2": { "type_override": "Z" }
+    }
+   },
+   "SSLGetSessionState": {
+    "retval": { "type_override": "i" },
+    "args": {
+     "0": { "type_override": "@" },
+     "1": { "type_override": "o^i" }
+    }
+   },
+   "SSLCreateContext": {
+    "retval": { "type_override": "@", "already_cfretained": true },
+    "args": {
+     "0": { "type_override": "@" },
+     "1": { "type_override": "i" },
+     "2": { "type_override": "i" }
+    }
+   },
+   "SecEncryptTransformCreate": {
+    "retval": { "type_override": "@", "already_cfretained": true },
+    "args": {
+     "0": { "type_override": "@" },
+     "1": { "type_override": "o^@" }
+    }
+   },
+   "SecDecryptTransformCreate": {
+    "retval": { "type_override": "@", "already_cfretained": true },
+    "args": {
+     "0": { "type_override": "@" },
+     "1": { "type_override": "o^@" }
+    }
+   },
+   "SecIdentitySetSystemIdentity": {
+    "retval": { "type_override": "i" },
+    "args": {
+     "0": { "type_override": "@" },
+     "1": { "type_override": "o^@", "already_cfretained": true }
+    }
+   },
+   "SecIdentityCopySystemIdentity": {
+    "retval": { "type_override": "i" },
+    "args": {
+     "0": { "type_override": "@" },
+     "1": { "type_override": "o^@", "already_cfretained": true },
+     "2": { "type_override": "o^@", "already_cfretained": true }
+    }
+   },
+   "SecIdentitySetPreferred": {
+    "retval": { "type_override": "i" },
+    "args": {
+     "0": { "type_override": "@" },
+     "1": { "type_override": "@" },
+     "2": { "type_override": "@" }
+    }
+   },
+   "SecVerifyTransformCreate": {
+    "retval": { "type_override": "@", "already_cfretained": true },
+    "args": {
+     "0": { "type_override": "@" },
+     "1": { "type_override": "@" },
+     "2": { "type_override": "o^@" }
+    }
+   },
+   "SecSignTransformCreate": {
+    "retval": { "type_override": "@", "already_cfretained": true },
+    "args": {
+     "0": { "type_override": "@" },
+     "1": { "type_override": "o^@" }
+    }
+   },
+   "SecIdentityCopyPreferred": {
+    "retval": { "type_override": "@", "already_cfretained": true },
+    "args": {
+     "0": { "type_override": "@" },
+     "1": { "type_override": "@" },
+     "2": { "type_override": "@" }
+    }
+   },
+   "SecIdentityCopyPrivateKey": {
+    "retval": { "type_override": "i" },
+    "args": {
+     "0": { "type_override": "@" },
+     "1": { "type_override": "o^@", "already_cfretained": true }
+    }
+   },
+   "SecIdentityCopyCertificate": {
+    "retval": { "type_override": "i" },
+    "args": {
+     "0": { "type_override": "@" },
+     "1": { "type_override": "o^@", "already_cfretained": true }
+    }
+   },
+   "SecIdentityCreateWithCertificate": {
+    "retval": { "type_override": "i" },
+    "args": {
+     "0": { "type_override": "@" },
+     "1": { "type_override": "@" },
+     "2": { "type_override": "o^@", "already_cfretained": true }
+    }
+   },
+   "SecTransformCreateReadTransformWithReadStream": {
+    "retval": { "type_override": "@", "already_cfretained": true },
+    "args": {
+     "0": { "type_override": "@" }
+    }
+   },
+   "SecDecodeTransformCreate": {
+    "retval": { "type_override": "@", "already_cfretained": true },
+    "args": {
+     "0": { "type_override": "@" },
+     "1": { "type_override": "o^@" }
+    }
+   },
+   "SecTransformExecute": {
+    "retval": { "type_override": "@", "already_cfretained": true },
+    "args": {
+     "0": { "type_override": "@" },
+     "1": { "type_override": "o^@" }
+    }
+   },
+   "SecTransformFindByName": {
+    "retval": { "type_override": "@" },
+    "args": {
+     "0": { "type_override": "@" },
+     "1": { "type_override": "@" }
+    }
+   },
+   "SecTransformGetAttribute": {
+    "retval": { "type_override": "@" },
+    "args": {
+     "0": { "type_override": "@" },
+     "1": { "type_override": "@" }
+    }
+   },
+   "SecTransformSetAttribute": {
+    "retval": { "type_override": "Z" },
+    "args": {
+     "0": { "type_override": "@" },
+     "1": { "type_override": "@" },
+     "2": { "type_override": "@" },
+     "3": { "type_override": "o^@" }
+    }
+   },
+   "SecTransformConnectTransforms": {
+    "retval": { "type_override": "@" },
+    "args": {
+     "0": { "type_override": "@" },
+     "1": { "type_override": "@" },
+     "2": { "type_override": "@" },
+     "3": { "type_override": "@" },
+     "4": { "type_override": "@" },
+     "5": { "type_override": "o^@" }
+    }
+   },
+   "SecTransformCreateGroupTransform": {
+    "retval": { "type_override": "@", "already_cfretained": true },
+    "args": {
+    }
+   },
+   "SecTransformCopyExternalRepresentation": {
+    "retval": { "type_override": "@", "already_cfretained": true },
+    "args": {
+     "0": { "type_override": "@" }
+    }
+   },
+   "SecTransformCreateFromExternalRepresentation": {
+    "retval": { "type_override": "@", "already_cfretained": true },
+    "args": {
+     "0": { "type_override": "@" },
+     "1": { "type_override": "o^@" }
+    }
+   },
+   "SecRequirementCopyString": {
+    "retval": { "type_override": "i" },
+    "args": {
+     "0": { "type_override": "@" },
+     "1": { "type_override": "I" },
+     "2": { "type_override": "o^@", "already_cfretained": true }
+    }
+   },
+   "SecRequirementCopyData": {
+    "retval": { "type_override": "i" },
+    "args": {
+     "0": { "type_override": "@" },
+     "1": { "type_override": "I" },
+     "2": { "type_override": "o^@", "already_cfretained": true }
+    }
+   },
+   "SecRequirementCreateWithStringAndErrors": {
+    "retval": { "type_override": "i" },
+    "args": {
+     "0": { "type_override": "@" },
+     "1": { "type_override": "I" },
+     "2": { "type_override": "o^@" },
+     "3": { "type_override": "o^@", "already_cfretained": true }
+    }
+   },
+   "SecRequirementCreateWithString": {
+    "retval": { "type_override": "i" },
+    "args": {
+     "0": { "type_override": "@" },
+     "1": { "type_override": "I" },
+     "2": { "type_override": "o^@", "already_cfretained": true }
+    }
+   },
+   "SecRequirementCreateWithData": {
+    "retval": { "type_override": "i" },
+    "args": {
+     "0": { "type_override": "@" },
+     "1": { "type_override": "I" },
+     "2": { "type_override": "o^@", "already_cfretained": true }
+    }
+   },
+   "SecStaticCodeCreateWithPath": {
+    "retval": { "type_override": "i" },
+    "args": {
+     "0": { "type_override": "@" },
+     "1": { "type_override": "I" },
+     "2": { "type_override": "o^@", "already_cfretained": true }
+    }
+   },
+   "SecStaticCodeCreateWithPathAndAttributes": {
+    "retval": { "type_override": "i" },
+    "args": {
+     "0": { "type_override": "@" },
+     "1": { "type_override": "I" },
+     "2": { "type_override": "@" },
+     "3": { "type_override": "o^@", "already_cfretained": true }
+    }
+   },
+   "SecStaticCodeCheckValidity": {
+    "retval": { "type_override": "i" },
+    "args": {
+     "0": { "type_override": "@" },
+     "1": { "type_override": "I" },
+     "2": { "type_override": "@" }
+    }
+   },
+   "SecStaticCodeCheckValidityWithErrors": {
+    "retval": { "type_override": "i" },
+    "args": {
+     "0": { "type_override": "@" },
+     "1": { "type_override": "I" },
+     "2": { "type_override": "@" },
+     "3": { "type_override": "o^@", "already_cfretained": true }
+    }
+   },
+   "SecureDownloadRelease": {
+    "retval": { "type_override": "i" },
+    "args": {
+     "0": { "type_override": "^{OpaqueSecureDownload=}" }
+    }
+   },
+   "SecureDownloadFinished": {
+    "retval": { "type_override": "i" },
+    "args": {
+     "0": { "type_override": "^{OpaqueSecureDownload=}" }
+    }
+   },
+   "SecureDownloadUpdateWithData": {
+    "retval": { "type_override": "i" },
+    "args": {
+     "0": { "type_override": "^{OpaqueSecureDownload=}" },
+     "1": { "type_override": "@" }
+    }
+   },
+   "SecureDownloadCopyTicketLocation": {
+    "retval": { "type_override": "i" },
+    "args": {
+     "0": { "type_override": "^{OpaqueSecureDownload=}" },
+     "1": { "type_override": "o^@", "already_cfretained": true }
+    }
+   },
+   "SecureDownloadCopyURLs": {
+    "retval": { "type_override": "i" },
+    "args": {
+     "0": { "type_override": "^{OpaqueSecureDownload=}" },
+     "1": { "type_override": "o^@", "already_cfretained": true }
+    }
+   },
+   "SecureDownloadGetDownloadSize": {
+    "retval": { "type_override": "i" },
+    "args": {
+     "0": { "type_override": "^{OpaqueSecureDownload=}" },
+     "1": { "type_override": "o^q" }
+    }
+   },
+   "SecureDownloadCopyName": {
+    "retval": { "type_override": "i" },
+    "args": {
+     "0": { "type_override": "^{OpaqueSecureDownload=}" },
+     "1": { "type_override": "o^@", "already_cfretained": true }
+    }
+   },
+   "SecureDownloadCopyCreationDate": {
+    "retval": { "type_override": "i" },
+    "args": {
+     "0": { "type_override": "^{OpaqueSecureDownload=}" },
+     "1": { "type_override": "o^@", "already_cfretained": true }
+    }
+   },
+   "AuthorizationRightRemove": {
+    "args": {
+     "0": { "type_override": "^{AuthorizationOpaqueRef=}" },
+     "1": { "type_override": "^t", "c_array_delimited_by_null": true, "type_modifier": "n" }
+    },
+    "retval": {
+     "type_override": "i"
+    }
+   },
+   "AuthorizationRightSet": {
+    "args": {
+     "0": { "type_override": "^{AuthorizationOpaqueRef=}" },
+     "1": { "type_override": "^t", "c_array_delimited_by_null": true, "type_modifier": "n" },
+     "2": { "type_override": "@" },
+     "3": { "type_override": "@" },
+     "4": { "type_override": "@" },
+     "5": { "type_override": "@" }
+    },
+    "retval": {
+     "type_override": "i"
+    }
+   },
+   "AuthorizationRightGet": {
+    "args": {
+     "0": { "type_override": "^t", "c_array_delimited_by_null": true, "type_modifier": "n" },
+     "1": { "type_override": "^@", "type_modifier": "o", "already_retained": true }
+    },
+    "retval": {
+     "type_override": "i"
+    }
+   },
+   "SessionGetInfo": {
+    "args": {
+     "0": { "type_override": "I" },
+     "1": { "type_override": "^I", "type_modifier": "o" },
+     "2": { "type_override": "^I", "type_modifier": "o" }
+    },
+    "retval": {
+     "type_override": "i"
+    }
+   },
+   "SessionCreate": {
+    "args": {
+     "0": { "type_override": "I" },
+     "1": { "type_override": "I" }
+    },
+    "retval": {
+     "type_override": "i"
+    }
+   }
+  }
+ }
+}
