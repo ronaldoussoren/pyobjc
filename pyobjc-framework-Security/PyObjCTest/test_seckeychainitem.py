@@ -45,7 +45,52 @@ class TestKeychainitem (TestCase):
     def test_functions(self):
         self.assertIsInstance(Security.SecKeychainItemGetTypeID(), (int, long))
 
+        self.assertResultHasType(Security.SecKeychainItemDelete, objc._C_INT)
+        self.assertArgHasType(Security.SecKeychainItemDelete, 0, objc._C_ID)
+
+        self.assertResultHasType(Security.SecKeychainItemCopyKeychain, objc._C_INT)
+        self.assertArgHasType(Security.SecKeychainItemCopyKeychain, 0, objc._C_ID)
+        self.assertArgHasType(Security.SecKeychainItemCopyKeychain, 1, objc._C_OUT + objc._C_PTR + objc._C_ID)
+        self.assertArgIsCFRetained(Security.SecKeychainItemCopyKeychain, 1)
+
+        self.assertResultHasType(Security.SecKeychainItemCreateCopy, objc._C_INT)
+        self.assertArgHasType(Security.SecKeychainItemCreateCopy, 0, objc._C_ID)
+        self.assertArgHasType(Security.SecKeychainItemCreateCopy, 1, objc._C_ID)
+        self.assertArgHasType(Security.SecKeychainItemCreateCopy, 2, objc._C_ID)
+        self.assertArgHasType(Security.SecKeychainItemCreateCopy, 3, objc._C_OUT + objc._C_PTR + objc._C_ID)
+        self.assertArgIsCFRetained(Security.SecKeychainItemCreateCopy, 3)
+
+        self.assertResultHasType(Security.SecKeychainItemCreatePersistentReference, objc._C_INT)
+        self.assertArgHasType(Security.SecKeychainItemCreatePersistentReference, 0, objc._C_ID)
+        self.assertArgHasType(Security.SecKeychainItemCreatePersistentReference, 1, objc._C_OUT + objc._C_PTR + objc._C_ID)
+        self.assertArgIsCFRetained(Security.SecKeychainItemCreatePersistentReference, 1)
+
+        self.assertResultHasType(Security.SecKeychainItemCopyFromPersistentReference, objc._C_INT)
+        self.assertArgHasType(Security.SecKeychainItemCopyFromPersistentReference, 0, objc._C_ID)
+        self.assertArgHasType(Security.SecKeychainItemCopyFromPersistentReference, 1, objc._C_OUT + objc._C_PTR + objc._C_ID)
+        self.assertArgIsCFRetained(Security.SecKeychainItemCopyFromPersistentReference, 1)
+
+        self.assertFalse(hasattr(Security, 'SecKeychainItemGetDLDBHandle'))
+        self.assertFalse(hasattr(Security, 'SecKeychainItemGetUniqueRecordID'))
+
+        self.assertResultHasType(Security.SecKeychainItemCopyAccess, objc._C_INT)
+        self.assertArgHasType(Security.SecKeychainItemCopyAccess, 0, objc._C_ID)
+        self.assertArgHasType(Security.SecKeychainItemCopyAccess, 1, objc._C_OUT + objc._C_PTR + objc._C_ID)
+        self.assertArgIsCFRetained(Security.SecKeychainItemCopyAccess, 1)
+
+        self.assertResultHasType(Security.SecKeychainItemSetAccess, objc._C_INT)
+        self.assertArgHasType(Security.SecKeychainItemSetAccess, 0, objc._C_ID)
+        self.assertArgHasType(Security.SecKeychainItemSetAccess, 1, objc._C_ID)
+
+    @expectedFailure
+    def test_functions_manual(self):
         self.fail("SecKeychainItemModifyAttributesAndData: SecKeychainAttributeList requires manual work")
+        self.fail("SecKeychainItemCreateFromContent: SecKeychainAttributeList requires manual work")
+        self.fail("SecKeychainItemModifyContent: SecKeychainAttributeList requires manual work")
+        self.fail("SecKeychainItemCopyContent: SecKeychainAttributeList requires manual work")
+        self.fail("SecKeychainItemFreeContent: SecKeychainAttributeList requires manual work")
+        self.fail("SecKeychainItemCopyAttributesAndData: SecKeychainAttributeList requires manual work")
+        self.fail("SecKeychainItemFreeAttributesAndData: SecKeychainAttributeList requires manual work")
 
 if __name__ == "__main__":
     main()

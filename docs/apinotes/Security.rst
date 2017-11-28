@@ -35,6 +35,11 @@ These functions were deprecated in macOS and are not available from Python.
 
 These functions were deprecated in macOS and are not available from Python.
 
+``EISL_*``
+..........
+
+These lowlevel APIs are not available from Python.
+
 ``SecAsn1*``
 ............
 
@@ -132,5 +137,15 @@ These functions were deprecated in macOS and are not available from Python.
 
 ``SecKeychainGetCSPHandle``, ``SecKeychainGetDLDBHandle``
 .........................................................
+
+These functions were deprecated in macOS and are not available from Python.
+
+``SecTrustSetParameters``, ``SecTrustGetResult``, ``SecTrustGetCssmResultCode``, ``SecTrustGetCssmResult``, ``SecTrustGetTPHandle``
+...................................................................................................................................
+
+These functions were deprecated in macOS and are not available from Python.
+
+``SecKeychainItemGetDLDBHandle``, ``SecKeychainItemGetUniqueRecordID``
+......................................................................
 
 These functions were deprecated in macOS and are not available from Python.

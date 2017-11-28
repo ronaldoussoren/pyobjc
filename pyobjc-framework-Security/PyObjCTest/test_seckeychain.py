@@ -270,7 +270,8 @@ class TestSecKeychain (TestCase):
         self.assertArgHasType(Security.SecKeychainSetAccess, 1, objc._C_ID)
 
 
-    def test_manual(self):
+    @expectedFailure
+    def test_functions_manual(self):
         self.fail("SecKeychainAttributeInfo")
         self.fail("SecKeychainFreeAttributeInfo")
 

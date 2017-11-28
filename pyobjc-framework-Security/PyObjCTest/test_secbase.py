@@ -9,18 +9,21 @@ class TestSecBase (TestCase):
         self.assertIsCFType(Security.SecKeyRef)
         self.assertIsCFType(Security.SecPolicyRef)
         self.assertIsCFType(Security.SecAccessControlRef)
-        self.assertIsCFType(Security.SecKeychainRef)
-        self.assertIsCFType(Security.SecKeychainItemRef)
-        self.assertIsCFType(Security.SecKeychainSearchRef)
         self.assertIsCFType(Security.SecTrustedApplicationRef)
         self.assertIsCFType(Security.SecAccessRef)
         self.assertIsCFType(Security.SecACLRef)
-        self.assertIsCFType(Security.SecPasswordRef)
 
+    @expectedFailure
+    def test_types_manual(self):
         self.fail("SecKeychainAttribute")
         self.fail("SecKeychainAttributeList")
         self.fail("SecKeychainAttributeInfo")
 
+    @expectedFailure
+    def test_types_not_unique(self):
+        self.assertIsCFType(Security.SecKeychainRef)
+        self.assertIsCFType(Security.SecKeychainItemRef)
+        self.assertIsCFType(Security.SecPasswordRef)
 
     def test_constants(self):
         self.assertEqual(Security.errSecSuccess, 0)
