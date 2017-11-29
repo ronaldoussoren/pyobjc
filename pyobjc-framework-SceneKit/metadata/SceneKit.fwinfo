@@ -1060,13 +1060,13 @@
         "callable": {
          "arguments": {
 	  "0": { "typestr": "^v" },
-	  "1": { "typestr": "{SCNVector3=ddd}" },
-	  "2": { "typestr": "{SCNVector3=ddd}" },
+	  "1": { "typestr": ["{SCNVector3=fff}", "{SCNVector3=ddd}"]  },
+	  "2": { "typestr": ["{SCNVector3=fff}", "{SCNVector3=ddd}"]  },
 	  "3": { "typestr": "f" },
 	  "4": { "typestr": "f" },
 	  "5": { "typestr": "d" }
 	 },
-	 "retval": { "typestr": "{SCNVector3=ddd}" }
+	 "retval": { "typestr": ["{SCNVector3=fff}", "{SCNVector3=ddd}"]  }
 	}
        }
       }
