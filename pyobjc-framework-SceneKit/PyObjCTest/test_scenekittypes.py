@@ -37,7 +37,7 @@ if os_level_key(os_release()) < os_level_key('10.12') or sys.maxsize >= 2**32:
             self.assertEqual(SceneKit.SCNColorMaskAll, 0xf)
 
 
-        @expectedFailureIf(os_release() == '10.10')
+        @expectedFailureIf(os_release().rsplit('.', 1)[0] == '10.10')
         @min_os_level('10.10')
         def testConstantsFail10_10(self):
             self.assertIsInstance(SceneKit.SCNErrorDomain, unicode)
@@ -66,20 +66,25 @@ if os_level_key(os_release()) < os_level_key('10.12') or sys.maxsize >= 2**32:
             self.assertEqual(v.z, 3)
             self.assertEqual(v.w, 4)
 
-            v = SceneKit.SCNMatrix4MakeTranslation(1, 2, 3)
-            self.assertIsInstance(v, SceneKit.SCNMatrix4)
-            self.assertEqual(v.m41, 1)
-            self.assertEqual(v.m42, 2)
-            self.assertEqual(v.m43, 3)
+            if sys.maxsize > 2 ** 32:
+                v = SceneKit.SCNMatrix4MakeTranslation(1, 2, 3)
+                self.assertIsInstance(v, SceneKit.SCNMatrix4)
+                self.assertEqual(v.m41, 1)
+                self.assertEqual(v.m42, 2)
+                self.assertEqual(v.m43, 3)
 
-            v = SceneKit.SCNMatrix4MakeScale(1, 2, 3)
-            self.assertIsInstance(v, SceneKit.SCNMatrix4)
-            self.assertEqual(v.m11, 1)
-            self.assertEqual(v.m22, 2)
-            self.assertEqual(v.m33, 3)
+                v = SceneKit.SCNMatrix4MakeScale(1, 2, 3)
+                self.assertIsInstance(v, SceneKit.SCNMatrix4)
+                self.assertEqual(v.m11, 1)
+                self.assertEqual(v.m22, 2)
+                self.assertEqual(v.m33, 3)
 
-            w = SceneKit.SCNMatrix4Translate(v, 6, 7, 8)
-            self.assertIsInstance(w, SceneKit.SCNMatrix4)
+                w = SceneKit.SCNMatrix4Translate(v, 6, 7, 8)
+                self.assertIsInstance(w, SceneKit.SCNMatrix4)
+            else:
+                self.assertFalse(hasattr(SceneKit, 'SCNMatrix4MakeTranslation'))
+                self.assertFalse(hasattr(SceneKit, 'SCNMatrix4MakeScale'))
+
 
         @expectedFailure
         def testFunctions_unsupported(self):

@@ -31,6 +31,9 @@ class TestSecAccess (TestCase):
         self.assertIsInstance(Security.kSecACLAuthorizationKeychainItemInsert, unicode)
         self.assertIsInstance(Security.kSecACLAuthorizationKeychainItemModify, unicode)
         self.assertIsInstance(Security.kSecACLAuthorizationKeychainItemDelete, unicode)
+
+    @expectedFailureIf(os_release().rsplit('.',1)[0] == '10.10')
+    def test_constants_10_7_missing(self):
         self.assertIsInstance(Security.kSecACLAuthorizationChangeACL, unicode)
         self.assertIsInstance(Security.kSecACLAuthorizationChangeOwner, unicode)
 

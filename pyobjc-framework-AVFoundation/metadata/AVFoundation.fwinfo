@@ -16,7 +16,7 @@
    }
   },
   "enum": {
-   "AVErrorNoSourceTrack": { "value": -11866 },
+   "AVErrorNoSourceTrack": { "value": -11869 },
    "AVErrorVideoCompositorFailed": { "value": -11858 },
    "AVAudio3DMixingRenderingAlgorithmEqualPowerPanning": { "value": 0 },
    "AVAudio3DMixingRenderingAlgorithmSphericalHead": { "value": 1 },

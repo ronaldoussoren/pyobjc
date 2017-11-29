@@ -5,8 +5,11 @@
 
 static PyObjC_function_map function_map[] = {
     {"SCNMatrix4FromMat4",          (PyObjC_Function_Pointer)&SCNMatrix4FromMat4 },
+#ifdef __LP64__
+    /* These two use a symbol that's only available in 64-bit code */
     {"SCNMatrix4MakeScale",         (PyObjC_Function_Pointer)&SCNMatrix4MakeScale },
     {"SCNMatrix4MakeTranslation",   (PyObjC_Function_Pointer)&SCNMatrix4MakeTranslation },
+#endif
     {"SCNMatrix4ToMat4",            (PyObjC_Function_Pointer)&SCNMatrix4ToMat4 },
     {"SCNMatrix4Translate",         (PyObjC_Function_Pointer)&SCNMatrix4Translate },
     {"SCNVector3FromFloat3",        (PyObjC_Function_Pointer)&SCNVector3FromFloat3 },

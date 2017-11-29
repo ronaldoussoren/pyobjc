@@ -7,8 +7,6 @@ class TestCMSEncoder (TestCase):
         self.assertIsCFType(Security.CMSEncoderRef)
 
     def test_constants(self):
-        self.assertIsInstance(Security.kCMSEncoderDigestAlgorithmSHA1, unicode)
-        self.assertIsInstance(Security.kCMSEncoderDigestAlgorithmSHA256, unicode)
 
         self.assertEqual(Security.kCMSAttrNone, 0x0000)
         self.assertEqual(Security.kCMSAttrSmimeCapabilities, 0x0001)
@@ -22,6 +20,10 @@ class TestCMSEncoder (TestCase):
         self.assertEqual(Security.kCMSCertificateChain, 2)
         self.assertEqual(Security.kCMSCertificateChainWithRoot, 3)
 
+    @min_os_level('10.11')
+    def test_constants_10_11(self):
+        self.assertIsInstance(Security.kCMSEncoderDigestAlgorithmSHA1, unicode)
+        self.assertIsInstance(Security.kCMSEncoderDigestAlgorithmSHA256, unicode)
 
     def test_functions(self):
         self.assertIsInstance(Security.CMSEncoderGetTypeID(), (int, long))
@@ -30,9 +32,6 @@ class TestCMSEncoder (TestCase):
         self.assertArgHasType(Security.CMSEncoderCreate, 0, objc._C_OUT + objc._C_PTR + objc._C_ID)
         self.assertArgIsCFRetained(Security.CMSEncoderCreate, 0)
 
-        self.assertResultHasType(Security.CMSEncoderSetSignerAlgorithm, objc._C_INT)
-        self.assertArgHasType(Security.CMSEncoderSetSignerAlgorithm, 0, objc._C_ID)
-        self.assertArgHasType(Security.CMSEncoderSetSignerAlgorithm, 1, objc._C_ID)
 
         self.assertResultHasType(Security.CMSEncoderAddSigners, objc._C_INT)
         self.assertArgHasType(Security.CMSEncoderAddSigners, 0, objc._C_ID)
@@ -127,6 +126,12 @@ class TestCMSEncoder (TestCase):
         self.assertArgHasType(Security.CMSEncoderCopySignerTimestampWithPolicy, 1, objc._C_ID)
         self.assertArgHasType(Security.CMSEncoderCopySignerTimestampWithPolicy, 2, objc._C_ULNG)
         self.assertArgHasType(Security.CMSEncoderCopySignerTimestampWithPolicy, 3, objc._C_OUT + objc._C_PTR + objc._C_DBL)
+
+    @min_os_level('10.11')
+    def test_functions_10_11(self):
+        self.assertResultHasType(Security.CMSEncoderSetSignerAlgorithm, objc._C_INT)
+        self.assertArgHasType(Security.CMSEncoderSetSignerAlgorithm, 0, objc._C_ID)
+        self.assertArgHasType(Security.CMSEncoderSetSignerAlgorithm, 1, objc._C_ID)
 
 if __name__ == "__main__":
     main()

@@ -137,7 +137,7 @@ int depythonify_authorizationitem(PyObject* value, void* _out)
         Py_DECREF(seq);
         PyErr_Format(PyExc_ValueError,
             "depythonifying struct of %"PY_FORMAT_SIZE_T"d members, got tuple of %"PY_FORMAT_SIZE_T"d",
-            4, PyTuple_Size(value));
+            4, PySequence_Fast_GET_SIZE(seq));
         return -1;
     }
 

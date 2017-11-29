@@ -88,6 +88,7 @@ FRAMEWORK_WRAPPERS=[
         ('SafariServices',          '10.11',            None        ),
         ('ScreenSaver',             None,               None        ),
         ('ScriptingBridge',         '10.5',             None        ),
+        ('Security',      	    None,               None        ),
         ('SecurityFoundation',      None,               None        ),
         ('SecurityInterface',       None,               None        ),
         ('SearchKit',               None,               None        ),

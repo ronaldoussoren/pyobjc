@@ -31,6 +31,8 @@ class TestSecTask (TestCase):
         self.assertArgHasType(Security.SecTaskCopyValuesForEntitlements, 1, objc._C_ID)
         self.assertArgHasType(Security.SecTaskCopyValuesForEntitlements, 2, objc._C_OUT + objc._C_PTR + objc._C_ID)
 
+    @min_os_level('10.12')
+    def test_functions10_12(self):
         self.assertResultHasType(Security.SecTaskCopySigningIdentifier, objc._C_ID)
         self.assertResultIsCFRetained(Security.SecTaskCopySigningIdentifier)
         self.assertArgHasType(Security.SecTaskCopySigningIdentifier, 0, objc._C_ID)

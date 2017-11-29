@@ -14,7 +14,6 @@ class TestCode (TestCase):
         self.assertIsInstance(Security.kSecGuestAttributeHash, unicode)
         self.assertIsInstance(Security.kSecGuestAttributeMachPort, unicode)
         self.assertIsInstance(Security.kSecGuestAttributePid, unicode)
-        self.assertIsInstance(Security.kSecGuestAttributeAudit, unicode)
         self.assertIsInstance(Security.kSecGuestAttributeDynamicCode, unicode)
         self.assertIsInstance(Security.kSecGuestAttributeDynamicCodeInfoPlist, unicode)
 
@@ -34,7 +33,6 @@ class TestCode (TestCase):
         self.assertIsInstance(Security.kSecCodeInfoFlags, unicode)
         self.assertIsInstance(Security.kSecCodeInfoFormat, unicode)
         self.assertIsInstance(Security.kSecCodeInfoDigestAlgorithm, unicode)
-        self.assertIsInstance(Security.kSecCodeInfoDigestAlgorithms, unicode)
         self.assertIsInstance(Security.kSecCodeInfoIdentifier, unicode)
         self.assertIsInstance(Security.kSecCodeInfoImplicitDesignatedRequirement, unicode)
         self.assertIsInstance(Security.kSecCodeInfoMainExecutable, unicode)
@@ -48,13 +46,21 @@ class TestCode (TestCase):
         self.assertIsInstance(Security.kSecCodeInfoTimestamp, unicode)
         self.assertIsInstance(Security.kSecCodeInfoTrust, unicode)
         self.assertIsInstance(Security.kSecCodeInfoUnique, unicode)
-        self.assertIsInstance(Security.kSecCodeInfoCdHashes, unicode)
 
     @expectedFailure
     def test_constants_missing(self):
         self.assertIsInstance(Security.kSecGuestAttributeArchitecture, unicode)
         self.assertIsInstance(Security.kSecGuestAttributeSubarchitecture, unicode)
         self.assertIsInstance(Security.kSecCodeInfoPlatformIdentifier, unicode)
+
+    @min_os_level('10.11.4')
+    def test_constants_10_11_4(self):
+        self.assertIsInstance(Security.kSecCodeInfoDigestAlgorithms, unicode)
+        self.assertIsInstance(Security.kSecCodeInfoCdHashes, unicode)
+
+    @min_os_level('10.12')
+    def test_constants_10_12(self):
+        self.assertIsInstance(Security.kSecGuestAttributeAudit, unicode)
 
     def test_functions(self):
         self.assertIsInstance(Security.SecCodeGetTypeID(), (int, long))

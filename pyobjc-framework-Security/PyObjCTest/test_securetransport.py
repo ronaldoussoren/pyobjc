@@ -109,6 +109,13 @@ class TestSecureTransport (TestCase):
         self.assertEqual(Security.kSSLStreamType, 0)
         self.assertEqual(Security.kSSLDatagramType, 1)
 
+
+        self.assertEqual(Security.kNeverAuthenticate, 0)
+        self.assertEqual(Security.kAlwaysAuthenticate, 1)
+        self.assertEqual(Security.kTryAuthenticate, 2)
+
+    @min_os_level('10.12')
+    def test_constants(self):
         self.assertIsInstance(Security.kSSLSessionConfig_default, unicode)
         self.assertIsInstance(Security.kSSLSessionConfig_ATSv1, unicode)
         self.assertIsInstance(Security.kSSLSessionConfig_ATSv1_noPFS, unicode)
@@ -121,10 +128,6 @@ class TestSecureTransport (TestCase):
         self.assertIsInstance(Security.kSSLSessionConfig_anonymous, unicode)
         self.assertIsInstance(Security.kSSLSessionConfig_3DES_fallback, unicode)
         self.assertIsInstance(Security.kSSLSessionConfig_TLSv1_3DES_fallback, unicode)
-
-        self.assertEqual(Security.kNeverAuthenticate, 0)
-        self.assertEqual(Security.kAlwaysAuthenticate, 1)
-        self.assertEqual(Security.kTryAuthenticate, 2)
 
     def test_functions(self):
         self.assertIsInstance(Security.SSLContextGetTypeID(), (int, long))

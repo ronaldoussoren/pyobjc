@@ -95,7 +95,6 @@ class TestCSCommon (TestCase):
         self.assertIsInstance(Security.kSecCFErrorResourceAdded, unicode)
         self.assertIsInstance(Security.kSecCFErrorResourceAltered, unicode)
         self.assertIsInstance(Security.kSecCFErrorResourceMissing, unicode)
-        self.assertIsInstance(Security.kSecCFErrorResourceSideband, unicode)
         self.assertIsInstance(Security.kSecCFErrorInfoPlist, unicode)
         self.assertIsInstance(Security.kSecCFErrorGuestAttributes, unicode)
         self.assertIsInstance(Security.kSecCFErrorRequirementSyntax, unicode)
@@ -137,6 +136,10 @@ class TestCSCommon (TestCase):
         self.assertEqual(Security.kSecCodeSignatureHashSHA256, 2)
         self.assertEqual(Security.kSecCodeSignatureHashSHA256Truncated, 3)
         self.assertEqual(Security.kSecCodeSignatureHashSHA384, 4)
+
+    @min_os_level('10.12')
+    def test_constants_10_12(self):
+        self.assertIsInstance(Security.kSecCFErrorResourceSideband, unicode)
 
 if __name__ == "__main__":
     main()

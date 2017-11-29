@@ -1655,10 +1655,10 @@ depythonify_c_struct(const char *types, PyObject *arg, void *datum)
     }
 
     if (nitems != PySequence_Fast_GET_SIZE(seq)) {
-        Py_DECREF(seq);
         PyErr_Format(PyExc_ValueError,
             "depythonifying struct of %"PY_FORMAT_SIZE_T"d members, got tuple of %"PY_FORMAT_SIZE_T"d",
-            nitems, PyTuple_Size(arg));
+            nitems, PySequence_Fast_GET_SIZE(seq));
+        Py_DECREF(seq);
         return -1;
     }
 
