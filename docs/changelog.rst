@@ -6,6 +6,15 @@ An overview of the relevant changes in new, and older, releases.
 Version 4.1b1
 -------------
 
+* Issue #223: Fix hard crash when executing ``help(Cocoa)``
+
+  Fetching the help for PyObjC framework wrappers isn't very useful due
+  to the sheer size of the output (4.5 million lines of output for
+  ``help(Cocoa)`` at the moment), but shouldn't cause a hard crash of
+  the interpreter.
+
+  Reported by Dave Fuller
+
 * Issue #218: Explictly cause an ImportError when reloading ```objc._objc```
 
   Reloading the PyObjC core extension now raises an ImportError because

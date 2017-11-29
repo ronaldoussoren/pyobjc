@@ -63,7 +63,12 @@ PyDoc_STRVAR(sel_metadata_doc, "__metadata__()\n" CLINIC_SEP "\nReturn a dict th
 static PyObject* sel_metadata(PyObject* self)
 {
     int r;
-    PyObject* result = PyObjCMethodSignature_AsDict(PyObjCSelector_GetMetadata(self));
+    PyObjCMethodSignature* mi = PyObjCSelector_GetMetadata(self);
+    if (mi == NULL) {
+        return NULL;
+    }
+
+    PyObject* result = PyObjCMethodSignature_AsDict(mi);
     if (result == NULL) {
         return NULL;
     }
