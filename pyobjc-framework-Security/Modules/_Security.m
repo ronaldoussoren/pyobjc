@@ -145,7 +145,7 @@ m_SecKeychainFindInternetPassword(
             py_passwordData = Py_None;
             Py_INCREF(py_passwordData);
         } else {
-#if Py_MAJOR == 3
+#if PY_MAJOR_VERSION == 3
             py_passwordData = PyBytes_FromStringAndSize(passwordData, password_length);
 #else
             py_passwordData = PyBytes_FromStringAndSize(passwordData, password_length);
@@ -270,7 +270,7 @@ m_SecKeychainFindGenericPassword(
             py_passwordData = Py_None;
             Py_INCREF(py_passwordData);
         } else {
-#if Py_MAJOR == 3
+#if PY_MAJOR_VERSION == 3
             py_passwordData = PyBytes_FromStringAndSize(passwordData, password_length);
 #else
             py_passwordData = PyBytes_FromStringAndSize(passwordData, password_length);
@@ -441,7 +441,7 @@ m_AuthorizationCopyInfo(
     if (py_tag == Py_None) {
         tag = NULL;
 
-#if Py_MAJOR == 2
+#if PY_MAJOR_VERSION == 2
     } else if (PyString_Check(py_tag)) {
 #else
     } else if (PyBytes_Check(py_tag)) {
@@ -662,7 +662,7 @@ m_AuthorizationExecuteWithPrivileges(
         return NULL;
     }
 
-#if Py_MAJOR == 2
+#if PY_MAJOR_VERSION == 2
     if (!PyString_Check(py_pathToTool)) {
         PyErr_SetString(PyExc_ValueError, "pathToTool must be a bytes string");
         return NULL;
@@ -698,7 +698,7 @@ m_AuthorizationExecuteWithPrivileges(
     for (i = 0; i < PySequence_Fast_GET_SIZE(seq); i++) {
         PyObject* t = PySequence_Fast_GET_ITEM(seq, i);
 
-#if Py_MAJOR == 2
+#if PY_MAJOR_VERSION == 2
         if (!PyString_Check(t)) {
             PyErr_SetString(PyExc_ValueError, "arguments must be a sequence of byte strings");
             PyMem_Free(arguments);
