@@ -121,6 +121,8 @@ class TestCMSEncoder (TestCase):
         self.assertArgHasType(Security.CMSEncoderCopySignerTimestamp, 1, objc._C_ULNG)
         self.assertArgHasType(Security.CMSEncoderCopySignerTimestamp, 2, objc._C_OUT + objc._C_PTR + objc._C_DBL)
 
+    @min_os_level('10.10')
+    def test_functions_10_10(self):
         self.assertResultHasType(Security.CMSEncoderCopySignerTimestampWithPolicy, objc._C_INT)
         self.assertArgHasType(Security.CMSEncoderCopySignerTimestampWithPolicy, 0, objc._C_ID)
         self.assertArgHasType(Security.CMSEncoderCopySignerTimestampWithPolicy, 1, objc._C_ID)

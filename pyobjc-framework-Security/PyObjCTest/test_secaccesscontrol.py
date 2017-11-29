@@ -18,6 +18,7 @@ class TestSecAccessControl (TestCase):
         self.assertEqual(Security.kSecAccessControlPrivateKeyUsage, 1 << 30)
         self.assertEqual(Security.kSecAccessControlApplicationPassword, 1 << 31)
 
+    @min_os_level('10.10')
     def test_functions(self):
         self.assertResultHasType(Security.SecAccessControlCreateWithFlags, objc._C_ID)
         self.assertResultIsCFRetained(Security.SecAccessControlCreateWithFlags)

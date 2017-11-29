@@ -8,10 +8,13 @@ class TestSecBase (TestCase):
         self.assertIsCFType(Security.SecIdentityRef)
         self.assertIsCFType(Security.SecKeyRef)
         self.assertIsCFType(Security.SecPolicyRef)
-        self.assertIsCFType(Security.SecAccessControlRef)
         self.assertIsCFType(Security.SecTrustedApplicationRef)
         self.assertIsCFType(Security.SecAccessRef)
         self.assertIsCFType(Security.SecACLRef)
+
+    @min_os_level('10.10')
+    def test_types_10_10(self):
+        self.assertIsCFType(Security.SecAccessControlRef)
 
     @expectedFailure
     def test_types_not_unique(self):
