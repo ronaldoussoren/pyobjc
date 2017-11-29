@@ -36,8 +36,8 @@ Version 4.1b1
 
 * #129: Add bindings to libdispatch.
 
-  These bindings require macOS 10.10 or later, libdispatch was
-  available earlier but macOS 10.10 changed the API in such a
+  These bindings require macOS 10.8 or later, libdispatch was
+  available earlier but macOS 10.8 changed the API in such a
   way that wrapping became a lot easier.
 
   .. note::

@@ -15,7 +15,7 @@ VERSION="4.1b1"
 setup(
     name='pyobjc-framework-libdispatch',
     description = "Wrappers for libdispatch on macOS",
-    min_os_level="10.10",
+    min_os_level="10.8",
     packages = [ "libdispatch" ],
     ext_modules = [
         Extension('libdispatch._inlines',

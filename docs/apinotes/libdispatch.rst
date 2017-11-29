@@ -16,7 +16,7 @@ API Notes
 
 .. note::
 
-   These bindings are only available on macOS 10.10 or later. The dispatch library is
+   These bindings are only available on macOS 10.8 or later. The dispatch library is
    available on earlier releases of OSX, but in a way that is not compatbile with these
    bindings.
 
