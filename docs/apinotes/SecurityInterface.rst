@@ -20,6 +20,6 @@ The entire "SecurityInterface" framework on macOS is available from Python.
 The *authorizationRights* are returned as a tuple of AuthorizationItem instances.
 
 ``-[SFAuthorizationView setAauthorizationRights:]``
-..............................................
+...................................................
 
 Pass the *authorizationRights* argument as a tuple of AuthorizationItem instances.

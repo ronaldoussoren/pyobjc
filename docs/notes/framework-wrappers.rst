@@ -208,7 +208,7 @@ The framework name links to API notes for that framework, the python packages li
 +----------------------------------------------------------------+---------------------------------------------+-----------------------------------------+
 | :doc:`LatentSemanticMapping </apinotes/LatentSemanticMapping>` | `pyobjc-framework-LatentSemanticMapping`_   |                                         |
 +----------------------------------------------------------------+---------------------------------------------+-----------------------------------------+
-| :doc:`LocalAuthentication </apinotes/LocalAuthentiation>`      | `pyobjc-framework-LocalAuthentication`_     |                                         |
+| :doc:`LocalAuthentication </apinotes/LocalAuthentication>`     | `pyobjc-framework-LocalAuthentication`_     |                                         |
 +----------------------------------------------------------------+---------------------------------------------+-----------------------------------------+
 | :doc:`MapKit </apinotes/MapKit>`                               | `pyobjc-framework-MapKit`_                  |                                         |
 +----------------------------------------------------------------+---------------------------------------------+-----------------------------------------+
@@ -298,7 +298,7 @@ The framework name links to API notes for that framework, the python packages li
 +----------------------------------------------------------------+---------------------------------------------+-----------------------------------------+
 | :doc:`SecurityFoundation </apinotes/SecurityFoundation>`       | `pyobjc-framework-SecurityFoundation`_      |                                         |
 +----------------------------------------------------------------+---------------------------------------------+-----------------------------------------+
-| :doc:`SecurityInterface </apinotes/SecurityInterface>`         | `pyobc-framework-SecurityInterface`_        |                                         |
+| :doc:`SecurityInterface </apinotes/SecurityInterface>`         | `pyobjc-framework-SecurityInterface`_       |                                         |
 +----------------------------------------------------------------+---------------------------------------------+-----------------------------------------+
 | :doc:`ServerNotification </apinotes/ServerNotification>`       | `pyobjc-framework-ServerNotification`_      |                                         |
 +----------------------------------------------------------------+---------------------------------------------+-----------------------------------------+

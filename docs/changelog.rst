@@ -141,10 +141,10 @@ Version 4.0b1
 * New framework wrappers:
 
   - :doc:`ColorSync </apinotes/ColorSync>` (new in macOS 10.13)
-  - :doc:`CoreML</apinotes/CoreML>`  (new in macOS 10.13)
-  - :doc:`ExternalAccessory</apinotes/ExernalAccssory>`  (new in macOS 10.13)
-  - :doc:`CoreSpotlight</apinotes/CoreSpotlight>`  (new in macOS 10.13)
-  - :doc:`Vision</apinotes/Vision>`  (new in macOS 10.13)
+  - :doc:`CoreML </apinotes/CoreML>`  (new in macOS 10.13)
+  - :doc:`ExternalAccessory </apinotes/ExternalAccessory>`  (new in macOS 10.13)
+  - :doc:`CoreSpotlight </apinotes/CoreSpotlight>`  (new in macOS 10.13)
+  - :doc:`Vision </apinotes/Vision>`  (new in macOS 10.13)
 
 * metadata updates:
 
@@ -174,7 +174,7 @@ Version 4.0b1
   - :doc:`Foundation </apinotes/Foundation>`
   - :doc:`FSEvents </apinotes/FSEvents>`
   - :doc:`GameController </apinotes/GameController>`
-  - :doc:`IMServicePlugIn </apinotes/IMServicePlugin>`
+  - :doc:`IMServicePlugIn </apinotes/IMServicePlugIn>`
   - :doc:`ImageCaptureCore </apinotes/ImageCaptureCore>`
   - :doc:`ImageIO </apinotes/ImageIO>`
   - :doc:`Intents </apinotes/Intents>`
@@ -2253,7 +2253,7 @@ Version 2.0 (MacOS X 10.5.0)
      unbound methods, or alternatively access instance methods through
      ``MyClass.pyobjc_instanceMethods``.
 
-  3) Due to a limitation in the implementation of python's ``super`` class[1]
+  3) Due to a limitation in the implementation of python's ``super`` class[1]_
      it is not possible to use the super machinery to resolve class methods.
 
      However, ``from Foundation import *`` will replace the builtin ``super``
