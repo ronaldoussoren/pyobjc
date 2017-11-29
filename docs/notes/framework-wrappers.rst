@@ -55,7 +55,7 @@ The framework name links to API notes for that framework, the python packages li
 +----------------------------------------------------------------+---------------------------------------------+-----------------------------------------+
 | :doc:`Collaboration </apinotes/Collaboration>`                 | `pyobjc-framework-Collaboration`_           |                                         |
 +----------------------------------------------------------------+---------------------------------------------+-----------------------------------------+
-| :doc:`ColorSync </apinotes/ColorSync>`                         |                                             | Not yet wrapped                         |
+| :doc:`ColorSync </apinotes/ColorSync>`                         | `pyobjc-framework-ColorSync`_               |                                         |
 +----------------------------------------------------------------+---------------------------------------------+-----------------------------------------+
 | :doc:`Contacts </apinotes/Contacts>`  `                        | `pyobjc-framework-Contacts`_                |                                         |
 +----------------------------------------------------------------+---------------------------------------------+-----------------------------------------+
@@ -65,7 +65,7 @@ The framework name links to API notes for that framework, the python packages li
 +----------------------------------------------------------------+---------------------------------------------+-----------------------------------------+
 | CoreAudioKit                                                   | -                                           | Not yet wrapped                         |
 +----------------------------------------------------------------+---------------------------------------------+-----------------------------------------+
-| CoreAuthentication                                             | -                                           | Not yet wrapped                         |
+| CoreAuthentication                                             | -                                           | No public API                           |
 +----------------------------------------------------------------+---------------------------------------------+-----------------------------------------+
 | :doc:`CoreBluetooth </apinotes/CoreBluetooth>`                 | `pyobjc-framework-CoreBluetooth`_           |                                         |
 +----------------------------------------------------------------+---------------------------------------------+-----------------------------------------+
@@ -85,7 +85,7 @@ The framework name links to API notes for that framework, the python packages li
 +----------------------------------------------------------------+---------------------------------------------+-----------------------------------------+
 | CoreMIDIServer                                                 | -                                           | Not yet wrapped                         |
 +----------------------------------------------------------------+---------------------------------------------+-----------------------------------------+
-| CoreML                                                         | -                                           | Not yet wrapped                         |
+| :doc:`CoreML </apinotes/CoreML>`                               | `pyobjc-framework-CoreML`_                  |                                         |
 +----------------------------------------------------------------+---------------------------------------------+-----------------------------------------+
 | CoreMedia                                                      | -                                           | Not yet wrapped                         |
 +----------------------------------------------------------------+---------------------------------------------+-----------------------------------------+
@@ -234,7 +234,7 @@ The framework name links to API notes for that framework, the python packages li
 +----------------------------------------------------------------+---------------------------------------------+-----------------------------------------+
 | :doc:`NetFS </apinotes/NetFS>`                                 | `pyobjc-framework-NetFS`_                   |                                         |
 +----------------------------------------------------------------+---------------------------------------------+-----------------------------------------+
-| NetworkExtension                                               | -                                           | Not wrapped yet                         |
+| :doc:`NetworkExtension </apinotes/NetworkExtension>`           | `pyobjc-framework-NetworkExtension`_        |                                         |
 +----------------------------------------------------------------+---------------------------------------------+-----------------------------------------+
 | :doc:`NotificationCenter </apinotes/NotificationCenter>`       | `pyobjc-framework-NotificationCenter`_      |                                         |
 +----------------------------------------------------------------+---------------------------------------------+-----------------------------------------+
@@ -368,11 +368,13 @@ version of PyObjC although there is no explicit roadmap for this.
 .. _`pyobjc-framework-CloudKit`: https://pypi.org/project/pyobjc-framework-CloudKit/
 .. _`pyobjc-framework-Cocoa`: https://pypi.org/project/pyobjc-framework-Cocoa/
 .. _`pyobjc-framework-Collaboration`: https://pypi.org/project/pyobjc-framework-Collaboration/
+.. _`pyobjc-framework-ColorSync`: https://pypi.org/project/pyobjc-framework-ColorSync/
 .. _`pyobjc-framework-ContactsUI`: https://pypi.org/project/pyobjc-framework-ContactsUI/
 .. _`pyobjc-framework-Contacts`: https://pypi.org/project/pyobjc-framework-Contacts/
 .. _`pyobjc-framework-CoreBluetooth`: https://pypi.org/project/pyobjc-framework-CoreBluetooth/
 .. _`pyobjc-framework-CoreData`: https://pypi.org/project/pyobjc-framework-CoreData/
 .. _`pyobjc-framework-CoreLocation`: https://pypi.org/project/pyobjc-framework-CoreLocation/
+.. _`pyobjc-framework-CoreML`: https://pypi.org/project/pyobjc-framework-CoreML/
 .. _`pyobjc-framework-CoreSpotlight`: https://pypi.org/project/pyobjc-framework-CoreSpotlight/
 .. _`pyobjc-framework-CoreText`: https://pypi.org/project/pyobjc-framework-CoreText/
 .. _`pyobjc-framework-CoreWLAN`: https://pypi.org/project/pyobjc-framework-CoreWLAN/
@@ -404,6 +406,7 @@ version of PyObjC although there is no explicit roadmap for this.
 .. _`pyobjc-framework-ModelIO`: https://pypi.org/project/pyobjc-framework-ModelIO/
 .. _`pyobjc-framework-MultipeerConnectivity`: https://pypi.org/project/pyobjc-framework-MultipeerConnectivity/
 .. _`pyobjc-framework-NetFS`: https://pypi.org/project/pyobjc-framework-NetFS/
+.. _`pyobjc-framework-NetworkExtension`: https://pypi.org/project/pyobjc-framework-NetworkExtension/
 .. _`pyobjc-framework-NotificationCenter`: https://pypi.org/project/pyobjc-framework-NotificationCenter/
 .. _`pyobjc-framework-OpenDirectory`: https://pypi.org/project/pyobjc-framework-OpenDirectory/
 .. _`pyobjc-framework-PhotosUI`: https://pypi.org/project/pyobjc-framework-PhotosUI/
