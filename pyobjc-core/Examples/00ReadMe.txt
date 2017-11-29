@@ -153,7 +153,7 @@ have installed.
 
 * `CurrencyConverter`_
 
-  A simple NIB based application. Start with this one. Also see the 
+  A simple NIB based application. Start with this one. Also see the
   `PyObjC tutorial`_.
 
 .. _`CurrencyConverter`: AppKit/CurrencyConverter
@@ -168,12 +168,12 @@ have installed.
 .. __: AppKit/DotView
 
 * `FieldGraph`__
-  
+
   This shows an simple example of an MVC based application, that also
   makes use of ``NSBezierPaths``.  Contains a ``Project Builder`` project,
   as well as a ``setup.py`` script.
 
-  The application calculates the field pattern and RMS field of an antenna 
+  The application calculates the field pattern and RMS field of an antenna
   array with up to three elements.
 
 .. __: AppKit/FieldGraph
@@ -193,7 +193,7 @@ have installed.
 .. __: AppKit/iClass
 
 * `PackageManager`__
-  
+
   An implementation of the MacPython PackageManager application using
   Cocoa.
 
@@ -246,15 +246,15 @@ have installed.
   pasteboard to tinyurl.com equivalents.
 
 .. __: AppKit/TinyURLService
-  
+
 * `Todo`_
 
   A more complex NIB based applications. This is a document-based application.
-  The code is a translation into Python of an example project in 
+  The code is a translation into Python of an example project in
   `Learning Cocoa`_ from O'Reilly
 
 .. _`Todo`: AppKit/ToDo
-.. _`Learning Cocoa`: http://www.oreilly.com/catalog/learncocoa2/
+.. _`Learning Cocoa`: http://shop.oreilly.com/product/9780596003012.do
 
 * `WebServicesTool`__
 
@@ -279,7 +279,7 @@ later.
 
   Shows custom array controller that implements table view data
   source methods to support drag and drop, including copying
-  objects from one window to another, drop of URLs, and 
+  objects from one window to another, drop of URLs, and
   re-ordering of the content array.
 
   Originally from `Cocoa Bindings Examples and Hints`_,
@@ -288,7 +288,7 @@ later.
 .. _`Bookmarks`: CocoaBindings/Bookmarks
 
 * `ControlledPreferences`_
-  
+
   Demonstrates how to use Cocoa Bindings to simplify storing and
   retrieving user preferences.  Also demonstrates how to use an
   ``NSValueTransformer`` to archive/unarchive a non-property-list
@@ -302,7 +302,7 @@ later.
 * `CurrencyConvBinding`_
 
   A rewrite of `CurrencyConverter`_ using Cocoa Bindings.
-    
+
   Originally from
   `Introduction to Developing Cocoa Applications Using Bindings`_,
   converted to PyObjC by u.fiedler.
@@ -314,7 +314,7 @@ later.
 
   Demonstrates how to subclass ``NSArrayController`` to implement filtering
   of a ``NSTableView``.  Also demonstrates the use of indexed accessors.
-  
+
   Originally from `Cocoa Bindings Examples and Hints`_,
   converted to PyObjC by u.fiedler.
 
@@ -338,7 +338,7 @@ later.
   programmatically, including a number of options such as validation
   and an array operator, and indexed accessor methods. A custom model
   object implements custom validation method.
-  
+
   Originally from `Cocoa Bindings Examples and Hints`_,
   converted to PyObjC by u.fiedler.
 
@@ -351,10 +351,10 @@ later.
   contains an ``Xcode`` project as well as a ``setup.py`` script.
 
 .. __: CocoaBindings/TableModel
-  
+
 * `TableModelWithSearch`__
 
-  A more advanced example of Key-Value Coding. This uses a custom 
+  A more advanced example of Key-Value Coding. This uses a custom
   ``NSArrayController``.  Contains contains an ``Xcode`` project
   as well as a ``setup.py`` script.
 
@@ -369,12 +369,12 @@ later.
   converted to PyObjC by u.fiedler.
 
 .. _`TemperatureTransformer`: CocoaBindings/TemperatureTransformer
-.. _`Value Transformers`: http://developer.apple.com/documentation/Cocoa/Conceptual/ValueTransformers/index.html
+.. _`Value Transformers`: https://developer.apple.com/library/content/documentation/Cocoa/Conceptual/ValueTransformers/index.html
 
 * `ToDos`_
 
   Shows two array controllers, one to manage the contents of a table
-  view, the other to manage a pop-up menu in a table column. Also 
+  view, the other to manage a pop-up menu in a table column. Also
   shows two value transformers to alter the color of text.
 
   Originally from `Cocoa Bindings Examples and Hints`_,
@@ -460,7 +460,7 @@ a Cocoa UI.  These examples also require `PyOpenGL`__.
 
 * `OpenGLDemo`__
 
-  A simple program that shows how to use OpenGL in a Cocoa program.  It is a 
+  A simple program that shows how to use OpenGL in a Cocoa program.  It is a
   port of Apple's "CocoaGL" example.
 
 .. __: OpenGL/OpenGLDemo
@@ -496,7 +496,7 @@ Mac OS X 10.3 and later.
 .. __: Plugins/SillyBallsSaver
 
 * `WebKitInterpreter`__
-  
+
   Uses the new WebKit Cocoa plugin API available in Safari 1.3
   and later to embed a PyInterpreter in the browser.
 
@@ -539,11 +539,11 @@ framework, the HTML rendering engine from Safari.
   This example implements a subclass of ``NSURLProtocol`` that can be used
   to load the ``pydoc`` documentation of a module.
 
-  It also includes a simple documentation browser using ``WebKit`` and the 
+  It also includes a simple documentation browser using ``WebKit`` and the
   ``PyDocURLProtocol`` class.
 
-.. __: WebKit/PyDocURLProtocol 
- 
+.. __: WebKit/PyDocURLProtocol
+
 
 Some work-in-progress examples
 ------------------------------

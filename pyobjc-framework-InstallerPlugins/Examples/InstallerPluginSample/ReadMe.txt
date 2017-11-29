@@ -74,10 +74,12 @@ Code Flow in the Plugin
 
 Plugins are only supported in Mac OS X Tiger (v10.4) and later.
 
-Contact: Subscribe to the installer-dev mailing list at the Apple Mailing
-Lists web page <https://lists.apple.com/mailman/listinfo>.  Select the
-"Installer-dev" list item and follow the steps on
-"Subscribing to Installer-dev".
+.. lists are no longer a thing:
+
+   Contact: Subscribe to the installer-dev mailing list at the Apple Mailing
+   Lists web page <https://lists.apple.com/mailman/listinfo>.  Select the
+   "Installer-dev" list item and follow the steps on
+   "Subscribing to Installer-dev".
 
 .. dead link:
 	Documentation:	http://developer.apple.com/documentation/DeveloperTools/Conceptual/SoftwareDistribution/index.html

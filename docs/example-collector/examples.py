@@ -308,7 +308,7 @@ def build_examples(app):
             print("There are no examples on the website", file=fp)
 
         else:
-            print("* `Download all examples <all-examples.zip>`_", file=fp)
+            print("* :download:`Download all examples <all-examples.zip>`", file=fp)
             print("", file=fp)
             for project, info in all_examples:
                 print(project, file=fp)

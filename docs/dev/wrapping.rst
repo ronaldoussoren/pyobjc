@@ -30,13 +30,13 @@ The code for loading a framework and exporting its classes is pretty simple:
  .. sourcecode: python
 
     import objc
-    objc.loadBundle("MyFramework", globals(), 
+    objc.loadBundle("MyFramework", globals(),
        bundle_path=objc.pathForFramework(u'/path/to/MyFramework.framework'))
     del objc
 
 In general you should not load frameworks this way, but you should write a
 package or module to do this for you (e.g. place this code in
-``MyFramework.py`` or ``MyFramework/__init__.py``.  This makes it possible to 
+``MyFramework.py`` or ``MyFramework/__init__.py``.  This makes it possible to
 ``import MyFramework`` which is much more convenient.
 
 If your class library does not require helper functions for some methods this
@@ -44,14 +44,14 @@ is all that is needed.
 
 It is currently necessary to import the wrapper modules for all frameworks that
 are used by your framework.  Not doing this may lead to subtle bugs in other
-parts of the code.  This is a limitation of PyObjC that will be 
+parts of the code.  This is a limitation of PyObjC that will be
 lifted in a future version.
 
 Wrapping global functions and constants
 ---------------------------------------
 
 The code above only provides wrappers for Objective-C classes, if the library
-also defines global functions and/or constants you'll have to write an 
+also defines global functions and/or constants you'll have to write an
 extension module to make these available to Python.
 
 You can use the PyObjC C-API (to be documented) when writing this module.  With
@@ -60,16 +60,16 @@ this module for you.  These scripts are both very rough and tuned for the Apple
 headers, so YMMV.
 
 Note that we currently do not install the ``pyobjc-api.h`` header, you'll have
-to copy it from the source-tree until we do.  This header is not installed 
+to copy it from the source-tree until we do.  This header is not installed
 because the interface is not yet stable, please let us know if you want to
 use the API.
 
 Pointer arguments
 -----------------
 
-Methods with pointer arguments (other then arguments that are equivalent to 
-an 'id') require more work.  If the pointer arguments are used to pass a single 
-value to/from a function ('pass-by-reference arguments') you'll just have to 
+Methods with pointer arguments (other then arguments that are equivalent to
+an 'id') require more work.  If the pointer arguments are used to pass a single
+value to/from a function ('pass-by-reference arguments') you'll just have to
 provide more specific method signatures.  In other cases you'll have to write
 custom wrappers for these methods.
 
@@ -78,9 +78,9 @@ Check ``Modules/Foundation`` for examples of these custom wrappers.
 Pass-by-reference arguments
 ...........................
 
-Pass-by-reference arguments can be 'in' (data passed into the function), 
-'out' (data is returned from the function) or 'inout' (data is passed into 
-and then returned from  the function). 
+Pass-by-reference arguments can be 'in' (data passed into the function),
+'out' (data is returned from the function) or 'inout' (data is passed into
+and then returned from  the function).
 
 Given the following class interface:
 
@@ -91,16 +91,16 @@ Given the following class interface:
    -(void)selector:(id*)outArgument withArguments:(NSArray*)data;
 
    @end
- 
-The compiler will generate a method signature for this method and this can 
-be accessed from Python using the property 'signature' of Objective-C methods. 
+
+The compiler will generate a method signature for this method and this can
+be accessed from Python using the property 'signature' of Objective-C methods.
 You can also just make up the signature, which is quite easy once you get the
 hang of it.  The signature for this method is 'v@:^@@'.  See `Type Encodings`_
 for the list of valid encoding characters for the Apple Objective-C runtime.
 
-.. _`Type Encodings`: https://developer.apple.com/library/mac/#documentation/Cocoa/Conceptual/ObjCRuntimeGuide/Articles/ocrtTypeEncodings.html#//apple_ref/doc/uid/TP40008048-CH100-SW1
+.. _`Type Encodings`: https://developer.apple.com/library/content/documentation/Cocoa/Conceptual/ObjCRuntimeGuide/Articles/ocrtTypeEncodings.html
 
-Let's say the first argument is an output parameter.  Output parameters are 
+Let's say the first argument is an output parameter.  Output parameters are
 denoted in the signature string using the character 'o' before the actual
 argument signature.  The 'correct' signature for method is therefore 'v@:o^@@'.
 The following code tells the bridge about this better method signature:
@@ -134,17 +134,17 @@ implementation of the method from Python and 1 to call a Python implementation
 of the method from Objective-C.
 
 You also must write a custom wrapper when the method has a variable number
-of arguments.  It is often advisable to documented varargs method as 
+of arguments.  It is often advisable to documented varargs method as
 unsupported, or to support them only using a fixed number of arguments.
 
-For now it is best to check the source code for the wrappers for the Cocoa 
+For now it is best to check the source code for the wrappers for the Cocoa
 class library for more information.  We'll add documentation for this in the
 future.
 
 protocols
 .........
 
-If the framework defines any (informal) protocols you should add 
+If the framework defines any (informal) protocols you should add
 ``objc.informal_protocol`` objects for those protocols to your module.  These
 can be defined in a submodule, as long as you arrange for that module to be
 loaded whenever someone imports your package.

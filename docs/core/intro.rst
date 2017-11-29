@@ -7,6 +7,7 @@ An introduction to PyObjC
 	:URL: http://pyobjc.sourceforge.net/
 	:copyright: 2003-2016 The PyObjC Project
 
+
 Preface
 -------
 
@@ -451,7 +452,7 @@ For more information about Objective-C see:
 
 * `The Objective-C Programming Language`_ at `Apple`_.
 
-.. _`The Objective-C Programming Language`: https://developer.apple.com/library/mac/#documentation/Cocoa/Conceptual/OOP_ObjC/Introduction/Introduction.html
+.. _`The Objective-C Programming Language`: https://developer.apple.com/library/content/documentation/Cocoa/Conceptual/OOP_ObjC/Introduction/Introduction.html
 
    The link is not correct, but the actual document is not online at the  moment.
 
@@ -866,9 +867,9 @@ More information on Cocoa programming can be found at:
 
 .. :doc:`PyObjC Example index </examples/index>`:
 
-..  _`Cocoa documentation at the Apple developer website`: https://developer.apple.com/library/mac/navigation/index.html#section=Frameworks&topic=Cocoa%20Layer
+..  _`Cocoa documentation at the Apple developer website`: https://developer.apple.com/documentation?language=objc
 
-.. _`Cocoa examples at the Apple developer website`: https://developer.apple.com/library/mac/navigation/index.html#section=Resource%20Types&topic=Sample%20Code
+.. _`Cocoa examples at the Apple developer website`: https://developer.apple.com/library/content/navigation/index.html
 
 Notes on specific tasks
 -----------------------

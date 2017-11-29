@@ -6,7 +6,6 @@
 #
 #  Value Transformer Example Application
 #  Based on Apples FahrenheitToCelsiusTransformer Example
-#  file:///Developer/ADC%20Reference%20Library/documentation/Cocoa/Conceptual/ValueTransformers/index.html
 
 import objc
 from Cocoa import NSValueTransformer, NSNumber, NSObject

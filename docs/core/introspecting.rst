@@ -84,4 +84,4 @@ without notice between releases. Changing instance variables can
 break class invariants and might cause misbehavior (including hard
 crashes).
 
-.. _`issue #17053 in Python's tracker`: http://bugs.python.org/issue17053
+.. _`issue #17053 in Python's tracker`: https://bugs.python.org/issue17053

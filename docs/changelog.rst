@@ -1875,7 +1875,7 @@ Version 2.2 (2009-11-24)
     such as an ``NSArray``, and there are no direct references to the block from
     Python.
 
-.. __: http://clang.llvm.org/docs/Block-ABI-Apple.html
+.. __: https://clang.llvm.org/docs/Block-ABI-Apple.html
 
 - ``objc.inject`` is no longer support. This was code that had no real relation
   to the rest of PyObjC and was only working in 32-bit mode with little reason
@@ -3440,7 +3440,7 @@ Version 0.9 (May-02-2003)
 - The module AppKit.NibClassBuilder has been moved to the package
   PyObjCTools.
 
-- Usage of libFFI (http://sourceware.org/libffi/) is now mandatory. The
+- Usage of libFFI (https://sourceware.org/libffi/) is now mandatory. The
   setup.py gives the impression that it isn't, but we do *not* support
   non-FFI builds.
 

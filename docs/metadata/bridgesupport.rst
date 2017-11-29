@@ -657,11 +657,11 @@ API description
    .. versionchanged:: 2.5
       The function is available again.
 
-.. _`pkg_resources.resource_string()`: http://setuptools.readthedocs.io/en/latest/pkg_resources.html
+.. _`pkg_resources.resource_string()`: https://setuptools.readthedocs.io/en/latest/pkg_resources.html
 
 .. rubric:: Footnotes
 
 .. [1] Technically, deprecation started in PyObjC 2.5, the bridgesupport
        system was temporarily removed in PyObjC 2.4.
 
-.. _`Apple's Objective-C Runtime Programming Guide`: https://developer.apple.com/library/content/documentation/Cocoa/Conceptual/ObjCRuntimeGuide/Introduction/Introduction.html#//apple_ref/doc/uid/TP40008048?language=objc
+.. _`Apple's Objective-C Runtime Programming Guide`: https://developer.apple.com/library/content/documentation/Cocoa/Conceptual/ObjCRuntimeGuide/Introduction/Introduction.html?language=objc
