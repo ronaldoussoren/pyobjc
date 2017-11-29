@@ -11,6 +11,7 @@ import AppKit
 import Security
 
 from SecurityInterface import _metadata
+import SecurityInterface._SecurityInterface
 
 
 sys.modules['SecurityInterface'] = mod = objc.ObjCLazyModule(

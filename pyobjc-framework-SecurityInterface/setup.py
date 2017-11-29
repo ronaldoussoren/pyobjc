@@ -7,7 +7,7 @@ for general tips and tricks regarding the translation between Python
 and (Objective-)C frameworks
 '''
 
-from pyobjc_setup import setup
+from pyobjc_setup import setup, Extension
 import os
 
 VERSION="4.1b1"
@@ -16,6 +16,12 @@ setup(
     name='pyobjc-framework-SecurityInterface',
     description = "Wrappers for the framework SecurityInterface on macOS",
     packages = [ "SecurityInterface" ],
+    ext_modules = [
+        Extension("SecurityInterface._SecurityInterface",
+            [ "Modules/_SecurityInterface.m" ],
+            extra_link_args=["-framework", "SecurityInterface"]
+        ),
+    ],
     version=VERSION,
     install_requires = [
         'pyobjc-core>='+VERSION,
