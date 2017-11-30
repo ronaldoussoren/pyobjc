@@ -637,7 +637,7 @@ def parse_package_metadata():
             metadata[opt] += "\n\nProject links\n"
             metadata[opt] += "-------------\n"
             metadata[opt] += "\n"
-            metadata[opt] += "* `Documetation <https://pyobjc.readthedocs.io/en/latest/>`_\n\n"
+            metadata[opt] += "* `Documentation <https://pyobjc.readthedocs.io/en/latest/>`_\n\n"
             metadata[opt] += "* `Issue Tracker <https://bitbucket.org/ronaldoussoren/pyobjc/issues?status=new&status=open>`_\n\n"
             metadata[opt] += "* `Repository <https://bitbucket.org/ronaldoussoren/pyobjc/>`_\n\n"
 
