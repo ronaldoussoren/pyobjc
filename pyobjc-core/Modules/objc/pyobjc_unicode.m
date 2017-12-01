@@ -459,7 +459,6 @@ PyObjCUnicode_New(NSString* value)
     result->nsstr = nil;
     result->weakrefs = NULL;
     result->py_nsstr = NULL;
-    tptr[0] = tptr[length] = 0;
 
     if (tptr == NULL) {
         Py_DECREF((PyObject*)result);
@@ -470,7 +469,8 @@ PyObjCUnicode_New(NSString* value)
     }
 
     range = NSMakeRange(0, length);
-    [value getCharacters:(unichar *)PyUnicode_AS_UNICODE(result) range:range];
+    [value getCharacters:(unichar*)tptr range:range];
+    tptr[length] = 0;
     result->base.length = length;
 
 #else /* !PyObjC_UNICODE_FAST_PATH */
