@@ -101,20 +101,30 @@ FRAMEWORK_WRAPPERS=[
         ('SystemConfiguration',     None,               None        ),
         ('WebKit',                  None,               None        ),
         ('XgridFoundation',         None,               '10.8'      ),
-#        ('AudioVideoBridging',      '10.8',             None        ),
-#        ('GLKit',                   '10.8',             None        ),
         ('GameKit',                 '10.8',             None        ),
         ('GameplayKit',             '10.11',            None        ),
-#        ('MediaToolbox',            '10.8',             None        ),
         ('SceneKit',                '10.7',             None        ),
-#        ('SpriteKit',               '10.9',             None        ),
-#        ('VideoToolbox',            '10.8',             None        ),
         ('Vision',                  '10.13',            None        ),
 
         # iTunes library is shipped with iTunes, not part of macOS 'core'
 	# Requires iTunes 11 or later, which is not available on 10.5
         ('iTunesLibrary',           '10.6',             None        ),
 ]
+
+MACOS_TO_DARWIN = {
+        '10.2': '6.0',
+        '10.3': '7.0',
+        '10.4': '8.0',
+        '10.5': '9.0',
+        '10.6': '10.0',
+        '10.7': '11.0',
+        '10.8': '12.0',
+        '10.9': '13.0',
+        '10.10': '14.0',
+        '10.11': '15.0',
+        '10.12': '16.0',
+        '10.13': '17.0',
+}
 
 
 BASE_REQUIRES=[
@@ -132,12 +142,20 @@ def framework_requires():
     result = []
 
     for name, introduced, removed in FRAMEWORK_WRAPPERS:
-        if introduced is not None and version_key(introduced) > version_key(build_platform):
-            continue
-        if removed is not None and version_key(removed) <= version_key(build_platform):
-            continue
 
-        result.append('pyobjc_framework-%s=='%(name,)+VERSION)
+        marker = []
+        if introduced is not None:
+            marker.append('platform_release>="%s"'%(MACOS_TO_DARWIN[introduced],))
+
+        if removed is not None:
+            marker.append('platform_release<"%s"'%(MACOS_TO_DARWIN[removed],))
+
+        if marker:
+            marker = ';%s'%(' and '.join(marker),)
+        else:
+            marker = ''
+
+        result.append('pyobjc-framework-%s==%s%s'%(name,VERSION,marker))
 
     return result
 

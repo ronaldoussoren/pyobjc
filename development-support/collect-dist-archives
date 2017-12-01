@@ -43,23 +43,16 @@ def main():
             print("WARNING: Building wheel for {} failed".format(nm))
             failed.append((nm, 'sdist', ''))
 
-        if nm != 'pyobjc':
-            # Create wheels for anything but the 'pyobjc' package,
-            # as that package contains logic that runs at "setup.py"
-            # time to tune the dependencies for the current machine.
-            #
-            # XXX: It should be possible to tweak that setup.py to
-            # generate a useable wheel, but that can wait until later.
-            for ver in PY_VERSIONS:
-                status = subprocess.call([
-                    'python{}'.format(ver), 'setup.py',
-                        'bdist_wheel', '--dist-dir={}'.format(DIST_DIR),
-                    ],
-                    cwd=os.path.join(TOP_DIR, nm))
+        for ver in PY_VERSIONS:
+            status = subprocess.call([
+                'python{}'.format(ver), 'setup.py',
+                    'bdist_wheel', '--dist-dir={}'.format(DIST_DIR),
+                ],
+                cwd=os.path.join(TOP_DIR, nm))
 
-                if status != 0:
-                    print("WARNING: Building wheel for {} failed (python {})".format(nm, ver))
-                    failed.append((nm, 'wheel', ver))
+            if status != 0:
+                print("WARNING: Building wheel for {} failed (python {})".format(nm, ver))
+                failed.append((nm, 'wheel', ver))
 
     print()
     print("Collected files")
