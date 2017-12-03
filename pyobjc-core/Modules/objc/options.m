@@ -21,6 +21,51 @@ struct options {
 #define _STR(v) #v
 #define STR(v) _STR(v)
 
+#define SSIZE_T_PROP(NAME, VAR, DFLT)                                       \
+    Py_ssize_t VAR = DFLT;                                                  \
+                                                                            \
+    static PyObject* NAME ## _get(PyObject* s __attribute__((__unused__)),  \
+            void *c __attribute__((__unused__)))                            \
+    {                                                                       \
+        return Py_BuildValue("n", VAR);                                     \
+    }                                                                       \
+                                                                            \
+    static int NAME ## _set(PyObject* s __attribute__((__unused__)),        \
+            PyObject* newVal, void* c __attribute__((__unused__)))          \
+    {                                                                       \
+        if (newVal == NULL) {                                               \
+            PyErr_SetString(PyExc_TypeError, "Cannot delete option '" STR(NAME) "'"); \
+            return -1;                                                      \
+        }                                                                   \
+                                                                            \
+        if (PyArg_Parse(newVal, "n", &VAR) < 0) {                           \
+            return -1;                                                      \
+        }                                                                   \
+        return 0;                                                           \
+    }
+
+#define INT_PROP(NAME, VAR, DFLT)                                           \
+    int VAR = DFLT;                                                         \
+                                                                            \
+    static PyObject* NAME ## _get(PyObject* s __attribute__((__unused__)),  \
+            void *c __attribute__((__unused__)))                            \
+    {                                                                       \
+        return Py_BuildValue("i", VAR);                                     \
+    }                                                                       \
+                                                                            \
+    static int NAME ## _set(PyObject* s __attribute__((__unused__)),        \
+            PyObject* newVal, void* c __attribute__((__unused__)))          \
+    {                                                                       \
+        if (newVal == NULL) {                                               \
+            PyErr_SetString(PyExc_TypeError, "Cannot delete option '" STR(NAME) "'"); \
+            return -1;                                                      \
+        }                                                                   \
+                                                                            \
+        if (PyArg_Parse(newVal, "i", &VAR) < 0) {                           \
+            return -1;                                                      \
+        }                                                                   \
+        return 0;                                                           \
+    }
 
 #define BOOL_PROP(NAME, VAR, DFLT)                                          \
     BOOL VAR = DFLT;                                                        \
@@ -90,73 +135,9 @@ BOOL_PROP(structs_writable, PyObjC_StructsWritable, YES)
 BOOL_PROP(strbridge_enabled, PyObjC_StrBridgeEnabled, YES)
 #endif /* PY_MAJOR_VERSION == 2 */
 
-int PyObjC_NSCoding_Version = 0;
-
-static PyObject* _nscoding_version_get(PyObject* s __attribute__((__unused__)),
-        void *c __attribute__((__unused__)))
-{
-    return PyInt_FromLong(PyObjC_NSCoding_Version);
-}
-
-static int _nscoding_version_set(PyObject* s __attribute__((__unused__)),
-        PyObject* newVal, void* c __attribute__((__unused__)))
-{
-    if (newVal == NULL) {
-        PyErr_SetString(PyExc_TypeError, "Cannot delete option 'nscoding_version'");
-        return -1;
-    }
-    if (PyArg_Parse(newVal, "i", &PyObjC_NSCoding_Version) < 0) {
-        return -1;
-    }
-
-    return 0;
-}
-
-int PyObjC_DeprecationVersion = 0;
-
-static PyObject* deprecation_warnings_get(PyObject* s __attribute__((__unused__)),
-        void *c __attribute__((__unused__)))
-{
-    return PyInt_FromLong(PyObjC_DeprecationVersion);
-}
-
-static int deprecation_warnings_set(PyObject* s __attribute__((__unused__)),
-        PyObject* newVal, void* c __attribute__((__unused__)))
-{
-    if (newVal == NULL) {
-        PyErr_SetString(PyExc_TypeError, "Cannot delete option 'deprecation_level'");
-        return -1;
-    }
-    if (PyArg_Parse(newVal, "i", &PyObjC_DeprecationVersion) < 0) {
-        return -1;
-    }
-
-    return 0;
-}
-
-Py_ssize_t PyObjC_MappingCount = 0;
-
-static PyObject* _mapping_count_get(PyObject* s __attribute__((__unused__)),
-        void *c __attribute__((__unused__)))
-{
-    return Py_BuildValue("n", PyObjC_MappingCount);
-}
-
-static int _mapping_count_set(PyObject* s __attribute__((__unused__)),
-        PyObject* newVal, void* c __attribute__((__unused__)))
-{
-    if (newVal == NULL) {
-        PyErr_SetString(PyExc_TypeError, "Cannot delete option 'nscoding_version'");
-        return -1;
-    }
-    if (PyArg_Parse(newVal, "n", &PyObjC_MappingCount) < 0) {
-        return -1;
-    }
-
-    return 0;
-}
-
-
+INT_PROP(_nscoding_version, PyObjC_NSCoding_Version, 0)
+INT_PROP(deprecation_warnings, PyObjC_DeprecationVersion, 0)
+SSIZE_T_PROP(_mapping_count, PyObjC_MappingCount, 0)
 
 
 /* Private properties */
