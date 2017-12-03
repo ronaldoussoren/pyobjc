@@ -6,6 +6,9 @@ An overview of the relevant changes in new, and older, releases.
 Version 4.1b1
 -------------
 
+* Protection agains buffer overflow and negative indexes in
+  ``__getitem__`` and ``__setitem__`` for ``objc.varlist`` instances.
+
 * Fix incorrect metadata for ``+[NSEvent addLocalMonitorForEventsMatchingMask:handler:]``
 
 * Fix incorrect and misleading error message in the exception

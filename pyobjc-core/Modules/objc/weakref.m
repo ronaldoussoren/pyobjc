@@ -5,13 +5,6 @@
  * module, its implementation can only work for
  * references to Python objects, not to 'foreign'
  * objects.
- *
- * TODO:
- * 1) Ensure the API is only made available when
- *    building on a new enough platform
- *
- * 2) Look into useing MAZeroingWeakRef for older
- *    platforms.
  */
 #include "pyobjc.h"
 

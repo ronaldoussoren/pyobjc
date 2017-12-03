@@ -62,27 +62,44 @@ static char* keywords[] = { "count", NULL };
     PyObjC_VarList* self = (PyObjC_VarList*)_self;
 
     Py_ssize_t buffer_size, length;
-    PyObject* result;
+    Py_buffer info;
 
     if (!PyArg_ParseTupleAndKeywords(args, kwds, "n", keywords, &length)) {
         return NULL;
     }
 
+    if (length >= PY_SSIZE_T_MAX / self->itemsize) {
+        /* Calculating the buffer size would overflow */
+        PyErr_SetString(PyExc_OverflowError, "Buffer too long");
+        return NULL;
+    }
+
     buffer_size = length * self->itemsize;
 
-    Py_buffer info;
     if (PyBuffer_FillInfo(&info, _self, self->array, buffer_size, 0, PyBUF_FULL) < 0) {
         return NULL;
     }
-    result = PyMemoryView_FromBuffer(&info);
 
-    return result;
+    return PyMemoryView_FromBuffer(&info);
 }
 
 static PyObject*
 object__getitem__(PyObject* _self, Py_ssize_t idx)
 {
     PyObjC_VarList* self = (PyObjC_VarList*)_self;
+
+    if (idx < 0) {
+        /* Indeterminate size, cannot access from the 'end' */
+        PyErr_SetString(PyExc_ValueError, "Negative indexes are not supported");
+        return NULL;
+    }
+
+    if (idx >= PY_SSIZE_T_MAX / self->itemsize) {
+        /* Interger overflow, index cannot be correct */
+        PyErr_Format(PyExc_IndexError, "Index '%"PY_FORMAT_SIZE_T"d' out of range", idx);
+        return NULL;
+    }
+
 
     return pythonify_c_value(VARLIST_TYPE(self), ((unsigned char*)self->array) + (idx * self->itemsize));
 }
@@ -166,6 +183,18 @@ static int
 object__setitem__(PyObject* _self, Py_ssize_t idx, PyObject* value)
 {
     PyObjC_VarList* self = (PyObjC_VarList*)_self;
+
+    if (idx < 0) {
+        /* Indeterminate size, cannot access from the 'end' */
+        PyErr_SetString(PyExc_ValueError, "Negative indexes are not supported");
+        return -1;
+    }
+
+    if (idx >= PY_SSIZE_T_MAX / self->itemsize) {
+        /* Interger overflow, index cannot be correct */
+        PyErr_Format(PyExc_IndexError, "Index '%"PY_FORMAT_SIZE_T"d' out of range", idx);
+        return -1;
+    }
 
     return depythonify_c_value(VARLIST_TYPE(self), value, ((unsigned char*)self->array) + (idx * self->itemsize));
 }
