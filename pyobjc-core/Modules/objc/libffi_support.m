@@ -1422,7 +1422,7 @@ method_stub(ffi_cif* cif __attribute__((__unused__)), void* resp, void** args, v
                         sel_getName(*(SEL*)args[1]));
                 } else {
                     PyErr_Format(PyExc_ValueError,
-                       "%R: returned None, expecting "
+                       "%R: did not return None, expecting "
                        "a value",
                        userdata->callable);
                 }
