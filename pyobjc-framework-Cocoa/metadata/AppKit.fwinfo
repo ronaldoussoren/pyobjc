@@ -7097,7 +7097,7 @@
           }
          },
          "retval": {
-          "typestr": "v"
+          "typestr": "@"
          }
         }
        }

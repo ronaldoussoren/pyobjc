@@ -6,6 +6,12 @@ An overview of the relevant changes in new, and older, releases.
 Version 4.1b1
 -------------
 
+* Fix incorrect metadata for ``+[NSEvent addLocalMonitorForEventsMatchingMask:handler:]``
+
+* Fix incorrect and misleading error message in the exception
+  that is raised when return a value from a block that should not
+  return a value.
+
 * Issue #223: Fix hard crash when executing ``help(Cocoa)``
 
   Fetching the help for PyObjC framework wrappers isn't very useful due

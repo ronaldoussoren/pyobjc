@@ -315,7 +315,7 @@ class TestNSEvent (TestCase):
     @min_os_level('10.6')
     def testMethods10_6(self):
         self.assertArgIsBlock(NSEvent.addGlobalMonitorForEventsMatchingMask_handler_, 1, b'v@')
-        self.assertArgIsBlock(NSEvent.addLocalMonitorForEventsMatchingMask_handler_, 1, b'v@')
+        self.assertArgIsBlock(NSEvent.addLocalMonitorForEventsMatchingMask_handler_, 1, b'@@')
 
     @min_os_level('10.7')
     def testMethods10_7(self):
