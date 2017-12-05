@@ -2,9 +2,18 @@
 # for information on how to update this file.
 {
  "definitions": {
-  "classes": {}, 
-  "formal_protocols": {}, 
-  "functions": {}, 
+  "classes": {},
+  "enum": {
+   "SKProductPeriodUnitDay": { "value": 0 },
+   "SKProductPeriodUnitWeek": { "value": 1 },
+   "SKProductPeriodUnitMonth": { "value": 2 },
+   "SKProductPeriodUnitYear": { "value": 3 },
+   "SKProductDiscountPaymentModePayAsYouGo": { "value": 0 },
+   "SKProductDiscountPaymentModePayUpFront": { "value": 1 },
+   "SKProductDiscountPaymentModeFreeTrial": { "value": 2 }
+  },
+  "formal_protocols": {},
+  "functions": {},
   "informal_protocols": {}
  }
 }

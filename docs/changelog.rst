@@ -29,7 +29,7 @@ Version 4.1b1
   Reloading the PyObjC core extension now raises an ImportError because
   this cannot work and used to raise a rather vague error.
 
-* Updated metadata for Xcode 9.2 (beta 2)
+* Updated metadata for Xcode 9.2
 
 * Added missing ```MAC_OS_X_VERSION_*``` constants
 
