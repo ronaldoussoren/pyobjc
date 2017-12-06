@@ -8,8 +8,8 @@ if sys.maxsize > 2 ** 32:
         def initWithParameterDictionary_error_(self, p, e): pass
         def setWeightData_error_(self, w, e): return 1
         def outputShapesForInputShapes_error_(self, w, e): return 1
-        def evaluateOnCPUWithInputs_outputs_error_(self, w, e): return 1
-        def encodeToCommandBuffer_inputs_outputs_error_(self, w, e): return 1
+        def evaluateOnCPUWithInputs_outputs_error_(self, i, o, e): return 1
+        def encodeToCommandBuffer_inputs_outputs_error_(self, b, i, o, e): return 1
 
     class TestMLCustomLayer (TestCase):
         @min_sdk_level('10.13')
