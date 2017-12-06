@@ -16,7 +16,7 @@ PY_VERSIONS=[
   "3.4",   # End-of-live: 2019-03-16
   "3.5",   # End-of-live: 2020-09-13
   "3.6",   # End-of-live: 2021-12-16
-  "3.7",   # In alpha
+#  "3.7",   # In alpha
 ]
 
 TOP_DIR=os.path.dirname(

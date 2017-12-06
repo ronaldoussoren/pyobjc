@@ -57,7 +57,7 @@ copyright = u'2017, Ronald Oussoren'
 # built documents.
 #
 # The short X.Y version.
-version = "4.1b1"
+version = "4.1"
 # The full version, including alpha/beta/rc tags.
 release = version
 

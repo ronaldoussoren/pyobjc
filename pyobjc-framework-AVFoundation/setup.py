@@ -10,7 +10,7 @@ and (Objective-)C frameworks
 from pyobjc_setup import setup, Extension
 import os
 
-VERSION="4.1b1"
+VERSION="4.1"
 
 setup(
     name='pyobjc-framework-AVFoundation',
