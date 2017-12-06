@@ -13,7 +13,7 @@ in pure Python. See our tutorial for an example of this.
 Release information
 -------------------
 
-PyObjC 4.0.1 was released on 2017-11-20. See the :doc:`changelog <changelog>` for more information.
+PyObjC 4.1 was released on 2017-12-06. See the :doc:`changelog <changelog>` for more information.
 
 Supported platforms
 -------------------
