@@ -440,6 +440,7 @@ PyObjCRT_SkipTypeSpec(const char *type)
                 if (type != NULL) {
                     type++;
                 } else {
+                    PyErr_Format(PyObjCExc_InternalError, "Invalid struct definition in type signature: %s", start_type);
                     return NULL;
                 }
             }
@@ -462,6 +463,7 @@ PyObjCRT_SkipTypeSpec(const char *type)
                 if (type != NULL) {
                     type++;
                 } else {
+                    PyErr_Format(PyObjCExc_InternalError, "Invalid union definition in type signature: %s", start_type);
                     return NULL;
                 }
             }

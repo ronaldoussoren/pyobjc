@@ -478,7 +478,7 @@ class TestBridgeSupportParser (TestCase):
         test_func.__name__ = _test_name
         test_func.__doc__ = "System bridgesupport %r"%(fn,)
 
-        if contains_any(fn, BROKEN_FRAMEWORKS) and os_release() in ('10.13', '10.13.1'):
+        if contains_any(fn, BROKEN_FRAMEWORKS) and os_release() in ('10.13', '10.13.1', '10.13.2'):
             locals()[_test_name] = expectedFailure(test_func)
         else:
             locals()[_test_name] = test_func
@@ -1187,7 +1187,13 @@ class TestBridgeSupportParser (TestCase):
             prs = bridgesupport._BridgeSupportParser(xmldata, framework_name)
         except objc.internal_error as exc:
             if 'PyObjCRT_SkipTypeSpec: Unhandled type' in str(exc):
-                self.fail("Bad type encoding in metadata")
+                self.fail("Bad type encoding in metadata (bad type)")
+            elif 'Invalid array definition' in str(exc):
+                self.fail("Bad type encoding in metadata (bad array)")
+            elif 'Invalid union definition in type signature' in str(exc):
+                self.fail("Bad type encoding in metadata (bad union)")
+            elif 'Invalid struct definition in type signature' in str(exc):
+                self.fail("Bad type encoding in metadata (bad struct)")
             else:
                 raise
 

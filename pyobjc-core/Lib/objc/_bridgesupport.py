@@ -122,8 +122,9 @@ class _BridgeSupportParser (object):
 
                 name, fields = objc.splitStructSignature(objc._C_STRUCT_B + _as_bytes(item[1:-1]) + objc._C_STRUCT_E)
                 result.append(start)
-                result.append(_as_bytes(name))
-                result.append(b'=')
+                if name is not None:
+                    result.append(_as_bytes(name))
+                    result.append(b'=')
                 for nm, tp in fields:
                     if nm is not None:
                         result.append(b'"')
@@ -144,8 +145,7 @@ class _BridgeSupportParser (object):
             else:
                 result.append(item)
 
-        result = b''.join(result)
-        return result
+        return b''.join(result)
 
 
     if sys.maxsize > 2**32:
