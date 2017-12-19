@@ -176,21 +176,6 @@ class TestStructs (TestCase):
         self.assertEqual(sys.getsizeof(tp0()) + 1 * PTR_SIZE, sys.getsizeof(tp1()))
         self.assertEqual(sys.getsizeof(tp0()) + 2 * PTR_SIZE, sys.getsizeof(tp2()))
 
-    def testStructSequenceDeprecated(self):
-        tp0 = objc.createStructType("FooStruct", b'{FooStruct="first"i"second"i}', None)
-
-        with pyobjc_options(structs_indexable=True, structs_writable=True):
-            with warnings.catch_warnings(record=True) as record:
-                warnings.simplefilter("always")
-                v = tp0()
-                v[0]
-                v[0] = 42
-                len(v)
-
-            self.assertEqual(len(record), 3)
-            self.assertTrue(all(issubclass(x.category, DeprecationWarning) for x in record))
-
-
     def testStructNotWritable(self):
         tp0 = objc.createStructType("FooStruct", b'{FooStruct="first"i"second"i}', None)
 

@@ -62,9 +62,6 @@ struct_sq_length(PyObject* self)
             "Instances of '%.100s' are not sequences 1", Py_TYPE(self)->tp_name);
         return -1;
     }
-    if (PyErr_Warn(PyExc_DeprecationWarning, "Using struct wrapper as sequence") < 0) {
-        return -1;
-    }
     return STRUCT_LENGTH(self);
 }
 
@@ -78,9 +75,6 @@ struct_sq_item(PyObject* self, Py_ssize_t offset)
     if (!PyObjC_StructsIndexable) {
         PyErr_Format(PyExc_TypeError,
             "Instances of '%.100s' are not sequences 2", Py_TYPE(self)->tp_name);
-        return NULL;
-    }
-    if (PyErr_Warn(PyExc_DeprecationWarning, "Using struct wrapper as sequence") < 0) {
         return NULL;
     }
 
@@ -109,9 +103,6 @@ struct_sq_slice(PyObject* self, Py_ssize_t ilow, Py_ssize_t ihigh)
     if (!PyObjC_StructsIndexable) {
         PyErr_Format(PyExc_TypeError,
             "Instances of '%.100s' are not sequences 3", Py_TYPE(self)->tp_name);
-        return NULL;
-    }
-    if (PyErr_Warn(PyExc_DeprecationWarning, "Using struct wrapper as sequence") < 0) {
         return NULL;
     }
 
@@ -149,9 +140,6 @@ struct_sq_ass_item(PyObject* self, Py_ssize_t offset, PyObject* newVal)
             "Instances of '%.100s' are read-only", Py_TYPE(self)->tp_name);
         return -1;
     }
-    if (PyErr_Warn(PyExc_DeprecationWarning, "Using struct wrapper as sequence") < 0) {
-        return -1;
-    }
 
     if (newVal == NULL) {
         PyErr_Format(PyExc_TypeError,
@@ -187,9 +175,6 @@ struct_sq_ass_slice(PyObject* self, Py_ssize_t ilow, Py_ssize_t ihigh, PyObject*
     if (!PyObjC_StructsWritable) {
         PyErr_Format(PyExc_TypeError,
             "Instances of '%.100s' are read-only", Py_TYPE(self)->tp_name);
-        return -1;
-    }
-    if (PyErr_Warn(PyExc_DeprecationWarning, "Using struct wrapper as sequence") < 0) {
         return -1;
     }
 
@@ -248,9 +233,6 @@ struct_sq_contains(PyObject* self, PyObject* value)
     if (!PyObjC_StructsIndexable) {
         PyErr_Format(PyExc_TypeError,
             "Instances of '%.100s' are not sequences", Py_TYPE(self)->tp_name);
-        return -1;
-    }
-    if (PyErr_Warn(PyExc_DeprecationWarning, "Using struct wrapper as sequence") < 0) {
         return -1;
     }
 
@@ -418,11 +400,6 @@ struct_mp_subscript(PyObject* self, PyObject* item)
             "Instances of '%.100s' are not sequences 7", Py_TYPE(self)->tp_name);
         return NULL;
     }
-#if 0
-    if (PyErr_Warn(PyExc_DeprecationWarning, "Using struct wrapper as sequence") < 0) {
-        return NULL;
-    }
-#endif
 
     if (PyIndex_Check(item)) {
         Py_ssize_t i;
@@ -489,11 +466,6 @@ struct_mp_ass_subscript(PyObject* self, PyObject* item, PyObject* value)
             "Instances of '%.100s' are read-only", Py_TYPE(self)->tp_name);
         return -1;
     }
-#if 0
-    if (PyErr_Warn(PyExc_DeprecationWarning, "Using struct wrapper as sequence") < 0) {
-        return -1;
-    }
-#endif
 
     if (PyIndex_Check(item)) {
         Py_ssize_t i = PyNumber_AsSsize_t(item, PyExc_IndexError);
