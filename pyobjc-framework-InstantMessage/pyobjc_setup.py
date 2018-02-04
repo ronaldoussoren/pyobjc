@@ -39,14 +39,16 @@ class oc_build_py (build_py.build_py):
 from pkg_resources import working_set, normalize_path, add_activation_listener, require
 from distutils.errors import DistutilsPlatformError, DistutilsError
 
+REPO_NAME='pyobjc'
+
 class oc_egg_info (egg_info.egg_info):
     def run(self):
         egg_info.egg_info.run(self)
 
         path = os.path.join(self.egg_info, 'PKG-INFO')
         with open(path, 'a+') as fp:
-            fp.write('Project-URL: Documentation, https://pyobjc.readthedocs.io/en/latest/\n')
-            fp.write('Project-URL: Issue tracker, https://bitbucket.org/ronaldoussoren/pyobjc/issues?status=new&status=open\n')
+            fp.write('Project-URL: Documentation, https://%s.readthedocs.io/en/latest/\n' % (REPO_NAME,))
+            fp.write('Project-URL: Issue tracker, https://bitbucket.org/ronaldoussoren/%s/issues?status=new&status=open\n' % (REPO_NAME,))
 
 class oc_test (test.test):
     description = "run test suite"
@@ -173,7 +175,7 @@ import os
 import plistlib
 import sys
 
-CLASSIFIERS = filter(None,
+CLASSIFIERS = list(filter(None,
 """
 Development Status :: 5 - Production/Stable
 Environment :: Console
@@ -193,7 +195,7 @@ Programming Language :: Python :: Implementation :: CPython
 Programming Language :: Objective C
 Topic :: Software Development :: Libraries :: Python Modules
 Topic :: Software Development :: User Interfaces
-""".splitlines())
+""".splitlines()))
 
 
 def get_os_level():
@@ -520,9 +522,9 @@ def setup(
         k['long_description'] += "\n\nProject links\n"
         k['long_description'] += "-------------\n"
         k['long_description'] += "\n"
-        k['long_description'] += "* `Documentation <https://pyobjc.readthedocs.io/en/latest/>`_\n\n"
-        k['long_description'] += "* `Issue Tracker <https://bitbucket.org/ronaldoussoren/pyobjc/issues?status=new&status=open>`_\n\n"
-        k['long_description'] += "* `Repository <https://bitbucket.org/ronaldoussoren/pyobjc/>`_\n\n"
+        k['long_description'] += "* `Documentation <https://%s.readthedocs.io/en/latest/>`_\n\n" % (REPO_NAME,)
+        k['long_description'] += "* `Issue Tracker <https://bitbucket.org/ronaldoussoren/%s/issues?status=new&status=open>`_\n\n" % (REPO_NAME,)
+        k['long_description'] += "* `Repository <https://bitbucket.org/ronaldoussoren/%s/>`_\n\n" % (REPO_NAME,)
         k['long_description_content_type'] = 'text/x-rst; charset=UTF-8'
 
     _setup(
