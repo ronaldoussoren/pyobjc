@@ -3,6 +3,8 @@
 {
  "definitions": {
   "externs": {
+   "WKWebsiteDataTypeFetchCache": { "typestr": "@" },
+   "WKWebsiteDataTypeServiceWorkerRegistrations": { "typestr": "@" },
    "WKWebsiteDataTypeDiskCache": { "typestr": "@" },
    "WKWebsiteDataTypeMemoryCache": { "typestr": "@" },
    "WKWebsiteDataTypeOfflineWebApplicationCache": { "typestr": "@" },
@@ -39,6 +41,24 @@
     "WKAudiovisualMediaTypeAll": { "alias": "NSUIntegerMax" }
   },
   "classes": {
+   "WKOpenPanelParameters": {
+    "methods": [
+     {
+      "class_method": false,
+      "retval": {
+       "type_override": "Z"
+      },
+      "selector": "allowsMultipleSelection"
+     },
+     {
+      "class_method": false,
+      "retval": {
+       "type_override": "Z"
+      },
+      "selector": "allowsDirectories"
+     }
+    ]
+   },
    "WKHTTPCookieStore": {
     "methods": [
      {

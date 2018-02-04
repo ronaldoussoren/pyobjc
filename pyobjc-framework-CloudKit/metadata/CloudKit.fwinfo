@@ -2909,6 +2909,9 @@
    "CKErrorServerResponseLost": {
     "value": 34
    },
+   "CKErrorAssetNotAvailable": {
+    "value": 35
+   },
    "CKErrorTooManyParticipants": {
     "value": 29
    },

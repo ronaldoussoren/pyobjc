@@ -41,6 +41,7 @@ class TestCGImage (TestCase):
             self.assertEqual(kCGBitmapByteOrder32Host, kCGBitmapByteOrder32Little)
 
         self.assertEqual(kCGImageByteOrderMask, 0x7000)
+        self.assertEqual(kCGImageByteOrderDefault, 0 << 12)
         self.assertEqual(kCGImageByteOrder16Little, 1 << 12)
         self.assertEqual(kCGImageByteOrder32Little, 2 << 12)
         self.assertEqual(kCGImageByteOrder16Big, 3 << 12)

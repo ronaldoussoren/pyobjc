@@ -18,6 +18,8 @@ Version 4.1.1
   break too much existing code, hence deprecating is not really an option. Furthermore,
   this would also break some nice idioms.
 
+* Update metadata for Xcode 9.3 (beta)
+
 Version 4.1
 -----------
 

@@ -48,6 +48,7 @@ if sys.maxsize > 2 ** 32:
             self.assertEqual(CloudKit.CKErrorManagedAccountRestricted, 32)
             self.assertEqual(CloudKit.CKErrorParticipantMayNeedVerification, 33)
             self.assertEqual(CloudKit.CKErrorServerResponseLost, 34)
+            self.assertEqual(CloudKit.CKErrorAssetNotAvailable, 35)
 
 if __name__ == "__main__":
     main()

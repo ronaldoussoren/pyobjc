@@ -114,8 +114,23 @@ class TestSecureTransport (TestCase):
         self.assertEqual(Security.kAlwaysAuthenticate, 1)
         self.assertEqual(Security.kTryAuthenticate, 2)
 
+        self.assertEqual(Security.errSSLTransportReset, -9852)
+        self.assertEqual(Security.errSSLNetworkTimeout, -9853)
+        self.assertEqual(Security.errSSLConfigurationFailed, -9854)
+        self.assertEqual(Security.errSSLUnsupportedExtension, -9855)
+        self.assertEqual(Security.errSSLUnexpectedMessage, -9856)
+        self.assertEqual(Security.errSSLDecompressFail, -9857)
+        self.assertEqual(Security.errSSLHandshakeFail, -9858)
+        self.assertEqual(Security.errSSLDecodeError, -9859)
+        self.assertEqual(Security.errSSLInappropriateFallback, -9860)
+        self.assertEqual(Security.errSSLMissingExtension, -9861)
+        self.assertEqual(Security.errSSLBadCertificateStatusResponse, -9862)
+        self.assertEqual(Security.errSSLCertificateRequired, -9863)
+        self.assertEqual(Security.errSSLUnknownPSKIdentity, -9864)
+        self.assertEqual(Security.errSSLUnrecognizedName, -9865)
+
     @min_os_level('10.12')
-    def test_constants(self):
+    def test_constants_10_12(self):
         self.assertIsInstance(Security.kSSLSessionConfig_default, unicode)
         self.assertIsInstance(Security.kSSLSessionConfig_ATSv1, unicode)
         self.assertIsInstance(Security.kSSLSessionConfig_ATSv1_noPFS, unicode)
@@ -128,6 +143,7 @@ class TestSecureTransport (TestCase):
         self.assertIsInstance(Security.kSSLSessionConfig_anonymous, unicode)
         self.assertIsInstance(Security.kSSLSessionConfig_3DES_fallback, unicode)
         self.assertIsInstance(Security.kSSLSessionConfig_TLSv1_3DES_fallback, unicode)
+
 
     def test_functions(self):
         self.assertIsInstance(Security.SSLContextGetTypeID(), (int, long))

@@ -1,5 +1,10 @@
 {
  "definitions": {
+  "enum": {
+   "GKAuthenticatingWithoutUI": { "value": 0 },
+   "GKAuthenticatingWithGreenBuddyUI": { "value": 1 },
+   "GKAuthenticatingWithAuthKitInvocation": { "value": 2 }
+  },
   "classes": {
    "GKAchievementDescription": {
     "methods": [

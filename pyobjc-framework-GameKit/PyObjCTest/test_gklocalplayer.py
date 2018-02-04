@@ -41,6 +41,9 @@ class TestGKLocalPlayer (TestCase):
     def testConstants(self):
         self.assertIsInstance(GameKit.GKPlayerAuthenticationDidChangeNotificationName, unicode)
 
+        self.assertEqual(GameKit.GKAuthenticatingWithoutUI, 0)
+        self.assertEqual(GameKit.GKAuthenticatingWithGreenBuddyUI, 1)
+        self.assertEqual(GameKit.GKAuthenticatingWithAuthKitInvocation, 2)
 
 if __name__ == "__main__":
     main()

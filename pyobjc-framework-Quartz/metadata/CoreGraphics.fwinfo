@@ -14,6 +14,7 @@
    "kCGColorConverterTransformToSpace": { "value": 1 },
    "kCGColorConverterTransformApplySpace": { "value": 2 },
    "kCGImageByteOrderMask": { "value": 28672 },
+   "kCGImageByteOrderDefault": { "value": 0 },
    "kCGImageByteOrder16Little": { "value": 4096 },
    "kCGImageByteOrder32Little": { "value": 8192 },
    "kCGImageByteOrder16Big": { "value": 12288 },

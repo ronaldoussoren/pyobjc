@@ -566,6 +566,14 @@
       "retval": { "type_override": "Z" }
      },
      {
+      "selector": "writeHEIFRepresentationOfImage:toURL:format:colorSpace:options:error:",
+      "class_method": false,
+      "args": {
+       "5": { "type_modifier": "o" }
+      },
+      "retval": { "type_override": "Z" }
+     },
+     {
       "selector": "startTaskToRender:fromRect:toDestination:atPoint:error:",
       "class_method": false,
       "args": {

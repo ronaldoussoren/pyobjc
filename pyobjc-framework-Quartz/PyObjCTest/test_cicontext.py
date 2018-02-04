@@ -36,5 +36,11 @@ class TestCIContext (TestCase):
         self.assertArgIsBOOL(CIContext.createCGImage_fromRect_format_colorSpace_deferred_, 4)
         self.assertResultIsCFRetained(CIContext.createCGImage_fromRect_format_colorSpace_deferred_)
 
+    @min_os_level('10.13.4')
+    def testMethods_10_13_4(self):
+        self.assertResultIsBOOL(CIContext.writeHEIFRepresentationOfImage_toURL_format_colorSpace_options_error_)
+        self.assertArgIsOut(CIContext.writeHEIFRepresentationOfImage_toURL_format_colorSpace_options_error_, 5)
+
+
 if __name__ == "__main__":
     main()

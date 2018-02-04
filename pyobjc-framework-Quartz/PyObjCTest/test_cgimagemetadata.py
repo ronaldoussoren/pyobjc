@@ -99,6 +99,11 @@ class TestCGImageMetadata (TestCase):
         self.assertIsInstance(Quartz.kCGImageMetadataNamespaceExifEX, unicode)
         self.assertIsInstance(Quartz.kCGImageMetadataPrefixExifEX, unicode)
 
+    @min_os_level('10.13.4')
+    def testConstants10_13_4(self):
+        self.assertIsInstance(Quartz.kCGImageMetadataNamespaceIPTCExtension, unicode)
+        self.assertIsInstance(Quartz.kCGImageMetadataPrefixIPTCExtension, unicode)
+
 
 if __name__ == "__main__":
     main()
