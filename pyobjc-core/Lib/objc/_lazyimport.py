@@ -78,7 +78,7 @@ class ObjCLazyModule (ModuleType):
             self.__bundle = None
 
         pfx = name + '.'
-        for nm in sys.modules:
+        for nm in list(sys.modules.keys()):
             # See issue #95: there can be objects that aren't strings in
             # sys.modules.
             if hasattr(nm, 'startswith') and nm.startswith(pfx):

@@ -49,7 +49,7 @@ def whichmodule(obj, name):
     if module_name is not None:
         return module_name
 
-    for module_name, module in sys.modules.items():
+    for module_name, module in list(sys.modules.items()):
         if module_name == "__main__" or module is None:
             continue
 
