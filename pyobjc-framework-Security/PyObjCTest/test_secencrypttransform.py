@@ -45,6 +45,8 @@ class TestSecEncryptTransform (TestCase):
     @expectedFailure
     @min_os_level('10.7')
     def test_functions_missing(self):
+        # On 10.13.4 (beta) both functions are found, but crash...
+        return
         self.assertIsInstance(Security.SecDecryptTransformGetTypeID(), (int, long))
         self.assertIsInstance(Security.SecEncryptTransformGetTypeID(), (int, long))
 
