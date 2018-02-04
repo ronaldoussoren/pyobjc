@@ -167,6 +167,14 @@ typedef unsigned int NSUInteger;
 #define MAC_OS_X_VERSION_10_13_2 101302
 #endif
 
+#ifndef MAC_OS_X_VERSION_10_13_3
+#define MAC_OS_X_VERSION_10_13_3 101303
+#endif
+
+#ifndef MAC_OS_X_VERSION_10_13_4
+#define MAC_OS_X_VERSION_10_13_4 101304
+#endif
+
 #if PyObjC_BUILD_RELEASE <= 1005
 
 /* On MacOS X, +signatureWithObjCTypes: is a method of NSMethodSignature,
