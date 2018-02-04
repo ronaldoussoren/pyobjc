@@ -478,7 +478,7 @@ class TestBridgeSupportParser (TestCase):
         test_func.__name__ = _test_name
         test_func.__doc__ = "System bridgesupport %r"%(fn,)
 
-        if contains_any(fn, BROKEN_FRAMEWORKS) and os_release() in ('10.13', '10.13.1', '10.13.2'):
+        if contains_any(fn, BROKEN_FRAMEWORKS) and os_release().startswith('10.13'):
             locals()[_test_name] = expectedFailure(test_func)
         else:
             locals()[_test_name] = test_func
