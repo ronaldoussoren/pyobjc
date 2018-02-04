@@ -6,6 +6,10 @@ An overview of the relevant changes in new, and older, releases.
 Version 4.1.1
 -------------
 
+* Ensure doctest can work with modules containing subclasses of NSObject
+
+  Reported by Just van Rossum
+
 * Issue #236 : Importing can sometimes fail in multi-threaded scenarios
 
   Fix by Max Bélanger

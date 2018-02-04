@@ -298,5 +298,16 @@ class TestNSInvocationBug (TestCase):
             def forwardInvocation_(self, inv):
                 pass
 
+class TestDocTestProblem (TestCase):
+    def test_doctest(self):
+        import doctest
+
+        class DocTestHelper (NSObject):
+            pass
+
+
+        f = doctest.DocTestFinder(verbose=True)
+        f.find(DocTestHelper)
+
 if __name__ == '__main__':
     main()

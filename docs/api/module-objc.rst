@@ -92,7 +92,7 @@ Bridge options
      When True (the default) PyObjC's wrappers for C structs can be indexed
      as if they are (writable) tuples. When False this isn't possible.
 
-     .. note:: This option will default to False in a future version of PyObjC, and will be removed some time after that.
+     .. note:: This is primarily an experimental option, that will likely be removed in a future version.
 
   .. data:: objc.options.structs_writable
 

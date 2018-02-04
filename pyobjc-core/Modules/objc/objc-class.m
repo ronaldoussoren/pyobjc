@@ -910,7 +910,7 @@ static char* keywords[] = { "name", "bases", "dict", "protocols", NULL };
         return NULL;
     }
 
-    if (PyObjC_MakeBundleForClass != NULL) {
+    if (PyObjC_MakeBundleForClass != NULL && PyObjC_MakeBundleForClass != Py_None) {
         PyObject* m = PyObject_CallObject(PyObjC_MakeBundleForClass, NULL);
         if (m == NULL) {
             (void)PyObjCClass_UnbuildClass(objc_class);
@@ -922,6 +922,10 @@ static char* keywords[] = { "name", "bases", "dict", "protocols", NULL };
             Py_DECREF(hiddenClassSelectors);
             return NULL;
         }
+        if (PyObjCPythonSelector_Check(m)) {
+            ((PyObjCSelector*)m)->sel_class = objc_class;
+        }
+
         r = PyDict_SetItemString(dict, "bundleForClass", m);
         Py_DECREF(m);
         if (r == -1) {
