@@ -12,7 +12,7 @@
    "NSObject": {
     "methods": [
      {
-      "selector": "additionalRequestHeadersForURL:completionHandler",
+      "selector": "additionalRequestHeadersForURL:completionHandler:",
       "class_method": false,
       "args": {
        "1": {

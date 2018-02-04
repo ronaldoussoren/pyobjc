@@ -21,7 +21,7 @@ misc.update({})
 r = objc.registerMetaDataForSelector
 objc._updatingMetadata(True)
 try:
-    r(b'NSObject', b'additionalRequestHeadersForURL:completionHandler', {'arguments': {3: {'callable': {'retval': {'type': b'v'}, 'arguments': {0: {'type': b'^v'}, 1: {'type': b'@'}}}, 'type': '@?'}}})
+    r(b'NSObject', b'additionalRequestHeadersForURL:completionHandler:', {'arguments': {3: {'callable': {'retval': {'type': b'v'}, 'arguments': {0: {'type': b'^v'}, 1: {'type': b'@'}}}, 'type': '@?'}}})
     r(b'NSObject', b'validateContextMenuItemWithCommand:inPage:userInfo:validationHandler:', {'arguments': {5: {'callable': {'retval': {'type': b'v'}, 'arguments': {0: {'type': b'^v'}, 1: {'type': b'Z'}, 2: {'type': b'@'}}}, 'type': '@?'}}})
     r(b'NSObject', b'validateToolbarItemInWindow:validationHandler:', {'arguments': {3: {'callable': {'retval': {'type': b'v'}, 'arguments': {0: {'type': b'^v'}, 1: {'type': b'Z'}, 2: {'type': b'@'}}}, 'type': '@?'}}})
     r(b'SFContentBlockerManager', b'getStateOfContentBlockerWithIdentifier:completionHandler:', {'arguments': {3: {'callable': {'retval': {'type': b'v'}, 'arguments': {0: {'type': b'^v'}, 1: {'type': b'@'}, 2: {'type': b'@'}}}}}})
