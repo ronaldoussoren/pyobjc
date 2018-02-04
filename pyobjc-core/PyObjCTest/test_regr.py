@@ -306,7 +306,7 @@ class TestDocTestProblem (TestCase):
             pass
 
 
-        f = doctest.DocTestFinder(verbose=True)
+        f = doctest.DocTestFinder(verbose=False)
         f.find(DocTestHelper)
 
 if __name__ == '__main__':
