@@ -3,8 +3,19 @@ What's new in PyObjC
 
 An overview of the relevant changes in new, and older, releases.
 
-Version 4.1b1
+Version 4.1.1
 -------------
+
+* Issue #236 : Importing can sometimes fail in multi-threaded scenarios
+
+  Fix by Max Bélanger
+
+* Undeprecate treating struct wrappers as sequences. Removing this feature would
+  break too much existing code, hence deprecating is not really an option. Furthermore,
+  this would also break some nice idioms.
+
+Version 4.1
+-----------
 
 * Protection agains buffer overflow and negative indexes in
   ``__getitem__`` and ``__setitem__`` for ``objc.varlist`` instances.
