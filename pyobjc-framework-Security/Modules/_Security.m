@@ -491,7 +491,7 @@ m_AuthorizationCopyRights(
     AuthorizationEnvironment environment;
     PyObject* py_environment;
     AuthorizationFlags flags;
-    AuthorizationRights* authorizedRights;
+    AuthorizationRights* authorizedRights = NULL;
     PyObject*  py_authorizedRights;
 
     if (!PyArg_ParseTuple(args, "OOOIO", &py_authorization, &py_rights, &py_environment, &flags, &py_authorizedRights)) {
@@ -649,7 +649,7 @@ m_AuthorizationExecuteWithPrivileges(
     PyObject* py_pathToTool;
     char** arguments;
     PyObject* py_arguments;
-    FILE* communicationsPipe;
+    FILE* communicationsPipe = NULL;
     PyObject* py_communicationsPipe;
     PyObject* seq;
     Py_ssize_t i;
