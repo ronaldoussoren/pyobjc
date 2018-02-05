@@ -6,6 +6,10 @@ An overview of the relevant changes in new, and older, releases.
 Version 4.1.1
 -------------
 
+* Issue #234 Fix crash in AuthorizationExecuteWithPrivileges() wrapper
+
+  Reported by Vangelis Koukis
+
 * Ensure doctest can work with modules containing subclasses of NSObject
 
   Reported by Just van Rossum

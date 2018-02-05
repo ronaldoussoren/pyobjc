@@ -735,7 +735,11 @@ m_AuthorizationExecuteWithPrivileges(
         return NULL;
     }
 
-    return Py_BuildValue("iO", retval, PyObjC_ObjCToPython(@encode(FILE*), &communicationsPipe));
+    if (py_communicationsPipe == PyObjC_NULL) {
+        return Py_BuildValue("iO", retval, Py_None);
+    } else {
+        return Py_BuildValue("iN", retval, PyObjC_ObjCToPython(@encode(FILE*), &communicationsPipe));
+    }
 }
 
 
