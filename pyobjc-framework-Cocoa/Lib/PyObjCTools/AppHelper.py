@@ -309,7 +309,7 @@ def runEventLoop(argv=None, unexpectedErrorAlert=None, installInterrupt=None, pd
                 objc_exception = False
                 if isinstance(e, objc.error):
                     if PY3K:
-                        error_str = str(str(e), 'utf-8', 'replace')
+                        error_str = str(e)
                     else:
                         error_str = unicode(str(e), 'utf-8', 'replace')
 
