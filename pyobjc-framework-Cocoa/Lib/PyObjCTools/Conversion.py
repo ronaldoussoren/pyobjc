@@ -15,10 +15,13 @@ __all__ = [
 import Foundation
 import datetime
 import time
+import sys
 try:
     import decimal
 except ImportError:
     decimal = None
+
+PY3K = (sys.version_info[0] == 3)
 
 try:
     PYTHON_TYPES = (
@@ -46,8 +49,13 @@ def fromPythonDecimal(aPythonDecimal):
     """
     Convert a Python decimal.Decimal to a NSDecimalNumber
     """
+    if PY3K:
+        value_str = str(aPythonDecimal)
+    else:
+        value_str = unicode(aPythonDecimal)
+
     return Foundation.NSDecimalNumber.decimalNumberWithString_locale_(
-        unicode(aPythonDecimal), DECIMAL_LOCALE)
+        value_str, DECIMAL_LOCALE)
 
 FORMATS = dict(
     xml=Foundation.NSPropertyListXMLFormat_v1_0,

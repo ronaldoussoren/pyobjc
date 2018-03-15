@@ -32,6 +32,8 @@ import traceback
 import objc
 from objc import super
 
+PY3K = (sys.version_info[0] == 3)
+
 class PyObjCMessageRunner(NSObject):
     """
     Wraps a Python function and its arguments and allows it to be posted to the
@@ -306,7 +308,12 @@ def runEventLoop(argv=None, unexpectedErrorAlert=None, installInterrupt=None, pd
                 exctype, e, tb = sys.exc_info()
                 objc_exception = False
                 if isinstance(e, objc.error):
-                    NSLog("%@", unicode(str(e), 'utf-8', 'replace'))
+                    if PY3K:
+                        error_str = str(e)
+                    else:
+                        error_str = unicode(str(e), 'utf-8', 'replace')
+
+                    NSLog("%@", error_str)
                 elif not unexpectedErrorAlert():
                     NSLog("%@", "An exception has occured:")
                     traceback.print_exc()
