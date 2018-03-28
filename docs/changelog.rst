@@ -26,6 +26,10 @@ Version 4.1.1
 
 * Update metadata for Xcode 9.3 (beta)
 
+* Pull request #17: Fix python 3 issues in PyObjCTools.AppHelper and PyObjCTools.Conversion
+
+  Fix by Max Bélanger
+
 Version 4.1
 -----------
 
