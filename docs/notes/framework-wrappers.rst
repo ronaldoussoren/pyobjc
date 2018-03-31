@@ -43,6 +43,8 @@ The framework name links to API notes for that framework, the python packages li
 +----------------------------------------------------------------+---------------------------------------------+-----------------------------------------+
 | :doc:`Automator </apinotes/Automator>`                         | `pyobjc-framework-Automator`_               |                                         |
 +----------------------------------------------------------------+---------------------------------------------+-----------------------------------------+
+| :doc:`BusinessChat </apinotes/BusinessChat>`                   | `pyobjc-framework-BusinessChat`_            |                                         |
++----------------------------------------------------------------+---------------------------------------------+-----------------------------------------+
 | :doc:`CFNetwork </apinotes/CFNetwork>`                         | `pyobjc-framework-CFNetwork`_               |                                         |
 +----------------------------------------------------------------+---------------------------------------------+-----------------------------------------+
 | :doc:`CalendarStore </apinotes/CalendarStore>`                 | `pyobjc-framework-CalendarStore`_           |                                         |
@@ -362,6 +364,7 @@ version of PyObjC although there is no explicit roadmap for this.
 .. _`pyobjc-framework-AppleScriptObjC`: https://pypi.org/project/pyobjc-framework-AppleScriptObjC/
 .. _`pyobjc-framework-ApplicationServices`: https://pypi.org/project/pyobjc-framework-ApplicationServices/
 .. _`pyobjc-framework-Automator`: https://pypi.org/project/pyobjc-framework-Automator/
+.. _`pyobjc-framework-BusinessChat`: https://pypi.org/project/pyobjc-framework-BusinessChat/
 .. _`pyobjc-framework-CFNetwork`: https://pypi.org/project/pyobjc-framework-CFNetwork/
 .. _`pyobjc-framework-CalendarStore`: https://pypi.org/project/pyobjc-framework-CalendarStore/
 .. _`pyobjc-framework-GameCenter`: https://pypi.org/project/pyobjc-framework-GameCenter/

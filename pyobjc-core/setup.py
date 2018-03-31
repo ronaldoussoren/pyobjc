@@ -519,8 +519,8 @@ class oc_build_ext (build_ext.build_ext):
 
         # setting was not set manually, check whether python was configured this
         # way.
-        if not self.use_system_libffi:
-            self.use_system_libffi = '--with-system-ffi' in get_config_var("CONFIG_ARGS")
+        #if not self.use_system_libffi:
+        #    self.use_system_libffi = '--with-system-ffi' in get_config_var("CONFIG_ARGS")
 
         self.sdk_root = os.environ.get('SDKROOT', None)
         if self.sdk_root is None:

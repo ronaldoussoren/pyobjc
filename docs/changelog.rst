@@ -3,8 +3,12 @@ What's new in PyObjC
 
 An overview of the relevant changes in new, and older, releases.
 
-Version 4.1.1
+Version 4.2
 -------------
+
+* Add bindings to the BusinessChat framework introduced in macOS 10.13.4
+
+* Update metadata for Xcode 9.3
 
 * Issue #233 Fix crash in Security.AuthorizationCopyRights() wrapper
 
@@ -24,7 +28,6 @@ Version 4.1.1
   break too much existing code, hence deprecating is not really an option. Furthermore,
   this would also break some nice idioms.
 
-* Update metadata for Xcode 9.3 (beta)
 
 * Pull request #17: Fix python 3 issues in PyObjCTools.AppHelper and PyObjCTools.Conversion
 
