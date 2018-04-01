@@ -5,6 +5,7 @@ import os
 import platform
 from distutils.core import Command
 from distutils.errors import DistutilsError
+from setuptools.command import egg_info
 
 import shutil
 import subprocess
@@ -410,6 +411,17 @@ class oc_test (Command):
         if failures:
             sys.exit(1)
 
+
+class oc_egg_info (egg_info.egg_info):
+    def run(self):
+        egg_info.egg_info.run(self)
+
+        path = os.path.join(self.egg_info, 'PKG-INFO')
+        with open(path, 'a+') as fp:
+            fp.write('Project-URL: Documentation, https://pyobjc.readthedocs.io/en/latest/\n')
+            fp.write('Project-URL: Issue tracker, https://bitbucket.org/ronaldoussoren/pyobjc/issues?status=new&status=open\n')
+
+
 dist = setup(
     name = "pyobjc",
     version = VERSION,
@@ -430,6 +442,7 @@ dist = setup(
     dependency_links = [],
     keywords=['Objective-C', 'bridge', 'Cocoa'],
     cmdclass={
-        'test': oc_test
+        'test': oc_test,
+	'egg_info': oc_egg_info,
     },
 )
