@@ -12,7 +12,7 @@ and (Objective-)C frameworks
 from pyobjc_setup import setup, Extension
 import os
 
-VERSION="4.2"
+VERSION="4.2.1b1"
 
 setup(
     name='pyobjc-framework-IMServicePlugIn',
