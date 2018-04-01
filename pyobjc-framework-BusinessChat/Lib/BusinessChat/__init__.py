@@ -15,7 +15,7 @@ sys.modules['BusinessChat'] = mod = objc.ObjCLazyModule(
     "BusinessChat",
     "com.apple.icloud.messages.apps.businessframework",
     objc.pathForFramework("/System/Library/Frameworks/BusinessChat.framework"),
-    _metadata.__dict__, _inline_list_, {
+    _metadata.__dict__, None, {
         '__doc__': __doc__,
         'objc': objc,
         '__path__': __path__,

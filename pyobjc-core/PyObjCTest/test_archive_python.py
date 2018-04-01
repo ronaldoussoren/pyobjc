@@ -799,6 +799,9 @@ class TestKeyedArchivePlainPython (TestCase, test.pickletester.AbstractPickleTes
     def test_negative_put(self): pass
 
     @onlyIf(0, "python unittest not relevant for archiving")
+    def test_framed_write_sizes_with_delayed_writer(self): pass
+
+    @onlyIf(0, "python unittest not relevant for archiving")
     def test_badly_quoted_string(self): pass
 
     @onlyIf(0, "python unittest not relevant for archiving")
@@ -1165,6 +1168,10 @@ class TestArchivePlainPython (TestKeyedArchivePlainPython):
     @onlyIf(0, "python unittest not relevant for archiving")
     def test_frame_readline(self): pass
 
+    @onlyIf(0, "python unittest not relevant for archiving")
+    def test_framed_write_sizes_with_delayed_writer(self): pass
+
+
     @expectedFailure
     def test_recursive_dict_subclass_key(self):
         test.pickletester.AbstractPickleTests.test_recursive_dict_subclass_key(self)
@@ -1212,6 +1219,7 @@ class TestArchivePlainPython (TestKeyedArchivePlainPython):
     @expectedFailure
     def test_recursive_frozenset_subclass_and_inst(self):
         test.pickletester.AbstractPickleTests.test_recursive_frozenset_subclass_and_inst(self)
+
 #
 # Disable testing of plain Archiving for now, need full support
 # for keyed-archiving first, then worry about adding "classic"

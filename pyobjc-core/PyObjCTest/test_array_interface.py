@@ -140,6 +140,10 @@ class MutableArrayTest (list_tests.CommonTest):
     type2test = NSMutableArray
 
     @onlyIf(0, "test irrelevant for NSMutableArray")
+    def test_repr_deep(self):
+        pass
+
+    @onlyIf(0, "test irrelevant for NSMutableArray")
     def test_exhausted_iterator(self):
         pass
 
