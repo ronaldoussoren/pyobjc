@@ -13,7 +13,7 @@ the framework.
 '''
 from pyobjc_setup import setup
 
-VERSION="4.1.1b1"
+VERSION="4.2"
 
 setup(
     name='pyobjc-framework-SearchKit',

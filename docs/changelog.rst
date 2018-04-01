@@ -4,7 +4,7 @@ What's new in PyObjC
 An overview of the relevant changes in new, and older, releases.
 
 Version 4.2
--------------
+-----------
 
 * Add bindings to the BusinessChat framework introduced in macOS 10.13.4
 
