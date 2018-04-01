@@ -41,11 +41,13 @@ def main():
 
 
             subprocess.check_call([
-                interpreter, "wheel-smoke-test.py"
+                interpreter, os.path.join(os.path.dirname(__file__), "wheel-smoke-test.py")
             ])
 
 
     for path in ['/usr/local/bin/python', '/usr/local/bin/python3']:
+        if not os.path.exists(path): continue
+
         with virtualenv(path) as interpreter:
             log = subprocess.check_output([
                 interpreter, "-mpip",

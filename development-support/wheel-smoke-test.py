@@ -39,6 +39,9 @@ if sys_version >= LooseVersion('10.6'):
     from CoreLocation import *
     from CoreWLAN import *
 
+    from iTunesLibrary import *
+
+
 if sys_version >= LooseVersion('10.7'):
     from AVFoundation import *
 
@@ -59,3 +62,19 @@ if sys_version >= LooseVersion('10.10'):
 if sys_version >= LooseVersion('10.11'):
     from Contacts import *
     from ContactsUI import *
+
+if sys_version >= LooseVersion('10.12'):
+    from Intents import *
+    from MediaPlayer import *
+
+if sys_version >= LooseVersion('10.13'):
+    from BusinessChat import *
+    from ColorSync import *
+    from CoreML import *
+    from CoreSpotlight import *
+    from ExternalAccessory import *
+    from Vision import *
+
+print("")
+print("SMOKE TEST PASSED")
+print("")
