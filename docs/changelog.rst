@@ -3,6 +3,11 @@ What's new in PyObjC
 
 An overview of the relevant changes in new, and older, releases.
 
+Version 4.2.1
+-------------
+
+* Update metadata for Xcode 9.4 beta (no changes)
+
 Version 4.2
 -----------
 
