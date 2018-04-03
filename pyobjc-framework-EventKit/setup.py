@@ -9,7 +9,7 @@ and (Objective-)C frameworks
 
 from pyobjc_setup import setup
 
-VERSION="4.2.1b1"
+VERSION="4.2.1"
 
 setup(
     name='pyobjc-framework-EventKit',
