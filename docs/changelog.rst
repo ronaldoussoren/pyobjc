@@ -6,7 +6,7 @@ An overview of the relevant changes in new, and older, releases.
 Version 4.2.1
 -------------
 
-* Update metadata for Xcode 9.4 beta (no changes)
+* Update metadata for Xcode 9.4 beta 2 (no changes)
 
 * Restore autodetection of --with-system-ffi, but ignore this python setting
   for /usr/bin/python because Apple doesn't ship libffi headers.
