@@ -3,7 +3,7 @@ A number of usefull categories on AppKit classes
 """
 __all__ = ()
 import objc
-from AppKit import  NSGraphicsContext
+from AppKit import NSGraphicsContext, NSAnimationContext
 
 class _ctxHelper(object):
     def __enter__(self):
@@ -19,18 +19,17 @@ class NSGraphicsContext (objc.Category(NSGraphicsContext)):
     def savedGraphicsState(self):
         return _ctxHelper()
 
-try:
-    from AppKit import  NSAnimationContext
 
-    class NSAnimationContext (objc.Category(NSAnimationContext)):
-        @classmethod
-        def __enter__(cls):
-            cls.beginGrouping()
+@objc.python_method
+def __enter__(cls):
+    cls.beginGrouping()
 
-        @classmethod
-        def __exit__(cls, exc_type, exc_value, exc_tb):
-            cls.endGrouping()
-            return False
+@objc.python_method
+def __exit__(cls, exc_type, exc_value, exc_tb):
+    cls.endGrouping()
 
-except ImportError:
-    pass
+
+# Cannot use a category here because these special methods
+# must be defined on the metaclass.
+type(NSAnimationContext).__enter__ = __enter__
+type(NSAnimationContext).__exit__ = __exit__

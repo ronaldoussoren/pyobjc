@@ -3,6 +3,15 @@ from PyObjCTools.TestSupport import *
 from AppKit import *
 
 class TestNSFontDescriptor (TestCase):
+    def testConvenience(self):
+        v = NSFontDescriptor.fontDescriptorWithName_size_("Courier", 12)
+        d = v[NSFontNameAttribute]
+        self.assertEqual(v.get(NSFontNameAttribute), d)
+        self.assertEqual(v.get('no-such-name'), None)
+        with self.assertRaises(KeyError):
+            v['no-such-name']
+
+
     def testConstants(self):
         self.assertEqual(NSFontUnknownClass, (0 << 28))
         self.assertEqual(NSFontOldStyleSerifsClass, (1 << 28))

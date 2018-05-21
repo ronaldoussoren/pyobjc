@@ -1104,6 +1104,7 @@ PyObjC_IsPythonKeyword(const char* word)
     static const char* keywords[] = {
         "class",
         "raise",
+        "from",
         NULL
     };
     const char** cur;

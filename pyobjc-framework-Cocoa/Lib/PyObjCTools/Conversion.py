@@ -21,6 +21,11 @@ try:
 except ImportError:
     decimal = None
 
+try:
+    unicode
+except NameError:
+    unicode = str
+
 PY3K = (sys.version_info[0] == 3)
 
 try:
@@ -60,7 +65,7 @@ def fromPythonDecimal(aPythonDecimal):
 FORMATS = dict(
     xml=Foundation.NSPropertyListXMLFormat_v1_0,
     binary=Foundation.NSPropertyListBinaryFormat_v1_0,
-    ascii=Foundation.NSPropertyListOpenStepFormat,
+    ascii=Foundation.NSPropertyListOpenStepFormat, # Not actually supported!
 )
 
 def serializePropertyList(aPropertyList, format='xml'):
@@ -87,13 +92,13 @@ def serializePropertyList(aPropertyList, format='xml'):
     try:
         formatOption = FORMATS[format]
     except KeyError:
-        raise TypeError("Invalid format: %s" % (format,))
-    data, err = Foundation.NSPropertyListSerialization.dataFromPropertyList_format_errorDescription_(aPropertyList, formatOption)
+        raise ValueError("Invalid format: %s" % (format,))
+    data, err = Foundation.NSPropertyListSerialization.dataFromPropertyList_format_errorDescription_(aPropertyList, formatOption, None)
     if err is not None:
         # braindead API!
         errStr = err.encode('utf-8')
         err.release()
-        raise TypeError(errStr)
+        raise ValueError(errStr)
     return data
 
 def deserializePropertyList(propertyListData):
@@ -106,12 +111,12 @@ def deserializePropertyList(propertyListData):
         propertyListData = buffer(propertyListData)
     elif isinstance(propertyListData, unicode):
         propertyListData = buffer(propertyListData.encode('utf-8'))
-    plist, fmt, err = Foundation.NSPropertyListSerialization.propertyListFromData_mutabilityOption_format_errorDescription_(propertyListData, Foundation.NSPropertyListMutableContainers)
+    plist, fmt, err = Foundation.NSPropertyListSerialization.propertyListFromData_mutabilityOption_format_errorDescription_(propertyListData, Foundation.NSPropertyListMutableContainers, None, None)
     if err is not None:
         # braindead API!
         errStr = err.encode('utf-8')
         err.release()
-        raise TypeError(errStr)
+        raise ValueError(errStr)
     return plist
 
 def propertyListFromPythonCollection(aPyCollection, conversionHelper=None):

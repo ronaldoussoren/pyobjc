@@ -31,6 +31,9 @@ class TestNSIndexPath (TestCase):
         self.assertEqual(len(p2), len(path) + 1)
         self.assertEqual(p2[3], 9)
 
+        with self.assertRaises(ValueError):
+            p2[1:3]
+
 
 if __name__ == "__main__":
     main()

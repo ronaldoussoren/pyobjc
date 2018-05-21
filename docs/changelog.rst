@@ -3,6 +3,17 @@ What's new in PyObjC
 
 An overview of the relevant changes in new, and older, releases.
 
+Version 4.2.2
+-------------
+
+* Ensure the context manager for ``NSAnimationContext`` defined in
+  ``PyObjCTools.AppCategories`` actually works.
+
+* Fix convenience wrappers for ``Foundation.NSCache``.
+
+* Fix convenience wrappers for ``Foundation.NSHashTable``.
+
+
 Version 4.2.1
 -------------
 

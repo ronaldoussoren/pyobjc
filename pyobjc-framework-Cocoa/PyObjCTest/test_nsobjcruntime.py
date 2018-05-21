@@ -169,9 +169,12 @@ class TestNSObjCRuntime (TestCase):
 
     def testMinMax(self):
         self.assertEqual(MAX(1, 2), 2)
+        self.assertEqual(MAX(2, 1), 2)
         self.assertEqual(MAX("a", "b"), "b")
         self.assertEqual(MIN(1, 2), 1)
+        self.assertEqual(MIN(2, 1), 1)
         self.assertEqual(MIN("a", "b"), "a")
+        self.assertEqual(ABS(1), 1)
         self.assertEqual(ABS(-1), 1)
         self.assertEqual(ABS(-1.0), 1.0)
 

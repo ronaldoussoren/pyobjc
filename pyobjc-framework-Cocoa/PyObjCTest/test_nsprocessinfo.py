@@ -6,6 +6,15 @@ from Foundation import *
 
 
 class TestNSProcessInfo (TestCase):
+    def testConvenience(self):
+        # This doesn't actually test anything...
+        with NSDisabledSuddenTermination():
+            pass
+
+        with NSDisabledAutomaticTermination('something'):
+            pass
+
+
     def testStructs(self):
         v = NSOperatingSystemVersion()
         self.assertIsInstance(v.majorVersion, (int, long))

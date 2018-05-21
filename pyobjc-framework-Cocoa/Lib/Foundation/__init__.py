@@ -31,6 +31,9 @@ def _setup_conveniences():
         elif value is NSNull.null():
             return None
 
+        else:
+            return value
+
     def nscache_get(self, key, default=None):
         value = self.objectForKey_(key)
         if value is None:
@@ -48,8 +51,8 @@ def _setup_conveniences():
         ('__getitem__', nscache_getitem),
         ('get',         nscache_get),
         ('__setitem__', nscache_setitem),
-        ('__delitem__', lambda self, key: self.removeObject_(key)),
-        ('clear',       lambda self, key: self.removeAllObjects()),
+        ('__delitem__', lambda self, key: self.removeObjectForKey_(key)),
+        ('clear',       lambda self: self.removeAllObjects()),
     ))
 
 
@@ -58,12 +61,12 @@ def _setup_conveniences():
             value = NSNull.null()
         self.addObject_(value)
 
-    def hash_contains(self):
+    def hash_contains(self, value):
         if value is None:
             value = NSNull.null()
         return self.containsObject_(value)
 
-    def hash_add(self, value):
+    def hash_remove(self, value):
         if value is None:
             value = NSNull.null()
         self.removeObject_(value)
@@ -71,30 +74,35 @@ def _setup_conveniences():
     def hash_pop(self):
         value = self.anyObject()
         self.removeObject_(value)
-        return value
+        if value is NSNull.null():
+            return None
+        else:
+            return value
 
     # XXX: add more of the set interface
     objc.addConvenienceForClass('NSHashTable', (
         ('__len__',      lambda self: self.count()),
-        ('clear',        lambda self, key: self.removeAllObjects()),
+        ('clear',        lambda self: self.removeAllObjects()),
         ('__iter__',     lambda self: iter(self.objectEnumerator())),
-        ('add',          lambda self, value: hash_add),
-        ('remove',       lambda self, value: hash_remove),
-        ('__contains__', lambda self, value: hash_contains),
+        ('add',          hash_add),
+        ('remove',       hash_remove),
+        ('__contains__', hash_contains),
         ('pop',          hash_pop),
     ))
 
-    def charset_contains(self, value):
-        try:
-            return self.characterIsMember_(value)
-        except ValueErorr:
-            # Wrong type
-            return False
+    # XXX: These convenience wrappers don't work due to type issues
+    #def charset_contains(self, value):
+    #    try:
+    #        return self.characterIsMember_(value)
+    #    except ValueErorr:
+    #        # Wrong type
+    #        return False
 
-    objc.addConvenienceForClass('NSCharacterSet', (
-        ('__len__',         lambda self: self.count()),
-        ('__contains__',    charset_contains),
-    ))
+    #objc.addConvenienceForClass('NSCharacterSet', (
+    #    ('__len__',         lambda self: self.count()),
+    #    ('__contains__',    charset_contains),
+    #))
+
 
     # XXX: add full set interface (even if other value can only be a set)
     #objc.addConvenienceForClass('NSMutableCharacterSet', (

@@ -135,6 +135,10 @@ class TestNSApplication (TestCase):
         if app is not None:
             self.assertIsInstance(app, NSApplication)
 
+            self.assertIsInstance(NSApp.description(), unicode)
+
+            self.assertRaises(AttributeError, setattr, NSApp, 'foo', 42)
+
     def testNSModalSession(self):
         self.assertIsOpaquePointer(NSModalSession)
 

@@ -3,6 +3,31 @@ from PyObjCTools.TestSupport import *
 from Foundation import *
 
 class TestNSIndexSet (TestCase):
+    def testConvenience(self):
+        v = NSIndexSet.indexSetWithIndexesInRange_((5, 10))
+        l = list(v)
+        self.assertEqual(l, [5, 6, 7, 8, 9, 10, 11, 12, 13, 14])
+
+        l = list(reversed(v))
+        self.assertEqual(l, [14, 13, 12, 11, 10, 9, 8, 7, 6, 5])
+
+
+        v2 = NSIndexSet.indexSetWithIndexesInRange_((5, 9))
+        v3 = NSIndexSet.indexSetWithIndexesInRange_((5, 10))
+
+        self.assertFalse(v == v2)
+        self.assertTrue(v == v3)
+        self.assertFalse(v == 42)
+
+        self.assertTrue(v != v2)
+        self.assertTrue(v != 42)
+        self.assertFalse(v != v3)
+
+        self.assertTrue(8 in v)
+        self.assertFalse(16 in v)
+        self.assertFalse('a'in v)
+
+
     def testMethods(self):
         self.assertResultIsBOOL(NSIndexSet.isEqualToIndexSet_)
         self.assertResultIsBOOL(NSIndexSet.containsIndex_)
