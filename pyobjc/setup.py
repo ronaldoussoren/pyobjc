@@ -162,7 +162,7 @@ def framework_requires():
     return result
 
 
-# Some PiPy stuff
+# Some PyPI stuff
 LONG_DESCRIPTION="""
 PyObjC is a bridge between Python and Objective-C.  It allows full
 featured Cocoa applications to be written in pure Python.  It is also
@@ -170,7 +170,7 @@ easy to use other frameworks containing Objective-C class libraries
 from Python and to mix in Objective-C, C and C++ source.
 
 This package is a pseudo-package that will install all pyobjc related
-packages (that is, pyobjc-core as well as wrapppers for frameworks on
+packages (that is, pyobjc-core as well as wrappers for frameworks on
 macOS)
 
 Project links
@@ -249,6 +249,12 @@ class oc_test (Command):
             self.verbosity=int(self.verbosity)
 
     def run(self):
+        try:
+            import readme_renderer
+        except ImportError:
+            readme_renderer = None
+
+
         print("  validating framework list...")
         all_names = set(nm.split('-')[-1] for nm in os.listdir('..') if nm.startswith('pyobjc-framework-'))
         configured_names = set(x[0] for x in FRAMEWORK_WRAPPERS)
@@ -367,6 +373,20 @@ class oc_test (Command):
                 if found_version != VERSION:
                     print("Bad version in wrapper for %s"%(nm,))
                     failures += 1
+
+        if readme_renderer is None:
+            print("  NOT validating long description")
+
+        else:
+            print("  validating long description...")
+            for nm in ('pyobjc', 'pyobjc-core',) + tuple(sorted(nm for nm in os.listdir('..') if nm.startswith('pyobjc-framework-'))):
+                subdir = os.path.join('..', nm)
+                if readme_renderer is not None:
+                    print("    %s"%(nm,))
+                    try:
+                        subprocess.check_output([sys.executable, 'setup.py', 'check', '-r', '-s'], cwd=subdir)
+                    except subprocess.CalledProcessError:
+                        failures += 1
 
         print("  validating sdist archives...")
         devnull = open('/dev/null', 'a')
