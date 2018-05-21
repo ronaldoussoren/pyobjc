@@ -177,7 +177,7 @@ def run_tests(*, interpreter, arch, py_ver, project, state_dir):
         k['env']['DYLD_FRAMEWORK_PATH'] = subprocess.check_output(['xcode-select', '-print-path']).decode('utf-8').strip() + '/Library/PrivateFrameworks/'
 
     p = subprocess.Popen(
-            ["/usr/bin/arch", "-%s"%(arch,), interpreter, "setup.py", "test", "--verbosity=3"],
+            ["/usr/bin/arch", "-%s"%(arch,), interpreter, "-mcoverage", "run", "--branch", "--parallel", "setup.py", "test", "--verbosity=3"],
             cwd=proj_dir,
             stdout=subprocess.PIPE,
             stderr=subprocess.PIPE,
@@ -301,7 +301,7 @@ def compiler_supports_arch(arch):
     return True
 
 
-def main():
+def _main():
     logging.basicConfig(stream=sys.stdout, level=logging.DEBUG)
     lg = logging.getLogger("runtests")
 
@@ -324,9 +324,18 @@ def main():
 
     build_order = ['pyobjc-core'] + sort_framework_wrappers()
 
+    # Clear coverage directories to avoid using old coverage information
+    for project in build_order:
+       cov_dir = os.path.join(TOP_DIR, project, '.coverage')
+       if os.path.exists(cov_dir):
+           shutil.rmtree(cov_dir)
+
     for py_ver in options.python_versions:
         with virtualenv("python{}".format(py_ver)) as interpreter:
-            # First install packages into the virtualenv
+            # Install coverage to be able to have coverage reports
+            subprocess.check_call([interpreter, '-mpip', 'install', 'coverage'])
+
+            # Install packages into the virtualenv
             for project in build_order:
                 build_project(
                         interpreter=interpreter,
@@ -364,10 +373,23 @@ def main():
     keys = load_pushover_keys()
     send_pushover(keys, 'Testsuite finished' if ok else 'Testsuite finished with errors')
 
+    # Save HTML coverage reports
+    # TODO: Find a way to combine all of this in 1 big report
+    with virtualenv("python{}".format(options.python_versions[-1])) as interpreter:
+       subprocess.check_call([interpreter, '-mpip', 'install', 'coverage'])
+       for project in build_order:
+          proj_dir = os.path.join(TOP_DIR, project)
+          if not os.path.exists(os.path.join(proj_dir, '.coverage')): 
+             continue
+          
+          status = subprocess.check_call([interpreter, '-mcoverage', 'combine'], cwd=proj_dir)
+          status = subprocess.check_call([interpreter, '-mcoverage', 'html', '--include=Lib/*', '--exclude=*/_metadata.py', '--title=%s'%(project,)], cwd=proj_dir)
+
     if not ok:
         print()
         print("ERROR: some tests have failures")
         sys.exit(1)
+
 
 if __name__ == "__main__":
     main()
