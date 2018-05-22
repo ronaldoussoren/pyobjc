@@ -383,7 +383,7 @@ def _main():
              continue
           
           status = subprocess.check_call([interpreter, '-mcoverage', 'combine'], cwd=proj_dir)
-          status = subprocess.check_call([interpreter, '-mcoverage', 'html', '--include=Lib/*', '--exclude=*/_metadata.py', '--title=%s'%(project,)], cwd=proj_dir)
+          status = subprocess.check_call([interpreter, '-mcoverage', 'html', '--include=Lib/*', '--omit=*/_metadata.py', '--title=%s'%(project,)], cwd=proj_dir)
 
     if not ok:
         print()
