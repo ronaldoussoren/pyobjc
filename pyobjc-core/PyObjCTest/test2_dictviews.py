@@ -35,6 +35,35 @@ class DictSetTest(TestCase):
         del e["a"]
         self.assertNotEqual(d.viewkeys(), e.viewkeys())
 
+        d = NSMutableDictionary({'a': 10, "b": "ABC"})
+        keys = d.viewkeys()
+        self.assertEqual(keys, {'a', 'b'})
+
+        s = keys() | { 'c' }
+        self.assertEqual(s, {'a', 'b', 'c'})
+
+        s = { 'c' } | keys()
+        self.assertEqual(s, {'a', 'b', 'c'})
+
+        s = keys() & { 'b' }
+        self.assertEqual(s, { 'b'})
+
+        s = {'b', 'c' } & keys()
+        self.assertEqual(s, { 'b'})
+
+        s = keys() - { 'b' }
+        self.assertEqual(s, { 'a'})
+
+        s = {'c', 'b' } - keys()
+        self.assertEqual(s, { 'c'})
+
+        s = keys() ^ { 'b', 'c' }
+        self.assertEqual(s, { 'a', 'c' })
+
+        s = {'c', 'b' } ^ keys()
+        self.assertEqual(s, { 'a', 'c'})
+
+
     def test_dict_items(self):
         d = NSMutableDictionary({1: 10, "a": "ABC"})
         items = d.viewitems()

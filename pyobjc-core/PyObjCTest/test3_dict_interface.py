@@ -51,6 +51,31 @@ class TestNSDictionaryInterface (TestCase):
 
         self.assertIsNotInstance(k, list)
 
+        s = d.keys() | { 'c' }
+        self.assertEqual(s, {'a', 'b', 'c'})
+
+        s = { 'c' } | d.keys()
+        self.assertEqual(s, {'a', 'b', 'c'})
+
+        s = d.keys() & { 'b' }
+        self.assertEqual(s, { 'b'})
+
+        s = {'b', 'c' } & d.keys()
+        self.assertEqual(s, { 'b'})
+
+        s = d.keys() - { 'b' }
+        self.assertEqual(s, { 'a'})
+
+        s = {'c', 'b' } - d.keys()
+        self.assertEqual(s, { 'c'})
+
+        s = d.keys() ^ { 'b', 'c' }
+        self.assertEqual(s, { 'a', 'c' })
+
+        s = {'c', 'b' } ^ d.keys()
+        self.assertEqual(s, { 'a', 'c'})
+
+
         self.assertEqual(repr(self.createDictionary(a=1).keys()),
                 "<nsdict_keys(['a'])>")
 
