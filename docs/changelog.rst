@@ -6,6 +6,8 @@ An overview of the relevant changes in new, and older, releases.
 Version 4.2.2
 -------------
 
+* Update metadata for Xcode 9.4
+
 * Ensure the context manager for ``NSAnimationContext`` defined in
   ``PyObjCTools.AppCategories`` actually works.
 
