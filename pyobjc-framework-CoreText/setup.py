@@ -10,7 +10,7 @@ and (Objective-)C frameworks
 '''
 from pyobjc_setup import setup, Extension
 
-VERSION="4.2.2"
+VERSION="4.2.3b1"
 
 setup(
     name='pyobjc-framework-CoreText',
