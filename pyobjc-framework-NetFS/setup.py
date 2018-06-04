@@ -12,7 +12,7 @@ and (Objective-)C frameworks
 from pyobjc_setup import setup
 import os
 
-VERSION="4.2.2b1"
+VERSION="4.2.2"
 
 setup(
     name='pyobjc-framework-NetFS',
