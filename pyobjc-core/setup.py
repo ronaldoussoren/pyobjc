@@ -620,8 +620,13 @@ def parse_package_metadata():
 
     cfg = RawConfigParser()
     cfg.optionxform = lambda x: x
-    with open('setup.cfg') as fp:
-        cfg.readfp(fp)
+
+    if sys.version_info.major == 2:
+        with open('setup.cfg') as fp:
+            cfg.readfp(fp)
+    else:
+        with open('setup.cfg') as fp:
+            cfg.read_file(fp)
 
 
     metadata = {}
