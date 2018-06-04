@@ -10,6 +10,7 @@ import os
 import sys
 
 from _common_definitions import PY_VERSIONS, TOP_DIR, DIST_DIR, virtualenv
+from _common_definitions import variants, setup_variant
 
 def pyobjc_ver():
     for nm in os.listdir(DIST_DIR):
@@ -24,47 +25,50 @@ def main():
     failed = []
 
     for ver in PY_VERSIONS:
-        with virtualenv("python{}".format(ver)) as interpreter:
-            log = subprocess.check_output([
-                interpreter, "-mpip",
-                    "install", "-f", DIST_DIR, "--no-index", "--no-cache-dir",
-                        "pyobjc=={}".format(pyobjc_ver())]).decode('utf-8')
+        for variant in variants(ver):
+            setup_variant(ver, variant)
 
-            sys.stdout.write(log)
-            if 'Building wheels for collected packages' in log:
-                print("WARNING: non-wheel install: {}".format(ver))
-                sys.exit(1)
-            for ln in log.splitlines():
-                if 'Running setup.py install' in ln and 'Running setup.py install for pyobjc:' not in ln:
+            with virtualenv("python{}".format(ver)) as interpreter:
+                log = subprocess.check_output([
+                    interpreter, "-mpip",
+                        "install", "-f", DIST_DIR, "--no-index", "--no-cache-dir",
+                            "pyobjc=={}".format(pyobjc_ver())]).decode('utf-8')
+    
+                sys.stdout.write(log)
+                if 'Building wheels for collected packages' in log:
                     print("WARNING: non-wheel install: {}".format(ver))
                     sys.exit(1)
+                for ln in log.splitlines():
+                    if 'Running setup.py install' in ln and 'Running setup.py install for pyobjc:' not in ln:
+                        print("WARNING: non-wheel install: {}".format(ver))
+                        sys.exit(1)
+    
+    
+                subprocess.check_call([
+                    interpreter, os.path.join(os.path.dirname(__file__), "wheel-smoke-test.py")
+                ])
 
 
-            subprocess.check_call([
-                interpreter, os.path.join(os.path.dirname(__file__), "wheel-smoke-test.py")
-            ])
-
-
-    for path in ['/usr/local/bin/python', '/usr/local/bin/python3']:
-        if not os.path.exists(path): continue
-
-        with virtualenv(path) as interpreter:
-            log = subprocess.check_output([
-                interpreter, "-mpip",
-                    "install", "-f", DIST_DIR, "--no-index", "--no-cache-dir",
-                        "pyobjc=={}".format(pyobjc_ver())]).decode('utf-8')
-            sys.stdout.write(log)
-            if 'Building wheels for collected packages' in log:
-                print("WARNING: non-wheel install: {}".format(path))
-                sys.exit(1)
-            for ln in log.splitlines():
-                if 'Running setup.py install' in ln and 'Running setup.py install for pyobjc:' not in ln:
-                    print("WARNING: non-wheel install: {}".format(path))
-                    sys.exit(1)
-
-            subprocess.check_call([
-                interpreter, "wheel-smoke-test.py"
-            ])
+#    for path in ['/usr/local/bin/python', '/usr/local/bin/python3']:
+#        if not os.path.exists(path): continue
+#
+#        with virtualenv(path) as interpreter:
+#            log = subprocess.check_output([
+#                interpreter, "-mpip",
+#                    "install", "-f", DIST_DIR, "--no-index", "--no-cache-dir",
+#                        "pyobjc=={}".format(pyobjc_ver())]).decode('utf-8')
+#            sys.stdout.write(log)
+#            if 'Building wheels for collected packages' in log:
+#                print("WARNING: non-wheel install: {}".format(path))
+#                sys.exit(1)
+#            for ln in log.splitlines():
+#                if 'Running setup.py install' in ln and 'Running setup.py install for pyobjc:' not in ln:
+#                    print("WARNING: non-wheel install: {}".format(path))
+#                    sys.exit(1)
+#
+#            subprocess.check_call([
+#                interpreter, "wheel-smoke-test.py"
+#            ])
 
 if __name__ == "__main__":
     main()

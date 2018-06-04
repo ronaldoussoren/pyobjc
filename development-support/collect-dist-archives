@@ -13,6 +13,7 @@ import shutil
 import fnmatch
 
 from _common_definitions import PY_VERSIONS, TOP_DIR, DIST_DIR, system_report
+from _common_definitions import variants, setup_variant
 
 def files_matching(pattern, dirname):
     return fnmatch.filter(os.listdir(dirname), pattern)
@@ -44,15 +45,17 @@ def main():
             failed.append((nm, 'sdist', ''))
 
         for ver in PY_VERSIONS:
-            status = subprocess.call([
-                'python{}'.format(ver), 'setup.py',
-                    'bdist_wheel', '--dist-dir={}'.format(DIST_DIR),
-                ],
-                cwd=os.path.join(TOP_DIR, nm))
+            for variant in variants(ver):
+                setup_variant(ver, variant)
+                status = subprocess.call([
+                    'python{}'.format(ver), 'setup.py',
+                        'bdist_wheel', '--dist-dir={}'.format(DIST_DIR),
+                    ],
+                    cwd=os.path.join(TOP_DIR, nm))
 
             if status != 0:
-                print("WARNING: Building wheel for {} failed (python {})".format(nm, ver))
-                failed.append((nm, 'wheel', ver))
+                print("WARNING: Building wheel for {} failed (python {})".format(nm, variant))
+                failed.append((nm, 'wheel', variant))
 
     print()
     print("Collected files")
@@ -62,7 +65,7 @@ def main():
         if nm == 'pyobjc': continue
         pattern = nm.replace('-', '?') + '-*'
         print("{}:".format(nm))
-        for fn in files_matching(pattern, DIST_DIR):
+        for fn in sorted(files_matching(pattern, DIST_DIR)):
             print("  {}".format(fn))
         print()
 

@@ -20,8 +20,9 @@ from urllib.parse import urlencode
 import ssl
 
 from _common_definitions import TOP_DIR, TEST_STATE_DIR, PY_VERSIONS
-from _common_definitions import virtualenv, system_report
+from _common_definitions import virtualenv, system_report, variants, setup_variant
 from _topsort import topological_sort
+
 
 _detected_versions = None
 def detect_pyversions():
@@ -301,7 +302,7 @@ def compiler_supports_arch(arch):
     return True
 
 
-def _main():
+def main():
     logging.basicConfig(stream=sys.stdout, level=logging.DEBUG)
     lg = logging.getLogger("runtests")
 
@@ -327,42 +328,47 @@ def _main():
     # Clear coverage directories to avoid using old coverage information
     for project in build_order:
        cov_dir = os.path.join(TOP_DIR, project, '.coverage')
-       if os.path.exists(cov_dir):
+       if os.path.isdir(cov_dir):
            shutil.rmtree(cov_dir)
+       elif os.path.isfile(cov_dir):
+           os.unlink(cov_dir)
 
     for py_ver in options.python_versions:
-        with virtualenv("python{}".format(py_ver)) as interpreter:
-            # Install coverage to be able to have coverage reports
-            subprocess.check_call([interpreter, '-mpip', 'install', 'coverage'])
+        for variant in variants(py_ver):
+            setup_variant(py_ver, variant)
 
-            # Install packages into the virtualenv
-            for project in build_order:
-                build_project(
-                        interpreter=interpreter,
-                        py_ver=py_ver,
-                        project=project)
-
-            # Then run tests for all supported architectures
-            for arch in ('ppc', 'i386', 'x86_64'):
-                if not supports_arch(interpreter, arch):
-                    lg.info("skipping Python %s (%7s), unsupported architecture", py_ver, arch)
-                    continue
-
-                if not compiler_supports_arch(arch):
-                    lg.info("skipping Python %s (%7s), compiler cannot build for architecture", py_ver, arch)
-                    continue
-                    
-
-                lg.info("running with Python %s (%7s) using %s", py_ver, arch, interpreter)
-                state_dir = os.path.join(osx_dir, "%s-%s"%(py_ver, arch))
-
-                for project in ['pyobjc'] + build_order:
-                    run_tests(
-                        interpreter=interpreter,
-                        arch=arch,
-                        py_ver=py_ver,
-                        project=project,
-                        state_dir=state_dir)
+            with virtualenv("python{}".format(py_ver)) as interpreter:
+                # Install coverage to be able to have coverage reports
+                subprocess.check_call([interpreter, '-mpip', 'install', 'coverage'])
+    
+                # Install packages into the virtualenv
+                for project in build_order:
+                    build_project(
+                            interpreter=interpreter,
+                            py_ver=variant,
+                            project=project)
+    
+                # Then run tests for all supported architectures
+                for arch in ('ppc', 'i386', 'x86_64'):
+                    if not supports_arch(interpreter, arch):
+                        lg.info("skipping Python %s (%7s), unsupported architecture", variant, arch)
+                        continue
+    
+                    if not compiler_supports_arch(arch):
+                        lg.info("skipping Python %s (%7s), compiler cannot build for architecture", variant, arch)
+                        continue
+                        
+    
+                    lg.info("running with Python %s (%7s) using %s", variant, arch, interpreter)
+                    state_dir = os.path.join(osx_dir, "%s-%s"%(variant, arch))
+    
+                    for project in ['pyobjc'] + build_order:
+                        run_tests(
+                            interpreter=interpreter,
+                            arch=arch,
+                            py_ver=variant,
+                            project=project,
+                            state_dir=state_dir)
 
     lg.info("done")
     with open(os.path.join(osx_dir, "summary.txt"), "w") as fp:

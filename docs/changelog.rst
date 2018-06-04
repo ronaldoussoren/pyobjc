@@ -6,6 +6,10 @@ An overview of the relevant changes in new, and older, releases.
 Version 4.2.2
 -------------
 
+* The binary release now includes wheels for both variants for the
+  Python.org installer for python 3.6 and 3.7: 32- and 64-bit for 
+  macOS 10.6 or later, and 64-bit only for macOS 10.9 or later.
+
 * Ensure the context manager for ``NSAnimationContext`` defined in
   ``PyObjCTools.AppCategories`` actually works.
 

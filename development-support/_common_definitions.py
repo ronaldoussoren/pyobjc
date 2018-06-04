@@ -94,3 +94,32 @@ def virtualenv(interpreter):
     finally:
         print("CLEANUP")
         shutil.rmtree("test-env")
+
+def variants(ver):
+    if os.path.islink(os.path.join(
+        '/Library/Frameworks/Python.framework/Versions', ver)):
+
+        result = []
+        for nm in os.listdir('/Library/Frameworks/Python.framework/Versions'):
+            if nm == ver: continue
+
+            v, _, s = nm.partition('-')
+            if v == ver:
+                result.append(nm)
+
+        if result:
+            return result
+
+    return [ver]
+
+def setup_variant(ver, variant):
+    if ver == variant:
+        return
+
+    tgt = os.path.join(
+        '/Library/Frameworks/Python.framework/Versions', ver)
+
+    if os.path.exists(tgt):
+        os.unlink(tgt)
+
+    os.symlink(variant, tgt)
