@@ -95,7 +95,7 @@ def virtualenv(interpreter):
         print("CLEANUP")
         shutil.rmtree("test-env")
 
-def variants(ver):
+def variants(ver, permitted_variants=None):
     if os.path.islink(os.path.join(
         '/Library/Frameworks/Python.framework/Versions', ver)):
 
@@ -104,6 +104,9 @@ def variants(ver):
             if nm == ver: continue
 
             v, _, s = nm.partition('-')
+
+            if permitted_variants and s not in permitted_variants:
+               continue
             if v == ver:
                 result.append(nm)
 

@@ -15,7 +15,7 @@ sys.modules['AdSupport'] = mod = objc.ObjCLazyModule(
     "AdSupport",
     "com.apple.AdSupport",
     objc.pathForFramework("/System/Library/Frameworks/AdSupport.framework"),
-    _metadata.__dict__, _inline_list_, {
+    _metadata.__dict__, None, {
         '__doc__': __doc__,
         'objc': objc,
         '__path__': __path__,
