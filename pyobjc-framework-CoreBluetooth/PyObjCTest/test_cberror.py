@@ -22,6 +22,8 @@ class TestCBAdvertisementData (TestCase):
         self.assertEqual(CoreBluetooth.CBErrorConnectionFailed, 10)
         self.assertEqual(CoreBluetooth.CBErrorConnectionLimitReached, 11)
         self.assertEqual(CoreBluetooth.CBErrorUnkownDevice, 12)
+        self.assertEqual(CoreBluetooth.CBErrorUnknownDevice, 12)
+        self.assertEqual(CoreBluetooth.CBErrorOperationNotSupported, 13)
 
         self.assertEqual(CoreBluetooth.CBATTErrorSuccess, 0x00)
         self.assertEqual(CoreBluetooth.CBATTErrorInvalidHandle, 0x01)
