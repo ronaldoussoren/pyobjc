@@ -2885,6 +2885,10 @@
    }
   },
   "enum": {
+   "CKShareParticipantRoleUnknown": { "value": 0 },
+   "CKShareParticipantRoleOwner": { "value": 1 },
+   "CKShareParticipantRolePrivateUser": { "value": 3 },
+   "CKShareParticipantRolePublicUser": { "value": 4 },
    "CKDatabaseScopePrivate": {
     "value": 2
    },
