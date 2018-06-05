@@ -52,6 +52,9 @@ class TestCBPeriphicalManager (TestCase):
         self.assertArgHasType(TestCBPeriphalManagerHelper.peripheralManager_didUnpublishL2CAPChannel_error_, 1, objc._C_USHT)
         self.assertArgHasType(TestCBPeriphalManagerHelper.peripheralManager_didOpenL2CAPChannel_error_, 1, objc._C_USHT)
 
+    @min_os_level("10.14")
+    def testMethods10_14(self):
+        self.assertArgIsBOOL(CoreBluetooth.CBPeripheralManager.publishL2CAPChannelWithEncryption_, 0)
 
 if __name__ == "__main__":
     main()

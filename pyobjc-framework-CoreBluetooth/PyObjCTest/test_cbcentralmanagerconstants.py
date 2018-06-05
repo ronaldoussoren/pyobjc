@@ -20,5 +20,11 @@ class TestCBCentral (TestCase):
         self.assertIsInstance(CoreBluetooth.CBCentralManagerRestoredStateScanServicesKey, unicode)
         self.assertIsInstance(CoreBluetooth.CBCentralManagerRestoredStateScanOptionsKey, unicode)
 
+
+    @min_os_level("10.14")
+    def testConstants10_14(self):
+        # XXX: This is currently documented as a 10.13 constant, but isn't available there
+        self.assertIsInstance(CoreBluetooth.CBConnectPeripheralOptionStartDelayKey, unicode)
+
 if __name__ == "__main__":
     main()

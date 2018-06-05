@@ -15,6 +15,7 @@ class TestCFSocketStream (TestCase):
     def testConstants10_8(self):
         self.assertIsInstance(kCFStreamPropertyNoCellular, unicode)
         self.assertIsInstance(kCFStreamPropertyConnectionIsCellular, unicode)
+        self.assertIsInstance(kCFStreamNetworkServiceTypeResponsiveData, unicode)
 
     @min_os_level('10.7')
     def testConstants10_7(self):
@@ -40,7 +41,7 @@ class TestCFSocketStream (TestCase):
         self.assertIsInstance(kCFStreamSSLPeerName, unicode)
         self.assertIsInstance(kCFStreamSSLCertificates, unicode)
         self.assertIsInstance(kCFStreamSSLIsServer, unicode)
-        self.assertIsInstance(kCFStreamErrorDomainSOCKS, (int, long))
+
 
         self.assertEqual(kCFStreamErrorSOCKSSubDomainNone, 0)
         self.assertEqual(kCFStreamErrorSOCKSSubDomainVersionCode, 1)
@@ -56,6 +57,9 @@ class TestCFSocketStream (TestCase):
         self.assertEqual(kCFStreamErrorSOCKS4IdConflict, 93)
         self.assertEqual(kSOCKS5NoAcceptableMethod, 0xFF)
 
+        # Moved to CoreFoundation in 10.14, still testing here for backward
+        # compat reasons.
+        self.assertIsInstance(kCFStreamErrorDomainSOCKS, (int, long))
         self.assertIsInstance(kCFStreamPropertySOCKSProxy, unicode)
         self.assertIsInstance(kCFStreamPropertySOCKSProxyHost, unicode)
         self.assertIsInstance(kCFStreamPropertySOCKSProxyPort, unicode)
@@ -72,6 +76,8 @@ class TestCFSocketStream (TestCase):
         self.assertIsInstance(kCFStreamSocketSecurityLevelTLSv1, unicode)
         self.assertIsInstance(kCFStreamSocketSecurityLevelNegotiatedSSL, unicode)
         self.assertIsInstance(kCFStreamPropertyShouldCloseNativeSocket, unicode)
+        #
+
         self.assertIsInstance(kCFStreamPropertySocketRemoteHost, unicode)
         self.assertIsInstance(kCFStreamPropertySocketRemoteNetService, unicode)
         self.assertEqual(kCFStreamSocketSecurityNone, 0)

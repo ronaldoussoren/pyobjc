@@ -7,11 +7,6 @@ if sys.version_info[0] != 2:
         return value.encode('latin1')
 
 class TestCFHTTPMessage (TestCase):
-    @min_os_level('10.9')
-    @expectedFailure
-    def testConstants10_9(self):
-        self.assertIsInstance(kCFHTTPAuthenticationSchemeOAuth1, unicode)
-
     @min_os_level('10.7')
     def testConstants10_7(self):
         self.assertIsInstance(kCFHTTPAuthenticationSchemeNegotiate2, unicode)

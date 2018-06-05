@@ -15,6 +15,16 @@ Version 5.0
   - AdSupport
   - ...
 
+* Add ``objc.MAC_OS_X_VERSION_CURRENT``.
+
+  This attribute contains the version of the version of
+  macOS the script is running on, and can be compared with
+  the various ``MAC_OS_X_VERSION_...`` attributes.
+
+* The extension in pyobjc-core used a number of deprecated
+  APIs in CPython, those uses have been replaced with modern
+  alternatives (if using a new enough version of CPython).
+
 Version 4.2.2
 -------------
 
