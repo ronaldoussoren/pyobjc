@@ -146,5 +146,11 @@ class TestSecCertificate (TestCase):
         self.assertArgHasType(Security.SecCertificateCopySerialNumberData, 0, objc._C_ID)
         self.assertArgHasType(Security.SecCertificateCopySerialNumberData, 1, objc._C_OUT + objc._C_PTR + objc._C_ID)
 
+    @min_os_level('10.14')
+    def test_functions_10_14(self):
+        self.assertResultHasType(Security.SecCertificateCopyKey, objc._C_ID)
+        self.assertResultIsCFRetained(Security.SecCertificateCopyKey)
+        self.assertArgHasType(Security.SecCertificateCopyKey, 0, objc._C_ID)
+
 if __name__ == "__main__":
     main()

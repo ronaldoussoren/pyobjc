@@ -5,6 +5,7 @@
   "enum": {
     "kCLErrorGeocodeFoundNoResult": { "ignore": true },
     "kCLErrorGeocodeCanceled": { "ignore": true },
+    "CLActivityTypeAirborne": { "value": 5 },
     "kCLAuthorizationStatusAuthorizedAlways": { "value": 3 }
   },
   "classes": {

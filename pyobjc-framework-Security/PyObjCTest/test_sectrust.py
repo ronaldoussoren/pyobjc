@@ -162,5 +162,11 @@ class TestSecTrusted (TestCase):
         self.assertArgHasType(Security.SecTrustSetOCSPResponse, 0, objc._C_ID)
         self.assertArgHasType(Security.SecTrustSetOCSPResponse, 1, objc._C_ID)
 
+    @min_os_level('10.14')
+    def test_functions_10_14(self):
+        self.assertResultHasType(Security.SecTrustEvaluateWithError, objc._C_BOOL)
+        self.assertArgHasType(Security.SecTrustEvaluateWithError, 0, objc._C_ID)
+        self.assertArgHasType(Security.SecTrustEvaluateWithError, 1, objc._C_OUT + objc._C_PTR + objc._C_ID)
+
 if __name__ == "__main__":
     main()

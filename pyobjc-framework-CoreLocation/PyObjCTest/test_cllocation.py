@@ -28,6 +28,11 @@ class TestCLLocation (TestCase):
         self.assertIsInstance(kCLLocationAccuracyBestForNavigation, float)
         self.assertIsInstance(kCLLocationCoordinate2DInvalid, CLLocationCoordinate2D)
 
+    @min_os_level('10.14')
+    def testConstants10_14(self):
+        self.assertIsInstance(CLLocationDistanceMax, float)
+        self.assertIsInstance(CLTimeIntervalMax, float)
+
     @min_os_level('10.6')
     def testMethods(self):
         self.assertResultHasType(CLLocation.coordinate, CLLocationCoordinate2D.__typestr__)

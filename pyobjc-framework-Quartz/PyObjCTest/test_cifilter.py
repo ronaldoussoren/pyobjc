@@ -106,6 +106,11 @@ class TestCIFilter (TestCase):
         self.assertIsInstance(kCIInputDepthImageKey, unicode)
         self.assertIsInstance(kCIInputDisparityImageKey, unicode)
 
+    @min_os_level('10.14')
+    def testConstants10_14(self):
+        self.assertIsInstance(kCIInputAmountKey, unicode)
+        self.assertIsInstance(kCIInputMatteImageKey, unicode)
+
     def testMethods(self):
         self.assertIsNullTerminated(CIFilter.apply_)
         self.assertIsNullTerminated(CIFilter.filterWithName_keysAndValues_)

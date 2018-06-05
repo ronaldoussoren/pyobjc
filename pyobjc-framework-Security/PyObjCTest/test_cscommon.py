@@ -88,6 +88,8 @@ class TestCSCommon (TestCase):
         self.assertEqual(Security.errSecCSBadTeamIdentifier, -66997)
         self.assertEqual(Security.errSecCSSignatureUntrusted, -66996)
         self.assertEqual(Security.errSecMultipleExecSegments, -66995)
+        self.assertEqual(Security.errSecCSInvalidEntitlements, -66994)
+        self.assertEqual(Security.errSecCSInvalidRuntimeVersion, -66993)
 
         self.assertIsInstance(Security.kSecCFErrorArchitecture, unicode)
         self.assertIsInstance(Security.kSecCFErrorPattern, unicode)
@@ -118,10 +120,13 @@ class TestCSCommon (TestCase):
         self.assertEqual(Security.kSecCodeSignatureRestrict, 0x0800)
         self.assertEqual(Security.kSecCodeSignatureEnforcement, 0x1000)
         self.assertEqual(Security.kSecCodeSignatureLibraryValidation, 0x2000)
+        self.assertEqual(Security.kSecCodeSignatureRuntime, 0x10000)
 
         self.assertEqual(Security.kSecCodeStatusValid, 0x0001)
         self.assertEqual(Security.kSecCodeStatusHard, 0x0100)
         self.assertEqual(Security.kSecCodeStatusKill, 0x0200)
+        self.assertEqual(Security.kSecCodeStatusDebugged, 0x10000000)
+        self.assertEqual(Security.kSecCodeStatusPlatform, 0x04000000)
 
         self.assertEqual(Security.kSecHostRequirementType, 1)
         self.assertEqual(Security.kSecGuestRequirementType, 2)
@@ -136,6 +141,7 @@ class TestCSCommon (TestCase):
         self.assertEqual(Security.kSecCodeSignatureHashSHA256, 2)
         self.assertEqual(Security.kSecCodeSignatureHashSHA256Truncated, 3)
         self.assertEqual(Security.kSecCodeSignatureHashSHA384, 4)
+        self.assertEqual(Security.kSecCodeSignatureHashSHA512, 5)
 
     @min_os_level('10.12')
     def test_constants_10_12(self):

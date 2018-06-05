@@ -99,6 +99,13 @@
    "SecKeychainCallbackInfo": { "typestr": "{SecKeychainCallbackInfo=I@@i}", "fieldnames": [ "version", "item", "keychain", "pid" ] }
   },
   "enum": {
+   "kSSLCiphersuiteGroupDefault": { "value": 0 },
+   "kSSLCiphersuiteGroupCompatibility": { "value": 1 },
+   "kSSLCiphersuiteGroupLegacy": { "value": 2 },
+   "kSSLCiphersuiteGroupATS": { "value": 3 },
+   "kSSLCiphersuiteGroupATSCompatibility": { "value": 4 },
+   "kSecCSValidatePEH": { "value": 2048 },
+   "kSecCodeSignatureRuntime": { "value": 65536 },
    "errSSLTransportReset": { "value": -9852 },
    "errSSLNetworkTimeout": { "value": -9853 },
    "errSSLConfigurationFailed": { "value": -9854 },
@@ -251,6 +258,8 @@
    "kCMSAttrSmimeMSEncryptionKeyPrefs": { "value": 4 },
    "kCMSAttrSigningTime": { "value": 8 },
    "kCMSAttrAppleCodesigningHashAgility": { "value": 16 },
+   "kCMSAttrAppleCodesigningHashAgilityV2": { "value": 32 },
+   "kCMSAttrAppleExpirationTime": { "value": 64 },
    "kSecTrustSettingsKeyUseSignature": { "value": 1 },
    "kSecTrustSettingsKeyUseEnDecryptData": { "value": 2 },
    "kSecTrustSettingsKeyUseEnDecryptKey": { "value": 4 },
@@ -916,6 +925,8 @@
    "errSecModuleManifestVerifyFailed": { "value": -67678 },
    "errSecModuleNotLoaded": { "value": -67718 },
    "errSecMultipleExecSegments": { "value": -66995 },
+   "errSecCSInvalidEntitlements": { "value": -66994 },
+   "errSecCSInvalidRuntimeVersion": { "value": -66993 },
    "errSecMultiplePrivKeys": { "value": -25259 },
    "errSecMultipleValuesUnsupported": { "value": -67842 },
    "errSecNetworkFailure": { "value": -67636 },
@@ -1104,12 +1115,15 @@
    "kSecCodeSignatureHashSHA256": { "value": 2 },
    "kSecCodeSignatureHashSHA256Truncated": { "value": 3 },
    "kSecCodeSignatureHashSHA384": { "value": 4 },
+   "kSecCodeSignatureHashSHA512": { "value": 5 },
    "kSecCodeSignatureHost": { "value": 1 },
    "kSecCodeSignatureLibraryValidation": { "value": 8192 },
    "kSecCodeSignatureNoHash": { "value": 0 },
    "kSecCodeSignatureRestrict": { "value": 2048 },
    "kSecCodeStatusHard": { "value": 256 },
    "kSecCodeStatusKill": { "value": 512 },
+   "kSecCodeStatusDebugged": { "value": 268435456 },
+   "kSecCodeStatusPlatform": { "value": 67108864 },
    "kSecCodeStatusValid": { "value": 1 },
    "kSecCredentialTypeDefault": { "value": 0 },
    "kSecCredentialTypeNoUI": { "value": 2 },
@@ -1934,6 +1948,13 @@
      "0": { "type_override": "@" }
     }
    },
+   "SecTrustEvaluateWithError": {
+    "retval": { "type_override": "B" },
+    "args": {
+     "0": { "type_override": "@" },
+     "1": { "type_override": "o^@" }
+    }
+   },
    "SecTrustEvaluate": {
     "retval": { "type_override": "i" },
     "args": {
@@ -2236,6 +2257,12 @@
     }
    },
    "SecTrustCopyProperties": {
+    "retval": { "type_override": "@", "already_cfretained": true },
+    "args": {
+     "0": { "type_override": "@" }
+    }
+   },
+   "SecCertificateCopyKey": {
     "retval": { "type_override": "@", "already_cfretained": true },
     "args": {
      "0": { "type_override": "@" }

@@ -14,6 +14,8 @@ class TestCMSEncoder (TestCase):
         self.assertEqual(Security.kCMSAttrSmimeMSEncryptionKeyPrefs, 0x0004)
         self.assertEqual(Security.kCMSAttrSigningTime, 0x0008)
         self.assertEqual(Security.kCMSAttrAppleCodesigningHashAgility, 0x0010)
+        self.assertEqual(Security.kCMSAttrAppleCodesigningHashAgilityV2, 0x0020)
+        self.assertEqual(Security.kCMSAttrAppleExpirationTime, 0x0040)
 
         self.assertEqual(Security.kCMSCertificateNone, 0)
         self.assertEqual(Security.kCMSCertificateSignerOnly, 1)

@@ -27,6 +27,7 @@ class TestCLLocationManager (TestCase):
         self.assertEqual(CLActivityTypeAutomotiveNavigation, 2)
         self.assertEqual(CLActivityTypeFitness, 3)
         self.assertEqual(CLActivityTypeOtherNavigation, 4)
+        self.assertEqual(CLActivityTypeAirborne, 5)
 
     @min_os_level('10.7')
     def testMethods10_7(self):
