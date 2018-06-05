@@ -2,6 +2,11 @@
 # for information on how to update this file.
 {
  "definitions": {
+  "enum": {
+   "AMWorkflowActionsNotLoadedError": { "value": -113 },
+   "AMWorkflowNoEnabledActionsError": { "value": -114 },
+   "AMActionThirdPartyActionsNotAllowedError": { "value": -222 }
+  },
   "classes": {
    "AMWorkspace": {
     "methods": [
