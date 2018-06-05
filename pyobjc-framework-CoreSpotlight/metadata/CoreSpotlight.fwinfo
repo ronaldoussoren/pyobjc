@@ -14,6 +14,7 @@
    "CSIndexErrorCodeIndexingUnsupported": { "value": -1005 }
   },
   "externs": {
+   "CSSearchQueryErrorDomain": { "typestr": "@" },
    "CoreSpotlightVersionNumber": { "typestr": "d" },
    "CoreSpotlightVersionString": { "typestr": "*" },
    "CSMailboxInbox": { "typestr": "@" },

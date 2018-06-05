@@ -12,6 +12,8 @@ if sys.maxsize > 2**32:
             self.assertEqual(CoreSpotlight.CSSearchQueryErrorCodeInvalidQuery, -2002)
             self.assertEqual(CoreSpotlight.CSSearchQueryErrorCodeCancelled, -2003)
 
+            self.assertIsInstance(CoreSpotlight.CSSearchQueryErrorDomain, unicode)
+
         def testMethods(self):
             self.assertResultIsBOOL(CoreSpotlight.CSSearchQuery.isCancelled)
             self.assertResultIsBlock(CoreSpotlight.CSSearchQuery.foundItemsHandler, b'v@')
