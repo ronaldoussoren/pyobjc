@@ -15,16 +15,22 @@
 
 - (OC_PythonData*)initWithPythonObject:(PyObject*)v
 {
-    Py_ssize_t buffer_len;
-    const void *buffer;
-
     self = [super init];
     if (unlikely(self == nil)) return nil;
 
+#if PY_MAJOR_VERSION == 2
+    Py_ssize_t buffer_len;
+    const void *buffer;
     if (unlikely(PyObject_AsReadBuffer(v, &buffer, &buffer_len) == -1)) {
         [super dealloc];
         return nil;
     }
+#else
+    if (unlikely(PyObject_GetBuffer(v, &view, PyBUF_CONTIG_RO) == -1)) {
+        [super dealloc];
+        return nil;
+    }
+#endif
 
     SET_FIELD_INCREF(value, v);
     return self;
@@ -73,9 +79,16 @@
         [super dealloc];
         return;
     }
+
     PyObjC_BEGIN_WITH_GIL
-        PyObjC_UnregisterObjCProxy(value, self);
-        Py_XDECREF(value);
+        if (value) {
+#if PY_MAJOR_VERSION == 3
+            PyBuffer_Release(&view);
+#endif
+
+            PyObjC_UnregisterObjCProxy(value, self);
+            Py_XDECREF(value);
+        }
 
     PyObjC_END_WITH_GIL
 
@@ -87,6 +100,7 @@
     NSUInteger rval;
 
     PyObjC_BEGIN_WITH_GIL
+#if PY_MAJOR_VERSION == 2
         Py_ssize_t buffer_len;
         const void *buffer;
 
@@ -101,6 +115,13 @@
                 rval = buffer_len;
             }
         }
+#else
+        if ((NSUInteger)view.len > NSUIntegerMax) {
+            rval = NSUIntegerMax;
+        } else  {
+            rval = view.len;
+        }
+#endif
 
     PyObjC_END_WITH_GIL
     return rval;
@@ -110,6 +131,7 @@
 {
     const void *rval;
     PyObjC_BEGIN_WITH_GIL
+#if PY_MAJOR_VERSION == 2
         Py_ssize_t buffer_len;
         const void *buffer;
 
@@ -119,6 +141,11 @@
         }
 
         rval = buffer;
+
+#else
+        rval = view.buf;
+#endif
+
     PyObjC_END_WITH_GIL
     return rval;
 }

@@ -77,6 +77,8 @@ CFLAGS = [
     "-Wno-import",
     "-Wno-unknown-pragmas",
     "-Wshorten-64-to-32",
+
+    #"-Werror", # For development only!
 ]
 
 # CFLAGS for other (test) extensions:

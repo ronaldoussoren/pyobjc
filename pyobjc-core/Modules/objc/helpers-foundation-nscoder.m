@@ -899,10 +899,14 @@ imp_NSCoder_decodeBytesWithReturnedLength_(
 
     PyObject* result;
     PyObject* arglist = NULL;
-    Py_ssize_t buflen;
     NSUInteger len;
     PyObject* pyself = NULL;
     int cookie = 0;
+#if PY_MAJOR_VERSION == 3
+    Py_buffer view;
+#else
+    Py_ssize_t buflen;
+#endif
 
     PyGILState_STATE state = PyGILState_Ensure();
 
@@ -926,6 +930,15 @@ imp_NSCoder_decodeBytesWithReturnedLength_(
         goto error;
     }
 
+#if PY_MAJOR_VERSION == 3
+    if (PyObject_GetBuffer(
+            PyTuple_GetItem(result, 0),
+            &view, PyBUF_CONTIG_RO) == -1) {
+        Py_DECREF(result);
+        goto error;
+    }
+
+#else
     if (PyObject_AsReadBuffer(
             PyTuple_GetItem(result, 0),
             pretval, &buflen) < 0) {
@@ -933,6 +946,7 @@ imp_NSCoder_decodeBytesWithReturnedLength_(
         Py_DECREF(result);
         goto error;
     }
+#endif
 
     if (depythonify_c_value(@encode(NSUInteger),
             PyTuple_GetItem(result, 1), &len) < 0) {
@@ -940,7 +954,12 @@ imp_NSCoder_decodeBytesWithReturnedLength_(
         goto error;
     }
 
+#if PY_MAJOR_VERSION == 3
+    if (len < (NSUInteger)view.len) {
+        PyBuffer_Release(&view);
+#else
     if (len < (NSUInteger)buflen) {
+#endif
         Py_DECREF(result);
         PyErr_SetString(PyExc_ValueError,
             "Should return (bytes, length)");
@@ -952,8 +971,13 @@ imp_NSCoder_decodeBytesWithReturnedLength_(
     /* Should return an autoreleased buffer, do this by createing an
      * NSData that will release the buffer
      */
+#if PY_MAJOR_VERSION == 3
+    *pretval = (const void*)[[[[NSData alloc] initWithBytes:view.buf length:view.len] autorelease] bytes];
+    PyBuffer_Release(&view);
+#else
     *pretval = (const void*)[[[[NSData alloc] initWithBytes:*pretval length:len]
           autorelease] bytes];
+#endif
 
     Py_DECREF(result);
     PyGILState_Release(state);
@@ -1073,10 +1097,14 @@ imp_NSCoder_decodeBytesForKey_returnedLength_(
     PyObject* result;
     PyObject* arglist = NULL;
     PyObject* v;
-    Py_ssize_t buflen;
     NSUInteger len;
     PyObject* pyself = NULL;
     int cookie = 0;
+#if PY_MAJOR_VERSION == 3
+    Py_buffer view;
+#else
+    Py_ssize_t buflen;
+#endif
 
     PyGILState_STATE state = PyGILState_Ensure();
 
@@ -1103,6 +1131,15 @@ imp_NSCoder_decodeBytesForKey_returnedLength_(
         goto error;
     }
 
+#if PY_MAJOR_VERSION == 3
+    if (PyObject_GetBuffer(
+            PyTuple_GetItem(result, 0),
+            &view, PyBUF_CONTIG_RO) == -1) {
+        Py_DECREF(result);
+        goto error;
+    }
+
+#else
     if (PyObject_AsReadBuffer(
             PyTuple_GetItem(result, 0),
             pretval, &buflen) < 0) {
@@ -1110,6 +1147,7 @@ imp_NSCoder_decodeBytesForKey_returnedLength_(
         Py_DECREF(result);
         goto error;
     }
+#endif
 
     if (depythonify_c_value(@encode(NSUInteger),
             PyTuple_GetItem(result, 1), &len) < 0) {
@@ -1117,7 +1155,12 @@ imp_NSCoder_decodeBytesForKey_returnedLength_(
         goto error;
     }
 
+#if PY_MAJOR_VERSION == 3
+    if (len < (NSUInteger)view.len) {
+        PyBuffer_Release(&view);
+#else
     if (len < (NSUInteger)buflen) {
+#endif
         Py_DECREF(result);
         PyErr_SetString(PyExc_ValueError,
             "Should return (bytes, length)");
@@ -1129,8 +1172,13 @@ imp_NSCoder_decodeBytesForKey_returnedLength_(
     /* Should return an autoreleased buffer, do this by createing an
      * NSData that will release the buffer
      */
+#if PY_MAJOR_VERSION == 3
+    *pretval = (const void*)[[[[NSData alloc] initWithBytes:view.buf length:view.len] autorelease] bytes];
+    PyBuffer_Release(&view);
+#else
     *pretval = (const void*)[[[[NSData alloc] initWithBytes:*pretval length:len]
           autorelease] bytes];
+#endif
 
     Py_DECREF(result);
     PyGILState_Release(state);
