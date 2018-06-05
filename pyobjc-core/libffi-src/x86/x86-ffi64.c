@@ -46,7 +46,12 @@ ffi_call_unix64(
 	unsigned long	bytes,
 	unsigned		flags,
 	void*			raddr,
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wstrict-prototypes"
+
 	void			(*fnaddr)(),
+
+#pragma clang diagnostic pop
 	unsigned		ssecount);
 
 /*	All reference to register classes here is identical to the code in
@@ -429,7 +434,10 @@ ffi_prep_cif_machdep(
 void
 ffi_call(
 	ffi_cif*	cif,
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wstrict-prototypes"
 	void		(*fn)(),
+#pragma clang diagnostic pop
 	void*		rvalue,
 	void**		avalue)
 {

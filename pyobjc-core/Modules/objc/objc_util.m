@@ -1288,9 +1288,9 @@ int PyObjC_is_ascii_string(PyObject* unicode_string, const char* ascii_string)
 
 int PyObjC_is_ascii_prefix(PyObject* unicode_string, const char* ascii_string, size_t n)
 {
-    size_t uni_sz = PyUnicode_GetSize(unicode_string);
 
 #ifdef PyObjC_FAST_UNICODE_ASCII
+    size_t uni_sz = PyUnicode_GetLength(unicode_string);
 
     if (uni_sz < n) {
         return 0;
@@ -1304,6 +1304,7 @@ int PyObjC_is_ascii_prefix(PyObject* unicode_string, const char* ascii_string, s
 
 #else /* !PyObjC_FAST_UNICODE_ASCII */
 
+    size_t uni_sz = PyUnicode_GetSize(unicode_string);
     size_t i;
     Py_UNICODE* code_points = PyUnicode_AsUnicode(unicode_string);
 
