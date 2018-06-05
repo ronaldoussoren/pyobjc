@@ -2149,7 +2149,54 @@ struct objc_typestr_values {
     { NULL, 0 }
 };
 
+#if PyObjC_BUILD_RELEASE < 1010
+typedef struct {
+    NSInteger majorVersion;
+    NSInteger minorVersion;
+    NSInteger patchVersion;
+} NSOperatingSystemVersion;
+#endif
 
+static NSOperatingSystemVersion version_from_plist(void)
+{
+    NSOperatingSystemVersion result = { 0, 0, 0 };
+
+    NSString *plistPath = @"/System/Library/CoreServices/SystemVersion.plist";
+    NSDictionary* info = [NSDictionary dictionaryWithContentsOfFile:plistPath];
+
+    NSString *versionString = [info objectForKey:@"ProductVersion"];
+    if (versionString == NULL) {
+        /* For some reason there is no version info key */
+        return result;
+    }
+
+    NSArray *components = [versionString componentsSeparatedByString:@"."];
+    NSUInteger cnt = [components count];
+
+    result.majorVersion = [[components objectAtIndex:0] integerValue];
+    result.minorVersion = (cnt > 1) ? [[components objectAtIndex:1] integerValue] : 0;
+    result.patchVersion = (cnt > 2) ? [[components objectAtIndex:2] integerValue] : 0;
+
+    return result;
+}
+
+static long get_macos_release(void)
+{
+    NSOperatingSystemVersion version;
+    long result;
+
+    if ([NSProcessInfo instancesRespondToSelector:@selector(operatingSystemVersion)]) {
+        version = (NSOperatingSystemVersion)[[NSProcessInfo processInfo] operatingSystemVersion];
+    } else {
+        version  = version_from_plist();
+    }
+
+    if (version.majorVersion == 10 && version.minorVersion <= 9) {
+        return version.majorVersion * 100 + version.minorVersion;
+    } else {
+        return version.majorVersion * 10000 + version.minorVersion * 100 + version.patchVersion;
+    }
+}
 
 PyObjC_MODULE_INIT(_objc)
 {
@@ -2505,6 +2552,12 @@ PyObjC_MODULE_INIT(_objc)
     }
 #endif /* MAC_OS_X_VERSION_MIN_REQUIRED */
 
+#ifdef MAC_OS_X_VERSION_10_0
+    if (PyModule_AddIntConstant(m, "MAC_OS_X_VERSION_10_0", MAC_OS_X_VERSION_10_0) < 0) {
+        PyObjC_INITERROR();
+    }
+#endif /* MAC_OS_X_VERSION_10_0 */
+
 #ifdef MAC_OS_X_VERSION_10_1
     if (PyModule_AddIntConstant(m, "MAC_OS_X_VERSION_10_1", MAC_OS_X_VERSION_10_1) < 0) {
         PyObjC_INITERROR();
@@ -2654,6 +2707,28 @@ PyObjC_MODULE_INIT(_objc)
         PyObjC_INITERROR();
     }
 #endif /* MAC_OS_X_VERSION_10_13_4 */
+
+#ifdef MAC_OS_X_VERSION_10_13_5
+    if (PyModule_AddIntConstant(m, "MAC_OS_X_VERSION_10_13_5", MAC_OS_X_VERSION_10_13_5) < 0) {
+        PyObjC_INITERROR();
+    }
+#endif /* MAC_OS_X_VERSION_10_13_5 */
+
+#ifdef MAC_OS_X_VERSION_10_13_6
+    if (PyModule_AddIntConstant(m, "MAC_OS_X_VERSION_10_13_6", MAC_OS_X_VERSION_10_13_6) < 0) {
+        PyObjC_INITERROR();
+    }
+#endif /* MAC_OS_X_VERSION_10_13_6 */
+
+#ifdef MAC_OS_X_VERSION_10_14
+    if (PyModule_AddIntConstant(m, "MAC_OS_X_VERSION_10_14", MAC_OS_X_VERSION_10_14) < 0) {
+        PyObjC_INITERROR();
+    }
+#endif /* MAC_OS_X_VERSION_10_14 */
+
+    if (PyModule_AddIntConstant(m, "MAC_OS_X_VERSION_CURRENT", get_macos_release()) < 0) {
+        PyObjC_INITERROR();
+    }
 
     if (PyModule_AddIntConstant(m, "PyObjC_BUILD_RELEASE", PyObjC_BUILD_RELEASE) < 0) {
         PyObjC_INITERROR();
