@@ -127,6 +127,7 @@ MACOS_TO_DARWIN = {
         '10.11': '15.0',
         '10.12': '16.0',
         '10.13': '17.0',
+        '10.14': '18.0',
 }
 
 
@@ -186,7 +187,7 @@ from setuptools import setup, Extension, find_packages
 import os
 
 
-CLASSIFIERS = filter(None,
+CLASSIFIERS = list(filter(None,
 """
 Development Status :: 5 - Production/Stable
 Environment :: Console
@@ -206,7 +207,7 @@ Programming Language :: Python :: 3.7
 Programming Language :: Objective C
 Topic :: Software Development :: Libraries :: Python Modules
 Topic :: Software Development :: User Interfaces
-""".splitlines())
+""".splitlines()))
 
 _SETUP_KEYS=(
     'name',
