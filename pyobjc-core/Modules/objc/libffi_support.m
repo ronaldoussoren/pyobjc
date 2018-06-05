@@ -741,12 +741,22 @@ parse_printf_args(
 #endif
             if (PyUnicode_Check(v)) {
 
+#if PY_VERSION_HEX < 0x03030000
                 if (PyUnicode_GetSize(v) != 1) {
                     PyErr_SetString(PyExc_ValueError, "Expecting string of length 1");
                     Py_DECREF(encoded);
                     return -1;
                 }
                 *(int*)byref[curarg] = (wchar_t)*PyUnicode_AsUnicode(v);
+#else /* PY_VERSION_HEX >= 0x03030000 */
+                if (PyUnicode_GetLength(v) != 1) {
+                    PyErr_SetString(PyExc_ValueError, "Expecting string of length 1");
+                    Py_DECREF(encoded);
+                    return -1;
+                }
+                *(int*)byref[curarg] = PyUnicode_ReadChar(v, 0);
+#endif /* PY_VERSION_HEX >= 0x03030000 */
+
             } else if (depythonify_c_value(@encode(int), v, byref[curarg]) < 0) {
                 Py_DECREF(encoded);
                 return -1;
@@ -868,6 +878,7 @@ parse_printf_args(
                     return -1;
                 }
 
+#if PY_VERSION_HEX < 0x03030000
                 Py_ssize_t sz = PyUnicode_GetSize(v);
                 byref[curarg] = PyMem_Malloc(sizeof(wchar_t)*(sz+1));
                 if (byref[curarg] == NULL) {
@@ -882,6 +893,15 @@ parse_printf_args(
                 ((wchar_t*)byref[curarg])[sz] = 0;
                 arglist[curarg] = signature_to_ffi_type(@encode(wchar_t*));
                 values[curarg] = byref + curarg;
+#else /* PY_VERSION_HEX >= 0x03030000 */
+                byref[curarg] = PyUnicode_AsWideCharString(v, NULL);
+                if (byref[curarg] == NULL) {
+                    Py_DECREF(encoded);
+                    return -1;
+                }
+                arglist[curarg] = signature_to_ffi_type(@encode(wchar_t*));
+                values[curarg] = byref + curarg;
+#endif /* PY_VERSION_HEX >= 0x03030000 */
 
             } else {
                 /* char */

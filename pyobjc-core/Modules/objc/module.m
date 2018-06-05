@@ -2183,7 +2183,6 @@ static NSOperatingSystemVersion version_from_plist(void)
 static long get_macos_release(void)
 {
     NSOperatingSystemVersion version;
-    long result;
 
     if ([NSProcessInfo instancesRespondToSelector:@selector(operatingSystemVersion)]) {
         version = (NSOperatingSystemVersion)[[NSProcessInfo processInfo] operatingSystemVersion];
