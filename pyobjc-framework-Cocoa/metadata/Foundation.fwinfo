@@ -79,7 +79,8 @@
     "NSURLSessionTaskMetricsResourceFetchTypeNetworkLoad": { "value": 1 },
     "NSURLSessionTaskMetricsResourceFetchTypeServerPush": { "value": 2 },
     "NSURLSessionTaskMetricsResourceFetchTypeLocalCache": { "value": 3 },
-    "NSURLNetworkServiceTypeCallSignaling": { "value": 5 },
+    "NSURLNetworkServiceTypeResponsiveData": { "value": 6 },
+    "NSURLNetworkServiceTypeCallSignaling": { "value": 11 },
     "NSFoundationVersionNumber10_10_4": { "value": 1153.20 },
     "NSFoundationVersionNumber10_10_5": { "value": 1154.0 },
     "NSFoundationVersionNumber10_10_Max": { "value": 1199.0 },
@@ -724,6 +725,19 @@
        }},
        "class_method": false,
        "selector": "setInterruptionHandler:"
+     },
+     {
+       "args": { "0": {
+        "callable": {
+	 "arguments": {
+	   "0": { "typestr": "^v" },
+	   "1": { "typestr": "@" }
+	 },
+	 "retval": { "typestr": "v" }
+	}
+       }},
+       "class_method": false,
+       "selector": "synchronousRemoteObjectProxyWithErrorHandler:"
      }
     ]
    },
@@ -5844,6 +5858,27 @@
      },
      {
       "args": {
+       "1": {
+        "type_override": "Z"
+       },
+       "2": {
+        "type_modifier": "o"
+       }
+      },
+      "class_method": true,
+      "selector": "archivedDataWithRootObject:requiringSecureCoding:error:"
+     },
+     {
+      "args": {
+       "0": {
+        "type_override": "Z"
+       }
+      },
+      "class_method": false,
+      "selector": "initRequiringSecureCoding:"
+     },
+     {
+      "args": {
        "0": {
         "type_override": "Z"
        }
@@ -5878,6 +5913,33 @@
       "class_method": false,
       "retval": {},
       "selector": "classForClassName:"
+     },
+     {
+      "args": {
+       "2": {
+        "type_modifier": "o"
+       }
+      },
+      "class_method": false,
+      "selector": "unarchivedObjectOfClasses:fromData:error:"
+     },
+     {
+      "args": {
+       "2": {
+        "type_modifier": "o"
+       }
+      },
+      "class_method": false,
+      "selector": "unarchivedObjectOfClass:fromData:error:"
+     },
+     {
+      "args": {
+       "1": {
+        "type_modifier": "o"
+       }
+      },
+      "class_method": false,
+      "selector": "initForReadingFromData:error:"
      },
      {
       "args": {
@@ -14834,6 +14896,7 @@
    }
   },
   "externs": {
+   "NSSecureUnarchiveFromDataTransformerName": { "typestr": "@" },
    "NSURLUbiquitousSharedItemPermissionsReadWrite": { "typestr": "@" },
    "NSURLUbiquitousSharedItemPermissionsReadOnly": { "typestr": "@" },
    "NSURLUbiquitousSharedItemRoleParticipant": { "typestr": "@" },

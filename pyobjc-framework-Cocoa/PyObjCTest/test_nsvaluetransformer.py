@@ -9,6 +9,10 @@ class TestValueTrans (TestCase):
         self.assertIsInstance(NSUnarchiveFromDataTransformerName, unicode)
         self.assertIsInstance(NSKeyedUnarchiveFromDataTransformerName, unicode)
 
+    @min_os_level('10.14')
+    def testConstants(self):
+        self.assertIsInstance(NSSecureUnarchiveFromDataTransformerName, unicode)
+
     def testMethods(self):
         self.assertResultIsBOOL(NSValueTransformer.allowsReverseTransformation)
 
