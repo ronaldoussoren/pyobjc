@@ -27,7 +27,7 @@ NOTE: This wrapper is not complete, this will change in a future version.
 '''
 from pyobjc_setup import setup
 
-VERSION="4.2.3b1"
+VERSION="5.0a1"
 
 setup(
     name='pyobjc-framework-LaunchServices',

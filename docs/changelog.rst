@@ -3,13 +3,25 @@ What's new in PyObjC
 
 An overview of the relevant changes in new, and older, releases.
 
+Version 5.0
+-----------
+
+* Adds support for macOS 10.14 (Mojave)
+
+  This release updates the framework wrappers with support
+  for new APIs in macOS 10.14 and adds bindings for the following
+  new frameworks:
+
+  - AdSupport
+  - ...
+
 Version 4.2.2
 -------------
 
 * Update metadata for Xcode 9.4
 
 * The binary release now includes wheels for both variants for the
-  Python.org installer for python 3.6 and 3.7: 32- and 64-bit for 
+  Python.org installer for python 3.6 and 3.7: 32- and 64-bit for
   macOS 10.6 or later, and 64-bit only for macOS 10.9 or later.
 
 * Ensure the context manager for ``NSAnimationContext`` defined in

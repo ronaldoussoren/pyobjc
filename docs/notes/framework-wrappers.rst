@@ -12,6 +12,8 @@ The framework name links to API notes for that framework, the python packages li
 +================================================================+=============================================+=========================================+
 | :doc:`dispatch </apinotes/libdispatch>`                        | `pyobjc-framework-libdispatch`_             |                                         |
 +----------------------------------------------------------------+---------------------------------------------+-----------------------------------------+
+| :doc:`AdSupport </apinotes/AdSupport>`                         | `pyobjc-framework-AdSupport`_               |                                         |
++----------------------------------------------------------------+---------------------------------------------+-----------------------------------------+
 | AGL                                                            | -                                           | Not wrapped yet.                        |
 +----------------------------------------------------------------+---------------------------------------------+-----------------------------------------+
 | :doc:`AVFoundation </apinotes/AVFoundation>`                   | `pyobjc-framework-AVFoundation`_            |                                         |
@@ -436,4 +438,5 @@ version of PyObjC although there is no explicit roadmap for this.
 .. _`pyobjc-framework-WebKit`: https://pypi.org/project/pyobjc-framework-WebKit/
 .. _`pyobjc-framework-XgridFoundation`: https://pypi.org/project/pyobjc-framework-XgridFoundation/
 .. _`pyobjc-framework-AVFoundation`: https://pypi.org/project/pyobjc-framework-AVFoundation/
+.. _`pyobjc-framework-AdSupport`: https://pypi.org/project/pyobjc-framework-AdSupport/
 .. _`pyobjc-framework-libdispatch`: https://pypi.org/project/pyobjc-framework-libdispatch/
