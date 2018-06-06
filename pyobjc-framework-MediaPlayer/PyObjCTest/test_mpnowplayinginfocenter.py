@@ -33,5 +33,14 @@ if sys.maxsize > 2**32:
             self.assertIsInstance(MediaPlayer.MPNowPlayingInfoPropertyMediaType, unicode)
             self.assertIsInstance(MediaPlayer.MPNowPlayingInfoPropertyAssetURL, unicode)
 
+        @min_os_level('10.13')
+        @expectedFailureIf(os_level_key(os_release()) < os_level_key('10.14')) # Documented for 10.13, but doesn't work there
+        def testConstants10_13(self):
+            self.assertIsInstance(MediaPlayer.MPNowPlayingInfoPropertyServiceIdentifier, unicode)
+
+        @min_os_level('10.13.1')
+        def testConstants10_13_1(self):
+            self.assertIsInstance(MediaPlayer.MPNowPlayingInfoPropertyCurrentPlaybackDate, unicode)
+
 if __name__ == "__main__":
     main()

@@ -154,6 +154,13 @@
    "SKNode": {
     "methods": [
      {
+      "selector": "nodeWithFileNamed:securelyWithClasses:andError:",
+      "class_method": true,
+      "args": {
+       "2": { "type_modifier": "o" }
+      }
+     },
+     {
       "args": {
        "1": {
         "callable": {

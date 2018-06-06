@@ -34,5 +34,9 @@ if sys.maxsize > 2 ** 32:
             self.assertArgIsBlock(SpriteKit.SKNode.enumerateChildNodesWithName_usingBlock_, 1, b'v@o^Z')
             self.assertArgIsBlock(SpriteKit.SKNode.runAction_completion_, 1, b'v')
 
+        @min_os_level("10.14")
+        def testMethods10_14(self):
+            self.assertArgIsOut(SpriteKit.SKNode.nodeWithFileNamed_securelyWithClasses_andError_, 2)
+
 if __name__ == "__main__":
     main()

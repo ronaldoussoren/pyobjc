@@ -3,6 +3,7 @@
 {
  "definitions": {
   "externs": {
+   "kCVImageBufferTransferFunction_Linear": { "typestr": "@" },
    "kCVImageBufferTransferFunction_sRGB": { "typestr": "@" },
    "kCVImageBufferTransferFunction_SMPTE_ST_2084_PQ": { "typestr": "@" },
    "kCVImageBufferTransferFunction_ITU_R_2100_HLG": { "typestr": "@" },
