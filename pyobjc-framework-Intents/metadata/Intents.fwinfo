@@ -1,6 +1,33 @@
 {
  "definitions": {
   "enum": {
+   "INSendMessageRecipientUnsupportedReasonNoValidHandle": { "value": 4 },
+   "INSendMessageRecipientUnsupportedReasonRequestedHandleInvalid": { "value": 5 },
+   "INSendMessageRecipientUnsupportedReasonNoHandleForLabel": { "value": 6 },
+   "INMessageTypePaymentSent": { "value": 19 },
+   "INMessageTypePaymentRequest": { "value": 20 },
+   "INMessageTypePaymentNote": { "value": 21 },
+   "INMessageTypeAnimoji": { "value": 22 },
+   "INMessageTypeActivitySnippet": { "value": 23 },
+   "INMessageTypeFile": { "value": 24 },
+   "INMessageTypeLink": { "value": 25 },
+   "INIntentHandlingStatusUserConfirmationRequired": {"value": 6 },
+   "INIntentErrorNoAppAvailable": {"value": 2005 },
+   "INIntentErrorImageGeneric": {"value": 6000 },
+   "INIntentErrorImageNoServiceAvailable": {"value": 6001 },
+   "INIntentErrorImageStorageFailed": {"value": 6002 },
+   "INIntentErrorImageLoadingFailed": {"value": 6003 },
+   "INIntentErrorImageRetrievalFailed": {"value": 6004 },
+   "INIntentErrorImageProxyLoop": {"value": 6005 },
+   "INIntentErrorImageProxyInvalid": {"value": 6006 },
+   "INIntentErrorImageProxyTimeout": {"value": 6007 },
+   "INIntentErrorImageServiceFailure": {"value": 6008 },
+   "INIntentErrorVoiceShortcutCreationFailed": {"value": 7000 },
+   "INIntentErrorVoiceShortcutGetFailed": {"value": 7001 },
+   "INIntentErrorVoiceShortcutDeleteFailed": {"value": 7002 },
+   "INIntentErrorEncodingGeneric": {"value": 8000 },
+   "INIntentErrorEncodingFailed": {"value": 8001 },
+   "INIntentErrorDecodingGeneric": {"value": 9000 },
    "INSendMessageRecipientUnsupportedReasonNoAccount": { "value": 1 },
    "INSendMessageRecipientUnsupportedReasonOffline": { "value": 2 },
    "INSendMessageRecipientUnsupportedReasonMessagingServiceNotEnabledForRecipient": { "value": 3 },
@@ -133,6 +160,12 @@
    "INConditionalOperatorNone": { "value": 2 }
   },
   "externs": {
+   "INStartAudioCallIntentIdentifier": { "typestr": "@" },
+   "INStartVideoCallIntentIdentifier": { "typestr": "@" },
+   "INSearchCallHistoryIntentIdentifier": { "typestr": "@" },
+   "INSendMessageIntentIdentifier": { "typestr": "@" },
+   "INSearchForMessagesIntentIdentifier": { "typestr": "@" },
+   "INSetMessageAttributeIntentIdentifier": { "typestr": "@" },
    "INPersonHandleLabelHome": { "typestr": "@" },
    "INPersonHandleLabelWork": { "typestr": "@" },
    "INPersonHandleLabeliPhone": { "typestr": "@" },
@@ -155,6 +188,26 @@
    "INPersonRelationshipManager": { "typestr": "@" }
  },
  "classes": {
+   "INPerson": {
+    "methods": [
+     {
+      "selector": "initWithPersonHandle:nameComponents:displayName:image:contactIdentifier:customIdentifier:isMe:",
+      "class_method": false,
+      "args": {
+       "6": { "type_override": "Z" }
+      }
+     }
+    ]
+   },
+   "INParameter": {
+    "methods": [
+     {
+      "selector": "isEqualToParameter:",
+      "class_method": false,
+      "retval": { "type_override": "Z" }
+     }
+    ]
+   },
    "INInteraction": {
     "methods": [
      {
