@@ -15,6 +15,13 @@ if sys.version_info[0] != 2:
 
 class TestCGImage (TestCase):
     def testConstants(self):
+        self.assertEqual(kCGImagePixelFormatMask, 0xF0000)
+        self.assertEqual(kCGImagePixelFormatPacked, 0 << 16)
+        self.assertEqual(kCGImagePixelFormatRGB555, 1 << 16)
+        self.assertEqual(kCGImagePixelFormatRGB565, 2 << 16)
+        self.assertEqual(kCGImagePixelFormatRGB101010, 3 << 16)
+        self.assertEqual(kCGImagePixelFormatRGBCIF10, 4 << 16)
+
         self.assertEqual(kCGImageAlphaNone, 0)
         self.assertEqual(kCGImageAlphaPremultipliedLast, 1)
         self.assertEqual(kCGImageAlphaPremultipliedFirst, 2)
@@ -184,6 +191,11 @@ class TestCGImage (TestCase):
 
         v = CGImageGetUTType(image)
         self.assertIsInstance(v, unicode)
+
+    @min_os_level('10.14')
+    def testFunctions10_14(self):
+        CGImageGetByteOrderInfo
+        CGImageGetPixelFormatInfo
 
 if __name__ == "__main__":
     main()

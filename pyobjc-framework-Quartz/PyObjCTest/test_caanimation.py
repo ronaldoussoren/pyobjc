@@ -39,7 +39,7 @@ class TestCAAnimation (TestCase):
         self.assertIsInstance(kCAAnimationRotateAutoReverse, unicode)
 
     @min_os_level('10.7')
-    def testConstants10_5(self):
+    def testConstants10_7(self):
         self.assertIsInstance(kCAAnimationCubic, unicode)
         self.assertIsInstance(kCAAnimationCubicPaced, unicode)
 

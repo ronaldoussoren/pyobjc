@@ -1,0 +1,11 @@
+{
+ "definitions": {
+  "enum": {
+   "VSSubscriptionAccessLevelUnknown": { "value": 0 },
+   "VSSubscriptionAccessLevelFreeWithAccount": { "value": 1 },
+   "VSSubscriptionAccessLevelPaid": { "value": 2 }
+  },
+  "externs": {
+  }
+ }
+}

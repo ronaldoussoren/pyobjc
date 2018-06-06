@@ -15,6 +15,7 @@ Version 5.0
   - AdSupport
   - NaturalLanguage
   - UserNotifications
+  - VideoSubscriberAccount
   - ...
 
 * Add ``objc.MAC_OS_X_VERSION_CURRENT``.

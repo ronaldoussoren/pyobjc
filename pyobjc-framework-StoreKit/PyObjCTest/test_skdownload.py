@@ -11,6 +11,10 @@ class TestSKDownload (TestCase):
         self.assertEqual(StoreKit.SKDownloadStateFailed, 4)
         self.assertEqual(StoreKit.SKDownloadStateCancelled, 5)
 
+    @min_os_level('10.14')
+    def test_constants10_14(self):
+        self.assertIsInstance(StoreKit.SKDownloadTimeRemainingUnknown, float)
+
 if __name__ == "__main__":
     main()
 

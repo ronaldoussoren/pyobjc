@@ -85,9 +85,22 @@ class TestCALayer (TestCase):
         self.assertResultIsBOOL(CALayer.drawsAsynchronously)
         self.assertArgIsBOOL(CALayer.setDrawsAsynchronously_, 0)
 
+    @min_os_level('10.10')
+    def testMethods10_10(self):
+        self.assertResultIsBOOL(CALayer.allowsEdgeAntialiasing)
+        self.assertArgIsBOOL(CALayer.setAllowsEdgeAntialiasing_, 0)
+        self.assertResultIsBOOL(CALayer.allowsGroupOpacity)
+        self.assertArgIsBOOL(CALayer.setAllowsGroupOpacity_, 0)
+
     @min_os_level('10.6')
     def testConstants10_6(self):
         self.assertIsInstance(kCAFilterTrilinear, unicode)
+
+    @min_os_level('10.12')
+    def testConstants10_12(self):
+        self.assertIsInstance(kCAContentsFormatRGBA8Uint, unicode)
+        self.assertIsInstance(kCAContentsFormatRGBA16Float, unicode)
+        self.assertIsInstance(kCAContentsFormatGray8Uint, unicode)
 
     @min_sdk_level('10.6')
     def testProtocols(self):

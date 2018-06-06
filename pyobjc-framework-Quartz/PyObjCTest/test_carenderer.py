@@ -12,5 +12,9 @@ class TestCARenderer (TestCase):
     def testConstants(self):
         self.assertIsInstance(kCARendererColorSpace, unicode)
 
+    @min_os_level('10.14')
+    def testConstants10_14(self):
+        self.assertIsInstance(kCARendererMetalCommandQueue, unicode)
+
 if __name__ == "__main__":
     main()

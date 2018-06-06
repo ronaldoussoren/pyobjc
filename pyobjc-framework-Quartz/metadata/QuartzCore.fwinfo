@@ -22,6 +22,12 @@
    "CIRenderDestinationAlphaUnpremultiplied": { "value": 2 }
   },
   "externs": {
+   "kCARendererMetalCommandQueue": { "typestr": "@" },
+   "kCAContentsFormatRGBA8Uint": { "typestr": "@" },
+   "kCAContentsFormatRGBA16Float": { "typestr": "@" },
+   "kCAContentsFormatGray8Uint": { "typestr": "@" },
+   "kCAGradientLayerConic": { "typestr": "@" },
+   "kCAGradientLayerRadial": { "typestr": "@" },
    "kCIImageApplyOrientationProperty": { "typestr": "@" },
    "kCIInputDepthImageKey": { "typestr": "@" },
    "kCIInputDisparityImageKey": { "typestr": "@" },
@@ -192,6 +198,30 @@
    },
    "CALayer": {
     "methods": [
+     {
+      "args": {
+       "0": { "type_override": "Z" }
+      },
+      "class_method": false,
+      "selector": "setAllowsEdgeAntialiasing:"
+     },
+     {
+      "retval": { "type_override": "Z" },
+      "class_method": false,
+      "selector": "allowsEdgeAntialiasing"
+     },
+     {
+      "args": {
+       "0": { "type_override": "Z" }
+      },
+      "class_method": false,
+      "selector": "setAllowsGroupOpacity:"
+     },
+     {
+      "retval": { "type_override": "Z" },
+      "class_method": false,
+      "selector": "allowsGroupOpacity"
+     },
      {
       "args": {
        "0": { "type_override": "Z" }

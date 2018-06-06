@@ -12,6 +12,9 @@
    "SKProductDiscountPaymentModePayUpFront": { "value": 1 },
    "SKProductDiscountPaymentModeFreeTrial": { "value": 2 }
   },
+  "externs": {
+   "SKDownloadTimeRemainingUnknown": { "typestr": "d" }
+  },
   "formal_protocols": {},
   "functions": {},
   "informal_protocols": {}

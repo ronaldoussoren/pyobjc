@@ -6,6 +6,12 @@
    "CGColorConverterRef": { "alias": "CGColorConversionInfoRef" }
   },
   "enum": {
+   "kCGImagePixelFormatMask": { "value": 983040 },
+   "kCGImagePixelFormatPacked": { "value": 0 },
+   "kCGImagePixelFormatRGB555": { "value": 65536 },
+   "kCGImagePixelFormatRGB565": { "value": 131072 },
+   "kCGImagePixelFormatRGB101010": { "value": 196608 },
+   "kCGImagePixelFormatRGBCIF10": { "value": 262144 },
    "CGGlyphMax": { "value": 65534 },
    "kCGColorConversionTransformFromSpace": { "value": 0 },
    "kCGColorConversionTransformToSpace": { "value": 1 },
@@ -29,6 +35,7 @@
    "kCGPDFAllowsFormFieldEntry": { "value": 128 }
   },
   "externs": {
+   "kCGColorConversionTRCSize": { "typestr": "@" },
    "kCGPDFOutlineTitle": { "typestr": "@" },
    "kCGPDFOutlineChildren": { "typestr": "@" },
    "kCGPDFOutlineDestination": { "typestr": "@" },
@@ -156,6 +163,18 @@
   },
   "formal_protocols": {},
   "functions": {
+   "CGImageGetByteOrderInfo": {
+    "retval": { "typestr": "I" },
+    "args": {
+     "0": { "typestr": "^{CGImage=}" }
+    }
+   },
+   "CGImageGetPixelFormatInfo": {
+    "retval": { "typestr": "I" },
+    "args": {
+     "0": { "typestr": "^{CGImage=}" }
+    }
+   },
    "CGPathApplyWithBlock": {
     "retval": { "typestr": "v" },
     "args": {
@@ -2647,6 +2666,42 @@
      "0": {}
     },
     "retval": {}
+   },
+   "CGPDFDictionaryApplyBlock": {
+    "retval": { "typestr": "v" },
+    "args": {
+     "0": { "typestr": "^{CGPDFDictionary=}" },
+     "1": {
+      "typestr": "@?",
+      "callable": {
+       "arguments": {
+        "0": { "typestr": "^v" },
+	"1": { "typestr": "n^t", "c_array_delimited_by_null": true },
+	"2": { "typestr": "^{CGPDFObject=}" },
+	"3": { "typestr": "^v" }
+       },
+       "retval": { "typestr": "v" }
+      }
+     }
+    }
+   },
+   "CGPDFArrayApplyBlock": {
+    "retval": { "typestr": "v" },
+    "args": {
+     "0": { "typestr": "^{CGPDFArray=}" },
+     "1": {
+      "typestr": "@?",
+      "callable": {
+       "arguments": {
+        "0": { "typestr": "^v" },
+	"1": { "typestr": "l" },
+	"2": { "typestr": "^{CGPDFObject=}" },
+	"3": { "typestr": "^v" }
+       },
+       "retval": { "typestr": "v" }
+      }
+     }
+    }
    },
    "CGPDFArrayGetArray": {
     "args": {

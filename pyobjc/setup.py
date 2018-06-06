@@ -109,6 +109,7 @@ FRAMEWORK_WRAPPERS=[
         ('GameplayKit',             '10.11',            None        ),
         ('SceneKit',                '10.7',             None        ),
         ('UserNotifications',       '10.14',            None        ),
+        ('VideoSubscriberAccount',  '10.14',            None        ),
         ('Vision',                  '10.13',            None        ),
 
         # iTunes library is shipped with iTunes, not part of macOS 'core'
