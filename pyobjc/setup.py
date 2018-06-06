@@ -78,6 +78,7 @@ FRAMEWORK_WRAPPERS=[
         ('Message',                 None,               '10.9'      ),
         ('ModelIO',                 '10.11',            None        ),
         ('MultipeerConnectivity',   '10.10',            None        ),
+        ('NaturalLanguage',         '10.14',            None        ),
         ('NetFS',                   '10.6',             None        ),
         ('NetworkExtension',        '10.11',            None        ),
         ('NotificationCenter',      '10.10',            None        ),

@@ -236,6 +236,8 @@ The framework name links to API notes for that framework, the python packages li
 +----------------------------------------------------------------+---------------------------------------------+-----------------------------------------+
 | :doc:`MultipeerConnectivity </apinotes/MultipeerConnectivity>` | `pyobjc-framework-MultipeerConnectivity`_   |                                         |
 +----------------------------------------------------------------+---------------------------------------------+-----------------------------------------+
+| :doc:`NaturualLanguage </apinotes/NaturualLanguage>`           | `pyobjc-framework-NaturualLanguage`_        |                                         |
++----------------------------------------------------------------+---------------------------------------------+-----------------------------------------+
 | :doc:`NetFS </apinotes/NetFS>`                                 | `pyobjc-framework-NetFS`_                   |                                         |
 +----------------------------------------------------------------+---------------------------------------------+-----------------------------------------+
 | :doc:`NetworkExtension </apinotes/NetworkExtension>`           | `pyobjc-framework-NetworkExtension`_        |                                         |
@@ -443,3 +445,4 @@ version of PyObjC although there is no explicit roadmap for this.
 .. _`pyobjc-framework-AdSupport`: https://pypi.org/project/pyobjc-framework-AdSupport/
 .. _`pyobjc-framework-libdispatch`: https://pypi.org/project/pyobjc-framework-libdispatch/
 .. _`pyobjc-framework-UserNotifications`: https://pypi.org/project/pyobjc-framework-UserNotifications/
+.. _`pyobjc-framework-NaturalLanguage`: https://pypi.org/project/pyobjc-framework-NaturalLanguage/

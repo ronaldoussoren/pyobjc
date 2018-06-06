@@ -13,6 +13,7 @@ Version 5.0
   new frameworks:
 
   - AdSupport
+  - NaturalLanguage
   - UserNotifications
   - ...
 
