@@ -13,6 +13,7 @@ Version 5.0
   new frameworks:
 
   - AdSupport
+  - UserNotifications
   - ...
 
 * Add ``objc.MAC_OS_X_VERSION_CURRENT``.

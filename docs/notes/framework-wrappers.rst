@@ -327,6 +327,8 @@ The framework name links to API notes for that framework, the python packages li
 +----------------------------------------------------------------+---------------------------------------------+-----------------------------------------+
 | Tk                                                             | -                                           | Will not be wrapped.                    |
 +----------------------------------------------------------------+---------------------------------------------+-----------------------------------------+
+| :doc:`UserNotifications </apinotes/UserNotifications>`         | `pyobjc-framework-UserNotifications`_       |                                         |
++----------------------------------------------------------------+---------------------------------------------+-----------------------------------------+
 | VideoDecodeAcceleration                                        | -                                           | Not wrapped yet                         |
 +----------------------------------------------------------------+---------------------------------------------+-----------------------------------------+
 | VideoToolbox                                                   | -                                           | Not wrapped yet                         |
@@ -440,3 +442,4 @@ version of PyObjC although there is no explicit roadmap for this.
 .. _`pyobjc-framework-AVFoundation`: https://pypi.org/project/pyobjc-framework-AVFoundation/
 .. _`pyobjc-framework-AdSupport`: https://pypi.org/project/pyobjc-framework-AdSupport/
 .. _`pyobjc-framework-libdispatch`: https://pypi.org/project/pyobjc-framework-libdispatch/
+.. _`pyobjc-framework-UserNotifications`: https://pypi.org/project/pyobjc-framework-UserNotifications/
