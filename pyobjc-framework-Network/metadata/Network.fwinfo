@@ -1,0 +1,98 @@
+// objective.metadata exceptions file, see its document
+// for information on how to update this file.
+{
+ "definitions": {
+  "classes": {},
+  "formal_protocols": {},
+  "functions": {
+   "nw_advertise_descriptor_create_bonjour_service": {
+    "args": {
+     "0": { "type_override": "^t", "type_modifier": "n", "c_array_delimited_by_null": true },
+     "1": { "type_override": "^t", "type_modifier": "n", "c_array_delimited_by_null": true },
+     "2": { "type_override": "^t", "type_modifier": "n", "c_array_delimited_by_null": true }
+    },
+    "retval": {
+     "already_retained": true
+    }
+   },
+   "nw_advertise_descriptor_set_txt_record": {
+    "args": {
+     "1": { "type_modifier": "n", "c_array_length_in_arg": 2 }
+    }
+   },
+   "nw_connection_copy_description": {
+    "retval": {}
+   },
+   "nw_content_context_create": {
+    "args": {
+     "0": {}
+    }
+   },
+   "nw_content_context_get_identifier": {
+    "retval": {}
+   },
+   "nw_endpoint_copy_address_string": {
+    "retval": {}
+   },
+   "nw_endpoint_copy_port_string": {
+    "retval": {}
+   },
+   "nw_endpoint_create_address": {
+    "args": {
+     "0": {}
+    }
+   },
+   "nw_endpoint_create_bonjour_service": {
+    "args": {
+     "0": {},
+     "1": {},
+     "2": {}
+    }
+   },
+   "nw_endpoint_create_host": {
+    "args": {
+     "0": {},
+     "1": {}
+    }
+   },
+   "nw_endpoint_get_address": {
+    "retval": {}
+   },
+   "nw_endpoint_get_bonjour_service_domain": {
+    "retval": {}
+   },
+   "nw_endpoint_get_bonjour_service_name": {
+    "retval": {}
+   },
+   "nw_endpoint_get_bonjour_service_type": {
+    "retval": {}
+   },
+   "nw_endpoint_get_hostname": {
+    "retval": {}
+   },
+   "nw_error_copy_cf_error": {
+    "retval": {}
+   },
+   "nw_interface_get_name": {
+    "retval": {}
+   },
+   "nw_listener_create_with_port": {
+    "args": {
+     "0": {}
+    }
+   },
+   "nw_release": {
+    "args": {
+     "0": {}
+    }
+   },
+   "nw_retain": {
+    "args": {
+     "0": {}
+    },
+    "retval": {}
+   }
+  },
+  "informal_protocols": {}
+ }
+}
