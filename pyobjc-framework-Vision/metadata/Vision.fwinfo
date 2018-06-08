@@ -24,6 +24,20 @@
    "VNImageOptionCameraIntrinsics": { "typestr": "@" }
   },
   "enum": {
+   "VNTrackRectangleRequestRevision1": { "value": 1 },
+   "VNTrackObjectRequestRevision1": { "value": 1 },
+   "VNRequestRevisionUnspecified": { "value": 0 },
+   "VNTranslationalImageRegistrationRequestRevision1": { "value": 1 },
+   "VNHomographicImageRegistrationRequestRevision1": { "value": 1 },
+   "VNDetectTextRectanglesRequestRevision1": { "value": 1 },
+   "VNDetectRectanglesRequestRevision1": { "value": 1 },
+   "VNDetectHorizonRequestRevision1": { "value": 1 },
+   "VNDetectFaceRectanglesRequestRevision1": { "value": 1 },
+   "VNDetectFaceRectanglesRequestRevision2": { "value": 2 },
+   "VNDetectFaceLandmarksRequestRevision1": { "value": 1 },
+   "VNDetectFaceLandmarksRequestRevision2": { "value": 2 },
+   "VNCoreMLRequestRevision1": { "value": 1 },
+   "VNDetectBarcodesRequestRevision1": { "value": 1 },
    "VNImageCropAndScaleOptionCenterCrop": { "value": 0 },
    "VNImageCropAndScaleOptionScaleFit": { "value": 1 },
    "VNImageCropAndScaleOptionScaleFill": { "value": 2 },
@@ -44,9 +58,19 @@
    "VNErrorInvalidOperation": { "value": 12 },
    "VNErrorInvalidImage": { "value": 13 },
    "VNErrorInvalidArgument": { "value": 14 },
-   "VNErrorInvalidModel": { "value": 15 }
+   "VNErrorInvalidModel": { "value": 15 },
+   "VNErrorUnsupportedRevision": { "value": 16 }
   },
   "classes": {
+   "NSObject": {
+    "methods": [
+     {
+      "selector": "requestRevision",
+      "class_method": false,
+      "retval": { "type_override": "Q" }
+     }
+    ]
+   },
    "VNFaceLandmarkRegion2D": {
     "methods": [
      {

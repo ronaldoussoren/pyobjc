@@ -91,9 +91,9 @@ The framework name links to API notes for that framework, the python packages li
 +------------------------------------------------------------------+---------------------------------------------+-----------------------------------------+
 | :doc:`CoreML </apinotes/CoreML>`                                 | `pyobjc-framework-CoreML`_                  |                                         |
 +------------------------------------------------------------------+---------------------------------------------+-----------------------------------------+
-| CoreMedia                                                        | -                                           | Not yet wrapped                         |
+| :doc:`CoreMedia </apinotes/CoreMedia>`                           | `pyobjc-framework-CoreMedia`_               |                                         |
 +------------------------------------------------------------------+---------------------------------------------+-----------------------------------------+
-| CoreMediaIO                                                      | -                                           | Not yet wrapped                         |
+| :doc:`CoreMediaIO </apinotes/CoreMediaIO>`                       | `pyobjc-framework-CoreMediaIO`_             |                                         |
 +------------------------------------------------------------------+---------------------------------------------+-----------------------------------------+
 | :doc:`CoreServices </apinotes/CoreServices>`                     | `pyobjc-framework-CoreServices`_            | Various subframeworks are wrapped       |
 +------------------------------------------------------------------+---------------------------------------------+-----------------------------------------+
@@ -223,7 +223,7 @@ The framework name links to API notes for that framework, the python packages li
 +------------------------------------------------------------------+---------------------------------------------+-----------------------------------------+
 | :doc:`MediaPlayer </apinotes/MediaPlayer>`                       | `pyobjc-framework-MediaPlayer`_             |                                         |
 +------------------------------------------------------------------+---------------------------------------------+-----------------------------------------+
-| MediaToolbox                                                     | -                                           | Not wrapped yet                         |
+| :doc:`MediaToolbox </apinotes/MediaToolbox>`                     | `pyobjc-framework-MediaToolbox`_            |                                         |
 +------------------------------------------------------------------+---------------------------------------------+-----------------------------------------+
 | :doc:`Message </apinotes/Message>`                               | `pyobjc-framework-Message`_                 | Not present on OSX 10.9 or later        |
 +------------------------------------------------------------------+---------------------------------------------+-----------------------------------------+
@@ -237,9 +237,11 @@ The framework name links to API notes for that framework, the python packages li
 +------------------------------------------------------------------+---------------------------------------------+-----------------------------------------+
 | :doc:`MultipeerConnectivity </apinotes/MultipeerConnectivity>`   | `pyobjc-framework-MultipeerConnectivity`_   |                                         |
 +------------------------------------------------------------------+---------------------------------------------+-----------------------------------------+
-| :doc:`NaturualLanguage </apinotes/NaturualLanguage>`             | `pyobjc-framework-NaturualLanguage`_        |                                         |
+| :doc:`NaturalLanguage </apinotes/NaturalLanguage>`               | `pyobjc-framework-NaturalLanguage`_         |                                         |
 +------------------------------------------------------------------+---------------------------------------------+-----------------------------------------+
 | :doc:`NetFS </apinotes/NetFS>`                                   | `pyobjc-framework-NetFS`_                   |                                         |
++------------------------------------------------------------------+---------------------------------------------+-----------------------------------------+
+| :doc:`Network </apinotes/Network>`                               | `pyobjc-framework-Network`_                 |                                         |
 +------------------------------------------------------------------+---------------------------------------------+-----------------------------------------+
 | :doc:`NetworkExtension </apinotes/NetworkExtension>`             | `pyobjc-framework-NetworkExtension`_        |                                         |
 +------------------------------------------------------------------+---------------------------------------------+-----------------------------------------+
@@ -419,6 +421,7 @@ version of PyObjC although there is no explicit roadmap for this.
 .. _`pyobjc-framework-MultipeerConnectivity`: https://pypi.org/project/pyobjc-framework-MultipeerConnectivity/
 .. _`pyobjc-framework-NetFS`: https://pypi.org/project/pyobjc-framework-NetFS/
 .. _`pyobjc-framework-NetworkExtension`: https://pypi.org/project/pyobjc-framework-NetworkExtension/
+.. _`pyobjc-framework-Network`: https://pypi.org/project/pyobjc-framework-Network/
 .. _`pyobjc-framework-NotificationCenter`: https://pypi.org/project/pyobjc-framework-NotificationCenter/
 .. _`pyobjc-framework-OpenDirectory`: https://pypi.org/project/pyobjc-framework-OpenDirectory/
 .. _`pyobjc-framework-PhotosUI`: https://pypi.org/project/pyobjc-framework-PhotosUI/
@@ -450,3 +453,6 @@ version of PyObjC although there is no explicit roadmap for this.
 .. _`pyobjc-framework-UserNotifications`: https://pypi.org/project/pyobjc-framework-UserNotifications/
 .. _`pyobjc-framework-NaturalLanguage`: https://pypi.org/project/pyobjc-framework-NaturalLanguage/
 .. _`pyobjc-framework-VideoSubscriberAccount`: https://pypi.org/project/pyobjc-framework-VideoSubscriberAccount/
+.. _`pyobjc-framework-MediaToolbox`: https://pypi.org/project/pyobjc-framework-MediaToolbox/
+.. _`pyobjc-framework-CoreMedia`: https://pypi.org/project/pyobjc-framework-CoreMedia/
+.. _`pyobjc-framework-CoreMediaIO`: https://pypi.org/project/pyobjc-framework-CoreMediaIO/

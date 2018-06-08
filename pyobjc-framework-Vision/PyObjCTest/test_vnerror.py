@@ -22,6 +22,7 @@ if sys.maxsize >= 2**32:
             self.assertEqual(Vision.VNErrorInvalidImage, 13)
             self.assertEqual(Vision.VNErrorInvalidArgument, 14)
             self.assertEqual(Vision.VNErrorInvalidModel, 15)
+            self.assertEqual(Vision.VNErrorUnsupportedRevision, 16)
 
 
 if __name__ == "__main__":

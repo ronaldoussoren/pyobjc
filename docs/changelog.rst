@@ -13,7 +13,9 @@ Version 5.0
   new frameworks:
 
   - AdSupport
+  - MediaToolbox
   - NaturalLanguage
+  - Network
   - UserNotifications
   - VideoSubscriberAccount
   - ...
@@ -2342,7 +2344,7 @@ Version 2.0 (MacOS X 10.5.0)
      unbound methods, or alternatively access instance methods through
      ``MyClass.pyobjc_instanceMethods``.
 
-  3) Due to a limitation in the implementation of python's ``super`` class[1]_
+  3) Due to a limitation in the implementation of python's ``super`` class [#f1]_
      it is not possible to use the super machinery to resolve class methods.
 
      However, ``from Foundation import *`` will replace the builtin ``super``
@@ -2350,7 +2352,7 @@ Version 2.0 (MacOS X 10.5.0)
      this doesn't affect most PyObjC-using programs.
 
 
-.. [1] It is not possible to override the way ``super`` looks for the "next"
+.. [#f1] It is not possible to override the way ``super`` looks for the "next"
    method to call. The class ``objc.super`` is a subclass of the builtin
    superclass with a ``__getattr__`` implementation that does the right thing
    for supercalls for Objective-C class methods.

@@ -33,6 +33,25 @@
 
   },
   "classes": {
+   "PHProjectExtensionContext": {
+    "methods": [
+     {
+      "selector": "updatedProjectInfoFromProjectInfo:completion:",
+      "class_method": false,
+      "args": {
+       "1": {
+	"callable": {
+	 "arguments": {
+	  "0": { "typestr": "^v" },
+	  "1": { "typestr": "@" }
+	 },
+	 "retval": { "typestr": "v" }
+	}
+       }
+      }
+     }
+    ]
+   },
    "PHLivePhotoView": {
     "methods": [
      {

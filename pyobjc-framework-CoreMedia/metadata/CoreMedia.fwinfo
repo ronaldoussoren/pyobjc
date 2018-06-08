@@ -1,0 +1,1656 @@
+// objective.metadata exceptions file, see its document
+// for information on how to update this file.
+{
+ "definitions": {
+  "classes": {},
+  "formal_protocols": {},
+  "cftypes": {
+   "CMBlockBufferRef": {
+    "typestr": "^{OpaqueCMBlockBuffer=}",
+    "gettypeid_func": "CMBlockBufferGetTypeID"
+   }
+  },
+  "functions": {
+   "CMAudioDeviceClockCreate": {
+    "args": {
+     "0": {},
+     "1": {},
+     "2": { "type_modifier": "o", "already_cfretained": true }
+    }
+   },
+   "CMAudioDeviceClockCreateFromAudioDeviceID": {
+    "args": {
+     "0": {},
+     "2": { "type_modifier": "o", "already_cfretained": true }
+    }
+   },
+   "CMAudioDeviceClockGetAudioDevice": {
+    "args": {
+     "0": {},
+     "1": { "type_modifier": "o" },
+     "2": { "type_modifier": "o" },
+     "3": { "type_modifier": "o" }
+    }
+   },
+   "CMAudioDeviceClockSetAudioDeviceID": {
+    "args": {
+     "0": {}
+    }
+   },
+   "CMAudioDeviceClockSetAudioDeviceUID": {
+    "args": {
+     "0": {},
+     "1": {}
+    }
+   },
+   "CMAudioFormatDescriptionCopyAsBigEndianSoundDescriptionBlockBuffer": {
+    "args": {
+     "0": {},
+     "1": {},
+     "2": {},
+     "3": {}
+    }
+   },
+   "CMAudioFormatDescriptionCreate": {
+    "args": {
+     "0": {},
+     "1": {},
+     "3": {},
+     "5": {},
+     "6": {},
+     "7": {}
+    }
+   },
+   "CMAudioFormatDescriptionCreateFromBigEndianSoundDescriptionBlockBuffer": {
+    "args": {
+     "0": {},
+     "1": {},
+     "2": {},
+     "3": {}
+    }
+   },
+   "CMAudioFormatDescriptionCreateFromBigEndianSoundDescriptionData": {
+    "args": {
+     "0": {},
+     "1": {},
+     "3": {},
+     "4": {}
+    }
+   },
+   "CMAudioFormatDescriptionCreateSummary": {
+    "args": {
+     "0": {},
+     "1": {},
+     "3": {}
+    }
+   },
+   "CMAudioFormatDescriptionEqual": {
+    "args": {
+     "0": {},
+     "1": {},
+     "3": {}
+    }
+   },
+   "CMAudioFormatDescriptionGetChannelLayout": {
+    "args": {
+     "0": {},
+     "1": {}
+    },
+    "retval": {}
+   },
+   "CMAudioFormatDescriptionGetFormatList": {
+    "args": {
+     "0": {},
+     "1": {}
+    },
+    "retval": {}
+   },
+   "CMAudioFormatDescriptionGetMagicCookie": {
+    "args": {
+     "0": {},
+     "1": {}
+    },
+    "retval": {}
+   },
+   "CMAudioFormatDescriptionGetMostCompatibleFormat": {
+    "args": {
+     "0": {}
+    },
+    "retval": {}
+   },
+   "CMAudioFormatDescriptionGetRichestDecodableFormat": {
+    "args": {
+     "0": {}
+    },
+    "retval": {}
+   },
+   "CMAudioFormatDescriptionGetStreamBasicDescription": {
+    "args": {
+     "0": {}
+    },
+    "retval": {}
+   },
+   "CMAudioSampleBufferCreateReadyWithPacketDescriptions": {
+    "args": {
+     "0": {},
+     "1": {},
+     "2": {},
+     "5": {},
+     "6": {}
+    }
+   },
+   "CMAudioSampleBufferCreateWithPacketDescriptions": {
+    "args": {
+     "0": {},
+     "1": {},
+     "3": {
+      "function": {
+       "args": [
+        {
+         "typestr": "^{opaqueCMSampleBuffer=}"
+        },
+        {
+         "typestr": "^v"
+        }
+       ],
+       "retval": {
+        "typestr": "i"
+       }
+      }
+     },
+     "4": {},
+     "5": {},
+     "8": {},
+     "9": {}
+    }
+   },
+   "CMBlockBufferAccessDataBytes": {
+    "suggestion": "Use CMBlockBufferCopyDataBytes",
+    "args": {
+     "0": {},
+     "3": {},
+     "4": {}
+    }
+   },
+   "CMBlockBufferAppendBufferReference": {
+    "args": {
+     "0": {},
+     "1": {}
+    }
+   },
+   "CMBlockBufferAppendMemoryBlock": {
+    "args": {
+     "0": {},
+     "1": { "type_modifier": "n", "c_array_length_in_arg": 2 },
+     "3": {},
+     "4": { "type_modifier": "n" }
+    }
+   },
+   "CMBlockBufferAssureBlockMemory": {
+    "args": {
+     "0": {}
+    }
+   },
+   "CMBlockBufferCopyDataBytes": {
+    "args": {
+     "0": {},
+     "3": { "type_modifier": "o", "c_array_length_in_arg": 2 }
+    }
+   },
+   "CMBlockBufferCreateContiguous": {
+    "args": {
+     "0": {},
+     "1": {},
+     "2": {},
+     "3": { "type_modifier": "n" },
+     "7": { "type_modifier": "o", "already_cfretained": true }
+    }
+   },
+   "CMBlockBufferCreateEmpty": {
+    "args": {
+     "0": {},
+     "3": { "type_modifier": "o", "already_cfretained": true }
+    }
+   },
+   "CMBlockBufferCreateWithBufferReference": {
+    "args": {
+     "0": {},
+     "1": {},
+     "5": { "type_modifier": "o", "already_cfretained": true }
+    }
+   },
+   "CMBlockBufferCreateWithMemoryBlock": {
+    "args": {
+     "0": {},
+     "1": { "type_modifier": "n", "c_array_length_in_arg": 2 },
+     "3": {},
+     "4": { "type_modifier": "n" },
+     "8": { "type_modifier": "o", "already_cfretained": true }
+    }
+   },
+   "CMBlockBufferFillDataBytes": {
+    "args": {
+     "1": {}
+    }
+   },
+   "CMBlockBufferGetDataLength": {
+    "args": {
+     "0": {}
+    }
+   },
+   "CMBlockBufferGetDataPointer": {
+    "args": {
+     "0": {},
+     "2": {},
+     "3": {},
+     "4": {}
+    }
+   },
+   "CMBlockBufferIsEmpty": {
+    "args": {
+     "0": {}
+    }
+   },
+   "CMBlockBufferIsRangeContiguous": {
+    "args": {
+     "0": {}
+    }
+   },
+   "CMBlockBufferReplaceDataBytes": {
+    "args": {
+     "0": { "type_modifier": "n", "c_array_length_in_arg": 3},
+     "1": {}
+    }
+   },
+   "CMBufferQueueCallForEachBuffer": {
+    "args": {
+     "0": {},
+     "1": {
+      "function": {
+       "args": [
+        {
+         "typestr": "@"
+        },
+        {
+         "typestr": "^v"
+        }
+       ],
+       "retval": {
+        "typestr": "i"
+       }
+      }
+     },
+     "2": {}
+    }
+   },
+   "CMBufferQueueContainsEndOfData": {
+    "args": {
+     "0": {}
+    }
+   },
+   "CMBufferQueueCreate": {
+    "args": {
+     "0": {},
+     "2": {},
+     "3": {}
+    }
+   },
+   "CMBufferQueueDequeueAndRetain": {
+    "args": {
+     "0": {}
+    }
+   },
+   "CMBufferQueueDequeueIfDataReadyAndRetain": {
+    "args": {
+     "0": {}
+    }
+   },
+   "CMBufferQueueEnqueue": {
+    "args": {
+     "0": {}
+    }
+   },
+   "CMBufferQueueGetBufferCount": {
+    "args": {
+     "0": {}
+    }
+   },
+   "CMBufferQueueGetCallbacksForSampleBuffersSortedByOutputPTS": {
+    "retval": {}
+   },
+   "CMBufferQueueGetCallbacksForUnsortedSampleBuffers": {
+    "retval": {}
+   },
+   "CMBufferQueueGetDuration": {
+    "args": {
+     "0": {}
+    }
+   },
+   "CMBufferQueueGetEndPresentationTimeStamp": {
+    "args": {
+     "0": {}
+    }
+   },
+   "CMBufferQueueGetFirstDecodeTimeStamp": {
+    "args": {
+     "0": {}
+    }
+   },
+   "CMBufferQueueGetFirstPresentationTimeStamp": {
+    "args": {
+     "0": {}
+    }
+   },
+   "CMBufferQueueGetHead": {
+    "args": {
+     "0": {}
+    }
+   },
+   "CMBufferQueueGetMaxPresentationTimeStamp": {
+    "args": {
+     "0": {}
+    }
+   },
+   "CMBufferQueueGetMinDecodeTimeStamp": {
+    "args": {
+     "0": {}
+    }
+   },
+   "CMBufferQueueGetMinPresentationTimeStamp": {
+    "args": {
+     "0": {}
+    }
+   },
+   "CMBufferQueueGetTotalSize": {
+    "args": {
+     "0": {}
+    }
+   },
+   "CMBufferQueueInstallTrigger": {
+    "args": {
+     "0": {},
+     "1": {
+      "function": {
+       "args": [
+        {
+         "typestr": "^v"
+        },
+        {
+         "typestr": "^{opaqueCMBufferQueueTriggerToken=}"
+        }
+       ],
+       "retval": {
+        "typestr": "v"
+       }
+      }
+     },
+     "2": {},
+     "5": {}
+    }
+   },
+   "CMBufferQueueInstallTriggerWithIntegerThreshold": {
+    "args": {
+     "0": {},
+     "1": {
+      "function": {
+       "args": [
+        {
+         "typestr": "^v"
+        },
+        {
+         "typestr": "^{opaqueCMBufferQueueTriggerToken=}"
+        }
+       ],
+       "retval": {
+        "typestr": "v"
+       }
+      }
+     },
+     "2": {},
+     "5": {}
+    }
+   },
+   "CMBufferQueueIsAtEndOfData": {
+    "args": {
+     "0": {}
+    }
+   },
+   "CMBufferQueueIsEmpty": {
+    "args": {
+     "0": {}
+    }
+   },
+   "CMBufferQueueMarkEndOfData": {
+    "args": {
+     "0": {}
+    }
+   },
+   "CMBufferQueueRemoveTrigger": {
+    "args": {
+     "0": {},
+     "1": {}
+    }
+   },
+   "CMBufferQueueReset": {
+    "args": {
+     "0": {}
+    }
+   },
+   "CMBufferQueueResetWithCallback": {
+    "args": {
+     "0": {},
+     "1": {
+      "function": {
+       "args": [
+        {
+         "typestr": "@"
+        },
+        {
+         "typestr": "^v"
+        }
+       ],
+       "retval": {
+        "typestr": "v"
+       }
+      }
+     },
+     "2": {}
+    }
+   },
+   "CMBufferQueueSetValidationCallback": {
+    "args": {
+     "0": {},
+     "1": {
+      "function": {
+       "args": [
+        {
+         "typestr": "^{opaqueCMBufferQueue=}"
+        },
+        {
+         "typestr": "@"
+        },
+        {
+         "typestr": "^v"
+        }
+       ],
+       "retval": {
+        "typestr": "i"
+       }
+      }
+     },
+     "2": {}
+    }
+   },
+   "CMBufferQueueTestTrigger": {
+    "args": {
+     "0": {},
+     "1": {}
+    }
+   },
+   "CMClockGetAnchorTime": {
+    "args": {
+     "0": {},
+     "1": {},
+     "2": {}
+    }
+   },
+   "CMClockGetHostTimeClock": {
+    "retval": {}
+   },
+   "CMClockGetTime": {
+    "args": {
+     "0": {}
+    }
+   },
+   "CMClockInvalidate": {
+    "args": {
+     "0": {}
+    }
+   },
+   "CMClockMightDrift": {
+    "args": {
+     "0": {},
+     "1": {}
+    }
+   },
+   "CMClosedCaptionFormatDescriptionCopyAsBigEndianClosedCaptionDescriptionBlockBuffer": {
+    "args": {
+     "0": {},
+     "1": {},
+     "2": {},
+     "3": {}
+    }
+   },
+   "CMClosedCaptionFormatDescriptionCreateFromBigEndianClosedCaptionDescriptionBlockBuffer": {
+    "args": {
+     "0": {},
+     "1": {},
+     "2": {},
+     "3": {}
+    }
+   },
+   "CMClosedCaptionFormatDescriptionCreateFromBigEndianClosedCaptionDescriptionData": {
+    "args": {
+     "0": {},
+     "1": {},
+     "3": {},
+     "4": {}
+    }
+   },
+   "CMCopyDictionaryOfAttachments": {
+    "args": {
+     "0": {}
+    },
+    "retval": {
+     "already_cfretained": true
+    }
+   },
+   "CMDoesBigEndianSoundDescriptionRequireLegacyCBRSampleTableLayout": {
+    "args": {
+     "0": {},
+     "1": {}
+    }
+   },
+   "CMFormatDescriptionCreate": {
+    "args": {
+     "0": {},
+     "3": {},
+     "4": {}
+    }
+   },
+   "CMFormatDescriptionEqual": {
+    "args": {
+     "0": {},
+     "1": {}
+    }
+   },
+   "CMFormatDescriptionEqualIgnoringExtensionKeys": {
+    "args": {
+     "0": {},
+     "1": {}
+    }
+   },
+   "CMFormatDescriptionGetExtension": {
+    "args": {
+     "0": {},
+     "1": {}
+    }
+   },
+   "CMFormatDescriptionGetExtensions": {
+    "args": {
+     "0": {}
+    },
+    "retval": {}
+   },
+   "CMFormatDescriptionGetMediaSubType": {
+    "args": {
+     "0": {}
+    }
+   },
+   "CMFormatDescriptionGetMediaType": {
+    "args": {
+     "0": {}
+    }
+   },
+   "CMGetAttachment": {
+    "args": {
+     "1": {},
+     "2": { "type_modifier": "o" }
+    }
+   },
+   "CMMemoryPoolCreate": {
+    "args": {
+     "0": {}
+    },
+    "retval": {
+     "already_cfretained": true
+    }
+   },
+   "CMMemoryPoolFlush": {
+    "args": {
+     "0": {}
+    }
+   },
+   "CMMemoryPoolGetAllocator": {
+    "args": {
+     "0": {}
+    },
+    "retval": {}
+   },
+   "CMMemoryPoolInvalidate": {
+    "args": {
+     "0": {}
+    }
+   },
+   "CMMetadataCreateIdentifierForKeyAndKeySpace": {
+    "args": {
+     "0": {},
+     "2": {},
+     "3": {}
+    }
+   },
+   "CMMetadataCreateKeyFromIdentifier": {
+    "args": {
+     "0": {},
+     "1": {},
+     "2": {}
+    }
+   },
+   "CMMetadataCreateKeyFromIdentifierAsCFData": {
+    "args": {
+     "0": {},
+     "1": {},
+     "2": {}
+    }
+   },
+   "CMMetadataCreateKeySpaceFromIdentifier": {
+    "args": {
+     "0": {},
+     "1": {},
+     "2": {}
+    }
+   },
+   "CMMetadataDataTypeRegistryDataTypeConformsToDataType": {
+    "args": {
+     "0": {},
+     "1": {}
+    }
+   },
+   "CMMetadataDataTypeRegistryDataTypeIsBaseDataType": {
+    "args": {
+     "0": {}
+    }
+   },
+   "CMMetadataDataTypeRegistryDataTypeIsRegistered": {
+    "args": {
+     "0": {}
+    }
+   },
+   "CMMetadataDataTypeRegistryGetBaseDataTypeForConformingDataType": {
+    "args": {
+     "0": {}
+    },
+    "retval": {}
+   },
+   "CMMetadataDataTypeRegistryGetBaseDataTypes": {
+    "retval": {}
+   },
+   "CMMetadataDataTypeRegistryGetConformingDataTypes": {
+    "args": {
+     "0": {}
+    },
+    "retval": {}
+   },
+   "CMMetadataDataTypeRegistryGetDataTypeDescription": {
+    "args": {
+     "0": {}
+    },
+    "retval": {}
+   },
+   "CMMetadataDataTypeRegistryRegisterDataType": {
+    "args": {
+     "0": {},
+     "1": {},
+     "2": {}
+    }
+   },
+   "CMMetadataFormatDescriptionCopyAsBigEndianMetadataDescriptionBlockBuffer": {
+    "args": {
+     "0": {},
+     "1": {},
+     "2": {},
+     "3": {}
+    }
+   },
+   "CMMetadataFormatDescriptionCreateByMergingMetadataFormatDescriptions": {
+    "args": {
+     "0": {},
+     "1": {},
+     "2": {},
+     "3": {}
+    }
+   },
+   "CMMetadataFormatDescriptionCreateFromBigEndianMetadataDescriptionBlockBuffer": {
+    "args": {
+     "0": {},
+     "1": {},
+     "2": {},
+     "3": {}
+    }
+   },
+   "CMMetadataFormatDescriptionCreateFromBigEndianMetadataDescriptionData": {
+    "args": {
+     "0": {},
+     "1": {},
+     "3": {},
+     "4": {}
+    }
+   },
+   "CMMetadataFormatDescriptionCreateWithKeys": {
+    "args": {
+     "0": {},
+     "2": {},
+     "3": {}
+    }
+   },
+   "CMMetadataFormatDescriptionCreateWithMetadataFormatDescriptionAndMetadataSpecifications": {
+    "args": {
+     "0": {},
+     "1": {},
+     "2": {},
+     "3": {}
+    }
+   },
+   "CMMetadataFormatDescriptionCreateWithMetadataSpecifications": {
+    "args": {
+     "0": {},
+     "2": {},
+     "3": {}
+    }
+   },
+   "CMMetadataFormatDescriptionGetIdentifiers": {
+    "args": {
+     "0": {}
+    },
+    "retval": {}
+   },
+   "CMMetadataFormatDescriptionGetKeyWithLocalID": {
+    "args": {
+     "0": {}
+    },
+    "retval": {}
+   },
+   "CMMuxedFormatDescriptionCreate": {
+    "args": {
+     "0": {},
+     "2": {},
+     "3": {}
+    }
+   },
+   "CMRemoveAttachment": {
+    "args": {
+     "1": {}
+    }
+   },
+   "CMSampleBufferCallBlockForEachSample": {
+    "args": {
+     "0": {}
+    }
+   },
+   "CMSampleBufferCallForEachSample": {
+    "args": {
+     "0": {},
+     "1": {
+      "function": {
+       "args": [
+        {
+         "typestr": "^{opaqueCMSampleBuffer=}"
+        },
+        {
+         "typestr": "q"
+        },
+        {
+         "typestr": "^v"
+        }
+       ],
+       "retval": {
+        "typestr": "i"
+       }
+      }
+     },
+     "2": {}
+    }
+   },
+   "CMSampleBufferCopyPCMDataIntoAudioBufferList": {
+    "args": {
+     "0": {},
+     "3": {}
+    }
+   },
+   "CMSampleBufferCopySampleBufferForRange": {
+    "args": {
+     "0": {},
+     "1": {},
+     "3": {}
+    }
+   },
+   "CMSampleBufferCreate": {
+    "args": {
+     "0": {},
+     "1": {},
+     "3": {
+      "function": {
+       "args": [
+        {
+         "typestr": "^{opaqueCMSampleBuffer=}"
+        },
+        {
+         "typestr": "^v"
+        }
+       ],
+       "retval": {
+        "typestr": "i"
+       }
+      }
+     },
+     "4": {},
+     "5": {},
+     "8": {},
+     "10": {},
+     "11": {}
+    }
+   },
+   "CMSampleBufferCreateCopy": {
+    "args": {
+     "0": {},
+     "1": {},
+     "2": {}
+    }
+   },
+   "CMSampleBufferCreateCopyWithNewTiming": {
+    "args": {
+     "0": {},
+     "1": {},
+     "3": {},
+     "4": {}
+    }
+   },
+   "CMSampleBufferCreateForImageBuffer": {
+    "args": {
+     "0": {},
+     "1": {},
+     "3": {
+      "function": {
+       "args": [
+        {
+         "typestr": "^{opaqueCMSampleBuffer=}"
+        },
+        {
+         "typestr": "^v"
+        }
+       ],
+       "retval": {
+        "typestr": "i"
+       }
+      }
+     },
+     "4": {},
+     "5": {},
+     "6": {},
+     "7": {}
+    }
+   },
+   "CMSampleBufferCreateReady": {
+    "args": {
+     "0": {},
+     "1": {},
+     "2": {},
+     "5": {},
+     "7": {},
+     "8": {}
+    }
+   },
+   "CMSampleBufferCreateReadyWithImageBuffer": {
+    "args": {
+     "0": {},
+     "1": {},
+     "2": {},
+     "3": {},
+     "4": {}
+    }
+   },
+   "CMSampleBufferDataIsReady": {
+    "args": {
+     "0": {}
+    }
+   },
+   "CMSampleBufferGetAudioBufferListWithRetainedBlockBuffer": {
+    "args": {
+     "0": {},
+     "1": {},
+     "2": {},
+     "4": {},
+     "5": {},
+     "7": {}
+    }
+   },
+   "CMSampleBufferGetAudioStreamPacketDescriptions": {
+    "args": {
+     "0": {},
+     "2": {},
+     "3": {}
+    }
+   },
+   "CMSampleBufferGetAudioStreamPacketDescriptionsPtr": {
+    "args": {
+     "0": {},
+     "1": {},
+     "2": {}
+    }
+   },
+   "CMSampleBufferGetDataBuffer": {
+    "args": {
+     "0": {}
+    },
+    "retval": {}
+   },
+   "CMSampleBufferGetDecodeTimeStamp": {
+    "args": {
+     "0": {}
+    }
+   },
+   "CMSampleBufferGetDuration": {
+    "args": {
+     "0": {}
+    }
+   },
+   "CMSampleBufferGetFormatDescription": {
+    "args": {
+     "0": {}
+    },
+    "retval": {}
+   },
+   "CMSampleBufferGetImageBuffer": {
+    "args": {
+     "0": {}
+    },
+    "retval": {}
+   },
+   "CMSampleBufferGetNumSamples": {
+    "args": {
+     "0": {}
+    }
+   },
+   "CMSampleBufferGetOutputDecodeTimeStamp": {
+    "args": {
+     "0": {}
+    }
+   },
+   "CMSampleBufferGetOutputDuration": {
+    "args": {
+     "0": {}
+    }
+   },
+   "CMSampleBufferGetOutputPresentationTimeStamp": {
+    "args": {
+     "0": {}
+    }
+   },
+   "CMSampleBufferGetOutputSampleTimingInfoArray": {
+    "args": {
+     "0": {},
+     "2": {},
+     "3": {}
+    }
+   },
+   "CMSampleBufferGetPresentationTimeStamp": {
+    "args": {
+     "0": {}
+    }
+   },
+   "CMSampleBufferGetSampleAttachmentsArray": {
+    "args": {
+     "0": {}
+    },
+    "retval": {}
+   },
+   "CMSampleBufferGetSampleSize": {
+    "args": {
+     "0": {}
+    }
+   },
+   "CMSampleBufferGetSampleSizeArray": {
+    "args": {
+     "0": {},
+     "2": {},
+     "3": {}
+    }
+   },
+   "CMSampleBufferGetSampleTimingInfo": {
+    "args": {
+     "0": {},
+     "2": {}
+    }
+   },
+   "CMSampleBufferGetSampleTimingInfoArray": {
+    "args": {
+     "0": {},
+     "2": {},
+     "3": {}
+    }
+   },
+   "CMSampleBufferGetTotalSampleSize": {
+    "args": {
+     "0": {}
+    }
+   },
+   "CMSampleBufferHasDataFailed": {
+    "args": {
+     "0": {},
+     "1": {}
+    }
+   },
+   "CMSampleBufferInvalidate": {
+    "args": {
+     "0": {}
+    }
+   },
+   "CMSampleBufferIsValid": {
+    "args": {
+     "0": {}
+    }
+   },
+   "CMSampleBufferMakeDataReady": {
+    "args": {
+     "0": {}
+    }
+   },
+   "CMSampleBufferSetDataBuffer": {
+    "args": {
+     "0": {},
+     "1": {}
+    }
+   },
+   "CMSampleBufferSetDataBufferFromAudioBufferList": {
+    "args": {
+     "0": {},
+     "1": {},
+     "2": {},
+     "4": {}
+    }
+   },
+   "CMSampleBufferSetDataFailed": {
+    "args": {
+     "0": {}
+    }
+   },
+   "CMSampleBufferSetDataReady": {
+    "args": {
+     "0": {}
+    }
+   },
+   "CMSampleBufferSetInvalidateCallback": {
+    "args": {
+     "0": {},
+     "1": {
+      "function": {
+       "args": [
+        {
+         "typestr": "^{opaqueCMSampleBuffer=}"
+        },
+        {
+         "typestr": "Q"
+        }
+       ],
+       "retval": {
+        "typestr": "v"
+       }
+      }
+     }
+    }
+   },
+   "CMSampleBufferSetInvalidateHandler": {
+    "args": {
+     "0": {}
+    }
+   },
+   "CMSampleBufferSetOutputPresentationTimeStamp": {
+    "args": {
+     "0": {}
+    }
+   },
+   "CMSampleBufferTrackDataReadiness": {
+    "args": {
+     "0": {},
+     "1": {}
+    }
+   },
+   "CMSetAttachment": {
+    "args": {
+     "1": {}
+    }
+   },
+   "CMSetAttachments": {
+    "args": {
+     "1": {}
+    }
+   },
+   "CMSimpleQueueCreate": {
+    "args": {
+     "0": {},
+     "2": {}
+    }
+   },
+   "CMSimpleQueueDequeue": {
+    "args": {
+     "0": {}
+    },
+    "retval": {}
+   },
+   "CMSimpleQueueEnqueue": {
+    "args": {
+     "0": {},
+     "1": {}
+    }
+   },
+   "CMSimpleQueueGetCapacity": {
+    "args": {
+     "0": {}
+    }
+   },
+   "CMSimpleQueueGetCount": {
+    "args": {
+     "0": {}
+    }
+   },
+   "CMSimpleQueueGetHead": {
+    "args": {
+     "0": {}
+    },
+    "retval": {}
+   },
+   "CMSimpleQueueReset": {
+    "args": {
+     "0": {}
+    }
+   },
+   "CMSwapBigEndianClosedCaptionDescriptionToHost": {
+    "args": {
+     "0": {}
+    }
+   },
+   "CMSwapBigEndianImageDescriptionToHost": {
+    "args": {
+     "0": {}
+    }
+   },
+   "CMSwapBigEndianMetadataDescriptionToHost": {
+    "args": {
+     "0": {}
+    }
+   },
+   "CMSwapBigEndianSoundDescriptionToHost": {
+    "args": {
+     "0": {}
+    }
+   },
+   "CMSwapBigEndianTextDescriptionToHost": {
+    "args": {
+     "0": {}
+    }
+   },
+   "CMSwapBigEndianTimeCodeDescriptionToHost": {
+    "args": {
+     "0": {}
+    }
+   },
+   "CMSwapHostEndianClosedCaptionDescriptionToBig": {
+    "args": {
+     "0": {}
+    }
+   },
+   "CMSwapHostEndianImageDescriptionToBig": {
+    "args": {
+     "0": {}
+    }
+   },
+   "CMSwapHostEndianMetadataDescriptionToBig": {
+    "args": {
+     "0": {}
+    }
+   },
+   "CMSwapHostEndianSoundDescriptionToBig": {
+    "args": {
+     "0": {}
+    }
+   },
+   "CMSwapHostEndianTextDescriptionToBig": {
+    "args": {
+     "0": {}
+    }
+   },
+   "CMSwapHostEndianTimeCodeDescriptionToBig": {
+    "args": {
+     "0": {}
+    }
+   },
+   "CMSyncGetRelativeRateAndAnchorTime": {
+    "args": {
+     "2": {},
+     "3": {},
+     "4": {}
+    }
+   },
+   "CMTextFormatDescriptionCopyAsBigEndianTextDescriptionBlockBuffer": {
+    "args": {
+     "0": {},
+     "1": {},
+     "2": {},
+     "3": {}
+    }
+   },
+   "CMTextFormatDescriptionCreateFromBigEndianTextDescriptionBlockBuffer": {
+    "args": {
+     "0": {},
+     "1": {},
+     "2": {},
+     "4": {}
+    }
+   },
+   "CMTextFormatDescriptionCreateFromBigEndianTextDescriptionData": {
+    "args": {
+     "0": {},
+     "1": {},
+     "3": {},
+     "5": {}
+    }
+   },
+   "CMTextFormatDescriptionGetDefaultStyle": {
+    "args": {
+     "0": {},
+     "1": {},
+     "2": {},
+     "3": {},
+     "4": {},
+     "5": {},
+     "6": {}
+    }
+   },
+   "CMTextFormatDescriptionGetDefaultTextBox": {
+    "args": {
+     "0": {},
+     "3": {}
+    }
+   },
+   "CMTextFormatDescriptionGetDisplayFlags": {
+    "args": {
+     "0": {},
+     "1": {}
+    }
+   },
+   "CMTextFormatDescriptionGetFontName": {
+    "args": {
+     "0": {},
+     "2": {}
+    }
+   },
+   "CMTextFormatDescriptionGetJustification": {
+    "args": {
+     "0": {},
+     "1": {},
+     "2": {}
+    }
+   },
+   "CMTimeCodeFormatDescriptionCopyAsBigEndianTimeCodeDescriptionBlockBuffer": {
+    "args": {
+     "0": {},
+     "1": {},
+     "2": {},
+     "3": {}
+    }
+   },
+   "CMTimeCodeFormatDescriptionCreate": {
+    "args": {
+     "0": {},
+     "5": {},
+     "6": {}
+    }
+   },
+   "CMTimeCodeFormatDescriptionCreateFromBigEndianTimeCodeDescriptionBlockBuffer": {
+    "args": {
+     "0": {},
+     "1": {},
+     "2": {},
+     "3": {}
+    }
+   },
+   "CMTimeCodeFormatDescriptionCreateFromBigEndianTimeCodeDescriptionData": {
+    "args": {
+     "0": {},
+     "1": {},
+     "3": {},
+     "4": {}
+    }
+   },
+   "CMTimeCodeFormatDescriptionGetFrameDuration": {
+    "args": {
+     "0": {}
+    }
+   },
+   "CMTimeCodeFormatDescriptionGetFrameQuanta": {
+    "args": {
+     "0": {}
+    }
+   },
+   "CMTimeCodeFormatDescriptionGetTimeCodeFlags": {
+    "args": {
+     "0": {}
+    }
+   },
+   "CMTimeCopyAsDictionary": {
+    "args": {
+     "1": {}
+    },
+    "retval": {
+     "already_cfretained": true
+    }
+   },
+   "CMTimeCopyDescription": {
+    "args": {
+     "0": {}
+    },
+    "retval": {
+     "already_cfretained": true
+    }
+   },
+   "CMTimeMakeFromDictionary": {
+    "args": {
+     "0": {}
+    }
+   },
+   "CMTimeMappingCopyAsDictionary": {
+    "args": {
+     "1": {}
+    },
+    "retval": {
+     "already_cfretained": true
+    }
+   },
+   "CMTimeMappingCopyDescription": {
+    "args": {
+     "0": {}
+    },
+    "retval": {
+     "already_cfretained": true
+    }
+   },
+   "CMTimeMappingMakeFromDictionary": {
+    "args": {
+     "0": {}
+    }
+   },
+   "CMTimeRangeCopyAsDictionary": {
+    "args": {
+     "1": {}
+    },
+    "retval": {
+     "already_cfretained": true
+    }
+   },
+   "CMTimeRangeCopyDescription": {
+    "args": {
+     "0": {}
+    },
+    "retval": {
+     "already_cfretained": true
+    }
+   },
+   "CMTimeRangeMakeFromDictionary": {
+    "args": {
+     "0": {}
+    }
+   },
+   "CMTimebaseAddTimer": {
+    "args": {
+     "0": {},
+     "1": {},
+     "2": {}
+    }
+   },
+   "CMTimebaseAddTimerDispatchSource": {
+    "args": {
+     "0": {}
+    }
+   },
+   "CMTimebaseCopyMaster": {
+    "args": {
+     "0": {}
+    }
+   },
+   "CMTimebaseCopyMasterClock": {
+    "args": {
+     "0": {}
+    },
+    "retval": {
+     "already_cfretained": true
+    }
+   },
+   "CMTimebaseCopyMasterTimebase": {
+    "args": {
+     "0": {}
+    },
+    "retval": {
+     "already_cfretained": true
+    }
+   },
+   "CMTimebaseCopyUltimateMasterClock": {
+    "args": {
+     "0": {}
+    },
+    "retval": {
+     "already_cfretained": true
+    }
+   },
+   "CMTimebaseCreateWithMasterClock": {
+    "args": {
+     "0": {},
+     "1": {},
+     "2": {}
+    }
+   },
+   "CMTimebaseCreateWithMasterTimebase": {
+    "args": {
+     "0": {},
+     "1": {},
+     "2": {}
+    }
+   },
+   "CMTimebaseGetEffectiveRate": {
+    "args": {
+     "0": {}
+    }
+   },
+   "CMTimebaseGetMaster": {
+    "args": {
+     "0": {}
+    }
+   },
+   "CMTimebaseGetMasterClock": {
+    "args": {
+     "0": {}
+    },
+    "retval": {}
+   },
+   "CMTimebaseGetMasterTimebase": {
+    "args": {
+     "0": {}
+    },
+    "retval": {}
+   },
+   "CMTimebaseGetRate": {
+    "args": {
+     "0": {}
+    }
+   },
+   "CMTimebaseGetTime": {
+    "args": {
+     "0": {}
+    }
+   },
+   "CMTimebaseGetTimeAndRate": {
+    "args": {
+     "0": {},
+     "1": {},
+     "2": {}
+    }
+   },
+   "CMTimebaseGetTimeWithTimeScale": {
+    "args": {
+     "0": {}
+    }
+   },
+   "CMTimebaseGetUltimateMasterClock": {
+    "args": {
+     "0": {}
+    },
+    "retval": {}
+   },
+   "CMTimebaseNotificationBarrier": {
+    "args": {
+     "0": {}
+    }
+   },
+   "CMTimebaseRemoveTimer": {
+    "args": {
+     "0": {},
+     "1": {}
+    }
+   },
+   "CMTimebaseRemoveTimerDispatchSource": {
+    "args": {
+     "0": {}
+    }
+   },
+   "CMTimebaseSetAnchorTime": {
+    "args": {
+     "0": {}
+    }
+   },
+   "CMTimebaseSetRate": {
+    "args": {
+     "0": {}
+    }
+   },
+   "CMTimebaseSetRateAndAnchorTime": {
+    "args": {
+     "0": {}
+    }
+   },
+   "CMTimebaseSetTime": {
+    "args": {
+     "0": {}
+    }
+   },
+   "CMTimebaseSetTimerDispatchSourceNextFireTime": {
+    "args": {
+     "0": {}
+    }
+   },
+   "CMTimebaseSetTimerDispatchSourceToFireImmediately": {
+    "args": {
+     "0": {}
+    }
+   },
+   "CMTimebaseSetTimerNextFireTime": {
+    "args": {
+     "0": {},
+     "1": {}
+    }
+   },
+   "CMTimebaseSetTimerToFireImmediately": {
+    "args": {
+     "0": {},
+     "1": {}
+    }
+   },
+   "CMVideoFormatDescriptionCopyAsBigEndianImageDescriptionBlockBuffer": {
+    "args": {
+     "0": {},
+     "1": {},
+     "3": {},
+     "4": {}
+    }
+   },
+   "CMVideoFormatDescriptionCreate": {
+    "args": {
+     "0": {},
+     "4": {},
+     "5": {}
+    }
+   },
+   "CMVideoFormatDescriptionCreateForImageBuffer": {
+    "args": {
+     "0": {},
+     "1": {},
+     "2": {}
+    }
+   },
+   "CMVideoFormatDescriptionCreateFromBigEndianImageDescriptionBlockBuffer": {
+    "args": {
+     "0": {},
+     "1": {},
+     "3": {},
+     "4": {}
+    }
+   },
+   "CMVideoFormatDescriptionCreateFromBigEndianImageDescriptionData": {
+    "args": {
+     "0": {},
+     "1": {},
+     "4": {},
+     "5": {}
+    }
+   },
+   "CMVideoFormatDescriptionCreateFromH264ParameterSets": {
+    "args": {
+     "0": {},
+     "2": {},
+     "3": {},
+     "5": {}
+    }
+   },
+   "CMVideoFormatDescriptionCreateFromHEVCParameterSets": {
+    "args": {
+     "0": {},
+     "2": {},
+     "3": {},
+     "5": {},
+     "6": {}
+    }
+   },
+   "CMVideoFormatDescriptionGetCleanAperture": {
+    "args": {
+     "0": {}
+    }
+   },
+   "CMVideoFormatDescriptionGetDimensions": {
+    "args": {
+     "0": {}
+    }
+   },
+   "CMVideoFormatDescriptionGetExtensionKeysCommonWithImageBuffers": {
+    "retval": {}
+   },
+   "CMVideoFormatDescriptionGetH264ParameterSetAtIndex": {
+    "args": {
+     "0": {},
+     "2": {},
+     "3": {},
+     "4": {},
+     "5": {}
+    }
+   },
+   "CMVideoFormatDescriptionGetHEVCParameterSetAtIndex": {
+    "args": {
+     "0": {},
+     "2": {},
+     "3": {},
+     "4": {},
+     "5": {}
+    }
+   },
+   "CMVideoFormatDescriptionGetPresentationDimensions": {
+    "args": {
+     "0": {}
+    }
+   },
+   "CMVideoFormatDescriptionMatchesImageBuffer": {
+    "args": {
+     "0": {},
+     "1": {}
+    }
+   }
+  },
+  "informal_protocols": {}
+ }
+}

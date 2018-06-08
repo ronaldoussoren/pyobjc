@@ -60,7 +60,7 @@ Manual installation is slightly involved, but still pretty easy.
   Due to package dependencies you need to install the packages in a
   particular order:
 
-  - `pyobjc-core <https://pypi.org/project/pyobjc-core>`_
+  - `pyobjc-core`_
 
   - `pyobjc-framework-Cocoa <https://pypi.org/project/pyobjc-framework-Cocoa>`_
 
