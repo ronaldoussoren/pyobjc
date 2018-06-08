@@ -13,12 +13,13 @@ Version 5.0
   new frameworks:
 
   - AdSupport
+  - CoreMedia (new in macOS 10.7)
+  - CoreMediaIO (new in macOS 10.7)
   - MediaToolbox
   - NaturalLanguage
   - Network
   - UserNotifications
   - VideoSubscriberAccount
-  - ...
 
 * Add ``objc.MAC_OS_X_VERSION_CURRENT``.
 
