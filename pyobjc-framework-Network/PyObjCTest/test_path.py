@@ -25,9 +25,9 @@ if sys.maxsize > 2 ** 32:
             Network.nw_path_has_dns
             Network.nw_path_uses_interface_type
 
-            self.assertResultIsRetained(Network.nw_path_copy_effective_local_endpoint(nw_path_t path);
+            self.assertResultIsRetained(Network.nw_path_copy_effective_local_endpoint)
 
-            self.assertResultIsRetained(Network.nw_path_copy_effective_remote_endpoint(nw_path_t path);
+            self.assertResultIsRetained(Network.nw_path_copy_effective_remote_endpoint)
 
 
 if __name__ == "__main__":

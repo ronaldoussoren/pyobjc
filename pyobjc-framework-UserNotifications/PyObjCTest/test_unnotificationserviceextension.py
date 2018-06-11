@@ -6,7 +6,7 @@ if sys.maxsize > 2 ** 32:
 
     class TestUNNotificationServiceExtension (TestCase):
         def test_methods(self):
-            self.assertEqual(UserNotifications.UNNotificationServiceExtension.didReceiveNotificationRequest_withContentHandler_, 1, b'v@')
+            self.assertArgIsBlock(UserNotifications.UNNotificationServiceExtension.didReceiveNotificationRequest_withContentHandler_, 1, b'v@')
 
 if __name__ == "__main__":
     main()

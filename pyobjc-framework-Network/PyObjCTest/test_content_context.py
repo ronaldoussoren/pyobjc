@@ -22,7 +22,7 @@ if sys.maxsize > 2 ** 32:
 
             self.assertResultIsRetained(Network.nw_content_context_copy_antecedent)
 
-            nw_content_context_set_metadata_for_protocol(nw_content_context_t context,
+            Network.nw_content_context_set_metadata_for_protocol
 
             self.assertResultIsRetained(Network.nw_content_context_copy_protocol_metadata)
 

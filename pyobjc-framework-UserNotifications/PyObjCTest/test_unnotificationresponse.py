@@ -6,8 +6,8 @@ if sys.maxsize > 2 ** 32:
 
     class TestUNNotificationResponse (TestCase):
         def test_constants(self):
-            self.assertEqual(UserNotifications.UNNotificationDefaultActionIdentifier, unicode)
-            self.assertEqual(UserNotifications.UNNotificationDismissActionIdentifier, unicode)
+            self.assertIsInstance(UserNotifications.UNNotificationDefaultActionIdentifier, unicode)
+            self.assertIsInstance(UserNotifications.UNNotificationDismissActionIdentifier, unicode)
 
 if __name__ == "__main__":
     main()

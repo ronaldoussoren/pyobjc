@@ -4,9 +4,9 @@ import sys
 if sys.maxsize > 2 ** 32:
     import Network
 
-        nw_listener_state_changed_handler_t = b'vi@'
-        nw_listener_new_connection_handler_t = b'v@'
-        nw_listener_advertised_endpoint_changed_handler_t = b'v@B'
+    nw_listener_state_changed_handler_t = b'vi@'
+    nw_listener_new_connection_handler_t = b'v@'
+    nw_listener_advertised_endpoint_changed_handler_t = b'v@B'
 
     class TestListener (TestCase):
         def test_constants(self):
@@ -17,11 +17,11 @@ if sys.maxsize > 2 ** 32:
             self.assertEqual(Network.nw_listener_state_cancelled, 4)
 
         def test_functions(self):
-            self.assertResultIsRetained(Network.nw_listener_create_with_port
+            self.assertResultIsRetained(Network.nw_listener_create_with_port)
 
-            self.assertResultIsRetained(Network.nw_listener_create
+            self.assertResultIsRetained(Network.nw_listener_create)
 
-            self.assertResultIsRetained(Network.nw_listener_create_with_connection
+            self.assertResultIsRetained(Network.nw_listener_create_with_connection)
 
             Network.nw_listener_set_queue
 

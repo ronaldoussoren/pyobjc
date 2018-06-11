@@ -20,16 +20,16 @@ if sys.maxsize > 2 ** 32:
             self.assertArgIsIn(Network.nw_endpoint_create_host, 2)
             self.assertArgIsNullTerminated(Network.nw_endpoint_create_host, 2)
 
-            self.assertResultIsNullTerminated(Network.nw_endpoint_get_hostname
+            self.assertResultIsNullTerminated(Network.nw_endpoint_get_hostname)
 
-            self.assertResultIsNullTerminated(Network.nw_endpoint_copy_port_string(nw_endpoint_t endpoint);
+            self.assertResultIsNullTerminated(Network.nw_endpoint_copy_port_string)
 
             Network.nw_endpoint_get_port
 
             self.assertResultIsRetained(nw_endpoint_create_address)
             self.assertArgIsIn(nw_endpoint_create_address, 0)
 
-            self.assertResultIsNullTerminated(Network.nw_endpoint_copy_address_string(nw_endpoint_t endpoint);
+            self.assertResultIsNullTerminated(Network.nw_endpoint_copy_address_string)
 
             Network.nw_endpoint_get_address # XXX Explicit test needed
 

@@ -2505,6 +2505,12 @@ PyObjC_MODULE_INIT(_objc)
     }
 #endif /* MAC_OS_X_VERSION_MIN_REQUIRED */
 
+#ifdef MAC_OS_X_VERSION_10_0
+    if (PyModule_AddIntConstant(m, "MAC_OS_X_VERSION_10_0", MAC_OS_X_VERSION_10_0) < 0) {
+        PyObjC_INITERROR();
+    }
+#endif /* MAC_OS_X_VERSION_10_1 */
+
 #ifdef MAC_OS_X_VERSION_10_1
     if (PyModule_AddIntConstant(m, "MAC_OS_X_VERSION_10_1", MAC_OS_X_VERSION_10_1) < 0) {
         PyObjC_INITERROR();

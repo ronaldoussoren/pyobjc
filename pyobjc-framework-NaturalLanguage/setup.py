@@ -1,5 +1,5 @@
 '''
-Wrappers for the "UserNotifications" framework on macOS.
+Wrappers for the "NaturalLanguage" framework on macOS.
 
 These wrappers don't include documentation, please check Apple's documention
 for information on how to use this framework and PyObjC's documentation
@@ -12,10 +12,10 @@ from pyobjc_setup import setup
 VERSION="5.0a1"
 
 setup(
-    name='pyobjc-framework-UserNotifications',
-    description = "Wrappers for the framework UserNotifications on macOS",
+    name='pyobjc-framework-NaturalLanguage',
+    description = "Wrappers for the framework NaturalLanguage on macOS",
     min_os_level="10.14",
-    packages = [ "UserNotifications" ],
+    packages = [ "NaturalLanguage" ],
     version=VERSION,
     install_requires = [
         'pyobjc-core>='+VERSION,

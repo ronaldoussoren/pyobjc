@@ -46,6 +46,7 @@ FRAMEWORK_WRAPPERS=[
         ('CoreData',                None,               None        ),
         ('CoreLocation',            '10.6',             None        ),
         ('CoreMedia',               '10.7',             None        ),
+        ('CoreMediaIO',             '10.7',             None        ),
         ('CoreML',                  '10.13',            None        ),
         ('CoreServices',            None,               None        ),
         ('CoreSpotlight',           '10.13',            None        ),

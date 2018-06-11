@@ -7,7 +7,7 @@ if sys.maxsize > 2 ** 32:
     class TestUNUserNotificationCenterHelper (UserNotifications.NSObject):
         def userNotificationCenter_willPresentNotification_withCompletionHandler_(self, a, b, c): pass
         def userNotificationCenter_didReceiveNotificationResponse_withCompletionHandler_(self, a, b, c): pass
-        def userNotificationCenter_openSettingsForNotification_(self, a, b)
+        def userNotificationCenter_openSettingsForNotification_(self, a, b): pass
 
     class TestUNUserNotificationCenter (TestCase):
         def test_constants(self):
