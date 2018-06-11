@@ -58,5 +58,11 @@ class TestRegressions (TestCase):
         self.assertEqual(NSColorTypePattern, 1)
         self.assertEqual(NSColorTypeCatalog, 2)
 
+        self.assertEqual(NSColorSystemEffectNone, 0)
+        self.assertEqual(NSColorSystemEffectPressed, 1)
+        self.assertEqual(NSColorSystemEffectDeepPressed, 2)
+        self.assertEqual(NSColorSystemEffectDisabled, 3)
+        self.assertEqual(NSColorSystemEffectRollover, 4)
+
 if __name__ == "__main__":
     main()

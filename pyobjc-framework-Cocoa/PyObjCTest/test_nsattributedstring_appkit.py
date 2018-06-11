@@ -109,6 +109,15 @@ class TestNSAttributedString (TestCase):
         self.assertIsInstance(NSAttachmentAttributeName, unicode)
         self.assertIsInstance(NSCursorAttributeName, unicode)
 
+        self.assertEqual(NSUnderlineStylePatternSolid, 0x0000)
+        self.assertEqual(NSUnderlineStylePatternDot, 0x0100)
+        self.assertEqual(NSUnderlineStylePatternDash, 0x0200)
+        self.assertEqual(NSUnderlineStylePatternDashDot, 0x0300)
+        self.assertEqual(NSUnderlineStylePatternDashDotDot, 0x0400)
+
+        self.assertEqual(NSUnderlineStyleByWord, 0x8000)
+
+
     def testMethods(self):
         self.assertArgIsOut(NSAttributedString.initWithURL_options_documentAttributes_error_, 2)
         self.assertArgIsOut(NSAttributedString.initWithURL_options_documentAttributes_error_, 3)

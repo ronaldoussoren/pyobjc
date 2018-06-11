@@ -16,6 +16,15 @@ class TestNSAppearance (TestCase):
          self.assertIsInstance(NSAppearanceNameVibrantDark, unicode)
          self.assertIsInstance(NSAppearanceNameVibrantLight, unicode)
 
+    @min_os_level('10.14')
+    def testConstants10_14(self):
+        self.assertIsInstance(NSAppearanceNameDarkAqua, unicode)
+
+        self.assertIsInstance(NSAppearanceNameAccessibilityHighContrastAqua, unicode)
+        self.assertIsInstance(NSAppearanceNameAccessibilityHighContrastDarkAqua, unicode)
+        self.assertIsInstance(NSAppearanceNameAccessibilityHighContrastVibrantLight, unicode)
+        self.assertIsInstance(NSAppearanceNameAccessibilityHighContrastVibrantDark, unicode)
+
     @min_os_level('10.9')
     def testProtocols(self):
         objc.protocolNamed('NSAppearanceCustomization')

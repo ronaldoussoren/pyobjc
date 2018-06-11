@@ -17,6 +17,7 @@ class TestNSApplicationHelper (NSObject):
     def applicationShouldHandleReopen_hasVisibleWindows_(self, sender, flag): return 1
     def application_willContinueUserActivityWithType_(self, sender, tp): return 1
     def application_continueUserActivity_restorationHandler_(self, sender, tp, h): return 1
+    def application_delegateHandlesKey_(self, a, k): return 1
 
 
 class TestNSApplication (TestCase):
@@ -61,6 +62,11 @@ class TestNSApplication (TestCase):
         self.assertEqual(NSAppKitVersionNumber10_12, 1504)
         self.assertEqual(NSAppKitVersionNumber10_12_1, 1504.60)
         self.assertEqual(NSAppKitVersionNumber10_12_2, 1504.76)
+        self.assertEqual(NSAppKitVersionNumber10_13, 1561)
+        self.assertEqual(NSAppKitVersionNumber10_13_1, 1561.1)
+        self.assertEqual(NSAppKitVersionNumber10_13_2, 1561.2)
+        self.assertEqual(NSAppKitVersionNumber10_13_4, 1561.4)
+
 
         self.assertIsInstance(NSModalPanelRunLoopMode, unicode)
         self.assertIsInstance(NSEventTrackingRunLoopMode, unicode)
@@ -187,6 +193,8 @@ class TestNSApplication (TestCase):
         self.assertResultIsBOOL(TestNSApplicationHelper.application_continueUserActivity_restorationHandler_)
         self.assertArgIsBlock(TestNSApplicationHelper.application_continueUserActivity_restorationHandler_, 2, b'v@')
 
+        self.assertResultIsBOOL(TestNSApplicationHelper.application_delegateHandlesKey_)
+
 
     @min_os_level('10.6')
     def testConstants10_6(self):
@@ -262,6 +270,10 @@ class TestNSApplication (TestCase):
     @min_os_level('10.12')
     def testMethods10_12(self):
         self.assertArgIsBlock(NSApplication.enumerateWindowsWithOptions_usingBlock_, 1, b'v@o^Z')
+
+    @min_os_level('10.14')
+    def testMethods10_12(self):
+        self.assertResultIsBOOL(NSApplication.isRegisteredForRemoteNotifications)
 
     @min_sdk_level('10.10')
     def testProtocols(self):

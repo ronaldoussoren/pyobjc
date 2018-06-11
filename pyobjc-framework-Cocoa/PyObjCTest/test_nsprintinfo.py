@@ -68,6 +68,10 @@ class TestNSPrintInfo (TestCase):
         self.assertIsInstance(NSPrintFaxUseCoverSheet, unicode)
         self.assertIsInstance(NSPrintFaxJob, unicode)
 
+        self.assertEqual(NSPrintingPaginationModeAutomatic, 0)
+        self.assertEqual(NSPrintingPaginationModeFit, 1)
+        self.assertEqual(NSPrintingPaginationModeClip, 2)
+
 
     def testMethods(self):
         self.assertResultIsBOOL(NSPrintInfo.isHorizontallyCentered)

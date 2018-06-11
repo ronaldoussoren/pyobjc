@@ -43,5 +43,9 @@ class TestNSToolbarItem (TestCase):
     def testProtocolObject(self):
         objc.protocolNamed('NSCloudSharingValidation')
 
+    @min_sdk_level('10.14')
+    def testProtocolObject10_14(self):
+        objc.protocolNamed('NSToolbarItemValidation')
+
 if __name__ == "__main__":
     main()

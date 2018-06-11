@@ -132,4 +132,14 @@ static void __attribute__((__used__)) use_protocols(void)
     p = PyObjC_IdToPython(@protocol(NSCollectionViewPrefetching)); Py_XDECREF(p);
     p = PyObjC_IdToPython(@protocol(NSUserInterfaceCompression)); Py_XDECREF(p);
 #endif
+#if PyObjC_BUILD_RELEASE >= 1014
+    p = PyObjC_IdToPython(@protocol(NSFontChanging)); Py_XDECREF(p);
+    p = PyObjC_IdToPython(@protocol(NSEditor)); Py_XDECREF(p);
+    p = PyObjC_IdToPython(@protocol(NSEditorRegistration)); Py_XDECREF(p);
+    p = PyObjC_IdToPython(@protocol(NSPasteboardTypeOwner)); Py_XDECREF(p);
+    p = PyObjC_IdToPython(@protocol(NSStandardKeyBindingResponding)); Py_XDECREF(p);
+    p = PyObjC_IdToPython(@protocol(NSToolbarItemValidation)); Py_XDECREF(p);
+    p = PyObjC_IdToPython(@protocol(NSViewLayerContentScaleDelegate)); Py_XDECREF(p);
+    p = PyObjC_IdToPython(@protocol(NSViewToolTipOwner)); Py_XDECREF(p);
+#endif
 }

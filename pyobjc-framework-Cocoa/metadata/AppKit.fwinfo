@@ -27147,6 +27147,10 @@
    }
   },
   "enum": {
+   "NSAppKitVersionNumber10_13": { "value": 1561 },
+   "NSAppKitVersionNumber10_13_1": { "value": 1561.1 },
+   "NSAppKitVersionNumber10_13_2": { "value": 1561.2 },
+   "NSAppKitVersionNumber10_13_4": { "value": 1561.4 },
    "NSTextMovementReturn": { "value": 16 },
    "NSTextMovementTab": { "value": 17 },
    "NSTextMovementBacktab": { "value": 18 },

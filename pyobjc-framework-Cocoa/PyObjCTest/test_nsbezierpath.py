@@ -130,6 +130,22 @@ class TestNSBezierPath(TestCase):
         self.assertEqual(NSCurveToBezierPathElement, 2)
         self.assertEqual(NSClosePathBezierPathElement, 3)
 
+        self.assertEqual(NSLineCapStyleButt, 0)
+        self.assertEqual(NSLineCapStyleRound, 1)
+        self.assertEqual(NSLineCapStyleSquare, 2)
+
+        self.assertEqual(NSLineJoinStyleMiter, 0)
+        self.assertEqual(NSLineJoinStyleRound, 1)
+        self.assertEqual(NSLineJoinStyleBevel, 2)
+
+        self.assertEqual(NSWindingRuleNonZero, 0)
+        self.assertEqual(NSWindingRuleEvenOdd, 1)
+
+        self.assertEqual(NSBezierPathElementMoveTo, 0)
+        self.assertEqual(NSBezierPathElementLineTo, 1)
+        self.assertEqual(NSBezierPathElementCurveTo, 2)
+        self.assertEqual(NSBezierPathElementClosePath, 3)
+
 
     def testMethods(self):
         self.assertResultIsBOOL(NSBezierPath.isEmpty)
