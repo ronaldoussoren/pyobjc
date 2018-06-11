@@ -21,9 +21,6 @@
 @interface OC_PythonData : NSData
 {
     PyObject* value;
-#if PY_MAJOR_VERSION == 3
-    Py_buffer view;
-#endif
 }
 
 /*!

@@ -1400,22 +1400,17 @@ pysel_default_signature(SEL selector, PyObject* callable)
     result[2] = _C_SEL;
     result[arg_count+3] = '\0';
 
-    /* func_code->co_code is always a bytes object */
-    if (!PyBytes_Check(func_code->co_code)) {
-        PyErr_SetString(PyExc_ValueError, "Function where code is not bytes");
+    if (PyObject_AsReadBuffer(func_code->co_code, (const void **)&buffer, &buffer_len)) {
         return NULL;
     }
 
-    buffer = (const unsigned char*)PyBytes_AS_STRING(func_code->co_code);
-    buffer_len = PyBytes_GET_SIZE(func_code->co_code);
-
     /*
-     *  Scan bytecode to find return statements. If any non-bare return
-     *  statement exists, then set the return type to @ (id).
-     *
-     *  In Python 3.6 the interpreter switched to a 16-bit word-code instead
-     *  of 8-bit bytecode, hence the two code paths
-     */
+       Scan bytecode to find return statements. If any non-bare return
+       statement exists, then set the return type to @ (id).
+
+       In Python 3.6 the interpreter switched to a 16-bit word-code instead
+       of 8-bit bytecode, hence the two code paths
+    */
     was_none = 0;
 
 #if PY_VERSION_HEX >= 0x03060000

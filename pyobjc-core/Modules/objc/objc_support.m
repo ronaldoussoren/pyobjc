@@ -2457,16 +2457,10 @@ depythonify_python_object(PyObject* argument, id* datum)
         }
 
         *datum = [OC_PythonString stringWithPythonObject:argument];
+#endif /* PY_MAJOR_VERSION == 2 */
 
     } else if (PyObject_CheckReadBuffer(argument)) {
         *datum = [OC_PythonData dataWithPythonObject:argument];
-
-#else /* Py_MAJOR_VERSION == 3 */
-
-    } else if (PyObject_CheckBuffer(argument)) {
-        *datum = [OC_PythonData dataWithPythonObject:argument];
-
-#endif /* PY_MAJOR_VERSION == 3 */
 
     } else if (PyObjCFormalProtocol_Check(argument)) {
         *datum = PyObjCFormalProtocol_GetProtocol(argument);
