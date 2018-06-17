@@ -18,6 +18,7 @@ Version 5.0
   - MediaToolbox
   - NaturalLanguage
   - Network
+  - OSAKit (new in macOS 10.0)
   - UserNotifications
   - VideoSubscriberAccount
 

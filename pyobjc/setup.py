@@ -87,6 +87,7 @@ FRAMEWORK_WRAPPERS=[
         ('NetworkExtension',        '10.11',            None        ),
         ('NotificationCenter',      '10.10',            None        ),
         ('OpenDirectory',           '10.6',             None        ),
+        ('OSAKit',                  None,               None        ),
         ('Photos',                  '10.11',            None        ),
         ('PhotosUI',                '10.11',            None        ),
         ('PreferencePanes',         None,               None        ),

@@ -70,7 +70,7 @@ The framework name links to API notes for that framework, the python packages li
 +------------------------------------------------------------------+---------------------------------------------+-----------------------------------------+
 | CoreAudioKit                                                     | -                                           | Not yet wrapped                         |
 +------------------------------------------------------------------+---------------------------------------------+-----------------------------------------+
-| CoreAuthentication                                               | -                                           | No public API (removed in macOS 10.13   |
+| CoreAuthentication                                               | -                                           | No public API (removed in macOS 10.13)  |
 +------------------------------------------------------------------+---------------------------------------------+-----------------------------------------+
 | :doc:`CoreBluetooth </apinotes/CoreBluetooth>`                   | `pyobjc-framework-CoreBluetooth`_           |                                         |
 +------------------------------------------------------------------+---------------------------------------------+-----------------------------------------+
@@ -248,7 +248,7 @@ The framework name links to API notes for that framework, the python packages li
 +------------------------------------------------------------------+---------------------------------------------+-----------------------------------------+
 | :doc:`NotificationCenter </apinotes/NotificationCenter>`         | `pyobjc-framework-NotificationCenter`_      |                                         |
 +------------------------------------------------------------------+---------------------------------------------+-----------------------------------------+
-| OSAKit                                                           | -                                           | Not wrapped yet.                        |
+| :doc:`OSAKit </apinotes/OSAKit>`                                 | `pyobjc-framework-OSAKit`_                  |                                         |
 +------------------------------------------------------------------+---------------------------------------------+-----------------------------------------+
 | OpenAL                                                           | -                                           | Will not be wrapped.                    |
 |                                                                  |                                             | Use `PyAL`_ instead.                    |
@@ -261,7 +261,7 @@ The framework name links to API notes for that framework, the python packages li
 | OpenGL                                                           | -                                           | Will not be wrapped.                    |
 |                                                                  |                                             | Use `PyOpenGL`_ instead.                |
 +------------------------------------------------------------------+---------------------------------------------+-----------------------------------------+
-| PCSC                                                             | -                                           | Not wrapped yet.                        |
+| PCSC                                                             | -                                           | Use `pyscard`_ instead.                 |
 +------------------------------------------------------------------+---------------------------------------------+-----------------------------------------+
 | :doc:`PDFKit </apinotes/PDFKit>`                                 | `pyobjc-framework-Quartz`_                  | Use "import Quartz".                    |
 +------------------------------------------------------------------+---------------------------------------------+-----------------------------------------+
@@ -370,6 +370,8 @@ version of PyObjC although there is no explicit roadmap for this.
 
 .. _pyopencl: https://pypi.org/project/pyopencl
 
+.. _pyscard: https://pypi.org/project/pyscard
+
 .. _`pyobjc-framework-AVKit`: https://pypi.org/project/pyobjc-framework-AVKit/
 .. _`pyobjc-framework-Accounts`: https://pypi.org/project/pyobjc-framework-Accounts/
 .. _`pyobjc-framework-AddressBook`: https://pypi.org/project/pyobjc-framework-AddressBook/
@@ -460,3 +462,4 @@ version of PyObjC although there is no explicit roadmap for this.
 .. _`pyobjc-framework-CoreMedia`: https://pypi.org/project/pyobjc-framework-CoreMedia/
 .. _`pyobjc-framework-CoreMediaIO`: https://pypi.org/project/pyobjc-framework-CoreMediaIO/
 .. _`pyobjc-framework-iTunesLibrary`: https://pypi.org/project/pyobjc-framework-iTunesLibrary/
+.. _`pyobjc-framework-OSAKit`: https://pypi.org/project/pyobjc-framework-OSAKit/
