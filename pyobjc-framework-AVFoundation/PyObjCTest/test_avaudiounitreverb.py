@@ -13,7 +13,7 @@ class TestAVAudioUnitReverb (TestCase):
         self.assertEqual(AVFoundation.AVAudioUnitReverbPresetLargeHall, 4)
         self.assertEqual(AVFoundation.AVAudioUnitReverbPresetPlate, 5)
         self.assertEqual(AVFoundation.AVAudioUnitReverbPresetMediumChamber, 6)
-        self.assertEqual(AVFoundation.,VAudioUnitReverbPresetLargeChamber, 7)
+        self.assertEqual(AVFoundation.AVAudioUnitReverbPresetLargeChamber, 7)
         self.assertEqual(AVFoundation.AVAudioUnitReverbPresetCathedral, 8)
         self.assertEqual(AVFoundation.AVAudioUnitReverbPresetLargeRoom2, 9)
         self.assertEqual(AVFoundation.AVAudioUnitReverbPresetMediumHall2, 10)

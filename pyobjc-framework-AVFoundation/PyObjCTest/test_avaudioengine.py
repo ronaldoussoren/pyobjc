@@ -2,7 +2,7 @@ from PyObjCTools.TestSupport import *
 
 import AVFoundation
 
-AVAudioEngineManualRenderingBlock = objc._C_NSInteger + objc._C_NSInteger + ... + b'o^@'
+AVAudioEngineManualRenderingBlock = objc._C_NSInteger + objc._C_NSInteger + b'...' + b'o^@'
 
 
 class TestAVAudioEngine (TestCase):
@@ -30,17 +30,17 @@ class TestAVAudioEngine (TestCase):
         self.assertIsInstance(AVFoundation.AVAudioEngineConfigurationChangeNotification, unicode)
 
     def testConstants(self):
-               AVAudioEngineManualRenderingErrorInvalidMode = -80800,
-        AVAudioEngineManualRenderingErrorInitialized = -80801,
-        AVAudioEngineManualRenderingErrorNotRunning  = -80802
+        self.assertEqual(AVFoundation.AVAudioEngineManualRenderingErrorInvalidMode, -80800)
+        self.assertEqual(AVFoundation.AVAudioEngineManualRenderingErrorInitialized, -80801)
+        self.assertEqual(AVFoundation.AVAudioEngineManualRenderingErrorNotRunning , -80802)
 
-                AVAudioEngineManualRenderingStatusError = -1,
-        AVAudioEngineManualRenderingStatusSuccess = 0,
-        AVAudioEngineManualRenderingStatusInsufficientDataFromInputNode = 1,
-        AVAudioEngineManualRenderingStatusCannotDoInCurrentContext = 2
+        self.assertEqual(AVFoundation.AVAudioEngineManualRenderingStatusError, -1)
+        self.assertEqual(AVFoundation.AVAudioEngineManualRenderingStatusSuccess, 0)
+        self.assertEqual(AVFoundation.AVAudioEngineManualRenderingStatusInsufficientDataFromInputNode, 1)
+        self.assertEqual(AVFoundation.AVAudioEngineManualRenderingStatusCannotDoInCurrentContext, 2)
 
-       AVAudioEngineManualRenderingModeOffline = 0,
-        AVAudioEngineManualRenderingModeRealtime = 1
+        self.assertEqual(AVFoundation.AVAudioEngineManualRenderingModeOffline, 0)
+        self.assertEqual(AVFoundation.AVAudioEngineManualRenderingModeRealtime, 1)
 
 
 

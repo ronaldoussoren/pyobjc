@@ -4,7 +4,7 @@ import AVFoundation
 
 class TestAVQueuedSampleBufferRenderingHelper (AVFoundation.NSObject):
     def isReadyForMoreMediaData(self): return 0
-    def requestMediaDataWhenReadyOnQueue_usingBlock_(self): pass
+    def requestMediaDataWhenReadyOnQueue_usingBlock_(self, q, b): pass
 
 class TestAVQueuedSampleBufferRendering (TestCase):
     def testConstants(self):

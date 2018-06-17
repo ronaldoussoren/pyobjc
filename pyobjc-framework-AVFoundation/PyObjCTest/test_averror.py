@@ -41,7 +41,7 @@ class TestAVError (TestCase):
         self.assertEqual(AVFoundation.AVErrorFileAlreadyExists, -11823)
         self.assertEqual(AVFoundation.AVErrorCompositionTrackSegmentsNotContiguous, -11824)
         self.assertEqual(AVFoundation.AVErrorInvalidCompositionTrackSegmentDuration, -11825)
-        self.assertEqual(AVFoundation.AVErrorInvalidCompositionTrackSegmentSourceStartTime= -11826)
+        self.assertEqual(AVFoundation.AVErrorInvalidCompositionTrackSegmentSourceStartTime, -11826)
         self.assertEqual(AVFoundation.AVErrorInvalidCompositionTrackSegmentSourceDuration, -11827)
         self.assertEqual(AVFoundation.AVErrorFileFormatNotRecognized, -11828)
         self.assertEqual(AVFoundation.AVErrorFileFailedToParse, -11829)
