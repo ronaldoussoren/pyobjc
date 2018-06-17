@@ -12,8 +12,6 @@ The framework name links to API notes for that framework, the python packages li
 +==================================================================+=============================================+=========================================+
 | :doc:`dispatch </apinotes/libdispatch>`                          | `pyobjc-framework-libdispatch`_             |                                         |
 +------------------------------------------------------------------+---------------------------------------------+-----------------------------------------+
-| :doc:`AdSupport </apinotes/AdSupport>`                           | `pyobjc-framework-AdSupport`_               |                                         |
-+------------------------------------------------------------------+---------------------------------------------+-----------------------------------------+
 | AGL                                                              | -                                           | Will not be wrapped, OpenGL is          |
 |                                                                  |                                             | deprecated in macOS 10.14               |
 +------------------------------------------------------------------+---------------------------------------------+-----------------------------------------+
@@ -24,6 +22,8 @@ The framework name links to API notes for that framework, the python packages li
 | Accelerate                                                       | -                                           | Will not be wrapped.                    |
 +------------------------------------------------------------------+---------------------------------------------+-----------------------------------------+
 | :doc:`Accounts </apinotes/Accounts>`                             | `pyobjc-framework-Accounts`_                |                                         |
++------------------------------------------------------------------+---------------------------------------------+-----------------------------------------+
+| :doc:`AdSupport </apinotes/AdSupport>`                           | `pyobjc-framework-AdSupport`_               |                                         |
 +------------------------------------------------------------------+---------------------------------------------+-----------------------------------------+
 | :doc:`AddressBook </apinotes/AddressBook>`                       | `pyobjc-framework-AddressBook`_             |                                         |
 +------------------------------------------------------------------+---------------------------------------------+-----------------------------------------+
@@ -70,7 +70,7 @@ The framework name links to API notes for that framework, the python packages li
 +------------------------------------------------------------------+---------------------------------------------+-----------------------------------------+
 | CoreAudioKit                                                     | -                                           | Not yet wrapped                         |
 +------------------------------------------------------------------+---------------------------------------------+-----------------------------------------+
-| CoreAuthentication                                               | -                                           | No public API                           |
+| CoreAuthentication                                               | -                                           | No public API (removed in macOS 10.13   |
 +------------------------------------------------------------------+---------------------------------------------+-----------------------------------------+
 | :doc:`CoreBluetooth </apinotes/CoreBluetooth>`                   | `pyobjc-framework-CoreBluetooth`_           |                                         |
 +------------------------------------------------------------------+---------------------------------------------+-----------------------------------------+
@@ -163,7 +163,7 @@ The framework name links to API notes for that framework, the python packages li
 +------------------------------------------------------------------+---------------------------------------------+-----------------------------------------+
 | :doc:`GameController </apinotes/GameController>`                 | `pyobjc-framework-GameController`_          |                                         |
 +------------------------------------------------------------------+---------------------------------------------+-----------------------------------------+
-| :doc:`GameCenter </apinotes/GameCenter>`                         | `pyobjc-framework-GameCenter`_              |                                         |
+| :doc:`GameCenter </apinotes/GameCenter>`                         | `pyobjc-framework-GameCenter`_              | No longer present in macOS 10.13        |
 +------------------------------------------------------------------+---------------------------------------------+-----------------------------------------+
 | :doc:`GameKit </apinotes/GameKit>`                               | `pyobjc-framework-GameKit`_                 |                                         |
 +------------------------------------------------------------------+---------------------------------------------+-----------------------------------------+
@@ -173,7 +173,7 @@ The framework name links to API notes for that framework, the python packages li
 +------------------------------------------------------------------+---------------------------------------------+-----------------------------------------+
 | ICADevices                                                       | -                                           | Not wrapped yet.                        |
 +------------------------------------------------------------------+---------------------------------------------+-----------------------------------------+
-| IMCore                                                           | -                                           | No public API                           |
+| IMCore                                                           | -                                           | No public API (removed in macOS 10.13   |
 +------------------------------------------------------------------+---------------------------------------------+-----------------------------------------+
 | :doc:`IMServicePlugIn </apinotes/IMServicePlugIn>`               | `pyobjc-framework-IMServicePlugIn`_         |                                         |
 +------------------------------------------------------------------+---------------------------------------------+-----------------------------------------+
@@ -189,7 +189,7 @@ The framework name links to API notes for that framework, the python packages li
 +------------------------------------------------------------------+---------------------------------------------+-----------------------------------------+
 | :doc:`ImageIO </apinotes/ImageIO>`                               | `pyobjc-framework-Quartz`_                  | use "import Quartz".                    |
 +------------------------------------------------------------------+---------------------------------------------+-----------------------------------------+
-| :doc:`ImageKit </apinotes/ImageKit>`                             | `pyobjc-framework-Quartz`_                  | use "import Quartz".                    |
+| Quartz / :doc:`ImageKit </apinotes/ImageKit>`                    | `pyobjc-framework-Quartz`_                  | use "import Quartz".                    |
 +------------------------------------------------------------------+---------------------------------------------+-----------------------------------------+
 | :doc:`InputMethodKit </apinotes/InputMethodKit>`                 | `pyobjc-framework-InputMethodKit`_          |                                         |
 +------------------------------------------------------------------+---------------------------------------------+-----------------------------------------+
@@ -279,15 +279,15 @@ The framework name links to API notes for that framework, the python packages li
 +------------------------------------------------------------------+---------------------------------------------+-----------------------------------------+
 | :doc:`Quartz </apinotes/Quartz>`                                 | `pyobjc-framework-Quartz`_                  |                                         |
 +------------------------------------------------------------------+---------------------------------------------+-----------------------------------------+
-| :doc:`QuartzComposer </apinotes/QuartzComposer>`                 | `pyobjc-framework-Quartz`_                  | Use "import Quartz".                    |
+| Quartz / :doc:`QuartzComposer </apinotes/QuartzComposer>`        | `pyobjc-framework-Quartz`_                  | Use "import Quartz"                     |
 +------------------------------------------------------------------+---------------------------------------------+-----------------------------------------+
 | :doc:`QuartzCore </apinotes/QuartzCore>`                         | `pyobjc-framework-Quartz`_                  | Use "import Quartz".                    |
 +------------------------------------------------------------------+---------------------------------------------+-----------------------------------------+
-| :doc:`QuartzFilters </apinotes/QuartzFilters>`                   | `pyobjc-framework-Quartz`_                  | Use "import Quartz".                    |
+| Quartz / :doc:`QuartzFilters </apinotes/QuartzFilters>`          | `pyobjc-framework-Quartz`_                  | Use "import Quartz".                    |
 +------------------------------------------------------------------+---------------------------------------------+-----------------------------------------+
 | :doc:`QuickLook </apinotes/QuickLook>`                           | `pyobjc-framework-Quartz`_                  | Use "import Quartz".                    |
 +------------------------------------------------------------------+---------------------------------------------+-----------------------------------------+
-| :doc:`QuickLookUI </apinotes/QuickLookUI>`                       | `pyobjc-framework-Quartz`_                  | Use "import Quartz".                    |
+| Quartz / :doc:`QuickLookUI </apinotes/QuickLookUI>`              | `pyobjc-framework-Quartz`_                  | Use "import Quartz".                    |
 +------------------------------------------------------------------+---------------------------------------------+-----------------------------------------+
 | QuickTime                                                        | -                                           | Will not be wrapped.                    |
 +------------------------------------------------------------------+---------------------------------------------+-----------------------------------------+
@@ -310,7 +310,7 @@ The framework name links to API notes for that framework, the python packages li
 +------------------------------------------------------------------+---------------------------------------------+-----------------------------------------+
 | :doc:`SecurityInterface </apinotes/SecurityInterface>`           | `pyobjc-framework-SecurityInterface`_       |                                         |
 +------------------------------------------------------------------+---------------------------------------------+-----------------------------------------+
-| :doc:`ServerNotification </apinotes/ServerNotification>`         | `pyobjc-framework-ServerNotification`_      |                                         |
+| :doc:`ServerNotification </apinotes/ServerNotification>`         | `pyobjc-framework-ServerNotification`_      | Removed in macOS 10.9                   |
 +------------------------------------------------------------------+---------------------------------------------+-----------------------------------------+
 | :doc:`ServiceManagement </apinotes/ServiceManagement>`           | `pyobjc-framework-ServiceManagement`_       |                                         |
 +------------------------------------------------------------------+---------------------------------------------+-----------------------------------------+
@@ -346,6 +346,8 @@ The framework name links to API notes for that framework, the python packages li
 | :doc:`WebKit </apinotes/WebKit>`                                 | `pyobjc-framework-WebKit`_                  |                                         |
 +------------------------------------------------------------------+---------------------------------------------+-----------------------------------------+
 | :doc:`XgridFoundation </apinotes/XgridFoundation>`               | `pyobjc-framework-XgridFoundation`_         | Not present on OSX 10.8 or later        |
++------------------------------------------------------------------+---------------------------------------------+-----------------------------------------+
+| :doc:`iTunesLibrary </apinotes/iTunesLibrary>`                   | `pyobjc-framework-iTunesLibrary`_           |                                         |
 +------------------------------------------------------------------+---------------------------------------------+-----------------------------------------+
 | vecLib                                                           | -                                           | Will not be wrapped.                    |
 +------------------------------------------------------------------+---------------------------------------------+-----------------------------------------+
@@ -457,3 +459,4 @@ version of PyObjC although there is no explicit roadmap for this.
 .. _`pyobjc-framework-MediaToolbox`: https://pypi.org/project/pyobjc-framework-MediaToolbox/
 .. _`pyobjc-framework-CoreMedia`: https://pypi.org/project/pyobjc-framework-CoreMedia/
 .. _`pyobjc-framework-CoreMediaIO`: https://pypi.org/project/pyobjc-framework-CoreMediaIO/
+.. _`pyobjc-framework-iTunesLibrary`: https://pypi.org/project/pyobjc-framework-iTunesLibrary/
