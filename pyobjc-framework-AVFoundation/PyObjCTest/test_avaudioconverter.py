@@ -2,7 +2,7 @@ from PyObjCTools.TestSupport import *
 
 import AVFoundation
 
-AVAudioConverterInputBlock = b'^{AudioBuffer=LL^v}Io^' + objc._C_NSInteger
+AVAudioConverterInputBlock = b'@Io^' + objc._C_NSInteger
 
 class TestAVAudioConverter (TestCase):
     def testConstants(self):
@@ -37,8 +37,8 @@ class TestAVAudioConverter (TestCase):
         self.assertResultIsBOOL(AVFoundation.AVAudioConverter.convertToBuffer_fromBuffer_error_)
         self.assertArgIsOut(AVFoundation.AVAudioConverter.convertToBuffer_fromBuffer_error_, 2)
 
-        self.self.assertArgIsOut(AVFoundation.AVAudioConverter.convertToBuffer_error_withInputFromBlock_, 1)
-        self.self.assertArgIsBlock(AVFoundation.AVAudioConverter.convertToBuffer_error_withInputFromBlock_, 2, AVAudioConverterInputBlock)
+        self.assertArgIsOut(AVFoundation.AVAudioConverter.convertToBuffer_error_withInputFromBlock_, 1)
+        self.assertArgIsBlock(AVFoundation.AVAudioConverter.convertToBuffer_error_withInputFromBlock_, 2, AVAudioConverterInputBlock)
 
 
 

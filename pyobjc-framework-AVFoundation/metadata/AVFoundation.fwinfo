@@ -16,6 +16,10 @@
    }
   },
   "enum": {
+   "AVSpeechBoundaryImmediate": { "value": 0 },
+   "AVSpeechBoundaryWord": { "value": 1 },
+   "AVSpeechSynthesisVoiceQualityDefault": { "value": 1 },
+   "AVSpeechSynthesisVoiceQualityEnhanced": { "value": 2 },
    "AVErrorNoSourceTrack": { "value": -11869 },
    "AVErrorVideoCompositorFailed": { "value": -11858 },
    "AVAudio3DMixingRenderingAlgorithmEqualPowerPanning": { "value": 0 },
@@ -101,6 +105,86 @@
    "AVAudio3DVector": { "alias": "AVAudio3DPoint" }
   },
   "classes": {
+   "AVDepthData": {
+    "methods": [
+     {
+      "selector": "depthDataFromDictionaryRepresentation:error:",
+      "class_method": false,
+      "args": {
+       "1": { "type_modifier": "o" }
+      }
+     },
+     {
+      "selector": "depthDataByReplacingDepthDataMapWithPixelBuffer:error:",
+      "class_method": false,
+      "args": {
+       "1": { "type_modifier": "o" }
+      }
+     }
+    ]
+   },
+   "AVContentKeyRequest": {
+    "methods": [
+     {
+      "selector": "persistableContentKeyFromKeyVendorResponse:options:error:",
+      "class_method": false,
+      "args": {
+       "2": { "type_modifier": "o" }
+      }
+     },
+     {
+      "selector": "makeStreamingContentKeyRequestDataForApp:contentIdentifier:options:completionHandler:",
+      "class_method": false,
+      "args": {
+       "3": {
+        "callable": {
+	 "retval": { "typestr": "v" },
+	 "arguments": {
+	  "0": { "typestr": "^v" },
+	  "1": { "typestr": "@" },
+	  "2": { "typestr": "@" }
+	 }
+        }
+       }
+      }
+     },
+     {
+      "selector": "respondByRequestingPersistableContentKeyRequestAndReturnError:",
+      "class_method": false,
+      "args": {
+       "0": { "type_modifier": "o" }
+      }
+     }
+    ]
+   },
+   "AVAudioConverter": {
+    "methods": [
+     {
+      "selector": "convertToBuffer:fromBuffer:error:",
+      "class_method": false,
+      "args": {
+       "2": { "type_modifier": "o" }
+      }
+     },
+     {
+      "selector": "convertToBuffer:error:withInputFromBlock:",
+      "class_method": false,
+      "args": {
+       "1": { "type_modifier": "o" },
+       "2": {
+        "callable": {
+	 "retval": { "typestr": "@" },
+	 "arguments": {
+	  "0": { "typestr": "^v" },
+	  "1": { "typestr": "I" },
+	  "2": { "typestr": [ "o^i", "o^q" ] }
+	 }
+        }
+       }
+      }
+     }
+    ]
+   },
    "AVRouteDetector": {
     "methods": [
      {
@@ -508,6 +592,13 @@
     "methods": [
      {
       "args": {
+       "3": { "type_modifier": "o" }
+      },
+      "class_method": false,
+      "selector": "enableManualRenderingMode:format:maximumFrameCount:error:"
+     },
+     {
+      "args": {
        "0": { "type_modifier": "o" }
       },
       "class_method": false,
@@ -748,6 +839,13 @@
       },
       "class_method": false,
       "selector": "initWithURL:settings:error:"
+     },
+     {
+      "args": {
+       "2": { "type_modifier": "o" }
+      },
+      "class_method": false,
+      "selector": "initWithURL:format:error:"
      }
     ]
    },
@@ -1388,6 +1486,15 @@
    },
    "AVMutableMovieTrack": {
     "methods": [
+     {
+      "class_method": false,
+      "args": {
+       "1": { "type_modifier": "o" },
+       "2": { "type_modifier": "o" },
+       "3": { "type_modifier": "o" }
+      },
+      "selector": "appendSampleBuffer:decodeTime:presentationTime:error:"
+     },
      {
       "class_method": false,
       "args": {
@@ -2093,6 +2200,27 @@
    },
    "NSObject": {
     "methods": [
+     {
+      "selector": "speechSynthesizer:willSpeakRangeOfSpeechString:utterance:",
+      "class_method": false,
+      "args": {
+       "1": { "type_override": [ "{_NSRange=II}", "{_NSRange=QQ}" ] }
+      }
+     },
+     {
+      "selector": "requestMediaDataWhenReadyOnQueue:usingBlock:",
+      "class_method": false,
+      "args": {
+       "1": {
+        "callable": {
+	 "retval": { "typestr": "v" },
+	 "arguments": {
+	  "0": { "typestr": "^v" }
+	 }
+	}
+       }
+      }
+     },
      {
       "args": {
        "0": {},

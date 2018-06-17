@@ -33,7 +33,7 @@ class TestAVContentKeySession (TestCase):
         self.assertResultIsBOOL(TestAVContentKeySessionHelper.contentKeySession_shouldRetryContentKeyRequest_reason_)
         self.assertResultIsBOOL(TestAVContentKeySessionHelper.mayRequireContentKeysForMediaDataProcessing)
 
-    @min_sdk_level('10.12.4')
+    @min_os_level('10.12.4')
     def testMethods10_12_4(self):
         self.assertResultIsBOOL(AVFoundation.AVContentKeyRequest.canProvidePersistableContentKey)
         self.assertArgIsBlock(AVFoundation.AVContentKeyRequest.makeStreamingContentKeyRequestDataForApp_contentIdentifier_options_completionHandler_, 3, b'v@@')
@@ -41,9 +41,12 @@ class TestAVContentKeySession (TestCase):
         self.assertResultIsBOOL(AVFoundation.AVContentKeyRequest.respondByRequestingPersistableContentKeyRequestAndReturnError_)
         self.assertArgIsOut(AVFoundation.AVContentKeyRequest.respondByRequestingPersistableContentKeyRequestAndReturnError_, 0)
 
-        self.assertArgIsOut(AVFoundation.AVContentKeyRequest.persistableContentKeyFromKeyVendorResponse_options_error_, 2)
 
         self.assertResultIsBOOL(AVFoundation.AVContentKeyRequest.renewsExpiringResponseData)
+
+    @min_os_level('10.14')
+    def testMethods10_14(self):
+        self.assertArgIsOut(AVFoundation.AVContentKeyRequest.persistableContentKeyFromKeyVendorResponse_options_error_, 2)
 
     @min_sdk_level('10.12.4')
     def testProtocols(self):

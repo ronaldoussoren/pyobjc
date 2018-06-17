@@ -25,7 +25,7 @@ class TestAVAsset (TestCase):
 
     @min_os_level('10.12.4')
     def testMethods10_12_4(self):
-        self.assertResultIsBOOL(AVFoundation.AVAsset.mayRequireContentKeysForMediaDataProcessing)
+        self.assertResultIsBOOL(AVFoundation.AVURLAsset.mayRequireContentKeysForMediaDataProcessing)
 
     @min_os_level('10.7')
     def testConstants(self):

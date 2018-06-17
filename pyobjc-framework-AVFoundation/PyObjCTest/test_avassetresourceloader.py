@@ -35,8 +35,8 @@ class TestAVAssetResourceLoader (TestCase):
     def testMethods10_11(self):
         self.assertResultIsBOOL(AVFoundation.AVAssetResourceLoadingDataRequest.requestsAllDataToEndOfResource)
 
-        self.assertResultIsBOOL(AVFoundation.AVAssetResourceLoadingDataRequest.preloadsEligibleContentKeys)
-        self.assertArgIsBOOL(AVFoundation.AVAssetResourceLoadingDataRequest.setPreloadsEligibleContentKeys_, 0)
+        self.assertResultIsBOOL(AVFoundation.AVAssetResourceLoader.preloadsEligibleContentKeys)
+        self.assertArgIsBOOL(AVFoundation.AVAssetResourceLoader.setPreloadsEligibleContentKeys_, 0)
 
     @min_os_level('10.14')
     def testMethods10_14(self):

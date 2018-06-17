@@ -17,7 +17,6 @@ class TestAVCaptureFileOutput (TestCase):
     def testMethods(self):
         self.assertResultIsBOOL(TestAVCaptureFileOutputHelper.captureOutputShouldProvideSampleAccurateRecordingStart_)
 
-        self.assertResultIsBOOL(AVFoundation.AVCaptureMovieFileOutput.recordsVideoOrientationAndMirroringChangesAsMetadataTrackForConnection_)
 
 if __name__ == "__main__":
     main()
