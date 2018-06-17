@@ -2,7 +2,7 @@ from PyObjCTools.TestSupport import *
 
 import AVFoundation
 
-AVAudioIONodeInputBlock = b'^{AudioBufferList=L[1{AudioBuffer=LL^v}]}' + objc._C_NSInteger
+AVAudioIONodeInputBlock = b'^{AudioBufferList=L[1{AudioBuffer=LL^v}]}I'
 
 
 class TestAVAudioIONode (TestCase):

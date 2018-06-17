@@ -2,7 +2,7 @@ from PyObjCTools.TestSupport import *
 
 import AVFoundation
 
-AVAudioEngineManualRenderingBlock = objc._C_NSInteger + objc._C_NSInteger + b'...' + b'o^@'
+AVAudioEngineManualRenderingBlock = objc._C_NSInteger + b'Io^{AudioBufferList=L[1{AudioBuffer=LL^v}]}o^i'
 
 
 class TestAVAudioEngine (TestCase):
@@ -23,6 +23,7 @@ class TestAVAudioEngine (TestCase):
 
         self.assertResultIsBOOL(AVFoundation.AVAudioEngine.isInManualRenderingMode)
 
+        # XXX: This almost certainly requires a manual wrapper to use correctly...
         self.assertResultIsBlock(AVFoundation.AVAudioEngine.manualRenderingBlock, AVAudioEngineManualRenderingBlock)
 
     @min_os_level('10.10')

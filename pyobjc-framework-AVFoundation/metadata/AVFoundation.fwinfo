@@ -108,6 +108,13 @@
    "AVDepthData": {
     "methods": [
      {
+      "selector": "dictionaryRepresentationForAuxiliaryDataType:",
+      "class_method": false,
+      "args": {
+       "0": { "type_modifier": "o" }
+      }
+     },
+     {
       "selector": "depthDataFromDictionaryRepresentation:error:",
       "class_method": false,
       "args": {
@@ -591,6 +598,28 @@
    "AVAudioEngine": {
     "methods": [
      {
+      "selector": "manualRenderingBlock",
+      "class_method": false,
+      "retval": {
+       "callable": {
+        "retval": { "typestr": [ "i", "q" ] },
+	"arguments": {
+	 "0": { "typestr": "^v" },
+	 "1": { "typestr": "I" },
+	 "2": { "typestr": "o^{AudioBufferList=L[1{AudioBuffer=LL^v}]}" },
+	 "3": { "typestr": "o^i" }
+	}
+       }
+      }
+     },
+     {
+      "args": {
+       "2": { "type_modifier": "o" }
+      },
+      "class_method": false,
+      "selector": "renderOffline:toBuffer:error:"
+     },
+     {
       "args": {
        "3": { "type_modifier": "o" }
       },
@@ -708,6 +737,44 @@
        "readonly"
       ],
       "name": "streamDescription"
+     }
+    ]
+   },
+   "AVSampleBufferAudioRenderer": {
+    "methods": [
+     {
+      "selector": "flushFromSourceTime:completionHandler:",
+      "class_method": false,
+      "args": {
+       "1": {
+        "callable": {
+	 "retval": { "typestr": "v" },
+	 "arguments": {
+	  "0": { "typestr": "^v" },
+	  "1": { "typestr": "Z" }
+	 }
+	}
+       }
+      }
+     }
+    ]
+   },
+   "AVAudioInputNode": {
+    "methods": [
+     {
+      "selector": "setManualRenderingInputPCMFormat:inputBlock:",
+      "class_method": false,
+      "args": {
+       "1": {
+        "callable": {
+	 "retval": { "typestr": "^{AudioBufferList=L[1{AudioBuffer=LL^v}]}" },
+	 "arguments": {
+	  "0": { "typestr": "^v" },
+	  "1": { "typestr": "I" }
+	 }
+	}
+       }
+      }
      }
     ]
    },
@@ -1818,10 +1885,10 @@
     "methods": [
      {
       "args": {
-       "1": {}
+       "1": { "type_modifier": "o" }
       },
       "class_method": false,
-      "retval": {},
+      "retval": { "already_cfretained": true },
       "selector": "copyPixelBufferForItemTime:itemTimeForDisplay:"
      },
      {
@@ -1844,6 +1911,39 @@
        "readonly"
       ],
       "name": "delegateQueue"
+     }
+    ]
+   },
+   "AVSampleBufferRenderSynchronizer": {
+    "methods": [
+     {
+      "args": {
+       "2": {
+        "callable": {
+	 "arguments": {
+	  "0": { "typestr": "^v" }
+	 },
+	 "retval": { "typestr": "v" }
+	}
+       }
+      },
+      "class_method": false,
+      "selector": "addBoundaryTimeObserverForTimes:queue:usingBlock:"
+     },
+     {
+      "args": {
+       "2": {
+        "callable": {
+	 "arguments": {
+	  "0": { "typestr": "^v" },
+	  "1": { "typestr": "{_CMTime=qiIq}" }
+	 },
+	 "retval": { "typestr": "v" }
+	}
+       }
+      },
+      "class_method": false,
+      "selector": "addPeriodicTimeObserverForInterval:queue:usingBlock:"
      }
     ]
    },
@@ -2132,6 +2232,66 @@
    },
    "AVAudioPlayerNode": {
     "methods": [
+     {
+      "selector": "scheduleSegment:startingFrame:frameCount:atTime:completionCallbackType:completionHandler:",
+      "class_method": false,
+      "args": {
+       "5": {
+        "callable": {
+	 "arguments": {
+	  "0": { "typestr": "^v" },
+	  "1": { "typestr": [ "i", "q" ] }
+	 },
+	 "retval": { "typestr": "v" }
+	}
+       }
+      }
+     },
+     {
+      "selector": "scheduleFile:atTime:completionCallbackType:completionHandler:",
+      "class_method": false,
+      "args": {
+       "3": {
+        "callable": {
+	 "arguments": {
+	  "0": { "typestr": "^v" },
+	  "1": { "typestr": [ "i", "q" ] }
+	 },
+	 "retval": { "typestr": "v" }
+	}
+       }
+      }
+     },
+     {
+      "selector": "scheduleBuffer:atTime:options:completionCallbackType:completionHandler:",
+      "class_method": false,
+      "args": {
+       "4": {
+        "callable": {
+	 "arguments": {
+	  "0": { "typestr": "^v" },
+	  "1": { "typestr": [ "i", "q" ] }
+	 },
+	 "retval": { "typestr": "v" }
+	}
+       }
+      }
+     },
+     {
+      "selector": "scheduleBuffer:completionCallbackType:completionHandler:",
+      "class_method": false,
+      "args": {
+       "2": {
+        "callable": {
+	 "arguments": {
+	  "0": { "typestr": "^v" },
+	  "1": { "typestr": [ "i", "q" ] }
+	 },
+	 "retval": { "typestr": "v" }
+	}
+       }
+      }
+     },
      {
       "args": {
        "1": {

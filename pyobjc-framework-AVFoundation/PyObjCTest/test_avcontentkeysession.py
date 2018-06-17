@@ -42,11 +42,12 @@ class TestAVContentKeySession (TestCase):
         self.assertArgIsOut(AVFoundation.AVContentKeyRequest.respondByRequestingPersistableContentKeyRequestAndReturnError_, 0)
 
 
-        self.assertResultIsBOOL(AVFoundation.AVContentKeyRequest.renewsExpiringResponseData)
 
     @min_os_level('10.14')
     def testMethods10_14(self):
+        # Both are document 10.12.4 and up, but tests fail on 10.13?
         self.assertArgIsOut(AVFoundation.AVContentKeyRequest.persistableContentKeyFromKeyVendorResponse_options_error_, 2)
+        self.assertResultIsBOOL(AVFoundation.AVContentKeyRequest.renewsExpiringResponseData)
 
     @min_sdk_level('10.12.4')
     def testProtocols(self):

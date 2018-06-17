@@ -26,7 +26,7 @@ class TestAVAudioPlayerNode (TestCase):
     @min_os_level('10.13')
     def testMethods10_13(self):
         self.assertArgIsBlock(AVFoundation.AVAudioPlayerNode.scheduleBuffer_completionCallbackType_completionHandler_, 2, AVAudioPlayerNodeCompletionHandler)
-        self.assertArgIsBlock(AVFoundation.AVAudioPlayerNode.scheduleBuffer_atTime_options_completionCallbackType_completionHandler_, 3, AVAudioPlayerNodeCompletionHandler)
+        self.assertArgIsBlock(AVFoundation.AVAudioPlayerNode.scheduleBuffer_atTime_options_completionCallbackType_completionHandler_, 4, AVAudioPlayerNodeCompletionHandler)
         self.assertArgIsBlock(AVFoundation.AVAudioPlayerNode.scheduleFile_atTime_completionCallbackType_completionHandler_, 3, AVAudioPlayerNodeCompletionHandler)
         self.assertArgIsBlock(AVFoundation.AVAudioPlayerNode.scheduleSegment_startingFrame_frameCount_atTime_completionCallbackType_completionHandler_, 5, AVAudioPlayerNodeCompletionHandler)
 
