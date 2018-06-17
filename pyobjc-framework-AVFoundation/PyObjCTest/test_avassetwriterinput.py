@@ -26,5 +26,10 @@ class TestAVAssetWriterInput (TestCase):
         self.assertResultIsBOOL(AVFoundation.AVAssetWriterInput.appendSampleBuffer_)
         self.assertResultIsBOOL(AVFoundation.AVAssetWriterInputPixelBufferAdaptor.appendPixelBuffer_withPresentationTime_)
 
+    @min_os_level('10.13')
+    def testConstants10_13(self):
+        self.assertIsInstance(AVFoundation.AVAssetWriterInputMediaDataLocationInterleavedWithMainMediaData, unicode)
+        self.assertIsInstance(AVFoundation.AVAssetWriterInputMediaDataLocationBeforeMainMediaDataNotInterleaved, unicode)
+
 if __name__ == "__main__":
     main()

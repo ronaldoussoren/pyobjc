@@ -33,4 +33,10 @@ static void __attribute__((__used__)) use_protocols(void)
 #if PyObjC_BUILD_RELEASE >= 1011
     p = PyObjC_IdToPython(@protocol(AVFragmentMinding)); Py_XDECREF(p);
 #endif
+#if PyObjC_BUILD_RELEASE >= 1013
+    p = PyObjC_IdToPython(@protocol(AVQueuedSampleBufferRendering)); Py_XDECREF(p);
+#endif
+#if PyObjC_BUILD_RELEASE >= 1014
+    p = PyObjC_IdToPython(@protocol(AVSpeechSynthesizerDelegate)); Py_XDECREF(p);
+#endif
 }

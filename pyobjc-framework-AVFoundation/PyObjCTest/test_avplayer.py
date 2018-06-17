@@ -4,7 +4,6 @@ import AVFoundation
 
 
 class TestAVPlayer (TestCase):
-    @min_os_level('10.7')
     def testConstants(self):
         self.assertEqual(AVFoundation.AVPlayerStatusUnknown, 0)
         self.assertEqual(AVFoundation.AVPlayerStatusReadyToPlay, 1)
@@ -13,6 +12,21 @@ class TestAVPlayer (TestCase):
         self.assertEqual(AVFoundation.AVPlayerActionAtItemEndAdvance, 0)
         self.assertEqual(AVFoundation.AVPlayerActionAtItemEndPause, 1)
         self.assertEqual(AVFoundation.AVPlayerActionAtItemEndNone, 2)
+
+        self.assertEqual(AVFoundation.AVPlayerTimeControlStatusPaused, 0)
+        self.assertEqual(AVFoundation.AVPlayerTimeControlStatusWaitingToPlayAtSpecifiedRate, 1)
+        self.assertEqual(AVFoundation.AVPlayerTimeControlStatusPlaying, 2)
+
+        self.assertEqual(AVFoundation.AVPlayerHDRModeHLG, 0x1)
+        self.assertEqual(AVFoundation.AVPlayerHDRModeHDR10, 0x2)
+        self.assertEqual(AVFoundation.AVPlayerHDRModeDolbyVision, 0x4)
+
+    @min_os_level('10.12')
+    def testConstants10_12(self):
+        self.assertIsInstance(AVFoundation.AVPlayerWaitingToMinimizeStallsReason, unicode)
+        self.assertIsInstance(AVFoundation.AVPlayerWaitingWhileEvaluatingBufferingRateReason, unicode)
+        self.assertIsInstance(AVFoundation.AVPlayerWaitingWithNoItemToPlayReason, unicode)
+
 
 
     @min_os_level('10.7')
@@ -40,6 +54,18 @@ class TestAVPlayer (TestCase):
         self.assertResultIsBOOL(AVFoundation.AVPlayer.allowsExternalPlayback)
         self.assertArgIsBOOL(AVFoundation.AVPlayer.setAllowsExternalPlayback_, 0)
         self.assertResultIsBOOL(AVFoundation.AVPlayer.isExternalPlaybackActive)
+
+    @min_os_level('10.12')
+    def testMethods10_12(self):
+        self.assertResultIsBOOL(AVFoundation.AVPlayer.automaticallyWaitsToMinimizeStalling)
+        self.assertArgIsBOOL(AVFoundation.AVPlayer.setAutomaticallyWaitsToMinimizeStalling_, 0)
+
+        self.assertResultIsBOOL(AVFoundation.AVPlayer.outputObscuredDueToInsufficientExternalProtection)
+
+    @min_os_level('10.14')
+    def testMethods10_14(self):
+        self.assertResultIsBOOL(AVFoundation.AVPlayer.preventsDisplaySleepDuringVideoPlayback)
+        self.assertArgIsBOOL(AVFoundation.AVPlayer.setPreventsDisplaySleepDuringVideoPlayback_, 0)
 
 if __name__ == "__main__":
     main()

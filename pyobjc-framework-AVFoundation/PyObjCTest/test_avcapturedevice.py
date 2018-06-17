@@ -47,6 +47,12 @@ class TestAVCaptureDevice (TestCase):
         self.assertEqual(AVFoundation.AVCaptureDeviceTransportControlsNotPlayingMode, 0)
         self.assertEqual(AVFoundation.AVCaptureDeviceTransportControlsPlayingMode, 1)
 
+        self.assertEqual(AVFoundation.AVAuthorizationStatusNotDetermined, 0)
+        self.assertEqual(AVFoundation.AVAuthorizationStatusRestricted, 1)
+        self.assertEqual(AVFoundation.AVAuthorizationStatusDenied, 2)
+        self.assertEqual(AVFoundation.AVAuthorizationStatusAuthorized, 3)
+
+
     @min_os_level('10.7')
     def testMethods(self):
         self.assertResultIsBOOL(AVFoundation.AVCaptureDevice.hasMediaType_)
@@ -72,6 +78,9 @@ class TestAVCaptureDevice (TestCase):
         self.assertResultIsBOOL(AVFoundation.AVCaptureDevice.isAdjustingWhiteBalance)
         self.assertResultIsBOOL(AVFoundation.AVCaptureDevice.transportControlsSupported)
 
+    @min_os_level('10.14')
+    def testMethods10_14(self):
+        self.assertArgIsBlock(AVFoundation.AVCaptureDevice.requestAccessForMediaType_completionHandler_, 1, b'vZ')
 
 if __name__ == "__main__":
     main()

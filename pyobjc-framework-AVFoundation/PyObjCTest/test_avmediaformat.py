@@ -55,6 +55,19 @@ class TestAVMediaFormat (TestCase):
         self.assertIsInstance(AVFoundation.AVStreamingKeyDeliveryContentKeyType, unicode)
         self.assertIsInstance(AVFoundation.AVStreamingKeyDeliveryPersistentContentKeyType, unicode)
 
+    @min_os_level('10.12')
+    def testConstants10_12(self):
+        self.assertIsInstance(AVFoundation.AVMediaCharacteristicUsesWideGamutColorSpace, unicode)
+
+    @min_os_level('10.13')
+    def testConstants10_13(self):
+        self.assertIsInstance(AVFoundation.AVMediaTypeDepthData, unicode)
+        self.assertIsInstance(AVFoundation.AVFileTypeJPEG, unicode)
+        self.assertIsInstance(AVFoundation.AVFileTypeDNG, unicode)
+        self.assertIsInstance(AVFoundation.AVFileTypeHEIC, unicode)
+        self.assertIsInstance(AVFoundation.AVFileTypeAVCI, unicode)
+        self.assertIsInstance(AVFoundation.AVFileTypeHEIF, unicode)
+        self.assertIsInstance(AVFoundation.AVFileTypeTIFF, unicode)
 
 if __name__ == "__main__":
     main()

@@ -12,6 +12,7 @@ class TestAVSampleBufferGenerator (TestCase):
         self.assertEqual(AVFoundation.AVSampleBufferRequestDirectionForward, +1)
         self.assertEqual(AVFoundation.AVSampleBufferRequestDirectionNone, 0)
         self.assertEqual(AVFoundation.AVSampleBufferRequestDirectionReverse, -1)
+
         self.assertEqual(AVFoundation.AVSampleBufferRequestModeImmediate, 0)
         self.assertEqual(AVFoundation.AVSampleBufferRequestModeScheduled, 1)
 

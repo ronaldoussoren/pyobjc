@@ -21,6 +21,10 @@ class TestAVAudioPlayer (TestCase):
 
         self.assertArgIsBOOL(TestAVAudioPlayerHelper.audioPlayerDidFinishPlaying_successfully_, 1)
 
+    @min_sdk_level('10.13')
+    def testProtocols(self):
+        objc.protocolNamed('AVAudioPlayerDelegate')
+
     @min_os_level('10.8')
     def testMethods10_8(self):
         self.assertResultIsBOOL(AVFoundation.AVAudioPlayer.enableRate)

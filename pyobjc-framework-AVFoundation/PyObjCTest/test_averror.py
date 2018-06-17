@@ -18,7 +18,7 @@ class TestAVError (TestCase):
 
         self.assertIsInstance(AVFoundation.AVErrorDiscontinuityFlagsKey, unicode)
 
-        self.assertEqual(AVFoundation.AVErrorNoSourceTrack, -11869)
+
         self.assertEqual(AVFoundation.AVErrorUnknown, -11800)
         self.assertEqual(AVFoundation.AVErrorOutOfMemory, -11801)
         self.assertEqual(AVFoundation.AVErrorSessionNotRunning, -11803)
@@ -35,14 +35,13 @@ class TestAVError (TestCase):
         self.assertEqual(AVFoundation.AVErrorDeviceNotConnected, -11814)
         self.assertEqual(AVFoundation.AVErrorDeviceInUseByAnotherApplication, -11815)
         self.assertEqual(AVFoundation.AVErrorDeviceLockedForConfigurationByAnotherProcess, -11817)
-
         self.assertEqual(AVFoundation.AVErrorExportFailed, -11820)
         self.assertEqual(AVFoundation.AVErrorDecodeFailed, -11821)
         self.assertEqual(AVFoundation.AVErrorInvalidSourceMedia, -11822)
         self.assertEqual(AVFoundation.AVErrorFileAlreadyExists, -11823)
         self.assertEqual(AVFoundation.AVErrorCompositionTrackSegmentsNotContiguous, -11824)
         self.assertEqual(AVFoundation.AVErrorInvalidCompositionTrackSegmentDuration, -11825)
-        self.assertEqual(AVFoundation.AVErrorInvalidCompositionTrackSegmentSourceStartTime, -11826)
+        self.assertEqual(AVFoundation.AVErrorInvalidCompositionTrackSegmentSourceStartTime= -11826)
         self.assertEqual(AVFoundation.AVErrorInvalidCompositionTrackSegmentSourceDuration, -11827)
         self.assertEqual(AVFoundation.AVErrorFileFormatNotRecognized, -11828)
         self.assertEqual(AVFoundation.AVErrorFileFailedToParse, -11829)
@@ -54,7 +53,6 @@ class TestAVError (TestCase):
         self.assertEqual(AVFoundation.AVErrorContentIsNotAuthorized, -11835)
         self.assertEqual(AVFoundation.AVErrorApplicationIsNotAuthorized, -11836)
         self.assertEqual(AVFoundation.AVErrorOperationNotSupportedForAsset, -11838)
-
         self.assertEqual(AVFoundation.AVErrorDecoderTemporarilyUnavailable, -11839)
         self.assertEqual(AVFoundation.AVErrorEncoderTemporarilyUnavailable, -11840)
         self.assertEqual(AVFoundation.AVErrorInvalidVideoComposition, -11841)
@@ -63,7 +61,6 @@ class TestAVError (TestCase):
         self.assertEqual(AVFoundation.AVErrorScreenCaptureFailed, -11844)
         self.assertEqual(AVFoundation.AVErrorDisplayWasDisabled, -11845)
         self.assertEqual(AVFoundation.AVErrorTorchLevelUnavailable, -11846)
-
         self.assertEqual(AVFoundation.AVErrorIncompatibleAsset, -11848)
         self.assertEqual(AVFoundation.AVErrorFailedToLoadMediaData, -11849)
         self.assertEqual(AVFoundation.AVErrorServerIncorrectlyConfigured, -11850)
@@ -74,6 +71,17 @@ class TestAVError (TestCase):
         self.assertEqual(AVFoundation.AVErrorAirPlayControllerRequiresInternet, -11856)
         self.assertEqual(AVFoundation.AVErrorAirPlayReceiverRequiresInternet, -11857)
         self.assertEqual(AVFoundation.AVErrorVideoCompositorFailed, -11858)
+        self.assertEqual(AVFoundation.AVErrorCreateContentKeyRequestFailed, -11860)
+        self.assertEqual(AVFoundation.AVErrorUnsupportedOutputSettings, -11861)
+        self.assertEqual(AVFoundation.AVErrorOperationNotAllowed, -11862)
+        self.assertEqual(AVFoundation.AVErrorContentIsUnavailable, -11863)
+        self.assertEqual(AVFoundation.AVErrorFormatUnsupported, -11864)
+        self.assertEqual(AVFoundation.AVErrorMalformedDepth, -11865)
+        self.assertEqual(AVFoundation.AVErrorContentNotUpdated, -11866)
+        self.assertEqual(AVFoundation.AVErrorNoLongerPlayable	, -11867)
+        self.assertEqual(AVFoundation.AVErrorNoCompatibleAlternatesForExternalDisplay, -11868)
+        self.assertEqual(AVFoundation.AVErrorNoSourceTrack, -11869)
+        self.assertEqual(AVFoundation.AVErrorExternalPlaybackNotSupportedForAsset, -11870)
 
     @min_os_level('10.10')
     def testConstants10_10(self):

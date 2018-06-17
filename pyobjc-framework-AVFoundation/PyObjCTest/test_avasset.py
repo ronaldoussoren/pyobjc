@@ -23,6 +23,10 @@ class TestAVAsset (TestCase):
         self.assertResultIsBOOL(AVFoundation.AVAsset.containsFragments)
         self.assertResultIsBOOL(AVFoundation.AVAsset.isCompatibleWithAirPlayVideo)
 
+    @min_os_level('10.12.4')
+    def testMethods10_12.4(self):
+        self.assertResultIsBOOL(AVFoundation.AVAsset.mayRequireContentKeysForMediaDataProcessing)
+
     @min_os_level('10.7')
     def testConstants(self):
         self.assertEqual(AVFoundation.AVAssetReferenceRestrictionForbidNone, 0)

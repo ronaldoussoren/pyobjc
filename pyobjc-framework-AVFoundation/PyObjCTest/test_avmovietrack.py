@@ -18,6 +18,15 @@ class TestAVMovieTrack (TestCase):
         self.assertArgIsBOOL(AVFoundation.AVMutableMovieTrack.insertTimeRange_ofTrack_atTime_copySampleData_error_, 3)
         self.assertArgIsOut(AVFoundation.AVMutableMovieTrack.insertTimeRange_ofTrack_atTime_copySampleData_error_, 4)
 
+    @min_os_level('10.12')
+    def testMethods10_12(self):
+        self.assertResultIsBOOL(AVFoundation.AVMutableMovieTrack.appendSampleBuffer_decodeTime_presentationTime_error_)
+        self.assertArgIsOut(AVFoundation.AVMutableMovieTrack.appendSampleBuffer_decodeTime_presentationTime_error_, 1)
+        self.assertArgIsOut(AVFoundation.AVMutableMovieTrack.appendSampleBuffer_decodeTime_presentationTime_error_, 2)
+        self.assertArgIsOut(AVFoundation.AVMutableMovieTrack.appendSampleBuffer_decodeTime_presentationTime_error_, 3)
+
+        self.assertResultIsBOOL(AVFoundation.AVMutableMovieTrack.insertMediaTimeRange_intoTimeRange_)
+
     @min_os_level('10.10')
     def testConstants10_10(self):
         self.assertIsInstance(AVFoundation.AVFragmentedMovieTrackTimeRangeDidChangeNotification, unicode)
