@@ -66,7 +66,7 @@ The framework name links to API notes for that framework, the python packages li
 +------------------------------------------------------------------+---------------------------------------------+-----------------------------------------+
 | :doc:`ContactsUI </apinotes/ContactsUI>`                         | `pyobjc-framework-ContactsUI`_              |                                         |
 +------------------------------------------------------------------+---------------------------------------------+-----------------------------------------+
-| CoreAudio                                                        | -                                           | Not yet wrapped                         |
+| :doc:`CoreAudio </apinotes/CoreAudio>`                           | `pyobjc-framework-CoreAudio`_               |                                         |
 +------------------------------------------------------------------+---------------------------------------------+-----------------------------------------+
 | CoreAudioKit                                                     | -                                           | Not yet wrapped                         |
 +------------------------------------------------------------------+---------------------------------------------+-----------------------------------------+
@@ -463,3 +463,4 @@ version of PyObjC although there is no explicit roadmap for this.
 .. _`pyobjc-framework-CoreMediaIO`: https://pypi.org/project/pyobjc-framework-CoreMediaIO/
 .. _`pyobjc-framework-iTunesLibrary`: https://pypi.org/project/pyobjc-framework-iTunesLibrary/
 .. _`pyobjc-framework-OSAKit`: https://pypi.org/project/pyobjc-framework-OSAKit/
+.. _`pyobjc-framework-CoreAudio`: https://pypi.org/project/pyobjc-framework-CoreAudio/

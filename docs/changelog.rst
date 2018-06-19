@@ -13,6 +13,7 @@ Version 5.0
   new frameworks:
 
   - AdSupport
+  - CoreAudio (new in macOS 10.3)
   - CoreMedia (new in macOS 10.7)
   - CoreMediaIO (new in macOS 10.7)
   - MediaToolbox

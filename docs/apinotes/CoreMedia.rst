@@ -34,7 +34,7 @@ The argument *customBlockSource* must be ``None``.  Please file an issue if you 
 for a custom block source.
 
 ``CMBlockBufferAppendMemoryBlock``
-.................................
+..................................
 
 The argument *customBlockSource* must be ``None``.  Please file an issue if you a usecase
 for a custom block source.

@@ -42,6 +42,7 @@ FRAMEWORK_WRAPPERS=[
         ('ColorSync',               '10.13',            None        ),
         ('Contacts',                '10.11',            None        ),
         ('ContactsUI',              '10.11',            None        ),
+        ('CoreAudio',               None,               None        ),
         ('CoreBluetooth',           '10.10',            None        ),
         ('CoreData',                None,               None        ),
         ('CoreLocation',            '10.6',             None        ),

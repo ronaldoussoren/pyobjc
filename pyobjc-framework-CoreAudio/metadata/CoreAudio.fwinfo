@@ -1,0 +1,489 @@
+// objective.metadata exceptions file, see its document
+// for information on how to update this file.
+{
+ "definitions": {
+  "classes": {}, 
+  "formal_protocols": {}, 
+  "functions": {
+   "AudioDeviceAddIOProc": {
+    "args": {
+     "1": {
+      "function": {
+       "args": [
+        {
+         "typestr": "I"
+        }, 
+        {
+         "typestr": "^{AudioTimeStamp=dQdQ{SMPTETime=ssIIIssss}II}"
+        }, 
+        {
+         "typestr": "^{AudioBufferList=I[1{AudioBuffer=II^v}]}"
+        }, 
+        {
+         "typestr": "^{AudioTimeStamp=dQdQ{SMPTETime=ssIIIssss}II}"
+        }, 
+        {
+         "typestr": "^{AudioBufferList=I[1{AudioBuffer=II^v}]}"
+        }, 
+        {
+         "typestr": "^{AudioTimeStamp=dQdQ{SMPTETime=ssIIIssss}II}"
+        }, 
+        {
+         "typestr": "^v"
+        }
+       ], 
+       "retval": {
+        "typestr": "i"
+       }
+      }
+     }, 
+     "2": {}
+    }
+   }, 
+   "AudioDeviceAddPropertyListener": {
+    "args": {
+     "4": {
+      "function": {
+       "args": [
+        {
+         "typestr": "I"
+        }, 
+        {
+         "typestr": "I"
+        }, 
+        {
+         "typestr": "Z"
+        }, 
+        {
+         "typestr": "I"
+        }, 
+        {
+         "typestr": "^v"
+        }
+       ], 
+       "retval": {
+        "typestr": "i"
+       }
+      }
+     }, 
+     "5": {}
+    }
+   }, 
+   "AudioDeviceCreateIOProcID": {
+    "args": {
+     "1": {
+      "function": {
+       "args": [
+        {
+         "typestr": "I"
+        }, 
+        {
+         "typestr": "^{AudioTimeStamp=dQdQ{SMPTETime=ssIIIssss}II}"
+        }, 
+        {
+         "typestr": "^{AudioBufferList=I[1{AudioBuffer=II^v}]}"
+        }, 
+        {
+         "typestr": "^{AudioTimeStamp=dQdQ{SMPTETime=ssIIIssss}II}"
+        }, 
+        {
+         "typestr": "^{AudioBufferList=I[1{AudioBuffer=II^v}]}"
+        }, 
+        {
+         "typestr": "^{AudioTimeStamp=dQdQ{SMPTETime=ssIIIssss}II}"
+        }, 
+        {
+         "typestr": "^v"
+        }
+       ], 
+       "retval": {
+        "typestr": "i"
+       }
+      }
+     }, 
+     "2": {}, 
+     "3": {}
+    }
+   }, 
+   "AudioDeviceCreateIOProcIDWithBlock": {
+    "args": {
+     "0": {}
+    }
+   }, 
+   "AudioDeviceDestroyIOProcID": {
+    "args": {
+     "1": {}
+    }
+   }, 
+   "AudioDeviceGetCurrentTime": {
+    "args": {
+     "1": {}
+    }
+   }, 
+   "AudioDeviceGetNearestStartTime": {
+    "args": {
+     "1": {}
+    }
+   }, 
+   "AudioDeviceGetProperty": {
+    "args": {
+     "4": {}, 
+     "5": {}
+    }
+   }, 
+   "AudioDeviceGetPropertyInfo": {
+    "args": {
+     "4": {}, 
+     "5": {}
+    }
+   }, 
+   "AudioDeviceRead": {
+    "args": {
+     "1": {}, 
+     "2": {}
+    }
+   }, 
+   "AudioDeviceRemoveIOProc": {
+    "args": {
+     "1": {
+      "function": {
+       "args": [
+        {
+         "typestr": "I"
+        }, 
+        {
+         "typestr": "^{AudioTimeStamp=dQdQ{SMPTETime=ssIIIssss}II}"
+        }, 
+        {
+         "typestr": "^{AudioBufferList=I[1{AudioBuffer=II^v}]}"
+        }, 
+        {
+         "typestr": "^{AudioTimeStamp=dQdQ{SMPTETime=ssIIIssss}II}"
+        }, 
+        {
+         "typestr": "^{AudioBufferList=I[1{AudioBuffer=II^v}]}"
+        }, 
+        {
+         "typestr": "^{AudioTimeStamp=dQdQ{SMPTETime=ssIIIssss}II}"
+        }, 
+        {
+         "typestr": "^v"
+        }
+       ], 
+       "retval": {
+        "typestr": "i"
+       }
+      }
+     }
+    }
+   }, 
+   "AudioDeviceRemovePropertyListener": {
+    "args": {
+     "4": {
+      "function": {
+       "args": [
+        {
+         "typestr": "I"
+        }, 
+        {
+         "typestr": "I"
+        }, 
+        {
+         "typestr": "Z"
+        }, 
+        {
+         "typestr": "I"
+        }, 
+        {
+         "typestr": "^v"
+        }
+       ], 
+       "retval": {
+        "typestr": "i"
+       }
+      }
+     }
+    }
+   }, 
+   "AudioDeviceSetProperty": {
+    "args": {
+     "1": {}, 
+     "6": {}
+    }
+   }, 
+   "AudioDeviceStart": {
+    "args": {
+     "1": {}
+    }
+   }, 
+   "AudioDeviceStartAtTime": {
+    "args": {
+     "1": {}, 
+     "2": {}
+    }
+   }, 
+   "AudioDeviceStop": {
+    "args": {
+     "1": {}
+    }
+   }, 
+   "AudioDeviceTranslateTime": {
+    "args": {
+     "1": {}, 
+     "2": {}
+    }
+   }, 
+   "AudioGetCurrentHostTime": {
+    "variadic": true
+   }, 
+   "AudioGetHostClockFrequency": {
+    "variadic": true
+   }, 
+   "AudioGetHostClockMinimumTimeDelta": {
+    "variadic": true
+   }, 
+   "AudioHardwareAddPropertyListener": {
+    "args": {
+     "1": {
+      "function": {
+       "args": [
+        {
+         "typestr": "I"
+        }, 
+        {
+         "typestr": "^v"
+        }
+       ], 
+       "retval": {
+        "typestr": "i"
+       }
+      }
+     }, 
+     "2": {}
+    }
+   }, 
+   "AudioHardwareAddRunLoopSource": {
+    "args": {
+     "0": {}
+    }
+   }, 
+   "AudioHardwareCreateAggregateDevice": {
+    "args": {
+     "0": {}, 
+     "1": {}
+    }
+   }, 
+   "AudioHardwareGetProperty": {
+    "args": {
+     "1": {}, 
+     "2": {}
+    }
+   }, 
+   "AudioHardwareGetPropertyInfo": {
+    "args": {
+     "1": {}, 
+     "2": {}
+    }
+   }, 
+   "AudioHardwareRemovePropertyListener": {
+    "args": {
+     "1": {
+      "function": {
+       "args": [
+        {
+         "typestr": "I"
+        }, 
+        {
+         "typestr": "^v"
+        }
+       ], 
+       "retval": {
+        "typestr": "i"
+       }
+      }
+     }
+    }
+   }, 
+   "AudioHardwareRemoveRunLoopSource": {
+    "args": {
+     "0": {}
+    }
+   }, 
+   "AudioHardwareSetProperty": {
+    "args": {
+     "2": {}
+    }
+   }, 
+   "AudioHardwareUnload": {
+    "variadic": true
+   }, 
+   "AudioObjectAddPropertyListener": {
+    "args": {
+     "1": {}, 
+     "2": {
+      "function": {
+       "args": [
+        {
+         "typestr": "I"
+        }, 
+        {
+         "typestr": "I"
+        }, 
+        {
+         "typestr": "^{AudioObjectPropertyAddress=III}"
+        }, 
+        {
+         "typestr": "^v"
+        }
+       ], 
+       "retval": {
+        "typestr": "i"
+       }
+      }
+     }, 
+     "3": {}
+    }
+   }, 
+   "AudioObjectAddPropertyListenerBlock": {
+    "args": {
+     "1": {}
+    }
+   }, 
+   "AudioObjectGetPropertyData": {
+    "args": {
+     "1": {}, 
+     "3": {}, 
+     "4": {}, 
+     "5": {}
+    }
+   }, 
+   "AudioObjectGetPropertyDataSize": {
+    "args": {
+     "1": {}, 
+     "3": {}, 
+     "4": {}
+    }
+   }, 
+   "AudioObjectHasProperty": {
+    "args": {
+     "1": {}
+    }
+   }, 
+   "AudioObjectIsPropertySettable": {
+    "args": {
+     "1": {}, 
+     "2": {}
+    }
+   }, 
+   "AudioObjectRemovePropertyListener": {
+    "args": {
+     "1": {}, 
+     "2": {
+      "function": {
+       "args": [
+        {
+         "typestr": "I"
+        }, 
+        {
+         "typestr": "I"
+        }, 
+        {
+         "typestr": "^{AudioObjectPropertyAddress=III}"
+        }, 
+        {
+         "typestr": "^v"
+        }
+       ], 
+       "retval": {
+        "typestr": "i"
+       }
+      }
+     }, 
+     "3": {}
+    }
+   }, 
+   "AudioObjectRemovePropertyListenerBlock": {
+    "args": {
+     "1": {}
+    }
+   }, 
+   "AudioObjectSetPropertyData": {
+    "args": {
+     "1": {}, 
+     "3": {}, 
+     "5": {}
+    }
+   }, 
+   "AudioStreamAddPropertyListener": {
+    "args": {
+     "3": {
+      "function": {
+       "args": [
+        {
+         "typestr": "I"
+        }, 
+        {
+         "typestr": "I"
+        }, 
+        {
+         "typestr": "I"
+        }, 
+        {
+         "typestr": "^v"
+        }
+       ], 
+       "retval": {
+        "typestr": "i"
+       }
+      }
+     }, 
+     "4": {}
+    }
+   }, 
+   "AudioStreamGetProperty": {
+    "args": {
+     "3": {}, 
+     "4": {}
+    }
+   }, 
+   "AudioStreamGetPropertyInfo": {
+    "args": {
+     "3": {}, 
+     "4": {}
+    }
+   }, 
+   "AudioStreamRemovePropertyListener": {
+    "args": {
+     "3": {
+      "function": {
+       "args": [
+        {
+         "typestr": "I"
+        }, 
+        {
+         "typestr": "I"
+        }, 
+        {
+         "typestr": "I"
+        }, 
+        {
+         "typestr": "^v"
+        }
+       ], 
+       "retval": {
+        "typestr": "i"
+       }
+      }
+     }
+    }
+   }, 
+   "AudioStreamSetProperty": {
+    "args": {
+     "1": {}, 
+     "5": {}
+    }
+   }
+  }, 
+  "informal_protocols": {}
+ }
+}
