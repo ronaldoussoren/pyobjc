@@ -263,6 +263,11 @@ for objects.
 Utilities
 ---------
 
+.. function:: macos_available(major, minor, patch=0) 
+
+   Returns true iff the current macOS version is at least the version
+   specified. Use this like the "@available" construct in Objective-C.
+
 .. function:: allocateBuffer(size)
 
    Returns a writable buffer object of *size* bytes.

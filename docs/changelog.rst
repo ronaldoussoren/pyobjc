@@ -24,6 +24,16 @@ Version 5.0
   - UserNotifications
   - VideoSubscriberAccount
 
+- Added two features that can help with gating code on the
+  version of macos:
+
+  1) The constants "objc.MAC_OS_X_VERSION_CURRENT" can be 
+     compared with one of the objc.MAC_OS_X_VERSION_..." contants.
+
+  2) The function "objc.macos_avaiable(major, minor[, patch])"
+     returns true if the current macOS version is at least the
+     specified version, comparable with "@available" in Swift.
+
 
 Version 4.2.2
 -------------

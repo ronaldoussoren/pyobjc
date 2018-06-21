@@ -29,8 +29,12 @@ int main(int argc, char** argv)
 
     @try {
         if (keyed) {
+            /* NSUnarchiver is deprecated as of the macOS 10.13 SDK */
+            #pragma clang diagnostic push
+            #pragma clang diagnostic ignored "-Wdeprecated-declarations"
             value = [NSKeyedUnarchiver unarchiveObjectWithFile:path];
 
+            #pragma clang diagnostic pop
         } else {
             /* NSUnarchiver is deprecated as of the macOS 10.13 SDK */
             #pragma clang diagnostic push
