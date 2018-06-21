@@ -247,7 +247,7 @@ def test_summary(fp_out, state_dir):
 
     keys = tuple(sorted(results[next(iter(results))].keys()))
 
-    fmt = "%26s" + " | %10s" * len(keys)
+    fmt = "%28s" + " | %10s" * len(keys)
     print(file=fp_out); print()
     print(fmt % (("Project",) + keys), file=fp_out)
     print((fmt % ((len(keys)+1)  * ("",))).replace(" ", "=").replace("|", "+"), file=fp_out)
