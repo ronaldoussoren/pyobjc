@@ -15,7 +15,8 @@ class TestCW8021XProfile (TestCase):
       p2 = CoreWLAN.CW8021XProfile.profile()
 
       self.assertTrue(p1 == p1)
-      self.assertFalse(p1 != p2)
+      self.assertFalse(p1 != p1)
+      self.assertTrue(p1 != p2)
 
       self.assertFalse(p1 == 42)
       self.assertTrue(p1 != 42)

@@ -10,6 +10,7 @@ import sys
 import Foundation
 
 from UserNotifications import _metadata
+import UserNotifications._UserNotifications
 
 sys.modules['UserNotifications'] = mod = objc.ObjCLazyModule(
     "UserNotifications",

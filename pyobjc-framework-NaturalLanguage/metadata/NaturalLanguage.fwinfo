@@ -126,7 +126,7 @@
      }
     ]
    },
-   "NSTagger": {
+   "NLTagger": {
     "methods": [
      {
       "selector": "enumerateTagsInRange:unit:scheme:options:usingBlock:",
@@ -147,7 +147,7 @@
      }
     ]
    },
-   "NSTokenizer": {
+   "NLTokenizer": {
     "methods": [
      {
       "selector": "enumerateTokensInRange:usingBlock:",

@@ -57,6 +57,13 @@ class TestNSPrintInfo (TestCase):
         self.assertIsInstance(NSPrintPagesPerSheet, unicode)
         self.assertIsInstance(NSPrintPaperFeed, unicode)
 
+
+        self.assertEqual(NSPrintingPaginationModeAutomatic, 0)
+        self.assertEqual(NSPrintingPaginationModeFit, 1)
+        self.assertEqual(NSPrintingPaginationModeClip, 2)
+
+    @max_os_level('10.13')
+    def testConstants_not10_14(self):
         self.assertIsInstance(NSPrintFaxCoverSheetName, unicode)
         self.assertIsInstance(NSPrintFaxHighResolution, unicode)
         self.assertIsInstance(NSPrintFaxModem, unicode)
@@ -67,11 +74,6 @@ class TestNSPrintInfo (TestCase):
         self.assertIsInstance(NSPrintFaxTrimPageEnds, unicode)
         self.assertIsInstance(NSPrintFaxUseCoverSheet, unicode)
         self.assertIsInstance(NSPrintFaxJob, unicode)
-
-        self.assertEqual(NSPrintingPaginationModeAutomatic, 0)
-        self.assertEqual(NSPrintingPaginationModeFit, 1)
-        self.assertEqual(NSPrintingPaginationModeClip, 2)
-
 
     def testMethods(self):
         self.assertResultIsBOOL(NSPrintInfo.isHorizontallyCentered)

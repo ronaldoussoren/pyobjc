@@ -242,6 +242,7 @@
       "class_method": false,
       "args": {
        "2": {
+        "type_override": "@?",
         "callable": {
 	 "arguments": {
 	  "0": { "typestr": "^v" },
@@ -257,6 +258,7 @@
       "class_method": false,
       "args": {
        "2": {
+        "type_override": "@?",
         "callable": {
 	 "arguments": {
 	  "0": { "typestr": "^v" }

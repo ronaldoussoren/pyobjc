@@ -16,7 +16,7 @@ if sys.maxsize > 2 ** 32:
             self.assertEqual(NaturalLanguage.NLTokenizerAttributeEmoji, 1 << 2)
 
         def test_methods(self):
-            self.assertArgIsBlock(NaturalLanguage.NSTokenizer.enumerateTokensInRange_usingBlock_, 1,
+            self.assertArgIsBlock(NaturalLanguage.NLTokenizer.enumerateTokensInRange_usingBlock_, 1,
                     objc._C_VOID + NaturalLanguage.NSRange.__typestr__ +  objc._C_NSUInteger + objc._C_OUT + objc._C_PTR + objc._C_NSBOOL)
 
 if __name__ == "__main__":

@@ -96,7 +96,7 @@ if sys.maxsize > 2 ** 32:
             self.assertIsInstance(ColorSync.kColorSyncConversionBPC, unicode)
             self.assertIsInstance(ColorSync.kColorSyncFixedPointRange, unicode)
 
-            self.assertIsInstance(ColorSync.kColorSyncTranformInfo, unicode)
+            self.assertIsInstance(ColorSync.kColorSyncTransformInfo, unicode)
 
 
 if __name__ == "__main__":

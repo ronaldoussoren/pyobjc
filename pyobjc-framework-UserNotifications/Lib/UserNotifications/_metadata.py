@@ -21,8 +21,8 @@ misc.update({})
 r = objc.registerMetaDataForSelector
 objc._updatingMetadata(True)
 try:
-    r(b'NSObject', b'userNotificationCenter:didReceiveNotificationResponse:withCompletionHandler:', {'arguments': {4: {'callable': {'retval': {'type': b'v'}, 'arguments': {0: {'type': b'^v'}}}}}})
-    r(b'NSObject', b'userNotificationCenter:willPresentNotification:withCompletionHandler:', {'arguments': {4: {'callable': {'retval': {'type': b'v'}, 'arguments': {0: {'type': b'^v'}, 1: {'type': b'Q'}}}}}})
+    r(b'NSObject', b'userNotificationCenter:didReceiveNotificationResponse:withCompletionHandler:', {'arguments': {4: {'type': b'@?', 'callable': {'retval': {'type': b'v'}, 'arguments': {0: {'type': b'^v'}}}}}})
+    r(b'NSObject', b'userNotificationCenter:willPresentNotification:withCompletionHandler:', {'arguments': {4: {'type': b'@?', 'callable': {'retval': {'type': b'v'}, 'arguments': {0: {'type': b'^v'}, 1: {'type': b'Q'}}}}}})
     r(b'UNCalendarNotificationTrigger', b'triggerWithDateMatchingComponents:repeats:', {'arguments': {3: {'type': 'Z'}}})
     r(b'UNLocationNotificationTrigger', b'triggerWithRegion:repeats:', {'arguments': {3: {'type': 'Z'}}})
     r(b'UNNotificationAttachment', b'attachmentWithIdentifier:URL:options:error:', {'arguments': {5: {'type_modifier': b'o'}}})

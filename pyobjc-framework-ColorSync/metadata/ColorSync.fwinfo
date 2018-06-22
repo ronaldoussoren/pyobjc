@@ -172,7 +172,7 @@
    "kColorSyncConvertThreadCount": { "typestr": "@" },
    "kColorSyncConvertUseVectorUnit": { "typestr": "@" },
    "kColorSyncConvertUseExtendedRange": { "typestr": "@" },
-   "kColorSyncTranformInfo": { "typestr": "@" },
+   "kColorSyncTransformInfo": { "typestr": "@" },
    "kColorSyncTransformCreator": { "typestr": "@" },
    "kColorSyncTransformSrcSpace": { "typestr": "@" },
    "kColorSyncTransformDstSpace": { "typestr": "@" },
