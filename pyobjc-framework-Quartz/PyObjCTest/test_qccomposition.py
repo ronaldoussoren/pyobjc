@@ -9,6 +9,13 @@ class TestQCComposition (TestCase):
         self.assertIsInstance(QCCompositionAttributeDescriptionKey, unicode)
         self.assertIsInstance(QCCompositionAttributeCopyrightKey, unicode)
 
+    @os_level_between('10.5', '10.13')
+    def testConstants10_5_to_13(self):
+        # Removed in 10.14
+        self.assertIsInstance(QCCompositionInputRSSFeedURLKey, unicode)
+        self.assertIsInstance(QCCompositionInputRSSArticleDurationKey, unicode)
+        self.assertIsInstance(QCCompositionProtocolRSSVisualizer, unicode)
+
     @min_os_level('10.5')
     def testConstants10_5(self):
         self.assertIsInstance(QCCompositionAttributeBuiltInKey, unicode)
@@ -21,8 +28,6 @@ class TestQCComposition (TestCase):
         self.assertIsInstance(QCCompositionInputImageKey, unicode)
         self.assertIsInstance(QCCompositionInputSourceImageKey, unicode)
         self.assertIsInstance(QCCompositionInputDestinationImageKey, unicode)
-        self.assertIsInstance(QCCompositionInputRSSFeedURLKey, unicode)
-        self.assertIsInstance(QCCompositionInputRSSArticleDurationKey, unicode)
         self.assertIsInstance(QCCompositionInputPreviewModeKey, unicode)
         self.assertIsInstance(QCCompositionInputXKey, unicode)
         self.assertIsInstance(QCCompositionInputYKey, unicode)
@@ -41,7 +46,6 @@ class TestQCComposition (TestCase):
         self.assertIsInstance(QCCompositionProtocolGraphicTransition, unicode)
         self.assertIsInstance(QCCompositionProtocolImageFilter, unicode)
         self.assertIsInstance(QCCompositionProtocolScreenSaver, unicode)
-        self.assertIsInstance(QCCompositionProtocolRSSVisualizer, unicode)
         self.assertIsInstance(QCCompositionProtocolMusicVisualizer, unicode)
 
     @min_os_level('10.6')

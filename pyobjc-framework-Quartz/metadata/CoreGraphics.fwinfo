@@ -2675,10 +2675,10 @@
       "typestr": "@?",
       "callable": {
        "arguments": {
-        "0": { "typestr": "^v" },
-	"1": { "typestr": "n^t", "c_array_delimited_by_null": true },
-	"2": { "typestr": "^{CGPDFObject=}" },
-	"3": { "typestr": "^v" }
+        "0": { "type": "^v" },
+	"1": { "type": "n^t", "c_array_delimited_by_null": true },
+	"2": { "type": "^{CGPDFObject=}" },
+	"3": { "type": "^v" }
        },
        "retval": { "typestr": "v" }
       }
@@ -2693,12 +2693,12 @@
       "typestr": "@?",
       "callable": {
        "arguments": {
-        "0": { "typestr": "^v" },
-	"1": { "typestr": "l" },
-	"2": { "typestr": "^{CGPDFObject=}" },
-	"3": { "typestr": "^v" }
+        "0": { "type": "^v" },
+	"1": { "type": "l" },
+	"2": { "type": "^{CGPDFObject=}" },
+	"3": { "type": "^v" }
        },
-       "retval": { "typestr": "v" }
+       "retval": { "typestr": "B" }
       }
      }
     }

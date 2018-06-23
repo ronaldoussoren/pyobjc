@@ -26,7 +26,7 @@ if sys.maxsize > 2 ** 32:
             Network.nw_listener_set_queue
 
 
-            self.assertArgIsBlock(nw_listener_set_state_changed_handler, 1, nw_listener_state_changed_handler_t)
+            self.assertArgIsBlock(Network.nw_listener_set_state_changed_handler, 1, nw_listener_state_changed_handler_t)
 
             self.assertArgIsBlock(Network.nw_listener_set_new_connection_handler, 1, nw_listener_new_connection_handler_t)
 

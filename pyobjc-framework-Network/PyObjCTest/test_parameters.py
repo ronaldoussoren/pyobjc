@@ -6,7 +6,7 @@ if sys.maxsize > 2 ** 32:
 
     nw_parameters_configure_protocol_block_t = b'v@'
     nw_parameters_iterate_interfaces_block_t = b'B@'
-    nw_parameters_iterate_interface_types_block_t = b'B@'
+    nw_parameters_iterate_interface_types_block_t = b'Bi'
     nw_protocol_stack_iterate_protocols_block_t = b'v@'
 
     class TestParameters (TestCase):
@@ -46,7 +46,7 @@ if sys.maxsize > 2 ** 32:
             Network.nw_parameters_prohibit_interface
             Network.nw_parameters_clear_prohibited_interfaces
 
-            self.assertArgIsBlock(nw_parameters_iterate_prohibited_interfaces, 1, nw_parameters_iterate_interfaces_block_t)
+            self.assertArgIsBlock(Network.nw_parameters_iterate_prohibited_interfaces, 1, nw_parameters_iterate_interfaces_block_t)
 
             Network.nw_parameters_set_required_interface_type
             Network.nw_parameters_get_required_interface_type
@@ -54,7 +54,7 @@ if sys.maxsize > 2 ** 32:
 
             Network.nw_parameters_clear_prohibited_interface_types
 
-            self.assertArgIsBlock(nw_parameters_iterate_prohibited_interface_types, 1, nw_parameters_iterate_interface_types_block_t)
+            self.assertArgIsBlock(Network.nw_parameters_iterate_prohibited_interface_types, 1, nw_parameters_iterate_interface_types_block_t)
 
             Network.nw_parameters_set_prohibit_expensive
             Network.nw_parameters_get_prohibit_expensive
@@ -71,7 +71,7 @@ if sys.maxsize > 2 ** 32:
             Network.nw_parameters_set_multipath_service
             Network.nw_parameters_get_multipath_service
 
-            self.assertResultIsRetained(nw_parameters_copy_default_protocol_stack)
+            self.assertResultIsRetained(Network.nw_parameters_copy_default_protocol_stack)
 
             Network.nw_protocol_stack_prepend_application_protocol
             Network.nw_protocol_stack_clear_application_protocols
@@ -82,7 +82,7 @@ if sys.maxsize > 2 ** 32:
 
             Network.nw_protocol_stack_set_transport_protocol
 
-            self.assertResultIsRetained(nw_protocol_stack_copy_internet_protocol)
+            self.assertResultIsRetained(Network.nw_protocol_stack_copy_internet_protocol)
 
             Network.nw_parameters_set_local_only
             Network.nw_parameters_get_local_only

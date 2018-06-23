@@ -16,7 +16,7 @@ if sys.maxsize > 2 ** 32:
         def test_functions(self):
             Network.nw_path_get_status
 
-            self.assertArgIsBlock(Network.nw_path_enumerate_interfaces, nw_path_enumerate_interfaces_block_t)
+            self.assertArgIsBlock(Network.nw_path_enumerate_interfaces, 1, nw_path_enumerate_interfaces_block_t)
 
             Network.nw_path_is_equal
             Network.nw_path_is_expensive

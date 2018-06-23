@@ -82,6 +82,8 @@ class TestCGImage (TestCase):
         fn = '/System/Library/CoreServices/DefaultDesktop.jpg'
         if not os.path.exists(fn):
             fn = '/System/Library/CoreServices/DefaultDesktopServer.jpg'
+            if not os.path.exists(fn):
+                fn = '/System/Library/CoreServices//RemoteManagement/ARDAgent.app/Contents/Resources/Lock.jpg'
         with open(fn, 'rb') as fp:
             data = fp.read()
         provider = CGDataProviderCreateWithCFData(buffer(data))
@@ -181,6 +183,8 @@ class TestCGImage (TestCase):
         fn = '/System/Library/CoreServices/DefaultDesktop.jpg'
         if not os.path.exists(fn):
             fn = '/System/Library/CoreServices/DefaultDesktopServer.jpg'
+            if not os.path.exists(fn):
+                fn = '/System/Library/CoreServices//RemoteManagement/ARDAgent.app/Contents/Resources/Lock.jpg'
         with open(fn, 'rb') as fp:
             data = fp.read()
         provider = CGDataProviderCreateWithCFData(buffer(data))

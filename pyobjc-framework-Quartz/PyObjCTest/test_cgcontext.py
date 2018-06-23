@@ -92,6 +92,8 @@ class TestCGContext (TestCase):
             fn = '/System/Library/CoreServices/DefaultDesktop.jpg'
             if not os.path.exists(fn):
                 fn = '/System/Library/Automator/Apply ColorSync Profile to Images.action/Contents/Resources/A-1075-normal.jpg'
+                if not os.path.exists(fn):
+                    fn = '/System/Library/CoreServices//RemoteManagement/ARDAgent.app/Contents/Resources/Lock.jpg'
 
             with open(fn, 'rb') as fp:
                 data = fp.read()
@@ -409,6 +411,8 @@ class TestCGContext (TestCase):
             fn = '/System/Library/CoreServices/DefaultDesktop.jpg'
             if not os.path.exists(fn):
                 fn = '/System/Library/Automator/Apply ColorSync Profile to Images.action/Contents/Resources/A-1075-normal.jpg'
+                if not os.path.exists(fn):
+                    fn = '/System/Library/CoreServices//RemoteManagement/ARDAgent.app/Contents/Resources/Lock.jpg'
 
             with open(fn, 'rb') as fp:
                 data = fp.read()

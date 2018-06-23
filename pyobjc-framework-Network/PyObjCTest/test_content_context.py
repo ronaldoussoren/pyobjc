@@ -10,7 +10,7 @@ if sys.maxsize > 2 ** 32:
             self.assertArgIsIn(Network.nw_content_context_create, 0)
             self.assertArgIsNullTerminated(Network.nw_content_context_create, 0)
 
-            self.assertResultIsNullTerminated(nw_content_context_get_identifier)
+            self.assertResultIsNullTerminated(Network.nw_content_context_get_identifier)
 
             Network.nw_content_context_get_is_final
             Network.nw_content_context_set_is_final

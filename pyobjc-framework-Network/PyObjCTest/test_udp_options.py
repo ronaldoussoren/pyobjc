@@ -12,7 +12,7 @@ if sys.maxsize > 2 ** 32:
 
             Network.nw_udp_options_set_prefer_no_checksum
 
-            self.assertResultIsRetained(nw_udp_create_metadata)
+            self.assertResultIsRetained(Network.nw_udp_create_metadata)
 
             Network.nw_protocol_metadata_is_udp
 
