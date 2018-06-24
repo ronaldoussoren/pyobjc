@@ -15,7 +15,7 @@ class TestAudioHardwarePlugIn (TestCase):
 
 
     def testCFTypes(self):
-        self.assertIsCFType(CoreAudio.AudioHardwarePlugInRef)
+        self.assertIsOpaquePointer(CoreAudio.AudioHardwarePlugInRef)
 
     def testFunctions(self):
         self.assertArgIsOut(CoreAudio.AudioObjectCreate, 3)

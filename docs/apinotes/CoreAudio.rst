@@ -23,3 +23,11 @@ API Notes
 
 * The APIs to implement CoreAudio plugins are not supported.
 
+* ``CalculateLPCMFlags``: all arguments to this function must be provided, there is no default value for the
+  last argument.
+
+
+* ``FillOutASBDForLPCM``: all arguments to this function must be provided, there is no default value for the
+  last argument.
+
+

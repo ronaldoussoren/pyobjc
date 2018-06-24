@@ -10,12 +10,13 @@ import sys
 import Foundation
 
 from CoreAudio import _metadata
+from CoreAudio._inlines import _inline_list_
 
 sys.modules['CoreAudio'] = mod = objc.ObjCLazyModule(
     "CoreAudio",
     "com.apple.CoreAudio",
     objc.pathForFramework("/System/Library/Frameworks/CoreAudio.framework"),
-    _metadata.__dict__, None, {
+    _metadata.__dict__, _inline_list_, {
         '__doc__': __doc__,
         'objc': objc,
         '__path__': __path__,
@@ -24,3 +25,7 @@ sys.modules['CoreAudio'] = mod = objc.ObjCLazyModule(
 
 import sys
 del sys.modules['CoreAudio._metadata']
+
+import CoreAudio._CoreAudio
+for nm in dir(CoreAudio._CoreAudio):
+    setattr(mod, nm, getattr(CoreAudio._CoreAudio, nm))

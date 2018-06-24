@@ -14,6 +14,7 @@ Version 5.0
 
   - AdSupport
   - CoreAudio (new in macOS 10.3)
+  - CoreAudioKit (new in macOS 10.3)
   - CoreMedia (new in macOS 10.7)
   - CoreMediaIO (new in macOS 10.7)
   - MediaToolbox
@@ -22,6 +23,7 @@ Version 5.0
   - OSAKit (new in macOS 10.0)
   - UserNotifications
   - VideoSubscriberAccount
+
 
 Version 4.2.2
 -------------

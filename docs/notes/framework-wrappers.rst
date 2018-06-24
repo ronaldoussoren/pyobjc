@@ -68,7 +68,7 @@ The framework name links to API notes for that framework, the python packages li
 +------------------------------------------------------------------+---------------------------------------------+-----------------------------------------+
 | :doc:`CoreAudio </apinotes/CoreAudio>`                           | `pyobjc-framework-CoreAudio`_               |                                         |
 +------------------------------------------------------------------+---------------------------------------------+-----------------------------------------+
-| CoreAudioKit                                                     | -                                           | Not yet wrapped                         |
+| :doc:`CoreAudioKit </apinotes/CoreAudioKit>`                     | `pyobjc-framework-CoreAudioKit`_            |                                         |
 +------------------------------------------------------------------+---------------------------------------------+-----------------------------------------+
 | CoreAuthentication                                               | -                                           | No public API (removed in macOS 10.13)  |
 +------------------------------------------------------------------+---------------------------------------------+-----------------------------------------+
@@ -335,7 +335,8 @@ The framework name links to API notes for that framework, the python packages li
 +------------------------------------------------------------------+---------------------------------------------+-----------------------------------------+
 | :doc:`UserNotifications </apinotes/UserNotifications>`           | `pyobjc-framework-UserNotifications`_       |                                         |
 +------------------------------------------------------------------+---------------------------------------------+-----------------------------------------+
-| VideoDecodeAcceleration                                          | -                                           | Not wrapped yet                         |
+| VideoDecodeAcceleration                                          | -                                           | Deprecated in macOS 10.11, won't be     |
+|                                                                  |                                             | wrapped.                                |
 +------------------------------------------------------------------+---------------------------------------------+-----------------------------------------+
 | :doc:`VideoSubscriberAccount </apinotes/VideoSubscriberAccount>` | `pyobjc-framework-VideoSubscriberAccount`_  |                                         |
 +------------------------------------------------------------------+---------------------------------------------+-----------------------------------------+
@@ -464,3 +465,4 @@ version of PyObjC although there is no explicit roadmap for this.
 .. _`pyobjc-framework-iTunesLibrary`: https://pypi.org/project/pyobjc-framework-iTunesLibrary/
 .. _`pyobjc-framework-OSAKit`: https://pypi.org/project/pyobjc-framework-OSAKit/
 .. _`pyobjc-framework-CoreAudio`: https://pypi.org/project/pyobjc-framework-CoreAudio/
+.. _`pyobjc-framework-CoreAudioKit`: https://pypi.org/project/pyobjc-framework-CoreAudioKit/

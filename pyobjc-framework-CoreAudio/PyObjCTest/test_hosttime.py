@@ -7,7 +7,7 @@ class TestHostTime (TestCase):
         CoreAudio.AudioGetCurrentHostTime
         CoreAudio.AudioGetHostClockFrequency
         CoreAudio.AudioGetHostClockMinimumTimeDelta
-        CoreAudio.AudioConvertHostTimeToNanosAudioConvertNanosToHostTime
+        CoreAudio.AudioConvertNanosToHostTime
 
 if __name__ == "__main__":
     main()

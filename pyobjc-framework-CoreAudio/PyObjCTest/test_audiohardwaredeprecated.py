@@ -2,6 +2,10 @@ from PyObjCTools.TestSupport import *
 
 import CoreAudio
 
+AudioDeviceIOProc = b'In^{' + CoreAudio.AudioTimeStamp.__typestr__ + b'n^' \
+    + CoreAudio.AudioBufferList.__typestr__ + b'n^' + CoreAudio.AudioTimeStamp.__typestr__ \
+    + b'o^' + CoreAudio.AudioBufferList.__typestr__ + b'n^' + CoreAudio.AudioTimeStamp.__typestr__ \
+    + b'^v'
 AudioHardwarePropertyListenerProc = b'iI^v'
 AudioDevicePropertyListenerProc = b'iIIZI^v'
 AudioStreamPropertyListenerProc = b'iIII^v'
@@ -110,7 +114,6 @@ class TestAudioHardwareDeprecated (TestCase):
         self.assertArgIsOut(CoreAudio.AudioHardwareGetProperty, 2)
         self.assertArgSizeInArg(CoreAudio.AudioHardwareGetProperty, 2, 1)
 
-        self.assertArgIsIn(CoreAudio.AudioHardwareSetProperty, 1)
         self.assertArgIsIn(CoreAudio.AudioHardwareSetProperty, 2)
         self.assertArgSizeInArg(CoreAudio.AudioHardwareSetProperty, 2, 1)
 

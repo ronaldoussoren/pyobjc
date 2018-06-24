@@ -335,7 +335,7 @@
          "typestr": "I"
         },
         {
-         "typestr": "^{AudioObjectPropertyAddress=III}"
+         "typestr": "n^{AudioObjectPropertyAddress=III}"
         },
         {
          "typestr": "^v"
@@ -349,9 +349,65 @@
      "3": {}
     }
    },
+   "AudioHardwareClaimAudioStreamID": {
+    "args": {
+     "2": { "type_modifier": "o" }
+    }
+   },
+   "AudioObjectCreate": {
+    "args": {
+     "3": { "type_modifier": "o" }
+    }
+   },
+   "AudioHardwareClaimAudioDeviceID": {
+    "args": {
+     "1": { "type_modifier": "o" }
+    }
+   },
+   "AudioHardwareDevicesDied": {
+    "args": {
+     "2": { "type_modifier": "n", "c_array_length_in_arg": 1 }
+    }
+   },
+   "AudioHardwareDevicesCreated": {
+    "args": {
+     "2": { "type_modifier": "n", "c_array_length_in_arg": 1 }
+    }
+   },
+   "AudioHardwareStreamsDied": {
+    "args": {
+     "3": { "type_modifier": "n", "c_array_length_in_arg": 2 }
+    }
+   },
+   "AudioHardwareStreamsCreated": {
+    "args": {
+     "3": { "type_modifier": "n", "c_array_length_in_arg": 2 }
+    }
+   },
+   "AudioObjectPropertiesChanged": {
+    "args": {
+     "3": { "type_modifier": "n", "c_array_length_in_arg": 2 }
+    }
+   },
+   "AudioObjectsPublishedAndDied": {
+    "args": {
+     "3": { "type_modifier": "n", "c_array_length_in_arg": 2 },
+     "5": { "type_modifier": "n", "c_array_length_in_arg": 4 }
+    }
+   },
    "AudioObjectAddPropertyListenerBlock": {
     "args": {
-     "1": { "type_modifier": "n" }
+     "1": { "type_modifier": "n" },
+     "3": {
+      "callable": {
+       "retval": { "type": "v" },
+       "arguments": {
+        "0": { "type": "^v" },
+	"1": { "type": "I" },
+	"2": { "type": "n^{AudioObjectPropertyAddress=III}", "c_array_length_in_arg": 1 }
+       }
+      }
+     }
     }
    },
    "AudioObjectGetPropertyData": {
@@ -393,7 +449,7 @@
          "typestr": "I"
         },
         {
-         "typestr": "^{AudioObjectPropertyAddress=III}"
+         "typestr": "n^{AudioObjectPropertyAddress=III}"
         },
         {
          "typestr": "^v"
@@ -409,7 +465,17 @@
    },
    "AudioObjectRemovePropertyListenerBlock": {
     "args": {
-     "1": { "type_modifier": "n" }
+     "1": { "type_modifier": "n" },
+     "3": {
+      "callable": {
+       "retval": { "type": "v" },
+       "arguments": {
+        "0": { "type": "^v" },
+	"1": { "type": "I" },
+	"2": { "type": "n^{AudioObjectPropertyAddress=III}", "c_array_length_in_arg": 1 }
+       }
+      }
+     }
     }
    },
    "AudioObjectSetPropertyData": {

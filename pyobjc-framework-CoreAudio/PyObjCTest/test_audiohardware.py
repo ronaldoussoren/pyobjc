@@ -2,10 +2,10 @@ from PyObjCTools.TestSupport import *
 
 import CoreAudio
 
-AudioObjectPropertyListenerProc = b'iIn^' + CoreAudio.AudioObjectPropertyAddress.__typestr__ + b'^v'
-AudioObjectRemovePropertyListenerBlock = b'vIn^' + CoreAudio.AudioObjectPropertyAddress.__typestr__
+AudioObjectPropertyListenerProc = b'iIIn^' + CoreAudio.AudioObjectPropertyAddress.__typestr__ + b'^v'
+AudioObjectPropertyListenerBlock = b'vIn^' + CoreAudio.AudioObjectPropertyAddress.__typestr__
 
-AudioDeviceIOProc = b'IIn^' + CoreAudio.AudioTimeStamp.__typestr__ \
+AudioDeviceIOProc = b'iIn^' + CoreAudio.AudioTimeStamp.__typestr__ \
     + b'n^' + CoreAudio.AudioBufferList.__typestr__ + b'n^' + CoreAudio.AudioTimeStamp.__typestr__ \
     + b'o^' + CoreAudio.AudioBufferList.__typestr__ + b'n^' + CoreAudio.AudioTimeStamp.__typestr__ \
     + b'^v'
@@ -126,7 +126,7 @@ class TestAudioHardware (TestCase):
         self.assertEqual(CoreAudio.kAudioDevicePropertySubVolumeDecibelsToScalar, fourcc(b'sd2v'))
         self.assertEqual(CoreAudio.kAudioDevicePropertySubMute, fourcc(b'smut'))
 
-        self.assertEqual(CoreAudio.kAudioAggregateDeviceClassID, fourcc('aagg'))
+        self.assertEqual(CoreAudio.kAudioAggregateDeviceClassID, fourcc(b'aagg'))
 
         self.assertEqual(CoreAudio.kAudioAggregateDeviceUIDKey, b"uid")
         self.assertEqual(CoreAudio.kAudioAggregateDeviceNameKey, b"name")
@@ -173,7 +173,7 @@ class TestAudioHardware (TestCase):
 
         self.assertArgIsIn(CoreAudio.AudioObjectGetPropertyDataSize, 1)
         self.assertArgIsIn(CoreAudio.AudioObjectGetPropertyDataSize, 3)
-        self.assertArgSizeInArg(CoreAudio.AudioObjectGetPropertyDataSize, 3, 2)
+        self.assertArgSizeInArg(CoreAudio.AudioObjectGetPropertyDataSize, 3, (2, 4))
         self.assertArgIsOut(CoreAudio.AudioObjectGetPropertyDataSize, 4)
 
         self.assertArgIsIn(CoreAudio.AudioObjectGetPropertyData, 1)
@@ -190,10 +190,10 @@ class TestAudioHardware (TestCase):
         self.assertArgSizeInArg(CoreAudio.AudioObjectSetPropertyData, 5, 4)
 
         self.assertArgIsIn(CoreAudio.AudioObjectAddPropertyListener, 1)
-        self.assertArgIsFunction(CoreAudio.AudioObjectAddPropertyListener, 2, AudioObjectPropertyListenerProc)
+        self.assertArgIsFunction(CoreAudio.AudioObjectAddPropertyListener, 2, AudioObjectPropertyListenerProc, True)
 
         self.assertArgIsIn(CoreAudio.AudioObjectRemovePropertyListener, 1)
-        self.assertArgIsFunction(CoreAudio.AudioObjectRemovePropertyListener, 2, AudioObjectPropertyListenerProc)
+        self.assertArgIsFunction(CoreAudio.AudioObjectRemovePropertyListener, 2, AudioObjectPropertyListenerProc, True)
 
         self.assertArgIsIn(CoreAudio.AudioObjectAddPropertyListenerBlock, 1)
         self.assertArgIsBlock(CoreAudio.AudioObjectAddPropertyListenerBlock, 3, AudioObjectPropertyListenerBlock)
@@ -228,7 +228,7 @@ class TestAudioHardware (TestCase):
         # XXX: Requires manual support
         v = CoreAudio.AudioHardwareIOProcStreamUsage()
         self.assertEqual(v.mIOProc, None)
-        self.assertEqual(v.mNumberStream, 0)
+        self.assertEqual(v.mNumberStreams, 0)
         self.assertEqual(v.mStreamIsOn, None)
 
 

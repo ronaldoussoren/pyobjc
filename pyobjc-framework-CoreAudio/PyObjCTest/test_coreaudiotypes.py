@@ -1,4 +1,5 @@
 from PyObjCTools.TestSupport import *
+import sys
 
 import CoreAudio
 
@@ -83,8 +84,10 @@ class TestAudioDriverPlugIn (TestCase):
         else:
             self.assertEqual(CoreAudio.kAudioFormatFlagsNativeEndian, 0)
 
-        self.assertEqual(CoreAudio.kAudioFormatFlagsCanonical, CoreAudio.kAudioFormatFlagIsSignedInteger | CoreAudio.kAudioFormatFlagsNativeEndian | CoreAudio.kAudioFormatFlagIsPacked)
-        self.assertEqual(CoreAudio.kAudioFormatFlagsAudioUnitCanonical, CoreAudio.kAudioFormatFlagIsSignedInteger | CoreAudio.kAudioFormatFlagsNativeEndian | CoreAudio.kAudioFormatFlagIsPacked | CoreAudio.kAudioFormatFlagIsNonInterleaved | (kAudioUnitSampleFractionBits << kLinearPCMFormatFlagsSampleFractionShift))
+
+
+        self.assertEqual(CoreAudio.kAudioFormatFlagsCanonical, CoreAudio.kAudioFormatFlagIsFloat | CoreAudio.kAudioFormatFlagsNativeEndian | CoreAudio.kAudioFormatFlagIsPacked)
+        self.assertEqual(CoreAudio.kAudioFormatFlagsAudioUnitCanonical, CoreAudio.kAudioFormatFlagIsFloat | CoreAudio.kAudioFormatFlagsNativeEndian | CoreAudio.kAudioFormatFlagIsPacked | CoreAudio.kAudioFormatFlagIsNonInterleaved)
         self.assertEqual(CoreAudio.kAudioFormatFlagsNativeFloatPacked, CoreAudio.kAudioFormatFlagIsFloat | CoreAudio.kAudioFormatFlagsNativeEndian | CoreAudio.kAudioFormatFlagIsPacked)
 
         self.assertEqual(CoreAudio.kSMPTETimeType24, 0)
@@ -290,13 +293,13 @@ class TestAudioDriverPlugIn (TestCase):
         self.assertEqual(CoreAudio.kAudioChannelLayoutTag_DVD_16, CoreAudio.kAudioChannelLayoutTag_DVD_11)
         self.assertEqual(CoreAudio.kAudioChannelLayoutTag_DVD_17, CoreAudio.kAudioChannelLayoutTag_DVD_12)
         self.assertEqual(CoreAudio.kAudioChannelLayoutTag_DVD_18, (138<<16) | 5)
-        self.assertEqual(CoreAudio.kAudioChannelLayoutTag_DVD_19, kAudioChannelLayoutTag_MPEG_5_0_B)
-        self.assertEqual(CoreAudio.kAudioChannelLayoutTag_DVD_20, kAudioChannelLayoutTag_MPEG_5_1_B)
-        self.assertEqual(CoreAudio.kAudioChannelLayoutTag_AudioUnit_4, kAudioChannelLayoutTag_Quadraphonic)
-        self.assertEqual(CoreAudio.kAudioChannelLayoutTag_AudioUnit_5, kAudioChannelLayoutTag_Pentagonal)
-        self.assertEqual(CoreAudio.kAudioChannelLayoutTag_AudioUnit_6, kAudioChannelLayoutTag_Hexagonal)
-        self.assertEqual(CoreAudio.kAudioChannelLayoutTag_AudioUnit_8, kAudioChannelLayoutTag_Octagonal)
-        self.assertEqual(CoreAudio.kAudioChannelLayoutTag_AudioUnit_5_0, kAudioChannelLayoutTag_MPEG_5_0_B)
+        self.assertEqual(CoreAudio.kAudioChannelLayoutTag_DVD_19, CoreAudio.kAudioChannelLayoutTag_MPEG_5_0_B)
+        self.assertEqual(CoreAudio.kAudioChannelLayoutTag_DVD_20, CoreAudio.kAudioChannelLayoutTag_MPEG_5_1_B)
+        self.assertEqual(CoreAudio.kAudioChannelLayoutTag_AudioUnit_4, CoreAudio.kAudioChannelLayoutTag_Quadraphonic)
+        self.assertEqual(CoreAudio.kAudioChannelLayoutTag_AudioUnit_5, CoreAudio.kAudioChannelLayoutTag_Pentagonal)
+        self.assertEqual(CoreAudio.kAudioChannelLayoutTag_AudioUnit_6, CoreAudio.kAudioChannelLayoutTag_Hexagonal)
+        self.assertEqual(CoreAudio.kAudioChannelLayoutTag_AudioUnit_8, CoreAudio.kAudioChannelLayoutTag_Octagonal)
+        self.assertEqual(CoreAudio.kAudioChannelLayoutTag_AudioUnit_5_0, CoreAudio.kAudioChannelLayoutTag_MPEG_5_0_B)
         self.assertEqual(CoreAudio.kAudioChannelLayoutTag_AudioUnit_6_0, (139<<16) | 6)
         self.assertEqual(CoreAudio.kAudioChannelLayoutTag_AudioUnit_7_0, (140<<16) | 7)
         self.assertEqual(CoreAudio.kAudioChannelLayoutTag_AudioUnit_7_0_Front, (148<<16) | 7)
@@ -392,7 +395,7 @@ class TestAudioDriverPlugIn (TestCase):
         self.assertEqual(v.mNumberBuffers, 0)
         self.assertEqual(v.mBuffers, None)
 
-        v = AudioStreamBasicDescription()
+        v = CoreAudio.AudioStreamBasicDescription()
         self.assertEqual(v.mSampleRate, 0.0)
         self.assertEqual(v.mFormatID, 0)
         self.assertEqual(v.mFormatFlags, 0)
@@ -419,7 +422,7 @@ class TestAudioDriverPlugIn (TestCase):
         self.assertEqual(v.mSeconds, 0)
         self.assertEqual(v.mFrames, 0)
 
-        v = AudioTimeStamp()
+        v = CoreAudio.AudioTimeStamp()
         self.assertEqual(v.mSampleTime, 0.0)
         self.assertEqual(v.mHostTime, 0)
         self.assertEqual(v.mRateScalar, 0.0)
@@ -436,7 +439,7 @@ class TestAudioDriverPlugIn (TestCase):
         v = CoreAudio.AudioChannelDescription()
         self.assertEqual(v.mChannelLabel, 0)
         self.assertEqual(v.mChannelFlags, 0)
-        self.assertEqual(v.mCoordinates, (0.0, 0.0, 0.0))
+        self.assertEqual(v.mCoordinates, None) # (0.0, 0.0, 0.0))
 
         # XXX: Need manual work
         v = CoreAudio.AudioChannelLayout()
@@ -448,11 +451,22 @@ class TestAudioDriverPlugIn (TestCase):
     def testFunctions(self):
         CoreAudio.TestAudioFormatNativeEndian
 
-        CoreAudio.CalculateLPCMFlags
-        CoreAudio.FillOutASBDForLPCM
-        CoreAudio.FillOutAudioTimeStampWithSampleTime
-        CoreAudio.FillOutAudioTimeStampWithHostTime
-        CoreAudio.FillOutAudioTimeStampWithSampleAndHostTime
+        self.assertArgIsIn(CoreAudio.IsAudioFormatNativeEndian, 0)
+        self.assertResultHasType(CoreAudio.IsAudioFormatNativeEndian, objc._C_BOOL)
+
+        self.assertArgHasType(CoreAudio.CalculateLPCMFlags, 2, objc._C_BOOL)
+        self.assertArgHasType(CoreAudio.CalculateLPCMFlags, 3, objc._C_BOOL)
+        self.assertArgHasType(CoreAudio.CalculateLPCMFlags, 4, objc._C_BOOL)
+
+        self.assertArgIsOut(CoreAudio.FillOutASBDForLPCM, 0)
+        self.assertArgHasType(CoreAudio.FillOutASBDForLPCM, 5, objc._C_BOOL)
+        self.assertArgHasType(CoreAudio.FillOutASBDForLPCM, 6, objc._C_BOOL)
+        self.assertArgHasType(CoreAudio.FillOutASBDForLPCM, 7, objc._C_BOOL)
+
+        self.assertArgIsOut(CoreAudio.FillOutAudioTimeStampWithSampleTime, 0)
+        self.assertArgIsOut(CoreAudio.FillOutAudioTimeStampWithHostTime, 0)
+        self.assertArgIsOut(CoreAudio.FillOutAudioTimeStampWithSampleAndHostTime, 0)
+
         CoreAudio.AudioChannelLayoutTag_GetNumberOfChannels
 
 if __name__ == "__main__":
