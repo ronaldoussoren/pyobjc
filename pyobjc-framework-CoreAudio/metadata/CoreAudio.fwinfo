@@ -4,6 +4,11 @@
  "definitions": {
   "classes": {},
   "formal_protocols": {},
+  "opaque": {
+   "AudioHardwarePlugInRef": {
+     "typestr": "^{AudioHardwarePlugInInterface=}"
+   }
+  },
   "functions": {
    "AudioDeviceAddIOProc": {
     "args": {
@@ -14,19 +19,19 @@
          "typestr": "I"
         },
         {
-         "typestr": "^{AudioTimeStamp=dQdQ{SMPTETime=ssIIIssss}II}"
+         "typestr": "n^{AudioTimeStamp=dQdQ{SMPTETime=ssIIIssss}II}"
         },
         {
-         "typestr": "^{AudioBufferList=I[1{AudioBuffer=II^v}]}"
+         "typestr": "n^{AudioBufferList=I[1{AudioBuffer=II^v}]}"
         },
         {
-         "typestr": "^{AudioTimeStamp=dQdQ{SMPTETime=ssIIIssss}II}"
+         "typestr": "n^{AudioTimeStamp=dQdQ{SMPTETime=ssIIIssss}II}"
         },
         {
-         "typestr": "^{AudioBufferList=I[1{AudioBuffer=II^v}]}"
+         "typestr": "o^{AudioBufferList=I[1{AudioBuffer=II^v}]}"
         },
         {
-         "typestr": "^{AudioTimeStamp=dQdQ{SMPTETime=ssIIIssss}II}"
+         "typestr": "n^{AudioTimeStamp=dQdQ{SMPTETime=ssIIIssss}II}"
         },
         {
          "typestr": "^v"
@@ -354,7 +359,7 @@
      "1": { "type_modifier": "n" },
      "3": { "type_modifier": "n", "c_array_length_in_arg": 2 },
      "4": { "type_modifier": "N" },
-     "5": { "type_modifier": "o" }
+     "5": { "type_modifier": "o", "c_array_length_in_arg": 4 }
     }
    },
    "AudioObjectGetPropertyDataSize": {
@@ -481,6 +486,57 @@
     "args": {
      "1": { "type_modifier": "n" },
      "5": { "type_modifier": "n", "c_array_length_in_arg": 4 }
+    }
+   },
+   "IsAudioFormatNativeEndian": {
+    "retval": { "type_override": "B" },
+    "args": {
+     "0": { "type_override": [ "n^{AudioStreamBasicDescription=dLLLLLLLL}", "n^{AudioStreamBasicDescription=dIIIIIIII}" ] }
+    }
+   },
+   "CalculateLPCMFlags": {
+    "retval": { "type_override": "I" },
+    "args": {
+     "0": { "type_override": "I" },
+     "1": { "type_override": "I" },
+     "2": { "type_override": "B" },
+     "3": { "type_override": "B" },
+     "4": { "type_override": "B" }
+    }
+   },
+   "FillOutASBDForLPCM": {
+    "retval": { "type_override": "v" },
+    "args": {
+     "0": { "type_override": [ "o^{AudioStreamBasicDescription=dLLLLLLLL}", "o^{AudioStreamBasicDescription=dIIIIIIII}" ] },
+     "1": { "type_override": "d" },
+     "2": { "type_override": "I" },
+     "3": { "type_override": "I" },
+     "4": { "type_override": "I" },
+     "5": { "type_override": "B" },
+     "6": { "type_override": "B" },
+     "7": { "type_override": "B" }
+    }
+   },
+   "FillOutAudioTimeStampWithSampleTime": {
+    "retval": { "type_override": "v" },
+    "args": {
+     "0": { "type_override": [ "o^{AudioTimeStamp=dQdQ{SMPTETime=ssLLLssss}LL}", "o^{AudioTimeStamp=dQdQ{SMPTETime=ssIIIssss}II}" ] },
+     "1": { "type_override": "d" }
+    }
+   },
+   "FillOutAudioTimeStampWithHostTime": {
+    "retval": { "type_override": "v" },
+    "args": {
+     "0": { "type_override": [ "o^{AudioTimeStamp=dQdQ{SMPTETime=ssLLLssss}LL}", "o^{AudioTimeStamp=dQdQ{SMPTETime=ssIIIssss}II}" ] },
+     "1": { "type_override": "Q" }
+    }
+   },
+   "FillOutAudioTimeStampWithSampleAndHostTime": {
+    "retval": { "type_override": "v" },
+    "args": {
+     "0": { "type_override": [ "o^{AudioTimeStamp=dQdQ{SMPTETime=ssLLLssss}LL}", "o^{AudioTimeStamp=dQdQ{SMPTETime=ssIIIssss}II}" ] },
+     "1": { "type_override": "d" },
+     "2": { "type_override": "Q" }
     }
    }
   },
