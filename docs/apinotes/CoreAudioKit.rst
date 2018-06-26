@@ -15,4 +15,4 @@ These bindings are accessed through the ``CoreAudioKit`` package (that is, ``imp
 API Notes
 ---------
 
-* Nothing yet
+* The full API can be used from Python

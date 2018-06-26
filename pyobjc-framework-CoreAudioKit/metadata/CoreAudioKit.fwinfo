@@ -1,0 +1,85 @@
+// objective.metadata exceptions file, see its document
+// for information on how to update this file.
+{
+ "definitions": {
+  "classes": {
+   "AUGenericView": {
+    "methods": [
+     {
+      "args": {
+       "0": {}
+      },
+      "class_method": false,
+      "selector": "initWithAudioUnit:"
+     },
+     {
+      "args": {
+       "0": {}
+      },
+      "class_method": false,
+      "selector": "initWithAudioUnit:displayFlags:"
+     },
+     {
+      "class_method": false,
+      "retval": {},
+      "selector": "audioUnit"
+     }
+    ],
+    "properties": [
+     {
+      "attributes": [
+       "readonly"
+      ],
+      "name": "audioUnit"
+     }
+    ]
+   },
+   "AUAudioUnit": {
+    "methods": [
+     {
+      "selector": "requestViewControllerWithCompletionHandler:",
+      "class_method": false,
+      "args": {
+       "0": {
+        "callable": {
+	 "retval": { "type": "v" },
+	 "arguments": {
+	  "0": { "type": "^v" },
+	  "1": { "type": "@" }
+	 }
+	}
+       }
+      }
+     }
+    ]
+   },
+   "AUPannerView": {
+    "methods": [
+     {
+      "args": {
+       "0": {}
+      },
+      "class_method": true,
+      "selector": "AUPannerViewWithAudioUnit:"
+     },
+     {
+      "class_method": false,
+      "retval": {},
+      "selector": "audioUnit"
+     }
+    ],
+    "properties": [
+     {
+      "attributes": [
+       "readonly"
+      ],
+      "name": "audioUnit"
+     }
+    ]
+   }
+  },
+  "formal_protocols": {},
+  "functions": {},
+  "informal_protocols": {}
+ }
+}
