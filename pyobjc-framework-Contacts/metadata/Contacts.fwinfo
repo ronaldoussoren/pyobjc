@@ -32,6 +32,7 @@
    "CNErrorCodeContainmentCycle": { "value": 202 },
    "CNErrorCodeContainmentScope": { "value": 203 },
    "CNErrorCodeParentRecordDoesNotExist": { "value": 204 },
+   "CNErrorCodeRecordIdentifierInvalid": { "value": 205 },
    "CNErrorCodeValidationMultipleErrors": { "value": 300 },
    "CNErrorCodeValidationTypeMismatch": { "value": 301 },
    "CNErrorCodeValidationConfigurationError": { "value": 302 },

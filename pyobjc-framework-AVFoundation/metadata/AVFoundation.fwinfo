@@ -598,6 +598,42 @@
    "AVAudioEngine": {
     "methods": [
      {
+      "selector": "connectMIDI:toNodes:format:block:",
+      "class_method": false,
+      "args": {
+       "3": {
+        "callable": {
+         "retval": { "typestr": "i" },
+	 "arguments": {
+	  "0": { "typestr": "^v" },
+	  "1": { "typestr": "q" },
+	  "2": { "typestr": "C" },
+	  "3": { "typestr": [ "I", "Q" ] },
+	  "4": { "typestr": "n^v", "c_array_length_in_arg": 3 }
+	 }
+	}
+       }
+      }
+     },
+     {
+      "selector": "connectMIDI:to:format:block:",
+      "class_method": false,
+      "args": {
+       "3": {
+        "callable": {
+         "retval": { "typestr": "i" },
+	 "arguments": {
+	  "0": { "typestr": "^v" },
+	  "1": { "typestr": "q" },
+	  "2": { "typestr": "C" },
+	  "3": { "typestr": [ "I", "Q" ] },
+	  "4": { "typestr": "n^v", "c_array_length_in_arg": 3 }
+	 }
+	}
+       }
+      }
+     },
+     {
       "selector": "manualRenderingBlock",
       "class_method": false,
       "retval": {

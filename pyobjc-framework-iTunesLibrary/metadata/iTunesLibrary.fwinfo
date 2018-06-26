@@ -46,6 +46,20 @@
    "ITLibrary": {
     "methods": [
      {
+      "selector": "initWithAPIVersion:options:error:",
+      "class_method": false,
+      "args": {
+       "2": { "type_override": "Z" }
+      }
+     },
+     {
+      "selector": "libraryWithAPIVersion:options:error:",
+      "class_method": true,
+      "args": {
+       "2": { "type_override": "Z" }
+      }
+     },
+     {
       "selector": "reloadData",
       "class_method": false,
       "retval": { "type_override": "Z" }

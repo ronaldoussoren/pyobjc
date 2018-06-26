@@ -17,8 +17,16 @@ class TestITLibrary (TestCase):
     def testMethods10_7(self):
         self.assertResultIsBOOL(iTunesLibrary.ITLibrary.reloadData)
 
+    @min_os_level('10.14')
+    def testMethods10_14(self):
+        self.assertArgIsOut(iTunesLibrary.ITLibrary.libraryWithAPIVersion_options_error_, 2)
+        self.assertArgIsOut(iTunesLibrary.ITLibrary.initWithAPIVersion_options_error_, 2)
+
     def testConstants(self):
         self.assertEqual(iTunesLibrary.ITLibExportFeatureNone, 0)
+
+        self.assertEqual(iTunesLibrary.ITLibInitOptionNone, 0)
+        self.assertEqual(iTunesLibrary.ITLibInitOptionLazyLoadData, 1)
 
 
 if __name__ == "__main__":

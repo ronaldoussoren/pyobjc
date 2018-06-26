@@ -123,6 +123,13 @@
       "args": {
        "1": { "type_modifier": "o" }
       }
+     },
+     {
+      "selector": "modelWithMLModel:error:",
+      "class_method": true,
+      "args": {
+       "1": { "type_modifier": "o" }
+      }
      }
     ]
    },

@@ -11,6 +11,10 @@ class TestCTTypesetter (TestCase):
         self.assertIsInstance(kCTTypesetterOptionDisableBidiProcessing, unicode)
         self.assertIsInstance(kCTTypesetterOptionForcedEmbeddingLevel, unicode)
 
+    @min_os_level('10.14')
+    def testConstants10_14(self):
+        self.assertIsInstance(kCTTypesetterOptionAllowUnboundedLayout, unicode)
+
     def testFunctions(self):
         self.assertIsInstance(CTTypesetterGetTypeID(), (int, long))
 

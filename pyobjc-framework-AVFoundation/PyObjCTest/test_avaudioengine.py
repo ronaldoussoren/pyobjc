@@ -3,7 +3,7 @@ from PyObjCTools.TestSupport import *
 import AVFoundation
 
 AVAudioEngineManualRenderingBlock = objc._C_NSInteger + b'Io^{AudioBufferList=L[1{AudioBuffer=LL^v}]}o^i'
-
+AUMIDIOutputEventBlock = b'iqC' + objc._C_NSInteger + b'n^v'
 
 class TestAVAudioEngine (TestCase):
     @min_os_level('10.10')
@@ -25,6 +25,11 @@ class TestAVAudioEngine (TestCase):
 
         # XXX: This almost certainly requires a manual wrapper to use correctly...
         self.assertResultIsBlock(AVFoundation.AVAudioEngine.manualRenderingBlock, AVAudioEngineManualRenderingBlock)
+
+    @min_os_level('10.14')
+    def testMethods10_14(self):
+        self.assertArgIsBlock(AVFoundation.AVAudioEngine.connectMIDI_to_format_block_, 3, AUMIDIOutputEventBlock)
+        self.assertArgIsBlock(AVFoundation.AVAudioEngine.connectMIDI_toNodes_format_block_, 3, AUMIDIOutputEventBlock)
 
     @min_os_level('10.10')
     def testConstants(self):

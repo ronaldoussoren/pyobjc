@@ -669,6 +669,12 @@ class TestCGImageProperties (TestCase):
 
         self.assertIsInstance(kCGImageAuxiliaryDataTypePortraitEffectsMatte, unicode)
 
+        self.assertIsInstance(kCGImagePropertyPNGComment, unicode)
+        self.assertIsInstance(kCGImagePropertyPNGDisclaimer, unicode)
+        self.assertIsInstance(kCGImagePropertyPNGSource, unicode)
+        self.assertIsInstance(kCGImagePropertyPNGWarning, unicode)
+
+
 
 if __name__ == "__main__":
     main()

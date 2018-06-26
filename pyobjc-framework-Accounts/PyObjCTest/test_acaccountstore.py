@@ -21,7 +21,6 @@ if sys.maxsize > 2 ** 32:
 
         def testMethods(self):
             self.assertArgIsBlock(Accounts.ACAccountStore.saveAccount_withCompletionHandler_, 1, ACAccountStoreSaveCompletionHandler)
-            self.assertArgIsBlock(Accounts.ACAccountStore.requestAccessToAccountsWithType_withCompletionHandler_, 1, ACAccountStoreRequestAccessCompletionHandler)
             self.assertArgIsBlock(Accounts.ACAccountStore.requestAccessToAccountsWithType_options_completion_, 2, ACAccountStoreRequestAccessCompletionHandler)
             self.assertArgIsBlock(Accounts.ACAccountStore.renewCredentialsForAccount_completion_, 1, ACAccountStoreCredentialRenewalHandler)
             self.assertArgIsBlock(Accounts.ACAccountStore.removeAccount_withCompletionHandler_, 1, ACAccountStoreRemoveCompletionHandler)

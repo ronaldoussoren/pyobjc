@@ -35,5 +35,9 @@ if os_level_key(os_release()) < os_level_key('10.12') or sys.maxsize >= 2**32:
             self.assertArgIsBOOL(SceneKit.SCNPhysicsBody.setAffectedByGravity_, 0)
             self.assertResultIsBOOL(SceneKit.SCNPhysicsBody.isAffectedByGravity)
 
+        @min_os_level('10.14')
+        def testMethods10_14(self):
+            self.assertArgIsBOOL(SceneKit.SCNPhysicsBody.setResting_, 0)
+
 if __name__ == "__main__":
     main()
