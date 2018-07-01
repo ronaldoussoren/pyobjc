@@ -57,6 +57,7 @@ FRAMEWORK_WRAPPERS=[
         ('CryptoTokenKit',          '10.10',            None        ),
         ('DictionaryServices',      '10.5',             None        ),
         ('DiscRecording',           None,               None        ),
+        ('DiscRecordingUI',         None,               None        ),
         ('DiskArbitration',         None,               None        ),
         ('EventKit',                '10.8',             None        ),
         ('ExceptionHandling',       None,               None        ),

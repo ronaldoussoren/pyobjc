@@ -1,0 +1,108 @@
+// objective.metadata exceptions file, see its document
+// for information on how to update this file.
+{
+ "definitions": {
+  "classes": {
+   "DRSetupPanel": {
+    "methods": [
+     {
+      "args": {
+       "3": {}
+      },
+      "class_method": false,
+      "selector": "beginSetupSheetForWindow:modalDelegate:didEndSelector:contextInfo:"
+     }
+    ]
+   },
+   "NSObject": {
+    "methods": [
+     {
+      "args": {
+       "2": {}
+      },
+      "class_method": false,
+      "selector": "setupPanel:deviceContainsSuitableMedia:promptString:"
+     }
+    ]
+   }
+  },
+  "formal_protocols": {},
+  "functions": {
+   "DRBurnSessionBeginProgressDialog": {
+    "args": {
+     "0": {},
+     "2": { "type_modifier": "n" },
+     "3": { "type_modifier": "n" }
+    }
+   },
+   "DRBurnSessionCreate": {
+    "retval": {
+     "already_cfretained": true
+    }
+   },
+   "DRBurnSessionGetBurn": {
+    "args": {
+     "0": {}
+    },
+    "retval": {}
+   },
+   "DRBurnSessionSetBurn": {
+    "args": {
+     "0": {},
+     "1": {}
+    }
+   },
+   "DRBurnSessionSetupDialog": {
+    "args": {
+     "0": {},
+     "1": { "type_modifier": "n" },
+     "2": { "type_modifier": "n" }
+    }
+   },
+   "DREraseSessionBeginProgressDialog": {
+    "args": {
+     "0": {},
+     "1": { "type_modifier": "n"},
+     "2": { "type_modifier": "n"}
+    }
+   },
+   "DREraseSessionCreate": {
+    "retval": {
+     "already_cfretained": true
+    }
+   },
+   "DREraseSessionGetErase": {
+    "args": {
+     "0": {}
+    },
+    "retval": {}
+   },
+   "DREraseSessionSetErase": {
+    "args": {
+     "0": {},
+     "1": {}
+    }
+   },
+   "DREraseSessionSetupDialog": {
+    "args": {
+     "0": {},
+     "1": { "type_modifier": "n" },
+     "2": { "type_modifier": "n" }
+    }
+   }
+  },
+  "informal_protocols": {
+   "DRSetupPanelDelegate": {
+    "methods": [
+     {
+      "args": {
+       "2": {}
+      },
+      "class_method": false,
+      "selector": "setupPanel:deviceContainsSuitableMedia:promptString:"
+     }
+    ]
+   }
+  }
+ }
+}

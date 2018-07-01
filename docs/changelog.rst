@@ -18,6 +18,7 @@ Version 5.0
   - CoreMedia (new in macOS 10.7)
   - CoreMediaIO (new in macOS 10.7)
   - DiscRecording (new in macOS 10.2)
+  - DiscRecordingUI (new in macOS 10.2)
   - MediaToolbox
   - NaturalLanguage
   - Network
