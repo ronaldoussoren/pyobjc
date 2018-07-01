@@ -56,6 +56,7 @@ FRAMEWORK_WRAPPERS=[
         ('CoreWLAN',                '10.6',             None        ),
         ('CryptoTokenKit',          '10.10',            None        ),
         ('DictionaryServices',      '10.5',             None        ),
+        ('DiscRecording',           None,               None        ),
         ('DiskArbitration',         None,               None        ),
         ('EventKit',                '10.8',             None        ),
         ('ExceptionHandling',       None,               None        ),

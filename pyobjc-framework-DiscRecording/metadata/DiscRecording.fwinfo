@@ -1,0 +1,714 @@
+// objective.metadata exceptions file, see its document
+// for information on how to update this file.
+{
+ "definitions": {
+  "classes": {
+   "NSObject": {
+    "methods": [
+     {
+      "selector": "produceFile:fork:intoBuffer:length:atAddress:blockSize:",
+      "class_method": false,
+      "args": {
+       "2": { "type_override": "^v", "type_modifier": "o", "c_array_length_in_arg": 3 }
+      }
+     },
+     {
+      "args": {
+       "1": { "type_override": "^v", "type_modifier": "o", "c_array_length_in_arg": 2 },
+       "5": { "type_modifier": "N" }
+      },
+      "class_method": false,
+      "selector": "producePreGapForTrack:intoBuffer:length:atAddress:blockSize:ioFlags:"
+     },
+     {
+      "args": {
+       "1": { "type_override": "^v", "type_modifier": "o", "c_array_length_in_arg": 2 },
+       "5": { "type_modifier": "N" }
+      },
+      "class_method": false,
+      "selector": "produceDataForTrack:intoBuffer:length:atAddress:blockSize:ioFlags:"
+     },
+     {
+      "args": {
+       "1": { "type_override": "^v", "type_modifier": "n", "c_array_length_in_arg": 2 },
+       "5": { "type_modifier": "N" }
+      },
+      "class_method": false,
+      "selector": "verifyPreGapForTrack:inBuffer:length:atAddress:blockSize:ioFlags:"
+     },
+     {
+      "args": {
+       "1": { "type_override": "^v", "type_modifier": "n", "c_array_length_in_arg":  2 },
+       "5": { "type_modifier": "N" }
+      },
+      "class_method": false,
+      "selector": "verifyDataForTrack:inBuffer:length:atAddress:blockSize:ioFlags:"
+     }
+    ]
+   }
+  },
+  "formal_protocols": {
+   "DRFileDataProduction": {
+    "methods": [
+     {
+      "args": {
+       "2": { "type_modifier": "o", "c_array_length_in_arg": 3 }
+      },
+      "class_method": false,
+      "selector": "produceFile:fork:intoBuffer:length:atAddress:blockSize:"
+     },
+     {
+      "args": {
+       "1": { "type_modifier": "o", "c_array_length_in_arg": 2 },
+       "5": { "type_modifier": "N" }
+      },
+      "class_method": false,
+      "selector": "producePreGapForTrack:intoBuffer:length:atAddress:blockSize:ioFlags:"
+     },
+     {
+      "args": {
+       "1": { "type_modifier": "o", "c_array_length_in_arg": 2 },
+       "5": { "type_modifier": "N" }
+      },
+      "class_method": false,
+      "selector": "produceDataForTrack:intoBuffer:length:atAddress:blockSize:ioFlags:"
+     },
+     {
+      "args": {
+       "1": { "type_modifier": "n", "c_array_length_in_arg": 2 },
+       "5": { "type_modifier": "N" }
+      },
+      "class_method": false,
+      "selector": "verifyPreGapForTrack:inBuffer:length:atAddress:blockSize:ioFlags:"
+     },
+     {
+      "args": {
+       "1": { "type_modifier": "n", "c_array_length_in_arg":  2 },
+       "5": { "type_modifier": "N" }
+      },
+      "class_method": false,
+      "selector": "verifyDataForTrack:inBuffer:length:atAddress:blockSize:ioFlags:"
+     }
+    ]
+   },
+   "DRTrackDataProduction": {
+    "methods": [
+     {
+      "args": {
+       "1": { "type_modifier": "o", "c_array_length_in_arg": 2 },
+       "5": { "type_modifier": "N" }
+      },
+      "class_method": false,
+      "selector": "producePreGapForTrack:intoBuffer:length:atAddress:blockSize:ioFlags:"
+     },
+     {
+      "args": {
+       "1": { "type_modifier": "o", "c_array_length_in_arg": 2 },
+       "5": { "type_modifier": "N" }
+      },
+      "class_method": false,
+      "selector": "produceDataForTrack:intoBuffer:length:atAddress:blockSize:ioFlags:"
+     },
+     {
+      "args": {
+       "1": { "type_modifier": "n", "c_array_length_in_arg": 2 },
+       "5": { "type_modifier": "N" }
+      },
+      "class_method": false,
+      "selector": "verifyPreGapForTrack:inBuffer:length:atAddress:blockSize:ioFlags:"
+     },
+     {
+      "args": {
+       "1": { "type_modifier": "n", "c_array_length_in_arg":  2 },
+       "5": { "type_modifier": "N" }
+      },
+      "class_method": false,
+      "selector": "verifyDataForTrack:inBuffer:length:atAddress:blockSize:ioFlags:"
+     }
+    ]
+   }
+  },
+  "functions": {
+   "DRAudioTrackCreate": {
+    "args": {
+     "0": { "type_modifier": "n" }
+    },
+    "retval": {
+     "already_cfretained": true
+    }
+   },
+   "DRAudioTrackCreateWithURL": {
+    "args": {
+     "0": {}
+    },
+    "retval": {
+     "already_cfretained": true
+    }
+   },
+   "DRBurnAbort": {
+    "args": {
+     "0": {}
+    }
+   },
+   "DRBurnCopyStatus": {
+    "args": {
+     "0": {}
+    },
+    "retval": {
+     "already_cfretained": true
+    }
+   },
+   "DRBurnCreate": {
+    "args": {
+     "0": {}
+    },
+    "retval": {
+     "already_cfretained": true
+    }
+   },
+   "DRBurnGetDevice": {
+    "args": {
+     "0": {}
+    },
+    "retval": {}
+   },
+   "DRBurnGetProperties": {
+    "args": {
+     "0": {}
+    },
+    "retval": {}
+   },
+   "DRBurnSetProperties": {
+    "args": {
+     "0": {},
+     "1": {}
+    }
+   },
+   "DRBurnWriteLayout": {
+    "args": {
+     "0": {}
+    }
+   },
+   "DRCDTextBlockCreate": {
+    "args": {
+     "0": {}
+    },
+    "retval": {
+     "already_cfretained": true
+    }
+   },
+   "DRCDTextBlockCreateArrayFromPackList": {
+    "args": {
+     "0": {}
+    },
+    "retval": {
+     "already_cfretained": true
+    }
+   },
+   "DRCDTextBlockFlatten": {
+    "args": {
+     "0": {}
+    }
+   },
+   "DRCDTextBlockGetProperties": {
+    "args": {
+     "0": {}
+    },
+    "retval": {}
+   },
+   "DRCDTextBlockGetTrackDictionaries": {
+    "args": {
+     "0": {}
+    },
+    "retval": {}
+   },
+   "DRCDTextBlockGetValue": {
+    "args": {
+     "0": {},
+     "2": {}
+    }
+   },
+   "DRCDTextBlockSetProperties": {
+    "args": {
+     "0": {},
+     "1": {}
+    }
+   },
+   "DRCDTextBlockSetTrackDictionaries": {
+    "args": {
+     "0": {},
+     "1": {}
+    }
+   },
+   "DRCDTextBlockSetValue": {
+    "args": {
+     "0": {},
+     "2": {}
+    }
+   },
+   "DRCopyDeviceArray": {
+    "retval": {
+     "already_cfretained": true
+    }
+   },
+   "DRCopyLocalizedStringForAdditionalSense": {
+    "retval": {
+     "already_cfretained": true
+    }
+   },
+   "DRCopyLocalizedStringForDiscRecordingError": {
+    "retval": {
+     "already_cfretained": true
+    }
+   },
+   "DRCopyLocalizedStringForSenseCode": {
+    "retval": {
+     "already_cfretained": true
+    }
+   },
+   "DRCopyLocalizedStringForValue": {
+    "args": {
+     "0": {}
+    },
+    "retval": {
+     "already_cfretained": true
+    }
+   },
+   "DRDeviceAcquireExclusiveAccess": {
+    "args": {
+     "0": {}
+    }
+   },
+   "DRDeviceAcquireMediaReservation": {
+    "args": {
+     "0": {}
+    }
+   },
+   "DRDeviceCloseTray": {
+    "args": {
+     "0": {}
+    }
+   },
+   "DRDeviceCopyDeviceForBSDName": {
+    "args": {
+     "0": {}
+    },
+    "retval": {
+     "already_cfretained": true
+    }
+   },
+   "DRDeviceCopyDeviceForIORegistryEntryPath": {
+    "args": {
+     "0": {}
+    },
+    "retval": {
+     "already_cfretained": true
+    }
+   },
+   "DRDeviceCopyInfo": {
+    "args": {
+     "0": {}
+    },
+    "retval": {
+     "already_cfretained": true
+    }
+   },
+   "DRDeviceCopyStatus": {
+    "args": {
+     "0": {}
+    },
+    "retval": {
+     "already_cfretained": true
+    }
+   },
+   "DRDeviceEjectMedia": {
+    "args": {
+     "0": {}
+    }
+   },
+   "DRDeviceIsValid": {
+    "args": {
+     "0": {}
+    }
+   },
+   "DRDeviceOpenTray": {
+    "args": {
+     "0": {}
+    }
+   },
+   "DRDeviceReleaseExclusiveAccess": {
+    "args": {
+     "0": {}
+    }
+   },
+   "DRDeviceReleaseMediaReservation": {
+    "args": {
+     "0": {}
+    }
+   },
+   "DREraseCopyStatus": {
+    "args": {
+     "0": {}
+    },
+    "retval": {
+     "already_cfretained": true
+    }
+   },
+   "DREraseCreate": {
+    "args": {
+     "0": {}
+    },
+    "retval": {
+     "already_cfretained": true
+    }
+   },
+   "DREraseGetDevice": {
+    "args": {
+     "0": {}
+    },
+    "retval": {}
+   },
+   "DREraseGetProperties": {
+    "args": {
+     "0": {}
+    },
+    "retval": {}
+   },
+   "DREraseSetProperties": {
+    "args": {
+     "0": {},
+     "1": {}
+    }
+   },
+   "DREraseStart": {
+    "args": {
+     "0": {}
+    }
+   },
+   "DRFSObjectCopyBaseName": {
+    "retval": {
+     "already_cfretained": true
+    }
+   },
+   "DRFSObjectCopyFilesystemProperties": {
+    "args": {
+     "1": {}
+    },
+    "retval": {
+     "already_cfretained": true
+    }
+   },
+   "DRFSObjectCopyFilesystemProperty": {
+    "args": {
+     "1": {},
+     "2": {}
+    }
+   },
+   "DRFSObjectCopyMangledName": {
+    "args": {
+     "1": {}
+    },
+    "retval": {
+     "already_cfretained": true
+    }
+   },
+   "DRFSObjectCopyMangledNames": {
+    "retval": {
+     "already_cfretained": true
+    }
+   },
+   "DRFSObjectCopyRealURL": {
+    "retval": {
+     "already_cfretained": true
+    }
+   },
+   "DRFSObjectCopySpecificName": {
+    "args": {
+     "1": {}
+    },
+    "retval": {
+     "already_cfretained": true
+    }
+   },
+   "DRFSObjectCopySpecificNames": {
+    "retval": {
+     "already_cfretained": true
+    }
+   },
+   "DRFSObjectGetFilesystemMask": {
+    "args": {
+     "1": { "type_modifier": "o" },
+     "2": { "type_modifier": "o" }
+    }
+   },
+   "DRFSObjectGetParent": {
+    "retval": {}
+   },
+   "DRFSObjectGetRealFSRef": {
+    "args": {
+     "1": { "type_modifier": "o" }
+    }
+   },
+   "DRFSObjectSetBaseName": {
+    "args": {
+     "1": {}
+    }
+   },
+   "DRFSObjectSetFilesystemProperties": {
+    "args": {
+     "1": {},
+     "2": {}
+    }
+   },
+   "DRFSObjectSetFilesystemProperty": {
+    "args": {
+     "1": {},
+     "2": {}
+    }
+   },
+   "DRFSObjectSetSpecificName": {
+    "args": {
+     "1": {},
+     "2": {}
+    }
+   },
+   "DRFSObjectSetSpecificNames": {
+    "args": {
+     "1": {}
+    }
+   },
+   "DRFileCreateReal": {
+    "args": {
+     "0": { "type_modifier": "n" }
+    },
+    "retval": {
+     "already_cfretained": true
+    }
+   },
+   "DRFileCreateRealWithURL": {
+    "args": {
+     "0": {}
+    },
+    "retval": {
+     "already_cfretained": true
+    }
+   },
+   "DRFileCreateVirtualLink": {
+    "args": {
+     "2": {}
+    },
+    "retval": {
+     "already_cfretained": true
+    }
+   },
+   "DRFileCreateVirtualWithCallback": {
+    "args": {
+     "0": {},
+     "1": {
+      "function": {
+       "args": [
+        {
+         "typestr": "^v"
+        },
+        {
+         "typestr": "^{__DRFile=}"
+        },
+        {
+         "typestr": "I"
+        },
+        {
+         "typestr": "^v"
+        }
+       ],
+       "retval": {
+        "typestr": "i"
+       }
+      }
+     },
+     "2": {}
+    },
+    "retval": {
+     "already_cfretained": true
+    }
+   },
+   "DRFileCreateVirtualWithData": {
+    "args": {
+     "0": {},
+     "1": { "type_modifier": "n", "c_array_length_in_arg": 2 }
+    },
+    "retval": {
+     "already_cfretained": true
+    }
+   },
+   "DRFilesystemTrackCreate": {
+    "args": {
+     "0": {}
+    },
+    "retval": {
+     "already_cfretained": true
+    }
+   },
+   "DRFolderAddChild": {
+    "args": {
+     "0": {}
+    }
+   },
+   "DRFolderConvertRealToVirtual": {
+    "args": {
+     "0": {}
+    }
+   },
+   "DRFolderCopyChildren": {
+    "args": {
+     "0": {}
+    },
+    "retval": {
+     "already_cfretained": true
+    }
+   },
+   "DRFolderCountChildren": {
+    "args": {
+     "0": {}
+    }
+   },
+   "DRFolderCreateReal": {
+    "args": {
+     "0": { "type_modifier": "n" }
+    },
+    "retval": {
+     "already_cfretained": true
+    }
+   },
+   "DRFolderCreateRealWithURL": {
+    "args": {
+     "0": {}
+    },
+    "retval": {
+     "already_cfretained": true
+    }
+   },
+   "DRFolderCreateVirtual": {
+    "args": {
+     "0": {}
+    },
+    "retval": {
+     "already_cfretained": true
+    }
+   },
+   "DRFolderRemoveChild": {
+    "args": {
+     "0": {}
+    }
+   },
+   "DRGetRefCon": {
+    "retval": {}
+   },
+   "DRNotificationCenterAddObserver": {
+    "args": {
+     "0": {},
+     "1": {},
+     "2": {
+      "function": {
+       "args": [
+        {
+         "typestr": "^{__DRNotificationCenter=}"
+        },
+        {
+         "typestr": "^v"
+        },
+        {
+         "typestr": "^{__CFString=}"
+        },
+        {
+         "typestr": "@"
+        },
+        {
+         "typestr": "^{__CFDictionary=}"
+        }
+       ],
+       "retval": {
+        "typestr": "v"
+       }
+      }
+     },
+     "3": {}
+    }
+   },
+   "DRNotificationCenterCreate": {
+    "retval": {
+     "already_cfretained": true
+    }
+   },
+   "DRNotificationCenterCreateRunLoopSource": {
+    "args": {
+     "0": {}
+    },
+    "retval": {
+     "already_cfretained": true
+    }
+   },
+   "DRNotificationCenterRemoveObserver": {
+    "args": {
+     "0": {},
+     "1": {},
+     "2": {}
+    }
+   },
+   "DRSetRefCon": {
+    "args": {
+     "1": {},
+     "2": {}
+    }
+   },
+   "DRTrackCreate": {
+    "args": {
+     "0": {},
+     "1": {
+      "function": {
+       "args": [
+        {
+         "typestr": "^{__DRTrack=}"
+        },
+        {
+         "typestr": "I"
+        },
+        {
+         "typestr": "^v"
+        }
+       ],
+       "retval": {
+        "typestr": "i"
+       }
+      }
+     }
+    },
+    "retval": {
+     "already_cfretained": true
+    }
+   },
+   "DRTrackEstimateLength": {
+    "args": {
+     "0": {}
+    }
+   },
+   "DRTrackGetProperties": {
+    "args": {
+     "0": {}
+    },
+    "retval": {}
+   },
+   "DRTrackSetProperties": {
+    "args": {
+     "0": {},
+     "1": {}
+    }
+   },
+   "DRTrackSpeedTest": {
+    "args": {
+     "0": {}
+    }
+   }
+  },
+  "informal_protocols": {}
+ }
+}

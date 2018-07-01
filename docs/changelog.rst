@@ -13,21 +13,22 @@ Version 5.0
   new frameworks:
 
   - AdSupport
-  - CoreAudio (new in macOS 10.3)
-  - CoreAudioKit (new in macOS 10.3)
+  - CoreAudio (new in macOS 10.0)
+  - CoreAudioKit (new in macOS 10.4)
   - CoreMedia (new in macOS 10.7)
   - CoreMediaIO (new in macOS 10.7)
+  - DiscRecording (new in macOS 10.2)
   - MediaToolbox
   - NaturalLanguage
   - Network
-  - OSAKit (new in macOS 10.0)
+  - OSAKit (new in macOS 10.4)
   - UserNotifications
   - VideoSubscriberAccount
 
 - Added two features that can help with gating code on the
   version of macos:
 
-  1) The constants "objc.MAC_OS_X_VERSION_CURRENT" can be 
+  1) The constants "objc.MAC_OS_X_VERSION_CURRENT" can be
      compared with one of the objc.MAC_OS_X_VERSION_..." contants.
 
   2) The function "objc.macos_avaiable(major, minor[, patch])"
