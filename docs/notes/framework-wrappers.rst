@@ -126,13 +126,13 @@ The framework name links to API notes for that framework, the python packages li
 +------------------------------------------------------------------+---------------------------------------------+-----------------------------------------+
 | DVComponentGlue                                                  | -                                           | Not yet wrapped                         |
 +------------------------------------------------------------------+---------------------------------------------+-----------------------------------------+
-| DVDPlayback                                                      | -                                           | Not yet wrapped                         |
+| :doc:`DVDPlayback </apinotes/DVDPlayback>`                       | `pyobjc-framework-DVDPlayback`_             |                                         |
 +------------------------------------------------------------------+---------------------------------------------+-----------------------------------------+
 | DirectoryService                                                 | -                                           | Will not be wrapped.                    |
 +------------------------------------------------------------------+---------------------------------------------+-----------------------------------------+
-| DiscRecording                                                    | -                                           | Not yet wrapped                         |
+| :doc:`DiscRecording </apinotes/DiscRecording>`                   | `pyobjc-framework-DiscRecording`_           |                                         |
 +------------------------------------------------------------------+---------------------------------------------+-----------------------------------------+
-| DiscRecordingUI                                                  | -                                           | Not yet wrapped                         |
+| :doc:`DiscRecordingUI </apinotes/DiscRecording>`                 | `pyobjc-framework-DiscRecording`_           |                                         |
 +------------------------------------------------------------------+---------------------------------------------+-----------------------------------------+
 | :doc:`DiskArbitration </apinotes/DiskArbitration>`               | `pyobjc-framework-DiskArbitration`_         |                                         |
 +------------------------------------------------------------------+---------------------------------------------+-----------------------------------------+
@@ -466,3 +466,6 @@ version of PyObjC although there is no explicit roadmap for this.
 .. _`pyobjc-framework-OSAKit`: https://pypi.org/project/pyobjc-framework-OSAKit/
 .. _`pyobjc-framework-CoreAudio`: https://pypi.org/project/pyobjc-framework-CoreAudio/
 .. _`pyobjc-framework-CoreAudioKit`: https://pypi.org/project/pyobjc-framework-CoreAudioKit/
+.. _`pyobjc-framework-DiscRecording`: https://pypi.org/project/pyobjc-framework-DiscRecording/
+.. _`pyobjc-framework-DiscRecordingUI`: https://pypi.org/project/pyobjc-framework-DiscRecordingUI/
+.. _`pyobjc-framework-DVDPlayback`: https://pypi.org/project/pyobjc-framework-DVDPlayback/
