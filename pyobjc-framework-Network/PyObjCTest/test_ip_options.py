@@ -28,6 +28,8 @@ if sys.maxsize > 2 ** 32:
             Network.nw_ip_metadata_get_ecn_flag
             Network.nw_ip_metadata_set_service_class
             Network.nw_ip_metadata_get_service_class
+            Network.nw_ip_options_set_calculate_receive_time
+            Network.nw_ip_metadata_get_receive_time
 
 if __name__ == "__main__":
     main()

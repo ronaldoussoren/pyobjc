@@ -4,6 +4,9 @@ from Quartz import *
 import Quartz
 
 class TestCGImageProperties (TestCase):
+    @min_os_level('10.14')
+    def testFunctions(self):
+        CGImageSourceGetPrimaryImageIndex
 
     def testConstants(self):
         self.assertEqual(IMAGEIO_PNG_NO_FILTERS, 0x00)
@@ -414,6 +417,9 @@ class TestCGImageProperties (TestCase):
         self.assertIsInstance(kCGImagePropertyThumbnailImages, unicode)
         self.assertIsInstance(kCGImagePropertyAuxiliaryData, unicode)
         self.assertIsInstance(kCGImagePropertyAuxiliaryDataType, unicode)
+
+        # New definition in Xcode 10.14 SDK
+        self.assertIsInstance(kCGImagePropertyPrimaryImage, unicode)
 
     @min_os_level('10.13.4')
     def testConstants10_13_4(self):

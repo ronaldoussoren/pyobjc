@@ -90,6 +90,8 @@ if sys.maxsize > 2 ** 32:
             Network.nw_parameters_get_prefer_no_proxy
             Network.nw_parameters_set_expired_dns_behavior
             Network.nw_parameters_get_expired_dns_behavior
+            Network.nw_parameters_set_include_peer_to_peer
+            Network.nw_parameters_get_include_peer_to_peer
 
 if __name__ == "__main__":
     main()

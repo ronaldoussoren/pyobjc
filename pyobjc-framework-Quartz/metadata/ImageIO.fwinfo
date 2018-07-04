@@ -3,6 +3,7 @@
 {
  "definitions": {
   "externs": {
+   "kCGImagePropertyPrimaryImage": { "typestr": "@" },
    "kCGImageAuxiliaryDataTypePortraitEffectsMatte": { "typestr": "@" },
    "kCGImagePropertyDNGActiveArea": { "typestr": "@" },
    "kCGImagePropertyDNGAnalogBalance": { "typestr": "@" },
@@ -713,6 +714,14 @@
     "args": {
      "0": {},
      "1": {}
+    }
+   },
+   "CGImageSourceGetPrimaryImageIndex": {
+    "args": {
+     "0": { "type_override": "@" }
+    },
+    "retval": {
+     "type_override": "l"
     }
    }
   },

@@ -31,6 +31,7 @@ if sys.maxsize > 2 ** 32:
             self.assertEqual(Intents.INIntentErrorImageProxyInvalid, 6006)
             self.assertEqual(Intents.INIntentErrorImageProxyTimeout, 6007)
             self.assertEqual(Intents.INIntentErrorImageServiceFailure, 6008)
+            self.assertEqual(Intents.INIntentErrorImageScalingFailed, 6009)
             self.assertEqual(Intents.INIntentErrorVoiceShortcutCreationFailed, 7000)
             self.assertEqual(Intents.INIntentErrorVoiceShortcutGetFailed, 7001)
             self.assertEqual(Intents.INIntentErrorVoiceShortcutDeleteFailed, 7002)
