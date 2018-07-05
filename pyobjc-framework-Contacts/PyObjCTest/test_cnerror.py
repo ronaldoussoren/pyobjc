@@ -19,7 +19,7 @@ if sys.maxsize > 2**32:
             self.assertEqual(Contacts.CNErrorCodeContainmentCycle, 202)
             self.assertEqual(Contacts.CNErrorCodeContainmentScope, 203)
             self.assertEqual(Contacts.CNErrorCodeParentRecordDoesNotExist, 204)
-            self.assertEqual(Constants.CNErrorCodeRecordIdentifierInvalid, 205)
+            self.assertEqual(Contacts.CNErrorCodeRecordIdentifierInvalid, 205)
             self.assertEqual(Contacts.CNErrorCodeValidationMultipleErrors, 300)
             self.assertEqual(Contacts.CNErrorCodeValidationTypeMismatch, 301)
             self.assertEqual(Contacts.CNErrorCodeValidationConfigurationError, 302)
