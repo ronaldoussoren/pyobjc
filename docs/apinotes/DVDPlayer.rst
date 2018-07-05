@@ -31,6 +31,6 @@ These 32-bit legacy APIs are not available from Python.
 These 32-bit legacy APIs are not available from Python.
 
 ``DVDGetMediaVolumeName``
-........................
+.........................
 
 This API is not available from Python. Use ``DVDGetMediaVolumeCFName`` instead.
