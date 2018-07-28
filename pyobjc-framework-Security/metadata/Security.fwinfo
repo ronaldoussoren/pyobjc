@@ -3019,6 +3019,74 @@
      "7": { "type_override": "o^@", "already_cfretained": true }
     }
    },
+   "sec_protocol_metadata_access_distinguished_names": {
+    "args":  {
+     "0": { "type_override": "@" },
+     "1": {
+      "type_override": "^?",
+      "callable_retained": true,
+      "callable": {
+       "arguments": {
+	"0": { "type": "^v" },
+	"1": { "type": "@" }
+       },
+       "retval": { "type": "i" }
+      }
+     }
+    },
+    "retval": { "type_override": "b" }
+   },
+   "sec_protocol_metadata_access_supported_signature_algorithms": {
+    "args":  {
+     "0": { "type_override": "@" },
+     "1": {
+      "type_override": "^?",
+      "callable_retained": true,
+      "callable": {
+       "arguments": {
+	"0": { "type": "^v" },
+	"1": { "type": "S" }
+       },
+       "retval": { "type": "i" }
+      }
+     }
+    },
+    "retval": { "type_override": "b" }
+   },
+   "sec_protocol_metadata_access_ocsp_response": {
+    "args":  {
+     "0": { "type_override": "@" },
+     "1": {
+      "type_override": "^?",
+      "callable_retained": true,
+      "callable": {
+       "arguments": {
+	"0": { "type": "^v" },
+	"1": { "type": "@" }
+       },
+       "retval": { "type": "i" }
+      }
+     }
+    },
+    "retval": { "type_override": "b" }
+   },
+   "sec_protocol_metadata_access_peer_certificate_chain": {
+    "args":  {
+     "0": { "type_override": "@" },
+     "1": {
+      "type_override": "^?",
+      "callable_retained": true,
+      "callable": {
+       "arguments": {
+	"0": { "type": "^v" },
+	"1": { "type": "@" }
+       },
+       "retval": { "type": "i" }
+      }
+     }
+    },
+    "retval": { "type_override": "b" }
+   },
    "SecKeychainAddCallback": {
     "args":  {
      "0": {
@@ -4576,6 +4644,167 @@
     },
     "retval": {
      "type_override": "i"
+    }
+   },
+   "sec_trust_create": {
+    "args": {
+     "0": { "type_override": "@" }
+    },
+    "retval": {
+     "type_override": "@",
+     "already_retained": true
+    }
+   },
+   "sec_identity_create": {
+    "args": {
+     "0": { "type_override": "@" }
+    },
+    "retval": {
+     "type_override": "@",
+     "already_retained": true
+    }
+   },
+   "sec_identity_create_with_certificates": {
+    "args": {
+     "0": { "type_override": "@" },
+     "1": { "type_override": "@" }
+    },
+    "retval": {
+     "type_override": "@",
+     "already_retained": true
+    }
+   },
+   "sec_certificate_create": {
+    "args": {
+     "0": { "type_override": "@" },
+     "1": { "type_override": "@" }
+    },
+    "retval": {
+     "type_override": "@",
+     "already_retained": true
+    }
+   },
+   "sec_protocol_metadata_copy_peer_public_key": {
+    "args": {
+     "0": { "type_override": "@" },
+     "1": { "type_override": "@" }
+    },
+    "retval": {
+     "type_override": "@",
+     "already_retained": true
+    }
+   },
+   "sec_protocol_metadata_get_early_data_accepted": {
+    "args": {
+     "0": { "type_override": "@" }
+    },
+    "retval": {
+     "type_override": "b"
+    }
+   },
+   "sec_protocol_metadata_get_negotiated_ciphersuite": {
+    "args": {
+     "0": { "type_override": "@" }
+    },
+    "retval": {
+     "type_override": "I"
+    }
+   },
+   "sec_protocol_metadata_get_negotiated_protocol_version": {
+    "args": {
+     "0": { "type_override": "@" }
+    },
+    "retval": {
+     "type_override": "i"
+    }
+   },
+   "sec_protocol_metadata_get_negotiated_protocol": {
+    "args": {
+     "0": { "type_override": "@" }
+    },
+    "retval": {
+     "type_override": "^t",
+     "c_array_delimited_by_null": true
+    }
+   },
+   "sec_certificate_copy_ref": {
+    "args": {
+     "0": { "type_override": "@" }
+    },
+    "retval": {
+     "type_override": "@",
+     "already_cfretained": true
+    }
+   },
+   "sec_trust_copy_ref": {
+    "args": {
+     "0": { "type_override": "@" }
+    },
+    "retval": {
+     "type_override": "@",
+     "already_cfretained": true
+    }
+   },
+   "sec_identity_copy_certificates_ref": {
+    "args": {
+     "0": { "type_override": "@" }
+    },
+    "retval": {
+     "type_override": "@",
+     "already_cfretained": true
+    }
+   },
+   "sec_identity_copy_ref": {
+    "args": {
+     "0": { "type_override": "@" }
+    },
+    "retval": {
+     "type_override": "@",
+     "already_cfretained": true
+    }
+   },
+   "sec_protocol_metadata_peers_are_equal": {
+    "args": {
+     "0": { "type_override": "@" },
+     "1": { "type_override": "@" }
+    },
+    "retval": {
+     "type_override": "b"
+    }
+   },
+   "sec_protocol_metadata_challenge_parameters_are_equal": {
+    "args": {
+     "0": { "type_override": "@" },
+     "1": { "type_override": "@" }
+    },
+    "retval": {
+     "type_override": "b"
+    }
+   },
+   "sec_protocol_metadata_create_secret_with_context": {
+    "args": {
+     "0": { "type_override": "@" },
+     "1": { "type_override": "L" },
+     "2": { "type_override": "^t", "type_modifier": "n", "c_array_length_in_arg": 1 },
+     "3": { "type_override": "L" },
+     "4": { "type_override": "^v", "type_modifier": "n", "c_array_length_in_arg": 3 },
+     "5": { "type_override": "L" }
+    },
+    "retval": {
+     "type_override": "@",
+     "already_retained": true
+    }
+   },
+   "sec_protocol_metadata_create_secret": {
+    "args": {
+     "0": { "type_override": "@" },
+     "1": { "type_override": "L" },
+     "2": { "type_override": "^t", "type_modifier": "n", "c_array_length_in_arg": 1 },
+     "3": { "type_override": "L" }
+    },
+    "retval": {
+     "type_override": "@",
+     "already_retained": true
     }
    }
   }
