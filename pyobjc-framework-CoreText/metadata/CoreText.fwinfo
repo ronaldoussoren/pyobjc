@@ -27,6 +27,7 @@
    "kCTVersionNumber10_13": { "value": 655360 }
   },
   "externs": {
+   "kCTTypesetterOptionAllowUnboundedLayout": { "typestr": "@" },
    "kCTFontVariationAxisHiddenKey": { "typestr": "@" },
    "kCTBaselineOffsetAttributeName": { "typestr": "@" },
    "kCTRubyAnnotationSizeFactorAttributeName": { "typestr": "@" },
@@ -1815,6 +1816,15 @@
     "retval": {
      "type_override": "@",
      "already_cfretained": true
+    }
+   },
+   "CTFramesetterCreateWithTypesetter": {
+    "retval": {
+     "type_override": "@",
+     "already_cfretained": true
+    },
+    "args": {
+     "0": { "type_override": "@" }
     }
    },
    "CTLineEnumerateCaretOffsets": {

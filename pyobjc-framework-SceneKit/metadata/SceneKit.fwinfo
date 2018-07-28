@@ -1078,7 +1078,9 @@
      {
       "selector": "setResting:",
       "class_method": false,
-      "retval": { "type_override": "Z" }
+      "args": {
+       "0": { "type_override": "Z" }
+      }
      },
      {
       "selector": "usesDefaultMomentOfInertia",
