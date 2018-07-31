@@ -927,6 +927,7 @@
    "errSecMultipleExecSegments": { "value": -66995 },
    "errSecCSInvalidEntitlements": { "value": -66994 },
    "errSecCSInvalidRuntimeVersion": { "value": -66993 },
+   "errSecCSRevokedNotarization": { "value": -66992 },
    "errSecMultiplePrivKeys": { "value": -25259 },
    "errSecMultipleValuesUnsupported": { "value": -67842 },
    "errSecNetworkFailure": { "value": -67636 },

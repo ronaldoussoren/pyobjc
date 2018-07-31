@@ -90,6 +90,7 @@ class TestCSCommon (TestCase):
         self.assertEqual(Security.errSecMultipleExecSegments, -66995)
         self.assertEqual(Security.errSecCSInvalidEntitlements, -66994)
         self.assertEqual(Security.errSecCSInvalidRuntimeVersion, -66993)
+        self.assertEqual(Security.errSecCSRevokedNotarization, -66992)
 
         self.assertIsInstance(Security.kSecCFErrorArchitecture, unicode)
         self.assertIsInstance(Security.kSecCFErrorPattern, unicode)
