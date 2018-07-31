@@ -1043,6 +1043,9 @@
    "INIntentErrorImageScalingFailed": {
     "value": 6009
    },
+   "INIntentErrorPermissionDenied": {
+    "value": 6010
+   },
    "INIntentErrorImageStorageFailed": {
     "value": 6002
    },
@@ -1213,6 +1216,9 @@
    },
    "INPersonSuggestionTypeInstantMessageAddress": {
     "value": 2
+   },
+   "INPersonSuggestionTypeNone": {
+    "value": 0
    },
    "INPersonSuggestionTypeSocialProfile": {
     "value": 1
