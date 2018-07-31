@@ -43,6 +43,8 @@ if sys.maxsize > 2 ** 32:
         self.assertArgIsFunction(ColorSync.ColorSyncIterateDeviceProfiles, 0, objc._C_BOOL + b'@^v', False)
         self.assertResultIsCFRetained(ColorSync.CGDisplayCreateUUIDFromDisplayID)
 
+        ColorSync.CGDisplayGetDisplayIDFromUUID
+
 
 
 if __name__ == "__main__":
