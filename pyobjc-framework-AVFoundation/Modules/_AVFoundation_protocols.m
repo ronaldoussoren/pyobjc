@@ -38,6 +38,6 @@ static void __attribute__((__used__)) use_protocols(void)
     p = PyObjC_IdToPython(@protocol(AVPlayerItemMetadataCollectorPushDelegate)); Py_XDECREF(p);
 #endif
 #if PyObjC_BUILD_RELEASE >= 1014
-    p = PyObjC_IdToPython(@protocol(AVSpeechSynthesizerDelegate)); Py_XDECREF(p);
+    //p = PyObjC_IdToPython(@protocol(AVSpeechSynthesizerDelegate)); Py_XDECREF(p);
 #endif
 }
