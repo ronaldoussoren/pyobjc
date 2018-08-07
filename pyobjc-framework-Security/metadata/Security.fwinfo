@@ -3031,62 +3031,59 @@
 	"0": { "type": "^v" },
 	"1": { "type": "@" }
        },
-       "retval": { "type": "i" }
+       "retval": { "type": "v" }
       }
      }
     },
-    "retval": { "type_override": "b" }
+    "retval": { "type_override": "B" }
    },
    "sec_protocol_metadata_access_supported_signature_algorithms": {
     "args":  {
      "0": { "type_override": "@" },
      "1": {
-      "type_override": "^?",
-      "callable_retained": true,
+      "type_override": "@?",
       "callable": {
        "arguments": {
 	"0": { "type": "^v" },
 	"1": { "type": "S" }
        },
-       "retval": { "type": "i" }
+       "retval": { "type": "v" }
       }
      }
     },
-    "retval": { "type_override": "b" }
+    "retval": { "type_override": "B" }
    },
    "sec_protocol_metadata_access_ocsp_response": {
     "args":  {
      "0": { "type_override": "@" },
      "1": {
-      "type_override": "^?",
-      "callable_retained": true,
+      "type_override": "@?",
       "callable": {
        "arguments": {
 	"0": { "type": "^v" },
 	"1": { "type": "@" }
        },
-       "retval": { "type": "i" }
+       "retval": { "type": "v" }
       }
      }
     },
-    "retval": { "type_override": "b" }
+    "retval": { "type_override": "B" }
    },
    "sec_protocol_metadata_access_peer_certificate_chain": {
     "args":  {
      "0": { "type_override": "@" },
      "1": {
-      "type_override": "^?",
-      "callable_retained": true,
+      "type_override": "@?",
       "callable": {
        "arguments": {
 	"0": { "type": "^v" },
 	"1": { "type": "@" }
        },
-       "retval": { "type": "i" }
+       "retval": { "type": "v" }
       }
      }
     },
-    "retval": { "type_override": "b" }
+    "retval": { "type_override": "B" }
    },
    "SecKeychainAddCallback": {
     "args":  {
@@ -4700,7 +4697,7 @@
      "0": { "type_override": "@" }
     },
     "retval": {
-     "type_override": "b"
+     "type_override": "B"
     }
    },
    "sec_protocol_metadata_get_negotiated_ciphersuite": {
@@ -4770,7 +4767,7 @@
      "1": { "type_override": "@" }
     },
     "retval": {
-     "type_override": "b"
+     "type_override": "B"
     }
    },
    "sec_protocol_metadata_challenge_parameters_are_equal": {
@@ -4779,7 +4776,7 @@
      "1": { "type_override": "@" }
     },
     "retval": {
-     "type_override": "b"
+     "type_override": "B"
     }
    },
    "sec_protocol_metadata_create_secret_with_context": {

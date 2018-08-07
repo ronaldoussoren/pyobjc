@@ -1,5 +1,5 @@
-API Notes: CoreServices/CarbonCore framework
-============================================
+API Notes: CoreServices/Metadata framework
+==========================================
 
 Apple documentation
 -------------------
@@ -13,17 +13,16 @@ the C and Objective-C APIs are available (but see the `API Notes`_ below).
 API Notes
 ---------
 
-The CarbonCore framework is a subframework of OSServices, use
+The Metadata framework is a subframework of CoreServices, use
 ``import CoreServices`` to access the definitions in this framework.
 
 PyObjC provides only limited access to definitions in the framework,
 primarily funcionility that cannot be accessed in a better (modern)
 way.
 
-In particular only the following funcionality is available from Python:
+The APIs to implement metadata importers is not available to
+python at this time.
 
-* BackupCore
+* MDQuerySetCreateResultFunction: The CFArrayCallbacks argument must be None
 
-* DiskspaceRecovery
-
-* MacLocales (but only the non-deprecated functions)
+* MDQuerySetCreateValueFunction: The CFArrayCallbacks argument must be None
