@@ -1,6 +1,7 @@
 {
  "definitions": {
   "externs": {
+   "NSAppearanceDocumentAttribute": { "typestr": "@" },
    "NSPasteboardTypeURL": { "typestr": "@" },
    "NSPasteboardTypeFileURL": { "typestr": "@" },
    "NSTextListMarkerBox": { "typestr": "@" },

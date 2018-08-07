@@ -141,5 +141,6 @@ static void __attribute__((__used__)) use_protocols(void)
     p = PyObjC_IdToPython(@protocol(NSToolbarItemValidation)); Py_XDECREF(p);
     p = PyObjC_IdToPython(@protocol(NSViewLayerContentScaleDelegate)); Py_XDECREF(p);
     p = PyObjC_IdToPython(@protocol(NSViewToolTipOwner)); Py_XDECREF(p);
+    p = PyObjC_IdToPython(@protocol(NSUserActivityRestoring)); Py_XDECREF(p);
 #endif
 }

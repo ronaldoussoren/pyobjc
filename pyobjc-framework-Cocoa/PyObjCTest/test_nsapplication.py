@@ -262,6 +262,10 @@ class TestNSApplication (TestCase):
         self.assertIsInstance(NSAboutPanelOptionVersion, unicode)
         self.assertIsInstance(NSAboutPanelOptionApplicationVersion, unicode)
 
+    @min_os_level('10.14')
+    def testConstants10_14(self):
+        self.assertIsInstance(NSAppearanceDocumentAttribute, unicode)
+
     @min_os_level('10.6')
     def testMethods10_6(self):
         self.assertResultIsBOOL(NSApplication.setActivationPolicy_)
