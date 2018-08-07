@@ -9,6 +9,9 @@
      "typestr": "^{AudioHardwarePlugInInterface=}"
    }
   },
+  "structs": {
+   "AudioBuffer": { "ignore": true, "comment": "Manual wrapper" }
+  },
   "functions": {
    "AudioDeviceAddIOProc": {
     "args": {
