@@ -7,8 +7,6 @@ if sys.maxsize > 2 ** 32:
     class TestMLBatchProviderHelper (CoreML.NSObject):
         def count(self): return 1
         def featuresAtIndex_(self, i): return 'a'
-        def featureProviderCount(self): return 1
-        def featureProviderAtIndex_(self, i): return 'a'
 
 
     class TestMLBatchProvider (TestCase):

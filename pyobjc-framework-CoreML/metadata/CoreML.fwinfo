@@ -1,6 +1,8 @@
 {
  "definitions": {
   "enum": {
+   "MLComputeUnitsCPUOnly": { "value": 0 },
+   "MLComputeUnitsCPUAndGPU": { "value": 1 },
    "MLMultiArrayShapeConstraintTypeUnspecified": { "value": 1 },
    "MLMultiArrayShapeConstraintTypeEnumerated": { "value": 2 },
    "MLMultiArrayShapeConstraintTypeRange": { "value": 3 },
@@ -117,6 +119,13 @@
       }
      },
      {
+      "selector": "modelWithContentsOfURL:configuration:error:",
+      "class_method": true,
+      "args": {
+       "2": { "type_modifier": "o" }
+      }
+     },
+     {
       "selector": "predictionFromFeatures:error:",
       "class_method": false,
       "args": {
@@ -149,23 +158,7 @@
       }
      },
      {
-      "selector": "featureProviderCount",
-      "class_method": false,
-      "retval": {
-       "type_override": [ "i", "q" ]
-      }
-     },
-     {
       "selector": "featuresAtIndex:",
-      "class_method": false,
-      "args": {
-       "0": {
-        "type_override": [ "i", "q" ]
-       }
-      }
-     },
-     {
-      "selector": "featureProviderAtIndex:",
       "class_method": false,
       "args": {
        "0": {
