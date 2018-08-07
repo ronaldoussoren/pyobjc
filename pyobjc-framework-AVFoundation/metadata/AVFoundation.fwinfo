@@ -47,8 +47,11 @@
    "AVCaptureAutoFocusRangeRestrictionNone": { "value": 0 }
   },
   "externs": {
+   "AVSpeechUtteranceMaximumSpeechRate": { "typestr": "f" },
+   "AVSpeechUtteranceMinimumSpeechRate": { "typestr": "f" },
    "AVCaptureMaxAvailableTorchLevel": { "typestr": "f" },
    "AVCaptureLensPositionCurrent": { "typestr": "f" },
+   "AVSampleBufferRenderSynchronizerRateDidChangeNotification": { "typestr": "@" },
    "AVRouteDetectorMultipleRoutesDetectedDidChangeNotification": { "typestr": "@" },
    "AVStreamingKeyDeliveryContentKeyType": { "typestr": "@" },
    "AVStreamingKeyDeliveryPersistentContentKeyType": { "typestr": "@" },
