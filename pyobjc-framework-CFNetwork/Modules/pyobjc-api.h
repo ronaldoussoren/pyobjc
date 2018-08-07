@@ -172,7 +172,7 @@ PyObjC_ImportAPI(PyObject* calling_module)
         return -1;
     }
 #if PY_MAJOR_VERSION == 2 && PY_VERSION_MAJOR < 7
-    PyObjC_API = PyCObject_AsVoidPtr(api_obj);
+    PyObjC_API = (struct pyobjc_api *)PyCObject_AsVoidPtr(api_obj);
 #else
     PyObjC_API = (struct pyobjc_api *)PyCapsule_GetPointer(api_obj, "objc." PYOBJC_API_NAME);
 #endif
