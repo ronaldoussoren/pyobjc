@@ -3,8 +3,17 @@ What's new in PyObjC
 
 An overview of the relevant changes in new, and older, releases.
 
-Version 5.0
------------
+Version 5.0a1
+-------------
+
+* Add a custom binding for the AudioBuffer type in
+  CoreAudio and adjust metadata to match.
+
+  XXX: Add sample code based on https://github.com/abbood/Learning-Core-Audio-Book-Code-Sample
+
+
+Version 5.0a0
+-------------
 
 * Adds support for macOS 10.14 (Mojave)
 
@@ -27,6 +36,9 @@ Version 5.0
   - UserNotifications
   - VideoSubscriberAccount
 
+- Support for CoreAudio, CoreMedia and MediaToolbox is limited
+  in this release due to missing manual wrappers.
+
 - Added two features that can help with gating code on the
   version of macos:
 
@@ -36,7 +48,6 @@ Version 5.0
   2) The function "objc.macos_avaiable(major, minor[, patch])"
      returns true if the current macOS version is at least the
      specified version, comparable with "@available" in Swift.
-
 
 Version 4.2.2
 -------------

@@ -6,6 +6,7 @@
    "CGColorConverterRef": { "alias": "CGColorConversionInfoRef" }
   },
   "enum": {
+   "kCGColorSpaceModelXYZ": { "value": 7 },
    "kCGImagePixelFormatMask": { "value": 983040 },
    "kCGImagePixelFormatPacked": { "value": 0 },
    "kCGImagePixelFormatRGB555": { "value": 65536 },

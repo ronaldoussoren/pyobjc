@@ -5,6 +5,7 @@
    "MLMultiArrayShapeConstraintTypeEnumerated": { "value": 2 },
    "MLMultiArrayShapeConstraintTypeRange": { "value": 3 },
    "MLModelErrorCustomLayer": { "value": 4 },
+   "MLModelErrorCustomModel": { "value": 5 },
    "MLMultiArrayDataTypeDouble": { "value": 65600 },
    "MLMultiArrayDataTypeFloat32": { "value": 65568 },
    "MLMultiArrayDataTypeInt32": { "value": 131104 },
