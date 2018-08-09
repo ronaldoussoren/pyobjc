@@ -12,6 +12,11 @@ Version 5.0a1
   XXX: Add sample code based on https://github.com/abbood/Learning-Core-Audio-Book-Code-Sample
 
 
+* PR19: Fix deprecation warning in bridgesupport support module
+
+  Patch by: Mickaël Schoentgen
+
+
 Version 5.0a0
 -------------
 
