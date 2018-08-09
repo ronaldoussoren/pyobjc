@@ -136,7 +136,7 @@ class _BridgeSupportParser (object):
 
 
             elif item.startswith(objc._C_ARY_B):
-                m = re.match(b'^.(\d*)(.*).$', item)
+                m = re.match(br'^.(\d*)(.*).$', item)
                 result.append(objc._C_ARY_B)
                 result.append(m.group(1))
                 result.append(self.typestr2typestr(m.group(2)))
