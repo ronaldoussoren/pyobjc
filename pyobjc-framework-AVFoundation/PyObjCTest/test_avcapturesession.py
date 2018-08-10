@@ -67,9 +67,6 @@ class TestAVCaptureSession (TestCase):
         self.assertResultIsBOOL(AVFoundation.AVCaptureAudioChannel.isEnabled)
         self.assertArgIsBOOL(AVFoundation.AVCaptureAudioChannel.setEnabled_, 0)
 
-    @min_os_level('10.14')
-    def testMethods10_14(self):
-        self.assertResultIsBOOL(AVFoundation.AVCaptureSession.isVideoMaxFrameDurationSupported)
 
 if __name__ == "__main__":
     main()

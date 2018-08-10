@@ -33,6 +33,7 @@ class TestAVSpeechSynthesis (TestCase):
         self.assertResultIsBOOL(AVFoundation.AVSpeechSynthesizer.pauseSpeakingAtBoundary_)
         self.assertResultIsBOOL(AVFoundation.AVSpeechSynthesizer.continueSpeaking)
 
+    @expectedFailure
     @min_sdk_level('10.14')
     def testProtocols(self):
         objc.protocolNamed('AVSpeechSynthesizerDelegate')

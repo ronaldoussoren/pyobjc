@@ -47,6 +47,9 @@
    "AVCaptureAutoFocusRangeRestrictionNone": { "value": 0 }
   },
   "externs": {
+   "AVSpeechSynthesisVoiceIdentifierAlex": { "typestr": "@" },
+   "AVSpeechSynthesisIPANotationAttribute": { "typestr": "@" },
+   "AVSpeechUtteranceDefaultSpeechRate": { "typestr": "f" },
    "AVSpeechUtteranceMaximumSpeechRate": { "typestr": "f" },
    "AVSpeechUtteranceMinimumSpeechRate": { "typestr": "f" },
    "AVCaptureMaxAvailableTorchLevel": { "typestr": "f" },
@@ -108,6 +111,84 @@
    "AVAudio3DVector": { "alias": "AVAudio3DPoint" }
   },
   "classes": {
+   "AVPortraitEffectsMatte": {
+    "methods": [
+     {
+      "selector": "dictionaryRepresentationForAuxiliaryDataType:",
+      "class_method": false,
+      "args": {
+       "0": { "type_modifier": "o" }
+      }
+     },
+     {
+      "selector": "portraitEffectsMatteFromDictionaryRepresentation:error:",
+      "class_method": false,
+      "args": {
+       "1": { "type_modifier": "o" }
+      }
+     },
+     {
+      "selector": "portraitEffectsMatteByReplacingPortraitEffectsMatteWithPixelBuffer:error:",
+      "class_method": false,
+      "args": {
+       "1": { "type_modifier": "o" }
+      }
+     }
+    ]
+   },
+   "AVSpeechSynthesizer": { 
+    "methods": [
+     {
+      "selector": "pauseSpeakingAtBoundary:",
+      "class_method": false,
+      "retval": {
+       "type_override": "Z"
+      }
+     },
+     {
+      "selector": "continueSpeaking",
+      "class_method": false,
+      "retval": {
+       "type_override": "Z"
+      }
+     },
+     {
+      "selector": "stopSpeakingAtBoundary:",
+      "class_method": false,
+      "retval": {
+       "type_override": "Z"
+      }
+     },
+     {
+      "selector": "isSpeaking",
+      "class_method": false,
+      "retval": {
+       "type_override": "Z"
+      }
+     },
+     {
+      "selector": "setSpeaking:",
+      "class_method": false,
+      "args": {
+       "0": { "type_override": "Z" }
+      }
+     },
+     {
+      "selector": "isPaused",
+      "class_method": false,
+      "retval": {
+       "type_override": "Z"
+      }
+     },
+     {
+      "selector": "setPaused:",
+      "class_method": false,
+      "args": {
+       "0": { "type_override": "Z" }
+      }
+     }
+    ]
+   },
    "AVDepthData": {
     "methods": [
      {
@@ -611,7 +692,7 @@
 	  "0": { "typestr": "^v" },
 	  "1": { "typestr": "q" },
 	  "2": { "typestr": "C" },
-	  "3": { "typestr": [ "I", "Q" ] },
+	  "3": { "typestr": [ "i", "q" ] },
 	  "4": { "typestr": "n^v", "c_array_length_in_arg": 3 }
 	 }
 	}
@@ -1106,6 +1187,21 @@
    },
    "AVCaptureDevice": {
     "methods": [
+     {
+      "selector": "requestAccessForMediaType:completionHandler:",
+      "class_method": false,
+      "args": {
+       "1": { 
+        "callable": {
+         "arguments": {
+          "0": { "type": "^v" },
+          "1": { "type": "Z" }
+         },
+         "retval": { "type": "v" }
+        }
+       } 
+      }
+     },
      {
       "args": {
        "0": { "type_modifier": "o" }
