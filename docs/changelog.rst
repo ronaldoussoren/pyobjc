@@ -22,6 +22,20 @@ Version 5.0a1
 
   Patch by: Mickaël Schoentgen
 
+* Creating objc.ObjCPointer instances now results in a
+  Python warning, instead of an unconditional message on
+  stdout. 
+
+  .. note::
+
+     The creation of these objects is a sign that APIs are
+     not wrapped correctly, these objects are created for
+     pointers where the bridge doesn't know how to handle
+     them properly.
+
+* System bridgesupport XML files (normally not used by PyObjC)
+  can contain constant numbers with value "inf", PyObjC now
+  knows how to handle those.
 
 Version 5.0a0
 -------------
