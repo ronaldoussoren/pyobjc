@@ -20,8 +20,5 @@ if sys.maxsize > 2 ** 32:
             self.assertResultHasType(TestMLBatchProviderHelper.count, objc._C_NSInteger)
             self.assertArgHasType(TestMLBatchProviderHelper.featuresAtIndex_, 0, objc._C_NSInteger)
 
-            self.assertResultHasType(TestMLBatchProviderHelper.featureProviderCount, objc._C_NSInteger)
-            self.assertArgHasType(TestMLBatchProviderHelper.featureProviderAtIndex_, 0, objc._C_NSInteger)
-
 if __name__ == "__main__":
     main()
