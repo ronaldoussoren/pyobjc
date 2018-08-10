@@ -49,7 +49,7 @@ FRAMEWORK_WRAPPERS=[
         ('CoreLocation',            '10.6',             None        ),
         ('CoreMedia',               '10.7',             None        ),
         ('CoreMediaIO',             '10.7',             None        ),
-        ('CoreMIDI',                None,               None        ),
+        #('CoreMIDI',                None,               None        ),
         ('CoreML',                  '10.13',            None        ),
         ('CoreServices',            None,               None        ),
         ('CoreSpotlight',           '10.13',            None        ),
