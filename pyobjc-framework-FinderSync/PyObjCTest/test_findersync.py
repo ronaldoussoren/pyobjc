@@ -38,7 +38,7 @@ if sys.maxsize > 2 ** 32:
 
         @min_os_level("10.14")
         def testMethods10_14(self):
-            self.assert.assertResultIsBOOL(FinderSync.FIFinderSyncController.isExtensionEnabled)
+            self.assertResultIsBOOL(FinderSync.FIFinderSyncController.isExtensionEnabled)
 
 if __name__ == "__main__":
     main()
