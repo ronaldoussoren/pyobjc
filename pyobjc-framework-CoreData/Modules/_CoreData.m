@@ -27,5 +27,12 @@ PyObjC_MODULE_INIT(_CoreData)
 
     if (PyObjC_ImportAPI(m) == -1) PyObjC_INITERROR();
 
+    /*
+     * XXX: This call is here to force some initialisation
+     * that confuses PyObjC. In particular, some 'constants'
+     * are nil until this calls is initialized.
+     */
+    [NSManagedObjectContext initialize];
+
     PyObjC_INITDONE();
 }
