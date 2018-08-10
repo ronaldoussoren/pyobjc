@@ -26,8 +26,5 @@ class TestCoreData (TestCase):
         self.assert_( hasattr(CoreData, 'NSDetailedErrorsKey') )
         self.assert_( isinstance(CoreData.NSDetailedErrorsKey, unicode) )
 
-        self.assert_( hasattr(CoreData, 'NSErrorMergePolicy') )
-        self.assert_( isinstance(CoreData.NSErrorMergePolicy, objc.objc_object) )
-
 if __name__ == "__main__":
     main()

@@ -3,11 +3,18 @@ from CoreData import *
 
 class TestNSMergePolicy (TestCase):
     def testConstants(self):
-        self.assertIsInstance(NSErrorMergePolicy, objc.objc_object)
-        self.assertIsInstance(NSMergeByPropertyStoreTrumpMergePolicy, objc.objc_object)
-        self.assertIsInstance(NSMergeByPropertyObjectTrumpMergePolicy, objc.objc_object)
-        self.assertIsInstance(NSOverwriteMergePolicy, objc.objc_object)
-        self.assertIsInstance(NSRollbackMergePolicy, objc.objc_object)
+        if os_level_key(os_release()) >= os_level_key('10.14'):
+            self.assertIs(NSErrorMergePolicy, None)
+            self.assertIs(NSMergeByPropertyStoreTrumpMergePolicy, None)
+            self.assertIs(NSMergeByPropertyObjectTrumpMergePolicy, None)
+            self.assertIs(NSOverwriteMergePolicy, None)
+            self.assertIs(NSRollbackMergePolicy, None)
+        else:
+            self.assertIsInstance(NSErrorMergePolicy, objc.objc_object)
+            self.assertIsInstance(NSMergeByPropertyStoreTrumpMergePolicy, objc.objc_object)
+            self.assertIsInstance(NSMergeByPropertyObjectTrumpMergePolicy, objc.objc_object)
+            self.assertIsInstance(NSOverwriteMergePolicy, objc.objc_object)
+            self.assertIsInstance(NSRollbackMergePolicy, objc.objc_object)
 
         self.assertEqual(NSErrorMergePolicyType, 0x00)
         self.assertEqual(NSMergeByPropertyStoreTrumpMergePolicyType, 0x01)

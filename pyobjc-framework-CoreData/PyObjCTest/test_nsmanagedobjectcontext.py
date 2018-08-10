@@ -21,12 +21,19 @@ class TestNSManagedObjectContext (TestCase):
         self.assertIsInstance(NSUpdatedObjectsKey, unicode)
         self.assertIsInstance(NSDeletedObjectsKey, unicode)
 
-
-        self.assertIsInstance(NSErrorMergePolicy, NSObject)
-        self.assertIsInstance(NSMergeByPropertyStoreTrumpMergePolicy, NSObject)
-        self.assertIsInstance(NSMergeByPropertyObjectTrumpMergePolicy, NSObject)
-        self.assertIsInstance(NSOverwriteMergePolicy, NSObject)
-        self.assertIsInstance(NSRollbackMergePolicy, NSObject)
+        if os_level_key(os_release()) >= os_level_key('10.14'):
+            # Verified in ObjC code: these values are nil on 10.14 (beta 5)
+            self.assertIs(NSErrorMergePolicy, None)
+            self.assertIs(NSMergeByPropertyStoreTrumpMergePolicy, None)
+            self.assertIs(NSMergeByPropertyObjectTrumpMergePolicy, None)
+            self.assertIs(NSOverwriteMergePolicy, None)
+            self.assertIs(NSRollbackMergePolicy, None)
+        else:
+            self.assertIsInstance(NSErrorMergePolicy, NSObject)
+            self.assertIsInstance(NSMergeByPropertyStoreTrumpMergePolicy, NSObject)
+            self.assertIsInstance(NSMergeByPropertyObjectTrumpMergePolicy, NSObject)
+            self.assertIsInstance(NSOverwriteMergePolicy, NSObject)
+            self.assertIsInstance(NSRollbackMergePolicy, NSObject)
 
         self.assertEqual(NSConfinementConcurrencyType, 0)
         self.assertEqual(NSPrivateQueueConcurrencyType, 1)
