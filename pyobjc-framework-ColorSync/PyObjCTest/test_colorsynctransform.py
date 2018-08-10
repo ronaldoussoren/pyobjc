@@ -96,9 +96,8 @@ if sys.maxsize > 2 ** 32:
             self.assertIsInstance(ColorSync.kColorSyncConversionBPC, unicode)
             self.assertIsInstance(ColorSync.kColorSyncFixedPointRange, unicode)
 
-            #self.assertIsInstance(ColorSync.kColorSyncTransformInfo, unicode)
+            self.assertIsInstance(ColorSync.kColorSyncTransformInfo, unicode)
 
-            self.assertIsInstance(ColorSync.kColorSyncTranformInfo, unicode)
             self.assertIsInstance(ColorSync.kColorSyncTransformCreator, unicode)
             self.assertIsInstance(ColorSync.kColorSyncTransformSrcSpace, unicode)
             self.assertIsInstance(ColorSync.kColorSyncTransformDstSpace, unicode)
