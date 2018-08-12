@@ -135,6 +135,8 @@ class TestCMIOHardwareDevice (TestCase):
         CoreMediaIO.CMIODeviceStartStream
         CoreMediaIO.CMIODeviceStopStream
 
-        # XXX: There probably require a manual wrapper
+        # XXX: These probably require a manual wrapper
         self.assertArgIsIn(CoreMediaIO.CMIODeviceProcessAVCCommand, 1)
         self.assertArgIsIn(CoreMediaIO.CMIODeviceProcessRS422Command, 1)
+
+        self.fail("Manual bindings for a number of structs!")

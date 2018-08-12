@@ -136,7 +136,7 @@
      }
     ]
    },
-   "AVSpeechSynthesizer": { 
+   "AVSpeechSynthesizer": {
     "methods": [
      {
       "selector": "pauseSpeakingAtBoundary:",
@@ -619,6 +619,16 @@
    },
    "AVAudioBuffer": {
     "methods": [
+     {
+      "class_method": false,
+      "selector": "packetDescriptions",
+      "retval": { "c_array_of_variable_length": true }
+     },
+     {
+      "class_method": false,
+      "selector": "data",
+      "retval": { "c_array_of_variable_length": true }
+     },
      {
       "class_method": false,
       "retval": {},
@@ -1191,7 +1201,7 @@
       "selector": "requestAccessForMediaType:completionHandler:",
       "class_method": false,
       "args": {
-       "1": { 
+       "1": {
         "callable": {
          "arguments": {
           "0": { "type": "^v" },
@@ -1199,7 +1209,7 @@
          },
          "retval": { "type": "v" }
         }
-       } 
+       }
       }
      },
      {
