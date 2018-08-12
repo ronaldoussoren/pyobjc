@@ -10,7 +10,8 @@
    }
   },
   "structs": {
-   "AudioBuffer": { "ignore": true, "comment": "Manual wrapper" }
+   "AudioBuffer": { "ignore": true, "comment": "Manual wrapper" },
+   "AudioBufferList": { "ignore": true, "comment": "Manual wrapper" }
   },
   "functions": {
    "AudioDeviceAddIOProc": {
@@ -25,13 +26,13 @@
          "typestr": "n^{AudioTimeStamp=dQdQ{SMPTETime=ssIIIssss}II}"
         },
         {
-         "typestr": "n^{AudioBufferList=I[1{AudioBuffer=II^v}]}"
+         "typestr": "^{AudioBufferList=I[1{AudioBuffer=II^v}]}"
         },
         {
          "typestr": "n^{AudioTimeStamp=dQdQ{SMPTETime=ssIIIssss}II}"
         },
         {
-         "typestr": "o^{AudioBufferList=I[1{AudioBuffer=II^v}]}"
+         "typestr": "^{AudioBufferList=I[1{AudioBuffer=II^v}]}"
         },
         {
          "typestr": "n^{AudioTimeStamp=dQdQ{SMPTETime=ssIIIssss}II}"
