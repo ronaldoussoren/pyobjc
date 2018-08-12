@@ -377,13 +377,6 @@ class TestAudioDriverPlugIn (TestCase):
         self.assertEqual(v.mMinimum, 0.0)
         self.assertEqual(v.mMaximum, 0.0)
 
-        # XXX: Needs manual work.
-        v = CoreAudio.AudioValueTranslation()
-        self.assertEqual(v.mInputData, None)
-        self.assertEqual(v.mInputDataSize, 0)
-        self.assertEqual(v.mOutputData, None)
-        self.assertEqual(v.mOutputDataSize, 0)
-
         v = CoreAudio.AudioStreamBasicDescription()
         self.assertEqual(v.mSampleRate, 0.0)
         self.assertEqual(v.mFormatID, 0)
@@ -425,17 +418,6 @@ class TestAudioDriverPlugIn (TestCase):
         self.assertEqual(v.mSubType, 0)
         self.assertEqual(v.mManufacturer, 0)
 
-        v = CoreAudio.AudioChannelDescription()
-        self.assertEqual(v.mChannelLabel, 0)
-        self.assertEqual(v.mChannelFlags, 0)
-        self.assertEqual(v.mCoordinates, None) # (0.0, 0.0, 0.0))
-
-        # XXX: Need manual work
-        v = CoreAudio.AudioChannelLayout()
-        self.assertEqual(v.mChannelLayoutTag, 0)
-        self.assertEqual(v.mChannelBitmap, 0)
-        self.assertEqual(v.mNumberChannelDescriptions, 0)
-        self.assertEqual(v.mChannelDescriptions, None)
 
     def testFunctions(self):
         CoreAudio.TestAudioFormatNativeEndian
@@ -481,7 +463,6 @@ class TestManualWrappers (TestCase):
         self.assertEqual(v2.itemsize, 1)
         self.assertEqual(v2.nbytes, 2048)
 
-
     def testAudioBufferList(self):
         bl = CoreAudio.AudioBufferList(2);
         self.assertEqual(len(bl), 2)
@@ -505,6 +486,100 @@ class TestManualWrappers (TestCase):
         with self.assertRaises(IndexError):
             bl[-4]
 
+
+    def testAudioValueTranslation(self):
+        avt = CoreAudio.AudioValueTranslation()
+        self.assertEqual(avt.mInputDataSize, 0)
+        self.assertEqual(avt.mInputData, None)
+        self.assertEqual(avt.mInputDataSize, 0)
+        self.assertEqual(avt.mOutputData, None)
+        self.assertEqual(avt.mOutputDataSize, 0)
+
+        avt.create_input_buffer(1024)
+
+        self.assertEqual(avt.mInputDataSize, 1024)
+        v = avt.mInputData
+        self.assertIsInstance(v, memoryview)
+        self.assertEqual(v.itemsize, 1)
+        self.assertEqual(v.nbytes, 1024)
+
+        self.assertEqual(avt.mOutputData, None)
+        self.assertEqual(avt.mOutputDataSize, 0)
+
+        avt.create_output_buffer(2048)
+
+        self.assertEqual(avt.mInputDataSize, 1024)
+        v = avt.mInputData
+        self.assertIsInstance(v, memoryview)
+        self.assertEqual(v.itemsize, 1)
+        self.assertEqual(v.nbytes, 1024)
+
+        self.assertEqual(avt.mOutputDataSize, 2048)
+        v = avt.mOutputData
+        self.assertIsInstance(v, memoryview)
+        self.assertEqual(v.itemsize, 1)
+        self.assertEqual(v.nbytes, 2048)
+
+        avt = CoreAudio.AudioValueTranslation(input_buffer_size = 50)
+
+        self.assertEqual(avt.mInputDataSize, 50)
+        v = avt.mInputData
+        self.assertIsInstance(v, memoryview)
+        self.assertEqual(v.itemsize, 1)
+        self.assertEqual(v.nbytes, 50)
+
+        self.assertEqual(avt.mOutputData, None)
+        self.assertEqual(avt.mOutputDataSize, 0)
+
+        avt = CoreAudio.AudioValueTranslation(output_buffer_size = 40)
+
+        self.assertEqual(avt.mOutputDataSize, 40)
+        v = avt.mOutputData
+        self.assertIsInstance(v, memoryview)
+        self.assertEqual(v.itemsize, 1)
+        self.assertEqual(v.nbytes, 40)
+
+        self.assertEqual(avt.mInputData, None)
+        self.assertEqual(avt.mInputDataSize, 0)
+
+    def test_AudioChannelDescription(self):
+        v = CoreAudio.AudioChannelDescription()
+        self.assertEqual(v.mChannelLabel, 0)
+        self.assertEqual(v.mChannelFlags, 0)
+        self.assertEqual(v.mCoordinates, (0.0, 0.0, 0.0))
+
+        v = CoreAudio.AudioChannelDescription(mChannelLabel=1, mChannelFlags=2, mCoordinates=(5, 6, 7))
+        self.assertEqual(v.mChannelLabel, 1)
+        self.assertEqual(v.mChannelFlags, 2)
+        self.assertEqual(v.mCoordinates, (5.0, 6.0, 7.0))
+
+
+    def test_AudioChannelLayout(self):
+
+        with self.assertRaises(TypeError):
+            v = CoreAudio.AudioChannelLayout()
+
+        v = CoreAudio.AudioChannelLayout(num_channels=2)
+        self.assertEqual(v.mChannelLayoutTag, 0)
+        self.assertEqual(v.mChannelBitmap, 0)
+        self.assertEqual(len(v), 2)
+
+        i0 = v[0]
+        i1 = v[1]
+
+        i_m1 = v[-1]
+        i_m2 = v[-2]
+
+        self.assertIs(i0, i_m2)
+        self.assertIs(i1, i_m1)
+
+        self.assertIsNot(i0, i1)
+
+        with self.assertRaises(IndexError):
+            v[2]
+
+        with self.assertRaises(IndexError):
+            v[-4]
 
 if __name__ == "__main__":
     main()

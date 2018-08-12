@@ -6,8 +6,14 @@ An overview of the relevant changes in new, and older, releases.
 Version 5.0a1
 -------------
 
-* Add a custom binding for the AudioBuffer and AudioBufferList types in
-  CoreAudio and adjust metadata to match.
+* Add a custom binding for a number of structure types in
+  CoreAudio:
+
+  - AudioBuffer
+  - AudioBufferList
+  - AudioChannelDescription
+  - AudioChannelLayout
+  - AudioValueTranslation
 
   With this patch using APIs with these types should actually
   work.

@@ -2,9 +2,9 @@ from PyObjCTools.TestSupport import *
 
 import CoreAudio
 
-AudioDeviceIOProc = b'In^{' + CoreAudio.AudioTimeStamp.__typestr__ + b'n^' \
+AudioDeviceIOProc = b'iIn^' + CoreAudio.AudioTimeStamp.__typestr__ + b'^' \
     + CoreAudio.AudioBufferList.__typestr__ + b'n^' + CoreAudio.AudioTimeStamp.__typestr__ \
-    + b'o^' + CoreAudio.AudioBufferList.__typestr__ + b'n^' + CoreAudio.AudioTimeStamp.__typestr__ \
+    + b'^' + CoreAudio.AudioBufferList.__typestr__ + b'n^' + CoreAudio.AudioTimeStamp.__typestr__ \
     + b'^v'
 AudioHardwarePropertyListenerProc = b'iI^v'
 AudioDevicePropertyListenerProc = b'iIIZI^v'
@@ -136,7 +136,6 @@ class TestAudioHardwareDeprecated (TestCase):
         self.assertArgSizeInArg(CoreAudio.AudioDeviceGetProperty, 5, 4)
 
         self.assertArgIsIn(CoreAudio.AudioDeviceSetProperty, 1)
-        self.assertArgIsIn(CoreAudio.AudioDeviceSetProperty, 5)
         self.assertArgIsIn(CoreAudio.AudioDeviceSetProperty, 6)
         self.assertArgSizeInArg(CoreAudio.AudioDeviceSetProperty, 6, 5)
 
@@ -152,9 +151,7 @@ class TestAudioHardwareDeprecated (TestCase):
         self.assertArgSizeInArg(CoreAudio.AudioStreamGetProperty, 4, 3)
 
         self.assertArgIsIn(CoreAudio.AudioDeviceSetProperty, 1)
-        self.assertArgIsIn(CoreAudio.AudioDeviceSetProperty, 4)
-        self.assertArgIsIn(CoreAudio.AudioDeviceSetProperty, 5)
-        self.assertArgSizeInArg(CoreAudio.AudioDeviceSetProperty, 5, 4)
+        self.assertArgSizeInArg(CoreAudio.AudioDeviceSetProperty, 6, 5)
 
         self.assertArgIsFunction(CoreAudio.AudioStreamAddPropertyListener, 3, AudioStreamPropertyListenerProc, True)
 

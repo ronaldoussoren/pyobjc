@@ -5,8 +5,6 @@
  * basically a buffer with extra attributes.
  */
 
-#include "structmember.h" /* Why is this needed */
-
 static PyTypeObject audio_buffer_type; /* Forward definition */
 
 #define audio_buffer_check(obj) PyObject_TypeCheck(obj, &audio_buffer_type)
@@ -14,8 +12,8 @@ static PyTypeObject audio_buffer_type; /* Forward definition */
 struct audio_buffer {
     PyObject_HEAD
 
-    char         ab_ownsstorage;
-    char         ab_ownsbuffer;
+    char         ab_owns_storage;
+    char         ab_owns_buffer;
     void*        ab_buf_pointer; /* for owned sample storage */
     AudioBuffer* ab_buf;
 };
@@ -24,14 +22,14 @@ static PyMemberDef ab_members[] = {
     {
         .name = "_owns_storage",
         .type = T_BOOL,
-        .offset = offsetof(struct audio_buffer, ab_ownsstorage),
+        .offset = offsetof(struct audio_buffer, ab_owns_storage),
         .flags = READONLY,
         .doc = "True iff this buffer owns storage for the AudioBufer"
     },
     {
         .name = "_owns_buffer",
         .type = T_BOOL,
-        .offset = offsetof(struct audio_buffer, ab_ownsbuffer),
+        .offset = offsetof(struct audio_buffer, ab_owns_buffer),
         .flags = READONLY,
         .doc = "True iff this buffer owns storage for the audio samples"
     },
@@ -68,19 +66,6 @@ ab_get_mDataByteSize(PyObject* _self, void* closure __attribute__((__unused__)))
     return Py_BuildValue("I", self->ab_buf->mDataByteSize);
 }
 
-static int
-ab_set_mDataByteSize(PyObject* _self, PyObject* value, void* closure __attribute__((__unused__)))
-{
-    struct audio_buffer* self = (struct audio_buffer*)_self;
-
-    if (value == NULL) {
-        PyErr_SetString(PyExc_ValueError, "Cannot delete 'mDataByteSize'");
-        return -1;
-    }
-
-    return PyObjC_PythonToObjC(@encode(unsigned int), value, &self->ab_buf->mDataByteSize);
-}
-
 static PyObject*
 ab_get_data(PyObject* _self, void* closure __attribute__((__unused__)))
 {
@@ -109,7 +94,7 @@ static PyGetSetDef ab_getset[] = {
     {
         .name = "mDataByteSize",
         .get = ab_get_mDataByteSize,
-        .set = ab_set_mDataByteSize,
+        .set = NULL,
         .doc = NULL,
         .closure = NULL
     },
@@ -149,12 +134,12 @@ static char* keywords[] = { "buffer_size", NULL };
         return NULL;
     }
 
-    if (self->ab_ownsbuffer && self->ab_buf_pointer != NULL) {
+    if (self->ab_owns_buffer && self->ab_buf_pointer != NULL) {
         PyMem_Free(self->ab_buf_pointer);
     }
 
     self->ab_buf_pointer = self->ab_buf->mData = new_buf;
-    self->ab_ownsbuffer = 1;
+    self->ab_owns_buffer = 1;
     self->ab_buf->mDataByteSize = buf_size;
 
     Py_INCREF(Py_None);
@@ -200,9 +185,10 @@ static char* keywords[] = { "num_channels", "buffer_size", NULL };
         return NULL;
     }
 
-    result->ab_ownsstorage = 1;
-    result->ab_ownsbuffer = 1;
-    result->ab_buf = result->ab_buf_pointer = PyMem_Malloc(sizeof(AudioBuffer));
+    result->ab_owns_storage = 1;
+    result->ab_owns_buffer = 0;
+    result->ab_buf_pointer = NULL;
+    result->ab_buf = PyMem_Malloc(sizeof(AudioBuffer));
     if (result == NULL) {
         Py_DECREF(result);
         return NULL;
@@ -213,13 +199,13 @@ static char* keywords[] = { "num_channels", "buffer_size", NULL };
     result->ab_buf->mData = NULL;
 
     if (bufsize != -1) {
-        result->ab_buf->mData = PyMem_Malloc(bufsize);
+        result->ab_buf->mData = result->ab_buf_pointer = PyMem_Malloc(bufsize);
         if (result->ab_buf->mData == NULL) {
             Py_DECREF(result);
             return NULL;
         }
         result->ab_buf->mDataByteSize = (unsigned int)bufsize;
-        result->ab_ownsbuffer = 1;
+        result->ab_owns_buffer = 1;
     }
 
     return (PyObject*)result;
@@ -230,10 +216,10 @@ ab_dealloc(PyObject* object)
 {
     struct audio_buffer* self = (struct audio_buffer*)object;
 
-    if (self->ab_ownsbuffer && self->ab_buf_pointer != NULL) {
+    if (self->ab_owns_buffer && self->ab_buf_pointer != NULL) {
         PyMem_Free(self->ab_buf_pointer);
     }
-    if (self->ab_ownsstorage) {
+    if (self->ab_owns_storage) {
         PyMem_Free(self->ab_buf);
     }
     Py_TYPE(object)->tp_free(object);
@@ -262,7 +248,7 @@ static PyTypeObject audio_buffer_type = {
 };
 
 static PyObject*
-ab_create(AudioBuffer* item, int owns_buffer)
+ab_create(AudioBuffer* item)
 {
     struct audio_buffer* result;
 
@@ -271,7 +257,8 @@ ab_create(AudioBuffer* item, int owns_buffer)
         return NULL;
     }
 
-    result->ab_ownsbuffer = owns_buffer;
+    result->ab_owns_storage = 0;
+    result->ab_owns_buffer = 0;
     result->ab_buf_pointer = NULL;
     result->ab_buf = item;
 
@@ -287,12 +274,12 @@ static PyObject* pythonify_audio_buffer(void* pointer)
         return Py_None;
     }
 
-    return ab_create(*(AudioBuffer**)pointer, 0);
+    return ab_create(*(AudioBuffer**)pointer);
 }
 
 static int depythonify_audio_buffer(PyObject* value, void* pointer)
 {
-    if (value == NULL) {
+    if (value == Py_None) {
         *(AudioBuffer**)pointer = NULL;
         return 0;
     }
@@ -313,6 +300,10 @@ init_audio_buffer(PyObject* module)
     int r;
 
     if (PyType_Ready(&audio_buffer_type) == -1) return -1;
+
+    r = PyDict_SetItemString(audio_buffer_type.tp_dict, "__typestr__",
+            PyBytes_FromString(@encode(AudioBuffer)));
+    if (r == -1) return -1;
 
 
     Py_INCREF(&audio_buffer_type);

@@ -1,11 +1,17 @@
 #define PY_SSIZE_T_CLEAN
 #include "Python.h"
+#include "structmember.h" /* Why is this needed */
+
 #include "pyobjc-api.h"
 
 #import <CoreAudio/CoreAudio.h>
 
+/* Source files are included here due to use of PyObjC's API */
 #include "_CoreAudio_AudioBuffer.m"
 #include "_CoreAudio_AudioBufferList.m"
+#include "_CoreAudio_AudioValueTranslation.m"
+#include "_CoreAudio_AudioChannelDescription.m"
+#include "_CoreAudio_AudioChannelLayout.m"
 
 static PyObject*
 m_TestAudioFormatNativeEndian(PyObject* mod __attribute__((__unused__)), PyObject* args)
@@ -52,6 +58,9 @@ PyObjC_MODULE_INIT(_CoreAudio)
     if (PyObjC_ImportAPI(m) == -1) PyObjC_INITERROR();
     if (init_audio_buffer(m) == -1) PyObjC_INITERROR();
     if (init_audio_buffer_list(m) == -1) PyObjC_INITERROR();
+    if (init_audio_value_translation(m) == -1) PyObjC_INITERROR();
+    if (init_audio_channel_description(m) == -1) PyObjC_INITERROR();
+    if (init_audio_channel_layout(m) == -1) PyObjC_INITERROR();
 
     PyObjC_INITDONE();
 }

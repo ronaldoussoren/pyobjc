@@ -11,7 +11,8 @@
   },
   "structs": {
    "AudioBuffer": { "ignore": true, "comment": "Manual wrapper" },
-   "AudioBufferList": { "ignore": true, "comment": "Manual wrapper" }
+   "AudioBufferList": { "ignore": true, "comment": "Manual wrapper" },
+   "AudioValueTranslation": { "ignore": true, "comment": "Manual wrapper" }
   },
   "functions": {
    "AudioDeviceAddIOProc": {
@@ -87,19 +88,19 @@
          "typestr": "I"
         },
         {
-         "typestr": "^{AudioTimeStamp=dQdQ{SMPTETime=ssIIIssss}II}"
+         "typestr": "n^{AudioTimeStamp=dQdQ{SMPTETime=ssIIIssss}II}"
         },
         {
          "typestr": "^{AudioBufferList=I[1{AudioBuffer=II^v}]}"
         },
         {
-         "typestr": "^{AudioTimeStamp=dQdQ{SMPTETime=ssIIIssss}II}"
+         "typestr": "n^{AudioTimeStamp=dQdQ{SMPTETime=ssIIIssss}II}"
         },
         {
          "typestr": "^{AudioBufferList=I[1{AudioBuffer=II^v}]}"
         },
         {
-         "typestr": "^{AudioTimeStamp=dQdQ{SMPTETime=ssIIIssss}II}"
+         "typestr": "n^{AudioTimeStamp=dQdQ{SMPTETime=ssIIIssss}II}"
         },
         {
          "typestr": "^v"
@@ -111,12 +112,25 @@
       }
      },
      "2": {},
-     "3": {}
+     "3": { "type_modifier": "o" }
     }
    },
    "AudioDeviceCreateIOProcIDWithBlock": {
     "args": {
-     "0": {}
+     "0": { "type_modifier": "o" },
+     "3": {
+      "callable": {
+       "arguments": {
+        "0": { "type": "^v" },
+        "1": { "type": "n^{AudioTimeStamp=dQdQ{SMPTETime=ssIIIssss}II}" },
+        "2": { "type": "^{AudioBufferList=I[1{AudioBuffer=II^v}]}" },
+        "3": { "type": "n^{AudioTimeStamp=dQdQ{SMPTETime=ssIIIssss}II}" },
+        "4": { "type": "^{AudioBufferList=I[1{AudioBuffer=II^v}]}" },
+        "5": { "type": "N^{AudioTimeStamp=dQdQ{SMPTETime=ssIIIssss}II}" }
+       },
+       "retval": { "type": "v" }
+      }
+     }
     }
    },
    "AudioDeviceDestroyIOProcID": {
@@ -161,19 +175,19 @@
          "typestr": "I"
         },
         {
-         "typestr": "^{AudioTimeStamp=dQdQ{SMPTETime=ssIIIssss}II}"
+         "typestr": "n^{AudioTimeStamp=dQdQ{SMPTETime=ssIIIssss}II}"
         },
         {
          "typestr": "^{AudioBufferList=I[1{AudioBuffer=II^v}]}"
         },
         {
-         "typestr": "^{AudioTimeStamp=dQdQ{SMPTETime=ssIIIssss}II}"
+         "typestr": "n^{AudioTimeStamp=dQdQ{SMPTETime=ssIIIssss}II}"
         },
         {
          "typestr": "^{AudioBufferList=I[1{AudioBuffer=II^v}]}"
         },
         {
-         "typestr": "^{AudioTimeStamp=dQdQ{SMPTETime=ssIIIssss}II}"
+         "typestr": "n^{AudioTimeStamp=dQdQ{SMPTETime=ssIIIssss}II}"
         },
         {
          "typestr": "^v"
@@ -517,8 +531,8 @@
    },
    "AudioStreamGetProperty": {
     "args": {
-     "3": {},
-     "4": {}
+     "3": { "type_modifier": "N" },
+     "4": { "type_modifier": "o", "c_array_length_in_arg": 3 }
     }
    },
    "AudioStreamGetPropertyInfo": {

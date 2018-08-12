@@ -6,13 +6,13 @@ AudioObjectPropertyListenerProc = b'iIIn^' + CoreAudio.AudioObjectPropertyAddres
 AudioObjectPropertyListenerBlock = b'vIn^' + CoreAudio.AudioObjectPropertyAddress.__typestr__
 
 AudioDeviceIOProc = b'iIn^' + CoreAudio.AudioTimeStamp.__typestr__ \
-    + b'n^' + CoreAudio.AudioBufferList.__typestr__ + b'n^' + CoreAudio.AudioTimeStamp.__typestr__ \
-    + b'o^' + CoreAudio.AudioBufferList.__typestr__ + b'n^' + CoreAudio.AudioTimeStamp.__typestr__ \
+    + b'^' + CoreAudio.AudioBufferList.__typestr__ + b'n^' + CoreAudio.AudioTimeStamp.__typestr__ \
+    + b'^' + CoreAudio.AudioBufferList.__typestr__ + b'n^' + CoreAudio.AudioTimeStamp.__typestr__ \
     + b'^v'
 
 AudioDeviceIOBlock = b'vn^' + CoreAudio.AudioTimeStamp.__typestr__ \
-    + b'n^' + CoreAudio.AudioBufferList.__typestr__ + b'n^' + CoreAudio.AudioTimeStamp.__typestr__ \
-    + b'o^' + CoreAudio.AudioBufferList.__typestr__ + b'n^' + CoreAudio.AudioTimeStamp.__typestr__
+    + b'^' + CoreAudio.AudioBufferList.__typestr__ + b'n^' + CoreAudio.AudioTimeStamp.__typestr__ \
+    + b'^' + CoreAudio.AudioBufferList.__typestr__ + b'N^' + CoreAudio.AudioTimeStamp.__typestr__
 
 
 class TestAudioHardware (TestCase):

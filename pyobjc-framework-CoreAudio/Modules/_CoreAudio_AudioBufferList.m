@@ -3,12 +3,7 @@
  *
  * These are basic bindings to the AudioBufferList type,
  * basically a buffer with extra attributes.
- *
- * XXX: This won't work if APIs return a pointer to a *writable* of *changing* AudioBuffer
- * XXX: Also needs changes for AudioBufferList
  */
-
-#include "structmember.h" /* Why is this needed */
 
 static PyTypeObject audio_buffer_list_type; /* Forward definition */
 
@@ -74,7 +69,7 @@ abl_get_item(PyObject* _self, Py_ssize_t idx)
         }
     }
 
-    result = ab_create(self->abl_list->mBuffers + idx, 1);
+    result = ab_create(self->abl_list->mBuffers + idx);
     if (result == NULL) {
         return NULL;
     }
@@ -97,6 +92,7 @@ abl_new(PyTypeObject* cls, PyObject* args, PyObject* kwds)
 static char* keywords[] = { "num_buffers", NULL };
     struct audio_buffer_list* result;
     unsigned int num_buffers;
+    unsigned int i;
 
     if (!PyArg_ParseTupleAndKeywords(args, kwds,
                 "I", keywords, &num_buffers)) {
@@ -116,6 +112,12 @@ static char* keywords[] = { "num_buffers", NULL };
         return NULL;
     }
     result->abl_list->mNumberBuffers = num_buffers;
+
+    for (i = 0; i < num_buffers; i++) {
+        result->abl_list->mBuffers[i].mNumberChannels = 0;
+        result->abl_list->mBuffers[i].mDataByteSize= 0;
+        result->abl_list->mBuffers[i].mData = NULL;
+    }
 
     return (PyObject*)result;
 }
@@ -200,7 +202,11 @@ init_audio_buffer_list(PyObject* module)
 
     if (PyType_Ready(&audio_buffer_list_type) == -1) return -1;
 
-    Py_INCREF(&audio_buffer_type);
+    r = PyDict_SetItemString(audio_buffer_list_type.tp_dict, "__typestr__",
+            PyBytes_FromString(@encode(AudioBufferList)));
+    if (r == -1) return -1;
+
+    Py_INCREF(&audio_buffer_list_type);
     r = PyModule_AddObject(module, "AudioBufferList", (PyObject*)&audio_buffer_list_type);
     if (r == -1) {
         Py_DECREF(&audio_buffer_list_type);
