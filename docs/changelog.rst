@@ -6,11 +6,11 @@ An overview of the relevant changes in new, and older, releases.
 Version 5.0a1
 -------------
 
-* Add a custom binding for the AudioBuffer type in
+* Add a custom binding for the AudioBuffer and AudioBufferList types in
   CoreAudio and adjust metadata to match.
 
-  XXX: Add sample code based on https://github.com/abbood/Learning-Core-Audio-Book-Code-Sample
-
+  With this patch using APIs with these types should actually
+  work.
 
 * PR19: Fix deprecation warning in bridgesupport support module
 

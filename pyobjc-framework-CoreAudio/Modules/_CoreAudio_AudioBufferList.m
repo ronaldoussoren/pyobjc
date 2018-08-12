@@ -48,16 +48,13 @@ abl_get_item(PyObject* _self, Py_ssize_t idx)
     struct audio_buffer_list* self = ((struct audio_buffer_list*)_self);
     PyObject* result;
 
-    if (idx > (Py_ssize_t)self->abl_list->mNumberBuffers) {
+    if (idx >= (Py_ssize_t)self->abl_list->mNumberBuffers) {
         PyErr_SetString(PyExc_IndexError, "index out of range");
         return NULL;
     }
     if (idx < 0) {
-        idx = self->abl_list->mNumberBuffers + idx;
-        if (idx < 0 || idx > (Py_ssize_t)self->abl_list->mNumberBuffers) {
-            PyErr_SetString(PyExc_IndexError, "index out of range");
-            return NULL;
-        }
+        PyErr_SetString(PyExc_IndexError, "index out of range");
+        return NULL;
     }
 
     if (self->abl_items != NULL) {
@@ -102,7 +99,7 @@ static char* keywords[] = { "num_buffers", NULL };
     unsigned int num_buffers;
 
     if (!PyArg_ParseTupleAndKeywords(args, kwds,
-                "II", keywords, &num_buffers)) {
+                "I", keywords, &num_buffers)) {
         return NULL;
     }
 
@@ -118,6 +115,7 @@ static char* keywords[] = { "num_buffers", NULL };
         Py_DECREF(result);
         return NULL;
     }
+    result->abl_list->mNumberBuffers = num_buffers;
 
     return (PyObject*)result;
 }

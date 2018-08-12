@@ -384,17 +384,6 @@ class TestAudioDriverPlugIn (TestCase):
         self.assertEqual(v.mOutputData, None)
         self.assertEqual(v.mOutputDataSize, 0)
 
-        # XXX: Needs manual work.
-        v = CoreAudio.AudioBuffer()
-        self.assertEqual(v.mNumberChannels, 0)
-        self.assertEqual(v.mDataByteSize, 0)
-        self.assertEqual(v.mData, None)
-
-        # XXX: Needs manual work.
-        v = CoreAudio.AudioBufferList()
-        self.assertEqual(v.mNumberBuffers, 0)
-        self.assertEqual(v.mBuffers, None)
-
         v = CoreAudio.AudioStreamBasicDescription()
         self.assertEqual(v.mSampleRate, 0.0)
         self.assertEqual(v.mFormatID, 0)
@@ -468,6 +457,54 @@ class TestAudioDriverPlugIn (TestCase):
         self.assertArgIsOut(CoreAudio.FillOutAudioTimeStampWithSampleAndHostTime, 0)
 
         CoreAudio.AudioChannelLayoutTag_GetNumberOfChannels
+
+class TestManualWrappers (TestCase):
+    def testAudioBuffer(self):
+        buf = CoreAudio.AudioBuffer()
+        self.assertEqual(buf.mNumberChannels, 1)
+        self.assertEqual(buf.mData, None)
+
+        buf = CoreAudio.AudioBuffer(num_channels=50)
+        self.assertEqual(buf.mNumberChannels, 50)
+        self.assertEqual(buf.mData, None)
+
+        buf = CoreAudio.AudioBuffer(num_channels=5, buffer_size=1024)
+        self.assertEqual(buf.mNumberChannels, 5)
+        v = buf.mData
+        self.assertIsInstance(v, memoryview)
+        self.assertEqual(v.itemsize, 1)
+        self.assertEqual(v.nbytes, 1024)
+
+        buf.create_buffer(2048)
+        v2 = buf.mData
+        self.assertIsInstance(v2, memoryview)
+        self.assertEqual(v2.itemsize, 1)
+        self.assertEqual(v2.nbytes, 2048)
+
+
+    def testAudioBufferList(self):
+        bl = CoreAudio.AudioBufferList(2);
+        self.assertEqual(len(bl), 2)
+
+        i0 = bl[0]
+        i1 = bl[1]
+        i_m1 = bl[-1]
+        i_m2 = bl[-2]
+
+        self.assertIs(i0, i_m2)
+        self.assertIs(i1, i_m1)
+
+        self.assertIsNot(i0, i1)
+
+        self.assertIsInstance(i0, CoreAudio.AudioBuffer)
+        self.assertIsInstance(i1, CoreAudio.AudioBuffer)
+
+        with self.assertRaises(IndexError):
+            bl[2]
+
+        with self.assertRaises(IndexError):
+            bl[-4]
+
 
 if __name__ == "__main__":
     main()

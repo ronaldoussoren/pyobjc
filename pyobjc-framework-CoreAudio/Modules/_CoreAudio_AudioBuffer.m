@@ -16,6 +16,7 @@ struct audio_buffer {
 
     char         ab_ownsstorage;
     char         ab_ownsbuffer;
+    void*        ab_buf_pointer; /* for owned sample storage */
     AudioBuffer* ab_buf;
 };
 
@@ -43,7 +44,7 @@ ab_get_mNumberChannels(PyObject* _self, void* closure __attribute__((__unused__)
 {
     struct audio_buffer* self = (struct audio_buffer*)_self;
 
-    return Py_BuildValue("I", &self->ab_buf->mNumberChannels);
+    return Py_BuildValue("I", self->ab_buf->mNumberChannels);
 }
 
 static int
@@ -64,7 +65,7 @@ ab_get_mDataByteSize(PyObject* _self, void* closure __attribute__((__unused__)))
 {
     struct audio_buffer* self = (struct audio_buffer*)_self;
 
-    return Py_BuildValue("I", &self->ab_buf->mDataByteSize);
+    return Py_BuildValue("I", self->ab_buf->mDataByteSize);
 }
 
 static int
@@ -123,7 +124,50 @@ static PyGetSetDef ab_getset[] = {
     { .name = NULL } /* Sentinel */
 };
 
+
+PyDoc_STRVAR(ab_create_buffer_doc,
+    "create_buffer(buffer_size)\n"
+    CLINIC_SEP
+    "Create a (new) buffer for storing audio samples. This replaces \n"
+    "the previous buffer. After calling this method the memoryview \n"
+    "retrieved from the mData attribute are no longer valid.");
+static PyObject*
+ab_create_buffer(PyObject* _self, PyObject* args, PyObject* kwds)
+{
+static char* keywords[] = { "buffer_size", NULL };
+
+    struct audio_buffer* self = (struct audio_buffer*)_self;
+    unsigned int buf_size;
+    void* new_buf;
+
+    if (PyArg_ParseTupleAndKeywords(args, kwds, "I", keywords, &buf_size) == -1) {
+        return NULL;
+    }
+
+    new_buf = PyMem_Malloc(buf_size);
+    if (new_buf == NULL) {
+        return NULL;
+    }
+
+    if (self->ab_ownsbuffer && self->ab_buf_pointer != NULL) {
+        PyMem_Free(self->ab_buf_pointer);
+    }
+
+    self->ab_buf_pointer = self->ab_buf->mData = new_buf;
+    self->ab_ownsbuffer = 1;
+    self->ab_buf->mDataByteSize = buf_size;
+
+    Py_INCREF(Py_None);
+    return Py_None;
+}
+
 static PyMethodDef ab_methods[] = {
+    {
+      .ml_name = "create_buffer",
+      .ml_meth = (PyCFunction)ab_create_buffer,
+      .ml_flags = METH_VARARGS | METH_KEYWORDS,
+      .ml_doc = ab_create_buffer_doc
+    },
 
     { .ml_name = NULL } /* Sentinel */
 };
@@ -140,14 +184,14 @@ static char* keywords[] = { "num_channels", "buffer_size", NULL };
     if (!PyArg_ParseTupleAndKeywords(args, kwds,
                 "|"
 #if PY_MAJOR_VERSION == 3
-                "&" /* keyword only */
+                "$"
 #endif
-                "II", keywords, &num_channels, &bufsize)) {
+                "In", keywords, &num_channels, &bufsize)) {
         return NULL;
     }
 
     if ((bufsize != -1 && bufsize < 0) || bufsize > (Py_ssize_t)UINT_MAX) {
-        PyErr_SetString(PyExc_ValueError, "bufsize out of range");
+        PyErr_Format(PyExc_ValueError, "bufsize %ld out of range", (long)bufsize);
         return NULL;
     }
 
@@ -158,7 +202,7 @@ static char* keywords[] = { "num_channels", "buffer_size", NULL };
 
     result->ab_ownsstorage = 1;
     result->ab_ownsbuffer = 1;
-    result->ab_buf = PyMem_Malloc(sizeof(AudioBuffer));
+    result->ab_buf = result->ab_buf_pointer = PyMem_Malloc(sizeof(AudioBuffer));
     if (result == NULL) {
         Py_DECREF(result);
         return NULL;
@@ -186,8 +230,8 @@ ab_dealloc(PyObject* object)
 {
     struct audio_buffer* self = (struct audio_buffer*)object;
 
-    if (self->ab_ownsbuffer && self->ab_buf->mData != NULL) {
-        PyMem_Free(self->ab_buf->mData);
+    if (self->ab_ownsbuffer && self->ab_buf_pointer != NULL) {
+        PyMem_Free(self->ab_buf_pointer);
     }
     if (self->ab_ownsstorage) {
         PyMem_Free(self->ab_buf);
@@ -228,6 +272,7 @@ ab_create(AudioBuffer* item, int owns_buffer)
     }
 
     result->ab_ownsbuffer = owns_buffer;
+    result->ab_buf_pointer = NULL;
     result->ab_buf = item;
 
     return (PyObject*)result;
