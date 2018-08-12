@@ -20,6 +20,12 @@ is easier to use and should work without problems in Python. The C API is
 harder to use and requires some manual wrappers to use nicely from Python, those
 manual wrappers aren't present at the moment.
 
+``DRFileProductionInfo``, ``DRTrackProductionInfo``
+---------------------------------------------------
+
+These types are not fully useful at the moment. The types require
+a manual wrapper that is not yet written.
+
 
 ``DRSetRefCon``
 ---------------
