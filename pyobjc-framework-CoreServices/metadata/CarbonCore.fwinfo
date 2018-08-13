@@ -1,0 +1,4562 @@
+// objective.metadata exceptions file, see its document
+// for information on how to update this file.
+{
+ "definitions": {
+  "classes": {},
+  "formal_protocols": {},
+  "literals": {
+   "MPCopyrightNotice": { "ignore": true },
+   "NoneName": { "ignore": true },
+   "ACE2to1Name": { "ignore": true },
+   "ACE8to3Name": { "ignore": true },
+   "MACE3to1Name": { "ignore": true },
+   "MACE6to1Name": { "ignore": true }
+  },
+  "externs": {
+   "CallComponentUPP": { "ignore": true }
+  },
+  "aliases": {
+   "kPowerPCArch": { "ignore": true },
+   "kMotorola68KArch": { "ignore": true },
+   "kAnyArchType": { "ignore": true },
+   "kNoLibName": { "ignore": true },
+   "kNoConnectionID": { "ignore": true },
+   "kLoadLib": { "ignore": true },
+   "kFindLib": { "ignore": true },
+   "kNewCFragCopy": { "ignore": true },
+   "kLoadNewCopy": { "ignore": true },
+   "kUseInPlace": { "ignore": true },
+   "kCodeSym": { "ignore": true },
+   "kDataSym": { "ignore": true },
+   "kTVectSym": { "ignore": true },
+   "kTOCSym": { "ignore": true },
+   "kGlueSym": { "ignore": true },
+   "kInMem": { "ignore": true },
+   "kOnDiskFlat": { "ignore": true },
+   "kOnDiskSegmented": { "ignore": true },
+   "kIsLib": { "ignore": true },
+   "kIsApp": { "ignore": true },
+   "kIsDropIn": { "ignore": true },
+   "kFullLib": { "ignore": true },
+   "kUpdateLib": { "ignore": true },
+   "kWholeFork": { "ignore": true },
+   "kCFMRsrcType": { "ignore": true },
+   "kCFMRsrcID": { "ignore": true },
+   "kSHLBFileType": { "ignore": true },
+   "kUnresolvedSymbolAddress": { "ignore": true },
+   "kPowerPC": { "ignore": true },
+   "kMotorola68K": { "ignore": true }
+  },
+  "enum": {
+   "kAppleManufacturer": { "ignore": true },
+   "kComponentResourceType": { "ignore": true },
+   "kComponentAliasResourceType": { "ignore": true },
+   "kAnyComponentType": { "ignore": true },
+   "kAnyComponentSubType": { "ignore": true },
+   "kAnyComponentManufacturer": { "ignore": true },
+   "kAnyComponentFlagsMask": { "ignore": true },
+   "cmpThreadSafe": { "ignore": true },
+   "cmpIsMissing": { "ignore": true },
+   "cmpWantsRegisterMessage": { "ignore": true },
+   "kComponentOpenSelect": { "ignore": true },
+   "kComponentCloseSelect": { "ignore": true },
+   "kComponentCanDoSelect": { "ignore": true },
+   "kComponentVersionSelect": { "ignore": true },
+   "kComponentRegisterSelect": { "ignore": true },
+   "kComponentTargetSelect": { "ignore": true },
+   "kComponentUnregisterSelect": { "ignore": true },
+   "kComponentGetMPWorkFunctionSelect": { "ignore": true },
+   "kComponentExecuteWiredActionSelect": { "ignore": true },
+   "kComponentGetPublicResourceSelect": { "ignore": true },
+   "componentDoAutoVersion": { "ignore": true },
+   "componentWantsUnregister": { "ignore": true },
+   "componentAutoVersionIncludeFlags": { "ignore": true },
+   "componentHasMultiplePlatforms": { "ignore": true },
+   "componentLoadResident": { "ignore": true },
+   "defaultComponentIdentical": { "ignore": true },
+   "defaultComponentAnyFlags": { "ignore": true },
+   "defaultComponentAnyManufacturer": { "ignore": true },
+   "defaultComponentAnySubType": { "ignore": true },
+   "defaultComponentAnyFlagsAnyManufacturer": { "ignore": true },
+   "defaultComponentAnyFlagsAnyManufacturerAnySubType": { "ignore": true },
+   "registerComponentGlobal": { "ignore": true },
+   "registerComponentNoDuplicates": { "ignore": true },
+   "registerComponentAfterExisting": { "ignore": true },
+   "registerComponentAliasesOnly": { "ignore": true },
+   "platform68k": { "ignore": true },
+   "platformPowerPC": { "ignore": true },
+   "platformInterpreted": { "ignore": true },
+   "platformWin32": { "ignore": true },
+   "platformPowerPCNativeEntryPoint": { "ignore": true },
+   "platformIA32NativeEntryPoint": { "ignore": true },
+   "platformPowerPC64NativeEntryPoint": { "ignore": true },
+   "platformX86_64NativeEntryPoint": { "ignore": true },
+   "platformIRIXmips": { "ignore": true },
+   "platformSunOSsparc": { "ignore": true },
+   "platformSunOSintel": { "ignore": true },
+   "platformLinuxppc": { "ignore": true },
+   "platformLinuxintel": { "ignore": true },
+   "platformAIXppc": { "ignore": true },
+   "platformNeXTIntel": { "ignore": true },
+   "platformNeXTppc": { "ignore": true },
+   "platformNeXTsparc": { "ignore": true },
+   "platformNeXT68k": { "ignore": true },
+   "platformMacOSx86": { "ignore": true },
+   "mpWorkFlagDoWork": { "ignore": true },
+   "mpWorkFlagDoCompletion": { "ignore": true },
+   "mpWorkFlagCopyWorkBlock": { "ignore": true },
+   "mpWorkFlagDontBlock": { "ignore": true },
+   "mpWorkFlagGetProcessorCount": { "ignore": true },
+   "mpWorkFlagGetIsRunning": { "ignore": true },
+   "cmpAliasNoFlags": { "ignore": true },
+   "cmpAliasOnlyThisFile": { "ignore": true },
+   "kCSAcceptAllComponentsMode": { "ignore": true },
+   "kCSAcceptThreadSafeComponentsOnlyMode": { "ignore": true },
+   "uppComponentFunctionImplementedProcInfo": { "ignore": true },
+   "uppGetComponentVersionProcInfo": { "ignore": true },
+   "uppComponentSetTargetProcInfo": { "ignore": true },
+   "uppCallComponentOpenProcInfo": { "ignore": true },
+   "uppCallComponentCloseProcInfo": { "ignore": true },
+   "uppCallComponentCanDoProcInfo": { "ignore": true },
+   "uppCallComponentVersionProcInfo": { "ignore": true },
+   "uppCallComponentRegisterProcInfo": { "ignore": true },
+   "uppCallComponentTargetProcInfo": { "ignore": true },
+   "uppCallComponentUnregisterProcInfo": { "ignore": true },
+   "uppCallComponentGetMPWorkFunctionProcInfo": { "ignore": true },
+   "uppCallComponentGetPublicResourceProcInfo": { "ignore": true },
+   "kCollectionDontWantTag": { "ignore": true },
+   "kCollectionDontWantId": { "ignore": true },
+   "kCollectionDontWantSize": { "ignore": true },
+   "kCollectionDontWantAttributes": { "ignore": true },
+   "kCollectionDontWantIndex": { "ignore": true },
+   "kCollectionDontWantData": { "ignore": true },
+   "kCollectionNoAttributes": { "ignore": true },
+   "kCollectionAllAttributes": { "ignore": true },
+   "kCollectionUserAttributes": { "ignore": true },
+   "kCollectionDefaultAttributes": { "ignore": true },
+   "kCollectionUser0Bit": { "ignore": true },
+   "kCollectionUser1Bit": { "ignore": true },
+   "kCollectionUser2Bit": { "ignore": true },
+   "kCollectionUser3Bit": { "ignore": true },
+   "kCollectionUser4Bit": { "ignore": true },
+   "kCollectionUser5Bit": { "ignore": true },
+   "kCollectionUser6Bit": { "ignore": true },
+   "kCollectionUser7Bit": { "ignore": true },
+   "kCollectionUser8Bit": { "ignore": true },
+   "kCollectionUser9Bit": { "ignore": true },
+   "kCollectionUser10Bit": { "ignore": true },
+   "kCollectionUser11Bit": { "ignore": true },
+   "kCollectionUser12Bit": { "ignore": true },
+   "kCollectionUser13Bit": { "ignore": true },
+   "kCollectionUser14Bit": { "ignore": true },
+   "kCollectionUser15Bit": { "ignore": true },
+   "kCollectionReserved0Bit": { "ignore": true },
+   "kCollectionReserved1Bit": { "ignore": true },
+   "kCollectionReserved2Bit": { "ignore": true },
+   "kCollectionReserved3Bit": { "ignore": true },
+   "kCollectionReserved4Bit": { "ignore": true },
+   "kCollectionReserved5Bit": { "ignore": true },
+   "kCollectionReserved6Bit": { "ignore": true },
+   "kCollectionReserved7Bit": { "ignore": true },
+   "kCollectionReserved8Bit": { "ignore": true },
+   "kCollectionReserved9Bit": { "ignore": true },
+   "kCollectionReserved10Bit": { "ignore": true },
+   "kCollectionReserved11Bit": { "ignore": true },
+   "kCollectionReserved12Bit": { "ignore": true },
+   "kCollectionReserved13Bit": { "ignore": true },
+   "kCollectionPersistenceBit": { "ignore": true },
+   "kCollectionLockBit": { "ignore": true },
+   "kCollectionUser0Mask": { "ignore": true },
+   "kCollectionUser1Mask": { "ignore": true },
+   "kCollectionUser2Mask": { "ignore": true },
+   "kCollectionUser3Mask": { "ignore": true },
+   "kCollectionUser4Mask": { "ignore": true },
+   "kCollectionUser5Mask": { "ignore": true },
+   "kCollectionUser6Mask": { "ignore": true },
+   "kCollectionUser7Mask": { "ignore": true },
+   "kCollectionUser8Mask": { "ignore": true },
+   "kCollectionUser9Mask": { "ignore": true },
+   "kCollectionUser10Mask": { "ignore": true },
+   "kCollectionUser11Mask": { "ignore": true },
+   "kCollectionUser12Mask": { "ignore": true },
+   "kCollectionUser13Mask": { "ignore": true },
+   "kCollectionUser14Mask": { "ignore": true },
+   "kCollectionUser15Mask": { "ignore": true },
+   "kCollectionReserved0Mask": { "ignore": true },
+   "kCollectionReserved1Mask": { "ignore": true },
+   "kCollectionReserved2Mask": { "ignore": true },
+   "kCollectionReserved3Mask": { "ignore": true },
+   "kCollectionReserved4Mask": { "ignore": true },
+   "kCollectionReserved5Mask": { "ignore": true },
+   "kCollectionReserved6Mask": { "ignore": true },
+   "kCollectionReserved7Mask": { "ignore": true },
+   "kCollectionReserved8Mask": { "ignore": true },
+   "kCollectionReserved9Mask": { "ignore": true },
+   "kCollectionReserved10Mask": { "ignore": true },
+   "kCollectionReserved11Mask": { "ignore": true },
+   "kCollectionReserved12Mask": { "ignore": true },
+   "kCollectionReserved13Mask": { "ignore": true },
+   "kCollectionPersistenceMask": { "ignore": true },
+   "kCollectionLockMask": { "ignore": true },
+   "dontWantTag": { "ignore": true },
+   "dontWantId": { "ignore": true },
+   "dontWantSize": { "ignore": true },
+   "dontWantAttributes": { "ignore": true },
+   "dontWantIndex": { "ignore": true },
+   "dontWantData": { "ignore": true },
+   "noCollectionAttributes": { "ignore": true },
+   "allCollectionAttributes": { "ignore": true },
+   "userCollectionAttributes": { "ignore": true },
+   "defaultCollectionAttributes": { "ignore": true },
+   "collectionUser0Bit": { "ignore": true },
+   "collectionUser1Bit": { "ignore": true },
+   "collectionUser2Bit": { "ignore": true },
+   "collectionUser3Bit": { "ignore": true },
+   "collectionUser4Bit": { "ignore": true },
+   "collectionUser5Bit": { "ignore": true },
+   "collectionUser6Bit": { "ignore": true },
+   "collectionUser7Bit": { "ignore": true },
+   "collectionUser8Bit": { "ignore": true },
+   "collectionUser9Bit": { "ignore": true },
+   "collectionUser10Bit": { "ignore": true },
+   "collectionUser11Bit": { "ignore": true },
+   "collectionUser12Bit": { "ignore": true },
+   "collectionUser13Bit": { "ignore": true },
+   "collectionUser14Bit": { "ignore": true },
+   "collectionUser15Bit": { "ignore": true },
+   "collectionReserved0Bit": { "ignore": true },
+   "collectionReserved1Bit": { "ignore": true },
+   "collectionReserved2Bit": { "ignore": true },
+   "collectionReserved3Bit": { "ignore": true },
+   "collectionReserved4Bit": { "ignore": true },
+   "collectionReserved5Bit": { "ignore": true },
+   "collectionReserved6Bit": { "ignore": true },
+   "collectionReserved7Bit": { "ignore": true },
+   "collectionReserved8Bit": { "ignore": true },
+   "collectionReserved9Bit": { "ignore": true },
+   "collectionReserved10Bit": { "ignore": true },
+   "collectionReserved11Bit": { "ignore": true },
+   "collectionReserved12Bit": { "ignore": true },
+   "collectionReserved13Bit": { "ignore": true },
+   "collectionPersistenceBit": { "ignore": true },
+   "collectionLockBit": { "ignore": true },
+   "collectionUser0Mask": { "ignore": true },
+   "collectionUser1Mask": { "ignore": true },
+   "collectionUser2Mask": { "ignore": true },
+   "collectionUser3Mask": { "ignore": true },
+   "collectionUser4Mask": { "ignore": true },
+   "collectionUser5Mask": { "ignore": true },
+   "collectionUser6Mask": { "ignore": true },
+   "collectionUser7Mask": { "ignore": true },
+   "collectionUser8Mask": { "ignore": true },
+   "collectionUser9Mask": { "ignore": true },
+   "collectionUser10Mask": { "ignore": true },
+   "collectionUser11Mask": { "ignore": true },
+   "collectionUser12Mask": { "ignore": true },
+   "collectionUser13Mask": { "ignore": true },
+   "collectionUser14Mask": { "ignore": true },
+   "collectionUser15Mask": { "ignore": true },
+   "collectionReserved0Mask": { "ignore": true },
+   "collectionReserved1Mask": { "ignore": true },
+   "collectionReserved2Mask": { "ignore": true },
+   "collectionReserved3Mask": { "ignore": true },
+   "collectionReserved4Mask": { "ignore": true },
+   "collectionReserved5Mask": { "ignore": true },
+   "collectionReserved6Mask": { "ignore": true },
+   "collectionReserved7Mask": { "ignore": true },
+   "collectionReserved8Mask": { "ignore": true },
+   "collectionReserved9Mask": { "ignore": true },
+   "collectionReserved10Mask": { "ignore": true },
+   "collectionReserved11Mask": { "ignore": true },
+   "collectionReserved12Mask": { "ignore": true },
+   "collectionReserved13Mask": { "ignore": true },
+   "collectionPersistenceMask": { "ignore": true },
+   "collectionLockMask": { "ignore": true },
+   "kReferenceCFrag": { "ignore": true },
+   "kFindCFrag": { "ignore": true },
+   "kPrivateCFragCopy": { "ignore": true },
+   "kUnresolvedCFragSymbolAddress": { "ignore": true },
+   "kCodeCFragSymbol": { "ignore": true },
+   "kDataCFragSymbol": { "ignore": true },
+   "kTVectorCFragSymbol": { "ignore": true },
+   "kTOCCFragSymbol": { "ignore": true },
+   "kGlueCFragSymbol": { "ignore": true },
+   "kCurrCFragResourceVersion": { "ignore": true },
+   "kCFragResourceSearchExtensionKind": { "ignore": true },
+   "kDefaultCFragNameLen": { "ignore": true },
+   "kCFragLibUsageMapPrivatelyMask": { "ignore": true },
+   "kCFragResourceType": { "ignore": true },
+   "kCFragResourceID": { "ignore": true },
+   "kCFragLibraryFileType": { "ignore": true },
+   "kCFragAllFileTypes": { "ignore": true },
+   "kPowerPCCFragArch": { "ignore": true },
+   "kMotorola68KCFragArch": { "ignore": true },
+   "kAnyCFragArch": { "ignore": true },
+   "kCompiledCFragArch": { "ignore": true },
+   "kCompiledCFragArch": { "ignore": true },
+   "kNullCFragVersion": { "ignore": true },
+   "kImportLibraryCFrag": { "ignore": true },
+   "kApplicationCFrag": { "ignore": true },
+   "kDropInAdditionCFrag": { "ignore": true },
+   "kStubLibraryCFrag": { "ignore": true },
+   "kWeakStubLibraryCFrag": { "ignore": true },
+   "kIsCompleteCFrag": { "ignore": true },
+   "kFirstCFragUpdate": { "ignore": true },
+   "kCFragGoesToEOF": { "ignore": true },
+   "kMemoryCFragLocator": { "ignore": true },
+   "kDataForkCFragLocator": { "ignore": true },
+   "kResourceCFragLocator": { "ignore": true },
+   "kNamedFragmentCFragLocator": { "ignore": true },
+   "kCFBundleCFragLocator": { "ignore": true },
+   "kCFBundlePreCFragLocator": { "ignore": true },
+   "kFSAliasInfoNone": { "ignore": true },
+   "kFSAliasInfoVolumeCreateDate": { "ignore": true },
+   "kFSAliasInfoTargetCreateDate": { "ignore": true },
+   "kFSAliasInfoFinderInfo": { "ignore": true },
+   "kFSAliasInfoIsDirectory": { "ignore": true },
+   "kFSAliasInfoIDs": { "ignore": true },
+   "kFSAliasInfoFSInfo": { "ignore": true },
+   "kFSAliasInfoVolumeFlags": { "ignore": true },
+   "rAliasType": { "ignore": true },
+   "kARMMountVol": { "ignore": true },
+   "kARMNoUI": { "ignore": true },
+   "kARMMultVols": { "ignore": true },
+   "kARMSearch": { "ignore": true },
+   "kARMSearchMore": { "ignore": true },
+   "kARMSearchRelFirst": { "ignore": true },
+   "kARMTryFileIDFirst": { "ignore": true },
+   "asiZoneName": { "ignore": true },
+   "asiServerName": { "ignore": true },
+   "asiVolumeName": { "ignore": true },
+   "asiAliasName": { "ignore": true },
+   "asiParentName": { "ignore": true },
+   "kResolveAliasFileNoUI": { "ignore": true },
+   "kResolveAliasTryFileIDFirst": { "ignore": true },
+   "kAVLPreOrder": { "ignore": true },
+   "kAVLInOrder": { "ignore": true },
+   "kAVLPostOrder": { "ignore": true },
+   "kLeftToRight": { "ignore": true },
+   "kRightToLeft": { "ignore": true },
+   "kAVLIsTree": { "ignore": true },
+   "kAVLIsLeftBranch": { "ignore": true },
+   "kAVLIsRightBranch": { "ignore": true },
+   "kAVLIsLeaf": { "ignore": true },
+   "kAVLNullNode": { "ignore": true },
+   "errItemAlreadyInTree": { "ignore": true },
+   "errNotValidTree": { "ignore": true },
+   "errItemNotFoundInTree": { "ignore": true },
+   "errCanNotInsertWhileWalkProcInProgress": { "ignore": true },
+   "errTreeIsLocked": { "ignore": true },
+   "kTextEncodingUnicodeV10_0": { "value": 276 },
+   "kTextEncodingUnicodeV11_0": { "value": 277 },
+   "AIFFID": { "ignore": true },
+   "AIFCID": { "ignore": true },
+   "FormatVersionID": { "ignore": true },
+   "CommonID": { "ignore": true },
+   "FORMID": { "ignore": true },
+   "SoundDataID": { "ignore": true },
+   "MarkerID": { "ignore": true },
+   "InstrumentID": { "ignore": true },
+   "MIDIDataID": { "ignore": true },
+   "AudioRecordingID": { "ignore": true },
+   "ApplicationSpecificID": { "ignore": true },
+   "CommentID": { "ignore": true },
+   "NameID": { "ignore": true },
+   "AuthorID": { "ignore": true },
+   "CopyrightID": { "ignore": true },
+   "AnnotationID": { "ignore": true },
+   "NoLooping": { "ignore": true },
+   "ForwardLooping": { "ignore": true },
+   "ForwardBackwardLooping": { "ignore": true },
+   "AIFCVersion1": { "ignore": true },
+   "NoneType": { "ignore": true },
+   "ACE2Type": { "ignore": true },
+   "ACE8Type": { "ignore": true },
+   "MACE3Type": { "ignore": true },
+   "MACE6Type": { "ignore": true }
+  },
+  "structs": {
+   "ComponentDescription": { "ignore": true },
+   "ResourceSpec": { "ignore": true },
+   "ComponentResource": { "ignore": true },
+   "ComponentPlatformInfo": { "ignore": true },
+   "ComponentResourceExtension": { "ignore": true },
+   "ComponentPlatformInfoArray": { "ignore": true },
+   "ExtComponentResource": { "ignore": true },
+   "ComponentAliasResource": { "ignore": true },
+   "ComponentParameters": { "ignore": true },
+   "ComponentRecord": { "ignore": true },
+   "ComponentInstanceRecord": { "ignore": true },
+   "RegisteredComponentRecord": { "ignore": true },
+   "RegisteredComponentInstanceRecord": { "ignore": true },
+   "ComponentMPWorkFunctionHeaderRecord": { "ignore": true },
+   "CFragResourceMember": { "ignore": true },
+   "CFragResourceExtensionHeader": { "ignore": true },
+   "CFragResourceSearchExtension": { "ignore": true },
+   "CFragResource": { "ignore": true },
+   "CFragWhere1Union": { "ignore": true },
+   "CFragWhere2Union": { "ignore": true },
+   "CFragUsage1Union": { "ignore": true },
+   "CFragUsage2Union": { "ignore": true },
+   "AliasRecord": { "ignore": true },
+   "FSAliasInfo": { "ignore": true },
+   "AVLTreeStruct": { "ignore": true },
+   "CFragInitBlock": { "ignore": true },
+   "CFragSystem7MemoryLocator": { "ignore": true },
+   "CFragSystem7DiskFlatLocator": { "ignore": true },
+   "CFragSystem7SegmentedLocator": { "ignore": true },
+   "CFragCFBundleLocator": { "ignore": true },
+   "ConvertBundlePreLocator": { "ignore": true },
+   "CFragSystem7InitBlock": { "ignore": true },
+   "PEFExportedSymbolKey": { "ignore": true },
+   "XLibExportedSymbolKey": { "ignore": true },
+   "CFragSystem7Locator": { "ignore": true },
+   "ChunkHeader": { "ignore": true },
+   "ContainerChunk": { "ignore": true },
+   "FormatVersionChunk": { "ignore": true },
+   "CommonChunk": { "ignore": true },
+   "ExtCommonChunk": { "ignore": true },
+   "SoundDataChunk": { "ignore": true },
+   "Marker": { "ignore": true },
+   "MarkerChunk": { "ignore": true },
+   "AIFFLoop": { "ignore": true },
+   "InstrumentChunk": { "ignore": true },
+   "MIDIDataChunk": { "ignore": true },
+   "AudioRecordingChunk": { "ignore": true },
+   "ApplicationSpecificChunk": { "ignore": true },
+   "Comment": { "ignore": true },
+   "CommentsChunk": { "ignore": true },
+   "TextChunk": { "ignore": true }
+  },
+  "functions": {
+   "CSSetComponentsThreadMode": { "ignore": true },
+   "CSGetComponentsThreadMode": { "ignore": true },
+   "GetComponentListModSeed": { "ignore": true },
+   "GetComponentTypeModSeed": { "ignore": true },
+   "CloseComponentResFile": { "ignore": true },
+   "RegisterComponentResourceFile": { "ignore": true },
+   "GetSharedLibrary": { "ignore": true },
+   "GetDiskFragment": { "ignore": true },
+   "GetMemFragment": { "ignore": true },
+   "CloseConnection": { "ignore": true },
+   "FindSymbol": { "ignore": true },
+   "CountSymbols": { "ignore": true },
+   "GetIndSymbol": { "ignore": true },
+   "NewAliasFilterUPP": { "ignore": true },
+   "DisposeAliasFilterUPP": { "ignore": true },
+   "InvokeAliasFilterUPP": { "ignore": true },
+   "AddAtomic": {
+    "args": {
+     "1": {}
+    }
+   },
+   "AddAtomic16": {
+    "args": {
+     "1": {}
+    }
+   },
+   "AddAtomic8": {
+    "args": {
+     "1": {}
+    }
+   },
+   "AddCollectionItem": { "ignore": true },
+   "AddCollectionItemHdl": { "ignore": true },
+   "AddFolderDescriptor": {
+    "args": {
+     "6": {}
+    }
+   },
+   "AddResource": {
+    "args": {
+     "0": {},
+     "3": {}
+    }
+   },
+   "BitAndAtomic": {
+    "args": {
+     "1": {}
+    }
+   },
+   "BitAndAtomic16": {
+    "args": {
+     "1": {}
+    }
+   },
+   "BitAndAtomic8": {
+    "args": {
+     "1": {}
+    }
+   },
+   "BitClr": {
+    "args": {
+     "0": {}
+    }
+   },
+   "BitOrAtomic": {
+    "args": {
+     "1": {}
+    }
+   },
+   "BitOrAtomic16": {
+    "args": {
+     "1": {}
+    }
+   },
+   "BitOrAtomic8": {
+    "args": {
+     "1": {}
+    }
+   },
+   "BitSet": {
+    "args": {
+     "0": {}
+    }
+   },
+   "BitTst": {
+    "args": {
+     "0": {}
+    }
+   },
+   "BitXorAtomic": {
+    "args": {
+     "1": {}
+    }
+   },
+   "BitXorAtomic16": {
+    "args": {
+     "1": {}
+    }
+   },
+   "BitXorAtomic8": {
+    "args": {
+     "1": {}
+    }
+   },
+   "CSBackupIsItemExcluded": {
+    "args": {
+     "0": {},
+     "1": { "type_modifier": "o" }
+    }
+   },
+   "CSBackupSetItemExcluded": {
+    "args": {
+     "0": {}
+    }
+   },
+   "CSCopyMachineName": {
+    "retval": {
+     "already_cfretained": true
+    }
+   },
+   "CSCopyUserName": {
+    "retval": {
+     "already_cfretained": true
+    }
+   },
+   "CSDiskSpaceCancelRecovery": {
+    "args": {
+     "0": {}
+    }
+   },
+   "CSDiskSpaceGetRecoveryEstimate": {
+    "args": {
+     "0": {}
+    }
+   },
+   "CSDiskSpaceStartRecovery": {
+    "args": {
+     "0": {},
+     "3": { "type_modifier": "o" },
+     "5": {
+      "type_override": "@?",
+      "callable": {
+       "arguments": {
+        "0": { "type": "^v" },
+        "1": { "type": "Z" },
+        "2": { "type": "Q" },
+        "3": { "type": "@" }
+       },
+       "retval": { "type": "v" }
+      }
+     }
+    }
+   },
+   "CallComponentCanDo": { "ignore": true },
+   "CallComponentClose": { "ignore": true },
+   "CallComponentDispatch": { "ignore": true },
+   "CallComponentFunction": { "ignore": true },
+   "CallComponentFunctionWithStorage": { "ignore": true },
+   "CallComponentFunctionWithStorageProcInfo": { "ignore": true },
+   "CallComponentGetMPWorkFunction": { "ignore": true },
+   "CallComponentGetPublicResource": { "ignore": true },
+   "CallComponentOpen": { "ignore": true },
+   "CallComponentRegister": { "ignore": true },
+   "CallComponentTarget": { "ignore": true },
+   "CallComponentUnregister": { "ignore": true },
+   "CallComponentVersion": { "ignore": true },
+   "CaptureComponent": { "ignore": true },
+   "ChangeTextToUnicodeInfo": {
+    "args": {
+     "0": {},
+     "1": {}
+    }
+   },
+   "ChangeUnicodeToTextInfo": {
+    "args": {
+     "0": {},
+     "1": {}
+    }
+   },
+   "ChangedResource": {
+    "args": {
+     "0": {}
+    }
+   },
+   "CloneCollection": { "ignore": true },
+   "CloseComponent": { "ignore": true },
+   "CollectionTagExists": { "ignore": true },
+   "CompareAndSwap": {
+    "args": {
+     "2": {}
+    }
+   },
+   "ConvertFromPStringToUnicode": {
+    "args": {
+     "0": {},
+     "1": {},
+     "3": {},
+     "4": {}
+    }
+   },
+   "ConvertFromTextToUnicode": {
+    "args": {
+     "0": {},
+     "2": {},
+     "5": {},
+     "6": {},
+     "7": {},
+     "9": {},
+     "10": {},
+     "11": {}
+    }
+   },
+   "ConvertFromUnicodeToPString": {
+    "args": {
+     "0": {},
+     "2": {}
+    }
+   },
+   "ConvertFromUnicodeToScriptCodeRun": {
+    "args": {
+     "0": {},
+     "2": {},
+     "5": {},
+     "6": {},
+     "7": {},
+     "9": {},
+     "10": {},
+     "11": {},
+     "13": {},
+     "14": {}
+    }
+   },
+   "ConvertFromUnicodeToText": {
+    "args": {
+     "0": {},
+     "2": {},
+     "5": {},
+     "6": {},
+     "7": {},
+     "9": {},
+     "10": {},
+     "11": {}
+    }
+   },
+   "ConvertFromUnicodeToTextRun": {
+    "args": {
+     "0": {},
+     "2": {},
+     "5": {},
+     "6": {},
+     "7": {},
+     "9": {},
+     "10": {},
+     "11": {},
+     "13": {},
+     "14": {}
+    }
+   },
+   "CopyCollection": { "ignore": true },
+   "CoreEndianFlipData": {
+    "args": {
+     "3": {}
+    }
+   },
+   "CoreEndianGetFlipper": {
+    "args": {
+     "2": {},
+     "3": {}
+    }
+   },
+   "CoreEndianInstallFlipper": {
+    "args": {
+     "2": {
+      "function": {
+       "args": [
+        {
+         "typestr": "I"
+        },
+        {
+         "typestr": "I"
+        },
+        {
+         "typestr": "s"
+        },
+        {
+         "typestr": "^v"
+        },
+        {
+         "typestr": "Q"
+        },
+        {
+         "typestr": "Z"
+        },
+        {
+         "typestr": "^v"
+        }
+       ],
+       "retval": {
+        "typestr": "i"
+       }
+      }
+     },
+     "3": {}
+    }
+   },
+   "CountCollectionItems": { "ignore": true },
+   "CountCollectionOwners": { "ignore": true },
+   "CountCollectionTags": { "ignore": true },
+   "CountComponentInstances": { "ignore": true },
+   "CountComponents": { "ignore": true },
+   "CountTaggedCollectionItems": { "ignore": true },
+   "CountUnicodeMappings": {
+    "args": {
+     "1": {},
+     "2": {}
+    }
+   },
+   "CreateTextToUnicodeInfo": {
+    "args": {
+     "0": {},
+     "1": {}
+    }
+   },
+   "CreateTextToUnicodeInfoByEncoding": {
+    "args": {
+     "1": {}
+    }
+   },
+   "CreateUnicodeToTextInfo": {
+    "args": {
+     "0": {},
+     "1": {}
+    }
+   },
+   "CreateUnicodeToTextInfoByEncoding": {
+    "args": {
+     "1": {}
+    }
+   },
+   "CreateUnicodeToTextRunInfo": {
+    "args": {
+     "1": {},
+     "2": {}
+    }
+   },
+   "CreateUnicodeToTextRunInfoByEncoding": {
+    "args": {
+     "1": {},
+     "2": {}
+    }
+   },
+   "CreateUnicodeToTextRunInfoByScriptCode": {
+    "args": {
+     "1": {},
+     "2": {}
+    }
+   },
+   "DebugAssert": {
+    "args": {
+     "2": {},
+     "3": {},
+     "4": {},
+     "5": {},
+     "7": {}
+    }
+   },
+   "DecrementAtomic": {
+    "args": {
+     "0": {}
+    }
+   },
+   "DecrementAtomic16": {
+    "args": {
+     "0": {}
+    }
+   },
+   "DecrementAtomic8": {
+    "args": {
+     "0": {}
+    }
+   },
+   "Delay": {
+    "args": {
+     "1": {}
+    }
+   },
+   "DelegateComponentCall": { "ignore": true },
+   "DetachResource": {
+    "args": {
+     "0": {}
+    }
+   },
+   "DetermineIfPathIsEnclosedByFolder": {
+    "args": {
+     "2": {},
+     "4": {}
+    }
+   },
+   "DisposeAVLCompareItemsUPP": { "ignore": true },
+   "DisposeAVLDisposeItemUPP": { "ignore": true },
+   "DisposeAVLItemSizeUPP": { "ignore": true },
+   "DisposeAVLWalkUPP": { "ignore": true },
+   "DisposeCollection": { "ignore": true },
+   "DisposeCollectionExceptionUPP": { "ignore": true },
+   "DisposeCollectionFlattenUPP": { "ignore": true },
+   "DisposeComponentFunctionUPP": { "ignore": true },
+   "DisposeComponentMPWorkFunctionUPP": { "ignore": true },
+   "DisposeComponentRoutineUPP": { "ignore": true },
+   "DisposeDebugAssertOutputHandlerUPP": {
+    "args": {
+     "0": {}
+    }
+   },
+   "DisposeDebugComponentCallbackUPP": { "ignore": true },
+   "DisposeDebuggerDisposeThreadUPP": {
+    "args": {
+     "0": {}
+    }
+   },
+   "DisposeDebuggerNewThreadUPP": {
+    "args": {
+     "0": {}
+    }
+   },
+   "DisposeDebuggerThreadSchedulerUPP": {
+    "args": {
+     "0": {}
+    }
+   },
+   "DisposeDeferredTaskUPP": {
+    "args": {
+     "0": {}
+    }
+   },
+   "DisposeExceptionHandlerUPP": {
+    "args": {
+     "0": {}
+    }
+   },
+   "DisposeFNSubscriptionUPP": {
+    "args": {
+     "0": {}
+    }
+   },
+   "DisposeFSVolumeEjectUPP": {
+    "args": {
+     "0": {}
+    }
+   },
+   "DisposeFSVolumeMountUPP": {
+    "args": {
+     "0": {}
+    }
+   },
+   "DisposeFSVolumeUnmountUPP": {
+    "args": {
+     "0": {}
+    }
+   },
+   "DisposeFolderManagerNotificationUPP": {
+    "args": {
+     "0": {}
+    }
+   },
+   "DisposeGetMissingComponentResourceUPP": { "ignore": true },
+   "DisposeHandle": {
+    "args": {
+     "0": {}
+    }
+   },
+   "DisposeIOCompletionUPP": {
+    "args": {
+     "0": {}
+    }
+   },
+   "DisposeIndexToUCStringUPP": {
+    "args": {
+     "0": {}
+    }
+   },
+   "DisposePtr": {
+    "args": {
+     "0": {}
+    }
+   },
+   "DisposeResErrUPP": {
+    "args": {
+     "0": {}
+    }
+   },
+   "DisposeSelectorFunctionUPP": {
+    "args": {
+     "0": {}
+    }
+   },
+   "DisposeTextToUnicodeInfo": {
+    "args": {
+     "0": {}
+    }
+   },
+   "DisposeThread": {
+    "args": {
+     "1": {}
+    }
+   },
+   "DisposeThreadEntryUPP": {
+    "args": {
+     "0": {}
+    }
+   },
+   "DisposeThreadSchedulerUPP": {
+    "args": {
+     "0": {}
+    }
+   },
+   "DisposeThreadSwitchUPP": {
+    "args": {
+     "0": {}
+    }
+   },
+   "DisposeThreadTerminationUPP": {
+    "args": {
+     "0": {}
+    }
+   },
+   "DisposeTimerUPP": {
+    "args": {
+     "0": {}
+    }
+   },
+   "DisposeUnicodeToTextFallbackUPP": {
+    "args": {
+     "0": {}
+    }
+   },
+   "DisposeUnicodeToTextInfo": {
+    "args": {
+     "0": {}
+    }
+   },
+   "DisposeUnicodeToTextRunInfo": {
+    "args": {
+     "0": {}
+    }
+   },
+   "EmptyCollection": { "ignore": true },
+   "EmptyHandle": {
+    "args": {
+     "0": {}
+    }
+   },
+   "FNGetDirectoryForSubscription": {
+    "args": {
+     "0": {},
+     "1": {}
+    }
+   },
+   "FNNotify": {
+    "args": {
+     "0": {}
+    }
+   },
+   "FNNotifyByPath": {
+    "args": {
+     "0": {}
+    }
+   },
+   "FNSubscribe": {
+    "args": {
+     "0": {},
+     "1": {},
+     "2": {},
+     "4": {}
+    }
+   },
+   "FNSubscribeByPath": {
+    "args": {
+     "0": {},
+     "1": {},
+     "2": {},
+     "4": {}
+    }
+   },
+   "FNUnsubscribe": {
+    "args": {
+     "0": {}
+    }
+   },
+   "FSAllocateFork": {
+    "args": {
+     "5": {}
+    }
+   },
+   "FSCancelVolumeOperation": {
+    "args": {
+     "0": {}
+    }
+   },
+   "FSCatalogSearch": {
+    "args": {
+     "0": {},
+     "1": {},
+     "3": {},
+     "4": {},
+     "6": {},
+     "7": {},
+     "8": {},
+     "9": {}
+    }
+   },
+   "FSCloseIterator": {
+    "args": {
+     "0": {}
+    }
+   },
+   "FSCompareFSRefs": {
+    "args": {
+     "0": {},
+     "1": {}
+    }
+   },
+   "FSCopyAliasInfo": { "ignore": true },
+   "FSCopyDADiskForVolume": {
+    "args": {
+     "1": {}
+    }
+   },
+   "FSCopyDiskIDForVolume": {
+    "args": {
+     "1": {}
+    }
+   },
+   "FSCopyObjectAsync": {
+    "args": {
+     "0": {},
+     "1": {},
+     "2": {},
+     "3": {},
+     "5": {
+      "function": {
+       "args": [
+        {
+         "typestr": "^{__FSFileOperation=}"
+        },
+        {
+         "typestr": "^{FSRef=[80C]}"
+        },
+        {
+         "typestr": "I"
+        },
+        {
+         "typestr": "i"
+        },
+        {
+         "typestr": "^{__CFDictionary=}"
+        },
+        {
+         "typestr": "^v"
+        }
+       ],
+       "retval": {
+        "typestr": "v"
+       }
+      }
+     },
+     "7": {}
+    }
+   },
+   "FSCopyObjectSync": {
+    "args": {
+     "0": {},
+     "1": {},
+     "2": {},
+     "3": {}
+    }
+   },
+   "FSCopyURLForVolume": {
+    "args": {
+     "1": {}
+    }
+   },
+   "FSCreateDirectoryUnicode": {
+    "args": {
+     "0": {},
+     "2": {},
+     "4": {},
+     "5": {},
+     "6": {},
+     "7": {}
+    }
+   },
+   "FSCreateFileAndOpenForkUnicode": {
+    "args": {
+     "0": {},
+     "2": {},
+     "4": {},
+     "6": {},
+     "8": {},
+     "9": {}
+    }
+   },
+   "FSCreateFileUnicode": {
+    "args": {
+     "0": {},
+     "2": {},
+     "4": {},
+     "5": {},
+     "6": {}
+    }
+   },
+   "FSCreateFork": {
+    "args": {
+     "0": {},
+     "2": {}
+    }
+   },
+   "FSCreateResFile": {
+    "args": {
+     "0": {},
+     "2": {},
+     "4": {},
+     "5": {},
+     "6": {}
+    }
+   },
+   "FSCreateResourceFile": {
+    "args": {
+     "0": {},
+     "2": {},
+     "4": {},
+     "6": {},
+     "7": {},
+     "8": {}
+    }
+   },
+   "FSCreateResourceFork": {
+    "args": {
+     "0": {},
+     "2": {}
+    }
+   },
+   "FSCreateStringFromHFSUniStr": {
+    "args": {
+     "0": {},
+     "1": {}
+    },
+    "retval": {
+     "already_cfretained": true
+    }
+   },
+   "FSCreateVolumeOperation": {
+    "args": {
+     "0": {}
+    }
+   },
+   "FSDeleteFork": {
+    "args": {
+     "0": {},
+     "2": {}
+    }
+   },
+   "FSDeleteObject": {
+    "args": {
+     "0": {}
+    }
+   },
+   "FSDetermineIfRefIsEnclosedByFolder": {
+    "args": {
+     "2": {},
+     "3": {}
+    }
+   },
+   "FSDisposeVolumeOperation": {
+    "args": {
+     "0": {}
+    }
+   },
+   "FSEjectVolumeAsync": {
+    "args": {
+     "2": {},
+     "3": {},
+     "4": {},
+     "5": {},
+     "6": {}
+    }
+   },
+   "FSEjectVolumeSync": {
+    "args": {
+     "2": {}
+    }
+   },
+   "FSExchangeObjects": {
+    "args": {
+     "0": {},
+     "1": {}
+    }
+   },
+   "FSFileOperationCancel": {
+    "args": {
+     "0": {}
+    }
+   },
+   "FSFileOperationCopyStatus": {
+    "args": {
+     "0": {},
+     "1": {},
+     "2": {},
+     "3": {},
+     "4": {},
+     "5": {}
+    }
+   },
+   "FSFileOperationCreate": {
+    "args": {
+     "0": {}
+    },
+    "retval": {
+     "already_cfretained": true
+    }
+   },
+   "FSFileOperationScheduleWithRunLoop": {
+    "args": {
+     "0": {},
+     "1": {},
+     "2": {}
+    }
+   },
+   "FSFileOperationUnscheduleFromRunLoop": {
+    "args": {
+     "0": {},
+     "1": {},
+     "2": {}
+    }
+   },
+   "FSFileSecurityCopyAccessControlList": {
+    "args": {
+     "0": {},
+     "1": {}
+    }
+   },
+   "FSFileSecurityCreate": {
+    "args": {
+     "0": {}
+    },
+    "retval": {
+     "already_cfretained": true
+    }
+   },
+   "FSFileSecurityCreateWithFSPermissionInfo": {
+    "args": {
+     "0": {},
+     "1": {}
+    },
+    "retval": {
+     "already_cfretained": true
+    }
+   },
+   "FSFileSecurityGetGroup": {
+    "args": {
+     "0": {},
+     "1": {}
+    }
+   },
+   "FSFileSecurityGetGroupUUID": {
+    "args": {
+     "0": {},
+     "1": {}
+    }
+   },
+   "FSFileSecurityGetMode": {
+    "args": {
+     "0": {},
+     "1": {}
+    }
+   },
+   "FSFileSecurityGetOwner": {
+    "args": {
+     "0": {},
+     "1": {}
+    }
+   },
+   "FSFileSecurityGetOwnerUUID": {
+    "args": {
+     "0": {},
+     "1": {}
+    }
+   },
+   "FSFileSecurityRefCreateCopy": {
+    "args": {
+     "0": {},
+     "1": {}
+    },
+    "retval": {
+     "already_cfretained": true
+    }
+   },
+   "FSFileSecuritySetAccessControlList": {
+    "args": {
+     "0": {},
+     "1": {}
+    }
+   },
+   "FSFileSecuritySetGroup": {
+    "args": {
+     "0": {}
+    }
+   },
+   "FSFileSecuritySetGroupUUID": {
+    "args": {
+     "0": {},
+     "1": {}
+    }
+   },
+   "FSFileSecuritySetMode": {
+    "args": {
+     "0": {}
+    }
+   },
+   "FSFileSecuritySetOwner": {
+    "args": {
+     "0": {}
+    }
+   },
+   "FSFileSecuritySetOwnerUUID": {
+    "args": {
+     "0": {},
+     "1": {}
+    }
+   },
+   "FSFindFolder": {
+    "args": {
+     "3": {}
+    }
+   },
+   "FSFollowFinderAlias": { "ignore": true },
+   "FSGetAsyncEjectStatus": {
+    "args": {
+     "0": {},
+     "1": {},
+     "2": {},
+     "3": {},
+     "4": {},
+     "5": {}
+    }
+   },
+   "FSGetAsyncMountStatus": {
+    "args": {
+     "0": {},
+     "1": {},
+     "2": {},
+     "3": {},
+     "4": {}
+    }
+   },
+   "FSGetAsyncUnmountStatus": {
+    "args": {
+     "0": {},
+     "1": {},
+     "2": {},
+     "3": {},
+     "4": {},
+     "5": {}
+    }
+   },
+   "FSGetCatalogInfo": {
+    "args": {
+     "0": {},
+     "2": {},
+     "3": {},
+     "4": {},
+     "5": {}
+    }
+   },
+   "FSGetCatalogInfoBulk": {
+    "args": {
+     "0": {},
+     "2": {},
+     "3": {},
+     "5": {},
+     "6": {},
+     "7": {},
+     "8": {}
+    }
+   },
+   "FSGetDataForkName": {
+    "args": {
+     "0": {}
+    }
+   },
+   "FSGetForkCBInfo": {
+    "args": {
+     "2": {},
+     "3": {},
+     "4": {},
+     "5": {},
+     "6": {}
+    }
+   },
+   "FSGetForkPosition": {
+    "args": {
+     "1": {}
+    }
+   },
+   "FSGetForkSize": {
+    "args": {
+     "1": {}
+    }
+   },
+   "FSGetHFSUniStrFromString": {
+    "args": {
+     "0": {},
+     "1": {}
+    }
+   },
+   "FSGetResourceForkName": {
+    "args": {
+     "0": {}
+    }
+   },
+   "FSGetTemporaryDirectoryForReplaceObject": {
+    "args": {
+     "0": {},
+     "1": {}
+    }
+   },
+   "FSGetVolumeForDADisk": {
+    "args": {
+     "0": {},
+     "1": {}
+    }
+   },
+   "FSGetVolumeForDiskID": {
+    "args": {
+     "0": {},
+     "1": {}
+    }
+   },
+   "FSGetVolumeInfo": {
+    "args": {
+     "2": {},
+     "4": {},
+     "5": {},
+     "6": {}
+    }
+   },
+   "FSGetVolumeMountInfo": {
+    "args": {
+     "1": {},
+     "3": {}
+    }
+   },
+   "FSGetVolumeMountInfoSize": {
+    "args": {
+     "1": {}
+    }
+   },
+   "FSGetVolumeParms": {
+    "args": {
+     "1": {}
+    }
+   },
+   "FSIsAliasFile": { "ignore": true },
+   "FSIsFSRefValid": {
+    "args": {
+     "0": {}
+    }
+   },
+   "FSIterateForks": {
+    "args": {
+     "0": {},
+     "1": {},
+     "2": {},
+     "3": {},
+     "4": {}
+    }
+   },
+   "FSLockRange": {
+    "args": {
+     "4": {}
+    }
+   },
+   "FSMakeFSRefUnicode": {
+    "args": {
+     "0": {},
+     "2": {},
+     "4": {}
+    }
+   },
+   "FSMatchAliasBulk": { "ignore": true },
+   "FSMountLocalVolumeAsync": {
+    "args": {
+     "0": {},
+     "1": {},
+     "2": {},
+     "3": {},
+     "5": {},
+     "6": {},
+     "7": {}
+    }
+   },
+   "FSMountLocalVolumeSync": {
+    "args": {
+     "0": {},
+     "1": {},
+     "2": {}
+    }
+   },
+   "FSMountServerVolumeAsync": {
+    "args": {
+     "0": {},
+     "1": {},
+     "2": {},
+     "3": {},
+     "4": {},
+     "5": {},
+     "7": {},
+     "8": {},
+     "9": {}
+    }
+   },
+   "FSMountServerVolumeSync": {
+    "args": {
+     "0": {},
+     "1": {},
+     "2": {},
+     "3": {},
+     "4": {}
+    }
+   },
+   "FSMoveObject": {
+    "args": {
+     "0": {},
+     "1": {},
+     "2": {}
+    }
+   },
+   "FSMoveObjectAsync": {
+    "args": {
+     "0": {},
+     "1": {},
+     "2": {},
+     "3": {},
+     "5": {
+      "function": {
+       "args": [
+        {
+         "typestr": "^{__FSFileOperation=}"
+        },
+        {
+         "typestr": "^{FSRef=[80C]}"
+        },
+        {
+         "typestr": "I"
+        },
+        {
+         "typestr": "i"
+        },
+        {
+         "typestr": "^{__CFDictionary=}"
+        },
+        {
+         "typestr": "^v"
+        }
+       ],
+       "retval": {
+        "typestr": "v"
+       }
+      }
+     },
+     "7": {}
+    }
+   },
+   "FSMoveObjectSync": {
+    "args": {
+     "0": {},
+     "1": {},
+     "2": {},
+     "3": {}
+    }
+   },
+   "FSMoveObjectToTrashAsync": {
+    "args": {
+     "0": {},
+     "1": {},
+     "3": {
+      "function": {
+       "args": [
+        {
+         "typestr": "^{__FSFileOperation=}"
+        },
+        {
+         "typestr": "^{FSRef=[80C]}"
+        },
+        {
+         "typestr": "I"
+        },
+        {
+         "typestr": "i"
+        },
+        {
+         "typestr": "^{__CFDictionary=}"
+        },
+        {
+         "typestr": "^v"
+        }
+       ],
+       "retval": {
+        "typestr": "v"
+       }
+      }
+     },
+     "5": {}
+    }
+   },
+   "FSMoveObjectToTrashSync": {
+    "args": {
+     "0": {},
+     "1": {}
+    }
+   },
+   "FSNewAlias": { "ignore": true },
+   "FSNewAliasFromPath": { "ignore": true },
+   "FSNewAliasMinimal": { "ignore": true },
+   "FSNewAliasMinimalUnicode": { "ignore": true },
+   "FSNewAliasUnicode": { "ignore": true },
+   "FSOpenFork": {
+    "args": {
+     "0": {},
+     "2": {},
+     "4": {}
+    }
+   },
+   "FSOpenIterator": {
+    "args": {
+     "0": {},
+     "2": {}
+    }
+   },
+   "FSOpenOrphanResFile": {
+    "args": {
+     "0": {},
+     "2": {}
+    }
+   },
+   "FSOpenResFile": {
+    "args": {
+     "0": {}
+    }
+   },
+   "FSOpenResourceFile": {
+    "args": {
+     "0": {},
+     "2": {},
+     "4": {}
+    }
+   },
+   "FSPathCopyObjectAsync": {
+    "args": {
+     "0": {},
+     "1": {},
+     "2": {},
+     "3": {},
+     "5": {
+      "function": {
+       "args": [
+        {
+         "typestr": "^{__FSFileOperation=}"
+        },
+        {
+         "typestr": "^c"
+        },
+        {
+         "typestr": "I"
+        },
+        {
+         "typestr": "i"
+        },
+        {
+         "typestr": "^{__CFDictionary=}"
+        },
+        {
+         "typestr": "^v"
+        }
+       ],
+       "retval": {
+        "typestr": "v"
+       }
+      }
+     },
+     "7": {}
+    }
+   },
+   "FSPathCopyObjectSync": {
+    "args": {
+     "0": {},
+     "1": {},
+     "2": {},
+     "3": {}
+    }
+   },
+   "FSPathFileOperationCopyStatus": {
+    "args": {
+     "0": {},
+     "1": {},
+     "2": {},
+     "3": {},
+     "4": {},
+     "5": {}
+    }
+   },
+   "FSPathGetTemporaryDirectoryForReplaceObject": {
+    "args": {
+     "0": {},
+     "1": {}
+    }
+   },
+   "FSPathMakeRef": {
+    "args": {
+     "0": {},
+     "1": {},
+     "2": {}
+    }
+   },
+   "FSPathMakeRefWithOptions": {
+    "args": {
+     "0": {},
+     "2": {},
+     "3": {}
+    }
+   },
+   "FSPathMoveObjectAsync": {
+    "args": {
+     "0": {},
+     "1": {},
+     "2": {},
+     "3": {},
+     "5": {
+      "function": {
+       "args": [
+        {
+         "typestr": "^{__FSFileOperation=}"
+        },
+        {
+         "typestr": "^c"
+        },
+        {
+         "typestr": "I"
+        },
+        {
+         "typestr": "i"
+        },
+        {
+         "typestr": "^{__CFDictionary=}"
+        },
+        {
+         "typestr": "^v"
+        }
+       ],
+       "retval": {
+        "typestr": "v"
+       }
+      }
+     },
+     "7": {}
+    }
+   },
+   "FSPathMoveObjectSync": {
+    "args": {
+     "0": {},
+     "1": {},
+     "2": {},
+     "3": {}
+    }
+   },
+   "FSPathMoveObjectToTrashAsync": {
+    "args": {
+     "0": {},
+     "1": {},
+     "3": {
+      "function": {
+       "args": [
+        {
+         "typestr": "^{__FSFileOperation=}"
+        },
+        {
+         "typestr": "^c"
+        },
+        {
+         "typestr": "I"
+        },
+        {
+         "typestr": "i"
+        },
+        {
+         "typestr": "^{__CFDictionary=}"
+        },
+        {
+         "typestr": "^v"
+        }
+       ],
+       "retval": {
+        "typestr": "v"
+       }
+      }
+     },
+     "5": {}
+    }
+   },
+   "FSPathMoveObjectToTrashSync": {
+    "args": {
+     "0": {},
+     "1": {}
+    }
+   },
+   "FSPathReplaceObject": {
+    "args": {
+     "0": {},
+     "1": {},
+     "2": {},
+     "3": {},
+     "4": {}
+    }
+   },
+   "FSReadFork": {
+    "args": {
+     "4": {},
+     "5": {}
+    }
+   },
+   "FSRefMakePath": {
+    "args": {
+     "0": {},
+     "1": {}
+    }
+   },
+   "FSRenameUnicode": {
+    "args": {
+     "0": {},
+     "2": {},
+     "4": {}
+    }
+   },
+   "FSReplaceObject": {
+    "args": {
+     "0": {},
+     "1": {},
+     "2": {},
+     "3": {},
+     "4": {},
+     "6": {}
+    }
+   },
+   "FSResolveAlias": { "ignore": true },
+   "FSResolveAliasFile": { "ignore": true },
+   "FSResolveAliasFileWithMountFlags": { "ignore": true },
+   "FSResolveAliasWithMountFlags": { "ignore": true },
+   "FSResolveNodeID": {
+    "args": {
+     "2": {}
+    }
+   },
+   "FSResourceFileAlreadyOpen": {
+    "args": {
+     "0": {},
+     "1": {},
+     "2": {}
+    }
+   },
+   "FSSetCatalogInfo": {
+    "args": {
+     "0": {},
+     "2": {}
+    }
+   },
+   "FSSetVolumeInfo": {
+    "args": {
+     "2": {}
+    }
+   },
+   "FSUnlinkObject": {
+    "args": {
+     "0": {}
+    }
+   },
+   "FSUnlockRange": {
+    "args": {
+     "4": {}
+    }
+   },
+   "FSUnmountVolumeAsync": {
+    "args": {
+     "2": {},
+     "3": {},
+     "4": {},
+     "5": {},
+     "6": {}
+    }
+   },
+   "FSUnmountVolumeSync": {
+    "args": {
+     "2": {}
+    }
+   },
+   "FSUpdateAlias": { "ignore": true },
+   "FSVolumeMount": {
+    "args": {
+     "0": {},
+     "1": {}
+    }
+   },
+   "FSWriteFork": {
+    "args": {
+     "4": {},
+     "5": {}
+    }
+   },
+   "FindFolder": {
+    "args": {
+     "3": {},
+     "4": {}
+    }
+   },
+   "FindNextComponent": { "ignore": true },
+   "FlattenCollection": { "ignore": true },
+   "FlattenCollectionToHdl": { "ignore": true },
+   "FlattenPartialCollection": { "ignore": true },
+   "Gestalt": {
+    "args": {
+     "1": {}
+    }
+   },
+   "Get1IndResource": {
+    "retval": {}
+   },
+   "Get1IndType": {
+    "args": {
+     "0": {}
+    }
+   },
+   "Get1NamedResource": {
+    "args": {
+     "1": {}
+    },
+    "retval": {}
+   },
+   "Get1Resource": {
+    "retval": {}
+   },
+   "GetAliasSize": { "ignore": true },
+   "GetAliasSizeFromPtr": { "ignore": true },
+   "GetAliasUserType": { "ignore": true },
+   "GetAliasUserTypeFromPtr": { "ignore": true },
+   "GetCollectionDefaultAttributes": { "ignore": true },
+   "GetCollectionExceptionProc": { "ignore": true },
+   "GetCollectionItem": { "ignore": true },
+   "GetCollectionItemHdl": { "ignore": true },
+   "GetCollectionItemInfo": { "ignore": true },
+   "GetCollectionRetainCount": { "ignore": true },
+   "GetComponentIndString": { "ignore": true },
+   "GetComponentInfo": { "ignore": true },
+   "GetComponentInstanceError": { "ignore": true },
+   "GetComponentInstanceStorage": { "ignore": true },
+   "GetComponentPublicIndString": { "ignore": true },
+   "GetComponentPublicResource": { "ignore": true },
+   "GetComponentPublicResourceList": { "ignore": true },
+   "GetComponentRefcon": { "ignore": true },
+   "GetComponentResource": { "ignore": true },
+   "GetCurrentThread": {
+    "args": {
+     "0": {}
+    }
+   },
+   "GetDebugComponentInfo": { "ignore": true },
+   "GetDebugOptionInfo": {
+    "args": {
+     "2": {},
+     "4": {}
+    }
+   },
+   "GetDefaultThreadStackSize": {
+    "args": {
+     "1": {}
+    }
+   },
+   "GetFolderNameUnicode": {
+    "args": {
+     "2": {},
+     "3": {}
+    }
+   },
+   "GetFolderTypes": {
+    "args": {
+     "1": {},
+     "2": {}
+    }
+   },
+   "GetHandleSize": {
+    "args": {
+     "0": {}
+    }
+   },
+   "GetIndResource": {
+    "retval": {}
+   },
+   "GetIndType": {
+    "args": {
+     "0": {}
+    }
+   },
+   "GetIndexedCollectionItem": { "ignore": true },
+   "GetIndexedCollectionItemHdl": { "ignore": true },
+   "GetIndexedCollectionItemInfo": { "ignore": true },
+   "GetIndexedCollectionTag": { "ignore": true },
+   "GetMacOSStatusCommentString": {
+    "retval": {}
+   },
+   "GetMacOSStatusErrorString": {
+    "retval": {}
+   },
+   "GetMaxResourceSize": {
+    "args": {
+     "0": {}
+    }
+   },
+   "GetNamedResource": {
+    "args": {
+     "1": {}
+    },
+    "retval": {}
+   },
+   "GetNewCollection": { "ignore": true },
+   "GetNextFOND": {
+    "args": {
+     "0": {}
+    },
+    "retval": {}
+   },
+   "GetNextResourceFile": {
+    "args": {
+     "1": {}
+    }
+   },
+   "GetPtrSize": {
+    "args": {
+     "0": {}
+    }
+   },
+   "GetResAttrs": {
+    "args": {
+     "0": {}
+    }
+   },
+   "GetResInfo": {
+    "args": {
+     "0": {},
+     "1": {},
+     "2": {}
+    }
+   },
+   "GetResource": {
+    "retval": {}
+   },
+   "GetResourceSizeOnDisk": {
+    "args": {
+     "0": {}
+    }
+   },
+   "GetScriptInfoFromTextEncoding": {
+    "args": {
+     "1": {},
+     "2": {}
+    }
+   },
+   "GetTaggedCollectionItem": { "ignore": true },
+   "GetTaggedCollectionItemInfo": { "ignore": true },
+   "GetTextEncodingFromScriptInfo": {
+    "args": {
+     "3": {}
+    }
+   },
+   "GetTextEncodingName": {
+    "args": {
+     "5": {},
+     "6": {},
+     "7": {},
+     "8": {}
+    }
+   },
+   "GetThreadCurrentTaskRef": {
+    "args": {
+     "0": {}
+    }
+   },
+   "GetThreadState": {
+    "args": {
+     "1": {}
+    }
+   },
+   "GetThreadStateGivenTaskRef": {
+    "args": {
+     "0": {},
+     "2": {}
+    }
+   },
+   "GetTopResourceFile": {
+    "args": {
+     "0": {}
+    }
+   },
+   "HClrRBit": {
+    "args": {
+     "0": {}
+    }
+   },
+   "HGetState": {
+    "args": {
+     "0": {}
+    }
+   },
+   "HLock": {
+    "args": {
+     "0": {}
+    }
+   },
+   "HLockHi": {
+    "args": {
+     "0": {}
+    }
+   },
+   "HSetRBit": {
+    "args": {
+     "0": {}
+    }
+   },
+   "HSetState": {
+    "args": {
+     "0": {}
+    }
+   },
+   "HUnlock": {
+    "args": {
+     "0": {}
+    }
+   },
+   "HandAndHand": {
+    "args": {
+     "0": {},
+     "1": {}
+    }
+   },
+   "HandToHand": {
+    "args": {
+     "0": {}
+    }
+   },
+   "HomeResFile": {
+    "args": {
+     "0": {}
+    }
+   },
+   "IdentifyFolder": {
+    "args": {
+     "2": {}
+    }
+   },
+   "IncrementAtomic": {
+    "args": {
+     "0": {}
+    }
+   },
+   "IncrementAtomic16": {
+    "args": {
+     "0": {}
+    }
+   },
+   "IncrementAtomic8": {
+    "args": {
+     "0": {}
+    }
+   },
+   "InstallDebugAssertOutputHandler": {
+    "args": {
+     "0": {}
+    }
+   },
+   "InstallExceptionHandler": {
+    "args": {
+     "0": {}
+    },
+    "retval": {}
+   },
+   "InvokeAVLCompareItemsUPP": { "ignore": true },
+   "InvokeAVLDisposeItemUPP": { "ignore": true },
+   "InvokeAVLItemSizeUPP": { "ignore": true },
+   "InvokeAVLWalkUPP": { "ignore": true },
+   "InvokeCollectionExceptionUPP": { "ignore": true },
+   "InvokeCollectionFlattenUPP": { "ignore": true },
+   "InvokeComponentMPWorkFunctionUPP": { "ignore": true },
+   "InvokeComponentRoutineUPP": { "ignore": true },
+   "InvokeDebugAssertOutputHandlerUPP": {
+    "args": {
+     "2": {},
+     "3": {},
+     "4": {},
+     "5": {},
+     "7": {},
+     "8": {},
+     "9": {}
+    }
+   },
+   "InvokeDebugComponentCallbackUPP": { "ignore": true },
+   "InvokeDebuggerDisposeThreadUPP": {
+    "args": {
+     "1": {}
+    }
+   },
+   "InvokeDebuggerNewThreadUPP": {
+    "args": {
+     "1": {}
+    }
+   },
+   "InvokeDebuggerThreadSchedulerUPP": {
+    "args": {
+     "0": {},
+     "1": {}
+    }
+   },
+   "InvokeDeferredTaskUPP": {
+    "args": {
+     "1": {}
+    }
+   },
+   "InvokeExceptionHandlerUPP": {
+    "args": {
+     "0": {},
+     "1": {}
+    }
+   },
+   "InvokeFNSubscriptionUPP": {
+    "args": {
+     "2": {},
+     "3": {},
+     "4": {}
+    }
+   },
+   "InvokeFSVolumeEjectUPP": {
+    "args": {
+     "0": {},
+     "1": {},
+     "5": {}
+    }
+   },
+   "InvokeFSVolumeMountUPP": {
+    "args": {
+     "0": {},
+     "1": {},
+     "4": {}
+    }
+   },
+   "InvokeFSVolumeUnmountUPP": {
+    "args": {
+     "0": {},
+     "1": {},
+     "5": {}
+    }
+   },
+   "InvokeFolderManagerNotificationUPP": {
+    "args": {
+     "1": {},
+     "2": {},
+     "3": {}
+    }
+   },
+   "InvokeGetMissingComponentResourceUPP": { "ignore": true },
+   "InvokeIOCompletionUPP": {
+    "args": {
+     "0": {},
+     "1": {}
+    }
+   },
+   "InvokeIndexToUCStringUPP": {
+    "args": {
+     "1": {},
+     "2": {},
+     "3": {},
+     "4": {},
+     "5": {}
+    }
+   },
+   "InvokeResErrUPP": {
+    "args": {
+     "1": {}
+    }
+   },
+   "InvokeSelectorFunctionUPP": {
+    "args": {
+     "1": {},
+     "2": {}
+    }
+   },
+   "InvokeThreadEntryUPP": {
+    "args": {
+     "0": {},
+     "1": {}
+    },
+    "retval": {}
+   },
+   "InvokeThreadSchedulerUPP": {
+    "args": {
+     "0": {},
+     "1": {}
+    }
+   },
+   "InvokeThreadSwitchUPP": {
+    "args": {
+     "1": {},
+     "2": {}
+    }
+   },
+   "InvokeThreadTerminationUPP": {
+    "args": {
+     "1": {},
+     "2": {}
+    }
+   },
+   "InvokeTimerUPP": {
+    "args": {
+     "0": {},
+     "1": {}
+    }
+   },
+   "InvokeUnicodeToTextFallbackUPP": {
+    "args": {
+     "0": {},
+     "2": {},
+     "3": {},
+     "5": {},
+     "6": {},
+     "7": {},
+     "8": {}
+    }
+   },
+   "IsHandleValid": {
+    "args": {
+     "0": {}
+    }
+   },
+   "IsPointerValid": {
+    "args": {
+     "0": {}
+    }
+   },
+   "LMGetIntlSpec": {
+    "retval": {}
+   },
+   "LMSetIntlSpec": {
+    "args": {
+     "0": {}
+    }
+   },
+   "LoadResource": {
+    "args": {
+     "0": {}
+    }
+   },
+   "LocaleCountNames": {
+    "args": {
+     "0": {},
+     "3": {}
+    }
+   },
+   "LocaleGetIndName": {
+    "args": {
+     "0": {},
+     "5": {},
+     "6": {},
+     "7": {}
+    }
+   },
+   "LocaleGetName": {
+    "args": {
+     "0": {},
+     "3": {},
+     "5": {},
+     "6": {}
+    }
+   },
+   "LocaleOperationCountLocales": {
+    "args": {
+     "1": {}
+    }
+   },
+   "LocaleOperationCountNames": {
+    "args": {
+     "1": {}
+    }
+   },
+   "LocaleOperationGetIndName": {
+    "args": {
+     "3": {},
+     "4": {},
+     "5": {}
+    }
+   },
+   "LocaleOperationGetLocales": {
+    "args": {
+     "2": {},
+     "3": {}
+    }
+   },
+   "LocaleOperationGetName": {
+    "args": {
+     "1": {},
+     "3": {},
+     "4": {}
+    }
+   },
+   "LocaleRefFromLangOrRegionCode": {
+    "args": {
+     "2": {}
+    }
+   },
+   "LocaleRefFromLocaleString": {
+    "args": {
+     "0": {},
+     "1": {}
+    }
+   },
+   "LocaleRefGetPartString": {
+    "args": {
+     "0": {},
+     "3": {}
+    }
+   },
+   "LocaleStringToLangAndRegionCodes": {
+    "args": {
+     "0": {},
+     "1": {},
+     "2": {}
+    }
+   },
+   "MPAllocate": {
+    "retval": {}
+   },
+   "MPAllocateAligned": {
+    "retval": {}
+   },
+   "MPAllocateTaskStorageIndex": {
+    "args": {
+     "0": {}
+    }
+   },
+   "MPArmTimer": {
+    "args": {
+     "0": {},
+     "1": {}
+    }
+   },
+   "MPBlockClear": {
+    "args": {
+     "0": {}
+    }
+   },
+   "MPBlockCopy": {
+    "args": {
+     "0": {},
+     "1": {}
+    }
+   },
+   "MPCancelTimer": {
+    "args": {
+     "0": {},
+     "1": {}
+    }
+   },
+   "MPCauseNotification": {
+    "args": {
+     "0": {}
+    }
+   },
+   "MPCreateCriticalRegion": {
+    "args": {
+     "0": {}
+    }
+   },
+   "MPCreateEvent": {
+    "args": {
+     "0": {}
+    }
+   },
+   "MPCreateNotification": {
+    "args": {
+     "0": {}
+    }
+   },
+   "MPCreateQueue": {
+    "args": {
+     "0": {}
+    }
+   },
+   "MPCreateSemaphore": {
+    "args": {
+     "2": {}
+    }
+   },
+   "MPCreateTask": {
+    "args": {
+     "0": {
+      "function": {
+       "args": [
+        {
+         "typestr": "^v"
+        }
+       ],
+       "retval": {
+        "typestr": "i"
+       }
+      }
+     },
+     "1": {},
+     "3": {},
+     "4": {},
+     "5": {},
+     "7": {}
+    }
+   },
+   "MPCreateTimer": {
+    "args": {
+     "0": {}
+    }
+   },
+   "MPCurrentTaskID": {
+    "retval": {}
+   },
+   "MPDelayUntil": {
+    "args": {
+     "0": {}
+    }
+   },
+   "MPDeleteCriticalRegion": {
+    "args": {
+     "0": {}
+    }
+   },
+   "MPDeleteEvent": {
+    "args": {
+     "0": {}
+    }
+   },
+   "MPDeleteNotification": {
+    "args": {
+     "0": {}
+    }
+   },
+   "MPDeleteQueue": {
+    "args": {
+     "0": {}
+    }
+   },
+   "MPDeleteSemaphore": {
+    "args": {
+     "0": {}
+    }
+   },
+   "MPDeleteTimer": {
+    "args": {
+     "0": {}
+    }
+   },
+   "MPDisposeTaskException": {
+    "args": {
+     "0": {}
+    }
+   },
+   "MPEnterCriticalRegion": {
+    "args": {
+     "0": {}
+    }
+   },
+   "MPExitCriticalRegion": {
+    "args": {
+     "0": {}
+    }
+   },
+   "MPExtractTaskState": {
+    "args": {
+     "0": {},
+     "2": {}
+    }
+   },
+   "MPFree": {
+    "args": {
+     "0": {}
+    }
+   },
+   "MPGetAllocatedBlockSize": {
+    "args": {
+     "0": {}
+    }
+   },
+   "MPGetNextCpuID": {
+    "args": {
+     "0": {},
+     "1": {}
+    }
+   },
+   "MPGetNextTaskID": {
+    "args": {
+     "0": {},
+     "1": {}
+    }
+   },
+   "MPGetTaskStorageValue": {
+    "retval": {}
+   },
+   "MPModifyNotification": {
+    "args": {
+     "0": {},
+     "1": {},
+     "2": {},
+     "3": {},
+     "4": {}
+    }
+   },
+   "MPModifyNotificationParameters": {
+    "args": {
+     "0": {},
+     "2": {},
+     "3": {},
+     "4": {}
+    }
+   },
+   "MPNotifyQueue": {
+    "args": {
+     "0": {},
+     "1": {},
+     "2": {},
+     "3": {}
+    }
+   },
+   "MPRegisterDebugger": {
+    "args": {
+     "0": {}
+    }
+   },
+   "MPRemoteCall": {
+    "args": {
+     "0": {
+      "function": {
+       "args": [
+        {
+         "typestr": "^v"
+        }
+       ],
+       "retval": {
+        "typestr": "^v"
+       }
+      }
+     },
+     "1": {}
+    },
+    "retval": {}
+   },
+   "MPRemoteCallCFM": {
+    "args": {
+     "0": {
+      "function": {
+       "args": [
+        {
+         "typestr": "^v"
+        }
+       ],
+       "retval": {
+        "typestr": "^v"
+       }
+      }
+     },
+     "1": {}
+    },
+    "retval": {}
+   },
+   "MPSetEvent": {
+    "args": {
+     "0": {}
+    }
+   },
+   "MPSetExceptionHandler": {
+    "args": {
+     "0": {},
+     "1": {}
+    }
+   },
+   "MPSetQueueReserve": {
+    "args": {
+     "0": {}
+    }
+   },
+   "MPSetTaskState": {
+    "args": {
+     "0": {},
+     "2": {}
+    }
+   },
+   "MPSetTaskStorageValue": {
+    "args": {
+     "1": {}
+    }
+   },
+   "MPSetTaskType": {
+    "args": {
+     "0": {}
+    }
+   },
+   "MPSetTaskWeight": {
+    "args": {
+     "0": {}
+    }
+   },
+   "MPSetTimerNotify": {
+    "args": {
+     "0": {},
+     "1": {},
+     "2": {},
+     "3": {},
+     "4": {}
+    }
+   },
+   "MPSignalSemaphore": {
+    "args": {
+     "0": {}
+    }
+   },
+   "MPTaskIsPreemptive": {
+    "args": {
+     "0": {}
+    }
+   },
+   "MPTerminateTask": {
+    "args": {
+     "0": {}
+    }
+   },
+   "MPThrowException": {
+    "args": {
+     "0": {}
+    }
+   },
+   "MPUnregisterDebugger": {
+    "args": {
+     "0": {}
+    }
+   },
+   "MPWaitForEvent": {
+    "args": {
+     "0": {},
+     "1": {}
+    }
+   },
+   "MPWaitOnQueue": {
+    "args": {
+     "0": {},
+     "1": {},
+     "2": {},
+     "3": {}
+    }
+   },
+   "MPWaitOnSemaphore": {
+    "args": {
+     "0": {}
+    }
+   },
+   "Microseconds": {
+    "args": {
+     "0": {}
+    }
+   },
+   "Munger": {
+    "args": {
+     "0": {},
+     "2": {},
+     "4": {}
+    }
+   },
+   "NearestMacTextEncodings": {
+    "args": {
+     "1": {},
+     "2": {}
+    }
+   },
+   "NewAVLCompareItemsUPP": { "ignore": true },
+   "NewAVLDisposeItemUPP": { "ignore": true },
+   "NewAVLItemSizeUPP": { "ignore": true },
+   "NewAVLWalkUPP": { "ignore": true },
+   "NewCollection": { "ignore": true },
+   "NewCollectionExceptionUPP": { "ignore": true },
+   "NewCollectionFlattenUPP": { "ignore": true },
+   "NewComponentFunctionUPP": { "ignore": true },
+   "NewComponentMPWorkFunctionUPP": { "ignore": true },
+   "NewComponentRoutineUPP": { "ignore": true },
+   "NewDebugAssertOutputHandlerUPP": {
+    "args": {
+     "0": {
+      "function": {
+       "args": [
+        {
+         "typestr": "I"
+        },
+        {
+         "typestr": "I"
+        },
+        {
+         "typestr": "^c"
+        },
+        {
+         "typestr": "^c"
+        },
+        {
+         "typestr": "^c"
+        },
+        {
+         "typestr": "^c"
+        },
+        {
+         "typestr": "q"
+        },
+        {
+         "typestr": "^v"
+        },
+        {
+         "typestr": "^C"
+        }
+       ],
+       "retval": {
+        "typestr": "v"
+       }
+      }
+     }
+    },
+    "retval": {}
+   },
+   "NewDebugComponent": { "ignore": true },
+   "NewDebugComponentCallbackUPP": { "ignore": true },
+   "NewDebugOption": {
+    "args": {
+     "2": {}
+    }
+   },
+   "NewDebuggerDisposeThreadUPP": {
+    "args": {
+     "0": {
+      "function": {
+       "args": [
+        {
+         "typestr": "Q"
+        }
+       ],
+       "retval": {
+        "typestr": "v"
+       }
+      }
+     }
+    },
+    "retval": {}
+   },
+   "NewDebuggerNewThreadUPP": {
+    "args": {
+     "0": {
+      "function": {
+       "args": [
+        {
+         "typestr": "Q"
+        }
+       ],
+       "retval": {
+        "typestr": "v"
+       }
+      }
+     }
+    },
+    "retval": {}
+   },
+   "NewDebuggerThreadSchedulerUPP": {
+    "args": {
+     "0": {
+      "function": {
+       "args": [
+        {
+         "typestr": "^{SchedulerInfoRec=IQQQ}"
+        }
+       ],
+       "retval": {
+        "typestr": "Q"
+       }
+      }
+     }
+    },
+    "retval": {}
+   },
+   "NewDeferredTaskUPP": {
+    "args": {
+     "0": {
+      "function": {
+       "args": [
+        {
+         "typestr": "q"
+        }
+       ],
+       "retval": {
+        "typestr": "v"
+       }
+      }
+     }
+    },
+    "retval": {}
+   },
+   "NewEmptyHandle": {
+    "retval": {}
+   },
+   "NewExceptionHandlerUPP": {
+    "args": {
+     "0": {
+      "function": {
+       "args": [
+        {
+         "typestr": "^{ExceptionInformation=Q^{MachineInformationIntel64=QQQQQQQQ}^{RegisterInformationIntel64=QQQQQQQQQQQQQQQQ}^{FPUInformationIntel64=[8[10C]]SSSSIII}(ExceptionInfo=^{MemoryExceptionInformation=^{OpaqueAreaID}^viQ})^{VectorInformationIntel64=[16(Vector128Intel=[4f][2q][2d][16C])]}}"
+        }
+       ],
+       "retval": {
+        "typestr": "i"
+       }
+      }
+     }
+    },
+    "retval": {}
+   },
+   "NewFNSubscriptionUPP": {
+    "args": {
+     "0": {
+      "function": {
+       "args": [
+        {
+         "typestr": "I"
+        },
+        {
+         "typestr": "I"
+        },
+        {
+         "typestr": "^v"
+        },
+        {
+         "typestr": "^{OpaqueFNSubscriptionRef=}"
+        }
+       ],
+       "retval": {
+        "typestr": "v"
+       }
+      }
+     }
+    },
+    "retval": {}
+   },
+   "NewFSVolumeEjectUPP": {
+    "args": {
+     "0": {
+      "function": {
+       "args": [
+        {
+         "typestr": "^{OpaqueFSVolumeOperation=}"
+        },
+        {
+         "typestr": "^v"
+        },
+        {
+         "typestr": "i"
+        },
+        {
+         "typestr": "s"
+        },
+        {
+         "typestr": "i"
+        }
+       ],
+       "retval": {
+        "typestr": "v"
+       }
+      }
+     }
+    },
+    "retval": {}
+   },
+   "NewFSVolumeMountUPP": {
+    "args": {
+     "0": {
+      "function": {
+       "args": [
+        {
+         "typestr": "^{OpaqueFSVolumeOperation=}"
+        },
+        {
+         "typestr": "^v"
+        },
+        {
+         "typestr": "i"
+        },
+        {
+         "typestr": "s"
+        }
+       ],
+       "retval": {
+        "typestr": "v"
+       }
+      }
+     }
+    },
+    "retval": {}
+   },
+   "NewFSVolumeUnmountUPP": {
+    "args": {
+     "0": {
+      "function": {
+       "args": [
+        {
+         "typestr": "^{OpaqueFSVolumeOperation=}"
+        },
+        {
+         "typestr": "^v"
+        },
+        {
+         "typestr": "i"
+        },
+        {
+         "typestr": "s"
+        },
+        {
+         "typestr": "i"
+        }
+       ],
+       "retval": {
+        "typestr": "v"
+       }
+      }
+     }
+    },
+    "retval": {}
+   },
+   "NewFolderManagerNotificationUPP": {
+    "args": {
+     "0": {
+      "function": {
+       "args": [
+        {
+         "typestr": "I"
+        },
+        {
+         "typestr": "^v"
+        },
+        {
+         "typestr": "^v"
+        }
+       ],
+       "retval": {
+        "typestr": "i"
+       }
+      }
+     }
+    },
+    "retval": {}
+   },
+   "NewGetMissingComponentResourceUPP": { "ignore": true },
+   "NewHandle": {
+    "retval": {}
+   },
+   "NewHandleClear": {
+    "retval": {}
+   },
+   "NewIOCompletionUPP": {
+    "args": {
+     "0": {
+      "function": {
+       "args": [
+        {
+         "typestr": "^v"
+        }
+       ],
+       "retval": {
+        "typestr": "v"
+       }
+      }
+     }
+    },
+    "retval": {}
+   },
+   "NewIndexToUCStringUPP": {
+    "args": {
+     "0": {
+      "function": {
+       "args": [
+        {
+         "typestr": "I"
+        },
+        {
+         "typestr": "^v"
+        },
+        {
+         "typestr": "^v"
+        },
+        {
+         "typestr": "^^{__CFString=}"
+        },
+        {
+         "typestr": "^S"
+        }
+       ],
+       "retval": {
+        "typestr": "Z"
+       }
+      }
+     }
+    },
+    "retval": {}
+   },
+   "NewPtr": {
+    "retval": {}
+   },
+   "NewPtrClear": {
+    "retval": {}
+   },
+   "NewResErrUPP": {
+    "args": {
+     "0": {
+      "function": {
+       "args": [
+        {
+         "typestr": "s"
+        }
+       ],
+       "retval": {
+        "typestr": "v"
+       }
+      }
+     }
+    },
+    "retval": {}
+   },
+   "NewSelectorFunctionUPP": {
+    "args": {
+     "0": {
+      "function": {
+       "args": [
+        {
+         "typestr": "I"
+        },
+        {
+         "typestr": "^i"
+        }
+       ],
+       "retval": {
+        "typestr": "s"
+       }
+      }
+     }
+    },
+    "retval": {}
+   },
+   "NewThread": {
+    "args": {
+     "1": {},
+     "2": {},
+     "5": {},
+     "6": {}
+    }
+   },
+   "NewThreadEntryUPP": {
+    "args": {
+     "0": {
+      "function": {
+       "args": [
+        {
+         "typestr": "^v"
+        }
+       ],
+       "retval": {
+        "typestr": "^v"
+       }
+      }
+     }
+    },
+    "retval": {}
+   },
+   "NewThreadSchedulerUPP": {
+    "args": {
+     "0": {
+      "function": {
+       "args": [
+        {
+         "typestr": "^{SchedulerInfoRec=IQQQ}"
+        }
+       ],
+       "retval": {
+        "typestr": "Q"
+       }
+      }
+     }
+    },
+    "retval": {}
+   },
+   "NewThreadSwitchUPP": {
+    "args": {
+     "0": {
+      "function": {
+       "args": [
+        {
+         "typestr": "Q"
+        },
+        {
+         "typestr": "^v"
+        }
+       ],
+       "retval": {
+        "typestr": "v"
+       }
+      }
+     }
+    },
+    "retval": {}
+   },
+   "NewThreadTerminationUPP": {
+    "args": {
+     "0": {
+      "function": {
+       "args": [
+        {
+         "typestr": "Q"
+        },
+        {
+         "typestr": "^v"
+        }
+       ],
+       "retval": {
+        "typestr": "v"
+       }
+      }
+     }
+    },
+    "retval": {}
+   },
+   "NewTimerUPP": {
+    "args": {
+     "0": {
+      "function": {
+       "args": [
+        {
+         "typestr": "^{TMTask=^{QElem=^{QElem=^{QElem=^{QElem=^{QElem=^{QElem=^{QElem=^{QElem=^{QElem=^{QElem=^{QElem=^{QElem=^{QElem=^{QElem=^{QElem=^{QElem=^{QElem=^{QElem=^{QElem=^{QElem=^{QElem=^{QElem=^{QElem=^{QElem=^{QElem=^{QElem=^{QElem=^{QElem=^{QElem=^{QElem=^{QElem=^{QElem=^{QElem=^{QElem=^{QElem=^{QElem=^{QElem=^{QElem=^{QElem=^{QElem=^{QElem=^{QElem=^{QElem=^{QElem=^{QElem=^{QElem=^{QElem=^{QElem=^{QElem=^{QElem=^{QElem=^{QElem=^{QElem=^{QElem=^{QElem=^{QElem=^{QElem=^{QElem=^{QElem=^{QElem=^{QElem=^{QElem=^{QElem=^{QElem=^{QElem=^{QElem=^{QElem=^{QElem=^{QElem=^{QElem=^{QElem=^{QElem=^{QElem=^{QElem=^{QElem=^{QElem=^{QElem=^{QElem=^{QElem=^{QElem=^{QElem=^{QElem=^{QElem=^{QElem=^{QElem=^{QElem=^{QElem=^{QElem=^{QElem=^{QElem=^{QElem=^{QElem=^{QElem=^{QElem=^{QElem=^{QElem=^{QElem=^{QElem=^{QElem=^{QElem=^{QElem=^{QElem=^{QElem=^{QElem=^{QElem=^{QElem=^{QElem=^{QElem=^{QElem=^{QElem=^{QElem=^{QElem=^{QElem=^{QElem=^{QElem=^{QElem=^{QElem=^{QElem=^{QElem=^{QElem=^{QElem=^{QElem=^{QElem=^{QElem=^{QElem=^{QElem=^{QElem=^{QElem=^{QElem=^{QElem=^{QElem=^{QElem=^{QElem=^{QElem=^{QElem=^{QElem=^{QElem=^{QElem=^{QElem=^{QElem=^{QElem=^{QElem=^{QElem=^{QElem=^{QElem=^{QElem=^{QElem=^{QElem=^{QElem=^{QElem=^{QElem=^{QElem=^{QElem=^{QElem=^{QElem=^{QElem=^{QElem=^{QElem=^{QElem=^{QElem=^{QElem=^{QElem=^{QElem=^{QElem=^{QElem=^{QElem=^{QElem=^{QElem=^{QElem=^{QElem=^{QElem=^{QElem=^{QElem=^{QElem=^{QElem=^{QElem=^{QElem=^{QElem=^{QElem=^{QElem=^{QElem=^{QElem=^{QElem=^{QElem=^{QElem=^{QElem=^{QElem=^{QElem=^{QElem=^{QElem=^{QElem=^{QElem=^{QElem=^{QElem=^{QElem=^{QElem=^{QElem=^{QElem=^{QElem=^{QElem=^{QElem=^{QElem=^{QElem=^{QElem=^{QElem=^{QElem=^{QElem=^{QElem=^{QElem=^{QElem=^{QElem=^{QElem=^{QElem=^{QElem=^{QElem=^{QElem=^{QElem=^{QElem=^{QElem=^{QElem=^{QElem=^{QElem=^{QElem=^{QElem=^{QElem=^{QElem=^{QElem=^{QElem=^{QElem=^{QElem=^{QElem=^{QElem=^{QElem=^{QElem=^{QElem=^{QElem=^{QElem=^{QElem=^{QElem=^{QElem=^{QElem=^{QElem=^{QElem=^{QElem=^{QElem=^{QElem=^{QElem=^{QElem=^{QElem=^{QElem=^{QElem=^{QElem=^{QElem=^{QElem=^{QElem=^{QElem=^{QElem=^{QElem=^{QElem=^{QElem=^{QElem=^{QElem=^{QElem=^{QElem=^{QElem=^{QElem=^{QElem=^{QElem=^{QElem=^{QElem=^{QElem=^{QElem=^{QElem=^{QElem=^{QElem=^{QElem=^{QElem=^{QElem=^{QElem=^{QElem=^{QElem=^{QElem=^{QElem=^{QElem=^{QElem=^{QElem=^{QElem=^{QElem=^{QElem=^{QElem=^{QElem=^{QElem=^{QElem=^{QElem=^{QElem=^{QElem=^{QElem=^{QElem=^{QElem=^{QElem=^{QElem=^{QElem=^{QElem=^{QElem=^{QElem=^{QElem=^{QElem=^{QElem=^{QElem=^{QElem=^{QElem=^{QElem=^{QElem=^{QElem=^{QElem=^{QElem=^{QElem=^{QElem=^{QElem=^{QElem=^{QElem=^{QElem=^{QElem=}s[1s]}s[1s]}s[1s]}s[1s]}s[1s]}s[1s]}s[1s]}s[1s]}s[1s]}s[1s]}s[1s]}s[1s]}s[1s]}s[1s]}s[1s]}s[1s]}s[1s]}s[1s]}s[1s]}s[1s]}s[1s]}s[1s]}s[1s]}s[1s]}s[1s]}s[1s]}s[1s]}s[1s]}s[1s]}s[1s]}s[1s]}s[1s]}s[1s]}s[1s]}s[1s]}s[1s]}s[1s]}s[1s]}s[1s]}s[1s]}s[1s]}s[1s]}s[1s]}s[1s]}s[1s]}s[1s]}s[1s]}s[1s]}s[1s]}s[1s]}s[1s]}s[1s]}s[1s]}s[1s]}s[1s]}s[1s]}s[1s]}s[1s]}s[1s]}s[1s]}s[1s]}s[1s]}s[1s]}s[1s]}s[1s]}s[1s]}s[1s]}s[1s]}s[1s]}s[1s]}s[1s]}s[1s]}s[1s]}s[1s]}s[1s]}s[1s]}s[1s]}s[1s]}s[1s]}s[1s]}s[1s]}s[1s]}s[1s]}s[1s]}s[1s]}s[1s]}s[1s]}s[1s]}s[1s]}s[1s]}s[1s]}s[1s]}s[1s]}s[1s]}s[1s]}s[1s]}s[1s]}s[1s]}s[1s]}s[1s]}s[1s]}s[1s]}s[1s]}s[1s]}s[1s]}s[1s]}s[1s]}s[1s]}s[1s]}s[1s]}s[1s]}s[1s]}s[1s]}s[1s]}s[1s]}s[1s]}s[1s]}s[1s]}s[1s]}s[1s]}s[1s]}s[1s]}s[1s]}s[1s]}s[1s]}s[1s]}s[1s]}s[1s]}s[1s]}s[1s]}s[1s]}s[1s]}s[1s]}s[1s]}s[1s]}s[1s]}s[1s]}s[1s]}s[1s]}s[1s]}s[1s]}s[1s]}s[1s]}s[1s]}s[1s]}s[1s]}s[1s]}s[1s]}s[1s]}s[1s]}s[1s]}s[1s]}s[1s]}s[1s]}s[1s]}s[1s]}s[1s]}s[1s]}s[1s]}s[1s]}s[1s]}s[1s]}s[1s]}s[1s]}s[1s]}s[1s]}s[1s]}s[1s]}s[1s]}s[1s]}s[1s]}s[1s]}s[1s]}s[1s]}s[1s]}s[1s]}s[1s]}s[1s]}s[1s]}s[1s]}s[1s]}s[1s]}s[1s]}s[1s]}s[1s]}s[1s]}s[1s]}s[1s]}s[1s]}s[1s]}s[1s]}s[1s]}s[1s]}s[1s]}s[1s]}s[1s]}s[1s]}s[1s]}s[1s]}s[1s]}s[1s]}s[1s]}s[1s]}s[1s]}s[1s]}s[1s]}s[1s]}s[1s]}s[1s]}s[1s]}s[1s]}s[1s]}s[1s]}s[1s]}s[1s]}s[1s]}s[1s]}s[1s]}s[1s]}s[1s]}s[1s]}s[1s]}s[1s]}s[1s]}s[1s]}s[1s]}s[1s]}s[1s]}s[1s]}s[1s]}s[1s]}s[1s]}s[1s]}s[1s]}s[1s]}s[1s]}s[1s]}s[1s]}s[1s]}s[1s]}s[1s]}s[1s]}s[1s]}s[1s]}s[1s]}s[1s]}s[1s]}s[1s]}s[1s]}s[1s]}s[1s]}s[1s]}s[1s]}s[1s]}s[1s]}s[1s]}s[1s]}s[1s]}s[1s]}s[1s]}s[1s]}s[1s]}s[1s]}s[1s]}s[1s]}s[1s]}s[1s]}s[1s]}s[1s]}s[1s]}s[1s]}s[1s]}s[1s]}s[1s]}s[1s]}s[1s]}s[1s]}s[1s]}s[1s]}s[1s]}s[1s]}s[1s]}s[1s]}s[1s]}s[1s]}s[1s]}s[1s]}s[1s]}s[1s]}s[1s]}s[1s]}s[1s]}s[1s]}s[1s]}s[1s]}s[1s]}s[1s]}s[1s]}s[1s]}s[1s]}s[1s]}s[1s]}s[1s]}s[1s]}s[1s]}s[1s]}s[1s]}s[1s]}s[1s]}s[1s]}s[1s]}s[1s]}s[1s]}s[1s]}s[1s]}s[1s]}s[1s]}s[1s]}s[1s]}s[1s]}s[1s]}s[1s]}s^?qqq}"
+        }
+       ],
+       "retval": {
+        "typestr": "v"
+       }
+      }
+     }
+    },
+    "retval": {}
+   },
+   "NewUnicodeToTextFallbackUPP": {
+    "args": {
+     "0": {
+      "function": {
+       "args": [
+        {
+         "typestr": "^T"
+        },
+        {
+         "typestr": "Q"
+        },
+        {
+         "typestr": "^Q"
+        },
+        {
+         "typestr": "^C"
+        },
+        {
+         "typestr": "Q"
+        },
+        {
+         "typestr": "^Q"
+        },
+        {
+         "typestr": "^v"
+        },
+        {
+         "typestr": "^{UnicodeMapping=IIi}"
+        }
+       ],
+       "retval": {
+        "typestr": "i"
+       }
+      }
+     }
+    },
+    "retval": {}
+   },
+   "OpenAComponent": { "ignore": true },
+   "OpenAComponentResFile": { "ignore": true },
+   "OpenADefaultComponent": { "ignore": true },
+   "OpenComponent": { "ignore": true },
+   "OpenComponentResFile": { "ignore": true },
+   "OpenDefaultComponent": { "ignore": true },
+   "PBAllocateForkAsync": {
+    "args": {
+     "0": {}
+    }
+   },
+   "PBAllocateForkSync": {
+    "args": {
+     "0": {}
+    }
+   },
+   "PBCatalogSearchAsync": {
+    "args": {
+     "0": {}
+    }
+   },
+   "PBCatalogSearchSync": {
+    "args": {
+     "0": {}
+    }
+   },
+   "PBCloseForkAsync": {
+    "args": {
+     "0": {}
+    }
+   },
+   "PBCloseForkSync": {
+    "args": {
+     "0": {}
+    }
+   },
+   "PBCloseIteratorAsync": {
+    "args": {
+     "0": {}
+    }
+   },
+   "PBCloseIteratorSync": {
+    "args": {
+     "0": {}
+    }
+   },
+   "PBCompareFSRefsAsync": {
+    "args": {
+     "0": {}
+    }
+   },
+   "PBCompareFSRefsSync": {
+    "args": {
+     "0": {}
+    }
+   },
+   "PBCreateDirectoryUnicodeAsync": {
+    "args": {
+     "0": {}
+    }
+   },
+   "PBCreateDirectoryUnicodeSync": {
+    "args": {
+     "0": {}
+    }
+   },
+   "PBCreateFileAndOpenForkUnicodeAsync": {
+    "args": {
+     "0": {}
+    }
+   },
+   "PBCreateFileAndOpenForkUnicodeSync": {
+    "args": {
+     "0": {}
+    }
+   },
+   "PBCreateFileUnicodeAsync": {
+    "args": {
+     "0": {}
+    }
+   },
+   "PBCreateFileUnicodeSync": {
+    "args": {
+     "0": {}
+    }
+   },
+   "PBCreateForkAsync": {
+    "args": {
+     "0": {}
+    }
+   },
+   "PBCreateForkSync": {
+    "args": {
+     "0": {}
+    }
+   },
+   "PBDeleteForkAsync": {
+    "args": {
+     "0": {}
+    }
+   },
+   "PBDeleteForkSync": {
+    "args": {
+     "0": {}
+    }
+   },
+   "PBDeleteObjectAsync": {
+    "args": {
+     "0": {}
+    }
+   },
+   "PBDeleteObjectSync": {
+    "args": {
+     "0": {}
+    }
+   },
+   "PBExchangeObjectsAsync": {
+    "args": {
+     "0": {}
+    }
+   },
+   "PBExchangeObjectsSync": {
+    "args": {
+     "0": {}
+    }
+   },
+   "PBFSCopyFileAsync": {
+    "args": {
+     "0": {}
+    }
+   },
+   "PBFSCopyFileSync": {
+    "args": {
+     "0": {}
+    }
+   },
+   "PBFSResolveNodeIDAsync": {
+    "args": {
+     "0": {}
+    }
+   },
+   "PBFSResolveNodeIDSync": {
+    "args": {
+     "0": {}
+    }
+   },
+   "PBFlushForkAsync": {
+    "args": {
+     "0": {}
+    }
+   },
+   "PBFlushForkSync": {
+    "args": {
+     "0": {}
+    }
+   },
+   "PBFlushVolumeAsync": {
+    "args": {
+     "0": {}
+    }
+   },
+   "PBFlushVolumeSync": {
+    "args": {
+     "0": {}
+    }
+   },
+   "PBGetCatalogInfoAsync": {
+    "args": {
+     "0": {}
+    }
+   },
+   "PBGetCatalogInfoBulkAsync": {
+    "args": {
+     "0": {}
+    }
+   },
+   "PBGetCatalogInfoBulkSync": {
+    "args": {
+     "0": {}
+    }
+   },
+   "PBGetCatalogInfoSync": {
+    "args": {
+     "0": {}
+    }
+   },
+   "PBGetForkCBInfoAsync": {
+    "args": {
+     "0": {}
+    }
+   },
+   "PBGetForkCBInfoSync": {
+    "args": {
+     "0": {}
+    }
+   },
+   "PBGetForkPositionAsync": {
+    "args": {
+     "0": {}
+    }
+   },
+   "PBGetForkPositionSync": {
+    "args": {
+     "0": {}
+    }
+   },
+   "PBGetForkSizeAsync": {
+    "args": {
+     "0": {}
+    }
+   },
+   "PBGetForkSizeSync": {
+    "args": {
+     "0": {}
+    }
+   },
+   "PBGetVolumeInfoAsync": {
+    "args": {
+     "0": {}
+    }
+   },
+   "PBGetVolumeInfoSync": {
+    "args": {
+     "0": {}
+    }
+   },
+   "PBIterateForksAsync": {
+    "args": {
+     "0": {}
+    }
+   },
+   "PBIterateForksSync": {
+    "args": {
+     "0": {}
+    }
+   },
+   "PBMakeFSRefUnicodeAsync": {
+    "args": {
+     "0": {}
+    }
+   },
+   "PBMakeFSRefUnicodeSync": {
+    "args": {
+     "0": {}
+    }
+   },
+   "PBMoveObjectAsync": {
+    "args": {
+     "0": {}
+    }
+   },
+   "PBMoveObjectSync": {
+    "args": {
+     "0": {}
+    }
+   },
+   "PBOpenForkAsync": {
+    "args": {
+     "0": {}
+    }
+   },
+   "PBOpenForkSync": {
+    "args": {
+     "0": {}
+    }
+   },
+   "PBOpenIteratorAsync": {
+    "args": {
+     "0": {}
+    }
+   },
+   "PBOpenIteratorSync": {
+    "args": {
+     "0": {}
+    }
+   },
+   "PBReadForkAsync": {
+    "args": {
+     "0": {}
+    }
+   },
+   "PBReadForkSync": {
+    "args": {
+     "0": {}
+    }
+   },
+   "PBRenameUnicodeAsync": {
+    "args": {
+     "0": {}
+    }
+   },
+   "PBRenameUnicodeSync": {
+    "args": {
+     "0": {}
+    }
+   },
+   "PBSetCatalogInfoAsync": {
+    "args": {
+     "0": {}
+    }
+   },
+   "PBSetCatalogInfoSync": {
+    "args": {
+     "0": {}
+    }
+   },
+   "PBSetForkPositionAsync": {
+    "args": {
+     "0": {}
+    }
+   },
+   "PBSetForkPositionSync": {
+    "args": {
+     "0": {}
+    }
+   },
+   "PBSetForkSizeAsync": {
+    "args": {
+     "0": {}
+    }
+   },
+   "PBSetForkSizeSync": {
+    "args": {
+     "0": {}
+    }
+   },
+   "PBSetVolumeInfoAsync": {
+    "args": {
+     "0": {}
+    }
+   },
+   "PBSetVolumeInfoSync": {
+    "args": {
+     "0": {}
+    }
+   },
+   "PBUnlinkObjectAsync": {
+    "args": {
+     "0": {}
+    }
+   },
+   "PBUnlinkObjectSync": {
+    "args": {
+     "0": {}
+    }
+   },
+   "PBWriteForkAsync": {
+    "args": {
+     "0": {}
+    }
+   },
+   "PBWriteForkSync": {
+    "args": {
+     "0": {}
+    }
+   },
+   "PBXLockRangeAsync": {
+    "args": {
+     "0": {}
+    }
+   },
+   "PBXLockRangeSync": {
+    "args": {
+     "0": {}
+    }
+   },
+   "PBXUnlockRangeAsync": {
+    "args": {
+     "0": {}
+    }
+   },
+   "PBXUnlockRangeSync": {
+    "args": {
+     "0": {}
+    }
+   },
+   "PLpos": {
+    "args": {
+     "0": {},
+     "1": {}
+    }
+   },
+   "PLstrcat": {
+    "args": {
+     "0": {},
+     "1": {}
+    },
+    "retval": {}
+   },
+   "PLstrchr": {
+    "args": {
+     "0": {}
+    },
+    "retval": {}
+   },
+   "PLstrcmp": {
+    "args": {
+     "0": {},
+     "1": {}
+    }
+   },
+   "PLstrcpy": {
+    "args": {
+     "0": {},
+     "1": {}
+    },
+    "retval": {}
+   },
+   "PLstrlen": {
+    "args": {
+     "0": {}
+    }
+   },
+   "PLstrncat": {
+    "args": {
+     "0": {},
+     "1": {}
+    },
+    "retval": {}
+   },
+   "PLstrncmp": {
+    "args": {
+     "0": {},
+     "1": {}
+    }
+   },
+   "PLstrncpy": {
+    "args": {
+     "0": {},
+     "1": {}
+    },
+    "retval": {}
+   },
+   "PLstrpbrk": {
+    "args": {
+     "0": {},
+     "1": {}
+    },
+    "retval": {}
+   },
+   "PLstrrchr": {
+    "args": {
+     "0": {}
+    },
+    "retval": {}
+   },
+   "PLstrspn": {
+    "args": {
+     "0": {},
+     "1": {}
+    }
+   },
+   "PLstrstr": {
+    "args": {
+     "0": {},
+     "1": {}
+    },
+    "retval": {}
+   },
+   "PtrAndHand": {
+    "args": {
+     "0": {},
+     "1": {}
+    }
+   },
+   "PtrToHand": {
+    "args": {
+     "0": {},
+     "1": {}
+    }
+   },
+   "PtrToXHand": {
+    "args": {
+     "0": {},
+     "1": {}
+    }
+   },
+   "PurgeCollection": { "ignore": true },
+   "PurgeCollectionTag": { "ignore": true },
+   "QueryUnicodeMappings": {
+    "args": {
+     "1": {},
+     "3": {},
+     "4": {}
+    }
+   },
+   "ReadLocation": {
+    "args": {
+     "0": {}
+    }
+   },
+   "ReadPartialResource": {
+    "args": {
+     "0": {},
+     "2": {}
+    }
+   },
+   "ReallocateHandle": {
+    "args": {
+     "0": {}
+    }
+   },
+   "RecoverHandle": {
+    "args": {
+     "0": {}
+    },
+    "retval": {}
+   },
+   "RegisterComponent": { "ignore": true },
+   "RegisterComponentFileRef": { "ignore": true },
+   "RegisterComponentFileRefEntries": { "ignore": true },
+   "RegisterComponentResource": { "ignore": true },
+   "ReleaseCollection": { "ignore": true },
+   "ReleaseResource": {
+    "args": {
+     "0": {}
+    }
+   },
+   "RemoveCollectionItem": { "ignore": true },
+   "RemoveIndexedCollectionItem": { "ignore": true },
+   "RemoveResource": {
+    "args": {
+     "0": {}
+    }
+   },
+   "ReplaceIndexedCollectionItem": { "ignore": true },
+   "ReplaceIndexedCollectionItemHdl": { "ignore": true },
+   "ResetTextToUnicodeInfo": {
+    "args": {
+     "0": {}
+    }
+   },
+   "ResetUnicodeToTextInfo": {
+    "args": {
+     "0": {}
+    }
+   },
+   "ResetUnicodeToTextRunInfo": {
+    "args": {
+     "0": {}
+    }
+   },
+   "ResolveComponentAlias": { "ignore": true },
+   "RetainCollection": { "ignore": true },
+   "RevertTextEncodingToScriptInfo": {
+    "args": {
+     "1": {},
+     "2": {}
+    }
+   },
+   "S64Divide": {
+    "args": {
+     "2": {}
+    }
+   },
+   "SetAliasUserType": { "ignore": true },
+   "SetAliasUserTypeWithPtr": { "ignore": true },
+   "SetCollectionDefaultAttributes": { "ignore": true },
+   "SetCollectionExceptionProc": { "ignore": true },
+   "SetCollectionItemInfo": { "ignore": true },
+   "SetComponentInstanceError": { "ignore": true },
+   "SetComponentInstanceStorage": { "ignore": true },
+   "SetComponentRefcon": { "ignore": true },
+   "SetDebuggerNotificationProcs": {
+    "args": {
+     "0": {},
+     "1": {},
+     "2": {}
+    }
+   },
+   "SetDefaultComponent": { "ignore": true },
+   "SetFallbackUnicodeToText": {
+    "args": {
+     "0": {},
+     "1": {},
+     "3": {}
+    }
+   },
+   "SetFallbackUnicodeToTextRun": {
+    "args": {
+     "0": {},
+     "1": {},
+     "3": {}
+    }
+   },
+   "SetHandleSize": {
+    "args": {
+     "0": {}
+    }
+   },
+   "SetIndexedCollectionItemInfo": { "ignore": true },
+   "SetPtrSize": {
+    "args": {
+     "0": {}
+    }
+   },
+   "SetResAttrs": {
+    "args": {
+     "0": {}
+    }
+   },
+   "SetResInfo": {
+    "args": {
+     "0": {},
+     "2": {}
+    }
+   },
+   "SetResourceSize": {
+    "args": {
+     "0": {}
+    }
+   },
+   "SetThreadReadyGivenTaskRef": {
+    "args": {
+     "0": {}
+    }
+   },
+   "SetThreadScheduler": {
+    "args": {
+     "0": {}
+    }
+   },
+   "SetThreadSwitcher": {
+    "args": {
+     "1": {},
+     "2": {}
+    }
+   },
+   "SetThreadTerminator": {
+    "args": {
+     "1": {},
+     "2": {}
+    }
+   },
+   "TECClearConverterContextInfo": {
+    "args": {
+     "0": {}
+    }
+   },
+   "TECClearSnifferContextInfo": {
+    "args": {
+     "0": {}
+    }
+   },
+   "TECConvertText": {
+    "args": {
+     "0": {},
+     "1": {},
+     "3": {},
+     "4": {},
+     "6": {}
+    }
+   },
+   "TECConvertTextToMultipleEncodings": {
+    "args": {
+     "0": {},
+     "1": {},
+     "3": {},
+     "4": {},
+     "6": {},
+     "7": {},
+     "9": {}
+    }
+   },
+   "TECCopyTextEncodingInternetNameAndMIB": {
+    "args": {
+     "2": {},
+     "3": {}
+    }
+   },
+   "TECCountAvailableSniffers": {
+    "args": {
+     "0": {}
+    }
+   },
+   "TECCountAvailableTextEncodings": {
+    "args": {
+     "0": {}
+    }
+   },
+   "TECCountDestinationTextEncodings": {
+    "args": {
+     "1": {}
+    }
+   },
+   "TECCountDirectTextEncodingConversions": {
+    "args": {
+     "0": {}
+    }
+   },
+   "TECCountMailTextEncodings": {
+    "args": {
+     "1": {}
+    }
+   },
+   "TECCountSubTextEncodings": {
+    "args": {
+     "1": {}
+    }
+   },
+   "TECCountWebTextEncodings": {
+    "args": {
+     "1": {}
+    }
+   },
+   "TECCreateConverter": {
+    "args": {
+     "0": {}
+    }
+   },
+   "TECCreateConverterFromPath": {
+    "args": {
+     "0": {},
+     "1": {}
+    }
+   },
+   "TECCreateOneToManyConverter": {
+    "args": {
+     "0": {},
+     "3": {}
+    }
+   },
+   "TECCreateSniffer": {
+    "args": {
+     "0": {},
+     "1": {}
+    }
+   },
+   "TECDisposeConverter": {
+    "args": {
+     "0": {}
+    }
+   },
+   "TECDisposeSniffer": {
+    "args": {
+     "0": {}
+    }
+   },
+   "TECFlushMultipleEncodings": {
+    "args": {
+     "0": {},
+     "1": {},
+     "3": {},
+     "4": {},
+     "6": {}
+    }
+   },
+   "TECFlushText": {
+    "args": {
+     "0": {},
+     "1": {},
+     "3": {}
+    }
+   },
+   "TECGetAvailableSniffers": {
+    "args": {
+     "0": {},
+     "2": {}
+    }
+   },
+   "TECGetAvailableTextEncodings": {
+    "args": {
+     "0": {},
+     "2": {}
+    }
+   },
+   "TECGetDestinationTextEncodings": {
+    "args": {
+     "1": {},
+     "3": {}
+    }
+   },
+   "TECGetDirectTextEncodingConversions": {
+    "args": {
+     "0": {},
+     "2": {}
+    }
+   },
+   "TECGetEncodingList": {
+    "args": {
+     "0": {},
+     "1": {},
+     "2": {}
+    }
+   },
+   "TECGetInfo": {
+    "args": {
+     "0": {}
+    }
+   },
+   "TECGetMailTextEncodings": {
+    "args": {
+     "1": {},
+     "3": {}
+    }
+   },
+   "TECGetSubTextEncodings": {
+    "args": {
+     "1": {},
+     "3": {}
+    }
+   },
+   "TECGetTextEncodingFromInternetName": {
+    "args": {
+     "0": {},
+     "1": {}
+    }
+   },
+   "TECGetTextEncodingFromInternetNameOrMIB": {
+    "args": {
+     "0": {},
+     "2": {}
+    }
+   },
+   "TECGetWebTextEncodings": {
+    "args": {
+     "1": {},
+     "3": {}
+    }
+   },
+   "TECSetBasicOptions": {
+    "args": {
+     "0": {}
+    }
+   },
+   "TECSniffTextEncoding": {
+    "args": {
+     "0": {},
+     "1": {},
+     "3": {},
+     "5": {},
+     "7": {}
+    }
+   },
+   "TempNewHandle": {
+    "args": {
+     "1": {}
+    },
+    "retval": {}
+   },
+   "TestAndClear": {
+    "args": {
+     "1": {}
+    }
+   },
+   "TestAndSet": {
+    "args": {
+     "1": {}
+    }
+   },
+   "ThreadCurrentStackSpace": {
+    "args": {
+     "1": {}
+    }
+   },
+   "TruncateForTextToUnicode": {
+    "args": {
+     "0": {},
+     "2": {},
+     "4": {}
+    }
+   },
+   "TruncateForUnicodeToText": {
+    "args": {
+     "0": {},
+     "2": {},
+     "5": {}
+    }
+   },
+   "U64Divide": {
+    "args": {
+     "2": {}
+    }
+   },
+   "UCCompareCollationKeys": {
+    "args": {
+     "0": {},
+     "2": {},
+     "4": {},
+     "5": {}
+    }
+   },
+   "UCCompareText": {
+    "args": {
+     "0": {},
+     "1": {},
+     "3": {},
+     "5": {},
+     "6": {}
+    }
+   },
+   "UCCompareTextDefault": {
+    "args": {
+     "1": {},
+     "3": {},
+     "5": {},
+     "6": {}
+    }
+   },
+   "UCCompareTextNoLocale": {
+    "args": {
+     "1": {},
+     "3": {},
+     "5": {},
+     "6": {}
+    }
+   },
+   "UCConvertCFAbsoluteTimeToLongDateTime": {
+    "args": {
+     "1": {}
+    }
+   },
+   "UCConvertCFAbsoluteTimeToSeconds": {
+    "args": {
+     "1": {}
+    }
+   },
+   "UCConvertCFAbsoluteTimeToUTCDateTime": {
+    "args": {
+     "1": {}
+    }
+   },
+   "UCConvertLongDateTimeToCFAbsoluteTime": {
+    "args": {
+     "1": {}
+    }
+   },
+   "UCConvertSecondsToCFAbsoluteTime": {
+    "args": {
+     "1": {}
+    }
+   },
+   "UCConvertUTCDateTimeToCFAbsoluteTime": {
+    "args": {
+     "0": {},
+     "1": {}
+    }
+   },
+   "UCCreateCollator": {
+    "args": {
+     "0": {},
+     "3": {}
+    }
+   },
+   "UCCreateTextBreakLocator": {
+    "args": {
+     "0": {},
+     "3": {}
+    }
+   },
+   "UCDisposeCollator": {
+    "args": {
+     "0": {}
+    }
+   },
+   "UCDisposeTextBreakLocator": {
+    "args": {
+     "0": {}
+    }
+   },
+   "UCFindTextBreak": {
+    "args": {
+     "0": {},
+     "3": {},
+     "6": {}
+    }
+   },
+   "UCGetCharProperty": {
+    "args": {
+     "0": {},
+     "3": {}
+    }
+   },
+   "UCGetCollationKey": {
+    "args": {
+     "0": {},
+     "1": {},
+     "4": {},
+     "5": {}
+    }
+   },
+   "UCKeyTranslate": {
+    "args": {
+     "0": {},
+     "6": {},
+     "8": {},
+     "9": {}
+    }
+   },
+   "UCTypeSelectAddKeyToSelector": {
+    "args": {
+     "0": {},
+     "1": {},
+     "3": {}
+    }
+   },
+   "UCTypeSelectCompare": {
+    "args": {
+     "0": {},
+     "1": {},
+     "2": {}
+    }
+   },
+   "UCTypeSelectCreateSelector": {
+    "args": {
+     "0": {},
+     "3": {}
+    }
+   },
+   "UCTypeSelectFindItem": {
+    "args": {
+     "0": {},
+     "2": {},
+     "3": {},
+     "4": {},
+     "5": {}
+    }
+   },
+   "UCTypeSelectFlushSelectorData": {
+    "args": {
+     "0": {}
+    }
+   },
+   "UCTypeSelectReleaseSelector": {
+    "args": {
+     "0": {}
+    }
+   },
+   "UCTypeSelectWalkList": {
+    "args": {
+     "0": {},
+     "1": {},
+     "4": {},
+     "5": {},
+     "6": {},
+     "7": {}
+    }
+   },
+   "UCTypeSelectWouldResetBuffer": {
+    "args": {
+     "0": {},
+     "1": {}
+    }
+   },
+   "UncaptureComponent": { "ignore": true },
+   "UnflattenCollection": { "ignore": true },
+   "UnflattenCollectionFromHdl": { "ignore": true },
+   "UnregisterComponent": { "ignore": true },
+   "UpgradeScriptInfoToTextEncoding": {
+    "args": {
+     "3": {},
+     "4": {}
+    }
+   },
+   "WideAdd": {
+    "args": {
+     "0": {},
+     "1": {}
+    },
+    "retval": {}
+   },
+   "WideBitShift": {
+    "args": {
+     "0": {}
+    },
+    "retval": {}
+   },
+   "WideCompare": {
+    "args": {
+     "0": {},
+     "1": {}
+    }
+   },
+   "WideDivide": {
+    "args": {
+     "0": {},
+     "2": {}
+    }
+   },
+   "WideMultiply": {
+    "args": {
+     "2": {}
+    },
+    "retval": {}
+   },
+   "WideNegate": {
+    "args": {
+     "0": {}
+    },
+    "retval": {}
+   },
+   "WideShift": {
+    "args": {
+     "0": {}
+    },
+    "retval": {}
+   },
+   "WideSquareRoot": {
+    "args": {
+     "0": {}
+    }
+   },
+   "WideSubtract": {
+    "args": {
+     "0": {},
+     "1": {}
+    },
+    "retval": {}
+   },
+   "WideWideDivide": {
+    "args": {
+     "0": {},
+     "2": {}
+    },
+    "retval": {}
+   },
+   "WritePartialResource": {
+    "args": {
+     "0": {},
+     "2": {}
+    }
+   },
+   "WriteResource": {
+    "args": {
+     "0": {}
+    }
+   },
+   "_MPLibraryIsCompatible": {
+    "args": {
+     "0": {}
+    }
+   },
+   "_MPLibraryVersion": {
+    "args": {
+     "0": {},
+     "1": {},
+     "2": {},
+     "3": {},
+     "4": {}
+    }
+   },
+   "dec2f": {
+    "args": {
+     "0": {}
+    }
+   },
+   "dec2l": {
+    "args": {
+     "0": {}
+    }
+   },
+   "dec2num": {
+    "args": {
+     "0": {}
+    }
+   },
+   "dec2numl": {
+    "args": {
+     "0": {}
+    }
+   },
+   "dec2s": {
+    "args": {
+     "0": {}
+    }
+   },
+   "dec2str": {
+    "args": {
+     "0": {},
+     "1": {},
+     "2": {}
+    }
+   },
+   "dtox80": {
+    "args": {
+     "0": {},
+     "1": {}
+    }
+   },
+   "ldtox80": {
+    "args": {
+     "0": {},
+     "1": {}
+    }
+   },
+   "num2dec": {
+    "args": {
+     "0": {},
+     "2": {}
+    }
+   },
+   "num2decl": {
+    "args": {
+     "0": {},
+     "2": {}
+    }
+   },
+   "numtostring": {
+    "args": {
+     "1": {}
+    }
+   },
+   "randomx": {
+    "args": {
+     "0": {}
+    }
+   },
+   "str2dec": {
+    "args": {
+     "0": {},
+     "1": {},
+     "2": {},
+     "3": {}
+    }
+   },
+   "x80tod": {
+    "args": {
+     "0": {}
+    }
+   },
+   "x80told": {
+    "args": {
+     "0": {},
+     "1": {}
+    }
+   }
+  },
+  "informal_protocols": {}
+ }
+}
