@@ -7,7 +7,7 @@
 static PyObjC_function_map function_map[] = {
     { "UCIsSurrogateHighCharacter", (PyObjC_Function_Pointer)&UCIsSurrogateHighCharacter },
     { "UCIsSurrogateLowCharacter", (PyObjC_Function_Pointer)&UCIsSurrogateLowCharacter },
-    { "UCGetUnicodeScalarValueForSurrogatePair", (PyObjC_Function_Pointer)&UCIsSurrogateLowCharacter },
+    { "UCGetUnicodeScalarValueForSurrogatePair", (PyObjC_Function_Pointer)&UCGetUnicodeScalarValueForSurrogatePair },
 
     { 0, 0 }
 };

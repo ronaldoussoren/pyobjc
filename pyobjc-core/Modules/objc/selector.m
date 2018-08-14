@@ -518,10 +518,10 @@ objcsel_call(PyObject* _self, PyObject* args, PyObject* kwds)
         assert(cls);
         assert(sel);
 
-        snprintf(buf, 128, "%c[%s %s] is a deprecated API",
+        snprintf(buf, 128, "%c[%s %s] is a deprecated API (%d)",
                 PyObjCSelector_IsClassMethod(_self) ? '+' : '-',
                 class_getName(cls),
-                sel_getName(sel));
+                sel_getName(sel), methinfo->deprecated);
         if (PyErr_Warn(PyObjCExc_DeprecationWarning, buf) < 0) {
             return NULL;
         }

@@ -35,15 +35,14 @@ class TestConversion (TestCase):
         in_val =  {'a': 42}
 
         for fmt in ('xml', 'binary'):
-            with self.subTest(fmt):
-                data = Conversion.serializePropertyList(in_val, fmt)
+             data = Conversion.serializePropertyList(in_val, fmt)
 
-                out_val = Conversion.deserializePropertyList(data)
+             out_val = Conversion.deserializePropertyList(data)
 
-                self.assertEqual(in_val, out_val)
+             self.assertEqual(in_val, out_val)
 
 
-                self.assertRaises(ValueError, Conversion.deserializePropertyList, data[:-2])
+             self.assertRaises(ValueError, Conversion.deserializePropertyList, data[:-2])
 
 if __name__ == "__main__":
     main()

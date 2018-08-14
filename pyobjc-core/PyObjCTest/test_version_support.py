@@ -7,7 +7,10 @@ class TestVersionSupport (TestCase):
         self.assertFalse(objc.macos_available(10, 99, 0))
 
         with open('/System/Library/CoreServices/SystemVersion.plist', 'rb') as fp:
-            pl = plistlib.load(fp)
+            if hasattr(plistlib, 'load'):
+                pl = plistlib.load(fp)
+            else:
+                pl = plistlib.readPlist(fp)
 
         version = (list(map(int, pl['ProductVersion'].split('.'))) + [0])[:3]
         

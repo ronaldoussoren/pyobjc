@@ -4,8 +4,7 @@ import CoreServices
 
 class TestStringCompoare (TestCase):
     def assert_not_wrapped(self, name):
-        with self.subTest(name):
-            self.assertTrue(not hasattr(CoreServices, name), "%r exposed in bindings"%(name,))
+         self.assertTrue(not hasattr(CoreServices, name), "%r exposed in bindings"%(name,))
 
     def test_not_wrapped(self):
         self.assert_not_wrapped('systemCurLang')

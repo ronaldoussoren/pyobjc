@@ -53,6 +53,10 @@ class TestDeprecationWarnings (TestCase):
             warnings.simplefilter("always")
             func()
 
+        
+        if w:
+          print([(x.category, x.message) for x in w])
+          print(func.__metadata__())
         self.assertEqual(len(w), 0)
 
     def test_warning(self):

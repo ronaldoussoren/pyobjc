@@ -39,28 +39,28 @@ class DictSetTest(TestCase):
         keys = d.viewkeys()
         self.assertEqual(keys, {'a', 'b'})
 
-        s = keys() | { 'c' }
+        s = keys | { 'c' }
         self.assertEqual(s, {'a', 'b', 'c'})
 
-        s = { 'c' } | keys()
+        s = { 'c' } | keys
         self.assertEqual(s, {'a', 'b', 'c'})
 
-        s = keys() & { 'b' }
+        s = keys & { 'b' }
         self.assertEqual(s, { 'b'})
 
-        s = {'b', 'c' } & keys()
+        s = {'b', 'c' } & keys
         self.assertEqual(s, { 'b'})
 
-        s = keys() - { 'b' }
+        s = keys - { 'b' }
         self.assertEqual(s, { 'a'})
 
-        s = {'c', 'b' } - keys()
+        s = {'c', 'b' } - keys
         self.assertEqual(s, { 'c'})
 
-        s = keys() ^ { 'b', 'c' }
+        s = keys ^ { 'b', 'c' }
         self.assertEqual(s, { 'a', 'c' })
 
-        s = {'c', 'b' } ^ keys()
+        s = {'c', 'b' } ^ keys
         self.assertEqual(s, { 'a', 'c'})
 
 

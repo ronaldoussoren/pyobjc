@@ -5,6 +5,17 @@ import CoreAudio
 
 class TestAudioDriverPlugIn (TestCase):
 
+    if sys.version_info[0] == 2:
+         def assert_buffer_size(self, buf, size):
+             self.assertIsInstance(buf, buffer)
+             self.assertEqual(len(buf), size)
+
+    else:
+         def assert_buffer_size(self, buf, size):
+             self.assertIsInstance(buf, memoryview)
+             self.assertEqual(buf.itemsize, 1)
+             self.assertEqual(buf.nbytes, size)
+
     def testConstants(self):
         self.assertEqual(CoreAudio.kAudio_UnimplementedError, -4)
         self.assertEqual(CoreAudio.kAudio_FileNotFoundError, -43)
@@ -441,6 +452,17 @@ class TestAudioDriverPlugIn (TestCase):
         CoreAudio.AudioChannelLayoutTag_GetNumberOfChannels
 
 class TestManualWrappers (TestCase):
+    if sys.version_info[0] == 2:
+         def assert_buffer_size(self, buf, size):
+             self.assertIsInstance(buf, buffer)
+             self.assertEqual(len(buf), size)
+
+    else:
+         def assert_buffer_size(self, buf, size):
+             self.assertIsInstance(buf, memoryview)
+             self.assertEqual(buf.itemsize, 1)
+             self.assertEqual(buf.nbytes, size)
+
     def testAudioBuffer(self):
         buf = CoreAudio.AudioBuffer()
         self.assertEqual(buf.mNumberChannels, 1)
@@ -453,15 +475,11 @@ class TestManualWrappers (TestCase):
         buf = CoreAudio.AudioBuffer(num_channels=5, buffer_size=1024)
         self.assertEqual(buf.mNumberChannels, 5)
         v = buf.mData
-        self.assertIsInstance(v, memoryview)
-        self.assertEqual(v.itemsize, 1)
-        self.assertEqual(v.nbytes, 1024)
+        self.assert_buffer_size(v, 1024)
 
         buf.create_buffer(2048)
         v2 = buf.mData
-        self.assertIsInstance(v2, memoryview)
-        self.assertEqual(v2.itemsize, 1)
-        self.assertEqual(v2.nbytes, 2048)
+        self.assert_buffer_size(v2, 2048)
 
     def testAudioBufferList(self):
         bl = CoreAudio.AudioBufferList(2);
@@ -499,9 +517,7 @@ class TestManualWrappers (TestCase):
 
         self.assertEqual(avt.mInputDataSize, 1024)
         v = avt.mInputData
-        self.assertIsInstance(v, memoryview)
-        self.assertEqual(v.itemsize, 1)
-        self.assertEqual(v.nbytes, 1024)
+        self.assert_buffer_size(v, 1024)
 
         self.assertEqual(avt.mOutputData, None)
         self.assertEqual(avt.mOutputDataSize, 0)
@@ -510,23 +526,17 @@ class TestManualWrappers (TestCase):
 
         self.assertEqual(avt.mInputDataSize, 1024)
         v = avt.mInputData
-        self.assertIsInstance(v, memoryview)
-        self.assertEqual(v.itemsize, 1)
-        self.assertEqual(v.nbytes, 1024)
+        self.assert_buffer_size(v, 1024)
 
         self.assertEqual(avt.mOutputDataSize, 2048)
         v = avt.mOutputData
-        self.assertIsInstance(v, memoryview)
-        self.assertEqual(v.itemsize, 1)
-        self.assertEqual(v.nbytes, 2048)
+        self.assert_buffer_size(v, 2048)
 
         avt = CoreAudio.AudioValueTranslation(input_buffer_size = 50)
 
         self.assertEqual(avt.mInputDataSize, 50)
         v = avt.mInputData
-        self.assertIsInstance(v, memoryview)
-        self.assertEqual(v.itemsize, 1)
-        self.assertEqual(v.nbytes, 50)
+        self.assert_buffer_size(v, 50)
 
         self.assertEqual(avt.mOutputData, None)
         self.assertEqual(avt.mOutputDataSize, 0)
@@ -535,9 +545,7 @@ class TestManualWrappers (TestCase):
 
         self.assertEqual(avt.mOutputDataSize, 40)
         v = avt.mOutputData
-        self.assertIsInstance(v, memoryview)
-        self.assertEqual(v.itemsize, 1)
-        self.assertEqual(v.nbytes, 40)
+        self.assert_buffer_size(v, 40)
 
         self.assertEqual(avt.mInputData, None)
         self.assertEqual(avt.mInputDataSize, 0)
