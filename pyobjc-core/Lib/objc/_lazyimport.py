@@ -14,6 +14,8 @@ from objc import lookUpClass, getClassList, nosuchclass_error, loadBundle
 import objc
 ModuleType = type(sys)
 
+_name_re = re.compile('^[A-Za-z_][A-Za-z_0-9]*$')
+
 def _loadBundle(frameworkName, frameworkIdentifier, frameworkPath):
     if frameworkIdentifier is None:
         bundle = loadBundle(
@@ -134,6 +136,11 @@ class ObjCLazyModule (ModuleType):
                 if '__all__' in self.__dict__:
                     del self.__dict__['__all__']
                 return value
+
+        if not _name_re.match(name):
+            # Name is not a valid identifier and cannot
+            # match.
+            raise AttributeError(name)
 
         # Check if the name is a constant from
         # the metadata files
