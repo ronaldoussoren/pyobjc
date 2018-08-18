@@ -23,8 +23,6 @@ setup(
     install_requires = [
         'pyobjc-core>='+VERSION,
         'pyobjc-framework-FSEvents>='+VERSION,
-        'pyobjc-framework-LaunchServices>='+VERSION,
-        'pyobjc-framework-SearchKit>='+VERSION,
     ],
     long_description=__doc__,
 )

@@ -10,12 +10,12 @@ framework.
 import sys
 import objc
 import FSEvents
-import LaunchServices
-import SearchKit
 
 from CoreServices import DictionaryServices
+from CoreServices import LaunchServices
 from CoreServices import Metadata
 from CoreServices import CarbonCore
+from CoreServices import SearchKit
 
 
 sys.modules['CoreServices'] = mod = objc.ObjCLazyModule('CoreServices',

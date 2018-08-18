@@ -8,6 +8,9 @@ import sys
 import objc
 import CoreServices
 
+import warnings
+warnings.warn("pyobjc-framework-DictionaryServices is deprecated, use 'import CoreServices' instead", DeprecationWarning)
+
 sys.modules['DictionaryServices'] = mod = objc.ObjCLazyModule('DictionaryServices',
     "com.apple.CoreServices",
     objc.pathForFramework("/System/Library/Frameworks/CoreServices.framework"),
