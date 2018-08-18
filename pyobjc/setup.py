@@ -322,6 +322,11 @@ class oc_test (Command):
                     nm))
                 failures += 1
 
+            if not os.path.exists(os.path.join(subdir, "License.txt")):
+                print("Framework wrapper for %s does not contain MANIFEST.in"%(
+                    nm))
+                failures += 1
+
             if not os.path.exists(os.path.join(subdir, "setup.py")):
                 print("Framework wrapper for %s does not contain setup.py"%(
                     nm))
