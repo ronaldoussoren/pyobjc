@@ -1,6 +1,7 @@
 {
  "definitions": {
   "externs": {
+   "MPNowPlayingInfoPropertyServiceIdentifier,": { "typestr": "@" },
    "MPNowPlayingInfoPropertyCurrentPlaybackDate": { "typestr": "@" },
    "MPNowPlayingInfoPropertyAssetURL": { "typestr": "@" },
    "MPLanguageOptionCharacteristicIsMainProgramContent": { "typestr": "@" },

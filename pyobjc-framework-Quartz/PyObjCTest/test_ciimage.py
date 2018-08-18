@@ -64,6 +64,10 @@ class TestCIImage (TestCase):
         self.assertIsInstance(kCIImageAuxiliaryDisparity, unicode)
         self.assertIsInstance(kCIImageApplyOrientationProperty, unicode)
 
+    @min_os_level('10.14')
+    def testConstants10_14(self):
+        self.assertIsInstance(kCIImageAuxiliaryPortraitEffectsMatte, unicode)
+
     def testMethods(self):
         self.assertArgIsBOOL(CIImage.imageWithTexture_size_flipped_colorSpace_, 2)
         self.assertArgIsBOOL(CIImage.initWithTexture_size_flipped_colorSpace_, 2)

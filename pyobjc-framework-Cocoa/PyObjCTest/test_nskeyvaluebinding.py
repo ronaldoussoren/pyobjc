@@ -153,6 +153,11 @@ class TestNSKeyValueBinding (TestCase):
         self.assertResultIsBOOL(TestNSKeyValueBindingHelper.commitEditingAndReturnError_)
         self.assertArgIsOut(TestNSKeyValueBindingHelper.commitEditingAndReturnError_, 0)
 
+    @min_sdk_level('10.14')
+    def test_protocols(self):
+        objc.protocolNamed('NSEditor')
+        objc.protocolNamed('NSEditorRegistration')
+
 
 
 if __name__ == "__main__":

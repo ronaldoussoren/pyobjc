@@ -46,6 +46,20 @@
    "ITLibrary": {
     "methods": [
      {
+      "selector": "initWithAPIVersion:options:error:",
+      "class_method": false,
+      "args": {
+       "2": { "type_modifier": "o" }
+      }
+     },
+     {
+      "selector": "libraryWithAPIVersion:options:error:",
+      "class_method": true,
+      "args": {
+       "2": { "type_modifier": "o" }
+      }
+     },
+     {
       "selector": "reloadData",
       "class_method": false,
       "retval": { "type_override": "Z" }
@@ -159,6 +173,8 @@
    }
   },
   "enum": {
+   "ITLibInitOptionNone": { "value": 0 },
+   "ITLibInitOptionLazyLoadData": { "value": 1 },
    "ITLibArtworkFormatNone": { "value": 0 },
    "ITLibArtworkFormatBitmap": { "value": 1 },
    "ITLibArtworkFormatJPEG": { "value": 2 },

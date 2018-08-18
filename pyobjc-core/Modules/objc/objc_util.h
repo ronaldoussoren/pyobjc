@@ -10,6 +10,7 @@ extern PyObject* PyObjCExc_LockError;
 extern PyObject* PyObjCExc_BadPrototypeError;
 extern PyObject* PyObjCExc_UnknownPointerError;
 extern PyObject* PyObjCExc_DeprecationWarning;
+extern PyObject* PyObjCExc_ObjCPointerWarning;
 
 extern int PyObjCUtil_Init(PyObject* module);
 

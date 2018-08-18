@@ -26,6 +26,11 @@ class TestCIContext (TestCase):
         self.assertIsInstance(kCIImageRepresentationDepthImage, unicode)
         self.assertIsInstance(kCIImageRepresentationDisparityImage, unicode)
 
+    @min_os_level('10.14')
+    def testConstants10_14(self):
+        self.assertIsInstance(kCIImageRepresentationAVPortraitEffectsMatte, unicode)
+        self.assertIsInstance(kCIImageRepresentationPortraitEffectsMatteImage, unicode)
+
     def testMethods(self):
         self.assertArgIsOut(CIContext.render_toBitmap_rowBytes_bounds_format_colorSpace_, 1)
         self.assertArgIsVariableSize(CIContext.render_toBitmap_rowBytes_bounds_format_colorSpace_, 1)

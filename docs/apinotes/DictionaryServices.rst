@@ -6,7 +6,7 @@ the C and Objective-C APIs are available (but see the `API Notes`_ below).
 
 .. __: https://developer.apple.com/documentation/coreservices/?preferredLanguage=occ
 
-These bindings are accessed through the ``DictionaryServices`` package (that is, ``import DictionaryServices``).
+These bindings are accessed through the ``CoreServices`` package (that is, ``import CoreServices``).
 
 
 API Notes

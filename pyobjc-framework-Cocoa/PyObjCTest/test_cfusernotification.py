@@ -24,19 +24,20 @@ class TestUserNotification (TestCase):
 
         self.assertArgIsOut(CFUserNotificationCreate, 3)
         ref, error = CFUserNotificationCreate(None,
-                1.0, 0, None, infoDict)
+                3.0, 0, None, infoDict)
         self.assertEqual(error , 0 )
         self.assertIsInstance(ref, CFUserNotificationRef)
         values = []
         @objc.callbackFor(CFUserNotificationCreateRunLoopSource)
         def callout(notification, flags):
             values.append((notification, flags))
+            CFRunLoopStop(rl)
 
         self.assertArgIsFunction(CFUserNotificationCreateRunLoopSource, 2, b'v^{__CFUserNotification=}' + objc._C_NSInteger, True)
         rls = CFUserNotificationCreateRunLoopSource(None, ref, callout, 1)
         self.assertIsInstance(rls, CFRunLoopSourceRef)
         CFRunLoopAddSource(rl, rls, runloop_mode)
-        CFRunLoopRunInMode(runloop_mode, 2.0, True)
+        CFRunLoopRunInMode(runloop_mode, 5.0, True)
 
         CFUserNotificationCancel(ref)
         CFRunLoopRunInMode(runloop_mode, 5.0, True)

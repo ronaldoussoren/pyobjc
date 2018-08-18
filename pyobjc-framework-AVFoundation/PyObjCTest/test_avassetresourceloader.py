@@ -21,7 +21,7 @@ class TestAVAssetResourceLoader (TestCase):
         self.assertResultHasType(TestAVAssetResourceLoaderHelper.resourceLoader_shouldWaitForResponseToAuthenticationChallenge_, objc._C_NSBOOL)
 
     @min_os_level('10.9')
-    def testMethods10_8(self):
+    def testMethods10_9(self):
         self.assertResultIsBOOL(AVFoundation.AVAssetResourceLoadingRequest.isFinished)
 
         self.assertResultIsBOOL(AVFoundation.AVAssetResourceLoadingRequest.isCancelled)
@@ -30,6 +30,17 @@ class TestAVAssetResourceLoader (TestCase):
         self.assertArgIsBOOL(AVFoundation.AVAssetResourceLoadingContentInformationRequest.setByteRangeAccessSupported_, 0)
 
         self.assertArgIsOut(AVFoundation.AVAssetResourceLoadingRequest.streamingContentKeyRequestDataForApp_contentIdentifier_options_error_, 3)
+
+    @min_os_level('10.11')
+    def testMethods10_11(self):
+        self.assertResultIsBOOL(AVFoundation.AVAssetResourceLoadingDataRequest.requestsAllDataToEndOfResource)
+
+        self.assertResultIsBOOL(AVFoundation.AVAssetResourceLoader.preloadsEligibleContentKeys)
+        self.assertArgIsBOOL(AVFoundation.AVAssetResourceLoader.setPreloadsEligibleContentKeys_, 0)
+
+    @min_os_level('10.14')
+    def testMethods10_14(self):
+        self.assertResultIsBOOL(AVFoundation.AVAssetResourceLoadingRequestor.providesExpiredSessionReports)
 
 if __name__ == "__main__":
     main()

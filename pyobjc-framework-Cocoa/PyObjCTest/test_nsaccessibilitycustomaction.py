@@ -10,7 +10,7 @@ class TestNSAccessibilityCustomAction (TestCase):
         self.assertResultIsBlock(AppKit.NSAccessibilityCustomAction.handler, b'Z')
         self.assertArgIsBlock(AppKit.NSAccessibilityCustomAction.setHandler_, 0, b'Z')
 
-        # Cannot describe this properly:
+        # XXX: Cannot describe this properly:
         # self.assertResultIsBlock(AppKit.NSAccessibilityCustomAction.selector, b'...')
         # self.assertArgIsBlock(AppKit.NSAccessibilityCustomAction.setSelector_, 0, b'...')
 

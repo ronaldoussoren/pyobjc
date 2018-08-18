@@ -3,6 +3,7 @@
 {
  "definitions": {
   "enum": {
+   "kCTVersionNumber10_14": { "value": 720896 },
    "kCTFontTableCBDT": { "value": 1128416340 },
    "kCTFontTableCBLC": { "value": 1128418371 },
    "kCTFontTableCFF": { "value": 1128678944 },
@@ -26,6 +27,7 @@
    "kCTVersionNumber10_13": { "value": 655360 }
   },
   "externs": {
+   "kCTTypesetterOptionAllowUnboundedLayout": { "typestr": "@" },
    "kCTFontVariationAxisHiddenKey": { "typestr": "@" },
    "kCTBaselineOffsetAttributeName": { "typestr": "@" },
    "kCTRubyAnnotationSizeFactorAttributeName": { "typestr": "@" },
@@ -1814,6 +1816,15 @@
     "retval": {
      "type_override": "@",
      "already_cfretained": true
+    }
+   },
+   "CTFramesetterCreateWithTypesetter": {
+    "retval": {
+     "type_override": "@",
+     "already_cfretained": true
+    },
+    "args": {
+     "0": { "type_override": "@" }
     }
    },
    "CTLineEnumerateCaretOffsets": {

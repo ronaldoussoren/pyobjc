@@ -14,7 +14,7 @@ import tarfile
 import sys
 import ast
 
-VERSION="4.2.3b1"
+VERSION="5.0b1"
 
 # Table with all framework wrappers and the OSX releases where they are
 # first supported, and where support was removed. The introduced column
@@ -24,6 +24,7 @@ VERSION="4.2.3b1"
 FRAMEWORK_WRAPPERS=[
         # Name                      Introcuded          Removed
         ('libdispatch',             '10.8',             None        ),
+        ('AdSupport',               '10.14',            None        ),
         ('AVKit',                   '10.9',             None        ),
         ('AVFoundation',            '10.7',             None        ),
         ('Accounts',                '10.8',             None        ),
@@ -41,9 +42,14 @@ FRAMEWORK_WRAPPERS=[
         ('ColorSync',               '10.13',            None        ),
         ('Contacts',                '10.11',            None        ),
         ('ContactsUI',              '10.11',            None        ),
+        ('CoreAudio',               None,               None        ),
+        ('CoreAudioKit',            None,               None        ),
         ('CoreBluetooth',           '10.10',            None        ),
         ('CoreData',                None,               None        ),
         ('CoreLocation',            '10.6',             None        ),
+        ('CoreMedia',               '10.7',             None        ),
+        ('CoreMediaIO',             '10.7',             None        ),
+        #('CoreMIDI',                None,               None        ),
         ('CoreML',                  '10.13',            None        ),
         ('CoreServices',            None,               None        ),
         ('CoreSpotlight',           '10.13',            None        ),
@@ -51,7 +57,10 @@ FRAMEWORK_WRAPPERS=[
         ('CoreWLAN',                '10.6',             None        ),
         ('CryptoTokenKit',          '10.10',            None        ),
         ('DictionaryServices',      '10.5',             None        ),
+        ('DiscRecording',           None,               None        ),
+        ('DiscRecordingUI',         None,               None        ),
         ('DiskArbitration',         None,               None        ),
+        ('DVDPlayback',             None,               None        ),
         ('EventKit',                '10.8',             None        ),
         ('ExceptionHandling',       None,               None        ),
         ('ExternalAccessory',       '10.13',            None        ),
@@ -74,13 +83,17 @@ FRAMEWORK_WRAPPERS=[
         ('MediaAccessibility',      '10.9',             None        ),
         ('MediaLibrary',            '10.9',             None        ),
         ('MediaPlayer',             '10.12',            None        ),
+        ('MediaToolbox',            '10.9',             None        ),
         ('Message',                 None,               '10.9'      ),
         ('ModelIO',                 '10.11',            None        ),
         ('MultipeerConnectivity',   '10.10',            None        ),
+        ('NaturalLanguage',         '10.14',            None        ),
         ('NetFS',                   '10.6',             None        ),
+        ('Network',                 '10.14',            None        ),
         ('NetworkExtension',        '10.11',            None        ),
         ('NotificationCenter',      '10.10',            None        ),
         ('OpenDirectory',           '10.6',             None        ),
+        ('OSAKit',                  None,               None        ),
         ('Photos',                  '10.11',            None        ),
         ('PhotosUI',                '10.11',            None        ),
         ('PreferencePanes',         None,               None        ),
@@ -106,6 +119,8 @@ FRAMEWORK_WRAPPERS=[
         ('GameKit',                 '10.8',             None        ),
         ('GameplayKit',             '10.11',            None        ),
         ('SceneKit',                '10.7',             None        ),
+        ('UserNotifications',       '10.14',            None        ),
+        ('VideoSubscriberAccount',  '10.14',            None        ),
         ('Vision',                  '10.13',            None        ),
 
         # iTunes library is shipped with iTunes, not part of macOS 'core'
@@ -126,6 +141,7 @@ MACOS_TO_DARWIN = {
         '10.11': '15.0',
         '10.12': '16.0',
         '10.13': '17.0',
+        '10.14': '18.0',
 }
 
 
@@ -185,7 +201,7 @@ from setuptools import setup, Extension, find_packages
 import os
 
 
-CLASSIFIERS = filter(None,
+CLASSIFIERS = list(filter(None,
 """
 Development Status :: 5 - Production/Stable
 Environment :: Console
@@ -205,7 +221,7 @@ Programming Language :: Python :: 3.7
 Programming Language :: Objective C
 Topic :: Software Development :: Libraries :: Python Modules
 Topic :: Software Development :: User Interfaces
-""".splitlines())
+""".splitlines()))
 
 _SETUP_KEYS=(
     'name',
@@ -302,6 +318,11 @@ class oc_test (Command):
         for nm in sorted(all_names):
             subdir = "../pyobjc-framework-" + nm
             if not os.path.exists(os.path.join(subdir, "MANIFEST.in")):
+                print("Framework wrapper for %s does not contain MANIFEST.in"%(
+                    nm))
+                failures += 1
+
+            if not os.path.exists(os.path.join(subdir, "License.txt")):
                 print("Framework wrapper for %s does not contain MANIFEST.in"%(
                     nm))
                 failures += 1

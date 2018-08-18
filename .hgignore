@@ -10,6 +10,8 @@ new-bindings
 wheel-dir
 test-results
 test-env
+testenv
+workenv
 docs/examples
 
 syntax: glob

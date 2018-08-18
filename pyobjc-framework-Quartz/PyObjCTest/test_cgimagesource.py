@@ -64,5 +64,9 @@ class TestCGImageSource (TestCase):
     def testFunctions10_13(self):
         self.assertResultIsCFRetained(Quartz.CGImageSourceCopyAuxiliaryDataInfoAtIndex)
 
+    @min_os_level('10.14')
+    def testFunctions10_14(self):
+        Quartz.CGImageSourceGetPrimaryImageIndex
+
 if __name__ == "__main__":
     main()

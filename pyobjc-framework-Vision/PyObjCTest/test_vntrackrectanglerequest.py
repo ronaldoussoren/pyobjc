@@ -10,6 +10,9 @@ if sys.maxsize >= 2**32:
             self.assertArgIsBlock(Vision.VNTrackRectangleRequest.initWithRectangleObservation_completionHandler_, 1, b'v@@')
             self.assertArgIsBlock(Vision.VNTrackRectangleRequest.initWithCompletionHandler_, 0, b'v@@')
 
+        def test_constants(self):
+            self.assertEqual(Vision.VNTrackRectangleRequestRevision1, 1)
+
 
 if __name__ == "__main__":
     main()

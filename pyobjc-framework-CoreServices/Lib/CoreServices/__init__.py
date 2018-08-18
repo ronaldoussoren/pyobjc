@@ -10,9 +10,13 @@ framework.
 import sys
 import objc
 import FSEvents
-import DictionaryServices
-import LaunchServices
-import SearchKit
+
+from CoreServices import DictionaryServices
+from CoreServices import LaunchServices
+from CoreServices import Metadata
+from CoreServices import CarbonCore
+from CoreServices import SearchKit
+
 
 sys.modules['CoreServices'] = mod = objc.ObjCLazyModule('CoreServices',
     "com.apple.CoreServices",
@@ -22,4 +26,4 @@ sys.modules['CoreServices'] = mod = objc.ObjCLazyModule('CoreServices',
        '__path__': __path__,
        '__loader__': globals().get('__loader__', None),
        'objc': objc,
-    }, (FSEvents, DictionaryServices, LaunchServices, SearchKit))
+    }, (FSEvents, DictionaryServices, LaunchServices, SearchKit, Metadata, CarbonCore))

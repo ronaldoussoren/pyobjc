@@ -16,9 +16,12 @@
    "CBErrorConnectionFailed": { "value": 10 },
    "CBPeripheralStateDisconnecting": { "value": 3 },
    "CBErrorConnectionLimitReached": { "value": 11 },
-   "CBErrorUnkownDevice": { "value": 12 }
+   "CBErrorUnkownDevice": { "value": 12 },
+   "CBErrorUnknownDevice": { "value": 12 },
+   "CBErrorOperationNotSupported": { "value": 13 }
   },
   "externs": {
+   "CBConnectPeripheralOptionStartDelayKey": { "typestr": "@" },
    "CBUUIDCharacteristicValidRangeString": { "typestr": "@" },
    "CBUUIDL2CAPPSMCharacteristicString": { "typestr": "@" },
    "CBPeripheralManagerOptionRestoreIdentifierKey": { "typestr": "@" },
@@ -111,6 +114,13 @@
       },
       "class_method": false,
       "selector": "initWithDelegate:queue:options:"
+     },
+     {
+      "args": {
+       "0": { "type_override": "Z" }
+      },
+      "class_method": false,
+      "selector": "publishL2CAPChannelWithEncryption:"
      }
     ]
    },

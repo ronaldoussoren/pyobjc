@@ -34,5 +34,9 @@ class TestNSXPCConnection (TestCase):
         self.assertArgIsBOOL(Foundation.NSXPCInterface.setInterface_forSelector_argumentIndex_ofReply_, 3)
         self.assertArgIsBOOL(Foundation.NSXPCInterface.interfaceForSelector_argumentIndex_ofReply_, 2)
 
+    @min_os_level('10.11')
+    def testMethods10_11(self):
+        self.assertArgIsBlock(Foundation.NSXPCConnection.synchronousRemoteObjectProxyWithErrorHandler_, 0, b'v@')
+
 if __name__ == "__main__":
     main()

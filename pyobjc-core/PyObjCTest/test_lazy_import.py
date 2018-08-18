@@ -119,6 +119,10 @@ class TestLazyImport (TestCase):
                 initial_dict, ())
         self.assertIsInstance(mod, objc.ObjCLazyModule)
 
+        self.assertRaises(AttributeError, getattr, mod, 'Foo(')
+        self.assertRaises(AttributeError, getattr, mod, 'Foo)')
+        self.assertRaises(AttributeError, getattr, mod, '42')
+
         if all:
             # Force precalculation of all attributes by accessing the __all__
             # attribute

@@ -3,25 +3,25 @@ Some simple tests to check that the framework is properly wrapped.
 '''
 import objc
 from PyObjCTools.TestSupport import *
-from DictionaryServices import *
+
+import DictionaryServices
 
 class TestDictionaryServices (TestCase):
     def testClasses(self):
-        self.assertIsCFType(DCSDictionaryRef)
+        self.assertIsCFType(DictionaryServices.DCSDictionaryRef)
 
 
     def testFunctions(self):
         txt = b"the hello world program".decode('latin1')
-        r = DCSGetTermRangeInString(None, txt, 5)
-        self.assertIsInstance(r, CFRange)
+        r = DictionaryServices.DCSGetTermRangeInString(None, txt, 5)
+        self.assertIsInstance(r, DictionaryServices.CFRange)
         self.assertEqual(r, (4, 5))
 
-        r = DCSCopyTextDefinition(None, txt, r)
+        r = DictionaryServices.DCSCopyTextDefinition(None, txt, r)
         self.assertIsInstance(r, (unicode, type(None)))
 
-        v = DCSDictionaryGetTypeID()
+        v = DictionaryServices.DCSDictionaryGetTypeID()
         self.assertIsInstance(v, (int, long))
-
 
 if __name__ == "__main__":
     main()

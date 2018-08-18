@@ -38,5 +38,9 @@ class TestCGPDFArray (TestCase):
 
         CGPDFArrayGetCount
 
+    @min_os_level('10.14')
+    def testFunctions10_14(self):
+        self.assertArgIsBlock(CGPDFArrayApplyBlock, 1, b'Bl^{CGPDFObject=}^v')
+
 if __name__ == "__main__":
     main()

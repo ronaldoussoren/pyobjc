@@ -6,6 +6,7 @@ class TestAVVideoCompositingHelper (AVFoundation.NSObject):
     def enablePostProcessing(self): return 1
     def containsTweening(self): return 1
     def passthroughTrackID(self): return 1
+    def supportsWideColorSourceFrames(self): return 1
 
 
 class TestAVVideoCompositing (TestCase):
@@ -24,9 +25,11 @@ class TestAVVideoCompositing (TestCase):
     def testMethods10_9(self):
         self.assertResultIsBOOL(AVFoundation.AVVideoCompositionRenderContext.highQualityRendering)
 
+    def testProtocolMethods(self):
         self.assertResultIsBOOL(TestAVVideoCompositingHelper.enablePostProcessing)
         self.assertResultIsBOOL(TestAVVideoCompositingHelper.containsTweening)
         self.assertResultHasType(TestAVVideoCompositingHelper.passthroughTrackID, objc._C_INT)
+        self.assertResultIsBOOL(TestAVVideoCompositingHelper.supportsWideColorSourceFrames)
 
     @min_os_level('10.9')
     def testProtocols(self):

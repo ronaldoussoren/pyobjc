@@ -1,0 +1,49 @@
+// objective.metadata exceptions file, see its document
+// for information on how to update this file.
+{
+ "definitions": {
+  "cftypes": {
+   "MTAudioProcessingTapRef": {
+    "typestr": "^{opaqueMTAudioProcessingTap=}",
+    "gettypeid_func": "MTAudioProcessingTapGetTypeID"
+   }
+  },
+  "classes": {},
+  "formal_protocols": {},
+  "functions": {
+   "MTAudioProcessingTapCreate": {
+    "args": {
+     "0": {},
+     "1": {},
+     "3": {}
+    }
+   },
+   "MTAudioProcessingTapGetSourceAudio": {
+    "args": {
+     "0": {},
+     "2": {},
+     "3": {},
+     "4": {},
+     "5": {}
+    }
+   },
+   "MTAudioProcessingTapGetStorage": {
+    "args": {
+     "0": {}
+    },
+    "retval": {}
+   },
+   "MTCopyLocalizedNameForMediaSubType": {
+    "retval": {
+     "already_cfretained": true
+    }
+   },
+   "MTCopyLocalizedNameForMediaType": {
+    "retval": {
+     "already_cfretained": true
+    }
+   }
+  },
+  "informal_protocols": {}
+ }
+}

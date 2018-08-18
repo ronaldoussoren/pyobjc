@@ -666,7 +666,7 @@ class TestCase (_unittest.TestCase):
         try:
             iface = st['retval']['type']
             if st['arguments'][0]['type'] != b'^v':
-                self.fail(message or "arg %d of %s has an invalid block signature"%(argno, method))
+                self.fail(message or "arg %d of %s has an invalid block signature %r"%(argno, method, st['arguments'][0]['type']))
             for a in st['arguments'][1:]:
                 iface += a['type']
         except KeyError:
@@ -695,7 +695,7 @@ class TestCase (_unittest.TestCase):
         try:
             iface = st['retval']['type']
             if st['arguments'][0]['type'] != b'^v':
-                self.fail(message or "result %s has an invalid block signature"%(method))
+                self.fail(message or "result %s has an invalid block signature %r"%(method, st['arguments'][0]['type']))
             for a in st['arguments'][1:]:
                 iface += a['type']
         except KeyError:

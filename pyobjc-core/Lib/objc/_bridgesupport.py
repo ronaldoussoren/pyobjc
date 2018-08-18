@@ -423,6 +423,9 @@ class _BridgeSupportParser (object):
             else:
                 value = float(value)
 
+        elif 'inf' in value:
+            value = float(value)
+
         else:
             value = int(value, 10)
 

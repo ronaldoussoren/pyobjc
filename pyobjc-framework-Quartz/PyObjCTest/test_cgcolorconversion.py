@@ -14,6 +14,10 @@ class TestCGColorConversion (TestCase):
 
         self.assertIsInstance(kCGColorConversionBlackPointCompensation, unicode)
 
+    @min_os_level('10.13')
+    def testConstants10_13(self):
+        self.assertIsInstance(kCGColorConversionTRCSize, unicode)
+
     @min_os_level('10.12')
     def testFunctions(self):
         self.assertResultIsCFRetained(CGColorConversionInfoCreate)

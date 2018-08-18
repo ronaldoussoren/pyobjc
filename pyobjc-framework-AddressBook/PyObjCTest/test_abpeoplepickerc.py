@@ -21,14 +21,18 @@ class TestABPeoplePickerC (TestCase):
     def testType(self):
         self.assertIsInstance(ABPickerRef, objc.objc_class)
 
+    @expectedFailure
     def testFunctions(self):
         self.assertResultIsCFRetained(ABPickerCreate)
+
         ref = ABPickerCreate()
+
         try:
             self.assertIsInstance(ref, (ABPickerRef, objc.lookUpClass('ABPeoplePickerCAdapter')))
 
         except objc.error:
             self.assertIsInstance(ref, ABPickerRef)
+
 
         ABPickerSetFrame(ref, ((90, 100), (200, 400)))
         r = ABPickerGetFrame(ref, None)
@@ -123,17 +127,6 @@ class TestABPeoplePickerC (TestCase):
         r = ABPickerGetDelegate(ref)
 
         ABPickerSetDelegate
-
-
-
-
-
-
-
-
-
-
-
 
 if __name__ == "__main__":
     main()

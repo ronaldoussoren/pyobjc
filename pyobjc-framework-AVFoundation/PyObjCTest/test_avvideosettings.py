@@ -74,5 +74,27 @@ class TestAVVideoSettings (TestCase):
         self.assertIsInstance(AVFoundation.AVVideoAverageNonDroppableFrameRateKey, unicode)
         self.assertIsInstance(AVFoundation.AVVideoEncoderSpecificationKey, unicode)
 
+    @min_os_level('10.12')
+    def testConstants10_12(self):
+        self.assertIsInstance(AVFoundation.AVVideoColorPrimaries_P3_D65, unicode)
+        self.assertIsInstance(AVFoundation.AVVideoAllowWideColorKey, unicode)
+
+    @min_os_level('10.13')
+    def testConstants10_13(self):
+        self.assertIsInstance(AVFoundation.AVVideoCodecTypeHEVC, unicode)
+        self.assertIsInstance(AVFoundation.AVVideoCodecTypeH264, unicode)
+        self.assertIsInstance(AVFoundation.AVVideoCodecTypeJPEG, unicode)
+        self.assertIsInstance(AVFoundation.AVVideoCodecTypeAppleProRes4444, unicode)
+        self.assertIsInstance(AVFoundation.AVVideoCodecTypeAppleProRes422, unicode)
+        self.assertIsInstance(AVFoundation.AVVideoColorPrimaries_ITU_R_2020, unicode)
+        self.assertIsInstance(AVFoundation.AVVideoTransferFunction_SMPTE_ST_2084_PQ, unicode)
+        self.assertIsInstance(AVFoundation.AVVideoTransferFunction_ITU_R_2100_HLG, unicode)
+        self.assertIsInstance(AVFoundation.AVVideoYCbCrMatrix_ITU_R_2020, unicode)
+        self.assertIsInstance(AVFoundation.AVVideoCodecHEVC, unicode)
+        self.assertIsInstance(AVFoundation.AVVideoDecompressionPropertiesKey, unicode)
+        self.assertIsInstance(AVFoundation.AVVideoApertureModeCleanAperture, unicode)
+        self.assertIsInstance(AVFoundation.AVVideoApertureModeProductionAperture, unicode)
+        self.assertIsInstance(AVFoundation.AVVideoApertureModeEncodedPixels, unicode)
+
 if __name__ == "__main__":
     main()

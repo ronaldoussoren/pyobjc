@@ -46,6 +46,9 @@ class TestCTFramesetter (TestCase):
         self.assertIsInstance(size, CGSize)
         self.assertIsInstance(range, CFRange)
 
+    @min_os_level('10.14')
+    def testMethods10_14(self):
+        self.assertResultIsCFRetained(CTFramesetterCreateWithTypesetter)
 
 
 if __name__ == "__main__":

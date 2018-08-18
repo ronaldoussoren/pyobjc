@@ -36,6 +36,9 @@ if sys.maxsize > 2 ** 32:
             self.assertArgIsBlock(FinderSync.FIFinderSyncController.setLastUsedDate_forItemWithURL_completion_, 2, b'v@')
             self.assertArgIsBlock(FinderSync.FIFinderSyncController.setTagData_forItemWithURL_completion_, 2, b'v@')
 
+        @min_os_level("10.14")
+        def testMethods10_14(self):
+            self.assertResultIsBOOL(FinderSync.FIFinderSyncController.isExtensionEnabled)
 
 if __name__ == "__main__":
     main()

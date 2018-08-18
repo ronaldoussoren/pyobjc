@@ -24,5 +24,9 @@ class TestNSResponder (TestCase):
         self.assertArgIsSEL(NSResponder.supplementalTargetForAction_sender_, 0, b'v@:@')
         self.assertResultIsBOOL(NSResponder.validateProposedFirstResponder_forEvent_)
 
+    @min_sdk_level('10.14')
+    def testProtocols(self):
+        objc.protocolNamed('NSStandardKeyBindingResponding')
+
 if __name__ == "__main__":
     main()

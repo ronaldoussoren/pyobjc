@@ -1,7 +1,13 @@
 {
  "definitions": {
   "enum": {
+   "MLComputeUnitsCPUOnly": { "value": 0 },
+   "MLComputeUnitsCPUAndGPU": { "value": 1 },
+   "MLMultiArrayShapeConstraintTypeUnspecified": { "value": 1 },
+   "MLMultiArrayShapeConstraintTypeEnumerated": { "value": 2 },
+   "MLMultiArrayShapeConstraintTypeRange": { "value": 3 },
    "MLModelErrorCustomLayer": { "value": 4 },
+   "MLModelErrorCustomModel": { "value": 5 },
    "MLMultiArrayDataTypeDouble": { "value": 65600 },
    "MLMultiArrayDataTypeFloat32": { "value": 65568 },
    "MLMultiArrayDataTypeInt32": { "value": 131104 },
@@ -14,7 +20,10 @@
    "MLFeatureTypeString": { "value": 3 },
    "MLFeatureTypeImage": { "value": 4 },
    "MLFeatureTypeMultiArray": { "value": 5 },
-   "MLFeatureTypeDictionary": { "value": 6 }
+   "MLFeatureTypeDictionary": { "value": 6 },
+   "MLImageSizeConstraintTypeUnspecified": { "value": 0 },
+   "MLImageSizeConstraintTypeEnumerated": { "value": 2 },
+   "MLImageSizeConstraintTypeRange": { "value": 3 }
   },
   "externs": {
    "MLModelCreatorDefinedKey": { "typestr": "@" },
@@ -110,6 +119,13 @@
       }
      },
      {
+      "selector": "modelWithContentsOfURL:configuration:error:",
+      "class_method": true,
+      "args": {
+       "2": { "type_modifier": "o" }
+      }
+     },
+     {
       "selector": "predictionFromFeatures:error:",
       "class_method": false,
       "args": {
@@ -122,11 +138,64 @@
       "args": {
        "2": { "type_modifier": "o" }
       }
+     },
+     {
+      "selector": "predictionsFromBatch:options:error:",
+      "class_method": false,
+      "args": {
+       "2": { "type_modifier": "o" }
+      }
      }
     ]
    },
    "NSObject": {
     "methods": [
+     {
+      "selector": "count",
+      "class_method": false,
+      "retval": {
+       "type_override": [ "i", "q" ]
+      }
+     },
+     {
+      "selector": "featuresAtIndex:",
+      "class_method": false,
+      "args": {
+       "0": {
+        "type_override": [ "i", "q" ]
+       }
+      }
+     },
+     {
+      "selector": "predictionsFromBatch:options:error:",
+      "class_method": false,
+      "args": {
+       "2": {
+        "type_override": "^@",
+	"type_modifier": "o"
+       }
+      }
+     },
+     {
+      "selector": "predictionFromFeatures:options:error:",
+      "class_method": false,
+      "args": {
+       "2": {
+        "type_override": "^@",
+	"type_modifier": "o"
+       }
+      }
+     },
+     {
+      "selector": "initWithModelDescription:parameterDictionary:error:",
+      "class_method": false,
+      "args": {
+       "2": {
+        "type_override": "^@",
+	"type_modifier": "o"
+       }
+      }
+     },
      {
       "selector": "encodeToCommandBuffer:inputs:outputs:error:",
       "class_method": false,

@@ -114,7 +114,7 @@ class TestAVMetadataIdentifiers (TestCase):
         self.assertIsInstance(AVFoundation.AVMetadataIdentifierQuickTimeMetadataPhonogramRights, unicode)
         self.assertIsInstance(AVFoundation.AVMetadataIdentifierQuickTimeMetadataCameraIdentifier, unicode)
         self.assertIsInstance(AVFoundation.AVMetadataIdentifierQuickTimeMetadataCameraFrameReadoutTime, unicode)
-        self.assertIsInstance(AVFoundation.AVMetadataIdentifierQuickTimeMetadataTitle, unicode)
+        self.assertIsInstance(AVFoundation.AVMetadataIdentifierQuickTimeMetadataTitle		, unicode)
         self.assertIsInstance(AVFoundation.AVMetadataIdentifierQuickTimeMetadataCollectionUser, unicode)
         self.assertIsInstance(AVFoundation.AVMetadataIdentifierQuickTimeMetadataRatingUser, unicode)
         self.assertIsInstance(AVFoundation.AVMetadataIdentifierQuickTimeMetadataLocationName, unicode)
@@ -177,7 +177,6 @@ class TestAVMetadataIdentifiers (TestCase):
         self.assertIsInstance(AVFoundation.AVMetadataIdentifierID3MetadataAttachedPicture, unicode)
         self.assertIsInstance(AVFoundation.AVMetadataIdentifierID3MetadataAudioSeekPointIndex, unicode)
         self.assertIsInstance(AVFoundation.AVMetadataIdentifierID3MetadataComments, unicode)
-        self.assertIsInstance(AVFoundation.AVMetadataIdentifierID3MetadataCommerical, unicode)
         self.assertIsInstance(AVFoundation.AVMetadataIdentifierID3MetadataEncryption, unicode)
         self.assertIsInstance(AVFoundation.AVMetadataIdentifierID3MetadataEqualization, unicode)
         self.assertIsInstance(AVFoundation.AVMetadataIdentifierID3MetadataEqualization2, unicode)
@@ -274,6 +273,11 @@ class TestAVMetadataIdentifiers (TestCase):
         self.assertIsInstance(AVFoundation.AVMetadataIdentifierQuickTimeMetadataVideoOrientation, unicode)
         self.assertIsInstance(AVFoundation.AVMetadataIdentifierQuickTimeMetadataContentIdentifier, unicode)
         self.assertIsInstance(AVFoundation.AVMetadataIdentifierID3MetadataCommercial, unicode)
+        self.assertIsInstance(AVFoundation.AVMetadataIdentifierID3MetadataCommerical, unicode)
+
+    @min_os_level('10.12')
+    def testConstants10_12(self):
+        self.assertIsInstance(AVFoundation.AVMetadataIdentifierISOUserDataDate, unicode)
 
 if __name__ == "__main__":
     main()

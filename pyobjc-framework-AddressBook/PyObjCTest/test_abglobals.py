@@ -59,7 +59,7 @@ class TestABGlobals (TestCase):
     def testConstants10_5(self):
         self.assertIsInstance(kABCalendarURIsProperty, unicode)
 
-    @expectedFailure
+    @expectedFailureIf(os_level_key(os_release()) < os_level_key('10.14'))
     def testConstants_10_7_broken(self):
         self.assertIsInstance(kABEmailMobileMeLabel, unicode)
         self.assertIsInstance(kABAIMMobileMeLabel, unicode)

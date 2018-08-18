@@ -5,7 +5,6 @@ if sys.maxsize > 2 ** 32:
     import Intents
 
     class TestINIntentErrors (TestCase):
-        @min_os_level('10.12')
         def testConstants(self):
             self.assertEqual(Intents.INIntentErrorInteractionOperationNotSupported, 1900)
             self.assertEqual(Intents.INIntentErrorDonatingInteraction, 1901)
@@ -21,6 +20,25 @@ if sys.maxsize > 2 ** 32:
 
             self.assertEqual(Intents.INIntentErrorExtensionLaunchingTimeout, 5000)
             self.assertEqual(Intents.INIntentErrorExtensionBringUpFailed, 5001)
+
+            self.assertEqual(Intents.INIntentErrorNoAppAvailable, 2005)
+            self.assertEqual(Intents.INIntentErrorImageGeneric, 6000)
+            self.assertEqual(Intents.INIntentErrorImageNoServiceAvailable, 6001)
+            self.assertEqual(Intents.INIntentErrorImageStorageFailed, 6002)
+            self.assertEqual(Intents.INIntentErrorImageLoadingFailed, 6003)
+            self.assertEqual(Intents.INIntentErrorImageRetrievalFailed, 6004)
+            self.assertEqual(Intents.INIntentErrorImageProxyLoop, 6005)
+            self.assertEqual(Intents.INIntentErrorImageProxyInvalid, 6006)
+            self.assertEqual(Intents.INIntentErrorImageProxyTimeout, 6007)
+            self.assertEqual(Intents.INIntentErrorImageServiceFailure, 6008)
+            self.assertEqual(Intents.INIntentErrorImageScalingFailed, 6009)
+            self.assertEqual(Intents.INIntentErrorPermissionDenied, 6010)
+            self.assertEqual(Intents.INIntentErrorVoiceShortcutCreationFailed, 7000)
+            self.assertEqual(Intents.INIntentErrorVoiceShortcutGetFailed, 7001)
+            self.assertEqual(Intents.INIntentErrorVoiceShortcutDeleteFailed, 7002)
+            self.assertEqual(Intents.INIntentErrorEncodingGeneric, 8000)
+            self.assertEqual(Intents.INIntentErrorEncodingFailed, 8001)
+            self.assertEqual(Intents.INIntentErrorDecodingGeneric, 9000)
 
 
 if __name__ == "__main__":

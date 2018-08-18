@@ -1,0 +1,483 @@
+// objective.metadata exceptions file, see its document
+// for information on how to update this file.
+{
+ "definitions": {
+  "classes": {},
+  "formal_protocols": {},
+  "functions": {
+   "DVDClearLastPlayBookmark": {
+    "variadic": false
+   },
+   "DVDCloseMediaFile": {
+    "variadic": false
+   },
+   "DVDCloseMediaVolume": {
+    "variadic": false
+   },
+   "DVDDispose": {
+    "variadic": false
+   },
+   "DVDDoMenuCGClick": {
+    "args": {
+     "0": { "type_modifier": "n" },
+     "1": { "type_modifier": "o" }
+    }
+   },
+   "DVDDoMenuCGMouseOver": {
+    "args": {
+     "0": { "type_modifier": "n" },
+     "1": { "type_modifier": "o" }
+    }
+   },
+   "DVDGetAngle": {
+    "args": {
+     "0": { "type_modifier": "o" }
+    }
+   },
+   "DVDGetAspectRatio": {
+    "args": {
+     "0": { "type_modifier": "o" }
+    }
+   },
+   "DVDGetAudioLanguageCode": {
+    "args": {
+     "0": { "type_modifier": "o" },
+     "1": { "type_modifier": "o" }
+    }
+   },
+   "DVDGetAudioLanguageCodeByStream": {
+    "args": {
+     "1": { "type_modifier": "o" },
+     "2": { "type_modifier": "o" }
+    }
+   },
+   "DVDGetAudioOutputMode": {
+    "args": {
+     "0": { "type_modifier": "o" }
+    }
+   },
+   "DVDGetAudioOutputModeCapabilities": {
+    "args": {
+     "0": { "type_modifier": "o" }
+    }
+   },
+   "DVDGetAudioStream": {
+    "args": {
+     "0": { "type_modifier": "o" }
+    }
+   },
+   "DVDGetAudioStreamFormat": {
+    "args": {
+     "0": { "type_modifier": "o" },
+     "1": { "type_modifier": "o" },
+     "2": { "type_modifier": "o" },
+     "3": { "type_modifier": "o" }
+    }
+   },
+   "DVDGetAudioStreamFormatByStream": {
+    "args": {
+     "1": { "type_modifier": "o" },
+     "2": { "type_modifier": "o" },
+     "3": { "type_modifier": "o" },
+     "4": { "type_modifier": "o" }
+    }
+   },
+   "DVDGetAudioVolume": {
+    "args": {
+     "0": { "type_modifier": "o" }
+    }
+   },
+   "DVDGetAudioVolumeInfo": {
+    "args": {
+     "0": { "type_modifier": "o" },
+     "1": { "type_modifier": "o" },
+     "2": { "type_modifier": "o" }
+    }
+   },
+   "DVDGetBookmark": {
+    "args": {
+     "0": { "type_modifier": "o", "c_array_length_in_arg": 1 },
+     "1": { "type_modifier": "N" }
+    }
+   },
+   "DVDGetButtonPosition": {
+    "args": {
+     "1": { "type_modifier": "o" },
+     "2": { "type_modifier": "o" }
+    }
+   },
+   "DVDGetButtoninfo": {
+    "args": {
+     "0": { "type_modifier": "o" },
+     "1": { "type_modifier": "o" },
+     "2": { "type_modifier": "o" },
+     "3": { "type_modifier": "o" },
+     "4": { "type_modifier": "o" }
+    }
+   },
+   "DVDGetChapter": {
+    "args": {
+     "0": { "type_modifier": "o" }
+    }
+   },
+   "DVDGetDiscRegionCode": {
+    "args": {
+     "0": { "type_modifier": "o" }
+    }
+   },
+   "DVDGetDriveRegionCode": {
+    "args": {
+     "0": { "type_modifier": "o" },
+     "1": { "type_modifier": "o" }
+    }
+   },
+   "DVDGetFormatStandard": {
+    "args": {
+     "0": { "type_modifier": "o" }
+    }
+   },
+   "DVDGetGPRMValue": {
+    "args": {
+     "1": { "type_modifier": "o" }
+    }
+   },
+   "DVDGetLastPlayBookmark": {
+    "args": {
+     "0": { "type_modifier": "o", "c_array_length_in_arg": 1 },
+     "1": { "type_modifier": "N" }
+    }
+   },
+   "DVDGetMediaVolumeCFName": {
+    "args": {
+     "0": { "type_modifier": "o" }
+    }
+   },
+   "DVDGetMediaVolumeName": {
+    "ignore": true,
+    "args": {
+     "0": { "type_modifier": "o" }
+    }
+   },
+   "DVDGetMenuLanguageCode": {
+    "args": {
+     "0": { "type_modifier": "o" }
+    }
+   },
+   "DVDGetNativeVideoSize": {
+    "args": {
+     "0": { "type_modifier": "o" },
+     "1": { "type_modifier": "o" }
+    }
+   },
+   "DVDGetNumAngles": {
+    "args": {
+     "0": { "type_modifier": "o" }
+    }
+   },
+   "DVDGetNumAudioStreams": {
+    "args": {
+     "0": { "type_modifier": "o" }
+    }
+   },
+   "DVDGetNumChapters": {
+    "args": {
+     "1": { "type_modifier": "o" }
+    }
+   },
+   "DVDGetNumSubPictureStreams": {
+    "args": {
+     "0": { "type_modifier": "o" }
+    }
+   },
+   "DVDGetNumTitles": {
+    "args": {
+     "0": { "type_modifier": "o" }
+    }
+   },
+   "DVDGetSPDIFDataOutDevice": {
+    "args": {
+     "0": { "type_modifier": "o" }
+    }
+   },
+   "DVDGetSPDIFDataOutDeviceCFName": {
+    "args": {
+     "1": { "type_modifier": "o" }
+    }
+   },
+   "DVDGetSPDIFDataOutDeviceCount": {
+    "args": {
+     "0": { "type_modifier": "o" }
+    }
+   },
+   "DVDGetScanRate": {
+    "args": {
+     "0": { "type_modifier": "o" },
+     "1": { "type_modifier": "o" }
+    }
+   },
+   "DVDGetState": {
+    "args": {
+     "0": { "type_modifier": "o" }
+    }
+   },
+   "DVDGetSubPictureLanguageCode": {
+    "args": {
+     "0": { "type_modifier": "o" },
+     "1": { "type_modifier": "o" }
+    }
+   },
+   "DVDGetSubPictureLanguageCodeByStream": {
+    "args": {
+     "1": { "type_modifier": "o" },
+     "2": { "type_modifier": "o" }
+    }
+   },
+   "DVDGetSubPictureStream": {
+    "args": {
+     "0": { "type_modifier": "o" }
+    }
+   },
+   "DVDGetTime": {
+    "args": {
+     "1": { "type_modifier": "o" },
+     "2": { "type_modifier": "o" }
+    }
+   },
+   "DVDGetTimeEventRate": {
+    "args": {
+     "0": { "type_modifier": "o" }
+    }
+   },
+   "DVDGetTitle": {
+    "args": {
+     "0": { "type_modifier": "o" }
+    }
+   },
+   "DVDGetVideoCGBounds": {
+    "args": {
+     "0": { "type_modifier": "o" }
+    }
+   },
+   "DVDGetVideoDisplay": {
+    "args": {
+     "0": { "type_modifier": "o" }
+    }
+   },
+   "DVDGetVideoWindowID": {
+    "args": {
+     "0": { "type_modifier": "o" }
+    }
+   },
+   "DVDGetVideoWindowRef": {
+    "args": {
+     "0": { "type_modifier": "o" }
+    }
+   },
+   "DVDGoBackOneLevel": {
+    "variadic": false
+   },
+   "DVDGotoBookmark": {
+    "args": {
+     "0": { "type_modifier": "n", "c_array_length_in_arg": 1 }
+    }
+   },
+   "DVDHasMedia": {
+    "args": {
+     "0": { "type_modifier": "o" }
+    }
+   },
+   "DVDHasMenu": {
+    "args": {
+     "1": { "type_modifier": "o" }
+    }
+   },
+   "DVDHasNextChapter": {
+    "args": {
+     "0": { "type_modifier": "o" }
+    }
+   },
+   "DVDHasPreviousChapter": {
+    "args": {
+     "0": { "type_modifier": "o" }
+    }
+   },
+   "DVDIdle": {
+    "variadic": false
+   },
+   "DVDInitialize": {
+    "variadic": false
+   },
+   "DVDIsDisplayingSubPicture": {
+    "args": {
+     "0": { "type_modifier": "o" }
+    }
+   },
+   "DVDIsMuted": {
+    "args": {
+     "0": { "type_modifier": "o" }
+    }
+   },
+   "DVDIsOnMenu": {
+    "args": {
+     "0": { "type_modifier": "o" },
+     "1": { "type_modifier": "o" }
+    }
+   },
+   "DVDIsPaused": {
+    "args": {
+     "0": { "type_modifier": "o" }
+    }
+   },
+   "DVDIsPlaying": {
+    "args": {
+     "0": { "type_modifier": "o" }
+    }
+   },
+   "DVDIsRegisteredEventCallBack": {
+    "args": {
+     "0": { "type_modifier": "o" }
+    }
+   },
+   "DVDIsSupportedDisplay": {
+    "args": {
+     "1": { "type_modifier": "o" }
+    }
+   },
+   "DVDIsValidMediaRef": {
+    "args": {
+     "0": { "type_modifier": "n" },
+     "1": { "type_modifier": "o" }
+    }
+   },
+   "DVDIsValidMediaURL": {
+    "args": {
+     "0": { },
+     "1": { "type_modifier": "o" }
+    }
+   },
+   "DVDNextChapter": {
+    "variadic": false
+   },
+   "DVDOpenMediaFile": {
+    "args": {
+     "0": { "type_modifier": "n" }
+    }
+   },
+   "DVDOpenMediaFileWithURL": {
+    "args": {
+     "0": {}
+    }
+   },
+   "DVDOpenMediaVolume": {
+    "args": {
+     "0": { "type_modifier": "n" }
+    }
+   },
+   "DVDOpenMediaVolumeWithURL": {
+    "args": {
+     "0": {}
+    }
+   },
+   "DVDPause": {
+    "variadic": false
+   },
+   "DVDPlay": {
+    "variadic": false
+   },
+   "DVDPreviousChapter": {
+    "variadic": false
+   },
+   "DVDRegisterEventCallBack": {
+    "args": {
+     "0": {
+      "function": {
+       "args": [
+        {
+         "typestr": "I"
+        },
+        {
+         "typestr": "L"
+        },
+        {
+         "typestr": "L"
+        },
+        {
+         "typestr": "^v"
+        }
+       ],
+       "retval": {
+        "typestr": "v"
+       }
+      }
+     },
+     "1": { "type_modifier": "n" },
+     "3": {},
+     "4": {}
+    }
+   },
+   "DVDResume": {
+    "variadic": false
+   },
+   "DVDReturnToTitle": {
+    "variadic": false
+   },
+   "DVDSetDriveRegionCode": {
+    "args": {
+     "1": {}
+    }
+   },
+   "DVDSetFatalErrorCallBack": {
+    "args": {
+     "0": {
+      "function": {
+       "args": [
+        {
+         "typestr": "i"
+        },
+        {
+         "typestr": "^v"
+        }
+       ],
+       "retval": {
+        "typestr": "v"
+       }
+      }
+     },
+     "1": {}
+    }
+   },
+   "DVDSetLastPlayBookmark": {
+    "args": {
+     "0": { "type_modifier": "n", "c_array_length_in_arg": 1 }
+    }
+   },
+   "DVDSetVideoCGBounds": {
+    "args": {
+     "0": { "type_modifier": "n" }
+    }
+   },
+   "DVDSetVideoWindowRef": {
+    "args": {
+     "0": {}
+    }
+   },
+   "DVDStop": {
+    "variadic": false
+   },
+   "DVDSwitchToDisplay": {
+    "args": {
+     "1": { "type_modifier": "o" }
+    }
+   },
+   "DVDUnregisterEventCallBack": {
+    "args": {
+     "0": {}
+    }
+   },
+   "DVDUpdateVideo": {
+    "variadic": false
+   }
+  },
+  "informal_protocols": {}
+ }
+}

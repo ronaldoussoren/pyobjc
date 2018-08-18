@@ -11,6 +11,12 @@ class TestSecureTransport (TestCase):
         self.assertIsCFType(Security.SSLContextRef)
 
     def test_constants(self):
+        self.assertEqual(Security.kSSLCiphersuiteGroupDefault, 0)
+        self.assertEqual(Security.kSSLCiphersuiteGroupCompatibility, 1)
+        self.assertEqual(Security.kSSLCiphersuiteGroupLegacy, 2)
+        self.assertEqual(Security.kSSLCiphersuiteGroupATS, 3)
+        self.assertEqual(Security.kSSLCiphersuiteGroupATSCompatibility, 4)
+
         self.assertEqual(Security.kSSLProtocolUnknown, 0)
         self.assertEqual(Security.kSSLProtocol3, 2)
         self.assertEqual(Security.kTLSProtocol1, 4)

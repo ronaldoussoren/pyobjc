@@ -42,7 +42,7 @@ class TestImageKitDeprecated (TestCase):
         self.assertResultIsBOOL(TestImageKitDeprecatedHelper.imageBrowser_moveCellsAtIndexes_toIndex_)
         self.assertArgHasType(TestImageKitDeprecatedHelper.imageBrowser_moveCellsAtIndexes_toIndex_, 2, objc._C_NSUInteger)
 
-    @min_os_level('10.6')
+    @os_level_between('10.6', '10.13')
     def testConstants10_6(self):
         self.assertIsInstance(IKImageBrowserCellLayerTypeBackground, unicode)
         self.assertIsInstance(IKImageBrowserCellLayerTypeForeground, unicode)

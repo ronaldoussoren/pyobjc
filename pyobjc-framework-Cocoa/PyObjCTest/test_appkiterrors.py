@@ -25,6 +25,9 @@ class TestAppKitErrors (TestCase):
         self.assertEqual(NSFontAssetDownloadError, 66304)
         self.assertEqual(NSFontErrorMinimum, 66304)
         self.assertEqual(NSFontErrorMaximum, 66335)
+        self.assertEqual(NSWorkspaceAuthorizationInvalidError, 67328)
+        self.assertEqual(NSWorkspaceErrorMinimum, 67328)
+        self.assertEqual(NSWorkspaceErrorMaximum, 67455)
 
 if __name__ == "__main__":
     main()

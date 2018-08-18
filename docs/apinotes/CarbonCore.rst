@@ -14,7 +14,7 @@ API Notes
 ---------
 
 The CarbonCore framework is a subframework of OSServices, use
-``import OSServices`` to access the definitions in this framework.
+``import CoreServices`` to access the definitions in this framework.
 
 PyObjC provides only limited access to definitions in the framework,
 primarily funcionility that cannot be accessed in a better (modern)
@@ -25,4 +25,3 @@ In particular only the following funcionality is available from Python:
 * BackupCore
 
 * DiskspaceRecovery
-

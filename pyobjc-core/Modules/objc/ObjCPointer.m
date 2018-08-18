@@ -88,7 +88,10 @@ PyObjCPointer_New(void *p, const char *t)
             "pointer of type %s", t);
         return NULL;
     }
-    NSLog(@"PyObjCPointer created: at %p of type %s", p, t);
+
+    if (PyErr_WarnFormat(PyObjCExc_ObjCPointerWarning, 0, "PyObjCPointer created: at %p of type %s", p, t) == -1) {
+    	return NULL;
+    }
 
     if (size == -1) {
         return NULL;

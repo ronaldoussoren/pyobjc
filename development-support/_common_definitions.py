@@ -12,10 +12,10 @@ import shutil
 import time
 
 PY_VERSIONS=[
-  "2.7",   # End-of-live: 2020-01-01
-  "3.4",   # End-of-live: 2019-03-16
-  "3.5",   # End-of-live: 2020-09-13
-  "3.6",   # End-of-live: 2021-12-16
+#  "2.7",   # End-of-live: 2020-01-01
+#  "3.4",   # End-of-live: 2019-03-16
+#  "3.5",   # End-of-live: 2020-09-13
+#  "3.6",   # End-of-live: 2021-12-16
   "3.7",   # In beta, expected EoL: 2023-06
 ]
 
@@ -95,7 +95,8 @@ def virtualenv(interpreter):
         print("CLEANUP")
         shutil.rmtree("test-env")
 
-def variants(ver):
+def variants(ver, permitted_variants=None):
+    return [ver]
     if os.path.islink(os.path.join(
         '/Library/Frameworks/Python.framework/Versions', ver)):
 
@@ -104,6 +105,9 @@ def variants(ver):
             if nm == ver: continue
 
             v, _, s = nm.partition('-')
+
+            if permitted_variants and s not in permitted_variants:
+               continue
             if v == ver:
                 result.append(nm)
 

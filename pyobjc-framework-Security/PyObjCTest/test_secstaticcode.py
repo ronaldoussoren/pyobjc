@@ -22,6 +22,7 @@ class TestSecStaticCode (TestCase):
         self.assertEqual(Security.kSecCSRestrictToAppLike, 1 << 8)
         self.assertEqual(Security.kSecCSRestrictSidebandData, 1 << 9)
         self.assertEqual(Security.kSecCSUseSoftwareSigningCert, 1 << 10)
+        self.assertEqual(Security.kSecCSValidatePEH, 1 << 11)
 
 
     def test_functions(self):

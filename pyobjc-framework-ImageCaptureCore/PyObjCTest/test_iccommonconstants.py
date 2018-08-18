@@ -49,5 +49,27 @@ class TestICCameraDevice (TestCase):
         self.assertEqual(ICReturnDeviceIsBusyEnumerating, -9954)
         self.assertEqual(ICReturnDeviceCommandGeneralFailure, -9955)
 
+        self.assertEqual(ICReturnCodeThumbnailOffset, -21000)
+        self.assertEqual(ICReturnCodeMetadataOffset, -21050)
+        self.assertEqual(ICReturnCodeDownloadOffset, -21100)
+        self.assertEqual(ICReturnCodeDeleteOffset, -21150)
+        self.assertEqual(ICReturnCodeExFATOffset, -21200)
+        self.assertEqual(ICReturnCodePTPOffset, -21250)
+        self.assertEqual(ICReturnCodeSystemOffset, -21300)
+        self.assertEqual(ICReturnDeviceFailedToCompleteTransfer, -9956)
+        self.assertEqual(ICReturnDeviceFailedToSendData, -9957)
+        self.assertEqual(ICReturnSessionNotOpened, -9958)
+        self.assertEqual(ICReturnThumbnailNotAvailable, ICReturnCodeThumbnailOffset)
+        self.assertEqual(ICReturnThumbnailAlreadyFetching, ICReturnCodeThumbnailOffset -1)
+        self.assertEqual(ICReturnThumbnailCanceled, ICReturnCodeThumbnailOffset -2)
+        self.assertEqual(ICReturnThumbnailInvalid, ICReturnCodeThumbnailOffset -3)
+        self.assertEqual(ICReturnErrorDeviceEjected, ICReturnCodeSystemOffset)
+        self.assertEqual(ICReturnMetadataNotAvailable, ICReturnCodeMetadataOffset)
+        self.assertEqual(ICReturnMetadataAlreadyFetching, ICReturnCodeMetadataOffset -1)
+        self.assertEqual(ICReturnMetadataCanceled, ICReturnCodeMetadataOffset -2)
+        self.assertEqual(ICReturnMetadataInvalid, ICReturnCodeMetadataOffset -3)
+        self.assertEqual(ICReturnMultiErrorDictionary, -30000)
+
+
 if __name__ == "__main__":
     main()

@@ -205,6 +205,11 @@ class TestHeader (TestCase):
         self.assertArgHasType(TestNSViewHelper.view_stringForToolTip_point_userData_, 2, NSPoint.__typestr__)
         self.assertArgHasType(TestNSViewHelper.view_stringForToolTip_point_userData_, 3, b'^v')
 
+    @min_sdk_level('10.14')
+    def testProtocolObjects(self):
+        objc.protocolNamed('NSViewLayerContentScaleDelegate')
+        objc.protocolNamed('NSViewToolTipOwner')
+
 
     def testMissingTests(self):
         v = NSView.alloc().init()

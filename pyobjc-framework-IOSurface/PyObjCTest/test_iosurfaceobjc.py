@@ -30,6 +30,10 @@ class TestIOSurfaceObjC (TestCase):
         self.assertIsInstance(IOSurface.IOSurfacePropertyKeyPixelFormat, unicode)
         self.assertIsInstance(IOSurface.IOSurfacePropertyKeyPixelSizeCastingAllowed, unicode)
 
+    @min_os_level('10.14')
+    def testConstants10_14(self):
+        self.assertIsInstance(IOSurface.IOSurfacePropertyKeyAllocSize, unicode)
+
     @min_os_level('10.12')
     def testMethods(self):
         self.assertArgIsOut(IOSurface.IOSurface.lockWithOptions_seed_, 1)

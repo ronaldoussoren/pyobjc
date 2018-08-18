@@ -1,787 +1,1469 @@
+// objective.metadata exceptions file, see its document
+// for information on how to update this file.
 {
  "definitions": {
-  "enum": {
-   "INSendMessageRecipientUnsupportedReasonNoAccount": { "value": 1 },
-   "INSendMessageRecipientUnsupportedReasonOffline": { "value": 2 },
-   "INSendMessageRecipientUnsupportedReasonMessagingServiceNotEnabledForRecipient": { "value": 3 },
-   "INCallDestinationTypeNormal": { "value": 1 },
-   "INCallDestinationTypeEmergency": { "value": 2 },
-   "INCallDestinationTypeVoicemail": { "value": 3 },
-   "INCallDestinationTypeRedial": { "value": 4 },
-   "INSearchForMessagesIntentResponseCodeFailureMessageTooManyResults": { "value": 7 },
-   "INRecurrenceFrequencyUnknown": { "value": 0 },
-   "INRecurrenceFrequencyMinute": { "value": 1 },
-   "INRecurrenceFrequencyHourly": { "value": 2 },
-   "INRecurrenceFrequencyDaily": { "value": 3 },
-   "INRecurrenceFrequencyWeekly": { "value": 4 },
-   "INRecurrenceFrequencyMonthly": { "value": 5 },
-   "INRecurrenceFrequencyYearly": { "value": 6 },
-   "INMessageAttributeOptionPlayed": { "value": 16 },
-   "INMessageTypeUnspecified": { "value": 0 },
-   "INMessageTypeText": { "value": 1 },
-   "INMessageTypeAudio": { "value": 2 },
-   "INMessageTypeDigitalTouch": { "value": 3 },
-   "INMessageTypeHandwriting": { "value": 4 },
-   "INMessageTypeSticker": { "value": 5 },
-   "INMessageTypeTapbackLiked": { "value": 6 },
-   "INMessageTypeTapbackDisliked": { "value": 7 },
-   "INMessageTypeTapbackEmphasized": { "value": 8 },
-   "INMessageTypeTapbackLoved": { "value": 9 },
-   "INMessageTypeTapbackQuestioned": { "value": 10 },
-   "INMessageTypeTapbackLaughed": { "value": 11 },
-   "INMessageTypeMediaCalendar": { "value": 12 },
-   "INMessageTypeMediaLocation": { "value": 13 },
-   "INMessageTypeMediaAddressCard": { "value": 14 },
-   "INMessageTypeMediaImage": { "value": 15 },
-   "INMessageTypeMediaVideo": { "value": 16 },
-   "INMessageTypeMediaPass": { "value": 17 },
-   "INMessageTypeMediaAudio": { "value": 18 },
-   "INCallRecordTypeOptionOutgoing": { "value": 1 },
-   "INCallRecordTypeOptionMissed": { "value": 2 },
-   "INCallRecordTypeOptionReceived": { "value": 4 },
-   "INCallRecordTypeOptionLatest": { "value": 8 },
-   "INCallRecordTypeOptionVoicemail": { "value": 16 },
-   "INCallRecordTypeLatest": { "value": 4 },
-   "INCallRecordTypeVoicemail": { "value": 5 },
-   "INCallDestinationTypeUnknown": { "value": 0 },
-   "INCallDestinationTypeNormalDestination": { "value": 1 },
-   "INCallDestinationTypeEmergencyDestination": { "value": 2 },
-   "INCallDestinationTypeVoicemailDestination": { "value": 3 },
-   "INCallDestinationTypeRedialDestination": { "value": 4 },
-   "INCallCapabilityUnknown": { "value": 0 },
-   "INCallCapabilityAudioCall": { "value": 1 },
-   "INCallCapabilityVideoCall": { "value": 2 },
-   "INIntentErrorExtensionLaunchingTimeout": { "value": 5000 },
-   "INIntentErrorExtensionBringUpFailed": { "value": 5001 },
-   "INStartVideoCallIntentResponseCodeUnspecified": { "value": 0 },
-   "INStartVideoCallIntentResponseCodeReady": { "value": 1 },
-   "INStartVideoCallIntentResponseCodeContinueInApp": { "value": 2 },
-   "INStartVideoCallIntentResponseCodeFailure": { "value": 3 },
-   "INStartVideoCallIntentResponseCodeFailureRequiringAppLaunch": { "value": 4 },
-   "INStartVideoCallIntentResponseCodeFailureAppConfigurationRequired": { "value": 5 },
-   "INStartVideoCallIntentResponseCodeFailureCallingServiceNotAvailable": { "value": 6 },
-   "INStartVideoCallIntentResponseCodeFailureContactNotSupportedByApp": { "value": 7 },
-   "INStartVideoCallIntentResponseCodeFailureInvalidNumber": { "value": 8 },
-   "INSearchCallHistoryIntentResponseCodeFailureAppConfigurationRequired": { "value": 5 },
-   "INSearchCallHistoryIntentResponseCodeInProgress": { "value": 6 },
-   "INSearchCallHistoryIntentResponseCodeSuccess": { "value": 7 },
-   "INStartAudioCallIntentResponseCodeUnspecified": { "value": 0 },
-   "INStartAudioCallIntentResponseCodeReady": { "value": 1 },
-   "INStartAudioCallIntentResponseCodeContinueInApp": { "value": 2 },
-   "INStartAudioCallIntentResponseCodeFailure": { "value": 3 },
-   "INStartAudioCallIntentResponseCodeFailureRequiringAppLaunch": { "value": 4 },
-   "INStartAudioCallIntentResponseCodeFailureAppConfigurationRequired": { "value": 5 },
-   "INStartAudioCallIntentResponseCodeFailureCallingServiceNotAvailable": { "value": 6 },
-   "INStartAudioCallIntentResponseCodeFailureContactNotSupportedByApp": { "value": 7 },
-   "INStartAudioCallIntentResponseCodeFailureNoValidNumber": { "value": 8 },
-   "INSendMessageIntentResponseCodeUnspecified": { "value": 0 },
-   "INSendMessageIntentResponseCodeReady": { "value": 1 },
-   "INSendMessageIntentResponseCodeInProgress": { "value": 2 },
-   "INSendMessageIntentResponseCodeSuccess": { "value": 3 },
-   "INSendMessageIntentResponseCodeFailure": { "value": 4 },
-   "INSendMessageIntentResponseCodeFailureRequiringAppLaunch": { "value": 5 },
-   "INSendMessageIntentResponseCodeFailureMessageServiceNotAvailable": { "value": 6 },
-   "INSearchForMessagesIntentResponseCodeUnspecified": { "value": 0 },
-   "INSearchForMessagesIntentResponseCodeReady": { "value": 1 },
-   "INSearchForMessagesIntentResponseCodeInProgress": { "value": 2 },
-   "INSearchForMessagesIntentResponseCodeSuccess": { "value": 3 },
-   "INSearchForMessagesIntentResponseCodeFailure": { "value": 4 },
-   "INSearchForMessagesIntentResponseCodeFailureRequiringAppLaunch": { "value": 5 },
-   "INSearchForMessagesIntentResponseCodeFailureMessageServiceNotAvailable": { "value": 6 },
-   "INSearchCallHistoryIntentResponseCodeUnspecified": { "value": 0 },
-   "INSearchCallHistoryIntentResponseCodeReady": { "value": 1 },
-   "INSearchCallHistoryIntentResponseCodeContinueInApp": { "value": 2 },
-   "INSearchCallHistoryIntentResponseCodeFailure": { "value": 3 },
-   "INSearchCallHistoryIntentResponseCodeFailureRequiringAppLaunch": { "value": 4 },
-   "INPersonHandleTypeUnknown": { "value": 0 },
-   "INPersonHandleTypeEmailAddress": { "value": 1 },
-   "INPersonHandleTypePhoneNumber": { "value": 2 },
-   "INPersonSuggestionTypeSocialProfile": { "value": 1 },
-   "INPersonSuggestionTypeInstantMessageAddress": { "value": 2 },
-   "INMessageAttributeOptionRead": { "value": 1 },
-   "INMessageAttributeOptionUnread": { "value": 2 },
-   "INMessageAttributeOptionFlagged": { "value": 4 },
-   "INMessageAttributeOptionUnflagged": { "value": 8 },
-   "INIntentHandlingStatusUnspecified": { "value": 0 },
-   "INIntentHandlingStatusReady": { "value": 1 },
-   "INIntentHandlingStatusInProgress": { "value": 2 },
-   "INIntentHandlingStatusSuccess": { "value": 3 },
-   "INIntentHandlingStatusFailure": { "value": 4 },
-   "INIntentHandlingStatusDeferredToApplication": { "value": 5 },
-   "INInteractionDirectionUnspecified": { "value": 0 },
-   "INInteractionDirectionOutgoing": { "value": 1 },
-   "INInteractionDirectionIncoming": { "value": 2 },
-   "INIntentErrorInteractionOperationNotSupported": { "value": 1900 },
-   "INIntentErrorDonatingInteraction": { "value": 1901 },
-   "INIntentErrorDeletingAllInteractions": { "value": 1902 },
-   "INIntentErrorDeletingInteractionWithIdentifiers": { "value": 1903 },
-   "INIntentErrorDeletingInteractionWithGroupIdentifier": { "value": 1904 },
-   "INIntentErrorIntentSupportedByMultipleExtension": { "value": 2001 },
-   "INIntentErrorRestrictedIntentsNotSupportedByExtension": { "value": 2002 },
-   "INIntentErrorNoHandlerProvidedForIntent": { "value": 2003 },
-   "INIntentErrorInvalidIntentName": { "value": 2004 },
-   "INIntentErrorRequestTimedOut": { "value": 3001 },
-   "INIntentErrorInvalidUserVocabularyFileLocation": { "value": 4000 },
-   "INCallCapabilityOptionAudioCall": { "value": 1 },
-   "INCallCapabilityOptionVideoCall": { "value": 2 },
-   "INCallRecordTypeUnknown": { "value": 0 },
-   "INCallRecordTypeOutgoing": { "value": 1 },
-   "INCallRecordTypeMissed": { "value": 2 },
-   "INCallRecordTypeReceived": { "value": 3 },
-   "INConditionalOperatorAll": { "value": 0 },
-   "INConditionalOperatorAny": { "value": 1 },
-   "INConditionalOperatorNone": { "value": 2 }
-  },
-  "externs": {
-   "INPersonHandleLabelHome": { "typestr": "@" },
-   "INPersonHandleLabelWork": { "typestr": "@" },
-   "INPersonHandleLabeliPhone": { "typestr": "@" },
-   "INPersonHandleLabelMobile": { "typestr": "@" },
-   "INPersonHandleLabelMain": { "typestr": "@" },
-   "INPersonHandleLabelHomeFax": { "typestr": "@" },
-   "INPersonHandleLabelWorkFax": { "typestr": "@" },
-   "INPersonHandleLabelPager": { "typestr": "@" },
-   "INPersonHandleLabelOther": { "typestr": "@" },
-   "INPersonRelationshipFather": { "typestr": "@" },
-   "INPersonRelationshipMother": { "typestr": "@" },
-   "INPersonRelationshipParent": { "typestr": "@" },
-   "INPersonRelationshipBrother": { "typestr": "@" },
-   "INPersonRelationshipSister": { "typestr": "@" },
-   "INPersonRelationshipChild": { "typestr": "@" },
-   "INPersonRelationshipFriend": { "typestr": "@" },
-   "INPersonRelationshipSpouse": { "typestr": "@" },
-   "INPersonRelationshipPartner": { "typestr": "@" },
-   "INPersonRelationshipAssistant": { "typestr": "@" },
-   "INPersonRelationshipManager": { "typestr": "@" }
- },
- "classes": {
+  "classes": {
+   "null": {
+    "methods": [
+     {
+      "class_method": true,
+      "selector": "deferredLocalizedIntentsStringWithFormat:",
+      "variadic": true
+     },
+     {
+      "class_method": true,
+      "selector": "deferredLocalizedIntentsStringWithFormat:fromTable:",
+      "variadic": true
+     }
+    ]
+   },
    "INInteraction": {
     "methods": [
      {
-      "class_method": false,
-      "selector": "donateInteractionWithCompletion:",
       "args": {
        "0": {
         "callable": {
-	 "arguments": {
-	  "0": { "typestr": "^v" },
-	  "1": { "typestr": "@" }
-	 },
-	 "retval": { "typestr": "v" }
-	}
+         "arguments": {
+          "0": {
+           "typestr": "^v"
+          },
+          "1": {
+           "typestr": "@"
+          }
+         },
+         "retval": {
+          "typestr": "v"
+         }
+        }
        }
-      }
+      },
+      "class_method": false,
+      "selector": "donateInteractionWithCompletion:"
      },
      {
-      "class_method": false,
-      "selector": "deleteAllInteractionsWithCompletion:",
       "args": {
        "0": {
         "callable": {
-	 "arguments": {
-	  "0": { "typestr": "^v" },
-	  "1": { "typestr": "@" }
-	 },
-	 "retval": { "typestr": "v" }
-	}
+         "arguments": {
+          "0": {
+           "typestr": "^v"
+          },
+          "1": {
+           "typestr": "@"
+          }
+         },
+         "retval": {
+          "typestr": "v"
+         }
+        }
        }
-      }
+      },
+      "class_method": false,
+      "selector": "deleteAllInteractionsWithCompletion:"
      },
      {
-      "class_method": false,
-      "selector": "deleteInteractionsWithIdentifiers:completionHandler:",
       "args": {
        "1": {
         "callable": {
-	 "arguments": {
-	  "0": { "typestr": "^v" },
-	  "1": { "typestr": "@" }
-	 },
-	 "retval": { "typestr": "v" }
-	}
+         "arguments": {
+          "0": {
+           "typestr": "^v"
+          },
+          "1": {
+           "typestr": "@"
+          }
+         },
+         "retval": {
+          "typestr": "v"
+         }
+        }
        }
-      }
+      },
+      "class_method": false,
+      "selector": "deleteInteractionsWithIdentifiers:completionHandler:"
      },
      {
-      "class_method": false,
-      "selector": "deleteInteractionsWithGroupIdentifier:completion:",
       "args": {
        "1": {
         "callable": {
-	 "arguments": {
-	  "0": { "typestr": "^v" },
-	  "1": { "typestr": "@" }
-	 },
-	 "retval": { "typestr": "v" }
-	}
+         "arguments": {
+          "0": {
+           "typestr": "^v"
+          },
+          "1": {
+           "typestr": "@"
+          }
+         },
+         "retval": {
+          "typestr": "v"
+         }
+        }
        }
-      }
+      },
+      "class_method": false,
+      "selector": "deleteInteractionsWithGroupIdentifier:completion:"
+     }
+    ]
+   },
+   "INParameter": {
+    "methods": [
+     {
+      "class_method": false,
+      "retval": {
+       "type_override": "Z"
+      },
+      "selector": "isEqualToParameter:"
+     }
+    ]
+   },
+   "INPerson": {
+    "methods": [
+     {
+      "args": {
+       "6": {
+        "type_override": "Z"
+       }
+      },
+      "class_method": false,
+      "selector": "initWithPersonHandle:nameComponents:displayName:image:contactIdentifier:customIdentifier:isMe:"
      }
     ]
    },
    "NSObject": {
     "methods": [
      {
-      "class_method": false,
-      "selector": "resolveSpeakableGroupNamesForSearchForMessages:withCompletion:",
       "args": {
        "1": {
-        "type_override": "@?",
         "callable": {
-	 "arguments": {
-	  "0": { "typestr": "^v" },
-	  "1": { "typestr": "@" }
-	 },
-	 "retval": { "typestr": "v" }
-	}
+         "arguments": {
+          "0": {
+           "typestr": "^v"
+          },
+          "1": {
+           "typestr": "@"
+          }
+         },
+         "retval": {
+          "typestr": "v"
+         }
+        },
+        "type_override": "@?"
        }
-      }
+      },
+      "class_method": false,
+      "selector": "resolveSpeakableGroupNamesForSearchForMessages:withCompletion:"
      },
      {
-      "class_method": false,
-      "selector": "resolveDestinationTypeForStartAudioCall:withCompletion:",
       "args": {
        "1": {
-        "type_override": "@?",
         "callable": {
-	 "arguments": {
-	  "0": { "typestr": "^v" },
-	  "1": { "typestr": "@" }
-	 },
-	 "retval": { "typestr": "v" }
-	}
+         "arguments": {
+          "0": {
+           "typestr": "^v"
+          },
+          "1": {
+           "typestr": "@"
+          }
+         },
+         "retval": {
+          "typestr": "v"
+         }
+        },
+        "type_override": "@?"
        }
-      }
+      },
+      "class_method": false,
+      "selector": "resolveDestinationTypeForStartAudioCall:withCompletion:"
      },
      {
-      "class_method": false,
-      "selector": "resolveSpeakableGroupNameForSendMessage:withCompletion:",
       "args": {
        "1": {
-        "type_override": "@?",
         "callable": {
-	 "arguments": {
-	  "0": { "typestr": "^v" },
-	  "1": { "typestr": "@" }
-	 },
-	 "retval": { "typestr": "v" }
-	}
+         "arguments": {
+          "0": {
+           "typestr": "^v"
+          },
+          "1": {
+           "typestr": "@"
+          }
+         },
+         "retval": {
+          "typestr": "v"
+         }
+        },
+        "type_override": "@?"
        }
-      }
+      },
+      "class_method": false,
+      "selector": "resolveSpeakableGroupNameForSendMessage:withCompletion:"
      },
      {
-      "class_method": false,
-      "selector": "resolveUnseenForSearchCallHistory:withCompletion:",
       "args": {
        "1": {
-        "type_override": "@?",
         "callable": {
-	 "arguments": {
-	  "0": { "typestr": "^v" },
-	  "1": { "typestr": "@" }
-	 },
-	 "retval": { "typestr": "v" }
-	}
+         "arguments": {
+          "0": {
+           "typestr": "^v"
+          },
+          "1": {
+           "typestr": "@"
+          }
+         },
+         "retval": {
+          "typestr": "v"
+         }
+        },
+        "type_override": "@?"
        }
-      }
+      },
+      "class_method": false,
+      "selector": "resolveUnseenForSearchCallHistory:withCompletion:"
      },
      {
-      "class_method": false,
-      "selector": "resolveCallTypesForSearchCallHistory:withCompletion:",
       "args": {
        "1": {
-        "type_override": "@?",
         "callable": {
-	 "arguments": {
-	  "0": { "typestr": "^v" },
-	  "1": { "typestr": "@" }
-	 },
-	 "retval": { "typestr": "v" }
-	}
+         "arguments": {
+          "0": {
+           "typestr": "^v"
+          },
+          "1": {
+           "typestr": "@"
+          }
+         },
+         "retval": {
+          "typestr": "v"
+         }
+        },
+        "type_override": "@?"
        }
-      }
+      },
+      "class_method": false,
+      "selector": "resolveCallTypesForSearchCallHistory:withCompletion:"
      },
      {
-      "class_method": false,
-      "selector": "resolveCallTypeForSearchCallHistory:withCompletion:",
       "args": {
        "1": {
-        "type_override": "@?",
         "callable": {
-	 "arguments": {
-	  "0": { "typestr": "^v" },
-	  "1": { "typestr": "@" }
-	 },
-	 "retval": { "typestr": "v" }
-	}
+         "arguments": {
+          "0": {
+           "typestr": "^v"
+          },
+          "1": {
+           "typestr": "@"
+          }
+         },
+         "retval": {
+          "typestr": "v"
+         }
+        },
+        "type_override": "@?"
        }
-      }
+      },
+      "class_method": false,
+      "selector": "resolveCallTypeForSearchCallHistory:withCompletion:"
      },
      {
-      "class_method": false,
-      "selector": "resolveDateCreatedForSearchCallHistory:withCompletion:",
       "args": {
        "1": {
-        "type_override": "@?",
         "callable": {
-	 "arguments": {
-	  "0": { "typestr": "^v" },
-	  "1": { "typestr": "@" }
-	 },
-	 "retval": { "typestr": "v" }
-	}
+         "arguments": {
+          "0": {
+           "typestr": "^v"
+          },
+          "1": {
+           "typestr": "@"
+          }
+         },
+         "retval": {
+          "typestr": "v"
+         }
+        },
+        "type_override": "@?"
        }
-      }
+      },
+      "class_method": false,
+      "selector": "resolveDateCreatedForSearchCallHistory:withCompletion:"
      },
      {
-      "class_method": false,
-      "selector": "resolveRecipientForSearchCallHistory:withCompletion:",
       "args": {
        "1": {
-        "type_override": "@?",
         "callable": {
-	 "arguments": {
-	  "0": { "typestr": "^v" },
-	  "1": { "typestr": "@" }
-	 },
-	 "retval": { "typestr": "v" }
-	}
+         "arguments": {
+          "0": {
+           "typestr": "^v"
+          },
+          "1": {
+           "typestr": "@"
+          }
+         },
+         "retval": {
+          "typestr": "v"
+         }
+        },
+        "type_override": "@?"
        }
-      }
+      },
+      "class_method": false,
+      "selector": "resolveRecipientForSearchCallHistory:withCompletion:"
      },
      {
-      "class_method": false,
-      "selector": "resolveCallCapabilitiesForSearchCallHistory:withCompletion:",
       "args": {
        "1": {
-        "type_override": "@?",
         "callable": {
-	 "arguments": {
-	  "0": { "typestr": "^v" },
-	  "1": { "typestr": "@" }
-	 },
-	 "retval": { "typestr": "v" }
-	}
+         "arguments": {
+          "0": {
+           "typestr": "^v"
+          },
+          "1": {
+           "typestr": "@"
+          }
+         },
+         "retval": {
+          "typestr": "v"
+         }
+        },
+        "type_override": "@?"
        }
-      }
+      },
+      "class_method": false,
+      "selector": "resolveCallCapabilitiesForSearchCallHistory:withCompletion:"
      },
      {
-      "class_method": false,
-      "selector": "handleSearchCallHistory:completion:",
       "args": {
        "1": {
-        "type_override": "@?",
         "callable": {
-	 "arguments": {
-	  "0": { "typestr": "^v" },
-	  "1": { "typestr": "@" }
-	 },
-	 "retval": { "typestr": "v" }
-	}
+         "arguments": {
+          "0": {
+           "typestr": "^v"
+          },
+          "1": {
+           "typestr": "@"
+          }
+         },
+         "retval": {
+          "typestr": "v"
+         }
+        },
+        "type_override": "@?"
        }
-      }
+      },
+      "class_method": false,
+      "selector": "handleSearchCallHistory:completion:"
      },
      {
-      "class_method": false,
-      "selector": "confirmSearchCallHistory:completion:",
       "args": {
        "1": {
-        "type_override": "@?",
         "callable": {
-	 "arguments": {
-	  "0": { "typestr": "^v" },
-	  "1": { "typestr": "@" }
-	 },
-	 "retval": { "typestr": "v" }
-	}
+         "arguments": {
+          "0": {
+           "typestr": "^v"
+          },
+          "1": {
+           "typestr": "@"
+          }
+         },
+         "retval": {
+          "typestr": "v"
+         }
+        },
+        "type_override": "@?"
        }
-      }
+      },
+      "class_method": false,
+      "selector": "confirmSearchCallHistory:completion:"
      },
      {
-      "class_method": false,
-      "selector": "handleSearchForMessages:completion:",
       "args": {
        "1": {
-        "type_override": "@?",
         "callable": {
-	 "arguments": {
-	  "0": { "typestr": "^v" },
-	  "1": { "typestr": "@" }
-	 },
-	 "retval": { "typestr": "v" }
-	}
+         "arguments": {
+          "0": {
+           "typestr": "^v"
+          },
+          "1": {
+           "typestr": "@"
+          }
+         },
+         "retval": {
+          "typestr": "v"
+         }
+        },
+        "type_override": "@?"
        }
-      }
+      },
+      "class_method": false,
+      "selector": "handleSearchForMessages:completion:"
      },
      {
-      "class_method": false,
-      "selector": "confirmSearchForMessages:completion:",
       "args": {
        "1": {
-        "type_override": "@?",
         "callable": {
-	 "arguments": {
-	  "0": { "typestr": "^v" },
-	  "1": { "typestr": "@" }
-	 },
-	 "retval": { "typestr": "v" }
-	}
+         "arguments": {
+          "0": {
+           "typestr": "^v"
+          },
+          "1": {
+           "typestr": "@"
+          }
+         },
+         "retval": {
+          "typestr": "v"
+         }
+        },
+        "type_override": "@?"
        }
-      }
+      },
+      "class_method": false,
+      "selector": "confirmSearchForMessages:completion:"
      },
      {
-      "class_method": false,
-      "selector": "resolveRecipientsForSearchForMessages:withCompletion:",
       "args": {
        "1": {
-        "type_override": "@?",
         "callable": {
-	 "arguments": {
-	  "0": { "typestr": "^v" },
-	  "1": { "typestr": "@" }
-	 },
-	 "retval": { "typestr": "v" }
-	}
+         "arguments": {
+          "0": {
+           "typestr": "^v"
+          },
+          "1": {
+           "typestr": "@"
+          }
+         },
+         "retval": {
+          "typestr": "v"
+         }
+        },
+        "type_override": "@?"
        }
-      }
+      },
+      "class_method": false,
+      "selector": "resolveRecipientsForSearchForMessages:withCompletion:"
      },
      {
-      "class_method": false,
-      "selector": "resolveSendersForSearchForMessages:withCompletion:",
       "args": {
        "1": {
-        "type_override": "@?",
         "callable": {
-	 "arguments": {
-	  "0": { "typestr": "^v" },
-	  "1": { "typestr": "@" }
-	 },
-	 "retval": { "typestr": "v" }
-	}
+         "arguments": {
+          "0": {
+           "typestr": "^v"
+          },
+          "1": {
+           "typestr": "@"
+          }
+         },
+         "retval": {
+          "typestr": "v"
+         }
+        },
+        "type_override": "@?"
        }
-      }
+      },
+      "class_method": false,
+      "selector": "resolveSendersForSearchForMessages:withCompletion:"
      },
      {
-      "class_method": false,
-      "selector": "resolveSearchTermsForSearchForMessages:withCompletion:",
       "args": {
        "1": {
-        "type_override": "@?",
         "callable": {
-	 "arguments": {
-	  "0": { "typestr": "^v" },
-	  "1": { "typestr": "@" }
-	 },
-	 "retval": { "typestr": "v" }
-	}
+         "arguments": {
+          "0": {
+           "typestr": "^v"
+          },
+          "1": {
+           "typestr": "@"
+          }
+         },
+         "retval": {
+          "typestr": "v"
+         }
+        },
+        "type_override": "@?"
        }
-      }
+      },
+      "class_method": false,
+      "selector": "resolveSearchTermsForSearchForMessages:withCompletion:"
      },
      {
-      "class_method": false,
-      "selector": "resolveAttributesForSearchForMessages:withCompletion:",
       "args": {
        "1": {
-        "type_override": "@?",
         "callable": {
-	 "arguments": {
-	  "0": { "typestr": "^v" },
-	  "1": { "typestr": "@" }
-	 },
-	 "retval": { "typestr": "v" }
-	}
+         "arguments": {
+          "0": {
+           "typestr": "^v"
+          },
+          "1": {
+           "typestr": "@"
+          }
+         },
+         "retval": {
+          "typestr": "v"
+         }
+        },
+        "type_override": "@?"
        }
-      }
+      },
+      "class_method": false,
+      "selector": "resolveAttributesForSearchForMessages:withCompletion:"
      },
      {
-      "class_method": false,
-      "selector": "resolveDateTimeRangeForSearchForMessages:withCompletion:",
       "args": {
        "1": {
-        "type_override": "@?",
         "callable": {
-	 "arguments": {
-	  "0": { "typestr": "^v" },
-	  "1": { "typestr": "@" }
-	 },
-	 "retval": { "typestr": "v" }
-	}
+         "arguments": {
+          "0": {
+           "typestr": "^v"
+          },
+          "1": {
+           "typestr": "@"
+          }
+         },
+         "retval": {
+          "typestr": "v"
+         }
+        },
+        "type_override": "@?"
        }
-      }
+      },
+      "class_method": false,
+      "selector": "resolveDateTimeRangeForSearchForMessages:withCompletion:"
      },
      {
-      "class_method": false,
-      "selector": "resolveIdentifiersForSearchForMessages:withCompletion:",
       "args": {
        "1": {
-        "type_override": "@?",
         "callable": {
-	 "arguments": {
-	  "0": { "typestr": "^v" },
-	  "1": { "typestr": "@" }
-	 },
-	 "retval": { "typestr": "v" }
-	}
+         "arguments": {
+          "0": {
+           "typestr": "^v"
+          },
+          "1": {
+           "typestr": "@"
+          }
+         },
+         "retval": {
+          "typestr": "v"
+         }
+        },
+        "type_override": "@?"
        }
-      }
+      },
+      "class_method": false,
+      "selector": "resolveIdentifiersForSearchForMessages:withCompletion:"
      },
      {
-      "class_method": false,
-      "selector": "resolveNotificationIdentifiersForSearchForMessages:withCompletion:",
       "args": {
        "1": {
-        "type_override": "@?",
         "callable": {
-	 "arguments": {
-	  "0": { "typestr": "^v" },
-	  "1": { "typestr": "@" }
-	 },
-	 "retval": { "typestr": "v" }
-	}
+         "arguments": {
+          "0": {
+           "typestr": "^v"
+          },
+          "1": {
+           "typestr": "@"
+          }
+         },
+         "retval": {
+          "typestr": "v"
+         }
+        },
+        "type_override": "@?"
        }
-      }
+      },
+      "class_method": false,
+      "selector": "resolveNotificationIdentifiersForSearchForMessages:withCompletion:"
      },
      {
-      "class_method": false,
-      "selector": "resolveGroupNamesForSearchForMessages:withCompletion:",
       "args": {
        "1": {
-        "type_override": "@?",
         "callable": {
-	 "arguments": {
-	  "0": { "typestr": "^v" },
-	  "1": { "typestr": "@" }
-	 },
-	 "retval": { "typestr": "v" }
-	}
+         "arguments": {
+          "0": {
+           "typestr": "^v"
+          },
+          "1": {
+           "typestr": "@"
+          }
+         },
+         "retval": {
+          "typestr": "v"
+         }
+        },
+        "type_override": "@?"
        }
-      }
+      },
+      "class_method": false,
+      "selector": "resolveGroupNamesForSearchForMessages:withCompletion:"
      },
      {
-      "class_method": false,
-      "selector": "handleSendMessage:completion:",
       "args": {
        "1": {
-        "type_override": "@?",
         "callable": {
-	 "arguments": {
-	  "0": { "typestr": "^v" },
-	  "1": { "typestr": "@" }
-	 },
-	 "retval": { "typestr": "v" }
-	}
+         "arguments": {
+          "0": {
+           "typestr": "^v"
+          },
+          "1": {
+           "typestr": "@"
+          }
+         },
+         "retval": {
+          "typestr": "v"
+         }
+        },
+        "type_override": "@?"
        }
-      }
+      },
+      "class_method": false,
+      "selector": "handleSendMessage:completion:"
      },
      {
-      "class_method": false,
-      "selector": "confirmSendMessage:completion:",
       "args": {
        "1": {
-        "type_override": "@?",
         "callable": {
-	 "arguments": {
-	  "0": { "typestr": "^v" },
-	  "1": { "typestr": "@" }
-	 },
-	 "retval": { "typestr": "v" }
-	}
+         "arguments": {
+          "0": {
+           "typestr": "^v"
+          },
+          "1": {
+           "typestr": "@"
+          }
+         },
+         "retval": {
+          "typestr": "v"
+         }
+        },
+        "type_override": "@?"
        }
-      }
+      },
+      "class_method": false,
+      "selector": "confirmSendMessage:completion:"
      },
      {
-      "class_method": false,
-      "selector": "resolveRecipientsForSendMessage:completion:",
       "args": {
        "1": {
-        "type_override": "@?",
         "callable": {
-	 "arguments": {
-	  "0": { "typestr": "^v" },
-	  "1": { "typestr": "@" }
-	 },
-	 "retval": { "typestr": "v" }
-	}
+         "arguments": {
+          "0": {
+           "typestr": "^v"
+          },
+          "1": {
+           "typestr": "@"
+          }
+         },
+         "retval": {
+          "typestr": "v"
+         }
+        },
+        "type_override": "@?"
        }
-      }
+      },
+      "class_method": false,
+      "selector": "resolveRecipientsForSendMessage:completion:"
      },
      {
-      "class_method": false,
-      "selector": "resolveRecipientsForSendMessage:withCompletion:",
       "args": {
        "1": {
-        "type_override": "@?",
         "callable": {
-	 "arguments": {
-	  "0": { "typestr": "^v" },
-	  "1": { "typestr": "@" }
-	 },
-	 "retval": { "typestr": "v" }
-	}
+         "arguments": {
+          "0": {
+           "typestr": "^v"
+          },
+          "1": {
+           "typestr": "@"
+          }
+         },
+         "retval": {
+          "typestr": "v"
+         }
+        },
+        "type_override": "@?"
        }
-      }
+      },
+      "class_method": false,
+      "selector": "resolveRecipientsForSendMessage:withCompletion:"
      },
      {
-      "class_method": false,
-      "selector": "resolveContentForSendMessage:withCompletion:",
       "args": {
        "1": {
-        "type_override": "@?",
         "callable": {
-	 "arguments": {
-	  "0": { "typestr": "^v" },
-	  "1": { "typestr": "@" }
-	 },
-	 "retval": { "typestr": "v" }
-	}
+         "arguments": {
+          "0": {
+           "typestr": "^v"
+          },
+          "1": {
+           "typestr": "@"
+          }
+         },
+         "retval": {
+          "typestr": "v"
+         }
+        },
+        "type_override": "@?"
        }
-      }
+      },
+      "class_method": false,
+      "selector": "resolveContentForSendMessage:withCompletion:"
      },
      {
-      "class_method": false,
-      "selector": "resolveGroupNameForSendMessage:withCompletion:",
       "args": {
        "1": {
-        "type_override": "@?",
         "callable": {
-	 "arguments": {
-	  "0": { "typestr": "^v" },
-	  "1": { "typestr": "@" }
-	 },
-	 "retval": { "typestr": "v" }
-	}
+         "arguments": {
+          "0": {
+           "typestr": "^v"
+          },
+          "1": {
+           "typestr": "@"
+          }
+         },
+         "retval": {
+          "typestr": "v"
+         }
+        },
+        "type_override": "@?"
        }
-      }
+      },
+      "class_method": false,
+      "selector": "resolveGroupNameForSendMessage:withCompletion:"
      },
      {
-      "class_method": false,
-      "selector": "resolveServiceNameForSendMessage:withCompletion:",
       "args": {
        "1": {
-        "type_override": "@?",
         "callable": {
-	 "arguments": {
-	  "0": { "typestr": "^v" },
-	  "1": { "typestr": "@" }
-	 },
-	 "retval": { "typestr": "v" }
-	}
+         "arguments": {
+          "0": {
+           "typestr": "^v"
+          },
+          "1": {
+           "typestr": "@"
+          }
+         },
+         "retval": {
+          "typestr": "v"
+         }
+        },
+        "type_override": "@?"
        }
-      }
+      },
+      "class_method": false,
+      "selector": "resolveServiceNameForSendMessage:withCompletion:"
      },
      {
-      "class_method": false,
-      "selector": "resolveSenderForSendMessage:withCompletion:",
       "args": {
        "1": {
-        "type_override": "@?",
         "callable": {
-	 "arguments": {
-	  "0": { "typestr": "^v" },
-	  "1": { "typestr": "@" }
-	 },
-	 "retval": { "typestr": "v" }
-	}
+         "arguments": {
+          "0": {
+           "typestr": "^v"
+          },
+          "1": {
+           "typestr": "@"
+          }
+         },
+         "retval": {
+          "typestr": "v"
+         }
+        },
+        "type_override": "@?"
        }
-      }
+      },
+      "class_method": false,
+      "selector": "resolveSenderForSendMessage:withCompletion:"
      },
      {
-      "class_method": false,
-      "selector": "handleStartAudioCall:completion:",
       "args": {
        "1": {
-        "type_override": "@?",
         "callable": {
-	 "arguments": {
-	  "0": { "typestr": "^v" },
-	  "1": { "typestr": "@" }
-	 },
-	 "retval": { "typestr": "v" }
-	}
+         "arguments": {
+          "0": {
+           "typestr": "^v"
+          },
+          "1": {
+           "typestr": "@"
+          }
+         },
+         "retval": {
+          "typestr": "v"
+         }
+        },
+        "type_override": "@?"
        }
-      }
+      },
+      "class_method": false,
+      "selector": "handleStartAudioCall:completion:"
      },
      {
-      "class_method": false,
-      "selector": "confirmStartAudioCall:completion:",
       "args": {
        "1": {
-        "type_override": "@?",
         "callable": {
-	 "arguments": {
-	  "0": { "typestr": "^v" },
-	  "1": { "typestr": "@" }
-	 },
-	 "retval": { "typestr": "v" }
-	}
+         "arguments": {
+          "0": {
+           "typestr": "^v"
+          },
+          "1": {
+           "typestr": "@"
+          }
+         },
+         "retval": {
+          "typestr": "v"
+         }
+        },
+        "type_override": "@?"
        }
-      }
+      },
+      "class_method": false,
+      "selector": "confirmStartAudioCall:completion:"
      },
      {
-      "class_method": false,
-      "selector": "resolveContactsForStartAudioCall:withCompletion:",
       "args": {
        "1": {
-        "type_override": "@?",
         "callable": {
-	 "arguments": {
-	  "0": { "typestr": "^v" },
-	  "1": { "typestr": "@" }
-	 },
-	 "retval": { "typestr": "v" }
-	}
+         "arguments": {
+          "0": {
+           "typestr": "^v"
+          },
+          "1": {
+           "typestr": "@"
+          }
+         },
+         "retval": {
+          "typestr": "v"
+         }
+        },
+        "type_override": "@?"
        }
-      }
+      },
+      "class_method": false,
+      "selector": "resolveContactsForStartAudioCall:withCompletion:"
      },
      {
-      "class_method": false,
-      "selector": "handleStartVideoCall:completion:",
       "args": {
        "1": {
-        "type_override": "@?",
         "callable": {
-	 "arguments": {
-	  "0": { "typestr": "^v" },
-	  "1": { "typestr": "@" }
-	 },
-	 "retval": { "typestr": "v" }
-	}
+         "arguments": {
+          "0": {
+           "typestr": "^v"
+          },
+          "1": {
+           "typestr": "@"
+          }
+         },
+         "retval": {
+          "typestr": "v"
+         }
+        },
+        "type_override": "@?"
        }
-      }
+      },
+      "class_method": false,
+      "selector": "handleStartVideoCall:completion:"
      },
      {
-      "class_method": false,
-      "selector": "confirmStartVideoCall:completion:",
       "args": {
        "1": {
-        "type_override": "@?",
         "callable": {
-	 "arguments": {
-	  "0": { "typestr": "^v" },
-	  "1": { "typestr": "@" }
-	 },
-	 "retval": { "typestr": "v" }
-	}
+         "arguments": {
+          "0": {
+           "typestr": "^v"
+          },
+          "1": {
+           "typestr": "@"
+          }
+         },
+         "retval": {
+          "typestr": "v"
+         }
+        },
+        "type_override": "@?"
        }
-      }
+      },
+      "class_method": false,
+      "selector": "confirmStartVideoCall:completion:"
      },
      {
-      "class_method": false,
-      "selector": "resolveContactsForStartVideoCall:withCompletion:",
       "args": {
        "1": {
-        "type_override": "@?",
         "callable": {
-	 "arguments": {
-	  "0": { "typestr": "^v" },
-	  "1": { "typestr": "@" }
-	 },
-	 "retval": { "typestr": "v" }
-	}
+         "arguments": {
+          "0": {
+           "typestr": "^v"
+          },
+          "1": {
+           "typestr": "@"
+          }
+         },
+         "retval": {
+          "typestr": "v"
+         }
+        },
+        "type_override": "@?"
        }
-      }
+      },
+      "class_method": false,
+      "selector": "resolveContactsForStartVideoCall:withCompletion:"
      }
     ]
+   }
+  },
+  "enum": {
+   "INCallCapabilityAudioCall": {
+    "value": 1
+   },
+   "INCallCapabilityOptionAudioCall": {
+    "value": 1
+   },
+   "INCallCapabilityOptionVideoCall": {
+    "value": 2
+   },
+   "INCallCapabilityUnknown": {
+    "value": 0
+   },
+   "INCallCapabilityVideoCall": {
+    "value": 2
+   },
+   "INCallDestinationTypeEmergency": {
+    "value": 2
+   },
+   "INCallDestinationTypeEmergencyDestination": {
+    "value": 2
+   },
+   "INCallDestinationTypeNormal": {
+    "value": 1
+   },
+   "INCallDestinationTypeNormalDestination": {
+    "value": 1
+   },
+   "INCallDestinationTypeRedial": {
+    "value": 4
+   },
+   "INCallDestinationTypeRedialDestination": {
+    "value": 4
+   },
+   "INCallDestinationTypeUnknown": {
+    "value": 0
+   },
+   "INCallDestinationTypeVoicemail": {
+    "value": 3
+   },
+   "INCallDestinationTypeVoicemailDestination": {
+    "value": 3
+   },
+   "INCallRecordTypeLatest": {
+    "value": 4
+   },
+   "INCallRecordTypeMissed": {
+    "value": 2
+   },
+   "INCallRecordTypeOptionLatest": {
+    "value": 8
+   },
+   "INCallRecordTypeOptionMissed": {
+    "value": 2
+   },
+   "INCallRecordTypeOptionOutgoing": {
+    "value": 1
+   },
+   "INCallRecordTypeOptionReceived": {
+    "value": 4
+   },
+   "INCallRecordTypeOptionVoicemail": {
+    "value": 16
+   },
+   "INCallRecordTypeOutgoing": {
+    "value": 1
+   },
+   "INCallRecordTypeReceived": {
+    "value": 3
+   },
+   "INCallRecordTypeUnknown": {
+    "value": 0
+   },
+   "INCallRecordTypeVoicemail": {
+    "value": 5
+   },
+   "INConditionalOperatorAll": {
+    "value": 0
+   },
+   "INConditionalOperatorAny": {
+    "value": 1
+   },
+   "INConditionalOperatorNone": {
+    "value": 2
+   },
+   "INIntentErrorDecodingGeneric": {
+    "value": 9000
+   },
+   "INIntentErrorDeletingAllInteractions": {
+    "value": 1902
+   },
+   "INIntentErrorDeletingInteractionWithGroupIdentifier": {
+    "value": 1904
+   },
+   "INIntentErrorDeletingInteractionWithIdentifiers": {
+    "value": 1903
+   },
+   "INIntentErrorDonatingInteraction": {
+    "value": 1901
+   },
+   "INIntentErrorEncodingFailed": {
+    "value": 8001
+   },
+   "INIntentErrorEncodingGeneric": {
+    "value": 8000
+   },
+   "INIntentErrorExtensionBringUpFailed": {
+    "value": 5001
+   },
+   "INIntentErrorExtensionLaunchingTimeout": {
+    "value": 5000
+   },
+   "INIntentErrorImageGeneric": {
+    "value": 6000
+   },
+   "INIntentErrorImageLoadingFailed": {
+    "value": 6003
+   },
+   "INIntentErrorImageNoServiceAvailable": {
+    "value": 6001
+   },
+   "INIntentErrorImageProxyInvalid": {
+    "value": 6006
+   },
+   "INIntentErrorImageProxyLoop": {
+    "value": 6005
+   },
+   "INIntentErrorImageProxyTimeout": {
+    "value": 6007
+   },
+   "INIntentErrorImageRetrievalFailed": {
+    "value": 6004
+   },
+   "INIntentErrorImageServiceFailure": {
+    "value": 6008
+   },
+   "INIntentErrorImageScalingFailed": {
+    "value": 6009
+   },
+   "INIntentErrorPermissionDenied": {
+    "value": 6010
+   },
+   "INIntentErrorImageStorageFailed": {
+    "value": 6002
+   },
+   "INIntentErrorIntentSupportedByMultipleExtension": {
+    "value": 2001
+   },
+   "INIntentErrorInteractionOperationNotSupported": {
+    "value": 1900
+   },
+   "INIntentErrorInvalidIntentName": {
+    "value": 2004
+   },
+   "INIntentErrorInvalidUserVocabularyFileLocation": {
+    "value": 4000
+   },
+   "INIntentErrorNoAppAvailable": {
+    "value": 2005
+   },
+   "INIntentErrorNoHandlerProvidedForIntent": {
+    "value": 2003
+   },
+   "INIntentErrorRequestTimedOut": {
+    "value": 3001
+   },
+   "INIntentErrorRestrictedIntentsNotSupportedByExtension": {
+    "value": 2002
+   },
+   "INIntentErrorVoiceShortcutCreationFailed": {
+    "value": 7000
+   },
+   "INIntentErrorVoiceShortcutDeleteFailed": {
+    "value": 7002
+   },
+   "INIntentErrorVoiceShortcutGetFailed": {
+    "value": 7001
+   },
+   "INIntentHandlingStatusDeferredToApplication": {
+    "value": 5
+   },
+   "INIntentHandlingStatusFailure": {
+    "value": 4
+   },
+   "INIntentHandlingStatusInProgress": {
+    "value": 2
+   },
+   "INIntentHandlingStatusReady": {
+    "value": 1
+   },
+   "INIntentHandlingStatusSuccess": {
+    "value": 3
+   },
+   "INIntentHandlingStatusUnspecified": {
+    "value": 0
+   },
+   "INIntentHandlingStatusUserConfirmationRequired": {
+    "value": 6
+   },
+   "INInteractionDirectionIncoming": {
+    "value": 2
+   },
+   "INInteractionDirectionOutgoing": {
+    "value": 1
+   },
+   "INInteractionDirectionUnspecified": {
+    "value": 0
+   },
+   "INMessageAttributeOptionFlagged": {
+    "value": 4
+   },
+   "INMessageAttributeOptionPlayed": {
+    "value": 16
+   },
+   "INMessageAttributeOptionRead": {
+    "value": 1
+   },
+   "INMessageAttributeOptionUnflagged": {
+    "value": 8
+   },
+   "INMessageAttributeOptionUnread": {
+    "value": 2
+   },
+   "INMessageTypeActivitySnippet": {
+    "value": 23
+   },
+   "INMessageTypeAnimoji": {
+    "value": 22
+   },
+   "INMessageTypeAudio": {
+    "value": 2
+   },
+   "INMessageTypeDigitalTouch": {
+    "value": 3
+   },
+   "INMessageTypeFile": {
+    "value": 24
+   },
+   "INMessageTypeHandwriting": {
+    "value": 4
+   },
+   "INMessageTypeLink": {
+    "value": 25
+   },
+   "INMessageTypeMediaAddressCard": {
+    "value": 14
+   },
+   "INMessageTypeMediaAudio": {
+    "value": 18
+   },
+   "INMessageTypeMediaCalendar": {
+    "value": 12
+   },
+   "INMessageTypeMediaImage": {
+    "value": 15
+   },
+   "INMessageTypeMediaLocation": {
+    "value": 13
+   },
+   "INMessageTypeMediaPass": {
+    "value": 17
+   },
+   "INMessageTypeMediaVideo": {
+    "value": 16
+   },
+   "INMessageTypePaymentNote": {
+    "value": 21
+   },
+   "INMessageTypePaymentRequest": {
+    "value": 20
+   },
+   "INMessageTypePaymentSent": {
+    "value": 19
+   },
+   "INMessageTypeSticker": {
+    "value": 5
+   },
+   "INMessageTypeTapbackDisliked": {
+    "value": 7
+   },
+   "INMessageTypeTapbackEmphasized": {
+    "value": 8
+   },
+   "INMessageTypeTapbackLaughed": {
+    "value": 11
+   },
+   "INMessageTypeTapbackLiked": {
+    "value": 6
+   },
+   "INMessageTypeTapbackLoved": {
+    "value": 9
+   },
+   "INMessageTypeTapbackQuestioned": {
+    "value": 10
+   },
+   "INMessageTypeText": {
+    "value": 1
+   },
+   "INMessageTypeUnspecified": {
+    "value": 0
+   },
+   "INPersonHandleTypeEmailAddress": {
+    "value": 1
+   },
+   "INPersonHandleTypePhoneNumber": {
+    "value": 2
+   },
+   "INPersonHandleTypeUnknown": {
+    "value": 0
+   },
+   "INPersonSuggestionTypeInstantMessageAddress": {
+    "value": 2
+   },
+   "INPersonSuggestionTypeNone": {
+    "value": 0
+   },
+   "INPersonSuggestionTypeSocialProfile": {
+    "value": 1
+   },
+   "INRecurrenceFrequencyDaily": {
+    "value": 3
+   },
+   "INRecurrenceFrequencyHourly": {
+    "value": 2
+   },
+   "INRecurrenceFrequencyMinute": {
+    "value": 1
+   },
+   "INRecurrenceFrequencyMonthly": {
+    "value": 5
+   },
+   "INRecurrenceFrequencyUnknown": {
+    "value": 0
+   },
+   "INRecurrenceFrequencyWeekly": {
+    "value": 4
+   },
+   "INRecurrenceFrequencyYearly": {
+    "value": 6
+   },
+   "INSearchCallHistoryIntentResponseCodeContinueInApp": {
+    "value": 2
+   },
+   "INSearchCallHistoryIntentResponseCodeFailure": {
+    "value": 3
+   },
+   "INSearchCallHistoryIntentResponseCodeFailureAppConfigurationRequired": {
+    "value": 5
+   },
+   "INSearchCallHistoryIntentResponseCodeFailureRequiringAppLaunch": {
+    "value": 4
+   },
+   "INSearchCallHistoryIntentResponseCodeInProgress": {
+    "value": 6
+   },
+   "INSearchCallHistoryIntentResponseCodeReady": {
+    "value": 1
+   },
+   "INSearchCallHistoryIntentResponseCodeSuccess": {
+    "value": 7
+   },
+   "INSearchCallHistoryIntentResponseCodeUnspecified": {
+    "value": 0
+   },
+   "INSearchForMessagesIntentResponseCodeFailure": {
+    "value": 4
+   },
+   "INSearchForMessagesIntentResponseCodeFailureMessageServiceNotAvailable": {
+    "value": 6
+   },
+   "INSearchForMessagesIntentResponseCodeFailureMessageTooManyResults": {
+    "value": 7
+   },
+   "INSearchForMessagesIntentResponseCodeFailureRequiringAppLaunch": {
+    "value": 5
+   },
+   "INSearchForMessagesIntentResponseCodeInProgress": {
+    "value": 2
+   },
+   "INSearchForMessagesIntentResponseCodeReady": {
+    "value": 1
+   },
+   "INSearchForMessagesIntentResponseCodeSuccess": {
+    "value": 3
+   },
+   "INSearchForMessagesIntentResponseCodeUnspecified": {
+    "value": 0
+   },
+   "INSendMessageIntentResponseCodeFailure": {
+    "value": 4
+   },
+   "INSendMessageIntentResponseCodeFailureMessageServiceNotAvailable": {
+    "value": 6
+   },
+   "INSendMessageIntentResponseCodeFailureRequiringAppLaunch": {
+    "value": 5
+   },
+   "INSendMessageIntentResponseCodeInProgress": {
+    "value": 2
+   },
+   "INSendMessageIntentResponseCodeReady": {
+    "value": 1
+   },
+   "INSendMessageIntentResponseCodeSuccess": {
+    "value": 3
+   },
+   "INSendMessageIntentResponseCodeUnspecified": {
+    "value": 0
+   },
+   "INSendMessageRecipientUnsupportedReasonMessagingServiceNotEnabledForRecipient": {
+    "value": 3
+   },
+   "INSendMessageRecipientUnsupportedReasonNoAccount": {
+    "value": 1
+   },
+   "INSendMessageRecipientUnsupportedReasonNoHandleForLabel": {
+    "value": 6
+   },
+   "INSendMessageRecipientUnsupportedReasonNoValidHandle": {
+    "value": 4
+   },
+   "INSendMessageRecipientUnsupportedReasonOffline": {
+    "value": 2
+   },
+   "INSendMessageRecipientUnsupportedReasonRequestedHandleInvalid": {
+    "value": 5
+   },
+   "INStartAudioCallIntentResponseCodeContinueInApp": {
+    "value": 2
+   },
+   "INStartAudioCallIntentResponseCodeFailure": {
+    "value": 3
+   },
+   "INStartAudioCallIntentResponseCodeFailureAppConfigurationRequired": {
+    "value": 5
+   },
+   "INStartAudioCallIntentResponseCodeFailureCallingServiceNotAvailable": {
+    "value": 6
+   },
+   "INStartAudioCallIntentResponseCodeFailureContactNotSupportedByApp": {
+    "value": 7
+   },
+   "INStartAudioCallIntentResponseCodeFailureNoValidNumber": {
+    "value": 8
+   },
+   "INStartAudioCallIntentResponseCodeFailureRequiringAppLaunch": {
+    "value": 4
+   },
+   "INStartAudioCallIntentResponseCodeReady": {
+    "value": 1
+   },
+   "INStartAudioCallIntentResponseCodeUnspecified": {
+    "value": 0
+   },
+   "INStartVideoCallIntentResponseCodeContinueInApp": {
+    "value": 2
+   },
+   "INStartVideoCallIntentResponseCodeFailure": {
+    "value": 3
+   },
+   "INStartVideoCallIntentResponseCodeFailureAppConfigurationRequired": {
+    "value": 5
+   },
+   "INStartVideoCallIntentResponseCodeFailureCallingServiceNotAvailable": {
+    "value": 6
+   },
+   "INStartVideoCallIntentResponseCodeFailureContactNotSupportedByApp": {
+    "value": 7
+   },
+   "INStartVideoCallIntentResponseCodeFailureInvalidNumber": {
+    "value": 8
+   },
+   "INStartVideoCallIntentResponseCodeFailureRequiringAppLaunch": {
+    "value": 4
+   },
+   "INStartVideoCallIntentResponseCodeReady": {
+    "value": 1
+   },
+   "INStartVideoCallIntentResponseCodeUnspecified": {
+    "value": 0
+   }
+  },
+  "externs": {
+   "INPersonHandleLabelHome": {
+    "typestr": "@"
+   },
+   "INPersonHandleLabelHomeFax": {
+    "typestr": "@"
+   },
+   "INPersonHandleLabelMain": {
+    "typestr": "@"
+   },
+   "INPersonHandleLabelMobile": {
+    "typestr": "@"
+   },
+   "INPersonHandleLabelOther": {
+    "typestr": "@"
+   },
+   "INPersonHandleLabelPager": {
+    "typestr": "@"
+   },
+   "INPersonHandleLabelWork": {
+    "typestr": "@"
+   },
+   "INPersonHandleLabelWorkFax": {
+    "typestr": "@"
+   },
+   "INPersonHandleLabeliPhone": {
+    "typestr": "@"
+   },
+   "INPersonRelationshipAssistant": {
+    "typestr": "@"
+   },
+   "INPersonRelationshipBrother": {
+    "typestr": "@"
+   },
+   "INPersonRelationshipChild": {
+    "typestr": "@"
+   },
+   "INPersonRelationshipFather": {
+    "typestr": "@"
+   },
+   "INPersonRelationshipFriend": {
+    "typestr": "@"
+   },
+   "INPersonRelationshipManager": {
+    "typestr": "@"
+   },
+   "INPersonRelationshipMother": {
+    "typestr": "@"
+   },
+   "INPersonRelationshipParent": {
+    "typestr": "@"
+   },
+   "INPersonRelationshipPartner": {
+    "typestr": "@"
+   },
+   "INPersonRelationshipSister": {
+    "typestr": "@"
+   },
+   "INPersonRelationshipSpouse": {
+    "typestr": "@"
+   },
+   "INSearchCallHistoryIntentIdentifier": {
+    "typestr": "@"
+   },
+   "INSearchForMessagesIntentIdentifier": {
+    "typestr": "@"
+   },
+   "INSendMessageIntentIdentifier": {
+    "typestr": "@"
+   },
+   "INSetMessageAttributeIntentIdentifier": {
+    "typestr": "@"
+   },
+   "INStartAudioCallIntentIdentifier": {
+    "typestr": "@"
+   },
+   "INStartVideoCallIntentIdentifier": {
+    "typestr": "@"
    }
   }
  }

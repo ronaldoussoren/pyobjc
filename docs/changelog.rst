@@ -3,13 +3,108 @@ What's new in PyObjC
 
 An overview of the relevant changes in new, and older, releases.
 
+Version 5.0b1
+-------------
+
+* Bindings updated for Xcode 10 beta 5.
+
+* Add a custom binding for a number of structure types in
+  CoreAudio:
+
+  - AudioBuffer
+  - AudioBufferList
+  - AudioChannelDescription
+  - AudioChannelLayout
+  - AudioValueTranslation
+
+  With this patch using APIs with these types should actually
+  work.
+
+* PR19: Fix deprecation warning in bridgesupport support module
+
+  Patch by: Mickaël Schoentgen
+
+* Creating objc.ObjCPointer instances now results in a
+  Python warning, instead of an unconditional message on
+  stdout.
+
+  .. note::
+
+     The creation of these objects is a sign that APIs are
+     not wrapped correctly, these objects are created for
+     pointers where the bridge doesn't know how to handle
+     them properly.
+
+* System bridgesupport XML files (normally not used by PyObjC)
+  can contain constant numbers with value "inf", PyObjC now
+  knows how to handle those.
+
+* Added bindings for the "Metadata" subframework of the
+  "CoreServices" framework.
+
+* Added bindings for the "CarbonCore" subframework of the
+  "CoreServices" framework.
+
+  Most APIs in this subframework are not available to Python,
+  only those APIs that are not deprecated and seem interesting
+  are exposed.
+
+* The separate framework wrappers DictionaryServices,
+  LaunchServices and SearchKit are deprecated, use
+  the CoreServices bindings instead.
+
+  These framework wrappers still exists, but are effectively
+  aliases for CoreServices with this release. Because of this
+  these bindings can expose more symbols than previously.
+
+* Fix unexpected exception when trying to call getattr
+  on a framework wrapped with a name that isn't a valid
+  identifier.
+
+Version 5.0a0
+-------------
+
+* Adds support for macOS 10.14 (Mojave)
+
+  This release updates the framework wrappers with support
+  for new APIs in macOS 10.14 and adds bindings for the following
+  new frameworks:
+
+  - AdSupport
+  - CoreAudio (new in macOS 10.0)
+  - CoreAudioKit (new in macOS 10.4)
+  - CoreMedia (new in macOS 10.7)
+  - CoreMediaIO (new in macOS 10.7)
+  - DiscRecording (new in macOS 10.2)
+  - DiscRecordingUI (new in macOS 10.2)
+  - DVDPlayback (new in macOS 10.3)
+  - MediaToolbox
+  - NaturalLanguage
+  - Network
+  - OSAKit (new in macOS 10.4)
+  - UserNotifications
+  - VideoSubscriberAccount
+
+- Support for CoreAudio, CoreMedia and MediaToolbox is limited
+  in this release due to missing manual wrappers.
+
+- Added two features that can help with gating code on the
+  version of macos:
+
+  1) The constants "objc.MAC_OS_X_VERSION_CURRENT" can be
+     compared with one of the "objc.MAC_OS_X_VERSION\_..." contants.
+
+  2) The function "objc.macos_avaiable(major, minor[, patch])"
+     returns true if the current macOS version is at least the
+     specified version, comparable with "@available" in Swift.
+
 Version 4.2.2
 -------------
 
 * Update metadata for Xcode 9.4
 
 * The binary release now includes wheels for both variants for the
-  Python.org installer for python 3.6 and 3.7: 32- and 64-bit for 
+  Python.org installer for python 3.6 and 3.7: 32- and 64-bit for
   macOS 10.6 or later, and 64-bit only for macOS 10.9 or later.
 
 * Ensure the context manager for ``NSAnimationContext`` defined in
@@ -2317,7 +2412,7 @@ Version 2.0 (MacOS X 10.5.0)
      unbound methods, or alternatively access instance methods through
      ``MyClass.pyobjc_instanceMethods``.
 
-  3) Due to a limitation in the implementation of python's ``super`` class[1]_
+  3) Due to a limitation in the implementation of python's ``super`` class [#f1]_
      it is not possible to use the super machinery to resolve class methods.
 
      However, ``from Foundation import *`` will replace the builtin ``super``
@@ -2325,7 +2420,7 @@ Version 2.0 (MacOS X 10.5.0)
      this doesn't affect most PyObjC-using programs.
 
 
-.. [1] It is not possible to override the way ``super`` looks for the "next"
+.. [#f1] It is not possible to override the way ``super`` looks for the "next"
    method to call. The class ``objc.super`` is a subclass of the builtin
    superclass with a ``__getattr__`` implementation that does the right thing
    for supercalls for Objective-C class methods.

@@ -1,0 +1,155 @@
+// objective.metadata exceptions file, see its document
+// for information on how to update this file.
+{
+ "definitions": {
+  "classes": {
+   "OSALanguage": {
+    "methods": [
+     {
+      "args": {
+       "0": {}
+      },
+      "class_method": false,
+      "selector": "initWithComponent:"
+     },
+     {
+      "class_method": false,
+      "retval": {},
+      "selector": "componentInstance"
+     }
+    ],
+    "properties": [
+     {
+      "attributes": [
+       "readonly"
+      ],
+      "name": "componentInstance"
+     }
+    ]
+   },
+   "OSALanguageInstance": {
+    "methods": [
+     {
+      "class_method": false,
+      "retval": {},
+      "selector": "componentInstance"
+     }
+    ],
+    "properties": [
+     {
+      "attributes": [
+       "readonly"
+      ],
+      "name": "componentInstance"
+     }
+    ]
+   },
+   "OSAScript": {
+    "methods": [
+     {
+      "args": {
+       "1": { "type_modifier": "o" }
+      },
+      "class_method": false,
+      "selector": "initWithContentsOfURL:error:"
+     },
+     {
+      "args": {
+       "2": { "type_modifier": "o" }
+      },
+      "class_method": false,
+      "selector": "initWithContentsOfURL:language:error:"
+     },
+     {
+      "args": {
+       "3": { "type_modifier": "o" }
+      },
+      "class_method": false,
+      "selector": "initWithContentsOfURL:languageInstance:usingStorageOptions:error:"
+     },
+     {
+      "args": {
+       "1": { "type_modifier": "o" }
+      },
+      "class_method": false,
+      "selector": "initWithCompiledData:error:"
+     },
+     {
+      "args": {
+       "3": { "type_modifier": "o" }
+      },
+      "class_method": false,
+      "selector": "initWithCompiledData:fromURL:usingStorageOptions:error:"
+     },
+     {
+      "args": {
+       "4": { "type_modifier": "o" }
+      },
+      "class_method": false,
+      "selector": "initWithScriptDataDescriptor:fromURL:languageInstance:usingStorageOptions:error:"
+     },
+     {
+      "args": {
+       "0": { "type_modifier": "o" }
+      },
+      "class_method": false,
+      "selector": "compileAndReturnError:"
+     },
+     {
+      "args": {
+       "0": { "type_modifier": "o" }
+      },
+      "class_method": false,
+      "selector": "executeAndReturnError:"
+     },
+     {
+      "args": {
+       "1": { "type_modifier": "o" }
+      },
+      "class_method": false,
+      "selector": "executeAppleEvent:error:"
+     },
+     {
+      "args": {
+       "0": { "type_modifier": "o" },
+       "1": { "type_modifier": "o" }
+      },
+      "class_method": false,
+      "selector": "executeAndReturnDisplayValue:error:"
+     },
+     {
+      "args": {
+       "2": { "type_modifier": "o" }
+      },
+      "class_method": false,
+      "selector": "executeHandlerWithName:arguments:error:"
+     },
+     {
+      "args": {
+       "2": { "type_modifier": "o" }
+      },
+      "class_method": false,
+      "selector": "writeToURL:ofType:error:"
+     },
+     {
+      "args": {
+       "3": { "type_modifier": "o" }
+      },
+      "class_method": false,
+      "selector": "writeToURL:ofType:usingStorageOptions:error:"
+     },
+     {
+      "args": {
+       "2": { "type_modifier": "o" }
+      },
+      "class_method": false,
+      "selector": "compiledDataForType:usingStorageOptions:error:"
+     }
+    ]
+   }
+  },
+  "formal_protocols": {},
+  "functions": {},
+  "informal_protocols": {}
+ }
+}

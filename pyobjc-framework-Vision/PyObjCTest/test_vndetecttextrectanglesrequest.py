@@ -10,5 +10,8 @@ if sys.maxsize >= 2**32:
             self.assertResultIsBOOL(Vision.VNDetectTextRectanglesRequest.reportCharacterBoxes)
             self.assertArgIsBOOL(Vision.VNDetectTextRectanglesRequest.setReportCharacterBoxes_, 0)
 
+        def test_constants(self):
+            self.assertEqual(Vision.VNDetectTextRectanglesRequestRevision1, 1)
+
 if __name__ == "__main__":
     main()

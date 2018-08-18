@@ -28,6 +28,13 @@ if sys.maxsize > 2 ** 32:
             self.assertEqual(PhotosUI.PHProjectTextElementTypeTitle, 1)
             self.assertEqual(PhotosUI.PHProjectTextElementTypeSubtitle, 2)
 
+        @min_os_level('10.14')
+        def testMethods(self):
+            self.assertResultIsBOOL(PhotosUI.PHProjectInfo.brandingEnabled)
+            self.assertResultIsBOOL(PhotosUI.PHProjectInfo.pageNumbersEnabled)
+            self.assertResultIsBOOL(PhotosUI.PHProjectAssetElement.horizontallyFlipped)
+            self.assertResultIsBOOL(PhotosUI.PHProjectAssetElement.verticallyFlipped)
+
 
 if __name__ == "__main__":
     main()

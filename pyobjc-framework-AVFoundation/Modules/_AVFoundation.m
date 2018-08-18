@@ -10,6 +10,8 @@
  */
 #include "_AVFoundation_protocols.m"
 
+#include "_AVFoundation_AVAudioBuffer.m"
+
 
 static PyMethodDef mod_methods[] = {
     { 0, 0, 0, 0 } /* sentinel */
@@ -26,6 +28,7 @@ PyObjC_MODULE_INIT(_AVFoundation)
     }
 
     if (PyObjC_ImportAPI(m) == -1) PyObjC_INITERROR();
+    if (init_avaudiobuffer() == -1) PyObjC_INITERROR();
 
     PyObjC_INITDONE();
 }

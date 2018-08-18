@@ -1,0 +1,275 @@
+{
+ "definitions": {
+  "enum": {
+   "UNNotificationPresentationOptionBadge": { "value": 1 },
+   "UNNotificationPresentationOptionSound": { "value": 2 },
+   "UNNotificationPresentationOptionAlert": { "value": 4 },
+   "UNNotificationPresentationOptionNone": { "value": 0 },
+   "UNAuthorizationOptionBadge": { "value": 1 },
+   "UNAuthorizationOptionSound": { "value": 2 },
+   "UNAuthorizationOptionAlert": { "value": 4 },
+   "UNAuthorizationOptionCarPlay": { "value": 8 },
+   "UNAuthorizationOptionCriticalAlert": { "value": 16 },
+   "UNAuthorizationOptionProvidesAppNotificationSettings": { "value": 32 },
+   "UNAuthorizationOptionProvisional": { "value": 64 },
+   "UNAuthorizationOptionNone": { "value": 0 },
+   "UNAlertStyleNone": { "value": 0 },
+   "UNAlertStyleBanner": { "value": 1 },
+   "UNAlertStyleAlert": { "value": 2 },
+   "UNNotificationSettingNotSupported": { "value": 0 },
+   "UNNotificationSettingDisabled": { "value": 1 },
+   "UNNotificationSettingEnabled": { "value": 2 },
+   "UNShowPreviewsSettingAlways": { "value": 0 },
+   "UNShowPreviewsSettingWhenAuthenticated": { "value": 1 },
+   "UNShowPreviewsSettingNever": { "value": 2 },
+   "UNAuthorizationStatusNotDetermined": { "value": 0 },
+   "UNAuthorizationStatusDenied": { "value": 1 },
+   "UNAuthorizationStatusAuthorized": { "value": 2 },
+   "UNAuthorizationStatusProvisional": { "value":  3},
+   "UNNotificationCategoryOptionCustomDismissAction": { "value": 1 },
+   "UNNotificationCategoryOptionAllowInCarPlay": { "value": 2 },
+   "UNNotificationCategoryOptionHiddenPreviewsShowTitle": { "value": 4 },
+   "UNNotificationCategoryOptionHiddenPreviewsShowSubtitle": { "value": 8 },
+   "UNNotificationCategoryOptionNone": { "value": 0 },
+   "UNErrorCodeNotificationsNotAllowed": { "value": 1 },
+   "UNErrorCodeAttachmentInvalidURL": { "value": 100 },
+   "UNErrorCodeAttachmentUnrecognizedType": { "value": 101 },
+   "UNErrorCodeAttachmentInvalidFileSize": { "value": 102 },
+   "UNErrorCodeAttachmentNotInDataStore": { "value": 103 },
+   "UNErrorCodeAttachmentMoveIntoDataStoreFailed": { "value": 104 },
+   "UNErrorCodeAttachmentCorrupt": { "value":  105 },
+   "UNErrorCodeNotificationInvalidNoDate": { "value": 1400 },
+   "UNErrorCodeNotificationInvalidNoContent": { "value": 1401 },
+   "UNNotificationActionOptionAuthenticationRequired": { "value": 1 },
+   "UNNotificationActionOptionDestructive": { "value": 2 },
+   "UNNotificationActionOptionForeground": { "value": 4 },
+   "UNNotificationActionOptionNone": { "value": 0 }
+  },
+  "externs": {
+   "UNNotificationDefaultActionIdentifier": { "typestr": "@" },
+   "UNNotificationDismissActionIdentifier": { "typestr": "@" },
+   "UNNotificationAttachmentOptionsTypeHintKey": { "typestr": "@" },
+   "UNNotificationAttachmentOptionsThumbnailHiddenKey": { "typestr": "@" },
+   "UNNotificationAttachmentOptionsThumbnailClippingRectKey": { "typestr": "@" },
+   "UNNotificationAttachmentOptionsThumbnailTimeKey": { "typestr": "@" }
+  },
+  "classes": {
+   "UNLocationNotificationTrigger": {
+    "methods": [
+     {
+      "selector": "triggerWithRegion:repeats:",
+      "class_method": false,
+      "args": {
+       "1": { "type_override": "Z" }
+      }
+     }
+    ]
+   },
+   "UNCalendarNotificationTrigger": {
+    "methods": [
+     {
+      "selector": "triggerWithDateMatchingComponents:repeats:",
+      "class_method": false,
+      "args": {
+       "1": { "type_override": "Z" }
+      }
+     }
+    ]
+   },
+   "UNTimeIntervalNotificationTrigger": {
+    "methods": [
+     {
+      "selector": "triggerWithTimeInterval:repeats:",
+      "class_method": false,
+      "args": {
+       "1": { "type_override": "Z" }
+      }
+     }
+    ]
+   },
+   "UNNotificationTrigger": {
+    "methods": [
+     {
+      "selector": "repeats",
+      "class_method": false,
+      "retval": { "type_override": "Z" }
+     }
+    ]
+   },
+   "UNNotificationSettings": {
+    "methods": [
+     {
+      "selector": "providesAppNotificationSettings",
+      "class_method": false,
+      "retval": { "type_override": "Z" }
+     }
+    ]
+   },
+   "UNNotificationAttachment": {
+    "methods": [
+     {
+      "selector": "attachmentWithIdentifier:URL:options:error:",
+      "class_method": false,
+      "args": {
+       "3": { "type_modifier": "o" }
+      }
+     }
+    ]
+   },
+   "UNNotificationServiceExtension": {
+    "methods": [
+     {
+      "selector": "didReceiveNotificationRequest:withContentHandler:",
+      "class_method": false,
+      "args": {
+       "1": {
+        "callable": {
+	 "arguments": {
+	  "0": { "typestr": "^v" },
+	  "1": { "typestr": "@" }
+	 },
+	 "retval": { "typestr": "v" }
+	}
+       }
+      }
+     }
+    ]
+   },
+   "UNUserNotificationCenter": {
+    "methods": [
+     {
+      "selector": "supportsContentExtensions",
+      "class_method": false,
+      "retval": { "type_override": "Z" }
+     },
+     {
+      "selector": "addNotificationRequest:withCompletionHandler:",
+      "class_method": false,
+      "args": {
+       "1": {
+        "callable": {
+	 "arguments": {
+	  "0": { "typestr": "^v" },
+	  "1": { "typestr": "@" }
+	 },
+	 "retval": { "typestr": "v" }
+	}
+       }
+      }
+     },
+     {
+      "selector": "requestAuthorizationWithOptions:completionHandler:",
+      "class_method": false,
+      "args": {
+       "1": {
+        "callable": {
+	 "arguments": {
+	  "0": { "typestr": "^v" },
+	  "1": { "typestr": "Z" },
+	  "2": { "typestr": "@" }
+	 },
+	 "retval": { "typestr": "v" }
+	}
+       }
+      }
+     },
+     {
+      "selector": "getDeliveredNotificationsWithCompletionHandler:",
+      "class_method": false,
+      "args": {
+       "0": {
+        "callable": {
+	 "arguments": {
+	  "0": { "typestr": "^v" },
+	  "1": { "typestr": "@" }
+	 },
+	 "retval": { "typestr": "v" }
+	}
+       }
+      }
+     },
+     {
+      "selector": "getPendingNotificationRequestsWithCompletionHandler:",
+      "class_method": false,
+      "args": {
+       "0": {
+        "callable": {
+	 "arguments": {
+	  "0": { "typestr": "^v" },
+	  "1": { "typestr": "@" }
+	 },
+	 "retval": { "typestr": "v" }
+	}
+       }
+      }
+     },
+     {
+      "selector": "getNotificationCategoriesWithCompletionHandler:",
+      "class_method": false,
+      "args": {
+       "0": {
+        "callable": {
+	 "arguments": {
+	  "0": { "typestr": "^v" },
+	  "1": { "typestr": "@" }
+	 },
+	 "retval": { "typestr": "v" }
+	}
+       }
+      }
+     },
+     {
+      "selector": "getNotificationSettingsWithCompletionHandler:",
+      "class_method": false,
+      "args": {
+       "0": {
+        "callable": {
+	 "arguments": {
+	  "0": { "typestr": "^v" },
+	  "1": { "typestr": "@" }
+	 },
+	 "retval": { "typestr": "v" }
+	}
+       }
+      }
+     }
+    ]
+   },
+   "NSObject": {
+    "methods": [
+     {
+      "selector": "userNotificationCenter:willPresentNotification:withCompletionHandler:",
+      "class_method": false,
+      "args": {
+       "2": {
+        "type_override": "@?",
+        "callable": {
+	 "arguments": {
+	  "0": { "typestr": "^v" },
+	  "1": { "typestr": "Q" }
+	 },
+	 "retval": { "typestr": "v" }
+	}
+       }
+      }
+     },
+     {
+      "selector": "userNotificationCenter:didReceiveNotificationResponse:withCompletionHandler:",
+      "class_method": false,
+      "args": {
+       "2": {
+        "type_override": "@?",
+        "callable": {
+	 "arguments": {
+	  "0": { "typestr": "^v" }
+	 },
+	 "retval": { "typestr": "v" }
+	}
+       }
+      }
+     }
+    ]
+   }
+  }
+ }
+}

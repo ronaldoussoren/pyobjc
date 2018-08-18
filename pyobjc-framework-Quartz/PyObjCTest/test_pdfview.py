@@ -98,6 +98,11 @@ class TestPDFView (TestCase):
         self.assertResultIsBOOL(PDFView.acceptsDraggedFiles)
         self.assertArgIsBOOL(PDFView.setAcceptsDraggedFiles_, 0)
 
+    @min_os_level('10.14')
+    def testMethods10_14(self):
+        self.assertResultIsBOOL(PDFView.pageShadowsEnabled)
+        self.assertArgIsBOOL(PDFView.enablePageShadows_, 0)
+
     def testProtocols(self):
         #self.assertIsInstance(protocols.PDFViewDelegate, objc.informal_protocol)
 

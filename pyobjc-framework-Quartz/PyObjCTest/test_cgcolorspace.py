@@ -26,6 +26,7 @@ class TestCGColorSpace (TestCase):
         self.assertEqual(kCGColorSpaceModelDeviceN, 4)
         self.assertEqual(kCGColorSpaceModelIndexed, 5)
         self.assertEqual(kCGColorSpaceModelPattern, 6)
+        self.assertEqual(kCGColorSpaceModelXYZ, 7)
 
         self.assertIsInstance(kCGColorSpaceGenericGray, unicode)
         self.assertIsInstance(kCGColorSpaceGenericRGB, unicode)

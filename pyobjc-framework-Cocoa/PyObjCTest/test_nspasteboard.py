@@ -116,11 +116,14 @@ class TestNSPasteboard (TestCase):
         objc.protocolNamed('NSPasteboardWriting')
         objc.protocolNamed('NSPasteboardReading')
 
+    @min_sdk_level('10.14')
+    def testProtocolObjects10_14(self):
+        objc.protocolNamed('NSPasteboardTypeOwner')
+
     def testProtocols(self):
         self.assertResultHasType(TestNSPasteboardHelper.writingOptionsForType_pasteboard_, objc._C_NSUInteger)
 
         self.assertResultHasType(TestNSPasteboardHelper.readingOptionsForType_pasteboard_, objc._C_NSUInteger)
-
 
 
 if __name__ == "__main__":

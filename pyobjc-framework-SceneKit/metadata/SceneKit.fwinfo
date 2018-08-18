@@ -1076,6 +1076,13 @@
    "SCNPhysicsBody": {
     "methods": [
      {
+      "selector": "setResting:",
+      "class_method": false,
+      "args": {
+       "0": { "type_override": "Z" }
+      }
+     },
+     {
       "selector": "usesDefaultMomentOfInertia",
       "class_method": false,
       "retval": { "type_override": "Z" }

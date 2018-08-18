@@ -2,6 +2,8 @@
  "definitions": {
   "enum": {
    "CNErrorCodeVCardMalformed": { "value": 700 },
+   "CNErrorCodeNoAccessableWritableContainers": { "value": 101 },
+   "CNErrorCodeVCardSummarizationError": { "value": 701 },
    "CNContactTypePerson": { "value": 0 },
    "CNContactTypeOrganization": { "value": 1 },
    "CNContactSortOrderNone": { "value": 0 },
@@ -30,6 +32,7 @@
    "CNErrorCodeContainmentCycle": { "value": 202 },
    "CNErrorCodeContainmentScope": { "value": 203 },
    "CNErrorCodeParentRecordDoesNotExist": { "value": 204 },
+   "CNErrorCodeRecordIdentifierInvalid": { "value": 205 },
    "CNErrorCodeValidationMultipleErrors": { "value": 300 },
    "CNErrorCodeValidationTypeMismatch": { "value": 301 },
    "CNErrorCodeValidationConfigurationError": { "value": 302 },

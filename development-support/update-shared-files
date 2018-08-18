@@ -9,6 +9,7 @@ FILES=[
     ('pyobjc-core/Modules/objc/pyobjc-compat.h', 'Modules/pyobjc-compat.h'),
     ('pyobjc-core/Tools/pyobjc_setup.py', 'pyobjc_setup.py'),
     ('pyobjc-core/Tools/MANIFEST.in', 'MANIFEST.in'),
+    ('pyobjc-core/License.txt', 'License.txt'),
 ]
 
 def contents(path):

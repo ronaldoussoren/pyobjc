@@ -4,22 +4,30 @@ import AVFoundation
 
 class TestAVAudioMixingHelper (AVFoundation.NSObject):
     def destinationForMixer_bus_(self, a, b): return 1
-    def setVolume_(self, a): pass
-    def setPan_(self, a): pass
-    def setRenderingAlgorithm_(self, a): pass
-    def setRate_(self, a): pass
-    def setReverbBlend_(self, a): pass
-    def setObstruction_(self, a): pass
-    def setOcclusion_(self, a): pass
-    def setPosition_(self, a): pass
+
     def volume(self): return 1
+    def setVolume_(self, a): pass
+
     def pan(self): return 1
+    def setPan_(self, a): pass
+
     def renderingAlgorithm(self): return 1
+    def setRenderingAlgorithm_(self, a): pass
+
     def rate(self): return 1
+    def setRate_(self, a): pass
+
     def reverbBlend(self): return 1
+    def setReverbBlend_(self, a): pass
+
     def obstruction(self): return 1
+    def setObstruction_(self, a): pass
+
     def occlusion(self): return 1
+    def setOcclusion_(self, a): pass
+
     def position(self): return 1
+    def setPosition_(self, a): pass
 
 
 
@@ -57,6 +65,13 @@ class TestAkAudioMixing (TestCase):
         self.assertEqual(AVFoundation.AVAudio3DMixingRenderingAlgorithmHRTF, 2)
         self.assertEqual(AVFoundation.AVAudio3DMixingRenderingAlgorithmSoundField, 3)
         self.assertEqual(AVFoundation.AVAudio3DMixingRenderingAlgorithmStereoPassThrough, 5)
+        self.assertEqual(AVFoundation.AVAudio3DMixingRenderingAlgorithmHRTFHQ, 6)
+
+    @min_sdk_level('10.10')
+    def testProtocols(self):
+        objc.protocolNamed('AVAudioMixing')
+        objc.protocolNamed('AVAudioStereoMixing')
+        objc.protocolNamed('AVAudio3DMixing')
 
 
 if __name__ == "__main__":

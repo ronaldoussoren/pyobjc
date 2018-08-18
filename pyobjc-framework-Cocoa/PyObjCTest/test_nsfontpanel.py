@@ -1,6 +1,7 @@
 
 from PyObjCTools.TestSupport import *
 from AppKit import *
+import objc
 
 class TestNSFontPanelHelper (NSObject):
     def validModesForFontPanel_(self, p): return 1
@@ -41,6 +42,10 @@ class TestNSFontPanel (TestCase):
 
     def testProtocols(self):
         self.assertResultHasType(TestNSFontPanelHelper.validModesForFontPanel_, objc._C_NSUInteger)
+
+    @min_sdk_level('10.14')
+    def testProtocols10_14(self):
+        objc.protocolNamed('NSFontChanging')
 
     def testMethods(self):
         self.assertResultIsBOOL(NSFontPanel.sharedFontPanelExists)

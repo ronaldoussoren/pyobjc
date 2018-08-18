@@ -6,6 +6,11 @@
    "FIFinderSyncController": {
     "methods": [
      {
+      "selector": "isExtensionEnabled",
+      "class_method": false,
+      "retval": { "type_override": "Z" }
+     },
+     {
       "selector": "setLastUsedDate:forItemWithURL:completion:",
       "class_method": false,
       "args": {

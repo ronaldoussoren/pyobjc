@@ -5,7 +5,6 @@ if sys.maxsize > 2 ** 32:
     import Intents
 
     class TestINMessage (TestCase):
-        @min_os_level('10.12')
         def testConstants(self):
             self.assertEqual(Intents.INMessageTypeUnspecified, 0)
             self.assertEqual(Intents.INMessageTypeText, 1)
@@ -26,6 +25,14 @@ if sys.maxsize > 2 ** 32:
             self.assertEqual(Intents.INMessageTypeMediaVideo, 16)
             self.assertEqual(Intents.INMessageTypeMediaPass, 17)
             self.assertEqual(Intents.INMessageTypeMediaAudio, 18)
+
+            self.assertEqual(Intents.INMessageTypePaymentSent, 19)
+            self.assertEqual(Intents.INMessageTypePaymentRequest, 20)
+            self.assertEqual(Intents.INMessageTypePaymentNote, 21)
+            self.assertEqual(Intents.INMessageTypeAnimoji, 22)
+            self.assertEqual(Intents.INMessageTypeActivitySnippet, 23)
+            self.assertEqual(Intents.INMessageTypeFile, 24)
+            self.assertEqual(Intents.INMessageTypeLink, 25)
 
 if __name__ == "__main__":
     main()

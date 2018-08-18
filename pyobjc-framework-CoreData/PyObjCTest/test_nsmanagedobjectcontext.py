@@ -21,7 +21,6 @@ class TestNSManagedObjectContext (TestCase):
         self.assertIsInstance(NSUpdatedObjectsKey, unicode)
         self.assertIsInstance(NSDeletedObjectsKey, unicode)
 
-
         self.assertIsInstance(NSErrorMergePolicy, NSObject)
         self.assertIsInstance(NSMergeByPropertyStoreTrumpMergePolicy, NSObject)
         self.assertIsInstance(NSMergeByPropertyObjectTrumpMergePolicy, NSObject)

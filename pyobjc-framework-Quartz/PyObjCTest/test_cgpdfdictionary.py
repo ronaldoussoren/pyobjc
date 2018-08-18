@@ -29,5 +29,9 @@ class TestCGPDFDictionary (TestCase):
     def testFunctions(self):
         CGPDFDictionaryGetCount
 
+    @min_os_level('10.14')
+    def testFunctions10_14(self):
+        self.assertArgIsBlock(CGPDFDictionaryApplyBlock, 1, b"vn^t^{CGPDFObject=}^v")
+
 if __name__ == "__main__":
     main()

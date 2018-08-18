@@ -1,6 +1,7 @@
 {
  "definitions": {
   "externs": {
+   "NSAppearanceDocumentAttribute": { "typestr": "@" },
    "NSPasteboardTypeURL": { "typestr": "@" },
    "NSPasteboardTypeFileURL": { "typestr": "@" },
    "NSTextListMarkerBox": { "typestr": "@" },
@@ -26777,6 +26778,24 @@
    "NSWorkspace": {
     "methods": [
      {
+      "selector":  "requestAuthorizationOfType:completionHandler:",
+      "class_method": false,
+      "args": {
+       "1": {
+        "callable": {
+	 "arguments": {
+	  "0": { "type": "^v" },
+	  "1": { "type": "@" },
+	  "2": { "type": "@" }
+	 },
+	 "retval": {
+	  "type": "v"
+	 }
+	}
+       }
+      }
+     },
+     {
       "selector": "isVoiceOverEnabled",
       "class_method": false,
       "retval": { "type_override": "Z" }
@@ -27147,6 +27166,16 @@
    }
   },
   "enum": {
+   "NSWorkspaceAuthorizationTypeCreateSymbolicLink": { "value": 0 },
+   "NSWorkspaceAuthorizationTypeSetAttributes": { "value": 1 },
+   "NSWorkspaceAuthorizationTypeReplaceFile": { "value": 2 },
+   "NSWorkspaceAuthorizationInvalidError": { "value": 67328 },
+   "NSWorkspaceErrorMinimum": { "value": 67328 },
+   "NSWorkspaceErrorMaximum": { "value": 67455 },
+   "NSAppKitVersionNumber10_13": { "value": 1561 },
+   "NSAppKitVersionNumber10_13_1": { "value": 1561.1 },
+   "NSAppKitVersionNumber10_13_2": { "value": 1561.2 },
+   "NSAppKitVersionNumber10_13_4": { "value": 1561.4 },
    "NSTextMovementReturn": { "value": 16 },
    "NSTextMovementTab": { "value": 17 },
    "NSTextMovementBacktab": { "value": 18 },

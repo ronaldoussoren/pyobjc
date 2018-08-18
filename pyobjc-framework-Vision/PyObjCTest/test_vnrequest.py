@@ -14,5 +14,8 @@ if sys.maxsize >= 2**32:
             self.assertArgIsBOOL(Vision.VNRequest.setUsesCPUOnly_, 0)
             self.assertResultIsBlock(Vision.VNRequest.completionHandler, b'v@@')
 
+        def test_constants(self):
+            self.assertEqual(Vision.VNRequestRevisionUnspecified, 0)
+
 if __name__ == "__main__":
     main()

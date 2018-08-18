@@ -3,7 +3,6 @@
  *
  * Last update: Wed Jan 16 13:10:52 2013
  */
-#import <AddressBook/ABPersonPickerDelegate.h>
 
 static void __attribute__((__used__)) use_protocols(void)
 {
@@ -32,5 +31,14 @@ static void __attribute__((__used__)) use_protocols(void)
 #endif
 #if PyObjC_BUILD_RELEASE >= 1011
     p = PyObjC_IdToPython(@protocol(AVFragmentMinding)); Py_XDECREF(p);
+#endif
+#if PyObjC_BUILD_RELEASE >= 1013
+    p = PyObjC_IdToPython(@protocol(AVQueuedSampleBufferRendering)); Py_XDECREF(p);
+    p = PyObjC_IdToPython(@protocol(AVPlayerItemMetadataCollectorPushDelegate)); Py_XDECREF(p);
+#endif
+#if PyObjC_BUILD_RELEASE >= 1014
+    // Defined in the AVFAudio subframework, but header is never included in the 
+    // toplevel framework...
+    //p = PyObjC_IdToPython(@protocol(AVSpeechSynthesizerDelegate)); Py_XDECREF(p);
 #endif
 }

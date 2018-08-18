@@ -1,0 +1,15 @@
+{
+ "definitions": {
+  "classes": {
+   "ASIdentifierManager": {
+    "methods": [
+     {
+      "retval": { "type_override": "Z" },
+      "class_method": false,
+      "selector": "isAdvertisingTrackingEnabled"
+     }
+    ]
+   }
+  }
+ }
+}

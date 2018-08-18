@@ -1,0 +1,273 @@
+// objective.metadata exceptions file, see its document
+// for information on how to update this file.
+{
+ "definitions": {
+  "classes": {},
+  "formal_protocols": {},
+  "enum": {
+   "kCMIOZoomRelativeControlClassID": { "value": 2054122866 },
+   "kCMIOInvalidSequenceNumber": { "value": 18446744073709551615 },
+   "kCMIOPanTiltRelativeControlClassID": { "value": 1886679660  },
+   "kCMIOPanTiltAbsoluteControlClassID": { "value": 1886675298  }
+  },
+  "structs": {
+   "CMIOStreamScheduledOutputNotificationProcAndRefCon": {
+    "fieldnames": [
+     "scheduledOutputNotificationProc",
+     "scheduledOutputNotificationRefCon"
+    ],
+    "special": false,
+    "typestr": "{CMIOStreamScheduledOutputNotificationProcAndRefCon=^?^?}"
+   },
+   "CMIODeviceSMPTETimeCallback": {
+    "fieldnames": [
+     "mGetSMPTETimeProc",
+     "mRefCon"
+    ],
+    "special": false,
+    "typestr": "{CMIODeviceSMPTETimeCallback=^?^v}"
+   }
+  },
+  "functions": {
+   "CMIODeviceProcessAVCCommand": {
+    "args": {
+     "1": { "type_modifier": "n" }
+    }
+   },
+   "CMIODeviceProcessRS422Command": {
+    "args": {
+     "1": { "type_modifier": "n" }
+    }
+   },
+   "CMIOObjectAddPropertyListener": {
+    "args": {
+     "1": { "type_modifier": "n" },
+     "2": {
+      "function": {
+       "args": [
+        {
+         "typestr": "I"
+        },
+        {
+         "typestr": "I"
+        },
+        {
+         "typestr": "^{CMIOObjectPropertyAddress=III}"
+        },
+        {
+         "typestr": "^v"
+        }
+       ],
+       "retval": {
+        "typestr": "i"
+       }
+      }
+     },
+     "3": {}
+    }
+   },
+   "CMIOObjectAddPropertyListenerBlock": {
+    "args": {
+     "1": { "type_modifier": "n" },
+     "3": {
+      "callable": {
+       "arguments": {
+        "0": { "type": "^v" },
+	"1": { "type": "I" },
+	"2": { "type": "^{CMIOObjectPropertyAddress=III}", "type_modifier": "n", "c_array_length_in_arg": 1 }
+       },
+       "retval": { "type": "v" }
+      }
+     }
+    }
+   },
+   "CMIOObjectCreate": {
+    "args": {
+     "0": {},
+     "3": {}
+    }
+   },
+   "CMIOObjectGetPropertyData": {
+    "args": {
+     "1": { "type_modifier": "n" },
+     "3": { "type_modifier": "o", "c_array_length_in_arg": 2 },
+     "5": { "type_modifier": "o" },
+     "6": { "type_modifier": "o", "c_array_length_in_arg": [4,5] }
+    }
+   },
+   "CMIOObjectGetPropertyDataSize": {
+    "args": {
+     "1": { "type_modifier": "n" },
+     "3": { "type_modifier": "n", "c_array_length_in_arg": 2 },
+     "4": { "type_modifier": "o" }
+    }
+   },
+   "CMIOObjectHasProperty": {
+    "args": {
+     "1": { "type_modifier": "n" }
+    }
+   },
+   "CMIOObjectIsPropertySettable": {
+    "args": {
+     "1": { "type_modifier": "n" },
+     "2": { "type_modifier": "o" }
+    }
+   },
+   "CMIOObjectPropertiesChanged": {
+    "args": {
+     "0": {},
+     "3": {}
+    }
+   },
+   "CMIOObjectRemovePropertyListener": {
+    "args": {
+     "1": { "type_modifier": "n" },
+     "2": {
+      "function": {
+       "args": [
+        {
+         "typestr": "I"
+        },
+        {
+         "typestr": "I"
+        },
+        {
+         "typestr": "^{CMIOObjectPropertyAddress=III}"
+        },
+        {
+         "typestr": "^v"
+        }
+       ],
+       "retval": {
+        "typestr": "i"
+       }
+      }
+     },
+     "3": {}
+    }
+   },
+   "CMIOObjectRemovePropertyListenerBlock": {
+    "args": {
+     "1": { "type_modifier": "n" },
+     "3": {
+      "callable": {
+       "arguments": {
+        "0": { "type": "^v" },
+	"1": { "type": "I" },
+	"2": { "type": "^{CMIOObjectPropertyAddress=III}", "type_modifier": "n", "c_array_length_in_arg": 1 }
+       },
+       "retval": { "type": "v" }
+      }
+     }
+    }
+   },
+   "CMIOObjectSetPropertyData": {
+    "args": {
+     "1": {},
+     "3": {},
+     "5": {}
+    }
+   },
+   "CMIOObjectsPublishedAndDied": {
+    "args": {
+     "0": {},
+     "3": {},
+     "5": {}
+    }
+   },
+   "CMIOSampleBufferCopyNonRequiredAttachments": {
+    "args": {
+     "0": {},
+     "1": {}
+    }
+   },
+   "CMIOSampleBufferCopySampleAttachments": {
+    "args": {
+     "0": {},
+     "1": {}
+    }
+   },
+   "CMIOSampleBufferCreate": {
+    "args": {
+     "0": {},
+     "1": {},
+     "2": {},
+     "5": { "type_modifier": "n", "c_array_length_in_arg": 4 },
+     "7": { "type_modifier": "n", "c_array_length_in_arg": 6 },
+     "10": { "type_modifier": "o", "already_cfretained": true }
+    }
+   },
+   "CMIOSampleBufferCreateForImageBuffer": {
+    "args": {
+     "0": {},
+     "1": {},
+     "2": {},
+     "3": { "type_modifier": "n" },
+     "6": { "type_modifier": "o", "already_cfretained": true }
+    }
+   },
+   "CMIOSampleBufferCreateNoDataMarker": {
+    "args": {
+     "0": {},
+     "2": {},
+     "5": { "type_modifier": "o", "already_cfretained": true }
+    }
+   },
+   "CMIOSampleBufferGetDiscontinuityFlags": {
+    "args": {
+     "0": {}
+    }
+   },
+   "CMIOSampleBufferGetSequenceNumber": {
+    "args": {
+     "0": {}
+    }
+   },
+   "CMIOSampleBufferSetDiscontinuityFlags": {
+    "args": {
+     "0": {},
+     "1": {}
+    }
+   },
+   "CMIOSampleBufferSetSequenceNumber": {
+    "args": {
+     "0": {},
+     "1": {}
+    }
+   },
+   "CMIOStreamClockCreate": {
+    "args": {
+     "0": {},
+     "1": {},
+     "2": {},
+     "6": { "type_modifier": "o", "already_cfretained": true }
+    }
+   },
+   "CMIOStreamCopyBufferQueue": {
+    "args": {
+     "1": {
+      "function": {
+       "args": [
+        {
+         "typestr": "I"
+        },
+        {
+         "typestr": "^v"
+        },
+        {
+         "typestr": "^v"
+        }
+       ],
+       "retval": {
+        "typestr": "v"
+       }
+      }
+     },
+     "2": {},
+     "3": { "type_modifier": "o", "already_cfretained": true }
+    }
+   }
+  },
+  "informal_protocols": {}
+ }
+}

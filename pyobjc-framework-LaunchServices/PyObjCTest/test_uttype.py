@@ -1,77 +1,77 @@
 
 from PyObjCTools.TestSupport import *
-from LaunchServices import *
+import LaunchServices
 
 class TestUTType (TestCase):
     def testConstants(self):
-        self.assertIsInstance(kUTExportedTypeDeclarationsKey, unicode)
-        self.assertIsInstance(kUTImportedTypeDeclarationsKey, unicode)
-        self.assertIsInstance(kUTTypeIdentifierKey, unicode)
-        self.assertIsInstance(kUTTypeTagSpecificationKey, unicode)
-        self.assertIsInstance(kUTTypeConformsToKey, unicode)
-        self.assertIsInstance(kUTTypeDescriptionKey, unicode)
-        self.assertIsInstance(kUTTypeIconFileKey, unicode)
-        self.assertIsInstance(kUTTypeReferenceURLKey, unicode)
-        self.assertIsInstance(kUTTypeVersionKey, unicode)
-        self.assertIsInstance(kUTTagClassFilenameExtension, unicode)
-        self.assertIsInstance(kUTTagClassMIMEType, unicode)
-        self.assertIsInstance(kUTTagClassNSPboardType, unicode)
-        self.assertIsInstance(kUTTagClassOSType, unicode)
+        self.assertIsInstance(LaunchServices.kUTExportedTypeDeclarationsKey, unicode)
+        self.assertIsInstance(LaunchServices.kUTImportedTypeDeclarationsKey, unicode)
+        self.assertIsInstance(LaunchServices.kUTTypeIdentifierKey, unicode)
+        self.assertIsInstance(LaunchServices.kUTTypeTagSpecificationKey, unicode)
+        self.assertIsInstance(LaunchServices.kUTTypeConformsToKey, unicode)
+        self.assertIsInstance(LaunchServices.kUTTypeDescriptionKey, unicode)
+        self.assertIsInstance(LaunchServices.kUTTypeIconFileKey, unicode)
+        self.assertIsInstance(LaunchServices.kUTTypeReferenceURLKey, unicode)
+        self.assertIsInstance(LaunchServices.kUTTypeVersionKey, unicode)
+        self.assertIsInstance(LaunchServices.kUTTagClassFilenameExtension, unicode)
+        self.assertIsInstance(LaunchServices.kUTTagClassMIMEType, unicode)
+        self.assertIsInstance(LaunchServices.kUTTagClassNSPboardType, unicode)
+        self.assertIsInstance(LaunchServices.kUTTagClassOSType, unicode)
 
     def testFunctions(self):
-        self.assertResultIsCFRetained(UTTypeCreatePreferredIdentifierForTag)
-        v = UTTypeCreatePreferredIdentifierForTag(kUTTagClassFilenameExtension, "py", kUTTypePlainText)
+        self.assertResultIsCFRetained(LaunchServices.UTTypeCreatePreferredIdentifierForTag)
+        v = LaunchServices.UTTypeCreatePreferredIdentifierForTag(LaunchServices.kUTTagClassFilenameExtension, "py", LaunchServices.kUTTypePlainText)
         self.assertIsInstance(v, unicode)
 
-        self.assertResultIsCFRetained(UTTypeCreateAllIdentifiersForTag)
-        v = UTTypeCreateAllIdentifiersForTag(kUTTagClassFilenameExtension, "py", kUTTypePlainText)
-        self.assertIsInstance(v, CFArrayRef)
+        self.assertResultIsCFRetained(LaunchServices.UTTypeCreateAllIdentifiersForTag)
+        v = LaunchServices.UTTypeCreateAllIdentifiersForTag(LaunchServices.kUTTagClassFilenameExtension, "py", LaunchServices.kUTTypePlainText)
+        self.assertIsInstance(v, LaunchServices.CFArrayRef)
         self.assertGreaterEqual(len(v), 1)
         self.assertIsInstance(v[0], unicode)
 
-        self.assertResultIsCFRetained(UTTypeCopyPreferredTagWithClass)
-        v = UTTypeCopyPreferredTagWithClass("public.python-script", kUTTagClassFilenameExtension)
+        self.assertResultIsCFRetained(LaunchServices.UTTypeCopyPreferredTagWithClass)
+        v = LaunchServices.UTTypeCopyPreferredTagWithClass("public.python-script", LaunchServices.kUTTagClassFilenameExtension)
         self.assertIsInstance(v, unicode)
 
-        self.assertResultIsBOOL(UTTypeEqual)
-        v = UTTypeEqual("public.python-script", "public.python-script")
+        self.assertResultIsBOOL(LaunchServices.UTTypeEqual)
+        v = LaunchServices.UTTypeEqual("public.python-script", "public.python-script")
         self.assertIs(v, True)
 
-        self.assertResultIsBOOL(UTTypeConformsTo)
-        v = UTTypeConformsTo("public.python-script", kUTTypePlainText)
+        self.assertResultIsBOOL(LaunchServices.UTTypeConformsTo)
+        v = LaunchServices.UTTypeConformsTo("public.python-script", LaunchServices.kUTTypePlainText)
         self.assertIs(v, True)
 
-        self.assertResultIsCFRetained(UTTypeCopyDescription)
-        v = UTTypeCopyDescription(kUTTypePlainText)
+        self.assertResultIsCFRetained(LaunchServices.UTTypeCopyDescription)
+        v = LaunchServices.UTTypeCopyDescription(LaunchServices.kUTTypePlainText)
         self.assertIsInstance(v, unicode)
 
-        self.assertResultIsCFRetained(UTTypeCopyDeclaration)
-        v = UTTypeCopyDeclaration(kUTTypePlainText)
-        self.assertIsInstance(v, CFDictionaryRef)
+        self.assertResultIsCFRetained(LaunchServices.UTTypeCopyDeclaration)
+        v = LaunchServices.UTTypeCopyDeclaration(LaunchServices.kUTTypePlainText)
+        self.assertIsInstance(v, LaunchServices.CFDictionaryRef)
 
-        self.assertResultIsCFRetained(UTTypeCopyDeclaringBundleURL)
-        v = UTTypeCopyDeclaringBundleURL(kUTTypePlainText)
-        self.assertIsInstance(v, CFURLRef)
+        self.assertResultIsCFRetained(LaunchServices.UTTypeCopyDeclaringBundleURL)
+        v = LaunchServices.UTTypeCopyDeclaringBundleURL(LaunchServices.kUTTypePlainText)
+        self.assertIsInstance(v, LaunchServices.CFURLRef)
 
-        self.assertResultIsCFRetained(UTCreateStringForOSType)
-        v = UTCreateStringForOSType(24353)
+        self.assertResultIsCFRetained(LaunchServices.UTCreateStringForOSType)
+        v = LaunchServices.UTCreateStringForOSType(24353)
         self.assertIsInstance(v, unicode)
 
-        v = UTGetOSTypeFromString(v)
+        v = LaunchServices.UTGetOSTypeFromString(v)
         self.assertEqual(v, 24353)
 
     @min_os_level('10.10')
     def testFunctions10_10(self):
-        self.assertResultIsCFRetained(UTTypeCopyAllTagsWithClass)
-        v = UTTypeCopyAllTagsWithClass(kUTTypeArchive, kUTTagClassFilenameExtension)
-        self.assertIsInstance(v, (CFArrayRef, type(None)))
+        self.assertResultIsCFRetained(LaunchServices.UTTypeCopyAllTagsWithClass)
+        v = LaunchServices.UTTypeCopyAllTagsWithClass(LaunchServices.kUTTypeArchive, LaunchServices.kUTTagClassFilenameExtension)
+        self.assertIsInstance(v, (LaunchServices.CFArrayRef, type(None)))
 
-        self.assertResultIsBOOL(UTTypeConformsTo)
-        v = UTTypeIsDeclared("public.python-script")
+        self.assertResultIsBOOL(LaunchServices.UTTypeConformsTo)
+        v = LaunchServices.UTTypeIsDeclared("public.python-script")
         self.assertTrue(v in (True, False))
 
-        self.assertResultIsBOOL(UTTypeIsDynamic)
-        v = UTTypeIsDynamic("public.python-script")
+        self.assertResultIsBOOL(LaunchServices.UTTypeIsDynamic)
+        v = LaunchServices.UTTypeIsDynamic("public.python-script")
         self.assertTrue(v in (True, False))
 
 

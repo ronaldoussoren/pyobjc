@@ -32,6 +32,72 @@ PyObject* PyObjC_TypeStr2CFTypeID = NULL;
 
 static NSAutoreleasePool* global_release_pool = nil;
 
+/* Calculate the current version of macOS in a format that 
+ * can be compared with MAC_OS_VERSION_X_... constants
+ */
+
+#if PyObjC_BUILD_RELEASE < 1010
+typedef struct {
+    long versionMajor;
+    long versionMinor;
+    long versionPatch;
+} NSOperatingSystemVersion;
+#endif
+
+static NSOperatingSystemVersion gSystemVersion = { 0, 0, 0 };
+
+static long
+calc_current_version(void)
+{
+#if PyObjC_BUILD_RELEASE >= 1010
+    if ([NSProcessInfo instancesRespondToSelector:@selector(operatingSystemVersion)]) {
+        NSAutoreleasePool* pool;
+
+        pool = [[NSAutoreleasePool alloc] init];
+        gSystemVersion = [[NSProcessInfo processInfo] operatingSystemVersion];
+	[pool release];
+
+
+    } else
+#endif
+    {
+	/* Code path for macOS 10.9 or earlier. Don't use Gestalt because that's deprecated. */
+        NSAutoreleasePool* pool;
+        NSDictionary* plist;
+        NSArray* parts;
+
+        pool = [[NSAutoreleasePool alloc] init];
+
+        plist = [NSDictionary dictionaryWithContentsOfFile:@"/System/Library/CoreServices/SystemVersion.plist"];
+        if (!plist) {
+            NSLog(@"Cannot determine system version");
+            return 0;
+        }
+
+        parts = [[plist valueForKey:@"ProductVersion"] componentsSeparatedByString:@"."];
+
+        if (!parts || [parts count] < 2) {
+            NSLog(@"Cannot determine system version");
+            return 0;
+        }
+        
+        gSystemVersion.majorVersion = [[parts objectAtIndex:0] intValue]; 
+        gSystemVersion.minorVersion = [[parts objectAtIndex:1] intValue]; 
+
+        if (parts.count >= 3) {
+            gSystemVersion.patchVersion = [[parts objectAtIndex:2] intValue]; 
+        }
+	
+        [pool release];
+    }
+
+    if (gSystemVersion.majorVersion >= 10 || gSystemVersion.minorVersion >= 10) {
+        return gSystemVersion.majorVersion * 10000 + gSystemVersion.minorVersion * 100 + gSystemVersion.patchVersion;
+    } else {
+        return gSystemVersion.majorVersion * 100 + gSystemVersion.minorVersion;
+    }
+}
+
 @interface OC_NSAutoreleasePoolCollector: NSObject
   /*
    * This class is used to automaticly reset the
@@ -143,6 +209,52 @@ PyObject *kwds)
 PyObject* PyObjCStrBridgeWarning = NULL;
 
 #endif /* PY_VERSION_MAJOR == 2 */
+
+
+PyDoc_STRVAR(macos_available_doc,
+  "macos_available(major, minor, patch=0)\n"
+  CLINIC_SEP
+  "\n"
+  "Return true if the current macOS release is "
+  "at least the provided version");
+
+static PyObject* 
+macos_available(PyObject* self __attribute__((__unused__)), 
+    PyObject* args, PyObject* kwds)
+{
+static char* keywords[] = { "major", "minor", "patch", NULL };
+    long major;
+    long minor;
+    long patch = 0;
+
+    if (!PyArg_ParseTupleAndKeywords(args, kwds, "ll|l",
+            keywords, &major, &minor, &patch)) {
+        return NULL;
+    }
+
+    if (major > gSystemVersion.majorVersion) {
+        Py_RETURN_FALSE;
+    } else if (major == gSystemVersion.majorVersion) {
+        if (minor > gSystemVersion.minorVersion) {
+             Py_RETURN_FALSE;
+        } else if (minor == gSystemVersion.minorVersion) {
+             if (patch > gSystemVersion.patchVersion) {
+                 Py_RETURN_FALSE;
+             } else {
+                 Py_RETURN_TRUE;
+             }
+        } else {
+             Py_RETURN_TRUE;
+        }
+
+    } else {
+        Py_RETURN_TRUE;
+    }
+}
+        
+
+     
+
 
 PyDoc_STRVAR(lookUpClass_doc,
   "lookUpClass(class_name)\n"
@@ -1834,6 +1946,12 @@ static PyMethodDef mod_methods[] = {
         .ml_doc     = objc_splitStructSignature_doc,
     },
     {
+        .ml_name    = "macos_available",
+        .ml_meth    = (PyCFunction)macos_available,
+        .ml_flags   = METH_VARARGS|METH_KEYWORDS,
+        .ml_doc     = macos_available_doc
+    },
+    {
         .ml_name    = "lookUpClass",
         .ml_meth    = (PyCFunction)lookUpClass,
         .ml_flags   = METH_VARARGS|METH_KEYWORDS,
@@ -2490,7 +2608,10 @@ PyObjC_MODULE_INIT(_objc)
 #endif /* MAC_OS_X_VERSION_MIN_REQUIRED < MAC_OS_X_VERSION_10_6 */
 #endif /* PyObjC_BUILD_RELEASE >= 1006 */
 
-
+    
+    if (PyModule_AddIntConstant(m, "MAC_OS_X_VERSION_CURRENT", calc_current_version()) < 0) {
+        PyObjC_INITERROR();
+    }
 
 #ifdef MAC_OS_X_VERSION_MAX_ALLOWED
     /* An easy way to check for the MacOS X version we did build for */
@@ -2504,6 +2625,12 @@ PyObjC_MODULE_INIT(_objc)
         PyObjC_INITERROR();
     }
 #endif /* MAC_OS_X_VERSION_MIN_REQUIRED */
+
+#ifdef MAC_OS_X_VERSION_10_0
+    if (PyModule_AddIntConstant(m, "MAC_OS_X_VERSION_10_0", MAC_OS_X_VERSION_10_0) < 0) {
+        PyObjC_INITERROR();
+    }
+#endif /* MAC_OS_X_VERSION_10_1 */
 
 #ifdef MAC_OS_X_VERSION_10_1
     if (PyModule_AddIntConstant(m, "MAC_OS_X_VERSION_10_1", MAC_OS_X_VERSION_10_1) < 0) {
@@ -2654,6 +2781,24 @@ PyObjC_MODULE_INIT(_objc)
         PyObjC_INITERROR();
     }
 #endif /* MAC_OS_X_VERSION_10_13_4 */
+
+#ifdef MAC_OS_X_VERSION_10_13_5
+    if (PyModule_AddIntConstant(m, "MAC_OS_X_VERSION_10_13_5", MAC_OS_X_VERSION_10_13_5) < 0) {
+        PyObjC_INITERROR();
+    }
+#endif /* MAC_OS_X_VERSION_10_13_5 */
+
+#ifdef MAC_OS_X_VERSION_10_13_6
+    if (PyModule_AddIntConstant(m, "MAC_OS_X_VERSION_10_13_6", MAC_OS_X_VERSION_10_13_6) < 0) {
+        PyObjC_INITERROR();
+    }
+#endif /* MAC_OS_X_VERSION_10_13_6 */
+
+#ifdef MAC_OS_X_VERSION_10_14
+    if (PyModule_AddIntConstant(m, "MAC_OS_X_VERSION_10_14", MAC_OS_X_VERSION_10_14) < 0) {
+        PyObjC_INITERROR();
+    }
+#endif /* MAC_OS_X_VERSION_10_14 */
 
     if (PyModule_AddIntConstant(m, "PyObjC_BUILD_RELEASE", PyObjC_BUILD_RELEASE) < 0) {
         PyObjC_INITERROR();

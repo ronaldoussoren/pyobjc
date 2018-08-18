@@ -2686,9 +2686,31 @@ depythonify_c_value(const char *type, PyObject *argument, void *datum)
         return 0;
 
     case _C_UNICHAR:
+#if PY_VERSION_HEX < 0x03030000
         if (PyUnicode_Check(argument) && PyUnicode_GetSize(argument) == 1) {
             *(UniChar*)datum = (UniChar)(*PyUnicode_AsUnicode(argument));
             return 0;
+#else /* PY_VERSION_HEX >= 0x03030000 */
+        if (PyUnicode_Check(argument) && PyUnicode_GetLength(argument) == 1) {
+
+            /* Need to guard against values outside of the BMP, which cannot be
+             * converted to UniChar
+             */
+            switch (PyUnicode_KIND(argument)) {
+            case PyUnicode_1BYTE_KIND:
+            case PyUnicode_2BYTE_KIND:
+                break;
+
+            default:
+                PyErr_Format(PyExc_ValueError, "Expecting string of length 1, got a '%s'",
+                    Py_TYPE(argument)->tp_name);
+                return -1;
+            }
+            *(UniChar*)datum = (UniChar)PyUnicode_ReadChar(argument, 0);
+            return 0;
+
+#endif /* PY_VERSION_HEX >= 0x03030000 */
+
 #if PY_MAJOR_VERSION == 2
         } else if (PyString_Check(argument)) {
             PyObject* u = PyUnicode_FromObject(argument);

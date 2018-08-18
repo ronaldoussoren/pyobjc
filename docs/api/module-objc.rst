@@ -263,6 +263,11 @@ for objects.
 Utilities
 ---------
 
+.. function:: macos_available(major, minor, patch=0) 
+
+   Returns true iff the current macOS version is at least the version
+   specified. Use this like the "@available" construct in Objective-C.
+
 .. function:: allocateBuffer(size)
 
    Returns a writable buffer object of *size* bytes.
@@ -1153,6 +1158,24 @@ Constants
 
    The value of :c:data:`MAC_OS_X_VERSION_MIN_REQUIRED` when PyObjC was
    compiled.
+
+.. data:: MAC_OS_X_VERSION_CURRENT
+
+   The currently running macOS version in the same format as
+   the various ``MAC_OS_X_VERSION_10_N`` constants.
+
+   The intended use is with API availability checks, more or less like
+   the ``@available`` construct in Objective-C, that is:
+
+   .. sourcecode:: python
+
+      if objc.MAC_OS_X_VERSION_CURRENT >= objc.MAC_OS_X_VERSION_10_14:
+         # Use API introducted in macOS 10.14
+         ...
+
+      else:
+         # Use fallback implementation
+         ...
 
 .. data:: PyObjC_BUILD_RELEASE
 

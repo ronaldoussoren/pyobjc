@@ -3,6 +3,26 @@
 {
  "definitions": {
   "enum": {
+   "ICReturnDeviceFailedToCompleteTransfer": { "value": -9956 },
+   "ICReturnDeviceFailedToSendData": { "value": -9957 },
+   "ICReturnSessionNotOpened": { "value": -9958 },
+   "ICReturnThumbnailNotAvailable": { "value": -21000 },
+   "ICReturnThumbnailAlreadyFetching": { "value": -21001 },
+   "ICReturnThumbnailCanceled": { "value": -21002 },
+   "ICReturnThumbnailInvalid": { "value": -21003 },
+   "ICReturnErrorDeviceEjected": { "value": -21300 },
+   "ICReturnMetadataNotAvailable": { "value": -21050 },
+   "ICReturnMetadataAlreadyFetching": { "value": -21051 },
+   "ICReturnMetadataCanceled": { "value": -21052 },
+   "ICReturnMetadataInvalid": { "value": -21053 },
+   "ICReturnMultiErrorDictionary": { "value": -30000 },
+   "ICReturnCodeThumbnailOffset": { "value": -21000 },
+   "ICReturnCodeMetadataOffset": { "value": -21050 },
+   "ICReturnCodeDownloadOffset": { "value": -21100 },
+   "ICReturnCodeDeleteOffset": { "value": -21150 },
+   "ICReturnCodeExFATOffset": { "value": -21200 },
+   "ICReturnCodePTPOffset": { "value": -21250 },
+   "ICReturnCodeSystemOffset": { "value": -21300 },
    "ICReturnDeviceIsBusyEnumerating": { "value": -9954 },
    "ICReturnDeviceCommandGeneralFailure": { "value": -9955 }
   },

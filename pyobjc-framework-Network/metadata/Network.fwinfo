@@ -1,0 +1,488 @@
+// objective.metadata exceptions file, see its document
+// for information on how to update this file.
+{
+ "definitions": {
+  "classes": {},
+  "formal_protocols": {},
+  "functions": {
+   "nw_advertise_descriptor_create_bonjour_service": {
+    "args": {
+     "0": { "type_override": "^t", "type_modifier": "n", "c_array_delimited_by_null": true },
+     "1": { "type_override": "^t", "type_modifier": "n", "c_array_delimited_by_null": true },
+     "2": { "type_override": "^t", "type_modifier": "n", "c_array_delimited_by_null": true }
+    },
+    "retval": {
+     "already_retained": true
+    }
+   },
+   "nw_advertise_descriptor_set_txt_record": {
+    "args": {
+     "1": { "type_modifier": "n", "c_array_length_in_arg": 2 }
+    }
+   },
+   "nw_connection_copy_description": {
+    "retval": {}
+   },
+   "nw_content_context_create": {
+    "retval": { "already_retained": true },
+    "args": {
+     "0": { "type_override": "^t", "c_array_delimited_by_null": true, "type_modifier": "n" }
+    }
+   },
+   "nw_protocol_stack_copy_internet_protocol": {
+    "retval": { "already_retained": true }
+   },
+   "nw_protocol_stack_copy_transport_protocol": {
+    "retval": { "already_retained": true }
+   },
+   "nw_connection_copy_protocol_metadata": {
+    "retval": { "already_retained": true }
+   },
+   "nw_parameters_copy_default_protocol_stack": {
+    "retval": { "already_retained": true }
+   },
+   "nw_parameters_copy_local_endpoint": {
+    "retval": { "already_retained": true }
+   },
+   "nw_connection_copy_current_path": {
+    "retval": { "already_retained": true }
+   },
+   "nw_parameters_copy_required_interface": {
+    "retval": { "already_retained": true }
+   },
+   "nw_connection_copy_parameters": {
+    "retval": { "already_retained": true }
+   },
+   "nw_udp_create_metadata": {
+    "retval": { "already_retained": true }
+   },
+   "nw_listener_create_with_connection": {
+    "retval": { "already_retained": true }
+   },
+   "nw_connection_copy_endpoint": {
+    "retval": { "already_retained": true }
+   },
+   "nw_tcp_create_options": {
+    "retval": { "already_retained": true }
+   },
+   "nw_path_monitor_create_with_type": {
+    "retval": { "already_retained": true }
+   },
+   "nw_udp_create_options": {
+    "retval": { "already_retained": true }
+   },
+   "nw_listener_create": {
+    "retval": { "already_retained": true }
+   },
+   "nw_path_copy_effective_remote_endpoint": {
+    "retval": { "already_retained": true }
+   },
+   "nw_parameters_create": {
+    "retval": { "already_retained": true }
+   },
+   "nw_parameters_copy": {
+    "retval": { "already_retained": true }
+   },
+   "nw_protocol_metadata_copy_definition": {
+    "retval": { "already_retained": true }
+   },
+   "nw_parameters_create_secure_udp": {
+    "retval": { "already_retained": true },
+    "args": {
+     "0": {
+      "callable": {
+       "retval": { "type": "v" },
+       "arguments": {
+        "0": { "type": "^v" },
+        "1": { "type": "@" }
+       }
+      }
+     },
+     "1": {
+      "callable": {
+       "retval": { "type": "v" },
+       "arguments": {
+        "0": { "type": "^v" },
+        "1": { "type": "@" }
+       }
+      }
+     }
+    }
+   },
+   "nw_path_copy_effective_local_endpoint": {
+    "retval": { "already_retained": true }
+   },
+   "nw_ip_create_metadata": {
+    "retval": { "already_retained": true }
+   },
+   "nw_connection_create": {
+    "retval": { "already_retained": true }
+   },
+   "nw_parameters_create_secure_tcp": {
+    "retval": { "already_retained": true },
+    "args": {
+     "0": {
+      "callable": {
+       "retval": { "type": "v" },
+       "arguments": {
+        "0": { "type": "^v" },
+        "1": { "type": "@" }
+       }
+      }
+     },
+     "1": {
+      "callable": {
+       "retval": { "type": "v" },
+       "arguments": {
+        "0": { "type": "^v" },
+        "1": { "type": "@" }
+       }
+      }
+     }
+    }
+   },
+   "nw_path_monitor_create": {
+    "retval": { "already_retained": true }
+   },
+   "nw_protocol_copy_tcp_definition": {
+    "retval": { "already_retained": true }
+   },
+   "nw_protocol_copy_udp_definition": {
+    "retval": { "already_retained": true }
+   },
+   "nw_protocol_copy_tls_definition": {
+    "retval": { "already_retained": true }
+   },
+   "nw_protocol_options_copy_definition": {
+    "retval": { "already_retained": true }
+   },
+   "nw_tls_copy_sec_protocol_metadata": {
+    "retval": { "already_retained": true }
+   },
+   "nw_tls_copy_sec_protocol_options": {
+    "retval": { "already_retained": true }
+   },
+   "nw_content_context_copy_protocol_metadata": {
+    "retval": { "already_retained": true }
+   },
+   "nw_content_context_copy_antecedent": {
+    "retval": { "already_retained": true }
+   },
+   "nw_content_context_get_identifier": {
+    "retval": { "type_override": "^t", "c_array_delimited_by_null": true }
+   },
+   "nw_endpoint_copy_address_string": {
+    "free_result": true,
+    "retval": { "type_override": "^t", "c_array_delimited_by_null": true }
+   },
+   "nw_endpoint_copy_port_string": {
+    "free_result": true,
+    "retval": { "type_override": "^t", "c_array_delimited_by_null": true }
+   },
+   "nw_endpoint_create_address": {
+    "retval": { "already_retained": true },
+    "args": {
+     "0": { "type_modifier": "n" }
+    }
+   },
+   "nw_endpoint_create_bonjour_service": {
+    "retval": { "already_retained": true },
+    "args": {
+     "0": { "type_override": "^t", "c_array_delimited_by_null": true, "type_modifier": "n" },
+     "1": { "type_override": "^t", "c_array_delimited_by_null": true, "type_modifier": "n" },
+     "2": { "type_override": "^t", "c_array_delimited_by_null": true, "type_modifier": "n" }
+    }
+   },
+   "nw_endpoint_create_host": {
+    "retval": { "already_retained": true },
+    "args": {
+     "0": { "type_override": "^t", "c_array_delimited_by_null": true, "type_modifier": "n" },
+     "1": { "type_override": "^t", "c_array_delimited_by_null": true, "type_modifier": "n" }
+    }
+   },
+   "nw_endpoint_get_address": {
+    "retval": {}
+   },
+   "nw_endpoint_get_bonjour_service_domain": {
+    "retval": { "type_override": "^t", "c_array_delimited_by_null": true }
+   },
+   "nw_endpoint_get_bonjour_service_name": {
+    "retval": { "type_override": "^t", "c_array_delimited_by_null": true }
+   },
+   "nw_endpoint_get_bonjour_service_type": {
+    "retval": { "type_override": "^t", "c_array_delimited_by_null": true }
+   },
+   "nw_endpoint_get_hostname": {
+    "retval": { "type_override": "^t", "c_array_delimited_by_null": true }
+   },
+   "nw_error_copy_cf_error": {
+    "retval": { "already_cfretained": true }
+   },
+   "nw_interface_get_name": {
+    "retval": { "type_override": "^t", "c_array_delimited_by_null": true }
+   },
+   "nw_listener_create_with_port": {
+    "retval": { "already_retained": true },
+    "args": {
+     "0": { "type_override": "^t", "c_array_delimited_by_null": true, "type_modifier": "n"}
+    }
+   },
+   "nw_connection_set_better_path_available_handler": {
+    "args": {
+     "1": {
+      "callable": {
+       "retval": { "type": "v" },
+       "arguments": {
+        "0": { "type": "^v" },
+        "1": { "type": "B" }
+       }
+      }
+     }
+    }
+   },
+   "nw_listener_set_advertised_endpoint_changed_handler": {
+    "args": {
+     "1": {
+      "callable": {
+       "retval": { "type": "v" },
+       "arguments": {
+        "0": { "type": "^v" },
+        "1": { "type": "@" },
+        "2": { "type": "B" }
+       }
+      }
+     }
+    }
+   },
+   "nw_listener_set_new_connection_handler": {
+    "args": {
+     "1": {
+      "callable": {
+       "retval": { "type": "v" },
+       "arguments": {
+        "0": { "type": "^v" },
+        "1": { "type": "@" }
+       }
+      }
+     }
+    }
+   },
+   "nw_path_monitor_set_update_handler": {
+    "args": {
+     "1": {
+      "callable": {
+       "retval": { "type": "v" },
+       "arguments": {
+        "0": { "type": "^v" },
+        "1": { "type": "@" }
+       }
+      }
+     }
+    }
+   },
+   "nw_connection_set_viability_changed_handler": {
+    "args": {
+     "1": {
+      "callable": {
+       "retval": { "type": "v" },
+       "arguments": {
+        "0": { "type": "^v" },
+        "1": { "type": "B" }
+       }
+      }
+     }
+    }
+   },
+   "nw_path_monitor_set_cancel_handler": {
+    "args": {
+     "1": {
+      "callable": {
+       "retval": { "type": "v" },
+       "arguments": {
+        "0": { "type": "^v" }
+       }
+      }
+     }
+    }
+   },
+   "nw_connection_set_state_changed_handler": {
+    "args": {
+     "1": {
+      "callable": {
+       "retval": { "type": "v" },
+       "arguments": {
+        "0": { "type": "^v" },
+        "1": { "type": "i" },
+        "2": { "type": "@" }
+       }
+      }
+     }
+    }
+   },
+   "nw_listener_set_state_changed_handler": {
+    "args": {
+     "1": {
+      "callable": {
+       "retval": { "type": "v" },
+       "arguments": {
+        "0": { "type": "^v" },
+        "1": { "type": "i" },
+        "2": { "type": "@" }
+       }
+      }
+     }
+    }
+   },
+   "nw_path_enumerate_interfaces": {
+    "args": {
+     "1": {
+      "callable": {
+       "retval": { "type": "B" },
+       "arguments": {
+        "0": { "type": "^v" },
+        "1": { "type": "@" }
+       }
+      }
+     }
+    }
+   },
+   "nw_connection_set_path_changed_handler": {
+    "args": {
+     "1": {
+      "callable": {
+       "retval": { "type": "v" },
+       "arguments": {
+        "0": { "type": "^v" },
+        "1": { "type": "@" }
+       }
+      }
+     }
+    }
+   },
+   "nw_parameters_iterate_prohibited_interface_types": {
+    "args": {
+     "1": {
+      "callable": {
+       "retval": { "type": "B" },
+       "arguments": {
+        "0": { "type": "^v" },
+        "1": { "type": "i" }
+       }
+      }
+     }
+    }
+   },
+   "nw_parameters_iterate_prohibited_interfaces": {
+    "args": {
+     "1": {
+      "callable": {
+       "retval": { "type": "B" },
+       "arguments": {
+        "0": { "type": "^v" },
+        "1": { "type": "@" }
+       }
+      }
+     }
+    }
+   },
+   "nw_connection_batch": {
+    "args": {
+     "1": {
+      "callable": {
+       "retval": { "type": "v" },
+       "arguments": {
+        "0": { "type": "^v" }
+       }
+      }
+     }
+    }
+   },
+   "nw_connection_send": {
+    "args": {
+     "4": {
+      "callable": {
+       "retval": { "type": "v" },
+       "arguments": {
+        "0": { "type": "^v" },
+        "1": { "type": "@" }
+       }
+      }
+     }
+    }
+   },
+   "nw_connection_receive_message": {
+    "args": {
+     "1": {
+      "callable": {
+       "retval": { "type": "v" },
+       "arguments": {
+        "0": { "type": "^v" },
+        "1": { "type": "@" },
+        "2": { "type": "@" },
+        "3": { "type": "B" },
+        "4": { "type": "@" }
+       }
+      }
+     }
+    }
+   },
+   "nw_connection_receive": {
+    "args": {
+     "3": {
+      "callable": {
+       "retval": { "type": "v" },
+       "arguments": {
+        "0": { "type": "^v" },
+        "1": { "type": "@" },
+        "2": { "type": "@" },
+        "3": { "type": "B" },
+        "4": { "type": "@" }
+       }
+      }
+     }
+    }
+   },
+   "nw_content_context_foreach_protocol_metadata": {
+    "args": {
+     "1": {
+      "callable": {
+       "retval": { "type": "v" },
+       "arguments": {
+        "0": { "type": "^v" },
+        "1": { "type": "@" },
+        "2": { "type": "@" }
+       }
+      }
+     }
+    }
+   },
+   "nw_protocol_stack_iterate_application_protocols": {
+    "args": {
+     "1": {
+      "callable": {
+       "retval": { "type": "v" },
+       "arguments": {
+        "0": { "type": "^v" },
+        "1": { "type": "@" }
+       }
+      }
+     }
+    }
+   },
+   "nw_release": {
+    "ignore": true,
+    "args": {
+     "0": {}
+    }
+   },
+   "nw_retain": {
+    "ignore": true,
+    "args": {
+     "0": {}
+    },
+    "retval": {}
+   }
+  },
+  "informal_protocols": {}
+ }
+}

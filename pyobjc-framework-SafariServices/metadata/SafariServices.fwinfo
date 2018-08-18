@@ -6,7 +6,8 @@
    "SFErrorLoadingInterrupted": { "value": 3 },
    "SFSafariServicesVersion10_0": { "value": 0 },
    "SFSafariServicesVersion10_1": { "value": 1 },
-   "SFSafariServicesVersion11_0": { "value": 2 }
+   "SFSafariServicesVersion11_0": { "value": 2 },
+   "SFSafariServicesVersion12_0": { "value": 3 }
   },
   "classes": {
    "NSObject": {

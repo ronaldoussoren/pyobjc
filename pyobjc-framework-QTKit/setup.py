@@ -14,7 +14,7 @@ Note that this framework is deprecated in OSX 10.9
 from pyobjc_setup import setup, Extension
 import os
 
-VERSION="4.2.3b1"
+VERSION="5.0b1"
 
 setup(
     name='pyobjc-framework-QTKit',

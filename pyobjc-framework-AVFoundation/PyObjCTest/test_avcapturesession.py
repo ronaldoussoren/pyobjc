@@ -37,6 +37,11 @@ class TestAVCaptureSession (TestCase):
         self.assertIsInstance(AVFoundation.AVCaptureSessionPresetiFrame960x540, unicode)
         self.assertIsInstance(AVFoundation.AVCaptureSessionPresetiFrame1280x720, unicode)
 
+    @min_os_level('10.14')
+    def testConstants10_14(self):
+        self.assertIsInstance(AVFoundation.AVCaptureSessionWasInterruptedNotification, unicode)
+        self.assertIsInstance(AVFoundation.AVCaptureSessionInterruptionEndedNotification, unicode)
+
     @min_os_level('10.7')
     def testMethods(self):
         self.assertResultIsBOOL(AVFoundation.AVCaptureSession.canSetSessionPreset_)
@@ -61,6 +66,7 @@ class TestAVCaptureSession (TestCase):
 
         self.assertResultIsBOOL(AVFoundation.AVCaptureAudioChannel.isEnabled)
         self.assertArgIsBOOL(AVFoundation.AVCaptureAudioChannel.setEnabled_, 0)
+
 
 if __name__ == "__main__":
     main()

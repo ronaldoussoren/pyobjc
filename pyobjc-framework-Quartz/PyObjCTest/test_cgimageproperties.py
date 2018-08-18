@@ -4,6 +4,9 @@ from Quartz import *
 import Quartz
 
 class TestCGImageProperties (TestCase):
+    @min_os_level('10.14')
+    def testFunctions(self):
+        CGImageSourceGetPrimaryImageIndex
 
     def testConstants(self):
         self.assertEqual(IMAGEIO_PNG_NO_FILTERS, 0x00)
@@ -415,6 +418,9 @@ class TestCGImageProperties (TestCase):
         self.assertIsInstance(kCGImagePropertyAuxiliaryData, unicode)
         self.assertIsInstance(kCGImagePropertyAuxiliaryDataType, unicode)
 
+        # New definition in Xcode 10.14 SDK
+        self.assertIsInstance(kCGImagePropertyPrimaryImage, unicode)
+
     @min_os_level('10.13.4')
     def testConstants10_13_4(self):
         self.assertIsInstance(kCGImagePropertyIPTCExtAboutCvTerm, unicode)
@@ -597,6 +603,83 @@ class TestCGImageProperties (TestCase):
         self.assertIsInstance(kCGImagePropertyIPTCExtWorkflowTagCvTermId, unicode)
         self.assertIsInstance(kCGImagePropertyIPTCExtWorkflowTagCvTermName, unicode)
         self.assertIsInstance(kCGImagePropertyIPTCExtWorkflowTagCvTermRefinedAbout, unicode)
+
+    @min_os_level('10.14')
+    def testConstants10_14(self):
+        self.assertIsInstance(kCGImagePropertyDNGActiveArea, unicode)
+        self.assertIsInstance(kCGImagePropertyDNGAnalogBalance, unicode)
+        self.assertIsInstance(kCGImagePropertyDNGAntiAliasStrength, unicode)
+        self.assertIsInstance(kCGImagePropertyDNGAsShotICCProfile, unicode)
+        self.assertIsInstance(kCGImagePropertyDNGAsShotPreProfileMatrix, unicode)
+        self.assertIsInstance(kCGImagePropertyDNGAsShotProfileName, unicode)
+        self.assertIsInstance(kCGImagePropertyDNGBaselineExposureOffset, unicode)
+        self.assertIsInstance(kCGImagePropertyDNGBayerGreenSplit, unicode)
+        self.assertIsInstance(kCGImagePropertyDNGBestQualityScale, unicode)
+        self.assertIsInstance(kCGImagePropertyDNGBlackLevelDeltaH, unicode)
+        self.assertIsInstance(kCGImagePropertyDNGBlackLevelDeltaV, unicode)
+        self.assertIsInstance(kCGImagePropertyDNGBlackLevelRepeatDim, unicode)
+        self.assertIsInstance(kCGImagePropertyDNGCFALayout, unicode)
+        self.assertIsInstance(kCGImagePropertyDNGCFAPlaneColor, unicode)
+        self.assertIsInstance(kCGImagePropertyDNGChromaBlurRadius, unicode)
+        self.assertIsInstance(kCGImagePropertyDNGColorimetricReference, unicode)
+        self.assertIsInstance(kCGImagePropertyDNGCurrentICCProfile, unicode)
+        self.assertIsInstance(kCGImagePropertyDNGCurrentPreProfileMatrix, unicode)
+        self.assertIsInstance(kCGImagePropertyDNGDefaultBlackRender, unicode)
+        self.assertIsInstance(kCGImagePropertyDNGDefaultCropOrigin, unicode)
+        self.assertIsInstance(kCGImagePropertyDNGDefaultCropSize, unicode)
+        self.assertIsInstance(kCGImagePropertyDNGDefaultScale, unicode)
+        self.assertIsInstance(kCGImagePropertyDNGDefaultUserCrop, unicode)
+        self.assertIsInstance(kCGImagePropertyDNGExtraCameraProfiles, unicode)
+        self.assertIsInstance(kCGImagePropertyDNGForwardMatrix1, unicode)
+        self.assertIsInstance(kCGImagePropertyDNGForwardMatrix2, unicode)
+        self.assertIsInstance(kCGImagePropertyDNGLinearizationTable, unicode)
+        self.assertIsInstance(kCGImagePropertyDNGLinearResponseLimit, unicode)
+        self.assertIsInstance(kCGImagePropertyDNGMakerNoteSafety, unicode)
+        self.assertIsInstance(kCGImagePropertyDNGMaskedAreas, unicode)
+        self.assertIsInstance(kCGImagePropertyDNGNewRawImageDigest, unicode)
+        self.assertIsInstance(kCGImagePropertyDNGNoiseReductionApplied, unicode)
+        self.assertIsInstance(kCGImagePropertyDNGOpcodeList1, unicode)
+        self.assertIsInstance(kCGImagePropertyDNGOpcodeList2, unicode)
+        self.assertIsInstance(kCGImagePropertyDNGOpcodeList3, unicode)
+        self.assertIsInstance(kCGImagePropertyDNGOriginalBestQualityFinalSize, unicode)
+        self.assertIsInstance(kCGImagePropertyDNGOriginalDefaultCropSize, unicode)
+        self.assertIsInstance(kCGImagePropertyDNGOriginalDefaultFinalSize, unicode)
+        self.assertIsInstance(kCGImagePropertyDNGOriginalRawFileData, unicode)
+        self.assertIsInstance(kCGImagePropertyDNGOriginalRawFileDigest, unicode)
+        self.assertIsInstance(kCGImagePropertyDNGOriginalRawFileName, unicode)
+        self.assertIsInstance(kCGImagePropertyDNGPreviewApplicationName, unicode)
+        self.assertIsInstance(kCGImagePropertyDNGPreviewApplicationVersion, unicode)
+        self.assertIsInstance(kCGImagePropertyDNGPreviewColorSpace, unicode)
+        self.assertIsInstance(kCGImagePropertyDNGPreviewDateTime, unicode)
+        self.assertIsInstance(kCGImagePropertyDNGPreviewSettingsDigest, unicode)
+        self.assertIsInstance(kCGImagePropertyDNGPreviewSettingsName, unicode)
+        self.assertIsInstance(kCGImagePropertyDNGProfileCopyright, unicode)
+        self.assertIsInstance(kCGImagePropertyDNGProfileEmbedPolicy, unicode)
+        self.assertIsInstance(kCGImagePropertyDNGProfileHueSatMapData1, unicode)
+        self.assertIsInstance(kCGImagePropertyDNGProfileHueSatMapData2, unicode)
+        self.assertIsInstance(kCGImagePropertyDNGProfileHueSatMapDims, unicode)
+        self.assertIsInstance(kCGImagePropertyDNGProfileHueSatMapEncoding, unicode)
+        self.assertIsInstance(kCGImagePropertyDNGProfileLookTableData, unicode)
+        self.assertIsInstance(kCGImagePropertyDNGProfileLookTableDims, unicode)
+        self.assertIsInstance(kCGImagePropertyDNGProfileLookTableEncoding, unicode)
+        self.assertIsInstance(kCGImagePropertyDNGProfileName, unicode)
+        self.assertIsInstance(kCGImagePropertyDNGProfileToneCurve, unicode)
+        self.assertIsInstance(kCGImagePropertyDNGRawDataUniqueID, unicode)
+        self.assertIsInstance(kCGImagePropertyDNGRawImageDigest, unicode)
+        self.assertIsInstance(kCGImagePropertyDNGRawToPreviewGain, unicode)
+        self.assertIsInstance(kCGImagePropertyDNGReductionMatrix1, unicode)
+        self.assertIsInstance(kCGImagePropertyDNGReductionMatrix2, unicode)
+        self.assertIsInstance(kCGImagePropertyDNGRowInterleaveFactor, unicode)
+        self.assertIsInstance(kCGImagePropertyDNGShadowScale, unicode)
+        self.assertIsInstance(kCGImagePropertyDNGSubTileBlockSize, unicode)
+
+        self.assertIsInstance(kCGImageAuxiliaryDataTypePortraitEffectsMatte, unicode)
+
+        self.assertIsInstance(kCGImagePropertyPNGComment, unicode)
+        self.assertIsInstance(kCGImagePropertyPNGDisclaimer, unicode)
+        self.assertIsInstance(kCGImagePropertyPNGSource, unicode)
+        self.assertIsInstance(kCGImagePropertyPNGWarning, unicode)
+
 
 
 if __name__ == "__main__":

@@ -54,6 +54,10 @@
     "kColorSyncByteOrder32Big": { "value": 16384 }
   },
   "externs": {
+   "kColorSyncTranformInfo": { "typestr": "@" },
+   "kColorSyncTransformCreator": { "typestr": "@" },
+   "kColorSyncTransformSrcSpace": { "typestr": "@" },
+   "kColorSyncTransformDstSpace": { "typestr": "@" },
    "kColorSyncConversionMatrix": { "typestr": "@" },
    "kCMMInitializeLinkProfileProcName": { "typestr": "@" },
    "kCMMInitializeTransformProcName": { "typestr": "@" },
@@ -172,7 +176,7 @@
    "kColorSyncConvertThreadCount": { "typestr": "@" },
    "kColorSyncConvertUseVectorUnit": { "typestr": "@" },
    "kColorSyncConvertUseExtendedRange": { "typestr": "@" },
-   "kColorSyncTranformInfo": { "typestr": "@" },
+   "kColorSyncTransformInfo": { "typestr": "@" },
    "kColorSyncTransformCreator": { "typestr": "@" },
    "kColorSyncTransformSrcSpace": { "typestr": "@" },
    "kColorSyncTransformDstSpace": { "typestr": "@" },

@@ -23,6 +23,22 @@ class TestNSDatePickerCell (TestCase):
         self.assertEqual(NSYearMonthDayDatePickerElementFlag, 0x00e0)
         self.assertEqual(NSEraDatePickerElementFlag, 0x0100)
 
+        self.assertEqual(NSDatePickerStyleTextFieldAndStepper, 0)
+        self.assertEqual(NSDatePickerStyleClockAndCalendar, 1)
+        self.assertEqual(NSDatePickerStyleTextField, 2)
+
+        self.assertEqual(NSDatePickerModeSingle, 0)
+        self.assertEqual(NSDatePickerModeRange, 1)
+
+        self.assertEqual(NSDatePickerElementFlagHourMinute, 0x000c)
+        self.assertEqual(NSDatePickerElementFlagHourMinuteSecond, 0x000e)
+        self.assertEqual(NSDatePickerElementFlagTimeZone, 0x0010)
+
+        self.assertEqual(NSDatePickerElementFlagYearMonth, 0x00c0)
+        self.assertEqual(NSDatePickerElementFlagYearMonthDay, 0x00e0)
+        self.assertEqual(NSDatePickerElementFlagEra, 0x0100)
+
+
     def testMethods(self):
         o = TestNSDatePickerHelper.alloc().init()
         m = o.datePickerCell_validateProposedDateValue_timeInterval_.__metadata__()

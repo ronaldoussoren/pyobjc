@@ -23,6 +23,10 @@ class TestAVAsset (TestCase):
         self.assertResultIsBOOL(AVFoundation.AVAsset.containsFragments)
         self.assertResultIsBOOL(AVFoundation.AVAsset.isCompatibleWithAirPlayVideo)
 
+    @min_os_level('10.12.4')
+    def testMethods10_12_4(self):
+        self.assertResultIsBOOL(AVFoundation.AVURLAsset.mayRequireContentKeysForMediaDataProcessing)
+
     @min_os_level('10.7')
     def testConstants(self):
         self.assertEqual(AVFoundation.AVAssetReferenceRestrictionForbidNone, 0)
@@ -34,10 +38,6 @@ class TestAVAsset (TestCase):
 
         self.assertIsInstance(AVFoundation.AVURLAssetPreferPreciseDurationAndTimingKey, unicode)
         self.assertIsInstance(AVFoundation.AVURLAssetReferenceRestrictionsKey, unicode)
-
-    @min_os_level('10.10')
-    def testConstants10_10(self):
-        self.assertIsInstance(AVFoundation.AVURLAssetHTTPCookiesKey, unicode)
 
     @min_os_level('10.11')
     def testConstants10_11(self):

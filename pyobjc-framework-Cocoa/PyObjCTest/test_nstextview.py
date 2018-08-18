@@ -241,6 +241,9 @@ class TestNSTextView (TestCase):
         self.assertArgHasType(TestNSTextViewHelper.textView_shouldSelectCandidateAtIndex_, 1, objc._C_NSUInteger)
         self.assertResultIsBOOL(TestNSTextViewHelper.textView_shouldSelectCandidateAtIndex_)
 
+    @min_os_level('10.14')
+    def testProtocols10_14(self):
+        objc.protocolNamed('NSUserActivityRestoring')
 
 
 if __name__ == "__main__":

@@ -130,6 +130,13 @@ def parse_arguments():
             default=TEST_STATE_DIR,
             help='Directory to store test results (%(default)s)')
 
+    parser.add_argument(
+            '--variant',
+            dest='permitted_variants',
+            metavar='VAR',
+            action='append',
+            default=[],
+            help='Restrict python variants to test (default: no restrictions)')
 
     result = parser.parse_args()
     if not result.python_versions:
@@ -240,7 +247,7 @@ def test_summary(fp_out, state_dir):
 
     keys = tuple(sorted(results[next(iter(results))].keys()))
 
-    fmt = "%26s" + " | %10s" * len(keys)
+    fmt = "%28s" + " | %10s" * len(keys)
     print(file=fp_out); print()
     print(fmt % (("Project",) + keys), file=fp_out)
     print((fmt % ((len(keys)+1)  * ("",))).replace(" ", "=").replace("|", "+"), file=fp_out)
@@ -275,7 +282,14 @@ def supports_arch(interpreter, arch):
     lines = subprocess.check_output(['/usr/bin/file', interpreter])
     lines = lines.decode('utf-8').splitlines()
     for ln in lines:
+        # For fat binaries:
         m = re.search('for architecture (\S+)\)', ln)
+        if m is not None:
+            if m.group(1).startswith(arch):
+                return True
+
+        # For single-arch binaries:
+        m = re.search('Mach-O .* executable (\S+)', ln)
         if m is not None:
             if m.group(1).startswith(arch):
                 return True
@@ -334,7 +348,9 @@ def main():
            os.unlink(cov_dir)
 
     for py_ver in options.python_versions:
-        for variant in variants(py_ver):
+        for variant in variants(py_ver, options.permitted_variants):
+            lg.info("Preparing variant %r of python %s"%(variant, py_ver))
+
             setup_variant(py_ver, variant)
 
             with virtualenv("python{}".format(py_ver)) as interpreter:

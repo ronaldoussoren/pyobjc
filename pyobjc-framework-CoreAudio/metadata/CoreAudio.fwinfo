@@ -1,0 +1,629 @@
+// objective.metadata exceptions file, see its document
+// for information on how to update this file.
+{
+ "definitions": {
+  "classes": {},
+  "formal_protocols": {},
+  "opaque": {
+   "AudioHardwarePlugInRef": {
+     "typestr": "^{AudioHardwarePlugInInterface=}"
+   }
+  },
+  "structs": {
+   "AudioBuffer": { "ignore": true, "comment": "Manual wrapper" },
+   "AudioBufferList": { "ignore": true, "comment": "Manual wrapper" },
+   "AudioValueTranslation": { "ignore": true, "comment": "Manual wrapper" }
+  },
+  "functions": {
+   "AudioDeviceAddIOProc": {
+    "args": {
+     "1": {
+      "function": {
+       "args": [
+        {
+         "typestr": "I"
+        },
+        {
+         "typestr": "n^{AudioTimeStamp=dQdQ{SMPTETime=ssIIIssss}II}"
+        },
+        {
+         "typestr": "^{AudioBufferList=I[1{AudioBuffer=II^v}]}"
+        },
+        {
+         "typestr": "n^{AudioTimeStamp=dQdQ{SMPTETime=ssIIIssss}II}"
+        },
+        {
+         "typestr": "^{AudioBufferList=I[1{AudioBuffer=II^v}]}"
+        },
+        {
+         "typestr": "n^{AudioTimeStamp=dQdQ{SMPTETime=ssIIIssss}II}"
+        },
+        {
+         "typestr": "^v"
+        }
+       ],
+       "retval": {
+        "typestr": "i"
+       }
+      }
+     },
+     "2": {}
+    }
+   },
+   "AudioDeviceAddPropertyListener": {
+    "args": {
+     "4": {
+      "function": {
+       "args": [
+        {
+         "typestr": "I"
+        },
+        {
+         "typestr": "I"
+        },
+        {
+         "typestr": "Z"
+        },
+        {
+         "typestr": "I"
+        },
+        {
+         "typestr": "^v"
+        }
+       ],
+       "retval": {
+        "typestr": "i"
+       }
+      }
+     },
+     "5": {}
+    }
+   },
+   "AudioDeviceCreateIOProcID": {
+    "args": {
+     "1": {
+      "function": {
+       "args": [
+        {
+         "typestr": "I"
+        },
+        {
+         "typestr": "n^{AudioTimeStamp=dQdQ{SMPTETime=ssIIIssss}II}"
+        },
+        {
+         "typestr": "^{AudioBufferList=I[1{AudioBuffer=II^v}]}"
+        },
+        {
+         "typestr": "n^{AudioTimeStamp=dQdQ{SMPTETime=ssIIIssss}II}"
+        },
+        {
+         "typestr": "^{AudioBufferList=I[1{AudioBuffer=II^v}]}"
+        },
+        {
+         "typestr": "n^{AudioTimeStamp=dQdQ{SMPTETime=ssIIIssss}II}"
+        },
+        {
+         "typestr": "^v"
+        }
+       ],
+       "retval": {
+        "typestr": "i"
+       }
+      }
+     },
+     "2": {},
+     "3": { "type_modifier": "o" }
+    }
+   },
+   "AudioDeviceCreateIOProcIDWithBlock": {
+    "args": {
+     "0": { "type_modifier": "o" },
+     "3": {
+      "callable": {
+       "arguments": {
+        "0": { "type": "^v" },
+        "1": { "type": "n^{AudioTimeStamp=dQdQ{SMPTETime=ssIIIssss}II}" },
+        "2": { "type": "^{AudioBufferList=I[1{AudioBuffer=II^v}]}" },
+        "3": { "type": "n^{AudioTimeStamp=dQdQ{SMPTETime=ssIIIssss}II}" },
+        "4": { "type": "^{AudioBufferList=I[1{AudioBuffer=II^v}]}" },
+        "5": { "type": "N^{AudioTimeStamp=dQdQ{SMPTETime=ssIIIssss}II}" }
+       },
+       "retval": { "type": "v" }
+      }
+     }
+    }
+   },
+   "AudioDeviceDestroyIOProcID": {
+    "args": {
+     "1": {}
+    }
+   },
+   "AudioDeviceGetCurrentTime": {
+    "args": {
+     "1": { "type_modifier": "o" }
+    }
+   },
+   "AudioDeviceGetNearestStartTime": {
+    "args": {
+     "1": { "type_modifier": "N" }
+    }
+   },
+   "AudioDeviceGetProperty": {
+    "args": {
+     "4": { "type_modifier": "N" },
+     "5": { "type_modifier": "o", "c_array_length_in_arg": 4 }
+    }
+   },
+   "AudioDeviceGetPropertyInfo": {
+    "args": {
+     "4": { "type_modifier": "o" },
+     "5": { "type_modifier": "o" }
+    }
+   },
+   "AudioDeviceRead": {
+    "args": {
+     "1": { "type_modifier": "n" },
+     "2": { "type_modifier": "o" }
+    }
+   },
+   "AudioDeviceRemoveIOProc": {
+    "args": {
+     "1": {
+      "function": {
+       "args": [
+        {
+         "typestr": "I"
+        },
+        {
+         "typestr": "n^{AudioTimeStamp=dQdQ{SMPTETime=ssIIIssss}II}"
+        },
+        {
+         "typestr": "^{AudioBufferList=I[1{AudioBuffer=II^v}]}"
+        },
+        {
+         "typestr": "n^{AudioTimeStamp=dQdQ{SMPTETime=ssIIIssss}II}"
+        },
+        {
+         "typestr": "^{AudioBufferList=I[1{AudioBuffer=II^v}]}"
+        },
+        {
+         "typestr": "n^{AudioTimeStamp=dQdQ{SMPTETime=ssIIIssss}II}"
+        },
+        {
+         "typestr": "^v"
+        }
+       ],
+       "retval": {
+        "typestr": "i"
+       }
+      }
+     }
+    }
+   },
+   "AudioDeviceRemovePropertyListener": {
+    "args": {
+     "4": {
+      "function": {
+       "args": [
+        {
+         "typestr": "I"
+        },
+        {
+         "typestr": "I"
+        },
+        {
+         "typestr": "Z"
+        },
+        {
+         "typestr": "I"
+        },
+        {
+         "typestr": "^v"
+        }
+       ],
+       "retval": {
+        "typestr": "i"
+       }
+      }
+     }
+    }
+   },
+   "AudioDeviceSetProperty": {
+    "args": {
+     "1": { "type_modifier": "n" },
+     "6": { "type_modifier": "n", "c_array_length_in_arg": 5 }
+    }
+   },
+   "AudioDeviceStart": {
+    "args": {
+     "1": {}
+    }
+   },
+   "AudioDeviceStartAtTime": {
+    "args": {
+     "1": {},
+     "2": { "type_modifier": "N" }
+    }
+   },
+   "AudioDeviceStop": {
+    "args": {
+     "1": {}
+    }
+   },
+   "AudioDeviceTranslateTime": {
+    "args": {
+     "1": { "type_modifier": "n" },
+     "2": { "type_modifier": "o" }
+    }
+   },
+   "AudioGetCurrentHostTime": {
+    "variadic": true
+   },
+   "AudioGetHostClockFrequency": {
+    "variadic": true
+   },
+   "AudioGetHostClockMinimumTimeDelta": {
+    "variadic": true
+   },
+   "AudioHardwareAddPropertyListener": {
+    "args": {
+     "1": {
+      "function": {
+       "args": [
+        {
+         "typestr": "I"
+        },
+        {
+         "typestr": "^v"
+        }
+       ],
+       "retval": {
+        "typestr": "i"
+       }
+      }
+     },
+     "2": {}
+    }
+   },
+   "AudioHardwareAddRunLoopSource": {
+    "args": {
+     "0": {}
+    }
+   },
+   "AudioHardwareCreateAggregateDevice": {
+    "args": {
+     "0": {},
+     "1": { "type_modifier": "o" }
+    }
+   },
+   "AudioHardwareGetProperty": {
+    "args": {
+     "1": { "type_modifier": "N" },
+     "2": { "type_modifier": "o", "c_array_length_in_arg": 1 }
+    }
+   },
+   "AudioHardwareGetPropertyInfo": {
+    "args": {
+     "1": { "type_modifier": "o" },
+     "2": { "type_modifier": "o" }
+    }
+   },
+   "AudioHardwareRemovePropertyListener": {
+    "args": {
+     "1": {
+      "function": {
+       "args": [
+        {
+         "typestr": "I"
+        },
+        {
+         "typestr": "^v"
+        }
+       ],
+       "retval": {
+        "typestr": "i"
+       }
+      }
+     }
+    }
+   },
+   "AudioHardwareRemoveRunLoopSource": {
+    "args": {
+     "0": {}
+    }
+   },
+   "AudioHardwareSetProperty": {
+    "args": {
+     "2": { "type_modifier": "n", "c_array_length_in_arg": 1 }
+    }
+   },
+   "AudioHardwareUnload": {
+    "variadic": true
+   },
+   "AudioObjectAddPropertyListener": {
+    "args": {
+     "1": { "type_modifier": "n" },
+     "2": {
+      "function": {
+       "args": [
+        {
+         "typestr": "I"
+        },
+        {
+         "typestr": "I"
+        },
+        {
+         "typestr": "n^{AudioObjectPropertyAddress=III}"
+        },
+        {
+         "typestr": "^v"
+        }
+       ],
+       "retval": {
+        "typestr": "i"
+       }
+      }
+     },
+     "3": {}
+    }
+   },
+   "AudioHardwareClaimAudioStreamID": {
+    "args": {
+     "2": { "type_modifier": "o" }
+    }
+   },
+   "AudioObjectCreate": {
+    "args": {
+     "3": { "type_modifier": "o" }
+    }
+   },
+   "AudioHardwareClaimAudioDeviceID": {
+    "args": {
+     "1": { "type_modifier": "o" }
+    }
+   },
+   "AudioHardwareDevicesDied": {
+    "args": {
+     "2": { "type_modifier": "n", "c_array_length_in_arg": 1 }
+    }
+   },
+   "AudioHardwareDevicesCreated": {
+    "args": {
+     "2": { "type_modifier": "n", "c_array_length_in_arg": 1 }
+    }
+   },
+   "AudioHardwareStreamsDied": {
+    "args": {
+     "3": { "type_modifier": "n", "c_array_length_in_arg": 2 }
+    }
+   },
+   "AudioHardwareStreamsCreated": {
+    "args": {
+     "3": { "type_modifier": "n", "c_array_length_in_arg": 2 }
+    }
+   },
+   "AudioObjectPropertiesChanged": {
+    "args": {
+     "3": { "type_modifier": "n", "c_array_length_in_arg": 2 }
+    }
+   },
+   "AudioObjectsPublishedAndDied": {
+    "args": {
+     "3": { "type_modifier": "n", "c_array_length_in_arg": 2 },
+     "5": { "type_modifier": "n", "c_array_length_in_arg": 4 }
+    }
+   },
+   "AudioObjectAddPropertyListenerBlock": {
+    "args": {
+     "1": { "type_modifier": "n" },
+     "3": {
+      "callable": {
+       "retval": { "type": "v" },
+       "arguments": {
+        "0": { "type": "^v" },
+	"1": { "type": "I" },
+	"2": { "type": "n^{AudioObjectPropertyAddress=III}", "c_array_length_in_arg": 1 }
+       }
+      }
+     }
+    }
+   },
+   "AudioObjectGetPropertyData": {
+    "args": {
+     "1": { "type_modifier": "n" },
+     "3": { "type_modifier": "n", "c_array_length_in_arg": 2 },
+     "4": { "type_modifier": "N" },
+     "5": { "type_modifier": "o", "c_array_length_in_arg": 4 }
+    }
+   },
+   "AudioObjectGetPropertyDataSize": {
+    "args": {
+     "1": { "type_modifier": "n" },
+     "3": { "type_modifier": "n", "c_array_length_in_arg":  [2, 4] },
+     "4": { "type_modifier": "o" }
+    }
+   },
+   "AudioObjectHasProperty": {
+    "args": {
+     "1": { "type_modifier": "n" }
+    }
+   },
+   "AudioObjectIsPropertySettable": {
+    "args": {
+     "1": { "type_modifier": "n" },
+     "2": { "type_modifier": "o" }
+    }
+   },
+   "AudioObjectRemovePropertyListener": {
+    "args": {
+     "1": { "type_modifier": "n" },
+     "2": {
+      "function": {
+       "args": [
+        {
+         "typestr": "I"
+        },
+        {
+         "typestr": "I"
+        },
+        {
+         "typestr": "n^{AudioObjectPropertyAddress=III}"
+        },
+        {
+         "typestr": "^v"
+        }
+       ],
+       "retval": {
+        "typestr": "i"
+       }
+      }
+     },
+     "3": {}
+    }
+   },
+   "AudioObjectRemovePropertyListenerBlock": {
+    "args": {
+     "1": { "type_modifier": "n" },
+     "3": {
+      "callable": {
+       "retval": { "type": "v" },
+       "arguments": {
+        "0": { "type": "^v" },
+	"1": { "type": "I" },
+	"2": { "type": "n^{AudioObjectPropertyAddress=III}", "c_array_length_in_arg": 1 }
+       }
+      }
+     }
+    }
+   },
+   "AudioObjectSetPropertyData": {
+    "args": {
+     "1": { "type_modifier": "n" },
+     "3": { "type_modifier": "n", "c_array_length_in_arg": 2 },
+     "5": { "type_modifier": "n", "c_array_length_in_arg": 4 }
+    }
+   },
+   "AudioStreamAddPropertyListener": {
+    "args": {
+     "3": {
+      "function": {
+       "args": [
+        {
+         "typestr": "I"
+        },
+        {
+         "typestr": "I"
+        },
+        {
+         "typestr": "I"
+        },
+        {
+         "typestr": "^v"
+        }
+       ],
+       "retval": {
+        "typestr": "i"
+       }
+      }
+     },
+     "4": {}
+    }
+   },
+   "AudioStreamGetProperty": {
+    "args": {
+     "3": { "type_modifier": "N" },
+     "4": { "type_modifier": "o", "c_array_length_in_arg": 3 }
+    }
+   },
+   "AudioStreamGetPropertyInfo": {
+    "args": {
+     "3": { "type_modifier": "o" },
+     "4": { "type_modifier": "o" }
+    }
+   },
+   "AudioStreamRemovePropertyListener": {
+    "args": {
+     "3": {
+      "function": {
+       "args": [
+        {
+         "typestr": "I"
+        },
+        {
+         "typestr": "I"
+        },
+        {
+         "typestr": "I"
+        },
+        {
+         "typestr": "^v"
+        }
+       ],
+       "retval": {
+        "typestr": "i"
+       }
+      }
+     }
+    }
+   },
+   "AudioStreamSetProperty": {
+    "args": {
+     "1": { "type_modifier": "n" },
+     "5": { "type_modifier": "n", "c_array_length_in_arg": 4 }
+    }
+   },
+   "IsAudioFormatNativeEndian": {
+    "retval": { "type_override": "B" },
+    "args": {
+     "0": { "type_override": [ "n^{AudioStreamBasicDescription=dLLLLLLLL}", "n^{AudioStreamBasicDescription=dIIIIIIII}" ] }
+    }
+   },
+   "CalculateLPCMFlags": {
+    "retval": { "type_override": "I" },
+    "args": {
+     "0": { "type_override": "I" },
+     "1": { "type_override": "I" },
+     "2": { "type_override": "B" },
+     "3": { "type_override": "B" },
+     "4": { "type_override": "B" }
+    }
+   },
+   "FillOutASBDForLPCM": {
+    "retval": { "type_override": "v" },
+    "args": {
+     "0": { "type_override": [ "o^{AudioStreamBasicDescription=dLLLLLLLL}", "o^{AudioStreamBasicDescription=dIIIIIIII}" ] },
+     "1": { "type_override": "d" },
+     "2": { "type_override": "I" },
+     "3": { "type_override": "I" },
+     "4": { "type_override": "I" },
+     "5": { "type_override": "B" },
+     "6": { "type_override": "B" },
+     "7": { "type_override": "B" }
+    }
+   },
+   "FillOutAudioTimeStampWithSampleTime": {
+    "retval": { "type_override": "v" },
+    "args": {
+     "0": { "type_override": [ "o^{AudioTimeStamp=dQdQ{SMPTETime=ssLLLssss}LL}", "o^{AudioTimeStamp=dQdQ{SMPTETime=ssIIIssss}II}" ] },
+     "1": { "type_override": "d" }
+    }
+   },
+   "FillOutAudioTimeStampWithHostTime": {
+    "retval": { "type_override": "v" },
+    "args": {
+     "0": { "type_override": [ "o^{AudioTimeStamp=dQdQ{SMPTETime=ssLLLssss}LL}", "o^{AudioTimeStamp=dQdQ{SMPTETime=ssIIIssss}II}" ] },
+     "1": { "type_override": "Q" }
+    }
+   },
+   "FillOutAudioTimeStampWithSampleAndHostTime": {
+    "retval": { "type_override": "v" },
+    "args": {
+     "0": { "type_override": [ "o^{AudioTimeStamp=dQdQ{SMPTETime=ssLLLssss}LL}", "o^{AudioTimeStamp=dQdQ{SMPTETime=ssIIIssss}II}" ] },
+     "1": { "type_override": "d" },
+     "2": { "type_override": "Q" }
+    }
+   }
+  },
+  "informal_protocols": {}
+ }
+}

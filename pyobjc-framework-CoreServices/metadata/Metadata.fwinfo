@@ -1,0 +1,463 @@
+// objective.metadata exceptions file, see its document
+// for information on how to update this file.
+{
+ "definitions": {
+  "classes": {},
+  "formal_protocols": {},
+  "functions": {
+   "MDCopyLabelKinds": {
+    "retval": {
+     "already_cfretained": true
+    }
+   },
+   "MDCopyLabelWithUUID": {
+    "args": {
+     "0": {}
+    },
+    "retval": {
+     "already_cfretained": true
+    }
+   },
+   "MDCopyLabelsMatchingExpression": {
+    "args": {
+     "0": {}
+    },
+    "retval": {
+     "already_cfretained": true
+    }
+   },
+   "MDCopyLabelsWithKind": {
+    "args": {
+     "0": {}
+    },
+    "retval": {
+     "already_cfretained": true
+    }
+   },
+   "MDItemCopyAttribute": {
+    "args": {
+     "0": {},
+     "1": {}
+    }
+   },
+   "MDItemCopyAttributeList": {
+    "args": {
+     "0": {}
+    },
+    "retval": {
+     "already_cfretained": true
+    },
+    "variadic": true
+   },
+   "MDItemCopyAttributeNames": {
+    "args": {
+     "0": {}
+    },
+    "retval": {
+     "already_cfretained": true
+    }
+   },
+   "MDItemCopyAttributes": {
+    "args": {
+     "0": {},
+     "1": {}
+    },
+    "retval": {
+     "already_cfretained": true
+    }
+   },
+   "MDItemCopyLabels": {
+    "args": {
+     "0": {}
+    },
+    "retval": {
+     "already_cfretained": true
+    }
+   },
+   "MDItemCreate": {
+    "args": {
+     "0": {},
+     "1": {}
+    },
+    "retval": {
+     "already_cfretained": true
+    }
+   },
+   "MDItemCreateWithURL": {
+    "args": {
+     "0": {},
+     "1": {}
+    },
+    "retval": {
+     "already_cfretained": true
+    }
+   },
+   "MDItemRemoveLabel": {
+    "args": {
+     "0": {},
+     "1": {}
+    }
+   },
+   "MDItemSetLabel": {
+    "args": {
+     "0": {},
+     "1": {}
+    }
+   },
+   "MDItemsCopyAttributes": {
+    "args": {
+     "0": {},
+     "1": {}
+    },
+    "retval": {
+     "already_cfretained": true
+    }
+   },
+   "MDItemsCreateWithURLs": {
+    "args": {
+     "0": {},
+     "1": {}
+    },
+    "retval": {
+     "already_cfretained": true
+    }
+   },
+   "MDLabelCopyAttribute": {
+    "args": {
+     "0": {},
+     "1": {}
+    }
+   },
+   "MDLabelCopyAttributeName": {
+    "args": {
+     "0": {}
+    },
+    "retval": {
+     "already_cfretained": true
+    }
+   },
+   "MDLabelCreate": {
+    "args": {
+     "0": {},
+     "1": {},
+     "2": {}
+    },
+    "retval": {
+     "already_cfretained": true
+    }
+   },
+   "MDLabelDelete": {
+    "args": {
+     "0": {}
+    }
+   },
+   "MDLabelSetAttributes": {
+    "args": {
+     "0": {},
+     "1": {}
+    }
+   },
+   "MDQueryCopyQueryString": {
+    "args": {
+     "0": {}
+    },
+    "retval": {
+     "already_cfretained": true
+    }
+   },
+   "MDQueryCopySortingAttributes": {
+    "args": {
+     "0": {}
+    },
+    "retval": {
+     "already_cfretained": true
+    }
+   },
+   "MDQueryCopyValueListAttributes": {
+    "args": {
+     "0": {}
+    },
+    "retval": {
+     "already_cfretained": true
+    }
+   },
+   "MDQueryCopyValuesOfAttribute": {
+    "args": {
+     "0": {},
+     "1": {}
+    },
+    "retval": {
+     "already_cfretained": true
+    }
+   },
+   "MDQueryCreate": {
+    "args": {
+     "0": {},
+     "1": {},
+     "2": {},
+     "3": {}
+    },
+    "retval": {
+     "already_cfretained": true
+    }
+   },
+   "MDQueryCreateForItems": {
+    "args": {
+     "0": {},
+     "1": {},
+     "2": {},
+     "3": {},
+     "4": {}
+    },
+    "retval": {
+     "already_cfretained": true
+    }
+   },
+   "MDQueryCreateSubset": {
+    "args": {
+     "0": {},
+     "1": {},
+     "2": {},
+     "3": {},
+     "4": {}
+    },
+    "retval": {
+     "already_cfretained": true
+    }
+   },
+   "MDQueryDisableUpdates": {
+    "args": {
+     "0": {}
+    }
+   },
+   "MDQueryEnableUpdates": {
+    "args": {
+     "0": {}
+    }
+   },
+   "MDQueryExecute": {
+    "args": {
+     "0": {}
+    }
+   },
+   "MDQueryGetAttributeValueOfResultAtIndex": {
+    "args": {
+     "0": {},
+     "1": {}
+    },
+    "retval": { "type_override": "@"}
+   },
+   "MDQueryGetBatchingParameters": {
+    "args": {
+     "0": {}
+    }
+   },
+   "MDQueryGetCountOfResultsWithAttributeValue": {
+    "args": {
+     "0": {},
+     "1": {}
+    }
+   },
+   "MDQueryGetIndexOfResult": {
+    "args": {
+     "0": {},
+     "1": { "type_override": "@" }
+    }
+   },
+   "MDQueryGetResultAtIndex": {
+    "args": {
+     "0": {}
+    },
+    "retval": { "type_override": "@" }
+   },
+   "MDQueryGetResultCount": {
+    "args": {
+     "0": {}
+    }
+   },
+   "MDQueryGetSortOptionFlagsForAttribute": {
+    "args": {
+     "0": {},
+     "1": {}
+    }
+   },
+   "MDQueryIsGatheringComplete": {
+    "args": {
+     "0": {}
+    }
+   },
+   "MDQuerySetBatchingParameters": {
+    "args": {
+     "0": {}
+    }
+   },
+   "MDQuerySetCreateResultFunction": {
+    "args": {
+     "0": {},
+     "1": {
+      "function": {
+       "args": [
+        {
+         "typestr": "^{__MDQuery=}"
+        },
+        {
+         "typestr": "^{__MDItem=}"
+        },
+        {
+         "typestr": "^v"
+        }
+       ],
+       "retval": {
+        "typestr": "^v"
+       }
+      }
+     },
+     "2": {},
+     "3": {}
+    }
+   },
+   "MDQuerySetCreateValueFunction": {
+    "args": {
+     "0": {},
+     "1": {
+      "function": {
+       "args": [
+        {
+         "typestr": "^{__MDQuery=}"
+        },
+        {
+         "typestr": "^{__CFString=}"
+        },
+        {
+         "typestr": "@"
+        },
+        {
+         "typestr": "^v"
+        }
+       ],
+       "retval": {
+        "typestr": "^v"
+       }
+      }
+     },
+     "2": {},
+     "3": {}
+    }
+   },
+   "MDQuerySetDispatchQueue": {
+    "args": {
+     "0": {}
+    }
+   },
+   "MDQuerySetMaxCount": {
+    "args": {
+     "0": {}
+    }
+   },
+   "MDQuerySetSearchScope": {
+    "args": {
+     "0": {},
+     "1": {}
+    }
+   },
+   "MDQuerySetSortComparator": {
+    "args": {
+     "0": {},
+     "1": {
+      "function": {
+       "args": [
+        {
+         "typestr": "^@",
+	 "type_modifier": "n",
+	 "c_array_of_variable_length": true
+        },
+        {
+         "typestr": "^@",
+	 "type_modifier": "n",
+	 "c_array_of_variable_length": true
+        },
+        {
+         "typestr": "^v"
+        }
+       ],
+       "retval": {
+        "typestr": "q"
+       }
+      }
+     },
+     "2": {}
+    }
+   },
+   "MDQuerySetSortComparatorBlock": {
+    "args": {
+     "0": {},
+     "1": {
+      "callable": {
+       "arguments": {
+        "0": { "type": "^v" },
+        "1": { "type": "^@", "type_modifier": "n", "c_array_of_variable_length": true },
+        "2": { "type": "^@", "type_modifier": "n", "c_array_of_variable_length": true }
+       },
+       "retval": { "type": ["i", "q"] }
+      }
+     }
+    }
+   },
+   "MDQuerySetSortOptionFlagsForAttribute": {
+    "args": {
+     "0": {},
+     "1": {}
+    }
+   },
+   "MDQuerySetSortOrder": {
+    "args": {
+     "0": {},
+     "1": {}
+    }
+   },
+   "MDQueryStop": {
+    "args": {
+     "0": {}
+    }
+   },
+   "MDSchemaCopyAllAttributes": {
+    "retval": {
+     "already_cfretained": true
+    }
+   },
+   "MDSchemaCopyAttributesForContentType": {
+    "args": {
+     "0": {}
+    },
+    "retval": {
+     "already_cfretained": true
+    }
+   },
+   "MDSchemaCopyDisplayDescriptionForAttribute": {
+    "args": {
+     "0": {}
+    },
+    "retval": {
+     "already_cfretained": true
+    }
+   },
+   "MDSchemaCopyDisplayNameForAttribute": {
+    "args": {
+     "0": {}
+    },
+    "retval": {
+     "already_cfretained": true
+    }
+   },
+   "MDSchemaCopyMetaAttributesForAttribute": {
+    "args": {
+     "0": {}
+    },
+    "retval": {
+     "already_cfretained": true
+    }
+   }
+  },
+  "informal_protocols": {}
+ }
+}
