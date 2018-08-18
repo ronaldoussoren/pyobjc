@@ -6,6 +6,8 @@ An overview of the relevant changes in new, and older, releases.
 Version 5.0a1
 -------------
 
+* Bindings updated for Xcode 10 beta 5.
+
 * Add a custom binding for a number of structure types in
   CoreAudio:
 

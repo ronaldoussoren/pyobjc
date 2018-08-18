@@ -65,6 +65,11 @@ class TestNSWorkspace(TestCase):
         self.assertIsInstance(NSWorkspaceRecycleOperation, unicode)
         self.assertIsInstance(NSWorkspaceDuplicateOperation, unicode)
 
+        self.assertEqual(NSWorkspaceAuthorizationTypeCreateSymbolicLink, 0)
+        self.assertEqual(NSWorkspaceAuthorizationTypeSetAttributes, 1)
+        self.assertEqual(NSWorkspaceAuthorizationTypeReplaceFile, 2)
+
+
     @min_os_level('10.6')
     def testConstants10_6(self):
         self.assertIsInstance(NSWorkspaceDesktopImageScalingKey, unicode)
@@ -154,6 +159,10 @@ class TestNSWorkspace(TestCase):
     def testMethods10_13(self):
         self.assertResultIsBOOL(NSWorkspace.isVoiceOverEnabled)
         self.assertResultIsBOOL(NSWorkspace.isSwitchControlEnabled)
+
+    @min_os_level('10.14')
+    def testMethods10_14(self):
+        self.assertArgIsBlock(NSWorkspace.requestAuthorizationOfType_completionHandler_, 1, b'v@@')
 
 if __name__ == '__main__':
     main( )
