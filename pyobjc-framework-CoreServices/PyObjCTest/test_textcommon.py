@@ -8,6 +8,7 @@ class TestTextCommon (TestCase):
         self.assertEqual(CoreServices.kTextCenter, 1)
         self.assertEqual(CoreServices.kTextFlushRight, -1)
         self.assertEqual(CoreServices.kTextFlushLeft, -2)
+
         self.assertEqual(CoreServices.kTextEncodingMacRoman, 0)
         self.assertEqual(CoreServices.kTextEncodingMacJapanese, 1)
         self.assertEqual(CoreServices.kTextEncodingMacChineseTrad, 2)
@@ -48,14 +49,23 @@ class TestTextCommon (TestCase):
         self.assertEqual(CoreServices.kTextEncodingMacCeltic, 39)
         self.assertEqual(CoreServices.kTextEncodingMacGaelic, 40)
         self.assertEqual(CoreServices.kTextEncodingMacKeyboardGlyphs, 41)
+
+        self.assertEqual(CoreServices.kTextEncodingMacTradChinese, CoreServices.kTextEncodingMacChineseTrad)
         self.assertEqual(CoreServices.kTextEncodingMacRSymbol, 8)
+        self.assertEqual(CoreServices.kTextEncodingMacSimpChinese, CoreServices.kTextEncodingMacChineseSimp)
+        self.assertEqual(CoreServices.kTextEncodingMacGeez, CoreServices.kTextEncodingMacEthiopic)
+        self.assertEqual(CoreServices.kTextEncodingMacEastEurRoman, CoreServices.kTextEncodingMacCentralEurRoman)
         self.assertEqual(CoreServices.kTextEncodingMacUninterp, 32)
+
         self.assertEqual(CoreServices.kTextEncodingMacUnicode, 0x7E)
+
         self.assertEqual(CoreServices.kTextEncodingMacFarsi, 0x8C)
         self.assertEqual(CoreServices.kTextEncodingMacUkrainian, 0x98)
         self.assertEqual(CoreServices.kTextEncodingMacInuit, 0xEC)
         self.assertEqual(CoreServices.kTextEncodingMacVT100, 0xFC)
-        self.assertEqual(CoreServices.kTextEncodingMacHFS, 0xff)
+
+        self.assertEqual(CoreServices.kTextEncodingMacHFS, 0xFF)
+
         self.assertEqual(CoreServices.kTextEncodingUnicodeDefault, 0x0100)
         self.assertEqual(CoreServices.kTextEncodingUnicodeV1_1, 0x0101)
         self.assertEqual(CoreServices.kTextEncodingISO10646_1993, 0x0101)
@@ -75,6 +85,7 @@ class TestTextCommon (TestCase):
         self.assertEqual(CoreServices.kTextEncodingUnicodeV9_0, 0x0113)
         self.assertEqual(CoreServices.kTextEncodingUnicodeV10_0, 0x0114)
         self.assertEqual(CoreServices.kTextEncodingUnicodeV11_0, 0x0115)
+
         self.assertEqual(CoreServices.kTextEncodingISOLatin1, 0x0201)
         self.assertEqual(CoreServices.kTextEncodingISOLatin2, 0x0202)
         self.assertEqual(CoreServices.kTextEncodingISOLatin3, 0x0203)
@@ -89,6 +100,7 @@ class TestTextCommon (TestCase):
         self.assertEqual(CoreServices.kTextEncodingISOLatin8, 0x020E)
         self.assertEqual(CoreServices.kTextEncodingISOLatin9, 0x020F)
         self.assertEqual(CoreServices.kTextEncodingISOLatin10, 0x0210)
+
         self.assertEqual(CoreServices.kTextEncodingDOSLatinUS, 0x0400)
         self.assertEqual(CoreServices.kTextEncodingDOSGreek, 0x0405)
         self.assertEqual(CoreServices.kTextEncodingDOSBalticRim, 0x0406)
@@ -121,6 +133,7 @@ class TestTextCommon (TestCase):
         self.assertEqual(CoreServices.kTextEncodingWindowsBalticRim, 0x0507)
         self.assertEqual(CoreServices.kTextEncodingWindowsVietnamese, 0x0508)
         self.assertEqual(CoreServices.kTextEncodingWindowsKoreanJohab, 0x0510)
+
         self.assertEqual(CoreServices.kTextEncodingUS_ASCII, 0x0600)
         self.assertEqual(CoreServices.kTextEncodingANSEL, 0x0601)
         self.assertEqual(CoreServices.kTextEncodingJIS_X0201_76, 0x0620)
@@ -139,6 +152,7 @@ class TestTextCommon (TestCase):
         self.assertEqual(CoreServices.kTextEncodingCNS_11643_92_P1, 0x0651)
         self.assertEqual(CoreServices.kTextEncodingCNS_11643_92_P2, 0x0652)
         self.assertEqual(CoreServices.kTextEncodingCNS_11643_92_P3, 0x0653)
+
         self.assertEqual(CoreServices.kTextEncodingISO_2022_JP, 0x0820)
         self.assertEqual(CoreServices.kTextEncodingISO_2022_JP_2, 0x0821)
         self.assertEqual(CoreServices.kTextEncodingISO_2022_JP_1, 0x0822)
@@ -146,10 +160,12 @@ class TestTextCommon (TestCase):
         self.assertEqual(CoreServices.kTextEncodingISO_2022_CN, 0x0830)
         self.assertEqual(CoreServices.kTextEncodingISO_2022_CN_EXT, 0x0831)
         self.assertEqual(CoreServices.kTextEncodingISO_2022_KR, 0x0840)
+
         self.assertEqual(CoreServices.kTextEncodingEUC_JP, 0x0920)
         self.assertEqual(CoreServices.kTextEncodingEUC_CN, 0x0930)
         self.assertEqual(CoreServices.kTextEncodingEUC_TW, 0x0931)
         self.assertEqual(CoreServices.kTextEncodingEUC_KR, 0x0940)
+
         self.assertEqual(CoreServices.kTextEncodingShiftJIS, 0x0A01)
         self.assertEqual(CoreServices.kTextEncodingKOI8_R, 0x0A02)
         self.assertEqual(CoreServices.kTextEncodingBig5, 0x0A03)
@@ -159,89 +175,118 @@ class TestTextCommon (TestCase):
         self.assertEqual(CoreServices.kTextEncodingVISCII, 0x0A07)
         self.assertEqual(CoreServices.kTextEncodingKOI8_U, 0x0A08)
         self.assertEqual(CoreServices.kTextEncodingBig5_E, 0x0A09)
+
         self.assertEqual(CoreServices.kTextEncodingNextStepLatin, 0x0B01)
         self.assertEqual(CoreServices.kTextEncodingNextStepJapanese, 0x0B02)
+
         self.assertEqual(CoreServices.kTextEncodingEBCDIC_LatinCore, 0x0C01)
         self.assertEqual(CoreServices.kTextEncodingEBCDIC_CP037, 0x0C02)
+
         self.assertEqual(CoreServices.kTextEncodingMultiRun, 0x0FFF)
         self.assertEqual(CoreServices.kTextEncodingUnknown, 0xFFFF)
+
         self.assertEqual(CoreServices.kTextEncodingEBCDIC_US, 0x0C01)
+
         self.assertEqual(CoreServices.kTextEncodingDefaultVariant, 0)
+
         self.assertEqual(CoreServices.kMacRomanDefaultVariant, 0)
         self.assertEqual(CoreServices.kMacRomanCurrencySignVariant, 1)
         self.assertEqual(CoreServices.kMacRomanEuroSignVariant, 2)
+
         self.assertEqual(CoreServices.kMacCyrillicDefaultVariant, 0)
         self.assertEqual(CoreServices.kMacCyrillicCurrSignStdVariant, 1)
         self.assertEqual(CoreServices.kMacCyrillicCurrSignUkrVariant, 2)
         self.assertEqual(CoreServices.kMacCyrillicEuroSignVariant, 3)
+
         self.assertEqual(CoreServices.kMacIcelandicStdDefaultVariant, 0)
         self.assertEqual(CoreServices.kMacIcelandicTTDefaultVariant, 1)
         self.assertEqual(CoreServices.kMacIcelandicStdCurrSignVariant, 2)
         self.assertEqual(CoreServices.kMacIcelandicTTCurrSignVariant, 3)
         self.assertEqual(CoreServices.kMacIcelandicStdEuroSignVariant, 4)
         self.assertEqual(CoreServices.kMacIcelandicTTEuroSignVariant, 5)
+
         self.assertEqual(CoreServices.kMacCroatianDefaultVariant, 0)
         self.assertEqual(CoreServices.kMacCroatianCurrencySignVariant, 1)
         self.assertEqual(CoreServices.kMacCroatianEuroSignVariant, 2)
+
         self.assertEqual(CoreServices.kMacRomanianDefaultVariant, 0)
         self.assertEqual(CoreServices.kMacRomanianCurrencySignVariant, 1)
         self.assertEqual(CoreServices.kMacRomanianEuroSignVariant, 2)
+
         self.assertEqual(CoreServices.kMacJapaneseStandardVariant, 0)
         self.assertEqual(CoreServices.kMacJapaneseStdNoVerticalsVariant, 1)
         self.assertEqual(CoreServices.kMacJapaneseBasicVariant, 2)
         self.assertEqual(CoreServices.kMacJapanesePostScriptScrnVariant, 3)
         self.assertEqual(CoreServices.kMacJapanesePostScriptPrintVariant, 4)
         self.assertEqual(CoreServices.kMacJapaneseVertAtKuPlusTenVariant, 5)
+
         self.assertEqual(CoreServices.kMacArabicStandardVariant, 0)
         self.assertEqual(CoreServices.kMacArabicTrueTypeVariant, 1)
         self.assertEqual(CoreServices.kMacArabicThuluthVariant, 2)
         self.assertEqual(CoreServices.kMacArabicAlBayanVariant, 3)
+
         self.assertEqual(CoreServices.kMacFarsiStandardVariant, 0)
         self.assertEqual(CoreServices.kMacFarsiTrueTypeVariant, 1)
+
         self.assertEqual(CoreServices.kMacHebrewStandardVariant, 0)
         self.assertEqual(CoreServices.kMacHebrewFigureSpaceVariant, 1)
+
         self.assertEqual(CoreServices.kMacGreekDefaultVariant, 0)
         self.assertEqual(CoreServices.kMacGreekNoEuroSignVariant, 1)
         self.assertEqual(CoreServices.kMacGreekEuroSignVariant, 2)
+
         self.assertEqual(CoreServices.kMacVT100DefaultVariant, 0)
         self.assertEqual(CoreServices.kMacVT100CurrencySignVariant, 1)
         self.assertEqual(CoreServices.kMacVT100EuroSignVariant, 2)
+
         self.assertEqual(CoreServices.kUnicodeNoSubset, 0)
         self.assertEqual(CoreServices.kUnicodeNormalizationFormD, 5)
         self.assertEqual(CoreServices.kUnicodeNormalizationFormC, 3)
         self.assertEqual(CoreServices.kUnicodeHFSPlusDecompVariant, 8)
         self.assertEqual(CoreServices.kUnicodeHFSPlusCompVariant, 9)
+
         self.assertEqual(CoreServices.kISOLatin1StandardVariant, 0)
         self.assertEqual(CoreServices.kISOLatin1MusicCDVariant, 1)
+
         self.assertEqual(CoreServices.kISOLatinArabicImplicitOrderVariant, 0)
         self.assertEqual(CoreServices.kISOLatinArabicVisualOrderVariant, 1)
         self.assertEqual(CoreServices.kISOLatinArabicExplicitOrderVariant, 2)
+
         self.assertEqual(CoreServices.kISOLatinHebrewImplicitOrderVariant, 0)
         self.assertEqual(CoreServices.kISOLatinHebrewVisualOrderVariant, 1)
         self.assertEqual(CoreServices.kISOLatinHebrewExplicitOrderVariant, 2)
+
         self.assertEqual(CoreServices.kWindowsLatin1StandardVariant, 0)
         self.assertEqual(CoreServices.kWindowsLatin1PalmVariant, 1)
+
         self.assertEqual(CoreServices.kDOSJapaneseStandardVariant, 0)
         self.assertEqual(CoreServices.kDOSJapanesePalmVariant, 1)
+
         self.assertEqual(CoreServices.kEUC_CN_BasicVariant, 0)
         self.assertEqual(CoreServices.kEUC_CN_DOSVariant, 1)
+
         self.assertEqual(CoreServices.kEUC_KR_BasicVariant, 0)
         self.assertEqual(CoreServices.kEUC_KR_DOSVariant, 1)
+
         self.assertEqual(CoreServices.kShiftJIS_BasicVariant, 0)
         self.assertEqual(CoreServices.kShiftJIS_DOSVariant, 1)
         self.assertEqual(CoreServices.kShiftJIS_MusicCDVariant, 2)
+
         self.assertEqual(CoreServices.kBig5_BasicVariant, 0)
         self.assertEqual(CoreServices.kBig5_StandardVariant, 1)
         self.assertEqual(CoreServices.kBig5_ETenVariant, 2)
         self.assertEqual(CoreServices.kBig5_DOSVariant, 3)
+
         self.assertEqual(CoreServices.kMacRomanLatin1DefaultVariant, 0)
         self.assertEqual(CoreServices.kMacRomanLatin1StandardVariant, 2)
         self.assertEqual(CoreServices.kMacRomanLatin1TurkishVariant, 6)
         self.assertEqual(CoreServices.kMacRomanLatin1CroatianVariant, 8)
         self.assertEqual(CoreServices.kMacRomanLatin1IcelandicVariant, 11)
         self.assertEqual(CoreServices.kMacRomanLatin1RomanianVariant, 14)
+
         self.assertEqual(CoreServices.kUnicodeNoCompatibilityVariant, 1)
         self.assertEqual(CoreServices.kUnicodeNoCorporateVariant, 4)
+
         self.assertEqual(CoreServices.kMacRomanStandardVariant, 0)
         self.assertEqual(CoreServices.kMacIcelandicStandardVariant, 0)
         self.assertEqual(CoreServices.kMacIcelandicTrueTypeVariant, 1)
@@ -258,6 +303,7 @@ class TestTextCommon (TestCase):
         self.assertEqual(CoreServices.kUnicodeMaxDecomposedVariant, 2)
         self.assertEqual(CoreServices.kUnicodeCanonicalCompVariant, 3)
         self.assertEqual(CoreServices.kUnicodeNoComposedVariant, 3)
+
         self.assertEqual(CoreServices.kTextEncodingDefaultFormat, 0)
         self.assertEqual(CoreServices.kUnicodeUTF16Format, 0)
         self.assertEqual(CoreServices.kUnicodeUTF7Format, 1)
@@ -270,14 +316,18 @@ class TestTextCommon (TestCase):
         self.assertEqual(CoreServices.kUnicodeSCSUFormat, 8)
         self.assertEqual(CoreServices.kUnicode16BitFormat, 0)
         self.assertEqual(CoreServices.kUnicode32BitFormat, 3)
+
         self.assertEqual(CoreServices.kTextEncodingFullName, 0)
         self.assertEqual(CoreServices.kTextEncodingBaseName, 1)
         self.assertEqual(CoreServices.kTextEncodingVariantName, 2)
         self.assertEqual(CoreServices.kTextEncodingFormatName, 3)
+
         self.assertEqual(CoreServices.kTextScriptDontCare, -128)
         self.assertEqual(CoreServices.kTextLanguageDontCare, -128)
         self.assertEqual(CoreServices.kTextRegionDontCare, -128)
+
         self.assertEqual(CoreServices.kTECInfoCurrentFormat, 2)
+
         self.assertEqual(CoreServices.kTECKeepInfoFixBit, 0)
         self.assertEqual(CoreServices.kTECFallbackTextLengthFixBit, 1)
         self.assertEqual(CoreServices.kTECTextRunBitClearFixBit, 2)
@@ -286,6 +336,7 @@ class TestTextCommon (TestCase):
         self.assertEqual(CoreServices.kTECPreferredEncodingFixBit, 5)
         self.assertEqual(CoreServices.kTECAddTextRunHeuristicsBit, 6)
         self.assertEqual(CoreServices.kTECAddFallbackInterruptBit, 7)
+
         self.assertEqual(CoreServices.kTECKeepInfoFixMask, 1 << CoreServices.kTECKeepInfoFixBit)
         self.assertEqual(CoreServices.kTECFallbackTextLengthFixMask, 1 << CoreServices.kTECFallbackTextLengthFixBit)
         self.assertEqual(CoreServices.kTECTextRunBitClearFixMask, 1 << CoreServices.kTECTextRunBitClearFixBit)
@@ -294,15 +345,18 @@ class TestTextCommon (TestCase):
         self.assertEqual(CoreServices.kTECPreferredEncodingFixMask, 1 << CoreServices.kTECPreferredEncodingFixBit)
         self.assertEqual(CoreServices.kTECAddTextRunHeuristicsMask, 1 << CoreServices.kTECAddTextRunHeuristicsBit)
         self.assertEqual(CoreServices.kTECAddFallbackInterruptMask, 1 << CoreServices.kTECAddFallbackInterruptBit)
+
         self.assertEqual(CoreServices.kUnicodeByteOrderMark, 0xFEFF)
         self.assertEqual(CoreServices.kUnicodeObjectReplacement, 0xFFFC)
         self.assertEqual(CoreServices.kUnicodeReplacementChar, 0xFFFD)
         self.assertEqual(CoreServices.kUnicodeSwappedByteOrderMark, 0xFFFE)
         self.assertEqual(CoreServices.kUnicodeNotAChar, 0xFFFF)
+
         self.assertEqual(CoreServices.kUCCharPropTypeGenlCategory, 1)
         self.assertEqual(CoreServices.kUCCharPropTypeCombiningClass, 2)
         self.assertEqual(CoreServices.kUCCharPropTypeBidiCategory, 3)
         self.assertEqual(CoreServices.kUCCharPropTypeDecimalDigitValue, 4)
+
         self.assertEqual(CoreServices.kUCGenlCatOtherNotAssigned, 0)
         self.assertEqual(CoreServices.kUCGenlCatOtherControl, 1)
         self.assertEqual(CoreServices.kUCGenlCatOtherFormat, 2)
@@ -333,6 +387,7 @@ class TestTextCommon (TestCase):
         self.assertEqual(CoreServices.kUCGenlCatSymbolCurrency, 29)
         self.assertEqual(CoreServices.kUCGenlCatSymbolModifier, 30)
         self.assertEqual(CoreServices.kUCGenlCatSymbolOther, 31)
+
         self.assertEqual(CoreServices.kUCBidiCatNotApplicable, 0)
         self.assertEqual(CoreServices.kUCBidiCatLeftRight, 1)
         self.assertEqual(CoreServices.kUCBidiCatRightLeft, 2)
@@ -357,10 +412,72 @@ class TestTextCommon (TestCase):
         self.assertEqual(CoreServices.kUCBidiCatRightLeftIsolate, 21)
         self.assertEqual(CoreServices.kUCBidiCatFirstStrongIsolate, 22)
         self.assertEqual(CoreServices.kUCBidiCatPopDirectionalIsolate, 23)
+
         self.assertEqual(CoreServices.kUCHighSurrogateRangeStart, 0xD800)
         self.assertEqual(CoreServices.kUCHighSurrogateRangeEnd, 0xDBFF)
         self.assertEqual(CoreServices.kUCLowSurrogateRangeStart, 0xDC00)
         self.assertEqual(CoreServices.kUCLowSurrogateRangeEnd, 0xDFFF)
+
+
+    def test_structs(self):
+        v = CoreServices.TextEncodingRun()
+        self.assertEqual(v.offset, 0)
+        self.assertEqual(v.textEncoding, 0)
+
+        v = CoreServices.ScriptCodeRun()
+        self.assertEqual(v.offset, 0)
+        self.assertEqual(v.script, 0)
+
+        # XXX tecTextEncodingsFolderName and tecExtensionFileName are Str31
+        v = CoreServices.TECInfo()
+        self.assertEqual(v.format, 0)
+        self.assertEqual(v.tecVersion, 0)
+        self.assertEqual(v.tecTextConverterFeatures, 0)
+        self.assertEqual(v.tecUnicodeConverterFeatures, 0)
+        self.assertEqual(v.tecTextCommonFeatures, 0)
+        self.assertEqual(v.tecTextEncodingsFolderName, None)
+        self.assertEqual(v.tecExtensionFileName, None)
+        self.assertEqual(v.tecLowestTEFileVersion, 0)
+        self.assertEqual(v.tecHighestTEFileVersion, 0)
+
+    def test_functions(self):
+        CoreServices.CreateTextEncoding
+        CoreServices.GetTextEncodingBase
+        CoreServices.GetTextEncodingVariant
+        CoreServices.GetTextEncodingFormat
+        CoreServices.ResolveDefaultTextEncoding
+
+        self.assertArgIsOut(CoreServices.GetTextEncodingName, 5)
+        self.assertArgIsOut(CoreServices.GetTextEncodingName, 6)
+        self.assertArgIsOut(CoreServices.GetTextEncodingName, 7)
+        self.assertArgIsOut(CoreServices.GetTextEncodingName, 8)
+        self.assertArgSizeInArg(CoreServices.GetTextEncodingName, 8, (4,5))
+
+        self.assertArgIsOut(CoreServices.TECGetInfo, 0)
+
+        self.assertArgIsOut(CoreServices.UpgradeScriptInfoToTextEncoding, 4)
+
+        # XXX: Last argument is Str255
+        self.assertArgIsOut(CoreServices.RevertTextEncodingToScriptInfo, 1)
+        self.assertArgIsOut(CoreServices.RevertTextEncodingToScriptInfo, 2)
+        self.assertArgIsOut(CoreServices.RevertTextEncodingToScriptInfo, 3)
+
+        self.assertArgIsOut(CoreServices.GetTextEncodingFromScriptInfo, 3)
+
+        self.assertArgIsOut(CoreServices.GetScriptInfoFromTextEncoding, 1)
+        self.assertArgIsOut(CoreServices.GetScriptInfoFromTextEncoding, 2)
+
+        self.assertArgIsOut(CoreServices.NearestMacTextEncodings, 1)
+        self.assertArgIsOut(CoreServices.NearestMacTextEncodings, 2)
+
+        self.assertArgIsIn(CoreServices.UCGetCharProperty, 0)
+        self.assertArgSizeInArg(CoreServices.UCGetCharProperty, 0, 1)
+        self.assertArgIsOut(CoreServices.UCGetCharProperty, 3)
+
+    def test_inline_functions(self):
+        self.assertResultIsBOOL(CoreServices.UCIsSurrogateHighCharacter)
+        self.assertResultIsBOOL(CoreServices.UCIsSurrogateLowCharacter)
+        CoreServices.UCGetUnicodeScalarValueForSurrogatePair
 
 if __name__ == "__main__":
     main()

@@ -24,7 +24,7 @@ Version 5.0a1
 
 * Creating objc.ObjCPointer instances now results in a
   Python warning, instead of an unconditional message on
-  stdout. 
+  stdout.
 
   .. note::
 
@@ -36,6 +36,28 @@ Version 5.0a1
 * System bridgesupport XML files (normally not used by PyObjC)
   can contain constant numbers with value "inf", PyObjC now
   knows how to handle those.
+
+* Added bindings for the "Metadata" subframework of the
+  "CoreServices" framework.
+
+* Added bindings for the "CarbonCore" subframework of the
+  "CoreServices" framework.
+
+  Most APIs in this subframework are not available to Python,
+  only those APIs that are not deprecated and seem interesting
+  are exposed.
+
+* The separate framework wrappers DictionaryServices,
+  LaunchServices and SearchKit are deprecated, use
+  the CoreServices bindings instead.
+
+  These framework wrappers still exists, but are effectively
+  aliases for CoreServices with this release. Because of this
+  these bindings can expose more symbols than previously.
+
+* Fix unexpected exception when trying to call getattr
+  on a framework wrapped with a name that isn't a valid
+  identifier.
 
 Version 5.0a0
 -------------

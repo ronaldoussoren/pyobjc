@@ -14,8 +14,9 @@ import DictionaryServices
 import LaunchServices
 import SearchKit
 
-from . import Metadata
-from . import CarbonCore
+from CoreServices import Metadata
+from CoreServices import CarbonCore
+
 
 sys.modules['CoreServices'] = mod = objc.ObjCLazyModule('CoreServices',
     "com.apple.CoreServices",

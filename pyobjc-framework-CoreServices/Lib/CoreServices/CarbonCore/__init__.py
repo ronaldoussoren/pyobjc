@@ -11,12 +11,12 @@ import sys
 import objc
 
 from CoreServices.CarbonCore import _metadata
+from CoreServices._inlines import _inline_list_
 
 sys.modules['CoreServices.CarbonCore'] = mod = objc.ObjCLazyModule('CoreServices.CarbonCore',
     "com.apple.CarbonCore",
     objc.pathForFramework("/System/Library/Frameworks/CoreServices.framework"),
-    _metadata.__dict__,
-    None, {
+    _metadata.__dict__, _inline_list_, {
        '__doc__': __doc__,
        '__path__': __path__,
        '__loader__': globals().get('__loader__', None),

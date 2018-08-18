@@ -25,5 +25,3 @@ In particular only the following funcionality is available from Python:
 * BackupCore
 
 * DiskspaceRecovery
-
-* MacLocales (but only the non-deprecated functions)
