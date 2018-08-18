@@ -10,10 +10,10 @@ framework.
 import sys
 import objc
 import FSEvents
-import DictionaryServices
 import LaunchServices
 import SearchKit
 
+from CoreServices import DictionaryServices
 from CoreServices import Metadata
 from CoreServices import CarbonCore
 
