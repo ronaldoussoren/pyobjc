@@ -3,7 +3,7 @@ What's new in PyObjC
 
 An overview of the relevant changes in new, and older, releases.
 
-Version 5.0a1
+Version 5.0b1
 -------------
 
 * Bindings updated for Xcode 10 beta 5.
