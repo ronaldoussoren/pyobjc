@@ -24,6 +24,8 @@ below.
 
 8. Update the version in the repository
 
+9. Announce the new release
+
 Ensure that PyObjC works on all supported platform
 --------------------------------------------------
 
@@ -44,40 +46,25 @@ upcoming release, and commit the changes.
 Create distribution artifacts
 -----------------------------
 
-The machine used to create the distribution archives is a VM running OSX 10.12 with the following
-additional software:
+The machines used to create the distribution archives are two VMs running macOS 10.13 and 10.14 with
+the following additional software:
 
 * up to date version of Xcode
 
-* up to date versions of Python 2.7, 3.4, 3.5 and 3.6
+* up to date versions of Python 2.7, 3.4, 3.5, 3.6 and 3.7
 
   All of these are installed using the python.org binary installer for OSX 10.6 or later,
   and during installation only the framework itself is installed (nothing in /usr/local,
   no GUI tools)
 
-* up to date python and python3 from Homebrew
+  For 2.7, 3.6 and 3.7 both variants of the Python.org installer are installed, with symlinks
+  to access a specific version.
 
+The script "development-support/collect-dist-archives" creates all distribution archives, but
+is not called directly.
 
-Update the dependencies needed for the final tests and creating the distribution archive:
-
-* ``$ development-support/update-system-dependencies``
-
-  This will install or upgrade pip, setuptools, virtualenv and wheel.
-
-Then build the archives:
-
-* ``$ development-support/collection-dist-archives``
-
-  This will create the "sdist" and "wheel" archives in "distribution-dir". That directory
-  build also contain a file "build-info.txt" with information about the build environment.
-
-* ``$ development-support/test-wheels``
-
-  This will perform a smoke-test of the generated wheels on the current machine.
-
-  For major releases also run this on other OSX releases (after transporting "distribution-dir"
-  to those machines).
-
+The script "development-support/collect-all-dist-archives" creates the distribution archives on
+both build machines and moves them to a common location.
 
 Tag the release
 ---------------
@@ -90,28 +77,12 @@ Push to bitbucket.
 Update the PyObjC website
 -------------------------
 
-In the pyobjc-website project directory:
-
-.. sourcecode:: sh
-
-  $ make collect
-  $ make html
-  $ make show
-
-Check the contents of the website.
-
-Then upload:
-
-.. sourcecode:: sh
-
-  $ make upload
-
+The PyObjC website is automaticly updated after push to bitbucket.
 
 Upload the new release
 ----------------------
 
 Use "twine" to upload the source and wheel archives created earlier to PyPI.
-
 
 Update the version in the repository
 ------------------------------------
@@ -133,3 +104,15 @@ If this is a new bugfix release:
   next release followed by "b1" (e.g. "3.2.2b1" if you just released "3.2.1").
 
 Push the update to bitbucket.
+
+Check the website
+-----------------
+
+Check that https://pyobjc.readthedocs.io/ contains the release notes for the current release
+
+Send out announcement
+---------------------
+
+1) Create a blog entry on my blog describing the new release
+
+2) Send e-mail to pythonmac-sig and pyobjc-dev with the same description

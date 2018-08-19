@@ -17,7 +17,6 @@ on PowerMac G5 or iMac G5 systems) is not supported.
    no longer actively developed and may be removed in future versions
    of PyObjC.
 
-
 Installation
 ------------
 
