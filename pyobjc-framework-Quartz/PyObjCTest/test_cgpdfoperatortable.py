@@ -10,6 +10,8 @@ class TestCGPDFOperatorTable (TestCase):
     def testFunctions(self):
         CGPDFOperatorCallback = b'v^{CGPDFScanner=}^v'
 
+        self.assertArgIsIn(CGPDFOperatorTableSetCallback, 1)
+        self.assertArgIsNullTerminated(CGPDFOperatorTableSetCallback, 1)
         self.assertArgIsFunction(CGPDFOperatorTableSetCallback, 2, CGPDFOperatorCallback, True)
 
         CGPDFOperatorTableRetain

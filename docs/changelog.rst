@@ -61,6 +61,8 @@ Version 5.0b1
   on a framework wrapped with a name that isn't a valid
   identifier.
 
+* #244: Bad metadata for CGPDFOperatorTableSetCallback
+
 Version 5.0a0
 -------------
 

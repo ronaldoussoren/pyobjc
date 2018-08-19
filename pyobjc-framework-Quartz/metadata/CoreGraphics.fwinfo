@@ -3115,7 +3115,7 @@
    "CGPDFOperatorTableSetCallback": {
     "args": {
      "0": {},
-     "1": {},
+     "1": { "type_modifier": "n", "c_array_delimited_by_null": true, "type_override": "^t" },
      "2": {
       "function": {
        "args": [
