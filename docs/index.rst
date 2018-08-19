@@ -31,6 +31,16 @@ on PowerMac G5 or iMac G5 systems) is not supported at all.
    no longer actively developed and may be removed in future versions
    of PyObjC.
 
+.. warning:: **Platform Removal**
+
+   PyObjC 6, which will be released in 2019, will drop
+   support for the following platforms:
+
+   - Python 2.7
+   - Python 3.4
+   - PowerPC
+
+
 
 
 General documentation
