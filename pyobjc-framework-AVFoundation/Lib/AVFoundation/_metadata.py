@@ -131,7 +131,7 @@ try:
     r(b'AVAudioConverter', b'downmix', {'retval': {'type': b'Z'}})
     r(b'AVAudioConverter', b'setDither:', {'arguments': {2: {'type': b'Z'}}})
     r(b'AVAudioConverter', b'setDownmix:', {'arguments': {2: {'type': b'Z'}}})
-    r(b'AVAudioEngine', b'connectMIDI:to:format:block:', {'arguments': {5: {'callable': {'retval': {'type': b'i'}, 'arguments': {0: {'type': b'^v'}, 1: {'type': b'q'}, 2: {'type': b'C'}, 3: {'type': sel32or64(b'I', b'Q')}, 4: {'type': b'n^v', 'c_array_length_in_arg': 3}}}}}})
+    r(b'AVAudioEngine', b'connectMIDI:to:format:block:', {'arguments': {5: {'callable': {'retval': {'type': b'i'}, 'arguments': {0: {'type': b'^v'}, 1: {'type': b'q'}, 2: {'type': b'C'}, 3: {'type': sel32or64(b'i', b'q')}, 4: {'type': b'n^v', 'c_array_length_in_arg': 3}}}}}})
     r(b'AVAudioEngine', b'connectMIDI:toNodes:format:block:', {'arguments': {5: {'callable': {'retval': {'type': b'i'}, 'arguments': {0: {'type': b'^v'}, 1: {'type': b'q'}, 2: {'type': b'C'}, 3: {'type': sel32or64(b'i', b'q')}, 4: {'type': b'n^v', 'c_array_length_in_arg': 3}}}}}})
     r(b'AVAudioEngine', b'enableManualRenderingMode:format:maximumFrameCount:error:', {'retval': {'type': b'Z'}, 'arguments': {5: {'type_modifier': b'o'}}})
     r(b'AVAudioEngine', b'isAutoShutdownEnabled', {'retval': {'type': b'Z'}})

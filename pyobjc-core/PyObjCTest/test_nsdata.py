@@ -37,13 +37,20 @@ class TestNSDataSupport (TestCase):
         else:
             buf = cls.dataWithData_(b"hello")
         self.assertIsInstance(buf, cls)
-        self.assertEqual(buf[0:1], "h")
+
+        if sys.version_info[0] == 2:
+            self.assertEqual(buf[0], "h")
+        else:
+            self.assertEqual(buf[0], ord("h"))
 
         if sys.version_info[0] == 2:
             buf[0] = "H"
         else:
             buf[0] = ord("H")
-        self.assertEqual(buf[0:1], "H")
+        if sys.version_info[0] == 2:
+            self.assertEqual(buf[0], "H")
+        else:
+            self.assertEqual(buf[0], ord("H"))
 
         if sys.version_info[0] == 3:
             self.assertEqual(buf.bytes(), b"Hello")

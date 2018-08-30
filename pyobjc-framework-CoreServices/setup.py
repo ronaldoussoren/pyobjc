@@ -7,13 +7,16 @@ for general tips and tricks regarding the translation between Python
 and (Objective-)C frameworks
 '''
 from pyobjc_setup import setup, Extension
+import os
 
 VERSION="5.0b1"
+
+subpackages = [ "CoreServices.%s"%(fn,) for fn in os.listdir('Lib/CoreServices') if os.path.exists(os.path.join('Lib/CoreServices', fn, "__init__.py"))]
 
 setup(
     name='pyobjc-framework-CoreServices',
     description = "Wrappers for the framework CoreServices on macOS",
-    packages = [ "CoreServices" ],
+    packages = [ "CoreServices" ] + subpackages,
     ext_modules = [
         Extension('CoreServices._inlines',
             [ 'Modules/_CoreServices_inlines.m' ],

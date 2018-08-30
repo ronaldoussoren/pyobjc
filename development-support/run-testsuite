@@ -246,8 +246,9 @@ def test_summary(fp_out, state_dir):
                 results[proj][nm] = json.load(fp)
 
     keys = tuple(sorted(results[next(iter(results))].keys()))
+    width = max(len(x) for x in keys)
 
-    fmt = "%28s" + " | %10s" * len(keys)
+    fmt = "%28s" + (" | %%%ds" % width) * len(keys)
     print(file=fp_out); print()
     print(fmt % (("Project",) + keys), file=fp_out)
     print((fmt % ((len(keys)+1)  * ("",))).replace(" ", "=").replace("|", "+"), file=fp_out)
@@ -276,7 +277,6 @@ def test_summary(fp_out, state_dir):
 
         print(fmt % tuple(row), file=fp_out)
     return ok
-
 
 def supports_arch(interpreter, arch):
     lines = subprocess.check_output(['/usr/bin/file', interpreter])

@@ -720,7 +720,7 @@
 	  "0": { "typestr": "^v" },
 	  "1": { "typestr": "q" },
 	  "2": { "typestr": "C" },
-	  "3": { "typestr": [ "I", "Q" ] },
+	  "3": { "typestr": [ "i", "q" ] },
 	  "4": { "typestr": "n^v", "c_array_length_in_arg": 3 }
 	 }
 	}
