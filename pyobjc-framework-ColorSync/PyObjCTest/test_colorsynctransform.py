@@ -96,12 +96,18 @@ if sys.maxsize > 2 ** 32:
             self.assertIsInstance(ColorSync.kColorSyncConversionBPC, unicode)
             self.assertIsInstance(ColorSync.kColorSyncFixedPointRange, unicode)
 
-            self.assertIsInstance(ColorSync.kColorSyncTransformInfo, unicode)
-
             self.assertIsInstance(ColorSync.kColorSyncTransformCreator, unicode)
             self.assertIsInstance(ColorSync.kColorSyncTransformSrcSpace, unicode)
             self.assertIsInstance(ColorSync.kColorSyncTransformDstSpace, unicode)
 
+        @min_os_level('10.13')
+        @max_os_level('10.13')
+        def testConstants10_13_only(self):
+            self.assertIsInstance(ColorSync.kColorSyncTranformInfo, unicode)
+
+        @min_os_level('10.14')
+        def testConstants10_14(self):
+            self.assertIsInstance(ColorSync.kColorSyncTransformInfo, unicode)
 
 if __name__ == "__main__":
     main()
