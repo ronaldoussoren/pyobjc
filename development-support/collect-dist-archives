@@ -94,11 +94,11 @@ def main():
         print()
         for nm, command, ver in failed:
             if ver:
-                print("{} {}@{}"%(nm, command, ver))
+                print(f"{nm} {command}@{ver}")
             else:
-                print("{} {}"%(nm, command, ver))
+                print(f"{nm} {command}")
 
-        sys.exit(1)
+        sys.exit(0)
 
     sys.exit(0)
 
