@@ -11,6 +11,7 @@ import objc
 from PyObjCTest.fnd import NSObject, NSAutoreleasePool
 
 rct = structargs.StructArgClass.someRect.__metadata__()['retval']['type']
+print(rct)
 
 class OCTestRegrWithGetItem (NSObject):
     def objectForKey_(self, k):
@@ -72,6 +73,7 @@ class TestRegressions(TestCase):
         # Check that we generate a warning for unitialized objects that
         # get deallocated
         import sys
+        import gc
         if sys.version_info[0] == 2:
             from StringIO import StringIO
         else:
@@ -80,6 +82,11 @@ class TestRegressions(TestCase):
         with warnings.catch_warnings(record=True) as w:
             d = NSObject.alloc()
             del d
+
+            # Expliclty for garbage collection, without this
+            # there are sporadic test failures when using
+            # coverage.py
+            gc.collect()
 
         self.assertTrue(len(w) == 1)
         self.assertEqual(w[0].category, objc.UninitializedDeallocWarning)
@@ -151,6 +158,7 @@ class TestRegressions(TestCase):
     def testStructReturn(self):
         o = structargs.StructArgClass.alloc().init()
         v = o.someRect()
+        print(o.someRect.__metadata__())
         self.assertEqual(v, ((1,2),(3,4)))
 
 
