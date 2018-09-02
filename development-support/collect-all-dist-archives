@@ -75,7 +75,7 @@ def main():
             else:
                 print(f'{futures[fut]} is done')
 
-    for vm in VMS:
+    for vm in VMs:
         os.mkdir(f"distribution-dir/{vm}")
         subprocess.check_call(["scp", f"{vm}:Projects/pyobjc/distribution-dir/*", f"distribution-dir/{vm}"])
         for fn in os.listdir(f"distribution-dir/{vm}"):
