@@ -3856,6 +3856,12 @@ PyObjCRT_ResultUsesStret(const char* typestr)
     }
 }
 
+#define USE_ALLOCA(bufsize) 0
+
+#if 0
+#define USE_ALLOCA(bufsize) ((bufsize) < 1<<12)
+#endif
+
 
 PyObject *
 PyObjCFFI_Caller(PyObject *aMeth, PyObject* self, PyObject *args)
@@ -3978,7 +3984,7 @@ PyObjCFFI_Caller(PyObject *aMeth, PyObject* self, PyObject *args)
         goto error_cleanup;
     }
 
-    if (likely(argbuf_len < (1<<12))) {
+    if (likely(USE_ALLOCA(argbuf_len))) {
         argbuf = alloca(argbuf_len);
     } else {
         argbuf = PyMem_Malloc(argbuf_len);
@@ -4133,7 +4139,7 @@ PyObjCFFI_Caller(PyObject *aMeth, PyObject* self, PyObject *args)
         }
     }
 
-    if (unlikely(!(argbuf_len < (1<<12)))) {
+    if (unlikely(!USE_ALLOCA(argbuf_len))) {
         PyMem_Free(argbuf);
     }
     argbuf = NULL;
@@ -4162,7 +4168,7 @@ error_cleanup:
         PyObjCFFI_FreeByRef(Py_SIZE(methinfo), byref, byref_attr);
     }
 
-    if (argbuf && !(argbuf_len < (1<<12))) {
+    if (argbuf && !USE_ALLOCA(argbuf_len)) {
         PyMem_Free(argbuf);
         argbuf = NULL;
     }
