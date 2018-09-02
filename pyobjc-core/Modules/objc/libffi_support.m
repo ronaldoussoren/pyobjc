@@ -93,7 +93,7 @@ static void describe_ffitype(ffi_type* type)
            break;
 
     default:
-           // Don't abort, this is called from the debugger
+           /* Don't abort, this is called from the debugger */
            printf("?(%d)", type->type);
     }
 }
@@ -2480,7 +2480,7 @@ PyObjCFFI_ParseArguments(
         PyObjCMethodSignature* methinfo, Py_ssize_t argOffset,
         PyObject* args,
         Py_ssize_t argbuf_cur, unsigned char* argbuf,
-        Py_ssize_t argbuf_len __attribute__((__unused__)), // only used in debug builds
+        Py_ssize_t argbuf_len __attribute__((__unused__)), /* only used in debug builds */
         void** byref,
         struct byref_attr* byref_attr,
         ffi_type** arglist, void** values)
