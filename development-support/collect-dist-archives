@@ -18,13 +18,30 @@ from _common_definitions import variants, setup_variant
 def files_matching(pattern, dirname):
     return fnmatch.filter(os.listdir(dirname), pattern)
 
+_detected_versions = None
+def detect_pyversions():
+    global _detected_versions
+    if _detected_versions is not None:
+        return _detected_versions
+
+    result = []
+    for ver in PY_VERSIONS:
+        if os.path.exists(os.path.join(
+            '/Library/Frameworks/Python.framework/Versions', ver)):
+
+            result.append(ver)
+
+    _detected_versions = result
+    return _detected_versions
+
+
 def main():
     if os.path.exists(DIST_DIR):
        shutil.rmtree(DIST_DIR)
     os.mkdir(DIST_DIR)
 
     # Information about this build:
-    system_report(os.path.join(TOP_DIR, "build-info.txt"), PY_VERSIONS)
+    system_report(os.path.join(TOP_DIR, "build-info.txt"), detect_pyversions())
 
     # Collect the list of subprojects to build
     names = ['pyobjc', 'pyobjc-core']
@@ -36,7 +53,7 @@ def main():
     for nm in names:
         # Collect sdist archive with most recent python version.
         status = subprocess.call([
-            'python{}'.format(PY_VERSIONS[-1]), 'setup.py',
+            'python{}'.format(detect_pyversions()[-1]), 'setup.py',
                 'sdist', '--dist-dir={}'.format(DIST_DIR),
             ],
             cwd=os.path.join(TOP_DIR, nm))
@@ -44,7 +61,7 @@ def main():
             print("WARNING: Building wheel for {} failed".format(nm))
             failed.append((nm, 'sdist', ''))
 
-        for ver in PY_VERSIONS:
+        for ver in detect_pyversions():
             for variant in variants(ver):
                 setup_variant(ver, variant)
                 status = subprocess.call([
