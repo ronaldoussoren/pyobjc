@@ -10,7 +10,7 @@ class TestDictionaryServices (TestCase):
     def testClasses(self):
         self.assertIsCFType(CoreServices.DCSDictionaryRef)
 
-
+    @onlyIf(os_release().rsplit('.', 1)[0] not in ('10.12', '10.13'))
     def testFunctions(self):
         txt = b"the hello world program".decode('latin1')
         r = CoreServices.DCSGetTermRangeInString(None, txt, 5)

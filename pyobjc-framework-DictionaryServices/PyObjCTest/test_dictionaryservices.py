@@ -11,6 +11,7 @@ class TestDictionaryServices (TestCase):
         self.assertIsCFType(DictionaryServices.DCSDictionaryRef)
 
 
+    @onlyIf(os_release().rsplit('.', 1)[0] not in ('10.12', '10.13'))
     def testFunctions(self):
         txt = b"the hello world program".decode('latin1')
         r = DictionaryServices.DCSGetTermRangeInString(None, txt, 5)
