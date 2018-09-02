@@ -8657,10 +8657,7 @@
    }, 
    "kPDFAnnotationKey_WidgetValue": {
     "typestr": "@"
-   }, 
-   "kPDFDestinationUnspecifiedValue": {
-    "typestr": "d"
-   }
+   } 
   }, 
   "formal_protocols": {
    "PDFDocumentDelegate": {
