@@ -4278,10 +4278,6 @@ PyObjCFFI_MakeClosure(
         return NULL;
     }
 
-    /*printf("create closure for cif\n");
-    describe_cif(cif);
-    printf("\n\n");*/
-
     rv = ffi_prep_closure(cl, cif, func, userdata);
     if (rv != FFI_OK) {
         PyObjCFFI_FreeCIF(cif);
