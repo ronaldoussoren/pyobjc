@@ -175,7 +175,11 @@ static char* keywords[] = { "num_channels", "buffer_size", NULL };
         return NULL;
     }
 
+#ifdef __LP64__
     if ((bufsize != -1 && bufsize < 0) || bufsize > (Py_ssize_t)UINT_MAX) {
+#else
+    if (bufsize != -1 && bufsize < 0) { /* 32bit means int == long == Py_ssizet */
+#endif
         PyErr_Format(PyExc_ValueError, "bufsize %ld out of range", (long)bufsize);
         return NULL;
     }

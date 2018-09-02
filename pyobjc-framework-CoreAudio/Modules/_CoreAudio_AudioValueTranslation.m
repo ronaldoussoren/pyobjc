@@ -235,11 +235,19 @@ static char* keywords[] = { "input_buffer_size", "output_buffer_size", NULL };
         return NULL;
     }
 
-    if ((input_bufsize != -1 && input_bufsize < 0) || input_bufsize > (Py_ssize_t)UINT_MAX) {
+    if ((input_bufsize != -1 && input_bufsize < 0) 
+#ifdef __LP64__
+            || input_bufsize > (Py_ssize_t)UINT_MAX
+#endif
+     ) {
         PyErr_SetString(PyExc_ValueError, "input bufsize out of range");
         return NULL;
     }
-    if ((output_bufsize != -1 && output_bufsize < 0) || output_bufsize > (Py_ssize_t)UINT_MAX) {
+    if ((output_bufsize != -1 && output_bufsize < 0) 
+#ifdef __LP64__
+            || output_bufsize > (Py_ssize_t)UINT_MAX
+#endif
+     ) {
         PyErr_SetString(PyExc_ValueError, "output bufsize out of range");
         return NULL;
     }
