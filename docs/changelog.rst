@@ -63,6 +63,14 @@ Version 5.0b1
 
 * #244: Bad metadata for CGPDFOperatorTableSetCallback
 
+* #247: Fix crash in regression test case
+
+  One specific test in pyobjc-core crashed the interpreter
+  when run separately. Because of this I've disabled an
+  optimization that uses alloca instead of PyMem_Malloc to
+  allocate memory for now.
+  
+
 Version 5.0a0
 -------------
 
