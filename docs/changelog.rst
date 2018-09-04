@@ -3,6 +3,12 @@ What's new in PyObjC
 
 An overview of the relevant changes in new, and older, releases.
 
+Version 5.0b2
+-------------
+
+* Added manual bindings for MTAudioProcessingTapCreate and MTAudioProcessingTapGetStorage
+  in the MediaToolbox bindings.
+
 Version 5.0b1
 -------------
 
@@ -69,7 +75,7 @@ Version 5.0b1
   when run separately. Because of this I've disabled an
   optimization that uses alloca instead of PyMem_Malloc to
   allocate memory for now.
-  
+
 
 Version 5.0a0
 -------------

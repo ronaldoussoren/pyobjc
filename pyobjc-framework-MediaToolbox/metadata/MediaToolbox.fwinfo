@@ -12,26 +12,19 @@
   "formal_protocols": {},
   "functions": {
    "MTAudioProcessingTapCreate": {
-    "args": {
-     "0": {},
-     "1": {},
-     "3": {}
-    }
+    "ignore": true
    },
    "MTAudioProcessingTapGetSourceAudio": {
     "args": {
      "0": {},
      "2": {},
-     "3": {},
-     "4": {},
-     "5": {}
+     "3": { "type_modifier": "o" },
+     "4": { "type_modifier": "o" },
+     "5": { "type_modifier": "o" }
     }
    },
    "MTAudioProcessingTapGetStorage": {
-    "args": {
-     "0": {}
-    },
-    "retval": {}
+    "ignore": true
    },
    "MTCopyLocalizedNameForMediaSubType": {
     "retval": {

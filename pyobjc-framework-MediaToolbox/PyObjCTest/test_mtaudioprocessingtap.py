@@ -9,6 +9,13 @@ class TestMTAudioProcessingTap (TestCase):
     def test_functions(self):
         self.assertIsInstance(MediaToolbox.MTAudioProcessingTapGetTypeID(), (int, long))
 
+        self.assertArgIsOut(MediaToolbox.MTAudioProcessingTapGetSourceAudio, 3)
+        self.assertArgIsOut(MediaToolbox.MTAudioProcessingTapGetSourceAudio, 4)
+        self.assertArgIsOut(MediaToolbox.MTAudioProcessingTapGetSourceAudio, 5)
+
+        self.assertNotIsInstance(MediaToolbox.MTAudioProcessingTapGetStorage, objc.function)
+        self.assertNotIsInstance(MediaToolbox.MTAudioProcessingTapCreate, objc.function)
+
         self.fail("Need manual wrappers for most functions")
 
     def test_constants(self):

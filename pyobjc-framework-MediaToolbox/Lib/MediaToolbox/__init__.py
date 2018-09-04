@@ -22,5 +22,9 @@ sys.modules['MediaToolbox'] = mod = objc.ObjCLazyModule(
         '__loader__': globals().get('__loader__', None),
     }, (Foundation,))
 
+import MediaToolbox._MediaToolbox
+for nm in dir(MediaToolbox._MediaToolbox):
+    setattr(mod, nm, getattr(MediaToolbox._MediaToolbox, nm))
+
 import sys
 del sys.modules['MediaToolbox._metadata']
