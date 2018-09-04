@@ -1,3 +1,4 @@
+#define PY_SSIZE_T_CLEAN
 #define CF_INLINE
 #include "Python.h"
 #include "pyobjc-api.h"

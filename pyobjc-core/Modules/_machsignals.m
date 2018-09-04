@@ -1,7 +1,7 @@
 /*
  * Nicer signal handling, integrated into the runloop.
  */
-
+#define PY_SSIZE_T_CLEAN
 #include <Python.h>
 #include <mach/mach.h>
 #include <mach/mach_error.h>

@@ -1,6 +1,7 @@
 /*
  * Support for callback functions/structs in the FSEvents frameework.
  */
+#define PY_SSIZE_T_CLEAN
 #include <Python.h>
 #include "pyobjc-api.h"
 

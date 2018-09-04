@@ -3,6 +3,7 @@
  *
  * XXX: Definitely need tests for these.
  */
+#define PY_SSIZE_T_CLEAN
 #include <Python.h>
 #include "pyobjc-api.h"
 
