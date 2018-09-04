@@ -7,7 +7,6 @@ MIODeviceStreamQueueAlteredProc = b'vI^v^v'
 CMIOStreamScheduledOutputNotificationProc = b'vQQ^v'
 
 
-
 class TestCMIOSampleBuffer (TestCase):
     def testDefines(self):
         self.assertEqual(CoreMediaIO.CMIOGetNextSequenceNumber(0), 1)
@@ -113,6 +112,6 @@ class TestCMIOSampleBuffer (TestCase):
         CoreMediaIO.CMIOSampleBufferCopyNonRequiredAttachments
         CoreMediaIO.CMIOSampleBufferCopySampleAttachments
 
+
 if __name__ == "__main__":
         main()
-

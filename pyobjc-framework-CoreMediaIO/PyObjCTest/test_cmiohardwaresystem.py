@@ -5,7 +5,6 @@ import CoreMediaIO
 class TestCMIOHardwareSystem (TestCase):
 
     def testConstants(self):
-
         self.assertEqual(CoreMediaIO.kCMIOSystemObjectClassID, fourcc(b'asys'))
         self.assertEqual(CoreMediaIO.kCMIOObjectSystemObject, 1)
 

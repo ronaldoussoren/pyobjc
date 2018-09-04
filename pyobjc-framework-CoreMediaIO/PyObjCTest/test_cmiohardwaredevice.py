@@ -10,7 +10,6 @@ class TestCMIOHardwareDevice (TestCase):
         self.assertEqual(v.mNumberStreams, 0)
         self.assertEqual(v.mNumberChannels, None)
 
-
         v = CoreMediaIO.CMIODeviceAVCCommand()
         self.assertEqual(v.mCommand, None)
         self.assertEqual(v.mCommandLength, 0)
@@ -24,8 +23,6 @@ class TestCMIOHardwareDevice (TestCase):
         self.assertEqual(v.mResponse, None)
         self.assertEqual(v.mResponseLength, 0)
         self.assertEqual(v.mResponseUsed, 0)
-
-
 
         v = CoreMediaIO.CMIODeviceSMPTETimeCallback()
         self.assertEqual(v.mGetSMPTETimeProc, None)
@@ -128,7 +125,6 @@ class TestCMIOHardwareDevice (TestCase):
         self.assertEqual(CoreMediaIO.kCMIODevicePropertyLocationExternalDisplay, 2)
         self.assertEqual(CoreMediaIO.kCMIODevicePropertyLocationExternalDevice, 3)
         self.assertEqual(CoreMediaIO.kCMIODevicePropertyLocationExternalWirelessDevice, 4)
-
 
     @min_os_level('10.7')
     def testFunctions(self):

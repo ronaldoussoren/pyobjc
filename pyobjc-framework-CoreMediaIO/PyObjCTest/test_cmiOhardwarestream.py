@@ -87,8 +87,6 @@ class TestCMIOHardwareStream (TestCase):
         self.assertEqual(CoreMediaIO.kCMIOStreamPropertyPreferredFormatDescription, fourcc(b'prfd'))
         self.assertEqual(CoreMediaIO.kCMIOStreamPropertyPreferredFrameRate, fourcc(b'prfr'))
 
-
-
     def testStructs(self):
         v = CoreMediaIO.CMIOStreamDeck()
         self.assertEqual(v.mStatus, 0)
@@ -114,14 +112,6 @@ class TestCMIOHardwareStream (TestCase):
         CoreMediaIO.CMIOStreamClockPostTimingEvent
         CoreMediaIO.CMIOStreamClockInvalidate
         CoreMediaIO.CMIOStreamClockConvertHostTimeToDeviceTime
-
-
-
-
-
-
-
-
 
 
 if __name__ == "__main__":
