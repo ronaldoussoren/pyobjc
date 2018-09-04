@@ -23,7 +23,7 @@ This is needed because the InterfaceBuilderKit framework won't load otherwise.
 '''
 from pyobjc_setup import setup
 
-VERSION="5.0b1"
+VERSION="5.0b2"
 
 setup(
     name='pyobjc-framework-InterfaceBuilderKit',

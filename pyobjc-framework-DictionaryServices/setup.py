@@ -6,7 +6,7 @@ Use package "CoreServices" instead.
 from pyobjc_setup import setup, Extension
 import os
 
-VERSION="5.0b1"
+VERSION="5.0b2"
 
 setup(
     name='pyobjc-framework-DictionaryServices',

@@ -11,7 +11,7 @@ and (Objective-)C frameworks
 '''
 from pyobjc_setup import *
 
-VERSION="5.0b1"
+VERSION="5.0b2"
 
 setup(
     name='pyobjc-framework-InstallerPlugins',
