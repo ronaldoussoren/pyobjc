@@ -13,10 +13,10 @@ class TestMTAudioProcessingTap (TestCase):
         self.assertArgIsOut(MediaToolbox.MTAudioProcessingTapGetSourceAudio, 4)
         self.assertArgIsOut(MediaToolbox.MTAudioProcessingTapGetSourceAudio, 5)
 
+        # XXX: These two funtionss are tested manually:
         self.assertNotIsInstance(MediaToolbox.MTAudioProcessingTapGetStorage, objc.function)
         self.assertNotIsInstance(MediaToolbox.MTAudioProcessingTapCreate, objc.function)
 
-        self.fail("Need manual wrappers for most functions")
 
     def test_constants(self):
         self.assertEqual(MediaToolbox.kMTAudioProcessingTapCreationFlag_PreEffects, 1 << 0)
