@@ -341,7 +341,7 @@ The framework name links to API notes for that framework, the python packages li
 +------------------------------------------------------------------+---------------------------------------------+-----------------------------------------+
 | :doc:`VideoSubscriberAccount </apinotes/VideoSubscriberAccount>` | `pyobjc-framework-VideoSubscriberAccount`_  |                                         |
 +------------------------------------------------------------------+---------------------------------------------+-----------------------------------------+
-| VideoToolbox                                                     | -                                           | Not wrapped yet                         |
+| :doc:`VideoToolbox </apinotes/VideoToolbox>`                     | `pyobjc-framework-VideoToolbox`_            |                                         |
 +------------------------------------------------------------------+---------------------------------------------+-----------------------------------------+
 | :doc:`Vision </apinotes/Vision>`                                 | `pyobjc-framework-Vision`_                  |                                         |
 +------------------------------------------------------------------+---------------------------------------------+-----------------------------------------+
@@ -460,6 +460,7 @@ version of PyObjC although there is no explicit roadmap for this.
 .. _`pyobjc-framework-UserNotifications`: https://pypi.org/project/pyobjc-framework-UserNotifications/
 .. _`pyobjc-framework-NaturalLanguage`: https://pypi.org/project/pyobjc-framework-NaturalLanguage/
 .. _`pyobjc-framework-VideoSubscriberAccount`: https://pypi.org/project/pyobjc-framework-VideoSubscriberAccount/
+.. _`pyobjc-framework-VideoToolbox`: https://pypi.org/project/pyobjc-framework-VideoToolbox/
 .. _`pyobjc-framework-MediaToolbox`: https://pypi.org/project/pyobjc-framework-MediaToolbox/
 .. _`pyobjc-framework-CoreMedia`: https://pypi.org/project/pyobjc-framework-CoreMedia/
 .. _`pyobjc-framework-CoreMediaIO`: https://pypi.org/project/pyobjc-framework-CoreMediaIO/

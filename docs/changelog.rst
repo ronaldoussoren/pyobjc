@@ -12,6 +12,8 @@ Version 5.0b2
 * Added manual bindings for CMIODeviceProcessAVCCommand and CMIODeviceProcessRS422Command
   in the CoreMediaIO bindings
 
+* Added bindings for the VideoToolbox framework introduced in macOS 10.8
+
 Version 5.0b1
 -------------
 

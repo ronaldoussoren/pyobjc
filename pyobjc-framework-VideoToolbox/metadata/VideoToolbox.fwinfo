@@ -1,0 +1,332 @@
+// objective.metadata exceptions file, see its document
+// for information on how to update this file.
+{
+ "definitions": {
+  "classes": {},
+  "structs": {
+   "VTDecompressionOutputCallbackRecord": { "ignore": true }
+  },
+  "cftypes": {
+   "VTPixelTransferSessionRef": {
+    "typestr": "^{OpaqueVTPixelTransferSession=}",
+    "gettypeid_func": ":VTPixelTransferSessionGetTypeID"
+   },
+   "VTMultiPassStorageRef": {
+    "typestr": "^{OpaqueVTMultiPassStorage=}",
+    "gettypeid_func": ":VTMultiPassStorageGetTypeID"
+   },
+   "VTSessionRef": {
+    "typestr": "^{OpaqueVTSession=}",
+    "gettypeid_func": ":VTSessionGetTypeID"
+   },
+   "VTDecompressionSessionRef": {
+    "typestr": "^{OpaqueVTDecompressionSession=}",
+    "gettypeid_func": ":VTDecompressionSessionGetTypeID"
+   },
+   "VTFrameSiloRef": {
+    "typestr": "^{OpaqueVTFrameSilo=}",
+    "gettypeid_func": ":VTFrameSiloGetTypeID"
+   }
+  },
+  "formal_protocols": {},
+  "functions": {
+   "VTCompressionSessionBeginPass": {
+    "args": {
+     "0": {},
+     "2": {}
+    }
+   },
+   "VTCompressionSessionCompleteFrames": {
+    "args": {
+     "0": {}
+    }
+   },
+   "VTCompressionSessionCreate": {
+    "args": {
+     "0": {},
+     "4": {},
+     "5": {},
+     "6": {},
+     "7": {
+      "function": {
+       "args": [
+        {
+         "typestr": "^v"
+        },
+        {
+         "typestr": "^v"
+        },
+        {
+         "typestr": "i"
+        },
+        {
+         "typestr": "I"
+        },
+        {
+         "typestr": "^{opaqueCMSampleBuffer=}"
+        }
+       ],
+       "retval": {
+        "typestr": "v"
+       }
+      }
+     },
+     "8": {},
+     "9": { "type_modifier": "o", "already_cfretained": true }
+    }
+   },
+   "VTCompressionSessionEncodeFrame": {
+    "args": {
+     "0": {},
+     "1": {},
+     "4": {},
+     "5": {},
+     "6": { "type_modifier": "o" }
+    }
+   },
+   "VTCompressionSessionEncodeFrameWithOutputHandler": {
+    "args": {
+     "0": {},
+     "1": {},
+     "4": {},
+     "5": { "type_modifier": "o" },
+     "6": {
+      "callable": {
+       "arguments": {
+        "0": { "type": "^v" },
+        "1": { "type": "i" },
+        "2": { "type": ["I", "Q"] },
+        "3": { "type": "^{opaqueCMSampleBuffer=}" }
+       },
+       "retval": { "type": "v" }
+      }
+     }
+    }
+   },
+   "VTCompressionSessionEndPass": {
+    "args": {
+     "0": {},
+     "1": { "type_modifier": "o" },
+     "2": {}
+    }
+   },
+   "VTCompressionSessionGetPixelBufferPool": {
+    "args": {
+     "0": {}
+    },
+    "retval": {}
+   },
+   "VTCompressionSessionGetTimeRangesForNextPass": {
+    "ignore": true, "comment": "requires manual binding"
+   },
+   "VTCompressionSessionInvalidate": {
+    "args": {
+     "0": {}
+    }
+   },
+   "VTCompressionSessionPrepareToEncodeFrames": {
+    "args": {
+     "0": {}
+    }
+   },
+   "VTCopySupportedPropertyDictionaryForEncoder": {
+    "args": {
+     "3": {},
+     "4": { "type_modifier": "o", "already_cfretained": true },
+     "5": { "type_modifier": "o", "already_cfretained": true }
+    }
+   },
+   "VTCopyVideoEncoderList": {
+    "args": {
+     "0": {},
+     "1": { "type_modifier": "o", "already_cfretained": true }
+    }
+   },
+   "VTCreateCGImageFromCVPixelBuffer": {
+    "args": {
+     "0": {},
+     "1": {},
+     "2": { "type_modifier": "o", "already_cfretained": true }
+    }
+   },
+   "VTDecompressionSessionCanAcceptFormatDescription": {
+    "args": {
+     "0": {},
+     "1": {}
+    }
+   },
+   "VTDecompressionSessionCopyBlackPixelBuffer": {
+    "args": {
+     "0": {},
+     "1": { "type_modifier": "o", "already_cfretained": true }
+    }
+   },
+   "VTDecompressionSessionCreate": { "ignore": true, "comment": "manual binding" },
+   "VTDecompressionSessionDecodeFrame": {
+    "args": {
+     "0": {},
+     "1": {},
+     "3": {},
+     "4": { "type_modifier": "o" }
+    }
+   },
+   "VTDecompressionSessionDecodeFrameWithOutputHandler": {
+    "args": {
+     "0": {},
+     "1": {},
+     "3": { "type_modifier": "o" },
+     "4": {
+      "callable": {
+       "arguments": {
+        "0": { "type": "^v" },
+	"1": { "type": "i" },
+	"2": { "type": "I" },
+	"3": { "type": "^{__CVBuffer=}" },
+	"4": { "type": "{_CMTime=qiIq}" },
+	"5": { "type": "{_CMTime=qiIq}" }
+       },
+       "retval": { "type": "v" }
+      }
+     }
+    }
+   },
+   "VTDecompressionSessionFinishDelayedFrames": {
+    "args": {
+     "0": {}
+    }
+   },
+   "VTDecompressionSessionInvalidate": {
+    "args": {
+     "0": {}
+    }
+   },
+   "VTDecompressionSessionWaitForAsynchronousFrames": {
+    "args": {
+     "0": {}
+    }
+   },
+   "VTFrameSiloAddSampleBuffer": {
+    "args": {
+     "0": {},
+     "1": {}
+    }
+   },
+   "VTFrameSiloCallBlockForEachSampleBuffer": {
+    "args": {
+     "0": {},
+     "2": {
+      "callable": {
+       "arguments": {
+        "0": { "type": "^v" },
+        "1": { "type": "^{opaqueCMSampleBuffer=}" }
+       },
+       "retval": { "type": "i" }
+      }
+     }
+    }
+   },
+   "VTFrameSiloCallFunctionForEachSampleBuffer": {
+    "args": {
+     "0": {},
+     "2": {},
+     "3": {
+      "callable_retained": false,
+      "function": {
+       "args": [
+        {
+         "typestr": "^v"
+        },
+        {
+         "typestr": "^{opaqueCMSampleBuffer=}"
+        }
+       ],
+       "retval": {
+        "typestr": "i"
+       }
+      }
+     }
+    }
+   },
+   "VTFrameSiloCreate": {
+    "args": {
+     "0": {},
+     "1": {},
+     "3": {},
+     "4": { "type_modifier": "o", "already_cfretained": true }
+    }
+   },
+   "VTFrameSiloGetProgressOfCurrentPass": {
+    "args": {
+     "0": {},
+     "1": { "type_modifier": "o" }
+    }
+   },
+   "VTFrameSiloSetTimeRangesForNextPass": {
+    "args": {
+     "0": {},
+     "2": { "type_modifier": "n", "c_array_length_in_arg": 1 }
+    }
+   },
+   "VTMultiPassStorageClose": {
+    "args": {
+     "0": {}
+    }
+   },
+   "VTMultiPassStorageCreate": {
+    "args": {
+     "0": {},
+     "1": {},
+     "3": {},
+     "4": { "type_modifier": "o", "already_cfretained": true }
+    }
+   },
+   "VTPixelTransferSessionCreate": {
+    "args": {
+     "0": {},
+     "1": { "type_modifier": "o", "already_cfretained": true }
+    }
+   },
+   "VTPixelTransferSessionInvalidate": {
+    "args": {
+     "0": {}
+    }
+   },
+   "VTPixelTransferSessionTransferImage": {
+    "args": {
+     "0": {},
+     "1": {},
+     "2": {}
+    }
+   },
+   "VTSessionCopyProperty": {
+    "args": {
+     "1": {},
+     "2": {},
+     "3": { "type_override": "^@", "type_modifier": "o", "already_cfretained": true }
+    }
+   },
+   "VTSessionCopySerializableProperties": {
+    "args": {
+     "1": {},
+     "2": { "type_modifier": "o", "already_cfretained": true }
+    }
+   },
+   "VTSessionCopySupportedPropertyDictionary": {
+    "args": {
+     "1": { "type_modifier": "o", "already_cfretained": true }
+    }
+   },
+   "VTSessionSetProperties": {
+    "args": {
+     "1": {}
+    }
+   },
+   "VTSessionSetProperty": {
+    "args": {
+     "1": {}
+    }
+   }
+  },
+  "informal_protocols": {}
+ }
+}
