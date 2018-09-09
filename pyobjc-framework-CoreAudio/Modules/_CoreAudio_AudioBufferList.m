@@ -34,6 +34,11 @@ static PyMemberDef abl_members[] = {
 static Py_ssize_t
 abl_length(PyObject* self)
 {
+    printf("abl_length %p\n", self); fflush(stdout);
+    printf("abl_length list %p\n", ((struct audio_buffer_list*)self)->abl_list); fflush(stdout);
+    if ((((struct audio_buffer_list*)self)->abl_list) == NULL) {
+        return 0;
+    }
     return ((struct audio_buffer_list*)self)->abl_list->mNumberBuffers;
 }
 
@@ -42,6 +47,11 @@ abl_get_item(PyObject* _self, Py_ssize_t idx)
 {
     struct audio_buffer_list* self = ((struct audio_buffer_list*)_self);
     PyObject* result;
+
+    if (self->abl_list == NULL) {
+        PyErr_SetString(PyExc_IndexError, "index out of range");
+        return NULL;
+    }
 
     if (idx >= (Py_ssize_t)self->abl_list->mNumberBuffers) {
         PyErr_SetString(PyExc_IndexError, "index out of range");
@@ -158,7 +168,7 @@ static PyTypeObject audio_buffer_list_type = {
 
 static PyObject* pythonify_audio_buffer_list(void* pointer)
 {
-    AudioBufferList* buf_pointer = *(AudioBufferList**)pointer;
+    AudioBufferList* buf_pointer = (AudioBufferList*)pointer;
     struct audio_buffer_list* result;
 
     if (buf_pointer == NULL) {

@@ -271,7 +271,7 @@ ab_create(AudioBuffer* item)
 
 static PyObject* pythonify_audio_buffer(void* pointer)
 {
-    AudioBuffer* buf_pointer = *(AudioBuffer**)pointer;
+    AudioBuffer* buf_pointer = (AudioBuffer*)pointer;
 
     if (buf_pointer == NULL) {
         Py_INCREF(Py_None);

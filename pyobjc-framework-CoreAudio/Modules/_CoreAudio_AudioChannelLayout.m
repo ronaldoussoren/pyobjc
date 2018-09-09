@@ -227,7 +227,7 @@ static PyTypeObject audio_channel_layout_type = {
 
 static PyObject* pythonify_audio_channel_layout(void* pointer)
 {
-    AudioChannelLayout* buf_pointer = *(AudioChannelLayout**)pointer;
+    AudioChannelLayout* buf_pointer = (AudioChannelLayout*)pointer;
     struct audio_channel_layout* result;
 
     if (buf_pointer == NULL) {

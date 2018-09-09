@@ -208,7 +208,7 @@ acd_create(AudioChannelDescription* item)
 
 static PyObject* pythonify_audio_channel_description(void* pointer)
 {
-    AudioChannelDescription* buf_pointer = *(AudioChannelDescription**)pointer;
+    AudioChannelDescription* buf_pointer = (AudioChannelDescription*)pointer;
 
     if (buf_pointer == NULL) {
         Py_INCREF(Py_None);

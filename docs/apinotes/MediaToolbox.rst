@@ -28,3 +28,8 @@ The full framework is available from Python. This framework was introduced in OS
      in an exception that exception is ignored and a warning is printed to
      the "stderr" stream.  The exception will *not* be converted to an Objective-C
      exception.
+
+  .. warning::
+
+     The process will crash if the process callback is too slow, there's nothing
+     PyObjC can do to prevent this.
