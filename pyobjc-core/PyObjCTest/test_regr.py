@@ -11,7 +11,6 @@ import objc
 from PyObjCTest.fnd import NSObject, NSAutoreleasePool
 
 rct = structargs.StructArgClass.someRect.__metadata__()['retval']['type']
-print(rct)
 
 class OCTestRegrWithGetItem (NSObject):
     def objectForKey_(self, k):
@@ -125,7 +124,26 @@ class TestRegressions(TestCase):
         self.assertRaises(TypeError, ClsIsNone.f, None)
 
 
-    def testStructArgs (self):
+    def testBufferArg(self):
+        data = objc.lookUpClass('NSData')
+
+        o = structargs.StructArgClass.alloc().init()
+
+        s = (b"foobar", 4)
+
+        d = o.dataFromBuffer_(s)
+        self.assertIsInstance(d, data)
+        self.assertEqual(d.length(), 4)
+        self.assertEqual(d.bytes(), b'foob')
+
+        s = (bytearray(b"FOOBAR"), 3)
+
+        d = o.dataFromBuffer_(s)
+        self.assertIsInstance(d, data)
+        self.assertEqual(d.length(), 3)
+        self.assertEqual(d.bytes(), b'FOO')
+
+    def testStructArgs(self):
         # Like AppKit.test.test_nsimage.TestNSImage.test_compositePoint
         # unlike that this one doesn't crash on darwin/x86, makeing it less
         # likely that libffi is at fault
@@ -158,7 +176,6 @@ class TestRegressions(TestCase):
     def testStructReturn(self):
         o = structargs.StructArgClass.alloc().init()
         v = o.someRect()
-        print(o.someRect.__metadata__())
         self.assertEqual(v, ((1,2),(3,4)))
 
 

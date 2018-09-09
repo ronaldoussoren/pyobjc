@@ -5,6 +5,11 @@
 
 #import <Cocoa/Cocoa.h>
 
+struct BufferStruct {
+    char* buffer;
+    int buffer_size;
+};
+
 @interface StructArgClass : NSObject
 {
 }
@@ -14,6 +19,7 @@
 -(NSRect)someRectWithRect:(NSRect)rect;
 -(NSRect)someRectWithX:(int)x Y:(int)y H:(int)h W:(int)w;
 -(NSRect)someRectWithObject:(StructArgClass*)o X:(int)x Y:(int)y H:(int)h W:(int)w;
+-(NSData*)dataFromBuffer:(struct BufferStruct*)buf;
 @end
 
 @implementation StructArgClass
@@ -57,6 +63,12 @@ static size_t ident(size_t v)
 
     return ident(((size_t)&c)+1);
 }
+
+-(NSData*)dataFromBuffer:(in struct BufferStruct*)buf;
+{
+    return [NSData dataWithBytes:buf->buffer length:buf->buffer_size];
+}
+
 @end
 
 static PyMethodDef mod_methods[] = {
