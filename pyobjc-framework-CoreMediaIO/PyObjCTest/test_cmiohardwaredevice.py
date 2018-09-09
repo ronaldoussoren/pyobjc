@@ -131,8 +131,5 @@ class TestCMIOHardwareDevice (TestCase):
         CoreMediaIO.CMIODeviceStartStream
         CoreMediaIO.CMIODeviceStopStream
 
-        # XXX: These probably require a manual wrapper
-        self.assertArgIsIn(CoreMediaIO.CMIODeviceProcessAVCCommand, 1)
-        self.assertArgIsIn(CoreMediaIO.CMIODeviceProcessRS422Command, 1)
-
-        self.fail("Manual bindings for a number of structs!")
+        self.assertIsNotInstance(CoreMediaIO.CMIODeviceProcessAVCCommand, objc.function)
+        self.assertIsNotInstance(CoreMediaIO.CMIODeviceProcessRS422Command, objc.function)

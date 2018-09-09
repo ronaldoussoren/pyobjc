@@ -19,3 +19,15 @@ API Notes
 ........................
 
 The APIs to create hardware plugins are not available from Python.
+
+``CMIODeviceProcessAVCCommand``, ``CMIODeviceProcessRS422Command``
+..................................................................
+
+The buffers in the command buffer should be bytearray instances and
+will be changed by the call.
+
+.. warning::
+
+   The current implementation of these wrappers does not validate
+   that the buffers are actually mutable, which may lead to
+   surprising results when code passes an immutable buffer.

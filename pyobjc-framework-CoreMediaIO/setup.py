@@ -7,7 +7,7 @@ for general tips and tricks regarding the translation between Python
 and (Objective-)C frameworks
 '''
 
-from pyobjc_setup import setup
+from pyobjc_setup import setup, Extension
 
 VERSION="5.0b2"
 
@@ -16,6 +16,11 @@ setup(
     description = "Wrappers for the framework CoreMediaIO on macOS",
     min_os_level="10.7",
     packages = [ "CoreMediaIO" ],
+    ext_modules = [
+        Extension('CoreMediaIO._CoreMediaIO',
+            [ 'Modules/_CoreMediaIO.m' ],
+            extra_link_args=['-framework', 'CoreMediaIO'])
+    ],
     version=VERSION,
     install_requires = [
         'pyobjc-core>='+VERSION,

@@ -25,6 +25,11 @@ sys.modules['CoreMediaIO'] = mod = objc.ObjCLazyModule(
 import sys
 del sys.modules['CoreMediaIO._metadata']
 
+from CoreMediaIO import _CoreMediaIO
+
+for nm in dir(_CoreMediaIO):
+    setattr(mod, nm, getattr(_CoreMediaIO, nm))
+
 def CMIOGetNextSequenceNumber(value):
     if value == 0xffffffffffffffff:
         return 0

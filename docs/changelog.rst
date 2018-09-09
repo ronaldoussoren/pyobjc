@@ -9,6 +9,9 @@ Version 5.0b2
 * Added manual bindings for MTAudioProcessingTapCreate and MTAudioProcessingTapGetStorage
   in the MediaToolbox bindings.
 
+* Added manual bindings for CMIODeviceProcessAVCCommand and CMIODeviceProcessRS422Command
+  in the CoreMediaIO bindings
+
 Version 5.0b1
 -------------
 
