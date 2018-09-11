@@ -34,7 +34,7 @@ class TestCMBufferQueue (TestCase):
         self.assertIsCFType(CoreMedia.CMBufferRef)
 
     def test_opaque(self):
-        self.assertIsOpaque(CoreMedia.CMBufferQueueTriggerToken)
+        self.assertIsOpaquePointer(CoreMedia.CMBufferQueueTriggerToken)
 
     def test_functions_manual(self):
         self.fail("CMBufferQueueGetCallbacksForUnsortedSampleBuffers")

@@ -8,7 +8,57 @@
    "CMBlockBufferRef": {
     "typestr": "^{OpaqueCMBlockBuffer=}",
     "gettypeid_func": "CMBlockBufferGetTypeID"
+   },
+   "CMFormatDescriptionRef": {
+    "typestr": "^{OpaqueCMFormatDescription=}",
+    "gettypeid_func": "CMFormatDescriptionGetTypeID"
+   },
+   "CMBufferRef": {
+    "typestr": "^{OpaqueCMBuffer=}",
+    "gettypeid_func": "CMBufferGetTypeID"
+   },
+   "CMBufferQueueRef": {
+    "typestr": "^{OpaqueCMBufferQueue=}",
+    "gettypeid_func": "CMBufferQueueGetTypeID"
+   },
+   "CMSimpleQueueRef": {
+    "typestr": "^{OpaqueCMSimpleQueue=}",
+    "gettypeid_func": "CMSimpleQueueGetTypeID"
+   },
+   "CMSampleBufferRef": {
+    "typestr": "^{OpaqueCMSampleBuffer=}",
+    "gettypeid_func": "CMSampleBufferGetTypeID"
+   },
+   "CMTimebaseRef": {
+    "typestr": "^{OpaqueCMTimebase=}",
+    "gettypeid_func": "CMTimebaseGetTypeID"
+   },
+   "CMSimpleQueueef": {
+    "typestr": "^{OpaqueCMSimpleQueue}",
+    "gettypeid_func": "CMSimpleQueueetTypeID"
+   },
+   "CMBufferRef": {
+    "typestr": "^{OpaqueCMBuffer=}",
+    "gettypeid_func": "CMBufferGetTypeID"
+   },
+   "CMClockRef": {
+    "typestr": "^{OpaqueCMClock=}",
+    "gettypeid_func": "CMClockGetTypeID"
+   },
+   "CMSampleBufferrRef": {
+    "typestr": "^{OpaqueCMSampleBufferr=}",
+    "gettypeid_func": "CMSampleBufferrGetTypeID"
+   },
+   "CMMemoryPoolRef": {
+    "typestr": "^{OpaqueCMMemoryPool=}",
+    "gettypeid_func": "CMMemoryPoolGetTypeID"
    }
+  },
+  "aliases": {
+   "kCMTimebaseFarFutureCFAbsoluteTime": {  "alias": "kCMTimebaseVeryLongCFTimeInterval" }
+  },
+  "enum": {
+   "kCMTimebaseVeryLongCFTimeInterval": { "value": 8073216000.0 }
   },
   "externs": {
    "kCMFormatDescriptionTransferFunction_Linear": { "typestr": "@" }
@@ -138,8 +188,8 @@
      "0": {},
      "1": {},
      "2": {},
-     "5": {},
-     "6": {}
+     "5": { "type_modifier": "n", "c_array_length_in_arg": 3 },
+     "6": { "type_modifier": "o", "already_cfretained": true }
     }
    },
    "CMAudioSampleBufferCreateWithPacketDescriptions": {
@@ -163,8 +213,8 @@
      },
      "4": {},
      "5": {},
-     "8": {},
-     "9": {}
+     "8": { "type_modifier": "n", "c_array_length_in_arg": 6 },
+     "9": { "type_modifier": "o", "already_cfretained": true }
     }
    },
    "CMBlockBufferAccessDataBytes": {
@@ -452,7 +502,7 @@
       "function": {
        "args": [
         {
-         "typestr": "@"
+         "typestr": "^{OpaqueCMBuffer=}"
         },
         {
          "typestr": "^v"
@@ -499,8 +549,8 @@
    "CMClockGetAnchorTime": {
     "args": {
      "0": {},
-     "1": {},
-     "2": {}
+     "1": { "type_modifier": "o" },
+     "2": { "type_modifier": "o" }
     }
    },
    "CMClockGetHostTimeClock": {
@@ -885,8 +935,8 @@
      },
      "4": {},
      "5": {},
-     "6": {},
-     "7": {}
+     "6": { "type_modifier": "n" },
+     "7": { "type_modifier": "o", "already_cfretained": true }
     }
    },
    "CMSampleBufferCreateReady": {
@@ -1134,12 +1184,12 @@
     "args": {
      "0": {}
     },
-    "retval": {}
+    "retval": { "type_override": "@" }
    },
    "CMSimpleQueueEnqueue": {
     "args": {
      "0": {},
-     "1": {}
+     "1": { "type_override": "@" }
     }
    },
    "CMSimpleQueueGetCapacity": {
@@ -1156,7 +1206,7 @@
     "args": {
      "0": {}
     },
-    "retval": {}
+    "retval": { "type_override": "@" }
    },
    "CMSimpleQueueReset": {
     "args": {
@@ -1444,14 +1494,14 @@
     "args": {
      "0": {},
      "1": {},
-     "2": {}
+     "2": { "type_modifier": "o", "already_cfretained": "o" }
     }
    },
    "CMTimebaseCreateWithMasterTimebase": {
     "args": {
      "0": {},
      "1": {},
-     "2": {}
+     "2": { "type_modifier": "o", "already_cfretained": "o" }
     }
    },
    "CMTimebaseGetEffectiveRate": {
@@ -1574,14 +1624,14 @@
     "args": {
      "0": {},
      "4": {},
-     "5": {}
+     "5": { "type_modifier": "o", "already_cfretained": "o" }
     }
    },
    "CMVideoFormatDescriptionCreateForImageBuffer": {
     "args": {
      "0": {},
      "1": {},
-     "2": {}
+     "2": { "type_modifier": "o", "already_cfretained": "o" }
     }
    },
    "CMVideoFormatDescriptionCreateFromBigEndianImageDescriptionBlockBuffer": {
@@ -1589,7 +1639,7 @@
      "0": {},
      "1": {},
      "3": {},
-     "4": {}
+     "4": { "type_modifier": "o", "already_cfretained": "o" }
     }
    },
    "CMVideoFormatDescriptionCreateFromBigEndianImageDescriptionData": {
@@ -1597,7 +1647,7 @@
      "0": {},
      "1": {},
      "4": {},
-     "5": {}
+     "5": { "type_modifier": "o", "already_cfretained": "o" }
     }
    },
    "CMVideoFormatDescriptionCreateFromH264ParameterSets": {
@@ -1605,7 +1655,7 @@
      "0": {},
      "2": {},
      "3": {},
-     "5": {}
+     "5": { "type_modifier": "o", "already_cfretained": "o" }
     }
    },
    "CMVideoFormatDescriptionCreateFromHEVCParameterSets": {
@@ -1614,7 +1664,7 @@
      "2": {},
      "3": {},
      "5": {},
-     "6": {}
+     "6": { "type_modifier": "o", "already_cfretained": "o" }
     }
    },
    "CMVideoFormatDescriptionGetCleanAperture": {

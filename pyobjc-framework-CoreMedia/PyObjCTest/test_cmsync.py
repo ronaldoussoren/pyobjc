@@ -29,12 +29,12 @@ class TestCMSync (TestCase):
 
     @min_os_level('10.8')
     def test_constants10_8(self):
-        self.assertEqual(CoreMedia.kCMTimebaseNotification_EffectiveRateChanged, unicode)
-        self.assertEqual(CoreMedia.kCMTimebaseNotification_TimeJumped, unicode)
+        self.assertIsInstance(CoreMedia.kCMTimebaseNotification_EffectiveRateChanged, unicode)
+        self.assertIsInstance(CoreMedia.kCMTimebaseNotification_TimeJumped, unicode)
 
     @min_os_level('10.9')
     def test_constants10_9(self):
-        self.assertEqual(CoreMedia.kCMTimebaseNotificationKey_EventTime, unicode)
+        self.assertIsInstance(CoreMedia.kCMTimebaseNotificationKey_EventTime, unicode)
 
     @min_os_level('10.8')
     def test_functions(self):
