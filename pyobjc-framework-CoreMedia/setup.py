@@ -7,7 +7,7 @@ for general tips and tricks regarding the translation between Python
 and (Objective-)C frameworks
 '''
 
-from pyobjc_setup import setup
+from pyobjc_setup import setup, Extension
 
 VERSION="5.0b2"
 
@@ -16,6 +16,11 @@ setup(
     description = "Wrappers for the framework CoreMedia on macOS",
     min_os_level="10.7",
     packages = [ "CoreMedia" ],
+    ext_modules = [
+        Extension('CoreMedia._CoreMedia',
+            [ 'Modules/_CoreMedia.m' ],
+            extra_link_args=['-framework', 'CoreMedia'])
+    ],
     version=VERSION,
     install_requires = [
         'pyobjc-core>='+VERSION,
