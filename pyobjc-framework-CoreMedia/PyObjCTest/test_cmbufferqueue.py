@@ -31,7 +31,6 @@ class TestCMBufferQueue (TestCase):
 
     def test_cftypes(self):
         self.assertIsCFType(CoreMedia.CMBufferQueueRef)
-        self.assertIsCFType(CoreMedia.CMBufferRef)
 
     def test_opaque(self):
         self.assertIsOpaquePointer(CoreMedia.CMBufferQueueTriggerToken)
@@ -59,7 +58,7 @@ class TestCMBufferQueue (TestCase):
 
         CoreMedia.CMBufferQueueReset
 
-        self.assertArgIsFunction(CoreMedia.CMBufferQueueResetWithCallback, 1, b'v^{CMBuffer=}^v', False)
+        self.assertArgIsFunction(CoreMedia.CMBufferQueueResetWithCallback, 1, b'v@^v', False)
 
         CoreMedia.CMBufferQueueGetBufferCount
         CoreMedia.CMBufferQueueGetDuration
@@ -81,9 +80,9 @@ class TestCMBufferQueue (TestCase):
 
         self.assertResultIsBOOL(CoreMedia.CMBufferQueueTestTrigger)
 
-        self.assertArgIsFunction(CoreMedia.CMBufferQueueCallForEachBuffer, 1, b'i^{CMBuffer=}^v', True)
+        self.assertArgIsFunction(CoreMedia.CMBufferQueueCallForEachBuffer, 1, b'i@^v', True)
 
-        self.assertArgIsFunction(CoreMedia.CMBufferQueueSetValidationCallback, 1, b'i^{CMBufferQueue=}^{CMBuffer=}^v', True)
+        self.assertArgIsFunction(CoreMedia.CMBufferQueueSetValidationCallback, 1, b'i^{CMBufferQueue=}@^v', True)
 
 
 if __name__ == "__main__":

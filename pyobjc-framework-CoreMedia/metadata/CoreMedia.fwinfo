@@ -4,6 +4,9 @@
  "definitions": {
   "classes": {},
   "formal_protocols": {},
+  "opaque": {
+   "CMBufferQueueTriggerToken": { "typestr": "^{opaqueCMBufferQueueTriggerToken=}" }
+  },
   "cftypes": {
    "CMBlockBufferRef": {
     "typestr": "^{OpaqueCMBlockBuffer=}",
@@ -12,10 +15,6 @@
    "CMFormatDescriptionRef": {
     "typestr": "^{OpaqueCMFormatDescription=}",
     "gettypeid_func": "CMFormatDescriptionGetTypeID"
-   },
-   "CMBufferRef": {
-    "typestr": "^{OpaqueCMBuffer=}",
-    "gettypeid_func": "CMBufferGetTypeID"
    },
    "CMBufferQueueRef": {
     "typestr": "^{OpaqueCMBufferQueue=}",
@@ -36,10 +35,6 @@
    "CMSimpleQueueef": {
     "typestr": "^{OpaqueCMSimpleQueue}",
     "gettypeid_func": "CMSimpleQueueetTypeID"
-   },
-   "CMBufferRef": {
-    "typestr": "^{OpaqueCMBuffer=}",
-    "gettypeid_func": "CMBufferGetTypeID"
    },
    "CMClockRef": {
     "typestr": "^{OpaqueCMClock=}",
@@ -108,10 +103,10 @@
     "args": {
      "0": {},
      "1": {},
-     "3": {},
-     "5": {},
+     "3": { "type_modifier": "n" },
+     "5": { "type_modifier": "n", "c_array_length_in_arg": 4 },
      "6": {},
-     "7": {}
+     "7": { "type_modifier": "o", "already_cfretained": true }
     }
    },
    "CMAudioFormatDescriptionCreateFromBigEndianSoundDescriptionBlockBuffer": {
@@ -134,36 +129,36 @@
     "args": {
      "0": {},
      "1": {},
-     "3": {}
+     "3": { "type_modifier": "o", "already_cfretained": true }
     }
    },
    "CMAudioFormatDescriptionEqual": {
     "args": {
      "0": {},
      "1": {},
-     "3": {}
+     "3": { "type_modifier": "o" }
     }
    },
    "CMAudioFormatDescriptionGetChannelLayout": {
     "args": {
      "0": {},
-     "1": {}
+     "1": { "type_modifier": "o" }
     },
-    "retval": {}
+    "retval": { "c_array_length_in_arg": 1 }
    },
    "CMAudioFormatDescriptionGetFormatList": {
     "args": {
      "0": {},
-     "1": {}
+     "1": { "type_modifier": "o" }
     },
-    "retval": {}
+    "retval": { "c_array_length_in_arg": 1 }
    },
    "CMAudioFormatDescriptionGetMagicCookie": {
     "args": {
      "0": {},
-     "1": {}
+     "1": { "type_modifier": "o" }
     },
-    "retval": {}
+    "retval": { "c_array_length_in_arg": 1 }
    },
    "CMAudioFormatDescriptionGetMostCompatibleFormat": {
     "args": {
@@ -444,7 +439,7 @@
       }
      },
      "2": {},
-     "5": {}
+     "5": { "type_modifier": "o" }
     }
    },
    "CMBufferQueueInstallTriggerWithIntegerThreshold": {
@@ -466,7 +461,7 @@
       }
      },
      "2": {},
-     "5": {}
+     "5": { "type_modifier": "o" }
     }
    },
    "CMBufferQueueIsAtEndOfData": {
@@ -499,10 +494,11 @@
     "args": {
      "0": {},
      "1": {
+      "callable_retained": false,
       "function": {
        "args": [
         {
-         "typestr": "^{OpaqueCMBuffer=}"
+         "typestr": "@"
         },
         {
          "typestr": "^v"
@@ -614,7 +610,7 @@
     "args": {
      "0": {},
      "3": {},
-     "4": {}
+     "4": { "type_modifier": "o", "already_cfretained": true }
     }
    },
    "CMFormatDescriptionEqual": {
@@ -685,28 +681,28 @@
     "args": {
      "0": {},
      "2": {},
-     "3": {}
+     "3": { "type_modifier": "o", "already_cfretained": true }
     }
    },
    "CMMetadataCreateKeyFromIdentifier": {
     "args": {
      "0": {},
      "1": {},
-     "2": {}
+     "2": { "type_modifier": "o", "already_cfretained": true }
     }
    },
    "CMMetadataCreateKeyFromIdentifierAsCFData": {
     "args": {
      "0": {},
      "1": {},
-     "2": {}
+     "2": { "type_modifier": "o", "already_cfretained": true }
     }
    },
    "CMMetadataCreateKeySpaceFromIdentifier": {
     "args": {
      "0": {},
      "1": {},
-     "2": {}
+     "2": { "type_modifier": "o", "already_cfretained": true }
     }
    },
    "CMMetadataDataTypeRegistryDataTypeConformsToDataType": {
@@ -766,7 +762,7 @@
      "0": {},
      "1": {},
      "2": {},
-     "3": {}
+     "3": { "type_modifier": "o", "already_cfretained": true }
     }
    },
    "CMMetadataFormatDescriptionCreateFromBigEndianMetadataDescriptionBlockBuffer": {
@@ -774,7 +770,7 @@
      "0": {},
      "1": {},
      "2": {},
-     "3": {}
+     "3": { "type_modifier": "o", "already_cfretained": true }
     }
    },
    "CMMetadataFormatDescriptionCreateFromBigEndianMetadataDescriptionData": {
@@ -782,14 +778,14 @@
      "0": {},
      "1": {},
      "3": {},
-     "4": {}
+     "4": { "type_modifier": "o", "already_cfretained": true }
     }
    },
    "CMMetadataFormatDescriptionCreateWithKeys": {
     "args": {
      "0": {},
      "2": {},
-     "3": {}
+     "3": { "type_modifier": "o", "already_cfretained": true }
     }
    },
    "CMMetadataFormatDescriptionCreateWithMetadataFormatDescriptionAndMetadataSpecifications": {
@@ -797,14 +793,14 @@
      "0": {},
      "1": {},
      "2": {},
-     "3": {}
+     "3": { "type_modifier": "o", "already_cfretained": true }
     }
    },
    "CMMetadataFormatDescriptionCreateWithMetadataSpecifications": {
     "args": {
      "0": {},
      "2": {},
-     "3": {}
+     "3": { "type_modifier": "o", "already_cfretained": true }
     }
    },
    "CMMetadataFormatDescriptionGetIdentifiers": {
@@ -823,7 +819,7 @@
     "args": {
      "0": {},
      "2": {},
-     "3": {}
+     "3": { "type_modifier": "o", "already_cfretained": true }
     }
    },
    "CMRemoveAttachment": {
@@ -870,7 +866,7 @@
     "args": {
      "0": {},
      "1": {},
-     "3": {}
+     "3": { "type_modifier": "o", "already_cfretained": true }
     }
    },
    "CMSampleBufferCreate": {
@@ -903,15 +899,15 @@
     "args": {
      "0": {},
      "1": {},
-     "2": {}
+     "2": { "type_modifier": "o", "already_cfretained": true}
     }
    },
    "CMSampleBufferCreateCopyWithNewTiming": {
     "args": {
      "0": {},
      "1": {},
-     "3": {},
-     "4": {}
+     "3": { "type_modifier": "n", "c_array_length_in_arg": 2 },
+     "4": { "type_modifier": "o", "already_cfretained": true}
     }
    },
    "CMSampleBufferCreateForImageBuffer": {
@@ -954,8 +950,8 @@
      "0": {},
      "1": {},
      "2": {},
-     "3": {},
-     "4": {}
+     "3": { "type_modifier": "n" },
+     "4": { "type_modifier": "o", "already_cfretained": true }
     }
    },
    "CMSampleBufferDataIsReady": {
@@ -966,27 +962,21 @@
    "CMSampleBufferGetAudioBufferListWithRetainedBlockBuffer": {
     "args": {
      "0": {},
-     "1": {},
+     "1": { "type_modifier": "o" },
      "2": {},
      "4": {},
      "5": {},
-     "7": {}
+     "7": { "type_modifier": "o", "already_cfretained": true }
     }
    },
    "CMSampleBufferGetAudioStreamPacketDescriptions": {
     "args": {
      "0": {},
-     "2": {},
-     "3": {}
+     "2": { "type_modifier": "o", "c_array_length_in_arg": 1 },
+     "3": { "type_modifier": "o" }
     }
    },
-   "CMSampleBufferGetAudioStreamPacketDescriptionsPtr": {
-    "args": {
-     "0": {},
-     "1": {},
-     "2": {}
-    }
-   },
+   "CMSampleBufferGetAudioStreamPacketDescriptionsPtr": { "ignore": true },
    "CMSampleBufferGetDataBuffer": {
     "args": {
      "0": {}
@@ -1086,7 +1076,7 @@
    "CMSampleBufferHasDataFailed": {
     "args": {
      "0": {},
-     "1": {}
+     "1": { "type_modifier": "o" }
     }
    },
    "CMSampleBufferInvalidate": {
@@ -1275,9 +1265,9 @@
    },
    "CMSyncGetRelativeRateAndAnchorTime": {
     "args": {
-     "2": {},
-     "3": {},
-     "4": {}
+     "2": { "type_modifier": "o" },
+     "3": { "type_modifier": "o" },
+     "4": { "type_modifier": "o" }
     }
    },
    "CMTextFormatDescriptionCopyAsBigEndianTextDescriptionBlockBuffer": {

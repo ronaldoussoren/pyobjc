@@ -346,8 +346,11 @@ class TestCMFormatDescription (TestCase):
         CoreMedia.CMFormatDescriptionGetExtensions
         CoreMedia.CMFormatDescriptionGetExtension
 
-        self.assertArgIsOut(CoreMedia.CMAudioFormatDescriptionCreate, 6)
-        self.assertArgIsCFRetained(CoreMedia.CMAudioFormatDescriptionCreate, 6)
+        self.assertArgIsIn(CoreMedia.CMAudioFormatDescriptionCreate, 3)
+        self.assertArgIsIn(CoreMedia.CMAudioFormatDescriptionCreate, 5)
+        self.assertArgSizeInArg(CoreMedia.CMAudioFormatDescriptionCreate, 5, 4)
+        self.assertArgIsOut(CoreMedia.CMAudioFormatDescriptionCreate, 7)
+        self.assertArgIsCFRetained(CoreMedia.CMAudioFormatDescriptionCreate, 7)
 
         CoreMedia.CMAudioFormatDescriptionGetStreamBasicDescription
 
@@ -376,7 +379,7 @@ class TestCMFormatDescription (TestCase):
         self.assertArgIsOut(CoreMedia.CMVideoFormatDescriptionCreateForImageBuffer, 2)
         self.assertArgIsCFRetained(CoreMedia.CMVideoFormatDescriptionCreateForImageBuffer, 2)
 
-        self.faiil("CMVideoFormatDescriptionCreateFromH264ParameterSets") # Needs manual wrapper
+        self.fail("CMVideoFormatDescriptionCreateFromH264ParameterSets") # Needs manual wrapper
         self.faiil("CMVideoFormatDescriptionCreateFromHEVCParameterSets") # Needs manual wrapper
         self.faiil("CMVideoFormatDescriptionGetH264ParameterSetAtIndex") # Needs manual wrapper
         self.faiil("CMVideoFormatDescriptionGetHEVCParameterSetAtIndex") # Needs manual wrapper
