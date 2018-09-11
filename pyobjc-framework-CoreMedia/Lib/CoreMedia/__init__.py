@@ -10,6 +10,7 @@ import sys
 import Foundation
 
 from CoreMedia import _metadata
+from CoreMedia import _macros
 
 sys.modules['CoreMedia'] = mod = objc.ObjCLazyModule(
     "CoreMedia",
@@ -20,7 +21,7 @@ sys.modules['CoreMedia'] = mod = objc.ObjCLazyModule(
         'objc': objc,
         '__path__': __path__,
         '__loader__': globals().get('__loader__', None),
-    }, (Foundation,))
+    }, (_macros, Foundation,))
 
 import sys
 del sys.modules['CoreMedia._metadata']

@@ -64,6 +64,7 @@ class TestCMBlockBuffer (TestCase):
         self.assertResultIsBOOL(CoreMedia.CMBlockBufferIsEmpty)
 
 
+        self.fail("manual wrappers")
         # XXX: Need manual wrappers for these to support custom block sources:
         #self.assertIsNotInstance(CoreMedia.CMBlockBufferCreateWithMemoryBlock, objc.function)
         #self.assertIsNotInstance(CoreMedia.CMBlockBufferCreateContiguous, objc.function)

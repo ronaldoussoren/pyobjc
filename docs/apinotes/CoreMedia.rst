@@ -50,3 +50,14 @@ a usecase for this, in general you should use ``CMBlockBufferCopyDataBytes`` ins
 
 This function cannot be used from Python at this time. Please file an issue if you have
 a usecase for this.
+
+``CMTIME_COMPARE_INLINE``
+.........................
+
+This API is not available in Python.
+
+``CMSampleBufferGetAudioStreamPacketDescriptionsPtr``
+.....................................................
+
+This API is not available in Python.
+

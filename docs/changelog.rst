@@ -14,6 +14,9 @@ Version 5.0b2
 
 * Added bindings for the VideoToolbox framework introduced in macOS 10.8
 
+* Finished bindings for CoreMedia, I noticed during review that the bindings were
+  far from finished.
+
 Version 5.0b1
 -------------
 

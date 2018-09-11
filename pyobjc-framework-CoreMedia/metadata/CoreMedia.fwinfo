@@ -301,11 +301,17 @@
    "CMBufferQueueDequeueAndRetain": {
     "args": {
      "0": {}
+    },
+    "retval": {
+     "already_cfretained": true
     }
    },
    "CMBufferQueueDequeueIfDataReadyAndRetain": {
     "args": {
      "0": {}
+    },
+    "retval": {
+     "already_cfretained": true
     }
    },
    "CMBufferQueueEnqueue": {
@@ -838,9 +844,9 @@
      },
      "4": {},
      "5": {},
-     "8": {},
-     "10": {},
-     "11": {}
+     "8": { "type_modifier": "n", "c_array_length_in_arg": 7 },
+     "10": { "type_modifier": "n", "c_array_length_in_arg": 9 },
+     "11": { "type_modifier": "o", "already_cfretained": true }
     }
    },
    "CMSampleBufferCreateCopy": {
@@ -888,9 +894,9 @@
      "0": {},
      "1": {},
      "2": {},
-     "5": {},
-     "7": {},
-     "8": {}
+     "5": { "type_modifier": "n", "c_array_length_in_arg": 4 },
+     "7": { "type_modifier": "n", "c_array_length_in_arg": 6 },
+     "8": { "type_modifier": "o", "already_cfretained": true }
     }
    },
    "CMSampleBufferCreateReadyWithImageBuffer": {
@@ -1121,7 +1127,7 @@
    "CMSimpleQueueCreate": {
     "args": {
      "0": {},
-     "2": {}
+     "2": { "type_modifier": "o", "already_cfretained": true }
     }
    },
    "CMSimpleQueueDequeue": {
