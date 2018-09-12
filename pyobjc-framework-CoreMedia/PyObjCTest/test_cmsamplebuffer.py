@@ -4,7 +4,7 @@ import CoreMedia
 
 CMSampleBufferMakeDataReadyCallback = b'i^{opaqueCMSampleBuffer=}^v'
 CMSampleBufferInvalidateHandler = b'v^{opaqueCMSampleBuffer=}'
-
+CMSampleBufferInvalidateCallback = b'v^{opaqueCMSampleBuffer=}Q'
 
 class TestCMSampleBuffer (TestCase):
     def test_constants(self):
@@ -180,7 +180,7 @@ class TestCMSampleBuffer (TestCase):
 
         self.assertArgIsFunction(CoreMedia.CMSampleBufferSetInvalidateCallback, 1, CMSampleBufferInvalidateCallback, True)
 
-        self.assertArgIsBlock(CMSampleBufferSetInvalidateHandler, 1, CMSampleBufferInvalidateHandler)
+        self.assertArgIsBlock(CoreMedia.CMSampleBufferSetInvalidateHandler, 1, CMSampleBufferInvalidateHandler)
 
         self.assertResultIsBOOL(CoreMedia.CMSampleBufferIsValid)
 
@@ -213,7 +213,7 @@ class TestCMSampleBuffer (TestCase):
 
         self.assertArgIsBOOL(CoreMedia.CMSampleBufferGetSampleAttachmentsArray, 1)
 
-        self.assertArgIsFunction(CoreMedia.CMSampleBufferCallForEachSample, 1, b'i^{opaqueCMSampleBuffer=}I^v')
+        self.assertArgIsFunction(CoreMedia.CMSampleBufferCallForEachSample, 1, b'i^{opaqueCMSampleBuffer=}I^v', False)
 
         self.assertArgIsBlock(CoreMedia.CMSampleBufferCallBlockForEachSample, 1, b'v^{opaqueCMSampleBuffer=}I')
 

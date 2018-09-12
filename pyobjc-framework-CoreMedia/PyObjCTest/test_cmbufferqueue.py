@@ -82,7 +82,7 @@ class TestCMBufferQueue (TestCase):
 
         self.assertArgIsFunction(CoreMedia.CMBufferQueueCallForEachBuffer, 1, b'i@^v', True)
 
-        self.assertArgIsFunction(CoreMedia.CMBufferQueueSetValidationCallback, 1, b'i^{CMBufferQueue=}@^v', True)
+        self.assertArgIsFunction(CoreMedia.CMBufferQueueSetValidationCallback, 1, b'i^{opaqueCMBufferQueue=}@^v', True)
 
 
 if __name__ == "__main__":
