@@ -341,6 +341,7 @@ static char* keywords[] = { "allocator", "callbacks", "flags", "tapOut", NULL };
 
     if (rv == 0) {
         py_tapOut = PyObjC_ObjCToPython(@encode(MTAudioProcessingTapRef), &tap);
+        CFRelease(tap);
     } else {
         py_tapOut = Py_None;
         Py_INCREF(Py_None);

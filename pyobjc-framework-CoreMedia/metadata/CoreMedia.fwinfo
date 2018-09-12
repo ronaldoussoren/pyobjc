@@ -50,7 +50,9 @@
    }
   },
   "aliases": {
-   "kCMTimebaseFarFutureCFAbsoluteTime": {  "alias": "kCMTimebaseVeryLongCFTimeInterval" }
+   "kCMTimebaseFarFutureCFAbsoluteTime": {  "alias": "kCMTimebaseVeryLongCFTimeInterval" },
+   "CMVideoFormatDescriptionGetCodecType": {  "alias": "CMFormatDescriptionGetMediaSubType" },
+   "CMSubtitleFormatDescriptionGetFormatType": {  "alias": "CMFormatDescriptionGetMediaSubType" }
   },
   "enum": {
    "kCMTimebaseVeryLongCFTimeInterval": { "value": 8073216000.0 }
@@ -573,7 +575,7 @@
      "0": {},
      "1": {},
      "2": {},
-     "3": {}
+     "3": { "type_modifier": "o", "already_cfretained": true }
     }
    },
    "CMClosedCaptionFormatDescriptionCreateFromBigEndianClosedCaptionDescriptionBlockBuffer": {
@@ -581,15 +583,15 @@
      "0": {},
      "1": {},
      "2": {},
-     "3": {}
+     "3": { "type_modifier": "o", "already_cfretained": true }
     }
    },
    "CMClosedCaptionFormatDescriptionCreateFromBigEndianClosedCaptionDescriptionData": {
     "args": {
      "0": {},
-     "1": {},
+     "1": { "type_modifier": "n", "c_array_length_in_arg": 2 },
      "3": {},
-     "4": {}
+     "4": { "type_modifier": "o", "already_cfretained": true }
     }
    },
    "CMCopyDictionaryOfAttachments": {
@@ -754,7 +756,7 @@
      "0": {},
      "1": {},
      "2": {},
-     "3": {}
+     "3": { "type_modifier": "o", "already_cfretained": true }
     }
    },
    "CMMetadataFormatDescriptionCreateByMergingMetadataFormatDescriptions": {
@@ -776,7 +778,7 @@
    "CMMetadataFormatDescriptionCreateFromBigEndianMetadataDescriptionData": {
     "args": {
      "0": {},
-     "1": {},
+     "1": { "type_modifier": "n", "c_array_length_in_arg": 2},
      "3": {},
      "4": { "type_modifier": "o", "already_cfretained": true }
     }
@@ -829,13 +831,24 @@
    },
    "CMSampleBufferCallBlockForEachSample": {
     "args": {
-     "0": {}
+     "0": {},
+     "1": {
+      "callable": {
+       "arguments": {
+        "0": { "type": "^v" },
+        "1": { "type": "^{opaqueCMSampleBuffer=}" },
+        "2": { "type": "q" }
+       },
+       "retval": { "typestr": "v" }
+      }
+     }
     }
    },
    "CMSampleBufferCallForEachSample": {
     "args": {
      "0": {},
      "1": {
+      "callable_retained": false,
       "function": {
        "args": [
         {
@@ -1214,7 +1227,7 @@
    },
    "CMSwapBigEndianClosedCaptionDescriptionToHost": {
     "args": {
-     "0": {}
+     "0": { "type_modifier": "N", "c_array_length_in_arg": 1 }
     }
    },
    "CMSwapBigEndianImageDescriptionToHost": {
@@ -1284,7 +1297,7 @@
      "0": {},
      "1": {},
      "2": {},
-     "3": {}
+     "3": { "type_modifier": "o", "already_cfretained": true }
     }
    },
    "CMTextFormatDescriptionCreateFromBigEndianTextDescriptionBlockBuffer": {
@@ -1292,51 +1305,51 @@
      "0": {},
      "1": {},
      "2": {},
-     "4": {}
+     "4": { "type_modifier": "o", "already_cfretained": true }
     }
    },
    "CMTextFormatDescriptionCreateFromBigEndianTextDescriptionData": {
     "args": {
      "0": {},
-     "1": {},
+     "1": { "type_modifier": "n", "c_array_length_in_arg": 2},
      "3": {},
-     "5": {}
+     "5": { "type_modifier": "o", "already_cfretained": true }
     }
    },
    "CMTextFormatDescriptionGetDefaultStyle": {
     "args": {
      "0": {},
-     "1": {},
-     "2": {},
-     "3": {},
-     "4": {},
-     "5": {},
-     "6": {}
+     "1": { "type_modifier": "o" },
+     "2": { "type_modifier": "o" },
+     "3": { "type_modifier": "o" },
+     "4": { "type_modifier": "o" },
+     "5": { "type_modifier": "o" },
+     "6": { "type_modifier": "o", "c_array_of_fixed_length": 4 }
     }
    },
    "CMTextFormatDescriptionGetDefaultTextBox": {
     "args": {
      "0": {},
-     "3": {}
+     "3": { "type_modifier": "o" }
     }
    },
    "CMTextFormatDescriptionGetDisplayFlags": {
     "args": {
      "0": {},
-     "1": {}
+     "1": { "type_modifier": "o" }
     }
    },
    "CMTextFormatDescriptionGetFontName": {
     "args": {
      "0": {},
-     "2": {}
+     "2": { "type_modifier": "o", "already_cfretained": true }
     }
    },
    "CMTextFormatDescriptionGetJustification": {
     "args": {
      "0": {},
-     "1": {},
-     "2": {}
+     "1": { "type_modifier": "o" },
+     "2": { "type_modifier": "o" }
     }
    },
    "CMTimeCodeFormatDescriptionCopyAsBigEndianTimeCodeDescriptionBlockBuffer": {
@@ -1344,14 +1357,14 @@
      "0": {},
      "1": {},
      "2": {},
-     "3": {}
+     "3": { "type_modifier": "o", "already_cfretained": true }
     }
    },
    "CMTimeCodeFormatDescriptionCreate": {
     "args": {
      "0": {},
      "5": {},
-     "6": {}
+     "6": { "type_modifier": "o", "already_cfretained": true }
     }
    },
    "CMTimeCodeFormatDescriptionCreateFromBigEndianTimeCodeDescriptionBlockBuffer": {
@@ -1359,15 +1372,15 @@
      "0": {},
      "1": {},
      "2": {},
-     "3": {}
+     "3": { "type_modifier": "o", "already_cfretained": true }
     }
    },
    "CMTimeCodeFormatDescriptionCreateFromBigEndianTimeCodeDescriptionData": {
     "args": {
      "0": {},
-     "1": {},
+     "1": { "type_modifier": "n", "c_array_length_in_arg": 2 },
      "3": {},
-     "4": {}
+     "4": { "type_modifier": "o", "already_cfretained": true }
     }
    },
    "CMTimeCodeFormatDescriptionGetFrameDuration": {
@@ -1493,14 +1506,14 @@
     "args": {
      "0": {},
      "1": {},
-     "2": { "type_modifier": "o", "already_cfretained": "o" }
+     "2": { "type_modifier": "o", "already_cfretained": true }
     }
    },
    "CMTimebaseCreateWithMasterTimebase": {
     "args": {
      "0": {},
      "1": {},
-     "2": { "type_modifier": "o", "already_cfretained": "o" }
+     "2": { "type_modifier": "o", "already_cfretained": true }
     }
    },
    "CMTimebaseGetEffectiveRate": {
@@ -1616,21 +1629,21 @@
      "0": {},
      "1": {},
      "3": {},
-     "4": { "type_modifier": "o", "already_cfretained": "o" }
+     "4": { "type_modifier": "o", "already_cfretained": true }
     }
    },
    "CMVideoFormatDescriptionCreate": {
     "args": {
      "0": {},
      "4": {},
-     "5": { "type_modifier": "o", "already_cfretained": "o" }
+     "5": { "type_modifier": "o", "already_cfretained": true }
     }
    },
    "CMVideoFormatDescriptionCreateForImageBuffer": {
     "args": {
      "0": {},
      "1": {},
-     "2": { "type_modifier": "o", "already_cfretained": "o" }
+     "2": { "type_modifier": "o", "already_cfretained": true }
     }
    },
    "CMVideoFormatDescriptionCreateFromBigEndianImageDescriptionBlockBuffer": {
@@ -1638,7 +1651,7 @@
      "0": {},
      "1": {},
      "3": {},
-     "4": { "type_modifier": "o", "already_cfretained": "o" }
+     "4": { "type_modifier": "o", "already_cfretained": true }
     }
    },
    "CMVideoFormatDescriptionCreateFromBigEndianImageDescriptionData": {
@@ -1646,26 +1659,11 @@
      "0": {},
      "1": { "type_modifier": "n", "c_array_length_in_arg": 2 },
      "4": {},
-     "5": { "type_modifier": "o", "already_cfretained": "o" }
+     "5": { "type_modifier": "o", "already_cfretained": true }
     }
    },
-   "CMVideoFormatDescriptionCreateFromH264ParameterSets": {
-    "args": {
-     "0": {},
-     "2": {},
-     "3": {},
-     "5": { "type_modifier": "o", "already_cfretained": "o" }
-    }
-   },
-   "CMVideoFormatDescriptionCreateFromHEVCParameterSets": {
-    "args": {
-     "0": {},
-     "2": {},
-     "3": {},
-     "5": {},
-     "6": { "type_modifier": "o", "already_cfretained": "o" }
-    }
-   },
+   "CMVideoFormatDescriptionCreateFromH264ParameterSets": { "ignore": true },
+   "CMVideoFormatDescriptionCreateFromHEVCParameterSets": { "ignore": true },
    "CMVideoFormatDescriptionGetCleanAperture": {
     "args": {
      "0": {}

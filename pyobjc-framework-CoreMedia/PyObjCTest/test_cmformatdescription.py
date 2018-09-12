@@ -330,6 +330,17 @@ class TestCMFormatDescription (TestCase):
     def test_types(self):
         self.assertIsCFType(CoreMedia.CMFormatDescriptionRef)
 
+
+    @min_os_level('10.7')
+    def test_functions_manual(self):
+        self.fail("CMVideoFormatDescriptionCreateFromH264ParameterSets") # Needs manual wrapper
+        self.faiil("CMVideoFormatDescriptionCreateFromHEVCParameterSets") # Needs manual wrapper
+        self.faiil("CMVideoFormatDescriptionGetH264ParameterSetAtIndex") # Needs manual wrapper
+        self.faiil("CMVideoFormatDescriptionGetHEVCParameterSetAtIndex") # Needs manual wrapper
+
+        self.assertIsNotInstance(CoreMedia.CMVideoFormatDescriptionCreateFromH264ParameterSets, objc.function)
+        self.assertIsNotInstance(CoreMedia.CMVideoFormatDescriptionCreateFromHEVCParameterSets, objc.function)
+
     @min_os_level('10.7')
     def test_functions(self):
         self.assertArgIsOut(CoreMedia.CMFormatDescriptionCreate, 4)
@@ -379,10 +390,6 @@ class TestCMFormatDescription (TestCase):
         self.assertArgIsOut(CoreMedia.CMVideoFormatDescriptionCreateForImageBuffer, 2)
         self.assertArgIsCFRetained(CoreMedia.CMVideoFormatDescriptionCreateForImageBuffer, 2)
 
-        self.fail("CMVideoFormatDescriptionCreateFromH264ParameterSets") # Needs manual wrapper
-        self.faiil("CMVideoFormatDescriptionCreateFromHEVCParameterSets") # Needs manual wrapper
-        self.faiil("CMVideoFormatDescriptionGetH264ParameterSetAtIndex") # Needs manual wrapper
-        self.faiil("CMVideoFormatDescriptionGetHEVCParameterSetAtIndex") # Needs manual wrapper
 
         self.assertIs(CoreMedia.CMVideoFormatDescriptionGetCodecType, CoreMedia.CMFormatDescriptionGetMediaSubType)
 
@@ -408,8 +415,8 @@ class TestCMFormatDescription (TestCase):
         self.assertArgHasType(CoreMedia.CMTextFormatDescriptionGetDefaultStyle, 2, b'o^Z')
         self.assertArgHasType(CoreMedia.CMTextFormatDescriptionGetDefaultStyle, 3, b'o^Z')
         self.assertArgHasType(CoreMedia.CMTextFormatDescriptionGetDefaultStyle, 4, b'o^Z')
-        self.assertArgHasType(CoreMedia.CMTextFormatDescriptionGetDefaultStyle, 5, b'o^Z')
-        self.assertArgIsOut(CoreMedia.CMTextFormatDescriptionGetDefaultStyle, 6)
+        self.assertArgHasType(CoreMedia.CMTextFormatDescriptionGetDefaultStyle, 5, b'o^' + objc._C_CGFloat)
+        self.assertArgHasType(CoreMedia.CMTextFormatDescriptionGetDefaultStyle, 6, b'o^' + objc._C_CGFloat)
         self.assertArgIsFixedSize(CoreMedia.CMTextFormatDescriptionGetDefaultStyle, 6, 4)
 
         self.assertArgIsOut(CoreMedia.CMTextFormatDescriptionGetFontName, 2)

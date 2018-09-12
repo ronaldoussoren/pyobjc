@@ -213,9 +213,9 @@ class TestCMSampleBuffer (TestCase):
 
         self.assertArgIsBOOL(CoreMedia.CMSampleBufferGetSampleAttachmentsArray, 1)
 
-        self.assertArgIsFunction(CoreMedia.CMSampleBufferCallForEachSample, 1, b'i^{opaqueCMSampleBuffer=}I^v', False)
+        self.assertArgIsFunction(CoreMedia.CMSampleBufferCallForEachSample, 1, b'i^{opaqueCMSampleBuffer=}q^v', False)
 
-        self.assertArgIsBlock(CoreMedia.CMSampleBufferCallBlockForEachSample, 1, b'v^{opaqueCMSampleBuffer=}I')
+        self.assertArgIsBlock(CoreMedia.CMSampleBufferCallBlockForEachSample, 1, b'v^{opaqueCMSampleBuffer=}q')
 
 
 if __name__ == "__main__":
