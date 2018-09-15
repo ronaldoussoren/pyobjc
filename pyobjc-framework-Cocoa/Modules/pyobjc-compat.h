@@ -123,8 +123,8 @@ typedef unsigned int NSUInteger;
 #define MAC_OS_X_VERSION_10_11 101100
 #endif
 
-#ifndef MAC_OS_X_VERSION_10_11_2
-#define MAC_OS_X_VERSION_10_11_2 101101
+#ifndef MAC_OS_X_VERSION_10_11_1
+#define MAC_OS_X_VERSION_10_11_1 101101
 #endif
 
 #ifndef MAC_OS_X_VERSION_10_11_2
