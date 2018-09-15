@@ -10,7 +10,7 @@ and (Objective-)C frameworks
 from pyobjc_setup import setup
 import os
 
-VERSION="5.0b2"
+VERSION="5.0c1"
 
 setup(
     name='pyobjc-framework-DiscRecordingUI',
