@@ -68,7 +68,6 @@ class TestCMBufferQueue (TestCase):
         CoreMedia.CMBufferQueueGetFirstPresentationTimeStamp
         CoreMedia.CMBufferQueueGetMaxPresentationTimeStamp
         CoreMedia.CMBufferQueueGetEndPresentationTimeStamp
-        CoreMedia.CMBufferQueueGetTotalSize
 
         self.assertArgIsFunction(CoreMedia.CMBufferQueueInstallTrigger, 1, b'v^v^{opaqueCMBufferQueueTriggerToken=}', True)
         self.assertArgIsOut(CoreMedia.CMBufferQueueInstallTrigger, 5)
@@ -83,6 +82,10 @@ class TestCMBufferQueue (TestCase):
         self.assertArgIsFunction(CoreMedia.CMBufferQueueCallForEachBuffer, 1, b'i@^v', True)
 
         self.assertArgIsFunction(CoreMedia.CMBufferQueueSetValidationCallback, 1, b'i^{opaqueCMBufferQueue=}@^v', True)
+    
+    @min_os_level('10.10')
+    def test_functions10_10(self):
+        CoreMedia.CMBufferQueueGetTotalSize
 
 
 if __name__ == "__main__":

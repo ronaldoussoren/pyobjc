@@ -58,7 +58,6 @@ class TestCMTime (TestCase):
         CoreMedia.CMTimeSubtract
         CoreMedia.CMTimeMultiply
         CoreMedia.CMTimeMultiplyByFloat64
-        CoreMedia.CMTimeMultiplyByRatio
         CoreMedia.CMTimeCompare
 
         self.assertFalse(hasattr(CoreMedia, 'CMTIME_COMPARE_INLINE'))
@@ -75,7 +74,9 @@ class TestCMTime (TestCase):
 
         CoreMedia.CMTimeShow
 
-
+    @min_os_level('10.10')
+    def test_functions10_10(self):
+        CoreMedia.CMTimeMultiplyByRatio
 
 
 

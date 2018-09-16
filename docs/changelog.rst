@@ -17,6 +17,8 @@ Version 5.0b2
 * Finished bindings for CoreMedia, I noticed during review that the bindings were
   far from finished.
 
+* Fixed problem with unitialized memory in pyobjc-core
+
 Version 5.0b1
 -------------
 

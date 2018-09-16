@@ -1217,6 +1217,7 @@ compiled_metadata(PyObject* metadata)
     Py_SIZE(result) = max_idx;
     result->suggestion = NULL;
     result->variadic = NO;
+    result->deprecated = 0;
     result->free_result = NO;
     result->shortcut_signature = NO;
     result->shortcut_argbuf_size = 0;
@@ -1705,6 +1706,15 @@ PyObjCMethodSignature_AsDict(PyObjCMethodSignature* methinfo)
     if (methinfo->suggestion) {
         r = PyDict_SetItemString(result, "suggestion",
                 methinfo->suggestion);
+        if (r == -1) goto error;
+    }
+
+    if (methinfo->deprecated != 0) {
+        v = Py_BuildValue("i", &methinfo->deprecated);
+        if (v == NULL) goto error;
+
+        r = PyDict_SetItemString(result, "deprecated", v);
+        Py_DECREF(v);
         if (r == -1) goto error;
     }
 

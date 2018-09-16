@@ -3,6 +3,7 @@ from PyObjCTools.TestSupport import *
 import AVFoundation
 
 class TestAVSampleBufferAudioRenderer (TestCase):
+    @min_os_level('10.13')
     def testMethods(self):
         self.assertResultIsBOOL(AVFoundation.AVSampleBufferAudioRenderer.isMuted)
         self.assertArgIsBOOL(AVFoundation.AVSampleBufferAudioRenderer.setMuted_, 0)

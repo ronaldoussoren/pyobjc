@@ -108,12 +108,6 @@ class TestCMSampleBuffer (TestCase):
         self.assertArgIsOut(CoreMedia.CMSampleBufferCreate, 11)
         self.assertArgIsCFRetained(CoreMedia.CMSampleBufferCreate, 11)
 
-        self.assertArgIsIn(CoreMedia.CMSampleBufferCreateReady, 5)
-        self.assertArgSizeInArg(CoreMedia.CMSampleBufferCreateReady, 5, 4)
-        self.assertArgIsIn(CoreMedia.CMSampleBufferCreateReady, 7)
-        self.assertArgSizeInArg(CoreMedia.CMSampleBufferCreateReady, 7, 6)
-        self.assertArgIsOut(CoreMedia.CMSampleBufferCreateReady, 8)
-        self.assertArgIsCFRetained(CoreMedia.CMSampleBufferCreateReady, 8)
 
         self.assertArgIsBOOL(CoreMedia.CMAudioSampleBufferCreateWithPacketDescriptions, 2)
         self.assertArgIsFunction(CoreMedia.CMAudioSampleBufferCreateWithPacketDescriptions, 3, CMSampleBufferMakeDataReadyCallback, True)
@@ -122,10 +116,6 @@ class TestCMSampleBuffer (TestCase):
         self.assertArgIsOut(CoreMedia.CMAudioSampleBufferCreateWithPacketDescriptions, 9)
         self.assertArgIsCFRetained(CoreMedia.CMAudioSampleBufferCreateWithPacketDescriptions, 9)
 
-        self.assertArgIsIn(CoreMedia.CMAudioSampleBufferCreateReadyWithPacketDescriptions, 5)
-        self.assertArgSizeInArg(CoreMedia.CMAudioSampleBufferCreateReadyWithPacketDescriptions, 5, 3)
-        self.assertArgIsOut(CoreMedia.CMAudioSampleBufferCreateReadyWithPacketDescriptions, 6)
-        self.assertArgIsCFRetained(CoreMedia.CMAudioSampleBufferCreateReadyWithPacketDescriptions, 6)
 
         self.assertArgIsBOOL(CoreMedia.CMSampleBufferCreateForImageBuffer, 2)
         self.assertArgIsFunction(CoreMedia.CMSampleBufferCreateForImageBuffer, 3, CMSampleBufferMakeDataReadyCallback, True)
@@ -133,9 +123,6 @@ class TestCMSampleBuffer (TestCase):
         self.assertArgIsOut(CoreMedia.CMSampleBufferCreateForImageBuffer, 7)
         self.assertArgIsCFRetained(CoreMedia.CMSampleBufferCreateForImageBuffer, 7)
 
-        self.assertArgIsIn(CoreMedia.CMSampleBufferCreateReadyWithImageBuffer, 3)
-        self.assertArgIsOut(CoreMedia.CMSampleBufferCreateReadyWithImageBuffer, 4)
-        self.assertArgIsCFRetained(CoreMedia.CMSampleBufferCreateReadyWithImageBuffer, 4)
 
         self.assertArgIsOut(CoreMedia.CMSampleBufferCreateCopy, 2)
         self.assertArgIsCFRetained(CoreMedia.CMSampleBufferCreateCopy, 2)
@@ -169,18 +156,11 @@ class TestCMSampleBuffer (TestCase):
 
         self.assertResultIsBOOL(CoreMedia.CMSampleBufferDataIsReady)
 
-        CoreMedia.CMSampleBufferSetDataFailed
-
-        self.assertResultIsBOOL(CoreMedia.CMSampleBufferHasDataFailed)
-        self.assertArgIsOut(CoreMedia.CMSampleBufferHasDataFailed, 1)
-
         CoreMedia.CMSampleBufferMakeDataReady
         CoreMedia.CMSampleBufferTrackDataReadiness
         CoreMedia.CMSampleBufferInvalidate
 
         self.assertArgIsFunction(CoreMedia.CMSampleBufferSetInvalidateCallback, 1, CMSampleBufferInvalidateCallback, True)
-
-        self.assertArgIsBlock(CoreMedia.CMSampleBufferSetInvalidateHandler, 1, CMSampleBufferInvalidateHandler)
 
         self.assertResultIsBOOL(CoreMedia.CMSampleBufferIsValid)
 
@@ -215,8 +195,33 @@ class TestCMSampleBuffer (TestCase):
 
         self.assertArgIsFunction(CoreMedia.CMSampleBufferCallForEachSample, 1, b'i^{opaqueCMSampleBuffer=}q^v', False)
 
-        self.assertArgIsBlock(CoreMedia.CMSampleBufferCallBlockForEachSample, 1, b'v^{opaqueCMSampleBuffer=}q')
 
+    @min_os_level('10.10')
+    def test_functions10_10(self):
+        self.assertArgIsIn(CoreMedia.CMSampleBufferCreateReady, 5)
+        self.assertArgSizeInArg(CoreMedia.CMSampleBufferCreateReady, 5, 4)
+        self.assertArgIsIn(CoreMedia.CMSampleBufferCreateReady, 7)
+        self.assertArgSizeInArg(CoreMedia.CMSampleBufferCreateReady, 7, 6)
+        self.assertArgIsOut(CoreMedia.CMSampleBufferCreateReady, 8)
+        self.assertArgIsCFRetained(CoreMedia.CMSampleBufferCreateReady, 8)
+
+        self.assertArgIsIn(CoreMedia.CMAudioSampleBufferCreateReadyWithPacketDescriptions, 5)
+        self.assertArgSizeInArg(CoreMedia.CMAudioSampleBufferCreateReadyWithPacketDescriptions, 5, 3)
+        self.assertArgIsOut(CoreMedia.CMAudioSampleBufferCreateReadyWithPacketDescriptions, 6)
+        self.assertArgIsCFRetained(CoreMedia.CMAudioSampleBufferCreateReadyWithPacketDescriptions, 6)
+
+        self.assertArgIsIn(CoreMedia.CMSampleBufferCreateReadyWithImageBuffer, 3)
+        self.assertArgIsOut(CoreMedia.CMSampleBufferCreateReadyWithImageBuffer, 4)
+        self.assertArgIsCFRetained(CoreMedia.CMSampleBufferCreateReadyWithImageBuffer, 4)
+
+        CoreMedia.CMSampleBufferSetDataFailed
+
+        self.assertResultIsBOOL(CoreMedia.CMSampleBufferHasDataFailed)
+        self.assertArgIsOut(CoreMedia.CMSampleBufferHasDataFailed, 1)
+
+        self.assertArgIsBlock(CoreMedia.CMSampleBufferSetInvalidateHandler, 1, CMSampleBufferInvalidateHandler)
+
+        self.assertArgIsBlock(CoreMedia.CMSampleBufferCallBlockForEachSample, 1, b'v^{opaqueCMSampleBuffer=}q')
 
 if __name__ == "__main__":
     main()

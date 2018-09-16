@@ -34,8 +34,6 @@ static PyMemberDef abl_members[] = {
 static Py_ssize_t
 abl_length(PyObject* self)
 {
-    printf("abl_length %p\n", self); fflush(stdout);
-    printf("abl_length list %p\n", ((struct audio_buffer_list*)self)->abl_list); fflush(stdout);
     if ((((struct audio_buffer_list*)self)->abl_list) == NULL) {
         return 0;
     }

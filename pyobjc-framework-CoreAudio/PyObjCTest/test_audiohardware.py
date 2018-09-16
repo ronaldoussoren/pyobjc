@@ -203,9 +203,7 @@ class TestAudioHardware (TestCase):
 
         CoreAudio.AudioHardwareUnload
 
-        self.assertArgIsOut(CoreAudio.AudioHardwareCreateAggregateDevice, 1)
 
-        CoreAudio.AudioHardwareDestroyAggregateDevice
 
         self.assertArgIsFunction(CoreAudio.AudioDeviceCreateIOProcID, 1, AudioDeviceIOProc, True)
         self.assertArgIsOut(CoreAudio.AudioDeviceCreateIOProcID, 3)
@@ -223,6 +221,11 @@ class TestAudioHardware (TestCase):
         self.assertArgIsOut(CoreAudio.AudioDeviceTranslateTime, 2)
 
         self.assertArgIsInOut(CoreAudio.AudioDeviceGetNearestStartTime, 1)
+
+    @min_os_level('10.11')
+    def test_functions10_11(self):
+        self.assertArgIsOut(CoreAudio.AudioHardwareCreateAggregateDevice, 1)
+        CoreAudio.AudioHardwareDestroyAggregateDevice
 
     def testStructs(self):
         # XXX: Requires manual support

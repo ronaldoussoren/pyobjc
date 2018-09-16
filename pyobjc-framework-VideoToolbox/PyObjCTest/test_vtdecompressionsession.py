@@ -21,9 +21,6 @@ class TestVTDecompressionSession (TestCase):
 
         self.assertArgIsOut(VideoToolbox.VTDecompressionSessionDecodeFrame, 4)
 
-        self.assertArgIsOut(VideoToolbox.VTDecompressionSessionDecodeFrameWithOutputHandler, 3)
-        self.assertArgIsBlock(VideoToolbox.VTDecompressionSessionDecodeFrameWithOutputHandler, 4, VTDecompressionOutputHandler)
-
         VideoToolbox.VTDecompressionSessionFinishDelayedFrames
 
         self.assertResultIsBOOL(VideoToolbox.VTDecompressionSessionCanAcceptFormatDescription)
@@ -33,6 +30,13 @@ class TestVTDecompressionSession (TestCase):
         self.assertArgIsOut(VideoToolbox.VTDecompressionSessionCopyBlackPixelBuffer, 1)
         self.assertArgIsCFRetained(VideoToolbox.VTDecompressionSessionCopyBlackPixelBuffer, 1)
 
+    @min_os_level('10.11')
+    def test_functions10_11(self):
+        self.assertArgIsOut(VideoToolbox.VTDecompressionSessionDecodeFrameWithOutputHandler, 3)
+        self.assertArgIsBlock(VideoToolbox.VTDecompressionSessionDecodeFrameWithOutputHandler, 4, VTDecompressionOutputHandler)
+
+    @min_os_level('10.13')
+    def test_functions10_13(self):
         self.assertResultIsBOOL(VideoToolbox.VTIsHardwareDecodeSupported)
 
 

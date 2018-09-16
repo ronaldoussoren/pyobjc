@@ -3,6 +3,7 @@ from PyObjCTools.TestSupport import *
 import AVFoundation
 
 class TestAVSampleBufferRenderSynchronizer (TestCase):
+    @min_os_level('10.13')
     def testMethods(self):
         self.assertArgIsBlock(AVFoundation.AVSampleBufferRenderSynchronizer.addPeriodicTimeObserverForInterval_queue_usingBlock_, 2, b'v{_CMTime=qiIq}')
         self.assertArgIsBlock(AVFoundation.AVSampleBufferRenderSynchronizer.addBoundaryTimeObserverForTimes_queue_usingBlock_, 2, b'v')

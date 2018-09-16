@@ -449,6 +449,8 @@ class TestAudioDriverPlugIn (TestCase):
         self.assertArgIsOut(CoreAudio.FillOutAudioTimeStampWithHostTime, 0)
         self.assertArgIsOut(CoreAudio.FillOutAudioTimeStampWithSampleAndHostTime, 0)
 
+    @min_os_level('10.11')
+    def test_functions10_11(self):
         CoreAudio.AudioChannelLayoutTag_GetNumberOfChannels
 
 class TestManualWrappers (TestCase):

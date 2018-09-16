@@ -196,7 +196,6 @@ class TestCMFormatDescription (TestCase):
 
         self.assertIsInstance(CoreMedia.kCMFormatDescriptionExtension_TemporalQuality, unicode)
         self.assertIsInstance(CoreMedia.kCMFormatDescriptionExtension_SpatialQuality, unicode)
-        self.assertIsInstance(CoreMedia.kCMFormatDescriptionExtension_VerbatimImageDescription, unicode)
 
         self.assertIsInstance(CoreMedia.kCMFormatDescriptionExtension_Version, unicode)
         self.assertIsInstance(CoreMedia.kCMFormatDescriptionExtension_RevisionLevel, unicode)
@@ -252,6 +251,7 @@ class TestCMFormatDescription (TestCase):
 
     @min_os_level('10.11')
     def test_constants10_11(self):
+        self.assertIsInstance(CoreMedia.kCMFormatDescriptionExtension_VerbatimImageDescription, unicode)
         self.assertIsInstance(CoreMedia.kCMFormatDescriptionExtension_CleanAperture, unicode)
         self.assertIsInstance(CoreMedia.kCMFormatDescriptionKey_CleanApertureWidth, unicode)
         self.assertIsInstance(CoreMedia.kCMFormatDescriptionKey_CleanApertureHeight, unicode)
@@ -434,6 +434,11 @@ class TestCMFormatDescription (TestCase):
         self.assertArgIsOut(CoreMedia.CMMetadataFormatDescriptionCreateWithKeys, 3)
         self.assertArgIsCFRetained(CoreMedia.CMMetadataFormatDescriptionCreateWithKeys, 3)
 
+
+        CoreMedia.CMMetadataFormatDescriptionGetKeyWithLocalID
+
+    @min_os_level('10.10')
+    def test_functions10_10(self):
         self.assertArgIsOut(CoreMedia.CMMetadataFormatDescriptionCreateWithMetadataSpecifications, 3)
         self.assertArgIsCFRetained(CoreMedia.CMMetadataFormatDescriptionCreateWithMetadataSpecifications, 3)
 
@@ -443,8 +448,6 @@ class TestCMFormatDescription (TestCase):
         self.assertArgIsOut(CoreMedia.CMMetadataFormatDescriptionCreateByMergingMetadataFormatDescriptions, 3)
         self.assertArgIsCFRetained(CoreMedia.CMMetadataFormatDescriptionCreateByMergingMetadataFormatDescriptions, 3)
 
-        CoreMedia.CMMetadataFormatDescriptionGetKeyWithLocalID
         CoreMedia.CMMetadataFormatDescriptionGetIdentifiers
-
 if __name__ == "__main__":
     main()

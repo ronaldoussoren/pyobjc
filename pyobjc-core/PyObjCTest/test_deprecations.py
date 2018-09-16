@@ -52,7 +52,6 @@ class TestDeprecationWarnings (TestCase):
         with warnings.catch_warnings(record=True) as w:
             warnings.simplefilter("always")
             func()
-
         
         if w:
           print([(x.category, x.message) for x in w])

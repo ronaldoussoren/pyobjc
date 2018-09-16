@@ -15,7 +15,7 @@ VERSION="5.0b2"
 setup(
     name='pyobjc-framework-BusinessChat',
     description = "Wrappers for the framework BusinessChat on macOS",
-    min_os_level="10.7",
+    min_os_level="10.14",
     packages = [ "BusinessChat" ],
     version=VERSION,
     install_requires = [

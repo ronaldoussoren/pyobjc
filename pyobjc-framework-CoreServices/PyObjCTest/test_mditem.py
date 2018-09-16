@@ -18,6 +18,10 @@ class TestMDImport (TestCase):
 
 
         self.assertResultIsCFRetained(CoreServices.MDItemCopyAttributeNames)
+
+    @min_os_level('10.10')
+    def test_functions10_10(self):
+        # Documented on 10.9, but not available there
         self.assertResultIsCFRetained(CoreServices.MDItemsCopyAttributes)
 
     @expectedFailure

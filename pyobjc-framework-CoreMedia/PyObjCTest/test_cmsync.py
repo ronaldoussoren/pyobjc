@@ -57,10 +57,6 @@ class TestCMSync (TestCase):
         self.assertArgIsOut(CoreMedia.CMTimebaseCreateWithMasterTimebase, 2)
         self.assertArgIsCFRetained(CoreMedia.CMTimebaseCreateWithMasterTimebase, 2)
 
-        self.assertResultIsCFRetained(CoreMedia.CMTimebaseCopyMasterTimebase)
-        self.assertResultIsCFRetained(CoreMedia.CMTimebaseCopyMasterClock)
-        self.assertResultIsCFRetained(CoreMedia.CMTimebaseCopyMaster)
-        self.assertResultIsCFRetained(CoreMedia.CMTimebaseCopyUltimateMasterClock)
 
         CoreMedia.CMTimebaseGetMasterTimebase
         CoreMedia.CMTimebaseGetMasterClock
@@ -93,6 +89,13 @@ class TestCMSync (TestCase):
         CoreMedia.CMSyncMightDrift
         CoreMedia.CMSyncGetTime
         CoreMedia.CMTimebaseNotificationBarrier
+
+    @min_os_level('10.11')
+    def test_functions10_11(self):
+        self.assertResultIsCFRetained(CoreMedia.CMTimebaseCopyMasterTimebase)
+        self.assertResultIsCFRetained(CoreMedia.CMTimebaseCopyMasterClock)
+        self.assertResultIsCFRetained(CoreMedia.CMTimebaseCopyMaster)
+        self.assertResultIsCFRetained(CoreMedia.CMTimebaseCopyUltimateMasterClock)
 
 if __name__ == "__main__":
     main()

@@ -33,7 +33,7 @@ FRAMEWORK_WRAPPERS=[
         ('AppleScriptObjC',         '10.6',             None        ),
         ('ApplicationServices',     None,               None        ),
         ('Automator',               None,               None        ),
-        ('BusinessChat',            '10.13',            None        ),
+        ('BusinessChat',            '10.14',            None        ),
         ('CFNetwork',               None,               None        ),
         ('CalendarStore',           '10.5',             None        ),
         ('CloudKit',                '10.10',            None        ),

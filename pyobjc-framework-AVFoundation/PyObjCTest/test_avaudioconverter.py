@@ -25,7 +25,7 @@ class TestAVAudioConverter (TestCase):
         self.assertEqual(v.trailingFrames, 0)
 
 
-    @min_os_level('10.9')
+    @min_os_level('10.11')
     def testMethods(self):
         self.assertResultIsBOOL(AVFoundation.AVAudioConverter.downmix)
         self.assertArgIsBOOL(AVFoundation.AVAudioConverter.setDownmix_, 0)
