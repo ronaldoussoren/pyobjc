@@ -13,7 +13,9 @@ static PyObjC_function_map function_map[] = {
     { "FillOutAudioTimeStampWithSampleTime", (PyObjC_Function_Pointer)&FillOutAudioTimeStampWithSampleTime },
     { "FillOutAudioTimeStampWithHostTime", (PyObjC_Function_Pointer)&FillOutAudioTimeStampWithHostTime },
     { "FillOutAudioTimeStampWithSampleAndHostTime", (PyObjC_Function_Pointer)&FillOutAudioTimeStampWithSampleAndHostTime },
+#if PyObjC_BUILD_RELEASE >= 1011
     { "AudioChannelLayoutTag_GetNumberOfChannels", (PyObjC_Function_Pointer)&AudioChannelLayoutTag_GetNumberOfChannels },
+#endif
     { 0, 0 }
 };
 

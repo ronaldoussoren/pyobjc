@@ -198,7 +198,7 @@ PyObjC_MODULE_INIT(_CoreMedia)
         PyObjC_INITERROR();
     }
 
-#if MAC_OS_X_VERSION_MIN_REQUIRED < MAC_OS_X_VERSION_10_13
+#if PyObjC_BUILD_RELEASE >= 1013 && MAC_OS_X_VERSION_MIN_REQUIRED < MAC_OS_X_VERSION_10_13
 
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wunguarded-availability-new"

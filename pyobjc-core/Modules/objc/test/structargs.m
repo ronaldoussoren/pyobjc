@@ -64,7 +64,7 @@ static size_t ident(size_t v)
     return ident(((size_t)&c)+1);
 }
 
--(NSData*)dataFromBuffer:(in struct BufferStruct*)buf;
+-(NSData*)dataFromBuffer:(in struct BufferStruct*)buf
 {
     return [NSData dataWithBytes:buf->buffer length:buf->buffer_size];
 }

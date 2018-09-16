@@ -17,9 +17,9 @@ enum {
 
 static void
 init_callback(
-    MTAudioProcessingTapRef CM_NONNULL tap,
-    void * CM_NULLABLE clientInfo,
-    void * CM_NULLABLE * CM_NONNULL tapStorageOut)
+    MTAudioProcessingTapRef tap,
+    void * clientInfo,
+    void ** tapStorageOut)
 {
     PyObject* cb_info = (PyObject*)clientInfo;
     PyObject* cb;

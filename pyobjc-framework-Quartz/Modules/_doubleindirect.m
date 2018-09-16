@@ -28,7 +28,13 @@ m_CGWaitForScreenRefreshRects(PyObject* self __attribute__((__unused__)),
     }
 
     PyObjC_DURING
+
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
+
         err = CGWaitForScreenRefreshRects(&rectArray, &count);
+
+#pragma clang diagnostic pop
 
     PyObjC_HANDLER
         PyObjCErr_FromObjC(localException);
@@ -47,7 +53,12 @@ m_CGWaitForScreenRefreshRects(PyObject* self __attribute__((__unused__)),
         }
 
         /* Free the C-level array */
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
+
         CGReleaseScreenRefreshRects(rectArray);
+
+#pragma clang diagnostic pop
 
         return Py_BuildValue("lNl", err, arr, count);
     }
@@ -100,11 +111,17 @@ m_CGWaitForScreenUpdateRects(PyObject* self __attribute__((__unused__)),
     }
 
     PyObjC_DURING
+
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
+
         err = CGWaitForScreenUpdateRects(
             requestedOperations,
             &currentOperation,
             &rectArray, &count,
             &delta);
+
+#pragma clang diagnostic pop
 
     PyObjC_HANDLER
         err = -1; /* Avoid compiler warning */
@@ -129,7 +146,12 @@ m_CGWaitForScreenUpdateRects(PyObject* self __attribute__((__unused__)),
         }
 
         /* Free the C-level array */
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
+
         CGReleaseScreenRefreshRects(rectArray);
+
+#pragma clang diagnostic pop
 
         return Py_BuildValue("llNl", err, currentOperation, arr, count, dlt);
     }

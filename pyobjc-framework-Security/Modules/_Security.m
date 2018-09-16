@@ -720,9 +720,15 @@ m_AuthorizationExecuteWithPrivileges(
     Py_DECREF(seq);
 
     PyObjC_DURING
+
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
+
         retval = AuthorizationExecuteWithPrivileges(
                     authorization, pathToTool, options, arguments,
                     py_communicationsPipe == PyObjC_NULL?NULL:&communicationsPipe);
+
+#pragma clang diagnostic pop
 
     PyObjC_HANDLER
         PyObjCErr_FromObjC(localException);

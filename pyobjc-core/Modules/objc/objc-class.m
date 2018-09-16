@@ -1115,6 +1115,10 @@ class_dealloc(PyObject* cls)
 
     snprintf(buf, sizeof(buf), "Deallocating objective-C class %s", ((PyTypeObject*)cls)->tp_name);
 
+    fputs(buf, stderr);
+    Py_INCREF(cls);
+    return;
+
     /* This should never happen */
     Py_FatalError(buf);
 }

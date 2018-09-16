@@ -97,7 +97,7 @@ m_VTDecompressionSessionCreate(PyObject* self __attribute__((__unused__)), PyObj
     } else {
         have_outputCallback = 1;
         /* FIXME: This is annoying: there is no clear way to store associated data here... */
-        PyErr_SetString(PyErr_ValueError, "Passing an outputCallback is not supported at the moment");
+        PyErr_SetString(PyExc_ValueError, "Passing an outputCallback is not supported at the moment");
     }
 
     rv = VTDecompressionSessionCreate(allocator, videoFormatDescription, videoDecoderSpecification,
