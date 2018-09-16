@@ -35,6 +35,7 @@ class TestCMBufferQueue (TestCase):
     def test_opaque(self):
         self.assertIsOpaquePointer(CoreMedia.CMBufferQueueTriggerToken)
 
+    @expectedFailure
     def test_functions_manual(self):
         self.fail("CMBufferQueueGetCallbacksForUnsortedSampleBuffers")
         self.fail("CMBufferQueueGetCallbacksForSampleBuffersSortedByOutputPTS")
@@ -82,7 +83,7 @@ class TestCMBufferQueue (TestCase):
         self.assertArgIsFunction(CoreMedia.CMBufferQueueCallForEachBuffer, 1, b'i@^v', True)
 
         self.assertArgIsFunction(CoreMedia.CMBufferQueueSetValidationCallback, 1, b'i^{opaqueCMBufferQueue=}@^v', True)
-    
+
     @min_os_level('10.10')
     def test_functions10_10(self):
         CoreMedia.CMBufferQueueGetTotalSize

@@ -8,6 +8,7 @@ int parse_parameterset(
         Py_ssize_t parameterSetCount, PyObject* py_parameterSetPointers, uint8_t*** parameterSetPointers,
         PyObject* py_parameterSetSizes, size_t** parameterSetSizes)
 {
+    Py_ssize_t i;
     *parameterSetPointers = NULL;
     *parameterSetSizes = NULL;
 
@@ -28,16 +29,70 @@ int parse_parameterset(
         return -1;
     }
 
-    goto error;
+    *parameterSetPointers = PyMem_Malloc(sizeof(uint8_t**) * parameterSetCount);
+    if (*parameterSetPointers == NULL) {
+        return -1;
+    }
+
+    *parameterSetSizes = PyMem_Malloc(sizeof(size_t*) * parameterSetCount);
+    if (*parameterSetPointers == NULL) {
+        PyMem_Free(parameterSetPointers);
+        return -1;
+    }
+
+    for (i = 0; i < parameterSetCount; i++) {
+        const void* buf;
+        Py_ssize_t size;
+        long expected_size;
+
+        if (PyLong_Check(PyTuple_GET_ITEM(py_parameterSetSizes, i))) {
+            expected_size = PyLong_AsLong(PyTuple_GET_ITEM(py_parameterSetSizes, i));
+            if (expected_size == -1 && PyErr_Occurred()) {
+                goto error;
+            }
+
+#if PY_MAJOR_VERSION == 2
+        } else if (PyInt_Check(PyTuple_GET_ITEM(py_parameterSetSizes, i))) {
+            expected_size = PyInt_AsLong(PyTuple_GET_ITEM(py_parameterSetSizes, i));
+#endif
+        } else {
+            PyErr_Format(PyExc_TypeError, "Element %d of parameterSetSizes is not an integer", i);
+            goto error;
+        }
+
+        if (expected_size < 0) {
+            PyErr_Format(PyExc_TypeError, "Element %d of parameterSetSizes is negative", i);
+            goto error;
+        }
+
+        if (PyUnicode_Check(PyTuple_GET_ITEM(py_parameterSetPointers, i))) {
+            /* Explictly reject unicode objects, those implement the buffer protocol but are not
+             * usable here.
+             */
+            PyErr_Format(PyExc_TypeError, "Element %d of parameterSetPointers is not a buffer", i);
+            goto error;
+        }
+
+        if (PyObject_AsReadBuffer(PyTuple_GET_ITEM(py_parameterSetPointers, i), &buf, &size) == -1) {
+            goto error;
+        }
+        if (size < expected_size) {
+            PyErr_Format(PyExc_TypeError, "Element %d of parameterSetPointers is too small", i);
+            goto error;
+        }
+
+        (*parameterSetSizes)[i] = (size_t)expected_size;
+        (*parameterSetPointers)[i] = (uint8_t*)buf;
+    }
 
     return 0;
 
 error:
     if (*parameterSetPointers != NULL) {
-        /* ... */
+        PyMem_Free(*parameterSetPointers);
     }
     if (*parameterSetSizes != NULL) {
-        /* .... */
+        PyMem_Free(*parameterSetSizes);
     }
 
     return -1;
@@ -46,7 +101,8 @@ error:
 
 static void clear_parameterset(size_t parameterSetCount, uint8_t** parameterSetPointers, size_t* parameterSetSizes)
 {
-    /* TODO */
+        PyMem_Free(parameterSetPointers);
+        PyMem_Free(parameterSetSizes);
 }
 
 static PyObject*

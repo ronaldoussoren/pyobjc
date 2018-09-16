@@ -61,3 +61,17 @@ This API is not available in Python.
 
 This API is not available in Python.
 
+``CMVideoFormatDescriptionGetH264ParameterSetAtIndex``, ``CMVideoFormatDescriptionGetHEVCParameterSetAtIndex``
+..............................................................................................................
+
+These functions are not supported from Python at this time
+
+CMBufferQueueGetCallbacksForUnsortedSampleBuffers, CMBufferQueueGetCallbacksForSampleBuffersSortedByOutputPTS, CMBufferQueueCreate
+..................................................................................................................................
+
+These functions are not supported from Python at this time
+
+CMBlockBufferCreateWithMemoryBlock, CMBlockBufferCreateContiguous, CMBlockBufferAppendMemoryBlock, CMBlockBufferAccessDataBytes, CMBlockBufferGetDataPointer
+............................................................................................................................................................
+
+These functions are not supported from Python at this time
