@@ -13,9 +13,7 @@ in pure Python. See our tutorial for an example of this.
 Release information
 -------------------
 
-PyObjC 4.2 was released on 2018-04-01. See the :doc:`changelog <changelog>` for more information.
-
-PyObjC 5.0b1 was released on 2018-09-02. This is a beta release for a version of PyObjC that supports macOS 10.14 (mojave). See the :doc:`changelog <changelog>` for more information. This version can be installed by explicitly specifying the version in pip's install command.
+PyObjC 5.0 was released on 2018-09-18. See the :doc:`changelog <changelog>` for more information.
 
 Supported platforms
 -------------------
