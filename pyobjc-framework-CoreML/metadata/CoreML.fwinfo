@@ -3,6 +3,7 @@
   "enum": {
    "MLComputeUnitsCPUOnly": { "value": 0 },
    "MLComputeUnitsCPUAndGPU": { "value": 1 },
+   "MLComputeUnitsAll": { "value": 2 },
    "MLMultiArrayShapeConstraintTypeUnspecified": { "value": 1 },
    "MLMultiArrayShapeConstraintTypeEnumerated": { "value": 2 },
    "MLMultiArrayShapeConstraintTypeRange": { "value": 3 },
