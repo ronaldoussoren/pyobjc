@@ -19,6 +19,8 @@ Version 5.0b2
 
 * Fixed problem with unitialized memory in pyobjc-core
 
+* The CarbonCore bindings included a number of symbols that shouldn't be exposed
+
 Version 5.0b1
 -------------
 

@@ -381,7 +381,7 @@
         }
        ],
        "retval": {
-        "typestr": "q"
+        "typestr": ["i", "q"]
        }
       }
      },

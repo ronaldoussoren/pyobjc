@@ -79,7 +79,10 @@ def system_report(path, py_versions):
            fp.write("Python {}:         {}\n".format(ver, py_version(ver)))
 
 def _install_virtualenv(interpreter):
+    subprocess.check_call([interpreter, "-mpip", "install", "-U", "pip" ])
+    subprocess.check_call([interpreter, "-mpip", "install", "-U", "setuptools" ])
     subprocess.check_call([interpreter, "-mpip", "install", "-U", "virtualenv" ])
+    subprocess.check_call([interpreter, "-mpip", "install", "-U", "wheel" ])
     
 @contextlib.contextmanager
 def virtualenv(interpreter):
