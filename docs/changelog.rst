@@ -3,6 +3,12 @@ What's new in PyObjC
 
 An overview of the relevant changes in new, and older, releases.
 
+Version 5.0
+-----------
+
+Version 5.0 of PyObjC primarily adds support for macOS 10.14 (mojave), and
+also adds support for a couple of older frameworks that weren't supported before.
+
 Version 5.0b2
 -------------
 
