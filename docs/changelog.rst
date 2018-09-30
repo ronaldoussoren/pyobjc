@@ -16,6 +16,13 @@ Version 5.0.1
 
 * Bindings are up-to-date w.r.t. Xcode 10.1 (beta)
 
+* Updated the support code for framework wrappers to be able to emit deprecation warnings on
+  the first import of a deprecated constants (functions and methods will only raise a deprecation
+  warning when called).
+
+  This is just an infrastructure change, the actual framework bindings do not yet contain the
+  information used to emit deprecation warnings.
+
 Version 5.0
 -----------
 

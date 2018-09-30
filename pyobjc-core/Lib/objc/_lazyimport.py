@@ -12,9 +12,15 @@ import struct
 
 from objc import lookUpClass, getClassList, nosuchclass_error, loadBundle
 import objc
+import warnings
 ModuleType = type(sys)
 
 _name_re = re.compile('^[A-Za-z_][A-Za-z_0-9]*$')
+
+def _check_deprecated(name, deprecation_version):
+    if objc.options.deprecation_warnings and objc.options.deprecation_warnings >= deprecation_version:
+        warnings.warn("%r is deprecated in macOS %d.%d"%(name, deprecation_version / 100, deprecation_version % 100),
+                objc.ApiDeprecationWarning, stacklevel=2)
 
 def _loadBundle(frameworkName, frameworkIdentifier, frameworkPath):
     if frameworkIdentifier is None:
@@ -97,10 +103,13 @@ class ObjCLazyModule (ModuleType):
         self.__dict__.update(metadict.get('misc', {}))
         self.__parents = parents
         self.__varmap = metadict.get('constants')
+        self.__varmap_deprecated = metadict.get('deprecated_constants', {})
         self.__varmap_dct = metadict.get('constants_dict', {})
         self.__enummap = metadict.get('enums')
+        self.__enum_deprecated = metadict.get('deprecated_enums', {})
         self.__funcmap = metadict.get('functions')
         self.__aliases = metadict.get('aliases')
+        self.__aliases_deprecated = metadict.get('deprecated_aliases', {})
         self.__inlinelist = inline_list
 
         # informal protocols are not exposed, but added here
@@ -182,7 +191,6 @@ class ObjCLazyModule (ModuleType):
                     self.__dict__[nm] = dct[nm]
 
             for nm, tp in self.__varmap_dct.items():
-                if nm == 'kLSSharedFileListItemLast': print(nm, tp)
                 if tp.startswith('=='):
                     try:
                         self.__dict__[nm] = objc._loadConstant(nm, tp[2:], 2)
@@ -313,6 +321,9 @@ class ObjCLazyModule (ModuleType):
                 else:
                     magic = 0
                 result = objc._loadConstant(name, tp, magic)
+                if name in self.__varmap_deprecated:
+                    _check_deprecated(name, self.__varmap_deprecated[name])
+
                 return result
 
         if self.__varmap:
@@ -334,12 +345,20 @@ class ObjCLazyModule (ModuleType):
                 else:
                     magic = 0
 
-                return objc._loadConstant(name, tp, magic)
+                result =  objc._loadConstant(name, tp, magic)
+
+                if name in self.__varmap_deprecated:
+                    _check_deprecated(name, self.__varmap_deprecated[name])
+
+                return result
 
         if self.__enummap:
             m = re.search(r"\$%s@([^$]*)\$"%(name,), self.__enummap)
             if m is not None:
-                return self.__prs_enum(m.group(1))
+                result =  self.__prs_enum(m.group(1))
+                if name in self.__enum_deprecated:
+                    _check_deprecated(name, self.__enum_deprecated[name])
+                return result
 
         if self.__funcmap:
             if name in self.__funcmap:
@@ -377,21 +396,25 @@ class ObjCLazyModule (ModuleType):
             if name in self.__aliases:
                 alias = self.__aliases.pop(name)
                 if alias == 'ULONG_MAX':
-                    return (sys.maxsize * 2) + 1
+                    result = (sys.maxsize * 2) + 1
                 elif alias == 'LONG_MAX':
-                    return sys.maxsize
+                    result = sys.maxsize
                 elif alias == 'LONG_MIN':
-                    return -sys.maxsize-1
+                    result = -sys.maxsize-1
                 elif alias == 'DBL_MAX':
-                    return sys.float_info.max
+                    result = sys.float_info.max
                 elif alias == 'DBL_MIN':
-                    return sys.float_info.min
+                    result = sys.float_info.min
                 elif alias == 'FLT_MAX':
-                    return objc._FLT_MAX
+                    result = objc._FLT_MAX
                 elif alias == 'FLT_MIN':
-                    return objc._FLT_MIN
+                    result = objc._FLT_MIN
+                else:
+                    result = getattr(self, alias)
 
-                return getattr(self, alias)
+                if name in self.__aliases_deprecated:
+                    _check_deprecated(name, self.__aliases_deprecated[name])
+                return result
 
         raise AttributeError(name)
 
