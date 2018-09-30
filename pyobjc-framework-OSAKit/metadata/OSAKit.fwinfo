@@ -57,6 +57,7 @@
       "args": {
        "2": { "type_modifier": "o" }
       },
+      "deprecated": 1006,
       "class_method": false,
       "selector": "initWithContentsOfURL:language:error:"
      },
@@ -72,6 +73,7 @@
        "1": { "type_modifier": "o" }
       },
       "class_method": false,
+      "deprecated": 1006,
       "selector": "initWithCompiledData:error:"
      },
      {
