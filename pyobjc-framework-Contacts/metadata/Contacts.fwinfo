@@ -149,6 +149,20 @@
    "CNSocialProfileServiceGameCenter": { "typestr": "@" }
   },
   "classes": {
+   "CNPhoneNumber": {
+    "methods": [
+     {
+      "selector": "init",
+      "class_method": false,
+      "deprecated": 1013
+     },
+     {
+      "selector": "new",
+      "class_method": true,
+      "deprecated": 1013
+     }
+    ]
+   },
    "CNContact": {
     "methods": [
      {
