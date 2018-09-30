@@ -6,6 +6,21 @@
    "CBIdentity": {
     "methods": [
      {
+      "selector": "identityWithUUIDString:authority:",
+      "class_method": true,
+      "deprecated": 1011
+     },
+     {
+      "selector": "UUIDString",
+      "class_method": false,
+      "deprecated": 1011
+     },
+     {
+      "selector": "members",
+      "class_method": false,
+      "deprecated": 1011
+     },
+     {
       "args": {
        "0": {
         "type_override": "^{__CSIdentity=}"
@@ -86,6 +101,7 @@
         "type_override": "^v"
        }
       },
+      "deprecated": 1011,
       "class_method": false,
       "selector": "runModalForWindow:modalDelegate:didEndSelector:contextInfo:"
      },
