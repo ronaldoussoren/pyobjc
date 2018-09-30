@@ -9,6 +9,13 @@ Version 5.0.1
 * Xcode 10 "GM" contains one difference from the last beta: the constant MLComputeUnitsCPUAndGPU
   in the CoreML bindings.
 
+* #222: Add a proxy for C's "FILE*" type on Python 3. This is not necessary on Python 2 because
+  the default IO stack on Python 2 already uses FILE* internally.
+
+  This proxy type is very minimal and shouldn't not be used for general I/O.
+
+* Bindings are up-to-date w.r.t. Xcode 10.1 (beta)
+
 Version 5.0
 -----------
 

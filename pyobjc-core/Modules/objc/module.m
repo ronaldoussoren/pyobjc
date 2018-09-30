@@ -32,7 +32,7 @@ PyObject* PyObjC_TypeStr2CFTypeID = NULL;
 
 static NSAutoreleasePool* global_release_pool = nil;
 
-/* Calculate the current version of macOS in a format that 
+/* Calculate the current version of macOS in a format that
  * can be compared with MAC_OS_VERSION_X_... constants
  */
 
@@ -80,14 +80,14 @@ calc_current_version(void)
             NSLog(@"Cannot determine system version");
             return 0;
         }
-        
-        gSystemVersion.majorVersion = [[parts objectAtIndex:0] intValue]; 
-        gSystemVersion.minorVersion = [[parts objectAtIndex:1] intValue]; 
+
+        gSystemVersion.majorVersion = [[parts objectAtIndex:0] intValue];
+        gSystemVersion.minorVersion = [[parts objectAtIndex:1] intValue];
 
         if (parts.count >= 3) {
-            gSystemVersion.patchVersion = [[parts objectAtIndex:2] intValue]; 
+            gSystemVersion.patchVersion = [[parts objectAtIndex:2] intValue];
         }
-	
+
         [pool release];
     }
 
@@ -218,8 +218,8 @@ PyDoc_STRVAR(macos_available_doc,
   "Return true if the current macOS release is "
   "at least the provided version");
 
-static PyObject* 
-macos_available(PyObject* self __attribute__((__unused__)), 
+static PyObject*
+macos_available(PyObject* self __attribute__((__unused__)),
     PyObject* args, PyObject* kwds)
 {
 static char* keywords[] = { "major", "minor", "patch", NULL };
@@ -251,9 +251,9 @@ static char* keywords[] = { "major", "minor", "patch", NULL };
         Py_RETURN_TRUE;
     }
 }
-        
 
-     
+
+
 
 
 PyDoc_STRVAR(lookUpClass_doc,
@@ -2362,6 +2362,11 @@ PyObjC_MODULE_INIT(_objc)
     if (PyType_Ready(&StructBase_Type) < 0) {
         PyObjC_INITERROR();
     }
+#if PY_MAJOR_VERSION == 3
+    if (PyType_Ready(&FILE_Type) < 0) {
+        PyObjC_INITERROR();
+    }
+#endif
 
 #ifndef Py_HAVE_LOCAL_LOOKUP
     PyObjCSuper_Type.tp_doc = PySuper_Type.tp_doc;
@@ -2418,6 +2423,11 @@ PyObjC_MODULE_INIT(_objc)
     if (PyDict_SetItemString(d, "ObjCPointer", (PyObject*)&PyObjCPointer_Type) < 0) {
         PyObjC_INITERROR();
     }
+#if PY_MAJOR_VERSION == 3
+    if (PyDict_SetItemString(d, "FILE", (PyObject*)&FILE_Type) < 0) {
+        PyObjC_INITERROR();
+    }
+#endif
     if (PyDict_SetItemString(d, "objc_meta_class", (PyObject*)&PyObjCMetaClass_Type) < 0) {
         PyObjC_INITERROR();
     }
@@ -2608,7 +2618,7 @@ PyObjC_MODULE_INIT(_objc)
 #endif /* MAC_OS_X_VERSION_MIN_REQUIRED < MAC_OS_X_VERSION_10_6 */
 #endif /* PyObjC_BUILD_RELEASE >= 1006 */
 
-    
+
     if (PyModule_AddIntConstant(m, "MAC_OS_X_VERSION_CURRENT", calc_current_version()) < 0) {
         PyObjC_INITERROR();
     }

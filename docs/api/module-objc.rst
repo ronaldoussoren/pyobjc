@@ -263,7 +263,7 @@ for objects.
 Utilities
 ---------
 
-.. function:: macos_available(major, minor, patch=0) 
+.. function:: macos_available(major, minor, patch=0)
 
    Returns true iff the current macOS version is at least the version
    specified. Use this like the "@available" construct in Objective-C.
@@ -1861,3 +1861,50 @@ the reason for this is that the use of :class:`ObjCPointer` is unwanted
    .. data:: pointerAsInteger
 
       An integer value with the raw pointer value.
+
+"FILE*" support
+---------------
+
+.. class:: FILE
+
+   This class is only present when using Python 3 and is used to
+   represent "FILE*" handles in Python. For Python 2 the regular
+   "file" type is used for that.
+
+   This types provides a fairly limited file-like API for binary
+   I/O. Instances of this type don't close the stream automaticly and
+   don't implement a contextmanager.
+
+   .. method:: at_eof()
+
+      Returns True iff the stream is at the EOF marker
+
+   .. method:: has_errors()
+
+      Return True iff the stream has errors.
+
+   .. method:: close()
+
+      Closes the stream.
+
+   .. method:: readline()
+
+      Read a single line from the stream.
+
+   .. method:: read(buffer_size)
+
+      Read *buffer_size* bytes. This returns an empty bytes object
+      when the stream has reached end-of-file.
+
+   .. method:: write(buffer)
+
+      Write *buffer* to the stream. Returns the number of bytes
+      that are actually written.
+
+   .. method:: tell()
+
+      Returns the current offset of the stream.
+
+   .. method:: seek(offset, whence)
+
+      Seek to the specified offset.

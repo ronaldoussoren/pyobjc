@@ -329,6 +329,27 @@ FILE_Convert(PyObject* obj, void* pObj)
     return 0;
 }
 
+#else
+
+static PyObject*
+FILE_New(void *obj)
+{
+    FILE* fp = (FILE*)obj;
+
+    return FILE_create(fp);
+}
+
+static int
+FILE_Convert(PyObject* obj, void* pObj)
+{
+    *(FILE**)pObj = FILE_get(obj);
+    if (*(FILE**)pObj == NULL) {
+        return 1;
+    }
+
+    return 0;
+}
+
 #endif
 
 int
@@ -344,12 +365,9 @@ PyObjCPointerWrapper_Init(void)
         class_new, class_convert);
     if (r == -1) return -1;
 
-
-#if PY_MAJOR_VERSION == 2
     r = PyObjCPointerWrapper_Register("FILE*", @encode(FILE*),
         FILE_New, FILE_Convert);
     if (r == -1) return -1;
-#endif
 
     return 0;
 }

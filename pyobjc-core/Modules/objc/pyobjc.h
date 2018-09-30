@@ -119,6 +119,10 @@
 #include "ctests.h"
 #include "weakref.h"
 
+#if PY_MAJOR_VERSION == 3
+#include "file_wrapper.h"
+#endif
+
 #define PYOBJC_BUILD
 #include "pyobjc-api.h"
 #undef PyObjC_BUILD
