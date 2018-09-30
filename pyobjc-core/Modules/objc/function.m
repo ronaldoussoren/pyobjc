@@ -143,18 +143,22 @@ func_call(PyObject* s, PyObject* args, PyObject* kwds)
 
 #if PY_MAJOR_VERSION == 2
         if (PyString_Check(self->name)) {
-            snprintf(buf, 128, "%s() is a deprecated API", PyString_AsString(self->name));
+            snprintf(buf, 128, "%s() is a deprecated API (macOS %d.%d)", PyString_AsString(self->name),
+                    self->methinfo->deprecated / 100, self->methinfo->deprecated % 100);
         } else
 #endif
         if (PyUnicode_Check(self->name)) {
 #if PY_VERSION_HEX >= 0x03030000
-            snprintf(buf, 128, "%s() is a deprecated API", PyUnicode_AsUTF8(self->name));
+            snprintf(buf, 128, "%s() is a deprecated API (macOS %d.%d)",
+                    PyUnicode_AsUTF8(self->name),
+                    self->methinfo->deprecated / 100, self->methinfo->deprecated % 100);
 #else
             PyObject* temp = PyUnicode_AsUTF8String(self->name);
             if (temp == NULL) {
                 return NULL;
             }
-            snprintf(buf, 128, "%s() is a deprecated API", PyString_AsString(temp));
+            snprintf(buf, 128, "%s() is a deprecated API (macOS %d.%d)", PyString_AsString(temp),
+                    self->methinfo->deprecated / 100, self->methinfo->deprecated % 100);
             Py_DECREF(temp);
 #endif
         } else {
