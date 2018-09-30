@@ -36,3 +36,27 @@ won't warn about APIs deprecated in macOS 10.14 or later).
    to emit the correct warnings is not present yet. This will
    change in future version of PyObjC.
 
+Example
+-------
+
+The following script demonstrates the use of API deprecation warnings:
+
+.. sourcecode:: python
+   :name: demoscript.py
+   :linenos:
+
+   import objc
+   import warnings
+   warnings.simplefilter("always", objc.ApiDeprecationWarning)
+   objc.options.deprecation_warnings = 1014
+
+   import Contacts
+   Contacts.CNPhoneNumber.alloc().init()
+
+When you run this script it logs the following information:
+
+
+.. sourcecode:: none
+
+    demoscript.py:7: ApiDeprecationWarning: -[CNPhoneNumber init] is a deprecated API (macOS 10.13)
+      Contacts.CNPhoneNumber.alloc().init()
