@@ -437,6 +437,7 @@
      {
       "selector": "displayMessage:completionHandler:",
       "class_method": true,
+      "deprecated": 1014,
       "args": {
        "0": {
         "type_override": "@?",
@@ -864,6 +865,16 @@
    },
    "NEVPNManager": {
     "methods": [
+     {
+      "selector": "protocol",
+      "class_method": false,
+      "deprecated": 1011
+     },
+     {
+      "selector": "setProtocol:",
+      "class_method": false,
+      "deprecated": 1011
+     },
      {
       "selector": "loadFromPreferencesWithCompletionHandler:",
       "class_method": false,
