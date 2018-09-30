@@ -68,6 +68,7 @@ General documentation
    examples/index
    notes/framework-wrappers.rst
    apinotes
+   deprecations
    team
    release-workflow
    xcode
