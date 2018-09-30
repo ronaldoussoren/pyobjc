@@ -30,6 +30,11 @@
    "GKPath": {
     "methods": [
      {
+      "selector": "pointAtIndex:",
+      "class_method": false,
+      "deprecated": 1012
+     },
+     {
       "args": {
        "0": { "type_override": "n", "arg_size_in_arg": 1 }
       },
