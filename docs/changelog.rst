@@ -23,6 +23,8 @@ Version 5.0.1
   This is just an infrastructure change, the actual framework bindings do not yet contain the
   information used to emit deprecation warnings.
 
+* Import ABCs from ``collections.abc`` instead of ``collections`` because the latter is deprecated.
+
 Version 5.0
 -----------
 

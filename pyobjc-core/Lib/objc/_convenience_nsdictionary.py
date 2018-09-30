@@ -7,7 +7,7 @@ from objc._convenience_mapping import addConvenienceForBasicMapping
 from objc._convenience import container_wrap, container_unwrap, addConvenienceForClass
 from objc._objc import lookUpClass
 
-import collections
+import collections.abc
 import sys, os
 
 NSDictionary = lookUpClass('NSDictionary')
@@ -36,11 +36,11 @@ def nsdict__iter__(self):
     return iter(self.keyEnumerator())
 
 
-class nsdict_view (collections.Set):
+class nsdict_view (collections.abc.Set):
     __slots__ = ()
 
     def __eq__(self, other):
-        if not isinstance(other, collections.Set):
+        if not isinstance(other, collections.abc.Set):
             return NotImplemented
 
         if len(self) == len(other):
@@ -50,7 +50,7 @@ class nsdict_view (collections.Set):
             return False
 
     def __ne__(self, other):
-        if not isinstance(other, collections.Set):
+        if not isinstance(other, collections.abc.Set):
             return NotImplemented
 
         if len(self) == len(other):
@@ -60,7 +60,7 @@ class nsdict_view (collections.Set):
             return True
 
     def __lt__(self, other):
-        if not isinstance(other, collections.Set):
+        if not isinstance(other, collections.abc.Set):
             return NotImplemented
 
         if len(self) < len(other):
@@ -70,7 +70,7 @@ class nsdict_view (collections.Set):
             return False
 
     def __le__(self, other):
-        if not isinstance(other, collections.Set):
+        if not isinstance(other, collections.abc.Set):
             return NotImplemented
 
         if len(self) <= len(other):
@@ -80,7 +80,7 @@ class nsdict_view (collections.Set):
             return False
 
     def __gt__(self, other):
-        if not isinstance(other, collections.Set):
+        if not isinstance(other, collections.abc.Set):
             return NotImplemented
 
         if len(self) > len(other):
@@ -90,7 +90,7 @@ class nsdict_view (collections.Set):
             return False
 
     def __ge__(self, other):
-        if not isinstance(other, collections.Set):
+        if not isinstance(other, collections.abc.Set):
             return NotImplemented
 
         if len(self) >= len(other):
@@ -100,56 +100,56 @@ class nsdict_view (collections.Set):
             return False
 
     def __and__(self, other):
-        if not isinstance(other, collections.Set):
+        if not isinstance(other, collections.abc.Set):
             return NotImplemented
         result = set(self)
         result.intersection_update(other)
         return result
 
     def __rand__(self, other):
-        if not isinstance(other, collections.Set):
+        if not isinstance(other, collections.abc.Set):
             return NotImplemented
         result = set(self)
         result.intersection_update(other)
         return result
 
     def __or__(self, other):
-        if not isinstance(other, collections.Set):
+        if not isinstance(other, collections.abc.Set):
             return NotImplemented
         result = set(self)
         result.update(other)
         return result
 
     def __ror__(self, other):
-        if not isinstance(other, collections.Set):
+        if not isinstance(other, collections.abc.Set):
             return NotImplemented
         result = set(self)
         result.update(other)
         return result
 
     def __sub__(self, other):
-        if not isinstance(other, collections.Set):
+        if not isinstance(other, collections.abc.Set):
             return NotImplemented
         result = set(self)
         result.difference_update(other)
         return result
 
     def __rsub__(self, other):
-        if not isinstance(other, collections.Set):
+        if not isinstance(other, collections.abc.Set):
             return NotImplemented
         result = set(other)
         result.difference_update(self)
         return result
 
     def __xor__(self, other):
-        if not isinstance(other, collections.Set):
+        if not isinstance(other, collections.abc.Set):
             return NotImplemented
         result = set(self)
         result.symmetric_difference_update(other)
         return result
 
     def __rxor__(self, other):
-        if not isinstance(other, collections.Set):
+        if not isinstance(other, collections.abc.Set):
             return NotImplemented
         result = set(self)
         result.symmetric_difference_update(other)
@@ -228,12 +228,12 @@ class nsdict_items(nsdict_view):
         return False
 
 
-collections.KeysView.register(nsdict_keys)
-collections.ValuesView.register(nsdict_values)
-collections.ItemsView.register(nsdict_items)
+collections.abc.KeysView.register(nsdict_keys)
+collections.abc.ValuesView.register(nsdict_values)
+collections.abc.ItemsView.register(nsdict_items)
 
-collections.Mapping.register(NSDictionary)
-collections.MutableMapping.register(NSMutableDictionary)
+collections.abc.Mapping.register(NSDictionary)
+collections.abc.MutableMapping.register(NSMutableDictionary)
 
 
 if int(os.uname()[2].split('.')[0]) <= 10:
@@ -248,7 +248,7 @@ if int(os.uname()[2].split('.')[0]) <= 10:
     # XXX: 'nsdict_fromkeys' doesn't work on OSX 10.5
     def nsmutabledict_fromkeys(cls, keys, value=None):
         value = container_wrap(value)
-    
+
         result = NSMutableDictionary.alloc().init()
         for k in keys:
            result[container_wrap(k)] = value
@@ -263,7 +263,7 @@ else:
 
     def nsmutabledict_fromkeys(cls, keys, value=None):
         value = container_wrap(value)
-    
+
         result = cls.alloc().init()
         for k in keys:
            result[container_wrap(k)] = value
@@ -276,7 +276,7 @@ def nsdict_new(cls, *args, **kwds):
 
     elif len(args) == 1:
         d = dict()
-        if isinstance(args[0], collections.Mapping):
+        if isinstance(args[0], collections.abc.Mapping):
             items = args[0].items()
         else:
             items = args[0]
@@ -304,7 +304,7 @@ def nsdict_new(cls, *args, **kwds):
 
 
 def nsdict__eq__(self, other):
-    if not isinstance(other, collections.Mapping):
+    if not isinstance(other, collections.abc.Mapping):
         return False
 
     return self.isEqualToDictionary_(other)
@@ -335,7 +335,7 @@ if sys.version_info[0] == 3:  # pragma: no 2.x cover
 
 else:  # pragma: no 3.x cover
     def nsdict__cmp__(self, other):
-        if not isinstance(other, collections.Mapping):
+        if not isinstance(other, collections.abc.Mapping):
             return NotImplemented
 
         if len(self) < len(other):
