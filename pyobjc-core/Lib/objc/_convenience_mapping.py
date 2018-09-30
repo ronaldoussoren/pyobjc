@@ -6,7 +6,7 @@ __all__ = ('addConvenienceForBasicMapping',)
 from objc._objc import selector
 from objc._convenience import addConvenienceForClass, CLASS_ABC
 from objc._convenience import container_unwrap, container_wrap
-import collections
+import collections.abc
 import sys
 
 def __getitem__objectForKey_(self, key):
@@ -53,7 +53,7 @@ def update_setObject_forKey_(self, *args, **kwds):
         other = args[0]
         if hasattr(other, 'keys'):
             # This mirrors the implementation of dict.update, but seems
-            # wrong for Python3 (with collectons.Dict)
+            # wrong for Python3 (with collectons.abc.Dict)
             for key in other.keys():
                 self[key] = other[key]
 
@@ -116,7 +116,7 @@ def addConvenienceForBasicMapping(classname, readonly=True):
     """
     Add the convience methods for a Cocoa mapping type
 
-    Used to add the basic collections.Mapping or collections.MutableMapping
+    Used to add the basic collections.abc.Mapping or collections.abc.MutableMapping
     APIs to a Cocoa class that has an API simular to NSDictionary.
     """
     addConvenienceForClass(classname,
@@ -127,4 +127,4 @@ def addConvenienceForBasicMapping(classname, readonly=True):
     except KeyError:
         lst = CLASS_ABC[classname] = []
 
-    lst.append(collections.Mapping if readonly else collections.MutableMapping)
+    lst.append(collections.abc.Mapping if readonly else collections.abc.MutableMapping)
