@@ -105,6 +105,11 @@
    "NCWidgetController": {
     "methods": [
      {
+      "selector": "defaultWidgetController",
+      "class_method": true,
+      "deprecated": 1010
+     },
+     {
       "selector": "setHasContent:forWidgetWithBundleIdentifier:",
       "class_method": false,
       "args": {
