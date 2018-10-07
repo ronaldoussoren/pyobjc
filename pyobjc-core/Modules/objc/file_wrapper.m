@@ -80,7 +80,7 @@ file_errors(PyObject* _self)
 
     result = ferror(self->fp);
 
-    PyBool_FromLong(result);
+    return PyBool_FromLong(result);
 }
 
 static PyObject*
@@ -96,7 +96,7 @@ file_at_eof(PyObject* _self)
 
     result = feof(self->fp);
 
-    PyBool_FromLong(result);
+    return PyBool_FromLong(result);
 }
 
 static PyObject*
