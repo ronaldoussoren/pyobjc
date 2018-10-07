@@ -9,7 +9,7 @@ and (Objective-)C frameworks
 
 from pyobjc_setup import setup
 
-VERSION="5.0.1b1"
+VERSION="5.1b1"
 
 setup(
     name='pyobjc-framework-VideoSubscriberAccount',
