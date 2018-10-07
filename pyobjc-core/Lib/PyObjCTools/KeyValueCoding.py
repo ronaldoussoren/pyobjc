@@ -36,14 +36,15 @@ if sys.version_info[0] == 2:  # pragma: no 3.x cover; pragma: no branch
 import objc
 import types
 import sys
-import collections
 import warnings
 
 if sys.version_info[0] == 2:  # pragma: no 3.x cover
     from itertools import imap as map
+    import collections as collections_abc
 
 else:   # pragma: no cover (py3k)
     basestring = str
+    import collections.abc as collections_abc
 
 _null = objc.lookUpClass('NSNull').null()
 
@@ -201,7 +202,7 @@ def getKey(obj, key):
             pass
 
     # check for array-like objects
-    if isinstance(obj, (collections.Sequence, collections.Set)) and not isinstance(obj, (basestring, collections.Mapping)):
+    if isinstance(obj, (collections_abc.Sequence, collections_abc.Set)) and not isinstance(obj, (basestring, collections_abc.Mapping)):
         def maybe_get(obj, key):
             try:
                 return getKey(obj, key)
@@ -269,7 +270,7 @@ def setKey(obj, key, value):
         obj.setValue_forKey_(value, key)
         return
 
-    if isinstance(obj, collections.Mapping):
+    if isinstance(obj, collections_abc.Mapping):
         obj[key] = value
         return
 
