@@ -485,7 +485,6 @@ def load_reduce(coder, setValue):
         func = coder.decodeObjectForKey_(kFUNC)
         args = coder.decodeObjectForKey_(kARGS)
 
-        print(func, args)
     else:
         func = coder.decodeObject()
         args = coder.decodeObject()

@@ -42,14 +42,17 @@ that can be serialized using :mod:`pickle`. During serialization
 and deserialization PyObjC will use the same hooks and mechanisms
 as the :mod:`pickle` module.
 
-Archiving instances of :class:`str` (:class:`unicode` in Python 2),
-:class:`bytes` (Python 3 only), :class:`list`, :class:`tuple`,
-:class:`set`, :class:`frozenset` and :class:`dict` (but not instances
-of subclasses of these types) with a plain, not keyed, archiver
-and will result in objects of the corresponding Cocoa type when
-reading them back, even when reading them back in Python. Programs
+Archiving instances of :class:`int`, :class:`float`, :class:`str`
+(:class:`unicode` in Python 2), :class:`bytes` (Python 3 only),
+:class:`list`, :class:`tuple`, :class:`set`, :class:`frozenset` and
+:class:`dict` (but not instances of subclasses of these types) with a plain,
+not keyed, archiver and will result in objects of the corresponding
+Cocoa type when reading them back, even when reading them back in Python. Programs
 than need high fidility when roundtripping object graphs therefore
 need to use keyed archiving when possible.
+
+For the classes mentioned in the previous paragraph PyObjC implementes
+"NSSecureCoding", it doesn't do so for other Python classes.
 
 Python subclasses of a Cocoa class can only be archived when they
 implement the NSCoding protocol, that is the subclass must implement

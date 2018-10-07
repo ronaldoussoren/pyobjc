@@ -2441,8 +2441,7 @@ depythonify_python_object(PyObject* argument, id* datum)
 #endif /* PY_MAJOR_VERSION == 2 */
 
     } else if (PyFloat_CheckExact(argument) ||  PyLong_CheckExact(argument)) {
-        //*datum = [OC_BuiltinPythonNumber numberWithPythonObject:argument];
-        *datum = [OC_PythonNumber numberWithPythonObject:argument];
+        *datum = [OC_BuiltinPythonNumber numberWithPythonObject:argument];
 
     } else if (PyFloat_Check(argument) || PyLong_Check(argument)) {
         *datum = [OC_PythonNumber numberWithPythonObject:argument];

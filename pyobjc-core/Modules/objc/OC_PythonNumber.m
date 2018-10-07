@@ -22,7 +22,6 @@
         }
     }
 
-
     res = [[self alloc] initWithPythonObject:v];
     [res autorelease];
     return res;
@@ -544,7 +543,7 @@ COMPARE_METHOD(isLessThanOrEqualTo, Py_LE)
     return [self isEqualTo:aNumber];
 }
 
-
+#if 0
 -(NSObject*)replacementObjectForArchiver:(NSArchiver*)archiver
 {
     (void)archiver;
@@ -568,6 +567,7 @@ COMPARE_METHOD(isLessThanOrEqualTo, Py_LE)
     (void)archiver;
     return (NSObject*)self;
 }
+#endif
 
 -(Class)classForArchiver
 {

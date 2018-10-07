@@ -1118,9 +1118,6 @@ class_dealloc(PyObject* cls)
     fputs(buf, stderr);
     Py_INCREF(cls);
     return;
-
-    /* This should never happen */
-    Py_FatalError(buf);
 }
 
 int

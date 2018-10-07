@@ -7,11 +7,6 @@
     return YES;
 }
 
--(Class)classForKeyedArchiver
-{
-    return [OC_BuiltinPythonNumber class];
-}
-
 +(NSArray*)classFallbacksForKeyedArchiver
 {
     return [NSArray arrayWithObjects:@"OC_PythonNumber", @"NSNumber", nil];
