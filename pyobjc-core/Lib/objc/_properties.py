@@ -3,9 +3,13 @@ __all__ = ('object_property', 'bool_property',
 
 from objc import ivar, selector, _C_ID, _C_NSBOOL, _C_BOOL, NULL, _C_NSUInteger
 from objc import lookUpClass
-import collections.abc
 from copy import copy as copy_func
 import sys
+
+if sys.version_info[0] == 2:
+    import collections as collections_abc
+else:
+    import collections.abc as collections_abc
 
 NSSet = lookUpClass('NSSet')
 NSObject = lookUpClass('NSObject')
@@ -304,7 +308,7 @@ def _id(value):
     return value
 
 # FIXME: split into two: array_proxy and mutable_array_proxy
-class array_proxy (collections.abc.MutableSequence):
+class array_proxy (collections_abc.MutableSequence):
     # XXX: The implemenation should be complete, but is currently not
     # tested.
     __slots__ = ('_name', '_parent', '__wrapped', '_ro')
@@ -701,7 +705,7 @@ NSKeyValueIntersectSetMutation = 3
 NSKeyValueSetSetMutation = 4
 
 
-class set_proxy (collections.abc.MutableSet):
+class set_proxy (collections_abc.MutableSet):
     __slots__ = ('_name', '__wrapped', '_parent', '_ro')
 
     def __init__(self, name, parent, wrapped, read_only):

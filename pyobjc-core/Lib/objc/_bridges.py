@@ -2,8 +2,12 @@ from objc._objc import *
 from objc import _objc
 import struct
 import sys
-import collections.abc
 import datetime
+
+if sys.version_info[0] == 2:
+    import collections as collections_abc
+else:
+    import collections.abc as collections_abc
 
 __all__ = [ 'registerListType', 'registerMappingType', 'registerSetType', 'registerDateType' ]
 
@@ -48,12 +52,12 @@ def registerDateType(type):
     options._date_types += (type,)
 
 
-registerListType(collections.abc.Sequence)
+registerListType(collections_abc.Sequence)
 registerListType(xrange if sys.version_info[0] == 2 else range)
-registerMappingType(collections.abc.Mapping)
+registerMappingType(collections_abc.Mapping)
 registerMappingType(dict)
 registerSetType(set)
 registerSetType(frozenset)
-registerSetType(collections.abc.Set)
+registerSetType(collections_abc.Set)
 registerDateType(datetime.date)
 registerDateType(datetime.datetime)

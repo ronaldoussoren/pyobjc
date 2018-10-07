@@ -6,8 +6,12 @@ __all__ = ('addConvenienceForBasicMapping',)
 from objc._objc import selector
 from objc._convenience import addConvenienceForClass, CLASS_ABC
 from objc._convenience import container_unwrap, container_wrap
-import collections.abc
 import sys
+
+if sys.version_info[0] == 2:
+    import collections as collections_abc
+else:
+    import collections.abc as collections_abc
 
 def __getitem__objectForKey_(self, key):
     res = self.objectForKey_(container_wrap(key))
@@ -127,4 +131,4 @@ def addConvenienceForBasicMapping(classname, readonly=True):
     except KeyError:
         lst = CLASS_ABC[classname] = []
 
-    lst.append(collections.abc.Mapping if readonly else collections.abc.MutableMapping)
+    lst.append(collections_abc.Mapping if readonly else collections_abc.MutableMapping)

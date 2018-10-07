@@ -7,14 +7,18 @@ from objc._convenience import addConvenienceForClass, container_wrap, container_
 from objc._objc import lookUpClass, registerMetaDataForSelector, _C_NSInteger, _C_ID
 from objc._objc import _NSNotFound as NSNotFound
 
-import collections.abc
 import sys
+
+if sys.version_info[0] == 2:
+    import collections as collections_abc
+else:
+    import collections.abc as collections_abc
 
 NSArray = lookUpClass('NSArray')
 NSMutableArray = lookUpClass('NSMutableArray')
 
-collections.abc.Sequence.register(NSArray)
-collections.abc.MutableSequence.register(NSMutableArray)
+collections_abc.Sequence.register(NSArray)
+collections_abc.MutableSequence.register(NSMutableArray)
 
 if sys.version_info[0] == 2:  # pragma: no 3.x cover
     INT_TYPES = (int, long)
