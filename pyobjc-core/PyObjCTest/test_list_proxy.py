@@ -10,6 +10,7 @@ from PyObjCTest.pythonset import OC_TestSet
 import objc
 
 OC_PythonArray = objc.lookUpClass("OC_PythonArray")
+OC_BuiltinPythonArray = objc.lookUpClass("OC_BuiltinPythonArray")
 
 class BasicSequenceTests:
     # Tests for sets that don't try to mutate the set.
@@ -18,7 +19,7 @@ class BasicSequenceTests:
 
     def testProxyClass(self):
         # Ensure that the right class is used to proxy sets
-        self.assertIs(OC_TestSet.classOf_(self.seqClass()), OC_PythonArray)
+        self.assertIs(OC_TestSet.classOf_(self.seqClass()), OC_BuiltinPythonArray)
 
     def testMutableCopy(self):
 

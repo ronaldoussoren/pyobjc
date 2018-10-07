@@ -484,9 +484,12 @@ def load_reduce(coder, setValue):
     if coder.allowsKeyedCoding():
         func = coder.decodeObjectForKey_(kFUNC)
         args = coder.decodeObjectForKey_(kARGS)
+
+        print(func, args)
     else:
         func = coder.decodeObject()
         args = coder.decodeObject()
+
 
         new_args = []
         for a in args:

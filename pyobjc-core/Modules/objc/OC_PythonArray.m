@@ -7,7 +7,7 @@
 {
     OC_PythonArray* res;
 
-    res = [[OC_PythonArray alloc] initWithPythonObject:v];
+    res = [[self alloc] initWithPythonObject:v];
     return [res autorelease];
 }
 

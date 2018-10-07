@@ -84,7 +84,7 @@
 
 +(OC_PythonDictionary*)dictionaryWithPythonObject:(PyObject*)v
 {
-    OC_PythonDictionary* res = [[OC_PythonDictionary alloc] initWithPythonObject:v];
+    OC_PythonDictionary* res = [[self alloc] initWithPythonObject:v];
     [res autorelease];
     return res;
 }

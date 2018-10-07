@@ -7,7 +7,7 @@
 {
     OC_PythonUnicode* res;
 
-    res = [[OC_PythonUnicode alloc] initWithPythonObject:v];
+    res = [[self alloc] initWithPythonObject:v];
     return [res autorelease];
 }
 

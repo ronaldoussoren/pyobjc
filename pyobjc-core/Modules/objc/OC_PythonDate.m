@@ -7,7 +7,7 @@
 {
     OC_PythonDate* res;
 
-    res = [[OC_PythonDate alloc] initWithPythonObject:v];
+    res = [[self alloc] initWithPythonObject:v];
     return [res autorelease];
 }
 

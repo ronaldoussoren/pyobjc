@@ -15,7 +15,6 @@
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wincompatible-pointer-types"
 #endif
-
             return [[NSNumber alloc] initWithUnsignedLongLong:lv];
 #ifdef __clang__
 #pragma clang diagnostic pop
@@ -23,7 +22,8 @@
         }
     }
 
-    res = [[OC_PythonNumber alloc] initWithPythonObject:v];
+
+    res = [[self alloc] initWithPythonObject:v];
     [res autorelease];
     return res;
 }
@@ -311,6 +311,7 @@
     PyObject* repr;
     NSObject* result = nil;
 
+
     PyObjC_BEGIN_WITH_GIL
         repr = PyObject_Repr(value);
         if (repr == NULL) {
@@ -381,7 +382,11 @@
 
     if (use_super) {
         [super encodeWithCoder:coder];
+
     } else {
+        /* XXX: Should check if coder requiresSecureCoding, and bail out in
+         * that case.
+         */
         PyObjC_encodeWithCoder(value, coder);
     }
 }
@@ -454,7 +459,7 @@
      *
      * In all other cases use Python's comparison semantics.
      */
-    if ([aNumber isKindOfClass:[NSNumber class]] && ![aNumber isMemberOfClass: [OC_PythonNumber class]]) {
+    if ([aNumber isKindOfClass:[NSNumber class]] && ![aNumber isKindOfClass: [OC_PythonNumber class]]) {
         int use_super = 0;
 
         PyObjC_BEGIN_WITH_GIL
@@ -462,7 +467,6 @@
                 PY_LONG_LONG r;
                 r = PyLong_AsLongLong(value);
                 if (r == -1 && PyErr_Occurred()) {
-                    PyErr_Print();
                     PyErr_Clear();
                 } else {
                     use_super = 1;
@@ -586,13 +590,13 @@ COMPARE_METHOD(isLessThanOrEqualTo, Py_LE)
             (void)PyLong_AsLongLong(value);
             if (PyErr_Occurred()) {
                 PyErr_Clear();
-                PyObjC_GIL_RETURN([OC_PythonNumber class]);
+                PyObjC_GIL_RETURN([self class]);
             } else {
                 PyObjC_GIL_RETURN([NSNumber class]);
             }
 
         } else {
-            PyObjC_GIL_RETURN([OC_PythonNumber class]);
+            PyObjC_GIL_RETURN([self class]);
         }
     PyObjC_END_WITH_GIL
 }
@@ -602,22 +606,7 @@ COMPARE_METHOD(isLessThanOrEqualTo, Py_LE)
     return [self classForArchiver];
 }
 
-+(Class)classForUnarchiver
-{
-    return [OC_PythonNumber class];
-}
-
-+(Class)classForKeyedUnarchiver
-{
-    return [OC_PythonNumber class];
-}
-
 -(Class)classForCoder
-{
-    return [self classForArchiver];
-}
-
--(Class)classForPortCoder
 {
     return [self classForArchiver];
 }

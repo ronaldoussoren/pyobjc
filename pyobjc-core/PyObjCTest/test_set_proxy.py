@@ -15,6 +15,7 @@ if sys.version_info[0] == 3:
 onLeopard = int(os.uname()[2].split('.')[0]) >= 9
 
 OC_PythonSet = objc.lookUpClass("OC_PythonSet")
+OC_BuiltinPythonSet = objc.lookUpClass("OC_BuiltinPythonSet")
 
 class OC_SetPredicate (NSPredicate):
     # A simple test predicate class
@@ -53,7 +54,7 @@ class BasicSetTests:
 
     def testProxyClass(self):
         # Ensure that the right class is used to proxy sets
-        self.assertIs(OC_TestSet.classOf_(self.setClass()), OC_PythonSet)
+        self.assertIs(OC_TestSet.classOf_(self.setClass()), OC_BuiltinPythonSet)
 
     def testMutableCopy(self):
 

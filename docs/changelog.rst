@@ -25,7 +25,10 @@ Version 5.0.1
 
 * Add metadata for deprecation warnings to the "Contacts" framework
 
-* Import ABCs from ``collections.abc`` instead of ``collections`` because the latter is deprecated.
+* #252: Import ABCs from ``collections.abc`` instead of ``collections`` because the latter is deprecated.
+
+* #180, #251: Instances of most builtin value types and sequences (int, float, str, unicode, tuple,
+  list, set, frozenset and dict) can now be written to archives that require secureCoding.
 
 Version 5.0
 -----------

@@ -7,7 +7,7 @@
 {
     OC_PythonSet* res;
 
-    res = [[OC_PythonSet alloc] initWithPythonObject:v];
+    res = [[self alloc] initWithPythonObject:v];
     [res autorelease];
     return res;
 }

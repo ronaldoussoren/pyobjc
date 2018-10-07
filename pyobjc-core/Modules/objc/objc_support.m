@@ -2420,7 +2420,10 @@ depythonify_python_object(PyObject* argument, id* datum)
         PyErr_Clear();
     }
 
-    if (PyUnicode_Check(argument)) {
+    if (PyUnicode_CheckExact(argument)) {
+        *datum = [OC_BuiltinPythonUnicode unicodeWithPythonObject:argument];
+
+    } else if (PyUnicode_Check(argument)) {
         *datum = [OC_PythonUnicode unicodeWithPythonObject:argument];
 
     } else if (PyBool_Check(argument)) {
@@ -2431,23 +2434,42 @@ depythonify_python_object(PyObject* argument, id* datum)
         }
 
 #if PY_MAJOR_VERSION == 2
+    } else if (PyInt_CheckExact(argument)) {
+        *datum = [OC_BuiltinPythonNumber numberWithPythonObject:argument];
     } else if (PyInt_Check(argument)) {
         *datum = [OC_PythonNumber numberWithPythonObject:argument];
 #endif /* PY_MAJOR_VERSION == 2 */
 
-    } else if (PyLong_Check(argument)) {
+    } else if (PyFloat_CheckExact(argument) ||  PyLong_CheckExact(argument)) {
+        //*datum = [OC_BuiltinPythonNumber numberWithPythonObject:argument];
         *datum = [OC_PythonNumber numberWithPythonObject:argument];
 
     } else if (PyFloat_Check(argument) || PyLong_Check(argument)) {
         *datum = [OC_PythonNumber numberWithPythonObject:argument];
 
+    } else if (PyList_CheckExact(argument) || PyTuple_CheckExact(argument)) {
+        *datum = [OC_BuiltinPythonArray arrayWithPythonObject:argument];
+
     } else if (PyList_Check(argument) || PyTuple_Check(argument)) {
         *datum = [OC_PythonArray arrayWithPythonObject:argument];
+
+    } else if (PyDict_CheckExact(argument)) {
+        *datum = [OC_BuiltinPythonDictionary dictionaryWithPythonObject:argument];
 
     } else if (PyDict_Check(argument)) {
         *datum = [OC_PythonDictionary dictionaryWithPythonObject:argument];
 
 #if PY_MAJOR_VERSION == 2
+    } else if (PyString_CheckExact(argument)) {
+        if (!PyObjC_StrBridgeEnabled) {
+            if (PyErr_Warn(PyObjCStrBridgeWarning, "use unicode(str, encoding) for NSString")) {
+                *datum = nil;
+                return -1;
+            }
+        }
+
+        *datum = [OC_BuiltinPythonString stringWithPythonObject:argument];
+
     } else if (PyString_Check(argument)) {
         if (!PyObjC_StrBridgeEnabled) {
             if (PyErr_Warn(PyObjCStrBridgeWarning, "use unicode(str, encoding) for NSString")) {
@@ -2459,8 +2481,20 @@ depythonify_python_object(PyObject* argument, id* datum)
         *datum = [OC_PythonString stringWithPythonObject:argument];
 #endif /* PY_MAJOR_VERSION == 2 */
 
+#if PY_MAJOR_VERSION == 3
+    } else if (PyBytes_CheckExact(argument)) {
+        *datum = [OC_BuiltinPythonData dataWithPythonObject:argument];
+
+#endif /* PY_MAJOR_VERSION == 3 */
+
     } else if (PyObject_CheckReadBuffer(argument)) {
         *datum = [OC_PythonData dataWithPythonObject:argument];
+
+    } else if (PyAnySet_CheckExact(argument)) {
+        *datum = [OC_BuiltinPythonSet setWithPythonObject:argument];
+
+    } else if (PyAnySet_Check(argument)) {
+        *datum = [OC_PythonSet setWithPythonObject:argument];
 
     } else if (PyObjCFormalProtocol_Check(argument)) {
         *datum = PyObjCFormalProtocol_GetProtocol(argument);

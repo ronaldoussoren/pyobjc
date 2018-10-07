@@ -10,12 +10,9 @@ from PyObjCTest.pythonset import OC_TestSet
 import objc
 
 OC_PythonDictionary = objc.lookUpClass("OC_PythonDictionary")
+OC_BuiltinPythonDictionary = objc.lookUpClass("OC_BuiltinPythonDictionary")
 
-
-
-
-
-class TestMutableSequence (TestCase):
+class TestDictionary (TestCase):
     mapClass = dict
 
     def testCopy(self):
@@ -31,7 +28,7 @@ class TestMutableSequence (TestCase):
 
     def testProxyClass(self):
         # Ensure that the right class is used to proxy sets
-        self.assertIs(OC_TestSet.classOf_(self.mapClass()), OC_PythonDictionary)
+        self.assertIs(OC_TestSet.classOf_(self.mapClass()), OC_BuiltinPythonDictionary)
 
     def testMutableCopy(self):
 

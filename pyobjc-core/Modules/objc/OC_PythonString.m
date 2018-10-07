@@ -14,7 +14,7 @@
 {
     OC_PythonString* res;
 
-    res = [[OC_PythonString alloc] initWithPythonObject:v];
+    res = [[self alloc] initWithPythonObject:v];
     [res autorelease];
     return res;
 }

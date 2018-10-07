@@ -70,18 +70,25 @@
 #include "pointer-support.h"
 #include "OC_PythonObject.h"
 #include "OC_PythonArray.h"
+#include "OC_BuiltinPythonArray.h"
 #include "OC_PythonData.h"
+#include "OC_BuiltinPythonData.h"
 #include "OC_PythonDictionary.h"
+#include "OC_BuiltinPythonDictionary.h"
 #include "OC_PythonUnicode.h"
+#include "OC_BuiltinPythonUnicode.h"
 
 #if PY_MAJOR_VERSION == 2
 #include "OC_PythonString.h"
+#include "OC_BuiltinPythonString.h"
 #endif
 
 #include "OC_PythonEnumerator.h"
 #include "OC_PythonDate.h"
 #include "OC_PythonNumber.h"
+#include "OC_BuiltinPythonNumber.h"
 #include "OC_PythonSet.h"
+#include "OC_BuiltinPythonSet.h"
 #include "method-signature.h"
 #include "objc-class.h"
 #include "objc-object.h"

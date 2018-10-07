@@ -17,6 +17,7 @@ if sys.version_info[0] == 3:
     long = int
 
 OC_PythonNumber = objc.lookUpClass("OC_PythonNumber")
+OC_BuiltinPythonNumber = objc.lookUpClass("OC_BuiltinPythonNumber")
 try:
     NSCFNumber = objc.lookUpClass("__NSCFNumber")
 except objc.error:
@@ -294,7 +295,7 @@ class TestPyNumber (TestCase):
     def testClasses(self):
         # Ensure that python numbers are proxied using the right proxy type
         for v in (0, 1, 2**32+1, 2**64+1, 42.5):
-            self.assertIs(OC_TestNumber.numberClass_(v), OC_PythonNumber)
+            self.assertIs(OC_TestNumber.numberClass_(v), OC_BuiltinPythonNumber)
 
         # The booleans True and False must be proxied as the corresponding
         # NSNumber constants, otherwise lowlevel Cocoa/CoreFoundation code

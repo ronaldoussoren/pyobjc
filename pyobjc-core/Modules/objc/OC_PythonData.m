@@ -7,7 +7,7 @@
 {
     OC_PythonData* res;
 
-    res = [[OC_PythonData alloc] initWithPythonObject:v];
+    res = [[self alloc] initWithPythonObject:v];
     [res autorelease];
     return res;
 }
