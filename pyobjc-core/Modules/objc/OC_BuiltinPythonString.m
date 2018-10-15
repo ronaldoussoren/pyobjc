@@ -5,7 +5,7 @@
 @implementation OC_BuiltinPythonString
 
 + (BOOL)supportsSecureCoding {
-    return NO;
+    return YES;
 }
 
 -(Class)classForKeyedArchiver
