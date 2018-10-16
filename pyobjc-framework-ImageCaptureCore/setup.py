@@ -9,7 +9,7 @@ and (Objective-)C frameworks
 import os
 from pyobjc_setup import setup, Extension
 
-VERSION="5.1b1"
+VERSION="5.1"
 
 setup(
     name='pyobjc-framework-ImageCaptureCore',
