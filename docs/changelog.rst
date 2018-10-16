@@ -3,8 +3,8 @@ What's new in PyObjC
 
 An overview of the relevant changes in new, and older, releases.
 
-Version 5.0.1
--------------
+Version 5.1
+-----------
 
 * Xcode 10 "GM" contains one difference from the last beta: the constant MLComputeUnitsCPUAndGPU
   in the CoreML bindings.
