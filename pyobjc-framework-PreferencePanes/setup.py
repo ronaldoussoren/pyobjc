@@ -9,7 +9,7 @@ and (Objective-)C frameworks
 '''
 from pyobjc_setup import *
 
-VERSION="5.1"
+VERSION="5.1.1"
 
 setup(
     name='pyobjc-framework-PreferencePanes',

@@ -10,7 +10,7 @@ and (Objective-)C frameworks
 from pyobjc_setup import setup, Extension
 import os
 
-VERSION="5.1"
+VERSION="5.1.1"
 
 #
 # Distutils doesn't undestand '.mm' as an extension

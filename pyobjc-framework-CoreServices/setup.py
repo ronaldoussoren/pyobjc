@@ -9,7 +9,7 @@ and (Objective-)C frameworks
 from pyobjc_setup import setup, Extension
 import os
 
-VERSION="5.1"
+VERSION="5.1.1"
 
 subpackages = [ "CoreServices.%s"%(fn,) for fn in os.listdir('Lib/CoreServices') if os.path.exists(os.path.join('Lib/CoreServices', fn, "__init__.py"))]
 
