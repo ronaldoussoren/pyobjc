@@ -3,6 +3,11 @@ What's new in PyObjC
 
 An overview of the relevant changes in new, and older, releases.
 
+Version 5.1.1
+-------------
+
+* Update metadata for Xcode 10.1
+
 Version 5.1
 -----------
 

@@ -16,6 +16,7 @@ if sys.maxsize > 2 ** 32:
             self.assertEqual(Intents.INIntentErrorNoHandlerProvidedForIntent, 2003)
             self.assertEqual(Intents.INIntentErrorInvalidIntentName, 2004)
             self.assertEqual(Intents.INIntentErrorRequestTimedOut, 3001)
+            self.assertEqual(Intents.INIntentErrorMissingInformation, 3002)
             self.assertEqual(Intents.INIntentErrorInvalidUserVocabularyFileLocation, 4000)
 
             self.assertEqual(Intents.INIntentErrorExtensionLaunchingTimeout, 5000)

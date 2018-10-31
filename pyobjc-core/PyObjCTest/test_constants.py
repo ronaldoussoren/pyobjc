@@ -39,6 +39,7 @@ class TestConstants (TestCase):
         self.assertEqual(objc.MAC_OS_X_VERSION_10_13_5, 101305)
         self.assertEqual(objc.MAC_OS_X_VERSION_10_13_6, 101306)
         self.assertEqual(objc.MAC_OS_X_VERSION_10_14, 101400)
+        self.assertEqual(objc.MAC_OS_X_VERSION_10_14_1, 101401)
 
 if __name__ == "__main__":
     main()

@@ -905,6 +905,9 @@
    }
   },
   "enum": {
+   "INIntentErrorMissingInformation": {
+    "value": 3002
+   },
    "INCallCapabilityAudioCall": {
     "value": 1
    },
