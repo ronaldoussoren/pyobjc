@@ -1,11 +1,6 @@
 Welcome to the PyObjC repository
 ================================
 
-.. note::
-
-   This branch is used to update PyObjC for macOS 10.14, primarily by
-   updating the framework bindings.
-
 Introduction
 ------------
 
