@@ -3,6 +3,11 @@ What's new in PyObjC
 
 An overview of the relevant changes in new, and older, releases.
 
+Version 5.1.2
+-------------
+
+* #254: Fix compile error on macOS 10.9 or earlier
+
 Version 5.1.1
 -------------
 

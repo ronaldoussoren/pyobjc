@@ -38,9 +38,9 @@ static NSAutoreleasePool* global_release_pool = nil;
 
 #if PyObjC_BUILD_RELEASE < 1010
 typedef struct {
-    long versionMajor;
-    long versionMinor;
-    long versionPatch;
+    long majorVersion;
+    long minorVersion;
+    long patchVersion;
 } NSOperatingSystemVersion;
 #endif
 
