@@ -24,6 +24,10 @@ Version 5.1.2
 
   The MAP_JIT flag is only used on macOS 10.14 or later.
 
+* Ensure that PyObjC can be built using /usr/bin/python on macOS 10.14
+
+  This failed due the problems with header files in the SDK included with Xcode 10.
+
 
 Version 5.1.1
 -------------
