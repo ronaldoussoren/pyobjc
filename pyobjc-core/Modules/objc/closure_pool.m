@@ -12,6 +12,35 @@ typedef struct freelist {
 
 static freelist* closure_freelist = NULL;
 
+#ifdef MAP_JIT
+
+static int use_map_jit(void)
+{
+    static int cached_result = -1;
+
+    if (cached_result == -1) {
+        char buf[256];
+        size_t buflen = 256;
+
+        /*
+         * In the unlikely event that sysctlbyname fails, or
+         * returns a value that is not useable we disable MAP_JIT
+         * support
+         */
+
+        if (sysctlbyname("kern.osrelease", buf, &buflen, NULL, 0) == -1) {
+            cached_result = 0;
+        } else {
+            long ver = strtol(buf, NULL, 10);
+            cached_result = (ver >= 18);
+        }
+    }
+
+    return cached_result;
+}
+
+#endif
+
 static freelist*
 allocate_block(void)
 {
@@ -19,12 +48,21 @@ allocate_block(void)
     /* Allocate ffi_closure in groups of 10 VM pages */
 #define BLOCKSIZE ((PAGE_SIZE*10)/sizeof(ffi_closure*))
 
+#ifdef MAP_JIT
+    freelist* newblock = mmap(NULL, BLOCKSIZE * sizeof(ffi_closure),
+        PROT_READ|PROT_WRITE|PROT_EXEC,
+        use_map_jit() ? MAP_PRIVATE|MAP_ANON|MAP_JIT : MAP_PRIVATE|MAP_ANON,
+        -1, 0);
+
+#else /* !MAP_JIT */
     freelist* newblock = mmap(NULL, BLOCKSIZE * sizeof(ffi_closure),
         PROT_READ|PROT_WRITE|PROT_EXEC,
         MAP_PRIVATE|MAP_ANON, -1, 0);
+#endif /* !MAP_JIT */
+
     size_t i;
 
-    if (newblock == (void*)-1) {
+    if (newblock == MAP_FAILED) {
         PyErr_NoMemory();
         return NULL;
     }

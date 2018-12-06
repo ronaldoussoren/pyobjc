@@ -15,6 +15,15 @@ Version 5.1.2
   when the ObjC or Swift block does not have signature information in the
   ObjC/blocks runtime.
 
+* Use MAP_JIT when allocating memory for the executable stubs for Python
+  methods.
+
+  With the "restricted" runtime you'll have to add the "com.apple.security.cs.allow-jit"
+  entitlement to use this flag, in earlier versions you'd have to use
+  a different entitlement: "com.apple.security.cs.allow-unsigned-executable-memory".
+
+  The MAP_JIT flag is only used on macOS 10.14 or later.
+
 
 Version 5.1.1
 -------------
