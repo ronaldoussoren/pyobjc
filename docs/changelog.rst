@@ -8,6 +8,14 @@ Version 5.1.2
 
 * #254: Fix compile error on macOS 10.9 or earlier
 
+* #255: Calling completion handler failed due to incomplete runtime info
+
+  PyObjC's metadata system didn't automaticly set the call signature
+  for blocks passed into a method implemented in Python. This causes problems
+  when the ObjC or Swift block does not have signature information in the
+  ObjC/blocks runtime.
+
+
 Version 5.1.1
 -------------
 

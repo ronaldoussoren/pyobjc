@@ -3,6 +3,8 @@
 
 #import <Foundation/Foundation.h>
 
+static void erase_signature(id _block);
+
 #if (PyObjC_BUILD_RELEASE >= 1006) && (__GNUC__ >= 4 && __GNUC_MINOR__ >= 2)
 @interface NSObject (IndirectBlockTest)
 -(double)processBlock:(double(^)(double, double))aBlock;
@@ -21,7 +23,7 @@
 -(void)callIntBlock:(void(^)(int))block withValue:(int)value;
 -(double)callDoubleBlock:(double(^)(double, double))block withValue:(double)v1 andValue:(double)v2;
 -(id)callOptionalBlock:(id(^)(id))block withValue:(id)value;
--(void)callCompletionOn:(NSObject*)v andArray:(NSMutableArray*)w;
+-(void)callCompletionOn:(NSObject*)v andArray:(NSMutableArray*)w withErasedSignature:(int)erased;
 
 -(int(^)(int))getIntBlock2;
 -(int(^)(int, int))getIntBlock3;
@@ -115,9 +117,13 @@
     }
 }
 
--(void)callCompletionOn:(NSObject*)v andArray:(NSMutableArray*)w
+-(void)callCompletionOn:(NSObject*)v andArray:(NSMutableArray*)w withErasedSignature:(int)erased
 {
-    [v callWithCompletion:^(id value) { [w addObject:value]; }];
+    void (^block)(id value) = ^(id value) { [w addObject:value]; };
+    if (erased) {
+        erase_signature(block);
+    }
+    [v callWithCompletion:block];
 }
 
 #define BLOCK_HAS_COPY_DISPOSE (1 << 25)
@@ -139,6 +145,14 @@ struct block_literal {
     struct block_descriptor* descriptor;
 };
 
+
+static void erase_signature(id _block)
+{
+    struct block_literal* block = (struct block_literal*)_block;
+    if (block->flags & BLOCK_HAS_SIGNATURE) {
+        block->flags &= ~BLOCK_HAS_SIGNATURE;
+    }
+}
 
 
 static id signature_for_block(id _block)

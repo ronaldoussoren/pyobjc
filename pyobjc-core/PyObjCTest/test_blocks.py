@@ -220,7 +220,11 @@ class TestBlocks (TestCase):
         tester = BlocksCompletion.alloc().init()
         a = []
 
-        obj.callCompletionOn_andArray_(tester, a)
+        obj.callCompletionOn_andArray_withErasedSignature_(tester, a, 0)
+        self.assertEqual(a, ['hello', 'world'])
+
+        a = []
+        obj.callCompletionOn_andArray_withErasedSignature_(tester, a, 1)
         self.assertEqual(a, ['hello', 'world'])
 
     @min_os_level('10.6')
@@ -230,7 +234,15 @@ class TestBlocks (TestCase):
         tester = BlockWithStoredCompletion.alloc().init()
         a = []
 
-        obj.callCompletionOn_andArray_(tester, a)
+        obj.callCompletionOn_andArray_withErasedSignature_(tester, a, 0)
+        self.assertEqual(a, [])
+
+        tester.performCompletions()
+
+        self.assertEqual(a, ['hello', 'world'])
+
+        a = []
+        obj.callCompletionOn_andArray_withErasedSignature_(tester, a, 1)
         self.assertEqual(a, [])
 
         tester.performCompletions()

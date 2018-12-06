@@ -1270,6 +1270,35 @@ method_stub(ffi_cif* cif __attribute__((__unused__)), void* resp, void** args, v
 
         default:
             v = pythonify_c_value(argtype, args[i]);
+
+            if (PyObjCObject_IsBlock(v) && PyObjCObject_GetBlock(v) == NULL) {
+                /* Value is an (Objective-)C block for which we don't have a Python signature
+                 *
+                 * 1) Try to extract from the metadata system
+                 * 2) Try to extract from the ObjC runtime
+                 *
+                 * Both systems may not have the required information.
+                 */
+
+                if (methinfo->argtype[i]->callable != NULL) {
+                    PyObjCObject_SET_BLOCK(v, methinfo->argtype[i]->callable);
+                    Py_INCREF(methinfo->argtype[i]->callable);
+
+                } else {
+                    const char* signature = PyObjCBlock_GetSignature(v);
+                    if (signature != NULL) {
+                        PyObjCMethodSignature* sig = PyObjCMethodSignature_FromSignature(signature, YES);
+
+                        if (sig == NULL) {
+                            Py_DECREF(v);
+                            v = NULL;
+                        } else {
+                            PyObjCObject_SET_BLOCK(v, sig);
+                            sig = NULL;
+                        }
+                    }
+                }
+            }
         }
 
         if (v == NULL) {
