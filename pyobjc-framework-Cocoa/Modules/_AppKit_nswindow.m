@@ -1,6 +1,17 @@
 #if PY_MAJOR_VERSION == 2 && defined(USE_TOOLBOX_OBJECT_GLUE)
 
-#ifdef __LP64__
+#if PyObjC_BUILD_RELEASE >= 1014
+/* The SDK included with Xcode 10 no longer includes a number
+ * of header files, but does #incldue them in <oCarbon/Carbon.h>.
+ *
+ * The defines below avoid trying to import these, which is
+ * safe because we don't use any of the definitions from these files.
+ */
+#define __CARBONSOUND__
+#define __NAVIGATIONSERVICES__
+#endif
+
+#if !__LP64__
 
 #include "pymactoolbox.h"
 
