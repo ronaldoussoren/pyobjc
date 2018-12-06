@@ -14,6 +14,8 @@ static freelist* closure_freelist = NULL;
 
 #ifdef MAP_JIT
 
+#include <sys/sysctl.h>
+
 static int use_map_jit(void)
 {
     static int cached_result = -1;
