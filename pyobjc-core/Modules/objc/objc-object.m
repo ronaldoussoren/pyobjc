@@ -1088,7 +1088,7 @@ static int
 obj_set_blocksignature(PyObject* self, PyObject* newVal, void* closure __attribute__((__unused__)))
 {
     if (newVal == NULL) {
-        PyErr_SetString(PyExc_TypeError, "Cannot delete '__block_signature'");
+        PyErr_SetString(PyExc_TypeError, "Cannot delete '__block_signature__'");
         return -1;
     }
     if (!PyObjCObject_IsBlock(self)) {
