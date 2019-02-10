@@ -899,8 +899,6 @@ imp_NSCoder_decodeBytesWithReturnedLength_(
 
     PyObject* result;
     PyObject* arglist = NULL;
-    Py_ssize_t buflen;
-    NSUInteger len;
     PyObject* pyself = NULL;
     int cookie = 0;
 
@@ -926,36 +924,16 @@ imp_NSCoder_decodeBytesWithReturnedLength_(
         goto error;
     }
 
-    if (PyObject_AsReadBuffer(
-            PyTuple_GetItem(result, 0),
-            pretval, &buflen) < 0) {
-
-        Py_DECREF(result);
-        goto error;
-    }
-
-    if (depythonify_c_value(@encode(NSUInteger),
-            PyTuple_GetItem(result, 1), &len) < 0) {
-        Py_DECREF(result);
-        goto error;
-    }
-
-    if (len < (NSUInteger)buflen) {
-        Py_DECREF(result);
-        PyErr_SetString(PyExc_ValueError,
-            "Should return (bytes, length)");
-        goto error;
-    }
-
-    *length = len;
-
-    /* Should return an autoreleased buffer, do this by createing an
-     * NSData that will release the buffer
-     */
-    *pretval = (const void*)[[[[NSData alloc] initWithBytes:*pretval length:len]
-          autorelease] bytes];
-
+    OCReleasedBuffer* temp = [[OCReleasedBuffer alloc] initWithPythonBuffer: PyTuple_GET_ITEM(result, 0) writable:NO];
     Py_DECREF(result);
+    if (temp == nil) {
+        goto error;
+    }
+
+    *length = [temp length];
+    *pretval = [temp buffer];
+
+    [temp autorelease];
     PyGILState_Release(state);
     return;
 
@@ -1073,7 +1051,6 @@ imp_NSCoder_decodeBytesForKey_returnedLength_(
     PyObject* result;
     PyObject* arglist = NULL;
     PyObject* v;
-    Py_ssize_t buflen;
     NSUInteger len;
     PyObject* pyself = NULL;
     int cookie = 0;
@@ -1103,36 +1080,29 @@ imp_NSCoder_decodeBytesForKey_returnedLength_(
         goto error;
     }
 
-    if (PyObject_AsReadBuffer(
-            PyTuple_GetItem(result, 0),
-            pretval, &buflen) < 0) {
-
-        Py_DECREF(result);
+    OCReleasedBuffer* tmp = [[OCReleasedBuffer alloc] initWithPythonBuffer:PyTuple_GET_ITEM(result, 0) writable:NO];
+    Py_DECREF(result);
+    if (tmp == nil) {
+        *pretval = NULL;
         goto error;
     }
+
+    [tmp autorelease];
 
     if (depythonify_c_value(@encode(NSUInteger),
             PyTuple_GetItem(result, 1), &len) < 0) {
-        Py_DECREF(result);
         goto error;
     }
 
-    if (len < (NSUInteger)buflen) {
-        Py_DECREF(result);
+    if (len < [tmp length]) {
         PyErr_SetString(PyExc_ValueError,
             "Should return (bytes, length)");
         goto error;
     }
 
     *length = len;
+    *pretval = [tmp buffer];
 
-    /* Should return an autoreleased buffer, do this by createing an
-     * NSData that will release the buffer
-     */
-    *pretval = (const void*)[[[[NSData alloc] initWithBytes:*pretval length:len]
-          autorelease] bytes];
-
-    Py_DECREF(result);
     PyGILState_Release(state);
     return;
 

@@ -1355,10 +1355,9 @@ pysel_default_signature(SEL selector, PyObject* callable)
     PyCodeObject* func_code;
     Py_ssize_t arg_count;
     char* result;
-    const unsigned char *buffer;
-    Py_ssize_t buffer_len;
     Py_ssize_t i;
     int was_none;
+    Py_buffer buf;
     const char* selname = sel_getName(selector);
 
     if (PyFunction_Check(callable)) {
@@ -1400,7 +1399,11 @@ pysel_default_signature(SEL selector, PyObject* callable)
     result[2] = _C_SEL;
     result[arg_count+3] = '\0';
 
-    if (PyObject_AsReadBuffer(func_code->co_code, (const void **)&buffer, &buffer_len)) {
+
+    if (PyObject_GetBuffer(func_code->co_code, &buf, PyBUF_CONTIG_RO) == -1) {
+        /* This should not happend: A function where co_code does not implement
+         * the buffer protocol.
+         */
         return NULL;
     }
 
@@ -1414,11 +1417,11 @@ pysel_default_signature(SEL selector, PyObject* callable)
     was_none = 0;
 
 #if PY_VERSION_HEX >= 0x03060000
-    PyObjC_Assert (buffer_len % 2 == 0, NULL);
+    PyObjC_Assert (buf.len % 2 == 0, NULL);
 
-    for (i=0; i<buffer_len; i+=2) {
-        int op = buffer[i];
-        if (op == LOAD_CONST && buffer[i+1] == 0) {
+    for (i=0; i<buf.len; i+=2) {
+        int op = ((unsigned char*)buf.buf)[i];
+        if (op == LOAD_CONST && ((unsigned char*)buf.buf)[i+1] == 0) {
             was_none = 1;
         } else {
             if (op == RETURN_VALUE && !was_none) {
@@ -1430,9 +1433,9 @@ pysel_default_signature(SEL selector, PyObject* callable)
     }
 
 #else /* PY_VERSION_HEX < 0x03060000 */
-    for (i=0; i<buffer_len; ++i) {
-        int op = buffer[i];
-        if (op == LOAD_CONST && buffer[i+1] == 0 && buffer[i+2] == 0) {
+    for (i=0; i<buf.len; ++i) {
+        int op = ((unsigned char*)buf.buf)[i];
+        if (op == LOAD_CONST && ((unsigned char*)buf.buf)[i+1] == 0 && ((unsigned char*)buf.buf)[i+2] == 0) {
             was_none = 1;
         } else {
             if (op == RETURN_VALUE) {
@@ -1448,7 +1451,7 @@ pysel_default_signature(SEL selector, PyObject* callable)
         }
     }
 #endif /* PY_VERSION_HEX < 0x03060000 */
-
+    PyBuffer_Release(&buf);
     return result;
 }
 

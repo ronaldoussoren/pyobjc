@@ -68,6 +68,7 @@
 #include "proxy-registry.h"
 #include "objc_support.h"
 #include "pointer-support.h"
+#include "released-buffer.h"
 #include "OC_PythonObject.h"
 #include "OC_PythonArray.h"
 #include "OC_BuiltinPythonArray.h"

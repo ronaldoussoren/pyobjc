@@ -15,14 +15,12 @@
 
 - (OC_PythonData*)initWithPythonObject:(PyObject*)v
 {
-    Py_ssize_t buffer_len;
-    const void *buffer;
-
     self = [super init];
     if (unlikely(self == nil)) return nil;
 
-    if (unlikely(PyObject_AsReadBuffer(v, &buffer, &buffer_len) == -1)) {
-        [super dealloc];
+    if (!PyObject_CheckBuffer(v)) {
+        PyErr_SetString(PyExc_TypeError, "not a buffer");
+        [self release];
         return nil;
     }
 
@@ -87,20 +85,14 @@
     NSUInteger rval;
 
     PyObjC_BEGIN_WITH_GIL
-        Py_ssize_t buffer_len;
-        const void *buffer;
-
-        if (unlikely(PyObject_AsReadBuffer(value, &buffer, &buffer_len) == -1)) {
+        OCReleasedBuffer* temp = [[OCReleasedBuffer alloc] initWithPythonBuffer:value writable:NO];
+        if (temp == nil) {
+            [self release];
             PyErr_Clear();
-            rval = 0;
-
-        } else {
-            if ((NSUInteger)buffer_len > NSUIntegerMax) {
-                rval = NSUIntegerMax;
-            } else {
-                rval = buffer_len;
-            }
+            return 0;
         }
+        [temp release];
+        rval = [temp length];
 
     PyObjC_END_WITH_GIL
     return rval;
@@ -108,17 +100,17 @@
 
 -(const void *)bytes
 {
-    const void *rval;
+    void* rval;
+
     PyObjC_BEGIN_WITH_GIL
-        Py_ssize_t buffer_len;
-        const void *buffer;
-
-        if (unlikely(PyObject_AsReadBuffer(value, &buffer, &buffer_len) == -1)) {
-            PyErr_Clear();
-            rval = NULL;
+        OCReleasedBuffer* temp = [[OCReleasedBuffer alloc] initWithPythonBuffer:value writable:NO];
+        if (temp == nil) {
+            [self release];
+            return nil;
         }
+        [temp autorelease];
+        rval = [temp buffer];
 
-        rval = buffer;
     PyObjC_END_WITH_GIL
     return rval;
 }

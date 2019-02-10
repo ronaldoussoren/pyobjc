@@ -107,18 +107,15 @@ imp_NSData_bytes(
 
     } else
 #endif /* PY_MAJOR_VERSION == 2 */
-
-    if (PyBytes_Check(result)) {
-        void* p;
-
-        p = PyBytes_AsString(result);
-        *pretval = (void*)p;
-        PyGILState_Release(state);
-        return;
+    {
+        OCReleasedBuffer* temp = [[OCReleasedBuffer alloc] initWithPythonBuffer:result writable:NO];
+        if (temp == nil) {
+            *pretval = NULL;
+            goto error;
+        }
+        [temp autorelease];
+        *pretval=[temp buffer];
     }
-
-    PyErr_SetString(PyExc_ValueError, "No idea what to do with result.");
-    goto error;
 
 error:
     Py_XDECREF(arglist);
@@ -215,22 +212,19 @@ imp_NSMutableData_mutableBytes(
     if (result == NULL) goto error;
 
     if (result == Py_None) {
-        Py_DECREF(result);
-        goto error;
-    }
-
-    if (result == Py_None) {
         *pretval = NULL;
         Py_DECREF(result);
         PyGILState_Release(state);
         return;
     }
 
-    void *p;
-    Py_ssize_t len;
-    if (PyObject_AsWriteBuffer(result, &p, &len) == -1) goto error;
-    Py_DECREF(result);
-    *pretval = (void *)p;
+    OCReleasedBuffer* temp = [[OCReleasedBuffer alloc] initWithPythonBuffer:result writable:YES];
+    if (temp == nil) {
+        *pretval = NULL;
+        goto error;
+    }
+    [temp autorelease];
+    *pretval=[temp buffer];
     PyGILState_Release(state);
     return;
 
