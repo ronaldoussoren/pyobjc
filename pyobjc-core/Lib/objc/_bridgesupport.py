@@ -831,7 +831,9 @@ objc.createStructType = createStructType
 _orig_registerStructAlias = objc.registerStructAlias
 @functools.wraps(objc.registerStructAlias)
 def registerStructAlias(typestr, structType):
-    warnings.warn("use createStructAlias instead", DeprecationWarning)
+    # XXX: Disable deprecation warnings, this function is used by
+    # the framework wrappers.
+    #warnings.warn("use createStructAlias instead", DeprecationWarning)
     return _orig_registerStructAlias(typestr, structType)
 
 def createStructAlias(name, typestr, structType):

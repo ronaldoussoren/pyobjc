@@ -8,6 +8,12 @@ Version 5.2
 
 * Updated metadata for Xcode 10.2 (beta)
 
+* #252: ``objc.registerStructAlias`` no longer emits a deprecation
+  warning because it is still used by the framework wrappers.
+
+  The function is still deprecated though, the deprecation will reappear
+  once the metadata has been updatd.
+
 Version 5.1.2
 -------------
 
