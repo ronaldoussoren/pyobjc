@@ -9,7 +9,7 @@ and (Objective-)C frameworks
 '''
 from pyobjc_setup import setup, Extension
 
-VERSION="5.1.2"
+VERSION="5.2b1"
 
 setup(
     name='pyobjc-framework-ScreenSaver',
