@@ -407,26 +407,37 @@
   },
   "formal_protocols": {},
   "functions": {
+   "GCExtendedGamepadSnapshotDataFromNSData": {
+    "args": {
+     "0": { "type_modifier": "o" }
+    }
+   },
+   "NSDataFromGCExtendedGamepadSnapshotData": {
+    "args": {
+     "0": { "type_modifier": "n" }
+    }
+   },
+   "GCMicroGamepadSnapshotDataFromNSData": {
+    "args": {
+     "0": { "type_modifier": "o" }
+    }
+   },
+   "NSDataFromGCMicroGamepadSnapshotData": {
+    "args": {
+     "0": { "type_modifier": "n" }
+    }
+   },
    "NSDataFromGCMicroGamepadSnapShotDataV100": {
-    "retval": {
-     "typestr": "@"
-    },
     "args": {
      "0": {
-      "typestr": "n^{_GCMicroGamepadSnapShotDataV100=}"
+      "type_modifier": "n"
      }
     }
    },
    "GCMicroGamepadSnapShotDataV100FromNSData": {
-    "retval": {
-     "typestr": "Z"
-    },
     "args": {
      "0": {
-      "typestr": "o^{_GCMicroGamepadSnapShotDataV100=}"
-     },
-     "1": {
-      "typestr": "@"
+      "type_modifier": "o"
      }
     }
    },
@@ -463,6 +474,12 @@
 	"buttonX"
        ],
        "typestr": "{_GCMicroGamepadSnapShotDataV100=SSffff}"
+    },
+    "GCMicroGamepadSnapshotData": {
+     "pack": 1
+    },
+    "GCExtendedGamepadSnapshotData": {
+     "pack": 1
     },
     "GCExtendedGamepadSnapShotDataV100": {
        "pack": 1
