@@ -1464,7 +1464,7 @@ PyObjC_SELToPythonName(SEL sel, char* buf, size_t buflen)
 
 #if PY_MAJOR_VERSION == 3
 PyObject*
-PyObjCDict_GetItemStringWithError(PyObject* dict, char* key)
+PyObjCDict_GetItemStringWithError(PyObject* dict, const char* key)
 {
     PyObject* result;
     PyObject* keystring = PyUnicode_FromString(key);

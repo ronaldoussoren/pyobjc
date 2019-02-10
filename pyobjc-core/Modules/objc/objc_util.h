@@ -2,7 +2,7 @@
 #define OBJC_UTIL
 
 #if PY_MAJOR_VERSION == 3
-extern PyObject* PyObjCDict_GetItemStringWithError(PyObject* dict, char* key);
+extern PyObject* PyObjCDict_GetItemStringWithError(PyObject* dict, const char* key);
 #define PyDict_GetItemStringWithError PyObjCDict_GetItemStringWithError
 #endif
 
