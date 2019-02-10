@@ -14,6 +14,9 @@ Version 5.2
   The function is still deprecated though, the deprecation will reappear
   once the metadata has been updatd.
 
+* #75: The core bridge now uses :func:`PyDict_GetItemWithError`, which
+  may result in exceptions being raised that were previously swallowed.
+
 Version 5.1.2
 -------------
 

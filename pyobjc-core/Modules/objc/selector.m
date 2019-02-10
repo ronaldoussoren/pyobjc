@@ -1902,7 +1902,6 @@ find_protocol_signature(PyObject* protocols, SEL selector, int is_class_method)
     /* Then check if another protocol users this selector */
     proto = PyObjCInformalProtocol_FindProtocol(selector);
     if (proto == NULL) {
-        PyErr_Clear();
         return NULL;
     }
 

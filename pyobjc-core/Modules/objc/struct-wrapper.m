@@ -902,7 +902,15 @@ struct_init(
             Py_DECREF(k_bytes);
 
             member = Py_TYPE(self)->tp_members + off;
+#if PY_MAJOR_VERSION == 3
+            v = PyDict_GetItemWithError(kwds, k);
+            if (v == NULL && PyErr_Occurred()) {
+                *(int*)retval = -1;
+                return;
+            }
+#else
             v = PyDict_GetItem(kwds, k);
+#endif
             SET_STRUCT_FIELD(self, member, v);
         }
         Py_DECREF(keys);
@@ -1379,10 +1387,14 @@ PyObject* PyObjC_FindRegisteredStruct(const char* signature, Py_ssize_t len)
     }
 
     v = PyText_FromStringAndSize(signature, len);
+
+#if PY_MAJOR_VERSION == 3
+    type = PyDict_GetItemWithError(structRegistry, v);
+#else
     type = PyDict_GetItem(structRegistry, v);
+#endif
     Py_DECREF(v);
     if (type == NULL) {
-        PyErr_Clear();
         return NULL;
     }
 
@@ -1405,10 +1417,14 @@ PyObjC_CreateRegisteredStruct(const char* signature, Py_ssize_t len, const char*
     }
 
     v = PyText_FromStringAndSize(signature, len);
+
+#if PY_MAJOR_VERSION == 3
+    type = (PyTypeObject*)PyDict_GetItemWithError(structRegistry, v);
+#else
     type = (PyTypeObject*)PyDict_GetItem(structRegistry, v);
+#endif
     Py_DECREF(v);
     if (type == NULL) {
-        PyErr_Clear();
         return NULL;
     }
 
@@ -1432,7 +1448,20 @@ PyObjC_CreateRegisteredStruct(const char* signature, Py_ssize_t len, const char*
     PyObject_GC_Track(result);
 
     if (objc_encoding) {
+#if PY_MAJOR_VERSION == 3
+        PyObject* typestr = PyDict_GetItemStringWithError(type->tp_dict, "__typestr__");
+        if (typestr == NULL && PyErr_Occurred()) {
+            Py_DECREF(result);
+            return NULL;
+        }
+#else
         PyObject* typestr = PyDict_GetItemString(type->tp_dict, "__typestr__");
+#endif
+        if (!PyBytes_Check(typestr)) {
+            PyErr_SetString(PyExc_TypeError, "__typestr__ not a bytes object");
+            Py_DECREF(result);
+            return NULL;
+        }
         if (typestr != NULL) {
             *objc_encoding = PyBytes_AsString(typestr);
 

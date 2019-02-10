@@ -82,6 +82,7 @@ PyObjCClass_HiddenSelector(PyObject* tp, SEL sel, BOOL classMethod)
                     PyErr_Clear();
 
                 } else {
+                    /* XXX: Should change to PyDict_GetItemWithError */
                     PyObject* r = PyDict_GetItem(hidden, v);
                     Py_DECREF(v);
                     if (r == NULL) {
@@ -426,7 +427,13 @@ class_init(PyObject *cls, PyObject *args, PyObject *kwds)
 {
     if (kwds != NULL) {
         if (PyDict_Check(kwds) && PyDict_Size(kwds) == 1) {
-            if (PyDict_GetItemString(kwds, "protocols") != NULL) {
+            PyObject* v = PyDict_GetItemStringWithError(kwds, "protocols");
+            if (v == NULL && PyErr_Occurred()) {
+                return -1;
+            }
+
+            /* XXX: Not clear what this tries to accomplish */
+            if (v != NULL) {
                 return PyType_Type.tp_init(cls, args, NULL);
             }
         }

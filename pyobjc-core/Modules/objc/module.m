@@ -1853,8 +1853,12 @@ name_for_signature(PyObject* mod __attribute__((__unused__)), PyObject* signatur
     if (typestr[0] == _C_STRUCT_B) {
         PyTypeObject* type = (PyTypeObject*)PyObjC_FindRegisteredStruct(typestr, PyBytes_GET_SIZE(signature));
         if (type == NULL) {
-            Py_INCREF(Py_None);
-            return Py_None;
+            if (PyErr_Occurred()) {
+                return NULL;
+            } else {
+                Py_INCREF(Py_None);
+                return Py_None;
+            }
         } else {
 #if PY_MAJOR_VERSION == 2
             return PyString_FromString(type->tp_name);
@@ -2814,7 +2818,25 @@ PyObjC_MODULE_INIT(_objc)
     if (PyModule_AddIntConstant(m, "MAC_OS_X_VERSION_10_14_1", MAC_OS_X_VERSION_10_14_1) < 0) {
         PyObjC_INITERROR();
     }
-#endif /* MAC_OS_X_VERSION_10_14 */
+#endif /* MAC_OS_X_VERSION_10_14_1 */
+
+#ifdef MAC_OS_X_VERSION_10_14_2
+    if (PyModule_AddIntConstant(m, "MAC_OS_X_VERSION_10_14_2", MAC_OS_X_VERSION_10_14_2) < 0) {
+        PyObjC_INITERROR();
+    }
+#endif /* MAC_OS_X_VERSION_10_14_2 */
+
+#ifdef MAC_OS_X_VERSION_10_14_3
+    if (PyModule_AddIntConstant(m, "MAC_OS_X_VERSION_10_14_3", MAC_OS_X_VERSION_10_14_3) < 0) {
+        PyObjC_INITERROR();
+    }
+#endif /* MAC_OS_X_VERSION_10_14_3 */
+
+#ifdef MAC_OS_X_VERSION_10_14_4
+    if (PyModule_AddIntConstant(m, "MAC_OS_X_VERSION_10_14_4", MAC_OS_X_VERSION_10_14_4) < 0) {
+        PyObjC_INITERROR();
+    }
+#endif /* MAC_OS_X_VERSION_10_14_4 */
 
     if (PyModule_AddIntConstant(m, "PyObjC_BUILD_RELEASE", PyObjC_BUILD_RELEASE) < 0) {
         PyObjC_INITERROR();

@@ -233,6 +233,7 @@ PyObjCErr_AsExc(void)
         NSString* reason = NULL;
         NSString* name = NULL;
 
+        /* NOTE: Don't use *WithError here because this function ignores errors */
         v = PyDict_GetItemString(args, "reason");
         if (v) {
             if (depythonify_c_value(@encode(NSObject*), v, &reason) < 0) {
@@ -1459,3 +1460,21 @@ PyObjC_SELToPythonName(SEL sel, char* buf, size_t buflen)
     }
     return buf;
 }
+
+
+#if PY_MAJOR_VERSION == 3
+PyObject*
+PyObjCDict_GetItemStringWithError(PyObject* dict, char* key)
+{
+    PyObject* result;
+    PyObject* keystring = PyUnicode_FromString(key);
+    if (keystring == NULL) {
+        return NULL;
+    }
+
+    result = PyDict_GetItemWithError(dict, keystring);
+    Py_DECREF(keystring);
+
+    return result;
+}
+#endif

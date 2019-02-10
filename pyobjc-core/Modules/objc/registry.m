@@ -27,11 +27,23 @@ PyObjC_AddToRegistry(
         return -1;
     }
 
+#if PY_MAJOR_VERSION == 3
+    sublist = PyDict_GetItemWithError(registry, selector);
+    if (sublist == NULL && PyErr_Occurred()) {
+        Py_DECREF(item);
+        return -1;
+    }
+#else
     sublist = PyDict_GetItem(registry, selector);
+#endif
     if (sublist == NULL) {
         sublist = PyList_New(0);
-        PyDict_SetItem(registry, selector, sublist);
+        result = PyDict_SetItem(registry, selector, sublist);
         Py_DECREF(sublist);
+        if (result == -1) {
+            Py_DECREF(item);
+            return -1;
+        }
     }
 
     if (!PyObjC_UpdatingMetaData) {
@@ -57,7 +69,12 @@ PyObjC_FindInRegistry(PyObject* registry, Class cls, SEL selector)
     }
 
     PyObject* k = PyBytes_FromString(sel_getName(selector));
+
+#if PY_MAJOR_VERSION == 3
+    sublist = PyDict_GetItemWithError(registry, k);
+#else
     sublist = PyDict_GetItem(registry, k);
+#endif
     Py_DECREF(k);
     if (sublist == NULL) return NULL;
 

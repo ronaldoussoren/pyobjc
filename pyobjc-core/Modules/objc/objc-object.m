@@ -465,7 +465,14 @@ _type_lookup(PyTypeObject* tp, PyObject* name
 
         PyObjC_Assert(dict && PyDict_Check(dict), NULL);
 
+#if PY_MAJOR_VERSION == 3
+        descr = PyDict_GetItemWithError(dict, name);
+        if (descr == NULL && PyErr_Occurred()) {
+            return NULL;
+        }
+#else
         descr = PyDict_GetItem(dict, name);
+#endif
         if (descr != NULL) {
             break;
         }
@@ -713,7 +720,14 @@ object_getattro(PyObject* obj, PyObject* name)
         } else {
             dict = *dictptr;
             if (dict != NULL) {
+#if PY_MAJOR_VERSION == 3
+                res = PyDict_GetItemWithError(dict, name);
+                if (res == NULL && PyErr_Occurred()) {
+                    goto done;
+                }
+#else
                 res = PyDict_GetItem(dict, name);
+#endif
                 if (res != NULL) {
                     Py_INCREF(res);
                     goto done;

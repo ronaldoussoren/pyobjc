@@ -133,7 +133,14 @@ super_getattro(PyObject *self, PyObject *name)
                 continue;
             }
 
+#if PY_MAJOR_VERSION == 3
+            res = PyDict_GetItemWithError(dict, name);
+            if (res == NULL && PyErr_Occurred()) {
+                return NULL;
+            }
+#else
             res = PyDict_GetItem(dict, name);
+#endif
             if (res != NULL) {
                 Py_INCREF(res);
                 f = Py_TYPE(res)->tp_descr_get;

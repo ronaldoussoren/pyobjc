@@ -115,7 +115,15 @@ PyObjC_RegisterMethodMapping(Class class, SEL sel,
         return -1;
     }
 
+#if PY_MAJOR_VERSION == 3
+    lst = PyDict_GetItemStringWithError(special_registry, sel_getName(sel));
+    if (lst == NULL && PyErr_Occurred()) {
+        Py_DECREF(entry);
+        return -1;
+    }
+#else
     lst = PyDict_GetItemString(special_registry, sel_getName(sel));
+#endif
     if (lst == NULL) {
         lst = PyList_New(0);
         if (PyDict_SetItemString(special_registry, sel_getName(sel), lst) == -1) {
@@ -218,7 +226,11 @@ search_special(Class class, SEL sel)
     search_class = PyObjCClass_New(class);
     if (search_class == NULL) goto error;
 
+#if PY_MAJOR_VERSION == 3
+    lst = PyDict_GetItemStringWithError(special_registry, sel_getName(sel));
+#else
     lst = PyDict_GetItemString(special_registry, sel_getName(sel));
+#endif
     if (lst == NULL) {
         goto error;
     }
@@ -271,8 +283,10 @@ search_special(Class class, SEL sel)
     return PyCapsule_GetPointer(result, "objc.__memblock__");
 
 error:
-    PyErr_Format(PyObjCExc_Error,
-        "PyObjC: don't know how to call method '%s'", sel_getName(sel));
+    if (!PyErr_Occurred()) {
+        PyErr_Format(PyObjCExc_Error,
+            "PyObjC: don't know how to call method '%s'", sel_getName(sel));
+    }
     return NULL;
 }
 
@@ -317,7 +331,11 @@ find_signature(const char* signature)
     if (key == NULL) {
         return NULL;
     }
+#if PY_MAJOR_VERSION == 3
+    o = PyDict_GetItemWithError(signature_registry, key);
+#else
     o = PyDict_GetItem(signature_registry, key);
+#endif
     Py_DECREF(key);
     if (o == NULL) goto error;
 
@@ -325,9 +343,11 @@ find_signature(const char* signature)
     return r;
 
 error:
-    PyErr_Format(PyObjCExc_Error,
-        "PyObjC: don't know how to call a method with "
-        "signature '%s'", signature);
+    if (!PyErr_Occurred()) {
+        PyErr_Format(PyObjCExc_Error,
+            "PyObjC: don't know how to call a method with "
+            "signature '%s'", signature);
+    }
     return NULL;
 }
 

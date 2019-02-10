@@ -168,6 +168,8 @@ class TestLazyImport (TestCase):
     def test_without_framework(self):
         initial_dict = {
                 '__doc__': 'rootless test module',
+                '__spec__': object(),
+                '__loader__': object(),
         }
         metadict = {
             'constants': '$ABAddressBookErrorDomain$',
@@ -192,6 +194,8 @@ class TestLazyImport (TestCase):
 
         self.assertEqual(mod.__doc__, 'rootless test module')
         self.assertEqual(mod.__doc__, mod.doc_string)
+        self.assertIs(mod.__spec__, initial_dict['__spec__'])
+        self.assertIs(mod.__loader__, initial_dict['__loader__'])
         self.assertEqual(mod.NSAboveBottom, 4)
         self.assertEqual(mod.mysum, mod.NSAWTEventType + mod.NSAboveBottom + 3)
         self.assertRaises(AttributeError, getattr, mod, 'ABPersonSetImageData')

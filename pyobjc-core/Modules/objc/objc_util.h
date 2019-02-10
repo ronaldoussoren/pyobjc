@@ -1,6 +1,11 @@
 #ifndef OBJC_UTIL
 #define OBJC_UTIL
 
+#if PY_MAJOR_VERSION == 3
+extern PyObject* PyObjCDict_GetItemStringWithError(PyObject* dict, char* key);
+#define PyDict_GetItemStringWithError PyObjCDict_GetItemStringWithError
+#endif
+
 extern PyObject* PyObjCExc_Error;
 extern PyObject* PyObjCExc_NoSuchClassError;
 extern PyObject* PyObjCExc_InternalError;

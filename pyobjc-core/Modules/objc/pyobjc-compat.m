@@ -430,7 +430,16 @@ PyObject* PyBytes_InternFromString(const char* v)
     if (key == NULL) {
         return NULL;
     }
+#if Py_MAJOR_VERSION == 3
+    value = PyDict_GetItemWithError(registry, key);
+    if (value == NULL && PyErr_Occured()) {
+        Py_DECREF(key);
+        return NULL;
+    }
+#else
     value = PyDict_GetItem(registry, key);
+#endif
+
     if (value == NULL) {
         int r = PyDict_SetItem(registry, key, key);
         if (r == -1) {
@@ -462,7 +471,16 @@ PyObject* PyBytes_InternFromStringAndSize(const char* v, Py_ssize_t l)
     if (key == NULL) {
         return NULL;
     }
+
+#if Py_MAJOR_VERSION == 3
+    value = PyDict_GetItemWithError(registry, key);
+    if (value == NULL && PyErr_Occurred()) {
+        Py_DECREF(key);
+        return NULL;
+    }
+#else
     value = PyDict_GetItem(registry, key);
+#endif
     if (value == NULL) {
         int r = PyDict_SetItem(registry, key, key);
         if (r == -1) {

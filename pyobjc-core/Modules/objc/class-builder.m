@@ -90,7 +90,15 @@ do_slots(PyObject* super_class, PyObject* clsdict)
     PyObject* slots;
     Py_ssize_t len, i;
 
+#if PY_MAJOR_VERSION == 3
+    slot_value = PyDict_GetItemStringWithError(clsdict, "__slots__");
+    if (slot_value == NULL && PyErr_Occurred()) {
+        return -1;
+    }
+
+#else
     slot_value = PyDict_GetItemString(clsdict, "__slots__");
+#endif
     if (slot_value == NULL) {
         /*
          * No __slots__ found, add an empty one and
@@ -129,7 +137,7 @@ do_slots(PyObject* super_class, PyObject* clsdict)
         Py_DECREF(v);
 
         return 0;
-     }
+    }
 
     slots = PySequence_Fast(slot_value, "__slots__ must be a sequence");
     if (slots == NULL) {
@@ -367,6 +375,9 @@ need_intermediate(PyObject* class_dict)
     for (cur = gMethods; cur->method_name != NULL; cur++) {
         /* XXX: Should look for a selector, not necessarily using the
          * method name.
+         *
+         * XXX: Use PyDict_GetItemStringWithError, but that requires an
+         * API change for this function as well.
          */
         if (PyDict_GetItemString(class_dict, cur->method_name) != NULL) {
             return YES;
@@ -554,8 +565,15 @@ PyObjCClass_BuildClass(Class super_class, PyObject* protocols,
     for (i = 0; i < key_count; i++) {
         key = PyList_GET_ITEM(key_list, i);
 
+#if PY_MAJOR_VERSION == 3
+        value = PyDict_GetItemWithError(class_dict, key);
+#else
         value = PyDict_GetItem(class_dict, key);
+#endif
         if (value == NULL) {
+#if PY_MAJOR_VERSION == 3
+            if (PyErr_Occurred()) goto error_cleanup;
+#endif
             PyErr_SetString(PyObjCExc_InternalError,
                 "PyObjCClass_BuildClass: Cannot fetch item in keylist");
             goto error_cleanup;
@@ -604,8 +622,15 @@ PyObjCClass_BuildClass(Class super_class, PyObject* protocols,
     for (i = 0; i < key_count; i++) {
         key = PyList_GET_ITEM(key_list, i);
 
+#if PY_MAJOR_VERSION == 3
+        value = PyDict_GetItemWithError(class_dict, key);
+#else
         value = PyDict_GetItem(class_dict, key);
+#endif
         if (value == NULL) {
+#if PY_MAJOR_VERSION == 3
+            if (PyErr_Occurred()) goto error_cleanup;
+#endif
             PyErr_SetString(PyObjCExc_InternalError,
                 "PyObjCClass_BuildClass: Cannot fetch item in keylist");
             goto error_cleanup;

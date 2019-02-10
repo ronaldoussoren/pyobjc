@@ -363,7 +363,10 @@ obj_getattro(PyObject* _self, PyObject* name)
                 if (!PyObjCClass_Check(c)) continue;
 
                 PyObject* dict = ((PyTypeObject*)c)->tp_dict;
-                PyObject* v = PyDict_GetItem(dict, name);
+                PyObject* v = PyDict_GetItemWithError(dict, name);
+                if (v == NULL && PyErr_Occurred()) {
+                    return NULL;
+                }
                 if (v != NULL) {
                     if (PyObjCSelector_Check(v)) {
                         /* Found it, use the
