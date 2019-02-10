@@ -134,6 +134,9 @@ class oc_test (test.test):
         loader_ep = EntryPoint.parse("x="+self.test_loader)
         loader_class = loader_ep.load(require=False)
 
+        import warnings
+        warnings.simplefilter("error")
+
         try:
             meta = self.distribution.metadata
             name = meta.get_name()

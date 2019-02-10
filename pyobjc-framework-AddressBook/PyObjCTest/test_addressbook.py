@@ -5,7 +5,7 @@ import AddressBook
 class TestAddressBook (TestCase):
     def testNoTypedefs(self):
         # Just in case: the following is a typedef not a function definition
-        self.assert_( not hasattr(AddressBook, 'ABActionGetPropertyCallback') )
+        self.assertFalse(hasattr(AddressBook, 'ABActionGetPropertyCallback') )
 
     def testOpaque(self):
         self.assertTrue(hasattr(AddressBook, 'ABPickerRef'))
