@@ -75,3 +75,8 @@ CMBlockBufferCreateWithMemoryBlock, CMBlockBufferCreateContiguous, CMBlockBuffer
 ............................................................................................................................................................
 
 These functions are not supported from Python at this time
+
+CMBufferQueueCreateWithHandlers
+...............................
+
+This function is not yet exposed to python.

@@ -1,22 +1,38 @@
-# objective.metada exceptions file, see its document
-# for information on how to update this file.
+// objective.metadata exceptions file, see its document
+// for information on how to update this file.
 {
  "definitions": {
-  "classes": {},
+  "classes": {}, 
   "enum": {
-   "SKProductPeriodUnitDay": { "value": 0 },
-   "SKProductPeriodUnitWeek": { "value": 1 },
-   "SKProductPeriodUnitMonth": { "value": 2 },
-   "SKProductPeriodUnitYear": { "value": 3 },
-   "SKProductDiscountPaymentModePayAsYouGo": { "value": 0 },
-   "SKProductDiscountPaymentModePayUpFront": { "value": 1 },
-   "SKProductDiscountPaymentModeFreeTrial": { "value": 2 }
-  },
+   "SKProductDiscountPaymentModeFreeTrial": {
+    "value": 2
+   }, 
+   "SKProductDiscountPaymentModePayAsYouGo": {
+    "value": 0
+   }, 
+   "SKProductDiscountPaymentModePayUpFront": {
+    "value": 1
+   }, 
+   "SKProductPeriodUnitDay": {
+    "value": 0
+   }, 
+   "SKProductPeriodUnitMonth": {
+    "value": 2
+   }, 
+   "SKProductPeriodUnitWeek": {
+    "value": 1
+   }, 
+   "SKProductPeriodUnitYear": {
+    "value": 3
+   }
+  }, 
   "externs": {
-   "SKDownloadTimeRemainingUnknown": { "typestr": "d" }
-  },
-  "formal_protocols": {},
-  "functions": {},
+   "SKDownloadTimeRemainingUnknown": {
+    "typestr": "d"
+   }
+  }, 
+  "formal_protocols": {}, 
+  "functions": {}, 
   "informal_protocols": {}
  }
 }

@@ -10,6 +10,7 @@ class TestJSValueRef (TestCase):
         self.assertEqual(JavaScriptCore.kJSTypeNumber, 3)
         self.assertEqual(JavaScriptCore.kJSTypeString, 4)
         self.assertEqual(JavaScriptCore.kJSTypeObject, 5)
+        self.assertEqual(JavaScriptCore.kJSTypeSymbol, 6)
 
         self.assertEqual(JavaScriptCore.kJSTypedArrayTypeInt8Array, 0)
         self.assertEqual(JavaScriptCore.kJSTypedArrayTypeInt16Array, 1)
@@ -61,9 +62,13 @@ class TestJSValueRef (TestCase):
         self.assertResultHasType(JavaScriptCore.JSValueIsDate, objc._C_BOOL)
 
     @min_os_level('10.12')
-    def testFunctions10_11(self):
-        self.assertResultHasType(JavaScriptCore.JSValueGetTypedArrayType, objc._C_INT)
+    def testFunctions10_12(self):
+        self.assertResultHasType(JavaScriptCore.JSValueGetTypedArrayType, objc._C_UINT)
         self.assertArgIsOut(JavaScriptCore.JSValueGetTypedArrayType, 2)
+
+    @min_os_level('10.14.4')
+    def testFunctions10_14_4(self):
+        self.assertResultHasType(JavaScriptCore.JSValueMakeSymbol, JavaScriptCore.JSValueRef.__typestr__)
 
 
 if __name__ == "__main__":

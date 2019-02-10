@@ -223,5 +223,14 @@ class TestCMSampleBuffer (TestCase):
 
         self.assertArgIsBlock(CoreMedia.CMSampleBufferCallBlockForEachSample, 1, b'v^{opaqueCMSampleBuffer=}q')
 
+    @min_os_level('10.14.4')
+    def test_functions_10_14_4(self):
+        self.assertArgIsBOOL(CoreMedia.CMSampleBufferCreateWithMakeDataReadyHandler, 2)
+        self.assertArgIsBlock(CoreMedia.CMSampleBufferCreateWithMakeDataReadyHandler, 3, b'i^{OpaqueCMSampleBuffer=}')
+        self.assertArgIsIn(CoreMedia.CMSampleBufferCreateWithMakeDataReadyHandler, 7)
+        self.assertArgSizeInArg(CoreMedia.CMSampleBufferCreateWithMakeDataReadyHandler, 7, 6)
+        self.assertArgIsOut(CoreMedia.CMSampleBufferCreateWithMakeDataReadyHandler, 8)
+        self.assertArgIsCFRetained(CoreMedia.CMSampleBufferCreateWithMakeDataReadyHandler, 8)
+
 if __name__ == "__main__":
     main()

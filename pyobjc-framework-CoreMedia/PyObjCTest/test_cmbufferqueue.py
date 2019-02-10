@@ -88,6 +88,18 @@ class TestCMBufferQueue (TestCase):
     def test_functions10_10(self):
         CoreMedia.CMBufferQueueGetTotalSize
 
+    @min_os_level('10.14.4')
+    def test_functions10_14_$(self):
+        self.assertFalse(hasattr(CoreMedia, 'CMBufferQueueCreateWithHandlers'))
+
+        self.assertIsOut(CoreMedia.CMBufferQueueInstallTriggerHandler, 3)
+        self.assertIsBlock(CoreMedia.CMBufferQueueInstallTriggerHandler, 4, b"v^{opaqueCMBufferQueueTriggerToken=}")
+
+        self.assertIsOut(CoreMedia.CMBufferQueueInstallTriggerHandlerWithIntegerThreshold, 3)
+        self.assertIsBlock(CoreMedia.CMBufferQueueInstallTriggerHandlerWithIntegerThreshold, 4, b"v^{opaqueCMBufferQueueTriggerToken=}")
+
+        self.assertIsBlock(CoreMedia.CMBufferQueueSetValidationHandler, 1, b"v@@")
+
 
 if __name__ == "__main__":
     main()

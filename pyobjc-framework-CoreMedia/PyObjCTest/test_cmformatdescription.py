@@ -172,6 +172,7 @@ class TestCMFormatDescription (TestCase):
         self.assertEqual(CoreMedia.kCMMetadataFormatType_ICY, fourcc(b'icy '))
         self.assertEqual(CoreMedia.kCMMetadataFormatType_ID3, fourcc(b'id3 '))
         self.assertEqual(CoreMedia.kCMMetadataFormatType_Boxed, fourcc(b'mebx'))
+        self.assertEqual(CoreMedia.kCMMetadataFormatType_EMSG, fourcc(b'emsg'))
 
 
     @min_os_level('10.7')
@@ -321,6 +322,7 @@ class TestCMFormatDescription (TestCase):
     @min_os_level('10.14')
     def test_constants10_14(self):
         self.assertIsInstance(CoreMedia.kCMFormatDescriptionTransferFunction_Linear, unicode)
+        self.assertIsInstance(CoreMedia.kCMFormatDescriptionExtension_AlternativeTransferCharacteristics, unicode)
 
     def test_structs(self):
         v = CoreMedia.CMVideoDimensions()

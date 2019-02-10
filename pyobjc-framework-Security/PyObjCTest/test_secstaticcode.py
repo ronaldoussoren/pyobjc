@@ -23,6 +23,7 @@ class TestSecStaticCode (TestCase):
         self.assertEqual(Security.kSecCSRestrictSidebandData, 1 << 9)
         self.assertEqual(Security.kSecCSUseSoftwareSigningCert, 1 << 10)
         self.assertEqual(Security.kSecCSValidatePEH, 1 << 11)
+        self.assertEqual(Security.kSecCSSingleThreaded, 1 << 12)
 
 
     def test_functions(self):

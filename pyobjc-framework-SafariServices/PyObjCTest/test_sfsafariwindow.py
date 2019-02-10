@@ -15,6 +15,10 @@ if sys.maxsize > 2 ** 32:
 
             self.assertArgIsBlock(SafariServices.SFSafariWindow.getToolbarItemWithCompletionHandler_, 0, b'v@')
 
+        @min_os_level('10.14.4')
+        def testMethods10_14(self):
+            self.assertArgIsBlock(SafariServices.SFSafariWindow.getAllTabsWithCompletionHandler_, 0, b'v@')
+
 
 if __name__ == "__main__":
     main()

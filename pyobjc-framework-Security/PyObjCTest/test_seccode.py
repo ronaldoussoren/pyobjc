@@ -23,6 +23,7 @@ class TestCode (TestCase):
         self.assertEqual(Security.kSecCSDynamicInformation, 1 << 3)
         self.assertEqual(Security.kSecCSContentInformation, 1 << 4)
         self.assertEqual(Security.kSecCSSkipResourceDirectory, 1 << 5)
+        self.assertEqual(Security.kSecCSCalculateCMSDigest, 1 << 6)
 
         self.assertIsInstance(Security.kSecCodeInfoCertificates, unicode)
         self.assertIsInstance(Security.kSecCodeInfoChangedFiles, unicode)

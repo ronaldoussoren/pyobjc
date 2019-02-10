@@ -3,6 +3,11 @@ What's new in PyObjC
 
 An overview of the relevant changes in new, and older, releases.
 
+Version 5.2
+-----------
+
+* Updated metadata for Xcode 10.2 (beta)
+
 Version 5.1.2
 -------------
 

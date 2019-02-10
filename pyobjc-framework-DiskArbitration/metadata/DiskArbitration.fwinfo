@@ -18,6 +18,11 @@
     "gettypeid_func": "DASessionGetTypeID"
    }
   },
+  "externs": {
+   "kDADiskDescriptionDeviceTDMLockedKey": { "typestr": "@" },
+   "kDADiskDescriptionMediaEncryptionDetailKey": { "typestr": "@" },
+   "kDADiskDescriptionMediaEncryptedKey": { "typestr": "@" }
+  },
   "functions": {
    "DADissenterGetTypeID": {
     "retval": {

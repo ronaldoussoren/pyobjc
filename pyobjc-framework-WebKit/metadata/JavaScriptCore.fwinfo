@@ -606,7 +606,7 @@
     "args": {
      "0": { "typestr": "^{OpaqueJSContext=}" },
      "1": { "typestr": "i" },
-     "2": { "typestr": "n^v", "c_array_lenght_in_arg": 3 },
+     "2": { "type_modifier": "n", "typestr": "^v", "c_array_lenght_in_arg": 3 },
      "3": { "typestr": "L" },
      "4": { "typestr": "^?",
       "callable": {

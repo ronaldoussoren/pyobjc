@@ -18,5 +18,11 @@ class TestAVSampleBufferDisplayLayer (TestCase):
         self.assertResultIsBOOL(AVFoundation.AVSampleBufferDisplayLayer.isReadyForMoreMediaData)
         self.assertArgIsBlock(AVFoundation.AVSampleBufferDisplayLayer.requestMediaDataWhenReadyOnQueue_usingBlock_, 1, b'v')
 
+    @min_os_level('10.14.4')
+    def testMethods10_15(self):
+        # Header says 10.15, but new in the 10.14.4 SDK headers
+        self.assertResultIsBOOL(AVFoundation.AVSampleBufferDisplayLayer.preventsCapture)
+        self.assertArgIsBOOL(AVFoundation.AVSampleBufferDisplayLayer.setPreventsCapture_, 0)
+
 if __name__ == "__main__":
     main()

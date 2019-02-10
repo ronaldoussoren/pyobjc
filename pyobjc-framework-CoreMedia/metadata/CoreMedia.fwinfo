@@ -55,12 +55,94 @@
    "CMSubtitleFormatDescriptionGetFormatType": {  "alias": "CMFormatDescriptionGetMediaSubType" }
   },
   "enum": {
-   "kCMTimebaseVeryLongCFTimeInterval": { "value": 8073216000.0 }
+   "kCMTimebaseVeryLongCFTimeInterval": { "value": 8073216000.0 },
+   "kCMMetadataFormatType_EMSG": { "value": 1735617893 }
   },
   "externs": {
-   "kCMFormatDescriptionTransferFunction_Linear": { "typestr": "@" }
+   "kCMFormatDescriptionTransferFunction_Linear": { "typestr": "@" },
+   "kCMFormatDescriptionExtension_AlternativeTransferCharacteristics": { "typestr": "@" }
   },
   "functions": {
+  "CMSampleBufferCreateWithMakeDataReadyHandler": {
+   "args": {
+    "0": { "type_override": "^{__CFAllocator=}" },
+    "1": { "type_override": "^{OpaqueCMBlockBuffer=}" },
+    "2": { "type_override": "Z" },
+    "3": {
+     "type_override": "@?"
+     "callable": {
+      "arguments": {
+       "0": { "type": "^v" },
+       "1": { "type": "^{OpaqueCMSampleBuffer=}" }
+      },
+      "retval": { "type": "i" }
+     }
+    },
+    "4": { "type_override": "^{OpaqueCMFormatDescription=}" },
+    "5": { "type_override": "l" },
+    "6": { "type_override": "l" },
+    "7": { "type_modifier": "n", "c_array_length_in_arg": 6, "type_override": "^{_CMSampleTimingInfo={_CMTime=qiIq}{_CMTime=qiIq}{_CMTime=qiIq}}" },
+    "8": { "type_modifier": "o", "type_override": "^^{opaqueCMSampleBuffer=}", "already_cfretained": true }
+   },
+   "retval": { "type_override": "i" }
+  },
+  "CMBufferQueueSetValidationHandler": {
+   "args": {
+    "0": { "type_override": "@" },
+    "1": {
+     "type_override": "@?",
+     "callable": {
+      "arguments": {
+       "0": { "type": "^v" },
+       "1": { "type": "@" },
+       "2": { "type": "@" }
+      }
+     },
+     "retval": { "type": "v" }
+    }
+   },
+   "CMBufferQueueInstallTriggerHandlerWithIntegerThreshold": {
+    "args": {
+     "0": { "type_override": "@" },
+     "1": { "type_override": "I" },
+     "2": { "type_override": [ "i", "q" ] },
+     "3": { "type_modifier": "o", "type_override": "^{opaqueCMBufferQueueTriggerToken=}" }
+     "4": {
+      "type_override": "@?",
+      "callable": {
+       "arguments": {
+        "0": { "type": "^v" },
+        "1": { "type": "^{opaqueCMBufferQueueTriggerToken=}" }
+       },
+       "retval": {
+        "type": "v"
+       }
+      }
+     }
+    },
+    "retval": { "type_override": "i" }
+   },
+   "CMBufferQueueInstallTriggerHandler": {
+    "args": {
+     "0": { "type_override": "@" },
+     "1": { "type_override": "I" },
+     "2": { "type_override": "{_CMTime=qiIq}" },
+     "3": { "type_modifier": "o", "type_override": "^{opaqueCMBufferQueueTriggerToken=}" }
+     "4": {
+      "type_override": "@?",
+      "callable": {
+       "arguments": {
+        "0": { "type": "^v" },
+        "1": { "type": "^{opaqueCMBufferQueueTriggerToken=}" }
+       },
+       "retval": {
+        "type": "v"
+       }
+      }
+     }
+    },
+    "retval": { "type_override": "i" }
+   },
    "CMAudioDeviceClockCreate": {
     "args": {
      "0": {},

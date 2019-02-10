@@ -1,191 +1,25 @@
-# objective.metada exceptions file, see its document
-# for information on how to update this file.
+// objective.metadata exceptions file, see its document
+// for information on how to update this file.
 {
  "definitions": {
-  "externs": {
-   "WKWebsiteDataTypeFetchCache": { "typestr": "@" },
-   "WKWebsiteDataTypeServiceWorkerRegistrations": { "typestr": "@" },
-   "WKWebsiteDataTypeDiskCache": { "typestr": "@" },
-   "WKWebsiteDataTypeMemoryCache": { "typestr": "@" },
-   "WKWebsiteDataTypeOfflineWebApplicationCache": { "typestr": "@" },
-   "WKWebsiteDataTypeCookies": { "typestr": "@" },
-   "WKWebsiteDataTypeSessionStorage": { "typestr": "@" },
-   "WKWebsiteDataTypeLocalStorage": { "typestr": "@" },
-   "WKWebsiteDataTypeWebSQLDatabases": { "typestr": "@" },
-   "WKWebsiteDataTypeIndexedDBDatabases": { "typestr": "@" }
-  },
-  "enum": {
-    "DOM_WEBKIT_KEYFRAMES_RULE": { "value": 7 },
-    "DOM_WEBKIT_KEYFRAME_RULE": { "value": 8 },
-    "DOM_KEYFRAMES_RULE": { "value": 7 },
-    "DOM_KEYFRAME_RULE": { "value": 8 },
-    "DOM_NAMESPACE_RULE": { "value": 10 },
-    "DOM_SUPPORTS_RULE": { "value": 12 },
-    "DOM_WEBKIT_REGION_RULE": { "value": 16 },
-    "WKErrorJavaScriptResultTypeIsUnsupported": { "value": 5 },
-    "WKErrorContentRuleListStoreCompileFailed": { "value": 6 },
-    "WKErrorContentRuleListStoreLookUpFailed": { "value": 7 },
-    "WKErrorContentRuleListStoreRemoveFailed": { "value": 8 },
-    "WKErrorContentRuleListStoreVersionMismatch": { "value": 9 },
-    "WKUserInterfaceDirectionPolicyContent": { "value": 0 },
-    "WKUserInterfaceDirectionPolicySystem": { "value": 1 },
-    "WKAudiovisualMediaTypeNone": { "value": 0 },
-    "WKAudiovisualMediaTypeAudio": { "value": 1 },
-    "WKAudiovisualMediaTypeVideo": { "value": 2 }
-  },
   "aliases": {
-    "AVAILABLE_AFTER_WEBKIT_VERSION_4_0": { "ignore": true },
-    "AVAILABLE_AFTER_WEBKIT_VERSION_4_0_BUT_DEPRECATED": { "ignore": true },
-    "AVAILABLE_IN_WEBKIT_VERSION_4_0": { "ignore": true },
-    "AVAILABLE_IN_WEBKIT_VERSION_4_0_BUT_DEPRECATED": { "ignore": true },
-    "WKAudiovisualMediaTypeAll": { "alias": "NSUIntegerMax" }
+   "AVAILABLE_AFTER_WEBKIT_VERSION_4_0": {
+    "ignore": true
+   },
+   "AVAILABLE_AFTER_WEBKIT_VERSION_4_0_BUT_DEPRECATED": {
+    "ignore": true
+   },
+   "AVAILABLE_IN_WEBKIT_VERSION_4_0": {
+    "ignore": true
+   },
+   "AVAILABLE_IN_WEBKIT_VERSION_4_0_BUT_DEPRECATED": {
+    "ignore": true
+   },
+   "WKAudiovisualMediaTypeAll": {
+    "alias": "NSUIntegerMax"
+   }
   },
   "classes": {
-   "WKOpenPanelParameters": {
-    "methods": [
-     {
-      "class_method": false,
-      "retval": {
-       "type_override": "Z"
-      },
-      "selector": "allowsMultipleSelection"
-     },
-     {
-      "class_method": false,
-      "retval": {
-       "type_override": "Z"
-      },
-      "selector": "allowsDirectories"
-     }
-    ]
-   },
-   "WKHTTPCookieStore": {
-    "methods": [
-     {
-      "class_method": false,
-      "selector": "getAllCookies:",
-      "args": {
-        "0": {
-	 "callable": {
-	  "arguments": {
-	   "0": { "typestr": "^v" },
-	   "1": { "typestr": "@" }
-	 },
-	 "retval": {
-	  "typestr": "v"
-	 }
-	}
-       }
-      }
-     },
-     {
-      "class_method": false,
-      "selector": "setCookie:completionHandler:",
-      "args": {
-        "1": {
-	 "callable": {
-	  "arguments": {
-	   "0": { "typestr": "^v" }
-	 },
-	 "retval": {
-	  "typestr": "v"
-	 }
-	}
-       }
-      }
-     },
-     {
-      "class_method": false,
-      "selector": "deleteCookie:completionHandler:",
-      "args": {
-        "1": {
-	 "callable": {
-	  "arguments": {
-	   "0": { "typestr": "^v" }
-	 },
-	 "retval": {
-	  "typestr": "v"
-	 }
-	}
-       }
-      }
-     }
-    ]
-   },
-   "WKContentRuleListStore": {
-    "methods": [
-     {
-      "class_method": false,
-      "selector": "compileContentRuleListForIdentifier:encodedContentRuleList:completionHandler:",
-      "args": {
-        "2": {
-	 "callable": {
-	  "arguments": {
-	   "0": { "typestr": "^v" },
-	   "1": { "typestr": "@" },
-	   "2": { "typestr": "@" }
-	 },
-	 "retval": {
-	  "typestr": "v"
-	 }
-	}
-       }
-      }
-     },
-     {
-      "class_method": false,
-      "selector": "lookUpContentRuleListForIdentifier:completionHandler:",
-      "args": {
-        "1": {
-	 "callable": {
-	  "arguments": {
-	   "0": { "typestr": "^v" },
-	   "1": { "typestr": "@" },
-	   "2": { "typestr": "@" }
-	 },
-	 "retval": {
-	  "typestr": "v"
-	 }
-	}
-       }
-      }
-     },
-     {
-      "class_method": false,
-      "selector": "removeContentRuleListForIdentifier:completionHandler:",
-      "args": {
-        "1": {
-	 "callable": {
-	  "arguments": {
-	   "0": { "typestr": "^v" },
-	   "1": { "typestr": "@" }
-	 },
-	 "retval": {
-	  "typestr": "v"
-	 }
-	}
-       }
-      }
-     },
-     {
-      "class_method": false,
-      "selector": "getAvailableContentRuleListIdentifiers:",
-      "args": {
-        "0": {
-	 "callable": {
-	  "arguments": {
-	   "0": { "typestr": "^v" },
-	   "1": { "typestr": "@" }
-	 },
-	 "retval": {
-	  "typestr": "v"
-	 }
-	}
-       }
-      }
-     }
-    ]
-   },
    "DOMAttr": {
     "methods": [
      {
@@ -1628,128 +1462,161 @@
    "NSObject": {
     "methods": [
      {
-      "class_method": false,
-      "selector": "webView:runOpenPanelWithParameters:initiatedByFrame:completionHandler:",
       "args": {
-        "3": {
-	 "type_override": "@?",
-	 "callable": {
-	  "arguments": {
-	   "0": { "typestr": "^v" },
-	   "1": { "typestr": "@" }
-	 },
-	 "retval": {
-	  "typestr": "v"
-	 }
-	}
+       "3": {
+        "callable": {
+         "arguments": {
+          "0": {
+           "typestr": "^v"
+          },
+          "1": {
+           "typestr": "@"
+          }
+         },
+         "retval": {
+          "typestr": "v"
+         }
+        },
+        "type_override": "@?"
        }
-      }
+      },
+      "class_method": false,
+      "selector": "webView:runOpenPanelWithParameters:initiatedByFrame:completionHandler:"
      },
      {
-      "class_method": false,
-      "selector": "webView:runJavaScriptTextInputPanelWithPrompt:defaultText:initiatedByFrame:completionHandler:",
       "args": {
-        "4": {
-	 "type_override": "@?",
-	 "callable": {
-	  "arguments": {
-	   "0": { "typestr": "^v" }
-	 },
-	 "retval": {
-	  "typestr": "v"
-	 }
-	}
+       "4": {
+        "callable": {
+         "arguments": {
+          "0": {
+           "typestr": "^v"
+          }
+         },
+         "retval": {
+          "typestr": "v"
+         }
+        },
+        "type_override": "@?"
        }
-      }
+      },
+      "class_method": false,
+      "selector": "webView:runJavaScriptTextInputPanelWithPrompt:defaultText:initiatedByFrame:completionHandler:"
      },
      {
-      "class_method": false,
-      "selector": "webView:decidePolicyForNavigationAction:decisionHandler:",
       "args": {
-        "2": {
-	 "type_override": "@?",
-	 "callable": {
-	  "arguments": {
-	   "0": { "typestr": "^v" },
-	   "1": { "typestr": ["i", "q"] }
-	 },
-	 "retval": {
-	  "typestr": "v"
-	 }
-	}
+       "2": {
+        "callable": {
+         "arguments": {
+          "0": {
+           "typestr": "^v"
+          },
+          "1": {
+           "typestr": [
+            "i",
+            "q"
+           ]
+          }
+         },
+         "retval": {
+          "typestr": "v"
+         }
+        },
+        "type_override": "@?"
        }
-      }
+      },
+      "class_method": false,
+      "selector": "webView:decidePolicyForNavigationAction:decisionHandler:"
      },
      {
-      "class_method": false,
-      "selector": "webView:decidePolicyForNavigationResponse:decisionHandler:",
       "args": {
-        "2": {
-	 "type_override": "@?",
-	 "callable": {
-	  "arguments": {
-	   "0": { "typestr": "^v" },
-	   "1": { "typestr": ["i", "q"] }
-	 },
-	 "retval": {
-	  "typestr": "v"
-	 }
-	}
+       "2": {
+        "callable": {
+         "arguments": {
+          "0": {
+           "typestr": "^v"
+          },
+          "1": {
+           "typestr": [
+            "i",
+            "q"
+           ]
+          }
+         },
+         "retval": {
+          "typestr": "v"
+         }
+        },
+        "type_override": "@?"
        }
-      }
+      },
+      "class_method": false,
+      "selector": "webView:decidePolicyForNavigationResponse:decisionHandler:"
      },
      {
-      "class_method": false,
-      "selector": "webView:didReceiveAuthenticationChallenge:completionHandler:",
       "args": {
-        "2": {
-	 "type_override": "@?",
-	 "callable": {
-	  "arguments": {
-	   "0": { "typestr": "^v" },
-	   "1": { "typestr": ["i", "q"] },
-	   "2": { "typestr": "@" }
-	 },
-	 "retval": {
-	  "typestr": "v"
-	 }
-	}
+       "2": {
+        "callable": {
+         "arguments": {
+          "0": {
+           "typestr": "^v"
+          },
+          "1": {
+           "typestr": [
+            "i",
+            "q"
+           ]
+          },
+          "2": {
+           "typestr": "@"
+          }
+         },
+         "retval": {
+          "typestr": "v"
+         }
+        },
+        "type_override": "@?"
        }
-      }
+      },
+      "class_method": false,
+      "selector": "webView:didReceiveAuthenticationChallenge:completionHandler:"
      },
      {
-      "class_method": false,
-      "selector": "webView:runJavaScriptAlertPanelWithMessage:initiatedByFrame:completionHandler:",
       "args": {
-        "3": {
-	 "type_override": "@?",
-	 "callable": {
-	  "arguments": {
-	   "0": { "typestr": "^v" }
-	 },
-	 "retval": {
-	  "typestr": "v"
-	 }
-	}
+       "3": {
+        "callable": {
+         "arguments": {
+          "0": {
+           "typestr": "^v"
+          }
+         },
+         "retval": {
+          "typestr": "v"
+         }
+        },
+        "type_override": "@?"
        }
-      }
+      },
+      "class_method": false,
+      "selector": "webView:runJavaScriptAlertPanelWithMessage:initiatedByFrame:completionHandler:"
      },
      {
-      "class_method": false,
-      "selector": "webView:runJavaScriptConfirmPanelWithMessage:initiatedByFrame:completionHandler:",
       "args": {
-        "3": {
-	 "type_override": "@?",
-	 "callable": {
-	  "arguments": {
-	   "0": { "typestr": "^v" }
-	 },
-	 "retval": {
-	  "typestr": "v"
-	 }
-	}
+       "3": {
+        "callable": {
+         "arguments": {
+          "0": {
+           "typestr": "^v"
+          }
+         },
+         "retval": {
+          "typestr": "v"
+         }
+        },
+        "type_override": "@?"
        }
-      }
+      },
+      "class_method": false,
+      "selector": "webView:runJavaScriptConfirmPanelWithMessage:initiatedByFrame:completionHandler:"
      },
      {
       "args": {
@@ -2097,6 +1964,399 @@
        "type_override": "Z"
       },
       "selector": "webViewIsStatusBarVisible:"
+     }
+    ]
+   },
+   "WKContentRuleListStore": {
+    "methods": [
+     {
+      "args": {
+       "2": {
+        "callable": {
+         "arguments": {
+          "0": {
+           "typestr": "^v"
+          },
+          "1": {
+           "typestr": "@"
+          },
+          "2": {
+           "typestr": "@"
+          }
+         },
+         "retval": {
+          "typestr": "v"
+         }
+        }
+       }
+      },
+      "class_method": false,
+      "selector": "compileContentRuleListForIdentifier:encodedContentRuleList:completionHandler:"
+     },
+     {
+      "args": {
+       "1": {
+        "callable": {
+         "arguments": {
+          "0": {
+           "typestr": "^v"
+          },
+          "1": {
+           "typestr": "@"
+          },
+          "2": {
+           "typestr": "@"
+          }
+         },
+         "retval": {
+          "typestr": "v"
+         }
+        }
+       }
+      },
+      "class_method": false,
+      "selector": "lookUpContentRuleListForIdentifier:completionHandler:"
+     },
+     {
+      "args": {
+       "1": {
+        "callable": {
+         "arguments": {
+          "0": {
+           "typestr": "^v"
+          },
+          "1": {
+           "typestr": "@"
+          }
+         },
+         "retval": {
+          "typestr": "v"
+         }
+        }
+       }
+      },
+      "class_method": false,
+      "selector": "removeContentRuleListForIdentifier:completionHandler:"
+     },
+     {
+      "args": {
+       "0": {
+        "callable": {
+         "arguments": {
+          "0": {
+           "typestr": "^v"
+          },
+          "1": {
+           "typestr": "@"
+          }
+         },
+         "retval": {
+          "typestr": "v"
+         }
+        }
+       }
+      },
+      "class_method": false,
+      "selector": "getAvailableContentRuleListIdentifiers:"
+     }
+    ]
+   },
+   "WKHTTPCookieStore": {
+    "methods": [
+     {
+      "args": {
+       "0": {
+        "callable": {
+         "arguments": {
+          "0": {
+           "typestr": "^v"
+          },
+          "1": {
+           "typestr": "@"
+          }
+         },
+         "retval": {
+          "typestr": "v"
+         }
+        }
+       }
+      },
+      "class_method": false,
+      "selector": "getAllCookies:"
+     },
+     {
+      "args": {
+       "1": {
+        "callable": {
+         "arguments": {
+          "0": {
+           "typestr": "^v"
+          }
+         },
+         "retval": {
+          "typestr": "v"
+         }
+        }
+       }
+      },
+      "class_method": false,
+      "selector": "setCookie:completionHandler:"
+     },
+     {
+      "args": {
+       "1": {
+        "callable": {
+         "arguments": {
+          "0": {
+           "typestr": "^v"
+          }
+         },
+         "retval": {
+          "typestr": "v"
+         }
+        }
+       }
+      },
+      "class_method": false,
+      "selector": "deleteCookie:completionHandler:"
+     }
+    ]
+   },
+   "WKOpenPanelParameters": {
+    "methods": [
+     {
+      "class_method": false,
+      "retval": {
+       "type_override": "Z"
+      },
+      "selector": "allowsMultipleSelection"
+     },
+     {
+      "class_method": false,
+      "retval": {
+       "type_override": "Z"
+      },
+      "selector": "allowsDirectories"
+     }
+    ]
+   },
+   "WKPreferences": {
+    "methods": [
+     {
+      "args": {
+       "0": {
+        "type_override": "Z"
+       }
+      },
+      "class_method": false,
+      "selector": "setSafeBrowsingEnabled:"
+     },
+     {
+      "class_method": false,
+      "retval": {
+       "type_override": "Z"
+      },
+      "selector": "isSafeBrowsingEnabled"
+     },
+     {
+      "args": {
+       "0": {
+        "type_override": "Z"
+       }
+      },
+      "class_method": false,
+      "selector": "setTabFocusesLinks:"
+     },
+     {
+      "class_method": false,
+      "retval": {
+       "type_override": "Z"
+      },
+      "selector": "tabFocusesLinks"
+     }
+    ]
+   },
+   "WKWebView": {
+    "methods": [
+     {
+      "args": {
+       "0": {
+        "type_override": "Z"
+       }
+      },
+      "class_method": false,
+      "selector": "setAllowsLinkPreview:"
+     },
+     {
+      "class_method": false,
+      "retval": {
+       "type_override": "Z"
+      },
+      "selector": "allowsLinkPreview"
+     },
+     {
+      "class_method": false,
+      "retval": {
+       "type_override": "Z"
+      },
+      "selector": "handlesURLScheme:"
+     },
+     {
+      "args": {
+       "1": {
+        "callable": {
+         "arguments": {
+          "0": {
+           "type": "^v"
+          },
+          "1": {
+           "type": "@"
+          },
+          "2": {
+           "type": "@"
+          }
+         },
+         "retval": {
+          "type": "v"
+         }
+        }
+       }
+      },
+      "class_method": false,
+      "selector": "takeSnapshotWithConfiguration:completionHandler:"
+     },
+     {
+      "args": {
+       "1": {
+        "callable": {
+         "arguments": {
+          "0": {
+           "type": "^v"
+          },
+          "1": {
+           "type": "@"
+          },
+          "2": {
+           "type": "@"
+          }
+         },
+         "retval": {
+          "type": "v"
+         }
+        }
+       }
+      },
+      "class_method": false,
+      "selector": "evaluateJavaScript:completionHandler:"
+     },
+     {
+      "class_method": false,
+      "retval": {},
+      "selector": "serverTrust"
+     }
+    ]
+   },
+   "WKWebViewConfiguration": {
+    "methods": [
+     {
+      "class_method": false,
+      "retval": {
+       "type_override": "Z"
+      },
+      "selector": "allowsPictureInPictureMediaPlayback"
+     },
+     {
+      "class_method": false,
+      "retval": {
+       "type_override": "Z"
+      },
+      "selector": "allowsAirPlayForMediaPlayback"
+     },
+     {
+      "args": {
+       "0": {
+        "type_override": "Z"
+       }
+      },
+      "class_method": false,
+      "selector": "setAllowsPictureInPictureMediaPlayback:"
+     },
+     {
+      "args": {
+       "0": {
+        "type_override": "Z"
+       }
+      },
+      "class_method": false,
+      "selector": "setAllowsAirPlayForMediaPlayback:"
+     }
+    ]
+   },
+   "WKWebsiteDataStore": {
+    "methods": [
+     {
+      "class_method": false,
+      "retval": {
+       "type_override": "Z"
+      },
+      "selector": "isPersistent"
+     },
+     {
+      "args": {
+       "1": {
+        "callable": {
+         "arguments": {
+          "0": {
+           "type": "^v"
+          },
+          "1": {
+           "type": "@"
+          }
+         },
+         "retval": {
+          "type": "v"
+         }
+        }
+       }
+      },
+      "class_method": false,
+      "selector": "fetchDataRecordsOfTypes:completionHandler:"
+     },
+     {
+      "args": {
+       "2": {
+        "callable": {
+         "arguments": {
+          "0": {
+           "type": "^v"
+          }
+         },
+         "retval": {
+          "type": "v"
+         }
+        }
+       }
+      },
+      "class_method": false,
+      "selector": "removeDataOfTypes:forDataRecords:completionHandler:"
+     },
+     {
+      "args": {
+       "2": {
+        "callable": {
+         "arguments": {
+          "0": {
+           "type": "^v"
+          }
+         },
+         "retval": {
+          "type": "v"
+         }
+        }
+       }
+      },
+      "class_method": false,
+      "selector": "removeDataOfTypes:modifiedSince:completionHandler:"
      }
     ]
    },
@@ -2666,177 +2926,91 @@
       "selector": "supportsTextEncoding"
      }
     ]
+   }
+  },
+  "enum": {
+   "DOM_KEYFRAMES_RULE": {
+    "value": 7
    },
-   "WKPreferences": {
-    "methods": [
-     {
-      "class_method": false,
-      "args": {
-       "0": { "type_override": "Z" }
-      },
-      "selector": "setTabFocusesLinks:"
-     },
-     {
-      "class_method": false,
-      "retval": {
-       "type_override": "Z"
-      },
-      "selector": "tabFocusesLinks"
-     }
-    ]
+   "DOM_KEYFRAME_RULE": {
+    "value": 8
    },
-   "WKWebView": {
-    "methods": [
-     {
-      "class_method": false,
-      "args": {
-       "0": { "type_override": "Z" }
-      },
-      "selector": "setAllowsLinkPreview:"
-     },
-     {
-      "class_method": false,
-      "retval": {
-       "type_override": "Z"
-      },
-      "selector": "allowsLinkPreview"
-     },
-     {
-      "class_method": false,
-      "retval": {
-       "type_override": "Z"
-      },
-      "selector": "handlesURLScheme:"
-     },
-     {
-      "selector": "takeSnapshotWithConfiguration:completionHandler:",
-      "class_method": false,
-      "args": {
-       "1": {
-        "callable": {
-	 "arguments": {
-	  "0": { "type": "^v" },
-	  "1": { "type": "@" },
-	  "2": { "type": "@" }
-	 },
-         "retval": {
-          "type": "v"
-         }
-	}
-       }
-      }
-     },
-     {
-      "selector": "evaluateJavaScript:completionHandler:",
-      "class_method": false,
-      "args": {
-       "1": {
-        "callable": {
-	 "arguments": {
-	  "0": { "type": "^v" },
-	  "1": { "type": "@" },
-	  "2": { "type": "@" }
-	 },
-         "retval": {
-          "type": "v"
-         }
-	}
-       }
-      }
-     }
-    ]
+   "DOM_NAMESPACE_RULE": {
+    "value": 10
    },
-   "WKWebsiteDataStore": {
-    "methods": [
-     {
-      "class_method": false,
-      "retval": {
-       "type_override": "Z"
-      },
-      "selector": "isPersistent"
-     },
-     {
-      "selector": "fetchDataRecordsOfTypes:completionHandler:",
-      "class_method": false,
-      "args": {
-       "1": {
-        "callable": {
-	 "arguments": {
-	  "0": { "type": "^v" },
-	  "1": { "type": "@" }
-	 },
-         "retval": {
-          "type": "v"
-         }
-	}
-       }
-      }
-     },
-     {
-      "selector": "removeDataOfTypes:forDataRecords:completionHandler:",
-      "class_method": false,
-      "args": {
-       "2": {
-        "callable": {
-	 "arguments": {
-	  "0": { "type": "^v" }
-	 },
-         "retval": {
-          "type": "v"
-         }
-	}
-       }
-      }
-     },
-     {
-      "selector": "removeDataOfTypes:modifiedSince:completionHandler:",
-      "class_method": false,
-      "args": {
-       "2": {
-        "callable": {
-	 "arguments": {
-	  "0": { "type": "^v" }
-	 },
-         "retval": {
-          "type": "v"
-         }
-	}
-       }
-      }
-     }
-    ]
+   "DOM_SUPPORTS_RULE": {
+    "value": 12
    },
-   "WKWebViewConfiguration": {
-    "methods": [
-     {
-      "class_method": false,
-      "retval": {
-       "type_override": "Z"
-      },
-      "selector": "allowsPictureInPictureMediaPlayback"
-     },
-     {
-      "class_method": false,
-      "retval": {
-       "type_override": "Z"
-      },
-      "selector": "allowsAirPlayForMediaPlayback"
-     },
-     {
-      "class_method": false,
-      "args": {
-       "0": { "type_override": "Z" }
-      },
-      "selector": "setAllowsPictureInPictureMediaPlayback:"
-     },
-     {
-      "class_method": false,
-      "args": {
-       "0": { "type_override": "Z" }
-      },
-      "selector": "setAllowsAirPlayForMediaPlayback:"
-     }
-    ]
+   "DOM_WEBKIT_KEYFRAMES_RULE": {
+    "value": 7
+   },
+   "DOM_WEBKIT_KEYFRAME_RULE": {
+    "value": 8
+   },
+   "DOM_WEBKIT_REGION_RULE": {
+    "value": 16
+   },
+   "WKAudiovisualMediaTypeAudio": {
+    "value": 1
+   },
+   "WKAudiovisualMediaTypeNone": {
+    "value": 0
+   },
+   "WKAudiovisualMediaTypeVideo": {
+    "value": 2
+   },
+   "WKErrorContentRuleListStoreCompileFailed": {
+    "value": 6
+   },
+   "WKErrorContentRuleListStoreLookUpFailed": {
+    "value": 7
+   },
+   "WKErrorContentRuleListStoreRemoveFailed": {
+    "value": 8
+   },
+   "WKErrorContentRuleListStoreVersionMismatch": {
+    "value": 9
+   },
+   "WKErrorJavaScriptResultTypeIsUnsupported": {
+    "value": 5
+   },
+   "WKUserInterfaceDirectionPolicyContent": {
+    "value": 0
+   },
+   "WKUserInterfaceDirectionPolicySystem": {
+    "value": 1
+   }
+  },
+  "externs": {
+   "WKWebsiteDataTypeCookies": {
+    "typestr": "@"
+   },
+   "WKWebsiteDataTypeDiskCache": {
+    "typestr": "@"
+   },
+   "WKWebsiteDataTypeFetchCache": {
+    "typestr": "@"
+   },
+   "WKWebsiteDataTypeIndexedDBDatabases": {
+    "typestr": "@"
+   },
+   "WKWebsiteDataTypeLocalStorage": {
+    "typestr": "@"
+   },
+   "WKWebsiteDataTypeMemoryCache": {
+    "typestr": "@"
+   },
+   "WKWebsiteDataTypeOfflineWebApplicationCache": {
+    "typestr": "@"
+   },
+   "WKWebsiteDataTypeServiceWorkerRegistrations": {
+    "typestr": "@"
+   },
+   "WKWebsiteDataTypeSessionStorage": {
+    "typestr": "@"
+   },
+   "WKWebsiteDataTypeWebSQLDatabases": {
+    "typestr": "@"
    }
   },
   "formal_protocols": {},

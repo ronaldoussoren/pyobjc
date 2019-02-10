@@ -8,13 +8,13 @@ class TestJSTypedArray (TestCase):
     def test_functions(self):
         self.assertResultHasType(JavaScriptCore.JSObjectMakeTypedArray, JavaScriptCore.JSObjectRef.__typestr__)
         self.assertArgHasType(JavaScriptCore.JSObjectMakeTypedArray, 0, JavaScriptCore.JSContextRef.__typestr__)
-        self.assertArgHasType(JavaScriptCore.JSObjectMakeTypedArray, 1, objc._C_INT)
+        self.assertArgHasType(JavaScriptCore.JSObjectMakeTypedArray, 1, objc._C_UINT)
         self.assertArgHasType(JavaScriptCore.JSObjectMakeTypedArray, 2, objc._C_ULNG) # size_t
         self.assertArgHasType(JavaScriptCore.JSObjectMakeTypedArray, 3, b'o^' + JavaScriptCore.JSValueRef.__typestr__)
 
         self.assertResultHasType(JavaScriptCore.JSObjectMakeTypedArrayWithBytesNoCopy, JavaScriptCore.JSObjectRef.__typestr__)
         self.assertArgHasType(JavaScriptCore.JSObjectMakeTypedArrayWithBytesNoCopy, 0, JavaScriptCore.JSContextRef.__typestr__)
-        self.assertArgHasType(JavaScriptCore.JSObjectMakeTypedArrayWithBytesNoCopy, 1, objc._C_INT)
+        self.assertArgHasType(JavaScriptCore.JSObjectMakeTypedArrayWithBytesNoCopy, 1, objc._C_UINT)
         self.assertArgHasType(JavaScriptCore.JSObjectMakeTypedArrayWithBytesNoCopy, 2, b'n^v')
         self.assertArgHasType(JavaScriptCore.JSObjectMakeTypedArrayWithBytesNoCopy, 3, objc._C_ULNG) # size_t
         self.assertArgIsFunction(JavaScriptCore.JSObjectMakeTypedArrayWithBytesNoCopy, 4, b'vn^v^v', True)
@@ -23,13 +23,13 @@ class TestJSTypedArray (TestCase):
 
         self.assertResultHasType(JavaScriptCore.JSObjectMakeTypedArrayWithArrayBuffer, JavaScriptCore.JSObjectRef.__typestr__)
         self.assertArgHasType(JavaScriptCore.JSObjectMakeTypedArrayWithArrayBuffer, 0, JavaScriptCore.JSContextRef.__typestr__)
-        self.assertArgHasType(JavaScriptCore.JSObjectMakeTypedArrayWithArrayBuffer, 1, objc._C_INT)
+        self.assertArgHasType(JavaScriptCore.JSObjectMakeTypedArrayWithArrayBuffer, 1, objc._C_UINT)
         self.assertArgHasType(JavaScriptCore.JSObjectMakeTypedArrayWithArrayBuffer, 2, JavaScriptCore.JSObjectRef.__typestr__)
         self.assertArgHasType(JavaScriptCore.JSObjectMakeTypedArrayWithArrayBuffer, 3, b'o^' + JavaScriptCore.JSValueRef.__typestr__)
 
         self.assertResultHasType(JavaScriptCore.JSObjectMakeTypedArrayWithArrayBufferAndOffset, JavaScriptCore.JSObjectRef.__typestr__)
         self.assertArgHasType(JavaScriptCore.JSObjectMakeTypedArrayWithArrayBufferAndOffset, 0, JavaScriptCore.JSContextRef.__typestr__)
-        self.assertArgHasType(JavaScriptCore.JSObjectMakeTypedArrayWithArrayBufferAndOffset, 1, objc._C_INT)
+        self.assertArgHasType(JavaScriptCore.JSObjectMakeTypedArrayWithArrayBufferAndOffset, 1, objc._C_UINT)
         self.assertArgHasType(JavaScriptCore.JSObjectMakeTypedArrayWithArrayBufferAndOffset, 2, JavaScriptCore.JSObjectRef.__typestr__)
         self.assertArgHasType(JavaScriptCore.JSObjectMakeTypedArrayWithArrayBufferAndOffset, 3, objc._C_ULNG)  # size_t
         self.assertArgHasType(JavaScriptCore.JSObjectMakeTypedArrayWithArrayBufferAndOffset, 4, b'o^' + JavaScriptCore.JSValueRef.__typestr__)

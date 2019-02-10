@@ -92,7 +92,7 @@ static PyObject* call_NSNetService_addresses(
     PyObject* result;
     struct objc_super super;
     NSArray* res;
-    int len, i;
+    NSInteger len, i;
     NSData* item;
 
     if (!PyArg_ParseTuple(arguments, "")) {

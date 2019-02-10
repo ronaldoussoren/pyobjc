@@ -41,6 +41,12 @@ class TestDADisk (TestCase):
         self.assertIsInstance(DiskArbitration.kDADiskDescriptionBusNameKey, unicode)
         self.assertIsInstance(DiskArbitration.kDADiskDescriptionBusPathKey, unicode)
 
+    @min_os_level('10.14.14')
+    def test_constants10_14_4(self):
+        self.assertIsInstance(DiskArbitration.kDADiskDescriptionMediaEncryptedKey, unicode)
+        self.assertIsInstance(DiskArbitration.kDADiskDescriptionMediaEncryptionDetailKey, unicode)
+        self.assertIsInstance(DiskArbitration.kDADiskDescriptionDeviceTDMLockedKey, unicode)
+
     @expectedFailureIf(os_release().rsplit('.', 1)[0] == '10.10')
     @min_os_level('10.10')
     def test_types(self):

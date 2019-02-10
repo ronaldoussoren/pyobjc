@@ -168,5 +168,9 @@ class TestSecTrusted (TestCase):
         self.assertArgHasType(Security.SecTrustEvaluateWithError, 0, objc._C_ID)
         self.assertArgHasType(Security.SecTrustEvaluateWithError, 1, objc._C_OUT + objc._C_PTR + objc._C_ID)
 
+    @min_os_level('10.14.2')
+    def test_functions_10_14_2(self):
+        Security.SecTrustSetSignedCertificateTimestamps
+
 if __name__ == "__main__":
     main()
