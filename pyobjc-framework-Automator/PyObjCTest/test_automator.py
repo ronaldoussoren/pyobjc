@@ -7,14 +7,14 @@ import Automator
 
 class TestAutomator (TestCase):
     def testClasses(self):
-        self.assert_( hasattr(Automator, 'AMAction') )
-        self.assert_( isinstance(Automator.AMAction, objc.objc_class) )
+        self.assertHasAttr(Automator, 'AMAction')
+        self.assertIsInstance(Automator.AMAction, objc.objc_class)
 
-        self.assert_( hasattr(Automator, 'AMAppleScriptAction') )
-        self.assert_( isinstance(Automator.AMAppleScriptAction, objc.objc_class) )
+        self.assertHasAttr(Automator, 'AMAppleScriptAction')
+        self.assertIsInstance(Automator.AMAppleScriptAction, objc.objc_class)
 
     def testInformalProtocols(self):
-        self.assertFalse(hasattr(Automator, 'protocols'))
+        self.assertNotHasAttr(Automator, 'protocols')
 
 
 if __name__ == "__main__":

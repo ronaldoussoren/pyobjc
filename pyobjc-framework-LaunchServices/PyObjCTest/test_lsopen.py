@@ -1,8 +1,12 @@
 
 from PyObjCTools.TestSupport import *
-import LaunchServices
 import sys
 import os
+
+import warnings
+with warnings.catch_warnings():
+    warnings.filterwarnings("ignore")
+    import LaunchServices
 
 class TestLSOpen (TestCase):
     def setUp(self):
@@ -68,7 +72,7 @@ class TestLSOpen (TestCase):
 
         self.assertArgIsOut(LaunchServices.LSOpenCFURLRef, 1)
         ok, u = LaunchServices.LSOpenCFURLRef(url, None)
-        self.assertEquals(ok, 0)
+        self.assertEqual(ok, 0)
         self.assertIsInstance(u, LaunchServices.CFURLRef)
 
         self.assertArgIsIn(LaunchServices.LSOpenItemsWithRole, 0)
@@ -84,7 +88,7 @@ class TestLSOpen (TestCase):
         for x in psns:
             # Actually a ProcessSerialNumber, but those aren't wrapped yet
             self.assertIsInstance(x, tuple)
-            self.assertEquals(len(x), 2)
+            self.assertEqual(len(x), 2)
             self.assertIsInstance(x[0], (int, long))
             self.assertIsInstance(x[1], (int, long))
 
@@ -93,12 +97,12 @@ class TestLSOpen (TestCase):
         self.assertArgIsOut(LaunchServices.LSOpenURLsWithRole, 4)
         self.assertArgSizeInArg(LaunchServices.LSOpenURLsWithRole, 4, 5)
         ok, psns = LaunchServices.LSOpenURLsWithRole([url], LaunchServices.kLSRolesAll, None, None, None, 1)
-        self.assertEquals(ok, 0)
+        self.assertEqual(ok, 0)
         self.assertIsInstance(psns, (list, tuple))
         for x in psns:
             # Actually a ProcessSerialNumber, but those aren't wrapped yet
             self.assertIsInstance(x, tuple)
-            self.assertEquals(len(x), 2)
+            self.assertEqual(len(x), 2)
             self.assertIsInstance(x[0], (int, long))
             self.assertIsInstance(x[1], (int, long))
 
@@ -119,7 +123,7 @@ class TestLSOpen (TestCase):
         # Call will fail for now, 'application' is an FSRef pointers and
         # pyobjc-core isn't smart enough to deal with that.
         ok, psn = LaunchServices.LSOpenApplication(params, None)
-        self.assertEquals(ok, 0)
+        self.assertEqual(ok, 0)
         self.assertIsInstance(psn, (int, long))
 
 

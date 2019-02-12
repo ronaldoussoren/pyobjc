@@ -39,7 +39,7 @@ class TestCTFramesetter (TestCase):
                 setter, CFRange(0, 2), None, CGSize(100, 500),
                 None)
         self.assertIsInstance(r, tuple)
-        self.assertEquals(len(r), 2)
+        self.assertEqual(len(r), 2)
 
         size, range = r
 

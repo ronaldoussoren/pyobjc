@@ -2,9 +2,12 @@
 Some simple tests to check that the framework is properly wrapped.
 '''
 import objc
+import warnings
 from PyObjCTools.TestSupport import *
 
-import DictionaryServices
+with warnings.catch_warnings():
+    warnings.filterwarnings("ignore")
+    import DictionaryServices
 
 class TestDictionaryServices (TestCase):
     def testClasses(self):

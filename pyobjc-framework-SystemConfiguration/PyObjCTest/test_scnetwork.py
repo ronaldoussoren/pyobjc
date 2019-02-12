@@ -11,13 +11,13 @@ def resolver_available():
 
 class TestSCNetwork (TestCase):
     def testConstants(self):
-        self.assertEquals(kSCNetworkFlagsTransientConnection, 1 << 0)
-        self.assertEquals(kSCNetworkFlagsReachable, 1<<1)
-        self.assertEquals(kSCNetworkFlagsConnectionRequired, 1<<2)
-        self.assertEquals(kSCNetworkFlagsConnectionAutomatic, 1<<3)
-        self.assertEquals(kSCNetworkFlagsInterventionRequired, 1<<4)
-        self.assertEquals(kSCNetworkFlagsIsLocalAddress, 1<<16)
-        self.assertEquals(kSCNetworkFlagsIsDirect, 1<<17)
+        self.assertEqual(kSCNetworkFlagsTransientConnection, 1 << 0)
+        self.assertEqual(kSCNetworkFlagsReachable, 1<<1)
+        self.assertEqual(kSCNetworkFlagsConnectionRequired, 1<<2)
+        self.assertEqual(kSCNetworkFlagsConnectionAutomatic, 1<<3)
+        self.assertEqual(kSCNetworkFlagsInterventionRequired, 1<<4)
+        self.assertEqual(kSCNetworkFlagsIsLocalAddress, 1<<16)
+        self.assertEqual(kSCNetworkFlagsIsDirect, 1<<17)
 
     def testHardFunctionsNoHost(self):
         self.assertRaises(socket.gaierror, SCNetworkCheckReachabilityByAddress,

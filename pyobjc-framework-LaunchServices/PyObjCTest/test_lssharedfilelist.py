@@ -1,8 +1,12 @@
 
 from PyObjCTools.TestSupport import *
-import LaunchServices
 
 import os
+
+import warnings
+with warnings.catch_warnings():
+    warnings.filterwarnings("ignore")
+    import LaunchServices
 
 class TestLSSharedFileList (TestCase):
     def testTypes(self):

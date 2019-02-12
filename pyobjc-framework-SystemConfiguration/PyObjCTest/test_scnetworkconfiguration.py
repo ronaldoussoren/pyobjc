@@ -35,11 +35,11 @@ class TestSCNetworkConfiguration (TestCase):
 
         self.assertTrue(isinstance(kSCNetworkInterfaceIPv4, SCNetworkInterfaceRef))
 
-        self.assertEquals(kSCBondStatusOK, 0)
-        self.assertEquals(kSCBondStatusLinkInvalid, 1)
-        self.assertEquals(kSCBondStatusNoPartner, 2)
-        self.assertEquals(kSCBondStatusNotInActiveGroup, 3)
-        self.assertEquals(kSCBondStatusUnknown, 999)
+        self.assertEqual(kSCBondStatusOK, 0)
+        self.assertEqual(kSCBondStatusLinkInvalid, 1)
+        self.assertEqual(kSCBondStatusNoPartner, 2)
+        self.assertEqual(kSCBondStatusNotInActiveGroup, 3)
+        self.assertEqual(kSCBondStatusUnknown, 999)
 
         self.assertTrue(isinstance(kSCBondStatusDeviceAggregationStatus, unicode))
         self.assertTrue(isinstance(kSCBondStatusDeviceCollecting, unicode))
@@ -71,7 +71,7 @@ class TestSCNetworkConfiguration (TestCase):
         for iface in r:
             if SCNetworkInterfaceGetBSDName(iface).startswith('en'):
                 break
-        
+
         r = SCNetworkInterfaceGetSupportedInterfaceTypes(iface)
         self.assertTrue(isinstance(r, CFArrayRef))
         self.assertTrue(isinstance(r[0], unicode))
@@ -202,7 +202,7 @@ class TestSCNetworkConfiguration (TestCase):
             self.assertEqual(r, a[0])
 
             t = SCVLANInterfaceGetTag(iface)
-            self.assertEquals(t, 99)
+            self.assertEqual(t, 99)
 
             t = SCVLANInterfaceGetOptions(iface)
             self.assertTrue(t is None or isinstance(t, CFDictionaryRef))

@@ -29,24 +29,24 @@ class TestScreenSaver (TestCase):
         outerRect = ScreenSaver.NSMakeRect(0, 0, 50, 60)
 
         res = fn(innerRect, outerRect)
-        self.assert_(isinstance(res, ScreenSaver.NSRect))
-        self.assertEquals(res, ScreenSaver.NSMakeRect(15, 15.0, 20.0, 30.0))
+        self.assertIsInstance(res, ScreenSaver.NSRect)
+        self.assertEqual(res, ScreenSaver.NSMakeRect(15, 15.0, 20.0, 30.0))
 
         fn = ScreenSaver.SSRandomFloatBetween
         for _ in range(10):
             r = fn(1.0, 20.5)
-            self.assert_(1.0 <= r <= 20.5)
-            self.assert_(isinstance(r, float))
+            self.assertTrue(1.0 <= r <= 20.5)
+            self.assertIsInstance(r, float)
 
         fn = ScreenSaver.SSRandomIntBetween
         for _ in range(10):
             r = fn(-10, 20)
-            self.assert_(-10 <= r <= 20)
-            self.assert_(isinstance(r, (int, long)))
+            self.assertTrue(-10 <= r <= 20)
+            self.assertIsInstance(r, (int, long))
 
         fn = ScreenSaver.SSRandomPointForSizeWithinRect
         r = fn(ScreenSaver.NSMakeSize(10, 10), ScreenSaver.NSMakeRect(20, 20, 100, 100))
-        self.assert_(isinstance(r, ScreenSaver.NSPoint))
+        self.assertIsInstance(r, ScreenSaver.NSPoint)
 
 
 if __name__ == "__main__":

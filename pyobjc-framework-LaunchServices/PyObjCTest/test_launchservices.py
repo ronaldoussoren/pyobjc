@@ -3,51 +3,55 @@ Some simple tests to check that the framework is properly wrapped.
 '''
 import objc
 from PyObjCTools.TestSupport import *
-import LaunchServices
+
+import warnings
+with warnings.catch_warnings():
+    warnings.filterwarnings("ignore")
+    import LaunchServices
 
 class TestLaunchServices (TestCase):
     def testValues(self):
         # Use this to test for a number of enum and #define values
-        self.assert_( hasattr(LaunchServices, 'kLSRequestAllInfo') )
-        self.assert_( isinstance(LaunchServices.kLSRequestAllInfo, (int, long)) )
+        self.assertHasAttr(LaunchServices, 'kLSRequestAllInfo')
+        self.assertIsInstance(LaunchServices.kLSRequestAllInfo, (int, long))
         # Note: the header file seems to indicate otherwise but the value
         # really is a signed integer!
-        self.assertEquals(LaunchServices.kLSRequestAllInfo, 0xffffffff)
+        self.assertEqual(LaunchServices.kLSRequestAllInfo, 0xffffffff)
 
-        self.assert_( hasattr(LaunchServices, 'kLSLaunchInProgressErr') )
-        self.assert_( isinstance(LaunchServices.kLSLaunchInProgressErr, (int, long)) )
-        self.assertEquals(LaunchServices.kLSLaunchInProgressErr, -10818)
+        self.assertHasAttr(LaunchServices, 'kLSLaunchInProgressErr')
+        self.assertIsInstance(LaunchServices.kLSLaunchInProgressErr, (int, long))
+        self.assertEqual(LaunchServices.kLSLaunchInProgressErr, -10818)
 
 
-        self.assert_( hasattr(LaunchServices, 'kLSInvalidExtensionIndex') )
-        self.assert_( isinstance(LaunchServices.kLSInvalidExtensionIndex, (int, long)) )
+        self.assertHasAttr(LaunchServices, 'kLSInvalidExtensionIndex')
+        self.assertIsInstance(LaunchServices.kLSInvalidExtensionIndex, (int, long))
 
 
     def testVariables(self):
-        self.assert_( hasattr(LaunchServices, 'kUTTypeItem') )
-        self.assert_( isinstance(LaunchServices.kUTTypeItem, unicode) )
+        self.assertHasAttr(LaunchServices, 'kUTTypeItem')
+        self.assertIsInstance(LaunchServices.kUTTypeItem, unicode)
 
-        self.assert_( hasattr(LaunchServices, 'kUTTypeApplication') )
-        self.assert_( isinstance(LaunchServices.kUTTypeApplication, unicode) )
+        self.assertHasAttr(LaunchServices, 'kUTTypeApplication')
+        self.assertIsInstance(LaunchServices.kUTTypeApplication, unicode)
 
-        self.assert_( hasattr(LaunchServices, 'kUTExportedTypeDeclarationsKey') )
-        self.assert_( isinstance(LaunchServices.kUTExportedTypeDeclarationsKey, unicode) )
+        self.assertHasAttr(LaunchServices, 'kUTExportedTypeDeclarationsKey')
+        self.assertIsInstance(LaunchServices.kUTExportedTypeDeclarationsKey, unicode)
 
     def testFunctions(self):
-        self.assert_( hasattr(LaunchServices, 'UTTypeEqual') )
-        self.assert_( isinstance(LaunchServices.UTTypeEqual, objc.function) )
+        self.assertHasAttr(LaunchServices, 'UTTypeEqual')
+        self.assertIsInstance(LaunchServices.UTTypeEqual, objc.function)
 
-        self.assert_( hasattr(LaunchServices, 'UTCreateStringForOSType') )
-        self.assert_( isinstance(LaunchServices.UTCreateStringForOSType, objc.function) )
+        self.assertHasAttr(LaunchServices, 'UTCreateStringForOSType')
+        self.assertIsInstance(LaunchServices.UTCreateStringForOSType, objc.function)
 
-        self.assert_( hasattr(LaunchServices, 'LSSetDefaultHandlerForURLScheme') )
-        self.assert_( isinstance(LaunchServices.LSSetDefaultHandlerForURLScheme, objc.function) )
+        self.assertHasAttr(LaunchServices, 'LSSetDefaultHandlerForURLScheme')
+        self.assertIsInstance(LaunchServices.LSSetDefaultHandlerForURLScheme, objc.function)
 
-        self.assert_( hasattr(LaunchServices, '_LSCopyAllApplicationURLs') )
-        self.assert_( isinstance(LaunchServices._LSCopyAllApplicationURLs, objc.function) )
+        self.assertHasAttr(LaunchServices, '_LSCopyAllApplicationURLs')
+        self.assertIsInstance(LaunchServices._LSCopyAllApplicationURLs, objc.function)
 
         arr = LaunchServices._LSCopyAllApplicationURLs(None)
-        self.assert_( isinstance(arr, objc.lookUpClass('NSArray') ) )
+        self.assertIsInstance(arr, objc.lookUpClass('NSArray'))
         for a in arr:
             if str(a) == 'file://localhost/Applications/Calculator.app/':
                 break
@@ -57,8 +61,8 @@ class TestLaunchServices (TestCase):
             self.fail("No Calculator.app?")
 
         fn = LaunchServices.LSGetExtensionInfo
-        self.assertEquals( fn(10, b'hello.text'.decode('latin1'), None), (0, 6) )
-        self.assertEquals( fn(10, 'hello.text', None), (0, 6) )
+        self.assertEqual(fn(10, b'hello.text'.decode('latin1'), None), (0, 6))
+        self.assertEqual(fn(10, 'hello.text', None), (0, 6))
 
 if __name__ == "__main__":
     main()

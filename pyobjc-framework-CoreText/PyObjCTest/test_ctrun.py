@@ -99,7 +99,7 @@ class TestCTRun (TestCase):
 
         r = CTRunGetAdvances(run, CFRange(1, 3), None)
         self.assertIsInstance(r, (list, tuple))
-        self.assertEquals(len(r), 3)
+        self.assertEqual(len(r), 3)
         for i in range(3):
             self.assertIsInstance(r[i], CGSize)
 

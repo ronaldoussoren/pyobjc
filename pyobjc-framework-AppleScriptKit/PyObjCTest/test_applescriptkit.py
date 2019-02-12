@@ -7,8 +7,8 @@ import AppleScriptKit
 
 class TestAppleScriptKit (TestCase):
     def testClasses(self):
-        self.assert_( hasattr(AppleScriptKit, 'ASKPluginObject') )
-        self.assert_( isinstance(AppleScriptKit.ASKPluginObject, objc.objc_class) )
+        self.assertHasAttr(AppleScriptKit, 'ASKPluginObject')
+        self.assertIsInstance(AppleScriptKit.ASKPluginObject, objc.objc_class)
 
 if __name__ == "__main__":
     main()

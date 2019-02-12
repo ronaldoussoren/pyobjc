@@ -7,24 +7,24 @@ import CoreData
 
 class TestCoreData (TestCase):
     def testClasses(self):
-        self.assert_( hasattr(CoreData, 'NSAttributeDescription') )
-        self.assert_( isinstance(CoreData.NSAttributeDescription, objc.objc_class) )
+        self.assertHasAttr(CoreData, 'NSAttributeDescription')
+        self.assertIsInstance(CoreData.NSAttributeDescription, objc.objc_class)
 
     def testValues(self):
-        self.assert_( hasattr(CoreData, 'NSCoreDataVersionNumber10_4_3') )
-        self.assert_( isinstance(CoreData.NSCoreDataVersionNumber10_4_3, float) )
-        self.assertEquals(CoreData.NSCoreDataVersionNumber10_4_3, 77.0)
+        self.assertHasAttr(CoreData, 'NSCoreDataVersionNumber10_4_3')
+        self.assertIsInstance(CoreData.NSCoreDataVersionNumber10_4_3, float)
+        self.assertEqual(CoreData.NSCoreDataVersionNumber10_4_3, 77.0)
 
-        self.assert_( hasattr(CoreData, 'NSValidationMultipleErrorsError') )
-        self.assert_( isinstance(CoreData.NSValidationMultipleErrorsError, (int, long)) )
-        self.assertEquals(CoreData.NSValidationMultipleErrorsError, 1560)
+        self.assertHasAttr(CoreData, 'NSValidationMultipleErrorsError')
+        self.assertIsInstance(CoreData.NSValidationMultipleErrorsError, (int, long))
+        self.assertEqual(CoreData.NSValidationMultipleErrorsError, 1560)
 
     def testVariables(self):
-        self.assert_( hasattr(CoreData, 'NSCoreDataVersionNumber') )
-        self.assert_( isinstance(CoreData.NSCoreDataVersionNumber, float) )
+        self.assertHasAttr(CoreData, 'NSCoreDataVersionNumber')
+        self.assertIsInstance(CoreData.NSCoreDataVersionNumber, float)
 
-        self.assert_( hasattr(CoreData, 'NSDetailedErrorsKey') )
-        self.assert_( isinstance(CoreData.NSDetailedErrorsKey, unicode) )
+        self.assertHasAttr(CoreData, 'NSDetailedErrorsKey')
+        self.assertIsInstance(CoreData.NSDetailedErrorsKey, unicode)
 
 if __name__ == "__main__":
     main()

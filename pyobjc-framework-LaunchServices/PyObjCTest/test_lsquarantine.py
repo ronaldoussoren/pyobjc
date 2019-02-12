@@ -1,6 +1,10 @@
 
 from PyObjCTools.TestSupport import *
-import LaunchServices
+
+import warnings
+with warnings.catch_warnings():
+    warnings.filterwarnings("ignore")
+    import LaunchServices
 
 class TestLSQuarantine (TestCase):
     def testConstants(self):

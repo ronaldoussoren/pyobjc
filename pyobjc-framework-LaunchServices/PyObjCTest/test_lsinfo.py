@@ -1,8 +1,12 @@
 
 from PyObjCTools.TestSupport import *
-import LaunchServices
 import sys
 import os
+
+import warnings
+with warnings.catch_warnings():
+    warnings.filterwarnings("ignore")
+    import LaunchServices
 
 class TestLSInfo (TestCase):
     def setUp(self):
@@ -125,29 +129,29 @@ class TestLSInfo (TestCase):
 
         self.assertArgIsOut(LaunchServices.LSGetExtensionInfo, 2)
         ok, info = LaunchServices.LSGetExtensionInfo(len(self.path), self.path, None)
-        self.failUnlessEqual(ok, 0)
-        self.failUnlessEqual(info, self.path.rindex('.')+1)
+        self.assertEqual(ok, 0)
+        self.assertEqual(info, self.path.rindex('.')+1)
 
         self.assertArgIsOut(LaunchServices.LSCopyDisplayNameForURL, 1)
         self.assertArgIsCFRetained(LaunchServices.LSCopyDisplayNameForURL, 1)
         ok, info = LaunchServices.LSCopyDisplayNameForURL(url, None)
-        self.assertEquals(ok, 0)
+        self.assertEqual(ok, 0)
         self.assertIsInstance(info, unicode)
 
         self.assertArgIsBOOL(LaunchServices.LSSetExtensionHiddenForURL, 1)
         ok = LaunchServices.LSSetExtensionHiddenForURL(url, True)
-        self.assertEquals(ok, 0)
+        self.assertEqual(ok, 0)
 
         self.assertArgIsOut(LaunchServices.LSCopyKindStringForURL, 1)
         self.assertArgIsCFRetained(LaunchServices.LSCopyKindStringForURL, 1)
         ok, info = LaunchServices.LSCopyKindStringForURL(url, None)
-        self.assertEquals(ok, 0)
+        self.assertEqual(ok, 0)
         self.assertIsInstance(info, unicode)
 
         self.assertArgIsOut(LaunchServices.LSCopyKindStringForTypeInfo, 3)
         self.assertArgIsCFRetained(LaunchServices.LSCopyKindStringForTypeInfo, 3)
         ok, info = LaunchServices.LSCopyKindStringForTypeInfo(LaunchServices.kLSUnknownType, LaunchServices.kLSUnknownCreator, "jpg", None)
-        self.assertEquals(ok, 0)
+        self.assertEqual(ok, 0)
         self.assertIsInstance(info, unicode)
 
         self.assertArgIsOut(LaunchServices.LSCopyKindStringForMIMEType, 1)
@@ -155,7 +159,7 @@ class TestLSInfo (TestCase):
         ok, info = LaunchServices.LSCopyKindStringForMIMEType("text/plain", None)
         self.assertIsInstance(ok, (int, long))
         # XXX: For some reason this fails sometimes...
-        #self.assertEquals(ok, 0)
+        #self.assertEqual(ok, 0)
         self.assertIsInstance(info, (unicode, type(None)))
 
 
@@ -164,21 +168,21 @@ class TestLSInfo (TestCase):
         self.assertArgIsCFRetained(LaunchServices.LSGetApplicationForInfo, 5)
 
         ok, ref, info_url = LaunchServices.LSGetApplicationForInfo(LaunchServices.kLSUnknownType, LaunchServices.kLSUnknownCreator, "txt", LaunchServices.kLSRolesAll, None, None)
-        self.assertEquals(ok, 0)
+        self.assertEqual(ok, 0)
         self.assertIsInstance(ref, objc.FSRef)
         self.assertIsInstance(info_url, LaunchServices.CFURLRef)
 
         self.assertArgIsOut(LaunchServices.LSCopyApplicationForMIMEType, 2)
         self.assertArgIsCFRetained(LaunchServices.LSCopyApplicationForMIMEType, 2)
         ok, info_url = LaunchServices.LSCopyApplicationForMIMEType("text/plain", LaunchServices.kLSRolesAll, None)
-        self.assertEquals(ok, 0)
+        self.assertEqual(ok, 0)
         self.assertIsInstance(info_url, LaunchServices.CFURLRef)
 
         self.assertArgIsOut(LaunchServices.LSGetApplicationForURL, 2)
         self.assertArgIsOut(LaunchServices.LSGetApplicationForURL, 3)
         self.assertArgIsCFRetained(LaunchServices.LSGetApplicationForURL, 3)
         ok, ref, info_url = LaunchServices.LSGetApplicationForURL(url, LaunchServices.kLSRolesAll, None, None)
-        self.assertEquals(ok, 0)
+        self.assertEqual(ok, 0)
         self.assertIsInstance(ref, objc.FSRef)
         self.assertIsInstance(info_url, LaunchServices.CFURLRef)
 
@@ -187,7 +191,7 @@ class TestLSInfo (TestCase):
         self.assertArgIsCFRetained(LaunchServices.LSFindApplicationForInfo, 4)
         ok, ref, info_url = LaunchServices.LSFindApplicationForInfo(LaunchServices.kLSUnknownCreator, None, "foo.app", None, None)
         # XXX: The code looks correct but fails, however the corresponding C code also fails.
-        #self.assertEquals(ok, 0)
+        #self.assertEqual(ok, 0)
         self.assertIsInstance(ok, (int, long))
         if ref is not None:
             self.assertIsInstance(ref, objc.FSRef)
@@ -261,24 +265,24 @@ class TestLSInfo (TestCase):
         self.assertArgIsOut(LaunchServices.LSCopyDisplayNameForRef, 1)
         self.assertArgIsCFRetained(LaunchServices.LSCopyDisplayNameForRef, 1)
         ok, info = LaunchServices.LSCopyDisplayNameForRef(ref, None)
-        self.assertEquals(ok, 0)
+        self.assertEqual(ok, 0)
         self.assertIsInstance(info, unicode)
 
         self.assertArgIsBOOL(LaunchServices.LSSetExtensionHiddenForRef, 1)
         ok = LaunchServices.LSSetExtensionHiddenForRef(ref, True)
-        self.assertEquals(ok, 0)
+        self.assertEqual(ok, 0)
 
         self.assertArgIsOut(LaunchServices.LSCopyKindStringForRef, 1)
         self.assertArgIsCFRetained(LaunchServices.LSCopyKindStringForRef, 1)
         ok, info = LaunchServices.LSCopyKindStringForRef(ref, None)
-        self.assertEquals(ok, 0)
+        self.assertEqual(ok, 0)
         self.assertIsInstance(info, unicode)
 
         self.assertArgIsOut(LaunchServices.LSGetApplicationForItem, 2)
         self.assertArgIsOut(LaunchServices.LSGetApplicationForItem, 3)
         self.assertArgIsCFRetained(LaunchServices.LSGetApplicationForItem, 3)
         ok, info_ref, info_url = LaunchServices.LSGetApplicationForItem(ref, LaunchServices.kLSRolesAll, None, None)
-        self.assertEquals(ok, 0)
+        self.assertEqual(ok, 0)
         self.assertIsInstance(info_ref, objc.FSRef)
         self.assertIsInstance(info_url, LaunchServices.CFURLRef)
 
@@ -286,7 +290,7 @@ class TestLSInfo (TestCase):
         app_ref = objc.FSRef.from_pathname('/Applications/TextEdit.app')
         self.assertArgIsOut(LaunchServices.LSCanRefAcceptItem, 4)
         ok, accepts = LaunchServices.LSCanRefAcceptItem(ref, app_ref, LaunchServices.kLSRolesAll, LaunchServices.kLSAcceptDefault, None)
-        self.assertEquals(ok, 0)
+        self.assertEqual(ok, 0)
         self.assertIsInstance(accepts, bool)
 
         ok = LaunchServices.LSRegisterFSRef(ref, False)
@@ -294,7 +298,7 @@ class TestLSInfo (TestCase):
 
         self.assertArgHasType(LaunchServices.LSCopyItemAttribute, 3, b'o^@')
         ok, value = LaunchServices.LSCopyItemAttribute(ref, LaunchServices.kLSRolesAll, LaunchServices.kLSItemExtensionIsHidden, None)
-        self.assertEquals(ok, 0)
+        self.assertEqual(ok, 0)
         self.assertIsInstance(value, bool)
 
 

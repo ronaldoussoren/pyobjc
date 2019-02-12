@@ -7,33 +7,33 @@ import WebKit
 
 class TestWebKit (TestCase):
     def testClasses(self):
-        self.assert_( hasattr(WebKit, 'WebResource') )
-        self.assert_( isinstance(WebKit.WebResource, objc.objc_class) )
+        self.assertHasAttr(WebKit, 'WebResource')
+        self.assertIsInstance(WebKit.WebResource, objc.objc_class)
 
-        self.assert_( hasattr(WebKit, 'DOMHTMLObjectElement') )
-        self.assert_( isinstance(WebKit.DOMHTMLObjectElement, objc.objc_class) )
+        self.assertHasAttr(WebKit, 'DOMHTMLObjectElement')
+        self.assertIsInstance(WebKit.DOMHTMLObjectElement, objc.objc_class)
 
     def testValues(self):
-        self.assert_( hasattr(WebKit, 'DOM_CSS_PERCENTAGE') )
-        self.assert_( isinstance(WebKit.DOM_CSS_PERCENTAGE, (int, long)) )
-        self.assertEquals(WebKit.DOM_CSS_PERCENTAGE, 2)
+        self.assertHasAttr(WebKit, 'DOM_CSS_PERCENTAGE')
+        self.assertIsInstance(WebKit.DOM_CSS_PERCENTAGE, (int, long))
+        self.assertEqual(WebKit.DOM_CSS_PERCENTAGE, 2)
 
-        self.assert_( hasattr(WebKit, 'DOM_CSS_VALUE_LIST') )
-        self.assert_( isinstance(WebKit.DOM_CSS_VALUE_LIST, (int, long)) )
-        self.assertEquals(WebKit.DOM_CSS_VALUE_LIST, 2)
+        self.assertHasAttr(WebKit, 'DOM_CSS_VALUE_LIST')
+        self.assertIsInstance(WebKit.DOM_CSS_VALUE_LIST, (int, long))
+        self.assertEqual(WebKit.DOM_CSS_VALUE_LIST, 2)
 
-        self.assert_( hasattr(WebKit, 'WebViewInsertActionDropped') )
-        self.assert_( isinstance(WebKit.WebViewInsertActionDropped, (int, long)) )
+        self.assertHasAttr(WebKit, 'WebViewInsertActionDropped')
+        self.assertIsInstance(WebKit.WebViewInsertActionDropped, (int, long))
 
 
     def testVariables(self):
-        self.assert_( hasattr(WebKit, 'DOMRangeException') )
-        self.assert_( isinstance(WebKit.DOMRangeException, unicode) )
+        self.assertHasAttr(WebKit, 'DOMRangeException')
+        self.assertIsInstance(WebKit.DOMRangeException, unicode)
 
     @onlyOn32Bit
     def testFunctions(self):
-        self.assert_( hasattr(WebKit, 'WebConvertNSImageToCGImageRef') )
-        self.assert_(isinstance(WebKit.WebConvertNSImageToCGImageRef, objc.function) )
+        self.assertHasAttr(WebKit, 'WebConvertNSImageToCGImageRef')
+        self.assertIsInstance(WebKit.WebConvertNSImageToCGImageRef, objc.function)
 
     @min_sdk_level('10.6')
     def testProtocols(self):

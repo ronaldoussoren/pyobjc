@@ -132,7 +132,7 @@ class oc_test (test.test):
 
         from pkg_resources import EntryPoint
         loader_ep = EntryPoint.parse("x="+self.test_loader)
-        loader_class = loader_ep.load(require=False)
+        loader_class = loader_ep.resolve()
 
         import warnings
         warnings.simplefilter("error")
