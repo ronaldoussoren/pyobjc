@@ -53,6 +53,8 @@ class GetAttrMap (object):
         self._container = container
 
     def __getitem__(self, key):
+        if key == 'CFSTR':
+            return lambda v: v.decode("utf-8")
         try:
             return getattr(self._container, key)
         except AttributeError:
@@ -409,6 +411,8 @@ class ObjCLazyModule (ModuleType):
                     result = objc._FLT_MAX
                 elif alias == 'FLT_MIN':
                     result = objc._FLT_MIN
+                elif alias == 'objc.NULL':
+                    result = objc.NULL
                 else:
                     result = getattr(self, alias)
 

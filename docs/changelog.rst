@@ -29,6 +29,8 @@ Version 5.2
 * #257: Fix incorrect metadata for the callback argument to
   ``-[AVCaptureStillImageOutput captureStillImageAsynchronouslyFromConnection:completionHandler:]``.
 
+#258: Add bindings to the "PrintCore" APIs from the ApplicationServices framework.
+
 Version 5.1.2
 -------------
 

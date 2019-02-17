@@ -11,8 +11,8 @@ import Cocoa
 from HIServices import _metadata
 
 sys.modules['HIServices'] = mod = objc.ObjCLazyModule('HIServices',
-    "com.apple.HIServices",
-    objc.pathForFramework("/System/Library/Frameworks/ApplicationServices.framework/Frameworks/HIServices.framework"),
+    "com.apple.ApplicationServices",
+    objc.pathForFramework("/System/Library/Frameworks/ApplicationServices.framework"),
     _metadata.__dict__, None, {
        '__doc__': __doc__,
        '__path__': __path__,

@@ -15,7 +15,7 @@ VERSION="5.2b1"
 setup(
     name='pyobjc-framework-ApplicationServices',
     description = "Wrappers for the framework ApplicationServices on macOS",
-    packages = [ "ApplicationServices", "HIServices" ],
+    packages = [ "ApplicationServices", "HIServices", "PrintCore" ],
     version=VERSION,
     install_requires = [
         'pyobjc-core>='+VERSION,

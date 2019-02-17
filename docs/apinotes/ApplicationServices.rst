@@ -59,7 +59,14 @@ The ApplicationServices framework is an unbrella framework containing a number o
 
  * *PrintCore*
 
-   Definitions in the framework are not yet available in Python.
+   The definitions for non-deprecated functions are available. The "PMObject" class in this framework
+   is not a CoreFoundation or Objective-C class, and this means that users of the API are responsible
+   for calling ``PMRetain`` and ``PMRelease`` where appropriate.
+
+   The definitions related to Apple Evens (such as kPMPrintSettingsAEType) are not supported.
+
+   ``PMPrintSettingsToOptions`` and ``PMPrintSettingsToOptionsWithPrinterAndPageFormat`` require
+   manual bindings and is not yet supported.
 
  * *QD*
 
