@@ -25,9 +25,9 @@ if sys.maxsize > 2 ** 32:
 
         @min_os_level("10.14")
         def testStructs10_14_4(self):
-            self.assertEqual(GameController.GCMicroGamepadSnapShotData.__struct_pack__, 1)
+            self.assertEqual(GameController.GCMicroGamepadSnapshotData.__struct_pack__, 1)
 
-            v = GameController.GCMicroGamepadSnapShotData()
+            v = GameController.GCMicroGamepadSnapshotData()
             self.assertIsInstance(v.version, int)
             self.assertIsInstance(v.size, int)
             self.assertIsInstance(v.dpadX, float)

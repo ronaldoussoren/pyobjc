@@ -51,9 +51,9 @@ if sys.maxsize > 2 ** 32:
         @min_os_level("10.14")
         def test_structs_10_14_4(self):
             # XXX: Introduced in the 10.14.4 SDK
-            self.assertEqual(GameController.GCExtendedGamepadSnapShotData.__struct_pack__, 1)
+            self.assertEqual(GameController.GCExtendedGamepadSnapshotData.__struct_pack__, 1)
 
-            v = GameController.GCExtendedGamepadSnapShotData()
+            v = GameController.GCExtendedGamepadSnapshotData()
             self.assertIsInstance(v.version, int)
             self.assertIsInstance(v.size, int)
             self.assertIsInstance(v.dpadX, float)
