@@ -30,7 +30,7 @@ class GlobalFunctionTest (TestCase):
 
 
     def testMakeNSRect(self):
-        self.assert_(hasattr(Foundation, 'NSMakeRect'))
+        self.assertHasAttr(Foundation, 'NSMakeRect')
 
         self.assertEqual(
                 Foundation.NSMakeRect(1.5, 2.5, 3.5, 4.5),
@@ -56,22 +56,21 @@ class GlobalFunctionTest (TestCase):
         self.assertEqual(rem,   ((1.0, 2.5), (3.0, 3.5)))
 
     def testMisc(self):
-        self.assert_(hasattr(Foundation, 'NSLogPageSize'))
-        self.assert_(hasattr(Foundation, 'NSRangeFromString'))
-        self.assert_(hasattr(Foundation, 'NSTemporaryDirectory'))
-        self.assert_(hasattr(Foundation, 'NSDecrementExtraRefCountWasZero'))
+        self.assertHasAttr(Foundation, 'NSLogPageSize')
+        self.assertHasAttr(Foundation, 'NSRangeFromString')
+        self.assertHasAttr(Foundation, 'NSTemporaryDirectory')
+        self.assertHasAttr(Foundation, 'NSDecrementExtraRefCountWasZero')
 
 class GlobalVariablesTest (TestCase):
     def testMisc(self):
         # enum
-        self.assert_(hasattr(Foundation, 'NS_LittleEndian'))
+        self.assertHasAttr(Foundation, 'NS_LittleEndian')
 
         # NSString
-        self.assert_(hasattr(Foundation, 'NSConnectionReplyMode'))
+        self.assertHasAttr(Foundation, 'NSConnectionReplyMode')
 
         # VAR
-        if sys.platform == 'darwin':
-            self.assert_(hasattr(Foundation, 'NSFoundationVersionNumber'))
+        self.assertHasAttr(Foundation, 'NSFoundationVersionNumber')
 
 class NSLogTest (TestCase):
     def startCaptureStderr(self):
@@ -93,7 +92,7 @@ class NSLogTest (TestCase):
         finally:
 
             data = self.stopCaptureStderr()
-            self.assert_(b"This is a test" in data)
+            self.assertIn(b"This is a test", data)
 
     def testLoggingWithFormattingChars(self):
         self.assertRaises(ValueError, Foundation.NSLog, "This is a test %@")
@@ -104,12 +103,12 @@ class NSLogTest (TestCase):
         finally:
 
             data = self.stopCaptureStderr()
-            self.assert_(b"This is a test, ronald" in data, data)
+            self.assertIn(b"This is a test, ronald", data)
 
     def testSpotlight(self):
         if hasattr(Foundation, 'NSMetadataQuery'):
-            self.assert_(hasattr(Foundation, 'NSMetadataQueryDidFinishGatheringNotification'))
-            self.assert_(isinstance(Foundation.NSMetadataQueryDidFinishGatheringNotification, unicode))
+            self.assertHasAttr(Foundation, 'NSMetadataQueryDidFinishGatheringNotification')
+            self.assertIsInstance(Foundation.NSMetadataQueryDidFinishGatheringNotification, unicode)
 
 
 if __name__ == "__main__":

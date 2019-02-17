@@ -8,24 +8,24 @@ from AppKit import *
 class TestNSBezierPath(TestCase):
     if not hasattr(TestCase, 'assertAlmostEquals'):
         def assertAlmostEquals(self, val1, val2):
-            self.assert_(abs(val1 - val2) < 0.000001)
+            self.assertTrue(abs(val1 - val2) < 0.000001)
 
     def assertPointEquals(self, point1, point2):
-        self.assertAlmostEquals(point1[0], point2[0])
-        self.assertAlmostEquals(point1[1], point2[1])
+        self.assertAlmostEqual(point1[0], point2[0])
+        self.assertAlmostEqual(point1[1], point2[1])
 
     def test_creation(self):
         p = NSBezierPath.bezierPath()
-        self.assert_(p is not None)
+        self.assertIsNot(p, None)
         self.assertEqual(p.elementCount(), 0)
 
         p = NSBezierPath.bezierPathWithOvalInRect_(((0, 0), (100, 50)))
-        self.assert_(p is not None)
+        self.assertIsNot(p, None)
         self.assertEqual(p.elementCount(), 5)
 
     def test_appendPoints(self):
         p = NSBezierPath.bezierPath()
-        self.assert_(p is not None)
+        self.assertIsNot(p, None)
         self.assertEqual(p.elementCount(), 0)
 
         points = [ (0, 0), (100, 0), (100, 100), (0, 0) ]
@@ -40,15 +40,15 @@ class TestNSBezierPath(TestCase):
         #self.assertEqual(pattern, None)
         self.assertEqual(pattern, objc.NULL)
         self.assertEqual(count, 4)
-        self.assertAlmostEquals(phase, 45.0)
+        self.assertAlmostEqual(phase, 45.0)
 
         pattern, count, phase = p.getLineDash_count_phase_(None, 4, None)
-        self.assertAlmostEquals(pattern[0], 10)
-        self.assertAlmostEquals(pattern[1], 10)
-        self.assertAlmostEquals(pattern[2], 20)
-        self.assertAlmostEquals(pattern[3], 5)
+        self.assertAlmostEqual(pattern[0], 10)
+        self.assertAlmostEqual(pattern[1], 10)
+        self.assertAlmostEqual(pattern[2], 20)
+        self.assertAlmostEqual(pattern[3], 5)
         self.assertEqual(count, 4)
-        self.assertAlmostEquals(phase, 45.0)
+        self.assertAlmostEqual(phase, 45.0)
 
     def test_elementAtIndex(self):
         p = NSBezierPath.bezierPath()

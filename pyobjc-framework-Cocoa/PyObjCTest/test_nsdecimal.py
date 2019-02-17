@@ -26,31 +26,31 @@ if 0:
 
         def testCreation(self):
             o = NSDecimal(b"1.25".decode('ascii'))
-            self.assert_(isinstance(o, NSDecimal))
+            self.assertIsInstance(o, NSDecimal)
             self.assertEqual(str(o), b"1.25".decode('ascii'))
 
             o = NSDecimal(12345, -2, objc.YES)
-            self.assert_(isinstance(o, NSDecimal))
+            self.assertIsInstance(o, NSDecimal)
             self.assertEqual(str(o), b"-123.45".decode('ascii'))
 
             o = NSDecimal()
-            self.assert_(isinstance(o, NSDecimal))
-            self.assert_(str(o) in (b"0".decode('ascii'), b"0.0".decode('ascii')))
+            self.assertIsInstance(o, NSDecimal)
+            self.assertIn(str(o), b"0".decode('ascii'))
 
             o = NSDecimal(1234)
-            self.assert_(isinstance(o, NSDecimal))
+            self.assertIsInstance(o, NSDecimal)
             self.assertEqual(str(o), b"1234".decode('ascii'))
 
             o = NSDecimal(-1234)
-            self.assert_(isinstance(o, NSDecimal))
+            self.assertIsInstance(o, NSDecimal)
             self.assertEqual(str(o), b"-1234".decode('ascii'))
 
             o = NSDecimal(long(1234))
-            self.assert_(isinstance(o, NSDecimal))
+            self.assertIsInstance(o, NSDecimal)
             self.assertEqual(str(o), b"1234".decode('ascii'))
 
             o = NSDecimal(long(-1234))
-            self.assert_(isinstance(o, NSDecimal))
+            self.assertIsInstance(o, NSDecimal)
             self.assertEqual(str(o), b"-1234".decode('ascii'))
 
             o = NSDecimal(1 << 64 - 1)
@@ -58,7 +58,7 @@ if 0:
             # Explicit conversion is supported, but might not do
             # what a naive user expects...
             o = NSDecimal(1.1)
-            self.assert_(isinstance(o, NSDecimal))
+            self.assertIsInstance(o, NSDecimal)
             self.assertEqual(str(o), repr(1.1))
 
             self.assertRaises(OverflowError, NSDecimal, 1 << 128)
@@ -104,21 +104,21 @@ if 0:
             small2 = NSDecimal(b"1".decode('ascii'))
             large = NSDecimal(b"42".decode('ascii'))
 
-            self.assert_(small == small2)
-            self.assert_(not (small == large))
-            self.assert_(not (small != small2))
-            self.assert_(small < large)
-            self.assert_(not(large < small))
-            self.assert_(not(small < small))
-            self.assert_(small <= large)
-            self.assert_(small <= small)
-            self.assert_(not(large <= small))
-            self.assert_(large > small)
-            self.assert_(not(small > large))
-            self.assert_(not(large > large))
-            self.assert_(large >= small)
-            self.assert_(large >= large)
-            self.assert_(not(small >= large))
+            self.assertTrue(small == small2)
+            self.assertTrue(not (small == large))
+            self.assertTrue(not (small != small2))
+            self.assertTrue(small < large)
+            self.assertTrue(not(large < small))
+            self.assertTrue(not(small < small))
+            self.assertTrue(small <= large)
+            self.assertTrue(small <= small)
+            self.assertTrue(not(large <= small))
+            self.assertTrue(large > small)
+            self.assertTrue(not(small > large))
+            self.assertTrue(not(large > large))
+            self.assertTrue(large >= small)
+            self.assertTrue(large >= large)
+            self.assertTrue(not(small >= large))
 
         def testConversion(self):
             o = NSDecimal(b"1234.44".decode('ascii'))
@@ -132,11 +132,11 @@ if 0:
 
         def testCreateFromFloat(self):
             o = NSDecimal(1.1)
-            self.assertAlmostEquals(o.as_float(), 1.1)
+            (o.as_float(), 1.1)
 
         if not hasattr(TestCase, 'assertAlmostEquals'):
             def assertAlmostEquals(self, val1, val2, eta=0.000001):
-                self.assert_(abs(val1 - val2) < eta)
+                self.assertTrue(abs(val1 - val2) < eta)
 
 
     class TestNSDecimalNumber (TestCase):
@@ -145,7 +145,7 @@ if 0:
             self.assertEqual(o.description(), b"1.1234".decode('ascii'))
 
             p = o.decimalValue()
-            self.assert_(isinstance(p, NSDecimal))
+            self.assertIsInstance(p, NSDecimal)
             self.assertEqual(str(p), b"1.1234".decode('ascii'))
 
         def testCreation2(self):
@@ -178,7 +178,7 @@ if 0:
             self.assertEqual(v, (NSDecimal(sys.maxint+2), r))
 
             t = NSDecimal(4).__pyobjc_object__
-            self.assert_(isinstance(t, NSObject))
+            self.assertIsInstance(t, NSObject)
             v = coerce(t, r)
             self.assertEqual(v, (NSDecimal(4), r))
 
@@ -202,8 +202,8 @@ if 0:
 
             O = o.__pyobjc_object__
             P = p.__pyobjc_object__
-            self.assert_(isinstance(P, NSObject))
-            self.assert_(isinstance(O, NSObject))
+            self.assertIsInstance(P, NSObject)
+            self.assertIsInstance(O, NSObject)
 
             NSDecimalAdd(r, o, p, NSRoundPlain)
             self.assertEqual(o+p, r)
@@ -230,8 +230,8 @@ if 0:
 
             P = p.__pyobjc_object__
             O = o.__pyobjc_object__
-            self.assert_(isinstance(P, NSObject))
-            self.assert_(isinstance(O, NSObject))
+            self.assertIsInstance(P, NSObject)
+            self.assertIsInstance(O, NSObject)
 
 
             NSDecimalSubtract(r, o, p, NSRoundPlain)
@@ -259,8 +259,8 @@ if 0:
 
             P = p.__pyobjc_object__
             O = o.__pyobjc_object__
-            self.assert_(isinstance(P, NSObject))
-            self.assert_(isinstance(O, NSObject))
+            self.assertIsInstance(P, NSObject)
+            self.assertIsInstance(O, NSObject)
 
             NSDecimalMultiply(r, o, p, NSRoundPlain)
             self.assertEqual(o*p, r)
@@ -284,8 +284,8 @@ if 0:
 
             P = p.__pyobjc_object__
             O = o.__pyobjc_object__
-            self.assert_(isinstance(P, NSObject))
-            self.assert_(isinstance(O, NSObject))
+            self.assertIsInstance(P, NSObject)
+            self.assertIsInstance(O, NSObject)
 
             NSDecimalDivide(r, o, p, NSRoundPlain)
             self.assertEqual(o/p, r)
@@ -350,7 +350,7 @@ if 0:
             p = NSDecimal(2)
 
             P = p.__pyobjc_object__
-            self.assert_(isinstance(P, NSObject))
+            self.assertIsInstance(P, NSObject)
 
             NSDecimalAdd(r, o, p, NSRoundPlain)
 
@@ -398,7 +398,7 @@ if 0:
             p = NSDecimal(2)
 
             P = p.__pyobjc_object__
-            self.assert_(isinstance(P, NSObject))
+            self.assertIsInstance(P, NSObject)
 
             NSDecimalSubtract(r, o, p, NSRoundPlain)
 
@@ -433,7 +433,7 @@ if 0:
             p = NSDecimal(3)
 
             P = p.__pyobjc_object__
-            self.assert_(isinstance(P, NSObject))
+            self.assertIsInstance(P, NSObject)
 
             NSDecimalMultiply(r, o, p, NSRoundPlain)
 
@@ -467,7 +467,7 @@ if 0:
             p = NSDecimal(3)
 
             P = p.__pyobjc_object__
-            self.assert_(isinstance(P, NSObject))
+            self.assertIsInstance(P, NSObject)
 
             NSDecimalDivide(r, o, p, NSRoundPlain)
 

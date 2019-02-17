@@ -330,6 +330,7 @@ class TestBuffer(TestCase):
         m = NSMutableData.dataWithData_(a)
         self.assertEqual(array_tobytes(a), m[:])
         self.assertTrue(objc.repythonify(a) is a)
+        objc.recycleAutoreleasePool()
         array_frombytes(a, m)
         self.assertEqual(array_tobytes(a), b'foofoo')
         m.appendData_(a)

@@ -9,7 +9,7 @@ class TestNSLockProtocols (TestCase):
     def testLockIsLock(self):
         # Test for bug #1735937
         lock = NSLock.alloc().init()
-        self.assert_(lock.conformsToProtocol_(objc.protocolNamed("NSLocking")))
+        self.assertTrue(lock.conformsToProtocol_(objc.protocolNamed("NSLocking")))
 
     def testMethods(self):
         self.assertResultIsBOOL(NSLock.tryLock)

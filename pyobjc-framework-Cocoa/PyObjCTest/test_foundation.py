@@ -9,54 +9,54 @@ import os
 
 class TestFoundation (TestCase):
     def testValues(self):
-        self.assert_( hasattr(Foundation, 'NSTimeIntervalSince1970') )
-        self.assert_( isinstance(Foundation.NSTimeIntervalSince1970, float) )
+        self.assertHasAttr(Foundation, 'NSTimeIntervalSince1970')
+        self.assertIsInstance(Foundation.NSTimeIntervalSince1970, float)
         self.assertEqual(Foundation.NSTimeIntervalSince1970, 978307200.0)
 
         if int(os.uname()[2].split('.')[0]) < 9:
-            self.assert_( hasattr(Foundation, 'NSMaximumStringLength') )
-            self.assert_( isinstance(Foundation.NSMaximumStringLength, (int, long)) )
-        self.assert_( hasattr(Foundation, 'NSURLResponseUnknownLength') )
-        self.assert_( isinstance(Foundation.NSURLResponseUnknownLength, (int, long)) )
+            self.assertHasAttr(Foundation, 'NSMaximumStringLength')
+            self.assertIsInstance(Foundation.NSMaximumStringLength, (int, long))
+        self.assertHasAttr(Foundation, 'NSURLResponseUnknownLength')
+        self.assertIsInstance(Foundation.NSURLResponseUnknownLength, (int, long))
 
     def testFunctions(self):
-        self.assert_( hasattr(Foundation, 'NSStringFromSelector') )
+        self.assertHasAttr(Foundation, 'NSStringFromSelector')
 
     def testProtocols(self):
-        self.assertFalse( hasattr(Foundation, 'protocols') )
+        self.assertNotHasAttr(Foundation, 'protocols')
 
 
     def test_structs(self):
-        self.assert_( hasattr(Foundation, 'NSPoint') )
+        self.assertHasAttr(Foundation, 'NSPoint')
         o = Foundation.NSPoint()
-        self.assert_( hasattr(o, 'x') )
-        self.assert_( hasattr(o, 'y') )
+        self.assertHasAttr(o, 'x')
+        self.assertHasAttr(o, 'y')
 
-        self.assert_( hasattr(Foundation, 'NSSize') )
+        self.assertHasAttr(Foundation, 'NSSize')
         o = Foundation.NSSize()
-        self.assert_( hasattr(o, 'width') )
-        self.assert_( hasattr(o, 'height') )
+        self.assertHasAttr(o, 'width')
+        self.assertHasAttr(o, 'height')
 
-        self.assert_( hasattr(Foundation, 'NSRange') )
+        self.assertHasAttr(Foundation, 'NSRange')
         o = Foundation.NSRange()
-        self.assert_( hasattr(o, 'location') )
-        self.assert_( hasattr(o, 'length') )
+        self.assertHasAttr(o, 'location')
+        self.assertHasAttr(o, 'length')
 
-        self.assert_( hasattr(Foundation, 'NSRect') )
+        self.assertHasAttr(Foundation, 'NSRect')
         o = Foundation.NSRect()
-        self.assert_( hasattr(o, 'origin') )
-        self.assert_( hasattr(o, 'size') )
-        self.assert_( isinstance(o.origin, Foundation.NSPoint) )
-        self.assert_( isinstance(o.size, Foundation.NSSize) )
+        self.assertHasAttr(o, 'origin')
+        self.assertHasAttr(o, 'size')
+        self.assertIsInstance(o.origin, Foundation.NSPoint)
+        self.assertIsInstance(o.size, Foundation.NSSize)
 
-        self.assert_( hasattr(Foundation, 'NSAffineTransformStruct') )
+        self.assertHasAttr(Foundation, 'NSAffineTransformStruct')
         o = Foundation.NSAffineTransformStruct()
-        self.assert_( hasattr(o, 'm11') )
-        self.assert_( hasattr(o, 'm12') )
-        self.assert_( hasattr(o, 'm21') )
-        self.assert_( hasattr(o, 'm22') )
-        self.assert_( hasattr(o, 'tX') )
-        self.assert_( hasattr(o, 'tY') )
+        self.assertHasAttr(o, 'm11')
+        self.assertHasAttr(o, 'm12')
+        self.assertHasAttr(o, 'm21')
+        self.assertHasAttr(o, 'm22' )
+        self.assertHasAttr(o, 'tX')
+        self.assertHasAttr(o, 'tY')
 
 
 if __name__ == "__main__":

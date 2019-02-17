@@ -29,13 +29,6 @@ if sys.platform == 'darwin':
 
             self.assertEqual(after.definingClass, c);
 
-            # XXX: Test used on PyObjC 2.x, this fails with 3.x
-            #      but 3.x behavior seems to be correct.
-            # 
-            #self.assert_(before != after, "No weirdness present on %s.%s: before=%s after=%s"%(
-            #    className, methodToTest, before, after))
-
-
         def testWeirdness1(self):
             self.doWeirdness("NSButtonCell", "setEnabled_")
 

@@ -10,7 +10,7 @@ class TestCFBinaryHeap (TestCase):
     def testCreation(self):
         heap = CFBinaryHeapCreate(
                 None, 0)
-        self.assert_(isinstance(heap, CFBinaryHeapRef))
+        self.assertIsInstance(heap, CFBinaryHeapRef)
 
         CFBinaryHeapAddValue(heap, "hello")
         CFBinaryHeapAddValue(heap, "world")
@@ -25,7 +25,7 @@ class TestCFBinaryHeap (TestCase):
 
         heap = CFBinaryHeapCreate(
                 None, 0)
-        self.assert_(isinstance(heap, CFBinaryHeapRef))
+        self.assertIsInstance(heap, CFBinaryHeapRef)
 
         CFBinaryHeapAddValue(heap, "hello")
         CFBinaryHeapAddValue(heap, "world")
@@ -55,20 +55,20 @@ class TestCFBinaryHeap (TestCase):
     def testCopy(self):
         heap = CFBinaryHeapCreate(
                 None, 0)
-        self.assert_(isinstance(heap, CFBinaryHeapRef))
+        self.assertIsInstance(heap, CFBinaryHeapRef)
 
         CFBinaryHeapAddValue(heap, "hello")
         CFBinaryHeapAddValue(heap, "world")
         CFBinaryHeapAddValue(heap, "aapjes")
 
         heap2 = CFBinaryHeapCreateCopy(None, 0, heap)
-        self.assert_(isinstance(heap2, CFBinaryHeapRef))
+        self.assertIsInstance(heap2, CFBinaryHeapRef)
 
     def testInspect(self):
         from Foundation import NSString, NSLog
         heap = CFBinaryHeapCreate(
                 None, 0)
-        self.assert_(isinstance(heap, CFBinaryHeapRef))
+        self.assertIsInstance(heap, CFBinaryHeapRef)
 
 
         CFBinaryHeapAddValue(heap, "hello")

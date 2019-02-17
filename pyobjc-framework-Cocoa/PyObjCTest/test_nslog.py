@@ -25,7 +25,7 @@ class TestNSLog (TestCase):
         finally:
             data = self._cleanup().rstrip()
 
-        self.assert_(data.endswith(b'] Hello world'))
+        self.assertTrue(data.endswith(b'] Hello world'))
 
     def testWithArguments(self):
         self._redirect()
@@ -34,7 +34,7 @@ class TestNSLog (TestCase):
         finally:
             data = self._cleanup().rstrip()
 
-        self.assert_(data.endswith(b'] Hello ronald: the count is 99'))
+        self.assertTrue(data.endswith(b'] Hello ronald: the count is 99'))
 
     def testWithInvalidFormat(self):
         self._redirect()
@@ -48,7 +48,7 @@ class TestNSLog (TestCase):
 
 class TestNSLogv (TestCase):
     def testNotSuchThing(self):
-        self.assert_(not hasattr(Foundation, 'NSLogv'))
+        self.assertFalse(hasattr(Foundation, 'NSLogv'))
 
 if __name__ == "__main__":
     main()

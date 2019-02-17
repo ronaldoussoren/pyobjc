@@ -10,7 +10,7 @@ class TestCFDictionary (TestCase):
                 ('aap', 'noot', 'mies', 'wim'),
                 ('monkey', 'nut', 'missy', 'john'),
                 4, kCFTypeDictionaryKeyCallBacks, kCFTypeDictionaryValueCallBacks)
-        self.assert_(isinstance(dictionary, CFDictionaryRef))
+        self.assertIsInstance(dictionary, CFDictionaryRef)
         self.assertEqual(dictionary, {
                 'aap': 'monkey',
                 'noot': 'nut',
@@ -19,7 +19,7 @@ class TestCFDictionary (TestCase):
             })
 
         dictionary = CFDictionaryCreateMutable(None, 0, kCFTypeDictionaryKeyCallBacks, kCFTypeDictionaryValueCallBacks)
-        self.assert_(isinstance(dictionary, CFMutableDictionaryRef))
+        self.assertIsInstance(dictionary, CFMutableDictionaryRef)
         CFDictionarySetValue(dictionary, 'hello', 'world')
         self.assertEqual(dictionary, {'hello': 'world'})
 

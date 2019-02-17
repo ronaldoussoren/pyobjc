@@ -224,16 +224,16 @@ class PyKeyValueCoding (TestCase):
 
         self.assertEqual(o._key4, b"4".decode('ascii'))
         STUB.setKeyValue_forObject_key_value_(0, o, b'key4'.decode('ascii'), b'vier'.decode('ascii'))
-        self.assert_(not hasattr(o, b"key4".decode('ascii')))
+        self.assertNotHasAttr(o, b"key4".decode('ascii'))
         self.assertEqual(o._key4, b"viervierviervier".decode('ascii'))
 
         o.key5 = 1
         STUB.setKeyValue_forObject_key_value_(0, o, b'key5'.decode('ascii'), b'V'.decode('ascii'))
         self.assertEqual(o.key5, b"VVVVV".decode('ascii'))
 
-        self.assert_(not hasattr(o, b'key9'.decode('ascii')))
+        self.assertNotHasAttr(o, b'key9'.decode('ascii'))
         STUB.setKeyValue_forObject_key_value_(0, o, b'key9'.decode('ascii'), b'IX'.decode('ascii'))
-        self.assert_(hasattr(o, b'key9'.decode('ascii')))
+        self.assertHasAttr(o, b'key9'.decode('ascii'))
         self.assertEqual(o.key9, b'IX'.decode('ascii'))
 
     @max_os_level('10.5')
@@ -262,9 +262,9 @@ class PyKeyValueCoding (TestCase):
         STUB.setKeyValue_forObject_key_value_(2, o, b'key5'.decode('ascii'), b'V'.decode('ascii'))
         self.assertEqual(o.key5, b"VVVVV".decode('ascii'))
 
-        self.assert_(not hasattr(o, b'key9'.decode('ascii')))
+        self.assertNotHasAttr(o, b'key9'.decode('ascii'))
         STUB.setKeyValue_forObject_key_value_(2, o, b'key9'.decode('ascii'), b'IX'.decode('ascii'))
-        self.assert_(hasattr(o, b'key9'.decode('ascii')))
+        self.assertHasAttr(o, b'key9'.decode('ascii'))
         self.assertEqual(o.key9, b'IX'.decode('ascii'))
 
     def testStoredTakeValueForKey2(self):
@@ -284,7 +284,7 @@ class PyKeyValueCoding (TestCase):
         self.assertEqual(o.key3, 3)
         self.assertEqual(o._key4, b"4".decode('ascii'))
         o.key5 = 1
-        self.assert_(not hasattr(o, b'key9'.decode('ascii')))
+        self.assertNotHasAttr(o, b'key9'.decode('ascii'))
 
         STUB.setKeyValue_forObject_key_value_(3, o, None,
             {
@@ -297,7 +297,7 @@ class PyKeyValueCoding (TestCase):
         self.assertEqual(o.key3, b"drie".decode('ascii'))
         self.assertEqual(o._key4, b"viervierviervier".decode('ascii'))
         self.assertEqual(o.key5, b"VVVVV".decode('ascii'))
-        self.assert_(hasattr(o, b'key9'.decode('ascii')))
+        self.assertHasAttr(o, b'key9'.decode('ascii'))
         self.assertEqual(o.key9, b'IX'.decode('ascii'))
 
     @max_os_level('10.5')
@@ -350,7 +350,7 @@ class PyKeyValueCoding (TestCase):
 
                 keyPath, object, change = observer.observed[0]
                 self.assertEqual(keyPath, b"key3".decode('ascii'))
-                self.assert_(object is o)
+                self.assertIs(object, o)
                 self.assertEqual(change, {NSKeyValueChangeKindKey: 1 })
 
             finally:
@@ -377,7 +377,7 @@ class PyKeyValueCoding (TestCase):
 
                 keyPath, object, change = observer.observed[0]
                 self.assertEqual(keyPath, b"key3".decode('ascii'))
-                self.assert_(object is o)
+                self.assertIs(object, o)
                 self.assertEqual(change,
                     {
                         NSKeyValueChangeKindKey:1,
@@ -445,18 +445,18 @@ class PyKeyValueCodingExplicit (TestCase):
 
         self.assertEqual(o._values['key4'], b"4".decode('ascii'))
         STUB.setKeyValue_forObject_key_value_(0, o, b'key4'.decode('ascii'), b'vier'.decode('ascii'))
-        self.assert_(not hasattr(o, b"key4".decode('ascii')))
+        self.assertNotHasAttr(o, b"key4".decode('ascii'))
         self.assertEqual(o._values['key4'], b"viervierviervier".decode('ascii'))
 
         o._values['key5'] = 1
         STUB.setKeyValue_forObject_key_value_(0, o, b'key5'.decode('ascii'), b'V'.decode('ascii'))
         self.assertEqual(o._values['key5'], b"VVVVV".decode('ascii'))
 
-        self.assert_(not hasattr(o, b'key9'.decode('ascii')))
-        self.assert_('key9' not in o._values)
+        self.assertNotHasAttr(o, b'key9'.decode('ascii'))
+        self.assertNotIn('key9', o._values)
         STUB.setKeyValue_forObject_key_value_(0, o, b'key9'.decode('ascii'), b'IX'.decode('ascii'))
-        self.assert_(not hasattr(o, b'key9'.decode('ascii')))
-        self.assert_('key9' in o._values)
+        self.assertNotHasAttr(o, b'key9'.decode('ascii'))
+        self.assertIn('key9', o._values)
         self.assertEqual(o._values['key9'], b'IX'.decode('ascii'))
 
     def testTakeStoredValueForKey(self):
@@ -474,9 +474,9 @@ class PyKeyValueCodingExplicit (TestCase):
         STUB.setKeyValue_forObject_key_value_(2, o, b'key5'.decode('ascii'), b'V'.decode('ascii'))
         self.assertEqual(o._values['key5'], b"VVVVV".decode('ascii'))
 
-        self.assert_('key9' not in o._values)
+        self.assertNotIn('key9', o._values)
         STUB.setKeyValue_forObject_key_value_(2, o, b'key9'.decode('ascii'), b'IX'.decode('ascii'))
-        self.assert_('key9' in o._values)
+        self.assertIn('key9', o._values)
         self.assertEqual(o._values['key9'], b'IX'.decode('ascii'))
 
     @max_os_level('10.5')
@@ -486,7 +486,7 @@ class PyKeyValueCodingExplicit (TestCase):
         self.assertEqual(o._values['key3'], 3)
         self.assertEqual(o._values['key4'], b"4".decode('ascii'))
         o._values['key5'] = 1
-        self.assert_('key9' not in o._values)
+        self.assertNotIn('key9', o._values)
 
         STUB.setKeyValue_forObject_key_value_(3, o, None,
             {

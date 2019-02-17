@@ -21,7 +21,7 @@ class TestNSHost (TestCase):
         o = NSHost.hostWithName_(b'localhost'.decode('ascii'))
         l = list(o.addresses())
         l.sort()
-        #self.assert_(l in ([b'127.0.0.1'.decode('ascii'), b'::1'.decode('ascii')], [b'127.0.0.1'.decode('ascii')]))
+        #self.assertIn(l, ([b'127.0.0.1'.decode('ascii'), b'::1'.decode('ascii')], [b'127.0.0.1'.decode('ascii')]))
         self.assertEqual(o.address(), o.addresses()[0])
 
     def testIndirectCreation(self):

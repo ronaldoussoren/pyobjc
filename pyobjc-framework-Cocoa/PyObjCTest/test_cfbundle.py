@@ -29,10 +29,10 @@ class TestCFBundle (TestCase):
         self.assertEqual(len(array), 0)
 
         array = CFBundleCreateBundlesFromDirectory(None, url, b"framework".decode('ascii'))
-        self.assertNotEquals(len(array), 0)
+        self.assertNotEqual(len(array), 0)
 
         array = CFBundleCreateBundlesFromDirectory(None, url, None)
-        self.assertNotEquals(len(array), 0)
+        self.assertNotEqual(len(array), 0)
 
     def testTypeID(self):
         v = CFBundleGetTypeID()

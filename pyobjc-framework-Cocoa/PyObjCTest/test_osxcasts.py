@@ -7,13 +7,13 @@ class TestTollFreeBridging( TestCase ):
     def testImplicitFromCF(self):
 
         c = CFArrayCreateMutable(None, 0, None)
-        self.assert_(isinstance(c, CFMutableArrayRef))
+        self.assertIsInstance(c, CFMutableArrayRef)
 
         nsa = NSMutableArray.array()
         nsa.addObject_(c)
 
         o = nsa[0]
-        self.assert_(isinstance(o, NSMutableArray))
+        self.assertIsInstance(o, NSMutableArray)
 
 if __name__ == '__main__':
     main( )

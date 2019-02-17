@@ -6,12 +6,12 @@ class TestCFBag (TestCase):
 
     def testCreation(self):
         bag = CFBagCreate(None, [1,1,2,3,4], 5)
-        self.assert_(isinstance(bag, CFBagRef))
+        self.assertIsInstance(bag, CFBagRef)
         self.assertEqual(CFBagGetCountOfValue(bag, 1), 2)
         self.assertEqual(CFBagGetCountOfValue(bag, 3), 1)
 
         bag = CFBagCreateMutable(None, 0)
-        self.assert_(isinstance(bag, CFBagRef))
+        self.assertIsInstance(bag, CFBagRef)
         CFBagAddValue(bag, 9)
         CFBagAddValue(bag, 8)
         CFBagAddValue(bag, 9)

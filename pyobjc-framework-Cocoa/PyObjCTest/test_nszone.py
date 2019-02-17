@@ -11,8 +11,8 @@ class TestNSZone (TestCase):
     def testWithZones(self):
         obj = NSObject.allocWithZone_(None).init()
         zone = obj.zone()
-        self.assert_(zone is not None)
-        self.assert_(zone.__pointer__ != 0)
+        self.assertIsNot(zone, None)
+        self.assertNotEqual(zone.__pointer__, 0)
 
         obj2 = NSObject.allocWithZone_(zone).init()
         zone2 = obj2.zone()

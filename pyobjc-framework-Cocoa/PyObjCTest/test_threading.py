@@ -115,7 +115,7 @@ class ThreadingTest (TestCase):
         time.sleep(2)
 
         retval = my.returnObject()
-        self.assert_(isinstance(retval, Dummy))
+        self.assertIsInstance(retval, Dummy)
 
 if __name__ == "__main__":
     main()

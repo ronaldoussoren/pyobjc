@@ -8,7 +8,7 @@ import operator
 class TestNSAffineTransformStruct (TestCase):
     def testConstructor(self):
         p = NSAffineTransformStruct()
-        self.assert_(isinstance(p, NSAffineTransformStruct))
+        self.assertIsInstance(p, NSAffineTransformStruct)
         self.assertEqual(p.m11, 0)
         self.assertEqual(p.m12, 0)
         self.assertEqual(p.m21, 0)
@@ -17,7 +17,7 @@ class TestNSAffineTransformStruct (TestCase):
         self.assertEqual(p.tY, 0)
 
         p = NSAffineTransformStruct(1,2, 3, 4, 5, 6)
-        self.assert_(isinstance(p, NSAffineTransformStruct))
+        self.assertIsInstance(p, NSAffineTransformStruct)
         self.assertEqual(p.m11, 1)
         self.assertEqual(p.m12, 2)
         self.assertEqual(p.m21, 3)
@@ -32,7 +32,7 @@ class TestNSAffineTransformStruct (TestCase):
         self.assertEqual(p[5], 6)
 
         p = NSAffineTransformStruct(tY=1,tX=2, m22=3, m21=4, m12=5, m11=6)
-        self.assert_(isinstance(p, NSAffineTransformStruct))
+        self.assertIsInstance(p, NSAffineTransformStruct)
         self.assertEqual(p.m11, 6)
         self.assertEqual(p.m12, 5)
         self.assertEqual(p.m21, 4)
@@ -61,42 +61,42 @@ class TestNSAffineTransformStruct (TestCase):
         P = (1, 2, 3, 4, 5, 6)
         Q = (1, 2, 3, 4, 5, 7)
 
-        self.assert_(not (p == P[:4]))
-        self.assert_((p != P[:4]))
-        self.assert_(not (p <= P[:4]))
-        self.assert_(not (p < P[:4]))
-        self.assert_((p > P[:4]))
-        self.assert_((p >= P[:4]))
+        self.assertTrue(not (p == P[:4]))
+        self.assertTrue((p != P[:4]))
+        self.assertTrue(not (p <= P[:4]))
+        self.assertTrue(not (p < P[:4]))
+        self.assertTrue((p > P[:4]))
+        self.assertTrue((p >= P[:4]))
 
-        self.assert_(not (p < p))
-        self.assert_(not (p < P))
-        self.assert_(p < q)
-        self.assert_(p < Q)
+        self.assertTrue(not (p < p))
+        self.assertTrue(not (p < P))
+        self.assertTrue(p < q)
+        self.assertTrue(p < Q)
 
-        self.assert_(p <= p)
-        self.assert_(p <= P)
-        self.assert_(p <= q)
-        self.assert_(p <= Q)
+        self.assertTrue(p <= p)
+        self.assertTrue(p <= P)
+        self.assertTrue(p <= q)
+        self.assertTrue(p <= Q)
 
-        self.assert_(p == p)
-        self.assert_(p == P)
-        self.assert_(not (p == q))
-        self.assert_(not (p == Q))
+        self.assertTrue(p == p)
+        self.assertTrue(p == P)
+        self.assertTrue(not (p == q))
+        self.assertTrue(not (p == Q))
 
-        self.assert_(p != q)
-        self.assert_(p != Q)
-        self.assert_(not(p != p))
-        self.assert_(not(p != P))
+        self.assertTrue(p != q)
+        self.assertTrue(p != Q)
+        self.assertTrue(not(p != p))
+        self.assertTrue(not(p != P))
 
-        self.assert_(q >= p)
-        self.assert_(q >= P)
-        self.assert_(q >= q)
-        self.assert_(q >= Q)
+        self.assertTrue(q >= p)
+        self.assertTrue(q >= P)
+        self.assertTrue(q >= q)
+        self.assertTrue(q >= Q)
 
-        self.assert_(not (q > q))
-        self.assert_(not (q > Q))
-        self.assert_(q > p)
-        self.assert_(q > P)
+        self.assertTrue(not (q > q))
+        self.assertTrue(not (q > Q))
+        self.assertTrue(q > p)
+        self.assertTrue(q > P)
 
     def testRepr(self):
         p = NSAffineTransformStruct()
@@ -122,7 +122,7 @@ class TestNSAffineTransformStruct (TestCase):
         p = NSAffineTransformStruct(1,2,3,4,5,6)
         q = p[:]
 
-        self.assert_(isinstance(q, tuple))
+        self.assertIsInstance(q, tuple)
         self.assertEqual(q, (1.0,2.0,3.0,4.0,5.0,6.0))
 
     def testDeleteSlice(self):
@@ -138,7 +138,7 @@ class TestNSAffineTransformStruct (TestCase):
         p = NSAffineTransformStruct(1,2,3,4,5,6)
         p[:] = (4,5,6,7,8,9)
 
-        self.assert_(isinstance(p, NSAffineTransformStruct))
+        self.assertIsInstance(p, NSAffineTransformStruct)
         self.assertEqual(p.m11, 4)
         self.assertEqual(p.m12, 5)
         self.assertEqual(p.m21, 6)
@@ -147,7 +147,7 @@ class TestNSAffineTransformStruct (TestCase):
         self.assertEqual(p.tY, 9)
 
         p[:] = p
-        self.assert_(isinstance(p, NSAffineTransformStruct))
+        self.assertIsInstance(p, NSAffineTransformStruct)
         self.assertEqual(p.m11, 4)
         self.assertEqual(p.m12, 5)
         self.assertEqual(p.m21, 6)
