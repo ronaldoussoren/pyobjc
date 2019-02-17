@@ -103,7 +103,6 @@ imp_NSData_bytes(
         Py_DECREF(result);
         *pretval = (void *)p;
         PyGILState_Release(state);
-        return;
 
     } else
 #endif /* PY_MAJOR_VERSION == 2 */
@@ -115,7 +114,9 @@ imp_NSData_bytes(
         }
         [temp autorelease];
         *pretval=[temp buffer];
+        PyGILState_Release(state);
     }
+    return;
 
 error:
     Py_XDECREF(arglist);

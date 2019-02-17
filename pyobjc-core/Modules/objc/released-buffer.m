@@ -24,6 +24,7 @@
         [self release];
         return nil;
     }
+    self->have_buffer = YES;
 
     return self;
 }
@@ -32,6 +33,7 @@
 {
     if (self->have_buffer) {
         PyBuffer_Release(&self->buffer);
+        self->have_buffer = NO;
     }
     [super dealloc];
 }
