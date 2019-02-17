@@ -1,7 +1,7 @@
 from PyObjCTools.TestSupport import *
 import objc
 import pickle
-import collections
+import collections.abc
 import sys
 
 NSObject = objc.lookUpClass('NSObject')
@@ -25,7 +25,7 @@ class TestArrayProperty (TestCase):
         o = TestArrayPropertyHelper.alloc().init()
 
         v = o.array
-        self.assertIsInstance(v, collections.MutableSequence)
+        self.assertIsInstance(v, collections.abc.MutableSequence)
 
         self.assertEqual(len(v), 0)
 
@@ -750,7 +750,7 @@ class TestArrayProperty (TestCase):
         o.array = [1,2,3]
         v = o.array
         self.assertEqual(v.count('a'), 0)
-        self.assertEqual(list(v.__reversed__()), [3,2,1]) 
+        self.assertEqual(list(v.__reversed__()), [3,2,1])
 
         self.assertRaises(AttributeError, getattr, o.array, 'nosuchattribute')
 

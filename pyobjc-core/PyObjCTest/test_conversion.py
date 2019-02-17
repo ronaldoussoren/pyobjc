@@ -46,8 +46,12 @@ class TestNumbers (TestCase):
             self.assertEqual(UCHAR_MAX, pyObjCPy(objc._C_UCHR, long(UCHAR_MAX)))
         self.assertEqual(UCHAR_MAX, pyObjCPy(objc._C_UCHR, float(UCHAR_MAX)))
 
-        self.assertRaises((IndexError, ValueError), pyObjCPy, objc._C_UCHR, SCHAR_MIN)
-        self.assertRaises((IndexError, ValueError), pyObjCPy, objc._C_UCHR, SCHAR_MIN - 1)
+
+        with warnings.catch_warnings():
+            warnings.filterwarnings("ignore", category=DeprecationWarning)
+
+            self.assertRaises((IndexError, ValueError), pyObjCPy, objc._C_UCHR, SCHAR_MIN)
+            self.assertRaises((IndexError, ValueError), pyObjCPy, objc._C_UCHR, SCHAR_MIN - 1)
 
     def test_char(self):
         self.assertEqual(0, pyObjCPy(objc._C_CHR, 0))
@@ -84,11 +88,14 @@ class TestNumbers (TestCase):
         self.assertEqual(0, pyObjCPy(objc._C_USHT, float(0)))
         self.assertEqual(USHRT_MAX, pyObjCPy(objc._C_USHT, float(USHRT_MAX)))
 
-        self.assertRaises(ValueError, pyObjCPy, objc._C_USHT, SHRT_MIN)
-        self.assertRaises(ValueError, pyObjCPy, objc._C_USHT, SHRT_MIN - 1)
+        with warnings.catch_warnings():
+            warnings.filterwarnings("ignore", category=DeprecationWarning)
 
-        self.assertRaises(ValueError, pyObjCPy, objc._C_USHT, "1")
-        self.assertRaises(ValueError, pyObjCPy, objc._C_USHT, b"1")
+            self.assertRaises(ValueError, pyObjCPy, objc._C_USHT, SHRT_MIN)
+            self.assertRaises(ValueError, pyObjCPy, objc._C_USHT, SHRT_MIN - 1)
+
+            self.assertRaises(ValueError, pyObjCPy, objc._C_USHT, "1")
+            self.assertRaises(ValueError, pyObjCPy, objc._C_USHT, b"1")
 
     def test_short(self):
         self.assertEqual(0, pyObjCPy(objc._C_SHT, 0))
@@ -117,11 +124,14 @@ class TestNumbers (TestCase):
         self.assertEqual(0, pyObjCPy(objc._C_UINT, float(0)))
         self.assertEqual(UINT_MAX, pyObjCPy(objc._C_UINT, float(UINT_MAX)))
 
-        self.assertRaises(ValueError, pyObjCPy, objc._C_UINT, INT_MIN)
-        self.assertRaises(ValueError, pyObjCPy, objc._C_UINT, INT_MIN - 1)
+        with warnings.catch_warnings():
+            warnings.filterwarnings("ignore", category=DeprecationWarning)
 
-        self.assertRaises(ValueError, pyObjCPy, objc._C_UINT, "1")
-        self.assertRaises(ValueError, pyObjCPy, objc._C_UINT, b"1")
+            self.assertRaises(ValueError, pyObjCPy, objc._C_UINT, INT_MIN)
+            self.assertRaises(ValueError, pyObjCPy, objc._C_UINT, INT_MIN - 1)
+
+            self.assertRaises(ValueError, pyObjCPy, objc._C_UINT, "1")
+            self.assertRaises(ValueError, pyObjCPy, objc._C_UINT, b"1")
 
     def test_int(self):
         self.assertEqual(0, pyObjCPy(objc._C_INT, 0))
@@ -150,13 +160,16 @@ class TestNumbers (TestCase):
             self.assertEqual(ULONG_MAX, pyObjCPy(objc._C_ULNG, long(ULONG_MAX)))
         self.assertEqual(0, pyObjCPy(objc._C_ULNG, float(0)))
 
-        if sys.maxsize < 2 ** 32:
-            self.assertEqual(ULONG_MAX, pyObjCPy(objc._C_ULNG, float(ULONG_MAX)))
-            self.assertRaises(ValueError, pyObjCPy, objc._C_ULNG, LONG_MIN)
-            self.assertRaises(ValueError, pyObjCPy, objc._C_ULNG, LONG_MIN - 1)
+        with warnings.catch_warnings():
+            warnings.filterwarnings("ignore", category=DeprecationWarning)
 
-        self.assertRaises(ValueError, pyObjCPy, objc._C_ULNG, "1")
-        self.assertRaises(ValueError, pyObjCPy, objc._C_ULNG, b"1")
+            if sys.maxsize < 2 ** 32:
+                self.assertEqual(ULONG_MAX, pyObjCPy(objc._C_ULNG, float(ULONG_MAX)))
+                self.assertRaises(ValueError, pyObjCPy, objc._C_ULNG, LONG_MIN)
+                self.assertRaises(ValueError, pyObjCPy, objc._C_ULNG, LONG_MIN - 1)
+
+            self.assertRaises(ValueError, pyObjCPy, objc._C_ULNG, "1")
+            self.assertRaises(ValueError, pyObjCPy, objc._C_ULNG, b"1")
 
     def test_long(self):
         self.assertEqual(0, pyObjCPy(objc._C_LNG, 0))

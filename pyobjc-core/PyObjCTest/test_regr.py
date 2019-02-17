@@ -73,12 +73,9 @@ class TestRegressions(TestCase):
         # get deallocated
         import sys
         import gc
-        if sys.version_info[0] == 2:
-            from StringIO import StringIO
-        else:
-            from io import StringIO
 
         with warnings.catch_warnings(record=True) as w:
+            warnings.filterwarnings("always")
             d = NSObject.alloc()
             del d
 

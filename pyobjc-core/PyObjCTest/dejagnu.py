@@ -55,10 +55,13 @@ def parseDG(fdata):
         if item[0] == 'dg-do':
             result.append(('run', item[1]))
         elif item[2] == 'dg-output':
+            value = item[3]
+            value = value.replace("\\-", "-")
+            value = value.replace("\-", "-")
             if sys.version_info[0] == 3:
-                value = codecs.decode(item[3], 'unicode_escape')
+                value = codecs.decode(value, 'unicode_escape')
             else:
-                value = item[3].decode('string_escape')
+                value = value.decode('string_escape')
             result.append(('expect', value))
 
     return result
@@ -152,10 +155,10 @@ class DgTestCase (unittest.TestCase):
             signal.alarm(5)
             def handler(signum, frame):
                 raise AssertionError("Test took too long")
-                
+
             orig_handler = signal.signal(signal.SIGALRM, handler)
             fp = os.popen('/tmp/test.bin', 'r')
-    
+
         finally:
             signal.alarm(0)
             signal.signal(signal.SIGALRM, orig_handler)

@@ -4,7 +4,11 @@ import objc._bridgesupport as bridgesupport
 import os
 import re
 import sys
-import imp
+
+if sys.version_info[0] == 2:
+    from imp import reload
+else:
+    from importlib import reload
 import ctypes
 import objc
 import subprocess
@@ -505,7 +509,7 @@ class TestBridgeSupportParser (TestCase):
                     # it contains conditional definitions
                     objc.createStructType = orig_createStructType
                     objc.registerStructAlias = orig_registerStructAlias
-                    imp.reload(bridgesupport)
+                    reload(bridgesupport)
 
                     self.verify_xml_structure()
 
@@ -516,7 +520,7 @@ class TestBridgeSupportParser (TestCase):
             # See above
             objc.createStructType = orig_createStructType
             objc.registerStructAlias = orig_registerStructAlias
-            imp.reload(bridgesupport)
+            reload(bridgesupport)
 
     def verify_xml_structure(self):
         prs = self.assert_valid_bridgesupport('TestXML', TEST_XML)
@@ -2121,8 +2125,10 @@ class TestMisc (TestCase):
             warnings.simplefilter("always")
             objc.registerStructAlias(b'{TestStruct2=dd}', tp1)
 
-        self.assertTrue(len(w) == 1)
-        self.assertEqual(w[0].category, DeprecationWarning)
+        # XXX: Disabled for now because this function is used in
+        # framework bindings...
+        #self.assertTrue(len(w) == 1)
+        #self.assertEqual(w[0].category, DeprecationWarning)
 
         with warnings.catch_warnings(record=True):
             warnings.simplefilter("ignore")

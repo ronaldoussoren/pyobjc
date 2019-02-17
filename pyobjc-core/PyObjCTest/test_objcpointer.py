@@ -3,6 +3,7 @@ from PyObjCTools.TestSupport import *
 from PyObjCTest.structpointer1 import OC_TestStructPointer
 
 import objc
+import warnings
 
 class TestObjCPointer (TestCase):
     def setUp(self):
@@ -19,12 +20,16 @@ class TestObjCPointer (TestCase):
         self.assertIn('pointerAsInteger', dir(objc.ObjCPointer))
 
     def test_objc_pointer_creation(self):
-        objc.options.unknown_pointer_raises = False
-        v = OC_TestStructPointer.returnUnwrapped()
-        self.assertIsInstance(v, objc.ObjCPointer)
+        with warnings.catch_warnings():
+            warnings.filterwarnings("ignore", category=objc.ObjCPointerWarning)
 
-        self.assertEqual(v.pointerAsInteger, 42)
-        self.assertEqual(v.type, b"^{UnwrappedStruct=ii}")
+            objc.options.unknown_pointer_raises = False
+
+            v = OC_TestStructPointer.returnUnwrapped()
+            self.assertIsInstance(v, objc.ObjCPointer)
+
+            self.assertEqual(v.pointerAsInteger, 42)
+            self.assertEqual(v.type, b"^{UnwrappedStruct=ii}")
 
     def test_objc_pointer_raises(self):
         objc.options.unknown_pointer_raises = True

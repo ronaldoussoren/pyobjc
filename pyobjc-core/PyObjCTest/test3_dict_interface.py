@@ -692,24 +692,24 @@ class TestDictUpdates (TestCase):
         self.do_test(NSMutableDictionary)
 
 
-import collections
+import collections.abc
 
 class TestABC (TestCase):
     def testDictABC(self):
-        self.assertTrue(issubclass(NSDictionary, collections.Mapping))
-        self.assertTrue(issubclass(NSMutableDictionary, collections.Mapping))
-        self.assertTrue(issubclass(NSMutableDictionary, collections.MutableMapping))
+        self.assertTrue(issubclass(NSDictionary, collections.abc.Mapping))
+        self.assertTrue(issubclass(NSMutableDictionary, collections.abc.Mapping))
+        self.assertTrue(issubclass(NSMutableDictionary, collections.abc.MutableMapping))
 
     def testViewABC(self):
         d = NSDictionary.dictionary()
-        self.assertTrue(isinstance(d.keys(), collections.KeysView))
-        self.assertTrue(isinstance(d.values(), collections.ValuesView))
-        self.assertTrue(isinstance(d.items(), collections.ItemsView))
+        self.assertTrue(isinstance(d.keys(), collections.abc.KeysView))
+        self.assertTrue(isinstance(d.values(), collections.abc.ValuesView))
+        self.assertTrue(isinstance(d.items(), collections.abc.ItemsView))
 
         d = NSMutableDictionary.dictionary()
-        self.assertTrue(isinstance(d.keys(), collections.KeysView))
-        self.assertTrue(isinstance(d.values(), collections.ValuesView))
-        self.assertTrue(isinstance(d.items(), collections.ItemsView))
+        self.assertTrue(isinstance(d.keys(), collections.abc.KeysView))
+        self.assertTrue(isinstance(d.values(), collections.abc.ValuesView))
+        self.assertTrue(isinstance(d.items(), collections.abc.ItemsView))
 
 class TestPyObjCDict (TestCase):
     def test_comparison(self):

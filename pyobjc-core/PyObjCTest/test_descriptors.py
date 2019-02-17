@@ -96,6 +96,8 @@ class TestBasicDescriptors (TestCase):
 
     def testNamedselector(self):
         with warnings.catch_warnings():
+            warnings.filterwarnings("ignore", category=DeprecationWarning)
+
             @objc.namedselector(b'foo:bar:')
             def mymethod(self, a, b):
                 pass
@@ -468,6 +470,7 @@ class TestBasicDescriptors (TestCase):
             # NOTE: the optional type argument is tested through the typedAccessor function
 
             # Basic properties:
+            warnings.filterwarnings("ignore", category=DeprecationWarning)
 
             @objc.Accessor
             def color(self):
@@ -650,22 +653,24 @@ class TestBasicDescriptors (TestCase):
                 pass
 
     def test_signature(self):
+        with warnings.catch_warnings():
+            warnings.filterwarnings("ignore", category=DeprecationWarning)
 
-        @objc.signature(b"d@:ii")
-        def myMethod_arg_(self, a, b):
-            pass
+            @objc.signature(b"d@:ii")
+            def myMethod_arg_(self, a, b):
+                pass
 
-        self.assertIsInstance(myMethod_arg_, objc.selector)
-        self.assertEqual(myMethod_arg_.signature, b'd@:ii')
-        self.assertEqual(myMethod_arg_.selector, b'myMethod:arg:')
+            self.assertIsInstance(myMethod_arg_, objc.selector)
+            self.assertEqual(myMethod_arg_.signature, b'd@:ii')
+            self.assertEqual(myMethod_arg_.selector, b'myMethod:arg:')
 
-        @objc.signature(b'q@:@q', selector=b'foo:bar:')
-        def method(self, a, b):
-            pass
+            @objc.signature(b'q@:@q', selector=b'foo:bar:')
+            def method(self, a, b):
+                pass
 
-        self.assertIsInstance(method, objc.selector)
-        self.assertEqual(method.signature, b'q@:@q')
-        self.assertEqual(method.selector, b'foo:bar:')
+            self.assertIsInstance(method, objc.selector)
+            self.assertEqual(method.signature, b'q@:@q')
+            self.assertEqual(method.selector, b'foo:bar:')
 
 if __name__ == "__main__":
     main()

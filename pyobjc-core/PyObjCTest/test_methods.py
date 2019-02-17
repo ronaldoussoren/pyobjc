@@ -36,6 +36,7 @@ from PyObjCTools.TestSupport import *
 import objc
 import sys
 import struct
+import warnings
 
 # Can't set the right signatures in plain Objective-C.
 for method, argmeta in [
@@ -395,9 +396,12 @@ class PyOCTestSimpleArguments(TestCase):
 
         self.assertEqual(self.obj.uintArg_(10.0), 5)
 
-        self.assertRaises(ValueError, self.obj.uintArg_, -5)
-        self.assertRaises(ValueError, self.obj.uintArg_, -5)
-        self.assertRaises(ValueError, self.obj.uintArg_, 1+2*(sys.maxsize+1))
+        with warnings.catch_warnings():
+            warnings.filterwarnings("ignore", category=DeprecationWarning)
+
+            self.assertRaises(ValueError, self.obj.uintArg_, -5)
+            self.assertRaises(ValueError, self.obj.uintArg_, -5)
+            self.assertRaises(ValueError, self.obj.uintArg_, 1+2*(sys.maxsize+1))
 
 
     def testShort(self):
@@ -426,12 +430,15 @@ class PyOCTestSimpleArguments(TestCase):
         self.assertEqual(self.obj.ushortArg_(10.0), 5)
 
         # Out of range arguments, assumes a short is 16 bits
-        self.assertRaises(ValueError, self.obj.ushortArg_, -5)
-        self.assertRaises(ValueError, self.obj.ushortArg_, -(1<<16)-1)
-        self.assertRaises(ValueError, self.obj.ushortArg_, 1<<16)
-        self.assertRaises(ValueError, self.obj.ushortArg_, -5)
-        self.assertRaises(ValueError, self.obj.ushortArg_, -(1<<16)-1)
-        self.assertRaises(ValueError, self.obj.ushortArg_, 1<<16)
+        with warnings.catch_warnings():
+            warnings.filterwarnings("ignore", category=DeprecationWarning)
+
+            self.assertRaises(ValueError, self.obj.ushortArg_, -5)
+            self.assertRaises(ValueError, self.obj.ushortArg_, -(1<<16)-1)
+            self.assertRaises(ValueError, self.obj.ushortArg_, 1<<16)
+            self.assertRaises(ValueError, self.obj.ushortArg_, -5)
+            self.assertRaises(ValueError, self.obj.ushortArg_, -(1<<16)-1)
+            self.assertRaises(ValueError, self.obj.ushortArg_, 1<<16)
 
 
     def testChar(self):
@@ -455,12 +462,15 @@ class PyOCTestSimpleArguments(TestCase):
         self.assertEqual(self.obj.ucharArg_(10.0), 5)
 
         # Out of range arguments
-        self.assertRaises(ValueError, self.obj.ucharArg_, -5)
-        self.assertRaises(ValueError, self.obj.ucharArg_, -256)
-        self.assertRaises(ValueError, self.obj.ucharArg_, 256)
-        self.assertRaises(ValueError, self.obj.ucharArg_, -5)
-        self.assertRaises(ValueError, self.obj.ucharArg_, -256)
-        self.assertRaises(ValueError, self.obj.ucharArg_, 256)
+        with warnings.catch_warnings():
+            warnings.filterwarnings("ignore", category=DeprecationWarning)
+
+            self.assertRaises(ValueError, self.obj.ucharArg_, -5)
+            self.assertRaises(ValueError, self.obj.ucharArg_, -256)
+            self.assertRaises(ValueError, self.obj.ucharArg_, 256)
+            self.assertRaises(ValueError, self.obj.ucharArg_, -5)
+            self.assertRaises(ValueError, self.obj.ucharArg_, -256)
+            self.assertRaises(ValueError, self.obj.ucharArg_, 256)
 
     def testCharp(self):
         self.assertEqual(self.obj.charpArg_(b"hello world"), b'dlrow olleh')

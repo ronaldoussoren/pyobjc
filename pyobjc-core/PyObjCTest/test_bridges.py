@@ -2,6 +2,7 @@ from PyObjCTools.TestSupport import *
 from PyObjCTest.testbndl import OC_TestClass2
 import objc
 import collections
+import collections.abc
 import sys
 
 if sys.version_info[0] == 2:
@@ -32,7 +33,7 @@ class TestBridges (TestCase):
 
     def test_user_collections(self):
         # Note: Not "UserDict" because UserDict doesn't implement
-        # __iter__ and hence isn't a collections.Mapping, and doesn't
+        # __iter__ and hence isn't a collections.abc.Mapping, and doesn't
         # implement enough API to implement the NSDictionary interface.
         v = IterableUserDict()
         self.assertIsSubclass(classOfProxy(v), NSMutableDictionary)
@@ -41,14 +42,14 @@ class TestBridges (TestCase):
         self.assertIsSubclass(classOfProxy(v), NSMutableArray)
 
     def test_abc(self):
-        class MySequence (collections.Sequence):
+        class MySequence (collections.abc.Sequence):
             def __getitem__(self, idx):
                 raise IndexError(idx)
 
             def __len__(self):
                 return 0
 
-        class MyDictionary (collections.Mapping):
+        class MyDictionary (collections.abc.Mapping):
             def __getitem__(self, key):
                 raise KeyError(key)
 

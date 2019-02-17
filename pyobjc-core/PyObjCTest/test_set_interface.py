@@ -7,7 +7,7 @@ from PyObjCTools.TestSupport import *
 
 import objc
 import operator
-import collections
+import collections.abc
 NSSet = objc.lookUpClass('NSSet')
 NSMutableSet = objc.lookUpClass('NSMutableSet')
 
@@ -27,7 +27,7 @@ if sys.version_info[0] == 3:
 class TestPyObjCSet (TestCase):
     def test_reverse_operator(self):
 
-        class MySet (collections.Set):
+        class MySet (collections.abc.Set):
             def __init__(self, init=()):
                 self._value = list(init)
 

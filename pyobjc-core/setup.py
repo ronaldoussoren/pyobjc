@@ -314,6 +314,9 @@ class oc_test (test.test):
         from PyObjCTest.loader import makeTestSuite
         import PyObjCTools.TestSupport as mod
 
+        import warnings
+        warnings.simplefilter("error")
+
         try:
             meta = self.distribution.metadata
             name = meta.get_name()
