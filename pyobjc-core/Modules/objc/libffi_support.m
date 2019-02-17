@@ -185,10 +185,14 @@ static PyObject* array_types = NULL;
         if (array_types == NULL) return NULL;
     }
 
+#if PY_MAJOR_VERSION == 3
     v = PyDict_GetItemStringWithError(array_types, (char*)argtype);
     if (v == NULL && PyErr_Occurred()) {
         return NULL;
     }
+#else
+    v = PyDict_GetItemString(array_types, (char*)argtype);
+#endif
     if (v != NULL) {
         return (ffi_type*)PyCapsule_GetPointer(v, "objc.__ffi_type__");
     }
@@ -256,10 +260,14 @@ static PyObject* struct_types = NULL;
         if (struct_types == NULL) return NULL;
     }
 
+#if PY_MAJOR_VERSION == 3
     v = PyDict_GetItemStringWithError(struct_types, (char*)argtype);
     if (v == NULL && PyErr_Occurred()) {
         return NULL;
     }
+#else
+    v = PyDict_GetItemString(struct_types, (char*)argtype);
+#endif
     if (v != NULL) {
         return (ffi_type*)PyCapsule_GetPointer(v, "objc.__ffi_type__");
     }

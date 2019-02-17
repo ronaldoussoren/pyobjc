@@ -427,10 +427,15 @@ class_init(PyObject *cls, PyObject *args, PyObject *kwds)
 {
     if (kwds != NULL) {
         if (PyDict_Check(kwds) && PyDict_Size(kwds) == 1) {
+
+#if PY_MAJOR_VERSION == 3
             PyObject* v = PyDict_GetItemStringWithError(kwds, "protocols");
             if (v == NULL && PyErr_Occurred()) {
                 return -1;
             }
+#else
+            PyObject* v = PyDict_GetItemString(kwds, "protocols");
+#endif
 
             /* XXX: Not clear what this tries to accomplish */
             if (v != NULL) {

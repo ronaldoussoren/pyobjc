@@ -314,6 +314,7 @@ void
 PyObjCErr_ToObjCWithGILState(PyGILState_STATE* state)
 {
     NSException* exc = PyObjCErr_AsExc();
+    assert(exc != nil);
 
     if (state) {
         PyGILState_Release(*state);

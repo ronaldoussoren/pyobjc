@@ -46,10 +46,14 @@ proto_dealloc(PyObject* object)
             /* Remove method from the selector to protocol mappping,
              * but only if this protocol is registered for the selector.
              */
+#if PY_MAJOR_VERSION == 3
             cur = PyDict_GetItemStringWithError(selToProtocolMapping, (char*)sel_getName(tmp->sel_selector));
             if (cur == NULL && PyErr_Occurred()) {
                 PyErr_WriteUnraisable(NULL);
             }
+#else
+            cur = PyDict_GetItemString(selToProtocolMapping, (char*)sel_getName(tmp->sel_selector));
+#endif
             if (cur == (PyObject*)self) {
                 r = PyDict_DelItemString(selToProtocolMapping,
                     sel_getName(tmp->sel_selector));
@@ -371,5 +375,9 @@ PyObjCInformalProtocol_FindProtocol(SEL selector)
 {
     if (selToProtocolMapping == NULL) return NULL;
 
+#if PY_MAJOR_VERSION == 3
     return PyDict_GetItemStringWithError(selToProtocolMapping, (char*)sel_getName(selector));
+#else
+    return PyDict_GetItemString(selToProtocolMapping, (char*)sel_getName(selector));
+#endif
 }
