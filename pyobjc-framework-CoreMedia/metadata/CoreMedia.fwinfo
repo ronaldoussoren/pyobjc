@@ -9,43 +9,43 @@
   },
   "cftypes": {
    "CMBlockBufferRef": {
-    "typestr": "^{OpaqueCMBlockBuffer=}",
+    "typestr": "^{opaqueCMBlockBuffer=}",
     "gettypeid_func": "CMBlockBufferGetTypeID"
    },
    "CMFormatDescriptionRef": {
-    "typestr": "^{OpaqueCMFormatDescription=}",
+    "typestr": "^{opaqueCMFormatDescription=}",
     "gettypeid_func": "CMFormatDescriptionGetTypeID"
    },
    "CMBufferQueueRef": {
-    "typestr": "^{OpaqueCMBufferQueue=}",
+    "typestr": "^{opaqueCMBufferQueue=}",
     "gettypeid_func": "CMBufferQueueGetTypeID"
    },
    "CMSimpleQueueRef": {
-    "typestr": "^{OpaqueCMSimpleQueue=}",
+    "typestr": "^{opaqueCMSimpleQueue=}",
     "gettypeid_func": "CMSimpleQueueGetTypeID"
    },
    "CMSampleBufferRef": {
-    "typestr": "^{OpaqueCMSampleBuffer=}",
+    "typestr": "^{opaqueCMSampleBuffer=}",
     "gettypeid_func": "CMSampleBufferGetTypeID"
    },
    "CMTimebaseRef": {
-    "typestr": "^{OpaqueCMTimebase=}",
+    "typestr": "^{opaqueCMTimebase=}",
     "gettypeid_func": "CMTimebaseGetTypeID"
    },
    "CMSimpleQueueef": {
-    "typestr": "^{OpaqueCMSimpleQueue}",
+    "typestr": "^{opaqueCMSimpleQueue}",
     "gettypeid_func": "CMSimpleQueueetTypeID"
    },
    "CMClockRef": {
-    "typestr": "^{OpaqueCMClock=}",
+    "typestr": "^{opaqueCMClock=}",
     "gettypeid_func": "CMClockGetTypeID"
    },
    "CMSampleBufferrRef": {
-    "typestr": "^{OpaqueCMSampleBufferr=}",
+    "typestr": "^{opaqueCMSampleBufferr=}",
     "gettypeid_func": "CMSampleBufferrGetTypeID"
    },
    "CMMemoryPoolRef": {
-    "typestr": "^{OpaqueCMMemoryPool=}",
+    "typestr": "^{opaqueCMMemoryPool=}",
     "gettypeid_func": "CMMemoryPoolGetTypeID"
    }
   },
@@ -55,8 +55,7 @@
    "CMSubtitleFormatDescriptionGetFormatType": {  "alias": "CMFormatDescriptionGetMediaSubType" }
   },
   "enum": {
-   "kCMTimebaseVeryLongCFTimeInterval": { "value": 8073216000.0 },
-   "kCMMetadataFormatType_EMSG": { "value": 1735617893 }
+   "kCMTimebaseVeryLongCFTimeInterval": { "value": 8073216000.0 }
   },
   "externs": {
    "kCMFormatDescriptionTransferFunction_Linear": { "typestr": "@" },

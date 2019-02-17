@@ -19,7 +19,7 @@ class TestAVCaptureOutput (TestCase):
 
         self.assertResultIsBOOL(AVFoundation.AVCaptureStillImageOutput.isCapturingStillImage)
         self.assertArgIsBlock(AVFoundation.AVCaptureStillImageOutput.captureStillImageAsynchronouslyFromConnection_completionHandler_, 1,
-                b'v@@')
+                b'v^{opaqueCMSampleBuffer=}@')
 
     def testProtocols(self):
         objc.protocolNamed('AVCaptureVideoDataOutputSampleBufferDelegate')

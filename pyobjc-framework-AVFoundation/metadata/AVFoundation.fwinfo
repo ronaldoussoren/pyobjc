@@ -1353,7 +1353,7 @@
         "callable": {
 	 "arguments": {
 	  "0": { "typestr": "^v" },
-	  "1": { "typestr": "@" },
+	  "1": { "typestr": "^{opaqueCMSampleBuffer=}" },
 	  "2": { "typestr": "@" }
 	 },
 	 "retval": { "typestr": "v" }
