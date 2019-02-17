@@ -69,7 +69,7 @@
     "1": { "type_override": "^{OpaqueCMBlockBuffer=}" },
     "2": { "type_override": "Z" },
     "3": {
-     "type_override": "@?"
+     "type_override": "@?",
      "callable": {
       "arguments": {
        "0": { "type": "^v" },
