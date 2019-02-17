@@ -322,6 +322,9 @@ class TestCMFormatDescription (TestCase):
     @min_os_level('10.14')
     def test_constants10_14(self):
         self.assertIsInstance(CoreMedia.kCMFormatDescriptionTransferFunction_Linear, unicode)
+
+    @min_os_level('10.14.4')
+    def test_constants10_14_4(self):
         self.assertIsInstance(CoreMedia.kCMFormatDescriptionExtension_AlternativeTransferCharacteristics, unicode)
 
     def test_structs(self):

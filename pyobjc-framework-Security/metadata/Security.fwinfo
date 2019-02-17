@@ -99,6 +99,8 @@
    "SecKeychainCallbackInfo": { "typestr": "{SecKeychainCallbackInfo=I@@i}", "fieldnames": [ "version", "item", "keychain", "pid" ] }
   },
   "enum": {
+   "kSecCSCalculateCMSDigest": { "value": 64 },
+   "kSecCSSingleThreaded": { "value": 4096 },
    "kSSLCiphersuiteGroupDefault": { "value": 0 },
    "kSSLCiphersuiteGroupCompatibility": { "value": 1 },
    "kSSLCiphersuiteGroupLegacy": { "value": 2 },
@@ -1929,6 +1931,13 @@
      "1": { "type_override": "@" }
     }
    },
+   "SecTrustSetSignedCertificateTimestamps": {
+    "retval": { "type_override": "i" },
+    "args": {
+     "0": { "type_override": "@" },
+     "1": { "type_override": "@" }
+    }
+   },
    "SecTrustSetVerifyDate": {
     "retval": { "type_override": "i" },
     "args": {
@@ -3024,7 +3033,7 @@
     "args":  {
      "0": { "type_override": "@" },
      "1": {
-      "type_override": "^?",
+      "type_override": "@?",
       "callable_retained": true,
       "callable": {
        "arguments": {

@@ -32,7 +32,8 @@ class TestJSTypedArray (TestCase):
         self.assertArgHasType(JavaScriptCore.JSObjectMakeTypedArrayWithArrayBufferAndOffset, 1, objc._C_UINT)
         self.assertArgHasType(JavaScriptCore.JSObjectMakeTypedArrayWithArrayBufferAndOffset, 2, JavaScriptCore.JSObjectRef.__typestr__)
         self.assertArgHasType(JavaScriptCore.JSObjectMakeTypedArrayWithArrayBufferAndOffset, 3, objc._C_ULNG)  # size_t
-        self.assertArgHasType(JavaScriptCore.JSObjectMakeTypedArrayWithArrayBufferAndOffset, 4, b'o^' + JavaScriptCore.JSValueRef.__typestr__)
+        self.assertArgHasType(JavaScriptCore.JSObjectMakeTypedArrayWithArrayBufferAndOffset, 4, objc._C_ULNG)  # size_t
+        self.assertArgHasType(JavaScriptCore.JSObjectMakeTypedArrayWithArrayBufferAndOffset, 5, b'o^' + JavaScriptCore.JSValueRef.__typestr__)
 
         self.assertResultHasType(JavaScriptCore.JSObjectGetTypedArrayBytesPtr, b'^v')
         self.assertArgHasType(JavaScriptCore.JSObjectGetTypedArrayBytesPtr, 0, JavaScriptCore.JSContextRef.__typestr__)

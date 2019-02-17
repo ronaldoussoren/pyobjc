@@ -594,34 +594,15 @@
    },
    "JSObjectMakeTypedArrayWithArrayBufferAndOffset": {
     "args": {
-     "0": { "typestr": "^{OpaqueJSContext=}" },
-     "1": { "typestr": "i" },
-     "2": { "typestr": "^{OpaqueJSValue=}" },
-     "3": { "typestr": "L" },
-     "4": { "type_modifier": "o", "typestr": "^^{OpaqueJSValue=}" }
+     "5": { "type_modifier": "o" }
     },
     "retval": { "typestr": "^{OpaqueJSValue=}" }
    },
    "JSObjectMakeTypedArrayWithBytesNoCopy": {
     "args": {
-     "0": { "typestr": "^{OpaqueJSContext=}" },
-     "1": { "typestr": "i" },
-     "2": { "type_modifier": "n", "typestr": "^v", "c_array_lenght_in_arg": 3 },
-     "3": { "typestr": "L" },
-     "4": { "typestr": "^?",
-      "callable": {
-       "retval": { "typestr": "v" },
-       "arguments": {
-        "0": { "type": "n^v" },
-	"1": { "type": "^v" }
-       }
-      },
-      "callable_retained": true
-     },
-     "5": { "typestr": "^v" },
-     "6": { "type_modifier": "o", "typestr": "^^{OpaqueJSValue=}" }
-    },
-    "retval": { "typestr": "^{OpaqueJSValue=}" }
+     "2": { "type_modifier": "n", "c_array_lenght_in_arg": 3 },
+     "6": { "type_modifier": "o" }
+    }
    },
    "JSObjectMakeConstructor": {
     "args": {

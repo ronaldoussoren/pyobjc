@@ -96,19 +96,20 @@
        "0": { "type": "^v" },
        "1": { "type": "@" },
        "2": { "type": "@" }
-      }
-     },
-     "retval": { "type": "v" }
+      },
+      "retval": { "type": "v" }
+     }
     }
-   },
-   "CMBufferQueueInstallTriggerHandlerWithIntegerThreshold": {
-    "args": {
-     "0": { "type_override": "@" },
-     "1": { "type_override": "I" },
-     "2": { "type_override": [ "i", "q" ] },
-     "3": { "type_modifier": "o", "type_override": "^{opaqueCMBufferQueueTriggerToken=}" }
-     "4": {
-      "type_override": "@?",
+   }
+  },
+  "CMBufferQueueInstallTriggerHandlerWithIntegerThreshold": {
+   "args": {
+    "0": { "type_override": "@" },
+    "1": { "type_override": "I" },
+    "2": { "type_override": [ "i", "q" ] },
+    "3": { "type_modifier": "o", "type_override": "^{opaqueCMBufferQueueTriggerToken=}" },
+    "4": {
+     "type_override": "@?",
       "callable": {
        "arguments": {
         "0": { "type": "^v" },
@@ -127,7 +128,7 @@
      "0": { "type_override": "@" },
      "1": { "type_override": "I" },
      "2": { "type_override": "{_CMTime=qiIq}" },
-     "3": { "type_modifier": "o", "type_override": "^{opaqueCMBufferQueueTriggerToken=}" }
+     "3": { "type_modifier": "o", "type_override": "^{opaqueCMBufferQueueTriggerToken=}" },
      "4": {
       "type_override": "@?",
       "callable": {

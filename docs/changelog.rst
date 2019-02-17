@@ -17,6 +17,15 @@ Version 5.2
 * #75: The core bridge now uses :func:`PyDict_GetItemWithError`, which
   may result in exceptions being raised that were previously swallowed.
 
+* #247: Switch to the new buffer API instead of the older Python 2
+  buffer API.
+
+  The new implementation is more correct, but may keep Python objects
+  alive longer than the previous implementation, and also affects
+  buffer related functionality of Python objects. In particular, calling
+  ``[someData bytes]`` on a Python object keeps the ``Py_buffer`` alive
+  until the next flush of the autoreleasepool.
+
 Version 5.1.2
 -------------
 
