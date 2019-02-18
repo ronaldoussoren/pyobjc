@@ -196,7 +196,7 @@ class TestCGDirectDisplay (TestCase):
         self.assertIsInstance(err, (int, long))
         self.assertIsInstance(count, (int, long))
         self.assertEqual(err, 0)
-        self.failIfEqual(count, 0)
+        self.assertNotEqual(count, 0)
 
         err = CGSetDisplayTransferByTable(CGMainDisplayID(), count,
                 red, green, blue)

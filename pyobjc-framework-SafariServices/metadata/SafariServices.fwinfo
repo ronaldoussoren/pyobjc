@@ -68,6 +68,20 @@
    "SFSafariTab": {
     "methods": [
      {
+      "selector": "getContainingWindowWithCompletionHandler:",
+      "class_method": false,
+      "args": {
+       "0": {
+        "callable": {
+	 "arguments": {
+	  "0": { "typestr": "^v" }
+	 },
+	 "retval": { "typestr": "v" }
+	}
+       }
+      }
+     },
+     {
       "selector": "getActivePageWithCompletionHandler:",
       "class_method": false,
       "args": {
@@ -116,6 +130,36 @@
    "SFSafariPage": {
     "methods": [
      {
+      "selector": "getScreenshotOfVisibleAreaWithCompletionHandler:",
+      "class_method": false,
+      "args": {
+       "0": {
+        "callable": {
+	 "arguments": {
+	  "0": { "typestr": "^v" },
+	  "1": { "typestr": "@" }
+	 },
+	 "retval": { "typestr": "v" }
+	}
+       }
+      }
+     },
+     {
+      "selector": "getContainingTabWithCompletionHandler:",
+      "class_method": false,
+      "args": {
+       "0": {
+        "callable": {
+	 "arguments": {
+	  "0": { "typestr": "^v" },
+	  "1": { "typestr": "@" }
+	 },
+	 "retval": { "typestr": "v" }
+	}
+       }
+      }
+     },
+     {
       "selector": "getPagePropertiesWithCompletionHandler:",
       "class_method": false,
       "args": {
@@ -134,6 +178,21 @@
    },
    "SFSafariWindow": {
     "methods": [
+     {
+      "selector": "getAllTabsWithCompletionHandler:",
+      "class_method": false,
+      "args": {
+       "0": {
+        "callable": {
+	 "arguments": {
+	  "0": { "typestr": "^v" },
+	  "1": { "typestr": "@" }
+	 },
+	 "retval": { "typestr": "v" }
+	}
+       }
+      }
+     },
      {
       "selector": "getToolbarItemWithCompletionHandler:",
       "class_method": false,
@@ -204,6 +263,21 @@
    },
    "SFSafariApplication": {
     "methods": [
+     {
+      "selector": "getAllWindowsWithCompletionHandler:",
+      "class_method": true,
+      "args": {
+       "0": {
+        "callable": {
+         "arguments": {
+ 	 "0": { "typestr": "^v" },
+ 	 "1": { "typestr": "@" }
+ 	},
+ 	"retval": { "typestr": "v" }
+        }
+       }
+      }
+     },
      {
       "selector": "dispatchMessageWithName:toExtensionWithIdentifier:userInfo:completionHandler:",
       "class_method": true,
@@ -328,6 +402,25 @@
       "class_method": false,
       "args": {
        "0": { "type_override": "Z" }
+      }
+     }
+    ]
+   },
+   "SFSafariExtension": {
+    "methods": [
+     {
+      "selector": "getBaseURIWithCompletionHandler:",
+      "class_method": false,
+      "args": {
+       "0": {
+        "callable": {
+	 "arguments": {
+	  "0": { "typestr": "^v" },
+	  "1": { "typestr": "@" }
+	 },
+	 "retval": { "typestr": "v" }
+	}
+       }
       }
      }
     ]

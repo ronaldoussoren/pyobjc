@@ -50,7 +50,7 @@ class TestCGBitmapContext (TestCase):
         self.assertIsInstance(ctx, CGContextRef)
         del ctx
 
-        self.assertEquals(len(list), 1)
+        self.assertEqual(len(list), 1)
         self.assertIs(list[0][0], release_info)
         self.assertIs(list[0][1], bytes_val)
 

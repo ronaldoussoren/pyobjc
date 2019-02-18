@@ -122,7 +122,7 @@ class TestCGFont (TestCase):
 
         tags = CGFontCopyTableTags(font)
         self.assertIsInstance(tags, tuple)
-        self.failIfEqual(len(tags), 0)
+        self.assertNotEqual(len(tags), 0)
         self.assertIsInstance(tags[0], (int, long))
 
         self.assertResultIsCFRetained(CGFontCopyTableForTag)

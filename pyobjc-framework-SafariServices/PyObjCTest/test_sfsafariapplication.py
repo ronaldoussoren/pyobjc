@@ -19,7 +19,7 @@ if sys.maxsize > 2 ** 32:
 
         @min_os_level('10.14.4')
         def testMethods10_14(self):
-            self.assertArgIsBlock(SafariServices.SFSafariApplication.getAllWindowsWithCompletionHandler, 0, b'v@')
+            self.assertArgIsBlock(SafariServices.SFSafariApplication.getAllWindowsWithCompletionHandler_, 0, b'v@')
 
 
 if __name__ == "__main__":
