@@ -542,7 +542,7 @@
    },
    "GCExtendedGamepadSnapshotDataFromNSData": {
     "args": {
-     "0": {}
+     "0": { "type_modifier": "o" }
     }
    },
    "GCGamepadSnapShotDataV100FromNSData": {
@@ -557,7 +557,7 @@
    },
    "GCMicroGamepadSnapshotDataFromNSData": {
     "args": {
-     "0": {}
+     "0": { "type_modifier": "o" }
     }
    },
    "NSDataFromGCExtendedGamepadSnapShotDataV100": {
@@ -567,7 +567,7 @@
    },
    "NSDataFromGCExtendedGamepadSnapshotData": {
     "args": {
-     "0": {}
+     "0": { "type_modifier": "n" }
     }
    },
    "NSDataFromGCGamepadSnapShotDataV100": {

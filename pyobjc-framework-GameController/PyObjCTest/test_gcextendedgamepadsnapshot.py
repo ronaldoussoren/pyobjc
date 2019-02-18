@@ -77,7 +77,7 @@ if sys.maxsize > 2 ** 32:
         @min_os_level('10.14.4')
         def test_functions_10_14_4(self):
             self.assertArgIsOut(GameController.GCExtendedGamepadSnapshotDataFromNSData, 0)
-            self.resultIsBOOL(GameController.GCExtendedGamepadSnapshotDataFromNSData)
+            self.assertResultIsBOOL(GameController.GCExtendedGamepadSnapshotDataFromNSData)
 
             self.assertArgIsIn(GameController.NSDataFromGCExtendedGamepadSnapshotData, 0)
 
