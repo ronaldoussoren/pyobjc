@@ -236,8 +236,8 @@ class TestCMSampleBuffer (TestCase):
         self.assertArgIsBlock(CoreMedia.CMAudioSampleBufferCreateWithPacketDescriptionsAndMakeDataReadyHandler, 3, b'i^{OpaqueCMSampleBuffer=}')
         self.assertArgIsIn(CoreMedia.CMAudioSampleBufferCreateWithPacketDescriptionsAndMakeDataReadyHandler, 7)
         self.assertArgSizeInArg(CoreMedia.CMAudioSampleBufferCreateWithPacketDescriptionsAndMakeDataReadyHandler, 7, 6)
-        self.assertArgIsOut(CoreMedia.CMAudioSampleBufferCreateWithPacketDescriptionsAndMakeDataReadyHandle, 8)
-        self.assertArgIsCFRetained(CoreMedia.CMAudioSampleBufferCreateWithPacketDescriptionsAndMakeDataReadyHandle, 8)
+        self.assertArgIsOut(CoreMedia.CMAudioSampleBufferCreateWithPacketDescriptionsAndMakeDataReadyHandler, 8)
+        self.assertArgIsCFRetained(CoreMedia.CMAudioSampleBufferCreateWithPacketDescriptionsAndMakeDataReadyHandler, 8)
 
         self.assertArgIsBOOL(CoreMedia.CMSampleBufferCreateForImageBufferWithMakeDataReadyHandler, 2)
         self.assertArgIsBlock(CoreMedia.CMSampleBufferCreateForImageBufferWithMakeDataReadyHandler, 3, b'i^{OpaqueCMSampleBuffer=}')

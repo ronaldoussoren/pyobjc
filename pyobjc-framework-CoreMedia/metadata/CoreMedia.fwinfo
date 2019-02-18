@@ -62,6 +62,38 @@
    "kCMFormatDescriptionExtension_AlternativeTransferCharacteristics": { "typestr": "@" }
   },
   "functions": {
+  "CMAudioSampleBufferCreateWithPacketDescriptionsAndMakeDataReadyHandler": {
+   "args": {
+    "3": {
+     "callable": {
+      "arguments": {
+       "0": { "type": "^v" },
+       "1": { "type": "^{OpaqueCMSampleBuffer=}" }
+      },
+      "retval": { "type": "i" }
+     }
+    },
+    "7": { "type_modifier": "n", "c_array_length_in_arg": 6 },
+    "8": { "type_modifier": "o", "already_cfretained": true }
+   }
+  },
+  "CMSampleBufferCreateForImageBufferWithMakeDataReadyHandler": {
+   "args": {
+    "3": {
+     "callable": {
+      "arguments": {
+       "0": { "type": "^v" },
+       "1": { "type": "^{OpaqueCMSampleBuffer=}" }
+      },
+      "retval": { "type": "i" }
+     }
+    },
+    "6": { "type_modifier": "o", "already_cfretained": true }
+   }
+  },
+  "CMBufferQueueCreateWithHandlers": {
+   "ignore": true
+  },
   "CMSampleBufferCreateWithMakeDataReadyHandler": {
    "args": {
     "0": { "type_override": "^{__CFAllocator=}" },

@@ -92,13 +92,13 @@ class TestCMBufferQueue (TestCase):
     def test_functions10_14_4(self):
         self.assertNotHasAttr(CoreMedia, 'CMBufferQueueCreateWithHandlers')
 
-        self.assertIsOut(CoreMedia.CMBufferQueueInstallTriggerHandler, 3)
-        self.assertIsBlock(CoreMedia.CMBufferQueueInstallTriggerHandler, 4, b"v^{opaqueCMBufferQueueTriggerToken=}")
+        self.assertArgIsOut(CoreMedia.CMBufferQueueInstallTriggerHandler, 3)
+        self.assertArgIsBlock(CoreMedia.CMBufferQueueInstallTriggerHandler, 4, b"v^{opaqueCMBufferQueueTriggerToken=}")
 
-        self.assertIsOut(CoreMedia.CMBufferQueueInstallTriggerHandlerWithIntegerThreshold, 3)
-        self.assertIsBlock(CoreMedia.CMBufferQueueInstallTriggerHandlerWithIntegerThreshold, 4, b"v^{opaqueCMBufferQueueTriggerToken=}")
+        self.assertArgIsOut(CoreMedia.CMBufferQueueInstallTriggerHandlerWithIntegerThreshold, 3)
+        self.assertArgIsBlock(CoreMedia.CMBufferQueueInstallTriggerHandlerWithIntegerThreshold, 4, b"v^{opaqueCMBufferQueueTriggerToken=}")
 
-        self.assertIsBlock(CoreMedia.CMBufferQueueSetValidationHandler, 1, b"v@@")
+        self.assertArgIsBlock(CoreMedia.CMBufferQueueSetValidationHandler, 1, b"v@@")
 
 
 if __name__ == "__main__":
