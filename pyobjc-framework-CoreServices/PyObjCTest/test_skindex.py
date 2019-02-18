@@ -93,7 +93,7 @@ class TestSKIndex (TestCase):
         self.assertIsInstance(v, (int, long))
 
         v = CoreServices.SKIndexGetAnalysisProperties(ref)
-        self.failUnless(v is None)
+        self.assertTrue(v is None)
 
         v = CoreServices.SKIndexGetDocumentCount(ref)
         self.assertIsInstance(v, (int, long))
@@ -114,12 +114,12 @@ class TestSKIndex (TestCase):
 
         v = CoreServices.SKIndexAddDocumentWithText(ref,
                 doc, "hello world", True)
-        self.failUnless(v)
+        self.assertTrue(v)
 
         self.assertResultIsBOOL(CoreServices.SKIndexAddDocument)
         self.assertArgIsBOOL(CoreServices.SKIndexAddDocument, 3)
         v = CoreServices.SKIndexAddDocument(ref, doc, None, True)
-        self.failUnless(v is True)
+        self.assertTrue(v is True)
 
         CoreServices.SKIndexSetDocumentProperties(ref, doc, {"demo": "pyobjc"})
 
@@ -134,7 +134,7 @@ class TestSKIndex (TestCase):
 
         self.assertResultIsCFRetained(CoreServices.SKIndexCopyDocumentForDocumentID)
         v = CoreServices.SKIndexCopyDocumentForDocumentID(ref, v)
-        self.failUnless(v is doc)
+        self.assertTrue(v is doc)
 
         r = CoreServices.SKIndexFlush(ref)
         self.assertIs(r, True)
@@ -148,7 +148,7 @@ class TestSKIndex (TestCase):
         self.assertIsInstance(v, CoreServices.SKDocumentRef)
 
         v = CoreServices.SKIndexDocumentIteratorCopyNext(it)
-        self.failUnless(v is None)
+        self.assertTrue(v is None)
 
         v = CoreServices.SKIndexGetMaximumDocumentID(ref)
         self.assertIsInstance(v, (int, long))
@@ -184,13 +184,13 @@ class TestSKIndex (TestCase):
         CoreServices.SKLoadDefaultExtractorPlugIns()
 
         v = CoreServices.SKIndexRenameDocument(ref, doc, "osx-acks.rtf")
-        self.failUnless(v is True)
+        self.assertTrue(v is True)
 
         v = CoreServices.SKIndexMoveDocument(ref, doc, None)
-        self.failUnless(v is True)
+        self.assertTrue(v is True)
 
         v = CoreServices.SKIndexRemoveDocument(ref, doc)
-        self.failUnless(v)
+        self.assertTrue(v)
 
 
 if __name__ == "__main__":

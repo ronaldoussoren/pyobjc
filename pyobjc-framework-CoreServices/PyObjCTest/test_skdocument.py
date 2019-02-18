@@ -32,7 +32,7 @@ class TestSKDocument (TestCase):
         self.assertIsInstance(v, unicode)
 
         v = CoreServices.SKDocumentGetParent(ref2)
-        self.failUnless(v is ref)
+        self.assertTrue(v is ref)
 
 
 if __name__ == "__main__":

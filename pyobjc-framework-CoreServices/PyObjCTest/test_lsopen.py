@@ -68,7 +68,7 @@ class TestLSOpen (TestCase):
 
         self.assertArgIsOut(CoreServices.LSOpenCFURLRef, 1)
         ok, u = CoreServices.LSOpenCFURLRef(url, None)
-        self.assertEquals(ok, 0)
+        self.assertEqual(ok, 0)
         self.assertIsInstance(u, CoreServices.CFURLRef)
 
         self.assertArgIsIn(CoreServices.LSOpenItemsWithRole, 0)
@@ -84,7 +84,7 @@ class TestLSOpen (TestCase):
         for x in psns:
             # Actually a ProcessSerialNumber, but those aren't wrapped yet
             self.assertIsInstance(x, tuple)
-            self.assertEquals(len(x), 2)
+            self.assertEqual(len(x), 2)
             self.assertIsInstance(x[0], (int, long))
             self.assertIsInstance(x[1], (int, long))
 
@@ -93,12 +93,12 @@ class TestLSOpen (TestCase):
         self.assertArgIsOut(CoreServices.LSOpenURLsWithRole, 4)
         self.assertArgSizeInArg(CoreServices.LSOpenURLsWithRole, 4, 5)
         ok, psns = CoreServices.LSOpenURLsWithRole([url], CoreServices.kLSRolesAll, None, None, None, 1)
-        self.assertEquals(ok, 0)
+        self.assertEqual(ok, 0)
         self.assertIsInstance(psns, (list, tuple))
         for x in psns:
             # Actually a ProcessSerialNumber, but those aren't wrapped yet
             self.assertIsInstance(x, tuple)
-            self.assertEquals(len(x), 2)
+            self.assertEqual(len(x), 2)
             self.assertIsInstance(x[0], (int, long))
             self.assertIsInstance(x[1], (int, long))
 
@@ -119,7 +119,7 @@ class TestLSOpen (TestCase):
         # Call will fail for now, 'application' is an FSRef pointers and
         # pyobjc-core isn't smart enough to deal with that.
         ok, psn = CoreServices.LSOpenApplication(params, None)
-        self.assertEquals(ok, 0)
+        self.assertEqual(ok, 0)
         self.assertIsInstance(psn, (int, long))
 
 
