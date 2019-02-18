@@ -7,14 +7,14 @@ import PubSub
 
 class TestPubSub (TestCase):
     def testClasses(self):
-        self.assert_( hasattr(PubSub, 'PSAuthor') )
-        self.assert_( isinstance(PubSub.PSAuthor, objc.objc_class) )
+        self.assertTrue( hasattr(PubSub, 'PSAuthor') )
+        self.assertTrue( isinstance(PubSub.PSAuthor, objc.objc_class) )
 
 
     def testProtocols(self):
         self.assertFalse( hasattr(PubSub, 'protocols') )
-        #self.assert_( hasattr(PubSub.protocols, 'PSClientDelegate') )
-        #self.assert_( isinstance(PubSub.protocols.PSClientDelegate, objc.informal_protocol) )
+        #self.assertTrue( hasattr(PubSub.protocols, 'PSClientDelegate') )
+        #self.assertTrue( isinstance(PubSub.protocols.PSClientDelegate, objc.informal_protocol) )
 
 
 if __name__ == "__main__":
