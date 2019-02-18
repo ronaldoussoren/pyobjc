@@ -2096,6 +2096,18 @@
     "methods": [
      {
       "class_method": false,
+      "retval": { "type_override": "Z" },
+      "selector": "preventsCapture"
+     },
+     {
+      "class_method": false,
+      "args": {
+       "0": { "type_override": "Z" }
+      },
+      "selector": "setPreventsCapture:"
+     },
+     {
+      "class_method": false,
       "retval": {},
       "selector": "controlTimebase"
      },
