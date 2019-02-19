@@ -31,6 +31,9 @@ Version 5.2
 
 #258: Add bindings to the "PrintCore" APIs from the ApplicationServices framework.
 
+* Python 2: UserDict.UserDict instances are now bridged to instances of
+  a subclass of NSDictionary.
+
 Version 5.1.2
 -------------
 
