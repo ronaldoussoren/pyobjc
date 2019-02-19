@@ -61,3 +61,7 @@ registerSetType(frozenset)
 registerSetType(collections_abc.Set)
 registerDateType(datetime.date)
 registerDateType(datetime.datetime)
+
+if sys.version_info[0] == 2:
+    import UserDict
+    registerMappingType(UserDict.UserDict)

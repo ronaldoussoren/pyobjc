@@ -2486,7 +2486,11 @@ depythonify_python_object(PyObject* argument, id* datum)
 
 #endif /* PY_MAJOR_VERSION == 3 */
 
-    } else if (PyObject_CheckBuffer(argument)) {
+    } else if (PyObject_CheckBuffer(argument)
+#if PY_MAJOR_VERSION == 2
+            || PyObject_CheckReadBuffer(argument)
+#endif
+            ) {
         *datum = [OC_PythonData dataWithPythonObject:argument];
 
     } else if (PyAnySet_CheckExact(argument)) {

@@ -18,7 +18,11 @@
     self = [super init];
     if (unlikely(self == nil)) return nil;
 
-    if (!PyObject_CheckBuffer(v)) {
+    if (!PyObject_CheckBuffer(v)
+#if PY_MAJOR_VERSION == 2
+        && !PyObject_CheckReadBuffer(v)
+#endif
+            ) {
         PyErr_SetString(PyExc_TypeError, "not a buffer");
         [self release];
         return nil;
@@ -85,6 +89,9 @@
     NSUInteger rval;
 
     PyObjC_BEGIN_WITH_GIL
+#if PY_MAJOR_VERSION == 2
+      if (PyObject_CheckBuffer(value)) {
+#endif
         OCReleasedBuffer* temp = [[OCReleasedBuffer alloc] initWithPythonBuffer:value writable:NO];
         if (temp == nil) {
             [self release];
@@ -93,6 +100,19 @@
         }
         [temp release];
         rval = [temp length];
+#if PY_MAJOR_VERSION == 2
+      } else {
+        Py_ssize_t buffer_len;
+        const void *buffer;
+
+        if (unlikely(PyObject_AsReadBuffer(value, &buffer, &buffer_len) == -1)) {
+            [self release];
+            PyErr_Clear();
+            return 0;
+        }
+        rval = buffer_len;
+      }
+#endif
 
     PyObjC_END_WITH_GIL
     return rval;
@@ -103,13 +123,31 @@
     void* rval;
 
     PyObjC_BEGIN_WITH_GIL
+#if PY_MAJOR_VERSION == 2
+      if (PyObject_CheckBuffer(value)) {
+#endif
         OCReleasedBuffer* temp = [[OCReleasedBuffer alloc] initWithPythonBuffer:value writable:NO];
         if (temp == nil) {
             [self release];
+            PyErr_Clear();
             return nil;
         }
         [temp autorelease];
         rval = [temp buffer];
+
+#if PY_MAJOR_VERSION == 2
+      } else {
+        Py_ssize_t buffer_len;
+        const void *buffer;
+
+        if (unlikely(PyObject_AsReadBuffer(value, &buffer, &buffer_len) == -1)) {
+            [self release];
+            PyErr_Clear();
+            return 0;
+        }
+        rval = (void*)buffer;
+      }
+#endif
 
     PyObjC_END_WITH_GIL
     return rval;
