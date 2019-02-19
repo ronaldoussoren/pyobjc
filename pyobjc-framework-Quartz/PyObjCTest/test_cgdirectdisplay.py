@@ -218,7 +218,7 @@ class TestCGDirectDisplay (TestCase):
         self.assertEqual(err, 0)
 
         v = CGDisplayIsCaptured(CGMainDisplayID())
-        self.failIf(v)
+        self.assertFalse(v)
 
         err = CGDisplayCaptureWithOptions(CGMainDisplayID(), 0)
         self.assertEqual(err, 0)
