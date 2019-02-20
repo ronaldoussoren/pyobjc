@@ -131,7 +131,7 @@ class TestNSKeyedArchivingInterop (TestCase):
                 converted = subprocess.check_output([self.progpath, 'keyed', fp.name])
 
             converted = loads(converted)
-            self.assertEqual(converted, [Data(testval)])
+            self.assertEqual(converted, [testval])
 
     def test_interop_seq(self):
         for testval in (
@@ -287,7 +287,7 @@ class TestNSArchivingInterop (TestCase):
                 converted = subprocess.check_output([self.progpath, 'plain', fp.name])
 
             converted = loads(converted)
-            self.assertEqual(converted, [Data(testval)])
+            self.assertEqual(converted, [testval])
 
     def test_interop_seq(self):
         for testval in (

@@ -153,7 +153,7 @@ class TestNSKeyedArchivingInterop (TestCase):
                 converted = subprocess.check_output([self.progpath, fp.name])
 
             converted = readPlistFromBytes(converted)
-            self.assertEqual(converted, [Data(testval)])
+            self.assertEqual(converted, [testval])
 
     def test_interop_seq(self):
         for testval in (
