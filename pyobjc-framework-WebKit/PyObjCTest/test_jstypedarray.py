@@ -17,7 +17,7 @@ class TestJSTypedArray (TestCase):
         self.assertArgHasType(JavaScriptCore.JSObjectMakeTypedArrayWithBytesNoCopy, 1, objc._C_UINT)
         self.assertArgHasType(JavaScriptCore.JSObjectMakeTypedArrayWithBytesNoCopy, 2, b'n^v')
         self.assertArgHasType(JavaScriptCore.JSObjectMakeTypedArrayWithBytesNoCopy, 3, objc._C_ULNG) # size_t
-        self.assertArgIsFunction(JavaScriptCore.JSObjectMakeTypedArrayWithBytesNoCopy, 4, b'vn^v^v', True)
+        self.assertArgIsFunction(JavaScriptCore.JSObjectMakeTypedArrayWithBytesNoCopy, 4, b'v^v^v', True)
         self.assertArgHasType(JavaScriptCore.JSObjectMakeTypedArrayWithBytesNoCopy, 5, b'^v')
         self.assertArgHasType(JavaScriptCore.JSObjectMakeTypedArrayWithBytesNoCopy, 6, b'o^' + JavaScriptCore.JSValueRef.__typestr__)
 
@@ -64,7 +64,7 @@ class TestJSTypedArray (TestCase):
         self.assertArgHasType(JavaScriptCore.JSObjectMakeArrayBufferWithBytesNoCopy, 0, JavaScriptCore.JSContextRef.__typestr__)
         self.assertArgHasType(JavaScriptCore.JSObjectMakeArrayBufferWithBytesNoCopy, 1, b'n^v')
         self.assertArgHasType(JavaScriptCore.JSObjectMakeArrayBufferWithBytesNoCopy, 2, objc._C_ULNG) # size_t
-        self.assertArgIsFunction(JavaScriptCore.JSObjectMakeArrayBufferWithBytesNoCopy, 3, b'vn^v^v', True)
+        self.assertArgIsFunction(JavaScriptCore.JSObjectMakeArrayBufferWithBytesNoCopy, 3, b'v^v^v', True)
         self.assertArgHasType(JavaScriptCore.JSObjectMakeArrayBufferWithBytesNoCopy, 4, b'^v')
         self.assertArgHasType(JavaScriptCore.JSObjectMakeArrayBufferWithBytesNoCopy, 5, b'o^' + JavaScriptCore.JSValueRef.__typestr__)
 

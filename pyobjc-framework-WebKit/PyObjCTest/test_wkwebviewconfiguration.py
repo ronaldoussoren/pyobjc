@@ -22,7 +22,10 @@ class TestWKWebViewConfiguration (TestCase):
         self.assertEqual(WKAudiovisualMediaTypeNone, 0)
         self.assertEqual(WKAudiovisualMediaTypeAudio, 1 << 0)
         self.assertEqual(WKAudiovisualMediaTypeVideo, 1 << 1)
-        self.assertEqual(WKAudiovisualMediaTypeAll, sys.maxsize * 2 + 1)
+
+        if sys.maxsize > 2 ** 32:
+            # The entire enum is only available in 64-bit code.
+            self.assertEqual(WKAudiovisualMediaTypeAll, sys.maxsize * 2 + 1)
 
 
 
