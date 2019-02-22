@@ -8,6 +8,10 @@ class TestSKProductDiscount (TestCase):
         self.assertEqual(StoreKit.SKProductDiscountPaymentModePayUpFront, 1)
         self.assertEqual(StoreKit.SKProductDiscountPaymentModeFreeTrial, 2)
 
+        self.assertEqual(StoreKit.SKProductDiscountTypeIntroductory, 0)
+        self.assertEqual(StoreKit.SKProductDiscountTypeSubscription, 1)
+
+
 if __name__ == "__main__":
     main()
 

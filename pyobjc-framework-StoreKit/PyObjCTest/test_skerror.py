@@ -16,6 +16,11 @@ class TestSKError (TestCase):
         self.assertEqual(StoreKit.SKErrorPrivacyAcknowledgementRequired, 9)
         self.assertEqual(StoreKit.SKErrorUnauthorizedRequestData, 10)
 
+        self.assertEqual(StoreKit.SKErrorInvalidOfferIdentifier, 11)
+        self.assertEqual(StoreKit.SKErrorInvalidSignature, 12)
+        self.assertEqual(StoreKit.SKErrorMissingOfferParams, 13)
+        self.assertEqual(StoreKit.SKErrorInvalidOfferPrice, 14)
+
 
 if __name__ == "__main__":
     main()
