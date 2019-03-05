@@ -64,7 +64,9 @@
   "functions": {
   "CMAudioSampleBufferCreateWithPacketDescriptionsAndMakeDataReadyHandler": {
    "args": {
-    "3": {
+    "6": { "type_modifier": "n", "c_array_length_in_arg": 5 },
+    "7": { "type_modifier": "o", "already_cfretained": true },
+    "8": {
      "callable": {
       "arguments": {
        "0": { "type": "^v" },
@@ -72,14 +74,13 @@
       },
       "retval": { "type": "i" }
      }
-    },
-    "7": { "type_modifier": "n", "c_array_length_in_arg": 6 },
-    "8": { "type_modifier": "o", "already_cfretained": true }
+    }
    }
   },
   "CMSampleBufferCreateForImageBufferWithMakeDataReadyHandler": {
    "args": {
-    "3": {
+    "5": { "type_modifier": "o", "already_cfretained": true },
+    "6": {
      "callable": {
       "arguments": {
        "0": { "type": "^v" },
@@ -87,8 +88,7 @@
       },
       "retval": { "type": "i" }
      }
-    },
-    "6": { "type_modifier": "o", "already_cfretained": true }
+    }
    }
   },
   "CMBufferQueueCreateWithHandlers": {
@@ -99,7 +99,12 @@
     "0": { "type_override": "^{__CFAllocator=}" },
     "1": { "type_override": "^{OpaqueCMBlockBuffer=}" },
     "2": { "type_override": "Z" },
-    "3": {
+    "3": { "type_override": "^{OpaqueCMFormatDescription=}" },
+    "4": { "type_override": "l" },
+    "5": { "type_override": "l" },
+    "6": { "type_modifier": "n", "c_array_length_in_arg": 5, "type_override": "^{_CMSampleTimingInfo={_CMTime=qiIq}{_CMTime=qiIq}{_CMTime=qiIq}}" },
+    "7": { "type_modifier": "o", "type_override": "^^{opaqueCMSampleBuffer=}", "already_cfretained": true },
+    "8": {
      "type_override": "@?",
      "callable": {
       "arguments": {
@@ -108,12 +113,7 @@
       },
       "retval": { "type": "i" }
      }
-    },
-    "4": { "type_override": "^{OpaqueCMFormatDescription=}" },
-    "5": { "type_override": "l" },
-    "6": { "type_override": "l" },
-    "7": { "type_modifier": "n", "c_array_length_in_arg": 6, "type_override": "^{_CMSampleTimingInfo={_CMTime=qiIq}{_CMTime=qiIq}{_CMTime=qiIq}}" },
-    "8": { "type_modifier": "o", "type_override": "^^{opaqueCMSampleBuffer=}", "already_cfretained": true }
+    }
    },
    "retval": { "type_override": "i" }
   },

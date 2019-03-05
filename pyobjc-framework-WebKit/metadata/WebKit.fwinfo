@@ -2149,22 +2149,6 @@
        }
       },
       "class_method": false,
-      "selector": "setSafeBrowsingEnabled:"
-     },
-     {
-      "class_method": false,
-      "retval": {
-       "type_override": "Z"
-      },
-      "selector": "isSafeBrowsingEnabled"
-     },
-     {
-      "args": {
-       "0": {
-        "type_override": "Z"
-       }
-      },
-      "class_method": false,
       "selector": "setTabFocusesLinks:"
      },
      {

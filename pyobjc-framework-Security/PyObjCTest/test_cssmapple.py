@@ -382,6 +382,7 @@ class TestMDS (TestCase):
         self.assertFalse(hasattr(Security, 'kKeychainDbSuffix'))
         self.assertFalse(hasattr(Security, 'kSystemKeychainName'))
         self.assertFalse(hasattr(Security, 'kSystemKeychainDir'))
+        self.assertFalse(hasattr(Security, 'kSystemKeychainPath'))
         self.assertFalse(hasattr(Security, 'kSystemUnlockFile'))
         self.assertFalse(hasattr(Security, 'CSSM_APPLE_ACL_TAG_PARTITION_ID'))
         self.assertFalse(hasattr(Security, 'CSSM_APPLE_ACL_TAG_INTEGRITY'))
