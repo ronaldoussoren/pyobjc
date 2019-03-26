@@ -578,7 +578,7 @@
     "args": {
      "0": { "typestr": "^{OpaqueJSContext=}" },
      "1": { "typestr": "i" },
-     "2": { "typestr": "L" },
+     "2": { "type_override": "L" },
      "3": { "type_modifier": "o", "typestr": "^^{OpaqueJSValue=}" }
     },
     "retval": { "typestr": "^{OpaqueJSValue=}" }
@@ -601,6 +601,7 @@
    "JSObjectMakeTypedArrayWithBytesNoCopy": {
     "args": {
      "2": { "type_modifier": "n", "c_array_lenght_in_arg": 3 },
+     "3": { "type_override": "L" },
      "6": { "type_modifier": "o" }
     }
    },
