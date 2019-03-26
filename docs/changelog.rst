@@ -6,7 +6,7 @@ An overview of the relevant changes in new, and older, releases.
 Version 5.2
 -----------
 
-* Updated metadata for Xcode 10.2 (beta 4)
+* Updated metadata for Xcode 10.2
 
 * #252: ``objc.registerStructAlias`` no longer emits a deprecation
   warning because it is still used by the framework wrappers.
