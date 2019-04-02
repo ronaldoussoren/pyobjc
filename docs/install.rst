@@ -4,7 +4,7 @@ Installing PyObjC
 Supported versions
 ------------------
 
-PyObjC is regularly tested with Python 2.7, 3.4, 3.5 and 3.6.
+PyObjC is regularly tested with Python 2.7, 3.4, 3.5, 3.6 and 3.7.
 PyObjC does not support other python implementation such as PyPy and Jython.
 
 PyObjC is regularly tested on macOS 10.12 and should work on macOS
