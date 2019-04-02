@@ -20,7 +20,7 @@ for the PyObjC project:
 Supported Python versions
 -------------------------
 
-PyObjC is regularly tested using Python 2.7, 3.3 and 3.4.
+PyObjC is regularly tested using Python 2.7, 3.5, 3.6 and 3.7.
 
 I'm also regularly testing using the development version of Python,
 although support for that might be broken when there are large changes in
