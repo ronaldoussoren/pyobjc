@@ -1,1 +1,2 @@
 sphinxcontrib-cheeseshop
+sphinx-sitemap

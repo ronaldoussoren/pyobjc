@@ -29,7 +29,7 @@ sys.path.append(os.path.abspath('example-collector'))
 # coming with Sphinx (named 'sphinx.ext.*') or your custom ones.
 extensions = [
     'sphinx.ext.intersphinx', 'sphinx.ext.todo', 'sphinx.ext.ifconfig',
-    'sphinx.ext.extlinks', 'examples'
+    'sphinx.ext.extlinks', 'examples', 'sphinx_sitemap',
 ]
 
 extlinks = {
@@ -107,6 +107,8 @@ linkcheck_workers=10
 # a list of builtin themes.
 #html_theme = 'traditional'
 html_theme = 'nature'
+
+html_baseurl = 'https://pyobjc.readthedocs.io/en/latest/'
 
 # Theme options are theme-specific and customize the look and feel of a theme
 # further.  For a list of options available for each theme, see the
