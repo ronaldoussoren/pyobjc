@@ -10,7 +10,7 @@ and (Objective-)C frameworks
 from pyobjc_setup import setup, Extension
 import os
 
-VERSION="5.2"
+VERSION="6.0a0"
 
 setup(
     name='pyobjc-framework-StoreKit',

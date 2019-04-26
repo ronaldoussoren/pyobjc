@@ -18,30 +18,11 @@ PyObjC 5.2 was released on 2019-04-03. See the :doc:`changelog <changelog>` for 
 Supported platforms
 -------------------
 
-PyObjC is regularly tested with Python 2.7, 3.4, 3.5, 3.6 and 3.7.
+PyObjC is regularly tested with Python 3.6 and 3.7.
 PyObjC does not support other python implementation such as PyPy and Jython.
 
 PyObjC is regularly tested on macOS 10.13 and should work on macOS
-10.5 or later for the i386, x86_64 and ppc architectures. PPC64 (64-bit
-on PowerMac G5 or iMac G5 systems) is not supported at all.
-
-.. note::
-
-   PPC support, and support for versions of macOS before 10.9 is
-   no longer actively developed and may be removed in future versions
-   of PyObjC.
-
-.. warning:: **Platform Removal**
-
-   PyObjC 6, which will be released in 2019, will drop
-   support for the following platforms:
-
-   - Python 2.7
-   - Python 3.4
-   - PowerPC
-
-
-
+10.9 or later for the i386 and x86_64 architectures.
 
 General documentation
 =====================
