@@ -12,9 +12,7 @@ import shutil
 import time
 
 PY_VERSIONS=[
-  "2.7",   # End-of-live: 2020-01-01
-  "3.4",   # End-of-live: 2019-03-16
-  "3.5",   # End-of-live: 2020-09-13
+  #"3.5",   # End-of-live: 2020-09-13
   "3.6",   # End-of-live: 2021-12-16
   "3.7",   # In beta, expected EoL: 2023-06
 ]
@@ -83,7 +81,7 @@ def _install_virtualenv(interpreter):
     subprocess.check_call([interpreter, "-mpip", "install", "-U", "setuptools" ])
     subprocess.check_call([interpreter, "-mpip", "install", "-U", "virtualenv" ])
     subprocess.check_call([interpreter, "-mpip", "install", "-U", "wheel" ])
-    
+
 @contextlib.contextmanager
 def virtualenv(interpreter):
     if os.path.exists("test-env"):
@@ -102,7 +100,7 @@ def virtualenv(interpreter):
         print("CLEANUP")
         shutil.rmtree("test-env")
 
-def variants(ver, permitted_variants=None):
+def variants(ver, permitted_variants={'64bit'}):
     if os.path.islink(os.path.join(
         '/Library/Frameworks/Python.framework/Versions', ver)):
 
