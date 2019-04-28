@@ -8,12 +8,13 @@
 #define PYOBJC_COMPAT_IMPL
 #include "pyobjc.h"
 
-#if (MAC_OS_X_VERSION_MIN_REQUIRED < MAC_OS_X_VERSION_10_5) &&!defined(__OBJC2__)
+#if (MAC_OS_X_VERSION_MIN_REQUIRED < MAC_OS_X_VERSION_10_5) && !defined(__OBJC2__)
 
 BOOL
 PyObjC_class_isSubclassOf(Class child, Class parent)
 {
-    if (parent == nil) return YES;
+    if (parent == nil)
+        return YES;
 
     while (child != nil) {
         if (child == parent) {
@@ -54,15 +55,17 @@ compat_objc_copyProtocolList(unsigned int* outCount)
     image_count = _dyld_image_count();
     for (image_index = 0; image_index < image_count; image_index++) {
         uint32_t size = 0;
-        const struct mach_header *mh = _dyld_get_image_header(image_index);
+        const struct mach_header* mh = _dyld_get_image_header(image_index);
         intptr_t slide = _dyld_get_image_vmaddr_slide(image_index);
-        ProtocolTemplate *protos = (ProtocolTemplate*)(
-            ((char *)getsectdatafromheader(mh, SEG_OBJC, "__protocol", &size)) +
-            slide);
+        ProtocolTemplate* protos =
+            (ProtocolTemplate*)(((char*)getsectdatafromheader(mh, SEG_OBJC, "__protocol",
+                                                              &size)) +
+                                slide);
         uint32_t nprotos = size / sizeof(ProtocolTemplate);
         uint32_t i;
 
-        if (nprotos == 0) continue;
+        if (nprotos == 0)
+            continue;
 
         if (protocols == NULL) {
             protocols = malloc(sizeof(Protocol*) * nprotos);
@@ -71,7 +74,8 @@ compat_objc_copyProtocolList(unsigned int* outCount)
             }
 
         } else {
-            Protocol** tmp = realloc(protocols, sizeof(Protocol*) * (*outCount+nprotos));
+            Protocol** tmp =
+                realloc(protocols, sizeof(Protocol*) * (*outCount + nprotos));
             if (tmp == NULL) {
                 free(protocols);
                 return NULL;
@@ -94,15 +98,18 @@ compat_objc_getProtocol(const char* name)
     image_count = _dyld_image_count();
     for (image_index = 0; image_index < image_count; image_index++) {
         uint32_t size = 0;
-        const struct mach_header *mh = _dyld_get_image_header(image_index);
+        const struct mach_header* mh = _dyld_get_image_header(image_index);
         intptr_t slide = _dyld_get_image_vmaddr_slide(image_index);
 
-        ProtocolTemplate *protos = (ProtocolTemplate*)(
-            ((char *)getsectdatafromheader(mh, SEG_OBJC, "__protocol", &size)) + slide);
+        ProtocolTemplate* protos =
+            (ProtocolTemplate*)(((char*)getsectdatafromheader(mh, SEG_OBJC, "__protocol",
+                                                              &size)) +
+                                slide);
         uint32_t nprotos = size / sizeof(ProtocolTemplate);
         uint32_t i;
 
-        if (nprotos == 0) continue;
+        if (nprotos == 0)
+            continue;
 
         for (i = 0; i < nprotos; i++) {
             Protocol* p = (Protocol*)&protos[i];
@@ -113,7 +120,6 @@ compat_objc_getProtocol(const char* name)
     }
     return nil;
 }
-
 
 static void
 compat_objc_registerClassPair(Class cls)
@@ -165,17 +171,20 @@ compat_objc_allocateClassPair(Class super_class, const char* name, size_t extra)
     result[1].info = CLS_META;
 
     result[0].name = strdup(name);
-    if (result[0].name == NULL) goto error_cleanup;
+    if (result[0].name == NULL)
+        goto error_cleanup;
 
     result[1].name = result[0].name;
     result[0].methodLists = malloc(sizeof(struct objc_method_list*));
 
-    if (result[0].methodLists == NULL) goto error_cleanup;
+    if (result[0].methodLists == NULL)
+        goto error_cleanup;
 
     memset(result[0].methodLists, 0, sizeof(struct objc_method_list*));
 
     result[1].methodLists = malloc(sizeof(struct objc_method_list*));
-    if (result[1].methodLists == NULL) goto error_cleanup;
+    if (result[1].methodLists == NULL)
+        goto error_cleanup;
 
     memset(result[1].methodLists, 0, sizeof(struct objc_method_list*));
 
@@ -193,13 +202,15 @@ compat_objc_allocateClassPair(Class super_class, const char* name, size_t extra)
     result[1].methodLists[0] = (struct objc_method_list*)-1;
 
     result[0].methodLists[0] = malloc(sizeof(struct objc_method_list));
-    if (result[0].methodLists[0] == NULL) goto error_cleanup;
+    if (result[0].methodLists[0] == NULL)
+        goto error_cleanup;
 
     result[0].methodLists[0]->method_count = 0;
     result[0].methodLists[0]->obsolete = NULL;
 
     result[1].methodLists[0] = malloc(sizeof(struct objc_method_list));
-    if (result[1].methodLists[0] == NULL) goto error_cleanup;
+    if (result[1].methodLists[0] == NULL)
+        goto error_cleanup;
 
     result[1].methodLists[0]->method_count = 0;
     result[1].methodLists[0]->obsolete = NULL;
@@ -221,16 +232,14 @@ compat_objc_allocateClassPair(Class super_class, const char* name, size_t extra)
 error_cleanup:
     if (result) {
         if (result[0].methodLists) {
-            if (result[0].methodLists[0] != 0 &&
-                    result[0].methodLists[0] != 0) {
+            if (result[0].methodLists[0] != 0 && result[0].methodLists[0] != 0) {
                 free(result[0].methodLists[0]);
             }
             free(result[0].methodLists);
         }
 
         if (result[1].methodLists) {
-            if (result[1].methodLists[1] != 0 &&
-                    result[1].methodLists[0] != 0) {
+            if (result[1].methodLists[1] != 0 && result[1].methodLists[0] != 0) {
                 free(result[1].methodLists[0]);
             }
             free(result[1].methodLists);
@@ -330,7 +339,8 @@ compat_class_copyMethodList(Class cls, unsigned int* outCount)
 
         for (i = 0; i < mlist->method_count; i++) {
             result[count] = mlist->method_list + i;
-            if (result[count] == NULL) continue;
+            if (result[count] == NULL)
+                continue;
             count++;
         }
 
@@ -379,14 +389,14 @@ compat_class_copyProtocolList(Class cls, unsigned int* outCount)
 {
     Protocol** list;
     unsigned int count = 0;
-    struct objc_protocol_list *protocol_list;
+    struct objc_protocol_list* protocol_list;
 
     protocol_list = cls->protocols;
     list = malloc(0);
 
     while (protocol_list != NULL) {
         Protocol** tmp;
-        tmp = realloc(list, (count + protocol_list->count)*sizeof(Protocol*));
+        tmp = realloc(list, (count + protocol_list->count) * sizeof(Protocol*));
         if (tmp == NULL) {
             free(list);
             *outCount = 0;
@@ -394,7 +404,8 @@ compat_class_copyProtocolList(Class cls, unsigned int* outCount)
         }
         list = tmp;
 
-        memcpy(list + count, protocol_list->list, protocol_list->count*sizeof(Protocol*));
+        memcpy(list + count, protocol_list->list,
+               protocol_list->count * sizeof(Protocol*));
         count += protocol_list->count;
         protocol_list = protocol_list->next;
     }
@@ -427,8 +438,8 @@ compat_class_addMethod(Class cls, SEL name, IMP imp, const char* types)
     struct objc_method_list* methodsToAdd;
     struct objc_method* objcMethod;
 
-    methodsToAdd = malloc(sizeof(struct objc_method_list) +
-            2*sizeof(struct objc_method));
+    methodsToAdd =
+        malloc(sizeof(struct objc_method_list) + 2 * sizeof(struct objc_method));
     methodsToAdd->method_count = 1;
     methodsToAdd->obsolete = NULL;
 
@@ -448,10 +459,10 @@ compat_preclass_addMethod(Class cls, SEL name, IMP imp, const char* types)
     struct objc_method_list* new_list;
     struct objc_method* objcMethod;
 
-    new_list = realloc(cls->methodLists[0],
-            sizeof(struct objc_method_list) +
-            (sizeof(struct objc_method
-                )*(cls->methodLists[0]->method_count+1)));
+    new_list =
+        realloc(cls->methodLists[0], sizeof(struct objc_method_list) +
+                                         (sizeof(struct objc_method) *
+                                          (cls->methodLists[0]->method_count + 1)));
     if (new_list == NULL) {
         return NO;
     }
@@ -471,24 +482,19 @@ compat_preclass_addMethod(Class cls, SEL name, IMP imp, const char* types)
 }
 
 static BOOL
-compat_preclass_addIvar(
-        Class cls,
-        const char* name,
-        size_t size,
-        uint8_t align, const char* types)
+compat_preclass_addIvar(Class cls, const char* name, size_t size, uint8_t align,
+                        const char* types)
 {
     /* Update the class structure, only valid during class construction */
     struct objc_ivar_list* new_ivars;
     struct objc_ivar* ivar;
 
     if (cls->ivars) {
-        new_ivars = realloc(cls->ivars,
-            sizeof(struct objc_ivar_list) +
-            ((cls->ivars->ivar_count+1) * sizeof(struct objc_ivar)));
+        new_ivars = realloc(
+            cls->ivars, sizeof(struct objc_ivar_list) +
+                            ((cls->ivars->ivar_count + 1) * sizeof(struct objc_ivar)));
     } else {
-        new_ivars = malloc(
-                sizeof(struct objc_ivar_list) +
-                sizeof(struct objc_ivar));
+        new_ivars = malloc(sizeof(struct objc_ivar_list) + sizeof(struct objc_ivar));
         new_ivars->ivar_count = 0;
     }
 
@@ -517,7 +523,7 @@ compat_preclass_addIvar(
         ivar->ivar_offset += align - (ivar->ivar_offset % align);
     }
 
-    new_ivars->ivar_count ++;
+    new_ivars->ivar_count++;
     cls->instance_size = ivar->ivar_offset + size;
     return YES;
 }
@@ -529,12 +535,11 @@ compat_preclass_addProtocol(Class cls, Protocol* protocol)
 
     if (cls->protocols) {
         protocols = realloc(cls->protocols,
-            sizeof(struct objc_protocol_list) +
-              (sizeof(Protocol*)*(cls->protocols->count+1)));
+                            sizeof(struct objc_protocol_list) +
+                                (sizeof(Protocol*) * (cls->protocols->count + 1)));
 
     } else {
-        protocols = malloc(sizeof(struct objc_protocol_list)
-                + sizeof(Protocol*));
+        protocols = malloc(sizeof(struct objc_protocol_list) + sizeof(Protocol*));
         protocols->count = 0;
         protocols->next = NULL;
     }
@@ -569,7 +574,7 @@ compat_method_setImplementation(Method m, IMP imp)
     return result;
 }
 
-static const char *
+static const char*
 compat_method_getTypeEncoding(Method m)
 {
     return m->method_types;
@@ -601,16 +606,14 @@ compat_ivar_getOffset(Ivar var)
 
 #ifndef NO_OBJC2_RUNTIME
 static BOOL
-objc20_class_addMethodList(Class cls,
-        struct PyObjC_method* list, unsigned int count)
+objc20_class_addMethodList(Class cls, struct PyObjC_method* list, unsigned int count)
 {
     unsigned int i;
     BOOL r;
     Method m;
 
     for (i = 0; i < count; i++) {
-        r = class_addMethod(cls,
-            list[i].name, list[i].imp, list[i].type);
+        r = class_addMethod(cls, list[i].name, list[i].imp, list[i].type);
 
         if (!r) {
             m = class_getInstanceMethod(cls, list[i].name);
@@ -634,22 +637,19 @@ compat_class_isMetaClass(Class cls)
 }
 
 static BOOL
-compat_class_addMethodList(Class cls,
-        struct PyObjC_method* list, unsigned int count)
+compat_class_addMethodList(Class cls, struct PyObjC_method* list, unsigned int count)
 {
     unsigned int i;
     struct objc_method_list* method_list;
 
-    method_list = malloc(
-            sizeof(struct objc_method_list) +
-            ((count+1) * sizeof(struct objc_method)));
+    method_list = malloc(sizeof(struct objc_method_list) +
+                         ((count + 1) * sizeof(struct objc_method)));
     if (method_list == NULL) {
         return NO;
     }
 
     memset(method_list, 0,
-            sizeof(struct objc_method_list) +
-            ((count+1) * sizeof(struct objc_method)));
+           sizeof(struct objc_method_list) + ((count + 1) * sizeof(struct objc_method)));
 
     method_list->method_count = 0;
     method_list->obsolete = 0;
@@ -666,19 +666,20 @@ compat_class_addMethodList(Class cls,
 }
 
 static BOOL
-compat_protocol_conformsToProtocol(Protocol *proto, Protocol *other)
+compat_protocol_conformsToProtocol(Protocol* proto, Protocol* other)
 {
     return [proto conformsTo:other];
 }
 
-static const char *
-compat_protocol_getName(Protocol *p)
+static const char*
+compat_protocol_getName(Protocol* p)
 {
     return [p name];
 }
 
-static struct objc_method_description *
-compat_protocol_copyMethodDescriptionList(Protocol *p, BOOL isRequiredMethod, BOOL isInstanceMethod, unsigned int *outCount)
+static struct objc_method_description*
+compat_protocol_copyMethodDescriptionList(Protocol* p, BOOL isRequiredMethod,
+                                          BOOL isInstanceMethod, unsigned int* outCount)
 {
     struct objc_method_description_list* list;
     struct objc_method_description* result;
@@ -710,7 +711,8 @@ compat_protocol_copyMethodDescriptionList(Protocol *p, BOOL isRequiredMethod, BO
     int i;
     *outCount = 0;
     for (i = 0; i < list->count; i++) {
-        if (list->list[i].name == NULL) continue;
+        if (list->list[i].name == NULL)
+            continue;
         result[*outCount].name = list->list[i].name;
         result[*outCount].types = list->list[i].types;
         (*outCount)++;
@@ -719,11 +721,10 @@ compat_protocol_copyMethodDescriptionList(Protocol *p, BOOL isRequiredMethod, BO
     return result;
 }
 
-static Protocol **
-compat_protocol_copyProtocolList(Protocol *proto, unsigned int *outCount)
+static Protocol**
+compat_protocol_copyProtocolList(Protocol* proto, unsigned int* outCount)
 {
-    struct objc_protocol_list* list =
-        ((ProtocolTemplate*)proto)->protocol_list;
+    struct objc_protocol_list* list = ((ProtocolTemplate*)proto)->protocol_list;
 
     *outCount = 0;
 
@@ -753,19 +754,20 @@ compat_protocol_copyProtocolList(Protocol *proto, unsigned int *outCount)
 }
 
 static struct objc_method_description
-compat_protocol_getMethodDescription(Protocol *p, SEL aSel, BOOL isRequiredMethod, BOOL isInstanceMethod)
+compat_protocol_getMethodDescription(Protocol* p, SEL aSel, BOOL isRequiredMethod,
+                                     BOOL isInstanceMethod)
 {
-static struct objc_method_description empty_description = { NULL, NULL };
+    static struct objc_method_description empty_description = {NULL, NULL};
     struct objc_method_description* result;
     if (!isRequiredMethod) {
         return empty_description;
     }
 
     if (isInstanceMethod) {
-        result = [p descriptionForInstanceMethod: aSel];
+        result = [p descriptionForInstanceMethod:aSel];
 
     } else {
-        result = [p descriptionForClassMethod: aSel];
+        result = [p descriptionForClassMethod:aSel];
     }
 
     if (result == NULL) {
@@ -787,11 +789,15 @@ compat_object_setIvar(id obj, Ivar ivar, id value)
 }
 
 /* Dispatch table */
-BOOL (*PyObjC_protocol_conformsToProtocol)(Protocol *proto, Protocol *other) = NULL;
-const char *(*PyObjC_protocol_getName)(Protocol *p) = NULL;
-struct objc_method_description *(*PyObjC_protocol_copyMethodDescriptionList)(Protocol *p, BOOL isRequiredMethod, BOOL isInstanceMethod, unsigned int *outCount) = NULL;
-Protocol **(*PyObjC_protocol_copyProtocolList)(Protocol *proto, unsigned int *outCount) = NULL;
-struct objc_method_description (*PyObjC_protocol_getMethodDescription)(Protocol *p, SEL aSel, BOOL isRequiredMethod, BOOL isInstanceMethod) = NULL;
+BOOL (*PyObjC_protocol_conformsToProtocol)(Protocol* proto, Protocol* other) = NULL;
+const char* (*PyObjC_protocol_getName)(Protocol* p) = NULL;
+struct objc_method_description* (*PyObjC_protocol_copyMethodDescriptionList)(
+    Protocol* p, BOOL isRequiredMethod, BOOL isInstanceMethod,
+    unsigned int* outCount) = NULL;
+Protocol** (*PyObjC_protocol_copyProtocolList)(Protocol* proto,
+                                               unsigned int* outCount) = NULL;
+struct objc_method_description (*PyObjC_protocol_getMethodDescription)(
+    Protocol* p, SEL aSel, BOOL isRequiredMethod, BOOL isInstanceMethod) = NULL;
 id (*PyObjC_object_getIvar)(id obj, Ivar ivar) = NULL;
 void (*PyObjC_object_setIvar)(id obj, Ivar ivar, id value) = NULL;
 Class (*PyObjC_objc_allocateClassPair)(Class, const char*, size_t) = NULL;
@@ -800,10 +806,9 @@ void (*PyObjC_objc_disposeClassPair)(Class) = NULL;
 Protocol** (*PyObjC_objc_copyProtocolList)(unsigned int*) = NULL;
 Protocol* (*PyObjC_objc_getProtocol)(const char* name) = NULL;
 BOOL (*PyObjC_preclass_addMethod)(Class, SEL, IMP, const char*) = NULL;
-BOOL (*PyObjC_preclass_addIvar)(Class cls,
-    const char *name, size_t size, uint8_t alignment,
-    const char *types) = NULL;
-BOOL (*PyObjC_preclass_addProtocol)(Class cls, Protocol *protocol) = NULL;
+BOOL(*PyObjC_preclass_addIvar)
+(Class cls, const char* name, size_t size, uint8_t alignment, const char* types) = NULL;
+BOOL (*PyObjC_preclass_addProtocol)(Class cls, Protocol* protocol) = NULL;
 Class (*PyObjC_object_getClass)(id obj) = NULL;
 Class (*PyObjC_object_setClass)(id obj, Class cls) = NULL;
 const char* (*PyObjC_object_getClassName)(id obj) = NULL;
@@ -819,17 +824,20 @@ BOOL (*PyObjC_class_isMetaClass)(Class) = NULL;
 SEL (*PyObjC_method_getName)(Method m) = NULL;
 IMP (*PyObjC_method_getImplementation)(Method m) = NULL;
 IMP (*PyObjC_method_setImplementation)(Method m, IMP imp) = NULL;
-const char *(*PyObjC_method_getTypeEncoding)(Method m) = NULL;
+const char* (*PyObjC_method_getTypeEncoding)(Method m) = NULL;
 BOOL (*PyObjC_sel_isEqual)(SEL, SEL) = NULL;
 const char* (*PyObjC_ivar_getName)(Ivar) = NULL;
 const char* (*PyObjC_ivar_getTypeEncoding)(Ivar) = NULL;
 ptrdiff_t (*PyObjC_ivar_getOffset)(Ivar) = NULL;
 
-#else /* (MAC_OS_X_VERSION_MIN_REQUIRED >= MAC_OS_X_VERSION_10_5) || defined(__OBJC2__) */
+#else /* (MAC_OS_X_VERSION_MIN_REQUIRED >= MAC_OS_X_VERSION_10_5) || defined(__OBJC2__)  \
+       */
 
-BOOL PyObjC_class_isSubclassOf(Class child, Class parent)
+BOOL
+PyObjC_class_isSubclassOf(Class child, Class parent)
 {
-    if (parent == nil) return YES;
+    if (parent == nil)
+        return YES;
 
     while (child != nil) {
         if (child == parent) {
@@ -841,8 +849,8 @@ BOOL PyObjC_class_isSubclassOf(Class child, Class parent)
     return NO;
 }
 
-BOOL PyObjC_class_addMethodList(Class cls,
-        struct PyObjC_method* list, unsigned int count)
+BOOL
+PyObjC_class_addMethodList(Class cls, struct PyObjC_method* list, unsigned int count)
 {
     unsigned int i;
     BOOL r;
@@ -870,7 +878,8 @@ BOOL PyObjC_class_addMethodList(Class cls,
     return YES;
 }
 
-#endif /* (MAC_OS_X_VERSION_MIN_REQUIRED >= MAC_OS_X_VERSION_10_5) || defined(__OBJC2__) */
+#endif /* (MAC_OS_X_VERSION_MIN_REQUIRED >= MAC_OS_X_VERSION_10_5) || defined(__OBJC2__) \
+        */
 
 #if defined(__x86_64__)
 
@@ -888,7 +897,7 @@ BOOL PyObjC_class_addMethodList(Class cls,
     return self;
 }
 
--doesNotRecognizeSelector:(SEL)sel
+- doesNotRecognizeSelector:(SEL)sel
 {
     printf("--> %s\n", sel_getName(sel));
     abort();
@@ -898,24 +907,26 @@ BOOL PyObjC_class_addMethodList(Class cls,
 
 #endif /* __x86_64__ */
 
-
 #if (MAC_OS_X_VERSION_MIN_REQUIRED < MAC_OS_X_VERSION_10_7)
-Protocol* (*PyObjC_objc_allocateProtocol)(const char *) = NULL;
+Protocol* (*PyObjC_objc_allocateProtocol)(const char*) = NULL;
 void (*PyObjC_objc_registerProtocol)(Protocol*) = NULL;
-void (*PyObjC_protocol_addMethodDescription)(Protocol*, SEL, const char*, BOOL, BOOL) = NULL;
+void (*PyObjC_protocol_addMethodDescription)(Protocol*, SEL, const char*, BOOL,
+                                             BOOL) = NULL;
 void (*PyObjC_protocol_addProtocol)(Protocol*, Protocol*) = NULL;
 
 #ifndef __LP64__
 struct Protocol_struct {
     Class _isa;
-    char *protocol_name;
-    struct objc_protocol_list *protocol_list;
+    char* protocol_name;
+    struct objc_protocol_list* protocol_list;
     struct objc_method_description_list *instance_methods, *class_methods;
-    struct objc_method_description_list *optional_instance_methods, *optional_class_methods;
-    void *instance_properties;
+    struct objc_method_description_list *optional_instance_methods,
+        *optional_class_methods;
+    void* instance_properties;
 };
 
-static Protocol* compat_objc_allocateProtocol(const char *name)
+static Protocol*
+compat_objc_allocateProtocol(const char* name)
 {
     struct Protocol_struct* result;
 
@@ -937,14 +948,17 @@ static Protocol* compat_objc_allocateProtocol(const char *name)
     return (Protocol*)result;
 }
 
-static void compat_objc_registerProtocol(Protocol* proto __attribute__((__unused__)))
+static void
+compat_objc_registerProtocol(Protocol* proto __attribute__((__unused__)))
 {
     /* Don't know how to register a new protocol in classic
      * runtime. Luckily we don't actually need this.
      */
 }
 
-static void compat_protocol_addMethodDescription(Protocol* proto, SEL sel, const char* types, BOOL required, BOOL instance_method)
+static void
+compat_protocol_addMethodDescription(Protocol* proto, SEL sel, const char* types,
+                                     BOOL required, BOOL instance_method)
 {
     struct Protocol_struct* proto_struct = (struct Protocol_struct*)proto;
     struct objc_method_description_list** plist;
@@ -965,7 +979,8 @@ static void compat_protocol_addMethodDescription(Protocol* proto, SEL sel, const
     }
 
     if (*plist == NULL) {
-        *plist = malloc(sizeof(struct objc_method_description_list) + (2*sizeof(struct objc_method_description)));
+        *plist = malloc(sizeof(struct objc_method_description_list) +
+                        (2 * sizeof(struct objc_method_description)));
         if (*plist == NULL) {
             /* Cannot report errors */
             abort();
@@ -974,7 +989,9 @@ static void compat_protocol_addMethodDescription(Protocol* proto, SEL sel, const
         (*plist)->count = 0;
 
     } else {
-        *plist = realloc(*plist, sizeof(struct objc_method_description_list) + (2+((*plist)->count)*sizeof(struct objc_method_description)));
+        *plist = realloc(
+            *plist, sizeof(struct objc_method_description_list) +
+                        (2 + ((*plist)->count) * sizeof(struct objc_method_description)));
         if (*plist == NULL) {
             /* Cannot report errors */
             abort();
@@ -995,12 +1012,14 @@ static void compat_protocol_addMethodDescription(Protocol* proto, SEL sel, const
     (*plist)->list[(*plist)->count].types = NULL;
 }
 
-static void compat_protocol_addProtocol(Protocol* proto, Protocol* newProto)
+static void
+compat_protocol_addProtocol(Protocol* proto, Protocol* newProto)
 {
     struct Protocol_struct* proto_struct = (struct Protocol_struct*)proto;
 
     if (proto_struct->protocol_list == NULL) {
-        proto_struct->protocol_list = malloc(sizeof(struct objc_protocol_list) + 2*sizeof(Protocol*));
+        proto_struct->protocol_list =
+            malloc(sizeof(struct objc_protocol_list) + 2 * sizeof(Protocol*));
         if (proto_struct->protocol_list == NULL) {
             /* Cannot report an error! */
             abort();
@@ -1008,27 +1027,31 @@ static void compat_protocol_addProtocol(Protocol* proto, Protocol* newProto)
         proto_struct->protocol_list->next = NULL;
         proto_struct->protocol_list->count = 0;
     } else {
-        proto_struct->protocol_list = realloc(proto_struct->protocol_list,
-                sizeof(struct objc_protocol_list) + (2+proto_struct->protocol_list->count)*sizeof(Protocol*));
+        proto_struct->protocol_list =
+            realloc(proto_struct->protocol_list,
+                    sizeof(struct objc_protocol_list) +
+                        (2 + proto_struct->protocol_list->count) * sizeof(Protocol*));
         if (proto_struct->protocol_list == NULL) {
             /* Cannot report an error! */
             abort();
         }
     }
     proto_struct->protocol_list->list[proto_struct->protocol_list->count] = newProto;
-    proto_struct->protocol_list->list[proto_struct->protocol_list->count+1] = NULL;
+    proto_struct->protocol_list->list[proto_struct->protocol_list->count + 1] = NULL;
     proto_struct->protocol_list->count++;
 }
 
 #endif /* !__LP64__ */
 #endif /* MAC_OS_X_VERSION_MIN_REQUIRED < MAC_OS_X_VERSION_10_7 */
 
-#if !((MAC_OS_X_VERSION_MIN_REQUIRED < MAC_OS_X_VERSION_10_5) &&!defined(__OBJC2__))
+#if !((MAC_OS_X_VERSION_MIN_REQUIRED < MAC_OS_X_VERSION_10_5) && !defined(__OBJC2__))
 #undef protocol_getMethodDescription
 struct objc_method_description
-PyObjC_protocol_getMethodDescription(Protocol *p, SEL aSel, BOOL isRequiredMethod, BOOL isInstanceMethod)
+PyObjC_protocol_getMethodDescription(Protocol* p, SEL aSel, BOOL isRequiredMethod,
+                                     BOOL isInstanceMethod)
 {
-    struct objc_method_description result = protocol_getMethodDescription(p, aSel, isRequiredMethod, isInstanceMethod);
+    struct objc_method_description result =
+        protocol_getMethodDescription(p, aSel, isRequiredMethod, isInstanceMethod);
     if (result.name != NULL) {
         return result;
     }
@@ -1042,7 +1065,8 @@ PyObjC_protocol_getMethodDescription(Protocol *p, SEL aSel, BOOL isRequiredMetho
 
         struct objc_method_description* methods;
         unsigned int count, i;
-        methods = protocol_copyMethodDescriptionList(p, isRequiredMethod, isInstanceMethod, &count);
+        methods = protocol_copyMethodDescriptionList(p, isRequiredMethod,
+                                                     isInstanceMethod, &count);
         if (methods == NULL) {
             return result;
         }
@@ -1058,10 +1082,11 @@ PyObjC_protocol_getMethodDescription(Protocol *p, SEL aSel, BOOL isRequiredMetho
         return result;
     }
 }
-#endif /* !((MAC_OS_X_VERSION_MIN_REQUIRED < MAC_OS_X_VERSION_10_5) &&!defined(__OBJC2__)) */
+#endif /* !((MAC_OS_X_VERSION_MIN_REQUIRED < MAC_OS_X_VERSION_10_5)                      \
+          &&!defined(__OBJC2__)) */
 
-
-void PyObjC_SetupRuntimeCompat(void)
+void
+PyObjC_SetupRuntimeCompat(void)
 {
 #if (MAC_OS_X_VERSION_MIN_REQUIRED < MAC_OS_X_VERSION_10_5) && !defined(__OBJC2__)
 
@@ -1076,8 +1101,7 @@ void PyObjC_SetupRuntimeCompat(void)
     PyObjC_preclass_addIvar = compat_preclass_addIvar;
     PyObjC_preclass_addProtocol = compat_preclass_addProtocol;
 
-# define SETUP(funcname) \
-        PyObjC_##funcname = compat_##funcname
+#define SETUP(funcname) PyObjC_##funcname = compat_##funcname
 
 #else /* !NO_OBJC2_RUNTIME */
 
@@ -1085,20 +1109,19 @@ void PyObjC_SetupRuntimeCompat(void)
         PyObjC_class_addMethodList = objc20_class_addMethodList;
         PyObjC_preclass_addMethod = class_addMethod;
         PyObjC_preclass_addIvar = class_addIvar;
-        PyObjC_preclass_addProtocol= class_addProtocol;
+        PyObjC_preclass_addProtocol = class_addProtocol;
     } else {
         PyObjC_class_addMethodList = compat_class_addMethodList;
         PyObjC_preclass_addMethod = compat_preclass_addMethod;
         PyObjC_preclass_addIvar = compat_preclass_addIvar;
-        PyObjC_preclass_addProtocol= compat_preclass_addProtocol;
+        PyObjC_preclass_addProtocol = compat_preclass_addProtocol;
     }
 
-
-# define SETUP(funcname) \
-    if ((funcname) == NULL) { \
-        PyObjC_##funcname = compat_##funcname; \
-    } else { \
-        PyObjC_##funcname = funcname; \
+#define SETUP(funcname)                                                                  \
+    if ((funcname) == NULL) {                                                            \
+        PyObjC_##funcname = compat_##funcname;                                           \
+    } else {                                                                             \
+        PyObjC_##funcname = funcname;                                                    \
     }
 #endif /* !NO_OBJC2_RUNTIME */
 
@@ -1145,7 +1168,6 @@ void PyObjC_SetupRuntimeCompat(void)
 #undef SETUP
 #endif
 
-
 #if (MAC_OS_X_VERSION_MIN_REQUIRED < MAC_OS_X_VERSION_10_7)
     /* Compat definitions for protocol creation
      *
@@ -1162,7 +1184,6 @@ void PyObjC_SetupRuntimeCompat(void)
     PyObjC_protocol_addProtocol = compat_protocol_addProtocol;
 #endif /* __LP64__ */
 
-
 #elif defined(__LP64__)
     PyObjC_objc_allocateProtocol = objc_allocateProtocol;
     PyObjC_objc_registerProtocol = objc_registerProtocol;
@@ -1170,11 +1191,11 @@ void PyObjC_SetupRuntimeCompat(void)
     PyObjC_protocol_addProtocol = protocol_addProtocol;
 
 #else /* PyObjC_BUILD_RELEASE >= 1007 && !__LP64 */
-# define SETUP(funcname) \
-    if ((funcname) == NULL) { \
-        PyObjC_##funcname = compat_##funcname; \
-    } else { \
-        PyObjC_##funcname = funcname; \
+#define SETUP(funcname)                                                                  \
+    if ((funcname) == NULL) {                                                            \
+        PyObjC_##funcname = compat_##funcname;                                           \
+    } else {                                                                             \
+        PyObjC_##funcname = funcname;                                                    \
     }
     SETUP(objc_allocateProtocol);
     SETUP(objc_registerProtocol);

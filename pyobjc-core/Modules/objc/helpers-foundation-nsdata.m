@@ -1,7 +1,7 @@
 #include "pyobjc.h"
 
-static PyObject* call_NSData_bytes(
-    PyObject* method, PyObject* self, PyObject* arguments)
+static PyObject*
+call_NSData_bytes(PyObject* method, PyObject* self, PyObject* arguments)
 {
     const void* bytes;
     NSUInteger bytes_len;
@@ -12,22 +12,21 @@ static PyObject* call_NSData_bytes(
         return NULL;
     }
 
-    PyObjC_DURING
-        objc_superSetReceiver(super, PyObjCObject_GetObject(self));
-        objc_superSetClass(super, PyObjCSelector_GetClass(method));
-        bytes = ((void*(*)(struct objc_super*, SEL))objc_msgSendSuper)(&super,
-            PyObjCSelector_GetSelector(method));
-        bytes_len = ((NSUInteger(*)(struct objc_super*, SEL))objc_msgSendSuper)(&super, @selector(length));
+    PyObjC_DURING objc_superSetReceiver(super, PyObjCObject_GetObject(self));
+    objc_superSetClass(super, PyObjCSelector_GetClass(method));
+    bytes = ((void* (*)(struct objc_super*, SEL))objc_msgSendSuper)(
+        &super, PyObjCSelector_GetSelector(method));
+    bytes_len = ((NSUInteger(*)(struct objc_super*, SEL))objc_msgSendSuper)(
+        &super, @selector(length));
 
-    PyObjC_HANDLER
-        PyObjCErr_FromObjC(localException);
-        result = NULL;
-        bytes = NULL;
-        bytes_len = 0;
+    PyObjC_HANDLER PyObjCErr_FromObjC(localException);
+    result = NULL;
+    bytes = NULL;
+    bytes_len = 0;
 
     PyObjC_ENDHANDLER
 
-    if (bytes == NULL && PyErr_Occurred()) return NULL;
+        if (bytes == NULL && PyErr_Occurred()) return NULL;
 
     if (bytes == NULL) {
         /* Creating a memory view with a NULL pointer will
@@ -48,14 +47,11 @@ static PyObject* call_NSData_bytes(
 }
 
 static void
-imp_NSData_bytes(
-    ffi_cif* cif __attribute__((__unused__)),
-    void* resp,
-    void** args,
-    void* callable)
+imp_NSData_bytes(ffi_cif* cif __attribute__((__unused__)), void* resp, void** args,
+                 void* callable)
 {
     id self = *(id*)args[0];
-    //SEL _meth = *(SEL*)args[1];
+    // SEL _meth = *(SEL*)args[1];
     void** pretval = (void**)resp;
 
     PyObject* result;
@@ -66,17 +62,22 @@ imp_NSData_bytes(
     PyGILState_STATE state = PyGILState_Ensure();
 
     arglist = PyTuple_New(1);
-    if (arglist == NULL) goto error;
+    if (arglist == NULL)
+        goto error;
 
     pyself = PyObjCObject_NewTransient(self, &cookie);
-    if (pyself == NULL) goto error;
+    if (pyself == NULL)
+        goto error;
     PyTuple_SetItem(arglist, 0, pyself);
     Py_INCREF(pyself);
 
     result = PyObject_Call((PyObject*)callable, arglist, NULL);
-    Py_DECREF(arglist); arglist = NULL;
-    PyObjCObject_ReleaseTransient(pyself, cookie); pyself = NULL;
-    if (result == NULL) goto error;
+    Py_DECREF(arglist);
+    arglist = NULL;
+    PyObjCObject_ReleaseTransient(pyself, cookie);
+    pyself = NULL;
+    if (result == NULL)
+        goto error;
 
     if (result == Py_None) {
         *pretval = NULL;
@@ -86,13 +87,14 @@ imp_NSData_bytes(
     }
 
     {
-        OCReleasedBuffer* temp = [[OCReleasedBuffer alloc] initWithPythonBuffer:result writable:NO];
+        OCReleasedBuffer* temp = [[OCReleasedBuffer alloc] initWithPythonBuffer:result
+                                                                       writable:NO];
         if (temp == nil) {
             *pretval = NULL;
             goto error;
         }
         [temp autorelease];
-        *pretval=[temp buffer];
+        *pretval = [temp buffer];
         PyGILState_Release(state);
     }
     return;
@@ -106,10 +108,8 @@ error:
     *pretval = NULL;
 }
 
-
 static PyObject*
-call_NSMutableData_mutableBytes(
-    PyObject* method, PyObject* self, PyObject* arguments)
+call_NSMutableData_mutableBytes(PyObject* method, PyObject* self, PyObject* arguments)
 {
     void* bytes;
     NSUInteger bytes_len;
@@ -120,23 +120,22 @@ call_NSMutableData_mutableBytes(
         return NULL;
     }
 
-    PyObjC_DURING
-        objc_superSetReceiver(super, PyObjCObject_GetObject(self));
-        objc_superSetClass(super, PyObjCSelector_GetClass(method));
+    PyObjC_DURING objc_superSetReceiver(super, PyObjCObject_GetObject(self));
+    objc_superSetClass(super, PyObjCSelector_GetClass(method));
 
-        bytes = ((void*(*)(struct objc_super*, SEL))objc_msgSendSuper)(&super,
-                PyObjCSelector_GetSelector(method));
-        bytes_len = ((NSUInteger(*)(struct objc_super*,SEL))objc_msgSendSuper)(&super, @selector(length));
+    bytes = ((void* (*)(struct objc_super*, SEL))objc_msgSendSuper)(
+        &super, PyObjCSelector_GetSelector(method));
+    bytes_len = ((NSUInteger(*)(struct objc_super*, SEL))objc_msgSendSuper)(
+        &super, @selector(length));
 
-    PyObjC_HANDLER
-        PyObjCErr_FromObjC(localException);
-        result = NULL;
-        bytes = NULL;
-        bytes_len = 0;
+    PyObjC_HANDLER PyObjCErr_FromObjC(localException);
+    result = NULL;
+    bytes = NULL;
+    bytes_len = 0;
 
     PyObjC_ENDHANDLER
 
-    if (bytes == NULL && PyErr_Occurred()) return NULL;
+        if (bytes == NULL && PyErr_Occurred()) return NULL;
 
     if (bytes == NULL) {
         /* PyMemoryView doesn't like null pointers, and those
@@ -157,14 +156,11 @@ call_NSMutableData_mutableBytes(
 }
 
 static void
-imp_NSMutableData_mutableBytes(
-    ffi_cif* cif __attribute__((__unused__)),
-    void* resp,
-    void** args,
-    void* callable)
+imp_NSMutableData_mutableBytes(ffi_cif* cif __attribute__((__unused__)), void* resp,
+                               void** args, void* callable)
 {
     id self = *(id*)args[0];
-    //SEL _meth = *(SEL*)args[1];
+    // SEL _meth = *(SEL*)args[1];
     void** pretval = (void**)resp;
     PyObject* result;
     PyObject* arglist = NULL;
@@ -174,17 +170,22 @@ imp_NSMutableData_mutableBytes(
     PyGILState_STATE state = PyGILState_Ensure();
 
     arglist = PyTuple_New(1);
-    if (arglist == NULL) goto error;
+    if (arglist == NULL)
+        goto error;
 
     pyself = PyObjCObject_NewTransient(self, &cookie);
-    if (pyself == NULL) goto error;
+    if (pyself == NULL)
+        goto error;
     PyTuple_SetItem(arglist, 0, pyself);
     Py_INCREF(pyself);
 
     result = PyObject_Call((PyObject*)callable, arglist, NULL);
-    Py_DECREF(arglist); arglist = NULL;
-    PyObjCObject_ReleaseTransient(pyself, cookie); pyself = NULL;
-    if (result == NULL) goto error;
+    Py_DECREF(arglist);
+    arglist = NULL;
+    PyObjCObject_ReleaseTransient(pyself, cookie);
+    pyself = NULL;
+    if (result == NULL)
+        goto error;
 
     if (result == Py_None) {
         *pretval = NULL;
@@ -193,13 +194,14 @@ imp_NSMutableData_mutableBytes(
         return;
     }
 
-    OCReleasedBuffer* temp = [[OCReleasedBuffer alloc] initWithPythonBuffer:result writable:YES];
+    OCReleasedBuffer* temp = [[OCReleasedBuffer alloc] initWithPythonBuffer:result
+                                                                   writable:YES];
     if (temp == nil) {
         *pretval = NULL;
         goto error;
     }
     [temp autorelease];
-    *pretval=[temp buffer];
+    *pretval = [temp buffer];
     PyGILState_Release(state);
     return;
 
@@ -212,28 +214,25 @@ error:
     PyObjCErr_ToObjCWithGILState(&state);
 }
 
-int PyObjC_setup_nsdata(void)
+int
+PyObjC_setup_nsdata(void)
 {
     Class classNSData = objc_lookUpClass("NSData");
     Class classNSMutableData = objc_lookUpClass("NSMutableData");
 
     if (classNSData != NULL) {
 
-        if (PyObjC_RegisterMethodMapping(classNSData,
-                 @selector(bytes),
-                 call_NSData_bytes,
-                 imp_NSData_bytes) < 0 ) {
+        if (PyObjC_RegisterMethodMapping(classNSData, @selector(bytes), call_NSData_bytes,
+                                         imp_NSData_bytes) < 0) {
             return -1;
         }
-
     }
 
     if (classNSMutableData != NULL) {
 
-        if (PyObjC_RegisterMethodMapping(classNSMutableData,
-                @selector(mutableBytes),
-                call_NSMutableData_mutableBytes,
-                imp_NSMutableData_mutableBytes) < 0 ) {
+        if (PyObjC_RegisterMethodMapping(classNSMutableData, @selector(mutableBytes),
+                                         call_NSMutableData_mutableBytes,
+                                         imp_NSMutableData_mutableBytes) < 0) {
             return -1;
         }
     }

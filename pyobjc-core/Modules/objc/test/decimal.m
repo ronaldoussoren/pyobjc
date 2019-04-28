@@ -4,30 +4,29 @@
 
 #import <Foundation/Foundation.h>
 
-@interface OC_TestDecimal : NSObject
-{
+@interface OC_TestDecimal : NSObject {
 }
--(int)getDecimal:(out NSDecimal*)value;
--(id)stringFromDecimal:(in NSDecimal*)value;
--(void)doubleDecimal:(inout NSDecimal*)value;
+- (int)getDecimal:(out NSDecimal*)value;
+- (id)stringFromDecimal:(in NSDecimal*)value;
+- (void)doubleDecimal:(inout NSDecimal*)value;
 
 @end
 
 @implementation OC_TestDecimal
 
--(int)getDecimal:(out NSDecimal*)value
+- (int)getDecimal:(out NSDecimal*)value
 {
     NSDecimalNumber* num = [NSDecimalNumber decimalNumberWithString:@"2.5"];
     *value = [num decimalValue];
     return 1;
 }
 
--(id)stringFromDecimal:(in NSDecimal*)value
+- (id)stringFromDecimal:(in NSDecimal*)value
 {
     return NSDecimalString(value, nil);
 }
 
--(void)doubleDecimal:(inout NSDecimal*)value
+- (void)doubleDecimal:(inout NSDecimal*)value
 {
     NSDecimal tmp;
     NSDecimalAdd(&tmp, value, value, NSRoundPlain);
@@ -36,27 +35,14 @@
 
 @end
 
-
-static PyMethodDef mod_methods[] = {
-            { 0, 0, 0, 0 }
-};
+static PyMethodDef mod_methods[] = {{0, 0, 0, 0}};
 
 static struct PyModuleDef mod_module = {
-    PyModuleDef_HEAD_INIT,
-    "decimal",
-    NULL,
-    0,
-    mod_methods,
-    NULL,
-    NULL,
-    NULL,
-    NULL
-};
+    PyModuleDef_HEAD_INIT, "decimal", NULL, 0, mod_methods, NULL, NULL, NULL, NULL};
 
 PyObject* PyInit_decimal(void);
 
-PyObject* __attribute__((__visibility__("default")))
-PyInit_decimal(void)
+PyObject* __attribute__((__visibility__("default"))) PyInit_decimal(void)
 {
     PyObject* m;
 
@@ -70,7 +56,7 @@ PyInit_decimal(void)
     }
 
     if (PyModule_AddObject(m, "OC_TestDecimal",
-        PyObjC_IdToPython([OC_TestDecimal class])) < 0) {
+                           PyObjC_IdToPython([OC_TestDecimal class])) < 0) {
         return NULL;
     }
 

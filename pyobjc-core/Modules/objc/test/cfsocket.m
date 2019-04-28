@@ -7,11 +7,11 @@
 #include <CoreFoundation/CoreFoundation.h>
 
 @interface OC_TestCFSocket : NSObject
--(id)newSocket;
+- (id)newSocket;
 @end
 
 @implementation OC_TestCFSocket
--(id)newSocket
+- (id)newSocket
 {
     CFSocketRef sock;
 
@@ -20,26 +20,14 @@
 }
 @end
 
-static PyMethodDef mod_methods[] = {
-    { 0, 0, 0, 0 }
-};
+static PyMethodDef mod_methods[] = {{0, 0, 0, 0}};
 
 static struct PyModuleDef mod_module = {
-    PyModuleDef_HEAD_INIT,
-    "cfsocket",
-    NULL,
-    0,
-    mod_methods,
-    NULL,
-    NULL,
-    NULL,
-    NULL
-};
+    PyModuleDef_HEAD_INIT, "cfsocket", NULL, 0, mod_methods, NULL, NULL, NULL, NULL};
 
 PyObject* PyInit_cfsocket(void);
 
-PyObject* __attribute__((__visibility__("default")))
-PyInit_cfsocket(void)
+PyObject* __attribute__((__visibility__("default"))) PyInit_cfsocket(void)
 {
     PyObject* m;
 
@@ -53,7 +41,7 @@ PyInit_cfsocket(void)
     }
 
     if (PyModule_AddObject(m, "OC_TestCFSocket",
-            PyObjC_IdToPython([OC_TestCFSocket class])) < 0) {
+                           PyObjC_IdToPython([OC_TestCFSocket class])) < 0) {
         return NULL;
     }
 

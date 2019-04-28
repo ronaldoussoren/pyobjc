@@ -34,13 +34,10 @@ extern id objc_retainBlock(id value);
 extern id objc_storeStrong(id* object, id value);
 extern id objc_storeWeak(id* object, id value);
 
-
 #else
 
 #undef HAVE_ARC_RUNTIME
 
 #endif
 
-
 #endif /* PyObjC_ARC_RUNTIME_H */
-

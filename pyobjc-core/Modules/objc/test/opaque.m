@@ -10,49 +10,33 @@
 typedef struct _Foo* FooHandle;
 typedef struct _Bar* BarHandle;
 
-@interface OC_OpaqueTest : NSObject
-{
+@interface OC_OpaqueTest : NSObject {
 }
-+(FooHandle)createFoo:(int)value;
-+(FooHandle)nullFoo;
-+(void)deleteFoo:(FooHandle)handle;
-+(int)getValueOf:(FooHandle)foo;
-+(void)setValue:(int)value forFoo:(FooHandle)handle;
++ (FooHandle)createFoo:(int)value;
++ (FooHandle)nullFoo;
++ (void)deleteFoo:(FooHandle)handle;
++ (int)getValueOf:(FooHandle)foo;
++ (void)setValue:(int)value forFoo:(FooHandle)handle;
 
-
-+(BarHandle)createBarWithFirst:(double)first andSecond:(double)second;
-+(BarHandle)nullBar;
-+(void)getFirst:(double*)first andSecond:(double*)second of:(BarHandle)bar;
-+(void)setFirst:(double)first andSecond:(double)second of:(BarHandle)bar;
-+(void)deleteBar:(BarHandle)handle;
-+(double)getFirst:(BarHandle)handle;
-+(double)getSecond:(BarHandle)handle;
++ (BarHandle)createBarWithFirst:(double)first andSecond:(double)second;
++ (BarHandle)nullBar;
++ (void)getFirst:(double*)first andSecond:(double*)second of:(BarHandle)bar;
++ (void)setFirst:(double)first andSecond:(double)second of:(BarHandle)bar;
++ (void)deleteBar:(BarHandle)handle;
++ (double)getFirst:(BarHandle)handle;
++ (double)getSecond:(BarHandle)handle;
 @end
 
-
-static PyMethodDef mod_methods[] = {
-            { 0, 0, 0, 0 }
-};
+static PyMethodDef mod_methods[] = {{0, 0, 0, 0}};
 
 static struct PyModuleDef mod_module = {
-    PyModuleDef_HEAD_INIT,
-    "opaque",
-    NULL,
-    0,
-    mod_methods,
-    NULL,
-    NULL,
-    NULL,
-    NULL
-};
+    PyModuleDef_HEAD_INIT, "opaque", NULL, 0, mod_methods, NULL, NULL, NULL, NULL};
 
 PyObject* PyInit_opaque(void);
 
-PyObject* __attribute__((__visibility__("default")))
-PyInit_opaque(void)
+PyObject* __attribute__((__visibility__("default"))) PyInit_opaque(void)
 {
     PyObject* m;
-
 
     m = PyModule_Create(&mod_module);
     if (!m) {
@@ -63,8 +47,8 @@ PyInit_opaque(void)
         return NULL;
     }
 
-    if (PyModule_AddObject(m, "OC_OpaqueTest",
-        PyObjC_IdToPython([OC_OpaqueTest class])) < 0) {
+    if (PyModule_AddObject(m, "OC_OpaqueTest", PyObjC_IdToPython([OC_OpaqueTest class])) <
+        0) {
         return NULL;
     }
 
@@ -93,7 +77,7 @@ struct _Bar {
 };
 
 @implementation OC_OpaqueTest
-+(FooHandle)createFoo:(int)value
++ (FooHandle)createFoo:(int)value
 {
     FooHandle result = malloc(sizeof(struct _Foo));
     if (result == NULL) {
@@ -103,69 +87,69 @@ struct _Bar {
     return result;
 }
 
-+(FooHandle)nullFoo
++ (FooHandle)nullFoo
 {
     return NULL;
 }
 
-+(void)deleteFoo:(FooHandle)handle
++ (void)deleteFoo:(FooHandle)handle
 {
     if (handle) {
         free(handle);
     }
 }
 
-+(int)getValueOf:(FooHandle)foo
++ (int)getValueOf:(FooHandle)foo
 {
     return foo->index;
 }
 
-+(void)setValue:(int)value forFoo:(FooHandle)handle
++ (void)setValue:(int)value forFoo:(FooHandle)handle
 {
     handle->index = value;
 }
 
-+(BarHandle)createBarWithFirst:(double)first andSecond:(double)second
++ (BarHandle)createBarWithFirst:(double)first andSecond:(double)second
 {
     BarHandle result = malloc(sizeof(struct _Bar));
-    if (result == NULL) return NULL;
+    if (result == NULL)
+        return NULL;
 
     result->first = first;
     result->second = second;
     return result;
 }
 
-+(BarHandle)nullBar
++ (BarHandle)nullBar
 {
     return NULL;
 }
 
-
-+(void)getFirst:(double*)first andSecond:(double*)second of:(BarHandle)bar
++ (void)getFirst:(double*)first andSecond:(double*)second of:(BarHandle)bar
 {
     *first = bar->first;
     *second = bar->second;
 }
 
-+(void)setFirst:(double)first andSecond:(double)second of:(BarHandle)bar
++ (void)setFirst:(double)first andSecond:(double)second of:(BarHandle)bar
 {
     bar->first = first;
     bar->second = second;
 }
 
-+(void)deleteBar:(BarHandle)handle
++ (void)deleteBar:(BarHandle)handle
 {
     if (handle) {
         free(handle);
     }
 }
 
-+(double)getFirst:(BarHandle)handle
++ (double)getFirst:(BarHandle)handle
 {
     return handle->first;
 }
 
-+(double)getSecond:(BarHandle)handle
++ (double)getSecond:(BarHandle)handle
 {
     return handle->second;
 }

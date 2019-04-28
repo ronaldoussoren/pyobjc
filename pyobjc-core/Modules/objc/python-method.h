@@ -7,4 +7,3 @@ extern PyTypeObject PyObjCPythonMethod_Type;
 extern PyObject* PyObjCPythonMethod_GetMethod(PyObject*);
 
 #endif /* PyObjC_PYTHON_METHOD_H */
-

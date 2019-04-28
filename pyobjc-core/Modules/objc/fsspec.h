@@ -4,7 +4,8 @@
 #ifndef PyObjC_FSSPEC_H
 #define PyObjC_FSSPEC_H
 
-#define IS_FSSPEC(typestr) (strncmp(typestr, @encode(FSSpec), sizeof(@encode(FSSpec))-1) == 0)
+#define IS_FSSPEC(typestr)                                                               \
+    (strncmp(typestr, @encode(FSSpec), sizeof(@encode(FSSpec)) - 1) == 0)
 
 extern int PyObjC_encode_fsspec(PyObject*, void*);
 extern PyObject* PyObjC_decode_fsspec(void*);

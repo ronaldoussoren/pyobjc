@@ -1,7 +1,7 @@
 #include "pyobjc.h"
 
 int
-PyObjC_Cmp(PyObject *o1, PyObject *o2, int *result)
+PyObjC_Cmp(PyObject* o1, PyObject* o2, int* result)
 {
     int r;
 
@@ -29,14 +29,14 @@ PyObjC_Cmp(PyObject *o1, PyObject *o2, int *result)
         return 0;
     }
 
-    PyErr_Format(PyExc_TypeError, "%R and %R cannot be compared",
-            o1, o2);
+    PyErr_Format(PyExc_TypeError, "%R and %R cannot be compared", o1, o2);
     return -1;
 }
 
 static PyObject* registry = NULL;
 
-PyObject* PyBytes_InternFromString(const char* v)
+PyObject*
+PyBytes_InternFromString(const char* v)
 {
     PyObject* key;
     PyObject* value;
@@ -71,7 +71,8 @@ PyObject* PyBytes_InternFromString(const char* v)
     }
 }
 
-PyObject* PyBytes_InternFromStringAndSize(const char* v, Py_ssize_t l)
+PyObject*
+PyBytes_InternFromStringAndSize(const char* v, Py_ssize_t l)
 {
     PyObject* key;
     PyObject* value;
@@ -107,7 +108,8 @@ PyObject* PyBytes_InternFromStringAndSize(const char* v, Py_ssize_t l)
     }
 }
 
-const char* PyObjC_Unicode_Fast_Bytes(PyObject* object)
+const char*
+PyObjC_Unicode_Fast_Bytes(PyObject* object)
 {
     if (!PyUnicode_Check(object)) {
         PyErr_SetString(PyExc_UnicodeDecodeError, "Not a unicode object");

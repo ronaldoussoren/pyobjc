@@ -7,20 +7,24 @@
  *
  */
 #ifndef __has_feature
-#  define __has_feature(x) 0
+#define __has_feature(x) 0
 #endif
 #ifndef __has_extension
-#  define __has_extension(x) __has_feature(x)
+#define __has_extension(x) __has_feature(x)
 #endif
 
 #if __has_extension(c_static_assert)
-# define STATIC_ASSERT(test, message) _Static_assert(test, message)
+#define STATIC_ASSERT(test, message) _Static_assert(test, message)
 #else
-# define STATIC_ASSERT(test, message) switch(0){ case 0: case test:;}
+#define STATIC_ASSERT(test, message)                                                     \
+    switch (0) {                                                                         \
+    case 0:                                                                              \
+    case test:;                                                                          \
+    }
 #endif
 
 #if !__has_feature(objc_instancetype)
-#  define instancetype id
+#define instancetype id
 #endif
 
 /*
@@ -43,7 +47,6 @@
 #error "MAC_OS_X_VERSION_10_1 not defined. You aren't running 10.1 are you?"
 
 #endif
-
 
 #ifndef MAC_OS_X_VERSION_10_2
 #define MAC_OS_X_VERSION_10_2 1020
@@ -198,77 +201,89 @@
  */
 #include <dlfcn.h>
 
-#define WEAK_LINKED_NAME(NAME)    static __typeof__(&NAME) ptr_ ## NAME;
-#define USE(NAME)        ptr_ ## NAME
-#define CHECK_WEAK_LINK(module, NAME) \
-    do {                                            \
-        void* dl = dlopen(NULL, RTLD_GLOBAL);                        \
-        ptr_ ## NAME = dlsym(dl, PyObjC_STR(NAME));                    \
-        dlclose(dl);                                    \
-        if (ptr_ ## NAME == NULL) {                            \
-            if (PyDict_DelItemString(PyModule_GetDict(module), PyObjC_STR(NAME)) < 0) {    \
-                return NULL;                        \
-            }                                    \
-        }                                        \
-    } while(0)
+#define WEAK_LINKED_NAME(NAME) static __typeof__(&NAME) ptr_##NAME;
+#define USE(NAME) ptr_##NAME
+#define CHECK_WEAK_LINK(module, NAME)                                                    \
+    do {                                                                                 \
+        void* dl = dlopen(NULL, RTLD_GLOBAL);                                            \
+        ptr_##NAME = dlsym(dl, PyObjC_STR(NAME));                                        \
+        dlclose(dl);                                                                     \
+        if (ptr_##NAME == NULL) {                                                        \
+            if (PyDict_DelItemString(PyModule_GetDict(module), PyObjC_STR(NAME)) < 0) {  \
+                return NULL;                                                             \
+            }                                                                            \
+        }                                                                                \
+    } while (0)
 
 #if MAC_OS_X_VERSION_MIN_REQUIRED >= MAC_OS_X_VERSION_10_5
 #define WEAK_LINKED_NAME_10_5(NAME)
-#define USE_10_5(NAME)                NAME
-#define CHECK_WEAK_LINK_10_5(module, NAME) do {} while(0)
+#define USE_10_5(NAME) NAME
+#define CHECK_WEAK_LINK_10_5(module, NAME)                                               \
+    do {                                                                                 \
+    } while (0)
 #else
-#define WEAK_LINKED_NAME_10_5(NAME)         WEAK_LINKED_NAME(NAME)
-#define USE_10_5(NAME)                USE(NAME)
+#define WEAK_LINKED_NAME_10_5(NAME) WEAK_LINKED_NAME(NAME)
+#define USE_10_5(NAME) USE(NAME)
 #define CHECK_WEAK_LINK_10_5(module, NAME) CHECK_WEAK_LINK(module, NAME)
 #endif
 
 #if MAC_OS_X_VERSION_MIN_REQUIRED >= MAC_OS_X_VERSION_10_6
 #define WEAK_LINKED_NAME_10_6(NAME)
-#define USE_10_6(NAME)                NAME
-#define CHECK_WEAK_LINK_10_6(module, NAME) do {} while(0)
+#define USE_10_6(NAME) NAME
+#define CHECK_WEAK_LINK_10_6(module, NAME)                                               \
+    do {                                                                                 \
+    } while (0)
 #else
-#define WEAK_LINKED_NAME_10_6(NAME)         WEAK_LINKED_NAME(NAME)
-#define USE_10_6(NAME)                USE(NAME)
+#define WEAK_LINKED_NAME_10_6(NAME) WEAK_LINKED_NAME(NAME)
+#define USE_10_6(NAME) USE(NAME)
 #define CHECK_WEAK_LINK_10_6(module, NAME) CHECK_WEAK_LINK(module, NAME)
 #endif
 
 #if MAC_OS_X_VERSION_MIN_REQUIRED >= MAC_OS_X_VERSION_10_7
 #define WEAK_LINKED_NAME_10_7(NAME)
-#define USE_10_7(NAME)                NAME
-#define CHECK_WEAK_LINK_10_7(module, NAME) do {} while(0)
+#define USE_10_7(NAME) NAME
+#define CHECK_WEAK_LINK_10_7(module, NAME)                                               \
+    do {                                                                                 \
+    } while (0)
 #else
-#define WEAK_LINKED_NAME_10_7(NAME)         WEAK_LINKED_NAME(NAME)
-#define USE_10_7(NAME)                USE(NAME)
+#define WEAK_LINKED_NAME_10_7(NAME) WEAK_LINKED_NAME(NAME)
+#define USE_10_7(NAME) USE(NAME)
 #define CHECK_WEAK_LINK_10_7(module, NAME) CHECK_WEAK_LINK(module, NAME)
 #endif
 
 #if MAC_OS_X_VERSION_MIN_REQUIRED >= MAC_OS_X_VERSION_10_8
 #define WEAK_LINKED_NAME_10_8(NAME)
-#define USE_10_8(NAME)                NAME
-#define CHECK_WEAK_LINK_10_8(module, NAME) do {} while(0)
+#define USE_10_8(NAME) NAME
+#define CHECK_WEAK_LINK_10_8(module, NAME)                                               \
+    do {                                                                                 \
+    } while (0)
 #else
-#define WEAK_LINKED_NAME_10_8(NAME)         WEAK_LINKED_NAME(NAME)
-#define USE_10_8(NAME)                USE(NAME)
+#define WEAK_LINKED_NAME_10_8(NAME) WEAK_LINKED_NAME(NAME)
+#define USE_10_8(NAME) USE(NAME)
 #define CHECK_WEAK_LINK_10_8(module, NAME) CHECK_WEAK_LINK(module, NAME)
 #endif
 
 #if MAC_OS_X_VERSION_MIN_REQUIRED >= MAC_OS_X_VERSION_10_9
 #define WEAK_LINKED_NAME_10_9(NAME)
-#define USE_10_9(NAME)                NAME
-#define CHECK_WEAK_LINK_10_9(module, NAME) do {} while(0)
+#define USE_10_9(NAME) NAME
+#define CHECK_WEAK_LINK_10_9(module, NAME)                                               \
+    do {                                                                                 \
+    } while (0)
 #else
-#define WEAK_LINKED_NAME_10_9(NAME)         WEAK_LINKED_NAME(NAME)
-#define USE_10_9(NAME)                USE(NAME)
+#define WEAK_LINKED_NAME_10_9(NAME) WEAK_LINKED_NAME(NAME)
+#define USE_10_9(NAME) USE(NAME)
 #define CHECK_WEAK_LINK_10_9(module, NAME) CHECK_WEAK_LINK(module, NAME)
 #endif
 
 #if MAC_OS_X_VERSION_MIN_REQUIRED >= MAC_OS_X_VERSION_10_10
 #define WEAK_LINKED_NAME_10_10(NAME)
-#define USE_10_10(NAME)                NAME
-#define CHECK_WEAK_LINK_10_10(module, NAME) do {} while(0)
+#define USE_10_10(NAME) NAME
+#define CHECK_WEAK_LINK_10_10(module, NAME)                                              \
+    do {                                                                                 \
+    } while (0)
 #else
-#define WEAK_LINKED_NAME_10_10(NAME)         WEAK_LINKED_NAME(NAME)
-#define USE_10_10(NAME)                USE(NAME)
+#define WEAK_LINKED_NAME_10_10(NAME) WEAK_LINKED_NAME(NAME)
+#define USE_10_10(NAME) USE(NAME)
 #define CHECK_WEAK_LINK_10_10(module, NAME) CHECK_WEAK_LINK(module, NAME)
 #endif
 
@@ -278,7 +293,6 @@
  *
  */
 
-
 /*
  *
  * Start of compiler support helpers
@@ -286,17 +300,15 @@
  */
 
 #ifdef __GNUC__
-#define unlikely(x) __builtin_expect (!!(x), 0)
-#define likely(x) __builtin_expect (!!(x), 1)
+#define unlikely(x) __builtin_expect(!!(x), 0)
+#define likely(x) __builtin_expect(!!(x), 1)
 #else
 #define likely(x) x
 #define likely(x) x
 #endif
 
-
-
-
-/* On some versions of GCC <limits.h> defines LONG_LONG_MAX but not LLONG_MAX, compensate. */
+/* On some versions of GCC <limits.h> defines LONG_LONG_MAX but not LLONG_MAX, compensate.
+ */
 #ifndef LLONG_MIN
 #ifdef LONG_LONG_MIN
 #define LLONG_MIN LONG_LONG_MIN
@@ -311,7 +323,6 @@
  *
  */
 
-
 #if __LP64__
 #define Py_ARG_NSInteger "l"
 #define Py_ARG_NSUInteger "k"
@@ -320,19 +331,17 @@
 #define Py_ARG_NSUInteger "I"
 #endif
 
-
 /*
  *
  * Python version compatibility
  *
  */
 
-
 /* Use CLINIC_SEP between the prototype and
  * description in doc strings, to get clean
  * docstrings.
  */
-# define CLINIC_SEP "--\n"
+#define CLINIC_SEP "--\n"
 
 /* Define PyObjC_UNICODE_FAST_PATH when
  * 1) We're before Python 3.3, and
@@ -343,10 +352,9 @@
  * "fast path"
  */
 
-extern int PyObjC_Cmp(PyObject *o1, PyObject *o2, int *result);
+extern int PyObjC_Cmp(PyObject* o1, PyObject* o2, int* result);
 extern PyObject* PyBytes_InternFromString(const char* v);
 extern PyObject* PyBytes_InternFromStringAndSize(const char* v, Py_ssize_t l);
-
 
 /*
  * A micro optimization: when using Python 3.3 or later it
@@ -360,7 +368,6 @@ extern PyObject* PyBytes_InternFromStringAndSize(const char* v, Py_ssize_t l);
  */
 extern const char* PyObjC_Unicode_Fast_Bytes(PyObject* object);
 
-
 #ifdef __clang__
 
 /* This is a crude hack to disable a otherwise useful warning in the context of
@@ -368,14 +375,16 @@ extern const char* PyObjC_Unicode_Fast_Bytes(PyObject* object);
  */
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Warray-bounds"
-static inline void _PyObjCTuple_SetItem(PyObject* tuple, Py_ssize_t idx, PyObject* value)
+static inline void
+_PyObjCTuple_SetItem(PyObject* tuple, Py_ssize_t idx, PyObject* value)
 {
     PyTuple_SET_ITEM(tuple, idx, value);
 }
 #undef PyTuple_SET_ITEM
 #define PyTuple_SET_ITEM(a, b, c) _PyObjCTuple_SetItem(a, b, c)
 
-static inline PyObject* _PyObjCTuple_GetItem(PyObject* tuple, Py_ssize_t idx)
+static inline PyObject*
+_PyObjCTuple_GetItem(PyObject* tuple, Py_ssize_t idx)
 {
     return PyTuple_GET_ITEM(tuple, idx);
 }
@@ -386,7 +395,6 @@ static inline PyObject* _PyObjCTuple_GetItem(PyObject* tuple, Py_ssize_t idx)
 
 #endif /* __clang__ */
 
-
 /*
  *
  * Helper macros for Cocoa exceptions and the Python GIL
@@ -395,59 +403,55 @@ static inline PyObject* _PyObjCTuple_GetItem(PyObject* tuple, Py_ssize_t idx)
 
 #ifdef NO_OBJC2_RUNTIME
 
-#define PyObjC_DURING \
-        Py_BEGIN_ALLOW_THREADS \
-        NS_DURING
+#define PyObjC_DURING Py_BEGIN_ALLOW_THREADS NS_DURING
 
 #define PyObjC_HANDLER NS_HANDLER
 
-#define PyObjC_ENDHANDLER \
-        NS_ENDHANDLER \
-        Py_END_ALLOW_THREADS
+#define PyObjC_ENDHANDLER                                                                \
+    NS_ENDHANDLER                                                                        \
+    Py_END_ALLOW_THREADS
 
 #else /* !NO_OBJC2_RUNTIME */
 
-#define    PyObjC_DURING \
-        Py_BEGIN_ALLOW_THREADS \
-        @try {
+#define PyObjC_DURING Py_BEGIN_ALLOW_THREADS @try {
 
-#define PyObjC_HANDLER } @catch(NSObject* _localException) { \
-        NSException* localException __attribute__((__unused__))= (NSException*)_localException;
+#define PyObjC_HANDLER                                                                   \
+    }                                                                                    \
+    @catch (NSObject * _localException)                                                  \
+    {                                                                                    \
+        NSException* localException __attribute__((__unused__)) =                        \
+            (NSException*)_localException;
 
-#define PyObjC_ENDHANDLER \
-        } \
-        Py_END_ALLOW_THREADS
+#define PyObjC_ENDHANDLER                                                                \
+    }                                                                                    \
+    Py_END_ALLOW_THREADS
 
 #endif /* !NO_OBJC2_RUNTIME */
 
-#define PyObjC_BEGIN_WITH_GIL \
-    { \
-        PyGILState_STATE _GILState; \
+#define PyObjC_BEGIN_WITH_GIL                                                            \
+    {                                                                                    \
+        PyGILState_STATE _GILState;                                                      \
         _GILState = PyGILState_Ensure();
 
-#define PyObjC_GIL_FORWARD_EXC() \
-        do { \
-            PyObjCErr_ToObjCWithGILState(&_GILState); \
-        } while (0)
+#define PyObjC_GIL_FORWARD_EXC()                                                         \
+    do {                                                                                 \
+        PyObjCErr_ToObjCWithGILState(&_GILState);                                        \
+    } while (0)
 
+#define PyObjC_GIL_RETURN(val)                                                           \
+    do {                                                                                 \
+        PyGILState_Release(_GILState);                                                   \
+        return (val);                                                                    \
+    } while (0)
 
-#define PyObjC_GIL_RETURN(val) \
-        do { \
-            PyGILState_Release(_GILState); \
-            return (val); \
-        } while (0)
+#define PyObjC_GIL_RETURNVOID                                                            \
+    do {                                                                                 \
+        PyGILState_Release(_GILState);                                                   \
+        return;                                                                          \
+    } while (0)
 
-#define PyObjC_GIL_RETURNVOID \
-        do { \
-            PyGILState_Release(_GILState); \
-            return; \
-        } while (0)
-
-
-#define PyObjC_END_WITH_GIL \
-        PyGILState_Release(_GILState); \
+#define PyObjC_END_WITH_GIL                                                              \
+    PyGILState_Release(_GILState);                                                       \
     }
-
-
 
 #endif /* PyObjC_COMPAT_H */

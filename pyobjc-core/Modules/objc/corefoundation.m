@@ -20,9 +20,8 @@ static PyObject*
 cf_repr(PyObject* self)
 {
     if (PyObjCObject_GetFlags(self) & PyObjCObject_kMAGIC_COOKIE) {
-        return PyUnicode_FromFormat(
-            "<%s CoreFoundation magic instance %p>",
-            Py_TYPE(self)->tp_name, PyObjCObject_GetObject(self));
+        return PyUnicode_FromFormat("<%s CoreFoundation magic instance %p>",
+                                    Py_TYPE(self)->tp_name, PyObjCObject_GetObject(self));
     }
 
     CFStringRef repr = CFCopyDescription(PyObjCObject_GetObject(self));
@@ -33,9 +32,8 @@ cf_repr(PyObject* self)
 
     } else {
         char buf[128];
-        snprintf(buf, sizeof(buf), "<%s object at %p>",
-            Py_TYPE(self)->tp_name,
-            PyObjCObject_GetObject(self));
+        snprintf(buf, sizeof(buf), "<%s object at %p>", Py_TYPE(self)->tp_name,
+                 PyObjCObject_GetObject(self));
 
         return PyUnicode_FromString(buf);
     }
@@ -44,7 +42,7 @@ cf_repr(PyObject* self)
 PyObject*
 PyObjC_TryCreateCFProxy(NSObject* value)
 {
-    PyObject *rval = NULL;
+    PyObject* rval = NULL;
 
     if (gTypeid2class != NULL) {
         PyObject* cfid;
@@ -78,7 +76,7 @@ PyObjC_TryCreateCFProxy(NSObject* value)
 static PyObject*
 pyobjc_PythonObject(NSObject* self, SEL _sel __attribute__((__unused__)))
 {
-    PyObject *rval = NULL;
+    PyObject* rval = NULL;
 
     rval = PyObjC_FindPythonProxy(self);
     if (rval == NULL) {
@@ -90,8 +88,7 @@ pyobjc_PythonObject(NSObject* self, SEL _sel __attribute__((__unused__)))
             /* There is no wrapper for this type, fall back to
              * the generic behaviour.
              */
-            rval = (PyObject *)PyObjCObject_New(self,
-                PyObjCObject_kDEFAULT, YES);
+            rval = (PyObject*)PyObjCObject_New(self, PyObjCObject_kDEFAULT, YES);
         }
 
         if (rval) {
@@ -102,7 +99,6 @@ pyobjc_PythonObject(NSObject* self, SEL _sel __attribute__((__unused__)))
     return rval;
 }
 #endif
-
 
 PyObject*
 PyObjCCFType_New(char* name, char* encoding, CFTypeID typeID)
@@ -190,8 +186,7 @@ PyObjCCFType_New(char* name, char* encoding, CFTypeID typeID)
     info->hasPythonImpl = 0;
     info->isCFWrapper = 1;
 
-    if (PyObject_SetAttrString(result,
-            "__module__", PyObjCClass_DefaultModule) < 0) {
+    if (PyObject_SetAttrString(result, "__module__", PyObjCClass_DefaultModule) < 0) {
         PyErr_Clear();
     }
 
@@ -201,7 +196,8 @@ PyObjCCFType_New(char* name, char* encoding, CFTypeID typeID)
         return NULL;
     }
 
-    Py_DECREF(cf); cf = NULL;
+    Py_DECREF(cf);
+    cf = NULL;
     return result;
 }
 
@@ -226,19 +222,21 @@ PyObjCCFType_Setup(void)
     }
 
 #ifdef PyObjC_ENABLE_CFTYPE_CATEGORY
-    snprintf(encodingBuf, sizeof(encodingBuf), "%s%c%c", @encode(PyObject*), _C_ID, _C_SEL);
+    snprintf(encodingBuf, sizeof(encodingBuf), "%s%c%c", @encode(PyObject*), _C_ID,
+             _C_SEL);
 #endif
 
     for (cur = gNames; *cur != NULL; cur++) {
         cls = objc_lookUpClass(*cur);
-        if (cls == Nil) continue;
+        if (cls == Nil)
+            continue;
 
 #ifdef PyObjC_ENABLE_CFTYPE_CATEGORY
         /* Add a __pyobjc_PythonObject__ method to NSCFType. Can't use a
          * category because the type isn't public.
          */
         if (!class_addMethod(cls, @selector(__pyobjc_PythonObject__),
-            (IMP)pyobjc_PythonObject, encodingBuf)) {
+                             (IMP)pyobjc_PythonObject, encodingBuf)) {
 
             return -1;
         }
@@ -256,8 +254,7 @@ PyObjCCFType_Setup(void)
     }
 
     if (PyObjC_NSCFTypeClass == NULL) {
-        PyErr_SetString(PyExc_RuntimeError,
-            "Cannot locate NSCFType");
+        PyErr_SetString(PyExc_RuntimeError, "Cannot locate NSCFType");
         return -1;
     }
 
@@ -281,7 +278,9 @@ PyObjCCF_NewSpecial(char* typestr, void* datum)
         if (PyErr_Occurred()) {
             return NULL;
         }
-        PyErr_Format(PyExc_ValueError, "Don't know CF type for typestr '%s', cannot create special wrapper", typestr);
+        PyErr_Format(PyExc_ValueError,
+                     "Don't know CF type for typestr '%s', cannot create special wrapper",
+                     typestr);
         return NULL;
     }
 
@@ -308,14 +307,15 @@ PyObjCCF_NewSpecial(char* typestr, void* datum)
             }
 
             ((PyObjCObject*)rval)->objc_object = (id)datum;
-            ((PyObjCObject*)rval)->flags = PyObjCObject_kDEFAULT|PyObjCObject_kSHOULD_NOT_RELEASE|PyObjCObject_kMAGIC_COOKIE;
+            ((PyObjCObject*)rval)->flags = PyObjCObject_kDEFAULT |
+                                           PyObjCObject_kSHOULD_NOT_RELEASE |
+                                           PyObjCObject_kMAGIC_COOKIE;
         }
 
     } else {
         rval = NULL;
-        PyErr_Format(PyExc_ValueError,
-            "Sorry, cannot wrap special value of typeid %d\n",
-            (int)typeid);
+        PyErr_Format(PyExc_ValueError, "Sorry, cannot wrap special value of typeid %d\n",
+                     (int)typeid);
     }
 
     return rval;
@@ -330,7 +330,7 @@ PyObjCCF_NewSpecial(char* typestr, void* datum)
 PyObject*
 PyObjCCF_NewSpecial2(CFTypeID typeid, void* datum)
 {
-    PyObject *rval = NULL;
+    PyObject* rval = NULL;
 
     if (gTypeid2class != NULL) {
         PyObject* cfid;
@@ -350,14 +350,15 @@ PyObjCCF_NewSpecial2(CFTypeID typeid, void* datum)
             }
 
             ((PyObjCObject*)rval)->objc_object = (id)datum;
-            ((PyObjCObject*)rval)->flags = PyObjCObject_kDEFAULT|PyObjCObject_kSHOULD_NOT_RELEASE|PyObjCObject_kMAGIC_COOKIE;
+            ((PyObjCObject*)rval)->flags = PyObjCObject_kDEFAULT |
+                                           PyObjCObject_kSHOULD_NOT_RELEASE |
+                                           PyObjCObject_kMAGIC_COOKIE;
         }
 
     } else {
         rval = NULL;
-        PyErr_Format(PyExc_ValueError,
-            "Sorry, cannot wrap special value of typeid %d\n",
-            (int)typeid);
+        PyErr_Format(PyExc_ValueError, "Sorry, cannot wrap special value of typeid %d\n",
+                     (int)typeid);
     }
 
     return rval;

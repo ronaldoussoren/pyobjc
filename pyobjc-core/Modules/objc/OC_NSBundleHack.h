@@ -17,14 +17,12 @@
  *     if it does not do the right thing
  */
 
-@interface OC_NSBundleHack : NSBundle
-{
+@interface OC_NSBundleHack : NSBundle {
 }
-+(void)installBundleHack;
++ (void)installBundleHack;
 @end
 
-@interface OC_NSBundleHackCheck : NSObject
-{
+@interface OC_NSBundleHackCheck : NSObject {
 }
-+(NSBundle*)bundleForClass;
++ (NSBundle*)bundleForClass;
 @end

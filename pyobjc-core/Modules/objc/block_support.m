@@ -19,9 +19,9 @@
 
 enum {
     BLOCK_HAS_COPY_DISPOSE = (1 << 25),
-    BLOCK_IS_GLOBAL        = (1 << 28),
-    BLOCK_HAS_STRET        = (1 << 29),
-    BLOCK_HAS_SIGNATURE    = (1 << 30)
+    BLOCK_IS_GLOBAL = (1 << 28),
+    BLOCK_HAS_STRET = (1 << 29),
+    BLOCK_HAS_SIGNATURE = (1 << 30)
 };
 
 /*
@@ -33,7 +33,7 @@ static Class gGlobalBlockClass = nil;
 struct block_descriptor {
     unsigned long int reserved;
     unsigned long int size;
-    void (*copy_helper)(void* dst, void*src);
+    void (*copy_helper)(void* dst, void* src);
     void (*dispose_helper)(void* src);
     const char* signature;
 };
@@ -73,7 +73,7 @@ PyObjCBlock_GetSignature(void* _block)
         const char* signature_loc = (void*)(block->descriptor);
         signature_loc += sizeof(unsigned long) * 2;
         if (block->flags & BLOCK_HAS_COPY_DISPOSE) {
-            signature_loc += sizeof(void(*)(void)) * 2;
+            signature_loc += sizeof(void (*)(void)) * 2;
         }
         return *(const char**)signature_loc;
     }
@@ -86,12 +86,10 @@ oc_copy_helper(void* _dst, void* _src)
     struct block_literal* dst = (struct block_literal*)_dst;
     struct block_literal* src = (struct block_literal*)_src;
 
-    PyObjC_BEGIN_WITH_GIL
-        dst->invoke_cleanup = src->invoke_cleanup;
-        Py_XINCREF(dst->invoke_cleanup);
+    PyObjC_BEGIN_WITH_GIL dst->invoke_cleanup = src->invoke_cleanup;
+    Py_XINCREF(dst->invoke_cleanup);
 
     PyObjC_END_WITH_GIL
-
 }
 
 static void
@@ -99,38 +97,29 @@ oc_dispose_helper(void* _src)
 {
     struct block_literal* src = (struct block_literal*)_src;
 
-    PyObjC_BEGIN_WITH_GIL
-        Py_CLEAR(src->invoke_cleanup);
+    PyObjC_BEGIN_WITH_GIL Py_CLEAR(src->invoke_cleanup);
 
     PyObjC_END_WITH_GIL
 }
 
 static struct block_descriptor gDescriptorTemplate = {
-    0,
-    sizeof(struct block_literal),
-    oc_copy_helper,
-    oc_dispose_helper,
-    0
-};
+    0, sizeof(struct block_literal), oc_copy_helper, oc_dispose_helper, 0};
 
-static struct block_literal gLiteralTemplate = {
-    0, /* ISA */
-    BLOCK_HAS_COPY_DISPOSE,
-    0,
-    0,
-    &gDescriptorTemplate,
-    0
-};
-
+static struct block_literal gLiteralTemplate = {0, /* ISA */
+                                                BLOCK_HAS_COPY_DISPOSE,
+                                                0,
+                                                0,
+                                                &gDescriptorTemplate,
+                                                0};
 
 /*
- * PyObjCBlock_Call is exposed to python code as objc._block_call(block, signature, args, kwds),
- * and is called from the __call__ method on blocks.
+ * PyObjCBlock_Call is exposed to python code as objc._block_call(block, signature, args,
+ * kwds), and is called from the __call__ method on blocks.
  *
  * The tp_call of blocks isn't set directly because that's annoyingly hard to arrange for
- * in objc-class.m, just setting the tp_call slot isn't good enough: you somehow have to update
- * the class dictionary as well (including those of subclasses). There is no public API for
- * that.
+ * in objc-class.m, just setting the tp_call slot isn't good enough: you somehow have to
+ * update the class dictionary as well (including those of subclasses). There is no public
+ * API for that.
  */
 PyObject*
 PyObjCBlock_Call(PyObject* module __attribute__((__unused__)), PyObject* func_args)
@@ -151,8 +140,8 @@ PyObjCBlock_Call(PyObject* module __attribute__((__unused__)), PyObject* func_ar
     unsigned char* argbuf = NULL;
     ffi_type* arglist[MAX_ARGCOUNT];
     void* values[MAX_ARGCOUNT];
-    void* byref[MAX_ARGCOUNT] = { 0 };
-    struct byref_attr byref_attr[MAX_ARGCOUNT] = { {0, 0} };
+    void* byref[MAX_ARGCOUNT] = {0};
+    struct byref_attr byref_attr[MAX_ARGCOUNT] = {{0, 0}};
     ffi_cif cif;
     PyObject* retval;
 
@@ -192,41 +181,50 @@ PyObjCBlock_Call(PyObject* module __attribute__((__unused__)), PyObject* func_ar
     }
 
     argbuf_len += sizeof(void*); /* Argument 0: the block itself */
-    r = PyObjCFFI_CountArguments(
-        signature, 1,
-        &byref_in_count, &byref_out_count, &plain_count,
-        &argbuf_len, &variadicAllArgs);
+    r = PyObjCFFI_CountArguments(signature, 1, &byref_in_count, &byref_out_count,
+                                 &plain_count, &argbuf_len, &variadicAllArgs);
     if (r == -1) {
         return NULL;
     }
 
-    variadicAllArgs |= signature->variadic && (signature->null_terminated_array || signature->arrayArg != -1);
+    variadicAllArgs |= signature->variadic &&
+                       (signature->null_terminated_array || signature->arrayArg != -1);
 
     if (variadicAllArgs) {
         if (byref_in_count != 0 || byref_out_count != 0) {
-            PyErr_Format(PyExc_TypeError, "Sorry, printf format with by-ref args not supported");
+            PyErr_Format(PyExc_TypeError,
+                         "Sorry, printf format with by-ref args not supported");
             return NULL;
         }
 
         if (PyTuple_Size(args) < Py_SIZE(signature) - 1) {
-            PyErr_Format(PyExc_TypeError, "Need %"PY_FORMAT_SIZE_T"d arguments, got %"PY_FORMAT_SIZE_T"d",
-            Py_SIZE(signature) - 2, PyTuple_Size(args));
+            PyErr_Format(PyExc_TypeError,
+                         "Need %" PY_FORMAT_SIZE_T "d arguments, got %" PY_FORMAT_SIZE_T
+                         "d",
+                         Py_SIZE(signature) - 2, PyTuple_Size(args));
             return NULL;
         }
 
         if (PyTuple_Size(args) > MAX_ARGCOUNT - 1) {
-            PyErr_Format(PyExc_TypeError, "At most %d arguments are supported, got %" PY_FORMAT_SIZE_T "d arguments", MAX_ARGCOUNT, PyTuple_Size(args));
+            PyErr_Format(PyExc_TypeError,
+                         "At most %d arguments are supported, got %" PY_FORMAT_SIZE_T
+                         "d arguments",
+                         MAX_ARGCOUNT, PyTuple_Size(args));
             return NULL;
         }
 
     } else if (PyTuple_Size(args) != Py_SIZE(signature) - 1) {
         if (Py_SIZE(signature) > MAX_ARGCOUNT) {
-            PyErr_Format(PyExc_TypeError, "At most %d arguments are supported, got %" PY_FORMAT_SIZE_T "d arguments", MAX_ARGCOUNT, PyTuple_Size(args));
+            PyErr_Format(PyExc_TypeError,
+                         "At most %d arguments are supported, got %" PY_FORMAT_SIZE_T
+                         "d arguments",
+                         MAX_ARGCOUNT, PyTuple_Size(args));
             return NULL;
         }
 
-        PyErr_Format(PyExc_TypeError, "Need %"PY_FORMAT_SIZE_T"d arguments, got %"PY_FORMAT_SIZE_T"d",
-            Py_SIZE(signature), PyTuple_Size(args));
+        PyErr_Format(PyExc_TypeError,
+                     "Need %" PY_FORMAT_SIZE_T "d arguments, got %" PY_FORMAT_SIZE_T "d",
+                     Py_SIZE(signature), PyTuple_Size(args));
         return NULL;
     }
 
@@ -238,13 +236,14 @@ PyObjCBlock_Call(PyObject* module __attribute__((__unused__)), PyObject* func_ar
 
     cif_arg_count = PyObjCFFI_ParseArguments(
         signature, 1, args,
-        align(PyObjCRT_SizeOfReturnType(signature->rettype->type), sizeof(void*)) + sizeof(void*),
-        argbuf, argbuf_len, byref, byref_attr, useStret ? arglist + 1 : arglist, useStret ? values + 1 : values);
+        align(PyObjCRT_SizeOfReturnType(signature->rettype->type), sizeof(void*)) +
+            sizeof(void*),
+        argbuf, argbuf_len, byref, byref_attr, useStret ? arglist + 1 : arglist,
+        useStret ? values + 1 : values);
 
     if (cif_arg_count == -1) {
         goto error;
     }
-
 
     if (useStret) {
         arglist[0] = &ffi_type_pointer;
@@ -257,22 +256,23 @@ PyObjCBlock_Call(PyObject* module __attribute__((__unused__)), PyObject* func_ar
         values[0] = &block_ptr;
     }
 
-    r = ffi_prep_cif(&cif, FFI_DEFAULT_ABI, (int)(useStret ? cif_arg_count + 1 : cif_arg_count),
-            useStret ? &ffi_type_void : PyObjCFFI_Typestr2FFI(signature->rettype->type), arglist);
+    r = ffi_prep_cif(
+        &cif, FFI_DEFAULT_ABI, (int)(useStret ? cif_arg_count + 1 : cif_arg_count),
+        useStret ? &ffi_type_void : PyObjCFFI_Typestr2FFI(signature->rettype->type),
+        arglist);
     if (r != FFI_OK) {
         PyErr_Format(PyExc_RuntimeError, "Cannot setup FFI CIF [%d]", r);
         goto error;
     }
 
-    PyObjC_DURING
-        ffi_call(&cif, FFI_FN(call_func), argbuf, values);
+    PyObjC_DURING ffi_call(&cif, FFI_FN(call_func), argbuf, values);
 
-    PyObjC_HANDLER
-        PyObjCErr_FromObjC(localException);
+    PyObjC_HANDLER PyObjCErr_FromObjC(localException);
 
     PyObjC_ENDHANDLER
 
-    if (useStret) {
+        if (useStret)
+    {
         byref[0] = NULL;
     }
 
@@ -280,11 +280,13 @@ PyObjCBlock_Call(PyObject* module __attribute__((__unused__)), PyObject* func_ar
         goto error;
     }
 
-    retval = PyObjCFFI_BuildResult(signature, 1, argbuf, byref,
-                   byref_attr, byref_out_count, NULL, 0, useStret ? values + 1: values );
+    retval =
+        PyObjCFFI_BuildResult(signature, 1, argbuf, byref, byref_attr, byref_out_count,
+                              NULL, 0, useStret ? values + 1 : values);
 
     if (variadicAllArgs) {
-        if (PyObjCFFI_FreeByRef(Py_SIZE(signature)+PyTuple_Size(args), byref, byref_attr) < 0) {
+        if (PyObjCFFI_FreeByRef(Py_SIZE(signature) + PyTuple_Size(args), byref,
+                                byref_attr) < 0) {
             goto error;
         }
 
@@ -294,12 +296,13 @@ PyObjCBlock_Call(PyObject* module __attribute__((__unused__)), PyObject* func_ar
         }
     }
 
-    PyMem_Free(argbuf); argbuf = NULL;
+    PyMem_Free(argbuf);
+    argbuf = NULL;
     return retval;
 
 error:
     if (variadicAllArgs) {
-        PyObjCFFI_FreeByRef(Py_SIZE(signature)+PyTuple_Size(args), byref, byref_attr);
+        PyObjCFFI_FreeByRef(Py_SIZE(signature) + PyTuple_Size(args), byref, byref_attr);
     } else {
         PyObjCFFI_FreeByRef(Py_SIZE(signature), byref, byref_attr);
     }
@@ -309,7 +312,8 @@ error:
     return NULL;
 }
 
-static void PyObjCBlock_CleanupCapsule(PyObject* ptr)
+static void
+PyObjCBlock_CleanupCapsule(PyObject* ptr)
 {
     PyObjCFFI_FreeBlockFunction(PyCapsule_GetPointer(ptr, "objc.__block_release__"));
 }
@@ -359,7 +363,8 @@ PyObjCBlock_Create(PyObjCMethodSignature* signature, PyObject* callable)
     }
 
     *block = gLiteralTemplate;
-    block->descriptor = (struct block_descriptor*)(((char*)block) + sizeof(struct block_literal));
+    block->descriptor =
+        (struct block_descriptor*)(((char*)block) + sizeof(struct block_literal));
     *(block->descriptor) = *(gLiteralTemplate.descriptor);
 
     /* The value of "signature->signature" cannot be trusted, it
@@ -380,7 +385,7 @@ PyObjCBlock_Create(PyObjCMethodSignature* signature, PyObject* callable)
     }
 
     block->invoke_cleanup = PyCapsule_New(block->invoke, "objc.__block_release__",
-            PyObjCBlock_CleanupCapsule);
+                                          PyObjCBlock_CleanupCapsule);
     if (block->invoke_cleanup == NULL) {
         PyObjCFFI_FreeBlockFunction(block->invoke);
         PyMem_Free(block);
@@ -398,7 +403,6 @@ PyObjCBlock_Release(void* _block)
     PyMem_Free(block);
 }
 
-
 _block_func_ptr
 PyObjCBlock_GetFunction(void* block)
 {
@@ -412,7 +416,7 @@ PyObjCBlock_GetFunction(void* block)
 static PyObject*
 pyobjc_PythonObject(NSObject* self, SEL _sel __attribute__((__unused__)))
 {
-    PyObject *rval;
+    PyObject* rval;
 
     /* Stack blocks are allocated on the stack and cause problems with
      * Python's garbage collections. Therefore uncondationally copy them,
@@ -422,7 +426,7 @@ pyobjc_PythonObject(NSObject* self, SEL _sel __attribute__((__unused__)))
 
     rval = PyObjC_FindPythonProxy(self);
 
-    rval = (PyObject *)PyObjCObject_New(self, PyObjCObject_kDEFAULT, YES);
+    rval = (PyObject*)PyObjCObject_New(self, PyObjCObject_kDEFAULT, YES);
     [self release];
     if (rval == NULL) {
         return NULL;
@@ -465,11 +469,13 @@ PyObjCBlock_Setup(void)
 
     StackBlock = objc_lookUpClass("__NSStackBlock__");
     if (StackBlock != Nil) {
-        if (!class_addMethod(StackBlock, @selector(__pyobjc_PythonObject__), (IMP)pyobjc_PythonObject, "^{_object}@:")) {
+        if (!class_addMethod(StackBlock, @selector(__pyobjc_PythonObject__),
+                             (IMP)pyobjc_PythonObject, "^{_object}@:")) {
             PyErr_SetString(PyObjCExc_InternalError, "Cannot initialize block support");
             return -1;
         }
-        if (!class_addMethod(StackBlock, @selector(__pyobjc_PythonTransient__:), (IMP)pyobjc_PythonTransient, "^{_object}@:^i")) {
+        if (!class_addMethod(StackBlock, @selector(__pyobjc_PythonTransient__:),
+                             (IMP)pyobjc_PythonTransient, "^{_object}@:^i")) {
             PyErr_SetString(PyObjCExc_InternalError, "Cannot initialize block support");
             return -1;
         }

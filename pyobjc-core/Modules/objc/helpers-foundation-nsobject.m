@@ -31,12 +31,10 @@ call_NSObject_description(PyObject* method, PyObject* self, PyObject* arguments)
         anObject = PyObjCObject_GetObject(self);
         aSel = PyObjCIMP_GetSelector(method);
 
-        PyObjC_DURING
-            result = anIMP(anObject, aSel);
+        PyObjC_DURING result = anIMP(anObject, aSel);
 
-        PyObjC_HANDLER
-            PyObjCErr_FromObjC(localException);
-            result = nil;
+        PyObjC_HANDLER PyObjCErr_FromObjC(localException);
+        result = nil;
 
         PyObjC_ENDHANDLER;
 
@@ -45,12 +43,10 @@ call_NSObject_description(PyObject* method, PyObject* self, PyObject* arguments)
         objc_superSetClass(spr, PyObjCSelector_GetClass(method));
         aSel = PyObjCSelector_GetSelector(method);
 
-        PyObjC_DURING
-            result = objc_msgSendSuper(&spr, aSel);
+        PyObjC_DURING result = objc_msgSendSuper(&spr, aSel);
 
-        PyObjC_HANDLER
-            PyObjCErr_FromObjC(localException);
-            result = nil;
+        PyObjC_HANDLER PyObjCErr_FromObjC(localException);
+        result = nil;
 
         PyObjC_ENDHANDLER;
     }
@@ -63,11 +59,8 @@ call_NSObject_description(PyObject* method, PyObject* self, PyObject* arguments)
 }
 
 static void
-imp_NSObject_description(
-    ffi_cif* cif __attribute__((__unused__)),
-    void* resp,
-    void** args __attribute__((__unused__)),
-    void* callable)
+imp_NSObject_description(ffi_cif* cif __attribute__((__unused__)), void* resp,
+                         void** args __attribute__((__unused__)), void* callable)
 {
     int err;
     PyObject* arglist = NULL;
@@ -77,37 +70,37 @@ imp_NSObject_description(
     PyObjC_BEGIN_WITH_GIL
 
         arglist = PyTuple_New(1);
-        if (unlikely(arglist == NULL)) {
-            PyObjC_GIL_FORWARD_EXC();
-        }
+    if (unlikely(arglist == NULL)) {
+        PyObjC_GIL_FORWARD_EXC();
+    }
 
-        v = PyObjC_IdToPython(*(id*)args[0]);
-        if (unlikely(v == NULL)) {
-            Py_DECREF(arglist);
-            PyObjC_GIL_FORWARD_EXC();
-        }
-        v = PyObjC_AdjustSelf(v);
-        if (unlikely(v == NULL)) {
-            Py_DECREF(arglist);
-            PyObjC_GIL_FORWARD_EXC();
-        }
-
-        PyTuple_SET_ITEM(arglist, 0, v);
-        v = NULL;
-
-        result = PyObject_Call((PyObject*)callable, arglist, NULL);
-        if (unlikely(result == NULL)) {
-            Py_DECREF(arglist);
-            PyObjC_GIL_FORWARD_EXC();
-        }
-
+    v = PyObjC_IdToPython(*(id*)args[0]);
+    if (unlikely(v == NULL)) {
         Py_DECREF(arglist);
+        PyObjC_GIL_FORWARD_EXC();
+    }
+    v = PyObjC_AdjustSelf(v);
+    if (unlikely(v == NULL)) {
+        Py_DECREF(arglist);
+        PyObjC_GIL_FORWARD_EXC();
+    }
 
-        err = depythonify_c_value(@encode(id), result, resp);
-        Py_DECREF(result);
-        if (unlikely(err == -1)) {
-            PyObjC_GIL_FORWARD_EXC();
-        }
+    PyTuple_SET_ITEM(arglist, 0, v);
+    v = NULL;
+
+    result = PyObject_Call((PyObject*)callable, arglist, NULL);
+    if (unlikely(result == NULL)) {
+        Py_DECREF(arglist);
+        PyObjC_GIL_FORWARD_EXC();
+    }
+
+    Py_DECREF(arglist);
+
+    err = depythonify_c_value(@encode(id), result, resp);
+    Py_DECREF(result);
+    if (unlikely(err == -1)) {
+        PyObjC_GIL_FORWARD_EXC();
+    }
 
     PyObjC_END_WITH_GIL
 }
@@ -128,7 +121,8 @@ call_NSObject_alloc(PyObject* method, PyObject* self, PyObject* arguments)
     }
 
     if (unlikely(!PyObjCClass_Check(self))) {
-        PyErr_Format(PyExc_TypeError, "Expecting Objective-C class, got instance of '%s'", Py_TYPE(self)->tp_name);
+        PyErr_Format(PyExc_TypeError, "Expecting Objective-C class, got instance of '%s'",
+                     Py_TYPE(self)->tp_name);
         return NULL;
     }
 
@@ -137,12 +131,10 @@ call_NSObject_alloc(PyObject* method, PyObject* self, PyObject* arguments)
         aClass = PyObjCClass_GetClass(self);
         aSel = PyObjCIMP_GetSelector(method);
 
-        PyObjC_DURING
-            result = anIMP(aClass, aSel);
+        PyObjC_DURING result = anIMP(aClass, aSel);
 
-        PyObjC_HANDLER
-            PyObjCErr_FromObjC(localException);
-            result = nil;
+        PyObjC_HANDLER PyObjCErr_FromObjC(localException);
+        result = nil;
 
         PyObjC_ENDHANDLER;
 
@@ -151,12 +143,10 @@ call_NSObject_alloc(PyObject* method, PyObject* self, PyObject* arguments)
         objc_superSetClass(spr, object_getClass(PyObjCSelector_GetClass(method)));
         aSel = PyObjCSelector_GetSelector(method);
 
-        PyObjC_DURING
-            result = objc_msgSendSuper(&spr, aSel);
+        PyObjC_DURING result = objc_msgSendSuper(&spr, aSel);
 
-        PyObjC_HANDLER
-            PyObjCErr_FromObjC(localException);
-            result = nil;
+        PyObjC_HANDLER PyObjCErr_FromObjC(localException);
+        result = nil;
 
         PyObjC_ENDHANDLER;
     }
@@ -169,11 +159,8 @@ call_NSObject_alloc(PyObject* method, PyObject* self, PyObject* arguments)
 }
 
 static void
-imp_NSObject_alloc(
-    ffi_cif* cif __attribute__((__unused__)),
-    void* resp,
-    void** args __attribute__((__unused__)),
-    void* callable)
+imp_NSObject_alloc(ffi_cif* cif __attribute__((__unused__)), void* resp,
+                   void** args __attribute__((__unused__)), void* callable)
 {
     int err;
     PyObject* arglist = NULL;
@@ -183,45 +170,43 @@ imp_NSObject_alloc(
     PyObjC_BEGIN_WITH_GIL
 
         arglist = PyTuple_New(1);
-        if (unlikely(arglist == NULL)) {
-            PyObjC_GIL_FORWARD_EXC();
-        }
+    if (unlikely(arglist == NULL)) {
+        PyObjC_GIL_FORWARD_EXC();
+    }
 
-        v = PyObjC_IdToPython(*(id*)args[0]);
-        if (unlikely(v == NULL)) {
-            Py_DECREF(arglist);
-            PyObjC_GIL_FORWARD_EXC();
-        }
-        v = PyObjC_AdjustSelf(v);
-        if (unlikely(v == NULL)) {
-            Py_DECREF(arglist);
-            PyObjC_GIL_FORWARD_EXC();
-        }
-
-        PyTuple_SET_ITEM(arglist, 0, v);
-        v = NULL;
-
-        result = PyObject_Call((PyObject*)callable, arglist, NULL);
-        if (unlikely(result == NULL)) {
-            Py_DECREF(arglist);
-            PyObjC_GIL_FORWARD_EXC();
-        }
-
+    v = PyObjC_IdToPython(*(id*)args[0]);
+    if (unlikely(v == NULL)) {
         Py_DECREF(arglist);
+        PyObjC_GIL_FORWARD_EXC();
+    }
+    v = PyObjC_AdjustSelf(v);
+    if (unlikely(v == NULL)) {
+        Py_DECREF(arglist);
+        PyObjC_GIL_FORWARD_EXC();
+    }
 
-        err = depythonify_c_value(@encode(id), result, resp);
-        Py_DECREF(result);
-        if (unlikely(err == -1)) {
-            PyObjC_GIL_FORWARD_EXC();
-        }
+    PyTuple_SET_ITEM(arglist, 0, v);
+    v = NULL;
+
+    result = PyObject_Call((PyObject*)callable, arglist, NULL);
+    if (unlikely(result == NULL)) {
+        Py_DECREF(arglist);
+        PyObjC_GIL_FORWARD_EXC();
+    }
+
+    Py_DECREF(arglist);
+
+    err = depythonify_c_value(@encode(id), result, resp);
+    Py_DECREF(result);
+    if (unlikely(err == -1)) {
+        PyObjC_GIL_FORWARD_EXC();
+    }
 
     PyObjC_END_WITH_GIL
 }
 
-
 static PyObject*
-call_NSObject_dealloc(PyObject* method,
-    PyObject* self, PyObject* arguments)
+call_NSObject_dealloc(PyObject* method, PyObject* self, PyObject* arguments)
 {
     struct objc_super spr;
     IMP anIMP;
@@ -234,8 +219,8 @@ call_NSObject_dealloc(PyObject* method,
 
     if (unlikely(!PyObjCObject_Check(self))) {
         PyErr_Format(PyExc_TypeError,
-            "[dealloc] Expecting Objective-C instance, got instance of '%s'",
-            Py_TYPE(self)->tp_name);
+                     "[dealloc] Expecting Objective-C instance, got instance of '%s'",
+                     Py_TYPE(self)->tp_name);
         return NULL;
     }
 
@@ -244,11 +229,9 @@ call_NSObject_dealloc(PyObject* method,
         aClass = PyObjCClass_GetClass(self);
         aSel = PyObjCIMP_GetSelector(method);
 
-        PyObjC_DURING
-            (void)anIMP(aClass, aSel);
+        PyObjC_DURING(void) anIMP(aClass, aSel);
 
-        PyObjC_HANDLER
-            PyObjCErr_FromObjC(localException);
+        PyObjC_HANDLER PyObjCErr_FromObjC(localException);
 
         PyObjC_ENDHANDLER;
 
@@ -257,11 +240,9 @@ call_NSObject_dealloc(PyObject* method,
         objc_superSetClass(spr, PyObjCSelector_GetClass(method));
         aSel = PyObjCSelector_GetSelector(method);
 
-        PyObjC_DURING
-            (void)objc_msgSendSuper(&spr, aSel);
+        PyObjC_DURING(void) objc_msgSendSuper(&spr, aSel);
 
-        PyObjC_HANDLER
-            PyObjCErr_FromObjC(localException);
+        PyObjC_HANDLER PyObjCErr_FromObjC(localException);
 
         PyObjC_ENDHANDLER;
     }
@@ -272,17 +253,14 @@ call_NSObject_dealloc(PyObject* method,
         return NULL;
     }
 
-
     Py_INCREF(Py_None);
     return Py_None;
 }
 
 static void
-imp_NSObject_dealloc(
-    ffi_cif* cif __attribute__((__unused__)),
-    void* resp __attribute__((__unused__)),
-    void** args __attribute__((__unused__)),
-    void* callable)
+imp_NSObject_dealloc(ffi_cif* cif __attribute__((__unused__)),
+                     void* resp __attribute__((__unused__)),
+                     void** args __attribute__((__unused__)), void* callable)
 {
     PyObject* arglist = NULL;
     PyObject* v = NULL;
@@ -291,43 +269,42 @@ imp_NSObject_dealloc(
     PyObjC_BEGIN_WITH_GIL
 
         arglist = PyTuple_New(1);
-        if (unlikely(arglist == NULL)) {
-            PyObjC_GIL_FORWARD_EXC();
-        }
+    if (unlikely(arglist == NULL)) {
+        PyObjC_GIL_FORWARD_EXC();
+    }
 
-        v = PyObjC_IdToPython(*(id*)args[0]);
-        if (unlikely(v == NULL)) {
-            Py_DECREF(arglist);
-            PyObjC_GIL_FORWARD_EXC();
-        }
-
-        PyTuple_SET_ITEM(arglist, 0, v);
-        v = NULL;
-
-        result = PyObject_Call((PyObject*)callable, arglist, NULL);
-        if (unlikely(result == NULL)) {
-            Py_DECREF(arglist);
-            PyObjC_GIL_FORWARD_EXC();
-        }
-
+    v = PyObjC_IdToPython(*(id*)args[0]);
+    if (unlikely(v == NULL)) {
         Py_DECREF(arglist);
+        PyObjC_GIL_FORWARD_EXC();
+    }
 
-        if (unlikely(result != Py_None)) {
-            PyErr_Format(PyExc_TypeError,
-                "dealloc should return None, returned instance"
-                " of %s", Py_TYPE(result)->tp_name);
-            PyObjC_GIL_FORWARD_EXC();
-        }
+    PyTuple_SET_ITEM(arglist, 0, v);
+    v = NULL;
 
-        Py_DECREF(result);
+    result = PyObject_Call((PyObject*)callable, arglist, NULL);
+    if (unlikely(result == NULL)) {
+        Py_DECREF(arglist);
+        PyObjC_GIL_FORWARD_EXC();
+    }
+
+    Py_DECREF(arglist);
+
+    if (unlikely(result != Py_None)) {
+        PyErr_Format(PyExc_TypeError,
+                     "dealloc should return None, returned instance"
+                     " of %s",
+                     Py_TYPE(result)->tp_name);
+        PyObjC_GIL_FORWARD_EXC();
+    }
+
+    Py_DECREF(result);
 
     PyObjC_END_WITH_GIL
 }
 
-
 static PyObject*
-call_NSObject_release(PyObject* method,
-    PyObject* self, PyObject* arguments)
+call_NSObject_release(PyObject* method, PyObject* self, PyObject* arguments)
 {
     struct objc_super spr;
     IMP anIMP;
@@ -340,8 +317,8 @@ call_NSObject_release(PyObject* method,
 
     if (unlikely(!PyObjCObject_Check(self))) {
         PyErr_Format(PyExc_TypeError,
-            "[release] Expecting Objective-C instance, got instance of '%s'",
-            Py_TYPE(self)->tp_name);
+                     "[release] Expecting Objective-C instance, got instance of '%s'",
+                     Py_TYPE(self)->tp_name);
         return NULL;
     }
 
@@ -350,11 +327,9 @@ call_NSObject_release(PyObject* method,
         aClass = PyObjCClass_GetClass(self);
         aSel = PyObjCIMP_GetSelector(method);
 
-        PyObjC_DURING
-            (void)anIMP(aClass, aSel);
+        PyObjC_DURING(void) anIMP(aClass, aSel);
 
-        PyObjC_HANDLER
-            PyObjCErr_FromObjC(localException);
+        PyObjC_HANDLER PyObjCErr_FromObjC(localException);
 
         PyObjC_ENDHANDLER;
 
@@ -363,11 +338,9 @@ call_NSObject_release(PyObject* method,
         objc_superSetClass(spr, PyObjCSelector_GetClass(method));
         aSel = PyObjCSelector_GetSelector(method);
 
-        PyObjC_DURING
-            (void)objc_msgSendSuper(&spr, aSel);
+        PyObjC_DURING(void) objc_msgSendSuper(&spr, aSel);
 
-        PyObjC_HANDLER
-            PyObjCErr_FromObjC(localException);
+        PyObjC_HANDLER PyObjCErr_FromObjC(localException);
 
         PyObjC_ENDHANDLER;
     }
@@ -376,14 +349,12 @@ call_NSObject_release(PyObject* method,
         return NULL;
     }
 
-
     Py_INCREF(Py_None);
     return Py_None;
 }
 
 static PyObject*
-call_NSObject_retain(PyObject* method,
-    PyObject* self, PyObject* arguments)
+call_NSObject_retain(PyObject* method, PyObject* self, PyObject* arguments)
 {
     struct objc_super spr;
     IMP anIMP;
@@ -397,8 +368,8 @@ call_NSObject_retain(PyObject* method,
 
     if (!PyObjCObject_Check(self)) {
         PyErr_Format(PyExc_TypeError,
-            "[retain] Expecting Objective-C instance, got instance of '%s'",
-            Py_TYPE(self)->tp_name);
+                     "[retain] Expecting Objective-C instance, got instance of '%s'",
+                     Py_TYPE(self)->tp_name);
         return NULL;
     }
 
@@ -407,11 +378,9 @@ call_NSObject_retain(PyObject* method,
         aClass = PyObjCClass_GetClass(self);
         aSel = PyObjCIMP_GetSelector(method);
 
-        PyObjC_DURING
-            retval = anIMP(aClass, aSel);
+        PyObjC_DURING retval = anIMP(aClass, aSel);
 
-        PyObjC_HANDLER
-            PyObjCErr_FromObjC(localException);
+        PyObjC_HANDLER PyObjCErr_FromObjC(localException);
 
         PyObjC_ENDHANDLER;
 
@@ -420,11 +389,9 @@ call_NSObject_retain(PyObject* method,
         objc_superSetClass(spr, PyObjCSelector_GetClass(method));
         aSel = PyObjCSelector_GetSelector(method);
 
-        PyObjC_DURING
-            retval = objc_msgSendSuper(&spr, aSel);
+        PyObjC_DURING retval = objc_msgSendSuper(&spr, aSel);
 
-        PyObjC_HANDLER
-            PyObjCErr_FromObjC(localException);
+        PyObjC_HANDLER PyObjCErr_FromObjC(localException);
 
         PyObjC_ENDHANDLER;
     }
@@ -436,13 +403,10 @@ call_NSObject_retain(PyObject* method,
     return PyObjC_IdToPython(retval);
 }
 
-
 static void
-imp_NSObject_release(
-    ffi_cif* cif __attribute__((__unused__)),
-    void* resp __attribute__((__unused__)),
-    void** args __attribute__((__unused__)),
-    void* callable)
+imp_NSObject_release(ffi_cif* cif __attribute__((__unused__)),
+                     void* resp __attribute__((__unused__)),
+                     void** args __attribute__((__unused__)), void* callable)
 {
     PyObject* arglist = NULL;
     PyObject* result = NULL;
@@ -452,47 +416,46 @@ imp_NSObject_release(
     PyObjC_BEGIN_WITH_GIL
 
         arglist = PyTuple_New(1);
-        if (arglist == NULL) {
-            PyObjC_GIL_FORWARD_EXC();
-        }
+    if (arglist == NULL) {
+        PyObjC_GIL_FORWARD_EXC();
+    }
 
-        pyself = PyObjCObject_NewTransient(*(id*)args[0], &cookie);
-        if (pyself == NULL) {
-            Py_DECREF(arglist);
-            PyObjC_GIL_FORWARD_EXC();
-        }
+    pyself = PyObjCObject_NewTransient(*(id*)args[0], &cookie);
+    if (pyself == NULL) {
+        Py_DECREF(arglist);
+        PyObjC_GIL_FORWARD_EXC();
+    }
 
-        PyTuple_SET_ITEM(arglist, 0, pyself);
-        Py_INCREF(pyself);
+    PyTuple_SET_ITEM(arglist, 0, pyself);
+    Py_INCREF(pyself);
 
-        result = PyObject_Call((PyObject*)callable, arglist, NULL);
-        if (result == NULL) {
-            Py_DECREF(arglist);
-            PyObjCObject_ReleaseTransient(pyself, cookie);
-            PyObjC_GIL_FORWARD_EXC();
-        }
-
+    result = PyObject_Call((PyObject*)callable, arglist, NULL);
+    if (result == NULL) {
         Py_DECREF(arglist);
         PyObjCObject_ReleaseTransient(pyself, cookie);
+        PyObjC_GIL_FORWARD_EXC();
+    }
 
-        if (result != Py_None) {
-            PyErr_Format(PyExc_TypeError,
-                "release should return None, returned instance"
-                " of %s", Py_TYPE(result)->tp_name);
-            PyObjC_GIL_FORWARD_EXC();
-        }
+    Py_DECREF(arglist);
+    PyObjCObject_ReleaseTransient(pyself, cookie);
 
-        Py_DECREF(result);
+    if (result != Py_None) {
+        PyErr_Format(PyExc_TypeError,
+                     "release should return None, returned instance"
+                     " of %s",
+                     Py_TYPE(result)->tp_name);
+        PyObjC_GIL_FORWARD_EXC();
+    }
+
+    Py_DECREF(result);
 
     PyObjC_END_WITH_GIL
 }
 
 static void
-imp_NSObject_retain(
-    ffi_cif* cif __attribute__((__unused__)),
-    void* resp __attribute__((__unused__)),
-    void** args __attribute__((__unused__)),
-    void* callable)
+imp_NSObject_retain(ffi_cif* cif __attribute__((__unused__)),
+                    void* resp __attribute__((__unused__)),
+                    void** args __attribute__((__unused__)), void* callable)
 {
     PyObject* arglist = NULL;
     PyObject* result = NULL;
@@ -503,38 +466,37 @@ imp_NSObject_retain(
     PyObjC_BEGIN_WITH_GIL
 
         arglist = PyTuple_New(1);
-        if (arglist == NULL) {
-            PyObjC_GIL_FORWARD_EXC();
-        }
+    if (arglist == NULL) {
+        PyObjC_GIL_FORWARD_EXC();
+    }
 
-        pyself = PyObjCObject_NewTransient(*(id*)args[0], &cookie);
-        if (pyself == NULL) {
-            Py_DECREF(arglist);
-            PyObjC_GIL_FORWARD_EXC();
-        }
-
-        PyTuple_SET_ITEM(arglist, 0, pyself);
-        Py_INCREF(pyself);
-
-        result = PyObject_Call((PyObject*)callable, arglist, NULL);
-        if (result == NULL) {
-            Py_DECREF(arglist);
-            PyObjCObject_ReleaseTransient(pyself, cookie);
-            PyObjC_GIL_FORWARD_EXC();
-        }
-
+    pyself = PyObjCObject_NewTransient(*(id*)args[0], &cookie);
+    if (pyself == NULL) {
         Py_DECREF(arglist);
+        PyObjC_GIL_FORWARD_EXC();
+    }
 
-        err = depythonify_c_value(@encode(id), result, resp);
-        Py_DECREF(result);
+    PyTuple_SET_ITEM(arglist, 0, pyself);
+    Py_INCREF(pyself);
+
+    result = PyObject_Call((PyObject*)callable, arglist, NULL);
+    if (result == NULL) {
+        Py_DECREF(arglist);
         PyObjCObject_ReleaseTransient(pyself, cookie);
-        if (err == -1) {
-            PyObjC_GIL_FORWARD_EXC();
-        }
+        PyObjC_GIL_FORWARD_EXC();
+    }
+
+    Py_DECREF(arglist);
+
+    err = depythonify_c_value(@encode(id), result, resp);
+    Py_DECREF(result);
+    PyObjCObject_ReleaseTransient(pyself, cookie);
+    if (err == -1) {
+        PyObjC_GIL_FORWARD_EXC();
+    }
 
     PyObjC_END_WITH_GIL
 }
-
 
 int
 PyObjC_setup_nsobject(void)
@@ -542,41 +504,31 @@ PyObjC_setup_nsobject(void)
     int r;
 
 #ifdef PyObjC_EXPLICT_DESCRIPTION_HELPER
-    r = PyObjC_RegisterMethodMapping(
-        objc_lookUpClass("NSObject"),
-        @selector(description),
-        call_NSObject_description,
-        imp_NSObject_description);
-    if (r != 0) return r;
+    r = PyObjC_RegisterMethodMapping(objc_lookUpClass("NSObject"), @selector(description),
+                                     call_NSObject_description, imp_NSObject_description);
+    if (r != 0)
+        return r;
 #endif /* PyObjC_EXPLICT_DESCRIPTION_HELPER */
 
-    r = PyObjC_RegisterMethodMapping(
-        objc_lookUpClass("NSObject"),
-        @selector(alloc),
-        call_NSObject_alloc,
-        imp_NSObject_alloc);
-    if (r != 0) return r;
+    r = PyObjC_RegisterMethodMapping(objc_lookUpClass("NSObject"), @selector(alloc),
+                                     call_NSObject_alloc, imp_NSObject_alloc);
+    if (r != 0)
+        return r;
 
-    r = PyObjC_RegisterMethodMapping(
-        objc_lookUpClass("NSObject"),
-        @selector(dealloc),
-        call_NSObject_dealloc,
-        imp_NSObject_dealloc);
-    if (r != 0) return r;
+    r = PyObjC_RegisterMethodMapping(objc_lookUpClass("NSObject"), @selector(dealloc),
+                                     call_NSObject_dealloc, imp_NSObject_dealloc);
+    if (r != 0)
+        return r;
 
-    r = PyObjC_RegisterMethodMapping(
-        objc_lookUpClass("NSObject"),
-        @selector(retain),
-        call_NSObject_retain,
-        imp_NSObject_retain);
-    if (r != 0) return r;
+    r = PyObjC_RegisterMethodMapping(objc_lookUpClass("NSObject"), @selector(retain),
+                                     call_NSObject_retain, imp_NSObject_retain);
+    if (r != 0)
+        return r;
 
-    r = PyObjC_RegisterMethodMapping(
-        objc_lookUpClass("NSObject"),
-        @selector(release),
-        call_NSObject_release,
-        imp_NSObject_release);
-    if (r != 0) return r;
+    r = PyObjC_RegisterMethodMapping(objc_lookUpClass("NSObject"), @selector(release),
+                                     call_NSObject_release, imp_NSObject_release);
+    if (r != 0)
+        return r;
 
     return r;
 }

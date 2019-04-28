@@ -32,19 +32,22 @@
 
 #include <stdarg.h>
 
-#define BEGIN_UNITTEST(name) \
-    static PyObject* \
-    test_##name (PyObject* self __attribute__((__unused__))) \
-     { \
+#define BEGIN_UNITTEST(name)                                                             \
+    static PyObject* test_##name(PyObject* self __attribute__((__unused__)))             \
+    {
 
-#define END_UNITTEST \
-        Py_INCREF(Py_None); \
-        return Py_None; \
-    error:              \
-        return NULL;    \
+#define END_UNITTEST                                                                     \
+    Py_INCREF(Py_None);                                                                  \
+    return Py_None;                                                                      \
+    error:                                                                               \
+    return NULL;                                                                         \
     }
 
-#define FAIL_IF(expr) do { if ((expr)) goto error; } while(0)
+#define FAIL_IF(expr)                                                                    \
+    do {                                                                                 \
+        if ((expr))                                                                      \
+            goto error;                                                                  \
+    } while (0)
 
 #pragma GCC diagnostic push
 #pragma clang diagnostic push
@@ -66,61 +69,53 @@ unittest_assert_failed(const char* file, int line, char* msg, ...)
 #pragma GCC diagnostic pop
 #pragma clang diagnostic pop
 
-#define ASSERT(expr) \
-    do { \
-        if (!(expr)) { \
-            unittest_assert_failed(__FILE__, __LINE__,"%s",#expr); \
-            goto error; \
-        } \
+#define ASSERT(expr)                                                                     \
+    do {                                                                                 \
+        if (!(expr)) {                                                                   \
+            unittest_assert_failed(__FILE__, __LINE__, "%s", #expr);                     \
+            goto error;                                                                  \
+        }                                                                                \
     } while (0)
 
-#define ASSERT_EQUALS(val1, val2, fmt) \
-    do { \
-        if ((val1) != (val2)) { \
-            unittest_assert_failed(__FILE__, __LINE__, \
-                    fmt " != " fmt, (val1), (val2)); \
-            goto error; \
-        } \
+#define ASSERT_EQUALS(val1, val2, fmt)                                                   \
+    do {                                                                                 \
+        if ((val1) != (val2)) {                                                          \
+            unittest_assert_failed(__FILE__, __LINE__, fmt " != " fmt, (val1), (val2));  \
+            goto error;                                                                  \
+        }                                                                                \
     } while (0)
 
-#define ASSERT_GE(val1, val2, fmt) \
-    do { \
-        if ((val1) < (val2)) { \
-            unittest_assert_failed(__FILE__, __LINE__, \
-                    fmt " < " fmt, (val1), (val2)); \
-            goto error; \
-        } \
+#define ASSERT_GE(val1, val2, fmt)                                                       \
+    do {                                                                                 \
+        if ((val1) < (val2)) {                                                           \
+            unittest_assert_failed(__FILE__, __LINE__, fmt " < " fmt, (val1), (val2));   \
+            goto error;                                                                  \
+        }                                                                                \
     } while (0)
 
-#define ASSERT_STREQUALS(val1, val2) \
-    do { \
-        const char* _val1 = (val1); \
-        const char* _val2 = (val2); \
-        \
-        if (strcmp(_val1, _val2) != 0) { \
-            unittest_assert_failed(__FILE__, __LINE__, \
-                     "%s != %s", (_val1), (_val2)); \
-            goto error; \
-        } \
+#define ASSERT_STREQUALS(val1, val2)                                                     \
+    do {                                                                                 \
+        const char* _val1 = (val1);                                                      \
+        const char* _val2 = (val2);                                                      \
+                                                                                         \
+        if (strcmp(_val1, _val2) != 0) {                                                 \
+            unittest_assert_failed(__FILE__, __LINE__, "%s != %s", (_val1), (_val2));    \
+            goto error;                                                                  \
+        }                                                                                \
     } while (0)
 
-#define ASSERT_ISINSTANCE(val, type) \
-    do { \
-        if (!Py##type##_Check((val))) { \
-            unittest_assert_failed(__FILE__, __LINE__, \
-                "type of value is %s not %s", \
-                (val)->ob_type->tp_name, \
-                Py##type##_Type.tp_name); \
-            goto error; \
-        } \
+#define ASSERT_ISINSTANCE(val, type)                                                     \
+    do {                                                                                 \
+        if (!Py##type##_Check((val))) {                                                  \
+            unittest_assert_failed(__FILE__, __LINE__, "type of value is %s not %s",     \
+                                   (val)->ob_type->tp_name, Py##type##_Type.tp_name);    \
+            goto error;                                                                  \
+        }                                                                                \
     } while (0)
 
-
-#define TESTDEF(name) \
-    { \
-        .ml_name  = #name, \
-        .ml_meth  = (PyCFunction)test_##name,  \
-        .ml_flags = METH_NOARGS,  \
+#define TESTDEF(name)                                                                    \
+    {                                                                                    \
+        .ml_name = #name, .ml_meth = (PyCFunction)test_##name, .ml_flags = METH_NOARGS,  \
     }
 
 #endif /* PyObjC_UNITTEST_H */

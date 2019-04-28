@@ -1,8 +1,7 @@
 #include "pyobjc.h"
 
 typedef struct {
-    PyObject_HEAD
-    IMP imp;
+    PyObject_HEAD IMP imp;
     PyObjC_CallFunc callfunc;
     PyObjCMethodSignature* signature;
     SEL selector;
@@ -11,12 +10,13 @@ typedef struct {
 
 PyObject*
 PyObjCIMP_New(IMP imp, SEL selector, PyObjC_CallFunc callfunc,
-        PyObjCMethodSignature* signature, int flags)
+              PyObjCMethodSignature* signature, int flags)
 {
     PyObjCIMPObject* result;
 
     result = PyObject_New(PyObjCIMPObject, &PyObjCIMP_Type);
-    if (result == NULL) return NULL;
+    if (result == NULL)
+        return NULL;
 
     result->imp = imp;
     result->selector = selector;
@@ -88,7 +88,6 @@ PyObjCIMP_GetSignature(PyObject* self)
 
 /* ========================================================================= */
 
-
 static PyObject*
 imp_call(PyObject* _self, PyObject* args, PyObject* kwds)
 {
@@ -103,7 +102,7 @@ imp_call(PyObject* _self, PyObject* args, PyObject* kwds)
 
     if (kwds != NULL && PyObject_Size(kwds) != 0) {
         PyErr_SetString(PyExc_TypeError,
-            "Objective-C selectors don't support keyword arguments");
+                        "Objective-C selectors don't support keyword arguments");
         return NULL;
     }
 
@@ -129,21 +128,20 @@ imp_call(PyObject* _self, PyObject* args, PyObject* kwds)
             return NULL;
         }
 
-        PyTuple_SET_ITEM(arglist, i-1, v);
+        PyTuple_SET_ITEM(arglist, i - 1, v);
         Py_INCREF(v);
     }
 
     pyres = res = execute((PyObject*)self, pyself, arglist);
     Py_DECREF(arglist);
 
-    if (pyres != NULL
-        && PyTuple_Check(pyres)
-        && PyTuple_GET_SIZE(pyres) > 1
-        && PyTuple_GET_ITEM(pyres, 0) == pyself) {
+    if (pyres != NULL && PyTuple_Check(pyres) && PyTuple_GET_SIZE(pyres) > 1 &&
+        PyTuple_GET_ITEM(pyres, 0) == pyself) {
         pyres = pyself;
     }
 
-    if (PyObjCObject_Check(pyself) && (((PyObjCObject*)pyself)->flags & PyObjCObject_kUNINITIALIZED)) {
+    if (PyObjCObject_Check(pyself) &&
+        (((PyObjCObject*)pyself)->flags & PyObjCObject_kUNINITIALIZED)) {
         if (pyself != pyres && !PyErr_Occurred()) {
             PyObjCObject_ClearObject(pyself);
         }
@@ -154,9 +152,9 @@ imp_call(PyObject* _self, PyObject* args, PyObject* kwds)
             ((PyObjCObject*)pyres)->flags |= PyObjCObject_kUNINITIALIZED;
 
         } else if (((PyObjCObject*)pyres)->flags & PyObjCObject_kUNINITIALIZED) {
-            ((PyObjCObject*)pyres)->flags &=
-                ~PyObjCObject_kUNINITIALIZED;
-            if (pyself && pyself != pyres && PyObjCObject_Check(pyself) && !PyErr_Occurred()) {
+            ((PyObjCObject*)pyres)->flags &= ~PyObjCObject_kUNINITIALIZED;
+            if (pyself && pyself != pyres && PyObjCObject_Check(pyself) &&
+                !PyErr_Occurred()) {
                 PyObjCObject_ClearObject(pyself);
             }
         }
@@ -169,9 +167,8 @@ static PyObject*
 imp_repr(PyObject* _self)
 {
     PyObjCIMPObject* self = (PyObjCIMPObject*)_self;
-    return PyUnicode_FromFormat("<IMP %s at %p for %p>",
-        sel_getName(self->selector),
-        self, self->imp);
+    return PyUnicode_FromFormat("<IMP %s at %p for %p>", sel_getName(self->selector),
+                                self, self->imp);
 }
 
 static void
@@ -205,8 +202,7 @@ imp_selector(PyObject* _self, void* closure __attribute__((__unused__)))
     return PyBytes_FromString(sel_getName(self->selector));
 }
 
-PyDoc_STRVAR(imp_class_method_doc,
-    "True if this is a class method, False otherwise");
+PyDoc_STRVAR(imp_class_method_doc, "True if this is a class method, False otherwise");
 
 static PyObject*
 imp_class_method(PyObject* _self, void* closure __attribute__((__unused__)))
@@ -215,11 +211,11 @@ imp_class_method(PyObject* _self, void* closure __attribute__((__unused__)))
     return PyBool_FromLong(0 != (self->flags & PyObjCSelector_kCLASS_METHOD));
 }
 
-PyDoc_STRVAR(imp_is_alloc_doc,
-"True if this is method returns a a freshly allocated object (uninitialized)\n"
-"\n"
-"NOTE: This field is used by the implementation."
-);
+PyDoc_STRVAR(
+    imp_is_alloc_doc,
+    "True if this is method returns a a freshly allocated object (uninitialized)\n"
+    "\n"
+    "NOTE: This field is used by the implementation.");
 static PyObject*
 imp_is_alloc(PyObject* _self, void* closure __attribute__((__unused__)))
 {
@@ -227,48 +223,44 @@ imp_is_alloc(PyObject* _self, void* closure __attribute__((__unused__)))
     return PyBool_FromLong(0 != (self->flags & PyObjCSelector_kRETURNS_UNINITIALIZED));
 }
 
-
-static PyGetSetDef imp_getset[] = {
-    {
-        .name   = "isAlloc",
-        .get    = imp_is_alloc,
-        .doc    = imp_is_alloc_doc,
-    },
-    {
-        .name   = "isClassMethod",
-        .get    = imp_class_method,
-        .doc    = imp_class_method_doc,
-    },
-    {
-        .name   = "signature",
-        .get    = imp_signature,
-        .doc    = imp_signature_doc,
-    },
-    {
-        .name   = "selector",
-        .get    = imp_selector,
-        .doc    = imp_selector_doc,
-    },
-    {
-        .name   = "__name__",
-        .get    = imp_selector,
-        .doc    = imp_selector_doc,
-    },
-    {
-        .name   = "__signature__",
-        .get    = PyObjC_callable_signature_get,
-        .doc    = "inspect.Signature for an IMP",
-    },
-    {
-        .name   = NULL  /* SENTINEL */
-    }
-};
+static PyGetSetDef imp_getset[] = {{
+                                       .name = "isAlloc",
+                                       .get = imp_is_alloc,
+                                       .doc = imp_is_alloc_doc,
+                                   },
+                                   {
+                                       .name = "isClassMethod",
+                                       .get = imp_class_method,
+                                       .doc = imp_class_method_doc,
+                                   },
+                                   {
+                                       .name = "signature",
+                                       .get = imp_signature,
+                                       .doc = imp_signature_doc,
+                                   },
+                                   {
+                                       .name = "selector",
+                                       .get = imp_selector,
+                                       .doc = imp_selector_doc,
+                                   },
+                                   {
+                                       .name = "__name__",
+                                       .get = imp_selector,
+                                       .doc = imp_selector_doc,
+                                   },
+                                   {
+                                       .name = "__signature__",
+                                       .get = PyObjC_callable_signature_get,
+                                       .doc = "inspect.Signature for an IMP",
+                                   },
+                                   {
+                                       .name = NULL /* SENTINEL */
+                                   }};
 
 static PyObject*
 imp_metadata(PyObject* self)
 {
-    PyObject* result = PyObjCMethodSignature_AsDict(
-            ((PyObjCIMPObject*)self)->signature);
+    PyObject* result = PyObjCMethodSignature_AsDict(((PyObjCIMPObject*)self)->signature);
     int r;
 
     if (((PyObjCIMPObject*)self)->flags & PyObjCSelector_kCLASS_METHOD) {
@@ -294,33 +286,28 @@ imp_metadata(PyObject* self)
     return result;
 }
 
-static PyMethodDef imp_methods[] = {
-    {
-        .ml_name    = "__metadata__",
-        .ml_meth    = (PyCFunction)imp_metadata,
-        .ml_flags   = METH_NOARGS,
-        .ml_doc     = "Return metadata for the method",
-    },
-    {
-        .ml_name    = NULL /* SENTINEL */
-    }
-};
-
+static PyMethodDef imp_methods[] = {{
+                                        .ml_name = "__metadata__",
+                                        .ml_meth = (PyCFunction)imp_metadata,
+                                        .ml_flags = METH_NOARGS,
+                                        .ml_doc = "Return metadata for the method",
+                                    },
+                                    {
+                                        .ml_name = NULL /* SENTINEL */
+                                    }};
 
 PyTypeObject PyObjCIMP_Type = {
-    PyVarObject_HEAD_INIT(NULL, 0)
-    .tp_name        = "objc.IMP",
-    .tp_basicsize   = sizeof(PyObjCIMPObject),
-    .tp_itemsize    = 0,
-    .tp_dealloc     = imp_dealloc,
-    .tp_repr        = imp_repr,
-    .tp_call        = imp_call,
-    .tp_getattro    = PyObject_GenericGetAttr,
-    .tp_flags       = Py_TPFLAGS_DEFAULT,
-    .tp_methods     = imp_methods,
-    .tp_getset      = imp_getset,
+    PyVarObject_HEAD_INIT(NULL, 0).tp_name = "objc.IMP",
+    .tp_basicsize = sizeof(PyObjCIMPObject),
+    .tp_itemsize = 0,
+    .tp_dealloc = imp_dealloc,
+    .tp_repr = imp_repr,
+    .tp_call = imp_call,
+    .tp_getattro = PyObject_GenericGetAttr,
+    .tp_flags = Py_TPFLAGS_DEFAULT,
+    .tp_methods = imp_methods,
+    .tp_getset = imp_getset,
 };
-
 
 /* ========================================================================= */
 
@@ -343,23 +330,22 @@ call_instanceMethodForSelector_(PyObject* method, PyObject* self, PyObject* args
 
     if (!PyObjCClass_Check(self)) {
         PyErr_Format(PyExc_TypeError,
-            "Expecting instance of 'objc.objc_class' as 'self', "
-            "got '%s'", Py_TYPE(self)->tp_name);
+                     "Expecting instance of 'objc.objc_class' as 'self', "
+                     "got '%s'",
+                     Py_TYPE(self)->tp_name);
         return NULL;
     }
 
-    PyObjC_DURING
-        retval = (IMP)objc_msgSend(PyObjCClass_GetClass(self),
-            PyObjCSelector_GetSelector(method),
-            selector);
+    PyObjC_DURING retval = (IMP)objc_msgSend(
+        PyObjCClass_GetClass(self), PyObjCSelector_GetSelector(method), selector);
 
-    PyObjC_HANDLER
-        PyObjCErr_FromObjC(localException);
-        retval = NULL;
+    PyObjC_HANDLER PyObjCErr_FromObjC(localException);
+    retval = NULL;
 
     PyObjC_ENDHANDLER
 
-    if (retval == NULL) {
+        if (retval == NULL)
+    {
         if (PyErr_Occurred()) {
             return NULL;
         }
@@ -373,29 +359,27 @@ call_instanceMethodForSelector_(PyObject* method, PyObject* self, PyObject* args
     }
 
     /*
-     * XXX: what if the method is implemented in Python. We should be able to deal with that!!!
+     * XXX: what if the method is implemented in Python. We should be able to deal with
+     * that!!!
      */
 
     if (!PyObjCNativeSelector_Check(attr)) {
         PyErr_Format(PyExc_TypeError, "Cannot locate Python representation of %s",
-                sel_getName(selector));
+                     sel_getName(selector));
         return NULL;
     }
 
     if (((PyObjCNativeSelector*)attr)->sel_call_func == NULL) {
-        ((PyObjCNativeSelector*)attr)->sel_call_func = PyObjC_FindCallFunc(((PyObjCNativeSelector*)attr)->base.sel_class, ((PyObjCNativeSelector*)attr)->base.sel_selector);
+        ((PyObjCNativeSelector*)attr)->sel_call_func =
+            PyObjC_FindCallFunc(((PyObjCNativeSelector*)attr)->base.sel_class,
+                                ((PyObjCNativeSelector*)attr)->base.sel_selector);
         if (((PyObjCNativeSelector*)attr)->sel_call_func == NULL) {
             return NULL;
         }
     }
 
-    res = PyObjCIMP_New(
-            retval,
-            selector,
-            ((PyObjCNativeSelector*)attr)->sel_call_func,
-            PyObjCSelector_GetMetadata(attr),
-            PyObjCSelector_GetFlags(attr)
-        );
+    res = PyObjCIMP_New(retval, selector, ((PyObjCNativeSelector*)attr)->sel_call_func,
+                        PyObjCSelector_GetMetadata(attr), PyObjCSelector_GetFlags(attr));
     Py_DECREF(attr);
     return res;
 }
@@ -427,17 +411,15 @@ call_methodForSelector_(PyObject* method, PyObject* self, PyObject* args)
 
     objc_superSetClass(super, object_getClass(objc_superGetReceiver(super)));
 
-    PyObjC_DURING
-        retval = (IMP)objc_msgSendSuper(&super,
-            PyObjCSelector_GetSelector(method),
-            selector);
+    PyObjC_DURING retval =
+        (IMP)objc_msgSendSuper(&super, PyObjCSelector_GetSelector(method), selector);
 
-    PyObjC_HANDLER
-        PyObjCErr_FromObjC(localException);
-        retval = NULL;
+    PyObjC_HANDLER PyObjCErr_FromObjC(localException);
+    retval = NULL;
     PyObjC_ENDHANDLER
 
-    if (retval == NULL) {
+        if (retval == NULL)
+    {
         if (PyErr_Occurred()) {
             return NULL;
         }
@@ -460,47 +442,42 @@ call_methodForSelector_(PyObject* method, PyObject* self, PyObject* args)
 
     if (!PyObjCNativeSelector_Check(attr)) {
         PyErr_Format(PyExc_TypeError, "Cannot locate Python representation of %s",
-                sel_getName(selector));
+                     sel_getName(selector));
         return NULL;
     }
 
-
     /* FIXME: there should be a function for retrieving the call function */
     if (((PyObjCNativeSelector*)attr)->sel_call_func == NULL) {
-        ((PyObjCNativeSelector*)attr)->sel_call_func = PyObjC_FindCallFunc(((PyObjCNativeSelector*)attr)->base.sel_class, ((PyObjCNativeSelector*)attr)->base.sel_selector);
+        ((PyObjCNativeSelector*)attr)->sel_call_func =
+            PyObjC_FindCallFunc(((PyObjCNativeSelector*)attr)->base.sel_class,
+                                ((PyObjCNativeSelector*)attr)->base.sel_selector);
         if (((PyObjCNativeSelector*)attr)->sel_call_func == NULL) {
             return NULL;
         }
     }
 
-    res = PyObjCIMP_New(
-            retval,
-            selector,
-            ((PyObjCNativeSelector*)attr)->sel_call_func,
-            PyObjCSelector_GetMetadata(attr),
-            PyObjCSelector_GetFlags(attr)
-        );
+    res = PyObjCIMP_New(retval, selector, ((PyObjCNativeSelector*)attr)->sel_call_func,
+                        PyObjCSelector_GetMetadata(attr), PyObjCSelector_GetFlags(attr));
     Py_DECREF(attr);
     return res;
 }
 
-int PyObjCIMP_SetUpMethodWrappers(void)
+int
+PyObjCIMP_SetUpMethodWrappers(void)
 {
     int r;
 
-    r = PyObjC_RegisterMethodMapping(
-            nil,
-            @selector(instanceMethodForSelector:),
-            call_instanceMethodForSelector_,
-            PyObjCUnsupportedMethod_IMP);
-    if (r == -1) return -1;
+    r = PyObjC_RegisterMethodMapping(nil, @selector(instanceMethodForSelector:),
+                                     call_instanceMethodForSelector_,
+                                     PyObjCUnsupportedMethod_IMP);
+    if (r == -1)
+        return -1;
 
-    r = PyObjC_RegisterMethodMapping(
-            nil,
-            @selector(methodForSelector:),
-            call_methodForSelector_,
-            PyObjCUnsupportedMethod_IMP);
-    if (r == -1) return -1;
+    r = PyObjC_RegisterMethodMapping(nil, @selector(methodForSelector:),
+                                     call_methodForSelector_,
+                                     PyObjCUnsupportedMethod_IMP);
+    if (r == -1)
+        return -1;
 
     return 0;
 }

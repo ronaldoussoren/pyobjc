@@ -40,7 +40,6 @@ SET_STRUCT_FIELD(PyObject* self, PyMemberDef* member, PyObject* val)
     Py_XDECREF(tmp);
 }
 
-
 static inline Py_ssize_t
 STRUCT_LENGTH(PyObject* self)
 {
@@ -58,8 +57,8 @@ struct_sq_length(PyObject* self)
      * array of PyObject*-s.
      */
     if (!PyObjC_StructsIndexable) {
-        PyErr_Format(PyExc_TypeError,
-            "Instances of '%.100s' are not sequences 1", Py_TYPE(self)->tp_name);
+        PyErr_Format(PyExc_TypeError, "Instances of '%.100s' are not sequences 1",
+                     Py_TYPE(self)->tp_name);
         return -1;
     }
     return STRUCT_LENGTH(self);
@@ -73,17 +72,16 @@ struct_sq_item(PyObject* self, Py_ssize_t offset)
     PyObject* res;
 
     if (!PyObjC_StructsIndexable) {
-        PyErr_Format(PyExc_TypeError,
-            "Instances of '%.100s' are not sequences 2", Py_TYPE(self)->tp_name);
+        PyErr_Format(PyExc_TypeError, "Instances of '%.100s' are not sequences 2",
+                     Py_TYPE(self)->tp_name);
         return NULL;
     }
 
     len = STRUCT_LENGTH(self);
 
     if (offset < 0 || offset >= len) {
-        PyErr_Format(PyExc_IndexError,
-                "%.100s index out of range",
-                Py_TYPE(self)->tp_name);
+        PyErr_Format(PyExc_IndexError, "%.100s index out of range",
+                     Py_TYPE(self)->tp_name);
         return NULL;
     }
 
@@ -101,14 +99,16 @@ struct_sq_slice(PyObject* self, Py_ssize_t ilow, Py_ssize_t ihigh)
     Py_ssize_t i, len;
 
     if (!PyObjC_StructsIndexable) {
-        PyErr_Format(PyExc_TypeError,
-            "Instances of '%.100s' are not sequences 3", Py_TYPE(self)->tp_name);
+        PyErr_Format(PyExc_TypeError, "Instances of '%.100s' are not sequences 3",
+                     Py_TYPE(self)->tp_name);
         return NULL;
     }
 
     len = STRUCT_LENGTH(self);
-    if (ilow < 0) ilow = 0;
-    if (ihigh > len) ihigh = len;
+    if (ilow < 0)
+        ilow = 0;
+    if (ihigh > len)
+        ihigh = len;
 
     result = PyTuple_New(ihigh - ilow);
     if (result == NULL) {
@@ -119,7 +119,7 @@ struct_sq_slice(PyObject* self, Py_ssize_t ilow, Py_ssize_t ihigh)
         PyMemberDef* member = Py_TYPE(self)->tp_members + i;
         PyObject* v = GET_STRUCT_FIELD(self, member);
         Py_INCREF(v);
-        PyTuple_SET_ITEM(result, i-ilow, v);
+        PyTuple_SET_ITEM(result, i - ilow, v);
     }
     return result;
 }
@@ -131,29 +131,28 @@ struct_sq_ass_item(PyObject* self, Py_ssize_t offset, PyObject* newVal)
     PyMemberDef* member;
 
     if (!PyObjC_StructsIndexable) {
-        PyErr_Format(PyExc_TypeError,
-            "Instances of '%.100s' are not sequences 4", Py_TYPE(self)->tp_name);
+        PyErr_Format(PyExc_TypeError, "Instances of '%.100s' are not sequences 4",
+                     Py_TYPE(self)->tp_name);
         return -1;
     }
     if (!PyObjC_StructsWritable) {
-        PyErr_Format(PyExc_TypeError,
-            "Instances of '%.100s' are read-only", Py_TYPE(self)->tp_name);
+        PyErr_Format(PyExc_TypeError, "Instances of '%.100s' are read-only",
+                     Py_TYPE(self)->tp_name);
         return -1;
     }
 
     if (newVal == NULL) {
         PyErr_Format(PyExc_TypeError,
-            "Cannot delete item '%"PY_FORMAT_SIZE_T"d' in a %.100s instance",
-            offset, Py_TYPE(self)->tp_name);
+                     "Cannot delete item '%" PY_FORMAT_SIZE_T "d' in a %.100s instance",
+                     offset, Py_TYPE(self)->tp_name);
         return -1;
     }
 
     len = STRUCT_LENGTH(self);
 
     if ((offset < 0) || (offset >= len)) {
-        PyErr_Format(PyExc_IndexError,
-                "%.100s index out of range",
-                Py_TYPE(self)->tp_name);
+        PyErr_Format(PyExc_IndexError, "%.100s index out of range",
+                     Py_TYPE(self)->tp_name);
         return -1;
     }
     member = Py_TYPE(self)->tp_members + offset;
@@ -168,23 +167,21 @@ struct_sq_ass_slice(PyObject* self, Py_ssize_t ilow, Py_ssize_t ihigh, PyObject*
     Py_ssize_t i, len;
 
     if (!PyObjC_StructsIndexable) {
-        PyErr_Format(PyExc_TypeError,
-            "Instances of '%.100s' are not sequences 5", Py_TYPE(self)->tp_name);
+        PyErr_Format(PyExc_TypeError, "Instances of '%.100s' are not sequences 5",
+                     Py_TYPE(self)->tp_name);
         return -1;
     }
     if (!PyObjC_StructsWritable) {
-        PyErr_Format(PyExc_TypeError,
-            "Instances of '%.100s' are read-only", Py_TYPE(self)->tp_name);
+        PyErr_Format(PyExc_TypeError, "Instances of '%.100s' are read-only",
+                     Py_TYPE(self)->tp_name);
         return -1;
     }
 
     if (v == NULL) {
-        PyErr_Format(PyExc_TypeError,
-            "Cannot delete items in instances of %.100s",
-            Py_TYPE(self)->tp_name);
+        PyErr_Format(PyExc_TypeError, "Cannot delete items in instances of %.100s",
+                     Py_TYPE(self)->tp_name);
         return -1;
     }
-
 
     len = STRUCT_LENGTH(self);
     if (ilow < 0) {
@@ -200,13 +197,15 @@ struct_sq_ass_slice(PyObject* self, Py_ssize_t ilow, Py_ssize_t ihigh, PyObject*
     }
 
     seq = PySequence_Fast(v, "must assign sequence to slice");
-    if (seq == NULL) return -1;
+    if (seq == NULL)
+        return -1;
 
     if (PySequence_Fast_GET_SIZE(seq) != ihigh - ilow) {
         Py_DECREF(seq);
         PyErr_Format(PyExc_TypeError,
-            "slice assignment would change size of %.100s "
-            "instance", Py_TYPE(self)->tp_name);
+                     "slice assignment would change size of %.100s "
+                     "instance",
+                     Py_TYPE(self)->tp_name);
         return -1;
     }
 
@@ -214,7 +213,7 @@ struct_sq_ass_slice(PyObject* self, Py_ssize_t ilow, Py_ssize_t ihigh, PyObject*
         PyObject* x;
         PyMemberDef* member = Py_TYPE(self)->tp_members + i;
 
-        x = PySequence_Fast_GET_ITEM(seq, i-ilow);
+        x = PySequence_Fast_GET_ITEM(seq, i - ilow);
         if (x == NULL) {
             Py_DECREF(seq);
             return -1;
@@ -231,8 +230,8 @@ struct_sq_contains(PyObject* self, PyObject* value)
     PyMemberDef* member = Py_TYPE(self)->tp_members;
 
     if (!PyObjC_StructsIndexable) {
-        PyErr_Format(PyExc_TypeError,
-            "Instances of '%.100s' are not sequences", Py_TYPE(self)->tp_name);
+        PyErr_Format(PyExc_TypeError, "Instances of '%.100s' are not sequences",
+                     Py_TYPE(self)->tp_name);
         return -1;
     }
 
@@ -259,7 +258,8 @@ struct_reduce(PyObject* self)
 
     len = STRUCT_LENGTH(self);
     values = PyTuple_New(len);
-    if (values == NULL) return NULL;
+    if (values == NULL)
+        return NULL;
 
     for (i = 0; i < len; i++) {
         PyObject* v = GET_STRUCT_FIELD(self, Py_TYPE(self)->tp_members + i);
@@ -280,7 +280,6 @@ struct_sizeof(PyObject* self)
     res = Py_TYPE(self)->tp_basicsize;
     return PyLong_FromSsize_t(res);
 }
-
 
 static PyObject*
 struct_copy(PyObject* self)
@@ -339,8 +338,7 @@ struct_replace(PyObject* self, PyObject* args, PyObject* kwds)
     PyObject* value;
 
     if (args && PySequence_Length(args) != 0) {
-        PyErr_SetString(PyExc_TypeError,
-             "_replace called with positional arguments");
+        PyErr_SetString(PyExc_TypeError, "_replace called with positional arguments");
         return NULL;
     }
 
@@ -396,8 +394,8 @@ static PyObject*
 struct_mp_subscript(PyObject* self, PyObject* item)
 {
     if (!PyObjC_StructsIndexable) {
-        PyErr_Format(PyExc_TypeError,
-            "Instances of '%.100s' are not sequences 7", Py_TYPE(self)->tp_name);
+        PyErr_Format(PyExc_TypeError, "Instances of '%.100s' are not sequences 7",
+                     Py_TYPE(self)->tp_name);
         return NULL;
     }
 
@@ -419,9 +417,8 @@ struct_mp_subscript(PyObject* self, PyObject* item)
         PyObject* result;
         PyObject* it;
 
-        if (PySlice_GetIndicesEx(item,
-                STRUCT_LENGTH(self),
-                &start, &stop, &step, &slicelength) < 0) {
+        if (PySlice_GetIndicesEx(item, STRUCT_LENGTH(self), &start, &stop, &step,
+                                 &slicelength) < 0) {
             return NULL;
         }
 
@@ -437,8 +434,7 @@ struct_mp_subscript(PyObject* self, PyObject* item)
                 return NULL;
             }
 
-            for (cur = start, i = 0; i < slicelength;
-                        cur += step, i++) {
+            for (cur = start, i = 0; i < slicelength; cur += step, i++) {
                 it = struct_sq_item(self, cur);
                 PyTuple_SET_ITEM(result, i, it);
             }
@@ -446,9 +442,8 @@ struct_mp_subscript(PyObject* self, PyObject* item)
         }
 
     } else {
-        PyErr_Format(PyExc_TypeError,
-            "struct indices must be integers, not %.100s",
-            Py_TYPE(item)->tp_name);
+        PyErr_Format(PyExc_TypeError, "struct indices must be integers, not %.100s",
+                     Py_TYPE(item)->tp_name);
         return NULL;
     }
 }
@@ -457,13 +452,13 @@ static int
 struct_mp_ass_subscript(PyObject* self, PyObject* item, PyObject* value)
 {
     if (!PyObjC_StructsIndexable) {
-        PyErr_Format(PyExc_TypeError,
-            "Instances of '%.100s' are not sequences 8", Py_TYPE(self)->tp_name);
+        PyErr_Format(PyExc_TypeError, "Instances of '%.100s' are not sequences 8",
+                     Py_TYPE(self)->tp_name);
         return -1;
     }
     if (!PyObjC_StructsWritable) {
-        PyErr_Format(PyExc_TypeError,
-            "Instances of '%.100s' are read-only", Py_TYPE(self)->tp_name);
+        PyErr_Format(PyExc_TypeError, "Instances of '%.100s' are read-only",
+                     Py_TYPE(self)->tp_name);
         return -1;
     }
 
@@ -481,9 +476,8 @@ struct_mp_ass_subscript(PyObject* self, PyObject* item, PyObject* value)
     } else if (PySlice_Check(item)) {
         Py_ssize_t start, stop, step, slicelength;
 
-        if (PySlice_GetIndicesEx(item,
-                STRUCT_LENGTH(self), &start, &stop,
-                &step, &slicelength) < 0) {
+        if (PySlice_GetIndicesEx(item, STRUCT_LENGTH(self), &start, &stop, &step,
+                                 &slicelength) < 0) {
             return -1;
         }
 
@@ -492,28 +486,27 @@ struct_mp_ass_subscript(PyObject* self, PyObject* item, PyObject* value)
         }
 
         if (value == NULL) {
-            PyErr_Format(PyExc_TypeError,
-                "Cannot delete items in an %.100s instance",
-                Py_TYPE(self)->tp_name);
+            PyErr_Format(PyExc_TypeError, "Cannot delete items in an %.100s instance",
+                         Py_TYPE(self)->tp_name);
             return -1;
         }
 
-        PyObject* seq = PySequence_Fast(value,
-                "must assign sequence to slice");
-        if (seq == NULL) return -1;
+        PyObject* seq = PySequence_Fast(value, "must assign sequence to slice");
+        if (seq == NULL)
+            return -1;
 
         if (PySequence_Fast_GET_SIZE(seq) != slicelength) {
             Py_DECREF(seq);
             PyErr_Format(PyExc_TypeError,
-                "slice assignment would change size of %.100s "
-                "instance", Py_TYPE(self)->tp_name);
+                         "slice assignment would change size of %.100s "
+                         "instance",
+                         Py_TYPE(self)->tp_name);
             return -1;
         }
 
         Py_ssize_t cur, i;
         for (cur = start, i = 0; i < slicelength; cur += step, i++) {
-            int r = struct_sq_ass_item(self, cur,
-                PySequence_Fast_GET_ITEM(seq, i));
+            int r = struct_sq_ass_item(self, cur, PySequence_Fast_GET_ITEM(seq, i));
             if (r == -1) {
                 Py_DECREF(seq);
                 return -1;
@@ -524,65 +517,57 @@ struct_mp_ass_subscript(PyObject* self, PyObject* item, PyObject* value)
         return 0;
 
     } else {
-        PyErr_Format(PyExc_TypeError,
-            "struct indices must be integers, not %.100s",
-            Py_TYPE(item)->tp_name);
+        PyErr_Format(PyExc_TypeError, "struct indices must be integers, not %.100s",
+                     Py_TYPE(item)->tp_name);
         return -1;
     }
 }
 
-
 static PySequenceMethods struct_as_sequence = {
-    .sq_length      = struct_sq_length,
-    .sq_item        = struct_sq_item,
-    .sq_ass_item    = struct_sq_ass_item,
-    .sq_contains    = struct_sq_contains,
+    .sq_length = struct_sq_length,
+    .sq_item = struct_sq_item,
+    .sq_ass_item = struct_sq_ass_item,
+    .sq_contains = struct_sq_contains,
 };
 
 static PyMappingMethods struct_as_mapping = {
-    .mp_length          = struct_sq_length,
-    .mp_subscript       = struct_mp_subscript,
-    .mp_ass_subscript   = struct_mp_ass_subscript,
+    .mp_length = struct_sq_length,
+    .mp_subscript = struct_mp_subscript,
+    .mp_ass_subscript = struct_mp_ass_subscript,
 };
 
 static PyMethodDef struct_methods[] = {
     {
-        .ml_name    = "__reduce__",
-        .ml_meth    = (PyCFunction)struct_reduce,
-        .ml_flags   = METH_NOARGS,
+        .ml_name = "__reduce__",
+        .ml_meth = (PyCFunction)struct_reduce,
+        .ml_flags = METH_NOARGS,
     },
     {
-        .ml_name    = "copy",
-        .ml_meth    = (PyCFunction)struct_copy,
-        .ml_flags   = METH_NOARGS,
-        .ml_doc     = "Return a copy of the struct",
+        .ml_name = "copy",
+        .ml_meth = (PyCFunction)struct_copy,
+        .ml_flags = METH_NOARGS,
+        .ml_doc = "Return a copy of the struct",
     },
     {
-        .ml_name    = "__pyobjc_copy__",
-        .ml_meth    = (PyCFunction)struct_copy,
-        .ml_flags   = METH_NOARGS,
+        .ml_name = "__pyobjc_copy__",
+        .ml_meth = (PyCFunction)struct_copy,
+        .ml_flags = METH_NOARGS,
     },
     {
-        .ml_name    = "__sizeof__",
-        .ml_meth    = (PyCFunction)struct_sizeof,
-        .ml_flags   = METH_NOARGS,
+        .ml_name = "__sizeof__",
+        .ml_meth = (PyCFunction)struct_sizeof,
+        .ml_flags = METH_NOARGS,
     },
     /* NamedTuple interface */
-    {
-        .ml_name    = "_asdict",
-        .ml_meth    = (PyCFunction)struct_asdict,
-        .ml_flags   = METH_NOARGS,
-        .ml_doc     = "Return dict representation of the object"
-    },
-    {
-        .ml_name    = "_replace",
-        .ml_meth    = (PyCFunction)struct_replace,
-        .ml_flags   = METH_VARARGS|METH_KEYWORDS,
-        .ml_doc     = "Return a copy with some fields replaced by other values"
-    },
-    { NULL, NULL, 0, NULL }
-};
-
+    {.ml_name = "_asdict",
+     .ml_meth = (PyCFunction)struct_asdict,
+     .ml_flags = METH_NOARGS,
+     .ml_doc = "Return dict representation of the object"},
+    {.ml_name = "_replace",
+     .ml_meth = (PyCFunction)struct_replace,
+     .ml_flags = METH_VARARGS | METH_KEYWORDS,
+     .ml_doc = "Return a copy with some fields replaced by other values"},
+    {NULL, NULL, 0, NULL}};
 
 /*
  * Special methods
@@ -592,13 +577,13 @@ static int
 struct_setattro(PyObject* self, PyObject* name, PyObject* value)
 {
     if (!PyObjC_StructsWritable) {
-        PyErr_Format(PyExc_TypeError,
-            "Instances of '%.100s' are read-only", Py_TYPE(self)->tp_name);
+        PyErr_Format(PyExc_TypeError, "Instances of '%.100s' are read-only",
+                     Py_TYPE(self)->tp_name);
         return -1;
     }
     if (value == NULL) {
         PyErr_Format(PyExc_TypeError, "Cannot delete attributes of %.100s",
-                Py_TYPE(self)->tp_name);
+                     Py_TYPE(self)->tp_name);
         return -1;
     }
     return PyObject_GenericSetAttr(self, name, value);
@@ -612,7 +597,7 @@ struct_dealloc(PyObject* self)
     PyObject_GC_UnTrack(self);
 
     while (member && member->name) {
-        Py_CLEAR(*(PyObject**)(((char*)self)+member->offset));
+        Py_CLEAR(*(PyObject**)(((char*)self) + member->offset));
         member++;
     }
 
@@ -627,7 +612,8 @@ struct_new(PyTypeObject* type, PyObject* args, PyObject* kwds)
     int r;
 
     result = PyObject_GC_New(PyObject, type);
-    if (result == NULL) return NULL;
+    if (result == NULL)
+        return NULL;
 
     while (member && member->name) {
         if (member->type != T_OBJECT) {
@@ -647,13 +633,13 @@ struct_new(PyTypeObject* type, PyObject* args, PyObject* kwds)
     return result;
 }
 
-static int LOCATE_MEMBER(PyTypeObject* type, const char* name)
+static int
+LOCATE_MEMBER(PyTypeObject* type, const char* name)
 {
     int i = 0;
     PyMemberDef* member;
 
-    for (i = 0, member = type->tp_members;
-            member->name != NULL; i++, member++) {
+    for (i = 0, member = type->tp_members; member->name != NULL; i++, member++) {
         if (strcmp(member->name, name) == 0) {
             return i;
         }
@@ -661,19 +647,21 @@ static int LOCATE_MEMBER(PyTypeObject* type, const char* name)
     return -1;
 }
 
-static int set_defaults(PyObject* self, const char* typestr)
+static int
+set_defaults(PyObject* self, const char* typestr)
 {
     Py_ssize_t i = 0;
     int r;
     PyObject* v;
 
-    while(*typestr != _C_STRUCT_E && *typestr++ != '=');
-    while(typestr && *typestr != _C_STRUCT_E) {
+    while (*typestr != _C_STRUCT_E && *typestr++ != '=')
+        ;
+    while (typestr && *typestr != _C_STRUCT_E) {
         const char* next;
 
         if (*typestr == '"') {
             /* embedded field names */
-            typestr = strchr(typestr+1, '"');
+            typestr = strchr(typestr + 1, '"');
             if (typestr) {
                 typestr++;
             } else {
@@ -691,35 +679,37 @@ static int set_defaults(PyObject* self, const char* typestr)
             v = PyBool_FromLong(0);
             break;
 
-        case _C_CHAR_AS_TEXT:
-            {
-                char ch = 0;
-                v = PyUnicode_FromStringAndSize(&ch, 1);
-            }
-            break;
+        case _C_CHAR_AS_TEXT: {
+            char ch = 0;
+            v = PyUnicode_FromStringAndSize(&ch, 1);
+        } break;
 
-        case _C_UNICHAR:
-            {
-                Py_UNICODE ch = 0;
-                v = PyUnicode_FromUnicode(&ch, 1);
-            }
-            break;
+        case _C_UNICHAR: {
+            Py_UNICODE ch = 0;
+            v = PyUnicode_FromUnicode(&ch, 1);
+        } break;
 
         case _C_CHAR_AS_INT:
-        case _C_CHR: case _C_UCHR:
-        case _C_SHT: case _C_USHT:
-        case _C_INT: case _C_UINT:
-        case _C_LNG: case _C_ULNG:
-        case _C_LNG_LNG: case _C_ULNG_LNG:
+        case _C_CHR:
+        case _C_UCHR:
+        case _C_SHT:
+        case _C_USHT:
+        case _C_INT:
+        case _C_UINT:
+        case _C_LNG:
+        case _C_ULNG:
+        case _C_LNG_LNG:
+        case _C_ULNG_LNG:
             v = PyLong_FromLong(0);
             break;
 
-        case _C_FLT: case _C_DBL:
+        case _C_FLT:
+        case _C_DBL:
             v = PyFloat_FromDouble(0.0);
             break;
 
         case _C_STRUCT_B:
-            v = PyObjC_CreateRegisteredStruct(typestr, next-typestr, NULL, NULL);
+            v = PyObjC_CreateRegisteredStruct(typestr, next - typestr, NULL, NULL);
             if (v != NULL) {
                 /* call init */
                 r = Py_TYPE(v)->tp_init(v, NULL, NULL);
@@ -735,7 +725,6 @@ static int set_defaults(PyObject* self, const char* typestr)
                 v = Py_None;
                 Py_INCREF(Py_None);
             }
-
 
             break;
 
@@ -759,14 +748,9 @@ static int set_defaults(PyObject* self, const char* typestr)
     return 0;
 }
 
-
 static void
-struct_init(
-    ffi_cif* cif __attribute__((__unused__)),
-    void* retval,
-    void** cargs,
-    void* userdata
-       )
+struct_init(ffi_cif* cif __attribute__((__unused__)), void* retval, void** cargs,
+            void* userdata)
 {
     PyObject* self = *(PyObject**)cargs[0];
     PyObject* args = *(PyObject**)cargs[1];
@@ -781,17 +765,15 @@ struct_init(
     }
 
     if (args != NULL && !PyTuple_Check(args)) {
-        PyErr_Format(PyExc_TypeError,
-                "%.100s() argument tuple is not a tuple",
-                Py_TYPE(self)->tp_name);
+        PyErr_Format(PyExc_TypeError, "%.100s() argument tuple is not a tuple",
+                     Py_TYPE(self)->tp_name);
         *(int*)retval = -1;
         return;
     }
 
     if (kwds != NULL && !PyDict_Check(kwds)) {
-        PyErr_Format(PyExc_TypeError,
-                "%.100s() keyword dict is not a dict",
-                Py_TYPE(self)->tp_name);
+        PyErr_Format(PyExc_TypeError, "%.100s() keyword dict is not a dict",
+                     Py_TYPE(self)->tp_name);
         *(int*)retval = -1;
         return;
     }
@@ -808,19 +790,19 @@ struct_init(
         len = PyTuple_GET_SIZE(args);
         if (len > STRUCT_LENGTH(self)) {
             PyErr_Format(PyExc_TypeError,
-                "%.100s() takes at most %"PY_FORMAT_SIZE_T"d %sarguments (%"PY_FORMAT_SIZE_T"d given)",
-                Py_TYPE(self)->tp_name,
-                STRUCT_LENGTH(self),
-                kwds?"non-keyword ":"", len);
+                         "%.100s() takes at most %" PY_FORMAT_SIZE_T
+                         "d %sarguments (%" PY_FORMAT_SIZE_T "d given)",
+                         Py_TYPE(self)->tp_name, STRUCT_LENGTH(self),
+                         kwds ? "non-keyword " : "", len);
             *(int*)retval = -1;
             return;
         }
         for (i = 0; i < len; i++) {
             PyObject* v = PyTuple_GET_ITEM(args, i);
 
-            SET_STRUCT_FIELD(self, Py_TYPE(self)->tp_members+i, v);
+            SET_STRUCT_FIELD(self, Py_TYPE(self)->tp_members + i, v);
         }
-        setUntil = len-1;
+        setUntil = len - 1;
     }
 
     if (kwds != NULL) {
@@ -835,8 +817,7 @@ struct_init(
 
         if (!PyList_Check(keys)) {
             Py_DECREF(keys);
-            PyErr_SetString(PyExc_TypeError,
-                    "dict.keys didn't return a list");
+            PyErr_SetString(PyExc_TypeError, "dict.keys didn't return a list");
             *(int*)retval = -1;
             return;
         }
@@ -859,20 +840,16 @@ struct_init(
 
             } else {
                 Py_DECREF(keys);
-                PyErr_Format(PyExc_TypeError,
-                    "%.100s() keywords must be strings",
-                    Py_TYPE(self)->tp_name);
+                PyErr_Format(PyExc_TypeError, "%.100s() keywords must be strings",
+                             Py_TYPE(self)->tp_name);
                 *(int*)retval = -1;
                 return;
             }
 
-
-            off = LOCATE_MEMBER(Py_TYPE(self),
-                    PyBytes_AS_STRING(k_bytes));
+            off = LOCATE_MEMBER(Py_TYPE(self), PyBytes_AS_STRING(k_bytes));
             if (off == -1) {
-                PyErr_Format(PyExc_TypeError,
-                    "no keyword argument: %.100s",
-                    PyBytes_AS_STRING(k_bytes));
+                PyErr_Format(PyExc_TypeError, "no keyword argument: %.100s",
+                             PyBytes_AS_STRING(k_bytes));
                 Py_DECREF(k_bytes);
                 Py_DECREF(keys);
                 *(int*)retval = -1;
@@ -881,10 +858,9 @@ struct_init(
 
             if (off <= setUntil) {
                 PyErr_Format(PyExc_TypeError,
-                    "%.100s() got multiple values for keyword "
-                    "argument '%.100s'",
-                    Py_TYPE(self)->tp_name,
-                    PyBytes_AS_STRING(k_bytes));
+                             "%.100s() got multiple values for keyword "
+                             "argument '%.100s'",
+                             Py_TYPE(self)->tp_name, PyBytes_AS_STRING(k_bytes));
                 Py_DECREF(k_bytes);
                 Py_DECREF(keys);
                 *(int*)retval = -1;
@@ -910,7 +886,7 @@ struct_init(
 static initproc
 make_init(const char* typestr)
 {
-static ffi_cif* init_cif = NULL;
+    static ffi_cif* init_cif = NULL;
     ffi_closure* cl = NULL;
     ffi_status rv;
 
@@ -940,8 +916,7 @@ static ffi_cif* init_cif = NULL;
     if (rv != FFI_OK) {
         PyObjC_free_closure(cl);
         PyMem_Free((void*)typestr);
-        PyErr_Format(PyExc_RuntimeError,
-            "Cannot create FFI closure: %d", rv);
+        PyErr_Format(PyExc_RuntimeError, "Cannot create FFI closure: %d", rv);
         return NULL;
     }
 
@@ -952,7 +927,7 @@ static long
 struct_hash(PyObject* self)
 {
     PyErr_Format(PyExc_TypeError, "%.100s objects are unhashable",
-            Py_TYPE(self)->tp_name);
+                 Py_TYPE(self)->tp_name);
     return -1;
 }
 
@@ -971,11 +946,11 @@ struct_richcompare(PyObject* self, PyObject* other, int op)
 
         len = STRUCT_LENGTH(self);
 
-        for (i = 0; i < len; i ++) {
+        for (i = 0; i < len; i++) {
             int k;
 
-            self_cur = GET_STRUCT_FIELD(self, Py_TYPE(self)->tp_members+i);
-            other_cur = GET_STRUCT_FIELD(other, Py_TYPE(other)->tp_members+i);
+            self_cur = GET_STRUCT_FIELD(self, Py_TYPE(self)->tp_members + i);
+            other_cur = GET_STRUCT_FIELD(other, Py_TYPE(other)->tp_members + i);
 
             k = PyObject_RichCompareBool(self_cur, other_cur, Py_EQ);
             if (k < 0) {
@@ -1031,10 +1006,8 @@ struct_richcompare(PyObject* self, PyObject* other, int op)
             return Py_True;
 
         } else {
-            PyErr_Format(PyExc_TypeError,
-                "Cannot compare instances of %.100s and %.100s",
-                Py_TYPE(self)->tp_name,
-                Py_TYPE(other)->tp_name);
+            PyErr_Format(PyExc_TypeError, "Cannot compare instances of %.100s and %.100s",
+                         Py_TYPE(self)->tp_name, Py_TYPE(other)->tp_name);
             return NULL;
         }
 
@@ -1048,10 +1021,8 @@ struct_richcompare(PyObject* self, PyObject* other, int op)
             return Py_True;
 
         } else {
-            PyErr_Format(PyExc_TypeError,
-                "Cannot compare instances of %.100s and %.100s",
-                Py_TYPE(self)->tp_name,
-                Py_TYPE(other)->tp_name);
+            PyErr_Format(PyExc_TypeError, "Cannot compare instances of %.100s and %.100s",
+                         Py_TYPE(self)->tp_name, Py_TYPE(other)->tp_name);
             return NULL;
         }
     }
@@ -1063,7 +1034,7 @@ struct_richcompare(PyObject* self, PyObject* other, int op)
         len = other_len;
     }
 
-    if (self_len != other_len && (op == Py_EQ || op == Py_NE)){
+    if (self_len != other_len && (op == Py_EQ || op == Py_NE)) {
         /* Shortcut comparison for non-equals lengths */
         if (op == Py_EQ) {
             Py_INCREF(Py_False);
@@ -1075,12 +1046,13 @@ struct_richcompare(PyObject* self, PyObject* other, int op)
         }
     }
 
-    for (i = 0; i < len; i ++) {
+    for (i = 0; i < len; i++) {
         int k;
 
-        self_cur = GET_STRUCT_FIELD(self, Py_TYPE(self)->tp_members+i);
+        self_cur = GET_STRUCT_FIELD(self, Py_TYPE(self)->tp_members + i);
         other_cur = PySequence_GetItem(other, i);
-        if (other_cur == NULL) return NULL;
+        if (other_cur == NULL)
+            return NULL;
 
         k = PyObject_RichCompareBool(self_cur, other_cur, Py_EQ);
         if (k < 0) {
@@ -1110,12 +1082,24 @@ struct_richcompare(PyObject* self, PyObject* other, int op)
 
     /* All items are equal, compare using sizes */
     switch (op) {
-    case Py_LT: cmp = self_len < other_len; break;
-    case Py_LE: cmp = self_len <= other_len; break;
-    case Py_EQ: cmp = self_len == other_len; break;
-    case Py_NE: cmp = self_len != other_len; break;
-    case Py_GE: cmp = self_len >= other_len; break;
-    case Py_GT: cmp = self_len > other_len; break;
+    case Py_LT:
+        cmp = self_len < other_len;
+        break;
+    case Py_LE:
+        cmp = self_len <= other_len;
+        break;
+    case Py_EQ:
+        cmp = self_len == other_len;
+        break;
+    case Py_NE:
+        cmp = self_len != other_len;
+        break;
+    case Py_GE:
+        cmp = self_len >= other_len;
+        break;
+    case Py_GT:
+        cmp = self_len > other_len;
+        break;
     default:
         /* Should never happen */
         PyErr_SetString(PyExc_TypeError, "Invalid comparion");
@@ -1139,12 +1123,13 @@ struct_traverse(PyObject* self, visitproc visit, void* arg)
     PyObject* v;
     int err;
 
-    for (member = Py_TYPE(self)->tp_members;
-                member && member->name; member++) {
+    for (member = Py_TYPE(self)->tp_members; member && member->name; member++) {
         v = GET_STRUCT_FIELD(self, member);
-        if (v == NULL) continue;
+        if (v == NULL)
+            continue;
         err = visit(v, arg);
-        if (err) return err;
+        if (err)
+            return err;
     }
     return 0;
 }
@@ -1154,14 +1139,11 @@ struct_clear(PyObject* self)
 {
     PyMemberDef* member;
 
-    for (member = Py_TYPE(self)->tp_members;
-                member && member->name; member++) {
+    for (member = Py_TYPE(self)->tp_members; member && member->name; member++) {
         SET_STRUCT_FIELD(self, member, NULL);
     }
     return 0;
 }
-
-
 
 static PyObject*
 struct_repr(PyObject* self)
@@ -1172,8 +1154,7 @@ struct_repr(PyObject* self)
 
     len = STRUCT_LENGTH(self);
     if (len == 0) {
-        return PyUnicode_FromFormat("<%.100s>",
-                Py_TYPE(self)->tp_name);
+        return PyUnicode_FromFormat("<%.100s>", Py_TYPE(self)->tp_name);
     }
 
     i = Py_ReprEnter(self);
@@ -1182,8 +1163,7 @@ struct_repr(PyObject* self)
 
     } else if (i != 0) {
         /* Self-recursive struct */
-        return PyUnicode_FromFormat("<%.100s ...>",
-                Py_TYPE(self)->tp_name);
+        return PyUnicode_FromFormat("<%.100s ...>", Py_TYPE(self)->tp_name);
     }
 
     cur = PyUnicode_FromFormat("<%.100s", Py_TYPE(self)->tp_name);
@@ -1192,14 +1172,15 @@ struct_repr(PyObject* self)
     while (member->name != NULL) {
         PyObject* v;
 
-        PyUnicode_Append(&cur,
-            PyUnicode_FromFormat(" %.100s=", member->name));
-        if (cur == NULL) goto done;
+        PyUnicode_Append(&cur, PyUnicode_FromFormat(" %.100s=", member->name));
+        if (cur == NULL)
+            goto done;
 
         v = GET_STRUCT_FIELD(self, member);
 
         PyUnicode_Append(&cur, PyObject_Repr(v));
-        if (cur == NULL) goto done;
+        if (cur == NULL)
+            goto done;
         member++;
     }
 
@@ -1210,56 +1191,46 @@ done:
     return cur;
 }
 
-
 PyTypeObject StructBase_Type = {
-    PyVarObject_HEAD_INIT(NULL, 0)
-    .tp_name    = "objc._structwrapper",
-    .tp_basicsize   = sizeof(PyObject),
-    .tp_itemsize    = 0,
+    PyVarObject_HEAD_INIT(NULL, 0).tp_name = "objc._structwrapper",
+    .tp_basicsize = sizeof(PyObject),
+    .tp_itemsize = 0,
 };
-
 
 struct StructTypeObject {
     PyTypeObject base;
-    Py_ssize_t pack;         /* struct packing, -1 for default packing */
+    Py_ssize_t pack; /* struct packing, -1 for default packing */
 };
 
 /*
  * A template for the type object
  */
 static struct StructTypeObject StructTemplate_Type = {
-    .base = {
-        PyVarObject_HEAD_INIT(NULL, 0)
-        .tp_name        = "objc.StructTemplate",
-        .tp_basicsize   = sizeof(PyObject),
-        .tp_itemsize    = 0,
-        .tp_dealloc     = struct_dealloc,
-        .tp_repr        = struct_repr,
-        .tp_as_sequence = &struct_as_sequence,
-        .tp_as_mapping  = &struct_as_mapping,
-        .tp_hash        = struct_hash,
-        .tp_getattro    = PyObject_GenericGetAttr,
-        .tp_setattro    = struct_setattro,
-        .tp_flags       = Py_TPFLAGS_DEFAULT
-                            | Py_TPFLAGS_HAVE_GC,
-        .tp_traverse    = struct_traverse,
-        .tp_clear       = struct_clear,
-        .tp_richcompare = struct_richcompare,
-        .tp_methods     = struct_methods,
-        .tp_new         = struct_new,
-    },
-    .pack = -1
-};
+    .base =
+        {
+            PyVarObject_HEAD_INIT(NULL, 0).tp_name = "objc.StructTemplate",
+            .tp_basicsize = sizeof(PyObject),
+            .tp_itemsize = 0,
+            .tp_dealloc = struct_dealloc,
+            .tp_repr = struct_repr,
+            .tp_as_sequence = &struct_as_sequence,
+            .tp_as_mapping = &struct_as_mapping,
+            .tp_hash = struct_hash,
+            .tp_getattro = PyObject_GenericGetAttr,
+            .tp_setattro = struct_setattro,
+            .tp_flags = Py_TPFLAGS_DEFAULT | Py_TPFLAGS_HAVE_GC,
+            .tp_traverse = struct_traverse,
+            .tp_clear = struct_clear,
+            .tp_richcompare = struct_richcompare,
+            .tp_methods = struct_methods,
+            .tp_new = struct_new,
+        },
+    .pack = -1};
 
 PyObject*
-PyObjC_MakeStructType(
-        const char* name,
-        const char* doc,
-        initproc tpinit,
-        Py_ssize_t numFields,
-        const char** fieldnames,
-        const char* typestr,
-        Py_ssize_t pack)
+PyObjC_MakeStructType(const char* name, const char* doc, initproc tpinit,
+                      Py_ssize_t numFields, const char** fieldnames, const char* typestr,
+                      Py_ssize_t pack)
 {
     struct StructTypeObject* result;
     PyMemberDef* members;
@@ -1271,7 +1242,7 @@ PyObjC_MakeStructType(
         return NULL;
     }
 
-    members = PyMem_Malloc(sizeof(PyMemberDef) * (numFields+1));
+    members = PyMem_Malloc(sizeof(PyMemberDef) * (numFields + 1));
     if (members == NULL) {
         Py_DECREF(fields);
         PyErr_NoMemory();
@@ -1286,13 +1257,13 @@ PyObjC_MakeStructType(
             return NULL;
         }
 
-        PyTuple_SET_ITEM(fields, i, nm); nm = NULL;
+        PyTuple_SET_ITEM(fields, i, nm);
+        nm = NULL;
         members[i].name = (char*)fieldnames[i];
         members[i].type = T_OBJECT;
-        members[i].offset = sizeof(PyObject) + i*sizeof(PyObject*);
+        members[i].offset = sizeof(PyObject) + i * sizeof(PyObject*);
         members[i].flags = 0; /* A read-write field */
         members[i].doc = NULL;
-
     }
     members[numFields].name = NULL;
 
@@ -1318,8 +1289,8 @@ PyObjC_MakeStructType(
 
     Py_REFCNT(result) = 1;
     result->base.tp_members = members;
-    result->base.tp_basicsize = sizeof(PyObject) + (numFields*sizeof(PyObject*));
-    if (PyDict_SetItemString(result->base.tp_dict, "_fields", fields)==-1){
+    result->base.tp_basicsize = sizeof(PyObject) + (numFields * sizeof(PyObject*));
+    if (PyDict_SetItemString(result->base.tp_dict, "_fields", fields) == -1) {
         Py_DECREF(fields);
         PyMem_Free(members);
         PyMem_Free(result);
@@ -1351,7 +1322,6 @@ PyObjC_MakeStructType(
         return NULL;
     }
 
-
     return (PyObject*)result;
 }
 
@@ -1361,12 +1331,13 @@ PyObjC_MakeStructType(
 
 static PyObject* structRegistry = NULL;
 
-PyObject* PyObjC_FindRegisteredStruct(const char* signature, Py_ssize_t len)
+PyObject*
+PyObjC_FindRegisteredStruct(const char* signature, Py_ssize_t len)
 {
     PyObject* type;
     PyObject* v;
 
-    if (structRegistry==NULL) {
+    if (structRegistry == NULL) {
         return NULL;
     }
 
@@ -1383,14 +1354,16 @@ PyObject* PyObjC_FindRegisteredStruct(const char* signature, Py_ssize_t len)
 }
 
 PyObject*
-PyObjC_CreateRegisteredStruct(const char* signature, Py_ssize_t len, const char** objc_encoding, Py_ssize_t* ppack)
+PyObjC_CreateRegisteredStruct(const char* signature, Py_ssize_t len,
+                              const char** objc_encoding, Py_ssize_t* ppack)
 {
     PyTypeObject* type;
     PyObject* result;
     PyObject* v;
     PyMemberDef* member;
 
-    if (structRegistry == NULL) return NULL;
+    if (structRegistry == NULL)
+        return NULL;
 
     if (ppack != NULL) {
         *ppack = -1;
@@ -1439,7 +1412,6 @@ PyObjC_CreateRegisteredStruct(const char* signature, Py_ssize_t len, const char*
 
         } else {
             *objc_encoding = signature;
-
         }
     }
 
@@ -1450,16 +1422,10 @@ PyObjC_CreateRegisteredStruct(const char* signature, Py_ssize_t len, const char*
     return result;
 }
 
-
 PyObject*
-PyObjC_RegisterStructType(
-        const char* signature,
-        const char* name,
-        const char* doc,
-        initproc tpinit,
-        Py_ssize_t numFields,
-        const char** fieldnames,
-        Py_ssize_t pack)
+PyObjC_RegisterStructType(const char* signature, const char* name, const char* doc,
+                          initproc tpinit, Py_ssize_t numFields, const char** fieldnames,
+                          Py_ssize_t pack)
 {
     PyObject* structType;
     PyObject* v;
@@ -1477,10 +1443,12 @@ PyObjC_RegisterStructType(
             return NULL;
         }
 
-        while (*sigcur && *sigcur != _C_STRUCT_E && *sigcur != '=') sigcur++;
+        while (*sigcur && *sigcur != _C_STRUCT_E && *sigcur != '=')
+            sigcur++;
 
         if (!*sigcur || *sigcur == _C_STRUCT_E) {
-            PyErr_SetString(PyExc_ValueError, "invalid signature: not a complete struct encoding");
+            PyErr_SetString(PyExc_ValueError,
+                            "invalid signature: not a complete struct encoding");
             return NULL;
         }
 
@@ -1488,22 +1456,26 @@ PyObjC_RegisterStructType(
         numFields = 0;
 
         while (*sigcur != _C_STRUCT_E) {
-            numFields ++;
+            numFields++;
             if (*sigcur == '"') {
                 sigcur++;
                 sigcur = strchr(sigcur, '"');
                 if (sigcur == NULL) {
-                    PyErr_SetString(PyExc_ValueError, "invalid signature: embedded field name without end");
+                    PyErr_SetString(PyExc_ValueError,
+                                    "invalid signature: embedded field name without end");
                     return NULL;
                 }
                 sigcur++;
 
             } else {
-                PyErr_SetString(PyExc_ValueError, "invalid signature: not all fields have an embedded name");
+                PyErr_SetString(
+                    PyExc_ValueError,
+                    "invalid signature: not all fields have an embedded name");
                 return NULL;
             }
 
-            if (*sigcur == _C_STRUCT_E) break;
+            if (*sigcur == _C_STRUCT_E)
+                break;
             sigcur = PyObjCRT_NextField(sigcur);
             if (sigcur == NULL) {
                 return NULL;
@@ -1522,16 +1494,17 @@ PyObjC_RegisterStructType(
                 end = strchr(sigcur, '"');
 
                 if (end == NULL) {
-                    PyErr_SetString(PyExc_ValueError, "invalid signature: embedded field name without end");
+                    PyErr_SetString(PyExc_ValueError,
+                                    "invalid signature: embedded field name without end");
                     return NULL;
                 }
 
                 fieldnames[numFields] = PyMem_Malloc(end - sigcur + 1);
-                memcpy((char*)fieldnames[numFields], sigcur, end-sigcur);
-                ((char*)fieldnames[numFields])[end-sigcur] = '\0';
+                memcpy((char*)fieldnames[numFields], sigcur, end - sigcur);
+                ((char*)fieldnames[numFields])[end - sigcur] = '\0';
                 sigcur = end + 1;
             }
-            numFields ++;
+            numFields++;
             sigcur = PyObjCRT_NextField(sigcur);
         }
         fieldnames[numFields] = NULL;
@@ -1541,7 +1514,7 @@ PyObjC_RegisterStructType(
          * The signature string still contains embedded field names,
          * remove those.
          */
-        sigtmp = PyMem_Malloc(strlen(signature)+20);
+        sigtmp = PyMem_Malloc(strlen(signature) + 20);
         if (sigtmp == NULL) {
             PyErr_NoMemory();
             return NULL;
@@ -1553,8 +1526,8 @@ PyObjC_RegisterStructType(
         signature = sigtmp;
     }
 
-    structType = PyObjC_MakeStructType(name, doc, tpinit,
-                numFields, fieldnames, signature, pack);
+    structType =
+        PyObjC_MakeStructType(name, doc, tpinit, numFields, fieldnames, signature, pack);
     if (structType == NULL) {
         if (freeNames) {
             int i;
@@ -1589,7 +1562,8 @@ PyObjC_RegisterStructType(
             Py_DECREF(structType);
             return NULL;
         }
-        r = PyDict_SetItemString(((PyTypeObject*)structType)->tp_dict, "__struct_pack__", v);
+        r = PyDict_SetItemString(((PyTypeObject*)structType)->tp_dict, "__struct_pack__",
+                                 v);
         Py_DECREF(v);
         if (r == -1) {
             Py_DECREF(structType);
@@ -1673,17 +1647,16 @@ PyObjC_SetStructField(PyObject* self, Py_ssize_t offset, PyObject* newVal)
 
     if (newVal == NULL) {
         PyErr_Format(PyExc_TypeError,
-            "Cannot delete item '%"PY_FORMAT_SIZE_T"d' in a %.100s instance",
-            offset, Py_TYPE(self)->tp_name);
+                     "Cannot delete item '%" PY_FORMAT_SIZE_T "d' in a %.100s instance",
+                     offset, Py_TYPE(self)->tp_name);
         return -1;
     }
 
     len = STRUCT_LENGTH(self);
 
     if ((offset < 0) || (offset >= len)) {
-        PyErr_Format(PyExc_IndexError,
-                "%.100s index out of range",
-                Py_TYPE(self)->tp_name);
+        PyErr_Format(PyExc_IndexError, "%.100s index out of range",
+                     Py_TYPE(self)->tp_name);
         return -1;
     }
     member = Py_TYPE(self)->tp_members + offset;
@@ -1702,7 +1675,7 @@ StructAsTuple(PyObject* strval)
 
     for (i = 0; i < len; i++) {
         PyObject* v;
-        v = GET_STRUCT_FIELD(strval, Py_TYPE(strval)->tp_members+i);
+        v = GET_STRUCT_FIELD(strval, Py_TYPE(strval)->tp_members + i);
         PyTuple_SET_ITEM(retval, i, v);
         Py_INCREF(v);
     }

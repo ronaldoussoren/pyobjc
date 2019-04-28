@@ -3,9 +3,8 @@
 typedef struct {
     PyObject_HEAD
 
-    PyObject* callable;
+        PyObject* callable;
 } PyObjCPythonMethod;
-
 
 PyObject*
 PyObjCPythonMethod_GetMethod(PyObject* value)
@@ -18,24 +17,20 @@ PyObjCPythonMethod_GetMethod(PyObject* value)
     return ((PyObjCPythonMethod*)value)->callable;
 }
 
-static PyMemberDef meth_members[] = {
-    {
-        .name   = "callable",
-        .type   = T_OBJECT,
-        .offset = offsetof(PyObjCPythonMethod, callable),
-        .flags  = READONLY,
-    },
-    {
-        .name   = NULL  /* SENTINEL */
-    }
-};
-
+static PyMemberDef meth_members[] = {{
+                                         .name = "callable",
+                                         .type = T_OBJECT,
+                                         .offset = offsetof(PyObjCPythonMethod, callable),
+                                         .flags = READONLY,
+                                     },
+                                     {
+                                         .name = NULL /* SENTINEL */
+                                     }};
 
 static PyObject*
-meth_new(PyTypeObject* type __attribute__((__unused__)),
-        PyObject* args, PyObject* kwds)
+meth_new(PyTypeObject* type __attribute__((__unused__)), PyObject* args, PyObject* kwds)
 {
-static char* keywords[] = { "callable", NULL };
+    static char* keywords[] = {"callable", NULL};
     PyObject* callable;
     PyObjCPythonMethod* result;
 
@@ -43,7 +38,8 @@ static char* keywords[] = { "callable", NULL };
         return NULL;
     }
 
-    result = (PyObjCPythonMethod*)PyObject_New(PyObjCPythonMethod, &PyObjCPythonMethod_Type);
+    result =
+        (PyObjCPythonMethod*)PyObject_New(PyObjCPythonMethod, &PyObjCPythonMethod_Type);
     if (result == NULL) {
         return NULL;
     }
@@ -100,26 +96,22 @@ meth_call(PyObject* self, PyObject* args, PyObject* kwds)
 }
 
 PyDoc_STRVAR(meth_doc,
-    "objc.python_method(callable)\n"
-    CLINIC_SEP
-    "\nReturns a descriptor that won't be converted to a selector object \n"
-    "and won't be registered with the Objective-C runtime.\n"
-    );
-
+             "objc.python_method(callable)\n" CLINIC_SEP
+             "\nReturns a descriptor that won't be converted to a selector object \n"
+             "and won't be registered with the Objective-C runtime.\n");
 
 PyTypeObject PyObjCPythonMethod_Type = {
-    PyVarObject_HEAD_INIT(&PyType_Type, 0)
-    .tp_name        = "objc.python_method",
-    .tp_basicsize   = sizeof(PyObjCPythonMethod),
-    .tp_itemsize    = 0,
-    .tp_dealloc     = meth_dealloc,
-    .tp_getattro    = PyObject_GenericGetAttr,
-    .tp_flags       = Py_TPFLAGS_DEFAULT,
-    .tp_doc         = meth_doc,
-    .tp_members     = meth_members,
-    .tp_new         = meth_new,
-    .tp_descr_get   = meth_descr_get,
-    .tp_traverse    = meth_traverse,
-    .tp_clear       = meth_clear,
-    .tp_call        = meth_call,
+    PyVarObject_HEAD_INIT(&PyType_Type, 0).tp_name = "objc.python_method",
+    .tp_basicsize = sizeof(PyObjCPythonMethod),
+    .tp_itemsize = 0,
+    .tp_dealloc = meth_dealloc,
+    .tp_getattro = PyObject_GenericGetAttr,
+    .tp_flags = Py_TPFLAGS_DEFAULT,
+    .tp_doc = meth_doc,
+    .tp_members = meth_members,
+    .tp_new = meth_new,
+    .tp_descr_get = meth_descr_get,
+    .tp_traverse = meth_traverse,
+    .tp_clear = meth_clear,
+    .tp_call = meth_call,
 };

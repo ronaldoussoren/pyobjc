@@ -1,4 +1,4 @@
-#include <Python.h>
+#include "Python.h"
 #include "pyobjc-api.h"
 
 #import <Foundation/Foundation.h>
@@ -7,36 +7,40 @@ static void erase_signature(id _block);
 
 #if (PyObjC_BUILD_RELEASE >= 1006) && (__GNUC__ >= 4 && __GNUC_MINOR__ >= 2)
 @interface NSObject (IndirectBlockTest)
--(double)processBlock:(double(^)(double, double))aBlock;
--(id)optionalBlock:(id(^)(id))aBlock;
--(void)callWithCompletion:(void(^)(id))aBlock;
+- (double)processBlock:(double (^)(double, double))aBlock;
+- (id)optionalBlock:(id (^)(id))aBlock;
+- (void)callWithCompletion:(void (^)(id))aBlock;
 @end
 #endif
 
-@interface OCTestBlock : NSObject {}
+@interface OCTestBlock : NSObject {
+}
 
 #if (PyObjC_BUILD_RELEASE >= 1006) && (__GNUC__ >= 4 && __GNUC_MINOR__ >= 2)
 
--(int(^)(void))getIntBlock;
--(double(^)(double,double))getFloatBlock;
--(NSRect(^)(double, double, double, double))getStructBlock;
--(void)callIntBlock:(void(^)(int))block withValue:(int)value;
--(double)callDoubleBlock:(double(^)(double, double))block withValue:(double)v1 andValue:(double)v2;
--(id)callOptionalBlock:(id(^)(id))block withValue:(id)value;
--(void)callCompletionOn:(NSObject*)v andArray:(NSMutableArray*)w withErasedSignature:(int)erased;
+- (int (^)(void))getIntBlock;
+- (double (^)(double, double))getFloatBlock;
+- (NSRect (^)(double, double, double, double))getStructBlock;
+- (void)callIntBlock:(void (^)(int))block withValue:(int)value;
+- (double)callDoubleBlock:(double (^)(double, double))block
+                withValue:(double)v1
+                 andValue:(double)v2;
+- (id)callOptionalBlock:(id (^)(id))block withValue:(id)value;
+- (void)callCompletionOn:(NSObject*)v
+                andArray:(NSMutableArray*)w
+     withErasedSignature:(int)erased;
 
--(int(^)(int))getIntBlock2;
--(int(^)(int, int))getIntBlock3;
--(int(^)(NSString*))getObjectBlock;
--(int(^)(NSString*, NSString*))getObjectBlock2;
+- (int (^)(int))getIntBlock2;
+- (int (^)(int, int))getIntBlock3;
+- (int (^)(NSString*))getObjectBlock;
+- (int (^)(NSString*, NSString*))getObjectBlock2;
 
--(id)signatureForBlock1:(double(^)(double, double))block;
--(id)signatureForBlock2:(id(^)(id))block;
--(id)signatureForBlock3:(id(^)(short))block;
--(id)signatureForBlock4:(char(^)(int,int,float))block;
+- (id)signatureForBlock1:(double (^)(double, double))block;
+- (id)signatureForBlock2:(id (^)(id))block;
+- (id)signatureForBlock3:(id (^)(short))block;
+- (id)signatureForBlock4:(char (^)(int, int, float))block;
 
 #endif
-
 
 @end
 
@@ -44,71 +48,89 @@ static void erase_signature(id _block);
 
 #if PyObjC_BUILD_RELEASE >= 1006 && (__GNUC__ >= 4 && __GNUC_MINOR__ >= 2)
 
--(NSRect(^)(double, double, double, double))getStructBlock
+- (NSRect (^)(double, double, double, double))getStructBlock
 {
     return [[^(double a, double b, double c, double d) {
-        return NSMakeRect(a, b, c, d);
+      return NSMakeRect(a, b, c, d);
     } copy] autorelease];
 }
 
--(int(^)(void))getIntBlock
+- (int (^)(void))getIntBlock
 {
-    return [[^{ return 42; } copy] autorelease];
+    return [[^{
+      return 42;
+    } copy] autorelease];
 }
 
--(int(^)(int))getIntBlock2
+- (int (^)(int))getIntBlock2
 {
-    return [[^(int x) { return x * 2; } copy] autorelease];
+    return [[^(int x) {
+      return x * 2;
+    } copy] autorelease];
 }
 
--(int(^)(int, int))getIntBlock3
+- (int (^)(int, int))getIntBlock3
 {
-    return [[^(int x, int y) { return x + y; } copy] autorelease];
+    return [[^(int x, int y) {
+      return x + y;
+    } copy] autorelease];
 }
 
--(int(^)(NSString*))getObjectBlock
+- (int (^)(NSString*))getObjectBlock
 {
-    return [[ ^(NSString* a) { return [a length]; } copy] autorelease];
+    return [[^(NSString* a) {
+      return [a length];
+    } copy] autorelease];
 }
 
--(int(^)(NSString*, NSString*))getObjectBlock2
+- (int (^)(NSString*, NSString*))getObjectBlock2
 {
-    return [[^(NSString* a, NSString* b) { return [a length] + [b length]; } copy] autorelease];
+    return [[^(NSString* a, NSString* b) {
+      return [a length] + [b length];
+    } copy] autorelease];
 }
 
-
--(double(^)(double,double))getFloatBlock
+- (double (^)(double, double))getFloatBlock
 {
-    return [[^(double a, double b) { return a + b; } copy] autorelease];
+    return [[^(double a, double b) {
+      return a + b;
+    } copy] autorelease];
 }
 
--(void)callIntBlock:(void(^)(int))block withValue:(int)value
+- (void)callIntBlock:(void (^)(int))block withValue:(int)value
 {
     block(value);
 }
 
--(double)callDoubleBlock: (double(^)(double, double))block withValue:(double)v1 andValue:(double)v2
+- (double)callDoubleBlock:(double (^)(double, double))block
+                withValue:(double)v1
+                 andValue:(double)v2
 {
     return block(v1, v2);
 }
 
--(NSRect)callStructBlock: (NSRect(^)(double, double, double, double))block
-                   withA:(double)a b:(double)b c:(double)c d:(double)d
+- (NSRect)callStructBlock:(NSRect (^)(double, double, double, double))block
+                    withA:(double)a
+                        b:(double)b
+                        c:(double)c
+                        d:(double)d
 {
     return block(a, b, c, d);
 }
 
--(double)callProcessBlockOn:(NSObject*)testObject
+- (double)callProcessBlockOn:(NSObject*)testObject
 {
-    return [testObject processBlock:^(double a, double b) { return a*b; }];
+    return [testObject processBlock:^(double a, double b) {
+      return a * b;
+    }];
 }
 
--(id)callOptionalBlockOn:(NSObject*)testObject
+- (id)callOptionalBlockOn:(NSObject*)testObject
 {
     return [testObject optionalBlock:nil];
 }
 
--(id)callOptionalBlock:(id(^)(id))block withValue:(id)value
+- (id)callOptionalBlock:(id (^)(id))block withValue:(id)value
 {
     if (!block) {
         return @"NOBLOCK";
@@ -117,9 +139,13 @@ static void erase_signature(id _block);
     }
 }
 
--(void)callCompletionOn:(NSObject*)v andArray:(NSMutableArray*)w withErasedSignature:(int)erased
+- (void)callCompletionOn:(NSObject*)v
+                andArray:(NSMutableArray*)w
+     withErasedSignature:(int)erased
 {
-    void (^block)(id value) = ^(id value) { [w addObject:value]; };
+    void (^block)(id value) = ^(id value) {
+      [w addObject:value];
+    };
     if (erased) {
         erase_signature(block);
     }
@@ -132,7 +158,7 @@ static void erase_signature(id _block);
 struct block_descriptor {
     unsigned long int reserved;
     unsigned long int size;
-    void (*copy_helper)(void* dst, void*src);
+    void (*copy_helper)(void* dst, void* src);
     void (*dispose_helper)(void* src);
     const char* signature;
 };
@@ -145,8 +171,8 @@ struct block_literal {
     struct block_descriptor* descriptor;
 };
 
-
-static void erase_signature(id _block)
+static void
+erase_signature(id _block)
 {
     struct block_literal* block = (struct block_literal*)_block;
     if (block->flags & BLOCK_HAS_SIGNATURE) {
@@ -154,8 +180,8 @@ static void erase_signature(id _block)
     }
 }
 
-
-static id signature_for_block(id _block)
+static id
+signature_for_block(id _block)
 {
     struct block_literal* block = (struct block_literal*)_block;
 
@@ -163,7 +189,7 @@ static id signature_for_block(id _block)
         const char* signature_loc = (void*)(block->descriptor);
         signature_loc += sizeof(unsigned long) * 2;
         if (block->flags & BLOCK_HAS_COPY_DISPOSE) {
-            signature_loc += sizeof(void(*)(void)) * 2;
+            signature_loc += sizeof(void (*)(void)) * 2;
         }
         return [NSString stringWithUTF8String:*(const char**)signature_loc];
     }
@@ -171,22 +197,22 @@ static id signature_for_block(id _block)
     return nil;
 }
 
--(id)signatureForBlock1:(double(^)(double, double))block
+- (id)signatureForBlock1:(double (^)(double, double))block
 {
     return signature_for_block(block);
 }
 
--(id)signatureForBlock2:(id(^)(id))block
+- (id)signatureForBlock2:(id (^)(id))block
 {
     return signature_for_block(block);
 }
 
--(id)signatureForBlock3:(id(^)(short))block
+- (id)signatureForBlock3:(id (^)(short))block
 {
     return signature_for_block(block);
 }
 
--(id)signatureForBlock4:(char(^)(int,int,float))block
+- (id)signatureForBlock4:(char (^)(int, int, float))block
 {
     return signature_for_block(block);
 }
@@ -195,27 +221,14 @@ static id signature_for_block(id _block)
 
 @end
 
-
-static PyMethodDef mod_methods[] = {
-            { 0, 0, 0, 0 }
-};
+static PyMethodDef mod_methods[] = {{0, 0, 0, 0}};
 
 static struct PyModuleDef mod_module = {
-    PyModuleDef_HEAD_INIT,
-    "block",
-    NULL,
-    0,
-    mod_methods,
-    NULL,
-    NULL,
-    NULL,
-    NULL
-};
+    PyModuleDef_HEAD_INIT, "block", NULL, 0, mod_methods, NULL, NULL, NULL, NULL};
 
 PyObject* PyInit_block(void);
 
-PyObject* __attribute__((__visibility__("default")))
-PyInit_block(void)
+PyObject* __attribute__((__visibility__("default"))) PyInit_block(void)
 {
     PyObject* m;
 
@@ -228,8 +241,8 @@ PyInit_block(void)
         return NULL;
     }
 
-    if (PyModule_AddObject(m, "OCTestBlock",
-        PyObjC_IdToPython([OCTestBlock class])) < 0) {
+    if (PyModule_AddObject(m, "OCTestBlock", PyObjC_IdToPython([OCTestBlock class])) <
+        0) {
         return NULL;
     }
 

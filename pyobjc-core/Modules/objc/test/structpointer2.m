@@ -6,29 +6,23 @@
 
 #import <Foundation/Foundation.h>
 
-
-static PyMethodDef mod_methods[] = {
-    { 0, 0, 0, 0 }
-};
+static PyMethodDef mod_methods[] = {{0, 0, 0, 0}};
 
 typedef struct TestStructPointerStruct* Foo;
 
-static struct PyModuleDef mod_module = {
-    PyModuleDef_HEAD_INIT,
-    "structpointer2",
-    NULL,
-    0,
-    mod_methods,
-    NULL,
-    NULL,
-    NULL,
-    NULL
-};
+static struct PyModuleDef mod_module = {PyModuleDef_HEAD_INIT,
+                                        "structpointer2",
+                                        NULL,
+                                        0,
+                                        mod_methods,
+                                        NULL,
+                                        NULL,
+                                        NULL,
+                                        NULL};
 
 PyObject* PyInit_structpointer2(void);
 
-PyObject* __attribute__((__visibility__("default")))
-PyInit_structpointer2(void)
+PyObject* __attribute__((__visibility__("default"))) PyInit_structpointer2(void)
 {
     PyObject* m;
 

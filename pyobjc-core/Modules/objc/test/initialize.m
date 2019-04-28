@@ -8,107 +8,94 @@
 
 static int numUninitialized = 0;
 
-@interface OC_TestInitialize : NSObject
-{
+@interface OC_TestInitialize : NSObject {
     int isInitialized;
 }
--(instancetype)init;
--(instancetype)retain;
--(void)release;
--(instancetype)autorelease;
--(int)isInitialized;
-+(int)numUninitialized;
--(id)dummy;
-+(id)makeInstance;
+- (instancetype)init;
+- (instancetype)retain;
+- (void)release;
+- (instancetype)autorelease;
+- (int)isInitialized;
++ (int)numUninitialized;
+- (id)dummy;
++ (id)makeInstance;
 
 /* completely unrelated ... */
--(oneway void)onewayVoidMethod;
+- (oneway void)onewayVoidMethod;
 
 @end
 
 @implementation OC_TestInitialize
 
--(instancetype)init
+- (instancetype)init
 {
     self = [super init];
-    if (!self) return self;
+    if (!self)
+        return self;
 
     isInitialized = 1;
     return self;
 }
 
--(instancetype)retain
+- (instancetype)retain
 {
     if (!isInitialized) {
-        numUninitialized ++;
+        numUninitialized++;
     }
     return [super retain];
 }
 
--(void)release
+- (void)release
 {
     if (!isInitialized) {
-        numUninitialized ++;
+        numUninitialized++;
     }
     [super release];
 }
 
--(instancetype)autorelease
+- (instancetype)autorelease
 {
     if (!isInitialized) {
-        numUninitialized ++;
+        numUninitialized++;
     }
     return [super autorelease];
 }
 
--(int)isInitialized
+- (int)isInitialized
 {
     return isInitialized;
 }
 
-+(int)numUninitialized
++ (int)numUninitialized
 {
     return numUninitialized;
 }
 
--(id)dummy
+- (id)dummy
 {
     return @"hello";
 }
 
-+(id)makeInstance
++ (id)makeInstance
 {
     return [[[self alloc] init] autorelease];
 }
 
--(oneway void)onewayVoidMethod
+- (oneway void)onewayVoidMethod
 {
-    isInitialized=-1;
+    isInitialized = -1;
 }
 
 @end
 
-
-static PyMethodDef mod_methods[] = {
-    { 0, 0, 0, 0 }
-};
+static PyMethodDef mod_methods[] = {{0, 0, 0, 0}};
 
 static struct PyModuleDef mod_module = {
-    PyModuleDef_HEAD_INIT,
-    "initialize",
-    NULL,
-    0,
-    mod_methods,
-    NULL,
-    NULL,
-    NULL,
-    NULL
-};
+    PyModuleDef_HEAD_INIT, "initialize", NULL, 0, mod_methods, NULL, NULL, NULL, NULL};
 
 PyObject* PyInit_initialize(void);
 
-PyObject* __attribute__((__visibility__("default")))
-PyInit_initialize(void)
+PyObject* __attribute__((__visibility__("default"))) PyInit_initialize(void)
 {
     PyObject* m;
 
@@ -121,7 +108,7 @@ PyInit_initialize(void)
         return NULL;
     }
     if (PyModule_AddObject(m, "OC_TestInitialize",
-        PyObjC_IdToPython([OC_TestInitialize class])) < 0) {
+                           PyObjC_IdToPython([OC_TestInitialize class])) < 0) {
         return NULL;
     }
 

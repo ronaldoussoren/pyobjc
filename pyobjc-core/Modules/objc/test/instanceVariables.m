@@ -6,8 +6,7 @@
 
 #import <Foundation/Foundation.h>
 
-@interface ClassWithVariables : NSObject
-{
+@interface ClassWithVariables : NSObject {
     int intValue;
     double floatValue;
     char charValue;
@@ -17,63 +16,53 @@
     PyObject* pyValue;
     NSObject* objValue;
 }
--(instancetype)init;
--(void)dealloc;
+- (instancetype)init;
+- (void)dealloc;
 @end
 
 @implementation ClassWithVariables
--(instancetype)init
+- (instancetype)init
 {
     self = [super init];
-    if (self == nil) return nil;
+    if (self == nil)
+        return nil;
 
     intValue = 42;
     floatValue = -10.055;
     charValue = 'a';
     strValue = "hello world";
-    rectValue = NSMakeRect(1,2,3,4);
+    rectValue = NSMakeRect(1, 2, 3, 4);
     nilValue = nil;
-    pyValue = PySlice_New(
-            PyLong_FromLong(1),
-            PyLong_FromLong(10),
-            PyLong_FromLong(4));
+    pyValue = PySlice_New(PyLong_FromLong(1), PyLong_FromLong(10), PyLong_FromLong(4));
     objValue = [[NSObject alloc] init];
     return self;
 }
 
--(void)dealloc
+- (void)dealloc
 {
-    PyObjC_BEGIN_WITH_GIL
-        Py_XDECREF(pyValue);
-    PyObjC_END_WITH_GIL
-    [objValue release];
+    PyObjC_BEGIN_WITH_GIL Py_XDECREF(pyValue);
+    PyObjC_END_WITH_GIL[objValue release];
     [nilValue release];
     [super dealloc];
 }
 
 @end
 
+static PyMethodDef mod_methods[] = {{0, 0, 0, 0}};
 
-static PyMethodDef mod_methods[] = {
-    { 0, 0, 0, 0 }
-};
-
-static struct PyModuleDef mod_module = {
-    PyModuleDef_HEAD_INIT,
-    "instanceVariables",
-    NULL,
-    0,
-    mod_methods,
-    NULL,
-    NULL,
-    NULL,
-    NULL
-};
+static struct PyModuleDef mod_module = {PyModuleDef_HEAD_INIT,
+                                        "instanceVariables",
+                                        NULL,
+                                        0,
+                                        mod_methods,
+                                        NULL,
+                                        NULL,
+                                        NULL,
+                                        NULL};
 
 PyObject* PyInit_instanceVariables(void);
 
-PyObject* __attribute__((__visibility__("default")))
-PyInit_instanceVariables(void)
+PyObject* __attribute__((__visibility__("default"))) PyInit_instanceVariables(void)
 {
     PyObject* m;
 
@@ -87,7 +76,7 @@ PyInit_instanceVariables(void)
     }
 
     if (PyModule_AddObject(m, "ClassWithVariables",
-        PyObjC_IdToPython([ClassWithVariables class])) < 0) {
+                           PyObjC_IdToPython([ClassWithVariables class])) < 0) {
         return NULL;
     }
 

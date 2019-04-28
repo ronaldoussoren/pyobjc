@@ -6,17 +6,16 @@
 
 #import <Foundation/Foundation.h>
 
-@interface OC_TestVoidPointer : NSObject
-{
+@interface OC_TestVoidPointer : NSObject {
     void* value;
 }
 
--(void*)getvalue;
--(void)setvalue:(void*)v;
+- (void*)getvalue;
+- (void)setvalue:(void*)v;
 @end
 
 @implementation OC_TestVoidPointer
--(instancetype)init
+- (instancetype)init
 {
     self = [super init];
     if (self) {
@@ -24,39 +23,26 @@
     }
     return self;
 }
--(void*)getvalue
+- (void*)getvalue
 {
     return value;
 }
--(void)setvalue:(void*)v
+- (void)setvalue:(void*)v
 {
     value = v;
 }
 @end
 
-static PyMethodDef mod_methods[] = {
-    { 0, 0, 0, 0 }
-};
+static PyMethodDef mod_methods[] = {{0, 0, 0, 0}};
 
 static struct PyModuleDef mod_module = {
-    PyModuleDef_HEAD_INIT,
-    "voidpointer",
-    NULL,
-    0,
-    mod_methods,
-    NULL,
-    NULL,
-    NULL,
-    NULL
-};
+    PyModuleDef_HEAD_INIT, "voidpointer", NULL, 0, mod_methods, NULL, NULL, NULL, NULL};
 
 PyObject* PyInit_voidpointer(void);
 
-PyObject* __attribute__((__visibility__("default")))
-PyInit_voidpointer(void)
+PyObject* __attribute__((__visibility__("default"))) PyInit_voidpointer(void)
 {
     PyObject* m;
-
 
     m = PyModule_Create(&mod_module);
     if (!m) {
@@ -67,7 +53,7 @@ PyInit_voidpointer(void)
     }
 
     if (PyModule_AddObject(m, "OC_TestVoidPointer",
-            PyObjC_IdToPython([OC_TestVoidPointer class])) < 0){
+                           PyObjC_IdToPython([OC_TestVoidPointer class])) < 0) {
         return NULL;
     }
 

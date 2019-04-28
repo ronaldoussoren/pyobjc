@@ -17,8 +17,7 @@
  *              can be used everywhere where NSArray or NSMutableArray objects
  *              are expected.
  */
-@interface OC_PythonArray : NSMutableArray
-{
+@interface OC_PythonArray : NSMutableArray {
     PyObject* value;
 }
 
@@ -30,7 +29,7 @@
  *
  * Caller must own the GIL.
  */
-+(OC_PythonArray*)arrayWithPythonObject:(PyObject*)value;
++ (OC_PythonArray*)arrayWithPythonObject:(PyObject*)value;
 
 /*!
  * @method initWithPythonObject:
@@ -46,20 +45,20 @@
  * @method dealloc
  * @abstract Deallocate the object
  */
--(void)dealloc;
+- (void)dealloc;
 
 /*!
  * @method dealloc
  * @abstract Access the wrapped Python sequence
  * @result  Returns a new reference to the wrapped Python sequence.
  */
--(PyObject*)__pyobjc_PythonObject__;
+- (PyObject*)__pyobjc_PythonObject__;
 
 /*!
  * @method count
  * @result  Returns the length of the wrapped Python sequence
  */
--(NSUInteger)count;
+- (NSUInteger)count;
 
 /*!
  * @method objectAtIndex:
@@ -77,7 +76,7 @@
  * @param idx An index
  * @param newValue A replacement value
  */
--(void)replaceObjectAtIndex:(NSUInteger)idx withObject:newValue;
+- (void)replaceObjectAtIndex:(NSUInteger)idx withObject:newValue;
 
 /*!
  * @method getObjects:inRange:
@@ -92,14 +91,14 @@
  * @param buffer  The output buffer
  * @param range   The range of objects to fetch.
  */
--(void)getObjects:(id*)buffer inRange:(NSRange)range;
+- (void)getObjects:(id*)buffer inRange:(NSRange)range;
 
 /*!
  * @method addObject:
  * @abstract Append an object
  * @param anObject The object that will be append
  */
--(void)addObject:(id)anObject;
+- (void)addObject:(id)anObject;
 
 /*!
  * @method insertObject:atIndex:
@@ -107,21 +106,20 @@
  * @param anObject The object to insert
  * @param idx  The index
  */
--(void)insertObject:(id)anObject atIndex:(NSUInteger)idx;
+- (void)insertObject:(id)anObject atIndex:(NSUInteger)idx;
 
 /*!
  * @method removeLastObject
  * @abstract Remove the last object of the sequence
  */
--(void)removeLastObject;
+- (void)removeLastObject;
 
 /*!
  * @method removeObjectAtIndex:
  * @abstract Remove a specific item
  * @param idx Which object should be removed
  */
--(void)removeObjectAtIndex:(NSUInteger)idx;
-
+- (void)removeObjectAtIndex:(NSUInteger)idx;
 
 /*
  * @method encodeWithCoder:

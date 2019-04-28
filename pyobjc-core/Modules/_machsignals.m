@@ -2,54 +2,57 @@
  * Nicer signal handling, integrated into the runloop.
  */
 #define PY_SSIZE_T_CLEAN
-#include <Python.h>
+#include "Python.h"
+#include "pyobjc-api.h"
+#include <CoreFoundation/CoreFoundation.h>
 #include <mach/mach.h>
 #include <mach/mach_error.h>
-#include <CoreFoundation/CoreFoundation.h>
-#include "pyobjc-api.h"
 
 PyDoc_STRVAR(machsignals_doc,
-    "_machsignals - signal handling integrated into the runloop\n"
-    "\n"
-    "This module exports a dictionary that contains the functions that \n"
-    "should be called when a signal is caught.\n"
-    "\n"
-    "The function 'handleSignal' installs a C signal handler that will \n"
-    "make sure our signal handler is called."
-);
+             "_machsignals - signal handling integrated into the runloop\n"
+             "\n"
+             "This module exports a dictionary that contains the functions that \n"
+             "should be called when a signal is caught.\n"
+             "\n"
+             "The function 'handleSignal' installs a C signal handler that will \n"
+             "make sure our signal handler is called.");
 
 static mach_port_t exit_m_port = MACH_PORT_NULL;
-static PyObject *signalmapping;
-
+static PyObject* signalmapping;
 
 static void
-SIGCallback(CFMachPortRef port __attribute__((__unused__)), void *msg, CFIndex size __attribute__((__unused__)), void *info __attribute__((__unused__)))
+SIGCallback(CFMachPortRef port __attribute__((__unused__)), void* msg,
+            CFIndex size __attribute__((__unused__)),
+            void* info __attribute__((__unused__)))
 {
-    PyObject *tmp;
-    PyObject *callable;
+    PyObject* tmp;
+    PyObject* callable;
     int signum;
     /* this is abuse of msgh_id */
     signum = ((mach_msg_header_t*)msg)->msgh_id;
     if (!signalmapping) {
         return;
     }
-    PyObjC_BEGIN_WITH_GIL
-        do {
-            tmp = PyInt_FromLong((long)signum);
-            if (!tmp) break;
-
-            callable = PyDict_GetItem(signalmapping, tmp);
-            Py_DECREF(tmp);
-            if (!callable) {
-                tmp = NULL;
-                break;
-            }
-
-            tmp = PyObject_CallFunction(callable, "i", signum);
-            Py_XDECREF(tmp);
-        } while (0);
+    PyObjC_BEGIN_WITH_GIL do
+    {
+        tmp = PyLong_FromLong((long)signum);
         if (!tmp)
-            PyObjC_GIL_FORWARD_EXC();
+            break;
+
+        callable = PyDict_GetItem(signalmapping, tmp);
+        Py_DECREF(tmp);
+        if (!callable) {
+            tmp = NULL;
+            break;
+        }
+
+        tmp = PyObject_CallFunction(callable, "i", signum);
+        Py_XDECREF(tmp);
+    }
+    while (0)
+        ;
+    if (!tmp)
+        PyObjC_GIL_FORWARD_EXC();
     PyObjC_END_WITH_GIL
 }
 
@@ -74,20 +77,18 @@ HandleSIG(int signum)
 }
 
 PyDoc_STRVAR(machsignals_handleSignal_doc,
-    "handle_signal(signum) -> None\n"
-    "\n"
-    "Handle a signal using the registered mach callback\n"
-    "Raises an ObjC exception if the callback fails"
-);
+             "handle_signal(signum) -> None\n"
+             "\n"
+             "Handle a signal using the registered mach callback\n"
+             "Raises an ObjC exception if the callback fails");
 static PyObject*
-machsignals_handleSignal(PyObject *self __attribute__((__unused__)), PyObject *args, PyObject *kwds)
+machsignals_handleSignal(PyObject* self __attribute__((__unused__)), PyObject* args,
+                         PyObject* kwds)
 {
-    static char* keywords[] = { "signum", 0 };
+    static char* keywords[] = {"signum", 0};
     int signum;
 
-    if (!PyArg_ParseTupleAndKeywords(args, kwds,
-        "i:handleSignal", keywords,
-        &signum)) {
+    if (!PyArg_ParseTupleAndKeywords(args, kwds, "i:handleSignal", keywords, &signum)) {
         return NULL;
     }
 
@@ -98,41 +99,40 @@ machsignals_handleSignal(PyObject *self __attribute__((__unused__)), PyObject *a
 }
 
 static PyMethodDef mod_methods[] = {
-    {
-            "handle_signal",
-            (PyCFunction)machsignals_handleSignal,
-            METH_VARARGS|METH_KEYWORDS,
-            machsignals_handleSignal_doc
-    },
-    { 0, 0, 0, 0}
-};
+    {"handle_signal", (PyCFunction)machsignals_handleSignal, METH_VARARGS | METH_KEYWORDS,
+     machsignals_handleSignal_doc},
+    {0, 0, 0, 0}};
 
-PyObjC_MODULE_INIT(_machsignals)
+static struct PyModuleDef mod_module = {
+    PyModuleDef_HEAD_INIT, "_machsignals", NULL, 0, mod_methods, NULL, NULL, NULL, NULL};
+
+PyObject* PyInit__machsignals(void);
+PyObject* __attribute__((__visibility__("default"))) PyInit__machsignals(void)
 {
     PyObject* m;
-    m = PyObjC_MODULE_CREATE(_machsignals)
+
+    m = PyModule_Create(&mod_module);
     if (m == NULL) {
-        PyObjC_INITERROR();
+        return NULL;
     }
 
     CFMachPortRef e_port;
     CFRunLoopSourceRef e_rls;
 
     if (PyObjC_ImportAPI(m) < 0) {
-        PyErr_Print();
-        PyObjC_INITERROR();
+        return NULL;
     }
 
     signalmapping = PyDict_New();
     if (!signalmapping) {
-        PyObjC_INITERROR();
+        return NULL;
     }
 
     if (PyModule_AddObject(m, "_signalmapping", signalmapping) == -1) {
-        PyObjC_INITERROR();
+        return NULL;
     }
     if (PyModule_AddStringConstant(m, "__doc__", machsignals_doc) == -1) {
-        PyObjC_INITERROR();
+        return NULL;
     }
 
     e_port = CFMachPortCreate(NULL, SIGCallback, NULL, NULL);
@@ -141,5 +141,5 @@ PyObjC_MODULE_INIT(_machsignals)
     CFRunLoopAddSource(CFRunLoopGetCurrent(), e_rls, kCFRunLoopDefaultMode);
     CFRelease(e_rls);
 
-    PyObjC_INITDONE();
+    return m;
 }

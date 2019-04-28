@@ -21,13 +21,12 @@
  *      PyMapping_* API is not flexible enough, and most sequence als implement
  *      the generic mapping interface to deal with slices.
  */
-@interface OC_PythonDictionary : NSMutableDictionary
-{
+@interface OC_PythonDictionary : NSMutableDictionary {
     PyObject* value;
 }
 
-+(OC_PythonDictionary*)dictionaryWithPythonObject:(PyObject*)value;
--(OC_PythonDictionary*)initWithPythonObject:(PyObject*)value;
++ (OC_PythonDictionary*)dictionaryWithPythonObject:(PyObject*)value;
+- (OC_PythonDictionary*)initWithPythonObject:(PyObject*)value;
 - (void)dealloc;
 - (PyObject*)__pyobjc_PythonObject__;
 - (NSUInteger)count;
@@ -36,6 +35,6 @@
 - (void)removeObjectForKey:(id)key;
 - (id)objectForKey:(id)key;
 - (void)encodeWithCoder:(NSCoder*)coder;
--(id)initWithCoder:(NSCoder*)coder;
+- (id)initWithCoder:(NSCoder*)coder;
 
 @end /* interface OC_PythonDictionary */

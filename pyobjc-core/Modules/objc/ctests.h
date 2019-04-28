@@ -4,4 +4,3 @@
 extern int PyObjC_init_ctests(PyObject*);
 
 #endif /* PyObjC_CTESTS_H */
-

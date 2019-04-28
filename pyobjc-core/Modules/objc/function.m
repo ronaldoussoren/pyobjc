@@ -7,7 +7,7 @@
 typedef struct {
     PyObject_HEAD
 
-    ffi_cif* cif;
+        ffi_cif* cif;
     PyObjCMethodSignature* methinfo;
     void* function;
     PyObject* doc;
@@ -15,60 +15,49 @@ typedef struct {
     PyObject* module;
 } func_object;
 
-
-
-static PyObject* func_metadata(PyObject* self)
+static PyObject*
+func_metadata(PyObject* self)
 {
     return PyObjCMethodSignature_AsDict(((func_object*)self)->methinfo);
 }
 
 static PyMethodDef func_methods[] = {
+    {.ml_name = "__metadata__",
+     .ml_meth = (PyCFunction)func_metadata,
+     .ml_flags = METH_NOARGS,
+     .ml_doc = "Return a dict that describes the metadata for this function."},
     {
-        .ml_name    = "__metadata__",
-        .ml_meth    = (PyCFunction)func_metadata,
-        .ml_flags   = METH_NOARGS,
-        .ml_doc     = "Return a dict that describes the metadata for this function."
-    },
-    {
-        .ml_name    = NULL  /* SENTINEL */
-    }
-};
+        .ml_name = NULL /* SENTINEL */
+    }};
 
-static PyGetSetDef func_getset[] = {
-    {
-        .name   = "__doc__",
-        .get    = PyObjC_callable_docstr_get,
-        .doc    = "Documentation for a function",
-    },
-    {
-        .name   = "__signature__",
-        .get    = PyObjC_callable_signature_get,
-        .doc    = "inspect.Signature for a function",
-    },
-    {
-        .name   = NULL /* SENTINEL */
-    }
-};
+static PyGetSetDef func_getset[] = {{
+                                        .name = "__doc__",
+                                        .get = PyObjC_callable_docstr_get,
+                                        .doc = "Documentation for a function",
+                                    },
+                                    {
+                                        .name = "__signature__",
+                                        .get = PyObjC_callable_signature_get,
+                                        .doc = "inspect.Signature for a function",
+                                    },
+                                    {
+                                        .name = NULL /* SENTINEL */
+                                    }};
 
-
-
-static PyMemberDef func_members[] = {
-    {
-        .name   = "__name__",
-        .type   = T_OBJECT,
-        .offset = offsetof(func_object, name),
-        .flags  = READONLY,
-    },
-    {
-        .name   = "__module__",
-        .type   = T_OBJECT,
-        .offset = offsetof(func_object, module),
-    },
-    {
-        .name   = NULL  /* SENTINEL */
-    }
-};
-
+static PyMemberDef func_members[] = {{
+                                         .name = "__name__",
+                                         .type = T_OBJECT,
+                                         .offset = offsetof(func_object, name),
+                                         .flags = READONLY,
+                                     },
+                                     {
+                                         .name = "__module__",
+                                         .type = T_OBJECT,
+                                         .offset = offsetof(func_object, module),
+                                     },
+                                     {
+                                         .name = NULL /* SENTINEL */
+                                     }};
 
 static PyObject*
 func_repr(PyObject* _self)
@@ -84,7 +73,6 @@ func_repr(PyObject* _self)
     }
 }
 
-
 static PyObject*
 func_call(PyObject* s, PyObject* args, PyObject* kwds)
 {
@@ -99,21 +87,22 @@ func_call(PyObject* s, PyObject* args, PyObject* kwds)
 
     unsigned char* argbuf = NULL;
     ffi_type* arglist[MAX_ARGCOUNT];
-    void*     values[MAX_ARGCOUNT];
-    void*      byref[MAX_ARGCOUNT] = { 0 };
-    struct byref_attr byref_attr[MAX_ARGCOUNT] = { {0, 0} };
+    void* values[MAX_ARGCOUNT];
+    void* byref[MAX_ARGCOUNT] = {0};
+    struct byref_attr byref_attr[MAX_ARGCOUNT] = {{0, 0}};
     ffi_cif cif;
     ffi_cif* cifptr;
 
     PyObject* retval;
 
-    if (PyObjC_DeprecationVersion && self->methinfo->deprecated && self->methinfo->deprecated <= PyObjC_DeprecationVersion) {
+    if (PyObjC_DeprecationVersion && self->methinfo->deprecated &&
+        self->methinfo->deprecated <= PyObjC_DeprecationVersion) {
         char buf[128];
 
         if (PyUnicode_Check(self->name)) {
             snprintf(buf, 128, "%s() is a deprecated API (macOS %d.%d)",
-                    PyUnicode_AsUTF8(self->name),
-                    self->methinfo->deprecated / 100, self->methinfo->deprecated % 100);
+                     PyUnicode_AsUTF8(self->name), self->methinfo->deprecated / 100,
+                     self->methinfo->deprecated % 100);
         } else {
             snprintf(buf, 128, "function is a deprecated API");
         }
@@ -130,44 +119,49 @@ func_call(PyObject* s, PyObject* args, PyObject* kwds)
 
     if (Py_SIZE(self->methinfo) >= 63) {
         PyErr_Format(PyObjCExc_Error,
-            "wrapping a function with %"PY_FORMAT_SIZE_T"d arguments, at most 64 "
-            "are supported", Py_SIZE(self->methinfo));
+                     "wrapping a function with %" PY_FORMAT_SIZE_T
+                     "d arguments, at most 64 "
+                     "are supported",
+                     Py_SIZE(self->methinfo));
         return NULL;
     }
 
     if (kwds != NULL && (!PyDict_Check(kwds) || PyDict_Size(kwds) != 0)) {
-        PyErr_SetString(PyExc_TypeError,
-            "keyword arguments not supported");
+        PyErr_SetString(PyExc_TypeError, "keyword arguments not supported");
         return NULL;
     }
 
     argbuf_len = PyObjCRT_SizeOfReturnType(self->methinfo->rettype->type);
     argbuf_len = align(argbuf_len, sizeof(void*));
-    r = PyObjCFFI_CountArguments(
-        self->methinfo, 0,
-        &byref_in_count, &byref_out_count, &plain_count,
-        &argbuf_len, &variadicAllArgs);
+    r = PyObjCFFI_CountArguments(self->methinfo, 0, &byref_in_count, &byref_out_count,
+                                 &plain_count, &argbuf_len, &variadicAllArgs);
     if (r == -1) {
         return NULL;
     }
 
-    variadicAllArgs |= self->methinfo->variadic && (self->methinfo->null_terminated_array || self->methinfo->arrayArg != -1);
+    variadicAllArgs |=
+        self->methinfo->variadic &&
+        (self->methinfo->null_terminated_array || self->methinfo->arrayArg != -1);
 
     if (variadicAllArgs) {
         if (byref_in_count != 0 || byref_out_count != 0) {
-            PyErr_Format(PyExc_TypeError, "Sorry, printf format with by-ref args not supported");
+            PyErr_Format(PyExc_TypeError,
+                         "Sorry, printf format with by-ref args not supported");
             return NULL;
         }
 
         if (PyTuple_Size(args) < Py_SIZE(self->methinfo)) {
-            PyErr_Format(PyExc_TypeError, "Need %"PY_FORMAT_SIZE_T"d arguments, got %"PY_FORMAT_SIZE_T"d",
-            Py_SIZE(self->methinfo) - 2, PyTuple_Size(args));
+            PyErr_Format(PyExc_TypeError,
+                         "Need %" PY_FORMAT_SIZE_T "d arguments, got %" PY_FORMAT_SIZE_T
+                         "d",
+                         Py_SIZE(self->methinfo) - 2, PyTuple_Size(args));
             return NULL;
         }
 
     } else if (PyTuple_Size(args) != Py_SIZE(self->methinfo)) {
-        PyErr_Format(PyExc_TypeError, "Need %"PY_FORMAT_SIZE_T"d arguments, got %"PY_FORMAT_SIZE_T"d",
-            Py_SIZE(self->methinfo), PyTuple_Size(args));
+        PyErr_Format(PyExc_TypeError,
+                     "Need %" PY_FORMAT_SIZE_T "d arguments, got %" PY_FORMAT_SIZE_T "d",
+                     Py_SIZE(self->methinfo), PyTuple_Size(args));
         return NULL;
     }
 
@@ -188,12 +182,11 @@ func_call(PyObject* s, PyObject* args, PyObject* kwds)
 
     if (variadicAllArgs) {
         r = ffi_prep_cif(&cif, FFI_DEFAULT_ABI, (int)cif_arg_count,
-        PyObjCFFI_Typestr2FFI(self->methinfo->rettype->type), arglist);
+                         PyObjCFFI_Typestr2FFI(self->methinfo->rettype->type), arglist);
 
         if (r != FFI_OK) {
-            PyErr_Format(PyExc_RuntimeError,
-                "Cannot setup FFI CIF [%d]", r);
-                goto error;
+            PyErr_Format(PyExc_RuntimeError, "Cannot setup FFI CIF [%d]", r);
+            goto error;
         }
         cifptr = &cif;
 
@@ -201,23 +194,23 @@ func_call(PyObject* s, PyObject* args, PyObject* kwds)
         cifptr = self->cif;
     }
 
-    PyObjC_DURING
-        ffi_call(cifptr, FFI_FN(self->function), argbuf, values);
+    PyObjC_DURING ffi_call(cifptr, FFI_FN(self->function), argbuf, values);
 
-    PyObjC_HANDLER
-        PyObjCErr_FromObjC(localException);
+    PyObjC_HANDLER PyObjCErr_FromObjC(localException);
 
     PyObjC_ENDHANDLER
 
-    if (PyErr_Occurred()) {
+        if (PyErr_Occurred())
+    {
         goto error;
     }
 
-    retval = PyObjCFFI_BuildResult(self->methinfo, 0, argbuf, byref,
-            byref_attr, byref_out_count, NULL, 0, values);
+    retval = PyObjCFFI_BuildResult(self->methinfo, 0, argbuf, byref, byref_attr,
+                                   byref_out_count, NULL, 0, values);
 
     if (variadicAllArgs) {
-        if (PyObjCFFI_FreeByRef(Py_SIZE(self->methinfo)+PyTuple_Size(args), byref, byref_attr) < 0) {
+        if (PyObjCFFI_FreeByRef(Py_SIZE(self->methinfo) + PyTuple_Size(args), byref,
+                                byref_attr) < 0) {
             goto error;
         }
 
@@ -227,7 +220,8 @@ func_call(PyObject* s, PyObject* args, PyObject* kwds)
         }
     }
 
-    PyMem_Free(argbuf); argbuf = NULL;
+    PyMem_Free(argbuf);
+    argbuf = NULL;
     return retval;
 
 error:
@@ -259,40 +253,40 @@ func_dealloc(PyObject* s)
     PyObject_Free(s);
 }
 
-static PyObject *
-func_descr_get(PyObject *self, PyObject *obj __attribute__((__unused__)), PyObject *type __attribute__((__unused__)))
+static PyObject*
+func_descr_get(PyObject* self, PyObject* obj __attribute__((__unused__)),
+               PyObject* type __attribute__((__unused__)))
 {
     Py_INCREF(self);
     return self;
 }
 
-
-PyTypeObject PyObjCFunc_Type =
-{
-    PyVarObject_HEAD_INIT(&PyType_Type, 0)
-    .tp_name        = "objc.function",
-    .tp_basicsize   = sizeof (func_object),
-    .tp_itemsize    = 0,
-    .tp_dealloc     = func_dealloc,
-    .tp_repr        = func_repr,
-    .tp_call        = func_call,
-    .tp_getattro    = PyObject_GenericGetAttr,
-    .tp_setattro    = PyObject_GenericSetAttr,
-    .tp_flags       = Py_TPFLAGS_DEFAULT,
-    .tp_doc         = "Wrapper around a Objective-C function",
-    .tp_methods     = func_methods,
-    .tp_members     = func_members,
-    .tp_getset      = func_getset,
-    .tp_descr_get   = func_descr_get,
+PyTypeObject PyObjCFunc_Type = {
+    PyVarObject_HEAD_INIT(&PyType_Type, 0).tp_name = "objc.function",
+    .tp_basicsize = sizeof(func_object),
+    .tp_itemsize = 0,
+    .tp_dealloc = func_dealloc,
+    .tp_repr = func_repr,
+    .tp_call = func_call,
+    .tp_getattro = PyObject_GenericGetAttr,
+    .tp_setattro = PyObject_GenericSetAttr,
+    .tp_flags = Py_TPFLAGS_DEFAULT,
+    .tp_doc = "Wrapper around a Objective-C function",
+    .tp_methods = func_methods,
+    .tp_members = func_members,
+    .tp_getset = func_getset,
+    .tp_descr_get = func_descr_get,
 };
 
 PyObject*
-PyObjCFunc_WithMethodSignature(PyObject* name, void* func, PyObjCMethodSignature* methinfo)
+PyObjCFunc_WithMethodSignature(PyObject* name, void* func,
+                               PyObjCMethodSignature* methinfo)
 {
     func_object* result;
 
     result = PyObject_NEW(func_object, &PyObjCFunc_Type);
-    if (result == NULL) return NULL;
+    if (result == NULL)
+        return NULL;
 
     result->function = func;
     result->doc = NULL;
@@ -311,14 +305,15 @@ PyObjCFunc_WithMethodSignature(PyObject* name, void* func, PyObjCMethodSignature
     return (PyObject*)result;
 }
 
-
 PyObject*
-PyObjCFunc_New(PyObject* name, void* func, const char* signature, PyObject* doc, PyObject* meta)
+PyObjCFunc_New(PyObject* name, void* func, const char* signature, PyObject* doc,
+               PyObject* meta)
 {
     func_object* result;
 
     result = PyObject_NEW(func_object, &PyObjCFunc_Type);
-    if (result == NULL) return NULL;
+    if (result == NULL)
+        return NULL;
 
     result->function = NULL;
     result->doc = NULL;
@@ -326,7 +321,7 @@ PyObjCFunc_New(PyObject* name, void* func, const char* signature, PyObject* doc,
     result->module = NULL;
     result->cif = NULL;
 
-    result->methinfo= PyObjCMethodSignature_WithMetaData(signature, meta, NO);
+    result->methinfo = PyObjCMethodSignature_WithMetaData(signature, meta, NO);
     if (result->methinfo == NULL) {
         Py_DECREF(result);
         return NULL;
@@ -345,7 +340,8 @@ PyObjCFunc_New(PyObject* name, void* func, const char* signature, PyObject* doc,
     return (PyObject*)result;
 }
 
-PyObjCMethodSignature* PyObjCFunc_GetMethodSignature(PyObject* func)
+PyObjCMethodSignature*
+PyObjCFunc_GetMethodSignature(PyObject* func)
 {
     return ((func_object*)func)->methinfo;
 }

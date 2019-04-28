@@ -14,8 +14,8 @@
  *    the preclass_* functions, not the regular ones because it isn't possible
  *    to emulate the entire ObjC 2.0 API on Tiger.
  */
-#include <objc/objc-runtime.h>
 #include <objc/Protocol.h>
+#include <objc/objc-runtime.h>
 
 #ifndef _C_CONST
 #define _C_CONST 'r'
@@ -57,7 +57,6 @@
 #define _C_BOOL 'B'
 #endif
 
-
 /* These don't actually exist in the Objective-C runtime, but are used
  * by the bridge to simplify code.
  */
@@ -97,15 +96,13 @@ BOOL PyObjC_class_isSubclassOf(Class child, Class parent);
 #define preclass_addMethod PyObjC_preclass_addMethod
 #define preclass_addProtocol PyObjC_preclass_addProtocol
 
-
 extern BOOL (*PyObjC_preclass_addMethod)(Class, SEL, IMP, const char*);
-extern BOOL (*PyObjC_preclass_addIvar)(Class, const char *, size_t, uint8_t, const char *);
-extern BOOL (*PyObjC_preclass_addProtocol)(Class, Protocol *);
+extern BOOL (*PyObjC_preclass_addIvar)(Class, const char*, size_t, uint8_t, const char*);
+extern BOOL (*PyObjC_preclass_addProtocol)(Class, Protocol*);
 
 extern Class (*PyObjC_objc_allocateClassPair)(Class, const char*, size_t);
 extern void (*PyObjC_objc_registerClassPair)(Class);
 extern void (*PyObjC_objc_disposeClassPair)(Class);
-
 
 extern Class (*PyObjC_object_getClass)(id);
 extern Class (*PyObjC_object_setClass)(id, Class);
@@ -123,7 +120,7 @@ extern Protocol** (*PyObjC_class_copyProtocolList)(Class, unsigned int*);
 extern BOOL (*PyObjC_class_isMetaClass)(Class);
 
 extern SEL (*PyObjC_method_getName)(Method);
-extern const char *(*PyObjC_method_getTypeEncoding)(Method);
+extern const char* (*PyObjC_method_getTypeEncoding)(Method);
 extern IMP (*PyObjC_method_getImplementation)(Method);
 extern IMP (*PyObjC_method_setImplementation)(Method, IMP);
 
@@ -135,16 +132,23 @@ extern ptrdiff_t (*PyObjC_ivar_getOffset)(Ivar);
 
 extern Protocol** (*PyObjC_objc_copyProtocolList)(unsigned int*);
 extern Protocol* (*PyObjC_objc_getProtocol)(const char*);
-extern struct objc_method_description_list* (*PyObjC_protocol_copyInstanceMethodDescriptionList)(Protocol*);
-extern struct objc_method_description_list* (*PyObjC_protocol_copyClassMethodDescriptionList)(Protocol*);
-extern struct objc_method_description_list* (*PyObjC_protocol_copyOptionalInstanceMethodDescriptionList)(Protocol*);
-extern struct objc_method_description_list* (*PyObjC_protocol_copyOptionalClassMethodDescriptionList)(Protocol*);
+extern struct objc_method_description_list* (
+    *PyObjC_protocol_copyInstanceMethodDescriptionList)(Protocol*);
+extern struct objc_method_description_list* (
+    *PyObjC_protocol_copyClassMethodDescriptionList)(Protocol*);
+extern struct objc_method_description_list* (
+    *PyObjC_protocol_copyOptionalInstanceMethodDescriptionList)(Protocol*);
+extern struct objc_method_description_list* (
+    *PyObjC_protocol_copyOptionalClassMethodDescriptionList)(Protocol*);
 
 extern BOOL (*PyObjC_protocol_conformsToProtocol)(Protocol*, Protocol*);
-extern const char *(*PyObjC_protocol_getName)(Protocol*);
-extern struct objc_method_description *(*PyObjC_protocol_copyMethodDescriptionList)(Protocol*, BOOL, BOOL, unsigned int*);
-extern Protocol **(*PyObjC_protocol_copyProtocolList)(Protocol*, unsigned int*);
-extern struct objc_method_description (*PyObjC_protocol_getMethodDescription)(Protocol*, SEL, BOOL, BOOL);
+extern const char* (*PyObjC_protocol_getName)(Protocol*);
+extern struct objc_method_description* (*PyObjC_protocol_copyMethodDescriptionList)(
+    Protocol*, BOOL, BOOL, unsigned int*);
+extern Protocol** (*PyObjC_protocol_copyProtocolList)(Protocol*, unsigned int*);
+extern struct objc_method_description (*PyObjC_protocol_getMethodDescription)(Protocol*,
+                                                                              SEL, BOOL,
+                                                                              BOOL);
 
 extern id (*PyObjC_object_getIvar)(id, Ivar);
 extern void (*PyObjC_object_setIvar)(id, Ivar, id);
@@ -190,10 +194,14 @@ extern void (*PyObjC_object_setIvar)(id, Ivar, id);
 
 #define objc_copyProtocolList PyObjC_objc_copyProtocolList
 #define objc_getProtocol PyObjC_objc_getProtocol
-#define protocol_copyInstanceMethodDescriptionList PyObjC_protocol_copyInstanceMethodDescriptionList
-#define protocol_copyClassMethodDescriptionList PyObjC_protocol_copyClassMethodDescriptionList
-#define protocol_copyOptionalInstanceMethodDescriptionList PyObjC_protocol_copyOptionalInstanceMethodDescriptionList
-#define protocol_copyOptionalClassMethodDescriptionList PyObjC_protocol_copyOptionalClassMethodDescriptionList
+#define protocol_copyInstanceMethodDescriptionList                                       \
+    PyObjC_protocol_copyInstanceMethodDescriptionList
+#define protocol_copyClassMethodDescriptionList                                          \
+    PyObjC_protocol_copyClassMethodDescriptionList
+#define protocol_copyOptionalInstanceMethodDescriptionList                               \
+    PyObjC_protocol_copyOptionalInstanceMethodDescriptionList
+#define protocol_copyOptionalClassMethodDescriptionList                                  \
+    PyObjC_protocol_copyOptionalClassMethodDescriptionList
 
 #endif /* !PYOBJC_COMPAT_IMPL */
 
@@ -217,19 +225,21 @@ extern BOOL PyObjC_class_addMethodList(Class, struct PyObjC_method*, unsigned in
 /*
  * XXX: Override protocol_getMethodDescription. This is a crude hack that's added because
  * protocol_getMethodDescription sometimes gives the wrong answer (test_protocols.py).
- * I haven't found the root cause for this yet, it may or may not be a problem with PyObjC.
+ * I haven't found the root cause for this yet, it may or may not be a problem with
+ * PyObjC.
  */
-extern struct objc_method_description PyObjC_protocol_getMethodDescription(Protocol *p, SEL aSel, BOOL isRequiredMethod, BOOL isInstanceMethod);
+extern struct objc_method_description
+PyObjC_protocol_getMethodDescription(Protocol* p, SEL aSel, BOOL isRequiredMethod,
+                                     BOOL isInstanceMethod);
 #define protocol_getMethodDescription PyObjC_protocol_getMethodDescription
 
 #endif
 
-
-
 #if (MAC_OS_X_VERSION_MIN_REQUIRED < MAC_OS_X_VERSION_10_7)
-extern Protocol* (*PyObjC_objc_allocateProtocol)(const char *);
+extern Protocol* (*PyObjC_objc_allocateProtocol)(const char*);
 extern void (*PyObjC_objc_registerProtocol)(Protocol*);
-extern void (*PyObjC_protocol_addMethodDescription)(Protocol*, SEL, const char*, BOOL, BOOL);
+extern void (*PyObjC_protocol_addMethodDescription)(Protocol*, SEL, const char*, BOOL,
+                                                    BOOL);
 extern void (*PyObjC_protocol_addProtocol)(Protocol*, Protocol*);
 
 #ifndef PYOBJC_COMPAT_IMPL

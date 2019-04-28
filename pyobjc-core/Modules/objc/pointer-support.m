@@ -117,18 +117,17 @@ py_to_ID(PyObject* obj, void* output)
 }
 
 int
-PyObjCPointerWrapper_RegisterID(const char* name, const char *signature)
+PyObjCPointerWrapper_RegisterID(const char* name, const char* signature)
 {
     return PyObjCPointerWrapper_Register(name, signature,
-        (PyObjCPointerWrapper_ToPythonFunc)&ID_to_py,
-        (PyObjCPointerWrapper_FromPythonFunc)&py_to_ID);
+                                         (PyObjCPointerWrapper_ToPythonFunc)&ID_to_py,
+                                         (PyObjCPointerWrapper_FromPythonFunc)&py_to_ID);
 }
 
 int
-PyObjCPointerWrapper_Register(
-    const char* name, const char* signature,
-    PyObjCPointerWrapper_ToPythonFunc pythonify,
-    PyObjCPointerWrapper_FromPythonFunc depythonify)
+PyObjCPointerWrapper_Register(const char* name, const char* signature,
+                              PyObjCPointerWrapper_ToPythonFunc pythonify,
+                              PyObjCPointerWrapper_FromPythonFunc depythonify)
 {
     struct wrapper* value;
 
@@ -160,17 +159,16 @@ PyObjCPointerWrapper_Register(
     } else {
         struct wrapper* tmp;
 
-        tmp = PyMem_Realloc(
-            items, sizeof(struct wrapper) * (item_count+1));
+        tmp = PyMem_Realloc(items, sizeof(struct wrapper) * (item_count + 1));
         if (tmp == NULL) {
             PyErr_NoMemory();
             return -1;
         }
         items = tmp;
-        item_count ++;
+        item_count++;
     }
 
-    value = items + (item_count-1);
+    value = items + (item_count - 1);
 
     value->name = PyObjCUtil_Strdup(name);
     if (value->name == NULL) {
@@ -183,7 +181,7 @@ PyObjCPointerWrapper_Register(
     if (value->signature == NULL) {
         PyMem_Free((void*)value->name);
         PyErr_NoMemory();
-        item_count --;
+        item_count--;
         return -1;
     }
 
@@ -194,8 +192,6 @@ PyObjCPointerWrapper_Register(
 
     return 0;
 }
-
-
 
 PyObject*
 PyObjCPointerWrapper_ToPython(const char* type, void* datum)
@@ -221,8 +217,7 @@ PyObjCPointerWrapper_ToPython(const char* type, void* datum)
              * is the only such object I don't think its worthwhile
              * to add generic support for this.
              */
-            result = PyObjCCF_NewSpecial2(
-                CFAllocatorGetTypeID(), *(void**)datum);
+            result = PyObjCCF_NewSpecial2(CFAllocatorGetTypeID(), *(void**)datum);
 
             PyObjC_RegisterPythonProxy(*(id*)datum, result);
             return result;
@@ -233,10 +228,8 @@ PyObjCPointerWrapper_ToPython(const char* type, void* datum)
     return result;
 }
 
-
 int
-PyObjCPointerWrapper_FromPython(
-    const char* type, PyObject* value, void* datum)
+PyObjCPointerWrapper_FromPython(const char* type, PyObject* value, void* datum)
 {
     struct wrapper* item;
     int r;
@@ -259,14 +252,14 @@ PyObjCPointerWrapper_FromPython(
     }
 }
 
-int PyObjCPointerWrapper_HaveWrapper(const char* type)
+int
+PyObjCPointerWrapper_HaveWrapper(const char* type)
 {
     return (FindWrapper(type) != NULL);
 }
 
-
 static PyObject*
-PyObjectPtr_New(void *obj)
+PyObjectPtr_New(void* obj)
 {
     return (PyObject*)obj;
 }
@@ -274,12 +267,12 @@ PyObjectPtr_New(void *obj)
 static int
 PyObjectPtr_Convert(PyObject* obj, void* pObj)
 {
-    *(void**)pObj = (void *)obj;
+    *(void**)pObj = (void*)obj;
     return 0;
 }
 
 static PyObject*
-class_new(void *obj)
+class_new(void* obj)
 {
     return pythonify_c_value("#", obj);
 }
@@ -290,9 +283,8 @@ class_convert(PyObject* obj, void* pObj)
     return depythonify_c_value("#", obj, pObj);
 }
 
-
 static PyObject*
-FILE_New(void *obj)
+FILE_New(void* obj)
 {
     FILE* fp = (FILE*)obj;
 
@@ -315,17 +307,19 @@ PyObjCPointerWrapper_Init(void)
 {
     int r = 0;
 
-    r = PyObjCPointerWrapper_Register("PyObject*", @encode(PyObject*),
-        PyObjectPtr_New, PyObjectPtr_Convert);
-    if (r == -1) return -1;
+    r = PyObjCPointerWrapper_Register("PyObject*", @encode(PyObject*), PyObjectPtr_New,
+                                      PyObjectPtr_Convert);
+    if (r == -1)
+        return -1;
 
-    r = PyObjCPointerWrapper_Register("Class", "^{objc_class=}",
-        class_new, class_convert);
-    if (r == -1) return -1;
+    r = PyObjCPointerWrapper_Register("Class", "^{objc_class=}", class_new,
+                                      class_convert);
+    if (r == -1)
+        return -1;
 
-    r = PyObjCPointerWrapper_Register("FILE*", @encode(FILE*),
-        FILE_New, FILE_Convert);
-    if (r == -1) return -1;
+    r = PyObjCPointerWrapper_Register("FILE*", @encode(FILE*), FILE_New, FILE_Convert);
+    if (r == -1)
+        return -1;
 
     return 0;
 }
@@ -334,7 +328,8 @@ const char*
 PyObjCPointerWrapper_Describe(const char* signature)
 {
     struct wrapper* wrapper = FindWrapper(signature);
-    if (wrapper == NULL) return NULL;
+    if (wrapper == NULL)
+        return NULL;
 
     return wrapper->name;
 }

@@ -10,7 +10,6 @@ PyObjC_ClassCount(void)
     return objc_getClassList(NULL, 0);
 }
 
-
 PyObject*
 PyObjC_GetClassList(void)
 {
@@ -43,12 +42,10 @@ PyObjC_GetClassList(void)
          * the buffer is NULL.
          */
         if (buffer == NULL) {
-            newBuffer = PyMem_Malloc(
-                sizeof(Class) * bufferLen);
+            newBuffer = PyMem_Malloc(sizeof(Class) * bufferLen);
 
         } else {
-            newBuffer = PyMem_Realloc(buffer,
-                sizeof(Class) * bufferLen);
+            newBuffer = PyMem_Realloc(buffer, sizeof(Class) * bufferLen);
         }
 
         if (newBuffer == NULL) {
@@ -56,7 +53,8 @@ PyObjC_GetClassList(void)
             goto error;
         }
 
-        buffer = newBuffer; newBuffer = NULL;
+        buffer = newBuffer;
+        newBuffer = NULL;
         neededLen = objc_getClassList(buffer, bufferLen);
     }
     bufferLen = neededLen;
@@ -76,7 +74,8 @@ PyObjC_GetClassList(void)
         PyTuple_SET_ITEM(result, i, pyclass);
     }
 
-    PyMem_Free(buffer); buffer = NULL;
+    PyMem_Free(buffer);
+    buffer = NULL;
 
     return result;
 

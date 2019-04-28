@@ -1,13 +1,15 @@
 #include "pyobjc.h"
+
 #import "OC_PythonNumber.h"
 
 @implementation OC_BuiltinPythonNumber
 
-+ (BOOL)supportsSecureCoding {
++ (BOOL)supportsSecureCoding
+{
     return YES;
 }
 
-+(NSArray*)classFallbacksForKeyedArchiver
++ (NSArray*)classFallbacksForKeyedArchiver
 {
     return [NSArray arrayWithObjects:@"OC_PythonNumber", @"NSNumber", nil];
 }

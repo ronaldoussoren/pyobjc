@@ -26,9 +26,8 @@ extern PyTypeObject PyObjCIMP_Type;
 
 #define PyObjCIMP_Check(obj) PyObject_TypeCheck(obj, &PyObjCIMP_Type)
 
-extern PyObject* PyObjCIMP_New(
-        IMP imp, SEL sel, PyObjC_CallFunc callfunc,
-        PyObjCMethodSignature* signature, int flags);
+extern PyObject* PyObjCIMP_New(IMP imp, SEL sel, PyObjC_CallFunc callfunc,
+                               PyObjCMethodSignature* signature, int flags);
 extern IMP PyObjCIMP_GetIMP(PyObject* self);
 extern PyObjC_CallFunc PyObjCIMP_GetCallFunc(PyObject* self);
 extern PyObjCMethodSignature* PyObjCIMP_GetSignature(PyObject* self);

@@ -6,93 +6,77 @@
 
 #import <Foundation/Foundation.h>
 
-static NSString* addSomeUnicode(NSString* input)
+static NSString*
+addSomeUnicode(NSString* input)
 {
     return [NSString stringWithFormat:@"%@%C%C", input, (short)0x1234, (short)0x2049];
 }
 
-@interface PyObjCTestExceptions : NSObject
-{
+@interface PyObjCTestExceptions : NSObject {
 }
--(void)raiseSimple;
--(void)raiseSimpleWithInfo;
--(void)raiseUnicodeName;
--(void)raiseUnicodeReason;
--(void)raiseUnicodeWithInfo;
--(void)raiseAString;
+- (void)raiseSimple;
+- (void)raiseSimpleWithInfo;
+- (void)raiseUnicodeName;
+- (void)raiseUnicodeReason;
+- (void)raiseUnicodeWithInfo;
+- (void)raiseAString;
 @end
 
 @implementation PyObjCTestExceptions
 
--(void)raiseSimple
+- (void)raiseSimple
 {
     [NSException raise:@"SimpleException" format:@"hello world"];
 }
 
--(void)raiseSimpleWithInfo
+- (void)raiseSimpleWithInfo
 {
-    [[NSException exceptionWithName:@"InfoException"
-                             reason:@"Reason string"
-                           userInfo:[NSDictionary dictionaryWithObjectsAndKeys:
-                                @"value1", @"key1",
-                                @"value2", @"key2",
-                                NULL]] raise];
+    [[NSException
+        exceptionWithName:@"InfoException"
+                   reason:@"Reason string"
+                 userInfo:[NSDictionary dictionaryWithObjectsAndKeys:@"value1", @"key1",
+                                                                     @"value2", @"key2",
+                                                                     NULL]] raise];
 }
 
--(void)raiseUnicodeName
+- (void)raiseUnicodeName
 {
-    [NSException
-        raise:addSomeUnicode(@"SimpleException")
-        format:@"hello world"];
+    [NSException raise:addSomeUnicode(@"SimpleException") format:@"hello world"];
 }
 
--(void)raiseUnicodeReason
+- (void)raiseUnicodeReason
 {
-    [NSException
-        raise:@"SimpleException"
-        format:@"%@", addSomeUnicode(@"hello world")];
+    [NSException raise:@"SimpleException" format:@"%@", addSomeUnicode(@"hello world")];
 }
 
--(void)raiseUnicodeWithInfo
+- (void)raiseUnicodeWithInfo
 {
-    [[NSException exceptionWithName:addSomeUnicode(@"InfoException")
-                             reason:addSomeUnicode(@"Reason string")
-                           userInfo:[NSDictionary dictionaryWithObjectsAndKeys:
-                                addSomeUnicode(@"value1"),
-                                addSomeUnicode(@"key1"),
-                                addSomeUnicode(@"value2"),
-                                addSomeUnicode(@"key2"),
-                                NULL]] raise];
+    [[NSException
+        exceptionWithName:addSomeUnicode(@"InfoException")
+                   reason:addSomeUnicode(@"Reason string")
+                 userInfo:[NSDictionary
+                              dictionaryWithObjectsAndKeys:addSomeUnicode(@"value1"),
+                                                           addSomeUnicode(@"key1"),
+                                                           addSomeUnicode(@"value2"),
+                                                           addSomeUnicode(@"key2"), NULL]]
+        raise];
 }
 
--(void)raiseAString
+- (void)raiseAString
 {
     @throw @"thrown string";
 }
 
 @end
 
-
-static PyMethodDef mod_methods[] = {
-    { 0, 0, 0, 0 }
-};
+static PyMethodDef mod_methods[] = {{0, 0, 0, 0}};
 
 static struct PyModuleDef mod_module = {
-    PyModuleDef_HEAD_INIT,
-    "exceptions",
-    NULL,
-    0,
-    mod_methods,
-    NULL,
-    NULL,
-    NULL,
-    NULL
-};
+    PyModuleDef_HEAD_INIT, "exceptions", NULL, 0, mod_methods, NULL, NULL, NULL, NULL};
 
 PyObject* PyInit_exceptions(void);
 
-PyObject* __attribute__((__visibility__("default")))
-PyInit_exceptions(void)
+PyObject* __attribute__((__visibility__("default"))) PyInit_exceptions(void)
 {
     PyObject* m;
 
@@ -105,7 +89,7 @@ PyInit_exceptions(void)
         return NULL;
     }
     if (PyModule_AddObject(m, "PyObjCTestExceptions",
-        PyObjC_IdToPython([PyObjCTestExceptions class])) < 0) {
+                           PyObjC_IdToPython([PyObjCTestExceptions class])) < 0) {
         return NULL;
     }
     return m;

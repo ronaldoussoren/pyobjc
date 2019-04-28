@@ -1,6 +1,5 @@
 #import "pyobjc.h"
 
-@interface OC_BuiltinPythonArray : OC_PythonArray
-{
+@interface OC_BuiltinPythonArray : OC_PythonArray {
 }
 @end

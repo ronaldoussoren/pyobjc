@@ -15,49 +15,42 @@ struct UnwrappedStruct {
     int i2;
 };
 
-static struct TestStructPointerStruct myGlobal = { 1 };
+static struct TestStructPointerStruct myGlobal = {1};
 
-@interface OC_TestStructPointer : NSObject
-{
+@interface OC_TestStructPointer : NSObject {
 }
-+(struct TestStructPointerStruct*)returnPointerToStruct;
-+(struct UnwrappedStruct*)returnUnwrapped;
++ (struct TestStructPointerStruct*)returnPointerToStruct;
++ (struct UnwrappedStruct*)returnUnwrapped;
 @end
 
 @implementation OC_TestStructPointer
-+(struct TestStructPointerStruct*)returnPointerToStruct
++ (struct TestStructPointerStruct*)returnPointerToStruct
 {
     return &myGlobal;
 }
 
-+(struct UnwrappedStruct*)returnUnwrapped
++ (struct UnwrappedStruct*)returnUnwrapped
 {
     return (struct UnwrappedStruct*)42;
 }
 
 @end
 
+static PyMethodDef mod_methods[] = {{0, 0, 0, 0}};
 
-static PyMethodDef mod_methods[] = {
-    { 0, 0, 0, 0 }
-};
-
-static struct PyModuleDef mod_module = {
-    PyModuleDef_HEAD_INIT,
-    "structpointer1",
-    NULL,
-    0,
-    mod_methods,
-    NULL,
-    NULL,
-    NULL,
-    NULL
-};
+static struct PyModuleDef mod_module = {PyModuleDef_HEAD_INIT,
+                                        "structpointer1",
+                                        NULL,
+                                        0,
+                                        mod_methods,
+                                        NULL,
+                                        NULL,
+                                        NULL,
+                                        NULL};
 
 PyObject* PyInit_structpointer1(void);
 
-PyObject* __attribute__((__visibility__("default")))
-PyInit_structpointer1(void)
+PyObject* __attribute__((__visibility__("default"))) PyInit_structpointer1(void)
 {
     PyObject* m;
 
@@ -71,7 +64,7 @@ PyInit_structpointer1(void)
     }
 
     if (PyModule_AddObject(m, "OC_TestStructPointer",
-        PyObjC_IdToPython([OC_TestStructPointer class])) < 0) {
+                           PyObjC_IdToPython([OC_TestStructPointer class])) < 0) {
         return NULL;
     }
 

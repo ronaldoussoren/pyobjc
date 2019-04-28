@@ -9,9 +9,9 @@
  *   variants to OC_TestClass2.
  */
 
-#include <Python.h>
-#include <pyobjc-api.h>
-#include <pyobjc-compat.h>
+#include "Python.h"
+#include "pyobjc-api.h"
+#include "pyobjc-compat.h"
 
 #import <Foundation/Foundation.h>
 
@@ -19,8 +19,8 @@
 #include <objc/objc-runtime.h>
 #endif
 
-#include <limits.h>
 #include <float.h>
+#include <limits.h>
 
 #ifdef __clang__
 #pragma clang diagnostic ignored "-Wdeprecated-declarations"
@@ -28,54 +28,45 @@
 
 #if !defined(LLONG_MAX) && defined(LONG_LONG_MAX)
 
-# define LLONG_MAX LONG_LONG_MAX
-# define LLONG_MIN LONG_LONG_MIN
-# define ULLONG_MAX ULONG_LONG_MAX
+#define LLONG_MAX LONG_LONG_MAX
+#define LLONG_MIN LONG_LONG_MIN
+#define ULLONG_MAX ULONG_LONG_MAX
 
 #endif
 
-struct dummy
-{
+struct dummy {
     int f1;
     short f2;
 };
 
-struct dummy2
-{
+struct dummy2 {
     int array[4];
 };
-
 
 struct s1 {
     int i;
     double d;
 };
 
-
-struct complexStruct
-{
-    /*  0 */ char           ch;
-    /*  1 */ unsigned char  uch;
-    /*  4 */ int            i1;
-    /*  8 */ unsigned int   u;
-    /* 12 */ short          s;
-    /* 20 */ double         d;
-    /* 28 */ struct s1      sub1[2];
-    /* 60 */ int            i2;
+struct complexStruct {
+    /*  0 */ char ch;
+    /*  1 */ unsigned char uch;
+    /*  4 */ int i1;
+    /*  8 */ unsigned int u;
+    /* 12 */ short s;
+    /* 20 */ double d;
+    /* 28 */ struct s1 sub1[2];
+    /* 60 */ int i2;
     /* 62 */ unsigned short us;
-    /* 64 */ char*          str;
+    /* 64 */ char* str;
 };
 
-
-
-@interface OC_TestClass1 : NSObject
-{
+@interface OC_TestClass1 : NSObject {
 }
 
 /* Reset the test counter */
 + (void)clsReset;
 - (void)reset;
-
 
 /* Test return values, return various values */
 + (long long)longlongClsFunc;
@@ -181,50 +172,22 @@ struct complexStruct
 
 @implementation OC_TestClass1
 
-#define ARRAYSIZE(a) (sizeof(a)/sizeof(a[0]))
+#define ARRAYSIZE(a) (sizeof(a) / sizeof(a[0]))
 static size_t g_idx = 0;
-static unsigned long long g_ulonglongs[] = {
-    0, 42, (1LL << 63)
-};
-static unsigned long g_ulongs[] = {
-    0, 42, (1 << 30)
-};
-static long long g_longlongs[] = {
-    -(1LL << 60), -42, 0, 42, (1LL << 60)
-};
-static long g_longs[] = {
-    -(1 << 30), -42, 0, 42, (1 << 30)
-};
-static int g_ints[] = {
-    -(1 << 30), -42, 0, 42, (1 << 30)
-};
-static unsigned int g_uints[] = {
-    0, 42, 1 << 30
-};
-static short g_shorts[] = {
-    -(1 << 14), -42, 0, 42, (1 << 14)
-};
-static unsigned short g_ushorts[] = {
-    0, 42, 1 << 14
-};
-static char g_chars[] = {
-    -128, 0, 127
-};
-static unsigned char g_uchars[] = {
-    0, 128, 255
-};
-static float g_floats[] = {
-    0.128, 1.0, 42.0, 1e10
-};
-static double g_doubles[] = {
-    0.128, 1.0, 42.0, 1e10
-};
+static unsigned long long g_ulonglongs[] = {0, 42, (1LL << 63)};
+static unsigned long g_ulongs[] = {0, 42, (1 << 30)};
+static long long g_longlongs[] = {-(1LL << 60), -42, 0, 42, (1LL << 60)};
+static long g_longs[] = {-(1 << 30), -42, 0, 42, (1 << 30)};
+static int g_ints[] = {-(1 << 30), -42, 0, 42, (1 << 30)};
+static unsigned int g_uints[] = {0, 42, 1 << 30};
+static short g_shorts[] = {-(1 << 14), -42, 0, 42, (1 << 14)};
+static unsigned short g_ushorts[] = {0, 42, 1 << 14};
+static char g_chars[] = {-128, 0, 127};
+static unsigned char g_uchars[] = {0, 128, 255};
+static float g_floats[] = {0.128, 1.0, 42.0, 1e10};
+static double g_doubles[] = {0.128, 1.0, 42.0, 1e10};
 
-static char* g_charps[] = {
-    "hello",
-    "world",
-    "foobar"
-};
+static char* g_charps[] = {"hello", "world", "foobar"};
 
 + (void)clsReset
 {
@@ -233,91 +196,109 @@ static char* g_charps[] = {
 
 + (long long)longlongClsFunc
 {
-    if (g_idx > ARRAYSIZE(g_longlongs)) g_idx = 0;
+    if (g_idx > ARRAYSIZE(g_longlongs))
+        g_idx = 0;
     return g_longlongs[g_idx++];
 }
 
 + (unsigned long long)ulonglongClsFunc
 {
-    if (g_idx > ARRAYSIZE(g_ulonglongs)) g_idx = 0;
+    if (g_idx > ARRAYSIZE(g_ulonglongs))
+        g_idx = 0;
     return g_ulonglongs[g_idx++];
 }
 
 + (long)longClsFunc
 {
-    if (g_idx > ARRAYSIZE(g_longs)) g_idx = 0;
+    if (g_idx > ARRAYSIZE(g_longs))
+        g_idx = 0;
     return g_longs[g_idx++];
 }
 
 + (unsigned long)ulongClsFunc
 {
-    if (g_idx > ARRAYSIZE(g_ulongs)) g_idx = 0;
+    if (g_idx > ARRAYSIZE(g_ulongs))
+        g_idx = 0;
     return g_ulongs[g_idx++];
 }
 
 + (int)intClsFunc
 {
-    if (g_idx > ARRAYSIZE(g_ints)) g_idx = 0;
+    if (g_idx > ARRAYSIZE(g_ints))
+        g_idx = 0;
     return g_ints[g_idx++];
 }
 
 + (unsigned int)uintClsFunc
 {
-    if (g_idx > ARRAYSIZE(g_uints)) g_idx = 0;
+    if (g_idx > ARRAYSIZE(g_uints))
+        g_idx = 0;
     return g_uints[g_idx++];
 }
 
 + (short)shortClsFunc
 {
-    if (g_idx > ARRAYSIZE(g_shorts)) g_idx = 0;
+    if (g_idx > ARRAYSIZE(g_shorts))
+        g_idx = 0;
     return g_shorts[g_idx++];
 }
 
 + (unsigned short)ushortClsFunc
 {
-    if (g_idx > ARRAYSIZE(g_ushorts)) g_idx = 0;
+    if (g_idx > ARRAYSIZE(g_ushorts))
+        g_idx = 0;
     return g_ushorts[g_idx++];
 }
 
 + (char)charClsFunc
 {
-    if (g_idx > ARRAYSIZE(g_chars)) g_idx = 0;
+    if (g_idx > ARRAYSIZE(g_chars))
+        g_idx = 0;
     return g_chars[g_idx++];
 }
 
 + (unsigned char)ucharClsFunc
 {
-    if (g_idx > ARRAYSIZE(g_uchars)) g_idx = 0;
+    if (g_idx > ARRAYSIZE(g_uchars))
+        g_idx = 0;
     return g_uchars[g_idx++];
 }
 
 + (float)floatClsFunc
 {
-    if (g_idx > ARRAYSIZE(g_floats)) g_idx = 0;
+    if (g_idx > ARRAYSIZE(g_floats))
+        g_idx = 0;
     return g_floats[g_idx++];
 }
 
 + (double)doubleClsFunc
 {
-    if (g_idx > ARRAYSIZE(g_doubles)) g_idx = 0;
+    if (g_idx > ARRAYSIZE(g_doubles))
+        g_idx = 0;
     return g_doubles[g_idx++];
 }
 
 + (char*)charpClsFunc
 {
-    if (g_idx > ARRAYSIZE(g_charps)) g_idx = 0;
+    if (g_idx > ARRAYSIZE(g_charps))
+        g_idx = 0;
     return g_charps[g_idx++];
 }
 
 + (id)idClsFunc
 {
-    if (g_idx > 3) g_idx = 0;
+    if (g_idx > 3)
+        g_idx = 0;
 
-    switch (g_idx ++) {
-    case 0: return [NSArray array];
-    case 1: return [NSHost hostWithAddress:@"127.0.0.1"];
-    case 2: return [NSMutableDictionary dictionary];
-    case 3: return NULL;
+    switch (g_idx++) {
+    case 0:
+        return [NSArray array];
+    case 1:
+        return [NSHost hostWithAddress:@"127.0.0.1"];
+    case 2:
+        return [NSMutableDictionary dictionary];
+    case 3:
+        return NULL;
     }
     return NULL;
 }
@@ -329,98 +310,116 @@ static char* g_charps[] = {
 
 - (long long)longlongFunc
 {
-    if (g_idx > ARRAYSIZE(g_longlongs)) g_idx = 0;
+    if (g_idx > ARRAYSIZE(g_longlongs))
+        g_idx = 0;
     return g_longlongs[g_idx++];
 }
 
 - (unsigned long long)ulonglongFunc
 {
-    if (g_idx > ARRAYSIZE(g_ulonglongs)) g_idx = 0;
+    if (g_idx > ARRAYSIZE(g_ulonglongs))
+        g_idx = 0;
     return g_ulonglongs[g_idx++];
 }
 
 - (long)longFunc
 {
-    if (g_idx > ARRAYSIZE(g_longs)) g_idx = 0;
+    if (g_idx > ARRAYSIZE(g_longs))
+        g_idx = 0;
     return g_longs[g_idx++];
 }
 
 - (unsigned long)ulongFunc
 {
-    if (g_idx > ARRAYSIZE(g_ulongs)) g_idx = 0;
+    if (g_idx > ARRAYSIZE(g_ulongs))
+        g_idx = 0;
     return g_ulongs[g_idx++];
 }
 
 - (int)intFunc
 {
-    if (g_idx > ARRAYSIZE(g_ints)) g_idx = 0;
+    if (g_idx > ARRAYSIZE(g_ints))
+        g_idx = 0;
     return g_ints[g_idx++];
 }
 
 - (unsigned int)uintFunc
 {
-    if (g_idx > ARRAYSIZE(g_uints)) g_idx = 0;
+    if (g_idx > ARRAYSIZE(g_uints))
+        g_idx = 0;
     return g_uints[g_idx++];
 }
 
 - (short)shortFunc
 {
-    if (g_idx > ARRAYSIZE(g_shorts)) g_idx = 0;
+    if (g_idx > ARRAYSIZE(g_shorts))
+        g_idx = 0;
     return g_shorts[g_idx++];
 }
 
 - (unsigned short)ushortFunc
 {
-    if (g_idx > ARRAYSIZE(g_ushorts)) g_idx = 0;
+    if (g_idx > ARRAYSIZE(g_ushorts))
+        g_idx = 0;
     return g_ushorts[g_idx++];
 }
 
 - (char)charFunc
 {
-    if (g_idx > ARRAYSIZE(g_chars)) g_idx = 0;
+    if (g_idx > ARRAYSIZE(g_chars))
+        g_idx = 0;
     return g_chars[g_idx++];
 }
 
 - (unsigned char)ucharFunc
 {
-    if (g_idx > ARRAYSIZE(g_uchars)) g_idx = 0;
+    if (g_idx > ARRAYSIZE(g_uchars))
+        g_idx = 0;
     return g_uchars[g_idx++];
 }
 
 - (float)floatFunc
 {
-    if (g_idx > ARRAYSIZE(g_floats)) g_idx = 0;
+    if (g_idx > ARRAYSIZE(g_floats))
+        g_idx = 0;
     return g_floats[g_idx++];
 }
 
 - (double)doubleFunc
 {
-    if (g_idx > ARRAYSIZE(g_doubles)) g_idx = 0;
+    if (g_idx > ARRAYSIZE(g_doubles))
+        g_idx = 0;
     return g_doubles[g_idx++];
 }
 
 - (char*)charpFunc
 {
-    if (g_idx > ARRAYSIZE(g_charps)) g_idx = 0;
+    if (g_idx > ARRAYSIZE(g_charps))
+        g_idx = 0;
     return g_charps[g_idx++];
 }
 
 - (id)idFunc
 {
-    if (g_idx > 3) g_idx = 0;
+    if (g_idx > 3)
+        g_idx = 0;
 
-    switch (g_idx ++) {
-    case 0: return [NSArray array];
-    case 1: return [NSHost hostWithAddress:@"127.0.0.1"];
-    case 2: return [NSMutableDictionary dictionary];
-    case 3: return NULL;
+    switch (g_idx++) {
+    case 0:
+        return [NSArray array];
+    case 1:
+        return [NSHost hostWithAddress:@"127.0.0.1"];
+    case 2:
+        return [NSMutableDictionary dictionary];
+    case 3:
+        return NULL;
     }
     return NULL;
 }
 
 - (NSPoint)nspointFunc
 {
-    NSPoint p = { 1.0, 2.0 };
+    NSPoint p = {1.0, 2.0};
     return p;
 }
 
@@ -515,7 +514,7 @@ static char* g_charps[] = {
 
 - (char*)charpArg:(char*)arg
 {
-static char buf[1024];
+    static char buf[1024];
     size_t len = strlen(arg);
     size_t i;
 
@@ -549,9 +548,9 @@ static char buf[1024];
     return result;
 }
 
-- (struct dummy2) dummy2Arg:(struct dummy2)arg
+- (struct dummy2)dummy2Arg:(struct dummy2)arg
 {
-    struct dummy2 result = { {-1, -1, -1, -1} };
+    struct dummy2 result = {{-1, -1, -1, -1}};
 
     result.array[0] = arg.array[3] * 2;
     result.array[1] = arg.array[2] * 2;
@@ -568,7 +567,8 @@ static char buf[1024];
 
 - (void)passOutChar:(char*)arg
 {
-    if (g_idx > ARRAYSIZE(g_ints)) g_idx = 0;
+    if (g_idx > ARRAYSIZE(g_ints))
+        g_idx = 0;
     *arg = g_chars[g_idx++];
 }
 
@@ -584,7 +584,8 @@ static char buf[1024];
 
 - (void)passOutUChar:(unsigned char*)arg
 {
-    if (g_idx > ARRAYSIZE(g_uchars)) g_idx = 0;
+    if (g_idx > ARRAYSIZE(g_uchars))
+        g_idx = 0;
     *arg = g_uchars[g_idx++];
 }
 
@@ -600,7 +601,8 @@ static char buf[1024];
 
 - (void)passOutShort:(short*)arg
 {
-    if (g_idx > ARRAYSIZE(g_shorts)) g_idx = 0;
+    if (g_idx > ARRAYSIZE(g_shorts))
+        g_idx = 0;
     *arg = g_shorts[g_idx++];
 }
 
@@ -616,7 +618,8 @@ static char buf[1024];
 
 - (void)passOutUShort:(unsigned short*)arg
 {
-    if (g_idx > ARRAYSIZE(g_ushorts)) g_idx = 0;
+    if (g_idx > ARRAYSIZE(g_ushorts))
+        g_idx = 0;
     *arg = g_ushorts[g_idx++];
 }
 
@@ -632,7 +635,8 @@ static char buf[1024];
 
 - (void)passOutInt:(int*)arg
 {
-    if (g_idx > ARRAYSIZE(g_ints)) g_idx = 0;
+    if (g_idx > ARRAYSIZE(g_ints))
+        g_idx = 0;
     *arg = g_ints[g_idx++];
 }
 
@@ -648,7 +652,8 @@ static char buf[1024];
 
 - (void)passOutUInt:(unsigned int*)arg
 {
-    if (g_idx > ARRAYSIZE(g_uints)) g_idx = 0;
+    if (g_idx > ARRAYSIZE(g_uints))
+        g_idx = 0;
     *arg = g_uints[g_idx++];
 }
 
@@ -664,7 +669,8 @@ static char buf[1024];
 
 - (void)passOutLong:(long*)arg
 {
-    if (g_idx > ARRAYSIZE(g_longs)) g_idx = 0;
+    if (g_idx > ARRAYSIZE(g_longs))
+        g_idx = 0;
     *arg = g_longs[g_idx++];
 }
 
@@ -680,7 +686,8 @@ static char buf[1024];
 
 - (void)passOutULong:(unsigned long*)arg
 {
-    if (g_idx > ARRAYSIZE(g_ulongs)) g_idx = 0;
+    if (g_idx > ARRAYSIZE(g_ulongs))
+        g_idx = 0;
     *arg = g_ulongs[g_idx++];
 }
 
@@ -696,7 +703,8 @@ static char buf[1024];
 
 - (void)passOutLongLong:(long long*)arg
 {
-    if (g_idx > ARRAYSIZE(g_longlongs)) g_idx = 0;
+    if (g_idx > ARRAYSIZE(g_longlongs))
+        g_idx = 0;
     *arg = g_longlongs[g_idx++];
 }
 
@@ -712,7 +720,8 @@ static char buf[1024];
 
 - (void)passOutULongLong:(unsigned long long*)arg
 {
-    if (g_idx > ARRAYSIZE(g_ulonglongs)) g_idx = 0;
+    if (g_idx > ARRAYSIZE(g_ulonglongs))
+        g_idx = 0;
     *arg = g_ulonglongs[g_idx++];
 }
 
@@ -728,7 +737,8 @@ static char buf[1024];
 
 - (void)passOutFloat:(float*)arg
 {
-    if (g_idx > ARRAYSIZE(g_floats)) g_idx = 0;
+    if (g_idx > ARRAYSIZE(g_floats))
+        g_idx = 0;
     *arg = g_floats[g_idx++];
 }
 
@@ -744,7 +754,8 @@ static char buf[1024];
 
 - (void)passOutDouble:(double*)arg
 {
-    if (g_idx > ARRAYSIZE(g_doubles)) g_idx = 0;
+    if (g_idx > ARRAYSIZE(g_doubles))
+        g_idx = 0;
     *arg = g_doubles[g_idx++];
 }
 
@@ -762,8 +773,8 @@ static char buf[1024];
     char* q;
 
     for (p = *arg, q = res; *p; p++) {
-        *q ++ = *p;
-        *q ++ = *p;
+        *q++ = *p;
+        *q++ = *p;
     }
     *q = 0;
     return res;
@@ -771,7 +782,8 @@ static char buf[1024];
 
 - (void)passOutCharp:(char**)arg
 {
-    if (g_idx > ARRAYSIZE(g_charps)) g_idx = 0;
+    if (g_idx > ARRAYSIZE(g_charps))
+        g_idx = 0;
     *arg = g_charps[g_idx++];
 }
 
@@ -784,8 +796,8 @@ static char buf[1024];
     char* q;
 
     for (p = *arg, q = res; *p; p++) {
-        *q ++ = *p;
-        *q ++ = *p;
+        *q++ = *p;
+        *q++ = *p;
     }
     *q = 0;
     *arg = res;
@@ -805,13 +817,22 @@ static char buf[1024];
 
 - (void)passOutID:(id*)arg
 {
-    if (g_idx > 3) g_idx = 0;
+    if (g_idx > 3)
+        g_idx = 0;
 
-    switch (g_idx ++) {
-    case 0: *arg = [NSArray array]; break;
-    case 1: *arg = [NSHost hostWithAddress:@"127.0.0.1"]; break;
-    case 2: *arg = [NSMutableDictionary dictionary]; break;
-    case 3: *arg = NULL; break;
+    switch (g_idx++) {
+    case 0:
+        *arg = [NSArray array];
+        break;
+    case 1:
+        *arg = [NSHost hostWithAddress:@"127.0.0.1"];
+        break;
+    case 2:
+        *arg = [NSMutableDictionary dictionary];
+        break;
+    case 3:
+        *arg = NULL;
+        break;
     }
 }
 
@@ -829,9 +850,6 @@ static char buf[1024];
 
 @end
 
-
-
-
 /*
  * Testing of calling into python
  *
@@ -839,38 +857,38 @@ static char buf[1024];
  * versions for all methods in OC_TestClass1 (both class and instance methods)
  */
 
-@interface OC_TestClass2: NSObject
-{
+@interface OC_TestClass2 : NSObject {
 }
 
-+(Class)classOfObject:(NSObject*)arg;
++ (Class)classOfObject:(NSObject*)arg;
 
 /* "plain" calls */
--(char)callInstanceCharFuncOf:(OC_TestClass1*)arg;
--(unsigned char)callInstanceUnsignedCharFuncOf:(OC_TestClass1*)arg;
+- (char)callInstanceCharFuncOf:(OC_TestClass1*)arg;
+- (unsigned char)callInstanceUnsignedCharFuncOf:(OC_TestClass1*)arg;
 
--(short)callInstanceShortFuncOf:(OC_TestClass1*)arg;
--(unsigned short)callInstanceUnsignedShortFuncOf:(OC_TestClass1*)arg;
+- (short)callInstanceShortFuncOf:(OC_TestClass1*)arg;
+- (unsigned short)callInstanceUnsignedShortFuncOf:(OC_TestClass1*)arg;
 
--(int)callInstanceIntFuncOf:(OC_TestClass1*)arg;
--(unsigned int)callInstanceUnsignedIntFuncOf:(OC_TestClass1*)arg;
+- (int)callInstanceIntFuncOf:(OC_TestClass1*)arg;
+- (unsigned int)callInstanceUnsignedIntFuncOf:(OC_TestClass1*)arg;
 
--(long)callInstanceLongFuncOf:(OC_TestClass1*)arg;
--(unsigned long)callInstanceUnsignedLongFuncOf:(OC_TestClass1*)arg;
+- (long)callInstanceLongFuncOf:(OC_TestClass1*)arg;
+- (unsigned long)callInstanceUnsignedLongFuncOf:(OC_TestClass1*)arg;
 
--(long long)callInstanceLongLongFuncOf:(OC_TestClass1*)arg;
--(unsigned long long)callInstanceUnsignedLongLongFuncOf:(OC_TestClass1*)arg;
+- (long long)callInstanceLongLongFuncOf:(OC_TestClass1*)arg;
+- (unsigned long long)callInstanceUnsignedLongLongFuncOf:(OC_TestClass1*)arg;
 
--(float)callInstanceFloatFuncOf:(OC_TestClass1*)arg;
--(double)callInstanceDoubleFuncOf:(OC_TestClass1*)arg;
+- (float)callInstanceFloatFuncOf:(OC_TestClass1*)arg;
+- (double)callInstanceDoubleFuncOf:(OC_TestClass1*)arg;
 
--(id)callInstanceIdFuncOf:(OC_TestClass1*)arg;
--(struct dummy)callInstanceDummyFuncOf:(OC_TestClass1*)arg;
--(struct dummy2)callInstanceDummy2FuncOf:(OC_TestClass1*)arg;
--(NSPoint)callInstanceNSPointFuncOf:(OC_TestClass1*)arg;
+- (id)callInstanceIdFuncOf:(OC_TestClass1*)arg;
+- (struct dummy)callInstanceDummyFuncOf:(OC_TestClass1*)arg;
+- (struct dummy2)callInstanceDummy2FuncOf:(OC_TestClass1*)arg;
+- (NSPoint)callInstanceNSPointFuncOf:(OC_TestClass1*)arg;
 
 - (long long)callInstanceLongLongArg:(long long)arg on:(OC_TestClass1*)obj;
-- (unsigned long long)callInstanceUnsignedLongLongArg:(unsigned long long)arg on:(OC_TestClass1*)obj;
+- (unsigned long long)callInstanceUnsignedLongLongArg:(unsigned long long)arg
+                                                   on:(OC_TestClass1*)obj;
 - (long)callInstanceLongArg:(long)arg on:(OC_TestClass1*)obj;
 - (unsigned long)callInstanceUnsignedLongArg:(unsigned long)arg on:(OC_TestClass1*)obj;
 - (int)callInstanceIntArg:(int)arg on:(OC_TestClass1*)obj;
@@ -885,37 +903,39 @@ static char buf[1024];
 - (id)callInstanceIdArg:(id)arg on:(OC_TestClass1*)obj;
 
 /* "NSInvocation" calls */
--(char)invokeInstanceCharFuncOf:(OC_TestClass1*)arg;
--(unsigned char)invokeInstanceUnsignedCharFuncOf:(OC_TestClass1*)arg;
+- (char)invokeInstanceCharFuncOf:(OC_TestClass1*)arg;
+- (unsigned char)invokeInstanceUnsignedCharFuncOf:(OC_TestClass1*)arg;
 
--(short)invokeInstanceShortFuncOf:(OC_TestClass1*)arg;
--(unsigned short)invokeInstanceUnsignedShortFuncOf:(OC_TestClass1*)arg;
+- (short)invokeInstanceShortFuncOf:(OC_TestClass1*)arg;
+- (unsigned short)invokeInstanceUnsignedShortFuncOf:(OC_TestClass1*)arg;
 
--(int)invokeInstanceIntFuncOf:(OC_TestClass1*)arg;
--(unsigned int)invokeInstanceUnsignedIntFuncOf:(OC_TestClass1*)arg;
+- (int)invokeInstanceIntFuncOf:(OC_TestClass1*)arg;
+- (unsigned int)invokeInstanceUnsignedIntFuncOf:(OC_TestClass1*)arg;
 
--(long)invokeInstanceLongFuncOf:(OC_TestClass1*)arg;
--(unsigned long)invokeInstanceUnsignedLongFuncOf:(OC_TestClass1*)arg;
+- (long)invokeInstanceLongFuncOf:(OC_TestClass1*)arg;
+- (unsigned long)invokeInstanceUnsignedLongFuncOf:(OC_TestClass1*)arg;
 
--(long long)invokeInstanceLongLongFuncOf:(OC_TestClass1*)arg;
--(unsigned long long)invokeInstanceUnsignedLongLongFuncOf:(OC_TestClass1*)arg;
+- (long long)invokeInstanceLongLongFuncOf:(OC_TestClass1*)arg;
+- (unsigned long long)invokeInstanceUnsignedLongLongFuncOf:(OC_TestClass1*)arg;
 
--(float)invokeInstanceFloatFuncOf:(OC_TestClass1*)arg;
--(double)invokeInstanceDoubleFuncOf:(OC_TestClass1*)arg;
+- (float)invokeInstanceFloatFuncOf:(OC_TestClass1*)arg;
+- (double)invokeInstanceDoubleFuncOf:(OC_TestClass1*)arg;
 
--(id)invokeInstanceIdFuncOf:(OC_TestClass1*)arg;
--(struct dummy)invokeInstanceDummyFuncOf:(OC_TestClass1*)arg;
--(struct dummy2)invokeInstanceDummy2FuncOf:(OC_TestClass1*)arg;
--(NSPoint)invokeInstanceNSPointFuncOf:(OC_TestClass1*)arg;
+- (id)invokeInstanceIdFuncOf:(OC_TestClass1*)arg;
+- (struct dummy)invokeInstanceDummyFuncOf:(OC_TestClass1*)arg;
+- (struct dummy2)invokeInstanceDummy2FuncOf:(OC_TestClass1*)arg;
+- (NSPoint)invokeInstanceNSPointFuncOf:(OC_TestClass1*)arg;
 
 - (long long)invokeInstanceLongLongArg:(long long)arg on:(OC_TestClass1*)obj;
-- (unsigned long long)invokeInstanceUnsignedLongLongArg:(unsigned long long)arg on:(OC_TestClass1*)obj;
+- (unsigned long long)invokeInstanceUnsignedLongLongArg:(unsigned long long)arg
+                                                     on:(OC_TestClass1*)obj;
 - (long)invokeInstanceLongArg:(long)arg on:(OC_TestClass1*)obj;
 - (unsigned long)invokeInstanceUnsignedLongArg:(unsigned long)arg on:(OC_TestClass1*)obj;
 - (int)invokeInstanceIntArg:(int)arg on:(OC_TestClass1*)obj;
 - (unsigned int)invokeInstanceUnsignedIntArg:(unsigned int)arg on:(OC_TestClass1*)obj;
 - (short)invokeInstanceShortArg:(short)arg on:(OC_TestClass1*)obj;
-- (unsigned short)invokeInstanceUnsignedShortArg:(unsigned short)arg on:(OC_TestClass1*)obj;
+- (unsigned short)invokeInstanceUnsignedShortArg:(unsigned short)arg
+                                              on:(OC_TestClass1*)obj;
 - (char)invokeInstanceCharArg:(char)arg on:(OC_TestClass1*)obj;
 - (unsigned char)invokeInstanceUnsignedCharArg:(unsigned char)arg on:(OC_TestClass1*)obj;
 - (float)invokeInstanceFloatArg:(float)arg on:(OC_TestClass1*)obj;
@@ -925,188 +945,186 @@ static char buf[1024];
 
 @end
 
-
-#define SETUP_INVOCATION(inv, target, selector) \
-    inv = [NSInvocation invocationWithMethodSignature: \
-        [target methodSignatureForSelector:selector]]; \
-    [inv setTarget:target]; \
+#define SETUP_INVOCATION(inv, target, selector)                                          \
+    inv = [NSInvocation                                                                  \
+        invocationWithMethodSignature:[target methodSignatureForSelector:selector]];     \
+    [inv setTarget:target];                                                              \
     [inv setSelector:selector];
 
 @implementation OC_TestClass2
 
-+(Class)classOfObject:(NSObject*)arg
++ (Class)classOfObject:(NSObject*)arg
 {
     return [arg class];
 }
 
--(char)callInstanceCharFuncOf:(OC_TestClass1*)arg
+- (char)callInstanceCharFuncOf:(OC_TestClass1*)arg
 {
     return [arg charFunc];
 }
 
--(unsigned char)callInstanceUnsignedCharFuncOf:(OC_TestClass1*)arg
+- (unsigned char)callInstanceUnsignedCharFuncOf:(OC_TestClass1*)arg
 {
     return [arg ucharFunc];
 }
 
--(short)callInstanceShortFuncOf:(OC_TestClass1*)arg
+- (short)callInstanceShortFuncOf:(OC_TestClass1*)arg
 {
     return [arg shortFunc];
 }
 
--(unsigned short)callInstanceUnsignedShortFuncOf:(OC_TestClass1*)arg
+- (unsigned short)callInstanceUnsignedShortFuncOf:(OC_TestClass1*)arg
 {
     return [arg ushortFunc];
 }
 
--(int)callInstanceIntFuncOf:(OC_TestClass1*)arg
+- (int)callInstanceIntFuncOf:(OC_TestClass1*)arg
 {
     return [arg intFunc];
 }
 
--(unsigned int)callInstanceUnsignedIntFuncOf:(OC_TestClass1*)arg
+- (unsigned int)callInstanceUnsignedIntFuncOf:(OC_TestClass1*)arg
 {
     return [arg uintFunc];
 }
 
--(long)callInstanceLongFuncOf:(OC_TestClass1*)arg
+- (long)callInstanceLongFuncOf:(OC_TestClass1*)arg
 {
     return [arg longFunc];
 }
 
--(unsigned long)callInstanceUnsignedLongFuncOf:(OC_TestClass1*)arg
+- (unsigned long)callInstanceUnsignedLongFuncOf:(OC_TestClass1*)arg
 {
     return [arg ulongFunc];
 }
 
--(char)invokeInstanceCharFuncOf:(OC_TestClass1*)arg
+- (char)invokeInstanceCharFuncOf:(OC_TestClass1*)arg
 {
     char res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, arg, @selector(charFunc))
 
-    [arg forwardInvocation:inv];
+        [arg forwardInvocation:inv];
     [inv getReturnValue:&res];
     return res;
 }
 
--(unsigned char)invokeInstanceUnsignedCharFuncOf:(OC_TestClass1*)arg
+- (unsigned char)invokeInstanceUnsignedCharFuncOf:(OC_TestClass1*)arg
 {
     unsigned char res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, arg, @selector(ucharFunc))
 
-    [arg forwardInvocation:inv];
+        [arg forwardInvocation:inv];
     [inv getReturnValue:&res];
     return res;
 }
 
--(short)invokeInstanceShortFuncOf:(OC_TestClass1*)arg
+- (short)invokeInstanceShortFuncOf:(OC_TestClass1*)arg
 {
     short res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, arg, @selector(shortFunc))
 
-    [arg forwardInvocation:inv];
+        [arg forwardInvocation:inv];
     [inv getReturnValue:&res];
     return res;
 }
 
--(unsigned short)invokeInstanceUnsignedShortFuncOf:(OC_TestClass1*)arg
+- (unsigned short)invokeInstanceUnsignedShortFuncOf:(OC_TestClass1*)arg
 {
     unsigned short res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, arg, @selector(ushortFunc))
 
-    [arg forwardInvocation:inv];
+        [arg forwardInvocation:inv];
     [inv getReturnValue:&res];
     return res;
 }
 
--(int)invokeInstanceIntFuncOf:(OC_TestClass1*)arg
+- (int)invokeInstanceIntFuncOf:(OC_TestClass1*)arg
 {
     int res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, arg, @selector(intFunc))
 
-    [arg forwardInvocation:inv];
+        [arg forwardInvocation:inv];
     [inv getReturnValue:&res];
     return res;
 }
 
--(unsigned int)invokeInstanceUnsignedIntFuncOf:(OC_TestClass1*)arg
+- (unsigned int)invokeInstanceUnsignedIntFuncOf:(OC_TestClass1*)arg
 {
     unsigned int res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, arg, @selector(uintFunc))
 
-    [arg forwardInvocation:inv];
+        [arg forwardInvocation:inv];
     [inv getReturnValue:&res];
     return res;
 }
 
--(long)invokeInstanceLongFuncOf:(OC_TestClass1*)arg
+- (long)invokeInstanceLongFuncOf:(OC_TestClass1*)arg
 {
     long res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, arg, @selector(longFunc))
 
-    [arg forwardInvocation:inv];
+        [arg forwardInvocation:inv];
     [inv getReturnValue:&res];
     return res;
 }
 
--(unsigned long)invokeInstanceUnsignedLongFuncOf:(OC_TestClass1*)arg
+- (unsigned long)invokeInstanceUnsignedLongFuncOf:(OC_TestClass1*)arg
 {
     unsigned long res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, arg, @selector(ulongFunc))
 
-    [arg forwardInvocation:inv];
+        [arg forwardInvocation:inv];
     [inv getReturnValue:&res];
     return res;
 }
 
--(long long)callInstanceLongLongFuncOf:(OC_TestClass1*)arg
+- (long long)callInstanceLongLongFuncOf:(OC_TestClass1*)arg
 {
     return [arg longlongFunc];
 }
 
--(unsigned long long)callInstanceUnsignedLongLongFuncOf:(OC_TestClass1*)arg
+- (unsigned long long)callInstanceUnsignedLongLongFuncOf:(OC_TestClass1*)arg
 {
     return [arg ulonglongFunc];
 }
 
--(float)callInstanceFloatFuncOf:(OC_TestClass1*)arg
+- (float)callInstanceFloatFuncOf:(OC_TestClass1*)arg
 {
     return [arg floatFunc];
 }
 
-
--(double)callInstanceDoubleFuncOf:(OC_TestClass1*)arg
+- (double)callInstanceDoubleFuncOf:(OC_TestClass1*)arg
 {
     return [arg doubleFunc];
 }
 
--(id)callInstanceIdFuncOf:(OC_TestClass1*)arg
+- (id)callInstanceIdFuncOf:(OC_TestClass1*)arg
 {
     return [arg idFunc];
 }
 
--(struct dummy)callInstanceDummyFuncOf:(OC_TestClass1*)arg
+- (struct dummy)callInstanceDummyFuncOf:(OC_TestClass1*)arg
 {
     return [arg dummyFunc];
 }
 
--(struct dummy2)callInstanceDummy2FuncOf:(OC_TestClass1*)arg
+- (struct dummy2)callInstanceDummy2FuncOf:(OC_TestClass1*)arg
 {
     struct dummy2 tmpval;
 
@@ -1114,7 +1132,7 @@ static char buf[1024];
     return tmpval;
 }
 
--(NSPoint)callInstanceNSPointFuncOf:(OC_TestClass1*)arg
+- (NSPoint)callInstanceNSPointFuncOf:(OC_TestClass1*)arg
 {
     return [arg nspointFunc];
 }
@@ -1124,7 +1142,8 @@ static char buf[1024];
     return [obj longlongArg:arg];
 }
 
-- (unsigned long long)callInstanceUnsignedLongLongArg:(unsigned long long)arg on:(OC_TestClass1*)obj
+- (unsigned long long)callInstanceUnsignedLongLongArg:(unsigned long long)arg
+                                                   on:(OC_TestClass1*)obj
 {
     return [obj ulonglongArg:arg];
 }
@@ -1189,100 +1208,98 @@ static char buf[1024];
     return [obj idArg:arg];
 }
 
-
-
--(long long)invokeInstanceLongLongFuncOf:(OC_TestClass1*)arg
+- (long long)invokeInstanceLongLongFuncOf:(OC_TestClass1*)arg
 {
     long long res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, arg, @selector(longlongFunc))
 
-    [arg forwardInvocation:inv];
+        [arg forwardInvocation:inv];
     [inv getReturnValue:&res];
     return res;
 }
 
--(unsigned long long)invokeInstanceUnsignedLongLongFuncOf:(OC_TestClass1*)arg
+- (unsigned long long)invokeInstanceUnsignedLongLongFuncOf:(OC_TestClass1*)arg
 {
     unsigned long long res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, arg, @selector(ulonglongFunc))
 
-    [arg forwardInvocation:inv];
+        [arg forwardInvocation:inv];
     [inv getReturnValue:&res];
     return res;
 }
 
--(float)invokeInstanceFloatFuncOf:(OC_TestClass1*)arg
+- (float)invokeInstanceFloatFuncOf:(OC_TestClass1*)arg
 {
     float res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, arg, @selector(floatFunc))
 
-    [arg forwardInvocation:inv];
+        [arg forwardInvocation:inv];
     [inv getReturnValue:&res];
     return res;
 }
 
--(double)invokeInstanceDoubleFuncOf:(OC_TestClass1*)arg
+- (double)invokeInstanceDoubleFuncOf:(OC_TestClass1*)arg
 {
     double res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, arg, @selector(doubleFunc))
 
-    [arg forwardInvocation:inv];
+        [arg forwardInvocation:inv];
     [inv getReturnValue:&res];
     return res;
 }
 
--(id)invokeInstanceIdFuncOf:(OC_TestClass1*)arg
+- (id)invokeInstanceIdFuncOf:(OC_TestClass1*)arg
 {
     id res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, arg, @selector(idFunc))
 
-    [arg forwardInvocation:inv];
+        [arg forwardInvocation:inv];
     [inv getReturnValue:&res];
     return res;
 }
 
--(struct dummy)invokeInstanceDummyFuncOf:(OC_TestClass1*)arg
+- (struct dummy)invokeInstanceDummyFuncOf:(OC_TestClass1*)arg
 {
     struct dummy res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, arg, @selector(dummyFunc))
 
-    [arg forwardInvocation:inv];
+        [arg forwardInvocation:inv];
     [inv getReturnValue:&res];
     return res;
 }
 
--(struct dummy2)invokeInstanceDummy2FuncOf:(OC_TestClass1*)arg
+- (struct dummy2)invokeInstanceDummy2FuncOf:(OC_TestClass1*)arg
 {
     struct dummy2 res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, arg, @selector(dummy2Func))
 
-    [arg forwardInvocation:inv];
+        [arg forwardInvocation:inv];
     [inv getReturnValue:&res];
     return res;
 }
 
--(NSPoint)invokeInstanceNSPointFuncOf:(OC_TestClass1*)arg
+- (NSPoint)invokeInstanceNSPointFuncOf:(OC_TestClass1*)arg
 {
     NSPoint res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, arg, @selector(nspointFunc))
 
-    [arg forwardInvocation:inv];
+        [arg forwardInvocation:inv];
     [inv getReturnValue:&res];
     return res;
 }
@@ -1292,21 +1309,24 @@ static char buf[1024];
     long long res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj, @selector(longlongArg:))
-    [inv setArgument:&arg atIndex:2]; // First real argument
+    SETUP_INVOCATION(inv, obj,
+                     @selector(longlongArg:))[inv setArgument:&arg
+                                                      atIndex:2]; // First real argument
 
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
     return res;
 }
 
-- (unsigned long long)invokeInstanceUnsignedLongLongArg:(unsigned long long)arg on:(OC_TestClass1*)obj
+- (unsigned long long)invokeInstanceUnsignedLongLongArg:(unsigned long long)arg
+                                                     on:(OC_TestClass1*)obj
 {
     unsigned long long res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj, @selector(ulonglongArg:))
-    [inv setArgument:&arg atIndex:2]; // First real argument
+    SETUP_INVOCATION(inv, obj,
+                     @selector(ulonglongArg:))[inv setArgument:&arg
+                                                       atIndex:2]; // First real argument
 
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -1318,8 +1338,9 @@ static char buf[1024];
     long res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj, @selector(longArg:))
-    [inv setArgument:&arg atIndex:2]; // First real argument
+    SETUP_INVOCATION(inv, obj,
+                     @selector
+                     (longArg:))[inv setArgument:&arg atIndex:2]; // First real argument
 
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -1331,8 +1352,9 @@ static char buf[1024];
     unsigned long res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj, @selector(ulonglongArg:))
-    [inv setArgument:&arg atIndex:2]; // First real argument
+    SETUP_INVOCATION(inv, obj,
+                     @selector(ulonglongArg:))[inv setArgument:&arg
+                                                       atIndex:2]; // First real argument
 
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -1344,8 +1366,9 @@ static char buf[1024];
     int res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj, @selector(intArg:))
-    [inv setArgument:&arg atIndex:2]; // First real argument
+    SETUP_INVOCATION(inv, obj,
+                     @selector
+                     (intArg:))[inv setArgument:&arg atIndex:2]; // First real argument
 
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -1357,8 +1380,9 @@ static char buf[1024];
     unsigned int res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj, @selector(uintArg:))
-    [inv setArgument:&arg atIndex:2]; // First real argument
+    SETUP_INVOCATION(inv, obj,
+                     @selector
+                     (uintArg:))[inv setArgument:&arg atIndex:2]; // First real argument
 
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -1370,21 +1394,24 @@ static char buf[1024];
     short res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj, @selector(shortArg:))
-    [inv setArgument:&arg atIndex:2]; // First real argument
+    SETUP_INVOCATION(inv, obj,
+                     @selector
+                     (shortArg:))[inv setArgument:&arg atIndex:2]; // First real argument
 
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
     return res;
 }
 
-- (unsigned short)invokeInstanceUnsignedShortArg:(unsigned short)arg on:(OC_TestClass1*)obj
+- (unsigned short)invokeInstanceUnsignedShortArg:(unsigned short)arg
+                                              on:(OC_TestClass1*)obj
 {
     unsigned short res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj, @selector(ushortArg:))
-    [inv setArgument:&arg atIndex:2]; // First real argument
+    SETUP_INVOCATION(inv, obj,
+                     @selector
+                     (ushortArg:))[inv setArgument:&arg atIndex:2]; // First real argument
 
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -1396,8 +1423,9 @@ static char buf[1024];
     char res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj, @selector(charArg:))
-    [inv setArgument:&arg atIndex:2]; // First real argument
+    SETUP_INVOCATION(inv, obj,
+                     @selector
+                     (charArg:))[inv setArgument:&arg atIndex:2]; // First real argument
 
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -1409,8 +1437,9 @@ static char buf[1024];
     unsigned char res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj, @selector(ucharArg:))
-    [inv setArgument:&arg atIndex:2]; // First real argument
+    SETUP_INVOCATION(inv, obj,
+                     @selector
+                     (ucharArg:))[inv setArgument:&arg atIndex:2]; // First real argument
 
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -1422,8 +1451,9 @@ static char buf[1024];
     float res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj, @selector(floatArg:))
-    [inv setArgument:&arg atIndex:2]; // First real argument
+    SETUP_INVOCATION(inv, obj,
+                     @selector
+                     (floatArg:))[inv setArgument:&arg atIndex:2]; // First real argument
 
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -1435,8 +1465,9 @@ static char buf[1024];
     double res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj, @selector(doubleArg:))
-    [inv setArgument:&arg atIndex:2]; // First real argument
+    SETUP_INVOCATION(inv, obj,
+                     @selector
+                     (doubleArg:))[inv setArgument:&arg atIndex:2]; // First real argument
 
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -1448,8 +1479,9 @@ static char buf[1024];
     char* res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj, @selector(charpArg:))
-    [inv setArgument:&arg atIndex:2]; // First real argument
+    SETUP_INVOCATION(inv, obj,
+                     @selector
+                     (charpArg:))[inv setArgument:&arg atIndex:2]; // First real argument
 
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -1461,38 +1493,36 @@ static char buf[1024];
     id res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj, @selector(idArg:))
-    [inv setArgument:&arg atIndex:2]; // First real argument
+    SETUP_INVOCATION(inv, obj,
+                     @selector
+                     (idArg:))[inv setArgument:&arg atIndex:2]; // First real argument
 
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
     return res;
 }
 
-
 @end
-
 
 /*============================================================================*/
 
-@interface PyObjC_TestClass3 : NSObject
-{
+@interface PyObjC_TestClass3 : NSObject {
 }
-+(NSHost*)createAHostWithAddress:(NSString*)address;
-+(id)copyValue:(id<NSCopying>)source;
-+(NSData*)getBytes:(NSData*)data;
-+(id)keyValue:(int)idx forObject: value key: id;
-+(void)setKeyValue:(int)idx forObject: object key: key value: value;
++ (NSHost*)createAHostWithAddress:(NSString*)address;
++ (id)copyValue:(id<NSCopying>)source;
++ (NSData*)getBytes:(NSData*)data;
++ (id)keyValue:(int)idx forObject:value key:id;
++ (void)setKeyValue:(int)idx forObject:object key:key value:value;
 @end
 
 @implementation PyObjC_TestClass3
 
-+(NSHost*)createAHostWithAddress:(NSString*)address
++ (NSHost*)createAHostWithAddress:(NSString*)address
 {
     return [NSHost hostWithAddress:address];
 }
 
-+(NSData*)getBytes:(NSData*)data
++ (NSData*)getBytes:(NSData*)data
 {
     const void* bytes = [data bytes];
 
@@ -1503,7 +1533,7 @@ static char buf[1024];
     }
 }
 
-+(id)copyValue:(NSObject<NSCopying>*)source
++ (id)copyValue:(NSObject<NSCopying>*)source
 {
     id theCopy;
     id pool;
@@ -1521,53 +1551,76 @@ static char buf[1024];
     return theCopy;
 }
 
-+(id)keyValue:(int)idx forObject: object key: key
++ (id)keyValue:(int)idx forObject:object key:key
 {
     switch (idx) {
-    case 0: return [object valueForKey: key];
-    case 1: return [object valueForKeyPath: key];
-    case 2: return [object storedValueForKey: key];
-    case 3: return [object valuesForKeys: key];
+    case 0:
+        return [object valueForKey:key];
+    case 1:
+        return [object valueForKeyPath:key];
+    case 2:
+        return [object storedValueForKey:key];
+    case 3:
+        return [object valuesForKeys:key];
     }
     return nil;
 }
 
-+(void)setKeyValue:(int)idx forObject: object key: key value: value
++ (void)setKeyValue:(int)idx forObject:object key:key value:value
 {
     switch (idx) {
-    case 0: [object takeValue: value forKey: key]; break;
-    case 1: [object takeValue: value forKeyPath: key]; break;
-    case 2: [object takeStoredValue: value forKey: key]; break;
-    case 3: [object takeValuesFromDictionary: value]; break;
-#if defined (MAC_OS_X_VERSION_10_3) && (MAC_OS_X_VERSION_MAX_ALLOWED >= MAC_OS_X_VERSION_10_3)
+    case 0:
+        [object takeValue:value forKey:key];
+        break;
+    case 1:
+        [object takeValue:value forKeyPath:key];
+        break;
+    case 2:
+        [object takeStoredValue:value forKey:key];
+        break;
+    case 3:
+        [object takeValuesFromDictionary:value];
+        break;
+#if defined(MAC_OS_X_VERSION_10_3) &&                                                    \
+    (MAC_OS_X_VERSION_MAX_ALLOWED >= MAC_OS_X_VERSION_10_3)
 
-    case 4: [object setValue: value forKey: key]; break;
-    case 5: [object setValue: value forKeyPath: key]; break;
-    case 6: [object setValuesForKeysWithDictionary: value]; break;
+    case 4:
+        [object setValue:value forKey:key];
+        break;
+    case 5:
+        [object setValue:value forKeyPath:key];
+        break;
+    case 6:
+        [object setValuesForKeysWithDictionary:value];
+        break;
 #endif
     }
 }
 
-+(NSObject*)makeObservedOfClass:(Class)theClass observer:(NSObject*)obj keyPath:(NSString*)path
++ (NSObject*)makeObservedOfClass:(Class)theClass
+                        observer:(NSObject*)obj
+                         keyPath:(NSString*)path
 {
-#if defined (MAC_OS_X_VERSION_10_3) && (MAC_OS_X_VERSION_MAX_ALLOWED >= MAC_OS_X_VERSION_10_3)
+#if defined(MAC_OS_X_VERSION_10_3) &&                                                    \
+    (MAC_OS_X_VERSION_MAX_ALLOWED >= MAC_OS_X_VERSION_10_3)
     NSObject* o = [[[theClass alloc] init] autorelease];
     [o addObserver:obj
-       forKeyPath:path
-       options:NSKeyValueObservingOptionNew|NSKeyValueObservingOptionOld
-       context:0];
+        forKeyPath:path
+           options:NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld
+           context:0];
     return o;
 #else
     /* Use arguments */
     int i;
-    i = (int)&theClass; i = (int)&obj; i = (int)&path;
+    i = (int)&theClass;
+    i = (int)&obj;
+    i = (int)&path;
     return nil;
 #endif
 }
 @end
 
-@interface PyObjC_TestClass4 : NSObject
-{
+@interface PyObjC_TestClass4 : NSObject {
     id returnObject;
 }
 - (void)encodeWithCoder:(NSCoder*)coder;
@@ -1585,7 +1638,7 @@ static char buf[1024];
 @end
 
 @implementation PyObjC_TestClass4
--(int)_privateMethodWithArg:(float)arg
+- (int)_privateMethodWithArg:(float)arg
 {
     return (int)arg;
 }
@@ -1606,7 +1659,7 @@ static char buf[1024];
 - (void)encodeWithCoder:(NSCoder*)coder
 {
     double d = 1.5;
-    int iArray[] = { 3,4,5,6};
+    int iArray[] = {3, 4, 5, 6};
     [coder encodeValueOfObjCType:@encode(double) at:&d];
     [coder encodeArrayOfObjCType:@encode(int) count:4 at:iArray];
     [coder encodeBytes:"hello world" length:11];
@@ -1640,34 +1693,30 @@ static char buf[1024];
     int data[10];
 
     [coder decodeArrayOfObjCType:@encode(int) count:10 at:data];
-    return [NSArray arrayWithObjects:
-            [NSNumber numberWithInt:data[0]],
-            [NSNumber numberWithInt:data[1]],
-            [NSNumber numberWithInt:data[2]],
-            [NSNumber numberWithInt:data[3]],
-            [NSNumber numberWithInt:data[4]],
-            [NSNumber numberWithInt:data[5]],
-            [NSNumber numberWithInt:data[6]],
-            [NSNumber numberWithInt:data[7]],
-            [NSNumber numberWithInt:data[8]],
-            [NSNumber numberWithInt:data[9]],
-            nil];
+    return [NSArray arrayWithObjects:[NSNumber numberWithInt:data[0]],
+                                     [NSNumber numberWithInt:data[1]],
+                                     [NSNumber numberWithInt:data[2]],
+                                     [NSNumber numberWithInt:data[3]],
+                                     [NSNumber numberWithInt:data[4]],
+                                     [NSNumber numberWithInt:data[5]],
+                                     [NSNumber numberWithInt:data[6]],
+                                     [NSNumber numberWithInt:data[7]],
+                                     [NSNumber numberWithInt:data[8]],
+                                     [NSNumber numberWithInt:data[9]], nil];
 }
 
-+ (NSString*) fetchObjectDescription: (NSObject*) value
++ (NSString*)fetchObjectDescription:(NSObject*)value
 {
     return [value description];
 }
 
 @end
 
-
-@interface PyObjCTest_KVBaseClass : NSObject
-{
-    NSString *directString;
-    NSNumber *directNumber;
-    NSString *indirectString;
-    NSNumber *indirectNumber;
+@interface PyObjCTest_KVBaseClass : NSObject {
+    NSString* directString;
+    NSNumber* directNumber;
+    NSString* indirectString;
+    NSNumber* indirectNumber;
 }
 @end
 
@@ -1675,26 +1724,33 @@ static char buf[1024];
 - (instancetype)init
 {
     self = [super init];
-    if (!self) return nil;
+    if (!self)
+        return nil;
 
     directString = [@"Direct String" retain];
-    directNumber = [[NSNumber numberWithInt: 42] retain];
+    directNumber = [[NSNumber numberWithInt:42] retain];
     indirectString = [@"Indirect String" retain];
-    indirectNumber = [[NSNumber numberWithInt: 84] retain];
+    indirectNumber = [[NSNumber numberWithInt:84] retain];
 
     return self;
 }
 
-- (NSString *) indirectString { return indirectString; }
-- (void) setIndirectString: (NSString *) aString
+- (NSString*)indirectString
+{
+    return indirectString;
+}
+- (void)setIndirectString:(NSString*)aString
 {
     [aString retain];
     [indirectString release];
     indirectString = aString;
 }
 
-- (NSNumber *) indirectNumber { return indirectNumber; }
-- (void) setIndirectNumber: (NSNumber *) aNumber
+- (NSNumber*)indirectNumber
+{
+    return indirectNumber;
+}
+- (void)setIndirectNumber:(NSNumber*)aNumber
 {
     [aNumber retain];
     [indirectNumber release];
@@ -1702,10 +1758,9 @@ static char buf[1024];
 }
 @end
 
-@interface PyObjCTest_KVPathClass : NSObject
-{
-    PyObjCTest_KVBaseClass *directHead;
-    PyObjCTest_KVBaseClass *indirectHead;
+@interface PyObjCTest_KVPathClass : NSObject {
+    PyObjCTest_KVBaseClass* directHead;
+    PyObjCTest_KVBaseClass* indirectHead;
 }
 @end
 
@@ -1713,7 +1768,8 @@ static char buf[1024];
 - (instancetype)init
 {
     self = [super init];
-    if (!self) return nil;
+    if (!self)
+        return nil;
 
     directHead = [[PyObjCTest_KVBaseClass alloc] init];
     indirectHead = [[PyObjCTest_KVBaseClass alloc] init];
@@ -1721,8 +1777,11 @@ static char buf[1024];
     return self;
 }
 
-- (PyObjCTest_KVBaseClass *) indirectHead { return indirectHead; }
-- (void) setInidrectHead: (PyObjCTest_KVBaseClass *) aHead
+- (PyObjCTest_KVBaseClass*)indirectHead
+{
+    return indirectHead;
+}
+- (void)setInidrectHead:(PyObjCTest_KVBaseClass*)aHead
 {
     [aHead retain];
     [indirectHead release];
@@ -1730,26 +1789,30 @@ static char buf[1024];
 }
 @end
 
-#if defined (MAC_OS_X_VERSION_10_3) && (MAC_OS_X_VERSION_MAX_ALLOWED >= MAC_OS_X_VERSION_10_3)
+#if defined(MAC_OS_X_VERSION_10_3) &&                                                    \
+    (MAC_OS_X_VERSION_MAX_ALLOWED >= MAC_OS_X_VERSION_10_3)
 
-@interface PyObjCTest_KeyValueObserver : NSObject
-{
+@interface PyObjCTest_KeyValueObserver : NSObject {
     id observed;
     NSString* key;
     id value;
 }
--(instancetype)initWithInstanceOfClass:(Class)cls withKey:(NSString*)key;
--(id)getValue;
--(void)dealloc;
--(void)observeValueForKeyPath:(NSString*)keyPath ofObject:(id)object change:(NSDictionary*)change context:(void*)context;
+- (instancetype)initWithInstanceOfClass:(Class)cls withKey:(NSString*)key;
+- (id)getValue;
+- (void)dealloc;
+- (void)observeValueForKeyPath:(NSString*)keyPath
+                      ofObject:(id)object
+                        change:(NSDictionary*)change
+                       context:(void*)context;
 @end
 
 @implementation PyObjCTest_KeyValueObserver
 
--(instancetype)initWithInstanceOfClass:(Class)cls withKey:(NSString*)aKey
+- (instancetype)initWithInstanceOfClass:(Class)cls withKey:(NSString*)aKey
 {
     self = [super init];
-    if (self == nil) return nil;
+    if (self == nil)
+        return nil;
     value = nil;
     observed = nil;
 
@@ -1763,9 +1826,9 @@ static char buf[1024];
     [aKey retain];
 
     [observed addObserver:self
-          forKeyPath:key
-          options:NSKeyValueObservingOptionNew|NSKeyValueObservingOptionOld
-          context:0];
+               forKeyPath:key
+                  options:NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld
+                  context:0];
     value = [[observed valueForKey:key] retain];
 
     // Not actually used...
@@ -1773,7 +1836,7 @@ static char buf[1024];
     return self;
 }
 
--(void)dealloc
+- (void)dealloc
 {
     [observed removeObserver:self forKeyPath:key];
     [key release];
@@ -1782,18 +1845,20 @@ static char buf[1024];
     [super dealloc];
 }
 
--(id)getValue
+- (id)getValue
 {
     return value;
 }
 
--(void)observeValueForKeyPath:(NSString*)keyPath ofObject:(id)object change:(NSDictionary*)change context:(void*)context
+- (void)observeValueForKeyPath:(NSString*)keyPath
+                      ofObject:(id)object
+                        change:(NSDictionary*)change
+                       context:(void*)context
 {
     id newValue = [change objectForKey:NSKeyValueChangeNewKey];
     [newValue retain];
     [value release];
     value = newValue;
-
 
     // use all arguments to avoid warnings...
     (void)&keyPath;
@@ -1801,22 +1866,19 @@ static char buf[1024];
     (void)&object;
 }
 
-
 @end
 
 #endif /* ! MacOS X 10.3 */
 
-
-static PyObject* pyobjcpy(PyObject* self __attribute__((__unused__)), PyObject* args)
+static PyObject*
+pyobjcpy(PyObject* self __attribute__((__unused__)), PyObject* args)
 {
     char* signature;
     PyObject* o;
     char* buf;
     int r;
 
-    if (!PyArg_ParseTuple(args,
-        "yO",
-        &signature, &o)) {
+    if (!PyArg_ParseTuple(args, "yO", &signature, &o)) {
 
         return NULL;
     }
@@ -1836,10 +1898,10 @@ static PyObject* pyobjcpy(PyObject* self __attribute__((__unused__)), PyObject* 
     o = PyObjC_ObjCToPython(signature, buf);
     PyMem_Free(buf);
     return o;
-
 }
 
-static PyObject* carrayMaker(PyObject* self __attribute__((__unused__)), PyObject* args)
+static PyObject*
+carrayMaker(PyObject* self __attribute__((__unused__)), PyObject* args)
 {
     char* signature;
     PyObject* o1;
@@ -1850,9 +1912,7 @@ static PyObject* carrayMaker(PyObject* self __attribute__((__unused__)), PyObjec
     PyObject* res;
     PyObject* v = NULL;
 
-    if (!PyArg_ParseTuple(args,
-        "yOO",
-        &signature, &o1, &o2)) {
+    if (!PyArg_ParseTuple(args, "yOO", &signature, &o1, &o2)) {
         return NULL;
     }
 
@@ -1877,54 +1937,31 @@ static PyObject* carrayMaker(PyObject* self __attribute__((__unused__)), PyObjec
     return res;
 }
 
-
-
 static PyMethodDef mod_methods[] = {
-    {
-        "pyObjCPy",
-        (PyCFunction)pyobjcpy,
-        METH_VARARGS,
+    {"pyObjCPy", (PyCFunction)pyobjcpy, METH_VARARGS,
 
-        "pyObjCPy(signature, object) -> object\n"
-        "\n"
-        "convert object to ObjC and back."
-    },
+     "pyObjCPy(signature, object) -> object\n"
+     "\n"
+     "convert object to ObjC and back."},
 
-    {
-        "carrayMaker",
-        (PyCFunction)carrayMaker,
-        METH_VARARGS,
+    {"carrayMaker", (PyCFunction)carrayMaker, METH_VARARGS,
 
-        "carrayMaker(signature, seq, count) -> str\n"
-        "\n"
-        "Convert a sequence of 'count' 'signature' objects to\n"
-        "a C buffer, and rebuild a python tuple from it.\n"
-        "count can be None."
-    },
+     "carrayMaker(signature, seq, count) -> str\n"
+     "\n"
+     "Convert a sequence of 'count' 'signature' objects to\n"
+     "a C buffer, and rebuild a python tuple from it.\n"
+     "count can be None."},
 
-
-    { 0, 0, 0, 0 }
-};
-
+    {0, 0, 0, 0}};
 
 /* Python glue */
 
 static struct PyModuleDef mod_module = {
-    PyModuleDef_HEAD_INIT,
-    "testbndl",
-    NULL,
-    0,
-    mod_methods,
-    NULL,
-    NULL,
-    NULL,
-    NULL
-};
+    PyModuleDef_HEAD_INIT, "testbndl", NULL, 0, mod_methods, NULL, NULL, NULL, NULL};
 
 PyObject* PyInit_testbndl(void);
 
-PyObject* __attribute__((__visibility__("default")))
-PyInit_testbndl(void)
+PyObject* __attribute__((__visibility__("default"))) PyInit_testbndl(void)
 {
     PyObject* m;
 
@@ -1937,34 +1974,35 @@ PyInit_testbndl(void)
         return NULL;
     }
 
-    if (PyModule_AddObject(m, "OC_TestClass1",
-        PyObjC_IdToPython([OC_TestClass1 class])) < 0) {
+    if (PyModule_AddObject(m, "OC_TestClass1", PyObjC_IdToPython([OC_TestClass1 class])) <
+        0) {
         return NULL;
     }
-    if (PyModule_AddObject(m, "OC_TestClass2",
-        PyObjC_IdToPython([OC_TestClass2 class])) < 0) {
+    if (PyModule_AddObject(m, "OC_TestClass2", PyObjC_IdToPython([OC_TestClass2 class])) <
+        0) {
         return NULL;
     }
     if (PyModule_AddObject(m, "PyObjC_TestClass3",
-        PyObjC_IdToPython([PyObjC_TestClass3 class])) < 0) {
+                           PyObjC_IdToPython([PyObjC_TestClass3 class])) < 0) {
         return NULL;
     }
     if (PyModule_AddObject(m, "PyObjC_TestClass4",
-        PyObjC_IdToPython([PyObjC_TestClass4 class])) < 0) {
+                           PyObjC_IdToPython([PyObjC_TestClass4 class])) < 0) {
         return NULL;
     }
     if (PyModule_AddObject(m, "PyObjCTest_KVBaseClass",
-        PyObjC_IdToPython([PyObjCTest_KVBaseClass class])) < 0) {
+                           PyObjC_IdToPython([PyObjCTest_KVBaseClass class])) < 0) {
         return NULL;
     }
     if (PyModule_AddObject(m, "PyObjCTest_KVPathClass",
-        PyObjC_IdToPython([PyObjCTest_KVPathClass class])) < 0) {
+                           PyObjC_IdToPython([PyObjCTest_KVPathClass class])) < 0) {
         return NULL;
     }
 
-#if defined (MAC_OS_X_VERSION_10_3) && (MAC_OS_X_VERSION_MAX_ALLOWED >= MAC_OS_X_VERSION_10_3)
+#if defined(MAC_OS_X_VERSION_10_3) &&                                                    \
+    (MAC_OS_X_VERSION_MAX_ALLOWED >= MAC_OS_X_VERSION_10_3)
     if (PyModule_AddObject(m, "PyObjCTest_KeyValueObserver",
-        PyObjC_IdToPython([PyObjCTest_KeyValueObserver class])) < 0) {
+                           PyObjC_IdToPython([PyObjCTest_KeyValueObserver class])) < 0) {
         return NULL;
     }
 #else
@@ -2055,7 +2093,8 @@ PyInit_testbndl(void)
         return NULL;
     }
 
-    if (PyModule_AddObject(m, "ULLONG_MAX", PyLong_FromUnsignedLongLong(ULLONG_MAX)) < 0) {
+    if (PyModule_AddObject(m, "ULLONG_MAX", PyLong_FromUnsignedLongLong(ULLONG_MAX)) <
+        0) {
         return NULL;
     }
     if (PyModule_AddObject(m, "LLONG_MAX", PyLong_FromLongLong(LLONG_MAX)) < 0) {

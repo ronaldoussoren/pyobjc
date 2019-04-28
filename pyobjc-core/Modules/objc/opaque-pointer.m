@@ -6,21 +6,18 @@
 typedef struct {
     PyObject_HEAD
 
-    void* pointer_value;
+        void* pointer_value;
 } OpaquePointerObject;
 
 static PyMemberDef opaque_members[] = {
+    {.name = "__pointer__",
+     .type = T_LONG,
+     .offset = offsetof(OpaquePointerObject, pointer_value),
+     .flags = READONLY,
+     .doc = "raw value of the pointer"},
     {
-        .name   = "__pointer__",
-        .type   = T_LONG,
-        .offset = offsetof(OpaquePointerObject, pointer_value),
-        .flags  = READONLY,
-        .doc    = "raw value of the pointer"
-    },
-    {
-        .name   = NULL  /* SENTINEL */
-    }
-};
+        .name = NULL /* SENTINEL */
+    }};
 
 static PyObject*
 as_cobject(PyObject* self)
@@ -30,7 +27,8 @@ as_cobject(PyObject* self)
         return Py_None;
     }
 
-    return PyCapsule_New(((OpaquePointerObject*)self)->pointer_value, "objc.__opaque__", NULL);
+    return PyCapsule_New(((OpaquePointerObject*)self)->pointer_value, "objc.__opaque__",
+                         NULL);
 }
 
 static PyObject*
@@ -49,7 +47,7 @@ as_ctypes_voidp(PyObject* self)
     }
 
     return PyObject_CallFunction(c_void_p, "k",
-        (long)((OpaquePointerObject*)self)->pointer_value);
+                                 (long)((OpaquePointerObject*)self)->pointer_value);
 }
 
 static PyObject*
@@ -58,36 +56,28 @@ opaque_sizeof(PyObject* self)
     return PyLong_FromSsize_t(Py_TYPE(self)->tp_basicsize);
 }
 
-
-
 static PyMethodDef opaque_methods[] = {
+    {.ml_name = "__cobject__",
+     .ml_meth = (PyCFunction)as_cobject,
+     .ml_flags = METH_NOARGS,
+     .ml_doc = "get a CObject representing this object"},
+    {.ml_name = "__c_void_p__",
+     .ml_meth = (PyCFunction)as_ctypes_voidp,
+     .ml_flags = METH_NOARGS,
+     .ml_doc = "get a ctypes.void_p representing this object"},
     {
-        .ml_name    = "__cobject__",
-        .ml_meth    = (PyCFunction)as_cobject,
-        .ml_flags   = METH_NOARGS,
-        .ml_doc     = "get a CObject representing this object"
+        .ml_name = "__sizeof__",
+        .ml_meth = (PyCFunction)opaque_sizeof,
+        .ml_flags = METH_NOARGS,
     },
     {
-        .ml_name    = "__c_void_p__",
-        .ml_meth    = (PyCFunction)as_ctypes_voidp,
-        .ml_flags   = METH_NOARGS,
-        .ml_doc     = "get a ctypes.void_p representing this object"
-    },
-    {
-        .ml_name    = "__sizeof__",
-        .ml_meth    = (PyCFunction)opaque_sizeof,
-        .ml_flags   = METH_NOARGS,
-    },
-    {
-        .ml_name    = NULL /* SENTINEL */
-    }
-};
-
+        .ml_name = NULL /* SENTINEL */
+    }};
 
 static PyObject*
 opaque_new(PyTypeObject* type, PyObject* args, PyObject* kwds)
 {
-static char* keywords[] = { "cobject", "c_void_p", NULL };
+    static char* keywords[] = {"cobject", "c_void_p", NULL};
     PyObject* cobject = NULL;
     PyObject* c_void_p = NULL;
 
@@ -96,8 +86,7 @@ static char* keywords[] = { "cobject", "c_void_p", NULL };
     }
 
     if (cobject != NULL && c_void_p != NULL) {
-        PyErr_SetString(PyExc_ValueError,
-            "pass 'cobject' or 'c_void_p', not both");
+        PyErr_SetString(PyExc_ValueError, "pass 'cobject' or 'c_void_p', not both");
         return NULL;
     }
 
@@ -106,8 +95,7 @@ static char* keywords[] = { "cobject", "c_void_p", NULL };
         void* p;
 
         if (!PyCapsule_CheckExact(cobject)) {
-            PyErr_SetString(PyExc_TypeError,
-                 "'cobject' argument is not a PyCapsule");
+            PyErr_SetString(PyExc_TypeError, "'cobject' argument is not a PyCapsule");
             return NULL;
         }
 
@@ -130,8 +118,8 @@ static char* keywords[] = { "cobject", "c_void_p", NULL };
         PyObject* attrval;
 
         if (PyLong_Check(c_void_p)) {
-                attrval = c_void_p;
-                Py_INCREF(attrval);
+            attrval = c_void_p;
+            Py_INCREF(attrval);
 
         } else {
             attrval = PyObject_GetAttrString(c_void_p, "value");
@@ -148,8 +136,7 @@ static char* keywords[] = { "cobject", "c_void_p", NULL };
             }
 
         } else {
-            PyErr_SetString(PyExc_ValueError,
-                "c_void_p.value is not an integer");
+            PyErr_SetString(PyExc_ValueError, "c_void_p.value is not an integer");
             return NULL;
         }
 
@@ -163,8 +150,7 @@ static char* keywords[] = { "cobject", "c_void_p", NULL };
         return (PyObject*)result;
 
     } else {
-        PyErr_Format(PyExc_TypeError, "Cannot create %s objects",
-                type->tp_name);
+        PyErr_Format(PyExc_TypeError, "Cannot create %s objects", type->tp_name);
         return NULL;
     }
 }
@@ -176,11 +162,8 @@ opaque_dealloc(PyObject* self)
 }
 
 static void
-opaque_from_c(
-    ffi_cif* cif __attribute__((__unused__)),
-    void* retval,
-    void** args,
-    void* userdata)
+opaque_from_c(ffi_cif* cif __attribute__((__unused__)), void* retval, void** args,
+              void* userdata)
 {
     void* pointer_value = *(void**)args[0];
     PyTypeObject* opaque_type = (PyTypeObject*)userdata;
@@ -197,11 +180,8 @@ opaque_from_c(
 }
 
 static void
-opaque_to_c(
-    ffi_cif* cif __attribute__((__unused__)),
-    void* retval,
-    void** args,
-    void* userdata)
+opaque_to_c(ffi_cif* cif __attribute__((__unused__)), void* retval, void** args,
+            void* userdata)
 {
     PyObject* obj = *(PyObject**)args[0];
     void* pObj = *(void**)args[1];
@@ -209,9 +189,8 @@ opaque_to_c(
 
     if (!PyObject_TypeCheck((obj), opaque_type)) {
         *(void**)pObj = (void*)0xDEADBEEF; /* force errors */
-        PyErr_Format(PyExc_TypeError,
-            "Need instance of %s, got instance of %s",
-            opaque_type->tp_name, Py_TYPE(obj)->tp_name);
+        PyErr_Format(PyExc_TypeError, "Need instance of %s, got instance of %s",
+                     opaque_type->tp_name, Py_TYPE(obj)->tp_name);
         *(int*)retval = -1;
         return;
     }
@@ -219,7 +198,6 @@ opaque_to_c(
     *(void**)pObj = ((OpaquePointerObject*)obj)->pointer_value;
     *(int*)retval = 0;
 }
-
 
 /*
  * Usage:
@@ -230,15 +208,13 @@ opaque_to_c(
  *             NSZonePointer_doc));
  */
 PyObject*
-PyObjCCreateOpaquePointerType(
-        const char* name,
-        const char* typestr,
-        const char* docstr)
+PyObjCCreateOpaquePointerType(const char* name, const char* typestr, const char* docstr)
 {
-static const char convert_cif_signature[] = { _C_INT, _C_PTR, _C_VOID, _C_PTR, _C_VOID, 0 };
-static const char new_cif_signature[] = { _C_PTR, _C_VOID, _C_PTR, _C_VOID, 0 };
-static ffi_cif* convert_cif = NULL;
-static ffi_cif* new_cif = NULL;
+    static const char convert_cif_signature[] = {_C_INT, _C_PTR,  _C_VOID,
+                                                 _C_PTR, _C_VOID, 0};
+    static const char new_cif_signature[] = {_C_PTR, _C_VOID, _C_PTR, _C_VOID, 0};
+    static ffi_cif* convert_cif = NULL;
+    static ffi_cif* new_cif = NULL;
 
     PyHeapTypeObject* newType = NULL;
     PyObjCPointerWrapper_ToPythonFunc from_c = NULL;
@@ -278,7 +254,7 @@ static ffi_cif* new_cif = NULL;
     newType->ht_type.tp_basicsize = sizeof(OpaquePointerObject);
     newType->ht_type.tp_dealloc = opaque_dealloc;
     newType->ht_type.tp_getattro = PyObject_GenericGetAttr;
-    newType->ht_type.tp_flags = Py_TPFLAGS_DEFAULT|Py_TPFLAGS_HEAPTYPE;
+    newType->ht_type.tp_flags = Py_TPFLAGS_DEFAULT | Py_TPFLAGS_HEAPTYPE;
     newType->ht_type.tp_methods = opaque_methods;
     newType->ht_type.tp_members = opaque_members;
     newType->ht_type.tp_new = opaque_new;
@@ -356,7 +332,8 @@ static ffi_cif* new_cif = NULL;
         Py_CLEAR(w);
     }
 
-    newType->ht_type.tp_dict = v; v = NULL;
+    newType->ht_type.tp_dict = v;
+    v = NULL;
 
     if (docstr != NULL) {
         newType->ht_type.tp_doc = PyObjCUtil_Strdup(docstr);
@@ -377,8 +354,7 @@ static ffi_cif* new_cif = NULL;
 
     rv = ffi_prep_closure(cl, convert_cif, opaque_to_c, newType);
     if (rv != FFI_OK) {
-        PyErr_Format(PyExc_RuntimeError,
-            "Cannot create FFI closure: %d", rv);
+        PyErr_Format(PyExc_RuntimeError, "Cannot create FFI closure: %d", rv);
         goto error_cleanup;
     }
     Py_INCREF(newType); /* Store reference, hence INCREF */
@@ -393,8 +369,7 @@ static ffi_cif* new_cif = NULL;
 
     rv = ffi_prep_closure(cl, new_cif, opaque_from_c, newType);
     if (rv != FFI_OK) {
-        PyErr_Format(PyExc_RuntimeError,
-            "Cannot create FFI closure: %d", rv);
+        PyErr_Format(PyExc_RuntimeError, "Cannot create FFI closure: %d", rv);
         goto error_cleanup;
     }
     Py_INCREF(newType); /* Store reference, hence INCREF */
@@ -411,8 +386,10 @@ static ffi_cif* new_cif = NULL;
 
 error_cleanup:
     if (newType) {
-        if (newType->ht_type.tp_name) PyMem_Free((char*)newType->ht_type.tp_name);
-        if (newType->ht_type.tp_doc) PyMem_Free((char*)newType->ht_type.tp_doc);
+        if (newType->ht_type.tp_name)
+            PyMem_Free((char*)newType->ht_type.tp_name);
+        if (newType->ht_type.tp_doc)
+            PyMem_Free((char*)newType->ht_type.tp_doc);
         Py_XDECREF(newType->ht_type.tp_dict);
         PyMem_Free(newType);
     }

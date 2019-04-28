@@ -3,8 +3,8 @@
  *       from Python but ends up in some fun places like NSAttributedString
  */
 
-#include <Python.h>
-#include <pyobjc-api.h>
+#include "Python.h"
+#include "pyobjc-api.h"
 
 #import <Foundation/Foundation.h>
 
@@ -12,17 +12,16 @@
 #include <objc/objc-runtime.h>
 #endif
 
-@interface PyObjC_TestOutputInitializer: NSObject
-{
+@interface PyObjC_TestOutputInitializer : NSObject {
     int _priv;
 }
 
--(instancetype)initWithBooleanOutput:(BOOL *)outBool;
--(BOOL)isInitialized;
+- (instancetype)initWithBooleanOutput:(BOOL*)outBool;
+- (BOOL)isInitialized;
 @end
 
 @implementation PyObjC_TestOutputInitializer
--(instancetype)initWithBooleanOutput:(BOOL *)outBool
+- (instancetype)initWithBooleanOutput:(BOOL*)outBool
 {
     self = [self init];
     *outBool = YES;
@@ -30,33 +29,28 @@
     return self;
 }
 
--(BOOL)isInitialized
+- (BOOL)isInitialized
 {
     return _priv;
 }
 @end
 
 /* Python glue */
-static PyMethodDef mod_methods[] = {
-    { 0, 0, 0, 0 }
-};
+static PyMethodDef mod_methods[] = {{0, 0, 0, 0}};
 
-static struct PyModuleDef mod_module = {
-    PyModuleDef_HEAD_INIT,
-    "testoutputinitializer",
-    NULL,
-    0,
-    mod_methods,
-    NULL,
-    NULL,
-    NULL,
-    NULL
-};
+static struct PyModuleDef mod_module = {PyModuleDef_HEAD_INIT,
+                                        "testoutputinitializer",
+                                        NULL,
+                                        0,
+                                        mod_methods,
+                                        NULL,
+                                        NULL,
+                                        NULL,
+                                        NULL};
 
 PyObject* PyInit_testoutputinitializer(void);
 
-PyObject* __attribute__((__visibility__("default")))
-PyInit_testoutputinitializer(void)
+PyObject* __attribute__((__visibility__("default"))) PyInit_testoutputinitializer(void)
 {
     PyObject* m;
 
@@ -70,7 +64,7 @@ PyInit_testoutputinitializer(void)
     }
 
     if (PyModule_AddObject(m, "PyObjC_TestOutputInitializer",
-        PyObjC_IdToPython([PyObjC_TestOutputInitializer class])) < 0) {
+                           PyObjC_IdToPython([PyObjC_TestOutputInitializer class])) < 0) {
         return NULL;
     }
 

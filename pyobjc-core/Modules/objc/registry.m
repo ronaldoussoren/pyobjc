@@ -15,10 +15,8 @@ PyObjC_NewRegistry(void)
 }
 
 int
-PyObjC_AddToRegistry(
-        PyObject* registry,
-        PyObject* class_name, PyObject* selector,
-        PyObject* value)
+PyObjC_AddToRegistry(PyObject* registry, PyObject* class_name, PyObject* selector,
+                     PyObject* value)
 {
     int result;
     PyObject* sublist;
@@ -68,8 +66,8 @@ PyObjC_FindInRegistry(PyObject* registry, Class cls, SEL selector)
 
     sublist = PyDict_GetItemWithError(registry, k);
     Py_DECREF(k);
-    if (sublist == NULL) return NULL;
-
+    if (sublist == NULL)
+        return NULL;
 
     len = PyList_Size(sublist);
     for (i = 0; i < len; i++) {
@@ -83,7 +81,7 @@ PyObjC_FindInRegistry(PyObject* registry, Class cls, SEL selector)
 
         if (!PyTuple_CheckExact(cur)) {
             PyErr_SetString(PyObjCExc_InternalError,
-                "Exception registry element isn't a tuple");
+                            "Exception registry element isn't a tuple");
             return NULL;
         }
 
@@ -99,7 +97,8 @@ PyObjC_FindInRegistry(PyObject* registry, Class cls, SEL selector)
             cur_class = objc_lookUpClass(PyBytes_AsString(nm));
 
         } else {
-            PyErr_SetString(PyExc_TypeError, "Exception registry class name is not a string");
+            PyErr_SetString(PyExc_TypeError,
+                            "Exception registry class name is not a string");
             return NULL;
         }
 
@@ -107,7 +106,8 @@ PyObjC_FindInRegistry(PyObject* registry, Class cls, SEL selector)
             continue;
         }
 
-        if (!class_isSubclassOf(cls, cur_class) && !class_isSubclassOf(cls, object_getClass(cur_class))) {
+        if (!class_isSubclassOf(cls, cur_class) &&
+            !class_isSubclassOf(cls, object_getClass(cur_class))) {
             continue;
         }
 
@@ -142,7 +142,8 @@ PyObjC_CopyRegistry(PyObject* registry, PyObjC_ItemTransform value_transform)
         PyObject* sl_new;
         len = PyList_Size(sublist);
         sl_new = PyList_New(len);
-        if (sl_new == NULL) goto error;
+        if (sl_new == NULL)
+            goto error;
         if (PyDict_SetItem(result, key, sl_new) == -1) {
             Py_DECREF(sl_new);
             goto error;
@@ -154,10 +155,10 @@ PyObjC_CopyRegistry(PyObject* registry, PyObjC_ItemTransform value_transform)
             PyObject* new_item;
 
             item = PyList_GET_ITEM(sublist, i);
-            new_item = Py_BuildValue("(ON)",
-                    PyTuple_GET_ITEM(item, 0),
-                    value_transform(PyTuple_GET_ITEM(item, 1)));
-            if (new_item == NULL) goto error;
+            new_item = Py_BuildValue("(ON)", PyTuple_GET_ITEM(item, 0),
+                                     value_transform(PyTuple_GET_ITEM(item, 1)));
+            if (new_item == NULL)
+                goto error;
 
             PyList_SET_ITEM(sl_new, i, new_item);
         }

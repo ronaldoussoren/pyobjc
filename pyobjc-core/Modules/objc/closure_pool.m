@@ -16,7 +16,8 @@ static freelist* closure_freelist = NULL;
 
 #include <sys/sysctl.h>
 
-static int use_map_jit(void)
+static int
+use_map_jit(void)
 {
     static int cached_result = -1;
 
@@ -48,18 +49,17 @@ allocate_block(void)
 {
 
     /* Allocate ffi_closure in groups of 10 VM pages */
-#define BLOCKSIZE ((PAGE_SIZE*10)/sizeof(ffi_closure*))
+#define BLOCKSIZE ((PAGE_SIZE * 10) / sizeof(ffi_closure*))
 
 #ifdef MAP_JIT
-    freelist* newblock = mmap(NULL, BLOCKSIZE * sizeof(ffi_closure),
-        PROT_READ|PROT_WRITE|PROT_EXEC,
-        use_map_jit() ? MAP_PRIVATE|MAP_ANON|MAP_JIT : MAP_PRIVATE|MAP_ANON,
-        -1, 0);
+    freelist* newblock = mmap(
+        NULL, BLOCKSIZE * sizeof(ffi_closure), PROT_READ | PROT_WRITE | PROT_EXEC,
+        use_map_jit() ? MAP_PRIVATE | MAP_ANON | MAP_JIT : MAP_PRIVATE | MAP_ANON, -1, 0);
 
-#else /* !MAP_JIT */
-    freelist* newblock = mmap(NULL, BLOCKSIZE * sizeof(ffi_closure),
-        PROT_READ|PROT_WRITE|PROT_EXEC,
-        MAP_PRIVATE|MAP_ANON, -1, 0);
+#else  /* !MAP_JIT */
+    freelist* newblock =
+        mmap(NULL, BLOCKSIZE * sizeof(ffi_closure), PROT_READ | PROT_WRITE | PROT_EXEC,
+             MAP_PRIVATE | MAP_ANON, -1, 0);
 #endif /* !MAP_JIT */
 
     size_t i;
@@ -68,16 +68,14 @@ allocate_block(void)
         PyErr_NoMemory();
         return NULL;
     }
-    for (i = 0; i < BLOCKSIZE-1; i++) {
-        ((freelist*)(((ffi_closure*)newblock)+i))->next =
-            (freelist*)(((ffi_closure*)newblock)+(i+1));
+    for (i = 0; i < BLOCKSIZE - 1; i++) {
+        ((freelist*)(((ffi_closure*)newblock) + i))->next =
+            (freelist*)(((ffi_closure*)newblock) + (i + 1));
     }
 
-    ((freelist*)(((ffi_closure*)newblock)+(BLOCKSIZE-1)))->next = NULL;
+    ((freelist*)(((ffi_closure*)newblock) + (BLOCKSIZE - 1)))->next = NULL;
     return newblock;
 }
-
-
 
 ffi_closure*
 PyObjC_malloc_closure(void)

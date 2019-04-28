@@ -12,15 +12,15 @@ obj_repr(PyObject* self __attribute__((__unused__)))
 }
 
 PyTypeObject PyObjC_NULL_Type = {
-    PyVarObject_HEAD_INIT(&PyType_Type, 0)
-    .tp_name        = "objc.NULL_type",
-    .tp_basicsize   = sizeof(PyObject),
-    .tp_itemsize    = 0,
-    .tp_repr        = obj_repr,
-    .tp_flags       = Py_TPFLAGS_DEFAULT,
+    PyVarObject_HEAD_INIT(&PyType_Type, 0).tp_name = "objc.NULL_type",
+    .tp_basicsize = sizeof(PyObject),
+    .tp_itemsize = 0,
+    .tp_repr = obj_repr,
+    .tp_flags = Py_TPFLAGS_DEFAULT,
 };
 
-PyObject* PyObjCInitNULL(void)
+PyObject*
+PyObjCInitNULL(void)
 {
     PyObject* result;
 

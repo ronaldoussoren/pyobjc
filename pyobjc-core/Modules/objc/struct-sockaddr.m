@@ -8,11 +8,11 @@
 
 #include "pyobjc.h"
 
+#include <netdb.h>
+#include <netinet/in.h>
 #include <sys/socket.h>
 #include <sys/types.h>
-#include <netinet/in.h>
 #include <sys/un.h>
-#include <netdb.h>
 
 static PyObject* socket_error = NULL;
 static PyObject* socket_gaierror = NULL;
@@ -78,8 +78,7 @@ makeipaddr(struct sockaddr* addr, int addrlen)
     char buf[NI_MAXHOST];
     int r;
 
-    r = getnameinfo(addr, addrlen, buf, sizeof(buf), NULL, 0,
-            NI_NUMERICHOST);
+    r = getnameinfo(addr, addrlen, buf, sizeof(buf), NULL, 0, NI_NUMERICHOST);
     if (r) {
         return set_gaierror(r);
     }
@@ -94,7 +93,7 @@ setipaddr(char* name, struct sockaddr* addr_ret, size_t addr_ret_size, int af)
     int d1, d2, d3, d4;
     char ch;
 
-    memset((void *) addr_ret, '\0', sizeof(*addr_ret));
+    memset((void*)addr_ret, '\0', sizeof(*addr_ret));
     if (name[0] == '\0') {
         int siz;
         memset(&hints, 0, sizeof(hints));
@@ -121,14 +120,12 @@ setipaddr(char* name, struct sockaddr* addr_ret, size_t addr_ret_size, int af)
 
         default:
             freeaddrinfo(res);
-            PyErr_SetString(socket_error,
-                "unsupported address family");
+            PyErr_SetString(socket_error, "unsupported address family");
             return -1;
         }
         if (res->ai_next) {
             freeaddrinfo(res);
-            PyErr_SetString(socket_error,
-                "wildcard resolved to multiple address");
+            PyErr_SetString(socket_error, "wildcard resolved to multiple address");
             return -1;
         }
         if (res->ai_addrlen < addr_ret_size)
@@ -138,27 +135,25 @@ setipaddr(char* name, struct sockaddr* addr_ret, size_t addr_ret_size, int af)
         return siz;
     }
     if (name[0] == '<' && strcmp(name, "<broadcast>") == 0) {
-        struct sockaddr_in *sinaddr;
+        struct sockaddr_in* sinaddr;
         if (af != AF_INET && af != AF_UNSPEC) {
-            PyErr_SetString(socket_error,
-                "address family mismatched");
+            PyErr_SetString(socket_error, "address family mismatched");
             return -1;
         }
-        sinaddr = (struct sockaddr_in *)addr_ret;
-        memset((void *) sinaddr, '\0', sizeof(*sinaddr));
+        sinaddr = (struct sockaddr_in*)addr_ret;
+        memset((void*)sinaddr, '\0', sizeof(*sinaddr));
         sinaddr->sin_family = AF_INET;
         sinaddr->sin_len = sizeof(*sinaddr);
         sinaddr->sin_addr.s_addr = INADDR_BROADCAST;
         return sizeof(sinaddr->sin_addr);
     }
-    if (sscanf(name, "%d.%d.%d.%d%c", &d1, &d2, &d3, &d4, &ch) == 4 &&
-        0 <= d1 && d1 <= 255 && 0 <= d2 && d2 <= 255 &&
-        0 <= d3 && d3 <= 255 && 0 <= d4 && d4 <= 255) {
-        struct sockaddr_in *sinaddr;
-        sinaddr = (struct sockaddr_in *)addr_ret;
-        sinaddr->sin_addr.s_addr = htonl(
-            ((long) d1 << 24) | ((long) d2 << 16) |
-            ((long) d3 << 8) | ((long) d4 << 0));
+    if (sscanf(name, "%d.%d.%d.%d%c", &d1, &d2, &d3, &d4, &ch) == 4 && 0 <= d1 &&
+        d1 <= 255 && 0 <= d2 && d2 <= 255 && 0 <= d3 && d3 <= 255 && 0 <= d4 &&
+        d4 <= 255) {
+        struct sockaddr_in* sinaddr;
+        sinaddr = (struct sockaddr_in*)addr_ret;
+        sinaddr->sin_addr.s_addr = htonl(((long)d1 << 24) | ((long)d2 << 16) |
+                                         ((long)d3 << 8) | ((long)d4 << 0));
         sinaddr->sin_family = AF_INET;
         sinaddr->sin_len = sizeof(*sinaddr);
         return 4;
@@ -172,7 +167,7 @@ setipaddr(char* name, struct sockaddr* addr_ret, size_t addr_ret_size, int af)
     }
     if (res->ai_addrlen < addr_ret_size)
         addr_ret_size = res->ai_addrlen;
-    memcpy((char *) addr_ret, res->ai_addr, addr_ret_size);
+    memcpy((char*)addr_ret, res->ai_addr, addr_ret_size);
     freeaddrinfo(res);
     switch (addr_ret->sa_family) {
     case AF_INET:
@@ -185,46 +180,37 @@ setipaddr(char* name, struct sockaddr* addr_ret, size_t addr_ret_size, int af)
     }
 }
 
-
 PyObject*
 PyObjC_SockAddrToPython(void* value)
 {
     switch (((struct sockaddr*)value)->sa_family) {
-    case AF_INET:
-        {
-            struct sockaddr_in* a = (struct sockaddr_in*)value;
-            PyObject* addrobj = makeipaddr((struct sockaddr*)a, sizeof(*a));
-            if (addrobj != NULL) {
-                return Py_BuildValue("Ni", addrobj,
-                        ntohs(a->sin_port));
-            }
-            return NULL;
+    case AF_INET: {
+        struct sockaddr_in* a = (struct sockaddr_in*)value;
+        PyObject* addrobj = makeipaddr((struct sockaddr*)a, sizeof(*a));
+        if (addrobj != NULL) {
+            return Py_BuildValue("Ni", addrobj, ntohs(a->sin_port));
         }
+        return NULL;
+    }
 
-    case AF_INET6:
-        {
-            struct sockaddr_in6* a = (struct sockaddr_in6*)value;
-            PyObject* addrobj = makeipaddr((struct sockaddr*)a, sizeof(*a));
-            if (addrobj != NULL) {
-                return Py_BuildValue("Niii", addrobj,
-                        ntohs(a->sin6_port),
-                        a->sin6_flowinfo,
-                        a->sin6_scope_id);
-            }
-            return NULL;
+    case AF_INET6: {
+        struct sockaddr_in6* a = (struct sockaddr_in6*)value;
+        PyObject* addrobj = makeipaddr((struct sockaddr*)a, sizeof(*a));
+        if (addrobj != NULL) {
+            return Py_BuildValue("Niii", addrobj, ntohs(a->sin6_port), a->sin6_flowinfo,
+                                 a->sin6_scope_id);
         }
+        return NULL;
+    }
 
-    case AF_UNIX:
-        {
-            struct sockaddr_un* a = (struct sockaddr_un*)value;
-            return PyUnicode_DecodeFSDefault(a->sun_path);
-        }
+    case AF_UNIX: {
+        struct sockaddr_un* a = (struct sockaddr_un*)value;
+        return PyUnicode_DecodeFSDefault(a->sun_path);
+    }
 
     default:
-        PyErr_Format(PyExc_ValueError,
-            "Don't know how to convert sockaddr family %d",
-            ((struct sockaddr*)value)->sa_family
-        );
+        PyErr_Format(PyExc_ValueError, "Don't know how to convert sockaddr family %d",
+                     ((struct sockaddr*)value)->sa_family);
         return NULL;
     }
 }
@@ -235,7 +221,7 @@ PyObjC_SockAddrFromPython(PyObject* value, void* buffer)
     if (PyUnicode_Check(value) || PyBytes_Check(value)) {
         /* AF_UNIX */
         struct sockaddr_un* addr = (struct sockaddr_un*)buffer;
-        char *path;
+        char* path;
         Py_ssize_t len;
 
         addr->sun_family = AF_INET;
@@ -268,12 +254,10 @@ PyObjC_SockAddrFromPython(PyObject* value, void* buffer)
         char* host;
         int port, result;
 
-        if (!PyArg_ParseTuple(value, "eti:getsockaddrarg",
-                "idna", &host, &port)) {
+        if (!PyArg_ParseTuple(value, "eti:getsockaddrarg", "idna", &host, &port)) {
             return -1;
         }
-        result = setipaddr(host, (struct sockaddr*)addr,
-                sizeof(*addr), AF_INET);
+        result = setipaddr(host, (struct sockaddr*)addr, sizeof(*addr), AF_INET);
         PyMem_Free(host);
         if (result < 0) {
             return -1;
@@ -289,13 +273,12 @@ PyObjC_SockAddrFromPython(PyObject* value, void* buffer)
         int port, flowinfo, scope_id, result;
 
         flowinfo = scope_id = 0;
-        if (!PyArg_ParseTuple(value, "eti|ii",
-            "idna", &host, &port, &flowinfo, &scope_id)) {
+        if (!PyArg_ParseTuple(value, "eti|ii", "idna", &host, &port, &flowinfo,
+                              &scope_id)) {
 
             return -1;
         }
-        result = setipaddr(host, (struct sockaddr*)addr,
-                sizeof(*addr), AF_INET6);
+        result = setipaddr(host, (struct sockaddr*)addr, sizeof(*addr), AF_INET6);
         PyMem_Free(host);
         if (result < 0) {
             return -1;

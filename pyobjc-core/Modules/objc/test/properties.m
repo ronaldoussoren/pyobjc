@@ -1,9 +1,12 @@
-#include <Python.h>
+#include "Python.h"
 #include "pyobjc-api.h"
 
 #import <Foundation/Foundation.h>
 
-typedef struct s { int i; char b; } struct_s;
+typedef struct s {
+    int i;
+    char b;
+} struct_s;
 @interface OCPropertyDefinitions : NSObject {
     int _prop1;
     float _prop2;
@@ -33,9 +36,9 @@ typedef struct s { int i; char b; } struct_s;
 @property(retain) id prop8;
 @property(copy) id prop9;
 @property(nonatomic) struct_s prop10;
-@property(getter=propGetter,setter=propSetter:) id prop11;
-@property(nonatomic,readwrite,retain) id prop12;
-@property(readwrite,copy) id prop13;
+@property(getter=propGetter, setter=propSetter:) id prop11;
+@property(nonatomic, readwrite, retain) id prop12;
+@property(readwrite, copy) id prop13;
 
 #pragma clang diagnostic pop
 #endif
@@ -44,7 +47,7 @@ typedef struct s { int i; char b; } struct_s;
 
 @implementation OCPropertyDefinitions
 
-#if (PyObjC_BUILD_RELEASE >= 1005 )
+#if (PyObjC_BUILD_RELEASE >= 1005)
 
 @synthesize prop1 = _prop1;
 @synthesize prop2 = _prop2;
@@ -64,27 +67,14 @@ typedef struct s { int i; char b; } struct_s;
 
 @end
 
-
-static PyMethodDef mod_methods[] = {
-            { 0, 0, 0, 0 }
-};
+static PyMethodDef mod_methods[] = {{0, 0, 0, 0}};
 
 static struct PyModuleDef mod_module = {
-    PyModuleDef_HEAD_INIT,
-    "properties",
-    NULL,
-    0,
-    mod_methods,
-    NULL,
-    NULL,
-    NULL,
-    NULL
-};
+    PyModuleDef_HEAD_INIT, "properties", NULL, 0, mod_methods, NULL, NULL, NULL, NULL};
 
 PyObject* PyInit_properties(void);
 
-PyObject* __attribute__((__visibility__("default")))
-PyInit_properties(void)
+PyObject* __attribute__((__visibility__("default"))) PyInit_properties(void)
 {
     PyObject* m;
 
@@ -98,7 +88,7 @@ PyInit_properties(void)
     }
 
     if (PyModule_AddObject(m, "OCPropertyDefinitions",
-        PyObjC_IdToPython([OCPropertyDefinitions class])) < 0) {
+                           PyObjC_IdToPython([OCPropertyDefinitions class])) < 0) {
         return NULL;
     }
 

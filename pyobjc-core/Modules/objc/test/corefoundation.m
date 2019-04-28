@@ -2,42 +2,39 @@
 #include "Python.h"
 #include "pyobjc-api.h"
 
-#import <Foundation/Foundation.h>
 #import <CoreFoundation/CoreFoundation.h>
+#import <Foundation/Foundation.h>
 
-
-@interface OC_TestCoreFoundation : NSObject
-{
+@interface OC_TestCoreFoundation : NSObject {
 }
 // not toll-free bridged.
-+(char*)signatureForCFUUIDRef;
-+(CFTypeID)typeidForCFUUIDRef;
-+(CFUUIDRef)createUUID;
-+(NSString*)formatUUID:(CFUUIDRef)uuid;
-+(NSObject*)anotherUUID;
++ (char*)signatureForCFUUIDRef;
++ (CFTypeID)typeidForCFUUIDRef;
++ (CFUUIDRef)createUUID;
++ (NSString*)formatUUID:(CFUUIDRef)uuid;
++ (NSObject*)anotherUUID;
 
 // tollfree bridged:
-+(char*)signatureForCFDateRef;
-+(CFTypeID)typeidForCFDateRef;
-+(CFDateRef)today;
-+(NSString*)formatDate:(CFDateRef)date;
-+(int)shortStyle;
++ (char*)signatureForCFDateRef;
++ (CFTypeID)typeidForCFDateRef;
++ (CFDateRef)today;
++ (NSString*)formatDate:(CFDateRef)date;
++ (int)shortStyle;
 @end
-
 
 @implementation OC_TestCoreFoundation
 
-+(char*)signatureForCFUUIDRef
++ (char*)signatureForCFUUIDRef
 {
     return @encode(CFUUIDRef);
 }
 
-+(CFTypeID)typeidForCFUUIDRef
++ (CFTypeID)typeidForCFUUIDRef
 {
     return CFUUIDGetTypeID();
 }
 
-+(CFUUIDRef)createUUID
++ (CFUUIDRef)createUUID
 {
     CFUUIDRef result = CFUUIDCreate(NULL);
 
@@ -49,7 +46,7 @@
     return result;
 }
 
-+(NSObject*)anotherUUID
++ (NSObject*)anotherUUID
 {
     CFUUIDRef result = CFUUIDCreate(NULL);
 
@@ -59,8 +56,7 @@
     return (NSObject*)result;
 }
 
-
-+(NSString*)formatUUID:(CFUUIDRef)uuid
++ (NSString*)formatUUID:(CFUUIDRef)uuid
 {
     NSString* result;
 
@@ -68,19 +64,17 @@
     return [result autorelease];
 }
 
-
-
-+(char*)signatureForCFDateRef
++ (char*)signatureForCFDateRef
 {
     return @encode(CFDateRef);
 }
 
-+(CFTypeID)typeidForCFDateRef
++ (CFTypeID)typeidForCFDateRef
 {
     return CFDateGetTypeID();
 }
 
-+(CFDateRef)today
++ (CFDateRef)today
 {
     CFDateRef result;
 
@@ -92,53 +86,45 @@
     return result;
 }
 
-+(NSString*)formatDate:(CFDateRef)date
++ (NSString*)formatDate:(CFDateRef)date
 {
     CFLocaleRef currentLocale = CFLocaleCopyCurrent();
     CFDateFormatterRef formatter = CFDateFormatterCreate(
-            NULL, currentLocale,
-            kCFDateFormatterShortStyle, kCFDateFormatterNoStyle);
+        NULL, currentLocale, kCFDateFormatterShortStyle, kCFDateFormatterNoStyle);
 
     if (currentLocale != NULL) {
         CFRelease(currentLocale);
     }
 
-    NSString* result = (NSString*)CFDateFormatterCreateStringWithDate(
-            NULL, formatter, date);
+    NSString* result =
+        (NSString*)CFDateFormatterCreateStringWithDate(NULL, formatter, date);
 
     CFRelease(formatter);
     return [result autorelease];
 }
 
-+(int)shortStyle
++ (int)shortStyle
 {
     return kCFDateFormatterShortStyle;
 }
 
 @end
 
+static PyMethodDef mod_methods[] = {{0, 0, 0, 0}};
 
-
-static PyMethodDef mod_methods[] = {
-            { 0, 0, 0, 0 }
-};
-
-static struct PyModuleDef mod_module = {
-    PyModuleDef_HEAD_INIT,
-    "corefoundation",
-    NULL,
-    0,
-    mod_methods,
-    NULL,
-    NULL,
-    NULL,
-    NULL
-};
+static struct PyModuleDef mod_module = {PyModuleDef_HEAD_INIT,
+                                        "corefoundation",
+                                        NULL,
+                                        0,
+                                        mod_methods,
+                                        NULL,
+                                        NULL,
+                                        NULL,
+                                        NULL};
 
 PyObject* PyInit_corefoundation(void);
 
-PyObject* __attribute__((__visibility__("default")))
-PyInit_corefoundation(void)
+PyObject* __attribute__((__visibility__("default"))) PyInit_corefoundation(void)
 {
     PyObject* m;
 
@@ -152,7 +138,7 @@ PyInit_corefoundation(void)
     }
 
     if (PyModule_AddObject(m, "OC_TestCoreFoundation",
-        PyObjC_IdToPython([OC_TestCoreFoundation class])) < 0) {
+                           PyObjC_IdToPython([OC_TestCoreFoundation class])) < 0) {
         return NULL;
     }
 

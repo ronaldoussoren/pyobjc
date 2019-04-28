@@ -8,12 +8,18 @@
 
 /* Special methods for Python subclasses of Objective-C objects */
 static void object_method_dealloc(ffi_cif* cif, void* retval, void** args, void* userarg);
-static void object_method_respondsToSelector(ffi_cif* cif, void* retval, void** args, void* userarg);
-static void object_method_methodSignatureForSelector(ffi_cif* cif, void* retval, void** args, void* userarg);
-static void object_method_forwardInvocation(ffi_cif* cif, void* retval, void** args, void* userarg);
-static void object_method_valueForKey_(ffi_cif* cif, void* retval, void** args, void* userarg);
-static void object_method_setValue_forKey_(ffi_cif* cif, void* retval, void** args, void* userarg);
-static void object_method_copyWithZone_(ffi_cif* cif, void* resp, void** args, void* userdata);
+static void object_method_respondsToSelector(ffi_cif* cif, void* retval, void** args,
+                                             void* userarg);
+static void object_method_methodSignatureForSelector(ffi_cif* cif, void* retval,
+                                                     void** args, void* userarg);
+static void object_method_forwardInvocation(ffi_cif* cif, void* retval, void** args,
+                                            void* userarg);
+static void object_method_valueForKey_(ffi_cif* cif, void* retval, void** args,
+                                       void* userarg);
+static void object_method_setValue_forKey_(ffi_cif* cif, void* retval, void** args,
+                                           void* userarg);
+static void object_method_copyWithZone_(ffi_cif* cif, void* resp, void** args,
+                                        void* userdata);
 
 struct method_info {
     SEL selector;
@@ -26,23 +32,28 @@ struct method_info {
 
 } gMethods[] = {
 
-    { 0, "dealloc", "dealloc", "v@:", object_method_dealloc, NO, YES },
-    { 0, "storedValueForKey:", "storedValueForKey_", "@@:@", object_method_valueForKey_, NO, YES },
-    { 0, "valueForKey:", "valueForKey_", "@@:@", object_method_valueForKey_, NO, YES },
-    { 0, "takeStoredValue:forKey:", "takeStoredValue_forKey_", "v@:@@", object_method_setValue_forKey_, NO, YES },
-    { 0, "takeValue:forKey:", "takeValue_forKey_", "v@:@@", object_method_setValue_forKey_, NO, YES },
-    { 0, "setValue:forKey:", "setValue_forKey_", "v@:@@", object_method_setValue_forKey_, NO, YES },
-    { 0, "forwardInvocation:", "forwardInvocation_", "v@:@", object_method_forwardInvocation, NO, YES },
-    { 0, "methodSignatureForSelector:", "methodSignatureForSelector_", "@@::", object_method_methodSignatureForSelector, NO, YES },
-    { 0, "respondsToSelector:", "respondsToSelector_", "c@::", object_method_respondsToSelector, NO, YES },
-    { 0, "copyWithZone:", "copyWithZone_", "@@:^{_NSZone=}", object_method_copyWithZone_, YES, YES },
-    { 0, "mutableCopyWithZone:", "mutableCopyWithZone_", "@@:^{_NSZone=}", object_method_copyWithZone_, YES, YES },
+    {0, "dealloc", "dealloc", "v@:", object_method_dealloc, NO, YES},
+    {0, "storedValueForKey:", "storedValueForKey_", "@@:@", object_method_valueForKey_,
+     NO, YES},
+    {0, "valueForKey:", "valueForKey_", "@@:@", object_method_valueForKey_, NO, YES},
+    {0, "takeStoredValue:forKey:", "takeStoredValue_forKey_", "v@:@@",
+     object_method_setValue_forKey_, NO, YES},
+    {0, "takeValue:forKey:", "takeValue_forKey_", "v@:@@", object_method_setValue_forKey_,
+     NO, YES},
+    {0, "setValue:forKey:", "setValue_forKey_", "v@:@@", object_method_setValue_forKey_,
+     NO, YES},
+    {0, "forwardInvocation:", "forwardInvocation_", "v@:@",
+     object_method_forwardInvocation, NO, YES},
+    {0, "methodSignatureForSelector:", "methodSignatureForSelector_",
+     "@@::", object_method_methodSignatureForSelector, NO, YES},
+    {0, "respondsToSelector:", "respondsToSelector_",
+     "c@::", object_method_respondsToSelector, NO, YES},
+    {0, "copyWithZone:", "copyWithZone_", "@@:^{_NSZone=}", object_method_copyWithZone_,
+     YES, YES},
+    {0, "mutableCopyWithZone:", "mutableCopyWithZone_", "@@:^{_NSZone=}",
+     object_method_copyWithZone_, YES, YES},
 
-    { 0, 0, 0, 0, 0, 0, 0 }
-};
-
-
-
+    {0, 0, 0, 0, 0, 0, 0}};
 
 #define IDENT_CHARS "ABCDEFGHIJKLMNOPQSRTUVWXYZabcdefghijklmnopqrstuvwxyz_0123456789"
 
@@ -108,7 +119,7 @@ do_slots(PyObject* super_class, PyObject* clsdict)
             return 0;
         }
 
-        if (PyDict_SetItemString(clsdict, "__slots__", slot_value) < 0){
+        if (PyDict_SetItemString(clsdict, "__slots__", slot_value) < 0) {
             Py_DECREF(slot_value);
             return -1;
         }
@@ -152,13 +163,13 @@ do_slots(PyObject* super_class, PyObject* clsdict)
                 return -1;
             }
 
-            var = (PyObjCInstanceVariable*)PyObjCInstanceVariable_New(PyBytes_AsString(bytes));
+            var = (PyObjCInstanceVariable*)PyObjCInstanceVariable_New(
+                PyBytes_AsString(bytes));
             Py_DECREF(bytes);
 
         } else {
             PyErr_Format(PyExc_TypeError,
-                "__slots__ entry %" PY_FORMAT_SIZE_T
-                "d is not a string", i);
+                         "__slots__ entry %" PY_FORMAT_SIZE_T "d is not a string", i);
             Py_DECREF(slots);
             return -1;
         }
@@ -222,17 +233,16 @@ build_intermediate_class(Class base_class, char* name)
             }
         }
 
-        PyObjCMethodSignature* methinfo = PyObjCMethodSignature_FromSignature(cur->typestr, NO);
-        if (methinfo == NULL) goto error_cleanup;
+        PyObjCMethodSignature* methinfo =
+            PyObjCMethodSignature_FromSignature(cur->typestr, NO);
+        if (methinfo == NULL)
+            goto error_cleanup;
         IMP closure = PyObjCFFI_MakeClosure(methinfo, cur->func, base_class);
         Py_CLEAR(methinfo);
-        if (closure == NULL) goto error_cleanup;
+        if (closure == NULL)
+            goto error_cleanup;
 
-        preclass_addMethod(
-            intermediate_class,
-            cur->selector,
-            (IMP)closure,
-            cur->typestr);
+        preclass_addMethod(intermediate_class, cur->selector, (IMP)closure, cur->typestr);
         closure = NULL;
     }
 
@@ -246,8 +256,6 @@ error_cleanup:
 
     return NULL;
 }
-
-
 
 /*
  * First step of creating a python subclass of an objective-C class
@@ -269,7 +277,6 @@ error_cleanup:
  *   the running app)
  */
 
-
 /* PyObjC uses a number of typecode descriptors that aren't available in
  * the objc runtime. Remove these from the type string (inline).
  */
@@ -278,7 +285,7 @@ tc2tc(char* buf)
 {
     /* Skip pointer declarations and anotations */
     for (;;) {
-        switch(*buf) {
+        switch (*buf) {
         case _C_PTR:
         case _C_IN:
         case _C_OUT:
@@ -310,7 +317,7 @@ exit:
         while (buf && *buf && *buf != _C_STRUCT_E) {
             if (*buf == '"') {
                 /* embedded field name */
-                buf = strchr(buf+1, '"');
+                buf = strchr(buf + 1, '"');
                 if (buf == NULL) {
                     return;
                 }
@@ -327,7 +334,7 @@ exit:
         while (buf && *buf && *buf != _C_UNION_E) {
             if (*buf == '"') {
                 /* embedded field name */
-                buf = strchr(buf+1, '"');
+                buf = strchr(buf + 1, '"');
                 if (buf == NULL) {
                     return;
                 }
@@ -339,7 +346,8 @@ exit:
         break;
 
     case _C_ARY_B:
-        while (isdigit(*++buf));
+        while (isdigit(*++buf))
+            ;
         tc2tc(buf);
         break;
     }
@@ -348,12 +356,13 @@ exit:
 int
 PyObjC_RemoveInternalTypeCodes(char* buf)
 {
-   while(buf && *buf) {
-      tc2tc(buf);
-      buf = (char*)PyObjCRT_SkipTypeSpec(buf);
-      if (buf == NULL) return -1;
-   }
-   return 0;
+    while (buf && *buf) {
+        tc2tc(buf);
+        buf = (char*)PyObjCRT_SkipTypeSpec(buf);
+        if (buf == NULL)
+            return -1;
+    }
+    return 0;
 }
 
 static BOOL
@@ -375,11 +384,10 @@ need_intermediate(PyObject* class_dict)
     return NO;
 }
 
-
 Class
-PyObjCClass_BuildClass(Class super_class, PyObject* protocols,
-      char* name, PyObject* class_dict, PyObject* meta_dict,
-      PyObject* hiddenSelectors, PyObject* hiddenClassSelectors)
+PyObjCClass_BuildClass(Class super_class, PyObject* protocols, char* name,
+                       PyObject* class_dict, PyObject* meta_dict,
+                       PyObject* hiddenSelectors, PyObject* hiddenClassSelectors)
 {
     PyObject* seq;
     PyObject* key_list = NULL;
@@ -400,21 +408,19 @@ PyObjCClass_BuildClass(Class super_class, PyObject* protocols,
 
     if (!PyList_Check(protocols)) {
         PyErr_Format(PyObjCExc_InternalError,
-            "protocol list not a python 'list' but '%s'",
-            Py_TYPE(protocols)->tp_name);
+                     "protocol list not a python 'list' but '%s'",
+                     Py_TYPE(protocols)->tp_name);
         goto error_cleanup;
     }
 
     if (!PyDict_Check(class_dict)) {
-        PyErr_Format(PyObjCExc_InternalError,
-            "class dict not a python 'dict', but '%s'",
-            Py_TYPE(class_dict)->tp_name);
+        PyErr_Format(PyObjCExc_InternalError, "class dict not a python 'dict', but '%s'",
+                     Py_TYPE(class_dict)->tp_name);
         goto error_cleanup;
     }
 
     if (super_class == NULL) {
-        PyErr_SetString(PyObjCExc_InternalError,
-           "must have super_class");
+        PyErr_SetString(PyObjCExc_InternalError, "must have super_class");
         goto error_cleanup;
     }
 
@@ -426,9 +432,8 @@ PyObjCClass_BuildClass(Class super_class, PyObject* protocols,
          * runtime API.
          */
 
-        PyErr_Format(PyObjCExc_Error,
-         "%s is overriding existing Objective-C class",
-         name);
+        PyErr_Format(PyObjCExc_Error, "%s is overriding existing Objective-C class",
+                     name);
         goto error_cleanup;
     }
 
@@ -474,8 +479,8 @@ PyObjCClass_BuildClass(Class super_class, PyObject* protocols,
      * The same issue is present with a number of other methods.
      */
 
-    if (!PyObjCClass_HasPythonImplementation(py_superclass)
-                    && need_intermediate(class_dict)) {
+    if (!PyObjCClass_HasPythonImplementation(py_superclass) &&
+        need_intermediate(class_dict)) {
         Class intermediate_class;
         char buf[1024];
 
@@ -485,15 +490,16 @@ PyObjCClass_BuildClass(Class super_class, PyObject* protocols,
         intermediate_class = objc_lookUpClass(buf);
         if (intermediate_class == NULL) {
             intermediate_class = build_intermediate_class(super_class, buf);
-            if (intermediate_class == NULL) goto error_cleanup;
+            if (intermediate_class == NULL)
+                goto error_cleanup;
         }
         Py_DECREF(py_superclass);
 
         super_class = intermediate_class;
         py_superclass = PyObjCClass_New(super_class);
-        if (py_superclass == NULL) return NULL;
+        if (py_superclass == NULL)
+            return NULL;
     }
-
 
     if (do_slots(py_superclass, class_dict) < 0) {
         goto error_cleanup;
@@ -533,15 +539,15 @@ PyObjCClass_BuildClass(Class super_class, PyObject* protocols,
     /* 0th round: protocols */
     protocol_count = PyList_Size(protocols);
     if (protocol_count > 0) {
-        for (i=0; i < protocol_count; i++) {
-            PyObject *wrapped_protocol;
+        for (i = 0; i < protocol_count; i++) {
+            PyObject* wrapped_protocol;
             wrapped_protocol = PyList_GET_ITEM(protocols, i);
             if (!PyObjCFormalProtocol_Check(wrapped_protocol)) {
                 continue;
             }
 
-            if (!preclass_addProtocol(new_class,
-                    PyObjCFormalProtocol_GetProtocol(wrapped_protocol))) {
+            if (!preclass_addProtocol(
+                    new_class, PyObjCFormalProtocol_GetProtocol(wrapped_protocol))) {
                 goto error_cleanup;
             }
         }
@@ -556,9 +562,10 @@ PyObjCClass_BuildClass(Class super_class, PyObject* protocols,
 
         value = PyDict_GetItemWithError(class_dict, key);
         if (value == NULL) {
-            if (PyErr_Occurred()) goto error_cleanup;
+            if (PyErr_Occurred())
+                goto error_cleanup;
             PyErr_SetString(PyObjCExc_InternalError,
-                "PyObjCClass_BuildClass: Cannot fetch item in keylist");
+                            "PyObjCClass_BuildClass: Cannot fetch item in keylist");
             goto error_cleanup;
         }
 
@@ -607,9 +614,10 @@ PyObjCClass_BuildClass(Class super_class, PyObject* protocols,
 
         value = PyDict_GetItemWithError(class_dict, key);
         if (value == NULL) {
-            if (PyErr_Occurred()) goto error_cleanup;
+            if (PyErr_Occurred())
+                goto error_cleanup;
             PyErr_SetString(PyObjCExc_InternalError,
-                "PyObjCClass_BuildClass: Cannot fetch item in keylist");
+                            "PyObjCClass_BuildClass: Cannot fetch item in keylist");
             goto error_cleanup;
         }
 
@@ -632,10 +640,8 @@ PyObjCClass_BuildClass(Class super_class, PyObject* protocols,
              * generation.
              */
             char buf[1024];
-            PyObject* pyname = PyUnicode_FromString(
-                PyObjC_SELToPythonName(
-                    PyObjCSelector_GetSelector(value),
-                    buf, sizeof(buf)));
+            PyObject* pyname = PyUnicode_FromString(PyObjC_SELToPythonName(
+                PyObjCSelector_GetSelector(value), buf, sizeof(buf)));
 
             if (pyname == NULL) {
                 goto error_cleanup;
@@ -645,7 +651,8 @@ PyObjCClass_BuildClass(Class super_class, PyObject* protocols,
             if (shouldCopy == -1) {
                 goto error_cleanup;
             } else if (!shouldCopy) {
-                Py_DECREF(pyname); pyname = NULL;
+                Py_DECREF(pyname);
+                pyname = NULL;
             }
 
             if (PyObjCSelector_GetClass(value) != NULL) {
@@ -661,144 +668,140 @@ PyObjCClass_BuildClass(Class super_class, PyObject* protocols,
                 }
 
                 value = new_value;
-                Py_DECREF(new_value); /* The value is still in the dict, and hence safe to use */
-        }
-
-        if (PyObjCSelector_IsClassMethod(value)) {
-            r = PySet_Add(class_methods, value);
-            if (r == -1) {
-                goto error_cleanup;
+                Py_DECREF(new_value); /* The value is still in the dict, and hence safe to
+                                         use */
             }
 
-
-            if (!PyObjCSelector_IsHidden(value)) {
-                if (PyDict_SetItem(meta_dict, key, value) == -1) {
-                    goto error_cleanup;
-                }
-            } else {
-                shouldCopy = NO;
-            }
-
-            if (shouldCopy) {
-                r = PyDict_SetItem(meta_dict, pyname, value);
-                Py_DECREF(pyname);
+            if (PyObjCSelector_IsClassMethod(value)) {
+                r = PySet_Add(class_methods, value);
                 if (r == -1) {
                     goto error_cleanup;
                 }
-            }
 
-            if (PyDict_DelItem(class_dict, key) == -1) {
-                goto error_cleanup;
-            }
-
-        } else {
-            r = PySet_Add(instance_methods, value);
-            if (r == -1) {
-               goto error_cleanup;
-            }
-
-            if (PyObjCSelector_IsHidden(value)) {
-                r = PyDict_DelItem(class_dict, key);
-                if (r == -1) {
-                    goto error_cleanup;
-                }
-                shouldCopy = NO;
-            }
-
-            if (shouldCopy) {
-                r = PyDict_SetItem(class_dict, pyname, value);
-                Py_DECREF(pyname);
-                if (r == -1) {
-                    goto error_cleanup;
-                }
-            }
-        }
-
-      } else if (
-            PyMethod_Check(value)
-              || PyFunction_Check(value)
-              || PyObject_TypeCheck(value, &PyClassMethod_Type)) {
-
-        PyObject* pyname;
-        const char* ocname;
-        pyname = key;
-        if (pyname == NULL) continue;
-
-        if (PyUnicode_Check(pyname)) {
-            ocname = PyObjC_Unicode_Fast_Bytes(pyname);
-            if (ocname == NULL) {
-                goto error_cleanup;
-            }
-
-        } else {
-            PyErr_Format(PyExc_TypeError,
-                "method name is of type %s, not a string",
-                Py_TYPE(pyname)->tp_name);
-            goto error_cleanup;
-        }
-
-        if (ocname[0] != '_' || ocname[1] != '_') {
-            /* Skip special methods (like __getattr__) to
-             * avoid confusing type().
-             */
-            PyObject* new_value;
-
-            new_value = PyObjCSelector_FromFunction(
-                pyname,
-                value,
-                py_superclass,
-                protocols);
-            if (new_value == NULL) {
-                goto error_cleanup;
-            }
-            value = new_value;
-
-            if (PyObjCSelector_Check(value)) {
-                int r;
-
-
-                if (PyObjCSelector_IsClassMethod(value)) {
-                    if (!PyObjCSelector_IsHidden(value)) {
-                        if (PyDict_SetItem(meta_dict, key, value) == -1) {
-                            goto error_cleanup;
-                        }
-                    }
-                    if (PyDict_DelItem(class_dict, key) == -1) {
+                if (!PyObjCSelector_IsHidden(value)) {
+                    if (PyDict_SetItem(meta_dict, key, value) == -1) {
                         goto error_cleanup;
                     }
-
-                    r = PySet_Add(class_methods, value);
-
                 } else {
-                    if (PyObjCSelector_IsHidden(value)) {
+                    shouldCopy = NO;
+                }
+
+                if (shouldCopy) {
+                    r = PyDict_SetItem(meta_dict, pyname, value);
+                    Py_DECREF(pyname);
+                    if (r == -1) {
+                        goto error_cleanup;
+                    }
+                }
+
+                if (PyDict_DelItem(class_dict, key) == -1) {
+                    goto error_cleanup;
+                }
+
+            } else {
+                r = PySet_Add(instance_methods, value);
+                if (r == -1) {
+                    goto error_cleanup;
+                }
+
+                if (PyObjCSelector_IsHidden(value)) {
+                    r = PyDict_DelItem(class_dict, key);
+                    if (r == -1) {
+                        goto error_cleanup;
+                    }
+                    shouldCopy = NO;
+                }
+
+                if (shouldCopy) {
+                    r = PyDict_SetItem(class_dict, pyname, value);
+                    Py_DECREF(pyname);
+                    if (r == -1) {
+                        goto error_cleanup;
+                    }
+                }
+            }
+
+        } else if (PyMethod_Check(value) || PyFunction_Check(value) ||
+                   PyObject_TypeCheck(value, &PyClassMethod_Type)) {
+
+            PyObject* pyname;
+            const char* ocname;
+            pyname = key;
+            if (pyname == NULL)
+                continue;
+
+            if (PyUnicode_Check(pyname)) {
+                ocname = PyObjC_Unicode_Fast_Bytes(pyname);
+                if (ocname == NULL) {
+                    goto error_cleanup;
+                }
+
+            } else {
+                PyErr_Format(PyExc_TypeError, "method name is of type %s, not a string",
+                             Py_TYPE(pyname)->tp_name);
+                goto error_cleanup;
+            }
+
+            if (ocname[0] != '_' || ocname[1] != '_') {
+                /* Skip special methods (like __getattr__) to
+                 * avoid confusing type().
+                 */
+                PyObject* new_value;
+
+                new_value =
+                    PyObjCSelector_FromFunction(pyname, value, py_superclass, protocols);
+                if (new_value == NULL) {
+                    goto error_cleanup;
+                }
+                value = new_value;
+
+                if (PyObjCSelector_Check(value)) {
+                    int r;
+
+                    if (PyObjCSelector_IsClassMethod(value)) {
+                        if (!PyObjCSelector_IsHidden(value)) {
+                            if (PyDict_SetItem(meta_dict, key, value) == -1) {
+                                goto error_cleanup;
+                            }
+                        }
                         if (PyDict_DelItem(class_dict, key) == -1) {
                             goto error_cleanup;
                         }
 
-                    } else {
-                        if (PyDict_SetItem(class_dict, key, value) < 0) {
-                            Py_CLEAR(value);
-                            goto error_cleanup;
-                        }
-                    }
+                        r = PySet_Add(class_methods, value);
 
-                    r = PySet_Add(instance_methods, value);
-                }
-                if (r == -1) {
-                    goto error_cleanup;
+                    } else {
+                        if (PyObjCSelector_IsHidden(value)) {
+                            if (PyDict_DelItem(class_dict, key) == -1) {
+                                goto error_cleanup;
+                            }
+
+                        } else {
+                            if (PyDict_SetItem(class_dict, key, value) < 0) {
+                                Py_CLEAR(value);
+                                goto error_cleanup;
+                            }
+                        }
+
+                        r = PySet_Add(instance_methods, value);
+                    }
+                    if (r == -1) {
+                        goto error_cleanup;
+                    }
                 }
             }
-        }
         }
     }
 
     /* Keylist is not needed anymore */
-    Py_DECREF(key_list); key_list = NULL;
+    Py_DECREF(key_list);
+    key_list = NULL;
 
     /* Step 3: Check instance variables */
 
     /*    convert to 'fast sequence' to ensure stable order when accessing */
-    seq = PySequence_Fast(instance_variables, "converting instance variable set to sequence");
+    seq = PySequence_Fast(instance_variables,
+                          "converting instance variable set to sequence");
     if (seq == NULL) {
         goto error_cleanup;
     }
@@ -813,11 +816,12 @@ PyObjCClass_BuildClass(Class super_class, PyObject* protocols,
 
         /* Our only check for now is that instance variable names must be unique */
         /* XXX: Is this really necessary? */
-        if (class_getInstanceVariable(super_class, PyObjCInstanceVariable_GetName(value)) != NULL) {
+        if (class_getInstanceVariable(super_class,
+                                      PyObjCInstanceVariable_GetName(value)) != NULL) {
             PyErr_Format(PyObjCExc_Error,
-                "a superclass already has an instance "
-                "variable with this name: %s",
-                PyObjCInstanceVariable_GetName(value));
+                         "a superclass already has an instance "
+                         "variable with this name: %s",
+                         PyObjCInstanceVariable_GetName(value));
             goto error_cleanup;
         }
     }
@@ -854,17 +858,15 @@ PyObjCClass_BuildClass(Class super_class, PyObject* protocols,
         }
 
         if (PyObjCSelector_IsClassMethod(value)) {
-            PyErr_Format(PyExc_TypeError,
-                "class method in instance method set: -%s",
-                sel_getName(PyObjCSelector_GetSelector(value)));
+            PyErr_Format(PyExc_TypeError, "class method in instance method set: -%s",
+                         sel_getName(PyObjCSelector_GetSelector(value)));
             goto error_cleanup;
         }
 
         if (PyObjCNativeSelector_Check(value)) {
-            PyErr_Format(PyExc_TypeError,
-                "native selector -%s of %s",
-                sel_getName(PyObjCSelector_GetSelector(value)),
-                class_getName(PyObjCSelector_GetClass(value)));
+            PyErr_Format(PyExc_TypeError, "native selector -%s of %s",
+                         sel_getName(PyObjCSelector_GetSelector(value)),
+                         class_getName(PyObjCSelector_GetClass(value)));
             goto error_cleanup;
         } else if (PyObjCSelector_Check(value)) {
             PyObjCSelector* sel = (PyObjCSelector*)value;
@@ -874,12 +876,12 @@ PyObjCClass_BuildClass(Class super_class, PyObject* protocols,
 
             if (sel->sel_flags & PyObjCSelector_kHIDDEN) {
                 PyObject* v = PyBytes_InternFromString(
-                   sel_getName(PyObjCSelector_GetSelector(value)));
+                    sel_getName(PyObjCSelector_GetSelector(value)));
                 if (v == NULL) {
                     goto error_cleanup;
                 }
                 int r = PyDict_SetItem(hiddenSelectors, v,
-                    (PyObject*)PyObjCSelector_GetMetadata(value));
+                                       (PyObject*)PyObjCSelector_GetMetadata(value));
                 Py_DECREF(v);
                 if (r == -1) {
                     goto error_cleanup;
@@ -902,17 +904,15 @@ PyObjCClass_BuildClass(Class super_class, PyObject* protocols,
         }
 
         if (!PyObjCSelector_IsClassMethod(value)) {
-            PyErr_Format(PyExc_TypeError,
-                "instance method in class method set: -%s",
-                sel_getName(PyObjCSelector_GetSelector(value)));
+            PyErr_Format(PyExc_TypeError, "instance method in class method set: -%s",
+                         sel_getName(PyObjCSelector_GetSelector(value)));
             goto error_cleanup;
         }
 
         if (PyObjCNativeSelector_Check(value)) {
-            PyErr_Format(PyExc_TypeError,
-                "native selector +%s of %s",
-                sel_getName(PyObjCSelector_GetSelector(value)),
-                class_getName(PyObjCSelector_GetClass(value)));
+            PyErr_Format(PyExc_TypeError, "native selector +%s of %s",
+                         sel_getName(PyObjCSelector_GetSelector(value)),
+                         class_getName(PyObjCSelector_GetClass(value)));
             goto error_cleanup;
         } else if (PyObjCSelector_Check(value)) {
             PyObjCSelector* sel = (PyObjCSelector*)value;
@@ -927,7 +927,7 @@ PyObjCClass_BuildClass(Class super_class, PyObject* protocols,
                     goto error_cleanup;
                 }
                 int r = PyDict_SetItem(hiddenClassSelectors, v,
-                    (PyObject*)PyObjCSelector_GetMetadata(value));
+                                       (PyObject*)PyObjCSelector_GetMetadata(value));
                 Py_DECREF(v);
                 if (r == -1) {
                     goto error_cleanup;
@@ -942,7 +942,6 @@ PyObjCClass_BuildClass(Class super_class, PyObject* protocols,
          * methods and variables
          */
 
-
         if (!have_intermediate) {
             struct method_info* cur;
             for (cur = gMethods; cur->method_name != NULL; cur++) {
@@ -955,21 +954,27 @@ PyObjCClass_BuildClass(Class super_class, PyObject* protocols,
                     }
                 }
 
-                PyObjCMethodSignature* methinfo = PyObjCMethodSignature_FromSignature(cur->typestr, NO);
-                if (methinfo == NULL) goto error_cleanup;
+                PyObjCMethodSignature* methinfo =
+                    PyObjCMethodSignature_FromSignature(cur->typestr, NO);
+                if (methinfo == NULL)
+                    goto error_cleanup;
 
                 IMP closure = PyObjCFFI_MakeClosure(methinfo, cur->func, super_class);
                 Py_CLEAR(methinfo);
-                if (closure == NULL) goto error_cleanup;
+                if (closure == NULL)
+                    goto error_cleanup;
 
                 preclass_addMethod(new_class, cur->selector, closure, cur->typestr);
-                PyObject* sel = PyObjCSelector_NewNative(new_class, cur->selector, cur->typestr, 0);
-                if (sel == NULL) goto error_cleanup;
+                PyObject* sel =
+                    PyObjCSelector_NewNative(new_class, cur->selector, cur->typestr, 0);
+                if (sel == NULL)
+                    goto error_cleanup;
 
                 int r = PyDict_SetItemString(class_dict, cur->method_name, sel);
                 Py_DECREF(sel);
 
-                if (r == -1) goto error_cleanup;
+                if (r == -1)
+                    goto error_cleanup;
             }
         }
     }
@@ -996,14 +1001,12 @@ PyObjCClass_BuildClass(Class super_class, PyObject* protocols,
         align = PyObjCRT_AlignOfType(type);
 
         if (PyObjCInstanceVariable_GetName(value) == NULL) {
-            PyErr_SetString(PyObjCExc_Error,
-                "instance variable without a name");
+            PyErr_SetString(PyObjCExc_Error, "instance variable without a name");
             goto error_cleanup;
         }
 
-        if (!preclass_addIvar(new_class,
-                PyObjCInstanceVariable_GetName(value),
-                size, align, type)) {
+        if (!preclass_addIvar(new_class, PyObjCInstanceVariable_GetName(value), size,
+                              align, type)) {
 
             goto error_cleanup;
         }
@@ -1025,11 +1028,11 @@ PyObjCClass_BuildClass(Class super_class, PyObject* protocols,
         if (meth) {
             is_override = 1;
             if (!PyObjCRT_SignaturesEqual(method_getTypeEncoding(meth),
-                PyObjCSelector_GetNativeSignature(value))) {
+                                          PyObjCSelector_GetNativeSignature(value))) {
 
                 PyErr_Format(PyObjCExc_BadPrototypeError,
-                    "%R has signature that is not compatible with super-class",
-                    value);
+                             "%R has signature that is not compatible with super-class",
+                             value);
                 goto error_cleanup;
             }
         }
@@ -1046,7 +1049,7 @@ PyObjCClass_BuildClass(Class super_class, PyObject* protocols,
         }
 
         if (!preclass_addMethod(new_class, PyObjCSelector_GetSelector(value), imp,
-                PyObjCSelector_GetNativeSignature(value))) {
+                                PyObjCSelector_GetNativeSignature(value))) {
             goto error_cleanup;
         }
     }
@@ -1068,19 +1071,19 @@ PyObjCClass_BuildClass(Class super_class, PyObject* protocols,
             is_override = 1;
 
             if (!PyObjCRT_SignaturesEqual(method_getTypeEncoding(meth),
-                PyObjCSelector_GetNativeSignature(value))) {
+                                          PyObjCSelector_GetNativeSignature(value))) {
 
                 PyErr_Format(PyObjCExc_BadPrototypeError,
-                    "%R has signature that is not compatible with super-class",
-                    value);
+                             "%R has signature that is not compatible with super-class",
+                             value);
                 goto error_cleanup;
             }
         }
 
         if (is_override) {
-             imp = PyObjC_MakeIMP(new_meta_class, super_class, value, value);
+            imp = PyObjC_MakeIMP(new_meta_class, super_class, value, value);
         } else {
-             imp = PyObjC_MakeIMP(new_meta_class, nil, value, value);
+            imp = PyObjC_MakeIMP(new_meta_class, nil, value, value);
         }
 
         if (imp == NULL) {
@@ -1088,7 +1091,7 @@ PyObjCClass_BuildClass(Class super_class, PyObject* protocols,
         }
 
         if (!preclass_addMethod(new_meta_class, PyObjCSelector_GetSelector(value), imp,
-                PyObjCSelector_GetNativeSignature(value))) {
+                                PyObjCSelector_GetNativeSignature(value))) {
             goto error_cleanup;
         }
     }
@@ -1139,7 +1142,6 @@ error_cleanup:
  *   knows these are normal functions. You cannot use [super call]s here.
  */
 
-
 static void
 free_ivars(id self, PyObject* cls)
 {
@@ -1163,7 +1165,6 @@ free_ivars(id self, PyObject* cls)
         if (objcClass == nil) {
             break;
         }
-
 
         clsDict = PyObject_GetAttrString(cls, "__dict__");
         if (clsDict == NULL) {
@@ -1222,14 +1223,12 @@ free_ivars(id self, PyObject* cls)
                 (*(PyObject**)(((char*)self) + ivar_getOffset(var))) = NULL;
                 Py_XDECREF(tmp);
             } else {
-                PyObjC_DURING
-                    [*(id*)(((char*)self) + ivar_getOffset(var)) autorelease];
+                PyObjC_DURING[*(id*)(((char*)self) + ivar_getOffset(var)) autorelease];
 
-                PyObjC_HANDLER
-                    NSLog(@"ignoring exception %@ in destructor", localException);
+                PyObjC_HANDLER NSLog(@"ignoring exception %@ in destructor",
+                                     localException);
 
-                PyObjC_ENDHANDLER
-                *(id*)(((char*)self) + ivar_getOffset(var)) = NULL;
+                PyObjC_ENDHANDLER*(id*)(((char*)self) + ivar_getOffset(var)) = NULL;
             }
             Py_DECREF(o);
         }
@@ -1257,11 +1256,9 @@ free_ivars(id self, PyObject* cls)
 
 /* -dealloc */
 static void
-object_method_dealloc(
-      ffi_cif* cif __attribute__((__unused__)),
-      void* retval __attribute__((__unused__)),
-      void** args,
-      void* userdata)
+object_method_dealloc(ffi_cif* cif __attribute__((__unused__)),
+                      void* retval __attribute__((__unused__)), void** args,
+                      void* userdata)
 {
     id self = *(id*)(args[0]);
     SEL _meth = *(SEL*)(args[1]);
@@ -1270,34 +1267,34 @@ object_method_dealloc(
     PyObject* obj;
     PyObject* delmethod;
     PyObject* cls;
-    PyObject* ptype, *pvalue, *ptraceback;
+    PyObject *ptype, *pvalue, *ptraceback;
 
     PyObjC_BEGIN_WITH_GIL
 
         PyErr_Fetch(&ptype, &pvalue, &ptraceback);
 
-        cls = PyObjCClass_New(object_getClass(self));
+    cls = PyObjCClass_New(object_getClass(self));
 
-        delmethod = PyObjCClass_GetDelMethod(cls);
-        if (delmethod != NULL) {
-            PyObject* s = _PyObjCObject_NewDeallocHelper(self);
-            obj = PyObject_CallFunction(delmethod, "O", s);
-            _PyObjCObject_FreeDeallocHelper(s);
-            if (obj == NULL) {
-                PyErr_WriteUnraisable(delmethod);
-            } else {
-                Py_DECREF(obj);
-            }
-            Py_DECREF(delmethod);
+    delmethod = PyObjCClass_GetDelMethod(cls);
+    if (delmethod != NULL) {
+        PyObject* s = _PyObjCObject_NewDeallocHelper(self);
+        obj = PyObject_CallFunction(delmethod, "O", s);
+        _PyObjCObject_FreeDeallocHelper(s);
+        if (obj == NULL) {
+            PyErr_WriteUnraisable(delmethod);
+        } else {
+            Py_DECREF(obj);
         }
+        Py_DECREF(delmethod);
+    }
 
-        free_ivars(self, cls);
+    free_ivars(self, cls);
 
-        PyErr_Restore(ptype, pvalue, ptraceback);
+    PyErr_Restore(ptype, pvalue, ptraceback);
 
     PyObjC_END_WITH_GIL
 
-    objc_superSetClass(spr, (Class)userdata);
+        objc_superSetClass(spr, (Class)userdata);
     objc_superSetReceiver(spr, self);
 
     objc_msgSendSuper(&spr, _meth);
@@ -1305,11 +1302,8 @@ object_method_dealloc(
 
 /* -copyWithZone:(NSZone*)zone */
 static void
-object_method_copyWithZone_(
-    ffi_cif* cif __attribute__((__unused__)),
-    void* resp,
-    void** args,
-    void* userdata)
+object_method_copyWithZone_(ffi_cif* cif __attribute__((__unused__)), void* resp,
+                            void** args, void* userdata)
 {
     id self = *(id*)args[0];
     id copy;
@@ -1347,12 +1341,13 @@ object_method_copyWithZone_(
             typestr = ivar_getTypeEncoding(v);
             offset = ivar_getOffset(v);
 
-            if (strcmp(typestr, @encode(PyObject*))!=0)
+            if (strcmp(typestr, @encode(PyObject*)) != 0)
                 continue;
 
             /* A PyObject, increase it's refcount */
-            p = (PyObject**)(((char*)copy)+offset);
-            if (*p == NULL) continue;
+            p = (PyObject**)(((char*)copy) + offset);
+            if (*p == NULL)
+                continue;
             if (strcmp(ivar_getName(v), "__dict__") == 0) {
                 /* copy __dict__ */
                 *p = PyDict_Copy(*p);
@@ -1376,11 +1371,8 @@ object_method_copyWithZone_(
 
 /* -respondsToSelector: */
 static void
-object_method_respondsToSelector(
-    ffi_cif* cif __attribute__((__unused__)),
-    void* retval,
-    void** args,
-    void* userdata)
+object_method_respondsToSelector(ffi_cif* cif __attribute__((__unused__)), void* retval,
+                                 void** args, void* userdata)
 {
     id self = *(id*)args[0];
     SEL _meth = *(SEL*)args[1];
@@ -1394,41 +1386,40 @@ object_method_respondsToSelector(
     PyObjC_BEGIN_WITH_GIL
         /* First check if we respond */
         pyself = PyObjCObject_New(self, PyObjCObject_kDEFAULT, YES);
-        if (pyself == NULL) {
+    if (pyself == NULL) {
+        *pres = NO;
+        PyObjC_GIL_RETURNVOID;
+    }
+    pymeth = PyObjCObject_FindSelector(pyself, aSelector);
+    Py_DECREF(pyself);
+    if (pymeth) {
+        *pres = YES;
+
+        if (PyObjCSelector_Check(pymeth) &&
+            (((PyObjCSelector*)pymeth)->sel_flags & PyObjCSelector_kCLASS_METHOD)) {
             *pres = NO;
-            PyObjC_GIL_RETURNVOID;
         }
-        pymeth = PyObjCObject_FindSelector(pyself, aSelector);
-        Py_DECREF(pyself);
-        if (pymeth) {
-            *pres = YES;
 
-            if (PyObjCSelector_Check(pymeth) && (((PyObjCSelector*)pymeth)->sel_flags & PyObjCSelector_kCLASS_METHOD)) {
-                *pres = NO;
-            }
-
-            Py_DECREF(pymeth);
-            PyObjC_GIL_RETURNVOID;
-        }
-        PyErr_Clear();
+        Py_DECREF(pymeth);
+        PyObjC_GIL_RETURNVOID;
+    }
+    PyErr_Clear();
 
     PyObjC_END_WITH_GIL
 
-    /* Check superclass */
-    objc_superSetClass(spr, (Class)userdata);
+        /* Check superclass */
+        objc_superSetClass(spr, (Class)userdata);
     objc_superSetReceiver(spr, self);
 
-    *pres = ((int(*)(struct objc_super*, SEL, SEL))objc_msgSendSuper)(&spr, _meth, aSelector);
+    *pres = ((int (*)(struct objc_super*, SEL, SEL))objc_msgSendSuper)(&spr, _meth,
+                                                                       aSelector);
     return;
 }
 
 /* -methodSignatureForSelector */
 static void
-object_method_methodSignatureForSelector(
-    ffi_cif* cif __attribute__((__unused__)),
-    void* retval,
-    void** args,
-    void* userdata)
+object_method_methodSignatureForSelector(ffi_cif* cif __attribute__((__unused__)),
+                                         void* retval, void** args, void* userdata)
 {
     id self = *(id*)args[0];
     SEL _meth = *(SEL*)args[1];
@@ -1445,10 +1436,10 @@ object_method_methodSignatureForSelector(
     objc_superSetReceiver(spr, self);
 
     NS_DURING
-        *presult = objc_msgSendSuper(&spr, _meth, aSelector);
+    *presult = objc_msgSendSuper(&spr, _meth, aSelector);
 
     NS_HANDLER
-        *presult = nil;
+    *presult = nil;
 
     NS_ENDHANDLER
 
@@ -1456,48 +1447,41 @@ object_method_methodSignatureForSelector(
         return;
     }
 
-    PyObjC_BEGIN_WITH_GIL
-        pyself = PyObjCObject_New(self, PyObjCObject_kDEFAULT, YES);
-        if (pyself == NULL) {
-            PyErr_Clear();
-            PyObjC_GIL_RETURNVOID;
-        }
+    PyObjC_BEGIN_WITH_GIL pyself = PyObjCObject_New(self, PyObjCObject_kDEFAULT, YES);
+    if (pyself == NULL) {
+        PyErr_Clear();
+        PyObjC_GIL_RETURNVOID;
+    }
 
-        pymeth = PyObjCObject_FindSelector(pyself, aSelector);
-        if (!pymeth) {
-            Py_DECREF(pyself);
-            PyErr_Clear();
-            PyObjC_GIL_RETURNVOID;
-        }
+    pymeth = PyObjCObject_FindSelector(pyself, aSelector);
+    if (!pymeth) {
+        Py_DECREF(pyself);
+        PyErr_Clear();
+        PyObjC_GIL_RETURNVOID;
+    }
 
     PyObjC_END_WITH_GIL
 
-    NS_DURING
-        *presult = [NSMethodSignature signatureWithObjCTypes:(
-                        (PyObjCSelector*)pymeth)->sel_python_signature];
+        NS_DURING* presult = [NSMethodSignature
+            signatureWithObjCTypes:((PyObjCSelector*)pymeth)->sel_python_signature];
     NS_HANDLER
-        PyObjC_BEGIN_WITH_GIL
-            Py_DECREF(pymeth);
-            Py_DECREF(pyself);
+    PyObjC_BEGIN_WITH_GIL Py_DECREF(pymeth);
+    Py_DECREF(pyself);
 
-        PyObjC_END_WITH_GIL
-        [localException raise];
+    PyObjC_END_WITH_GIL[localException raise];
     NS_ENDHANDLER
 
-    PyObjC_BEGIN_WITH_GIL
-        Py_DECREF(pymeth);
-        Py_DECREF(pyself);
+    PyObjC_BEGIN_WITH_GIL Py_DECREF(pymeth);
+    Py_DECREF(pyself);
 
     PyObjC_END_WITH_GIL
 }
 
 /* -forwardInvocation: */
 static void
-object_method_forwardInvocation(
-    ffi_cif* cif __attribute__((__unused__)),
-    void* retval __attribute__((__unused__)),
-    void** args,
-    void* userdata)
+object_method_forwardInvocation(ffi_cif* cif __attribute__((__unused__)),
+                                void* retval __attribute__((__unused__)), void** args,
+                                void* userdata)
 {
     id self = *(id*)args[0];
     SEL _meth = *(SEL*)args[1];
@@ -1527,18 +1511,16 @@ object_method_forwardInvocation(
         return;
     }
 
-    PyObjC_DURING
-        theSelector = [invocation selector];
-    PyObjC_HANDLER
-        PyGILState_Release(state);
-        [localException raise];
+    PyObjC_DURING theSelector = [invocation selector];
+    PyObjC_HANDLER PyGILState_Release(state);
+    [localException raise];
 
-        /* Avoid compiler warnings */
-        theSelector = @selector(init);
+    /* Avoid compiler warnings */
+    theSelector = @selector(init);
 
     PyObjC_ENDHANDLER
 
-    pymeth = PyObjCObject_FindSelector(pyself, theSelector);
+        pymeth = PyObjCObject_FindSelector(pyself, theSelector);
 
     if ((pymeth == NULL) || PyObjCNativeSelector_Check(pymeth)) {
         struct objc_super spr;
@@ -1557,12 +1539,11 @@ object_method_forwardInvocation(
         return;
     }
 
-
-    signature = PyObjCMethodSignature_FromSignature(
-        PyObjCSelector_Signature(pymeth), NO);
+    signature = PyObjCMethodSignature_FromSignature(PyObjCSelector_Signature(pymeth), NO);
     len = Py_SIZE(signature);
 
-    Py_XDECREF(pymeth); pymeth = NULL;
+    Py_XDECREF(pymeth);
+    pymeth = NULL;
 
     arglist = PyList_New(1);
     if (arglist == NULL) {
@@ -1593,7 +1574,7 @@ object_method_forwardInvocation(
             return;
         }
 
-        argbuf = PyMem_Malloc(arglen+64);
+        argbuf = PyMem_Malloc(arglen + 64);
 
         [invocation getArgument:argbuf atIndex:i];
 
@@ -1602,26 +1583,29 @@ object_method_forwardInvocation(
         switch (*type) {
         case _C_INOUT:
             if (type[1] == _C_PTR) {
-                have_output ++;
+                have_output++;
             }
             /* FALL THROUGH */
-        case _C_IN: case _C_CONST:
+        case _C_IN:
+        case _C_CONST:
             if (type[1] == _C_PTR) {
-                v = pythonify_c_value(type+2, *(void**)argbuf);
+                v = pythonify_c_value(type + 2, *(void**)argbuf);
             } else {
-                v = pythonify_c_value(type+1, argbuf);
+                v = pythonify_c_value(type + 1, argbuf);
             }
             break;
         case _C_OUT:
             if (type[1] == _C_PTR) {
-                have_output ++;
+                have_output++;
             }
-            PyMem_Free(argbuf); argbuf = NULL;
+            PyMem_Free(argbuf);
+            argbuf = NULL;
             continue;
         default:
             v = pythonify_c_value(type, argbuf);
         }
-        PyMem_Free(argbuf); argbuf = NULL;
+        PyMem_Free(argbuf);
+        argbuf = NULL;
 
         if (v == NULL) {
             Py_DECREF(arglist);
@@ -1646,7 +1630,8 @@ object_method_forwardInvocation(
         return;
     }
     Py_DECREF(arglist);
-    arglist = v; v = NULL;
+    arglist = v;
+    v = NULL;
 
     result = PyObjC_CallPython(self, theSelector, arglist, &isAlloc, &isCFAlloc);
     Py_DECREF(arglist);
@@ -1667,7 +1652,7 @@ object_method_forwardInvocation(
 
     if (!have_output) {
         if (*type != _C_VOID && *type != _C_ONEWAY) {
-            argbuf = PyMem_Malloc(arglen+64);
+            argbuf = PyMem_Malloc(arglen + 64);
 
             err = depythonify_c_value(type, result, argbuf);
             if (err == -1) {
@@ -1701,7 +1686,7 @@ object_method_forwardInvocation(
              * duplication
              */
 
-            for (i = 2; i < len;i++) {
+            for (i = 2; i < len; i++) {
                 void* ptr;
                 type = signature->argtype[i]->type;
 
@@ -1712,7 +1697,8 @@ object_method_forwardInvocation(
                 }
 
                 switch (*type) {
-                case _C_INOUT: case _C_OUT:
+                case _C_INOUT:
+                case _C_OUT:
                     if (type[1] != _C_PTR) {
                         continue;
                     }
@@ -1747,11 +1733,9 @@ object_method_forwardInvocation(
         }
 
         if (*type != _C_VOID) {
-            if (!PyTuple_Check(result) || PyTuple_Size(result) != have_output+1) {
-                PyErr_Format(PyExc_TypeError,
-                    "%s: Need tuple of %d arguments as result",
-                    sel_getName(theSelector),
-                    have_output+1);
+            if (!PyTuple_Check(result) || PyTuple_Size(result) != have_output + 1) {
+                PyErr_Format(PyExc_TypeError, "%s: Need tuple of %d arguments as result",
+                             sel_getName(theSelector), have_output + 1);
                 Py_DECREF(result);
                 Py_DECREF(signature);
                 PyObjCErr_ToObjCWithGILState(&state);
@@ -1760,7 +1744,7 @@ object_method_forwardInvocation(
             idx = 1;
             real_res = PyTuple_GET_ITEM(result, 0);
 
-            argbuf = PyMem_Malloc(arglen+64);
+            argbuf = PyMem_Malloc(arglen + 64);
 
             err = depythonify_c_value(type, real_res, argbuf);
             if (err == -1) {
@@ -1782,10 +1766,8 @@ object_method_forwardInvocation(
 
         } else {
             if (!PyTuple_Check(result) || PyTuple_Size(result) != have_output) {
-                PyErr_Format(PyExc_TypeError,
-                    "%s: Need tuple of %d arguments as result",
-                    sel_getName(theSelector),
-                    have_output);
+                PyErr_Format(PyExc_TypeError, "%s: Need tuple of %d arguments as result",
+                             sel_getName(theSelector), have_output);
                 Py_DECREF(signature);
                 Py_DECREF(result);
                 PyObjCErr_ToObjCWithGILState(&state);
@@ -1794,7 +1776,7 @@ object_method_forwardInvocation(
             idx = 0;
         }
 
-        for (i = 2; i < len;i++) {
+        for (i = 2; i < len; i++) {
             void* ptr;
             type = signature->argtype[i]->type;
 
@@ -1805,7 +1787,8 @@ object_method_forwardInvocation(
             }
 
             switch (*type) {
-            case _C_INOUT: case _C_OUT:
+            case _C_INOUT:
+            case _C_OUT:
                 if (type[1] != _C_PTR) {
                     continue;
                 }
@@ -1829,7 +1812,6 @@ object_method_forwardInvocation(
                  */
                 [[*(id*)ptr retain] autorelease];
             }
-
         }
         Py_DECREF(result);
     }
@@ -1841,7 +1823,8 @@ object_method_forwardInvocation(
  * XXX: Function PyObjC_CallPython should be moved
  */
 PyObject*
-PyObjC_CallPython( id self, SEL selector, PyObject* arglist, BOOL* isAlloc, BOOL* isCFAlloc)
+PyObjC_CallPython(id self, SEL selector, PyObject* arglist, BOOL* isAlloc,
+                  BOOL* isCFAlloc)
 {
     PyObject* pyself = NULL;
     PyObject* pymeth = NULL;
@@ -1873,9 +1856,8 @@ PyObjC_CallPython( id self, SEL selector, PyObject* arglist, BOOL* isAlloc, BOOL
         }
         if (arg_self != ((PyObjCSelector*)pymeth)->sel_self) {
 
-            PyErr_SetString(PyExc_TypeError,
-                "PyObjC_CallPython called with 'self' and "
-                "a method bound to another object");
+            PyErr_SetString(PyExc_TypeError, "PyObjC_CallPython called with 'self' and "
+                                             "a method bound to another object");
             return NULL;
         }
 
@@ -1908,11 +1890,8 @@ PyObjC_CallPython( id self, SEL selector, PyObject* arglist, BOOL* isAlloc, BOOL
 }
 
 static void
-object_method_valueForKey_(
-    ffi_cif* cif __attribute__((__unused__)),
-    void* retval,
-    void** args,
-    void* userdata)
+object_method_valueForKey_(ffi_cif* cif __attribute__((__unused__)), void* retval,
+                           void** args, void* userdata)
 {
     /*
      * This method does the following:
@@ -1930,9 +1909,9 @@ object_method_valueForKey_(
 
     /* First check super */
     NS_DURING
-        objc_superSetClass(spr, (Class)userdata);
-        objc_superSetReceiver(spr, self);
-        *((id *)retval) = (id)objc_msgSendSuper(&spr, _meth, key);
+    objc_superSetClass(spr, (Class)userdata);
+    objc_superSetReceiver(spr, self);
+    *((id*)retval) = (id)objc_msgSendSuper(&spr, _meth, key);
     NS_HANDLER
 
     /* Parent doesn't know the key, try to create in the
@@ -1945,54 +1924,53 @@ object_method_valueForKey_(
      * This is why attribute access is hardcoded using PyObjCObject_GetAttrString
      * rather than PyObject_GetAttrString.
      */
-     if (([[localException name] isEqual:@"NSUnknownKeyException"])
-                && [[self class] accessInstanceVariablesDirectly]) {
+    if (([[localException name] isEqual:@"NSUnknownKeyException"]) &&
+        [[self class] accessInstanceVariablesDirectly]) {
 
-            PyGILState_STATE state = PyGILState_Ensure();
-            PyObject* selfObj = PyObjCObject_New(self, PyObjCObject_kDEFAULT, YES);
-            PyObject *res = NULL;
-            r = -1;
-            do {
-                res = PyObjCObject_GetAttrString(selfObj, (char *)[key UTF8String]);
+        PyGILState_STATE state = PyGILState_Ensure();
+        PyObject* selfObj = PyObjCObject_New(self, PyObjCObject_kDEFAULT, YES);
+        PyObject* res = NULL;
+        r = -1;
+        do {
+            res = PyObjCObject_GetAttrString(selfObj, (char*)[key UTF8String]);
+            if (res == NULL) {
+                PyErr_Clear();
+                res = PyObjCObject_GetAttrString(
+                    selfObj, (char*)[[@"_" stringByAppendingString:key] UTF8String]);
                 if (res == NULL) {
-                    PyErr_Clear();
-                    res = PyObjCObject_GetAttrString(selfObj, (char *)[[@"_" stringByAppendingString:key] UTF8String]);
-                    if (res == NULL) {
-                        break;
-                    }
-                }
-
-                /* Check that we don't accidently return
-                 * an accessor method.
-                 */
-                if (PyObjCSelector_Check(res) &&
-                        ((PyObjCSelector*)res)->sel_self == selfObj) {
-                    Py_DECREF(res); res = NULL;
                     break;
                 }
-                r = depythonify_c_value(@encode(id), res, retval);
-            } while (0);
-            Py_DECREF(selfObj);
-            Py_XDECREF(res);
-            if (r == -1) {
-                PyErr_Clear();
-                PyGILState_Release(state);
-                [localException raise];
             }
+
+            /* Check that we don't accidently return
+             * an accessor method.
+             */
+            if (PyObjCSelector_Check(res) &&
+                ((PyObjCSelector*)res)->sel_self == selfObj) {
+                Py_DECREF(res);
+                res = NULL;
+                break;
+            }
+            r = depythonify_c_value(@encode(id), res, retval);
+        } while (0);
+        Py_DECREF(selfObj);
+        Py_XDECREF(res);
+        if (r == -1) {
+            PyErr_Clear();
             PyGILState_Release(state);
-        } else {
             [localException raise];
         }
+        PyGILState_Release(state);
+    } else {
+        [localException raise];
+    }
     NS_ENDHANDLER
 }
 
-
 static void
-object_method_setValue_forKey_(
-    ffi_cif* cif __attribute__((__unused__)),
-    void* retval __attribute__((__unused__)),
-    void** args,
-    void* userdata)
+object_method_setValue_forKey_(ffi_cif* cif __attribute__((__unused__)),
+                               void* retval __attribute__((__unused__)), void** args,
+                               void* userdata)
 {
     /*
      * This method does the following:
@@ -2009,52 +1987,52 @@ object_method_setValue_forKey_(
     NSString* key = *(NSString**)args[3];
 
     NS_DURING
-        /* First check super */
-        objc_superSetClass(spr, (Class)userdata);
-        objc_superSetReceiver(spr, self);
-        (void)objc_msgSendSuper(&spr, _meth, value, key);
+    /* First check super */
+    objc_superSetClass(spr, (Class)userdata);
+    objc_superSetReceiver(spr, self);
+    (void)objc_msgSendSuper(&spr, _meth, value, key);
     NS_HANDLER
-        /* Parent doesn't know the key, try to create in the
-         * python side, just like for plain python objects.
-         */
-        if (([[localException name] isEqual:@"NSUnknownKeyException"])
-                && [[self class] accessInstanceVariablesDirectly]) {
+    /* Parent doesn't know the key, try to create in the
+     * python side, just like for plain python objects.
+     */
+    if (([[localException name] isEqual:@"NSUnknownKeyException"]) &&
+        [[self class] accessInstanceVariablesDirectly]) {
 
-            PyGILState_STATE state = PyGILState_Ensure();
-            PyObject* val = pythonify_c_value(@encode(id), &value);
-            if (val == NULL) {
-                PyErr_Clear();
-                PyGILState_Release(state);
-
-                [localException raise];
-            }
-            PyObject* res = NULL;
-            PyObject* selfObj = PyObjCObject_New(self, PyObjCObject_kDEFAULT, YES);
-            r = -1;
-            do {
-                char *rawkey = (char *)[[@"_" stringByAppendingString:key] UTF8String];
-                res = PyObject_GetAttrString(selfObj, rawkey);
-                if (res != NULL) {
-                    r = PyObject_SetAttrString(selfObj, rawkey, val);
-                    if (r != -1) {
-                        break;
-                    }
-                }
-                PyErr_Clear();
-                rawkey = (char *)[key UTF8String];
-                r = PyObject_SetAttrString(selfObj, rawkey, val);
-            } while (0);
-            Py_DECREF(selfObj);
-            Py_DECREF(val);
-            Py_XDECREF(res);
-            if (r == -1) {
-                PyErr_Clear();
-                PyGILState_Release(state);
-                [localException raise];
-            }
+        PyGILState_STATE state = PyGILState_Ensure();
+        PyObject* val = pythonify_c_value(@encode(id), &value);
+        if (val == NULL) {
+            PyErr_Clear();
             PyGILState_Release(state);
-        } else {
+
             [localException raise];
         }
+        PyObject* res = NULL;
+        PyObject* selfObj = PyObjCObject_New(self, PyObjCObject_kDEFAULT, YES);
+        r = -1;
+        do {
+            char* rawkey = (char*)[[@"_" stringByAppendingString:key] UTF8String];
+            res = PyObject_GetAttrString(selfObj, rawkey);
+            if (res != NULL) {
+                r = PyObject_SetAttrString(selfObj, rawkey, val);
+                if (r != -1) {
+                    break;
+                }
+            }
+            PyErr_Clear();
+            rawkey = (char*)[key UTF8String];
+            r = PyObject_SetAttrString(selfObj, rawkey, val);
+        } while (0);
+        Py_DECREF(selfObj);
+        Py_DECREF(val);
+        Py_XDECREF(res);
+        if (r == -1) {
+            PyErr_Clear();
+            PyGILState_Release(state);
+            [localException raise];
+        }
+        PyGILState_Release(state);
+    } else {
+        [localException raise];
+    }
     NS_ENDHANDLER
 }

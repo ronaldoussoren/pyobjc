@@ -26,19 +26,18 @@
 
 extern void PyObjC_encodeWithCoder(PyObject* pyObject, NSCoder* coder);
 
-@interface OC_PythonObject : NSProxy <NSCopying>
-{
-  PyObject *pyObject;
+@interface OC_PythonObject : NSProxy <NSCopying> {
+    PyObject* pyObject;
 }
 
-+ (id <NSObject>)objectWithPythonObject:(PyObject *) obj;
-- (id)initWithPyObject:(PyObject *) obj;
++ (id<NSObject>)objectWithPythonObject:(PyObject*)obj;
+- (id)initWithPyObject:(PyObject*)obj;
 
 /*!
  * @method pyObject
  * @result Returns a borrowed reference to the wrapped object
  */
-- (PyObject*) pyObject;
+- (PyObject*)pyObject;
 
 /*!
  * @method __pyobjc_PythonObject__
@@ -47,11 +46,11 @@ extern void PyObjC_encodeWithCoder(PyObject* pyObject, NSCoder* coder);
  *     This method is part of the implementation of objc_support.m,
  *     see that file for details.
  */
-- (PyObject*) __pyobjc_PythonObject__;
-- (void) forwardInvocation:(NSInvocation *) invocation;
-- (BOOL) respondsToSelector:(SEL) aSelector;
-- (NSMethodSignature *) methodSignatureForSelector:(SEL) selector;
-- (void) doesNotRecognizeSelector:(SEL) aSelector;
+- (PyObject*)__pyobjc_PythonObject__;
+- (void)forwardInvocation:(NSInvocation*)invocation;
+- (BOOL)respondsToSelector:(SEL)aSelector;
+- (NSMethodSignature*)methodSignatureForSelector:(SEL)selector;
+- (void)doesNotRecognizeSelector:(SEL)aSelector;
 
 /* NSObject protocol */
 - (NSUInteger)hash;
@@ -62,37 +61,37 @@ extern void PyObjC_encodeWithCoder(PyObject* pyObject, NSCoder* coder);
 /* Key-Value Coding support */
 + (BOOL)useStoredAccessor;
 + (BOOL)accessInstanceVariablesDirectly;
-- (id)valueForKey:(NSString*) key;
-- (NSDictionary*) valuesForKeys: (NSArray*)keys;
-- (id)valueForKeyPath: (NSString*) keyPath;
-- (id)storedValueForKey: (NSString*) key;
-- (void)takeValue: value forKey: (NSString*) key;
-- (void)setValue: value forKey: (NSString*) key;
-- (void)setValue: value forKeyPath: (NSString*) key;
-- (void)takeStoredValue: value forKey: (NSString*) key;
-- (void)takeValue: value forKeyPath: (NSString*) keyPath;
-- (void)takeValuesFromDictionary: (NSDictionary*) aDictionary;
-- (void)setValuesForKeysWithDictionary: (NSDictionary*) aDictionary;
-- (void)unableToSetNilForKey: (NSString*) key;
-- (void)valueForUndefinedKey: (NSString*) key;
-- (void)handleTakeValue: value forUnboundKey: (NSString*) key;
-- (void)setValue: value forUndefinedKey: (NSString*) key;
+- (id)valueForKey:(NSString*)key;
+- (NSDictionary*)valuesForKeys:(NSArray*)keys;
+- (id)valueForKeyPath:(NSString*)keyPath;
+- (id)storedValueForKey:(NSString*)key;
+- (void)takeValue:value forKey:(NSString*)key;
+- (void)setValue:value forKey:(NSString*)key;
+- (void)setValue:value forKeyPath:(NSString*)key;
+- (void)takeStoredValue:value forKey:(NSString*)key;
+- (void)takeValue:value forKeyPath:(NSString*)keyPath;
+- (void)takeValuesFromDictionary:(NSDictionary*)aDictionary;
+- (void)setValuesForKeysWithDictionary:(NSDictionary*)aDictionary;
+- (void)unableToSetNilForKey:(NSString*)key;
+- (void)valueForUndefinedKey:(NSString*)key;
+- (void)handleTakeValue:value forUnboundKey:(NSString*)key;
+- (void)setValue:value forUndefinedKey:(NSString*)key;
 
 /* These two are only present to *disable* coding, not implement it */
 - (void)encodeWithCoder:(NSCoder*)coder;
 - (id)initWithCoder:(NSCoder*)coder;
 + (id)classFallbacksForKeyedArchiver;
--(NSObject*)replacementObjectForArchiver:(NSArchiver*)archiver;
--(NSObject*)replacementObjectForKeyedArchiver:(NSKeyedArchiver*)archiver;
--(NSObject*)replacementObjectForCoder:(NSCoder*)archiver;
--(NSObject*)replacementObjectForPortCoder:(NSPortCoder*)archiver;
--(Class)classForArchiver;
--(Class)classForKeyedArchiver;
-+(Class)classForUnarchiver;
-+(Class)classForKeyedUnarchiver;
--(Class)classForCoder;
--(Class)classForPortCoder;
--(id)awakeAfterUsingCoder:(NSCoder*)coder;
+- (NSObject*)replacementObjectForArchiver:(NSArchiver*)archiver;
+- (NSObject*)replacementObjectForKeyedArchiver:(NSKeyedArchiver*)archiver;
+- (NSObject*)replacementObjectForCoder:(NSCoder*)archiver;
+- (NSObject*)replacementObjectForPortCoder:(NSPortCoder*)archiver;
+- (Class)classForArchiver;
+- (Class)classForKeyedArchiver;
++ (Class)classForUnarchiver;
++ (Class)classForKeyedUnarchiver;
+- (Class)classForCoder;
+- (Class)classForPortCoder;
+- (id)awakeAfterUsingCoder:(NSCoder*)coder;
 
 @end /* OC_PythonObject class interface */
 

@@ -10,16 +10,18 @@
 #include "pyobjc.h"
 
 @implementation OCReleasedBuffer
--(instancetype) initWithPythonBuffer:(PyObject*)object writable:(BOOL)writable
+- (instancetype)initWithPythonBuffer:(PyObject*)object writable:(BOOL)writable
 {
     int r;
 
     self = [super init];
-    if (self == nil) return nil;
+    if (self == nil)
+        return nil;
 
     self->have_buffer = NO;
 
-    r = PyObject_GetBuffer(object, &self->buffer, writable?PyBUF_CONTIG:PyBUF_CONTIG_RO);
+    r = PyObject_GetBuffer(object, &self->buffer,
+                           writable ? PyBUF_CONTIG : PyBUF_CONTIG_RO);
     if (r != 0) {
         [self release];
         return nil;
@@ -29,7 +31,7 @@
     return self;
 }
 
--(void)dealloc
+- (void)dealloc
 {
     if (self->have_buffer) {
         PyBuffer_Release(&self->buffer);
@@ -38,12 +40,12 @@
     [super dealloc];
 }
 
--(void*)buffer
+- (void*)buffer
 {
     return self->buffer.buf;
 }
 
--(NSUInteger)length
+- (NSUInteger)length
 {
     return (NSUInteger)self->buffer.len;
 }

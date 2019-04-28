@@ -8,6 +8,11 @@ Version 6.0a0
 
 * Removed Python 2 support from the C extension in pyobjc-core
 
+* Reformatted code in pyobjc-core:
+
+  - Use "black" for Python code
+  - Use "clang-format" for Objective-C code
+
 Version 5.2
 -----------
 

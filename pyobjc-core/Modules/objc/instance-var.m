@@ -53,35 +53,32 @@ ivar_descr_get(PyObject* _self, PyObject* obj, PyObject* type __attribute__((__u
     PyObject* res;
 
     if (!obj || PyObjCClass_Check(obj)) {
-        PyErr_SetString(PyExc_TypeError,
-            "Cannot access Objective-C instance-variables "
-            "through class");
+        PyErr_SetString(PyExc_TypeError, "Cannot access Objective-C instance-variables "
+                                         "through class");
         return NULL;
     }
 
     if (!PyObjCObject_Check(obj)) {
-        PyErr_SetString(PyExc_TypeError,
-            "objc_ivar descriptor on a non-objc object");
+        PyErr_SetString(PyExc_TypeError, "objc_ivar descriptor on a non-objc object");
         return NULL;
     }
 
     objc = PyObjCObject_GetObject(obj);
     if (objc == NULL) {
         PyErr_SetString(PyExc_TypeError,
-           "Cannot access Objective-C instance-variables of NULL");
+                        "Cannot access Objective-C instance-variables of NULL");
         return NULL;
     }
 
     if (self->name == NULL) {
-        PyErr_SetString(PyExc_TypeError,
-            "Using unnamed instance variable");
+        PyErr_SetString(PyExc_TypeError, "Using unnamed instance variable");
         return NULL;
     }
 
-    var = class_getInstanceVariable(
-            object_getClass(objc), self->name);
+    var = class_getInstanceVariable(object_getClass(objc), self->name);
     if (var == NULL) {
-        PyErr_Format(PyExc_RuntimeError,
+        PyErr_Format(
+            PyExc_RuntimeError,
             "objc_ivar descriptor for non-existing instance variable '%s' in class '%s'",
             self->name, class_getName(object_getClass(objc)));
         return NULL;
@@ -91,8 +88,7 @@ ivar_descr_get(PyObject* _self, PyObject* obj, PyObject* type __attribute__((__u
         res = *(PyObject**)(((char*)objc) + ivar_getOffset(var));
 
         if (res == NULL) {
-            PyErr_Format(PyExc_AttributeError,
-                "No attribute %s\n", ivar_getName(var));
+            PyErr_Format(PyExc_AttributeError, "No attribute %s\n", ivar_getName(var));
         } else {
             Py_INCREF(res);
         }
@@ -103,12 +99,9 @@ ivar_descr_get(PyObject* _self, PyObject* obj, PyObject* type __attribute__((__u
         if (encoding[0] == _C_ID) {
             /* An object */
             id value = object_getIvar(objc, var);
-            res = pythonify_c_value(
-                encoding, &value);
+            res = pythonify_c_value(encoding, &value);
         } else {
-            res = pythonify_c_value(
-                encoding,
-                ((char*)objc) + ivar_getOffset(var));
+            res = pythonify_c_value(encoding, ((char*)objc) + ivar_getOffset(var));
         }
     }
     return res;
@@ -124,44 +117,39 @@ ivar_descr_set(PyObject* _self, PyObject* obj, PyObject* value)
     int res;
 
     if (value == NULL && !self->isSlot) {
-        PyErr_SetString(PyExc_TypeError,
-            "Cannot delete Objective-C instance variables");
+        PyErr_SetString(PyExc_TypeError, "Cannot delete Objective-C instance variables");
         return -1;
     }
 
     if (!obj || PyObjCClass_Check(obj)) {
-        PyErr_SetString(PyExc_TypeError,
-            "Cannot access Objective-C instance-variables "
-            "through class");
+        PyErr_SetString(PyExc_TypeError, "Cannot access Objective-C instance-variables "
+                                         "through class");
         return -1;
     }
 
     if (!PyObjCObject_Check(obj)) {
-        PyErr_SetString(PyExc_TypeError,
-            "objc_ivar descriptor on a non-objc object");
+        PyErr_SetString(PyExc_TypeError, "objc_ivar descriptor on a non-objc object");
         return -1;
     }
 
     objc = PyObjCObject_GetObject(obj);
     if (objc == NULL) {
         PyErr_SetString(PyExc_TypeError,
-           "Cannot access Objective-C instance-variables of NULL");
+                        "Cannot access Objective-C instance-variables of NULL");
         return -1;
     }
 
     if (self->name == NULL) {
-        PyErr_SetString(PyExc_TypeError,
-            "Using unnamed instance variable");
+        PyErr_SetString(PyExc_TypeError, "Using unnamed instance variable");
         return -1;
     }
 
     if (self->ivar == NULL) {
-        var = class_getInstanceVariable(
-                object_getClass(objc), self->name);
+        var = class_getInstanceVariable(object_getClass(objc), self->name);
         if (var == NULL) {
             PyErr_SetString(PyExc_RuntimeError,
-                "objc_ivar descriptor for non-existing instance "
-                "variable");
+                            "objc_ivar descriptor for non-existing instance "
+                            "variable");
             return -1;
         }
         self->ivar = var;
@@ -169,12 +157,11 @@ ivar_descr_set(PyObject* _self, PyObject* obj, PyObject* value)
         var = self->ivar;
     }
 
-    //NSString* ocName = [NSString stringWithUTF8String:self->name];
+    // NSString* ocName = [NSString stringWithUTF8String:self->name];
     // [objc willChangeValueForKey:ocName];
 
     if (self->isSlot) {
-        PyObject** slotval = (PyObject**)(
-                ((char*)objc) + ivar_getOffset(var));
+        PyObject** slotval = (PyObject**)(((char*)objc) + ivar_getOffset(var));
         Py_XINCREF(value);
         Py_XDECREF(*slotval);
         *slotval = value;
@@ -194,12 +181,12 @@ ivar_descr_set(PyObject* _self, PyObject* obj, PyObject* value)
         }
 
         if (!self->isOutlet) {
-            PyObjC_DURING
-                id old_value = object_getIvar(objc, var);
-                [new_value retain];
-                [old_value release];
-            PyObjC_HANDLER
-                NSLog(@"PyObjC: ignoring exception during attribute replacement: %@", localException);
+            PyObjC_DURING id old_value = object_getIvar(objc, var);
+            [new_value retain];
+            [old_value release];
+            PyObjC_HANDLER NSLog(
+                @"PyObjC: ignoring exception during attribute replacement: %@",
+                localException);
             PyObjC_ENDHANDLER
         }
 
@@ -215,7 +202,7 @@ ivar_descr_set(PyObject* _self, PyObject* obj, PyObject* value)
         return -1;
     }
     res = depythonify_c_value(ivar_getTypeEncoding(var), value,
-        (void*)(((char*)objc)+ivar_getOffset(var)));
+                              (void*)(((char*)objc) + ivar_getOffset(var)));
     if (res == -1) {
         // [objc didChangeValueForKey:ocName];
         return -1;
@@ -228,15 +215,14 @@ ivar_descr_set(PyObject* _self, PyObject* obj, PyObject* value)
 static int
 ivar_init(PyObject* _self, PyObject* args, PyObject* kwds)
 {
-static char* keywords[] = { "name", "type", "isOutlet", NULL };
+    static char* keywords[] = {"name", "type", "isOutlet", NULL};
     PyObjCInstanceVariable* self = (PyObjCInstanceVariable*)_self;
     char* name = NULL;
     char* type = @encode(id);
     PyObject* isOutletObj = NULL;
 
-    if (!PyArg_ParseTupleAndKeywords(args, kwds,
-                "|syO:objc_ivar",
-            keywords, &name, &type, &isOutletObj)) {
+    if (!PyArg_ParseTupleAndKeywords(args, kwds, "|syO:objc_ivar", keywords, &name, &type,
+                                     &isOutletObj)) {
         return -1;
     }
 
@@ -251,7 +237,7 @@ static char* keywords[] = { "name", "type", "isOutlet", NULL };
     }
 
     self->type = PyObjCUtil_Strdup(type);
-    if(self->type == NULL) {
+    if (self->type == NULL) {
         if (name) {
             PyMem_Free(self->name);
         }
@@ -274,7 +260,8 @@ static char* keywords[] = { "name", "type", "isOutlet", NULL };
 static PyObject*
 ivar_class_setup(PyObject* _self, PyObject* args, PyObject* kwds)
 {
-static char* keywords[] = { "name", "class_dict", "instance_method_list", "class_method_list", NULL };
+    static char* keywords[] = {"name", "class_dict", "instance_method_list",
+                               "class_method_list", NULL};
 
     PyObjCInstanceVariable* self = (PyObjCInstanceVariable*)_self;
     char* name;
@@ -282,12 +269,9 @@ static char* keywords[] = { "name", "class_dict", "instance_method_list", "class
     PyObject* instance_method_list;
     PyObject* class_method_list;
 
-    if (!PyArg_ParseTupleAndKeywords(args, kwds, "sO!O!O!", keywords,
-            &name,
-            &PyDict_Type, &class_dict,
-            &PySet_Type, &instance_method_list,
-            &PySet_Type, &class_method_list
-        )){
+    if (!PyArg_ParseTupleAndKeywords(args, kwds, "sO!O!O!", keywords, &name, &PyDict_Type,
+                                     &class_dict, &PySet_Type, &instance_method_list,
+                                     &PySet_Type, &class_method_list)) {
 
         return NULL;
     }
@@ -300,36 +284,29 @@ static char* keywords[] = { "name", "class_dict", "instance_method_list", "class
     return Py_None;
 }
 
+static PyMethodDef ivar_methods[] = {{
+                                         .ml_name = "__pyobjc_class_setup__",
+                                         .ml_meth = (PyCFunction)ivar_class_setup,
+                                         .ml_flags = METH_VARARGS | METH_KEYWORDS,
+                                     },
 
-static PyMethodDef ivar_methods[] = {
-    {
-        .ml_name    = "__pyobjc_class_setup__",
-        .ml_meth    = (PyCFunction)ivar_class_setup,
-        .ml_flags   = METH_VARARGS|METH_KEYWORDS,
-    },
+                                     {
+                                         .ml_name = NULL /* SENTINEL */
+                                     }};
 
-    {
-        .ml_name    = NULL /* SENTINEL */
-    }
-};
+PyDoc_STRVAR(
+    ivar_doc,
+    "ivar(name, type='@', isOutlet=False) -> instance-variable\n" CLINIC_SEP "\n"
+    "Creates a descriptor for accessing an Objective-C instance variable.\n\n"
+    "This should only be used in the definition of Objective-C subclasses, and\n"
+    "will then automaticly define the instance variable in the objective-C side.\n"
+    "\n"
+    "'type' is optional and should be a signature string.\n"
+    "\n"
+    "The name is optional in class definitions and will default to the name the\n"
+    "value is assigned to");
 
-
-PyDoc_STRVAR(ivar_doc,
-"ivar(name, type='@', isOutlet=False) -> instance-variable\n"
-CLINIC_SEP
-"\n"
-"Creates a descriptor for accessing an Objective-C instance variable.\n\n"
-"This should only be used in the definition of Objective-C subclasses, and\n"
-"will then automaticly define the instance variable in the objective-C side.\n"
-"\n"
-"'type' is optional and should be a signature string.\n"
-"\n"
-"The name is optional in class definitions and will default to the name the\n"
-"value is assigned to"
-);
-
-PyDoc_STRVAR(ivar_typestr_doc,
-                "The Objective-C type encoding");
+PyDoc_STRVAR(ivar_typestr_doc, "The Objective-C type encoding");
 static PyObject*
 ivar_get_typestr(PyObject* _self, void* closure __attribute__((__unused__)))
 {
@@ -343,7 +320,6 @@ static PyObject*
 ivar_get_name(PyObject* _self, void* closure __attribute__((__unused__)))
 {
     PyObjCInstanceVariable* self = (PyObjCInstanceVariable*)_self;
-
 
     if (self->name) {
         return PyUnicode_FromString(self->name);
@@ -373,50 +349,46 @@ ivar_get_isSlot(PyObject* _self, void* closure __attribute__((__unused__)))
     return result;
 }
 
-static PyGetSetDef ivar_getset[] = {
-    {
-        .name   = "__typestr__",
-        .get    = ivar_get_typestr,
-        .doc    = ivar_typestr_doc,
-    },
-    {
-        .name   = "__name__",
-        .get    = ivar_get_name,
-        .doc    = ivar_name_doc,
-    },
-    {
-        .name   = "__isOutlet__",
-        .get    = ivar_get_isOutlet,
-        .doc    = ivar_isOutlet_doc,
-    },
-    {
-        .name   = "__isSlot__",
-        .get    = ivar_get_isSlot,
-        .doc    = ivar_isSlot_doc,
-    },
-    {
-        .name   = NULL /* SENTINEL */
-    }
-};
-
+static PyGetSetDef ivar_getset[] = {{
+                                        .name = "__typestr__",
+                                        .get = ivar_get_typestr,
+                                        .doc = ivar_typestr_doc,
+                                    },
+                                    {
+                                        .name = "__name__",
+                                        .get = ivar_get_name,
+                                        .doc = ivar_name_doc,
+                                    },
+                                    {
+                                        .name = "__isOutlet__",
+                                        .get = ivar_get_isOutlet,
+                                        .doc = ivar_isOutlet_doc,
+                                    },
+                                    {
+                                        .name = "__isSlot__",
+                                        .get = ivar_get_isSlot,
+                                        .doc = ivar_isSlot_doc,
+                                    },
+                                    {
+                                        .name = NULL /* SENTINEL */
+                                    }};
 
 PyTypeObject PyObjCInstanceVariable_Type = {
-    PyVarObject_HEAD_INIT(&PyType_Type, 0)
-    .tp_name        = "ivar",
-    .tp_basicsize   = sizeof(PyObjCInstanceVariable),
-    .tp_itemsize    = 0,
-    .tp_dealloc     = ivar_dealloc,
-    .tp_repr        = ivar_repr,
-    .tp_getattro    = PyObject_GenericGetAttr,
-    .tp_flags       = Py_TPFLAGS_DEFAULT,
-    .tp_doc         = ivar_doc,
-    .tp_methods     = ivar_methods,
-    .tp_getset      = ivar_getset,
-    .tp_descr_get   = ivar_descr_get,
-    .tp_descr_set   = ivar_descr_set,
-    .tp_init        = ivar_init,
-    .tp_alloc       = PyType_GenericAlloc,
-    .tp_new         = PyType_GenericNew,
+    PyVarObject_HEAD_INIT(&PyType_Type, 0).tp_name = "ivar",
+    .tp_basicsize = sizeof(PyObjCInstanceVariable),
+    .tp_itemsize = 0,
+    .tp_dealloc = ivar_dealloc,
+    .tp_repr = ivar_repr,
+    .tp_getattro = PyObject_GenericGetAttr,
+    .tp_flags = Py_TPFLAGS_DEFAULT,
+    .tp_doc = ivar_doc,
+    .tp_methods = ivar_methods,
+    .tp_getset = ivar_getset,
+    .tp_descr_get = ivar_descr_get,
+    .tp_descr_set = ivar_descr_set,
+    .tp_init = ivar_init,
+    .tp_alloc = PyType_GenericAlloc,
+    .tp_new = PyType_GenericNew,
 };
 
 /* Set the name of an ivar if it doesn't already have one
@@ -456,11 +428,11 @@ PyObjCInstanceVariable_SetName(PyObject* value, PyObject* name)
 
     } else {
         PyErr_SetString(PyExc_TypeError,
-            "Implied instance variable name is not a string");
+                        "Implied instance variable name is not a string");
         return -1;
     }
 
-    return (self->name == NULL?-1:0);
+    return (self->name == NULL ? -1 : 0);
 }
 
 PyObject*
