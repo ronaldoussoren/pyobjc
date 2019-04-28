@@ -20,7 +20,7 @@ static PyObject*
 cf_repr(PyObject* self)
 {
     if (PyObjCObject_GetFlags(self) & PyObjCObject_kMAGIC_COOKIE) {
-        return PyText_FromFormat(
+        return PyUnicode_FromFormat(
             "<%s CoreFoundation magic instance %p>",
             Py_TYPE(self)->tp_name, PyObjCObject_GetObject(self));
     }
@@ -37,7 +37,7 @@ cf_repr(PyObject* self)
             Py_TYPE(self)->tp_name,
             PyObjCObject_GetObject(self));
 
-        return PyText_FromString(buf);
+        return PyUnicode_FromString(buf);
     }
 }
 
@@ -50,7 +50,7 @@ PyObjC_TryCreateCFProxy(NSObject* value)
         PyObject* cfid;
         PyTypeObject* tp;
 
-        cfid = PyInt_FromLong(CFGetTypeID((CFTypeRef)value));
+        cfid = PyLong_FromLong(CFGetTypeID((CFTypeRef)value));
         tp = (PyTypeObject*)PyDict_GetItem(gTypeid2class, cfid);
         Py_DECREF(cfid);
         if (tp == NULL && PyErr_Occurred()) {
@@ -167,7 +167,7 @@ PyObjCCFType_New(char* name, char* encoding, CFTypeID typeID)
     Py_INCREF(PyObjC_NSCFTypeClass);
 
     args = PyTuple_New(3);
-    PyTuple_SetItem(args, 0, PyText_FromString(name));
+    PyTuple_SetItem(args, 0, PyUnicode_FromString(name));
     PyTuple_SetItem(args, 1, bases);
     PyTuple_SetItem(args, 2, dict);
 
@@ -293,7 +293,7 @@ PyObjCCF_NewSpecial(char* typestr, void* datum)
         PyObject* cfid;
         PyTypeObject* tp;
 
-        cfid = PyInt_FromLong(typeid);
+        cfid = PyLong_FromLong(typeid);
         tp = (PyTypeObject*)PyDict_GetItemWithError(gTypeid2class, cfid);
         Py_DECREF(cfid);
 
@@ -336,7 +336,7 @@ PyObjCCF_NewSpecial2(CFTypeID typeid, void* datum)
         PyObject* cfid;
         PyTypeObject* tp;
 
-        cfid = PyInt_FromLong(typeid);
+        cfid = PyLong_FromLong(typeid);
         tp = (PyTypeObject*)PyDict_GetItemWithError(gTypeid2class, cfid);
         Py_DECREF(cfid);
         if (tp == NULL && PyErr_Occurred()) {

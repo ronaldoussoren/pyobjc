@@ -33,8 +33,6 @@ static PyMethodDef mod_methods[] = {
     { 0, 0, 0, 0 }
 };
 
-#if PY_VERSION_HEX >= 0x03000000
-
 static struct PyModuleDef mod_module = {
     PyModuleDef_HEAD_INIT,
     "protocols",
@@ -47,50 +45,32 @@ static struct PyModuleDef mod_module = {
     NULL
 };
 
-#define INITERROR() return NULL
-#define INITDONE() return m
-
 PyObject* PyInit_protocol(void);
 
 PyObject* __attribute__((__visibility__("default")))
 PyInit_protocol(void)
-
-#else
-
-#define INITERROR() return
-#define INITDONE() return
-
-void initprotocol(void);
-
-void __attribute__((__visibility__("default")))
-initprotocol(void)
-#endif
 {
     PyObject* m;
     Protocol* p;
 
 
-#if PY_VERSION_HEX >= 0x03000000
     m = PyModule_Create(&mod_module);
-#else
-    m = Py_InitModule4("protocol", mod_methods,
-        NULL, NULL, PYTHON_API_VERSION);
-#endif
     if (!m) {
-        INITERROR();
+        return NULL;
     }
     if (PyObjC_ImportAPI(m) < 0) {
-        INITERROR();
+        return NULL;
     }
 
     p = @protocol(OC_TestProtocol);
     PyObject* prot = PyObjC_ObjCToPython("@", &p);
     if (!prot) {
-        INITERROR();
-    }
-    if (PyModule_AddObject(m, "OC_TestProtocol", prot) < 0) {
-        INITERROR();
+        return NULL;
     }
 
-    INITDONE();
+    if (PyModule_AddObject(m, "OC_TestProtocol", prot) < 0) {
+        return NULL;
+    }
+
+    return m;
 }

@@ -1,6 +1,7 @@
 #include "pyobjc.h"
 
-int PyObject_Cmp (PyObject *o1, PyObject *o2, int *result)
+int
+PyObjC_Cmp(PyObject *o1, PyObject *o2, int *result)
 {
     int r;
 
@@ -106,8 +107,6 @@ PyObject* PyBytes_InternFromStringAndSize(const char* v, Py_ssize_t l)
     }
 }
 
-#ifdef PyObjC_FAST_UNICODE_ASCII
-
 const char* PyObjC_Unicode_Fast_Bytes(PyObject* object)
 {
     if (!PyUnicode_Check(object)) {
@@ -120,5 +119,3 @@ const char* PyObjC_Unicode_Fast_Bytes(PyObject* object)
     }
     return (const char*)(PyUnicode_DATA(object));
 }
-
-#endif /* PyObjC_FAST_UNICODE_ASCII */

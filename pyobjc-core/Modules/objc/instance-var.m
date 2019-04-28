@@ -30,16 +30,16 @@ ivar_repr(PyObject* _self)
     PyObjCInstanceVariable* self = (PyObjCInstanceVariable*)_self;
     if (self->isOutlet) {
         if (self->name) {
-            return PyText_FromFormat("<IBOutlet %s>", self->name);
+            return PyUnicode_FromFormat("<IBOutlet %s>", self->name);
         } else {
-            return PyText_FromString("<IBOutlet>");
+            return PyUnicode_FromString("<IBOutlet>");
         }
 
     } else {
         if (self->name) {
-            return PyText_FromFormat("<instance-variable %s>", self->name);
+            return PyUnicode_FromFormat("<instance-variable %s>", self->name);
         } else {
-            return PyText_FromString("<instance-variable>");
+            return PyUnicode_FromString("<instance-variable>");
         }
     }
 }
@@ -235,7 +235,7 @@ static char* keywords[] = { "name", "type", "isOutlet", NULL };
     PyObject* isOutletObj = NULL;
 
     if (!PyArg_ParseTupleAndKeywords(args, kwds,
-                "|s"Py_ARG_BYTES"O:objc_ivar",
+                "|syO:objc_ivar",
             keywords, &name, &type, &isOutletObj)) {
         return -1;
     }
@@ -346,7 +346,7 @@ ivar_get_name(PyObject* _self, void* closure __attribute__((__unused__)))
 
 
     if (self->name) {
-        return PyText_FromString(self->name);
+        return PyUnicode_FromString(self->name);
     } else {
         Py_INCREF(Py_None);
         return Py_None;

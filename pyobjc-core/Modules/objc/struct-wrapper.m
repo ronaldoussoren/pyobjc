@@ -419,7 +419,7 @@ struct_mp_subscript(PyObject* self, PyObject* item)
         PyObject* result;
         PyObject* it;
 
-        if (PySlice_GetIndicesEx(SLICE_CAST(item),
+        if (PySlice_GetIndicesEx(item,
                 STRUCT_LENGTH(self),
                 &start, &stop, &step, &slicelength) < 0) {
             return NULL;
@@ -481,7 +481,7 @@ struct_mp_ass_subscript(PyObject* self, PyObject* item, PyObject* value)
     } else if (PySlice_Check(item)) {
         Py_ssize_t start, stop, step, slicelength;
 
-        if (PySlice_GetIndicesEx(SLICE_CAST(item),
+        if (PySlice_GetIndicesEx(item,
                 STRUCT_LENGTH(self), &start, &stop,
                 &step, &slicelength) < 0) {
             return -1;
@@ -694,7 +694,7 @@ static int set_defaults(PyObject* self, const char* typestr)
         case _C_CHAR_AS_TEXT:
             {
                 char ch = 0;
-                v = PyText_FromStringAndSize(&ch, 1);
+                v = PyUnicode_FromStringAndSize(&ch, 1);
             }
             break;
 
@@ -711,7 +711,7 @@ static int set_defaults(PyObject* self, const char* typestr)
         case _C_INT: case _C_UINT:
         case _C_LNG: case _C_ULNG:
         case _C_LNG_LNG: case _C_ULNG_LNG:
-            v = PyInt_FromLong(0);
+            v = PyLong_FromLong(0);
             break;
 
         case _C_FLT: case _C_DBL:
@@ -1172,7 +1172,7 @@ struct_repr(PyObject* self)
 
     len = STRUCT_LENGTH(self);
     if (len == 0) {
-        return PyText_FromFormat("<%.100s>",
+        return PyUnicode_FromFormat("<%.100s>",
                 Py_TYPE(self)->tp_name);
     }
 
@@ -1182,28 +1182,28 @@ struct_repr(PyObject* self)
 
     } else if (i != 0) {
         /* Self-recursive struct */
-        return PyText_FromFormat("<%.100s ...>",
+        return PyUnicode_FromFormat("<%.100s ...>",
                 Py_TYPE(self)->tp_name);
     }
 
-    cur = PyText_FromFormat("<%.100s", Py_TYPE(self)->tp_name);
+    cur = PyUnicode_FromFormat("<%.100s", Py_TYPE(self)->tp_name);
 
     member = Py_TYPE(self)->tp_members;
     while (member->name != NULL) {
         PyObject* v;
 
-        PyText_Append(&cur,
-            PyText_FromFormat(" %.100s=", member->name));
+        PyUnicode_Append(&cur,
+            PyUnicode_FromFormat(" %.100s=", member->name));
         if (cur == NULL) goto done;
 
         v = GET_STRUCT_FIELD(self, member);
 
-        PyText_Append(&cur, PyObject_Repr(v));
+        PyUnicode_Append(&cur, PyObject_Repr(v));
         if (cur == NULL) goto done;
         member++;
     }
 
-    PyText_Append(&cur, PyText_FromString(">"));
+    PyUnicode_Append(&cur, PyUnicode_FromString(">"));
 
 done:
     Py_ReprLeave(self);
@@ -1279,7 +1279,7 @@ PyObjC_MakeStructType(
     }
 
     for (i = 0; i < numFields; i++) {
-        PyObject* nm = PyText_FromString(fieldnames[i]);
+        PyObject* nm = PyUnicode_FromString(fieldnames[i]);
         if (nm == NULL) {
             Py_DECREF(fields);
             PyMem_Free(members);
@@ -1370,7 +1370,7 @@ PyObject* PyObjC_FindRegisteredStruct(const char* signature, Py_ssize_t len)
         return NULL;
     }
 
-    v = PyText_FromStringAndSize(signature, len);
+    v = PyUnicode_FromStringAndSize(signature, len);
 
     type = PyDict_GetItemWithError(structRegistry, v);
     Py_DECREF(v);
@@ -1396,7 +1396,7 @@ PyObjC_CreateRegisteredStruct(const char* signature, Py_ssize_t len, const char*
         *ppack = -1;
     }
 
-    v = PyText_FromStringAndSize(signature, len);
+    v = PyUnicode_FromStringAndSize(signature, len);
 
     type = (PyTypeObject*)PyDict_GetItemWithError(structRegistry, v);
     Py_DECREF(v);

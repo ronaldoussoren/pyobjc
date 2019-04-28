@@ -632,7 +632,7 @@ PyObjCClass_BuildClass(Class super_class, PyObject* protocols,
              * generation.
              */
             char buf[1024];
-            PyObject* pyname = PyText_FromString(
+            PyObject* pyname = PyUnicode_FromString(
                 PyObjC_SELToPythonName(
                     PyObjCSelector_GetSelector(value),
                     buf, sizeof(buf)));
@@ -722,28 +722,13 @@ PyObjCClass_BuildClass(Class super_class, PyObject* protocols,
         PyObject* pyname;
         const char* ocname;
         pyname = key;
-#ifndef PyObjC_FAST_UNICODE_ASCII
-        PyObject* pyname_bytes = NULL;
-#endif
         if (pyname == NULL) continue;
 
         if (PyUnicode_Check(pyname)) {
-#ifdef PyObjC_FAST_UNICODE_ASCII
             ocname = PyObjC_Unicode_Fast_Bytes(pyname);
             if (ocname == NULL) {
                 goto error_cleanup;
             }
-#else
-            pyname_bytes = PyUnicode_AsEncodedString(pyname, NULL, NULL);
-            if (pyname_bytes == NULL) {
-                goto error_cleanup;
-            }
-            ocname = PyBytes_AsString(pyname_bytes);
-            if (ocname == NULL) {
-                PyErr_SetString(PyExc_ValueError, "empty name");
-                goto error_cleanup;
-            }
-#endif
 
         } else {
             PyErr_Format(PyExc_TypeError,
@@ -764,16 +749,9 @@ PyObjCClass_BuildClass(Class super_class, PyObject* protocols,
                 py_superclass,
                 protocols);
             if (new_value == NULL) {
-#ifndef PyObjC_FAST_UNICODE_ASCII
-                Py_CLEAR(pyname_bytes);
-#endif
                 goto error_cleanup;
             }
             value = new_value;
-
-#ifndef PyObjC_FAST_UNICODE_ASCII
-            Py_CLEAR(pyname_bytes);
-#endif
 
             if (PyObjCSelector_Check(value)) {
                 int r;
@@ -811,9 +789,6 @@ PyObjCClass_BuildClass(Class super_class, PyObject* protocols,
                 }
             }
         }
-#ifndef PyObjC_FAST_UNICODE_ASCII
-        Py_CLEAR(pyname_bytes);
-#endif
         }
     }
 

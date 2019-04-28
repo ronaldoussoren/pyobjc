@@ -76,7 +76,7 @@ func_repr(PyObject* _self)
     func_object* self = (func_object*)_self;
 
     if (self->name == NULL) {
-        return PyText_FromFormat("<objc.function object at %p>", self);
+        return PyUnicode_FromFormat("<objc.function object at %p>", self);
 
     } else {
 

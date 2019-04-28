@@ -81,7 +81,7 @@ proto_repr(PyObject* object)
         return NULL;
     }
 
-    PyObject* r = PyText_FromFormat("<%s %s at %p>", Py_TYPE(self)->tp_name, PyBytes_AsString(b), (void*)self);
+    PyObject* r = PyUnicode_FromFormat("<%s %s at %p>", Py_TYPE(self)->tp_name, PyBytes_AsString(b), (void*)self);
     Py_XDECREF(b);
     return r;
 }

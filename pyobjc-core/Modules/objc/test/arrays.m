@@ -15,12 +15,6 @@ typedef struct ArrayStruct struct_array_t[4];
 @interface OC_ArrayTest : NSObject
 {
 }
-#if 0
-    /* It seems to be impossible to return C arrays */
-+(int_array_t)arrayOf4Integers;
-+(struct_array_t)arrayOf4Structs;
-#endif
-
 -(NSObject*)arrayOf4Ints:(int_array_t)array;
 -(NSObject*)arrayOf4IntsIn:(in int_array_t)array;
 -(NSObject*)arrayOf4IntsInOut:(inout int_array_t)array;
@@ -38,25 +32,6 @@ typedef struct ArrayStruct struct_array_t[4];
 @end
 
 @implementation OC_ArrayTest
-
-#if 0
-    /* These don't compile for some reason */
-+(int_array_t)arrayOf4Integers;
-{
-static int_array_t gValue = { 4, 5, 6, 7 };
-    return gValue;
-}
-+(struct_array_t)arrayOf4Structs
-{
-static struct_array_t gValue = {
-        { 9, 10 },
-        { 12, 13 },
-        { 21, 24 },
-        { -1, -2 },
-    };
-    return gValue;
-}
-#endif
 
 -(NSObject*)arrayOf4Ints:(int_array_t)array
 {
@@ -244,8 +219,6 @@ static PyMethodDef mod_methods[] = {
             { 0, 0, 0, 0 }
 };
 
-#if PY_VERSION_HEX >= 0x03000000
-
 static struct PyModuleDef mod_module = {
     PyModuleDef_HEAD_INIT,
     "arrays",
@@ -258,43 +231,24 @@ static struct PyModuleDef mod_module = {
     NULL
 };
 
-#define INITERROR() return NULL
-#define INITDONE() return m
-
 PyObject* PyInit_arrays(void);
 
 PyObject* __attribute__((__visibility__("default")))
 PyInit_arrays(void)
-
-#else
-
-#define INITERROR() return
-#define INITDONE() return
-
-void initarrays(void);
-
-void __attribute__((__visibility__("default")))
-initarrays(void)
-#endif
 {
     PyObject* m;
 
-#if PY_VERSION_HEX >= 0x03000000
     m = PyModule_Create(&mod_module);
-#else
-    m = Py_InitModule4("arrays", mod_methods,
-        NULL, NULL, PYTHON_API_VERSION);
-#endif
     if (!m) {
-        INITERROR();
+        return NULL;
     }
 
     PyObjC_ImportAPI(m);
 
     if (PyModule_AddObject(m, "OC_ArrayTest",
         PyObjC_IdToPython([OC_ArrayTest class])) < 0) {
-        INITERROR();
+        return NULL;
     }
 
-    INITDONE();
+    return m;
 }

@@ -42,7 +42,7 @@ PyObjCIvar_Info(PyObject* self __attribute__((__unused__)), PyObject* object)
 
     /* Handle 'isa' specially, due to Objective-C 2.0 weirdness */
     v = Py_BuildValue(
-            "(s" Py_ARG_BYTES ")",
+            "(sy)",
             "isa", @encode(Class));
     if (v == NULL) {
         Py_DECREF(result);
@@ -80,7 +80,7 @@ PyObjCIvar_Info(PyObject* self __attribute__((__unused__)), PyObject* object)
             }
 
             v = Py_BuildValue(
-                "(s"Py_ARG_BYTES")",
+                "(sy)",
                 ivar_name,
                 ivar_getTypeEncoding(ivar));
 

@@ -178,7 +178,7 @@ sig_str(PyObject* _self)
     PyObject* v = PyObjCMethodSignature_AsDict(self);
     if (v == NULL) {
         PyErr_Clear();
-        return PyText_FromString(self->signature);
+        return PyUnicode_FromString(self->signature);
 
     } else {
         PyObject* r = PyObject_Repr(v);
@@ -584,9 +584,9 @@ setup_descr(struct _PyObjC_ArgDescr* descr, PyObject* meta, BOOL is_native)
             return -1;
         }
 
-        PyErr_Format(PyExc_TypeError, "metadata of type %s: %s",
+        PyErr_Format(PyExc_TypeError, "metadata of type %s: %U",
                 Py_TYPE(meta)->tp_name,
-                PyText_AsString(r));
+                r);
         Py_DECREF(r);
 
         return -1;
@@ -1044,7 +1044,7 @@ process_metadata_dict(PyObjCMethodSignature* methinfo, PyObject* metadata, BOOL 
         if (args != NULL) {
             Py_ssize_t i;
             for (i = 0; i < Py_SIZE(methinfo); i++) {
-                PyObject* k = PyInt_FromLong(i);
+                PyObject* k = PyLong_FromLong(i);
                 PyObject* d;
                 int r;
 
@@ -1149,7 +1149,7 @@ process_metadata_dict(PyObjCMethodSignature* methinfo, PyObject* metadata, BOOL 
                 /* No printf-format argument, therefore the method is
                  * not supported
                  */
-                methinfo->suggestion = PyText_FromString("Variadic functions/methods are not supported");
+                methinfo->suggestion = PyUnicode_FromString("Variadic functions/methods are not supported");
                 if (methinfo->suggestion == NULL) {
                     Py_DECREF(methinfo);
                     return -1;
@@ -1611,7 +1611,7 @@ argdescr2dict(struct _PyObjC_ArgDescr* descr)
         break;
     case PyObjC_kArrayCountInArg:
         if (descr->arrayArg == descr->arrayArgOut) {
-            v = PyInt_FromLong(descr->arrayArg);
+            v = PyLong_FromLong(descr->arrayArg);
         } else {
             v = Py_BuildValue("ii", descr->arrayArg, descr->arrayArgOut);
         }
@@ -1621,7 +1621,7 @@ argdescr2dict(struct _PyObjC_ArgDescr* descr)
         if (r == -1) goto error;
         break;
     case PyObjC_kFixedLengthArray:
-        v = PyInt_FromLong(descr->arrayArg);
+        v = PyLong_FromLong(descr->arrayArg);
         if (v == NULL) goto error;
         r = PyDict_SetItemString(result, "c_array_of_fixed_length", v);
         Py_DECREF(v);
@@ -1686,7 +1686,7 @@ PyObjCMethodSignature_AsDict(PyObjCMethodSignature* methinfo)
     }
 
     if (methinfo->variadic && methinfo->arrayArg != -1) {
-        v = PyInt_FromLong(methinfo->arrayArg);
+        v = PyLong_FromLong(methinfo->arrayArg);
         if (v == NULL) goto error;
         r = PyDict_SetItemString(result, "c_array_length_in_arg", v);
         Py_DECREF(v);

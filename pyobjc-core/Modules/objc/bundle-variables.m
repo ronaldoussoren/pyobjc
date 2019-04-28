@@ -152,7 +152,7 @@ static char* keywords[] = { "bundle", "module_globals", "variableInfo", "skip_un
         }
 
         if (!PyArg_ParseTuple(item,
-                "O!"Py_ARG_BYTES":variableInfo",
+                "O!y:variableInfo",
                 &PyUnicode_Type,
                 &py_name, &signature)) {
             Py_DECREF(seq);
@@ -310,7 +310,7 @@ static char* keywords[] = { "bundle", "module_globals", "functionInfo", "skip_un
             PyObject* py_val;
 
             if (cfBundle == NULL) {
-                py_name = PyText_FromString(c_name);
+                py_name = PyUnicode_FromString(c_name);
             } else {
                 py_name = PyObjC_IdToPython(name);
             }

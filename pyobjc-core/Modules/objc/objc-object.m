@@ -81,7 +81,7 @@ object_repr(PyObject* _self)
     PyObject* res;
 
     if (self->flags & PyObjCObject_kMAGIC_COOKIE) {
-        return PyText_FromFormat(
+        return PyUnicode_FromFormat(
             "<%s objective-c magic instance %p>",
             Py_TYPE(self)->tp_name, self->objc_object);
     }
@@ -100,7 +100,7 @@ object_repr(PyObject* _self)
             return res;
         }
     }
-    return PyText_FromFormat(
+    return PyUnicode_FromFormat(
         "<%s objective-c instance %p>",
         Py_TYPE(self)->tp_name, self->objc_object);
 }
@@ -305,111 +305,14 @@ _get_dictptr(PyObject* obj)
     return (PyObject**)(((char*)obj_object) + dictoffset);
 }
 
-#ifdef Py_HAVE_LOCAL_LOOKUP
-
-/*
- * Implementation of object_getattro for Python versions
- * that implement PEP 447. Most of the PyObjC magic is in
- * the tp_locallookup logic in the metaclass types.
- */
-
-static PyObject*
-object_getattro(PyObject* obj, PyObject* name)
-{
-    PyObject* result;
-    id obj_inst;
-
-    if (object_verify_not_nil(obj, name) == -1) {
-        return NULL;
-    }
-
-    if (object_verify_type(obj, &obj_inst) == -1) {
-        return NULL;
-    }
-
-
-
-    result = PyObject_GenericGetAttr(obj, name);
-
-    if (result == NULL && PyErr_ExceptionMatches(PyExc_AttributeError)) {
-        /* Attribute not found, the object might respond to this
-         * selector anyway, therefore perform one final lookup.
-         */
-        PyObject* ptype, *pvalue, *ptraceback;
-
-        if (!PyObjCObject_IsClassic(obj)) {
-            const char* namestr;
-#ifndef PyObjC_FAST_UNICODE_ASCII
-            PyObject* name_bytes;
-#endif
-
-            PyErr_Fetch(&ptype, &pvalue, &ptraceback);
-
-            if (PyUnicode_Check(name)) {
-#ifndef PyObjC_FAST_UNICODE_ASCII
-                name_bytes = PyUnicode_AsEncodedString(name, NULL, NULL);
-                if (name_bytes == NULL) {
-                    PyErr_Restore(ptype, pvalue, ptraceback);
-                    return NULL;
-                }
-#else
-                if (PyObjC_Unicode_Fast_Bytes(name) == NULL) {
-                    PyErr_Restore(ptype, pvalue, ptraceback);
-                    return NULL;
-                }
-#endif
-
-            } else {
-                PyErr_Restore(ptype, pvalue, ptraceback);
-                return NULL;
-            }
-
-#ifndef PyObjC_FAST_UNICODE_ASCII
-            namestr = PyBytes_AsString(name_bytes);
-#else
-            namestr = PyObjC_Unicode_Fast_Bytes(name);
-#endif
-            if (namestr == NULL) {
-                PyErr_Restore(ptype, pvalue, ptraceback);
-                return NULL;
-            }
-
-            result = PyObjCSelector_FindNative(obj, namestr);
-#ifndef PyObjC_FAST_UNICODE_ASCII
-            Py_DECREF(name_bytes)
-#endif
-            if (result != NULL) {
-                Py_DECREF(ptype);
-                Py_DECREF(pvalue);
-                Py_DECREF(ptraceback);
-            } else {
-                PyErr_Restore(ptype, pvalue, ptraceback);
-            }
-        }
-    }
-    return result;
-}
-
-
-#else /* !PY_HAVE_LOCALLOOKUP */
-
-
 static inline PyObject*
-_type_lookup(PyTypeObject* tp, PyObject* name
-#ifndef PyObjC_FAST_UNICODE_ASCII
-        , PyObject* name_bytes
-#endif
-    )
+_type_lookup(PyTypeObject* tp, PyObject* name)
 {
     Py_ssize_t i, n;
     PyObject *mro, *base, *dict;
     PyObject *descr = NULL;
     PyObject* res;
-#ifndef PyObjC_FAST_UNICODE_ASCII
-    SEL sel = PyObjCSelector_DefaultSelector(PyBytes_AsString(name_bytes));
-#else
     SEL sel = PyObjCSelector_DefaultSelector(PyObjC_Unicode_Fast_Bytes(name));
-#endif
 
     /* Look in tp_dict of types in MRO */
     mro = tp->tp_mro;
@@ -468,11 +371,7 @@ _type_lookup(PyTypeObject* tp, PyObject* name
 }
 
 static inline PyObject*
-_type_lookup_harder(PyTypeObject* tp, PyObject* name
-#ifndef PyObjC_FAST_UNICODE_ASCII
-        , PyObject* name_bytes
-#endif
-    )
+_type_lookup_harder(PyTypeObject* tp, PyObject* name)
 {
     Py_ssize_t i, n;
     PyObject *mro, *base;
@@ -516,13 +415,7 @@ _type_lookup_harder(PyTypeObject* tp, PyObject* name
                         sizeof(selbuf));
             if (sel_name == NULL) continue;
 
-            if (strcmp(sel_name,
-#ifndef PyObjC_FAST_UNICODE_ASCII
-                PyBytes_AS_STRING(name_bytes)
-#else
-                PyObjC_Unicode_Fast_Bytes(name)
-#endif
-                ) == 0) {
+            if (strcmp(sel_name, PyObjC_Unicode_Fast_Bytes(name)) == 0) {
 
                 /* Create (unbound) selector */
                 descr = PyObjCSelector_NewNative(
@@ -562,9 +455,6 @@ object_getattro(PyObject* obj, PyObject* name)
     descrgetfunc f;
     PyObject** dictptr;
     const char* namestr;
-#ifndef PyObjC_FAST_UNICODE_ASCII
-    PyObject* name_bytes;
-#endif
 
     if (name == NULL) {
         PyErr_SetString(PyExc_TypeError, "<nil> name");
@@ -572,12 +462,7 @@ object_getattro(PyObject* obj, PyObject* name)
     }
 
     if (PyUnicode_Check(name)) {
-#ifndef PyObjC_FAST_UNICODE_ASCII
-        name_bytes = PyUnicode_AsEncodedString(name, NULL, NULL);
-        if (name_bytes == NULL) return NULL;
-#else
         if (PyObjC_Unicode_Fast_Bytes(name) == NULL) return NULL;
-#endif
 
     } else {
         PyErr_Format(PyExc_TypeError,
@@ -586,11 +471,7 @@ object_getattro(PyObject* obj, PyObject* name)
         return NULL;
     }
 
-#ifndef PyObjC_FAST_UNICODE_ASCII
-    namestr = PyBytes_AsString(name_bytes);
-#else
     namestr = PyObjC_Unicode_Fast_Bytes(name);
-#endif
     if (namestr == NULL) {
         if (!PyErr_Occurred()) {
             PyErr_SetString(PyExc_ValueError, "Empty name");
@@ -614,11 +495,7 @@ object_getattro(PyObject* obj, PyObject* name)
 
     /* replace _PyType_Lookup */
     if (descr == NULL) {
-        descr = _type_lookup(tp, name
-#ifndef PyObjC_FAST_UNICODE_ASCII
-            , name_bytes
-#endif
-        );
+        descr = _type_lookup(tp, name);
         if (descr == NULL && PyErr_Occurred()) {
             return NULL;
         }
@@ -639,12 +516,7 @@ object_getattro(PyObject* obj, PyObject* name)
     }
 
     if (strcmp(
-#ifndef PyObjC_FAST_UNICODE_ASCII
-        PyBytes_AS_STRING(name_bytes),
-#else
         PyObjC_Unicode_Fast_Bytes(name),
-#endif
-
         "__del__") == 0) {
 
         res = PyObjCClass_GetDelMethod((PyObject*)Py_TYPE(obj));
@@ -658,11 +530,7 @@ object_getattro(PyObject* obj, PyObject* name)
         PyObject *dict;
 
         if (strcmp(
-#ifndef PyObjC_FAST_UNICODE_ASCII
-            PyBytes_AS_STRING(name_bytes),
-#else
             PyObjC_Unicode_Fast_Bytes(name),
-#endif
             "__dict__") == 0) {
 
             res = *dictptr;
@@ -700,11 +568,7 @@ object_getattro(PyObject* obj, PyObject* name)
          * for a method where the selector does not conform to the
          * naming convention that _type_lookup expects.
          */
-        descr = _type_lookup_harder(tp, name
-#ifndef PyObjC_FAST_UNICODE_ASCII
-            , name_bytes
-#endif
-        );
+        descr = _type_lookup_harder(tp, name);
 
         if (descr != NULL) {
             f = Py_TYPE(descr)->tp_descr_get;
@@ -752,71 +616,10 @@ done:
             res = NULL;
         }
     }
-#ifndef PyObjC_FAST_UNICODE_ASCII
-    Py_DECREF(name_bytes);
-#endif
     return res;
 }
 
-#endif /* !PY_HAVE_LOCALLOOKUP */
 
-#ifdef Py_HAVE_LOCAL_LOOKUP
-static int
-object_setattro(PyObject *obj, PyObject *name, PyObject *value)
-{
-    int result;
-    NSString* obj_name = nil;
-
-    if (object_verify_not_nil(obj, name) == -1) {
-        return -1;
-    }
-
-    if (((PyObjCObject*)obj)->objc_dict == NULL) {
-        PyObject** ptr_dict = _get_dictptr(obj);
-        if (ptr_dict != NULL) {
-            ((PyObjCObject*)obj)->objc_dict = *ptr_dict = PyDict_New();
-            if (((PyObjCObject*)obj)->objc_dict == NULL) {
-                return -1;
-            }
-        }
-    }
-
-
-    if (((PyObjCClassObject*)Py_TYPE(obj))->useKVO) {
-        if ((PyObjCObject_GetFlags(obj) & PyObjCObject_kUNINITIALIZED) == 0) {
-            if (!PyObjC_is_ascii_prefix(name, "_", 1)) {
-                if (depythonify_c_value("@", name, &obj_name) == -1) {
-                    PyErr_Clear();
-                } else {
-                    NS_DURING
-                        [PyObjCObject_GetObject(obj) willChangeValueForKey:obj_name];
-                    NS_HANDLER
-                        PyObjCErr_FromObjC(localException);
-                    NS_ENDHANDLER
-                    if (PyErr_Occurred()) {
-                        return -1;
-                    }
-                }
-            }
-        }
-    }
-
-    result = PyObject_GenericSetAttr(obj, name, value);
-
-    if (obj_name) {
-        NS_DURING
-            [PyObjCObject_GetObject(obj) didChangeValueForKey:obj_name];
-        NS_HANDLER
-            PyObjCErr_FromObjC(localException);
-        NS_ENDHANDLER
-        if (PyErr_Occurred()) {
-            return -1;
-        }
-    }
-    return result;
-}
-
-#else /* !PY_HAVE_LOCALLOOKUP */
 static int
 object_setattro(PyObject *obj, PyObject *name, PyObject *value)
 {
@@ -827,17 +630,9 @@ object_setattro(PyObject *obj, PyObject *name, PyObject *value)
     int res;
     id obj_inst;
     NSString *obj_name;
-#ifndef PyObjC_FAST_UNICODE_ASCII
-    PyObject* name_bytes;
-#endif
 
     if (PyUnicode_Check(name)) {
-#ifndef PyObjC_FAST_UNICODE_ASCII
-        name_bytes = PyUnicode_AsEncodedString(name, NULL, NULL);
-        if (name_bytes == NULL) return -1;
-#else
         if (PyObjC_Unicode_Fast_Bytes(name) == NULL) return -1;
-#endif
 
     } else {
         PyErr_Format(PyExc_TypeError,
@@ -857,11 +652,7 @@ object_setattro(PyObject *obj, PyObject *name, PyObject *value)
         if ((PyObjCObject_GetFlags(obj) & PyObjCObject_kUNINITIALIZED) == 0) {
             if (!PyObjC_is_ascii_prefix(name, "_", 1)) {
                 obj_name = [NSString stringWithUTF8String:
-#ifndef PyObjC_FAST_UNICODE_ASCII
-                    PyBytes_AS_STRING(name_bytes)
-#else
                     PyObjC_Unicode_Fast_Bytes(name)
-#endif
                 ];
 
                 NS_DURING
@@ -870,19 +661,12 @@ object_setattro(PyObject *obj, PyObject *name, PyObject *value)
                     PyObjCErr_FromObjC(localException);
                 NS_ENDHANDLER
                 if (PyErr_Occurred()) {
-#ifndef PyObjC_FAST_UNICODE_ASCII
-                    Py_DECREF(name_bytes);
-#endif
                     return -1;
                 }
             }
         }
     }
-    descr = _type_lookup(tp, name
-#ifndef PyObjC_FAST_UNICODE_ASCII
-        , name_bytes
-#endif
-    );
+    descr = _type_lookup(tp, name);
     if (descr == NULL && PyErr_Occurred()) {
         return -1;
     }
@@ -935,11 +719,7 @@ object_setattro(PyObject *obj, PyObject *name, PyObject *value)
         PyErr_Format(PyExc_AttributeError,
                  "'%.50s' object has no attribute '%.400s'",
                  tp->tp_name,
-#ifndef PyObjC_FAST_UNICODE_ASCII
-                 PyBytes_AS_STRING(name_bytes)
-#else
                  PyObjC_Unicode_Fast_Bytes(name)
-#endif
              );
         res = -1;
         goto done;
@@ -948,11 +728,7 @@ object_setattro(PyObject *obj, PyObject *name, PyObject *value)
     PyErr_Format(PyExc_AttributeError,
              "'%.50s' object attribute '%.400s' is read-only",
              tp->tp_name,
-#ifndef PyObjC_FAST_UNICODE_ASCII
-             PyBytes_AS_STRING(name_bytes)
-#else
              PyObjC_Unicode_Fast_Bytes(name)
-#endif
     );
     res = -1;
   done:
@@ -966,12 +742,8 @@ object_setattro(PyObject *obj, PyObject *name, PyObject *value)
             res = -1;
         }
     }
-#ifndef PyObjC_FAST_UNICODE_ASCII
-    Py_DECREF(name_bytes);
-#endif
     return res;
 }
-#endif /* !PY_HAVE_LOCALLOOKUP */
 
 PyDoc_STRVAR(objc_get_real_class_doc, "Return the current ISA of the object");
 
@@ -1226,7 +998,7 @@ meth_dir(PyObject* self)
                         sizeof(selbuf));
             if (name == NULL) continue;
 
-            item = PyText_FromString(name);
+            item = PyUnicode_FromString(name);
             if (item == NULL) {
                 free(methods);
                 Py_DECREF(result);
@@ -1307,9 +1079,6 @@ PyObjCClassObject PyObjCObject_Type = {
             .tp_new         = object_new,
             .tp_del         = (destructor)object_del,
             .tp_doc         = "objc_object()",
-#ifdef Py_HAVE_LOCAL_LOOKUP
-            .tp_dictoffset  = offsetof(PyObjCObject, objc_dict),
-#endif /* Py_HAVE_LOCALLOOKUP */
         },
     }
 };
@@ -1342,15 +1111,6 @@ _PyObjCObject_NewDeallocHelper(id objc_object)
     }
 
     ((PyObjCObject*)res)->objc_object = objc_object;
-
-#ifdef Py_HAVE_LOCAL_LOOKUP
-    PyObject** dict_ptr = _get_dictptr(res);
-    if (dict_ptr != NULL) {
-        ((PyObjCObject*)res)->objc_dict = *dict_ptr;
-    } else {
-        ((PyObjCObject*)res)->objc_dict = NULL;
-    }
-#endif /* Py_HAVe_LOCAL_LOOKUP */
 
     ((PyObjCObject*)res)->flags = PyObjCObject_kDEALLOC_HELPER;
     return res;
@@ -1431,14 +1191,6 @@ PyObjCObject_New(id objc_object, int flags, int retain)
     }
 
     ((PyObjCObject*)res)->objc_object = objc_object;
-#ifdef Py_HAVE_LOCAL_LOOKUP
-    PyObject** dict_ptr = _get_dictptr(res);
-    if (dict_ptr != NULL) {
-        ((PyObjCObject*)res)->objc_dict = *dict_ptr;
-    } else {
-        ((PyObjCObject*)res)->objc_dict = NULL;
-    }
-#endif /* Py_HAVe_LOCAL_LOOKUP */
     ((PyObjCObject*)res)->flags = flags;
 
     if (flags & PyObjCObject_kBLOCK) {
@@ -1514,7 +1266,7 @@ PyObject* PyObjCObject_GetAttr(PyObject* obj, PyObject* name)
 
 PyObject* PyObjCObject_GetAttrString(PyObject* obj, char* name)
 {
-    PyObject* pyname = PyText_FromString(name);
+    PyObject* pyname = PyUnicode_FromString(name);
     if (pyname == NULL) return NULL;
 
     PyObject* rv = object_getattro(obj, pyname);

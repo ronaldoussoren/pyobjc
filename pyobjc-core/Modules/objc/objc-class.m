@@ -326,7 +326,7 @@ PyObjCClass_NewMetaClass(Class objc_class)
 
     PyObject* args = PyTuple_New(3);
     PyTuple_SetItem(args, 0,
-            PyText_FromString(class_getName(objc_class)));
+            PyUnicode_FromString(class_getName(objc_class)));
     PyTuple_SetItem(args, 1, bases);
     PyTuple_SetItem(args, 2, dict);
 
@@ -1040,17 +1040,17 @@ class_repr(PyObject* obj)
     if (cls) {
         const char* nm = class_getName(cls);
         if (strstr(nm, "NSCFType") != NULL) {
-            return PyText_FromFormat(
+            return PyUnicode_FromFormat(
                 "<core-foundation class %s at %p>",
                 ((PyTypeObject*)obj)->tp_name, (void*)cls);
 
         } else {
-            return PyText_FromFormat(
+            return PyUnicode_FromFormat(
                 "<objective-c class %s at %p>",
                 nm, (void*)cls);
         }
     } else {
-        return PyText_FromString("<class objc.objc_class>");
+        return PyUnicode_FromString("<class objc.objc_class>");
     }
 }
 
@@ -1137,7 +1137,7 @@ metaclass_dir(PyObject* self)
                         sizeof(selbuf));
             if (name == NULL) continue;
 
-            item = PyText_FromString(name);
+            item = PyUnicode_FromString(name);
             if (item == NULL) {
                 free(methods);
                 Py_DECREF(result);
@@ -1162,21 +1162,13 @@ metaclass_dir(PyObject* self)
 
 /* FIXME: This is a lightly modified version of _type_lookup in objc-object.m, need to merge these */
 static inline PyObject*
-_type_lookup(PyTypeObject* tp, PyObject* name
-#ifndef PyObjC_FAST_UNICODE_ASCII
-        , PyObject* name_bytes
-#endif
-)
+_type_lookup(PyTypeObject* tp, PyObject* name)
 {
     Py_ssize_t i, n;
     PyObject *mro, *base, *dict;
     PyObject *descr = NULL;
     PyObject* res;
-#ifndef PyObjC_FAST_UNICODE_ASCII
-    SEL sel = PyObjCSelector_DefaultSelector(PyBytes_AsString(name_bytes));
-#else
     SEL sel = PyObjCSelector_DefaultSelector(PyObjC_Unicode_Fast_Bytes(name));
-#endif
 
     /* TODO: if sel.startswith('__') and sel.endswith('__'): look_in_runtime = False */
 
@@ -1224,11 +1216,7 @@ _type_lookup(PyTypeObject* tp, PyObject* name
 }
 
 static inline PyObject*
-_type_lookup_harder(PyTypeObject* tp, PyObject* name
-#ifndef PyObjC_FAST_UNICODE_ASCII
-    , PyObject* name_bytes
-#endif
-    )
+_type_lookup_harder(PyTypeObject* tp, PyObject* name)
     /* See function of same name in objc-object.m for an explanation */
 {
     Py_ssize_t i, n;
@@ -1271,11 +1259,7 @@ _type_lookup_harder(PyTypeObject* tp, PyObject* name
                         selbuf,
                         sizeof(selbuf));
             if (strcmp(sel_name,
-#ifndef PyObjC_FAST_UNICODE_ASCII
-                    PyBytes_AS_STRING(name_bytes)
-#else
                     PyObjC_Unicode_Fast_Bytes(name)
-#endif
                     ) == 0) {
                 /* Create (unbound) selector */
                 descr = PyObjCSelector_NewNative(
@@ -1365,21 +1349,13 @@ PyObject* PyObjCMetaClass_TryResolveSelector(PyObject* base, PyObject* name, SEL
 
 /* FIXME: version of _type_lookup that only looks for instance methods */
 static inline PyObject*
-_type_lookup_instance(PyObject* class_dict, PyTypeObject* tp, PyObject* name
-#ifndef PyObjC_FAST_UNICODE_ASCII
-    , PyObject* name_bytes
-#endif
-    )
+_type_lookup_instance(PyObject* class_dict, PyTypeObject* tp, PyObject* name)
 {
     Py_ssize_t i, n;
     PyObject *mro, *base, *dict;
     PyObject *descr = NULL;
     PyObject* res;
-#ifndef PyObjC_FAST_UNICODE_ASCII
-    SEL sel = PyObjCSelector_DefaultSelector(PyBytes_AsString(name_bytes));
-#else
     SEL sel = PyObjCSelector_DefaultSelector(PyObjC_Unicode_Fast_Bytes(name));
-#endif
 
     /* TODO: if sel.startswith('__') and sel.endswith('__'): look_in_runtime = False */
 
@@ -1459,21 +1435,13 @@ _type_lookup_instance(PyObject* class_dict, PyTypeObject* tp, PyObject* name
 }
 
 static inline PyObject*
-_type_lookup_instance_harder(PyObject* class_dict, PyTypeObject* tp, PyObject* name
-#ifndef PyObjC_FAST_UNICODE_ASCII
-        , PyObject* name_bytes
-#endif
-    )
+_type_lookup_instance_harder(PyObject* class_dict, PyTypeObject* tp, PyObject* name)
 {
     Py_ssize_t i, n;
     PyObject *mro, *base;
     PyObject *descr = NULL;
     PyObject* res;
-#ifndef PyObjC_FAST_UNICODE_ASCII
-    SEL sel = PyObjCSelector_DefaultSelector(PyBytes_AsString(name_bytes));
-#else
     SEL sel = PyObjCSelector_DefaultSelector(PyObjC_Unicode_Fast_Bytes(name));
-#endif
 
     /* Look in tp_dict of types in MRO */
     mro = tp->tp_mro;
@@ -1505,13 +1473,7 @@ _type_lookup_instance_harder(PyObject* class_dict, PyTypeObject* tp, PyObject* n
                         selbuf,
                         sizeof(selbuf));
 
-            if (strcmp(sel_name,
-#ifndef PyObjC_FAST_UNICODE_ASCII
-                    PyBytes_AS_STRING(name_bytes)
-#else
-                    PyObjC_Unicode_Fast_Bytes(name)
-#endif
-                    ) == 0) {
+            if (strcmp(sel_name, PyObjC_Unicode_Fast_Bytes(name)) == 0) {
                 /* Create (unbound) selector */
                 PyObject* result = PyObjCSelector_NewNative(
                         cls, sel, method_getTypeEncoding(m), 0);
@@ -1543,9 +1505,6 @@ class_getattro(PyObject* self, PyObject* name)
 {
     PyObject *descr = NULL;
     PyObject *result = NULL;
-#ifndef PyObjC_FAST_UNICODE_ASCII
-    PyObject *name_bytes;
-#endif
     descrgetfunc f;
 
     /* Python will look for a number of "private" attributes during
@@ -1571,12 +1530,7 @@ class_getattro(PyObject* self, PyObject* name)
             PyErr_Clear();
         }
 
-#ifndef PyObjC_FAST_UNICODE_ASCII
-        name_bytes = PyUnicode_AsEncodedString(name, NULL, NULL);
-        if (name_bytes == NULL) return NULL;
-#else
         if (PyObjC_Unicode_Fast_Bytes(name) == NULL) return NULL;
-#endif
 
     } else {
         PyErr_Format(PyExc_TypeError, "Attribute name is not a string, but an instance of '%s'",
@@ -1587,11 +1541,7 @@ class_getattro(PyObject* self, PyObject* name)
         return NULL;
     }
 
-    descr = _type_lookup(Py_TYPE(self), name
-#ifndef PyObjC_FAST_UNICODE_ASCII
-        , name_bytes
-#endif
-    );
+    descr = _type_lookup(Py_TYPE(self), name);
     if (descr == NULL && PyErr_Occurred()) {
         return NULL;
     }
@@ -1606,11 +1556,7 @@ class_getattro(PyObject* self, PyObject* name)
     }
 
     if (strcmp(
-#ifndef PyObjC_FAST_UNICODE_ASCII
-        PyBytes_AS_STRING(name_bytes),
-#else
         PyObjC_Unicode_Fast_Bytes(name),
-#endif
         "__dict__") == 0) {
 
         result = ((PyTypeObject*)self)->tp_dict;
@@ -1620,11 +1566,7 @@ class_getattro(PyObject* self, PyObject* name)
 
 
     if (descr == NULL) {
-        descr = _type_lookup_instance(((PyTypeObject*)self)->tp_dict, (PyTypeObject*)self, name
-#ifndef PyObjC_FAST_UNICODE_ASCII
-            , name_bytes
-#endif
-        );
+        descr = _type_lookup_instance(((PyTypeObject*)self)->tp_dict, (PyTypeObject*)self, name);
         if (descr != NULL) {
             f = Py_TYPE(descr)->tp_descr_get;
             if (f != NULL) {
@@ -1641,11 +1583,7 @@ class_getattro(PyObject* self, PyObject* name)
     }
 
     if (descr == NULL) {
-        descr = _type_lookup_harder(Py_TYPE(self), name
-#ifndef PyObjC_FAST_UNICODE_ASCII
-            , name_bytes
-#endif
-        );
+        descr = _type_lookup_harder(Py_TYPE(self), name);
         if (descr != NULL) {
             f = Py_TYPE(descr)->tp_descr_get;
         }
@@ -1655,11 +1593,7 @@ class_getattro(PyObject* self, PyObject* name)
     }
 
     if (descr == NULL) {
-        descr = _type_lookup_instance_harder(((PyTypeObject*)self)->tp_dict, (PyTypeObject*)self, name
-#ifndef PyObjC_FAST_UNICODE_ASCII
-            , name_bytes
-#endif
-        );
+        descr = _type_lookup_instance_harder(((PyTypeObject*)self)->tp_dict, (PyTypeObject*)self, name);
         if (descr != NULL) {
             f = Py_TYPE(descr)->tp_descr_get;
         }
@@ -1682,25 +1616,14 @@ class_getattro(PyObject* self, PyObject* name)
     /* Try to find the method anyway */
     PyErr_Clear();
     if (PyObjCClass_HiddenSelector(self,
-#ifndef PyObjC_FAST_UNICODE_ASCII
-            sel_getUid(PyBytes_AsString(name_bytes)),
-#else
             sel_getUid(PyObjC_Unicode_Fast_Bytes(name)),
-#endif
             YES)) {
-#ifndef PyObjC_FAST_UNICODE_ASCII
-        Py_DECREF(name_bytes);
-#endif
         PyErr_SetObject(PyExc_AttributeError, name);
         return NULL;
     }
 
     result = PyObjCSelector_FindNative(self,
-#ifndef PyObjC_FAST_UNICODE_ASCII
-        PyBytes_AsString(name_bytes)
-#else
         PyObjC_Unicode_Fast_Bytes(name)
-#endif
     );
 
     if (result != NULL) {
@@ -1722,9 +1645,6 @@ class_getattro(PyObject* self, PyObject* name)
         }
     }
 done:
-#ifndef PyObjC_FAST_UNICODE_ASCII
-    Py_DECREF(name_bytes);
-#endif
     return result;
 }
 
@@ -1985,14 +1905,14 @@ cls_get__name__(PyObject* self, void* closure __attribute__((__unused__)))
 {
     Class cls = PyObjCClass_GetClass(self);
     if (cls == NULL) {
-        return PyText_FromString("objc.objc_class");
+        return PyUnicode_FromString("objc.objc_class");
 
     } else {
         const char* nm = class_getName(cls);
         if (strstr(nm, "NSCFType") != NULL) {
-            return PyText_FromString(((PyTypeObject*)self)->tp_name);
+            return PyUnicode_FromString(((PyTypeObject*)self)->tp_name);
         } else {
-            return PyText_FromString(nm);
+            return PyUnicode_FromString(nm);
         }
     }
 }
@@ -2006,7 +1926,7 @@ cls_get_version(PyObject* self, void* closure __attribute__((__unused__)))
         Py_INCREF(Py_None);
         return Py_None;
     } else {
-        return PyInt_FromLong(class_getVersion(cls));
+        return PyLong_FromLong(class_getVersion(cls));
     }
 }
 
@@ -2121,7 +2041,7 @@ meth_dir(PyObject* self)
                         sizeof(selbuf));
             if (name == NULL) continue;
 
-            item = PyText_FromString(name);
+            item = PyUnicode_FromString(name);
             if (item == NULL) {
                 free(methods);
                 Py_DECREF(result);
@@ -2168,112 +2088,6 @@ static PyMethodDef class_methods[] = {
     }
 };
 
-#ifdef Py_HAVE_LOCAL_LOOKUP
-
-static int
-is_dunder_name(PyObject* name)
-{
-    /* FIXME: should check name suffix as well */
-    if (PyUnicode_Check(name)) {
-        if (PyObjC_is_ascii_prefix(name, "__", 2)) {
-            return 1;
-        } else {
-            return 0;
-        }
-
-    } else {
-        return 1;
-    }
-}
-
-static SEL
-default_selector(PyObject* name)
-{
-#ifndef PyObjC_FAST_UNICODE_ASCII
-    /* XXX: name_bytes */
-    SEL sel = PyObjCSelector_DefaultSelector(PyBytes_AsString(name_bytes));
-    return sel;
-#else
-    return PyObjCSelector_DefaultSelector(PyObjC_Unicode_Fast_Bytes(name));
-#endif
-}
-
-static PyObject*
-metaclass_locallookup(PyTypeObject* tp, PyObject* name)
-{
-    PyObject* result;
-#ifdef PyObjC_DEBUG
-    if (!PyType_IsSubtype(tp, &PyObjCClass_Type)) {
-        return NULL;
-    }
-#endif /* PyObjC_DEBUG */
-
-    result = PyDict_GetItem(tp->tp_dict, name);
-    if (result != NULL) {
-        if (PyObjCSelector_Check(result) && PyObjCSelector_IsHidden(result)) {
-            return NULL;
-        }
-        Py_INCREF(result);
-        return result;
-    }
-
-    if (is_dunder_name(name)) {
-        return NULL;
-    }
-
-
-    result = PyObjCMetaClass_TryResolveSelector((PyObject*)Py_TYPE(tp), name, default_selector(name));
-    if (result != NULL) {
-        if (PyObjCSelector_Check(result) && PyObjCSelector_IsHidden(result)) {
-            return NULL;
-        }
-        Py_INCREF(result);
-        return result;
-    }
-
-    /* TODO: harder names */
-
-    return NULL;
-}
-
-static PyObject*
-class_locallookup(PyTypeObject* tp, PyObject* name)
-{
-    PyObject* result;
-#ifdef PyObjC_DEBUG
-    if (!PyType_IsSubtype(tp, &PyObjCObject_Type)) {
-        return NULL;
-    }
-#endif /* PyObjC_DEBUG */
-
-    result = PyDict_GetItem(tp->tp_dict, name);
-    if (result != NULL) {
-        if (PyObjCSelector_Check(result) && PyObjCSelector_IsHidden(result)) {
-            return NULL;
-        }
-        Py_INCREF(result);
-        return result;
-    }
-
-    if (is_dunder_name(name)) {
-        return NULL;
-    }
-
-    result = PyObjCClass_TryResolveSelector((PyObject*)tp, name, default_selector(name));
-    if (result != NULL) {
-        if (PyObjCSelector_Check(result) && PyObjCSelector_IsHidden(result)) {
-            return NULL;
-        }
-        Py_INCREF(result);
-        return result;
-    }
-
-    /* TODO: harder names */
-
-    return NULL;
-}
-#endif /* Py_HAVE_LOCALLOOKUP */
-
 /*
  * This is the class for type(NSObject), and is a subclass of type()
  * with an overridden tp_getattro that is used to dynamicly look up
@@ -2288,9 +2102,6 @@ PyTypeObject PyObjCMetaClass_Type = {
     .tp_methods     = metaclass_methods,
     .tp_base        = &PyType_Type,
     .tp_dictoffset  = offsetof(PyTypeObject, tp_dict),
-#ifdef Py_HAVE_LOCAL_LOOKUP
-    .tp_locallookup = metaclass_locallookup,
-#endif /* Py_HAVE_LOCAL_LOOKUP */
 };
 
 
@@ -2312,9 +2123,6 @@ PyTypeObject PyObjCClass_Type = {
     .tp_base        = &PyObjCMetaClass_Type,
     .tp_init        = class_init,
     .tp_new         = class_new,
-#ifdef Py_HAVE_LOCAL_LOOKUP
-    .tp_locallookup = class_locallookup,
-#endif /* Py_HAVE_LOCAL_LOOKUP */
 };
 
 /*
@@ -2382,7 +2190,7 @@ PyObjCClass_New(Class objc_class)
     }
     args = PyTuple_New(3);
     className = class_getName(objc_class);
-    PyTuple_SetItem(args, 0, PyText_FromString(className));
+    PyTuple_SetItem(args, 0, PyUnicode_FromString(className));
     PyTuple_SetItem(args, 1, bases);
     PyTuple_SetItem(args, 2, dict);
     bases = NULL; dict = NULL;
@@ -2503,7 +2311,7 @@ PyObjCClass_ListProperties(PyObject* aClass)
         const char* e;
 
         item = Py_BuildValue(
-            "{sss"Py_ARG_BYTES"}",
+            "{sssy}",
             "name", name,
             "raw_attr", attr);
         if (item == NULL) {
@@ -2545,7 +2353,7 @@ PyObjCClass_ListProperties(PyObject* aClass)
         attr = e;
         if (*attr == '"') {
             e = strchr(attr+1, '"');
-            v = PyText_FromStringAndSize(attr+1, e-(attr+1));
+            v = PyUnicode_FromStringAndSize(attr+1, e-(attr+1));
             if (v == NULL) {
                 goto error;
             }
@@ -2785,7 +2593,7 @@ PyObjCClass_FindSelector(PyObject* cls, SEL selector, BOOL class_method)
             name = PyObjC_SELToPythonName(selector, selbuf, sizeof(selbuf));
             if (!name) continue;
 
-            py_name = PyText_FromString(name);
+            py_name = PyUnicode_FromString(name);
             if (!py_name) {
                 PyErr_Clear();
                 continue;

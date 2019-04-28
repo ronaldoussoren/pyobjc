@@ -186,8 +186,6 @@ static PyMethodDef mod_methods[] = {
             { 0, 0, 0, 0 }
 };
 
-#if PY_VERSION_HEX >= 0x03000000
-
 static struct PyModuleDef mod_module = {
     PyModuleDef_HEAD_INIT,
     "pythonset",
@@ -200,45 +198,26 @@ static struct PyModuleDef mod_module = {
     NULL
 };
 
-#define INITERROR() return NULL
-#define INITDONE() return m
-
 PyObject* PyInit_pythonset(void);
 
 PyObject* __attribute__((__visibility__("default")))
 PyInit_pythonset(void)
-
-#else
-
-#define INITERROR() return
-#define INITDONE() return
-
-void initpythonset(void);
-
-void __attribute__((__visibility__("default")))
-initpythonset(void)
-#endif
 {
     PyObject* m;
 
-#if PY_VERSION_HEX >= 0x03000000
     m = PyModule_Create(&mod_module);
-#else
-    m = Py_InitModule4("pythonset", mod_methods,
-        NULL, NULL, PYTHON_API_VERSION);
-#endif
     if (!m) {
-        INITERROR();
+        return NULL;
     }
 
     if (PyObjC_ImportAPI(m) < 0) {
-        INITERROR();
+        return NULL;
     }
 
     if (PyModule_AddObject(m, "OC_TestSet",
         PyObjC_IdToPython([OC_TestSet class])) < 0) {
-        INITERROR();
+        return NULL;
     }
 
-    INITDONE();
+    return m;
 }

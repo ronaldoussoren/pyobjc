@@ -55,7 +55,7 @@ PyObject* pythonify_authorizationitem(void* _value)
         }
     }
 
-    t = PyInt_FromLong(value->valueLength);
+    t = PyLong_FromLong(value->valueLength);
     if (t == NULL) {
         Py_DECREF(result);
         return NULL;
@@ -92,7 +92,7 @@ PyObject* pythonify_authorizationitem(void* _value)
         }
     }
 
-    t = PyInt_FromLong(value->valueLength);
+    t = PyLong_FromLong(value->valueLength);
     if (t == NULL) {
         Py_DECREF(result);
         return NULL;

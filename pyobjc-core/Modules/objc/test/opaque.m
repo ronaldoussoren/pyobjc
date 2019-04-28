@@ -34,8 +34,6 @@ static PyMethodDef mod_methods[] = {
             { 0, 0, 0, 0 }
 };
 
-#if PY_VERSION_HEX >= 0x03000000
-
 static struct PyModuleDef mod_module = {
     PyModuleDef_HEAD_INIT,
     "opaque",
@@ -48,65 +46,36 @@ static struct PyModuleDef mod_module = {
     NULL
 };
 
-#define INITERROR() return NULL
-#define INITDONE() return m
-
 PyObject* PyInit_opaque(void);
 
 PyObject* __attribute__((__visibility__("default")))
 PyInit_opaque(void)
-
-#else
-
-#define INITERROR() return
-#define INITDONE() return
-
-void initopaque(void);
-
-void __attribute__((__visibility__("default")))
-initopaque(void)
-#endif
 {
     PyObject* m;
 
 
-#if PY_VERSION_HEX >= 0x03000000
     m = PyModule_Create(&mod_module);
-#else
-    m = Py_InitModule4("opaque", mod_methods,
-        NULL, NULL, PYTHON_API_VERSION);
-#endif
     if (!m) {
-        INITERROR();
+        return NULL;
     }
 
     if (PyObjC_ImportAPI(m) < 0) {
-        INITERROR();
+        return NULL;
     }
 
     if (PyModule_AddObject(m, "OC_OpaqueTest",
         PyObjC_IdToPython([OC_OpaqueTest class])) < 0) {
-        INITERROR();
+        return NULL;
     }
 
-#if PY_VERSION_HEX >= 0x03000000
     if (PyModule_AddObject(m, "BarEncoded", PyBytes_FromString(@encode(BarHandle))) < 0) {
-        INITERROR();
+        return NULL;
     }
     if (PyModule_AddObject(m, "FooEncoded", PyBytes_FromString(@encode(FooHandle))) < 0) {
-        INITERROR();
-    }
-#else
-    if (PyModule_AddObject(m, "BarEncoded", PyString_FromString(@encode(BarHandle))) < 0) {
-        INITERROR();
+        return NULL;
     }
 
-    if (PyModule_AddObject(m, "FooEncoded", PyString_FromString(@encode(FooHandle))) < 0) {
-        INITERROR();
-    }
-#endif
-
-    INITDONE();
+    return m;
 }
 
 /*

@@ -425,7 +425,7 @@ decimal_richcompare(PyObject* self, PyObject* other, int type)
 static PyObject* decimal_asint(PyObject* self)
 {
     NSDecimalNumber* tmp = Decimal_ObjCValue(self);
-    return PyInt_FromLong([tmp longValue]);
+    return PyLong_FromLong([tmp longValue]);
 }
 
 static PyObject* decimal_asfloat(PyObject* self)

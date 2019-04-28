@@ -221,7 +221,7 @@ base_name(PyObject* _self, void* closure __attribute__((__unused__)))
     name = PyObjC_SELToPythonName(
         self->sel_selector, buf, sizeof(buf));
 
-    return PyText_FromString(name);
+    return PyUnicode_FromString(name);
 }
 
 PyDoc_STRVAR(base_class_doc, "Objective-C Class that defines the method");
@@ -390,7 +390,7 @@ objcsel_repr(PyObject* _self)
     PyObjCNativeSelector* sel = (PyObjCNativeSelector*)_self;
     PyObject *rval;
     if (sel->base.sel_self == NULL) {
-        rval = PyText_FromFormat("<unbound native-selector %s in %s>", sel_getName(sel->base.sel_selector), class_getName(sel->base.sel_class));
+        rval = PyUnicode_FromFormat("<unbound native-selector %s in %s>", sel_getName(sel->base.sel_selector), class_getName(sel->base.sel_class));
 
     } else {
         rval = PyUnicode_FromFormat("<native-selector %s of %R>", sel_getName(sel->base.sel_selector), sel->base.sel_self);
@@ -1075,14 +1075,14 @@ pysel_repr(PyObject* _self)
 
     if (sel->base.sel_self == NULL) {
         if (sel->base.sel_class) {
-            rval = PyText_FromFormat("<unbound selector %s of %s at %p>", sel_getName(sel->base.sel_selector), class_getName(sel->base.sel_class), sel);
+            rval = PyUnicode_FromFormat("<unbound selector %s of %s at %p>", sel_getName(sel->base.sel_selector), class_getName(sel->base.sel_class), sel);
 
         } else {
-            rval = PyText_FromFormat("<unbound selector %s at %p>", sel_getName(sel->base.sel_selector), sel);
+            rval = PyUnicode_FromFormat("<unbound selector %s at %p>", sel_getName(sel->base.sel_selector), sel);
         }
 
     } else {
-        rval = PyText_FromFormat("<selector %s of %R>", sel_getName(sel->base.sel_selector), sel->base.sel_self);
+        rval = PyUnicode_FromFormat("<selector %s of %R>", sel_getName(sel->base.sel_selector), sel->base.sel_self);
     }
     return rval;
 }
@@ -1549,7 +1549,7 @@ static char* keywords[] = { "function", "selector", "signature",
     int hidden = 0;
 
     if (!PyArg_ParseTupleAndKeywords(args, kwds,
-            "O|"Py_ARG_BYTES Py_ARG_BYTES"iii",
+            "O|yyiii",
             keywords, &callable, &selector, &signature,
             &class_method, &required, &hidden)) {
         return NULL;

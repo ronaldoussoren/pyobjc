@@ -635,7 +635,7 @@ getModuleFunction(char* modname, char* funcname)
     PyObject* name;
     PyObject* mod;
 
-    name = PyText_FromString(modname);
+    name = PyUnicode_FromString(modname);
     if (name == NULL) {
         return NULL;
     }
@@ -991,7 +991,7 @@ static PyObject* setKeyFunc = NULL;
             PyObjC_GIL_RETURN(NSOrderedSame);
         }
         int r;
-        if (PyObject_Cmp([self pyObject], otherPyObject, &r) == -1) {
+        if (PyObjC_Cmp([self pyObject], otherPyObject, &r) == -1) {
             PyObjC_GIL_FORWARD_EXC();
         }
         NSComparisonResult rval;

@@ -153,7 +153,7 @@ BEGIN_UNITTEST(FillStruct1)
     input = PyTuple_New(2);
     FAIL_IF(input == NULL);
 
-    PyTuple_SetItem(input, 0, PyInt_FromLong(1));
+    PyTuple_SetItem(input, 0, PyLong_FromLong(1));
     PyTuple_SetItem(input, 1, PyFloat_FromDouble(2));
 
     r = depythonify_c_value(@encode(struct Struct1), input, &output);
@@ -177,13 +177,13 @@ BEGIN_UNITTEST(FillStruct2)
     FAIL_IF(input == NULL);
 
     v = PyTuple_New(5);
-    PyTuple_SetItem(v, 0, PyInt_FromLong(10));
-    PyTuple_SetItem(v, 1, PyInt_FromLong(11));
-    PyTuple_SetItem(v, 2, PyInt_FromLong(12));
-    PyTuple_SetItem(v, 3, PyInt_FromLong(13));
-    PyTuple_SetItem(v, 4, PyInt_FromLong(14));
+    PyTuple_SetItem(v, 0, PyLong_FromLong(10));
+    PyTuple_SetItem(v, 1, PyLong_FromLong(11));
+    PyTuple_SetItem(v, 2, PyLong_FromLong(12));
+    PyTuple_SetItem(v, 3, PyLong_FromLong(13));
+    PyTuple_SetItem(v, 4, PyLong_FromLong(14));
 
-    PyTuple_SetItem(input, 0, PyInt_FromLong(1));
+    PyTuple_SetItem(input, 0, PyLong_FromLong(1));
     PyTuple_SetItem(input, 1, PyFloat_FromDouble(2));
     PyTuple_SetItem(input, 2, v);
 
@@ -212,7 +212,7 @@ BEGIN_UNITTEST(FillStruct3)
     FAIL_IF(input == NULL);
 
     PyTuple_SetItem(input, 0,  PyBytes_FromStringAndSize("\001", 1));
-    PyTuple_SetItem(input, 1, PyInt_FromLong(2));
+    PyTuple_SetItem(input, 1, PyLong_FromLong(2));
 
     r = depythonify_c_value(@encode(struct Struct3), input, &output);
     FAIL_IF(r < 0);
@@ -234,7 +234,7 @@ BEGIN_UNITTEST(FillStruct4)
     FAIL_IF(input == NULL);
 
     PyTuple_SetItem(input, 0, PyBytes_FromStringAndSize("\001", 1));
-    PyTuple_SetItem(input, 1, PyInt_FromLong(500000));
+    PyTuple_SetItem(input, 1, PyLong_FromLong(500000));
 
     r = depythonify_c_value(@encode(struct Struct4), input, &output);
     FAIL_IF(r < 0);
@@ -257,12 +257,12 @@ BEGIN_UNITTEST(FillStruct5Array)
     FAIL_IF(input == NULL);
 
     v = PyTuple_New(2);
-    PyTuple_SetItem(v, 0, PyInt_FromLong(500000));
+    PyTuple_SetItem(v, 0, PyLong_FromLong(500000));
     PyTuple_SetItem(v, 1, PyBytes_FromStringAndSize("\001", 1));
     PyTuple_SetItem(input, 0, v);
 
     v = PyTuple_New(2);
-    PyTuple_SetItem(v, 0, PyInt_FromLong(1000000));
+    PyTuple_SetItem(v, 0, PyLong_FromLong(1000000));
     PyTuple_SetItem(v, 1, PyBytes_FromStringAndSize("\002", 1));
     PyTuple_SetItem(input, 1, v);
 
@@ -702,12 +702,12 @@ BEGIN_UNITTEST(FillNSRect)
     FAIL_IF(input == NULL);
 
     v= PyTuple_New(2);
-    PyTuple_SetItem(v, 0, PyInt_FromLong(10));
-    PyTuple_SetItem(v, 1, PyInt_FromLong(11));
+    PyTuple_SetItem(v, 0, PyLong_FromLong(10));
+    PyTuple_SetItem(v, 1, PyLong_FromLong(11));
 
     t= PyTuple_New(2);
-    PyTuple_SetItem(t, 0, PyInt_FromLong(20));
-    PyTuple_SetItem(t, 1, PyInt_FromLong(21));
+    PyTuple_SetItem(t, 0, PyLong_FromLong(20));
+    PyTuple_SetItem(t, 1, PyLong_FromLong(21));
 
     PyTuple_SetItem(input, 0, v);
     PyTuple_SetItem(input, 1, t);

@@ -48,22 +48,12 @@ super_getattro(PyObject *self, PyObject *name)
     }
 
     if (PyUnicode_Check(name)) {
-#ifdef PyObjC_FAST_UNICODE_ASCII
         const char* b = PyObjC_Unicode_Fast_Bytes(name);
         if (name == NULL) {
             return NULL;
         }
 
         sel = PyObjCSelector_DefaultSelector(b);
-
-#else /* !PyObjC_FAST_UNICODE_ASCII */
-
-        PyObject* bytes = PyUnicode_AsEncodedString(name, NULL, NULL);
-        if (bytes == NULL) {
-            return NULL;
-        }
-        sel = PyObjCSelector_DefaultSelector(PyBytes_AsString(bytes));
-#endif /* !PyObjC_FAST_UNICODE_ASCII */
 
     } else if (!skip) {
         PyErr_SetString(PyExc_TypeError, "attribute name is not a string");

@@ -449,7 +449,7 @@
             PyObjC_GIL_FORWARD_EXC();
         }
 
-        ok = PyObject_Cmp(value, other, &r);
+        ok = PyObjC_Cmp(value, other, &r);
         Py_DECREF(other);
         if (ok == -1) {
             PyObjC_GIL_FORWARD_EXC();

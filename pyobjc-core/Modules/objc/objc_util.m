@@ -159,11 +159,11 @@ PyObjCErr_FromObjC(NSException* localException)
             }
 
             if ([[localException reason] UTF8String]) {
-                 buf = PyText_FromFormat("%s - %s",
+                 buf = PyUnicode_FromFormat("%s - %s",
                        [[localException name] UTF8String],
                        [[localException reason] UTF8String]);
             } else {
-                 buf = PyText_FromFormat("%s",
+                 buf = PyUnicode_FromFormat("%s",
                        [[localException name] UTF8String]);
             }
             PyErr_SetObject(exception, buf);
@@ -1180,7 +1180,6 @@ PyObjCClass_Convert(PyObject* object, void* pvar)
 
 int PyObjC_is_ascii_string(PyObject* unicode_string, const char* ascii_string)
 {
-#ifdef PyObjC_FAST_UNICODE_ASCII
     if (!PyUnicode_IS_ASCII(unicode_string)) {
         return 0;
 
@@ -1189,37 +1188,11 @@ int PyObjC_is_ascii_string(PyObject* unicode_string, const char* ascii_string)
                 (const char*)(PyUnicode_DATA(unicode_string)),
                 ascii_string) == 0;
     }
-
-#else /* !PyObjC_FAST_UNICODE_ASCII */
-
-    size_t uni_sz = PyUnicode_GetSize(unicode_string);
-    size_t i;
-    Py_UNICODE* code_points = PyUnicode_AsUnicode(unicode_string);
-
-    if (code_points == NULL) {
-        PyErr_Clear();
-        return 0;
-    }
-
-    for (i = 0; i < uni_sz; i++) {
-        if (code_points[i] != (Py_UNICODE)ascii_string[i]) {
-            return 0;
-
-        } else if (ascii_string[i] == '\0') {
-            return 0;
-        }
-    }
-    if (ascii_string[i] != '\0') {
-        return 0;
-    }
-    return 1;
-#endif /* !PyObjC_FAST_UNICODE_ASCII */
 }
 
 int PyObjC_is_ascii_prefix(PyObject* unicode_string, const char* ascii_string, size_t n)
 {
 
-#ifdef PyObjC_FAST_UNICODE_ASCII
     size_t uni_sz = PyUnicode_GetLength(unicode_string);
 
     if (uni_sz < n) {
@@ -1231,32 +1204,6 @@ int PyObjC_is_ascii_prefix(PyObject* unicode_string, const char* ascii_string, s
     }
 
     return strncmp((const char*)(PyUnicode_DATA(unicode_string)), ascii_string, n) == 0;
-
-#else /* !PyObjC_FAST_UNICODE_ASCII */
-
-    size_t uni_sz = PyUnicode_GetSize(unicode_string);
-    size_t i;
-    Py_UNICODE* code_points = PyUnicode_AsUnicode(unicode_string);
-
-    if (code_points == NULL) {
-        PyErr_Clear();
-        return 0;
-    }
-
-    for (i = 0; i < uni_sz && i < n; i++) {
-        if (code_points[i] != (Py_UNICODE)ascii_string[i]) {
-            return 0;
-
-        } else if (ascii_string[i] == '\0') {
-            return 0;
-        }
-    }
-    if (i != n) {
-        return 0;
-    }
-    return 1;
-
-#endif /* !PyObjC_FAST_UNICODE_ASCII */
 }
 
 PyObject*
@@ -1268,13 +1215,13 @@ PyObjC_ImportName(const char* name)
 
     if (c == NULL) {
         /* Toplevel module */
-        py_name = PyText_FromString(name);
+        py_name = PyUnicode_FromString(name);
         mod = PyImport_Import(py_name);
         Py_DECREF(py_name);
         return mod;
 
     } else {
-        py_name = PyText_FromStringAndSize(name, c - name);
+        py_name = PyUnicode_FromStringAndSize(name, c - name);
         mod = PyImport_Import(py_name);
         Py_DECREF(py_name);
         if (mod == NULL) {

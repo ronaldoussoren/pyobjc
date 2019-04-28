@@ -297,9 +297,9 @@ static ffi_cif* new_cif = NULL;
 
     name_dot = strchr(name, '.');
     if (name_dot != NULL && name_dot[1] != '\0') {
-        newType->ht_name = PyText_FromString(name_dot + 1);
+        newType->ht_name = PyUnicode_FromString(name_dot + 1);
     } else {
-        newType->ht_name = PyText_FromString(name);
+        newType->ht_name = PyUnicode_FromString(name);
     }
     if (newType->ht_name == NULL) {
         PyMem_Free(newType);
@@ -307,7 +307,12 @@ static ffi_cif* new_cif = NULL;
         return NULL;
     }
 
-    newType->ht_type.tp_name = PyText_AsString(newType->ht_name);
+    newType->ht_type.tp_name = PyUnicode_AsUTF8(newType->ht_name);
+    if (newType->ht_type.tp_name == NULL) {
+        PyMem_Free(newType);
+        PyErr_NoMemory();
+        return NULL;
+    }
 
     newType->ht_qualname = newType->ht_name;
     Py_INCREF(newType->ht_qualname);
@@ -330,7 +335,7 @@ static ffi_cif* new_cif = NULL;
     Py_CLEAR(w);
 
     if (name_dot == NULL || name_dot[1] == '\0') {
-        w = PyText_FromString("objc");
+        w = PyUnicode_FromString("objc");
         if (w == NULL) {
             goto error_cleanup;
         }
@@ -340,7 +345,7 @@ static ffi_cif* new_cif = NULL;
         }
         Py_CLEAR(w);
     } else {
-        w = PyText_FromStringAndSize(name, name_dot - name);
+        w = PyUnicode_FromStringAndSize(name, name_dot - name);
         if (w == NULL) {
             goto error_cleanup;
         }

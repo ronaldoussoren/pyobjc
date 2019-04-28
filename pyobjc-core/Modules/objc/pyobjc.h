@@ -140,5 +140,7 @@
 extern PyObject* PyObjC_TypeStr2CFTypeID;
 extern PyObject* PyObjC_callable_docstr_get(PyObject* callable, void* closure);
 extern PyObject* PyObjC_callable_signature_get(PyObject* callable, void* closure);
+extern PyObject* PyInit__objc(void);
+
 
 #endif /* PyObjC_H */

@@ -1908,7 +1908,6 @@ static PyMethodDef mod_methods[] = {
 
 
 /* Python glue */
-#if PY_VERSION_HEX >= 0x03000000
 
 static struct PyModuleDef mod_module = {
     PyModuleDef_HEAD_INIT,
@@ -1922,189 +1921,168 @@ static struct PyModuleDef mod_module = {
     NULL
 };
 
-#define INITERROR() return NULL
-#define INITDONE() return m
-
 PyObject* PyInit_testbndl(void);
 
 PyObject* __attribute__((__visibility__("default")))
 PyInit_testbndl(void)
-
-#else
-
-#define INITERROR() return
-#define INITDONE() return
-
-void inittestbndl(void);
-
-void __attribute__((__visibility__("default")))
-inittestbndl(void)
-#endif
 {
     PyObject* m;
 
-#if PY_VERSION_HEX >= 0x03000000
     m = PyModule_Create(&mod_module);
-#else
-    m = Py_InitModule4("testbndl", mod_methods,
-        NULL, NULL, PYTHON_API_VERSION);
-#endif
     if (!m) {
-        INITERROR();
+        return NULL;
     }
 
     if (PyObjC_ImportAPI(m) < 0) {
-        INITERROR();
+        return NULL;
     }
 
     if (PyModule_AddObject(m, "OC_TestClass1",
         PyObjC_IdToPython([OC_TestClass1 class])) < 0) {
-        INITERROR();
+        return NULL;
     }
     if (PyModule_AddObject(m, "OC_TestClass2",
         PyObjC_IdToPython([OC_TestClass2 class])) < 0) {
-        INITERROR();
+        return NULL;
     }
     if (PyModule_AddObject(m, "PyObjC_TestClass3",
         PyObjC_IdToPython([PyObjC_TestClass3 class])) < 0) {
-        INITERROR();
+        return NULL;
     }
     if (PyModule_AddObject(m, "PyObjC_TestClass4",
         PyObjC_IdToPython([PyObjC_TestClass4 class])) < 0) {
-        INITERROR();
+        return NULL;
     }
     if (PyModule_AddObject(m, "PyObjCTest_KVBaseClass",
         PyObjC_IdToPython([PyObjCTest_KVBaseClass class])) < 0) {
-        INITERROR();
+        return NULL;
     }
     if (PyModule_AddObject(m, "PyObjCTest_KVPathClass",
         PyObjC_IdToPython([PyObjCTest_KVPathClass class])) < 0) {
-        INITERROR();
+        return NULL;
     }
 
 #if defined (MAC_OS_X_VERSION_10_3) && (MAC_OS_X_VERSION_MAX_ALLOWED >= MAC_OS_X_VERSION_10_3)
     if (PyModule_AddObject(m, "PyObjCTest_KeyValueObserver",
         PyObjC_IdToPython([PyObjCTest_KeyValueObserver class])) < 0) {
-        INITERROR();
+        return NULL;
     }
 #else
     if (PyModule_AddObject(m, "PyObjCTest_KeyValueObserver", Py_None) < 0) {
-        INITERROR();
+        return NULL;
     }
 
 #endif /* ! MacOS X 10.3 */
 
-    if (PyModule_AddObject(m, "DO_VALUEFORKEY", PyInt_FromLong(0)) < 0) {
-        INITERROR();
+    if (PyModule_AddObject(m, "DO_VALUEFORKEY", PyLong_FromLong(0)) < 0) {
+        return NULL;
     }
-    if (PyModule_AddObject(m, "DO_VALUEFORKEYPATH", PyInt_FromLong(1)) < 0) {
-        INITERROR();
+    if (PyModule_AddObject(m, "DO_VALUEFORKEYPATH", PyLong_FromLong(1)) < 0) {
+        return NULL;
     }
-    if (PyModule_AddObject(m, "DO_STOREDVALUEFORKEY", PyInt_FromLong(2)) < 0) {
-        INITERROR();
+    if (PyModule_AddObject(m, "DO_STOREDVALUEFORKEY", PyLong_FromLong(2)) < 0) {
+        return NULL;
     }
-    if (PyModule_AddObject(m, "DO_VALUESFORKEYS", PyInt_FromLong(3)) < 0) {
-        INITERROR();
-    }
-
-    if (PyModule_AddObject(m, "DO_TAKEVALUE_FORKEY", PyInt_FromLong(0)) < 0) {
-        INITERROR();
-    }
-    if (PyModule_AddObject(m, "DO_TAKEVALUE_FORKEYPATH", PyInt_FromLong(1)) < 0) {
-        INITERROR();
-    }
-    if (PyModule_AddObject(m, "DO_TAKESTOREDVALUE_FORKEY", PyInt_FromLong(2)) < 0) {
-        INITERROR();
-    }
-    if (PyModule_AddObject(m, "DO_TAKEVALUESFROMDICT", PyInt_FromLong(3)) < 0) {
-        INITERROR();
-    }
-    if (PyModule_AddObject(m, "DO_SETVALUE_FORKEY", PyInt_FromLong(4)) < 0) {
-        INITERROR();
-    }
-    if (PyModule_AddObject(m, "DO_SETVALUE_FORKEYPATH", PyInt_FromLong(5)) < 0) {
-        INITERROR();
-    }
-    if (PyModule_AddObject(m, "DO_SETVALUESFORKEYSFROMDICT", PyInt_FromLong(6)) < 0) {
-        INITERROR();
+    if (PyModule_AddObject(m, "DO_VALUESFORKEYS", PyLong_FromLong(3)) < 0) {
+        return NULL;
     }
 
+    if (PyModule_AddObject(m, "DO_TAKEVALUE_FORKEY", PyLong_FromLong(0)) < 0) {
+        return NULL;
+    }
+    if (PyModule_AddObject(m, "DO_TAKEVALUE_FORKEYPATH", PyLong_FromLong(1)) < 0) {
+        return NULL;
+    }
+    if (PyModule_AddObject(m, "DO_TAKESTOREDVALUE_FORKEY", PyLong_FromLong(2)) < 0) {
+        return NULL;
+    }
+    if (PyModule_AddObject(m, "DO_TAKEVALUESFROMDICT", PyLong_FromLong(3)) < 0) {
+        return NULL;
+    }
+    if (PyModule_AddObject(m, "DO_SETVALUE_FORKEY", PyLong_FromLong(4)) < 0) {
+        return NULL;
+    }
+    if (PyModule_AddObject(m, "DO_SETVALUE_FORKEYPATH", PyLong_FromLong(5)) < 0) {
+        return NULL;
+    }
+    if (PyModule_AddObject(m, "DO_SETVALUESFORKEYSFROMDICT", PyLong_FromLong(6)) < 0) {
+        return NULL;
+    }
 
-    if (PyModule_AddObject(m, "UCHAR_MAX", PyInt_FromLong(UCHAR_MAX)) < 0) {
-        INITERROR();
+    if (PyModule_AddObject(m, "UCHAR_MAX", PyLong_FromLong(UCHAR_MAX)) < 0) {
+        return NULL;
     }
-    if (PyModule_AddObject(m, "SCHAR_MAX", PyInt_FromLong(SCHAR_MAX)) < 0) {
-        INITERROR();
+    if (PyModule_AddObject(m, "SCHAR_MAX", PyLong_FromLong(SCHAR_MAX)) < 0) {
+        return NULL;
     }
-    if (PyModule_AddObject(m, "SCHAR_MIN", PyInt_FromLong(SCHAR_MIN)) < 0) {
-        INITERROR();
+    if (PyModule_AddObject(m, "SCHAR_MIN", PyLong_FromLong(SCHAR_MIN)) < 0) {
+        return NULL;
     }
-    if (PyModule_AddObject(m, "CHAR_MAX", PyInt_FromLong(CHAR_MAX)) < 0) {
-        INITERROR();
+    if (PyModule_AddObject(m, "CHAR_MAX", PyLong_FromLong(CHAR_MAX)) < 0) {
+        return NULL;
     }
-    if (PyModule_AddObject(m, "CHAR_MIN", PyInt_FromLong(CHAR_MIN)) < 0) {
-        INITERROR();
+    if (PyModule_AddObject(m, "CHAR_MIN", PyLong_FromLong(CHAR_MIN)) < 0) {
+        return NULL;
     }
 
-    if (PyModule_AddObject(m, "USHRT_MAX", PyInt_FromLong(USHRT_MAX)) < 0) {
-        INITERROR();
+    if (PyModule_AddObject(m, "USHRT_MAX", PyLong_FromLong(USHRT_MAX)) < 0) {
+        return NULL;
     }
-    if (PyModule_AddObject(m, "SHRT_MAX", PyInt_FromLong(SHRT_MAX)) < 0) {
-        INITERROR();
+    if (PyModule_AddObject(m, "SHRT_MAX", PyLong_FromLong(SHRT_MAX)) < 0) {
+        return NULL;
     }
-    if (PyModule_AddObject(m, "SHRT_MIN", PyInt_FromLong(SHRT_MIN)) < 0) {
-        INITERROR();
+    if (PyModule_AddObject(m, "SHRT_MIN", PyLong_FromLong(SHRT_MIN)) < 0) {
+        return NULL;
     }
 
     if (PyModule_AddObject(m, "UINT_MAX", PyLong_FromUnsignedLongLong(UINT_MAX)) < 0) {
-        INITERROR();
+        return NULL;
     }
-    if (PyModule_AddObject(m, "INT_MAX", PyInt_FromLong(INT_MAX)) < 0) {
-        INITERROR();
+    if (PyModule_AddObject(m, "INT_MAX", PyLong_FromLong(INT_MAX)) < 0) {
+        return NULL;
     }
-    if (PyModule_AddObject(m, "INT_MIN", PyInt_FromLong(INT_MIN)) < 0) {
-        INITERROR();
+    if (PyModule_AddObject(m, "INT_MIN", PyLong_FromLong(INT_MIN)) < 0) {
+        return NULL;
     }
 
     if (PyModule_AddObject(m, "ULONG_MAX", PyLong_FromUnsignedLongLong(ULONG_MAX)) < 0) {
-        INITERROR();
+        return NULL;
     }
-    if (PyModule_AddObject(m, "LONG_MAX", PyInt_FromLong(LONG_MAX)) < 0) {
-        INITERROR();
+    if (PyModule_AddObject(m, "LONG_MAX", PyLong_FromLong(LONG_MAX)) < 0) {
+        return NULL;
     }
-    if (PyModule_AddObject(m, "LONG_MIN", PyInt_FromLong(LONG_MIN)) < 0) {
-        INITERROR();
+    if (PyModule_AddObject(m, "LONG_MIN", PyLong_FromLong(LONG_MIN)) < 0) {
+        return NULL;
     }
 
     if (PyModule_AddObject(m, "ULLONG_MAX", PyLong_FromUnsignedLongLong(ULLONG_MAX)) < 0) {
-        INITERROR();
+        return NULL;
     }
     if (PyModule_AddObject(m, "LLONG_MAX", PyLong_FromLongLong(LLONG_MAX)) < 0) {
-        INITERROR();
+        return NULL;
     }
     if (PyModule_AddObject(m, "LLONG_MIN", PyLong_FromLongLong(LLONG_MIN)) < 0) {
-        INITERROR();
+        return NULL;
     }
 
     if (PyModule_AddObject(m, "DBL_MAX", PyFloat_FromDouble(DBL_MAX)) < 0) {
-        INITERROR();
+        return NULL;
     }
     if (PyModule_AddObject(m, "DBL_MIN", PyFloat_FromDouble(DBL_MIN)) < 0) {
-        INITERROR();
+        return NULL;
     }
     if (PyModule_AddObject(m, "DBL_EPSILON", PyFloat_FromDouble(DBL_EPSILON)) < 0) {
-        INITERROR();
+        return NULL;
     }
     if (PyModule_AddObject(m, "FLT_MAX", PyFloat_FromDouble(FLT_MAX)) < 0) {
-        INITERROR();
+        return NULL;
     }
     if (PyModule_AddObject(m, "FLT_MIN", PyFloat_FromDouble(FLT_MIN)) < 0) {
-        INITERROR();
+        return NULL;
     }
     if (PyModule_AddObject(m, "FLT_EPSILON", PyFloat_FromDouble(FLT_EPSILON)) < 0) {
-        INITERROR();
+        return NULL;
     }
 
-
-    INITDONE();
+    return m;
 }

@@ -169,7 +169,7 @@ static PyObject*
 imp_repr(PyObject* _self)
 {
     PyObjCIMPObject* self = (PyObjCIMPObject*)_self;
-    return PyText_FromFormat("<IMP %s at %p for %p>",
+    return PyUnicode_FromFormat("<IMP %s at %p for %p>",
         sel_getName(self->selector),
         self, self->imp);
 }

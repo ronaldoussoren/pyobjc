@@ -38,7 +38,7 @@ proto_repr(PyObject* object)
         name = "<nil>";
     }
 
-    return PyText_FromFormat("<%s %s at %p>", Py_TYPE(self)->tp_name, name, (void*)self);
+    return PyUnicode_FromFormat("<%s %s at %p>", Py_TYPE(self)->tp_name, name, (void*)self);
 }
 
 static PyObject*
@@ -58,7 +58,7 @@ proto_get__name__(PyObject* object, void* closure __attribute__((__unused__)))
         return Py_None;
     }
 
-    return PyText_FromString(name);
+    return PyUnicode_FromString(name);
 }
 
 
@@ -192,7 +192,7 @@ proto_name(PyObject* object)
         return Py_None;
     }
 
-    return PyText_FromString(name);
+    return PyUnicode_FromString(name);
 }
 
 static PyObject*

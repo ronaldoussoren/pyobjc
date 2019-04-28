@@ -541,7 +541,6 @@ parse_printf_args(
         format = PyBytes_AsString(encoded);
 
     } else if (PyUnicode_Check(py_format)) {
-#ifdef PyObjC_FAST_UNICODE_ASCII
         format = PyObjC_Unicode_Fast_Bytes(py_format);
         if (format != NULL) {
             encoded = py_format;
@@ -555,16 +554,6 @@ parse_printf_args(
             }
             format = PyBytes_AsString(encoded);
         }
-
-#else /* !PyObjC_FAST_UNICODE_ASCII */
-
-        encoded = PyUnicode_AsEncodedString(py_format, "utf-8", NULL);
-        if (encoded == NULL) {
-            return -1;
-        }
-        format = PyBytes_AsString(encoded);
-
-#endif /* !PyObjC_FAST_UNICODE_ASCII */
 
     } else {
         PyErr_SetString(PyExc_TypeError, "Unsupported format string type");

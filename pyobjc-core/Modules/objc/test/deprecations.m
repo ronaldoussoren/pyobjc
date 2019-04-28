@@ -62,8 +62,6 @@ static PyMethodDef mod_methods[] = {
             { 0, 0, 0, 0 }
 };
 
-#if PY_VERSION_HEX >= 0x03000000
-
 static struct PyModuleDef mod_module = {
     PyModuleDef_HEAD_INIT,
     "deprecations",
@@ -76,57 +74,36 @@ static struct PyModuleDef mod_module = {
     NULL
 };
 
-#define INITERROR() return NULL
-#define INITDONE() return m
-
 PyObject* PyInit_deprecations(void);
 
 PyObject* __attribute__((__visibility__("default")))
 PyInit_deprecations(void)
-
-#else
-
-#define INITERROR() return
-#define INITDONE() return
-
-void initdeprecations(void);
-
-void __attribute__((__visibility__("default")))
-initdeprecations(void)
-#endif
 {
     PyObject* m;
     PyObject* v;
 
-#if PY_VERSION_HEX >= 0x03000000
     m = PyModule_Create(&mod_module);
-#else
-    m = Py_InitModule4("deprecations", mod_methods,
-        NULL, NULL, PYTHON_API_VERSION);
-#endif
     if (!m) {
-        INITERROR();
+        return NULL;
     }
 
     if (PyObjC_ImportAPI(m) < 0) {
-        INITERROR();
+        return NULL;
     }
 
     if (PyModule_AddObject(m, "OCTestDeprecations",
         PyObjC_IdToPython([OCTestDeprecations class])) < 0) {
-        INITERROR();
+        return NULL;
     }
 
-#if PY_VERSION_MAJOR == 2 && PY_VERSION_MINOR < 7
-    v = PyCObject_FromVoidPtr(gFunctionMap, NULL);
-#else
     v = PyCapsule_New(gFunctionMap, "objc.__inline__", NULL);
-#endif
     if (v == NULL) {
-        INITERROR();
+        return NULL;
     }
+
     if (PyModule_AddObject(m, "function_list", v) < 0) {
-        INITERROR();
+        return NULL;
     }
-    INITDONE();
+
+    return m;
 }

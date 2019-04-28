@@ -12,7 +12,7 @@ call_NSCoder_encodeValueOfObjCType_at_(
     struct objc_super super;
     Py_ssize_t typestr_len;
 
-    if (!PyArg_ParseTuple(arguments, Py_ARG_BYTES "#O", &typestr, &typestr_len, &value)) {
+    if (!PyArg_ParseTuple(arguments, "y#O", &typestr, &typestr_len, &value)) {
         return NULL;
     }
 
@@ -141,7 +141,7 @@ call_NSCoder_encodeArrayOfObjCType_count_at_(
     struct objc_super super;
     Py_ssize_t typestr_len;
 
-    if (!PyArg_ParseTuple(arguments, Py_ARG_BYTES "#" Py_ARG_NSUInteger "O", &typestr, &typestr_len, &count, &value)) {
+    if (!PyArg_ParseTuple(arguments, "y#" Py_ARG_NSUInteger "O", &typestr, &typestr_len, &count, &value)) {
         return NULL;
     }
 
@@ -250,7 +250,7 @@ imp_NSCoder_encodeArrayOfObjCType_count_at_(
     if (v == NULL) goto error;
     PyTuple_SetItem(arglist, 1, v);
 
-    v = PyInt_FromLong(count);
+    v = PyLong_FromLong(count);
     if (v == NULL) goto error;
     PyTuple_SetItem(arglist, 2, v);
 
@@ -300,7 +300,7 @@ call_NSCoder_decodeValueOfObjCType_at_(
     struct objc_super super;
     PyObject* py_buf;
 
-    if (!PyArg_ParseTuple(arguments, Py_ARG_BYTES "#O", &typestr, &typestr_len, &py_buf)) {
+    if (!PyArg_ParseTuple(arguments, "y#O", &typestr, &typestr_len, &py_buf)) {
         return NULL;
     }
 
@@ -420,7 +420,7 @@ call_NSCoder_decodeValueOfObjCType_at_size_(
     struct objc_super super;
     PyObject* py_buf;
 
-    if (!PyArg_ParseTuple(arguments, Py_ARG_BYTES "#On", &typestr, &typestr_len, &py_buf, &size)) {
+    if (!PyArg_ParseTuple(arguments, "y#On", &typestr, &typestr_len, &py_buf, &size)) {
         return NULL;
     }
 
@@ -545,7 +545,7 @@ call_NSCoder_decodeArrayOfObjCType_count_at_(
     Py_ssize_t typestr_len;
 
     if (!PyArg_ParseTuple(arguments,
-                Py_ARG_BYTES "#" Py_ARG_NSUInteger "O",
+                "y#" Py_ARG_NSUInteger "O",
                 &typestr, &typestr_len, &count, &py_buf)) {
         return NULL;
     }
@@ -653,7 +653,7 @@ imp_NSCoder_decodeArrayOfObjCType_count_at_(
     if (v == NULL) goto error;
     PyTuple_SetItem(arglist, 1, v);
 
-    v = PyInt_FromLong(count);
+    v = PyLong_FromLong(count);
     if (v == NULL) goto error;
     PyTuple_SetItem(arglist, 2, v);
 
@@ -704,7 +704,7 @@ call_NSCoder_encodeBytes_length_(
 
     struct objc_super super;
 
-    if (!PyArg_ParseTuple(arguments, Py_ARG_BYTES"#n", &bytes, &size, &length)) {
+    if (!PyArg_ParseTuple(arguments, "y#n", &bytes, &size, &length)) {
         return NULL;
     }
 
@@ -772,7 +772,7 @@ imp_NSCoder_encodeBytes_length_(
     if (v == NULL) goto error;
     PyTuple_SetItem(arglist, 1, v);
 
-    v = PyInt_FromLong(length);
+    v = PyLong_FromLong(length);
     if (v == NULL) goto error;
     PyTuple_SetItem(arglist, 2, v);
 
@@ -1125,7 +1125,7 @@ call_NSCoder_encodeBytes_length_forKey_(
     id key;
     struct objc_super super;
 
-    if (!PyArg_ParseTuple(arguments, Py_ARG_BYTES "#O&", &bytes, &size,
+    if (!PyArg_ParseTuple(arguments, "y#O&", &bytes, &size,
             PyObjCObject_Convert, &key)) {
         return NULL;
     }
@@ -1191,7 +1191,7 @@ imp_NSCoder_encodeBytes_length_forKey_(
     if (v == NULL) goto error;
     PyTuple_SetItem(arglist, 1, v);
 
-    v = PyInt_FromLong(length);
+    v = PyLong_FromLong(length);
     if (v == NULL) goto error;
     PyTuple_SetItem(arglist, 2, v);
 

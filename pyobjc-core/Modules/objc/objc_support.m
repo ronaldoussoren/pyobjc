@@ -1739,11 +1739,11 @@ pythonify_c_value(const char *type, void *datum)
          * We don't return a string because BOOL is an alias for
          * char (at least on MacOS X)
          */
-        retobject = (PyObject*)PyInt_FromLong((int)(*(char*)datum));
+        retobject = (PyObject*)PyLong_FromLong((int)(*(char*)datum));
         break;
 
     case _C_UCHR:
-        retobject = (PyObject*)PyInt_FromLong(
+        retobject = (PyObject*)PyLong_FromLong(
             (long)(*(unsigned char*)datum));
         break;
 
@@ -1775,12 +1775,12 @@ pythonify_c_value(const char *type, void *datum)
         break;
 
     case _C_INT:
-        retobject = (PyObject *) PyInt_FromLong(*(int*) datum);
+        retobject = (PyObject *) PyLong_FromLong(*(int*) datum);
         break;
 
     case _C_UINT:
 #if __LP64__
-        retobject = (PyObject*)PyInt_FromLong(
+        retobject = (PyObject*)PyLong_FromLong(
             *(unsigned int *) datum);
 
 #else
@@ -1788,18 +1788,18 @@ pythonify_c_value(const char *type, void *datum)
             retobject = (PyObject*)PyLong_FromUnsignedLongLong(
                 *(unsigned int*)datum);
         } else {
-            retobject = (PyObject*)PyInt_FromLong(
+            retobject = (PyObject*)PyLong_FromLong(
                 *(unsigned int *) datum);
         }
 #endif
         break;
 
     case _C_SHT:
-        retobject = (PyObject *) PyInt_FromLong(*(short *) datum);
+        retobject = (PyObject *) PyLong_FromLong(*(short *) datum);
         break;
 
     case _C_USHT:
-        retobject = (PyObject *) PyInt_FromLong(
+        retobject = (PyObject *) PyLong_FromLong(
             *(unsigned short *) datum);
         break;
 
@@ -1810,7 +1810,7 @@ pythonify_c_value(const char *type, void *datum)
 #endif
 
     case _C_LNG:
-        retobject = (PyObject *) PyInt_FromLong(*(long *) datum);
+        retobject = (PyObject *) PyLong_FromLong(*(long *) datum);
         break;
 
     case _C_ULNG_LNG:
@@ -1863,7 +1863,7 @@ pythonify_c_value(const char *type, void *datum)
             Py_INCREF(retobject);
 
         } else {
-            retobject = PyText_FromString(sel_getName(*(SEL*)datum));
+            retobject = PyUnicode_FromString(sel_getName(*(SEL*)datum));
         }
         break;
 
