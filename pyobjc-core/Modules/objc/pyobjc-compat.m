@@ -432,7 +432,7 @@ PyObject* PyBytes_InternFromString(const char* v)
     }
 #if Py_MAJOR_VERSION == 3
     value = PyDict_GetItemWithError(registry, key);
-    if (value == NULL && PyErr_Occured()) {
+    if (value == NULL && PyErr_Occurred()) {
         Py_DECREF(key);
         return NULL;
     }
