@@ -11,7 +11,8 @@ else:
     from UserDict import UserDict
     from UserList import UserList
 
-class TestBridgedClasses (TestCase):
+
+class TestBridgedClasses(TestCase):
     def test_dict(self):
         value = {}
         cls = OCTestClasses.classForObject_(value)
@@ -46,12 +47,14 @@ class TestBridgedClasses (TestCase):
 
         class L(list):
             pass
+
         value = L()
         cls = OCTestClasses.classForObject_(value)
         self.assertEqual(cls.__name__, "OC_PythonArray")
 
         class T(tuple):
             pass
+
         value = T()
         cls = OCTestClasses.classForObject_(value)
         self.assertEqual(cls.__name__, "OC_PythonArray")
@@ -79,7 +82,7 @@ class TestBridgedClasses (TestCase):
         self.assertEqual(cls.__name__, "OC_BuiltinPythonUnicode")
 
     def test_unicode_subclass(self):
-        class U (type(u"")):
+        class U(type(u"")):
             pass
 
         value = U()
@@ -100,7 +103,6 @@ class TestBridgedClasses (TestCase):
         value = B()
         cls = OCTestClasses.classForObject_(value)
         self.assertEqual(cls.__name__, "OC_PythonData")
-
 
     def test_bool(self):
         value = True
@@ -128,8 +130,7 @@ class TestBridgedClasses (TestCase):
         cls = OCTestClasses.classForObject_(value)
         self.assertEqual(cls.__name__, "OC_PythonNumber")
 
-
-        class L(type(sys.maxsize*2)):
+        class L(type(sys.maxsize * 2)):
             pass
 
         value = L()
@@ -159,7 +160,7 @@ class TestBridgedClasses (TestCase):
         self.assertEqual(cls.__name__, "OC_PythonDate")
 
     def test_array(self):
-        value = array.array('B', [200, 150, 80, 20])
+        value = array.array("B", [200, 150, 80, 20])
         cls = OCTestClasses.classForObject_(value)
         self.assertEqual(cls.__name__, "OC_PythonData")
 
@@ -194,5 +195,5 @@ class TestBridgedClasses (TestCase):
         self.assertEqual(cls.__name__, "OC_PythonObject")
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()

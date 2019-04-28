@@ -1,9 +1,10 @@
 from PyObjCTools.TestSupport import *
 import objc
 
-NSObject = objc.lookUpClass('NSObject')
+NSObject = objc.lookUpClass("NSObject")
 
-class TestUseKVOObserver (NSObject):
+
+class TestUseKVOObserver(NSObject):
     def init(self):
         self = objc.super(TestUseKVOObserver, self).init()
         if self is None:
@@ -12,11 +13,13 @@ class TestUseKVOObserver (NSObject):
         self.observations = []
         return self
 
-    def observeValueForKeyPath_ofObject_change_context_(self, path, object, change, context):
+    def observeValueForKeyPath_ofObject_change_context_(
+        self, path, object, change, context
+    ):
         self.observations.append((path, object))
 
 
-class TestUseKVO (TestCase):
+class TestUseKVO(TestCase):
     def setUp(self):
         self._previous = objc.options.use_kvo
         objc.options.use_kvo = True
@@ -26,8 +29,7 @@ class TestUseKVO (TestCase):
 
     def areChangesEmitted(self, object):
         observer = TestUseKVOObserver.alloc().init()
-        object.addObserver_forKeyPath_options_context_(
-                observer, "value", 0, 0)
+        object.addObserver_forKeyPath_options_context_(observer, "value", 0, 0)
 
         try:
             object.value = 42
@@ -48,7 +50,7 @@ class TestUseKVO (TestCase):
     def testPythonAttr_True(self):
         objc.options.use_kvo = True
 
-        class OCTestUseKVO1 (NSObject):
+        class OCTestUseKVO1(NSObject):
             pass
 
         self.assertTrue(OCTestUseKVO1.__useKVO__)
@@ -59,7 +61,7 @@ class TestUseKVO (TestCase):
     def testObjCAttr_True(self):
         objc.options.use_kvo = True
 
-        class OCTestUseKVO2 (NSObject):
+        class OCTestUseKVO2(NSObject):
             value = objc.ivar()
 
         self.assertTrue(OCTestUseKVO2.__useKVO__)
@@ -67,11 +69,10 @@ class TestUseKVO (TestCase):
         obj = OCTestUseKVO2.alloc().init()
         self.assertChangesEmitted(obj)
 
-
     def testPythonAttr_False(self):
         objc.options.use_kvo = False
 
-        class OCTestUseKVO3 (NSObject):
+        class OCTestUseKVO3(NSObject):
             pass
 
         self.assertFalse(OCTestUseKVO3.__useKVO__)
@@ -81,7 +82,7 @@ class TestUseKVO (TestCase):
     def testObjCAttr_False(self):
         objc.options.use_kvo = False
 
-        class OCTestUseKVO4 (NSObject):
+        class OCTestUseKVO4(NSObject):
             value = objc.ivar()
 
         self.assertFalse(OCTestUseKVO4.__useKVO__)

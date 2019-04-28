@@ -5,7 +5,8 @@ from PyObjCTools.TestSupport import *
 from PyObjCTest.clinmeth import *
 import objc
 
-class TestClassMethods (TestCase):
+
+class TestClassMethods(TestCase):
     # Some very basic tests that check that getattr on instances doesn't
     # return a class method and that getattr on classes prefers classmethods
     # over instance methods (and v.v. for getattr on instances)
@@ -24,28 +25,28 @@ class TestClassMethods (TestCase):
     def testClassAndInstanceViaClass(self):
         m = PyObjC_ClsInst1.both
         self.assertIsInstance(m, objc.selector)
-        self.assertTrue( m.__metadata__()['classmethod'] )
+        self.assertTrue(m.__metadata__()["classmethod"])
 
         self.assertEqual(m(), 3)
 
     def testClassAndInstanceViaInstance(self):
         o = PyObjC_ClsInst1.alloc().init()
         m = o.both
-        self.assertTrue( isinstance(m, objc.selector) )
-        self.assertTrue( not m.isClassMethod )
+        self.assertTrue(isinstance(m, objc.selector))
+        self.assertTrue(not m.isClassMethod)
 
         self.assertEqual(m(), 2)
 
 
-class TestInstanceMethods (TestCase):
+class TestInstanceMethods(TestCase):
     # Check that instance methods can be accessed through the instance, and
     # also through the class when no class method of the same name is
     # available.
 
     def testViaClass(self):
         m = PyObjC_ClsInst1.instance
-        self.assertTrue( isinstance(m, objc.selector) )
-        self.assertTrue( not m.isClassMethod )
+        self.assertTrue(isinstance(m, objc.selector))
+        self.assertTrue(not m.isClassMethod)
 
         self.assertRaises(TypeError, m)
 
@@ -58,7 +59,8 @@ class TestInstanceMethods (TestCase):
 
         self.assertEqual(m(), 1)
 
-class TestSuper (TestCase):
+
+class TestSuper(TestCase):
     # Tests that check if super() behaves as expected (which is the most likely
     # reason for failure).
 

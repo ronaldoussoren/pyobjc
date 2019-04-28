@@ -5,16 +5,18 @@ import copy
 from PyObjCTest.fnd import *
 
 objc.registerMetaDataForSelector(
-        b"NSObject", b"validateValue:forKey:error:",
-        dict(
-            arguments={
-                2: dict(type_modifier=objc._C_INOUT),
-                4: dict(type_modifier=objc._C_OUT),
-            },
-        ))
+    b"NSObject",
+    b"validateValue:forKey:error:",
+    dict(
+        arguments={
+            2: dict(type_modifier=objc._C_INOUT),
+            4: dict(type_modifier=objc._C_OUT),
+        }
+    ),
+)
 
 
-class OCCopy (NSObject):
+class OCCopy(NSObject):
     def copy(self):
         return self.copyWithZone_(None)
 
@@ -22,7 +24,8 @@ class OCCopy (NSObject):
         v = OCCopy.allocWithZone_(zone).init()
         return v
 
-class OCObserve (NSObject):
+
+class OCObserve(NSObject):
     def init(self):
         self = objc.super(OCObserve, self).init()
         self.values = []
@@ -31,13 +34,11 @@ class OCObserve (NSObject):
 
     @property
     def seen(self):
-        return { v[1]: v[2]['new'] for v in self.values }
-
+        return {v[1]: v[2]["new"] for v in self.values}
 
     @objc.python_method
     def register(self, object, keypath):
-        object.addObserver_forKeyPath_options_context_(
-                self, keypath, 0x3, None)
+        object.addObserver_forKeyPath_options_context_(self, keypath, 0x3, None)
         self.registrations.append((object, keypath))
 
     @objc.python_method
@@ -45,7 +46,8 @@ class OCObserve (NSObject):
         object.removeObserver_forKeyPath_(self, keypath)
 
     def observeValueForKeyPath_ofObject_change_context_(
-            self, keypath, object, change, context):
+        self, keypath, object, change, context
+    ):
 
         # We don't get to keep the 'change' dictionary, make
         # a copy (it gets reused in future calls)
@@ -66,88 +68,89 @@ class OCObserve (NSObject):
         self.registrations = []
 
 
-class TestObjectProperty (TestCase):
+class TestObjectProperty(TestCase):
     def testCreation(self):
-        class OCTestObjectProperty1 (NSObject):
+        class OCTestObjectProperty1(NSObject):
             p1 = objc.object_property()
             p2 = objc.object_property(copy=True)
             p3 = objc.object_property(read_only=True)
-            p4 = objc.object_property(ivar='myp4')
+            p4 = objc.object_property(ivar="myp4")
             p5 = objc.object_property(typestr=objc._C_INT)
             p6 = objc.object_property(typestr=objc._C_DBL)
 
-
         o = OCTestObjectProperty1.alloc().init()
 
-        self.assertTrue(o.respondsToSelector_(b'p1'))
-        self.assertTrue(o.respondsToSelector_(b'setP1:'))
+        self.assertTrue(o.respondsToSelector_(b"p1"))
+        self.assertTrue(o.respondsToSelector_(b"setP1:"))
 
         v = OCCopy.alloc().init()
         o.p1 = v
         self.assertIs(o.p1, v)
         self.assertIs(o._p1, v)
 
-        self.assertTrue(o.respondsToSelector_(b'p2'))
-        self.assertTrue(o.respondsToSelector_(b'setP2:'))
+        self.assertTrue(o.respondsToSelector_(b"p2"))
+        self.assertTrue(o.respondsToSelector_(b"setP2:"))
 
         o.p2 = v
         self.assertIsInstance(o.p2, OCCopy)
         self.assertIsNot(o.p2, v)
         self.assertIsNot(o._p2, v)
 
-        self.assertTrue(o.respondsToSelector_(b'p3'))
-        self.assertFalse(o.respondsToSelector_(b'setP3:'))
+        self.assertTrue(o.respondsToSelector_(b"p3"))
+        self.assertFalse(o.respondsToSelector_(b"setP3:"))
 
         o._p3 = v
         self.assertIs(o.p3, v)
 
-
-        self.assertTrue(o.respondsToSelector_(b'p4'))
-        self.assertTrue(o.respondsToSelector_(b'setP4:'))
+        self.assertTrue(o.respondsToSelector_(b"p4"))
+        self.assertTrue(o.respondsToSelector_(b"setP4:"))
 
         o.p4 = v
         self.assertIs(o.p4, v)
         self.assertIs(o.myp4, v)
 
-        self.assertTrue(o.respondsToSelector_(b'p5'))
-        self.assertTrue(o.respondsToSelector_(b'setP5:'))
-        self.assertTrue(o.respondsToSelector_(b'p6'))
-        self.assertTrue(o.respondsToSelector_(b'setP6:'))
-        s = o.methodSignatureForSelector_(b'p5')
+        self.assertTrue(o.respondsToSelector_(b"p5"))
+        self.assertTrue(o.respondsToSelector_(b"setP5:"))
+        self.assertTrue(o.respondsToSelector_(b"p6"))
+        self.assertTrue(o.respondsToSelector_(b"setP6:"))
+        s = o.methodSignatureForSelector_(b"p5")
         self.assertEqual(s.methodReturnType(), objc._C_INT)
-        s = o.methodSignatureForSelector_(b'p6')
+        s = o.methodSignatureForSelector_(b"p6")
         self.assertEqual(s.methodReturnType(), objc._C_DBL)
 
     def testDepends(self):
-        class OCTestObjectProperty2 (NSObject):
+        class OCTestObjectProperty2(NSObject):
             p1 = objc.object_property()
             p2 = objc.object_property()
-            p3 = objc.object_property(read_only=True, depends_on=['p1', 'p2'])
+            p3 = objc.object_property(read_only=True, depends_on=["p1", "p2"])
             p9 = objc.object_property()
 
             @p3.getter
             def p3(self):
-                return (self.p1 or '', self.p2 or '')
+                return (self.p1 or "", self.p2 or "")
 
-        class OCTestObjectProperty2b (OCTestObjectProperty2):
+        class OCTestObjectProperty2b(OCTestObjectProperty2):
             p4 = objc.object_property()
 
             @OCTestObjectProperty2.p3.getter
             def p3(self):
-                return (self.p4 or '', self.p2 or '', self.p1 or '')
-            p3.depends_on('p4')
+                return (self.p4 or "", self.p2 or "", self.p1 or "")
+
+            p3.depends_on("p4")
 
             p5 = objc.object_property(read_only=True)
 
             @p5.getter
             def p5(self):
-                return "-%s-"%(self.p4,)
-            p5.depends_on('p4')
+                return "-%s-" % (self.p4,)
+
+            p5.depends_on("p4")
 
             @OCTestObjectProperty2.p9.getter
             def p9(self):
-                return "+%s+"%(self.p4,)
-            p9.depends_on('p4')
+                return "+%s+" % (self.p4,)
+
+            p9.depends_on("p4")
 
         observer1 = OCObserve.alloc().init()
         observer2 = OCObserve.alloc().init()
@@ -155,43 +158,43 @@ class TestObjectProperty (TestCase):
         object2 = OCTestObjectProperty2b.alloc().init()
 
         v = type(object1).keyPathsForValuesAffectingP3()
-        self.assertIsInstance(v, objc.lookUpClass('NSSet'))
-        self.assertEqual(v, {'p1', 'p2'})
+        self.assertIsInstance(v, objc.lookUpClass("NSSet"))
+        self.assertEqual(v, {"p1", "p2"})
 
         v = type(object2).keyPathsForValuesAffectingP3()
-        self.assertIsInstance(v, objc.lookUpClass('NSSet'))
-        self.assertEqual(v, {'p1', 'p2', 'p4'})
+        self.assertIsInstance(v, objc.lookUpClass("NSSet"))
+        self.assertEqual(v, {"p1", "p2", "p4"})
 
-        self.assertTrue(object1.respondsToSelector_('p1'))
-        self.assertTrue(object1.respondsToSelector_('setP1:'))
-        self.assertTrue(object1.respondsToSelector_('p2'))
-        self.assertTrue(object1.respondsToSelector_('setP2:'))
-        self.assertTrue(object1.respondsToSelector_('p3'))
-        self.assertFalse(object1.respondsToSelector_('setP3:'))
-        self.assertTrue(object1.respondsToSelector_('p9'))
-        self.assertTrue(object1.respondsToSelector_('setP9:'))
+        self.assertTrue(object1.respondsToSelector_("p1"))
+        self.assertTrue(object1.respondsToSelector_("setP1:"))
+        self.assertTrue(object1.respondsToSelector_("p2"))
+        self.assertTrue(object1.respondsToSelector_("setP2:"))
+        self.assertTrue(object1.respondsToSelector_("p3"))
+        self.assertFalse(object1.respondsToSelector_("setP3:"))
+        self.assertTrue(object1.respondsToSelector_("p9"))
+        self.assertTrue(object1.respondsToSelector_("setP9:"))
 
-        self.assertTrue(object2.respondsToSelector_('p1'))
-        self.assertTrue(object2.respondsToSelector_('setP1:'))
-        self.assertTrue(object2.respondsToSelector_('p2'))
-        self.assertTrue(object2.respondsToSelector_('setP2:'))
-        self.assertTrue(object2.respondsToSelector_('p3'))
-        self.assertFalse(object2.respondsToSelector_('setP3:'))
-        self.assertTrue(object2.respondsToSelector_('p4'))
-        self.assertTrue(object2.respondsToSelector_('setP4:'))
-        self.assertTrue(object2.respondsToSelector_('p9'))
-        self.assertTrue(object2.respondsToSelector_('setP9:'))
+        self.assertTrue(object2.respondsToSelector_("p1"))
+        self.assertTrue(object2.respondsToSelector_("setP1:"))
+        self.assertTrue(object2.respondsToSelector_("p2"))
+        self.assertTrue(object2.respondsToSelector_("setP2:"))
+        self.assertTrue(object2.respondsToSelector_("p3"))
+        self.assertFalse(object2.respondsToSelector_("setP3:"))
+        self.assertTrue(object2.respondsToSelector_("p4"))
+        self.assertTrue(object2.respondsToSelector_("setP4:"))
+        self.assertTrue(object2.respondsToSelector_("p9"))
+        self.assertTrue(object2.respondsToSelector_("setP9:"))
 
-        observer1.register(object1, 'p1')
-        observer1.register(object1, 'p2')
-        observer1.register(object1, 'p3')
+        observer1.register(object1, "p1")
+        observer1.register(object1, "p2")
+        observer1.register(object1, "p3")
 
-        observer2.register(object2, 'p1')
-        observer2.register(object2, 'p2')
-        observer2.register(object2, 'p3')
-        observer2.register(object2, 'p4')
-        observer2.register(object2, 'p5')
-        observer2.register(object2, 'p9')
+        observer2.register(object2, "p1")
+        observer2.register(object2, "p2")
+        observer2.register(object2, "p3")
+        observer2.register(object2, "p4")
+        observer2.register(object2, "p5")
+        observer2.register(object2, "p9")
 
         try:
             self.assertEqual(observer1.values, [])
@@ -209,51 +212,63 @@ class TestObjectProperty (TestCase):
             self.assertEqual(object2.pyobjc_instanceMethods.p3(), ("c", "b", "a"))
             self.assertEqual(object2.pyobjc_instanceMethods.p4(), "c")
 
-            #seen = { v[1]: v[2]['new'] for v in observer1.values }
-            self.assertEqual(observer1.seen,
-                {'p1': 'a', 'p2': 'b', 'p3': ('a', 'b') })
+            # seen = { v[1]: v[2]['new'] for v in observer1.values }
+            self.assertEqual(observer1.seen, {"p1": "a", "p2": "b", "p3": ("a", "b")})
 
-            #seen = { v[1]: v[2]['new'] for v in observer2.values }
-            self.assertEqual(observer2.seen,
-                    {'p1': 'a', 'p2': 'b', 'p3': ('c', 'b', 'a'), 'p4': 'c', 'p5': '-c-', 'p9': '+c+' })
+            # seen = { v[1]: v[2]['new'] for v in observer2.values }
+            self.assertEqual(
+                observer2.seen,
+                {
+                    "p1": "a",
+                    "p2": "b",
+                    "p3": ("c", "b", "a"),
+                    "p4": "c",
+                    "p5": "-c-",
+                    "p9": "+c+",
+                },
+            )
 
         finally:
-            observer1.unregister(object1, 'p1')
-            observer1.unregister(object1, 'p2')
-            observer1.unregister(object1, 'p3')
+            observer1.unregister(object1, "p1")
+            observer1.unregister(object1, "p2")
+            observer1.unregister(object1, "p3")
 
-            observer2.unregister(object2, 'p1')
-            observer2.unregister(object2, 'p2')
-            observer2.unregister(object2, 'p3')
-            observer2.unregister(object2, 'p4')
-            observer2.unregister(object2, 'p5')
-            observer2.unregister(object2, 'p9')
+            observer2.unregister(object2, "p1")
+            observer2.unregister(object2, "p2")
+            observer2.unregister(object2, "p3")
+            observer2.unregister(object2, "p4")
+            observer2.unregister(object2, "p5")
+            observer2.unregister(object2, "p9")
 
     def testDepends2(self):
-        class OCTestObjectProperty2B (NSObject):
+        class OCTestObjectProperty2B(NSObject):
             p1 = objc.object_property()
+
             @p1.getter
             def p1(self):
                 return self._p1
+
             @p1.setter
             def p1(self, v):
                 self._p1 = v
 
             p2 = objc.object_property()
+
             @p2.getter
             def p2(self):
                 return self._p2
+
             @p2.setter
             def p2(self, v):
                 self._p2 = v
 
-            p3 = objc.object_property(read_only=True, depends_on=['p1', 'p2'])
+            p3 = objc.object_property(read_only=True, depends_on=["p1", "p2"])
 
             @p3.getter
             def p3(self):
-                return (self.p1 or '', self.p2 or '')
+                return (self.p1 or "", self.p2 or "")
 
-        class OCTestObjectProperty2Bb (OCTestObjectProperty2B):
+        class OCTestObjectProperty2Bb(OCTestObjectProperty2B):
             p4 = objc.object_property()
 
             @OCTestObjectProperty2B.p1.getter
@@ -262,8 +277,9 @@ class TestObjectProperty (TestCase):
 
             @OCTestObjectProperty2B.p3.getter
             def p3(self):
-                return (self.p4 or '', self.p2 or '', self.p1 or '')
-            p3.depends_on('p4')
+                return (self.p4 or "", self.p2 or "", self.p1 or "")
+
+            p3.depends_on("p4")
 
         observer1 = OCObserve.alloc().init()
         observer2 = OCObserve.alloc().init()
@@ -271,37 +287,37 @@ class TestObjectProperty (TestCase):
         object2 = OCTestObjectProperty2Bb.alloc().init()
 
         v = type(object1).keyPathsForValuesAffectingP3()
-        self.assertIsInstance(v, objc.lookUpClass('NSSet'))
-        self.assertEqual(v, {'p1', 'p2'})
+        self.assertIsInstance(v, objc.lookUpClass("NSSet"))
+        self.assertEqual(v, {"p1", "p2"})
 
         v = type(object2).keyPathsForValuesAffectingP3()
-        self.assertIsInstance(v, objc.lookUpClass('NSSet'))
-        self.assertEqual(v, {'p1', 'p2', 'p4'})
+        self.assertIsInstance(v, objc.lookUpClass("NSSet"))
+        self.assertEqual(v, {"p1", "p2", "p4"})
 
-        self.assertTrue(object1.respondsToSelector_('p1'))
-        self.assertTrue(object1.respondsToSelector_('setP1:'))
-        self.assertTrue(object1.respondsToSelector_('p2'))
-        self.assertTrue(object1.respondsToSelector_('setP2:'))
-        self.assertTrue(object1.respondsToSelector_('p3'))
-        self.assertFalse(object1.respondsToSelector_('setP3:'))
+        self.assertTrue(object1.respondsToSelector_("p1"))
+        self.assertTrue(object1.respondsToSelector_("setP1:"))
+        self.assertTrue(object1.respondsToSelector_("p2"))
+        self.assertTrue(object1.respondsToSelector_("setP2:"))
+        self.assertTrue(object1.respondsToSelector_("p3"))
+        self.assertFalse(object1.respondsToSelector_("setP3:"))
 
-        self.assertTrue(object2.respondsToSelector_('p1'))
-        self.assertTrue(object2.respondsToSelector_('setP1:'))
-        self.assertTrue(object2.respondsToSelector_('p2'))
-        self.assertTrue(object2.respondsToSelector_('setP2:'))
-        self.assertTrue(object2.respondsToSelector_('p3'))
-        self.assertFalse(object2.respondsToSelector_('setP3:'))
-        self.assertTrue(object2.respondsToSelector_('p4'))
-        self.assertTrue(object2.respondsToSelector_('setP4:'))
+        self.assertTrue(object2.respondsToSelector_("p1"))
+        self.assertTrue(object2.respondsToSelector_("setP1:"))
+        self.assertTrue(object2.respondsToSelector_("p2"))
+        self.assertTrue(object2.respondsToSelector_("setP2:"))
+        self.assertTrue(object2.respondsToSelector_("p3"))
+        self.assertFalse(object2.respondsToSelector_("setP3:"))
+        self.assertTrue(object2.respondsToSelector_("p4"))
+        self.assertTrue(object2.respondsToSelector_("setP4:"))
 
-        observer1.register(object1, 'p1')
-        observer1.register(object1, 'p2')
-        observer1.register(object1, 'p3')
+        observer1.register(object1, "p1")
+        observer1.register(object1, "p2")
+        observer1.register(object1, "p3")
 
-        observer2.register(object2, 'p1')
-        observer2.register(object2, 'p2')
-        observer2.register(object2, 'p3')
-        observer2.register(object2, 'p4')
+        observer2.register(object2, "p1")
+        observer2.register(object2, "p2")
+        observer2.register(object2, "p3")
+        observer2.register(object2, "p4")
 
         try:
             self.assertEqual(observer1.values, [])
@@ -312,7 +328,6 @@ class TestObjectProperty (TestCase):
             self.assertEqual(object1.p3, ("a", "b"))
             self.assertEqual(object1.pyobjc_instanceMethods.p3(), ("a", "b"))
 
-
             object2.p1 = "a"
             object2.p2 = "b"
             object2.p4 = "c"
@@ -320,41 +335,40 @@ class TestObjectProperty (TestCase):
             self.assertEqual(object2.pyobjc_instanceMethods.p3(), ("c", "b", "a"))
             self.assertEqual(object2.pyobjc_instanceMethods.p4(), "c")
 
-            #seen = { v[1]: v[2]['new'] for v in observer1.values }
-            self.assertEqual(observer1.seen,
-                {'p1': 'a', 'p2': 'b', 'p3': ('a', 'b') })
+            # seen = { v[1]: v[2]['new'] for v in observer1.values }
+            self.assertEqual(observer1.seen, {"p1": "a", "p2": "b", "p3": ("a", "b")})
 
-            #seen = { v[1]: v[2]['new'] for v in observer2.values }
-            self.assertEqual(observer2.seen,
-               {'p1': 'a', 'p2': 'b', 'p3': ('c', 'b', 'a'), 'p4': 'c' })
+            # seen = { v[1]: v[2]['new'] for v in observer2.values }
+            self.assertEqual(
+                observer2.seen, {"p1": "a", "p2": "b", "p3": ("c", "b", "a"), "p4": "c"}
+            )
 
         finally:
-            observer1.unregister(object1, 'p1')
-            observer1.unregister(object1, 'p2')
-            observer1.unregister(object1, 'p3')
+            observer1.unregister(object1, "p1")
+            observer1.unregister(object1, "p2")
+            observer1.unregister(object1, "p3")
 
-            observer2.unregister(object2, 'p1')
-            observer2.unregister(object2, 'p2')
-            observer2.unregister(object2, 'p3')
-            observer2.unregister(object2, 'p4')
+            observer2.unregister(object2, "p1")
+            observer2.unregister(object2, "p2")
+            observer2.unregister(object2, "p3")
+            observer2.unregister(object2, "p4")
 
     def testMethods(self):
         l = []
 
-        class OCTestObjectProperty4 (NSObject):
+        class OCTestObjectProperty4(NSObject):
 
             p1 = objc.object_property()
 
             @p1.getter
             def p1(self):
-                l.append(('get',))
-                return self._p1 + '!'
+                l.append(("get",))
+                return self._p1 + "!"
 
             @p1.setter
             def p1(self, v):
-                l.append(('set', v))
-                self._p1 = v + '?'
-
+                l.append(("set", v))
+                self._p1 = v + "?"
 
             @p1.validate
             def p1(self, value, error):
@@ -363,7 +377,7 @@ class TestObjectProperty (TestCase):
                 else:
                     return (False, 2, "snake")
 
-        class OCTestObjectProperty4b (OCTestObjectProperty4):
+        class OCTestObjectProperty4b(OCTestObjectProperty4):
             @OCTestObjectProperty4.p1.validate
             def p1(self, value, error):
                 if value == 2:
@@ -371,73 +385,67 @@ class TestObjectProperty (TestCase):
                 else:
                     return (False, 2, "monty")
 
-
         o = OCTestObjectProperty4.alloc().init()
-        o.p1 = 'f'
-        self.assertEqual(o.p1, 'f?!')
-        self.assertEqual(o._p1, 'f?')
-        self.assertEqual(l, [('set', 'f'), ('get',)])
+        o.p1 = "f"
+        self.assertEqual(o.p1, "f?!")
+        self.assertEqual(o._p1, "f?")
+        self.assertEqual(l, [("set", "f"), ("get",)])
 
-        ok, value, error = o.validateValue_forKey_error_(
-                1, 'p1', None)
+        ok, value, error = o.validateValue_forKey_error_(1, "p1", None)
         self.assertTrue(ok)
         self.assertEqual(value, 1)
         self.assertEqual(error, None)
 
-        ok, value, error = o.validateValue_forKey_error_(
-                9, 'p1', None)
+        ok, value, error = o.validateValue_forKey_error_(9, "p1", None)
         self.assertFalse(ok)
         self.assertEqual(value, 2)
         self.assertEqual(error, "snake")
 
         l = []
         o = OCTestObjectProperty4b.alloc().init()
-        o.p1 = 'f'
-        self.assertEqual(o.p1, 'f?!')
-        self.assertEqual(o._p1, 'f?')
-        self.assertEqual(l, [('set', 'f'), ('get',)])
+        o.p1 = "f"
+        self.assertEqual(o.p1, "f?!")
+        self.assertEqual(o._p1, "f?")
+        self.assertEqual(l, [("set", "f"), ("get",)])
 
-        ok, value, error = o.validateValue_forKey_error_(
-                2, 'p1', None)
+        ok, value, error = o.validateValue_forKey_error_(2, "p1", None)
         self.assertTrue(ok)
         self.assertEqual(value, 2)
         self.assertEqual(error, None)
 
-        ok, value, error = o.validateValue_forKey_error_(
-                9, 'p1', None)
+        ok, value, error = o.validateValue_forKey_error_(9, "p1", None)
         self.assertFalse(ok)
         self.assertEqual(value, 2)
         self.assertEqual(error, "monty")
 
     def testNative(self):
         l = []
-        class OCTestObjectProperty7 (NSObject):
+
+        class OCTestObjectProperty7(NSObject):
             p1 = objc.object_property()
 
             @p1.getter
             def p1(self):
-                l.append('get')
+                l.append("get")
                 return self._p1
 
             @p1.setter
             def p1(self, value):
-                l.append('set')
+                l.append("set")
                 self._p1 = value
 
-
         o = OCTestObjectProperty7.alloc().init()
-        o.setValue_forKey_(42, 'p1')
+        o.setValue_forKey_(42, "p1")
         self.assertEqual(o._p1, 42)
 
         o._p1 = "monkey"
-        v = o.valueForKey_('p1')
+        v = o.valueForKey_("p1")
         self.assertEqual(v, "monkey")
 
         self.assertEqual(l, ["set", "get"])
 
-
     def testDynamic(self):
-        class OCTestObjectProperty8 (NSObject):
+        class OCTestObjectProperty8(NSObject):
             p1 = objc.object_property(dynamic=True)
             p2 = objc.object_property(dynamic=True, typestr=objc._C_NSBOOL)
 
@@ -447,8 +455,10 @@ class TestObjectProperty (TestCase):
         self.assertFalse(OCTestObjectProperty8.instancesRespondToSelector_(b"setP2:"))
 
         v = [42]
+
         def getter(self):
             return v[0]
+
         def setter(self, value):
             v[0] = value
 
@@ -456,13 +466,15 @@ class TestObjectProperty (TestCase):
         OCTestObjectProperty8.setP1_ = setter
 
         v2 = [False]
+
         def getter2(self):
             return v2[0]
+
         def setter2(self, value):
             v2[0] = bool(value)
+
         OCTestObjectProperty8.isP2 = getter2
         OCTestObjectProperty8.setP2_ = setter2
-
 
         self.assertTrue(OCTestObjectProperty8.instancesRespondToSelector_(b"p1"))
         self.assertTrue(OCTestObjectProperty8.instancesRespondToSelector_(b"setP1:"))
@@ -473,7 +485,6 @@ class TestObjectProperty (TestCase):
         self.assertIsInstance(OCTestObjectProperty8.p1, objc.object_property)
         self.assertIsInstance(OCTestObjectProperty8.p2, objc.object_property)
 
-
         self.assertEqual(o.p1, 42)
         self.assertEqual(o.p2, False)
         o.p1 = 99
@@ -483,24 +494,21 @@ class TestObjectProperty (TestCase):
         self.assertEqual(o.p2, True)
         self.assertEqual(v2[0], True)
 
-
     def testReadOnly(self):
-
-        class OCTestObjectProperty3 (NSObject):
+        class OCTestObjectProperty3(NSObject):
             p1 = objc.object_property(read_only=True)
 
         o = OCTestObjectProperty3.alloc().init()
 
-        self.assertRaises(ValueError, setattr, o, 'p1', 42)
+        self.assertRaises(ValueError, setattr, o, "p1", 42)
 
     def testSubclass(self):
-
-        class OCTestObjectProperty5 (NSObject):
+        class OCTestObjectProperty5(NSObject):
             p1 = objc.object_property(read_only=True)
             p2 = objc.object_property()
             p3 = objc.object_property(read_only=True, typestr=objc._C_NSBOOL)
 
-        class OCTestObjectProperty6 (OCTestObjectProperty5):
+        class OCTestObjectProperty6(OCTestObjectProperty5):
             @OCTestObjectProperty5.p1.setter
             def p1(self, value):
                 self._p1 = value
@@ -514,28 +522,28 @@ class TestObjectProperty (TestCase):
                 return not objc.super(OCTestObjectProperty6, self).p3
 
         base = OCTestObjectProperty5.alloc().init()
-        self.assertRaises(ValueError, setattr, base, 'p1', 1)
-        self.assertRaises(ValueError, setattr, base, 'p3', 1)
-        base.p2 = 'b'
-        self.assertEqual(base.p2, 'b')
+        self.assertRaises(ValueError, setattr, base, "p1", 1)
+        self.assertRaises(ValueError, setattr, base, "p3", 1)
+        base.p2 = "b"
+        self.assertEqual(base.p2, "b")
 
         sub = OCTestObjectProperty6.alloc().init()
         sub.p1 = 1
-        sub.p2 = 'a'
+        sub.p2 = "a"
         sub._p3 = False
         self.assertEqual(sub.p1, 1)
-        self.assertEqual(sub.p2, 'aa')
+        self.assertEqual(sub.p2, "aa")
         self.assertEqual(sub.p3, True)
 
-        self.assertTrue(base.respondsToSelector_(b'p2'))
-        self.assertFalse(base.respondsToSelector_(b'setP1:'))
-        self.assertTrue(base.respondsToSelector_(b'isP3'))
-        self.assertFalse(base.respondsToSelector_(b'p3'))
+        self.assertTrue(base.respondsToSelector_(b"p2"))
+        self.assertFalse(base.respondsToSelector_(b"setP1:"))
+        self.assertTrue(base.respondsToSelector_(b"isP3"))
+        self.assertFalse(base.respondsToSelector_(b"p3"))
 
-        self.assertTrue(sub.respondsToSelector_(b'p2'))
-        self.assertTrue(sub.respondsToSelector_(b'setP1:'))
-        self.assertTrue(sub.respondsToSelector_(b'isP3'))
-        self.assertFalse(sub.respondsToSelector_(b'p3'))
+        self.assertTrue(sub.respondsToSelector_(b"p2"))
+        self.assertTrue(sub.respondsToSelector_(b"setP1:"))
+        self.assertTrue(sub.respondsToSelector_(b"isP3"))
+        self.assertFalse(sub.respondsToSelector_(b"p3"))
 
         try:
             del sub.p3
@@ -547,8 +555,10 @@ class TestObjectProperty (TestCase):
     def testDefaultSetterWithoutIvar(self):
 
         try:
-            class OCTestObjectProperty7 (NSObject):
+
+            class OCTestObjectProperty7(NSObject):
                 p1 = objc.object_property(ivar=objc.NULL)
+
         except ValueError:
             pass
 
@@ -556,17 +566,19 @@ class TestObjectProperty (TestCase):
             self.fail("ValueError not raised")
 
         try:
-            class OCTestObjectProperty8 (NSObject):
+
+            class OCTestObjectProperty8(NSObject):
                 p1 = objc.object_property(ivar=objc.NULL, read_only=True)
+
         except ValueError:
             pass
 
         else:
             self.fail("ValueError not raised")
 
-
         try:
-            class OCTestObjectProperty9 (NSObject):
+
+            class OCTestObjectProperty9(NSObject):
                 p1 = objc.object_property(read_only=True)
 
                 @p1.setter
@@ -580,7 +592,8 @@ class TestObjectProperty (TestCase):
             self.fail("ValueError not raised")
 
         try:
-            class OCTestObjectProperty9 (NSObject):
+
+            class OCTestObjectProperty9(NSObject):
                 p1 = objc.object_property(read_only=True)
 
                 @p1.validate
@@ -593,9 +606,10 @@ class TestObjectProperty (TestCase):
         else:
             self.fail("ValueError not raised")
 
-class TestBoolProperty (TestCase):
+
+class TestBoolProperty(TestCase):
     def testDefault(self):
-        class OCTestBoolProperty1 (NSObject):
+        class OCTestBoolProperty1(NSObject):
             p1 = objc.bool_property()
 
         o = OCTestBoolProperty1.alloc().init()
@@ -603,6 +617,7 @@ class TestBoolProperty (TestCase):
 
         o.p1 = [1, 2]
         self.assertEqual(o.p1, True)
+
 
 if __name__ == "__main__":
     main()

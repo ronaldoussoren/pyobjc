@@ -1,10 +1,10 @@
 import objc
 from PyObjCTools.TestSupport import *
 
-NSObject = objc.lookUpClass('NSObject')
+NSObject = objc.lookUpClass("NSObject")
 
 
-class TestBasicIMP (TestCase):
+class TestBasicIMP(TestCase):
     # Test the basic functionality of IMP's. Imp's are basically unbound
     # selectors if you look at the interface. The implementation refers to
     # the actual functions that implements the method for calling the IMP
@@ -17,9 +17,12 @@ class TestBasicIMP (TestCase):
         cls = NSObject
         m = cls.pyobjc_classMethods.methodForSelector_("alloc")
         self.assertIsInstance(m, objc.IMP)
-        self.assertTrue(m.__metadata__()['classmethod'])
-        self.assertEqual(m.__metadata__()['retval'].get('already_retained'), cls.alloc.__metadata__()['retval'].get('already_retained'))
-        self.assertEqual(m.selector, b'alloc')
+        self.assertTrue(m.__metadata__()["classmethod"])
+        self.assertEqual(
+            m.__metadata__()["retval"].get("already_retained"),
+            cls.alloc.__metadata__()["retval"].get("already_retained"),
+        )
+        self.assertEqual(m.selector, b"alloc")
 
         o = m(cls).init()
         self.assertIsInstance(o, cls)
@@ -28,9 +31,12 @@ class TestBasicIMP (TestCase):
         cls = NSObject
         m = cls.instanceMethodForSelector_("init")
         self.assertIsInstance(m, objc.IMP)
-        self.assertFalse(m.__metadata__()['classmethod'])
-        self.assertEqual(m.__metadata__()['retval'].get('already_retained'), cls.init.__metadata__()['retval'].get('already_retained'))
-        self.assertEqual(m.selector, b'init')
+        self.assertFalse(m.__metadata__()["classmethod"])
+        self.assertEqual(
+            m.__metadata__()["retval"].get("already_retained"),
+            cls.init.__metadata__()["retval"].get("already_retained"),
+        )
+        self.assertEqual(m.selector, b"init")
 
         o = m(cls.alloc())
         self.assertIsInstance(o, cls)
@@ -41,9 +47,12 @@ class TestBasicIMP (TestCase):
 
         m = o.methodForSelector_("init")
         self.assertIsInstance(m, objc.IMP)
-        self.assertFalse(m.__metadata__()['classmethod'])
-        self.assertEqual(m.__metadata__()['retval'].get('already_retained'), cls.init.__metadata__()['retval'].get('already_retained'))
-        self.assertEqual(m.selector, b'init')
+        self.assertFalse(m.__metadata__()["classmethod"])
+        self.assertEqual(
+            m.__metadata__()["retval"].get("already_retained"),
+            cls.init.__metadata__()["retval"].get("already_retained"),
+        )
+        self.assertEqual(m.selector, b"init")
 
         o = m(cls.alloc())
         self.assertIsInstance(o, cls)
@@ -51,9 +60,7 @@ class TestBasicIMP (TestCase):
     def testDescription(self):
         o = NSObject.alloc().init()
 
-        self.assertEqual(o.description(), o.methodForSelector_(b'description')(o))
-
-
+        self.assertEqual(o.description(), o.methodForSelector_(b"description")(o))
 
 
 if __name__ == "__main__":

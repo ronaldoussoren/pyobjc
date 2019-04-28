@@ -7,7 +7,8 @@ from PyObjCTest.fnd import *
 
 LeaksDel = 0
 
-class LeaksClass (NSObject):
+
+class LeaksClass(NSObject):
     def init(self):
         self = objc.super(LeaksClass, self).init()
         return self
@@ -17,20 +18,22 @@ class LeaksClass (NSObject):
 
         LeaksDel = 1
 
-class SlottedClass (NSObject):
-    __slots__ = ('slot1',)
+
+class SlottedClass(NSObject):
+    __slots__ = ("slot1",)
 
     def init(self):
         NSObject.pyobjc_instanceMethods.init(self)
         self.slot1 = LeaksClass.alloc().init()
         return self
 
-class MemberClass (NSObject):
 
+class MemberClass(NSObject):
     def init(self):
         self = NSObject.pyobjc_instanceMethods.init(self)
         self.slot1 = LeaksClass.alloc().init()
         return self
+
 
 class TestRetains(TestCase):
     def testPyClass(self):
@@ -52,7 +55,7 @@ class TestRetains(TestCase):
         LeaksDel = 0
         self.assertEqual(LeaksDel, 0)
         pool = NSAutoreleasePool.alloc().init()
-        c = NSMutableArray.arrayWithArray_([ LeaksClass.alloc().init() ])
+        c = NSMutableArray.arrayWithArray_([LeaksClass.alloc().init()])
         del pool
 
         pool = NSAutoreleasePool.alloc().init()
@@ -69,8 +72,7 @@ class TestRetains(TestCase):
         self.assertEqual(LeaksDel, 0)
         pool = NSAutoreleasePool.alloc().init()
         c = NSMutableArray.alloc()
-        c = c.initWithArray_(
-            [ LeaksClass.alloc().init() ])
+        c = c.initWithArray_([LeaksClass.alloc().init()])
         del pool
 
         pool = NSAutoreleasePool.alloc().init()
@@ -106,6 +108,5 @@ class TestRetains(TestCase):
         self.assertEqual(LeaksDel, 1)
 
 
-
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()

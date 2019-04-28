@@ -14,7 +14,8 @@ from PyObjCTest.locking import OC_LockTest
 
 NSAutoreleasePool = objc.lookUpClass("NSAutoreleasePool")
 
-class OtherThread (threading.Thread):
+
+class OtherThread(threading.Thread):
     def __init__(self, obj):
         self.obj = obj
 
@@ -32,15 +33,16 @@ class OtherThread (threading.Thread):
                 self.obj.appendToList_("LOCK FOUND")
 
             self.obj.setLocked_(True)
-            self.obj.appendToList_("thread %d a"%(i,))
+            self.obj.appendToList_("thread %d a" % (i,))
             time.sleep(0.5)
-            self.obj.appendToList_("thread %d b"%(i,))
+            self.obj.appendToList_("thread %d b" % (i,))
             self.obj.setLocked_(False)
             lck.unlock()
 
         del pool
 
-class ObjCThread (threading.Thread):
+
+class ObjCThread(threading.Thread):
     def __init__(self, obj):
         self.obj = obj
 
@@ -56,7 +58,7 @@ class ObjCThread (threading.Thread):
         del pool
 
 
-class BaseClass (objc.lookUpClass('NSObject')):
+class BaseClass(objc.lookUpClass("NSObject")):
     def initWithList_(self, list):
         self = objc.super(BaseClass, self).init()
         if self is None:
@@ -72,12 +74,11 @@ class BaseClass (objc.lookUpClass('NSObject')):
     def setLocked_(self, value):
         self._locked = value
 
-
     def appendToList_(self, value):
         self.list.append(value)
 
-class TestLockingBasic (TestCase):
 
+class TestLockingBasic(TestCase):
     def testBasicLocking(self):
         lst = []
 
@@ -99,8 +100,8 @@ class TestLockingBasic (TestCase):
 
         self.assertNotIn("LOCK FOUND", lst)
         for idx in range(len(lst)):
-            if lst[idx].endswith(' a'):
-                self.assertTrue(lst[idx+1].endswith(' b'))
+            if lst[idx].endswith(" a"):
+                self.assertTrue(lst[idx + 1].endswith(" b"))
 
     def testObjectiveCLocking(self):
         lst = []
@@ -125,12 +126,11 @@ class TestLockingBasic (TestCase):
 
         self.assertNotIn("LOCK FOUND", lst)
         for idx in range(len(lst)):
-            if lst[idx].endswith(' a'):
-                self.assertTrue(lst[idx+1].endswith(' b'))
+            if lst[idx].endswith(" a"):
+                self.assertTrue(lst[idx + 1].endswith(" b"))
 
 
-class TestLockingWithStatement (TestCase):
-
+class TestLockingWithStatement(TestCase):
     def testBasicLocking(self):
         lst = []
         lst = []
@@ -152,8 +152,9 @@ class TestLockingWithStatement (TestCase):
 
         self.assertNotIn("LOCK FOUND", lst)
         for idx in range(len(lst)):
-            if lst[idx].endswith(' a'):
-                self.assertTrue(lst[idx+1].endswith(' b'))
+            if lst[idx].endswith(" a"):
+                self.assertTrue(lst[idx + 1].endswith(" b"))
+
 
 if __name__ == "__main__":
     main()

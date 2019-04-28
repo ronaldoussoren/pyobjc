@@ -4,8 +4,8 @@ import objc
 import sys
 
 if sys.version_info[0] == 2:
-    from UserList import  UserList
-    from UserDict import  IterableUserDict
+    from UserList import UserList
+    from UserDict import IterableUserDict
     import collections as collections_abc
 
 else:
@@ -15,11 +15,12 @@ else:
 NSMutableArray = objc.lookUpClass("NSMutableArray")
 NSMutableDictionary = objc.lookUpClass("NSMutableDictionary")
 
+
 def classOfProxy(value):
     return OC_TestClass2.classOfObject_(value)
 
 
-class TestBridges (TestCase):
+class TestBridges(TestCase):
     # NOTE: the two "register" functions from objc._bridges aren't
     # tested explictly, but the tests in this class do verify that
     # the default registrations (which are made through those two
@@ -42,14 +43,14 @@ class TestBridges (TestCase):
         self.assertIsSubclass(classOfProxy(v), NSMutableArray)
 
     def test_abc(self):
-        class MySequence (collections_abc.Sequence):
+        class MySequence(collections_abc.Sequence):
             def __getitem__(self, idx):
                 raise IndexError(idx)
 
             def __len__(self):
                 return 0
 
-        class MyDictionary (collections_abc.Mapping):
+        class MyDictionary(collections_abc.Mapping):
             def __getitem__(self, key):
                 raise KeyError(key)
 

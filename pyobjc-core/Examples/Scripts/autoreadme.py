@@ -18,7 +18,8 @@ from Foundation import *
 from PyObjCTools import AppHelper
 
 
-readTheseFiles = re.compile('(.*read\s*me.*|.*release.*note.*|^about.*)', re.I)
+readTheseFiles = re.compile("(.*read\s*me.*|.*release.*note.*|^about.*)", re.I)
+
 
 class NotificationHandler(NSObject):
     """
@@ -28,20 +29,19 @@ class NotificationHandler(NSObject):
     def handleMountNotification_(self, aNotification):
 
         # Find the path to the just inserted volume
-        path = aNotification.userInfo()['NSDevicePath']
+        path = aNotification.userInfo()["NSDevicePath"]
 
         for aFile in os.listdir(path):
             if readTheseFiles.match(aFile):
                 # Found a readme file, try to open it using the Workspace API
 
                 fullPath = os.path.join(path, aFile)
-                success, app, _ = workspace.getInfoForFile_application_type_(
-                        fullPath)
+                success, app, _ = workspace.getInfoForFile_application_type_(fullPath)
                 if not success:
-                    NSLog("Failed to find application to open file %s",
-                        fullPath)
+                    NSLog("Failed to find application to open file %s", fullPath)
                     return
                 workspace.openFile_withApplication_(fullPath, app)
+
 
 # Create an instance of our notification handler, and ask the workspace
 # notification center to tell us when a new volume is mounted.
@@ -52,7 +52,8 @@ notificationCenter.addObserver_selector_name_object_(
     notificationHandler,
     "handleMountNotification:",
     NSWorkspaceDidMountNotification,
-    None)
+    None,
+)
 
 NSLog("Listening for mount notifications....")
 AppHelper.runConsoleEventLoop()

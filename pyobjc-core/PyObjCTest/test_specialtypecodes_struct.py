@@ -12,24 +12,19 @@ from PyObjCTest.specialtypecodes import *
 
 
 EmbeddedBoolStruct = objc.createStructType(
-        "EmbeddedBoolStruct",
-        b"{_EmbeddedBool=" + objc._C_INT + objc._C_NSBOOL + b"}",
-        [
-            "count",
-            "isValid"
-        ])
+    "EmbeddedBoolStruct",
+    b"{_EmbeddedBool=" + objc._C_INT + objc._C_NSBOOL + b"}",
+    ["count", "isValid"],
+)
 
 EmbeddedBoolArrayStruct = objc.createStructType(
-        "EmbeddedBoolArrayStruct",
-        b"{_EmbeddedBoolArray=" + objc._C_INT + b"[4" + objc._C_NSBOOL + b"]}",
-        [
-            "count",
-            "valid"
-        ])
+    "EmbeddedBoolArrayStruct",
+    b"{_EmbeddedBoolArray=" + objc._C_INT + b"[4" + objc._C_NSBOOL + b"]}",
+    ["count", "valid"],
+)
 
 
-
-class TestRecode (TestCase):
+class TestRecode(TestCase):
     # Use recode to test to/from Objective-C.
     #
     # This has limited because in 'real life' we'd encode/decode based on a
@@ -55,7 +50,7 @@ class TestRecode (TestCase):
         self.assertIs(w.valid[3], False)
 
 
-class TestObjectiveC (TestCase):
+class TestObjectiveC(TestCase):
     # Use an Objective-C class to test to/from Objective-C.
     #
     def testBoolStruct(self):
@@ -78,6 +73,7 @@ class TestObjectiveC (TestCase):
         self.assertIs(w.valid[1], True)
         self.assertIs(w.valid[2], True)
         self.assertIs(w.valid[3], False)
+
 
 if __name__ == "__main__":
     main()

@@ -3,15 +3,16 @@ import objc
 
 NSObject = objc.lookUpClass("NSObject")
 
-class OC_AssocSneakyCopy (NSObject):
+
+class OC_AssocSneakyCopy(NSObject):
     def copy(self):
         return "<copy!>"
 
     def copyWithZone_(self, zone):
         return "<copy!>"
 
-class TestAssocations (TestCase):
 
+class TestAssocations(TestCase):
     @min_os_level("10.6")
     def testKeysAreIdentityBased(self):
         o = NSObject.alloc().init()
@@ -78,7 +79,7 @@ class TestAssocations (TestCase):
         objc.setAssociatedObject(o, key2, value, objc.OBJC_ASSOCIATION_COPY)
 
         self.assertEqual(objc.getAssociatedObject(o, key1), value)
-        self.assertEqual(objc.getAssociatedObject(o, key2),  "<copy!>")
+        self.assertEqual(objc.getAssociatedObject(o, key2), "<copy!>")
 
 
 if __name__ == "__main__":

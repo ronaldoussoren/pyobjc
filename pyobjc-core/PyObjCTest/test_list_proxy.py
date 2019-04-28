@@ -12,6 +12,7 @@ import objc
 OC_PythonArray = objc.lookUpClass("OC_PythonArray")
 OC_BuiltinPythonArray = objc.lookUpClass("OC_BuiltinPythonArray")
 
+
 class BasicSequenceTests:
     # Tests for sets that don't try to mutate the set.
     # Shared between tests for set() and frozenset()
@@ -36,9 +37,7 @@ class BasicSequenceTests:
         self.assertIsInstance(o, list)
 
 
-
-
-class TestImmutableSequence (TestCase, BasicSequenceTests):
+class TestImmutableSequence(TestCase, BasicSequenceTests):
     seqClass = tuple
 
     def testCopy(self):
@@ -52,12 +51,11 @@ class TestImmutableSequence (TestCase, BasicSequenceTests):
 
     def testNotMutable(self):
         # Ensure that a frozenset cannot be mutated
-        o = self.seqClass([1,2,3])
-        self.assertRaises((TypeError, AttributeError),
-                OC_TestSet.set_addObject_, o, 4)
+        o = self.seqClass([1, 2, 3])
+        self.assertRaises((TypeError, AttributeError), OC_TestSet.set_addObject_, o, 4)
 
 
-class TestMutableSequence (TestCase, BasicSequenceTests):
+class TestMutableSequence(TestCase, BasicSequenceTests):
     seqClass = list
 
     def testCopy(self):
@@ -70,8 +68,6 @@ class TestMutableSequence (TestCase, BasicSequenceTests):
         o = OC_TestSet.set_copyWithZone_(s, None)
         self.assertEqual(s, o)
         self.assertIsNot(s, o)
-
-
 
 
 if __name__ == "__main__":

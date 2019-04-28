@@ -4,12 +4,12 @@ import objc
 import sys
 import warnings
 
-#try:
+# try:
 #    from  Foundation import NSRange
 #
 #    _C_NSRange = NSRange.__typestr__
 #
-#except ImportError:
+# except ImportError:
 if 1:
     if sys.maxsize > 2 ** 32:
         _C_NSRange = b"{_NSRange=QQ}"
@@ -19,34 +19,33 @@ if 1:
 
 NSObject = objc.lookUpClass("NSObject")
 
-class TestBasicDescriptors (TestCase):
+
+class TestBasicDescriptors(TestCase):
 
     # IBOutlet is tested in test_ivar
 
     def test_ibaction(self):
-
         @objc.IBAction
         def myAction_(self, sender):
             return 1
 
         self.assertIsInstance(myAction_, objc.selector)
-        self.assertEqual(myAction_.signature, b'v@:@')
-        self.assertEqual(myAction_.selector, b'myAction:')
+        self.assertEqual(myAction_.signature, b"v@:@")
+        self.assertEqual(myAction_.selector, b"myAction:")
         self.assertFalse(myAction_.isClassMethod)
-
 
         self.assertRaises(TypeError, objc.IBAction, None)
         self.assertRaises(TypeError, objc.IBAction, 42)
 
     def test_instancemethod(self):
-        class TestDescriptorsClass1 (NSObject):
+        class TestDescriptorsClass1(NSObject):
             @objc.instancemethod
             def new(self):
                 pass
 
         o = NSObject.alloc().init()
-        self.assertFalse(hasattr(o, 'new'))
-        self.assertTrue(hasattr(NSObject, 'new'))
+        self.assertFalse(hasattr(o, "new"))
+        self.assertTrue(hasattr(NSObject, "new"))
         self.assertTrue(NSObject.new.isClassMethod)
 
         o = TestDescriptorsClass1.alloc().init()
@@ -54,12 +53,10 @@ class TestBasicDescriptors (TestCase):
         self.assertIsInstance(m, objc.selector)
         self.assertFalse(m.isClassMethod)
 
-
         self.assertRaises(TypeError, objc.instancemethod, None)
         self.assertRaises(TypeError, objc.instancemethod, 42)
 
     def test_typedSelector(self):
-
         @objc.typedSelector(b"I@:qq")
         def mySelector_arg_(self, a, b):
             return 4
@@ -72,7 +69,7 @@ class TestBasicDescriptors (TestCase):
         self.assertRaises(TypeError, objc.typedSelector(b"v@:i"), 42)
 
     def testNamedSelector(self):
-        @objc.namedSelector(b'foo:bar:')
+        @objc.namedSelector(b"foo:bar:")
         def mymethod(self, a, b):
             pass
 
@@ -83,7 +80,7 @@ class TestBasicDescriptors (TestCase):
         self.assertRaises(TypeError, objc.namedSelector(b"foo:bar:"), None)
         self.assertRaises(TypeError, objc.namedSelector(b"foo:bar:"), 42)
 
-        @objc.namedSelector(b'foo:bar:', signature=b"q@:qq")
+        @objc.namedSelector(b"foo:bar:", signature=b"q@:qq")
         def mymethod(self, a, b):
             pass
 
@@ -98,7 +95,7 @@ class TestBasicDescriptors (TestCase):
         with warnings.catch_warnings():
             warnings.filterwarnings("ignore", category=DeprecationWarning)
 
-            @objc.namedselector(b'foo:bar:')
+            @objc.namedselector(b"foo:bar:")
             def mymethod(self, a, b):
                 pass
 
@@ -109,7 +106,7 @@ class TestBasicDescriptors (TestCase):
             self.assertRaises(TypeError, objc.namedselector(b"foo:bar:"), None)
             self.assertRaises(TypeError, objc.namedselector(b"foo:bar:"), 42)
 
-            @objc.namedselector(b'foo:bar:', signature=b"q@:qq")
+            @objc.namedselector(b"foo:bar:", signature=b"q@:qq")
             def mymethod(self, a, b):
                 pass
 
@@ -117,7 +114,9 @@ class TestBasicDescriptors (TestCase):
             self.assertEqual(mymethod.signature, b"q@:qq")
             self.assertEqual(mymethod.selector, b"foo:bar:")
 
-            self.assertRaises(TypeError, objc.namedselector(b"foo:bar:", b"q@:qq"), None)
+            self.assertRaises(
+                TypeError, objc.namedselector(b"foo:bar:", b"q@:qq"), None
+            )
             self.assertRaises(TypeError, objc.namedselector(b"foo:bar:", b"q@:qq"), 42)
 
     # synthesize is tested in test_synthesize
@@ -147,7 +146,6 @@ class TestBasicDescriptors (TestCase):
         self.assertEqual(isColor.signature, b"@@:")
         self.assertEqual(setColor_.signature, b"v@:@")
 
-
         # Indexed accessors
 
         @objc.accessor
@@ -165,7 +163,6 @@ class TestBasicDescriptors (TestCase):
         @objc.accessor
         def getFlavors_range_(self, buffer, range):
             return ["sour", "sweet"]
-
 
         self.assertIsInstance(countOfFlavors, objc.selector)
         self.assertIsInstance(objectInFlavorsAtIndex_, objc.selector)
@@ -205,7 +202,6 @@ class TestBasicDescriptors (TestCase):
         def replaceFlavorsAtIndexes_withFlavors_(self, indices, values):
             pass
 
-
         self.assertIsInstance(insertObject_inFlavorsAtIndex_, objc.selector)
         self.assertIsInstance(insertFlavors_atIndexes_, objc.selector)
         self.assertIsInstance(removeObjectFromFlavorsAtIndex_, objc.selector)
@@ -213,13 +209,19 @@ class TestBasicDescriptors (TestCase):
         self.assertIsInstance(replaceObjectInFlavorsAtIndex_withObject_, objc.selector)
         self.assertIsInstance(replaceFlavorsAtIndexes_withFlavors_, objc.selector)
 
-        self.assertEqual(insertObject_inFlavorsAtIndex_.signature, b"v@:@" + objc._C_NSUInteger)
+        self.assertEqual(
+            insertObject_inFlavorsAtIndex_.signature, b"v@:@" + objc._C_NSUInteger
+        )
         self.assertEqual(insertFlavors_atIndexes_.signature, b"v@:@@")
-        self.assertEqual(removeObjectFromFlavorsAtIndex_.signature, b"v@:" + objc._C_NSUInteger)
+        self.assertEqual(
+            removeObjectFromFlavorsAtIndex_.signature, b"v@:" + objc._C_NSUInteger
+        )
         self.assertEqual(removeFlavorsAtIndexes_.signature, b"v@:@")
-        self.assertEqual(replaceObjectInFlavorsAtIndex_withObject_.signature, b"v@:" + objc._C_NSUInteger + b"@")
+        self.assertEqual(
+            replaceObjectInFlavorsAtIndex_withObject_.signature,
+            b"v@:" + objc._C_NSUInteger + b"@",
+        )
         self.assertEqual(replaceFlavorsAtIndexes_withFlavors_.signature, b"v@:@@")
-
 
         # Getter Unordered Accessors
         @objc.accessor
@@ -270,48 +272,53 @@ class TestBasicDescriptors (TestCase):
             return (False, None)
 
         self.assertIsInstance(validateColor_error_, objc.selector)
-        self.assertEqual(validateColor_error_.signature, objc._C_NSBOOL + b'@:N^@o^@')
-
-
+        self.assertEqual(validateColor_error_.signature, objc._C_NSBOOL + b"@:N^@o^@")
 
         # Keyword arguments (**kwds) and varargs (*args) are
         # not supported:
 
         def attrib(self, *args):
             pass
+
         self.assertRaises(TypeError, objc.accessor, attrib)
 
         def attrib(self, **kwds):
             pass
+
         self.assertRaises(TypeError, objc.accessor, attrib)
 
         # Not really an accessor
         def attrib_error_(self, a, b):
             pass
+
         self.assertRaises(TypeError, objc.accessor, attrib_error_)
 
         # Argument counts that don't match
         def validateObject_error_(self, a):
             pass
+
         self.assertRaises(TypeError, objc.accessor, validateObject_error_)
 
         def validateObject_error_(self, a, b, c):
             pass
+
         self.assertRaises(TypeError, objc.accessor, validateObject_error_)
 
         def validateObject_error_(self, a, b, c, d=1, e=2):
             pass
+
         self.assertRaises(TypeError, objc.accessor, validateObject_error_)
 
         @objc.accessor
         def validateObject_error_(self, a, b, c=1):
             pass
 
-
         def countOfFoo_withBar_withBaz_withNone_(self, foo, bar, baz, none):
             pass
-        self.assertRaises(TypeError, objc.accessor, countOfFoo_withBar_withBaz_withNone_)
 
+        self.assertRaises(
+            TypeError, objc.accessor, countOfFoo_withBar_withBaz_withNone_
+        )
 
     def test_typedAccessor(self):
         # NOTE: the optional type argument is tested through the typedAccessor function
@@ -340,7 +347,6 @@ class TestBasicDescriptors (TestCase):
         self.assertEqual(isColor.signature, mytype + b"@:")
         self.assertEqual(setColor_.signature, b"v@:" + mytype)
 
-
         # Indexed accessors
 
         @objc.typedAccessor(mytype)
@@ -359,15 +365,16 @@ class TestBasicDescriptors (TestCase):
         def getFlavors_range_(self, buffer, range):
             return ["sour", "sweet"]
 
-
         self.assertIsInstance(countOfFlavors, objc.selector)
         self.assertIsInstance(objectInFlavorsAtIndex_, objc.selector)
         self.assertIsInstance(flavorsAtIndexes_, objc.selector)
         self.assertIsInstance(getFlavors_range_, objc.selector)
 
         self.assertEqual(countOfFlavors.signature, objc._C_NSUInteger + b"@:")
-        self.assertEqual(objectInFlavorsAtIndex_.signature, mytype + b"@:" + objc._C_NSUInteger)
-        self.assertEqual(flavorsAtIndexes_.signature, b"@@:@") #XXX: is this correct?
+        self.assertEqual(
+            objectInFlavorsAtIndex_.signature, mytype + b"@:" + objc._C_NSUInteger
+        )
+        self.assertEqual(flavorsAtIndexes_.signature, b"@@:@")  # XXX: is this correct?
 
         # XXX: This needs even more work: also have to add custom metadata!
         self.assertEqual(getFlavors_range_.signature, b"v@:o^@" + _C_NSRange)
@@ -398,7 +405,6 @@ class TestBasicDescriptors (TestCase):
         def replaceFlavorsAtIndexes_withFlavors_(self, indices, values):
             pass
 
-
         self.assertIsInstance(insertObject_inFlavorsAtIndex_, objc.selector)
         self.assertIsInstance(insertFlavors_atIndexes_, objc.selector)
         self.assertIsInstance(removeObjectFromFlavorsAtIndex_, objc.selector)
@@ -406,13 +412,24 @@ class TestBasicDescriptors (TestCase):
         self.assertIsInstance(replaceObjectInFlavorsAtIndex_withObject_, objc.selector)
         self.assertIsInstance(replaceFlavorsAtIndexes_withFlavors_, objc.selector)
 
-        self.assertEqual(insertObject_inFlavorsAtIndex_.signature, b"v@:" + mytype + objc._C_NSUInteger)
-        self.assertEqual(insertFlavors_atIndexes_.signature, b"v@:@@") # XXX: is this correct?
-        self.assertEqual(removeObjectFromFlavorsAtIndex_.signature, b"v@:" + objc._C_NSUInteger)
+        self.assertEqual(
+            insertObject_inFlavorsAtIndex_.signature,
+            b"v@:" + mytype + objc._C_NSUInteger,
+        )
+        self.assertEqual(
+            insertFlavors_atIndexes_.signature, b"v@:@@"
+        )  # XXX: is this correct?
+        self.assertEqual(
+            removeObjectFromFlavorsAtIndex_.signature, b"v@:" + objc._C_NSUInteger
+        )
         self.assertEqual(removeFlavorsAtIndexes_.signature, b"v@:@")
-        self.assertEqual(replaceObjectInFlavorsAtIndex_withObject_.signature, b"v@:" + objc._C_NSUInteger + mytype)
-        self.assertEqual(replaceFlavorsAtIndexes_withFlavors_.signature, b"v@:@@") # XXX: is this correct?
-
+        self.assertEqual(
+            replaceObjectInFlavorsAtIndex_withObject_.signature,
+            b"v@:" + objc._C_NSUInteger + mytype,
+        )
+        self.assertEqual(
+            replaceFlavorsAtIndexes_withFlavors_.signature, b"v@:@@"
+        )  # XXX: is this correct?
 
         # Getter Unordered Accessors
         @objc.typedAccessor(mytype)
@@ -454,7 +471,7 @@ class TestBasicDescriptors (TestCase):
         self.assertIsInstance(intersectLanguagues_, objc.selector)
 
         self.assertEqual(addLanguagesObject_.signature, b"v@:" + mytype)
-        self.assertEqual(addLanguagues_.signature, b"v@:@") # XXX: is this correct?
+        self.assertEqual(addLanguagues_.signature, b"v@:@")  # XXX: is this correct?
         self.assertEqual(intersectLanguagues_.signature, b"v@:@")
 
         # Validation
@@ -463,7 +480,7 @@ class TestBasicDescriptors (TestCase):
             return (False, None)
 
         self.assertIsInstance(validateColor_error_, objc.selector)
-        self.assertEqual(validateColor_error_.signature, objc._C_NSBOOL + b'@:N^@o^@')
+        self.assertEqual(validateColor_error_.signature, objc._C_NSBOOL + b"@:N^@o^@")
 
     def test_Accessor(self):
         with warnings.catch_warnings():
@@ -492,7 +509,6 @@ class TestBasicDescriptors (TestCase):
             self.assertEqual(isColor.signature, b"@@:")
             self.assertEqual(setColor_.signature, b"v@:@")
 
-
             # Indexed accessors
 
             @objc.Accessor
@@ -511,14 +527,15 @@ class TestBasicDescriptors (TestCase):
             def getFlavors_range_(self, buffer, range):
                 return ["sour", "sweet"]
 
-
             self.assertIsInstance(countOfFlavors, objc.selector)
             self.assertIsInstance(objectInFlavorsAtIndex_, objc.selector)
             self.assertIsInstance(flavorsAtIndexes_, objc.selector)
             self.assertIsInstance(getFlavors_range_, objc.selector)
 
             self.assertEqual(countOfFlavors.signature, objc._C_NSUInteger + b"@:")
-            self.assertEqual(objectInFlavorsAtIndex_.signature, b"@@:" + objc._C_NSUInteger)
+            self.assertEqual(
+                objectInFlavorsAtIndex_.signature, b"@@:" + objc._C_NSUInteger
+            )
             self.assertEqual(flavorsAtIndexes_.signature, b"@@:@")
 
             # XXX: This needs even more work: also have to add custom metadata!
@@ -550,21 +567,28 @@ class TestBasicDescriptors (TestCase):
             def replaceFlavorsAtIndexes_withFlavors_(self, indices, values):
                 pass
 
-
             self.assertIsInstance(insertObject_inFlavorsAtIndex_, objc.selector)
             self.assertIsInstance(insertFlavors_atIndexes_, objc.selector)
             self.assertIsInstance(removeObjectFromFlavorsAtIndex_, objc.selector)
             self.assertIsInstance(removeFlavorsAtIndexes_, objc.selector)
-            self.assertIsInstance(replaceObjectInFlavorsAtIndex_withObject_, objc.selector)
+            self.assertIsInstance(
+                replaceObjectInFlavorsAtIndex_withObject_, objc.selector
+            )
             self.assertIsInstance(replaceFlavorsAtIndexes_withFlavors_, objc.selector)
 
-            self.assertEqual(insertObject_inFlavorsAtIndex_.signature, b"v@:@" + objc._C_NSUInteger)
+            self.assertEqual(
+                insertObject_inFlavorsAtIndex_.signature, b"v@:@" + objc._C_NSUInteger
+            )
             self.assertEqual(insertFlavors_atIndexes_.signature, b"v@:@@")
-            self.assertEqual(removeObjectFromFlavorsAtIndex_.signature, b"v@:" + objc._C_NSUInteger)
+            self.assertEqual(
+                removeObjectFromFlavorsAtIndex_.signature, b"v@:" + objc._C_NSUInteger
+            )
             self.assertEqual(removeFlavorsAtIndexes_.signature, b"v@:@")
-            self.assertEqual(replaceObjectInFlavorsAtIndex_withObject_.signature, b"v@:" + objc._C_NSUInteger + b"@")
+            self.assertEqual(
+                replaceObjectInFlavorsAtIndex_withObject_.signature,
+                b"v@:" + objc._C_NSUInteger + b"@",
+            )
             self.assertEqual(replaceFlavorsAtIndexes_withFlavors_.signature, b"v@:@@")
-
 
             # Getter Unordered Accessors
             @objc.Accessor
@@ -615,37 +639,43 @@ class TestBasicDescriptors (TestCase):
                 return (False, None)
 
             self.assertIsInstance(validateColor_error_, objc.selector)
-            self.assertEqual(validateColor_error_.signature, objc._C_NSBOOL + b'@:N^@o^@')
-
-
+            self.assertEqual(
+                validateColor_error_.signature, objc._C_NSBOOL + b"@:N^@o^@"
+            )
 
             # Keyword arguments (**kwds) and varargs (*args) are
             # not supported:
 
             def attrib(self, *args):
                 pass
+
             self.assertRaises(TypeError, objc.Accessor, attrib)
 
             def attrib(self, **kwds):
                 pass
+
             self.assertRaises(TypeError, objc.Accessor, attrib)
 
             # Not really an accessor
             def attrib_error_(self, a, b):
                 pass
+
             self.assertRaises(TypeError, objc.Accessor, attrib_error_)
 
             # Argument counts that don't match
             def validateObject_error_(self, a):
                 pass
+
             self.assertRaises(TypeError, objc.Accessor, validateObject_error_)
 
             def validateObject_error_(self, a, b, c):
                 pass
+
             self.assertRaises(TypeError, objc.Accessor, validateObject_error_)
 
             def validateObject_error_(self, a, b, c, d=1, e=2):
                 pass
+
             self.assertRaises(TypeError, objc.Accessor, validateObject_error_)
 
             @objc.Accessor
@@ -661,16 +691,17 @@ class TestBasicDescriptors (TestCase):
                 pass
 
             self.assertIsInstance(myMethod_arg_, objc.selector)
-            self.assertEqual(myMethod_arg_.signature, b'd@:ii')
-            self.assertEqual(myMethod_arg_.selector, b'myMethod:arg:')
+            self.assertEqual(myMethod_arg_.signature, b"d@:ii")
+            self.assertEqual(myMethod_arg_.selector, b"myMethod:arg:")
 
-            @objc.signature(b'q@:@q', selector=b'foo:bar:')
+            @objc.signature(b"q@:@q", selector=b"foo:bar:")
             def method(self, a, b):
                 pass
 
             self.assertIsInstance(method, objc.selector)
-            self.assertEqual(method.signature, b'q@:@q')
-            self.assertEqual(method.selector, b'foo:bar:')
+            self.assertEqual(method.signature, b"q@:@q")
+            self.assertEqual(method.selector, b"foo:bar:")
+
 
 if __name__ == "__main__":
     main()

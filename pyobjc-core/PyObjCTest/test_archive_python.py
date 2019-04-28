@@ -10,6 +10,7 @@ import pickle
 
 if sys.version_info[0] == 3:
     import copyreg
+
     long = int
 
 else:
@@ -38,14 +39,32 @@ import test.pickletester
 
 MyList = test.pickletester.MyList
 
-class float_subclass (float): pass
-class tuple_subclass (tuple): pass
-class list_subclass (list): pass
-class dict_subclass (dict): pass
-class set_subclass (set): pass
-class frozenset_subclass (frozenset): pass
 
-class with_getstate (object):
+class float_subclass(float):
+    pass
+
+
+class tuple_subclass(tuple):
+    pass
+
+
+class list_subclass(list):
+    pass
+
+
+class dict_subclass(dict):
+    pass
+
+
+class set_subclass(set):
+    pass
+
+
+class frozenset_subclass(frozenset):
+    pass
+
+
+class with_getstate(object):
     def __init__(self, value=None):
         self.value = value
 
@@ -55,7 +74,8 @@ class with_getstate (object):
     def __setstate__(self, value):
         self.value = value
 
-class only_getstate (object):
+
+class only_getstate(object):
     def __init__(self, slots=None, dct=None):
         self._slots = slots
         self._dct = dct
@@ -63,7 +83,8 @@ class only_getstate (object):
     def __getstate__(self):
         return (self._dct, self._slots)
 
-class with_reduce_func (object):
+
+class with_reduce_func(object):
     def __init__(self, *args):
         self.args = args
 
@@ -71,61 +92,76 @@ class with_reduce_func (object):
         return with_reduce_func, self.args
 
 
-class reduce_global (object):
+class reduce_global(object):
     def __reduce__(self):
         return "reduce_global"
+
+
 reduce_global = reduce_global()
 
 # Quick hack to add a proper __repr__ to class C in
 # pickletester, makes it a lot easier to debug.
 def C__repr__(self):
-    return '<%s instance at %#x: %r>'%(
-        self.__class__.__name__, id(self), self.__dict__)
+    return "<%s instance at %#x: %r>" % (
+        self.__class__.__name__,
+        id(self),
+        self.__dict__,
+    )
+
+
 test.pickletester.C.__repr__ = C__repr__
 del C__repr__
 
-class myobject :
+
+class myobject:
     def __init__(self):
         pass
 
     def __getinitargs__(self):
-        return (1,2)
+        return (1, 2)
+
 
 class state_obj_1:
     def __getstate__(self):
-        return ({'a': 1, 42: 3}, {'b': 2})
+        return ({"a": 1, 42: 3}, {"b": 2})
 
 
 class mystr(str):
     __slots__ = ()
 
+
 class myint(int):
     __slots__ = ()
+
 
 def a_function():
     pass
 
+
 class a_classic_class:
     pass
 
+
 class a_classic_class_with_state:
     def __getstate__(self):
-        return {'a': 1}
+        return {"a": 1}
 
     def __setstate__(self, state):
         for k, v in state.items():
             setattr(self, k, v)
 
-class a_newstyle_class (object):
+
+class a_newstyle_class(object):
     pass
 
-class newstyle_with_slots (object):
-    __slots__ = ('a', 'b', '__dict__')
 
-class newstyle_with_setstate (object):
+class newstyle_with_slots(object):
+    __slots__ = ("a", "b", "__dict__")
+
+
+class newstyle_with_setstate(object):
     def __setstate__(self, state):
         self.state = state
-
 
 
 def make_instance(state):
@@ -133,16 +169,15 @@ def make_instance(state):
     o.__dict__.update(state)
     return o
 
-class a_reducing_class (object):
+
+class a_reducing_class(object):
     def __reduce__(self):
         return make_instance, (self.__dict__,)
 
 
-
-
-class TestKeyedArchiveSimple (TestCase):
+class TestKeyedArchiveSimple(TestCase):
     def setUp(self):
-        self.isKeyed       = True
+        self.isKeyed = True
         self.archiverClass = NSKeyedArchiver
         self.unarchiverClass = NSKeyedUnarchiver
 
@@ -154,7 +189,7 @@ class TestKeyedArchiveSimple (TestCase):
             o = TestKeyedArchiveSimple
             buf = self.archiverClass.archivedDataWithRootObject_(o)
 
-            if os_level_key(os_release()) >= os_level_key('10.11'):
+            if os_level_key(os_release()) >= os_level_key("10.11"):
                 # On OSX 10.11 (un)archivers modify exceptions, which looses
                 # enough information that PyObjC can no longer reconstruct
                 # the correct Python exception
@@ -162,18 +197,18 @@ class TestKeyedArchiveSimple (TestCase):
             else:
                 exception = pickle.UnpicklingError
 
-            self.assertRaises(exception, self.unarchiverClass.unarchiveObjectWithData_, buf)
-
+            self.assertRaises(
+                exception, self.unarchiverClass.unarchiveObjectWithData_, buf
+            )
 
         finally:
             pycoder.decode_dispatch[pycoder.kOP_GLOBAL] = orig
 
-
-
     def test_reducing_issues(self):
-        class Error1 (object):
+        class Error1(object):
             def __reduce__(self):
-                return dir, 'foo'
+                return dir, "foo"
+
         object1 = Error1()
 
         data = NSMutableData.alloc().init()
@@ -182,9 +217,10 @@ class TestKeyedArchiveSimple (TestCase):
         if self.archiverClass is NSKeyedArchiver:
             archiver.finishEncoding()
 
-        class Error2 (object):
+        class Error2(object):
             def __reduce__(self):
-                return 'foo', (1, 2)
+                return "foo", (1, 2)
+
         object2 = Error2()
 
         data = NSMutableData.alloc().init()
@@ -205,7 +241,6 @@ class TestKeyedArchiveSimple (TestCase):
         self.assertIsInstance(v, a_newstyle_class)
         self.assertEqual(v.__dict__, o.__dict__)
 
-
     # XXX: Disabled due to deadlock?
     def test_misc_globals(self):
         global mystr
@@ -213,7 +248,7 @@ class TestKeyedArchiveSimple (TestCase):
         try:
             del mystr
 
-            o = orig('hello')
+            o = orig("hello")
 
             data = NSMutableData.alloc().init()
             archiver = self.archiverClass.alloc().initForWritingWithMutableData_(data)
@@ -228,7 +263,7 @@ class TestKeyedArchiveSimple (TestCase):
         try:
             mystr = None
 
-            o = orig('hello')
+            o = orig("hello")
             data = NSMutableData.alloc().init()
             archiver = self.archiverClass.alloc().initForWritingWithMutableData_(data)
             self.assertRaises(pickle.PicklingError, archiver.encodeRootObject_, o)
@@ -239,8 +274,13 @@ class TestKeyedArchiveSimple (TestCase):
             mystr = orig
 
         try:
-            copyreg.add_extension(a_newstyle_class.__module__, a_newstyle_class.__name__, 42)
-            self.assertIn((a_newstyle_class.__module__, a_newstyle_class.__name__), copyreg._extension_registry)
+            copyreg.add_extension(
+                a_newstyle_class.__module__, a_newstyle_class.__name__, 42
+            )
+            self.assertIn(
+                (a_newstyle_class.__module__, a_newstyle_class.__name__),
+                copyreg._extension_registry,
+            )
 
             o = a_newstyle_class
             buf = self.archiverClass.archivedDataWithRootObject_(o)
@@ -252,28 +292,35 @@ class TestKeyedArchiveSimple (TestCase):
             v = self.unarchiverClass.unarchiveObjectWithData_(buf)
             self.assertIs(v, o)
 
-            copyreg.remove_extension(a_newstyle_class.__module__, a_newstyle_class.__name__, 42)
+            copyreg.remove_extension(
+                a_newstyle_class.__module__, a_newstyle_class.__name__, 42
+            )
 
-            if os_level_key(os_release()) >= os_level_key('10.11'):
+            if os_level_key(os_release()) >= os_level_key("10.11"):
                 # On OSX 10.11 (un)archivers modify exceptions, which looses
                 # enough information that PyObjC can no longer reconstruct
                 # the correct Python exception
                 exception = (objc.error, ValueError)
             else:
                 exception = ValueError
-            self.assertRaises(exception, self.unarchiverClass.unarchiveObjectWithData_, buf)
+            self.assertRaises(
+                exception, self.unarchiverClass.unarchiveObjectWithData_, buf
+            )
 
         finally:
             mystr = orig
             try:
-                copyreg.remove_extension(a_newstyle_class.__module__, a_newstyle_class.__name__, 42)
+                copyreg.remove_extension(
+                    a_newstyle_class.__module__, a_newstyle_class.__name__, 42
+                )
             except ValueError:
                 pass
 
+        def f():
+            pass
 
-        def f(): pass
         del f.__module__
-        if hasattr(f, '__qualname__'):
+        if hasattr(f, "__qualname__"):
             f.__qualname__ = f.__name__
         try:
             sys.f = f
@@ -292,14 +339,13 @@ class TestKeyedArchiveSimple (TestCase):
         buf = self.archiverClass.archivedDataWithRootObject_(v)
         self.assertIsInstance(buf, NSData)
 
-        if os_level_key(os_release()) >= os_level_key('10.9'):
+        if os_level_key(os_release()) >= os_level_key("10.9"):
             # On OSX 10.11 (un)archivers modify exceptions, which looses
             # enough information that PyObjC can no longer reconstruct
             # the correct Python exception
             exception = (objc.error, TypeError)
         else:
             exception = objc.error
-
 
         self.assertRaises(exception, self.unarchiverClass.unarchiveObjectWithData_, buf)
 
@@ -337,7 +383,7 @@ class TestKeyedArchiveSimple (TestCase):
         self.assertIsInstance(buf, NSData)
         v = self.unarchiverClass.unarchiveObjectWithData_(buf)
         self.assertIsInstance(v, newstyle_with_setstate)
-        self.assertEqual(v.state, {'a': 1, 'b': 2})
+        self.assertEqual(v.state, {"a": 1, "b": 2})
 
     def test_reduce_as_global(self):
         # Test class where __reduce__ returns a string (the name of a global)
@@ -348,36 +394,42 @@ class TestKeyedArchiveSimple (TestCase):
         v = self.unarchiverClass.unarchiveObjectWithData_(buf)
         self.assertIs(v, reduce_global)
 
-
     def test_reduce_invalid(self):
-        class invalid_reduce (object):
+        class invalid_reduce(object):
             def __reduce__(self):
                 return 42
 
         data = NSMutableData.alloc().init()
         archiver = self.archiverClass.alloc().initForWritingWithMutableData_(data)
-        self.assertRaises(pickle.PicklingError, archiver.encodeRootObject_, invalid_reduce())
+        self.assertRaises(
+            pickle.PicklingError, archiver.encodeRootObject_, invalid_reduce()
+        )
         if self.archiverClass is NSKeyedArchiver:
             archiver.finishEncoding()
 
-        class invalid_reduce (object):
+        class invalid_reduce(object):
             def __reduce__(self):
                 return (1,)
+
         data = NSMutableData.alloc().init()
         archiver = self.archiverClass.alloc().initForWritingWithMutableData_(data)
-        self.assertRaises(pickle.PicklingError, archiver.encodeRootObject_, invalid_reduce())
+        self.assertRaises(
+            pickle.PicklingError, archiver.encodeRootObject_, invalid_reduce()
+        )
         if self.archiverClass is NSKeyedArchiver:
             archiver.finishEncoding()
 
-        class invalid_reduce (object):
+        class invalid_reduce(object):
             def __reduce__(self):
-                return (1,2,3,4,5,6)
+                return (1, 2, 3, 4, 5, 6)
+
         data = NSMutableData.alloc().init()
         archiver = self.archiverClass.alloc().initForWritingWithMutableData_(data)
-        self.assertRaises(pickle.PicklingError, archiver.encodeRootObject_, invalid_reduce())
+        self.assertRaises(
+            pickle.PicklingError, archiver.encodeRootObject_, invalid_reduce()
+        )
         if self.archiverClass is NSKeyedArchiver:
             archiver.finishEncoding()
-
 
     def test_basic_objects(self):
         buf = self.archiverClass.archivedDataWithRootObject_(a_function)
@@ -410,7 +462,7 @@ class TestKeyedArchiveSimple (TestCase):
         self.assertIsInstance(v, a_classic_class_with_state)
         self.assertEqual(v.a, 1)
 
-        for o in (None,  [None], (None,), {None,}):
+        for o in (None, [None], (None,), {None}):
             buf = self.archiverClass.archivedDataWithRootObject_(o)
             self.assertIsInstance(buf, NSData)
             v = self.unarchiverClass.unarchiveObjectWithData_(buf)
@@ -422,21 +474,21 @@ class TestKeyedArchiveSimple (TestCase):
             v = self.unarchiverClass.unarchiveObjectWithData_(buf)
             self.assertEqual(v, o)
 
-        o = ('aap', 42)
+        o = ("aap", 42)
         buf = self.archiverClass.archivedDataWithRootObject_(o)
         self.assertIsInstance(buf, NSData)
         v = self.unarchiverClass.unarchiveObjectWithData_(buf)
         self.assertIsInstance(v, tuple if self.isKeyed else NSArray)
         self.assertEqual(o, v)
 
-        o = ['aap', 42]
+        o = ["aap", 42]
         buf = self.archiverClass.archivedDataWithRootObject_(o)
         self.assertIsInstance(buf, NSData)
         v = self.unarchiverClass.unarchiveObjectWithData_(buf)
         self.assertIsInstance(v, list if self.isKeyed else NSArray)
         self.assertEqual(o, v)
 
-        o = {'aap': 'monkey', 'noot': 'nut' }
+        o = {"aap": "monkey", "noot": "nut"}
         buf = self.archiverClass.archivedDataWithRootObject_(o)
         self.assertIsInstance(buf, NSData)
         v = self.unarchiverClass.unarchiveObjectWithData_(buf)
@@ -450,7 +502,7 @@ class TestKeyedArchiveSimple (TestCase):
         self.assertIsInstance(v, set if self.isKeyed else NSSet)
         self.assertEqual(v, o)
 
-        o = 'hello world'
+        o = "hello world"
         buf = self.archiverClass.archivedDataWithRootObject_(o)
         self.assertIsInstance(buf, NSData)
         v = self.unarchiverClass.unarchiveObjectWithData_(buf)
@@ -460,22 +512,26 @@ class TestKeyedArchiveSimple (TestCase):
             self.assertIsInstance(v, str)
         self.assertEqual(o, v)
 
-        o = b'hello world'
+        o = b"hello world"
         buf = self.archiverClass.archivedDataWithRootObject_(o)
         self.assertIsInstance(buf, NSData)
         v = self.unarchiverClass.unarchiveObjectWithData_(buf)
-        self.assertIsInstance(v, bytes if self.isKeyed else (NSData if sys.version_info[0] == 3 else unicode))
+        self.assertIsInstance(
+            v,
+            bytes
+            if self.isKeyed
+            else (NSData if sys.version_info[0] == 3 else unicode),
+        )
         self.assertEqual(o, v)
 
-        o = b'hello world'.decode('ascii')
+        o = b"hello world".decode("ascii")
         buf = self.archiverClass.archivedDataWithRootObject_(o)
         self.assertIsInstance(buf, NSData)
         v = self.unarchiverClass.unarchiveObjectWithData_(buf)
         self.assertIsInstance(v, type(o))
         self.assertEqual(o, v)
 
-
-        o = mystr('hello world')
+        o = mystr("hello world")
         buf = self.archiverClass.archivedDataWithRootObject_(o)
         self.assertIsInstance(buf, NSData)
         v = self.unarchiverClass.unarchiveObjectWithData_(buf)
@@ -496,7 +552,6 @@ class TestKeyedArchiveSimple (TestCase):
         self.assertIsInstance(v, float)
         self.assertEqual(o, v)
 
-
         if sys.version_info[0] == 2:
             buf = self.archiverClass.archivedDataWithRootObject_(unicode("hello"))
             self.assertIsInstance(buf, NSData)
@@ -506,7 +561,9 @@ class TestKeyedArchiveSimple (TestCase):
         buf = self.archiverClass.archivedDataWithRootObject_("hello")
         self.assertIsInstance(buf, NSData)
         v = self.unarchiverClass.unarchiveObjectWithData_(buf)
-        self.assertIsInstance(v, str if sys.version_info[0] == 3 or self.isKeyed else unicode)
+        self.assertIsInstance(
+            v, str if sys.version_info[0] == 3 or self.isKeyed else unicode
+        )
         self.assertEqual(v, "hello")
 
         buf = self.archiverClass.archivedDataWithRootObject_(sys.maxsize * 4)
@@ -609,7 +666,7 @@ class TestKeyedArchiveSimple (TestCase):
         self.assertIsInstance(v, dict if self.isKeyed else NSDictionary)
         self.assertEqual(dict(v), o)
 
-        o = {unicode("hello"): unicode("bar"), 42: 1.5 }
+        o = {unicode("hello"): unicode("bar"), 42: 1.5}
         buf = self.archiverClass.archivedDataWithRootObject_(o)
         self.assertIsInstance(buf, NSData)
         v = self.unarchiverClass.unarchiveObjectWithData_(buf)
@@ -626,7 +683,7 @@ class TestKeyedArchiveSimple (TestCase):
         self.assertEqual(v, o)
         self.assertEqual(v.a, o.a)
 
-        o = dict_subclass({unicode("hello"): unicode("bar"), 42: 1.5 })
+        o = dict_subclass({unicode("hello"): unicode("bar"), 42: 1.5})
         o.a = 99
         buf = self.archiverClass.archivedDataWithRootObject_(o)
         self.assertIsInstance(buf, NSData)
@@ -636,10 +693,7 @@ class TestKeyedArchiveSimple (TestCase):
         self.assertEqual(v.a, o.a)
 
     def testNestedDicts(self):
-        o = {
-                unicode("hello"): { 1:2 },
-                unicode("world"): unicode("foobar")
-            }
+        o = {unicode("hello"): {1: 2}, unicode("world"): unicode("foobar")}
         buf = self.archiverClass.archivedDataWithRootObject_(o)
         self.assertIsInstance(buf, NSData)
         v = self.unarchiverClass.unarchiveObjectWithData_(buf)
@@ -647,21 +701,21 @@ class TestKeyedArchiveSimple (TestCase):
         self.assertEqual(v, o)
 
         o = {}
-        o[unicode('self')] = o
+        o[unicode("self")] = o
         buf = self.archiverClass.archivedDataWithRootObject_(o)
         self.assertIsInstance(buf, NSData)
         v = self.unarchiverClass.unarchiveObjectWithData_(buf)
         self.assertIsInstance(v, dict if self.isKeyed else NSMutableDictionary)
 
         if self.isKeyed:
-            self.assertIs(v[unicode('self')], v)
+            self.assertIs(v[unicode("self")], v)
 
         else:
             # See 'TestArchiveNative'
-            self.assertIsNot(v[unicode('self')], v)
+            self.assertIsNot(v[unicode("self")], v)
 
     def testNestedSequences(self):
-        o = [ 1, 2, 3, (5, (unicode('a'), unicode('b')), 6), {1:2} ]
+        o = [1, 2, 3, (5, (unicode("a"), unicode("b")), 6), {1: 2}]
         o[-1] = o
 
         buf = self.archiverClass.archivedDataWithRootObject_(o)
@@ -697,6 +751,7 @@ class TestKeyedArchiveSimple (TestCase):
         o.value = o
 
         import pickle
+
         b = pickle.dumps(o)
         o2 = pickle.loads(b)
 
@@ -718,7 +773,7 @@ class TestKeyedArchiveSimple (TestCase):
 
     def testRecusiveNesting(self):
         l = []
-        d = {1:l}
+        d = {1: l}
         i = a_classic_class()
         i.attr = d
         l.append(i)
@@ -747,8 +802,6 @@ class TestKeyedArchiveSimple (TestCase):
             # See 'TestArchiveNative'
             self.assertIsNot(v[1][0].attr, v)
 
-
-
     def testTupleOfObjects(self):
         o = a_classic_class()
         t = (o, o, o)
@@ -764,14 +817,15 @@ class TestKeyedArchiveSimple (TestCase):
         self.assertIs(v[0], v[1])
         self.assertIs(v[0], v[2])
 
-class TestArchiveSimple (TestKeyedArchiveSimple):
+
+class TestArchiveSimple(TestKeyedArchiveSimple):
     def setUp(self):
         self.isKeyed = False
         self.archiverClass = NSArchiver
         self.unarchiverClass = NSUnarchiver
 
 
-class TestKeyedArchivePlainPython (TestCase, test.pickletester.AbstractPickleTests):
+class TestKeyedArchivePlainPython(TestCase, test.pickletester.AbstractPickleTests):
     # Ensure that we don't run every test case three times
     def setUp(self):
         self._protocols = test.pickletester.protocols
@@ -783,7 +837,6 @@ class TestKeyedArchivePlainPython (TestCase, test.pickletester.AbstractPickleTes
     def assert_is_copy(self, a, b):
         return self.assertEqual(a, b)
 
-
     def dumps(self, arg, proto=0, fast=0):
         # Ignore proto and fast
         return NSKeyedArchiver.archivedDataWithRootObject_(arg)
@@ -791,157 +844,205 @@ class TestKeyedArchivePlainPython (TestCase, test.pickletester.AbstractPickleTes
     def loads(self, buf):
         return NSKeyedUnarchiver.unarchiveObjectWithData_(buf)
 
-
     # Disable a number of methods, these test things we're not interested in.
     # (Most of these look at the generated byte-stream, as we're not writing data in pickle's
     # format such tests are irrelevant to archiving support)
     @onlyIf(0, "python unittest not relevant for archiving")
-    def test_negative_put(self): pass
+    def test_negative_put(self):
+        pass
 
     @onlyIf(0, "python unittest not relevant for archiving")
-    def test_framed_write_sizes_with_delayed_writer(self): pass
+    def test_framed_write_sizes_with_delayed_writer(self):
+        pass
 
     @onlyIf(0, "python unittest not relevant for archiving")
-    def test_badly_quoted_string(self): pass
+    def test_badly_quoted_string(self):
+        pass
 
     @onlyIf(0, "python unittest not relevant for archiving")
-    def test_correctly_quoted_string(self): pass
+    def test_correctly_quoted_string(self):
+        pass
 
     @onlyIf(0, "python unittest not relevant for archiving")
-    def test_badly_escaped_string(self): pass
+    def test_badly_escaped_string(self):
+        pass
 
     @onlyIf(0, "python unittest not relevant for archiving")
-    def test_appends_on_non_lists(self): pass
+    def test_appends_on_non_lists(self):
+        pass
 
     @onlyIf(0, "python unittest not relevant for archiving")
-    def test_setitems_on_non_dicts(self): pass
+    def test_setitems_on_non_dicts(self):
+        pass
 
     @onlyIf(0, "python unittest not relevant for archiving")
-    def test_int_pickling_efficiency(self): pass
+    def test_int_pickling_efficiency(self):
+        pass
 
     @onlyIf(0, "python unittest not relevant for archiving")
-    def test_dynamic_class(self): pass
+    def test_dynamic_class(self):
+        pass
 
     @onlyIf(0, "python unittest not relevant for archiving")
-    def test_ellipsis(self): pass
+    def test_ellipsis(self):
+        pass
 
     @onlyIf(0, "python unittest not relevant for archiving")
-    def test_notimplemented(self): pass
+    def test_notimplemented(self):
+        pass
 
     @onlyIf(0, "python unittest not relevant for archiving")
-    def test_load_classic_instance(self): pass
+    def test_load_classic_instance(self):
+        pass
 
     @onlyIf(0, "python unittest not relevant for archiving")
-    def test_insecure_strings(self): pass
+    def test_insecure_strings(self):
+        pass
 
     @onlyIf(0, "python unittest not relevant for archiving")
-    def test_load_from_canned_string(self): pass
+    def test_load_from_canned_string(self):
+        pass
 
     @onlyIf(0, "python unittest not relevant for archiving")
-    def test_maxint64(self): pass
+    def test_maxint64(self):
+        pass
 
     @onlyIf(0, "python unittest not relevant for archiving")
-    def test_dict_chunking(self): pass
+    def test_dict_chunking(self):
+        pass
 
     @onlyIf(0, "python unittest not relevant for archiving")
-    def test_float_format(self): pass
+    def test_float_format(self):
+        pass
 
     @onlyIf(0, "python unittest not relevant for archiving")
-    def test_garyp(self): pass
+    def test_garyp(self):
+        pass
 
     @onlyIf(0, "python unittest not relevant for archiving")
-    def test_list_chunking(self): pass
+    def test_list_chunking(self):
+        pass
 
     @onlyIf(0, "python unittest not relevant for archiving")
-    def test_singletons(self): pass
+    def test_singletons(self):
+        pass
 
     @onlyIf(0, "python unittest not relevant for archiving")
-    def test_simple_newobj(self): pass
+    def test_simple_newobj(self):
+        pass
 
     @onlyIf(0, "python unittest not relevant for archiving")
-    def test_short_tuples(self): pass
+    def test_short_tuples(self):
+        pass
 
     @onlyIf(0, "python unittest not relevant for archiving")
-    def test_proto(self): pass
+    def test_proto(self):
+        pass
 
     @onlyIf(0, "python unittest not relevant for archiving")
-    def test_long1(self): pass
+    def test_long1(self):
+        pass
 
     @onlyIf(0, "python unittest not relevant for archiving")
-    def test_long4(self): pass
+    def test_long4(self):
+        pass
 
     @onlyIf(0, "python unittest not relevant for archiving")
-    def test_get(self): pass
+    def test_get(self):
+        pass
 
     @onlyIf(0, "python unittest not relevant for archiving")
-    def test_load_from_data0(self): pass
+    def test_load_from_data0(self):
+        pass
 
     @onlyIf(0, "python unittest not relevant for archiving")
-    def test_load_from_data1(self): pass
+    def test_load_from_data1(self):
+        pass
 
     @onlyIf(0, "python unittest not relevant for archiving")
-    def test_load_from_data2(self): pass
+    def test_load_from_data2(self):
+        pass
 
     @onlyIf(0, "python unittest not relevant for archiving")
-    def test_unpickle_from_2x(self): pass
+    def test_unpickle_from_2x(self):
+        pass
 
     @onlyIf(0, "python unittest not relevant for archiving")
-    def test_pickle_to_2x(self): pass
+    def test_pickle_to_2x(self):
+        pass
 
     @onlyIf(0, "python unittest not relevant for archiving")
-    def test_bad_getattr(self): pass
+    def test_bad_getattr(self):
+        pass
 
     @onlyIf(0, "python unittest not relevant for archiving")
-    def test_unicode(self): pass
+    def test_unicode(self):
+        pass
 
     @onlyIf(0, "python unittest not relevant for archiving")
     # XXX: fixme: currently gives abort in debug builds of 3.4, that shouldn't happen!
-    def test_unicode_high_plane(self): pass
+    def test_unicode_high_plane(self):
+        pass
 
     @onlyIf(0, "python unittest not relevant for archiving")
-    def test_maxsize64(self): pass
+    def test_maxsize64(self):
+        pass
 
     @onlyIf(0, "python unittest not relevant for archiving")
-    def test_empty_bytestring(self): pass
+    def test_empty_bytestring(self):
+        pass
 
     @onlyIf(0, "python unittest not relevant for archiving")
-    def test_pop_empty_stack(self): pass
+    def test_pop_empty_stack(self):
+        pass
 
     @onlyIf(0, "python unittest not relevant for archiving")
-    def test_framing_many_objects(self): pass
+    def test_framing_many_objects(self):
+        pass
 
     @onlyIf(0, "python unittest not relevant for archiving")
-    def test_set_chunking(self): pass
+    def test_set_chunking(self):
+        pass
 
     @onlyIf(0, "python unittest not relevant for archiving")
-    def test_optional_frames(self): pass
+    def test_optional_frames(self):
+        pass
 
     @onlyIf(0, "python unittest not relevant for archiving")
-    def test_framing_large_objects(self): pass
+    def test_framing_large_objects(self):
+        pass
 
     @onlyIf(0, "python unittest not relevant for archiving")
-    def test_load_long_python2_str_as_bytes(self): pass
+    def test_load_long_python2_str_as_bytes(self):
+        pass
 
     @onlyIf(0, "python unittest not relevant for archiving")
-    def test_load_python2_unicode_as_str(self): pass
+    def test_load_python2_unicode_as_str(self):
+        pass
 
     @onlyIf(0, "python unittest not relevant for archiving")
-    def test_load_python2_str_as_bytes(self): pass
+    def test_load_python2_str_as_bytes(self):
+        pass
 
     @onlyIf(0, "python unittest not relevant for archiving")
-    def test_complex_newobj(self): pass
+    def test_complex_newobj(self):
+        pass
 
     @onlyIf(0, "python unittest not relevant for archiving")
-    def test_compat_pickle(self): pass
+    def test_compat_pickle(self):
+        pass
 
     @onlyIf(0, "python unittest not relevant for archiving")
-    def test_compat_unpickle(self): pass
+    def test_compat_unpickle(self):
+        pass
 
     @onlyIf(0, "python unittest not relevant for archiving")
-    def test_frame_readline(self): pass
+    def test_frame_readline(self):
+        pass
 
     @onlyIf(0, "python unittest not relevant for archiving")
-    def test_complex_newobj_ex(self): pass
+    def test_complex_newobj_ex(self):
+        pass
 
     @expectedFailure
     def test_newobj_not_class(self):
@@ -974,15 +1075,21 @@ class TestKeyedArchivePlainPython (TestCase, test.pickletester.AbstractPickleTes
 
     @expectedFailure
     def test_recursive_list_subclass_and_inst(self):
-        test.pickletester.AbstractPickleTests.test_recursive_list_subclass_and_inst(self)
+        test.pickletester.AbstractPickleTests.test_recursive_list_subclass_and_inst(
+            self
+        )
 
     @expectedFailure
     def test_recursive_tuple_subclass_and_inst(self):
-        test.pickletester.AbstractPickleTests.test_recursive_tuple_subclass_and_inst(self)
+        test.pickletester.AbstractPickleTests.test_recursive_tuple_subclass_and_inst(
+            self
+        )
 
     @expectedFailure
     def test_recursive_dict_subclass_and_inst(self):
-        test.pickletester.AbstractPickleTests.test_recursive_dict_subclass_and_inst(self)
+        test.pickletester.AbstractPickleTests.test_recursive_dict_subclass_and_inst(
+            self
+        )
 
     @expectedFailure
     def test_recursive_set_subclass_and_inst(self):
@@ -990,11 +1097,13 @@ class TestKeyedArchivePlainPython (TestCase, test.pickletester.AbstractPickleTes
 
     @expectedFailure
     def test_recursive_frozenset_subclass_and_inst(self):
-        test.pickletester.AbstractPickleTests.test_recursive_frozenset_subclass_and_inst(self)
+        test.pickletester.AbstractPickleTests.test_recursive_frozenset_subclass_and_inst(
+            self
+        )
 
     def test_long(self):
         # The real test_long method takes way to much time, test a subset
-        x = 12345678910111213141516178920 << (256*8)
+        x = 12345678910111213141516178920 << (256 * 8)
         buf = self.dumps(x)
         v = self.loads(buf)
         self.assertEqual(v, x)
@@ -1011,10 +1120,6 @@ class TestKeyedArchivePlainPython (TestCase, test.pickletester.AbstractPickleTes
                 buf = self.dumps(x)
                 v = self.loads(buf)
                 self.assertEqual(v, x)
-
-
-
-
 
     # Overriden tests for extension codes, the test code checks
     # the actual byte stream.
@@ -1038,7 +1143,7 @@ class TestKeyedArchivePlainPython (TestCase, test.pickletester.AbstractPickleTes
     # versions. Override to only look at protocol version 2.
     #
     def test_reduce_overrides_default_reduce_ex(self):
-        for proto in 2,:
+        for proto in (2,):
             x = test.pickletester.REX_one()
             self.assertEqual(x._reduce_called, 0)
             s = self.dumps(x, proto)
@@ -1047,7 +1152,7 @@ class TestKeyedArchivePlainPython (TestCase, test.pickletester.AbstractPickleTes
             self.assertEqual(y._reduce_called, 0)
 
     def test_reduce_ex_called(self):
-        for proto in 2,:
+        for proto in (2,):
             x = test.pickletester.REX_two()
             self.assertEqual(x._proto, None)
             s = self.dumps(x, proto)
@@ -1056,7 +1161,7 @@ class TestKeyedArchivePlainPython (TestCase, test.pickletester.AbstractPickleTes
             self.assertEqual(y._proto, None)
 
     def test_reduce_ex_overrides_reduce(self):
-        for proto in 2,:
+        for proto in (2,):
             x = test.pickletester.REX_three()
             self.assertEqual(x._proto, None)
             s = self.dumps(x, proto)
@@ -1065,7 +1170,7 @@ class TestKeyedArchivePlainPython (TestCase, test.pickletester.AbstractPickleTes
             self.assertEqual(y._proto, None)
 
     def test_reduce_ex_calls_base(self):
-        for proto in 2,:
+        for proto in (2,):
             x = test.pickletester.REX_four()
             self.assertEqual(x._proto, None)
             s = self.dumps(x, proto)
@@ -1074,7 +1179,7 @@ class TestKeyedArchivePlainPython (TestCase, test.pickletester.AbstractPickleTes
             self.assertEqual(y._proto, proto)
 
     def test_reduce_calls_base(self):
-        for proto in 2,:
+        for proto in (2,):
             x = test.pickletester.REX_five()
             self.assertEqual(x._reduce_called, 0)
             s = self.dumps(x, proto)
@@ -1082,7 +1187,8 @@ class TestKeyedArchivePlainPython (TestCase, test.pickletester.AbstractPickleTes
             y = self.loads(s)
             self.assertEqual(y._reduce_called, 1)
 
-class TestArchivePlainPython (TestKeyedArchivePlainPython):
+
+class TestArchivePlainPython(TestKeyedArchivePlainPython):
     def setUp(self):
         self._protocols = test.pickletester.protocols
         test.pickletester.protocols = (2,)
@@ -1090,14 +1196,12 @@ class TestArchivePlainPython (TestKeyedArchivePlainPython):
     def tearDown(self):
         test.pickletester.protocols = self._protocols
 
-
     def dumps(self, arg, proto=0, fast=0):
         # Ignore proto and fast
         return NSArchiver.archivedDataWithRootObject_(arg)
 
     def loads(self, buf):
         return NSUnarchiver.unarchiveObjectWithData_(buf)
-
 
     @expectedFailure
     def test_recursive_dict(self):
@@ -1137,40 +1241,49 @@ class TestArchivePlainPython (TestKeyedArchivePlainPython):
         # See 'TestArchiveNative'
         test.pickletester.AbstractPickleTests.test_recursive_tuple(self)
 
+    @onlyIf(0, "python unittest not relevant for archiving")
+    def test_negative_put(self):
+        pass
 
     @onlyIf(0, "python unittest not relevant for archiving")
-    def test_negative_put(self): pass
+    def test_int_pickling_efficiency(self):
+        pass
 
     @onlyIf(0, "python unittest not relevant for archiving")
-    def test_int_pickling_efficiency(self): pass
+    def test_negative_32b_binunicode(self):
+        pass
 
     @onlyIf(0, "python unittest not relevant for archiving")
-    def test_negative_32b_binunicode(self): pass
+    def test_negative_32b_binput(self):
+        pass
 
     @onlyIf(0, "python unittest not relevant for archiving")
-    def test_negative_32b_binput(self): pass
+    def test_negative_32b_binbytes(self):
+        pass
 
     @onlyIf(0, "python unittest not relevant for archiving")
-    def test_negative_32b_binbytes(self): pass
+    def test_framing_many_objects(self):
+        pass
 
     @onlyIf(0, "python unittest not relevant for archiving")
-    def test_framing_many_objects(self): pass
+    def test_complex_newobj(self):
+        pass
 
     @onlyIf(0, "python unittest not relevant for archiving")
-    def test_complex_newobj(self): pass
+    def test_compat_pickle(self):
+        pass
 
     @onlyIf(0, "python unittest not relevant for archiving")
-    def test_compat_pickle(self): pass
+    def test_compat_unpickle(self):
+        pass
 
     @onlyIf(0, "python unittest not relevant for archiving")
-    def test_compat_unpickle(self): pass
+    def test_frame_readline(self):
+        pass
 
     @onlyIf(0, "python unittest not relevant for archiving")
-    def test_frame_readline(self): pass
-
-    @onlyIf(0, "python unittest not relevant for archiving")
-    def test_framed_write_sizes_with_delayed_writer(self): pass
-
+    def test_framed_write_sizes_with_delayed_writer(self):
+        pass
 
     @expectedFailure
     def test_recursive_dict_subclass_key(self):
@@ -1202,15 +1315,21 @@ class TestArchivePlainPython (TestKeyedArchivePlainPython):
 
     @expectedFailure
     def test_recursive_list_subclass_and_inst(self):
-        test.pickletester.AbstractPickleTests.test_recursive_list_subclass_and_inst(self)
+        test.pickletester.AbstractPickleTests.test_recursive_list_subclass_and_inst(
+            self
+        )
 
     @expectedFailure
     def test_recursive_tuple_subclass_and_inst(self):
-        test.pickletester.AbstractPickleTests.test_recursive_tuple_subclass_and_inst(self)
+        test.pickletester.AbstractPickleTests.test_recursive_tuple_subclass_and_inst(
+            self
+        )
 
     @expectedFailure
     def test_recursive_dict_subclass_and_inst(self):
-        test.pickletester.AbstractPickleTests.test_recursive_dict_subclass_and_inst(self)
+        test.pickletester.AbstractPickleTests.test_recursive_dict_subclass_and_inst(
+            self
+        )
 
     @expectedFailure
     def test_recursive_set_subclass_and_inst(self):
@@ -1218,14 +1337,17 @@ class TestArchivePlainPython (TestKeyedArchivePlainPython):
 
     @expectedFailure
     def test_recursive_frozenset_subclass_and_inst(self):
-        test.pickletester.AbstractPickleTests.test_recursive_frozenset_subclass_and_inst(self)
+        test.pickletester.AbstractPickleTests.test_recursive_frozenset_subclass_and_inst(
+            self
+        )
+
 
 #
 # Disable testing of plain Archiving for now, need full support
 # for keyed-archiving first, then worry about adding "classic"
 # archiving.
 #
-#class TestArchivePlainPython (TestKeyedArchivePlainPython):
+# class TestArchivePlainPython (TestKeyedArchivePlainPython):
 #    def dumps(self, arg, proto=0, fast=0):
 #        # Ignore proto and fast
 #        return NSArchiver.archivedDataWithRootObject_(arg)
@@ -1238,7 +1360,7 @@ class TestArchivePlainPython (TestKeyedArchivePlainPython):
 # Second set of tests: test if archiving a graph that
 # contains both python and objective-C objects works correctly.
 #
-class TestKeyedArchiveMixedGraphs (TestCase):
+class TestKeyedArchiveMixedGraphs(TestCase):
     isKeyed = True
 
     def dumps(self, arg, proto=0, fast=0):
@@ -1270,11 +1392,11 @@ class TestKeyedArchiveMixedGraphs (TestCase):
         self.assertIsInstance(p3, list if self.isKeyed else NSArray)
         self.assertIs(p3[0], p1)
         self.assertIs(p3[1], p2)
-        self.assertIsInstance(p2.lst , NSArray)
+        self.assertIsInstance(p2.lst, NSArray)
         self.assertIs(p2.lst[0], p1)
 
 
-class TestArchiveMixedGraphs (TestKeyedArchiveMixedGraphs):
+class TestArchiveMixedGraphs(TestKeyedArchiveMixedGraphs):
     isKeyed = False
 
     def dumps(self, arg, proto=0, fast=0):
@@ -1284,7 +1406,8 @@ class TestArchiveMixedGraphs (TestKeyedArchiveMixedGraphs):
     def loads(self, buf):
         return NSUnarchiver.unarchiveObjectWithData_(buf)
 
-class TestArchiveNative (TestCase):
+
+class TestArchiveNative(TestCase):
     # Self-referential graphs with collections are broken
     # in Cocoa, these are tested here because this behavior
     # is mentioned in PyObjC's documentation, that documentation
@@ -1301,8 +1424,8 @@ class TestArchiveNative (TestCase):
 
     @expectedFailure
     def test_self_referential_array(self):
-        s1 = NSString.stringWithString_('hello')
-        s2 = NSString.stringWithString_('world')
+        s1 = NSString.stringWithString_("hello")
+        s2 = NSString.stringWithString_("world")
 
         a = NSMutableArray.arrayWithArray_([s1, s2])
         a.addObject_(a)
@@ -1317,8 +1440,8 @@ class TestArchiveNative (TestCase):
 
     @expectedFailure
     def test_self_referential_dictionary(self):
-        s1 = NSString.stringWithString_('hello')
-        s2 = NSString.stringWithString_('world')
+        s1 = NSString.stringWithString_("hello")
+        s2 = NSString.stringWithString_("world")
 
         a = NSMutableDictionary.dictionary()
         a.setValue_forKey_(s1, s2)
@@ -1353,7 +1476,7 @@ class TestArchiveNative (TestCase):
         self.assertEqual(a, b)
         self.assertIsInstance(b, float_subclass)
 
-    @expectedFailureIf(os_level_key(os_release()) <= os_level_key('10.6'))
+    @expectedFailureIf(os_level_key(os_release()) <= os_level_key("10.6"))
     def test_more_state(self):
         a = with_getstate(1.5)
         self.assertEqual(a.value, 1.5)
@@ -1373,8 +1496,8 @@ class TestArchiveNative (TestCase):
         self.assertEqual(a.value, b.value)
         self.assertIsInstance(b.value, (int, long))
 
-        a = with_getstate(1<<100)
-        self.assertEqual(a.value, 1<<100)
+        a = with_getstate(1 << 100)
+        self.assertEqual(a.value, 1 << 100)
         buf = self.dumps(a)
         self.assertIsInstance(buf, NSData)
         b = self.loads(buf)
@@ -1382,8 +1505,8 @@ class TestArchiveNative (TestCase):
         self.assertEqual(a.value, b.value)
         self.assertIsInstance(b.value, (int, long))
 
-        a = with_getstate((1,2))
-        self.assertEqual(a.value, (1,2))
+        a = with_getstate((1, 2))
+        self.assertEqual(a.value, (1, 2))
         buf = self.dumps(a)
         self.assertIsInstance(buf, NSData)
         b = self.loads(buf)
@@ -1391,29 +1514,34 @@ class TestArchiveNative (TestCase):
         self.assertEqual(a.value, b.value)
         self.assertIsInstance(b.value, tuple)
 
-        a = only_getstate({'a':42, 'b':9, NSString('otherstr'): 'b'}, {'c': 4, 'd': 7, 42: 'b', 'a': 1, NSString('nsstr'): NSString('xx') })
+        a = only_getstate(
+            {"a": 42, "b": 9, NSString("otherstr"): "b"},
+            {"c": 4, "d": 7, 42: "b", "a": 1, NSString("nsstr"): NSString("xx")},
+        )
         buf = self.dumps(a)
         self.assertIsInstance(buf, NSData)
         b = self.loads(buf)
         self.assertIsInstance(b, only_getstate)
-        self.assertEqual(b.__dict__, {
-            #'_slots': None,
-            #'_kwds': None,
-            'a': 42,
-            'b': 9,
-            'c': 4,
-            'd': 7,
-            42: 'b',
-            'nsstr': 'xx',
-            'otherstr': 'b',
-        })
+        self.assertEqual(
+            b.__dict__,
+            {
+                #'_slots': None,
+                #'_kwds': None,
+                "a": 42,
+                "b": 9,
+                "c": 4,
+                "d": 7,
+                42: "b",
+                "nsstr": "xx",
+                "otherstr": "b",
+            },
+        )
         for k in b.__dict__:
             self.assertNotIsInstance(k, objc.pyobjc_unicode)
             if sys.version_info[0] == 3:
                 self.assertNotIsInstance(k, bytes)
 
-
-        a = with_reduce_func([1,2], (3,4), {'a': 4}, {'d', 'e'}, frozenset(['f']), id)
+        a = with_reduce_func([1, 2], (3, 4), {"a": 4}, {"d", "e"}, frozenset(["f"]), id)
         buf = self.dumps(a)
         self.assertIsInstance(buf, NSData)
         b = self.loads(buf)
@@ -1426,7 +1554,7 @@ class TestArchiveNative (TestCase):
         self.assertIsInstance(b.args[4], frozenset)
 
 
-class TestKeyedArchiveNative (TestArchiveNative):
+class TestKeyedArchiveNative(TestArchiveNative):
     def dumps(self, arg, proto=0, fast=0):
         # Ignore proto and fast
         return NSKeyedArchiver.archivedDataWithRootObject_(arg)
@@ -1434,12 +1562,14 @@ class TestKeyedArchiveNative (TestArchiveNative):
     def loads(self, buf):
         return NSKeyedUnarchiver.unarchiveObjectWithData_(buf)
 
+
 #
 # And finally some tests to check if archiving of Python
 # subclasses of NSObject works correctly.
 #
-class TestArchivePythonObjCSubclass (TestCase):
+class TestArchivePythonObjCSubclass(TestCase):
     pass
+
 
 if __name__ == "__main__":
     main()

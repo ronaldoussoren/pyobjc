@@ -5,15 +5,17 @@ for testing NSMutableDictionary
 from PyObjCTools.TestSupport import *
 
 import objc
-NSDictionary = objc.lookUpClass('NSDictionary')
-NSMutableDictionary = objc.lookUpClass('NSMutableDictionary')
+
+NSDictionary = objc.lookUpClass("NSDictionary")
+NSMutableDictionary = objc.lookUpClass("NSMutableDictionary")
 
 
 import unittest
 
-class DictSetTest(TestCase):
 
-    def test_constructors_not_callable(self): pass
+class DictSetTest(TestCase):
+    def test_constructors_not_callable(self):
+        pass
 
     def test_dict_keys(self):
         d = NSMutableDictionary({1: 10, "a": "ABC"})
@@ -35,34 +37,33 @@ class DictSetTest(TestCase):
         del e["a"]
         self.assertNotEqual(d.viewkeys(), e.viewkeys())
 
-        d = NSMutableDictionary({'a': 10, "b": "ABC"})
+        d = NSMutableDictionary({"a": 10, "b": "ABC"})
         keys = d.viewkeys()
-        self.assertEqual(keys, {'a', 'b'})
+        self.assertEqual(keys, {"a", "b"})
 
-        s = keys | { 'c' }
-        self.assertEqual(s, {'a', 'b', 'c'})
+        s = keys | {"c"}
+        self.assertEqual(s, {"a", "b", "c"})
 
-        s = { 'c' } | keys
-        self.assertEqual(s, {'a', 'b', 'c'})
+        s = {"c"} | keys
+        self.assertEqual(s, {"a", "b", "c"})
 
-        s = keys & { 'b' }
-        self.assertEqual(s, { 'b'})
+        s = keys & {"b"}
+        self.assertEqual(s, {"b"})
 
-        s = {'b', 'c' } & keys
-        self.assertEqual(s, { 'b'})
+        s = {"b", "c"} & keys
+        self.assertEqual(s, {"b"})
 
-        s = keys - { 'b' }
-        self.assertEqual(s, { 'a'})
+        s = keys - {"b"}
+        self.assertEqual(s, {"a"})
 
-        s = {'c', 'b' } - keys
-        self.assertEqual(s, { 'c'})
+        s = {"c", "b"} - keys
+        self.assertEqual(s, {"c"})
 
-        s = keys ^ { 'b', 'c' }
-        self.assertEqual(s, { 'a', 'c' })
+        s = keys ^ {"b", "c"}
+        self.assertEqual(s, {"a", "c"})
 
-        s = {'c', 'b' } ^ keys
-        self.assertEqual(s, { 'a', 'c'})
-
+        s = {"c", "b"} ^ keys
+        self.assertEqual(s, {"a", "c"})
 
     def test_dict_items(self):
         d = NSMutableDictionary({1: 10, "a": "ABC"})
@@ -99,68 +100,76 @@ class DictSetTest(TestCase):
         self.assertEqual(set(values), set([10, "ABC"]))
         self.assertEqual(len(values), 2)
 
-    def test_dict_repr(self): pass
+    def test_dict_repr(self):
+        pass
 
     def test_keys_set_operations(self):
-        d1 = NSMutableDictionary({u'a': 1, u'b': 2})
-        d2 = NSMutableDictionary({u'b': 3, u'c': 2})
-        d3 = NSMutableDictionary({u'd': 4, u'e': 5})
-        self.assertEqual(d1.viewkeys() & d1.viewkeys(), set((u'a', u'b')))
-        self.assertEqual(d1.viewkeys() & d2.viewkeys(), set((u'b')))
+        d1 = NSMutableDictionary({u"a": 1, u"b": 2})
+        d2 = NSMutableDictionary({u"b": 3, u"c": 2})
+        d3 = NSMutableDictionary({u"d": 4, u"e": 5})
+        self.assertEqual(d1.viewkeys() & d1.viewkeys(), set((u"a", u"b")))
+        self.assertEqual(d1.viewkeys() & d2.viewkeys(), set((u"b")))
         self.assertEqual(d1.viewkeys() & d3.viewkeys(), set())
-        self.assertEqual(d1.viewkeys() & set(d1.viewkeys()), set((u'a', u'b')))
-        self.assertEqual(d1.viewkeys() & set(d2.viewkeys()), set((u'b')))
+        self.assertEqual(d1.viewkeys() & set(d1.viewkeys()), set((u"a", u"b")))
+        self.assertEqual(d1.viewkeys() & set(d2.viewkeys()), set((u"b")))
         self.assertEqual(d1.viewkeys() & set(d3.viewkeys()), set())
 
-        self.assertEqual(d1.viewkeys() | d1.viewkeys(), set((u'a', u'b')))
-        self.assertEqual(d1.viewkeys() | d2.viewkeys(), set((u'a', u'b', u'c')))
-        self.assertEqual(d1.viewkeys() | d3.viewkeys(), set((u'a', u'b', u'd', u'e')))
-        self.assertEqual(d1.viewkeys() | set(d1.viewkeys()), set((u'a', u'b')))
-        self.assertEqual(d1.viewkeys() | set(d2.viewkeys()), set((u'a', u'b', u'c')))
-        self.assertEqual(d1.viewkeys() | set(d3.viewkeys()),
-                         set((u'a', u'b', u'd', u'e')))
+        self.assertEqual(d1.viewkeys() | d1.viewkeys(), set((u"a", u"b")))
+        self.assertEqual(d1.viewkeys() | d2.viewkeys(), set((u"a", u"b", u"c")))
+        self.assertEqual(d1.viewkeys() | d3.viewkeys(), set((u"a", u"b", u"d", u"e")))
+        self.assertEqual(d1.viewkeys() | set(d1.viewkeys()), set((u"a", u"b")))
+        self.assertEqual(d1.viewkeys() | set(d2.viewkeys()), set((u"a", u"b", u"c")))
+        self.assertEqual(
+            d1.viewkeys() | set(d3.viewkeys()), set((u"a", u"b", u"d", u"e"))
+        )
 
         self.assertEqual(d1.viewkeys() ^ d1.viewkeys(), set())
-        self.assertEqual(d1.viewkeys() ^ d2.viewkeys(), set((u'a', u'c')))
-        self.assertEqual(d1.viewkeys() ^ d3.viewkeys(), set((u'a', u'b', u'd', u'e')))
+        self.assertEqual(d1.viewkeys() ^ d2.viewkeys(), set((u"a", u"c")))
+        self.assertEqual(d1.viewkeys() ^ d3.viewkeys(), set((u"a", u"b", u"d", u"e")))
         self.assertEqual(d1.viewkeys() ^ set(d1.viewkeys()), set())
-        self.assertEqual(d1.viewkeys() ^ set(d2.viewkeys()), set((u'a', u'c')))
-        self.assertEqual(d1.viewkeys() ^ set(d3.viewkeys()),
-                         set((u'a', u'b', u'd', u'e')))
+        self.assertEqual(d1.viewkeys() ^ set(d2.viewkeys()), set((u"a", u"c")))
+        self.assertEqual(
+            d1.viewkeys() ^ set(d3.viewkeys()), set((u"a", u"b", u"d", u"e"))
+        )
 
     def test_items_set_operations(self):
-        d1 = NSMutableDictionary({u'a': 1, u'b': 2})
-        d2 = NSMutableDictionary({u'a': 2, u'b': 2})
-        d3 = NSMutableDictionary({u'd': 4, u'e': 5})
-        self.assertEqual(
-            d1.viewitems() & d1.viewitems(), set(((u'a', 1), (u'b', 2))))
-        self.assertEqual(d1.viewitems() & d2.viewitems(), set(((u'b', 2),)))
+        d1 = NSMutableDictionary({u"a": 1, u"b": 2})
+        d2 = NSMutableDictionary({u"a": 2, u"b": 2})
+        d3 = NSMutableDictionary({u"d": 4, u"e": 5})
+        self.assertEqual(d1.viewitems() & d1.viewitems(), set(((u"a", 1), (u"b", 2))))
+        self.assertEqual(d1.viewitems() & d2.viewitems(), set(((u"b", 2),)))
         self.assertEqual(d1.viewitems() & d3.viewitems(), set())
-        self.assertEqual(d1.viewitems() & set(d1.viewitems()),
-                         set(((u'a', 1), (u'b', 2))))
-        self.assertEqual(d1.viewitems() & set(d2.viewitems()), set(((u'b', 2),)))
+        self.assertEqual(
+            d1.viewitems() & set(d1.viewitems()), set(((u"a", 1), (u"b", 2)))
+        )
+        self.assertEqual(d1.viewitems() & set(d2.viewitems()), set(((u"b", 2),)))
         self.assertEqual(d1.viewitems() & set(d3.viewitems()), set())
 
-        self.assertEqual(d1.viewitems() | d1.viewitems(),
-                         set(((u'a', 1), (u'b', 2))))
-        self.assertEqual(d1.viewitems() | d2.viewitems(),
-                         set(((u'a', 1), (u'a', 2), (u'b', 2))))
-        self.assertEqual(d1.viewitems() | d3.viewitems(),
-                         set(((u'a', 1), (u'b', 2), (u'd', 4), (u'e', 5))))
-        self.assertEqual(d1.viewitems() | set(d1.viewitems()),
-                         set(((u'a', 1), (u'b', 2))))
-        self.assertEqual(d1.viewitems() | set(d2.viewitems()),
-                         set(((u'a', 1), (u'a', 2), (u'b', 2))))
-        self.assertEqual(d1.viewitems() | set(d3.viewitems()),
-                         set(((u'a', 1), (u'b', 2), (u'd', 4), (u'e', 5))))
+        self.assertEqual(d1.viewitems() | d1.viewitems(), set(((u"a", 1), (u"b", 2))))
+        self.assertEqual(
+            d1.viewitems() | d2.viewitems(), set(((u"a", 1), (u"a", 2), (u"b", 2)))
+        )
+        self.assertEqual(
+            d1.viewitems() | d3.viewitems(),
+            set(((u"a", 1), (u"b", 2), (u"d", 4), (u"e", 5))),
+        )
+        self.assertEqual(
+            d1.viewitems() | set(d1.viewitems()), set(((u"a", 1), (u"b", 2)))
+        )
+        self.assertEqual(
+            d1.viewitems() | set(d2.viewitems()), set(((u"a", 1), (u"a", 2), (u"b", 2)))
+        )
+        self.assertEqual(
+            d1.viewitems() | set(d3.viewitems()),
+            set(((u"a", 1), (u"b", 2), (u"d", 4), (u"e", 5))),
+        )
 
         self.assertEqual(d1.viewitems() ^ d1.viewitems(), set())
-        self.assertEqual(d1.viewitems() ^ d2.viewitems(),
-                         set(((u'a', 1), (u'a', 2))))
-        self.assertEqual(d1.viewitems() ^ d3.viewitems(),
-                         set(((u'a', 1), (u'b', 2), (u'd', 4), (u'e', 5))))
-
-
+        self.assertEqual(d1.viewitems() ^ d2.viewitems(), set(((u"a", 1), (u"a", 2))))
+        self.assertEqual(
+            d1.viewitems() ^ d3.viewitems(),
+            set(((u"a", 1), (u"b", 2), (u"d", 4), (u"e", 5))),
+        )
 
 
 if __name__ == "__main__":

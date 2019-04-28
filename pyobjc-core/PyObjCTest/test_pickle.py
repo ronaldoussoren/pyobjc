@@ -2,6 +2,7 @@ import sys
 from PyObjCTest.fnd import NSNumber
 from PyObjCTools.TestSupport import *
 from objc._pythonify import OC_PythonLong, OC_PythonFloat
+
 if sys.version_info[0] == 2:
     from objc._pythonify import OC_PythonInt
 import pickle
@@ -11,8 +12,8 @@ try:
 except ImportError:
     cPickle = None
 
-class TestPickleNumber (TestCase):
 
+class TestPickleNumber(TestCase):
     def testPickleInt(self):
         if sys.version_info[0] == 2:
             number_type = OC_PythonInt
@@ -74,8 +75,6 @@ class TestPickleNumber (TestCase):
             self.assertEqual(v2, v)
             self.assertIsNotInstance(v2, OC_PythonLong)
             self.assertIsInstance(v2, long)
-
-
 
 
 if __name__ == "__main__":

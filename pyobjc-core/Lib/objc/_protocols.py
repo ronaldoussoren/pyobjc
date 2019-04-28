@@ -1,12 +1,16 @@
 from objc import _objc
 import sys
 
-__all__ = ['protocolNamed', 'ProtocolError']
+__all__ = ["protocolNamed", "ProtocolError"]
+
 
 class ProtocolError(_objc.error):
-    __module__ = 'objc'
+    __module__ = "objc"
+
 
 PROTOCOL_CACHE = {}
+
+
 def protocolNamed(name):
     """
     Returns a Protocol object for the named protocol. This is the

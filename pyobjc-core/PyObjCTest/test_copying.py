@@ -5,14 +5,17 @@ NSObject = objc.lookUpClass("NSObject")
 NSAutoreleasePool = objc.lookUpClass("NSAutoreleasePool")
 from PyObjCTest.copying import OC_CopyHelper, OC_CopyBase
 
+
 def funcattr(**kwds):
     def annotate(func):
         for k, v in kwds.items():
             setattr(func, k, v)
         return func
+
     return annotate
 
-class OC_TestCopy1 (NSObject):
+
+class OC_TestCopy1(NSObject):
     def init(self):
         self = objc.super(OC_TestCopy1, self).init()
         if self is not None:
@@ -31,14 +34,16 @@ class OC_TestCopy1 (NSObject):
         other.x = self.x
         other.y = self.y
         return other
+
     # Argh, copyWithZone_ is a classmethod by default unless the
     # superclass implements  -copyWithZone:
-    copyWithZone_ = objc.selector(copyWithZone_,
-            signature=NSObject.copyWithZone_.signature,
-            isClassMethod=False)
+    copyWithZone_ = objc.selector(
+        copyWithZone_, signature=NSObject.copyWithZone_.signature, isClassMethod=False
+    )
 
-#OC_CopyBase.initWithInt_
-class OC_TestCopy2 (OC_CopyBase):
+
+# OC_CopyBase.initWithInt_
+class OC_TestCopy2(OC_CopyBase):
     def init(self):
         self = objc.super(OC_TestCopy2, self).initWithInt_(10)
         if self is not None:
@@ -52,8 +57,9 @@ class OC_TestCopy2 (OC_CopyBase):
         self.y = 24
         self.z = 0
 
-class OC_TestCopy3 (OC_CopyBase):
-    __slots__ = 'x y'.split()
+
+class OC_TestCopy3(OC_CopyBase):
+    __slots__ = "x y".split()
 
     def init(self):
         self = objc.super(OC_TestCopy3, self).initWithInt_(10)
@@ -67,7 +73,8 @@ class OC_TestCopy3 (OC_CopyBase):
         self.x = 42
         self.y = 24
 
-class OC_TestCopy4 (OC_CopyBase):
+
+class OC_TestCopy4(OC_CopyBase):
     def init(self):
         self = objc.super(OC_TestCopy4, self).initWithInt_(10)
         if self is not None:
@@ -89,11 +96,13 @@ class OC_TestCopy4 (OC_CopyBase):
         other.z = "hello"
         return other
 
-class TestNSCopyingHelper (NSObject):
+
+class TestNSCopyingHelper(NSObject):
     def copyWithZone_(self, zone):
         return 42
 
-class TestNSCopying (TestCase):
+
+class TestNSCopying(TestCase):
     def testCopyingRegr20090327(self):
         o = TestNSCopyingHelper.alloc().init()
         v = o.copyWithZone_(None)
@@ -111,7 +120,7 @@ class TestNSCopying (TestCase):
 
         self.assertEqual(o.x, 42)
         self.assertEqual(o.y, 24)
-        self.assertRaises(AttributeError, getattr, o, 'z')
+        self.assertRaises(AttributeError, getattr, o, "z")
 
     def testCopyingWithSuperFromObjC(self):
         o = OC_CopyBase.alloc().init()
@@ -172,7 +181,7 @@ class TestNSCopying (TestCase):
 
         self.assertEqual(o.x, 42)
         self.assertEqual(o.y, 24)
-        self.assertRaises(AttributeError, getattr, o, 'z')
+        self.assertRaises(AttributeError, getattr, o, "z")
 
     def testCopyingWithSuper(self):
         o = OC_CopyBase.alloc().init()
@@ -235,12 +244,13 @@ class TestNSCopying (TestCase):
 NSMutableArray = objc.lookUpClass("NSMutableArray")
 import copy
 
-class TestPyCopyObjC (TestCase):
+
+class TestPyCopyObjC(TestCase):
     # Testcases that ensure that copy.copy works
     # with Objective-C objects as well.
 
     def testCopyArray(self):
-        a = NSMutableArray.arrayWithArray_(['a', 'b', 'c'])
+        a = NSMutableArray.arrayWithArray_(["a", "b", "c"])
         self.assertIsInstance(a, NSMutableArray)
 
         b = copy.copy(a)

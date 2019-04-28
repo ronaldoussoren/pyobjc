@@ -10,31 +10,35 @@ import warnings
 import objc
 from PyObjCTest.fnd import NSObject, NSAutoreleasePool
 
-rct = structargs.StructArgClass.someRect.__metadata__()['retval']['type']
+rct = structargs.StructArgClass.someRect.__metadata__()["retval"]["type"]
 
-class OCTestRegrWithGetItem (NSObject):
+
+class OCTestRegrWithGetItem(NSObject):
     def objectForKey_(self, k):
-        return "ofk: %s"%(k,)
+        return "ofk: %s" % (k,)
 
     def __getitem__(self, k):
-        return "gi: %s"%(k,)
+        return "gi: %s" % (k,)
 
-class OCTestRegrWithGetItem2 (OCTestRegrWithGetItem):
+
+class OCTestRegrWithGetItem2(OCTestRegrWithGetItem):
     def objectForKey_(self, k):
-        return "ofk2: %s"%(k,)
+        return "ofk2: %s" % (k,)
 
-class ReturnAStruct (NSObject):
+
+class ReturnAStruct(NSObject):
     def someRectWithRect_(self, aRect):
         ((x, y), (h, w)) = aRect
-        return ((x,y),(h,w))
-    someRectWithRect_ = objc.selector(someRectWithRect_, signature=rct + b'@:' + rct)
+        return ((x, y), (h, w))
+
+    someRectWithRect_ = objc.selector(someRectWithRect_, signature=rct + b"@:" + rct)
 
 
 class TestRegressions(TestCase):
     def testSetCompare(self):
-        oc = objc.lookUpClass('NSSet').setWithArray_([None])
-        oc2 = objc.lookUpClass('NSMutableSet').setWithArray_([None])
-        py = { None }
+        oc = objc.lookUpClass("NSSet").setWithArray_([None])
+        oc2 = objc.lookUpClass("NSMutableSet").setWithArray_([None])
+        py = {None}
 
         self.assertEqual(list(oc.allObjects()), [None])
         for o in oc.allObjects():
@@ -47,27 +51,24 @@ class TestRegressions(TestCase):
             self.assertEqual(py, oc)
 
     def testNSObjectPerforming(self):
-        o = NSObject.performSelector_('new')
+        o = NSObject.performSelector_("new")
         self.assertIsInstance(o, NSObject)
 
-        v = o.performSelector_('description')
+        v = o.performSelector_("description")
         self.assertEqual(v, o.description())
 
     def testNSObjectRespondsToCommonMethods(self):
-        self.assertTrue(NSObject.pyobjc_classMethods.respondsToSelector_('alloc'))
-        self.assertTrue(NSObject.instancesRespondToSelector_('init'))
-        self.assertFalse(NSObject.instancesRespondToSelector_('frodel'))
-
+        self.assertTrue(NSObject.pyobjc_classMethods.respondsToSelector_("alloc"))
+        self.assertTrue(NSObject.instancesRespondToSelector_("init"))
+        self.assertFalse(NSObject.instancesRespondToSelector_("frodel"))
 
     def testDeallocUninit(self):
         with warnings.catch_warnings():
-            warnings.filterwarnings('ignore',
-                category=objc.UninitializedDeallocWarning)
+            warnings.filterwarnings("ignore", category=objc.UninitializedDeallocWarning)
 
-            for clsName in [ 'NSURL', 'NSObject', 'NSArray' ]:
+            for clsName in ["NSURL", "NSObject", "NSArray"]:
                 d = objc.lookUpClass(clsName).alloc()
                 del d
-
 
         # Check that we generate a warning for unitialized objects that
         # get deallocated
@@ -92,23 +93,25 @@ class TestRegressions(TestCase):
         from PyObjCTest.initialize import OC_TestInitialize
 
         o = OC_TestInitialize.alloc().init()
-        self.assertEqual(objc.splitSignature(o.onewayVoidMethod.signature), (objc._C_ONEWAY + objc._C_VOID, objc._C_ID, objc._C_SEL))
+        self.assertEqual(
+            objc.splitSignature(o.onewayVoidMethod.signature),
+            (objc._C_ONEWAY + objc._C_VOID, objc._C_ID, objc._C_SEL),
+        )
 
         # Make sure we can call the method
         o.onewayVoidMethod()
         self.assertEqual(o.isInitialized(), -1)
 
-
-    def testNoneAsSelf (self):
-        class SelfIsNone (NSObject):
+    def testNoneAsSelf(self):
+        class SelfIsNone(NSObject):
             def f(x):
                 pass
 
         self.assertRaises(TypeError, NSObject.pyobjc_instanceMethods.description, None)
         self.assertRaises(TypeError, SelfIsNone.pyobjc_instanceMethods.f, None)
 
-    def testOneArgumentTooMany (self):
-        class ClsIsNone (NSObject):
+    def testOneArgumentTooMany(self):
+        class ClsIsNone(NSObject):
             @classmethod
             def f(cls):
                 pass
@@ -120,9 +123,8 @@ class TestRegressions(TestCase):
         self.assertRaises(TypeError, NSObject.description, None)
         self.assertRaises(TypeError, ClsIsNone.f, None)
 
-
     def testBufferArg(self):
-        data = objc.lookUpClass('NSData')
+        data = objc.lookUpClass("NSData")
 
         o = structargs.StructArgClass.alloc().init()
 
@@ -131,14 +133,14 @@ class TestRegressions(TestCase):
         d = o.dataFromBuffer_(s)
         self.assertIsInstance(d, data)
         self.assertEqual(d.length(), 4)
-        self.assertEqual(d.bytes(), b'foob')
+        self.assertEqual(d.bytes(), b"foob")
 
         s = (bytearray(b"FOOBAR"), 3)
 
         d = o.dataFromBuffer_(s)
         self.assertIsInstance(d, data)
         self.assertEqual(d.length(), 3)
-        self.assertEqual(d.bytes(), b'FOO')
+        self.assertEqual(d.bytes(), b"FOO")
 
     def testStructArgs(self):
         # Like AppKit.test.test_nsimage.TestNSImage.test_compositePoint
@@ -146,14 +148,14 @@ class TestRegressions(TestCase):
         # likely that libffi is at fault
 
         o = structargs.StructArgClass.alloc().init()
-        v = o.compP_aRect_anOp_((1,2), ((3,4),(5,6)), 7)
+        v = o.compP_aRect_anOp_((1, 2), ((3, 4), (5, 6)), 7)
         self.assertEqual(v, "aP:{1, 2} aR:{{3, 4}, {5, 6}} anO:7")
 
     def testInitialize(self):
-        calls=[]
+        calls = []
         self.assertEqual(len(calls), 0)
 
-        class InitializeTestClass (NSObject):
+        class InitializeTestClass(NSObject):
             @classmethod
             def initialize(cls):
                 calls.append(repr(cls))
@@ -168,29 +170,26 @@ class TestRegressions(TestCase):
         p = structargs.StructArgClass.alloc().init()
 
         v = p.someRectWithObject_X_Y_H_W_(o, 1, 2, 3, 4)
-        self.assertEqual(v, ((1,2),(3,4)))
+        self.assertEqual(v, ((1, 2), (3, 4)))
 
     def testStructReturn(self):
         o = structargs.StructArgClass.alloc().init()
         v = o.someRect()
-        self.assertEqual(v, ((1,2),(3,4)))
+        self.assertEqual(v, ((1, 2), (3, 4)))
 
 
-
-if sys.byteorder == 'little':
+if sys.byteorder == "little":
     # i386 has specific stack alignment requirements.
 
     class AlignmentTestClass(NSObject):
         def testWithObject_(self, obj):
             return obj.stackPtr()
 
-
     def testStackPtr(self):
         o = structargs.StructArgClass.alloc().init()
 
         p = self.AlignmentTestClass.alloc().init()
         self.assertEqual(p.testWithObject_(o) % 16, o.stackPtr() % 16)
-
 
 
 #
@@ -202,22 +201,25 @@ if sys.byteorder == 'little':
 #
 
 gDeallocCounter = 0
-class OC_LeakTest_20090704_init (NSObject):
+
+
+class OC_LeakTest_20090704_init(NSObject):
     def init(self):
-        #self = super(OC_LeakTest_20090704_init, self).init()
+        # self = super(OC_LeakTest_20090704_init, self).init()
         return self
 
     def dealloc(self):
         global gDeallocCounter
         gDeallocCounter += 1
 
-class OC_LeakTest_20090704_noinit (NSObject):
+
+class OC_LeakTest_20090704_noinit(NSObject):
     def dealloc(self):
         global gDeallocCounter
         gDeallocCounter += 1
 
 
-class TestInitMemoryLeak (TestCase):
+class TestInitMemoryLeak(TestCase):
     def testNoPythonInit(self):
         # This test is basicly a self-test of the test-case, the
         # test even passed before the regression was fixed.
@@ -254,7 +256,7 @@ class TestInitMemoryLeak (TestCase):
         self.assertNotEqual(gDeallocCounter, 0)
 
     def testInitFailureLeaks(self):
-        NSData = objc.lookUpClass('NSData')
+        NSData = objc.lookUpClass("NSData")
 
         with warnings.catch_warnings(record=True) as w:
             v = NSData.alloc().initWithContentsOfFile_("/etc/no-such-file.txt")
@@ -274,7 +276,6 @@ class TestInitMemoryLeak (TestCase):
         self.assertEqual(v["foo"], "gi: foo")
 
     def testAllowDecorators(self):
-
         def decorator(function):
             @functools.wraps(function)
             def wrapper(*args, **kwds):
@@ -282,7 +283,7 @@ class TestInitMemoryLeak (TestCase):
 
             return wrapper
 
-        class OCTestRegrWithWrapped (NSObject):
+        class OCTestRegrWithWrapped(NSObject):
             @decorator
             def someMethod(self):
                 return 42
@@ -291,45 +292,53 @@ class TestInitMemoryLeak (TestCase):
         v = o.someMethod()
         self.assertEqual(v, 84)
 
-
     def testDefaultSignatures(self):
-        def meth(): pass
+        def meth():
+            pass
+
         s = objc.selector(meth)
-        self.assertEqual(s.selector, b'meth')
-        self.assertEqual(s.signature, b'v@:')
+        self.assertEqual(s.selector, b"meth")
+        self.assertEqual(s.signature, b"v@:")
 
-        def meth__(): pass
+        def meth__():
+            pass
+
         s = objc.selector(meth__)
-        self.assertEqual(s.selector, b'meth::')
-        self.assertEqual(s.signature, b'v@:@@')
+        self.assertEqual(s.selector, b"meth::")
+        self.assertEqual(s.signature, b"v@:@@")
 
-        def meth(): return 1
+        def meth():
+            return 1
+
         s = objc.selector(meth)
-        self.assertEqual(s.selector, b'meth')
-        self.assertEqual(s.signature, b'@@:')
+        self.assertEqual(s.selector, b"meth")
+        self.assertEqual(s.signature, b"@@:")
 
-        def meth__(): return 1
+        def meth__():
+            return 1
+
         s = objc.selector(meth__)
-        self.assertEqual(s.selector, b'meth::')
-        self.assertEqual(s.signature, b'@@:@@')
+        self.assertEqual(s.selector, b"meth::")
+        self.assertEqual(s.signature, b"@@:@@")
 
 
-class TestNSInvocationBug (TestCase):
+class TestNSInvocationBug(TestCase):
     def testNSInvocationOveride(self):
-        class HelperNSInvocationTest (NSObject):
+        class HelperNSInvocationTest(NSObject):
             def forwardInvocation_(self, inv):
                 pass
 
-class TestDocTestProblem (TestCase):
+
+class TestDocTestProblem(TestCase):
     def test_doctest(self):
         import doctest
 
-        class DocTestHelper (NSObject):
+        class DocTestHelper(NSObject):
             pass
-
 
         f = doctest.DocTestFinder(verbose=False)
         f.find(DocTestHelper)
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     main()

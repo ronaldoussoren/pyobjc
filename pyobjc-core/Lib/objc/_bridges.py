@@ -9,7 +9,13 @@ if sys.version_info[0] == 2:
 else:
     import collections.abc as collections_abc
 
-__all__ = [ 'registerListType', 'registerMappingType', 'registerSetType', 'registerDateType' ]
+__all__ = [
+    "registerListType",
+    "registerMappingType",
+    "registerSetType",
+    "registerDateType",
+]
+
 
 def registerListType(type):
     """
@@ -21,6 +27,7 @@ def registerListType(type):
 
     options._sequence_types += (type,)
 
+
 def registerMappingType(type):
     """
     Register 'type' as a dictionary-like type that will be proxied
@@ -31,6 +38,7 @@ def registerMappingType(type):
 
     options._mapping_types += (type,)
 
+
 def registerSetType(type):
     """
     Register 'type' as a set-like type that will be proxied
@@ -40,6 +48,7 @@ def registerSetType(type):
         options._set_types = ()
 
     options._set_types += (type,)
+
 
 def registerDateType(type):
     """
@@ -64,4 +73,5 @@ registerDateType(datetime.datetime)
 
 if sys.version_info[0] == 2:
     import UserDict
+
     registerMappingType(UserDict.UserDict)

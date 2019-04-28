@@ -17,10 +17,11 @@ import objc
 # Import some of the stdlib tests
 from test import mapping_tests
 
-NSDictionary = objc.lookUpClass('NSDictionary')
-NSMutableDictionary = objc.lookUpClass('NSMutableDictionary')
+NSDictionary = objc.lookUpClass("NSDictionary")
+NSMutableDictionary = objc.lookUpClass("NSMutableDictionary")
 
-class TestNSDictionaryInterface (TestCase):
+
+class TestNSDictionaryInterface(TestCase):
     def dictClass(self):
         return NSDictionary
 
@@ -33,9 +34,9 @@ class TestNSDictionaryInterface (TestCase):
 
     def testBool(self):
         self.assertIs(not self.createDictionary(), True)
-        self.assertTrue(self.createDictionary(foo='1'))
+        self.assertTrue(self.createDictionary(foo="1"))
         self.assertIs(bool(self.createDictionary()), False)
-        self.assertIs(bool(self.createDictionary(foo='1')), True)
+        self.assertIs(bool(self.createDictionary(foo="1")), True)
 
     def testKeys(self):
         d = self.createDictionary()
@@ -44,40 +45,40 @@ class TestNSDictionaryInterface (TestCase):
         d = self.createDictionary(a=1, b=2)
         k = d.keys()
 
-        self.assertIn('a', d)
-        self.assertIn('b', d)
-        self.assertIn('a', k)
-        self.assertIn('b', k)
+        self.assertIn("a", d)
+        self.assertIn("b", d)
+        self.assertIn("a", k)
+        self.assertIn("b", k)
 
         self.assertIsNotInstance(k, list)
 
-        s = d.keys() | { 'c' }
-        self.assertEqual(s, {'a', 'b', 'c'})
+        s = d.keys() | {"c"}
+        self.assertEqual(s, {"a", "b", "c"})
 
-        s = { 'c' } | d.keys()
-        self.assertEqual(s, {'a', 'b', 'c'})
+        s = {"c"} | d.keys()
+        self.assertEqual(s, {"a", "b", "c"})
 
-        s = d.keys() & { 'b' }
-        self.assertEqual(s, { 'b'})
+        s = d.keys() & {"b"}
+        self.assertEqual(s, {"b"})
 
-        s = {'b', 'c' } & d.keys()
-        self.assertEqual(s, { 'b'})
+        s = {"b", "c"} & d.keys()
+        self.assertEqual(s, {"b"})
 
-        s = d.keys() - { 'b' }
-        self.assertEqual(s, { 'a'})
+        s = d.keys() - {"b"}
+        self.assertEqual(s, {"a"})
 
-        s = {'c', 'b' } - d.keys()
-        self.assertEqual(s, { 'c'})
+        s = {"c", "b"} - d.keys()
+        self.assertEqual(s, {"c"})
 
-        s = d.keys() ^ { 'b', 'c' }
-        self.assertEqual(s, { 'a', 'c' })
+        s = d.keys() ^ {"b", "c"}
+        self.assertEqual(s, {"a", "c"})
 
-        s = {'c', 'b' } ^ d.keys()
-        self.assertEqual(s, { 'a', 'c'})
+        s = {"c", "b"} ^ d.keys()
+        self.assertEqual(s, {"a", "c"})
 
-
-        self.assertEqual(repr(self.createDictionary(a=1).keys()),
-                "<nsdict_keys(['a'])>")
+        self.assertEqual(
+            repr(self.createDictionary(a=1).keys()), "<nsdict_keys(['a'])>"
+        )
 
     def testValues(self):
         d = self.createDictionary()
@@ -89,29 +90,31 @@ class TestNSDictionaryInterface (TestCase):
         self.assertRaises(TypeError, d.values, None)
         self.assertIsNotInstance(d.values(), list)
 
-        self.assertEqual(repr(self.createDictionary(a=1).values()),
-                "<nsdict_values([1])>")
+        self.assertEqual(
+            repr(self.createDictionary(a=1).values()), "<nsdict_values([1])>"
+        )
 
     def testItems(self):
         d = self.createDictionary()
         self.assertEqual(set(d.items()), set())
 
         d = self.createDictionary(a=1)
-        self.assertEqual(set(d.items()), {('a', 1)})
+        self.assertEqual(set(d.items()), {("a", 1)})
         self.assertRaises(TypeError, d.items, None)
-        self.assertEqual(repr(self.createDictionary(a=1).items()),
-                "<nsdict_items([('a', 1)])>")
+        self.assertEqual(
+            repr(self.createDictionary(a=1).items()), "<nsdict_items([('a', 1)])>"
+        )
 
     def testContains(self):
         d = self.createDictionary()
-        self.assertNotIn('a', d)
-        self.assertFalse('a' in d)
-        self.assertTrue('a' not in d)
+        self.assertNotIn("a", d)
+        self.assertFalse("a" in d)
+        self.assertTrue("a" not in d)
 
         d = self.createDictionary(a=1, b=2)
-        self.assertIn('a', d)
-        self.assertIn('b', d)
-        self.assertNotIn('c', d)
+        self.assertIn("a", d)
+        self.assertIn("b", d)
+        self.assertNotIn("c", d)
 
         self.assertRaises(TypeError, d.__contains__)
 
@@ -124,57 +127,57 @@ class TestNSDictionaryInterface (TestCase):
 
     def testGetItem(self):
         d = self.createDictionary(a=1, b=2)
-        self.assertEqual(d['a'], 1)
-        self.assertEqual(d['b'], 2)
+        self.assertEqual(d["a"], 1)
+        self.assertEqual(d["b"], 2)
 
         self.assertRaises(TypeError, d.__getitem__)
 
     def testFromKeys(self):
-        d = self.dictClass().fromkeys('abc')
-        self.assertEqual(d, {'a':None, 'b':None, 'c':None})
+        d = self.dictClass().fromkeys("abc")
+        self.assertEqual(d, {"a": None, "b": None, "c": None})
 
         d = self.createDictionary()
-        self.assertIsNot(d.fromkeys('abc'), d)
-        self.assertEqual(d.fromkeys('abc'), {'a':None, 'b':None, 'c':None})
-        self.assertEqual(d.fromkeys((4,5),0), {4:0, 5:0})
+        self.assertIsNot(d.fromkeys("abc"), d)
+        self.assertEqual(d.fromkeys("abc"), {"a": None, "b": None, "c": None})
+        self.assertEqual(d.fromkeys((4, 5), 0), {4: 0, 5: 0})
         self.assertEqual(d.fromkeys([]), {})
 
         def g():
             yield 1
 
-        self.assertEqual(d.fromkeys(g()), {1:None})
+        self.assertEqual(d.fromkeys(g()), {1: None})
         self.assertRaises(TypeError, {}.fromkeys, 3)
 
         d = self.dictClass()(zip(range(6), range(6)))
-        self.assertEqual(dict.fromkeys(d, 0), dict(zip(range(6), [0]*6)))
+        self.assertEqual(dict.fromkeys(d, 0), dict(zip(range(6), [0] * 6)))
 
     def _testCopy(self):
         self.fail("Decide what to do w.r.t. -copy and -mutableCopy")
 
     def testGet(self):
         d = self.createDictionary()
-        self.assertIs(d.get('c'), None)
-        self.assertEqual(d.get('c', 3), 3)
-
+        self.assertIs(d.get("c"), None)
+        self.assertEqual(d.get("c", 3), 3)
 
         d = self.createDictionary(a=1, b=2)
-        self.assertIs(d.get('c'), None)
-        self.assertEqual(d.get('c', 3), 3)
-        self.assertEqual(d.get('a'), 1)
-        self.assertEqual(d.get('a', 3), 1)
+        self.assertIs(d.get("c"), None)
+        self.assertEqual(d.get("c", 3), 3)
+        self.assertEqual(d.get("a"), 1)
+        self.assertEqual(d.get("a", 3), 1)
         self.assertRaises(TypeError, d.get)
         self.assertRaises(TypeError, d.get, None, None, None)
-
 
     def testEq(self):
         self.assertEqual(self.createDictionary(), self.createDictionary())
         self.assertEqual(self.createDictionary(a=1), self.createDictionary(a=1))
 
-        class Exc(Exception): pass
+        class Exc(Exception):
+            pass
 
         class BadCmp(object):
             def __eq__(self, other):
                 raise Exc()
+
             def __hash__(self):
                 return 1
 
@@ -183,7 +186,6 @@ class TestNSDictionaryInterface (TestCase):
 
         with self.assertRaises(Exc):
             d1 == d2
-
 
     def testKeysContained(self):
         self.helper_keys_contained(lambda x: x.keys())
@@ -200,19 +202,19 @@ class TestNSDictionaryInterface (TestCase):
         larger2 = fn(self.createDictionary(a=1, b=2, c=3))
         larger3 = fn(self.createDictionary(d=1, b=2, c=3))
 
-        self.assertTrue(smaller <  larger)
+        self.assertTrue(smaller < larger)
         self.assertTrue(smaller <= larger)
-        self.assertTrue(larger >  smaller)
+        self.assertTrue(larger > smaller)
         self.assertTrue(larger >= smaller)
 
         self.assertFalse(smaller >= larger)
-        self.assertFalse(smaller >  larger)
-        self.assertFalse(larger  <= smaller)
-        self.assertFalse(larger  <  smaller)
+        self.assertFalse(smaller > larger)
+        self.assertFalse(larger <= smaller)
+        self.assertFalse(larger < smaller)
 
-        self.assertFalse(smaller <  larger3)
+        self.assertFalse(smaller < larger3)
         self.assertFalse(smaller <= larger3)
-        self.assertFalse(larger3 >  smaller)
+        self.assertFalse(larger3 > smaller)
         self.assertFalse(larger3 >= smaller)
 
         # Inequality strictness
@@ -257,52 +259,74 @@ class TestNSDictionaryInterface (TestCase):
         with self.assertRaises(RuntimeError):
             d3.items() > d2.items()
 
-        k1 = self.dictClass().dictionaryWithDictionary_({1:1, 2:2}).keys()
-        k2 = self.dictClass().dictionaryWithDictionary_({1:1, 2:2, 3:3}).keys()
-        k3 = self.dictClass().dictionaryWithDictionary_({4:4}).keys()
+        k1 = self.dictClass().dictionaryWithDictionary_({1: 1, 2: 2}).keys()
+        k2 = self.dictClass().dictionaryWithDictionary_({1: 1, 2: 2, 3: 3}).keys()
+        k3 = self.dictClass().dictionaryWithDictionary_({4: 4}).keys()
 
         self.assertEqual(k1 - k2, set())
-        self.assertEqual(k1 - k3, {1,2})
+        self.assertEqual(k1 - k3, {1, 2})
         self.assertEqual(k2 - k1, {3})
         self.assertEqual(k3 - k1, {4})
-        self.assertEqual(k1 & k2, {1,2})
+        self.assertEqual(k1 & k2, {1, 2})
         self.assertEqual(k1 & k3, set())
-        self.assertEqual(k1 | k2, {1,2,3})
+        self.assertEqual(k1 | k2, {1, 2, 3})
         self.assertEqual(k1 ^ k2, {3})
-        self.assertEqual(k1 ^ k3, {1,2,4})
+        self.assertEqual(k1 ^ k3, {1, 2, 4})
 
     def testDictviewSetOperationsOnItems(self):
-        k1 = self.dictClass().dictionaryWithDictionary_({1:1, 2:2}).items()
-        k2 = self.dictClass().dictionaryWithDictionary_({1:1, 2:2, 3:3}).items()
-        k3 = self.dictClass().dictionaryWithDictionary_({4:4}).items()
+        k1 = self.dictClass().dictionaryWithDictionary_({1: 1, 2: 2}).items()
+        k2 = self.dictClass().dictionaryWithDictionary_({1: 1, 2: 2, 3: 3}).items()
+        k3 = self.dictClass().dictionaryWithDictionary_({4: 4}).items()
 
         self.assertEqual(k1 - k2, set())
-        self.assertEqual(k1 - k3, {(1,1), (2,2)})
-        self.assertEqual(k2 - k1, {(3,3)})
-        self.assertEqual(k3 - k1, {(4,4)})
-        self.assertEqual(k1 & k2, {(1,1), (2,2)})
+        self.assertEqual(k1 - k3, {(1, 1), (2, 2)})
+        self.assertEqual(k2 - k1, {(3, 3)})
+        self.assertEqual(k3 - k1, {(4, 4)})
+        self.assertEqual(k1 & k2, {(1, 1), (2, 2)})
         self.assertEqual(k1 & k3, set())
-        self.assertEqual(k1 | k2, {(1,1), (2,2), (3,3)})
-        self.assertEqual(k1 ^ k2, {(3,3)})
-        self.assertEqual(k1 ^ k3, {(1,1), (2,2), (4,4)})
+        self.assertEqual(k1 | k2, {(1, 1), (2, 2), (3, 3)})
+        self.assertEqual(k1 ^ k2, {(3, 3)})
+        self.assertEqual(k1 ^ k3, {(1, 1), (2, 2), (4, 4)})
 
     def testDictviewMixedSetOperations(self):
         # Just a few for .keys()
-        self.assertTrue(self.dictClass().dictionaryWithDictionary_({1:1}).keys() == {1})
-        self.assertTrue({1} == self.dictClass().dictionaryWithDictionary_({1:1}).keys())
-        self.assertEqual(self.dictClass().dictionaryWithDictionary_({1:1}).keys() | {2}, {1, 2})
-        self.assertEqual({2} | self.dictClass().dictionaryWithDictionary_({1:1}).keys(), {1, 2})
-        self.assertFalse(self.dictClass().dictionaryWithDictionary_({1:1}).keys() == [1])
+        self.assertTrue(
+            self.dictClass().dictionaryWithDictionary_({1: 1}).keys() == {1}
+        )
+        self.assertTrue(
+            {1} == self.dictClass().dictionaryWithDictionary_({1: 1}).keys()
+        )
+        self.assertEqual(
+            self.dictClass().dictionaryWithDictionary_({1: 1}).keys() | {2}, {1, 2}
+        )
+        self.assertEqual(
+            {2} | self.dictClass().dictionaryWithDictionary_({1: 1}).keys(), {1, 2}
+        )
+        self.assertFalse(
+            self.dictClass().dictionaryWithDictionary_({1: 1}).keys() == [1]
+        )
 
         # And a few for .items()
-        self.assertTrue(self.dictClass().dictionaryWithDictionary_({1:1}).items() == {(1,1)})
-        self.assertTrue({(1,1)} == self.dictClass().dictionaryWithDictionary_({1:1}).items())
-        self.assertEqual(self.dictClass().dictionaryWithDictionary_({1:1}).items() | {2}, {(1,1), 2})
-        self.assertEqual({2} | self.dictClass().dictionaryWithDictionary_({1:1}).items(), {(1,1), 2})
-        self.assertFalse(self.dictClass().dictionaryWithDictionary_({1:1}).items() == [(1,1)])
+        self.assertTrue(
+            self.dictClass().dictionaryWithDictionary_({1: 1}).items() == {(1, 1)}
+        )
+        self.assertTrue(
+            {(1, 1)} == self.dictClass().dictionaryWithDictionary_({1: 1}).items()
+        )
+        self.assertEqual(
+            self.dictClass().dictionaryWithDictionary_({1: 1}).items() | {2},
+            {(1, 1), 2},
+        )
+        self.assertEqual(
+            {2} | self.dictClass().dictionaryWithDictionary_({1: 1}).items(),
+            {(1, 1), 2},
+        )
+        self.assertFalse(
+            self.dictClass().dictionaryWithDictionary_({1: 1}).items() == [(1, 1)]
+        )
 
 
-class TestNSMutableDictionaryInterface (TestNSDictionaryInterface):
+class TestNSMutableDictionaryInterface(TestNSDictionaryInterface):
     def dictClass(self):
         return NSMutableDictionary
 
@@ -316,20 +340,19 @@ class TestNSMutableDictionaryInterface (TestNSDictionaryInterface):
         d = self.createDictionary(a=1, b=2)
         k = d.keys()
 
-
-        self.assertIn('a', d)
-        self.assertIn('b', d)
-        self.assertIn('a', k)
-        self.assertIn('b', k)
+        self.assertIn("a", d)
+        self.assertIn("b", d)
+        self.assertIn("a", k)
+        self.assertIn("b", k)
 
         self.assertIsNotInstance(k, list)
 
-        self.assertNotIn('c', d)
-        self.assertNotIn('c', k)
+        self.assertNotIn("c", d)
+        self.assertNotIn("c", k)
 
-        d['c'] = 3
-        self.assertIn('c', d)
-        self.assertIn('c', k)
+        d["c"] = 3
+        self.assertIn("c", d)
+        self.assertIn("c", k)
 
     def testValuesMutable(self):
         d = self.createDictionary()
@@ -340,7 +363,7 @@ class TestNSMutableDictionaryInterface (TestNSDictionaryInterface):
 
         self.assertEqual(set(v), {1})
 
-        d['b'] = 2
+        d["b"] = 2
         self.assertEqual(set(v), {1, 2})
 
     def testItemsMutable(self):
@@ -350,31 +373,33 @@ class TestNSMutableDictionaryInterface (TestNSDictionaryInterface):
         d = self.createDictionary(a=1)
         i = d.items()
 
-        self.assertEqual(set(i), {('a', 1)})
+        self.assertEqual(set(i), {("a", 1)})
 
-        d['b'] = 2
+        d["b"] = 2
 
-        self.assertEqual(set(i), {('a', 1), ('b', 2)})
+        self.assertEqual(set(i), {("a", 1), ("b", 2)})
 
     def testGetItem(self):
         d = self.createDictionary(a=1, b=2)
-        self.assertEqual(d['a'], 1)
-        self.assertEqual(d['b'], 2)
+        self.assertEqual(d["a"], 1)
+        self.assertEqual(d["b"], 2)
 
-        d['c'] = 3
-        d['a'] = 4
-        self.assertEqual(d['c'], 3)
-        self.assertEqual(d['a'], 4)
-        del d['b']
-        self.assertEqual(d, {'a': 4, 'c': 3})
+        d["c"] = 3
+        d["a"] = 4
+        self.assertEqual(d["c"], 3)
+        self.assertEqual(d["a"], 4)
+        del d["b"]
+        self.assertEqual(d, {"a": 4, "c": 3})
 
         self.assertRaises(TypeError, d.__getitem__)
 
-        class Exc (Exception): pass
+        class Exc(Exception):
+            pass
 
         class BadEq(object):
             def __eq__(self, other):
                 raise Exc()
+
             def __hash__(self):
                 return hash(23)
 
@@ -384,6 +409,7 @@ class TestNSMutableDictionaryInterface (TestNSDictionaryInterface):
 
         class BadHash(object):
             fail = False
+
             def __hash__(self):
                 if self.fail:
                     raise Exc()
@@ -396,7 +422,7 @@ class TestNSMutableDictionaryInterface (TestNSDictionaryInterface):
         x.fail = True
 
         # FIXME
-        #self.assertRaises(Exc, d.__getitem__, x)
+        # self.assertRaises(Exc, d.__getitem__, x)
 
     def testClear(self):
         d = self.createDictionary(a=1, b=2, c=3)
@@ -408,29 +434,32 @@ class TestNSMutableDictionaryInterface (TestNSDictionaryInterface):
 
     def testUpdate(self):
         d = self.createDictionary()
-        d.update({1:100})
-        d.update({2:20})
-        d.update({1:1, 2:2, 3:3})
-        self.assertEqual(d, {1:1, 2:2, 3:3})
+        d.update({1: 100})
+        d.update({2: 20})
+        d.update({1: 1, 2: 2, 3: 3})
+        self.assertEqual(d, {1: 1, 2: 2, 3: 3})
 
         d.update()
-        self.assertEqual(d, {1:1, 2:2, 3:3})
+        self.assertEqual(d, {1: 1, 2: 2, 3: 3})
 
         self.assertRaises((TypeError, AttributeError), d.update, None)
 
         class SimpleUserDict:
             def __init__(self):
-                self.d = {1:1, 2:2, 3:3}
+                self.d = {1: 1, 2: 2, 3: 3}
+
             def keys(self):
                 return self.d.keys()
+
             def __getitem__(self, i):
                 return self.d[i]
 
         d = self.createDictionary()
         d.update(SimpleUserDict())
-        self.assertEqual(d, {1:1, 2:2, 3:3})
+        self.assertEqual(d, {1: 1, 2: 2, 3: 3})
 
-        class Exc(Exception): pass
+        class Exc(Exception):
+            pass
 
         d.clear()
 
@@ -440,69 +469,78 @@ class TestNSMutableDictionaryInterface (TestNSDictionaryInterface):
 
         self.assertRaises(Exc, d.update, FailingUserDict())
 
-
         class FailingUserDict:
             def keys(self):
                 class BogonIter:
                     def __init__(self):
                         self.i = 1
+
                     def __iter__(self):
                         return self
+
                     def __next__(self):
                         if self.i:
                             self.i = 0
-                            return 'a'
+                            return "a"
                         raise Exc
+
                 return BogonIter()
+
             def __getitem__(self, key):
                 return key
 
         self.assertRaises(Exc, d.update, FailingUserDict())
 
-
         class FailingUserDict:
             def keys(self):
                 class BogonIter:
                     def __init__(self):
-                        self.i = ord('a')
+                        self.i = ord("a")
+
                     def __iter__(self):
                         return self
+
                     def __next__(self):
-                        if self.i <= ord('z'):
+                        if self.i <= ord("z"):
                             rtn = chr(self.i)
                             self.i += 1
                             return rtn
                         raise StopIteration
+
                 return BogonIter()
+
             def __getitem__(self, key):
                 raise Exc
+
         self.assertRaises(Exc, d.update, FailingUserDict())
 
         class badseq(object):
             def __iter__(self):
                 return self
+
             def __next__(self):
                 raise Exc()
 
         self.assertRaises(Exc, {}.update, badseq())
         self.assertRaises(ValueError, {}.update, [(1, 2, 3)])
 
-
     def setDefault(self):
         d = self.createDictionary()
-        self.assertIs(d.setdefault('key0'), None)
-        d.setdefault('key0', [])
-        self.assertIs(d.setdefault('key0'), None)
-        d.setdefault('key', []).append(3)
-        self.assertEqual(d['key'][0], 3)
-        d.setdefault('key', []).append(4)
-        self.assertEqual(len(d['key']), 2)
+        self.assertIs(d.setdefault("key0"), None)
+        d.setdefault("key0", [])
+        self.assertIs(d.setdefault("key0"), None)
+        d.setdefault("key", []).append(3)
+        self.assertEqual(d["key"][0], 3)
+        d.setdefault("key", []).append(4)
+        self.assertEqual(len(d["key"]), 2)
         self.assertRaises(TypeError, d.setdefault)
 
-        class Exc (Exception): pass
+        class Exc(Exception):
+            pass
 
         class BadHash(object):
             fail = False
+
             def __hash__(self):
                 if self.fail:
                     raise Exc()
@@ -519,7 +557,7 @@ class TestNSMutableDictionaryInterface (TestNSDictionaryInterface):
             # -1: b has same structure as a
             # +1: b is a.copy()
             for log2size in range(12):
-                size = 2**log2size
+                size = 2 ** log2size
                 a = self.createDictionary()
                 b = self.createDictionary()
                 for i in range(size):
@@ -540,12 +578,11 @@ class TestNSMutableDictionaryInterface (TestNSDictionaryInterface):
         d = self.createDictionary()
         self.assertRaises(KeyError, d.popitem)
 
-
     def testPop(self):
         d = self.createDictionary()
-        k, v = 'abc', 'def'
+        k, v = "abc", "def"
         d[k] = v
-        self.assertRaises(KeyError, d.pop, 'ghi')
+        self.assertRaises(KeyError, d.pop, "ghi")
 
         self.assertEqual(d.pop(k), v)
         self.assertEqual(len(d), 0)
@@ -558,22 +595,25 @@ class TestNSMutableDictionaryInterface (TestNSDictionaryInterface):
 
         self.assertRaises(TypeError, d.pop)
 
-        class Exc(Exception): pass
+        class Exc(Exception):
+            pass
 
         class BadHash(object):
             fail = False
+
             def __hash__(self):
                 if self.fail:
                     raise Exc()
                 else:
                     return 42
 
-        #x = BadHash()
-        #d[x] = 42
-        #x.fail = True
-        #self.assertRaises(Exc, d.pop, x)
+        # x = BadHash()
+        # d[x] = 42
+        # x.fail = True
+        # self.assertRaises(Exc, d.pop, x)
 
-class DictSetTest (TestCase):
+
+class DictSetTest(TestCase):
     testclass = NSDictionary
 
     def testDictKeys(self):
@@ -621,8 +661,7 @@ class DictSetTest (TestCase):
         self.assertEqual(d.items(), e.items())
 
 
-
-class DictSetTest (DictSetTest):
+class DictSetTest(DictSetTest):
     testclass = NSMutableDictionary
 
     def testDictKeysMutable(self):
@@ -642,48 +681,42 @@ class DictSetTest (DictSetTest):
         self.assertNotEqual(d.items(), e.items())
 
     def testDictMixedKeysItems(self):
-        d = self.testclass.dictionaryWithDictionary_(
-                {(1, 1): 11, (2, 2): 22})
-        e = self.testclass.dictionaryWithDictionary_(
-                {1: 1, 2: 2})
+        d = self.testclass.dictionaryWithDictionary_({(1, 1): 11, (2, 2): 22})
+        e = self.testclass.dictionaryWithDictionary_({1: 1, 2: 2})
         self.assertEqual(d.keys(), e.items())
         self.assertNotEqual(d.items(), e.keys())
 
     def testDictValues(self):
-        d = self.testclass.dictionaryWithDictionary_(
-                {1: 10, "a": "ABC"})
+        d = self.testclass.dictionaryWithDictionary_({1: 10, "a": "ABC"})
         values = d.values()
         self.assertEqual(set(values), {10, "ABC"})
         self.assertEqual(len(values), 2)
 
 
-
-class GeneralMappingTestsNSMutableDictionary (
-        mapping_tests.BasicTestMappingProtocol):
+class GeneralMappingTestsNSMutableDictionary(mapping_tests.BasicTestMappingProtocol):
     type2test = NSMutableDictionary
 
 
-class TestDictUpdates (TestCase):
-
+class TestDictUpdates(TestCase):
     def do_test(self, dictType):
         d = dictType()
-        d['a'] = 42
+        d["a"] = 42
         self.assertRaises(TypeError, d.update, {}, {})
 
-        d.update({'b': 9})
-        self.assertEqual(dict(d), {'a':42, 'b':9})
+        d.update({"b": 9})
+        self.assertEqual(dict(d), {"a": 42, "b": 9})
 
-        d.update({'a': 2})
-        self.assertEqual(dict(d), {'a':2, 'b':9})
+        d.update({"a": 2})
+        self.assertEqual(dict(d), {"a": 2, "b": 9})
 
-        d.update([('a', 1), ('c', 3)])
-        self.assertEqual(dict(d), {'a':1, 'b':9, 'c': 3})
+        d.update([("a", 1), ("c", 3)])
+        self.assertEqual(dict(d), {"a": 1, "b": 9, "c": 3})
 
         d.update(d=4, a=9, e=3)
-        self.assertEqual(dict(d), {'a':9, 'b':9, 'c': 3, 'd': 4, 'e': 3})
+        self.assertEqual(dict(d), {"a": 9, "b": 9, "c": 3, "d": 4, "e": 3})
 
         d.update()
-        self.assertEqual(dict(d), {'a':9, 'b':9, 'c': 3, 'd': 4, 'e': 3})
+        self.assertEqual(dict(d), {"a": 9, "b": 9, "c": 3, "d": 4, "e": 3})
 
     def test_native(self):
         self.do_test(dict)
@@ -694,7 +727,8 @@ class TestDictUpdates (TestCase):
 
 import collections.abc
 
-class TestABC (TestCase):
+
+class TestABC(TestCase):
     def testDictABC(self):
         self.assertTrue(issubclass(NSDictionary, collections.abc.Mapping))
         self.assertTrue(issubclass(NSMutableDictionary, collections.abc.Mapping))
@@ -711,7 +745,8 @@ class TestABC (TestCase):
         self.assertTrue(isinstance(d.values(), collections.abc.ValuesView))
         self.assertTrue(isinstance(d.items(), collections.abc.ItemsView))
 
-class TestPyObjCDict (TestCase):
+
+class TestPyObjCDict(TestCase):
     def test_comparison(self):
         self.assertRaises(TypeError, operator.lt, {}, {})
         self.assertRaises(TypeError, operator.le, {}, {})
@@ -738,7 +773,7 @@ class TestPyObjCDict (TestCase):
             self.assertIsInstance(v, dict_type)
             self.assertEqual(len(v), 0)
 
-            v = dict_type({1:2, 2:3})
+            v = dict_type({1: 2, 2: 3})
             self.assertIsInstance(v, dict_type)
             self.assertEqual(len(v), 2)
             self.assertEqual(v[1], 2)
@@ -756,20 +791,20 @@ class TestPyObjCDict (TestCase):
             self.assertEqual(v[1], -1)
             self.assertEqual(v[2], 9)
 
-            self.assertRaises(TypeError, dict_type, (1,2), (3,4))
+            self.assertRaises(TypeError, dict_type, (1, 2), (3, 4))
 
             v = dict_type(a=3, b=4)
             self.assertEqual(len(v), 2)
-            self.assertEqual(v['a'], 3)
-            self.assertEqual(v['b'], 4)
+            self.assertEqual(v["a"], 3)
+            self.assertEqual(v["b"], 4)
 
-            v = dict_type((v for v in [(1, -1), (2, 9)]), a='hello', b='world')
+            v = dict_type((v for v in [(1, -1), (2, 9)]), a="hello", b="world")
             self.assertIsInstance(v, dict_type)
             self.assertEqual(len(v), 4)
             self.assertEqual(v[1], -1)
             self.assertEqual(v[2], 9)
-            self.assertEqual(v['a'], 'hello')
-            self.assertEqual(v['b'], 'world')
+            self.assertEqual(v["a"], "hello")
+            self.assertEqual(v["b"], "world")
 
     def test_values(self):
         py = dict(a=4, b=3)
@@ -783,34 +818,35 @@ class TestPyObjCDict (TestCase):
     def test_view_set(self):
         oc = NSDictionary(a=1, b=2, c=3, d=4, e=5)
 
-        v = oc.keys() | {'a', 'f' }
-        self.assertEqual(v, {'a', 'b', 'c', 'd', 'e', 'f' })
+        v = oc.keys() | {"a", "f"}
+        self.assertEqual(v, {"a", "b", "c", "d", "e", "f"})
         self.assertIsInstance(v, set)
-        self.assertRaises(TypeError, operator.or_, oc.keys(), ('a', 'f'))
-        self.assertRaises(TypeError, operator.or_, ('a', 'f'), oc.keys())
+        self.assertRaises(TypeError, operator.or_, oc.keys(), ("a", "f"))
+        self.assertRaises(TypeError, operator.or_, ("a", "f"), oc.keys())
 
-        v = oc.keys() & {'a', 'f' }
-        self.assertEqual(v, {'a'})
+        v = oc.keys() & {"a", "f"}
+        self.assertEqual(v, {"a"})
         self.assertIsInstance(v, set)
-        self.assertRaises(TypeError, operator.and_, oc.keys(), ('a', 'f'))
-        self.assertRaises(TypeError, operator.and_, ('a', 'f'), oc.keys())
+        self.assertRaises(TypeError, operator.and_, oc.keys(), ("a", "f"))
+        self.assertRaises(TypeError, operator.and_, ("a", "f"), oc.keys())
 
-        v = oc.keys() ^ {'a', 'f' }
-        self.assertEqual(v, {'b', 'c', 'd', 'e', 'f'})
+        v = oc.keys() ^ {"a", "f"}
+        self.assertEqual(v, {"b", "c", "d", "e", "f"})
         self.assertIsInstance(v, set)
-        self.assertRaises(TypeError, operator.xor, oc.keys(), ('a', 'f'))
-        self.assertRaises(TypeError, operator.xor, ('a', 'f'), oc.keys())
+        self.assertRaises(TypeError, operator.xor, oc.keys(), ("a", "f"))
+        self.assertRaises(TypeError, operator.xor, ("a", "f"), oc.keys())
 
-        v = oc.keys() - {'a', 'f' }
-        self.assertEqual(v, {'b', 'c', 'd', 'e'})
+        v = oc.keys() - {"a", "f"}
+        self.assertEqual(v, {"b", "c", "d", "e"})
         self.assertIsInstance(v, set)
-        self.assertRaises(TypeError, operator.sub, oc.keys(), ('a', 'f'))
-        self.assertRaises(TypeError, operator.sub, ('a', 'f'), oc.keys())
+        self.assertRaises(TypeError, operator.sub, oc.keys(), ("a", "f"))
+        self.assertRaises(TypeError, operator.sub, ("a", "f"), oc.keys())
 
-        self.assertRaises(TypeError, operator.lt, oc.keys(), ('a', 'f'))
-        self.assertRaises(TypeError, operator.le, oc.keys(), ('a', 'f'))
-        self.assertRaises(TypeError, operator.gt, oc.keys(), ('a', 'f'))
-        self.assertRaises(TypeError, operator.ge, oc.keys(), ('a', 'f'))
+        self.assertRaises(TypeError, operator.lt, oc.keys(), ("a", "f"))
+        self.assertRaises(TypeError, operator.le, oc.keys(), ("a", "f"))
+        self.assertRaises(TypeError, operator.gt, oc.keys(), ("a", "f"))
+        self.assertRaises(TypeError, operator.ge, oc.keys(), ("a", "f"))
+
 
 if __name__ == "__main__":
     main()

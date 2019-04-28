@@ -26,9 +26,10 @@ when you're done. The argument to unregister is the same object as was
 passed in during registration.
 """
 
-__all__ = ('context',)
+__all__ = ("context",)
 
-class ContextRegistry (object):
+
+class ContextRegistry(object):
     def __init__(self):
         self._registry = {}
 
@@ -45,5 +46,6 @@ class ContextRegistry (object):
 
     def get(self, uniq):
         return self._registry[uniq]
+
 
 context = ContextRegistry()

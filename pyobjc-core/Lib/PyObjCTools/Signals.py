@@ -28,6 +28,7 @@ __all__ = ["dumpStackOnFatalSignal", "resetFatalSignals"]
 
 originalHandlers = None
 
+
 def dumpHandler(signum, frame):
     """
     the signal handler used in this module: print a stacktrace and
@@ -39,12 +40,14 @@ def dumpHandler(signum, frame):
     print("*** Restored handlers and resignaling.")
     os.kill(os.getpid(), signum)
 
+
 def installHandler(sig):
     """
     Install our signal handler for a signal. The original handler
     is saved in 'originalHandlers'.
     """
     originalHandlers[sig] = signal.signal(sig, dumpHandler)
+
 
 def dumpStackOnFatalSignal():
     """
@@ -66,6 +69,7 @@ def dumpStackOnFatalSignal():
         installHandler(signal.SIGBUS)
         installHandler(signal.SIGSEGV)
         installHandler(signal.SIGSYS)
+
 
 def resetFatalSignals():
     """

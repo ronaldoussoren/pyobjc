@@ -12,12 +12,13 @@ import os
 if sys.version_info[0] == 3:
     unicode = str
 
-onLeopard = int(os.uname()[2].split('.')[0]) >= 9
+onLeopard = int(os.uname()[2].split(".")[0]) >= 9
 
 OC_PythonSet = objc.lookUpClass("OC_PythonSet")
 OC_BuiltinPythonSet = objc.lookUpClass("OC_BuiltinPythonSet")
 
-class OC_SetPredicate (NSPredicate):
+
+class OC_SetPredicate(NSPredicate):
     # A simple test predicate class
     def initWithFunction_(self, pred):
         self = objc.super(OC_SetPredicate, self).init()
@@ -30,8 +31,8 @@ class OC_SetPredicate (NSPredicate):
     def evaluateWithObject_(self, object):
         return self.pred(object)
 
-class OC_TestElem(NSObject):
 
+class OC_TestElem(NSObject):
     def __new__(self, k):
         return self.alloc().initWithK_(k)
 
@@ -70,37 +71,37 @@ class BasicSetTests:
         self.assertIsNot(s, o)
         self.assertIsInstance(o, set)
 
-
     def testAllObject(self):
         s = self.setClass()
         self.assertEqual(OC_TestSet.allObjectsOfSet_(s), [])
 
-        s = self.setClass([1,2,3])
+        s = self.setClass([1, 2, 3])
         o = OC_TestSet.allObjectsOfSet_(s)
         o.sort()
-        self.assertEqual(o, [1,2,3])
+        self.assertEqual(o, [1, 2, 3])
 
     def testCount(self):
         s = self.setClass()
         self.assertEqual(OC_TestSet.countOfSet_(s), 0)
 
-        s = self.setClass([1,2,3])
+        s = self.setClass([1, 2, 3])
         self.assertEqual(OC_TestSet.countOfSet_(s), 3)
 
     def testAnyObject(self):
         s = self.setClass()
         self.assertEqual(OC_TestSet.anyObjectOfSet_(s), None)
 
-        s = self.setClass([1,2,3,4])
+        s = self.setClass([1, 2, 3, 4])
         self.assertIn(OC_TestSet.anyObjectOfSet_(s), s)
 
     def testContainsObject_(self):
-        s = self.setClass([1,2,3])
+        s = self.setClass([1, 2, 3])
 
         self.assertFalse(OC_TestSet.set_containsObject_(s, 4))
         self.assertTrue(OC_TestSet.set_containsObject_(s, 2))
 
     if onLeopard:
+
         def testFilteredSetUsingPredicate(self):
             s = self.setClass(range(10))
             p = OC_SetPredicate.alloc().initWithFunction_(lambda x: x % 2 == 0)
@@ -140,8 +141,7 @@ class BasicSetTests:
             l.append(v)
             v = enum.nextObject()
 
-
-        self.assertEqual(dict.fromkeys(l), dict.fromkeys([1,2,NSNull.null(),3]))
+        self.assertEqual(dict.fromkeys(l), dict.fromkeys([1, 2, NSNull.null(), 3]))
 
     def testIsSubSet(self):
         s1 = self.setClass(range(10))
@@ -152,9 +152,9 @@ class BasicSetTests:
         self.assertFalse(OC_TestSet.set_isSubsetOfSet_(s1, s2))
 
     def testIntersects(self):
-        s1 = self.setClass([1,2,3,4])
-        s2 = self.setClass([3,4,5,6])
-        s3 = self.setClass([5,6,7,8])
+        s1 = self.setClass([1, 2, 3, 4])
+        s2 = self.setClass([3, 4, 5, 6])
+        s3 = self.setClass([5, 6, 7, 8])
 
         self.assertTrue(OC_TestSet.set_intersectsSet_(s1, s2))
         self.assertTrue(OC_TestSet.set_intersectsSet_(s2, s3))
@@ -166,7 +166,7 @@ class BasicSetTests:
         self.assertIsInstance(o, unicode)
 
 
-class TestImmutableSet (TestCase, BasicSetTests):
+class TestImmutableSet(TestCase, BasicSetTests):
     setClass = frozenset
 
     def testCopy(self):
@@ -180,38 +180,41 @@ class TestImmutableSet (TestCase, BasicSetTests):
 
     def testNotMutable(self):
         # Ensure that a frozenset cannot be mutated
-        o = self.setClass([1,2,3])
-        self.assertRaises((TypeError, AttributeError),
-                OC_TestSet.set_addObject_, o, 4)
+        o = self.setClass([1, 2, 3])
+        self.assertRaises((TypeError, AttributeError), OC_TestSet.set_addObject_, o, 4)
 
-        self.assertRaises(TypeError,
-                OC_TestSet.set_removeObject_, o, 2)
+        self.assertRaises(TypeError, OC_TestSet.set_removeObject_, o, 2)
 
-        self.assertRaises(TypeError,
-                OC_TestSet.set_addObjectsFromArray_, o, [4, 5, 6])
+        self.assertRaises(TypeError, OC_TestSet.set_addObjectsFromArray_, o, [4, 5, 6])
 
         if onLeopard:
-            self.assertRaises(TypeError,
-                    OC_TestSet.set_filterUsingPredicate_, o,
-                    NSPredicate.predicateWithValue_(True))
+            self.assertRaises(
+                TypeError,
+                OC_TestSet.set_filterUsingPredicate_,
+                o,
+                NSPredicate.predicateWithValue_(True),
+            )
 
-        self.assertRaises(TypeError,
-                OC_TestSet.set_intersectSet_, o, self.setClass([2,3,4]))
+        self.assertRaises(
+            TypeError, OC_TestSet.set_intersectSet_, o, self.setClass([2, 3, 4])
+        )
 
-        self.assertRaises(TypeError,
-                OC_TestSet.set_minusSet_, o, self.setClass([2,3,4]))
+        self.assertRaises(
+            TypeError, OC_TestSet.set_minusSet_, o, self.setClass([2, 3, 4])
+        )
 
-        self.assertRaises(TypeError,
-                OC_TestSet.set_setSet_, o, self.setClass([2,3,4]))
+        self.assertRaises(
+            TypeError, OC_TestSet.set_setSet_, o, self.setClass([2, 3, 4])
+        )
 
-        self.assertRaises(TypeError,
-                OC_TestSet.set_minusSet_, o, self.setClass([2,3,4]))
+        self.assertRaises(
+            TypeError, OC_TestSet.set_minusSet_, o, self.setClass([2, 3, 4])
+        )
 
-        self.assertRaises(TypeError,
-                OC_TestSet.removeAllObjecsFromSet_, o)
+        self.assertRaises(TypeError, OC_TestSet.removeAllObjecsFromSet_, o)
 
 
-class TestMutableSet (TestCase, BasicSetTests):
+class TestMutableSet(TestCase, BasicSetTests):
     setClass = set
 
     def testCopy(self):
@@ -226,34 +229,35 @@ class TestMutableSet (TestCase, BasicSetTests):
         self.assertIsNot(s, o)
 
     def testUnionSet(self):
-        s1 = self.setClass([1,2,3])
-        s2 = self.setClass([3,4,5])
+        s1 = self.setClass([1, 2, 3])
+        s2 = self.setClass([3, 4, 5])
 
         OC_TestSet.set_unionSet_(s1, s2)
-        self.assertEqual(s1, self.setClass([1,2,3,4,5]))
+        self.assertEqual(s1, self.setClass([1, 2, 3, 4, 5]))
 
     def testSetSet(self):
-        s1 = self.setClass([1,2,3])
-        s2 = self.setClass([3,4,5])
+        s1 = self.setClass([1, 2, 3])
+        s2 = self.setClass([3, 4, 5])
 
         OC_TestSet.set_setSet_(s1, s2)
-        self.assertEqual(s1, self.setClass([3,4,5]))
+        self.assertEqual(s1, self.setClass([3, 4, 5]))
 
     def testMinusSet(self):
-        s1 = self.setClass([1,2,3])
-        s2 = self.setClass([3,4,5])
+        s1 = self.setClass([1, 2, 3])
+        s2 = self.setClass([3, 4, 5])
 
         OC_TestSet.set_minusSet_(s1, s2)
         self.assertEqual(s1, self.setClass([1, 2]))
 
     def testIntersectSet(self):
-        s1 = self.setClass([1,2,3])
-        s2 = self.setClass([3,4,5])
+        s1 = self.setClass([1, 2, 3])
+        s2 = self.setClass([3, 4, 5])
 
         OC_TestSet.set_intersectSet_(s1, s2)
         self.assertEqual(s1, self.setClass([3]))
 
     if onLeopard:
+
         def testFilterSet(self):
             s = self.setClass(range(10))
             p = OC_SetPredicate.alloc().initWithFunction_(lambda x: x % 2 == 0)
@@ -262,38 +266,37 @@ class TestMutableSet (TestCase, BasicSetTests):
             self.assertEqual(s, self.setClass([0, 2, 4, 6, 8]))
 
     def testAddObject(self):
-        s = self.setClass([1,2,3])
+        s = self.setClass([1, 2, 3])
 
         OC_TestSet.set_addObject_(s, 1)
-        self.assertEqual(s, self.setClass([1,2,3]))
+        self.assertEqual(s, self.setClass([1, 2, 3]))
 
         OC_TestSet.set_addObject_(s, 9)
-        self.assertEqual(s, self.setClass([1,2,3,9]))
+        self.assertEqual(s, self.setClass([1, 2, 3, 9]))
 
     def testAddObjectsFromArray(self):
-        s = self.setClass([1,2,3])
+        s = self.setClass([1, 2, 3])
 
-        OC_TestSet.set_addObjectsFromArray_(s, [1,2])
-        self.assertEqual(s, self.setClass([1,2,3]))
+        OC_TestSet.set_addObjectsFromArray_(s, [1, 2])
+        self.assertEqual(s, self.setClass([1, 2, 3]))
 
-        OC_TestSet.set_addObjectsFromArray_(s, [9,5,4])
-        self.assertEqual(s, self.setClass([1,2,3,9,5,4]))
+        OC_TestSet.set_addObjectsFromArray_(s, [9, 5, 4])
+        self.assertEqual(s, self.setClass([1, 2, 3, 9, 5, 4]))
 
     def testRemoveObject(self):
-        s = self.setClass([1,2,3])
+        s = self.setClass([1, 2, 3])
 
         OC_TestSet.set_removeObject_(s, 1)
-        self.assertEqual(s, self.setClass([2,3]))
+        self.assertEqual(s, self.setClass([2, 3]))
 
         OC_TestSet.set_removeObject_(s, 9)
-        self.assertEqual(s, self.setClass([2,3]))
+        self.assertEqual(s, self.setClass([2, 3]))
 
     def testRemoveAllObjects(self):
-        s = self.setClass([1,2,3])
+        s = self.setClass([1, 2, 3])
 
         OC_TestSet.removeAllObjecsFromSet_(s)
         self.assertEqual(s, self.setClass())
-
 
 
 if __name__ == "__main__":

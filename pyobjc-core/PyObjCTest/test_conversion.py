@@ -21,15 +21,14 @@ import warnings
 import array, sys
 
 
-
-class TestNumbers (TestCase):
+class TestNumbers(TestCase):
     """
     Test of conversion of numbers, especially boundary cases
     """
 
     def test_unsigned_char(self):
         self.assertEqual(0, pyObjCPy(objc._C_UCHR, 0))
-        self.assertEqual(0, pyObjCPy(objc._C_UCHR, b'\0'))
+        self.assertEqual(0, pyObjCPy(objc._C_UCHR, b"\0"))
 
         if sys.version_info[0] == 2:
             self.assertEqual(0, pyObjCPy(objc._C_UCHR, long(0)))
@@ -46,16 +45,19 @@ class TestNumbers (TestCase):
             self.assertEqual(UCHAR_MAX, pyObjCPy(objc._C_UCHR, long(UCHAR_MAX)))
         self.assertEqual(UCHAR_MAX, pyObjCPy(objc._C_UCHR, float(UCHAR_MAX)))
 
-
         with warnings.catch_warnings():
             warnings.filterwarnings("ignore", category=DeprecationWarning)
 
-            self.assertRaises((IndexError, ValueError), pyObjCPy, objc._C_UCHR, SCHAR_MIN)
-            self.assertRaises((IndexError, ValueError), pyObjCPy, objc._C_UCHR, SCHAR_MIN - 1)
+            self.assertRaises(
+                (IndexError, ValueError), pyObjCPy, objc._C_UCHR, SCHAR_MIN
+            )
+            self.assertRaises(
+                (IndexError, ValueError), pyObjCPy, objc._C_UCHR, SCHAR_MIN - 1
+            )
 
     def test_char(self):
         self.assertEqual(0, pyObjCPy(objc._C_CHR, 0))
-        self.assertEqual(0, pyObjCPy(objc._C_CHR, b'\x00'))
+        self.assertEqual(0, pyObjCPy(objc._C_CHR, b"\x00"))
         if sys.version_info[0] == 2:
             self.assertEqual(0, pyObjCPy(objc._C_CHR, long(0)))
 
@@ -74,7 +76,7 @@ class TestNumbers (TestCase):
 
         # XXX: Is this right, chr(-1) raises an exception, and is not
         # equivalent to '\xff'. Should (char)-1 be converted to '\xff'/255 ?
-        self.assertEqual(-1, pyObjCPy(objc._C_CHR, b'\xff'))
+        self.assertEqual(-1, pyObjCPy(objc._C_CHR, b"\xff"))
 
         self.assertRaises(ValueError, pyObjCPy, objc._C_CHR, CHAR_MAX + 1)
         self.assertRaises(ValueError, pyObjCPy, objc._C_CHR, CHAR_MIN - 1)
@@ -200,17 +202,21 @@ class TestNumbers (TestCase):
 
         with warnings.catch_warnings(record=True) as w:
             warnings.simplefilter("always")
-            pyObjCPy(objc._C_ULNG_LNG, LLONG_MIN+100)
+            pyObjCPy(objc._C_ULNG_LNG, LLONG_MIN + 100)
 
         self.assertEqual(len(w), 1)
         self.assertEqual(w[0].category, DeprecationWarning)
 
         with warnings.catch_warnings(record=True):
             warnings.simplefilter("ignore")
-            self.assertEqual(-LLONG_MIN+100, pyObjCPy(objc._C_ULNG_LNG, LLONG_MIN+100))
+            self.assertEqual(
+                -LLONG_MIN + 100, pyObjCPy(objc._C_ULNG_LNG, LLONG_MIN + 100)
+            )
 
-        #self.assertRaises(ValueError, pyObjCPy, objc._C_ULNG_LNG, LLONG_MIN)
-        self.assertRaises((ValueError, IndexError), pyObjCPy, objc._C_ULNG_LNG, LLONG_MIN - 1)
+        # self.assertRaises(ValueError, pyObjCPy, objc._C_ULNG_LNG, LLONG_MIN)
+        self.assertRaises(
+            (ValueError, IndexError), pyObjCPy, objc._C_ULNG_LNG, LLONG_MIN - 1
+        )
 
         self.assertRaises(ValueError, pyObjCPy, objc._C_ULNG_LNG, "1")
         self.assertRaises(ValueError, pyObjCPy, objc._C_ULNG_LNG, b"1")
@@ -239,7 +245,9 @@ class TestNumbers (TestCase):
         self.assertEqual(DBL_EPSILON, pyObjCPy(objc._C_DBL, DBL_EPSILON))
         self.assertEqual(-DBL_EPSILON, pyObjCPy(objc._C_DBL, -DBL_EPSILON))
 
-        self.assertRaises((OverflowError, ValueError), pyObjCPy, objc._C_DBL, 1 << 10000)
+        self.assertRaises(
+            (OverflowError, ValueError), pyObjCPy, objc._C_DBL, 1 << 10000
+        )
 
         self.assertRaises(ValueError, pyObjCPy, objc._C_DBL, "1")
         self.assertRaises(ValueError, pyObjCPy, objc._C_DBL, b"1")
@@ -258,13 +266,15 @@ class TestNumbers (TestCase):
         # of float
         self.assertNotEqual(DBL_MAX, pyObjCPy(objc._C_FLT, DBL_MAX))
 
-        self.assertRaises((ValueError, OverflowError), pyObjCPy, objc._C_FLT, 1 << 10000)
+        self.assertRaises(
+            (ValueError, OverflowError), pyObjCPy, objc._C_FLT, 1 << 10000
+        )
 
         self.assertRaises(ValueError, pyObjCPy, objc._C_FLT, "1")
         self.assertRaises(ValueError, pyObjCPy, objc._C_FLT, b"1")
 
 
-class TestStruct (TestCase):
+class TestStruct(TestCase):
     """
     Structs are usually represented as tuples, but any sequence type is
     accepted as input, as long as it has the right number of elements
@@ -303,7 +313,8 @@ class TestStruct (TestCase):
         self.assertEqual(inval, pyObjCPy(signature, iter(inval)))
         self.assertEqual(inval, pyObjCPy(signature, iter(list(inval))))
 
-class TestArray (TestCase):
+
+class TestArray(TestCase):
     def test_simple(self):
         signature = b"[10i]"
         value = tuple(range(10))
@@ -319,7 +330,8 @@ class TestArray (TestCase):
         self.assertRaises(ValueError, pyObjCPy, signature, iter(value[:9]))
         self.assertRaises(TypeError, pyObjCPy, signature, None)
 
-class TestCArray (TestCase):
+
+class TestCArray(TestCase):
     # Tests for the PyObjC_PythonToCArray (C-)function, this function is
     # used to build variable-length C Arrays from Python objects.
 
@@ -328,7 +340,7 @@ class TestCArray (TestCase):
     #       "{_Foo=fi}" (fail with array.array) + version with [{foo=if}]
     #       - other simple types
     def testShortTuple(self):
-        arr = (1,2,3,4,5)
+        arr = (1, 2, 3, 4, 5)
 
         res = carrayMaker(objc._C_SHT, arr, None)
         self.assertEqual(res, arr)
@@ -340,8 +352,8 @@ class TestCArray (TestCase):
         self.assertRaises(ValueError, carrayMaker, objc._C_SHT, ["a", "b"], 1)
 
     def testShortArray(self):
-        arr = array.array('h', [1,2,3,4,5])
-        arr2 = array.array('f', [1,2,3,4,5])
+        arr = array.array("h", [1, 2, 3, 4, 5])
+        arr2 = array.array("f", [1, 2, 3, 4, 5])
 
         res = carrayMaker(objc._C_SHT, arr, None)
         self.assertEqual(res, tuple(arr))
@@ -353,7 +365,7 @@ class TestCArray (TestCase):
         self.assertRaises(ValueError, carrayMaker, objc._C_SHT, arr2, None)
 
     def testIntTuple(self):
-        arr = (1,2,3,4,5)
+        arr = (1, 2, 3, 4, 5)
 
         res = carrayMaker(objc._C_INT, arr, None)
         self.assertEqual(res, arr)
@@ -365,9 +377,9 @@ class TestCArray (TestCase):
         self.assertRaises(ValueError, carrayMaker, objc._C_INT, ["a", "b"], 1)
 
     def testIntArray(self):
-        arr = array.array('i', [1,2,3,4,5])
-        arr2 = array.array('f', [1,2,3,4,5])
-        arr3 = array.array('h', [1,2,3,4,5])
+        arr = array.array("i", [1, 2, 3, 4, 5])
+        arr2 = array.array("f", [1, 2, 3, 4, 5])
+        arr3 = array.array("h", [1, 2, 3, 4, 5])
 
         res = carrayMaker(objc._C_INT, arr, None)
         self.assertEqual(res, tuple(arr))
@@ -380,7 +392,7 @@ class TestCArray (TestCase):
         self.assertRaises(ValueError, carrayMaker, objc._C_INT, arr3, None)
 
     def testFloatTuple(self):
-        arr = (1,2,3,4,5)
+        arr = (1, 2, 3, 4, 5)
 
         res = carrayMaker(objc._C_FLT, arr, None)
         self.assertEqual(res, arr)
@@ -392,8 +404,8 @@ class TestCArray (TestCase):
         self.assertRaises(ValueError, carrayMaker, objc._C_INT, ["a", "b"], 1)
 
     def testFloatArray(self):
-        arr = array.array('f', [1.5,2.5,3.5,4.5,5.5])
-        arr2 = array.array('i', [1,2,3,4,5])
+        arr = array.array("f", [1.5, 2.5, 3.5, 4.5, 5.5])
+        arr2 = array.array("i", [1, 2, 3, 4, 5])
 
         res = carrayMaker(objc._C_FLT, arr, None)
         self.assertEqual(res, tuple(arr))
@@ -406,90 +418,114 @@ class TestCArray (TestCase):
 
     def testPointTuple(self):
         arr = ((1.0, 1.5), (2.0, 2.5), (3.0, 3.5), (4.0, 4.5), (5.0, 5.5))
-        arr2 = (1.5,2.5,3.5,4.5,5.5)
+        arr2 = (1.5, 2.5, 3.5, 4.5, 5.5)
 
-        res = carrayMaker(b'{Point=ff}', arr, None)
+        res = carrayMaker(b"{Point=ff}", arr, None)
         self.assertEqual(res, arr)
 
-        res = carrayMaker(b'{Point=ff}', arr, 2)
+        res = carrayMaker(b"{Point=ff}", arr, 2)
         self.assertEqual(res, arr[:2])
 
-        self.assertRaises(ValueError, carrayMaker, b'{Point=ff}', arr, 7)
-        self.assertRaises(ValueError, carrayMaker, b'{Point=ff}', ["a", "b"], 1)
-        self.assertRaises(TypeError, carrayMaker, b'{Point=ff}', arr2, None)
+        self.assertRaises(ValueError, carrayMaker, b"{Point=ff}", arr, 7)
+        self.assertRaises(ValueError, carrayMaker, b"{Point=ff}", ["a", "b"], 1)
+        self.assertRaises(TypeError, carrayMaker, b"{Point=ff}", arr2, None)
 
     def testPointArray(self):
-        arr = array.array('f', [
-            1.0, 1.5,
-            2.0, 2.5,
-            3.0, 3.5,
-            4.0, 4.5,
-            5.0, 5.5])
+        arr = array.array("f", [1.0, 1.5, 2.0, 2.5, 3.0, 3.5, 4.0, 4.5, 5.0, 5.5])
         lst = ((1.0, 1.5), (2.0, 2.5), (3.0, 3.5), (4.0, 4.5), (5.0, 5.5))
 
-        arr2 = array.array('i', [
-            1, 1,
-            2, 2,
-            3, 3,
-            4, 4,
-            5, 5])
+        arr2 = array.array("i", [1, 1, 2, 2, 3, 3, 4, 4, 5, 5])
 
-        res = carrayMaker(b'{Point=ff}', arr, None)
+        res = carrayMaker(b"{Point=ff}", arr, None)
         self.assertEqual(res, lst)
 
-        res = carrayMaker(b'{Point=ff}', arr, 2)
+        res = carrayMaker(b"{Point=ff}", arr, 2)
         self.assertEqual(res, lst[:2])
 
-        self.assertRaises(ValueError, carrayMaker, b'{Point=ff}', arr2, None)
+        self.assertRaises(ValueError, carrayMaker, b"{Point=ff}", arr2, None)
 
     def testRectArray(self):
-        arr = array.array('f', [
-            1.0, 1.5, -1.0, -1.5,
-            2.0, 2.5, -2.0, -2.5,
-            3.0, 3.5, -3.0, -3.5,
-            4.0, 4.5, -4.0, -4.5,
-            5.0, 5.5, -5.0, -5.5])
+        arr = array.array(
+            "f",
+            [
+                1.0,
+                1.5,
+                -1.0,
+                -1.5,
+                2.0,
+                2.5,
+                -2.0,
+                -2.5,
+                3.0,
+                3.5,
+                -3.0,
+                -3.5,
+                4.0,
+                4.5,
+                -4.0,
+                -4.5,
+                5.0,
+                5.5,
+                -5.0,
+                -5.5,
+            ],
+        )
         lst = (
-                ((1.0, 1.5),  (-1.0, -1.5)),
-                ((2.0, 2.5),  (-2.0, -2.5)),
-                ((3.0, 3.5),  (-3.0, -3.5)),
-                ((4.0, 4.5),  (-4.0, -4.5)),
-                ((5.0, 5.5),  (-5.0, -5.5)),
-            )
+            ((1.0, 1.5), (-1.0, -1.5)),
+            ((2.0, 2.5), (-2.0, -2.5)),
+            ((3.0, 3.5), (-3.0, -3.5)),
+            ((4.0, 4.5), (-4.0, -4.5)),
+            ((5.0, 5.5), (-5.0, -5.5)),
+        )
 
-        arr2 = array.array('i', [
-            1, 1, 1, 1,
-            2, 2, 2, 2,
-            3, 3, 3, 3,
-            4, 4, 4, 4,
-            5, 5, 5, 5])
+        arr2 = array.array(
+            "i", [1, 1, 1, 1, 2, 2, 2, 2, 3, 3, 3, 3, 4, 4, 4, 4, 5, 5, 5, 5]
+        )
 
-        res = carrayMaker(b'{Rect={P=ff}{S=ff}}', arr, None)
+        res = carrayMaker(b"{Rect={P=ff}{S=ff}}", arr, None)
         self.assertEqual(res, lst)
 
-        res = carrayMaker(b'{Rect={P=ff}{S=ff}}', arr, 2)
+        res = carrayMaker(b"{Rect={P=ff}{S=ff}}", arr, 2)
         self.assertEqual(res, lst[:2])
 
-        res = carrayMaker(b'{Rect=[2f][2f]}', arr, None)
+        res = carrayMaker(b"{Rect=[2f][2f]}", arr, None)
         self.assertEqual(res, lst)
 
-        res = carrayMaker(b'[2[2f]]}', arr, None)
+        res = carrayMaker(b"[2[2f]]}", arr, None)
         self.assertEqual(res, lst)
 
-        self.assertRaises(ValueError, carrayMaker, b'{Rect={P=ff}{S=ff}}', arr2, None)
+        self.assertRaises(ValueError, carrayMaker, b"{Rect={P=ff}{S=ff}}", arr2, None)
 
     def testMixedArray(self):
-        arr = array.array('f', [
-            1.0, 1.5, -1.0, -1.5,
-            2.0, 2.5, -2.0, -2.5,
-            3.0, 3.5, -3.0, -3.5,
-            4.0, 4.5, -4.0, -4.5,
-            5.0, 5.5, -5.0, -5.5])
+        arr = array.array(
+            "f",
+            [
+                1.0,
+                1.5,
+                -1.0,
+                -1.5,
+                2.0,
+                2.5,
+                -2.0,
+                -2.5,
+                3.0,
+                3.5,
+                -3.0,
+                -3.5,
+                4.0,
+                4.5,
+                -4.0,
+                -4.5,
+                5.0,
+                5.5,
+                -5.0,
+                -5.5,
+            ],
+        )
 
-        self.assertRaises(ValueError, carrayMaker, b'{M={P=ff}{S=ii}}', arr, 4)
-        self.assertRaises(ValueError, carrayMaker, b'{M=if{S=ii}}', arr, None)
-        self.assertRaises(ValueError, carrayMaker, b'{M=fi{S=ff}}', arr, None)
-
+        self.assertRaises(ValueError, carrayMaker, b"{M={P=ff}{S=ii}}", arr, 4)
+        self.assertRaises(ValueError, carrayMaker, b"{M=if{S=ii}}", arr, None)
+        self.assertRaises(ValueError, carrayMaker, b"{M=fi{S=ff}}", arr, None)
 
 
 class PyOCTestTypeStr(TestCase):
@@ -528,6 +564,7 @@ class PyOCTestTypeStr(TestCase):
         self.assertEqual(objc._C_IN, b"n")
         self.assertEqual(objc._C_OUT, b"o")
         self.assertEqual(objc._C_INOUT, b"N")
+
 
 if __name__ == "__main__":
     main()

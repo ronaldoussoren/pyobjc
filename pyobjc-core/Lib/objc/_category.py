@@ -1,18 +1,21 @@
-__all__ = ['classAddMethod', 'Category']
+__all__ = ["classAddMethod", "Category"]
 
 from objc._objc import selector, classAddMethods, objc_class, ivar
 
 from types import FunctionType, MethodType
+
 
 def classAddMethod(cls, name, method):
     """
     Add a single method to a class. 'name' is the ObjC selector
     """
     if isinstance(method, selector):
-        sel = selector(method.callable,
-                    selector=name,
-                    signature=method.signature,
-                    isClassMethod=method.isClassMethod)
+        sel = selector(
+            method.callable,
+            selector=name,
+            signature=method.signature,
+            isClassMethod=method.isClassMethod,
+        )
     else:
         sel = selector(method, selector=name)
 
@@ -23,14 +26,18 @@ def classAddMethod(cls, name, method):
 # Syntactic support for categories
 #
 
+
 class _CategoryMeta(type):
     """
     Meta class for categories.
     """
+
     __slots__ = ()
-    _IGNORENAMES = ('__module__', '__name__', '__doc__')
+    _IGNORENAMES = ("__module__", "__name__", "__doc__")
+
     def _newSubclass(cls, name, bases, methods):
         return type.__new__(cls, name, bases, methods)
+
     _newSubclass = classmethod(_newSubclass)
 
     def __new__(cls, name, bases, methods):
@@ -42,9 +49,18 @@ class _CategoryMeta(type):
         if c.__name__ != name:
             raise TypeError("Category name must be same as class name")
 
-
-        m = [ x[1] for x in methods.items() if x[0] not in cls._IGNORENAMES  and isinstance(x[1], (FunctionType, MethodType, selector, classmethod))]
-        vars = [ x for x in methods.items() if x[0] not in cls._IGNORENAMES  and not isinstance(x[1], (FunctionType, MethodType, selector, classmethod))]
+        m = [
+            x[1]
+            for x in methods.items()
+            if x[0] not in cls._IGNORENAMES
+            and isinstance(x[1], (FunctionType, MethodType, selector, classmethod))
+        ]
+        vars = [
+            x
+            for x in methods.items()
+            if x[0] not in cls._IGNORENAMES
+            and not isinstance(x[1], (FunctionType, MethodType, selector, classmethod))
+        ]
         for k, v in vars:
             if isinstance(v, ivar):
                 raise TypeError("Cannot add instance variables in a Category")
@@ -53,6 +69,7 @@ class _CategoryMeta(type):
         for k, v in vars:
             setattr(c, k, v)
         return c
+
 
 def Category(cls):
     """
@@ -69,5 +86,5 @@ def Category(cls):
     """
     if not isinstance(cls, objc_class):
         raise TypeError("Category can only be used on Objective-C classes")
-    retval = _CategoryMeta._newSubclass('Category', (), dict(real_class=cls))
+    retval = _CategoryMeta._newSubclass("Category", (), dict(real_class=cls))
     return retval

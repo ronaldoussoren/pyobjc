@@ -28,8 +28,6 @@ if hasattr(_options, "strbridge_enabled"):  # pragma: no 3.x cover; pragma: no b
         warnings.warn("Set objc.options.strbridge_enabled instead", DeprecationWarning)
         _options.strbridge_enabled = bool(value)
 
-
     def getStrBridgeEnabled():
         warnings.warn("Read objc.options.strbridge_enabled instead", DeprecationWarning)
         return _options.strbridge_enabled
-

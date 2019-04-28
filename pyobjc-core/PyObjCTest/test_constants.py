@@ -1,12 +1,13 @@
 from PyObjCTools.TestSupport import *
 import objc
 
-class TestConstants (TestCase):
+
+class TestConstants(TestCase):
     def test_version_current(self):
         self.assertIsInstance(objc.MAC_OS_X_VERSION_CURRENT, (int, long))
 
-        v = os_release().split('.')[:2]
-        v = 'MAC_OS_X_VERSION_%s_%s'%tuple(v)
+        v = os_release().split(".")[:2]
+        v = "MAC_OS_X_VERSION_%s_%s" % tuple(v)
 
         self.assertGreaterEqual(objc.MAC_OS_X_VERSION_CURRENT, getattr(objc, v))
 
@@ -40,6 +41,7 @@ class TestConstants (TestCase):
         self.assertEqual(objc.MAC_OS_X_VERSION_10_13_6, 101306)
         self.assertEqual(objc.MAC_OS_X_VERSION_10_14, 101400)
         self.assertEqual(objc.MAC_OS_X_VERSION_10_14_1, 101401)
+
 
 if __name__ == "__main__":
     main()

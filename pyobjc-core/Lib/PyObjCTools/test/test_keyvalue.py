@@ -16,11 +16,12 @@ from objc.test import ctests
 from Foundation import *
 import datetime
 
-class KeyValueClass5 (object):
+
+class KeyValueClass5(object):
     def __init__(self):
         self.key3 = 3
         self._key4 = u"4"
-        self.__private = u'private'
+        self.__private = u"private"
 
     def addMultiple(self):
         self.multiple = KeyValueClass5()
@@ -42,8 +43,8 @@ class KeyValueClass5 (object):
         self.key5 = value * 5
 
 
-class KeyValueClass6 (object):
-    __slots__ = (u'foo', )
+class KeyValueClass6(object):
+    __slots__ = (u"foo",)
 
     def __init__(self):
         self.foo = u"foobar"
@@ -53,19 +54,20 @@ class KeyValueClass6 (object):
     def read_bar(self):
         return self.foo + self.foo
 
-    def write_bar (self, value):
+    def write_bar(self, value):
         self.foo = value + value
 
     bar = property(read_bar, write_bar)
 
     roprop = property(lambda self: u"read-only")
 
-class KeyValueClass7 (NSObject):
+
+class KeyValueClass7(NSObject):
     def init(self):
         self = super(KeyValueClass7, self).init()
         self.key3 = 3
         self._key4 = u"4"
-        self.__private = u'private'
+        self.__private = u"private"
         return self
 
     def addMultiple(self):
@@ -90,8 +92,9 @@ class KeyValueClass7 (NSObject):
     def keyM(self):
         return u"m"
 
-class KeyValueClass8 (NSObject):
-    __slots__ = ('foo', )
+
+class KeyValueClass8(NSObject):
+    __slots__ = ("foo",)
 
     def init(self):
         self = super(KeyValueClass8, self).init()
@@ -103,7 +106,7 @@ class KeyValueClass8 (NSObject):
     def read_bar(self):
         return self.foo + self.foo
 
-    def write_bar (self, value):
+    def write_bar(self, value):
         self.foo = value + value
 
     bar = property(read_bar, write_bar)
@@ -111,8 +114,7 @@ class KeyValueClass8 (NSObject):
     roprop = property(lambda self: u"read-only")
 
 
-
-class PyKeyValueCoding (unittest.TestCase):
+class PyKeyValueCoding(unittest.TestCase):
     def testNoPrivateVars(self):
         # Private instance variables ('anObject.__value') are not accessible using
         # key-value coding.
@@ -145,8 +147,12 @@ class PyKeyValueCoding (unittest.TestCase):
 
         self.assertEquals(getKeyPath(o, u"multiple"), o.multiple)
         self.assertEquals(getKeyPath(o, u"multiple.level2"), o.multiple.level2)
-        self.assertEquals(getKeyPath(o, u"multiple.level2.level3.keyA"), o.multiple.level2.level3.keyA)
-        self.assertEquals(getKeyPath(o, u"multiple.level2.level3.keyB"), o.multiple.level2.level3.keyB)
+        self.assertEquals(
+            getKeyPath(o, u"multiple.level2.level3.keyA"), o.multiple.level2.level3.keyA
+        )
+        self.assertEquals(
+            getKeyPath(o, u"multiple.level2.level3.keyB"), o.multiple.level2.level3.keyB
+        )
 
         self.assertRaises(KeyError, getKeyPath, o, u"multiple.level2.nokey")
 
@@ -154,30 +160,30 @@ class PyKeyValueCoding (unittest.TestCase):
         o = KeyValueClass5()
 
         self.assertEquals(o.key3, 3)
-        setKey(o, u'key3', u'drie')
+        setKey(o, u"key3", u"drie")
         self.assertEquals(o.key3, u"drie")
 
         self.assertEquals(o._key4, u"4")
-        setKey(o, u'key4', u'vier')
+        setKey(o, u"key4", u"vier")
         self.assertEquals(o._key4, u"viervierviervier")
 
         o.key5 = 1
-        setKey(o, u'key5', u'V')
+        setKey(o, u"key5", u"V")
         self.assertEquals(o.key5, u"VVVVV")
 
-        self.assert_(not hasattr(o, u'key9'))
-        setKey(o, u'key9', u'IX')
-        self.assert_(hasattr(o, u'key9'))
-        self.assertEquals(o.key9, u'IX')
+        self.assert_(not hasattr(o, u"key9"))
+        setKey(o, u"key9", u"IX")
+        self.assert_(hasattr(o, u"key9"))
+        self.assertEquals(o.key9, u"IX")
 
     def testTakeValueForKey2(self):
         o = KeyValueClass6()
 
         self.assertEquals(o.foo, u"foobar")
-        setKey(o, u'foo', u'FOO')
+        setKey(o, u"foo", u"FOO")
         self.assertEquals(o.foo, u"FOO")
 
-        self.assertRaises(KeyError, setKey, o, u'key9', u'IX')
+        self.assertRaises(KeyError, setKey, o, u"key9", u"IX")
 
     def testTakeValueForKeyPath(self):
         o = KeyValueClass5()
@@ -193,7 +199,7 @@ class PyKeyValueCoding (unittest.TestCase):
         self.assertEquals(o.multiple.level2.level3.keyB, 9.999)
 
 
-class OcKeyValueCoding (unittest.TestCase):
+class OcKeyValueCoding(unittest.TestCase):
     def testNoPrivateVars(self):
         # Private instance variables ('anObject.__value') are not accessible using
         # key-value coding.
@@ -218,7 +224,6 @@ class OcKeyValueCoding (unittest.TestCase):
         a.addObject_({u"keyM": u"5"})
         a.addObject_(NSDictionary.dictionaryWithObject_forKey_(u"foo", u"keyM"))
         b = NSMutableArray.arrayWithObjects_(u"m", u"5", u"foo", None)
-
 
         # See Modules/objc/unittest.m for an explantion of this test
         try:
@@ -247,8 +252,12 @@ class OcKeyValueCoding (unittest.TestCase):
 
         self.assertEquals(getKeyPath(o, u"multiple"), o.multiple)
         self.assertEquals(getKeyPath(o, u"multiple.level2"), o.multiple.level2)
-        self.assertEquals(getKeyPath(o, u"multiple.level2.level3.keyA"), o.multiple.level2.level3.keyA)
-        self.assertEquals(getKeyPath(o, u"multiple.level2.level3.keyB"), o.multiple.level2.level3.keyB)
+        self.assertEquals(
+            getKeyPath(o, u"multiple.level2.level3.keyA"), o.multiple.level2.level3.keyA
+        )
+        self.assertEquals(
+            getKeyPath(o, u"multiple.level2.level3.keyB"), o.multiple.level2.level3.keyB
+        )
 
         self.assertRaises(KeyError, getKeyPath, o, u"multiple.level2.nokey")
 
@@ -256,30 +265,30 @@ class OcKeyValueCoding (unittest.TestCase):
         o = KeyValueClass7.alloc().init()
 
         self.assertEquals(o.key3, 3)
-        setKey(o, u'key3', u'drie')
+        setKey(o, u"key3", u"drie")
         self.assertEquals(o.key3, u"drie")
 
         self.assertEquals(o._key4, u"4")
-        setKey(o, u'key4', u'vier')
+        setKey(o, u"key4", u"vier")
         self.assertEquals(o._key4, u"viervierviervier")
 
         o.key5 = 1
-        setKey(o, u'key5', u'V')
+        setKey(o, u"key5", u"V")
         self.assertEquals(o.key5, u"VVVVV")
 
-        self.assert_(not hasattr(o, u'key9'))
-        setKey(o, u'key9', u'IX')
-        self.assert_(hasattr(o, u'key9'))
-        self.assertEquals(o.key9, u'IX')
+        self.assert_(not hasattr(o, u"key9"))
+        setKey(o, u"key9", u"IX")
+        self.assert_(hasattr(o, u"key9"))
+        self.assertEquals(o.key9, u"IX")
 
     def testTakeValueForKey2(self):
         o = KeyValueClass8.alloc().init()
 
         self.assertEquals(o.foo, u"foobar")
-        setKey(o, u'foo', u'FOO')
+        setKey(o, u"foo", u"FOO")
         self.assertEquals(o.foo, u"FOO")
 
-        self.assertRaises(KeyError, setKey, o, u'key9', u'IX')
+        self.assertRaises(KeyError, setKey, o, u"key9", u"IX")
 
     def testTakeValueForKeyPath(self):
         o = KeyValueClass7.alloc().init()
@@ -294,57 +303,65 @@ class OcKeyValueCoding (unittest.TestCase):
         setKeyPath(o, u"multiple.level2.level3.keyB", 9.999)
         self.assertEquals(o.multiple.level2.level3.keyB, 9.999)
 
-class MethodsAsKeys (unittest.TestCase):
 
-    def testStrCap (self):
+class MethodsAsKeys(unittest.TestCase):
+    def testStrCap(self):
         s = u"hello"
 
-        self.assertEquals(getKey(s, u'capitalize'), u"Hello")
+        self.assertEquals(getKey(s, u"capitalize"), u"Hello")
 
 
 class AbstractKVCodingTest:
     def testBaseValueForKey(self):
-        self.assertEquals(DirectString,
-            getKey( self.base, u"directString"))
-        self.assertEquals(IndirectString,
-            getKey( self.base, u"indirectString"))
-        self.assertEquals(DirectNumber,
-            getKey( self.base, u"directNumber"))
-        self.assertEquals(IndirectNumber,
-            getKey( self.base, u"indirectNumber"))
+        self.assertEquals(DirectString, getKey(self.base, u"directString"))
+        self.assertEquals(IndirectString, getKey(self.base, u"indirectString"))
+        self.assertEquals(DirectNumber, getKey(self.base, u"directNumber"))
+        self.assertEquals(IndirectNumber, getKey(self.base, u"indirectNumber"))
 
     def testPathValueForKey(self):
-        self.assertEquals(DirectString,
-            getKeyPath( self.path, u"directHead.directString"))
-        self.assertEquals(DirectString,
-            getKeyPath( self.path, u"indirectHead.directString"))
-        self.assertEquals(IndirectString,
-            getKeyPath( self.path, u"directHead.indirectString"))
-        self.assertEquals(IndirectString,
-            getKeyPath( self.path, u"indirectHead.indirectString"))
-        self.assertEquals(DirectNumber,
-            getKeyPath( self.path, u"directHead.directNumber"))
-        self.assertEquals(DirectNumber,
-            getKeyPath( self.path, u"indirectHead.directNumber"))
-        self.assertEquals(IndirectNumber,
-            getKeyPath( self.path, u"directHead.indirectNumber"))
-        self.assertEquals(IndirectNumber,
-            getKeyPath( self.path, u"indirectHead.indirectNumber"))
+        self.assertEquals(
+            DirectString, getKeyPath(self.path, u"directHead.directString")
+        )
+        self.assertEquals(
+            DirectString, getKeyPath(self.path, u"indirectHead.directString")
+        )
+        self.assertEquals(
+            IndirectString, getKeyPath(self.path, u"directHead.indirectString")
+        )
+        self.assertEquals(
+            IndirectString, getKeyPath(self.path, u"indirectHead.indirectString")
+        )
+        self.assertEquals(
+            DirectNumber, getKeyPath(self.path, u"directHead.directNumber")
+        )
+        self.assertEquals(
+            DirectNumber, getKeyPath(self.path, u"indirectHead.directNumber")
+        )
+        self.assertEquals(
+            IndirectNumber, getKeyPath(self.path, u"directHead.indirectNumber")
+        )
+        self.assertEquals(
+            IndirectNumber, getKeyPath(self.path, u"indirectHead.indirectNumber")
+        )
+
 
 class TestObjCKVCoding(AbstractKVCodingTest, unittest.TestCase):
     def setUp(self):
         self.base = PyObjCTest_KVBaseClass.new()
         self.path = PyObjCTest_KVPathClass.new()
 
+
 class TestPythonKVCoding(AbstractKVCodingTest, unittest.TestCase):
     def setUp(self):
         self.base = KVPyBase()
         self.path = KVPyPath()
 
+
 class TestPythonSubObjCContainerCoding(AbstractKVCodingTest, unittest.TestCase):
     def setUp(self):
         self.base = KVPySubObjCBase.new()
         self.path = KVPySubObjCPath.new()
+
 
 class TestPythonSubOverObjC(AbstractKVCodingTest, unittest.TestCase):
     def setUp(self):
@@ -352,34 +369,39 @@ class TestPythonSubOverObjC(AbstractKVCodingTest, unittest.TestCase):
         self.path = KVPySubOverObjCPath.new()
 
     def testOverValueKey(self):
-        self.assertEquals(DirectString,
-            getKey( self.base, u"overDirectString"))
-        self.assertEquals(IndirectString,
-            getKey( self.base, u"overIndirectString"))
+        self.assertEquals(DirectString, getKey(self.base, u"overDirectString"))
+        self.assertEquals(IndirectString, getKey(self.base, u"overIndirectString"))
 
     def testOverValueKeyPath(self):
-        self.assertEquals(DirectString,
-            getKeyPath( self.path, u"overDirectHead.directString"))
-        self.assertEquals(DirectString,
-            getKeyPath( self.path, u"overIndirectHead.directString"))
-        self.assertEquals(IndirectString,
-            getKeyPath( self.path, u"overDirectHead.indirectString"))
-        self.assertEquals(IndirectString,
-            getKeyPath( self.path, u"overIndirectHead.indirectString"))
+        self.assertEquals(
+            DirectString, getKeyPath(self.path, u"overDirectHead.directString")
+        )
+        self.assertEquals(
+            DirectString, getKeyPath(self.path, u"overIndirectHead.directString")
+        )
+        self.assertEquals(
+            IndirectString, getKeyPath(self.path, u"overDirectHead.indirectString")
+        )
+        self.assertEquals(
+            IndirectString, getKeyPath(self.path, u"overIndirectHead.indirectString")
+        )
+
 
 class Account(object):
     def __init__(self, **kw):
         self.__dict__.update(kw)
 
+
 class Transaction(object):
     def __init__(self, **kw):
         self.__dict__.update(kw)
 
+
 class PyObjCAccount(NSObject):
-    openingBalance = objc.ivar('openingBalance', 'd')
-    name = objc.ivar('name')
-    notes = objc.ivar('notes')
-    transactions = objc.ivar('transactions')
+    openingBalance = objc.ivar("openingBalance", "d")
+    name = objc.ivar("name")
+    notes = objc.ivar("notes")
+    transactions = objc.ivar("transactions")
 
     def __new__(cls, **kw):
         self = cls.alloc().init()
@@ -387,12 +409,13 @@ class PyObjCAccount(NSObject):
             setattr(self, k, v)
         return self
 
+
 class PyObjCTransaction(NSObject):
-    referenceNumber = objc.ivar('referenceNumber', 'I')
-    amount = objc.ivar('amount', 'd')
-    payee = objc.ivar('payee')
-    date = objc.ivar('date')
-    category = objc.ivar('category')
+    referenceNumber = objc.ivar("referenceNumber", "I")
+    amount = objc.ivar("amount", "d")
+    payee = objc.ivar("payee")
+    date = objc.ivar("date")
+    category = objc.ivar("category")
     reconciled = objc.ivar(objc._C_BOOL)
 
     def __new__(cls, **kw):
@@ -401,66 +424,67 @@ class PyObjCTransaction(NSObject):
             setattr(self, k, v)
         return self
 
+
 def makeAccounts(Account, Transaction):
     return [
         Account(
             openingBalance=10.0,
-            name=u'Alice',
-            notes=u'Alice notes',
+            name=u"Alice",
+            notes=u"Alice notes",
             transactions=[
                 Transaction(
                     referenceNumber=1,
                     amount=20.0,
-                    payee=u'Bob',
+                    payee=u"Bob",
                     date=datetime.date(2005, 1, 1),
-                    category=u'Tacos',
+                    category=u"Tacos",
                     reconciled=True,
                 ),
                 Transaction(
                     referenceNumber=2,
                     amount=14.50,
-                    payee=u'George',
+                    payee=u"George",
                     date=datetime.date(2005, 1, 2),
-                    category=u'Bagels',
+                    category=u"Bagels",
                     reconciled=True,
                 ),
                 Transaction(
                     referenceNumber=3,
                     amount=250,
-                    payee=u'Bill',
+                    payee=u"Bill",
                     date=datetime.date(2005, 1, 3),
-                    category=u'Tequila',
+                    category=u"Tequila",
                     reconciled=True,
                 ),
             ],
         ),
         Account(
             openingBalance=10.0,
-            name=u'Bob',
-            notes=u'Bob notes',
+            name=u"Bob",
+            notes=u"Bob notes",
             transactions=[
                 Transaction(
                     referenceNumber=4,
                     amount=25.0,
-                    payee=u'Alice',
+                    payee=u"Alice",
                     date=datetime.date(2005, 1, 4),
-                    category=u'Beer',
+                    category=u"Beer",
                     reconciled=True,
                 ),
                 Transaction(
                     referenceNumber=5,
                     amount=60.0,
-                    payee=u'George',
+                    payee=u"George",
                     date=datetime.date(2005, 1, 5),
-                    category=u'Book',
+                    category=u"Book",
                     reconciled=True,
                 ),
                 Transaction(
                     referenceNumber=6,
                     amount=250,
-                    payee=u'Bill',
+                    payee=u"Bill",
                     date=datetime.date(2005, 1, 6),
-                    category=u'Tequila',
+                    category=u"Tequila",
                     reconciled=True,
                 ),
             ],
@@ -471,38 +495,33 @@ def makeAccounts(Account, Transaction):
 class TestArrayOperators(unittest.TestCase):
     def setUp(self):
         self.accounts = makeAccounts(Account, Transaction)
+
     def testCount(self):
-        self.assertEquals(
-            getKeyPath(self, u'accounts.@count'), 2)
-        self.assertEquals(
-            getKeyPath(self, u'accounts.transactions.@count'), 2)
-        self.assertEquals(
-            getKeyPath(self.accounts, u'@count'), 2)
-        self.assertEquals(
-            getKeyPath(self.accounts[0], u'transactions.@count'), 3)
-        self.assertEquals(
-            getKeyPath(self.accounts[1], u'transactions.@count'), 3)
+        self.assertEquals(getKeyPath(self, u"accounts.@count"), 2)
+        self.assertEquals(getKeyPath(self, u"accounts.transactions.@count"), 2)
+        self.assertEquals(getKeyPath(self.accounts, u"@count"), 2)
+        self.assertEquals(getKeyPath(self.accounts[0], u"transactions.@count"), 3)
+        self.assertEquals(getKeyPath(self.accounts[1], u"transactions.@count"), 3)
 
     def testDistinctUnionOfArrays(self):
         self.assertEquals(
-            getKeyPath(
-                self.accounts,
-                u'@distinctUnionOfArrays.transactions.payee'),
-            [u'Bob', u'George', u'Bill', u'Alice'])
+            getKeyPath(self.accounts, u"@distinctUnionOfArrays.transactions.payee"),
+            [u"Bob", u"George", u"Bill", u"Alice"],
+        )
         self.assertEquals(
             getKeyPath(
-                self.accounts,
-                u'@distinctUnionOfArrays.transactions.referenceNumber'),
-            [1, 2, 3, 4, 5, 6])
+                self.accounts, u"@distinctUnionOfArrays.transactions.referenceNumber"
+            ),
+            [1, 2, 3, 4, 5, 6],
+        )
         self.assertEquals(
-            getKeyPath(
-                self.accounts,
-                u'@distinctUnionOfArrays.transactions.category'),
-            [u'Tacos', u'Bagels', u'Tequila', u'Beer', u'Book'])
+            getKeyPath(self.accounts, u"@distinctUnionOfArrays.transactions.category"),
+            [u"Tacos", u"Bagels", u"Tequila", u"Beer", u"Book"],
+        )
 
     def testDistinctUnionOfObjects(self):
         alice = self.accounts[0]
-        v = getKeyPath(alice, u'transactions.@distinctUnionOfObjects.payee')
+        v = getKeyPath(alice, u"transactions.@distinctUnionOfObjects.payee")
 
         def assertSameUnion(a, b):
             a = list(a)
@@ -511,109 +530,72 @@ class TestArrayOperators(unittest.TestCase):
             b.sort()
             self.assertEquals(a, b)
 
-
-
-
         assertSameUnion(
-            getKeyPath(
-                alice,
-                u'transactions.@distinctUnionOfObjects.payee'),
-            [u'Bill', u'Bob', u'George'])
+            getKeyPath(alice, u"transactions.@distinctUnionOfObjects.payee"),
+            [u"Bill", u"Bob", u"George"],
+        )
         assertSameUnion(
-            getKeyPath(
-                alice,
-                u'transactions.@distinctUnionOfObjects.referenceNumber'),
-            [1, 2, 3])
+            getKeyPath(alice, u"transactions.@distinctUnionOfObjects.referenceNumber"),
+            [1, 2, 3],
+        )
         assertSameUnion(
-            getKeyPath(
-                alice,
-                u'transactions.@distinctUnionOfObjects.reconciled'),
-            [True])
+            getKeyPath(alice, u"transactions.@distinctUnionOfObjects.reconciled"),
+            [True],
+        )
 
     def testMax(self):
         alice = self.accounts[0]
         self.assertEquals(
-            getKeyPath(
-                alice,
-                u'transactions.@max.date'),
-            datetime.date(2005, 1, 3))
-        self.assertEquals(
-            getKeyPath(
-                alice,
-                u'transactions.@max.referenceNumber'),
-            3)
-        self.assertEquals(
-            getKeyPath(
-                alice,
-                u'transactions.@max.amount'),
-            250)
+            getKeyPath(alice, u"transactions.@max.date"), datetime.date(2005, 1, 3)
+        )
+        self.assertEquals(getKeyPath(alice, u"transactions.@max.referenceNumber"), 3)
+        self.assertEquals(getKeyPath(alice, u"transactions.@max.amount"), 250)
 
     def testMin(self):
         alice = self.accounts[0]
         self.assertEquals(
-            getKeyPath(
-                alice,
-                u'transactions.@min.date'),
-            datetime.date(2005, 1, 1))
-        self.assertEquals(
-            getKeyPath(
-                alice,
-                u'transactions.@min.referenceNumber'),
-            1)
-        self.assertEquals(
-            getKeyPath(
-                alice,
-                u'transactions.@min.amount'),
-            14.50)
+            getKeyPath(alice, u"transactions.@min.date"), datetime.date(2005, 1, 1)
+        )
+        self.assertEquals(getKeyPath(alice, u"transactions.@min.referenceNumber"), 1)
+        self.assertEquals(getKeyPath(alice, u"transactions.@min.amount"), 14.50)
 
     def testSum(self):
         alice = self.accounts[0]
         self.assertEquals(
-            getKeyPath(
-                alice,
-                u'transactions.@sum.amount'),
-            20 + 14.50 + 250)
+            getKeyPath(alice, u"transactions.@sum.amount"), 20 + 14.50 + 250
+        )
         bob = self.accounts[1]
-        self.assertEquals(
-            getKeyPath(
-                bob,
-                u'transactions.@sum.amount'),
-            25 + 60 + 250)
+        self.assertEquals(getKeyPath(bob, u"transactions.@sum.amount"), 25 + 60 + 250)
 
     def testUnionOfArrays(self):
         self.assertEquals(
-            getKeyPath(
-                self.accounts,
-                u'@unionOfArrays.transactions.payee'),
-            [u'Bob', u'George', u'Bill', u'Alice', u'George', u'Bill'])
+            getKeyPath(self.accounts, u"@unionOfArrays.transactions.payee"),
+            [u"Bob", u"George", u"Bill", u"Alice", u"George", u"Bill"],
+        )
         self.assertEquals(
-            getKeyPath(
-                self.accounts,
-                u'@unionOfArrays.transactions.referenceNumber'),
-            [1, 2, 3, 4, 5, 6])
+            getKeyPath(self.accounts, u"@unionOfArrays.transactions.referenceNumber"),
+            [1, 2, 3, 4, 5, 6],
+        )
         self.assertEquals(
-            getKeyPath(
-                self.accounts,
-                u'@unionOfArrays.transactions.category'),
-            [u'Tacos', u'Bagels', u'Tequila', u'Beer', u'Book', u'Tequila'])
+            getKeyPath(self.accounts, u"@unionOfArrays.transactions.category"),
+            [u"Tacos", u"Bagels", u"Tequila", u"Beer", u"Book", u"Tequila"],
+        )
 
     def testUnionOfObjects(self):
         alice = self.accounts[0]
         self.assertEquals(
-            getKeyPath(
-                alice,
-                u'transactions.@unionOfObjects.payee'),
-            [u'Bob', u'George', u'Bill'])
+            getKeyPath(alice, u"transactions.@unionOfObjects.payee"),
+            [u"Bob", u"George", u"Bill"],
+        )
         self.assertEquals(
-            getKeyPath(
-                alice,
-                u'transactions.@unionOfObjects.referenceNumber'),
-            [1, 2, 3])
+            getKeyPath(alice, u"transactions.@unionOfObjects.referenceNumber"),
+            [1, 2, 3],
+        )
         self.assertEquals(
-            getKeyPath(
-                alice,
-                u'transactions.@unionOfObjects.reconciled'),
-            [True, True, True])
+            getKeyPath(alice, u"transactions.@unionOfObjects.reconciled"),
+            [True, True, True],
+        )
+
 
 class TestPyObjCArrayOperators(TestArrayOperators):
     def setUp(self):

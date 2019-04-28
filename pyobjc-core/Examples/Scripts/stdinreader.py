@@ -3,20 +3,22 @@ from __future__ import print_function
 from Foundation import *
 from PyObjCTools import AppHelper
 
+
 class FileObserver(NSObject):
-    def initWithFileDescriptor_readCallback_errorCallback_(self,
-            fileDescriptor, readCallback, errorCallback):
+    def initWithFileDescriptor_readCallback_errorCallback_(
+        self, fileDescriptor, readCallback, errorCallback
+    ):
         self = self.init()
         self.readCallback = readCallback
         self.errorCallback = errorCallback
-        self.fileHandle = NSFileHandle.alloc().initWithFileDescriptor_(
-            fileDescriptor)
+        self.fileHandle = NSFileHandle.alloc().initWithFileDescriptor_(fileDescriptor)
         self.nc = NSNotificationCenter.defaultCenter()
         self.nc.addObserver_selector_name_object_(
             self,
-            'fileHandleReadCompleted:',
+            "fileHandleReadCompleted:",
             NSFileHandleReadCompletionNotification,
-            self.fileHandle)
+            self.fileHandle,
+        )
         self.fileHandle.readInBackgroundAndNotify()
         return self
 
@@ -49,9 +51,11 @@ class FileObserver(NSObject):
         # matter, but it's worth pointing out.
         self.close()
 
+
 def prompt():
     sys.stdout.write("write something: ")
     sys.stdout.flush()
+
 
 def gotLine(observer, aLine):
     if aLine:
@@ -61,13 +65,17 @@ def gotLine(observer, aLine):
         print("")
         AppHelper.stopEventLoop()
 
+
 def gotError(observer, err):
     print("error:", err)
     AppHelper.stopEventLoop()
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     import sys
+
     observer = FileObserver.alloc().initWithFileDescriptor_readCallback_errorCallback_(
-        sys.stdin.fileno(), gotLine, gotError)
+        sys.stdin.fileno(), gotLine, gotError
+    )
     prompt()
     AppHelper.runConsoleEventLoop(installInterrupt=True)

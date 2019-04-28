@@ -3,7 +3,8 @@ from PyObjCTools.TestSupport import *
 import objc
 import warnings
 
-class TestCompatFunctions (TestCase):
+
+class TestCompatFunctions(TestCase):
     def test_verbose(self):
         orig = objc.options.verbose
         try:
@@ -83,6 +84,7 @@ class TestCompatFunctions (TestCase):
 
         finally:
             objc.options.strbridge_enabled = orig
+
 
 if __name__ == "__main__":
     main()

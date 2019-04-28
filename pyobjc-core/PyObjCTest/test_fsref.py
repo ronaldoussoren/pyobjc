@@ -5,10 +5,12 @@ import objc
 from PyObjCTest.fsref import *
 
 import sys
+
 if sys.version_info[0] == 3:
     unicode = str
 
-class TestFSRef (TestCase):
+
+class TestFSRef(TestCase):
     def testBasicInterface(self):
         self.assertArgIsIn(OC_TestFSRefHelper.pathForFSRef_, 0)
         self.assertArgIsOut(OC_TestFSRefHelper.getFSRef_forPath_, 0)
