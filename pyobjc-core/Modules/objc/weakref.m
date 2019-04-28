@@ -107,4 +107,3 @@ PyTypeObject PyObjCWeakRef_Type = {
 };
 
 #endif /* PyObjC_BUILD_RELEASE >= 1007 */
-

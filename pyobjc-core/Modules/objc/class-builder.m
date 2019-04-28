@@ -90,15 +90,10 @@ do_slots(PyObject* super_class, PyObject* clsdict)
     PyObject* slots;
     Py_ssize_t len, i;
 
-#if PY_MAJOR_VERSION == 3
     slot_value = PyDict_GetItemStringWithError(clsdict, "__slots__");
     if (slot_value == NULL && PyErr_Occurred()) {
         return -1;
     }
-
-#else
-    slot_value = PyDict_GetItemString(clsdict, "__slots__");
-#endif
     if (slot_value == NULL) {
         /*
          * No __slots__ found, add an empty one and
@@ -159,12 +154,6 @@ do_slots(PyObject* super_class, PyObject* clsdict)
 
             var = (PyObjCInstanceVariable*)PyObjCInstanceVariable_New(PyBytes_AsString(bytes));
             Py_DECREF(bytes);
-
-#if PY_MAJOR_VERSION == 2
-        } else if (PyString_Check(slot_value)) {
-            var = (PyObjCInstanceVariable*)PyObjCInstanceVariable_New(PyString_AS_STRING(slot_value));
-
-#endif /* PY_MAJOR_VERSION == 2 */
 
         } else {
             PyErr_Format(PyExc_TypeError,
@@ -565,15 +554,9 @@ PyObjCClass_BuildClass(Class super_class, PyObject* protocols,
     for (i = 0; i < key_count; i++) {
         key = PyList_GET_ITEM(key_list, i);
 
-#if PY_MAJOR_VERSION == 3
         value = PyDict_GetItemWithError(class_dict, key);
-#else
-        value = PyDict_GetItem(class_dict, key);
-#endif
         if (value == NULL) {
-#if PY_MAJOR_VERSION == 3
             if (PyErr_Occurred()) goto error_cleanup;
-#endif
             PyErr_SetString(PyObjCExc_InternalError,
                 "PyObjCClass_BuildClass: Cannot fetch item in keylist");
             goto error_cleanup;
@@ -622,15 +605,9 @@ PyObjCClass_BuildClass(Class super_class, PyObject* protocols,
     for (i = 0; i < key_count; i++) {
         key = PyList_GET_ITEM(key_list, i);
 
-#if PY_MAJOR_VERSION == 3
         value = PyDict_GetItemWithError(class_dict, key);
-#else
-        value = PyDict_GetItem(class_dict, key);
-#endif
         if (value == NULL) {
-#if PY_MAJOR_VERSION == 3
             if (PyErr_Occurred()) goto error_cleanup;
-#endif
             PyErr_SetString(PyObjCExc_InternalError,
                 "PyObjCClass_BuildClass: Cannot fetch item in keylist");
             goto error_cleanup;
@@ -768,10 +745,6 @@ PyObjCClass_BuildClass(Class super_class, PyObject* protocols,
             }
 #endif
 
-#if PY_MAJOR_VERSION == 2
-        } else if (PyString_Check(pyname)) {
-            ocname = PyString_AS_STRING(pyname);
-#endif
         } else {
             PyErr_Format(PyExc_TypeError,
                 "method name is of type %s, not a string",

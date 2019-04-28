@@ -54,19 +54,9 @@ static PyNumberMethods decimal_asnumber = {
     .nb_negative        = decimal_negative,
     .nb_positive        = decimal_positive,
     .nb_absolute        = decimal_absolute,
-#if PY_MAJOR_VERSION == 2
-    .nb_nonzero         = decimal_nonzero,
-#else /* PY_MAJOR_VERSION == 3 */
     .nb_bool            = decimal_nonzero,
-#endif /* PY_MAJOR_VERSION == 3 */
     .nb_floor_divide    = decimal_floordivide,
     .nb_true_divide     = decimal_divide,
-
-#if PY_MAJOR_VERSION == 2
-    .nb_divide          = decimal_divide,
-    .nb_coerce          = decimal_coerce,
-
-#endif /* PY_MAJOR_VERSION == 2 */
 };
 
 static NSDecimalNumber *
@@ -138,11 +128,7 @@ static PyTypeObject Decimal_Type = {
     .tp_hash        = decimal_hash,
     .tp_getattro    = decimal_getattro,
     .tp_setattro    = PyObject_GenericSetAttr,
-#if PY_MAJOR_VERSION == 2
-    .tp_flags       = Py_TPFLAGS_DEFAULT | Py_TPFLAGS_HAVE_RICHCOMPARE,
-#else /* PY_MAJOR_VERSION == 3 */
     .tp_flags       = Py_TPFLAGS_DEFAULT,
-#endif /* PY_MAJOR_VERSION == 3 */
     .tp_doc         = "NSDecimal wrapper",
     .tp_richcompare = decimal_richcompare,
     .tp_methods     = decimal_methods,
@@ -247,24 +233,6 @@ PyObjC_number_to_decimal(PyObject* pyValue, NSDecimal* outResult)
             return 0;
         }
 
-#if PY_MAJOR_VERSION == 2
-    } else if (PyInt_Check(pyValue)) {
-        long lng = PyInt_AsLong(pyValue);
-
-        if (lng < 0) {
-            mantissa = -lng;
-            exponent = 0;
-            negative = YES;
-
-        } else{
-            mantissa = lng;
-            exponent = 0;
-            negative = NO;
-        }
-
-        DecimalFromComponents(outResult, mantissa, exponent, negative);
-        return 0;
-#endif
     } else if (PyFloat_Check(pyValue)) {
         /* Explicit conversion from float to NSDecimal
          * first convert the float to a string using repr, that
@@ -272,19 +240,9 @@ PyObjC_number_to_decimal(PyObject* pyValue, NSDecimal* outResult)
          * float.
          */
         NSString* stringVal;
-#if PY_MAJOR_VERSION == 2
-        PyObject* strVal = PyObject_Repr(pyValue);
-        PyObject* uniVal = NULL;
 
-        if (strVal == NULL) return -1;
-
-        uniVal = PyUnicode_FromEncodedObject(strVal, "ascii", "strict");
-        Py_DECREF(strVal);
-
-#else /* PY_MAJOR_VERSION == 2 */
         PyObject* uniVal = PyObject_Repr(pyValue);
         if (uniVal == NULL) return -1;
-#endif /* PY_MAJOR_VERSION == 2 */
 
         if (uniVal == NULL) return -1;
 
@@ -365,11 +323,7 @@ static char* keywords2[] = { "string", NULL };
             PyErr_Format(PyExc_TypeError, "cannot convert object of %s to NSDecimal", pyValue->ob_type->tp_name);
             return -1;
 
-        } else if (
-#if PY_MAJOR_VERSION == 2
-                PyString_Check(pyValue) ||
-#endif /* PY_MAJOR_VERSION == 2 */
-                PyUnicode_Check(pyValue)) {
+        } else if (PyUnicode_Check(pyValue)) {
 
             NSString* stringVal;
 
@@ -491,19 +445,12 @@ static PyObject* decimal_power(
 }
 
 
-#if PY_MAJOR_VERSION == 3
 #   define  TRY_COERCE(left, right) \
         int r = decimal_coerce(&left, &right);  \
         if (r == 1) {                           \
             Py_INCREF(Py_NotImplemented);       \
             return Py_NotImplemented;           \
         }
-
-#else /* PY_MAJOR_VERSION == 2 */
-
-#   define  TRY_COERCE(left, right)
-
-#endif /* PY_MAJOR_VERSION == 2 */
 
 #define DECIMAL_OPERATOR(py_function, nsdecimal_function) \
             static PyObject* py_function(PyObject* left, PyObject* right)                                       \

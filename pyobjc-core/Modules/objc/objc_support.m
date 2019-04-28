@@ -1821,17 +1821,7 @@ pythonify_c_value(const char *type, void *datum)
 #endif
 
     case _C_ULNG:
-#if PY_MAJOR_VERSION == 2
-        if (*(unsigned long*)datum > LONG_MAX) {
-            retobject = (PyObject*)PyLong_FromUnsignedLongLong(
-                *(unsigned long*)datum);
-        } else {
-            retobject = (PyObject*)PyInt_FromLong(
-                *(unsigned long*) datum);
-        }
-#else
         retobject = PyLong_FromUnsignedLong(*(unsigned long*)datum);
-#endif
         break;
 
     case _C_FLT:
@@ -1979,37 +1969,6 @@ depythonify_unsigned_int_value(
     PyObjC_Assert(descr != NULL, -1);
     PyObjC_Assert(out != NULL, -1);
 
-#if PY_MAJOR_VERSION == 2
-    if (PyInt_Check(argument)) {
-        long temp = PyInt_AsLong(argument);
-        if (PyErr_Occurred()) {
-            return -1;
-        }
-
-        if (temp < 0) {
-            if (PyErr_WarnEx(
-                PyExc_DeprecationWarning,
-                "converting negative value to unsigned integer",
-                1) < 0) {
-
-                return -1;
-            }
-        }
-
-        if ((unsigned long long)temp > max) {
-            PyErr_Format(PyExc_ValueError,
-                "depythonifying '%s', got '%s' of "
-                "wrong magnitude (max %llu, value %llu)", descr,
-                    Py_TYPE(argument)->tp_name,
-                    max, temp);
-            return -1;
-        }
-        *out = temp;
-        return 0;
-
-    } else
-#endif
-
     if (PyLong_Check(argument)) {
         *out = PyLong_AsUnsignedLongLong(argument);
         if (*out == (unsigned long long)-1 && PyErr_Occurred()) {
@@ -2051,11 +2010,7 @@ depythonify_unsigned_int_value(
         PyObject* tmp;
 
         if (
-#if PY_MAJOR_VERSION == 2
-            PyString_Check(argument) ||
-#else
             PyBytes_Check(argument) ||
-#endif
 #ifdef PyByteArray_Check
             PyByteArray_Check(argument) ||
 #endif
@@ -2118,25 +2073,6 @@ depythonify_signed_int_value(
     PyObjC_Assert(descr != NULL, -1);
     PyObjC_Assert(out != NULL, -1);
 
-#if PY_MAJOR_VERSION == 2
-    if (PyInt_Check(argument)) {
-        *out = (long long)PyInt_AsLong(argument);
-        if (PyErr_Occurred()) {
-            return -1;
-        }
-
-        if (*out < min || *out > max) {
-            PyErr_Format(PyExc_ValueError,
-                "depythonifying '%s', got '%s' of "
-                "wrong magnitude", descr,
-                    Py_TYPE(argument)->tp_name);
-            return -1;
-        }
-        return 0;
-
-    } else
-#endif
-
     if (PyLong_Check(argument)) {
         *out = PyLong_AsLongLong(argument);
         if (PyErr_Occurred()) {
@@ -2160,11 +2096,7 @@ depythonify_signed_int_value(
         PyObject* tmp;
 
         if (
-#if PY_MAJOR_VERSION == 2
-            PyString_Check(argument) ||
-#else
             PyBytes_Check(argument) ||
-#endif
 #ifdef PyByteArray_Check
             PyByteArray_Check(argument) ||
 #endif
@@ -2273,19 +2205,6 @@ const char* type, PyObject* argument, void* datum)
             *(int*)datum = (int)(*PyUnicode_AsUnicode(argument));
             return 0;
 
-#if PY_MAJOR_VERSION == 2
-        } else if (PyString_Check(argument)) {
-            PyObject* u = PyUnicode_FromObject(argument);
-            if (u == NULL) {
-                return -1;
-            }
-            if (PyUnicode_Check(u) && PyUnicode_GetSize(u) == 1) {
-                *(int*)datum = (int)(*PyUnicode_AsUnicode(u));
-                Py_DECREF(u);
-                return 0;
-            }
-            Py_DECREF(u);
-#endif
         }
         PyErr_Format(PyExc_ValueError, "Expecting unicode string of length 1, got a '%s'",
                 Py_TYPE(argument)->tp_name);
@@ -2433,13 +2352,6 @@ depythonify_python_object(PyObject* argument, id* datum)
             *datum = [NSNumber numberWithBool:NO];
         }
 
-#if PY_MAJOR_VERSION == 2
-    } else if (PyInt_CheckExact(argument)) {
-        *datum = [OC_BuiltinPythonNumber numberWithPythonObject:argument];
-    } else if (PyInt_Check(argument)) {
-        *datum = [OC_PythonNumber numberWithPythonObject:argument];
-#endif /* PY_MAJOR_VERSION == 2 */
-
     } else if (PyFloat_CheckExact(argument) ||  PyLong_CheckExact(argument)) {
         *datum = [OC_BuiltinPythonNumber numberWithPythonObject:argument];
 
@@ -2458,39 +2370,10 @@ depythonify_python_object(PyObject* argument, id* datum)
     } else if (PyDict_Check(argument)) {
         *datum = [OC_PythonDictionary dictionaryWithPythonObject:argument];
 
-#if PY_MAJOR_VERSION == 2
-    } else if (PyString_CheckExact(argument)) {
-        if (!PyObjC_StrBridgeEnabled) {
-            if (PyErr_Warn(PyObjCStrBridgeWarning, "use unicode(str, encoding) for NSString")) {
-                *datum = nil;
-                return -1;
-            }
-        }
-
-        *datum = [OC_BuiltinPythonString stringWithPythonObject:argument];
-
-    } else if (PyString_Check(argument)) {
-        if (!PyObjC_StrBridgeEnabled) {
-            if (PyErr_Warn(PyObjCStrBridgeWarning, "use unicode(str, encoding) for NSString")) {
-                *datum = nil;
-                return -1;
-            }
-        }
-
-        *datum = [OC_PythonString stringWithPythonObject:argument];
-#endif /* PY_MAJOR_VERSION == 2 */
-
-#if PY_MAJOR_VERSION == 3
     } else if (PyBytes_CheckExact(argument)) {
         *datum = [OC_BuiltinPythonData dataWithPythonObject:argument];
 
-#endif /* PY_MAJOR_VERSION == 3 */
-
-    } else if (PyObject_CheckBuffer(argument)
-#if PY_MAJOR_VERSION == 2
-            || PyObject_CheckReadBuffer(argument)
-#endif
-            ) {
+    } else if (PyObject_CheckBuffer(argument)) {
         *datum = [OC_PythonData dataWithPythonObject:argument];
 
     } else if (PyAnySet_CheckExact(argument)) {
@@ -2723,11 +2606,6 @@ depythonify_c_value(const char *type, PyObject *argument, void *datum)
         return 0;
 
     case _C_UNICHAR:
-#if PY_VERSION_HEX < 0x03030000
-        if (PyUnicode_Check(argument) && PyUnicode_GetSize(argument) == 1) {
-            *(UniChar*)datum = (UniChar)(*PyUnicode_AsUnicode(argument));
-            return 0;
-#else /* PY_VERSION_HEX >= 0x03030000 */
         if (PyUnicode_Check(argument) && PyUnicode_GetLength(argument) == 1) {
 
             /* Need to guard against values outside of the BMP, which cannot be
@@ -2746,21 +2624,6 @@ depythonify_c_value(const char *type, PyObject *argument, void *datum)
             *(UniChar*)datum = (UniChar)PyUnicode_ReadChar(argument, 0);
             return 0;
 
-#endif /* PY_VERSION_HEX >= 0x03030000 */
-
-#if PY_MAJOR_VERSION == 2
-        } else if (PyString_Check(argument)) {
-            PyObject* u = PyUnicode_FromObject(argument);
-            if (u == NULL) {
-                return -1;
-            }
-            if (PyUnicode_Check(u) && PyUnicode_GetSize(u) == 1) {
-                *(UniChar*)datum = (UniChar)(*PyUnicode_AsUnicode(u));
-                Py_DECREF(u);
-                return 0;
-            }
-            Py_DECREF(u);
-#endif
         }
         PyErr_Format(PyExc_ValueError, "Expecting unicode string of length 1, got a '%s'",
                 Py_TYPE(argument)->tp_name);
@@ -2957,11 +2820,6 @@ depythonify_c_value(const char *type, PyObject *argument, void *datum)
         if (PyFloat_Check(argument)) {
             *(float *) datum = (float)PyFloat_AsDouble(argument);
 
-#if PY_MAJOR_VERSION == 2
-        } else if (PyInt_Check(argument)) {
-            *(float *) datum = (float) PyInt_AsLong(argument);
-#endif
-
         } else if (PyLong_Check(argument)) {
             *(float*) datum = (float) PyLong_AsDouble(argument);
             if (*(float*)datum == -1 && PyErr_Occurred()) {
@@ -2969,13 +2827,9 @@ depythonify_c_value(const char *type, PyObject *argument, void *datum)
             }
 
         } else if (
-#if PY_MAJOR_VERSION == 2
-                PyString_Check(argument) ||
-#else
                 PyBytes_Check(argument) ||
 #ifdef PyByteArray_Check
                 PyByteArray_Check(argument) ||
-#endif
 #endif
                 PyUnicode_Check(argument)) {
             PyErr_Format(PyExc_ValueError,
@@ -3003,11 +2857,6 @@ depythonify_c_value(const char *type, PyObject *argument, void *datum)
         if (PyFloat_Check(argument)) {
             *(double *) datum = PyFloat_AsDouble(argument);
 
-#if PY_MAJOR_VERSION == 2
-        } else if (PyInt_Check(argument)) {
-            *(double *) datum = (double) PyInt_AsLong(argument);
-#endif
-
         } else if (PyLong_Check(argument)) {
             *(double *) datum = PyLong_AsDouble(argument);
             if (*(double*)datum == -1 && PyErr_Occurred()) {
@@ -3015,11 +2864,7 @@ depythonify_c_value(const char *type, PyObject *argument, void *datum)
             }
 
         } else if (
-#if PY_MAJOR_VERSION == 2
-                PyString_Check(argument) ||
-#else
                 PyBytes_Check(argument) ||
-#endif
 #ifdef PyByteArray_Check
                 PyByteArray_Check(argument) ||
 #endif

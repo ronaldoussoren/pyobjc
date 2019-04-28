@@ -217,11 +217,7 @@ PyObjC_SockAddrToPython(void* value)
     case AF_UNIX:
         {
             struct sockaddr_un* a = (struct sockaddr_un*)value;
-#if PY_MAJOR_VERSION == 3
             return PyUnicode_DecodeFSDefault(a->sun_path);
-#else
-            return PyBytes_FromString(a->sun_path);
-#endif
         }
 
     default:
@@ -245,15 +241,7 @@ PyObjC_SockAddrFromPython(PyObject* value, void* buffer)
         addr->sun_family = AF_INET;
 
         if (PyUnicode_Check(value)) {
-#if Py_MAJOR_VERSION == 3 && PY_MINOR_VERSION >= 2
             value = PyUnicode_EncodeFSDefault(value);
-#else
-            /* The filesystem encoding on OSX is UTF-8,
-             * use that instead of trying to fetch the
-             * filesystem encoding from the sys module.
-             */
-            value = PyUnicode_AsUTF8String(value);
-#endif
             if (value == NULL) {
                 return -1;
             }

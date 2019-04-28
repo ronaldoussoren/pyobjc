@@ -89,17 +89,9 @@ PyObjCPointer_New(void *p, const char *t)
         return NULL;
     }
 
-#if PY_MAJOR_VERSION == 3
     if (PyErr_WarnFormat(PyObjCExc_ObjCPointerWarning, 0, "PyObjCPointer created: at %p of type %s", p, t) == -1) {
     	return NULL;
     }
-#else
-    char buf[256];
-    snprintf(buf, 256, "PyObjCPointer created: at %p of type %s", p, t);
-    if (PyErr_Warn(PyObjCExc_ObjCPointerWarning, buf) == -1) {
-    	return NULL;
-    }
-#endif
 
     if (size == -1) {
         return NULL;

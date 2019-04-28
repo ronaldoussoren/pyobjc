@@ -97,8 +97,6 @@
     [super dealloc];
 }
 
-#if PY_VERSION_HEX >= 0x03030000
-
 -(id)__realObject__
 {
 #ifdef Py_DEBUG
@@ -160,42 +158,6 @@
     }
     return realObject;
 }
-
-#elif defined(PyObjC_UNICODE_FAST_PATH)
-
--(id)__realObject__
-{
-    if (!realObject) {
-        realObject = [[NSString alloc]
-            initWithCharactersNoCopy:PyUnicode_AS_UNICODE(value)
-                   length:(NSUInteger)PyUnicode_GET_SIZE(value)
-             freeWhenDone:NO];
-    }
-    return realObject;
-}
-
-#else // !PyObjC_UNICODE_FAST_PATH */
-
--(id)__realObject__
-{
-    if (!realObject) {
-        PyObjC_BEGIN_WITH_GIL
-            PyObject* utf8 = PyUnicode_AsUTF8String(value);
-            if (!utf8) {
-                NSLog(@"failed to encode unicode string to byte string");
-                PyErr_Clear();
-            } else {
-                realObject = [[NSString alloc]
-                    initWithBytes:PyBytes_AS_STRING(utf8)
-                           length:(NSUInteger)PyBytes_GET_SIZE(utf8)
-                         encoding:NSUTF8StringEncoding];
-                Py_DECREF(utf8);
-            }
-        PyObjC_END_WITH_GIL
-    }
-    return realObject;
-}
-#endif
 
 -(NSUInteger)length
 {

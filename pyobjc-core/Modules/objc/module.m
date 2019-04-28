@@ -204,13 +204,6 @@ PyObject *kwds)
     return rval;
 }
 
-#if PY_MAJOR_VERSION == 2
-
-PyObject* PyObjCStrBridgeWarning = NULL;
-
-#endif /* PY_VERSION_MAJOR == 2 */
-
-
 PyDoc_STRVAR(macos_available_doc,
   "macos_available(major, minor, patch=0)\n"
   CLINIC_SEP
@@ -473,11 +466,7 @@ allocateBuffer(PyObject* self __attribute__((__unused__)), PyObject* args, PyObj
         return NULL;
     }
 
-#if PY_MAJOR_VERSION == 2 && PY_MINOR_VERSION < 6
-    return PyBuffer_New(length);
-#else
     return PyByteArray_FromStringAndSize(NULL, length);
-#endif
 }
 
 PyDoc_STRVAR(currentBundle_doc,
@@ -534,11 +523,7 @@ static Py_ssize_t curClassCount = -1;
     PyObject* scanClasses = NULL;
 
     if (!PyArg_ParseTupleAndKeywords(args, kwds,
-#if PY_MAJOR_VERSION == 2
-            "SO|O&O&O",
-#else
             "UO|O&O&O",
-#endif
             keywords, &module_name, &module_globals,
             PyObjCObject_Convert, &bundle_path, PyObjCObject_Convert, &bundle_identifier, &scanClasses)) {
         return NULL;
@@ -1138,11 +1123,6 @@ static char* keywords[] = { "name", "typestr", "fieldnames", "doc", "pack", NULL
                 fieldnames[i] = PyObjCUtil_Strdup(PyBytes_AsString(bytes));
                 Py_DECREF(bytes);
 
-#if PY_MAJOR_VERSION == 2
-            } else if (PyString_Check(v)) {
-                fieldnames[i] = PyObjCUtil_Strdup(PyString_AS_STRING(v));
-#endif
-
             } else {
                 PyErr_SetString(PyExc_TypeError,
                     "fieldnames must be a sequence of strings");
@@ -1370,19 +1350,11 @@ PyDoc_STRVAR(_makeClosure_doc,
   "Returns a closure object that can be used to call the function from\n"
   "C. This object has no useable interface from Python.\n"
  );
-#if PY_MAJOR_VERSION == 2 && PY_MINOR_VERSION < 7
-static void _callback_cleanup(void* closure)
-{
-    PyObjCFFI_FreeIMP((IMP)closure);
-}
-
-#else /* Python >= 2.7 */
 
 static void _callback_cleanup(PyObject* closure)
 {
     PyObjCFFI_FreeIMP((IMP)PyCapsule_GetPointer(closure, "objc.__imp__"));
 }
-#endif /* Python >= 2.7 */
 
 static PyObject*
 _makeClosure(
@@ -1828,7 +1800,6 @@ PyObject* PyObjC_callable_docstr_get(PyObject* callable, void* closure __attribu
     return PyObject_CallFunction(PyObjC_CallableDocFunction, "O", callable);
 }
 
-#if PY_VERSION_HEX >= 0x03030000
 PyObject* PyObjC_callable_signature_get(PyObject* callable, void* closure __attribute__((__unused__)))
 
 {
@@ -1838,7 +1809,6 @@ PyObject* PyObjC_callable_signature_get(PyObject* callable, void* closure __attr
     }
     return PyObject_CallFunction(PyObjC_CallableSignatureFunction, "O", callable);
 }
-#endif /* PY_VERSION_HEX >= 0x03030000 */
 
 static PyObject*
 name_for_signature(PyObject* mod __attribute__((__unused__)), PyObject* signature)
@@ -1860,21 +1830,13 @@ name_for_signature(PyObject* mod __attribute__((__unused__)), PyObject* signatur
                 return Py_None;
             }
         } else {
-#if PY_MAJOR_VERSION == 2
-            return PyString_FromString(type->tp_name);
-#else
             return PyUnicode_FromString(type->tp_name);
-#endif
         }
     }
     if (typestr[0] == _C_PTR) {
         const char* name = PyObjCPointerWrapper_Describe(typestr);
         if (name != NULL) {
-#if PY_MAJOR_VERSION == 2
-            return PyString_FromString(name);
-#else
             return PyUnicode_FromString(name);
-#endif
         }
     }
     Py_INCREF(Py_None);
@@ -2366,11 +2328,9 @@ PyObjC_MODULE_INIT(_objc)
     if (PyType_Ready(&StructBase_Type) < 0) {
         PyObjC_INITERROR();
     }
-#if PY_MAJOR_VERSION == 3
     if (PyType_Ready(&FILE_Type) < 0) {
         PyObjC_INITERROR();
     }
-#endif
 
 #ifndef Py_HAVE_LOCAL_LOOKUP
     PyObjCSuper_Type.tp_doc = PySuper_Type.tp_doc;
@@ -2427,11 +2387,9 @@ PyObjC_MODULE_INIT(_objc)
     if (PyDict_SetItemString(d, "ObjCPointer", (PyObject*)&PyObjCPointer_Type) < 0) {
         PyObjC_INITERROR();
     }
-#if PY_MAJOR_VERSION == 3
     if (PyDict_SetItemString(d, "FILE", (PyObject*)&FILE_Type) < 0) {
         PyObjC_INITERROR();
     }
-#endif
     if (PyDict_SetItemString(d, "objc_meta_class", (PyObject*)&PyObjCMetaClass_Type) < 0) {
         PyObjC_INITERROR();
     }
@@ -2527,11 +2485,6 @@ PyObjC_MODULE_INIT(_objc)
         PyObjC_INITERROR();
     }
 
-
-#if PY_MAJOR_VERSION == 2
-    PyObjCStrBridgeWarning = PyErr_NewException("objc.PyObjCStrBridgeWarning", PyExc_DeprecationWarning, NULL);
-    PyModule_AddObject(m, "PyObjCStrBridgeWarning", PyObjCStrBridgeWarning);
-#endif
 
     {
         struct objc_typestr_values* cur = objc_typestr_values;
@@ -2889,13 +2842,11 @@ PyObjC_MODULE_INIT(_objc)
 #error "No Py_ARG_NSUInteger"
 #endif
 
-#if PY_MAJOR_VERSION == 3
     /*
      * Archives created with Python 2.x can contain instances of OC_PythonString,
      * use OC_PythonUnicode to decode.
      */
     [NSUnarchiver decodeClassName:@"OC_PythonString" asClassName:@"OC_PythonUnicode"];
-#endif /* PY_MAJOR_VERSION == 3 */
 
     PyObjC_Initialized = 1;
     PyObjC_INITDONE();

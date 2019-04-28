@@ -39,11 +39,7 @@ PyObject* pythonify_authorizationitem(void* _value)
 
     }
 
-#if PY_MAJOR_VERSION == 2
-    t = PyString_FromString(value->name);
-#else
     t = PyBytes_FromString(value->name);
-#endif
     if (t == NULL) {
         Py_DECREF(result);
         return NULL;
@@ -78,11 +74,7 @@ PyObject* pythonify_authorizationitem(void* _value)
     if (value->value == NULL) {
         t = Py_None; Py_INCREF(t);
     } else {
-#if PY_MAJOR_VERSION == 2
-        t = PyString_FromStringAndSize(value->value, value->valueLength);
-#else
         t = PyBytes_FromStringAndSize(value->value, value->valueLength);
-#endif
         if (t == NULL) {
             Py_DECREF(result);
             return NULL;
@@ -144,13 +136,8 @@ int depythonify_authorizationitem(PyObject* value, void* _out)
     if (PySequence_Fast_GET_ITEM(seq, 0) == Py_None) {
         out->name = NULL;
 
-#if PY_MAJOR_VERSION ==2
-    } else if (PyString_Check(PySequence_Fast_GET_ITEM(seq, 0))) {
-        out->name = PyString_AsString(PyTuple_GET_ITEM(seq, 0));
-#else
     } else if (PyBytes_Check(PySequence_Fast_GET_ITEM(seq, 0))) {
         out->name = PyBytes_AsString(PyTuple_GET_ITEM(seq, 0));
-#endif
     } else {
         PyErr_Format(PyExc_TypeError, "AuthorizationItem.name should be a byte string, not %s", Py_TYPE(PySequence_Fast_GET_ITEM(seq, 0))->tp_name);
         Py_DECREF(seq);
@@ -164,14 +151,6 @@ int depythonify_authorizationitem(PyObject* value, void* _out)
             return -1;
         }
 
-#if PY_MAJOR_VERSION == 2
-    } else if (PyInt_Check(PySequence_Fast_GET_ITEM(seq, 1))) {
-        out->valueLength = PyInt_AsLong(PySequence_Fast_GET_ITEM(seq, 1));
-        if (PyErr_Occurred()) {
-            Py_DECREF(seq);
-            return -1;
-        }
-#endif
     } else {
         PyErr_Format(PyExc_TypeError, "AuthorizationItem.valueLength should be an integer, not %s", Py_TYPE(PySequence_Fast_GET_ITEM(seq, 1))->tp_name);
         Py_DECREF(seq);
@@ -180,19 +159,7 @@ int depythonify_authorizationitem(PyObject* value, void* _out)
 
     if (PyTuple_GET_ITEM(seq, 2) == Py_None) {
         out->value = NULL;
-#if PY_MAJOR_VERSION ==2
-    } else if (PyString_Check(PySequence_Fast_GET_ITEM(seq, 2))) {
-        Py_ssize_t len;
-        if (PyString_AsStringAndSize(PySequence_Fast_GET_ITEM(seq, 2), (char**)&out->value, &len) == -1) {
-            Py_DECREF(seq);
-            return -1;
-        } else if ((size_t)len < out->valueLength) {
-            PyErr_Format(PyExc_ValueError, "AuthorizationItem.value too small; expecting at least %ld bytes, got %ld", (long)out->valueLength, (long)len);
-            Py_DECREF(seq);
-            return -1;
-        }
 
-#else
     } else if (PyBytes_Check(PySequence_Fast_GET_ITEM(seq, 2))) {
         Py_ssize_t len;
         if (PyBytes_AsStringAndSize(PySequence_Fast_GET_ITEM(seq, 2), (char**)&out->value, &len) == -1) {
@@ -203,7 +170,7 @@ int depythonify_authorizationitem(PyObject* value, void* _out)
             Py_DECREF(seq);
             return -1;
         }
-#endif
+
     } else {
         PyErr_Format(PyExc_TypeError, "AuthorizationItem.value should be a byte string, not %s", Py_TYPE(PySequence_Fast_GET_ITEM(seq, 2))->tp_name);
         Py_DECREF(seq);
@@ -218,15 +185,6 @@ int depythonify_authorizationitem(PyObject* value, void* _out)
             return -1;
         }
 
-#if PY_MAJOR_VERSION == 2
-    } else if (PyInt_Check(PySequence_Fast_GET_ITEM(seq, 3))) {
-
-        out->valueLength = PyInt_AsLong(PySequence_Fast_GET_ITEM(seq, 3));
-        if (PyErr_Occurred()) {
-            Py_DECREF(seq);
-            return -1;
-        }
-#endif
     } else {
         PyErr_Format(PyExc_TypeError, "AuthorizationItem.flags should be a byte string, not %s", Py_TYPE(PySequence_Fast_GET_ITEM(seq, 3))->tp_name);
         Py_DECREF(seq);

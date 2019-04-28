@@ -431,11 +431,6 @@ array_typestr(PyObject* array)
             return '\0';
         }
 
-#if PY_MAJOR_VERSION == 2
-    } else if (PyString_Check(typecode)) {
-        bytes = typecode; Py_INCREF(bytes);
-#endif
-
     } else {
         PyErr_SetString(PyExc_TypeError, "typecode not a string");
         return '\0';
@@ -780,15 +775,8 @@ PyObjC_PythonToCArray(
 
     if (*elementType == _C_UNICHAR && PyUnicode_Check(pythonList)) {
 
-#if PY_VERSION_HEX >= 0x03030000
         *bufobj = _PyUnicode_EncodeUTF16(
-            pythonList, NULL,
-#ifdef WORDS_BIGENDIAN
-            1
-#else
-            -1
-#endif
-        );
+            pythonList, NULL, -1);
 
         if (*bufobj == NULL) {
             return -1;
@@ -821,60 +809,10 @@ PyObjC_PythonToCArray(
 
         /* *array = PyBytes_AsString(*bufobj); return SHOULD_IGNORE*/
 
-#else /* Python before 3.3 */
-        if (writable) {
-            *array = PyMem_Malloc(*size * sizeof(UniChar));
-            memcpy(*array, PyUnicode_AsUnicode(pythonList), *size * sizeof(UniChar));
-            return SHOULD_FREE;
-
-        } else {
-            *array = PyUnicode_AsUnicode(pythonList);
-            *bufobj = pythonList;
-            Py_INCREF(pythonList);
-            return SHOULD_IGNORE;
-        }
-#endif /* Python before 3.3 */
-
-#if PY_MAJOR_VERSION == 2
-    } else if (*elementType == _C_UNICHAR && PyString_Check(pythonList)) {
-        PyObject* u = PyUnicode_Decode(
-                PyString_AsString(pythonList),
-                PyString_Size(pythonList),
-                NULL, NULL);
-        if (u == NULL) {
-            return -1;
-        }
-
-        Py_ssize_t bufsize = PyUnicode_GetSize(u);
-
-        if (*size == -1) {
-            *size = bufsize;
-
-        } else if ((exactSize && *size != bufsize) || (!exactSize && *size > bufsize)) {
-            PyErr_Format(PyExc_ValueError,
-                "Requesting unicode buffer of %"PY_FORMAT_SIZE_T"d, have unicode buffer "
-                "of %"PY_FORMAT_SIZE_T"d", *size, bufsize);
-            Py_DECREF(u);
-            return -1;
-        }
-
-        if (writable) {
-            *array = PyMem_Malloc(*size * sizeof(UniChar));
-            memcpy(*array, PyUnicode_AsUnicode(u), *size * sizeof(UniChar));
-            Py_DECREF(u);
-            return SHOULD_FREE;
-
-        } else {
-            *array = PyUnicode_AsUnicode(u);
-            *bufobj = u;
-            return SHOULD_IGNORE;
-        }
-#endif
     }
 
     /* A more complex array */
 
-#if PY_VERSION_HEX >= 0x02060000
     if (PyObject_CheckBuffer(pythonList)) {
         /* An object that implements the new-style buffer interface.
          * Use the buffer interface description to check if the buffer
@@ -895,7 +833,6 @@ PyObjC_PythonToCArray(
          */
     }
 
-#endif
 
     if (array_check(pythonList)) {
         /* An array.array. Only convert if the typestr describes an
@@ -1243,13 +1180,6 @@ PyObjCClass_Convert(PyObject* object, void* pvar)
 
 int PyObjC_is_ascii_string(PyObject* unicode_string, const char* ascii_string)
 {
-#if PY_MAJOR_VERSION == 2
-    if (PyString_Check(unicode_string)) {
-        return strcmp(PyString_AsString(unicode_string), ascii_string) == 0;
-
-    } else {
-#endif
-
 #ifdef PyObjC_FAST_UNICODE_ASCII
     if (!PyUnicode_IS_ASCII(unicode_string)) {
         return 0;
@@ -1284,10 +1214,6 @@ int PyObjC_is_ascii_string(PyObject* unicode_string, const char* ascii_string)
     }
     return 1;
 #endif /* !PyObjC_FAST_UNICODE_ASCII */
-
-#if PY_MAJOR_VERSION == 2
-    }
-#endif
 }
 
 int PyObjC_is_ascii_prefix(PyObject* unicode_string, const char* ascii_string, size_t n)
@@ -1463,7 +1389,6 @@ PyObjC_SELToPythonName(SEL sel, char* buf, size_t buflen)
 }
 
 
-#if PY_MAJOR_VERSION == 3
 PyObject*
 PyObjCDict_GetItemStringWithError(PyObject* dict, const char* key)
 {
@@ -1478,4 +1403,3 @@ PyObjCDict_GetItemStringWithError(PyObject* dict, const char* key)
 
     return result;
 }
-#endif

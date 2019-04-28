@@ -40,21 +40,10 @@ init_registry(void)
     return 0;
 }
 
-#if PY_MAJOR_VERSION == 2 && PY_MINOR_VERSION < 7
-
-static void memblock_capsule_cleanup(void* ptr)
-{
-    PyMem_Free(ptr);
-}
-
-#else /* Python 2.7 and 3.x */
-
 static void memblock_capsule_cleanup(PyObject* ptr)
 {
     PyMem_Free(PyCapsule_GetPointer(ptr, "objc.__memblock__"));
 }
-
-#endif /* Python 2.7 and 3.x */
 
 
 /*
@@ -115,16 +104,11 @@ PyObjC_RegisterMethodMapping(Class class, SEL sel,
         return -1;
     }
 
-#if PY_MAJOR_VERSION == 3
     lst = PyDict_GetItemStringWithError(special_registry, sel_getName(sel));
     if (lst == NULL && PyErr_Occurred()) {
         Py_DECREF(entry);
         return -1;
-    }
-#else
-    lst = PyDict_GetItemString(special_registry, sel_getName(sel));
-#endif
-    if (lst == NULL) {
+    } else if (lst == NULL) {
         lst = PyList_New(0);
         if (PyDict_SetItemString(special_registry, sel_getName(sel), lst) == -1) {
             Py_DECREF(lst);
@@ -226,11 +210,7 @@ search_special(Class class, SEL sel)
     search_class = PyObjCClass_New(class);
     if (search_class == NULL) goto error;
 
-#if PY_MAJOR_VERSION == 3
     lst = PyDict_GetItemStringWithError(special_registry, sel_getName(sel));
-#else
-    lst = PyDict_GetItemString(special_registry, sel_getName(sel));
-#endif
     if (lst == NULL) {
         goto error;
     }
@@ -331,11 +311,7 @@ find_signature(const char* signature)
     if (key == NULL) {
         return NULL;
     }
-#if PY_MAJOR_VERSION == 3
     o = PyDict_GetItemWithError(signature_registry, key);
-#else
-    o = PyDict_GetItem(signature_registry, key);
-#endif
     Py_DECREF(key);
     if (o == NULL) goto error;
 
@@ -435,33 +411,9 @@ PyObjCUnsupportedMethod_Caller(
     PyObject* self,
     PyObject* args __attribute__((__unused__)))
 {
-#if PY_MAJOR_VERSION == 2
-    PyObject* repr;
-
-    repr = PyObject_Repr(self);
-    if (repr == NULL || !PyString_Check(repr)) {
-        Py_XDECREF(repr);
-        PyErr_Format(PyExc_TypeError,
-            "Cannot call '%s' on instances of '%s' from Python",
-            sel_getName(PyObjCSelector_GetSelector(meth)),
-            Py_TYPE(self)->tp_name);
-        return NULL;
-    }
-
-    PyErr_Format(PyExc_TypeError,
-        "Cannot call '%s' on '%s' from Python",
-        sel_getName(PyObjCSelector_GetSelector(meth)),
-        PyString_AS_STRING(repr));
-    Py_DECREF(repr);
-    return NULL;
-
-#else
     PyErr_Format(PyExc_TypeError,
         "Cannot call '%s' on '%R' from Python",
         sel_getName(PyObjCSelector_GetSelector(meth)),
         self);
     return NULL;
-
-#endif
-
 }

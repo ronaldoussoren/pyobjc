@@ -96,11 +96,6 @@
         } else if (PyFloat_Check(value)) {
             PyObjC_GIL_RETURN(@encode(double));
 
-#if PY_MAJOR_VERSION == 2
-        } else if (PyInt_Check(value)) {
-            PyObjC_GIL_RETURN(@encode(long));
-
-#endif
         } else if (PyLong_Check(value)) {
             (void)PyLong_AsLongLong(value);
             if (!PyErr_Occurred()) {
@@ -241,12 +236,6 @@
     long long result;
 
     PyObjC_BEGIN_WITH_GIL
-#if PY_MAJOR_VERSION == 2
-        if (PyInt_Check(value)) {
-            result = PyInt_AsLong(value);
-            PyObjC_GIL_RETURN(result);
-        } else
-#endif
         if (PyFloat_Check(value)) {
             result = (long long)PyFloat_AsDouble(value);
             PyObjC_GIL_RETURN(result);
@@ -269,12 +258,6 @@
         if (PyLong_Check(value)) {
             result = PyLong_AsUnsignedLongLongMask(value);
             PyObjC_GIL_RETURN(result);
-
-#if PY_MAJOR_VERSION == 2
-        } else if (PyInt_Check(value)) {
-            result = (unsigned long long)PyInt_AsLong(value);
-            PyObjC_GIL_RETURN(result);
-#endif
 
         } else if (PyFloat_Check(value)) {
             double temp = PyFloat_AsDouble(value);
@@ -317,25 +300,11 @@
             PyObjC_GIL_FORWARD_EXC();
         }
 
-#if PY_MAJOR_VERSION == 2
-        PyObject* uniVal = PyUnicode_FromEncodedObject(repr, "ascii", "strict");
-        Py_DECREF(repr);
-        if (PyErr_Occurred()) {
-            PyObjC_GIL_FORWARD_EXC();
-        }
-
-        result = PyObjC_PythonToId(uniVal);
-        Py_DECREF(uniVal);
-        if (PyErr_Occurred()) {
-            PyObjC_GIL_FORWARD_EXC();
-        }
-#else
         result = PyObjC_PythonToId(repr);
         Py_DECREF(repr);
         if (PyErr_Occurred()) {
             PyObjC_GIL_FORWARD_EXC();
         }
-#endif
 
     PyObjC_END_WITH_GIL
     return (NSString*)result;
@@ -354,13 +323,6 @@
              */
             use_super = 1;
 
-#if PY_MAJOR_VERSION == 2
-        } else if (PyInt_CheckExact(value)) {
-            /* Int is a C double and can be roundtripped using
-             * NSNumber.
-             */
-            use_super = 1;
-#endif
         } else if (PyLong_CheckExact(value)) {
             /* Long object that fits in a long long */
             (void)PyLong_AsLongLong(value);
@@ -578,13 +540,6 @@ COMPARE_METHOD(isLessThanOrEqualTo, Py_LE)
              */
             PyObjC_GIL_RETURN([NSNumber class]);
 
-#if PY_MAJOR_VERSION == 2
-        } else if (PyInt_CheckExact(value)) {
-            /* Int is a C double and can be roundtripped using
-             * NSNumber.
-             */
-            PyObjC_GIL_RETURN([NSNumber class]);
-#endif
         } else if (PyLong_CheckExact(value)) {
             /* Long object that fits in a long long */
             (void)PyLong_AsLongLong(value);

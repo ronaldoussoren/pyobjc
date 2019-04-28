@@ -33,7 +33,7 @@ def get_config_var(var):
 
 
 # We need at least Python 2.7
-MIN_PYTHON = (2, 7)
+MIN_PYTHON = (3, 6)
 
 if sys.version_info < MIN_PYTHON:
     vstr = '.'.join(map(str, MIN_PYTHON))

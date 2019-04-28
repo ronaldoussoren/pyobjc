@@ -152,22 +152,10 @@ free_type(void *obj)
 
 static ffi_type* signature_to_ffi_type(const char* argtype);
 
-#if PY_MAJOR_VERSION == 2 && PY_MINOR_VERSION < 6
-
-static void cleanup_ffitype_capsule(void* ptr)
-{
-    free_type(ptr);
-}
-
-#else /* Python >= 2.7 */
-
 static void cleanup_ffitype_capsule(PyObject* ptr)
 {
     free_type(PyCapsule_GetPointer(ptr, "objc.__ffi_type__"));
 }
-
-#endif /* Python >= 2.7 */
-
 
 static ffi_type*
 array_to_ffi_type(const char* argtype)
@@ -185,14 +173,10 @@ static PyObject* array_types = NULL;
         if (array_types == NULL) return NULL;
     }
 
-#if PY_MAJOR_VERSION == 3
     v = PyDict_GetItemStringWithError(array_types, (char*)argtype);
     if (v == NULL && PyErr_Occurred()) {
         return NULL;
     }
-#else
-    v = PyDict_GetItemString(array_types, (char*)argtype);
-#endif
     if (v != NULL) {
         return (ffi_type*)PyCapsule_GetPointer(v, "objc.__ffi_type__");
     }
@@ -260,14 +244,10 @@ static PyObject* struct_types = NULL;
         if (struct_types == NULL) return NULL;
     }
 
-#if PY_MAJOR_VERSION == 3
     v = PyDict_GetItemStringWithError(struct_types, (char*)argtype);
     if (v == NULL && PyErr_Occurred()) {
         return NULL;
     }
-#else
-    v = PyDict_GetItemString(struct_types, (char*)argtype);
-#endif
     if (v != NULL) {
         return (ffi_type*)PyCapsule_GetPointer(v, "objc.__ffi_type__");
     }
@@ -743,33 +723,14 @@ parse_printf_args(
             byref[curarg] = PyMem_Malloc(sizeof(int));
             arglist[curarg] = signature_to_ffi_type(@encode(int));
             v = PyTuple_GET_ITEM(argtuple, argoffset);
-#if PY_MAJOR_VERSION == 2
-            if (PyString_Check(v)) {
-                if (PyString_Size(v) != 1) {
-                    PyErr_SetString(PyExc_ValueError, "Expecting string of length 1");
-                    Py_DECREF(encoded);
-                    return -1;
-                }
-                *(int*)byref[curarg] = (wchar_t)*PyString_AsString(v);
-            } else
-#endif
             if (PyUnicode_Check(v)) {
 
-#if PY_VERSION_HEX < 0x03030000
-                if (PyUnicode_GetSize(v) != 1) {
-                    PyErr_SetString(PyExc_ValueError, "Expecting string of length 1");
-                    Py_DECREF(encoded);
-                    return -1;
-                }
-                *(int*)byref[curarg] = (wchar_t)*PyUnicode_AsUnicode(v);
-#else /* PY_VERSION_HEX >= 0x03030000 */
                 if (PyUnicode_GetLength(v) != 1) {
                     PyErr_SetString(PyExc_ValueError, "Expecting string of length 1");
                     Py_DECREF(encoded);
                     return -1;
                 }
                 *(int*)byref[curarg] = PyUnicode_ReadChar(v, 0);
-#endif /* PY_VERSION_HEX >= 0x03030000 */
 
             } else if (depythonify_c_value(@encode(int), v, byref[curarg]) < 0) {
                 Py_DECREF(encoded);
@@ -892,22 +853,6 @@ parse_printf_args(
                     return -1;
                 }
 
-#if PY_VERSION_HEX < 0x03030000
-                Py_ssize_t sz = PyUnicode_GetSize(v);
-                byref[curarg] = PyMem_Malloc(sizeof(wchar_t)*(sz+1));
-                if (byref[curarg] == NULL) {
-                    Py_DECREF(encoded);
-                    return -1;
-                }
-
-                if (PyUnicode_AsWideChar(UNICODE_CAST(v), (wchar_t*)byref[curarg], sz)<0) {
-                    Py_DECREF(encoded);
-                    return -1;
-                }
-                ((wchar_t*)byref[curarg])[sz] = 0;
-                arglist[curarg] = signature_to_ffi_type(@encode(wchar_t*));
-                values[curarg] = byref + curarg;
-#else /* PY_VERSION_HEX >= 0x03030000 */
                 byref[curarg] = PyUnicode_AsWideCharString(v, NULL);
                 if (byref[curarg] == NULL) {
                     Py_DECREF(encoded);
@@ -915,7 +860,6 @@ parse_printf_args(
                 }
                 arglist[curarg] = signature_to_ffi_type(@encode(wchar_t*));
                 values[curarg] = byref + curarg;
-#endif /* PY_VERSION_HEX >= 0x03030000 */
 
             } else {
                 /* char */
@@ -1951,13 +1895,11 @@ _argcount(PyObject* callable, BOOL* haveVarArgs, BOOL* haveVarKwds, BOOL* haveKw
         *haveVarArgs = (func_code->co_flags & CO_VARARGS) != 0;
         *haveVarKwds = (func_code->co_flags & CO_VARKEYWORDS) != 0;
         *haveKwOnly = NO;
-#if PY_MAJOR_VERSION > 2
         if (func->func_kwdefaults == NULL) {
             *haveKwOnly = (func_code->co_kwonlyargcount != 0);
         } else {
             *haveKwOnly = (func_code->co_kwonlyargcount != PyDict_Size(func->func_kwdefaults));
         }
-#endif
         *defaultCount = 0;
 
         if (func->func_defaults != NULL) {
@@ -2493,19 +2435,6 @@ PyObjCFFI_CountArguments(
 }
 
 
-#if PY_MAJOR_VERSION == 2 && PY_MINOR_VERSION < 7
-static void imp_capsule_cleanup(void* ptr)
-{
-    PyObjCFFI_FreeIMP(ptr);
-}
-
-static void block_capsule_cleanup(void* ptr)
-{
-    PyObjCBlock_Release(ptr);
-}
-
-#else /* Python >= 2.7 */
-
 static void imp_capsule_cleanup(PyObject* ptr)
 {
     PyObjCFFI_FreeIMP(PyCapsule_GetPointer(ptr, "objc.__imp__"));
@@ -2515,7 +2444,6 @@ static void block_capsule_cleanup(PyObject* ptr)
 {
     PyObjCBlock_Release(PyCapsule_GetPointer(ptr, "objc.__imp__"));
 }
-#endif /* Python >= 2.7 */
 
 
 Py_ssize_t

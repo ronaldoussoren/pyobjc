@@ -26,7 +26,6 @@
 #endif
 
 #import "OC_PythonUnicode.h"
-#import "OC_PythonString.h"
 
 extern NSString * const NSUnknownKeyException; /* Radar #3336042 */
 
@@ -145,29 +144,6 @@ extern NSString * const NSUnknownKeyException; /* Radar #3336042 */
 
         repr = PyObject_Repr (pyObject);
 
-#if PY_MAJOR_VERSION == 2
-        if (repr) {
-            int err;
-            NSString* result;
-            PyObject *urepr = PyUnicode_FromEncodedObject(
-                repr,
-                NULL,
-                "replace");
-            Py_DECREF(repr);
-            if (urepr == NULL) {
-                PyObjC_GIL_FORWARD_EXC();
-            }
-            err = depythonify_c_value (@encode(id), urepr, &result);
-            Py_DECREF (urepr);
-            if (err == -1) {
-                PyObjC_GIL_FORWARD_EXC();
-            }
-            PyObjC_GIL_RETURN(result);
-
-        } else {
-            PyObjC_GIL_FORWARD_EXC();
-        }
-#else
         if (repr) {
             int err;
             NSString* result;
@@ -182,7 +158,6 @@ extern NSString * const NSUnknownKeyException; /* Radar #3336042 */
         } else {
             PyObjC_GIL_FORWARD_EXC();
         }
-#endif
 
     PyObjC_END_WITH_GIL
 

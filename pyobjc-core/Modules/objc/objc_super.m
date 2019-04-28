@@ -41,12 +41,6 @@ super_getattro(PyObject *self, PyObject *name)
         if (PyUnicode_Check(name)) {
             skip = (PyUnicode_GET_SIZE(name) && PyObjC_is_ascii_string(name, "__class__"));
 
-#if PY_MAJOR_VERSION == 2
-        } else if (PyString_Check(name)) {
-            skip = (
-                PyString_GET_SIZE(name) == 9 &&
-                strcmp(PyString_AS_STRING(name), "__class__") == 0);
-#endif
         } else {
             skip = 0;
         }
@@ -70,11 +64,6 @@ super_getattro(PyObject *self, PyObject *name)
         }
         sel = PyObjCSelector_DefaultSelector(PyBytes_AsString(bytes));
 #endif /* !PyObjC_FAST_UNICODE_ASCII */
-
-#if PY_MAJOR_VERSION == 2
-    } else if (PyBytes_Check(name)) {
-        sel = PyObjCSelector_DefaultSelector(PyBytes_AsString(name));
-#endif
 
     } else if (!skip) {
         PyErr_SetString(PyExc_TypeError, "attribute name is not a string");
@@ -124,24 +113,14 @@ super_getattro(PyObject *self, PyObject *name)
             } else if (PyType_Check(tmp)) {
                 dict = ((PyTypeObject *)tmp)->tp_dict;
 
-#if PY_MAJOR_VERSION == 2
-            } else if (PyClass_Check(tmp)) {
-                dict = ((PyClassObject *)tmp)->cl_dict;
-#endif
-
             } else {
                 continue;
             }
 
-#if PY_MAJOR_VERSION == 3
             res = PyDict_GetItemWithError(dict, name);
             if (res == NULL && PyErr_Occurred()) {
                 return NULL;
-            }
-#else
-            res = PyDict_GetItem(dict, name);
-#endif
-            if (res != NULL) {
+            } else if (res != NULL) {
                 Py_INCREF(res);
                 f = Py_TYPE(res)->tp_descr_get;
                 if (f != NULL) {

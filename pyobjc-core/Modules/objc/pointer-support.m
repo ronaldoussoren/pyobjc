@@ -291,46 +291,6 @@ class_convert(PyObject* obj, void* pObj)
 }
 
 
-#if PY_MAJOR_VERSION == 2
-
-static int dontClose(FILE* fp __attribute__((__unused__)))
-{
-    return 0;
-}
-static PyObject*
-FILE_New(void *obj)
-{
-    FILE* fp = (FILE*)obj;
-    char* mode = "r";
-
-#if defined(__SRW)
-    /* This is a hack, but allows us to pass the right file mode into
-     * Python.
-     */
-    if (fp->_flags & __SWR) {
-        mode = "w";
-
-    } else if (fp->_flags & __SRW) {
-        mode = "w+";
-    }
-
-#endif
-    return PyFile_FromFile(fp, "<objc-file>", mode, dontClose);
-}
-
-static int
-FILE_Convert(PyObject* obj, void* pObj)
-{
-    *(FILE**)pObj = PyFile_AsFile(obj);
-    if (*(FILE**)pObj == NULL) {
-        return 1;
-    }
-
-    return 0;
-}
-
-#else
-
 static PyObject*
 FILE_New(void *obj)
 {
@@ -349,8 +309,6 @@ FILE_Convert(PyObject* obj, void* pObj)
 
     return 0;
 }
-
-#endif
 
 int
 PyObjCPointerWrapper_Init(void)

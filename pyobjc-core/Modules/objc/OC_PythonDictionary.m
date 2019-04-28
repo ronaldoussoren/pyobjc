@@ -199,15 +199,10 @@
         }
 
         if (likely(PyDict_CheckExact(value))) {
-#if PY_MAJOR_VERSION == 3
             v = PyDict_GetItemWithError(value, k);
             if (v == NULL && PyErr_Occurred()) {
                 PyObjC_GIL_FORWARD_EXC();
             }
-#else
-
-            v = PyDict_GetItem(value, k);
-#endif
             Py_XINCREF(v);
 
         } else {
@@ -386,7 +381,6 @@
                 if (k == NULL) {
                     PyObjC_GIL_FORWARD_EXC();
                 }
-#if PY_MAJOR_VERSION == 3
                 if (PyObjCUnicode_Check(k)) {
                     PyObject* k2 = PyObject_Str(k);
                     if (k2 == NULL) {
@@ -397,7 +391,6 @@
                     Py_DECREF(k);
                     k = k2;
                 }
-#endif
             }
 
             r = PyDict_SetItem(value, k, v);

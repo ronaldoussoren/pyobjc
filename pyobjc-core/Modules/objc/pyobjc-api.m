@@ -118,11 +118,7 @@ struct pyobjc_api objc_api = {
 
 int PyObjCAPI_Register(PyObject* module)
 {
-#if PY_MAJOR_VERSION == 2
-    PyObject* API = PyCObject_FromVoidPtr(&objc_api, NULL);
-#else
     PyObject* API = PyCapsule_New(&objc_api, "objc." PYOBJC_API_NAME, NULL);
-#endif
 
     if (API == NULL) return -1;
 

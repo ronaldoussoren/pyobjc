@@ -104,43 +104,6 @@ PyObjCClass_HiddenSelector(PyObject* tp, SEL sel, BOOL classMethod)
  *
  */
 
-#if PY_MAJOR_VERSION == 2
-static
-Py_ssize_t nsdata_getreadbuffer(PyObject *pyself, Py_ssize_t segment __attribute__((unused)), void **ptrptr) {
-    NSData *self = (NSData *)PyObjCObject_GetObject(pyself);
-    PyObjC_Assert(segment == 0, -1);
-
-    if (ptrptr != NULL) {
-        *ptrptr = (void *)[self bytes];
-    }
-
-    return (int)[self length];
-}
-
-static
-Py_ssize_t nsmutabledata_getwritebuffer(PyObject *pyself, Py_ssize_t segment __attribute__((unused)), void **ptrptr) {
-    NSMutableData *self = (NSMutableData *)PyObjCObject_GetObject(pyself);
-    PyObjC_Assert(segment == 0, -1);
-
-    if (ptrptr != NULL) {
-        *ptrptr = (void *)[self mutableBytes];
-    }
-
-    return (int)[self length];
-}
-
-static
-Py_ssize_t nsdata_getsegcount(PyObject *pyself, Py_ssize_t *lenp) {
-    NSData *self = (NSData *)PyObjCObject_GetObject(pyself);
-    if (lenp != NULL) {
-        *lenp = (Py_ssize_t)[self length];
-    }
-    return 1;
-}
-#endif /* PY_MAJOR_VERSION == 2 */
-
-#if PY_VERSION_HEX >= 0x02060000
-
 static int
 nsdata_getbuffer(PyObject* obj, Py_buffer* view, int flags)
 {
@@ -164,38 +127,13 @@ nsmutabledata_getbuffer(PyObject* obj, Py_buffer* view, int flags)
     return r;
 }
 
-#endif /* PY_VERSION_HEX >= 0x02060000 */
-
 
 static PyBufferProcs nsdata_as_buffer = {
-#if PY_MAJOR_VERSION == 2
-    .bf_getreadbuffer   = nsdata_getreadbuffer,
-    .bf_getsegcount     = nsdata_getsegcount,
-#if PY_VERSION_HEX >= 0x02060000
-    .bf_getbuffer       = nsdata_getbuffer
-#endif /* PY_VERSION_HEX >= 0x02060000 */
-
-#else /* PY_MAJOR_VERSION == 3 */
     .bf_getbuffer       = nsdata_getbuffer,
-
-#endif /* PY_MAJOR_VERSION == 3 */
-
 };
 
 static PyBufferProcs nsmutabledata_as_buffer = {
-#if PY_MAJOR_VERSION == 2
-    .bf_getreadbuffer   = nsdata_getreadbuffer,
-    .bf_getwritebuffer  = nsmutabledata_getwritebuffer,
-    .bf_getsegcount     = nsdata_getsegcount,
-#if PY_VERSION_HEX >= 0x02060000
     .bf_getbuffer       = nsmutabledata_getbuffer,
-#endif /* PY_VERSION_HEX >= 0x02060000 */
-
-#else /* PY_MAJOR_VERSION == 3 */
-
-    .bf_getbuffer       = nsmutabledata_getbuffer,
-
-#endif /* PY_MAJOR_VERSION == 3 */
 };
 
 
@@ -428,14 +366,10 @@ class_init(PyObject *cls, PyObject *args, PyObject *kwds)
     if (kwds != NULL) {
         if (PyDict_Check(kwds) && PyDict_Size(kwds) == 1) {
 
-#if PY_MAJOR_VERSION == 3
             PyObject* v = PyDict_GetItemStringWithError(kwds, "protocols");
             if (v == NULL && PyErr_Occurred()) {
                 return -1;
             }
-#else
-            PyObject* v = PyDict_GetItemString(kwds, "protocols");
-#endif
 
             /* XXX: Not clear what this tries to accomplish */
             if (v != NULL) {
@@ -1266,10 +1200,6 @@ _type_lookup(PyTypeObject* tp, PyObject* name
             dict = ((PyTypeObject *)base)->tp_dict;
 
 
-#if PY_MAJOR_VERSION == 2
-        } else if (PyClass_Check(base)) {
-            dict = ((PyClassObject*)base)->cl_dict;
-#endif
         } else {
             return NULL;
         }
@@ -1467,10 +1397,6 @@ _type_lookup_instance(PyObject* class_dict, PyTypeObject* tp, PyObject* name
             dict = ((PyTypeObject *)base)->tp_dict;
 
 
-#if PY_MAJOR_VERSION == 2
-        } else if (PyClass_Check(base)) {
-            dict = ((PyClassObject*)base)->cl_dict;
-#endif
         } else {
             return NULL;
         }
@@ -1652,19 +1578,6 @@ class_getattro(PyObject* self, PyObject* name)
         if (PyObjC_Unicode_Fast_Bytes(name) == NULL) return NULL;
 #endif
 
-#if PY_MAJOR_VERSION == 2
-    } else if (PyString_Check(name)) {
-        if (strncmp(PyString_AS_STRING(name), "__", 2) == 0 && strcmp(PyString_AS_STRING(name), "__dict__") != 0) {
-            result = PyType_Type.tp_getattro(self, name);
-            if (result != NULL) {
-                return result;
-            }
-            PyErr_Clear();
-        }
-
-        name_bytes = name;
-        Py_INCREF(name_bytes);
-#endif
     } else {
         PyErr_Format(PyExc_TypeError, "Attribute name is not a string, but an instance of '%s'",
                 Py_TYPE(name)->tp_name);
@@ -1684,11 +1597,7 @@ class_getattro(PyObject* self, PyObject* name)
     }
 
     f = NULL;
-    if (descr != NULL
-#if PY_MAJOR_VERSION == 2
-        && PyType_HasFeature(Py_TYPE(descr), Py_TPFLAGS_HAVE_CLASS)
-#endif
-        ) {
+    if (descr != NULL) {
         f = Py_TYPE(descr)->tp_descr_get;
         if (f != NULL && PyDescr_IsData(descr)) {
             result = f(descr, self, (PyObject*)Py_TYPE(self));
@@ -1716,11 +1625,7 @@ class_getattro(PyObject* self, PyObject* name)
             , name_bytes
 #endif
         );
-        if (descr != NULL
-#if PY_MAJOR_VERSION == 2
-            && PyType_HasFeature(Py_TYPE(descr), Py_TPFLAGS_HAVE_CLASS)
-#endif
-            ) {
+        if (descr != NULL) {
             f = Py_TYPE(descr)->tp_descr_get;
             if (f != NULL) {
                 result = f(descr, NULL, self);
@@ -1741,11 +1646,7 @@ class_getattro(PyObject* self, PyObject* name)
             , name_bytes
 #endif
         );
-        if (descr != NULL
-#if PY_MAJOR_VERSION == 2
-            && PyType_HasFeature(Py_TYPE(descr), Py_TPFLAGS_HAVE_CLASS)
-#endif
-            ) {
+        if (descr != NULL) {
             f = Py_TYPE(descr)->tp_descr_get;
         }
         if (PyErr_Occurred()) {
@@ -1759,11 +1660,7 @@ class_getattro(PyObject* self, PyObject* name)
             , name_bytes
 #endif
         );
-        if (descr != NULL
-#if PY_MAJOR_VERSION == 2
-            && PyType_HasFeature(Py_TYPE(descr), Py_TPFLAGS_HAVE_CLASS)
-#endif
-            ) {
+        if (descr != NULL) {
             f = Py_TYPE(descr)->tp_descr_get;
         }
         if (PyErr_Occurred()) {
@@ -2054,55 +1951,6 @@ class_richcompare(PyObject* self, PyObject* other, int op)
     return result;
 }
 
-#if PY_MAJOR_VERSION == 2
-static int
-class_compare(PyObject* self, PyObject* other)
-{
-    Class self_class;
-    Class other_class;
-    int v;
-
-    if (!PyObjCClass_Check(other)) {
-        PyErr_SetString(PyExc_NotImplementedError, "Cmp with other");
-        return -1;
-    }
-
-    /* This is as arbitrary as the default tp_compare, but nicer for
-     * the user
-     */
-    self_class = PyObjCClass_GetClass(self);
-    other_class = PyObjCClass_GetClass(other);
-
-    if (self_class == other_class) return 0;
-    if (!self_class) return -1;
-    if (!other_class) return 1;
-
-    v = strcmp(
-        class_getName(self_class),
-        class_getName(other_class));
-
-    /* Python requires -1, 0 or 1, but strcmp on MacOS X returns
-     * 'negative', 0 or 'positive'.
-     *
-     * Also ensure that two different Class objects that happen
-     * to have the same name don't compare equal (that's something
-     * that shouldn't happen, but I have found some instances of this)
-     */
-    if (v < 0) return -1;
-    if (v == 0) {
-        if ((intptr_t)self_class < (intptr_t)other_class) {
-            return -1;
-        } else if ((intptr_t)self_class > (intptr_t)other_class) {
-            return 1;
-        } else {
-            return 0;
-        }
-    }
-    return 1;
-}
-
-#endif /* PY_MAJOR_VERSION == 2 */
-
 static Py_hash_t
 class_hash(PyObject* self)
 {
@@ -2333,15 +2181,6 @@ is_dunder_name(PyObject* name)
             return 0;
         }
 
-#if PY_MAJOR_VERSION == 2
-    } else if (PyString_Check(name)) {
-        if (strncmp(PyString_AS_STRING(name) "__", 2) == 0) {
-            return 1;
-        } else {
-            return 0;
-        }
-
-#endif
     } else {
         return 1;
     }
@@ -2461,9 +2300,6 @@ PyTypeObject PyObjCClass_Type = {
     .tp_basicsize   = sizeof (PyObjCClassObject),
     .tp_itemsize    = 0,
     .tp_dealloc     = class_dealloc,
-#if PY_MAJOR_VERSION == 2
-    .tp_compare     = class_compare,
-#endif /* PY_MAJOR_VERSION == 2 */
     .tp_repr        = class_repr,
     .tp_hash        = class_hash,
     .tp_getattro    = class_getattro,
@@ -2576,17 +2412,11 @@ PyObjCClass_New(Class objc_class)
      */
     if (strcmp(className, "NSMutableData") == 0) {
         ((PyTypeObject *)result)->tp_as_buffer = &nsmutabledata_as_buffer;
-#if PY_MAJOR_VERSION == 2 && PY_MINOR_VERSION >= 6
-        ((PyTypeObject *)result)->tp_flags |= Py_TPFLAGS_HAVE_NEWBUFFER;
-#endif
         PyType_Modified((PyTypeObject*)result);
         PyType_Ready((PyTypeObject *)result);
 
     } else if (strcmp(className, "NSData") == 0) {
         ((PyTypeObject *)result)->tp_as_buffer = &nsdata_as_buffer;
-#if PY_MAJOR_VERSION == 2 && PY_MINOR_VERSION >= 6
-        ((PyTypeObject *)result)->tp_flags |= Py_TPFLAGS_HAVE_NEWBUFFER;
-#endif
         PyType_Modified((PyTypeObject*)result);
         PyType_Ready((PyTypeObject *)result);
 
@@ -3090,20 +2920,7 @@ update_convenience_methods(PyObject* cls)
 
                 continue;
             }
-#if PY_MAJOR_VERSION == 2
 
-        } else if (PyString_Check(k)) {
-            char* n = PyString_AS_STRING(k);
-
-            if (   strcmp(n, "__dict__") == 0
-                || strcmp(n, "__bases__") == 0
-                || strcmp(n, "__slots__") == 0
-                || strcmp(n, "__mro__") == 0
-               ) {
-
-                continue;
-            }
-#endif
         } else {
             if (PyDict_SetItem(((PyTypeObject*)cls)->tp_dict, k, v) == -1) {
                 PyErr_Clear();
@@ -3234,7 +3051,6 @@ PyObjCClass_AddMethods(PyObject* classObject, PyObject** methods, Py_ssize_t met
 
         name = PyObject_GetAttrString(aMethod, "__name__");
 
-#if PY_MAJOR_VERSION == 3
         if (PyBytes_Check(name)) {
             PyObject* t = PyUnicode_Decode(
                     PyBytes_AsString(name),
@@ -3248,7 +3064,7 @@ PyObjCClass_AddMethods(PyObject* classObject, PyObject** methods, Py_ssize_t met
             Py_DECREF(name);
             name = t;
         }
-#endif
+
         if (PyObjCSelector_IsHidden(aMethod)) {
             r = PyObjCClass_SetHidden(classObject, objcMethod->name, PyObjCSelector_IsClassMethod(aMethod),
                     (PyObject*)PyObjCSelector_GetMetadata(aMethod));

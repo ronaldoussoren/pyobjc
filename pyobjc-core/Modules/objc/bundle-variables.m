@@ -153,11 +153,7 @@ static char* keywords[] = { "bundle", "module_globals", "variableInfo", "skip_un
 
         if (!PyArg_ParseTuple(item,
                 "O!"Py_ARG_BYTES":variableInfo",
-#if PY_MAJOR_VERSION == 2
-                &PyBaseString_Type,
-#else /* PY_MAJOR_VERSION == 3 */
                 &PyUnicode_Type,
-#endif /* PY_MAJOR_VERSION == 3 */
                 &py_name, &signature)) {
             Py_DECREF(seq);
             return NULL;
@@ -276,11 +272,7 @@ static char* keywords[] = { "bundle", "module_globals", "functionInfo", "skip_un
         doc = NULL;
         if (cfBundle != NULL) {
             if (!PyArg_ParseTuple(item,
-#if PY_MAJOR_VERSION == 2
-                "O&s|SO;functionInfo",
-#else /* PY_MAJOR_VERSION == 3 */
                 "O&y|UO;functionInfo",
-#endif /* PY_MAJOR_VERSION == 3 */
                 PyObjCObject_Convert, &name, &signature, &doc, &meta)){
                 Py_DECREF(seq);
                 return NULL;
@@ -296,11 +288,7 @@ static char* keywords[] = { "bundle", "module_globals", "functionInfo", "skip_un
                     (CFStringRef)name);
         } else {
             if (!PyArg_ParseTuple(item,
-#if PY_MAJOR_VERSION == 2
-                "ss|SO;functionInfo",
-#else /* PY_MAJOR_VERSION == 3 */
                 "sy|UO;functionInfo",
-#endif /* PY_MAJOR_VERSION == 3 */
                 &c_name, &signature, &doc, &meta)){
                 Py_DECREF(seq);
                 return NULL;
@@ -424,19 +412,9 @@ static char* keywords[] = { "function_list", "module_globals", "functionInfo", "
 
         doc = NULL;
         if (!PyArg_ParseTuple(item,
-#if PY_MAJOR_VERSION == 2
-                    "O!s|O!O:functionInfo tuple", &PyBaseString_Type,
-
-#else /* PY_MAJOR_VERSION == 3 */
                     "Uy|O!O:functionInfo tuple",
-#endif /* PY_MAJOR_VERSION == 3 */
                 &name, &signature,
-#if PY_MAJOR_VERSION == 2
-                &PyBaseString_Type,
-#else /* PY_MAJOR_VERSION == 3 */
                 &PyUnicode_Type,
-#endif /* PY_MAJOR_VERSION == 3 */
-
                 &doc, &meta)){
             Py_DECREF(seq);
             return NULL;

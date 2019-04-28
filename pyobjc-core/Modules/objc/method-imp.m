@@ -254,15 +254,11 @@ static PyGetSetDef imp_getset[] = {
         .get    = imp_selector,
         .doc    = imp_selector_doc,
     },
-
-#if PY_VERSION_HEX >= 0x03030000
     {
         .name   = "__signature__",
         .get    = PyObjC_callable_signature_get,
         .doc    = "inspect.Signature for an IMP",
     },
-#endif
-
     {
         .name   = NULL  /* SENTINEL */
     }

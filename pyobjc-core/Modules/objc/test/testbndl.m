@@ -1815,11 +1815,7 @@ static PyObject* pyobjcpy(PyObject* self __attribute__((__unused__)), PyObject* 
     int r;
 
     if (!PyArg_ParseTuple(args,
-#if PY_VERSION_HEX < 0x03000000
-        "sO",
-#else
         "yO",
-#endif
         &signature, &o)) {
 
         return NULL;
@@ -1855,11 +1851,7 @@ static PyObject* carrayMaker(PyObject* self __attribute__((__unused__)), PyObjec
     PyObject* v = NULL;
 
     if (!PyArg_ParseTuple(args,
-#if PY_VERSION_HEX < 0x03000000
-        "sOO",
-#else
         "yOO",
-#endif
         &signature, &o1, &o2)) {
         return NULL;
     }

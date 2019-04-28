@@ -3,6 +3,11 @@ What's new in PyObjC
 
 An overview of the relevant changes in new, and older, releases.
 
+Version 6.0a0
+-------------
+
+* Removed Python 2 support from the C extension in pyobjc-core
+
 Version 5.2
 -----------
 

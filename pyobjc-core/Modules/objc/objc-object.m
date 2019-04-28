@@ -40,11 +40,7 @@ static char* keywords[] = { "cobject", "c_void_p", NULL };
         NSObject* p;
         PyObject* attrval;
 
-        if (PyLong_Check(c_void_p)
-#if PY_MAJOR_VERSION == 2
-                || PyInt_Check(c_void_p)
-#endif
-            ) {
+        if (PyLong_Check(c_void_p)) {
                 attrval = c_void_p;
                 Py_INCREF(attrval);
 
@@ -55,13 +51,7 @@ static char* keywords[] = { "cobject", "c_void_p", NULL };
             }
         }
 
-        if (
-#if PY_MAJOR_VERSION == 2
-            PyInt_Check(attrval) ||
-            /* NOTE: PyLong_AsVoidPtr works on Int objects as well */
-#endif /* PY_MAJOR_VERSION == 2 */
-            PyLong_Check(attrval)
-        ) {
+        if (PyLong_Check(attrval)) {
             p = PyLong_AsVoidPtr(attrval);
             if (p == NULL && PyErr_Occurred()) {
                 Py_DECREF(attrval);
@@ -255,17 +245,10 @@ static int
 object_verify_not_nil(PyObject* obj, PyObject* name)
 {
     if (PyObjCObject_GetObject(obj) == nil) {
-#if PY_MAJOR_VERSION == 2
-        PyErr_Format(PyExc_AttributeError,
-             "cannot access attribute '%.400s' of NIL '%.50s' object",
-             PyString_AS_STRING(name),
-             Py_TYPE(obj)->tp_name);
-#else
         PyErr_Format(PyExc_AttributeError,
              "cannot access attribute '%U' of NIL '%.50s' object",
              name,
              Py_TYPE(obj)->tp_name);
-#endif
         return -1;
     }
     return 0;
@@ -376,10 +359,6 @@ object_getattro(PyObject* obj, PyObject* name)
                 }
 #endif
 
-#if PY_MAJOR_VERSION == 2
-            } else if (PyString_Check(name)) {
-                name_bytes = name; Py_INCREF(name_bytes);
-#endif
             } else {
                 PyErr_Restore(ptype, pvalue, ptraceback);
                 return NULL;
@@ -455,25 +434,16 @@ _type_lookup(PyTypeObject* tp, PyObject* name
             dict = ((PyTypeObject *)base)->tp_dict;
 
 
-#if PY_MAJOR_VERSION == 2
-        } else if (PyClass_Check(base)) {
-            dict = ((PyClassObject*)base)->cl_dict;
-#endif
         } else {
             return NULL;
         }
 
         PyObjC_Assert(dict && PyDict_Check(dict), NULL);
 
-#if PY_MAJOR_VERSION == 3
         descr = PyDict_GetItemWithError(dict, name);
         if (descr == NULL && PyErr_Occurred()) {
             return NULL;
-        }
-#else
-        descr = PyDict_GetItem(dict, name);
-#endif
-        if (descr != NULL) {
+        } else if (descr != NULL) {
             break;
         }
 
@@ -609,10 +579,6 @@ object_getattro(PyObject* obj, PyObject* name)
         if (PyObjC_Unicode_Fast_Bytes(name) == NULL) return NULL;
 #endif
 
-#if PY_MAJOR_VERSION == 2
-    } else if (PyString_Check(name)) {
-        name_bytes = name; Py_INCREF(name_bytes);
-#endif
     } else {
         PyErr_Format(PyExc_TypeError,
             "attribute name must be string, got %s",
@@ -659,11 +625,7 @@ object_getattro(PyObject* obj, PyObject* name)
     }
 
     f = NULL;
-    if (descr != NULL
-#if PY_MAJOR_VERSION == 2
-        && PyType_HasFeature(Py_TYPE(descr), Py_TPFLAGS_HAVE_CLASS)
-#endif
-        ) {
+    if (descr != NULL) {
         f = Py_TYPE(descr)->tp_descr_get;
         if (f != NULL && PyDescr_IsData(descr)) {
             res = f(descr, obj, (PyObject*)Py_TYPE(obj));
@@ -720,15 +682,10 @@ object_getattro(PyObject* obj, PyObject* name)
         } else {
             dict = *dictptr;
             if (dict != NULL) {
-#if PY_MAJOR_VERSION == 3
                 res = PyDict_GetItemWithError(dict, name);
                 if (res == NULL && PyErr_Occurred()) {
                     goto done;
-                }
-#else
-                res = PyDict_GetItem(dict, name);
-#endif
-                if (res != NULL) {
+                } else if (res != NULL) {
                     Py_INCREF(res);
                     goto done;
                 }
@@ -749,11 +706,7 @@ object_getattro(PyObject* obj, PyObject* name)
 #endif
         );
 
-        if (descr != NULL
-#if PY_MAJOR_VERSION == 2
-            && PyType_HasFeature(Py_TYPE(descr), Py_TPFLAGS_HAVE_CLASS)
-#endif
-            ) {
+        if (descr != NULL) {
             f = Py_TYPE(descr)->tp_descr_get;
         }
         if (descr == NULL && PyErr_Occurred()) {
@@ -793,15 +746,9 @@ done:
         if (PyObjCSelector_Check(res)
                 && PyObjCSelector_IsClassMethod(res)) {
             Py_DECREF(res);
-#if PY_MAJOR_VERSION == 2
-            PyErr_Format(PyExc_AttributeError,
-                 "'%.50s' object has no attribute '%.400s'",
-                 tp->tp_name, PyString_AS_STRING(name));
-#else
             PyErr_Format(PyExc_AttributeError,
                  "'%.50s' object has no attribute '%U'",
                  tp->tp_name, name);
-#endif
             res = NULL;
         }
     }
@@ -892,11 +839,6 @@ object_setattro(PyObject *obj, PyObject *name, PyObject *value)
         if (PyObjC_Unicode_Fast_Bytes(name) == NULL) return -1;
 #endif
 
-#if PY_MAJOR_VERSION == 2
-    } else if (PyString_Check(name)) {
-        name_bytes = name; Py_INCREF(name_bytes);
-#endif
-
     } else {
         PyErr_Format(PyExc_TypeError,
             "attribute name must be string, got %s",
@@ -945,11 +887,7 @@ object_setattro(PyObject *obj, PyObject *name, PyObject *value)
         return -1;
     }
     f = NULL;
-    if (descr != NULL
-#if PY_MAJOR_VERSION == 2
-        && PyType_HasFeature(Py_TYPE(descr), Py_TPFLAGS_HAVE_CLASS)
-#endif
-       ) {
+    if (descr != NULL) {
         f = Py_TYPE(descr)->tp_descr_set;
         if (f != NULL && PyDescr_IsData(descr)) {
             res = f(descr, obj, value);

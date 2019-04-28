@@ -40,15 +40,11 @@ static PyGetSetDef func_getset[] = {
         .get    = PyObjC_callable_docstr_get,
         .doc    = "Documentation for a function",
     },
-
-#if PY_VERSION_HEX >= 0x03030000
     {
         .name   = "__signature__",
         .get    = PyObjC_callable_signature_get,
         .doc    = "inspect.Signature for a function",
     },
-#endif /* PY_VERSION_HEX >= 0x03030000 */
-
     {
         .name   = NULL /* SENTINEL */
     }
@@ -82,36 +78,9 @@ func_repr(PyObject* _self)
     if (self->name == NULL) {
         return PyText_FromFormat("<objc.function object at %p>", self);
 
-#if PY_MAJOR_VERSION == 2
-    } else if (PyString_Check(self->name)) {
-        return PyString_FromFormat("<objc.function '%s' at %p>", PyString_AsString(self->name), self);
-#endif /* PY_MAJOR_VERSION == 2 */
-
-
     } else {
 
-#if PY_MAJOR_VERSION == 2
-        PyObject* result;
-        PyObject* name_repr = PyObject_Repr(self->name);
-
-        if (name_repr == NULL) {
-            return NULL;
-        }
-
-        if (!PyString_Check(name_repr)) {
-            result = PyString_FromFormat("<objc.function object at %p>", self);
-
-        } else {
-            result = PyString_FromFormat("<objc.function '%s' at %p>",
-                    PyString_AsString(name_repr), self);
-        }
-        Py_DECREF(name_repr);
-        return result;
-
-#else /* PY_MAJOR_VERSION == 3 */
         return PyUnicode_FromFormat("<objc.function %R at %p>", self->name, self);
-
-#endif /* PY_MAJOR_VERSION == 3 */
     }
 }
 
@@ -141,26 +110,10 @@ func_call(PyObject* s, PyObject* args, PyObject* kwds)
     if (PyObjC_DeprecationVersion && self->methinfo->deprecated && self->methinfo->deprecated <= PyObjC_DeprecationVersion) {
         char buf[128];
 
-#if PY_MAJOR_VERSION == 2
-        if (PyString_Check(self->name)) {
-            snprintf(buf, 128, "%s() is a deprecated API (macOS %d.%d)", PyString_AsString(self->name),
-                    self->methinfo->deprecated / 100, self->methinfo->deprecated % 100);
-        } else
-#endif
         if (PyUnicode_Check(self->name)) {
-#if PY_VERSION_HEX >= 0x03030000
             snprintf(buf, 128, "%s() is a deprecated API (macOS %d.%d)",
                     PyUnicode_AsUTF8(self->name),
                     self->methinfo->deprecated / 100, self->methinfo->deprecated % 100);
-#else
-            PyObject* temp = PyUnicode_AsUTF8String(self->name);
-            if (temp == NULL) {
-                return NULL;
-            }
-            snprintf(buf, 128, "%s() is a deprecated API (macOS %d.%d)", PyString_AsString(temp),
-                    self->methinfo->deprecated / 100, self->methinfo->deprecated % 100);
-            Py_DECREF(temp);
-#endif
         } else {
             snprintf(buf, 128, "function is a deprecated API");
         }

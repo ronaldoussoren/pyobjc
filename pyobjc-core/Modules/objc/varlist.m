@@ -202,10 +202,6 @@ object__setitem__(PyObject* _self, Py_ssize_t idx, PyObject* value)
 static PySequenceMethods object_tp_as_list = {
     .sq_item      = object__getitem__,
     .sq_ass_item  = object__setitem__,
-#if PY_MAJOR_VERSION == 2
-    .sq_slice     = object__getslice__,
-    .sq_ass_slice = object__setslice__,
-#endif
 };
 
 static Py_ssize_t

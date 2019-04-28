@@ -454,11 +454,6 @@ PyObjCInstanceVariable_SetName(PyObject* value, PyObject* name)
             return -1;
         }
 
-#if PY_MAJOR_VERSION == 2
-    } else if (PyString_Check(name)) {
-        self->name = PyObjCUtil_Strdup(PyString_AS_STRING(name));
-#endif
-
     } else {
         PyErr_SetString(PyExc_TypeError,
             "Implied instance variable name is not a string");

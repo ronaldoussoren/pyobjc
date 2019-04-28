@@ -133,11 +133,7 @@ typedef struct PyObjC_function_map {
 static inline PyObject*
 PyObjC_CreateInlineTab(PyObjC_function_map* map)
 {
-#if PY_MAJOR_VERSION == 2 && PY_MINOR_VERSION < 7
-    return PyCObject_FromVoidPtr(map, NULL);
-#else
     return PyCapsule_New(map, "objc.__inline__", NULL);
-#endif
 }
 
 static inline int
@@ -146,11 +142,7 @@ PyObjC_ImportAPI(PyObject* calling_module)
     PyObject* m;
     PyObject* d;
     PyObject* api_obj;
-#if PY_MAJOR_VERSION == 2
-    PyObject* name = PyString_FromString("objc");
-#else
     PyObject* name = PyUnicode_FromString("objc");
-#endif
 
     m = PyImport_Import(name);
     Py_DECREF(name);
@@ -171,11 +163,7 @@ PyObjC_ImportAPI(PyObject* calling_module)
             "No C_API in objc module");
         return -1;
     }
-#if PY_MAJOR_VERSION == 2 && PY_VERSION_MAJOR < 7
-    PyObjC_API = (struct pyobjc_api *)PyCObject_AsVoidPtr(api_obj);
-#else
     PyObjC_API = (struct pyobjc_api *)PyCapsule_GetPointer(api_obj, "objc." PYOBJC_API_NAME);
-#endif
     if (PyObjC_API == NULL) {
         return 0;
     }

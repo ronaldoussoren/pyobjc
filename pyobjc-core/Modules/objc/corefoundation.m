@@ -51,16 +51,11 @@ PyObjC_TryCreateCFProxy(NSObject* value)
         PyTypeObject* tp;
 
         cfid = PyInt_FromLong(CFGetTypeID((CFTypeRef)value));
-#if PY_MAJOR_VERSION == 3
         tp = (PyTypeObject*)PyDict_GetItem(gTypeid2class, cfid);
         Py_DECREF(cfid);
         if (tp == NULL && PyErr_Occurred()) {
             return NULL;
         }
-#else
-        tp = (PyTypeObject*)PyDict_GetItem(gTypeid2class, cfid);
-        Py_DECREF(cfid);
-#endif
 
         if (tp != NULL) {
             rval = tp->tp_alloc(tp, 0);
@@ -140,16 +135,11 @@ PyObjCCFType_New(char* name, char* encoding, CFTypeID typeID)
         return NULL;
     }
 
-#if PY_MAJOR_VERSION == 3
     result = PyDict_GetItemWithError(gTypeid2class, cf);
     if (result == NULL && PyErr_Occurred()) {
         Py_DECREF(cf);
         return NULL;
     }
-#else
-
-    result = PyDict_GetItem(gTypeid2class, cf);
-#endif
     if (result != NULL) {
         /* This type is the same as an already registered type,
          * return that type
@@ -284,13 +274,7 @@ PyObject*
 PyObjCCF_NewSpecial(char* typestr, void* datum)
 {
     PyObject* rval = NULL;
-#if PY_MAJOR_VERSION == 3
     PyObject* v = PyDict_GetItemStringWithError(PyObjC_TypeStr2CFTypeID, typestr);
-
-#else
-    PyObject* v = PyDict_GetItemString(PyObjC_TypeStr2CFTypeID, typestr);
-#endif
-
     CFTypeID typeid;
 
     if (v == NULL) {
@@ -310,17 +294,12 @@ PyObjCCF_NewSpecial(char* typestr, void* datum)
         PyTypeObject* tp;
 
         cfid = PyInt_FromLong(typeid);
-#if PY_MAJOR_VERSION == 3
         tp = (PyTypeObject*)PyDict_GetItemWithError(gTypeid2class, cfid);
         Py_DECREF(cfid);
 
         if (tp == NULL && PyErr_Occurred()) {
             return NULL;
         }
-#else
-        tp = (PyTypeObject*)PyDict_GetItem(gTypeid2class, cfid);
-        Py_DECREF(cfid);
-#endif
 
         if (tp != NULL) {
             rval = tp->tp_alloc(tp, 0);
@@ -358,16 +337,11 @@ PyObjCCF_NewSpecial2(CFTypeID typeid, void* datum)
         PyTypeObject* tp;
 
         cfid = PyInt_FromLong(typeid);
-#if PY_MAJOR_VERSION == 3
         tp = (PyTypeObject*)PyDict_GetItemWithError(gTypeid2class, cfid);
         Py_DECREF(cfid);
         if (tp == NULL && PyErr_Occurred()) {
             return NULL;
         }
-#else
-        tp = (PyTypeObject*)PyDict_GetItem(gTypeid2class, cfid);
-        Py_DECREF(cfid);
-#endif
 
         if (tp != NULL) {
             rval = tp->tp_alloc(tp, 0);

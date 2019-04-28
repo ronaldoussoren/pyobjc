@@ -29,11 +29,6 @@ static PyObject* call_NSData_bytes(
 
     if (bytes == NULL && PyErr_Occurred()) return NULL;
 
-#if PY_MAJOR_VERSION == 2 && PY_MINOR_VERSION <= 6
-    result = PyBuffer_FromMemory((char*)bytes, bytes_len);
-#else
-
-#if PY_MAJOR_VERSION == 3
     if (bytes == NULL) {
         /* Creating a memory view with a NULL pointer will
          * fail in 3.4 (and possibly earlier), use a
@@ -41,7 +36,6 @@ static PyObject* call_NSData_bytes(
          */
         return PyBytes_FromStringAndSize("", 0);
     }
-#endif
 
     /* 2.7 or later: use a memory view */
     Py_buffer info;
@@ -49,7 +43,6 @@ static PyObject* call_NSData_bytes(
         return NULL;
     }
     result = PyMemoryView_FromBuffer(&info);
-#endif
 
     return result;
 }
@@ -92,20 +85,6 @@ imp_NSData_bytes(
         return;
     }
 
-#if PY_MAJOR_VERSION == 2
-    if (PyBuffer_Check(result)) {
-        const void *p;
-        Py_ssize_t len;
-        if (PyObject_AsReadBuffer(result, &p, &len) == -1) {
-            goto error;
-        }
-
-        Py_DECREF(result);
-        *pretval = (void *)p;
-        PyGILState_Release(state);
-
-    } else
-#endif /* PY_MAJOR_VERSION == 2 */
     {
         OCReleasedBuffer* temp = [[OCReleasedBuffer alloc] initWithPythonBuffer:result writable:NO];
         if (temp == nil) {
@@ -159,10 +138,6 @@ call_NSMutableData_mutableBytes(
 
     if (bytes == NULL && PyErr_Occurred()) return NULL;
 
-#if PY_MAJOR_VERSION == 2 && PY_MINOR_VERSION <= 6
-    result = PyBuffer_FromReadWriteMemory((void*)bytes, bytes_len);
-
-#else
     if (bytes == NULL) {
         /* PyMemoryView doesn't like null pointers, and those
          * are nonsensical here anyway.
@@ -177,7 +152,6 @@ call_NSMutableData_mutableBytes(
         return NULL;
     }
     result = PyMemoryView_FromBuffer(&info);
-#endif
 
     return result;
 }

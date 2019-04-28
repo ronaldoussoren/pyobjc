@@ -309,21 +309,10 @@ error:
     return NULL;
 }
 
-#if PY_MAJOR_VERSION == 2 && PY_MINOR_VERSION < 7
-
-static void PyObjCBlock_CleanupCapsule(void* ptr)
-{
-    PyObjCFFI_FreeBlockFunction(ptr);
-}
-
-#else /* Python <= 2.6 */
-
 static void PyObjCBlock_CleanupCapsule(PyObject* ptr)
 {
     PyObjCFFI_FreeBlockFunction(PyCapsule_GetPointer(ptr, "objc.__block_release__"));
 }
-
-#endif /* Python <= 2.6 */
 
 static char*
 block_signature(PyObjCMethodSignature* signature)

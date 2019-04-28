@@ -129,11 +129,7 @@ static char* keywords[] = { "cobject", "c_void_p", NULL };
         void* p;
         PyObject* attrval;
 
-        if (PyLong_Check(c_void_p)
-#if PY_MAJOR_VERSION == 2
-                || PyInt_Check(c_void_p)
-#endif
-            ) {
+        if (PyLong_Check(c_void_p)) {
                 attrval = c_void_p;
                 Py_INCREF(attrval);
 
@@ -144,13 +140,7 @@ static char* keywords[] = { "cobject", "c_void_p", NULL };
             }
         }
 
-        if (
-#if PY_MAJOR_VERSION == 2
-            PyInt_Check(attrval) ||
-            /* NOTE: PyLong_AsVoidPtr works on Int objects as well */
-#endif /* PY_MAJOR_VERSION == 2 */
-            PyLong_Check(attrval)
-        ) {
+        if (PyLong_Check(attrval)) {
             p = PyLong_AsVoidPtr(attrval);
             if (p == NULL && PyErr_Occurred()) {
                 Py_DECREF(attrval);
@@ -319,10 +309,8 @@ static ffi_cif* new_cif = NULL;
 
     newType->ht_type.tp_name = PyText_AsString(newType->ht_name);
 
-#if PY_VERSION_HEX >= 0x03030000
     newType->ht_qualname = newType->ht_name;
     Py_INCREF(newType->ht_qualname);
-#endif
 
     v = PyDict_New();
     if (v == NULL) {

@@ -235,11 +235,7 @@ append_method_list(PyObject* lst, Protocol* protocol, BOOL isRequired, BOOL isIn
         char buf[512];
         PyObjCRT_SimplifySignature(methods[i].types, buf, sizeof(buf));
         PyObject* item = Py_BuildValue(
-#if PY_MAJOR_VERSION == 2
-            "{sssssO}",
-#else /* PY_MAJOR_VERSION == 3 */
             "{sysysO}",
-#endif /* PY_MAJOR_VERSION == 3 */
             "selector", sel_getName(methods[i].name),
             "typestr", buf,
             "required", isRequired?Py_True:Py_False);
@@ -324,25 +320,6 @@ descriptionForInstanceMethod_(PyObject* object, PyObject* sel)
     if (PyObjCSelector_Check(sel)) {
         aSelector = PyObjCSelector_GetSelector(sel);
 
-#if PY_MAJOR_VERSION == 2
-    } else if (PyUnicode_Check(sel)) {
-        PyObject* bytes = PyUnicode_AsEncodedString(sel, NULL, NULL);
-        if (bytes == NULL) {
-            return NULL;
-        }
-
-        char* s = PyBytes_AsString(bytes);
-        if (s == NULL || *s == '\0') {
-            PyErr_SetString(PyExc_ValueError,
-                    "empty selector name");
-            return NULL;
-        }
-
-        aSelector = sel_getUid(s);
-        Py_DECREF(bytes);
-
-#endif /* PY_MAJOR_VERSION == 2 */
-
     } else if (PyBytes_Check(sel)) {
         char* s = PyBytes_AsString(sel);
 
@@ -372,11 +349,7 @@ descriptionForInstanceMethod_(PyObject* object, PyObject* sel)
         char buf[512];
         PyObjCRT_SimplifySignature(descr.types, buf, sizeof(buf));
         return Py_BuildValue(
-#if PY_MAJOR_VERSION == 2
-            "(ss)",
-#else /* PY_MAJOR_VERSION == 3 */
             "(yy)",
-#endif /* PY_MAJOR_VERSION == 3 */
             sel_getName(descr.name),
             buf);
     }
@@ -391,24 +364,6 @@ descriptionForClassMethod_(PyObject* object, PyObject* sel)
 
     if (PyObjCSelector_Check(sel)) {
         aSelector = PyObjCSelector_GetSelector(sel);
-#if PY_MAJOR_VERSION == 2
-    } else if (PyUnicode_Check(sel)) {
-        PyObject* bytes = PyUnicode_AsEncodedString(sel, NULL, NULL);
-        if (bytes == NULL) {
-            return NULL;
-        }
-
-        char* s = PyBytes_AsString(bytes);
-        if (s == NULL || *s == '\0') {
-            PyErr_SetString(PyExc_ValueError,
-                    "empty selector name");
-            return NULL;
-        }
-
-        aSelector = sel_getUid(s);
-        Py_DECREF(bytes);
-
-#endif /* PY_MAJOR_VERSION == 2 */
 
     } else if (PyBytes_Check(sel)) {
         char* s = PyBytes_AsString(sel);
@@ -436,11 +391,7 @@ descriptionForClassMethod_(PyObject* object, PyObject* sel)
         char buf[256];
         PyObjCRT_SimplifySignature(descr.types, buf, sizeof(buf));
         return Py_BuildValue(
-#if PY_MAJOR_VERSION == 2
-            "(ss)",
-#else /* PY_MAJOR_VERSION == 3 */
             "(yy)",
-#endif /* PY_MAJOR_VERSION == 3 */
             sel_getName(descr.name),
             buf);
     }

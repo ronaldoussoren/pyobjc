@@ -393,23 +393,7 @@ objcsel_repr(PyObject* _self)
         rval = PyText_FromFormat("<unbound native-selector %s in %s>", sel_getName(sel->base.sel_selector), class_getName(sel->base.sel_class));
 
     } else {
-#if PY_MAJOR_VERSION == 2
-        PyObject* selfrepr = PyObject_Repr(sel->base.sel_self);
-        if (selfrepr == NULL) {
-            return NULL;
-        }
-
-        if (!PyString_Check(selfrepr)) {
-            Py_DECREF(selfrepr);
-            return NULL;
-        }
-
-        rval = PyText_FromFormat("<native-selector %s of %s>", sel_getName(sel->base.sel_selector), PyString_AS_STRING(selfrepr));
-        Py_DECREF(selfrepr);
-
-#else
         rval = PyUnicode_FromFormat("<native-selector %s of %R>", sel_getName(sel->base.sel_selector), sel->base.sel_self);
-#endif
     }
 
     return rval;
@@ -575,9 +559,6 @@ objcsel_call(PyObject* _self, PyObject* args, PyObject* kwds)
 
         myClass = PyObjCClass_New(self->base.sel_class);
         if (!(PyObject_IsInstance(pyself, myClass)
-#if PY_MAJOR_VERSION == 2
-            || (PyString_Check(pyself) && class_isSubclassOf(self->base.sel_class, [NSString class]))
-#endif
             || (PyUnicode_Check(pyself) && class_isSubclassOf(self->base.sel_class, [NSString class]))
         )) {
 
@@ -714,13 +695,11 @@ static PyGetSetDef objcsel_getset[] = {
         .get    = PyObjC_callable_docstr_get,
         .doc    = "The document string for a method",
     },
-#if PY_VERSION_HEX >= 0x03030000
     {
         .name   = "__signature__",
         .get    = PyObjC_callable_signature_get,
         .doc    = "inspect.Signature for a method",
     },
-#endif
     {
         .name   = NULL  /* SENTINEL */
     }
@@ -1103,23 +1082,7 @@ pysel_repr(PyObject* _self)
         }
 
     } else {
-#if PY_MAJOR_VERSION == 2
-        PyObject* selfrepr = PyObject_Repr(sel->base.sel_self);
-        if (selfrepr == NULL) {
-            return NULL;
-        }
-
-        if (!PyString_Check(selfrepr)) {
-            Py_DECREF(selfrepr);
-            return NULL;
-        }
-
-        rval = PyText_FromFormat("<selector %s of %s>", sel_getName(sel->base.sel_selector), PyString_AS_STRING(selfrepr));
-        Py_DECREF(selfrepr);
-
-#else
         rval = PyText_FromFormat("<selector %s of %R>", sel_getName(sel->base.sel_selector), sel->base.sel_self);
-#endif
     }
     return rval;
 }
@@ -1473,11 +1436,6 @@ pysel_default_selector(PyObject* callable)
         Py_DECREF(bytes);
 
 
-#if PY_MAJOR_VERSION == 2
-    } else if (PyString_Check(name)) {
-        strncpy(buf, PyString_AS_STRING(name), sizeof(buf)-1);
-#endif
-
     } else {
         return NULL;
     }
@@ -1635,11 +1593,7 @@ static char* keywords[] = { "function", "selector", "signature",
             return NULL;
         }
 
-#if PY_MAJOR_VERSION == 2
-        callable = PyObject_GetAttrString(tmp, "im_func");
-#else
         callable = PyObject_GetAttrString(tmp, "__func__");
-#endif
         Py_DECREF(tmp);
         if (callable == NULL) {
             return NULL;
@@ -1779,13 +1733,11 @@ static PyGetSetDef pysel_getset[] = {
         .get    = pysel_docstring,
         .doc    = pysel_docstring_doc,
     },
-#if PY_VERSION_HEX >= 0x03030000
     {
         .name   = "__signature__",
         .get    = PyObjC_callable_signature_get,
         .doc    = "inspect.Signaturefor a method",
     },
-#endif
     {
         .name   = NULL /* SENTINEL */
     }
@@ -1998,11 +1950,7 @@ PyObjCSelector_FromFunction(
             return callable;
         }
 
-#if PY_MAJOR_VERSION == 2
-        callable = PyObject_GetAttrString(tmp, "im_func");
-#else
         callable = PyObject_GetAttrString(tmp, "__func__");
-#endif
         Py_DECREF(tmp);
         if (callable == NULL) {
             return NULL;
@@ -2024,12 +1972,6 @@ PyObjCSelector_FromFunction(
                     PyBytes_AsString(bytes));
             Py_DECREF(bytes);
 
-#if PY_MAJOR_VERSION == 2
-        } else if (PyString_Check(pyname)) {
-            selector = PyObjCSelector_DefaultSelector(
-                    PyString_AsString(pyname));
-#endif
-
         } else {
             PyErr_SetString(PyExc_TypeError, "Function name is not a string");
             return NULL;
@@ -2045,12 +1987,6 @@ PyObjCSelector_FromFunction(
         selector = PyObjCSelector_DefaultSelector(
                 PyBytes_AsString(bytes));
         Py_DECREF(bytes);
-
-#if PY_MAJOR_VERSION == 2
-    } else if (PyString_Check(pyname)) {
-        selector = PyObjCSelector_DefaultSelector(
-            PyString_AS_STRING(pyname));
-#endif
 
     } else {
         PyErr_SetString(PyExc_TypeError,

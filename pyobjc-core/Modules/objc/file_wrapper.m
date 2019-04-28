@@ -1,6 +1,5 @@
 #include "pyobjc.h"
 
-#if PY_MAJOR_VERSION == 3
 /* A basic wrapper for C's "FILE*"
  * that implements a usable API.
  */
@@ -329,5 +328,3 @@ FILE* FILE_get(PyObject* fp)
 
     return ((struct file_object*)fp)->fp;
 }
-
-#endif

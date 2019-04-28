@@ -537,10 +537,6 @@ static PySequenceMethods struct_as_sequence = {
     .sq_item        = struct_sq_item,
     .sq_ass_item    = struct_sq_ass_item,
     .sq_contains    = struct_sq_contains,
-#if PY_MAJOR_VERSION == 2
-    .sq_slice       = struct_sq_slice,
-    .sq_ass_slice   = struct_sq_ass_slice,
-#endif
 };
 
 static PyMappingMethods struct_as_mapping = {
@@ -861,11 +857,6 @@ struct_init(
                     return;
                 }
 
-#if PY_MAJOR_VERSION == 2
-            } else if (PyString_Check(k)) {
-                k_bytes = k; Py_INCREF(k_bytes);
-#endif
-
             } else {
                 Py_DECREF(keys);
                 PyErr_Format(PyExc_TypeError,
@@ -902,15 +893,11 @@ struct_init(
             Py_DECREF(k_bytes);
 
             member = Py_TYPE(self)->tp_members + off;
-#if PY_MAJOR_VERSION == 3
             v = PyDict_GetItemWithError(kwds, k);
             if (v == NULL && PyErr_Occurred()) {
                 *(int*)retval = -1;
                 return;
             }
-#else
-            v = PyDict_GetItem(kwds, k);
-#endif
             SET_STRUCT_FIELD(self, member, v);
         }
         Py_DECREF(keys);
@@ -1254,9 +1241,6 @@ static struct StructTypeObject StructTemplate_Type = {
         .tp_getattro    = PyObject_GenericGetAttr,
         .tp_setattro    = struct_setattro,
         .tp_flags       = Py_TPFLAGS_DEFAULT
-#if PY_MAJOR_VERSION == 2
-                            | Py_TPFLAGS_HAVE_RICHCOMPARE
-#endif
                             | Py_TPFLAGS_HAVE_GC,
         .tp_traverse    = struct_traverse,
         .tp_clear       = struct_clear,
@@ -1388,11 +1372,7 @@ PyObject* PyObjC_FindRegisteredStruct(const char* signature, Py_ssize_t len)
 
     v = PyText_FromStringAndSize(signature, len);
 
-#if PY_MAJOR_VERSION == 3
     type = PyDict_GetItemWithError(structRegistry, v);
-#else
-    type = PyDict_GetItem(structRegistry, v);
-#endif
     Py_DECREF(v);
     if (type == NULL) {
         return NULL;
@@ -1418,11 +1398,7 @@ PyObjC_CreateRegisteredStruct(const char* signature, Py_ssize_t len, const char*
 
     v = PyText_FromStringAndSize(signature, len);
 
-#if PY_MAJOR_VERSION == 3
     type = (PyTypeObject*)PyDict_GetItemWithError(structRegistry, v);
-#else
-    type = (PyTypeObject*)PyDict_GetItem(structRegistry, v);
-#endif
     Py_DECREF(v);
     if (type == NULL) {
         return NULL;
@@ -1448,15 +1424,11 @@ PyObjC_CreateRegisteredStruct(const char* signature, Py_ssize_t len, const char*
     PyObject_GC_Track(result);
 
     if (objc_encoding) {
-#if PY_MAJOR_VERSION == 3
         PyObject* typestr = PyDict_GetItemStringWithError(type->tp_dict, "__typestr__");
         if (typestr == NULL && PyErr_Occurred()) {
             Py_DECREF(result);
             return NULL;
         }
-#else
-        PyObject* typestr = PyDict_GetItemString(type->tp_dict, "__typestr__");
-#endif
         if (!PyBytes_Check(typestr)) {
             PyErr_SetString(PyExc_TypeError, "__typestr__ not a bytes object");
             Py_DECREF(result);

@@ -291,11 +291,7 @@ BEGIN_UNITTEST(ExtractStruct1)
 
     ASSERT_ISINSTANCE(output, Tuple);
     ASSERT_EQUALS(PyTuple_GET_SIZE(output), 2, "%d");
-#if PY_VERSION_HEX < 0x03000000
-    ASSERT_ISINSTANCE(PyTuple_GetItem(output, 0), Int);
-#else
     ASSERT_ISINSTANCE(PyTuple_GetItem(output, 0), Long);
-#endif
     ASSERT_ISINSTANCE(PyTuple_GetItem(output, 1), Float);
     ASSERT_EQUALS(PyLong_AsLong(PyTuple_GetItem(output, 0)), 1, "%d");
     ASSERT_EQUALS(PyFloat_AsDouble(PyTuple_GetItem(output, 1)), 2.0, "%g");
@@ -322,11 +318,7 @@ BEGIN_UNITTEST(ExtractStruct2)
 
     ASSERT_ISINSTANCE(output, Tuple);
     ASSERT_EQUALS(PyTuple_GET_SIZE(output), 3, "%d");
-#if PY_VERSION_HEX < 0x03000000
-    ASSERT_ISINSTANCE(PyTuple_GetItem(output, 0), Int);
-#else
     ASSERT_ISINSTANCE(PyTuple_GetItem(output, 0), Long);
-#endif
     ASSERT_ISINSTANCE(PyTuple_GetItem(output, 1), Float);
     ASSERT_ISINSTANCE(PyTuple_GetItem(output, 2), Tuple);
     ASSERT_EQUALS(PyLong_AsLong(PyTuple_GetItem(output, 0)), 1, "%d");
@@ -336,43 +328,23 @@ BEGIN_UNITTEST(ExtractStruct2)
     ASSERT_EQUALS(PyTuple_GET_SIZE(tup), 5, "%d");
 
     v = PyTuple_GetItem(tup, 0);
-#if PY_VERSION_HEX < 0x03000000
-    ASSERT_ISINSTANCE(v, Int);
-#else
     ASSERT_ISINSTANCE(v, Long);
-#endif
     ASSERT_EQUALS(PyLong_AsLong(v), 3, "%d");
 
     v = PyTuple_GetItem(tup, 1);
-#if PY_VERSION_HEX < 0x03000000
-    ASSERT_ISINSTANCE(v, Int);
-#else
     ASSERT_ISINSTANCE(v, Long);
-#endif
     ASSERT_EQUALS(PyLong_AsLong(v), 4, "%d");
 
     v = PyTuple_GetItem(tup, 2);
-#if PY_VERSION_HEX < 0x03000000
-    ASSERT_ISINSTANCE(v, Int);
-#else
     ASSERT_ISINSTANCE(v, Long);
-#endif
     ASSERT_EQUALS(PyLong_AsLong(v), 5, "%d");
 
     v = PyTuple_GetItem(tup, 3);
-#if PY_VERSION_HEX < 0x03000000
-    ASSERT_ISINSTANCE(v, Int);
-#else
     ASSERT_ISINSTANCE(v, Long);
-#endif
     ASSERT_EQUALS(PyLong_AsLong(v), 6, "%d");
 
     v = PyTuple_GetItem(tup, 4);
-#if PY_VERSION_HEX < 0x03000000
-    ASSERT_ISINSTANCE(v, Int);
-#else
     ASSERT_ISINSTANCE(v, Long);
-#endif
     ASSERT_EQUALS(PyLong_AsLong(v), 7, "%d");
 
 END_UNITTEST
@@ -390,13 +362,8 @@ BEGIN_UNITTEST(ExtractStruct3)
 
     ASSERT_ISINSTANCE(output, Tuple);
     ASSERT_EQUALS(PyTuple_GET_SIZE(output), 2, "%d");
-#if PY_VERSION_HEX < 0x03000000
-    ASSERT_ISINSTANCE(PyTuple_GetItem(output, 0), Int);
-    ASSERT_ISINSTANCE(PyTuple_GetItem(output, 1), Int);
-#else
     ASSERT_ISINSTANCE(PyTuple_GetItem(output, 0), Long);
     ASSERT_ISINSTANCE(PyTuple_GetItem(output, 1), Long);
-#endif
     ASSERT_EQUALS(PyLong_AsLong(PyTuple_GetItem(output, 0)), 1, "%d");
     ASSERT_EQUALS(PyLong_AsLong(PyTuple_GetItem(output, 1)), 2, "%d");
 
@@ -415,17 +382,8 @@ BEGIN_UNITTEST(ExtractStruct4)
 
     ASSERT_ISINSTANCE(output, Tuple);
     ASSERT_EQUALS(PyTuple_GET_SIZE(output), 2, "%d");
-#if PY_VERSION_HEX < 0x03000000
-    ASSERT_ISINSTANCE(PyTuple_GetItem(output, 0), Int);
-#ifdef __LP64__
-    ASSERT_ISINSTANCE(PyTuple_GetItem(output, 1), Int);
-#else
-    ASSERT_ISINSTANCE(PyTuple_GetItem(output, 1), Long);
-#endif
-#else
     ASSERT_ISINSTANCE(PyTuple_GetItem(output, 0), Long);
     ASSERT_ISINSTANCE(PyTuple_GetItem(output, 1), Long);
-#endif
 
     ASSERT_EQUALS(PyLong_AsLong(PyTuple_GetItem(output, 0)), 1, "%d");
     ASSERT_EQUALS(PyLong_AsLong(PyTuple_GetItem(output, 1)), 500000, "%d");
@@ -451,25 +409,15 @@ BEGIN_UNITTEST(ExtractStruct5Array)
 
     v = PyTuple_GetItem(output, 0);
     ASSERT_ISINSTANCE(v, Tuple);
-#if PY_VERSION_HEX < 0x03000000
-    ASSERT_ISINSTANCE(PyTuple_GetItem(v, 0), Int);
-    ASSERT_ISINSTANCE(PyTuple_GetItem(v, 1), Int);
-#else
     ASSERT_ISINSTANCE(PyTuple_GetItem(v, 0), Long);
     ASSERT_ISINSTANCE(PyTuple_GetItem(v, 1), Long);
-#endif
     ASSERT_EQUALS(PyLong_AsLong(PyTuple_GetItem(v, 0)), 500000, "%d");
     ASSERT_EQUALS(PyLong_AsLong(PyTuple_GetItem(v, 1)), 1, "%d");
 
     v = PyTuple_GetItem(output, 1);
     ASSERT_ISINSTANCE(v, Tuple);
-#if PY_VERSION_HEX < 0x03000000
-    ASSERT_ISINSTANCE(PyTuple_GetItem(v, 0), Int);
-    ASSERT_ISINSTANCE(PyTuple_GetItem(v, 1), Int);
-#else
     ASSERT_ISINSTANCE(PyTuple_GetItem(v, 0), Long);
     ASSERT_ISINSTANCE(PyTuple_GetItem(v, 1), Long);
-#endif
     ASSERT_EQUALS(PyLong_AsLong(PyTuple_GetItem(v, 0)), 1000000, "%d");
     ASSERT_EQUALS(PyLong_AsLong(PyTuple_GetItem(v, 1)), 2, "%d");
 

@@ -79,11 +79,6 @@
 #include "OC_PythonUnicode.h"
 #include "OC_BuiltinPythonUnicode.h"
 
-#if PY_MAJOR_VERSION == 2
-#include "OC_PythonString.h"
-#include "OC_BuiltinPythonString.h"
-#endif
-
 #include "OC_PythonEnumerator.h"
 #include "OC_PythonDate.h"
 #include "OC_PythonNumber.h"
@@ -126,10 +121,7 @@
 #include "ivar-accessor.h"
 #include "ctests.h"
 #include "weakref.h"
-
-#if PY_MAJOR_VERSION == 3
 #include "file_wrapper.h"
-#endif
 
 #define PYOBJC_BUILD
 #include "pyobjc-api.h"
@@ -147,12 +139,6 @@
 /* module.m */
 extern PyObject* PyObjC_TypeStr2CFTypeID;
 extern PyObject* PyObjC_callable_docstr_get(PyObject* callable, void* closure);
-#if PY_VERSION_HEX >= 0x03030000
 extern PyObject* PyObjC_callable_signature_get(PyObject* callable, void* closure);
-#endif
-
-#if PY_MAJOR_VERSION == 2
-extern PyObject* PyObjCStrBridgeWarning;
-#endif
 
 #endif /* PyObjC_H */

@@ -27,15 +27,11 @@ PyObjC_AddToRegistry(
         return -1;
     }
 
-#if PY_MAJOR_VERSION == 3
     sublist = PyDict_GetItemWithError(registry, selector);
     if (sublist == NULL && PyErr_Occurred()) {
         Py_DECREF(item);
         return -1;
     }
-#else
-    sublist = PyDict_GetItem(registry, selector);
-#endif
     if (sublist == NULL) {
         sublist = PyList_New(0);
         result = PyDict_SetItem(registry, selector, sublist);
@@ -70,11 +66,7 @@ PyObjC_FindInRegistry(PyObject* registry, Class cls, SEL selector)
 
     PyObject* k = PyBytes_FromString(sel_getName(selector));
 
-#if PY_MAJOR_VERSION == 3
     sublist = PyDict_GetItemWithError(registry, k);
-#else
-    sublist = PyDict_GetItem(registry, k);
-#endif
     Py_DECREF(k);
     if (sublist == NULL) return NULL;
 
@@ -103,14 +95,9 @@ PyObjC_FindInRegistry(PyObject* registry, Class cls, SEL selector)
             }
             cur_class = objc_lookUpClass(PyBytes_AsString(bytes));
             Py_DECREF(bytes);
-#if PY_MAJOR_VERSION == 2
-        } else if (PyString_Check(nm)) {
-            cur_class = objc_lookUpClass(PyString_AsString(nm));
-#else
         } else if (PyBytes_Check(nm)) {
             cur_class = objc_lookUpClass(PyBytes_AsString(nm));
 
-#endif
         } else {
             PyErr_SetString(PyExc_TypeError, "Exception registry class name is not a string");
             return NULL;

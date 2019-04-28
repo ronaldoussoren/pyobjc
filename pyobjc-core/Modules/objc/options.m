@@ -131,14 +131,9 @@ BOOL_PROP(unknown_pointer_raises, PyObjCPointer_RaiseException, NO)
 BOOL_PROP(structs_indexable, PyObjC_StructsIndexable, YES)
 BOOL_PROP(structs_writable, PyObjC_StructsWritable, YES)
 
-#if PY_MAJOR_VERSION == 2
-BOOL_PROP(strbridge_enabled, PyObjC_StrBridgeEnabled, YES)
-#endif /* PY_MAJOR_VERSION == 2 */
-
 INT_PROP(_nscoding_version, PyObjC_NSCoding_Version, 0)
 INT_PROP(deprecation_warnings, PyObjC_DeprecationVersion, 0)
 SSIZE_T_PROP(_mapping_count, PyObjC_MappingCount, 0)
-
 
 /* Private properties */
 OBJECT_PROP(_nscoding_encoder, PyObjC_Encoder, NULL)
@@ -148,9 +143,7 @@ OBJECT_PROP(_class_extender, PyObjC_ClassExtender, NULL)
 OBJECT_PROP(_make_bundleForClass, PyObjC_MakeBundleForClass, NULL)
 OBJECT_PROP(_nsnumber_wrapper, PyObjC_NSNumberWrapper, NULL)
 OBJECT_PROP(_callable_doc, PyObjC_CallableDocFunction, NULL)
-#if PY_VERSION_HEX >= 0x03030000
 OBJECT_PROP(_callable_signature, PyObjC_CallableSignatureFunction, NULL)
-#endif
 OBJECT_PROP(_mapping_types, PyObjC_DictLikeTypes, NULL)
 OBJECT_PROP(_sequence_types, PyObjC_ListLikeTypes, NULL)
 OBJECT_PROP(_set_types, PyObjC_SetLikeTypes, NULL)
@@ -163,10 +156,6 @@ static PyGetSetDef object_getset[] = {
     GETSET(unknown_pointer_raises,  "If True the bridge raises an exception instead of creating an ObjCPointer"),
     GETSET(structs_indexable,       "If True wrappers for C structs can be used as a sequence"),
     GETSET(structs_writable,       "If True wrappers for C structs can be modified"),
-
-#if PY_MAJOR_VERSION == 2
-    GETSET(strbridge_enabled,       "If True the transparent str() bridge is enabled"),
-#endif /* PY_MAJOR_VERSION == 2 */
 
     /* Private properties */
     GETSET(_nscoding_version,       "Private version number for NSCoding support"),
@@ -182,9 +171,7 @@ static PyGetSetDef object_getset[] = {
     GETSET(_sequence_types,         "Private list of types that proxied as instances of NSMutableArray"),
     GETSET(_set_types,              "Private list of types that proxied as instances of NSMutableSet"),
     GETSET(_date_types,             "Private list of types that proxied as instances of NSDate"),
-#if PY_VERSION_HEX >= 0x03030000
     GETSET(_callable_signature,     "Private helper function for generating __signature__ for selectors"),
-#endif /* PY_VERSION_HEX >= 0x03030000 */
     GETSET(deprecation_warnings,       "If not 0 give deprecation warnings for the given SDK version"),
 
     { 0, 0, 0, 0, 0 } /* Sentinel */

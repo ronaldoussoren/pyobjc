@@ -596,16 +596,13 @@ setup_descr(struct _PyObjC_ArgDescr* descr, PyObject* meta, BOOL is_native)
 
     PyObjC_Assert(descr == NULL || descr->allowNULL, -1);
     if (meta) {
-#if PY_MAJOR_VERSION == 3
         d = PyDict_GetItemStringWithError(meta, "null_accepted");
         if (d == NULL && PyErr_Occurred()) {
             return -1;
-        }
-#else
-        d = PyDict_GetItemString(meta, "null_accepted");
-#endif
-        if (d == NULL || PyObject_IsTrue(d)) {
+
+        } else if (d == NULL || PyObject_IsTrue(d)) {
             /* pass */
+
         } else {
             if (descr == NULL || descr->tmpl) return -2;
             descr->allowNULL = NO;
@@ -614,17 +611,14 @@ setup_descr(struct _PyObjC_ArgDescr* descr, PyObject* meta, BOOL is_native)
 
 
     if (meta) {
-#if PY_MAJOR_VERSION == 3
         d = PyDict_GetItemStringWithError(meta, "already_retained");
         if (d == NULL && PyErr_Occurred()) {
             return -1;
-        }
-#else
-        d = PyDict_GetItemString(meta, "already_retained");
-#endif
-        if (d && PyObject_IsTrue(d)) {
+
+        } else if (d && PyObject_IsTrue(d)) {
             if (descr == NULL || (descr->tmpl && !descr->alreadyRetained)) return -2;
             descr->alreadyRetained = YES;
+
         } else {
             if (descr == NULL || (descr->tmpl && descr->alreadyRetained)) return -2;
             descr->alreadyRetained = NO;
@@ -633,17 +627,14 @@ setup_descr(struct _PyObjC_ArgDescr* descr, PyObject* meta, BOOL is_native)
 
     PyObjC_Assert(descr == NULL || !descr->alreadyCFRetained, -1);
     if (meta) {
-#if PY_MAJOR_VERSION == 3
         d = PyDict_GetItemStringWithError(meta, "already_cfretained");
         if (d == NULL && PyErr_Occurred()) {
             return -1;
-        }
-#else
-        d = PyDict_GetItemString(meta, "already_cfretained");
-#endif
-        if (d && PyObject_IsTrue(d)) {
+
+        } else if (d && PyObject_IsTrue(d)) {
             if (descr == NULL || descr->tmpl) return -2;
             descr->alreadyCFRetained = YES;
+
         } else {
             /* pass */
         }
@@ -651,15 +642,10 @@ setup_descr(struct _PyObjC_ArgDescr* descr, PyObject* meta, BOOL is_native)
 
     PyObjC_Assert(descr == NULL || !descr->callableRetained, -1);
     if (meta) {
-#if PY_MAJOR_VERSION == 3
         d = PyDict_GetItemStringWithError(meta, "callable_retained");
         if (d == NULL && PyErr_Occurred()) {
             return -1;
-        }
-#else
-        d = PyDict_GetItemString(meta, "callable_retained");
-#endif
-        if (d == NULL || PyObject_IsTrue(d)) {
+        } else if (d == NULL || PyObject_IsTrue(d)) {
             if (descr == NULL || descr->tmpl) return -2;
             descr->callableRetained = YES;
         } else {
@@ -669,15 +655,10 @@ setup_descr(struct _PyObjC_ArgDescr* descr, PyObject* meta, BOOL is_native)
 
     PyObjC_Assert(descr == NULL || descr->sel_type == NULL, -1);
     if (meta) {
-#if PY_MAJOR_VERSION == 3
         d = PyDict_GetItemStringWithError(meta, "sel_of_type");
         if (d == NULL && PyErr_Occurred()) {
             return -1;
-        }
-#else
-        d = PyDict_GetItemString(meta, "sel_of_type");
-#endif
-        if (d) {
+        } else if (d) {
             if (PyUnicode_Check(d)) {
                 PyObject* bytes = PyUnicode_AsEncodedString(d, NULL, NULL);
                 if (bytes == NULL) {
@@ -707,31 +688,20 @@ setup_descr(struct _PyObjC_ArgDescr* descr, PyObject* meta, BOOL is_native)
     }
 
     if (meta) {
-#if PY_MAJOR_VERSION == 3
         d = PyDict_GetItemStringWithError(meta, "callable");
         if (d == NULL && PyErr_Occurred()) {
             return -1;
-        }
-#else
-        d = PyDict_GetItemString(meta, "callable");
-#endif
-        if (d) {
+        } else if (d) {
             if (descr == NULL || descr->tmpl) return -2;
 
             /* Make up a dummy signature, will be overridden by
              * the metadata.
              */
             char buffer[64];
-#if PY_MAJOR_VERSION == 3
             PyObject* a = PyDict_GetItemStringWithError(d, "arguments");
             if (a == NULL && PyErr_Occurred()) {
                 return -1;
-            }
-#else
-            PyObject* a = PyDict_GetItemString(d, "arguments");
-#endif
-
-            if (a != NULL) {
+            } else if (a != NULL) {
                 Py_ssize_t i, len = PyDict_Size(a);
                 if (len == -1) {
                     return -1;
@@ -757,15 +727,10 @@ setup_descr(struct _PyObjC_ArgDescr* descr, PyObject* meta, BOOL is_native)
 
     PyObjC_Assert(descr == NULL || !descr->arraySizeInRetval, -1);
     if (meta) {
-#if PY_MAJOR_VERSION == 3
         d = PyDict_GetItemStringWithError(meta, "c_array_length_in_result");
         if (d == NULL && PyErr_Occurred()) {
             return -1;
-        }
-#else
-        d = PyDict_GetItemString(meta, "c_array_length_in_result");
-#endif
-        if (d != NULL && PyObject_IsTrue(d)) {
+        } else if (d != NULL && PyObject_IsTrue(d)) {
             if (descr == NULL || descr->tmpl) return -2;
 
             descr->arraySizeInRetval = YES;
@@ -774,15 +739,10 @@ setup_descr(struct _PyObjC_ArgDescr* descr, PyObject* meta, BOOL is_native)
 
     PyObjC_Assert(descr == NULL || !descr->printfFormat, -1);
     if (meta) {
-#if PY_MAJOR_VERSION == 3
         d = PyDict_GetItemStringWithError(meta, "printf_format");
         if (d == NULL && PyErr_Occurred()) {
             return -1;
-        }
-#else
-        d = PyDict_GetItemString(meta, "printf_format");
-#endif
-        if (d != NULL && PyObject_IsTrue(d)) {
+        } else if (d != NULL && PyObject_IsTrue(d)) {
             if (descr == NULL || descr->tmpl) return -2;
 
             descr->printfFormat = YES;
@@ -790,15 +750,10 @@ setup_descr(struct _PyObjC_ArgDescr* descr, PyObject* meta, BOOL is_native)
     }
 
     if (meta) {
-#if PY_MAJOR_VERSION == 3
         d = PyDict_GetItemStringWithError(meta, "c_array_delimited_by_null");
         if (d == NULL && PyErr_Occurred()) {
             return -1;
-        }
-#else
-        d = PyDict_GetItemString(meta, "c_array_delimited_by_null");
-#endif
-        if (d != NULL && PyObject_IsTrue(d)) {
+        } else if (d != NULL && PyObject_IsTrue(d)) {
             if (descr == NULL || descr->tmpl) return -2;
 
             descr->ptrType = PyObjC_kNullTerminatedArray;
@@ -806,15 +761,10 @@ setup_descr(struct _PyObjC_ArgDescr* descr, PyObject* meta, BOOL is_native)
     }
 
     if (meta) {
-#if PY_MAJOR_VERSION == 3
         d = PyDict_GetItemStringWithError(meta, "c_array_of_fixed_length");
         if (d == NULL && PyErr_Occurred()) {
             return -1;
-        }
-#else
-        d = PyDict_GetItemString(meta, "c_array_of_fixed_length");
-#endif
-        if (d != NULL) {
+        } else if (d != NULL) {
             if (PyLong_Check(d)) {
                 if (descr == NULL || descr->tmpl) return -2;
 
@@ -825,28 +775,14 @@ setup_descr(struct _PyObjC_ArgDescr* descr, PyObject* meta, BOOL is_native)
                     return -1;
                 }
             }
-#if PY_MAJOR_VERSION == 2
-            else if (PyInt_Check(d)) {
-                if (descr == NULL || descr->tmpl) return -2;
-
-                descr->ptrType = PyObjC_kFixedLengthArray;
-                descr->arrayArg = PyInt_AsLong(d);
-                descr->arrayArgOut = descr->arrayArg;
-            }
-#endif
         }
     }
 
     if (meta) {
-#if PY_MAJOR_VERSION == 3
         d = PyDict_GetItemStringWithError(meta, "c_array_of_variable_length");
         if (d == NULL && PyErr_Occurred()) {
             return -1;
-        }
-#else
-        d = PyDict_GetItemString(meta, "c_array_of_variable_length");
-#endif
-        if (d != NULL && PyObject_IsTrue(d)) {
+        } else if (d != NULL && PyObject_IsTrue(d)) {
             if (descr == NULL || descr->tmpl) return -2;
 
             descr->ptrType = PyObjC_kVariableLengthArray;
@@ -856,15 +792,10 @@ setup_descr(struct _PyObjC_ArgDescr* descr, PyObject* meta, BOOL is_native)
     }
 
     if (meta) {
-#if PY_MAJOR_VERSION == 3
         d = PyDict_GetItemStringWithError(meta, "c_array_length_in_arg");
         if (d == NULL && PyErr_Occurred()) {
             return -1;
-        }
-#else
-        d = PyDict_GetItemString(meta, "c_array_length_in_arg");
-#endif
-        if (d != NULL) {
+        } else if (d != NULL) {
             if (PyLong_Check(d)) {
                 if (descr == NULL || descr->tmpl) return -2;
 
@@ -875,14 +806,6 @@ setup_descr(struct _PyObjC_ArgDescr* descr, PyObject* meta, BOOL is_native)
                 }
                 descr->arrayArgOut = descr->arrayArg;
 
-#if PY_MAJOR_VERSION == 2
-            } else if (PyInt_Check(d)) {
-                if (descr == NULL || descr->tmpl) return -2;
-
-                descr->ptrType = PyObjC_kArrayCountInArg;
-                descr->arrayArg = PyInt_AsLong(d);
-                descr->arrayArgOut = descr->arrayArg;
-#endif
             } else if (PyTuple_Check(d)) {
                 if (descr == NULL || descr->tmpl) return -2;
 
@@ -891,11 +814,7 @@ setup_descr(struct _PyObjC_ArgDescr* descr, PyObject* meta, BOOL is_native)
                     if (PyLong_Check(PyTuple_GET_ITEM(d, 0))) {
                         descr->arrayArg = PyLong_AsLong(PyTuple_GET_ITEM(d, 0));
                     } else {
-#if PY_MAJOR_VERSION == 2
-                        descr->arrayArg = PyInt_AsLong(PyTuple_GET_ITEM(d, 0));
-#else
                         PyErr_SetString(PyExc_TypeError, "array_out argument not integer");
-#endif
                     }
                     if (PyErr_Occurred()) {
                         return -1;
@@ -906,11 +825,7 @@ setup_descr(struct _PyObjC_ArgDescr* descr, PyObject* meta, BOOL is_native)
                     if (PyLong_Check(PyTuple_GET_ITEM(d, 0))) {
                         descr->arrayArg = PyLong_AsLong(PyTuple_GET_ITEM(d, 0));
                     } else {
-#if PY_MAJOR_VERSION == 2
-                        descr->arrayArg = PyInt_AsLong(PyTuple_GET_ITEM(d, 0));
-#else
                         PyErr_SetString(PyExc_TypeError, "array_out argument not integer");
-#endif
                     }
 
                     if (PyErr_Occurred()) {
@@ -920,11 +835,7 @@ setup_descr(struct _PyObjC_ArgDescr* descr, PyObject* meta, BOOL is_native)
                     if (PyLong_Check(PyTuple_GET_ITEM(d, 1))) {
                         descr->arrayArgOut = PyLong_AsLong(PyTuple_GET_ITEM(d, 1));
                     } else {
-#if PY_MAJOR_VERSION == 2
-                        descr->arrayArgOut = PyInt_AsLong(PyTuple_GET_ITEM(d, 1));
-#else
                         PyErr_SetString(PyExc_TypeError, "array_out argument not integer");
-#endif
                     }
                     if (PyErr_Occurred()) {
                         return -1;
@@ -935,15 +846,10 @@ setup_descr(struct _PyObjC_ArgDescr* descr, PyObject* meta, BOOL is_native)
     }
 
     if (meta) {
-#if PY_MAJOR_VERSION == 3
         d = PyDict_GetItemStringWithError(meta, "type_modifier");
         if (d == NULL && PyErr_Occurred()) {
             return -1;
-        }
-#else
-        d = PyDict_GetItemString(meta, "type_modifier");
-#endif
-        if (d != NULL) {
+        } else if (d != NULL) {
             if (PyUnicode_Check(d)) {
                 PyObject* bytes = PyUnicode_AsEncodedString(d, NULL, NULL);
                 if (bytes == NULL) {
@@ -957,30 +863,19 @@ setup_descr(struct _PyObjC_ArgDescr* descr, PyObject* meta, BOOL is_native)
 
                 typeModifier = *PyBytes_AsString(bytes);
                 Py_DECREF(bytes);
-#if PY_MAJOR_VERSION == 2
-            } else if (PyString_Check(d)) {
-                if (descr == NULL || descr->tmpl) return -2;
-
-                typeModifier = *PyString_AsString(d);
-#else
             } else if (PyBytes_Check(d)) {
                 if (descr == NULL || descr->tmpl) return -2;
 
                 typeModifier = *PyBytes_AsString(d);
-#endif
             }
         }
     }
 
     if (meta) {
-#if PY_MAJOR_VERSION == 3
         d = PyDict_GetItemStringWithError(meta, "type");
         if (d == NULL && PyErr_Occurred()) {
             return -1;
         }
-#else
-        d = PyDict_GetItemString(meta, "type");
-#endif
 
     } else {
         d = NULL;
@@ -988,11 +883,7 @@ setup_descr(struct _PyObjC_ArgDescr* descr, PyObject* meta, BOOL is_native)
 
     if (d
         && (
-#if PY_MAJOR_VERSION == 2
-          PyString_Check(d) ||
-#else
           PyBytes_Check(d) ||
-#endif
           PyUnicode_Check(d))
         ) {
 
@@ -1009,15 +900,8 @@ setup_descr(struct _PyObjC_ArgDescr* descr, PyObject* meta, BOOL is_native)
                 return -1;
             }
 
-#if PY_MAJOR_VERSION == 2
-        } else if (PyString_Check(d)) {
-            bytes = d; Py_INCREF(bytes);
-#else /* PY_MAJOR_VERSION == 3 */
-
         } else if (PyBytes_Check(d)) {
             bytes = d; Py_INCREF(bytes);
-
-#endif /* PY_MAJOR_VERSION == 3 */
 
         } else {
             PyErr_SetString(PyExc_SystemError, "Inconsistent if-case");
@@ -1114,16 +998,10 @@ process_metadata_dict(PyObjCMethodSignature* methinfo, PyObject* metadata, BOOL 
     }
 
     if (metadata) {
-#if PY_MAJOR_VERSION == 3
         PyObject* retval = PyDict_GetItemStringWithError(metadata, "retval");
         if (retval == NULL && PyErr_Occurred()) {
             return -1;
-        }
-#else
-        PyObject* retval = PyDict_GetItemString(metadata, "retval");
-#endif
-
-        if (retval != NULL) {
+        } else if (retval != NULL) {
             int r = setup_descr(methinfo->rettype, retval, is_native);
             if (r == -1) {
                 Py_DECREF(methinfo);
@@ -1144,15 +1022,10 @@ process_metadata_dict(PyObjCMethodSignature* methinfo, PyObject* metadata, BOOL 
             }
 
             if (retval != NULL) {
-#if PY_MAJOR_VERSION == 3
                 PyObject* av = PyDict_GetItemStringWithError(metadata, "free_result");
                 if (av == NULL && PyErr_Occurred()) {
                     return -1;
-                }
-#else
-                PyObject* av = PyDict_GetItemString(metadata, "free_result");
-#endif
-                if (av && PyObject_IsTrue(av)) {
+                } else if (av && PyObject_IsTrue(av)) {
                     methinfo->free_result = YES;
                 }
                 Py_XDECREF(av);
@@ -1161,15 +1034,10 @@ process_metadata_dict(PyObjCMethodSignature* methinfo, PyObject* metadata, BOOL 
     }
 
     if (metadata) {
-#if PY_MAJOR_VERSION == 3
         PyObject* args = PyDict_GetItemStringWithError(metadata, "arguments");
         if (args == NULL && PyErr_Occurred()) {
             return -1;
-        }
-#else
-        PyObject* args = PyDict_GetItemString(metadata, "arguments");
-#endif
-        if (args != NULL && !PyDict_Check(args)) {
+        } else if (args != NULL && !PyDict_Check(args)) {
             args = NULL;
         }
 
@@ -1181,15 +1049,11 @@ process_metadata_dict(PyObjCMethodSignature* methinfo, PyObject* metadata, BOOL 
                 int r;
 
                 if (args) {
-#if PY_MAJOR_VERSION == 3
                     d = PyDict_GetItemWithError(args, k);
                     if (d == NULL && PyErr_Occurred()) {
                         Py_DECREF(k);
                         return -1;
                     }
-#else
-                    d = PyDict_GetItem(args, k);
-#endif
                     Py_DECREF(k);
 
                 } else {
@@ -1222,88 +1086,53 @@ process_metadata_dict(PyObjCMethodSignature* methinfo, PyObject* metadata, BOOL 
             }
         }
 
-#if PY_MAJOR_VERSION == 3
         v = PyDict_GetItemStringWithError(metadata, "suggestion");
         if (v == NULL && PyErr_Occurred()) {
             return -1;
-        }
-#else
-        v = PyDict_GetItemString(metadata, "suggestion");
-#endif
-        if (v) {
+        } else if (v) {
             methinfo->suggestion = v;
             Py_INCREF(v);
         }
 
-#if PY_MAJOR_VERSION == 3
         v = PyDict_GetItemStringWithError(metadata, "deprecated");
         if (v == NULL && PyErr_Occurred()) {
             return -1;
-        }
-#else
-        v = PyDict_GetItemString(metadata, "deprecated");
-#endif
-        if (v) {
+        } else if (v) {
             if (PyLong_Check(v)) {
                 methinfo->deprecated = (int)PyLong_AsLong(v);
                 if (PyErr_Occurred()) {
                     return -1;
                 }
             }
-#if PY_MAJOR_VERSION == 2
-            else if (PyInt_Check(v)) {
-                methinfo->deprecated = (int)PyInt_AsLong(v);
-            }
-#endif
         }
 
         methinfo->null_terminated_array = NO;
-#if PY_MAJOR_VERSION == 3
         v = PyDict_GetItemStringWithError(metadata, "c_array_delimited_by_null");
         if (v == NULL && PyErr_Occurred()) {
             return -1;
-        }
-#else
-        v = PyDict_GetItemString(metadata, "c_array_delimited_by_null");
-#endif
-        if (v && PyObject_IsTrue(v)) {
+        } else if (v && PyObject_IsTrue(v)) {
             methinfo->null_terminated_array = YES;
         }
 
         methinfo->arrayArg = -1;
-#if PY_MAJOR_VERSION == 3
         v = PyDict_GetItemStringWithError(metadata, "c_array_length_in_arg");
         if (v == NULL && PyErr_Occurred()) {
             return -1;
-        }
-#else
-        v = PyDict_GetItemString(metadata, "c_array_length_in_arg");
-#endif
-        if (v) {
+        } else if (v) {
             if (PyLong_Check(v)) {
                 methinfo->arrayArg = (int)PyLong_AsLong(v);
                 if (PyErr_Occurred()) {
                     return -1;
                 }
             }
-#if PY_MAJOR_VERSION == 2
-            else if (PyInt_Check(v)) {
-                methinfo->arrayArg = (int)PyInt_AsLong(v);
-            }
-#endif
         }
 
         methinfo->variadic = NO;
 
-#if PY_MAJOR_VERSION == 3
         v = PyDict_GetItemStringWithError(metadata, "variadic");
         if (v == NULL && PyErr_Occurred()) {
             return -1;
-        }
-#else
-        v = PyDict_GetItemString(metadata, "variadic");
-#endif
-        if (v && PyObject_IsTrue(v)) {
+        } else if (v && PyObject_IsTrue(v)) {
             methinfo->variadic = YES;
 
             if ((methinfo->suggestion == NULL)
@@ -1349,15 +1178,10 @@ compiled_metadata(PyObject* metadata)
     PyObjC_Assert(PyDict_Check(metadata), NULL);
 
 
-#if PY_MAJOR_VERSION == 3
     PyObject* arguments = PyDict_GetItemStringWithError(metadata, "arguments");
     if (arguments == NULL && PyErr_Occurred()) {
         return NULL;
-    }
-#else
-    PyObject* arguments = PyDict_GetItemString(metadata, "arguments");
-#endif
-    if (arguments == NULL || !PyDict_Check(arguments)) {
+    } else if (arguments == NULL || !PyDict_Check(arguments)) {
         max_idx = 0;
     } else {
         pos = 0;
@@ -1372,17 +1196,6 @@ compiled_metadata(PyObject* metadata)
                 if (k > max_idx) {
                     max_idx = k;
                 }
-#if PY_MAJOR_VERSION == 2
-            } else if (PyInt_Check(key)) {
-
-                Py_ssize_t k = (ssize_t)PyInt_AsLong(key);
-                if (k == -1 && PyErr_Occurred()) {
-                    PyErr_Clear();
-                }
-                if (k > max_idx) {
-                    max_idx = k;
-                }
-#endif /* PY_MAJOR_VERSION == 2 */
             }
         }
 

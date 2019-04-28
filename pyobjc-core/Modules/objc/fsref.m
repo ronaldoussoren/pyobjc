@@ -91,13 +91,8 @@ fsref_as_path(PyObject* ref)
     rc = FSRefMakePath( &((PyObjC_FSRefObject*)ref)->ref,
             buffer, sizeof(buffer));
     if (rc != 0) {
-#if (PY_MAJOR_VERSION == 2) && defined (USE_TOOLBOX_OBJECT_GLUE)
-        PyMac_Error(rc);
-
-#else /* (PY_MAJOR_VERSION == 3) || !defined (USE_TOOLBOX_OBJECT_GLUE) */
         PyErr_Format(PyExc_OSError, "MAC Error %d", rc);
 
-#endif /* (PY_MAJOR_VERSION == 3) || !defined (USE_TOOLBOX_OBJECT_GLUE) */
         return NULL;
     }
 
@@ -117,11 +112,6 @@ fsref_from_path(PyObject* self __attribute__((__unused__)), PyObject* path)
     if (PyUnicode_Check(path)) {
         value = PyUnicode_AsEncodedString(path, NULL, NULL);
 
-#if PY_MAJOR_VERSION == 2
-    } else if(PyString_Check(path)) {
-        value = path; Py_INCREF(path);
-#endif /* PY_MAJOR_VERSION == 2 */
-
     } else {
         PyErr_SetString(PyExc_TypeError, "Expecting string");
         return NULL;
@@ -133,14 +123,7 @@ fsref_from_path(PyObject* self __attribute__((__unused__)), PyObject* path)
     Py_DECREF(value);
     if (rc != 0) {
 
-#if (PY_MAJOR_VERSION == 2) && defined(USE_TOOLBOX_OBJECT_GLUE)
-        PyMac_Error(rc);
-
-#else /* (PY_MAJOR_VERSION == 3) || !defined(USE_TOOLBOX_OBJECT_GLUE) */
         PyErr_Format(PyExc_OSError, "MAC Error %d", rc);
-
-#endif /* (PY_MAJOR_VERSION == 3) || !defined(USE_TOOLBOX_OBJECT_GLUE) */
-
         return NULL;
     }
 
