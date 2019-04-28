@@ -73,14 +73,8 @@ def makeTestSuite(use_system_libffi):
         "test_*.py", join(topdir, "PyObjCTest"), package="PyObjCTest"
     )
 
-    version_suite = importExternalTestCases(
-        "test%d_*.py" % (sys.version_info[0],),
-        join(topdir, "PyObjCTest"),
-        package="PyObjCTest",
-    )
-
     if use_system_libffi:
-        return unittest.TestSuite((plain_suite, version_suite))
+        return plain_suite
 
     else:
-        return unittest.TestSuite((plain_suite, version_suite, deja_suite))
+        return unittest.TestSuite((plain_suite, deja_suite))

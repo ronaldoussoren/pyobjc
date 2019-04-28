@@ -33,7 +33,7 @@ def get_config_var(var):
     return _get_config_var(var) or ""
 
 
-# We need at least Python 2.7
+# We need at least Python 3.6
 MIN_PYTHON = (3, 6)
 
 if sys.version_info < MIN_PYTHON:
@@ -194,8 +194,8 @@ def verify_platform():
     if sys.platform != "darwin":
         raise DistutilsPlatformError("PyObjC requires macOS to build")
 
-    if sys.version_info[:2] < (2, 7):
-        raise DistutilsPlatformError("PyObjC requires Python 2.7 or later to build")
+    if sys.version_info[:2] < MIN_PYTHON:
+        raise DistutilsPlatformError("PyObjC requires Python {} or later to build".format(".".join(MIN_PYTHON)))
 
     if hasattr(sys, "pypy_version_info"):
         print("WARNING: PyPy is not a supported platform for PyObjC")
@@ -671,12 +671,8 @@ def parse_package_metadata():
     cfg = RawConfigParser()
     cfg.optionxform = lambda x: x
 
-    if sys.version_info.major == 2:
-        with open("setup.cfg") as fp:
-            cfg.readfp(fp)
-    else:
-        with open("setup.cfg") as fp:
-            cfg.read_file(fp)
+    with open("setup.cfg") as fp:
+        cfg.read_file(fp)
 
     metadata = {}
     for opt in cfg.options("x-metadata"):
