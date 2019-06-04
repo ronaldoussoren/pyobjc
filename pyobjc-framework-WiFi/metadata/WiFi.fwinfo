@@ -1,0 +1,69 @@
+// objective.metadata exceptions file, see its document
+// for information on how to update this file.
+{
+ "definitions": {
+  "classes": {
+   "WFConnectionMonitor": {
+    "methods": [
+     {
+      "selector": "invalidationHandler",
+      "class_method": false,
+      "retval": {
+       "callable": {
+        "args": {
+	 "0": { "type": "^v" }
+	},
+	"retval": { "type": "v" }
+       }
+      }
+     },
+     {
+      "selector": "setInvalidationHandler:",
+      "class_method": false,
+      "args": {
+       "0": {
+        "callable": {
+         "args": {
+	  "0": { "type": "^v" }
+	 },
+	 "retval": { "type": "v" }
+	}
+       }
+      }
+     },
+     {
+      "selector": "connectionStatusHandler",
+      "class_method": false,
+      "retval": {
+       "callable": {
+        "args": {
+	 "0": { "type": "^v" },
+	 "1": { "type": "@" }
+	},
+	"retval": { "type": "v" }
+       }
+      }
+     },
+     {
+      "selector": "setConnectionStatusHandler:",
+      "class_method": false,
+      "args": {
+       "0": {
+        "callable": {
+         "args": {
+	  "0": { "type": "^v" },
+	  "1": { "type": "@" }
+	 },
+	 "retval": { "type": "v" }
+	}
+       }
+      }
+     }
+    ]
+   }
+  },
+  "formal_protocols": {},
+  "functions": {},
+  "informal_protocols": {}
+ }
+}
