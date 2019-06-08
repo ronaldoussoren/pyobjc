@@ -38,16 +38,15 @@
 /*
  * Only add items to the end of this list!
  */
-typedef int (RegisterMethodMappingFunctionType)(
-            Class,
-            SEL,
-            PyObject *(*)(PyObject*, PyObject*, PyObject*),
-            void (*)(void*, void*, void**, void*));
+typedef int(RegisterMethodMappingFunctionType)(Class, SEL,
+                                               PyObject* (*)(PyObject*, PyObject*,
+                                                             PyObject*),
+                                               void (*)(void*, void*, void**, void*));
 
 struct pyobjc_api {
-    int api_version; /* API version */
+    int api_version;   /* API version */
     size_t struct_len; /* Length of this struct */
-    RegisterMethodMappingFunctionType *register_method_mapping;
+    RegisterMethodMappingFunctionType* register_method_mapping;
     id (*obj_get_object)(PyObject*);
     Class (*cls_get_class)(PyObject*);
     id (*python_to_id)(PyObject*);
@@ -60,16 +59,16 @@ struct pyobjc_api {
     SEL (*sel_get_sel)(PyObject* sel);
     void (*fill_super)(struct objc_super*, Class, id);
     void (*fill_super_cls)(struct objc_super*, Class, Class);
-    int (*register_pointer_wrapper)(
-            const char*, const char*, PyObject* (*pythonify)(void*),
-            int (*depythonify)(PyObject*, void*)
-        );
+    int (*register_pointer_wrapper)(const char*, const char*,
+                                    PyObject* (*pythonify)(void*),
+                                    int (*depythonify)(PyObject*, void*));
     void (*unsupported_method_imp)(void*, void*, void**, void*);
     PyObject* (*unsupported_method_caller)(PyObject*, PyObject*, PyObject*);
     void (*err_python_to_objc_gil)(PyGILState_STATE* state);
     int (*simplify_sig)(const char* signature, char* buf, size_t buflen);
-    void (*free_c_array)(int,void*);
-    int (*py_to_c_array)(BOOL, BOOL, const char*, PyObject*, void**, Py_ssize_t*, PyObject**);
+    void (*free_c_array)(int, void*);
+    int (*py_to_c_array)(BOOL, BOOL, const char*, PyObject*, void**, Py_ssize_t*,
+                         PyObject**);
     PyObject* (*c_array_to_py)(const char*, void*, Py_ssize_t);
     PyTypeObject* imp_type;
     IMP (*imp_get_imp)(PyObject*);
@@ -77,9 +76,10 @@ struct pyobjc_api {
     PyObject* (*newtransient)(id objc_object, int* cookie);
     void (*releasetransient)(PyObject* proxy, int cookie);
     PyObject** pyobjc_null;
-    int (*dep_c_array_count)(const char* type, Py_ssize_t count, BOOL strict, PyObject* value, void* datum);
+    int (*dep_c_array_count)(const char* type, Py_ssize_t count, BOOL strict,
+                             PyObject* value, void* datum);
     PyObject* (*varlistnew)(const char* tp, void* array);
-    int (*pyobjcobject_convert)(PyObject*,void*);
+    int (*pyobjcobject_convert)(PyObject*, void*);
     int (*register_id_alias)(const char*, const char*);
 };
 
@@ -126,18 +126,12 @@ typedef struct PyObjC_function_map {
     PyObjC_Function_Pointer function;
 } PyObjC_function_map;
 
-
-
 #ifndef PYOBJC_METHOD_STUB_IMPL
 
 static inline PyObject*
 PyObjC_CreateInlineTab(PyObjC_function_map* map)
 {
-#if PY_MAJOR_VERSION == 2 && PY_MINOR_VERSION < 7
-    return PyCObject_FromVoidPtr(map, NULL);
-#else
     return PyCapsule_New(map, "objc.__inline__", NULL);
-#endif
 }
 
 static inline int
@@ -146,11 +140,7 @@ PyObjC_ImportAPI(PyObject* calling_module)
     PyObject* m;
     PyObject* d;
     PyObject* api_obj;
-#if PY_MAJOR_VERSION == 2
-    PyObject* name = PyString_FromString("objc");
-#else
     PyObject* name = PyUnicode_FromString("objc");
-#endif
 
     m = PyImport_Import(name);
     Py_DECREF(name);
@@ -160,36 +150,31 @@ PyObjC_ImportAPI(PyObject* calling_module)
 
     d = PyModule_GetDict(m);
     if (d == NULL) {
-        PyErr_SetString(PyExc_RuntimeError,
-            "No dict in objc module");
+        PyErr_SetString(PyExc_RuntimeError, "No dict in objc module");
         return -1;
     }
 
     api_obj = PyDict_GetItemString(d, PYOBJC_API_NAME);
     if (api_obj == NULL) {
-        PyErr_SetString(PyExc_RuntimeError,
-            "No C_API in objc module");
+        PyErr_SetString(PyExc_RuntimeError, "No C_API in objc module");
         return -1;
     }
-#if PY_MAJOR_VERSION == 2 && PY_VERSION_MAJOR < 7
-    PyObjC_API = (struct pyobjc_api *)PyCObject_AsVoidPtr(api_obj);
-#else
-    PyObjC_API = (struct pyobjc_api *)PyCapsule_GetPointer(api_obj, "objc." PYOBJC_API_NAME);
-#endif
+    PyObjC_API =
+        (struct pyobjc_api*)PyCapsule_GetPointer(api_obj, "objc." PYOBJC_API_NAME);
     if (PyObjC_API == NULL) {
         return 0;
     }
     if (PyObjC_API->api_version != PYOBJC_API_VERSION) {
         PyErr_Format(PyExc_RuntimeError,
-            "Wrong version of PyObjC C API (got %d, expected %d)",
-            (int)PyObjC_API->api_version, (int)PYOBJC_API_VERSION);
+                     "Wrong version of PyObjC C API (got %d, expected %d)",
+                     (int)PyObjC_API->api_version, (int)PYOBJC_API_VERSION);
         return -1;
     }
 
     if (PyObjC_API->struct_len < sizeof(struct pyobjc_api)) {
         PyErr_Format(PyExc_RuntimeError,
-            "Wrong struct-size of PyObjC C API (got %d, expected %d)",
-            (int)PyObjC_API->struct_len, (int)sizeof(struct pyobjc_api));
+                     "Wrong struct-size of PyObjC C API (got %d, expected %d)",
+                     (int)PyObjC_API->struct_len, (int)sizeof(struct pyobjc_api));
         return -1;
     }
 
