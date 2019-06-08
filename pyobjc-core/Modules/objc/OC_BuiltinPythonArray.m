@@ -1,5 +1,4 @@
 #include "pyobjc.h"
-
 #import "OC_PythonArray.h"
 
 @implementation OC_BuiltinPythonArray

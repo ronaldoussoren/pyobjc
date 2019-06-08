@@ -1,6 +1,9 @@
 {
  "definitions": {
   "enum": {
+   "UNNotificationGroupingSettingDefault": { "value": 0 },
+   "UNNotificationGroupingSettingSource": { "value": 1 },
+   "UNNotificationGroupingSettingOff": { "value": 2 },
    "UNNotificationPresentationOptionBadge": { "value": 1 },
    "UNNotificationPresentationOptionSound": { "value": 2 },
    "UNNotificationPresentationOptionAlert": { "value": 4 },

@@ -1,5 +1,4 @@
 #include "pyobjc.h"
-
 #import "OC_PythonSet.h"
 
 @implementation OC_BuiltinPythonSet

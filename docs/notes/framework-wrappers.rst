@@ -46,6 +46,8 @@ The framework name links to API notes for that framework, the python packages li
 +------------------------------------------------------------------+---------------------------------------------+-----------------------------------------+
 | :doc:`Automator </apinotes/Automator>`                           | `pyobjc-framework-Automator`_               |                                         |
 +------------------------------------------------------------------+---------------------------------------------+-----------------------------------------+
+| BackgroundTasks                                                  |                                             | No public API on macOS                  |
++------------------------------------------------------------------+---------------------------------------------+-----------------------------------------+
 | :doc:`BusinessChat </apinotes/BusinessChat>`                     | `pyobjc-framework-BusinessChat`_            |                                         |
 +------------------------------------------------------------------+---------------------------------------------+-----------------------------------------+
 | :doc:`CFNetwork </apinotes/CFNetwork>`                           | `pyobjc-framework-CFNetwork`_               |                                         |
@@ -253,6 +255,7 @@ The framework name links to API notes for that framework, the python packages li
 +------------------------------------------------------------------+---------------------------------------------+-----------------------------------------+
 | OpenAL                                                           | -                                           | Will not be wrapped.                    |
 |                                                                  |                                             | Use `PyAL`_ instead.                    |
+|                                                                  |                                             | Deprecated in macOS 10.15.              |
 +------------------------------------------------------------------+---------------------------------------------+-----------------------------------------+
 | OpenCL                                                           | -                                           | Will not be wrapped.                    |
 |                                                                  |                                             | Use `pyopencl`_ instead.                |
@@ -266,6 +269,8 @@ The framework name links to API notes for that framework, the python packages li
 +------------------------------------------------------------------+---------------------------------------------+-----------------------------------------+
 | :doc:`PDFKit </apinotes/PDFKit>`                                 | `pyobjc-framework-Quartz`_                  | Use "import Quartz".                    |
 +------------------------------------------------------------------+---------------------------------------------+-----------------------------------------+
+| :doc:`PencilKit </apinotes/PencilKit>`                           | `pyobjc-framework-PencilKit`_               |                                         |
++------------------------------------------------------------------+---------------------------------------------+-----------------------------------------+
 | :doc:`Photos </apinotes/Photos>`                                 | `pyobjc-framework-Photos`_                  |                                         |
 +------------------------------------------------------------------+---------------------------------------------+-----------------------------------------+
 | :doc:`PhotosUI </apinotes/PhotosUI>`                             | `pyobjc-framework-PhotosUI`_                |                                         |
@@ -276,7 +281,7 @@ The framework name links to API notes for that framework, the python packages li
 +------------------------------------------------------------------+---------------------------------------------+-----------------------------------------+
 | Python                                                           | -                                           | Will not be wrapped.                    |
 +------------------------------------------------------------------+---------------------------------------------+-----------------------------------------+
-| :doc:`QTKit </apinotes/QTKit>`                                   | `pyobjc-framework-QTKit`_                   |                                         |
+| :doc:`QTKit </apinotes/QTKit>`                                   | `pyobjc-framework-QTKit`_                   | Removed in macOS 10.15                  |
 +------------------------------------------------------------------+---------------------------------------------+-----------------------------------------+
 | :doc:`Quartz </apinotes/Quartz>`                                 | `pyobjc-framework-Quartz`_                  |                                         |
 +------------------------------------------------------------------+---------------------------------------------+-----------------------------------------+
@@ -300,6 +305,8 @@ The framework name links to API notes for that framework, the python packages li
 +------------------------------------------------------------------+---------------------------------------------+-----------------------------------------+
 | :doc:`ScreenSaver </apinotes/ScreenSaver>`                       | `pyobjc-framework-ScreenSaver`_             |                                         |
 +------------------------------------------------------------------+---------------------------------------------+-----------------------------------------+
+| ScreenTime                                                       | -                                           | Not a public API.                       |
++------------------------------------------------------------------+---------------------------------------------+-----------------------------------------+
 | Scripting                                                        | -                                           | This framework is (long) deprecated,    |
 |                                                                  |                                             | use "import Foundation" instead.        |
 +------------------------------------------------------------------+---------------------------------------------+-----------------------------------------+
@@ -320,6 +327,8 @@ The framework name links to API notes for that framework, the python packages li
 | :doc:`SpriteKit </apinotes/SpriteKit>`                           | `pyobjc-framework-SpriteKit`_               |                                         |
 +------------------------------------------------------------------+---------------------------------------------+-----------------------------------------+
 | :doc:`StoreKit </apinotes/StoreKit>`                             | `pyobjc-framework-StoreKit`_                |                                         |
++------------------------------------------------------------------+---------------------------------------------+-----------------------------------------+
+| SwiftUI                                                          | -                                           | Swift only API.                         |
 +------------------------------------------------------------------+---------------------------------------------+-----------------------------------------+
 | :doc:`SyncServices </apinotes/SyncServices>`                     | `pyobjc-framework-SyncServices`_            |                                         |
 +------------------------------------------------------------------+---------------------------------------------+-----------------------------------------+
@@ -347,6 +356,8 @@ The framework name links to API notes for that framework, the python packages li
 +------------------------------------------------------------------+---------------------------------------------+-----------------------------------------+
 | :doc:`WebKit </apinotes/WebKit>`                                 | `pyobjc-framework-WebKit`_                  |                                         |
 +------------------------------------------------------------------+---------------------------------------------+-----------------------------------------+
+| :doc:`WiFi </apinotes/WiFi>`                                     | `pyobjc-framework-WiFi`_                    |                                         |
++------------------------------------------------------------------+---------------------------------------------+-----------------------------------------+
 | :doc:`XgridFoundation </apinotes/XgridFoundation>`               | `pyobjc-framework-XgridFoundation`_         | Not present on OSX 10.8 or later        |
 +------------------------------------------------------------------+---------------------------------------------+-----------------------------------------+
 | :doc:`iTunesLibrary </apinotes/iTunesLibrary>`                   | `pyobjc-framework-iTunesLibrary`_           |                                         |
@@ -359,6 +370,9 @@ The framework name links to API notes for that framework, the python packages li
 Frameworks that are marked as "Will not be wrapped" will not be wrapped, mostly because these frameworks are not
 usefull for Python programmers. Frameworks that are marked with "Not wrapped yet" will be wrapped in some future
 version of PyObjC although there is no explicit roadmap for this.
+
+Frameworks that are marked as "Swift only API" have a public API for Swift, but not for other languages. This
+cannot be wrapped using PyObjC.
 
 .. _PyAL: https://pypi.org/project/PyAL
 
@@ -471,3 +485,4 @@ version of PyObjC although there is no explicit roadmap for this.
 .. _`pyobjc-framework-DiscRecording`: https://pypi.org/project/pyobjc-framework-DiscRecording/
 .. _`pyobjc-framework-DiscRecordingUI`: https://pypi.org/project/pyobjc-framework-DiscRecordingUI/
 .. _`pyobjc-framework-DVDPlayback`: https://pypi.org/project/pyobjc-framework-DVDPlayback/
+.. _`pyobjc-framework-WiFi`: https://pypi.org/project/pyobjc-framework-WiFi/

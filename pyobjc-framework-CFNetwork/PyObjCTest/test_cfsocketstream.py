@@ -3,6 +3,12 @@ from CFNetwork import *
 
 
 class TestCFSocketStream (TestCase):
+    @min_os_level('10.15')
+    def testConstants10_15(self):
+        self.assertIsInstance(kCFStreamPropertyAllowExpensiveNetworkAccess, unicode)
+        self.assertIsInstance(kCFStreamPropertyConnectionIsExpensive, unicode)
+        self.assertIsInstance(kCFStreamPropertyAllowConstrainedNetworkAccess, unicode)
+
     @min_os_level('10.12')
     def testConstants10_12(self):
         self.assertIsInstance(kCFStreamNetworkServiceTypeCallSignaling, unicode)
@@ -16,6 +22,9 @@ class TestCFSocketStream (TestCase):
         self.assertIsInstance(kCFStreamPropertyNoCellular, unicode)
         self.assertIsInstance(kCFStreamPropertyConnectionIsCellular, unicode)
         self.assertIsInstance(kCFStreamNetworkServiceTypeResponsiveData, unicode)
+
+        self.assertIsInstance(kCFStreamNetworkServiceTypeAVStreaming, unicode)
+        self.assertIsInstance(kCFStreamNetworkServiceTypeResponsiveAV, unicode)
 
     @min_os_level('10.7')
     def testConstants10_7(self):

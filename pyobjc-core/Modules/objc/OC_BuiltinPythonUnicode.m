@@ -1,5 +1,4 @@
 #include "pyobjc.h"
-
 #import "OC_PythonUnicode.h"
 
 @implementation OC_BuiltinPythonUnicode

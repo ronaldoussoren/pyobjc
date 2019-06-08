@@ -23,6 +23,12 @@ if sys.maxsize > 2 ** 32:
             self.assertEqual(UserNotifications.UNAlertStyleBanner, 1)
             self.assertEqual(UserNotifications.UNAlertStyleAlert, 2)
 
+            self.assertEqual(UserNotifications.UNNotificationGroupingSettingDefault, 0)
+            self.assertEqual(UserNotifications.UNNotificationGroupingSettingSource, 1)
+            self.assertEqual(UserNotifications.UNNotificationGroupingSettingOff, 2)
+
+
+
         def test_methods(self):
             self.assertResultIsBOOL(UserNotifications.UNNotificationSettings.providesAppNotificationSettings)
 

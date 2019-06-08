@@ -13,6 +13,13 @@ Version 6.0a0
   - Use "black" for Python code
   - Use "clang-format" for Objective-C code
 
+* Updated bindings for macOS 10.15 (beta 1)
+
+* Add new framework wrappers:
+
+  - PencilKit (new in macOS 10.15)
+  - WiFi (new in macOS 10.15)
+
 Version 5.2
 -----------
 

@@ -1,5 +1,4 @@
 #include "pyobjc.h"
-
 #import "OC_PythonNumber.h"
 
 @implementation OC_BuiltinPythonNumber

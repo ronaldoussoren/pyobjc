@@ -1,5 +1,4 @@
 #include "pyobjc.h"
-
 #import "OC_NSBundleHack.h"
 
 static id (*bundleForClassIMP)(id, SEL, Class);

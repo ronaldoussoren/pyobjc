@@ -82,10 +82,12 @@ MacroBlockBegin:
   PyObjC_DURING
   Py_BEGIN_ALLOW_THREADS
   PyObjC_HANDLER
+  PyObjC_BEGIN_WITH_GIL
 MacroBlockEnd:
   PyObjC_HANDLER
   PyObjC_ENDHANDLER
   Py_END_ALLOW_THREADS
+  PyObjC_END_WITH_GIL
 MaxEmptyLinesToKeep: 1
 NamespaceIndentation: None
 ObjCBinPackProtocolList: Auto

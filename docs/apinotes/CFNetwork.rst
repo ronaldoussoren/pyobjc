@@ -13,6 +13,18 @@ These bindings are accessed through the ``CFNetwork`` package (that is, ``import
 API Notes
 ---------
 
+* ``CFHTTPReadStreamSetRedirectsAutomatically``
+
+  This API was removed in macOS 10.15.
+
+* ``CFNetServiceGetProtocolSpecificInformation``
+
+  This API was removed in macOS 10.15.
+
+* ``CFNetServiceSetProtocolSpecificInformation``
+
+  This API was removed in macOS 10.15.
+
 * ``CFNetworkExecuteProxyAutoConfigurationScript`` and ``CFNetworkExecuteProxyAutoConfigurationURL``
 
   The ``context`` argument can be an arbitrary Python object.

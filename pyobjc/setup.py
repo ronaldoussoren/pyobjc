@@ -94,11 +94,12 @@ FRAMEWORK_WRAPPERS=[
         ('NotificationCenter',      '10.10',            None        ),
         ('OpenDirectory',           '10.6',             None        ),
         ('OSAKit',                  None,               None        ),
+        ('PencilKit',               '10.15',            None        ),
         ('Photos',                  '10.11',            None        ),
         ('PhotosUI',                '10.11',            None        ),
         ('PreferencePanes',         None,               None        ),
         ('PubSub',                  '10.5',             None        ),
-        ('QTKit',                   '10.5',             None        ),
+        ('QTKit',                   '10.5',             '10.15'     ),
         ('Quartz',                  None,               None        ),
         ('SafariServices',          '10.11',            None        ),
         ('ScreenSaver',             None,               None        ),
@@ -123,6 +124,7 @@ FRAMEWORK_WRAPPERS=[
         ('VideoSubscriberAccount',  '10.14',            None        ),
         ('VideoToolbox',            '10.8',             None        ),
         ('Vision',                  '10.13',            None        ),
+        ('WiFi',                    '10.15',            None        ),
 
         # iTunes library is shipped with iTunes, not part of macOS 'core'
 	# Requires iTunes 11 or later, which is not available on 10.5
@@ -143,6 +145,7 @@ MACOS_TO_DARWIN = {
         '10.12': '16.0',
         '10.13': '17.0',
         '10.14': '18.0',
+        '10.14': '19.0',
 }
 
 

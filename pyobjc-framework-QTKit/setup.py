@@ -19,6 +19,7 @@ VERSION="6.0a0"
 setup(
     name='pyobjc-framework-QTKit',
     description = "Wrappers for the framework QTKit on macOS",
+    max_os_level = "10.14",
     packages = [ "QTKit" ],
     ext_modules = [
         Extension("QTKit._QTKit",

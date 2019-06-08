@@ -7,6 +7,21 @@
    "kCFURLErrorFileOutsideSafeArea": { "value": -1104 }
   },
   "externs": {
+    "kCFStreamPropertyAllowConstrainedNetworkAccess": {
+      "typestr": "^{__CFString=}"
+    },
+    "kCFStreamPropertyConnectionIsExpensive": {
+      "typestr": "^{__CFString=}"
+    },
+    "kCFStreamPropertyAllowExpensiveNetworkAccess": {
+      "typestr": "^{__CFString=}"
+    },
+    "kCFStreamNetworkServiceTypeAVStreaming": {
+      "typestr": "^{__CFString=}"
+    },
+    "kCFStreamNetworkServiceTypeResponsiveAV": {
+      "typestr": "^{__CFString=}"
+    },
     "kCFStreamNetworkServiceTypeResponsiveData": {
       "typestr": "^{__CFString=}"
     },
