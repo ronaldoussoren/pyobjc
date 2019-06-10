@@ -6,6 +6,8 @@ if sys.maxsize > 2 ** 32:
     import Quartz
 
     PHAssetImageProgressHandler = b'vd@o^Z@'
+    PHAssetVideoProgressHandler = b'vd@o^Z@'
+
 
     class TestPHImageManager (TestCase):
         @min_os_level('10.13')
@@ -32,6 +34,11 @@ if sys.maxsize > 2 ** 32:
             self.assertIsInstance(Photos.PHImageCancelledKey, unicode)
             self.assertIsInstance(Photos.PHImageErrorKey, unicode)
 
+            self.assertEqual(Photos.PHVideoRequestOptionsDeliveryModeAutomatic, 0)
+            self.assertEqual(Photos.PHVideoRequestOptionsDeliveryModeHighQualityFormat, 1)
+            self.assertEqual(Photos.PHVideoRequestOptionsDeliveryModeMediumQualityFormat, 2)
+            self.assertEqual(Photos.PHVideoRequestOptionsDeliveryModeFastFormat, 3)
+
         @min_os_level('10.13')
         def testMethods10_13(self):
             self.assertResultIsBOOL(Photos.PHImageRequestOptions.isNetworkAccessAllowed)
@@ -45,6 +52,26 @@ if sys.maxsize > 2 ** 32:
 
             self.assertArgIsBlock(Photos.PHImageManager.requestImageForAsset_targetSize_contentMode_options_resultHandler_, 4, b'v@@')
             self.assertArgIsBlock(Photos.PHImageManager.requestImageDataForAsset_options_resultHandler_, 2, b'v@@I@')
+
+        @min_os_level('10.15')
+        def testMethods10_15(self):
+            self.assertResultIsBOOL(Photos.PHLivePhotoRequestOptions.isNetworkAccessAllowed)
+            self.assertArgIsBOOL(Photos.PHLivePhotoRequestOptions.setNetworkAccessAllowed_, 0)
+
+            self.assertResultIsBlock(Photos.PHLivePhotoRequestOptions.progressHandler, PHAssetImageProgressHandler)
+            self.assertArgIsBlock(Photos.PHLivePhotoRequestOptions.setProgressHandler_, 0, PHAssetImageProgressHandler)
+
+            self.assertResultIsBOOL(Photos.PHVideoRequestOptions.isNetworkAccessAllowed)
+            self.assertArgIsBOOL(Photos.PHVideoRequestOptions.setNetworkAccessAllowed_, 0)
+
+            self.assertResultIsBlock(Photos.PHVideoRequestOptions.progressHandler, PHAssetVideoProgressHandler)
+            self.assertArgIsBlock(Photos.PHVideoRequestOptions.setProgressHandler_, 0, PHAssetVideoProgressHandler)
+
+            self.assertArgIsBlock(Photos.PHImageManager.requestImageDataAndOrientationForAsset_options_resultHandler_, 2, b'v@@I@')
+            self.assertArgIsBlock(Photos.PHImageManager.requestLivePhotoForAsset_targetSize_contentMode_options_resultHandler_, 4, b'v@@')
+            self.assertArgIsBlock(Photos.PHImageManager.requestPlayerItemForVideo_options_resultHandler_, 2, b'v@@')
+            self.assertArgIsBlock(Photos.PHImageManager.requestExportSessionForVideo_options_exportPreset_resultHandler_, 3, b'v@@')
+            self.assertArgIsBlock(Photos.PHImageManager.requestAVAssetForVideo_options_resultHandler_, 2, b'v@@@')
 
 if __name__ == "__main__":
     main()

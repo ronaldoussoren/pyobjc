@@ -12,5 +12,10 @@ if sys.maxsize > 2 ** 32:
             self.assertResultIsBOOL(Photos.PHFetchOptions.wantsIncrementalChangeDetails)
             self.assertArgIsBOOL(Photos.PHFetchOptions.setWantsIncrementalChangeDetails_, 0)
 
+        @min_os_level('10.15')
+        def testMethods10_15(self):
+            self.assertResultIsBOOL(Photos.PHFetchOptions.includeAllBurstAssets)
+            self.assertArgIsBOOL(Photos.PHFetchOptions.setIncludeAllBurstAssets_, 0)
+
 if __name__ == "__main__":
     main()

@@ -8,7 +8,8 @@
    "SFSafariServicesVersion10_1": { "value": 1 },
    "SFSafariServicesVersion11_0": { "value": 2 },
    "SFSafariServicesVersion12_0": { "value": 3 },
-   "SFSafariServicesVersion12_1": { "value": 4 }
+   "SFSafariServicesVersion12_1": { "value": 4 },
+   "SFSafariServicesVersion13_0": { "value": 5 }
   },
   "classes": {
    "NSObject": {

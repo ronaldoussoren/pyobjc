@@ -17,6 +17,7 @@ class TestVTPixelTransferProperties (TestCase):
         self.assertIsInstance(VideoToolbox.kVTPixelTransferPropertyKey_DestinationTransferFunction, unicode)
         self.assertIsInstance(VideoToolbox.kVTPixelTransferPropertyKey_DestinationICCProfile, unicode)
         self.assertIsInstance(VideoToolbox.kVTPixelTransferPropertyKey_DestinationYCbCrMatrix, unicode)
+        self.assertIsInstance(VideoToolbox.kVTPixelTransferPropertyKey_RealTime, unicode)
 
 
 if __name__ == "__main__":

@@ -19,6 +19,7 @@
    "PHImageErrorKey": { "typestr": "@" }
   },
   "enum": {
+   "PHInvalidAssetResourceDataRequestID": { "value": 0 },
    "PHAuthorizationStatusNotDetermined": { "value": 0 },
    "PHAuthorizationStatusRestricted": { "value": 1 },
    "PHAuthorizationStatusDenied": { "value": 2 },
@@ -118,6 +119,49 @@
    "PHAssetResourceTypePairedVideo": { "value": 9 }
   },
   "classes": {
+   "PHAssetResourceManager": {
+    "methods": [
+     {
+      "class_method": false,
+      "selector": "requestDataForAssetResource:options:dataReceivedHandler:completionHandler:",
+      "args": {
+       "2": {
+        "callable": {
+         "arguments": {
+	  "0": { "typestr": "^v" },
+	  "1": { "typestr": "@" }
+	 },
+	 "retval": { "typestr": "v" }
+	}
+       },
+       "3": {
+        "callable": {
+         "arguments": {
+	  "0": { "typestr": "^v" },
+	  "1": { "typestr": "@" }
+	 },
+	 "retval": { "typestr": "v" }
+	}
+       }
+      }
+     },
+     {
+      "class_method": false,
+      "selector": "writeDataForAssetResource:toFile:options:completionHandler:",
+      "args": {
+       "3": {
+        "callable": {
+         "arguments": {
+	  "0": { "typestr": "^v" },
+	  "1": { "typestr": "@" }
+	 },
+	 "retval": { "typestr": "v" }
+	}
+       }
+      }
+     }
+    ]
+   },
    "PHPhotoLibrary": {
     "methods": [
      {
@@ -328,6 +372,16 @@
    },
    "PHAsset": {
     "methods": [
+     {
+      "class_method": false,
+      "selector":  "canPerformEditOperation:",
+      "retval": { "type_override": "Z" }
+     },
+     {
+      "class_method": false,
+      "selector":  "representsBurst",
+      "retval": { "type_override": "Z" }
+     },
      {
       "class_method": false,
       "selector":  "isSyncFailureHidden",

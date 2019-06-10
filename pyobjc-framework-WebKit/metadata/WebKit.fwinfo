@@ -20,6 +20,86 @@
    }
   },
   "classes": {
+   "NSAttributedString": {
+    "methods": [
+     {
+      "class_method": false,
+      "selector": "loadFromHTMLWithRequest:options:completionHandler:",
+      "args": {
+       "2": {
+        "callable": {
+         "arguments": {
+          "0": { "typestr": "^v" },
+          "1": { "typestr": "@" },
+          "2": { "typestr": "@" },
+          "3": { "typestr": "@" }
+         },
+         "retval": {
+          "typestr": "v"
+         }
+        }
+       }
+      }
+     },
+     {
+      "class_method": false,
+      "selector": "loadFromHTMLWithFileURL:options:completionHandler:",
+      "args": {
+       "2": {
+        "callable": {
+         "arguments": {
+          "0": { "typestr": "^v" },
+          "1": { "typestr": "@" },
+          "2": { "typestr": "@" },
+          "3": { "typestr": "@" }
+         },
+         "retval": {
+          "typestr": "v"
+         }
+        }
+       }
+      }
+     },
+     {
+      "class_method": false,
+      "selector": "loadFromHTMLWithString:options:completionHandler:",
+      "args": {
+       "2": {
+        "callable": {
+         "arguments": {
+          "0": { "typestr": "^v" },
+          "1": { "typestr": "@" },
+          "2": { "typestr": "@" },
+          "3": { "typestr": "@" }
+         },
+         "retval": {
+          "typestr": "v"
+         }
+        }
+       }
+      }
+     },
+     {
+      "class_method": false,
+      "selector": "loadFromHTMLWithData:options:completionHandler:",
+      "args": {
+       "2": {
+        "callable": {
+         "arguments": {
+          "0": { "typestr": "^v" },
+          "1": { "typestr": "@" },
+          "2": { "typestr": "@" },
+          "3": { "typestr": "@" }
+         },
+         "retval": {
+          "typestr": "v"
+         }
+        }
+       }
+      }
+     }
+    ]
+   },
    "DOMAttr": {
     "methods": [
      {
@@ -2140,6 +2220,22 @@
      }
     ]
    },
+   "WKSnapshotConfiguration": {
+    "methods": [
+     {
+      "selector": "afterScreenUpdates",
+      "class_method": false,
+      "retval": { "type_override": "Z" }
+     },
+     {
+      "selector": "setAfterScreenUpdates:",
+      "class_method": false,
+      "args": {
+       "0": { "type_override": "Z" }
+      }
+     }
+    ]
+   },
    "WKPreferences": {
     "methods": [
      {
@@ -2913,6 +3009,15 @@
    }
   },
   "enum": {
+   "WKContentModeRecommended": { "value": 0 },
+   "WKContentModeMobile": { "value": 1 },
+   "WKContentModeDesktop": { "value": 2 },
+   "WKErrorAttributedStringContentFailedToLoad": {
+    "value": 10
+   },
+   "WKErrorAttributedStringContentLoadTimedOut": {
+    "value": 11
+   },
    "DOM_KEYFRAMES_RULE": {
     "value": 7
    },
@@ -2998,7 +3103,20 @@
    }
   },
   "formal_protocols": {},
-  "functions": {},
+  "functions": {
+   "WebInitForCarbon": {
+    "deprecated": 1006
+   },
+   "WebConvertNSImageToCGImageRef": {
+    "deprecated": 1006
+   },
+   "HIWebViewCreate": {
+    "deprecated": 1006
+   },
+   "HIWebViewGetWebView": {
+    "deprecated": 1006
+   }
+  },
   "informal_protocols": {
    "WebJavaPlugIn": {
     "methods": [

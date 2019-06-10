@@ -72,6 +72,9 @@ if sys.maxsize > 2 ** 32:
             self.assertEqual(Photos.PHAssetCollectionSubtypeSmartAlbumScreenshots, 211)
             self.assertEqual(Photos.PHAssetCollectionSubtypeSmartAlbumDepthEffect, 212)
             self.assertEqual(Photos.PHAssetCollectionSubtypeSmartAlbumLivePhotos, 213)
+            self.assertEqual(Photos.PHAssetCollectionSubtypeSmartAlbumAnimated, 214)
+            self.assertEqual(Photos.PHAssetCollectionSubtypeSmartAlbumLongExposures, 215)
+            self.assertEqual(Photos.PHAssetCollectionSubtypeSmartAlbumUnableToUpload, 216)
             self.assertEqual(Photos.PHAssetCollectionSubtypeAny, sys.maxsize)
 
             self.assertEqual(Photos.PHAssetEditOperationDelete, 1)
@@ -96,6 +99,8 @@ if sys.maxsize > 2 ** 32:
             self.assertEqual(Photos.PHAssetResourceTypeAdjustmentData, 7)
             self.assertEqual(Photos.PHAssetResourceTypeAdjustmentBasePhoto, 8)
             self.assertEqual(Photos.PHAssetResourceTypePairedVideo, 9)
+            self.assertEqual(Photos.PHAssetResourceTypeFullSizePairedVideo, 10)
+            self.assertEqual(Photos.PHAssetResourceTypeAdjustmentBasePairedVideo, 11)
 
             self.assertEqual(Photos.PHAssetPlaybackStyleUnsupported, 0)
             self.assertEqual(Photos.PHAssetPlaybackStyleImage, 1)

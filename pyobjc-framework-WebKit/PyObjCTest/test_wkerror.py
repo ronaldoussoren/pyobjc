@@ -17,6 +17,8 @@ class TestWKError (TestCase):
         self.assertEqual(WKErrorContentRuleListStoreLookUpFailed, 7)
         self.assertEqual(WKErrorContentRuleListStoreRemoveFailed, 8)
         self.assertEqual(WKErrorContentRuleListStoreVersionMismatch, 9)
+        self.assertEqual(WKErrorAttributedStringContentFailedToLoad, 10)
+        self.assertEqual(WKErrorAttributedStringContentLoadTimedOut, 11)
 
 
 if __name__ == "__main__":

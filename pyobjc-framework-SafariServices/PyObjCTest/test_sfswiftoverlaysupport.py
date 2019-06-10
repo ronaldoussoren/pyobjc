@@ -12,6 +12,7 @@ if sys.maxsize > 2 ** 32:
             self.assertEqual(SafariServices.SFSafariServicesVersion11_0, 2)
             self.assertEqual(SafariServices.SFSafariServicesVersion12_0, 3)
             self.assertEqual(SafariServices.SFSafariServicesVersion12_1, 4)
+            self.assertEqual(SafariServices.SFSafariServicesVersion13_0, 5)
 
 if __name__ == "__main__":
     main()

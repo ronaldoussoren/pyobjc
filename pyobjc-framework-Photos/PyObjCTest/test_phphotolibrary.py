@@ -15,6 +15,10 @@ if sys.maxsize > 2 ** 32:
         def testProtocols(self):
             objc.protocolNamed('PHPhotoLibraryChangeObserver')
 
+        @min_sdk_level('10.15')
+        def testProtocols10_15(self):
+            objc.protocolNamed('PHPhotoLibraryAvailabilityObserver')
+
         @min_os_level('10.13')
         def testMethods(self):
             self.assertArgIsBlock(Photos.PHPhotoLibrary.requestAuthorization_, 0, b'v' + objc._C_NSInteger)

@@ -12,6 +12,7 @@ if sys.maxsize >= 2**32:
 
         def test_constants(self):
             self.assertEqual(Vision.VNTrackObjectRequestRevision1, 1)
+            self.assertEqual(Vision.VNTrackObjectRequestRevision2, 2)
 
 
 if __name__ == "__main__":

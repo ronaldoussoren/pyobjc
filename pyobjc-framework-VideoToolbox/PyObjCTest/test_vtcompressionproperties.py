@@ -99,6 +99,7 @@ class TestVTCompressionProperties (TestCase):
         self.assertIsInstance(VideoToolbox.kVTVideoEncoderSpecification_EnableHardwareAcceleratedVideoEncoder, unicode)
         self.assertIsInstance(VideoToolbox.kVTVideoEncoderSpecification_RequireHardwareAcceleratedVideoEncoder, unicode)
         self.assertIsInstance(VideoToolbox.kVTCompressionPropertyKey_UsingHardwareAcceleratedVideoEncoder, unicode)
+        self.assertIsInstance(VideoToolbox.kVTCompressionPropertyKey_GammaLevel, unicode)
 
     @min_os_level('10.10')
     def test_constants10_10(self):
@@ -117,6 +118,15 @@ class TestVTCompressionProperties (TestCase):
     def test_constants10_14(self):
         self.assertIsInstance(VideoToolbox.kVTCompressionPropertyKey_AllowOpenGOP, unicode)
         self.assertIsInstance(VideoToolbox.kVTCompressionPropertyKey_MaximizePowerEfficiency, unicode)
+        self.assertIsInstance(VideoToolbox.kVTVideoEncoderSpecification_RequiredEncoderGPURegistryID, unicode)
+        self.assertIsInstance(VideoToolbox.kVTVideoEncoderSpecification_PreferredEncoderGPURegistryID, unicode)
+
+    @min_os_level('10.15')
+    def test_constants10_15(self):
+        self.assertIsInstance(VideoToolbox.kVTCompressionPropertyKey_TargetQualityForAlpha, unicode)
+        self.assertIsInstance(VideoToolbox.kVTCompressionPropertyKey_AlphaChannelMode, unicode)
+        self.assertIsInstance(VideoToolbox.kVTAlphaChannelMode_StraightAlpha, unicode)
+        self.assertIsInstance(VideoToolbox.kVTAlphaChannelMode_PremultipliedAlpha, unicode)
 
 if __name__ == "__main__":
     main()

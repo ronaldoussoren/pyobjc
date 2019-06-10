@@ -11,5 +11,10 @@ if sys.maxsize > 2 ** 32:
             self.assertResultIsBOOL(Photos.PHAsset.isFavorite)
             self.assertResultIsBOOL(Photos.PHAsset.isSyncFailureHidden)
 
+        @min_os_level('10.15')
+        def testMethods10_15(self):
+            self.assertResultIsBOOL(Photos.PHAsset.representsBurst)
+            self.assertResultIsBOOL(Photos.PHAsset.canPerformEditOperation_)
+
 if __name__ == "__main__":
     main()

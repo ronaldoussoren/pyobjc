@@ -10,6 +10,10 @@ if sys.maxsize >= 2**32:
             self.assertEqual(Vision.VNImageCropAndScaleOptionScaleFit, 1)
             self.assertEqual(Vision.VNImageCropAndScaleOptionScaleFill, 2)
 
+            self.assertEqual(Vision.VNElementTypeUnknown, 0)
+            self.assertEqual(Vision.VNElementTypeFloat, 1)
+            self.assertEqual(Vision.VNElementTypeDouble, 2)
+
         @min_os_level('10.13')
         def testConstants10_13(self):
             self.assertIsInstance(Vision.VNBarcodeSymbologyAztec, unicode)

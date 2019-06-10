@@ -46,6 +46,10 @@ if sys.maxsize >= 2**32:
             #self.assertArgHasType(Vision.VNImagePointForFaceLandmarkPoint, 2, objc._C_ULNG)
             #self.assertArgHasType(Vision.VNImagePointForFaceLandmarkPoint, 3, objc._C_ULNG)
 
+        @min_os_level('10.15')
+        def testFunctions10_15(self):
+            Vision.VNElementTypeSize
+
 
 if __name__ == "__main__":
     main()

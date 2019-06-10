@@ -9,6 +9,15 @@ class TestVTVideoEncoderList (TestCase):
         self.assertIsInstance(VideoToolbox.kVTVideoEncoderList_EncoderName, unicode)
         self.assertIsInstance(VideoToolbox.kVTVideoEncoderList_DisplayName, unicode)
 
+    @min_os_level('10.14')
+    def test_constants10_14(self):
+        self.assertIsInstance(VideoToolbox.kVTVideoEncoderList_GPURegistryID, unicode)
+        self.assertIsInstance(VideoToolbox.kVTVideoEncoderList_SupportedSelectionProperties, unicode)
+        self.assertIsInstance(VideoToolbox.kVTVideoEncoderList_PerformanceRating, unicode)
+        self.assertIsInstance(VideoToolbox.kVTVideoEncoderList_QualityRating, unicode)
+        self.assertIsInstance(VideoToolbox.kVTVideoEncoderList_InstanceLimit, unicode)
+        self.assertIsInstance(VideoToolbox.kVTVideoEncoderList_IsHardwareAccelerated, unicode)
+
     def test_functions(self):
         self.assertArgIsOut(VideoToolbox.VTCopyVideoEncoderList, 1)
         self.assertArgIsCFRetained(VideoToolbox.VTCopyVideoEncoderList, 1)
