@@ -1,0 +1,29 @@
+// objective.metadata exceptions file, see its document
+// for information on how to update this file.
+{
+ "definitions": {
+  "classes": {
+   "QLThumbnailRepresentation": {
+    "methods": [
+     {
+      "class_method": false, 
+      "retval": {}, 
+      "selector": "CGImage"
+     }
+    ], 
+    "properties": [
+     {
+      "attributes": [
+       "nonatomic", 
+       "readonly"
+      ], 
+      "name": "CGImage"
+     }
+    ]
+   }
+  }, 
+  "formal_protocols": {}, 
+  "functions": {}, 
+  "informal_protocols": {}
+ }
+}

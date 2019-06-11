@@ -1,5 +1,5 @@
 API Notes: AdSupport framework
-=================================
+==============================
 
 Apple documentation
 -------------------

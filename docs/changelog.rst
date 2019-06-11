@@ -20,6 +20,8 @@ Version 6.0a0
   - DeviceCheck (new in macOS 10.15)
   - ExecutionPolicy (new in macOS 10.15)
   - PencilKit (new in macOS 10.15)
+  - PushKit (new in macOS 10.15)
+  - QuickLookThumbnailing (new in macOS 10.15)
   - WiFi (new in macOS 10.15)
 
 Version 5.2

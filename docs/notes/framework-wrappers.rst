@@ -291,11 +291,15 @@ The framework name links to API notes for that framework, the python packages li
 +------------------------------------------------------------------+---------------------------------------------+-----------------------------------------+
 | :doc:`PubSub </apinotes/PubSub>`                                 | `pyobjc-framework-PubSub`_                  |                                         |
 +------------------------------------------------------------------+---------------------------------------------+-----------------------------------------+
+| :doc:`PushKit </apinotes/PushKit>`                               | `pyobjc-framework-PushKit`_                 |                                         |
++------------------------------------------------------------------+---------------------------------------------+-----------------------------------------+
 | Python                                                           | -                                           | Will not be wrapped.                    |
 +------------------------------------------------------------------+---------------------------------------------+-----------------------------------------+
 | :doc:`QTKit </apinotes/QTKit>`                                   | `pyobjc-framework-QTKit`_                   | Removed in macOS 10.15                  |
 +------------------------------------------------------------------+---------------------------------------------+-----------------------------------------+
 | :doc:`Quartz </apinotes/Quartz>`                                 | `pyobjc-framework-Quartz`_                  |                                         |
++------------------------------------------------------------------+---------------------------------------------+-----------------------------------------+
+| :doc:`QuickLookThumbnailing </apinotes/QuickLookThumbnailing>`   | `pyobjc-framework-QuickLookThumbnailing`_   |                                         |
 +------------------------------------------------------------------+---------------------------------------------+-----------------------------------------+
 | Quartz / :doc:`QuartzComposer </apinotes/QuartzComposer>`        | `pyobjc-framework-Quartz`_                  | Use "import Quartz"                     |
 +------------------------------------------------------------------+---------------------------------------------+-----------------------------------------+
@@ -500,3 +504,5 @@ cannot be wrapped using PyObjC.
 .. _`pyobjc-framework-WiFi`: https://pypi.org/project/pyobjc-framework-WiFi/
 .. _`pyobjc-framework-DeviceCheck`: https://pypi.org/project/pyobjc-framework-DeviceCheck/
 .. _`pyobjc-framework-ExecutionPolicy`: https://pypi.org/project/pyobjc-framework-ExecutionPolicy/
+.. _`pyobjc-framework-QuickLookThumbnailing`: https://pypi.org/project/pyobjc-framework-QuickLookThumbnailing/
+.. _`pyobjc-framework-PushKit`: https://pypi.org/project/pyobjc-framework-PushKit/
