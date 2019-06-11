@@ -67,6 +67,11 @@ if os_level_key(os_release()) < os_level_key('10.12') or sys.maxsize >= 2**32:
             self.assertArgIsBOOL(SceneKit.SCNView.setAllowsCameraControl_, 0)
             self.assertResultIsBOOL(SceneKit.SCNView.allowsCameraControl)
 
+        @min_os_level('10.15')
+        def testMethods10_15(self):
+            self.assertResultIsBOOL(SceneKit.SCNView.drawableResizesAsynchronously)
+            self.assertArgIsBOOL(SceneKit.SCNView.setDrawableResizesAsynchronously_, 0)
+
         @min_sdk_level('10.13')
         def testProtocols(self):
             objc.protocolNamed('SCNCameraControlConfiguration')

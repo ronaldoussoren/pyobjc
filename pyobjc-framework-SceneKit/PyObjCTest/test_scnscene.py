@@ -43,6 +43,11 @@ if os_level_key(os_release()) < os_level_key('10.12') or sys.maxsize >= 2**32:
             self.assertResultIsBOOL(SceneKit.SCNScene.isPaused)
             self.assertArgIsBOOL(SceneKit.SCNScene.setPaused_, 0)
 
+        @min_os_level('10.15')
+        def testMethods10_15(self):
+            self.assertResultIsBOOL(SceneKit.SCNScene.wantsScreenSpaceReflection)
+            self.assertArgIsBOOL(SceneKit.SCNScene.setWantsScreenSpaceReflection_, 0)
+
         @min_sdk_level('10.10')
         def testProtocols(self):
             objc.protocolNamed('SCNSceneExportDelegate')

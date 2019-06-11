@@ -5,6 +5,10 @@ from PyObjCTools.TestSupport import *
 if sys.maxsize > 2 ** 32:
     import AVKit
 
+    class TestAVPlayerViewHelper (AVKit.NSObject):
+        def playerView_restoreUserInterfaceForPictureInPictureStopWithCompletionHandler_(self, a, b): pass
+        def playerViewShouldAutomaticallyDismissAtPictureInPictureStart_(self): return 1
+
     class TestAVPlayerView (TestCase):
         @min_os_level("10.9")
         def testClasses(self):
@@ -33,6 +37,17 @@ if sys.maxsize > 2 ** 32:
             self.assertArgIsBOOL(AVKit.AVPlayerView.setUpdatesNowPlayingInfoCenter_, 0)
             self.assertResultIsBOOL(AVKit.AVPlayerView.updatesNowPlayingInfoCenter)
 
+        @min_os_level("10.15")
+        def testMethods10_15(self):
+            self.assertArgIsBOOL(AVKit.AVPlayerView.setShowsTimecodes_, 0)
+            self.assertResultIsBOOL(AVKit.AVPlayerView.showsTimecodes)
+
+            self.assertResultIsBOOL(AVKit.AVPlayerView.allowsPictureInPicturePlayback)
+            self.assertResultIsBOOL(AVKit.AVPlayerView.setAllowsPictureInPicturePlayback_)
+
+            self.assertArgIsBlock(AVPlayerViewHelper.playerView_restoreUserInterfaceForPictureInPictureStopWithCompletionHandler_, 1, b'vZ')
+            self.assertResultIsBOOL(AVPlayerViewHelper.playerViewShouldAutomaticallyDismissAtPictureInPictureStart_)
+
         @min_os_level("10.9")
         def test_constants(self):
             self.assertEqual(AVKit.AVPlayerViewControlsStyleNone, 0)
@@ -43,6 +58,10 @@ if sys.maxsize > 2 ** 32:
 
             self.assertEqual(AVKit.AVPlayerViewTrimOKButton, 0)
             self.assertEqual(AVKit.AVPlayerViewTrimCancelButton, 1)
+
+        @min_sdk_level("10.15")
+        def test_protocols(self):
+            objc.protocolNamed("AVPlayerViewPictureInPictureDelegate")
 
 if __name__ == "__main__":
     main()

@@ -680,6 +680,27 @@ class TestCGImageProperties (TestCase):
         self.assertIsInstance(kCGImagePropertyPNGSource, unicode)
         self.assertIsInstance(kCGImagePropertyPNGWarning, unicode)
 
+    @min_os_level('10.15')
+    def testConstants10_15(self):
+        self.assertIsInstance(kCGImagePropertyHEICSDictionary, unicode)
+        self.assertIsInstance(kCGImagePropertyHEICSLoopCount, unicode)
+        self.assertIsInstance(kCGImagePropertyHEICSDelayTime, unicode)
+        self.assertIsInstance(kCGImagePropertyHEICSUnclampedDelayTime, unicode)
+        self.assertIsInstance(kCGImagePropertyHEICSCanvasPixelWidth, unicode)
+        self.assertIsInstance(kCGImagePropertyHEICSCanvasPixelHeight, unicode)
+        self.assertIsInstance(kCGImagePropertyHEICSFrameInfoArray, unicode)
+        self.assertIsInstance(kCGImagePropertyExifOffsetTime, unicode)
+        self.assertIsInstance(kCGImagePropertyExifOffsetTimeOriginal, unicode)
+        self.assertIsInstance(kCGImagePropertyExifOffsetTimeDigitized, unicode)
+        self.assertIsInstance(kCGImagePropertyGIFCanvasPixelWidth, unicode)
+        self.assertIsInstance(kCGImagePropertyGIFCanvasPixelHeight, unicode)
+        self.assertIsInstance(kCGImagePropertyGIFFrameInfoArray, unicode)
+        self.assertIsInstance(kCGImagePropertyAPNGFrameInfoArray, unicode)
+        self.assertIsInstance(kCGImagePropertyAPNGCanvasPixelWidth, unicode)
+        self.assertIsInstance(kCGImagePropertyAPNGCanvasPixelHeight, unicode)
+        self.assertIsInstance(kCGImageAuxiliaryDataTypeSemanticSegmentationSkinMatte, unicode)
+        self.assertIsInstance(kCGImageAuxiliaryDataTypeSemanticSegmentationHairMatte, unicode)
+        self.assertIsInstance(kCGImageAuxiliaryDataTypeSemanticSegmentationTeethMatte, unicode)
 
 
 if __name__ == "__main__":

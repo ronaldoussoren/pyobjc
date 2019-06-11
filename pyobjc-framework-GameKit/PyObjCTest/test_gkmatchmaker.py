@@ -43,7 +43,7 @@ class TestGKMatchMaker (TestCase):
 
     @onlyOn64Bit
     @min_os_level('10.10')
-    def testMethods10_9(self):	
+    def testMethods10_9(self):
 	# XXX: These aren't available on 10.9, even though the SDK claims they are
         self.assertArgIsBlock(GameKit.GKMatchmaker.matchForInvite_completionHandler_, 1, b'v@@')
 
@@ -60,6 +60,12 @@ class TestGKMatchMaker (TestCase):
 
         self.assertArgIsBlock(GameKit.GKMatchmaker.findPlayersForHostedRequest_withCompletionHandler_, 1, b'v@@')
         self.assertArgIsBlock(GameKit.GKMatchmaker.startBrowsingForNearbyPlayersWithHandler_, 0, b'v@Z')
+
+    @min_os_level('10.15')
+    def testMethods10_15(self):
+        self.assertResultIsBOOL(GameKit.GKMatchmaker.restrictToAutomatch)
+        self.assertArgIsBOOL(GameKit.GKMatchmaker.setRestrictToAutomatch_, 0)
+
 
     def testProtocols(self):
         objc.protocolNamed('GKInviteEventListener')

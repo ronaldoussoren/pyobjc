@@ -119,6 +119,7 @@ class TestCMIOHardwareDevice (TestCase):
         self.assertEqual(CoreMediaIO.kCMIODevicePropertyIIDCCSRData, fourcc(b'csrd'))
         self.assertEqual(CoreMediaIO.kCMIODevicePropertyCanSwitchFrameRatesWithoutFrameDrops, fourcc(b'frnd'))
         self.assertEqual(CoreMediaIO.kCMIODevicePropertyLocation, fourcc(b'dloc'))
+        self.assertEqual(CoreMediaIO.kCMIODevicePropertyDeviceHasStreamingError, fourcc(b'serr'))
 
         self.assertEqual(CoreMediaIO.kCMIODevicePropertyLocationUnknown, 0)
         self.assertEqual(CoreMediaIO.kCMIODevicePropertyLocationBuiltInDisplay, 1)

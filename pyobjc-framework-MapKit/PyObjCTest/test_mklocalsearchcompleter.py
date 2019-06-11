@@ -6,10 +6,13 @@ if sys.maxsize > 2 ** 32:
     import MapKit
 
     class TestMKLocalSearchCompleter (TestCase):
-        @min_os_level("10.11")
         def testConstants(self):
             self.assertEqual(MapKit.MKSearchCompletionFilterTypeLocationsAndQueries, 0)
             self.assertEqual(MapKit.MKSearchCompletionFilterTypeLocationsOnly, 1)
+
+            self.assertEqual(MapKit.MKLocalSearchCompleterResultTypeAddress, 1 << 0)
+            self.assertEqual(MapKit.MKLocalSearchCompleterResultTypePointOfInterest, 1 << 1)
+            self.assertEqual(MapKit.MKLocalSearchCompleterResultTypeQuery, 1 << 2)
 
         @min_os_level("10.11")
         def testMethods(self):

@@ -43,6 +43,7 @@ class TestCMIOHardwareControl (TestCase):
         self.assertEqual(CoreMediaIO.kCMIOPanTiltAbsoluteControlClassID, fourcc(b'ptab'))
         self.assertEqual(CoreMediaIO.kCMIOPanTiltRelativeControlClassID, fourcc(b'ptrl'))
         self.assertEqual(CoreMediaIO.kCMIOZoomRelativeControlClassID, fourcc(b'zomr'))
+        self.assertEqual(CoreMediaIO.kCMIORollAbsoluteControlClassID, fourcc(b'rola'))
 
         self.assertEqual(CoreMediaIO.kCMIOControlPropertyScope, fourcc(b'cscp'))
         self.assertEqual(CoreMediaIO.kCMIOControlPropertyElement, fourcc(b'celm'))

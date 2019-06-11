@@ -35,6 +35,12 @@ class TestGKLocalPlayer (TestCase):
     def testMethods10_11(self):
         self.assertArgIsBlock(GameKit.GKLocalPlayer.loadRecentPlayersWithCompletionHandler_, 0, b'v@@')
 
+    @min_os_level('10.15')
+    def testMethods10_15(self):
+        self.assertResultIsBOOL(GameKit.GKLocalPlayer.isMultiplayerGamingRestricted)
+        self.assertArgIsBlock(GameKit.GKLocalPlayer.loadChallengableFriendsWithCompletionHandler_, 0, b'v@@')
+
+
     def testProtocols(self):
         objc.protocolNamed('GKLocalPlayerListener')
 

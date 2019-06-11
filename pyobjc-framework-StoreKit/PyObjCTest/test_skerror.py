@@ -21,6 +21,8 @@ class TestSKError (TestCase):
         self.assertEqual(StoreKit.SKErrorMissingOfferParams, 13)
         self.assertEqual(StoreKit.SKErrorInvalidOfferPrice, 14)
 
+        self.assertEqual(StoreKit.SKErrorStoreProductNotAvailable, 5)
+
 
 if __name__ == "__main__":
     main()

@@ -77,6 +77,11 @@ if sys.maxsize > 2 ** 32:
             self.assertResultIsBOOL(MapKit.MKMapView.showsTraffic)
             self.assertArgIsBOOL(MapKit.MKMapView.setShowsTraffic_, 0)
 
+        @min_os_level("10.15")
+        def testClasses10_15(self):
+            self.assertResultIsBOOL(MapKit.MKMapView.showsPointsOfInterest)
+            self.assertArgIsBOOL(MapKit.MKMapView.setShowsPointsOfInterest_, 0)
+
 
 if __name__ == "__main__":
     main()

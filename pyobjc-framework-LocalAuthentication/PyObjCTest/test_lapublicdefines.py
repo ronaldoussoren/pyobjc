@@ -14,6 +14,8 @@ if sys.maxsize > 2 ** 32:
             self.assertEqual(LocalAuthentication.kLAPolicyDeviceOwnerAuthentication, 2)
             self.assertEqual(LocalAuthentication.kLAOptionUserFallback, 1)
             self.assertEqual(LocalAuthentication.kLAOptionAuthenticationReason, 2)
+            self.assertEqual(LocalAuthentication.kLAPolicyDeviceOwnerAuthenticationWithWatch, 3)
+            self.assertEqual(LocalAuthentication.kLAPolicyDeviceOwnerAuthenticationWithBiometricsOrWatch, 4)
 
             self.assertEqual(LocalAuthentication.kLACredentialTypePasscode, -1)
             self.assertEqual(LocalAuthentication.kLACredentialTypePassphrase, -2)
@@ -29,6 +31,7 @@ if sys.maxsize > 2 ** 32:
             self.assertEqual(LocalAuthentication.kLAErrorTouchIDLockout, -8)
             self.assertEqual(LocalAuthentication.kLAErrorAppCancel, -9)
             self.assertEqual(LocalAuthentication.kLAErrorInvalidContext, -10)
+            self.assertEqual(LocalAuthentication.kLAErrorWatchNotAvailable, -11)
             self.assertEqual(LocalAuthentication.kLAErrorDomain, "com.apple.LocalAuthentication")
 
             self.assertEqual(LocalAuthentication.kLAErrorBiometryNotAvailable, LocalAuthentication.kLAErrorTouchIDNotAvailable)

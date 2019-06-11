@@ -12,6 +12,7 @@ if sys.maxsize > 2 ** 32:
         def tokenSession_performKeyExchangeWithPublicKey_usingKey_algorithm_parameters_error_(self, s, pk, k, a, p, e): return 1
 
         def token_createSessionWithError_(self, t, e): return 1
+        def tokenDriver_tokenForConfiguration_error_(self, a, b, c): pass
 
     class TestTKToken (TestCase):
         @min_os_level('10.12')
@@ -45,6 +46,7 @@ if sys.maxsize > 2 ** 32:
             self.assertArgHasType(TestTKTokenHelper.tokenSession_performKeyExchangeWithPublicKey_usingKey_algorithm_parameters_error_, 5, b'o^@')
 
             self.assertArgHasType(TestTKTokenHelper.token_createSessionWithError_, 1, b'o^@')
+            self.assertArgHasType(TestTKTokenHelper.tokenDriver_tokenForConfiguration_error_, 2, b'o^@')
 
 
 if __name__ == "__main__":

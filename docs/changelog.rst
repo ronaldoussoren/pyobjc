@@ -17,6 +17,8 @@ Version 6.0a0
 
 * Add new framework wrappers:
 
+  - DeviceCheck (new in macOS 10.15)
+  - ExecutionPolicy (new in macOS 10.15)
   - PencilKit (new in macOS 10.15)
   - WiFi (new in macOS 10.15)
 

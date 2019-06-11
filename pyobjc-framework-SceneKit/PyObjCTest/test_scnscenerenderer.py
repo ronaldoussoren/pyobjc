@@ -46,6 +46,12 @@ if os_level_key(os_release()) < os_level_key('10.12') or sys.maxsize >= 2**32:
         def renderer_willRenderScene_atTime_(self, r, s, t): pass
         def renderer_didRenderScene_atTime_(self, r, s, t): pass
 
+        def isTemporalAntialiasingEnabled(self): return 1
+        def setTemporalAntialiasingEnabled_(self, v): pass
+        def currentViewport(self): return 1
+        def useReverseZ(self): return 1
+        def setUseReverseZ(self, v): pass
+
 
 
 
@@ -147,6 +153,15 @@ if os_level_key(os_release()) < os_level_key('10.12') or sys.maxsize >= 2**32:
             self.assertArgHasType(TestSCNSceneRendererHelper.renderer_willRenderScene_atTime_, 2, objc._C_DBL)
             self.assertArgHasType(TestSCNSceneRendererHelper.renderer_didRenderScene_atTime_, 2, objc._C_DBL)
 
+        @min_os_level('10.15')
+        def testMethods(self):
+            self.assertResultIsBOOL(TestSCNSceneRendererHelper.isTemporalAntialiasingEnabled)
+            self.assertArgIsBOOL(TestSCNSceneRendererHelper.setTemporalAntialiasingEnabled_, 0)
+
+            self.assertResultHasType(TestSCNSceneRendererHelper.currentViewport, SceneKit.CGRect.__typestr__)
+
+            self.assertResultIsBOOL(TestSCNSceneRendererHelper.useReverseZ)
+            self.assertArgIsBOOL(TestSCNSceneRendererHelper.setUseReverseZ_, 0)
 
 if __name__ == "__main__":
     main()

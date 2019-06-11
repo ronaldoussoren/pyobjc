@@ -19,6 +19,7 @@ if sys.maxsize > 2 ** 32:
             self.assertEqual(MapKit.MKErrorLoadingThrottled, 3)
             self.assertEqual(MapKit.MKErrorPlacemarkNotFound, 4)
             self.assertEqual(MapKit.MKErrorDirectionsNotFound, 5)
+            self.assertEqual(MapKit.MKErrorDecodingFailed, 6)
 
             self.assertEqual(MapKit.MKFeatureVisibilityAdaptive, 0)
             self.assertEqual(MapKit.MKFeatureVisibilityHidden, 1)

@@ -90,6 +90,17 @@
    "kCIFormatRGf": { "typestr": "i" }
   },
   "classes": {
+   "CADisplayLink": {
+    "methods": [
+     {
+      "selector": "displayLinkWithTarget:selector",
+      "class_method": true,
+      "args": {
+       "1": { "sel_of_type": "v@:@" }
+      }
+     }
+    ]
+   },
    "CIRenderTask": {
     "methods": [
      {

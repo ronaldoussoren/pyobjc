@@ -132,6 +132,8 @@ The framework name links to API notes for that framework, the python packages li
 +------------------------------------------------------------------+---------------------------------------------+-----------------------------------------+
 | :doc:`CryptoTokenKit </apinotes/CryptoTokenKit>`                 | `pyobjc-framework-CryptoTokenKit`_          |                                         |
 +------------------------------------------------------------------+---------------------------------------------+-----------------------------------------+
+| :doc:`DeviceCheck </apinotes/DeviceCheck>`                       | `pyobjc-framework-DeviceCheck`_             |                                         |
++------------------------------------------------------------------+---------------------------------------------+-----------------------------------------+
 | DVComponentGlue                                                  | -                                           | No public API.                          |
 +------------------------------------------------------------------+---------------------------------------------+-----------------------------------------+
 | :doc:`DVDPlayback </apinotes/DVDPlayback>`                       | `pyobjc-framework-DVDPlayback`_             |                                         |
@@ -149,6 +151,8 @@ The framework name links to API notes for that framework, the python packages li
 | :doc:`EventKit </apinotes/EventKit>`                             | `pyobjc-framework-EventKit`_                |                                         |
 +------------------------------------------------------------------+---------------------------------------------+-----------------------------------------+
 | :doc:`ExceptionHandling </apinotes/ExceptionHandling>`           | `pyobjc-framework-ExceptionHandling`_       |                                         |
++------------------------------------------------------------------+---------------------------------------------+-----------------------------------------+
+| :doc:`ExecutionPolicy </apinotes/ExecutionPolicy>`               | `pyobjc-framework-ExecutionPolicy`_         |                                         |
 +------------------------------------------------------------------+---------------------------------------------+-----------------------------------------+
 | :doc:`ExternalAccessory </apinotes/ExternalAccessory>`           | `pyobjc-framework-ExternalAccessory`_       |                                         |
 +------------------------------------------------------------------+---------------------------------------------+-----------------------------------------+
@@ -494,3 +498,5 @@ cannot be wrapped using PyObjC.
 .. _`pyobjc-framework-DiscRecordingUI`: https://pypi.org/project/pyobjc-framework-DiscRecordingUI/
 .. _`pyobjc-framework-DVDPlayback`: https://pypi.org/project/pyobjc-framework-DVDPlayback/
 .. _`pyobjc-framework-WiFi`: https://pypi.org/project/pyobjc-framework-WiFi/
+.. _`pyobjc-framework-DeviceCheck`: https://pypi.org/project/pyobjc-framework-DeviceCheck/
+.. _`pyobjc-framework-ExecutionPolicy`: https://pypi.org/project/pyobjc-framework-ExecutionPolicy/

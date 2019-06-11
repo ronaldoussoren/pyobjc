@@ -26,8 +26,19 @@ if os_level_key(os_release()) < os_level_key('10.12') or sys.maxsize >= 2**32:
             self.assertIsInstance(SceneKit.SCNLightShadowNearClippingKey, unicode)
             self.assertIsInstance(SceneKit.SCNLightShadowFarClippingKey, unicode)
 
+            self.assertEqual(SceneKit.SCNLightProbeTypeIrradiance, 0)
+            self.assertEqual(SceneKit.SCNLightProbeTypeRadiance, 1)
+
+            self.assertEqual(SceneKit.SCNLightProbeUpdateTypeNever, 0)
+            self.assertEqual(SceneKit.SCNLightProbeUpdateTypeRealtime, 1)
+
+            self.assertEqual(SceneKit.SCNLightAreaTypeLine, 0)
+            self.assertEqual(SceneKit.SCNLightAreaTypeRectangle, 1)
+            self.assertEqual(SceneKit.SCNLightAreaTypePolygon, 4)
+
+
         @min_os_level('10.12')
-        def testConstants(self):
+        def testConstants10_12(self):
             self.assertIsInstance(SceneKit.SCNLightTypeIES, unicode)
             self.assertIsInstance(SceneKit.SCNLightTypeProbe, unicode)
 
@@ -45,6 +56,17 @@ if os_level_key(os_release()) < os_level_key('10.12') or sys.maxsize >= 2**32:
 
             self.assertResultIsBOOL(SceneKit.SCNLight.sampleDistributedShadowMaps)
             self.assertArgIsBOOL(SceneKit.SCNLight.setSampleDistributedShadowMaps_, 0)
+
+        @min_os_level('10.15')
+        def testMethods10_15(self):
+            self.assertResultIsBOOL(SceneKit.SCNLight.parallaxCorrectionEnabled)
+            self.assertArgIsBOOL(SceneKit.SCNLight.setParallaxCorrectionEnabled_, 0)
+
+            self.assertResultIsBOOL(SceneKit.SCNLight.drawsArea)
+            self.assertArgIsBOOL(SceneKit.SCNLight.setDrawsArea_, 0)
+
+            self.assertResultIsBOOL(SceneKit.SCNLight.doubleSided)
+            self.assertArgIsBOOL(SceneKit.SCNLight.setDoubleSided_, 0)
 
 
 if __name__ == "__main__":

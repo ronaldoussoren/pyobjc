@@ -15,4 +15,7 @@ static void __attribute__((__used__)) use_protocols(void)
 #if defined(__LP64__) && PyObjC_BUILD_RELEASE >= 1012
     p = PyObjC_IdToPython(@protocol(MKLocalSearchCompleterDelegate)); Py_XDECREF(p);
 #endif
+#if defined(__LP64__) && PyObjC_BUILD_RELEASE >= 1015
+    p = PyObjC_IdToPython(@protocol(MKGeoJSONObject)); Py_XDECREF(p);
+#endif
 }

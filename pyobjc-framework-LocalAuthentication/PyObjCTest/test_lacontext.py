@@ -9,6 +9,7 @@ if sys.maxsize > 2 ** 32:
             self.assertEqual(LocalAutentication.LABiometryTypeNone, 0)
             self.assertEqual(LocalAutentication.LABiometryNone, 0)
             self.assertEqual(LocalAutentication.LABiometryTypeTouchID, 1)
+            self.assertEqual(LocalAutentication.LABiometryTypeFaceID, 2)
 
         @min_os_level("10.10")
         def testClasses(self):
@@ -39,7 +40,7 @@ if sys.maxsize > 2 ** 32:
             self.assertEqual(LocalAuthentication.LAPolicyDeviceOwnerAuthenticationWithBiometrics,
                 LocalAuthentication.kLAPolicyDeviceOwnerAuthenticationWithBiometrics)
             self.assertEqual(LocalAuthentication.LAPolicyDeviceOwnerAuthentication, LocalAuthentication.kLAPolicyDeviceOwnerAuthentication)
-            self.assertEqual(LocalAuthentication.LACredentialTypeApplicationPassword, 0)
+            self.assertEqual(LocalAuthentication.LACredentialTypeApplicationPassword, LocalAuthentication.kLACredentialTypeApplicationPassword)
 
         @min_os_level("10.11")
         def testConstants10_11(self):
@@ -54,6 +55,12 @@ if sys.maxsize > 2 ** 32:
             self.assertEqual(LocalAuthentication.LAAccessControlOperationUseKeyKeyExchange, 5)
 
             self.assertIsInstance(LocalAuthentication.LATouchIDAuthenticationMaximumAllowableReuseDuration, float)
+
+        @min_os_level("10.15")
+        def testConstants10_15(self):
+            self.assertEqual(LocalAuthentication.LAPolicyDeviceOwnerAuthenticationWithWatch, LocalAuthentication.kLAPolicyDeviceOwnerAuthenticationWithWatch)
+            self.assertEqual(LocalAuthentication.LAPolicyDeviceOwnerAuthenticationWithBiometricsOrWatch, LocalAuthentication.kLAPolicyDeviceOwnerAuthenticationWithBiometricsOrWatch)
+
 
         @min_os_level('10.11')
         def testMethods10_11(self):
