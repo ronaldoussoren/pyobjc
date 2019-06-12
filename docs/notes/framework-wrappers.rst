@@ -186,6 +186,8 @@ The framework name links to API notes for that framework, the python packages li
 +------------------------------------------------------------------+---------------------------------------------+-----------------------------------------+
 | ICADevices                                                       | -                                           | Will not be wrapped.                    |
 +------------------------------------------------------------------+---------------------------------------------+-----------------------------------------+
+| IdentityLookup                                                   | -                                           | No public API on macOS                  |
++------------------------------------------------------------------+---------------------------------------------+-----------------------------------------+
 | IMCore                                                           | -                                           | No public API (removed in macOS 10.13)  |
 +------------------------------------------------------------------+---------------------------------------------+-----------------------------------------+
 | :doc:`IMServicePlugIn </apinotes/IMServicePlugIn>`               | `pyobjc-framework-IMServicePlugIn`_         |                                         |
@@ -229,7 +231,11 @@ The framework name links to API notes for that framework, the python packages li
 +------------------------------------------------------------------+---------------------------------------------+-----------------------------------------+
 | :doc:`LatentSemanticMapping </apinotes/LatentSemanticMapping>`   | `pyobjc-framework-LatentSemanticMapping`_   |                                         |
 +------------------------------------------------------------------+---------------------------------------------+-----------------------------------------+
+| :doc:`LinkPresentation </apinotes/LinkPresentation>`             | `pyobjc-framework-LinkPresentation`_        |                                         |
++------------------------------------------------------------------+---------------------------------------------+-----------------------------------------+
 | :doc:`LocalAuthentication </apinotes/LocalAuthentication>`       | `pyobjc-framework-LocalAuthentication`_     |                                         |
++------------------------------------------------------------------+---------------------------------------------+-----------------------------------------+
+| :doc:`Logging </apinotes/Logging>`                               | `pyobjc-framework-Logging`_                 |                                         |
 +------------------------------------------------------------------+---------------------------------------------+-----------------------------------------+
 | :doc:`MapKit </apinotes/MapKit>`                                 | `pyobjc-framework-MapKit`_                  |                                         |
 +------------------------------------------------------------------+---------------------------------------------+-----------------------------------------+
@@ -248,6 +254,8 @@ The framework name links to API notes for that framework, the python packages li
 | MetalKit                                                         | -                                           | Not wrapped yet                         |
 +------------------------------------------------------------------+---------------------------------------------+-----------------------------------------+
 | MetalPerformanceShaders                                          | -                                           | Not wrapped yet                         |
++------------------------------------------------------------------+---------------------------------------------+-----------------------------------------+
+| MetricKit                                                        | -                                           | No public API on macOS                  |
 +------------------------------------------------------------------+---------------------------------------------+-----------------------------------------+
 | :doc:`ModelIO </apinotes/ModelIO>`                               | `pyobjc-framework-ModelIO`_                 |                                         |
 +------------------------------------------------------------------+---------------------------------------------+-----------------------------------------+
@@ -506,3 +514,5 @@ cannot be wrapped using PyObjC.
 .. _`pyobjc-framework-ExecutionPolicy`: https://pypi.org/project/pyobjc-framework-ExecutionPolicy/
 .. _`pyobjc-framework-QuickLookThumbnailing`: https://pypi.org/project/pyobjc-framework-QuickLookThumbnailing/
 .. _`pyobjc-framework-PushKit`: https://pypi.org/project/pyobjc-framework-PushKit/
+.. _`pyobjc-framework-LinkPresentation`: https://pypi.org/project/pyobjc-framework-LinkPresentation/
+.. _`pyobjc-framework-Logging`: https://pypi.org/project/pyobjc-framework-Logging/

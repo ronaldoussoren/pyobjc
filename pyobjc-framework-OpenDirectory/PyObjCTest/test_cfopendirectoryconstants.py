@@ -379,6 +379,8 @@ class TestCFOpenDirectoryConstants (TestCase):
         self.assertEqual(CFOpenDirectory.kODErrorCredentialsAccountDisabled, 5301)
         self.assertEqual(CFOpenDirectory.kODErrorCredentialsAccountExpired, 5302)
         self.assertEqual(CFOpenDirectory.kODErrorCredentialsAccountInactive, 5303)
+        self.assertEqual(CFOpenDirectory.kODErrorCredentialsAccountTemporarilyLocked, 5304)
+        self.assertEqual(CFOpenDirectory.kODErrorCredentialsAccountLocked, 5305)
         self.assertEqual(CFOpenDirectory.kODErrorCredentialsPasswordExpired, 5400)
         self.assertEqual(CFOpenDirectory.kODErrorCredentialsPasswordChangeRequired, 5401)
         self.assertEqual(CFOpenDirectory.kODErrorCredentialsPasswordQualityFailed, 5402)
@@ -510,6 +512,10 @@ class TestCFOpenDirectoryConstants (TestCase):
     def testConstants10_13(self):
         # Not actually exported...
         self.assertIsInstance(CFOpenDirectory.kODAuthenticationTypeClearTextReadOnly, unicode)
+
+    @min_os_level('10.15')
+    def testConstants10_15(self):
+        self.assertIsInstance(CFOpenDirectory.kODBackOffSeconds, unicode)
 
 if __name__ == "__main__":
     main()

@@ -19,6 +19,7 @@ class TestCIContext (TestCase):
     def testConstants10_12(self):
         self.assertIsInstance(kCIContextCacheIntermediates, unicode)
         self.assertIsInstance(kCIContextPriorityRequestLow, unicode)
+        self.assertIsInstance(kCIContextAllowLowPower, unicode)
 
     @min_os_level('10.13')
     def testConstants10_13(self):

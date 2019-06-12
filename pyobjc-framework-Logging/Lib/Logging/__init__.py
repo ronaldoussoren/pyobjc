@@ -1,5 +1,5 @@
 '''
-Python mapping for the PushKit framework.
+Python mapping for the Logging framework.
 
 This module does not contain docstrings for the wrapped code, check Apple's
 documentation for details on how to use these functions and classes.
@@ -9,13 +9,12 @@ import objc
 import sys
 import Foundation
 
-from PushKit import _metadata
-from PushKit import _PushKit
+from Logging import _metadata
 
-sys.modules['PushKit'] = mod = objc.ObjCLazyModule(
-    "PushKit",
-    "com.apple.pushkit",
-    objc.pathForFramework("/System/Library/Frameworks/PushKit.framework"),
+sys.modules['Logging'] = mod = objc.ObjCLazyModule(
+    "Logging",
+    "com.apple.logging",
+    objc.pathForFramework("/System/Library/Frameworks/Logging.framework"),
     _metadata.__dict__, _inline_list_, {
         '__doc__': __doc__,
         'objc': objc,
@@ -24,4 +23,4 @@ sys.modules['PushKit'] = mod = objc.ObjCLazyModule(
     }, (Foundation,))
 
 import sys
-del sys.modules['PushKit._metadata']
+del sys.modules['Logging._metadata']

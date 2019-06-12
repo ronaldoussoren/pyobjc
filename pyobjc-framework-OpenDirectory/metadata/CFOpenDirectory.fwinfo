@@ -5,7 +5,7 @@
   "externs": {
    "kODPolicyKeyContentDescription": { "typestr": "@" },
    "kODPolicyKeyEvaluationDetails": { "typestr": "@" },
-   "kODPolicyKeyPolicySatisfied": { "typestr": "@" }
+   "kODPolicyKeyPolicySatisfied": { "typestr": "@" },
    "kODAuthenticationTypeClearTextReadOnly": { "typestr": "@" }
   },
   "classes": {},

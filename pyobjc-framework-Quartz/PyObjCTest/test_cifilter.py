@@ -124,5 +124,9 @@ class TestCIFilter (TestCase):
     def testMethods10_9(self):
         self.assertArgIsOut(CIFilter.filterArrayFromSerializedXMP_inputImageExtent_error_, 2)
 
+    @min_sdk_level('10.15')
+    def test_protocols(self):
+        objc.protocolNamed('CIFilter')
+
 if __name__ == "__main__":
     main()

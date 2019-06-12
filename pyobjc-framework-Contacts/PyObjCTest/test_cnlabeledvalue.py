@@ -15,5 +15,9 @@ if sys.maxsize > 2**32:
             self.assertIsInstance(Contacts.CNLabelURLAddressHomePage, unicode)
             self.assertIsInstance(Contacts.CNLabelDateAnniversary, unicode)
 
+        @min_os_level("10.15")
+        def testConstants10_15(self):
+            self.assertIsInstance(Contacts.CNLabelSchool, unicode)
+
 if __name__ == "__main__":
     main()
