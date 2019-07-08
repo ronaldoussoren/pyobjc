@@ -291,6 +291,11 @@ class TestNSEvent (TestCase):
         self.assertEqual(NSPressureBehaviorPrimaryDeepClick, 5)
         self.assertEqual(NSPressureBehaviorPrimaryDeepDrag, 6)
 
+    @min_os_level('10.15')
+    def testConstants10_15(self):
+        self.assertEqual(NSEventTypeChangeMode, 38)
+        self.assertEqual(NSEventMaskChangeMode, 1 << NSEventTypeChangeMode)
+
     def testFunctions(self):
         v = NSEventMaskFromType(NSLeftMouseDown)
         self.assertEqual(v, NSLeftMouseDownMask)

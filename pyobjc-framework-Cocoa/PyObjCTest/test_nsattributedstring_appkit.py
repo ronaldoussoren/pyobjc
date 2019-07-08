@@ -117,6 +117,20 @@ class TestNSAttributedString (TestCase):
 
         self.assertEqual(NSUnderlineStyleByWord, 0x8000)
 
+        self.assertEqual(NSTextScalingStandard, 0)
+        self.assertEqual(NSTextScalingiOS, 1)
+
+    @min_os_level('10.14')
+    def testConstants10_14(self):
+        self.assertIsInstance(NSAppearanceDocumentAttribute, unicode)
+
+    @min_os_level('10.15')
+    def testConstants10_15(self):
+        self.assertIsInstance(NSTextScalingDocumentAttribute, unicode)
+        self.assertIsInstance(NSSourceTextScalingDocumentAttribute, unicode)
+        self.assertIsInstance(NSTargetTextScalingDocumentOption, unicode)
+        self.assertIsInstance(NSSourceTextScalingDocumentOption, unicode)
+
 
     def testMethods(self):
         self.assertArgIsOut(NSAttributedString.initWithURL_options_documentAttributes_error_, 2)

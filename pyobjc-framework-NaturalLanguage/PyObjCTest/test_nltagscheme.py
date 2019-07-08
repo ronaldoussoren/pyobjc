@@ -46,6 +46,9 @@ if sys.maxsize > 2 ** 32:
             self.assertIsInstance(NaturalLanguage.NLTagOrganizationName, unicode)
 
 
+        @min_os_level('10.15')
+        def test_constants10_15(self):
+            self.assertIsInstance(NaturalLanguage.NLTagSchemeSentimentScore, unicode)
 
 if __name__ == "__main__":
     main()

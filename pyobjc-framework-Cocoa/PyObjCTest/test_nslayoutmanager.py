@@ -273,7 +273,15 @@ class TestNSLayoutManager (TestCase):
         self.assertArgIsBlock(NSLayoutManager.enumerateLineFragmentsForGlyphRange_usingBlock_, 1, b'v' + NSRect.__typestr__ + NSRect.__typestr__ + b'@' + NSRange.__typestr__ + b'o^Z')
         self.assertArgIsBlock(NSLayoutManager.enumerateEnclosingRectsForGlyphRange_withinSelectedGlyphRange_inTextContainer_usingBlock_, 3, b'v' + NSRect.__typestr__ + b'o^Z')
 
-        self.assertResultIsBOOL
+    @min_os_level('10.15')
+    def testMethods10_15(self):
+        self.assertResultIsBOOL(NSLayoutManager.usesDefaultHyphenation)
+        self.assertArgIsBOOL(NSLayoutManager.setUsesDefaultHyphenation_, 0)
+
+        self.assertArgIsIn(NSLayoutManager.showCGGlyphs_positions_count_font_textMatrix_attributes_inContext_, 0)
+        self.assertArgSizeInArg(NSLayoutManager.showCGGlyphs_positions_count_font_textMatrix_attributes_inContext_, 0, 2)
+        self.assertArgIsIn(NSLayoutManager.showCGGlyphs_positions_count_font_textMatrix_attributes_inContext_, 1)
+        self.assertArgSizeInArg(NSLayoutManager.showCGGlyphs_positions_count_font_textMatrix_attributes_inContext_, 1, 2)
 
 
 if __name__ == "__main__":

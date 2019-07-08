@@ -97,9 +97,17 @@ class TestNSFontDescriptor (TestCase):
         self.assertIsInstance(NSFontWeightHeavy, float)
         self.assertIsInstance(NSFontWeightBlack, float)
 
+    @min_os_level('10.15')
+    def testConstants10_15(self):
+        self.assertIsInstance(NSFontDescriptorSystemDesignDefault, unicode)
+        self.assertIsInstance(NSFontDescriptorSystemDesignSerif, unicode)
+        self.assertIsInstance(NSFontDescriptorSystemDesignMonospaced, unicode)
+        self.assertIsInstance(NSFontDescriptorSystemDesignRounded, unicode)
+
     @min_os_level('10.13')
     def testMethods10_13(self):
         self.assertResultIsBOOL(NSFontDescriptor.requiresFontAssetRequest)
+
 
 
 if __name__ == "__main__":

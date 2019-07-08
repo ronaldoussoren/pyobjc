@@ -143,4 +143,12 @@ static void __attribute__((__used__)) use_protocols(void)
     p = PyObjC_IdToPython(@protocol(NSViewToolTipOwner)); Py_XDECREF(p);
     p = PyObjC_IdToPython(@protocol(NSUserActivityRestoring)); Py_XDECREF(p);
 #endif
+#if PyObjC_BUILD_RELEASE >= 1014
+    p = PyObjC_IdToPython(@protocol(NSCollectionLayoutContainer)); Py_XDECREF(p);
+    p = PyObjC_IdToPython(@protocol(NSCollectionLayoutEnvironment)); Py_XDECREF(p);
+    p = PyObjC_IdToPython(@protocol(NSCollectionLayoutVisibleItem)); Py_XDECREF(p);
+#endif
+#if PyObjC_BUILD_RELEASE >= 1015
+    p = PyObjC_IdToPython(@protocol(NSTextInputTraits)); Py_XDECREF(p);
+#endif
 }

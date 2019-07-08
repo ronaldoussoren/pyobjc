@@ -40,6 +40,12 @@ if sys.maxsize > 2**32:
             self.assertEqual(EventKit.EKErrorProcedureAlarmsNotMutable, 28)
             self.assertEqual(EventKit.EKErrorEventStoreNotAuthorized, 29)
             self.assertEqual(EventKit.EKErrorOSNotSupported, 30)
+            self.assertEqual(EventKit.EKErrorInvalidInviteReplyCalendar, 31)
+            self.assertEqual(EventKit.EKErrorNotificationsCollectionFlagNotSet, 32)
+            self.assertEqual(EventKit.EKErrorSourceMismatch, 33)
+            self.assertEqual(EventKit.EKErrorNotificationCollectionMismatch, 34)
+            self.assertEqual(EventKit.EKErrorNotificationSavedWithoutCollection, 35)
+
             self.assertEqual(EventKit.EKErrorLast, 31)
 
 if __name__ == '__main__':

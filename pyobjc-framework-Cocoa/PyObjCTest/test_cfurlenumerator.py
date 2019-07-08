@@ -50,6 +50,7 @@ class TestCFURLEnumerator (TestCase):
         self.assertEqual(kCFURLEnumeratorSkipPackageContents, 1<<3)
         self.assertEqual(kCFURLEnumeratorIncludeDirectoriesPreOrder, 1<<4)
         self.assertEqual(kCFURLEnumeratorIncludeDirectoriesPostOrder, 1<<5)
+        self.assertEqual(kCFURLEnumeratorGenerateRelativePathURLs, 1<<6)
         self.assertEqual(kCFURLEnumeratorSuccess, 1)
         self.assertEqual(kCFURLEnumeratorEnd, 2)
         self.assertEqual(kCFURLEnumeratorError, 3)

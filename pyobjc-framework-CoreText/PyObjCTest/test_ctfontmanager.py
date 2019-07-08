@@ -7,8 +7,10 @@ class TestCTFontManager (TestCase):
     def testConstants10_6(self):
         self.assertEqual(kCTFontManagerScopeNone, 0)
         self.assertEqual(kCTFontManagerScopeProcess, 1)
-        self.assertEqual(kCTFontManagerScopeUser, 2)
-        self.assertEqual(kCTFontManagerScopeSession, 3)
+        self.assertEqual(kCTFontManagerScopePersistent, 2)
+        self.assertEqual(kCTFontManagerScopeSession, 2)
+        self.assertEqual(kCTFontManagerScopeUser, kCTFontManagerScopePersistent)
+
 
         self.assertIsInstance(kCTFontManagerBundleIdentifier, unicode)
 
@@ -53,6 +55,16 @@ class TestCTFontManager (TestCase):
         self.assertResultIsCFRetained(CTFontManagerCreateFontDescriptorFromData)
         self.assertArgIsOut(CTFontManagerRegisterGraphicsFont, 1)
         self.assertArgIsOut(CTFontManagerUnregisterGraphicsFont, 1)
+
+    @min_os_level('10.15')
+    def testFunctions10_15(self):
+        self.assertArgIsBlock(CTFontManagerRegisterFontURLs, 2, objc._C_BOOL + objc._C_ID + objc._C_BOOL)
+        self.assertArgIsBlock(CTFontManagerUnregisterFontURLs, 2, objc._C_BOOL + objc._C_ID + objc._C_BOOL)
+        self.assertArgIsBlock(CTFontManagerRegisterFontDescriptors, 3, objc._C_BOOL + objc._C_ID + objc._C_BOOL)
+        self.assertArgIsBlock(CTFontManagerUnregisterFontDescriptors, 2, objc._C_BOOL + objc._C_ID + objc._C_BOOL)
+
+        self.assertResultIsCFRetained(CTFontManagerCopyRegisteredFontDescriptors)
+        self.assertArgIsBlock(CTFontManagerRequestFonts, 1, b'v@')
 
 if __name__ == "__main__":
     main()

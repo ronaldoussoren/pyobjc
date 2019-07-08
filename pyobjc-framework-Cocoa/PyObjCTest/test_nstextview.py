@@ -221,6 +221,12 @@ class TestNSTextView (TestCase):
         self.assertResultIsBOOL(NSTextView.allowsCharacterPickerTouchBarItem)
         self.assertArgIsBOOL(NSTextView.setAllowsCharacterPickerTouchBarItem_, 0)
 
+    @min_os_level('10.14')
+    def testMethods10_14(self):
+        self.assertResultIsBOOL(NSTextView.performValidatedReplacementInRange_withAttributedString_)
+        self.assertResultIsBOOL(NSTextView.usesAdaptiveColorMappingForDarkAppearance)
+        self.assertArgIsBOOL(NSTextView.setUsesAdaptiveColorMappingForDarkAppearance_, 0)
+
     @min_os_level('10.6')
     def testProtocols10_6(self):
         self.assertArgHasType(TestNSTextViewHelper.textView_willCheckTextInRange_options_types_, 1, NSRange.__typestr__)

@@ -110,6 +110,10 @@ class TestNSApplication (TestCase):
 
         self.assertEqual(NSWindowListOrderedFrontToBack, 1<<0)
 
+        self.assertEqual(NSModalResponseStop, -1000)
+        self.assertEqual(NSModalResponseAbort, -1001)
+        self.assertEqual(NSModalResponseContinue, -1002)
+
 
     def testFunctions(self):
         # Testing the next function is not doable in this context...
@@ -250,8 +254,8 @@ class TestNSApplication (TestCase):
 
         self.assertIsInstance(NSApplicationDidChangeOcclusionStateNotification, unicode)
 
-    @min_os_level('10.11')
-    def testConstants10_11(self):
+    @min_os_level('10.11.2')
+    def testConstants10_11_2(self):
         self.assertEqual(NSApplicationPresentationDisableCursorLocationAssistance, 1 << 12)
 
     @min_os_level('10.13')

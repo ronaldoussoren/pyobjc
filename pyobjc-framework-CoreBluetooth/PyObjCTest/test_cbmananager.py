@@ -12,5 +12,12 @@ class TestCBManager (TestCase):
         self.assertEqual(CoreBluetooth.CBManagerStatePoweredOff, 4)
         self.assertEqual(CoreBluetooth.CBManagerStatePoweredOn, 5)
 
+        self.assertEqual(CoreBluetooth.CBManagerAuthorizationNotDetermined, 0)
+        self.assertEqual(CoreBluetooth.CBManagerAuthorizationRestricted, 1)
+        self.assertEqual(CoreBluetooth.CBManagerAuthorizationDenied, 2)
+        self.assertEqual(CoreBluetooth.CBManagerAuthorizationAllowedWhileInUse, 3)
+        self.assertEqual(CoreBluetooth.CBManagerAuthorizationAllowedAlways, 4)
+
+
 if __name__ == "__main__":
     main()

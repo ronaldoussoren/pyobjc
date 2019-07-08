@@ -164,5 +164,29 @@ class TestNSWorkspace(TestCase):
     def testMethods10_14(self):
         self.assertArgIsBlock(NSWorkspace.requestAuthorizationOfType_completionHandler_, 1, b'v@@')
 
+    @min_os_level('10.15')
+    def testMethods10_15(self):
+        self.assertArgIsBlock(NSWorkspace.openURL_configuration_completionHandler_, 2, b'v@@')
+        self.assertArgIsBlock(NSWorkspace.openURL_withApplicationAtURL_configuration_completionHandler_, 3, b'v@@')
+        self.assertArgIsBlock(NSWorkspace.openApplicationAtURL_configuration_completionHandler_, 2, b'v@@')
+
+        self.assertResultIsBOOL(NSWorkspaceOpenConfiguration.promptsUserIfNeeded)
+        self.assertResultIsBOOL(NSWorkspaceOpenConfiguration.addsToRecentItems)
+        self.assertResultIsBOOL(NSWorkspaceOpenConfiguration.activates)
+        self.assertResultIsBOOL(NSWorkspaceOpenConfiguration.hides)
+        self.assertResultIsBOOL(NSWorkspaceOpenConfiguration.hidesOthers)
+        self.assertResultIsBOOL(NSWorkspaceOpenConfiguration.isForPrinting)
+        self.assertResultIsBOOL(NSWorkspaceOpenConfiguration.createsNewApplicationInstance)
+        self.assertResultIsBOOL(NSWorkspaceOpenConfiguration.requiresUniversalLinks)
+
+        self.assertArgIsBOOL(NSWorkspaceOpenConfiguration.setPromptsUserIfNeeded_, 0)
+        self.assertArgIsBOOL(NSWorkspaceOpenConfiguration.setAddsToRecentItems_, 0)
+        self.assertArgIsBOOL(NSWorkspaceOpenConfiguration.setActivates_, 0)
+        self.assertArgIsBOOL(NSWorkspaceOpenConfiguration.setHides_, 0)
+        self.assertArgIsBOOL(NSWorkspaceOpenConfiguration.setHidesOthers_, 0)
+        self.assertArgIsBOOL(NSWorkspaceOpenConfiguration.setIsForPrinting_, 0)
+        self.assertArgIsBOOL(NSWorkspaceOpenConfiguration.setCreatesNewApplicationInstance_, 0)
+        self.assertArgIsBOOL(NSWorkspaceOpenConfiguration.setRequiresUniversalLinks_, 0)
+
 if __name__ == '__main__':
     main( )

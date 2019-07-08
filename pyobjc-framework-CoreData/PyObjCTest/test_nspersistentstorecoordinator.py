@@ -79,6 +79,16 @@ class TestNSPersistentStoreCoordinator (TestCase):
         self.assertIsInstance(NSBinaryStoreSecureDecodingClasses, unicode)
         self.assertIsInstance(NSBinaryStoreInsecureDecodingCompatibilityOption, unicode)
 
+    @min_os_level("10.14")
+    def testConstants10_14(self):
+        self.assertIsInstance(NSPersistentStoreRemoteChangeNotification, unicode)
+        self.assertIsInstance(NSPersistentStoreURLKey, unicode)
+        self.assertIsInstance(NSPersistentHistoryTokenKey, unicode)
+
+    @min_os_level("10.15")
+    def testConstants10_15(self):
+        self.assertIsInstance(NSPersistentStoreRemoteChangeNotificationPostOptionKey, unicode)
+
     def testMethods(self):
         self.assertArgIsOut(NSPersistentStoreCoordinator.addPersistentStoreWithType_configuration_URL_options_error_, 4)
         self.assertResultIsBOOL(NSPersistentStoreCoordinator.removePersistentStore_error_)

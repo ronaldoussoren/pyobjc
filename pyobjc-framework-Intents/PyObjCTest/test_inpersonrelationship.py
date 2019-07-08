@@ -19,6 +19,10 @@ if sys.maxsize > 2 ** 32:
             self.assertIsInstance(Intents.INPersonRelationshipAssistant, unicode)
             self.assertIsInstance(Intents.INPersonRelationshipManager, unicode)
 
+        @min_os_level('10.15')
+        def testConstants10_15(self):
+            self.assertIsInstance(Intents.INPersonRelationshipSon, unicode)
+            self.assertIsInstance(Intents.INPersonRelationshipDaughter, unicode)
 
 if __name__ == "__main__":
     main()

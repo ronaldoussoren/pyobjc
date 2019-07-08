@@ -47,6 +47,14 @@ if sys.maxsize > 2**32:
         def testMethods10_9(self):
             self.assertArgIsBlock(EventKit.EKEventStore.requestAccessToEntityType_completion_, 1, b"vZ@")
 
+        @min_os_level('10.14')
+        def testMethods10_14(self):
+            self.assertResultIsBOOL(EventKit.EKEventStore.saveEvent_span_error_)
+            self.assertArgIsOut(EventKit.EKEventStore.saveEvent_span_error_, 2)
+
+            self.assertResultIsBOOL(EventKit.EKEventStore.removeEvent_span_error_)
+            self.assertArgIsOut(EventKit.EKEventStore.removeEvent_span_error_, 2)
+
         @min_os_level('10.8')
         def testConstants10_8(self):
             self.assertEqual(EventKit.EKSpanThisEvent, 0)
