@@ -42,6 +42,10 @@ class TestICDevice (TestCase):
     def testConstants10_8(self):
         self.assertIsInstance(ICStatusCodeKey, unicode)
 
+    @min_os_level('10.15')
+    def testConstants10_15(self):
+        self.assertIsInstance(ICEnumerationChronologicalOrder, unicode)
+
     def testProtocolObjects(self):
         objc.protocolNamed('ICDeviceDelegate')
 
@@ -53,6 +57,11 @@ class TestICDevice (TestCase):
 
         self.assertArgIsSEL(ICDevice.requestSendMessage_outData_maxReturnedDataSize_sendMessageDelegate_didSendMessageSelector_contextInfo_, 4, b'v@:I@@^v')
 
+    @min_os_level('10.15')
+    def testMethods10_15(self):
+        self.assertArgIsBlock(ICDevice.requestOpenSessionWithOptions_completion_, 1, b'v@')
+        self.assertArgIsBlock(ICDevice.requestCloseSessionWithOptions_completion_, 1, b'v@')
+        self.assertArgIsBlock(ICDevice.requestEjectWithCompletion_, 0, b'v@')
 
 if __name__ == "__main__":
     main()

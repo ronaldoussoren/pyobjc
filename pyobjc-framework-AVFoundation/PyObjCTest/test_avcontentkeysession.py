@@ -29,6 +29,12 @@ class TestAVContentKeySession (TestCase):
     def testConstants10_13(self):
         self.assertIsInstance(AVFoundation.AVContentKeySystemClearKey, unicode)
 
+    @min_os_level('10.15')
+    def testConstants10_15(self):
+        self.assertIsInstance(AVFoundation.AVContentKeySystemAuthorizationToken, unicode)
+        self.assertIsInstance(AVFoundation.AVContentKeySessionServerPlaybackContextOptionProtocolVersions, unicode)
+        self.assertIsInstance(AVFoundation.AVContentKeySessionServerPlaybackContextOptionServerChallenge, unicode)
+
     def testMethods(self):
         self.assertResultIsBOOL(TestAVContentKeySessionHelper.contentKeySession_shouldRetryContentKeyRequest_reason_)
         self.assertResultIsBOOL(TestAVContentKeySessionHelper.mayRequireContentKeysForMediaDataProcessing)
@@ -42,12 +48,21 @@ class TestAVContentKeySession (TestCase):
         self.assertArgIsOut(AVFoundation.AVContentKeyRequest.respondByRequestingPersistableContentKeyRequestAndReturnError_, 0)
 
 
-
     @expectedFailure
     @min_os_level('10.14')
     def testMethods10_14(self):
         # Documented as available...
         self.assertResultIsBOOL(AVFoundation.AVContentKeyRequest.renewsExpiringResponseData)
+
+    @min_os_level('10.5')
+    def testMethods10_5(self):
+        self.assertArgIsBlock(AVFoundation.AVContentKeySession.makeSecureTokenForExpirationDateOfPersistableContentKey_completionHandler_, 1, b'v@@')
+        self.assertArgIsBlock(AVFoundation.AVContentKeySession.invalidatePersistableContentKey_options_completionHandler_, 2, b'v@@')
+        self.assertArgIsBlock(AVFoundation.AVContentKeySession.invalidateAllPersistableContentKeysForApp_options__completionHandler_, 2, b'v@@')
+
+        self.assertResultIsBOOL(AVFoundation.AVContentKeyRequest.respondByRequestingPersistableContentKeyRequestAndReturnError_)
+        self.assertArgIsOut(AVFoundation.AVContentKeyRequest.respondByRequestingPersistableContentKeyRequestAndReturnError_, 0)
+
 
     @min_sdk_level('10.12.4')
     def testProtocols(self):

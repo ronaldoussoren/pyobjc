@@ -105,6 +105,12 @@ class TestCVImageBuffer (TestCase):
     def testConstants10_14(self):
         self.assertIsInstance(kCVImageBufferTransferFunction_Linear, unicode)
 
+    @min_os_level('10.15')
+    def testConstants10_15(self):
+        self.assertIsInstance(kCVImageBufferAlphaChannelModeKey, unicode)
+        self.assertIsInstance(kCVImageBufferAlphaChannelMode_StraightAlpha, unicode)
+        self.assertIsInstance(kCVImageBufferAlphaChannelMode_PremultipliedAlpha, unicode)
+
     def testFunctions(self):
         self.assertResultHasType(CVImageBufferGetEncodedSize, CGSize.__typestr__)
         self.assertResultHasType(CVImageBufferGetDisplaySize, CGSize.__typestr__)

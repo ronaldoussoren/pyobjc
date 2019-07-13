@@ -68,6 +68,11 @@ class TestCMMetadata (TestCase):
     def test_constants10_13(self):
         self.assertIsInstance(CoreMedia.kCMMetadataKeySpace_HLSDateRange, unicode)
 
+    @min_os_level('10.15')
+    def test_constants10_15(self):
+        self.assertIsInstance(CoreMedia.kCMMetadataIdentifier_QuickTimeMetadataLivePhotoStillImageTransform, unicode)
+        self.assertIsInstance(CoreMedia.kCMMetadataBaseDataType_PerspectiveTransformF64, unicode)
+
     @min_os_level('10.10')
     def test_functions10_10(self):
         self.assertArgIsOut(CoreMedia.CMMetadataCreateIdentifierForKeyAndKeySpace, 3)

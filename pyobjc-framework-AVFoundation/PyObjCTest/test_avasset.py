@@ -35,6 +35,7 @@ class TestAVAsset (TestCase):
         self.assertEqual(AVFoundation.AVAssetReferenceRestrictionForbidCrossSiteReference, 1 << 2)
         self.assertEqual(AVFoundation.AVAssetReferenceRestrictionForbidLocalReferenceToLocal, 1 << 3)
         self.assertEqual(AVFoundation.AVAssetReferenceRestrictionForbidAll, 0xFFFF)
+        self.assertEqual(AVFoundation.AVAssetReferenceRestrictionDefaultPolicy, AVFoundation.AVAssetReferenceRestrictionForbidLocalReferenceToRemote)
 
         self.assertIsInstance(AVFoundation.AVURLAssetPreferPreciseDurationAndTimingKey, unicode)
         self.assertIsInstance(AVFoundation.AVURLAssetReferenceRestrictionsKey, unicode)
@@ -46,6 +47,12 @@ class TestAVAsset (TestCase):
         self.assertIsInstance(AVFoundation.AVAssetWasDefragmentedNotification, unicode)
         self.assertIsInstance(AVFoundation.AVAssetChapterMetadataGroupsDidChangeNotification, unicode)
         self.assertIsInstance(AVFoundation.AVAssetMediaSelectionGroupsDidChangeNotification, unicode)
+
+    @min_os_level('10.15')
+    def testConstants10_15(self):
+        self.assertIsInstance(AVFoundation.AVURLAssetAllowsCellularAccessKey, unicode)
+        self.assertIsInstance(AVFoundation.AVURLAssetAllowsExpensiveNetworkAccessKey, unicode)
+        self.assertIsInstance(AVFoundation.AVURLAssetAllowsConstrainedNetworkAccessKey, unicode)
 
 
     @min_sdk_level('10.11')

@@ -60,4 +60,7 @@ static void __attribute__((__used__)) use_protocols(void)
     p = PyObjC_IdToPython(@protocol(NSItemProviderWriting)); Py_XDECREF(p);
     p = PyObjC_IdToPython(@protocol(NSItemProviderReading)); Py_XDECREF(p);
 #endif
+#if PyObjC_BUILD_RELEASE >= 1015
+    p = PyObjC_IdToPython(@protocol(NSURLSessionWebSocketDelegate)); Py_XDECREF(p);
+#endif
 }

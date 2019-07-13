@@ -24,6 +24,14 @@ class TestICCameraDevice (TestCase):
         self.assertIsInstance(ICDeleteAfterSuccessfulDownload, unicode)
         self.assertIsInstance(ICDownloadSidecarFiles, unicode)
 
+        self.assertIsInstance(ICDeleteSuccessful, unicode)
+        self.assertIsInstance(ICDeleteCanceled, unicode)
+        self.assertIsInstance(ICDeleteFailed, unicode)
+        self.assertIsInstance(ICDeleteErrorReadOnly, unicode)
+        self.assertIsInstance(ICDeleteErrorFileMissing, unicode)
+        self.assertIsInstance(ICDeleteErrorDeviceMissing, unicode)
+        self.assertIsInstance(ICDeleteErrorCanceled, unicode)
+
     @os_level_between('10.11', '10.11')
     def testConstants10_11(self):
         self.assertIsInstance(ICCameraDeviceSupportsFastPTP, unicode)
@@ -41,6 +49,11 @@ class TestICCameraDevice (TestCase):
         self.assertArgHasType(TestICCameraDeviceHelper.didReceiveDownloadProgressForFile_downloadedBytes_maxBytes_, 2, b'q')
 
     def testMethods(self):
+        self.assertResultIsBOOL(ICCameraDevice.isEjectable)
+        self.assertResultIsBOOL(ICCameraDevice.isLocked)
+        self.assertResultIsBOOL(ICCameraDevice.isAccessRestrictedAppleDevice)
+        self.assertResultIsBOOL(ICCameraDevice.iCloudPhotosEnabled)
+        self.assertResultIsBOOL(ICCameraDevice.tetheredCaptureEnabled)
         self.assertResultIsBOOL(ICCameraDevice.batteryLevelAvailable)
         self.assertResultIsBOOL(ICCameraDevice.isAccessRestrictedAppleDevice)
         self.assertResultIsBOOL(ICCameraDevice.tetheredCaptureEnabled)
@@ -49,6 +62,12 @@ class TestICCameraDevice (TestCase):
         self.assertArgIsSEL(ICCameraDevice.requestUploadFile_options_uploadDelegate_didUploadSelector_contextInfo_, 3, b'v@:@@^v')
         self.assertArgIsSEL(ICCameraDevice.requestReadDataFromFile_atOffset_length_readDelegate_didReadDataSelector_contextInfo_, 4, b'v@:@@@^v')
         self.assertArgIsSEL(ICCameraDevice.requestSendPTPCommand_outData_sendCommandDelegate_didSendCommandSelector_contextInfo_, 3, b'v@:@@@@^v')
+
+    @min_os_level('10.15')
+    def test_methods10_15(self):
+        self.assertArgIsBlock(ICCameraDevice.requestDeleteFiles_deleteFailed_completion_, 1, b'v@')
+        self.assertArgIsBlock(ICCameraDevice.requestDeleteFiles_deleteFailed_completion_, 2, b'v@@')
+
 
 if __name__ == "__main__":
     main()

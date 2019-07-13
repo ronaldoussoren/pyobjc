@@ -86,6 +86,14 @@ class TestNSData(TestCase):
 
         self.assertEqual(NSDataBase64DecodingIgnoreUnknownCharacters, 1<<0)
 
+    @min_os_level('10.15')
+    def testConstants10_15(self):
+        self.assertEqual(NSDataCompressionAlgorithmLZFSE, 0)
+        self.assertEqual(NSDataCompressionAlgorithmLZ4, 1)
+        self.assertEqual(NSDataCompressionAlgorithmLZMA, 2)
+        self.assertEqual(NSDataCompressionAlgorithmZlib, 3)
+
+
     @min_os_level('10.6')
     def testMethods10_6(self):
         self.assertResultHasType(NSData.rangeOfData_options_range_, NSRange.__typestr__)
@@ -106,6 +114,14 @@ class TestNSData(TestCase):
         ])
 
         self.assertArgIsBlock(NSData.initWithBytesNoCopy_length_deallocator_, 2, b'vn^v' + objc._C_NSUInteger)
+
+    @min_os_level('10.15')
+    def testMethods10_15(self):
+        self.assertResultIsBOOL(NSData.decompressUsingAlgorithm_error_)
+        self.assertArgIsOut(NSData.decompressUsingAlgorithm_error_, 1)
+
+        self.assertResultIsBOOL(NSData.compressUsingAlgorithm_error_)
+        self.assertArgIsOut(NSData.compressUsingAlgorithm_error_, 1)
 
     def assertDataContents(self, d1, d2, rawData):
         self.assertEqual(len(d1), d1.length(), "d1: len() and -length didn't match.")

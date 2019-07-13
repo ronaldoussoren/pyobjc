@@ -22,6 +22,10 @@ class TestCGColorConversion (TestCase):
     def testFunctions(self):
         self.assertResultIsCFRetained(CGColorConversionInfoCreate)
 
+    @min_os_level('10.14.6')
+    def testFunctions10_14_6(self):
+        self.assertResultIsCFRetained(CGColorConversionInfoCreateWithOptions)
+
     @expectedFailure
     @min_os_level('10.12')
     def testFunctionHard(self):

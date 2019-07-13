@@ -2,6 +2,8 @@ from PyObjCTools.TestSupport import *
 
 import AVFoundation
 
+AVSpeechSynthesizerBufferCallback = b'v@'
+
 class TestAVSpeechSynthesisHelper (AVFoundation.NSObject):
     def speechSynthesizer_willSpeakRangeOfSpeechString_utterance_(self, a, b, c): pass
 
@@ -12,6 +14,10 @@ class TestAVSpeechSynthesis (TestCase):
 
         self.assertEqual(AVFoundation.AVSpeechSynthesisVoiceQualityDefault, 1)
         self.assertEqual(AVFoundation.AVSpeechSynthesisVoiceQualityEnhanced, 2)
+
+        self.assertEqual(AVFoundation.AVSpeechSynthesisVoiceGenderUnspecified, 0)
+        self.assertEqual(AVFoundation.AVSpeechSynthesisVoiceGenderMale, 1)
+        self.assertEqual(AVFoundation.AVSpeechSynthesisVoiceGenderFemale, 2)
 
     @min_os_level('10.14')
     def testConstants10_14(self):
@@ -32,6 +38,10 @@ class TestAVSpeechSynthesis (TestCase):
         self.assertResultIsBOOL(AVFoundation.AVSpeechSynthesizer.stopSpeakingAtBoundary_)
         self.assertResultIsBOOL(AVFoundation.AVSpeechSynthesizer.pauseSpeakingAtBoundary_)
         self.assertResultIsBOOL(AVFoundation.AVSpeechSynthesizer.continueSpeaking)
+
+    @min_os_level('10.15')
+    def testMethods10_15(self):
+        self.assertArgIsBlock(AVFoundation.AVSpeechSynthesizer.writeUtterance_toBufferCallback_, 1, AVSpeechSynthesizerBufferCallback)
 
     @expectedFailure
     @min_sdk_level('10.14')

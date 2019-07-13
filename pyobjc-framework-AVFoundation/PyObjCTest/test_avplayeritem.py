@@ -53,5 +53,13 @@ class TestAVPlayerItem (TestCase):
         self.assertResultIsBOOL(AVFoundation.AVPlayerItem.canUseNetworkResourcesForLiveStreamingWhilePaused)
         self.assertArgIsBOOL(AVFoundation.AVPlayerItem.setCanUseNetworkResourcesForLiveStreamingWhilePaused_, 0)
 
+    @min_os_level('10.15')
+    def testMethods10_15(self):
+        self.assertResultIsBOOL(AVFoundation.AVPlayerItem.automaticallyPreservesTimeOffsetFromLive)
+        self.assertArgIsBOOL(AVFoundation.AVPlayerItem.setAutomaticallyPreservesTimeOffsetFromLive_, 0)
+
+        self.assertResultIsBOOL(AVFoundation.AVPlayerItem.isAudioSpatializationAllowed)
+        self.assertArgIsBOOL(AVFoundation.AVPlayerItem.setAudioSpatializationAllowed_, 0)
+
 if __name__ == "__main__":
     main()

@@ -35,6 +35,8 @@ class TestPDFDocument (TestCase):
         self.assertIsInstance(PDFDocumentCreationDateAttribute, unicode)
         self.assertIsInstance(PDFDocumentModificationDateAttribute, unicode)
         self.assertIsInstance(PDFDocumentKeywordsAttribute, unicode)
+        self.assertIsInstance(PDFDocumentOwnerPasswordOption, unicode)
+        self.assertIsInstance(PDFDocumentUserPasswordOption, unicode)
 
     def testMethods(self):
         self.assertResultIsBOOL(PDFDocument.isEncrypted)
@@ -63,9 +65,7 @@ class TestPDFDocument (TestCase):
         self.assertArgIsBOOL(PDFDocument.printOperationForPrintInfo_scalingMode_autoRotate_, 2)
 
     def testProtocols(self):
-        #self.assertIsInstance(protocols.PDFDocumentNotifications, objc.informal_protocol)
-        #self.assertIsInstance(protocols.PDFDocumentDelegate, objc.informal_protocol)
-        pass
+        objc.protocolNamed('PDFDocumentDelegate')
 
 
 if __name__ == "__main__":

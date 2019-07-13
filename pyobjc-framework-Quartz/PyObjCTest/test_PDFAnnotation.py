@@ -10,6 +10,23 @@ class TestPDFAnnotation (TestCase):
         self.assertArgIsBOOL(PDFAnnotation.setShouldPrint_, 0)
         self.assertResultIsBOOL(PDFAnnotation.hasAppearanceStream)
 
+        self.assertResultIsBOOL(PDFAnnotation.isMultiline)
+        self.assertArgIsBOOL(PDFAnnotation.setMultiline_, 0)
+        self.assertResultIsBOOL(PDFAnnotation.isPasswordField)
+        self.assertArgIsBOOL(PDFAnnotation.setIsPasswordField_, 0)
+        self.assertResultIsBOOL(PDFAnnotation.hasComb)
+        self.assertArgIsBOOL(PDFAnnotation.setComb_, 0)
+        self.assertResultIsBOOL(PDFAnnotation.allowsToggleToOff)
+        self.assertArgIsBOOL(PDFAnnotation.setAllowsToggleToOff_, 0)
+        self.assertResultIsBOOL(PDFAnnotation.radiosInUnison)
+        self.assertArgIsBOOL(PDFAnnotation.setRadiosInUnison_, 0)
+        self.assertResultIsBOOL(PDFAnnotation.isReadOnly)
+        self.assertArgIsBOOL(PDFAnnotation.setReadOnly_, 0)
+        self.assertResultIsBOOL(PDFAnnotation.isListChoice)
+        self.assertArgIsBOOL(PDFAnnotation.setListChoice_, 0)
+        self.assertResultIsBOOL(PDFAnnotation.isOpen)
+        self.assertArgIsBOOL(PDFAnnotation.setOpen_, 0)
+
     @min_os_level('10.12')
     def testMethods10_12(self):
         self.assertResultIsBOOL(PDFAnnotation.setValue_forAnnotationKey_)

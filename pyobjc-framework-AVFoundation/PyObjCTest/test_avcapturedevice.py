@@ -39,6 +39,7 @@ class TestAVCaptureDevice (TestCase):
         self.assertEqual(AVFoundation.AVCaptureExposureModeLocked, 0)
         self.assertEqual(AVFoundation.AVCaptureExposureModeAutoExpose, 1)
         self.assertEqual(AVFoundation.AVCaptureExposureModeContinuousAutoExposure, 2)
+        self.assertEqual(AVFoundation.AVCaptureExposureModeCustom, 3)
 
         self.assertEqual(AVFoundation.AVCaptureWhiteBalanceModeLocked, 0)
         self.assertEqual(AVFoundation.AVCaptureWhiteBalanceModeAutoWhiteBalance, 1)
@@ -51,6 +52,14 @@ class TestAVCaptureDevice (TestCase):
         self.assertEqual(AVFoundation.AVAuthorizationStatusRestricted, 1)
         self.assertEqual(AVFoundation.AVAuthorizationStatusDenied, 2)
         self.assertEqual(AVFoundation.AVAuthorizationStatusAuthorized, 3)
+
+    @min_os_level('10.15')
+    def test_constants10_15(self):
+        self.assertIsInstance(AVFoundation.AVCaptureDeviceTypeExternalUnknown, unicode)
+        self.assertIsInstance(AVFoundation.AVCaptureDeviceTypeBuiltInMicrophone, unicode)
+        self.assertIsInstance(AVFoundation.AVCaptureDeviceTypeBuiltInWideAngleCamera, unicode)
+
+        self.assertIsInstance(AVFoundation.AVCaptureMaxAvailableTorchLevel, float)
 
 
     @min_os_level('10.7')
@@ -81,6 +90,15 @@ class TestAVCaptureDevice (TestCase):
     @min_os_level('10.14')
     def testMethods10_14(self):
         self.assertArgIsBlock(AVFoundation.AVCaptureDevice.requestAccessForMediaType_completionHandler_, 1, b'vZ')
+
+    @min_os_level('10.15')
+    def testMethods10_15(self):
+        self.assertResultIsBOOL(AVFoundation.AVCaptureDevice.isFlashAvailable)
+        self.assertResultIsBOOL(AVFoundation.AVCaptureDevice.isTorchAvailable)
+        self.assertResultIsBOOL(AVFoundation.AVCaptureDevice.isTorchActive)
+
+        self.assertResultIsBOOL(AVFoundation.AVCaptureDevice.setTorchModeOnWithLevel_error_)
+        self.assertArgIsOut(AVFoundation.AVCaptureDevice.setTorchModeOnWithLevel_error_, 1)
 
 if __name__ == "__main__":
     main()

@@ -44,6 +44,9 @@ class TestNSURLSessionHelper (NSObject):
     def URLSession_downloadTask_didResumeAtOffset_expectedTotalBytes_(self, a, b, c, d): pass
     def URLSession_task_willBeginDelayedRequest_completionHandler_(self, a, b, c, d): pass
 
+class TestNSURLSessionWebSocketDelegateHelper (NSObject):
+    def URLSession_webSocketTask_didCloseWithCode_reason_(self, a, b, c, d): pass
+
 class TestNSURLSession (TestCase):
     def testConstants(self):
         self.assertEqual(NSURLSessionMultipathServiceTypeNone, 0)
@@ -54,6 +57,24 @@ class TestNSURLSession (TestCase):
         self.assertEqual(NSURLSessionDelayedRequestContinueLoading, 0)
         self.assertEqual(NSURLSessionDelayedRequestUseNewRequest, 1)
         self.assertEqual(NSURLSessionDelayedRequestCancel, 2)
+
+        self.assertEqual(NSURLSessionWebSocketMessageTypeData, 0)
+        self.assertEqual(NSURLSessionWebSocketMessageTypeString, 1)
+
+        self.assertEqual(NSURLSessionWebSocketCloseCodeInvalid, 0)
+        self.assertEqual(NSURLSessionWebSocketCloseCodeNormalClosure, 1000)
+        self.assertEqual(NSURLSessionWebSocketCloseCodeGoingAway, 1001)
+        self.assertEqual(NSURLSessionWebSocketCloseCodeProtocolError, 1002)
+        self.assertEqual(NSURLSessionWebSocketCloseCodeUnsupportedData, 1003)
+        self.assertEqual(NSURLSessionWebSocketCloseCodeNoStatusReceived, 1005)
+        self.assertEqual(NSURLSessionWebSocketCloseCodeAbnormalClosure, 1006)
+        self.assertEqual(NSURLSessionWebSocketCloseCodeInvalidFramePayloadData, 1007)
+        self.assertEqual(NSURLSessionWebSocketCloseCodePolicyViolation, 1008)
+        self.assertEqual(NSURLSessionWebSocketCloseCodeMessageTooBig, 1009)
+        self.assertEqual(NSURLSessionWebSocketCloseCodeMandatoryExtensionMissing, 1010)
+        self.assertEqual(NSURLSessionWebSocketCloseCodeInternalServerError, 1011)
+        self.assertEqual(NSURLSessionWebSocketCloseCodeTLSHandshakeFailure, 1015)
+
 
     @min_os_level('10.10')
     def testConstants10_10(self):
@@ -154,6 +175,17 @@ class TestNSURLSession (TestCase):
     def testMethods10_13(self):
         self.assertArgIsBlock(TestNSURLSessionHelper.URLSession_task_willBeginDelayedRequest_completionHandler_, 3, b'v' + objc._C_NSInteger + b'@')
 
+    @min_os_level('10.15')
+    def testMethods10_15(self):
+        self.assertArgIsBlock(NSURLSessionWebSocketTask.sendMessage_completionHandler_, 1, b'v@')
+        self.assertArgIsBlock(NSURLSessionWebSocketTask.receiveMessageWithCompletionHandler_, 0, b'v@@')
+        self.assertArgIsBlock(NSURLSessionWebSocketTask.sendPingWithPongReceiveHandler_, 0, b'v@')
+
+        self.assertResultIsBOOL(NSURLSessionConfiguration.isCellular)
+        self.assertResultIsBOOL(NSURLSessionConfiguration.isExpensive)
+        self.assertResultIsBOOL(NSURLSessionConfiguration.isConstrained)
+        self.assertResultIsBOOL(NSURLSessionConfiguration.isMultipath)
+
     @min_sdk_level('10.12')
     def testProtocols10_12(self):
         objc.protocolNamed('NSURLSessionTaskDelegate')
@@ -163,6 +195,8 @@ class TestNSURLSession (TestCase):
     @min_sdk_level('10.11')
     def testProtocols10_11(self):
         objc.protocolNamed('NSURLSessionStreamDelegate')
+
+        self.assertArgHasType(TestNSURLSessionWebSocketDelegateHelper.URLSession_webSocketTask_didCloseWithCode_reason_, 2, objc._C_NSInteger)
 
 if __name__ == "__main__":
     main()

@@ -5,6 +5,7 @@ from PyObjCTools.TestSupport import *
 class TestIKCameraDeviceView (TestCase):
     @min_os_level('10.6')
     def testConstants10_6(self):
+        self.assertEqual(IKCameraDeviceViewDisplayModeNone, -1)
         self.assertEqual(IKCameraDeviceViewDisplayModeTable, 0)
         self.assertEqual(IKCameraDeviceViewDisplayModeIcon, 1)
 
@@ -31,7 +32,7 @@ class TestIKCameraDeviceView (TestCase):
         self.assertResultIsBOOL(IKCameraDeviceView.canDownloadSelectedItems)
 
         self.assertArgIsBOOL(IKCameraDeviceView.selectIndexes_byExtendingSelection_, 1)
-    
+
     @min_sdk_level('10.10')
     def testProtocols(self):
 	# XXX: Require minimal deployment target of 10.6

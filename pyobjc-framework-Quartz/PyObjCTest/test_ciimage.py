@@ -68,6 +68,12 @@ class TestCIImage (TestCase):
     def testConstants10_14(self):
         self.assertIsInstance(kCIImageAuxiliaryPortraitEffectsMatte, unicode)
 
+    @min_os_level('10.15')
+    def testConstants10_15(self):
+        self.assertIsInstance(kCIImageAuxiliarySemanticSegmentationSkinMatte, unicode)
+        self.assertIsInstance(kCIImageAuxiliarySemanticSegmentationHairMatte, unicode)
+        self.assertIsInstance(kCIImageAuxiliarySemanticSegmentationTeethMatte, unicode)
+
     def testMethods(self):
         self.assertArgIsBOOL(CIImage.imageWithTexture_size_flipped_colorSpace_, 2)
         self.assertArgIsBOOL(CIImage.initWithTexture_size_flipped_colorSpace_, 2)

@@ -11,6 +11,8 @@ import AppKit
 from Quartz.PDFKit import _metadata
 from Quartz.PDFKit import _PDFKit
 
+# XXX: Moved to topelevel framework in 10.15
+
 sys.modules['Quartz.PDFKit'] = mod = objc.ObjCLazyModule('Quartz.PDFKit',
     "com.apple.PDFKit",
     objc.pathForFramework("/System/Library/Frameworks/Quartz.framework/Frameworks/PDFKit.framework"),

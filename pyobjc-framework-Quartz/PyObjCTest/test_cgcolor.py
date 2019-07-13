@@ -6,6 +6,13 @@ class TestCGColor (TestCase):
     def testTypes(self):
         self.assertIsCFType(CGColorRef)
 
+    @min_os_level('10.15')
+    def testFunctions10_15(self):
+        self.assertResultIsCFRetained(CGColorCreateGenericGrayGamma2_2)
+        color = CGColorCreateGenericGrayGamma2_2(1.5, 0.3)
+        self.assertIsInstance(color, CGColorRef)
+
+
     @min_os_level('10.11')
     def testFunctions10_11(self):
         self.assertResultIsCFRetained(CGColorCreateCopyByMatchingToColorSpace)

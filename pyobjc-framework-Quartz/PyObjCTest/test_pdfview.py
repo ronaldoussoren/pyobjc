@@ -104,7 +104,7 @@ class TestPDFView (TestCase):
         self.assertArgIsBOOL(PDFView.enablePageShadows_, 0)
 
     def testProtocols(self):
-        #self.assertIsInstance(protocols.PDFViewDelegate, objc.informal_protocol)
+        objc.protocolNamed('PDFViewDelegate')
 
         self.assertArgHasType(TestPDFViewHelper.PDFViewWillChangeScaleFactor_toScale_, 1, objc._C_CGFloat)
         self.assertResultHasType(TestPDFViewHelper.PDFViewWillChangeScaleFactor_toScale_, objc._C_CGFloat)

@@ -24,5 +24,8 @@ class TestAVSampleBufferDisplayLayer (TestCase):
         self.assertResultIsBOOL(AVFoundation.AVSampleBufferDisplayLayer.preventsCapture)
         self.assertArgIsBOOL(AVFoundation.AVSampleBufferDisplayLayer.setPreventsCapture_, 0)
 
+        self.assertResultIsBOOL(AVFoundation.AVSampleBufferDisplayLayer.preventsDisplaySleepDuringVideoPlayback)
+        self.assertArgIsBOOL(AVFoundation.AVSampleBufferDisplayLayer.setPreventsDisplaySleepDuringVideoPlayback_, 0)
+
 if __name__ == "__main__":
     main()

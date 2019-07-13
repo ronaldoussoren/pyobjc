@@ -62,6 +62,7 @@ class TestCMFormatDescription (TestCase):
         self.assertEqual(CoreMedia.kCMVideoCodecType_H263, fourcc(b'h263'))
         self.assertEqual(CoreMedia.kCMVideoCodecType_H264, fourcc(b'avc1'))
         self.assertEqual(CoreMedia.kCMVideoCodecType_HEVC, fourcc(b'hvc1'))
+        self.assertEqual(CoreMedia.kCMVideoCodecType_HEVCWithAlpha, fourcc(b'muxa'))
         self.assertEqual(CoreMedia.kCMVideoCodecType_MPEG4Video, fourcc(b'mp4v'))
         self.assertEqual(CoreMedia.kCMVideoCodecType_MPEG2Video, fourcc(b'mp2v'))
         self.assertEqual(CoreMedia.kCMVideoCodecType_MPEG1Video, fourcc(b'mp1v'))
@@ -326,6 +327,15 @@ class TestCMFormatDescription (TestCase):
     @min_os_level('10.14.4')
     def test_constants10_14_4(self):
         self.assertIsInstance(CoreMedia.kCMFormatDescriptionExtension_AlternativeTransferCharacteristics, unicode)
+
+    @min_os_level('10.15')
+    def test_constants10_15(self):
+        self.assertIsInstance(CoreMedia.kCMFormatDescriptionTransferFunction_sRGB, unicode)
+        self.assertIsInstance(CoreMedia.kCMFormatDescriptionExtension_AuxiliaryTypeInfo, unicode)
+        self.assertIsInstance(CoreMedia.kCMFormatDescriptionExtension_AlphaChannelMode, unicode)
+        self.assertIsInstance(CoreMedia.kCMFormatDescriptionAlphaChannelMode_StraightAlpha, unicode)
+        self.assertIsInstance(CoreMedia.kCMFormatDescriptionAlphaChannelMode_PremultipliedAlpha, unicode)
+        self.assertIsInstance(CoreMedia.kCMFormatDescriptionExtension_ContainsAlphaChannel, unicode)
 
     def test_structs(self):
         v = CoreMedia.CMVideoDimensions()

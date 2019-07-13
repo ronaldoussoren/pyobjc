@@ -91,5 +91,13 @@ class TestNSURLError (TestCase):
     def testConstants10_12(self):
         self.assertEqual(NSURLErrorFileOutsideSafeArea, -1104)
 
+    @min_os_level('10.15')
+    def testConstants10_15(self):
+        self.assertIsInstance(NSURLErrorNetworkUnavailableReasonKey, unicode)
+
+        self.assertEqual(NSURLErrorNetworkUnavailableReasonCellular, 0)
+        self.assertEqual(NSURLErrorNetworkUnavailableReasonExpensive, 1)
+        self.assertEqual(NSURLErrorNetworkUnavailableReasonConstrained, 2)
+
 if __name__ == "__main__":
     main()

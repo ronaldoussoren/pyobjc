@@ -96,5 +96,11 @@ class TestAVVideoSettings (TestCase):
         self.assertIsInstance(AVFoundation.AVVideoApertureModeProductionAperture, unicode)
         self.assertIsInstance(AVFoundation.AVVideoApertureModeEncodedPixels, unicode)
 
+    @min_os_level('10.15')
+    def testConstants10_15(self):
+        self.assertIsInstance(AVFoundation.AVVideoCodecTypeAppleProRes422HQ, unicode)
+        self.assertIsInstance(AVFoundation.AVVideoCodecTypeAppleProRes422LT, unicode)
+        self.assertIsInstance(AVFoundation.AVVideoCodecTypeAppleProRes422Proxy, unicode)
+
 if __name__ == "__main__":
     main()

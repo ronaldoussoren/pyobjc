@@ -89,6 +89,11 @@ class TestNSFileManager (TestCase):
 
         self.assertIsInstance(NSFileManagerUnmountDissentingProcessIdentifierErrorKey, unicode)
 
+    @min_os_level('10.15')
+    def testConstants10_15(self):
+        self.assertEqual(NSDirectoryEnumerationIncludesDirectoriesPostOrder, 1 << 3)
+        self.assertEqual(NSDirectoryEnumerationProducesRelativePathURLs, 1 << 4)
+
     @min_os_level('10.6')
     def testMethods10_6(self):
         self.assertArgIsOut(NSFileManager.contentsOfDirectoryAtURL_includingPropertiesForKeys_options_error_, 3)
@@ -301,6 +306,10 @@ class TestNSFileManager (TestCase):
     @min_os_level('10.13')
     def testMethods10_13(self):
         self.assertArgIsBlock(NSFileManager.getFileProviderMessageInterfacesForItemAtURL_completionHandler_, 1, b'v@@')
+
+    @min_os_level('10.15')
+    def testMethods10_15(self):
+        self.assertResultIsBOOL(NSFileManager.isEnumeratingDirectoryPostOrder)
 
     def testProtocols(self):
         self.assertResultIsBOOL(TestNSFileManagerHelper.fileManager_shouldProceedAfterError_)

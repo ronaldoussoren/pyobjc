@@ -30,6 +30,34 @@ class TestNSFileHandle (TestCase):
         self.assertResultIsBlock(NSFileHandle.readabilityHandler, b'v@')
         self.assertResultIsBlock(NSFileHandle.writeabilityHandler, b'v@')
 
+    @min_os_level('10.15')
+    def testMethods10_15(self):
+        self.assertArgIsOut(NSFileHandle.readDataToEndOfFileAndReturnError_, 0)
+        self.assertArgIsOut(NSFileHandle.readDataUpToLength_error_, 1)
+
+        self.assertResultIsBOOL(NSFileHandle.writeData_error_)
+        self.assertArgIsOut(NSFileHandle.writeData_error_, 1)
+
+        self.assertResultIsBOOL(NSFileHandle.getOffset_error_)
+        self.assertArgIsOut(NSFileHandle.getOffset_error_, 0)
+        self.assertArgIsOut(NSFileHandle.getOffset_error_, 1)
+
+        self.assertResultIsBOOL(NSFileHandle.seekToEndReturningOffset_error_)
+        self.assertArgIsOut(NSFileHandle.seekToEndReturningOffset_error_, 0)
+        self.assertArgIsOut(NSFileHandle.seekToEndReturningOffset_error_, 1)
+
+        self.assertResultIsBOOL(NSFileHandle.seekToOffset_error_)
+        self.assertArgIsOut(NSFileHandle.seekToOffset_error_, 1)
+
+        self.assertResultIsBOOL(NSFileHandle.truncateAtOffset_error_)
+        self.assertArgIsOut(NSFileHandle.truncateAtOffset_error_, 1)
+
+        self.assertResultIsBOOL(NSFileHandle.synchronizeAndReturnError_)
+        self.assertArgIsOut(NSFileHandle.synchronizeAndReturnError_, 0)
+
+        self.assertResultIsBOOL(NSFileHandle.closeAndReturnError_)
+        self.assertArgIsOut(NSFileHandle.closeAndReturnError_, 0)
+
 
 if __name__ == "__main__":
     main()

@@ -511,6 +511,10 @@ class TestNSArray (TestCase):
         self.assertArgIsOut(NSArray.initWithContentsOfURL_error_, 1)
         self.assertArgIsOut(NSArray.arrayWithContentsOfURL_error_, 1)
 
+    @min_os_level('10.15')
+    def testMethods10_15(self):
+        self.assertArgIsBlock(NSArray.differenceFromArray_withOptions_usingEquivalenceTest_, 2, b'b@@')
+
     @min_os_level('10.6')
     def testConstants10_6(self):
         self.assertEqual(NSBinarySearchingFirstEqual, 1 << 8)

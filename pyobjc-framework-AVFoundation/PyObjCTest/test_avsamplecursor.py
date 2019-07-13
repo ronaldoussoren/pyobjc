@@ -36,5 +36,10 @@ class TestAVSampleCursor (TestCase):
         self.assertIsInstance(v.chunkHasUniformSampleDurations, bool)
         self.assertIsInstance(v.chunkHasUniformFormatDescriptions, bool)
 
+        v = AVFoundation.AVSampleCursorAudioDependencyInfo()
+        self.assertIsInstance(v.audioSampleIsIndependentlyDecodable, bool)
+        self.assertIsInstance(v.audioSamplePacketRefreshCount, int)
+
+
 if __name__ == "__main__":
     main()

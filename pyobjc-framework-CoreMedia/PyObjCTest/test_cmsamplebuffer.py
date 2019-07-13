@@ -89,6 +89,10 @@ class TestCMSampleBuffer (TestCase):
         self.assertIsInstance(CoreMedia.kCMSampleAttachmentKey_HEVCStepwiseTemporalSubLayerAccess, unicode)
         self.assertIsInstance(CoreMedia.kCMSampleAttachmentKey_HEVCSyncSampleNALUnitType, unicode)
 
+    @min_os_level('10.15')
+    def test_constants10_15(self):
+        self.assertIsInstance(CoreMedia.kCMSampleAttachmentKey_AudioIndependentSampleDecoderRefreshCount, unicode)
+
     def test_types(self):
         self.assertIsCFType(CoreMedia.CMSampleBufferRef)
 

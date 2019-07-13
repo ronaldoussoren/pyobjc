@@ -103,6 +103,14 @@ class FoundationErrorsTest (TestCase):
         self.assertEqual(NSCloudSharingErrorMinimum, 5120)
         self.assertEqual(NSCloudSharingErrorMaximum, 5375)
 
+    @min_os_level('10.15')
+    def testConstants10_15(self):
+        self.assertEqual(NSCompressionFailedError, 5376)
+        self.assertEqual(NSDecompressionFailedError, 5377)
+        self.assertEqual(NSCompressionErrorMinimum, 5376)
+        self.assertEqual(NSCompressionErrorMaximum, 5503)
+
+
 
 if __name__ == "__main__":
     main()

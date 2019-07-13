@@ -18,5 +18,16 @@ class TestAVAudioIONode (TestCase):
         self.assertResultIsBOOL(AVFoundation.AVAudioInputNode.setManualRenderingInputPCMFormat_inputBlock_)
         self.assertArgIsBlock(AVFoundation.AVAudioInputNode.setManualRenderingInputPCMFormat_inputBlock_, 1, AVAudioIONodeInputBlock)
 
+    @min_os_level('10.15')
+    def testMethods10_15(self):
+        self.assertResultIsBOOL(AVFoundation.AVAudioInputNode.setVoiceProcessingEnabled_error_)
+        self.assertArgIsOut(AVFoundation.AVAudioInputNode.setVoiceProcessingEnabled_error_, 1)
+
+        self.assertResultIsBOOL(AVFoundation.AVAudioInputNode.isVoiceProcessingBypassed)
+        self.assertArgIsBOOL(AVFoundation.AVAudioInputNode.setVoiceProcessingBypassed_, 0)
+
+        self.assertResultIsBOOL(AVFoundation.AVAudioInputNode.isVoiceProcessingMuted)
+        self.assertArgIsBOOL(AVFoundation.AVAudioInputNode.setVoiceProcessingMuted_, 0)
+
 if __name__ == "__main__":
     main()

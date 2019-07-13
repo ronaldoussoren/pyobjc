@@ -26,6 +26,10 @@ if sys.maxsize > 2 ** 32:
             self.assertResultIsBOOL(GameController.GCEventViewController.controllerUserInteractionEnabled)
             self.assertArgIsBOOL(GameController.GCEventViewController.setControllerUserInteractionEnabled_, 0)
 
+        @min_os_level("10.14")
+        def testMethods10_14(self):
+            self.assertResultIsBOOL(GameController.GCEventViewController.isSnapshot)
+
         @min_os_level("10.9")
         def test_constants(self):
             self.assertIsInstance(GameController.GCControllerDidConnectNotification, unicode)

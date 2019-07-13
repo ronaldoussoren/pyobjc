@@ -47,6 +47,11 @@ class TestAVAssetExportSession (TestCase):
         self.assertIsInstance(AVFoundation.AVAssetExportPresetHEVC1920x1080, unicode)
         self.assertIsInstance(AVFoundation.AVAssetExportPresetHEVC3840x2160, unicode)
 
+    @min_os_level('10.15')
+    def testConstants10_13(self):
+        self.assertIsInstance(AVFoundation.AVAssetExportPresetHEVC1920x1080WithAlpha, unicode)
+        self.assertIsInstance(AVFoundation.AVAssetExportPresetHEVC3840x2160WithAlpha, unicode)
+
     @min_os_level('10.7')
     def testMethods(self):
         self.assertArgIsBlock(AVFoundation.AVAssetExportSession.determineCompatibilityOfExportPreset_withAsset_outputFileType_completionHandler_, 3, b'vZ')
@@ -59,6 +64,11 @@ class TestAVAssetExportSession (TestCase):
     def testMethods10_10(self):
         self.assertResultIsBOOL(AVFoundation.AVAssetExportSession.canPerformMultiplePassesOverSourceMediaData)
         self.assertArgIsBOOL(AVFoundation.AVAssetExportSession.setCanPerformMultiplePassesOverSourceMediaData_, 0)
+
+    @min_os_level('10.10')
+    def testMethods10_10(self):
+        self.assertArgIsBlock(AVFoundation.AVAssetExportSession.estimateMaximumDurationWithCompletionHandler_, 0, b'v' + AVFoundation.CMTime.__typestr__ + b'@')
+        self.assertArgIsBlock(AVFoundation.AVAssetExportSession.estimateOutputFileLengthWithCompletionHandler_, 0, b'vQ@')
 
 if __name__ == "__main__":
     main()

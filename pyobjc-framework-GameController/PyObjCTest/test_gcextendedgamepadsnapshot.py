@@ -48,8 +48,8 @@ if sys.maxsize > 2 ** 32:
             self.assertIsInstance(v.leftTrigger, float)
             self.assertIsInstance(v.rightTrigger, float)
 
-        @min_os_level("10.14")
-        def test_structs_10_14_4(self):
+        @min_os_level("10.14.1")
+        def test_structs_10_14_1(self):
             # XXX: Introduced in the 10.14.4 SDK
             self.assertEqual(GameController.GCExtendedGamepadSnapshotData.__struct_pack__, 1)
 
@@ -71,6 +71,7 @@ if sys.maxsize > 2 ** 32:
             self.assertIsInstance(v.leftTrigger, float)
             self.assertIsInstance(v.rightTrigger, float)
 
+            self.assertEqual(v.supportsClickableThumbsticks, False)
             self.assertEqual(v.leftThumbstickButton, False)
             self.assertEqual(v.rightThumbstickButton, False)
 

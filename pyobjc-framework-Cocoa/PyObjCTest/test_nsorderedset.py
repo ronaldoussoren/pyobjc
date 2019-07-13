@@ -2,6 +2,10 @@ from PyObjCTools.TestSupport import *
 from Foundation import *
 
 class TestNSOrderedSet (TestCase):
+    @min_os_level('10.14')
+    def testMethods10_14(self):
+        self.assertArgIsBlock(NSOrderedSet.differenceFromOrderedSet_withOptions_usingEquivalenceTest_, 2, b'Z@@')
+
     @min_os_level('10.7')
     def testMethods10_7(self):
         self.assertResultIsBOOL(NSOrderedSet.isEqualToOrderedSet_)

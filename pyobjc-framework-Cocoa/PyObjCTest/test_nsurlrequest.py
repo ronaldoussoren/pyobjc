@@ -17,7 +17,11 @@ class TestNSURLRequest (TestCase):
         self.assertEqual(NSURLNetworkServiceTypeBackground, 3)
         self.assertEqual(NSURLNetworkServiceTypeVoice, 4)
         self.assertEqual(NSURLNetworkServiceTypeResponsiveData, 6)
+        self.assertEqual(NSURLNetworkServiceTypeAVStreaming, 8)
+        self.assertEqual(NSURLNetworkServiceTypeResponsiveAV, 9)
         self.assertEqual(NSURLNetworkServiceTypeCallSignaling, 11)
+
+
 
     def testMethods(self):
         self.assertResultIsBOOL(NSURLRequest.HTTPShouldHandleCookies)
@@ -35,6 +39,17 @@ class TestNSURLRequest (TestCase):
         self.assertArgIsBOOL(NSMutableURLRequest.setAllowsCellularAccess_, 0)
 
         self.assertResultIsBOOL(NSURLRequest.supportsSecureCoding)
+
+    @min_os_level('10.15')
+    def testMethods10_15(self):
+        self.assertResultIsBOOL(NSURLRequest.allowsExpensiveNetworkAccess)
+        self.assertArgIsBOOL(NSMutableURLRequest.setAllowsExpensiveNetworkAccess_, 0)
+        self.assertResultIsBOOL(NSURLRequest.allowsConstrainedNetworkAccess)
+        self.assertArgIsBOOL(NSMutableURLRequest.setAllowsConstrainedNetworkAccess_, 0)
+
+    @min_sdk_level('10.15')
+    def test_protocols(self):
+        objc.protocolNamed('NSURLSessionWebSocketDelegate')
 
 if __name__ == "__main__":
     main()

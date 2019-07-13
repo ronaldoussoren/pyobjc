@@ -9,6 +9,10 @@ class TestAVAssetResourceLoaderHelper (AVFoundation.NSObject):
     def resourceLoader_shouldWaitForResponseToAuthenticationChallenge_(self, rl, r): return 1
 
 class TestAVAssetResourceLoader (TestCase):
+    @min_os_level('10.14')
+    def test_constants10_14(self):
+        self.assertIsInstance(AVFoundation.AVAssetResourceLoadingRequestStreamingContentKeyRequestRequiresPersistentKey, unicode)
+
     @min_os_level('10.9')
     def testProtocols(self):
         objc.protocolNamed('AVAssetResourceLoaderDelegate')
@@ -41,6 +45,10 @@ class TestAVAssetResourceLoader (TestCase):
     @min_os_level('10.14')
     def testMethods10_14(self):
         self.assertResultIsBOOL(AVFoundation.AVAssetResourceLoadingRequestor.providesExpiredSessionReports)
+
+    @min_os_level('10.15')
+    def testMethods10_15(self):
+        self.assertArgIsOut(AVFoundation.AVAssetResourceLoadingRequestor.persistentContentKeyFromKeyVendorResponse_options_error_, 2)
 
 if __name__ == "__main__":
     main()
