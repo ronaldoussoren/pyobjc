@@ -124,9 +124,9 @@
         "0": { "type": "^v" },
         "1": { "type": ["n^{AudioTimeStamp=dQdQ{SMPTETime=ssLLLssss}LL}", "n^{AudioTimeStamp=dQdQ{SMPTETime=ssIIIssss}II}" ] },
         "2": { "type": "^{AudioBufferList=I[1{AudioBuffer=II^v}]}" },
-        "3": { "type": ["n^{AudioTimeStamp=dQdQ{SMPTETime=ssLLLssss}LL}", "n^{AudioTimeStamp=dQdQ{SMPTETime=ssIIIssss}II}" ]
+        "3": { "type": ["n^{AudioTimeStamp=dQdQ{SMPTETime=ssLLLssss}LL}", "n^{AudioTimeStamp=dQdQ{SMPTETime=ssIIIssss}II}" ] },
         "4": { "type": "^{AudioBufferList=I[1{AudioBuffer=II^v}]}" },
-        "5": { "type": ["N^{AudioTimeStamp=dQdQ{SMPTETime=ssLLLssss}LL}", "N^{AudioTimeStamp=dQdQ{SMPTETime=ssIIIssss}II}" ]
+        "5": { "type": ["N^{AudioTimeStamp=dQdQ{SMPTETime=ssLLLssss}LL}", "N^{AudioTimeStamp=dQdQ{SMPTETime=ssIIIssss}II}" ] }
        },
        "retval": { "type": "v" }
       }
