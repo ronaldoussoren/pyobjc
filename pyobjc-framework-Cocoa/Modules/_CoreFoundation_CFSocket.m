@@ -56,12 +56,12 @@ mod_CFSocketCallBack(
         py_data = Py_None;
         Py_INCREF(py_data);
     } else if (type == kCFSocketConnectCallBack) {
-        py_data = PyInt_FromLong(*(SInt32*)data);
+        py_data = PyLong_FromLong(*(SInt32*)data);
         if (py_data == NULL) {
             PyObjCErr_ToObjCWithGILState(&state);
         }
     } else if (type == kCFSocketAcceptCallBack) {
-        py_data = PyInt_FromLong(*(CFSocketNativeHandle*)data);
+        py_data = PyLong_FromLong(*(CFSocketNativeHandle*)data);
         if (py_data == NULL) {
             PyObjCErr_ToObjCWithGILState(&state);
         }

@@ -290,7 +290,7 @@ mod_CFCalendarDecomposeAbsoluteTime(
     Py_ssize_t i, len;
     len = strlen(componentDesc);
     for (i = 0; i < len; i++) {
-        PyObject* v = PyInt_FromLong(params[i]);
+        PyObject* v = PyLong_FromLong(params[i]);
         if (v == NULL) {
             Py_DECREF(rv);
             return NULL;
@@ -411,7 +411,7 @@ mod_CFCalendarGetComponentDifference(
     Py_ssize_t i, len;
     len = strlen(componentDesc);
     for (i = 0; i < len; i++) {
-        PyObject* v = PyInt_FromLong(params[i]);
+        PyObject* v = PyLong_FromLong(params[i]);
         if (v == NULL) {
             Py_DECREF(rv);
             return NULL;

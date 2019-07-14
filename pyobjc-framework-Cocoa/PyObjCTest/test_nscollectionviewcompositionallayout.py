@@ -62,7 +62,7 @@ class TestNSCollectionViewCompositionalLayout (TestCase):
 
     @min_sdk_level('10.15')
     def test_functions_10_15(self):
-        v = AppKit.NSDirectionalEdgeInsetsMake(1, 2, ,3 4)
+        v = AppKit.NSDirectionalEdgeInsetsMake(1, 2, 3, 4)
         self.assertIsInstance(v, AppKit.AppKit.NSDirectionalEdgeInsets)
         self.assertEqual(v.top, 1.0)
         self.assertEqual(v.leading, 2.0)

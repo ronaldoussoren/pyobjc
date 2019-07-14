@@ -61,8 +61,8 @@ def parseDG(fdata):
             result.append(("run", item[1]))
         elif item[2] == "dg-output":
             value = item[3]
-            value = value.replace("\\-", "-")
-            value = value.replace("\-", "-")
+            value = value.replace(r"\\-", "-")
+            value = value.replace(r"\-", "-")
             if sys.version_info[0] == 3:
                 value = codecs.decode(value, "unicode_escape")
             else:
@@ -138,7 +138,7 @@ class DgTestCase(unittest.TestCase):
         if int(os.uname()[2].split(".")[0]) >= 11:
             # Workaround for compile failure on OSX 10.7
             # and Xcode 4.2
-            CFLAGS = re.sub("\s+-isysroot\s+\S+\s+", " ", CFLAGS)
+            CFLAGS = re.sub(r"\s+-isysroot\s+\S+\s+", " ", CFLAGS)
 
         CC = get_config_var("CC")
         CC += " -v"

@@ -85,7 +85,7 @@ objc_NSApplicationMain(
 
     if (res == -1 && PyErr_Occurred())
         return NULL;
-    return PyInt_FromLong(res);
+    return PyLong_FromLong(res);
 
 error_cleanup:
     if (argv != NULL) {

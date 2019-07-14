@@ -38,9 +38,9 @@ NSCoding support for Python objects
 -----------------------------------
 
 PyObjC implements the NSCoding protocol for any Python object
-that can be serialized using :mod:`pickle`. During serialization
-and deserialization PyObjC will use the same hooks and mechanisms
-as the :mod:`pickle` module.
+that can be serialized using :mod:`pickle` (without out of band
+buffers). During serialization and deserialization PyObjC will use
+the same hooks and mechanisms as the :mod:`pickle` module.
 
 Archiving instances of :class:`int`, :class:`float`, :class:`str`
 (:class:`unicode` in Python 2), :class:`bytes` (Python 3 only),

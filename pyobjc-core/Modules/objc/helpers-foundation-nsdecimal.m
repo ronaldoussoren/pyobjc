@@ -761,16 +761,18 @@ call_NSDecimalNumber_decimalNumberWithDecimal_(PyObject* method, PyObject* self,
         return NULL;
     }
 
-    PyObjC_DURING objc_superSetReceiver(super,
-                                        object_getClass(PyObjCClass_GetClass(self)));
-    objc_superSetClass(super, object_getClass(PyObjCSelector_GetClass(method)));
+    PyObjC_DURING
+        objc_superSetReceiver(super,
+            object_getClass(PyObjCClass_GetClass(self)));
+            objc_superSetClass(super, object_getClass(PyObjCSelector_GetClass(method)));
 
-    res = objc_msgSendSuper(&super, PyObjCSelector_GetSelector(method), *aDecimal);
-    PyObjC_HANDLER PyObjCErr_FromObjC(localException);
-    res = nil;
+        res = ((id(*)(struct objc_super*, SEL, NSDecimal))objc_msgSendSuper)(&super, PyObjCSelector_GetSelector(method), *aDecimal);
+    PyObjC_HANDLER
+        PyObjCErr_FromObjC(localException);
+        res = nil;
     PyObjC_ENDHANDLER
 
-        if (res == nil && PyErr_Occurred())
+    if (res == nil && PyErr_Occurred())
     {
         return NULL;
     }
@@ -793,7 +795,7 @@ call_NSDecimalNumber_initWithDecimal_(PyObject* method, PyObject* self,
     PyObjC_DURING objc_superSetReceiver(super, PyObjCObject_GetObject(self));
     objc_superSetClass(super, PyObjCSelector_GetClass(method));
 
-    res = objc_msgSendSuper(&super, PyObjCSelector_GetSelector(method), *aDecimal);
+    res = ((id(*)(struct objc_super*, SEL, NSDecimal))objc_msgSendSuper)(&super, PyObjCSelector_GetSelector(method), *aDecimal);
     PyObjC_HANDLER PyObjCErr_FromObjC(localException);
     res = nil;
     PyObjC_ENDHANDLER

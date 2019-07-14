@@ -336,15 +336,17 @@ call_instanceMethodForSelector_(PyObject* method, PyObject* self, PyObject* args
         return NULL;
     }
 
-    PyObjC_DURING retval = (IMP)objc_msgSend(
-        PyObjCClass_GetClass(self), PyObjCSelector_GetSelector(method), selector);
+    PyObjC_DURING
+        retval = ((IMP(*)(Class, SEL, SEL))objc_msgSend)(
+            PyObjCClass_GetClass(self), PyObjCSelector_GetSelector(method), selector);
 
-    PyObjC_HANDLER PyObjCErr_FromObjC(localException);
-    retval = NULL;
+    PyObjC_HANDLER
+        PyObjCErr_FromObjC(localException);
+        retval = NULL;
 
     PyObjC_ENDHANDLER
 
-        if (retval == NULL)
+    if (retval == NULL)
     {
         if (PyErr_Occurred()) {
             return NULL;
@@ -411,11 +413,12 @@ call_methodForSelector_(PyObject* method, PyObject* self, PyObject* args)
 
     objc_superSetClass(super, object_getClass(objc_superGetReceiver(super)));
 
-    PyObjC_DURING retval =
-        (IMP)objc_msgSendSuper(&super, PyObjCSelector_GetSelector(method), selector);
+    PyObjC_DURING
+        retval = ((IMP(*)(struct objc_super*, SEL, SEL))objc_msgSendSuper)(&super, PyObjCSelector_GetSelector(method), selector);
 
-    PyObjC_HANDLER PyObjCErr_FromObjC(localException);
-    retval = NULL;
+    PyObjC_HANDLER
+        PyObjCErr_FromObjC(localException);
+        retval = NULL;
     PyObjC_ENDHANDLER
 
         if (retval == NULL)

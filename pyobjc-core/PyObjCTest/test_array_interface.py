@@ -327,8 +327,7 @@ class MutableArrayTest(list_tests.CommonTest):
 
                 def __eq__(self, other):
                     del self.victim[:]
-
-                return False
+                    return False
 
             a = self.type2test()
             a[:] = [EvilCmp(a) for _ in range(100)]

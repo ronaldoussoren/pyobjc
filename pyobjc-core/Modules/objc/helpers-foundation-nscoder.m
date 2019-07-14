@@ -336,7 +336,7 @@ call_NSCoder_decodeValueOfObjCType_at_(PyObject* method, PyObject* self,
         objc_superSetReceiver(super, PyObjCObject_GetObject(self));
         objc_superSetClass(super, PyObjCSelector_GetClass(method));
 
-        (void)objc_msgSendSuper(&super, PyObjCSelector_GetSelector(method), typestr, buf);
+        ((void(*)(struct objc_super*, SEL, char*, void*))objc_msgSendSuper)(&super, PyObjCSelector_GetSelector(method), typestr, buf);
     }
 
     PyObjC_HANDLER PyObjCErr_FromObjC(localException);
@@ -454,7 +454,7 @@ call_NSCoder_decodeValueOfObjCType_at_size_(PyObject* method, PyObject* self,
         objc_superSetReceiver(super, PyObjCObject_GetObject(self));
         objc_superSetClass(super, PyObjCSelector_GetClass(method));
 
-        (void)objc_msgSendSuper(&super, PyObjCSelector_GetSelector(method), typestr, buf,
+        ((void(*)(struct objc_super*, SEL, char*, void*, NSUInteger))objc_msgSendSuper)(&super, PyObjCSelector_GetSelector(method), typestr, buf,
                                 size);
     }
 

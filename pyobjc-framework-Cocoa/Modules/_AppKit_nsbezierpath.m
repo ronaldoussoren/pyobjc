@@ -184,7 +184,7 @@ imp_NSBezierPath_elementAtIndex_associatedPoints_(
     PyTuple_SetItem(arglist, 0, pyself);
     Py_INCREF(pyself);
 
-    v = PyInt_FromLong(idx);
+    v = PyLong_FromLong(idx);
     if (v == NULL) goto error;
     PyTuple_SetItem(arglist, 1, v);
 

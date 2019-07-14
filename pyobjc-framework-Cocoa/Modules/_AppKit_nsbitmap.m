@@ -44,7 +44,7 @@ call_NSBitmapImageRep_getTIFFCompressionTypes_count_(
         return NULL;
     }
 
-    PyTuple_SetItem(result, 1, PyInt_FromLong(numTypes));
+    PyTuple_SetItem(result, 1, PyLong_FromLong(numTypes));
     if (PyTuple_GetItem(result, 1) == NULL) {
         Py_DECREF(result);
         return NULL;

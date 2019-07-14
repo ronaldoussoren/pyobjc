@@ -85,7 +85,7 @@ def sdkForPython(_cache=[]):
     if not _cache:
 
         cflags = _get_config_var("CFLAGS")
-        m = _re.search("-isysroot\s+([^ ]*)(\s|$)", cflags)
+        m = _re.search(r"-isysroot\s+([^ ]*)(\s|$)", cflags)
         if m is None:
             _cache.append(None)
             return None
