@@ -25,7 +25,6 @@ PyObjC_MODULE_INIT(_PushKit)
     }
 
     if (PyObjC_ImportAPI(m) == -1) PyObjC_INITERROR();
-    if (init_avaudiobuffer() == -1) PyObjC_INITERROR();
 
     PyObjC_INITDONE();
 }

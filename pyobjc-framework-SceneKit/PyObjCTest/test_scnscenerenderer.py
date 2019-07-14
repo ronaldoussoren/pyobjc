@@ -50,7 +50,7 @@ if os_level_key(os_release()) < os_level_key('10.12') or sys.maxsize >= 2**32:
         def setTemporalAntialiasingEnabled_(self, v): pass
         def currentViewport(self): return 1
         def useReverseZ(self): return 1
-        def setUseReverseZ(self, v): pass
+        def setUseReverseZ_(self, v): pass
 
 
 

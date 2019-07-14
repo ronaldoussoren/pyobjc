@@ -16,7 +16,7 @@ sys.modules['PushKit'] = mod = objc.ObjCLazyModule(
     "PushKit",
     "com.apple.pushkit",
     objc.pathForFramework("/System/Library/Frameworks/PushKit.framework"),
-    _metadata.__dict__, _inline_list_, {
+    _metadata.__dict__, None, {
         '__doc__': __doc__,
         'objc': objc,
         '__path__': __path__,

@@ -1,6 +1,6 @@
 
 import sys
-from PyObjCTest import *
+from PyObjCTools.TestSupport import *
 
 if sys.maxsize > 2 ** 32:
     import Logging

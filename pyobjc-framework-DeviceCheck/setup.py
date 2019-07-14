@@ -16,7 +16,7 @@ setup(
     name='pyobjc-framework-DeviceCheck',
     description = "Wrappers for the framework DeviceCheck on macOS",
     min_os_level="10.15",
-    packages = [ "WiFi" ],
+    packages = [ "DeviceCheck" ],
     version=VERSION,
     install_requires = [
         'pyobjc-core>='+VERSION,

@@ -5,9 +5,7 @@ if sys.maxsize >= 2 ** 32:
 
     import NetworkExtension
 
-     NEFilterPacketProviderVerdict (^NEFilterPacketHandler)(NEFilterPacketContext *context, _Nonnull nw_interface_t interface, NETrafficDirection direction, const void *packetBytes, const size_t packetLength)
-
-     NEFilterPacketHandler = objc._C_NSInteger + objc._C_ID + objc._C_ID + objc._C_NSInteger + objc._C_IN + objc._C_PTR + objc._C_VOID + objc._C_LNG
+    NEFilterPacketHandler = objc._C_NSInteger + objc._C_ID + objc._C_ID + objc._C_NSInteger + objc._C_IN + objc._C_PTR + objc._C_VOID + objc._C_LNG
 
     class TestNEFilterPacketProvider (TestCase):
         def test_constants(self):

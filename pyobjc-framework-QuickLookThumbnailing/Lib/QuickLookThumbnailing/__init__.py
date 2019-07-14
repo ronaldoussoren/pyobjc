@@ -15,7 +15,7 @@ sys.modules['QuickLookThumbnailing'] = mod = objc.ObjCLazyModule(
     "QuickLookThumbnailing",
     "com.apple.quicklookthumbnailing",
     objc.pathForFramework("/System/Library/Frameworks/QuickLookThumbnailing.framework"),
-    _metadata.__dict__, _inline_list_, {
+    _metadata.__dict__, None, {
         '__doc__': __doc__,
         'objc': objc,
         '__path__': __path__,

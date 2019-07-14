@@ -15,7 +15,7 @@ sys.modules['DeviceCheck'] = mod = objc.ObjCLazyModule(
     "DeviceCheck",
     "com.apple.devicecheck",
     objc.pathForFramework("/System/Library/Frameworks/DeviceCheck.framework"),
-    _metadata.__dict__, _inline_list_, {
+    _metadata.__dict__, None, {
         '__doc__': __doc__,
         'objc': objc,
         '__path__': __path__,

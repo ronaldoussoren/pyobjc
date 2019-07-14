@@ -7,7 +7,7 @@ if sys.maxsize > 2 ** 32:
 
     class TestAVPlayerViewHelper (AVKit.NSObject):
         def playerView_restoreUserInterfaceForPictureInPictureStopWithCompletionHandler_(self, a, b): pass
-        def playerViewShouldAutomaticallyDismissAtPictureInPictureStart_(self): return 1
+        def playerViewShouldAutomaticallyDismissAtPictureInPictureStart_(self, a): return 1
 
     class TestAVPlayerView (TestCase):
         @min_os_level("10.9")

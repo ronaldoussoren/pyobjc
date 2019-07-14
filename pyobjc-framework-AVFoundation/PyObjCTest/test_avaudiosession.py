@@ -50,4 +50,4 @@ class TestAVAudioSession (TestCase):
         self.assertEqual(AVFoundation.AVAudioSessionPromptStyleNormal, fourcc(b'nrml'))
 
 if __name__ == "__main__":
-main()
+    main()

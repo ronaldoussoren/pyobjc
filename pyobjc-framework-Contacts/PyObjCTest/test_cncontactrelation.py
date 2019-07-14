@@ -20,7 +20,6 @@ if sys.maxsize > 2**32:
             self.assertIsInstance(Contacts.CNLabelContactRelationAssistant, unicode)
             self.assertIsInstance(Contacts.CNLabelContactRelationManager, unicode)
 
-+
         @min_os_level("10.13")
         def testConstants10_13(self):
             self.assertIsInstance(Contacts.CNLabelContactRelationSon, unicode)
