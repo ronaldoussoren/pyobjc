@@ -43,6 +43,11 @@ class TestSecCertificate (TestCase):
         self.assertFalse(hasattr(Security, 'kSecCertTypeItemAttr'))
         self.assertFalse(hasattr(Security, 'kSecCertEncodingItemAttr'))
 
+    @min_os_level('10.15')
+    def test_constants10_15(self):
+        self.assertIsInstance(Security.kSecPropertyTypeArray, unicode)
+        self.assertIsInstance(Security.kSecPropertyTypeNumber, unicode)
+
     def test_functions(self):
         self.assertIsInstance(Security.SecCertificateGetTypeID(), (int, long))
 

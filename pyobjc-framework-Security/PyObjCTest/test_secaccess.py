@@ -33,8 +33,8 @@ class TestSecAccess (TestCase):
         self.assertIsInstance(Security.kSecACLAuthorizationKeychainItemDelete, unicode)
 
     @expectedFailureIf(os_release().rsplit('.',1)[0] in ('10.9', '10.10', '10.11', '10.12'))
-    @min_os_level('10.7')
-    def test_constants_10_7_missing(self):
+    @min_os_level('10.13')
+    def test_constants_10_13(self):
         self.assertIsInstance(Security.kSecACLAuthorizationChangeACL, unicode)
         self.assertIsInstance(Security.kSecACLAuthorizationChangeOwner, unicode)
 

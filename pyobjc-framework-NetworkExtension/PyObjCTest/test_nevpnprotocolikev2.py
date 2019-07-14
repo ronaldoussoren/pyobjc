@@ -14,6 +14,7 @@ if sys.maxsize >= 2 ** 32:
             self.assertEqual(NetworkExtension.NEVPNIKEv2EncryptionAlgorithmAES256, 4)
             self.assertEqual(NetworkExtension.NEVPNIKEv2EncryptionAlgorithmAES128GCM, 5)
             self.assertEqual(NetworkExtension.NEVPNIKEv2EncryptionAlgorithmAES256GCM, 6)
+            self.assertEqual(NetworkExtension.NEVPNIKEv2EncryptionAlgorithmChaCha20Poly1305, 7)
 
             self.assertEqual(NetworkExtension.NEVPNIKEv2IntegrityAlgorithmSHA96, 1)
             self.assertEqual(NetworkExtension.NEVPNIKEv2IntegrityAlgorithmSHA160, 2)
@@ -39,11 +40,13 @@ if sys.maxsize >= 2 ** 32:
             self.assertEqual(NetworkExtension.NEVPNIKEv2DiffieHellmanGroup19, 19)
             self.assertEqual(NetworkExtension.NEVPNIKEv2DiffieHellmanGroup20, 20)
             self.assertEqual(NetworkExtension.NEVPNIKEv2DiffieHellmanGroup21, 21)
+            self.assertEqual(NetworkExtension.NEVPNIKEv2DiffieHellmanGroup31, 31)
 
             self.assertEqual(NetworkExtension.NEVPNIKEv2CertificateTypeRSA, 1)
             self.assertEqual(NetworkExtension.NEVPNIKEv2CertificateTypeECDSA256, 2)
             self.assertEqual(NetworkExtension.NEVPNIKEv2CertificateTypeECDSA384, 3)
             self.assertEqual(NetworkExtension.NEVPNIKEv2CertificateTypeECDSA521, 4)
+            self.assertEqual(NetworkExtension.NEVPNIKEv2CertificateTypeEd25519, 5)
 
             self.assertEqual(NetworkExtension.NEVPNIKEv2TLSVersionDefault, 0)
             self.assertEqual(NetworkExtension.NEVPNIKEv2TLSVersion1_0, 1)

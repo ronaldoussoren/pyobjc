@@ -186,6 +186,10 @@ class TestAuthorizationDB (TestCase):
         self.assertIsInstance(Security.kSecAttrPersistantReference, unicode)
         self.assertIsInstance(Security.kSecAttrPersistentReference, unicode)
 
+    @min_os_level('10.15')
+    def test_constants_10_15(self):
+        self.assertIsInstance(Security.kSecUseDataProtectionKeychain, unicode)
+
     @min_os_level('10.6')
     def test_functions(self):
         self.assertResultHasType(Security.SecItemCopyMatching, objc._C_INT)

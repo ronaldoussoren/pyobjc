@@ -21,5 +21,11 @@ if sys.maxsize > 2 ** 32:
             self.assertArgHasType(Network.nw_advertise_descriptor_set_no_auto_rename, 1, objc._C_BOOL)
             self.assertResultHasType(Network.nw_advertise_descriptor_get_no_auto_rename, objc._C_BOOL)
 
+        @min_os_level('10.15')
+        def test_functions10_15(self):
+            Network.nw_advertise_descriptor_set_txt_record_object
+
+            self.assertResultIsRetained(Network.nw_advertise_descriptor_copy_txt_record_object)
+
 if __name__ == "__main__":
     main()

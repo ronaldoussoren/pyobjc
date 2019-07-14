@@ -5,6 +5,7 @@ if sys.maxsize > 2 ** 32:
     import Network
 
     nw_path_enumerate_interfaces_block_t = b'B@'
+    nw_path_enumerate_gateways_block_t = b'B@'
 
     class TestPath (TestCase):
         def test_constants(self):
@@ -28,6 +29,13 @@ if sys.maxsize > 2 ** 32:
             self.assertResultIsRetained(Network.nw_path_copy_effective_local_endpoint)
 
             self.assertResultIsRetained(Network.nw_path_copy_effective_remote_endpoint)
+
+        @min_os_level('10.15')
+        def test_functions10_15(self):
+            Network.nw_path_is_constrained
+
+            self.assertArgIsBlock(Network.nw_path_enumerate_gateways, 1, nw_path_enumerate_gateways_block_t)
+
 
 
 if __name__ == "__main__":

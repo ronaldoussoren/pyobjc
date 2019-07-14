@@ -16,6 +16,9 @@ if sys.maxsize > 2 ** 32:
             self.assertEqual(Network.nw_listener_state_failed, 3)
             self.assertEqual(Network.nw_listener_state_cancelled, 4)
 
+            self.assertEqual(Network.NW_LISTENER_INFINITE_CONNECTION_LIMIT, 0xFFFFFFFF)
+
+
         def test_functions(self):
             self.assertResultIsRetained(Network.nw_listener_create_with_port)
 
@@ -37,6 +40,11 @@ if sys.maxsize > 2 ** 32:
             Network.nw_listener_get_port
             Network.nw_listener_start
             Network.nw_listener_cancel
+
+        @min_os_level('10.15')
+        def test_functions10_15(self):
+            Network.nw_listener_get_new_connection_limit
+            Network.nw_listener_set_new_connection_limit
 
 if __name__ == "__main__":
     main()

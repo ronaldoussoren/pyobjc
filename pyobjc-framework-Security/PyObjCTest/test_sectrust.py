@@ -3,12 +3,12 @@ from PyObjCTools.TestSupport import *
 import Security
 
 SecTrustCallback = b'v@I'
+SecTrustWithErrorCallback = b'v@B@'
 
 class TestSecTrusted (TestCase):
 
     def test_types(self):
         self.assertIsCFType(Security.SecTrustRef)
-
 
     def test_constants(self):
         self.assertEqual(Security.kSecTrustResultInvalid, 0)
@@ -171,6 +171,11 @@ class TestSecTrusted (TestCase):
     @min_os_level('10.14.2')
     def test_functions_10_14_2(self):
         Security.SecTrustSetSignedCertificateTimestamps
+
+    @min_os_level('10.15')
+    def test_functions_10_15(self):
+        self.assertArgIsBlock(Security.SecTrustEvaluateAsyncWithError, 2, SecTrustWithErrorCallback)
+
 
 if __name__ == "__main__":
     main()

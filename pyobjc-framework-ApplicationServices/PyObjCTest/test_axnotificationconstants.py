@@ -42,6 +42,7 @@ class TestAXNotificationConstants (TestCase):
         self.assertEqual(HIServices.kAXUIElementsKey, "AXUIElementsKey")
         self.assertEqual(HIServices.kAXPriorityKey, "AXPriorityKey")
         self.assertEqual(HIServices.kAXAnnouncementKey, "AXAnnouncementKey")
+        self.assertEqual(HIServices.kAXUIElementTitleKey, "AXUIElementTitleKey")
 
         self.assertEqual(HIServices.kAXPriorityLow, 10)
         self.assertEqual(HIServices.kAXPriorityMedium, 50)

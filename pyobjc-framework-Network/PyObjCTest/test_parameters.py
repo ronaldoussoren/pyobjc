@@ -93,5 +93,13 @@ if sys.maxsize > 2 ** 32:
             Network.nw_parameters_set_include_peer_to_peer
             Network.nw_parameters_get_include_peer_to_peer
 
+        @min_os_level('10.15')
+        def test_functions10_15(self):
+            self.assertResultIsRetained(Network.nw_parameters_create_custom_ip)
+
+            Network.nw_parameters_set_prohibit_constrained
+            Network.nw_parameters_get_prohibit_constrained
+
+
 if __name__ == "__main__":
     main()

@@ -72,6 +72,10 @@ class TestCipherSuite (TestCase):
         self.assertEqual(Security.TLS_ECDH_anon_WITH_3DES_EDE_CBC_SHA, 0xC017)
         self.assertEqual(Security.TLS_ECDH_anon_WITH_AES_128_CBC_SHA, 0xC018)
         self.assertEqual(Security.TLS_ECDH_anon_WITH_AES_256_CBC_SHA, 0xC019)
+        self.assertEqual(Security.TLS_ECDHE_PSK_WITH_AES_128_CBC_SHA, 0xC035)
+        self.assertEqual(Security.TLS_ECDHE_PSK_WITH_AES_256_CBC_SHA, 0xC036)
+        self.assertEqual(Security.TLS_PSK_WITH_CHACHA20_POLY1305_SHA256, 0xCCAB)
+
         self.assertEqual(Security.TLS_NULL_WITH_NULL_NULL, 0x0000)
         self.assertEqual(Security.TLS_RSA_WITH_NULL_MD5, 0x0001)
         self.assertEqual(Security.TLS_RSA_WITH_NULL_SHA, 0x0002)
@@ -171,6 +175,13 @@ class TestCipherSuite (TestCase):
         self.assertEqual(Security.SSL_RSA_WITH_DES_CBC_MD5, 0xFF82)
         self.assertEqual(Security.SSL_RSA_WITH_3DES_EDE_CBC_MD5, 0xFF83)
         self.assertEqual(Security.SSL_NO_SUCH_CIPHERSUITE, 0xFFFF)
+
+        self.assertEqual(Security.kSSLCiphersuiteGroupDefault, 0)
+        self.assertEqual(Security.kSSLCiphersuiteGroupCompatibility, 1)
+        self.assertEqual(Security.kSSLCiphersuiteGroupLegacy, 2)
+        self.assertEqual(Security.kSSLCiphersuiteGroupATS, 3)
+        self.assertEqual(Security.kSSLCiphersuiteGroupATSCompatibility, 4)
+
 
 if __name__ == "__main__":
     main()

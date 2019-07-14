@@ -10,6 +10,7 @@ if sys.maxsize > 2 ** 32:
             self.assertEqual(Network.nw_endpoint_type_address, 1)
             self.assertEqual(Network.nw_endpoint_type_host, 2)
             self.assertEqual(Network.nw_endpoint_type_bonjour_service, 3)
+            self.assertEqual(Network.nw_endpoint_type_url, 4)
 
         def test_functions(self):
             Network.nw_endpoint_get_type
@@ -44,6 +45,12 @@ if sys.maxsize > 2 ** 32:
             self.assertResultIsNullTerminated(Network.nw_endpoint_get_bonjour_service_name)
             self.assertResultIsNullTerminated(Network.nw_endpoint_get_bonjour_service_type)
             self.assertResultIsNullTerminated(Network.nw_endpoint_get_bonjour_service_domain)
+
+        @min_os_level('10.15')
+        def test_functions10_15(self):
+            self.assertResultIsRetained(Network.nw_endpoint_create_url)
+
+            self.assertResultIsNullTerminated(Network.nw_endpoint_get_url)
 
 if __name__ == "__main__":
     main()

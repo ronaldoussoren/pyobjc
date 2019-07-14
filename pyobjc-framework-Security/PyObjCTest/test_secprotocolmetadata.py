@@ -41,5 +41,15 @@ class TestSecProtocolMetadata (TestCase):
         self.assertArgHasType(Security.sec_protocol_metadata_create_secret_with_context, 4, b'n^v')
         self.assertArgSizeInArg(Security.sec_protocol_metadata_create_secret_with_context, 4, 3)
 
+        Security.sec_protocol_metadata_get_negotiated_tls_ciphersuite
+
+        self.assertResultIsNullTerminated(Security.sec_protocol_metadata_get_server_name)
+        self.assertResultHasType(Security.sec_protocol_metadata_get_server_name, b'^t')
+
+    @min_os_level('10.15')
+    def test_functions10_15(self):
+        Security.sec_protocol_metadata_get_negotiated_tls_protocol_version
+
+
 if __name__ == "__main__":
     main()
