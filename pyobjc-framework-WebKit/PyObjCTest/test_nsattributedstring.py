@@ -1,5 +1,5 @@
 from PyObjCTools.TestSupport import *
-from WebKit import *
+import WebKit
 
 NSAttributedStringCompletionHandler = b'v@@@'
 

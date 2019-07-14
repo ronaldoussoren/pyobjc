@@ -556,7 +556,7 @@ m_CGPDFObjectGetValue(PyObject* self __attribute__((__unused__)),
                 res = CGPDFObjectGetValue(obj, type, &val);
                 return Py_BuildValue("NN",
                         PyBool_FromLong(res),
-                        PyText_FromString(val)
+                        PyUnicode_FromString(val)
                     );
             } else {
                 res = CGPDFObjectGetValue(obj, type, NULL);

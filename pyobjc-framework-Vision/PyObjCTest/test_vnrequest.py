@@ -7,7 +7,7 @@ VNRequestProgressHandler = b'v@d@'
 if sys.maxsize >= 2**32:
     import Vision
 
-    class TestVNRequestHelper (Vision.NSObbject):
+    class TestVNRequestHelper (Vision.NSObject):
         def progressHandler(self): return 1
         def setProgressHandler_(self, v): pass
         def indeterminate(self): return 1
