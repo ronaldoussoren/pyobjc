@@ -2355,7 +2355,7 @@
      },
      {
       "name": "mode",
-      "typestr": "I"
+      "typestr": "i"
      }
     ],
     "retval": {
@@ -2576,7 +2576,7 @@
      }
     ],
     "retval": {
-     "typestr": "I"
+     "typestr": "i"
     }
    },
    "CGContextGetPathBoundingBox": {
@@ -2687,7 +2687,7 @@
      },
      {
       "name": "mode",
-      "typestr": "I"
+      "typestr": "i"
      }
     ],
     "retval": {
@@ -2799,7 +2799,7 @@
      },
      {
       "name": "textEncoding",
-      "typestr": "I"
+      "typestr": "i"
      }
     ],
     "retval": {
@@ -2889,7 +2889,7 @@
      },
      {
       "name": "mode",
-      "typestr": "I"
+      "typestr": "i"
      }
     ],
     "retval": {
@@ -3128,7 +3128,7 @@
      },
      {
       "name": "quality",
-      "typestr": "I"
+      "typestr": "i"
      }
     ],
     "retval": {
@@ -3143,7 +3143,7 @@
      },
      {
       "name": "cap",
-      "typestr": "I"
+      "typestr": "i"
      }
     ],
     "retval": {
@@ -3181,7 +3181,7 @@
      },
      {
       "name": "join",
-      "typestr": "I"
+      "typestr": "i"
      }
     ],
     "retval": {
@@ -3295,7 +3295,7 @@
      },
      {
       "name": "intent",
-      "typestr": "I"
+      "typestr": "i"
      }
     ],
     "retval": {
@@ -3476,7 +3476,7 @@
      },
      {
       "name": "mode",
-      "typestr": "I"
+      "typestr": "i"
      }
     ],
     "retval": {
@@ -5485,7 +5485,7 @@
     "args": [
      {
       "name": "stateID",
-      "typestr": "I"
+      "typestr": "i"
      },
      {
       "name": "button",
@@ -5500,7 +5500,7 @@
     "args": [
      {
       "name": "stateID",
-      "typestr": "I"
+      "typestr": "i"
      },
      {
       "name": "eventType",
@@ -5515,7 +5515,7 @@
     "args": [
      {
       "name": "stateID",
-      "typestr": "I"
+      "typestr": "i"
      }
     ],
     "retval": {
@@ -5527,7 +5527,7 @@
     "args": [
      {
       "name": "stateID",
-      "typestr": "I"
+      "typestr": "i"
      }
     ],
     "retval": {
@@ -5590,7 +5590,7 @@
      }
     ],
     "retval": {
-     "typestr": "I"
+     "typestr": "i"
     }
    },
    "CGEventSourceGetTypeID": {
@@ -5619,7 +5619,7 @@
     "args": [
      {
       "name": "stateID",
-      "typestr": "I"
+      "typestr": "i"
      },
      {
       "name": "key",
@@ -5634,7 +5634,7 @@
     "args": [
      {
       "name": "stateID",
-      "typestr": "I"
+      "typestr": "i"
      },
      {
       "name": "eventType",
@@ -5905,7 +5905,7 @@
      },
      {
       "name": "format",
-      "typestr": "I"
+      "typestr": "i"
      }
     ],
     "retval": {
@@ -6049,7 +6049,7 @@
      },
      {
       "name": "format",
-      "typestr": "I"
+      "typestr": "i"
      },
      {
       "name": "glyphs",
@@ -6749,7 +6749,7 @@
      },
      {
       "name": "intent",
-      "typestr": "I"
+      "typestr": "i"
      }
     ],
     "retval": {
@@ -6817,7 +6817,7 @@
      },
      {
       "name": "intent",
-      "typestr": "I"
+      "typestr": "i"
      }
     ],
     "retval": {
@@ -6873,7 +6873,7 @@
      },
      {
       "name": "intent",
-      "typestr": "I"
+      "typestr": "i"
      }
     ],
     "retval": {
@@ -6988,7 +6988,7 @@
      }
     ],
     "retval": {
-     "typestr": "I"
+     "typestr": "i"
     }
    },
    "CGImageGetShouldInterpolate": {
@@ -8142,7 +8142,7 @@
      }
     ],
     "retval": {
-     "typestr": "I"
+     "typestr": "i"
     }
    },
    "CGPDFObjectGetValue": {
@@ -8247,7 +8247,7 @@
      },
      {
       "name": "box",
-      "typestr": "I"
+      "typestr": "i"
      }
     ],
     "retval": {
@@ -8284,7 +8284,7 @@
      },
      {
       "name": "box",
-      "typestr": "I"
+      "typestr": "i"
      },
      {
       "name": "rect",
@@ -8565,7 +8565,7 @@
      },
      {
       "name": "format",
-      "typestr": "^I"
+      "typestr": "^i"
      }
     ],
     "retval": {
@@ -9427,7 +9427,7 @@
      },
      {
       "name": "tiling",
-      "typestr": "I"
+      "typestr": "i"
      },
      {
       "name": "isColored",
@@ -10793,7 +10793,7 @@
    "CGPathElement": {
     "fieldnames": [],
     "special": false,
-    "typestr": "{CGPathElement=I^{CGPoint=dd}}"
+    "typestr": "{CGPathElement=i^{CGPoint=dd}}"
    },
    "CGPatternCallbacks": {
     "fieldnames": [],
