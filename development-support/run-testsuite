@@ -29,7 +29,7 @@ def detect_pyversions():
     global _detected_versions
     if _detected_versions is not None:
         return _detected_versions
-    
+
     result = []
     for ver in PY_VERSIONS:
         if os.path.exists(os.path.join(
@@ -283,13 +283,13 @@ def supports_arch(interpreter, arch):
     lines = lines.decode('utf-8').splitlines()
     for ln in lines:
         # For fat binaries:
-        m = re.search('for architecture (\S+)\)', ln)
+        m = re.search(r'for architecture (\S+)\)', ln)
         if m is not None:
             if m.group(1).startswith(arch):
                 return True
 
         # For single-arch binaries:
-        m = re.search('Mach-O .* executable (\S+)', ln)
+        m = re.search(r'Mach-O .* executable (\S+)', ln)
         if m is not None:
             if m.group(1).startswith(arch):
                 return True
@@ -329,7 +329,7 @@ def main():
 
     osx_release = platform.mac_ver()[0]
 
-    lg.info("running PyObjC tests on OSX %s with python versions %s", 
+    lg.info("running PyObjC tests on OSX %s with python versions %s",
 	osx_release, ", ".join(options.python_versions))
     osx_dir = os.path.join(options.state_dir, ".".join(osx_release.split(".")[:2]))
     if not os.path.exists(osx_dir):
@@ -356,28 +356,28 @@ def main():
             with virtualenv("python{}".format(py_ver)) as interpreter:
                 # Install coverage to be able to have coverage reports
                 subprocess.check_call([interpreter, '-mpip', 'install', 'coverage'])
-    
+
                 # Install packages into the virtualenv
                 for project in build_order:
                     build_project(
                             interpreter=interpreter,
                             py_ver=variant,
                             project=project)
-    
+
                 # Then run tests for all supported architectures
                 for arch in ('ppc', 'i386', 'x86_64'):
                     if not supports_arch(interpreter, arch):
                         lg.info("skipping Python %s (%7s), unsupported architecture", variant, arch)
                         continue
-    
+
                     if not compiler_supports_arch(arch):
                         lg.info("skipping Python %s (%7s), compiler cannot build for architecture", variant, arch)
                         continue
-                        
-    
+
+
                     lg.info("running with Python %s (%7s) using %s", variant, arch, interpreter)
                     state_dir = os.path.join(osx_dir, "%s-%s"%(variant, arch))
-    
+
                     for project in ['pyobjc'] + build_order:
                         run_tests(
                             interpreter=interpreter,
@@ -401,9 +401,9 @@ def main():
        subprocess.check_call([interpreter, '-mpip', 'install', 'coverage'])
        for project in build_order:
           proj_dir = os.path.join(TOP_DIR, project)
-          if not os.path.exists(os.path.join(proj_dir, '.coverage')): 
+          if not os.path.exists(os.path.join(proj_dir, '.coverage')):
              continue
-          
+
           status = subprocess.check_call([interpreter, '-mcoverage', 'combine'], cwd=proj_dir)
           status = subprocess.check_call([interpreter, '-mcoverage', 'html', '--include=Lib/*', '--omit=*/_metadata.py', '--title=%s'%(project,)], cwd=proj_dir)
 
