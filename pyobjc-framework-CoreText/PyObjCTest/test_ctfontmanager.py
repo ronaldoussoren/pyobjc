@@ -56,6 +56,10 @@ class TestCTFontManager (TestCase):
         self.assertArgIsOut(CTFontManagerRegisterGraphicsFont, 1)
         self.assertArgIsOut(CTFontManagerUnregisterGraphicsFont, 1)
 
+    @min_os_level('10.13')
+    def testFunctions10_13(self):
+        self.assertResultIsCFRetained(CTFontManagerCreateFontDescriptorsFromData)
+
     @min_os_level('10.15')
     def testFunctions10_15(self):
         self.assertArgIsBlock(CTFontManagerRegisterFontURLs, 2, objc._C_BOOL + objc._C_ID + objc._C_BOOL)
@@ -64,7 +68,6 @@ class TestCTFontManager (TestCase):
         self.assertArgIsBlock(CTFontManagerUnregisterFontDescriptors, 2, objc._C_BOOL + objc._C_ID + objc._C_BOOL)
 
         self.assertResultIsCFRetained(CTFontManagerCopyRegisteredFontDescriptors)
-        self.assertArgIsBlock(CTFontManagerRequestFonts, 1, b'v@')
 
 if __name__ == "__main__":
     main()

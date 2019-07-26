@@ -5,6 +5,7 @@ class TestNSPersistentStoreRequest (TestCase):
     def testConstants(self):
         self.assertEqual(NSFetchRequestType, 1)
         self.assertEqual(NSSaveRequestType, 2)
+        self.assertEqual(NSBatchInsertRequestType, 5)
         self.assertEqual(NSBatchUpdateRequestType, 6)
         self.assertEqual(NSBatchDeleteRequestType, 7)
 

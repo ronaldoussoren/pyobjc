@@ -84,6 +84,12 @@
   "classes": {},
   "formal_protocols": {},
   "functions": {
+   "CTRunGetBaseAdvancesAndOrigins": {
+    "args": {
+     "2": { "type_modifier": "o", "c_array_length_in_arg": 1 },
+     "3": { "type_modifier": "o", "c_array_length_in_arg": 1 }
+    }
+   },
    "CTFontCollectionCopyExclusionDescriptors": {
     "args": {
      "0": {}

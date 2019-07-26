@@ -88,6 +88,8 @@ class TestCIImage (TestCase):
         self.assertArgIsOut(CIContext.writeJPEGRepresentationOfImage_toURL_colorSpace_options_error_, 4)
         self.assertResultIsBOOL(CIContext.writeJPEGRepresentationOfImage_toURL_colorSpace_options_error_)
 
+        self.assertArgIsBOOL(CIContext.imageByApplyingTransform_highQualityDownsample_, 1)
+
     @min_os_level('10.13')
     def testMethods10_13(self):
         self.assertArgIsOut(CIContext.writePNGRepresentationOfImage_toURL_format_colorSpace_options_error_, 5)

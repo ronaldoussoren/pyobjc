@@ -130,7 +130,6 @@ FRAMEWORK_WRAPPERS=[
         ('VideoSubscriberAccount',  '10.14',            None        ),
         ('VideoToolbox',            '10.8',             None        ),
         ('Vision',                  '10.13',            None        ),
-        ('WiFi',                    '10.15',            None        ),
 
         # iTunes library is shipped with iTunes, not part of macOS 'core'
 	# Requires iTunes 11 or later, which is not available on 10.5

@@ -380,8 +380,6 @@ The framework name links to API notes for that framework, the python packages li
 +------------------------------------------------------------------+---------------------------------------------+-----------------------------------------+
 | :doc:`WebKit </apinotes/WebKit>`                                 | `pyobjc-framework-WebKit`_                  |                                         |
 +------------------------------------------------------------------+---------------------------------------------+-----------------------------------------+
-| :doc:`WiFi </apinotes/WiFi>`                                     | `pyobjc-framework-WiFi`_                    |                                         |
-+------------------------------------------------------------------+---------------------------------------------+-----------------------------------------+
 | :doc:`XgridFoundation </apinotes/XgridFoundation>`               | `pyobjc-framework-XgridFoundation`_         | Not present on OSX 10.8 or later        |
 +------------------------------------------------------------------+---------------------------------------------+-----------------------------------------+
 | :doc:`iTunesLibrary </apinotes/iTunesLibrary>`                   | `pyobjc-framework-iTunesLibrary`_           |                                         |
@@ -509,7 +507,6 @@ cannot be wrapped using PyObjC.
 .. _`pyobjc-framework-DiscRecording`: https://pypi.org/project/pyobjc-framework-DiscRecording/
 .. _`pyobjc-framework-DiscRecordingUI`: https://pypi.org/project/pyobjc-framework-DiscRecordingUI/
 .. _`pyobjc-framework-DVDPlayback`: https://pypi.org/project/pyobjc-framework-DVDPlayback/
-.. _`pyobjc-framework-WiFi`: https://pypi.org/project/pyobjc-framework-WiFi/
 .. _`pyobjc-framework-DeviceCheck`: https://pypi.org/project/pyobjc-framework-DeviceCheck/
 .. _`pyobjc-framework-ExecutionPolicy`: https://pypi.org/project/pyobjc-framework-ExecutionPolicy/
 .. _`pyobjc-framework-QuickLookThumbnailing`: https://pypi.org/project/pyobjc-framework-QuickLookThumbnailing/

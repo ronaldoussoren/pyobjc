@@ -36,6 +36,11 @@ class TestNSToolbarItem (TestCase):
         self.assertArgIsBOOL(NSToolbarItem.setAutovalidates_, 0)
         self.assertResultIsBOOL(NSToolbarItem.allowsDuplicatesInToolbar)
 
+    @min_os_level('10.15')
+    def testMethods10_15(self):
+        self.assertResultIsBOOL(NSToolbarItem.isBordered)
+        self.assertArgIsBOOL(NSToolbarItem.setBordered_, 0)
+
     def testProtocols(self):
         self.assertResultIsBOOL(TestNSToolbarItemHelper.validateToolbarItem_)
 

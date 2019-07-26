@@ -12,6 +12,8 @@ if sys.maxsize >= 2 ** 32:
             self.assertEqual(NetworkExtension.NEFilterManagerErrorConfigurationDisabled, 2)
             self.assertEqual(NetworkExtension.NEFilterManagerErrorConfigurationStale, 3)
             self.assertEqual(NetworkExtension.NEFilterManagerErrorConfigurationCannotBeRemoved, 4)
+            self.assertEqual(NetworkExtension.NEFilterManagerErrorConfigurationPermissionDenied, 5)
+            self.assertEqual(NetworkExtension.NEFilterManagerErrorConfigurationInternalError, 6)
 
             self.assertEqual(NetworkExtension.NEFilterManagerGradeFirewall, 1)
             self.assertEqual(NetworkExtension.NEFilterManagerGradeInspector, 2)

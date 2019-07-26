@@ -48,5 +48,9 @@ class TestCIRAWFilter (TestCase):
     def testConstants10_13(self):
         self.assertIsInstance(kCIInputMoireAmountKey, unicode)
 
+    @min_os_level('10.14')
+    def testConstants10_14(self):
+        self.assertIsInstance(kCIInputEnableEDRModeKey, unicode)
+
 if __name__ == "__main__":
     main()

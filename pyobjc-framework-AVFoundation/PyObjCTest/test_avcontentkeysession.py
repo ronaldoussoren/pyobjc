@@ -34,6 +34,7 @@ class TestAVContentKeySession (TestCase):
         self.assertIsInstance(AVFoundation.AVContentKeySystemAuthorizationToken, unicode)
         self.assertIsInstance(AVFoundation.AVContentKeySessionServerPlaybackContextOptionProtocolVersions, unicode)
         self.assertIsInstance(AVFoundation.AVContentKeySessionServerPlaybackContextOptionServerChallenge, unicode)
+        self.assertIsInstance(AVFoundation.AVContentKeyRequestRequiresValidationDataInSecureTokenKey, unicode)
 
     def testMethods(self):
         self.assertResultIsBOOL(TestAVContentKeySessionHelper.contentKeySession_shouldRetryContentKeyRequest_reason_)

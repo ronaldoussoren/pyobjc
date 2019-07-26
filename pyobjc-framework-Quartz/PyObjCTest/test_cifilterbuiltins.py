@@ -45,6 +45,7 @@ class TestCIBuiltinFilterHelper (NSObject):
     def extent(self): return 1
     def fadeThreshold(self): return 1
     def falloff(self): return 1
+    def focalLength(self): return 1
     def foldShadowAmount(self): return 1
     def fontSize(self): return 1
     def grayComponentReplacement(self): return 1
@@ -157,6 +158,7 @@ class TestCIBuiltinFilterHelper (NSObject):
     def setExtent_(self, a): pass
     def setFadeThreshold_(self, a): pass
     def setFalloff_(self, a): pass
+    def setFocalLength_(self, a): pass
     def setFoldShadowAmount_(self, a): pass
     def setFontSize_(self, a): pass
     def setGrayComponentReplacement_(self, a): pass
@@ -243,6 +245,7 @@ class TestCIBarcodeDescriptor (TestCase):
         objc.protocolNamed('CIHatchedScreen')
         objc.protocolNamed('CILineScreen')
         objc.protocolNamed('CIBicubicScaleTransform')
+        objc.protocolNamed('CIFourCoordinateGeometryFilter')
         objc.protocolNamed('CIEdgePreserveUpsample')
         objc.protocolNamed('CILanczosScaleTransform')
         objc.protocolNamed('CIPerspectiveCorrection')
@@ -434,6 +437,12 @@ class TestCIBarcodeDescriptor (TestCase):
         self.assert_rw_prop(TestCIBuiltinFilterHelper, 'width', objc._C_FLT)
         self.assert_rw_prop(TestCIBuiltinFilterHelper, 'sharpness', objc._C_FLT)
 
+        # CIFourCoordinateGeometryFilter
+        self.assert_rw_prop(TestCIBuiltinFilterHelper, 'topLeft', CGPoint.__typestr__)
+        self.assert_rw_prop(TestCIBuiltinFilterHelper, 'topRight', CGPoint.__typestr__)
+        self.assert_rw_prop(TestCIBuiltinFilterHelper, 'bottomRight', CGPoint.__typestr__)
+        self.assert_rw_prop(TestCIBuiltinFilterHelper, 'bottomLeft', CGPoint.__typestr__)
+
         # CIBicubicScaleTransform
         self.assert_rw_prop(TestCIBuiltinFilterHelper, 'scale', objc._C_FLT)
         self.assert_rw_prop(TestCIBuiltinFilterHelper, 'aspectRatio', objc._C_FLT)
@@ -444,29 +453,33 @@ class TestCIBarcodeDescriptor (TestCase):
         self.assert_rw_prop(TestCIBuiltinFilterHelper, 'spatialSigma', objc._C_FLT)
         self.assert_rw_prop(TestCIBuiltinFilterHelper, 'lumaSigma', objc._C_FLT)
 
+        # CIKeystoneCorrectionCombined
+        self.assert_rw_prop(TestCIBuiltinFilterHelper, 'focalLength', objc._C_FLT)
+
+        # CIKeystoneCorrectionHorizontal
+        self.assert_rw_prop(TestCIBuiltinFilterHelper, 'focalLength', objc._C_FLT)
+
+        # CIKeystoneCorrectionVertical
+        self.assert_rw_prop(TestCIBuiltinFilterHelper, 'focalLength', objc._C_FLT)
+
         # CILanczosScaleTransform
         self.assert_rw_prop(TestCIBuiltinFilterHelper, 'scale', objc._C_FLT)
         self.assert_rw_prop(TestCIBuiltinFilterHelper, 'aspectRatio', objc._C_FLT)
 
         # CIPerspectiveCorrection
-        self.assert_rw_prop(TestCIBuiltinFilterHelper, 'topLeft', CGPoint.__typestr__)
-        self.assert_rw_prop(TestCIBuiltinFilterHelper, 'topRight', CGPoint.__typestr__)
-        self.assert_rw_prop(TestCIBuiltinFilterHelper, 'bottomRight', CGPoint.__typestr__)
-        self.assert_rw_prop(TestCIBuiltinFilterHelper, 'bottomLeft', CGPoint.__typestr__)
         self.assert_rw_prop(TestCIBuiltinFilterHelper, 'crop', objc._C_BOOL)
 
+        # CIPerspectiveRotate
+        self.assert_rw_prop(TestCIBuiltinFilterHelper, 'focalLength', objc._C_FLT)
+        self.assert_rw_prop(TestCIBuiltinFilterHelper, 'pitch', objc._C_FLT)
+        self.assert_rw_prop(TestCIBuiltinFilterHelper, 'yaw', objc._C_FLT)
+        self.assert_rw_prop(TestCIBuiltinFilterHelper, 'roll', objc._C_FLT)
+
         # CIPerspectiveTransform
-        self.assert_rw_prop(TestCIBuiltinFilterHelper, 'topLeft', CGPoint.__typestr__)
-        self.assert_rw_prop(TestCIBuiltinFilterHelper, 'topRight', CGPoint.__typestr__)
-        self.assert_rw_prop(TestCIBuiltinFilterHelper, 'bottomRight', CGPoint.__typestr__)
-        self.assert_rw_prop(TestCIBuiltinFilterHelper, 'bottomLeft', CGPoint.__typestr__)
+        pass
 
         # CIPerspectiveTransformWithExtent
         self.assert_rw_prop(TestCIBuiltinFilterHelper, 'extent', CGRect.__typestr__)
-        self.assert_rw_prop(TestCIBuiltinFilterHelper, 'topLeft', CGPoint.__typestr__)
-        self.assert_rw_prop(TestCIBuiltinFilterHelper, 'topRight', CGPoint.__typestr__)
-        self.assert_rw_prop(TestCIBuiltinFilterHelper, 'bottomRight', CGPoint.__typestr__)
-        self.assert_rw_prop(TestCIBuiltinFilterHelper, 'bottomLeft', CGPoint.__typestr__)
 
         # CIStraighten
         self.assert_rw_prop(TestCIBuiltinFilterHelper, 'angle', objc._C_FLT)
@@ -801,6 +814,10 @@ class TestCIBarcodeDescriptor (TestCase):
         # CIRandomGenerator
         pass
 
+        # CIRoundedRectangleGenerator
+        self.assert_rw_prop(TestCIBuiltinFilterHelper, 'extent', CGRect.__typestr__)
+        self.assert_rw_prop(TestCIBuiltinFilterHelper, 'radius', objc._C_FLT)
+
         # CIStarShineGenerator
         self.assert_rw_prop(TestCIBuiltinFilterHelper, 'center', CGPoint.__typestr__)
         self.assert_rw_prop(TestCIBuiltinFilterHelper, 'radius', objc._C_FLT)
@@ -861,6 +878,9 @@ class TestCIBarcodeDescriptor (TestCase):
 
         # CIEdgeWork
         self.assert_rw_prop(TestCIBuiltinFilterHelper, 'radius', objc._C_FLT)
+
+        # CIGaborGradients
+        pass
 
         # CIGloom
         self.assert_rw_prop(TestCIBuiltinFilterHelper, 'radius', objc._C_FLT)

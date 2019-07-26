@@ -209,6 +209,19 @@ class TestJSObjectRef (TestCase):
         self.assertArgIsIn(func, 4)
         self.assertArgIsOut(func, 5)
 
+    @min_os_level('10.15')
+    def test_functions10_15(self):
+        self.assertArgIsOut(JavaScriptCore.JSObjectMakeDeferredPromise, 1)
+        self.assertArgIsOut(JavaScriptCore.JSObjectMakeDeferredPromise, 2)
+
+        self.assertArgIsOut(JavaScriptCore.JSObjectHasPropertyForKey, 3)
+
+        self.assertArgIsOut(JavaScriptCore.JSObjectGetPropertyForKey, 3)
+
+        self.assertArgIsOut(JavaScriptCore.JSObjectSetPropertyForKey, 5)
+
+        self.assertArgIsOut(JavaScriptCore.JSObjectDeletePropertyForKey, 3)
+
 
     def testUnsupported(self):
         self.assertNotHasAttr(JavaScriptCore, 'kJSClassDefinitionEmpty')

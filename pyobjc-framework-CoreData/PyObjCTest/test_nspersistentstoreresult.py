@@ -18,5 +18,9 @@ class TestNSPersistentStoreResult (TestCase):
         self.assertEqual(NSPersistentHistoryResultTypeChangesOnly, 0x4)
         self.assertEqual(NSPersistentHistoryResultTypeTransactionsAndChanges, 0x5)
 
+        self.assertEqual(NSBatchInsertRequestResultTypeStatusOnly, 0x0)
+        self.assertEqual(NSBatchInsertRequestResultTypeObjectIDs, 0x1)
+        self.assertEqual(NSBatchInsertRequestResultTypeCount, 0x2)
+
 if __name__ == "__main__":
     main()

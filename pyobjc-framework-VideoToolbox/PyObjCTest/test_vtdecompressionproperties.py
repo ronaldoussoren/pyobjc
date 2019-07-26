@@ -57,6 +57,10 @@ class TestVTDecompressionProperties (TestCase):
     def test_constants10_14(self):
         self.assertIsInstance(VideoToolbox.kVTDecompressionPropertyKey_MaximizePowerEfficiency, unicode)
 
+    @min_os_level('10.15')
+    def test_constants10_15(self):
+        self.assertIsInstance(VideoToolbox.kVTDecompressionPropertyKey_UsingGPURegistryID, unicode)
+
 
 if __name__ == "__main__":
     main()

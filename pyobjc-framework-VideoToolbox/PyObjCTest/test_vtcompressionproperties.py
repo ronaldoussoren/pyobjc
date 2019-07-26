@@ -127,6 +127,7 @@ class TestVTCompressionProperties (TestCase):
         self.assertIsInstance(VideoToolbox.kVTCompressionPropertyKey_AlphaChannelMode, unicode)
         self.assertIsInstance(VideoToolbox.kVTAlphaChannelMode_StraightAlpha, unicode)
         self.assertIsInstance(VideoToolbox.kVTAlphaChannelMode_PremultipliedAlpha, unicode)
+        self.assertIsInstance(VideoToolbox.kVTCompressionPropertyKey_UsingGPURegistryID, unicode)
 
 if __name__ == "__main__":
     main()

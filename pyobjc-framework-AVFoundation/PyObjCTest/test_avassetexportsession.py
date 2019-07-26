@@ -48,9 +48,10 @@ class TestAVAssetExportSession (TestCase):
         self.assertIsInstance(AVFoundation.AVAssetExportPresetHEVC3840x2160, unicode)
 
     @min_os_level('10.15')
-    def testConstants10_13(self):
+    def testConstants10_15(self):
         self.assertIsInstance(AVFoundation.AVAssetExportPresetHEVC1920x1080WithAlpha, unicode)
         self.assertIsInstance(AVFoundation.AVAssetExportPresetHEVC3840x2160WithAlpha, unicode)
+        self.assertIsInstance(AVFoundation.AVAssetExportPresetAppleProRes4444LPCM, unicode)
 
     @min_os_level('10.7')
     def testMethods(self):

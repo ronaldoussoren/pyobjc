@@ -79,6 +79,12 @@ class TestCGColorSpace (TestCase):
         self.assertIsInstance(kCGColorSpaceExtendedLinearITUR_2020, unicode)
         self.assertIsInstance(kCGColorSpaceExtendedLinearDisplayP3, unicode)
 
+    @min_os_level('10.14.6')
+    def testConstants10_14_6(self):
+        self.assertIsInstance(kCGColorSpaceDisplayP3_PQ_EOTF, unicode)
+        self.assertIsInstance(kCGColorSpaceDisplayP3_HLG, unicode)
+        self.assertIsInstance(kCGColorSpaceITUR_2020_HLG, unicode)
+
     def testFunctions(self):
         self.assertResultIsCFRetained(CGColorSpaceCreateDeviceGray)
         self.assertIsInstance(CGColorSpaceCreateDeviceGray(), CGColorSpaceRef)
@@ -191,6 +197,10 @@ class TestCGColorSpace (TestCase):
     @min_os_level('10.13')
     def testFunctions10_13(self):
         CGColorSpaceGetName
+
+    @min_os_level('10.14.6')
+    def testFunctions10_14.6(self):
+        CGColorSpaceIsHDR
 
 if __name__ == "__main__":
     main()

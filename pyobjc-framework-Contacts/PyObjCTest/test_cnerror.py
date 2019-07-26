@@ -15,6 +15,7 @@ if sys.maxsize > 2**32:
             self.assertEqual(Contacts.CNErrorCodeAuthorizationDenied, 100)
             self.assertEqual(Contacts.CNErrorCodeNoAccessableWritableContainers, 101)
             self.assertEqual(Contacts.CNErrorCodeUnauthorizedKeys, 102)
+            self.assertEqual(Contacts.CNErrorCodeFeatureDisabledByUser, 103)
             self.assertEqual(Contacts.CNErrorCodeRecordDoesNotExist, 200)
             self.assertEqual(Contacts.CNErrorCodeInsertedRecordAlreadyExists, 201)
             self.assertEqual(Contacts.CNErrorCodeContainmentCycle, 202)

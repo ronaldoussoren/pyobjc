@@ -70,6 +70,10 @@ class TestJSValueRef (TestCase):
     def testFunctions10_14_4(self):
         self.assertResultHasType(JavaScriptCore.JSValueMakeSymbol, JavaScriptCore.JSValueRef.__typestr__)
 
+    @min_os_level('10.15')
+    def testFunctions10_15(self):
+        JavaScriptCore.JSValueIsSymbol
+        JavaScriptCore.JSValueMakeSymbol
 
 if __name__ == "__main__":
     main()

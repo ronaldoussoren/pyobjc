@@ -66,6 +66,12 @@ class TestNSApplication (TestCase):
         self.assertEqual(NSAppKitVersionNumber10_13_1, 1561.1)
         self.assertEqual(NSAppKitVersionNumber10_13_2, 1561.2)
         self.assertEqual(NSAppKitVersionNumber10_13_4, 1561.4)
+        self.assertEqual(NSAppKitVersionNumber10_14, 1671)
+        self.assertEqual(NSAppKitVersionNumber10_14_1, 1671.1)
+        self.assertEqual(NSAppKitVersionNumber10_14_2, 1671.2)
+        self.assertEqual(NSAppKitVersionNumber10_14_3, 1671.3)
+        self.assertEqual(NSAppKitVersionNumber10_14_4, 1671.4)
+        self.assertEqual(NSAppKitVersionNumber10_14_5, 1671.5)
 
 
         self.assertIsInstance(NSModalPanelRunLoopMode, unicode)

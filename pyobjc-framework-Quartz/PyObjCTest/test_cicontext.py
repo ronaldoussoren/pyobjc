@@ -32,6 +32,13 @@ class TestCIContext (TestCase):
         self.assertIsInstance(kCIImageRepresentationAVPortraitEffectsMatte, unicode)
         self.assertIsInstance(kCIImageRepresentationPortraitEffectsMatteImage, unicode)
 
+    @min_os_level('10.15')
+    def testConstants10_15(self):
+        self.assertIsInstance(kCIImageRepresentationAVSemanticSegmentationMattes, unicode)
+        self.assertIsInstance(kCIImageRepresentationSemanticSegmentationSkinMatteImage, unicode)
+        self.assertIsInstance(kCIImageRepresentationSemanticSegmentationHairMatteImage, unicode)
+        self.assertIsInstance(kCIImageRepresentationSemanticSegmentationTeethMatteImage, unicode)
+
     def testMethods(self):
         self.assertArgIsOut(CIContext.render_toBitmap_rowBytes_bounds_format_colorSpace_, 1)
         self.assertArgIsVariableSize(CIContext.render_toBitmap_rowBytes_bounds_format_colorSpace_, 1)

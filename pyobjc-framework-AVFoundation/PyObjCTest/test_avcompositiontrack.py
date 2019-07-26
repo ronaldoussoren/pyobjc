@@ -15,5 +15,8 @@ class TestAVCompositionTrack (TestCase):
         self.assertResultIsBOOL(AVFoundation.AVMutableCompositionTrack.validateTrackSegments_error_)
         self.assertArgIsOut(AVFoundation.AVMutableCompositionTrack.validateTrackSegments_error_, 1)
 
+        self.assertResultIsBOOL(AVFoundation.AVMutableCompositionTrack.isEnabled)
+        self.assertArgIsBOOL(AVFoundation.AVMutableCompositionTrack.setEnabled_, 0)
+
 if __name__ == "__main__":
     main()

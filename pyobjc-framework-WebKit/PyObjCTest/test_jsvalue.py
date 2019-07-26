@@ -29,6 +29,11 @@ class TestJSValue (TestCase):
         self.assertResultIsBOOL(JavaScriptCore.JSValue.isArray)
         self.assertResultIsBOOL(JavaScriptCore.JSValue.isDate)
 
+    @min_os_level('10.15')
+    def test_methods10_15(self):
+        self.assertArgIsBlock(JavaScriptCore.JSValue.valueWithNewPromiseInContext_fromExecutor_, 1, b'v@@')
+        self.assertResultIsBOOL(JavaScriptCore.JSValue.isSymbol)
+
 
     @onlyOn64Bit
     @min_os_level('10.9')

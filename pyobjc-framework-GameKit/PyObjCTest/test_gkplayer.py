@@ -19,6 +19,10 @@ class TestGKPlayer (TestCase):
 
         self.assertResultIsBOOL(TestGKPlayerHelper.isFriend)
 
+    @min_os_level('10.15')
+    def testMethods10_15(self):
+        self.assertResultIsBOOL(GameKit.GKPlayer.scopedIDsArePersistent)
+
 
 if __name__ == "__main__":
     main()

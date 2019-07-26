@@ -5,8 +5,7 @@ if sys.maxsize > 2 ** 32:
     import Photos
 
     class TestPhotosTypes (TestCase):
-        @min_os_level('10.11')
-        def testConstants(self):
+        def test_constants(self):
 
             self.assertEqual(Photos.PHAssetMediaTypeUnknown, 0)
             self.assertEqual(Photos.PHAssetMediaTypeImage, 1)
@@ -101,6 +100,7 @@ if sys.maxsize > 2 ** 32:
             self.assertEqual(Photos.PHAssetResourceTypePairedVideo, 9)
             self.assertEqual(Photos.PHAssetResourceTypeFullSizePairedVideo, 10)
             self.assertEqual(Photos.PHAssetResourceTypeAdjustmentBasePairedVideo, 11)
+            self.assertEqual(Photos.PHAssetResourceTypeAdjustmentBaseVideo, 12)
 
             self.assertEqual(Photos.PHAssetPlaybackStyleUnsupported, 0)
             self.assertEqual(Photos.PHAssetPlaybackStyleImage, 1)
@@ -108,7 +108,6 @@ if sys.maxsize > 2 ** 32:
             self.assertEqual(Photos.PHAssetPlaybackStyleLivePhoto, 3)
             self.assertEqual(Photos.PHAssetPlaybackStyleVideo, 4)
             self.assertEqual(Photos.PHAssetPlaybackStyleVideoLooping, 5)
-
 
 
 if __name__ == "__main__":

@@ -37,6 +37,10 @@ if os_level_key(os_release()) < os_level_key('10.12') or sys.maxsize >= 2**32:
         def testConstants10_12(self):
             self.assertIsInstance(SceneKit.SCNLightingModelPhysicallyBased, unicode)
 
+        @min_os_level('10.15')
+        def testConstants10_15(self):
+            self.assertIsInstance(SceneKit.SCNLightingModelShadowOnly, unicode)
+
         def testMethods(self):
             self.assertResultIsBOOL(SceneKit.SCNMaterial.isLitPerPixel)
             self.assertArgIsBOOL(SceneKit.SCNMaterial.setLitPerPixel_, 0)

@@ -107,6 +107,13 @@ class TestCTRun (TestCase):
         self.assertIsInstance(v, objc.varlist)
         self.assertIsInstance(v[0], CGSize)
 
+    @min_os_level('10.11')
+    def testFunctions10_11(self):
+        self.assertArgIsOut(CTRunGetBaseAdvancesAndOrigins, 2)
+        self.assertArgSizeInArg(CTRunGetBaseAdvancesAndOrigins, 2, 1)
+        self.assertArgIsOut(CTRunGetBaseAdvancesAndOrigins, 3)
+        self.assertArgSizeInArg(CTRunGetBaseAdvancesAndOrigins, 3, 1)
+
 
 if __name__ == "__main__":
     main()
