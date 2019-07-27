@@ -269,7 +269,7 @@ The framework name links to API notes for that framework, the python packages li
 +------------------------------------------------------------------+---------------------------------------------+-----------------------------------------+
 | Metal                                                            | -                                           | Not wrapped yet                         |
 +------------------------------------------------------------------+---------------------------------------------+-----------------------------------------+
-| MetalKit                                                         | -                                           | Not wrapped yet                         |
+| :doc:`MetalKit </apinotes/MetalKit>`                             | `pyobjc-framework-MetalKit`_                |                                         |
 +------------------------------------------------------------------+---------------------------------------------+-----------------------------------------+
 | MetalPerformanceShaders                                          | -                                           | Not wrapped yet                         |
 +------------------------------------------------------------------+---------------------------------------------+-----------------------------------------+
@@ -547,3 +547,4 @@ cannot be wrapped using PyObjC.
 .. _`pyobjc-framework-AuthenticationServices`: https://pypi.org/project/pyobjc-framework-AuthenticationServices/
 .. _`pyobjc-framework-Speech`: https://pypi.org/project/pyobjc-framework-Speech/
 .. _`pyobjc-framework-SystemExtensions`: https://pypi.org/project/pyobjc-framework-SystemExtensions/
+.. _`pyobjc-framework-MetalKit`: https://pypi.org/project/pyobjc-framework-MetalKit/
