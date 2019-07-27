@@ -13,10 +13,12 @@ Version 6.0a0
   - Use "black" for Python code
   - Use "clang-format" for Objective-C code
 
-* Updated bindings for macOS 10.15 (beta 1)
+* Updated bindings for macOS 10.15 (beta 3)
 
 * Add new framework wrappers:
 
+  - AuthenticationServices (new in macOS 10.15)
+  - CoreHaptics (new in macOS 10.15)
   - DeviceCheck (new in macOS 10.15)
   - ExecutionPolicy (new in macOS 10.15)
   - PencilKit (new in macOS 10.15)

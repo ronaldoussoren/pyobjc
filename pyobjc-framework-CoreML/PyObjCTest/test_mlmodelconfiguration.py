@@ -10,6 +10,12 @@ if sys.maxsize > 2 ** 32:
             self.assertEqual(CoreML.MLComputeUnitsCPUAndGPU, 1)
             self.assertEqual(CoreML.MLComputeUnitsAll, 2)
 
+        def test_methods10_15(self):
+            self.assertResultIsBOOL(CoreML.MLModelConfiguration.allowLowPrecisionAccumulationOnGPU)
+            self.assertArgIsBOOL(CoreML.MLModelConfiguration.setAllowLowPrecisionAccumulationOnGPU_, 0)
+
+            self.assertResultIsBOOL(CoreML.MLModelDescription.isUpdatable)
+
 
 if __name__ == "__main__":
     main()

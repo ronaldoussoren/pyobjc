@@ -25,6 +25,7 @@ FRAMEWORK_WRAPPERS=[
         # Name                      Introcuded          Removed
         ('libdispatch',             '10.8',             None        ),
         ('AdSupport',               '10.14',            None        ),
+        ('AuthenticationServices',  '10.15',            None        ),
         ('AVKit',                   '10.9',             None        ),
         ('AVFoundation',            '10.7',             None        ),
         ('Accounts',                '10.8',             None        ),
@@ -46,6 +47,7 @@ FRAMEWORK_WRAPPERS=[
         ('CoreAudioKit',            None,               None        ),
         ('CoreBluetooth',           '10.10',            None        ),
         ('CoreData',                None,               None        ),
+        ('CoreHaptics',             '10.15',            None        ),
         ('CoreLocation',            '10.6',             None        ),
         ('CoreMedia',               '10.7',             None        ),
         ('CoreMediaIO',             '10.7',             None        ),

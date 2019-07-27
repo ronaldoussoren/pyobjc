@@ -16,6 +16,7 @@ if sys.maxsize > 2 ** 32:
         def testMethods10_14(self):
             self.assertArgIsOut(CoreML.MLModel.modelWithContentsOfURL_configuration_error_, 2)
             self.assertArgIsOut(CoreML.MLModel.predictionsFromBatch_options_error_, 2)
+            self.assertArgIsOut(CoreML.MLModel.predictionsFromBatch_error_, 1)
 
 if __name__ == "__main__":
     main()

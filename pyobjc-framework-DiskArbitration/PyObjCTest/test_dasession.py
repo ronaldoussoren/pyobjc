@@ -10,7 +10,7 @@ class TestDASession (TestCase):
         self.assertIsCFType(DiskArbitration.DAApprovalSessionRef)
 
     @min_os_level('10.10')
-    def test_functions(self):
+    def test_functions10_10(self):
         self.assertIsInstance(DiskArbitration.DASessionGetTypeID(), (int, long))
 
         self.assertResultIsCFRetained(DiskArbitration.DASessionCreate)
@@ -34,6 +34,14 @@ class TestDASession (TestCase):
         DiskArbitration.DAApprovalSessionUnscheduleFromRunLoop(ses, rl, DiskArbitration.kCFRunLoopCommonModes)
 
         DiskArbitration.DASessionSetDispatchQueue
+
+    @min_os_level('10.15')
+    def test_functions10_15(self):
+        self.assertResultIsCFRetained(DiskArbitration.DACallbackCreate)
+        DiskArbitration.DAAddCallbackToSession
+        DiskArbitration.DARemoveCallbackFromSessionWithKey
+        DiskArbitration.DARemoveCallbackFromSession
+        DiskArbitration.DAGetCallbackFromSession
 
 if __name__ == "__main__":
     main()

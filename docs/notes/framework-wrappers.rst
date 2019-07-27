@@ -15,6 +15,8 @@ The framework name links to API notes for that framework, the python packages li
 | AGL                                                              | -                                           | Will not be wrapped, OpenGL is          |
 |                                                                  |                                             | deprecated in macOS 10.14               |
 +------------------------------------------------------------------+---------------------------------------------+-----------------------------------------+
+| :doc:`AuthenticationServices </apinotes/AuthenticationServices>` | `pyobjc-framework-AuthenticationServices`_  |                                         |
++------------------------------------------------------------------+---------------------------------------------+-----------------------------------------+
 | :doc:`AVFoundation </apinotes/AVFoundation>`                     | `pyobjc-framework-AVFoundation`_            |                                         |
 +------------------------------------------------------------------+---------------------------------------------+-----------------------------------------+
 | :doc:`AVKit </apinotes/AVKit>`                                   | `pyobjc-framework-AVKit`_                   |                                         |
@@ -87,6 +89,8 @@ The framework name links to API notes for that framework, the python packages li
 | :doc:`CoreFoundation </apinotes/CoreFoundation>`                 | `pyobjc-framework-Cocoa`_                   |                                         |
 +------------------------------------------------------------------+---------------------------------------------+-----------------------------------------+
 | :doc:`CoreGraphics </apinotes/CoreGraphics>`                     | `pyobjc-framework-Quartz`_                  | Use "import Quartz".                    |
++------------------------------------------------------------------+---------------------------------------------+-----------------------------------------+
+| :doc:`CoreHaptics </apinotes/CoreHaptics>`                       | `pyobjc-framework-CoreHaptics`_             |                                         |
 +------------------------------------------------------------------+---------------------------------------------+-----------------------------------------+
 | :doc:`CoreImage </apinotes/CoreImage>`                           | `pyobjc-framework-Quartz`_                  | Use "import Quartz".                    |
 +------------------------------------------------------------------+---------------------------------------------+-----------------------------------------+
@@ -513,3 +517,5 @@ cannot be wrapped using PyObjC.
 .. _`pyobjc-framework-PushKit`: https://pypi.org/project/pyobjc-framework-PushKit/
 .. _`pyobjc-framework-LinkPresentation`: https://pypi.org/project/pyobjc-framework-LinkPresentation/
 .. _`pyobjc-framework-Logging`: https://pypi.org/project/pyobjc-framework-Logging/
+.. _`pyobjc-framework-CoreHaptics`: https://pypi.org/project/pyobjc-framework-CoreHaptics/
+.. _`pyobjc-framework-AuthenticationServices`: https://pypi.org/project/pyobjc-framework-AuthenticationServices/
