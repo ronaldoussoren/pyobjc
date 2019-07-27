@@ -119,6 +119,7 @@ FRAMEWORK_WRAPPERS=[
         ('ServerNotification',      '10.6',             '10.9'      ),
         ('ServiceManagement',       '10.6',             None        ),
         ('Social',                  '10.8',             None        ),
+        ('Speech',                  '10.15',            None        ),
         ('SpriteKit',               '10.9',             None        ),
         ('StoreKit',                '10.7',             None        ),
         ('SyncServices',            None,               None        ),
