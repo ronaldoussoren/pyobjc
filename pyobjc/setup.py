@@ -129,6 +129,8 @@ FRAMEWORK_WRAPPERS=[
         ('GameKit',                 '10.8',             None        ),
         ('GameplayKit',             '10.11',            None        ),
         ('SceneKit',                '10.7',             None        ),
+        ('SoundAnalysis',           '10.15',            None        ),
+        ('SystemExtensions',        '10.15',            None        ),
         ('UserNotifications',       '10.14',            None        ),
         ('VideoSubscriberAccount',  '10.14',            None        ),
         ('VideoToolbox',            '10.8',             None        ),

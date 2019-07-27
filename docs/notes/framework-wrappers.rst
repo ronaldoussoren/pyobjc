@@ -380,9 +380,9 @@ The framework name links to API notes for that framework, the python packages li
 +------------------------------------------------------------------+---------------------------------------------+-----------------------------------------+
 | :doc:`SyncServices </apinotes/SyncServices>`                     | `pyobjc-framework-SyncServices`_            |                                         |
 +------------------------------------------------------------------+---------------------------------------------+-----------------------------------------+
-| System                                                           | -                                           | Not a public API.                       |
+| System                                                           | -                                           | No public API.                          |
 +------------------------------------------------------------------+---------------------------------------------+-----------------------------------------+
-| SystemExtensions                                                 | -                                           | Not wrapped yet                         |
+| :doc:`SystemExtensions </apinotes/SystemExtensions>`             | `pyobjc-framework-SystemExtensions`_        |                                         |
 +------------------------------------------------------------------+---------------------------------------------+-----------------------------------------+
 | :doc:`SystemConfiguration </apinotes/SystemConfiguration>`       | `pyobjc-framework-SystemConfiguration`_     |                                         |
 +------------------------------------------------------------------+---------------------------------------------+-----------------------------------------+
@@ -391,7 +391,7 @@ The framework name links to API notes for that framework, the python packages li
 +------------------------------------------------------------------+---------------------------------------------+-----------------------------------------+
 | Tcl                                                              | -                                           | Will not be wrapped.                    |
 +------------------------------------------------------------------+---------------------------------------------+-----------------------------------------+
-| Tk                                                               | -                                           | Will not be wrapped.                    |
+| Tk                                                               | -                                           | Will not be wrapped, use :mod:`tkinter`.|
 +------------------------------------------------------------------+---------------------------------------------+-----------------------------------------+
 | USBDriverKit                                                     | -                                           | Not wrapped yet                         |
 +------------------------------------------------------------------+---------------------------------------------+-----------------------------------------+
@@ -546,3 +546,4 @@ cannot be wrapped using PyObjC.
 .. _`pyobjc-framework-CoreHaptics`: https://pypi.org/project/pyobjc-framework-CoreHaptics/
 .. _`pyobjc-framework-AuthenticationServices`: https://pypi.org/project/pyobjc-framework-AuthenticationServices/
 .. _`pyobjc-framework-Speech`: https://pypi.org/project/pyobjc-framework-Speech/
+.. _`pyobjc-framework-SystemExtensions`: https://pypi.org/project/pyobjc-framework-SystemExtensions/

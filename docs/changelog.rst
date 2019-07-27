@@ -24,6 +24,8 @@ Version 6.0a0
   - PencilKit (new in macOS 10.15)
   - PushKit (new in macOS 10.15)
   - QuickLookThumbnailing (new in macOS 10.15)
+  - SoundAnalysis (new in macOS 10.15)
+  - SystemExtensions (new in macOS 10.15)
 
 Version 5.2
 -----------
