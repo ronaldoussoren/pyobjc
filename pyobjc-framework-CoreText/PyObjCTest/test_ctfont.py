@@ -475,6 +475,10 @@ class TestCTFont (TestCase):
 
         self.assertResultIsCFRetained(CTFontCopyDefaultCascadeListForLanguages)
 
+    @min_os_level('10.9')
+    def testFunctions10_9(self):
+        self.assertResultIsCFRetained(CTFontCreateForStringWithLanguage)
+
     @min_os_level('10.10')
     def testConstants10_10(self):
         self.assertIsInstance(kCTFontOpenTypeFeatureTag, unicode)
@@ -483,6 +487,11 @@ class TestCTFont (TestCase):
     @min_os_level('10.13')
     def testConstants10_13(self):
         self.assertIsInstance(kCTFontVariationAxisHiddenKey, unicode)
+
+    @min_os_level('10.15')
+    def testConstants10_15(self):
+        self.assertIsInstance(kCTFontFeatureSampleTextKey, unicode)
+        self.assertIsInstance(kCTFontFeatureTooltipTextKey, unicode)
 
 if __name__ == "__main__":
     main()

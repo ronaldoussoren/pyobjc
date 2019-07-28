@@ -22,6 +22,7 @@ class TestCTFontManagerErrors (TestCase):
         self.assertEqual(kCTFontManagerErrorInsufficientInfo, 303)
         self.assertEqual(kCTFontManagerErrorCancelledByUser, 304)
         self.assertEqual(kCTFontManagerErrorDuplicatedName, 305)
+        self.assertEqual(kCTFontManagerErrorInvalidFilePath, 306)
 
 
 if __name__ == "__main__":

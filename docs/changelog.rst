@@ -13,7 +13,7 @@ Version 6.0a0
   - Use "black" for Python code
   - Use "clang-format" for Objective-C code
 
-* Updated bindings for macOS 10.15 (beta 3)
+* Updated bindings for macOS 10.15 (beta 4)
 
 * Add new framework wrappers:
 

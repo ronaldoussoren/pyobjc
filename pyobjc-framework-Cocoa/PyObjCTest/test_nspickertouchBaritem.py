@@ -19,5 +19,10 @@ class TestNSPickerTouchBarItem (TestCase):
 
         self.assertArgIsSEL(AppKit.NSPickerTouchBarItem.setAction_, 0, b'v@:@')
 
+        self.assertResultIsBOOL(AppKit.NSPickerTouchBarItem.isEnabled)
+        self.assertArgIsBOOL(AppKit.NSPickerTouchBarItem.setEnabled_, 0)
+        self.assertResultIsBOOL(AppKit.NSPickerTouchBarItem.isEnabledAtIndex_)
+        self.assertArgIsBOOL(AppKit.NSPickerTouchBarItem.setEnabled_atIndex_, 0)
+
 if __name__ == "__main__":
     main()

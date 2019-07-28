@@ -8,8 +8,8 @@ class TestNSTextStorageHelper (NSObject):
 
 class TestNSTextStorage (TestCase):
     def testConstants(self):
-        self.assertEqual(NSTextStorageEditedAttributes, 1)
-        self.assertEqual(NSTextStorageEditedCharacters, 2)
+        self.assertEqual(NSTextStorageEditedAttributes, 1<<0)
+        self.assertEqual(NSTextStorageEditedCharacters, 1<<1)
 
         self.assertIsInstance(NSTextStorageWillProcessEditingNotification, unicode)
         self.assertIsInstance(NSTextStorageDidProcessEditingNotification, unicode)

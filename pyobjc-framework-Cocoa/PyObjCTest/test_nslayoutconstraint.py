@@ -111,5 +111,13 @@ class TestNSLayoutContraintManual (TestCase):
         self.assertResultIsBOOL(NSLayoutConstraint.isActive)
         self.assertArgIsBOOL(NSLayoutConstraint.setActive_, 0)
 
+    @min_os_level('10.15')
+    def testMethods10_15(self):
+        self.assertResultIsBOOL(NSLayoutConstraint.isHorizontalContentSizeConstraintActive)
+        self.assertArgIsBOOL(NSLayoutConstraint.setsHorizontalContentSizeConstraintActive_, 0)
+
+        self.assertResultIsBOOL(NSLayoutConstraint.isVerticalContentSizeConstraintActive)
+        self.assertArgIsBOOL(NSLayoutConstraint.setVerticalContentSizeConstraintActive_, 0)
+
 if __name__ == "__main__":
     main()

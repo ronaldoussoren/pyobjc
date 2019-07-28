@@ -90,6 +90,9 @@ class TestCMSync (TestCase):
         CoreMedia.CMSyncGetTime
         CoreMedia.CMTimebaseNotificationBarrier
 
+        CoreMedia.CMTimebaseSetMasterClock
+        CoreMedia.CMTimebaseSetMasterTimebase
+
     @min_os_level('10.11')
     def test_functions10_11(self):
         self.assertResultIsCFRetained(CoreMedia.CMTimebaseCopyMasterTimebase)

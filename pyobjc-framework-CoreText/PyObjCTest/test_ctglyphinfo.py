@@ -59,6 +59,9 @@ class TestCTGlyphInfo (TestCase):
         v = CTGlyphInfoGetCharacterCollection(info)
         self.assertIsInstance(v, (int, long))
 
+    @min_os_level('10.15')
+    def testFunctions10_15(self):
+        CoreText.CTGlyphInfoGetGlyph
 
 if __name__ == "__main__":
     main()
