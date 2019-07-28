@@ -169,7 +169,7 @@ The framework name links to API notes for that framework, the python packages li
 | FWAUserLib                                                       | -                                           | Will not be wrapped, framework is       |
 |                                                                  |                                             | deprecated in macOS 10.12               |
 +------------------------------------------------------------------+---------------------------------------------+-----------------------------------------+
-| FileProvider                                                     | -                                           | Not wrapped yet                         |
+| :doc:`FileProvider </apinotes/FileProvider>`                     | `pyobjc-framework-FileProvider`_            |                                         |
 +------------------------------------------------------------------+---------------------------------------------+-----------------------------------------+
 | FileProviderUI                                                   | -                                           | Not wrapped yet                         |
 +------------------------------------------------------------------+---------------------------------------------+-----------------------------------------+
@@ -484,6 +484,7 @@ cannot be wrapped using PyObjC.
 .. _`pyobjc-framework-ExecutionPolicy`: https://pypi.org/project/pyobjc-framework-ExecutionPolicy/
 .. _`pyobjc-framework-ExternalAccessory`: https://pypi.org/project/pyobjc-framework-ExternalAccessory/
 .. _`pyobjc-framework-FSEvents`: https://pypi.org/project/pyobjc-framework-FSEvents/
+.. _`pyobjc-framework-FileProvider`: https://pypi.org/project/pyobjc-framework-libdispatch/
 .. _`pyobjc-framework-FinderSync`: https://pypi.org/project/pyobjc-framework-FinderSync/
 .. _`pyobjc-framework-GameCenter`: https://pypi.org/project/pyobjc-framework-GameCenter/
 .. _`pyobjc-framework-GameController`: https://pypi.org/project/pyobjc-framework-GameController/

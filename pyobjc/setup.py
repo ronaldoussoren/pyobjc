@@ -69,6 +69,7 @@ FRAMEWORK_WRAPPERS=[
         ('ExceptionHandling',       None,               None        ),
         ('ExecutionPolicy',         '10.15',            None        ),
         ('ExternalAccessory',       '10.13',            None        ),
+        ('FileProvider',            '10.15',            None        ),
         ('FSEvents',                '10.5',             None        ),
         ('FinderSync',              '10.10',            None        ),
         ('GameCenter',              '10.8',             None        ),

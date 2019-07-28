@@ -1,0 +1,73 @@
+// objective.metadata exceptions file, see its document
+// for information on how to update this file.
+{
+ "definitions": {
+  "classes": {
+   "NSFileProviderExtension": {
+    "methods": [
+     {
+      "args": {
+       "1": {}
+      }, 
+      "class_method": false, 
+      "selector": "itemForIdentifier:error:"
+     }, 
+     {
+      "args": {
+       "2": {}
+      }, 
+      "class_method": true, 
+      "selector": "writePlaceholderAtURL:withMetadata:error:"
+     }, 
+     {
+      "args": {
+       "1": {}
+      }, 
+      "class_method": false, 
+      "selector": "enumeratorForContainerItemIdentifier:error:"
+     }, 
+     {
+      "args": {
+       "1": {}
+      }, 
+      "class_method": false, 
+      "selector": "enumeratorForSearchQuery:error:"
+     }, 
+     {
+      "args": {
+       "1": {}
+      }, 
+      "class_method": false, 
+      "selector": "supportedServiceSourcesForItemIdentifier:error:"
+     }
+    ]
+   }, 
+   "NSFileProviderManager": {
+    "methods": [
+     {
+      "args": {
+       "2": {}
+      }, 
+      "class_method": true, 
+      "selector": "writePlaceholderAtURL:withMetadata:error:"
+     }
+    ]
+   }
+  }, 
+  "formal_protocols": {
+   "NSFileProviderServiceSource": {
+    "methods": [
+     {
+      "args": {
+       "0": {}
+      }, 
+      "class_method": false, 
+      "selector": "makeListenerEndpointAndReturnError:"
+     }
+    ]
+   }
+  }, 
+  "functions": {}, 
+  "informal_protocols": {}
+ }
+}
