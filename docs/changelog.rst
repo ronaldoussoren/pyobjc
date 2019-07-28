@@ -19,6 +19,7 @@ Version 6.0a0
 
   - AuthenticationServices (new in macOS 10.15)
   - CoreHaptics (new in macOS 10.15)
+  - CoreMotion (new in macOS 10.15)
   - DeviceCheck (new in macOS 10.15)
   - ExecutionPolicy (new in macOS 10.15)
   - MetalKit (new in macOS 10.11)
