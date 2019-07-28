@@ -22,6 +22,8 @@ Version 6.0a0
   - CoreMotion (new in macOS 10.15)
   - DeviceCheck (new in macOS 10.15)
   - ExecutionPolicy (new in macOS 10.15)
+  - FileProvider (new in macOS 10.15)
+  - FileProviderUI (new in macOS 10.15)
   - MetalKit (new in macOS 10.11)
   - PencilKit (new in macOS 10.15)
   - PushKit (new in macOS 10.15)

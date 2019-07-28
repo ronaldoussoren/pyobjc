@@ -171,7 +171,7 @@ The framework name links to API notes for that framework, the python packages li
 +------------------------------------------------------------------+---------------------------------------------+-----------------------------------------+
 | :doc:`FileProvider </apinotes/FileProvider>`                     | `pyobjc-framework-FileProvider`_            |                                         |
 +------------------------------------------------------------------+---------------------------------------------+-----------------------------------------+
-| FileProviderUI                                                   | -                                           | Not wrapped yet                         |
+| :doc:`FileProviderUI </apinotes/FileProviderUI>`                 | `pyobjc-framework-FileProviderUI`_          |                                         |
 +------------------------------------------------------------------+---------------------------------------------+-----------------------------------------+
 | :doc:`FinderSync </apinotes/FinderSync>`                         | `pyobjc-framework-FinderSync`_              |                                         |
 +------------------------------------------------------------------+---------------------------------------------+-----------------------------------------+
@@ -484,7 +484,8 @@ cannot be wrapped using PyObjC.
 .. _`pyobjc-framework-ExecutionPolicy`: https://pypi.org/project/pyobjc-framework-ExecutionPolicy/
 .. _`pyobjc-framework-ExternalAccessory`: https://pypi.org/project/pyobjc-framework-ExternalAccessory/
 .. _`pyobjc-framework-FSEvents`: https://pypi.org/project/pyobjc-framework-FSEvents/
-.. _`pyobjc-framework-FileProvider`: https://pypi.org/project/pyobjc-framework-libdispatch/
+.. _`pyobjc-framework-FileProvider`: https://pypi.org/project/pyobjc-framework-FileProvider/
+.. _`pyobjc-framework-FileProviderUI`: https://pypi.org/project/pyobjc-framework-FileProviderUI/
 .. _`pyobjc-framework-FinderSync`: https://pypi.org/project/pyobjc-framework-FinderSync/
 .. _`pyobjc-framework-GameCenter`: https://pypi.org/project/pyobjc-framework-GameCenter/
 .. _`pyobjc-framework-GameController`: https://pypi.org/project/pyobjc-framework-GameController/
