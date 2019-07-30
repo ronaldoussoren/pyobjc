@@ -15,21 +15,33 @@ Version 6.0a0
 
 * Updated bindings for macOS 10.15 (beta 4)
 
-* Add new framework wrappers:
+* The userspace driver frameworks introduced in macOS 10.15
+  (DriverKit and related frameworks) will not be exposed through
+  PyObjC. Please let me know if you have a good
+  use case for using these frameworks with Python.
 
-  - AuthenticationServices (new in macOS 10.15)
-  - CoreHaptics (new in macOS 10.15)
-  - CoreMotion (new in macOS 10.15)
-  - DeviceCheck (new in macOS 10.15)
-  - ExecutionPolicy (new in macOS 10.15)
-  - FileProvider (new in macOS 10.15)
-  - FileProviderUI (new in macOS 10.15)
+* Add new framework wrappers for all other new frameworks
+  in macOS 10.15:
+
+  - AuthenticationServices
+  - CoreHaptics
+  - CoreMotion
+  - DeviceCheck
+  - ExecutionPolicy
+  - FileProvider
+  - FileProviderUI
+  - Logging
+  - PencilKit
+  - PushKit
+  - QuickLookThumbnailing
+  - Speech
+  - SoundAnalysis
+  - SystemExtensions
+
+* Add new framework wrappers for a number of older
+  frameworks:
+
   - MetalKit (new in macOS 10.11)
-  - PencilKit (new in macOS 10.15)
-  - PushKit (new in macOS 10.15)
-  - QuickLookThumbnailing (new in macOS 10.15)
-  - SoundAnalysis (new in macOS 10.15)
-  - SystemExtensions (new in macOS 10.15)
 
 Version 5.2
 -----------
