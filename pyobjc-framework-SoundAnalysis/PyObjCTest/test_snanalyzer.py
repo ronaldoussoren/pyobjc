@@ -13,5 +13,5 @@ class TestSNAnalyzer (TestCase):
         self.assertResultIsBOOL(SoundAnalysis.SNAudioStreamAnalyzer.addRequest_withObserver_error_)
         self.assertArgIsOut(SoundAnalysis.SNAudioStreamAnalyzer.addRequest_withObserver_error_, 2)
 
-        self.assertArgIsBlock(SoundAnalysis.SNAudioStreamAnalyzer.analyzeWithCompletionHandler_, 0, b'v@')
+        self.assertArgIsBlock(SoundAnalysis.SNAudioFileAnalyzer.analyzeWithCompletionHandler_, 0, b'v@')
 
