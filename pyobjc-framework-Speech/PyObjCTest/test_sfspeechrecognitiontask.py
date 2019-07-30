@@ -24,7 +24,5 @@ class TestSFSpeechRecognitionTask (TestCase):
     @min_os_level('10.15')
     def test_methods10_15(self):
         self.assertResultIsBOOL(Speech.SFSpeechRecognitionTask.isFinishing)
-        self.assertArgIsBOOL(Speech.SFSpeechRecognitionTask.setFinishing_, 0)
 
         self.assertResultIsBOOL(Speech.SFSpeechRecognitionTask.isCancelled)
-        self.assertArgIsBOOL(Speech.SFSpeechRecognitionTask.setCancelled_, 0)

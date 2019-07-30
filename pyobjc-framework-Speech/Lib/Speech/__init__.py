@@ -10,6 +10,7 @@ import sys
 import Foundation
 
 from Speech import _metadata
+from Speech import _Speech
 
 
 sys.modules['Speech'] = mod = objc.ObjCLazyModule(

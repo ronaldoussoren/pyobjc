@@ -23,7 +23,6 @@ class TestSFSpeechRecognizer (TestCase):
     def test_methods10_15(self):
         self.assertArgIsBlock(Speech.SFSpeechRecognizer.requestAuthorization_, 0, b'v' + objc._C_NSInteger)
 
-        self.assertResultIsBOOL(SFSpeechRecognizer.isAvailable)
-        self.assertArgIsBOOL(SFSpeechRecognizer.setAvailable_)
+        self.assertResultIsBOOL(Speech.SFSpeechRecognizer.isAvailable)
 
         self.assertArgIsBlock(Speech.SFSpeechRecognizer.recognitionTaskWithRequest_resultHandler_, 1, b'v@@')
