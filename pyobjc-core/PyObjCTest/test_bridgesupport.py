@@ -480,6 +480,7 @@ class TestBridgeSupportParser(TestCase):
     BROKEN_FRAMEWORKS = (
         "AE.bridgesupport",
         "ATS.bridgesupport",
+        "ATSUI.bridgesupport",
         "AVFoundation.bridgesupport",
         "AudioToolbox.bridgesupport",
         "CarbonSound.bridgesupport",
@@ -495,6 +496,7 @@ class TestBridgeSupportParser(TestCase):
         "IOKit.bridgesupport",
         "Kerberos.bridgesupport",
         "LangAnalysis.bridgesupport",
+        "MetalPerformanceShaders",
         "MPSImage.bridgesupport",
         "ModelIO.bridgesupport",
         "NavigationServices.bridgesupport",
@@ -530,7 +532,7 @@ class TestBridgeSupportParser(TestCase):
         test_func.__doc__ = "System bridgesupport %r" % (fn,)
 
         if contains_any(fn, BROKEN_FRAMEWORKS) and any(
-            os_release().startswith(version) for version in ("10.13", "10.14")
+            os_release().startswith(version) for version in ("10.13", "10.14", "10.15")
         ):
             locals()[_test_name] = expectedFailure(test_func)
         else:
