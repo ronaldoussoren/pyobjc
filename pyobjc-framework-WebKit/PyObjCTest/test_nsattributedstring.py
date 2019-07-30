@@ -6,7 +6,7 @@ NSAttributedStringCompletionHandler = b'v@@@'
 class TestWKContentRuleListStore (TestCase):
     @min_os_level('10.15')
     def test_constants(self):
-        self.assertIsInstance(WebKit.NSAttributedStringDocumentReadingOptionKey, unicode)
+        self.assertIsInstance(WebKit.NSReadAccessURLDocumentOption, unicode)
 
     @min_os_level('10.15')
     def test_methods(self):

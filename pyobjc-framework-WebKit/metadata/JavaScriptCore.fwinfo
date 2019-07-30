@@ -69,6 +69,22 @@
     "methods": [
      {
       "class_method": false,
+      "selector": "valueWithNewPromiseInContext:fromExecutor:",
+      "args": {
+       "1": {
+        "callable": {
+         "retval": { "typestr": "v" },
+         "arguments": {
+          "0": { "type": "^v" },
+	  "1": { "type": "@" },
+	  "2": { "type": "@" }
+         }
+        }
+       }
+      }
+     },
+     {
+      "class_method": false,
       "selector": "valueWithBool:inContext:",
       "args": {
        "0": { "type_override": "Z" }
@@ -491,10 +507,8 @@
    },
    "JSObjectMakeArrayBufferWithBytesNoCopy": {
     "args": {
-     "0": { "typestr": "^{OpaqueJSContext=}" },
-     "1": { "typestr": "n^v", "c_array_lenght_in_arg": "2" },
-     "2": { "typestr": "L" },
-     "3": { "typestr": "^?",
+     "1": { "type_modifier": "n", "c_array_length_in_arg": 2 },
+     "3": {
       "callable": {
        "retval": { "typestr": "v" },
        "arguments": {
@@ -504,10 +518,8 @@
       },
       "callable_retained": true
      },
-     "4": { "typestr": "^v" },
-     "5": { "typestr": "^^{OpaqueJSValue=}", "type_modifier": "o" }
-    },
-    "retval": { "typestr": "^{OpaqueJSValue=}" }
+     "5":  { "type_modifier": "o" }
+    }
    },
    "JSObjectGetPrivate": {
     "args": {
@@ -538,6 +550,26 @@
      "1": {}
     },
     "retval": {}
+   },
+   "JSObjectDeletePropertyForKey": {
+    "args": {
+     "3": { "type_modifier": "o" }
+    }
+   },
+   "JSObjectSetPropertyForKey": {
+    "args": {
+     "5": { "type_modifier": "o" }
+    }
+   },
+   "JSObjectGetPropertyForKey": {
+    "args": {
+     "3": { "type_modifier": "o" }
+    }
+   },
+   "JSObjectHasPropertyForKey": {
+    "args": {
+     "3": { "type_modifier": "o" }
+    }
    },
    "JSObjectHasProperty": {
     "args": {
@@ -600,7 +632,7 @@
    },
    "JSObjectMakeTypedArrayWithBytesNoCopy": {
     "args": {
-     "2": { "type_modifier": "n", "c_array_lenght_in_arg": 3 },
+     "2": { "type_modifier": "n", "c_array_length_in_arg": 3 },
      "3": { "type_override": "L" },
      "6": { "type_modifier": "o" }
     }
@@ -638,6 +670,12 @@
      }
     },
     "retval": {}
+   },
+   "JSObjectMakeDeferredPromise": {
+    "args": {
+     "1": { "type_modifier": "o" },
+     "2": { "type_modifier": "o" }
+    }
    },
    "JSObjectMakeDate": {
     "args": {
