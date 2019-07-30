@@ -912,6 +912,13 @@
     "methods": [
      {
       "class_method": false,
+      "selector": "setVoiceProcessingEnabled:error:",
+      "args": {
+       "1": { "type_modifier": "o" }
+      }
+     },
+     {
+      "class_method": false,
       "retval": {},
       "selector": "audioUnit"
      }
