@@ -82,7 +82,7 @@ class TestAVError (TestCase):
         self.assertEqual(AVFoundation.AVErrorNoCompatibleAlternatesForExternalDisplay, -11868)
         self.assertEqual(AVFoundation.AVErrorNoSourceTrack, -11869)
         self.assertEqual(AVFoundation.AVErrorExternalPlaybackNotSupportedForAsset, -11870)
-        self.assertEqual(AVFoundation.AVErrorOperationNotSupportedForPreset, -11873)
+        self.assertEqual(AVFoundation.AVErrorOperationNotSupportedForPreset, -11871)
 
     @min_os_level('10.10')
     def testConstants10_10(self):

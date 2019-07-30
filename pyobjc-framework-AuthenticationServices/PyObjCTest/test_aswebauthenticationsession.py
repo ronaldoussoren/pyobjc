@@ -10,7 +10,7 @@ class TestASWebAuthenticationSession (TestCase):
         self.assertEqual(AuthenticationServices.ASWebAuthenticationSessionErrorCodePresentationContextNotProvided, 2)
         self.assertEqual(AuthenticationServices.ASWebAuthenticationSessionErrorCodePresentationContextInvalid, 3)
 
-    @min_sdk_version('10.15')
+    @min_sdk_level('10.15')
     def test_protocols(self):
         objc.protocolNamed('ASWebAuthenticationPresentationContextProviding')
 
