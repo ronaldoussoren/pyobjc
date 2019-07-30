@@ -10,6 +10,7 @@ import sys
 import Foundation
 
 from SystemExtensions import _metadata
+from SystemExtensions import _SystemExtensions
 
 
 sys.modules['SystemExtensions'] = mod = objc.ObjCLazyModule(

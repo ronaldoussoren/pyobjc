@@ -7,7 +7,8 @@ for general tips and tricks regarding the translation between Python
 and (Objective-)C frameworks
 '''
 
-from pyobjc_setup import setup
+from pyobjc_setup import setup, Extension
+import os
 
 VERSION="6.0a0"
 
@@ -16,6 +17,17 @@ setup(
     description = "Wrappers for the framework SystemExtensions on macOS",
     min_os_level="10.15",
     packages = [ "SystemExtensions" ],
+    ext_modules = [
+        Extension("SystemExtensions._SystemExtensions",
+            [ "Modules/_SystemExtensions.m" ],
+            extra_link_args=["-framework", "SystemExtensions"],
+            depends=[
+                os.path.join('Modules', fn)
+                for fn in os.listdir('Modules')
+                if fn.startswith('_SystemExtensions')
+            ]
+        ),
+    ],
     version=VERSION,
     install_requires = [
         'pyobjc-core>='+VERSION,
