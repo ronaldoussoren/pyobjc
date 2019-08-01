@@ -52,7 +52,7 @@ class TestCHHapticPatternPlayer (TestCase):
         self.assertArgIsOut(TestCHHapticPatternPlayerHelper.cancelAndReturnError_, 0)
 
         self.assertResultIsBOOL(TestCHHapticPatternPlayerHelper.isMuted)
-        self.assertArgIsBOOL(TestCHHapticPatternPlayerHelper.setMuted_, 0)
+        self.assertArgIsBOOL(TestCHHapticPatternPlayerHelper.setIsMuted_, 0)
 
         # CHHapticAdvancedPatternPlayer
         self.assertResultIsBOOL(TestCHHapticPatternPlayerHelper.pauseAtTime_error_)
@@ -73,11 +73,11 @@ class TestCHHapticPatternPlayer (TestCase):
         self.assertResultHasType(TestCHHapticPatternPlayerHelper.loopEnd, objc._C_DBL)
         self.assertArgHasType(TestCHHapticPatternPlayerHelper.setLoopEnd_, 0, objc._C_DBL)
 
-        self.assertResultHasType(TestCHHapticPatternPlayerHelper.playbackRate, objc._C_DBL)
-        self.assertArgHasType(TestCHHapticPatternPlayerHelper.setPlaybackRate_, 0, objc._C_DBL)
+        self.assertResultHasType(TestCHHapticPatternPlayerHelper.playbackRate, objc._C_FLT)
+        self.assertArgHasType(TestCHHapticPatternPlayerHelper.setPlaybackRate_, 0, objc._C_FLT)
 
         self.assertResultIsBOOL(TestCHHapticPatternPlayerHelper.isMuted)
-        self.assertArgIsBOOL(TestCHHapticPatternPlayerHelper.setMuted_, 0)
+        self.assertArgIsBOOL(TestCHHapticPatternPlayerHelper.setIsMuted_, 0)
 
         self.assertResultIsBlock(TestCHHapticPatternPlayerHelper.completionHandler, CHHapticAdvancedPatternPlayerCompletionHandler)
         self.assertArgIsBlock(TestCHHapticPatternPlayerHelper.setCompletionHandler_, 0, CHHapticAdvancedPatternPlayerCompletionHandler)

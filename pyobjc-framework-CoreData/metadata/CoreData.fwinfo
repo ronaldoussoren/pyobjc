@@ -44,6 +44,17 @@
    "NSManagedObjectContextQueryGenerationKey": { "typestr": "@" }
   },
   "classes": {
+   "NSPersistentCloudKitContainer": {
+    "methods": [
+     {
+      "class_method": false,
+      "selector": "initializeCloudKitSchemaWithOptions:error:",
+      "args": {
+       "1": { "type_modifier": "o" }
+      }
+     }
+    ]
+   },
    "NSFetchIndexElementDescription": {
     "methods": [
      {

@@ -9,6 +9,7 @@ class TestCHHapticDeviceCapabilityHelper (CoreHaptics.NSObject):
     def supportsHaptics(self): return 1
     def supportsAudio(self): return 1
     def attributesForEventParameter_eventType_error_(self, a, b, c): return 1
+    def attributesForDynamicParameter_error_(self, a, b): return 1
 
 class TestCHHapticDeviceCapability (TestCase):
     @min_sdk_level('10.15')

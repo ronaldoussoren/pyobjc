@@ -7,8 +7,6 @@ CHHapticEngineFinishedHandler = objc._C_NSInteger + b'@'
 CHHapticEngineStoppedHandler = b'v' + objc._C_NSInteger
 CHHapticEngineResetHandler = b'v'
 
-class TestCHHapticEngineHelper (CoreHaptics.NSObject):
-
 class TestCHHapticEngine (TestCase):
     def test_constants(self):
         self.assertEqual(CoreHaptics.CHHapticTimeImmediate, 0.0)
@@ -43,7 +41,7 @@ class TestCHHapticEngine (TestCase):
         self.assertArgIsBOOL(CoreHaptics.CHHapticEngine.setAutoShutdownEnabled_, 0)
 
         self.assertArgIsOut(CoreHaptics.CHHapticEngine.initAndReturnError_, 0)
-        self.assertArgIsOut(CoreHaptics.CHHapticEngine.initWithAudioSession_erorr_, 1)
+        self.assertArgIsOut(CoreHaptics.CHHapticEngine.initWithAudioSession_error_, 1)
 
         self.assertArgIsBlock(CoreHaptics.CHHapticEngine.startWithCompletionHandler_, 0, CHHapticCompletionHandler)
 

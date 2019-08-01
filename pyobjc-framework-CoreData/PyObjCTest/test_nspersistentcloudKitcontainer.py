@@ -1,6 +1,6 @@
 
 from PyObjCTools.TestSupport import *
-from CoreData import *
+import CoreData
 
 class TestNSPersistentCloudKitContainer (TestCase):
     def test_constants(self):

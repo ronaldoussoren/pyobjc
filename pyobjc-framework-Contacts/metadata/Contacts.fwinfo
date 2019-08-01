@@ -223,6 +223,20 @@
    "CNContactStore": {
     "methods": [
      {
+      "selector": "enumeratorForChangeHistoryFetchRequest:error:",
+      "class_method": false,
+      "args": {
+       "1": { "type_modifier": "o" }
+      }
+     },
+     {
+      "selector": "enumeratorForContactFetchRequest:error:",
+      "class_method": false,
+      "args": {
+       "1": { "type_modifier": "o" }
+      }
+     },
+     {
       "selector": "groupsMatchingPredicate:error:",
       "class_method": false,
       "args": {

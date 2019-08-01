@@ -21,7 +21,7 @@ class TestCHHapticParameter (TestCase):
 
     @min_sdk_level('10.15')
     def test_methods10_15(self):
-        self.assertArgIsOut(CoreHaptics.CHHapticPattern.initWithEvents_parameters_errors_, 2)
-        self.assertArgIsOut(CoreHaptics.CHHapticPattern.initWithEvents_parameterCurves_errors_, 2)
-        self.assertArgIsOut(CoreHaptics.CHHapticPattern.initWithDictionary_errors_, 1)
+        self.assertArgIsOut(CoreHaptics.CHHapticPattern.initWithEvents_parameters_error_, 2)
+        self.assertArgIsOut(CoreHaptics.CHHapticPattern.initWithEvents_parameterCurves_error_, 2)
+        self.assertArgIsOut(CoreHaptics.CHHapticPattern.initWithDictionary_error_, 1)
         self.assertArgIsOut(CoreHaptics.CHHapticPattern.exportDictionaryAndReturnError_, 0)
