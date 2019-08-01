@@ -47,8 +47,9 @@ class TestCFHTTPStream (TestCase):
             v = CFReadStreamCreateForStreamedHTTPRequest(None, req, v)
             self.assertIsInstance(v, CFReadStreamRef)
 
-            self.assertArgIsBOOL(CFHTTPReadStreamSetRedirectsAutomatically, 1)
-            CFHTTPReadStreamSetRedirectsAutomatically(v, True)
+            if os_level_key(os_release()) < os_level_key('10.15'):
+                self.assertArgIsBOOL(CFHTTPReadStreamSetRedirectsAutomatically, 1)
+                CFHTTPReadStreamSetRedirectsAutomatically(v, True)
 
             if os_level_key(os_release()) < os_level_key('10.10'):
                 CFHTTPReadStreamSetProxy(v, "localhost", 8080)
