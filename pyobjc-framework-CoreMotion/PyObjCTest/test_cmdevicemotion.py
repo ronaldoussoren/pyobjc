@@ -11,6 +11,6 @@ class TestCMDeviceMotion (TestCase):
 
     def test_structs(self):
         v = CoreMotion.CMCalibratedMagneticField()
-        self.assertEqual(v.field, 0.0)
+        self.assertEqual(v.field, CoreMotion.CMMagneticField())
         self.assertEqual(v.accuracy, 0)
 
