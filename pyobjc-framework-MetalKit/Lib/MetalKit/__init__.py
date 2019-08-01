@@ -10,6 +10,7 @@ import sys
 import Foundation
 
 from MetalKit import _metadata
+from MetalKit import _MetalKit
 
 
 sys.modules['MetalKit'] = mod = objc.ObjCLazyModule(

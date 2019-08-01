@@ -1,5 +1,5 @@
 import sys
-from PyObjCTest import *
+from PyObjCTools.TestSupport import *
 
 if sys.maxsize > 2 ** 32:
     import ExecutionPolicy
@@ -13,4 +13,4 @@ if sys.maxsize > 2 ** 32:
 
         @min_os_level('10.15')
         def test_methods(self):
-            self.assertArgIsBlock(ExecutionPolicy.EPDeveloperTool.requestDeveloperToolAccessWithCompletionHandler_, 'vZ')
+            self.assertArgIsBlock(ExecutionPolicy.EPDeveloperTool.requestDeveloperToolAccessWithCompletionHandler_, 0, b'vZ')

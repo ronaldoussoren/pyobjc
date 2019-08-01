@@ -1,0 +1,41 @@
+// objective.metadata exceptions file, see its document
+// for information on how to update this file.
+{
+ "definitions": {
+  "classes": {
+   "EPDeveloperTool": {
+    "methods": [
+     {
+      "args": {
+       "0": {
+        "callable": {
+	 "arguments": {
+	  "0": { "type": "^v" },
+	  "1": { "type": "Z" }
+	 },
+	 "retval": { "type": "v" }
+	}
+       }
+      },
+      "selector": "requestDeveloperToolAccessWithCompletionHandler:",
+      "class_method": false
+     }
+    ]
+   },
+   "EPExecutionPolicy": {
+    "methods": [
+     {
+      "args": {
+       "1": { "type_modifier": "o" }
+      },
+      "class_method": false,
+      "selector": "addPolicyExceptionForURL:error:"
+     }
+    ]
+   }
+  },
+  "formal_protocols": {},
+  "functions": {},
+  "informal_protocols": {}
+ }
+}

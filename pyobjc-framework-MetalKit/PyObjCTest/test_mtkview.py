@@ -5,6 +5,7 @@ import sys
 if sys.maxsize > 2 ** 32:
 
     import MetalKit
+    import Quartz
 
     class TestMTKViewHelper (MetalKit.NSObject):
         def mtkView_drawableSizeWillChange_(self, a, b): pass
@@ -32,4 +33,4 @@ if sys.maxsize > 2 ** 32:
             objc.protocolNamed('MTKViewDelegate')
 
         def test_methods(self):
-            self.assertArgHasType(TestMTKViewHelper.mtkView_drawableSizeWillChange_, 1, MetalKit.CGSize.__typestr__)
+            self.assertArgHasType(TestMTKViewHelper.mtkView_drawableSizeWillChange_, 1, Quartz.CGSize.__typestr__)
