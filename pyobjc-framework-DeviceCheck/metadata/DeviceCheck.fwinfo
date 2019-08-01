@@ -2,9 +2,30 @@
 // for information on how to update this file.
 {
  "definitions": {
-  "classes": {}, 
-  "formal_protocols": {}, 
-  "functions": {}, 
+  "classes": {
+   "DCDevice": {
+    "methods": [
+     {
+      "selector": "generateTokenWithCompletionHandler:",
+      "class_method": false,
+      "args": {
+       "0": {
+        "callable": {
+	 "arguments": {
+	  "0": { "type": "^v" },
+	  "1": { "type": "@" },
+	  "2": { "type": "@" }
+	 },
+	 "retval": { "type": "v" }
+	}
+       }
+      }
+     }
+    ]
+   }
+  },
+  "formal_protocols": {},
+  "functions": {},
   "informal_protocols": {}
  }
 }
