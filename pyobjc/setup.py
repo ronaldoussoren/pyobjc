@@ -13,6 +13,8 @@ import glob
 import tarfile
 import sys
 import ast
+import glob
+import contextlib
 
 VERSION="6.0a0"
 
@@ -270,6 +272,18 @@ def same_order(lst1, lst2):
             return False
     return True
 
+
+@contextlib.contextmanager
+def cwd(path):
+    cur = os.getcwd()
+    try:
+        os.chdir(path)
+
+        yield
+
+    finally:
+        os.chdir(cur)
+
 class oc_test (Command):
     description = "run test suite"
     user_options = [
@@ -284,12 +298,6 @@ class oc_test (Command):
             self.verbosity=int(self.verbosity)
 
     def run(self):
-        try:
-            import readme_renderer
-        except ImportError:
-            readme_renderer = None
-
-
         print("  validating framework list...")
         all_names = set(nm.split('-')[-1] for nm in os.listdir('..') if nm.startswith('pyobjc-framework-'))
         configured_names = set(x[0] for x in FRAMEWORK_WRAPPERS)
@@ -414,58 +422,56 @@ class oc_test (Command):
                     print("Bad version in wrapper for %s"%(nm,))
                     failures += 1
 
-        if readme_renderer is None:
-            print("  NOT validating long description")
-
-        else:
-            print("  validating long description...")
-            for nm in ('pyobjc', 'pyobjc-core',) + tuple(sorted(nm for nm in os.listdir('..') if nm.startswith('pyobjc-framework-'))):
-                subdir = os.path.join('..', nm)
-                if readme_renderer is not None:
-                    print("    %s"%(nm,))
-                    try:
-                        subprocess.check_output([sys.executable, 'setup.py', 'check', '-r', '-s'], cwd=subdir)
-                    except subprocess.CalledProcessError:
-                        failures += 1
 
         print("  validating sdist archives...")
         devnull = open('/dev/null', 'a')
-        for nm in ('pyobjc-core',) + tuple(sorted(nm for nm in os.listdir('..') if nm.startswith('pyobjc-framework-'))):
+        for nm in ('pyobjc', 'pyobjc-core',) + tuple(sorted(nm for nm in os.listdir('..') if nm.startswith('pyobjc-framework-'))):
             print("    %s"%(nm,))
             subdir = os.path.join('..', nm)
             if os.path.exists(os.path.join(subdir, 'dist')):
                 shutil.rmtree(os.path.join(subdir, 'dist'))
-                p = subprocess.check_call(
-                    [ sys.executable, 'setup.py', 'sdist' ],
-                    cwd=subdir,
-                    stdout=devnull, stderr=devnull
-                    )
-                files = glob.glob(
-                    os.path.join(subdir, 'dist', '*.tar.gz'))
 
-                if not files:
-                    print("No sdist in %s"%(nm,))
+            p = subprocess.check_call(
+                [ sys.executable, 'setup.py', 'sdist' ],
+                cwd=subdir,
+                stdout=devnull, stderr=devnull
+                )
+            files = glob.glob(
+                os.path.join(subdir, 'dist', '*.tar.gz'))
+
+            if not files:
+                print("No sdist in %s"%(nm,))
+                failures += 1
+
+            elif len(files) > 1:
+                print("Too many sdist in %s"%(nm,))
+                failures += 1
+
+            else:
+                t = tarfile.open(files[0], 'r:gz')
+                for fn in t.getnames():
+                    if fn.startswith('/'):
+                        print("Absolute path in sdist for %s"%(nm,))
+                        ok = False
+
+                    for p in (
+                        '__pycache__', '.pyc', '.pyo', '.so',
+                        '.dSYM', '.eggs', '.app', '/build/', '/dist/'):
+
+                        if p in fn:
+                            print("Unwanted pattern %r in sdist for %s: %s"%(
+                                p, nm, fn))
+                            failures += 1
+
+        print("  validating long description...")
+        for nm in ('pyobjc', 'pyobjc-core',) + tuple(sorted(nm for nm in os.listdir('..') if nm.startswith('pyobjc-framework-'))):
+            subdir = os.path.join('..', nm)
+            print("    %s"%(nm,))
+            with cwd(subdir):
+                try:
+                    subprocess.check_output([sys.executable, '-mtwine', 'check', ] + glob.glob('dist/*'))
+                except subprocess.CalledProcessError:
                     failures += 1
-
-                elif len(files) > 1:
-                    print("Too many sdist in %s"%(nm,))
-                    failures += 1
-
-                else:
-                    t = tarfile.open(files[0], 'r:gz')
-                    for fn in t.getnames():
-                        if fn.startswith('/'):
-                            print("Absolute path in sdist for %s"%(nm,))
-                            ok = False
-
-                        for p in (
-                            '__pycache__', '.pyc', '.pyo', '.so',
-                            '.dSYM', '.eggs', '.app', '/build/', '/dist/'):
-
-                            if p in fn:
-                                print("Unwanted pattern %r in sdist for %s: %s"%(
-                                    p, nm, fn))
-                                failures += 1
 
         print("SUMMARY: {'testSeconds': 0.0, 'count': 0, 'fails': %d, 'errors': 0, 'xfails': 0, 'skip': 0, 'xpass': 0, }"%(failures,))
         if failures:
