@@ -500,6 +500,7 @@ dist = setup(
     platforms = [ 'macOS' ],
     packages = [],
     install_requires = BASE_REQUIRES + framework_requires(),
+    python_requires = ">=3.6",
     setup_requires = [],
     classifiers = CLASSIFIERS,
     license = 'MIT License',

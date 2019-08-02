@@ -575,6 +575,7 @@ def setup(min_os_level=None, max_os_level=None, cmdclass=None, **kwds):
         zip_safe=False,
         license="MIT License",
         classifiers=CLASSIFIERS,
+        python_requires = ">=3.6",
         keywords=["PyObjC"] + [p for p in k["packages"] if p not in ("PyObjCTools",)],
         **k
     )
