@@ -1,5 +1,3 @@
-// objective.metadata exceptions file, see its document
-// for information on how to update this file.
 {
  "definitions": {
   "structs": {
@@ -47,6 +45,11 @@
    "AVCaptureAutoFocusRangeRestrictionNone": { "value": 0 }
   },
   "externs": {
+   "AVAssetDownloadTaskMediaSelectionPrefersMultichannelKey": { "typestr": "@" },
+   "AVAssetDownloadTaskMediaSelectionKey": { "typestr": "@" },
+   "AVAssetDownloadedAssetEvictionPriorityImportant": { "typestr": "@" },
+   "AVAssetDownloadedAssetEvictionPriorityDefault": { "typestr": "@" },
+   "AVAssetDownloadTaskMinimumRequiredMediaBitrateKey": { "typestr": "@" },
    "AVSpeechSynthesisVoiceIdentifierAlex": { "typestr": "@" },
    "AVSpeechSynthesisIPANotationAttribute": { "typestr": "@" },
    "AVSpeechUtteranceDefaultSpeechRate": { "typestr": "f" },
@@ -111,6 +114,46 @@
    "AVAudio3DVector": { "alias": "AVAudio3DPoint" }
   },
   "classes": {
+   "AVAudioSourceNode": {
+    "methods": [
+     {
+      "selector": "initWithRenderBlock:",
+      "class_method": false,
+      "args": {
+       "0": {
+        "callable": {
+	 "retval": { "typestr": "i" },
+	 "arguments": {
+	  "0": { "typestr": "^v" },
+	  "1": { "typestr": "o^Z" },
+	  "2": { "typestr": "n^^{AudioTimeStamp=dQdQ{SMPTETime=ssIIIssss}II}" },
+	  "3": { "typestr": "I" },
+	  "4": { "typestr": "o^{AudioBufferList=I[1{AudioBuffer=II^v}]}" }
+	 }
+        }
+       }
+      }
+     }
+    ]
+   },
+   "AVSemanticSegmentationMatte": {
+    "methods": [
+     {
+      "selector": "semanticSegmentationMatteFromImageSourceAuxiliaryDataType:dictionaryRepresentation:error:",
+      "class_method": true,
+      "args": {
+       "2": { "type_modifier": "o" }
+      }
+     },
+     {
+      "selector": "semanticSegmentationMatteByReplacingSemanticSegmentationMatteWithPixelBuffer:error:",
+      "class_method": false,
+      "args": {
+       "1": { "type_modifier": "o" }
+      }
+     }
+    ]
+   },
    "AVPortraitEffectsMatte": {
     "methods": [
      {
@@ -138,6 +181,37 @@
    },
    "AVSpeechSynthesizer": {
     "methods": [
+     {
+      "selector": "writeUtterance:toBufferCallback:",
+      "class_method": false,
+      "args": {
+       "1": {
+        "callable": {
+	 "retval": { "typestr": "v" },
+	 "arguments": {
+	  "0": { "typestr": "^v" },
+	  "1": { "typestr": "@" }
+	 }
+        }
+       }
+      }
+     },
+     {
+      "selector": "makeSecureTokenForExpirationDateOfPersistableContentKey:completionHandler:",
+      "class_method": false,
+      "args": {
+       "1": {
+        "callable": {
+	 "retval": { "typestr": "v" },
+	 "arguments": {
+	  "0": { "typestr": "^v" },
+	  "1": { "typestr": "@" },
+	  "2": { "typestr": "@" }
+	 }
+        }
+       }
+      }
+     },
      {
       "selector": "pauseSpeakingAtBoundary:",
       "class_method": false,
@@ -210,6 +284,58 @@
       "class_method": false,
       "args": {
        "1": { "type_modifier": "o" }
+      }
+     }
+    ]
+   },
+   "AVContentKeySession": {
+    "methods": [
+     {
+      "selector": "invalidateAllPersistableContentKeysForApp:options:completionHandler:",
+      "class_method": false,
+      "args": {
+       "2": {
+        "callable": {
+	 "retval": { "typestr": "v" },
+	 "arguments": {
+	  "0": { "typestr": "^v" },
+	  "1": { "typestr": "@" },
+	  "2": { "typestr": "@" }
+	 }
+        }
+       }
+      }
+     },
+     {
+      "selector": "makeSecureTokenForExpirationDateOfPersistableContentKey:completionHandler:",
+      "class_method": false,
+      "args": {
+       "1": {
+        "callable": {
+	 "retval": { "typestr": "v" },
+	 "arguments": {
+	  "0": { "typestr": "^v" },
+	  "1": { "typestr": "@" },
+	  "2": { "typestr": "@" }
+	 }
+        }
+       }
+      }
+     },
+     {
+      "selector": "invalidatePersistableContentKey:options:completionHandler:",
+      "class_method": false,
+      "args": {
+       "2": {
+        "callable": {
+	 "retval": { "typestr": "v" },
+	 "arguments": {
+	  "0": { "typestr": "^v" },
+	  "1": { "typestr": "@" },
+	  "2": { "typestr": "@" }
+	 }
+        }
+       }
       }
      }
     ]
@@ -417,6 +543,13 @@
     "methods": [
      {
       "args": {
+       "2": { "type_modifier": "o" }
+      },
+      "class_method": false,
+      "selector": "persistentContentKeyFromKeyVendorResponse:options:error:"
+     },
+     {
+      "args": {
        "3": { "type_modifier": "o" }
       },
       "class_method": false,
@@ -458,6 +591,38 @@
    },
    "AVAssetExportSession": {
     "methods": [
+     {
+      "args": {
+       "0": {
+        "callable": {
+	 "arguments": {
+	  "0": { "typestr": "^v" },
+	  "1": { "typestr": "Q" },
+	  "2": { "typestr": "@" }
+	 },
+	 "retval": { "typestr": "v" }
+	}
+       }
+      },
+      "class_method": false,
+      "selector": "estimateOutputFileLengthWithCompletionHandler:"
+     },
+     {
+      "args": {
+       "0": {
+        "callable": {
+	 "arguments": {
+	  "0": { "typestr": "^v" },
+	  "1": { "typestr": "{_CMTime=qiIq}" },
+	  "2": { "typestr": "@" }
+	 },
+	 "retval": { "typestr": "v" }
+	}
+       }
+      },
+      "class_method": false,
+      "selector": "estimateMaximumDurationWithCompletionHandler:"
+     },
      {
       "args": {
        "3": {
@@ -2331,6 +2496,27 @@
      }
     ]
    },
+   "AVAudioSinkNode": {
+    "methods": [
+     {
+      "selector": "initWithReceiverBlock:",
+      "class_method": false,
+      "args": {
+       "0": {
+        "callable": {
+	 "arguments": {
+	  "0": { "typestr": "^v" },
+	  "1": { "typestr": "n^{AudioTimeStamp=dQdQ{SMPTETime=ssIIIssss}II}" },
+	  "2": { "typestr": "I" },
+	  "3": { "typestr": "n^^{AudioBufferList=I[1{AudioBuffer=II^v}]}" }
+	 },
+	 "retval": { "typestr": "i" }
+	}
+       }
+      }
+     }
+    ]
+   },
    "AVAudioSequencer": {
     "methods": [
      {
@@ -2524,6 +2710,22 @@
    },
    "NSObject": {
     "methods": [
+     {
+      "selector": "URLSession:aggregateAssetDownloadTask:didLoadTimeRange:totalTimeRangesLoaded:timeRangeExpectedToLoad:forMediaSelection:",
+      "class_method": false,
+      "args": {
+       "2": { "type_override": "{_CMTimeRange={_CMTime=qiIq}{_CMTime=qiIq}}" },
+       "4": { "type_override": "{_CMTimeRange={_CMTime=qiIq}{_CMTime=qiIq}}" }
+      }
+     },
+     {
+      "selector": "URLSession:assetDownloadTask:didLoadTimeRange:totalTimeRangesLoaded:timeRangeExpectedToLoad:",
+      "class_method": false,
+      "args": {
+       "2": { "type_override": "{_CMTimeRange={_CMTime=qiIq}{_CMTime=qiIq}}" },
+       "4": { "type_override": "{_CMTimeRange={_CMTime=qiIq}{_CMTime=qiIq}}" }
+      }
+     },
      {
       "selector": "speechSynthesizer:willSpeakRangeOfSpeechString:utterance:",
       "class_method": false,

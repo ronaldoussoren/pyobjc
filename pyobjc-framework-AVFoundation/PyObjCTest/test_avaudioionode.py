@@ -26,8 +26,6 @@ class TestAVAudioIONode (TestCase):
         self.assertResultIsBOOL(AVFoundation.AVAudioInputNode.isVoiceProcessingBypassed)
         self.assertArgIsBOOL(AVFoundation.AVAudioInputNode.setVoiceProcessingBypassed_, 0)
 
-        self.assertResultIsBOOL(AVFoundation.AVAudioInputNode.isVoiceProcessingMuted)
-        self.assertArgIsBOOL(AVFoundation.AVAudioInputNode.setVoiceProcessingMuted_, 0)
 
 if __name__ == "__main__":
     main()

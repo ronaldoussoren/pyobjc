@@ -48,7 +48,7 @@ class TestAVAssetResourceLoader (TestCase):
 
     @min_os_level('10.15')
     def testMethods10_15(self):
-        self.assertArgIsOut(AVFoundation.AVAssetResourceLoadingRequestor.persistentContentKeyFromKeyVendorResponse_options_error_, 2)
+        self.assertArgIsOut(AVFoundation.AVAssetResourceLoadingRequest.persistentContentKeyFromKeyVendorResponse_options_error_, 2)
 
 if __name__ == "__main__":
     main()

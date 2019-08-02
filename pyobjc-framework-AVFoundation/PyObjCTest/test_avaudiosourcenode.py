@@ -8,7 +8,6 @@ class TestAVAudioSourceNode (TestCase):
     @min_os_level('10.15')
     def test_methods(self):
         self.assertArgIsBlock(AVFoundation.AVAudioSourceNode.initWithRenderBlock_, 0, AVAudioSourceNodeRenderBlock)
-        self.assertArgIsBlock(AVFoundation.AVAudioSourceNode.initWithRenderBlock_format_, 0, AVAudioSourceNodeRenderBlock)
 
 
 if __name__ == "__main__":

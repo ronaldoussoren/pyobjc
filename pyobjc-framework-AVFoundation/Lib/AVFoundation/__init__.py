@@ -8,6 +8,7 @@ documentation for details on how to use these functions and classes.
 import objc
 import sys
 import Foundation
+import CoreMedia
 
 from AVFoundation import _metadata
 from AVFoundation._AVFoundation import *
@@ -23,7 +24,7 @@ sys.modules['AVFoundation'] = mod = objc.ObjCLazyModule(
         'objc': objc,
         '__path__': __path__,
         '__loader__': globals().get('__loader__', None),
-    }, (Foundation,))
+    }, (CoreMedia, Foundation,))
 
 import sys
 del sys.modules['AVFoundation._metadata']

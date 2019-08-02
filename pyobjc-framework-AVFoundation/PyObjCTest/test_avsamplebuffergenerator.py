@@ -15,7 +15,6 @@ class TestAVSampleBufferGenerator (TestCase):
 
         self.assertEqual(AVFoundation.AVSampleBufferRequestModeImmediate, 0)
         self.assertEqual(AVFoundation.AVSampleBufferRequestModeScheduled, 1)
-        self.assertEqual(AVFoundation.AVSampleBufferRequestOpportunistic, 2)
 
 
 if __name__ == "__main__":

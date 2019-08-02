@@ -42,7 +42,7 @@ class TestAVAudioSession (TestCase):
 
         self.assertEqual(AVFoundation.AVAudioSessionRouteSharingPolicyDefault, 0)
         self.assertEqual(AVFoundation.AVAudioSessionRouteSharingPolicyLongFormAudio, 1)
-        self.assertEqual(AVFoundation.AVAudioSessionRouteSharingPolicyLongForm, AVAudioSessionRouteSharingPolicyLongFormAudio)
+        self.assertEqual(AVFoundation.AVAudioSessionRouteSharingPolicyLongForm, AVFoundation.AVAudioSessionRouteSharingPolicyLongFormAudio)
         self.assertEqual(AVFoundation.AVAudioSessionRouteSharingPolicyIndependent, 2)
 
         self.assertEqual(AVFoundation.AVAudioSessionPromptStyleNone, fourcc(b'none'))

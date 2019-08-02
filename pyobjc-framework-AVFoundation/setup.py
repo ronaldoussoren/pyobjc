@@ -34,6 +34,7 @@ setup(
     version=VERSION,
     install_requires = [
         'pyobjc-core>='+VERSION,
+        'pyobjc-framework-CoreMedia>='+VERSION,
         'pyobjc-framework-Cocoa>='+VERSION,
         'pyobjc-framework-Quartz>='+VERSION,
     ],

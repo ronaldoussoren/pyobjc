@@ -59,7 +59,7 @@ class TestAVContentKeySession (TestCase):
     def testMethods10_5(self):
         self.assertArgIsBlock(AVFoundation.AVContentKeySession.makeSecureTokenForExpirationDateOfPersistableContentKey_completionHandler_, 1, b'v@@')
         self.assertArgIsBlock(AVFoundation.AVContentKeySession.invalidatePersistableContentKey_options_completionHandler_, 2, b'v@@')
-        self.assertArgIsBlock(AVFoundation.AVContentKeySession.invalidateAllPersistableContentKeysForApp_options__completionHandler_, 2, b'v@@')
+        self.assertArgIsBlock(AVFoundation.AVContentKeySession.invalidateAllPersistableContentKeysForApp_options_completionHandler_, 2, b'v@@')
 
         self.assertResultIsBOOL(AVFoundation.AVContentKeyRequest.respondByRequestingPersistableContentKeyRequestAndReturnError_)
         self.assertArgIsOut(AVFoundation.AVContentKeyRequest.respondByRequestingPersistableContentKeyRequestAndReturnError_, 0)
