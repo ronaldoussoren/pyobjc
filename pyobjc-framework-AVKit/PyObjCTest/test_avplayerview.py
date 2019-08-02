@@ -26,11 +26,9 @@ if sys.maxsize > 2 ** 32:
 
             self.assertArgIsBlock(AVKit.AVPlayerView.beginTrimmingWithCompletionHandler_, 0, b"v" + objc._C_NSInteger)
 
-        @min_os_level("10.9")
-        @expectedFailure
-        def testMethods10_9_missing(self):
-            self.assertResultIsBOOL(AVKit.AVCaptureView.alloc().init().isReadyForDisplay)
-            self.assertArgIsBOOL(AVKit.AVCaptureView.setReadyForDisplay_, 0)
+        @min_os_level("10.10")
+        def testMethods10_10(self):
+            self.assertResultIsBOOL(AVKit.AVPlayerView.isReadyForDisplay)
 
         @min_os_level("10.13")
         def testMethods10_13(self):
@@ -43,10 +41,10 @@ if sys.maxsize > 2 ** 32:
             self.assertResultIsBOOL(AVKit.AVPlayerView.showsTimecodes)
 
             self.assertResultIsBOOL(AVKit.AVPlayerView.allowsPictureInPicturePlayback)
-            self.assertResultIsBOOL(AVKit.AVPlayerView.setAllowsPictureInPicturePlayback_)
+            self.assertArgIsBOOL(AVKit.AVPlayerView.setAllowsPictureInPicturePlayback_, 0)
 
-            self.assertArgIsBlock(AVPlayerViewHelper.playerView_restoreUserInterfaceForPictureInPictureStopWithCompletionHandler_, 1, b'vZ')
-            self.assertResultIsBOOL(AVPlayerViewHelper.playerViewShouldAutomaticallyDismissAtPictureInPictureStart_)
+            self.assertArgIsBlock(TestAVPlayerViewHelper.playerView_restoreUserInterfaceForPictureInPictureStopWithCompletionHandler_, 1, b'vZ')
+            self.assertResultIsBOOL(TestAVPlayerViewHelper.playerViewShouldAutomaticallyDismissAtPictureInPictureStart_)
 
         @min_os_level("10.9")
         def test_constants(self):

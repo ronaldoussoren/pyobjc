@@ -23,9 +23,9 @@ class TestNSFileProviderExtension (TestCase):
 
     @min_os_level('10.15')
     def test_methods10_15(self):
-        self.assertArgIsBlock(FileProvier.NSFileProviderExtension.fetchContentsForItemWithIdentifier_version_completionHandler_, 2, b'v@@@')
-        self.assertArgIsBlock(FileProvier.NSFileProviderExtension.fetchContentsForItemWithIdentifier_version_usingExistingContentsAtURL_existingVersion_completionHandler_, 4, b'v@@@')
-        self.assertArgIsBlock(FileProvier.NSFileProviderExtension.itemChanged_baseVersion_changedFields_contents_completionHandler_, 4, b'v@@')
-        self.assertArgIsBlock(FileProvier.NSFileProviderExtension.createItemBasedOnTemplate_fields_contents_options_completionHandler_, 4, b'v@@')
-        self.assertArgIsBlock(FileProvier.NSFileProviderExtension.deleteItemWithIdentifier_baseVersion_options_completionHandler_, 3, b'v@')
-        self.assertArgIsBlock(FileProvier.NSFileProviderExtension.importDidFinishWithCompletionHandler_, 0, b'v')
+        self.assertArgIsBlock(FileProvider.NSFileProviderExtension.fetchContentsForItemWithIdentifier_version_completionHandler_, 2, b'v@@@')
+        self.assertArgIsBlock(FileProvider.NSFileProviderExtension.fetchContentsForItemWithIdentifier_version_usingExistingContentsAtURL_existingVersion_completionHandler_, 4, b'v@@@')
+        self.assertArgIsBlock(FileProvider.NSFileProviderExtension.itemChanged_baseVersion_changedFields_contents_completionHandler_, 4, b'v@@')
+        self.assertArgIsBlock(FileProvider.NSFileProviderExtension.createItemBasedOnTemplate_fields_contents_options_completionHandler_, 4, b'v@@')
+        self.assertArgIsBlock(FileProvider.NSFileProviderExtension.deleteItemWithIdentifier_baseVersion_options_completionHandler_, 3, b'v@')
+        self.assertArgIsBlock(FileProvider.NSFileProviderExtension.importDidFinishWithCompletionHandler_, 0, b'v')

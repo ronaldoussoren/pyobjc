@@ -10,7 +10,7 @@ class TestCLLocation (TestCase):
         self.assertIsInstance(v.latitude, float)
         self.assertIsInstance(v.longitude, float)
         self.assertEqual(CLLocationCoordinate2D.__typestr__,
-                b'{_CLLocationCoordinate2D=dd}')
+                b'{CLLocationCoordinate2D=dd}')
 
 
     @min_os_level('10.6')

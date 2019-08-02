@@ -17,7 +17,7 @@ if sys.maxsize > 2 ** 32:
 
             self.assertResultIsBOOL(NaturalLanguage.NLEmbedding.getVector_forString_)
             self.assertArgIsOut(NaturalLanguage.NLEmbedding.getVector_forString_, 0)
-            self.assertArgSizeIs(NaturalLanguage.NLEmbedding.assertArgIsVariableSize, 0)
+            self.assertArgIsVariableSize(NaturalLanguage.NLEmbedding.getVector_forString_, 0)
 
             self.assertArgIsBlock(NaturalLanguage.NLEmbedding.enumerateNeighborsForVector_maximumCount_distanceType_usingBlock_, 3, b'v@do^Z')
             self.assertArgIsBlock(NaturalLanguage.NLEmbedding.enumerateNeighborsForVector_maximumCount_maximumDistance_distanceType_usingBlock_, 4, b'v@do^Z')

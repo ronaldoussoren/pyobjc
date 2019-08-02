@@ -18,7 +18,7 @@ class TestCTFontManagerErrors (TestCase):
         self.assertEqual(kCTFontManagerErrorInUse, 202)
         self.assertEqual(kCTFontManagerErrorSystemRequired, 203)
         self.assertEqual(kCTFontManagerErrorRegistrationFailed, 301)
-        self.assertEqual(kCTFontManagerErrorMissingEntitlement, 302,
+        self.assertEqual(kCTFontManagerErrorMissingEntitlement, 302)
         self.assertEqual(kCTFontManagerErrorInsufficientInfo, 303)
         self.assertEqual(kCTFontManagerErrorCancelledByUser, 304)
         self.assertEqual(kCTFontManagerErrorDuplicatedName, 305)

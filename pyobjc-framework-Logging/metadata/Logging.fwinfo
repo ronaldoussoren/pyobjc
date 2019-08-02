@@ -7,37 +7,37 @@
     "methods": [
      {
       "args": {
-       "0": {}
-      }, 
-      "class_method": true, 
+       "0": { "type_modifier": "o" }
+      },
+      "class_method": true,
       "selector": "localStoreAndReturnError:"
-     }, 
+     },
      {
       "args": {
-       "1": {}
-      }, 
-      "class_method": true, 
+       "1": { "type_modifier": "o" }
+      },
+      "class_method": true,
       "selector": "storeWithURL:error:"
-     }, 
+     },
      {
       "args": {
-       "3": {}
-      }, 
-      "class_method": false, 
+       "3": { "type_modifier": "o" }
+      },
+      "class_method": false,
       "selector": "entriesEnumeratorWithOptions:position:predicate:error:"
-     }, 
+     },
      {
       "args": {
-       "0": {}
-      }, 
-      "class_method": false, 
+       "0": { "type_modifier": "o" }
+      },
+      "class_method": false,
       "selector": "entriesEnumeratorAndReturnError:"
      }
     ]
    }
-  }, 
-  "formal_protocols": {}, 
-  "functions": {}, 
+  },
+  "formal_protocols": {},
+  "functions": {},
   "informal_protocols": {}
  }
 }

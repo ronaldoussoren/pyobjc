@@ -10,6 +10,7 @@ import sys
 import Foundation
 
 from AuthenticationServices import _metadata
+from AuthenticationServices import _AuthenticationServices
 
 
 sys.modules['AuthenticationServices'] = mod = objc.ObjCLazyModule(

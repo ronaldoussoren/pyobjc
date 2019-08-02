@@ -55,7 +55,7 @@ m_CTFontCopyAvailableTables(PyObject* self __attribute__((__unused__)),
 
     for (i = 0; i < len; i++) {
         CTFontTableTag tag = (CTFontTableTag)(uintptr_t)CFArrayGetValueAtIndex(ref, i);
-        PyTuple_SET_ITEM(result, i, PyInt_FromLong(tag));
+        PyTuple_SET_ITEM(result, i, PyLong_FromLong(tag));
         if (PyTuple_GET_ITEM(result, i) == NULL) {
             Py_DECREF(result);
             CFRelease(ref);

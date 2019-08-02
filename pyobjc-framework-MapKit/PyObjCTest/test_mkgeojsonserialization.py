@@ -8,7 +8,7 @@ if sys.maxsize > 2 ** 32:
     class TestMKGeoJSONSerialization (TestCase):
         @min_os_level("10.15")
         def test_methods(self):
-            self.assertArgIsOut(MapKit.MKGeoJSONDecoder.geoJSONObjectsWithData_error, 1)
+            self.assertArgIsOut(MapKit.MKGeoJSONDecoder.geoJSONObjectsWithData_error_, 1)
 
         @min_sdk_level("10.15")
         def test_protocols(self):

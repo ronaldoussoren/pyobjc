@@ -7,7 +7,7 @@ class TestNSFileProviderItemHelper (FileProvider.NSObject):
     def isUserWritable(self): return 1
     def isHidden(self): return 1
     def isPathExtensionHidden(self): return 1
-    def isThrashed(self): return 1
+    def isTrashed(self): return 1
     def isUploaded(self): return 1
     def isUploading(self): return 1
     def isDownloaded(self): return 1

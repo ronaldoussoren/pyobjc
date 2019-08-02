@@ -35,13 +35,5 @@ class TestDASession (TestCase):
 
         DiskArbitration.DASessionSetDispatchQueue
 
-    @min_os_level('10.15')
-    def test_functions10_15(self):
-        self.assertResultIsCFRetained(DiskArbitration.DACallbackCreate)
-        DiskArbitration.DAAddCallbackToSession
-        DiskArbitration.DARemoveCallbackFromSessionWithKey
-        DiskArbitration.DARemoveCallbackFromSession
-        DiskArbitration.DAGetCallbackFromSession
-
 if __name__ == "__main__":
     main()

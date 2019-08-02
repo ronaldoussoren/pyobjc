@@ -593,7 +593,7 @@
      {
       "args": [
        {
-        "typestr": "{_CLLocationCoordinate2D=dd}",
+        "typestr": "{CLLocationCoordinate2D=dd}",
         "typestr_special": true
        },
        {
@@ -628,7 +628,7 @@
       "args": [],
       "class_method": false,
       "retval": {
-       "typestr": "{_CLLocationCoordinate2D=dd}",
+       "typestr": "{CLLocationCoordinate2D=dd}",
        "typestr_special": true
       },
       "selector": "coordinate",
@@ -663,7 +663,7 @@
        "readonly"
       ],
       "name": "coordinate",
-      "typestr": "{_CLLocationCoordinate2D=dd}",
+      "typestr": "{CLLocationCoordinate2D=dd}",
       "typestr_special": true
      },
      {
@@ -1347,7 +1347,7 @@
      {
       "args": [
        {
-        "typestr": "^{_CLLocationCoordinate2D=dd}",
+        "typestr": "^{CLLocationCoordinate2D=dd}",
         "typestr_special": true
        },
        {
@@ -1474,7 +1474,7 @@
       "args": [],
       "class_method": false,
       "retval": {
-       "typestr": "{_MKCoordinateRegion={_CLLocationCoordinate2D=dd}{_MKCoordinateSpan=dd}}",
+       "typestr": "{_MKCoordinateRegion={CLLocationCoordinate2D=dd}{_MKCoordinateSpan=dd}}",
        "typestr_special": true
       },
       "selector": "region",
@@ -1483,7 +1483,7 @@
      {
       "args": [
        {
-        "typestr": "{_MKCoordinateRegion={_CLLocationCoordinate2D=dd}{_MKCoordinateSpan=dd}}",
+        "typestr": "{_MKCoordinateRegion={CLLocationCoordinate2D=dd}{_MKCoordinateSpan=dd}}",
         "typestr_special": true
        }
       ],
@@ -1513,7 +1513,7 @@
        "nonatomic"
       ],
       "name": "region",
-      "typestr": "{_MKCoordinateRegion={_CLLocationCoordinate2D=dd}{_MKCoordinateSpan=dd}}",
+      "typestr": "{_MKCoordinateRegion={CLLocationCoordinate2D=dd}{_MKCoordinateSpan=dd}}",
       "typestr_special": true
      }
     ],
@@ -1539,7 +1539,7 @@
       "args": [],
       "class_method": false,
       "retval": {
-       "typestr": "{_MKCoordinateRegion={_CLLocationCoordinate2D=dd}{_MKCoordinateSpan=dd}}",
+       "typestr": "{_MKCoordinateRegion={CLLocationCoordinate2D=dd}{_MKCoordinateSpan=dd}}",
        "typestr_special": true
       },
       "selector": "boundingRegion",
@@ -1563,7 +1563,7 @@
        "readonly"
       ],
       "name": "boundingRegion",
-      "typestr": "{_MKCoordinateRegion={_CLLocationCoordinate2D=dd}{_MKCoordinateSpan=dd}}",
+      "typestr": "{_MKCoordinateRegion={CLLocationCoordinate2D=dd}{_MKCoordinateSpan=dd}}",
       "typestr_special": true
      }
     ],
@@ -1586,11 +1586,11 @@
      {
       "args": [
        {
-        "typestr": "{_CLLocationCoordinate2D=dd}",
+        "typestr": "{CLLocationCoordinate2D=dd}",
         "typestr_special": true
        },
        {
-        "typestr": "{_CLLocationCoordinate2D=dd}",
+        "typestr": "{CLLocationCoordinate2D=dd}",
         "typestr_special": true
        },
        {
@@ -1610,7 +1610,7 @@
       "args": [],
       "class_method": false,
       "retval": {
-       "typestr": "{_CLLocationCoordinate2D=dd}",
+       "typestr": "{CLLocationCoordinate2D=dd}",
        "typestr_special": true
       },
       "selector": "centerCoordinate",
@@ -1619,7 +1619,7 @@
      {
       "args": [
        {
-        "typestr": "{_CLLocationCoordinate2D=dd}",
+        "typestr": "{CLLocationCoordinate2D=dd}",
         "typestr_special": true
        }
       ],
@@ -1714,7 +1714,7 @@
        "nonatomic"
       ],
       "name": "centerCoordinate",
-      "typestr": "{_CLLocationCoordinate2D=dd}",
+      "typestr": "{CLLocationCoordinate2D=dd}",
       "typestr_special": true
      },
      {
@@ -1964,7 +1964,7 @@
      {
       "args": [
        {
-        "typestr": "{_CLLocationCoordinate2D=dd}",
+        "typestr": "{CLLocationCoordinate2D=dd}",
         "typestr_special": true
        }
       ],
@@ -2059,7 +2059,7 @@
       "args": [],
       "class_method": false,
       "retval": {
-       "typestr": "{_MKCoordinateRegion={_CLLocationCoordinate2D=dd}{_MKCoordinateSpan=dd}}",
+       "typestr": "{_MKCoordinateRegion={CLLocationCoordinate2D=dd}{_MKCoordinateSpan=dd}}",
        "typestr_special": true
       },
       "selector": "region",
@@ -2068,7 +2068,7 @@
      {
       "args": [
        {
-        "typestr": "{_MKCoordinateRegion={_CLLocationCoordinate2D=dd}{_MKCoordinateSpan=dd}}",
+        "typestr": "{_MKCoordinateRegion={CLLocationCoordinate2D=dd}{_MKCoordinateSpan=dd}}",
         "typestr_special": true
        }
       ],
@@ -2207,7 +2207,7 @@
        "nonatomic"
       ],
       "name": "region",
-      "typestr": "{_MKCoordinateRegion={_CLLocationCoordinate2D=dd}{_MKCoordinateSpan=dd}}",
+      "typestr": "{_MKCoordinateRegion={CLLocationCoordinate2D=dd}{_MKCoordinateSpan=dd}}",
       "typestr_special": true
      },
      {
@@ -2348,7 +2348,7 @@
      {
       "args": [
        {
-        "typestr": "{_MKCoordinateRegion={_CLLocationCoordinate2D=dd}{_MKCoordinateSpan=dd}}",
+        "typestr": "{_MKCoordinateRegion={CLLocationCoordinate2D=dd}{_MKCoordinateSpan=dd}}",
         "typestr_special": true
        },
        {
@@ -2367,7 +2367,7 @@
      {
       "args": [
        {
-        "typestr": "{_CLLocationCoordinate2D=dd}",
+        "typestr": "{CLLocationCoordinate2D=dd}",
         "typestr_special": true
        },
        {
@@ -2386,13 +2386,13 @@
      {
       "args": [
        {
-        "typestr": "{_MKCoordinateRegion={_CLLocationCoordinate2D=dd}{_MKCoordinateSpan=dd}}",
+        "typestr": "{_MKCoordinateRegion={CLLocationCoordinate2D=dd}{_MKCoordinateSpan=dd}}",
         "typestr_special": true
        }
       ],
       "class_method": false,
       "retval": {
-       "typestr": "{_MKCoordinateRegion={_CLLocationCoordinate2D=dd}{_MKCoordinateSpan=dd}}",
+       "typestr": "{_MKCoordinateRegion={CLLocationCoordinate2D=dd}{_MKCoordinateSpan=dd}}",
        "typestr_special": true
       },
       "selector": "regionThatFits:",
@@ -2496,7 +2496,7 @@
      {
       "args": [
        {
-        "typestr": "{_CLLocationCoordinate2D=dd}",
+        "typestr": "{CLLocationCoordinate2D=dd}",
         "typestr_special": true
        },
        {
@@ -2525,7 +2525,7 @@
       ],
       "class_method": false,
       "retval": {
-       "typestr": "{_CLLocationCoordinate2D=dd}",
+       "typestr": "{CLLocationCoordinate2D=dd}",
        "typestr_special": true
       },
       "selector": "convertPoint:toCoordinateFromView:",
@@ -2534,7 +2534,7 @@
      {
       "args": [
        {
-        "typestr": "{_MKCoordinateRegion={_CLLocationCoordinate2D=dd}{_MKCoordinateSpan=dd}}",
+        "typestr": "{_MKCoordinateRegion={CLLocationCoordinate2D=dd}{_MKCoordinateSpan=dd}}",
         "typestr_special": true
        },
        {
@@ -2563,7 +2563,7 @@
       ],
       "class_method": false,
       "retval": {
-       "typestr": "{_MKCoordinateRegion={_CLLocationCoordinate2D=dd}{_MKCoordinateSpan=dd}}",
+       "typestr": "{_MKCoordinateRegion={CLLocationCoordinate2D=dd}{_MKCoordinateSpan=dd}}",
        "typestr_special": true
       },
       "selector": "convertRect:toRegionFromView:",
@@ -2785,7 +2785,7 @@
       "args": [],
       "class_method": false,
       "retval": {
-       "typestr": "{_MKCoordinateRegion={_CLLocationCoordinate2D=dd}{_MKCoordinateSpan=dd}}",
+       "typestr": "{_MKCoordinateRegion={CLLocationCoordinate2D=dd}{_MKCoordinateSpan=dd}}",
        "typestr_special": true
       },
       "selector": "region",
@@ -2794,7 +2794,7 @@
      {
       "args": [
        {
-        "typestr": "{_MKCoordinateRegion={_CLLocationCoordinate2D=dd}{_MKCoordinateSpan=dd}}",
+        "typestr": "{_MKCoordinateRegion={CLLocationCoordinate2D=dd}{_MKCoordinateSpan=dd}}",
         "typestr_special": true
        }
       ],
@@ -2810,7 +2810,7 @@
       "args": [],
       "class_method": false,
       "retval": {
-       "typestr": "{_CLLocationCoordinate2D=dd}",
+       "typestr": "{CLLocationCoordinate2D=dd}",
        "typestr_special": true
       },
       "selector": "centerCoordinate",
@@ -2819,7 +2819,7 @@
      {
       "args": [
        {
-        "typestr": "{_CLLocationCoordinate2D=dd}",
+        "typestr": "{CLLocationCoordinate2D=dd}",
         "typestr_special": true
        }
       ],
@@ -3452,7 +3452,7 @@
        "nonatomic"
       ],
       "name": "region",
-      "typestr": "{_MKCoordinateRegion={_CLLocationCoordinate2D=dd}{_MKCoordinateSpan=dd}}",
+      "typestr": "{_MKCoordinateRegion={CLLocationCoordinate2D=dd}{_MKCoordinateSpan=dd}}",
       "typestr_special": true
      },
      {
@@ -3460,7 +3460,7 @@
        "nonatomic"
       ],
       "name": "centerCoordinate",
-      "typestr": "{_CLLocationCoordinate2D=dd}",
+      "typestr": "{CLLocationCoordinate2D=dd}",
       "typestr_special": true
      },
      {
@@ -3638,7 +3638,7 @@
      {
       "args": [
        {
-        "typestr": "^{_CLLocationCoordinate2D=dd}",
+        "typestr": "^{CLLocationCoordinate2D=dd}",
         "typestr_special": true
        },
        {
@@ -4411,7 +4411,7 @@
      {
       "args": [
        {
-        "typestr": "{_CLLocationCoordinate2D=dd}",
+        "typestr": "{CLLocationCoordinate2D=dd}",
         "typestr_special": true
        },
        {
@@ -4462,7 +4462,7 @@
       "args": [],
       "class_method": false,
       "retval": {
-       "typestr": "{_CLLocationCoordinate2D=dd}",
+       "typestr": "{CLLocationCoordinate2D=dd}",
        "typestr_special": true
       },
       "selector": "coordinate",
@@ -4471,7 +4471,7 @@
      {
       "args": [
        {
-        "typestr": "{_CLLocationCoordinate2D=dd}",
+        "typestr": "{CLLocationCoordinate2D=dd}",
         "typestr_special": true
        }
       ],
@@ -4492,7 +4492,7 @@
        "nonatomic"
       ],
       "name": "coordinate",
-      "typestr": "{_CLLocationCoordinate2D=dd}",
+      "typestr": "{CLLocationCoordinate2D=dd}",
       "typestr_special": true
      }
     ],
@@ -4547,7 +4547,7 @@
      {
       "args": [
        {
-        "typestr": "^{_CLLocationCoordinate2D=dd}",
+        "typestr": "^{CLLocationCoordinate2D=dd}",
         "typestr_special": true
        },
        {
@@ -4566,7 +4566,7 @@
      {
       "args": [
        {
-        "typestr": "^{_CLLocationCoordinate2D=dd}",
+        "typestr": "^{CLLocationCoordinate2D=dd}",
         "typestr_special": true
        },
        {
@@ -4682,7 +4682,7 @@
      {
       "args": [
        {
-        "typestr": "^{_CLLocationCoordinate2D=dd}",
+        "typestr": "^{CLLocationCoordinate2D=dd}",
         "typestr_special": true
        },
        {
@@ -5501,7 +5501,7 @@
      {
       "args": [
        {
-        "typestr": "{_CLLocationCoordinate2D=dd}",
+        "typestr": "{CLLocationCoordinate2D=dd}",
         "typestr_special": true
        }
       ],
@@ -5532,7 +5532,7 @@
       "args": [],
       "class_method": false,
       "retval": {
-       "typestr": "{_CLLocationCoordinate2D=dd}",
+       "typestr": "{CLLocationCoordinate2D=dd}",
        "typestr_special": true
       },
       "selector": "MKCoordinateValue",
@@ -5635,7 +5635,7 @@
      {
       "args": [
        {
-        "typestr": "{_CLLocationCoordinate2D=dd}",
+        "typestr": "{CLLocationCoordinate2D=dd}",
         "typestr_special": true
        }
       ],
@@ -5653,7 +5653,7 @@
       "class_method": false,
       "required": true,
       "retval": {
-       "typestr": "{_CLLocationCoordinate2D=dd}",
+       "typestr": "{CLLocationCoordinate2D=dd}",
        "typestr_special": true
       },
       "selector": "coordinate",
@@ -5689,7 +5689,7 @@
        "readonly"
       ],
       "name": "coordinate",
-      "typestr": "{_CLLocationCoordinate2D=dd}",
+      "typestr": "{CLLocationCoordinate2D=dd}",
       "typestr_special": true
      },
      {
@@ -6107,7 +6107,7 @@
       "class_method": false,
       "required": true,
       "retval": {
-       "typestr": "{_CLLocationCoordinate2D=dd}",
+       "typestr": "{CLLocationCoordinate2D=dd}",
        "typestr_special": true
       },
       "selector": "coordinate",
@@ -6132,7 +6132,7 @@
        "readonly"
       ],
       "name": "coordinate",
-      "typestr": "{_CLLocationCoordinate2D=dd}",
+      "typestr": "{CLLocationCoordinate2D=dd}",
       "typestr_special": true
      },
      {
@@ -6157,7 +6157,7 @@
      }
     ],
     "retval": {
-     "typestr": "{_CLLocationCoordinate2D=dd}"
+     "typestr": "{CLLocationCoordinate2D=dd}"
     }
    },
    "MKCoordinateRegionForMapRect": {
@@ -6168,14 +6168,14 @@
      }
     ],
     "retval": {
-     "typestr": "{_MKCoordinateRegion={_CLLocationCoordinate2D=dd}{_MKCoordinateSpan=dd}}"
+     "typestr": "{_MKCoordinateRegion={CLLocationCoordinate2D=dd}{_MKCoordinateSpan=dd}}"
     }
    },
    "MKCoordinateRegionMake": {
     "args": [
      {
       "name": "centerCoordinate",
-      "typestr": "{_CLLocationCoordinate2D=dd}"
+      "typestr": "{CLLocationCoordinate2D=dd}"
      },
      {
       "name": "span",
@@ -6184,14 +6184,14 @@
     ],
     "inline": true,
     "retval": {
-     "typestr": "{_MKCoordinateRegion={_CLLocationCoordinate2D=dd}{_MKCoordinateSpan=dd}}"
+     "typestr": "{_MKCoordinateRegion={CLLocationCoordinate2D=dd}{_MKCoordinateSpan=dd}}"
     }
    },
    "MKCoordinateRegionMakeWithDistance": {
     "args": [
      {
       "name": "centerCoordinate",
-      "typestr": "{_CLLocationCoordinate2D=dd}"
+      "typestr": "{CLLocationCoordinate2D=dd}"
      },
      {
       "name": "latitudinalMeters",
@@ -6203,7 +6203,7 @@
      }
     ],
     "retval": {
-     "typestr": "{_MKCoordinateRegion={_CLLocationCoordinate2D=dd}{_MKCoordinateSpan=dd}}"
+     "typestr": "{_MKCoordinateRegion={CLLocationCoordinate2D=dd}{_MKCoordinateSpan=dd}}"
     }
    },
    "MKCoordinateSpanMake": {
@@ -6242,7 +6242,7 @@
     "args": [
      {
       "name": "coordinate",
-      "typestr": "{_CLLocationCoordinate2D=dd}"
+      "typestr": "{CLLocationCoordinate2D=dd}"
      }
     ],
     "retval": {
@@ -6713,7 +6713,7 @@
      "span"
     ],
     "special": true,
-    "typestr": "{_MKCoordinateRegion={_CLLocationCoordinate2D=dd}{_MKCoordinateSpan=dd}}"
+    "typestr": "{_MKCoordinateRegion={CLLocationCoordinate2D=dd}{_MKCoordinateSpan=dd}}"
    },
    "MKCoordinateSpan": {
     "fieldnames": [

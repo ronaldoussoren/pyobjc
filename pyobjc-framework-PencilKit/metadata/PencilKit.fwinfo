@@ -7,16 +7,16 @@
     "methods": [
      {
       "args": {
-       "1": {}
-      }, 
-      "class_method": false, 
+       "1": { "type_modifier": "o" }
+      },
+      "class_method": false,
       "selector": "initWithData:error:"
      }
     ]
    }
-  }, 
-  "formal_protocols": {}, 
-  "functions": {}, 
+  },
+  "formal_protocols": {},
+  "functions": {},
   "informal_protocols": {}
  }
 }
