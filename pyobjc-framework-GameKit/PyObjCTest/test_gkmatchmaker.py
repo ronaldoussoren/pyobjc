@@ -62,9 +62,10 @@ class TestGKMatchMaker (TestCase):
         self.assertArgIsBlock(GameKit.GKMatchmaker.startBrowsingForNearbyPlayersWithHandler_, 0, b'v@Z')
 
     @min_os_level('10.15')
+    @expectedFailure
     def testMethods10_15(self):
-        self.assertResultIsBOOL(GameKit.GKMatchmaker.restrictToAutomatch)
-        self.assertArgIsBOOL(GameKit.GKMatchmaker.setRestrictToAutomatch_, 0)
+        self.assertResultIsBOOL(GameKit.GKMatchRequest.restrictToAutomatch)
+        self.assertArgIsBOOL(GameKit.GKMatchRequest.setRestrictToAutomatch_, 0)
 
 
     def testProtocols(self):

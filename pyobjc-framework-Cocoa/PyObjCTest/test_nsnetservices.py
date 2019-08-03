@@ -28,7 +28,7 @@ class TestNSNetservices (TestCase):
         self.assertEqual(NSNetServiceListenForConnections, 1<<1)
 
     def testOutput(self):
-        o = NSNetService.alloc().init()
+        o = NSNetService.alloc().initWithDomain_type_name_port_("", "_http._tcp.", "", 0)
 
         m = o.getInputStream_outputStream_.__metadata__()
         self.assertEqual(m['retval']['type'], b'Z')

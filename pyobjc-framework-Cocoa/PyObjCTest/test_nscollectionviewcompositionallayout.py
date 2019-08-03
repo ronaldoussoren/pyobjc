@@ -51,7 +51,7 @@ class TestNSCollectionViewCompositionalLayout (TestCase):
 
     @min_os_level('10.15')
     def test_contants10_15(self):
-        self.assertIsInstance(AppKit.NSDirectionalEdgeInsetsZero, AppKit.AppKit.NSDirectionalEdgeInsets)
+        self.assertIsInstance(AppKit.NSDirectionalEdgeInsetsZero, AppKit.NSDirectionalEdgeInsets)
 
     def test_structs(self):
         v = AppKit.NSDirectionalEdgeInsets()
@@ -63,7 +63,7 @@ class TestNSCollectionViewCompositionalLayout (TestCase):
     @min_sdk_level('10.15')
     def test_functions_10_15(self):
         v = AppKit.NSDirectionalEdgeInsetsMake(1, 2, 3, 4)
-        self.assertIsInstance(v, AppKit.AppKit.NSDirectionalEdgeInsets)
+        self.assertIsInstance(v, AppKit.NSDirectionalEdgeInsets)
         self.assertEqual(v.top, 1.0)
         self.assertEqual(v.leading, 2.0)
         self.assertEqual(v.bottom, 3.0)
@@ -88,8 +88,8 @@ class TestNSCollectionViewCompositionalLayout (TestCase):
         self.assertResultIsBOOL(AppKit.NSCollectionLayoutSpacing.isFlexibleSpacing)
         self.assertResultIsBOOL(AppKit.NSCollectionLayoutSpacing.isFixedSpacing)
 
-        self.assertResultIsBOOL(AppKit.NSCollectionLayoutBoundarySupplementaryItem.isAbsoluteOffset)
-        self.assertResultIsBOOL(AppKit.NSCollectionLayoutBoundarySupplementaryItem.isFractionalOffset)
+        self.assertResultIsBOOL(AppKit.NSCollectionLayoutAnchor.isAbsoluteOffset)
+        self.assertResultIsBOOL(AppKit.NSCollectionLayoutAnchor.isFractionalOffset)
 
         self.assertResultHasType(TestNSCollectionViewCompositionalLayoutHelper.contentSize, AppKit.NSSize.__typestr__)
         self.assertResultHasType(TestNSCollectionViewCompositionalLayoutHelper.effectiveContentSize, AppKit.NSSize.__typestr__)
@@ -100,7 +100,7 @@ class TestNSCollectionViewCompositionalLayout (TestCase):
         self.assertResultHasType(TestNSCollectionViewCompositionalLayoutHelper.isHidden, objc._C_NSBOOL)
         self.assertResultHasType(TestNSCollectionViewCompositionalLayoutHelper.frame, AppKit.NSRect.__typestr__)
         self.assertResultHasType(TestNSCollectionViewCompositionalLayoutHelper.bounds, AppKit.NSRect.__typestr__)
-        self.assertResultHasType(TestNSCollectionViewCompositionalLayoutHelper.NSCollectionElementCategory, objc._C_NSInteger)
+        self.assertResultHasType(TestNSCollectionViewCompositionalLayoutHelper.representedElementCategory, objc._C_NSInteger)
 
         self.assertArgIsBlock(AppKit.NSCollectionViewDiffableDataSource.initWithCollectionView_itemProvider_, 1, NSCollectionViewDiffableDataSourceItemProvider)
         self.assertArgIsBOOL(AppKit.NSCollectionViewDiffableDataSource.applySnapshot_animatingDifferences_, 1)

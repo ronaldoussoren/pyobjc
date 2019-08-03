@@ -5,7 +5,7 @@ class TestNSTextCheckingClientHelper (NSObject):
     def annotatedSubstringForProposedRange_actualRange_(self, a, b): return 1
     def setAnnotations_range_(self, a, b): pass
     def addAnnotations_range_(self, a, b): pass
-    def removeAnnotations_range_(self, a, b): pass
+    def removeAnnotation_range_(self, a, b): pass
     def replaceCharactersInRange_withAnnotatedString_(self, a, b): pass
     def selectAndShowRange_(self, a): pass
     def viewForRange_firstRect_actualRange_(self, a, b, c): return 1
@@ -50,22 +50,22 @@ class TestNSTextCheckingClient (TestCase):
         self.assertResultHasType(TestNSTextCheckingClientHelper.linkDetectionType, objc._C_NSInteger)
         self.assertResultHasType(TestNSTextCheckingClientHelper.textCompletionType, objc._C_NSInteger)
 
-        self.assertArgHasType(TestNSTextCheckingClientHelper.autocorrectionType_, 0, objc._C_NSInteger)
-        self.assertArgHasType(TestNSTextCheckingClientHelper.spellCheckingType_, 0, objc._C_NSInteger)
-        self.assertArgHasType(TestNSTextCheckingClientHelper.grammarCheckingType_, 0, objc._C_NSInteger)
-        self.assertArgHasType(TestNSTextCheckingClientHelper.smartQuotesType_, 0, objc._C_NSInteger)
-        self.assertArgHasType(TestNSTextCheckingClientHelper.smartDashesType_, 0, objc._C_NSInteger)
-        self.assertArgHasType(TestNSTextCheckingClientHelper.smartInsertDeleteType_, 0, objc._C_NSInteger)
-        self.assertArgHasType(TestNSTextCheckingClientHelper.textReplacementType_, 0, objc._C_NSInteger)
-        self.assertArgHasType(TestNSTextCheckingClientHelper.dataDetectionType_, 0, objc._C_NSInteger)
-        self.assertArgHasType(TestNSTextCheckingClientHelper.linkDetectionType_, 0, objc._C_NSInteger)
-        self.assertArgHasType(TestNSTextCheckingClientHelper.textCompletionType_, 0, objc._C_NSInteger)
+        self.assertArgHasType(TestNSTextCheckingClientHelper.setAutocorrectionType_, 0, objc._C_NSInteger)
+        self.assertArgHasType(TestNSTextCheckingClientHelper.setSpellCheckingType_, 0, objc._C_NSInteger)
+        self.assertArgHasType(TestNSTextCheckingClientHelper.setGrammarCheckingType_, 0, objc._C_NSInteger)
+        self.assertArgHasType(TestNSTextCheckingClientHelper.setSmartQuotesType_, 0, objc._C_NSInteger)
+        self.assertArgHasType(TestNSTextCheckingClientHelper.setSmartDashesType_, 0, objc._C_NSInteger)
+        self.assertArgHasType(TestNSTextCheckingClientHelper.setSmartInsertDeleteType_, 0, objc._C_NSInteger)
+        self.assertArgHasType(TestNSTextCheckingClientHelper.setTextReplacementType_, 0, objc._C_NSInteger)
+        self.assertArgHasType(TestNSTextCheckingClientHelper.setDataDetectionType_, 0, objc._C_NSInteger)
+        self.assertArgHasType(TestNSTextCheckingClientHelper.setLinkDetectionType_, 0, objc._C_NSInteger)
+        self.assertArgHasType(TestNSTextCheckingClientHelper.setTextCompletionType_, 0, objc._C_NSInteger)
 
         self.assertArgHasType(TestNSTextCheckingClientHelper.annotatedSubstringForProposedRange_actualRange_, 0, NSRange.__typestr__)
         self.assertArgHasType(TestNSTextCheckingClientHelper.annotatedSubstringForProposedRange_actualRange_, 1, b'o^' + NSRange.__typestr__)
         self.assertArgHasType(TestNSTextCheckingClientHelper.setAnnotations_range_, 1, NSRange.__typestr__)
         self.assertArgHasType(TestNSTextCheckingClientHelper.addAnnotations_range_, 1, NSRange.__typestr__)
-        self.assertArgHasType(TestNSTextCheckingClientHelper.removeAnnotations_range_, 1, NSRange.__typestr__)
+        self.assertArgHasType(TestNSTextCheckingClientHelper.removeAnnotation_range_, 1, NSRange.__typestr__)
         self.assertArgHasType(TestNSTextCheckingClientHelper.replaceCharactersInRange_withAnnotatedString_, 0, NSRange.__typestr__)
         self.assertArgHasType(TestNSTextCheckingClientHelper.selectAndShowRange_, 0, NSRange.__typestr__)
         self.assertArgHasType(TestNSTextCheckingClientHelper.viewForRange_firstRect_actualRange_, 0, NSRange.__typestr__)

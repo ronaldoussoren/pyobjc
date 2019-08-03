@@ -309,7 +309,7 @@ class TestNSFileManager (TestCase):
 
     @min_os_level('10.15')
     def testMethods10_15(self):
-        self.assertResultIsBOOL(NSFileManager.isEnumeratingDirectoryPostOrder)
+        self.assertResultIsBOOL(NSDirectoryEnumerator.isEnumeratingDirectoryPostOrder)
 
     def testProtocols(self):
         self.assertResultIsBOOL(TestNSFileManagerHelper.fileManager_shouldProceedAfterError_)

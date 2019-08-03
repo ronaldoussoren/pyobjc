@@ -25,12 +25,11 @@ class TestOpenPanel (TestCase):
         self.assertResultIsBOOL(NSOpenPanel.canChooseFiles)
         self.assertArgIsBOOL(NSOpenPanel.setCanChooseFiles_, 0)
 
-        panel = NSOpenPanel.openPanel()
-        self.assertArgIsSEL(panel.beginSheetForDirectory_file_types_modalForWindow_modalDelegate_didEndSelector_contextInfo_, 5, b'v@:@' + objc._C_NSInteger + b'^v')
-        self.assertArgHasType(panel.beginSheetForDirectory_file_types_modalForWindow_modalDelegate_didEndSelector_contextInfo_, 6, b'^v')
+        self.assertArgIsSEL(NSOpenPanel.beginSheetForDirectory_file_types_modalForWindow_modalDelegate_didEndSelector_contextInfo_, 5, b'v@:@' + objc._C_NSInteger + b'^v')
+        self.assertArgHasType(NSOpenPanel.beginSheetForDirectory_file_types_modalForWindow_modalDelegate_didEndSelector_contextInfo_, 6, b'^v')
 
-        self.assertArgIsSEL(panel.beginForDirectory_file_types_modelessDelegate_didEndSelector_contextInfo_, 4, b'v@:@'+objc._C_NSInteger+b'^v')
-        self.assertArgHasType(panel.beginForDirectory_file_types_modelessDelegate_didEndSelector_contextInfo_, 5, b'^v')
+        self.assertArgIsSEL(NSOpenPanel.beginForDirectory_file_types_modelessDelegate_didEndSelector_contextInfo_, 4, b'v@:@'+objc._C_NSInteger+b'^v')
+        self.assertArgHasType(NSOpenPanel.beginForDirectory_file_types_modelessDelegate_didEndSelector_contextInfo_, 5, b'^v')
 
     @min_os_level('10.10')
     def testMethods10_10(self):

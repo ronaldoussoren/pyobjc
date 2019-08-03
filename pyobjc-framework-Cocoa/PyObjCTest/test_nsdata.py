@@ -117,11 +117,11 @@ class TestNSData(TestCase):
 
     @min_os_level('10.15')
     def testMethods10_15(self):
-        self.assertResultIsBOOL(NSData.decompressUsingAlgorithm_error_)
-        self.assertArgIsOut(NSData.decompressUsingAlgorithm_error_, 1)
+        self.assertResultIsBOOL(NSMutableData.decompressUsingAlgorithm_error_)
+        self.assertArgIsOut(NSMutableData.decompressUsingAlgorithm_error_, 1)
 
-        self.assertResultIsBOOL(NSData.compressUsingAlgorithm_error_)
-        self.assertArgIsOut(NSData.compressUsingAlgorithm_error_, 1)
+        self.assertResultIsBOOL(NSMutableData.compressUsingAlgorithm_error_)
+        self.assertArgIsOut(NSMutableData.compressUsingAlgorithm_error_, 1)
 
     def assertDataContents(self, d1, d2, rawData):
         self.assertEqual(len(d1), d1.length(), "d1: len() and -length didn't match.")

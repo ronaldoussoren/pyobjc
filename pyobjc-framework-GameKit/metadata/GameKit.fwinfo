@@ -938,6 +938,22 @@
    "GKLocalPlayer": {
     "methods": [
      {
+      "selector": "loadChallengableFriendsWithCompletionHandler:",
+      "class_method": false,
+      "args": {
+       "0": {
+        "callable": {
+	 "arguments": {
+	  "0": { "type": "^v" },
+	  "1": { "type": "@" },
+	  "2": { "type": "@" }
+	 },
+	 "retval": { "type": "v" }
+	}
+       }
+      }
+     },
+     {
       "selector": "authenticateHandler",
       "class_method": false,
       "retval": {

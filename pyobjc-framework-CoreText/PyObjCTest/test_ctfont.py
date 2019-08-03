@@ -280,7 +280,7 @@ class TestCTFont (TestCase):
         self.assertIsInstance(v, unicode)
 
         v, l = CTFontCopyLocalizedName(font, kCTFontCopyrightNameKey, None)
-        self.assertIsInstance(v, unicode)
+        self.assertIsInstance(v, (unicode, type(None)))
         self.assertIsInstance(l, (unicode, type(None)))
         self.assertArgIsOut(CTFontCopyLocalizedName, 2)
 

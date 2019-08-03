@@ -29,9 +29,11 @@ if sys.platform == 'darwin':
 
             self.assertEqual(after.definingClass, c);
 
+        @max_sdk_level('10.14')
         def testWeirdness1(self):
             self.doWeirdness("NSButtonCell", "setEnabled_")
 
+        @max_sdk_level('10.14')
         def testWeirdness2(self):
             self.doWeirdness("NSTextView", "setEditable_")
 

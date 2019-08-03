@@ -3444,6 +3444,49 @@
      }
     ]
    },
+   "NSToolbarItemGroup": {
+    "methods": [
+     {
+      "selector": "groupWithItemIdentifier:images:selectionMode:labels:target:action:",
+      "class_method": true,
+      "args": {
+       "5": { "sel_of_type": "v@:@" }
+      }
+     },
+     {
+      "selector": "groupWithItemIdentifier:titles:selectionMode:labels:target:action:",
+      "class_method": true,
+      "args": {
+       "5": { "sel_of_type": "v@:@" }
+      }
+     }
+    ]
+   },
+   "NSButtonTouchBarItem": {
+    "methods": [
+     {
+      "selector": "buttonTouchBarItemWithIdentifier:title:image:target:action:",
+      "class_method": true,
+      "args": {
+       "4": { "sel_of_type": "v@:@" }
+      }
+     },
+     {
+      "selector": "buttonTouchBarItemWithIdentifier:title:target:action:",
+      "class_method": true,
+      "args": {
+       "3": { "sel_of_type": "v@:@" }
+      }
+     },
+     {
+      "selector": "buttonTouchBarItemWithIdentifier:image:target:action:",
+      "class_method": true,
+      "args": {
+       "3": { "sel_of_type": "v@:@" }
+      }
+     }
+    ]
+   },
    "NSButton": {
     "methods": [
      {
@@ -4676,6 +4719,166 @@
        "0": { "type_override": "Z" }
       },
       "selector": "setInvalidateFlowLayoutDelegateMetrics:"
+     }
+    ]
+   },
+   "NSCollectionViewDiffableDataSource": {
+    "methods": [
+     {
+      "retval": {
+       "callable": {
+	"arguments": {
+	 "0": { "typestr": "^v" },
+	 "1": { "typestr": "@" },
+	 "2": { "typestr": "@" },
+	 "3": { "typestr": "@" }
+	},
+	"retval": {"typestr": "@" }
+       }
+      },
+      "class_method": false,
+      "selector": "supplementaryViewProvider"
+     },
+     {
+      "args": {
+       "0": {
+        "callable": {
+	 "arguments": {
+	  "0": { "typestr": "^v" },
+	  "1": { "typestr": "@" },
+	  "2": { "typestr": "@" },
+	  "3": { "typestr": "@" }
+	 },
+	 "retval": {"typestr": "@" }
+	}
+       }
+      },
+      "class_method": false,
+      "selector": "setSupplementaryViewProvider:"
+     },
+     {
+      "args": {
+       "1": {
+        "callable": {
+	 "arguments": {
+	  "0": { "typestr": "^v" },
+	  "1": { "typestr": "@" },
+	  "2": { "typestr": "@" },
+	  "3": { "typestr": "q" }
+	 },
+	 "retval": {"typestr": "@" }
+	}
+       }
+      },
+      "class_method": false,
+      "selector": "initWithCollectionView:itemProvider:"
+     }
+    ]
+   },
+   "NSColorSampler": {
+    "methods": [
+     {
+      "args": {
+       "0": {
+        "callable": {
+	 "arguments": {
+	  "0": { "typestr": "^v" },
+	  "1": { "typestr": "@" }
+	 },
+	 "retval": {"typestr": "v" }
+	}
+       }
+      },
+      "class_method": false,
+      "selector": "showSamplerWithSelectionHandler:"
+     }
+    ]
+   },
+   "NSCollectionLayoutSection": {
+    "methods": [
+     {
+      "retval": {
+       "callable": {
+	"arguments": {
+	 "0": { "typestr": "^v" },
+	 "1": { "typestr": "@" },
+	 "2": { "typestr": [ "{_NSPoint=ff}", "{CGPoint=dd}" ] },
+	 "3": { "typestr": "@" }
+	},
+	"retval": {"typestr": "v" }
+       }
+      },
+      "class_method": false,
+      "selector": "visibleItemsInvalidationHandler"
+     },
+     {
+      "args": {
+       "0": {
+        "callable": {
+	 "arguments": {
+	  "0": { "typestr": "^v" },
+	  "1": { "typestr": "@" },
+	  "2": { "typestr": [ "{_NSPoint=ff}", "{CGPoint=dd}" ] },
+	  "3": { "typestr": "@" }
+	 },
+	 "retval": {"typestr": "v" }
+	}
+       }
+      },
+      "class_method": false,
+      "selector": "setVisibleItemsInvalidationHandler:"
+     },
+     {
+      "args": {
+       "0": {
+        "callable": {
+	 "arguments": {
+	  "0": { "typestr": "^v" },
+	  "1": { "typestr": "q" },
+	  "2": { "typestr": "@" }
+	 },
+	 "retval": {"typestr": "@" }
+	}
+       }
+      },
+      "class_method": false,
+      "selector": "initWithSectionProvider:configuration:"
+     }
+    ]
+   },
+   "NSCollectionViewCompositionalLayout": {
+    "methods": [
+     {
+      "args": {
+       "0": {
+        "callable": {
+	 "arguments": {
+	  "0": { "typestr": "^v" },
+	  "1": { "typestr": "q" },
+	  "2": { "typestr": "@" }
+	 },
+	 "retval": {"typestr": "@" }
+	}
+       }
+      },
+      "class_method": false,
+      "selector": "initWithSectionProvider:"
+     },
+     {
+      "args": {
+       "0": {
+        "callable": {
+	 "arguments": {
+	  "0": { "typestr": "^v" },
+	  "1": { "typestr": "q" },
+	  "2": { "typestr": "@" }
+	 },
+	 "retval": {"typestr": "@" }
+	}
+       }
+      },
+      "class_method": false,
+      "selector": "initWithSectionProvider:configuration:"
      }
     ]
    },
@@ -8919,6 +9122,14 @@
    "NSLayoutManager": {
     "methods": [
      {
+      "selector": "showCGGlyphs:positions:count:font:textMatrix:attributes:inContext:",
+      "class_method": false,
+      "args": {
+       "0": { "type_modifier": "n", "c_array_length_in_arg": 2 },
+       "1": { "type_modifier": "n", "c_array_length_in_arg": 2 }
+      }
+     },
+     {
       "selector": "setGlyphs:properties:characterIndexes:font:forGlyphRange:",
       "class_method": false,
       "args": {
@@ -11839,6 +12050,40 @@
      }
     ]
    },
+   "NSStoryboard": {
+    "methods": [
+     {
+      "args": {
+       "1": {
+	"callable": {
+	 "arguments": {
+	  "0": { "type": "^v" },
+	  "1": { "type": "@" }
+	 },
+	 "retval": { "typestr": "@" }
+        }
+       }
+      },
+      "class_method": true,
+      "selector": "instantiateControllerWithIdentifier:creator:"
+     },
+     {
+      "args": {
+       "0": {
+	"callable": {
+	 "arguments": {
+	  "0": { "type": "^v" },
+	  "1": { "type": "@" }
+	 },
+	 "retval": { "typestr": "@" }
+        }
+       }
+      },
+      "class_method": true,
+      "selector": "instantiateInitialControllerWithCreator:"
+     }
+    ]
+   },
    "NSStoryboardSegue": {
     "methods": [
        {
@@ -11916,6 +12161,31 @@
        }
     ]
    },
+   "NSPickerTouchBarItem": {
+    "methods": [
+       {
+        "args": {
+	 "0": { "sel_of_type": "v@:@" }
+	},
+	"selector": "setAction:",
+	"class_method": false
+       },
+       {
+        "args": {
+	 "4": { "sel_of_type": "v@:@" }
+	},
+	"selector": "pickerTouchBarItemWithIdentifier:images:selectionMode:target:action:",
+	"class_method": false
+       },
+       {
+        "args": {
+	 "4": { "sel_of_type": "v@:@" }
+	},
+	"selector": "pickerTouchBarItemWithIdentifier:labels:selectionMode:target:action:",
+	"class_method": false
+       }
+    ]
+   },
    "NSGestureRecognizer": {
     "methods": [
        {
@@ -11989,6 +12259,21 @@
    },
    "NSObject": {
     "methods": [
+     {
+      "selector": "viewForRange:firstRect:actualRange:",
+      "class_method": false,
+      "args": {
+       "1": { "type_modifier": "o" },
+       "2": { "type_modifier": "o" }
+      }
+     },
+     {
+      "selector": "annotatedSubstringForProposedRange:actualRange:",
+      "class_method": false,
+      "args": {
+       "1": { "type_modifier": "o" }
+      }
+     },
      {
       "selector": "numberOfItemsForScrubber:",
       "class_method": false,
@@ -26778,6 +27063,60 @@
    "NSWorkspace": {
     "methods": [
      {
+      "selector":  "openApplicationAtURL:configuration:completionHandler:",
+      "class_method": false,
+      "args": {
+       "2": {
+        "callable": {
+	 "arguments": {
+	  "0": { "type": "^v" },
+	  "1": { "type": "@" },
+	  "2": { "type": "@" }
+	 },
+	 "retval": {
+	  "type": "v"
+	 }
+	}
+       }
+      }
+     },
+     {
+      "selector":  "openURLs:withApplicationAtURL:configuration:completionHandler:",
+      "class_method": false,
+      "args": {
+       "3": {
+        "callable": {
+	 "arguments": {
+	  "0": { "type": "^v" },
+	  "1": { "type": "@" },
+	  "2": { "type": "@" }
+	 },
+	 "retval": {
+	  "type": "v"
+	 }
+	}
+       }
+      }
+     },
+     {
+      "selector":  "openURL:configuration:completionHandler:",
+      "class_method": false,
+      "args": {
+       "2": {
+        "callable": {
+	 "arguments": {
+	  "0": { "type": "^v" },
+	  "1": { "type": "@" },
+	  "2": { "type": "@" }
+	 },
+	 "retval": {
+	  "type": "v"
+	 }
+	}
+       }
+      }
+     },
+     {
       "selector":  "requestAuthorizationOfType:completionHandler:",
       "class_method": false,
       "args": {
@@ -27166,6 +27505,12 @@
    }
   },
   "enum": {
+   "NSAppKitVersionNumber10_14": { "value": 1671.0 },
+   "NSAppKitVersionNumber10_14_1": { "value": 1671.1 },
+   "NSAppKitVersionNumber10_14_2": { "value": 1671.2 },
+   "NSAppKitVersionNumber10_14_3": { "value": 1671.3 },
+   "NSAppKitVersionNumber10_14_4": { "value": 1671.4 },
+   "NSAppKitVersionNumber10_14_5": { "value": 1671.5 },
    "NSWorkspaceAuthorizationTypeCreateSymbolicLink": { "value": 0 },
    "NSWorkspaceAuthorizationTypeSetAttributes": { "value": 1 },
    "NSWorkspaceAuthorizationTypeReplaceFile": { "value": 2 },
@@ -28125,6 +28470,11 @@
    }
   },
   "functions": {
+   "NSDrawBitmap": {
+    "args": {
+     "10": { "type_override": "[5^C]" }
+    }
+   },
    "NSTouchTypeMaskFromType": {
     "inline": true,
     "args": {

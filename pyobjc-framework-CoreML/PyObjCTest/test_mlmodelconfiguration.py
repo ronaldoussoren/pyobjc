@@ -14,6 +14,8 @@ if sys.maxsize > 2 ** 32:
             self.assertResultIsBOOL(CoreML.MLModelConfiguration.allowLowPrecisionAccumulationOnGPU)
             self.assertArgIsBOOL(CoreML.MLModelConfiguration.setAllowLowPrecisionAccumulationOnGPU_, 0)
 
+        @expectedFailure
+        def test_methods10_15_missing(self):
             self.assertResultIsBOOL(CoreML.MLModelDescription.isUpdatable)
 
 

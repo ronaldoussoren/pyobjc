@@ -164,8 +164,7 @@ class TestNSURLSession (TestCase):
         self.assertResultIsBOOL(TestNSURLSessionConfigurationHelper.shouldUseExtendedBackgroundIdleMode)
         self.assertArgIsBOOL(TestNSURLSessionConfigurationHelper.setShouldUseExtendedBackgroundIdleMode_, 0)
 
-    @expectedFailure # For some reason these aren't present on 10.12 after all.
-    @min_os_level('10.12')
+    @min_os_level('10.15')
     def testMethods10_12(self):
         self.assertResultIsBOOL(NSURLSessionTaskTransactionMetrics.isProxyConnection)
         self.assertResultIsBOOL(NSURLSessionTaskTransactionMetrics.isReusedConnection)
@@ -181,10 +180,10 @@ class TestNSURLSession (TestCase):
         self.assertArgIsBlock(NSURLSessionWebSocketTask.receiveMessageWithCompletionHandler_, 0, b'v@@')
         self.assertArgIsBlock(NSURLSessionWebSocketTask.sendPingWithPongReceiveHandler_, 0, b'v@')
 
-        self.assertResultIsBOOL(NSURLSessionConfiguration.isCellular)
-        self.assertResultIsBOOL(NSURLSessionConfiguration.isExpensive)
-        self.assertResultIsBOOL(NSURLSessionConfiguration.isConstrained)
-        self.assertResultIsBOOL(NSURLSessionConfiguration.isMultipath)
+        self.assertResultIsBOOL(NSURLSessionTaskTransactionMetrics.isCellular)
+        self.assertResultIsBOOL(NSURLSessionTaskTransactionMetrics.isExpensive)
+        self.assertResultIsBOOL(NSURLSessionTaskTransactionMetrics.isConstrained)
+        self.assertResultIsBOOL(NSURLSessionTaskTransactionMetrics.isMultipath)
 
     @min_sdk_level('10.12')
     def testProtocols10_12(self):

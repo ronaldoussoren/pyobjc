@@ -167,7 +167,7 @@ class TestNSWorkspace(TestCase):
     @min_os_level('10.15')
     def testMethods10_15(self):
         self.assertArgIsBlock(NSWorkspace.openURL_configuration_completionHandler_, 2, b'v@@')
-        self.assertArgIsBlock(NSWorkspace.openURL_withApplicationAtURL_configuration_completionHandler_, 3, b'v@@')
+        self.assertArgIsBlock(NSWorkspace.openURLs_withApplicationAtURL_configuration_completionHandler_, 3, b'v@@')
         self.assertArgIsBlock(NSWorkspace.openApplicationAtURL_configuration_completionHandler_, 2, b'v@@')
 
         self.assertResultIsBOOL(NSWorkspaceOpenConfiguration.promptsUserIfNeeded)
@@ -184,7 +184,7 @@ class TestNSWorkspace(TestCase):
         self.assertArgIsBOOL(NSWorkspaceOpenConfiguration.setActivates_, 0)
         self.assertArgIsBOOL(NSWorkspaceOpenConfiguration.setHides_, 0)
         self.assertArgIsBOOL(NSWorkspaceOpenConfiguration.setHidesOthers_, 0)
-        self.assertArgIsBOOL(NSWorkspaceOpenConfiguration.setIsForPrinting_, 0)
+        self.assertArgIsBOOL(NSWorkspaceOpenConfiguration.setForPrinting_, 0)
         self.assertArgIsBOOL(NSWorkspaceOpenConfiguration.setCreatesNewApplicationInstance_, 0)
         self.assertArgIsBOOL(NSWorkspaceOpenConfiguration.setRequiresUniversalLinks_, 0)
 

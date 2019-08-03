@@ -10,6 +10,38 @@
    "kCWSecurityWPA3Transition": { "value": 13 }
   },
   "classes": {
+   "CWConfiguration": {
+    "methods": [
+     {
+      "selector": "setRememberJoinedNetworks:",
+      "class_method": false,
+      "args": {
+       "0": { "type_override": "Z" }
+      }
+     },
+     {
+      "selector": "setRequireAdministratorForIBSSMode:",
+      "class_method": false,
+      "args": {
+       "0": { "type_override": "Z" }
+      }
+     },
+     {
+      "selector": "setRequireAdministratorForPower:",
+      "class_method": false,
+      "args": {
+       "0": { "type_override": "Z" }
+      }
+     },
+     {
+      "selector": "setRequireAdministratorForAssociation:",
+      "class_method": false,
+      "args": {
+       "0": { "type_override": "Z" }
+      }
+     }
+    ]
+   },
    "CWInterface": {
     "methods": [
      {

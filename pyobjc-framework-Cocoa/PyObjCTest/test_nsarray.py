@@ -281,7 +281,7 @@ class TestNSMutableArrayInteraction(TestCase):
         self.assertEqual(a, (0, 1, 2, 3))
 
         t = objc.options.verbose
-        objc.options.verbose = True
+        #objc.options.verbose = True
         try:
             self.assertRaises(TypeError, a.sortUsingFunction_context_, dir)
             self.assertRaises(TypeError, a.sortUsingFunction_context_, dir, 1, 2)

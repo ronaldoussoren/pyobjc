@@ -95,6 +95,34 @@
       "retval": { "type_override": "Z" }
      },
      {
+      "selector": "featureValueWithCGImage:constraint:options:error:",
+      "class_method": true,
+      "args": {
+       "3": { "type_modifier": "o" }
+      }
+     },
+     {
+      "selector": "featureValueWithCGImage:pixelsWide:pixelsHigh:pixelFormatType:options:error:",
+      "class_method": true,
+      "args": {
+       "5": { "type_modifier": "o" }
+      }
+     },
+     {
+      "selector": "featureValueWithImageAtURL:constraint:options:error:",
+      "class_method": true,
+      "args": {
+       "3": { "type_modifier": "o" }
+      }
+     },
+     {
+      "selector": "featureValueWithImageAtURL:pixelsWide:pixelsHigh:pixelFormatType:options:error:",
+      "class_method": true,
+      "args": {
+       "5": { "type_modifier": "o" }
+      }
+     },
+     {
       "selector": "featureValueWithDictionary:error:",
       "class_method": true,
       "args": {
@@ -103,8 +131,139 @@
      }
     ]
    },
+   "MLUpdateProgressHandlers": {
+    "methods": [
+     {
+      "selector": "initForEvents:progressHandler:completionHandler:",
+      "class_method": true,
+      "args": {
+       "1": {
+        "callable": {
+	 "arguments": {
+	  "0": { "typestr": "^v" },
+	  "1": { "typestr": "@" }
+	 },
+	 "retval": { "typestr": "v" }
+	}
+       },
+       "2": {
+        "callable": {
+	 "arguments": {
+	  "0": { "typestr": "^v" },
+	  "1": { "typestr": "@" }
+	 },
+	 "retval": { "typestr": "v" }
+	}
+       }
+      }
+     },
+     {
+      "selector": "updateTaskForModelAtURL:trainingData:configuration:completionHandler:error:",
+      "class_method": true,
+      "args": {
+       "3": {
+        "callable": {
+	 "arguments": {
+	  "0": { "typestr": "^v" },
+	  "1": { "typestr": "@" }
+	 },
+	 "retval": { "typestr": "v" }
+	}
+       },
+       "4": { "type_modifier": "o" }
+      }
+     }
+    ]
+   },
+   "MLModelConfiguration": {
+    "methods": [
+     {
+      "selector": "setAllowLowPrecisionAccumulationOnGPU:",
+      "class_method": false,
+      "args": {
+       "0": { "type_override": "Z" }
+      }
+     },
+     {
+      "selector": "allowLowPrecisionAccumulationOnGPU",
+      "class_method": false,
+      "retval": { "type_override": "Z" }
+     }
+    ]
+   },
+   "MLUpdateTask": {
+    "methods": [
+     {
+      "selector": "updateTaskForModelAtURL:trainingData:configuration:progressHandlers:error:",
+      "class_method": true,
+      "args": {
+       "3": {
+        "callable": {
+	 "arguments": {
+	  "0": { "typestr": "^v" },
+	  "1": { "typestr": "@" }
+	 },
+	 "retval": { "typestr": "v" }
+	}
+       },
+       "4": { "type_modifier": "o" }
+      }
+     },
+     {
+      "selector": "updateTaskForModelAtURL:trainingData:configuration:completionHandler:error:",
+      "class_method": true,
+      "args": {
+       "3": {
+        "callable": {
+	 "arguments": {
+	  "0": { "typestr": "^v" },
+	  "1": { "typestr": "@" }
+	 },
+	 "retval": { "typestr": "v" }
+	}
+       },
+       "4": { "type_modifier": "o" }
+      }
+     }
+    ]
+   },
+   "MLUpdateProgressHandlers": {
+    "methods": [
+     {
+      "selector": "initForEvents:progressHandler:completionHandler:",
+      "class_method": false,
+      "args": {
+       "1": {
+        "callable": {
+	 "arguments": {
+	  "0": { "typestr": "^v" },
+	  "1": { "typestr": "@" }
+	 },
+	 "retval": { "typestr": "v" }
+	}
+       },
+       "2": {
+        "callable": {
+	 "arguments": {
+	  "0": { "typestr": "^v" },
+	  "1": { "typestr": "@" }
+	 },
+	 "retval": { "typestr": "v" }
+	}
+       }
+      }
+     }
+    ]
+   },
    "MLModel": {
     "methods": [
+     {
+      "selector": "predictionsFromBatch:error:",
+      "class_method": true,
+      "args": {
+       "1": { "type_modifier": "o" }
+      }
+     },
      {
       "selector": "compileModelAtURL:error:",
       "class_method": true,
@@ -164,6 +323,15 @@
       "args": {
        "0": {
         "type_override": [ "i", "q" ]
+       }
+      }
+     },
+     {
+      "selector": "writeToURL:error:",
+      "class_method": false,
+      "args": {
+       "1": {
+        "type_override": "o^@"
        }
       }
      },
