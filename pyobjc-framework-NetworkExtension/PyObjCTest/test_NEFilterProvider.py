@@ -18,11 +18,11 @@ if sys.maxsize >= 2 ** 32:
             self.assertArgIsBOOL(NetworkExtension.NEFilterVerdict.setShouldReport_, 0)
 
         def test_constants(self):
-            self.asserEqual(NetworkExtension.NEFilterActionInvalid, 0)
-            self.asserEqual(NetworkExtension.NEFilterActionAllow, 1)
-            self.asserEqual(NetworkExtension.NEFilterActionDrop, 2)
-            self.asserEqual(NetworkExtension.NEFilterActionRemediate, 3)
-            self.asserEqual(NetworkExtension.NEFilterActionFilterData, 4)
+            self.assertEqual(NetworkExtension.NEFilterActionInvalid, 0)
+            self.assertEqual(NetworkExtension.NEFilterActionAllow, 1)
+            self.assertEqual(NetworkExtension.NEFilterActionDrop, 2)
+            self.assertEqual(NetworkExtension.NEFilterActionRemediate, 3)
+            self.assertEqual(NetworkExtension.NEFilterActionFilterData, 4)
 
             self.assertEqual(NetworkExtension.NEFilterReportEventNewFlow, 1)
             self.assertEqual(NetworkExtension.NEFilterReportEventDataDecision, 2)

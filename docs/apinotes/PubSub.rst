@@ -6,6 +6,8 @@ Apple's developer website.
 
 These bindings are accessed through the ``PubSub`` package (that is, ``import PubSub``).
 
+.. note:: This framework was removed in macOS 10.15
+
 API Notes
 ---------
 
