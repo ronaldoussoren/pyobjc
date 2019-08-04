@@ -286,8 +286,10 @@ class TestLSInfo (TestCase):
         self.assertIsInstance(info_ref, objc.FSRef)
         self.assertIsInstance(info_url, LaunchServices.CFURLRef)
 
-
-        app_ref = objc.FSRef.from_pathname('/Applications/TextEdit.app')
+        if os.path.exists('/Applications/TextEdit.app'):
+            app_ref = objc.FSRef.from_pathname('/Applications/TextEdit.app')
+        else:
+            app_ref = objc.FSRef.from_pathname('/System/Applications/TextEdit.app')
         self.assertArgIsOut(LaunchServices.LSCanRefAcceptItem, 4)
         ok, accepts = LaunchServices.LSCanRefAcceptItem(ref, app_ref, LaunchServices.kLSRolesAll, LaunchServices.kLSAcceptDefault, None)
         self.assertEqual(ok, 0)

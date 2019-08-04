@@ -46,6 +46,12 @@ class TestLaunchServices (TestCase):
         self.assertTrue( hasattr(CoreServices, '_LSCopyAllApplicationURLs') )
         self.assertTrue( isinstance(CoreServices._LSCopyAllApplicationURLs, objc.function) )
 
+
+        fn = CoreServices.LSGetExtensionInfo
+        self.assertEqual( fn(10, b'hello.text'.decode('latin1'), None), (0, 6) )
+        self.assertEqual( fn(10, 'hello.text', None), (0, 6) )
+
+
         arr = CoreServices._LSCopyAllApplicationURLs(None)
         self.assertTrue( isinstance(arr, objc.lookUpClass('NSArray') ) )
         for a in arr:
@@ -53,12 +59,9 @@ class TestLaunchServices (TestCase):
                 break
             elif str(a) == 'file:///Applications/Calculator.app/':
                 break
+            elif str(a) == 'file:///System/Applications/Calculator.app/':
+                break
         else:
             self.fail("No Calculator.app?")
-
-        fn = CoreServices.LSGetExtensionInfo
-        self.assertEqual( fn(10, b'hello.text'.decode('latin1'), None), (0, 6) )
-        self.assertEqual( fn(10, 'hello.text', None), (0, 6) )
-
 if __name__ == "__main__":
     main()
