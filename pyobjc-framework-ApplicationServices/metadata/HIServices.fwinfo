@@ -553,11 +553,7 @@
      "0": {}
     }
    },
-   "LaunchApplication": {
-    "args": {
-     "0": {}
-    }
-   },
+   "LaunchApplication": { "ignore": true },
    "LoadIconCache": {
     "args": {
      "0": {},
@@ -971,6 +967,8 @@
   },
   "informal_protocols": {},
   "structs": {
+   "LaunchParamBlockRec": { "ignore": true },
+   "AppParameters": { "ignore": true },
    "ICDirSpec": { "ignore": true },
    "ICFontRecord": { "ignore": true },
    "ICCharTable": { "ignore": true },

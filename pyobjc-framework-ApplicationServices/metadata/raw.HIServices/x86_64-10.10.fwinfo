@@ -3933,10 +3933,10 @@
     "unicode": false,
     "value": "\\pWhoisHost"
    },
-   "kPasteboardClipboard": "com.apple.pasteboard.clipboard",
-   "kPasteboardFind": "com.apple.pasteboard.find",
-   "kPasteboardTypeFilePromiseContent": "com.apple.pasteboard.promised-file-content-type",
-   "kPasteboardTypeFileURLPromise": "com.apple.pasteboard.promised-file-url"
+   "kPasteboardClipboard": { "value": "com.apple.pasteboard.clipboard", "unicode": true },
+   "kPasteboardFind": { "value": "com.apple.pasteboard.find", "unicode": true },
+   "kPasteboardTypeFilePromiseContent": { "value": "com.apple.pasteboard.promised-file-content-type", "unicode": true },
+   "kPasteboardTypeFileURLPromise": { "value": "com.apple.pasteboard.promised-file-url", "unicode": true }
   },
   "structs": {
    "AppParameters": {

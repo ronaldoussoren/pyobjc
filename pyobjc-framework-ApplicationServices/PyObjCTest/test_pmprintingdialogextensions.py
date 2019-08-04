@@ -33,7 +33,6 @@ class TestPMPrintingDialogExtensions (TestCase):
         self.assertEqual(PrintCore.kPMInkPDEKindID, u"com.apple.print.pde.InkKind")
         self.assertEqual(PrintCore.kPMColorPDEKindID, u"com.apple.print.pde.ColorKind")
         self.assertEqual(PrintCore.kPMMediaQualityPDEKindID, u"com.apple.print.pde.MediaQualityPDEKind")
-        self.assertEqual(PrintCore.kPMWatermarkPDEKindID, u"com.apple.print.pde.WatermarkPDEKind")
         self.assertEqual(PrintCore.SUMMARY_DISPLAY_ORDER, u"Summary, Display, Order")
         self.assertEqual(PrintCore.kPMSandboxCompatiblePDEs, u"PMSandboxCompatiblePDEs")
         self.assertEqual(PrintCore.kDialogExtensionIntfIDStr, u"A996FD7E-B738-11D3-8519-0050E4603277")
