@@ -16,7 +16,7 @@ class TestICCameraFile (TestCase):
         self.assertArgIsBlock(ICCameraFile.requestThumbnailDataWithOptions_completion_, 1, b'v@@')
         self.assertArgIsBlock(ICCameraFile.requestMetadataDictionaryWithOptions_completion_, 1, b'v@@')
         self.assertArgIsBlock(ICCameraFile.requestDownloadWithOptions_completion_, 1, b'v@@')
-        self.assertArgIsBlock(ICCameraFile.requestReadDataAtOffset_offset_completion_, 2, b'v@@')
+        self.assertArgIsBlock(ICCameraFile.requestReadDataAtOffset_length_completion_, 2, b'v@@')
 
 if __name__ == "__main__":
     main()

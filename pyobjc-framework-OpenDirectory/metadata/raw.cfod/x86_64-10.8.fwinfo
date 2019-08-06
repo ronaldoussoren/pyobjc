@@ -929,10 +929,10 @@
     "typestr": "@"
    },
    "kODErrorDomainFramework": {
-    "typestr": "^{__CFString=}"
+    "typestr": "@"
    },
    "kODNodeOptionsQuerySkippedSubnode": {
-    "typestr": "^{__CFString=}"
+    "typestr": "@"
    },
    "kODRecordTypeAFPServer": {
     "typestr": "@"
@@ -1079,16 +1079,16 @@
     "typestr": "^{__ODSession=}"
    },
    "kODSessionProxyAddress": {
-    "typestr": "^{__CFString=}"
+    "typestr": "@"
    },
    "kODSessionProxyPassword": {
-    "typestr": "^{__CFString=}"
+    "typestr": "@"
    },
    "kODSessionProxyPort": {
-    "typestr": "^{__CFString=}"
+    "typestr": "@"
    },
    "kODSessionProxyUsername": {
-    "typestr": "^{__CFString=}"
+    "typestr": "@"
    }
   },
   "formal_protocols": {},
@@ -1140,7 +1140,7 @@
      },
      {
       "name": "recordName",
-      "typestr": "^{__CFString=}"
+      "typestr": "@"
      },
      {
       "name": "attributes",
@@ -1274,7 +1274,7 @@
      },
      {
       "name": "recordName",
-      "typestr": "^{__CFString=}"
+      "typestr": "@"
      },
      {
       "name": "attributeDict",
@@ -1305,7 +1305,7 @@
      },
      {
       "name": "nodeName",
-      "typestr": "^{__CFString=}"
+      "typestr": "@"
      },
      {
       "already_cfretained": true,
@@ -1381,7 +1381,7 @@
      }
     ],
     "retval": {
-     "typestr": "^{__CFString=}"
+     "typestr": "@"
     }
    },
    "ODNodeGetTypeID": {
@@ -1407,11 +1407,11 @@
      },
      {
       "name": "recordName",
-      "typestr": "^{__CFString=}"
+      "typestr": "@"
      },
      {
       "name": "password",
-      "typestr": "^{__CFString=}"
+      "typestr": "@"
      },
      {
       "already_cfretained": true,
@@ -1471,7 +1471,7 @@
      },
      {
       "name": "cacheName",
-      "typestr": "^{__CFString=}"
+      "typestr": "@"
      },
      {
       "already_cfretained": true,
@@ -1625,7 +1625,7 @@
      },
      {
       "name": "runLoopMode",
-      "typestr": "^{__CFString=}"
+      "typestr": "@"
      }
     ],
     "retval": {
@@ -1723,7 +1723,7 @@
      },
      {
       "name": "runLoopMode",
-      "typestr": "^{__CFString=}"
+      "typestr": "@"
      }
     ],
     "retval": {
@@ -1786,11 +1786,11 @@
      },
      {
       "name": "oldPassword",
-      "typestr": "^{__CFString=}"
+      "typestr": "@"
      },
      {
       "name": "newPassword",
-      "typestr": "^{__CFString=}"
+      "typestr": "@"
      },
      {
       "already_cfretained": true,
@@ -1921,7 +1921,7 @@
      }
     ],
     "retval": {
-     "typestr": "^{__CFString=}"
+     "typestr": "@"
     }
    },
    "ODRecordGetRecordType": {
@@ -1932,7 +1932,7 @@
      }
     ],
     "retval": {
-     "typestr": "^{__CFString=}"
+     "typestr": "@"
     }
    },
    "ODRecordGetTypeID": {
@@ -2002,11 +2002,11 @@
      },
      {
       "name": "username",
-      "typestr": "^{__CFString=}"
+      "typestr": "@"
      },
      {
       "name": "password",
-      "typestr": "^{__CFString=}"
+      "typestr": "@"
      },
      {
       "already_cfretained": true,
@@ -2066,7 +2066,7 @@
      },
      {
       "name": "cacheName",
-      "typestr": "^{__CFString=}"
+      "typestr": "@"
      },
      {
       "already_cfretained": true,
@@ -2132,7 +2132,7 @@
      },
      {
       "name": "password",
-      "typestr": "^{__CFString=}"
+      "typestr": "@"
      },
      {
       "already_cfretained": true,

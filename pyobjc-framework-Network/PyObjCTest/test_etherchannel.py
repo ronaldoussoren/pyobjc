@@ -3,9 +3,10 @@ import sys
 
 if sys.maxsize > 2 ** 32:
     import Network
+    import objc
 
     nw_ethernet_channel_state_changed_handler_t = b'v@@'
-    nw_ethernet_channel_receive_handler_t = b'v@Hn[6t]n[6t]'
+    nw_ethernet_channel_receive_handler_t = b'v@' + objc._C_USHT + b'n[6t]n[6t]'
     nw_ethernet_channel_send_completion_t = b'v@'
 
     class TestEtherChannel (TestCase):

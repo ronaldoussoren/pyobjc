@@ -450,6 +450,8 @@ class ObjCLazyModule(ModuleType):
                     result = objc._FLT_MIN
                 elif alias == "objc.NULL":
                     result = objc.NULL
+                elif alias == "objc.UINT32_MAX":
+                    result = 0xFFFFFFFF
                 else:
                     result = getattr(self, alias)
 

@@ -22,12 +22,20 @@
    "CIRenderDestinationAlphaUnpremultiplied": { "value": 2 }
   },
   "externs": {
+   "kCIContextAllowLowPower": { "typestr": "@" },
    "kCARendererMetalCommandQueue": { "typestr": "@" },
    "kCAContentsFormatRGBA8Uint": { "typestr": "@" },
    "kCAContentsFormatRGBA16Float": { "typestr": "@" },
    "kCAContentsFormatGray8Uint": { "typestr": "@" },
    "kCAGradientLayerConic": { "typestr": "@" },
    "kCAGradientLayerRadial": { "typestr": "@" },
+   "kCIImageRepresentationAVSemanticSegmentationMattes": { "typestr": "@" },
+   "kCIImageRepresentationSemanticSegmentationSkinMatteImage": { "typestr": "@" },
+   "kCIImageRepresentationSemanticSegmentationHairMatteImage": { "typestr": "@" },
+   "kCIImageRepresentationSemanticSegmentationTeethMatteImage": { "typestr": "@" },
+   "kCIImageAuxiliarySemanticSegmentationSkinMatte": { "typestr": "@" },
+   "kCIImageAuxiliarySemanticSegmentationHairMatte": { "typestr": "@" },
+   "kCIImageAuxiliarySemanticSegmentationTeethMatte": { "typestr": "@" },
    "kCIImageApplyOrientationProperty": { "typestr": "@" },
    "kCIInputDepthImageKey": { "typestr": "@" },
    "kCIInputDisparityImageKey": { "typestr": "@" },
@@ -749,6 +757,13 @@
    },
    "CIImage": {
     "methods": [
+     {
+      "selector": "imageByApplyingTransform:highQualityDownsample:",
+      "class_method": false,
+      "args": {
+       "1": { "type_override": "Z" }
+      }
+     },
      {
       "selector": "writeJPEGRepresentationOfImage:toURL:colorSpace:options:error:",
       "class_method": false,

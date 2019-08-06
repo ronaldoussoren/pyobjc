@@ -1,4 +1,4 @@
-static void __attribute__((__used__)) use_protocols(void)
+static void __attribute__((__used__)) use_protocols2(void)
 {
     PyObject* p __attribute__((__unused__));
 #if PyObjC_BUILD_RELEASE >= 1015
@@ -139,5 +139,11 @@ static void __attribute__((__used__)) use_protocols(void)
     p = PyObjC_IdToPython(@protocol(CIMotionBlur)); Py_XDECREF(p);
     p = PyObjC_IdToPython(@protocol(CINoiseReduction)); Py_XDECREF(p);
     p = PyObjC_IdToPython(@protocol(CIZoomBlur)); Py_XDECREF(p);
+    p = PyObjC_IdToPython(@protocol(CIKeystoneCorrectionCombined)); Py_XDECREF(p);
+    p = PyObjC_IdToPython(@protocol(CIKeystoneCorrectionHorizontal)); Py_XDECREF(p);
+    p = PyObjC_IdToPython(@protocol(CIKeystoneCorrectionVertical)); Py_XDECREF(p);
+    p = PyObjC_IdToPython(@protocol(CIPerspectiveRotate)); Py_XDECREF(p);
+    p = PyObjC_IdToPython(@protocol(CIRoundedRectangleGenerator)); Py_XDECREF(p);
+    p = PyObjC_IdToPython(@protocol(CIGaborGradients)); Py_XDECREF(p);
 #endif
 }

@@ -701,7 +701,6 @@ class TestCGImageProperties (TestCase):
         self.assertIsInstance(kCGImageAuxiliaryDataTypeSemanticSegmentationSkinMatte, unicode)
         self.assertIsInstance(kCGImageAuxiliaryDataTypeSemanticSegmentationHairMatte, unicode)
         self.assertIsInstance(kCGImageAuxiliaryDataTypeSemanticSegmentationTeethMatte, unicode)
-        self.assertIsInstance(kCGImagePropertyIsSticker, unicode)
 
 
 if __name__ == "__main__":

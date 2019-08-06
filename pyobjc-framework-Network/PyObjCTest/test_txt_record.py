@@ -4,9 +4,9 @@ import sys
 if sys.maxsize > 2 ** 32:
     import Network
 
-    nw_txt_record_access_key_t = b'B^t@^vL'
-    nw_txt_record_access_bytes_t = b'B^vL'
-    nw_txt_record_applier_t = b'B^t@n^vL'
+    nw_txt_record_access_key_t = b'Bn^t@n^vL'
+    nw_txt_record_access_bytes_t = b'Bn^vL'
+    nw_txt_record_applier_t = b'Bn^t@n^vL'
 
     class TestTxtRecord (TestCase):
 
@@ -26,8 +26,8 @@ if sys.maxsize > 2 ** 32:
             self.assertResultIsRetained(Network.nw_txt_record_create_dictionary)
             self.assertResultIsRetained(Network.nw_txt_record_copy)
 
-            self.assertArgHasType(Network.nw_txt_record_find_key, 0, b'n^t')
-            self.assertArgSizeIsNullTerminated(Network.nw_txt_record_find_key, 0)
+            self.assertArgHasType(Network.nw_txt_record_find_key, 1, b'n^t')
+            self.assertArgIsNullTerminated(Network.nw_txt_record_find_key, 1)
 
             self.assertArgIsIn(Network.nw_txt_record_access_key, 1)
             self.assertArgIsNullTerminated(Network.nw_txt_record_access_key, 1)

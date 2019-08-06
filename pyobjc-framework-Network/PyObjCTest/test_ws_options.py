@@ -5,8 +5,8 @@ if sys.maxsize > 2 ** 32:
     import Network
 
     nw_ws_pong_handler_t = b'v@'
-    nw_ws_subprotocol_enumerator_t = b'Zn^t'
-    nw_ws_additional_header_enumerator_t = b'Zn^tn^t'
+    nw_ws_subprotocol_enumerator_t = b'Bn^t'
+    nw_ws_additional_header_enumerator_t = b'Bn^tn^t'
     nw_ws_client_request_handler_t = b'@@'
 
     class TestWSOptions (TestCase):
@@ -69,10 +69,10 @@ if sys.maxsize > 2 ** 32:
             self.assertResultIsNullTerminated(Network.nw_ws_response_get_selected_subprotocol)
             self.assertResultHasType(Network.nw_ws_response_get_selected_subprotocol, b'^t')
 
-            self.assertArgHasType(Network.nw_ws_response_add_additional_header, 1, b'^t')
-            self.assertArgIsNullTerminated(Network.nw_ws_response_add_additional_header, 1, b'^t')
-            self.assertArgHasType(Network.nw_ws_response_add_additional_header, 2, b'^t')
-            self.assertArgIsNullTerminated(Network.nw_ws_response_add_additional_header, 2, b'^t')
+            self.assertArgHasType(Network.nw_ws_response_add_additional_header, 1, b'n^t')
+            self.assertArgIsNullTerminated(Network.nw_ws_response_add_additional_header, 1)
+            self.assertArgHasType(Network.nw_ws_response_add_additional_header, 2, b'n^t')
+            self.assertArgIsNullTerminated(Network.nw_ws_response_add_additional_header, 2)
 
             self.assertResultIsRetained(Network.nw_ws_metadata_copy_server_response)
 

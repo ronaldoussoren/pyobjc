@@ -6,8 +6,11 @@
 #include "pyobjc-api.h"
 
 #import <Quartz/Quartz.h>
+#import <CoreImage/CoreImage.h>
+#import <CoreImage/CIFilterBuiltins.h>
 
 #include "_QuartzCore_protocols.m"
+#include "_CoreImage_protocols.m"
 
 static PyMethodDef mod_methods[] = {
     { 0, 0, 0, }

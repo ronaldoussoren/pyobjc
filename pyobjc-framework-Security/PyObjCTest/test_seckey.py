@@ -296,8 +296,5 @@ class TestSecKey (TestCase):
         self.assertFalse(hasattr(Security, 'SecKeyGetCSPHandle'))
         self.assertFalse(hasattr(Security, 'SecKeyGetCredentials'))
 
-
-
-
 if __name__ == "__main__":
     main()

@@ -30,6 +30,46 @@
    "ICCameraDevice": {
     "methods": [
      {
+      "selector": "requestDeleteFiles:deleteFailed:completion:",
+      "class_method": false,
+      "args": {
+       "1": {
+        "callable": {
+	 "arguments": {
+	  "0": { "type": "^v" },
+	  "1": { "type": "@" }
+	 },
+	 "retval": { "type": "v" }
+	}
+       },
+       "2": {
+        "callable": {
+	 "arguments": {
+	  "0": { "type": "^v" },
+	  "1": { "type": "@" },
+	  "2": { "type": "@" }
+	 },
+	 "retval": { "type": "v" }
+	}
+       }
+      }
+     },
+     {
+      "selector": "requestDeleteFiles:deleteFailed:completion:",
+      "class_method": false,
+      "args": {
+       "2": {
+        "callable": {
+	 "arguments": {
+	  "0": { "type": "^v" },
+	  "1": { "type": "@" }
+	 },
+	 "retval": { "type": "v" }
+	}
+       }
+      }
+     },
+     {
       "selector": "requestSendPTPCommand:outData:sendCommandDelegate:didSendCommandSelector:contextInfo:",
       "class_method": false,
       "args": {
@@ -86,6 +126,90 @@
        "type_override": "Z"
       },
       "selector": "tetheredCaptureEnabled"
+     }
+    ]
+   },
+   "ICCameraFile": {
+    "methods": [
+     {
+      "selector": "requestReadDataAtOffset:length:completion:",
+      "class_method": false,
+      "args": {
+       "2": {
+        "callable": {
+	 "arguments": {
+	  "0": { "type": "^v" },
+	  "1": { "type": "@" },
+	  "2": { "type": "@" }
+	 },
+	 "retval": { "type": "v" }
+	}
+       }
+      }
+     },
+     {
+      "selector": "requestDownloadWithOptions:completion:",
+      "class_method": false,
+      "args": {
+       "1": {
+        "callable": {
+	 "arguments": {
+	  "0": { "type": "^v" },
+	  "1": { "type": "@" },
+	  "2": { "type": "@" }
+	 },
+	 "retval": { "type": "v" }
+	}
+       }
+      }
+     },
+     {
+      "selector": "requestMetadataDictionaryWithOptions:completion:",
+      "class_method": false,
+      "args": {
+       "1": {
+        "callable": {
+	 "arguments": {
+	  "0": { "type": "^v" },
+	  "1": { "type": "@" },
+	  "2": { "type": "@" }
+	 },
+	 "retval": { "type": "v" }
+	}
+       }
+      }
+     },
+     {
+      "selector": "requestMetadataDictionaryWithOptions:completion:",
+      "class_method": false,
+      "args": {
+       "1": {
+        "callable": {
+	 "arguments": {
+	  "0": { "type": "^v" },
+	  "1": { "type": "@" },
+	  "2": { "type": "@" }
+	 },
+	 "retval": { "type": "v" }
+	}
+       }
+      }
+     },
+     {
+      "selector": "requestThumbnailDataWithOptions:completion:",
+      "class_method": false,
+      "args": {
+       "1": {
+        "callable": {
+	 "arguments": {
+	  "0": { "type": "^v" },
+	  "1": { "type": "@" },
+	  "2": { "type": "@" }
+	 },
+	 "retval": { "type": "v" }
+	}
+       }
+      }
      }
     ]
    },
@@ -157,6 +281,51 @@
    },
    "ICDevice": {
     "methods": [
+     {
+      "selector": "requestEjectWithCompletion:",
+      "class_method": false,
+      "args": {
+       "0": {
+        "callable": {
+	 "arguments": {
+	  "0": { "type": "^v" },
+	  "1": { "type": "@" }
+	 },
+	 "retval": { "type": "v" }
+	}
+       }
+      }
+     },
+     {
+      "selector": "requestCloseSessionWithOptions:completion:",
+      "class_method": false,
+      "args": {
+       "1": {
+        "callable": {
+	 "arguments": {
+	  "0": { "type": "^v" },
+	  "1": { "type": "@" }
+	 },
+	 "retval": { "type": "v" }
+	}
+       }
+      }
+     },
+     {
+      "selector": "requestOpenSessionWithOptions:completion:",
+      "class_method": false,
+      "args": {
+       "1": {
+        "callable": {
+	 "arguments": {
+	  "0": { "type": "^v" },
+	  "1": { "type": "@" }
+	 },
+	 "retval": { "type": "v" }
+	}
+       }
+      }
+     },
      {
       "selector": "requestSendMessage:outData:maxReturnedDataSize:sendMessageDelegate:didSendMessageSelector:contextInfo:",
       "class_method": false,

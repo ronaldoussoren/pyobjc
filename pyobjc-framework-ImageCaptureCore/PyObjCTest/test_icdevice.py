@@ -51,11 +51,14 @@ class TestICDevice (TestCase):
 
     def testMethods(self):
         self.assertResultIsBOOL(ICDevice.isRemote)
-        self.assertResultIsBOOL(ICDevice.isShared)
         self.assertResultIsBOOL(ICDevice.hasConfigurableWiFiInterface)
         self.assertResultIsBOOL(ICDevice.hasOpenSession)
 
         self.assertArgIsSEL(ICDevice.requestSendMessage_outData_maxReturnedDataSize_sendMessageDelegate_didSendMessageSelector_contextInfo_, 4, b'v@:I@@^v')
+
+    @expectedFailure
+    def testMethods_removed_in_10_15(self):
+        self.assertResultIsBOOL(ICDevice.isShared)
 
     @min_os_level('10.15')
     def testMethods10_15(self):

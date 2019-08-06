@@ -112,7 +112,9 @@ class TestCGFont (TestCase):
 
 
         #data = open('/Library/Fonts/Webdings.ttf', 'rb').read()
-        with open('/Library/Fonts/Courier New.ttf', 'rb') as fp:
+        #with open('/Library/Fonts/Courier New.ttf', 'rb') as fp:
+        #    data = fp.read()
+        with open('/System/Library/Fonts/Symbol.ttf', 'rb') as fp:
             data = fp.read()
         self.assertResultIsCFRetained(CGFontCreateWithDataProvider)
         font = CGFontCreateWithDataProvider(

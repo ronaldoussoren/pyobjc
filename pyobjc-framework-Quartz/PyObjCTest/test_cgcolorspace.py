@@ -199,7 +199,7 @@ class TestCGColorSpace (TestCase):
         CGColorSpaceGetName
 
     @min_os_level('10.14.6')
-    def testFunctions10_14.6(self):
+    def testFunctions10_14_6(self):
         CGColorSpaceIsHDR
 
 if __name__ == "__main__":

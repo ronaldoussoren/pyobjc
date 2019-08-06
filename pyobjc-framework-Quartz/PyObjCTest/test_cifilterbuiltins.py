@@ -1,6 +1,6 @@
 from PyObjCTools.TestSupport import *
 from Quartz.QuartzCore import *
-from Quartz import CGPoint
+from Quartz import CGPoint, CGRect, CGAffineTransform
 
 class TestCIBuiltinFilterHelper (NSObject):
     def EV(self): return 1
@@ -19,12 +19,14 @@ class TestCIBuiltinFilterHelper (NSObject):
     def bottomRight(self): return 1
     def brightness(self): return 1
     def center(self): return 1
+    def count(self): return 1
     def closeness1(self): return 1
     def closeness2(self): return 1
     def closeness3(self): return 1
     def compactStyle(self): return 1
     def compactionMode(self): return 1
     def compression(self): return 1
+    def pitch(self): return 1
     def concentration(self): return 1
     def contrast(self): return 1
     def contrast1(self): return 1
@@ -115,8 +117,15 @@ class TestCIBuiltinFilterHelper (NSObject):
     def unsharpMaskRadius(self): return 1
     def value(self): return 1
     def width(self): return 1
+    def yaw(self): return 1
+    def roll(self): return 1
 
     def setEV_(self, a): pass
+    def setYaw_(self, a): pass
+    def setRoll_(self, a): pass
+    def setPitch_(self, a): pass
+    def setCompression_(self, a): pass
+    def setShadowOffset_(self, a): pass
     def setNRNoiseLevel_(self, a): pass
     def setNRSharpness_(self, a): pass
     def setAcuteAngle_(self, a): pass
@@ -132,6 +141,7 @@ class TestCIBuiltinFilterHelper (NSObject):
     def setBottomRight_(self, a): pass
     def setBrightness_(self, a): pass
     def setCenter_(self, a): pass
+    def setCount_(self, a): pass
     def setCloseness1_(self, a): pass
     def setCloseness2_(self, a): pass
     def setCloseness3_(self, a): pass
@@ -155,6 +165,7 @@ class TestCIBuiltinFilterHelper (NSObject):
     def setDither_(self, a): pass
     def setDdgeIntensity_(self, a): pass
     def setEpsilon_(self, a): pass
+    def setEdgeIntensity_(self, a): pass
     def setExtent_(self, a): pass
     def setFadeThreshold_(self, a): pass
     def setFalloff_(self, a): pass
@@ -229,7 +240,7 @@ class TestCIBuiltinFilterHelper (NSObject):
     def setValue_(self, a): return 1
     def setWidth_(self, a): return 1
 
-class TestCIBarcodeDescriptor (TestCase):
+class TestCIFilterBuiltins (TestCase):
     @min_sdk_level('10.15')
     def test_protocols(self):
         objc.protocolNamed('CIGaussianGradient')
@@ -382,613 +393,613 @@ class TestCIBarcodeDescriptor (TestCase):
         self.assertArgHasType(getattr(cls, setter), 0, typestr)
 
     def test_methods(self):
-        # CIGaussianGradient
-        self.assert_rw_prop(TestCIBuiltinFilterHelper, 'center', CGPoint.__typestr__)
-        self.assert_rw_prop(TestCIBuiltinFilterHelper, 'radius', objc._C_FLT)
-
-        # CIHueSaturationValueGradient
-        self.assert_rw_prop(TestCIBuiltinFilterHelper, 'value', objc._C_FLT)
-        self.assert_rw_prop(TestCIBuiltinFilterHelper, 'radius', objc._C_FLT)
-        self.assert_rw_prop(TestCIBuiltinFilterHelper, 'softness', objc._C_FLT)
-        self.assert_rw_prop(TestCIBuiltinFilterHelper, 'dither', objc._C_FLT)
-
-        # CILinearGradient
-        self.assert_rw_prop(TestCIBuiltinFilterHelper, 'point0', CGPoint.__typestr__)
-        self.assert_rw_prop(TestCIBuiltinFilterHelper, 'point1', CGPoint.__typestr__)
-
-        # CIRadialGradient
-        self.assert_rw_prop(TestCIBuiltinFilterHelper, 'center', CGPoint.__typestr__)
-        self.assert_rw_prop(TestCIBuiltinFilterHelper, 'radius0', objc._C_FLT)
-        self.assert_rw_prop(TestCIBuiltinFilterHelper, 'radius1', objc._C_FLT)
-
-        # CISmoothLinearGradient
-        self.assert_rw_prop(TestCIBuiltinFilterHelper, 'point0', CGPoint.__typestr__)
-        self.assert_rw_prop(TestCIBuiltinFilterHelper, 'point1', CGPoint.__typestr__)
-
-        # CISharpenLuminance
-        self.assert_rw_prop(TestCIBuiltinFilterHelper, 'sharpness', objc._C_FLT)
-        self.assert_rw_prop(TestCIBuiltinFilterHelper, 'radius', objc._C_FLT)
-
-        # CIUnsharpMask
-        self.assert_rw_prop(TestCIBuiltinFilterHelper, 'radius', objc._C_FLT)
-        self.assert_rw_prop(TestCIBuiltinFilterHelper, 'intensity', objc._C_FLT)
-
-        # CICircularScreen
-        self.assert_rw_prop(TestCIBuiltinFilterHelper, 'width', objc._C_FLT)
-        self.assert_rw_prop(TestCIBuiltinFilterHelper, 'sharpness', objc._C_FLT)
-
-        # CICMYKHalftone
-        self.assert_rw_prop(TestCIBuiltinFilterHelper, 'center', CGPoint.__typestr__)
-        self.assert_rw_prop(TestCIBuiltinFilterHelper, 'width', objc._C_FLT)
-        self.assert_rw_prop(TestCIBuiltinFilterHelper, 'angle', objc._C_FLT)
-        self.assert_rw_prop(TestCIBuiltinFilterHelper, 'sharpness', objc._C_FLT)
-        self.assert_rw_prop(TestCIBuiltinFilterHelper, 'grayComponentReplacement', objc._C_FLT)
-        self.assert_rw_prop(TestCIBuiltinFilterHelper, 'underColorRemoval', objc._C_FLT)
-
-        # CIDotScreen
-        self.assert_rw_prop(TestCIBuiltinFilterHelper, 'center', CGPoint.__typestr__)
-        self.assert_rw_prop(TestCIBuiltinFilterHelper, 'angle', objc._C_FLT)
-        self.assert_rw_prop(TestCIBuiltinFilterHelper, 'width', objc._C_FLT)
-        self.assert_rw_prop(TestCIBuiltinFilterHelper, 'sharpness', objc._C_FLT)
-
-        # CIHatchedScreen
-        self.assert_rw_prop(TestCIBuiltinFilterHelper, 'center', CGPoint.__typestr__)
-        self.assert_rw_prop(TestCIBuiltinFilterHelper, 'angle', objc._C_FLT)
-        self.assert_rw_prop(TestCIBuiltinFilterHelper, 'width', objc._C_FLT)
-        self.assert_rw_prop(TestCIBuiltinFilterHelper, 'sharpness', objc._C_FLT)
-
-        # CILineScreen
-        self.assert_rw_prop(TestCIBuiltinFilterHelper, 'center', CGPoint.__typestr__)
-        self.assert_rw_prop(TestCIBuiltinFilterHelper, 'angle', objc._C_FLT)
-        self.assert_rw_prop(TestCIBuiltinFilterHelper, 'width', objc._C_FLT)
-        self.assert_rw_prop(TestCIBuiltinFilterHelper, 'sharpness', objc._C_FLT)
-
-        # CIFourCoordinateGeometryFilter
-        self.assert_rw_prop(TestCIBuiltinFilterHelper, 'topLeft', CGPoint.__typestr__)
-        self.assert_rw_prop(TestCIBuiltinFilterHelper, 'topRight', CGPoint.__typestr__)
-        self.assert_rw_prop(TestCIBuiltinFilterHelper, 'bottomRight', CGPoint.__typestr__)
-        self.assert_rw_prop(TestCIBuiltinFilterHelper, 'bottomLeft', CGPoint.__typestr__)
-
-        # CIBicubicScaleTransform
-        self.assert_rw_prop(TestCIBuiltinFilterHelper, 'scale', objc._C_FLT)
-        self.assert_rw_prop(TestCIBuiltinFilterHelper, 'aspectRatio', objc._C_FLT)
-        self.assert_rw_prop(TestCIBuiltinFilterHelper, 'parameterB', objc._C_FLT)
-        self.assert_rw_prop(TestCIBuiltinFilterHelper, 'parameterC', objc._C_FLT)
-
-        # CIEdgePreserveUpsample
-        self.assert_rw_prop(TestCIBuiltinFilterHelper, 'spatialSigma', objc._C_FLT)
-        self.assert_rw_prop(TestCIBuiltinFilterHelper, 'lumaSigma', objc._C_FLT)
-
-        # CIKeystoneCorrectionCombined
-        self.assert_rw_prop(TestCIBuiltinFilterHelper, 'focalLength', objc._C_FLT)
-
-        # CIKeystoneCorrectionHorizontal
-        self.assert_rw_prop(TestCIBuiltinFilterHelper, 'focalLength', objc._C_FLT)
-
-        # CIKeystoneCorrectionVertical
-        self.assert_rw_prop(TestCIBuiltinFilterHelper, 'focalLength', objc._C_FLT)
-
-        # CILanczosScaleTransform
-        self.assert_rw_prop(TestCIBuiltinFilterHelper, 'scale', objc._C_FLT)
-        self.assert_rw_prop(TestCIBuiltinFilterHelper, 'aspectRatio', objc._C_FLT)
-
-        # CIPerspectiveCorrection
-        self.assert_rw_prop(TestCIBuiltinFilterHelper, 'crop', objc._C_BOOL)
-
-        # CIPerspectiveRotate
-        self.assert_rw_prop(TestCIBuiltinFilterHelper, 'focalLength', objc._C_FLT)
-        self.assert_rw_prop(TestCIBuiltinFilterHelper, 'pitch', objc._C_FLT)
-        self.assert_rw_prop(TestCIBuiltinFilterHelper, 'yaw', objc._C_FLT)
-        self.assert_rw_prop(TestCIBuiltinFilterHelper, 'roll', objc._C_FLT)
-
-        # CIPerspectiveTransform
-        pass
-
-        # CIPerspectiveTransformWithExtent
-        self.assert_rw_prop(TestCIBuiltinFilterHelper, 'extent', CGRect.__typestr__)
-
-        # CIStraighten
-        self.assert_rw_prop(TestCIBuiltinFilterHelper, 'angle', objc._C_FLT)
-
-        # CITransitionFilter
-        self.assert_rw_prop(TestCIBuiltinFilterHelper, 'time', objc._C_FLT)
-
-        # CIAccordionFoldTransition
-        self.assert_rw_prop(TestCIBuiltinFilterHelper, 'bottomHeight', objc._C_FLT)
-        self.assert_rw_prop(TestCIBuiltinFilterHelper, 'numberOfFolds', objc._C_FLT)
-        self.assert_rw_prop(TestCIBuiltinFilterHelper, 'foldShadowAmount', objc._C_FLT)
-
-        # CIBarsSwipeTransition
-        self.assert_rw_prop(TestCIBuiltinFilterHelper, 'angle', objc._C_FLT)
-        self.assert_rw_prop(TestCIBuiltinFilterHelper, 'width', objc._C_FLT)
-        self.assert_rw_prop(TestCIBuiltinFilterHelper, 'barOffset', objc._C_FLT)
-
-        # CICopyMachineTransition
-        self.assert_rw_prop(TestCIBuiltinFilterHelper, 'extent', CGRect.__typestr__)
-        self.assert_rw_prop(TestCIBuiltinFilterHelper, 'angle', objc._C_FLT)
-        self.assert_rw_prop(TestCIBuiltinFilterHelper, 'width', objc._C_FLT)
-        self.assert_rw_prop(TestCIBuiltinFilterHelper, 'opacity', objc._C_FLT)
-
-        # CIDisintegrateWithMaskTransition
-        self.assert_rw_prop(TestCIBuiltinFilterHelper, 'shadowRadius', objc._C_FLT)
-        self.assert_rw_prop(TestCIBuiltinFilterHelper, 'shadowDensity', objc._C_FLT)
-        self.assert_rw_prop(TestCIBuiltinFilterHelper, 'shadowOffset', CGPoint.__typestr__)
-
-        # CIDissolveTransition
-        pass
-
-        # CIFlashTransition
-        self.assert_rw_prop(TestCIBuiltinFilterHelper, 'center', CGPoint.__typestr__)
-        self.assert_rw_prop(TestCIBuiltinFilterHelper, 'extent', CGRect.__typestr__)
-        self.assert_rw_prop(TestCIBuiltinFilterHelper, 'maxStriationRadius', objc._C_FLT)
-        self.assert_rw_prop(TestCIBuiltinFilterHelper, 'striationStrength', objc._C_FLT)
-        self.assert_rw_prop(TestCIBuiltinFilterHelper, 'striationContrast', objc._C_FLT)
-        self.assert_rw_prop(TestCIBuiltinFilterHelper, 'fadeThreshold', objc._C_FLT)
-
-        # CIModTransition
-        self.assert_rw_prop(TestCIBuiltinFilterHelper, 'center', CGPoint.__typestr__)
-        self.assert_rw_prop(TestCIBuiltinFilterHelper, 'angle', objc._C_FLT)
-        self.assert_rw_prop(TestCIBuiltinFilterHelper, 'radius', objc._C_FLT)
-        self.assert_rw_prop(TestCIBuiltinFilterHelper, 'compression', objc._C_FLT)
+        with self.subTest('CIGaussianGradient'):
+            self.assert_rw_prop(TestCIBuiltinFilterHelper, 'center', CGPoint.__typestr__)
+            self.assert_rw_prop(TestCIBuiltinFilterHelper, 'radius', objc._C_FLT)
+
+        with self.subTest('CIHueSaturationValueGradient'):
+            self.assert_rw_prop(TestCIBuiltinFilterHelper, 'value', objc._C_FLT)
+            self.assert_rw_prop(TestCIBuiltinFilterHelper, 'radius', objc._C_FLT)
+            self.assert_rw_prop(TestCIBuiltinFilterHelper, 'softness', objc._C_FLT)
+            self.assert_rw_prop(TestCIBuiltinFilterHelper, 'dither', objc._C_FLT)
+
+        with self.subTest('CILinearGradient'):
+            self.assert_rw_prop(TestCIBuiltinFilterHelper, 'point0', CGPoint.__typestr__)
+            self.assert_rw_prop(TestCIBuiltinFilterHelper, 'point1', CGPoint.__typestr__)
+
+        with self.subTest('CIRadialGradient'):
+            self.assert_rw_prop(TestCIBuiltinFilterHelper, 'center', CGPoint.__typestr__)
+            self.assert_rw_prop(TestCIBuiltinFilterHelper, 'radius0', objc._C_FLT)
+            self.assert_rw_prop(TestCIBuiltinFilterHelper, 'radius1', objc._C_FLT)
+
+        with self.subTest('CISmoothLinearGradient'):
+            self.assert_rw_prop(TestCIBuiltinFilterHelper, 'point0', CGPoint.__typestr__)
+            self.assert_rw_prop(TestCIBuiltinFilterHelper, 'point1', CGPoint.__typestr__)
+
+        with self.subTest('CISharpenLuminance'):
+            self.assert_rw_prop(TestCIBuiltinFilterHelper, 'sharpness', objc._C_FLT)
+            self.assert_rw_prop(TestCIBuiltinFilterHelper, 'radius', objc._C_FLT)
+
+        with self.subTest('CIUnsharpMask'):
+            self.assert_rw_prop(TestCIBuiltinFilterHelper, 'radius', objc._C_FLT)
+            self.assert_rw_prop(TestCIBuiltinFilterHelper, 'intensity', objc._C_FLT)
+
+        with self.subTest('CICircularScreen'):
+            self.assert_rw_prop(TestCIBuiltinFilterHelper, 'width', objc._C_FLT)
+            self.assert_rw_prop(TestCIBuiltinFilterHelper, 'sharpness', objc._C_FLT)
+
+        with self.subTest('CICMYKHalftone'):
+            self.assert_rw_prop(TestCIBuiltinFilterHelper, 'center', CGPoint.__typestr__)
+            self.assert_rw_prop(TestCIBuiltinFilterHelper, 'width', objc._C_FLT)
+            self.assert_rw_prop(TestCIBuiltinFilterHelper, 'angle', objc._C_FLT)
+            self.assert_rw_prop(TestCIBuiltinFilterHelper, 'sharpness', objc._C_FLT)
+            self.assert_rw_prop(TestCIBuiltinFilterHelper, 'grayComponentReplacement', objc._C_FLT)
+            self.assert_rw_prop(TestCIBuiltinFilterHelper, 'underColorRemoval', objc._C_FLT)
+
+        with self.subTest('CIDotScreen'):
+            self.assert_rw_prop(TestCIBuiltinFilterHelper, 'center', CGPoint.__typestr__)
+            self.assert_rw_prop(TestCIBuiltinFilterHelper, 'angle', objc._C_FLT)
+            self.assert_rw_prop(TestCIBuiltinFilterHelper, 'width', objc._C_FLT)
+            self.assert_rw_prop(TestCIBuiltinFilterHelper, 'sharpness', objc._C_FLT)
+
+        with self.subTest('CIHatchedScreen'):
+            self.assert_rw_prop(TestCIBuiltinFilterHelper, 'center', CGPoint.__typestr__)
+            self.assert_rw_prop(TestCIBuiltinFilterHelper, 'angle', objc._C_FLT)
+            self.assert_rw_prop(TestCIBuiltinFilterHelper, 'width', objc._C_FLT)
+            self.assert_rw_prop(TestCIBuiltinFilterHelper, 'sharpness', objc._C_FLT)
+
+        with self.subTest('CILineScreen'):
+            self.assert_rw_prop(TestCIBuiltinFilterHelper, 'center', CGPoint.__typestr__)
+            self.assert_rw_prop(TestCIBuiltinFilterHelper, 'angle', objc._C_FLT)
+            self.assert_rw_prop(TestCIBuiltinFilterHelper, 'width', objc._C_FLT)
+            self.assert_rw_prop(TestCIBuiltinFilterHelper, 'sharpness', objc._C_FLT)
+
+        with self.subTest('CIFourCoordinateGeometryFilter'):
+            self.assert_rw_prop(TestCIBuiltinFilterHelper, 'topLeft', CGPoint.__typestr__)
+            self.assert_rw_prop(TestCIBuiltinFilterHelper, 'topRight', CGPoint.__typestr__)
+            self.assert_rw_prop(TestCIBuiltinFilterHelper, 'bottomRight', CGPoint.__typestr__)
+            self.assert_rw_prop(TestCIBuiltinFilterHelper, 'bottomLeft', CGPoint.__typestr__)
+
+        with self.subTest('CIBicubicScaleTransform'):
+            self.assert_rw_prop(TestCIBuiltinFilterHelper, 'scale', objc._C_FLT)
+            self.assert_rw_prop(TestCIBuiltinFilterHelper, 'aspectRatio', objc._C_FLT)
+            self.assert_rw_prop(TestCIBuiltinFilterHelper, 'parameterB', objc._C_FLT)
+            self.assert_rw_prop(TestCIBuiltinFilterHelper, 'parameterC', objc._C_FLT)
+
+        with self.subTest('CIEdgePreserveUpsample'):
+            self.assert_rw_prop(TestCIBuiltinFilterHelper, 'spatialSigma', objc._C_FLT)
+            self.assert_rw_prop(TestCIBuiltinFilterHelper, 'lumaSigma', objc._C_FLT)
+
+        with self.subTest('CIKeystoneCorrectionCombined'):
+            self.assert_rw_prop(TestCIBuiltinFilterHelper, 'focalLength', objc._C_FLT)
+
+        with self.subTest('CIKeystoneCorrectionHorizontal'):
+            self.assert_rw_prop(TestCIBuiltinFilterHelper, 'focalLength', objc._C_FLT)
+
+        with self.subTest('CIKeystoneCorrectionVertical'):
+            self.assert_rw_prop(TestCIBuiltinFilterHelper, 'focalLength', objc._C_FLT)
+
+        with self.subTest('CILanczosScaleTransform'):
+            self.assert_rw_prop(TestCIBuiltinFilterHelper, 'scale', objc._C_FLT)
+            self.assert_rw_prop(TestCIBuiltinFilterHelper, 'aspectRatio', objc._C_FLT)
+
+        with self.subTest('CIPerspectiveCorrection'):
+            self.assert_rw_prop(TestCIBuiltinFilterHelper, 'crop', objc._C_BOOL)
+
+        with self.subTest('CIPerspectiveRotate'):
+            self.assert_rw_prop(TestCIBuiltinFilterHelper, 'focalLength', objc._C_FLT)
+            self.assert_rw_prop(TestCIBuiltinFilterHelper, 'pitch', objc._C_FLT)
+            self.assert_rw_prop(TestCIBuiltinFilterHelper, 'yaw', objc._C_FLT)
+            self.assert_rw_prop(TestCIBuiltinFilterHelper, 'roll', objc._C_FLT)
+
+        with self.subTest('CIPerspectiveTransform'):
+            pass
+
+        with self.subTest('CIPerspectiveTransformWithExtent'):
+            self.assert_rw_prop(TestCIBuiltinFilterHelper, 'extent', CGRect.__typestr__)
+
+        with self.subTest('CIStraighten'):
+            self.assert_rw_prop(TestCIBuiltinFilterHelper, 'angle', objc._C_FLT)
+
+        with self.subTest('CITransitionFilter'):
+            self.assert_rw_prop(TestCIBuiltinFilterHelper, 'time', objc._C_FLT)
+
+        with self.subTest('CIAccordionFoldTransition'):
+            self.assert_rw_prop(TestCIBuiltinFilterHelper, 'bottomHeight', objc._C_FLT)
+            self.assert_rw_prop(TestCIBuiltinFilterHelper, 'numberOfFolds', objc._C_FLT)
+            self.assert_rw_prop(TestCIBuiltinFilterHelper, 'foldShadowAmount', objc._C_FLT)
+
+        with self.subTest('CIBarsSwipeTransition'):
+            self.assert_rw_prop(TestCIBuiltinFilterHelper, 'angle', objc._C_FLT)
+            self.assert_rw_prop(TestCIBuiltinFilterHelper, 'width', objc._C_FLT)
+            self.assert_rw_prop(TestCIBuiltinFilterHelper, 'barOffset', objc._C_FLT)
+
+        with self.subTest('CICopyMachineTransition'):
+            self.assert_rw_prop(TestCIBuiltinFilterHelper, 'extent', CGRect.__typestr__)
+            self.assert_rw_prop(TestCIBuiltinFilterHelper, 'angle', objc._C_FLT)
+            self.assert_rw_prop(TestCIBuiltinFilterHelper, 'width', objc._C_FLT)
+            self.assert_rw_prop(TestCIBuiltinFilterHelper, 'opacity', objc._C_FLT)
+
+        with self.subTest('CIDisintegrateWithMaskTransition'):
+            self.assert_rw_prop(TestCIBuiltinFilterHelper, 'shadowRadius', objc._C_FLT)
+            self.assert_rw_prop(TestCIBuiltinFilterHelper, 'shadowDensity', objc._C_FLT)
+            self.assert_rw_prop(TestCIBuiltinFilterHelper, 'shadowOffset', CGPoint.__typestr__)
+
+        with self.subTest('CIDissolveTransition'):
+            pass
+
+        with self.subTest('CIFlashTransition'):
+            self.assert_rw_prop(TestCIBuiltinFilterHelper, 'center', CGPoint.__typestr__)
+            self.assert_rw_prop(TestCIBuiltinFilterHelper, 'extent', CGRect.__typestr__)
+            self.assert_rw_prop(TestCIBuiltinFilterHelper, 'maxStriationRadius', objc._C_FLT)
+            self.assert_rw_prop(TestCIBuiltinFilterHelper, 'striationStrength', objc._C_FLT)
+            self.assert_rw_prop(TestCIBuiltinFilterHelper, 'striationContrast', objc._C_FLT)
+            self.assert_rw_prop(TestCIBuiltinFilterHelper, 'fadeThreshold', objc._C_FLT)
+
+        with self.subTest('CIModTransition'):
+            self.assert_rw_prop(TestCIBuiltinFilterHelper, 'center', CGPoint.__typestr__)
+            self.assert_rw_prop(TestCIBuiltinFilterHelper, 'angle', objc._C_FLT)
+            self.assert_rw_prop(TestCIBuiltinFilterHelper, 'radius', objc._C_FLT)
+            self.assert_rw_prop(TestCIBuiltinFilterHelper, 'compression', objc._C_FLT)
 
-        # CIPageCurlTransition
-        self.assert_rw_prop(TestCIBuiltinFilterHelper, 'extent', CGRect.__typestr__)
-        self.assert_rw_prop(TestCIBuiltinFilterHelper, 'angle', objc._C_FLT)
-        self.assert_rw_prop(TestCIBuiltinFilterHelper, 'radius', objc._C_FLT)
+        with self.subTest('CIPageCurlTransition'):
+            self.assert_rw_prop(TestCIBuiltinFilterHelper, 'extent', CGRect.__typestr__)
+            self.assert_rw_prop(TestCIBuiltinFilterHelper, 'angle', objc._C_FLT)
+            self.assert_rw_prop(TestCIBuiltinFilterHelper, 'radius', objc._C_FLT)
 
-        # CIPageCurlWithShadowTransition
-        self.assert_rw_prop(TestCIBuiltinFilterHelper, 'extent', CGRect.__typestr__)
-        self.assert_rw_prop(TestCIBuiltinFilterHelper, 'angle', objc._C_FLT)
-        self.assert_rw_prop(TestCIBuiltinFilterHelper, 'radius', objc._C_FLT)
-        self.assert_rw_prop(TestCIBuiltinFilterHelper, 'shadowSize', objc._C_FLT)
-        self.assert_rw_prop(TestCIBuiltinFilterHelper, 'shadowAmount', objc._C_FLT)
-        self.assert_rw_prop(TestCIBuiltinFilterHelper, 'shadowExtent', CGRect.__typestr__)
+        with self.subTest('CIPageCurlWithShadowTransition'):
+            self.assert_rw_prop(TestCIBuiltinFilterHelper, 'extent', CGRect.__typestr__)
+            self.assert_rw_prop(TestCIBuiltinFilterHelper, 'angle', objc._C_FLT)
+            self.assert_rw_prop(TestCIBuiltinFilterHelper, 'radius', objc._C_FLT)
+            self.assert_rw_prop(TestCIBuiltinFilterHelper, 'shadowSize', objc._C_FLT)
+            self.assert_rw_prop(TestCIBuiltinFilterHelper, 'shadowAmount', objc._C_FLT)
+            self.assert_rw_prop(TestCIBuiltinFilterHelper, 'shadowExtent', CGRect.__typestr__)
 
-        # CIRippleTransition
-        self.assert_rw_prop(TestCIBuiltinFilterHelper, 'center', CGPoint.__typestr__)
-        self.assert_rw_prop(TestCIBuiltinFilterHelper, 'extent', CGRect.__typestr__)
-        self.assert_rw_prop(TestCIBuiltinFilterHelper, 'width', objc._C_FLT)
-        self.assert_rw_prop(TestCIBuiltinFilterHelper, 'scale', objc._C_FLT)
+        with self.subTest('CIRippleTransition'):
+            self.assert_rw_prop(TestCIBuiltinFilterHelper, 'center', CGPoint.__typestr__)
+            self.assert_rw_prop(TestCIBuiltinFilterHelper, 'extent', CGRect.__typestr__)
+            self.assert_rw_prop(TestCIBuiltinFilterHelper, 'width', objc._C_FLT)
+            self.assert_rw_prop(TestCIBuiltinFilterHelper, 'scale', objc._C_FLT)
 
-        # CISwipeTransition
-        self.assert_rw_prop(TestCIBuiltinFilterHelper, 'extent', CGRect.__typestr__)
-        self.assert_rw_prop(TestCIBuiltinFilterHelper, 'angle', objc._C_FLT)
-        self.assert_rw_prop(TestCIBuiltinFilterHelper, 'width', objc._C_FLT)
-        self.assert_rw_prop(TestCIBuiltinFilterHelper, 'opacity', objc._C_FLT)
+        with self.subTest('CISwipeTransition'):
+            self.assert_rw_prop(TestCIBuiltinFilterHelper, 'extent', CGRect.__typestr__)
+            self.assert_rw_prop(TestCIBuiltinFilterHelper, 'angle', objc._C_FLT)
+            self.assert_rw_prop(TestCIBuiltinFilterHelper, 'width', objc._C_FLT)
+            self.assert_rw_prop(TestCIBuiltinFilterHelper, 'opacity', objc._C_FLT)
 
-        # CICompositeOperation
-        pass
+        with self.subTest('CICompositeOperation'):
+            pass
 
-        # CIColorClamp
-        pass
+        with self.subTest('CIColorClamp'):
+            pass
 
-        # CIColorControls
-        self.assert_rw_prop(TestCIBuiltinFilterHelper, 'saturation', objc._C_FLT)
-        self.assert_rw_prop(TestCIBuiltinFilterHelper, 'brightness', objc._C_FLT)
-        self.assert_rw_prop(TestCIBuiltinFilterHelper, 'contrast', objc._C_FLT)
+        with self.subTest('CIColorControls'):
+            self.assert_rw_prop(TestCIBuiltinFilterHelper, 'saturation', objc._C_FLT)
+            self.assert_rw_prop(TestCIBuiltinFilterHelper, 'brightness', objc._C_FLT)
+            self.assert_rw_prop(TestCIBuiltinFilterHelper, 'contrast', objc._C_FLT)
 
-        # CIColorMatrix
-        pass
+        with self.subTest('CIColorMatrix'):
+            pass
 
-        # CIColorPolynomial
-        pass
+        with self.subTest('CIColorPolynomial'):
+            pass
 
-        # CIDepthToDisparity
-        pass
+        with self.subTest('CIDepthToDisparity'):
+            pass
 
-        # CIDisparityToDepth
-        pass
+        with self.subTest('CIDisparityToDepth'):
+            pass
 
-        # CIExposureAdjust
-        self.assert_rw_prop(TestCIBuiltinFilterHelper, 'EV', objc._C_FLT)
+        with self.subTest('CIExposureAdjust'):
+            self.assert_rw_prop(TestCIBuiltinFilterHelper, 'EV', objc._C_FLT)
 
-        # CIGammaAdjust
-        self.assert_rw_prop(TestCIBuiltinFilterHelper, 'power', objc._C_FLT)
+        with self.subTest('CIGammaAdjust'):
+            self.assert_rw_prop(TestCIBuiltinFilterHelper, 'power', objc._C_FLT)
 
-        # CIHueAdjust
-        self.assert_rw_prop(TestCIBuiltinFilterHelper, 'angle', objc._C_FLT)
+        with self.subTest('CIHueAdjust'):
+            self.assert_rw_prop(TestCIBuiltinFilterHelper, 'angle', objc._C_FLT)
 
-        # CILinearToSRGBToneCurve
-        pass
+        with self.subTest('CILinearToSRGBToneCurve'):
+            pass
 
-        # CISRGBToneCurveToLinear
-        pass
+        with self.subTest('CISRGBToneCurveToLinear'):
+            pass
 
-        # CITemperatureAndTint
-        self.assert_rw_prop(TestCIBuiltinFilterHelper, 'neutral', CGPoint.__typestr__)
-        self.assert_rw_prop(TestCIBuiltinFilterHelper, 'targetNeutral', CGPoint.__typestr__)
+        with self.subTest('CITemperatureAndTint'):
+            self.assert_rw_prop(TestCIBuiltinFilterHelper, 'neutral', CGPoint.__typestr__)
+            self.assert_rw_prop(TestCIBuiltinFilterHelper, 'targetNeutral', CGPoint.__typestr__)
 
-        # CIToneCurve
-        self.assert_rw_prop(TestCIBuiltinFilterHelper, 'point0', CGPoint.__typestr__)
-        self.assert_rw_prop(TestCIBuiltinFilterHelper, 'point1', CGPoint.__typestr__)
-        self.assert_rw_prop(TestCIBuiltinFilterHelper, 'point2', CGPoint.__typestr__)
-        self.assert_rw_prop(TestCIBuiltinFilterHelper, 'point3', CGPoint.__typestr__)
-        self.assert_rw_prop(TestCIBuiltinFilterHelper, 'point4', CGPoint.__typestr__)
+        with self.subTest('CIToneCurve'):
+            self.assert_rw_prop(TestCIBuiltinFilterHelper, 'point0', CGPoint.__typestr__)
+            self.assert_rw_prop(TestCIBuiltinFilterHelper, 'point1', CGPoint.__typestr__)
+            self.assert_rw_prop(TestCIBuiltinFilterHelper, 'point2', CGPoint.__typestr__)
+            self.assert_rw_prop(TestCIBuiltinFilterHelper, 'point3', CGPoint.__typestr__)
+            self.assert_rw_prop(TestCIBuiltinFilterHelper, 'point4', CGPoint.__typestr__)
 
-        # CIVibrance
-        self.assert_rw_prop(TestCIBuiltinFilterHelper, 'amount', objc._C_FLT)
+        with self.subTest('CIVibrance'):
+            self.assert_rw_prop(TestCIBuiltinFilterHelper, 'amount', objc._C_FLT)
 
-        # CIWhitePointAdjust
-        pass
+        with self.subTest('CIWhitePointAdjust'):
+            pass
 
-        # CIColorCrossPolynomial
-        pass
+        with self.subTest('CIColorCrossPolynomial'):
+            pass
 
-        # CIColorCube
-        self.assert_rw_prop(TestCIBuiltinFilterHelper, 'cubeDimension', objc._C_FLT)
+        with self.subTest('CIColorCube'):
+            self.assert_rw_prop(TestCIBuiltinFilterHelper, 'cubeDimension', objc._C_FLT)
 
-        # CIColorCubesMixedWithMask
-        self.assert_rw_prop(TestCIBuiltinFilterHelper, 'cubeDimension', objc._C_FLT)
+        with self.subTest('CIColorCubesMixedWithMask'):
+            self.assert_rw_prop(TestCIBuiltinFilterHelper, 'cubeDimension', objc._C_FLT)
 
-        # CIColorCubeWithColorSpace
-        self.assert_rw_prop(TestCIBuiltinFilterHelper, 'cubeDimension', objc._C_FLT)
+        with self.subTest('CIColorCubeWithColorSpace'):
+            self.assert_rw_prop(TestCIBuiltinFilterHelper, 'cubeDimension', objc._C_FLT)
 
-        # CIColorCurves
-        pass
+        with self.subTest('CIColorCurves'):
+            pass
 
-        # CIColorInvert
-        pass
+        with self.subTest('CIColorInvert'):
+            pass
 
-        # CIColorMap
-        pass
+        with self.subTest('CIColorMap'):
+            pass
 
-        # CIColorMonochrome
-        self.assert_rw_prop(TestCIBuiltinFilterHelper, 'intensity', objc._C_FLT)
+        with self.subTest('CIColorMonochrome'):
+            self.assert_rw_prop(TestCIBuiltinFilterHelper, 'intensity', objc._C_FLT)
 
-        # CIColorPosterize
-        self.assert_rw_prop(TestCIBuiltinFilterHelper, 'levels', objc._C_FLT)
+        with self.subTest('CIColorPosterize'):
+            self.assert_rw_prop(TestCIBuiltinFilterHelper, 'levels', objc._C_FLT)
 
-        # CIDither
-        self.assert_rw_prop(TestCIBuiltinFilterHelper, 'intensity', objc._C_FLT)
+        with self.subTest('CIDither'):
+            self.assert_rw_prop(TestCIBuiltinFilterHelper, 'intensity', objc._C_FLT)
 
-        # CIDocumentEnhancer
-        self.assert_rw_prop(TestCIBuiltinFilterHelper, 'amount', objc._C_FLT)
+        with self.subTest('CIDocumentEnhancer'):
+            self.assert_rw_prop(TestCIBuiltinFilterHelper, 'amount', objc._C_FLT)
 
-        # CIFalseColor
-        pass
+        with self.subTest('CIFalseColor'):
+            pass
 
-        # CILabDeltaE
-        pass
+        with self.subTest('CILabDeltaE'):
+            pass
 
-        # CIMaskToAlpha
-        pass
-
-        # CIMaximumComponent
-        pass
-
-        # CIMinimumComponent
-        pass
-
-        # CIPaletteCentroid
-        self.assert_rw_prop(TestCIBuiltinFilterHelper, 'perceptual', objc._C_BOOL)
-
-        # CIPalettize
-        self.assert_rw_prop(TestCIBuiltinFilterHelper, 'perceptual', objc._C_BOOL)
-
-        # CIPhotoEffect
-        pass
-
-        # CISepiaTone
-        self.assert_rw_prop(TestCIBuiltinFilterHelper, 'intensity', objc._C_FLT)
-
-        # CIThermal
-        pass
-
-        # CIVignette
-        self.assert_rw_prop(TestCIBuiltinFilterHelper, 'intensity', objc._C_FLT)
-        self.assert_rw_prop(TestCIBuiltinFilterHelper, 'radius', objc._C_FLT)
-
-        # CIVignetteEffect
-        self.assert_rw_prop(TestCIBuiltinFilterHelper, 'center', CGPoint.__typestr__)
-        self.assert_rw_prop(TestCIBuiltinFilterHelper, 'radius', objc._C_FLT)
-        self.assert_rw_prop(TestCIBuiltinFilterHelper, 'intensity', objc._C_FLT)
-        self.assert_rw_prop(TestCIBuiltinFilterHelper, 'falloff', objc._C_FLT)
-
-        # CIXRay
-        pass
-
-        # CIAffineClamp
-        self.assert_rw_prop(TestCIBuiltinFilterHelper, 'transform', CGAffineTransform.__typestr__)
-
-        # CIAffineTile
-        self.assert_rw_prop(TestCIBuiltinFilterHelper, 'transform', CGAffineTransform.__typestr__)
-
-        # CIEightfoldReflectedTile
-        self.assert_rw_prop(TestCIBuiltinFilterHelper, 'center', CGPoint.__typestr__)
-        self.assert_rw_prop(TestCIBuiltinFilterHelper, 'angle', objc._C_FLT)
-        self.assert_rw_prop(TestCIBuiltinFilterHelper, 'width', objc._C_FLT)
-
-        # CIFourfoldReflectedTile
-        self.assert_rw_prop(TestCIBuiltinFilterHelper, 'center', CGPoint.__typestr__)
-        self.assert_rw_prop(TestCIBuiltinFilterHelper, 'angle', objc._C_FLT)
-        self.assert_rw_prop(TestCIBuiltinFilterHelper, 'width', objc._C_FLT)
-        self.assert_rw_prop(TestCIBuiltinFilterHelper, 'acuteAngle', objc._C_FLT)
-
-        # CIFourfoldRotatedTile
-        self.assert_rw_prop(TestCIBuiltinFilterHelper, 'center', CGPoint.__typestr__)
-        self.assert_rw_prop(TestCIBuiltinFilterHelper, 'angle', objc._C_FLT)
-        self.assert_rw_prop(TestCIBuiltinFilterHelper, 'width', objc._C_FLT)
-
-        # CIFourfoldTranslatedTile
-        self.assert_rw_prop(TestCIBuiltinFilterHelper, 'center', CGPoint.__typestr__)
-        self.assert_rw_prop(TestCIBuiltinFilterHelper, 'angle', objc._C_FLT)
-        self.assert_rw_prop(TestCIBuiltinFilterHelper, 'width', objc._C_FLT)
-        self.assert_rw_prop(TestCIBuiltinFilterHelper, 'acuteAngle', objc._C_FLT)
-
-        # CIGlideReflectedTile
-        self.assert_rw_prop(TestCIBuiltinFilterHelper, 'center', CGPoint.__typestr__)
-        self.assert_rw_prop(TestCIBuiltinFilterHelper, 'angle', objc._C_FLT)
-        self.assert_rw_prop(TestCIBuiltinFilterHelper, 'width', objc._C_FLT)
-
-        # CIKaleidoscope
-        self.assert_rw_prop(TestCIBuiltinFilterHelper, 'count', objc._C_NSInteger)
-        self.assert_rw_prop(TestCIBuiltinFilterHelper, 'center', CGPoint.__typestr__)
-        self.assert_rw_prop(TestCIBuiltinFilterHelper, 'angle', objc._C_FLT)
-
-        # CIOpTile
-        self.assert_rw_prop(TestCIBuiltinFilterHelper, 'center', CGPoint.__typestr__)
-        self.assert_rw_prop(TestCIBuiltinFilterHelper, 'scale', objc._C_FLT)
-        self.assert_rw_prop(TestCIBuiltinFilterHelper, 'angle', objc._C_FLT)
-        self.assert_rw_prop(TestCIBuiltinFilterHelper, 'width', objc._C_FLT)
-
-        # CIParallelogramTile
-        self.assert_rw_prop(TestCIBuiltinFilterHelper, 'center', CGPoint.__typestr__)
-        self.assert_rw_prop(TestCIBuiltinFilterHelper, 'angle', objc._C_FLT)
-        self.assert_rw_prop(TestCIBuiltinFilterHelper, 'acuteAngle', objc._C_FLT)
-        self.assert_rw_prop(TestCIBuiltinFilterHelper, 'width', objc._C_FLT)
-
-        # CIPerspectiveTile
-        self.assert_rw_prop(TestCIBuiltinFilterHelper, 'topLeft', CGPoint.__typestr__)
-        self.assert_rw_prop(TestCIBuiltinFilterHelper, 'topRight', CGPoint.__typestr__)
-        self.assert_rw_prop(TestCIBuiltinFilterHelper, 'bottomRight', CGPoint.__typestr__)
-        self.assert_rw_prop(TestCIBuiltinFilterHelper, 'bottomLeft', CGPoint.__typestr__)
-
-        # CISixfoldReflectedTile
-        self.assert_rw_prop(TestCIBuiltinFilterHelper, 'center', CGPoint.__typestr__)
-        self.assert_rw_prop(TestCIBuiltinFilterHelper, 'angle', objc._C_FLT)
-        self.assert_rw_prop(TestCIBuiltinFilterHelper, 'width', objc._C_FLT)
-
-        # CISixfoldRotatedTile
-        self.assert_rw_prop(TestCIBuiltinFilterHelper, 'center', CGPoint.__typestr__)
-        self.assert_rw_prop(TestCIBuiltinFilterHelper, 'angle', objc._C_FLT)
-        self.assert_rw_prop(TestCIBuiltinFilterHelper, 'width', objc._C_FLT)
-
-        # CITriangleKaleidoscope
-        self.assert_rw_prop(TestCIBuiltinFilterHelper, 'point', CGPoint.__typestr__)
-        self.assert_rw_prop(TestCIBuiltinFilterHelper, 'size', objc._C_FLT)
-        self.assert_rw_prop(TestCIBuiltinFilterHelper, 'rotation', objc._C_FLT)
-        self.assert_rw_prop(TestCIBuiltinFilterHelper, 'decay', objc._C_FLT)
-
-        # CITriangleTile
-        self.assert_rw_prop(TestCIBuiltinFilterHelper, 'center', CGPoint.__typestr__)
-        self.assert_rw_prop(TestCIBuiltinFilterHelper, 'angle', objc._C_FLT)
-        self.assert_rw_prop(TestCIBuiltinFilterHelper, 'width', objc._C_FLT)
-
-        # CITwelvefoldReflectedTile
-        self.assert_rw_prop(TestCIBuiltinFilterHelper, 'center', CGPoint.__typestr__)
-        self.assert_rw_prop(TestCIBuiltinFilterHelper, 'angle', objc._C_FLT)
-        self.assert_rw_prop(TestCIBuiltinFilterHelper, 'width', objc._C_FLT)
-
-        # CIAttributedTextImageGenerator
-        self.assert_rw_prop(TestCIBuiltinFilterHelper, 'scaleFactor', objc._C_FLT)
-
-        # CIAztecCodeGenerator
-        self.assert_rw_prop(TestCIBuiltinFilterHelper, 'correctionLevel', objc._C_FLT)
-        self.assert_rw_prop(TestCIBuiltinFilterHelper, 'layers', objc._C_FLT)
-        self.assert_rw_prop(TestCIBuiltinFilterHelper, 'compactStyle', objc._C_FLT)
-
-        # CIBarcodeGenerator
-        pass
-
-        # CICheckerboardGenerator
-        self.assert_rw_prop(TestCIBuiltinFilterHelper, 'center', CGPoint.__typestr__)
-        self.assert_rw_prop(TestCIBuiltinFilterHelper, 'width', objc._C_FLT)
-        self.assert_rw_prop(TestCIBuiltinFilterHelper, 'sharpness', objc._C_FLT)
-
-        # CICode128BarcodeGenerator
-        self.assert_rw_prop(TestCIBuiltinFilterHelper, 'quietSpace', objc._C_FLT)
-        self.assert_rw_prop(TestCIBuiltinFilterHelper, 'barcodeHeight', objc._C_FLT)
-
-        # CILenticularHaloGenerator
-        self.assert_rw_prop(TestCIBuiltinFilterHelper, 'center', CGPoint.__typestr__)
-        self.assert_rw_prop(TestCIBuiltinFilterHelper, 'haloRadius', objc._C_FLT)
-        self.assert_rw_prop(TestCIBuiltinFilterHelper, 'haloWidth', objc._C_FLT)
-        self.assert_rw_prop(TestCIBuiltinFilterHelper, 'haloOverlap', objc._C_FLT)
-        self.assert_rw_prop(TestCIBuiltinFilterHelper, 'striationStrength', objc._C_FLT)
-        self.assert_rw_prop(TestCIBuiltinFilterHelper, 'striationContrast', objc._C_FLT)
-        self.assert_rw_prop(TestCIBuiltinFilterHelper, 'time', objc._C_FLT)
-
-        # CIMeshGenerator
-        self.assert_rw_prop(TestCIBuiltinFilterHelper, 'width', objc._C_FLT)
-
-        # CIPDF417BarcodeGenerator
-        self.assert_rw_prop(TestCIBuiltinFilterHelper, 'minWidth', objc._C_FLT)
-        self.assert_rw_prop(TestCIBuiltinFilterHelper, 'maxWidth', objc._C_FLT)
-        self.assert_rw_prop(TestCIBuiltinFilterHelper, 'minHeight', objc._C_FLT)
-        self.assert_rw_prop(TestCIBuiltinFilterHelper, 'maxHeight', objc._C_FLT)
-        self.assert_rw_prop(TestCIBuiltinFilterHelper, 'dataColumns', objc._C_FLT)
-        self.assert_rw_prop(TestCIBuiltinFilterHelper, 'rows', objc._C_FLT)
-        self.assert_rw_prop(TestCIBuiltinFilterHelper, 'preferredAspectRatio', objc._C_FLT)
-        self.assert_rw_prop(TestCIBuiltinFilterHelper, 'compactionMode', objc._C_FLT)
-        self.assert_rw_prop(TestCIBuiltinFilterHelper, 'compactStyle', objc._C_FLT)
-        self.assert_rw_prop(TestCIBuiltinFilterHelper, 'correctionLevel', objc._C_FLT)
-        self.assert_rw_prop(TestCIBuiltinFilterHelper, 'alwaysSpecifyCompaction', objc._C_FLT)
-
-        # CIQRCodeGenerator
-        pass
-
-        # CIRandomGenerator
-        pass
-
-        # CIRoundedRectangleGenerator
-        self.assert_rw_prop(TestCIBuiltinFilterHelper, 'extent', CGRect.__typestr__)
-        self.assert_rw_prop(TestCIBuiltinFilterHelper, 'radius', objc._C_FLT)
-
-        # CIStarShineGenerator
-        self.assert_rw_prop(TestCIBuiltinFilterHelper, 'center', CGPoint.__typestr__)
-        self.assert_rw_prop(TestCIBuiltinFilterHelper, 'radius', objc._C_FLT)
-        self.assert_rw_prop(TestCIBuiltinFilterHelper, 'crossScale', objc._C_FLT)
-        self.assert_rw_prop(TestCIBuiltinFilterHelper, 'crossAngle', objc._C_FLT)
-        self.assert_rw_prop(TestCIBuiltinFilterHelper, 'crossOpacity', objc._C_FLT)
-        self.assert_rw_prop(TestCIBuiltinFilterHelper, 'crossWidth', objc._C_FLT)
-        self.assert_rw_prop(TestCIBuiltinFilterHelper, 'epsilon', objc._C_FLT)
-
-        # CIStripesGenerator
-        self.assert_rw_prop(TestCIBuiltinFilterHelper, 'center', CGPoint.__typestr__)
-        self.assert_rw_prop(TestCIBuiltinFilterHelper, 'width', objc._C_FLT)
-        self.assert_rw_prop(TestCIBuiltinFilterHelper, 'sharpness', objc._C_FLT)
-
-        # CISunbeamsGenerator
-        self.assert_rw_prop(TestCIBuiltinFilterHelper, 'center', CGPoint.__typestr__)
-        self.assert_rw_prop(TestCIBuiltinFilterHelper, 'sunRadius', objc._C_FLT)
-        self.assert_rw_prop(TestCIBuiltinFilterHelper, 'maxStriationRadius', objc._C_FLT)
-        self.assert_rw_prop(TestCIBuiltinFilterHelper, 'striationStrength', objc._C_FLT)
-        self.assert_rw_prop(TestCIBuiltinFilterHelper, 'striationContrast', objc._C_FLT)
-        self.assert_rw_prop(TestCIBuiltinFilterHelper, 'time', objc._C_FLT)
-
-        # CITextImageGenerator
-        self.assert_rw_prop(TestCIBuiltinFilterHelper, 'fontSize', objc._C_FLT)
-        self.assert_rw_prop(TestCIBuiltinFilterHelper, 'scaleFactor', objc._C_FLT)
-
-        # CIBlendWithMask
-        pass
-
-        # CIBloom
-        self.assert_rw_prop(TestCIBuiltinFilterHelper, 'radius', objc._C_FLT)
-        self.assert_rw_prop(TestCIBuiltinFilterHelper, 'intensity', objc._C_FLT)
-
-        # CIComicEffect
-        pass
-
-        # CIConvolution
-        self.assert_rw_prop(TestCIBuiltinFilterHelper, 'bias', objc._C_FLT)
-
-        # CICoreMLModel
-        self.assert_rw_prop(TestCIBuiltinFilterHelper, 'headIndex', objc._C_FLT)
-        self.assert_rw_prop(TestCIBuiltinFilterHelper, 'softmaxNormalization', objc._C_BOOL)
-
-        # CICrystallize
-        self.assert_rw_prop(TestCIBuiltinFilterHelper, 'radius', objc._C_FLT)
-        self.assert_rw_prop(TestCIBuiltinFilterHelper, 'center', CGPoint.__typestr__)
-
-        # CIDepthOfField
-        self.assert_rw_prop(TestCIBuiltinFilterHelper, 'point0', CGPoint.__typestr__)
-        self.assert_rw_prop(TestCIBuiltinFilterHelper, 'point1', CGPoint.__typestr__)
-        self.assert_rw_prop(TestCIBuiltinFilterHelper, 'saturation', objc._C_FLT)
-        self.assert_rw_prop(TestCIBuiltinFilterHelper, 'unsharpMaskRadius', objc._C_FLT)
-        self.assert_rw_prop(TestCIBuiltinFilterHelper, 'unsharpMaskIntensity', objc._C_FLT)
-        self.assert_rw_prop(TestCIBuiltinFilterHelper, 'radius', objc._C_FLT)
-
-        # CIEdges
-        self.assert_rw_prop(TestCIBuiltinFilterHelper, 'intensity', objc._C_FLT)
-
-        # CIEdgeWork
-        self.assert_rw_prop(TestCIBuiltinFilterHelper, 'radius', objc._C_FLT)
-
-        # CIGaborGradients
-        pass
-
-        # CIGloom
-        self.assert_rw_prop(TestCIBuiltinFilterHelper, 'radius', objc._C_FLT)
-        self.assert_rw_prop(TestCIBuiltinFilterHelper, 'intensity', objc._C_FLT)
-
-        # CIHeightFieldFromMask
-        self.assert_rw_prop(TestCIBuiltinFilterHelper, 'radius', objc._C_FLT)
-
-        # CIHexagonalPixellate
-        self.assert_rw_prop(TestCIBuiltinFilterHelper, 'center', CGPoint.__typestr__)
-        self.assert_rw_prop(TestCIBuiltinFilterHelper, 'scale', objc._C_FLT)
-
-        # CIHighlightShadowAdjust
-        self.assert_rw_prop(TestCIBuiltinFilterHelper, 'radius', objc._C_FLT)
-        self.assert_rw_prop(TestCIBuiltinFilterHelper, 'shadowAmount', objc._C_FLT)
-        self.assert_rw_prop(TestCIBuiltinFilterHelper, 'highlightAmount', objc._C_FLT)
-
-        # CILineOverlay
-        self.assert_rw_prop(TestCIBuiltinFilterHelper, 'NRNoiseLevel', objc._C_FLT)
-        self.assert_rw_prop(TestCIBuiltinFilterHelper, 'NRSharpness', objc._C_FLT)
-        self.assert_rw_prop(TestCIBuiltinFilterHelper, 'edgeIntensity', objc._C_FLT)
-        self.assert_rw_prop(TestCIBuiltinFilterHelper, 'threshold', objc._C_FLT)
-        self.assert_rw_prop(TestCIBuiltinFilterHelper, 'contrast', objc._C_FLT)
-
-        # CIMix
-        self.assert_rw_prop(TestCIBuiltinFilterHelper, 'amount', objc._C_FLT)
-
-        # CIPixellate
-        self.assert_rw_prop(TestCIBuiltinFilterHelper, 'center', CGPoint.__typestr__)
-        self.assert_rw_prop(TestCIBuiltinFilterHelper, 'scale', objc._C_FLT)
-
-        # CIPointillize
-        self.assert_rw_prop(TestCIBuiltinFilterHelper, 'radius', objc._C_FLT)
-        self.assert_rw_prop(TestCIBuiltinFilterHelper, 'center', CGPoint.__typestr__)
-
-        # CISaliencyMap
-        pass
-
-        # CIShadedMaterial
-        self.assert_rw_prop(TestCIBuiltinFilterHelper, 'scale', objc._C_FLT)
-
-        # CISpotColor
-        self.assert_rw_prop(TestCIBuiltinFilterHelper, 'closeness1', objc._C_FLT)
-        self.assert_rw_prop(TestCIBuiltinFilterHelper, 'contrast1', objc._C_FLT)
-        self.assert_rw_prop(TestCIBuiltinFilterHelper, 'closeness2', objc._C_FLT)
-        self.assert_rw_prop(TestCIBuiltinFilterHelper, 'contrast2', objc._C_FLT)
-        self.assert_rw_prop(TestCIBuiltinFilterHelper, 'closeness3', objc._C_FLT)
-        self.assert_rw_prop(TestCIBuiltinFilterHelper, 'contrast3', objc._C_FLT)
-
-        # CISpotLight
-        self.assert_rw_prop(TestCIBuiltinFilterHelper, 'brightness', objc._C_FLT)
-        self.assert_rw_prop(TestCIBuiltinFilterHelper, 'concentration', objc._C_FLT)
-
-        # CIBokehBlur
-        self.assert_rw_prop(TestCIBuiltinFilterHelper, 'radius', objc._C_FLT)
-        self.assert_rw_prop(TestCIBuiltinFilterHelper, 'ringAmount', objc._C_FLT)
-        self.assert_rw_prop(TestCIBuiltinFilterHelper, 'ringSize', objc._C_FLT)
-        self.assert_rw_prop(TestCIBuiltinFilterHelper, 'softness', objc._C_FLT)
-
-        # CIBoxBlur
-        self.assert_rw_prop(TestCIBuiltinFilterHelper, 'radius', objc._C_FLT)
-
-        # CIDiscBlur
-        self.assert_rw_prop(TestCIBuiltinFilterHelper, 'radius', objc._C_FLT)
-
-        # CIGaussianBlur
-        self.assert_rw_prop(TestCIBuiltinFilterHelper, 'radius', objc._C_FLT)
-
-        # CIMaskedVariableBlur
-        self.assert_rw_prop(TestCIBuiltinFilterHelper, 'radius', objc._C_FLT)
-
-        # CIMedian
-        pass
-
-        # CIMorphologyGradient
-        self.assert_rw_prop(TestCIBuiltinFilterHelper, 'radius', objc._C_FLT)
-
-        # CIMorphologyMaximum
-        self.assert_rw_prop(TestCIBuiltinFilterHelper, 'radius', objc._C_FLT)
-
-        # CIMorphologyMinimum
-        self.assert_rw_prop(TestCIBuiltinFilterHelper, 'radius', objc._C_FLT)
-
-        # CIMorphologyRectangleMaximum
-        self.assert_rw_prop(TestCIBuiltinFilterHelper, 'width', objc._C_FLT)
-        self.assert_rw_prop(TestCIBuiltinFilterHelper, 'height', objc._C_FLT)
-
-        # CIMorphologyRectangleMinimum
-        self.assert_rw_prop(TestCIBuiltinFilterHelper, 'width', objc._C_FLT)
-        self.assert_rw_prop(TestCIBuiltinFilterHelper, 'height', objc._C_FLT)
-
-        # CIMotionBlur
-        self.assert_rw_prop(TestCIBuiltinFilterHelper, 'radius', objc._C_FLT)
-        self.assert_rw_prop(TestCIBuiltinFilterHelper, 'angle', objc._C_FLT)
-
-        # CINoiseReduction
-        self.assert_rw_prop(TestCIBuiltinFilterHelper, 'noiseLevel', objc._C_FLT)
-        self.assert_rw_prop(TestCIBuiltinFilterHelper, 'sharpness', objc._C_FLT)
-
-        # CIZoomBlur
-        self.assert_rw_prop(TestCIBuiltinFilterHelper, 'center', CGPoint.__typestr__)
-        self.assert_rw_prop(TestCIBuiltinFilterHelper, 'amount', objc._C_FLT)
+        with self.subTest('CIMaskToAlpha'):
+            pass
+
+        with self.subTest('CIMaximumComponent'):
+            pass
+
+        with self.subTest('CIMinimumComponent'):
+            pass
+
+        with self.subTest('CIPaletteCentroid'):
+            self.assert_rw_prop(TestCIBuiltinFilterHelper, 'perceptual', objc._C_BOOL)
+
+        with self.subTest('CIPalettize'):
+            self.assert_rw_prop(TestCIBuiltinFilterHelper, 'perceptual', objc._C_BOOL)
+
+        with self.subTest('CIPhotoEffect'):
+            pass
+
+        with self.subTest('CISepiaTone'):
+            self.assert_rw_prop(TestCIBuiltinFilterHelper, 'intensity', objc._C_FLT)
+
+        with self.subTest('CIThermal'):
+            pass
+
+        with self.subTest('CIVignette'):
+            self.assert_rw_prop(TestCIBuiltinFilterHelper, 'intensity', objc._C_FLT)
+            self.assert_rw_prop(TestCIBuiltinFilterHelper, 'radius', objc._C_FLT)
+
+        with self.subTest('CIVignetteEffect'):
+            self.assert_rw_prop(TestCIBuiltinFilterHelper, 'center', CGPoint.__typestr__)
+            self.assert_rw_prop(TestCIBuiltinFilterHelper, 'radius', objc._C_FLT)
+            self.assert_rw_prop(TestCIBuiltinFilterHelper, 'intensity', objc._C_FLT)
+            self.assert_rw_prop(TestCIBuiltinFilterHelper, 'falloff', objc._C_FLT)
+
+        with self.subTest('CIXRay'):
+            pass
+
+        with self.subTest('CIAffineClamp'):
+            self.assert_rw_prop(TestCIBuiltinFilterHelper, 'transform', CGAffineTransform.__typestr__)
+
+        with self.subTest('CIAffineTile'):
+            self.assert_rw_prop(TestCIBuiltinFilterHelper, 'transform', CGAffineTransform.__typestr__)
+
+        with self.subTest('CIEightfoldReflectedTile'):
+            self.assert_rw_prop(TestCIBuiltinFilterHelper, 'center', CGPoint.__typestr__)
+            self.assert_rw_prop(TestCIBuiltinFilterHelper, 'angle', objc._C_FLT)
+            self.assert_rw_prop(TestCIBuiltinFilterHelper, 'width', objc._C_FLT)
+
+        with self.subTest('CIFourfoldReflectedTile'):
+            self.assert_rw_prop(TestCIBuiltinFilterHelper, 'center', CGPoint.__typestr__)
+            self.assert_rw_prop(TestCIBuiltinFilterHelper, 'angle', objc._C_FLT)
+            self.assert_rw_prop(TestCIBuiltinFilterHelper, 'width', objc._C_FLT)
+            self.assert_rw_prop(TestCIBuiltinFilterHelper, 'acuteAngle', objc._C_FLT)
+
+        with self.subTest('CIFourfoldRotatedTile'):
+            self.assert_rw_prop(TestCIBuiltinFilterHelper, 'center', CGPoint.__typestr__)
+            self.assert_rw_prop(TestCIBuiltinFilterHelper, 'angle', objc._C_FLT)
+            self.assert_rw_prop(TestCIBuiltinFilterHelper, 'width', objc._C_FLT)
+
+        with self.subTest('CIFourfoldTranslatedTile'):
+            self.assert_rw_prop(TestCIBuiltinFilterHelper, 'center', CGPoint.__typestr__)
+            self.assert_rw_prop(TestCIBuiltinFilterHelper, 'angle', objc._C_FLT)
+            self.assert_rw_prop(TestCIBuiltinFilterHelper, 'width', objc._C_FLT)
+            self.assert_rw_prop(TestCIBuiltinFilterHelper, 'acuteAngle', objc._C_FLT)
+
+        with self.subTest('CIGlideReflectedTile'):
+            self.assert_rw_prop(TestCIBuiltinFilterHelper, 'center', CGPoint.__typestr__)
+            self.assert_rw_prop(TestCIBuiltinFilterHelper, 'angle', objc._C_FLT)
+            self.assert_rw_prop(TestCIBuiltinFilterHelper, 'width', objc._C_FLT)
+
+        with self.subTest('CIKaleidoscope'):
+            self.assert_rw_prop(TestCIBuiltinFilterHelper, 'count', objc._C_NSInteger)
+            self.assert_rw_prop(TestCIBuiltinFilterHelper, 'center', CGPoint.__typestr__)
+            self.assert_rw_prop(TestCIBuiltinFilterHelper, 'angle', objc._C_FLT)
+
+        with self.subTest('CIOpTile'):
+            self.assert_rw_prop(TestCIBuiltinFilterHelper, 'center', CGPoint.__typestr__)
+            self.assert_rw_prop(TestCIBuiltinFilterHelper, 'scale', objc._C_FLT)
+            self.assert_rw_prop(TestCIBuiltinFilterHelper, 'angle', objc._C_FLT)
+            self.assert_rw_prop(TestCIBuiltinFilterHelper, 'width', objc._C_FLT)
+
+        with self.subTest('CIParallelogramTile'):
+            self.assert_rw_prop(TestCIBuiltinFilterHelper, 'center', CGPoint.__typestr__)
+            self.assert_rw_prop(TestCIBuiltinFilterHelper, 'angle', objc._C_FLT)
+            self.assert_rw_prop(TestCIBuiltinFilterHelper, 'acuteAngle', objc._C_FLT)
+            self.assert_rw_prop(TestCIBuiltinFilterHelper, 'width', objc._C_FLT)
+
+        with self.subTest('CIPerspectiveTile'):
+            self.assert_rw_prop(TestCIBuiltinFilterHelper, 'topLeft', CGPoint.__typestr__)
+            self.assert_rw_prop(TestCIBuiltinFilterHelper, 'topRight', CGPoint.__typestr__)
+            self.assert_rw_prop(TestCIBuiltinFilterHelper, 'bottomRight', CGPoint.__typestr__)
+            self.assert_rw_prop(TestCIBuiltinFilterHelper, 'bottomLeft', CGPoint.__typestr__)
+
+        with self.subTest('CISixfoldReflectedTile'):
+            self.assert_rw_prop(TestCIBuiltinFilterHelper, 'center', CGPoint.__typestr__)
+            self.assert_rw_prop(TestCIBuiltinFilterHelper, 'angle', objc._C_FLT)
+            self.assert_rw_prop(TestCIBuiltinFilterHelper, 'width', objc._C_FLT)
+
+        with self.subTest('CISixfoldRotatedTile'):
+            self.assert_rw_prop(TestCIBuiltinFilterHelper, 'center', CGPoint.__typestr__)
+            self.assert_rw_prop(TestCIBuiltinFilterHelper, 'angle', objc._C_FLT)
+            self.assert_rw_prop(TestCIBuiltinFilterHelper, 'width', objc._C_FLT)
+
+        with self.subTest('CITriangleKaleidoscope'):
+            self.assert_rw_prop(TestCIBuiltinFilterHelper, 'point', CGPoint.__typestr__)
+            self.assert_rw_prop(TestCIBuiltinFilterHelper, 'size', objc._C_FLT)
+            self.assert_rw_prop(TestCIBuiltinFilterHelper, 'rotation', objc._C_FLT)
+            self.assert_rw_prop(TestCIBuiltinFilterHelper, 'decay', objc._C_FLT)
+
+        with self.subTest('CITriangleTile'):
+            self.assert_rw_prop(TestCIBuiltinFilterHelper, 'center', CGPoint.__typestr__)
+            self.assert_rw_prop(TestCIBuiltinFilterHelper, 'angle', objc._C_FLT)
+            self.assert_rw_prop(TestCIBuiltinFilterHelper, 'width', objc._C_FLT)
+
+        with self.subTest('CITwelvefoldReflectedTile'):
+            self.assert_rw_prop(TestCIBuiltinFilterHelper, 'center', CGPoint.__typestr__)
+            self.assert_rw_prop(TestCIBuiltinFilterHelper, 'angle', objc._C_FLT)
+            self.assert_rw_prop(TestCIBuiltinFilterHelper, 'width', objc._C_FLT)
+
+        with self.subTest('CIAttributedTextImageGenerator'):
+            self.assert_rw_prop(TestCIBuiltinFilterHelper, 'scaleFactor', objc._C_FLT)
+
+        with self.subTest('CIAztecCodeGenerator'):
+            self.assert_rw_prop(TestCIBuiltinFilterHelper, 'correctionLevel', objc._C_FLT)
+            self.assert_rw_prop(TestCIBuiltinFilterHelper, 'layers', objc._C_FLT)
+            self.assert_rw_prop(TestCIBuiltinFilterHelper, 'compactStyle', objc._C_FLT)
+
+        with self.subTest('CIBarcodeGenerator'):
+            pass
+
+        with self.subTest('CICheckerboardGenerator'):
+            self.assert_rw_prop(TestCIBuiltinFilterHelper, 'center', CGPoint.__typestr__)
+            self.assert_rw_prop(TestCIBuiltinFilterHelper, 'width', objc._C_FLT)
+            self.assert_rw_prop(TestCIBuiltinFilterHelper, 'sharpness', objc._C_FLT)
+
+        with self.subTest('CICode128BarcodeGenerator'):
+            self.assert_rw_prop(TestCIBuiltinFilterHelper, 'quietSpace', objc._C_FLT)
+            self.assert_rw_prop(TestCIBuiltinFilterHelper, 'barcodeHeight', objc._C_FLT)
+
+        with self.subTest('CILenticularHaloGenerator'):
+            self.assert_rw_prop(TestCIBuiltinFilterHelper, 'center', CGPoint.__typestr__)
+            self.assert_rw_prop(TestCIBuiltinFilterHelper, 'haloRadius', objc._C_FLT)
+            self.assert_rw_prop(TestCIBuiltinFilterHelper, 'haloWidth', objc._C_FLT)
+            self.assert_rw_prop(TestCIBuiltinFilterHelper, 'haloOverlap', objc._C_FLT)
+            self.assert_rw_prop(TestCIBuiltinFilterHelper, 'striationStrength', objc._C_FLT)
+            self.assert_rw_prop(TestCIBuiltinFilterHelper, 'striationContrast', objc._C_FLT)
+            self.assert_rw_prop(TestCIBuiltinFilterHelper, 'time', objc._C_FLT)
+
+        with self.subTest('CIMeshGenerator'):
+            self.assert_rw_prop(TestCIBuiltinFilterHelper, 'width', objc._C_FLT)
+
+        with self.subTest('CIPDF417BarcodeGenerator'):
+            self.assert_rw_prop(TestCIBuiltinFilterHelper, 'minWidth', objc._C_FLT)
+            self.assert_rw_prop(TestCIBuiltinFilterHelper, 'maxWidth', objc._C_FLT)
+            self.assert_rw_prop(TestCIBuiltinFilterHelper, 'minHeight', objc._C_FLT)
+            self.assert_rw_prop(TestCIBuiltinFilterHelper, 'maxHeight', objc._C_FLT)
+            self.assert_rw_prop(TestCIBuiltinFilterHelper, 'dataColumns', objc._C_FLT)
+            self.assert_rw_prop(TestCIBuiltinFilterHelper, 'rows', objc._C_FLT)
+            self.assert_rw_prop(TestCIBuiltinFilterHelper, 'preferredAspectRatio', objc._C_FLT)
+            self.assert_rw_prop(TestCIBuiltinFilterHelper, 'compactionMode', objc._C_FLT)
+            self.assert_rw_prop(TestCIBuiltinFilterHelper, 'compactStyle', objc._C_FLT)
+            self.assert_rw_prop(TestCIBuiltinFilterHelper, 'correctionLevel', objc._C_FLT)
+            self.assert_rw_prop(TestCIBuiltinFilterHelper, 'alwaysSpecifyCompaction', objc._C_FLT)
+
+        with self.subTest('CIQRCodeGenerator'):
+            pass
+
+        with self.subTest('CIRandomGenerator'):
+            pass
+
+        with self.subTest('CIRoundedRectangleGenerator'):
+            self.assert_rw_prop(TestCIBuiltinFilterHelper, 'extent', CGRect.__typestr__)
+            self.assert_rw_prop(TestCIBuiltinFilterHelper, 'radius', objc._C_FLT)
+
+        with self.subTest('CIStarShineGenerator'):
+            self.assert_rw_prop(TestCIBuiltinFilterHelper, 'center', CGPoint.__typestr__)
+            self.assert_rw_prop(TestCIBuiltinFilterHelper, 'radius', objc._C_FLT)
+            self.assert_rw_prop(TestCIBuiltinFilterHelper, 'crossScale', objc._C_FLT)
+            self.assert_rw_prop(TestCIBuiltinFilterHelper, 'crossAngle', objc._C_FLT)
+            self.assert_rw_prop(TestCIBuiltinFilterHelper, 'crossOpacity', objc._C_FLT)
+            self.assert_rw_prop(TestCIBuiltinFilterHelper, 'crossWidth', objc._C_FLT)
+            self.assert_rw_prop(TestCIBuiltinFilterHelper, 'epsilon', objc._C_FLT)
+
+        with self.subTest('CIStripesGenerator'):
+            self.assert_rw_prop(TestCIBuiltinFilterHelper, 'center', CGPoint.__typestr__)
+            self.assert_rw_prop(TestCIBuiltinFilterHelper, 'width', objc._C_FLT)
+            self.assert_rw_prop(TestCIBuiltinFilterHelper, 'sharpness', objc._C_FLT)
+
+        with self.subTest('CISunbeamsGenerator'):
+            self.assert_rw_prop(TestCIBuiltinFilterHelper, 'center', CGPoint.__typestr__)
+            self.assert_rw_prop(TestCIBuiltinFilterHelper, 'sunRadius', objc._C_FLT)
+            self.assert_rw_prop(TestCIBuiltinFilterHelper, 'maxStriationRadius', objc._C_FLT)
+            self.assert_rw_prop(TestCIBuiltinFilterHelper, 'striationStrength', objc._C_FLT)
+            self.assert_rw_prop(TestCIBuiltinFilterHelper, 'striationContrast', objc._C_FLT)
+            self.assert_rw_prop(TestCIBuiltinFilterHelper, 'time', objc._C_FLT)
+
+        with self.subTest('CITextImageGenerator'):
+            self.assert_rw_prop(TestCIBuiltinFilterHelper, 'fontSize', objc._C_FLT)
+            self.assert_rw_prop(TestCIBuiltinFilterHelper, 'scaleFactor', objc._C_FLT)
+
+        with self.subTest('CIBlendWithMask'):
+            pass
+
+        with self.subTest('CIBloom'):
+            self.assert_rw_prop(TestCIBuiltinFilterHelper, 'radius', objc._C_FLT)
+            self.assert_rw_prop(TestCIBuiltinFilterHelper, 'intensity', objc._C_FLT)
+
+        with self.subTest('CIComicEffect'):
+            pass
+
+        with self.subTest('CIConvolution'):
+            self.assert_rw_prop(TestCIBuiltinFilterHelper, 'bias', objc._C_FLT)
+
+        with self.subTest('CICoreMLModel'):
+            self.assert_rw_prop(TestCIBuiltinFilterHelper, 'headIndex', objc._C_FLT)
+            self.assert_rw_prop(TestCIBuiltinFilterHelper, 'softmaxNormalization', objc._C_BOOL)
+
+        with self.subTest('CICrystallize'):
+            self.assert_rw_prop(TestCIBuiltinFilterHelper, 'radius', objc._C_FLT)
+            self.assert_rw_prop(TestCIBuiltinFilterHelper, 'center', CGPoint.__typestr__)
+
+        with self.subTest('CIDepthOfField'):
+            self.assert_rw_prop(TestCIBuiltinFilterHelper, 'point0', CGPoint.__typestr__)
+            self.assert_rw_prop(TestCIBuiltinFilterHelper, 'point1', CGPoint.__typestr__)
+            self.assert_rw_prop(TestCIBuiltinFilterHelper, 'saturation', objc._C_FLT)
+            self.assert_rw_prop(TestCIBuiltinFilterHelper, 'unsharpMaskRadius', objc._C_FLT)
+            self.assert_rw_prop(TestCIBuiltinFilterHelper, 'unsharpMaskIntensity', objc._C_FLT)
+            self.assert_rw_prop(TestCIBuiltinFilterHelper, 'radius', objc._C_FLT)
+
+        with self.subTest('CIEdges'):
+            self.assert_rw_prop(TestCIBuiltinFilterHelper, 'intensity', objc._C_FLT)
+
+        with self.subTest('CIEdgeWork'):
+            self.assert_rw_prop(TestCIBuiltinFilterHelper, 'radius', objc._C_FLT)
+
+        with self.subTest('CIGaborGradients'):
+            pass
+
+        with self.subTest('CIGloom'):
+            self.assert_rw_prop(TestCIBuiltinFilterHelper, 'radius', objc._C_FLT)
+            self.assert_rw_prop(TestCIBuiltinFilterHelper, 'intensity', objc._C_FLT)
+
+        with self.subTest('CIHeightFieldFromMask'):
+            self.assert_rw_prop(TestCIBuiltinFilterHelper, 'radius', objc._C_FLT)
+
+        with self.subTest('CIHexagonalPixellate'):
+            self.assert_rw_prop(TestCIBuiltinFilterHelper, 'center', CGPoint.__typestr__)
+            self.assert_rw_prop(TestCIBuiltinFilterHelper, 'scale', objc._C_FLT)
+
+        with self.subTest('CIHighlightShadowAdjust'):
+            self.assert_rw_prop(TestCIBuiltinFilterHelper, 'radius', objc._C_FLT)
+            self.assert_rw_prop(TestCIBuiltinFilterHelper, 'shadowAmount', objc._C_FLT)
+            self.assert_rw_prop(TestCIBuiltinFilterHelper, 'highlightAmount', objc._C_FLT)
+
+        with self.subTest('CILineOverlay'):
+            self.assert_rw_prop(TestCIBuiltinFilterHelper, 'NRNoiseLevel', objc._C_FLT)
+            self.assert_rw_prop(TestCIBuiltinFilterHelper, 'NRSharpness', objc._C_FLT)
+            self.assert_rw_prop(TestCIBuiltinFilterHelper, 'edgeIntensity', objc._C_FLT)
+            self.assert_rw_prop(TestCIBuiltinFilterHelper, 'threshold', objc._C_FLT)
+            self.assert_rw_prop(TestCIBuiltinFilterHelper, 'contrast', objc._C_FLT)
+
+        with self.subTest('CIMix'):
+            self.assert_rw_prop(TestCIBuiltinFilterHelper, 'amount', objc._C_FLT)
+
+        with self.subTest('CIPixellate'):
+            self.assert_rw_prop(TestCIBuiltinFilterHelper, 'center', CGPoint.__typestr__)
+            self.assert_rw_prop(TestCIBuiltinFilterHelper, 'scale', objc._C_FLT)
+
+        with self.subTest('CIPointillize'):
+            self.assert_rw_prop(TestCIBuiltinFilterHelper, 'radius', objc._C_FLT)
+            self.assert_rw_prop(TestCIBuiltinFilterHelper, 'center', CGPoint.__typestr__)
+
+        with self.subTest('CISaliencyMap'):
+            pass
+
+        with self.subTest('CIShadedMaterial'):
+            self.assert_rw_prop(TestCIBuiltinFilterHelper, 'scale', objc._C_FLT)
+
+        with self.subTest('CISpotColor'):
+            self.assert_rw_prop(TestCIBuiltinFilterHelper, 'closeness1', objc._C_FLT)
+            self.assert_rw_prop(TestCIBuiltinFilterHelper, 'contrast1', objc._C_FLT)
+            self.assert_rw_prop(TestCIBuiltinFilterHelper, 'closeness2', objc._C_FLT)
+            self.assert_rw_prop(TestCIBuiltinFilterHelper, 'contrast2', objc._C_FLT)
+            self.assert_rw_prop(TestCIBuiltinFilterHelper, 'closeness3', objc._C_FLT)
+            self.assert_rw_prop(TestCIBuiltinFilterHelper, 'contrast3', objc._C_FLT)
+
+        with self.subTest('CISpotLight'):
+            self.assert_rw_prop(TestCIBuiltinFilterHelper, 'brightness', objc._C_FLT)
+            self.assert_rw_prop(TestCIBuiltinFilterHelper, 'concentration', objc._C_FLT)
+
+        with self.subTest('CIBokehBlur'):
+            self.assert_rw_prop(TestCIBuiltinFilterHelper, 'radius', objc._C_FLT)
+            self.assert_rw_prop(TestCIBuiltinFilterHelper, 'ringAmount', objc._C_FLT)
+            self.assert_rw_prop(TestCIBuiltinFilterHelper, 'ringSize', objc._C_FLT)
+            self.assert_rw_prop(TestCIBuiltinFilterHelper, 'softness', objc._C_FLT)
+
+        with self.subTest('CIBoxBlur'):
+            self.assert_rw_prop(TestCIBuiltinFilterHelper, 'radius', objc._C_FLT)
+
+        with self.subTest('CIDiscBlur'):
+            self.assert_rw_prop(TestCIBuiltinFilterHelper, 'radius', objc._C_FLT)
+
+        with self.subTest('CIGaussianBlur'):
+            self.assert_rw_prop(TestCIBuiltinFilterHelper, 'radius', objc._C_FLT)
+
+        with self.subTest('CIMaskedVariableBlur'):
+            self.assert_rw_prop(TestCIBuiltinFilterHelper, 'radius', objc._C_FLT)
+
+        with self.subTest('CIMedian'):
+            pass
+
+        with self.subTest('CIMorphologyGradient'):
+            self.assert_rw_prop(TestCIBuiltinFilterHelper, 'radius', objc._C_FLT)
+
+        with self.subTest('CIMorphologyMaximum'):
+            self.assert_rw_prop(TestCIBuiltinFilterHelper, 'radius', objc._C_FLT)
+
+        with self.subTest('CIMorphologyMinimum'):
+            self.assert_rw_prop(TestCIBuiltinFilterHelper, 'radius', objc._C_FLT)
+
+        with self.subTest('CIMorphologyRectangleMaximum'):
+            self.assert_rw_prop(TestCIBuiltinFilterHelper, 'width', objc._C_FLT)
+            self.assert_rw_prop(TestCIBuiltinFilterHelper, 'height', objc._C_FLT)
+
+        with self.subTest('CIMorphologyRectangleMinimum'):
+            self.assert_rw_prop(TestCIBuiltinFilterHelper, 'width', objc._C_FLT)
+            self.assert_rw_prop(TestCIBuiltinFilterHelper, 'height', objc._C_FLT)
+
+        with self.subTest('CIMotionBlur'):
+            self.assert_rw_prop(TestCIBuiltinFilterHelper, 'radius', objc._C_FLT)
+            self.assert_rw_prop(TestCIBuiltinFilterHelper, 'angle', objc._C_FLT)
+
+        with self.subTest('CINoiseReduction'):
+            self.assert_rw_prop(TestCIBuiltinFilterHelper, 'noiseLevel', objc._C_FLT)
+            self.assert_rw_prop(TestCIBuiltinFilterHelper, 'sharpness', objc._C_FLT)
+
+        with self.subTest('CIZoomBlur'):
+            self.assert_rw_prop(TestCIBuiltinFilterHelper, 'center', CGPoint.__typestr__)
+            self.assert_rw_prop(TestCIBuiltinFilterHelper, 'amount', objc._C_FLT)
 
 if __name__ == "__main__":
     main()

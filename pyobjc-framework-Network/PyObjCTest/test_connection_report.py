@@ -16,17 +16,17 @@ if sys.maxsize > 2 ** 32:
             self.assertEqual(Network.nw_report_resolution_source_cache, 2)
             self.assertEqual(Network.nw_report_resolution_source_expired_cache, 3)
 
-            self.assertEqual(nw_data_transfer_report_state_collecting, 1)
-            self.assertEqual(nw_data_transfer_report_state_collected, 2)
+            self.assertEqual(Network.nw_data_transfer_report_state_collecting, 1)
+            self.assertEqual(Network.nw_data_transfer_report_state_collected, 2)
 
         @min_os_level('10.15')
         def test_contants10_15(self):
-            self.assertIsInstance(Network.NW_ALL_PATHS, objc.objc_object)
+            self.assertIsInstance(Network.NW_ALL_PATHS, int)
 
 
         @min_os_level('10.15')
         def test_functions10_15(self):
-            self.assertArgIsBlock(Network.nw_connection_access_establishment_report, 1, nw_establishment_report_access_block_t)
+            self.assertArgIsBlock(Network.nw_connection_access_establishment_report, 2, nw_establishment_report_access_block_t)
 
             Network.nw_establishment_report_get_duration_milliseconds
             Network.nw_establishment_report_get_attempt_started_after_milliseconds
@@ -40,9 +40,9 @@ if sys.maxsize > 2 ** 32:
 
             self.assertArgIsBlock(Network.nw_establishment_report_enumerate_protocols, 1, nw_report_protocol_enumerator_t)
 
-            self.assertResultIsRetained(Network.nw_data_transfer_report_t)
+            self.assertResultIsRetained(Network.nw_connection_create_new_data_transfer_report)
 
-            Network.nw_data_transfer_report_state_t
+            Network.nw_data_transfer_report_get_state
 
             self.assertArgIsBlock(Network.nw_data_transfer_report_collect, 2, nw_data_transfer_report_collect_block_t)
 

@@ -13,7 +13,7 @@ class TestPDFAnnotation (TestCase):
         self.assertResultIsBOOL(PDFAnnotation.isMultiline)
         self.assertArgIsBOOL(PDFAnnotation.setMultiline_, 0)
         self.assertResultIsBOOL(PDFAnnotation.isPasswordField)
-        self.assertArgIsBOOL(PDFAnnotation.setIsPasswordField_, 0)
+        #self.assertArgIsBOOL(PDFAnnotation.setIsPasswordField_, 0)
         self.assertResultIsBOOL(PDFAnnotation.hasComb)
         self.assertArgIsBOOL(PDFAnnotation.setComb_, 0)
         self.assertResultIsBOOL(PDFAnnotation.allowsToggleToOff)
