@@ -91,52 +91,6 @@
    }
   },
   "structs": {
-   "CSSM_MANAGER_EVENT_NOTIFICATION": { "ignore": true },
-   "BER_TAG_UNKNOWN": { "ignore": true },
-   "CSSM_CONTEXT_EVENT_CREATE": { "ignore": true },
-   "INTEL_X509_C_DATATYPE": { "ignore": true },
-   "CSSM_INVALID_HANDLE": { "ignore": true },
-   "CSSM_BASE_ERROR": { "ignore": true },
-   "GNT_RegisteredID": { "ignore": true },
-   "CSSM_MANAGER_EVENT_NOTIFICATION": { "ignore": true },
-   "CSSM_TUPLE": { "ignore": true },
-   "CSSM_LIST": { "ignore": true },
-   "CSSM_SAMPLE": { "ignore": true },
-   "CSSM_SAMPLEGROUP": { "ignore": true },
-   "CSSM_TUPLEGROUP": { "ignore": true },
-   "CSSM_TP_CERTNOTARIZE_OUTPUT": { "ignore": true },
-   "CSSM_ACL_ENTRY_PROTOTYPE": { "ignore": true },
-   "CSSM_TP_CERTISSUE_OUTPUT": { "ignore": true },
-   "CSSM_ACL_EDIT": { "ignore": true },
-   "CSSM_FUNC_NAME_ADDR": { "ignore": true },
-   "CSSM_ACL_ENTRY_INFO": { "ignore": true },
-   "CSSM_DATE": { "ignore": true },
-   "CSSM_RANGE": { "ignore": true },
-   "CSSM_QUERY_SIZE_DATA": { "ignore": true },
-   "CSSM_KEY_SIZE": { "ignore": true },
-   "CSSM_ACL_ENTRY_INPUT": { "ignore": true },
-   "CSSM_TP_CERTRECLAIM_OUTPUT": { "ignore": true },
-   "CSSM_BASE_CERTS": { "ignore": true },
-   "CSSM_KR_NAME": { "ignore": true },
-   "MDS_OBJECT_DIRECTORY_NAME": { "ignore": true },
-   "CSSM_RESOURCE_CONTROL_CONTEXT": { "ignore": true },
-   "CSSM_LIST_ELEMENT": { "ignore": true },
-   "CSSM_CERTGROUP": { "ignore": true },
-   "CSSM_CRLGROUP": { "ignore": true },
-   "CSSM_KR_PROFILE": { "ignore": true },
-   "CSSM_KR_WRAPPEDPRODUCT_INFO": { "ignore": true },
-   "CSSM_KRSUBSERVICE": { "ignore": true },
-   "CSSM_KR_POLICY_LIST_ITEM": { "ignore": true },
-   "CSSM_KR_POLICY_INFO": { "ignore": true },
-   "CSSM_ACL_OWNER_PROTOTYPE": { "ignore": true },
-   "CE_SemanticsInformation": { "ignore": true },
-   "CE_GeneralSubtrees": { "ignore": true },
-   "CE_IssuingDistributionPoint": { "ignore": true },
-   "CE_DistributionPointName": { "ignore": true },
-   "CE_CRLDistPointsSyntax": { "ignore": true },
-   "CE_CRLDistributionPoint": { "ignore": true },
-   "CE_AccessDescription": { "ignore": true },
-   "CE_AuthorityInfoAccess": { "ignore": true },
    "AuthorizationItem": { "typestr": "{_AuthorizationItem=^cL^vI}", "fieldnames": [ "name", "valueLength", "value", "flags" ] },
    "AuthorizationItemSet": { "comment": "FIXME: requires manual wrapping" },
    "AuthorizationExternalForm": { "typestr": "{_AuthorizationExternalForm=[32C]}", "fieldnames": ["bytes"] },
@@ -145,8 +99,74 @@
    "SecKeychainCallbackInfo": { "typestr": "{SecKeychainCallbackInfo=I@@i}", "fieldnames": [ "version", "item", "keychain", "pid" ] }
   },
   "enum": {
-   "CSSM_MANAGER_SERVICE_REQUEST": { "ignore": true },
-   "CSSM_MANAGER_REPLY": { "ignore": true },
+   "errSSLATSViolation": { "value": -9880 },
+   "errSSLATSMinimumVersionViolation": { "value": -9881 },
+   "errSSLATSCiphersuiteViolation": { "value": -9882 },
+   "errSSLATSMinimumKeySizeViolation": { "value": -9883 },
+   "errSSLATSLeafCertificateHashAlgorithmViolation": { "value": -9884 },
+   "errSSLATSCertificateHashAlgorithmViolation": { "value": -9885 },
+   "errSSLATSCertificateTrustViolation": { "value": -9886 },
+   "kSecAccessControlUserPresence": { "value": 1 },
+   "kSecAccessControlBiometryAny": { "value": 2 },
+   "kSecAccessControlTouchIDAny": { "value": 2 },
+   "kSecAccessControlBiometryCurrentSet": { "value": 8 },
+   "kSecAccessControlTouchIDCurrentSet": { "value": 8 },
+   "kSecAccessControlDevicePasscode": { "value": 16 },
+   "kSecAccessControlWatch": { "value": 32 },
+   "kSecAccessControlOr": { "value": 16384 },
+   "kSecAccessControlAnd": { "value": 32768 },
+   "kSecAccessControlPrivateKeyUsage": { "value": 1073741824 },
+   "kSecAccessControlApplicationPassword": { "value": 2147483648 },
+   "tls_ciphersuite_group_default": { "value": 0 },
+   "tls_ciphersuite_group_compatibility": { "value": 1 },
+   "tls_ciphersuite_group_legacy": { "value": 2 },
+   "tls_ciphersuite_group_ats": { "value": 3 },
+   "tls_ciphersuite_group_ats_compatibility": { "value": 4 },
+   "kSSLProtocolUnknown": { "value": 0 },
+   "kTLSProtocol1": { "value": 4 },
+   "kTLSProtocol11": { "value": 7 },
+   "kTLSProtocol12": { "value": 8 },
+   "kDTLSProtocol1": { "value": 9 },
+   "kTLSProtocol13": { "value": 10 },
+   "kDTLSProtocol12": { "value": 11 },
+   "kTLSProtocolMaxSupported": { "value": 999 },
+   "kSSLProtocol2": { "value": 1 },
+   "kSSLProtocol3": { "value": 2 },
+   "kSSLProtocol3Only": { "value": 3 },
+   "kTLSProtocol1Only": { "value": 5 },
+   "kSSLProtocolAll": { "value": 6 },
+   "tls_ciphersuite_RSA_WITH_3DES_EDE_CBC_SHA": { "value": 10 },
+   "tls_ciphersuite_RSA_WITH_AES_128_CBC_SHA": { "value": 47 },
+   "tls_ciphersuite_RSA_WITH_AES_256_CBC_SHA": { "value": 53 },
+   "tls_ciphersuite_RSA_WITH_AES_128_GCM_SHA256": { "value": 156 },
+   "tls_ciphersuite_RSA_WITH_AES_256_GCM_SHA384": { "value": 157 },
+   "tls_ciphersuite_RSA_WITH_AES_128_CBC_SHA256": { "value": 60 },
+   "tls_ciphersuite_RSA_WITH_AES_256_CBC_SHA256": { "value": 61 },
+   "tls_ciphersuite_ECDHE_ECDSA_WITH_3DES_EDE_CBC_SHA": { "value": 49160 },
+   "tls_ciphersuite_ECDHE_ECDSA_WITH_AES_128_CBC_SHA": { "value": 49161 },
+   "tls_ciphersuite_ECDHE_ECDSA_WITH_AES_256_CBC_SHA": { "value": 49162 },
+   "tls_ciphersuite_ECDHE_RSA_WITH_3DES_EDE_CBC_SHA": { "value": 49170 },
+   "tls_ciphersuite_ECDHE_RSA_WITH_AES_128_CBC_SHA": { "value": 49171 },
+   "tls_ciphersuite_ECDHE_RSA_WITH_AES_256_CBC_SHA": { "value": 49172 },
+   "tls_ciphersuite_ECDHE_ECDSA_WITH_AES_128_CBC_SHA256": { "value": 49187 },
+   "tls_ciphersuite_ECDHE_ECDSA_WITH_AES_256_CBC_SHA384": { "value": 49188 },
+   "tls_ciphersuite_ECDHE_RSA_WITH_AES_128_CBC_SHA256": { "value": 49191 },
+   "tls_ciphersuite_ECDHE_RSA_WITH_AES_256_CBC_SHA384": { "value": 49192 },
+   "tls_ciphersuite_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256": { "value": 49195 },
+   "tls_ciphersuite_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384": { "value": 49196 },
+   "tls_ciphersuite_ECDHE_RSA_WITH_AES_128_GCM_SHA256": { "value": 49199 },
+   "tls_ciphersuite_ECDHE_RSA_WITH_AES_256_GCM_SHA384": { "value": 49200 },
+   "tls_ciphersuite_ECDHE_RSA_WITH_CHACHA20_POLY1305_SHA256": { "value": 52392 },
+   "tls_ciphersuite_ECDHE_ECDSA_WITH_CHACHA20_POLY1305_SHA256": { "value": 52393 },
+   "tls_ciphersuite_AES_128_GCM_SHA256": { "value": 4865 },
+   "tls_ciphersuite_AES_256_GCM_SHA384": { "value": 4866 },
+   "tls_ciphersuite_CHACHA20_POLY1305_SHA256": { "value": 4867 },
+   "tls_protocol_version_TLSv10": { "value": 769 },
+   "tls_protocol_version_TLSv11": { "value": 770 },
+   "tls_protocol_version_TLSv12": { "value": 771 },
+   "tls_protocol_version_TLSv13": { "value": 772 },
+   "tls_protocol_version_DTLSv10": { "value": 65279 },
+   "tls_protocol_version_DTLSv12": { "value": 65277 },
    "kSecCSCalculateCMSDigest": { "value": 64 },
    "kSecCSSingleThreaded": { "value": 4096 },
    "kSSLCiphersuiteGroupDefault": { "value": 0 },
@@ -548,6 +568,9 @@
    "TLS_DH_anon_WITH_AES_256_CBC_SHA256": { "value":  109  },
    "TLS_DH_anon_WITH_AES_256_GCM_SHA384": { "value":  167  },
    "TLS_DH_anon_WITH_RC4_128_MD5": { "value":  24  },
+   "TLS_ECDHE_PSK_WITH_AES_128_CBC_SHA": { "value": 49205  },
+   "TLS_ECDHE_PSK_WITH_AES_256_CBC_SHA": { "value": 49206  },
+   "TLS_PSK_WITH_CHACHA20_POLY1305_SHA256": { "value": 52395 },
    "TLS_ECDHE_ECDSA_WITH_3DES_EDE_CBC_SHA": { "value":  49160  },
    "TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA": { "value":  49161  },
    "TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA256": { "value":  49187  },
@@ -754,6 +777,9 @@
    "errSecCertificateExpired": { "value": -67818 },
    "errSecCertificateNotValidYet": { "value": -67819 },
    "errSecCertificateRevoked": { "value": -67820 },
+   "errSecCertificatePolicyNotAllowed": { "value": -67899 },
+   "errSecCertificateNameNotAllowed": { "value": -67900 },
+   "errSecCertificateValidityPeriodTooLong": { "value": -67901 },
    "errSecCertificateSuspended": { "value": -67821 },
    "errSecCodeSigningBadCertChainLength": { "value": -67647 },
    "errSecCodeSigningBadPathLengthConstraint": { "value": -67649 },
@@ -1303,6 +1329,7 @@
    "kAuthorizationRightExecute": { "value": "system.privilege.admin", "unicode": false },
    "kAuthorizationEnvironmentPrompt": { "value": "prompt", "unicode": false },
    "kAuthorizationEnvironmentIcon": { "value": "icon", "unicode": false },
+   "kAuthorizationPamResult": { "value": "pam_result", "unicode": false },
    "kAuthorizationComment": { "value": "comment", "unicode": false },
    "kAuthorizationRightRule": { "value": "rule", "unicode": false },
    "kAuthorizationRuleAuthenticateAsAdmin": { "value": "authenticate-admin", "unicode": false },
@@ -1315,296 +1342,7 @@
    "kAuthorizationEmptyEnvironment": { "value": "None" }
   },
   "externs": {
-   "CSSM_MANAGER_SERVICE_REQUEST": { "ignore": true },
-   "CSSM_MANAGER_REPLY": { "ignore": true },
-   "CSSMOID_MD2": { "ignore": true },
-   "CSSMOID_MD4": { "ignore": true },
-   "CSSMOID_MD5": { "ignore": true },
-   "CSSMOID_RSA": { "ignore": true },
-   "CSSMOID_MD2WithRSA": { "ignore": true },
-   "CSSMOID_MD4WithRSA": { "ignore": true },
-   "CSSMOID_MD5WithRSA": { "ignore": true },
-   "CSSMOID_SHA1WithRSA": { "ignore": true },
-   "CSSMOID_SHA224WithRSA": { "ignore": true },
-   "CSSMOID_SHA256WithRSA": { "ignore": true },
-   "CSSMOID_SHA384WithRSA": { "ignore": true },
-   "CSSMOID_SHA512WithRSA": { "ignore": true },
-   "CSSMOID_SHA1WithRSA_OIW": { "ignore": true },
-   "CSSMOID_RSAWithOAEP": { "ignore": true },
-   "CSSMOID_OAEP_MGF1": { "ignore": true },
-   "CSSMOID_OAEP_ID_PSPECIFIED": { "ignore": true },
-   "CSSMOID_DES_CBC": { "ignore": true },
-   "CSSMOID_ANSI_DH_PUB_NUMBER": { "ignore": true },
-   "CSSMOID_ANSI_DH_STATIC": { "ignore": true },
-   "CSSMOID_ANSI_DH_ONE_FLOW": { "ignore": true },
-   "CSSMOID_ANSI_DH_EPHEM": { "ignore": true },
-   "CSSMOID_ANSI_DH_HYBRID1": { "ignore": true },
-   "CSSMOID_ANSI_DH_HYBRID2": { "ignore": true },
-   "CSSMOID_ANSI_DH_HYBRID_ONEFLOW": { "ignore": true },
-   "CSSMOID_ANSI_MQV1": { "ignore": true },
-   "CSSMOID_ANSI_MQV2": { "ignore": true },
-   "CSSMOID_ANSI_DH_STATIC_SHA1": { "ignore": true },
-   "CSSMOID_ANSI_DH_ONE_FLOW_SHA1": { "ignore": true },
-   "CSSMOID_ANSI_DH_EPHEM_SHA1": { "ignore": true },
-   "CSSMOID_ANSI_DH_HYBRID1_SHA1": { "ignore": true },
-   "CSSMOID_ANSI_DH_HYBRID2_SHA1": { "ignore": true },
-   "CSSMOID_ANSI_MQV1_SHA1": { "ignore": true },
-   "CSSMOID_ANSI_MQV2_SHA1": { "ignore": true },
-   "CSSMOID_PKCS3": { "ignore": true },
-   "CSSMOID_DH": { "ignore": true },
-   "CSSMOID_DSA": { "ignore": true },
-   "CSSMOID_DSA_CMS": { "ignore": true },
-   "CSSMOID_DSA_JDK": { "ignore": true },
-   "CSSMOID_SHA1WithDSA": { "ignore": true },
-   "CSSMOID_SHA1WithDSA_CMS": { "ignore": true },
-   "CSSMOID_SHA1WithDSA_JDK": { "ignore": true },
-   "CSSMOID_SHA1": { "ignore": true },
-   "CSSMOID_SHA224": { "ignore": true },
-   "CSSMOID_SHA256": { "ignore": true },
-   "CSSMOID_SHA384": { "ignore": true },
-   "CSSMOID_SHA512": { "ignore": true },
-   "CSSMOID_ecPublicKey": { "ignore": true },
-   "CSSMOID_ECDSA_WithSHA1": { "ignore": true },
-   "CSSMOID_ECDSA_WithSHA224": { "ignore": true },
-   "CSSMOID_ECDSA_WithSHA256": { "ignore": true },
-   "CSSMOID_ECDSA_WithSHA384": { "ignore": true },
-   "CSSMOID_ECDSA_WithSHA512": { "ignore": true },
-   "CSSMOID_ECDSA_WithSpecified": { "ignore": true },
-   "CSSMOID_APPLE_ISIGN": { "ignore": true },
-   "CSSMOID_APPLE_X509_BASIC": { "ignore": true },
-   "CSSMOID_APPLE_TP_SSL": { "ignore": true },
-   "CSSMOID_APPLE_TP_LOCAL_CERT_GEN": { "ignore": true },
-   "CSSMOID_APPLE_TP_CSR_GEN": { "ignore": true },
-   "CSSMOID_APPLE_TP_REVOCATION_CRL": { "ignore": true },
-   "CSSMOID_APPLE_TP_REVOCATION_OCSP": { "ignore": true },
-   "CSSMOID_APPLE_TP_SMIME": { "ignore": true },
-   "CSSMOID_APPLE_TP_EAP": { "ignore": true },
-   "CSSMOID_APPLE_TP_CODE_SIGN": { "ignore": true },
-   "CSSMOID_APPLE_TP_SW_UPDATE_SIGNING": { "ignore": true },
-   "CSSMOID_APPLE_TP_IP_SEC": { "ignore": true },
-   "CSSMOID_APPLE_TP_ICHAT": { "ignore": true },
-   "CSSMOID_APPLE_TP_RESOURCE_SIGN": { "ignore": true },
-   "CSSMOID_APPLE_TP_PKINIT_CLIENT": { "ignore": true },
-   "CSSMOID_APPLE_TP_PKINIT_SERVER": { "ignore": true },
-   "CSSMOID_APPLE_TP_CODE_SIGNING": { "ignore": true },
-   "CSSMOID_APPLE_TP_PACKAGE_SIGNING": { "ignore": true },
-   "CSSMOID_APPLE_TP_MACAPPSTORE_RECEIPT": { "ignore": true },
-   "CSSMOID_APPLE_TP_APPLEID_SHARING": { "ignore": true },
-   "CSSMOID_APPLE_TP_TIMESTAMPING": { "ignore": true },
-   "CSSMOID_APPLE_TP_REVOCATION": { "ignore": true },
-   "CSSMOID_APPLE_TP_PASSBOOK_SIGNING": { "ignore": true },
-   "CSSMOID_APPLE_TP_MOBILE_STORE": { "ignore": true },
-   "CSSMOID_APPLE_TP_ESCROW_SERVICE": { "ignore": true },
-   "CSSMOID_APPLE_TP_PROFILE_SIGNING": { "ignore": true },
-   "CSSMOID_APPLE_TP_QA_PROFILE_SIGNING": { "ignore": true },
-   "CSSMOID_APPLE_TP_TEST_MOBILE_STORE": { "ignore": true },
-   "CSSMOID_APPLE_TP_PCS_ESCROW_SERVICE": { "ignore": true },
-   "CSSMOID_APPLE_TP_PROVISIONING_PROFILE_SIGNING": { "ignore": true },
-   "CSSMOID_APPLE_FEE": { "ignore": true },
-   "CSSMOID_APPLE_ASC": { "ignore": true },
-   "CSSMOID_APPLE_FEE_MD5": { "ignore": true },
-   "CSSMOID_APPLE_FEE_SHA1": { "ignore": true },
-   "CSSMOID_APPLE_FEED": { "ignore": true },
-   "CSSMOID_APPLE_FEEDEXP": { "ignore": true },
-   "CSSMOID_APPLE_ECDSA": { "ignore": true },
-   "CSSMOID_DOTMAC_CERT": { "ignore": true },
-   "CSSMOID_DOTMAC_CERT_REQ": { "ignore": true },
-   "CSSMOID_DOTMAC_CERT_REQ_IDENTITY": { "ignore": true },
-   "CSSMOID_DOTMAC_CERT_REQ_EMAIL_SIGN": { "ignore": true },
-   "CSSMOID_DOTMAC_CERT_REQ_EMAIL_ENCRYPT": { "ignore": true },
-   "CSSMOID_DOTMAC_CERT_REQ_ARCHIVE_LIST": { "ignore": true },
-   "CSSMOID_DOTMAC_CERT_REQ_ARCHIVE_STORE": { "ignore": true },
-   "CSSMOID_DOTMAC_CERT_REQ_ARCHIVE_FETCH": { "ignore": true },
-   "CSSMOID_DOTMAC_CERT_REQ_ARCHIVE_REMOVE": { "ignore": true },
-   "CSSMOID_DOTMAC_CERT_REQ_SHARED_SERVICES": { "ignore": true },
-   "CSSMOID_DOTMAC_CERT_REQ_VALUE_USERNAME": { "ignore": true },
-   "CSSMOID_DOTMAC_CERT_REQ_VALUE_PASSWORD": { "ignore": true },
-   "CSSMOID_DOTMAC_CERT_REQ_VALUE_HOSTNAME": { "ignore": true },
-   "CSSMOID_DOTMAC_CERT_REQ_VALUE_RENEW": { "ignore": true },
-   "CSSMOID_DOTMAC_CERT_REQ_VALUE_ASYNC": { "ignore": true },
-   "CSSMOID_DOTMAC_CERT_REQ_VALUE_IS_PENDING": { "ignore": true },
-   "CSSMOID_PKCS5_DIGEST_ALG": { "ignore": true },
-   "CSSMOID_PKCS5_ENCRYPT_ALG": { "ignore": true },
-   "CSSMOID_PKCS5_HMAC_SHA1": { "ignore": true },
-   "CSSMOID_PKCS5_pbeWithMD2AndDES": { "ignore": true },
-   "CSSMOID_PKCS5_pbeWithMD2AndRC2": { "ignore": true },
-   "CSSMOID_PKCS5_pbeWithMD5AndDES": { "ignore": true },
-   "CSSMOID_PKCS5_pbeWithMD5AndRC2": { "ignore": true },
-   "CSSMOID_PKCS5_pbeWithSHA1AndDES": { "ignore": true },
-   "CSSMOID_PKCS5_pbeWithSHA1AndRC2": { "ignore": true },
-   "CSSMOID_PKCS5_PBKDF2": { "ignore": true },
-   "CSSMOID_PKCS5_PBES2": { "ignore": true },
-   "CSSMOID_PKCS5_PBMAC1": { "ignore": true },
-   "CSSMOID_PKCS5_RC2_CBC": { "ignore": true },
-   "CSSMOID_PKCS5_DES_EDE3_CBC": { "ignore": true },
-   "CSSMOID_PKCS5_RC5_CBC": { "ignore": true },
-   "CSSMOID_PKCS12_pbeWithSHAAnd128BitRC4": { "ignore": true },
-   "CSSMOID_PKCS12_pbeWithSHAAnd40BitRC4": { "ignore": true },
-   "CSSMOID_PKCS12_pbeWithSHAAnd3Key3DESCBC": { "ignore": true },
-   "CSSMOID_PKCS12_pbeWithSHAAnd2Key3DESCBC": { "ignore": true },
-   "CSSMOID_PKCS12_pbeWithSHAAnd128BitRC2CBC": { "ignore": true },
-   "CSSMOID_PKCS12_pbewithSHAAnd40BitRC2CBC": { "ignore": true },
-   "CSSMOID_ObjectClass": { "ignore": true },
-   "CSSMOID_AliasedEntryName": { "ignore": true },
-   "CSSMOID_KnowledgeInformation": { "ignore": true },
-   "CSSMOID_CommonName": { "ignore": true },
-   "CSSMOID_Surname": { "ignore": true },
-   "CSSMOID_SerialNumber": { "ignore": true },
-   "CSSMOID_CountryName": { "ignore": true },
-   "CSSMOID_LocalityName": { "ignore": true },
-   "CSSMOID_StateProvinceName": { "ignore": true },
-   "CSSMOID_CollectiveStateProvinceName": { "ignore": true },
-   "CSSMOID_StreetAddress": { "ignore": true },
-   "CSSMOID_CollectiveStreetAddress": { "ignore": true },
-   "CSSMOID_OrganizationName": { "ignore": true },
-   "CSSMOID_CollectiveOrganizationName": { "ignore": true },
-   "CSSMOID_OrganizationalUnitName": { "ignore": true },
-   "CSSMOID_CollectiveOrganizationalUnitName": { "ignore": true },
-   "CSSMOID_Title": { "ignore": true },
-   "CSSMOID_Description": { "ignore": true },
-   "CSSMOID_SearchGuide": { "ignore": true },
-   "CSSMOID_BusinessCategory": { "ignore": true },
-   "CSSMOID_PostalAddress": { "ignore": true },
-   "CSSMOID_CollectivePostalAddress": { "ignore": true },
-   "CSSMOID_PostalCode": { "ignore": true },
-   "CSSMOID_CollectivePostalCode": { "ignore": true },
-   "CSSMOID_PostOfficeBox": { "ignore": true },
-   "CSSMOID_CollectivePostOfficeBox": { "ignore": true },
-   "CSSMOID_PhysicalDeliveryOfficeName": { "ignore": true },
-   "CSSMOID_CollectivePhysicalDeliveryOfficeName": { "ignore": true },
-   "CSSMOID_TelephoneNumber": { "ignore": true },
-   "CSSMOID_CollectiveTelephoneNumber": { "ignore": true },
-   "CSSMOID_TelexNumber": { "ignore": true },
-   "CSSMOID_CollectiveTelexNumber": { "ignore": true },
-   "CSSMOID_TelexTerminalIdentifier": { "ignore": true },
-   "CSSMOID_CollectiveTelexTerminalIdentifier": { "ignore": true },
-   "CSSMOID_FacsimileTelephoneNumber": { "ignore": true },
-   "CSSMOID_CollectiveFacsimileTelephoneNumber": { "ignore": true },
-   "CSSMOID_X_121Address": { "ignore": true },
-   "CSSMOID_InternationalISDNNumber": { "ignore": true },
-   "CSSMOID_CollectiveInternationalISDNNumber": { "ignore": true },
-   "CSSMOID_RegisteredAddress": { "ignore": true },
-   "CSSMOID_DestinationIndicator": { "ignore": true },
-   "CSSMOID_PreferredDeliveryMethod": { "ignore": true },
-   "CSSMOID_PresentationAddress": { "ignore": true },
-   "CSSMOID_SupportedApplicationContext": { "ignore": true },
-   "CSSMOID_Member": { "ignore": true },
-   "CSSMOID_Owner": { "ignore": true },
-   "CSSMOID_RoleOccupant": { "ignore": true },
-   "CSSMOID_SeeAlso": { "ignore": true },
-   "CSSMOID_UserPassword": { "ignore": true },
-   "CSSMOID_UserCertificate": { "ignore": true },
-   "CSSMOID_CACertificate": { "ignore": true },
-   "CSSMOID_AuthorityRevocationList": { "ignore": true },
-   "CSSMOID_CertificateRevocationList": { "ignore": true },
-   "CSSMOID_CrossCertificatePair": { "ignore": true },
-   "CSSMOID_Name": { "ignore": true },
-   "CSSMOID_GivenName": { "ignore": true },
-   "CSSMOID_Initials": { "ignore": true },
-   "CSSMOID_GenerationQualifier": { "ignore": true },
-   "CSSMOID_UniqueIdentifier": { "ignore": true },
-   "CSSMOID_DNQualifier": { "ignore": true },
-   "CSSMOID_EnhancedSearchGuide": { "ignore": true },
-   "CSSMOID_ProtocolInformation": { "ignore": true },
-   "CSSMOID_DistinguishedName": { "ignore": true },
-   "CSSMOID_UniqueMember": { "ignore": true },
-   "CSSMOID_HouseIdentifier": { "ignore": true },
-   "CSSMOID_EmailAddress": { "ignore": true },
-   "CSSMOID_UnstructuredName": { "ignore": true },
-   "CSSMOID_ContentType": { "ignore": true },
-   "CSSMOID_MessageDigest": { "ignore": true },
-   "CSSMOID_SigningTime": { "ignore": true },
-   "CSSMOID_CounterSignature": { "ignore": true },
-   "CSSMOID_ChallengePassword": { "ignore": true },
-   "CSSMOID_UnstructuredAddress": { "ignore": true },
-   "CSSMOID_ExtendedCertificateAttributes": { "ignore": true },
-   "CSSMOID_PKCS9_Id_Ct_TSTInfo": { "ignore": true },
-   "CSSMOID_PKCS9_TimeStampToken": { "ignore": true },
-   "CSSMOID_QT_CPS": { "ignore": true },
-   "CSSMOID_QT_UNOTICE": { "ignore": true },
-   "CSSMOID_AD_OCSP": { "ignore": true },
-   "CSSMOID_AD_CA_ISSUERS": { "ignore": true },
-   "CSSMOID_AD_TIME_STAMPING": { "ignore": true },
-   "CSSMOID_AD_CA_REPOSITORY": { "ignore": true },
-   "CSSMOID_PDA_DATE_OF_BIRTH": { "ignore": true },
-   "CSSMOID_PDA_PLACE_OF_BIRTH": { "ignore": true },
-   "CSSMOID_PDA_GENDER": { "ignore": true },
-   "CSSMOID_PDA_COUNTRY_CITIZEN": { "ignore": true },
-   "CSSMOID_PDA_COUNTRY_RESIDENCE": { "ignore": true },
-   "CSSMOID_OID_QCS_SYNTAX_V1": { "ignore": true },
-   "CSSMOID_OID_QCS_SYNTAX_V2": { "ignore": true },
-   "CSSMOID_ETSI_QCS_QC_COMPLIANCE": { "ignore": true },
-   "CSSMOID_ETSI_QCS_QC_LIMIT_VALUE": { "ignore": true },
-   "CSSMOID_ETSI_QCS_QC_RETENTION": { "ignore": true },
-   "CSSMOID_ETSI_QCS_QC_SSCD": { "ignore": true },
-   "CSSMOID_PKCS7_Data": { "ignore": true },
-   "CSSMOID_PKCS7_SignedData": { "ignore": true },
-   "CSSMOID_PKCS7_EnvelopedData": { "ignore": true },
-   "CSSMOID_PKCS7_SignedAndEnvelopedData": { "ignore": true },
-   "CSSMOID_PKCS7_DigestedData": { "ignore": true },
-   "CSSMOID_PKCS7_EncryptedData": { "ignore": true },
-   "CSSMOID_PKCS7_DataWithAttributes": { "ignore": true },
-   "CSSMOID_PKCS7_EncryptedPrivateKeyInfo": { "ignore": true },
-   "CSSMOID_PKCS9_FriendlyName": { "ignore": true },
-   "CSSMOID_PKCS9_LocalKeyId": { "ignore": true },
-   "CSSMOID_PKCS9_CertTypes": { "ignore": true },
-   "CSSMOID_PKCS9_CrlTypes": { "ignore": true },
-   "CSSMOID_PKCS9_X509Certificate": { "ignore": true },
-   "CSSMOID_PKCS9_SdsiCertificate": { "ignore": true },
-   "CSSMOID_PKCS9_X509Crl": { "ignore": true },
-   "CSSMOID_PKCS12_keyBag": { "ignore": true },
-   "CSSMOID_PKCS12_shroudedKeyBag": { "ignore": true },
-   "CSSMOID_PKCS12_certBag": { "ignore": true },
-   "CSSMOID_PKCS12_crlBag": { "ignore": true },
-   "CSSMOID_PKCS12_secretBag": { "ignore": true },
-   "CSSMOID_PKCS12_safeContentsBag": { "ignore": true },
-   "CSSMOID_UserID": { "ignore": true },
-   "CSSMOID_DomainComponent": { "ignore": true },
-   "CSSMOID_KERBv5_PKINIT_AUTH_DATA": { "ignore": true },
-   "CSSMOID_KERBv5_PKINIT_DH_KEY_DATA": { "ignore": true },
-   "CSSMOID_KERBv5_PKINIT_RKEY_DATA": { "ignore": true },
-   "CSSMOID_X9_62": { "ignore": true },
-   "CSSMOID_X9_62_FieldType": { "ignore": true },
-   "CSSMOID_X9_62_PubKeyType": { "ignore": true },
-   "CSSMOID_X9_62_EllCurve": { "ignore": true },
-   "CSSMOID_X9_62_C_TwoCurve": { "ignore": true },
-   "CSSMOID_X9_62_PrimeCurve": { "ignore": true },
-   "CSSMOID_X9_62_SigType": { "ignore": true },
-   "CSSMOID_secp192r1": { "ignore": true },
-   "CSSMOID_secp256r1": { "ignore": true },
-   "CSSMOID_Certicom": { "ignore": true },
-   "CSSMOID_CerticomEllCurve": { "ignore": true },
-   "CSSMOID_secp112r1": { "ignore": true },
-   "CSSMOID_secp112r2": { "ignore": true },
-   "CSSMOID_secp128r1": { "ignore": true },
-   "CSSMOID_secp128r2": { "ignore": true },
-   "CSSMOID_secp160k1": { "ignore": true },
-   "CSSMOID_secp160r1": { "ignore": true },
-   "CSSMOID_secp160r2": { "ignore": true },
-   "CSSMOID_secp192k1": { "ignore": true },
-   "CSSMOID_secp224k1": { "ignore": true },
-   "CSSMOID_secp224r1": { "ignore": true },
-   "CSSMOID_secp256k1": { "ignore": true },
-   "CSSMOID_secp384r1": { "ignore": true },
-   "CSSMOID_secp521r1": { "ignore": true },
-   "CSSMOID_sect113r1": { "ignore": true },
-   "CSSMOID_sect113r2": { "ignore": true },
-   "CSSMOID_sect131r1": { "ignore": true },
-   "CSSMOID_sect131r2": { "ignore": true },
-   "CSSMOID_sect163k1": { "ignore": true },
-   "CSSMOID_sect163r1": { "ignore": true },
-   "CSSMOID_sect163r2": { "ignore": true },
-   "CSSMOID_sect193r1": { "ignore": true },
-   "CSSMOID_sect193r2": { "ignore": true },
-   "CSSMOID_sect233k1": { "ignore": true },
-   "CSSMOID_sect233r1": { "ignore": true },
-   "CSSMOID_sect239k1": { "ignore": true },
-   "CSSMOID_sect283k1": { "ignore": true },
-   "CSSMOID_sect283r1": { "ignore": true },
-   "CSSMOID_sect409k1": { "ignore": true },
-   "CSSMOID_sect409r1": { "ignore": true },
-   "CSSMOID_sect571k1": { "ignore": true },
-   "CSSMOID_sect571r1": { "ignore": true },
+   "kSecUseDataProtectionKeychain": { "typestr": "@" },
    "kSecTransformActionCanExecute": { "typestr": "@" },
    "kSecTransformActionStartingExecution": { "typestr": "@" },
    "kSecTransformActionFinalize": { "typestr": "@" },
@@ -1658,6 +1396,8 @@
    "kSecPropertyTypeString": { "typestr": "@" },
    "kSecPropertyTypeURL": { "typestr": "@" },
    "kSecPropertyTypeDate": { "typestr": "@" },
+   "kSecPropertyTypeArray": { "typestr": "@" },
+   "kSecPropertyTypeNumber": { "typestr": "@" },
    "kSecOIDADC_CERT_POLICY": { "typestr": "@" },
    "kSecOIDAPPLE_CERT_POLICY": { "typestr": "@" },
    "kSecOIDAPPLE_EKU_CODE_SIGNING": { "typestr": "@" },
@@ -2191,55 +1931,34 @@
   "classes": {
   },
   "functions": {
-   "SecKeyRawSign": { "ignore": true },
-   "SecKeyRawVerify": { "ignore": true },
-   "SecKeyEncrypt": { "ignore": true },
-   "SecKeyDecrypt": { "ignore": true },
-   "SecKeyCreatePair": { "ignore": true },
-   "SecKeyGenerate": { "ignore": true },
-   "SecKeyGetCSSMKey": { "ignore": true },
-   "SecKeyGetCSPHandle": { "ignore": true },
-   "SecKeyGetCredentials": { "ignore": true },
-   "sec_retain": { "ignore": true },
-   "sec_release": { "ignore": true },
-   "SecAccessCreateFromOwnerAndACL": { "ignore": true },
-   "SecAccessGetOwnerAndACL": { "ignore": true },
-   "MDS_Initialize": { "ignore": true },
-   "CSSM_Init": { "ignore": true },
-   "SecKeychainItemCopyAttributesAndData": { "ignore": true },
-   "SecKeychainItemGetDLDBHandle": { "ignore": true },
-   "CMSEncoderSetEncapsulatedContentType": { "ignore": true },
-   "SecPolicyCreateWithOID": { "ignore": true },
-   "SecACLCreateFromSimpleContents": { "ignore": true },
-   "AuthorizationFreeItemSet": { "ignore": true },
-   "SecKeychainSearchGetTypeID": { "ignore": true },
-   "SecKeychainAttributeInfoForItemID": { "ignore": true },
-   "SecIdentitySearchCreate": { "ignore": true },
-   "SecKeyCreatePair": { "ignore": true },
-   "SecTrustSetParameters": { "ignore": true },
-   "SecKeychainItemExport": { "ignore": true },
-   "SecKeychainItemImport": { "ignore": true },
-   "SSLNewContext": { "ignore": true },
-   "SSLDisposeContext": { "ignore": true },
-   "SSLSetProtocolVersionEnabled": { "ignore": true },
-   "SSLGetProtocolVersionEnabled": { "ignore": true },
-   "SSLSetProtocolVersion": { "ignore": true },
-   "SSLGetProtocolVersion": { "ignore": true },
-   "SSLSetEnableCertVerify": { "ignore": true },
-   "SSLGetEnableCertVerify": { "ignore": true },
-   "SSLSetAllowsExpiredCerts": { "ignore": true },
-   "SSLGetAllowsExpiredCerts": { "ignore": true },
-   "SSLSetAllowsExpiredRoots": { "ignore": true },
-   "SSLGetAllowsExpiredRoots": { "ignore": true },
-   "SSLSetAllowsAnyRoot": { "ignore": true },
-   "SSLGetAllowsAnyRoot": { "ignore": true },
-   "SSLSetTrustedRoots": { "ignore": true },
-   "SSLCopyTrustedRoots": { "ignore": true },
-   "SSLCopyPeerCertificates": { "ignore": true },
-   "SSLSetRsaBlinding": { "ignore": true },
-   "SSLGetRsaBlinding": { "ignore": true },
-   "SecIdentityCopyPreference": { "ignore": true },
-   "SecIdentitySetPreference": { "ignore": true },
+   "sec_protocol_metadata_get_negotiated_tls_protocol_version":  {
+    "retval": { "type_override": "S" },
+    "args": {
+     "0": { "type_override": "@" }
+    }
+   },
+   "sec_identity_access_certificates": {
+    "retval": { "type_override": "@", "already_cfretained": true },
+    "args": {
+     "0": { "type_override": "@" }
+    }
+   },
+   "sec_identity_access_certificates": {
+    "retval": { "type_override": "B" },
+    "args": {
+     "0": { "type_override": "@" },
+     "1": {
+      "type_override": "@?" ,
+      "callable": {
+       "arguments": {
+	"0": { "type": "^v" },
+	"1": { "type": "@" }
+       },
+       "retval": { "type": "v" }
+      }
+     }
+    }
+   },
    "AuthorizationFree": {
     "retval": { "type_override": "i" },
     "args": {
@@ -3399,8 +3118,8 @@
      "0": { "type_override": "@" },
      "1": { "type_override": "I" },
      "2": { "type_override": "I" },
-     "3": { "type_modifier": "n", "type_override": "^{_SecItemImportExportKeyParameters=II@@@@@@}" },
-     "4": { "type_modifier": "o", "type_override": "^@", "already_cfretained": true }
+     "3": { "type_override": "n^{_SecItemImportExportKeyParameters=II@@@@@@}" },
+     "4": { "type_override": "o^@", "already_cfretained": true }
     }
    },
    "SecItemImport": {
@@ -3545,6 +3264,68 @@
      "2": { "type_override": "o^@" }
     },
     "retval": { "type_override": "Z" }
+   },
+   "sec_protocol_options_are_equal":  {
+    "retval": { "type_override": "B" },
+    "args": {
+     "0": { "type_override": "@" },
+     "1": { "type_override": "@" }
+    }
+   },
+   "sec_protocol_metadata_get_server_name": {
+    "retval": { "type_override": "^t", "c_array_delimited_by_null": true },
+    "args": {
+     "0": { "type_override": "@" }
+    }
+   },
+   "sec_protocol_options_set_local_identity":  {
+    "retval": { "type_override": "v" },
+    "args": {
+     "0": { "type_override": "@" },
+     "1": { "type_override": "@" }
+    }
+   },
+   "sec_protocol_options_append_tls_ciphersuite_group": {
+    "retval": { "type_override": "v" },
+    "args": {
+     "0": { "type_override": "@" },
+     "1": { "type_override": "S" }
+    }
+   },
+   "sec_protocol_options_append_tls_ciphersuite":  {
+    "retval": { "type_override": "v" },
+    "args": {
+     "0": { "type_override": "@" },
+     "1": { "type_override": "@" }
+    }
+   },
+   "sec_protocol_set_local_identity":  {
+    "retval": { "type_override": "v" },
+    "args": {
+     "0": { "type_override": "@" },
+     "1": { "type_override": "@" }
+    }
+   },
+   "SecTrustEvaluateAsyncWithError": {
+    "args":  {
+     "0": { "type_override": "@" },
+     "1": { "type_override": "^{dispatch_queue_s}" },
+     "2": {
+      "type_override": "@?",
+      "callable": {
+       "arguments": {
+        "0": { "type": "^v" },
+        "1": { "type": "@" },
+        "2": { "type": "B" },
+        "3": { "type": "@" }
+       },
+       "retval": {
+        "type": "v"
+       }
+      }
+     }
+    },
+    "retval": { "type_override": "i" }
    },
    "SecTrustEvaluateAsync": {
     "args":  {
@@ -4305,7 +4086,9 @@
    },
    "SSLSetIOFuncs": {
     "args": {
+     "0": { "type_override": "@" },
      "1": {
+      "type_override": "^?",
       "callable": {
        "arguments": {
         "0": { "type": "@" },
@@ -4317,6 +4100,7 @@
       "callable_retained": true
      },
      "2": {
+      "type_override": "^?",
       "callable": {
        "arguments": {
         "0": { "type": "@" },
@@ -5093,6 +4877,14 @@
      "type_override": "B"
     }
    },
+   "sec_protocol_metadata_get_negotiated_tls_ciphersuite": {
+    "args": {
+     "0": { "type_override": "@" }
+    },
+    "retval": {
+     "type_override": "I"
+    }
+   },
    "sec_protocol_metadata_get_negotiated_ciphersuite": {
     "args": {
      "0": { "type_override": "@" }
@@ -5172,6 +4964,235 @@
      "type_override": "B"
     }
    },
+   "sec_protocol_options_set_min_tls_protocol_version": {
+    "retval": { "type_override": "v" },
+    "args": {
+     "0": { "type_override": "@" },
+     "1": { "type_override": "i" }
+    }
+   },
+   "sec_protocol_options_set_max_tls_protocol_version": {
+    "retval": { "type_override": "v" },
+    "args": {
+     "0": { "type_override": "@" },
+     "1": { "type_override": "i" }
+    }
+   },
+   "sec_protocol_options_set_tls_min_version": {
+    "retval": { "type_override": "v" },
+    "args": {
+     "0": { "type_override": "@" },
+     "1": { "type_override": "i" }
+    }
+   },
+   "sec_protocol_options_set_tls_max_version": {
+    "retval": { "type_override": "v" },
+    "args": {
+     "0": { "type_override": "@" },
+     "1": { "type_override": "i" }
+    }
+   },
+   "sec_protocol_options_set_tls_diffie_hellman_parameters": {
+    "retval": { "type_override": "v" },
+    "args": {
+     "0": { "type_override": "@" },
+     "1": { "type_override": "@" }
+    }
+   },
+   "sec_protocol_options_get_default_min_tls_protocol_version": {
+    "retval": { "type_override": "i" },
+    "args": {
+     "0": { "type_override": "@" }
+    }
+   },
+   "sec_protocol_options_get_default_max_tls_protocol_version": {
+    "retval": { "type_override": "i" },
+    "args": {
+     "0": { "type_override": "@" }
+    }
+   },
+   "sec_protocol_options_get_default_min_dtls_protocol_version": {
+    "retval": { "type_override": "i" },
+    "args": {
+     "0": { "type_override": "@" }
+    }
+   },
+   "sec_protocol_options_get_default_max_dtls_protocol_version": {
+    "retval": { "type_override": "i" },
+    "args": {
+     "0": { "type_override": "@" }
+    }
+   },
+   "sec_protocol_options_add_tls_ciphersuite_group": {
+    "retval": { "type_override": "v" },
+    "args": {
+     "0": { "type_override": "@" },
+     "1": { "type_override": "S" }
+    }
+   },
+   "sec_protocol_options_add_tls_ciphersuite": {
+    "retval": { "type_override": "v" },
+    "args": {
+     "0": { "type_override": "@" },
+     "1": { "type_override": "i" }
+    }
+   },
+   "sec_protocol_options_set_key_update_block": {
+    "retval": { "type_override": "v" },
+    "args": {
+     "0": { "type_override": "@" },
+     "1": {
+      "type_override": "@?",
+      "callable": {
+       "arguments": {
+	"0": { "type": "^v" },
+	"1": { "type": "@" },
+	"2": {
+	 "type": "@?",
+         "callable": {
+          "arguments": {
+	   "0": { "type": "^v" }
+          },
+          "retval": { "type": "v" }
+         }
+	}
+       },
+       "retval": { "type": "v" }
+      }
+     },
+     "2": { "type_override": "^{dispatch_queue_s}" }
+    }
+   },
+   "sec_protocol_options_set_verify_block": {
+    "retval": { "type_override": "v" },
+    "args": {
+     "0": { "type_override": "@" },
+     "1": {
+      "type_override": "@?",
+      "callable": {
+       "arguments": {
+	"0": { "type": "^v" },
+	"1": { "type": "@" },
+	"2": { "type": "@" },
+	"3": {
+	 "type": "@?",
+         "callable": {
+          "arguments": {
+	   "0": { "type": "^v" }
+          },
+          "retval": { "type": "v" }
+         }
+	}
+       },
+       "retval": { "type": "v" }
+      }
+     },
+     "2": { "type_override": "^{dispatch_queue_s}" }
+    }
+   },
+   "sec_protocol_options_set_challenge_block": {
+    "retval": { "type_override": "v" },
+    "args": {
+     "0": { "type_override": "@" },
+     "1": {
+      "type_override": "@?",
+      "callable": {
+       "arguments": {
+	"0": { "type": "^v" },
+	"1": { "type": "@" },
+	"2": {
+	 "type": "@?",
+         "callable": {
+          "arguments": {
+	   "0": { "type": "^v" }
+          },
+          "retval": { "type": "v" }
+         }
+	}
+       },
+       "retval": { "type": "v" }
+      }
+     },
+     "2": { "type_override": "^{dispatch_queue_s}" }
+    }
+   },
+   "sec_protocol_options_set_peer_authentication_required": {
+    "retval": { "type_override": "v" },
+    "args": {
+     "0": { "type_override": "@" },
+     "0": { "type_override": "B" }
+    }
+   },
+   "sec_protocol_options_set_tls_renegotiation_enabled": {
+    "retval": { "type_override": "v" },
+    "args": {
+     "0": { "type_override": "@" },
+     "0": { "type_override": "B" }
+    }
+   },
+   "sec_protocol_options_set_tls_sct_enabled": {
+    "retval": { "type_override": "v" },
+    "args": {
+     "0": { "type_override": "@" },
+     "0": { "type_override": "B" }
+    }
+   },
+   "sec_protocol_options_set_tls_ocsp_enabled": {
+    "retval": { "type_override": "v" },
+    "args": {
+     "0": { "type_override": "@" },
+     "0": { "type_override": "B" }
+    }
+   },
+   "sec_protocol_options_set_tls_false_start_enabled": {
+    "retval": { "type_override": "v" },
+    "args": {
+     "0": { "type_override": "@" },
+     "0": { "type_override": "B" }
+    }
+   },
+   "sec_protocol_options_set_tls_resumption_enabled": {
+    "retval": { "type_override": "v" },
+    "args": {
+     "0": { "type_override": "@" },
+     "0": { "type_override": "B" }
+    }
+   },
+   "sec_protocol_options_set_tls_is_fallback_attempt": {
+    "retval": { "type_override": "v" },
+    "args": {
+     "0": { "type_override": "@" },
+     "0": { "type_override": "B" }
+    }
+   },
+   "sec_protocol_options_set_tls_tickets_enabled": {
+    "retval": { "type_override": "v" },
+    "args": {
+     "0": { "type_override": "@" },
+     "0": { "type_override": "B" }
+    }
+   },
+   "sec_protocol_options_add_pre_shared_key": {
+    "retval": { "type_override": "v" },
+    "args": {
+     "0": { "type_override": "@" },
+     "0": { "type_override": "@" }
+    }
+   },
+   "sec_protocol_options_add_tls_application_protocol": {
+    "retval": { "type_override": "v" },
+    "args": {
+     "0": { "type_override": "@" },
+     "1": { "type_override": "^t", "type_modifier": "n", "c_array_delimited_by_null": true }
+    }
+   },
+   "sec_protocol_options_set_tls_server_name": {
+    "retval": { "type_override": "v" },
+    "args": {
+     "0": { "type_override": "@" },
+     "1": { "type_override": "^t", "type_modifier": "n", "c_array_delimited_by_null": true }
+    }
+   },
    "sec_protocol_metadata_create_secret_with_context": {
     "args": {
      "0": { "type_override": "@" },
@@ -5185,9 +5206,6 @@
      "type_override": "@",
      "already_retained": true
     }
-   },
-   "sec_protocol_metadata_get_server_name": {
-    "retval": { "c_array_delimited_by_null": true, "type_override": "^t" }
    },
    "sec_protocol_metadata_create_secret": {
     "args": {
