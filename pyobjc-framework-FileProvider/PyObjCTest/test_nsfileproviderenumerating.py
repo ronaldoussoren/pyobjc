@@ -9,6 +9,11 @@ class TestNSFileProviderEnumerationHelper (FileProvider.NSObject):
 
 
 class TestNSFileProviderEnumeration (TestCase):
+    @min_os_level('10.15')
+    def test_constants(self):
+        self.assertIsInstance(FileProvider.NSFileProviderInitialPageSortedByDate, FileProvider.NSData)
+        self.assertIsInstance(FileProvider.NSFileProviderInitialPageSortedByName, FileProvider.NSData)
+
     @min_sdk_level('10.15')
     def test_protocols(self):
         objc.protocolNamed('NSFileProviderEnumerationObserver')

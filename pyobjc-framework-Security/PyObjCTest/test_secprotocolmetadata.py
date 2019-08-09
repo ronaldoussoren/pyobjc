@@ -50,6 +50,9 @@ class TestSecProtocolMetadata (TestCase):
     def test_functions10_15(self):
         Security.sec_protocol_metadata_get_negotiated_tls_protocol_version
 
+        self.assertArgIsBlock(Security.sec_protocol_metadata_access_pre_shared_keys, 1, b'v@@')
+        Security.sec_protocol_options_set_tls_pre_shared_key_identity_hint
+
 
 if __name__ == "__main__":
     main()

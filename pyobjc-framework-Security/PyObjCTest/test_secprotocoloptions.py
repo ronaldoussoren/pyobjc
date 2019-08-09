@@ -8,6 +8,7 @@ sec_protocol_challenge_complete_t = b'v@'
 sec_protocol_challenge_t = b'v@@?'
 sec_protocol_verify_complete_t = b'vB'
 sec_protocol_verify_t = b'v@@@?'
+sec_protocol_pre_shared_key_selection_t = b'v@@@?'
 
 
 class TestSecProtocolOptions (TestCase):
@@ -51,6 +52,10 @@ class TestSecProtocolOptions (TestCase):
         self.assertArgIsBlock(Security.sec_protocol_options_set_key_update_block, 1, sec_protocol_key_update_t)
         self.assertArgIsBlock(Security.sec_protocol_options_set_challenge_block, 1, sec_protocol_challenge_t)
         self.assertArgIsBlock(Security.sec_protocol_options_set_verify_block, 1, sec_protocol_verify_t)
+
+        Security.sec_protocol_options_set_tls_pre_shared_key_identity_hint
+
+        self.assertArgIsBlock(Security.sec_protocol_options_set_pre_shared_key_selection_block, 1, sec_protocol_verify_t)
 
 
 

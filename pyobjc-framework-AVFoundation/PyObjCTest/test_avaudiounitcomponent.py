@@ -19,6 +19,10 @@ class TestAVAudioUnitComponent (TestCase):
 
         self.assertIsInstance(AVFoundation.AVAudioUnitComponentTagsDidChangeNotification, unicode)
 
+    @min_os_level('10.15')
+    def testConstants10_15(self):
+        self.assertIsInstance(AVFoundation.AVAudioUnitComponentManagerRegistrationsChangedNotification, unicode)
+
     @min_os_level('10.10')
     def testMethods10_10(self):
         self.assertResultIsBOOL(AVFoundation.AVAudioUnitComponent.isSandboxSafe)

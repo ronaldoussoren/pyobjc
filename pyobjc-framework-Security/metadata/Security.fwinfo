@@ -5030,11 +5030,63 @@
      "1": { "type_override": "S" }
     }
    },
+   "sec_protocol_options_set_tls_pre_shared_key_identity_hint": {
+    "retval": { "type_override": "v" },
+    "args": {
+     "0": { "type_override": "@" },
+     "1": { "type_override": "@" }
+    }
+   },
    "sec_protocol_options_add_tls_ciphersuite": {
     "retval": { "type_override": "v" },
     "args": {
      "0": { "type_override": "@" },
      "1": { "type_override": "i" }
+    }
+   },
+   "sec_protocol_options_set_pre_shared_key_selection_block": {
+    "retval": { "type_override": "v" },
+    "args": {
+     "0": { "type_override": "@" },
+     "1": {
+      "type_override": "@?",
+      "callable": {
+       "arguments": {
+	"0": { "type": "^v" },
+	"1": { "type": "@" },
+	"2": { "type": "@" },
+	"3": {
+	 "type": "@?",
+	 "callable": {
+          "arguments": {
+	   "0": { "type": "^v" },
+	   "1": { "type": "@" }
+          },
+          "retval": { "type": "v" }
+	 }
+	}
+       },
+       "retval": { "type": "v" }
+      }
+     },
+     "2": { "type_override": "^{dispatch_queue_s}" }
+    }
+   },
+   "sec_protocol_metadata_access_pre_shared_keys": {
+    "retval": { "type_override": "B" },
+    "args": {
+     "0": { "type_override": "@" },
+     "1": {
+      "type_override": "@?",
+      "callable": {
+       "arguments": {
+	"0": { "type": "^v" },
+	"1": { "type": "@" },
+	"2": { "type": "@" }
+       },
+       "retval": { "type": "v" }
+      }
+     }
     }
    },
    "sec_protocol_options_set_key_update_block": {

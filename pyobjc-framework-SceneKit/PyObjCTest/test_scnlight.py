@@ -32,7 +32,6 @@ if os_level_key(os_release()) < os_level_key('10.12') or sys.maxsize >= 2**32:
             self.assertEqual(SceneKit.SCNLightProbeUpdateTypeNever, 0)
             self.assertEqual(SceneKit.SCNLightProbeUpdateTypeRealtime, 1)
 
-            self.assertEqual(SceneKit.SCNLightAreaTypeLine, 0)
             self.assertEqual(SceneKit.SCNLightAreaTypeRectangle, 1)
             self.assertEqual(SceneKit.SCNLightAreaTypePolygon, 4)
 

@@ -27,7 +27,9 @@ class TestAVPlayer (TestCase):
         self.assertIsInstance(AVFoundation.AVPlayerWaitingWhileEvaluatingBufferingRateReason, unicode)
         self.assertIsInstance(AVFoundation.AVPlayerWaitingWithNoItemToPlayReason, unicode)
 
-
+    @min_os_level('10.15')
+    def testConstants10_15(self):
+        self.assertIsInstance(AVFoundation.AVPlayerEligibleForHDRPlaybackDidChangeNotification, unicode)
 
     @min_os_level('10.7')
     def testMethods(self):
@@ -66,6 +68,10 @@ class TestAVPlayer (TestCase):
     def testMethods10_14(self):
         self.assertResultIsBOOL(AVFoundation.AVPlayer.preventsDisplaySleepDuringVideoPlayback)
         self.assertArgIsBOOL(AVFoundation.AVPlayer.setPreventsDisplaySleepDuringVideoPlayback_, 0)
+
+    @min_os_level('10.15')
+    def testMethods10_15(self):
+        self.assertResultIsBOOL(AVFoundation.AVPlayer.eligibleForHDRPlayback)
 
 if __name__ == "__main__":
     main()

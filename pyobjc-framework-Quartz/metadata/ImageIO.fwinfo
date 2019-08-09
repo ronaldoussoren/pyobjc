@@ -4,1319 +4,1373 @@
  "definitions": {
   "cftypes": {
    "CGImageDestinationRef": {
-    "gettypeid_func": "CGImageDestinationGetTypeID", 
+    "gettypeid_func": "CGImageDestinationGetTypeID",
     "typestr": "^{CGImageDestination=}"
-   }, 
+   },
    "CGImageMetadataRef": {
-    "gettypeid_func": "CGImageMetadataGetTypeID", 
+    "gettypeid_func": "CGImageMetadataGetTypeID",
     "typestr": "^{CGImageMetadata=}"
-   }, 
+   },
    "CGImageMetadataTagRef": {
-    "gettypeid_func": "CGImageMetadataTagGetTypeID", 
+    "gettypeid_func": "CGImageMetadataTagGetTypeID",
     "typestr": "^{CGImageMetadataTag=}"
-   }, 
+   },
    "CGImageSourceRef": {
-    "gettypeid_func": "CGImageSourceGetTypeID", 
+    "gettypeid_func": "CGImageSourceGetTypeID",
     "typestr": "^{CGImageSource=}"
    }
-  }, 
-  "classes": {}, 
+  },
+  "classes": {},
   "enum": {
    "IMAGEIO_PNG_ALL_FILTERS": {
     "value": 248
-   }, 
+   },
    "IMAGEIO_PNG_FILTER_AVG": {
     "value": 64
-   }, 
+   },
    "IMAGEIO_PNG_FILTER_NONE": {
     "value": 8
-   }, 
+   },
    "IMAGEIO_PNG_FILTER_PAETH": {
     "value": 128
-   }, 
+   },
    "IMAGEIO_PNG_FILTER_SUB": {
     "value": 16
-   }, 
+   },
    "IMAGEIO_PNG_FILTER_UP": {
     "value": 32
-   }, 
+   },
    "IMAGEIO_PNG_NO_FILTERS": {
     "value": 0
    }
-  }, 
+  },
   "externs": {
+   "kCGImagePropertyIsSticker": {
+    "typestr": "@"
+   },
    "kCGImageAuxiliaryDataInfoData": {
     "typestr": "@"
-   }, 
+   },
    "kCGImageAuxiliaryDataInfoDataDescription": {
     "typestr": "@"
-   }, 
+   },
    "kCGImageAuxiliaryDataInfoMetadata": {
     "typestr": "@"
-   }, 
+   },
    "kCGImageAuxiliaryDataTypeDepth": {
     "typestr": "@"
-   }, 
+   },
    "kCGImageAuxiliaryDataTypeDisparity": {
     "typestr": "@"
-   }, 
+   },
    "kCGImageAuxiliaryDataTypePortraitEffectsMatte": {
     "typestr": "@"
-   }, 
+   },
    "kCGImageDestinationOptimizeColorForSharing": {
     "typestr": "@"
-   }, 
+   },
    "kCGImageMetadataNamespaceIPTCExtension": {
     "typestr": "@"
-   }, 
+   },
    "kCGImageMetadataPrefixIPTCExtension": {
     "typestr": "@"
-   }, 
+   },
    "kCGImagePropertyAuxiliaryData": {
     "typestr": "@"
-   }, 
+   },
    "kCGImagePropertyAuxiliaryDataType": {
     "typestr": "@"
-   }, 
+   },
    "kCGImagePropertyBytesPerRow": {
     "typestr": "@"
-   }, 
+   },
    "kCGImagePropertyDNGActiveArea": {
     "typestr": "@"
-   }, 
+   },
    "kCGImagePropertyDNGAnalogBalance": {
     "typestr": "@"
-   }, 
+   },
    "kCGImagePropertyDNGAntiAliasStrength": {
     "typestr": "@"
-   }, 
+   },
    "kCGImagePropertyDNGAsShotICCProfile": {
     "typestr": "@"
-   }, 
+   },
    "kCGImagePropertyDNGAsShotNeutral": {
     "typestr": "@"
-   }, 
+   },
    "kCGImagePropertyDNGAsShotPreProfileMatrix": {
     "typestr": "@"
-   }, 
+   },
    "kCGImagePropertyDNGAsShotProfileName": {
     "typestr": "@"
-   }, 
+   },
    "kCGImagePropertyDNGAsShotWhiteXY": {
     "typestr": "@"
-   }, 
+   },
    "kCGImagePropertyDNGBaselineExposure": {
     "typestr": "@"
-   }, 
+   },
    "kCGImagePropertyDNGBaselineExposureOffset": {
     "typestr": "@"
-   }, 
+   },
    "kCGImagePropertyDNGBaselineNoise": {
     "typestr": "@"
-   }, 
+   },
    "kCGImagePropertyDNGBaselineSharpness": {
     "typestr": "@"
-   }, 
+   },
    "kCGImagePropertyDNGBayerGreenSplit": {
     "typestr": "@"
-   }, 
+   },
    "kCGImagePropertyDNGBestQualityScale": {
     "typestr": "@"
-   }, 
+   },
    "kCGImagePropertyDNGBlackLevel": {
     "typestr": "@"
-   }, 
+   },
    "kCGImagePropertyDNGBlackLevelDeltaH": {
     "typestr": "@"
-   }, 
+   },
    "kCGImagePropertyDNGBlackLevelDeltaV": {
     "typestr": "@"
-   }, 
+   },
    "kCGImagePropertyDNGBlackLevelRepeatDim": {
     "typestr": "@"
-   }, 
+   },
    "kCGImagePropertyDNGCFALayout": {
     "typestr": "@"
-   }, 
+   },
    "kCGImagePropertyDNGCFAPlaneColor": {
     "typestr": "@"
-   }, 
+   },
    "kCGImagePropertyDNGCalibrationIlluminant1": {
     "typestr": "@"
-   }, 
+   },
    "kCGImagePropertyDNGCalibrationIlluminant2": {
     "typestr": "@"
-   }, 
+   },
    "kCGImagePropertyDNGCameraCalibration1": {
     "typestr": "@"
-   }, 
+   },
    "kCGImagePropertyDNGCameraCalibration2": {
     "typestr": "@"
-   }, 
+   },
    "kCGImagePropertyDNGCameraCalibrationSignature": {
     "typestr": "@"
-   }, 
+   },
    "kCGImagePropertyDNGChromaBlurRadius": {
     "typestr": "@"
-   }, 
+   },
    "kCGImagePropertyDNGColorMatrix1": {
     "typestr": "@"
-   }, 
+   },
    "kCGImagePropertyDNGColorMatrix2": {
     "typestr": "@"
-   }, 
+   },
    "kCGImagePropertyDNGColorimetricReference": {
     "typestr": "@"
-   }, 
+   },
    "kCGImagePropertyDNGCurrentICCProfile": {
     "typestr": "@"
-   }, 
+   },
    "kCGImagePropertyDNGCurrentPreProfileMatrix": {
     "typestr": "@"
-   }, 
+   },
    "kCGImagePropertyDNGDefaultBlackRender": {
     "typestr": "@"
-   }, 
+   },
    "kCGImagePropertyDNGDefaultCropOrigin": {
     "typestr": "@"
-   }, 
+   },
    "kCGImagePropertyDNGDefaultCropSize": {
     "typestr": "@"
-   }, 
+   },
    "kCGImagePropertyDNGDefaultScale": {
     "typestr": "@"
-   }, 
+   },
    "kCGImagePropertyDNGDefaultUserCrop": {
     "typestr": "@"
-   }, 
+   },
    "kCGImagePropertyDNGExtraCameraProfiles": {
     "typestr": "@"
-   }, 
+   },
    "kCGImagePropertyDNGFixVignetteRadial": {
     "typestr": "@"
-   }, 
+   },
    "kCGImagePropertyDNGForwardMatrix1": {
     "typestr": "@"
-   }, 
+   },
    "kCGImagePropertyDNGForwardMatrix2": {
     "typestr": "@"
-   }, 
+   },
    "kCGImagePropertyDNGLinearResponseLimit": {
     "typestr": "@"
-   }, 
+   },
    "kCGImagePropertyDNGLinearizationTable": {
     "typestr": "@"
-   }, 
+   },
    "kCGImagePropertyDNGMakerNoteSafety": {
     "typestr": "@"
-   }, 
+   },
    "kCGImagePropertyDNGMaskedAreas": {
     "typestr": "@"
-   }, 
+   },
    "kCGImagePropertyDNGNewRawImageDigest": {
     "typestr": "@"
-   }, 
+   },
    "kCGImagePropertyDNGNoiseProfile": {
     "typestr": "@"
-   }, 
+   },
    "kCGImagePropertyDNGNoiseReductionApplied": {
     "typestr": "@"
-   }, 
+   },
    "kCGImagePropertyDNGOpcodeList1": {
     "typestr": "@"
-   }, 
+   },
    "kCGImagePropertyDNGOpcodeList2": {
     "typestr": "@"
-   }, 
+   },
    "kCGImagePropertyDNGOpcodeList3": {
     "typestr": "@"
-   }, 
+   },
    "kCGImagePropertyDNGOriginalBestQualityFinalSize": {
     "typestr": "@"
-   }, 
+   },
    "kCGImagePropertyDNGOriginalDefaultCropSize": {
     "typestr": "@"
-   }, 
+   },
    "kCGImagePropertyDNGOriginalDefaultFinalSize": {
     "typestr": "@"
-   }, 
+   },
    "kCGImagePropertyDNGOriginalRawFileData": {
     "typestr": "@"
-   }, 
+   },
    "kCGImagePropertyDNGOriginalRawFileDigest": {
     "typestr": "@"
-   }, 
+   },
    "kCGImagePropertyDNGOriginalRawFileName": {
     "typestr": "@"
-   }, 
+   },
    "kCGImagePropertyDNGPreviewApplicationName": {
     "typestr": "@"
-   }, 
+   },
    "kCGImagePropertyDNGPreviewApplicationVersion": {
     "typestr": "@"
-   }, 
+   },
    "kCGImagePropertyDNGPreviewColorSpace": {
     "typestr": "@"
-   }, 
+   },
    "kCGImagePropertyDNGPreviewDateTime": {
     "typestr": "@"
-   }, 
+   },
    "kCGImagePropertyDNGPreviewSettingsDigest": {
     "typestr": "@"
-   }, 
+   },
    "kCGImagePropertyDNGPreviewSettingsName": {
     "typestr": "@"
-   }, 
+   },
    "kCGImagePropertyDNGPrivateData": {
     "typestr": "@"
-   }, 
+   },
    "kCGImagePropertyDNGProfileCalibrationSignature": {
     "typestr": "@"
-   }, 
+   },
    "kCGImagePropertyDNGProfileCopyright": {
     "typestr": "@"
-   }, 
+   },
    "kCGImagePropertyDNGProfileEmbedPolicy": {
     "typestr": "@"
-   }, 
+   },
    "kCGImagePropertyDNGProfileHueSatMapData1": {
     "typestr": "@"
-   }, 
+   },
    "kCGImagePropertyDNGProfileHueSatMapData2": {
     "typestr": "@"
-   }, 
+   },
    "kCGImagePropertyDNGProfileHueSatMapDims": {
     "typestr": "@"
-   }, 
+   },
    "kCGImagePropertyDNGProfileHueSatMapEncoding": {
     "typestr": "@"
-   }, 
+   },
    "kCGImagePropertyDNGProfileLookTableData": {
     "typestr": "@"
-   }, 
+   },
    "kCGImagePropertyDNGProfileLookTableDims": {
     "typestr": "@"
-   }, 
+   },
    "kCGImagePropertyDNGProfileLookTableEncoding": {
     "typestr": "@"
-   }, 
+   },
    "kCGImagePropertyDNGProfileName": {
     "typestr": "@"
-   }, 
+   },
    "kCGImagePropertyDNGProfileToneCurve": {
     "typestr": "@"
-   }, 
+   },
    "kCGImagePropertyDNGRawDataUniqueID": {
     "typestr": "@"
-   }, 
+   },
    "kCGImagePropertyDNGRawImageDigest": {
     "typestr": "@"
-   }, 
+   },
    "kCGImagePropertyDNGRawToPreviewGain": {
     "typestr": "@"
-   }, 
+   },
    "kCGImagePropertyDNGReductionMatrix1": {
     "typestr": "@"
-   }, 
+   },
    "kCGImagePropertyDNGReductionMatrix2": {
     "typestr": "@"
-   }, 
+   },
    "kCGImagePropertyDNGRowInterleaveFactor": {
     "typestr": "@"
-   }, 
+   },
    "kCGImagePropertyDNGShadowScale": {
     "typestr": "@"
-   }, 
+   },
    "kCGImagePropertyDNGSubTileBlockSize": {
     "typestr": "@"
-   }, 
+   },
    "kCGImagePropertyDNGWarpFisheye": {
     "typestr": "@"
-   }, 
+   },
    "kCGImagePropertyDNGWarpRectilinear": {
     "typestr": "@"
-   }, 
+   },
    "kCGImagePropertyDNGWhiteLevel": {
     "typestr": "@"
-   }, 
+   },
    "kCGImagePropertyExifSubsecTimeOriginal": {
     "typestr": "@"
-   }, 
+   },
    "kCGImagePropertyFileContentsDictionary": {
     "typestr": "@"
-   }, 
+   },
    "kCGImagePropertyHeight": {
     "typestr": "@"
-   }, 
+   },
    "kCGImagePropertyIPTCExtAboutCvTerm": {
     "typestr": "@"
-   }, 
+   },
    "kCGImagePropertyIPTCExtAboutCvTermCvId": {
     "typestr": "@"
-   }, 
+   },
    "kCGImagePropertyIPTCExtAboutCvTermId": {
     "typestr": "@"
-   }, 
+   },
    "kCGImagePropertyIPTCExtAboutCvTermName": {
     "typestr": "@"
-   }, 
+   },
    "kCGImagePropertyIPTCExtAboutCvTermRefinedAbout": {
     "typestr": "@"
-   }, 
+   },
    "kCGImagePropertyIPTCExtAddlModelInfo": {
     "typestr": "@"
-   }, 
+   },
    "kCGImagePropertyIPTCExtArtworkCircaDateCreated": {
     "typestr": "@"
-   }, 
+   },
    "kCGImagePropertyIPTCExtArtworkContentDescription": {
     "typestr": "@"
-   }, 
+   },
    "kCGImagePropertyIPTCExtArtworkContributionDescription": {
     "typestr": "@"
-   }, 
+   },
    "kCGImagePropertyIPTCExtArtworkCopyrightNotice": {
     "typestr": "@"
-   }, 
+   },
    "kCGImagePropertyIPTCExtArtworkCopyrightOwnerID": {
     "typestr": "@"
-   }, 
+   },
    "kCGImagePropertyIPTCExtArtworkCopyrightOwnerName": {
     "typestr": "@"
-   }, 
+   },
    "kCGImagePropertyIPTCExtArtworkCreator": {
     "typestr": "@"
-   }, 
+   },
    "kCGImagePropertyIPTCExtArtworkCreatorID": {
     "typestr": "@"
-   }, 
+   },
    "kCGImagePropertyIPTCExtArtworkDateCreated": {
     "typestr": "@"
-   }, 
+   },
    "kCGImagePropertyIPTCExtArtworkLicensorID": {
     "typestr": "@"
-   }, 
+   },
    "kCGImagePropertyIPTCExtArtworkLicensorName": {
     "typestr": "@"
-   }, 
+   },
    "kCGImagePropertyIPTCExtArtworkOrObject": {
     "typestr": "@"
-   }, 
+   },
    "kCGImagePropertyIPTCExtArtworkPhysicalDescription": {
     "typestr": "@"
-   }, 
+   },
    "kCGImagePropertyIPTCExtArtworkSource": {
     "typestr": "@"
-   }, 
+   },
    "kCGImagePropertyIPTCExtArtworkSourceInvURL": {
     "typestr": "@"
-   }, 
+   },
    "kCGImagePropertyIPTCExtArtworkSourceInventoryNo": {
     "typestr": "@"
-   }, 
+   },
    "kCGImagePropertyIPTCExtArtworkStylePeriod": {
     "typestr": "@"
-   }, 
+   },
    "kCGImagePropertyIPTCExtArtworkTitle": {
     "typestr": "@"
-   }, 
+   },
    "kCGImagePropertyIPTCExtAudioBitrate": {
     "typestr": "@"
-   }, 
+   },
    "kCGImagePropertyIPTCExtAudioBitrateMode": {
     "typestr": "@"
-   }, 
+   },
    "kCGImagePropertyIPTCExtAudioChannelCount": {
     "typestr": "@"
-   }, 
+   },
    "kCGImagePropertyIPTCExtCircaDateCreated": {
     "typestr": "@"
-   }, 
+   },
    "kCGImagePropertyIPTCExtContainerFormat": {
     "typestr": "@"
-   }, 
+   },
    "kCGImagePropertyIPTCExtContainerFormatIdentifier": {
     "typestr": "@"
-   }, 
+   },
    "kCGImagePropertyIPTCExtContainerFormatName": {
     "typestr": "@"
-   }, 
+   },
    "kCGImagePropertyIPTCExtContributor": {
     "typestr": "@"
-   }, 
+   },
    "kCGImagePropertyIPTCExtContributorIdentifier": {
     "typestr": "@"
-   }, 
+   },
    "kCGImagePropertyIPTCExtContributorName": {
     "typestr": "@"
-   }, 
+   },
    "kCGImagePropertyIPTCExtContributorRole": {
     "typestr": "@"
-   }, 
+   },
    "kCGImagePropertyIPTCExtControlledVocabularyTerm": {
     "typestr": "@"
-   }, 
+   },
    "kCGImagePropertyIPTCExtCopyrightYear": {
     "typestr": "@"
-   }, 
+   },
    "kCGImagePropertyIPTCExtCreator": {
     "typestr": "@"
-   }, 
+   },
    "kCGImagePropertyIPTCExtCreatorIdentifier": {
     "typestr": "@"
-   }, 
+   },
    "kCGImagePropertyIPTCExtCreatorName": {
     "typestr": "@"
-   }, 
+   },
    "kCGImagePropertyIPTCExtCreatorRole": {
     "typestr": "@"
-   }, 
+   },
    "kCGImagePropertyIPTCExtDataOnScreen": {
     "typestr": "@"
-   }, 
+   },
    "kCGImagePropertyIPTCExtDataOnScreenRegion": {
     "typestr": "@"
-   }, 
+   },
    "kCGImagePropertyIPTCExtDataOnScreenRegionD": {
     "typestr": "@"
-   }, 
+   },
    "kCGImagePropertyIPTCExtDataOnScreenRegionH": {
     "typestr": "@"
-   }, 
+   },
    "kCGImagePropertyIPTCExtDataOnScreenRegionText": {
     "typestr": "@"
-   }, 
+   },
    "kCGImagePropertyIPTCExtDataOnScreenRegionUnit": {
     "typestr": "@"
-   }, 
+   },
    "kCGImagePropertyIPTCExtDataOnScreenRegionW": {
     "typestr": "@"
-   }, 
+   },
    "kCGImagePropertyIPTCExtDataOnScreenRegionX": {
     "typestr": "@"
-   }, 
+   },
    "kCGImagePropertyIPTCExtDataOnScreenRegionY": {
     "typestr": "@"
-   }, 
+   },
    "kCGImagePropertyIPTCExtDigitalImageGUID": {
     "typestr": "@"
-   }, 
+   },
    "kCGImagePropertyIPTCExtDigitalSourceFileType": {
     "typestr": "@"
-   }, 
+   },
    "kCGImagePropertyIPTCExtDigitalSourceType": {
     "typestr": "@"
-   }, 
+   },
    "kCGImagePropertyIPTCExtDopesheet": {
     "typestr": "@"
-   }, 
+   },
    "kCGImagePropertyIPTCExtDopesheetLink": {
     "typestr": "@"
-   }, 
+   },
    "kCGImagePropertyIPTCExtDopesheetLinkLink": {
     "typestr": "@"
-   }, 
+   },
    "kCGImagePropertyIPTCExtDopesheetLinkLinkQualifier": {
     "typestr": "@"
-   }, 
+   },
    "kCGImagePropertyIPTCExtEmbdEncRightsExpr": {
     "typestr": "@"
-   }, 
+   },
    "kCGImagePropertyIPTCExtEmbeddedEncodedRightsExpr": {
     "typestr": "@"
-   }, 
+   },
    "kCGImagePropertyIPTCExtEmbeddedEncodedRightsExprLangID": {
     "typestr": "@"
-   }, 
+   },
    "kCGImagePropertyIPTCExtEmbeddedEncodedRightsExprType": {
     "typestr": "@"
-   }, 
+   },
    "kCGImagePropertyIPTCExtEpisode": {
     "typestr": "@"
-   }, 
+   },
    "kCGImagePropertyIPTCExtEpisodeIdentifier": {
     "typestr": "@"
-   }, 
+   },
    "kCGImagePropertyIPTCExtEpisodeName": {
     "typestr": "@"
-   }, 
+   },
    "kCGImagePropertyIPTCExtEpisodeNumber": {
     "typestr": "@"
-   }, 
+   },
    "kCGImagePropertyIPTCExtEvent": {
     "typestr": "@"
-   }, 
+   },
    "kCGImagePropertyIPTCExtExternalMetadataLink": {
     "typestr": "@"
-   }, 
+   },
    "kCGImagePropertyIPTCExtFeedIdentifier": {
     "typestr": "@"
-   }, 
+   },
    "kCGImagePropertyIPTCExtGenre": {
     "typestr": "@"
-   }, 
+   },
    "kCGImagePropertyIPTCExtGenreCvId": {
     "typestr": "@"
-   }, 
+   },
    "kCGImagePropertyIPTCExtGenreCvTermId": {
     "typestr": "@"
-   }, 
+   },
    "kCGImagePropertyIPTCExtGenreCvTermName": {
     "typestr": "@"
-   }, 
+   },
    "kCGImagePropertyIPTCExtGenreCvTermRefinedAbout": {
     "typestr": "@"
-   }, 
+   },
    "kCGImagePropertyIPTCExtHeadline": {
     "typestr": "@"
-   }, 
+   },
    "kCGImagePropertyIPTCExtIPTCLastEdited": {
     "typestr": "@"
-   }, 
+   },
    "kCGImagePropertyIPTCExtLinkedEncRightsExpr": {
     "typestr": "@"
-   }, 
+   },
    "kCGImagePropertyIPTCExtLinkedEncodedRightsExpr": {
     "typestr": "@"
-   }, 
+   },
    "kCGImagePropertyIPTCExtLinkedEncodedRightsExprLangID": {
     "typestr": "@"
-   }, 
+   },
    "kCGImagePropertyIPTCExtLinkedEncodedRightsExprType": {
     "typestr": "@"
-   }, 
+   },
    "kCGImagePropertyIPTCExtLocationCity": {
     "typestr": "@"
-   }, 
+   },
    "kCGImagePropertyIPTCExtLocationCountryCode": {
     "typestr": "@"
-   }, 
+   },
    "kCGImagePropertyIPTCExtLocationCountryName": {
     "typestr": "@"
-   }, 
+   },
    "kCGImagePropertyIPTCExtLocationCreated": {
     "typestr": "@"
-   }, 
+   },
    "kCGImagePropertyIPTCExtLocationGPSAltitude": {
     "typestr": "@"
-   }, 
+   },
    "kCGImagePropertyIPTCExtLocationGPSLatitude": {
     "typestr": "@"
-   }, 
+   },
    "kCGImagePropertyIPTCExtLocationGPSLongitude": {
     "typestr": "@"
-   }, 
+   },
    "kCGImagePropertyIPTCExtLocationIdentifier": {
     "typestr": "@"
-   }, 
+   },
    "kCGImagePropertyIPTCExtLocationLocationId": {
     "typestr": "@"
-   }, 
+   },
    "kCGImagePropertyIPTCExtLocationLocationName": {
     "typestr": "@"
-   }, 
+   },
    "kCGImagePropertyIPTCExtLocationProvinceState": {
     "typestr": "@"
-   }, 
+   },
    "kCGImagePropertyIPTCExtLocationShown": {
     "typestr": "@"
-   }, 
+   },
    "kCGImagePropertyIPTCExtLocationSublocation": {
     "typestr": "@"
-   }, 
+   },
    "kCGImagePropertyIPTCExtLocationWorldRegion": {
     "typestr": "@"
-   }, 
+   },
    "kCGImagePropertyIPTCExtMaxAvailHeight": {
     "typestr": "@"
-   }, 
+   },
    "kCGImagePropertyIPTCExtMaxAvailWidth": {
     "typestr": "@"
-   }, 
+   },
    "kCGImagePropertyIPTCExtModelAge": {
     "typestr": "@"
-   }, 
+   },
    "kCGImagePropertyIPTCExtOrganisationInImageCode": {
     "typestr": "@"
-   }, 
+   },
    "kCGImagePropertyIPTCExtOrganisationInImageName": {
     "typestr": "@"
-   }, 
+   },
    "kCGImagePropertyIPTCExtPersonHeard": {
     "typestr": "@"
-   }, 
+   },
    "kCGImagePropertyIPTCExtPersonHeardIdentifier": {
     "typestr": "@"
-   }, 
+   },
    "kCGImagePropertyIPTCExtPersonHeardName": {
     "typestr": "@"
-   }, 
+   },
    "kCGImagePropertyIPTCExtPersonInImage": {
     "typestr": "@"
-   }, 
+   },
    "kCGImagePropertyIPTCExtPersonInImageCharacteristic": {
     "typestr": "@"
-   }, 
+   },
    "kCGImagePropertyIPTCExtPersonInImageCvTermCvId": {
     "typestr": "@"
-   }, 
+   },
    "kCGImagePropertyIPTCExtPersonInImageCvTermId": {
     "typestr": "@"
-   }, 
+   },
    "kCGImagePropertyIPTCExtPersonInImageCvTermName": {
     "typestr": "@"
-   }, 
+   },
    "kCGImagePropertyIPTCExtPersonInImageCvTermRefinedAbout": {
     "typestr": "@"
-   }, 
+   },
    "kCGImagePropertyIPTCExtPersonInImageDescription": {
     "typestr": "@"
-   }, 
+   },
    "kCGImagePropertyIPTCExtPersonInImageId": {
     "typestr": "@"
-   }, 
+   },
    "kCGImagePropertyIPTCExtPersonInImageName": {
     "typestr": "@"
-   }, 
+   },
    "kCGImagePropertyIPTCExtPersonInImageWDetails": {
     "typestr": "@"
-   }, 
+   },
    "kCGImagePropertyIPTCExtProductInImage": {
     "typestr": "@"
-   }, 
+   },
    "kCGImagePropertyIPTCExtProductInImageDescription": {
     "typestr": "@"
-   }, 
+   },
    "kCGImagePropertyIPTCExtProductInImageGTIN": {
     "typestr": "@"
-   }, 
+   },
    "kCGImagePropertyIPTCExtProductInImageName": {
     "typestr": "@"
-   }, 
+   },
    "kCGImagePropertyIPTCExtPublicationEvent": {
     "typestr": "@"
-   }, 
+   },
    "kCGImagePropertyIPTCExtPublicationEventDate": {
     "typestr": "@"
-   }, 
+   },
    "kCGImagePropertyIPTCExtPublicationEventIdentifier": {
     "typestr": "@"
-   }, 
+   },
    "kCGImagePropertyIPTCExtPublicationEventName": {
     "typestr": "@"
-   }, 
+   },
    "kCGImagePropertyIPTCExtRating": {
     "typestr": "@"
-   }, 
+   },
    "kCGImagePropertyIPTCExtRatingRatingRegion": {
     "typestr": "@"
-   }, 
+   },
    "kCGImagePropertyIPTCExtRatingRegionCity": {
     "typestr": "@"
-   }, 
+   },
    "kCGImagePropertyIPTCExtRatingRegionCountryCode": {
     "typestr": "@"
-   }, 
+   },
    "kCGImagePropertyIPTCExtRatingRegionCountryName": {
     "typestr": "@"
-   }, 
+   },
    "kCGImagePropertyIPTCExtRatingRegionGPSAltitude": {
     "typestr": "@"
-   }, 
+   },
    "kCGImagePropertyIPTCExtRatingRegionGPSLatitude": {
     "typestr": "@"
-   }, 
+   },
    "kCGImagePropertyIPTCExtRatingRegionGPSLongitude": {
     "typestr": "@"
-   }, 
+   },
    "kCGImagePropertyIPTCExtRatingRegionIdentifier": {
     "typestr": "@"
-   }, 
+   },
    "kCGImagePropertyIPTCExtRatingRegionLocationId": {
     "typestr": "@"
-   }, 
+   },
    "kCGImagePropertyIPTCExtRatingRegionLocationName": {
     "typestr": "@"
-   }, 
+   },
    "kCGImagePropertyIPTCExtRatingRegionProvinceState": {
     "typestr": "@"
-   }, 
+   },
    "kCGImagePropertyIPTCExtRatingRegionSublocation": {
     "typestr": "@"
-   }, 
+   },
    "kCGImagePropertyIPTCExtRatingRegionWorldRegion": {
     "typestr": "@"
-   }, 
+   },
    "kCGImagePropertyIPTCExtRatingScaleMaxValue": {
     "typestr": "@"
-   }, 
+   },
    "kCGImagePropertyIPTCExtRatingScaleMinValue": {
     "typestr": "@"
-   }, 
+   },
    "kCGImagePropertyIPTCExtRatingSourceLink": {
     "typestr": "@"
-   }, 
+   },
    "kCGImagePropertyIPTCExtRatingValue": {
     "typestr": "@"
-   }, 
+   },
    "kCGImagePropertyIPTCExtRatingValueLogoLink": {
     "typestr": "@"
-   }, 
+   },
    "kCGImagePropertyIPTCExtRegistryEntryRole": {
     "typestr": "@"
-   }, 
+   },
    "kCGImagePropertyIPTCExtRegistryID": {
     "typestr": "@"
-   }, 
+   },
    "kCGImagePropertyIPTCExtRegistryItemID": {
     "typestr": "@"
-   }, 
+   },
    "kCGImagePropertyIPTCExtRegistryOrganisationID": {
     "typestr": "@"
-   }, 
+   },
    "kCGImagePropertyIPTCExtReleaseReady": {
     "typestr": "@"
-   }, 
+   },
    "kCGImagePropertyIPTCExtSeason": {
     "typestr": "@"
-   }, 
+   },
    "kCGImagePropertyIPTCExtSeasonIdentifier": {
     "typestr": "@"
-   }, 
+   },
    "kCGImagePropertyIPTCExtSeasonName": {
     "typestr": "@"
-   }, 
+   },
    "kCGImagePropertyIPTCExtSeasonNumber": {
     "typestr": "@"
-   }, 
+   },
    "kCGImagePropertyIPTCExtSeries": {
     "typestr": "@"
-   }, 
+   },
    "kCGImagePropertyIPTCExtSeriesIdentifier": {
     "typestr": "@"
-   }, 
+   },
    "kCGImagePropertyIPTCExtSeriesName": {
     "typestr": "@"
-   }, 
+   },
    "kCGImagePropertyIPTCExtShownEvent": {
     "typestr": "@"
-   }, 
+   },
    "kCGImagePropertyIPTCExtShownEventIdentifier": {
     "typestr": "@"
-   }, 
+   },
    "kCGImagePropertyIPTCExtShownEventName": {
     "typestr": "@"
-   }, 
+   },
    "kCGImagePropertyIPTCExtStorylineIdentifier": {
     "typestr": "@"
-   }, 
+   },
    "kCGImagePropertyIPTCExtStreamReady": {
     "typestr": "@"
-   }, 
+   },
    "kCGImagePropertyIPTCExtStylePeriod": {
     "typestr": "@"
-   }, 
+   },
    "kCGImagePropertyIPTCExtSupplyChainSource": {
     "typestr": "@"
-   }, 
+   },
    "kCGImagePropertyIPTCExtSupplyChainSourceIdentifier": {
     "typestr": "@"
-   }, 
+   },
    "kCGImagePropertyIPTCExtSupplyChainSourceName": {
     "typestr": "@"
-   }, 
+   },
    "kCGImagePropertyIPTCExtTemporalCoverage": {
     "typestr": "@"
-   }, 
+   },
    "kCGImagePropertyIPTCExtTemporalCoverageFrom": {
     "typestr": "@"
-   }, 
+   },
    "kCGImagePropertyIPTCExtTemporalCoverageTo": {
     "typestr": "@"
-   }, 
+   },
    "kCGImagePropertyIPTCExtTranscript": {
     "typestr": "@"
-   }, 
+   },
    "kCGImagePropertyIPTCExtTranscriptLink": {
     "typestr": "@"
-   }, 
+   },
    "kCGImagePropertyIPTCExtTranscriptLinkLink": {
     "typestr": "@"
-   }, 
+   },
    "kCGImagePropertyIPTCExtTranscriptLinkLinkQualifier": {
     "typestr": "@"
-   }, 
+   },
    "kCGImagePropertyIPTCExtVideoBitrate": {
     "typestr": "@"
-   }, 
+   },
    "kCGImagePropertyIPTCExtVideoBitrateMode": {
     "typestr": "@"
-   }, 
+   },
    "kCGImagePropertyIPTCExtVideoDisplayAspectRatio": {
     "typestr": "@"
-   }, 
+   },
    "kCGImagePropertyIPTCExtVideoEncodingProfile": {
     "typestr": "@"
-   }, 
+   },
    "kCGImagePropertyIPTCExtVideoShotType": {
     "typestr": "@"
-   }, 
+   },
    "kCGImagePropertyIPTCExtVideoShotTypeIdentifier": {
     "typestr": "@"
-   }, 
+   },
    "kCGImagePropertyIPTCExtVideoShotTypeName": {
     "typestr": "@"
-   }, 
+   },
    "kCGImagePropertyIPTCExtVideoStreamsCount": {
     "typestr": "@"
-   }, 
+   },
    "kCGImagePropertyIPTCExtVisualColor": {
     "typestr": "@"
-   }, 
+   },
    "kCGImagePropertyIPTCExtWorkflowTag": {
     "typestr": "@"
-   }, 
+   },
    "kCGImagePropertyIPTCExtWorkflowTagCvId": {
     "typestr": "@"
-   }, 
+   },
    "kCGImagePropertyIPTCExtWorkflowTagCvTermId": {
     "typestr": "@"
-   }, 
+   },
    "kCGImagePropertyIPTCExtWorkflowTagCvTermName": {
     "typestr": "@"
-   }, 
+   },
    "kCGImagePropertyIPTCExtWorkflowTagCvTermRefinedAbout": {
     "typestr": "@"
-   }, 
+   },
    "kCGImagePropertyImageCount": {
     "typestr": "@"
-   }, 
+   },
    "kCGImagePropertyImages": {
     "typestr": "@"
-   }, 
+   },
    "kCGImagePropertyNamedColorSpace": {
     "typestr": "@"
-   }, 
+   },
    "kCGImagePropertyPNGCompressionFilter": {
     "typestr": "@"
-   }, 
+   },
    "kCGImagePropertyPixelFormat": {
     "typestr": "@"
-   }, 
+   },
    "kCGImagePropertyPrimaryImage": {
     "typestr": "@"
-   }, 
+   },
    "kCGImagePropertyTIFFTileLength": {
     "typestr": "@"
-   }, 
+   },
    "kCGImagePropertyTIFFTileWidth": {
     "typestr": "@"
-   }, 
+   },
    "kCGImagePropertyThumbnailImages": {
     "typestr": "@"
-   }, 
+   },
    "kCGImagePropertyWidth": {
     "typestr": "@"
-   }, 
+   },
    "kCGImageSourceSubsampleFactor": {
     "typestr": "@"
    }
-  }, 
-  "formal_protocols": {}, 
+  },
+  "formal_protocols": {},
   "functions": {
+   "CGImageMetadataTagBlock": {
+    "args": {
+     "3": {
+      "callable": {
+       "arguments": {
+        "0": { "type": "^v" },
+        "1": { "type": "@" },
+        "2": { "type": "@" }
+       },
+       "retval": { "type": "B" }
+      }
+     }
+    }
+   },
+   "CGAnimateImageDataWithBlock": {
+    "args": {
+     "2": {
+      "callable": {
+       "arguments": {
+        "0": { "type": "^v" },
+        "1": { "type": "l" },
+        "2": { "type": "@" },
+        "3": { "type": "o^B" }
+       },
+       "retval": { "type": "v" }
+      }
+     }
+    }
+   },
+   "CGAnimateImageAtURLWithBlock": {
+    "args": {
+     "2": {
+      "callable": {
+       "arguments": {
+        "0": { "type": "^v" },
+        "1": { "type": "l" },
+        "2": { "type": "@" },
+        "3": { "type": "o^B" }
+       },
+       "retval": { "type": "v" }
+      }
+     }
+    }
+   },
    "CGImageDestinationAddAuxiliaryDataInfo": {
     "args": {
-     "0": {}, 
-     "1": {}, 
+     "0": {},
+     "1": {},
      "2": {}
     }
-   }, 
+   },
    "CGImageDestinationAddImage": {
     "args": {
-     "0": {}, 
-     "1": {}, 
+     "0": {},
+     "1": {},
      "2": {}
     }
-   }, 
+   },
    "CGImageDestinationAddImageAndMetadata": {
     "args": {
-     "0": {}, 
-     "1": {}, 
-     "2": {}, 
+     "0": {},
+     "1": {},
+     "2": {},
      "3": {}
     }
-   }, 
+   },
    "CGImageDestinationAddImageFromSource": {
     "args": {
-     "0": {}, 
-     "1": {}, 
+     "0": {},
+     "1": {},
      "3": {}
     }
-   }, 
+   },
    "CGImageDestinationCopyImageSource": {
     "args": {
-     "0": {}, 
-     "1": {}, 
-     "2": {}, 
+     "0": {},
+     "1": {},
+     "2": {},
      "3": {
-      "already_cfretained": true, 
-      "null_accepted": true, 
+      "already_cfretained": true,
+      "null_accepted": true,
       "type_modifier": "o"
      }
     }
-   }, 
+   },
    "CGImageDestinationCopyTypeIdentifiers": {
     "retval": {
      "already_cfretained": true
     }
-   }, 
+   },
    "CGImageDestinationCreateWithData": {
     "args": {
-     "0": {}, 
-     "1": {}, 
+     "0": {},
+     "1": {},
      "3": {}
-    }, 
+    },
     "retval": {
      "already_cfretained": true
     }
-   }, 
+   },
    "CGImageDestinationCreateWithDataConsumer": {
     "args": {
-     "0": {}, 
-     "1": {}, 
+     "0": {},
+     "1": {},
      "3": {}
-    }, 
+    },
     "retval": {
      "already_cfretained": true
     }
-   }, 
+   },
    "CGImageDestinationCreateWithURL": {
     "args": {
-     "0": {}, 
-     "1": {}, 
+     "0": {},
+     "1": {},
      "3": {}
-    }, 
+    },
     "retval": {
      "already_cfretained": true
     }
-   }, 
+   },
    "CGImageDestinationFinalize": {
     "args": {
      "0": {}
     }
-   }, 
+   },
    "CGImageDestinationSetProperties": {
     "args": {
-     "0": {}, 
+     "0": {},
      "1": {}
     }
-   }, 
+   },
    "CGImageMetadataCopyStringValueWithPath": {
     "args": {
-     "0": {}, 
-     "1": {}, 
+     "0": {},
+     "1": {},
      "2": {}
-    }, 
+    },
     "retval": {
      "already_cfretained": true
     }
-   }, 
+   },
    "CGImageMetadataCopyTagMatchingImageProperty": {
     "args": {
-     "0": {}, 
-     "1": {}, 
+     "0": {},
+     "1": {},
      "2": {}
-    }, 
+    },
     "retval": {
      "already_cfretained": true
     }
-   }, 
+   },
    "CGImageMetadataCopyTagWithPath": {
     "args": {
-     "0": {}, 
-     "1": {}, 
+     "0": {},
+     "1": {},
      "2": {}
-    }, 
+    },
     "retval": {
      "already_cfretained": true
     }
-   }, 
+   },
    "CGImageMetadataCopyTags": {
     "args": {
      "0": {}
-    }, 
+    },
     "retval": {
      "already_cfretained": true
     }
-   }, 
+   },
    "CGImageMetadataCreateFromXMPData": {
     "args": {
      "0": {}
-    }, 
+    },
     "retval": {
      "already_cfretained": true
     }
-   }, 
+   },
    "CGImageMetadataCreateMutable": {
     "retval": {
      "already_cfretained": true
     }
-   }, 
+   },
    "CGImageMetadataCreateMutableCopy": {
     "args": {
      "0": {}
-    }, 
+    },
     "retval": {
      "already_cfretained": true
     }
-   }, 
+   },
    "CGImageMetadataCreateXMPData": {
     "args": {
-     "0": {}, 
+     "0": {},
      "1": {}
-    }, 
+    },
     "retval": {
      "already_cfretained": true
     }
-   }, 
+   },
    "CGImageMetadataEnumerateTagsUsingBlock": {
     "args": {
-     "0": {}, 
-     "1": {}, 
-     "2": {}
+     "3": {
+      "callable": {
+       "arguments": {
+        "0": { "type": "^v" },
+        "1": { "type": "@" },
+        "2": { "type": "@" }
+       },
+       "retval": { "type": "B" }
+      }
+     }
     }
-   }, 
+   },
    "CGImageMetadataRegisterNamespaceForPrefix": {
     "args": {
-     "0": {}, 
-     "1": {}, 
-     "2": {}, 
+     "0": {},
+     "1": {},
+     "2": {},
      "3": {
-      "already_cfretained": true, 
-      "null_accepted": true, 
+      "already_cfretained": true,
+      "null_accepted": true,
       "type_modifier": "o"
      }
     }
-   }, 
+   },
    "CGImageMetadataRemoveTagWithPath": {
     "args": {
-     "0": {}, 
-     "1": {}, 
+     "0": {},
+     "1": {},
      "2": {}
     }
-   }, 
+   },
    "CGImageMetadataSetTagWithPath": {
     "args": {
-     "0": {}, 
-     "1": {}, 
-     "2": {}, 
+     "0": {},
+     "1": {},
+     "2": {},
      "3": {}
     }
-   }, 
+   },
    "CGImageMetadataSetValueMatchingImageProperty": {
     "args": {
-     "0": {}, 
-     "1": {}, 
+     "0": {},
+     "1": {},
      "2": {}
     }
-   }, 
+   },
    "CGImageMetadataSetValueWithPath": {
     "args": {
-     "0": {}, 
-     "1": {}, 
+     "0": {},
+     "1": {},
      "2": {}
     }
-   }, 
+   },
    "CGImageMetadataTagCopyName": {
     "args": {
      "0": {}
-    }, 
+    },
     "retval": {
      "already_cfretained": true
     }
-   }, 
+   },
    "CGImageMetadataTagCopyNamespace": {
     "args": {
      "0": {}
-    }, 
+    },
     "retval": {
      "already_cfretained": true
     }
-   }, 
+   },
    "CGImageMetadataTagCopyPrefix": {
     "args": {
      "0": {}
-    }, 
+    },
     "retval": {
      "already_cfretained": true
     }
-   }, 
+   },
    "CGImageMetadataTagCopyQualifiers": {
     "args": {
      "0": {}
-    }, 
+    },
     "retval": {
      "already_cfretained": true
     }
-   }, 
+   },
    "CGImageMetadataTagCopyValue": {
     "args": {
      "0": {}
     }
-   }, 
+   },
    "CGImageMetadataTagCreate": {
     "args": {
-     "0": {}, 
-     "1": {}, 
+     "0": {},
+     "1": {},
      "2": {}
-    }, 
+    },
     "retval": {
      "already_cfretained": true
     }
-   }, 
+   },
    "CGImageMetadataTagGetType": {
     "args": {
      "0": {}
     }
-   }, 
+   },
    "CGImageSourceCopyAuxiliaryDataInfoAtIndex": {
     "args": {
-     "0": {}, 
+     "0": {},
      "2": {}
-    }, 
+    },
     "retval": {
      "already_cfretained": true
     }
-   }, 
+   },
    "CGImageSourceCopyMetadataAtIndex": {
     "args": {
-     "0": {}, 
+     "0": {},
      "2": {}
-    }, 
+    },
     "retval": {
      "already_cfretained": true
     }
-   }, 
+   },
    "CGImageSourceCopyProperties": {
     "args": {
-     "0": {}, 
+     "0": {},
      "1": {}
-    }, 
+    },
     "retval": {
      "already_cfretained": true
     }
-   }, 
+   },
    "CGImageSourceCopyPropertiesAtIndex": {
     "args": {
-     "0": {}, 
+     "0": {},
      "2": {}
-    }, 
+    },
     "retval": {
      "already_cfretained": true
     }
-   }, 
+   },
    "CGImageSourceCopyTypeIdentifiers": {
     "retval": {
      "already_cfretained": true
     }
-   }, 
+   },
    "CGImageSourceCreateImageAtIndex": {
     "args": {
-     "0": {}, 
+     "0": {},
      "2": {}
-    }, 
+    },
     "retval": {
      "already_cfretained": true
     }
-   }, 
+   },
    "CGImageSourceCreateIncremental": {
     "args": {
      "0": {}
-    }, 
+    },
     "retval": {
      "already_cfretained": true
     }
-   }, 
+   },
    "CGImageSourceCreateThumbnailAtIndex": {
     "args": {
-     "0": {}, 
+     "0": {},
      "2": {}
-    }, 
+    },
     "retval": {
      "already_cfretained": true
     }
-   }, 
+   },
    "CGImageSourceCreateWithData": {
     "args": {
-     "0": {}, 
+     "0": {},
      "1": {}
-    }, 
+    },
     "retval": {
      "already_cfretained": true
     }
-   }, 
+   },
    "CGImageSourceCreateWithDataProvider": {
     "args": {
-     "0": {}, 
+     "0": {},
      "1": {}
-    }, 
+    },
     "retval": {
      "already_cfretained": true
     }
-   }, 
+   },
    "CGImageSourceCreateWithURL": {
     "args": {
-     "0": {}, 
+     "0": {},
      "1": {}
-    }, 
+    },
     "retval": {
      "already_cfretained": true
     }
-   }, 
+   },
    "CGImageSourceGetCount": {
     "args": {
      "0": {}
     }
-   }, 
+   },
    "CGImageSourceGetPrimaryImageIndex": {
     "args": {
      "0": {}
     }
-   }, 
+   },
    "CGImageSourceGetStatus": {
     "args": {
      "0": {}
     }
-   }, 
+   },
    "CGImageSourceGetStatusAtIndex": {
     "args": {
      "0": {}
     }
-   }, 
+   },
    "CGImageSourceGetType": {
     "args": {
      "0": {}
-    }, 
+    },
     "retval": {}
-   }, 
+   },
    "CGImageSourceRemoveCacheAtIndex": {
     "args": {
      "0": {}
     }
-   }, 
+   },
    "CGImageSourceUpdateData": {
     "args": {
-     "0": {}, 
+     "0": {},
      "1": {}
     }
-   }, 
+   },
    "CGImageSourceUpdateDataProvider": {
     "args": {
-     "0": {}, 
+     "0": {},
      "1": {}
     }
    }
-  }, 
+  },
   "informal_protocols": {}
  }
 }

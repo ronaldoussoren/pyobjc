@@ -150,5 +150,6 @@ static void __attribute__((__used__)) use_protocols(void)
 #endif
 #if PyObjC_BUILD_RELEASE >= 1015
     p = PyObjC_IdToPython(@protocol(NSTextInputTraits)); Py_XDECREF(p);
+    p = PyObjC_IdToPython(@protocol(NSSharingServicePickerToolbarItemDelegate)); Py_XDECREF(p);
 #endif
 }

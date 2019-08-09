@@ -106,6 +106,7 @@ FRAMEWORK_WRAPPERS=[
         ('NotificationCenter',      '10.10',            None        ),
         ('OpenDirectory',           '10.6',             None        ),
         ('OSAKit',                  None,               None        ),
+        ('OSLog',                   '10.15',            None        ),
         ('PencilKit',               '10.15',            None        ),
         ('Photos',                  '10.11',            None        ),
         ('PhotosUI',                '10.11',            None        ),

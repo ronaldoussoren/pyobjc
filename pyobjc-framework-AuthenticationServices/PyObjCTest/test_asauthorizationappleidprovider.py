@@ -7,6 +7,7 @@ class TestASAuthorizationAppleIDProvider (TestCase):
         self.assertEqual(AuthenticationServices.ASAuthorizationAppleIDProviderCredentialRevoked, 0)
         self.assertEqual(AuthenticationServices.ASAuthorizationAppleIDProviderCredentialAuthorized, 1)
         self.assertEqual(AuthenticationServices.ASAuthorizationAppleIDProviderCredentialNotFound, 2)
+        self.assertEqual(AuthenticationServices.ASAuthorizationAppleIDProviderCredentialTransferred, 3)
 
     @min_os_level('10.15')
     def test_methods10_15(self):

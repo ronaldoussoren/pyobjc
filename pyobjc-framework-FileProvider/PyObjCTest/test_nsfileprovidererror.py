@@ -16,7 +16,9 @@ class TestNSFileProviderError (TestCase):
 
     @min_os_level('10.15')
     def test_constants10_15(self):
+        self.assertIsInstance(FileProvider.NSFileProviderErrorDomain, unicode)
         self.assertIsInstance(FileProvider.NSFileProviderErrorItemKey, unicode)
+        self.assertIsInstance(FileProvider.NSFileProviderErrorNonExistentItemIdentifierKey, unicode)
 
 
 

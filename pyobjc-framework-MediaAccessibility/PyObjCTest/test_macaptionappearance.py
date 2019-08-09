@@ -59,5 +59,7 @@ class TestMAAudibleMedia (TestCase):
         self.assertArgIsOut(MediaAccessibility.MACaptionAppearanceGetRelativeCharacterSize, 1)
         self.assertArgIsOut(MediaAccessibility.MACaptionAppearanceGetTextEdgeStyle, 1)
 
+        MediaAccessibility.MACaptionAppearanceDidDisplayCaptions
+
 if __name__ == "__main__":
     main()

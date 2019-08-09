@@ -18,5 +18,9 @@ if sys.maxsize > 2 ** 32:
             self.assertArgIsOut(CoreML.MLModel.predictionsFromBatch_options_error_, 2)
             self.assertArgIsOut(CoreML.MLModel.predictionsFromBatch_error_, 1)
 
+        @min_os_level("10.15")
+        def testMethods10_15(self):
+            self.assertArgIsOut(CoreML.MLModel.parameterValueForKey_error_, 1)
+
 if __name__ == "__main__":
     main()

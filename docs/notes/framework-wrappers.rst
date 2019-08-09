@@ -312,6 +312,8 @@ The framework name links to API notes for that framework, the python packages li
 +------------------------------------------------------------------+---------------------------------------------+-----------------------------------------+
 | :doc:`OSAKit </apinotes/OSAKit>`                                 | `pyobjc-framework-OSAKit`_                  |                                         |
 +------------------------------------------------------------------+---------------------------------------------+-----------------------------------------+
+| :doc:`OSLog </apinotes/OSLog>`                                   | `pyobjc-framework-OSLog`_                   |                                         |
++------------------------------------------------------------------+---------------------------------------------+-----------------------------------------+
 | PCSC                                                             | -                                           | Use `pyscard`_ instead.                 |
 +------------------------------------------------------------------+---------------------------------------------+-----------------------------------------+
 | :doc:`PDFKit </apinotes/PDFKit>`                                 | `pyobjc-framework-Quartz`_                  | Use "import Quartz".                    |
@@ -562,3 +564,4 @@ prioritizing work.
 .. _`pyobjc-framework-XgridFoundation`: https://pypi.org/project/pyobjc-framework-XgridFoundation/
 .. _`pyobjc-framework-iTunesLibrary`: https://pypi.org/project/pyobjc-framework-iTunesLibrary/
 .. _`pyobjc-framework-libdispatch`: https://pypi.org/project/pyobjc-framework-libdispatch/
+.. _`pyobjc-framework-OSLog`: https://pypi.org/project/pyobjc-framework-OSLog/

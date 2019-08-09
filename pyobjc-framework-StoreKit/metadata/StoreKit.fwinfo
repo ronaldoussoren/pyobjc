@@ -2,37 +2,78 @@
 // for information on how to update this file.
 {
  "definitions": {
-  "classes": {}, 
+  "classes": {
+   "SKArcadeService": {
+    "methods": [
+     {
+      "selector": "registerArcadeAppWithRandomFromLib:randomFromLibLength:resultHandler:",
+      "class_method": false,
+      "args": {
+       "2": {
+        "callable": {
+	 "retval": { "type": "@" },
+	 "arguments": {
+	  "0": { "type": "@" },
+	  "1": { "type": "I" },
+	  "2": { "type": "@" },
+	  "3": { "type": "I" },
+	  "4": { "type": "@" }
+	 }
+	}
+       }
+      }
+     },
+     {
+      "selector": "arcadeSubscriptionStatusWithNonce:resultHandler:",
+      "class_method": false,
+      "args": {
+       "1": {
+        "callable": {
+	 "retval": { "type": "@" },
+	 "arguments": {
+	  "0": { "type": "@" },
+	  "1": { "type": "I" },
+	  "2": { "type": "@" },
+	  "3": { "type": "I" },
+	  "4": { "type": "@" }
+	 }
+	}
+       }
+      }
+     }
+    ]
+   }
+  },
   "enum": {
    "SKProductDiscountPaymentModeFreeTrial": {
     "value": 2
-   }, 
+   },
    "SKProductDiscountPaymentModePayAsYouGo": {
     "value": 0
-   }, 
+   },
    "SKProductDiscountPaymentModePayUpFront": {
     "value": 1
-   }, 
+   },
    "SKProductPeriodUnitDay": {
     "value": 0
-   }, 
+   },
    "SKProductPeriodUnitMonth": {
     "value": 2
-   }, 
+   },
    "SKProductPeriodUnitWeek": {
     "value": 1
-   }, 
+   },
    "SKProductPeriodUnitYear": {
     "value": 3
    }
-  }, 
+  },
   "externs": {
    "SKDownloadTimeRemainingUnknown": {
     "typestr": "d"
    }
-  }, 
-  "formal_protocols": {}, 
-  "functions": {}, 
+  },
+  "formal_protocols": {},
+  "functions": {},
   "informal_protocols": {}
  }
 }

@@ -81,6 +81,7 @@ class TestCVPixelBuffer (TestCase):
         self.assertEqual(kCVPixelFormatType_420YpCbCr10BiPlanarFullRange, fourcc(b'xf20'))
         self.assertEqual(kCVPixelFormatType_422YpCbCr10BiPlanarFullRange, fourcc(b'xf22'))
         self.assertEqual(kCVPixelFormatType_444YpCbCr10BiPlanarFullRange, fourcc(b'xf44'))
+        self.assertEqual(kCVPixelFormatType_420YpCbCr8VideoRange_8A_TriPlanar, fourcc(b'v0a8'))
 
     def testTypes(self):
         self.assertIsCFType(CVPixelBufferRef)

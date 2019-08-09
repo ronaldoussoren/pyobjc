@@ -29,3 +29,5 @@ class TestNSFileProviderExtension (TestCase):
         self.assertArgIsBlock(FileProvider.NSFileProviderExtension.createItemBasedOnTemplate_fields_contents_options_completionHandler_, 4, b'v@@')
         self.assertArgIsBlock(FileProvider.NSFileProviderExtension.deleteItemWithIdentifier_baseVersion_options_completionHandler_, 3, b'v@')
         self.assertArgIsBlock(FileProvider.NSFileProviderExtension.importDidFinishWithCompletionHandler_, 0, b'v')
+
+        self.assertArgIsOut(FileProvider.NSFileProviderExtension.itemForIdentifier_error_, 1)

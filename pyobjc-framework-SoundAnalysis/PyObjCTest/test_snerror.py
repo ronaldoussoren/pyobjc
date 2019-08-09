@@ -9,4 +9,5 @@ class TestSNError (TestCase):
         self.assertEqual(SoundAnalysis.SNErrorCodeOperationFailed, 2)
         self.assertEqual(SoundAnalysis.SNErrorCodeInvalidFormat, 3)
         self.assertEqual(SoundAnalysis.SNErrorCodeInvalidModel, 4)
+        self.assertEqual(SoundAnalysis.SNErrorCodeInvalidFile, 5)
 

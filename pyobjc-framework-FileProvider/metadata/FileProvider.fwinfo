@@ -24,6 +24,20 @@
    "NSFileProviderExtension": {
     "methods": [
      {
+      "selector": "supportedServiceSourcesForItemIdentifier:error:",
+      "class_method": false,
+      "args": {
+       "1": { "type_modifier": "o" }
+      }
+     },
+     {
+      "selector": "itemForIdentifier:error:",
+      "class_method": false,
+      "args": {
+       "1": { "type_modifier": "o" }
+      }
+     },
+     {
       "selector": "importDidFinishWithCompletionHandler:",
       "class_method": false,
       "args": {

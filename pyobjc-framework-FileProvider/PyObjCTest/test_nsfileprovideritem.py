@@ -35,6 +35,13 @@ class TestNSFileProviderItem (TestCase):
             | FileProvider.NSFileProviderItemCapabilitiesAllowsTrashing
             | FileProvider.NSFileProviderItemCapabilitiesAllowsDeleting)
 
+    @min_os_level('10.15')
+    def test_constants10_15(self):
+        self.assertIsInstance(FileProvider.NSFileProviderRootContainerItemIdentifier, unicode)
+        self.assertIsInstance(FileProvider.NSFileProviderWorkingSetContainerItemIdentifier, unicode)
+
+        self.assertIsInstance(FileProvider.NSFileProviderFavoriteRankUnranked, int)
+
     @min_sdk_level('10.15')
     def test_protocols(self):
         objc.protocolNamed('NSFileProviderItemFlags')

@@ -20,6 +20,22 @@
    "NSObject": {
     "methods": [
      {
+      "selector": "preparePreviewOfFileAtURL:completionHandler:",
+      "class_method": false,
+      "args": {
+       "1": {
+        "type_override": "@?",
+	"callable": {
+	 "arguments": {
+	  "0": { "typestr": "^v" },
+	  "1": { "typestr": "@" }
+	 },
+	 "retval": { "typestr": "v" }
+	}
+       }
+      }
+     },
+     {
       "selector": "preparePreviewOfSearchableItemWithIdentifier:queryString:completionHandler:",
       "class_method": false,
       "args": {

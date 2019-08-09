@@ -7318,7 +7318,7 @@
      },
      {
       "name": "value",
-      "typestr": "^^(CGPDFObject=)"
+      "typestr": "^^{CGPDFObject=}"
      }
     ],
     "retval": {
@@ -7411,7 +7411,7 @@
      }
     ],
     "retval": {
-     "typestr": "^(CGPDFObject=)"
+     "typestr": "^{CGPDFObject=}"
     }
    },
    "CGPDFContentStreamGetStreams": {
@@ -7609,7 +7609,7 @@
          "typestr": "^c"
         },
         {
-         "typestr": "^(CGPDFObject=)"
+         "typestr": "^{CGPDFObject=}"
         },
         {
          "typestr": "^v"
@@ -7768,7 +7768,7 @@
      },
      {
       "name": "value",
-      "typestr": "^^(CGPDFObject=)"
+      "typestr": "^^{CGPDFObject=}"
      }
     ],
     "retval": {
@@ -8101,7 +8101,7 @@
     "args": [
      {
       "name": "object",
-      "typestr": "^(CGPDFObject=)"
+      "typestr": "^{CGPDFObject=}"
      }
     ],
     "retval": {
@@ -8112,11 +8112,11 @@
     "args": [
      {
       "name": "object",
-      "typestr": "^(CGPDFObject=)"
+      "typestr": "^{CGPDFObject=}"
      },
      {
       "name": "type",
-      "typestr": "I"
+      "typestr": "i"
      },
      {
       "name": "value",
@@ -8441,7 +8441,7 @@
      },
      {
       "name": "value",
-      "typestr": "^^(CGPDFObject=)"
+      "typestr": "^^{CGPDFObject=}"
      }
     ],
     "retval": {

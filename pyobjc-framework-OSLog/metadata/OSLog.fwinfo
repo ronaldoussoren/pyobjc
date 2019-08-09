@@ -1,0 +1,43 @@
+// objective.metadata exceptions file, see its document
+// for information on how to update this file.
+{
+ "definitions": {
+  "classes": {
+   "OSLogStore": {
+    "methods": [
+     {
+      "args": {
+       "0": { "type_modifier": "o" }
+      },
+      "class_method": true,
+      "selector": "localStoreAndReturnError:"
+     },
+     {
+      "args": {
+       "1": { "type_modifier": "o" }
+      },
+      "class_method": true,
+      "selector": "storeWithURL:error:"
+     },
+     {
+      "args": {
+       "3": { "type_modifier": "o" }
+      },
+      "class_method": false,
+      "selector": "entriesEnumeratorWithOptions:position:predicate:error:"
+     },
+     {
+      "args": {
+       "0": { "type_modifier": "o" }
+      },
+      "class_method": false,
+      "selector": "entriesEnumeratorAndReturnError:"
+     }
+    ]
+   }
+  },
+  "formal_protocols": {},
+  "functions": {},
+  "informal_protocols": {}
+ }
+}

@@ -132,6 +132,17 @@
      }
     ]
    },
+   "VNRecognizeAnimalsRequest": {
+    "methods": [
+     {
+      "selector": "knownAnimalIdentifiersForRevision:error:",
+      "class_method": true,
+      "args": {
+       "1": { "type_modifier": "o" }
+      }
+     }
+    ]
+   },
    "VNFeaturePrintObservation": {
     "methods": [
      {

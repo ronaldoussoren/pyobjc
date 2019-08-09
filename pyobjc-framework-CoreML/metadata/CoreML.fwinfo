@@ -85,6 +85,34 @@
    "MLFeatureValue": {
     "methods": [
      {
+      "selector": "featureValueWithImageAtURL_orientation_pixelsWide_pixelsHigh_pixelFormatType_options_error_",
+      "class_method": false,
+      "args": {
+       "6": { "type_modifier": "o" }
+      }
+     },
+     {
+      "selector": "featureValueWithImageAtURL_orientation_constraint_options_error_",
+      "class_method": false,
+      "args": {
+       "4": { "type_modifier": "o" }
+      }
+     },
+     {
+      "selector": "featureValueWithCGImage_orientation_pixelsWide_pixelsHigh_pixelFormatType_options_error_",
+      "class_method": false,
+      "args": {
+       "6": { "type_modifier": "o" }
+      }
+     },
+     {
+      "selector": "featureValueWithCGImage_orientation_constraint_options_error_",
+      "class_method": false,
+      "args": {
+       "4": { "type_modifier": "o" }
+      }
+     },
+     {
       "selector": "isUndefined",
       "class_method": false,
       "retval": { "type_override": "Z" }
@@ -297,6 +325,13 @@
       "class_method": false,
       "args": {
        "2": { "type_modifier": "o" }
+      }
+     },
+     {
+      "selector": "parameterValueForKey:error:",
+      "class_method": false,
+      "args": {
+       "1": { "type_modifier": "o" }
       }
      },
      {

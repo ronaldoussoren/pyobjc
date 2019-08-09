@@ -13,7 +13,7 @@ Version 6.0a0
   - Use "black" for Python code
   - Use "clang-format" for Objective-C code
 
-* Updated bindings for macOS 10.15 (beta 4)
+* Updated bindings for macOS 10.15 (beta 5)
 
 * The userspace driver frameworks introduced in macOS 10.15
   (DriverKit and related frameworks) will not be exposed through
@@ -31,6 +31,7 @@ Version 6.0a0
   - FileProvider
   - FileProviderUI
   - Logging
+  - OSLog
   - PencilKit
   - PushKit
   - QuickLookThumbnailing

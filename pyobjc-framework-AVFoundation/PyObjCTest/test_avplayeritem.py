@@ -15,12 +15,15 @@ class TestAVPlayerItem (TestCase):
         self.assertEqual(AVFoundation.AVPlayerItemStatusReadyToPlay, 1)
         self.assertEqual(AVFoundation.AVPlayerItemStatusFailed, 2)
 
-
     @min_os_level('10.9')
     def testConstants10_9(self):
         self.assertIsInstance(AVFoundation.AVPlayerItemPlaybackStalledNotification, unicode)
         self.assertIsInstance(AVFoundation.AVPlayerItemNewAccessLogEntryNotification, unicode)
         self.assertIsInstance(AVFoundation.AVPlayerItemNewErrorLogEntryNotification, unicode)
+
+    @min_os_level('10.15')
+    def testConstants10_15(self):
+        self.assertIsInstance(AVFoundation.AVPlayerItemMediaSelectionDidChangeNotification, unicode)
 
     @min_os_level('10.7')
     def testMethods10_7(self):

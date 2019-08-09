@@ -35,24 +35,7 @@ class TestGKError (TestCase):
         self.assertEqual(GameKit.GKErrorMatchNotConnected, 28)
         self.assertEqual(GameKit.GKErrorGameSessionRequestInvalid, 29)
         self.assertEqual(GameKit.GKErrorRestrictedToAutomatch, 30)
-
-        self.assertEqual(GameKit.GKTournamentErrorUnknown, 1)
-        self.assertEqual(GameKit.GKTournamentErrorInvalidTournament, 2)
-        self.assertEqual(GameKit.GKTournamentErrorRegistrationNotOpen, 3)
-        self.assertEqual(GameKit.GKTournamentErrorPlayerNotRegistered, 4)
-        self.assertEqual(GameKit.GKTournamentErrorInvalidTournamentState, 5)
-        self.assertEqual(GameKit.GKTournamentErrorInvalidParticipantState, 6)
-        self.assertEqual(GameKit.GKTournamentErrorAlreadyRegistered, 7)
-        self.assertEqual(GameKit.GKTournamentErrorDeviceConflict, 8)
-        self.assertEqual(GameKit.GKTournamentErrorLocalPlayerCustomTournamentLimit, 9)
-        self.assertEqual(GameKit.GKTournamentErrorNotEnoughPlayers, 10)
-        self.assertEqual(GameKit.GKTournamentErrorCheatingDetected, 11)
-        self.assertEqual(GameKit.GKTournamentErrorInvalidTryToken, 12)
-        self.assertEqual(GameKit.GKTournamentErrorNetworkError, 13)
-        self.assertEqual(GameKit.GKTournamentErrorNotSignedIntoICloud, 14)
-        self.assertEqual(GameKit.GKTournamentErrorCKServerRecordChanged, 15)
-
-
+        self.assertEqual(GameKit.GKErrorAPINotAvailable, 31)
 
 if __name__ == "__main__":
     main()
