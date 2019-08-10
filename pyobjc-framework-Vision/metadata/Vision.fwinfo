@@ -29,6 +29,7 @@
    "VNElementTypeUnknown": { "value": 0 },
    "VNElementTypeFloat": { "value": 1 },
    "VNElementTypeDouble": { "value": 2 },
+   "VNRecognizeAnimalsRequestRevision1": { "value": 1 },
    "VNRecognizeTextRequestRevision1": { "value": 1 },
    "VNTrackObjectRequestRevision2": { "value": 2 },
    "VNRequestTextRecognitionLevelAccurate": { "value": 0 },

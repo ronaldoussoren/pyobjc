@@ -2,7 +2,6 @@ from PyObjCTools.TestSupport import *
 
 from Foundation import *
 
-
 class Behaviour(NSObject):
     def scale(self):
         return 1

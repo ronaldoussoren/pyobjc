@@ -24,6 +24,32 @@
    "NSFileProviderExtension": {
     "methods": [
      {
+      "selector": "fetchThumbnailsForItemIdentifiers:requestedSize:perThumbnailCompletionHandler:completionHandler:",
+      "class_method": false,
+      "args": {
+       "2": {
+        "callable": {
+         "arguments": {
+	  "0": { "type": "^v" },
+	  "1": { "type": "@" },
+	  "2": { "type": "@" },
+	  "3": { "type": "@" }
+	 },
+	 "retval": { "type": "v" }
+	}
+       },
+       "3": {
+        "callable": {
+         "arguments": {
+	  "0": { "type": "^v" },
+	  "1": { "type": "@" }
+	 },
+	 "retval": { "type": "v" }
+	}
+       }
+      }
+     },
+     {
       "selector": "supportedServiceSourcesForItemIdentifier:error:",
       "class_method": false,
       "args": {

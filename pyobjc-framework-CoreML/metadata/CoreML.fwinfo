@@ -85,28 +85,28 @@
    "MLFeatureValue": {
     "methods": [
      {
-      "selector": "featureValueWithImageAtURL_orientation_pixelsWide_pixelsHigh_pixelFormatType_options_error_",
+      "selector": "featureValueWithImageAtURL:orientation:pixelsWide:pixelsHigh:pixelFormatType:options:error:",
       "class_method": false,
       "args": {
        "6": { "type_modifier": "o" }
       }
      },
      {
-      "selector": "featureValueWithImageAtURL_orientation_constraint_options_error_",
+      "selector": "featureValueWithImageAtURL:orientation:constraint:options:error:",
       "class_method": false,
       "args": {
        "4": { "type_modifier": "o" }
       }
      },
      {
-      "selector": "featureValueWithCGImage_orientation_pixelsWide_pixelsHigh_pixelFormatType_options_error_",
+      "selector": "featureValueWithCGImage:orientation:pixelsWide:pixelsHigh:pixelFormatType:options:error:",
       "class_method": false,
       "args": {
        "6": { "type_modifier": "o" }
       }
      },
      {
-      "selector": "featureValueWithCGImage_orientation_constraint_options_error_",
+      "selector": "featureValueWithCGImage:orientation:constraint:options:error:",
       "class_method": false,
       "args": {
        "4": { "type_modifier": "o" }
