@@ -638,7 +638,7 @@ class oc_build_ext(build_ext.build_ext):
             % (tuple(map(int, get_sdk_level(self.sdk_root).split("."))))
         )
 
-        _fixup_compiler(use_ccache="develop" in sys.argv)
+        _fixup_compiler(use_ccache=any(cmd in sys.argv for cmd in ["develop", "test"]))
 
         build_ext.build_ext.run(self)
         extensions = self.extensions
