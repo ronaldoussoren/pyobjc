@@ -13,6 +13,15 @@ Version 6.0a0
   - Use "black" for Python code
   - Use "clang-format" for Objective-C code
 
+    As a side-effect of this all usage of "NS_DURING" and "PyObjC_DURING"
+    has been replaced by the expansion of those macros, mostly because
+    "clang-format" doesn't understand these kinds of blocks.
+
+    Replacing "PyObjC_DURING" by its expansion also reduces the knowledge
+    needed to understand what's going on w.r.t. the Python GIL.
+
+    The macro "PyObjC_DURING", and its siblings, have been removed as well.
+
 * Updated bindings for macOS 10.15 (beta 5)
 
 * The userspace driver frameworks introduced in macOS 10.15
