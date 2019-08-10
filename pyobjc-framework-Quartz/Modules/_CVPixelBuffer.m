@@ -2,8 +2,8 @@
  * Customer wrappers for a number of CoreVideo APIs.
  */
 #define PY_SSIZE_T_CLEAN
+#include "Python.h"
 #include "pyobjc-api.h"
-#include <Python.h>
 
 #if PyObjC_BUILD_RELEASE >= 1005
 /* WITH_COREVIDEO */

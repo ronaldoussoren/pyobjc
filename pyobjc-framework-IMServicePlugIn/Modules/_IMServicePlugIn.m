@@ -1,6 +1,6 @@
 #define PY_SSIZE_T_CLEAN
 #include "pyobjc-api.h"
-#include <Python.h>
+#include "Python.h"
 
 #import <Foundation/Foundation.h>
 #import <IMServicePlugIn/IMServicePlugIn.h>

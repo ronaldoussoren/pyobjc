@@ -1,8 +1,8 @@
 /*
  * Workaround to make NSAppicationMain more usable from Python.
  */
+#include "Python.h"
 #include "pyobjc-api.h"
-#include <Python.h>
 
 #import <AppKit/AppKit.h>
 

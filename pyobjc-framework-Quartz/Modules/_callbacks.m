@@ -4,8 +4,8 @@
  * XXX: Definitely need tests for these.
  */
 #define PY_SSIZE_T_CLEAN
+#include "Python.h"
 #include "pyobjc-api.h"
-#include <Python.h>
 
 #import <ApplicationServices/ApplicationServices.h>
 #if PyObjC_BUILD_RELEASE > 1008

@@ -2,8 +2,8 @@
  * Functions with a callback argument that isn't "retained"
  */
 #define PY_SSIZE_T_CLEAN
+#include "Python.h"
 #include "pyobjc-api.h"
-#include <Python.h>
 
 #import <ApplicationServices/ApplicationServices.h>
 
