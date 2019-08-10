@@ -19,7 +19,8 @@ mod_source_release(const void* info)
 static void
 mod_schedule(void* info, CFRunLoopRef rl, CFStringRef mode)
 {
-    if (info == NULL) return;
+    if (info == NULL)
+        return;
 
     PyGILState_STATE state = PyGILState_Ensure();
     if (PyTuple_GetItem(info, 1) != Py_None) {
@@ -33,9 +34,8 @@ mod_schedule(void* info, CFRunLoopRef rl, CFStringRef mode)
             PyObjCErr_ToObjCWithGILState(&state);
         }
 
-        PyObject* result = PyObject_CallFunction(
-            PyTuple_GetItem(info, 1),
-            "ONN", py_info, py_rl, py_mode);
+        PyObject* result = PyObject_CallFunction(PyTuple_GetItem(info, 1), "ONN", py_info,
+                                                 py_rl, py_mode);
         if (result == NULL) {
             PyObjCErr_ToObjCWithGILState(&state);
         }
@@ -47,23 +47,23 @@ mod_schedule(void* info, CFRunLoopRef rl, CFStringRef mode)
 static void
 mod_cancel(void* info, CFRunLoopRef rl, CFStringRef mode)
 {
-    if (info == NULL) return;
+    if (info == NULL)
+        return;
 
     PyGILState_STATE state = PyGILState_Ensure();
     if (PyTuple_GetItem(info, 2) != Py_None) {
         PyObject* py_info = PyTuple_GetItem(info, 4);
         PyObject* py_rl = PyObjC_ObjCToPython(@encode(CFRunLoopRef), &rl);
         if (py_rl == NULL) {
-                PyObjCErr_ToObjCWithGILState(&state);
+            PyObjCErr_ToObjCWithGILState(&state);
         }
         PyObject* py_mode = PyObjC_ObjCToPython(@encode(CFStringRef), &mode);
         if (py_rl == NULL) {
             PyObjCErr_ToObjCWithGILState(&state);
         }
 
-        PyObject* result = PyObject_CallFunction(
-            PyTuple_GetItem(info, 2),
-            "ONN", py_info, py_rl, py_mode);
+        PyObject* result = PyObject_CallFunction(PyTuple_GetItem(info, 2), "ONN", py_info,
+                                                 py_rl, py_mode);
         if (result == NULL) {
             PyObjCErr_ToObjCWithGILState(&state);
         }
@@ -75,15 +75,14 @@ mod_cancel(void* info, CFRunLoopRef rl, CFStringRef mode)
 static void
 mod_perform(void* info)
 {
-    if (info == NULL) return;
+    if (info == NULL)
+        return;
 
     PyGILState_STATE state = PyGILState_Ensure();
     if (PyTuple_GetItem(info, 3) != Py_None) {
         PyObject* py_info = PyTuple_GetItem(info, 4);
 
-        PyObject* result = PyObject_CallFunction(
-            PyTuple_GetItem(info, 3),
-            "O", py_info);
+        PyObject* result = PyObject_CallFunction(PyTuple_GetItem(info, 3), "O", py_info);
         if (result == NULL) {
             PyObjCErr_ToObjCWithGILState(&state);
         }
@@ -93,22 +92,11 @@ mod_perform(void* info)
 }
 
 static CFRunLoopSourceContext mod_CFRunLoopSourceContext = {
-    0,
-    NULL,
-    mod_source_retain,
-    mod_source_release,
-    NULL,
-    NULL,
-    NULL,
-    mod_schedule,
-    mod_cancel,
-    mod_perform
-};
+    0,    NULL, mod_source_retain, mod_source_release, NULL,
+    NULL, NULL, mod_schedule,      mod_cancel,         mod_perform};
 
 static PyObject*
-mod_CFRunLoopSourceCreate(
-    PyObject* self __attribute__((__unused__)),
-    PyObject* args)
+mod_CFRunLoopSourceCreate(PyObject* self __attribute__((__unused__)), PyObject* args)
 {
     PyObject* py_allocator;
     PyObject* py_order;
@@ -144,21 +132,19 @@ mod_CFRunLoopSourceCreate(
         return NULL;
     }
 
-
     context.info = py_context;
     Py_INCREF(py_context);
 
     CFRunLoopSourceRef rv = NULL;
-    PyObjC_DURING
-        rv = CFRunLoopSourceCreate(
-            allocator, order, &context);
+    Py_BEGIN_ALLOW_THREADS
+        @try {
+            rv = CFRunLoopSourceCreate(allocator, order, &context);
 
-
-    PyObjC_HANDLER
-        rv = NULL;
-        PyObjCErr_FromObjC(localException);
-
-    PyObjC_ENDHANDLER
+        } @catch (NSException* localException) {
+            rv = NULL;
+            PyObjCErr_FromObjC(localException);
+        }
+    Py_END_ALLOW_THREADS
 
     Py_DECREF((PyObject*)context.info);
     if (PyErr_Occurred()) {
@@ -172,11 +158,8 @@ mod_CFRunLoopSourceCreate(
     return result;
 }
 
-
 static PyObject*
-mod_CFRunLoopSourceGetContext(
-    PyObject* self __attribute__((__unused__)),
-    PyObject* args)
+mod_CFRunLoopSourceGetContext(PyObject* self __attribute__((__unused__)), PyObject* args)
 {
     PyObject* py_f;
     PyObject* py_context;
@@ -198,13 +181,14 @@ mod_CFRunLoopSourceGetContext(
 
     context.version = 0;
 
-    PyObjC_DURING
-        CFRunLoopSourceGetContext(f, &context);
+    Py_BEGIN_ALLOW_THREADS
+        @try {
+            CFRunLoopSourceGetContext(f, &context);
 
-    PyObjC_HANDLER
-        PyObjCErr_FromObjC(localException);
-
-    PyObjC_ENDHANDLER
+        } @catch (NSException* localException) {
+            PyObjCErr_FromObjC(localException);
+        }
+    Py_END_ALLOW_THREADS
 
     if (PyErr_Occurred()) {
         return NULL;
@@ -216,8 +200,7 @@ mod_CFRunLoopSourceGetContext(
     }
 
     if (context.retain != mod_source_retain) {
-        PyErr_SetString(PyExc_ValueError,
-            "retrieved context is not supported");
+        PyErr_SetString(PyExc_ValueError, "retrieved context is not supported");
         return NULL;
     }
 
@@ -230,16 +213,8 @@ mod_CFRunLoopSourceGetContext(
     return (PyObject*)(context.info);
 }
 
-#define COREFOUNDATION_RUNLOOPSOURCE_METHODS \
-    { \
-        "CFRunLoopSourceCreate", \
-        (PyCFunction)mod_CFRunLoopSourceCreate, \
-        METH_VARARGS, \
-        NULL \
-    }, \
-    { \
-        "CFRunLoopSourceGetContext", \
-        (PyCFunction)mod_CFRunLoopSourceGetContext, \
-        METH_VARARGS, \
-        NULL \
-    },
+#define COREFOUNDATION_RUNLOOPSOURCE_METHODS                                             \
+    {"CFRunLoopSourceCreate", (PyCFunction)mod_CFRunLoopSourceCreate, METH_VARARGS,      \
+     NULL},                                                                              \
+        {"CFRunLoopSourceGetContext", (PyCFunction)mod_CFRunLoopSourceGetContext,        \
+         METH_VARARGS, NULL},

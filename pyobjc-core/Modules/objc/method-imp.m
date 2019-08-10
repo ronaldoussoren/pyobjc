@@ -336,18 +336,18 @@ call_instanceMethodForSelector_(PyObject* method, PyObject* self, PyObject* args
         return NULL;
     }
 
-    PyObjC_DURING
-        retval = ((IMP(*)(Class, SEL, SEL))objc_msgSend)(
-            PyObjCClass_GetClass(self), PyObjCSelector_GetSelector(method), selector);
+    Py_BEGIN_ALLOW_THREADS
+        @try {
+            retval = ((IMP(*)(Class, SEL, SEL))objc_msgSend)(
+                PyObjCClass_GetClass(self), PyObjCSelector_GetSelector(method), selector);
 
-    PyObjC_HANDLER
-        PyObjCErr_FromObjC(localException);
-        retval = NULL;
+        } @catch (NSObject* localException) {
+            PyObjCErr_FromObjC(localException);
+            retval = NULL;
+        }
+    Py_END_ALLOW_THREADS
 
-    PyObjC_ENDHANDLER
-
-    if (retval == NULL)
-    {
+    if (retval == NULL) {
         if (PyErr_Occurred()) {
             return NULL;
         }
@@ -413,16 +413,18 @@ call_methodForSelector_(PyObject* method, PyObject* self, PyObject* args)
 
     objc_superSetClass(super, object_getClass(objc_superGetReceiver(super)));
 
-    PyObjC_DURING
-        retval = ((IMP(*)(struct objc_super*, SEL, SEL))objc_msgSendSuper)(&super, PyObjCSelector_GetSelector(method), selector);
+    Py_BEGIN_ALLOW_THREADS
+        @try {
+            retval = ((IMP(*)(struct objc_super*, SEL, SEL))objc_msgSendSuper)(
+                &super, PyObjCSelector_GetSelector(method), selector);
 
-    PyObjC_HANDLER
-        PyObjCErr_FromObjC(localException);
-        retval = NULL;
-    PyObjC_ENDHANDLER
+        } @catch (NSObject* localException) {
+            PyObjCErr_FromObjC(localException);
+            retval = NULL;
+        }
+    Py_END_ALLOW_THREADS
 
-        if (retval == NULL)
-    {
+    if (retval == NULL) {
         if (PyErr_Occurred()) {
             return NULL;
         }

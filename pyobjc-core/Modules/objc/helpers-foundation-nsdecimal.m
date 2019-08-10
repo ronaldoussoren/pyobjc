@@ -244,13 +244,17 @@ PyObjC_number_to_decimal(PyObject* pyValue, NSDecimal* outResult)
         stringVal = PyObjC_PythonToId(uniVal);
         Py_DECREF(uniVal);
 
-        PyObjC_DURING DecimalFromString(outResult, stringVal, NULL);
+        Py_BEGIN_ALLOW_THREADS
+            @try {
+                DecimalFromString(outResult, stringVal, NULL);
 
-        PyObjC_HANDLER PyObjCErr_FromObjC(localException);
+            } @catch (NSObject* localException) {
+                PyObjCErr_FromObjC(localException);
+            }
+        Py_END_ALLOW_THREADS
 
-        PyObjC_ENDHANDLER
-
-            if (PyErr_Occurred()) return -1;
+        if (PyErr_Occurred())
+            return -1;
         return 0;
     }
 
@@ -322,11 +326,16 @@ decimal_init(PyObject* self, PyObject* args, PyObject* kwds)
             NSString* stringVal;
 
             stringVal = PyObjC_PythonToId(pyValue);
-            PyObjC_DURING DecimalFromString(&Decimal_Value(self), stringVal, NULL);
-            PyObjC_HANDLER PyObjCErr_FromObjC(localException);
-            PyObjC_ENDHANDLER
+            Py_BEGIN_ALLOW_THREADS
+                @try {
+                    DecimalFromString(&Decimal_Value(self), stringVal, NULL);
+                } @catch (NSObject* localException) {
+                    PyObjCErr_FromObjC(localException);
+                }
+            Py_END_ALLOW_THREADS
 
-                if (PyErr_Occurred()) return -1;
+            if (PyErr_Occurred())
+                return -1;
             return 0;
 
         } else {
@@ -761,19 +770,20 @@ call_NSDecimalNumber_decimalNumberWithDecimal_(PyObject* method, PyObject* self,
         return NULL;
     }
 
-    PyObjC_DURING
-        objc_superSetReceiver(super,
-            object_getClass(PyObjCClass_GetClass(self)));
+    Py_BEGIN_ALLOW_THREADS
+        @try {
+            objc_superSetReceiver(super, object_getClass(PyObjCClass_GetClass(self)));
             objc_superSetClass(super, object_getClass(PyObjCSelector_GetClass(method)));
 
-        res = ((id(*)(struct objc_super*, SEL, NSDecimal))objc_msgSendSuper)(&super, PyObjCSelector_GetSelector(method), *aDecimal);
-    PyObjC_HANDLER
-        PyObjCErr_FromObjC(localException);
-        res = nil;
-    PyObjC_ENDHANDLER
+            res = ((id(*)(struct objc_super*, SEL, NSDecimal))objc_msgSendSuper)(
+                &super, PyObjCSelector_GetSelector(method), *aDecimal);
+        } @catch (NSObject* localException) {
+            PyObjCErr_FromObjC(localException);
+            res = nil;
+        }
+    Py_END_ALLOW_THREADS
 
-    if (res == nil && PyErr_Occurred())
-    {
+    if (res == nil && PyErr_Occurred()) {
         return NULL;
     }
 
@@ -792,16 +802,20 @@ call_NSDecimalNumber_initWithDecimal_(PyObject* method, PyObject* self,
         return NULL;
     }
 
-    PyObjC_DURING objc_superSetReceiver(super, PyObjCObject_GetObject(self));
-    objc_superSetClass(super, PyObjCSelector_GetClass(method));
+    Py_BEGIN_ALLOW_THREADS
+        @try {
+            objc_superSetReceiver(super, PyObjCObject_GetObject(self));
+            objc_superSetClass(super, PyObjCSelector_GetClass(method));
 
-    res = ((id(*)(struct objc_super*, SEL, NSDecimal))objc_msgSendSuper)(&super, PyObjCSelector_GetSelector(method), *aDecimal);
-    PyObjC_HANDLER PyObjCErr_FromObjC(localException);
-    res = nil;
-    PyObjC_ENDHANDLER
+            res = ((id(*)(struct objc_super*, SEL, NSDecimal))objc_msgSendSuper)(
+                &super, PyObjCSelector_GetSelector(method), *aDecimal);
+        } @catch (NSObject* localException) {
+            PyObjCErr_FromObjC(localException);
+            res = nil;
+        }
+    Py_END_ALLOW_THREADS
 
-        if (res == nil && PyErr_Occurred())
-    {
+    if (res == nil && PyErr_Occurred()) {
         return NULL;
     }
 
@@ -870,25 +884,28 @@ call_NSDecimalNumber_decimalValue(PyObject* method, PyObject* self, PyObject* ar
         return NULL;
     }
 
-    PyObjC_DURING objc_superSetReceiver(super, PyObjCObject_GetObject(self));
-    objc_superSetClass(super, PyObjCSelector_GetClass(method));
+    Py_BEGIN_ALLOW_THREADS
+        @try {
+            objc_superSetReceiver(super, PyObjCObject_GetObject(self));
+            objc_superSetClass(super, PyObjCSelector_GetClass(method));
 
 #if defined(__i386__)
-    /* The call below doesn't work on i386, I'm not sure why.
-     * Because nobody will every subclass NSDecimalNumber this is not
-     * really a problem.
-     */
-    aDecimal = [PyObjCObject_GetObject(self) decimalValue];
+            /* The call below doesn't work on i386, I'm not sure why.
+             * Because nobody will every subclass NSDecimalNumber this is not
+             * really a problem.
+             */
+            aDecimal = [PyObjCObject_GetObject(self) decimalValue];
 #else
-    ((void (*)(void*, struct objc_super*, SEL))objc_msgSendSuper_stret)(
-        &aDecimal, &super, PyObjCSelector_GetSelector(method));
+            ((void (*)(void*, struct objc_super*, SEL))objc_msgSendSuper_stret)(
+                &aDecimal, &super, PyObjCSelector_GetSelector(method));
 #endif
 
-    PyObjC_HANDLER PyObjCErr_FromObjC(localException);
-    PyObjC_ENDHANDLER
+        } @catch (NSObject* localException) {
+            PyObjCErr_FromObjC(localException);
+        }
+    Py_END_ALLOW_THREADS
 
-        if (PyErr_Occurred())
-    {
+    if (PyErr_Occurred()) {
         return NULL;
     }
 

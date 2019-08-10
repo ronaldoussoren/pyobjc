@@ -1,7 +1,5 @@
 static PyObject*
-mod_CFNumberGetValue(
-    PyObject* self __attribute__((__unused__)),
-    PyObject* args)
+mod_CFNumberGetValue(PyObject* self __attribute__((__unused__)), PyObject* args)
 {
     PyObject* py_number;
     CFNumberRef number;
@@ -36,13 +34,14 @@ mod_CFNumberGetValue(
     }
 
     Boolean rv = FALSE;
-    PyObjC_DURING
-        rv = CFNumberGetValue(number, type, &buf);
+    Py_BEGIN_ALLOW_THREADS
+        @try {
+            rv = CFNumberGetValue(number, type, &buf);
 
-    PyObjC_HANDLER
-        PyObjCErr_FromObjC(localException);
-
-    PyObjC_ENDHANDLER
+        } @catch (NSException* localException) {
+            PyObjCErr_FromObjC(localException);
+        }
+    Py_END_ALLOW_THREADS
 
     if (PyErr_Occurred()) {
         return NULL;
@@ -120,9 +119,7 @@ mod_CFNumberGetValue(
 }
 
 static PyObject*
-mod_CFNumberCreate(
-    PyObject* self __attribute__((__unused__)),
-    PyObject* args)
+mod_CFNumberCreate(PyObject* self __attribute__((__unused__)), PyObject* args)
 {
     PyObject* py_allocator;
     CFAllocatorRef allocator;
@@ -220,13 +217,14 @@ mod_CFNumberCreate(
     }
 
     CFNumberRef rv = NULL;
-    PyObjC_DURING
-        rv = CFNumberCreate(allocator, type, &buf);
+    Py_BEGIN_ALLOW_THREADS
+        @try {
+            rv = CFNumberCreate(allocator, type, &buf);
 
-    PyObjC_HANDLER
-        PyObjCErr_FromObjC(localException);
-
-    PyObjC_ENDHANDLER
+        } @catch (NSException* localException) {
+            PyObjCErr_FromObjC(localException);
+        }
+    Py_END_ALLOW_THREADS
 
     if (PyErr_Occurred()) {
         return NULL;
@@ -239,18 +237,6 @@ mod_CFNumberCreate(
     return result;
 }
 
-
-
-#define COREFOUNDATION_NUMBER_METHODS \
-    { \
-        "CFNumberGetValue", \
-        (PyCFunction)mod_CFNumberGetValue, \
-        METH_VARARGS, \
-        NULL \
-    }, \
-    { \
-        "CFNumberCreate", \
-        (PyCFunction)mod_CFNumberCreate, \
-        METH_VARARGS, \
-        NULL \
-    },
+#define COREFOUNDATION_NUMBER_METHODS                                                    \
+    {"CFNumberGetValue", (PyCFunction)mod_CFNumberGetValue, METH_VARARGS, NULL},         \
+        {"CFNumberCreate", (PyCFunction)mod_CFNumberCreate, METH_VARARGS, NULL},

@@ -3,14 +3,13 @@
  * described by the metadata.
  */
 #define PY_SSIZE_T_CLEAN
-#include <Python.h>
 #include "pyobjc-api.h"
+#include <Python.h>
 
 #import <ApplicationServices/ApplicationServices.h>
 
 static PyObject*
-m_CGWaitForScreenRefreshRects(PyObject* self __attribute__((__unused__)),
-        PyObject* args)
+m_CGWaitForScreenRefreshRects(PyObject* self __attribute__((__unused__)), PyObject* args)
 {
     CGRect* rectArray = NULL;
     CGRectCount count = 0;
@@ -27,18 +26,20 @@ m_CGWaitForScreenRefreshRects(PyObject* self __attribute__((__unused__)),
         }
     }
 
-    PyObjC_DURING
+    Py_BEGIN_ALLOW_THREADS
+        @try {
 
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wdeprecated-declarations"
 
-        err = CGWaitForScreenRefreshRects(&rectArray, &count);
+            err = CGWaitForScreenRefreshRects(&rectArray, &count);
 
 #pragma clang diagnostic pop
 
-    PyObjC_HANDLER
-        PyObjCErr_FromObjC(localException);
-    PyObjC_ENDHANDLER
+        } @catch (NSException* localException) {
+            PyObjCErr_FromObjC(localException);
+        }
+    Py_END_ALLOW_THREADS
 
     if (PyErr_Occurred()) {
         return NULL;
@@ -46,8 +47,7 @@ m_CGWaitForScreenRefreshRects(PyObject* self __attribute__((__unused__)),
 
     if (err == kCGErrorSuccess) {
         /* Build the array */
-        PyObject* arr = PyObjC_CArrayToPython(
-            @encode(CGRect), rectArray, count);
+        PyObject* arr = PyObjC_CArrayToPython(@encode(CGRect), rectArray, count);
         if (arr == NULL) {
             return NULL;
         }
@@ -67,8 +67,7 @@ m_CGWaitForScreenRefreshRects(PyObject* self __attribute__((__unused__)),
 }
 
 static PyObject*
-m_CGWaitForScreenUpdateRects(PyObject* self __attribute__((__unused__)),
-    PyObject* args)
+m_CGWaitForScreenUpdateRects(PyObject* self __attribute__((__unused__)), PyObject* args)
 {
     CGRect* rectArray = NULL;
     size_t count = 0;
@@ -84,7 +83,8 @@ m_CGWaitForScreenUpdateRects(PyObject* self __attribute__((__unused__)),
         PyObject* py_count;
         PyObject* py_delta;
 
-        if (!PyArg_ParseTuple(args, "OOOOO", &py_ops, &py_curop, &py_rectarr, &py_count, &py_delta)) {
+        if (!PyArg_ParseTuple(args, "OOOOO", &py_ops, &py_curop, &py_rectarr, &py_count,
+                              &py_delta)) {
             return NULL;
         }
 
@@ -106,27 +106,27 @@ m_CGWaitForScreenUpdateRects(PyObject* self __attribute__((__unused__)),
         }
     }
 
-    if (PyObjC_PythonToObjC(@encode(CGScreenUpdateOperation), py_ops, &requestedOperations) < 0) {
+    if (PyObjC_PythonToObjC(@encode(CGScreenUpdateOperation), py_ops,
+                            &requestedOperations) < 0) {
         return NULL;
     }
 
-    PyObjC_DURING
+    Py_BEGIN_ALLOW_THREADS
+        @try {
 
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wdeprecated-declarations"
 
-        err = CGWaitForScreenUpdateRects(
-            requestedOperations,
-            &currentOperation,
-            &rectArray, &count,
-            &delta);
+            err = CGWaitForScreenUpdateRects(requestedOperations, &currentOperation,
+                                             &rectArray, &count, &delta);
 
 #pragma clang diagnostic pop
 
-    PyObjC_HANDLER
-        err = -1; /* Avoid compiler warning */
-        PyObjCErr_FromObjC(localException);
-    PyObjC_ENDHANDLER
+        } @catch (NSException* localException) {
+            err = -1; /* Avoid compiler warning */
+            PyObjCErr_FromObjC(localException);
+        }
+    Py_END_ALLOW_THREADS
 
     if (PyErr_Occurred()) {
         return NULL;
@@ -134,13 +134,11 @@ m_CGWaitForScreenUpdateRects(PyObject* self __attribute__((__unused__)),
 
     if (err == kCGErrorSuccess) {
         /* Build the array */
-        PyObject* arr = PyObjC_CArrayToPython(
-            @encode(CGRect), rectArray, count);
+        PyObject* arr = PyObjC_CArrayToPython(@encode(CGRect), rectArray, count);
         if (arr == NULL) {
             return NULL;
         }
-        PyObject* dlt = PyObjC_ObjCToPython(
-            @encode(CGScreenUpdateMoveDelta), &delta);
+        PyObject* dlt = PyObjC_ObjCToPython(@encode(CGScreenUpdateMoveDelta), &delta);
         if (dlt == NULL) {
             return NULL;
         }
@@ -160,9 +158,7 @@ m_CGWaitForScreenUpdateRects(PyObject* self __attribute__((__unused__)),
 }
 
 static PyObject*
-m_CGReleaseScreenRefreshRects(
-    PyObject* self __attribute__((__unused__)),
-    PyObject* args)
+m_CGReleaseScreenRefreshRects(PyObject* self __attribute__((__unused__)), PyObject* args)
 {
     PyObject* array;
 
@@ -178,36 +174,22 @@ m_CGReleaseScreenRefreshRects(
     return Py_None;
 }
 
-
 static PyMethodDef mod_methods[] = {
-    {
-        "CGWaitForScreenRefreshRects",
-        (PyCFunction)m_CGWaitForScreenRefreshRects,
-        METH_VARARGS,
-        NULL
-    },
-    {
-        "CGWaitForScreenUpdateRects",
-        (PyCFunction)m_CGWaitForScreenUpdateRects,
-        METH_VARARGS,
-        NULL
-    },
-    {
-        "CGReleaseScreenRefreshRects",
-        (PyCFunction)m_CGReleaseScreenRefreshRects,
-        METH_VARARGS,
-        NULL
-    },
+    {"CGWaitForScreenRefreshRects", (PyCFunction)m_CGWaitForScreenRefreshRects,
+     METH_VARARGS, NULL},
+    {"CGWaitForScreenUpdateRects", (PyCFunction)m_CGWaitForScreenUpdateRects,
+     METH_VARARGS, NULL},
+    {"CGReleaseScreenRefreshRects", (PyCFunction)m_CGReleaseScreenRefreshRects,
+     METH_VARARGS, NULL},
 
-
-    { 0, 0, 0, 0 }
-};
+    {0, 0, 0, 0}};
 
 PyObjC_MODULE_INIT(_doubleindirect)
 {
     PyObject* m = PyObjC_MODULE_CREATE(_doubleindirect);
 
-    if (PyObjC_ImportAPI(m) < 0) PyObjC_INITERROR();
+    if (PyObjC_ImportAPI(m) < 0)
+        PyObjC_INITERROR();
 
     PyObjC_INITDONE();
 }

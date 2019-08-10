@@ -17,7 +17,7 @@ extern PyObject* PyObjCExc_ObjCPointerWarning;
 
 extern int PyObjCUtil_Init(PyObject* module);
 
-extern void PyObjCErr_FromObjC(NSException* localException);
+extern void PyObjCErr_FromObjC(NSObject* localException);
 extern void PyObjCErr_ToObjC(void) __attribute__((__noreturn__));
 
 extern void PyObjCErr_ToObjCWithGILState(PyGILState_STATE* state)

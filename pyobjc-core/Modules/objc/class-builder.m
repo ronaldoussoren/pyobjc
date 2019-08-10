@@ -1223,12 +1223,15 @@ free_ivars(id self, PyObject* cls)
                 (*(PyObject**)(((char*)self) + ivar_getOffset(var))) = NULL;
                 Py_XDECREF(tmp);
             } else {
-                PyObjC_DURING[*(id*)(((char*)self) + ivar_getOffset(var)) autorelease];
+                Py_BEGIN_ALLOW_THREADS
+                    @try {
+                        [*(id*)(((char*)self) + ivar_getOffset(var)) autorelease];
 
-                PyObjC_HANDLER NSLog(@"ignoring exception %@ in destructor",
-                                     localException);
-
-                PyObjC_ENDHANDLER*(id*)(((char*)self) + ivar_getOffset(var)) = NULL;
+                    } @catch (NSObject* localException) {
+                        NSLog(@"ignoring exception %@ in destructor", localException);
+                    }
+                Py_END_ALLOW_THREADS
+                *(id*)(((char*)self) + ivar_getOffset(var)) = NULL;
             }
             Py_DECREF(o);
         }
@@ -1273,31 +1276,31 @@ object_method_dealloc(ffi_cif* cif __attribute__((__unused__)),
 
         PyErr_Fetch(&ptype, &pvalue, &ptraceback);
 
-    cls = PyObjCClass_New(object_getClass(self));
+        cls = PyObjCClass_New(object_getClass(self));
 
-    delmethod = PyObjCClass_GetDelMethod(cls);
-    if (delmethod != NULL) {
-        PyObject* s = _PyObjCObject_NewDeallocHelper(self);
-        obj = PyObject_CallFunction(delmethod, "O", s);
-        _PyObjCObject_FreeDeallocHelper(s);
-        if (obj == NULL) {
-            PyErr_WriteUnraisable(delmethod);
-        } else {
-            Py_DECREF(obj);
+        delmethod = PyObjCClass_GetDelMethod(cls);
+        if (delmethod != NULL) {
+            PyObject* s = _PyObjCObject_NewDeallocHelper(self);
+            obj = PyObject_CallFunction(delmethod, "O", s);
+            _PyObjCObject_FreeDeallocHelper(s);
+            if (obj == NULL) {
+                PyErr_WriteUnraisable(delmethod);
+            } else {
+                Py_DECREF(obj);
+            }
+            Py_DECREF(delmethod);
         }
-        Py_DECREF(delmethod);
-    }
 
-    free_ivars(self, cls);
+        free_ivars(self, cls);
 
-    PyErr_Restore(ptype, pvalue, ptraceback);
+        PyErr_Restore(ptype, pvalue, ptraceback);
 
     PyObjC_END_WITH_GIL
 
-        objc_superSetClass(spr, (Class)userdata);
+    objc_superSetClass(spr, (Class)userdata);
     objc_superSetReceiver(spr, self);
 
-    ((void(*)(struct objc_super*, SEL))objc_msgSendSuper)(&spr, _meth);
+    ((void (*)(struct objc_super*, SEL))objc_msgSendSuper)(&spr, _meth);
 }
 
 /* -copyWithZone:(NSZone*)zone */
@@ -1318,7 +1321,8 @@ object_method_copyWithZone_(ffi_cif* cif __attribute__((__unused__)), void* resp
 
     objc_superSetClass(spr, (Class)userdata);
     objc_superSetReceiver(spr, self);
-    copy = ((id(*)(struct objc_super*, SEL, NSZone*))objc_msgSendSuper)(&spr, _meth, zone);
+    copy =
+        ((id(*)(struct objc_super*, SEL, NSZone*))objc_msgSendSuper)(&spr, _meth, zone);
 
     if (copy == nil) {
         *(id*)resp = nil;
@@ -1386,29 +1390,29 @@ object_method_respondsToSelector(ffi_cif* cif __attribute__((__unused__)), void*
     PyObjC_BEGIN_WITH_GIL
         /* First check if we respond */
         pyself = PyObjCObject_New(self, PyObjCObject_kDEFAULT, YES);
-    if (pyself == NULL) {
-        *pres = NO;
-        PyObjC_GIL_RETURNVOID;
-    }
-    pymeth = PyObjCObject_FindSelector(pyself, aSelector);
-    Py_DECREF(pyself);
-    if (pymeth) {
-        *pres = YES;
-
-        if (PyObjCSelector_Check(pymeth) &&
-            (((PyObjCSelector*)pymeth)->sel_flags & PyObjCSelector_kCLASS_METHOD)) {
+        if (pyself == NULL) {
             *pres = NO;
+            PyObjC_GIL_RETURNVOID;
         }
+        pymeth = PyObjCObject_FindSelector(pyself, aSelector);
+        Py_DECREF(pyself);
+        if (pymeth) {
+            *pres = YES;
 
-        Py_DECREF(pymeth);
-        PyObjC_GIL_RETURNVOID;
-    }
-    PyErr_Clear();
+            if (PyObjCSelector_Check(pymeth) &&
+                (((PyObjCSelector*)pymeth)->sel_flags & PyObjCSelector_kCLASS_METHOD)) {
+                *pres = NO;
+            }
+
+            Py_DECREF(pymeth);
+            PyObjC_GIL_RETURNVOID;
+        }
+        PyErr_Clear();
 
     PyObjC_END_WITH_GIL
 
-        /* Check superclass */
-        objc_superSetClass(spr, (Class)userdata);
+    /* Check superclass */
+    objc_superSetClass(spr, (Class)userdata);
     objc_superSetReceiver(spr, self);
 
     *pres = ((int (*)(struct objc_super*, SEL, SEL))objc_msgSendSuper)(&spr, _meth,
@@ -1435,44 +1439,49 @@ object_method_methodSignatureForSelector(ffi_cif* cif __attribute__((__unused__)
     objc_superSetClass(spr, (Class)userdata);
     objc_superSetReceiver(spr, self);
 
-    NS_DURING
-    *presult = ((NSMethodSignature*(*)(struct objc_super*, SEL, SEL))objc_msgSendSuper)(&spr, _meth, aSelector);
+    @try {
+        *presult = ((NSMethodSignature * (*)(struct objc_super*, SEL, SEL))
+                        objc_msgSendSuper)(&spr, _meth, aSelector);
 
-    NS_HANDLER
-    *presult = nil;
-
-    NS_ENDHANDLER
+    } @catch (NSObject* localException) {
+        *presult = nil;
+    }
 
     if (*presult != nil) {
         return;
     }
 
-    PyObjC_BEGIN_WITH_GIL pyself = PyObjCObject_New(self, PyObjCObject_kDEFAULT, YES);
-    if (pyself == NULL) {
-        PyErr_Clear();
-        PyObjC_GIL_RETURNVOID;
-    }
+    PyObjC_BEGIN_WITH_GIL
+        pyself = PyObjCObject_New(self, PyObjCObject_kDEFAULT, YES);
+        if (pyself == NULL) {
+            PyErr_Clear();
+            PyObjC_GIL_RETURNVOID;
+        }
 
-    pymeth = PyObjCObject_FindSelector(pyself, aSelector);
-    if (!pymeth) {
-        Py_DECREF(pyself);
-        PyErr_Clear();
-        PyObjC_GIL_RETURNVOID;
-    }
+        pymeth = PyObjCObject_FindSelector(pyself, aSelector);
+        if (!pymeth) {
+            Py_DECREF(pyself);
+            PyErr_Clear();
+            PyObjC_GIL_RETURNVOID;
+        }
 
     PyObjC_END_WITH_GIL
 
-        NS_DURING* presult = [NSMethodSignature
+    @try {
+        *presult = [NSMethodSignature
             signatureWithObjCTypes:((PyObjCSelector*)pymeth)->sel_python_signature];
-    NS_HANDLER
-    PyObjC_BEGIN_WITH_GIL Py_DECREF(pymeth);
-    Py_DECREF(pyself);
+    } @catch (NSObject* localException) {
+        PyObjC_BEGIN_WITH_GIL
+            Py_DECREF(pymeth);
+            Py_DECREF(pyself);
 
-    PyObjC_END_WITH_GIL[localException raise];
-    NS_ENDHANDLER
+        PyObjC_END_WITH_GIL
+        @throw;
+    }
 
-    PyObjC_BEGIN_WITH_GIL Py_DECREF(pymeth);
-    Py_DECREF(pyself);
+    PyObjC_BEGIN_WITH_GIL
+        Py_DECREF(pymeth);
+        Py_DECREF(pyself);
 
     PyObjC_END_WITH_GIL
 }
@@ -1511,16 +1520,19 @@ object_method_forwardInvocation(ffi_cif* cif __attribute__((__unused__)),
         return;
     }
 
-    PyObjC_DURING theSelector = [invocation selector];
-    PyObjC_HANDLER PyGILState_Release(state);
-    [localException raise];
+    Py_BEGIN_ALLOW_THREADS
+        @try {
+            theSelector = [invocation selector];
+        } @catch (NSObject* localException) {
+            PyGILState_Release(state);
+            @throw;
 
-    /* Avoid compiler warnings */
-    theSelector = @selector(init);
+            /* Avoid compiler warnings */
+            theSelector = @selector(init);
+        }
+    Py_END_ALLOW_THREADS
 
-    PyObjC_ENDHANDLER
-
-        pymeth = PyObjCObject_FindSelector(pyself, theSelector);
+    pymeth = PyObjCObject_FindSelector(pyself, theSelector);
 
     if ((pymeth == NULL) || PyObjCNativeSelector_Check(pymeth)) {
         struct objc_super spr;
@@ -1535,7 +1547,8 @@ object_method_forwardInvocation(ffi_cif* cif __attribute__((__unused__)),
         objc_superSetClass(spr, (Class)userdata);
         objc_superSetReceiver(spr, self);
         PyGILState_Release(state);
-        ((void(*)(struct objc_super*, SEL, NSInvocation*))objc_msgSendSuper)(&spr, _meth, invocation);
+        ((void (*)(struct objc_super*, SEL, NSInvocation*))objc_msgSendSuper)(&spr, _meth,
+                                                                              invocation);
         return;
     }
 
@@ -1908,63 +1921,65 @@ object_method_valueForKey_(ffi_cif* cif __attribute__((__unused__)), void* retva
     struct objc_super spr;
 
     /* First check super */
-    NS_DURING
-    objc_superSetClass(spr, (Class)userdata);
-    objc_superSetReceiver(spr, self);
-    *((id*)retval) = ((id(*)(struct objc_super*, SEL, NSString*))objc_msgSendSuper)(&spr, _meth, key);
-    NS_HANDLER
+    @try {
+        objc_superSetClass(spr, (Class)userdata);
+        objc_superSetReceiver(spr, self);
+        *((id*)retval) = ((id(*)(struct objc_super*, SEL, NSString*))objc_msgSendSuper)(
+            &spr, _meth, key);
+    } @catch (NSObject* localException) {
 
-    /* Parent doesn't know the key, try to create in the
-     * python side, just like for plain python objects.
-     *
-     * NOTE: We have to be extermely careful in here, some classes,
-     * like NSManagedContext convert __getattr__ into a -valueForKey:,
-     * and that can cause infinite loops.
-     *
-     * This is why attribute access is hardcoded using PyObjCObject_GetAttrString
-     * rather than PyObject_GetAttrString.
-     */
-    if (([[localException name] isEqual:@"NSUnknownKeyException"]) &&
-        [[self class] accessInstanceVariablesDirectly]) {
+        /* Parent doesn't know the key, try to create in the
+         * python side, just like for plain python objects.
+         *
+         * NOTE: We have to be extermely careful in here, some classes,
+         * like NSManagedContext convert __getattr__ into a -valueForKey:,
+         * and that can cause infinite loops.
+         *
+         * This is why attribute access is hardcoded using PyObjCObject_GetAttrString
+         * rather than PyObject_GetAttrString.
+         */
+        if (([localException isKindOfClass:[NSException class]]) &&
+            ([[(NSException*)localException name] isEqual:@"NSUnknownKeyException"]) &&
+            [[self class] accessInstanceVariablesDirectly]) {
 
-        PyGILState_STATE state = PyGILState_Ensure();
-        PyObject* selfObj = PyObjCObject_New(self, PyObjCObject_kDEFAULT, YES);
-        PyObject* res = NULL;
-        r = -1;
-        do {
-            res = PyObjCObject_GetAttrString(selfObj, (char*)[key UTF8String]);
-            if (res == NULL) {
-                PyErr_Clear();
-                res = PyObjCObject_GetAttrString(
-                    selfObj, (char*)[[@"_" stringByAppendingString:key] UTF8String]);
+            PyGILState_STATE state = PyGILState_Ensure();
+            PyObject* selfObj = PyObjCObject_New(self, PyObjCObject_kDEFAULT, YES);
+            PyObject* res = NULL;
+            r = -1;
+            do {
+                res = PyObjCObject_GetAttrString(selfObj, (char*)[key UTF8String]);
                 if (res == NULL) {
+                    PyErr_Clear();
+                    res = PyObjCObject_GetAttrString(
+                        selfObj, (char*)[[@"_" stringByAppendingString:key] UTF8String]);
+                    if (res == NULL) {
+                        break;
+                    }
+                }
+
+                /* Check that we don't accidently return
+                 * an accessor method.
+                 */
+                if (PyObjCSelector_Check(res) &&
+                    ((PyObjCSelector*)res)->sel_self == selfObj) {
+                    Py_DECREF(res);
+                    res = NULL;
                     break;
                 }
+                r = depythonify_c_value(@encode(id), res, retval);
+            } while (0);
+            Py_DECREF(selfObj);
+            Py_XDECREF(res);
+            if (r == -1) {
+                PyErr_Clear();
+                PyGILState_Release(state);
+                @throw;
             }
-
-            /* Check that we don't accidently return
-             * an accessor method.
-             */
-            if (PyObjCSelector_Check(res) &&
-                ((PyObjCSelector*)res)->sel_self == selfObj) {
-                Py_DECREF(res);
-                res = NULL;
-                break;
-            }
-            r = depythonify_c_value(@encode(id), res, retval);
-        } while (0);
-        Py_DECREF(selfObj);
-        Py_XDECREF(res);
-        if (r == -1) {
-            PyErr_Clear();
             PyGILState_Release(state);
-            [localException raise];
+        } else {
+            @throw;
         }
-        PyGILState_Release(state);
-    } else {
-        [localException raise];
     }
-    NS_ENDHANDLER
 }
 
 static void
@@ -1986,53 +2001,55 @@ object_method_setValue_forKey_(ffi_cif* cif __attribute__((__unused__)),
     id value = *(id*)args[2];
     NSString* key = *(NSString**)args[3];
 
-    NS_DURING
-    /* First check super */
-    objc_superSetClass(spr, (Class)userdata);
-    objc_superSetReceiver(spr, self);
-    ((void(*)(struct objc_super*, SEL, id, id))objc_msgSendSuper)(&spr, _meth, value, key);
-    NS_HANDLER
-    /* Parent doesn't know the key, try to create in the
-     * python side, just like for plain python objects.
-     */
-    if (([[localException name] isEqual:@"NSUnknownKeyException"]) &&
-        [[self class] accessInstanceVariablesDirectly]) {
+    @try {
+        /* First check super */
+        objc_superSetClass(spr, (Class)userdata);
+        objc_superSetReceiver(spr, self);
+        ((void (*)(struct objc_super*, SEL, id, id))objc_msgSendSuper)(&spr, _meth, value,
+                                                                       key);
+    } @catch (NSObject* localException) {
+        /* Parent doesn't know the key, try to create in the
+         * python side, just like for plain python objects.
+         */
+        if (([localException isKindOfClass:[NSException class]]) &&
+            ([[(NSException*)localException name] isEqual:@"NSUnknownKeyException"]) &&
+            [[self class] accessInstanceVariablesDirectly]) {
 
-        PyGILState_STATE state = PyGILState_Ensure();
-        PyObject* val = pythonify_c_value(@encode(id), &value);
-        if (val == NULL) {
-            PyErr_Clear();
-            PyGILState_Release(state);
+            PyGILState_STATE state = PyGILState_Ensure();
+            PyObject* val = pythonify_c_value(@encode(id), &value);
+            if (val == NULL) {
+                PyErr_Clear();
+                PyGILState_Release(state);
 
-            [localException raise];
-        }
-        PyObject* res = NULL;
-        PyObject* selfObj = PyObjCObject_New(self, PyObjCObject_kDEFAULT, YES);
-        r = -1;
-        do {
-            char* rawkey = (char*)[[@"_" stringByAppendingString:key] UTF8String];
-            res = PyObject_GetAttrString(selfObj, rawkey);
-            if (res != NULL) {
-                r = PyObject_SetAttrString(selfObj, rawkey, val);
-                if (r != -1) {
-                    break;
-                }
+                @throw;
             }
-            PyErr_Clear();
-            rawkey = (char*)[key UTF8String];
-            r = PyObject_SetAttrString(selfObj, rawkey, val);
-        } while (0);
-        Py_DECREF(selfObj);
-        Py_DECREF(val);
-        Py_XDECREF(res);
-        if (r == -1) {
-            PyErr_Clear();
+            PyObject* res = NULL;
+            PyObject* selfObj = PyObjCObject_New(self, PyObjCObject_kDEFAULT, YES);
+            r = -1;
+            do {
+                char* rawkey = (char*)[[@"_" stringByAppendingString:key] UTF8String];
+                res = PyObject_GetAttrString(selfObj, rawkey);
+                if (res != NULL) {
+                    r = PyObject_SetAttrString(selfObj, rawkey, val);
+                    if (r != -1) {
+                        break;
+                    }
+                }
+                PyErr_Clear();
+                rawkey = (char*)[key UTF8String];
+                r = PyObject_SetAttrString(selfObj, rawkey, val);
+            } while (0);
+            Py_DECREF(selfObj);
+            Py_DECREF(val);
+            Py_XDECREF(res);
+            if (r == -1) {
+                PyErr_Clear();
+                PyGILState_Release(state);
+                @throw;
+            }
             PyGILState_Release(state);
-            [localException raise];
+        } else {
+            @throw;
         }
-        PyGILState_Release(state);
-    } else {
-        [localException raise];
     }
-    NS_ENDHANDLER
 }

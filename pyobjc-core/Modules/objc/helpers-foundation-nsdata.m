@@ -12,21 +12,25 @@ call_NSData_bytes(PyObject* method, PyObject* self, PyObject* arguments)
         return NULL;
     }
 
-    PyObjC_DURING objc_superSetReceiver(super, PyObjCObject_GetObject(self));
-    objc_superSetClass(super, PyObjCSelector_GetClass(method));
-    bytes = ((void* (*)(struct objc_super*, SEL))objc_msgSendSuper)(
-        &super, PyObjCSelector_GetSelector(method));
-    bytes_len = ((NSUInteger(*)(struct objc_super*, SEL))objc_msgSendSuper)(
-        &super, @selector(length));
+    Py_BEGIN_ALLOW_THREADS
+        @try {
+            objc_superSetReceiver(super, PyObjCObject_GetObject(self));
+            objc_superSetClass(super, PyObjCSelector_GetClass(method));
+            bytes = ((void* (*)(struct objc_super*, SEL))objc_msgSendSuper)(
+                &super, PyObjCSelector_GetSelector(method));
+            bytes_len = ((NSUInteger(*)(struct objc_super*, SEL))objc_msgSendSuper)(
+                &super, @selector(length));
 
-    PyObjC_HANDLER PyObjCErr_FromObjC(localException);
-    result = NULL;
-    bytes = NULL;
-    bytes_len = 0;
+        } @catch (NSObject* localException) {
+            PyObjCErr_FromObjC(localException);
+            result = NULL;
+            bytes = NULL;
+            bytes_len = 0;
+        }
+    Py_END_ALLOW_THREADS
 
-    PyObjC_ENDHANDLER
-
-        if (bytes == NULL && PyErr_Occurred()) return NULL;
+    if (bytes == NULL && PyErr_Occurred())
+        return NULL;
 
     if (bytes == NULL) {
         /* Creating a memory view with a NULL pointer will
@@ -120,22 +124,26 @@ call_NSMutableData_mutableBytes(PyObject* method, PyObject* self, PyObject* argu
         return NULL;
     }
 
-    PyObjC_DURING objc_superSetReceiver(super, PyObjCObject_GetObject(self));
-    objc_superSetClass(super, PyObjCSelector_GetClass(method));
+    Py_BEGIN_ALLOW_THREADS
+        @try {
+            objc_superSetReceiver(super, PyObjCObject_GetObject(self));
+            objc_superSetClass(super, PyObjCSelector_GetClass(method));
 
-    bytes = ((void* (*)(struct objc_super*, SEL))objc_msgSendSuper)(
-        &super, PyObjCSelector_GetSelector(method));
-    bytes_len = ((NSUInteger(*)(struct objc_super*, SEL))objc_msgSendSuper)(
-        &super, @selector(length));
+            bytes = ((void* (*)(struct objc_super*, SEL))objc_msgSendSuper)(
+                &super, PyObjCSelector_GetSelector(method));
+            bytes_len = ((NSUInteger(*)(struct objc_super*, SEL))objc_msgSendSuper)(
+                &super, @selector(length));
 
-    PyObjC_HANDLER PyObjCErr_FromObjC(localException);
-    result = NULL;
-    bytes = NULL;
-    bytes_len = 0;
+        } @catch (NSObject* localException) {
+            PyObjCErr_FromObjC(localException);
+            result = NULL;
+            bytes = NULL;
+            bytes_len = 0;
+        }
+    Py_END_ALLOW_THREADS
 
-    PyObjC_ENDHANDLER
-
-        if (bytes == NULL && PyErr_Occurred()) return NULL;
+    if (bytes == NULL && PyErr_Occurred())
+        return NULL;
 
     if (bytes == NULL) {
         /* PyMemoryView doesn't like null pointers, and those

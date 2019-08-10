@@ -19,18 +19,12 @@ mod_CFTreeCopyDescriptionCallback(const void* info)
     return (CFStringRef)result;
 }
 
-static CFTreeContext mod_CFTreeContext = {
-    0,
-    NULL,
-    mod_CFTreeRetainCallback,
-    mod_CFTreeReleaseCallback,
-    mod_CFTreeCopyDescriptionCallback
-};
+static CFTreeContext mod_CFTreeContext = {0, NULL, mod_CFTreeRetainCallback,
+                                          mod_CFTreeReleaseCallback,
+                                          mod_CFTreeCopyDescriptionCallback};
 
 static PyObject*
-mod_CFTreeGetContext(
-    PyObject* self __attribute__((__unused__)),
-    PyObject* args)
+mod_CFTreeGetContext(PyObject* self __attribute__((__unused__)), PyObject* args)
 {
     PyObject* py_tree;
     PyObject* py_context;
@@ -52,13 +46,14 @@ mod_CFTreeGetContext(
 
     context.version = 0;
 
-    PyObjC_DURING
-        CFTreeGetContext(tree, &context);
+    Py_BEGIN_ALLOW_THREADS
+        @try {
+            CFTreeGetContext(tree, &context);
 
-    PyObjC_HANDLER
-        PyObjCErr_FromObjC(localException);
-
-    PyObjC_ENDHANDLER
+        } @catch (NSException* localException) {
+            PyObjCErr_FromObjC(localException);
+        }
+    Py_END_ALLOW_THREADS
 
     if (PyErr_Occurred()) {
         return NULL;
@@ -78,9 +73,7 @@ mod_CFTreeGetContext(
 }
 
 static PyObject*
-mod_CFTreeSetContext(
-    PyObject* self __attribute__((__unused__)),
-    PyObject* args)
+mod_CFTreeSetContext(PyObject* self __attribute__((__unused__)), PyObject* args)
 {
     PyObject* py_tree;
     PyObject* py_context;
@@ -103,13 +96,14 @@ mod_CFTreeSetContext(
     context = mod_CFTreeContext;
     context.info = info;
 
-    PyObjC_DURING
-        CFTreeSetContext(tree, &context);
+    Py_BEGIN_ALLOW_THREADS
+        @try {
+            CFTreeSetContext(tree, &context);
 
-    PyObjC_HANDLER
-        PyObjCErr_FromObjC(localException);
-
-    PyObjC_ENDHANDLER
+        } @catch (NSException* localException) {
+            PyObjCErr_FromObjC(localException);
+        }
+    Py_END_ALLOW_THREADS
 
     if (PyErr_Occurred()) {
         return NULL;
@@ -119,11 +113,8 @@ mod_CFTreeSetContext(
     return Py_None;
 }
 
-
 static PyObject*
-mod_CFTreeCreate(
-    PyObject* self __attribute__((__unused__)),
-    PyObject* args)
+mod_CFTreeCreate(PyObject* self __attribute__((__unused__)), PyObject* args)
 {
     PyObject* py_allocator;
     PyObject* py_context;
@@ -147,16 +138,16 @@ mod_CFTreeCreate(
     context = mod_CFTreeContext;
     context.info = info;
 
-
     tree = NULL;
 
-    PyObjC_DURING
-        tree = CFTreeCreate(allocator, &context);
+    Py_BEGIN_ALLOW_THREADS
+        @try {
+            tree = CFTreeCreate(allocator, &context);
 
-    PyObjC_HANDLER
-        PyObjCErr_FromObjC(localException);
-
-    PyObjC_ENDHANDLER
+        } @catch (NSException* localException) {
+            PyObjCErr_FromObjC(localException);
+        }
+    Py_END_ALLOW_THREADS
 
     if (PyErr_Occurred()) {
         return NULL;
@@ -174,9 +165,7 @@ mod_CFTreeCreate(
 }
 
 static PyObject*
-mod_CFTreeGetChildren(
-    PyObject* self __attribute__((__unused__)),
-    PyObject* args)
+mod_CFTreeGetChildren(PyObject* self __attribute__((__unused__)), PyObject* args)
 {
     PyObject* py_tree;
     PyObject* py_buffer;
@@ -199,22 +188,23 @@ mod_CFTreeGetChildren(
     }
 
     children = NULL;
-    PyObjC_DURING
-        count = CFTreeGetChildCount(tree);
-        children = malloc(count * sizeof(CFTreeRef));
-        if (children != NULL) {
-            CFTreeGetChildren(tree, children);
-        }
+    Py_BEGIN_ALLOW_THREADS
+        @try {
+            count = CFTreeGetChildCount(tree);
+            children = malloc(count * sizeof(CFTreeRef));
+            if (children != NULL) {
+                CFTreeGetChildren(tree, children);
+            }
 
-    PyObjC_HANDLER
-        count = -1;
-        if (children != NULL) {
-            free(children);
-            children = NULL;
+        } @catch (NSException* localException) {
+            count = -1;
+            if (children != NULL) {
+                free(children);
+                children = NULL;
+            }
+            PyObjCErr_FromObjC(localException);
         }
-        PyObjCErr_FromObjC(localException);
-
-    PyObjC_ENDHANDLER
+    Py_END_ALLOW_THREADS
 
     if (children == NULL) {
         if (!PyErr_Occurred()) {
@@ -222,7 +212,6 @@ mod_CFTreeGetChildren(
         }
         return NULL;
     }
-
 
     if (PyErr_Occurred()) {
         if (children) {
@@ -236,29 +225,13 @@ mod_CFTreeGetChildren(
     return result;
 }
 
-
-#define COREFOUNDATION_TREE_METHODS \
-    { \
-        "CFTreeCreate", \
-        (PyCFunction)mod_CFTreeCreate, \
-        METH_VARARGS, \
-        NULL \
-    }, \
-    { \
-        "CFTreeGetContext", \
-        (PyCFunction)mod_CFTreeGetContext, \
-        METH_VARARGS, \
-        NULL \
-    }, \
-    { \
-        "CFTreeSetContext", \
-        (PyCFunction)mod_CFTreeSetContext, \
-        METH_VARARGS, \
-        NULL \
-    }, \
-    { \
-        "CFTreeGetChildren", \
-        (PyCFunction)mod_CFTreeGetChildren, \
-        METH_VARARGS, \
-        NULL, \
-    },
+#define COREFOUNDATION_TREE_METHODS                                                      \
+    {"CFTreeCreate", (PyCFunction)mod_CFTreeCreate, METH_VARARGS, NULL},                 \
+        {"CFTreeGetContext", (PyCFunction)mod_CFTreeGetContext, METH_VARARGS, NULL},     \
+        {"CFTreeSetContext", (PyCFunction)mod_CFTreeSetContext, METH_VARARGS, NULL},     \
+        {                                                                                \
+            "CFTreeGetChildren",                                                         \
+            (PyCFunction)mod_CFTreeGetChildren,                                          \
+            METH_VARARGS,                                                                \
+            NULL,                                                                        \
+        },

@@ -16,31 +16,21 @@ mod_writestream_release(void* info)
     PyGILState_Release(state);
 }
 
-
 static CFStreamClientContext mod_CFStreamClientContext_Write = {
-    0,
-    NULL,
-    mod_writestream_retain,
-    mod_writestream_release,
-    NULL
-};
+    0, NULL, mod_writestream_retain, mod_writestream_release, NULL};
 
 static void
-mod_CFWriteStreamClientCallBack(
-    CFWriteStreamRef f,
-    CFStreamEventType eventType,
-    void* _info)
+mod_CFWriteStreamClientCallBack(CFWriteStreamRef f, CFStreamEventType eventType,
+                                void* _info)
 {
     PyObject* info = (PyObject*)_info;
     PyGILState_STATE state = PyGILState_Ensure();
 
     PyObject* py_f = PyObjC_ObjCToPython(@encode(CFWriteStreamRef), &f);
-    PyObject* py_eventType = PyObjC_ObjCToPython(
-        @encode(CFStreamEventType), &eventType);
+    PyObject* py_eventType = PyObjC_ObjCToPython(@encode(CFStreamEventType), &eventType);
 
-    PyObject* result = PyObject_CallFunction(
-        PyTuple_GetItem(info, 0),
-        "NNO", py_f, py_eventType, PyTuple_GetItem(info, 1));
+    PyObject* result = PyObject_CallFunction(PyTuple_GetItem(info, 0), "NNO", py_f,
+                                             py_eventType, PyTuple_GetItem(info, 1));
     if (result == NULL) {
         PyObjCErr_ToObjCWithGILState(&state);
     }
@@ -49,9 +39,7 @@ mod_CFWriteStreamClientCallBack(
 }
 
 static PyObject*
-mod_CFWriteStreamSetClient(
-    PyObject* self __attribute__((__unused__)),
-    PyObject* args)
+mod_CFWriteStreamSetClient(PyObject* self __attribute__((__unused__)), PyObject* args)
 {
     PyObject* py_stream;
     PyObject* py_streamEvents;
@@ -78,23 +66,20 @@ mod_CFWriteStreamSetClient(
     }
 
     Boolean rv = FALSE;
-    PyObjC_DURING
-        if (callout == Py_None) {
-            rv = CFWriteStreamSetClient(
-                stream, streamEvents,
-                NULL, &context);
-        } else {
-            rv = CFWriteStreamSetClient(
-                stream, streamEvents,
-                mod_CFWriteStreamClientCallBack, &context);
+    Py_BEGIN_ALLOW_THREADS
+        @try {
+            if (callout == Py_None) {
+                rv = CFWriteStreamSetClient(stream, streamEvents, NULL, &context);
+            } else {
+                rv = CFWriteStreamSetClient(stream, streamEvents,
+                                            mod_CFWriteStreamClientCallBack, &context);
+            }
+
+        } @catch (NSException* localException) {
+            rv = FALSE;
+            PyObjCErr_FromObjC(localException);
         }
-
-
-    PyObjC_HANDLER
-        rv = FALSE;
-        PyObjCErr_FromObjC(localException);
-
-    PyObjC_ENDHANDLER
+    Py_END_ALLOW_THREADS
 
     Py_DECREF((PyObject*)context.info);
     if (PyErr_Occurred()) {
@@ -104,10 +89,6 @@ mod_CFWriteStreamSetClient(
     return PyBool_FromLong(rv);
 }
 
-#define COREFOUNDATION_WRITESTREAM_METHODS \
-    { \
-        "CFWriteStreamSetClient", \
-        (PyCFunction)mod_CFWriteStreamSetClient, \
-        METH_VARARGS, \
-        NULL \
-    },
+#define COREFOUNDATION_WRITESTREAM_METHODS                                               \
+    {"CFWriteStreamSetClient", (PyCFunction)mod_CFWriteStreamSetClient, METH_VARARGS,    \
+     NULL},

@@ -34,23 +34,25 @@ call_NSCoder_encodeValueOfObjCType_at_(PyObject* method, PyObject* self,
     }
 
     int isIMP = PyObjCIMP_Check(method);
-    NS_DURING
-    if (isIMP) {
-        ((void (*)(id, SEL, char*, void*))(PyObjCIMP_GetIMP(method)))(
-            PyObjCObject_GetObject(self), PyObjCIMP_GetSelector(method), typestr, buf);
+    Py_BEGIN_ALLOW_THREADS
+        @try {
+            if (isIMP) {
+                ((void (*)(id, SEL, char*, void*))(PyObjCIMP_GetIMP(method)))(
+                    PyObjCObject_GetObject(self), PyObjCIMP_GetSelector(method), typestr,
+                    buf);
 
-    } else {
-        objc_superSetReceiver(super, PyObjCObject_GetObject(self));
-        objc_superSetClass(super, PyObjCSelector_GetClass(method));
+            } else {
+                objc_superSetReceiver(super, PyObjCObject_GetObject(self));
+                objc_superSetClass(super, PyObjCSelector_GetClass(method));
 
-        ((void (*)(struct objc_super*, SEL, char*, void*))objc_msgSendSuper)(
-            &super, PyObjCSelector_GetSelector(method), typestr, buf);
-    }
+                ((void (*)(struct objc_super*, SEL, char*, void*))objc_msgSendSuper)(
+                    &super, PyObjCSelector_GetSelector(method), typestr, buf);
+            }
 
-    NS_HANDLER
-    PyObjCErr_FromObjC(localException);
-
-    NS_ENDHANDLER
+        } @catch (NSObject* localException) {
+            PyObjCErr_FromObjC(localException);
+        }
+    Py_END_ALLOW_THREADS
 
     PyMem_Free(buf);
 
@@ -184,25 +186,27 @@ call_NSCoder_encodeArrayOfObjCType_count_at_(PyObject* method, PyObject* self,
     }
 
     int isIMP = PyObjCIMP_Check(method);
-    PyObjC_DURING if (isIMP)
-    {
-        ((void (*)(id, SEL, char*, NSUInteger, void*))(PyObjCIMP_GetIMP(method)))(
-            PyObjCObject_GetObject(self), PyObjCIMP_GetSelector(method), typestr, count,
-            buf);
-    }
-    else
-    {
-        objc_superSetReceiver(super, PyObjCObject_GetObject(self));
-        objc_superSetClass(super, PyObjCSelector_GetClass(method));
+    Py_BEGIN_ALLOW_THREADS
+        @try {
+            if (isIMP) {
+                ((void (*)(id, SEL, char*, NSUInteger, void*))(PyObjCIMP_GetIMP(method)))(
+                    PyObjCObject_GetObject(self), PyObjCIMP_GetSelector(method), typestr,
+                    count, buf);
+            } else {
+                objc_superSetReceiver(super, PyObjCObject_GetObject(self));
+                objc_superSetClass(super, PyObjCSelector_GetClass(method));
 
-        ((void (*)(struct objc_super*, SEL, char*, NSUInteger, void*))objc_msgSendSuper)(
-            &super, PyObjCSelector_GetSelector(method), typestr, count, buf);
-    }
+                ((void (*)(struct objc_super*, SEL, char*, NSUInteger,
+                           void*))objc_msgSendSuper)(
+                    &super, PyObjCSelector_GetSelector(method), typestr, count, buf);
+            }
 
-    PyObjC_HANDLER PyObjCErr_FromObjC(localException);
-    PyObjC_ENDHANDLER
+        } @catch (NSObject* localException) {
+            PyObjCErr_FromObjC(localException);
+        }
+    Py_END_ALLOW_THREADS
 
-        PyMem_Free(buf);
+    PyMem_Free(buf);
     if (PyErr_Occurred())
         return NULL;
 
@@ -326,25 +330,26 @@ call_NSCoder_decodeValueOfObjCType_at_(PyObject* method, PyObject* self,
     }
 
     int isIMP = PyObjCIMP_Check(method);
-    PyObjC_DURING if (isIMP)
-    {
-        ((void (*)(id, SEL, char*, void*))(PyObjCIMP_GetIMP(method)))(
-            PyObjCObject_GetObject(self), PyObjCIMP_GetSelector(method), typestr, buf);
-    }
-    else
-    {
-        objc_superSetReceiver(super, PyObjCObject_GetObject(self));
-        objc_superSetClass(super, PyObjCSelector_GetClass(method));
+    Py_BEGIN_ALLOW_THREADS
+        @try {
+            if (isIMP) {
+                ((void (*)(id, SEL, char*, void*))(PyObjCIMP_GetIMP(method)))(
+                    PyObjCObject_GetObject(self), PyObjCIMP_GetSelector(method), typestr,
+                    buf);
+            } else {
+                objc_superSetReceiver(super, PyObjCObject_GetObject(self));
+                objc_superSetClass(super, PyObjCSelector_GetClass(method));
 
-        ((void(*)(struct objc_super*, SEL, char*, void*))objc_msgSendSuper)(&super, PyObjCSelector_GetSelector(method), typestr, buf);
-    }
+                ((void (*)(struct objc_super*, SEL, char*, void*))objc_msgSendSuper)(
+                    &super, PyObjCSelector_GetSelector(method), typestr, buf);
+            }
 
-    PyObjC_HANDLER PyObjCErr_FromObjC(localException);
+        } @catch (NSObject* localException) {
+            PyObjCErr_FromObjC(localException);
+        }
+    Py_END_ALLOW_THREADS
 
-    PyObjC_ENDHANDLER
-
-        if (PyErr_Occurred())
-    {
+    if (PyErr_Occurred()) {
         PyMem_Free(buf);
         return NULL;
     }
@@ -443,27 +448,27 @@ call_NSCoder_decodeValueOfObjCType_at_size_(PyObject* method, PyObject* self,
     }
 
     int isIMP = PyObjCIMP_Check(method);
-    PyObjC_DURING if (isIMP)
-    {
-        ((void (*)(id, SEL, char*, void*, NSUInteger))(PyObjCIMP_GetIMP(method)))(
-            PyObjCObject_GetObject(self), PyObjCIMP_GetSelector(method), typestr, buf,
-            size);
-    }
-    else
-    {
-        objc_superSetReceiver(super, PyObjCObject_GetObject(self));
-        objc_superSetClass(super, PyObjCSelector_GetClass(method));
+    Py_BEGIN_ALLOW_THREADS
+        @try {
+            if (isIMP) {
+                ((void (*)(id, SEL, char*, void*, NSUInteger))(PyObjCIMP_GetIMP(method)))(
+                    PyObjCObject_GetObject(self), PyObjCIMP_GetSelector(method), typestr,
+                    buf, size);
+            } else {
+                objc_superSetReceiver(super, PyObjCObject_GetObject(self));
+                objc_superSetClass(super, PyObjCSelector_GetClass(method));
 
-        ((void(*)(struct objc_super*, SEL, char*, void*, NSUInteger))objc_msgSendSuper)(&super, PyObjCSelector_GetSelector(method), typestr, buf,
-                                size);
-    }
+                ((void (*)(struct objc_super*, SEL, char*, void*,
+                           NSUInteger))objc_msgSendSuper)(
+                    &super, PyObjCSelector_GetSelector(method), typestr, buf, size);
+            }
 
-    PyObjC_HANDLER PyObjCErr_FromObjC(localException);
+        } @catch (NSObject* localException) {
+            PyObjCErr_FromObjC(localException);
+        }
+    Py_END_ALLOW_THREADS
 
-    PyObjC_ENDHANDLER
-
-        if (PyErr_Occurred())
-    {
+    if (PyErr_Occurred()) {
         PyMem_Free(buf);
         return NULL;
     }
@@ -577,27 +582,28 @@ call_NSCoder_decodeArrayOfObjCType_count_at_(PyObject* method, PyObject* self,
     }
 
     int isIMP = PyObjCIMP_Check(method);
-    PyObjC_DURING if (isIMP)
-    {
-        ((void (*)(id, SEL, char*, NSUInteger, void*))(PyObjCIMP_GetIMP(method)))(
-            PyObjCObject_GetObject(self), PyObjCIMP_GetSelector(method), typestr, count,
-            buf);
-    }
-    else
-    {
-        objc_superSetReceiver(super, PyObjCObject_GetObject(self));
-        objc_superSetClass(super, PyObjCSelector_GetClass(method));
+    Py_BEGIN_ALLOW_THREADS
+        @try {
+            if (isIMP) {
+                ((void (*)(id, SEL, char*, NSUInteger, void*))(PyObjCIMP_GetIMP(method)))(
+                    PyObjCObject_GetObject(self), PyObjCIMP_GetSelector(method), typestr,
+                    count, buf);
+            } else {
+                objc_superSetReceiver(super, PyObjCObject_GetObject(self));
+                objc_superSetClass(super, PyObjCSelector_GetClass(method));
 
-        ((void (*)(struct objc_super*, SEL, char*, NSUInteger, void*))objc_msgSendSuper)(
-            &super, PyObjCSelector_GetSelector(method), typestr, (NSUInteger)count, buf);
-    }
+                ((void (*)(struct objc_super*, SEL, char*, NSUInteger,
+                           void*))objc_msgSendSuper)(&super,
+                                                     PyObjCSelector_GetSelector(method),
+                                                     typestr, (NSUInteger)count, buf);
+            }
 
-    PyObjC_HANDLER PyObjCErr_FromObjC(localException);
+        } @catch (NSObject* localException) {
+            PyObjCErr_FromObjC(localException);
+        }
+    Py_END_ALLOW_THREADS
 
-    PyObjC_ENDHANDLER
-
-        if (PyErr_Occurred())
-    {
+    if (PyErr_Occurred()) {
         PyMem_Free(buf);
         return NULL;
     }
@@ -727,23 +733,26 @@ call_NSCoder_encodeBytes_length_(PyObject* method, PyObject* self, PyObject* arg
     }
 
     int isIMP = PyObjCIMP_Check(method);
-    PyObjC_DURING if (isIMP)
-    {
-        ((void (*)(id, SEL, void*, NSUInteger))(PyObjCIMP_GetIMP(method)))(
-            PyObjCObject_GetObject(self), PyObjCIMP_GetSelector(method), bytes, length);
-    }
-    else
-    {
-        objc_superSetReceiver(super, PyObjCObject_GetObject(self));
-        objc_superSetClass(super, PyObjCSelector_GetClass(method));
+    Py_BEGIN_ALLOW_THREADS
+        @try {
+            if (isIMP) {
+                ((void (*)(id, SEL, void*, NSUInteger))(PyObjCIMP_GetIMP(method)))(
+                    PyObjCObject_GetObject(self), PyObjCIMP_GetSelector(method), bytes,
+                    length);
+            } else {
+                objc_superSetReceiver(super, PyObjCObject_GetObject(self));
+                objc_superSetClass(super, PyObjCSelector_GetClass(method));
 
-        ((void (*)(struct objc_super*, SEL, void*, NSUInteger))objc_msgSendSuper)(
-            &super, PyObjCSelector_GetSelector(method), bytes, length);
-    }
-    PyObjC_HANDLER PyObjCErr_FromObjC(localException);
-    PyObjC_ENDHANDLER
+                ((void (*)(struct objc_super*, SEL, void*, NSUInteger))objc_msgSendSuper)(
+                    &super, PyObjCSelector_GetSelector(method), bytes, length);
+            }
+        } @catch (NSObject* localException) {
+            PyObjCErr_FromObjC(localException);
+        }
+    Py_END_ALLOW_THREADS
 
-        if (PyErr_Occurred()) return NULL;
+    if (PyErr_Occurred())
+        return NULL;
 
     Py_INCREF(Py_None);
     return Py_None;
@@ -831,27 +840,27 @@ call_NSCoder_decodeBytesWithReturnedLength_(PyObject* method, PyObject* self,
     }
 
     int isIMP = PyObjCIMP_Check(method);
-    PyObjC_DURING if (isIMP)
-    {
-        bytes = ((void* (*)(id, SEL, NSUInteger*))(PyObjCIMP_GetIMP(method)))(
-            PyObjCObject_GetObject(self), PyObjCIMP_GetSelector(method), &size);
-    }
-    else
-    {
-        objc_superSetReceiver(super, PyObjCObject_GetObject(self));
-        objc_superSetClass(super, PyObjCSelector_GetClass(method));
+    Py_BEGIN_ALLOW_THREADS
+        @try {
+            if (isIMP) {
+                bytes = ((void* (*)(id, SEL, NSUInteger*))(PyObjCIMP_GetIMP(method)))(
+                    PyObjCObject_GetObject(self), PyObjCIMP_GetSelector(method), &size);
+            } else {
+                objc_superSetReceiver(super, PyObjCObject_GetObject(self));
+                objc_superSetClass(super, PyObjCSelector_GetClass(method));
 
-        bytes = ((void* (*)(struct objc_super*, SEL, NSUInteger*))objc_msgSendSuper)(
-            &super, PyObjCSelector_GetSelector(method), &size);
-    }
+                bytes =
+                    ((void* (*)(struct objc_super*, SEL, NSUInteger*))objc_msgSendSuper)(
+                        &super, PyObjCSelector_GetSelector(method), &size);
+            }
 
-    PyObjC_HANDLER PyObjCErr_FromObjC(localException);
-    bytes = NULL;
+        } @catch (NSObject* localException) {
+            PyObjCErr_FromObjC(localException);
+            bytes = NULL;
+        }
+    Py_END_ALLOW_THREADS
 
-    PyObjC_ENDHANDLER
-
-        if (bytes == NULL)
-    {
+    if (bytes == NULL) {
         if (PyErr_Occurred()) {
             return NULL;
         }
@@ -980,28 +989,28 @@ call_NSCoder_decodeBytesForKey_returnedLength_(PyObject* method, PyObject* self,
         return NULL;
     }
 
-    PyObjC_DURING if (PyObjCIMP_Check(method))
-    {
-        bytes = ((void* (*)(id, SEL, id, NSUInteger*))(PyObjCIMP_GetIMP(method)))(
-            PyObjCObject_GetObject(self), PyObjCIMP_GetSelector(method), key,
-            (NSUInteger*)&size);
-    }
-    else
-    {
-        objc_superSetReceiver(super, PyObjCObject_GetObject(self));
-        objc_superSetClass(super, PyObjCSelector_GetClass(method));
+    Py_BEGIN_ALLOW_THREADS
+        @try {
+            if (PyObjCIMP_Check(method)) {
+                bytes = ((void* (*)(id, SEL, id, NSUInteger*))(PyObjCIMP_GetIMP(method)))(
+                    PyObjCObject_GetObject(self), PyObjCIMP_GetSelector(method), key,
+                    (NSUInteger*)&size);
+            } else {
+                objc_superSetReceiver(super, PyObjCObject_GetObject(self));
+                objc_superSetClass(super, PyObjCSelector_GetClass(method));
 
-        bytes = ((void* (*)(struct objc_super*, SEL, id, NSUInteger*))objc_msgSendSuper)(
-            &super, PyObjCSelector_GetSelector(method), key, &size);
-    }
+                bytes = ((void* (*)(struct objc_super*, SEL, id,
+                                    NSUInteger*))objc_msgSendSuper)(
+                    &super, PyObjCSelector_GetSelector(method), key, &size);
+            }
 
-    PyObjC_HANDLER PyObjCErr_FromObjC(localException);
-    bytes = NULL;
+        } @catch (NSObject* localException) {
+            PyObjCErr_FromObjC(localException);
+            bytes = NULL;
+        }
+    Py_END_ALLOW_THREADS
 
-    PyObjC_ENDHANDLER
-
-        if (bytes == NULL)
-    {
+    if (bytes == NULL) {
         if (PyErr_Occurred()) {
             return NULL;
         }
@@ -1141,26 +1150,29 @@ call_NSCoder_encodeBytes_length_forKey_(PyObject* method, PyObject* self,
     }
 
     int isIMP = PyObjCIMP_Check(method);
-    PyObjC_DURING if (isIMP)
-    {
-        ((void (*)(id, SEL, void*, NSUInteger, id))(PyObjCIMP_GetIMP(method)))(
-            PyObjCObject_GetObject(self), PyObjCIMP_GetSelector(method), bytes, size,
-            key);
-    }
-    else
-    {
-        objc_superSetReceiver(super, PyObjCObject_GetObject(self));
-        objc_superSetClass(super, PyObjCSelector_GetClass(method));
+    Py_BEGIN_ALLOW_THREADS
+        @try {
+            if (isIMP) {
+                ((void (*)(id, SEL, void*, NSUInteger, id))(PyObjCIMP_GetIMP(method)))(
+                    PyObjCObject_GetObject(self), PyObjCIMP_GetSelector(method), bytes,
+                    size, key);
+            } else {
+                objc_superSetReceiver(super, PyObjCObject_GetObject(self));
+                objc_superSetClass(super, PyObjCSelector_GetClass(method));
 
-        ((void (*)(struct objc_super*, SEL, void*, NSUInteger, id))objc_msgSendSuper)(
-            &super, PyObjCSelector_GetSelector(method), bytes, (NSUInteger)size, key);
-    }
+                ((void (*)(struct objc_super*, SEL, void*, NSUInteger,
+                           id))objc_msgSendSuper)(&super,
+                                                  PyObjCSelector_GetSelector(method),
+                                                  bytes, (NSUInteger)size, key);
+            }
 
-    PyObjC_HANDLER PyObjCErr_FromObjC(localException);
+        } @catch (NSObject* localException) {
+            PyObjCErr_FromObjC(localException);
+        }
+    Py_END_ALLOW_THREADS
 
-    PyObjC_ENDHANDLER
-
-        if (PyErr_Occurred()) return NULL;
+    if (PyErr_Occurred())
+        return NULL;
 
     Py_INCREF(Py_None);
     return Py_None;

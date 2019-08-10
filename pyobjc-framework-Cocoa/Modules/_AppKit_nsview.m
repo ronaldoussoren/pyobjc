@@ -1,12 +1,12 @@
 static PyObject*
-call_NSView_getRectsBeingDrawn_count_(
-    PyObject* method, PyObject* self, PyObject* arguments)
+call_NSView_getRectsBeingDrawn_count_(PyObject* method, PyObject* self,
+                                      PyObject* arguments)
 {
     PyObject* result;
     struct objc_super super;
     PyObject* v;
     NSRect* rects;
-    PyObject* arg1, *arg2;
+    PyObject *arg1, *arg2;
     NSInteger count;
 
     if (!PyArg_ParseTuple(arguments, "OO", &arg1, &arg2)) {
@@ -22,20 +22,20 @@ call_NSView_getRectsBeingDrawn_count_(
         return NULL;
     }
 
+    Py_BEGIN_ALLOW_THREADS
+        @try {
+            PyObjC_InitSuper(&super, PyObjCSelector_GetClass(method),
+                             PyObjCObject_GetObject(self));
 
-    PyObjC_DURING
-        PyObjC_InitSuper(&super,
-            PyObjCSelector_GetClass(method),
-            PyObjCObject_GetObject(self));
+            ((void (*)(struct objc_super*, SEL, NSRect**, NSInteger*))objc_msgSendSuper)(
+                &super, PyObjCSelector_GetSelector(method), &rects, &count);
+        } @catch (NSException* localException) {
+            PyObjCErr_FromObjC(localException);
+        }
+    Py_END_ALLOW_THREADS
 
-        ((void(*)(struct objc_super*, SEL, NSRect**, NSInteger*))objc_msgSendSuper)(&super,
-            PyObjCSelector_GetSelector(method),
-            &rects, &count);
-    PyObjC_HANDLER
-        PyObjCErr_FromObjC(localException);
-    PyObjC_ENDHANDLER
-
-    if (PyErr_Occurred()) return NULL;
+    if (PyErr_Occurred())
+        return NULL;
 
     v = PyObjC_CArrayToPython(
 #ifdef __LP64__
@@ -44,7 +44,8 @@ call_NSView_getRectsBeingDrawn_count_(
         "{_NSRect={_NSPoint=ff}{_NSSize=ff}}",
 #endif
         rects, count);
-    if (v == NULL) return NULL;
+    if (v == NULL)
+        return NULL;
 
     result = Py_BuildValue("Oi", v, count);
     Py_XDECREF(v);
@@ -52,19 +53,17 @@ call_NSView_getRectsBeingDrawn_count_(
     return result;
 }
 
-
-static int setup_nsview(PyObject* m __attribute__((__unused__)))
+static int
+setup_nsview(PyObject* m __attribute__((__unused__)))
 {
     Class classNSView = objc_lookUpClass("NSView");
     if (classNSView == NULL) {
         return 0;
     }
 
-    if (PyObjC_RegisterMethodMapping(
-        classNSView,
-        @selector(getRectsBeingDrawn:count:),
-        call_NSView_getRectsBeingDrawn_count_,
-        PyObjCUnsupportedMethod_IMP) < 0) {
+    if (PyObjC_RegisterMethodMapping(classNSView, @selector(getRectsBeingDrawn:count:),
+                                     call_NSView_getRectsBeingDrawn_count_,
+                                     PyObjCUnsupportedMethod_IMP) < 0) {
 
         return -1;
     }

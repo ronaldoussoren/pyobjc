@@ -467,15 +467,15 @@ d = [NSMutableDictionary dictionary];
 
 a = [NSMutableArray arrayWithObjects:d, nil];
 
-NS_DURING
-v = [a valueForKey:@"keyM"];
-haveException = 0;
-NS_HANDLER
-v = nil;
-haveException = 1;
-NS_ENDHANDLER
+@try {
+    v = [a valueForKey:@"keyM"];
+    haveException = 0;
+} @catch (NSObject* localException) {
+    v = nil;
+    haveException = 1;
+}
 
-    [p release];
+[p release];
 
 ASSERT(!haveException);
 END_UNITTEST

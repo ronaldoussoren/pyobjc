@@ -18,9 +18,8 @@ mod_machport_release(const void* info)
 static CFStringRef
 mod_machport_copyDescription(const void* info)
 {
-    return CFStringCreateWithFormat(NULL, NULL,
-            CFSTR("PyObjC Context %p"),
-            PyTuple_GetItem((PyObject*)info, 1));
+    return CFStringCreateWithFormat(NULL, NULL, CFSTR("PyObjC Context %p"),
+                                    PyTuple_GetItem((PyObject*)info, 1));
 }
 
 /*
@@ -33,19 +32,10 @@ mod_machport_copyDescription(const void* info)
  */
 
 static CFMachPortContext mod_CFMachPortContext = {
-    0,
-    NULL,
-    mod_machport_retain,
-    mod_machport_release,
-    mod_machport_copyDescription
-};
+    0, NULL, mod_machport_retain, mod_machport_release, mod_machport_copyDescription};
 
 static void
-mod_CFMachPortCallBack(
-    CFMachPortRef f,
-    void* msg,
-    CFIndex size,
-    void* _info)
+mod_CFMachPortCallBack(CFMachPortRef f, void* msg, CFIndex size, void* _info)
 {
     PyObject* info = (PyObject*)_info;
     PyGILState_STATE state = PyGILState_Ensure();
@@ -54,9 +44,8 @@ mod_CFMachPortCallBack(
     PyObject* py_msg = PyBytes_FromStringAndSize(msg, size);
     PyObject* py_size = PyLong_FromLongLong(size);
 
-    PyObject* result = PyObject_CallFunction(
-        PyTuple_GetItem(info, 0),
-        "NNNO", py_f, py_msg, py_size, PyTuple_GetItem(info, 1));
+    PyObject* result = PyObject_CallFunction(PyTuple_GetItem(info, 0), "NNNO", py_f,
+                                             py_msg, py_size, PyTuple_GetItem(info, 1));
     if (result == NULL) {
         PyObjCErr_ToObjCWithGILState(&state);
     }
@@ -65,16 +54,15 @@ mod_CFMachPortCallBack(
 }
 
 static void
-mod_CFMachPortInvalidationCallBack(CFMachPortRef f, void *_info)
+mod_CFMachPortInvalidationCallBack(CFMachPortRef f, void* _info)
 {
     PyObject* info = (PyObject*)_info;
     PyGILState_STATE state = PyGILState_Ensure();
 
     PyObject* py_f = PyObjC_ObjCToPython(@encode(CFMachPortRef), &f);
 
-    PyObject* result = PyObject_CallFunction(
-        PyTuple_GetItem(info, 2),
-        "NO", py_f, PyTuple_GetItem(info, 1));
+    PyObject* result = PyObject_CallFunction(PyTuple_GetItem(info, 2), "NO", py_f,
+                                             PyTuple_GetItem(info, 1));
     if (result == NULL) {
         PyObjCErr_ToObjCWithGILState(&state);
     }
@@ -82,11 +70,8 @@ mod_CFMachPortInvalidationCallBack(CFMachPortRef f, void *_info)
     PyGILState_Release(state);
 }
 
-
 static PyObject*
-mod_CFMachPortCreate(
-    PyObject* self __attribute__((__unused__)),
-    PyObject* args)
+mod_CFMachPortCreate(PyObject* self __attribute__((__unused__)), PyObject* args)
 {
     PyObject* py_allocator;
     PyObject* callout;
@@ -104,8 +89,7 @@ mod_CFMachPortCreate(
     }
 
     if (py_shouldFree != Py_None && py_shouldFree != PyObjC_NULL) {
-        PyErr_SetString(PyExc_ValueError,
-            "shouldFree not None or NULL");
+        PyErr_SetString(PyExc_ValueError, "shouldFree not None or NULL");
         return NULL;
     }
 
@@ -116,16 +100,16 @@ mod_CFMachPortCreate(
     }
 
     CFMachPortRef rv = NULL;
-    PyObjC_DURING
-        rv = CFMachPortCreate(
-            allocator,
-            mod_CFMachPortCallBack, &context, &shouldFree);
+    Py_BEGIN_ALLOW_THREADS
+        @try {
+            rv = CFMachPortCreate(allocator, mod_CFMachPortCallBack, &context,
+                                  &shouldFree);
 
-    PyObjC_HANDLER
-        rv = NULL;
-        PyObjCErr_FromObjC(localException);
-
-    PyObjC_ENDHANDLER
+        } @catch (NSException* localException) {
+            rv = NULL;
+            PyObjCErr_FromObjC(localException);
+        }
+    Py_END_ALLOW_THREADS
 
     Py_DECREF((PyObject*)context.info);
 
@@ -133,9 +117,9 @@ mod_CFMachPortCreate(
         return NULL;
     }
 
-    PyObject* result = Py_BuildValue("NN",
-        PyObjC_ObjCToPython(@encode(CFMachPortRef), &rv),
-        PyBool_FromLong(shouldFree));
+    PyObject* result =
+        Py_BuildValue("NN", PyObjC_ObjCToPython(@encode(CFMachPortRef), &rv),
+                      PyBool_FromLong(shouldFree));
 
     if (rv != NULL) {
         CFRelease(rv);
@@ -144,9 +128,7 @@ mod_CFMachPortCreate(
 }
 
 static PyObject*
-mod_CFMachPortCreateWithPort(
-    PyObject* self __attribute__((__unused__)),
-    PyObject* args)
+mod_CFMachPortCreateWithPort(PyObject* self __attribute__((__unused__)), PyObject* args)
 {
     PyObject* py_allocator;
     PyObject* py_port;
@@ -157,7 +139,8 @@ mod_CFMachPortCreateWithPort(
     mach_port_t port;
     Boolean shouldFree;
 
-    if (!PyArg_ParseTuple(args, "OOOOO", &py_allocator, &py_port, &callout, &info, &py_shouldFree)) {
+    if (!PyArg_ParseTuple(args, "OOOOO", &py_allocator, &py_port, &callout, &info,
+                          &py_shouldFree)) {
         return NULL;
     }
 
@@ -170,8 +153,7 @@ mod_CFMachPortCreateWithPort(
     }
 
     if (py_shouldFree != Py_None && py_shouldFree != PyObjC_NULL) {
-        PyErr_SetString(PyExc_ValueError,
-            "shouldFree not None or NULL");
+        PyErr_SetString(PyExc_ValueError, "shouldFree not None or NULL");
         return NULL;
     }
 
@@ -182,17 +164,16 @@ mod_CFMachPortCreateWithPort(
     }
 
     CFMachPortRef rv = NULL;
-    PyObjC_DURING
-        rv = CFMachPortCreateWithPort(
-            allocator,
-            port,
-            mod_CFMachPortCallBack, &context, &shouldFree);
+    Py_BEGIN_ALLOW_THREADS
+        @try {
+            rv = CFMachPortCreateWithPort(allocator, port, mod_CFMachPortCallBack,
+                                          &context, &shouldFree);
 
-    PyObjC_HANDLER
-        rv = NULL;
-        PyObjCErr_FromObjC(localException);
-
-    PyObjC_ENDHANDLER
+        } @catch (NSException* localException) {
+            rv = NULL;
+            PyObjCErr_FromObjC(localException);
+        }
+    Py_END_ALLOW_THREADS
 
     Py_DECREF((PyObject*)context.info);
 
@@ -200,9 +181,9 @@ mod_CFMachPortCreateWithPort(
         return NULL;
     }
 
-    PyObject* result = Py_BuildValue("NN",
-        PyObjC_ObjCToPython(@encode(CFMachPortRef), &rv),
-        PyBool_FromLong(shouldFree));
+    PyObject* result =
+        Py_BuildValue("NN", PyObjC_ObjCToPython(@encode(CFMachPortRef), &rv),
+                      PyBool_FromLong(shouldFree));
 
     if (rv != NULL) {
         CFRelease(rv);
@@ -210,16 +191,13 @@ mod_CFMachPortCreateWithPort(
     return result;
 }
 
-
 static PyObject*
-mod_CFMachPortGetContext(
-    PyObject* self __attribute__((__unused__)),
-    PyObject* args)
+mod_CFMachPortGetContext(PyObject* self __attribute__((__unused__)), PyObject* args)
 {
     PyObject* py_f;
     PyObject* py_context;
     CFMachPortRef f;
-    CFMachPortContext context = { .version = 0 };
+    CFMachPortContext context = {.version = 0};
 
     if (!PyArg_ParseTuple(args, "OO", &py_f, &py_context)) {
         return NULL;
@@ -234,25 +212,26 @@ mod_CFMachPortGetContext(
         return NULL;
     }
 
-    PyObjC_DURING
-        CFMachPortGetContext(f, &context);
+    Py_BEGIN_ALLOW_THREADS
+        @try {
+            CFMachPortGetContext(f, &context);
 
-    PyObjC_HANDLER
-        PyObjCErr_FromObjC(localException);
-
-    PyObjC_ENDHANDLER
+        } @catch (NSException* localException) {
+            PyObjCErr_FromObjC(localException);
+        }
+    Py_END_ALLOW_THREADS
 
     if (PyErr_Occurred()) {
         return NULL;
     }
 
     if (context.version != 0) {
-        PyErr_Format(PyExc_ValueError, "retrieved context with version %ld is not valid", (long)context.version);
+        PyErr_Format(PyExc_ValueError, "retrieved context with version %ld is not valid",
+                     (long)context.version);
         return NULL;
     }
     if (context.copyDescription != mod_machport_copyDescription) {
-        PyErr_SetString(PyExc_ValueError,
-            "retrieved context is not supported");
+        PyErr_SetString(PyExc_ValueError, "retrieved context is not supported");
         return NULL;
     }
 
@@ -264,9 +243,8 @@ mod_CFMachPortGetContext(
  * Invalidation callbacks are supported only on MachPorts created from Python.
  */
 static PyObject*
-mod_CFMachPortSetInvalidationCallBack(
-    PyObject* self __attribute__((__unused__)),
-    PyObject* args)
+mod_CFMachPortSetInvalidationCallBack(PyObject* self __attribute__((__unused__)),
+                                      PyObject* args)
 {
     PyObject* py_port;
     PyObject* callout;
@@ -283,13 +261,14 @@ mod_CFMachPortSetInvalidationCallBack(
     CFMachPortContext context;
     context.version = 0;
 
-    PyObjC_DURING
-        CFMachPortGetContext(port, &context);
+    Py_BEGIN_ALLOW_THREADS
+        @try {
+            CFMachPortGetContext(port, &context);
 
-    PyObjC_HANDLER
-        PyObjCErr_FromObjC(localException);
-
-    PyObjC_ENDHANDLER
+        } @catch (NSException* localException) {
+            PyObjCErr_FromObjC(localException);
+        }
+    Py_END_ALLOW_THREADS
 
     if (PyErr_Occurred()) {
         return NULL;
@@ -304,14 +283,14 @@ mod_CFMachPortSetInvalidationCallBack(
     Py_INCREF(callout);
     PyTuple_SetItem((PyObject*)context.info, 2, callout);
 
+    Py_BEGIN_ALLOW_THREADS
+        @try {
+            CFMachPortSetInvalidationCallBack(port, mod_CFMachPortInvalidationCallBack);
 
-    PyObjC_DURING
-        CFMachPortSetInvalidationCallBack(port, mod_CFMachPortInvalidationCallBack);
-
-    PyObjC_HANDLER
-        PyObjCErr_FromObjC(localException);
-
-    PyObjC_ENDHANDLER
+        } @catch (NSException* localException) {
+            PyObjCErr_FromObjC(localException);
+        }
+    Py_END_ALLOW_THREADS
 
     if (PyErr_Occurred()) {
         return NULL;
@@ -322,9 +301,8 @@ mod_CFMachPortSetInvalidationCallBack(
 }
 
 static PyObject*
-mod_CFMachPortGetInvalidationCallBack(
-    PyObject* self __attribute__((__unused__)),
-    PyObject* args)
+mod_CFMachPortGetInvalidationCallBack(PyObject* self __attribute__((__unused__)),
+                                      PyObject* args)
 {
     PyObject* py_port;
     CFMachPortRef port;
@@ -340,13 +318,14 @@ mod_CFMachPortGetInvalidationCallBack(
     CFMachPortContext context;
     context.version = 0;
 
-    PyObjC_DURING
-        CFMachPortGetContext(port, &context);
+    Py_BEGIN_ALLOW_THREADS
+        @try {
+            CFMachPortGetContext(port, &context);
 
-    PyObjC_HANDLER
-        PyObjCErr_FromObjC(localException);
-
-    PyObjC_ENDHANDLER
+        } @catch (NSException* localException) {
+            PyObjCErr_FromObjC(localException);
+        }
+    Py_END_ALLOW_THREADS
 
     if (PyErr_Occurred()) {
         return NULL;
@@ -357,16 +336,16 @@ mod_CFMachPortGetInvalidationCallBack(
         return NULL;
     }
 
-
     CFMachPortInvalidationCallBack rv = NULL;
 
-    PyObjC_DURING
-        rv = CFMachPortGetInvalidationCallBack(port);
+    Py_BEGIN_ALLOW_THREADS
+        @try {
+            rv = CFMachPortGetInvalidationCallBack(port);
 
-    PyObjC_HANDLER
-        PyObjCErr_FromObjC(localException);
-
-    PyObjC_ENDHANDLER
+        } @catch (NSException* localException) {
+            PyObjCErr_FromObjC(localException);
+        }
+    Py_END_ALLOW_THREADS
 
     if (PyErr_Occurred()) {
         return NULL;
@@ -383,39 +362,17 @@ mod_CFMachPortGetInvalidationCallBack(
         return result;
     }
 
-    PyErr_SetString(PyExc_ValueError,
-        "Unsupported value for invalidate callback");
+    PyErr_SetString(PyExc_ValueError, "Unsupported value for invalidate callback");
     return NULL;
 }
 
-#define COREFOUNDATION_MACHPORT_METHODS \
-    { \
-        "CFMachPortCreate", \
-        (PyCFunction)mod_CFMachPortCreate, \
-        METH_VARARGS, \
-        NULL \
-    }, \
-    { \
-        "CFMachPortCreateWithPort", \
-        (PyCFunction)mod_CFMachPortCreateWithPort, \
-        METH_VARARGS, \
-        NULL \
-    }, \
-    { \
-        "CFMachPortGetContext", \
-        (PyCFunction)mod_CFMachPortGetContext, \
-        METH_VARARGS, \
-        NULL \
-    }, \
-    { \
-        "CFMachPortSetInvalidationCallBack", \
-        (PyCFunction)mod_CFMachPortSetInvalidationCallBack, \
-        METH_VARARGS, \
-        NULL \
-    }, \
-    { \
-        "CFMachPortGetInvalidationCallBack", \
-        (PyCFunction)mod_CFMachPortGetInvalidationCallBack, \
-        METH_VARARGS, \
-        NULL \
-    },
+#define COREFOUNDATION_MACHPORT_METHODS                                                  \
+    {"CFMachPortCreate", (PyCFunction)mod_CFMachPortCreate, METH_VARARGS, NULL},         \
+        {"CFMachPortCreateWithPort", (PyCFunction)mod_CFMachPortCreateWithPort,          \
+         METH_VARARGS, NULL},                                                            \
+        {"CFMachPortGetContext", (PyCFunction)mod_CFMachPortGetContext, METH_VARARGS,    \
+         NULL},                                                                          \
+        {"CFMachPortSetInvalidationCallBack",                                            \
+         (PyCFunction)mod_CFMachPortSetInvalidationCallBack, METH_VARARGS, NULL},        \
+        {"CFMachPortGetInvalidationCallBack",                                            \
+         (PyCFunction)mod_CFMachPortGetInvalidationCallBack, METH_VARARGS, NULL},

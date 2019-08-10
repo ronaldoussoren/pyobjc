@@ -86,8 +86,9 @@ oc_copy_helper(void* _dst, void* _src)
     struct block_literal* dst = (struct block_literal*)_dst;
     struct block_literal* src = (struct block_literal*)_src;
 
-    PyObjC_BEGIN_WITH_GIL dst->invoke_cleanup = src->invoke_cleanup;
-    Py_XINCREF(dst->invoke_cleanup);
+    PyObjC_BEGIN_WITH_GIL
+        dst->invoke_cleanup = src->invoke_cleanup;
+        Py_XINCREF(dst->invoke_cleanup);
 
     PyObjC_END_WITH_GIL
 }
@@ -97,7 +98,8 @@ oc_dispose_helper(void* _src)
 {
     struct block_literal* src = (struct block_literal*)_src;
 
-    PyObjC_BEGIN_WITH_GIL Py_CLEAR(src->invoke_cleanup);
+    PyObjC_BEGIN_WITH_GIL
+        Py_CLEAR(src->invoke_cleanup);
 
     PyObjC_END_WITH_GIL
 }
@@ -265,14 +267,16 @@ PyObjCBlock_Call(PyObject* module __attribute__((__unused__)), PyObject* func_ar
         goto error;
     }
 
-    PyObjC_DURING ffi_call(&cif, FFI_FN(call_func), argbuf, values);
+    Py_BEGIN_ALLOW_THREADS
+        @try {
+            ffi_call(&cif, FFI_FN(call_func), argbuf, values);
 
-    PyObjC_HANDLER PyObjCErr_FromObjC(localException);
+        } @catch (NSObject* localException) {
+            PyObjCErr_FromObjC(localException);
+        }
+    Py_END_ALLOW_THREADS
 
-    PyObjC_ENDHANDLER
-
-        if (useStret)
-    {
+    if (useStret) {
         byref[0] = NULL;
     }
 

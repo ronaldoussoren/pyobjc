@@ -33,26 +33,24 @@ SIGCallback(CFMachPortRef port __attribute__((__unused__)), void* msg,
     if (!signalmapping) {
         return;
     }
-    PyObjC_BEGIN_WITH_GIL do
-    {
-        tmp = PyLong_FromLong((long)signum);
+    PyObjC_BEGIN_WITH_GIL
+        do {
+            tmp = PyLong_FromLong((long)signum);
+            if (!tmp)
+                break;
+
+            callable = PyDict_GetItem(signalmapping, tmp);
+            Py_DECREF(tmp);
+            if (!callable) {
+                tmp = NULL;
+                break;
+            }
+
+            tmp = PyObject_CallFunction(callable, "i", signum);
+            Py_XDECREF(tmp);
+        } while (0);
         if (!tmp)
-            break;
-
-        callable = PyDict_GetItem(signalmapping, tmp);
-        Py_DECREF(tmp);
-        if (!callable) {
-            tmp = NULL;
-            break;
-        }
-
-        tmp = PyObject_CallFunction(callable, "i", signum);
-        Py_XDECREF(tmp);
-    }
-    while (0)
-        ;
-    if (!tmp)
-        PyObjC_GIL_FORWARD_EXC();
+            PyObjC_GIL_FORWARD_EXC();
     PyObjC_END_WITH_GIL
 }
 

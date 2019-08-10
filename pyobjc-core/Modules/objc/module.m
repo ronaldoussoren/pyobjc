@@ -312,13 +312,18 @@ remove_autorelease_pool(PyObject* self __attribute__((__unused__)), PyObject* ar
         return NULL;
     }
 
-    PyObjC_DURING[global_release_pool release];
-    global_release_pool = nil;
+    Py_BEGIN_ALLOW_THREADS
+        @try {
+            [global_release_pool release];
+            global_release_pool = nil;
 
-    PyObjC_HANDLER PyObjCErr_FromObjC(localException);
-    PyObjC_ENDHANDLER
+        } @catch (NSObject* localException) {
+            PyObjCErr_FromObjC(localException);
+        }
+    Py_END_ALLOW_THREADS
 
-        if (PyErr_Occurred()) return NULL;
+    if (PyErr_Occurred())
+        return NULL;
 
     Py_INCREF(Py_None);
     return Py_None;
@@ -340,14 +345,18 @@ recycle_autorelease_pool(PyObject* self __attribute__((__unused__)), PyObject* a
 
     if (global_release_pool != NULL) {
 
-        PyObjC_DURING[global_release_pool release];
-        [OC_NSAutoreleasePoolCollector newAutoreleasePool];
+        Py_BEGIN_ALLOW_THREADS
+            @try {
+                [global_release_pool release];
+                [OC_NSAutoreleasePoolCollector newAutoreleasePool];
 
-        PyObjC_HANDLER PyObjCErr_FromObjC(localException);
+            } @catch (NSObject* localException) {
+                PyObjCErr_FromObjC(localException);
+            }
+        Py_END_ALLOW_THREADS
 
-        PyObjC_ENDHANDLER
-
-            if (PyErr_Occurred()) return NULL;
+        if (PyErr_Occurred())
+            return NULL;
     }
 
     Py_INCREF(Py_None);
@@ -1192,12 +1201,12 @@ PyObjC_objc_sync_enter(PyObject* self __attribute__((__unused__)), PyObject* arg
         return NULL;
     }
 
-    Py_BEGIN_ALLOW_THREADS rv = objc_sync_enter(object);
+    Py_BEGIN_ALLOW_THREADS
+        rv = objc_sync_enter(object);
 
     Py_END_ALLOW_THREADS
 
-        if (rv == OBJC_SYNC_SUCCESS)
-    {
+    if (rv == OBJC_SYNC_SUCCESS) {
         Py_INCREF(Py_None);
         return Py_None;
     }
@@ -1216,9 +1225,10 @@ PyObjC_objc_sync_exit(PyObject* self __attribute__((__unused__)), PyObject* args
         return NULL;
     }
 
-    Py_BEGIN_ALLOW_THREADS rv = objc_sync_exit(object);
-    Py_END_ALLOW_THREADS if (rv == OBJC_SYNC_SUCCESS)
-    {
+    Py_BEGIN_ALLOW_THREADS
+        rv = objc_sync_exit(object);
+    Py_END_ALLOW_THREADS
+    if (rv == OBJC_SYNC_SUCCESS) {
         Py_INCREF(Py_None);
         return Py_None;
     }
@@ -1520,13 +1530,17 @@ PyObjC_setAssociatedObject(PyObject* self __attribute__((__unused__)), PyObject*
         return NULL;
     }
 
-    PyObjC_DURING objc_setAssociatedObject(object, (void*)key, value, policy);
+    Py_BEGIN_ALLOW_THREADS
+        @try {
+            objc_setAssociatedObject(object, (void*)key, value, policy);
 
-    PyObjC_HANDLER PyObjCErr_FromObjC(localException);
+        } @catch (NSObject* localException) {
+            PyObjCErr_FromObjC(localException);
+        }
+    Py_END_ALLOW_THREADS
 
-    PyObjC_ENDHANDLER
-
-        if (PyErr_Occurred()) return NULL;
+    if (PyErr_Occurred())
+        return NULL;
 
     Py_INCREF(Py_None);
     return Py_None;
@@ -1557,13 +1571,18 @@ PyObjC_getAssociatedObject(PyObject* self __attribute__((__unused__)), PyObject*
         return NULL;
     }
 
-    PyObjC_DURING value = objc_getAssociatedObject(object, (void*)key);
+    Py_BEGIN_ALLOW_THREADS
+        @try {
+            value = objc_getAssociatedObject(object, (void*)key);
 
-    PyObjC_HANDLER value = nil;
-    PyObjCErr_FromObjC(localException);
-    PyObjC_ENDHANDLER
+        } @catch (NSObject* localException) {
+            value = nil;
+            PyObjCErr_FromObjC(localException);
+        }
+    Py_END_ALLOW_THREADS
 
-        if (PyErr_Occurred()) return NULL;
+    if (PyErr_Occurred())
+        return NULL;
 
     return PyObjC_IdToPython(value);
 }
@@ -1593,13 +1612,17 @@ PyObjC_removeAssociatedObjects(PyObject* self __attribute__((__unused__)), PyObj
         return NULL;
     }
 
-    PyObjC_DURING objc_removeAssociatedObjects(object);
+    Py_BEGIN_ALLOW_THREADS
+        @try {
+            objc_removeAssociatedObjects(object);
 
-    PyObjC_HANDLER PyObjCErr_FromObjC(localException);
+        } @catch (NSObject* localException) {
+            PyObjCErr_FromObjC(localException);
+        }
+    Py_END_ALLOW_THREADS
 
-    PyObjC_ENDHANDLER
-
-        if (PyErr_Occurred()) return NULL;
+    if (PyErr_Occurred())
+        return NULL;
 
     Py_INCREF(Py_None);
     return Py_None;

@@ -346,7 +346,6 @@
 #define PyObjC__STR(x) #x
 #define PyObjC_STR(x) PyObjC__STR(x)
 
-
 /*
  *
  * Python version compatibility
@@ -417,33 +416,6 @@ _PyObjCTuple_GetItem(PyObject* tuple, Py_ssize_t idx)
  *
  */
 
-#ifdef NO_OBJC2_RUNTIME
-
-#define PyObjC_DURING Py_BEGIN_ALLOW_THREADS NS_DURING
-
-#define PyObjC_HANDLER NS_HANDLER
-
-#define PyObjC_ENDHANDLER                                                                \
-    NS_ENDHANDLER                                                                        \
-    Py_END_ALLOW_THREADS
-
-#else /* !NO_OBJC2_RUNTIME */
-
-#define PyObjC_DURING Py_BEGIN_ALLOW_THREADS @try {
-
-#define PyObjC_HANDLER                                                                   \
-    }                                                                                    \
-    @catch (NSObject * _localException)                                                  \
-    {                                                                                    \
-        NSException* localException __attribute__((__unused__)) =                        \
-            (NSException*)_localException;
-
-#define PyObjC_ENDHANDLER                                                                \
-    }                                                                                    \
-    Py_END_ALLOW_THREADS
-
-#endif /* !NO_OBJC2_RUNTIME */
-
 #define PyObjC_BEGIN_WITH_GIL                                                            \
     {                                                                                    \
         PyGILState_STATE _GILState;                                                      \
@@ -470,29 +442,25 @@ _PyObjCTuple_GetItem(PyObject* tuple, Py_ssize_t idx)
     PyGILState_Release(_GILState);                                                       \
     }
 
-
 /* TEMP */
 
-#   define PyObjC_INITERROR() return NULL
-#   define PyObjC_INITDONE() return m
+#define PyObjC_INITERROR() return NULL
+#define PyObjC_INITDONE() return m
 
-#   define PyObjC_MODULE_INIT(name) \
-        static struct PyModuleDef mod_module = { \
-            PyModuleDef_HEAD_INIT, \
-            PyObjC_STR(name), \
-            NULL, \
-            0, \
-            mod_methods, \
-            NULL, \
-            NULL, \
-            NULL, \
-            NULL \
-        }; \
-        \
-        PyObject* PyInit_##name(void); \
-        PyObject* __attribute__ ((__visibility__ ("default"))) PyInit_##name(void)
+#define PyObjC_MODULE_INIT(name)                                                         \
+    static struct PyModuleDef mod_module = {PyModuleDef_HEAD_INIT,                       \
+                                            PyObjC_STR(name),                            \
+                                            NULL,                                        \
+                                            0,                                           \
+                                            mod_methods,                                 \
+                                            NULL,                                        \
+                                            NULL,                                        \
+                                            NULL,                                        \
+                                            NULL};                                       \
+                                                                                         \
+    PyObject* PyInit_##name(void);                                                       \
+    PyObject* __attribute__((__visibility__("default"))) PyInit_##name(void)
 
-#define PyObjC_MODULE_CREATE(name) \
-    PyModule_Create(&mod_module);
+#define PyObjC_MODULE_CREATE(name) PyModule_Create(&mod_module);
 
 #endif /* PyObjC_COMPAT_H */

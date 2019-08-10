@@ -2,19 +2,13 @@
  * Functions with a callback argument that isn't "retained"
  */
 #define PY_SSIZE_T_CLEAN
-#include <Python.h>
 #include "pyobjc-api.h"
+#include <Python.h>
 
 #import <ApplicationServices/ApplicationServices.h>
 
-
-
-
 static void
-m_CGPDFDictionaryApplierFunction(
-    const char *key,
-    CGPDFObjectRef value,
-    void* _info)
+m_CGPDFDictionaryApplierFunction(const char* key, CGPDFObjectRef value, void* _info)
 {
     PyObject* info = (PyObject*)_info;
 
@@ -47,15 +41,12 @@ m_CGPDFDictionaryApplierFunction(
         PyObjCErr_ToObjCWithGILState(&state);
     }
 
-
     Py_DECREF(result);
     PyGILState_Release(state);
 }
 
 static PyObject*
-m_CGPDFDictionaryApplyFunction(
-    PyObject* self __attribute__((__unused__)),
-    PyObject* args)
+m_CGPDFDictionaryApplyFunction(PyObject* self __attribute__((__unused__)), PyObject* args)
 {
     PyObject* d;
     PyObject* f;
@@ -69,7 +60,7 @@ m_CGPDFDictionaryApplyFunction(
         PyErr_SetString(PyExc_TypeError, "callback not callable");
         return NULL;
     }
-    if (PyObjC_PythonToObjC(@encode(CGPDFDictionaryRef), d, &dictionary)<0){
+    if (PyObjC_PythonToObjC(@encode(CGPDFDictionaryRef), d, &dictionary) < 0) {
         return NULL;
     }
 
@@ -78,15 +69,14 @@ m_CGPDFDictionaryApplyFunction(
         return NULL;
     }
 
-    PyObjC_DURING
-        CGPDFDictionaryApplyFunction(
-            dictionary,
-            m_CGPDFDictionaryApplierFunction,
-            (void*)real_info);
-    PyObjC_HANDLER
-        PyObjCErr_FromObjC(localException);
-
-    PyObjC_ENDHANDLER
+    Py_BEGIN_ALLOW_THREADS
+        @try {
+            CGPDFDictionaryApplyFunction(dictionary, m_CGPDFDictionaryApplierFunction,
+                                         (void*)real_info);
+        } @catch (NSException* localException) {
+            PyObjCErr_FromObjC(localException);
+        }
+    Py_END_ALLOW_THREADS
 
     Py_DECREF(real_info);
     if (PyErr_Occurred()) {
@@ -109,17 +99,15 @@ m_CGPathApplierFunction(void* _info, const CGPathElement* element)
 
     PyGILState_STATE state = PyGILState_Ensure();
 
-    PyObject* py_element = PyObject_CallFunction(gCGPathElement,
-        "lN",
-        element->type,
-        PyObjC_VarList_New(@encode(CGPoint), element->points));
+    PyObject* py_element =
+        PyObject_CallFunction(gCGPathElement, "lN", element->type,
+                              PyObjC_VarList_New(@encode(CGPoint), element->points));
     if (element == NULL) {
         PyObjCErr_ToObjCWithGILState(&state);
     }
 
-    PyObject* result = PyObject_CallFunction(
-        PyTuple_GET_ITEM(info, 0),
-        "ON", PyTuple_GET_ITEM(info, 1), py_element);
+    PyObject* result = PyObject_CallFunction(PyTuple_GET_ITEM(info, 0), "ON",
+                                             PyTuple_GET_ITEM(info, 1), py_element);
     if (result == NULL) {
         PyObjCErr_ToObjCWithGILState(&state);
     }
@@ -128,8 +116,7 @@ m_CGPathApplierFunction(void* _info, const CGPathElement* element)
 }
 
 static PyObject*
-setCGPathElement(PyObject* self __attribute__((__unused__)),
-        PyObject* args)
+setCGPathElement(PyObject* self __attribute__((__unused__)), PyObject* args)
 {
     PyObject* v;
 
@@ -139,15 +126,14 @@ setCGPathElement(PyObject* self __attribute__((__unused__)),
 
     Py_XDECREF(gCGPathElement);
     Py_INCREF(v);
-    gCGPathElement=v;
+    gCGPathElement = v;
 
     Py_INCREF(Py_None);
     return Py_None;
 }
 
 static PyObject*
-m_CGPathApply(PyObject* self __attribute__((__unused__)),
-            PyObject* args)
+m_CGPathApply(PyObject* self __attribute__((__unused__)), PyObject* args)
 {
     PyObject* py_path;
     PyObject* callback;
@@ -170,13 +156,14 @@ m_CGPathApply(PyObject* self __attribute__((__unused__)),
         return NULL;
     }
 
-    PyObjC_DURING
-        CGPathApply(path, real_info, m_CGPathApplierFunction);
+    Py_BEGIN_ALLOW_THREADS
+        @try {
+            CGPathApply(path, real_info, m_CGPathApplierFunction);
 
-    PyObjC_HANDLER
-        PyObjCErr_FromObjC(localException);
-
-    PyObjC_ENDHANDLER
+        } @catch (NSException* localException) {
+            PyObjCErr_FromObjC(localException);
+        }
+    Py_END_ALLOW_THREADS
 
     Py_DECREF(real_info);
 
@@ -188,35 +175,33 @@ m_CGPathApply(PyObject* self __attribute__((__unused__)),
     return Py_None;
 }
 
-static PyMethodDef mod_methods[] = {
-    {
-        "CGPDFDictionaryApplyFunction",
-        (PyCFunction)m_CGPDFDictionaryApplyFunction,
-        METH_VARARGS,
-        NULL,
-    },
-    {
-        "CGPathApply",
-        (PyCFunction)m_CGPathApply,
-        METH_VARARGS,
-        NULL,
-    },
-    {
-        "setCGPathElement",
-        (PyCFunction)setCGPathElement,
-        METH_VARARGS,
-        NULL,
-    },
+static PyMethodDef mod_methods[] = {{
+                                        "CGPDFDictionaryApplyFunction",
+                                        (PyCFunction)m_CGPDFDictionaryApplyFunction,
+                                        METH_VARARGS,
+                                        NULL,
+                                    },
+                                    {
+                                        "CGPathApply",
+                                        (PyCFunction)m_CGPathApply,
+                                        METH_VARARGS,
+                                        NULL,
+                                    },
+                                    {
+                                        "setCGPathElement",
+                                        (PyCFunction)setCGPathElement,
+                                        METH_VARARGS,
+                                        NULL,
+                                    },
 
-    { 0, 0, 0, 0 }
-};
-
+                                    {0, 0, 0, 0}};
 
 PyObjC_MODULE_INIT(_sortandmap)
 {
     PyObject* m = PyObjC_MODULE_CREATE(_sortandmap);
 
-    if (PyObjC_ImportAPI(m) < 0) PyObjC_INITERROR();
+    if (PyObjC_ImportAPI(m) < 0)
+        PyObjC_INITERROR();
 
     PyObjC_INITDONE();
 }

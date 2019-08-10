@@ -2,13 +2,10 @@
  * Manual wrappers for CFBag
  */
 static PyObject*
-mod_CFBagGetValues(
-    PyObject* self __attribute__((__unused__)),
-    PyObject* args)
+mod_CFBagGetValues(PyObject* self __attribute__((__unused__)), PyObject* args)
 {
     PyObject* py_bag;
     CFBagRef bag;
-
 
     if (!PyArg_ParseTuple(args, "O", &py_bag)) {
         return NULL;
@@ -27,15 +24,14 @@ mod_CFBagGetValues(
     memset(members, 0, sizeof(NSObject*) * count);
 
     CFBagGetValues(bag, (const void**)members);
-    PyObject* result = PyObjC_CArrayToPython(@encode(NSObject*), members, (Py_ssize_t)count);
+    PyObject* result =
+        PyObjC_CArrayToPython(@encode(NSObject*), members, (Py_ssize_t)count);
     free(members);
     return result;
 }
 
-
 static PyObject*
-mod_CFBagCreate(PyObject* self __attribute__((__unused__)),
-    PyObject* args)
+mod_CFBagCreate(PyObject* self __attribute__((__unused__)), PyObject* args)
 {
     PyObject* py_allocator;
     PyObject* py_members;
@@ -46,7 +42,6 @@ mod_CFBagCreate(PyObject* self __attribute__((__unused__)),
     PyObject* buf = NULL;
     CFBagRef bag;
 
-
     if (!PyArg_ParseTuple(args, "OOn", &py_allocator, &py_members, &count)) {
         return NULL;
     }
@@ -55,12 +50,14 @@ mod_CFBagCreate(PyObject* self __attribute__((__unused__)),
         return NULL;
     }
 
-    r = PyObjC_PythonToCArray(NO, NO, @encode(NSObject*), py_members, (void**)&members, &count, &buf);
+    r = PyObjC_PythonToCArray(NO, NO, @encode(NSObject*), py_members, (void**)&members,
+                              &count, &buf);
     if (r == -1) {
         return NULL;
     }
 
-    bag = CFBagCreate(allocator, (const void**)members, (CFIndex)count, &kCFTypeBagCallBacks);
+    bag = CFBagCreate(allocator, (const void**)members, (CFIndex)count,
+                      &kCFTypeBagCallBacks);
 
     PyObjC_FreeCArray(r, members);
     Py_XDECREF(buf);
@@ -73,16 +70,14 @@ mod_CFBagCreate(PyObject* self __attribute__((__unused__)),
 }
 
 static PyObject*
-mod_CFBagCreateMutable(PyObject* self __attribute__((__unused__)),
-    PyObject* args)
+mod_CFBagCreateMutable(PyObject* self __attribute__((__unused__)), PyObject* args)
 {
     PyObject* py_allocator;
     Py_ssize_t count;
     CFAllocatorRef allocator;
     CFBagRef bag;
 
-
-if (!PyArg_ParseTuple(args, "On", &py_allocator, &count)) {
+    if (!PyArg_ParseTuple(args, "On", &py_allocator, &count)) {
         return NULL;
     }
 
@@ -99,22 +94,7 @@ if (!PyArg_ParseTuple(args, "On", &py_allocator, &count)) {
     return result;
 }
 
-#define COREFOUNDATION_CFBAG_METHODS \
-    { \
-        "CFBagCreate", \
-        (PyCFunction)mod_CFBagCreate, \
-        METH_VARARGS, \
-        NULL \
-    }, \
-    { \
-        "CFBagCreateMutable", \
-        (PyCFunction)mod_CFBagCreateMutable, \
-        METH_VARARGS, \
-        NULL \
-    }, \
-    { \
-        "CFBagGetValues", \
-        (PyCFunction)mod_CFBagGetValues, \
-        METH_VARARGS, \
-        NULL \
-    },
+#define COREFOUNDATION_CFBAG_METHODS                                                     \
+    {"CFBagCreate", (PyCFunction)mod_CFBagCreate, METH_VARARGS, NULL},                   \
+        {"CFBagCreateMutable", (PyCFunction)mod_CFBagCreateMutable, METH_VARARGS, NULL}, \
+        {"CFBagGetValues", (PyCFunction)mod_CFBagGetValues, METH_VARARGS, NULL},

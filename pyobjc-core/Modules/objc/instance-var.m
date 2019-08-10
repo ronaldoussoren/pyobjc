@@ -181,13 +181,16 @@ ivar_descr_set(PyObject* _self, PyObject* obj, PyObject* value)
         }
 
         if (!self->isOutlet) {
-            PyObjC_DURING id old_value = object_getIvar(objc, var);
-            [new_value retain];
-            [old_value release];
-            PyObjC_HANDLER NSLog(
-                @"PyObjC: ignoring exception during attribute replacement: %@",
-                localException);
-            PyObjC_ENDHANDLER
+            Py_BEGIN_ALLOW_THREADS
+                @try {
+                    id old_value = object_getIvar(objc, var);
+                    [new_value retain];
+                    [old_value release];
+                } @catch (NSObject* localException) {
+                    NSLog(@"PyObjC: ignoring exception during attribute replacement: %@",
+                          localException);
+                }
+            Py_END_ALLOW_THREADS
         }
 
         object_setIvar(objc, var, new_value);

@@ -15,28 +15,19 @@ mod_timer_release(const void* info)
     PyGILState_Release(state);
 }
 
-
-static CFRunLoopTimerContext mod_CFRunLoopTimerContext = {
-    0,
-    NULL,
-    mod_timer_retain,
-    mod_timer_release,
-    NULL
-};
+static CFRunLoopTimerContext mod_CFRunLoopTimerContext = {0, NULL, mod_timer_retain,
+                                                          mod_timer_release, NULL};
 
 static void
-mod_CFRunLoopTimerCallBack(
-    CFRunLoopTimerRef f,
-    void* _info)
+mod_CFRunLoopTimerCallBack(CFRunLoopTimerRef f, void* _info)
 {
     PyObject* info = (PyObject*)_info;
     PyGILState_STATE state = PyGILState_Ensure();
 
     PyObject* py_f = PyObjC_ObjCToPython(@encode(CFRunLoopTimerRef), &f);
 
-    PyObject* result = PyObject_CallFunction(
-        PyTuple_GetItem(info, 0),
-        "NO", py_f, PyTuple_GetItem(info, 1));
+    PyObject* result = PyObject_CallFunction(PyTuple_GetItem(info, 0), "NO", py_f,
+                                             PyTuple_GetItem(info, 1));
     if (result == NULL) {
         PyObjCErr_ToObjCWithGILState(&state);
     }
@@ -45,9 +36,7 @@ mod_CFRunLoopTimerCallBack(
 }
 
 static PyObject*
-mod_CFRunLoopTimerCreate(
-    PyObject* self __attribute__((__unused__)),
-    PyObject* args)
+mod_CFRunLoopTimerCreate(PyObject* self __attribute__((__unused__)), PyObject* args)
 {
     PyObject* py_allocator;
     PyObject* py_fireDate;
@@ -62,7 +51,8 @@ mod_CFRunLoopTimerCreate(
     CFOptionFlags flags;
     CFIndex order;
 
-    if (!PyArg_ParseTuple(args, "OOOOOOO", &py_allocator, &py_fireDate, &py_interval, &py_flags, &py_order, &callout, &info)) {
+    if (!PyArg_ParseTuple(args, "OOOOOOO", &py_allocator, &py_fireDate, &py_interval,
+                          &py_flags, &py_order, &callout, &info)) {
         return NULL;
     }
 
@@ -89,17 +79,16 @@ mod_CFRunLoopTimerCreate(
     }
 
     CFRunLoopTimerRef rv = NULL;
-    PyObjC_DURING
-        rv = CFRunLoopTimerCreate(
-            allocator, fireDate, interval, flags, order,
-            mod_CFRunLoopTimerCallBack, &context);
+    Py_BEGIN_ALLOW_THREADS
+        @try {
+            rv = CFRunLoopTimerCreate(allocator, fireDate, interval, flags, order,
+                                      mod_CFRunLoopTimerCallBack, &context);
 
-
-    PyObjC_HANDLER
-        rv = NULL;
-        PyObjCErr_FromObjC(localException);
-
-    PyObjC_ENDHANDLER
+        } @catch (NSException* localException) {
+            rv = NULL;
+            PyObjCErr_FromObjC(localException);
+        }
+    Py_END_ALLOW_THREADS
 
     Py_DECREF((PyObject*)context.info);
     if (PyErr_Occurred()) {
@@ -113,11 +102,8 @@ mod_CFRunLoopTimerCreate(
     return result;
 }
 
-
 static PyObject*
-mod_CFRunLoopTimerGetContext(
-    PyObject* self __attribute__((__unused__)),
-    PyObject* args)
+mod_CFRunLoopTimerGetContext(PyObject* self __attribute__((__unused__)), PyObject* args)
 {
     PyObject* py_f;
     PyObject* py_context = NULL;
@@ -139,13 +125,14 @@ mod_CFRunLoopTimerGetContext(
 
     context.version = 0;
 
-    PyObjC_DURING
-        CFRunLoopTimerGetContext(f, &context);
+    Py_BEGIN_ALLOW_THREADS
+        @try {
+            CFRunLoopTimerGetContext(f, &context);
 
-    PyObjC_HANDLER
-        PyObjCErr_FromObjC(localException);
-
-    PyObjC_ENDHANDLER
+        } @catch (NSException* localException) {
+            PyObjCErr_FromObjC(localException);
+        }
+    Py_END_ALLOW_THREADS
 
     if (PyErr_Occurred()) {
         return NULL;
@@ -157,8 +144,7 @@ mod_CFRunLoopTimerGetContext(
     }
 
     if (context.retain != mod_timer_retain) {
-        PyErr_SetString(PyExc_ValueError,
-            "retrieved context is not supported");
+        PyErr_SetString(PyExc_ValueError, "retrieved context is not supported");
         return NULL;
     }
 
@@ -171,16 +157,7 @@ mod_CFRunLoopTimerGetContext(
     return PyTuple_GetItem((PyObject*)context.info, 1);
 }
 
-#define COREFOUNDATION_RUNLOOPTIMER_METHODS \
-    { \
-        "CFRunLoopTimerCreate", \
-        (PyCFunction)mod_CFRunLoopTimerCreate, \
-        METH_VARARGS, \
-        NULL \
-    }, \
-    { \
-        "CFRunLoopTimerGetContext", \
-        (PyCFunction)mod_CFRunLoopTimerGetContext, \
-        METH_VARARGS, \
-        NULL \
-    },
+#define COREFOUNDATION_RUNLOOPTIMER_METHODS                                              \
+    {"CFRunLoopTimerCreate", (PyCFunction)mod_CFRunLoopTimerCreate, METH_VARARGS, NULL}, \
+        {"CFRunLoopTimerGetContext", (PyCFunction)mod_CFRunLoopTimerGetContext,          \
+         METH_VARARGS, NULL},

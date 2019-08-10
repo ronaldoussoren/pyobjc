@@ -1,7 +1,6 @@
 static PyObject*
-mod_CFDictionaryGetKeysAndValues(
-    PyObject* self __attribute__((__unused__)),
-    PyObject* args)
+mod_CFDictionaryGetKeysAndValues(PyObject* self __attribute__((__unused__)),
+                                 PyObject* args)
 {
     PyObject* pyDict;
     PyObject* pyKeys;
@@ -23,7 +22,7 @@ mod_CFDictionaryGetKeysAndValues(
     count = -1;
     if (pyKeys == PyObjC_NULL) {
         keys = NULL;
-    } else if (pyKeys == Py_None){
+    } else if (pyKeys == Py_None) {
         count = CFDictionaryGetCount(dict);
         keys = malloc(sizeof(void*) * count);
         if (keys == NULL) {
@@ -37,7 +36,7 @@ mod_CFDictionaryGetKeysAndValues(
 
     if (pyValues == PyObjC_NULL) {
         values = NULL;
-    } else if (pyValues == Py_None){
+    } else if (pyValues == Py_None) {
         if (count == -1) {
             count = CFDictionaryGetCount(dict);
         }
@@ -54,14 +53,14 @@ mod_CFDictionaryGetKeysAndValues(
         return NULL;
     }
 
-    PyObjC_DURING
-        CFDictionaryGetKeysAndValues(
-            dict, keys, values);
+    Py_BEGIN_ALLOW_THREADS
+        @try {
+            CFDictionaryGetKeysAndValues(dict, keys, values);
 
-    PyObjC_HANDLER
-        PyObjCErr_FromObjC(localException);
-
-    PyObjC_ENDHANDLER
+        } @catch (NSException* localException) {
+            PyObjCErr_FromObjC(localException);
+        }
+    Py_END_ALLOW_THREADS
 
     if (PyErr_Occurred()) {
         if (keys != NULL) {
@@ -93,10 +92,6 @@ mod_CFDictionaryGetKeysAndValues(
     return result;
 }
 
-#define COREFOUNDATION_DICTIONARY_METHODS \
-    { \
-        "CFDictionaryGetKeysAndValues", \
-        (PyCFunction)mod_CFDictionaryGetKeysAndValues, \
-        METH_VARARGS, \
-        NULL \
-    },
+#define COREFOUNDATION_DICTIONARY_METHODS                                                \
+    {"CFDictionaryGetKeysAndValues", (PyCFunction)mod_CFDictionaryGetKeysAndValues,      \
+     METH_VARARGS, NULL},

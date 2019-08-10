@@ -42,15 +42,17 @@ PyObjC_loadSpecialVar(PyObject* self __attribute__((__unused__)), PyObject* args
         return NULL;
     }
 
-    PyObjC_DURING cfBundle = CreateCFBundleFromNSBundle(bundle);
+    Py_BEGIN_ALLOW_THREADS
+        @try {
+            cfBundle = CreateCFBundleFromNSBundle(bundle);
 
-    PyObjC_HANDLER PyObjCErr_FromObjC(localException);
-    cfBundle = NULL;
+        } @catch (NSObject* localException) {
+            PyObjCErr_FromObjC(localException);
+            cfBundle = NULL;
+        }
+    Py_END_ALLOW_THREADS
 
-    PyObjC_ENDHANDLER
-
-        if (cfBundle == NULL)
-    {
+    if (cfBundle == NULL) {
         if (PyErr_Occurred()) {
             return NULL;
         }
@@ -107,15 +109,17 @@ PyObjC_loadBundleVariables(PyObject* self __attribute__((__unused__)), PyObject*
         return NULL;
     }
 
-    PyObjC_DURING cfBundle = CreateCFBundleFromNSBundle(bundle);
+    Py_BEGIN_ALLOW_THREADS
+        @try {
+            cfBundle = CreateCFBundleFromNSBundle(bundle);
 
-    PyObjC_HANDLER PyObjCErr_FromObjC(localException);
-    cfBundle = NULL;
+        } @catch (NSObject* localException) {
+            PyObjCErr_FromObjC(localException);
+            cfBundle = NULL;
+        }
+    Py_END_ALLOW_THREADS
 
-    PyObjC_ENDHANDLER
-
-        if (cfBundle == NULL)
-    {
+    if (cfBundle == NULL) {
         if (PyErr_Occurred()) {
             return NULL;
         }
@@ -215,15 +219,17 @@ PyObjC_loadBundleFunctions(PyObject* self __attribute__((__unused__)), PyObject*
     if (bundle == NULL) {
         cfBundle = NULL;
     } else {
-        PyObjC_DURING cfBundle = CreateCFBundleFromNSBundle(bundle);
+        Py_BEGIN_ALLOW_THREADS
+            @try {
+                cfBundle = CreateCFBundleFromNSBundle(bundle);
 
-        PyObjC_HANDLER PyObjCErr_FromObjC(localException);
-        cfBundle = NULL;
+            } @catch (NSObject* localException) {
+                PyObjCErr_FromObjC(localException);
+                cfBundle = NULL;
+            }
+        Py_END_ALLOW_THREADS
 
-        PyObjC_ENDHANDLER
-
-            if (cfBundle == NULL && PyErr_Occurred())
-        {
+        if (cfBundle == NULL && PyErr_Occurred()) {
             return NULL;
         }
 

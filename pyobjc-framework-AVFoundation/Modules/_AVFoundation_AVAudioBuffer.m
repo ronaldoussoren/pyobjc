@@ -2,11 +2,9 @@
  * Manual wrappers for a number of AVAudioBuffer methods
  */
 
-
 static PyObject*
-call_AVAudioPCMBuffer_floatChannelData(
-    PyObject* method,
-    PyObject* self, PyObject* arguments)
+call_AVAudioPCMBuffer_floatChannelData(PyObject* method, PyObject* self,
+                                       PyObject* arguments)
 {
     float** res;
     AVAudioFormat* format;
@@ -18,23 +16,22 @@ call_AVAudioPCMBuffer_floatChannelData(
         return NULL;
     }
 
-    PyObjC_DURING
-        if (PyObjCIMP_Check(method)) {
-            res = ((float**(*)(id,SEL))
-            PyObjCIMP_GetIMP(method))(
-                PyObjCObject_GetObject(self),
-                PyObjCIMP_GetSelector(method));
-        } else {
-            PyObjC_InitSuper(&super,
-                PyObjCSelector_GetClass(method),
-                PyObjCObject_GetObject(self));
+    Py_BEGIN_ALLOW_THREADS
+        @try {
+            if (PyObjCIMP_Check(method)) {
+                res = ((float** (*)(id, SEL))PyObjCIMP_GetIMP(method))(
+                    PyObjCObject_GetObject(self), PyObjCIMP_GetSelector(method));
+            } else {
+                PyObjC_InitSuper(&super, PyObjCSelector_GetClass(method),
+                                 PyObjCObject_GetObject(self));
 
-            res = ((float**(*)(struct objc_super*, SEL))objc_msgSendSuper)(&super,
-                        PyObjCSelector_GetSelector(method));
+                res = ((float** (*)(struct objc_super*, SEL))objc_msgSendSuper)(
+                    &super, PyObjCSelector_GetSelector(method));
+            }
+        } @catch (NSException* localException) {
+            PyObjCErr_FromObjC(localException);
         }
-    PyObjC_HANDLER
-        PyObjCErr_FromObjC(localException);
-    PyObjC_ENDHANDLER
+    Py_END_ALLOW_THREADS
 
     if (PyErr_Occurred()) {
         return NULL;
@@ -66,9 +63,8 @@ call_AVAudioPCMBuffer_floatChannelData(
 }
 
 static PyObject*
-call_AVAudioPCMBuffer_int16ChannelData(
-    PyObject* method,
-    PyObject* self, PyObject* arguments)
+call_AVAudioPCMBuffer_int16ChannelData(PyObject* method, PyObject* self,
+                                       PyObject* arguments)
 {
     int16_t** res;
     AVAudioFormat* format;
@@ -80,23 +76,22 @@ call_AVAudioPCMBuffer_int16ChannelData(
         return NULL;
     }
 
-    PyObjC_DURING
-        if (PyObjCIMP_Check(method)) {
-            res = ((int16_t**(*)(id,SEL))
-            PyObjCIMP_GetIMP(method))(
-                PyObjCObject_GetObject(self),
-                PyObjCIMP_GetSelector(method));
-        } else {
-            PyObjC_InitSuper(&super,
-                PyObjCSelector_GetClass(method),
-                PyObjCObject_GetObject(self));
+    Py_BEGIN_ALLOW_THREADS
+        @try {
+            if (PyObjCIMP_Check(method)) {
+                res = ((int16_t * *(*)(id, SEL)) PyObjCIMP_GetIMP(method))(
+                    PyObjCObject_GetObject(self), PyObjCIMP_GetSelector(method));
+            } else {
+                PyObjC_InitSuper(&super, PyObjCSelector_GetClass(method),
+                                 PyObjCObject_GetObject(self));
 
-            res = ((int16_t**(*)(struct objc_super*, SEL))objc_msgSendSuper)(&super,
-                        PyObjCSelector_GetSelector(method));
+                res = ((int16_t * *(*)(struct objc_super*, SEL))
+                           objc_msgSendSuper)(&super, PyObjCSelector_GetSelector(method));
+            }
+        } @catch (NSException* localException) {
+            PyObjCErr_FromObjC(localException);
         }
-    PyObjC_HANDLER
-        PyObjCErr_FromObjC(localException);
-    PyObjC_ENDHANDLER
+    Py_END_ALLOW_THREADS
 
     if (PyErr_Occurred()) {
         return NULL;
@@ -128,9 +123,8 @@ call_AVAudioPCMBuffer_int16ChannelData(
 }
 
 static PyObject*
-call_AVAudioPCMBuffer_int32ChannelData(
-    PyObject* method,
-    PyObject* self, PyObject* arguments)
+call_AVAudioPCMBuffer_int32ChannelData(PyObject* method, PyObject* self,
+                                       PyObject* arguments)
 {
     int32_t** res;
     AVAudioFormat* format;
@@ -142,23 +136,22 @@ call_AVAudioPCMBuffer_int32ChannelData(
         return NULL;
     }
 
-    PyObjC_DURING
-        if (PyObjCIMP_Check(method)) {
-            res = ((int32_t**(*)(id,SEL))
-            PyObjCIMP_GetIMP(method))(
-                PyObjCObject_GetObject(self),
-                PyObjCIMP_GetSelector(method));
-        } else {
-            PyObjC_InitSuper(&super,
-                PyObjCSelector_GetClass(method),
-                PyObjCObject_GetObject(self));
+    Py_BEGIN_ALLOW_THREADS
+        @try {
+            if (PyObjCIMP_Check(method)) {
+                res = ((int32_t * *(*)(id, SEL)) PyObjCIMP_GetIMP(method))(
+                    PyObjCObject_GetObject(self), PyObjCIMP_GetSelector(method));
+            } else {
+                PyObjC_InitSuper(&super, PyObjCSelector_GetClass(method),
+                                 PyObjCObject_GetObject(self));
 
-            res = ((int32_t**(*)(struct objc_super*, SEL))objc_msgSendSuper)(&super,
-                        PyObjCSelector_GetSelector(method));
+                res = ((int32_t * *(*)(struct objc_super*, SEL))
+                           objc_msgSendSuper)(&super, PyObjCSelector_GetSelector(method));
+            }
+        } @catch (NSException* localException) {
+            PyObjCErr_FromObjC(localException);
         }
-    PyObjC_HANDLER
-        PyObjCErr_FromObjC(localException);
-    PyObjC_ENDHANDLER
+    Py_END_ALLOW_THREADS
 
     if (PyErr_Occurred()) {
         return NULL;
@@ -197,26 +190,23 @@ init_avaudiobuffer(void)
         return 0;
     }
 
-    if (PyObjC_RegisterMethodMapping(cls,
-        @selector(floatChannelData),
-        call_AVAudioPCMBuffer_floatChannelData,
-        PyObjCUnsupportedMethod_IMP) < 0 ) {
+    if (PyObjC_RegisterMethodMapping(cls, @selector(floatChannelData),
+                                     call_AVAudioPCMBuffer_floatChannelData,
+                                     PyObjCUnsupportedMethod_IMP) < 0) {
 
         return -1;
     }
 
-    if (PyObjC_RegisterMethodMapping(cls,
-        @selector(int16ChannelData),
-        call_AVAudioPCMBuffer_int16ChannelData,
-        PyObjCUnsupportedMethod_IMP) < 0 ) {
+    if (PyObjC_RegisterMethodMapping(cls, @selector(int16ChannelData),
+                                     call_AVAudioPCMBuffer_int16ChannelData,
+                                     PyObjCUnsupportedMethod_IMP) < 0) {
 
         return -1;
     }
 
-    if (PyObjC_RegisterMethodMapping(cls,
-        @selector(int32ChannelData),
-        call_AVAudioPCMBuffer_int32ChannelData,
-        PyObjCUnsupportedMethod_IMP) < 0 ) {
+    if (PyObjC_RegisterMethodMapping(cls, @selector(int32ChannelData),
+                                     call_AVAudioPCMBuffer_int32ChannelData,
+                                     PyObjCUnsupportedMethod_IMP) < 0) {
 
         return -1;
     }

@@ -44,19 +44,21 @@ extern NSString* const NSUnknownKeyException; /* Radar #3336042 */
 
 - (id)initWithPyObject:(PyObject*)obj
 {
-    PyObjC_BEGIN_WITH_GIL if (PyLong_Check(obj)) abort();
+    PyObjC_BEGIN_WITH_GIL
+        if (PyLong_Check(obj))
+            abort();
 
-    if (pyObject) {
-        PyObjC_UnregisterObjCProxy(pyObject, self);
-    }
+        if (pyObject) {
+            PyObjC_UnregisterObjCProxy(pyObject, self);
+        }
 
-    PyObjC_RegisterObjCProxy(obj, self);
+        PyObjC_RegisterObjCProxy(obj, self);
 
-    SET_FIELD_INCREF(pyObject, obj);
+        SET_FIELD_INCREF(pyObject, obj);
 
     PyObjC_END_WITH_GIL
 
-        return self;
+    return self;
 }
 
 - (BOOL)supportsWeakPointers
@@ -72,7 +74,8 @@ extern NSString* const NSUnknownKeyException; /* Radar #3336042 */
         return;
     }
 
-    PyObjC_BEGIN_WITH_GIL[super release];
+    PyObjC_BEGIN_WITH_GIL
+        [super release];
     PyObjC_END_WITH_GIL
 }
 
@@ -83,12 +86,13 @@ extern NSString* const NSUnknownKeyException; /* Radar #3336042 */
         return;
     }
 
-    PyObjC_BEGIN_WITH_GIL PyObjC_UnregisterObjCProxy(pyObject, self);
-    Py_CLEAR(pyObject);
+    PyObjC_BEGIN_WITH_GIL
+        PyObjC_UnregisterObjCProxy(pyObject, self);
+        Py_CLEAR(pyObject);
 
     PyObjC_END_WITH_GIL
 
-        [super dealloc];
+    [super dealloc];
 }
 
 - (id)copyWithZone:(NSZone*)zone
@@ -102,14 +106,14 @@ extern NSString* const NSUnknownKeyException; /* Radar #3336042 */
                     format:@"cannot copy Python objects"];
 
     } else {
-        PyObjC_BEGIN_WITH_GIL copy =
-            PyObject_CallFunctionObjArgs(PyObjC_CopyFunc, pyObject, NULL);
-        if (copy == NULL) {
-            PyObjC_GIL_FORWARD_EXC();
-        }
+        PyObjC_BEGIN_WITH_GIL
+            copy = PyObject_CallFunctionObjArgs(PyObjC_CopyFunc, pyObject, NULL);
+            if (copy == NULL) {
+                PyObjC_GIL_FORWARD_EXC();
+            }
 
-        result = PyObjC_PythonToId(copy);
-        Py_DECREF(copy);
+            result = PyObjC_PythonToId(copy);
+            Py_DECREF(copy);
 
         PyObjC_END_WITH_GIL
     }
@@ -142,25 +146,25 @@ extern NSString* const NSUnknownKeyException; /* Radar #3336042 */
 
         repr = PyObject_Repr(pyObject);
 
-    if (repr) {
-        int err;
-        NSString* result;
+        if (repr) {
+            int err;
+            NSString* result;
 
-        err = depythonify_c_value(@encode(id), repr, &result);
-        Py_DECREF(repr);
-        if (err == -1) {
+            err = depythonify_c_value(@encode(id), repr, &result);
+            Py_DECREF(repr);
+            if (err == -1) {
+                PyObjC_GIL_FORWARD_EXC();
+            }
+
+            PyObjC_GIL_RETURN(result);
+        } else {
             PyObjC_GIL_FORWARD_EXC();
         }
 
-        PyObjC_GIL_RETURN(result);
-    } else {
-        PyObjC_GIL_FORWARD_EXC();
-    }
-
     PyObjC_END_WITH_GIL
 
-        /* not reached */
-        return @"a python object";
+    /* not reached */
+    return @"a python object";
 }
 
 - (void)doesNotRecognizeSelector:(SEL)aSelector
@@ -255,15 +259,16 @@ get_method_for_selector(PyObject* obj, SEL aSelector)
     }
     free(methods);
 
-    PyObjC_BEGIN_WITH_GIL m = get_method_for_selector(pyObject, aSelector);
+    PyObjC_BEGIN_WITH_GIL
+        m = get_method_for_selector(pyObject, aSelector);
 
-    if (m) {
-        Py_DECREF(m);
-        PyObjC_GIL_RETURN(YES);
-    } else {
-        PyErr_Clear();
-        PyObjC_GIL_RETURN(NO);
-    }
+        if (m) {
+            Py_DECREF(m);
+            PyObjC_GIL_RETURN(YES);
+        } else {
+            PyErr_Clear();
+            PyObjC_GIL_RETURN(NO);
+        }
 
     PyObjC_END_WITH_GIL
 }
@@ -307,32 +312,32 @@ get_method_for_selector(PyObject* obj, SEL aSelector)
     PyObjC_BEGIN_WITH_GIL
 
         pymethod = get_method_for_selector(pyObject, sel);
-    if (!pymethod) {
-        PyErr_Clear();
-        PyGILState_Release(_GILState);
-        [NSException raise:NSInvalidArgumentException
-                    format:@"Class %s: no such selector: %s", object_getClassName(self),
-                           sel_getName(sel)];
-    }
+        if (!pymethod) {
+            PyErr_Clear();
+            PyGILState_Release(_GILState);
+            [NSException raise:NSInvalidArgumentException
+                        format:@"Class %s: no such selector: %s",
+                               object_getClassName(self), sel_getName(sel)];
+        }
 
-    if (PyMethod_Check(pymethod)) {
-        func_code = (PyCodeObject*)PyFunction_GetCode(PyMethod_Function(pymethod));
-        argcount = func_code->co_argcount - 1;
+        if (PyMethod_Check(pymethod)) {
+            func_code = (PyCodeObject*)PyFunction_GetCode(PyMethod_Function(pymethod));
+            argcount = func_code->co_argcount - 1;
 
-    } else {
-        func_code = (PyCodeObject*)PyFunction_GetCode(pymethod);
-        argcount = func_code->co_argcount;
-    }
-    Py_DECREF(pymethod);
+        } else {
+            func_code = (PyCodeObject*)PyFunction_GetCode(pymethod);
+            argcount = func_code->co_argcount;
+        }
+        Py_DECREF(pymethod);
 
-    encoding = alloca(argcount + 4);
-    memset(encoding, '@', argcount + 3);
-    encoding[argcount + 3] = '\0';
-    encoding[2] = ':';
+        encoding = alloca(argcount + 4);
+        memset(encoding, '@', argcount + 3);
+        encoding[argcount + 3] = '\0';
+        encoding[2] = ':';
 
     PyObjC_END_WITH_GIL
 
-        return [NSMethodSignature signatureWithObjCTypes:encoding];
+    return [NSMethodSignature signatureWithObjCTypes:encoding];
 }
 
 - (BOOL)_forwardNative:(NSInvocation*)invocation
@@ -477,80 +482,87 @@ get_method_for_selector(PyObject* obj, SEL aSelector)
     PyObjC_BEGIN_WITH_GIL
 
         retsize = PyObjCRT_SizeOfType(rettype);
-    if (retsize == -1) {
-        PyObjC_GIL_FORWARD_EXC();
-    }
+        if (retsize == -1) {
+            PyObjC_GIL_FORWARD_EXC();
+        }
 
-    retbuffer = alloca(retsize);
+        retbuffer = alloca(retsize);
 
-    pymethod = get_method_for_selector(pyObject, aSelector);
+        pymethod = get_method_for_selector(pyObject, aSelector);
 
-    if (!pymethod) {
-        PyGILState_Release(_GILState);
-        [self doesNotRecognizeSelector:aSelector];
-        return;
-    }
+        if (!pymethod) {
+            PyGILState_Release(_GILState);
+            [self doesNotRecognizeSelector:aSelector];
+            return;
+        }
 
-    argcount = [msign numberOfArguments];
-    args = PyTuple_New(argcount - 2);
-    if (args == NULL) {
-        Py_DECREF(pymethod);
-        PyObjC_GIL_FORWARD_EXC();
-    }
-    for (i = 2; i < argcount; i++) {
-        const char* argtype;
-        char* argbuffer;
-        Py_ssize_t argsize;
-        PyObject* pyarg;
-
-        argtype = [msign getArgumentTypeAtIndex:i];
-
-        argsize = PyObjCRT_SizeOfType(argtype);
-        if (argsize == -1) {
-            Py_DECREF(args);
+        argcount = [msign numberOfArguments];
+        args = PyTuple_New(argcount - 2);
+        if (args == NULL) {
             Py_DECREF(pymethod);
             PyObjC_GIL_FORWARD_EXC();
         }
-        argbuffer = alloca(argsize);
+        for (i = 2; i < argcount; i++) {
+            const char* argtype;
+            char* argbuffer;
+            Py_ssize_t argsize;
+            PyObject* pyarg;
 
-        PyObjC_DURING [invocation getArgument:argbuffer atIndex:i];
+            argtype = [msign getArgumentTypeAtIndex:i];
 
-        PyObjC_HANDLER PyGILState_Release(_GILState);
-        [localException raise];
+            argsize = PyObjCRT_SizeOfType(argtype);
+            if (argsize == -1) {
+                Py_DECREF(args);
+                Py_DECREF(pymethod);
+                PyObjC_GIL_FORWARD_EXC();
+            }
+            argbuffer = alloca(argsize);
 
-        PyObjC_ENDHANDLER
+            Py_BEGIN_ALLOW_THREADS
+                @try {
+                    [invocation getArgument:argbuffer atIndex:i];
+
+                } @catch (NSObject* localException) {
+                    PyGILState_Release(_GILState);
+                    @throw;
+                }
+            Py_END_ALLOW_THREADS
 
             pyarg = pythonify_c_value(argtype, argbuffer);
-        if (pyarg == NULL) {
-            Py_DECREF(args);
-            Py_DECREF(pymethod);
+            if (pyarg == NULL) {
+                Py_DECREF(args);
+                Py_DECREF(pymethod);
+                PyObjC_GIL_FORWARD_EXC();
+            }
+
+            PyTuple_SET_ITEM(args, i - 2, pyarg);
+        }
+        result = PyObject_CallObject(pymethod, args);
+        Py_DECREF(args);
+        args = NULL;
+        Py_DECREF(pymethod);
+        pymethod = NULL;
+
+        if (result == NULL) {
             PyObjC_GIL_FORWARD_EXC();
+            return;
         }
 
-        PyTuple_SET_ITEM(args, i - 2, pyarg);
-    }
-    result = PyObject_CallObject(pymethod, args);
-    Py_DECREF(args);
-    args = NULL;
-    Py_DECREF(pymethod);
-    pymethod = NULL;
+        err = depythonify_c_value(rettype, result, retbuffer);
+        Py_DECREF(result);
+        if (err == -1) {
+            PyObjC_GIL_FORWARD_EXC();
+        } else {
+            Py_BEGIN_ALLOW_THREADS
+                @try {
+                    [invocation setReturnValue:retbuffer];
 
-    if (result == NULL) {
-        PyObjC_GIL_FORWARD_EXC();
-        return;
-    }
-
-    err = depythonify_c_value(rettype, result, retbuffer);
-    Py_DECREF(result);
-    if (err == -1) {
-        PyObjC_GIL_FORWARD_EXC();
-    } else {
-        PyObjC_DURING [invocation setReturnValue:retbuffer];
-
-        PyObjC_HANDLER PyGILState_Release(_GILState);
-        [localException raise];
-        PyObjC_ENDHANDLER
-    }
+                } @catch (NSObject* localException) {
+                    PyGILState_Release(_GILState);
+                    @throw;
+                }
+            Py_END_ALLOW_THREADS
+        }
 
     PyObjC_END_WITH_GIL
 }
@@ -562,34 +574,35 @@ get_method_for_selector(PyObject* obj, SEL aSelector)
 
 - (PyObject*)__pyobjc_PythonObject__
 {
-    PyObjC_BEGIN_WITH_GIL if (pyObject == NULL)
-    {
-        PyObject* r = PyObjCObject_New(self, PyObjCObject_kDEFAULT, YES);
-        PyObjC_GIL_RETURN(r);
-    }
-    else
-    {
-        Py_XINCREF(pyObject);
-        PyObjC_GIL_RETURN(pyObject);
-    }
+    PyObjC_BEGIN_WITH_GIL
+        if (pyObject == NULL) {
+            PyObject* r = PyObjCObject_New(self, PyObjCObject_kDEFAULT, YES);
+            PyObjC_GIL_RETURN(r);
+        } else {
+            Py_XINCREF(pyObject);
+            PyObjC_GIL_RETURN(pyObject);
+        }
     PyObjC_END_WITH_GIL
 }
 - (PyObject*)__pyobjc_PythonTransient__:(int*)cookie
 {
-    PyObjC_BEGIN_WITH_GIL* cookie = 0;
-    Py_INCREF(pyObject);
-    PyObjC_END_WITH_GIL return pyObject;
+    PyObjC_BEGIN_WITH_GIL
+        *cookie = 0;
+        Py_INCREF(pyObject);
+    PyObjC_END_WITH_GIL
+    return pyObject;
 }
 
 + (PyObject*)__pyobjc_PythonTransient__:(int*)cookie
 {
     PyObject* rval;
 
-    PyObjC_BEGIN_WITH_GIL rval = PyObjCClass_New([OC_PythonObject class]);
-    *cookie = 0;
+    PyObjC_BEGIN_WITH_GIL
+        rval = PyObjCClass_New([OC_PythonObject class]);
+        *cookie = 0;
     PyObjC_END_WITH_GIL
 
-        return rval;
+    return rval;
 }
 
 /*
@@ -652,34 +665,33 @@ getModuleFunction(char* modname, char* funcname)
 
     PyObjC_BEGIN_WITH_GIL
 
-        if (getKeyFunc == NULL)
-    {
-        getKeyFunc = getModuleFunction("PyObjCTools.KeyValueCoding", "getKey");
         if (getKeyFunc == NULL) {
+            getKeyFunc = getModuleFunction("PyObjCTools.KeyValueCoding", "getKey");
+            if (getKeyFunc == NULL) {
+                PyObjC_GIL_FORWARD_EXC();
+            }
+        }
+
+        keyName = PyObjC_IdToPython(key);
+        if (keyName == NULL) {
             PyObjC_GIL_FORWARD_EXC();
         }
-    }
 
-    keyName = PyObjC_IdToPython(key);
-    if (keyName == NULL) {
-        PyObjC_GIL_FORWARD_EXC();
-    }
+        val = PyObject_CallFunction(getKeyFunc, "OO", pyObject, keyName);
+        Py_DECREF(keyName);
+        if (val == NULL) {
+            PyObjC_GIL_FORWARD_EXC();
+        }
 
-    val = PyObject_CallFunction(getKeyFunc, "OO", pyObject, keyName);
-    Py_DECREF(keyName);
-    if (val == NULL) {
-        PyObjC_GIL_FORWARD_EXC();
-    }
-
-    if (depythonify_c_value(@encode(id), val, &res) < 0) {
+        if (depythonify_c_value(@encode(id), val, &res) < 0) {
+            Py_DECREF(val);
+            PyObjC_GIL_FORWARD_EXC();
+        }
         Py_DECREF(val);
-        PyObjC_GIL_FORWARD_EXC();
-    }
-    Py_DECREF(val);
 
     PyObjC_END_WITH_GIL
 
-        return res;
+    return res;
 }
 
 - (id)storedValueForKey:(NSString*)key
@@ -702,33 +714,32 @@ getModuleFunction(char* modname, char* funcname)
 
     PyObjC_BEGIN_WITH_GIL
 
-        if (setKeyFunc == NULL)
-    {
-        setKeyFunc = getModuleFunction("PyObjCTools.KeyValueCoding", "setKey");
         if (setKeyFunc == NULL) {
+            setKeyFunc = getModuleFunction("PyObjCTools.KeyValueCoding", "setKey");
+            if (setKeyFunc == NULL) {
+                PyObjC_GIL_FORWARD_EXC();
+            }
+        }
+
+        keyName = PyObjC_IdToPython(key);
+        if (keyName == NULL) {
             PyObjC_GIL_FORWARD_EXC();
         }
-    }
 
-    keyName = PyObjC_IdToPython(key);
-    if (keyName == NULL) {
-        PyObjC_GIL_FORWARD_EXC();
-    }
+        pyValue = PyObjC_IdToPython(value);
+        if (pyValue == NULL) {
+            Py_DECREF(keyName);
+            PyObjC_GIL_FORWARD_EXC();
+        }
 
-    pyValue = PyObjC_IdToPython(value);
-    if (pyValue == NULL) {
+        val = PyObject_CallFunction(setKeyFunc, "OOO", pyObject, keyName, pyValue);
         Py_DECREF(keyName);
-        PyObjC_GIL_FORWARD_EXC();
-    }
+        Py_DECREF(pyValue);
+        if (val == NULL) {
+            PyObjC_GIL_FORWARD_EXC();
+        }
 
-    val = PyObject_CallFunction(setKeyFunc, "OOO", pyObject, keyName, pyValue);
-    Py_DECREF(keyName);
-    Py_DECREF(pyValue);
-    if (val == NULL) {
-        PyObjC_GIL_FORWARD_EXC();
-    }
-
-    Py_DECREF(val);
+        Py_DECREF(val);
 
     PyObjC_END_WITH_GIL
 }
@@ -765,34 +776,33 @@ getModuleFunction(char* modname, char* funcname)
 
     PyObjC_BEGIN_WITH_GIL
 
-        if (getKeyFunc == NULL)
-    {
-        getKeyFunc = getModuleFunction("PyObjCTools.KeyValueCoding", "getKeyPath");
         if (getKeyFunc == NULL) {
+            getKeyFunc = getModuleFunction("PyObjCTools.KeyValueCoding", "getKeyPath");
+            if (getKeyFunc == NULL) {
+                PyObjC_GIL_FORWARD_EXC();
+            }
+        }
+
+        keyName = PyObjC_IdToPython(keyPath);
+        if (keyName == NULL) {
             PyObjC_GIL_FORWARD_EXC();
         }
-    }
 
-    keyName = PyObjC_IdToPython(keyPath);
-    if (keyName == NULL) {
-        PyObjC_GIL_FORWARD_EXC();
-    }
+        val = PyObject_CallFunction(getKeyFunc, "OO", pyObject, keyName);
+        Py_DECREF(keyName);
+        if (val == NULL) {
+            PyObjC_GIL_FORWARD_EXC();
+        }
 
-    val = PyObject_CallFunction(getKeyFunc, "OO", pyObject, keyName);
-    Py_DECREF(keyName);
-    if (val == NULL) {
-        PyObjC_GIL_FORWARD_EXC();
-    }
-
-    if (depythonify_c_value(@encode(id), val, &res) < 0) {
+        if (depythonify_c_value(@encode(id), val, &res) < 0) {
+            Py_DECREF(val);
+            PyObjC_GIL_FORWARD_EXC();
+        }
         Py_DECREF(val);
-        PyObjC_GIL_FORWARD_EXC();
-    }
-    Py_DECREF(val);
 
     PyObjC_END_WITH_GIL
 
-        return res;
+    return res;
 }
 
 - (void)takeValue:value forKeyPath:(NSString*)keyPath
@@ -810,33 +820,32 @@ getModuleFunction(char* modname, char* funcname)
 
     PyObjC_BEGIN_WITH_GIL
 
-        if (setKeyFunc == NULL)
-    {
-        setKeyFunc = getModuleFunction("PyObjCTools.KeyValueCoding", "setKeyPath");
         if (setKeyFunc == NULL) {
+            setKeyFunc = getModuleFunction("PyObjCTools.KeyValueCoding", "setKeyPath");
+            if (setKeyFunc == NULL) {
+                PyObjC_GIL_FORWARD_EXC();
+            }
+        }
+
+        keyName = PyObjC_IdToPython(keyPath);
+        if (keyName == NULL) {
             PyObjC_GIL_FORWARD_EXC();
         }
-    }
 
-    keyName = PyObjC_IdToPython(keyPath);
-    if (keyName == NULL) {
-        PyObjC_GIL_FORWARD_EXC();
-    }
+        pyValue = PyObjC_IdToPython(value);
+        if (pyValue == NULL) {
+            Py_DECREF(keyName);
+            PyObjC_GIL_FORWARD_EXC();
+        }
 
-    pyValue = PyObjC_IdToPython(value);
-    if (pyValue == NULL) {
+        val = PyObject_CallFunction(setKeyFunc, "OOO", pyObject, keyName, pyValue);
         Py_DECREF(keyName);
-        PyObjC_GIL_FORWARD_EXC();
-    }
+        Py_DECREF(pyValue);
+        if (val == NULL) {
+            PyObjC_GIL_FORWARD_EXC();
+        }
 
-    val = PyObject_CallFunction(setKeyFunc, "OOO", pyObject, keyName, pyValue);
-    Py_DECREF(keyName);
-    Py_DECREF(pyValue);
-    if (val == NULL) {
-        PyObjC_GIL_FORWARD_EXC();
-    }
-
-    Py_DECREF(val);
+        Py_DECREF(val);
 
     PyObjC_END_WITH_GIL
 }
@@ -906,15 +915,16 @@ getModuleFunction(char* modname, char* funcname)
 {
     Py_hash_t rval;
 
-    PyObjC_BEGIN_WITH_GIL rval = PyObject_Hash([self pyObject]);
-    if (rval == -1) {
-        PyErr_Clear();
-        rval = (NSUInteger)[self pyObject];
-    }
+    PyObjC_BEGIN_WITH_GIL
+        rval = PyObject_Hash([self pyObject]);
+        if (rval == -1) {
+            PyErr_Clear();
+            rval = (NSUInteger)[self pyObject];
+        }
 
     PyObjC_END_WITH_GIL
 
-        return rval;
+    return rval;
 }
 
 - (BOOL)isEqual:(id)anObject
@@ -926,23 +936,24 @@ getModuleFunction(char* modname, char* funcname)
         return YES;
     }
 
-    PyObjC_BEGIN_WITH_GIL PyObject* otherPyObject = PyObjC_IdToPython(anObject);
-    if (otherPyObject == NULL) {
-        PyErr_Clear();
-        PyObjC_GIL_RETURN(NO);
-    }
-    if (otherPyObject == [self pyObject]) {
-        PyObjC_GIL_RETURN(YES);
-    }
-    switch (PyObject_RichCompareBool([self pyObject], otherPyObject, Py_EQ)) {
-    case -1:
-        PyErr_Clear();
-    case 0:
-        PyObjC_GIL_RETURN(NO);
-        break;
-    default:
-        PyObjC_GIL_RETURN(YES);
-    }
+    PyObjC_BEGIN_WITH_GIL
+        PyObject* otherPyObject = PyObjC_IdToPython(anObject);
+        if (otherPyObject == NULL) {
+            PyErr_Clear();
+            PyObjC_GIL_RETURN(NO);
+        }
+        if (otherPyObject == [self pyObject]) {
+            PyObjC_GIL_RETURN(YES);
+        }
+        switch (PyObject_RichCompareBool([self pyObject], otherPyObject, Py_EQ)) {
+        case -1:
+            PyErr_Clear();
+        case 0:
+            PyObjC_GIL_RETURN(NO);
+            break;
+        default:
+            PyObjC_GIL_RETURN(YES);
+        }
     PyObjC_END_WITH_GIL
 }
 
@@ -954,29 +965,30 @@ getModuleFunction(char* modname, char* funcname)
     } else if (self == other) {
         return NSOrderedSame;
     }
-    PyObjC_BEGIN_WITH_GIL PyObject* otherPyObject = PyObjC_IdToPython(other);
-    if (otherPyObject == NULL) {
-        PyObjC_GIL_FORWARD_EXC();
-    }
-    if (otherPyObject == [self pyObject]) {
-        PyObjC_GIL_RETURN(NSOrderedSame);
-    }
-    int r;
-    if (PyObjC_Cmp([self pyObject], otherPyObject, &r) == -1) {
-        PyObjC_GIL_FORWARD_EXC();
-    }
-    NSComparisonResult rval;
-    switch (r) {
-    case -1:
-        rval = NSOrderedAscending;
-        break;
-    case 0:
-        rval = NSOrderedSame;
-        break;
-    default:
-        rval = NSOrderedDescending;
-    }
-    PyObjC_GIL_RETURN(rval);
+    PyObjC_BEGIN_WITH_GIL
+        PyObject* otherPyObject = PyObjC_IdToPython(other);
+        if (otherPyObject == NULL) {
+            PyObjC_GIL_FORWARD_EXC();
+        }
+        if (otherPyObject == [self pyObject]) {
+            PyObjC_GIL_RETURN(NSOrderedSame);
+        }
+        int r;
+        if (PyObjC_Cmp([self pyObject], otherPyObject, &r) == -1) {
+            PyObjC_GIL_FORWARD_EXC();
+        }
+        NSComparisonResult rval;
+        switch (r) {
+        case -1:
+            rval = NSOrderedAscending;
+            break;
+        case 0:
+            rval = NSOrderedSame;
+            break;
+        default:
+            rval = NSOrderedDescending;
+        }
+        PyObjC_GIL_RETURN(rval);
     PyObjC_END_WITH_GIL
 }
 
@@ -994,9 +1006,10 @@ getModuleFunction(char* modname, char* funcname)
  */
 - (void)pyobjcSetValue:(NSObject*)other
 {
-    PyObjC_BEGIN_WITH_GIL PyObject* value = PyObjC_IdToPython(other);
+    PyObjC_BEGIN_WITH_GIL
+        PyObject* value = PyObjC_IdToPython(other);
 
-    SET_FIELD(pyObject, value);
+        SET_FIELD(pyObject, value);
     PyObjC_END_WITH_GIL
 }
 
@@ -1005,48 +1018,49 @@ getModuleFunction(char* modname, char* funcname)
     pyObject = NULL;
 
     if (PyObjC_Decoder != NULL) {
-        PyObjC_BEGIN_WITH_GIL PyObject* cdr = PyObjC_IdToPython(coder);
-        PyObject* setValue;
-        PyObject* selfAsPython;
-        PyObject* v;
+        PyObjC_BEGIN_WITH_GIL
+            PyObject* cdr = PyObjC_IdToPython(coder);
+            PyObject* setValue;
+            PyObject* selfAsPython;
+            PyObject* v;
 
-        if (cdr == NULL) {
-            PyObjC_GIL_FORWARD_EXC();
-        }
+            if (cdr == NULL) {
+                PyObjC_GIL_FORWARD_EXC();
+            }
 
-        selfAsPython = PyObjCObject_New(self, 0, YES);
-        setValue = PyObject_GetAttrString(selfAsPython, "pyobjcSetValue_");
+            selfAsPython = PyObjCObject_New(self, 0, YES);
+            setValue = PyObject_GetAttrString(selfAsPython, "pyobjcSetValue_");
 
-        v = PyObject_CallFunction(PyObjC_Decoder, "OO", cdr, setValue);
-        Py_DECREF(cdr);
-        Py_DECREF(setValue);
-        Py_DECREF(selfAsPython);
+            v = PyObject_CallFunction(PyObjC_Decoder, "OO", cdr, setValue);
+            Py_DECREF(cdr);
+            Py_DECREF(setValue);
+            Py_DECREF(selfAsPython);
 
-        if (v == NULL) {
-            PyObjC_GIL_FORWARD_EXC();
-        }
+            if (v == NULL) {
+                PyObjC_GIL_FORWARD_EXC();
+            }
 
-        /* To make life more interesting the correct proxy
-         * type for 'v' might not be OC_PythonObject, in particular
-         * when introducing new proxy types in new versions
-         * of PyObjC, and in some error cases.
-         */
-        NSObject* temp;
-        if (depythonify_python_object(v, &temp) == -1) {
-            Py_DECREF(v);
-            PyObjC_GIL_FORWARD_EXC();
-        }
+            /* To make life more interesting the correct proxy
+             * type for 'v' might not be OC_PythonObject, in particular
+             * when introducing new proxy types in new versions
+             * of PyObjC, and in some error cases.
+             */
+            NSObject* temp;
+            if (depythonify_python_object(v, &temp) == -1) {
+                Py_DECREF(v);
+                PyObjC_GIL_FORWARD_EXC();
+            }
 
-        if (temp != (NSObject*)self) {
-            [temp retain];
-            [self release];
-            self = (OC_PythonObject*)temp;
-        }
-        Py_DECREF(pyObject);
+            if (temp != (NSObject*)self) {
+                [temp retain];
+                [self release];
+                self = (OC_PythonObject*)temp;
+            }
+            Py_DECREF(pyObject);
 
         PyObjC_END_WITH_GIL
 
-            return self;
+        return self;
 
     } else {
         [NSException raise:NSInvalidArgumentException
@@ -1197,25 +1211,25 @@ PyObjC_encodeWithCoder(PyObject* pyObject, NSCoder* coder)
     if (PyObjC_Encoder != NULL) {
         NSException* exc = nil;
 
-        PyObjC_BEGIN_WITH_GIL PyObject* cdr = PyObjC_IdToPython(coder);
-        if (cdr == NULL) {
-            PyObjC_GIL_FORWARD_EXC();
-        }
+        PyObjC_BEGIN_WITH_GIL
+            PyObject* cdr = PyObjC_IdToPython(coder);
+            if (cdr == NULL) {
+                PyObjC_GIL_FORWARD_EXC();
+            }
 
-        PyObject* r = PyObject_CallFunction(PyObjC_Encoder, "OO", pyObject, cdr);
-        Py_DECREF(cdr);
-        if (r == NULL) {
-            exc = PyObjCErr_AsExc();
-            // PyObjC_GIL_FORWARD_EXC();
+            PyObject* r = PyObject_CallFunction(PyObjC_Encoder, "OO", pyObject, cdr);
+            Py_DECREF(cdr);
+            if (r == NULL) {
+                exc = PyObjCErr_AsExc();
+                // PyObjC_GIL_FORWARD_EXC();
 
-        } else {
-            Py_DECREF(r);
-        }
+            } else {
+                Py_DECREF(r);
+            }
 
         PyObjC_END_WITH_GIL
 
-            if (exc != nil)
-        {
+        if (exc != nil) {
             [exc raise];
         }
 

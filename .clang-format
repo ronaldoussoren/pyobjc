@@ -78,16 +78,8 @@ IndentWrappedFunctionNames: false
 JavaScriptQuotes: Leave
 JavaScriptWrapImports: true
 KeepEmptyLinesAtTheStartOfBlocks: true
-MacroBlockBegin:
-  PyObjC_DURING
-  Py_BEGIN_ALLOW_THREADS
-  PyObjC_HANDLER
-  PyObjC_BEGIN_WITH_GIL
-MacroBlockEnd:
-  PyObjC_HANDLER
-  PyObjC_ENDHANDLER
-  Py_END_ALLOW_THREADS
-  PyObjC_END_WITH_GIL
+MacroBlockBegin: "^PyObjC_DURING|Py_BEGIN_ALLOW_THREADS|PyObjC_BEGIN_WITH_GIL|NS_DURING|NS_HANLDER|PyObjC_HANDLER"
+MacroBlockEnd: "^PyObjC_HANDLER|NS_HANDLER|NS_ENDHANDLER|PyObjC_ENDHANDLER|Py_END_ALLOW_THREADS|PyObjC_END_WITH_GIL$"
 MaxEmptyLinesToKeep: 1
 NamespaceIndentation: None
 ObjCBinPackProtocolList: Auto

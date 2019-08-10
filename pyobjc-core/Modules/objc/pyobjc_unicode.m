@@ -202,21 +202,23 @@ PyObjCUnicode_New(NSString* value)
         return NULL;
     }
 
-    PyObjC_DURING range = NSMakeRange(0, length);
+    Py_BEGIN_ALLOW_THREADS
+        @try {
+            range = NSMakeRange(0, length);
 
-    [value getCharacters:characters range:range];
-    characters[length] = 0;
+            [value getCharacters:characters range:range];
+            characters[length] = 0;
 
-    PyObjC_HANDLER if (characters)
-    {
-        PyMem_Free(characters);
-        characters = NULL;
-    }
-    PyObjCErr_FromObjC(localException);
-    PyObjC_ENDHANDLER
+        } @catch (NSObject* localException) {
+            if (characters) {
+                PyMem_Free(characters);
+                characters = NULL;
+            }
+            PyObjCErr_FromObjC(localException);
+        }
+    Py_END_ALLOW_THREADS
 
-        if (characters == NULL)
-    {
+    if (characters == NULL) {
         return NULL;
     }
 

@@ -9,12 +9,17 @@ static void __attribute__((__used__)) use_protocols(void)
 {
     PyObject* p __attribute__((__unused__));
 #if PyObjC_BUILD_RELEASE >= 1011
-    p = PyObjC_IdToPython(@protocol(TKSmartCardUserInteractionDelegate)); Py_XDECREF(p);
+    p = PyObjC_IdToPython(@protocol(TKSmartCardUserInteractionDelegate));
+    Py_XDECREF(p);
 #endif
 #if PyObjC_BUILD_RELEASE >= 1012
-    p = PyObjC_IdToPython(@protocol(TKSmartCardTokenDriverDelegate)); Py_XDECREF(p);
-    p = PyObjC_IdToPython(@protocol(TKTokenSessionDelegate)); Py_XDECREF(p);
-    p = PyObjC_IdToPython(@protocol(TKTokenDelegate)); Py_XDECREF(p);
-    p = PyObjC_IdToPython(@protocol(TKTokenDriverDelegate)); Py_XDECREF(p);
+    p = PyObjC_IdToPython(@protocol(TKSmartCardTokenDriverDelegate));
+    Py_XDECREF(p);
+    p = PyObjC_IdToPython(@protocol(TKTokenSessionDelegate));
+    Py_XDECREF(p);
+    p = PyObjC_IdToPython(@protocol(TKTokenDelegate));
+    Py_XDECREF(p);
+    p = PyObjC_IdToPython(@protocol(TKTokenDriverDelegate));
+    Py_XDECREF(p);
 #endif
 }

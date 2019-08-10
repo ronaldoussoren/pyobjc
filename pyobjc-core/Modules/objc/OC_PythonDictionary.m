@@ -53,24 +53,25 @@
     id key = nil;
     PyObject* pykey = NULL;
 
-    PyObjC_BEGIN_WITH_GIL PyObject* dct = [value __pyobjc_PythonObject__];
-    if (unlikely(!PyDict_Next(dct, &pos, &pykey, NULL))) {
-        key = nil;
+    PyObjC_BEGIN_WITH_GIL
+        PyObject* dct = [value __pyobjc_PythonObject__];
+        if (unlikely(!PyDict_Next(dct, &pos, &pykey, NULL))) {
+            key = nil;
 
-    } else if (pykey == Py_None) {
-        key = [NSNull null];
+        } else if (pykey == Py_None) {
+            key = [NSNull null];
 
-    } else {
-        if (depythonify_c_value(@encode(id), pykey, &key) == -1) {
-            Py_DECREF(dct);
-            PyObjC_GIL_FORWARD_EXC();
+        } else {
+            if (depythonify_c_value(@encode(id), pykey, &key) == -1) {
+                Py_DECREF(dct);
+                PyObjC_GIL_FORWARD_EXC();
+            }
         }
-    }
-    Py_DECREF(dct);
+        Py_DECREF(dct);
 
     PyObjC_END_WITH_GIL
 
-        valid = (key != nil) ? YES : NO;
+    valid = (key != nil) ? YES : NO;
 
     return key;
 }
@@ -114,7 +115,8 @@
         return;
     }
 
-    PyObjC_BEGIN_WITH_GIL[super release];
+    PyObjC_BEGIN_WITH_GIL
+        [super release];
 
     PyObjC_END_WITH_GIL
 }
@@ -126,12 +128,13 @@
         return;
     }
 
-    PyObjC_BEGIN_WITH_GIL PyObjC_UnregisterObjCProxy(value, self);
-    Py_CLEAR(value);
+    PyObjC_BEGIN_WITH_GIL
+        PyObjC_UnregisterObjCProxy(value, self);
+        Py_CLEAR(value);
 
     PyObjC_END_WITH_GIL
 
-        [super dealloc];
+    [super dealloc];
 }
 
 - (PyObject*)__pyobjc_PythonObject__
@@ -154,16 +157,16 @@
         return 0;
     }
 
-    PyObjC_BEGIN_WITH_GIL if (likely(PyDict_CheckExact(value)))
-    {
-        result = PyDict_Size(value);
-    }
-    else { result = PyObject_Length(value); }
+    PyObjC_BEGIN_WITH_GIL
+        if (likely(PyDict_CheckExact(value))) {
+            result = PyDict_Size(value);
+        } else {
+            result = PyObject_Length(value);
+        }
 
     PyObjC_END_WITH_GIL
 
-        if (sizeof(Py_ssize_t) > sizeof(NSUInteger))
-    {
+    if (sizeof(Py_ssize_t) > sizeof(NSUInteger)) {
         if (result > (Py_ssize_t)NSUIntegerMax) {
             return NSUIntegerMax;
         }
@@ -184,49 +187,46 @@
 
     PyObjC_BEGIN_WITH_GIL
 
-        if (unlikely(key == [NSNull null]))
-    {
-        Py_INCREF(Py_None);
-        k = Py_None;
-    }
-    else
-    {
-        k = PyObjC_IdToPython(key);
-        if (k == NULL) {
+        if (unlikely(key == [NSNull null])) {
+            Py_INCREF(Py_None);
+            k = Py_None;
+        } else {
+            k = PyObjC_IdToPython(key);
+            if (k == NULL) {
+                PyObjC_GIL_FORWARD_EXC();
+            }
+        }
+
+        if (likely(PyDict_CheckExact(value))) {
+            v = PyDict_GetItemWithError(value, k);
+            if (v == NULL && PyErr_Occurred()) {
+                PyObjC_GIL_FORWARD_EXC();
+            }
+            Py_XINCREF(v);
+
+        } else {
+            v = PyObject_GetItem(value, k);
+        }
+
+        Py_DECREF(k);
+
+        if (unlikely(v == NULL)) {
+            PyErr_Clear();
+            PyObjC_GIL_RETURN(nil);
+        }
+
+        if (v == Py_None) {
+            result = [NSNull null];
+
+        } else if (unlikely(depythonify_c_value(@encode(id), v, &result) == -1)) {
+            Py_DECREF(v);
             PyObjC_GIL_FORWARD_EXC();
         }
-    }
-
-    if (likely(PyDict_CheckExact(value))) {
-        v = PyDict_GetItemWithError(value, k);
-        if (v == NULL && PyErr_Occurred()) {
-            PyObjC_GIL_FORWARD_EXC();
-        }
-        Py_XINCREF(v);
-
-    } else {
-        v = PyObject_GetItem(value, k);
-    }
-
-    Py_DECREF(k);
-
-    if (unlikely(v == NULL)) {
-        PyErr_Clear();
-        PyObjC_GIL_RETURN(nil);
-    }
-
-    if (v == Py_None) {
-        result = [NSNull null];
-
-    } else if (unlikely(depythonify_c_value(@encode(id), v, &result) == -1)) {
         Py_DECREF(v);
-        PyObjC_GIL_FORWARD_EXC();
-    }
-    Py_DECREF(v);
 
     PyObjC_END_WITH_GIL
 
-        return result;
+    return result;
 }
 
 - (void)setObject:val forKey:key
@@ -235,48 +235,46 @@
     PyObject* k = NULL;
     id null = [NSNull null];
 
-    PyObjC_BEGIN_WITH_GIL if (unlikely(val == null))
-    {
-        Py_INCREF(Py_None);
-        v = Py_None;
-    }
-    else
-    {
-        v = PyObjC_IdToPython(val);
-        if (unlikely(v == NULL)) {
-            PyObjC_GIL_FORWARD_EXC();
-        }
-    }
-
-    if (unlikely(key == nil)) {
-        Py_INCREF(Py_None);
-        k = Py_None;
-
-    } else {
-        k = PyObjC_IdToPython(key);
-        if (k == NULL) {
-            Py_XDECREF(v);
-            PyObjC_GIL_FORWARD_EXC();
-        }
-    }
-
-    if (likely(PyDict_CheckExact(value))) {
-        if (unlikely(PyDict_SetItem(value, k, v) < 0)) {
-            Py_XDECREF(v);
-            Py_XDECREF(k);
-            PyObjC_GIL_FORWARD_EXC();
+    PyObjC_BEGIN_WITH_GIL
+        if (unlikely(val == null)) {
+            Py_INCREF(Py_None);
+            v = Py_None;
+        } else {
+            v = PyObjC_IdToPython(val);
+            if (unlikely(v == NULL)) {
+                PyObjC_GIL_FORWARD_EXC();
+            }
         }
 
-    } else {
-        if (unlikely(PyObject_SetItem(value, k, v) < 0)) {
-            Py_XDECREF(v);
-            Py_XDECREF(k);
-            PyObjC_GIL_FORWARD_EXC();
-        }
-    }
+        if (unlikely(key == nil)) {
+            Py_INCREF(Py_None);
+            k = Py_None;
 
-    Py_DECREF(v);
-    Py_DECREF(k);
+        } else {
+            k = PyObjC_IdToPython(key);
+            if (k == NULL) {
+                Py_XDECREF(v);
+                PyObjC_GIL_FORWARD_EXC();
+            }
+        }
+
+        if (likely(PyDict_CheckExact(value))) {
+            if (unlikely(PyDict_SetItem(value, k, v) < 0)) {
+                Py_XDECREF(v);
+                Py_XDECREF(k);
+                PyObjC_GIL_FORWARD_EXC();
+            }
+
+        } else {
+            if (unlikely(PyObject_SetItem(value, k, v) < 0)) {
+                Py_XDECREF(v);
+                Py_XDECREF(k);
+                PyObjC_GIL_FORWARD_EXC();
+            }
+        }
+
+        Py_DECREF(v);
+        Py_DECREF(k);
 
     PyObjC_END_WITH_GIL
 }
@@ -285,32 +283,30 @@
 {
     PyObject* k;
 
-    PyObjC_BEGIN_WITH_GIL if (unlikely(key == [NSNull null]))
-    {
-        Py_INCREF(Py_None);
-        k = Py_None;
-    }
-    else
-    {
-        k = PyObjC_IdToPython(key);
-        if (unlikely(k == NULL)) {
-            PyObjC_GIL_FORWARD_EXC();
-        }
-    }
-
-    if (PyDict_CheckExact(value)) {
-        if (unlikely(PyDict_DelItem(value, k) < 0)) {
-            Py_DECREF(k);
-            PyObjC_GIL_FORWARD_EXC();
+    PyObjC_BEGIN_WITH_GIL
+        if (unlikely(key == [NSNull null])) {
+            Py_INCREF(Py_None);
+            k = Py_None;
+        } else {
+            k = PyObjC_IdToPython(key);
+            if (unlikely(k == NULL)) {
+                PyObjC_GIL_FORWARD_EXC();
+            }
         }
 
-    } else {
-        if (unlikely(PyObject_DelItem(value, k) < 0)) {
-            Py_DECREF(k);
-            PyObjC_GIL_FORWARD_EXC();
+        if (PyDict_CheckExact(value)) {
+            if (unlikely(PyDict_DelItem(value, k) < 0)) {
+                Py_DECREF(k);
+                PyObjC_GIL_FORWARD_EXC();
+            }
+
+        } else {
+            if (unlikely(PyObject_DelItem(value, k) < 0)) {
+                Py_DECREF(k);
+                PyObjC_GIL_FORWARD_EXC();
+            }
         }
-    }
-    Py_DECREF(k);
+        Py_DECREF(k);
 
     PyObjC_END_WITH_GIL
 }
@@ -325,19 +321,20 @@
         return [OC_PythonDictionaryEnumerator enumeratorWithWrappedDictionary:self];
 
     } else {
-        PyObjC_BEGIN_WITH_GIL PyObject* keys = PyObject_CallMethod(value, "keys", NULL);
-        if (keys == NULL) {
-            PyObjC_GIL_FORWARD_EXC();
-        }
+        PyObjC_BEGIN_WITH_GIL
+            PyObject* keys = PyObject_CallMethod(value, "keys", NULL);
+            if (keys == NULL) {
+                PyObjC_GIL_FORWARD_EXC();
+            }
 
-        PyObject* iter = PyObject_GetIter(keys);
-        Py_DECREF(keys);
-        if (iter == NULL) {
-            PyObjC_GIL_FORWARD_EXC();
-        }
+            PyObject* iter = PyObject_GetIter(keys);
+            Py_DECREF(keys);
+            if (iter == NULL) {
+                PyObjC_GIL_FORWARD_EXC();
+            }
 
-        NSEnumerator* result = [OC_PythonEnumerator enumeratorWithPythonObject:iter];
-        PyObjC_GIL_RETURN(result);
+            NSEnumerator* result = [OC_PythonEnumerator enumeratorWithPythonObject:iter];
+            PyObjC_GIL_RETURN(result);
 
         PyObjC_END_WITH_GIL
     }
@@ -352,53 +349,54 @@
      */
     NSUInteger i;
 
-    PyObjC_BEGIN_WITH_GIL for (i = 0; i < count; i++)
-    {
-        PyObject* k;
-        PyObject* v;
-        int r;
+    PyObjC_BEGIN_WITH_GIL
+        for (i = 0; i < count; i++) {
+            PyObject* k;
+            PyObject* v;
+            int r;
 
-        if (objects[i] == [NSNull null]) {
-            v = Py_None;
-            Py_INCREF(Py_None);
+            if (objects[i] == [NSNull null]) {
+                v = Py_None;
+                Py_INCREF(Py_None);
 
-        } else {
-            v = PyObjC_IdToPython(objects[i]);
-            if (v == NULL) {
-                PyObjC_GIL_FORWARD_EXC();
-            }
-        }
-
-        if (keys[i] == [NSNull null]) {
-            k = Py_None;
-            Py_INCREF(Py_None);
-
-        } else {
-            k = PyObjC_IdToPython(keys[i]);
-            if (k == NULL) {
-                PyObjC_GIL_FORWARD_EXC();
-            }
-            if (PyObjCUnicode_Check(k)) {
-                PyObject* k2 = PyObject_Str(k);
-                if (k2 == NULL) {
-                    Py_DECREF(k);
+            } else {
+                v = PyObjC_IdToPython(objects[i]);
+                if (v == NULL) {
                     PyObjC_GIL_FORWARD_EXC();
                 }
-                PyUnicode_InternInPlace(&k2);
-                Py_DECREF(k);
-                k = k2;
+            }
+
+            if (keys[i] == [NSNull null]) {
+                k = Py_None;
+                Py_INCREF(Py_None);
+
+            } else {
+                k = PyObjC_IdToPython(keys[i]);
+                if (k == NULL) {
+                    PyObjC_GIL_FORWARD_EXC();
+                }
+                if (PyObjCUnicode_Check(k)) {
+                    PyObject* k2 = PyObject_Str(k);
+                    if (k2 == NULL) {
+                        Py_DECREF(k);
+                        PyObjC_GIL_FORWARD_EXC();
+                    }
+                    PyUnicode_InternInPlace(&k2);
+                    Py_DECREF(k);
+                    k = k2;
+                }
+            }
+
+            r = PyDict_SetItem(value, k, v);
+            Py_DECREF(k);
+            Py_DECREF(v);
+
+            if (r == -1) {
+                PyObjC_GIL_FORWARD_EXC();
             }
         }
-
-        r = PyDict_SetItem(value, k, v);
-        Py_DECREF(k);
-        Py_DECREF(v);
-
-        if (r == -1) {
-            PyObjC_GIL_FORWARD_EXC();
-        }
-    }
-    PyObjC_END_WITH_GIL return self;
+    PyObjC_END_WITH_GIL
+    return self;
 }
 
 /*
@@ -407,9 +405,10 @@
  */
 - (void)pyobjcSetValue:(NSObject*)other
 {
-    PyObjC_BEGIN_WITH_GIL PyObject* v = PyObjC_IdToPython(other);
+    PyObjC_BEGIN_WITH_GIL
+        PyObject* v = PyObjC_IdToPython(other);
 
-    SET_FIELD(value, v);
+        SET_FIELD(value, v);
     PyObjC_END_WITH_GIL
 }
 
@@ -424,45 +423,47 @@
 
     switch (code) {
     case 1:
-        PyObjC_BEGIN_WITH_GIL value = PyDict_New();
-        if (value == NULL) {
-            PyObjC_GIL_FORWARD_EXC();
-        }
+        PyObjC_BEGIN_WITH_GIL
+            value = PyDict_New();
+            if (value == NULL) {
+                PyObjC_GIL_FORWARD_EXC();
+            }
 
         PyObjC_END_WITH_GIL
 
-            self = [super initWithCoder:coder];
+        self = [super initWithCoder:coder];
         return self;
 
     case 2:
         if (PyObjC_Decoder != NULL) {
-            PyObjC_BEGIN_WITH_GIL PyObject* cdr = PyObjC_IdToPython(coder);
-            PyObject* setValue;
-            PyObject* selfAsPython;
-            PyObject* v;
+            PyObjC_BEGIN_WITH_GIL
+                PyObject* cdr = PyObjC_IdToPython(coder);
+                PyObject* setValue;
+                PyObject* selfAsPython;
+                PyObject* v;
 
-            if (cdr == NULL) {
-                PyObjC_GIL_FORWARD_EXC();
-            }
+                if (cdr == NULL) {
+                    PyObjC_GIL_FORWARD_EXC();
+                }
 
-            selfAsPython = PyObjCObject_New(self, 0, YES);
-            setValue = PyObject_GetAttrString(selfAsPython, "pyobjcSetValue_");
+                selfAsPython = PyObjCObject_New(self, 0, YES);
+                setValue = PyObject_GetAttrString(selfAsPython, "pyobjcSetValue_");
 
-            v = PyObject_CallFunction(PyObjC_Decoder, "OO", cdr, setValue);
-            Py_DECREF(cdr);
-            Py_DECREF(setValue);
-            Py_DECREF(selfAsPython);
+                v = PyObject_CallFunction(PyObjC_Decoder, "OO", cdr, setValue);
+                Py_DECREF(cdr);
+                Py_DECREF(setValue);
+                Py_DECREF(selfAsPython);
 
-            if (v == NULL) {
-                PyObjC_GIL_FORWARD_EXC();
-            }
+                if (v == NULL) {
+                    PyObjC_GIL_FORWARD_EXC();
+                }
 
-            SET_FIELD(value, v);
+                SET_FIELD(value, v);
 
-            self = PyObjC_FindOrRegisterObjCProxy(value, self);
+                self = PyObjC_FindOrRegisterObjCProxy(value, self);
             PyObjC_END_WITH_GIL
 
-                return self;
+            return self;
 
         } else {
             [NSException raise:NSInvalidArgumentException
@@ -520,23 +521,23 @@
     if (PyObjC_CopyFunc) {
         NSObject* result;
 
-        PyObjC_BEGIN_WITH_GIL PyObject* copy =
-            PyObject_CallFunctionObjArgs(PyObjC_CopyFunc, value, NULL);
-        if (copy == NULL) {
-            PyObjC_GIL_FORWARD_EXC();
-        }
+        PyObjC_BEGIN_WITH_GIL
+            PyObject* copy = PyObject_CallFunctionObjArgs(PyObjC_CopyFunc, value, NULL);
+            if (copy == NULL) {
+                PyObjC_GIL_FORWARD_EXC();
+            }
 
-        result = PyObjC_PythonToId(copy);
-        Py_DECREF(copy);
+            result = PyObjC_PythonToId(copy);
+            Py_DECREF(copy);
 
-        if (PyErr_Occurred()) {
-            PyObjC_GIL_FORWARD_EXC();
-        }
+            if (PyErr_Occurred()) {
+                PyObjC_GIL_FORWARD_EXC();
+            }
 
-        [result retain];
+            [result retain];
         PyObjC_END_WITH_GIL
 
-            return result;
+        return result;
 
     } else {
         return [super copyWithZone:zone];
@@ -548,28 +549,29 @@
     if (PyObjC_CopyFunc) {
         NSObject* result;
 
-        PyObjC_BEGIN_WITH_GIL PyObject* copy = PyDict_New();
-        if (copy == NULL) {
-            PyObjC_GIL_FORWARD_EXC();
-        }
+        PyObjC_BEGIN_WITH_GIL
+            PyObject* copy = PyDict_New();
+            if (copy == NULL) {
+                PyObjC_GIL_FORWARD_EXC();
+            }
 
-        int r = PyDict_Update(copy, value);
-        if (r == -1) {
-            PyObjC_GIL_FORWARD_EXC();
-        }
+            int r = PyDict_Update(copy, value);
+            if (r == -1) {
+                PyObjC_GIL_FORWARD_EXC();
+            }
 
-        result = PyObjC_PythonToId(copy);
-        Py_DECREF(copy);
+            result = PyObjC_PythonToId(copy);
+            Py_DECREF(copy);
 
-        if (PyErr_Occurred()) {
-            PyObjC_GIL_FORWARD_EXC();
-        }
+            if (PyErr_Occurred()) {
+                PyObjC_GIL_FORWARD_EXC();
+            }
 
-        [result retain];
+            [result retain];
 
         PyObjC_END_WITH_GIL
 
-            return result;
+        return result;
 
     } else {
         return [super mutableCopyWithZone:zone];

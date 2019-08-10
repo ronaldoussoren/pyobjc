@@ -68,7 +68,8 @@
         return;
     }
 
-    PyObjC_BEGIN_WITH_GIL[super release];
+    PyObjC_BEGIN_WITH_GIL
+        [super release];
 
     PyObjC_END_WITH_GIL
 }
@@ -80,38 +81,41 @@
         return;
     }
 
-    PyObjC_BEGIN_WITH_GIL PyObjC_UnregisterObjCProxy(value, self);
-    Py_CLEAR(value);
+    PyObjC_BEGIN_WITH_GIL
+        PyObjC_UnregisterObjCProxy(value, self);
+        Py_CLEAR(value);
 
     PyObjC_END_WITH_GIL
 
-        [super dealloc];
+    [super dealloc];
 }
 
 - (const char*)objCType
 {
-    PyObjC_BEGIN_WITH_GIL if (PyBool_Check(value)) { PyObjC_GIL_RETURN(@encode(BOOL)); }
-    else if (PyFloat_Check(value)) { PyObjC_GIL_RETURN(@encode(double)); }
-    else if (PyLong_Check(value))
-    {
-        (void)PyLong_AsLongLong(value);
-        if (!PyErr_Occurred()) {
-            PyObjC_GIL_RETURN(@encode(long long));
-        } else {
-            PyErr_Clear();
-            (void)PyLong_AsUnsignedLongLong(value);
+    PyObjC_BEGIN_WITH_GIL
+        if (PyBool_Check(value)) {
+            PyObjC_GIL_RETURN(@encode(BOOL));
+        } else if (PyFloat_Check(value)) {
+            PyObjC_GIL_RETURN(@encode(double));
+        } else if (PyLong_Check(value)) {
+            (void)PyLong_AsLongLong(value);
             if (!PyErr_Occurred()) {
-                PyObjC_GIL_RETURN(@encode(unsigned long long));
-            }
-            PyErr_Clear();
+                PyObjC_GIL_RETURN(@encode(long long));
+            } else {
+                PyErr_Clear();
+                (void)PyLong_AsUnsignedLongLong(value);
+                if (!PyErr_Occurred()) {
+                    PyObjC_GIL_RETURN(@encode(unsigned long long));
+                }
+                PyErr_Clear();
 
-            /* Wrap on overflow */
-            PyObjC_GIL_RETURN(@encode(long long));
+                /* Wrap on overflow */
+                PyObjC_GIL_RETURN(@encode(long long));
+            }
         }
-    }
     PyObjC_END_WITH_GIL
-        [NSException raise:NSInvalidArgumentException
-                    format:@"Cannot determine objective-C type of this number"];
+    [NSException raise:NSInvalidArgumentException
+                format:@"Cannot determine objective-C type of this number"];
     return @encode(char);
 }
 
@@ -119,20 +123,22 @@
 {
     const char* encoded = [self objCType];
     int r;
-    PyObjC_BEGIN_WITH_GIL r = depythonify_c_value(encoded, value, buffer);
-    if (r == -1) {
-        PyObjC_GIL_FORWARD_EXC();
-    }
+    PyObjC_BEGIN_WITH_GIL
+        r = depythonify_c_value(encoded, value, buffer);
+        if (r == -1) {
+            PyObjC_GIL_FORWARD_EXC();
+        }
     PyObjC_END_WITH_GIL
 }
 
 - (void)getValue:(void*)buffer forType:(const char*)type
 {
     int r;
-    PyObjC_BEGIN_WITH_GIL r = depythonify_c_value(type, value, buffer);
-    if (r == -1) {
-        PyObjC_GIL_FORWARD_EXC();
-    }
+    PyObjC_BEGIN_WITH_GIL
+        r = depythonify_c_value(type, value, buffer);
+        if (r == -1) {
+            PyObjC_GIL_FORWARD_EXC();
+        }
     PyObjC_END_WITH_GIL
 }
 
@@ -151,24 +157,26 @@
     NSDecimal result;
     int r;
 
-    PyObjC_BEGIN_WITH_GIL r = PyObjC_number_to_decimal(value, &result);
+    PyObjC_BEGIN_WITH_GIL
+        r = PyObjC_number_to_decimal(value, &result);
 
-    if (r == -1) {
-        PyObjC_GIL_FORWARD_EXC();
-    }
+        if (r == -1) {
+            PyObjC_GIL_FORWARD_EXC();
+        }
 
     PyObjC_END_WITH_GIL
 
-        return result;
+    return result;
 }
 
 - (double)doubleValue
 {
-    PyObjC_BEGIN_WITH_GIL if (PyFloat_Check(value))
-    {
-        PyObjC_GIL_RETURN(PyFloat_AsDouble(value));
-    }
-    PyObjC_END_WITH_GIL return (double)[self longLongValue];
+    PyObjC_BEGIN_WITH_GIL
+        if (PyFloat_Check(value)) {
+            PyObjC_GIL_RETURN(PyFloat_AsDouble(value));
+        }
+    PyObjC_END_WITH_GIL
+    return (double)[self longLongValue];
 }
 
 - (float)floatValue
@@ -225,20 +233,18 @@
 {
     long long result;
 
-    PyObjC_BEGIN_WITH_GIL if (PyFloat_Check(value))
-    {
-        result = (long long)PyFloat_AsDouble(value);
-        PyObjC_GIL_RETURN(result);
-    }
-    else if (PyLong_Check(value))
-    {
-        result = PyLong_AsUnsignedLongLongMask(value);
-        PyObjC_GIL_RETURN(result);
-    }
+    PyObjC_BEGIN_WITH_GIL
+        if (PyFloat_Check(value)) {
+            result = (long long)PyFloat_AsDouble(value);
+            PyObjC_GIL_RETURN(result);
+        } else if (PyLong_Check(value)) {
+            result = PyLong_AsUnsignedLongLongMask(value);
+            PyObjC_GIL_RETURN(result);
+        }
     PyObjC_END_WITH_GIL
 
-        [NSException raise:NSInvalidArgumentException
-                    format:@"Cannot determine objective-C type of this number"];
+    [NSException raise:NSInvalidArgumentException
+                format:@"Cannot determine objective-C type of this number"];
     return -1;
 }
 
@@ -246,33 +252,31 @@
 {
     unsigned long long result;
 
-    PyObjC_BEGIN_WITH_GIL if (PyLong_Check(value))
-    {
-        result = PyLong_AsUnsignedLongLongMask(value);
-        PyObjC_GIL_RETURN(result);
-    }
-    else if (PyFloat_Check(value))
-    {
-        double temp = PyFloat_AsDouble(value);
-        if (temp < 0) {
-            /* Conversion of negative numbers to
-             * unsigned long long is undefined behaviour,
-             * the code below seems to get the behaviour
-             * we'd like: casting to unsigned long long
-             * behaves simular to casting a signed integer
-             * to undefined.
-             */
-            long long t = (long long)temp;
-            result = (unsigned long long)t;
-        } else {
-            result = (unsigned long long)temp;
+    PyObjC_BEGIN_WITH_GIL
+        if (PyLong_Check(value)) {
+            result = PyLong_AsUnsignedLongLongMask(value);
+            PyObjC_GIL_RETURN(result);
+        } else if (PyFloat_Check(value)) {
+            double temp = PyFloat_AsDouble(value);
+            if (temp < 0) {
+                /* Conversion of negative numbers to
+                 * unsigned long long is undefined behaviour,
+                 * the code below seems to get the behaviour
+                 * we'd like: casting to unsigned long long
+                 * behaves simular to casting a signed integer
+                 * to undefined.
+                 */
+                long long t = (long long)temp;
+                result = (unsigned long long)t;
+            } else {
+                result = (unsigned long long)temp;
+            }
+            PyObjC_GIL_RETURN(result);
         }
-        PyObjC_GIL_RETURN(result);
-    }
     PyObjC_END_WITH_GIL
 
-        [NSException raise:NSInvalidArgumentException
-                    format:@"Cannot determine objective-C type of this number"];
+    [NSException raise:NSInvalidArgumentException
+                format:@"Cannot determine objective-C type of this number"];
     return -1;
 }
 
@@ -286,18 +290,20 @@
     PyObject* repr;
     NSObject* result = nil;
 
-    PyObjC_BEGIN_WITH_GIL repr = PyObject_Repr(value);
-    if (repr == NULL) {
-        PyObjC_GIL_FORWARD_EXC();
-    }
+    PyObjC_BEGIN_WITH_GIL
+        repr = PyObject_Repr(value);
+        if (repr == NULL) {
+            PyObjC_GIL_FORWARD_EXC();
+        }
 
-    result = PyObjC_PythonToId(repr);
-    Py_DECREF(repr);
-    if (PyErr_Occurred()) {
-        PyObjC_GIL_FORWARD_EXC();
-    }
+        result = PyObjC_PythonToId(repr);
+        Py_DECREF(repr);
+        if (PyErr_Occurred()) {
+            PyObjC_GIL_FORWARD_EXC();
+        }
 
-    PyObjC_END_WITH_GIL return (NSString*)result;
+    PyObjC_END_WITH_GIL
+    return (NSString*)result;
 }
 
 /* NSCoding support */
@@ -306,38 +312,33 @@
 {
     int use_super = 0;
 
-    PyObjC_BEGIN_WITH_GIL if (PyFloat_CheckExact(value))
-    {
-        /* Float is a C double and can be roundtripped using
-         * NSNumber.
-         */
-        use_super = 1;
-    }
-    else if (PyLong_CheckExact(value))
-    {
-        /* Long object that fits in a long long */
-        (void)PyLong_AsLongLong(value);
-        if (PyErr_Occurred()) {
-            PyErr_Clear();
-            (void)PyLong_AsUnsignedLongLong(value);
+    PyObjC_BEGIN_WITH_GIL
+        if (PyFloat_CheckExact(value)) {
+            /* Float is a C double and can be roundtripped using
+             * NSNumber.
+             */
+            use_super = 1;
+        } else if (PyLong_CheckExact(value)) {
+            /* Long object that fits in a long long */
+            (void)PyLong_AsLongLong(value);
             if (PyErr_Occurred()) {
                 PyErr_Clear();
-                use_super = 0;
+                (void)PyLong_AsUnsignedLongLong(value);
+                if (PyErr_Occurred()) {
+                    PyErr_Clear();
+                    use_super = 0;
+                } else {
+                    use_super = 1;
+                }
             } else {
                 use_super = 1;
             }
-        } else {
-            use_super = 1;
         }
-    }
     PyObjC_END_WITH_GIL
 
-        if (use_super)
-    {
+    if (use_super) {
         [super encodeWithCoder:coder];
-    }
-    else
-    {
+    } else {
         /* XXX: Should check if coder requiresSecureCoding, and bail out in
          * that case.
          */
@@ -351,44 +352,46 @@
  */
 - (void)pyobjcSetValue:(NSObject*)other
 {
-    PyObjC_BEGIN_WITH_GIL PyObject* v = PyObjC_IdToPython(other);
+    PyObjC_BEGIN_WITH_GIL
+        PyObject* v = PyObjC_IdToPython(other);
 
-    SET_FIELD(value, v);
+        SET_FIELD(value, v);
     PyObjC_END_WITH_GIL
 }
 
 - (id)initWithCoder:(NSCoder*)coder
 {
     if (PyObjC_Decoder != NULL) {
-        PyObjC_BEGIN_WITH_GIL PyObject* cdr = PyObjC_IdToPython(coder);
-        PyObject* setValue;
-        PyObject* selfAsPython;
-        PyObject* v;
+        PyObjC_BEGIN_WITH_GIL
+            PyObject* cdr = PyObjC_IdToPython(coder);
+            PyObject* setValue;
+            PyObject* selfAsPython;
+            PyObject* v;
 
-        if (cdr == NULL) {
-            PyObjC_GIL_FORWARD_EXC();
-        }
+            if (cdr == NULL) {
+                PyObjC_GIL_FORWARD_EXC();
+            }
 
-        selfAsPython = PyObjCObject_New(self, 0, YES);
-        setValue = PyObject_GetAttrString(selfAsPython, "pyobjcSetValue_");
+            selfAsPython = PyObjCObject_New(self, 0, YES);
+            setValue = PyObject_GetAttrString(selfAsPython, "pyobjcSetValue_");
 
-        v = PyObject_CallFunction(PyObjC_Decoder, "OO", cdr, setValue);
-        Py_DECREF(cdr);
-        Py_DECREF(setValue);
-        Py_DECREF(selfAsPython);
+            v = PyObject_CallFunction(PyObjC_Decoder, "OO", cdr, setValue);
+            Py_DECREF(cdr);
+            Py_DECREF(setValue);
+            Py_DECREF(selfAsPython);
 
-        if (v == NULL) {
-            PyObjC_GIL_FORWARD_EXC();
-        }
+            if (v == NULL) {
+                PyObjC_GIL_FORWARD_EXC();
+            }
 
-        Py_XDECREF(value);
-        value = v;
+            Py_XDECREF(value);
+            value = v;
 
-        self = PyObjC_FindOrRegisterObjCProxy(value, self);
+            self = PyObjC_FindOrRegisterObjCProxy(value, self);
 
         PyObjC_END_WITH_GIL
 
-            return self;
+        return self;
 
     } else {
         [NSException raise:NSInvalidArgumentException
@@ -414,16 +417,16 @@
         ![aNumber isKindOfClass:[OC_PythonNumber class]]) {
         int use_super = 0;
 
-        PyObjC_BEGIN_WITH_GIL if (PyLong_Check(value))
-        {
-            PY_LONG_LONG r;
-            r = PyLong_AsLongLong(value);
-            if (r == -1 && PyErr_Occurred()) {
-                PyErr_Clear();
-            } else {
-                use_super = 1;
+        PyObjC_BEGIN_WITH_GIL
+            if (PyLong_Check(value)) {
+                PY_LONG_LONG r;
+                r = PyLong_AsLongLong(value);
+                if (r == -1 && PyErr_Occurred()) {
+                    PyErr_Clear();
+                } else {
+                    use_super = 1;
+                }
             }
-        }
 
         PyObjC_END_WITH_GIL;
 
@@ -432,26 +435,27 @@
         }
     }
 
-    PyObjC_BEGIN_WITH_GIL PyObject* other = PyObjC_IdToPython(aNumber);
-    int r, ok;
+    PyObjC_BEGIN_WITH_GIL
+        PyObject* other = PyObjC_IdToPython(aNumber);
+        int r, ok;
 
-    if (other == NULL) {
-        PyObjC_GIL_FORWARD_EXC();
-    }
+        if (other == NULL) {
+            PyObjC_GIL_FORWARD_EXC();
+        }
 
-    ok = PyObjC_Cmp(value, other, &r);
-    Py_DECREF(other);
-    if (ok == -1) {
-        PyObjC_GIL_FORWARD_EXC();
-    }
+        ok = PyObjC_Cmp(value, other, &r);
+        Py_DECREF(other);
+        if (ok == -1) {
+            PyObjC_GIL_FORWARD_EXC();
+        }
 
-    if (r < 0) {
-        PyObjC_GIL_RETURN(NSOrderedAscending);
-    } else if (r > 0) {
-        PyObjC_GIL_RETURN(NSOrderedDescending);
-    } else {
-        PyObjC_GIL_RETURN(NSOrderedSame);
-    }
+        if (r < 0) {
+            PyObjC_GIL_RETURN(NSOrderedAscending);
+        } else if (r > 0) {
+            PyObjC_GIL_RETURN(NSOrderedDescending);
+        } else {
+            PyObjC_GIL_RETURN(NSOrderedSame);
+        }
 
     PyObjC_END_WITH_GIL
 }
@@ -459,23 +463,24 @@
 #define COMPARE_METHOD(NAME, OPERATOR)                                                   \
     -(BOOL)NAME : (NSObject*)aNumber                                                     \
     {                                                                                    \
-        PyObjC_BEGIN_WITH_GIL PyObject* other = PyObjC_IdToPython(aNumber);              \
-        int r;                                                                           \
-        if (other == NULL) {                                                             \
-            PyObjC_GIL_FORWARD_EXC();                                                    \
-        }                                                                                \
+        PyObjC_BEGIN_WITH_GIL                                                            \
+            PyObject* other = PyObjC_IdToPython(aNumber);                                \
+            int r;                                                                       \
+            if (other == NULL) {                                                         \
+                PyObjC_GIL_FORWARD_EXC();                                                \
+            }                                                                            \
                                                                                          \
-        r = PyObject_RichCompareBool(value, other, OPERATOR);                            \
-        Py_DECREF(other);                                                                \
-        if (r == -1) {                                                                   \
-            PyObjC_GIL_FORWARD_EXC();                                                    \
-        }                                                                                \
+            r = PyObject_RichCompareBool(value, other, OPERATOR);                        \
+            Py_DECREF(other);                                                            \
+            if (r == -1) {                                                               \
+                PyObjC_GIL_FORWARD_EXC();                                                \
+            }                                                                            \
                                                                                          \
-        if (r) {                                                                         \
-            PyObjC_GIL_RETURN(YES);                                                      \
-        } else {                                                                         \
-            PyObjC_GIL_RETURN(NO);                                                       \
-        }                                                                                \
+            if (r) {                                                                     \
+                PyObjC_GIL_RETURN(YES);                                                  \
+            } else {                                                                     \
+                PyObjC_GIL_RETURN(NO);                                                   \
+            }                                                                            \
                                                                                          \
         PyObjC_END_WITH_GIL                                                              \
     }
@@ -520,25 +525,24 @@ COMPARE_METHOD(isLessThanOrEqualTo, Py_LE)
 
 - (Class)classForArchiver
 {
-    PyObjC_BEGIN_WITH_GIL if (PyFloat_CheckExact(value))
-    {
-        /* Float is a C double and can be roundtripped using
-         * NSNumber.
-         */
-        PyObjC_GIL_RETURN([NSNumber class]);
-    }
-    else if (PyLong_CheckExact(value))
-    {
-        /* Long object that fits in a long long */
-        (void)PyLong_AsLongLong(value);
-        if (PyErr_Occurred()) {
-            PyErr_Clear();
-            PyObjC_GIL_RETURN([self class]);
-        } else {
+    PyObjC_BEGIN_WITH_GIL
+        if (PyFloat_CheckExact(value)) {
+            /* Float is a C double and can be roundtripped using
+             * NSNumber.
+             */
             PyObjC_GIL_RETURN([NSNumber class]);
+        } else if (PyLong_CheckExact(value)) {
+            /* Long object that fits in a long long */
+            (void)PyLong_AsLongLong(value);
+            if (PyErr_Occurred()) {
+                PyErr_Clear();
+                PyObjC_GIL_RETURN([self class]);
+            } else {
+                PyObjC_GIL_RETURN([NSNumber class]);
+            }
+        } else {
+            PyObjC_GIL_RETURN([self class]);
         }
-    }
-    else { PyObjC_GIL_RETURN([self class]); }
     PyObjC_END_WITH_GIL
 }
 

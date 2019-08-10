@@ -12,12 +12,11 @@
  */
 
 @protocol QTExportSessionDelegate
--(void)exportSessionDidSucceed:(id)session;
--(void)exportSession:(id)session didFailWithError:(id)error;
--(void)exportSessionWasCancelled:(id)session;
--(void)exportSession:(id)session didReachProgress:(double)p;
+- (void)exportSessionDidSucceed:(id)session;
+- (void)exportSession:(id)session didFailWithError:(id)error;
+- (void)exportSessionWasCancelled:(id)session;
+- (void)exportSession:(id)session didReachProgress:(double)p;
 @end
-
 
 #elif PyObjC_BUILD_RELEASE >= 1007
 #import <QTKit/QTExportSession.h>
@@ -27,6 +26,7 @@ static void __attribute__((__used__)) use_protocols(void)
 {
     PyObject* p __attribute__((__unused__));
 #if PyObjC_BUILD_RELEASE >= 1007
-    p = PyObjC_IdToPython(@protocol(QTExportSessionDelegate)); Py_XDECREF(p);
+    p = PyObjC_IdToPython(@protocol(QTExportSessionDelegate));
+    Py_XDECREF(p);
 #endif
 }

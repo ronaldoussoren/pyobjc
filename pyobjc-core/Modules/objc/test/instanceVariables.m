@@ -40,8 +40,10 @@
 
 - (void)dealloc
 {
-    PyObjC_BEGIN_WITH_GIL Py_XDECREF(pyValue);
-    PyObjC_END_WITH_GIL[objValue release];
+    PyObjC_BEGIN_WITH_GIL
+        Py_XDECREF(pyValue);
+    PyObjC_END_WITH_GIL
+    [objValue release];
     [nilValue release];
     [super dealloc];
 }

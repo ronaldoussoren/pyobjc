@@ -5,14 +5,11 @@
  * declarations we use instead of using the pymactoolbox.h
  * header file.
  */
-extern PyObject *GrafObj_New(GrafPtr);
-extern int GrafObj_Convert(PyObject *, GrafPtr *);
-
+extern PyObject* GrafObj_New(GrafPtr);
+extern int GrafObj_Convert(PyObject*, GrafPtr*);
 
 static PyObject*
-call_NSQuickDrawView_qdport(
-    PyObject* method,
-    PyObject* self, PyObject* arguments)
+call_NSQuickDrawView_qdport(PyObject* method, PyObject* self, PyObject* arguments)
 {
     PyObject* result;
     struct objc_super super;
@@ -22,24 +19,24 @@ call_NSQuickDrawView_qdport(
         return NULL;
     }
 
-    PyObjC_DURING
-        PyObjC_InitSuper(&super,
-            PyObjCSelector_GetClass(method),
-            PyObjCObject_GetObject(self));
+    Py_BEGIN_ALLOW_THREADS
+        @try {
+            PyObjC_InitSuper(&super, PyObjCSelector_GetClass(method),
+                             PyObjCObject_GetObject(self));
 
+            port = ((void* (*)(struct objc_super*, SEL))objc_msgSendSuper)(
+                &super, PyObjCSelector_GetSelector(method));
 
-        port = ((void*(*)(struct objc_super*, SEL))objc_msgSendSuper)(&super,
-            PyObjCSelector_GetSelector(method));
-
-    PyObjC_HANDLER
-        PyObjCErr_FromObjC(localException);
-        result = NULL;
-        port = NULL;
-
-    PyObjC_ENDHANDLER
+        } @catch (NSException* localException) {
+            PyObjCErr_FromObjC(localException);
+            result = NULL;
+            port = NULL;
+        }
+    Py_END_ALLOW_THREADS
 
     if (port == NULL) {
-        if (PyErr_Occurred()) return NULL;
+        if (PyErr_Occurred())
+            return NULL;
         result = Py_None;
         Py_INCREF(result);
     } else {
@@ -50,11 +47,8 @@ call_NSQuickDrawView_qdport(
 }
 
 static void
-imp_NSQuickDrawView_qdport(
-    void* cif __attribute__((__unused__)),
-    void* resp,
-    void** args,
-    void* callable)
+imp_NSQuickDrawView_qdport(void* cif __attribute__((__unused__)), void* resp, void** args,
+                           void* callable)
 {
     id self = *(id*)args[0];
     GrafPtr* pretval = (GrafPtr*)resp;
@@ -67,22 +61,28 @@ imp_NSQuickDrawView_qdport(
     PyGILState_STATE state = PyGILState_Ensure();
 
     arglist = PyTuple_New(1);
-    if (arglist == NULL) goto error;
+    if (arglist == NULL)
+        goto error;
 
     pyself = PyObjCObject_NewTransient(self, &cookie);
-    if (pyself == NULL) goto error;
+    if (pyself == NULL)
+        goto error;
     PyTuple_SetItem(arglist, 0, pyself);
     Py_INCREF(pyself);
 
     result = PyObject_Call((PyObject*)callable, arglist, NULL);
-    Py_DECREF(arglist); arglist = NULL;
-    PyObjCObject_ReleaseTransient(pyself, cookie); pyself = NULL;
-    if (result == NULL) goto error;
+    Py_DECREF(arglist);
+    arglist = NULL;
+    PyObjCObject_ReleaseTransient(pyself, cookie);
+    pyself = NULL;
+    if (result == NULL)
+        goto error;
 
     GrafObj_Convert(result, pretval);
     Py_DECREF(result);
 
-    if (PyErr_Occurred()) goto error;
+    if (PyErr_Occurred())
+        goto error;
 
     PyGILState_Release(state);
     return;
@@ -98,8 +98,8 @@ error:
 
 #endif
 
-
-static int setup_nsquickdrawview(PyObject* m __attribute__((__unused__)))
+static int
+setup_nsquickdrawview(PyObject* m __attribute__((__unused__)))
 {
 #if !defined(__LP64__) && PY_MAJOR_VERSION == 2 && defined(USE_TOOLBOX_OBJECT_GLUE)
     Class classNSQuickDrawView = objc_lookUpClass("NSQuickDrawView");
@@ -107,11 +107,9 @@ static int setup_nsquickdrawview(PyObject* m __attribute__((__unused__)))
         return 0;
     }
 
-    if (PyObjC_RegisterMethodMapping(
-        classNSQuickDrawView,
-        @selector(qdport),
-        call_NSQuickDrawView_qdport,
-        imp_NSQuickDrawView_qdport) < 0) {
+    if (PyObjC_RegisterMethodMapping(classNSQuickDrawView, @selector(qdport),
+                                     call_NSQuickDrawView_qdport,
+                                     imp_NSQuickDrawView_qdport) < 0) {
 
         return -1;
     }

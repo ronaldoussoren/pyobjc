@@ -15,31 +15,21 @@ mod_readstream_release(void* info)
     PyGILState_Release(state);
 }
 
-
 static CFStreamClientContext mod_CFStreamClientContext_Read = {
-    0,
-    NULL,
-    mod_readstream_retain,
-    mod_readstream_release,
-    NULL
-};
+    0, NULL, mod_readstream_retain, mod_readstream_release, NULL};
 
 static void
-mod_CFReadStreamClientCallBack(
-    CFReadStreamRef f,
-    CFStreamEventType eventType,
-    void* _info)
+mod_CFReadStreamClientCallBack(CFReadStreamRef f, CFStreamEventType eventType,
+                               void* _info)
 {
     PyObject* info = (PyObject*)_info;
     PyGILState_STATE state = PyGILState_Ensure();
 
     PyObject* py_f = PyObjC_ObjCToPython(@encode(CFReadStreamRef), &f);
-    PyObject* py_eventType = PyObjC_ObjCToPython(
-        @encode(CFStreamEventType), &eventType);
+    PyObject* py_eventType = PyObjC_ObjCToPython(@encode(CFStreamEventType), &eventType);
 
-    PyObject* result = PyObject_CallFunction(
-        PyTuple_GetItem(info, 0),
-        "NNO", py_f, py_eventType, PyTuple_GetItem(info, 1));
+    PyObject* result = PyObject_CallFunction(PyTuple_GetItem(info, 0), "NNO", py_f,
+                                             py_eventType, PyTuple_GetItem(info, 1));
     if (result == NULL) {
         PyObjCErr_ToObjCWithGILState(&state);
     }
@@ -48,9 +38,7 @@ mod_CFReadStreamClientCallBack(
 }
 
 static PyObject*
-mod_CFReadStreamSetClient(
-    PyObject* self __attribute__((__unused__)),
-    PyObject* args)
+mod_CFReadStreamSetClient(PyObject* self __attribute__((__unused__)), PyObject* args)
 {
     PyObject* py_stream;
     PyObject* py_streamEvents;
@@ -79,25 +67,22 @@ mod_CFReadStreamSetClient(
         }
     }
 
-
     Boolean rv = FALSE;
-    PyObjC_DURING
-        if (info == PyObjC_NULL) {
-            rv = CFReadStreamSetClient(
-                stream, streamEvents,
-                mod_CFReadStreamClientCallBack, NULL);
-        } else {
-            rv = CFReadStreamSetClient(
-                stream, streamEvents,
-                mod_CFReadStreamClientCallBack, &context);
-        }
+    Py_BEGIN_ALLOW_THREADS
+        @try {
+            if (info == PyObjC_NULL) {
+                rv = CFReadStreamSetClient(stream, streamEvents,
+                                           mod_CFReadStreamClientCallBack, NULL);
+            } else {
+                rv = CFReadStreamSetClient(stream, streamEvents,
+                                           mod_CFReadStreamClientCallBack, &context);
+            }
 
-
-    PyObjC_HANDLER
+        } @catch (NSException* localException) {
             rv = FALSE;
             PyObjCErr_FromObjC(localException);
-
-    PyObjC_ENDHANDLER
+        }
+    Py_END_ALLOW_THREADS
     if (info != PyObjC_NULL) {
         Py_DECREF((PyObject*)context.info);
     }
@@ -109,10 +94,5 @@ mod_CFReadStreamSetClient(
     return PyBool_FromLong(rv);
 }
 
-#define COREFOUNDATION_READSTREAM_METHODS \
-    { \
-        "CFReadStreamSetClient", \
-        (PyCFunction)mod_CFReadStreamSetClient, \
-        METH_VARARGS, \
-        NULL \
-    },
+#define COREFOUNDATION_READSTREAM_METHODS                                                \
+    {"CFReadStreamSetClient", (PyCFunction)mod_CFReadStreamSetClient, METH_VARARGS, NULL},

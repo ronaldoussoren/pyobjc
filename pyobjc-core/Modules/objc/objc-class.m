@@ -1267,13 +1267,19 @@ PyObjCMetaClass_TryResolveSelector(PyObject* base, PyObject* name, SEL sel)
     Method m;
     PyObject* dict = ((PyTypeObject*)base)->tp_dict;
 
-    PyObjC_DURING cls = objc_metaclass_locate(base);
-    m = class_getClassMethod(cls, sel);
+    Py_BEGIN_ALLOW_THREADS
+        @try {
+            cls = objc_metaclass_locate(base);
+            m = class_getClassMethod(cls, sel);
 
-    PyObjC_HANDLER PyObjCErr_FromObjC(localException);
-    m = nil;
-
-    PyObjC_ENDHANDLER if (m == nil && PyErr_Occurred()) { return NULL; }
+        } @catch (NSObject* localException) {
+            PyObjCErr_FromObjC(localException);
+            m = nil;
+        }
+    Py_END_ALLOW_THREADS
+    if (m == nil && PyErr_Occurred()) {
+        return NULL;
+    }
 
     if (PyObjCClass_HiddenSelector(PyObjCClass_ClassForMetaClass(base), sel, YES)) {
         return NULL;
@@ -1355,17 +1361,19 @@ _type_lookup_instance(PyObject* class_dict, PyTypeObject* tp, PyObject* name)
             Class cls = PyObjCClass_GetClass(base);
             Method m;
 
-            PyObjC_DURING m = class_getInstanceMethod(cls, sel);
+            Py_BEGIN_ALLOW_THREADS
+                @try {
+                    m = class_getInstanceMethod(cls, sel);
 
-            PyObjC_HANDLER
-                /* Annoyingly enough this can result in callbacks to ObjC
-                 * that can raise an exception.
-                 */
-                m = NULL;
-            PyObjC_ENDHANDLER
+                } @catch (NSObject* localException) {
+                    /* Annoyingly enough this can result in callbacks to ObjC
+                     * that can raise an exception.
+                     */
+                    m = NULL;
+                }
+            Py_END_ALLOW_THREADS
 
-                if (m)
-            {
+            if (m) {
 #ifndef PyObjC_FAST_BUT_INEXACT
                 int use = 1;
                 Class sup = class_getSuperclass(cls);

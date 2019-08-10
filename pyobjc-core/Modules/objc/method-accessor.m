@@ -71,18 +71,20 @@ find_selector(PyObject* self, const char* name, int class_method)
         }
     }
 
-    PyObjC_DURING if (unbound_instance_method)
-    {
-        methsig = [objc_object instanceMethodSignatureForSelector:sel];
-    }
-    else { methsig = [objc_object methodSignatureForSelector:sel]; }
+    Py_BEGIN_ALLOW_THREADS
+        @try {
+            if (unbound_instance_method) {
+                methsig = [objc_object instanceMethodSignatureForSelector:sel];
+            } else {
+                methsig = [objc_object methodSignatureForSelector:sel];
+            }
 
-    PyObjC_HANDLER methsig = nil;
+        } @catch (NSObject* localException) {
+            methsig = nil;
+        }
+    Py_END_ALLOW_THREADS
 
-    PyObjC_ENDHANDLER
-
-        if (methsig == NULL)
-    {
+    if (methsig == NULL) {
         PyErr_Format(PyExc_AttributeError, "No selector %s", name);
         return NULL;
     }

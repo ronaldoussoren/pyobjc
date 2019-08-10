@@ -16,31 +16,21 @@ mod_observer_release(const void* info)
     PyGILState_Release(state);
 }
 
-
 static CFRunLoopObserverContext mod_CFRunLoopObserverContext = {
-    0,
-    NULL,
-    mod_observer_retain,
-    mod_observer_release,
-    NULL
-};
+    0, NULL, mod_observer_retain, mod_observer_release, NULL};
 
 static void
-mod_CFRunLoopObserverCallBack(
-    CFRunLoopObserverRef f,
-    CFRunLoopActivity activity,
-    void* _info)
+mod_CFRunLoopObserverCallBack(CFRunLoopObserverRef f, CFRunLoopActivity activity,
+                              void* _info)
 {
     PyObject* info = (PyObject*)_info;
     PyGILState_STATE state = PyGILState_Ensure();
 
     PyObject* py_f = PyObjC_ObjCToPython(@encode(CFRunLoopObserverRef), &f);
-    PyObject* py_activity = PyObjC_ObjCToPython(
-        @encode(CFRunLoopActivity), &activity);
+    PyObject* py_activity = PyObjC_ObjCToPython(@encode(CFRunLoopActivity), &activity);
 
-    PyObject* result = PyObject_CallFunction(
-        PyTuple_GetItem(info, 0),
-        "NNO", py_f, py_activity, PyTuple_GetItem(info, 1));
+    PyObject* result = PyObject_CallFunction(PyTuple_GetItem(info, 0), "NNO", py_f,
+                                             py_activity, PyTuple_GetItem(info, 1));
     if (result == NULL) {
         PyObjCErr_ToObjCWithGILState(&state);
     }
@@ -49,9 +39,7 @@ mod_CFRunLoopObserverCallBack(
 }
 
 static PyObject*
-mod_CFRunLoopObserverCreate(
-    PyObject* self __attribute__((__unused__)),
-    PyObject* args)
+mod_CFRunLoopObserverCreate(PyObject* self __attribute__((__unused__)), PyObject* args)
 {
     PyObject* py_allocator;
     PyObject* py_activities;
@@ -64,7 +52,8 @@ mod_CFRunLoopObserverCreate(
     Boolean repeats;
     CFIndex order;
 
-    if (!PyArg_ParseTuple(args, "OOOOOO", &py_allocator, &py_activities, &py_repeats, &py_order, &callout, &info)) {
+    if (!PyArg_ParseTuple(args, "OOOOOO", &py_allocator, &py_activities, &py_repeats,
+                          &py_order, &callout, &info)) {
         return NULL;
     }
 
@@ -88,17 +77,16 @@ mod_CFRunLoopObserverCreate(
     }
 
     CFRunLoopObserverRef rv = NULL;
-    PyObjC_DURING
-        rv = CFRunLoopObserverCreate(
-            allocator, activities, repeats, order,
-            mod_CFRunLoopObserverCallBack, &context);
+    Py_BEGIN_ALLOW_THREADS
+        @try {
+            rv = CFRunLoopObserverCreate(allocator, activities, repeats, order,
+                                         mod_CFRunLoopObserverCallBack, &context);
 
-
-    PyObjC_HANDLER
-        rv = NULL;
-        PyObjCErr_FromObjC(localException);
-
-    PyObjC_ENDHANDLER
+        } @catch (NSException* localException) {
+            rv = NULL;
+            PyObjCErr_FromObjC(localException);
+        }
+    Py_END_ALLOW_THREADS
 
     Py_DECREF((PyObject*)context.info);
     if (PyErr_Occurred()) {
@@ -112,11 +100,9 @@ mod_CFRunLoopObserverCreate(
     return result;
 }
 
-
 static PyObject*
-mod_CFRunLoopObserverGetContext(
-    PyObject* self __attribute__((__unused__)),
-    PyObject* args)
+mod_CFRunLoopObserverGetContext(PyObject* self __attribute__((__unused__)),
+                                PyObject* args)
 {
     PyObject* py_f;
     PyObject* py_context;
@@ -130,7 +116,7 @@ mod_CFRunLoopObserverGetContext(
     if (py_context != NULL && py_context != Py_None) {
         PyErr_SetString(PyExc_ValueError, "invalid context");
         return NULL;
-}
+    }
 
     if (PyObjC_PythonToObjC(@encode(CFRunLoopObserverRef), py_f, &f) < 0) {
         return NULL;
@@ -138,13 +124,14 @@ mod_CFRunLoopObserverGetContext(
 
     context.version = 0;
 
-    PyObjC_DURING
-        CFRunLoopObserverGetContext(f, &context);
+    Py_BEGIN_ALLOW_THREADS
+        @try {
+            CFRunLoopObserverGetContext(f, &context);
 
-    PyObjC_HANDLER
-        PyObjCErr_FromObjC(localException);
-
-    PyObjC_ENDHANDLER
+        } @catch (NSException* localException) {
+            PyObjCErr_FromObjC(localException);
+        }
+    Py_END_ALLOW_THREADS
 
     if (PyErr_Occurred()) {
         return NULL;
@@ -156,8 +143,7 @@ mod_CFRunLoopObserverGetContext(
     }
 
     if (context.retain != mod_observer_retain) {
-        PyErr_SetString(PyExc_ValueError,
-            "retrieved context is not supported");
+        PyErr_SetString(PyExc_ValueError, "retrieved context is not supported");
         return NULL;
     }
 
@@ -166,21 +152,12 @@ mod_CFRunLoopObserverGetContext(
         return PyObjC_NULL;
     }
 
-
     Py_INCREF(PyTuple_GetItem((PyObject*)context.info, 1));
     return PyTuple_GetItem((PyObject*)context.info, 1);
 }
 
-#define COREFOUNDATION_RUNLOOP_METHODS \
-    { \
-        "CFRunLoopObserverCreate", \
-        (PyCFunction)mod_CFRunLoopObserverCreate, \
-        METH_VARARGS, \
-        NULL \
-    }, \
-    { \
-        "CFRunLoopObserverGetContext", \
-        (PyCFunction)mod_CFRunLoopObserverGetContext, \
-        METH_VARARGS, \
-        NULL \
-    },
+#define COREFOUNDATION_RUNLOOP_METHODS                                                   \
+    {"CFRunLoopObserverCreate", (PyCFunction)mod_CFRunLoopObserverCreate, METH_VARARGS,  \
+     NULL},                                                                              \
+        {"CFRunLoopObserverGetContext", (PyCFunction)mod_CFRunLoopObserverGetContext,    \
+         METH_VARARGS, NULL},

@@ -54,7 +54,8 @@
         return;
     }
 
-    PyObjC_BEGIN_WITH_GIL[super release];
+    PyObjC_BEGIN_WITH_GIL
+        [super release];
 
     PyObjC_END_WITH_GIL
 }
@@ -69,12 +70,13 @@
         return;
     }
 
-    PyObjC_BEGIN_WITH_GIL PyObjC_UnregisterObjCProxy(value, self);
-    Py_XDECREF(value);
+    PyObjC_BEGIN_WITH_GIL
+        PyObjC_UnregisterObjCProxy(value, self);
+        Py_XDECREF(value);
 
     PyObjC_END_WITH_GIL
 
-        [super dealloc];
+    [super dealloc];
 }
 
 - (void)encodeWithCoder:(NSCoder*)coder
@@ -88,9 +90,10 @@
  */
 - (void)pyobjcSetValue:(NSObject*)other
 {
-    PyObjC_BEGIN_WITH_GIL PyObject* v = PyObjC_IdToPython(other);
+    PyObjC_BEGIN_WITH_GIL
+        PyObject* v = PyObjC_IdToPython(other);
 
-    SET_FIELD(value, v);
+        SET_FIELD(value, v);
 
     PyObjC_END_WITH_GIL
 }
@@ -100,30 +103,31 @@
     value = NULL;
 
     if (PyObjC_Decoder != NULL) {
-        PyObjC_BEGIN_WITH_GIL PyObject* cdr = PyObjC_IdToPython(coder);
-        if (cdr == NULL) {
-            PyObjC_GIL_FORWARD_EXC();
-        }
+        PyObjC_BEGIN_WITH_GIL
+            PyObject* cdr = PyObjC_IdToPython(coder);
+            if (cdr == NULL) {
+                PyObjC_GIL_FORWARD_EXC();
+            }
 
-        PyObject* setValue;
-        PyObject* selfAsPython = PyObjCObject_New(self, 0, YES);
-        setValue = PyObject_GetAttrString(selfAsPython, "pyobjcSetValue_");
+            PyObject* setValue;
+            PyObject* selfAsPython = PyObjCObject_New(self, 0, YES);
+            setValue = PyObject_GetAttrString(selfAsPython, "pyobjcSetValue_");
 
-        PyObject* v = PyObject_CallFunction(PyObjC_Decoder, "OO", cdr, setValue);
-        Py_DECREF(cdr);
-        Py_DECREF(setValue);
-        Py_DECREF(selfAsPython);
+            PyObject* v = PyObject_CallFunction(PyObjC_Decoder, "OO", cdr, setValue);
+            Py_DECREF(cdr);
+            Py_DECREF(setValue);
+            Py_DECREF(selfAsPython);
 
-        if (v == NULL) {
-            PyObjC_GIL_FORWARD_EXC();
-        }
+            if (v == NULL) {
+                PyObjC_GIL_FORWARD_EXC();
+            }
 
-        SET_FIELD(value, v);
-        self = PyObjC_FindOrRegisterObjCProxy(value, self);
+            SET_FIELD(value, v);
+            self = PyObjC_FindOrRegisterObjCProxy(value, self);
 
         PyObjC_END_WITH_GIL
 
-            return self;
+        return self;
 
     } else {
         [NSException raise:NSInvalidArgumentException
@@ -135,46 +139,13 @@
 - (NSDate*)_make_oc_value
 {
     if (oc_value == nil) {
-        PyObjC_BEGIN_WITH_GIL PyObject* v;
+        PyObjC_BEGIN_WITH_GIL
+            PyObject* v;
 
-        v = PyObject_CallMethod(value, "strftime", "s", "%Y-%m-%d %H:%M:%S %z");
-        if (v == NULL) {
-            /* Raise ObjC exception */
-            PyObjC_GIL_FORWARD_EXC();
-        }
-
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Wdeprecated-declarations"
-        oc_value = [NSDate dateWithString:PyObjC_PythonToId(v)];
-#pragma clang diagnostic pop
-        [oc_value retain];
-        Py_DECREF(v);
-
-        if (oc_value == nil) {
-            /* The first try will fail when the date/datetime object
-             * isn't timezone aware, try again with a default timezone
-             */
-            char buf[128];
-
-            NSTimeZone* zone = [NSTimeZone defaultTimeZone];
-            NSInteger offset = [zone secondsFromGMT];
-            char posneg;
-            if (offset < 0) {
-                posneg = '-';
-                offset = -offset;
-            } else {
-                posneg = '+';
-            }
-            offset = offset / 60; /* Seconds to minutes */
-
-            NSInteger minutes = offset % 60;
-            NSInteger hours = offset / 60;
-
-            snprintf(buf, sizeof(buf), "%%Y-%%m-%%d %%H:%%M:%%S %c%02ld%02ld", posneg,
-                     (long)hours, (long)minutes);
-            v = PyObject_CallMethod(value, "strftime", "s", buf);
+            v = PyObject_CallMethod(value, "strftime", "s", "%Y-%m-%d %H:%M:%S %z");
             if (v == NULL) {
                 /* Raise ObjC exception */
+                PyObjC_GIL_FORWARD_EXC();
             }
 
 #pragma clang diagnostic push
@@ -183,7 +154,41 @@
 #pragma clang diagnostic pop
             [oc_value retain];
             Py_DECREF(v);
-        }
+
+            if (oc_value == nil) {
+                /* The first try will fail when the date/datetime object
+                 * isn't timezone aware, try again with a default timezone
+                 */
+                char buf[128];
+
+                NSTimeZone* zone = [NSTimeZone defaultTimeZone];
+                NSInteger offset = [zone secondsFromGMT];
+                char posneg;
+                if (offset < 0) {
+                    posneg = '-';
+                    offset = -offset;
+                } else {
+                    posneg = '+';
+                }
+                offset = offset / 60; /* Seconds to minutes */
+
+                NSInteger minutes = offset % 60;
+                NSInteger hours = offset / 60;
+
+                snprintf(buf, sizeof(buf), "%%Y-%%m-%%d %%H:%%M:%%S %c%02ld%02ld", posneg,
+                         (long)hours, (long)minutes);
+                v = PyObject_CallMethod(value, "strftime", "s", buf);
+                if (v == NULL) {
+                    /* Raise ObjC exception */
+                }
+
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
+                oc_value = [NSDate dateWithString:PyObjC_PythonToId(v)];
+#pragma clang diagnostic pop
+                [oc_value retain];
+                Py_DECREF(v);
+            }
 
         PyObjC_END_WITH_GIL
     }

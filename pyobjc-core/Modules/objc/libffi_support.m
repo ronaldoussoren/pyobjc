@@ -4216,26 +4216,26 @@ PyObjCFFI_Caller(PyObject* aMeth, PyObject* self, PyObject* args)
         isUninitialized = NO;
     }
 
-    PyObjC_DURING if (unlikely(PyObjCIMP_Check(aMeth)))
-    {
-        ffi_call(&cif, FFI_FN(PyObjCIMP_GetIMP(aMeth)), msgResult, values);
-    }
-    else
-    {
+    Py_BEGIN_ALLOW_THREADS
+        @try {
+            if (unlikely(PyObjCIMP_Check(aMeth))) {
+                ffi_call(&cif, FFI_FN(PyObjCIMP_GetIMP(aMeth)), msgResult, values);
+            } else {
 
-        if (unlikely(useStret)) {
-            ffi_call(&cif, FFI_FN(objc_msgSendSuper_stret), msgResult, values);
-        } else {
-            ffi_call(&cif, FFI_FN(objc_msgSendSuper), msgResult, values);
+                if (unlikely(useStret)) {
+                    ffi_call(&cif, FFI_FN(objc_msgSendSuper_stret), msgResult, values);
+                } else {
+                    ffi_call(&cif, FFI_FN(objc_msgSendSuper), msgResult, values);
+                }
+            }
+
+        } @catch (NSObject* localException) {
+
+            PyObjCErr_FromObjC(localException);
         }
-    }
+    Py_END_ALLOW_THREADS
 
-    PyObjC_HANDLER PyObjCErr_FromObjC(localException);
-
-    PyObjC_ENDHANDLER
-
-        if (unlikely(isUninitialized && PyObjCObject_Check(self)))
-    {
+    if (unlikely(isUninitialized && PyObjCObject_Check(self))) {
         ((PyObjCObject*)self)->flags |= PyObjCObject_kUNINITIALIZED;
     }
 

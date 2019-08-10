@@ -1,6 +1,6 @@
 static PyObject*
-m_NSConvertGlyphsToPackedGlyphs(
-    PyObject* self __attribute__((__unused__)), PyObject* arguments)
+m_NSConvertGlyphsToPackedGlyphs(PyObject* self __attribute__((__unused__)),
+                                PyObject* arguments)
 {
     PyObject* py_glBuf;
     PyObject* py_count;
@@ -15,7 +15,8 @@ m_NSConvertGlyphsToPackedGlyphs(
     NSMultibyteGlyphPacking packing;
     char* packedGlyphs;
 
-    if (!PyArg_ParseTuple(arguments, "OOOO", &py_glBuf, &py_count, &py_packing, &py_packedGlyphs)) {
+    if (!PyArg_ParseTuple(arguments, "OOOO", &py_glBuf, &py_count, &py_packing,
+                          &py_packedGlyphs)) {
         return NULL;
     }
 
@@ -27,19 +28,20 @@ m_NSConvertGlyphsToPackedGlyphs(
     if (PyObjC_PythonToObjC(@encode(NSInteger), py_count, &count) == -1) {
         return NULL;
     }
-    if (PyObjC_PythonToObjC(@encode(NSMultibyteGlyphPacking), py_packing, &packing) == -1) {
+    if (PyObjC_PythonToObjC(@encode(NSMultibyteGlyphPacking), py_packing, &packing) ==
+        -1) {
         return NULL;
     }
 
     c = count;
-    bufCode = PyObjC_PythonToCArray(NO, NO, @encode(NSGlyph), py_glBuf,
-        (void**)&glBuf, &c, &buffer);
+    bufCode = PyObjC_PythonToCArray(NO, NO, @encode(NSGlyph), py_glBuf, (void**)&glBuf,
+                                    &c, &buffer);
     if (bufCode == -1) {
         return NULL;
     }
     count = c;
 
-    packedGlyphs = malloc(count*4+1);
+    packedGlyphs = malloc(count * 4 + 1);
     if (packedGlyphs == NULL) {
         PyObjC_FreeCArray(bufCode, glBuf);
         Py_XDECREF(buffer);
@@ -48,12 +50,14 @@ m_NSConvertGlyphsToPackedGlyphs(
     }
 
     NSInteger result = -1;
-    PyObjC_DURING
-        result = NSConvertGlyphsToPackedGlyphs(glBuf, count, packing, packedGlyphs);
+    Py_BEGIN_ALLOW_THREADS
+        @try {
+            result = NSConvertGlyphsToPackedGlyphs(glBuf, count, packing, packedGlyphs);
 
-    PyObjC_HANDLER
-        PyObjCErr_FromObjC(localException);
-    PyObjC_ENDHANDLER
+        } @catch (NSException* localException) {
+            PyObjCErr_FromObjC(localException);
+        }
+    Py_END_ALLOW_THREADS
 
     PyObjC_FreeCArray(bufCode, glBuf);
     Py_XDECREF(buffer);
@@ -71,23 +75,20 @@ m_NSConvertGlyphsToPackedGlyphs(
     PyObject* pyRes;
 
     if (result == 0) {
-        pyRes = Py_BuildValue("Ns#",
-            PyObjC_ObjCToPython(@encode(NSInteger), &result), packedGlyphs, result-1);
+        pyRes = Py_BuildValue("Ns#", PyObjC_ObjCToPython(@encode(NSInteger), &result),
+                              packedGlyphs, result - 1);
     } else {
-        pyRes = Py_BuildValue("Ns#",
-            PyObjC_ObjCToPython(@encode(NSInteger), &result), packedGlyphs, result);
+        pyRes = Py_BuildValue("Ns#", PyObjC_ObjCToPython(@encode(NSInteger), &result),
+                              packedGlyphs, result);
     }
 
     free(packedGlyphs);
     return pyRes;
 }
 
-
-
-#define APPKIT_NSFONT_METHODS \
-    { \
-       "NSConvertGlyphsToPackedGlyphs", \
-       (PyCFunction)m_NSConvertGlyphsToPackedGlyphs, \
-       METH_VARARGS, \
-       "NSConvertGlyphsToPackedGlyphs(arg0, arg1, arg2, arg3)\n\nNSInteger NSConvertGlyphsToPackedGlyphs(NSGlyph *glBuf, NSInteger count, NSMultibyteGlyphPacking packing, char *packedGlyphs);" \
-    },
+#define APPKIT_NSFONT_METHODS                                                            \
+    {"NSConvertGlyphsToPackedGlyphs", (PyCFunction)m_NSConvertGlyphsToPackedGlyphs,      \
+     METH_VARARGS,                                                                       \
+     "NSConvertGlyphsToPackedGlyphs(arg0, arg1, arg2, arg3)\n\nNSInteger "               \
+     "NSConvertGlyphsToPackedGlyphs(NSGlyph *glBuf, NSInteger count, "                   \
+     "NSMultibyteGlyphPacking packing, char *packedGlyphs);"},

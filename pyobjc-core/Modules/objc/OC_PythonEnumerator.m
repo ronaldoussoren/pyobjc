@@ -27,7 +27,8 @@
         return;
     }
 
-    PyObjC_BEGIN_WITH_GIL[super release];
+    PyObjC_BEGIN_WITH_GIL
+        [super release];
 
     PyObjC_END_WITH_GIL
 }
@@ -39,10 +40,11 @@
         return;
     }
 
-    PyObjC_BEGIN_WITH_GIL Py_XDECREF(value);
+    PyObjC_BEGIN_WITH_GIL
+        Py_XDECREF(value);
     PyObjC_END_WITH_GIL
 
-        [super dealloc];
+    [super dealloc];
 }
 
 - (id)nextObject
@@ -53,33 +55,34 @@
 
     NSObject* result = nil;
 
-    PyObjC_BEGIN_WITH_GIL PyObject* object = PyIter_Next(value);
-    if (object == NULL) {
-        if (!PyErr_Occurred()) {
-            valid = NO;
-            PyErr_Clear();
-            PyObjC_GIL_RETURN(nil);
-        } else {
-            PyObjC_GIL_FORWARD_EXC();
+    PyObjC_BEGIN_WITH_GIL
+        PyObject* object = PyIter_Next(value);
+        if (object == NULL) {
+            if (!PyErr_Occurred()) {
+                valid = NO;
+                PyErr_Clear();
+                PyObjC_GIL_RETURN(nil);
+            } else {
+                PyObjC_GIL_FORWARD_EXC();
+            }
         }
-    }
 
-    if (object == Py_None) {
-        result = [NSNull null];
-    } else {
-        result = PyObjC_PythonToId(object);
-    }
-    if (result == nil) {
-        if (PyErr_Occurred()) {
-            PyObjC_GIL_FORWARD_EXC();
+        if (object == Py_None) {
+            result = [NSNull null];
         } else {
-            PyObjC_GIL_RETURN([NSNull null]);
+            result = PyObjC_PythonToId(object);
         }
-    }
+        if (result == nil) {
+            if (PyErr_Occurred()) {
+                PyObjC_GIL_FORWARD_EXC();
+            } else {
+                PyObjC_GIL_RETURN([NSNull null]);
+            }
+        }
 
     PyObjC_END_WITH_GIL
 
-        return result;
+    return result;
 }
 
 - (NSArray*)allObjects

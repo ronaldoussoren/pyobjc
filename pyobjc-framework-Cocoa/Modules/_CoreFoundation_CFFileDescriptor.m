@@ -24,31 +24,22 @@ mod_filedescr_release(void* info)
     PyGILState_Release(state);
 }
 
-
 static CFFileDescriptorContext mod_CFFileDescriptorContext = {
-    0,
-    NULL,
-    mod_filedescr_retain,
-    mod_filedescr_release,
-    NULL
-};
+    0, NULL, mod_filedescr_retain, mod_filedescr_release, NULL};
 
 static void
-mod_CFFileDescriptorCallBack(
-    CFFileDescriptorRef f,
-    CFOptionFlags callBackType,
-    void* _info)
+mod_CFFileDescriptorCallBack(CFFileDescriptorRef f, CFOptionFlags callBackType,
+                             void* _info)
 {
     PyObject* info = (PyObject*)_info;
     PyGILState_STATE state = PyGILState_Ensure();
 
     PyObject* py_f = PyObjC_ObjCToPython(@encode(CFFileDescriptorRef), &f);
-    PyObject* py_callBackType = PyObjC_ObjCToPython(
-        @encode(CFOptionFlags), &callBackType);
+    PyObject* py_callBackType =
+        PyObjC_ObjCToPython(@encode(CFOptionFlags), &callBackType);
 
-    PyObject* result = PyObject_CallFunction(
-        PyTuple_GetItem(info, 0),
-        "NNO", py_f, py_callBackType, PyTuple_GetItem(info, 1));
+    PyObject* result = PyObject_CallFunction(PyTuple_GetItem(info, 0), "NNO", py_f,
+                                             py_callBackType, PyTuple_GetItem(info, 1));
     if (result == NULL) {
         PyObjCErr_ToObjCWithGILState(&state);
     }
@@ -57,9 +48,7 @@ mod_CFFileDescriptorCallBack(
 }
 
 static PyObject*
-mod_CFFileDescriptorCreate(
-    PyObject* self __attribute__((__unused__)),
-    PyObject* args)
+mod_CFFileDescriptorCreate(PyObject* self __attribute__((__unused__)), PyObject* args)
 {
     PyObject* py_allocator;
     PyObject* py_descriptor;
@@ -70,17 +59,20 @@ mod_CFFileDescriptorCreate(
     CFFileDescriptorNativeDescriptor descriptor;
     Boolean closeOnInvalidate;
 
-    if (!PyArg_ParseTuple(args, "OOOOO", &py_allocator, &py_descriptor, &py_closeOnInvalidate, &callout, &info)) {
+    if (!PyArg_ParseTuple(args, "OOOOO", &py_allocator, &py_descriptor,
+                          &py_closeOnInvalidate, &callout, &info)) {
         return NULL;
     }
 
     if (PyObjC_PythonToObjC(@encode(CFAllocatorRef), py_allocator, &allocator) < 0) {
         return NULL;
     }
-    if (PyObjC_PythonToObjC(@encode(CFFileDescriptorNativeDescriptor), py_descriptor, &descriptor) < 0) {
+    if (PyObjC_PythonToObjC(@encode(CFFileDescriptorNativeDescriptor), py_descriptor,
+                            &descriptor) < 0) {
         return NULL;
     }
-    if (PyObjC_PythonToObjC(@encode(bool), py_closeOnInvalidate, &closeOnInvalidate) < 0) {
+    if (PyObjC_PythonToObjC(@encode(bool), py_closeOnInvalidate, &closeOnInvalidate) <
+        0) {
         return NULL;
     }
 
@@ -91,17 +83,17 @@ mod_CFFileDescriptorCreate(
     }
 
     CFFileDescriptorRef rv = NULL;
-    PyObjC_DURING
-        rv = USE_10_5(CFFileDescriptorCreate)(
-            allocator, descriptor, closeOnInvalidate,
-            mod_CFFileDescriptorCallBack, &context);
+    Py_BEGIN_ALLOW_THREADS
+        @try {
+            rv =
+                USE_10_5(CFFileDescriptorCreate)(allocator, descriptor, closeOnInvalidate,
+                                                 mod_CFFileDescriptorCallBack, &context);
 
-
-    PyObjC_HANDLER
-        rv = NULL;
-        PyObjCErr_FromObjC(localException);
-
-    PyObjC_ENDHANDLER
+        } @catch (NSException* localException) {
+            rv = NULL;
+            PyObjCErr_FromObjC(localException);
+        }
+    Py_END_ALLOW_THREADS
 
     Py_DECREF((PyObject*)context.info);
     if (PyErr_Occurred()) {
@@ -115,11 +107,8 @@ mod_CFFileDescriptorCreate(
     return result;
 }
 
-
 static PyObject*
-mod_CFFileDescriptorGetContext(
-    PyObject* self __attribute__((__unused__)),
-    PyObject* args)
+mod_CFFileDescriptorGetContext(PyObject* self __attribute__((__unused__)), PyObject* args)
 {
     PyObject* py_f;
     PyObject* py_context;
@@ -141,13 +130,14 @@ mod_CFFileDescriptorGetContext(
 
     context.version = 0;
 
-    PyObjC_DURING
-        USE_10_5(CFFileDescriptorGetContext)(f, &context);
+    Py_BEGIN_ALLOW_THREADS
+        @try {
+            USE_10_5(CFFileDescriptorGetContext)(f, &context);
 
-    PyObjC_HANDLER
-        PyObjCErr_FromObjC(localException);
-
-    PyObjC_ENDHANDLER
+        } @catch (NSException* localException) {
+            PyObjCErr_FromObjC(localException);
+        }
+    Py_END_ALLOW_THREADS
 
     if (PyErr_Occurred()) {
         return NULL;
@@ -159,8 +149,7 @@ mod_CFFileDescriptorGetContext(
     }
 
     if (context.retain != mod_filedescr_retain) {
-        PyErr_SetString(PyExc_ValueError,
-            "retrieved context is not supported");
+        PyErr_SetString(PyExc_ValueError, "retrieved context is not supported");
         return NULL;
     }
 
@@ -169,20 +158,12 @@ mod_CFFileDescriptorGetContext(
 }
 #endif
 
-#define COREFOUNDATION_FILEDESCRIPTOR_METHODS \
-    { \
-        "CFFileDescriptorCreate", \
-        (PyCFunction)mod_CFFileDescriptorCreate, \
-        METH_VARARGS, \
-        NULL \
-    }, \
-    { \
-        "CFFileDescriptorGetContext", \
-        (PyCFunction)mod_CFFileDescriptorGetContext, \
-        METH_VARARGS, \
-        NULL \
-    },
+#define COREFOUNDATION_FILEDESCRIPTOR_METHODS                                            \
+    {"CFFileDescriptorCreate", (PyCFunction)mod_CFFileDescriptorCreate, METH_VARARGS,    \
+     NULL},                                                                              \
+        {"CFFileDescriptorGetContext", (PyCFunction)mod_CFFileDescriptorGetContext,      \
+         METH_VARARGS, NULL},
 
-#define COREFOUNDATION_FILEDESCRIPTOR_AFTER_CREATE \
-    CHECK_WEAK_LINK_10_5(m, CFFileDescriptorCreate); \
+#define COREFOUNDATION_FILEDESCRIPTOR_AFTER_CREATE                                       \
+    CHECK_WEAK_LINK_10_5(m, CFFileDescriptorCreate);                                     \
     CHECK_WEAK_LINK_10_5(m, CFFileDescriptorGetContext);

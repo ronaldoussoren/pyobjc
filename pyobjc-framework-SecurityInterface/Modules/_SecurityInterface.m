@@ -1,12 +1,12 @@
 #define PY_SSIZE_T_CLEAN
-#include <Python.h>
 #include "pyobjc-api.h"
+#include <Python.h>
 
 #import <Foundation/Foundation.h>
 #import <SecurityInterface/SFAuthorizationView.h>
 
-
-static int parse_itemset(PyObject* value, AuthorizationItemSet* itemset)
+static int
+parse_itemset(PyObject* value, AuthorizationItemSet* itemset)
 {
     itemset->items = NULL;
 
@@ -20,14 +20,17 @@ static int parse_itemset(PyObject* value, AuthorizationItemSet* itemset)
             return 0;
         }
         itemset->count = PySequence_Fast_GET_SIZE(seq);
-        itemset->items = PyMem_Malloc(sizeof(AuthorizationItem) * PySequence_Fast_GET_SIZE(seq));
+        itemset->items =
+            PyMem_Malloc(sizeof(AuthorizationItem) * PySequence_Fast_GET_SIZE(seq));
         if (itemset->items == NULL) {
             PyErr_NoMemory();
             return 0;
         }
 
         for (i = 0; i < PySequence_Fast_GET_SIZE(seq); i++) {
-            if (PyObjC_PythonToObjC("{_AuthorizationItem=^cL^vI}", PySequence_Fast_GET_ITEM(seq, i), itemset->items + i) < 0) {
+            if (PyObjC_PythonToObjC("{_AuthorizationItem=^cL^vI}",
+                                    PySequence_Fast_GET_ITEM(seq, i),
+                                    itemset->items + i) < 0) {
                 PyMem_Free(itemset->items);
                 return 0;
             }
@@ -36,7 +39,8 @@ static int parse_itemset(PyObject* value, AuthorizationItemSet* itemset)
     return 1;
 }
 
-static PyObject* build_itemset(AuthorizationItemSet* itemset)
+static PyObject*
+build_itemset(AuthorizationItemSet* itemset)
 {
     PyObject* result;
 
@@ -52,7 +56,8 @@ static PyObject* build_itemset(AuthorizationItemSet* itemset)
         }
 
         for (i = 0; i < itemset->count; i++) {
-            PyObject* t = PyObjC_ObjCToPython("{_AuthorizationItem=^cL^vI}", itemset->items + i);
+            PyObject* t =
+                PyObjC_ObjCToPython("{_AuthorizationItem=^cL^vI}", itemset->items + i);
             if (t == NULL) {
                 Py_DECREF(result);
                 return NULL;
@@ -64,8 +69,7 @@ static PyObject* build_itemset(AuthorizationItemSet* itemset)
 }
 
 static PyObject*
-call_authorizationRights(
-        PyObject* method, PyObject* self, PyObject* arguments)
+call_authorizationRights(PyObject* method, PyObject* self, PyObject* arguments)
 {
     struct objc_super super;
     AuthorizationRights* rights;
@@ -75,17 +79,18 @@ call_authorizationRights(
         return NULL;
     }
 
-    PyObjC_DURING
-        PyObjC_InitSuper(&super,
-            PyObjCSelector_GetClass(method),
-            PyObjCObject_GetObject(self));
+    Py_BEGIN_ALLOW_THREADS
+        @try {
+            PyObjC_InitSuper(&super, PyObjCSelector_GetClass(method),
+                             PyObjCObject_GetObject(self));
 
-        rights = ((AuthorizationRights*(*)(struct objc_super*, SEL))objc_msgSendSuper)(&super,
-            PyObjCSelector_GetSelector(method));
+            rights = ((AuthorizationRights * (*)(struct objc_super*, SEL))
+                          objc_msgSendSuper)(&super, PyObjCSelector_GetSelector(method));
 
-    PyObjC_HANDLER
-        PyObjCErr_FromObjC(localException);
-    PyObjC_ENDHANDLER
+        } @catch (NSException* localException) {
+            PyObjCErr_FromObjC(localException);
+        }
+    Py_END_ALLOW_THREADS
 
     if (PyErr_Occurred()) {
         return NULL;
@@ -100,8 +105,7 @@ call_authorizationRights(
 }
 
 static PyObject*
-call_setAuthorizationRights_(
-        PyObject* method, PyObject* self, PyObject* arguments)
+call_setAuthorizationRights_(PyObject* method, PyObject* self, PyObject* arguments)
 {
     struct objc_super super;
     AuthorizationRights rights;
@@ -117,17 +121,18 @@ call_setAuthorizationRights_(
         return NULL;
     }
 
-    PyObjC_DURING
-        PyObjC_InitSuper(&super,
-            PyObjCSelector_GetClass(method),
-            PyObjCObject_GetObject(self));
+    Py_BEGIN_ALLOW_THREADS
+        @try {
+            PyObjC_InitSuper(&super, PyObjCSelector_GetClass(method),
+                             PyObjCObject_GetObject(self));
 
-        ((void(*)(struct objc_super*, SEL, AuthorizationRights*))objc_msgSendSuper)(&super,
-            PyObjCSelector_GetSelector(method), &rights);
+            ((void (*)(struct objc_super*, SEL, AuthorizationRights*))objc_msgSendSuper)(
+                &super, PyObjCSelector_GetSelector(method), &rights);
 
-    PyObjC_HANDLER
-        PyObjCErr_FromObjC(localException);
-    PyObjC_ENDHANDLER
+        } @catch (NSException* localException) {
+            PyObjCErr_FromObjC(localException);
+        }
+    Py_END_ALLOW_THREADS
 
     PyMem_Free(rights.items);
 
@@ -139,11 +144,9 @@ call_setAuthorizationRights_(
     return Py_None;
 }
 
-
 static PyMethodDef mod_methods[] = {
-    { 0, 0, 0, 0 } /* sentinel */
+    {0, 0, 0, 0} /* sentinel */
 };
-
 
 /* Python glue */
 PyObjC_MODULE_INIT(_SecurityInterface)
@@ -151,32 +154,26 @@ PyObjC_MODULE_INIT(_SecurityInterface)
     PyObject* m;
     Class cls;
 
-    m = PyObjC_MODULE_CREATE(_SecurityInterface)
-    if (!m) {
+    m = PyObjC_MODULE_CREATE(_SecurityInterface) if (!m) { PyObjC_INITERROR(); }
+
+    if (PyObjC_ImportAPI(m) == -1)
         PyObjC_INITERROR();
-    }
 
-    if (PyObjC_ImportAPI(m) == -1) PyObjC_INITERROR();
-
-    cls= objc_lookUpClass("SFAuthorizationView");
+    cls = objc_lookUpClass("SFAuthorizationView");
     if (cls == NULL) {
         PyObjC_INITDONE();
     }
 
-    if (PyObjC_RegisterMethodMapping(
-        cls,
-        @selector(authorizationView),
-        call_authorizationRights,
-        PyObjCUnsupportedMethod_IMP) < 0) {
+    if (PyObjC_RegisterMethodMapping(cls, @selector(authorizationView),
+                                     call_authorizationRights,
+                                     PyObjCUnsupportedMethod_IMP) < 0) {
 
         PyObjC_INITERROR();
     }
 
-    if (PyObjC_RegisterMethodMapping(
-        cls,
-        @selector(setAuthorizationView:),
-        call_setAuthorizationRights_,
-        PyObjCUnsupportedMethod_IMP) < 0) {
+    if (PyObjC_RegisterMethodMapping(cls, @selector(setAuthorizationView:),
+                                     call_setAuthorizationRights_,
+                                     PyObjCUnsupportedMethod_IMP) < 0) {
 
         PyObjC_INITERROR();
     }

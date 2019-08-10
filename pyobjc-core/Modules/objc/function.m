@@ -194,14 +194,16 @@ func_call(PyObject* s, PyObject* args, PyObject* kwds)
         cifptr = self->cif;
     }
 
-    PyObjC_DURING ffi_call(cifptr, FFI_FN(self->function), argbuf, values);
+    Py_BEGIN_ALLOW_THREADS
+        @try {
+            ffi_call(cifptr, FFI_FN(self->function), argbuf, values);
 
-    PyObjC_HANDLER PyObjCErr_FromObjC(localException);
+        } @catch (NSObject* localException) {
+            PyObjCErr_FromObjC(localException);
+        }
+    Py_END_ALLOW_THREADS
 
-    PyObjC_ENDHANDLER
-
-        if (PyErr_Occurred())
-    {
+    if (PyErr_Occurred()) {
         goto error;
     }
 

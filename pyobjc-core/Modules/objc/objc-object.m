@@ -153,16 +153,20 @@ object_dealloc(PyObject* obj)
             ((PyObjCObject*)obj)->objc_object = nil;
 
         } else {
-            PyObjC_DURING if (((PyObjCObject*)obj)->flags & PyObjCObject_kCFOBJECT)
-            {
-                CFRelease(((PyObjCObject*)obj)->objc_object);
-            }
-            else { CFRelease(((PyObjCObject*)obj)->objc_object); }
+            Py_BEGIN_ALLOW_THREADS
+                @try {
+                    if (((PyObjCObject*)obj)->flags & PyObjCObject_kCFOBJECT) {
+                        CFRelease(((PyObjCObject*)obj)->objc_object);
+                    } else {
+                        CFRelease(((PyObjCObject*)obj)->objc_object);
+                    }
 
-            PyObjC_HANDLER NSLog(@"PyObjC: Exception during dealloc of proxy: %@",
-                                 localException);
-
-            PyObjC_ENDHANDLER((PyObjCObject*)obj)->objc_object = nil;
+                } @catch (NSObject* localException) {
+                    NSLog(@"PyObjC: Exception during dealloc of proxy: %@",
+                          localException);
+                }
+            Py_END_ALLOW_THREADS((PyObjCObject*)obj)
+            ->objc_object = nil;
         }
     }
 
@@ -626,10 +630,11 @@ object_setattro(PyObject* obj, PyObject* name, PyObject* value)
                 obj_name =
                     [NSString stringWithUTF8String:PyObjC_Unicode_Fast_Bytes(name)];
 
-                NS_DURING [(NSObject*)obj_inst willChangeValueForKey:obj_name];
-                NS_HANDLER
-                PyObjCErr_FromObjC(localException);
-                NS_ENDHANDLER
+                @try {
+                    [(NSObject*)obj_inst willChangeValueForKey:obj_name];
+                } @catch (NSObject* localException) {
+                    PyObjCErr_FromObjC(localException);
+                }
                 if (PyErr_Occurred()) {
                     return -1;
                 }
@@ -697,10 +702,11 @@ object_setattro(PyObject* obj, PyObject* name, PyObject* value)
     res = -1;
 done:
     if (obj_inst && obj_name) {
-        NS_DURING [(NSObject*)obj_inst didChangeValueForKey:obj_name];
-        NS_HANDLER
-        PyObjCErr_FromObjC(localException);
-        NS_ENDHANDLER
+        @try {
+            [(NSObject*)obj_inst didChangeValueForKey:obj_name];
+        } @catch (NSObject* localException) {
+            PyObjCErr_FromObjC(localException);
+        }
         if (PyErr_Occurred()) {
             res = -1;
         }
