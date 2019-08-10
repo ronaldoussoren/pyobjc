@@ -2,7 +2,8 @@ from PyObjCTools.TestSupport import *
 
 import Security
 
-class TestSecBase (TestCase):
+
+class TestSecBase(TestCase):
     def test_types(self):
         self.assertIsCFType(Security.SecCertificateRef)
         self.assertIsCFType(Security.SecIdentityRef)
@@ -12,7 +13,7 @@ class TestSecBase (TestCase):
         self.assertIsCFType(Security.SecAccessRef)
         self.assertIsCFType(Security.SecACLRef)
 
-    @min_os_level('10.10')
+    @min_os_level("10.10")
     def test_types_10_10(self):
         self.assertIsCFType(Security.SecAccessControlRef)
 
@@ -476,12 +477,13 @@ class TestSecBase (TestCase):
         self.assertEqual(Security.errSSLATSCertificateHashAlgorithmViolation, -9885)
         self.assertEqual(Security.errSSLATSCertificateTrustViolation, -9886)
 
-
     def test_functions(self):
         self.assertResultHasType(Security.SecCopyErrorMessageString, objc._C_ID)
         self.assertResultIsCFRetained(Security.SecCopyErrorMessageString)
         self.assertArgHasType(Security.SecCopyErrorMessageString, 0, objc._C_INT)
-        self.assertArgHasType(Security.SecCopyErrorMessageString, 1, objc._C_PTR + objc._C_VOID)
+        self.assertArgHasType(
+            Security.SecCopyErrorMessageString, 1, objc._C_PTR + objc._C_VOID
+        )
 
 
 if __name__ == "__main__":

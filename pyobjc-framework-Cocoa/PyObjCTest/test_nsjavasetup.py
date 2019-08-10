@@ -3,8 +3,9 @@ import os
 
 from Foundation import *
 
-class TestNSJavaSetup (TestCase):
-    @max_os_level('10.5')
+
+class TestNSJavaSetup(TestCase):
+    @max_os_level("10.5")
     def testConstants(self):
         self.assertIsInstance(NSJavaClasses, unicode)
         self.assertIsInstance(NSJavaRoot, unicode)
@@ -17,7 +18,8 @@ class TestNSJavaSetup (TestCase):
         self.assertIsInstance(NSJavaDidSetupVirtualMachineNotification, unicode)
         self.assertIsInstance(NSJavaWillCreateVirtualMachineNotification, unicode)
         self.assertIsInstance(NSJavaDidCreateVirtualMachineNotification, unicode)
-    @max_os_level('10.5')
+
+    @max_os_level("10.5")
     def testFunctions(self):
         v = NSJavaNeedsVirtualMachine({})
         self.assertIs(v, False)
@@ -31,7 +33,7 @@ class TestNSJavaSetup (TestCase):
         self.assertIsInstance(v, objc.objc_object)
         v = NSJavaObjectNamedInPath("java.lang.Object", None)
         self.assertIsInstance(v, objc.objc_object)
-        v, vm = NSJavaClassesFromPath(None, ['java.lang.Object'], True, None)
+        v, vm = NSJavaClassesFromPath(None, ["java.lang.Object"], True, None)
         self.assertIsInstance(v, NSArray)
         self.assertEqual(len(v), 1)
         self.assertIsInstance(vm, objc.objc_object)
@@ -46,7 +48,7 @@ class TestNSJavaSetup (TestCase):
         # plan to fix is (there is no problem with PyObjC or the Foundation
         # wrappers)
         fd = os.dup(2)
-        x = os.open('/dev/null', os.O_WRONLY)
+        x = os.open("/dev/null", os.O_WRONLY)
         os.dup2(x, 2)
         os.close(x)
         try:

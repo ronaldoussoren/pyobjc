@@ -23,12 +23,14 @@ def RedBlackRedRampEvaluate(info, input, output):
         # to zero at the midpoint of the shading (input value 0.5)
         # and increases up to 1 at the endpoint of the shading (input
         # value 1.0).
-        abs(1.0 - input[0]*2),
+        abs(1.0 - input[0] * 2),
         # The green and blue components are always 0.
-        0, 0,
+        0,
+        0,
         # The alpha component is 1 for the entire shading.
         1,
     )
+
 
 def createFunctionForRGB(evaluationFunction):
     # This is a 1 in, 4 out function for drawing shadings
@@ -44,13 +46,17 @@ def createFunctionForRGB(evaluationFunction):
 
     range = (
         # The red component, min and max.
-        0, 1,
+        0,
+        1,
         # The green component, min and max.
-        0, 1,
+        0,
+        1,
         # The blue component, min and max.
-        0, 1,
+        0,
+        1,
         # The alpha component, min and max.
-        0, 1
+        0,
+        1,
     )
 
     # Dimension of domain is 1 and dimension of range is 4.
@@ -62,6 +68,7 @@ def createFunctionForRGB(evaluationFunction):
 
     return function
 
+
 def doSimpleAxialShading(context):
     # This shading paints colors in the calibrated Generic RGB
     # color space so it needs a function that evaluates 1 in to 4 out.
@@ -72,16 +79,20 @@ def doSimpleAxialShading(context):
     # Start the shading at the point (20,20) and
     # end it at (420,20). The axis of the shading
     # is a line from (20,20) to (420,20).
-    startPoint = Quartz.CGPoint(x = 20, y = 20)
-    endPoint = Quartz.CGPoint(x = 420, y = 20)
+    startPoint = Quartz.CGPoint(x=20, y=20)
+    endPoint = Quartz.CGPoint(x=420, y=20)
 
     # Don't extend this shading.
     extendStart = extendEnd = False
 
-    shading = Quartz.CGShadingCreateAxial(Utilities.getTheCalibratedRGBColorSpace(),
-                            startPoint, endPoint,
-                            axialFunction,
-                            extendStart, extendEnd)
+    shading = Quartz.CGShadingCreateAxial(
+        Utilities.getTheCalibratedRGBColorSpace(),
+        startPoint,
+        endPoint,
+        axialFunction,
+        extendStart,
+        extendEnd,
+    )
     # The shading retains the function and this code
     # is done with the function so it should release it.
     del axialFunction
@@ -94,6 +105,7 @@ def doSimpleAxialShading(context):
     # current clipping area.
     Quartz.CGContextDrawShading(context, shading)
 
+
 def RedGreenRampEvaluate(info, input, output):
     # The domain of this function is 0 - 1. For an input value of 0
     # this function returns the color to paint at the start point
@@ -105,7 +117,6 @@ def RedGreenRampEvaluate(info, input, output):
     # For an RGB color space as the shading color space, this
     # function evaluates to produce a blend from pure, opaque
     # red at the start point to a pure opaque green at the end point.
-
 
     return (
         # The red component starts at 1 and reduces to zero as the input
@@ -122,6 +133,7 @@ def RedGreenRampEvaluate(info, input, output):
         1,
     )
 
+
 def doExampleAxialShading(context):
     rect = Quartz.CGRectMake(0, 0, 240, 240)
 
@@ -134,15 +146,19 @@ def doExampleAxialShading(context):
     # Start the shading at the point (20,20) and
     # end it at (220,220). The axis of the shading
     # is a diagonal line from (20,20) to (220,220).
-    startPoint = Quartz.CGPoint(x = 20, y = 20)
-    endPoint = Quartz.CGPoint(x = 220, y = 220)
+    startPoint = Quartz.CGPoint(x=20, y=20)
+    endPoint = Quartz.CGPoint(x=220, y=220)
 
     # Don't extend this shading.
     extendStart = extendEnd = False
-    shading = Quartz.CGShadingCreateAxial(Utilities.getTheCalibratedRGBColorSpace(),
-                            startPoint, endPoint,
-                            redGreenFunction,
-                            extendStart, extendEnd)
+    shading = Quartz.CGShadingCreateAxial(
+        Utilities.getTheCalibratedRGBColorSpace(),
+        startPoint,
+        endPoint,
+        redGreenFunction,
+        extendStart,
+        extendEnd,
+    )
 
     if shading is None:
         print("Couldn't create the shading!")
@@ -174,10 +190,14 @@ def doExampleAxialShading(context):
 
     # Extend this shading.
     extendStart = extendEnd = True
-    shading = Quartz.CGShadingCreateAxial(Utilities.getTheCalibratedRGBColorSpace(),
-                            startPoint, endPoint,
-                            redGreenFunction,
-                            extendStart, extendEnd)
+    shading = Quartz.CGShadingCreateAxial(
+        Utilities.getTheCalibratedRGBColorSpace(),
+        startPoint,
+        endPoint,
+        redGreenFunction,
+        extendStart,
+        extendEnd,
+    )
     # The shading retains the function and this code
     # is done with the function so it should release it.
     del redGreenFunction
@@ -204,8 +224,9 @@ def doExampleAxialShading(context):
 
         # Set the font with the PostScript name "Times-Roman", at
         # 80 points, with the MacRoman encoding.
-        Quartz.CGContextSelectFont(context, b"Times-Roman", 80,
-                                            Quartz.kCGEncodingMacRoman)
+        Quartz.CGContextSelectFont(
+            context, b"Times-Roman", 80, Quartz.kCGEncodingMacRoman
+        )
 
         # Rotate so that the text characters are rotated
         # relative to the page.
@@ -233,10 +254,12 @@ def doExampleAxialShading(context):
     # Release the shading once the code is finished with it.
     del shading
 
-class MyStartEndColor (object):
+
+class MyStartEndColor(object):
     def __init__(self):
         self.startColor = [0.0] * 3
         self.endColor = [0.0] * 3
+
 
 def StartColorEndColorEvaluate(info, input, output):
     # The domain of this function is 0 - 1. For an input value of 0
@@ -255,17 +278,18 @@ def StartColorEndColorEvaluate(info, input, output):
     # Weight the starting and ending color components depending
     # on what position in the blend the input value specifies.
     return (
-        (info.startColor[0]*(1-input[0]) + info.endColor[0]*input[0]),
-        (info.startColor[1]*(1-input[0]) + info.endColor[1]*input[0]),
-        (info.startColor[2]*(1-input[0]) + info.endColor[2]*input[0]),
+        (info.startColor[0] * (1 - input[0]) + info.endColor[0] * input[0]),
+        (info.startColor[1] * (1 - input[0]) + info.endColor[1] * input[0]),
+        (info.startColor[2] * (1 - input[0]) + info.endColor[2] * input[0]),
         # The alpha component is always 1, the shading is always opaque.
         1,
     )
 
+
 def createFunctionWithStartEndColorRamp(startColor, endColor):
     # Use a pointer to a MyStartEndColor as a way of
     # parameterizing the color ramp this function produces.
-    startEndColorP =  MyStartEndColor()
+    startEndColorP = MyStartEndColor()
 
     # Set up start and end colors in the info structure.
     startEndColorP.startColor[0] = startColor[0]
@@ -289,18 +313,23 @@ def createFunctionWithStartEndColorRamp(startColor, endColor):
 
     range = (
         # The red component, min and max.
-        0, 1,
+        0,
+        1,
         # The green component, min and max.
-        0, 1,
+        0,
+        1,
         # The blue component, min and max.
-        0, 1,
+        0,
+        1,
         # The alpha component, min and max.
-        0, 1,
+        0,
+        1,
     )
 
     # Pass startEndColorP as the info parameter.
-    function = Quartz.CGFunctionCreate(startEndColorP, 1, domain, 4,
-                        range, StartColorEndColorEvaluate)
+    function = Quartz.CGFunctionCreate(
+        startEndColorP, 1, domain, 4, range, StartColorEndColorEvaluate
+    )
 
     if function is None:
         print("Couldn't create the CGFunction!")
@@ -308,21 +337,21 @@ def createFunctionWithStartEndColorRamp(startColor, endColor):
 
     return function
 
+
 def doSimpleRadialShading(context):
-    startColor = [ 0.663, 0.0, 0.031 ] # Red.
-    endColor   = [ 1.0,   0.8, 0.4   ] # Light yellow.
+    startColor = [0.663, 0.0, 0.031]  # Red.
+    endColor = [1.0, 0.8, 0.4]  # Light yellow.
 
     # This function describes a color ramp where the starting color
     # is red and the ending color is blue.
-    redYellowFunction = createFunctionWithStartEndColorRamp(
-                                        startColor, endColor)
+    redYellowFunction = createFunctionWithStartEndColorRamp(startColor, endColor)
     if redYellowFunction is None:
         return
 
     Quartz.CGContextTranslateCTM(context, 120, 120)
 
     # Circles whose origin is the same.
-    circleACenter = Quartz.CGPoint(x = 0, y = 0)
+    circleACenter = Quartz.CGPoint(x=0, y=0)
     circleBCenter = circleACenter
 
     # The starting circle is inside the ending circle.
@@ -332,11 +361,15 @@ def doSimpleRadialShading(context):
     #  Don't extend the shading.
     extendStart = extendEnd = False
     shading = Quartz.CGShadingCreateRadial(
-                Utilities.getTheCalibratedRGBColorSpace(),
-                circleACenter, circleARadius,
-                circleBCenter, circleBRadius,
-                redYellowFunction,
-                extendStart, extendEnd)
+        Utilities.getTheCalibratedRGBColorSpace(),
+        circleACenter,
+        circleARadius,
+        circleBCenter,
+        circleBRadius,
+        redYellowFunction,
+        extendStart,
+        extendEnd,
+    )
 
     del redYellowFunction
     if shading is None:
@@ -344,21 +377,21 @@ def doSimpleRadialShading(context):
         return
     Quartz.CGContextDrawShading(context, shading)
 
+
 def doExampleRadialShadings(context):
-    magenta   = [ 1,    0, 1    ] # Pure magenta.
-    magenta30 = [ 0.3,  0, 0.3  ] # 30% magenta.
-    black     = [ 0,    0, 0    ]
-    red       = [ 1,    0, 0    ]
-    green     = [ 0,    1, 0    ]
-    blue      = [ 0,    0, 1    ]
-    redgreen  = [ 0.66, 1, 0.04 ] # A red-green shade.
+    magenta = [1, 0, 1]  # Pure magenta.
+    magenta30 = [0.3, 0, 0.3]  # 30% magenta.
+    black = [0, 0, 0]
+    red = [1, 0, 0]
+    green = [0, 1, 0]
+    blue = [0, 0, 1]
+    redgreen = [0.66, 1, 0.04]  # A red-green shade.
 
     Quartz.CGContextTranslateCTM(context, 120, 550)
 
     # This function describes a color ramp where the starting color
     # is a full magenta, the ending color is 30% magenta.
-    magentaFunction = createFunctionWithStartEndColorRamp(
-                            magenta, magenta30)
+    magentaFunction = createFunctionWithStartEndColorRamp(magenta, magenta30)
     if magentaFunction is None:
         print("Couldn't create the magenta function!")
         return
@@ -379,11 +412,15 @@ def doExampleRadialShadings(context):
     # Don't extend the shading.
     extendStart = extendEnd = False
     shading = Quartz.CGShadingCreateRadial(
-                Utilities.getTheCalibratedRGBColorSpace(),
-                circleACenter, circleARadius,
-                circleBCenter, circleBRadius,
-                magentaFunction,
-                extendStart, extendEnd)
+        Utilities.getTheCalibratedRGBColorSpace(),
+        circleACenter,
+        circleARadius,
+        circleBCenter,
+        circleBRadius,
+        magentaFunction,
+        extendStart,
+        extendEnd,
+    )
     # Finished with the magenta function so release it.
     del magentaFunction
     if shading is None:
@@ -398,8 +435,7 @@ def doExampleRadialShadings(context):
     # circle B but with different origins.
 
     # The starting color is red and the ending color is green.
-    redGreenFunction = createFunctionWithStartEndColorRamp(
-                            red, green)
+    redGreenFunction = createFunctionWithStartEndColorRamp(red, green)
     if redGreenFunction is None:
         print("Couldn't create the red-Green function!")
         return
@@ -417,11 +453,15 @@ def doExampleRadialShadings(context):
     extendStart = False
     extendEnd = True
     shading = Quartz.CGShadingCreateRadial(
-                    Utilities.getTheCalibratedRGBColorSpace(),
-                    circleACenter, circleARadius,
-                    circleBCenter, circleBRadius,
-                    redGreenFunction,
-                    extendStart, extendEnd)
+        Utilities.getTheCalibratedRGBColorSpace(),
+        circleACenter,
+        circleARadius,
+        circleBCenter,
+        circleBRadius,
+        redGreenFunction,
+        extendStart,
+        extendEnd,
+    )
     # Finished with this function so release it.
     del redGreenFunction
     if shading is None:
@@ -437,11 +477,15 @@ def doExampleRadialShadings(context):
         Quartz.CGContextTranslateCTM(context, 250, 0)
         Quartz.CGContextBeginPath(context)
         Quartz.CGContextMoveToPoint(context, 25, 0)
-        Quartz.CGContextAddArc(context,
-                        25, 0, 130,
-                        Utilities.DEGREES_TO_RADIANS(30),
-                        Utilities.DEGREES_TO_RADIANS(-30),
-                        0)
+        Quartz.CGContextAddArc(
+            context,
+            25,
+            0,
+            130,
+            Utilities.DEGREES_TO_RADIANS(30),
+            Utilities.DEGREES_TO_RADIANS(-30),
+            0,
+        )
         Quartz.CGContextClip(context)
         # Paint the shading.
         Quartz.CGContextDrawShading(context, shading)
@@ -465,18 +509,21 @@ def doExampleRadialShadings(context):
     extendStart = extendEnd = False
 
     # Create a function that paints a red to black ramp.
-    redBlackFunction = createFunctionWithStartEndColorRamp(
-                            red, black)
+    redBlackFunction = createFunctionWithStartEndColorRamp(red, black)
     if redBlackFunction is None:
         print("Couldn't create the red-black function!")
         return
 
     shading = Quartz.CGShadingCreateRadial(
-                    Utilities.getTheCalibratedRGBColorSpace(),
-                    circleACenter, circleARadius,
-                    circleBCenter, circleBRadius,
-                    redBlackFunction,
-                    extendStart, extendEnd)
+        Utilities.getTheCalibratedRGBColorSpace(),
+        circleACenter,
+        circleARadius,
+        circleBCenter,
+        circleBRadius,
+        redBlackFunction,
+        extendStart,
+        extendEnd,
+    )
     if shading is None:
         print("Couldn't create the shading!")
         return
@@ -498,11 +545,15 @@ def doExampleRadialShadings(context):
     # Extend at the start and end.
     extendStart = extendEnd = True
     shading = Quartz.CGShadingCreateRadial(
-                Utilities.getTheCalibratedRGBColorSpace(),
-                circleACenter, circleARadius,
-                circleBCenter, circleBRadius,
-                redBlackFunction,
-                extendStart, extendEnd)
+        Utilities.getTheCalibratedRGBColorSpace(),
+        circleACenter,
+        circleARadius,
+        circleBCenter,
+        circleBRadius,
+        redBlackFunction,
+        extendStart,
+        extendEnd,
+    )
     # Finished with this function so release it.
     del redBlackFunction
     if shading is None:
@@ -515,8 +566,9 @@ def doExampleRadialShadings(context):
         # Clip to an elliptical path so the shading
         # does not extend to infinity at the larger end.
         Quartz.CGContextBeginPath(context)
-        Utilities.myCGContextAddEllipseInRect(context,
-                        Quartz.CGRectMake(-200, -200, 450, 400))
+        Utilities.myCGContextAddEllipseInRect(
+            context, Quartz.CGRectMake(-200, -200, 450, 400)
+        )
         Quartz.CGContextClip(context)
         Quartz.CGContextDrawShading(context, shading)
         # Finished with the shading so release it.
@@ -526,8 +578,7 @@ def doExampleRadialShadings(context):
     Quartz.CGContextTranslateCTM(context, 30, -200)
 
     # The starting color is blue, the ending color is a red-green color.
-    blueGreenFunction = createFunctionWithStartEndColorRamp(
-                            blue, redgreen)
+    blueGreenFunction = createFunctionWithStartEndColorRamp(blue, redgreen)
     if blueGreenFunction is None:
         print("Couldn't create the blue-Green function!")
         return
@@ -544,11 +595,15 @@ def doExampleRadialShadings(context):
 
     extendStart = extendEnd = False
     shading = Quartz.CGShadingCreateRadial(
-                    Utilities.getTheCalibratedRGBColorSpace(),
-                    circleACenter, circleARadius,
-                    circleBCenter, circleBRadius,
-                    blueGreenFunction,
-                    extendStart, extendEnd)
+        Utilities.getTheCalibratedRGBColorSpace(),
+        circleACenter,
+        circleARadius,
+        circleBCenter,
+        circleBRadius,
+        blueGreenFunction,
+        extendStart,
+        extendEnd,
+    )
     if shading is None:
         print("Couldn't create the shading!")
         return
@@ -565,11 +620,15 @@ def doExampleRadialShadings(context):
     circleARadius = 45
     circleBRadius = 75
     shading = Quartz.CGShadingCreateRadial(
-                    Utilities.getTheCalibratedRGBColorSpace(),
-                    circleACenter, circleARadius,
-                    circleBCenter, circleBRadius,
-                    blueGreenFunction,
-                    extendStart, extendEnd)
+        Utilities.getTheCalibratedRGBColorSpace(),
+        circleACenter,
+        circleARadius,
+        circleBCenter,
+        circleBRadius,
+        blueGreenFunction,
+        extendStart,
+        extendEnd,
+    )
     # Finished with this function so release it.
     del blueGreenFunction
     if shading is None:
@@ -578,14 +637,14 @@ def doExampleRadialShadings(context):
 
     Quartz.CGContextDrawShading(context, shading)
 
+
 def doEllipseShading(context):
-    black = [ 0, 0, 0 ]
-    red   = [ 1, 0, 0 ]
+    black = [0, 0, 0]
+    red = [1, 0, 0]
 
     # This function describes a color ramp where the starting color
     # is red, the ending color is black.
-    redBlackFunction = createFunctionWithStartEndColorRamp(
-                            red, black)
+    redBlackFunction = createFunctionWithStartEndColorRamp(red, black)
     if redBlackFunction is None:
         print("Couldn't create the red-black function!")
         return
@@ -612,11 +671,15 @@ def doEllipseShading(context):
     extendStart = extendEnd = False
 
     shading = Quartz.CGShadingCreateRadial(
-                    Utilities.getTheCalibratedRGBColorSpace(),
-                    circleACenter, circleARadius,
-                    circleBCenter, circleBRadius,
-                    redBlackFunction,
-                    extendStart, extendEnd)
+        Utilities.getTheCalibratedRGBColorSpace(),
+        circleACenter,
+        circleARadius,
+        circleBCenter,
+        circleBRadius,
+        redBlackFunction,
+        extendStart,
+        extendEnd,
+    )
     if shading is None:
         # Couldn't create the shading so release
         # the function before returning.
@@ -637,7 +700,6 @@ def doEllipseShading(context):
     Quartz.CGContextRestoreGState(context)
 
     Quartz.CGContextTranslateCTM(context, 300, 10)
-
 
     # Shading 2.
     #    Now draw the shading where the shading ellipses are
@@ -677,11 +739,15 @@ def doEllipseShading(context):
     circleBCenter = Quartz.CGPointApplyAffineTransform(circleBCenter, inverseT)
 
     shading = Quartz.CGShadingCreateRadial(
-                    Utilities.getTheCalibratedRGBColorSpace(),
-                    circleACenter, circleARadius,
-                    circleBCenter, circleBRadius,
-                    redBlackFunction,
-                    extendStart, extendEnd)
+        Utilities.getTheCalibratedRGBColorSpace(),
+        circleACenter,
+        circleARadius,
+        circleBCenter,
+        circleBRadius,
+        redBlackFunction,
+        extendStart,
+        extendEnd,
+    )
     # The code is finished with the function so release it.
     del redBlackFunction
     if shading is None:

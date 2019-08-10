@@ -1,9 +1,8 @@
-
 from PyObjCTools.TestSupport import *
 from AppKit import *
 
 
-class TestNSOpenGL (TestCase):
+class TestNSOpenGL(TestCase):
     def testConstants(self):
         self.assertEqual(NSOpenGLGOFormatCacheSize, 501)
         self.assertEqual(NSOpenGLGOClearFormatCache, 502)
@@ -11,42 +10,41 @@ class TestNSOpenGL (TestCase):
         self.assertEqual(NSOpenGLGOResetLibrary, 504)
         self.assertEqual(NSOpenGLGOUseBuildCache, 506)
 
-        self.assertEqual(NSOpenGLPFAAllRenderers,   1)
-        self.assertEqual(NSOpenGLPFATripleBuffer,   3)
-        self.assertEqual(NSOpenGLPFADoubleBuffer,   5)
-        self.assertEqual(NSOpenGLPFAStereo,   6)
-        self.assertEqual(NSOpenGLPFAAuxBuffers,   7)
-        self.assertEqual(NSOpenGLPFAColorSize,   8)
-        self.assertEqual(NSOpenGLPFAAlphaSize,  11)
-        self.assertEqual(NSOpenGLPFADepthSize,  12)
-        self.assertEqual(NSOpenGLPFAStencilSize,  13)
-        self.assertEqual(NSOpenGLPFAAccumSize,  14)
-        self.assertEqual(NSOpenGLPFAMinimumPolicy,  51)
-        self.assertEqual(NSOpenGLPFAMaximumPolicy,  52)
-        self.assertEqual(NSOpenGLPFAOffScreen,  53)
-        self.assertEqual(NSOpenGLPFAFullScreen,  54)
-        self.assertEqual(NSOpenGLPFASampleBuffers,  55)
-        self.assertEqual(NSOpenGLPFASamples,  56)
-        self.assertEqual(NSOpenGLPFAAuxDepthStencil,  57)
-        self.assertEqual(NSOpenGLPFAColorFloat,  58)
-        self.assertEqual(NSOpenGLPFAMultisample,  59)
-        self.assertEqual(NSOpenGLPFASupersample,  60)
-        self.assertEqual(NSOpenGLPFASampleAlpha,  61)
-        self.assertEqual(NSOpenGLPFARendererID,  70)
-        self.assertEqual(NSOpenGLPFASingleRenderer,  71)
-        self.assertEqual(NSOpenGLPFANoRecovery,  72)
-        self.assertEqual(NSOpenGLPFAAccelerated,  73)
-        self.assertEqual(NSOpenGLPFAClosestPolicy,  74)
-        self.assertEqual(NSOpenGLPFARobust,  75)
-        self.assertEqual(NSOpenGLPFABackingStore,  76)
-        self.assertEqual(NSOpenGLPFAMPSafe,  78)
-        self.assertEqual(NSOpenGLPFAWindow,  80)
-        self.assertEqual(NSOpenGLPFAMultiScreen,  81)
-        self.assertEqual(NSOpenGLPFACompliant,  83)
-        self.assertEqual(NSOpenGLPFAScreenMask,  84)
-        self.assertEqual(NSOpenGLPFAPixelBuffer,  90)
+        self.assertEqual(NSOpenGLPFAAllRenderers, 1)
+        self.assertEqual(NSOpenGLPFATripleBuffer, 3)
+        self.assertEqual(NSOpenGLPFADoubleBuffer, 5)
+        self.assertEqual(NSOpenGLPFAStereo, 6)
+        self.assertEqual(NSOpenGLPFAAuxBuffers, 7)
+        self.assertEqual(NSOpenGLPFAColorSize, 8)
+        self.assertEqual(NSOpenGLPFAAlphaSize, 11)
+        self.assertEqual(NSOpenGLPFADepthSize, 12)
+        self.assertEqual(NSOpenGLPFAStencilSize, 13)
+        self.assertEqual(NSOpenGLPFAAccumSize, 14)
+        self.assertEqual(NSOpenGLPFAMinimumPolicy, 51)
+        self.assertEqual(NSOpenGLPFAMaximumPolicy, 52)
+        self.assertEqual(NSOpenGLPFAOffScreen, 53)
+        self.assertEqual(NSOpenGLPFAFullScreen, 54)
+        self.assertEqual(NSOpenGLPFASampleBuffers, 55)
+        self.assertEqual(NSOpenGLPFASamples, 56)
+        self.assertEqual(NSOpenGLPFAAuxDepthStencil, 57)
+        self.assertEqual(NSOpenGLPFAColorFloat, 58)
+        self.assertEqual(NSOpenGLPFAMultisample, 59)
+        self.assertEqual(NSOpenGLPFASupersample, 60)
+        self.assertEqual(NSOpenGLPFASampleAlpha, 61)
+        self.assertEqual(NSOpenGLPFARendererID, 70)
+        self.assertEqual(NSOpenGLPFASingleRenderer, 71)
+        self.assertEqual(NSOpenGLPFANoRecovery, 72)
+        self.assertEqual(NSOpenGLPFAAccelerated, 73)
+        self.assertEqual(NSOpenGLPFAClosestPolicy, 74)
+        self.assertEqual(NSOpenGLPFARobust, 75)
+        self.assertEqual(NSOpenGLPFABackingStore, 76)
+        self.assertEqual(NSOpenGLPFAMPSafe, 78)
+        self.assertEqual(NSOpenGLPFAWindow, 80)
+        self.assertEqual(NSOpenGLPFAMultiScreen, 81)
+        self.assertEqual(NSOpenGLPFACompliant, 83)
+        self.assertEqual(NSOpenGLPFAScreenMask, 84)
+        self.assertEqual(NSOpenGLPFAPixelBuffer, 90)
         self.assertEqual(NSOpenGLPFAVirtualScreenCount, 128)
-
 
         self.assertEqual(NSOpenGLCPSwapRectangle, 200)
         self.assertEqual(NSOpenGLCPSwapRectangleEnable, 201)
@@ -94,7 +92,6 @@ class TestNSOpenGL (TestCase):
     def testConstants10_10(self):
         self.assertEqual(NSOpenGLProfileVersion4_1Core, 0x4100)
 
-
     def testFunctions(self):
         major, minor = NSOpenGLGetVersion(None, None)
         self.assertIsInstance(major, (int, long))
@@ -110,20 +107,23 @@ class TestNSOpenGL (TestCase):
         self.assertArgIsNullTerminated(NSOpenGLPixelFormat.initWithAttributes_, 0)
         self.assertArgIsIn(NSOpenGLPixelFormat.initWithAttributes_, 0)
 
-        o = NSOpenGLPixelFormat.alloc().initWithAttributes_([NSOpenGLPFANoRecovery, NSOpenGLPFAAuxBuffers, 2])
+        o = NSOpenGLPixelFormat.alloc().initWithAttributes_(
+            [NSOpenGLPFANoRecovery, NSOpenGLPFAAuxBuffers, 2]
+        )
         self.assertIsInstance(o, NSOpenGLPixelFormat)
 
-        #FIXME: I'm not entirely sure this test is correct.
-        self.assertArgIsOut(NSOpenGLPixelFormat.getValues_forAttribute_forVirtualScreen_, 0)
-        v = o.getValues_forAttribute_forVirtualScreen_(
-                None, NSOpenGLPFANoRecovery, 0)
+        # FIXME: I'm not entirely sure this test is correct.
+        self.assertArgIsOut(
+            NSOpenGLPixelFormat.getValues_forAttribute_forVirtualScreen_, 0
+        )
+        v = o.getValues_forAttribute_forVirtualScreen_(None, NSOpenGLPFANoRecovery, 0)
         self.assertIsInstance(v, (int, long))
 
-        self.assertResultHasType(NSOpenGLPixelFormat.CGLPixelFormatObj,
-                b'^{_CGLPixelFormatObject}')
+        self.assertResultHasType(
+            NSOpenGLPixelFormat.CGLPixelFormatObj, b"^{_CGLPixelFormatObject}"
+        )
 
-        self.assertResultHasType(NSOpenGLContext.CGLContextObj,
-                b'^{_CGLContextObj}')
+        self.assertResultHasType(NSOpenGLContext.CGLContextObj, b"^{_CGLContextObj}")
 
         self.assertArgIsIn(NSOpenGLContext.setValues_forParameter_, 0)
         self.assertArgIsVariableSize(NSOpenGLContext.setValues_forParameter_, 0)
@@ -132,15 +132,21 @@ class TestNSOpenGL (TestCase):
         self.assertArgIsVariableSize(NSOpenGLContext.setValues_forParameter_, 0)
 
         self.assertArgIsIn(NSOpenGLContext.setOffScreen_width_height_rowbytes_, 0)
-        self.assertArgIsVariableSize(NSOpenGLContext.setOffScreen_width_height_rowbytes_, 0)
+        self.assertArgIsVariableSize(
+            NSOpenGLContext.setOffScreen_width_height_rowbytes_, 0
+        )
 
-    @min_os_level('10.6')
+    @min_os_level("10.6")
     def testMethods10_6(self):
-        self.assertArgHasType(NSOpenGLPixelFormat.initWithCGLPixelFormatObj_, 0, b'^{_CGLPixelFormatObject}')
-        self.assertArgHasType(NSOpenGLPixelFormat.initWithCGLBufferObj, 0, b'^{_CGLBufferObject}')
-        self.assertResultHasType(NSOpenGLPixelFormat.CGLBufferObj, b'^{_CGLBufferObject}')
+        self.assertArgHasType(
+            NSOpenGLPixelFormat.initWithCGLPixelFormatObj_, 0, b"^{_CGLPixelFormatObject}"
+        )
+        self.assertArgHasType(
+            NSOpenGLPixelFormat.initWithCGLBufferObj, 0, b"^{_CGLBufferObject}"
+        )
+        self.assertResultHasType(NSOpenGLPixelFormat.CGLBufferObj, b"^{_CGLBufferObject}")
 
-    @min_os_level('10.6')
+    @min_os_level("10.6")
     def testMethods10_6(self):
         self.assertEqual(NSOpenGLPFARemotePixelBuffer, 91)
         self.assertEqual(NSOpenGLPFAAcceleratedCompute, 97)

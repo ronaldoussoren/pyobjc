@@ -2,7 +2,8 @@ from PyObjCTools.TestSupport import *
 
 import CoreMotion
 
-class TestCMAccelerometer (TestCase):
+
+class TestCMAccelerometer(TestCase):
     def test_structs(self):
         v = CoreMotion.CMRotationMatrix()
         self.assertEqual(v.m11, 0.0)
@@ -23,7 +24,10 @@ class TestCMAccelerometer (TestCase):
 
     def test_constants(self):
         self.assertEqual(CoreMotion.CMAttitudeReferenceFrameXArbitraryZVertical, 1 << 0)
-        self.assertEqual(CoreMotion.CMAttitudeReferenceFrameXArbitraryCorrectedZVertical, 1 << 1)
-        self.assertEqual(CoreMotion.CMAttitudeReferenceFrameXMagneticNorthZVertical, 1 << 2)
+        self.assertEqual(
+            CoreMotion.CMAttitudeReferenceFrameXArbitraryCorrectedZVertical, 1 << 1
+        )
+        self.assertEqual(
+            CoreMotion.CMAttitudeReferenceFrameXMagneticNorthZVertical, 1 << 2
+        )
         self.assertEqual(CoreMotion.CMAttitudeReferenceFrameXTrueNorthZVertical, 1 << 3)
-

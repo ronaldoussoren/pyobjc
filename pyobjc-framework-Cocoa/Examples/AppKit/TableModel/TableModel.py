@@ -54,13 +54,16 @@ class TableModel(NSObject):
         return self.rowcount
 
     def tableView_objectValueForTableColumn_row_(
-            self, aTableView, aTableColumn, rowIndex):
+        self, aTableView, aTableColumn, rowIndex
+    ):
         col = aTableColumn.identifier()
-        return self.editedFields.get((aTableColumn, rowIndex),
-            "{%s, %d}" % (col, rowIndex))
+        return self.editedFields.get(
+            (aTableColumn, rowIndex), "{%s, %d}" % (col, rowIndex)
+        )
 
     def tableView_setObjectValue_forTableColumn_row_(
-            self, aTableView, anObject, aTableColumn, rowIndex):
+        self, aTableView, anObject, aTableColumn, rowIndex
+    ):
         self.editedFields[(aTableColumn, rowIndex)] = anObject
 
     # delegate methods
@@ -86,7 +89,11 @@ class TableModel(NSObject):
         else:
             items = list(self.tableView.selectedRowEnumerator())
             word = "Row"
-        label = "%s%s: %s" % (word, ("s", "")[len(items) == 1], ", ".join([str(x) for x in items]))
+        label = "%s%s: %s" % (
+            word,
+            ("s", "")[len(items) == 1],
+            ", ".join([str(x) for x in items]),
+        )
         self.label.setStringValue_(label)
 
     def windowShouldClose_(self, sender):

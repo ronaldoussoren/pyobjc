@@ -70,7 +70,7 @@ class TestNSKeyedArchivingInterop(TestCase):
             os.unlink(cls.progpath)
 
     def test_interop_string(self):
-        for testval in (u"hello world", "goodbye moon"):
+        for testval in ("hello world", "goodbye moon"):
             v = NSArray.arrayWithObject_(testval)
             data, error = NSKeyedArchiver.archivedDataWithRootObject_requiringSecureCoding_error_(
                 v, True, None

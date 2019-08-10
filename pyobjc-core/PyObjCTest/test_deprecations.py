@@ -6,30 +6,14 @@ import contextlib
 from PyObjCTest.deprecations import *
 
 objc.registerMetaDataForSelector(b"OCTestDeprecations", b"method1", dict())
-objc.registerMetaDataForSelector(
-    b"OCTestDeprecations", b"method2", dict(deprecated=1004)
-)
-objc.registerMetaDataForSelector(
-    b"OCTestDeprecations", b"method3", dict(deprecated=1004)
-)
-objc.registerMetaDataForSelector(
-    b"OCTestDeprecations", b"method4", dict(deprecated=1005)
-)
-objc.registerMetaDataForSelector(
-    b"OCTestDeprecations", b"method5", dict(deprecated=1005)
-)
-objc.registerMetaDataForSelector(
-    b"OCTestDeprecations", b"method6", dict(deprecated=1006)
-)
-objc.registerMetaDataForSelector(
-    b"OCTestDeprecations", b"method7", dict(deprecated=1006)
-)
-objc.registerMetaDataForSelector(
-    b"OCTestDeprecations", b"method8", dict(deprecated=1010)
-)
-objc.registerMetaDataForSelector(
-    b"OCTestDeprecations", b"method9", dict(deprecated=1010)
-)
+objc.registerMetaDataForSelector(b"OCTestDeprecations", b"method2", dict(deprecated=1004))
+objc.registerMetaDataForSelector(b"OCTestDeprecations", b"method3", dict(deprecated=1004))
+objc.registerMetaDataForSelector(b"OCTestDeprecations", b"method4", dict(deprecated=1005))
+objc.registerMetaDataForSelector(b"OCTestDeprecations", b"method5", dict(deprecated=1005))
+objc.registerMetaDataForSelector(b"OCTestDeprecations", b"method6", dict(deprecated=1006))
+objc.registerMetaDataForSelector(b"OCTestDeprecations", b"method7", dict(deprecated=1006))
+objc.registerMetaDataForSelector(b"OCTestDeprecations", b"method8", dict(deprecated=1010))
+objc.registerMetaDataForSelector(b"OCTestDeprecations", b"method9", dict(deprecated=1010))
 
 _FunctionTable = [
     ("func1", b"i", "", dict()),

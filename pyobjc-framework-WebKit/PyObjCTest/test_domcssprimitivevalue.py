@@ -1,8 +1,8 @@
-
 from PyObjCTools.TestSupport import *
 from WebKit import *
 
-class TestDOMCSSPrimitiveValue (TestCase):
+
+class TestDOMCSSPrimitiveValue(TestCase):
     def testConstants(self):
         self.assertEqual(DOM_CSS_UNKNOWN, 0)
         self.assertEqual(DOM_CSS_NUMBER, 1)
@@ -34,6 +34,7 @@ class TestDOMCSSPrimitiveValue (TestCase):
         self.assertEqual(DOM_CSS_VH, 27)
         self.assertEqual(DOM_CSS_VMIN, 28)
         self.assertEqual(DOM_CSS_VMAX, 29)
+
 
 if __name__ == "__main__":
     main()

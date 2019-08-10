@@ -2,9 +2,10 @@ from PyObjCTools.TestSupport import *
 
 import DiscRecording
 
-DRNotificationCallback = b'v^{__DRNotificationCenter=}^v^{__CFString=}@^{__CFDictionary=}'
+DRNotificationCallback = b"v^{__DRNotificationCenter=}^v^{__CFString=}@^{__CFDictionary=}"
 
-class TestDRCoreNotifications (TestCase):
+
+class TestDRCoreNotifications(TestCase):
     @expectedFailure
     def testCFTypes(self):
         self.assertIsCFType(DiscRecording.DRNotificationCenterRef)
@@ -14,9 +15,13 @@ class TestDRCoreNotifications (TestCase):
 
         self.assertResultIsCFRetained(DiscRecording.DRNotificationCenterCreate)
 
-        self.assertResultIsCFRetained(DiscRecording.DRNotificationCenterCreateRunLoopSource)
+        self.assertResultIsCFRetained(
+            DiscRecording.DRNotificationCenterCreateRunLoopSource
+        )
 
-        self.assertArgIsFunction(DiscRecording.DRNotificationCenterAddObserver, 2, DRNotificationCallback, True)
+        self.assertArgIsFunction(
+            DiscRecording.DRNotificationCenterAddObserver, 2, DRNotificationCallback, True
+        )
 
         DiscRecording.DRNotificationCenterRemoveObserver
 

@@ -18,30 +18,31 @@ import DrawingBasics
 
 
 # Defines
-kCatPDF          = "Kitty.pdf"
+kCatPDF = "Kitty.pdf"
 kPDFForBlendMode = "blendmode.pdf"
 
-kOurJPEG          = "Poot.jpg"
-kQTImage          = "ptlobos.tif"
+kOurJPEG = "Poot.jpg"
+kQTImage = "ptlobos.tif"
 kOurSubstituteJPG = "LyingOnDeckNoProfile.JPG"
-kOurEPS           = "imageturkey.eps"
+kOurEPS = "imageturkey.eps"
 
-RAW_IMAGE_WIDTH   = 400
-RAW_IMAGE_HEIGHT  = 300
-kRawColorImage    = "image-400x300x24.raw"
-kOtherColorImage  = "otherimage-400x300x24.raw"
+RAW_IMAGE_WIDTH = 400
+RAW_IMAGE_HEIGHT = 300
+kRawColorImage = "image-400x300x24.raw"
+kOtherColorImage = "otherimage-400x300x24.raw"
 
-MASKING_IMAGE_WIDTH  = 400
+MASKING_IMAGE_WIDTH = 400
 MASKING_IMAGE_HEIGHT = 259
-kMaskingImage        = "400x259x8.bw.raw"
+kMaskingImage = "400x259x8.bw.raw"
 
-noOffScreen     = 0
+noOffScreen = 0
 bitmapOffScreen = 1
-layerOffScreen  = 2
+layerOffScreen = 2
 
 # Cache info for GetURL
 _mainBundle = None
 _urlMap = {}
+
 
 def GetURL(name):
     """
@@ -64,19 +65,22 @@ def GetURL(name):
         return
 
     if url is None:
-        print("Couldn't get URL for %r"%(name,))
+        print("Couldn't get URL for %r" % (name,))
 
     return url
+
 
 #
 # Helper functions for drawing
 #
+
 
 def callPDFDrawProc(context, proc, pdfFile):
     ourPDFurl = GetURL(pdfFile)
 
     if ourPDFurl:
         proc(context, ourPDFurl)
+
 
 def doDrawJPEGFile(context):
     ourJPEGurl = GetURL(kOurJPEG)
@@ -89,18 +93,18 @@ def doRawImageFileWithURL(context):
     url = GetURL(kRawColorImage)
 
     if url is not None:
-        Images.drawImageFromURL(context, url,
-            RAW_IMAGE_WIDTH, RAW_IMAGE_HEIGHT,
-            8, True);   # 8 bits per component, isColor = True
+        Images.drawImageFromURL(context, url, RAW_IMAGE_WIDTH, RAW_IMAGE_HEIGHT, 8, True)
+        # 8 bits per component, isColor = True
 
 
 def doRawImageFileWithCallbacks(context):
     url = GetURL(kRawColorImage)
 
     if url is not None:
-        Images.doImageWithCallbacksCreatedFromURL(context, url,
-                RAW_IMAGE_WIDTH, RAW_IMAGE_HEIGHT,
-                8, True);   # 8 bits per component, isColor = True
+        Images.doImageWithCallbacksCreatedFromURL(
+            context, url, RAW_IMAGE_WIDTH, RAW_IMAGE_HEIGHT, 8, True
+        )
+        # 8 bits per component, isColor = True
 
 
 def doDrawImageWithCGImageSource(context):
@@ -108,11 +112,13 @@ def doDrawImageWithCGImageSource(context):
     if url is not None:
         Images.drawImageWithCGImageDataSource(context, url)
 
+
 def doIncrementalImage(context):
     url = GetURL(kOurJPEG)
 
     if url is not None:
         Images.doIncrementalImageWithURL(context, url)
+
 
 def doQTImage(context):
     url = GetURL(kQTImage)
@@ -127,31 +133,49 @@ def doJPEGDocumentWithMultipleProfiles(context):
     if url is not None:
         Images.drawJPEGDocumentWithMultipleProfiles(context, url)
 
+
 def doMaskImageWithMask(context):
     theImageToMaskURL = GetURL(kOtherColorImage)
     theMaskingImageURL = GetURL(kMaskingImage)
 
-    if theImageToMaskURL is not None and  theMaskingImageURL is not None:
-        ImageMasking.doMaskImageWithMaskFromURL(context, theImageToMaskURL, RAW_IMAGE_WIDTH,
-                            RAW_IMAGE_HEIGHT, 8, theMaskingImageURL, MASKING_IMAGE_WIDTH,
-                            MASKING_IMAGE_HEIGHT)
+    if theImageToMaskURL is not None and theMaskingImageURL is not None:
+        ImageMasking.doMaskImageWithMaskFromURL(
+            context,
+            theImageToMaskURL,
+            RAW_IMAGE_WIDTH,
+            RAW_IMAGE_HEIGHT,
+            8,
+            theMaskingImageURL,
+            MASKING_IMAGE_WIDTH,
+            MASKING_IMAGE_HEIGHT,
+        )
+
 
 def doMaskImageWithGrayImage(context):
     theImageToMaskURL = GetURL(kOtherColorImage)
     theMaskingImageURL = GetURL(kMaskingImage)
 
     if theImageToMaskURL is not None and theMaskingImageURL is not None:
-        ImageMasking.doMaskImageWithGrayImageFromURL(context, theImageToMaskURL, RAW_IMAGE_WIDTH,
-                            RAW_IMAGE_HEIGHT, 8, theMaskingImageURL, MASKING_IMAGE_WIDTH,
-                            MASKING_IMAGE_HEIGHT)
+        ImageMasking.doMaskImageWithGrayImageFromURL(
+            context,
+            theImageToMaskURL,
+            RAW_IMAGE_WIDTH,
+            RAW_IMAGE_HEIGHT,
+            8,
+            theMaskingImageURL,
+            MASKING_IMAGE_WIDTH,
+            MASKING_IMAGE_HEIGHT,
+        )
+
 
 def doImageMaskedWithColor(context):
     url = GetURL(kOtherColorImage)
 
     if url is not None:
-        ImageMasking.doMaskImageWithColorFromURL(context, url,
-                        RAW_IMAGE_WIDTH, RAW_IMAGE_HEIGHT,
-                        True)
+        ImageMasking.doMaskImageWithColorFromURL(
+            context, url, RAW_IMAGE_WIDTH, RAW_IMAGE_HEIGHT, True
+        )
+
 
 def exportImageMaskedWithImage(context):
     theImageToMaskURL = GetURL(kOtherColorImage)
@@ -159,16 +183,25 @@ def exportImageMaskedWithImage(context):
 
     if theImageToMaskURL is not None and theMaskingImageURL is not None:
         ImageMasking.exportImageWithMaskFromURLWithDestination(
-                context, theImageToMaskURL, RAW_IMAGE_WIDTH,
-                RAW_IMAGE_HEIGHT, 8, theMaskingImageURL,
-                MASKING_IMAGE_WIDTH, MASKING_IMAGE_HEIGHT)
+            context,
+            theImageToMaskURL,
+            RAW_IMAGE_WIDTH,
+            RAW_IMAGE_HEIGHT,
+            8,
+            theMaskingImageURL,
+            MASKING_IMAGE_WIDTH,
+            MASKING_IMAGE_HEIGHT,
+        )
+
 
 def doClipMask(context):
     theMaskingImageURL = GetURL(kMaskingImage)
 
     if theMaskingImageURL is not None:
-        ImageMasking.drawWithClippingMask(context,
-            theMaskingImageURL, MASKING_IMAGE_WIDTH, MASKING_IMAGE_HEIGHT)
+        ImageMasking.drawWithClippingMask(
+            context, theMaskingImageURL, MASKING_IMAGE_WIDTH, MASKING_IMAGE_HEIGHT
+        )
+
 
 def tilePDFDocument(context, offscreenType):
     url = GetURL(kCatPDF)
@@ -180,6 +213,7 @@ def tilePDFDocument(context, offscreenType):
             BitmapContext.TilePDFWithOffscreenBitmap(context, url)
         else:
             BitmapContext.TilePDFWithCGLayer(context, url)
+
 
 def doCompatibleEPSDrawing(context):
     ourEPSurl = GetURL(kOurEPS)

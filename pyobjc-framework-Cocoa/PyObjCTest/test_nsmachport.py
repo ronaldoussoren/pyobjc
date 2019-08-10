@@ -2,7 +2,8 @@ from PyObjCTools.TestSupport import *
 import objc
 import Foundation
 
-if hasattr(Foundation, 'NSMachPort'):
+if hasattr(Foundation, "NSMachPort"):
+
     class TestNSMachPort(TestCase):
         def testAlloc(self):
             obj = Foundation.NSMachPort.alloc()
@@ -11,5 +12,6 @@ if hasattr(Foundation, 'NSMachPort'):
             obj = obj.init()
             self.assertIsNot(obj, None)
 
-if __name__ == '__main__':
-    main( )
+
+if __name__ == "__main__":
+    main()

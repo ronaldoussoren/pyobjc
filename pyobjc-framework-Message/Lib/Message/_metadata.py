@@ -5,25 +5,43 @@
 import objc, sys
 
 if sys.maxsize > 2 ** 32:
-    def sel32or64(a, b): return b
-else:
-    def sel32or64(a, b): return a
-if sys.byteorder == 'little':
-    def littleOrBig(a, b): return a
-else:
-    def littleOrBig(a, b): return b
 
-misc = {
-}
-constants = '''$NSASCIIMailFormat$NSMIMEMailFormat$NSSMTPDeliveryProtocol$NSSendmailDeliveryProtocol$'''
-enums = '''$$'''
+    def sel32or64(a, b):
+        return b
+
+
+else:
+
+    def sel32or64(a, b):
+        return a
+
+
+if sys.byteorder == "little":
+
+    def littleOrBig(a, b):
+        return a
+
+
+else:
+
+    def littleOrBig(a, b):
+        return b
+
+
+misc = {}
+constants = """$NSASCIIMailFormat$NSMIMEMailFormat$NSSMTPDeliveryProtocol$NSSendmailDeliveryProtocol$"""
+enums = """$$"""
 misc.update({})
 r = objc.registerMetaDataForSelector
 objc._updatingMetadata(True)
 try:
-    r(b'NSMailDelivery', b'deliverMessage:headers:format:protocol:', {'retval': {'type': 'Z'}})
-    r(b'NSMailDelivery', b'deliverMessage:subject:to:', {'retval': {'type': 'Z'}})
-    r(b'NSMailDelivery', b'hasDeliveryClassBeenConfigured', {'retval': {'type': 'Z'}})
+    r(
+        b"NSMailDelivery",
+        b"deliverMessage:headers:format:protocol:",
+        {"retval": {"type": "Z"}},
+    )
+    r(b"NSMailDelivery", b"deliverMessage:subject:to:", {"retval": {"type": "Z"}})
+    r(b"NSMailDelivery", b"hasDeliveryClassBeenConfigured", {"retval": {"type": "Z"}})
 finally:
     objc._updatingMetadata(False)
 expressions = {}

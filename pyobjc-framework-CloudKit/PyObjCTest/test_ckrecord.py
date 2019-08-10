@@ -4,10 +4,10 @@ if sys.maxsize > 2 ** 32:
     from PyObjCTools.TestSupport import *
     import CloudKit
 
-    class TestCKRecord (TestCase):
+    class TestCKRecord(TestCase):
         @min_sdk_level("10.11")
         def testProtocols(self):
-            objc.protocolNamed('CKRecordKeyValueSetting')
+            objc.protocolNamed("CKRecordKeyValueSetting")
 
         @min_os_level("10.10")
         def testClasses(self):
@@ -22,6 +22,7 @@ if sys.maxsize > 2 ** 32:
         def testConstants(self):
             self.assertIsInstance(CloudKit.CKRecordParentKey, unicode)
             self.assertIsInstance(CloudKit.CKRecordShareKey, unicode)
+
 
 if __name__ == "__main__":
     main()

@@ -1,9 +1,9 @@
-
 from PyObjCTools.TestSupport import *
 from ServiceManagement import *
 
-class TestSMErrors (TestCase):
-    @min_os_level('10.6')
+
+class TestSMErrors(TestCase):
+    @min_os_level("10.6")
     def testConstants(self):
         self.assertIsInstance(kSMErrorDomainIPC, unicode)
         self.assertIsInstance(kSMErrorDomainFramework, unicode)
@@ -18,6 +18,7 @@ class TestSMErrors (TestCase):
         self.assertEqual(kSMErrorJobPlistNotFound, 8)
         self.assertEqual(kSMErrorJobMustBeEnabled, 9)
         self.assertEqual(kSMErrorInvalidPlist, 10)
+
 
 if __name__ == "__main__":
     main()

@@ -1,10 +1,10 @@
-
 from PyObjCTools.TestSupport import *
 from AppKit import *
 
-class TestNSPrintPanel (TestCase):
+
+class TestNSPrintPanel(TestCase):
     def testProtocols(self):
-        objc.protocolNamed('NSPrintPanelAccessorizing')
+        objc.protocolNamed("NSPrintPanelAccessorizing")
 
     def testConstants(self):
         self.assertEqual(NSPrintPanelShowsCopies, 0x01)
@@ -17,16 +17,24 @@ class TestNSPrintPanel (TestCase):
 
         self.assertIsInstance(NSPrintPhotoJobStyleHint, unicode)
 
-    @min_os_level('10.5')
+    @min_os_level("10.5")
     def testConstants10_5(self):
         self.assertIsInstance(NSPrintPanelAccessorySummaryItemNameKey, unicode)
         self.assertIsInstance(NSPrintPanelAccessorySummaryItemDescriptionKey, unicode)
 
     def testMethods(self):
-        self.assertArgIsSEL(NSPrintPanel.beginSheetWithPrintInfo_modalForWindow_delegate_didEndSelector_contextInfo_, 3, b'v@:@' + objc._C_NSInteger + b'^v')
-        self.assertArgHasType(NSPrintPanel.beginSheetWithPrintInfo_modalForWindow_delegate_didEndSelector_contextInfo_, 4, b'^v')
+        self.assertArgIsSEL(
+            NSPrintPanel.beginSheetWithPrintInfo_modalForWindow_delegate_didEndSelector_contextInfo_,
+            3,
+            b"v@:@" + objc._C_NSInteger + b"^v",
+        )
+        self.assertArgHasType(
+            NSPrintPanel.beginSheetWithPrintInfo_modalForWindow_delegate_didEndSelector_contextInfo_,
+            4,
+            b"^v",
+        )
 
-    @min_os_level('10.6')
+    @min_os_level("10.6")
     def testConstants10_6(self):
         self.assertEqual(NSPrintPanelShowsPrintSelection, 1 << 5)
 

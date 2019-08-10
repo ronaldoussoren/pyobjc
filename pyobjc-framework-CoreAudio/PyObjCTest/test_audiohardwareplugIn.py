@@ -2,17 +2,17 @@ from PyObjCTools.TestSupport import *
 
 import CoreAudio
 
-class TestAudioHardwarePlugIn (TestCase):
+
+class TestAudioHardwarePlugIn(TestCase):
     def testUnavailable(self):
-        self.assertNotHasAttr(CoreAudio, 'AudioHardwarePlugInInterface')
+        self.assertNotHasAttr(CoreAudio, "AudioHardwarePlugInInterface")
 
-        self.assertNotHasAttr(CoreAudio, 'kAudioHardwarePlugInTypeID')
-        self.assertNotHasAttr(CoreAudio, 'kAudioHardwarePlugInInterfaceID')
-        self.assertNotHasAttr(CoreAudio, 'kAudioHardwarePlugInInterface2ID')
-        self.assertNotHasAttr(CoreAudio, 'kAudioHardwarePlugInInterface3ID')
-        self.assertNotHasAttr(CoreAudio, 'kAudioHardwarePlugInInterface4ID')
-        self.assertNotHasAttr(CoreAudio, 'kAudioHardwarePlugInInterface5ID')
-
+        self.assertNotHasAttr(CoreAudio, "kAudioHardwarePlugInTypeID")
+        self.assertNotHasAttr(CoreAudio, "kAudioHardwarePlugInInterfaceID")
+        self.assertNotHasAttr(CoreAudio, "kAudioHardwarePlugInInterface2ID")
+        self.assertNotHasAttr(CoreAudio, "kAudioHardwarePlugInInterface3ID")
+        self.assertNotHasAttr(CoreAudio, "kAudioHardwarePlugInInterface4ID")
+        self.assertNotHasAttr(CoreAudio, "kAudioHardwarePlugInInterface5ID")
 
     def testCFTypes(self):
         self.assertIsOpaquePointer(CoreAudio.AudioHardwarePlugInRef)

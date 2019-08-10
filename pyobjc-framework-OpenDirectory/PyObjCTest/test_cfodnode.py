@@ -1,7 +1,8 @@
 from PyObjCTools.TestSupport import *
 import CFOpenDirectory
 
-class TestCFODNode (TestCase):
+
+class TestCFODNode(TestCase):
     def testMethods(self):
         self.assertIsInstance(CFOpenDirectory.ODNodeGetTypeID(), (int, long))
 
@@ -34,10 +35,14 @@ class TestCFODNode (TestCase):
         self.assertResultHasType(CFOpenDirectory.ODNodeSetCredentials, objc._C_BOOL)
         self.assertArgIsOut(CFOpenDirectory.ODNodeSetCredentials, 4)
 
-        self.assertResultHasType(CFOpenDirectory.ODNodeSetCredentialsExtended, objc._C_BOOL)
+        self.assertResultHasType(
+            CFOpenDirectory.ODNodeSetCredentialsExtended, objc._C_BOOL
+        )
         self.assertArgIsOut(CFOpenDirectory.ODNodeSetCredentialsExtended, 6)
 
-        self.assertResultHasType(CFOpenDirectory.ODNodeSetCredentialsUsingKerberosCache, objc._C_BOOL)
+        self.assertResultHasType(
+            CFOpenDirectory.ODNodeSetCredentialsUsingKerberosCache, objc._C_BOOL
+        )
         self.assertArgIsOut(CFOpenDirectory.ODNodeSetCredentialsUsingKerberosCache, 2)
 
         self.assertResultIsCFRetained(CFOpenDirectory.ODNodeCreateRecord)
@@ -48,7 +53,7 @@ class TestCFODNode (TestCase):
 
         self.assertArgIsOut(CFOpenDirectory.ODNodeCustomCall, 3)
 
-    @min_os_level('10.9')
+    @min_os_level("10.9")
     def testMethods10_9(self):
         self.assertArgIsOut(CFOpenDirectory.ODNodeCustomFunction, 3)
 
@@ -67,7 +72,7 @@ class TestCFODNode (TestCase):
         self.assertResultHasType(CFOpenDirectory.ODNodeRemovePolicy, objc._C_BOOL)
         self.assertArgIsOut(CFOpenDirectory.ODNodeRemovePolicy, 2)
 
-    @min_os_level('10.10')
+    @min_os_level("10.10")
     def testMethods10_10(self):
         self.assertResultHasType(CFOpenDirectory.ODNodeAddAccountPolicy, objc._C_BOOL)
         self.assertArgIsOut(CFOpenDirectory.ODNodeAddAccountPolicy, 3)
@@ -83,6 +88,7 @@ class TestCFODNode (TestCase):
 
         self.assertResultHasType(CFOpenDirectory.ODNodePasswordContentCheck, objc._C_BOOL)
         self.assertArgIsOut(CFOpenDirectory.ODNodePasswordContentCheck, 3)
+
 
 if __name__ == "__main__":
     main()

@@ -14,16 +14,16 @@ from Cocoa import NSWindowController, NSUserDefaultsController, NSFont
 from Cocoa import NSFontManager, NSValueTransformer, NSArchiver, NSColor
 from PyObjCTools.KeyValueCoding import getKey
 
-class PreferencesPanelController (NSWindowController):
 
+class PreferencesPanelController(NSWindowController):
     @objc.IBAction
     def changeTextFont_(self, sender):
         "The user changed the current font selection, so update the default font"
 
         # Get font name and size from user defaults
         defaults = NSUserDefaultsController.sharedUserDefaultsController().values()
-        fontName = getKey(defaults, 'FontName')
-        fontSize = getKey(defaults, 'FontSize')
+        fontName = getKey(defaults, "FontName")
+        fontSize = getKey(defaults, "FontSize")
 
         # Create font from name and size; initialize font panel
         font = NSFont.fontWithName_size_(fontName, fontSize)
@@ -34,7 +34,6 @@ class PreferencesPanelController (NSWindowController):
 
         # Set window as firstResponder so we get changeFont: messages
         self.window().makeFirstResponder_(self.window())
-
 
     @objc.IBAction
     def changeFont_(self, sender):
@@ -65,14 +64,16 @@ class PreferencesPanelController (NSWindowController):
 #
 # The color must be archived -- you can't store NSColors directly in NSUserDefaults.
 dictionary = {}
-dictionary['WordOfTheDay'] = 'Today'
+dictionary["WordOfTheDay"] = "Today"
 systemFont = NSFont.systemFontOfSize_(NSFont.systemFontSize())
 dictionary["FontName"] = systemFont.fontName()
 dictionary["FontSize"] = systemFont.pointSize()
 archivedColor = NSArchiver.archivedDataWithRootObject_(NSColor.greenColor())
-dictionary['FavoriteColor'] = archivedColor
+dictionary["FavoriteColor"] = archivedColor
 NSUserDefaultsController.sharedUserDefaultsController().setInitialValues_(dictionary)
 
 # Create and register font name value transformer
 transformer = FontNameToDisplayNameTransformer.alloc().init()
-NSValueTransformer.setValueTransformer_forName_(transformer, 'FontNameToDisplayNameTransformer')
+NSValueTransformer.setValueTransformer_forName_(
+    transformer, "FontNameToDisplayNameTransformer"
+)

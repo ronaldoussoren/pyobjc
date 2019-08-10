@@ -10,6 +10,7 @@ from Foundation import *
 from CoreData import *
 from AppKit import *
 
+
 class xcPROJECTNAMEASIDENTIFIERxcDocument(NSPersistentDocument):
     def init(self):
         self = super(xcPROJECTNAMEASIDENTIFIERxcDocument, self).init()
@@ -17,8 +18,10 @@ class xcPROJECTNAMEASIDENTIFIERxcDocument(NSPersistentDocument):
         return self
 
     def windowNibName(self):
-        return u"xcPROJECTNAMEASIDENTIFIERxcDocument"
+        return "xcPROJECTNAMEASIDENTIFIERxcDocument"
 
     def windowControllerDidLoadNib_(self, aController):
-        super(xcPROJECTNAMEASIDENTIFIERxcDocument, self).windowControllerDidLoadNib_(aController)
+        super(xcPROJECTNAMEASIDENTIFIERxcDocument, self).windowControllerDidLoadNib_(
+            aController
+        )
         # user interface preparation code

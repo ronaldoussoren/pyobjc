@@ -3,7 +3,7 @@ from PyObjCTools.TestSupport import *
 from ImageCaptureCore import *
 
 
-class TestICScannerDevice (TestCase):
+class TestICScannerDevice(TestCase):
     def testConstants(self):
         self.assertIsInstance(ICScannerStatusWarmingUp, unicode)
         self.assertIsInstance(ICScannerStatusWarmUpDone, unicode)
@@ -13,7 +13,8 @@ class TestICScannerDevice (TestCase):
         self.assertEqual(ICScannerTransferModeMemoryBased, 1)
 
     def testProtocolObjects(self):
-        objc.protocolNamed('ICScannerDeviceDelegate')
+        objc.protocolNamed("ICScannerDeviceDelegate")
+
 
 if __name__ == "__main__":
     main()

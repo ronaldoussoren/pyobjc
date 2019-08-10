@@ -2,7 +2,8 @@ from PyObjCTools.TestSupport import *
 
 import CoreHaptics
 
-class TestCHHapticErrors (TestCase):
+
+class TestCHHapticErrors(TestCase):
     def test_constants(self):
         self.assertEqual(CoreHaptics.CHHapticErrorCodeEngineNotRunning, -4805)
         self.assertEqual(CoreHaptics.CHHapticErrorCodeOperationNotPermitted, -4806)

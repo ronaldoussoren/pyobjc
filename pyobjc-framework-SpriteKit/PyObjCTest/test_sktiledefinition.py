@@ -5,7 +5,7 @@ from PyObjCTools.TestSupport import *
 if sys.maxsize > 2 ** 32:
     import SpriteKit
 
-    class TestSKTileDefinition (TestCase):
+    class TestSKTileDefinition(TestCase):
         @min_os_level("10.12")
         def testConstants(self):
             self.assertEqual(SpriteKit.SKTileDefinitionRotation0, 0)
@@ -13,7 +13,7 @@ if sys.maxsize > 2 ** 32:
             self.assertEqual(SpriteKit.SKTileDefinitionRotation180, 2)
             self.assertEqual(SpriteKit.SKTileDefinitionRotation270, 3)
 
-        @min_os_level('10.12')
+        @min_os_level("10.12")
         def testMethods(self):
             self.assertResultIsBOOL(SpriteKit.SKTileDefinition.flipVertically)
             self.assertArgIsBOOL(SpriteKit.SKTileDefinition.setFlipVertically_, 0)

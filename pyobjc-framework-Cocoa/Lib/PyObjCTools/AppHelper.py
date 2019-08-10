@@ -9,10 +9,21 @@ Exported functions:
 * callLater - call a function on the main thread after a delay (async)
 """
 
-__all__ = ( 'runEventLoop', 'runConsoleEventLoop', 'stopEventLoop', 'endSheetMethod', 'callAfter', 'callLater' )
+__all__ = (
+    "runEventLoop",
+    "runConsoleEventLoop",
+    "stopEventLoop",
+    "endSheetMethod",
+    "callAfter",
+    "callLater",
+)
 
-from AppKit import (NSApp, NSRunAlertPanel, NSApplicationMain,
-                    NSApplicationDidFinishLaunchingNotification)
+from AppKit import (
+    NSApp,
+    NSRunAlertPanel,
+    NSApplicationMain,
+    NSApplicationDidFinishLaunchingNotification,
+)
 
 from Foundation import (
     NSAutoreleasePool,
@@ -32,13 +43,15 @@ import traceback
 import objc
 from objc import super
 
-PY3K = (sys.version_info[0] == 3)
+PY3K = sys.version_info[0] == 3
+
 
 class PyObjCMessageRunner(NSObject):
     """
     Wraps a Python function and its arguments and allows it to be posted to the
     MainThread's `NSRunLoop`.
     """
+
     def initWithPayload_(self, payload):
         """
         Designated initializer.
@@ -56,7 +69,7 @@ class PyObjCMessageRunner(NSObject):
         Posts a message to the Main thread, to be executed immediately.
         """
         self.performSelectorOnMainThread_withObject_waitUntilDone_(
-            self.scheduleCallWithDelay_, None, False,
+            self.scheduleCallWithDelay_, None, False
         )
 
     def callLater_(self, delay):
@@ -65,7 +78,7 @@ class PyObjCMessageRunner(NSObject):
         delay, in seconds.
         """
         self.performSelectorOnMainThread_withObject_waitUntilDone_(
-            self.scheduleCallWithDelay_, delay, False,
+            self.scheduleCallWithDelay_, delay, False
         )
 
     def scheduleCallWithDelay_(self, delay):
@@ -80,9 +93,7 @@ class PyObjCMessageRunner(NSObject):
             return
 
         # There's a delay, schedule it for later.
-        self.performSelector_withObject_afterDelay_(
-            self.performCall, None, delay,
-        )
+        self.performSelector_withObject_afterDelay_(self.performCall, None, delay)
 
     def performCall(self):
         """
@@ -96,6 +107,7 @@ class PyObjCMessageRunner(NSObject):
         # Run it.
         func(*args, **kwargs)
 
+
 def callAfter(func, *args, **kwargs):
     """
     Call a function on the Main thread (async).
@@ -105,6 +117,7 @@ def callAfter(func, *args, **kwargs):
     runner.callAfter()
     del runner
     del pool
+
 
 def callLater(delay, func, *args, **kwargs):
     """
@@ -116,8 +129,8 @@ def callLater(delay, func, *args, **kwargs):
     del runner
     del pool
 
-class PyObjCAppHelperApplicationActivator(NSObject):
 
+class PyObjCAppHelperApplicationActivator(NSObject):
     def activateNow_(self, aNotification):
         NSApp().activateIgnoringOtherApps_(True)
 
@@ -128,6 +141,7 @@ class PyObjCAppHelperRunLoopStopper(NSObject):
     def currentRunLoopStopper(cls):
         runLoop = NSRunLoop.currentRunLoop()
         return cls.singletons.get(runLoop)
+
     currentRunLoopStopper = classmethod(currentRunLoopStopper)
 
     def init(self):
@@ -142,12 +156,14 @@ class PyObjCAppHelperRunLoopStopper(NSObject):
         if runLoop in cls.singletons:
             raise ValueError("Stopper already registered for this runLoop")
         cls.singletons[runLoop] = runLoopStopper
+
     addRunLoopStopper_toRunLoop_ = classmethod(addRunLoopStopper_toRunLoop_)
 
     def removeRunLoopStopperFromRunLoop_(cls, runLoop):
         if runLoop not in cls.singletons:
             raise ValueError("Stopper not registered for this runLoop")
         del cls.singletons[runLoop]
+
     removeRunLoopStopperFromRunLoop_ = classmethod(removeRunLoopStopperFromRunLoop_)
 
     def stop(self):
@@ -173,11 +189,8 @@ def stopEventLoop():
             return True
         return False
     NSTimer.scheduledTimerWithTimeInterval_target_selector_userInfo_repeats_(
-        0.0,
-        stopper,
-        'performStop:',
-        None,
-        False)
+        0.0, stopper, "performStop:", None, False
+    )
     return True
 
 
@@ -186,19 +199,24 @@ def endSheetMethod(meth):
     Return a selector that can be used as the delegate callback for
     sheet methods
     """
-    return objc.selector(meth, signature=b'v@:@' + objc._C_NSInteger + objc._C_NSInteger)
+    return objc.selector(meth, signature=b"v@:@" + objc._C_NSInteger + objc._C_NSInteger)
 
 
 def unexpectedErrorAlertPanel():
-    exceptionInfo = traceback.format_exception_only(
-        *sys.exc_info()[:2])[0].strip()
-    return NSRunAlertPanel("An unexpected error has occurred",
-            "%@",
-            "Continue", "Quit", None, "(%s)" % exceptionInfo)
+    exceptionInfo = traceback.format_exception_only(*sys.exc_info()[:2])[0].strip()
+    return NSRunAlertPanel(
+        "An unexpected error has occurred",
+        "%@",
+        "Continue",
+        "Quit",
+        None,
+        "(%s)" % exceptionInfo,
+    )
 
 
 def unexpectedErrorAlertPdb():
     import pdb
+
     traceback.print_exc()
     pdb.post_mortem(sys.exc_info()[2])
     return True
@@ -212,6 +230,7 @@ def machInterrupt(signum):
         NSApp().terminate_(None)
     else:
         import os
+
         os._exit(1)
 
 
@@ -224,7 +243,9 @@ def installMachInterrupt():
     MachSignals.signal(signal.SIGINT, machInterrupt)
 
 
-def runConsoleEventLoop(argv=None, installInterrupt=False, mode=NSDefaultRunLoopMode, maxTimeout=3.0):
+def runConsoleEventLoop(
+    argv=None, installInterrupt=False, mode=NSDefaultRunLoopMode, maxTimeout=3.0
+):
     if argv is None:
         argv = sys.argv
     if installInterrupt:
@@ -251,7 +272,13 @@ def runConsoleEventLoop(argv=None, installInterrupt=False, mode=NSDefaultRunLoop
 RAISETHESE = (SystemExit, MemoryError, KeyboardInterrupt)
 
 
-def runEventLoop(argv=None, unexpectedErrorAlert=None, installInterrupt=None, pdb=None, main=NSApplicationMain):
+def runEventLoop(
+    argv=None,
+    unexpectedErrorAlert=None,
+    installInterrupt=None,
+    pdb=None,
+    main=NSApplicationMain,
+):
     """Run the event loop, ask the user if we should continue if an
     exception is caught. Use this function instead of NSApplicationMain().
     """
@@ -259,19 +286,17 @@ def runEventLoop(argv=None, unexpectedErrorAlert=None, installInterrupt=None, pd
         argv = sys.argv
 
     if pdb is None:
-        pdb = 'USE_PDB' in os.environ
+        pdb = "USE_PDB" in os.environ
 
     if pdb:
         from PyObjCTools import Debugging
+
         Debugging.installVerboseExceptionHandler()
         # bring it to the front, starting from terminal
         # often won't
         activator = PyObjCAppHelperApplicationActivator.alloc().init()
         NSNotificationCenter.defaultCenter().addObserver_selector_name_object_(
-            activator,
-            'activateNow:',
-            NSApplicationDidFinishLaunchingNotification,
-            None,
+            activator, "activateNow:", NSApplicationDidFinishLaunchingNotification, None
         )
     else:
         Debugging = None
@@ -311,7 +336,7 @@ def runEventLoop(argv=None, unexpectedErrorAlert=None, installInterrupt=None, pd
                     if PY3K:
                         error_str = str(e)
                     else:
-                        error_str = unicode(str(e), 'utf-8', 'replace')
+                        error_str = unicode(str(e), "utf-8", "replace")
 
                     NSLog("%@", error_str)
                 elif not unexpectedErrorAlert():

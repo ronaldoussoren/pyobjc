@@ -118,9 +118,7 @@ class TestCopying(TestCase):
                 return o
 
             copyWithZone_ = objc.selector(
-                copyWithZone_,
-                signature=NSObject.copyWithZone_.signature,
-                isClassMethod=0,
+                copyWithZone_, signature=NSObject.copyWithZone_.signature, isClassMethod=0
             )
 
         # Make sure the runtime correctly marked our copyWithZone_
@@ -376,9 +374,7 @@ class TestOverridingSpecials(TestCase):
 
         MethodNamesClass.__foo_bar__ = __foo_bar__
 
-        self.assertEqual(
-            MethodNamesClass.someName_andArg_.selector, b"someName:andArg:"
-        )
+        self.assertEqual(MethodNamesClass.someName_andArg_.selector, b"someName:andArg:")
         self.assertEqual(
             MethodNamesClass._someName_andArg_.selector, b"_someName:andArg:"
         )

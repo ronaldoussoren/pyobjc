@@ -1,10 +1,10 @@
-
 from PyObjCTools.TestSupport import *
 from Quartz import *
 import Quartz
 
-class TestCGImageProperties (TestCase):
-    @min_os_level('10.14')
+
+class TestCGImageProperties(TestCase):
+    @min_os_level("10.14")
     def testFunctions(self):
         CGImageSourceGetPrimaryImageIndex
 
@@ -15,7 +15,14 @@ class TestCGImageProperties (TestCase):
         self.assertEqual(IMAGEIO_PNG_FILTER_UP, 0x20)
         self.assertEqual(IMAGEIO_PNG_FILTER_AVG, 0x40)
         self.assertEqual(IMAGEIO_PNG_FILTER_PAETH, 0x80)
-        self.assertEqual(IMAGEIO_PNG_ALL_FILTERS, IMAGEIO_PNG_FILTER_NONE | IMAGEIO_PNG_FILTER_SUB | IMAGEIO_PNG_FILTER_UP | IMAGEIO_PNG_FILTER_AVG | IMAGEIO_PNG_FILTER_PAETH)
+        self.assertEqual(
+            IMAGEIO_PNG_ALL_FILTERS,
+            IMAGEIO_PNG_FILTER_NONE
+            | IMAGEIO_PNG_FILTER_SUB
+            | IMAGEIO_PNG_FILTER_UP
+            | IMAGEIO_PNG_FILTER_AVG
+            | IMAGEIO_PNG_FILTER_PAETH,
+        )
 
         self.assertIsInstance(kCGImagePropertyTIFFDictionary, unicode)
         self.assertIsInstance(kCGImagePropertyGIFDictionary, unicode)
@@ -26,7 +33,6 @@ class TestCGImageProperties (TestCase):
         self.assertIsInstance(kCGImagePropertyGPSDictionary, unicode)
         self.assertIsInstance(kCGImagePropertyRawDictionary, unicode)
         self.assertIsInstance(kCGImagePropertyCIFFDictionary, unicode)
-
 
         self.assertIsInstance(kCGImagePropertyFileSize, unicode)
         self.assertIsInstance(kCGImagePropertyPixelHeight, unicode)
@@ -223,9 +229,7 @@ class TestCGImageProperties (TestCase):
         self.assertEqual(kCGImagePropertyOrientationRightMirrored, 7)
         self.assertEqual(kCGImagePropertyOrientationLeft, 8)
 
-
-
-    @min_os_level('10.5')
+    @min_os_level("10.5")
     def testConstants10_5(self):
         self.assertIsInstance(kCGImagePropertyMakerCanonDictionary, unicode)
         self.assertIsInstance(kCGImagePropertyMakerNikonDictionary, unicode)
@@ -296,23 +300,22 @@ class TestCGImageProperties (TestCase):
         self.assertIsInstance(kCGImagePropertyExifAuxOwnerName, unicode)
         self.assertIsInstance(kCGImagePropertyExifAuxFirmware, unicode)
 
-    @min_os_level('10.5')
-    @expectedFailureIf(os_release().rsplit('.', 1)[0] == '10.6')
+    @min_os_level("10.5")
+    @expectedFailureIf(os_release().rsplit(".", 1)[0] == "10.6")
     def testConstants10_5_bad_on_10_6(self):
-        self.assertTrue(hasattr(Quartz, 'kCGImagePropertyMakerMinoltaDictionary'))
-        self.assertTrue(hasattr(Quartz, 'kCGImagePropertyMakerFujiDictionary'))
-        self.assertTrue(hasattr(Quartz, 'kCGImagePropertyMakerOlympusDictionary'))
-        self.assertTrue(hasattr(Quartz, 'kCGImagePropertyMakerPentaxDictionary'))
+        self.assertTrue(hasattr(Quartz, "kCGImagePropertyMakerMinoltaDictionary"))
+        self.assertTrue(hasattr(Quartz, "kCGImagePropertyMakerFujiDictionary"))
+        self.assertTrue(hasattr(Quartz, "kCGImagePropertyMakerOlympusDictionary"))
+        self.assertTrue(hasattr(Quartz, "kCGImagePropertyMakerPentaxDictionary"))
 
         self.assertIsInstance(kCGImagePropertyMakerMinoltaDictionary, unicode)
         self.assertIsInstance(kCGImagePropertyMakerFujiDictionary, unicode)
         self.assertIsInstance(kCGImagePropertyMakerOlympusDictionary, unicode)
         self.assertIsInstance(kCGImagePropertyMakerPentaxDictionary, unicode)
 
-
-    @min_os_level('10.7')
+    @min_os_level("10.7")
     def testConstants10_6(self):
-	# Contants aren't actually available on OSX 10.6
+        # Contants aren't actually available on OSX 10.6
         self.assertIsInstance(kCGImagePropertyIPTCCreatorContactInfo, unicode)
         self.assertIsInstance(kCGImagePropertyIPTCRightsUsageTerms, unicode)
         self.assertIsInstance(kCGImagePropertyIPTCScene, unicode)
@@ -325,7 +328,7 @@ class TestCGImageProperties (TestCase):
         self.assertIsInstance(kCGImagePropertyIPTCContactInfoPhones, unicode)
         self.assertIsInstance(kCGImagePropertyIPTCContactInfoWebURLs, unicode)
 
-    @min_os_level('10.7')
+    @min_os_level("10.7")
     def testConstants10_7(self):
         self.assertIsInstance(kCGImagePropertyGIFUnclampedDelayTime, unicode)
         self.assertIsInstance(kCGImagePropertyPNGAuthor, unicode)
@@ -336,8 +339,8 @@ class TestCGImageProperties (TestCase):
         self.assertIsInstance(kCGImagePropertyPNGSoftware, unicode)
         self.assertIsInstance(kCGImagePropertyPNGTitle, unicode)
 
-    @min_os_level('10.7')
-    @expectedFailureIf(os_level_key(os_release()) <= os_level_key('10.9'))
+    @min_os_level("10.7")
+    @expectedFailureIf(os_level_key(os_release()) <= os_level_key("10.9"))
     def testConstants10_7_broken(self):
         # The constants in this testcase are defined in headers and documentation,
         # but aren't exported by the framework...
@@ -348,7 +351,7 @@ class TestCGImageProperties (TestCase):
         self.assertIsInstance(kCGImagePropertyExifLensModel, unicode)
         self.assertIsInstance(kCGImagePropertyExifLensSerialNumber, unicode)
 
-    @min_os_level('10.9')
+    @min_os_level("10.9")
     def testConstants10_9(self):
         self.assertIsInstance(kCGImagePropertyOpenEXRDictionary, unicode)
         self.assertIsInstance(kCGImagePropertyOpenEXRAspectRatio, unicode)
@@ -359,7 +362,7 @@ class TestCGImageProperties (TestCase):
         self.assertIsInstance(kCGImagePropertyExifISOSpeedLatitudeyyy, unicode)
         self.assertIsInstance(kCGImagePropertyExifISOSpeedLatitudezzz, unicode)
 
-    @min_os_level('10.10')
+    @min_os_level("10.10")
     def testConstants10_10(self):
         self.assertIsInstance(kCGImagePropertyMakerAppleDictionary, unicode)
         self.assertIsInstance(kCGImagePropertyAPNGLoopCount, unicode)
@@ -368,14 +371,14 @@ class TestCGImageProperties (TestCase):
         self.assertIsInstance(kCGImagePropertyGPSHPositioningError, unicode)
         self.assertIsInstance(kCGImageProperty8BIMVersion, unicode)
 
-    @min_os_level('10.11')
+    @min_os_level("10.11")
     def testConstants10_11(self):
         self.assertIsInstance(kCGImagePropertyTIFFTileWidth, unicode)
         self.assertIsInstance(kCGImagePropertyTIFFTileLength, unicode)
         self.assertIsInstance(kCGImagePropertyPNGCompressionFilter, unicode)
         self.assertIsInstance(kCGImagePropertyExifSubsecTimeOriginal, unicode)
 
-    @min_os_level('10.12')
+    @min_os_level("10.12")
     def testConstants10_12(self):
         self.assertIsInstance(kCGImagePropertyDNGBlackLevel, unicode)
         self.assertIsInstance(kCGImagePropertyDNGWhiteLevel, unicode)
@@ -398,7 +401,7 @@ class TestCGImageProperties (TestCase):
         self.assertIsInstance(kCGImagePropertyDNGWarpFisheye, unicode)
         self.assertIsInstance(kCGImagePropertyDNGFixVignetteRadial, unicode)
 
-    @min_os_level('10.13')
+    @min_os_level("10.13")
     def testConstants10_13(self):
         self.assertIsInstance(kCGImagePropertyFileContentsDictionary, unicode)
         self.assertIsInstance(kCGImageAuxiliaryDataTypeDepth, unicode)
@@ -421,7 +424,7 @@ class TestCGImageProperties (TestCase):
         # New definition in Xcode 10.14 SDK
         self.assertIsInstance(kCGImagePropertyPrimaryImage, unicode)
 
-    @min_os_level('10.13.4')
+    @min_os_level("10.13.4")
     def testConstants10_13_4(self):
         self.assertIsInstance(kCGImagePropertyIPTCExtAboutCvTerm, unicode)
         self.assertIsInstance(kCGImagePropertyIPTCExtAboutCvTermCvId, unicode)
@@ -432,7 +435,9 @@ class TestCGImageProperties (TestCase):
         self.assertIsInstance(kCGImagePropertyIPTCExtArtworkOrObject, unicode)
         self.assertIsInstance(kCGImagePropertyIPTCExtArtworkCircaDateCreated, unicode)
         self.assertIsInstance(kCGImagePropertyIPTCExtArtworkContentDescription, unicode)
-        self.assertIsInstance(kCGImagePropertyIPTCExtArtworkContributionDescription, unicode)
+        self.assertIsInstance(
+            kCGImagePropertyIPTCExtArtworkContributionDescription, unicode
+        )
         self.assertIsInstance(kCGImagePropertyIPTCExtArtworkCopyrightNotice, unicode)
         self.assertIsInstance(kCGImagePropertyIPTCExtArtworkCreator, unicode)
         self.assertIsInstance(kCGImagePropertyIPTCExtArtworkCreatorID, unicode)
@@ -482,8 +487,12 @@ class TestCGImageProperties (TestCase):
         self.assertIsInstance(kCGImagePropertyIPTCExtDopesheetLinkLinkQualifier, unicode)
         self.assertIsInstance(kCGImagePropertyIPTCExtEmbdEncRightsExpr, unicode)
         self.assertIsInstance(kCGImagePropertyIPTCExtEmbeddedEncodedRightsExpr, unicode)
-        self.assertIsInstance(kCGImagePropertyIPTCExtEmbeddedEncodedRightsExprType, unicode)
-        self.assertIsInstance(kCGImagePropertyIPTCExtEmbeddedEncodedRightsExprLangID, unicode)
+        self.assertIsInstance(
+            kCGImagePropertyIPTCExtEmbeddedEncodedRightsExprType, unicode
+        )
+        self.assertIsInstance(
+            kCGImagePropertyIPTCExtEmbeddedEncodedRightsExprLangID, unicode
+        )
         self.assertIsInstance(kCGImagePropertyIPTCExtEpisode, unicode)
         self.assertIsInstance(kCGImagePropertyIPTCExtEpisodeIdentifier, unicode)
         self.assertIsInstance(kCGImagePropertyIPTCExtEpisodeName, unicode)
@@ -504,7 +513,9 @@ class TestCGImageProperties (TestCase):
         self.assertIsInstance(kCGImagePropertyIPTCExtLinkedEncRightsExpr, unicode)
         self.assertIsInstance(kCGImagePropertyIPTCExtLinkedEncodedRightsExpr, unicode)
         self.assertIsInstance(kCGImagePropertyIPTCExtLinkedEncodedRightsExprType, unicode)
-        self.assertIsInstance(kCGImagePropertyIPTCExtLinkedEncodedRightsExprLangID, unicode)
+        self.assertIsInstance(
+            kCGImagePropertyIPTCExtLinkedEncodedRightsExprLangID, unicode
+        )
         self.assertIsInstance(kCGImagePropertyIPTCExtLocationCreated, unicode)
         self.assertIsInstance(kCGImagePropertyIPTCExtLocationCity, unicode)
         self.assertIsInstance(kCGImagePropertyIPTCExtLocationCountryCode, unicode)
@@ -533,7 +544,9 @@ class TestCGImageProperties (TestCase):
         self.assertIsInstance(kCGImagePropertyIPTCExtPersonInImageCvTermCvId, unicode)
         self.assertIsInstance(kCGImagePropertyIPTCExtPersonInImageCvTermId, unicode)
         self.assertIsInstance(kCGImagePropertyIPTCExtPersonInImageCvTermName, unicode)
-        self.assertIsInstance(kCGImagePropertyIPTCExtPersonInImageCvTermRefinedAbout, unicode)
+        self.assertIsInstance(
+            kCGImagePropertyIPTCExtPersonInImageCvTermRefinedAbout, unicode
+        )
         self.assertIsInstance(kCGImagePropertyIPTCExtPersonInImageDescription, unicode)
         self.assertIsInstance(kCGImagePropertyIPTCExtPersonInImageId, unicode)
         self.assertIsInstance(kCGImagePropertyIPTCExtPersonInImageName, unicode)
@@ -602,9 +615,11 @@ class TestCGImageProperties (TestCase):
         self.assertIsInstance(kCGImagePropertyIPTCExtWorkflowTagCvId, unicode)
         self.assertIsInstance(kCGImagePropertyIPTCExtWorkflowTagCvTermId, unicode)
         self.assertIsInstance(kCGImagePropertyIPTCExtWorkflowTagCvTermName, unicode)
-        self.assertIsInstance(kCGImagePropertyIPTCExtWorkflowTagCvTermRefinedAbout, unicode)
+        self.assertIsInstance(
+            kCGImagePropertyIPTCExtWorkflowTagCvTermRefinedAbout, unicode
+        )
 
-    @min_os_level('10.14')
+    @min_os_level("10.14")
     def testConstants10_14(self):
         self.assertIsInstance(kCGImagePropertyDNGActiveArea, unicode)
         self.assertIsInstance(kCGImagePropertyDNGAnalogBalance, unicode)
@@ -680,7 +695,7 @@ class TestCGImageProperties (TestCase):
         self.assertIsInstance(kCGImagePropertyPNGSource, unicode)
         self.assertIsInstance(kCGImagePropertyPNGWarning, unicode)
 
-    @min_os_level('10.15')
+    @min_os_level("10.15")
     def testConstants10_15(self):
         self.assertIsInstance(kCGImagePropertyHEICSDictionary, unicode)
         self.assertIsInstance(kCGImagePropertyHEICSLoopCount, unicode)
@@ -698,9 +713,15 @@ class TestCGImageProperties (TestCase):
         self.assertIsInstance(kCGImagePropertyAPNGFrameInfoArray, unicode)
         self.assertIsInstance(kCGImagePropertyAPNGCanvasPixelWidth, unicode)
         self.assertIsInstance(kCGImagePropertyAPNGCanvasPixelHeight, unicode)
-        self.assertIsInstance(kCGImageAuxiliaryDataTypeSemanticSegmentationSkinMatte, unicode)
-        self.assertIsInstance(kCGImageAuxiliaryDataTypeSemanticSegmentationHairMatte, unicode)
-        self.assertIsInstance(kCGImageAuxiliaryDataTypeSemanticSegmentationTeethMatte, unicode)
+        self.assertIsInstance(
+            kCGImageAuxiliaryDataTypeSemanticSegmentationSkinMatte, unicode
+        )
+        self.assertIsInstance(
+            kCGImageAuxiliaryDataTypeSemanticSegmentationHairMatte, unicode
+        )
+        self.assertIsInstance(
+            kCGImageAuxiliaryDataTypeSemanticSegmentationTeethMatte, unicode
+        )
 
 
 if __name__ == "__main__":

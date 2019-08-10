@@ -1,7 +1,8 @@
 from AppKit import *
 from PyObjCTools.TestSupport import *
 
-class TestNSObjectController (TestCase):
+
+class TestNSObjectController(TestCase):
     def testMethods(self):
         self.assertResultIsBOOL(NSObjectController.automaticallyPreparesContent)
         self.assertArgIsBOOL(NSObjectController.setAutomaticallyPreparesContent_, 0)

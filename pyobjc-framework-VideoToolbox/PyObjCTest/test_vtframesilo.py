@@ -1,13 +1,14 @@
 from PyObjCTools.TestSupport import *
 import VideoToolbox
 
-class TestVTFrameSilo (TestCase):
+
+class TestVTFrameSilo(TestCase):
     @expectedFailure
-    @min_os_level('10.10')
+    @min_os_level("10.10")
     def test_types(self):
         self.assertIsCFType(VideoToolbox.VTFrameSiloRef)
 
-    @min_os_level('10.10')
+    @min_os_level("10.10")
     def test_functions(self):
         VideoToolbox.VTFrameSiloGetTypeID
 
@@ -21,9 +22,18 @@ class TestVTFrameSilo (TestCase):
 
         self.assertArgIsOut(VideoToolbox.VTFrameSiloGetProgressOfCurrentPass, 1)
 
-        self.assertArgIsFunction(VideoToolbox.VTFrameSiloCallFunctionForEachSampleBuffer, 3, b'i^v^{opaqueCMSampleBuffer=}', False)
+        self.assertArgIsFunction(
+            VideoToolbox.VTFrameSiloCallFunctionForEachSampleBuffer,
+            3,
+            b"i^v^{opaqueCMSampleBuffer=}",
+            False,
+        )
 
-        self.assertArgIsBlock(VideoToolbox.VTFrameSiloCallBlockForEachSampleBuffer, 2, b'i^{opaqueCMSampleBuffer=}')
+        self.assertArgIsBlock(
+            VideoToolbox.VTFrameSiloCallBlockForEachSampleBuffer,
+            2,
+            b"i^{opaqueCMSampleBuffer=}",
+        )
 
 
 if __name__ == "__main__":

@@ -1,8 +1,8 @@
-
 from PyObjCTools.TestSupport import *
 from AppKit import *
 
-class TestNSTextContainer (TestCase):
+
+class TestNSTextContainer(TestCase):
     def testConstants(self):
         self.assertEqual(NSLineSweepLeft, 0)
         self.assertEqual(NSLineSweepRight, 1)
@@ -23,9 +23,12 @@ class TestNSTextContainer (TestCase):
         self.assertResultIsBOOL(NSTextContainer.isSimpleRectangularTextContainer)
         self.assertResultIsBOOL(NSTextContainer.containsPoint_)
 
-    @min_os_level('10.11')
+    @min_os_level("10.11")
     def testMethods10_11(self):
-        self.assertArgIsOut(NSTextContainer.lineFragmentRectForProposedRect_atIndex_writingDirection_remainingRect_, 3)
+        self.assertArgIsOut(
+            NSTextContainer.lineFragmentRectForProposedRect_atIndex_writingDirection_remainingRect_,
+            3,
+        )
 
 
 if __name__ == "__main__":

@@ -2,11 +2,11 @@ from PyObjCTools.TestSupport import *
 
 import DiscRecording
 
-class TestDRContentFolder (TestCase):
+
+class TestDRContentFolder(TestCase):
     @expectedFailure
     def testCFTypes(self):
         self.assertIsCFType(DiscRecording.DRFolderRef)
-
 
     def testFunctions(self):
         self.assertIsInstance(DiscRecording.DRFolderGetTypeID(), (int, long))

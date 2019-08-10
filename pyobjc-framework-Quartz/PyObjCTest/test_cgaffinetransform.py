@@ -1,8 +1,8 @@
-
 from PyObjCTools.TestSupport import *
 from Quartz.CoreGraphics import *
 
-class TestCGAffineTransform (TestCase):
+
+class TestCGAffineTransform(TestCase):
     def testStruct(self):
         v = CGAffineTransform()
         self.assertTrue(hasattr(v, "a"))
@@ -24,28 +24,28 @@ class TestCGAffineTransform (TestCase):
     def testFunctions(self):
         tf = CGAffineTransformMake(1.5, 2.5, 3.5, 4.5, 5.5, 6.5)
         self.assertIsInstance(tf, CGAffineTransform)
-        self.assertEqual(tf.a,  1.5)
-        self.assertEqual(tf.b,  2.5)
-        self.assertEqual(tf.c,  3.5)
-        self.assertEqual(tf.d,  4.5)
+        self.assertEqual(tf.a, 1.5)
+        self.assertEqual(tf.b, 2.5)
+        self.assertEqual(tf.c, 3.5)
+        self.assertEqual(tf.d, 4.5)
         self.assertEqual(tf.tx, 5.5)
         self.assertEqual(tf.ty, 6.5)
 
         tf = CGAffineTransformMakeTranslation(2.5, 3.5)
         self.assertIsInstance(tf, CGAffineTransform)
-        self.assertEqual(tf.a,  1.0)
-        self.assertEqual(tf.b,  0.0)
-        self.assertEqual(tf.c,  0.0)
-        self.assertEqual(tf.d,  1.0)
+        self.assertEqual(tf.a, 1.0)
+        self.assertEqual(tf.b, 0.0)
+        self.assertEqual(tf.c, 0.0)
+        self.assertEqual(tf.d, 1.0)
         self.assertEqual(tf.tx, 2.5)
         self.assertEqual(tf.ty, 3.5)
 
         tf = CGAffineTransformMakeScale(2.5, 3.5)
         self.assertIsInstance(tf, CGAffineTransform)
-        self.assertEqual(tf.a,  2.5)
-        self.assertEqual(tf.b,  0.0)
-        self.assertEqual(tf.c,  0.0)
-        self.assertEqual(tf.d,  3.5)
+        self.assertEqual(tf.a, 2.5)
+        self.assertEqual(tf.b, 0.0)
+        self.assertEqual(tf.c, 0.0)
+        self.assertEqual(tf.d, 3.5)
         self.assertEqual(tf.tx, 0.0)
         self.assertEqual(tf.ty, 0.0)
 
@@ -68,8 +68,9 @@ class TestCGAffineTransform (TestCase):
         tf = CGAffineTransformInvert(tf)
         self.assertIsInstance(tf, CGAffineTransform)
 
-        tf2 = CGAffineTransformConcat(tf,
-                CGAffineTransformMake(1.0, 1.0, 1.0, 1.0, 1.0, 1.0))
+        tf2 = CGAffineTransformConcat(
+            tf, CGAffineTransformMake(1.0, 1.0, 1.0, 1.0, 1.0, 1.0)
+        )
         self.assertIsInstance(tf2, CGAffineTransform)
 
         self.assertResultHasType(CGAffineTransformEqualToTransform, objc._C_BOOL)
@@ -84,6 +85,7 @@ class TestCGAffineTransform (TestCase):
 
         rct = CGRectApplyAffineTransform(((2.5, 3.5), (4.5, 5.5)), tf)
         self.assertIsInstance(rct, CGRect)
+
 
 if __name__ == "__main__":
     main()

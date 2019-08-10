@@ -4,7 +4,7 @@ import sys
 if sys.maxsize > 2 ** 32:
     import NaturalLanguage
 
-    class TestNLLanguage (TestCase):
+    class TestNLLanguage(TestCase):
         def test_constants(self):
             self.assertIsInstance(NaturalLanguage.NLLanguageUndetermined, unicode)
             self.assertIsInstance(NaturalLanguage.NLLanguageAmharic, unicode)
@@ -63,6 +63,7 @@ if sys.maxsize > 2 ** 32:
             self.assertIsInstance(NaturalLanguage.NLLanguageUkrainian, unicode)
             self.assertIsInstance(NaturalLanguage.NLLanguageUrdu, unicode)
             self.assertIsInstance(NaturalLanguage.NLLanguageVietnamese, unicode)
+
 
 if __name__ == "__main__":
     main()

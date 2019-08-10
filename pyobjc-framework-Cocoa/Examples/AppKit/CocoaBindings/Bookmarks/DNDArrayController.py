@@ -19,16 +19,17 @@ from BookmarksDocument import CopiedRowsType
 
 MovedRowsType = "MOVED_ROWS_TYPE"
 
-class DNDArrayController (NSArrayController):
+
+class DNDArrayController(NSArrayController):
     # DNDArrayController is delegate and dataSource of tableView
     tableView = objc.IBOutlet()
 
     def awakeFromNib(self):
         "register for drag and drop"
         self.tableView.registerForDraggedTypes_(
-            [CopiedRowsType, MovedRowsType, NSURLPboardType])
+            [CopiedRowsType, MovedRowsType, NSURLPboardType]
+        )
         self.tableView.setAllowsMultipleSelection_(True)
-
 
     def tableView_writeRows_toPasteboard_(self, tv, rows, pboard):
         # declare our own pasteboard types
@@ -45,7 +46,7 @@ class DNDArrayController (NSArrayController):
             # If we can, add NSURLPboardType to the declared types and write
             # the URL to the pasteboard; otherwise declare existing types
             row = rows[0]
-            urlString = self.arrangedObjects()[row].valueForKey_(u'url')
+            urlString = self.arrangedObjects()[row].valueForKey_("url")
             url = None
             if urlString:
                 url = NSURL.URLWithString_(urlString)
@@ -68,11 +69,13 @@ class DNDArrayController (NSArrayController):
         pboard.setPropertyList_forType_(rowCopies, CopiedRowsType)
         return True
 
-    def tableView_validateDrop_proposedRow_proposedDropOperation_(self, tv, info, row, op):
+    def tableView_validateDrop_proposedRow_proposedDropOperation_(
+        self, tv, info, row, op
+    ):
         dragOp = NSDragOperationCopy
         # if drag source is self, it's a move
         if info.draggingSource() == self.tableView:
-            dragOp =  NSDragOperationMove
+            dragOp = NSDragOperationMove
         # we want to put the object at, not over,
         # the current row (contrast NSTableViewDropOn)
         tv.setDropRow_dropOperation_(row, NSTableViewDropAbove)
@@ -108,8 +111,8 @@ class DNDArrayController (NSArrayController):
         if url:
             newObject = self.newObject()
             self.insertObject_atArrangedObjectIndex_(newObject, row)
-            newObject.setValue_forKey_(url.absoluteString(), u"url")
-            newObject.setValue_forKey_(NSCalendarDate.date(), u"date")
+            newObject.setValue_forKey_(url.absoluteString(), "url")
+            newObject.setValue_forKey_(NSCalendarDate.date(), "date")
             # set selected rows to those that were just copied
             self.setSelectionIndex_(row)
             return True

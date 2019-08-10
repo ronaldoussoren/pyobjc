@@ -9,8 +9,8 @@
 
 from Cocoa import NSValueTransformer, NSColor
 
-class OverdueTransformer(NSValueTransformer):
 
+class OverdueTransformer(NSValueTransformer):
     @classmethod
     def transformedValueClass(cls):
         return NSColor

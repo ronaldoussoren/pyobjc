@@ -1,8 +1,8 @@
-
 from PyObjCTools.TestSupport import *
 from Quartz.CoreGraphics import *
 
-class TestCGError (TestCase):
+
+class TestCGError(TestCase):
     def testConstants(self):
         self.assertEqual(kCGErrorSuccess, 0)
         self.assertEqual(kCGErrorFirst, 1000)
@@ -28,6 +28,7 @@ class TestCGError (TestCase):
         self.assertEqual(kCGErrorForkFailed, 1028)
         self.assertEqual(kCGErrorRetryRegistration, 1029)
         self.assertEqual(kCGErrorLast, kCGErrorRetryRegistration)
+
 
 if __name__ == "__main__":
     main()

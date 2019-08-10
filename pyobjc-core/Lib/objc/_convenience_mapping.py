@@ -50,9 +50,7 @@ def update_setObject_forKey_(self, *args, **kwds):
     if len(args) == 0:
         pass
     elif len(args) != 1:
-        raise TypeError(
-            "update expected at most 1 arguments, got {0}".format(len(args))
-        )
+        raise TypeError("update expected at most 1 arguments, got {0}".format(len(args)))
 
     else:
         other = args[0]

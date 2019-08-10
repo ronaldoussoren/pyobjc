@@ -1,22 +1,21 @@
-
 from PyObjCTools.TestSupport import *
 from Quartz.QuartzComposer import *
 
-class TestQCComposition (TestCase):
 
+class TestQCComposition(TestCase):
     def testConstants(self):
         self.assertIsInstance(QCCompositionAttributeNameKey, unicode)
         self.assertIsInstance(QCCompositionAttributeDescriptionKey, unicode)
         self.assertIsInstance(QCCompositionAttributeCopyrightKey, unicode)
 
-    @os_level_between('10.5', '10.13')
+    @os_level_between("10.5", "10.13")
     def testConstants10_5_to_13(self):
         # Removed in 10.14
         self.assertIsInstance(QCCompositionInputRSSFeedURLKey, unicode)
         self.assertIsInstance(QCCompositionInputRSSArticleDurationKey, unicode)
         self.assertIsInstance(QCCompositionProtocolRSSVisualizer, unicode)
 
-    @min_os_level('10.5')
+    @min_os_level("10.5")
     def testConstants10_5(self):
         self.assertIsInstance(QCCompositionAttributeBuiltInKey, unicode)
         self.assertIsInstance(QCCompositionAttributeIsTimeDependentKey, unicode)
@@ -48,7 +47,7 @@ class TestQCComposition (TestCase):
         self.assertIsInstance(QCCompositionProtocolScreenSaver, unicode)
         self.assertIsInstance(QCCompositionProtocolMusicVisualizer, unicode)
 
-    @min_os_level('10.6')
+    @min_os_level("10.6")
     @expectedFailure
     def testConstants10_6(self):
         self.assertIsInstance(QCCompositionInputMeshKey, unicode)

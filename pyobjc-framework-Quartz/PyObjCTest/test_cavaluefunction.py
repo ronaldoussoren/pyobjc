@@ -2,8 +2,8 @@ from Quartz import *
 from PyObjCTools.TestSupport import *
 
 
-class TestCAValueFunction (TestCase):
-    @min_os_level('10.6')
+class TestCAValueFunction(TestCase):
+    @min_os_level("10.6")
     def testConstants10_6(self):
         self.assertIsInstance(kCAValueFunctionRotateX, unicode)
         self.assertIsInstance(kCAValueFunctionRotateY, unicode)
@@ -16,6 +16,7 @@ class TestCAValueFunction (TestCase):
         self.assertIsInstance(kCAValueFunctionTranslateX, unicode)
         self.assertIsInstance(kCAValueFunctionTranslateY, unicode)
         self.assertIsInstance(kCAValueFunctionTranslateZ, unicode)
+
 
 if __name__ == "__main__":
     main()

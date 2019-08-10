@@ -4,7 +4,8 @@ from PyObjCTools.TestSupport import *
 
 import MediaAccessibility
 
-class TestMAImageCaptioning (TestCase):
+
+class TestMAImageCaptioning(TestCase):
     @min_os_level("10.15")
     def testFunctions10_10(self):
         self.assertResultIsCFRetained(MediaAccessibility.MAImageCaptioningCopyCaption)
@@ -14,7 +15,9 @@ class TestMAImageCaptioning (TestCase):
         self.assertArgIsOut(MediaAccessibility.MAImageCaptioningSetCaption, 2)
         self.assertArgIsCFRetained(MediaAccessibility.MAImageCaptioningSetCaption, 2)
 
-        self.assertResultIsCFRetained(MediaAccessibility.MAImageCaptioningCopyMetadataTagPath)
+        self.assertResultIsCFRetained(
+            MediaAccessibility.MAImageCaptioningCopyMetadataTagPath
+        )
 
 
 if __name__ == "__main__":

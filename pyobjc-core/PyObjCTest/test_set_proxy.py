@@ -203,9 +203,7 @@ class TestImmutableSet(TestCase, BasicSetTests):
             TypeError, OC_TestSet.set_minusSet_, o, self.setClass([2, 3, 4])
         )
 
-        self.assertRaises(
-            TypeError, OC_TestSet.set_setSet_, o, self.setClass([2, 3, 4])
-        )
+        self.assertRaises(TypeError, OC_TestSet.set_setSet_, o, self.setClass([2, 3, 4]))
 
         self.assertRaises(
             TypeError, OC_TestSet.set_minusSet_, o, self.setClass([2, 3, 4])

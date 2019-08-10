@@ -5,87 +5,677 @@
 import objc, sys
 
 if sys.maxsize > 2 ** 32:
-    def sel32or64(a, b): return b
-else:
-    def sel32or64(a, b): return a
 
-misc = {
-}
-constants = '''$VNAnimalDetectorCat$VNAnimalDetectorDog$VNAnimalIdentifierCat$VNAnimalIdentifierDog$VNBarcodeSymbologyAztec$VNBarcodeSymbologyCode128$VNBarcodeSymbologyCode39$VNBarcodeSymbologyCode39Checksum$VNBarcodeSymbologyCode39FullASCII$VNBarcodeSymbologyCode39FullASCIIChecksum$VNBarcodeSymbologyCode93$VNBarcodeSymbologyCode93i$VNBarcodeSymbologyDataMatrix$VNBarcodeSymbologyEAN13$VNBarcodeSymbologyEAN8$VNBarcodeSymbologyI2of5$VNBarcodeSymbologyI2of5Checksum$VNBarcodeSymbologyITF14$VNBarcodeSymbologyPDF417$VNBarcodeSymbologyQR$VNBarcodeSymbologyUPCE$VNErrorDomain$VNImageOptionCIContext$VNImageOptionCameraIntrinsics$VNImageOptionProperties$VNNormalizedIdentityRect@{CGRect={CGPoint=dd}{CGSize=dd}}$VNVisionVersionNumber@d$'''
-enums = '''$VNClassifyImageRequestRevision1@1$VNCoreMLRequestRevision1@1$VNDetectAnimalRectanglesRequestRevision1@1$VNDetectBarcodesRequestRevision1@1$VNDetectFaceCaptureQualityRequestRevision1@1$VNDetectFaceLandmarksRequestRevision1@1$VNDetectFaceLandmarksRequestRevision2@2$VNDetectFaceLandmarksRequestRevision3@3$VNDetectFaceQualityRequestRevision1@1$VNDetectFaceRectanglesRequestRevision1@1$VNDetectFaceRectanglesRequestRevision2@2$VNDetectHorizonRequestRevision1@1$VNDetectHumanRectanglesRequestRevision1@1$VNDetectRectanglesRequestRevision1@1$VNDetectTextRectanglesRequestRevision1@1$VNElementTypeDouble@2$VNElementTypeFloat@1$VNElementTypeUnknown@0$VNErrorDataUnavailable@17$VNErrorIOError@6$VNErrorInternalError@9$VNErrorInvalidArgument@14$VNErrorInvalidFormat@2$VNErrorInvalidImage@13$VNErrorInvalidModel@15$VNErrorInvalidOperation@12$VNErrorInvalidOption@5$VNErrorMissingOption@7$VNErrorNotImplemented@8$VNErrorOK@0$VNErrorOperationFailed@3$VNErrorOutOfBoundsError@4$VNErrorOutOfMemory@10$VNErrorRequestCancelled@1$VNErrorUnknownError@11$VNErrorUnsupportedRevision@16$VNGenerateAttentionBasedSaliencyImageRequestRevision1@1$VNGenerateImageFeaturePrintRequestRevision1@1$VNGenerateObjectnessBasedSaliencyImageRequestRevision1@1$VNHomographicImageRegistrationRequestRevision1@1$VNImageCropAndScaleOptionCenterCrop@0$VNImageCropAndScaleOptionScaleFill@2$VNImageCropAndScaleOptionScaleFit@1$VNRecognizeTextRequestRevision1@1$VNRequestFaceLandmarksConstellation65Points@1$VNRequestFaceLandmarksConstellation76Points@2$VNRequestFaceLandmarksConstellationNotDefined@0$VNRequestRevisionUnspecified@0$VNRequestTextRecognitionLevelAccurate@0$VNRequestTextRecognitionLevelFast@1$VNRequestTrackingLevelAccurate@0$VNRequestTrackingLevelFast@1$VNTrackObjectRequestRevision1@1$VNTrackObjectRequestRevision2@2$VNTrackRectangleRequestRevision1@1$VNTranslationalImageRegistrationRequestRevision1@1$'''
+    def sel32or64(a, b):
+        return b
+
+
+else:
+
+    def sel32or64(a, b):
+        return a
+
+
+misc = {}
+constants = """$VNAnimalDetectorCat$VNAnimalDetectorDog$VNAnimalIdentifierCat$VNAnimalIdentifierDog$VNBarcodeSymbologyAztec$VNBarcodeSymbologyCode128$VNBarcodeSymbologyCode39$VNBarcodeSymbologyCode39Checksum$VNBarcodeSymbologyCode39FullASCII$VNBarcodeSymbologyCode39FullASCIIChecksum$VNBarcodeSymbologyCode93$VNBarcodeSymbologyCode93i$VNBarcodeSymbologyDataMatrix$VNBarcodeSymbologyEAN13$VNBarcodeSymbologyEAN8$VNBarcodeSymbologyI2of5$VNBarcodeSymbologyI2of5Checksum$VNBarcodeSymbologyITF14$VNBarcodeSymbologyPDF417$VNBarcodeSymbologyQR$VNBarcodeSymbologyUPCE$VNErrorDomain$VNImageOptionCIContext$VNImageOptionCameraIntrinsics$VNImageOptionProperties$VNNormalizedIdentityRect@{CGRect={CGPoint=dd}{CGSize=dd}}$VNVisionVersionNumber@d$"""
+enums = """$VNClassifyImageRequestRevision1@1$VNCoreMLRequestRevision1@1$VNDetectAnimalRectanglesRequestRevision1@1$VNDetectBarcodesRequestRevision1@1$VNDetectFaceCaptureQualityRequestRevision1@1$VNDetectFaceLandmarksRequestRevision1@1$VNDetectFaceLandmarksRequestRevision2@2$VNDetectFaceLandmarksRequestRevision3@3$VNDetectFaceQualityRequestRevision1@1$VNDetectFaceRectanglesRequestRevision1@1$VNDetectFaceRectanglesRequestRevision2@2$VNDetectHorizonRequestRevision1@1$VNDetectHumanRectanglesRequestRevision1@1$VNDetectRectanglesRequestRevision1@1$VNDetectTextRectanglesRequestRevision1@1$VNElementTypeDouble@2$VNElementTypeFloat@1$VNElementTypeUnknown@0$VNErrorDataUnavailable@17$VNErrorIOError@6$VNErrorInternalError@9$VNErrorInvalidArgument@14$VNErrorInvalidFormat@2$VNErrorInvalidImage@13$VNErrorInvalidModel@15$VNErrorInvalidOperation@12$VNErrorInvalidOption@5$VNErrorMissingOption@7$VNErrorNotImplemented@8$VNErrorOK@0$VNErrorOperationFailed@3$VNErrorOutOfBoundsError@4$VNErrorOutOfMemory@10$VNErrorRequestCancelled@1$VNErrorUnknownError@11$VNErrorUnsupportedRevision@16$VNGenerateAttentionBasedSaliencyImageRequestRevision1@1$VNGenerateImageFeaturePrintRequestRevision1@1$VNGenerateObjectnessBasedSaliencyImageRequestRevision1@1$VNHomographicImageRegistrationRequestRevision1@1$VNImageCropAndScaleOptionCenterCrop@0$VNImageCropAndScaleOptionScaleFill@2$VNImageCropAndScaleOptionScaleFit@1$VNRecognizeTextRequestRevision1@1$VNRequestFaceLandmarksConstellation65Points@1$VNRequestFaceLandmarksConstellation76Points@2$VNRequestFaceLandmarksConstellationNotDefined@0$VNRequestRevisionUnspecified@0$VNRequestTextRecognitionLevelAccurate@0$VNRequestTextRecognitionLevelFast@1$VNRequestTrackingLevelAccurate@0$VNRequestTrackingLevelFast@1$VNTrackObjectRequestRevision1@1$VNTrackObjectRequestRevision2@2$VNTrackRectangleRequestRevision1@1$VNTranslationalImageRegistrationRequestRevision1@1$"""
 misc.update({})
-functions={'VNImageRectForNormalizedRect': (b'{CGRect={CGPoint=dd}{CGSize=dd}}{CGRect={CGPoint=dd}{CGSize=dd}}QQ',), 'VNNormalizedRectIsIdentityRect': (b'B{CGRect={CGPoint=dd}{CGSize=dd}}',), 'VNImagePointForNormalizedPoint': (b'{CGPoint=dd}{CGPoint=dd}QQ',), 'VNElementTypeSize': (b'QQ',), 'VNNormalizedRectForImageRect': (b'{CGRect={CGPoint=dd}{CGSize=dd}}{CGRect={CGPoint=dd}{CGSize=dd}}QQ',)}
+functions = {
+    "VNImageRectForNormalizedRect": (
+        b"{CGRect={CGPoint=dd}{CGSize=dd}}{CGRect={CGPoint=dd}{CGSize=dd}}QQ",
+    ),
+    "VNNormalizedRectIsIdentityRect": (b"B{CGRect={CGPoint=dd}{CGSize=dd}}",),
+    "VNImagePointForNormalizedPoint": (b"{CGPoint=dd}{CGPoint=dd}QQ",),
+    "VNElementTypeSize": (b"QQ",),
+    "VNNormalizedRectForImageRect": (
+        b"{CGRect={CGPoint=dd}{CGSize=dd}}{CGRect={CGPoint=dd}{CGSize=dd}}QQ",
+    ),
+}
 r = objc.registerMetaDataForSelector
 objc._updatingMetadata(True)
 try:
-    r(b'NSObject', b'indeterminate', {'required': True, 'retval': {'type': 'Z'}})
-    r(b'NSObject', b'inputFaceObservations', {'required': True, 'retval': {'type': b'@'}})
-    r(b'NSObject', b'progressHandler', {'required': True, 'retval': {'callable': {'retval': {'type': b'v'}, 'arguments': {0: {'type': b'^v'}, 1: {'type': b'@'}, 2: {'type': b'd'}, 3: {'type': b'@'}}}, 'type': '@?'}})
-    r(b'NSObject', b'requestRevision', {'required': True, 'retval': {'type': 'Q'}})
-    r(b'NSObject', b'setInputFaceObservations:', {'required': True, 'retval': {'type': b'v'}, 'arguments': {2: {'type': b'@'}}})
-    r(b'NSObject', b'setProgressHandler:', {'required': True, 'retval': {'type': b'v'}, 'arguments': {2: {'callable': {'retval': {'type': b'v'}, 'arguments': {0: {'type': b'^v'}, 1: {'type': b'@'}, 2: {'type': b'd'}, 3: {'type': b'@'}}}, 'type': '@?'}}})
-    r(b'VNClassificationObservation', b'hasMinimumPrecision:forRecall:', {'retval': {'type': 'Z'}})
-    r(b'VNClassificationObservation', b'hasMinimumRecall:forPrecision:', {'retval': {'type': 'Z'}})
-    r(b'VNClassifyImageRequest', b'knownClassificationsForRevision:error:', {'arguments': {3: {'type_modifier': b'o'}}})
-    r(b'VNCoreMLModel', b'modelForMLModel:error:', {'arguments': {3: {'type_modifier': b'o'}}})
-    r(b'VNCoreMLRequest', b'initWithCompletionHandler:', {'arguments': {2: {'callable': {'retval': {'type': b'v'}, 'arguments': {0: {'type': b'^v'}, 1: {'type': b'@'}, 2: {'type': b'@'}}}}}})
-    r(b'VNCoreMLRequest', b'initWithModel:completionHandler:', {'arguments': {3: {'callable': {'retval': {'type': b'v'}, 'arguments': {0: {'type': b'^v'}, 1: {'type': b'@'}, 2: {'type': b'@'}}}}}})
-    r(b'VNDetectFaceLandmarksRequest', b'revision:supportsConstellation:', {'retval': {'type': b'Z'}})
-    r(b'VNDetectTextRectanglesRequest', b'reportCharacterBoxes', {'retval': {'type': 'Z'}})
-    r(b'VNDetectTextRectanglesRequest', b'setReportCharacterBoxes:', {'arguments': {2: {'type': 'Z'}}})
-    r(b'VNFaceLandmarkRegion2D', b'normalizedPoints', {'retval': {'c_array_of_variable_length': True}})
-    r(b'VNFaceLandmarkRegion2D', b'pointsInImageOfSize:', {'retval': {'c_array_of_variable_length': True}})
-    r(b'VNFeaturePrintObservation', b'computeDistance:toFeaturePrintObservation:error:', {'retval': {'type': 'Z'}, 'arguments': {4: {'type_modifier': b'o'}}})
-    r(b'VNImageHomographicAlignmentObservation', b'setWarpTransform:', {'arguments': {2: {'type': b'{_matrix_float3x3=?}'}}})
-    r(b'VNImageHomographicAlignmentObservation', b'warpTransform', {'retval': {'type': b'{_matrix_float3x3=?}'}})
-    r(b'VNImageRequestHandler', b'performRequests:error:', {'retval': {'type': 'Z'}, 'arguments': {3: {'type_modifier': b'o'}}})
-    r(b'VNRecognizeAnimalsRequest', b'knownAnimalIdentifiersForRevision:error:', {'arguments': {3: {'type_modifier': b'o'}}})
-    r(b'VNRecognizeTextRequest', b'setUsesLanguageCorrection:', {'arguments': {2: {'type': 'Z'}}})
-    r(b'VNRecognizeTextRequest', b'supportedRecognitionLanguagesForTextRecognitionLevel:revision:error:', {'arguments': {4: {'type_modifier': b'o'}}})
-    r(b'VNRecognizeTextRequest', b'usesLanguageCorrection', {'retval': {'type': 'Z'}})
-    r(b'VNRecognizedText', b'boundingBoxForRange:error:', {'arguments': {3: {'type_modifier': b'o'}}})
-    r(b'VNRequest', b'completionHandler', {'retval': {'callable': {'retval': {'type': b'v'}, 'arguments': {0: {'type': b'^v'}, 1: {'type': b'@'}, 2: {'type': b'@'}}}}})
-    r(b'VNRequest', b'initWithCompletionHandler:', {'arguments': {2: {'callable': {'retval': {'type': b'v'}, 'arguments': {0: {'type': b'^v'}, 1: {'type': b'@'}, 2: {'type': b'@'}}}}}})
-    r(b'VNRequest', b'preferBackgroundProcessing', {'retval': {'type': 'Z'}})
-    r(b'VNRequest', b'setPreferBackgroundProcessing:', {'arguments': {2: {'type': 'Z'}}})
-    r(b'VNRequest', b'setUsesCPUOnly:', {'arguments': {2: {'type': 'Z'}}})
-    r(b'VNRequest', b'usesCPUOnly', {'retval': {'type': 'Z'}})
-    r(b'VNSequenceRequestHandler', b'performRequests:onCGImage:error:', {'retval': {'type': 'Z'}, 'arguments': {4: {'type_modifier': b'o'}}})
-    r(b'VNSequenceRequestHandler', b'performRequests:onCGImage:orientation:error:', {'retval': {'type': 'Z'}, 'arguments': {5: {'type_modifier': b'o'}}})
-    r(b'VNSequenceRequestHandler', b'performRequests:onCIImage:error:', {'retval': {'type': 'Z'}, 'arguments': {4: {'type_modifier': b'o'}}})
-    r(b'VNSequenceRequestHandler', b'performRequests:onCIImage:orientation:error:', {'retval': {'type': 'Z'}, 'arguments': {5: {'type_modifier': b'o'}}})
-    r(b'VNSequenceRequestHandler', b'performRequests:onCVPixelBuffer:error:', {'retval': {'type': 'Z'}, 'arguments': {4: {'type_modifier': b'o'}}})
-    r(b'VNSequenceRequestHandler', b'performRequests:onCVPixelBuffer:orientation:error:', {'retval': {'type': 'Z'}, 'arguments': {5: {'type_modifier': b'o'}}})
-    r(b'VNSequenceRequestHandler', b'performRequests:onImageData:error:', {'retval': {'type': 'Z'}, 'arguments': {4: {'type_modifier': b'o'}}})
-    r(b'VNSequenceRequestHandler', b'performRequests:onImageData:orientation:error:', {'retval': {'type': 'Z'}, 'arguments': {5: {'type_modifier': b'o'}}})
-    r(b'VNSequenceRequestHandler', b'performRequests:onImageURL:error:', {'retval': {'type': 'Z'}, 'arguments': {4: {'type_modifier': b'o'}}})
-    r(b'VNSequenceRequestHandler', b'performRequests:onImageURL:orientation:error:', {'retval': {'type': 'Z'}, 'arguments': {5: {'type_modifier': b'o'}}})
-    r(b'VNTargetedImageRequest', b'initWithCompletionHandler:', {'arguments': {2: {'callable': {'retval': {'type': b'v'}, 'arguments': {0: {'type': b'^v'}, 1: {'type': b'@'}, 2: {'type': b'@'}}}}}})
-    r(b'VNTargetedImageRequest', b'initWithTargetedCGImage:completionHandler:', {'arguments': {3: {'callable': {'retval': {'type': b'v'}, 'arguments': {0: {'type': b'^v'}, 1: {'type': b'@'}, 2: {'type': b'@'}}}}}})
-    r(b'VNTargetedImageRequest', b'initWithTargetedCGImage:options:completionHandler:', {'arguments': {4: {'callable': {'retval': {'type': b'v'}, 'arguments': {0: {'type': b'^v'}, 1: {'type': b'@'}, 2: {'type': b'@'}}}}}})
-    r(b'VNTargetedImageRequest', b'initWithTargetedCGImage:orientation:options:completionHandler:', {'arguments': {5: {'callable': {'retval': {'type': b'v'}, 'arguments': {0: {'type': b'^v'}, 1: {'type': b'@'}, 2: {'type': b'@'}}}}}})
-    r(b'VNTargetedImageRequest', b'initWithTargetedCIImage:completionHandler:', {'arguments': {3: {'callable': {'retval': {'type': b'v'}, 'arguments': {0: {'type': b'^v'}, 1: {'type': b'@'}, 2: {'type': b'@'}}}}}})
-    r(b'VNTargetedImageRequest', b'initWithTargetedCIImage:options:completionHandler:', {'arguments': {4: {'callable': {'retval': {'type': b'v'}, 'arguments': {0: {'type': b'^v'}, 1: {'type': b'@'}, 2: {'type': b'@'}}}}}})
-    r(b'VNTargetedImageRequest', b'initWithTargetedCIImage:orientation:options:completionHandler:', {'arguments': {5: {'callable': {'retval': {'type': b'v'}, 'arguments': {0: {'type': b'^v'}, 1: {'type': b'@'}, 2: {'type': b'@'}}}}}})
-    r(b'VNTargetedImageRequest', b'initWithTargetedCVPixelBuffer:completionHandler:', {'arguments': {3: {'callable': {'retval': {'type': b'v'}, 'arguments': {0: {'type': b'^v'}, 1: {'type': b'@'}, 2: {'type': b'@'}}}}}})
-    r(b'VNTargetedImageRequest', b'initWithTargetedCVPixelBuffer:options:completionHandler:', {'arguments': {4: {'callable': {'retval': {'type': b'v'}, 'arguments': {0: {'type': b'^v'}, 1: {'type': b'@'}, 2: {'type': b'@'}}}}}})
-    r(b'VNTargetedImageRequest', b'initWithTargetedCVPixelBuffer:orientation:options:completionHandler:', {'arguments': {5: {'callable': {'retval': {'type': b'v'}, 'arguments': {0: {'type': b'^v'}, 1: {'type': b'@'}, 2: {'type': b'@'}}}}}})
-    r(b'VNTargetedImageRequest', b'initWithTargetedImageData:completionHandler:', {'arguments': {3: {'callable': {'retval': {'type': b'v'}, 'arguments': {0: {'type': b'^v'}, 1: {'type': b'@'}, 2: {'type': b'@'}}}}}})
-    r(b'VNTargetedImageRequest', b'initWithTargetedImageData:options:completionHandler:', {'arguments': {4: {'callable': {'retval': {'type': b'v'}, 'arguments': {0: {'type': b'^v'}, 1: {'type': b'@'}, 2: {'type': b'@'}}}}}})
-    r(b'VNTargetedImageRequest', b'initWithTargetedImageData:orientation:options:completionHandler:', {'arguments': {5: {'callable': {'retval': {'type': b'v'}, 'arguments': {0: {'type': b'^v'}, 1: {'type': b'@'}, 2: {'type': b'@'}}}}}})
-    r(b'VNTargetedImageRequest', b'initWithTargetedImageURL:completionHandler:', {'arguments': {3: {'callable': {'retval': {'type': b'v'}, 'arguments': {0: {'type': b'^v'}, 1: {'type': b'@'}, 2: {'type': b'@'}}}}}})
-    r(b'VNTargetedImageRequest', b'initWithTargetedImageURL:options:completionHandler:', {'arguments': {4: {'callable': {'retval': {'type': b'v'}, 'arguments': {0: {'type': b'^v'}, 1: {'type': b'@'}, 2: {'type': b'@'}}}}}})
-    r(b'VNTargetedImageRequest', b'initWithTargetedImageURL:orientation:options:completionHandler:', {'arguments': {5: {'callable': {'retval': {'type': b'v'}, 'arguments': {0: {'type': b'^v'}, 1: {'type': b'@'}, 2: {'type': b'@'}}}}}})
-    r(b'VNTrackObjectRequest', b'initWithCompletionHandler:', {'arguments': {2: {'callable': {'retval': {'type': b'v'}, 'arguments': {0: {'type': b'^v'}, 1: {'type': b'@'}, 2: {'type': b'@'}}}}}})
-    r(b'VNTrackObjectRequest', b'initWithDetectedObjectObservation:completionHandler:', {'arguments': {3: {'callable': {'retval': {'type': b'v'}, 'arguments': {0: {'type': b'^v'}, 1: {'type': b'@'}, 2: {'type': b'@'}}}}}})
-    r(b'VNTrackRectangleRequest', b'initWithCompletionHandler:', {'arguments': {2: {'callable': {'retval': {'type': b'v'}, 'arguments': {0: {'type': b'^v'}, 1: {'type': b'@'}, 2: {'type': b'@'}}}}}})
-    r(b'VNTrackRectangleRequest', b'initWithRectangleObservation:completionHandler:', {'arguments': {3: {'callable': {'retval': {'type': b'v'}, 'arguments': {0: {'type': b'^v'}, 1: {'type': b'@'}, 2: {'type': b'@'}}}}}})
-    r(b'VNTrackingRequest', b'initWithCompletionHandler:', {'arguments': {2: {'callable': {'retval': {'type': b'v'}, 'arguments': {0: {'type': b'^v'}, 1: {'type': b'@'}, 2: {'type': b'@'}}}}}})
-    r(b'VNTrackingRequest', b'isLastFrame', {'retval': {'type': 'Z'}})
-    r(b'VNTrackingRequest', b'setLastFrame:', {'arguments': {2: {'type': 'Z'}}})
-    r(b'null', b'hasMinimumPrecision:forRecall:', {'retval': {'type': b'Z'}})
-    r(b'null', b'hasMinimumRecall:forPrecision:', {'retval': {'type': b'Z'}})
-    r(b'null', b'hasPrecisionRecallCurve', {'retval': {'type': b'Z'}})
+    r(b"NSObject", b"indeterminate", {"required": True, "retval": {"type": "Z"}})
+    r(b"NSObject", b"inputFaceObservations", {"required": True, "retval": {"type": b"@"}})
+    r(
+        b"NSObject",
+        b"progressHandler",
+        {
+            "required": True,
+            "retval": {
+                "callable": {
+                    "retval": {"type": b"v"},
+                    "arguments": {
+                        0: {"type": b"^v"},
+                        1: {"type": b"@"},
+                        2: {"type": b"d"},
+                        3: {"type": b"@"},
+                    },
+                },
+                "type": "@?",
+            },
+        },
+    )
+    r(b"NSObject", b"requestRevision", {"required": True, "retval": {"type": "Q"}})
+    r(
+        b"NSObject",
+        b"setInputFaceObservations:",
+        {"required": True, "retval": {"type": b"v"}, "arguments": {2: {"type": b"@"}}},
+    )
+    r(
+        b"NSObject",
+        b"setProgressHandler:",
+        {
+            "required": True,
+            "retval": {"type": b"v"},
+            "arguments": {
+                2: {
+                    "callable": {
+                        "retval": {"type": b"v"},
+                        "arguments": {
+                            0: {"type": b"^v"},
+                            1: {"type": b"@"},
+                            2: {"type": b"d"},
+                            3: {"type": b"@"},
+                        },
+                    },
+                    "type": "@?",
+                }
+            },
+        },
+    )
+    r(
+        b"VNClassificationObservation",
+        b"hasMinimumPrecision:forRecall:",
+        {"retval": {"type": "Z"}},
+    )
+    r(
+        b"VNClassificationObservation",
+        b"hasMinimumRecall:forPrecision:",
+        {"retval": {"type": "Z"}},
+    )
+    r(
+        b"VNClassifyImageRequest",
+        b"knownClassificationsForRevision:error:",
+        {"arguments": {3: {"type_modifier": b"o"}}},
+    )
+    r(
+        b"VNCoreMLModel",
+        b"modelForMLModel:error:",
+        {"arguments": {3: {"type_modifier": b"o"}}},
+    )
+    r(
+        b"VNCoreMLRequest",
+        b"initWithCompletionHandler:",
+        {
+            "arguments": {
+                2: {
+                    "callable": {
+                        "retval": {"type": b"v"},
+                        "arguments": {
+                            0: {"type": b"^v"},
+                            1: {"type": b"@"},
+                            2: {"type": b"@"},
+                        },
+                    }
+                }
+            }
+        },
+    )
+    r(
+        b"VNCoreMLRequest",
+        b"initWithModel:completionHandler:",
+        {
+            "arguments": {
+                3: {
+                    "callable": {
+                        "retval": {"type": b"v"},
+                        "arguments": {
+                            0: {"type": b"^v"},
+                            1: {"type": b"@"},
+                            2: {"type": b"@"},
+                        },
+                    }
+                }
+            }
+        },
+    )
+    r(
+        b"VNDetectFaceLandmarksRequest",
+        b"revision:supportsConstellation:",
+        {"retval": {"type": b"Z"}},
+    )
+    r(
+        b"VNDetectTextRectanglesRequest",
+        b"reportCharacterBoxes",
+        {"retval": {"type": "Z"}},
+    )
+    r(
+        b"VNDetectTextRectanglesRequest",
+        b"setReportCharacterBoxes:",
+        {"arguments": {2: {"type": "Z"}}},
+    )
+    r(
+        b"VNFaceLandmarkRegion2D",
+        b"normalizedPoints",
+        {"retval": {"c_array_of_variable_length": True}},
+    )
+    r(
+        b"VNFaceLandmarkRegion2D",
+        b"pointsInImageOfSize:",
+        {"retval": {"c_array_of_variable_length": True}},
+    )
+    r(
+        b"VNFeaturePrintObservation",
+        b"computeDistance:toFeaturePrintObservation:error:",
+        {"retval": {"type": "Z"}, "arguments": {4: {"type_modifier": b"o"}}},
+    )
+    r(
+        b"VNImageHomographicAlignmentObservation",
+        b"setWarpTransform:",
+        {"arguments": {2: {"type": b"{_matrix_float3x3=?}"}}},
+    )
+    r(
+        b"VNImageHomographicAlignmentObservation",
+        b"warpTransform",
+        {"retval": {"type": b"{_matrix_float3x3=?}"}},
+    )
+    r(
+        b"VNImageRequestHandler",
+        b"performRequests:error:",
+        {"retval": {"type": "Z"}, "arguments": {3: {"type_modifier": b"o"}}},
+    )
+    r(
+        b"VNRecognizeAnimalsRequest",
+        b"knownAnimalIdentifiersForRevision:error:",
+        {"arguments": {3: {"type_modifier": b"o"}}},
+    )
+    r(
+        b"VNRecognizeTextRequest",
+        b"setUsesLanguageCorrection:",
+        {"arguments": {2: {"type": "Z"}}},
+    )
+    r(
+        b"VNRecognizeTextRequest",
+        b"supportedRecognitionLanguagesForTextRecognitionLevel:revision:error:",
+        {"arguments": {4: {"type_modifier": b"o"}}},
+    )
+    r(b"VNRecognizeTextRequest", b"usesLanguageCorrection", {"retval": {"type": "Z"}})
+    r(
+        b"VNRecognizedText",
+        b"boundingBoxForRange:error:",
+        {"arguments": {3: {"type_modifier": b"o"}}},
+    )
+    r(
+        b"VNRequest",
+        b"completionHandler",
+        {
+            "retval": {
+                "callable": {
+                    "retval": {"type": b"v"},
+                    "arguments": {
+                        0: {"type": b"^v"},
+                        1: {"type": b"@"},
+                        2: {"type": b"@"},
+                    },
+                }
+            }
+        },
+    )
+    r(
+        b"VNRequest",
+        b"initWithCompletionHandler:",
+        {
+            "arguments": {
+                2: {
+                    "callable": {
+                        "retval": {"type": b"v"},
+                        "arguments": {
+                            0: {"type": b"^v"},
+                            1: {"type": b"@"},
+                            2: {"type": b"@"},
+                        },
+                    }
+                }
+            }
+        },
+    )
+    r(b"VNRequest", b"preferBackgroundProcessing", {"retval": {"type": "Z"}})
+    r(b"VNRequest", b"setPreferBackgroundProcessing:", {"arguments": {2: {"type": "Z"}}})
+    r(b"VNRequest", b"setUsesCPUOnly:", {"arguments": {2: {"type": "Z"}}})
+    r(b"VNRequest", b"usesCPUOnly", {"retval": {"type": "Z"}})
+    r(
+        b"VNSequenceRequestHandler",
+        b"performRequests:onCGImage:error:",
+        {"retval": {"type": "Z"}, "arguments": {4: {"type_modifier": b"o"}}},
+    )
+    r(
+        b"VNSequenceRequestHandler",
+        b"performRequests:onCGImage:orientation:error:",
+        {"retval": {"type": "Z"}, "arguments": {5: {"type_modifier": b"o"}}},
+    )
+    r(
+        b"VNSequenceRequestHandler",
+        b"performRequests:onCIImage:error:",
+        {"retval": {"type": "Z"}, "arguments": {4: {"type_modifier": b"o"}}},
+    )
+    r(
+        b"VNSequenceRequestHandler",
+        b"performRequests:onCIImage:orientation:error:",
+        {"retval": {"type": "Z"}, "arguments": {5: {"type_modifier": b"o"}}},
+    )
+    r(
+        b"VNSequenceRequestHandler",
+        b"performRequests:onCVPixelBuffer:error:",
+        {"retval": {"type": "Z"}, "arguments": {4: {"type_modifier": b"o"}}},
+    )
+    r(
+        b"VNSequenceRequestHandler",
+        b"performRequests:onCVPixelBuffer:orientation:error:",
+        {"retval": {"type": "Z"}, "arguments": {5: {"type_modifier": b"o"}}},
+    )
+    r(
+        b"VNSequenceRequestHandler",
+        b"performRequests:onImageData:error:",
+        {"retval": {"type": "Z"}, "arguments": {4: {"type_modifier": b"o"}}},
+    )
+    r(
+        b"VNSequenceRequestHandler",
+        b"performRequests:onImageData:orientation:error:",
+        {"retval": {"type": "Z"}, "arguments": {5: {"type_modifier": b"o"}}},
+    )
+    r(
+        b"VNSequenceRequestHandler",
+        b"performRequests:onImageURL:error:",
+        {"retval": {"type": "Z"}, "arguments": {4: {"type_modifier": b"o"}}},
+    )
+    r(
+        b"VNSequenceRequestHandler",
+        b"performRequests:onImageURL:orientation:error:",
+        {"retval": {"type": "Z"}, "arguments": {5: {"type_modifier": b"o"}}},
+    )
+    r(
+        b"VNTargetedImageRequest",
+        b"initWithCompletionHandler:",
+        {
+            "arguments": {
+                2: {
+                    "callable": {
+                        "retval": {"type": b"v"},
+                        "arguments": {
+                            0: {"type": b"^v"},
+                            1: {"type": b"@"},
+                            2: {"type": b"@"},
+                        },
+                    }
+                }
+            }
+        },
+    )
+    r(
+        b"VNTargetedImageRequest",
+        b"initWithTargetedCGImage:completionHandler:",
+        {
+            "arguments": {
+                3: {
+                    "callable": {
+                        "retval": {"type": b"v"},
+                        "arguments": {
+                            0: {"type": b"^v"},
+                            1: {"type": b"@"},
+                            2: {"type": b"@"},
+                        },
+                    }
+                }
+            }
+        },
+    )
+    r(
+        b"VNTargetedImageRequest",
+        b"initWithTargetedCGImage:options:completionHandler:",
+        {
+            "arguments": {
+                4: {
+                    "callable": {
+                        "retval": {"type": b"v"},
+                        "arguments": {
+                            0: {"type": b"^v"},
+                            1: {"type": b"@"},
+                            2: {"type": b"@"},
+                        },
+                    }
+                }
+            }
+        },
+    )
+    r(
+        b"VNTargetedImageRequest",
+        b"initWithTargetedCGImage:orientation:options:completionHandler:",
+        {
+            "arguments": {
+                5: {
+                    "callable": {
+                        "retval": {"type": b"v"},
+                        "arguments": {
+                            0: {"type": b"^v"},
+                            1: {"type": b"@"},
+                            2: {"type": b"@"},
+                        },
+                    }
+                }
+            }
+        },
+    )
+    r(
+        b"VNTargetedImageRequest",
+        b"initWithTargetedCIImage:completionHandler:",
+        {
+            "arguments": {
+                3: {
+                    "callable": {
+                        "retval": {"type": b"v"},
+                        "arguments": {
+                            0: {"type": b"^v"},
+                            1: {"type": b"@"},
+                            2: {"type": b"@"},
+                        },
+                    }
+                }
+            }
+        },
+    )
+    r(
+        b"VNTargetedImageRequest",
+        b"initWithTargetedCIImage:options:completionHandler:",
+        {
+            "arguments": {
+                4: {
+                    "callable": {
+                        "retval": {"type": b"v"},
+                        "arguments": {
+                            0: {"type": b"^v"},
+                            1: {"type": b"@"},
+                            2: {"type": b"@"},
+                        },
+                    }
+                }
+            }
+        },
+    )
+    r(
+        b"VNTargetedImageRequest",
+        b"initWithTargetedCIImage:orientation:options:completionHandler:",
+        {
+            "arguments": {
+                5: {
+                    "callable": {
+                        "retval": {"type": b"v"},
+                        "arguments": {
+                            0: {"type": b"^v"},
+                            1: {"type": b"@"},
+                            2: {"type": b"@"},
+                        },
+                    }
+                }
+            }
+        },
+    )
+    r(
+        b"VNTargetedImageRequest",
+        b"initWithTargetedCVPixelBuffer:completionHandler:",
+        {
+            "arguments": {
+                3: {
+                    "callable": {
+                        "retval": {"type": b"v"},
+                        "arguments": {
+                            0: {"type": b"^v"},
+                            1: {"type": b"@"},
+                            2: {"type": b"@"},
+                        },
+                    }
+                }
+            }
+        },
+    )
+    r(
+        b"VNTargetedImageRequest",
+        b"initWithTargetedCVPixelBuffer:options:completionHandler:",
+        {
+            "arguments": {
+                4: {
+                    "callable": {
+                        "retval": {"type": b"v"},
+                        "arguments": {
+                            0: {"type": b"^v"},
+                            1: {"type": b"@"},
+                            2: {"type": b"@"},
+                        },
+                    }
+                }
+            }
+        },
+    )
+    r(
+        b"VNTargetedImageRequest",
+        b"initWithTargetedCVPixelBuffer:orientation:options:completionHandler:",
+        {
+            "arguments": {
+                5: {
+                    "callable": {
+                        "retval": {"type": b"v"},
+                        "arguments": {
+                            0: {"type": b"^v"},
+                            1: {"type": b"@"},
+                            2: {"type": b"@"},
+                        },
+                    }
+                }
+            }
+        },
+    )
+    r(
+        b"VNTargetedImageRequest",
+        b"initWithTargetedImageData:completionHandler:",
+        {
+            "arguments": {
+                3: {
+                    "callable": {
+                        "retval": {"type": b"v"},
+                        "arguments": {
+                            0: {"type": b"^v"},
+                            1: {"type": b"@"},
+                            2: {"type": b"@"},
+                        },
+                    }
+                }
+            }
+        },
+    )
+    r(
+        b"VNTargetedImageRequest",
+        b"initWithTargetedImageData:options:completionHandler:",
+        {
+            "arguments": {
+                4: {
+                    "callable": {
+                        "retval": {"type": b"v"},
+                        "arguments": {
+                            0: {"type": b"^v"},
+                            1: {"type": b"@"},
+                            2: {"type": b"@"},
+                        },
+                    }
+                }
+            }
+        },
+    )
+    r(
+        b"VNTargetedImageRequest",
+        b"initWithTargetedImageData:orientation:options:completionHandler:",
+        {
+            "arguments": {
+                5: {
+                    "callable": {
+                        "retval": {"type": b"v"},
+                        "arguments": {
+                            0: {"type": b"^v"},
+                            1: {"type": b"@"},
+                            2: {"type": b"@"},
+                        },
+                    }
+                }
+            }
+        },
+    )
+    r(
+        b"VNTargetedImageRequest",
+        b"initWithTargetedImageURL:completionHandler:",
+        {
+            "arguments": {
+                3: {
+                    "callable": {
+                        "retval": {"type": b"v"},
+                        "arguments": {
+                            0: {"type": b"^v"},
+                            1: {"type": b"@"},
+                            2: {"type": b"@"},
+                        },
+                    }
+                }
+            }
+        },
+    )
+    r(
+        b"VNTargetedImageRequest",
+        b"initWithTargetedImageURL:options:completionHandler:",
+        {
+            "arguments": {
+                4: {
+                    "callable": {
+                        "retval": {"type": b"v"},
+                        "arguments": {
+                            0: {"type": b"^v"},
+                            1: {"type": b"@"},
+                            2: {"type": b"@"},
+                        },
+                    }
+                }
+            }
+        },
+    )
+    r(
+        b"VNTargetedImageRequest",
+        b"initWithTargetedImageURL:orientation:options:completionHandler:",
+        {
+            "arguments": {
+                5: {
+                    "callable": {
+                        "retval": {"type": b"v"},
+                        "arguments": {
+                            0: {"type": b"^v"},
+                            1: {"type": b"@"},
+                            2: {"type": b"@"},
+                        },
+                    }
+                }
+            }
+        },
+    )
+    r(
+        b"VNTrackObjectRequest",
+        b"initWithCompletionHandler:",
+        {
+            "arguments": {
+                2: {
+                    "callable": {
+                        "retval": {"type": b"v"},
+                        "arguments": {
+                            0: {"type": b"^v"},
+                            1: {"type": b"@"},
+                            2: {"type": b"@"},
+                        },
+                    }
+                }
+            }
+        },
+    )
+    r(
+        b"VNTrackObjectRequest",
+        b"initWithDetectedObjectObservation:completionHandler:",
+        {
+            "arguments": {
+                3: {
+                    "callable": {
+                        "retval": {"type": b"v"},
+                        "arguments": {
+                            0: {"type": b"^v"},
+                            1: {"type": b"@"},
+                            2: {"type": b"@"},
+                        },
+                    }
+                }
+            }
+        },
+    )
+    r(
+        b"VNTrackRectangleRequest",
+        b"initWithCompletionHandler:",
+        {
+            "arguments": {
+                2: {
+                    "callable": {
+                        "retval": {"type": b"v"},
+                        "arguments": {
+                            0: {"type": b"^v"},
+                            1: {"type": b"@"},
+                            2: {"type": b"@"},
+                        },
+                    }
+                }
+            }
+        },
+    )
+    r(
+        b"VNTrackRectangleRequest",
+        b"initWithRectangleObservation:completionHandler:",
+        {
+            "arguments": {
+                3: {
+                    "callable": {
+                        "retval": {"type": b"v"},
+                        "arguments": {
+                            0: {"type": b"^v"},
+                            1: {"type": b"@"},
+                            2: {"type": b"@"},
+                        },
+                    }
+                }
+            }
+        },
+    )
+    r(
+        b"VNTrackingRequest",
+        b"initWithCompletionHandler:",
+        {
+            "arguments": {
+                2: {
+                    "callable": {
+                        "retval": {"type": b"v"},
+                        "arguments": {
+                            0: {"type": b"^v"},
+                            1: {"type": b"@"},
+                            2: {"type": b"@"},
+                        },
+                    }
+                }
+            }
+        },
+    )
+    r(b"VNTrackingRequest", b"isLastFrame", {"retval": {"type": "Z"}})
+    r(b"VNTrackingRequest", b"setLastFrame:", {"arguments": {2: {"type": "Z"}}})
+    r(b"null", b"hasMinimumPrecision:forRecall:", {"retval": {"type": b"Z"}})
+    r(b"null", b"hasMinimumRecall:forPrecision:", {"retval": {"type": b"Z"}})
+    r(b"null", b"hasPrecisionRecallCurve", {"retval": {"type": b"Z"}})
 finally:
     objc._updatingMetadata(False)
 expressions = {}

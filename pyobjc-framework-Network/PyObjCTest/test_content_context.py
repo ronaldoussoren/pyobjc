@@ -4,7 +4,7 @@ import sys
 if sys.maxsize > 2 ** 32:
     import Network
 
-    class TestContentContext (TestCase):
+    class TestContentContext(TestCase):
         def test_functions(self):
             self.assertResultIsRetained(Network.nw_content_context_create)
             self.assertArgIsIn(Network.nw_content_context_create, 0)
@@ -26,8 +26,10 @@ if sys.maxsize > 2 ** 32:
 
             self.assertResultIsRetained(Network.nw_content_context_copy_protocol_metadata)
 
-            self.assertArgIsBlock(Network.nw_content_context_foreach_protocol_metadata, 1, b'v@@')
+            self.assertArgIsBlock(
+                Network.nw_content_context_foreach_protocol_metadata, 1, b"v@@"
+            )
+
 
 if __name__ == "__main__":
     main()
-

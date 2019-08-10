@@ -90,9 +90,7 @@ class TestArrayOperators(TestCase):
 
         values = [{"a": {"b": 1}}, {"a": {"b": 1}}, {"a": {"b": 2}}, {"a": {"b": 3}}]
 
-        self.assertEqual(
-            arrayOperators.unionOfObjects(values, ("a", "b")), [1, 1, 2, 3]
-        )
+        self.assertEqual(arrayOperators.unionOfObjects(values, ("a", "b")), [1, 1, 2, 3])
         self.assertEqual(
             KeyValueCoding.getKeyPath(values, "@unionOfObjects.a.b"), [1, 1, 2, 3]
         )
@@ -534,9 +532,7 @@ class TestPythonObject(TestCase):
 
         o = objc.lookUpClass("NSObject").alloc().init()
         self.assertRaises(KeyError, KeyValueCoding.setKey, o, "description", "hello")
-        self.assertRaises(
-            KeyError, KeyValueCoding.setKeyPath, o, "description", "hello"
-        )
+        self.assertRaises(KeyError, KeyValueCoding.setKeyPath, o, "description", "hello")
 
     def test_accessor(self):
         class Record(object):
@@ -681,8 +677,7 @@ class TestKVCHelper(TestCase):
         o.key2
         getattr(o, "key3.key4")
         self.assertEqual(
-            self._trace,
-            [("get", v, "key"), ("get", v, "key2"), ("get", v, "key3.key4")],
+            self._trace, [("get", v, "key"), ("get", v, "key2"), ("get", v, "key3.key4")]
         )
         self._trace[:] = []
 

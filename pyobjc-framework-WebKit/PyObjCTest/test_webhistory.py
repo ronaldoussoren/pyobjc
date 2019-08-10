@@ -1,8 +1,8 @@
-
 from PyObjCTools.TestSupport import *
 from WebKit import *
 
-class TestWebHistory (TestCase):
+
+class TestWebHistory(TestCase):
     def testConstants(self):
         self.assertIsInstance(WebHistoryItemsAddedNotification, unicode)
         self.assertIsInstance(WebHistoryItemsRemovedNotification, unicode)

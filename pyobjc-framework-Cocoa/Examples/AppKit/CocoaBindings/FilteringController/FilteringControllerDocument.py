@@ -13,13 +13,13 @@ from objc import super
 from Cocoa import NSDocument, NSKeyedArchiver, NSKeyedUnarchiver
 
 
-
-class FilteringControllerDocument (NSDocument):
+class FilteringControllerDocument(NSDocument):
     peopleController = objc.IBOutlet()
 
     def init(self):
         self = super(FilteringControllerDocument, self).init()
-        if self is None: return None
+        if self is None:
+            return None
         self._k_people = []
         return self
 
@@ -35,7 +35,6 @@ class FilteringControllerDocument (NSDocument):
     def loadDataRepresentation_ofType_(self, data, aType):
         self.setPeople_(NSKeyedUnarchiver.unarchiveObjectWithData_(data))
         return True
-
 
     ### indexed accessors
 

@@ -1,8 +1,8 @@
-
 from PyObjCTools.TestSupport import *
 from AppKit import *
 
-class TestNSSegmentedControl (TestCase):
+
+class TestNSSegmentedControl(TestCase):
     def testConstants(self):
         self.assertEqual(NSSegmentStyleAutomatic, 0)
         self.assertEqual(NSSegmentStyleRounded, 1)
@@ -30,20 +30,29 @@ class TestNSSegmentedControl (TestCase):
         self.assertArgIsBOOL(NSSegmentedControl.setEnabled_forSegment_, 0)
         self.assertResultIsBOOL(NSSegmentedControl.isEnabledForSegment_)
 
-    @min_os_level('10.10')
+    @min_os_level("10.10")
     def testMethods10_10(self):
         self.assertResultIsBOOL(NSSegmentedControl.isSpringLoaded)
         self.assertArgIsBOOL(NSSegmentedControl.setSpringLoaded_, 0)
 
-    @min_os_level('10.12')
+    @min_os_level("10.12")
     def testMethods10_12(self):
-        self.assertArgIsSEL(NSSegmentedControl.segmentedControlWithLabels_trackingMode_target_action_, 3, b'v@:@')
-        self.assertArgIsSEL(NSSegmentedControl.segmentedControlWithImages_trackingMode_target_action_, 3, b'v@:@')
+        self.assertArgIsSEL(
+            NSSegmentedControl.segmentedControlWithLabels_trackingMode_target_action_,
+            3,
+            b"v@:@",
+        )
+        self.assertArgIsSEL(
+            NSSegmentedControl.segmentedControlWithImages_trackingMode_target_action_,
+            3,
+            b"v@:@",
+        )
 
-    @min_os_level('10.13')
+    @min_os_level("10.13")
     def testMethods10_13(self):
         self.assertArgIsBOOL(NSSegmentedControl.setShowsMenuIndicator_forSegment_, 0)
         self.assertResultIsBOOL(NSSegmentedControl.showsMenuIndicatorForSegment_)
+
 
 if __name__ == "__main__":
     main()

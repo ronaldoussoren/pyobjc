@@ -1,8 +1,8 @@
-
 from PyObjCTools.TestSupport import *
 from ExceptionHandling import *
 
-class TestNSExceptionHandlerHelper (NSObject):
+
+class TestNSExceptionHandlerHelper(NSObject):
     def exceptionHandler_shouldLogException_mask_(self, h, e, m):
         return False
 
@@ -10,14 +10,26 @@ class TestNSExceptionHandlerHelper (NSObject):
         return False
 
 
-class TestNSExceptionHandler (TestCase):
+class TestNSExceptionHandler(TestCase):
     def testProtocols(self):
-        #self.assertIsInstance(protocols.NSExceptionHandlerDelegate, objc.informal_protocol)
+        # self.assertIsInstance(protocols.NSExceptionHandlerDelegate, objc.informal_protocol)
 
-        self.assertResultIsBOOL(TestNSExceptionHandlerHelper.exceptionHandler_shouldLogException_mask_)
-        self.assertArgHasType(TestNSExceptionHandlerHelper.exceptionHandler_shouldLogException_mask_, 2, objc._C_NSUInteger)
-        self.assertResultIsBOOL(TestNSExceptionHandlerHelper.exceptionHandler_shouldHandleException_mask_)
-        self.assertArgHasType(TestNSExceptionHandlerHelper.exceptionHandler_shouldHandleException_mask_, 2, objc._C_NSUInteger)
+        self.assertResultIsBOOL(
+            TestNSExceptionHandlerHelper.exceptionHandler_shouldLogException_mask_
+        )
+        self.assertArgHasType(
+            TestNSExceptionHandlerHelper.exceptionHandler_shouldLogException_mask_,
+            2,
+            objc._C_NSUInteger,
+        )
+        self.assertResultIsBOOL(
+            TestNSExceptionHandlerHelper.exceptionHandler_shouldHandleException_mask_
+        )
+        self.assertArgHasType(
+            TestNSExceptionHandlerHelper.exceptionHandler_shouldHandleException_mask_,
+            2,
+            objc._C_NSUInteger,
+        )
 
     def testConstants(self):
         self.assertIsInstance(NSUncaughtSystemExceptionException, unicode)
@@ -35,8 +47,21 @@ class TestNSExceptionHandler (TestCase):
         self.assertEqual(NSLogOtherExceptionMask, 1 << 8)
         self.assertEqual(NSHandleOtherExceptionMask, 1 << 9)
 
-        self.assertEqual(NSLogAndHandleEveryExceptionMask,
-                (NSLogUncaughtExceptionMask|NSLogUncaughtSystemExceptionMask|NSLogUncaughtRuntimeErrorMask|NSHandleUncaughtExceptionMask|NSHandleUncaughtSystemExceptionMask|NSHandleUncaughtRuntimeErrorMask|NSLogTopLevelExceptionMask|NSHandleTopLevelExceptionMask|NSLogOtherExceptionMask|NSHandleOtherExceptionMask))
+        self.assertEqual(
+            NSLogAndHandleEveryExceptionMask,
+            (
+                NSLogUncaughtExceptionMask
+                | NSLogUncaughtSystemExceptionMask
+                | NSLogUncaughtRuntimeErrorMask
+                | NSHandleUncaughtExceptionMask
+                | NSHandleUncaughtSystemExceptionMask
+                | NSHandleUncaughtRuntimeErrorMask
+                | NSLogTopLevelExceptionMask
+                | NSHandleTopLevelExceptionMask
+                | NSLogOtherExceptionMask
+                | NSHandleOtherExceptionMask
+            ),
+        )
 
         self.assertEqual(NSHangOnUncaughtExceptionMask, 1 << 0)
         self.assertEqual(NSHangOnUncaughtSystemExceptionMask, 1 << 1)
@@ -44,12 +69,20 @@ class TestNSExceptionHandler (TestCase):
         self.assertEqual(NSHangOnTopLevelExceptionMask, 1 << 3)
         self.assertEqual(NSHangOnOtherExceptionMask, 1 << 4)
 
-        self.assertEqual(NSHangOnEveryExceptionMask, (NSHangOnUncaughtExceptionMask|NSHangOnUncaughtSystemExceptionMask|NSHangOnUncaughtRuntimeErrorMask|NSHangOnTopLevelExceptionMask|NSHangOnOtherExceptionMask))
-
-
+        self.assertEqual(
+            NSHangOnEveryExceptionMask,
+            (
+                NSHangOnUncaughtExceptionMask
+                | NSHangOnUncaughtSystemExceptionMask
+                | NSHangOnUncaughtRuntimeErrorMask
+                | NSHangOnTopLevelExceptionMask
+                | NSHangOnOtherExceptionMask
+            ),
+        )
 
     def testFunctions(self):
         NSExceptionHandlerResume
+
 
 if __name__ == "__main__":
     main()

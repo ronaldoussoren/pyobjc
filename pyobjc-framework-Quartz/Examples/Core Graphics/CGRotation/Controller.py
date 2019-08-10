@@ -5,7 +5,8 @@ import CGImageUtils
 import LaunchServices
 import math
 
-class Controller (Cocoa.NSObject):
+
+class Controller(Cocoa.NSObject):
     imageView = objc.IBOutlet()
     scaleYView = objc.IBOutlet()
     textScaleYView = objc.IBOutlet()
@@ -22,7 +23,9 @@ class Controller (Cocoa.NSObject):
     def awakeFromNib(self):
         self.openImageIOSupportedTypes = None
         # Ask CFBundle for the location of our demo image
-        url = Cocoa.CFBundleCopyResourceURL(Cocoa.CFBundleGetMainBundle(), u"demo", u"png", None)
+        url = Cocoa.CFBundleCopyResourceURL(
+            Cocoa.CFBundleGetMainBundle(), "demo", "png", None
+        )
         if url is not None:
             # And if available, load it
             self.imageView.setImage_(CGImageUtils.IICreateImage(url))
@@ -77,17 +80,23 @@ class Controller (Cocoa.NSObject):
             decleration = LaunchServices.UTTypeCopyDeclaration(uti)
             if decleration is not None:
                 # Grab the tags for this UTI, which includes extensions, OSTypes and MIME types.
-                tags = Cocoa.CFDictionaryGetValue(decleration, LaunchServices.kUTTypeTagSpecificationKey)
+                tags = Cocoa.CFDictionaryGetValue(
+                    decleration, LaunchServices.kUTTypeTagSpecificationKey
+                )
                 if tags is not None:
                     # We are interested specifically in the extensions that this UTI uses
-                    filenameExtensions = tags.get(LaunchServices.kUTTagClassFilenameExtension)
+                    filenameExtensions = tags.get(
+                        LaunchServices.kUTTagClassFilenameExtension
+                    )
                     if filenameExtensions is not None:
                         # It is valid for a UTI to export either an Array (of Strings) representing
                         # multiple tags, or a String representing a single tag.
                         type = Cocoa.CFGetTypeID(filenameExtensions)
                         if type == Cocoa.CFStringGetTypeID():
                             # If a string was exported, then wrap it up in an array.
-                            extensions = Cocoa.NSArray.arrayWithObject_(filenameExtensions)
+                            extensions = Cocoa.NSArray.arrayWithObject_(
+                                filenameExtensions
+                            )
                         elif type == Cocoa.CFArrayGetTypeID():
                             # If an array was exported, then just return that array.
                             extensions = filenameExtensions.copy()
@@ -100,10 +109,13 @@ class Controller (Cocoa.NSObject):
         if self.openImageIOSupportedTypes is None:
             imageIOUTIs = Quartz.CGImageSourceCopyTypeIdentifiers()
             count = len(imageIOUTIs)
-            self.openImageIOSupportedTypes = Cocoa.NSMutableArray.alloc().initWithCapacity_(count)
+            self.openImageIOSupportedTypes = Cocoa.NSMutableArray.alloc().initWithCapacity_(
+                count
+            )
             for i in range(count):
                 self.openImageIOSupportedTypes.addObjectsFromArray_(
-                    self.extensionsForUTI_(imageIOUTIs[i]))
+                    self.extensionsForUTI_(imageIOUTIs[i])
+                )
 
     @objc.IBAction
     def openDocument_(self, sender):
@@ -115,14 +127,22 @@ class Controller (Cocoa.NSObject):
         self.createOpenTypesArray()
 
         panel.beginSheetForDirectory_file_types_modalForWindow_modalDelegate_didEndSelector_contextInfo_(
-                None, None, self.openImageIOSupportedTypes, self.imageView.window(), self,
-                'openImageDidEnd:returnCode:contextInfo:', None)
+            None,
+            None,
+            self.openImageIOSupportedTypes,
+            self.imageView.window(),
+            self,
+            "openImageDidEnd:returnCode:contextInfo:",
+            None,
+        )
 
     @objc.signature(b"v@:@i^v")
     def openImageDidEnd_returnCode_contextInfo_(self, panel, returnCode, contextInfo_):
         if returnCode == Cocoa.NSOKButton:
             if len(panel.filenames()) > 0:
-                image = CGImageUtils.IICreateImage(Cocoa.NSURL.fileURLWithPath_(panel.filenames()[0]))
+                image = CGImageUtils.IICreateImage(
+                    Cocoa.NSURL.fileURLWithPath_(panel.filenames()[0])
+                )
                 if image is not None:
                     # Ownership is transferred to the CGImageView.
                     self.imageView.setImage_(image)
@@ -136,15 +156,24 @@ class Controller (Cocoa.NSObject):
         panel.setTreatsFilePackagesAsDirectories_(True)
 
         panel.beginSheetForDirectory_file_modalForWindow_modalDelegate_didEndSelector_contextInfo_(
-                None, "untitled image", self.imageView.window(), self,
-                'saveImageDidEnd:returnCode:contextInfo:', None)
+            None,
+            "untitled image",
+            self.imageView.window(),
+            self,
+            "saveImageDidEnd:returnCode:contextInfo:",
+            None,
+        )
 
     @objc.signature(b"v@:@i^v")
     def saveImageDidEnd_returnCode_contextInfo_(self, panel, returnCode, contextInfo):
         if returnCode == Cocoa.NSOKButton:
             frame = self.imageView.frame()
-            CGImageUtils.IISaveImage(self.imageView.image(), panel.URL(),
-                    math.ceil(frame.size.width), math.ceil(frame.size.height))
+            CGImageUtils.IISaveImage(
+                self.imageView.image(),
+                panel.URL(),
+                math.ceil(frame.size.width),
+                math.ceil(frame.size.height),
+            )
 
     def setRotation_(self, r):
         r = r % 360.0
@@ -152,11 +181,11 @@ class Controller (Cocoa.NSObject):
             r += 360.0
 
         self._rotation = r
-        self.imageView.image().fRotation = 360.0 - r # XXX
+        self.imageView.image().fRotation = 360.0 - r  # XXX
         self.imageView.setNeedsDisplay_(True)
 
     def setScaleX_(self, x):
-        self._scaleX = x;
+        self._scaleX = x
         self.imageView.image().fScaleX = self._scaleX
         if self._preserveAspectRatio:
             self.imageView.image().fScaleY = self._scaleX

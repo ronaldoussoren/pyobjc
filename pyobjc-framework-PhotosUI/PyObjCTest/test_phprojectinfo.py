@@ -4,7 +4,7 @@ import sys
 if sys.maxsize > 2 ** 32:
     import PhotosUI
 
-    class TestPHProjectInfo (TestCase):
+    class TestPHProjectInfo(TestCase):
         def testConstants(self):
             self.assertEqual(PhotosUI.PHProjectCreationSourceUndefined, 0)
             self.assertEqual(PhotosUI.PHProjectCreationSourceUserSelection, 1)
@@ -28,7 +28,7 @@ if sys.maxsize > 2 ** 32:
             self.assertEqual(PhotosUI.PHProjectTextElementTypeTitle, 1)
             self.assertEqual(PhotosUI.PHProjectTextElementTypeSubtitle, 2)
 
-        @min_os_level('10.14')
+        @min_os_level("10.14")
         def testMethods(self):
             self.assertResultIsBOOL(PhotosUI.PHProjectInfo.brandingEnabled)
             self.assertResultIsBOOL(PhotosUI.PHProjectInfo.pageNumbersEnabled)

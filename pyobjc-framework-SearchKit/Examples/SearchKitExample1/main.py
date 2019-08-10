@@ -6,6 +6,7 @@ import AppController
 # PyObjC more verbose, which helps during
 # debugging.
 import objc
+
 objc.setVerbose(True)
 
 

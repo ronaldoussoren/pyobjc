@@ -1,21 +1,25 @@
-
 from PyObjCTools.TestSupport import *
 from AppKit import *
 
-class TestNSTextHelper (NSObject):
-    def textShouldBeginEditing_(self, t): return 1
-    def textShouldEndEditing_(self, t): return 1
 
-class TestNSText (TestCase):
+class TestNSTextHelper(NSObject):
+    def textShouldBeginEditing_(self, t):
+        return 1
+
+    def textShouldEndEditing_(self, t):
+        return 1
+
+
+class TestNSText(TestCase):
     def testConstants(self):
         self.assertEqual(NSEnterCharacter, unichr(0x0003))
         self.assertEqual(NSBackspaceCharacter, unichr(0x0008))
         self.assertEqual(NSTabCharacter, unichr(0x0009))
-        self.assertEqual(NSNewlineCharacter, unichr(0x000a))
-        self.assertEqual(NSFormFeedCharacter, unichr(0x000c))
-        self.assertEqual(NSCarriageReturnCharacter, unichr(0x000d))
+        self.assertEqual(NSNewlineCharacter, unichr(0x000A))
+        self.assertEqual(NSFormFeedCharacter, unichr(0x000C))
+        self.assertEqual(NSCarriageReturnCharacter, unichr(0x000D))
         self.assertEqual(NSBackTabCharacter, unichr(0x0019))
-        self.assertEqual(NSDeleteCharacter,  unichr(0x007f))
+        self.assertEqual(NSDeleteCharacter, unichr(0x007F))
         self.assertEqual(NSLineSeparatorCharacter, unichr(0x2028))
         self.assertEqual(NSParagraphSeparatorCharacter, unichr(0x2029))
 
@@ -60,12 +64,12 @@ class TestNSText (TestCase):
         self.assertEqual(NSTextMovementCancel, 0x17)
         self.assertEqual(NSTextMovementOther, 0)
 
-    @min_os_level('10.6')
+    @min_os_level("10.6")
     def testConstants10_6(self):
-        self.assertEqual(NSTextWritingDirectionEmbedding, 0<<1)
-        self.assertEqual(NSTextWritingDirectionOverride,  1<<1)
+        self.assertEqual(NSTextWritingDirectionEmbedding, 0 << 1)
+        self.assertEqual(NSTextWritingDirectionOverride, 1 << 1)
 
-    @min_os_level('10.13')
+    @min_os_level("10.13")
     def testConstants10_13(self):
         self.assertIsInstance(NSTextMovementUserInfoKey, unicode)
 
@@ -93,13 +97,14 @@ class TestNSText (TestCase):
         self.assertResultIsBOOL(NSText.isVerticallyResizable)
         self.assertArgIsBOOL(NSText.setVerticallyResizable_, 0)
 
-    @min_sdk_level('10.6')
+    @min_sdk_level("10.6")
     def testProtocolObjects(self):
-        objc.protocolNamed('NSTextDelegate')
+        objc.protocolNamed("NSTextDelegate")
 
     def testProtocols(self):
         self.assertResultIsBOOL(TestNSTextHelper.textShouldBeginEditing_)
         self.assertResultIsBOOL(TestNSTextHelper.textShouldEndEditing_)
+
 
 if __name__ == "__main__":
     main()

@@ -1,8 +1,8 @@
-
 from PyObjCTools.TestSupport import *
 from WebKit import *
 
-class TestDOMCSSValue (TestCase):
+
+class TestDOMCSSValue(TestCase):
     def testConstants(self):
         self.assertEqual(DOM_CSS_INHERIT, 0)
         self.assertEqual(DOM_CSS_PRIMITIVE_VALUE, 1)

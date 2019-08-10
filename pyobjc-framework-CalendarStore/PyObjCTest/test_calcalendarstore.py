@@ -1,8 +1,8 @@
-
 from PyObjCTools.TestSupport import *
 from CalendarStore import *
 
-class TestCalCalendarStore (TestCase):
+
+class TestCalCalendarStore(TestCase):
     def testConstants(self):
         self.assertEqual(CalSpanThisEvent, 0)
         self.assertEqual(CalSpanFutureEvents, 1)
@@ -37,6 +37,7 @@ class TestCalCalendarStore (TestCase):
 
         self.assertArgIsOut(CalCalendarStore.removeTask_error_, 1)
         self.assertResultIsBOOL(CalCalendarStore.removeTask_error_)
+
 
 if __name__ == "__main__":
     main()

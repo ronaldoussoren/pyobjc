@@ -1,13 +1,14 @@
 from PyObjCTools.TestSupport import *
 import sys
 
-if sys.maxsize > 2**32:
+if sys.maxsize > 2 ** 32:
     import ModelIO
 
-    class TestMDLTypesHelper (ModelIO.NSObject):
-        def objectAtIndexedSubscript_(self, i): return 1
+    class TestMDLTypesHelper(ModelIO.NSObject):
+        def objectAtIndexedSubscript_(self, i):
+            return 1
 
-    class TestMDLTypes (TestCase):
+    class TestMDLTypes(TestCase):
         def testConstants(self):
             self.assertIsInstance(ModelIO.kUTTypeAlembic, unicode)
             self.assertIsInstance(ModelIO.kUTType3dObject, unicode)
@@ -36,21 +37,24 @@ if sys.maxsize > 2**32:
             self.assertEqual(ModelIO.MDLProbePlacementUniformGrid, 0)
             self.assertEqual(ModelIO.MDLProbePlacementIrradianceDistribution, 1)
 
-        @min_os_level('10.12')
+        @min_os_level("10.12")
         def testConstants10_12(self):
             self.assertIsInstance(ModelIO.kUTTypeUniversalSceneDescription, unicode)
 
         def testProtocolObjects(self):
-            objc.protocolNamed('MDLNamed')
-            objc.protocolNamed('MDLComponent')
-            objc.protocolNamed('MDLObjectContainerComponent')
+            objc.protocolNamed("MDLNamed")
+            objc.protocolNamed("MDLComponent")
+            objc.protocolNamed("MDLObjectContainerComponent")
 
         def testMethods(self):
-            self.assertArgHasType(TestMDLTypesHelper.objectAtIndexedSubscript_, 0, objc._C_NSUInteger)
+            self.assertArgHasType(
+                TestMDLTypesHelper.objectAtIndexedSubscript_, 0, objc._C_NSUInteger
+            )
 
         @expectedFailure
         def testStructs(self):
             self.fail("MDLAxisAlignedBoundingBox is SIMD type")
+
 
 if __name__ == "__main__":
     main()

@@ -2,23 +2,32 @@ from PyObjCTools.TestSupport import *
 import AppKit
 from AppKit import *
 
-class TestNSImageHelper (NSObject):
-    def image_didLoadRepresentation_withStatus_(self, i, r, s): pass
-    def image_didLoadPartOfRepresentation_withValidRows_(self, i, r, c): pass
 
-class TestNSImage (TestCase):
+class TestNSImageHelper(NSObject):
+    def image_didLoadRepresentation_withStatus_(self, i, r, s):
+        pass
+
+    def image_didLoadPartOfRepresentation_withValidRows_(self, i, r, c):
+        pass
+
+
+class TestNSImage(TestCase):
     def test_compositePoint(self):
         # comes straight from ReSTedit.  Works on PPC, not on Intel (as of r1791)
         ws = AppKit.NSWorkspace.sharedWorkspace()
         txtIcon = ws.iconForFileType_("txt")
-        txtIcon.setSize_( (16,16) )
+        txtIcon.setSize_((16, 16))
         htmlIcon = ws.iconForFileType_("html")
-        htmlIcon.setSize_( (16,16) )
+        htmlIcon.setSize_((16, 16))
 
-        comboIcon = AppKit.NSImage.alloc().initWithSize_( (100,100) )
+        comboIcon = AppKit.NSImage.alloc().initWithSize_((100, 100))
         comboIcon.lockFocus()
-        txtIcon.compositeToPoint_fromRect_operation_((0,0), ((0,0),(16,16)), AppKit.NSCompositeCopy)
-        htmlIcon.compositeToPoint_fromRect_operation_((8,0), ((8,0),(8,16)), AppKit.NSCompositeCopy)
+        txtIcon.compositeToPoint_fromRect_operation_(
+            (0, 0), ((0, 0), (16, 16)), AppKit.NSCompositeCopy
+        )
+        htmlIcon.compositeToPoint_fromRect_operation_(
+            (8, 0), ((8, 0), (8, 16)), AppKit.NSCompositeCopy
+        )
         comboIcon.unlockFocus()
 
     def testConstants(self):
@@ -36,53 +45,52 @@ class TestNSImage (TestCase):
         self.assertEqual(NSImageResizingModeStretch, 0)
         self.assertEqual(NSImageResizingModeTile, 1)
 
-
     @min_os_level("10.5")
     def testConstants10_5(self):
-        self.assertIsInstance( NSImageNameQuickLookTemplate, unicode)
-        self.assertIsInstance( NSImageNameBluetoothTemplate, unicode)
-        self.assertIsInstance( NSImageNameIChatTheaterTemplate, unicode)
-        self.assertIsInstance( NSImageNameSlideshowTemplate, unicode)
-        self.assertIsInstance( NSImageNameActionTemplate, unicode)
-        self.assertIsInstance( NSImageNameSmartBadgeTemplate, unicode)
-        self.assertIsInstance( NSImageNameIconViewTemplate, unicode)
-        self.assertIsInstance( NSImageNameListViewTemplate, unicode)
-        self.assertIsInstance( NSImageNameColumnViewTemplate, unicode)
-        self.assertIsInstance( NSImageNameFlowViewTemplate, unicode)
-        self.assertIsInstance( NSImageNamePathTemplate, unicode)
-        self.assertIsInstance( NSImageNameInvalidDataFreestandingTemplate, unicode)
-        self.assertIsInstance( NSImageNameLockLockedTemplate, unicode)
-        self.assertIsInstance( NSImageNameLockUnlockedTemplate, unicode)
-        self.assertIsInstance( NSImageNameGoRightTemplate, unicode)
-        self.assertIsInstance( NSImageNameGoLeftTemplate, unicode)
-        self.assertIsInstance( NSImageNameRightFacingTriangleTemplate, unicode)
-        self.assertIsInstance( NSImageNameLeftFacingTriangleTemplate, unicode)
-        self.assertIsInstance( NSImageNameAddTemplate, unicode)
-        self.assertIsInstance( NSImageNameRemoveTemplate, unicode)
-        self.assertIsInstance( NSImageNameRevealFreestandingTemplate, unicode)
-        self.assertIsInstance( NSImageNameFollowLinkFreestandingTemplate, unicode)
-        self.assertIsInstance( NSImageNameEnterFullScreenTemplate, unicode)
-        self.assertIsInstance( NSImageNameExitFullScreenTemplate, unicode)
-        self.assertIsInstance( NSImageNameStopProgressTemplate, unicode)
-        self.assertIsInstance( NSImageNameStopProgressFreestandingTemplate, unicode)
-        self.assertIsInstance( NSImageNameRefreshTemplate, unicode)
-        self.assertIsInstance( NSImageNameRefreshFreestandingTemplate, unicode)
-        self.assertIsInstance( NSImageNameBonjour, unicode)
-        self.assertIsInstance( NSImageNameDotMac, unicode)
-        self.assertIsInstance( NSImageNameComputer, unicode)
-        self.assertIsInstance( NSImageNameFolderBurnable, unicode)
-        self.assertIsInstance( NSImageNameFolderSmart, unicode)
-        self.assertIsInstance( NSImageNameNetwork, unicode)
-        self.assertIsInstance( NSImageNameMultipleDocuments, unicode)
-        self.assertIsInstance( NSImageNameUserAccounts, unicode)
-        self.assertIsInstance( NSImageNamePreferencesGeneral, unicode)
-        self.assertIsInstance( NSImageNameAdvanced, unicode)
-        self.assertIsInstance( NSImageNameInfo, unicode)
-        self.assertIsInstance( NSImageNameFontPanel, unicode)
-        self.assertIsInstance( NSImageNameColorPanel, unicode)
-        self.assertIsInstance( NSImageNameUser, unicode)
-        self.assertIsInstance( NSImageNameUserGroup, unicode)
-        self.assertIsInstance( NSImageNameEveryone, unicode)
+        self.assertIsInstance(NSImageNameQuickLookTemplate, unicode)
+        self.assertIsInstance(NSImageNameBluetoothTemplate, unicode)
+        self.assertIsInstance(NSImageNameIChatTheaterTemplate, unicode)
+        self.assertIsInstance(NSImageNameSlideshowTemplate, unicode)
+        self.assertIsInstance(NSImageNameActionTemplate, unicode)
+        self.assertIsInstance(NSImageNameSmartBadgeTemplate, unicode)
+        self.assertIsInstance(NSImageNameIconViewTemplate, unicode)
+        self.assertIsInstance(NSImageNameListViewTemplate, unicode)
+        self.assertIsInstance(NSImageNameColumnViewTemplate, unicode)
+        self.assertIsInstance(NSImageNameFlowViewTemplate, unicode)
+        self.assertIsInstance(NSImageNamePathTemplate, unicode)
+        self.assertIsInstance(NSImageNameInvalidDataFreestandingTemplate, unicode)
+        self.assertIsInstance(NSImageNameLockLockedTemplate, unicode)
+        self.assertIsInstance(NSImageNameLockUnlockedTemplate, unicode)
+        self.assertIsInstance(NSImageNameGoRightTemplate, unicode)
+        self.assertIsInstance(NSImageNameGoLeftTemplate, unicode)
+        self.assertIsInstance(NSImageNameRightFacingTriangleTemplate, unicode)
+        self.assertIsInstance(NSImageNameLeftFacingTriangleTemplate, unicode)
+        self.assertIsInstance(NSImageNameAddTemplate, unicode)
+        self.assertIsInstance(NSImageNameRemoveTemplate, unicode)
+        self.assertIsInstance(NSImageNameRevealFreestandingTemplate, unicode)
+        self.assertIsInstance(NSImageNameFollowLinkFreestandingTemplate, unicode)
+        self.assertIsInstance(NSImageNameEnterFullScreenTemplate, unicode)
+        self.assertIsInstance(NSImageNameExitFullScreenTemplate, unicode)
+        self.assertIsInstance(NSImageNameStopProgressTemplate, unicode)
+        self.assertIsInstance(NSImageNameStopProgressFreestandingTemplate, unicode)
+        self.assertIsInstance(NSImageNameRefreshTemplate, unicode)
+        self.assertIsInstance(NSImageNameRefreshFreestandingTemplate, unicode)
+        self.assertIsInstance(NSImageNameBonjour, unicode)
+        self.assertIsInstance(NSImageNameDotMac, unicode)
+        self.assertIsInstance(NSImageNameComputer, unicode)
+        self.assertIsInstance(NSImageNameFolderBurnable, unicode)
+        self.assertIsInstance(NSImageNameFolderSmart, unicode)
+        self.assertIsInstance(NSImageNameNetwork, unicode)
+        self.assertIsInstance(NSImageNameMultipleDocuments, unicode)
+        self.assertIsInstance(NSImageNameUserAccounts, unicode)
+        self.assertIsInstance(NSImageNamePreferencesGeneral, unicode)
+        self.assertIsInstance(NSImageNameAdvanced, unicode)
+        self.assertIsInstance(NSImageNameInfo, unicode)
+        self.assertIsInstance(NSImageNameFontPanel, unicode)
+        self.assertIsInstance(NSImageNameColorPanel, unicode)
+        self.assertIsInstance(NSImageNameUser, unicode)
+        self.assertIsInstance(NSImageNameUserGroup, unicode)
+        self.assertIsInstance(NSImageNameEveryone, unicode)
 
     def testMethods(self):
         self.assertResultIsBOOL(NSImage.setName_)
@@ -110,40 +118,69 @@ class TestNSImage (TestCase):
 
     def testProtocols(self):
 
-        self.assertArgHasType(TestNSImageHelper.image_didLoadPartOfRepresentation_withValidRows_, 2, objc._C_NSInteger)
-        self.assertArgHasType(TestNSImageHelper.image_didLoadRepresentation_withStatus_, 2, objc._C_NSUInteger)
+        self.assertArgHasType(
+            TestNSImageHelper.image_didLoadPartOfRepresentation_withValidRows_,
+            2,
+            objc._C_NSInteger,
+        )
+        self.assertArgHasType(
+            TestNSImageHelper.image_didLoadRepresentation_withStatus_,
+            2,
+            objc._C_NSUInteger,
+        )
 
-    @min_sdk_level('10.10')
+    @min_sdk_level("10.10")
     def testProtocolObjects(self):
-        objc.protocolNamed('NSImageDelegate')
+        objc.protocolNamed("NSImageDelegate")
 
-    @min_os_level('10.6')
+    @min_os_level("10.6")
     def testMethods10_6(self):
-        self.assertArgHasType(NSImage.drawInRect_fromRect_operation_fraction_respectFlipped_hints_,
-                0, NSRect.__typestr__)
-        self.assertArgIsBOOL(NSImage.drawInRect_fromRect_operation_fraction_respectFlipped_hints_, 4)
+        self.assertArgHasType(
+            NSImage.drawInRect_fromRect_operation_fraction_respectFlipped_hints_,
+            0,
+            NSRect.__typestr__,
+        )
+        self.assertArgIsBOOL(
+            NSImage.drawInRect_fromRect_operation_fraction_respectFlipped_hints_, 4
+        )
         self.assertArgIsBOOL(NSImage.lockFocusFlipped_, 0)
         self.assertArgHasType(NSImage.initWithCGImage_size_, 1, NSSize.__typestr__)
-        self.assertArgHasType(NSImage.CGImageForProposedRect_context_hints_, 0, b'o^' + NSRect.__typestr__)
-        self.assertArgHasType(NSImage.bestRepresentationForRect_context_hints_, 0, NSRect.__typestr__)
+        self.assertArgHasType(
+            NSImage.CGImageForProposedRect_context_hints_, 0, b"o^" + NSRect.__typestr__
+        )
+        self.assertArgHasType(
+            NSImage.bestRepresentationForRect_context_hints_, 0, NSRect.__typestr__
+        )
 
-        self.assertResultIsBOOL(NSImage.hitTestRect_withImageDestinationRect_context_hints_flipped_)
-        self.assertArgHasType(NSImage.hitTestRect_withImageDestinationRect_context_hints_flipped_, 0, NSRect.__typestr__)
-        self.assertArgHasType(NSImage.hitTestRect_withImageDestinationRect_context_hints_flipped_, 1, NSRect.__typestr__)
+        self.assertResultIsBOOL(
+            NSImage.hitTestRect_withImageDestinationRect_context_hints_flipped_
+        )
+        self.assertArgHasType(
+            NSImage.hitTestRect_withImageDestinationRect_context_hints_flipped_,
+            0,
+            NSRect.__typestr__,
+        )
+        self.assertArgHasType(
+            NSImage.hitTestRect_withImageDestinationRect_context_hints_flipped_,
+            1,
+            NSRect.__typestr__,
+        )
 
-    @min_os_level('10.7')
+    @min_os_level("10.7")
     def testMethods10_7(self):
         self.assertResultIsBOOL(NSImage.matchesOnlyOnBestFittingAxis)
         self.assertArgIsBOOL(NSImage.setMatchesOnlyOnBestFittingAxis_, 0)
 
-    @min_os_level('10.8')
+    @min_os_level("10.8")
     def testMethods10_8(self):
         self.assertArgIsBOOL(NSImage.imageWithSize_flipped_drawingHandler_, 1)
-        self.assertArgIsBlock(NSImage.imageWithSize_flipped_drawingHandler_, 2,
-                objc._C_NSBOOL + NSRect.__typestr__)
+        self.assertArgIsBlock(
+            NSImage.imageWithSize_flipped_drawingHandler_,
+            2,
+            objc._C_NSBOOL + NSRect.__typestr__,
+        )
 
-
-    @min_os_level('10.6')
+    @min_os_level("10.6")
     def testConstants10_6(self):
         self.assertIsInstance(NSImageHintCTM, unicode)
         self.assertIsInstance(NSImageHintInterpolation, unicode)
@@ -163,11 +200,11 @@ class TestNSImage (TestCase):
         self.assertIsInstance(NSImageNameStatusUnavailable, unicode)
         self.assertIsInstance(NSImageNameStatusNone, unicode)
 
-    @min_os_level('10.8')
+    @min_os_level("10.8")
     def testConstants10_8(self):
         self.assertIsInstance(NSImageNameShareTemplate, unicode)
 
-    @min_os_level('10.12')
+    @min_os_level("10.12")
     def testConstants10_12(self):
         self.assertIsInstance(NSImageHintUserInterfaceLayoutDirection, unicode)
         self.assertIsInstance(NSImageNameGoForwardTemplate, unicode)
@@ -250,9 +287,10 @@ class TestNSImage (TestCase):
         self.assertIsInstance(NSImageNameTouchBarVolumeDownTemplate, unicode)
         self.assertIsInstance(NSImageNameTouchBarVolumeUpTemplate, unicode)
 
-    @min_os_level('10.13')
+    @min_os_level("10.13")
     def testConstants10_13(self):
         self.assertIsInstance(NSImageNameTouchBarRemoveTemplate, unicode)
+
 
 if __name__ == "__main__":
     main()

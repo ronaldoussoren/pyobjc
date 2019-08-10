@@ -22,60 +22,79 @@ import os
 import sys
 
 import traceback
-from ExceptionHandling import NSExceptionHandler, NSLogUncaughtExceptionMask, NSLogAndHandleEveryExceptionMask, NSStackTraceKey
+from ExceptionHandling import (
+    NSExceptionHandler,
+    NSLogUncaughtExceptionMask,
+    NSLogAndHandleEveryExceptionMask,
+    NSStackTraceKey,
+)
 
 DEFAULTMASK = NSLogUncaughtExceptionMask
 EVERYTHINGMASK = NSLogAndHandleEveryExceptionMask
 
 
 __all__ = [
-    'LOGSTACKTRACE', 'DEFAULTVERBOSITY', 'DEFAULTMASK', 'EVERYTHINGMASK',
-    'installExceptionHandler', 'installVerboseExceptionHandler',
-    'installPythonExceptionHandler', 'removeExceptionHandler',
-    'handlerInstalled',
+    "LOGSTACKTRACE",
+    "DEFAULTVERBOSITY",
+    "DEFAULTMASK",
+    "EVERYTHINGMASK",
+    "installExceptionHandler",
+    "installVerboseExceptionHandler",
+    "installPythonExceptionHandler",
+    "removeExceptionHandler",
+    "handlerInstalled",
 ]
 
+
 def isPythonException(exception):
-    if hasattr(exception, '_pyobjc_info_'):
+    if hasattr(exception, "_pyobjc_info_"):
         return False
 
-    if not hasattr(exception, 'userInfo'):
+    if not hasattr(exception, "userInfo"):
         return True
 
-    return (exception.userInfo() or {}).get('__pyobjc_exc_type__') is not None
+    return (exception.userInfo() or {}).get("__pyobjc_exc_type__") is not None
+
 
 def nsLogPythonException(exception):
     userInfo = exception.userInfo()
-    NSLog('%@', '*** Python exception discarded!\n' +
-        ''.join(traceback.format_exception(
-        userInfo['__pyobjc_exc_type__'],
-        userInfo['__pyobjc_exc_value__'],
-        userInfo['__pyobjc_exc_traceback__'],
-    )))
+    NSLog(
+        "%@",
+        "*** Python exception discarded!\n"
+        + "".join(
+            traceback.format_exception(
+                userInfo["__pyobjc_exc_type__"],
+                userInfo["__pyobjc_exc_value__"],
+                userInfo["__pyobjc_exc_traceback__"],
+            )
+        ),
+    )
     # we logged it, so don't log it for us
     return False
 
 
 _atos_command = None
 
+
 def _run_atos(stack):
     global _atos_command
     if _atos_command is None:
-        if os.path.exists('/usr/bin/atos'):
-            _atos_command = '/usr/bin/atos'
+        if os.path.exists("/usr/bin/atos"):
+            _atos_command = "/usr/bin/atos"
 
-            if os.uname()[2].startswith('13.'):
+            if os.uname()[2].startswith("13."):
                 # The atos command on OSX 10.9 gives a usage
                 # warning that's surpressed with the "-d" option.
-                _atos_command += ' -d'
+                _atos_command += " -d"
 
-        elif os.path.exists('/usr/bin/xcrun'):
-            _atos_command = '/usr/bin/xcrun atos'
+        elif os.path.exists("/usr/bin/xcrun"):
+            _atos_command = "/usr/bin/xcrun atos"
 
         else:
             return None
 
-    return os.popen('%s -p %s %s'%(_atos_command, os.getpid(), stack))
+    return os.popen("%s -p %s %s" % (_atos_command, os.getpid(), stack))
+
 
 def nsLogObjCException(exception):
     stacktrace = None
@@ -111,26 +130,29 @@ def nsLogObjCException(exception):
         stacktrace.reverse()
         pipe.close()
 
-    NSLog("%@", "*** ObjC exception '%s' (reason: '%s') discarded\n" % (
-            exception.name(), exception.reason(),
-        ) +
-        'Stack trace (most recent call last):\n' +
-        ''.join([('  '+line) for line in stacktrace])
+    NSLog(
+        "%@",
+        "*** ObjC exception '%s' (reason: '%s') discarded\n"
+        % (exception.name(), exception.reason())
+        + "Stack trace (most recent call last):\n"
+        + "".join([("  " + line) for line in stacktrace]),
     )
     return False
+
 
 LOGSTACKTRACE = 1 << 0
 DEFAULTVERBOSITY = 0
 
+
 class PyObjCDebuggingDelegate(NSObject):
-    verbosity = objc.ivar('verbosity', b'i')
+    verbosity = objc.ivar("verbosity", b"i")
 
     def initWithVerbosity_(self, verbosity):
         self = self.init()
         self.verbosity = verbosity
         return self
 
-    @objc.typedSelector(b'c@:@@I')
+    @objc.typedSelector(b"c@:@@I")
     def exceptionHandler_shouldLogException_mask_(self, sender, exception, aMask):
         try:
             if isPythonException(exception):
@@ -142,14 +164,14 @@ class PyObjCDebuggingDelegate(NSObject):
             else:
                 return False
         except:
-            print("*** Exception occurred during exception handler ***",
-                    file=sys.stderr)
+            print("*** Exception occurred during exception handler ***", file=sys.stderr)
             traceback.print_exc(sys.stderr)
             return True
 
-    @objc.typedSelector(b'c@:@@I')
+    @objc.typedSelector(b"c@:@@I")
     def exceptionHandler_shouldHandleException_mask_(self, sender, exception, aMask):
         return False
+
 
 def installExceptionHandler(verbosity=DEFAULTVERBOSITY, mask=DEFAULTMASK):
     """
@@ -163,6 +185,7 @@ def installExceptionHandler(verbosity=DEFAULTVERBOSITY, mask=DEFAULTMASK):
     NSExceptionHandler.defaultExceptionHandler().setDelegate_(delegate)
     _exceptionHandlerDelegate = delegate
 
+
 def installPythonExceptionHandler():
     """
     Install a verbose exception handling delegate that logs every exception
@@ -171,6 +194,7 @@ def installPythonExceptionHandler():
     Will log only Python stack traces, if available.
     """
     installExceptionHandler(verbosity=DEFAULTVERBOSITY, mask=EVERYTHINGMASK)
+
 
 def installVerboseExceptionHandler():
     """
@@ -181,12 +205,14 @@ def installVerboseExceptionHandler():
     """
     installExceptionHandler(verbosity=LOGSTACKTRACE, mask=EVERYTHINGMASK)
 
+
 def removeExceptionHandler():
     """
     Remove the current exception handler delegate
     """
     NSExceptionHandler.defaultExceptionHandler().setDelegate_(None)
     NSExceptionHandler.defaultExceptionHandler().setExceptionHandlingMask_(0)
+
 
 def handlerInstalled():
     """

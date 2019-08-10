@@ -5,23 +5,37 @@
 import objc, sys
 
 if sys.maxsize > 2 ** 32:
-    def sel32or64(a, b): return b
-else:
-    def sel32or64(a, b): return a
-if sys.byteorder == 'little':
-    def littleOrBig(a, b): return a
-else:
-    def littleOrBig(a, b): return b
 
-misc = {
-}
-constants = '''$PKAppleDrawingTypeIdentifier@^{__CFString=}$'''
-enums = '''$$'''
+    def sel32or64(a, b):
+        return b
+
+
+else:
+
+    def sel32or64(a, b):
+        return a
+
+
+if sys.byteorder == "little":
+
+    def littleOrBig(a, b):
+        return a
+
+
+else:
+
+    def littleOrBig(a, b):
+        return b
+
+
+misc = {}
+constants = """$PKAppleDrawingTypeIdentifier@^{__CFString=}$"""
+enums = """$$"""
 misc.update({})
 r = objc.registerMetaDataForSelector
 objc._updatingMetadata(True)
 try:
-    r(b'PKDrawing', b'initWithData:error:', {'arguments': {3: {'type_modifier': b'o'}}})
+    r(b"PKDrawing", b"initWithData:error:", {"arguments": {3: {"type_modifier": b"o"}}})
 finally:
     objc._updatingMetadata(False)
 expressions = {}

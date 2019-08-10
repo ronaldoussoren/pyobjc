@@ -1,16 +1,19 @@
-
 from PyObjCTools.TestSupport import *
 from InterfaceBuilderKit import *
 
 
-class TestIBObjectIntegrationHelper (NSObject):
+class TestIBObjectIntegrationHelper(NSObject):
     def ibIsChildViewUserMovable_(self, v):
         return False
+
     def ibIsChildViewUserSizable_(self, v):
         return False
-    def ibRemoveChildren_(self, v): return True
 
-class TestIBObjectIntegration (TestCase):
+    def ibRemoveChildren_(self, v):
+        return True
+
+
+class TestIBObjectIntegration(TestCase):
     def testContants(self):
         self.assertIsInstance(IBAttributeKeyPaths, unicode)
         self.assertIsInstance(IBToOneRelationshipKeyPaths, unicode)

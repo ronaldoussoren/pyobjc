@@ -1,8 +1,8 @@
-
 from PyObjCTools.TestSupport import *
 from WebKit import *
 
-class TestWebKitErrors (TestCase):
+
+class TestWebKitErrors(TestCase):
     def testConstants(self):
         self.assertIsInstance(WebKitErrorDomain, unicode)
         self.assertIsInstance(WebKitErrorMIMETypeKey, unicode)

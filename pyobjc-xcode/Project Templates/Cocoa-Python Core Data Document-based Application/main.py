@@ -6,7 +6,7 @@
 #  Copyright xcORGANIZATIONNAMExc xcYEARxc. All rights reserved.
 #
 
-#import modules required by application
+# import modules required by application
 import objc
 import Foundation
 import AppKit

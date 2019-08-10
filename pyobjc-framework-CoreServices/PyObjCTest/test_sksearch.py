@@ -1,8 +1,8 @@
-
 from PyObjCTools.TestSupport import *
 import CoreServices
 
-class TestSKSearch (TestCase):
+
+class TestSKSearch(TestCase):
     def testTypes(self):
         self.assertIsInstance(CoreServices.SKSearchGroupRef, objc.objc_class)
         self.assertIsInstance(CoreServices.SKSearchResultsRef, objc.objc_class)
@@ -26,24 +26,35 @@ class TestSKSearch (TestCase):
 
         data = CoreServices.NSMutableData.data()
         index = CoreServices.SKIndexCreateWithMutableData(
-                data, "pyobjc.test", CoreServices.kSKIndexInverted, None)
+            data, "pyobjc.test", CoreServices.kSKIndexInverted, None
+        )
         self.assertIsInstance(index, CoreServices.SKIndexRef)
         doc = CoreServices.SKDocumentCreateWithURL(
             CoreServices.CFURLCreateWithFileSystemPath(
-            None, b"/Library/Documentation/Acknowledgements.rtf".decode('latin1'),
-            CoreServices.kCFURLPOSIXPathStyle, False))
+                None,
+                b"/Library/Documentation/Acknowledgements.rtf".decode("latin1"),
+                CoreServices.kCFURLPOSIXPathStyle,
+                False,
+            )
+        )
         doc2 = CoreServices.SKDocumentCreateWithURL(
             CoreServices.CFURLCreateWithFileSystemPath(
-            None, b"/Library/Documentation/iPod/Acknowledgements.rtf".decode('latin1'),
-            CoreServices.kCFURLPOSIXPathStyle, False))
-        CoreServices.SKIndexAddDocumentWithText(index, doc, "copyright and licenses", True)
-        CoreServices.SKIndexAddDocumentWithText(index, doc2, "copyright and licenses for iPod", True)
+                None,
+                b"/Library/Documentation/iPod/Acknowledgements.rtf".decode("latin1"),
+                CoreServices.kCFURLPOSIXPathStyle,
+                False,
+            )
+        )
+        CoreServices.SKIndexAddDocumentWithText(
+            index, doc, "copyright and licenses", True
+        )
+        CoreServices.SKIndexAddDocumentWithText(
+            index, doc2, "copyright and licenses for iPod", True
+        )
         CoreServices.SKIndexFlush(index)
-
 
         grp = CoreServices.SKSearchGroupCreate([index])
         self.assertIsInstance(grp, CoreServices.SKSearchGroupRef)
-
 
         l = []
 
@@ -52,15 +63,21 @@ class TestSKSearch (TestCase):
             l.append([idx, doc, ctx])
             return True
 
-
         ctx = 10
 
         res = CoreServices.SKSearchResultsCreateWithQuery(
-                grp, b"copyright".decode('latin1'), CoreServices.kSKSearchRequiredRanked, 2, ctx, callback)
+            grp,
+            b"copyright".decode("latin1"),
+            CoreServices.kSKSearchRequiredRanked,
+            2,
+            ctx,
+            callback,
+        )
         self.assertIsInstance(res, CoreServices.SKSearchResultsRef)
 
         res = CoreServices.SKSearchResultsCreateWithDocuments(
-                grp, [doc], 10, ctx, callback)
+            grp, [doc], 10, ctx, callback
+        )
         self.assertIsInstance(res, CoreServices.SKSearchResultsRef)
         self.assertGreaterEqual(len(l), 2)
         self.assertEqual(l[0][0], index)
@@ -76,11 +93,11 @@ class TestSKSearch (TestCase):
             pass
             return
 
-
         self.failUnless(cnt > 0)
 
-
-        v, o1, o2, o3 = CoreServices.SKSearchResultsGetInfoInRange(res, CFRange(0, cnt), None, None, None)
+        v, o1, o2, o3 = CoreServices.SKSearchResultsGetInfoInRange(
+            res, CFRange(0, cnt), None, None, None
+        )
         self.assertIsInstance(v, int)
         self.assertIsInstance(o1, tuple)
         if o1:
@@ -108,22 +125,19 @@ class TestSKSearch (TestCase):
             self.assertIsInstance(o2[0], float)
         self.assertIsInstance(o3, (int, long))
 
-        v1, v2 = CoreServices.SKIndexCopyInfoForDocumentIDs(
-                index, o3, o1, None, None)
+        v1, v2 = CoreServices.SKIndexCopyInfoForDocumentIDs(index, o3, o1, None, None)
         if v1:
             self.assertIsInstance(v1[0], unicode)
         self.assertIsInstance(v2, tuple)
         if v2:
             self.assertIsInstance(v2[0], (int, long))
 
-        v = CoreServices.SKIndexCopyDocumentRefsForDocumentIDs(
-            index, o3, o1, None)
+        v = CoreServices.SKIndexCopyDocumentRefsForDocumentIDs(index, o3, o1, None)
         self.assertIsInstance(v, tuple)
         if v:
             self.assertIsInstance(v[0], CoreServices.SKDocumentRef)
 
-        v = CoreServices.SKIndexCopyDocumentURLsForDocumentIDs(
-                index, o3, o1, None)
+        v = CoreServices.SKIndexCopyDocumentURLsForDocumentIDs(index, o3, o1, None)
         self.assertIsInstance(v, tuple)
         if v:
             self.assertIsInstance(v[0], CoreServices.CFURLRef)
@@ -133,6 +147,7 @@ class TestSKSearch (TestCase):
         self.assertIsInstance(a, CoreServices.CFArrayRef)
 
         CoreServices.SKSearchCancel(src)
+
 
 if __name__ == "__main__":
     main()

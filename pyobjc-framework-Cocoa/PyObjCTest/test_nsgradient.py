@@ -1,12 +1,11 @@
-
 from PyObjCTools.TestSupport import *
 from AppKit import *
 
-class TestNSGradient (TestCase):
+
+class TestNSGradient(TestCase):
     def testConstants(self):
         self.assertEqual(NSGradientDrawsBeforeStartingLocation, (1 << 0))
         self.assertEqual(NSGradientDrawsAfterEndingLocation, (1 << 1))
-
 
     def testMethods(self):
         self.assertArgSizeInArg(NSGradient.initWithColors_atLocations_colorSpace_, 1, 0)

@@ -1,8 +1,8 @@
-
 from PyObjCTools.TestSupport import *
 from Quartz import *
 
-class TestCVReturn (TestCase):
+
+class TestCVReturn(TestCase):
     def testConstants(self):
         self.assertEqual(kCVReturnSuccess, 0)
         self.assertEqual(kCVReturnError, -6660)
@@ -23,6 +23,7 @@ class TestCVReturn (TestCase):
         self.assertEqual(kCVReturnInvalidPoolAttributes, -6691)
         self.assertEqual(kCVReturnRetry, -6692)
         self.assertEqual(kCVReturnLast, -6699)
+
 
 if __name__ == "__main__":
     main()

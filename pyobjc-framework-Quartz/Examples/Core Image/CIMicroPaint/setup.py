@@ -15,5 +15,5 @@ setup(
         "pyobjc-framework-Cocoa",
         "pyobjc-framework-Quartz",
         "PyOpenGL",
-    ]
+    ],
 )

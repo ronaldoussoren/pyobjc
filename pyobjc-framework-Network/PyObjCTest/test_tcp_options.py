@@ -4,7 +4,7 @@ import sys
 if sys.maxsize > 2 ** 32:
     import Network
 
-    class TestTCPOptions (TestCase):
+    class TestTCPOptions(TestCase):
         def test_functions(self):
             self.assertResultIsRetained(Network.nw_protocol_copy_tcp_definition)
 
@@ -32,5 +32,3 @@ if sys.maxsize > 2 ** 32:
 
 if __name__ == "__main__":
     main()
-
-

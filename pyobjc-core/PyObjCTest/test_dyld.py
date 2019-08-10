@@ -60,11 +60,7 @@ class TestDyld(TestCase):
         self.assertRaises(UnicodeError, dyld.ensure_unicode, b"\xff\xff")
 
     def test_dyld_library(self):
-        for k in (
-            "DYLD_LIBRARY_PATH",
-            "DYLD_FALLBACK_LIBRARY_PATH",
-            "DYLD_IMAGE_SUFFIX",
-        ):
+        for k in ("DYLD_LIBRARY_PATH", "DYLD_FALLBACK_LIBRARY_PATH", "DYLD_IMAGE_SUFFIX"):
             if k in os.environ:
                 del os.environ[k]
 

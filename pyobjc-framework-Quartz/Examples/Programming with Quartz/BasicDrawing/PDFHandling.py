@@ -7,6 +7,7 @@ import Quartz
 
 import sys
 
+
 def createNewPDFRefFromPasteBoard():
     # Create a reference to the PDF data on the pasteboard.
     # The implementation of myCreatePDFDataFromPasteBoard depends
@@ -39,7 +40,10 @@ def createNewPDFRefFromPasteBoard():
         return None
     return pasteBoardPDFDocument
 
+
 _pdfDoc = None
+
+
 def getPasteBoardPDFDoc(reset):
     global _pdfDoc
     if reset:
@@ -53,18 +57,21 @@ def getPasteBoardPDFDoc(reset):
 
 
 def drawPasteBoardPDF(context):
-    pdfDoc = getPasteBoardPDFDoc(False)   # Obtain the existing one.
+    pdfDoc = getPasteBoardPDFDoc(False)  # Obtain the existing one.
     if pdfDoc is None:
         print("Quartz couldn't create CGPDFDocumentRef from pasteboard.")
         return
 
     # The media box is the bounding box of the PDF document.
-    pdfRect = Quartz.CGPDFDocumentGetMediaBox(pdfDoc , 1);   # page 1
+    pdfRect = Quartz.CGPDFDocumentGetMediaBox(pdfDoc, 1)
+    # page 1
     # Make the destination rect origin at the Quartz origin.
-    pdfRect.origin.x = pdfRect.origin.y = 0.;
-    Quartz.CGContextDrawPDFDocument(context, pdfRect, pdfDoc, 1);  # page 1
+    pdfRect.origin.x = pdfRect.origin.y = 0.0
+    Quartz.CGContextDrawPDFDocument(context, pdfRect, pdfDoc, 1)
+    # page 1
 
-def cfDataCreatePDFDocumentFromCommand( command):
+
+def cfDataCreatePDFDocumentFromCommand(command):
     # Media rect for the drawing. In a real application this
     # should be the bounding rectangle of the graphics
     # that will be the PDF content.
@@ -108,6 +115,7 @@ def cfDataCreatePDFDocumentFromCommand( command):
 
     return data
 
+
 def MakePDFDocument(url, exportInfo):
     # Use this as the media box for the document.
     # In a real application this should be the bounding
@@ -117,11 +125,9 @@ def MakePDFDocument(url, exportInfo):
     info = {
         # Add the title information for this document.
         Quartz.kCGPDFContextTitle: "BasicDrawing Sample Graphics",
-
         # Add the author information for this document. This is typically
         # the user creating the document.
         Quartz.kCGPDFContextAuthor: "David Gelphman and Bunny Laden",
-
         # The creator is the application creating the document.
         Quartz.kCGPDFContextCreator: "BasicDrawing Application",
     }
@@ -129,7 +135,7 @@ def MakePDFDocument(url, exportInfo):
     if 0:
         # Before using the kCGPDFContextCropBox key, check to ensure that it
         # is available.
-        if hasattr(Quartz, 'kCFPDFContextCropBox'):
+        if hasattr(Quartz, "kCFPDFContextCropBox"):
             # Prepare the crop box entry. Use this rectangle as the crop box for
             # this example.
 

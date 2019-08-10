@@ -2,11 +2,11 @@ from PyObjCTools.TestSupport import *
 import objc
 import sys
 
-if os_level_key(os_release()) < os_level_key('10.12') or sys.maxsize >= 2**32:
+if os_level_key(os_release()) < os_level_key("10.12") or sys.maxsize >= 2 ** 32:
 
     import SceneKit
 
-    class TestSCNMaterialProperty (TestCase):
+    class TestSCNMaterialProperty(TestCase):
         def testConstants(self):
             self.assertIsInstance(SceneKit.SCNModelTransform, unicode)
             self.assertIsInstance(SceneKit.SCNViewTransform, unicode)
@@ -28,25 +28,30 @@ if os_level_key(os_release()) < os_level_key('10.12') or sys.maxsize >= 2**32:
 
             self.assertArgIsBOOL(SceneKit.SCNNode.childNodeWithName_recursively_, 1)
 
-            self.assertArgIsBlock(SceneKit.SCNNode.childNodesPassingTest_, 0, b'Z@o^Z')
+            self.assertArgIsBlock(SceneKit.SCNNode.childNodesPassingTest_, 0, b"Z@o^Z")
 
-        @min_os_level('10.10')
+        @min_os_level("10.10")
         def testMethods10_10(self):
             self.assertResultIsBOOL(SceneKit.SCNNode.castsShadow)
             self.assertArgIsBOOL(SceneKit.SCNNode.setCastsShadow_, 0)
 
-            self.assertArgIsBlock(SceneKit.SCNNode.enumerateChildNodesUsingBlock_, 0, b'v@o^Z')
+            self.assertArgIsBlock(
+                SceneKit.SCNNode.enumerateChildNodesUsingBlock_, 0, b"v@o^Z"
+            )
 
             self.assertResultIsBOOL(SceneKit.SCNNode.isPaused)
             self.assertArgIsBOOL(SceneKit.SCNNode.setPaused_, 0)
 
-        @min_os_level('10.12')
+        @min_os_level("10.12")
         def testMethods10_12(self):
-            self.assertArgIsBlock(SceneKit.SCNNode.enumerateHierarchyUsingBlock_, 0, b'v@o^Z')
+            self.assertArgIsBlock(
+                SceneKit.SCNNode.enumerateHierarchyUsingBlock_, 0, b"v@o^Z"
+            )
 
-        @min_sdk_level('10.10')
+        @min_sdk_level("10.10")
         def testProtocolObjects(self):
-            objc.protocolNamed('SCNNodeRendererDelegate')
+            objc.protocolNamed("SCNNodeRendererDelegate")
+
 
 if __name__ == "__main__":
     main()

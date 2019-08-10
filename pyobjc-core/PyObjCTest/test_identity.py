@@ -281,7 +281,7 @@ class PythonToObjC(TestCase):
         # These get converted, not proxied
         container = OC_TestIdentity.alloc().init()
 
-        for v in (1, 666666, sys.maxsize * 3, 1.0):
+        for v in (1, 666_666, sys.maxsize * 3, 1.0):
             container.setStoredObject_(v)
 
             self.assertTrue(container.isSameObjectAsStored_(v), repr(v))

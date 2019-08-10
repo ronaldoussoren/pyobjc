@@ -1,7 +1,8 @@
 from AppKit import *
 from PyObjCTools.TestSupport import *
 
-class TestNSCursor (TestCase):
+
+class TestNSCursor(TestCase):
     def testMethods(self):
         self.assertArgIsBOOL(NSCursor.setHiddenUntilMouseMoves_, 0)
         self.assertArgIsBOOL(NSCursor.setOnMouseExited_, 0)

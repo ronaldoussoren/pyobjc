@@ -4,7 +4,7 @@ import sys
 if sys.maxsize > 2 ** 32:
     import Network
 
-    class TestIPOptions (TestCase):
+    class TestIPOptions(TestCase):
         def test_constants(self):
             self.assertEqual(Network.nw_ip_version_any, 0)
             self.assertEqual(Network.nw_ip_version_4, 4)
@@ -18,7 +18,6 @@ if sys.maxsize > 2 ** 32:
             self.assertEqual(Network.nw_ip_local_address_preference_default, 0)
             self.assertEqual(Network.nw_ip_local_address_preference_temporary, 1)
             self.assertEqual(Network.nw_ip_local_address_preference_stable, 2)
-
 
         def test_functions(self):
             Network.nw_ip_options_set_version
@@ -36,11 +35,10 @@ if sys.maxsize > 2 ** 32:
             Network.nw_ip_options_set_calculate_receive_time
             Network.nw_ip_metadata_get_receive_time
 
-        @min_os_level('10.15')
+        @min_os_level("10.15")
         def test_funtions10_15(self):
             Network.nw_ip_options_set_local_address_preference
 
 
 if __name__ == "__main__":
     main()
-

@@ -4,7 +4,7 @@ import sys
 if sys.maxsize >= 2 ** 32:
     import GameplayKit
 
-    class TestGKNoiseSource (TestCase):
+    class TestGKNoiseSource(TestCase):
         def testMethods(self):
             self.assertResultIsBOOL(GameplayKit.GKVoronoiNoiseSource.isDistanceEnabled)
             self.assertArgIsBOOL(GameplayKit.GKVoronoiNoiseSource.setDistanceEnabled_, 0)

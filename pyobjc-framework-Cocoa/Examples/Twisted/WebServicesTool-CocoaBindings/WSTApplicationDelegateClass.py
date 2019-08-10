@@ -10,8 +10,8 @@ from WSTConnectionWindowControllerClass import WSTConnectionWindowController
 
 from twisted.internet import reactor
 
-class WSTApplicationDelegate (NSObject):
 
+class WSTApplicationDelegate(NSObject):
     @objc.IBAction
     def newConnectionAction_(self, sender):
         """Action method fired when the user selects the 'new connection'
@@ -29,8 +29,7 @@ class WSTApplicationDelegate (NSObject):
 
     def applicationShouldTerminate_(self, sender):
         if reactor.running:
-            reactor.addSystemEventTrigger(
-                'after', 'shutdown', AppHelper.stopEventLoop)
+            reactor.addSystemEventTrigger("after", "shutdown", AppHelper.stopEventLoop)
             reactor.stop()
             return False
         return True

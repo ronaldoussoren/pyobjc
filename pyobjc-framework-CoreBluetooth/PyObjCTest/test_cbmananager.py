@@ -3,7 +3,8 @@ import sys
 from PyObjCTools.TestSupport import *
 import CoreBluetooth
 
-class TestCBManager (TestCase):
+
+class TestCBManager(TestCase):
     def testConstants(self):
         self.assertEqual(CoreBluetooth.CBManagerStateUnknown, 0)
         self.assertEqual(CoreBluetooth.CBManagerStateResetting, 1)

@@ -9,21 +9,25 @@ import Utilities
 _dpi = 144
 _useQT = False
 
+
 def getURLToExport(suffix):
     savePanel = Cocoa.NSSavePanel.savePanel()
 
-    initialFileName = "BasicDrawing.%s"%(suffix,)
+    initialFileName = "BasicDrawing.%s" % (suffix,)
 
-    if savePanel.runModalForDirectory_file_(None, initialFileName) == Cocoa.NSFileHandlingPanelOKButton:
+    if (
+        savePanel.runModalForDirectory_file_(None, initialFileName)
+        == Cocoa.NSFileHandlingPanelOKButton
+    ):
         return savePanel.URL()
 
     return None
 
 
-class MyAppController (Cocoa.NSObject):
+class MyAppController(Cocoa.NSObject):
     theView = objc.IBOutlet()
-    currentDPIMenuItem  = objc.IBOutlet()
-    currentExportStyleMenuItem  = objc.IBOutlet()
+    currentDPIMenuItem = objc.IBOutlet()
+    currentExportStyleMenuItem = objc.IBOutlet()
 
     @objc.IBAction
     def print_(self, sender):
@@ -71,7 +75,7 @@ class MyAppController (Cocoa.NSObject):
         # Use the printable version of the current command. This produces
         # the best results for exporting.
         exportInfoP.command = self.theView.currentPrintableCommand()
-        exportInfoP.fileType = '    '   # unused
+        exportInfoP.fileType = "    "  # unused
         exportInfoP.useQTForExport = _useQT
         exportInfoP.dpi = _dpi
 
@@ -99,7 +103,6 @@ class MyAppController (Cocoa.NSObject):
             self.setupExportInfo_(exportInfo)
             BitmapContext.MakeTIFFDocument(url, exportInfo)
 
-
     @objc.IBAction
     def exportAsJPEG_(self, sender):
         url = getURLToExport("jpg")
@@ -112,14 +115,14 @@ class MyAppController (Cocoa.NSObject):
         if menuItem.tag == _dpi:
             currentDPIMenuItem = menuItem
             menuItem.setState_(True)
-        elif menuItem.action() == 'setUseQT:':
+        elif menuItem.action() == "setUseQT:":
             if _useQT:
                 self.currentDPIMenuItem = menuItem
                 menuItem.setState_(True)
             else:
                 menuItem.setState_(False)
 
-        elif menuItem.action() == 'setUseCGImageSource:':
+        elif menuItem.action() == "setUseCGImageSource:":
             if _useQT:
                 currentDPIMenuItem = menuItem
                 menuItem.setState_(True)

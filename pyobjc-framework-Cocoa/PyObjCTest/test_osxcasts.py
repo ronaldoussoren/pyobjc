@@ -3,7 +3,8 @@ from PyObjCTools.TestSupport import *
 from objc import *
 from Foundation import *
 
-class TestTollFreeBridging( TestCase ):
+
+class TestTollFreeBridging(TestCase):
     def testImplicitFromCF(self):
 
         c = CFArrayCreateMutable(None, 0, None)
@@ -15,5 +16,6 @@ class TestTollFreeBridging( TestCase ):
         o = nsa[0]
         self.assertIsInstance(o, NSMutableArray)
 
-if __name__ == '__main__':
-    main( )
+
+if __name__ == "__main__":
+    main()

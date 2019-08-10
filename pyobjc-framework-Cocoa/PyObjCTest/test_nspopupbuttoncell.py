@@ -1,8 +1,8 @@
-
 from PyObjCTools.TestSupport import *
 from AppKit import *
 
-class TestNSPopUpButtonCell (TestCase):
+
+class TestNSPopUpButtonCell(TestCase):
     def testConstants(self):
         self.assertEqual(NSPopUpNoArrow, 0)
         self.assertEqual(NSPopUpArrowAtCenter, 1)

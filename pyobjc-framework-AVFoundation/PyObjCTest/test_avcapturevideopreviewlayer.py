@@ -2,7 +2,8 @@ from PyObjCTools.TestSupport import *
 
 import AVFoundation
 
-class TestAVCaptureVideoPreviewLayer (TestCase):
+
+class TestAVCaptureVideoPreviewLayer(TestCase):
     def testClasses(self):
         AVFoundation.AVCaptureVideoPreviewLayer
 

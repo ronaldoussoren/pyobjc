@@ -48,9 +48,7 @@ class TestStructs(TestCase):
     def testNamedTupleAPI(self):
         Point = objc.createStructType("OCPoint", b"{_OCPoint=dd}", ["x", "y"])
         Line = objc.createStructType(
-            "OCLine",
-            b"{_OCLine={_OCPoint=dd}{_OCPoint=dd}}d",
-            ["start", "stop", "width"],
+            "OCLine", b"{_OCLine={_OCPoint=dd}{_OCPoint=dd}}d", ["start", "stop", "width"]
         )
 
         self.assertEqual(Point._fields, ("x", "y"))
@@ -105,12 +103,8 @@ class TestStructs(TestCase):
 
         self.assertEqual(tp._fields, ("e", "f", "g", "h"))
 
-        self.assertRaises(
-            ValueError, objc.createStructType, "Foo2", b'{_Foo=f"a"}', None
-        )
-        self.assertRaises(
-            ValueError, objc.createStructType, "Foo3", b'{_Foo="a"f', None
-        )
+        self.assertRaises(ValueError, objc.createStructType, "Foo2", b'{_Foo=f"a"}', None)
+        self.assertRaises(ValueError, objc.createStructType, "Foo3", b'{_Foo="a"f', None)
         self.assertRaises(
             ValueError, objc.createStructType, "Foo4", b'^{_Foo="a"f}', None
         )

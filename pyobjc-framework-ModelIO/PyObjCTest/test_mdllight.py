@@ -1,10 +1,10 @@
 from PyObjCTools.TestSupport import *
 import sys
 
-if sys.maxsize > 2**32:
+if sys.maxsize > 2 ** 32:
     import ModelIO
 
-    class TestMDLCamera (TestCase):
+    class TestMDLCamera(TestCase):
         def testConstants(self):
             self.assertEqual(ModelIO.MDLLightTypeUnknown, 0)
             self.assertEqual(ModelIO.MDLLightTypeAmbient, 1)
@@ -18,6 +18,7 @@ if sys.maxsize > 2**32:
             self.assertEqual(ModelIO.MDLLightTypePhotometric, 9)
             self.assertEqual(ModelIO.MDLLightTypeProbe, 10)
             self.assertEqual(ModelIO.MDLLightTypeEnvironment, 11)
+
 
 if __name__ == "__main__":
     main()

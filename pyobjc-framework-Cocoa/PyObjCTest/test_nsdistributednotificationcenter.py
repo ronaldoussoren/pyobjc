@@ -3,7 +3,7 @@ from PyObjCTools.TestSupport import *
 from Foundation import *
 
 
-class TestNSDistributedNotificationCenter (TestCase):
+class TestNSDistributedNotificationCenter(TestCase):
     def testConstants(self):
         self.assertIsInstance(NSLocalNotificationCenterType, unicode)
         self.assertEqual(NSNotificationSuspensionBehaviorDrop, 1)
@@ -18,12 +18,22 @@ class TestNSDistributedNotificationCenter (TestCase):
         self.assertEqual(NSDistributedNotificationPostToAllSessions, 2)
 
     def testMethods(self):
-        self.assertArgIsSEL(NSDistributedNotificationCenter.addObserver_selector_name_object_suspensionBehavior_, 1, b'v@:@')
-        self.assertArgIsSEL(NSDistributedNotificationCenter.addObserver_selector_name_object_, 1, b'v@:@')
+        self.assertArgIsSEL(
+            NSDistributedNotificationCenter.addObserver_selector_name_object_suspensionBehavior_,
+            1,
+            b"v@:@",
+        )
+        self.assertArgIsSEL(
+            NSDistributedNotificationCenter.addObserver_selector_name_object_, 1, b"v@:@"
+        )
 
-        self.assertArgIsBOOL(NSDistributedNotificationCenter.postNotificationName_object_userInfo_deliverImmediately_, 3)
+        self.assertArgIsBOOL(
+            NSDistributedNotificationCenter.postNotificationName_object_userInfo_deliverImmediately_,
+            3,
+        )
         self.assertArgIsBOOL(NSDistributedNotificationCenter.setSuspended_, 0)
         self.assertResultIsBOOL(NSDistributedNotificationCenter.suspended)
+
 
 if __name__ == "__main__":
     main()

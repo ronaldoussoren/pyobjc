@@ -1,10 +1,10 @@
 from PyObjCTools.TestSupport import *
 import sys
 
-if sys.maxsize >= 2**32:
+if sys.maxsize >= 2 ** 32:
     import Vision
 
-    class TestVNDetectFaceLandmarksRequest (TestCase):
+    class TestVNDetectFaceLandmarksRequest(TestCase):
         def test_constants(self):
             self.assertEqual(Vision.VNRequestFaceLandmarksConstellationNotDefined, 0)
             self.assertEqual(Vision.VNRequestFaceLandmarksConstellation65Points, 1)
@@ -13,9 +13,12 @@ if sys.maxsize >= 2**32:
             self.assertEqual(Vision.VNDetectFaceLandmarksRequestRevision2, 2)
             self.assertEqual(Vision.VNDetectFaceLandmarksRequestRevision3, 3)
 
-        @min_os_level('10.13')
+        @min_os_level("10.13")
         def test_methods(self):
-            self.assertResultIsBOOL(Vision.VNDetectFaceLandmarksRequest.revision_supportsConstellation_)
+            self.assertResultIsBOOL(
+                Vision.VNDetectFaceLandmarksRequest.revision_supportsConstellation_
+            )
+
 
 if __name__ == "__main__":
     main()

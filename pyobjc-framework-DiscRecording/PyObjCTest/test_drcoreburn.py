@@ -2,7 +2,8 @@ from PyObjCTools.TestSupport import *
 
 import DiscRecording
 
-class TestDRCoreBurn (TestCase):
+
+class TestDRCoreBurn(TestCase):
     @expectedFailure
     def testCFTypes(self):
         self.assertIsCFType(DiscRecording.DRBurnRef)
@@ -19,7 +20,9 @@ class TestDRCoreBurn (TestCase):
         self.assertIsInstance(DiscRecording.kDRSynchronousBehaviorKey, unicode)
         self.assertIsInstance(DiscRecording.kDRBurnFailureActionKey, unicode)
         self.assertIsInstance(DiscRecording.kDRMediaCatalogNumberKey, unicode)
-        self.assertIsInstance(DiscRecording.kDRBurnDoubleLayerL0DataZoneBlocksKey, unicode)
+        self.assertIsInstance(
+            DiscRecording.kDRBurnDoubleLayerL0DataZoneBlocksKey, unicode
+        )
         self.assertIsInstance(DiscRecording.kDRBurnStrategyKey, unicode)
         self.assertIsInstance(DiscRecording.kDRBurnStrategyIsRequiredKey, unicode)
         self.assertIsInstance(DiscRecording.kDRCDTextKey, unicode)
@@ -46,11 +49,6 @@ class TestDRCoreBurn (TestCase):
         DiscRecording.DRBurnGetDevice
         DiscRecording.DRBurnSetProperties
         DiscRecording.DRBurnGetProperties
-
-
-
-
-
 
 
 if __name__ == "__main__":

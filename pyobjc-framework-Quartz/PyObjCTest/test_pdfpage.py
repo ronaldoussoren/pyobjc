@@ -1,8 +1,8 @@
-
 from PyObjCTools.TestSupport import *
 from Quartz.PDFKit import *
 
-class TestPDFPage (TestCase):
+
+class TestPDFPage(TestCase):
     def testConstants(self):
         self.assertEqual(kPDFDisplayBoxMediaBox, 0)
         self.assertEqual(kPDFDisplayBoxCropBox, 1)
@@ -13,6 +13,7 @@ class TestPDFPage (TestCase):
     def testMethods(self):
         self.assertResultIsBOOL(PDFPage.displaysAnnotations)
         self.assertArgIsBOOL(PDFPage.setDisplaysAnnotations_, 0)
+
 
 if __name__ == "__main__":
     main()

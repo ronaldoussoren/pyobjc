@@ -6,7 +6,7 @@ if sys.maxsize > 2 ** 32:
 
     nw_browse_result_enumerate_interface_t = objc._C_BOOL + objc._C_ID
 
-    class TestBrowseResult (TestCase):
+    class TestBrowseResult(TestCase):
         def test_constants(self):
             self.assertEqual(Network.nw_browse_result_change_invalid, 0x00)
             self.assertEqual(Network.nw_browse_result_change_identical, 0x01)
@@ -16,7 +16,7 @@ if sys.maxsize > 2 ** 32:
             self.assertEqual(Network.nw_browse_result_change_interface_removed, 0x10)
             self.assertEqual(Network.nw_browse_result_change_txt_record_changed, 0x20)
 
-        @min_os_level('10.15')
+        @min_os_level("10.15")
         def test_functions10_15(self):
             self.assertResultIsRetained(Network.nw_browse_result_copy_endpoint)
 
@@ -25,7 +25,11 @@ if sys.maxsize > 2 ** 32:
 
             self.assertResultIsRetained(Network.nw_browse_result_copy_txt_record_object)
 
-            self.assertArgIsBlock(Network.nw_browse_result_enumerate_interfaces, 1, nw_browse_result_enumerate_interface_t)
+            self.assertArgIsBlock(
+                Network.nw_browse_result_enumerate_interfaces,
+                1,
+                nw_browse_result_enumerate_interface_t,
+            )
 
 
 if __name__ == "__main__":

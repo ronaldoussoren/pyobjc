@@ -5,7 +5,7 @@ from PyObjCTools.TestSupport import *
 if sys.maxsize > 2 ** 32:
     import MediaLibrary
 
-    class TestMLMediaLibrary (TestCase):
+    class TestMLMediaLibrary(TestCase):
         @min_os_level("10.9")
         def testClasses(self):
             self.assertIsInstance(MediaLibrary.MLMediaLibrary, objc.objc_class)
@@ -25,9 +25,15 @@ if sys.maxsize > 2 ** 32:
             self.assertIsInstance(MediaLibrary.MLMediaSourceLogicIdentifier, unicode)
             self.assertIsInstance(MediaLibrary.MLMediaSourcePhotoBoothIdentifier, unicode)
 
-            self.assertIsInstance(MediaLibrary.MLMediaSourceCustomFoldersIdentifier, unicode)
-            self.assertIsInstance(MediaLibrary.MLMediaSourceMoviesFolderIdentifier, unicode)
-            self.assertIsInstance(MediaLibrary.MLMediaSourceAppDefinedFoldersIdentifier, unicode)
+            self.assertIsInstance(
+                MediaLibrary.MLMediaSourceCustomFoldersIdentifier, unicode
+            )
+            self.assertIsInstance(
+                MediaLibrary.MLMediaSourceMoviesFolderIdentifier, unicode
+            )
+            self.assertIsInstance(
+                MediaLibrary.MLMediaSourceAppDefinedFoldersIdentifier, unicode
+            )
 
             self.assertIsInstance(MediaLibrary.MLMediaLoadSourceTypesKey, unicode)
 
@@ -41,6 +47,7 @@ if sys.maxsize > 2 ** 32:
             self.assertIsInstance(MediaLibrary.MLMediaLoadMoviesFolder, unicode)
 
             self.assertIsInstance(MediaLibrary.MLMediaLoadAppFoldersKey, unicode)
+
 
 if __name__ == "__main__":
     main()

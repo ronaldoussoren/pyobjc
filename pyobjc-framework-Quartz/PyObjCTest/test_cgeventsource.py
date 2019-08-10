@@ -1,8 +1,8 @@
-
 from PyObjCTools.TestSupport import *
 from Quartz.CoreGraphics import *
 
-class TestCGEventSource (TestCase):
+
+class TestCGEventSource(TestCase):
     def testTypes(self):
         self.assertIsCFType(CGEventSourceRef)
 
@@ -42,22 +42,26 @@ class TestCGEventSource (TestCase):
         v = CGEventSourceCounterForEventType(0, kCGEventLeftMouseDown)
         self.assertIsInstance(v, (int, long))
 
-        CGEventSourceSetUserData(src, 0xabbccdd00112233)
+        CGEventSourceSetUserData(src, 0xABBCCDD00112233)
         v = CGEventSourceGetUserData(src)
         self.assertIsInstance(v, (int, long))
-        self.assertEqual(v, 0xabbccdd00112233)
+        self.assertEqual(v, 0xABBCCDD00112233)
 
-        CGEventSourceSetLocalEventsFilterDuringSuppressionState(src,
-                kCGEventFlagMaskControl|kCGEventFlagMaskCommand,
-                 kCGEventSuppressionStateRemoteMouseDrag )
+        CGEventSourceSetLocalEventsFilterDuringSuppressionState(
+            src,
+            kCGEventFlagMaskControl | kCGEventFlagMaskCommand,
+            kCGEventSuppressionStateRemoteMouseDrag,
+        )
 
-        m = CGEventSourceGetLocalEventsFilterDuringSuppressionState(src,
-                 kCGEventSuppressionStateRemoteMouseDrag )
+        m = CGEventSourceGetLocalEventsFilterDuringSuppressionState(
+            src, kCGEventSuppressionStateRemoteMouseDrag
+        )
         self.assertIsInstance(m, (int, long))
 
         CGEventSourceSetLocalEventsSuppressionInterval(src, 1.5)
         v = CGEventSourceGetLocalEventsSuppressionInterval(src)
         self.assertEqual(v, 1.5)
+
 
 if __name__ == "__main__":
     main()

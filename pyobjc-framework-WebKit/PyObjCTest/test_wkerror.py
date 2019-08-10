@@ -2,9 +2,9 @@ from PyObjCTools.TestSupport import *
 from WebKit import *
 
 
-class TestWKError (TestCase):
+class TestWKError(TestCase):
     @onlyOn64Bit
-    @min_os_level('10.10')
+    @min_os_level("10.10")
     def testConstants10_10(self):
         self.assertIsInstance(WKErrorDomain, unicode)
 

@@ -1,18 +1,31 @@
-
 from PyObjCTools.TestSupport import *
 from Quartz.PDFKit import *
 
-class TestPDFViewHelper (NSObject):
-    def PDFViewWillChangeScaleFactor_toScale_(self, f, s): return 1.0
-    def PDFViewWillClickOnLink_withURL_(self, s, u): pass
-    def PDFViewPrintJobTitle_(self, s): return b'a'.decode('latin1')
-    def PDFViewPerformFind_(self, s): pass
-    def PDFViewPerformGoToPage_(self, s): pass
-    def PDFViewPerformPrint_(self, s): pass
-    def PDFViewOpenPDF_forRemoteGoToAction_(self, s, a): pass
+
+class TestPDFViewHelper(NSObject):
+    def PDFViewWillChangeScaleFactor_toScale_(self, f, s):
+        return 1.0
+
+    def PDFViewWillClickOnLink_withURL_(self, s, u):
+        pass
+
+    def PDFViewPrintJobTitle_(self, s):
+        return b"a".decode("latin1")
+
+    def PDFViewPerformFind_(self, s):
+        pass
+
+    def PDFViewPerformGoToPage_(self, s):
+        pass
+
+    def PDFViewPerformPrint_(self, s):
+        pass
+
+    def PDFViewOpenPDF_forRemoteGoToAction_(self, s, a):
+        pass
 
 
-class TestPDFView (TestCase):
+class TestPDFView(TestCase):
     def testConstants(self):
         self.assertEqual(kPDFDisplaySinglePage, 0)
         self.assertEqual(kPDFDisplaySinglePageContinuous, 1)
@@ -41,14 +54,14 @@ class TestPDFView (TestCase):
         self.assertEqual(kPDFDisplayDirectionVertical, 0)
         self.assertEqual(kPDFDisplayDirectionHorizontal, 1)
 
-    @min_os_level('10.5')
+    @min_os_level("10.5")
     def testConstants10_5(self):
         self.assertIsInstance(PDFViewAnnotationWillHitNotification, unicode)
         self.assertIsInstance(PDFViewSelectionChangedNotification, unicode)
         self.assertIsInstance(PDFViewDisplayModeChangedNotification, unicode)
         self.assertIsInstance(PDFViewDisplayBoxChangedNotification, unicode)
 
-    @min_os_level('10.7')
+    @min_os_level("10.7")
     def testConstants10_7(self):
         self.assertEqual(kPDFInterpolationQualityNone, 0)
         self.assertEqual(kPDFInterpolationQualityLow, 1)
@@ -79,18 +92,18 @@ class TestPDFView (TestCase):
         self.assertResultIsBOOL(PDFView.allowsDragging)
         self.assertArgIsBOOL(PDFView.setAllowsDragging_, 0)
 
-    @min_os_level('10.5')
+    @min_os_level("10.5")
     def testMethods10_5(self):
         self.assertArgIsBOOL(PDFView.setCurrentSelection_animate_, 1)
         self.assertArgIsBOOL(PDFView.printWithInfo_autoRotate_, 1)
         self.assertArgIsBOOL(PDFView.printWithInfo_autoRotate_pageScaling_, 1)
 
-    @min_os_level('10.6')
+    @min_os_level("10.6")
     def testMethods10_6(self):
         self.assertResultIsBOOL(PDFView.enableDataDetectors)
         self.assertArgIsBOOL(PDFView.setEnableDataDetectors_, 0)
 
-    @min_os_level('10.13')
+    @min_os_level("10.13")
     def testMethods10_13(self):
         self.assertResultIsBOOL(PDFView.displaysRTL)
         self.assertArgIsBOOL(PDFView.setDisplaysRTL_, 0)
@@ -98,16 +111,21 @@ class TestPDFView (TestCase):
         self.assertResultIsBOOL(PDFView.acceptsDraggedFiles)
         self.assertArgIsBOOL(PDFView.setAcceptsDraggedFiles_, 0)
 
-    @min_os_level('10.14')
+    @min_os_level("10.14")
     def testMethods10_14(self):
         self.assertResultIsBOOL(PDFView.pageShadowsEnabled)
         self.assertArgIsBOOL(PDFView.enablePageShadows_, 0)
 
     def testProtocols(self):
-        objc.protocolNamed('PDFViewDelegate')
+        objc.protocolNamed("PDFViewDelegate")
 
-        self.assertArgHasType(TestPDFViewHelper.PDFViewWillChangeScaleFactor_toScale_, 1, objc._C_CGFloat)
-        self.assertResultHasType(TestPDFViewHelper.PDFViewWillChangeScaleFactor_toScale_, objc._C_CGFloat)
+        self.assertArgHasType(
+            TestPDFViewHelper.PDFViewWillChangeScaleFactor_toScale_, 1, objc._C_CGFloat
+        )
+        self.assertResultHasType(
+            TestPDFViewHelper.PDFViewWillChangeScaleFactor_toScale_, objc._C_CGFloat
+        )
+
 
 if __name__ == "__main__":
     main()

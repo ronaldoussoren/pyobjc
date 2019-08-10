@@ -1,8 +1,8 @@
-
 from PyObjCTools.TestSupport import *
 from Quartz.PDFKit import *
 
-class TestPDFActionNamed (TestCase):
+
+class TestPDFActionNamed(TestCase):
     def testConstants(self):
         self.assertEqual(kPDFActionNamedNone, 0)
         self.assertEqual(kPDFActionNamedNextPage, 1)
@@ -16,6 +16,7 @@ class TestPDFActionNamed (TestCase):
         self.assertEqual(kPDFActionNamedPrint, 9)
         self.assertEqual(kPDFActionNamedZoomIn, 10)
         self.assertEqual(kPDFActionNamedZoomOut, 11)
+
 
 if __name__ == "__main__":
     main()

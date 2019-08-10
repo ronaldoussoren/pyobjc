@@ -1,4 +1,4 @@
-'''
+"""
 Wrappers for "InstantMessage" framework on macOS 10.5 or later. This framework
 allows you to access iChat information, as well as a way to provide an
 auxilliary video source to iChat Theater.
@@ -10,21 +10,21 @@ and (Objective-)C frameworks
 
 Note that this framework is deprecated in OSX 10.9, use the Social framework
 instead if you target that OSX release.
-'''
+"""
 from pyobjc_setup import setup
 
-VERSION="6.0a0"
+VERSION = "6.0a0"
 
 setup(
-    name='pyobjc-framework-InstantMessage',
-    description = "Wrappers for the framework InstantMessage on macOS",
-    min_os_level='10.5',
-    packages = [ "InstantMessage" ],
+    name="pyobjc-framework-InstantMessage",
+    description="Wrappers for the framework InstantMessage on macOS",
+    min_os_level="10.5",
+    packages=["InstantMessage"],
     version=VERSION,
-    install_requires = [
-        'pyobjc-core>='+VERSION,
-        'pyobjc-framework-Cocoa>='+VERSION,
-        'pyobjc-framework-Quartz>='+VERSION,
+    install_requires=[
+        "pyobjc-core>=" + VERSION,
+        "pyobjc-framework-Cocoa>=" + VERSION,
+        "pyobjc-framework-Quartz>=" + VERSION,
     ],
     long_description=__doc__,
 )

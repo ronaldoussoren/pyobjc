@@ -1,8 +1,8 @@
-
 from PyObjCTools.TestSupport import *
 from Quartz import *
 
-class TestCVOpenGLBuffer (TestCase):
+
+class TestCVOpenGLBuffer(TestCase):
     def testConstants(self):
         self.assertIsInstance(kCVOpenGLBufferWidth, unicode)
         self.assertIsInstance(kCVOpenGLBufferHeight, unicode)
@@ -18,7 +18,7 @@ class TestCVOpenGLBuffer (TestCase):
 
         self.assertArgIsOut(CVOpenGLBufferCreate, 4)
         self.assertArgIsCFRetained(CVOpenGLBufferCreate, 4)
-        rv, buf = CVOpenGLBufferCreate(None, 100, 100, {"a":"b"}, None)
+        rv, buf = CVOpenGLBufferCreate(None, 100, 100, {"a": "b"}, None)
         self.assertEqual(rv, 0)
         self.assertIsInstance(buf, CVOpenGLBufferRef)
 
@@ -31,7 +31,8 @@ class TestCVOpenGLBuffer (TestCase):
         self.assertIsInstance(v, (dict, CFDictionaryRef))
 
         # FIXME: actual test
-        self.assertArgHasType(CVOpenGLBufferAttach, 0, b'^{__CVBuffer=}')
+        self.assertArgHasType(CVOpenGLBufferAttach, 0, b"^{__CVBuffer=}")
+
 
 if __name__ == "__main__":
     main()

@@ -10,8 +10,8 @@
 
 from Foundation import NSNumber, NSValueTransformer
 
-class RadiansToDegreesTransformer(NSValueTransformer):
 
+class RadiansToDegreesTransformer(NSValueTransformer):
     @classmethod
     def transformedValueClass(cls):
         return NSNumber
@@ -21,12 +21,12 @@ class RadiansToDegreesTransformer(NSValueTransformer):
         return True
 
     def transformedValue_(self, radians):
-        return radians / (3.1415927/180.0)
+        return radians / (3.141_592_7 / 180.0)
 
     def reverseTransformedValue_(self, degrees):
         if type(degrees) == type(1.2):
             # when using jostickview we get a value of type float()
-            return degrees * (3.1415927/180.0)
+            return degrees * (3.141_592_7 / 180.0)
         else:
             # we get a decimalNumber when entering a value in the textfield
-            return degrees.doubleValue() * (3.1415927/180.0)
+            return degrees.doubleValue() * (3.141_592_7 / 180.0)

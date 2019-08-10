@@ -1,7 +1,8 @@
 import HIServices
 from PyObjCTools.TestSupport import *
 
-class TestAXActionConstants (TestCase):
+
+class TestAXActionConstants(TestCase):
     def testConstants(self):
         self.assertEqual(HIServices.kAXPressAction, "AXPress")
         self.assertEqual(HIServices.kAXIncrementAction, "AXIncrement")
@@ -13,6 +14,7 @@ class TestAXActionConstants (TestCase):
         self.assertEqual(HIServices.kAXRaiseAction, "AXRaise")
         self.assertEqual(HIServices.kAXShowMenuAction, "AXShowMenu")
         self.assertEqual(HIServices.kAXPickAction, "AXPick")
+
 
 if __name__ == "__main__":
     main()

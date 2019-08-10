@@ -5,7 +5,7 @@ from PyObjCTools.TestSupport import *
 if sys.maxsize > 2 ** 32:
     import MapKit
 
-    class TestMKTileOverlay (TestCase):
+    class TestMKTileOverlay(TestCase):
         @min_os_level("10.9")
         def testClasses(self):
             self.assertIsInstance(MapKit.MKTileOverlay, objc.objc_class)
@@ -25,7 +25,6 @@ if sys.maxsize > 2 ** 32:
             self.assertIsInstance(c.y, int)
             self.assertIsInstance(c.z, int)
             self.assertIsInstance(c.contentScaleFactor, float)
-
 
 
 if __name__ == "__main__":

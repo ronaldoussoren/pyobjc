@@ -1,16 +1,19 @@
 from PyObjCTools.TestSupport import *
 from Quartz import *
 
-class TestCVDisplayLink (TestCase):
+
+class TestCVDisplayLink(TestCase):
     def testTypes(self):
         self.assertIsCFType(CVDisplayLinkRef)
 
-    @min_os_level('10.11')
+    @min_os_level("10.11")
     def testFunctions10_11(self):
         # XXX: headers claim this is generally available ??
-        self.assertArgIsBlock(CVDisplayLinkSetOutputHandler, 1,
-                b'i^{__CVDisplayLink=}n^{_CVTimeStamp=IiqQdq{CVSMPTETime=ssIIIssss}QQ}n^{_CVTimeStamp=IiqQdq{CVSMPTETime=ssIIIssss}QQ}Qo^Q')
-
+        self.assertArgIsBlock(
+            CVDisplayLinkSetOutputHandler,
+            1,
+            b"i^{__CVDisplayLink=}n^{_CVTimeStamp=IiqQdq{CVSMPTETime=ssIIIssss}QQ}n^{_CVTimeStamp=IiqQdq{CVSMPTETime=ssIIIssss}QQ}Qo^Q",
+        )
 
     def testFunctions(self):
         self.assertIsInstance(CVDisplayLinkGetTypeID(), (int, long))
@@ -28,7 +31,9 @@ class TestCVDisplayLink (TestCase):
 
         self.assertArgIsOut(CVDisplayLinkCreateWithOpenGLDisplayMask, 1)
         self.assertArgIsCFRetained(CVDisplayLinkCreateWithOpenGLDisplayMask, 1)
-        rv, link2 = CVDisplayLinkCreateWithOpenGLDisplayMask(CGDisplayIDToOpenGLDisplayMask(mainID), None)
+        rv, link2 = CVDisplayLinkCreateWithOpenGLDisplayMask(
+            CGDisplayIDToOpenGLDisplayMask(mainID), None
+        )
         self.assertEqual(rv, 0)
         self.assertIsInstance(link2, CVDisplayLinkRef)
 
@@ -52,12 +57,18 @@ class TestCVDisplayLink (TestCase):
         v = CVDisplayLinkGetCurrentCGDisplay(link)
         self.assertEqual(v, mainID)
 
-        self.assertArgIsFunction(CVDisplayLinkSetOutputCallback, 1, b'i^{__CVDisplayLink=}n^{_CVTimeStamp=IiqQdq{CVSMPTETime=ssIIIssss}QQ}N^{_CVTimeStamp=IiqQdq{CVSMPTETime=ssIIIssss}QQ}Qo^Q^v', True)
-        self.assertArgHasType(CVDisplayLinkSetOutputCallback, 2, b'^v')
+        self.assertArgIsFunction(
+            CVDisplayLinkSetOutputCallback,
+            1,
+            b"i^{__CVDisplayLink=}n^{_CVTimeStamp=IiqQdq{CVSMPTETime=ssIIIssss}QQ}N^{_CVTimeStamp=IiqQdq{CVSMPTETime=ssIIIssss}QQ}Qo^Q^v",
+            True,
+        )
+        self.assertArgHasType(CVDisplayLinkSetOutputCallback, 2, b"^v")
 
         @objc.callbackFor(CVDisplayLinkSetOutputCallback)
         def callback(dl, now, time, flags, oflags, ctx):
             pass
+
         CVDisplayLinkSetOutputCallback(link2, callback, None)
 
         rv = CVDisplayLinkStart(link4)
@@ -65,7 +76,9 @@ class TestCVDisplayLink (TestCase):
         rv = CVDisplayLinkStop(link4)
         self.assertIsInstance(rv, (int, long))
 
-        self.assertResultHasType(CVDisplayLinkGetNominalOutputVideoRefreshPeriod, CVTime.__typestr__)
+        self.assertResultHasType(
+            CVDisplayLinkGetNominalOutputVideoRefreshPeriod, CVTime.__typestr__
+        )
         v = CVDisplayLinkGetNominalOutputVideoRefreshPeriod(link)
         self.assertIsInstance(v, CVTime)
 
@@ -73,7 +86,9 @@ class TestCVDisplayLink (TestCase):
         v = CVDisplayLinkGetOutputVideoLatency(link)
         self.assertIsInstance(v, CVTime)
 
-        self.assertResultHasType(CVDisplayLinkGetActualOutputVideoRefreshPeriod, objc._C_DBL)
+        self.assertResultHasType(
+            CVDisplayLinkGetActualOutputVideoRefreshPeriod, objc._C_DBL
+        )
         v = CVDisplayLinkGetActualOutputVideoRefreshPeriod(link)
         self.assertIsInstance(v, float)
 
@@ -81,15 +96,21 @@ class TestCVDisplayLink (TestCase):
         v = CVDisplayLinkIsRunning(link)
         self.assertIsInstance(v, bool)
 
-        self.assertArgHasType(CVDisplayLinkGetCurrentTime, 1, b'o^' + CVTimeStamp.__typestr__)
+        self.assertArgHasType(
+            CVDisplayLinkGetCurrentTime, 1, b"o^" + CVTimeStamp.__typestr__
+        )
         rv, v = CVDisplayLinkGetCurrentTime(link, None)
         self.assertIsInstance(rv, (int, long))
         self.assertIsInstance(v, CVTimeStamp)
         ts = v
 
-        self.assertArgHasType(CVDisplayLinkTranslateTime, 1, b'n^' + CVTimeStamp.__typestr__)
-        self.assertArgHasType(CVDisplayLinkTranslateTime, 2, b'o^' + CVTimeStamp.__typestr__)
-        rv, v = CVDisplayLinkTranslateTime(link,  ts, None)
+        self.assertArgHasType(
+            CVDisplayLinkTranslateTime, 1, b"n^" + CVTimeStamp.__typestr__
+        )
+        self.assertArgHasType(
+            CVDisplayLinkTranslateTime, 2, b"o^" + CVTimeStamp.__typestr__
+        )
+        rv, v = CVDisplayLinkTranslateTime(link, ts, None)
         self.assertIsInstance(rv, (int, long))
         self.assertIsInstance(v, CVTimeStamp)
 

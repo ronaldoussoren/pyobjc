@@ -2,8 +2,8 @@ from PyObjCTools.TestSupport import *
 
 import Security
 
-class TestCSCommon (TestCase):
 
+class TestCSCommon(TestCase):
     def test_types(self):
         self.assertIsCFType(Security.SecCodeRef)
         self.assertIsCFType(Security.SecRequirementRef)
@@ -135,7 +135,9 @@ class TestCSCommon (TestCase):
         self.assertEqual(Security.kSecLibraryRequirementType, 4)
         self.assertEqual(Security.kSecPluginRequirementType, 5)
         self.assertEqual(Security.kSecInvalidRequirementType, 6)
-        self.assertEqual(Security.kSecRequirementTypeCount, Security.kSecInvalidRequirementType)
+        self.assertEqual(
+            Security.kSecRequirementTypeCount, Security.kSecInvalidRequirementType
+        )
 
         self.assertEqual(Security.kSecCodeSignatureNoHash, 0)
         self.assertEqual(Security.kSecCodeSignatureHashSHA1, 1)
@@ -144,9 +146,10 @@ class TestCSCommon (TestCase):
         self.assertEqual(Security.kSecCodeSignatureHashSHA384, 4)
         self.assertEqual(Security.kSecCodeSignatureHashSHA512, 5)
 
-    @min_os_level('10.12')
+    @min_os_level("10.12")
     def test_constants_10_12(self):
         self.assertIsInstance(Security.kSecCFErrorResourceSideband, unicode)
+
 
 if __name__ == "__main__":
     main()

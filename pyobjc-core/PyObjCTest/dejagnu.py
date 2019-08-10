@@ -120,8 +120,7 @@ class DgTestCase(unittest.TestCase):
     def compileTestCase(self):
         libdir = os.path.join(
             "build",
-            "temp.%s-%d.%d"
-            % (get_platform(), sys.version_info[0], sys.version_info[1]),
+            "temp.%s-%d.%d" % (get_platform(), sys.version_info[0], sys.version_info[1]),
         )
         if hasattr(sys, "gettotalrefcount"):
             libdir += "-pydebug"

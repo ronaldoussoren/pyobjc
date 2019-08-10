@@ -2,11 +2,11 @@ from PyObjCTools.TestSupport import *
 import objc
 import sys
 
-if os_level_key(os_release()) < os_level_key('10.12') or sys.maxsize >= 2**32:
+if os_level_key(os_release()) < os_level_key("10.12") or sys.maxsize >= 2 ** 32:
 
     import SceneKit
 
-    class TestSCNParametricGeometry (TestCase):
+    class TestSCNParametricGeometry(TestCase):
         def testConstants(self):
             self.assertEqual(SceneKit.SCNChamferModeBoth, 0)
             self.assertEqual(SceneKit.SCNChamferModeFront, 1)

@@ -4,9 +4,11 @@ import objc
 from objc import super
 
 prioritySortDescriptions = Cocoa.NSArray.arrayWithObject_(
-        Cocoa.NSSortDescriptor.alloc().initWithKey_ascending_("value", True))
+    Cocoa.NSSortDescriptor.alloc().initWithKey_ascending_("value", True)
+)
 
-class MyDocument (CoreData.NSPersistentDocument):
+
+class MyDocument(CoreData.NSPersistentDocument):
     outlineTreeController = objc.IBOutlet()
 
     def initWithType_error_(self, tp, error):
@@ -17,10 +19,14 @@ class MyDocument (CoreData.NSPersistentDocument):
         managedObjectContext = self.managedObjectContext()
 
         for aPriorityValue in range(5):
-            aPriority = CoreData.NSEntityDescription.insertNewObjectForEntityForName_inManagedObjectContext_("Priority", managedObjectContext)
-            aPriority.setValue_forKey_(aPriorityValue+1, "value")
+            aPriority = CoreData.NSEntityDescription.insertNewObjectForEntityForName_inManagedObjectContext_(
+                "Priority", managedObjectContext
+            )
+            aPriority.setValue_forKey_(aPriorityValue + 1, "value")
 
-        CoreData.NSEntityDescription.insertNewObjectForEntityForName_inManagedObjectContext_("Note", managedObjectContext)
+        CoreData.NSEntityDescription.insertNewObjectForEntityForName_inManagedObjectContext_(
+            "Note", managedObjectContext
+        )
 
         managedObjectContext.processPendingChanges()
         managedObjectContext.undoManager().removeAllActions()
@@ -28,10 +34,8 @@ class MyDocument (CoreData.NSPersistentDocument):
 
         return (self, None)
 
-
     def windowNibName(self):
         return "MyDocument"
-
 
     def prioritySortDescriptions(self):
         return prioritySortDescriptions
@@ -54,9 +58,11 @@ class MyDocument (CoreData.NSPersistentDocument):
         if parentNote is None:
             children = self.outlineTreeController.content()
         else:
-            children  = parentNote.valueForKeyPath_("children").allObjects()
+            children = parentNote.valueForKeyPath_("children").allObjects()
 
-        children = children.sortedArrayUsingDescriptors_(self.outlineTreeController.sortDescriptors())
+        children = children.sortedArrayUsingDescriptors_(
+            self.outlineTreeController.sortDescriptors()
+        )
 
         index = selectionPath.indexAtPosition_(selectionPath.length() - 1)
         if index == 0:
@@ -69,7 +75,12 @@ class MyDocument (CoreData.NSPersistentDocument):
         selection = self.outlineTreeController.selection()
         parent = selection.valueForKeyPath_("parent")
 
-        if parent in (None, Cocoa.NSMultipleValuesMarker, Cocoa.NSNoSelectionMarker, Cocoa.NSNotApplicableMarker):
+        if parent in (
+            None,
+            Cocoa.NSMultipleValuesMarker,
+            Cocoa.NSNoSelectionMarker,
+            Cocoa.NSNotApplicableMarker,
+        ):
             Cocoa.NSBeep()
             return
 

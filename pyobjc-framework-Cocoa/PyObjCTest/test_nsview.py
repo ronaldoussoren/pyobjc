@@ -4,39 +4,43 @@ from AppKit import *
 import objc
 
 
-class TestNSViewHelper (NSObject):
-    def view_stringForToolTip_point_userData_(self, a, b, c, d): return 1
+class TestNSViewHelper(NSObject):
+    def view_stringForToolTip_point_userData_(self, a, b, c, d):
+        return 1
 
-    def layer_shouldInheritContentsScale_fromWindow_(self, l, s, w): return 1
+    def layer_shouldInheritContentsScale_fromWindow_(self, l, s, w):
+        return 1
 
-class ObjCTestNSView_KnowPageRange (NSView):
+
+class ObjCTestNSView_KnowPageRange(NSView):
     def knowsPageRange_(self, range):
-        return  objc.YES, (1, 10)
+        return objc.YES, (1, 10)
 
     def rectForPage_(self, page):
-        return ((1,1),(2,2))
+        return ((1, 1), (2, 2))
 
-class TestNSView (TestCase):
 
+class TestNSView(TestCase):
     def test_knowsPageRange(self):
         method = ObjCTestNSView_KnowPageRange.knowsPageRange_
-        self.assertEqual(method.__metadata__()['arguments'][2]['type'], b'o^' + NSRange.__typestr__)
+        self.assertEqual(
+            method.__metadata__()["arguments"][2]["type"], b"o^" + NSRange.__typestr__
+        )
 
     def test_rectForPage(self):
         method = ObjCTestNSView_KnowPageRange.rectForPage_
 
-
         self.assertResultHasType(method, NSRect.__typestr__)
-        #self.assertEqual(objc.splitSignature(method.signature), objc.splitSignature(NSRect.__typestr__+b"@:" + objc._C_NSInteger))
+        # self.assertEqual(objc.splitSignature(method.signature), objc.splitSignature(NSRect.__typestr__+b"@:" + objc._C_NSInteger))
 
 
-class TestHeader (TestCase):
+class TestHeader(TestCase):
     def testConstants(self):
-        self.assertEqual(NSViewNotSizable,  0)
-        self.assertEqual(NSViewMinXMargin,  1)
-        self.assertEqual(NSViewWidthSizable,  2)
-        self.assertEqual(NSViewMaxXMargin,  4)
-        self.assertEqual(NSViewMinYMargin,  8)
+        self.assertEqual(NSViewNotSizable, 0)
+        self.assertEqual(NSViewMinXMargin, 1)
+        self.assertEqual(NSViewWidthSizable, 2)
+        self.assertEqual(NSViewMaxXMargin, 4)
+        self.assertEqual(NSViewMinYMargin, 8)
         self.assertEqual(NSViewHeightSizable, 16)
         self.assertEqual(NSViewMaxYMargin, 32)
 
@@ -57,7 +61,7 @@ class TestHeader (TestCase):
         self.assertIsInstance(NSFullScreenModeWindowLevel, unicode)
         self.assertIsInstance(NSViewDidUpdateTrackingAreasNotification, unicode)
 
-    @min_os_level('10.6')
+    @min_os_level("10.6")
     def testConstants10_6(self):
         self.assertIsInstance(NSFullScreenModeApplicationPresentationOptions, unicode)
 
@@ -83,7 +87,7 @@ class TestHeader (TestCase):
         self.assertIsInstance(NSDefinitionPresentationTypeOverlay, unicode)
         self.assertIsInstance(NSDefinitionPresentationTypeDictionaryApplication, unicode)
 
-    @min_os_level('10.9')
+    @min_os_level("10.9")
     def testConstants10_9(self):
         self.assertEqual(NSViewLayerContentsRedrawCrossfade, 4)
 
@@ -95,8 +99,10 @@ class TestHeader (TestCase):
         self.assertResultIsBOOL(NSView.needsToDrawRect_)
         self.assertResultIsBOOL(NSView.wantsDefaultClipping)
 
-        self.assertArgIsFunction(NSView.sortSubviewsUsingFunction_context_, 0, b'i@@@', False)
-        self.assertArgHasType(NSView.sortSubviewsUsingFunction_context_, 1, b'@')
+        self.assertArgIsFunction(
+            NSView.sortSubviewsUsingFunction_context_, 0, b"i@@@", False
+        )
+        self.assertArgHasType(NSView.sortSubviewsUsingFunction_context_, 1, b"@")
 
         self.assertResultIsBOOL(NSView.postsFrameChangedNotifications)
         self.assertArgIsBOOL(NSView.setPostsFrameChangedNotifications_, 0)
@@ -119,7 +125,9 @@ class TestHeader (TestCase):
         self.assertResultIsBOOL(NSView.shouldDelayWindowOrderingForEvent_)
         self.assertResultIsBOOL(NSView.needsPanelToBecomeKey)
         self.assertResultIsBOOL(NSView.mouseDownCanMoveWindow)
-        self.assertArgHasType(NSView.addTrackingRect_owner_userData_assumeInside_, 2, b'^v')
+        self.assertArgHasType(
+            NSView.addTrackingRect_owner_userData_assumeInside_, 2, b"^v"
+        )
         self.assertArgIsBOOL(NSView.addTrackingRect_owner_userData_assumeInside_, 3)
         self.assertResultIsBOOL(NSView.shouldDrawColor)
         self.assertResultIsBOOL(NSView.postsBoundsChangedNotifications)
@@ -127,9 +135,11 @@ class TestHeader (TestCase):
         self.assertResultIsBOOL(NSView.inLiveResize)
         self.assertResultIsBOOL(NSView.preservesContentDuringLiveResize)
 
-        self.assertArgHasType(NSView.getRectsExposedDuringLiveResize_count_, 0, b'o^' + NSRect.__typestr__)
-        m = NSView.getRectsExposedDuringLiveResize_count_.__metadata__()['arguments'][2]
-        self.assertEqual(m['c_array_of_fixed_length'], 4)
+        self.assertArgHasType(
+            NSView.getRectsExposedDuringLiveResize_count_, 0, b"o^" + NSRect.__typestr__
+        )
+        m = NSView.getRectsExposedDuringLiveResize_count_.__metadata__()["arguments"][2]
+        self.assertEqual(m["c_array_of_fixed_length"], 4)
         self.assertArgIsOut(NSView.getRectsExposedDuringLiveResize_count_, 1)
 
         self.assertResultIsBOOL(NSView.performMnemonic_)
@@ -138,20 +148,26 @@ class TestHeader (TestCase):
         self.assertArgIsOut(NSView.adjustPageWidthNew_left_right_limit_, 0)
         self.assertArgIsOut(NSView.adjustPageHeightNew_top_bottom_limit_, 0)
 
-        self.assertArgIsBOOL(NSView.dragImage_at_offset_event_pasteboard_source_slideBack_, 6)
+        self.assertArgIsBOOL(
+            NSView.dragImage_at_offset_event_pasteboard_source_slideBack_, 6
+        )
         self.assertResultIsBOOL(NSView.dragFile_fromRect_slideBack_event_)
         self.assertArgIsBOOL(NSView.dragFile_fromRect_slideBack_event_, 2)
-        self.assertResultIsBOOL(NSView.dragPromisedFilesOfTypes_fromRect_source_slideBack_event_)
-        self.assertArgIsBOOL(NSView.dragPromisedFilesOfTypes_fromRect_source_slideBack_event_, 3)
+        self.assertResultIsBOOL(
+            NSView.dragPromisedFilesOfTypes_fromRect_source_slideBack_event_
+        )
+        self.assertArgIsBOOL(
+            NSView.dragPromisedFilesOfTypes_fromRect_source_slideBack_event_, 3
+        )
 
-    @min_os_level('10.5')
+    @min_os_level("10.5")
     def testMethods10_5(self):
         self.assertArgIsBOOL(NSView.setWantsLayer_, 0)
         self.assertResultIsBOOL(NSView.wantsLayer)
         self.assertResultIsBOOL(NSView.enterFullScreenMode_withOptions_)
         self.assertResultIsBOOL(NSView.isInFullScreenMode)
 
-    @min_os_level('10.6')
+    @min_os_level("10.6")
     def testMethods10_6(self):
         self.assertResultIsBOOL(NSView.canDrawConcurrently)
         self.assertArgIsBOOL(NSView.setCanDrawConcurrently_, 0)
@@ -160,13 +176,22 @@ class TestHeader (TestCase):
         self.assertResultIsBOOL(NSView.wantsRestingTouches)
         self.assertArgIsBOOL(NSView.setWantsRestingTouches_, 0)
 
-        self.assertArgHasType(NSView.showDefinitionForAttributedString_atPoint_, 1, NSPoint.__typestr__)
+        self.assertArgHasType(
+            NSView.showDefinitionForAttributedString_atPoint_, 1, NSPoint.__typestr__
+        )
 
-        self.assertArgHasType(NSView.showDefinitionForAttributedString_range_options_baselineOriginProvider_, 1, NSRange.__typestr__)
-        self.assertArgIsBlock(NSView.showDefinitionForAttributedString_range_options_baselineOriginProvider_, 3,
-                NSPoint.__typestr__ + NSRange.__typestr__)
+        self.assertArgHasType(
+            NSView.showDefinitionForAttributedString_range_options_baselineOriginProvider_,
+            1,
+            NSRange.__typestr__,
+        )
+        self.assertArgIsBlock(
+            NSView.showDefinitionForAttributedString_range_options_baselineOriginProvider_,
+            3,
+            NSPoint.__typestr__ + NSRange.__typestr__,
+        )
 
-    @min_os_level('10.7')
+    @min_os_level("10.7")
     def testMethods10_7(self):
         self.assertResultIsBOOL(NSView.isDrawingFindIndicator)
 
@@ -177,14 +202,15 @@ class TestHeader (TestCase):
         else:
             self.assertResultIsBOOL(NSView.layer_shouldInheritContentsScale_fromWindow_)
 
+        self.assertResultIsBOOL(
+            TestNSViewHelper.layer_shouldInheritContentsScale_fromWindow_
+        )
 
-        self.assertResultIsBOOL(TestNSViewHelper.layer_shouldInheritContentsScale_fromWindow_)
-
-    @min_os_level('10.8')
+    @min_os_level("10.8")
     def testMethods10_8(self):
         self.assertResultIsBOOL(NSView.wantsUpdateLayer)
 
-    @min_os_level('10.9')
+    @min_os_level("10.9")
     def testMethods10_9(self):
         self.assertResultIsBOOL(NSView.canDrawSubviewsIntoLayer)
         self.assertArgIsBOOL(NSView.setCanDrawSubviewsIntoLayer_, 0)
@@ -192,24 +218,27 @@ class TestHeader (TestCase):
         self.assertArgIsBOOL(NSView.setLayerUsesCoreImageFilters_, 0)
         self.assertResultIsBOOL(NSView.isCompatibleWithResponsiveScrolling)
 
-    @min_os_level('10.10')
+    @min_os_level("10.10")
     def testMethods10_10(self):
         self.assertResultIsBOOL(NSView.allowsVibrancy)
 
-    @min_os_level('10.11')
+    @min_os_level("10.11")
     def testMethods10_11(self):
         self.assertResultIsBOOL(NSView.wantsExtendedDynamicRangeOpenGLSurface)
         self.assertArgIsBOOL(NSView.setWantsExtendedDynamicRangeOpenGLSurface_, 0)
 
     def testProtocol(self):
-        self.assertArgHasType(TestNSViewHelper.view_stringForToolTip_point_userData_, 2, NSPoint.__typestr__)
-        self.assertArgHasType(TestNSViewHelper.view_stringForToolTip_point_userData_, 3, b'^v')
+        self.assertArgHasType(
+            TestNSViewHelper.view_stringForToolTip_point_userData_, 2, NSPoint.__typestr__
+        )
+        self.assertArgHasType(
+            TestNSViewHelper.view_stringForToolTip_point_userData_, 3, b"^v"
+        )
 
-    @min_sdk_level('10.14')
+    @min_sdk_level("10.14")
     def testProtocolObjects(self):
-        objc.protocolNamed('NSViewLayerContentScaleDelegate')
-        objc.protocolNamed('NSViewToolTipOwner')
-
+        objc.protocolNamed("NSViewLayerContentScaleDelegate")
+        objc.protocolNamed("NSViewToolTipOwner")
 
     def testMissingTests(self):
         v = NSView.alloc().init()
@@ -221,11 +250,6 @@ class TestHeader (TestCase):
         self.assertIsInstance(r[1], (int, long))
         if r[1] != 0:
             self.assertIsInstance(r[0][0], NSRect)
-
-
-
-
-
 
 
 if __name__ == "__main__":

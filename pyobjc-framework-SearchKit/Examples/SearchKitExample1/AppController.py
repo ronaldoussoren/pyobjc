@@ -3,7 +3,8 @@ import SearchKit
 import objc
 import os
 
-class AppController (Cocoa.NSObject):
+
+class AppController(Cocoa.NSObject):
 
     myWindow = objc.IBOutlet()
 
@@ -21,7 +22,6 @@ class AppController (Cocoa.NSObject):
     directoryToIndex = objc.ivar()
     myIndex = objc.ivar()
 
-
     def awakeFromNib(self):
         # set our default directory to index to be our home directory
         self.directoryToIndex = Cocoa.NSHomeDirectory()
@@ -35,7 +35,6 @@ class AppController (Cocoa.NSObject):
         # the alternative (False) would be to get a search initiated
         # with every keystroke - which may be what is desired in a
         # prefix style search (like iTunes).
-
 
     @objc.IBAction
     def chooseDirectory_(self, sender):
@@ -78,7 +77,7 @@ class AppController (Cocoa.NSObject):
         # We could also do this all in procedural C with the native
         # CoreFoundation components, but I find this is significantly easier
         # - both to write and  to understand.
-        analysisDict[SearchKit.kSKLanguageTypes] = u"en"
+        analysisDict[SearchKit.kSKLanguageTypes] = "en"
         # another example of setting an attribute, in this case the minimum term
         # length
         analysisDict[SearchKit.kSKMinTermLength] = 2
@@ -96,15 +95,16 @@ class AppController (Cocoa.NSObject):
 
         # the function to create the on-disk index
         self.myIndex = SearchKit.SKIndexCreateWithURL(
-                                        # the file:# URL of where to place the
-                                        # index file
-                                        fileUrlToIndex,
-                                        # a name for the index (this may be None)
-                                        indexName,
-                                        # the type of index
-                                        SearchKit.kSKIndexInverted,
-                                        # and our index attributes dictionary
-                                        analysisDict)
+            # the file:# URL of where to place the
+            # index file
+            fileUrlToIndex,
+            # a name for the index (this may be None)
+            indexName,
+            # the type of index
+            SearchKit.kSKIndexInverted,
+            # and our index attributes dictionary
+            analysisDict,
+        )
         # note that the above function call will silently fail if you give it a
         # directory and not a file... or if the index file already exists
 
@@ -138,7 +138,8 @@ class AppController (Cocoa.NSObject):
 
             # create the URL with the filename
             fileURL = Cocoa.NSURL.fileURLWithPath_(
-                    os.path.join(self.directoryToIndex, aFile))
+                os.path.join(self.directoryToIndex, aFile)
+            )
 
             # invoke a helper method to add this file into our index
             self.addDocumentToIndex_(fileURL)
@@ -170,7 +171,7 @@ class AppController (Cocoa.NSObject):
         # Since this is just an example, I am going to be lazy and just report
         # the results of our search into a text field. I'm creating an
         # NSMutableString to build up what will appear there.
-        textOfResults = ''
+        textOfResults = ""
 
         searchQuery = sender.stringValue()
         textOfResults += "Searching for:"
@@ -187,7 +188,9 @@ class AppController (Cocoa.NSObject):
 
         # now that we have a searchgroup, we can request a result set
         # from it with our search terms.
-        searchResults = SearchKit.SKSearchCreate(self.myIndex, searchQuery, SearchKit.kSKSearchRanked)
+        searchResults = SearchKit.SKSearchCreate(
+            self.myIndex, searchQuery, SearchKit.kSKSearchRanked
+        )
 
         if searchResults is None:
             msg = "Search function failed"
@@ -198,17 +201,18 @@ class AppController (Cocoa.NSObject):
         # now to go through the results, we can create an array for each
         # SearchKit document and another for the scores, and then populate
         # them from the SearchResults
-        busy, outDocumentIDsArray, scoresArray, resultCount=  SearchKit.SKSearchFindMatches(searchResults, # the search result set
-                                          10,
-                                          None,      # an array of SKDocumentID
-                                          None,      # an array of scores
-                                          1.0,       # max 1 sec
-                                          None       # outFoundcount
-                                          )
+        busy, outDocumentIDsArray, scoresArray, resultCount = SearchKit.SKSearchFindMatches(
+            searchResults,  # the search result set
+            10,
+            None,  # an array of SKDocumentID
+            None,  # an array of scores
+            1.0,  # max 1 sec
+            None,  # outFoundcount
+        )
         if busy:
-            textOfResults += "%d Results Found (still busy)\n"%(resultCount,)
+            textOfResults += "%d Results Found (still busy)\n" % (resultCount,)
         else:
-            textOfResults += "%d Results Found\n"%(resultCount,)
+            textOfResults += "%d Results Found\n" % (resultCount,)
 
         assert resultCount == len(scoresArray)
 
@@ -220,7 +224,7 @@ class AppController (Cocoa.NSObject):
 
             documentName = SearchKit.SKDocumentGetName(hit)
 
-            textOfResults += "Score: %f ==> %s\n"%(score, documentName)
+            textOfResults += "Score: %f ==> %s\n" % (score, documentName)
 
         self.searchResultsTextView.setString_(textOfResults)
 
@@ -229,8 +233,7 @@ class AppController (Cocoa.NSObject):
         # memory exception because we never initialized our SearchKit index
         # properly
         if self.myIndex is None:
-            Cocoa.NSLog("myIndex is None - not processing %@",
-                    fileURL)
+            Cocoa.NSLog("myIndex is None - not processing %@", fileURL)
             return
 
         Cocoa.NSLog("Processing %@", fileURL.absoluteString())
@@ -240,18 +243,19 @@ class AppController (Cocoa.NSObject):
 
         # if you wanted to watch them process in, just uncomment the following
         # 2 lines.
-        #NSLog("Name: %@", SearchKit.SKDocumentGetName(aDocument))
-        #NSLog("Scheme: %@", SearchKit.SKDocumentGetSchemeName(aDocument))
+        # NSLog("Name: %@", SearchKit.SKDocumentGetName(aDocument))
+        # NSLog("Scheme: %@", SearchKit.SKDocumentGetSchemeName(aDocument))
 
         # add the document to the index
-        if not SearchKit.SKIndexAddDocument(self.myIndex, # a reference ot the index added to
-                                 aDocument, # the document we want to add
-                                 None, # this could be a mime type hint in the form
-                                      # of a CFStringRef
-                                  1):   # a boolean value indicating the document
-                                      # can be overwritten
+        if not SearchKit.SKIndexAddDocument(
+            self.myIndex,  # a reference ot the index added to
+            aDocument,  # the document we want to add
+            None,  # this could be a mime type hint in the form
+            # of a CFStringRef
+            1,
+        ):  # a boolean value indicating the document
+            # can be overwritten
             Cocoa.NSLog("There was a problem adding %@", fileURL)
-
 
     def displayIndexInformation(self):
         if self.myIndex is not None:
@@ -266,5 +270,5 @@ class AppController (Cocoa.NSObject):
             self.numberOfTermsTextField.setIntValue_(maxTerm)
 
         else:
-            self.numberOfDocumentsTextField.setStringValue_('N/A')
-            self.numberOfTermsTextField.setStringValue_('N/A')
+            self.numberOfDocumentsTextField.setStringValue_("N/A")
+            self.numberOfTermsTextField.setStringValue_("N/A")

@@ -6,9 +6,15 @@ by this application.  Exposes read-only collections
 import objc
 from Cocoa import NSValueTransformer, NSString, NSObject, NSDate, NSNotificationCenter
 from CalendarStore import CalCalendarStore, CalCalendarsChangedExternallyNotification
-from CalendarStore import CalCalendarsChangedNotification, CalEventsChangedExternallyNotification
+from CalendarStore import (
+    CalCalendarsChangedNotification,
+    CalEventsChangedExternallyNotification,
+)
 from CalendarStore import CalEventsChangedNotification, CalPriorityHigh, CalPriorityMedium
-from CalendarStore import CalTasksChangedExternallyNotification, CalTasksChangedNotification
+from CalendarStore import (
+    CalTasksChangedExternallyNotification,
+    CalTasksChangedNotification,
+)
 
 highPriority = "High"
 normPriority = "Normal"
@@ -16,13 +22,13 @@ lowPriority = "Low"
 nonePriority = "None"
 
 # Transformer class for CalPriority->String conversion
-class CalPriorityToStringTransformer (NSValueTransformer):
-    '''
+class CalPriorityToStringTransformer(NSValueTransformer):
+    """
     The CalPriorityToStringTransformer class allows easy conversion between
     CalPriority values (0-9) and human-readable priority strings (High,
     Normal, Low, None). This allows us to populate the priority dropdown
     using bindings
-    '''
+    """
 
     @classmethod
     def transformedValueClass(cls):
@@ -45,7 +51,8 @@ class CalPriorityToStringTransformer (NSValueTransformer):
 
         return lowPriority
 
-class CalController (NSObject):
+
+class CalController(NSObject):
     def awakeFromNib(self):
         # Register a transformer object for easy generation of
         # human-readable priority strings
@@ -54,34 +61,34 @@ class CalController (NSObject):
 
         prioTransformer = CalPriorityToStringTransformer.alloc().init()
         NSValueTransformer.setValueTransformer_forName_(
-                prioTransformer, "CalPriorityToStringTransformer")
+            prioTransformer, "CalPriorityToStringTransformer"
+        )
 
         # Register for notifications on calendars, events and tasks so we can
         # update the GUI to reflect any changes beneath us
         NSNotificationCenter.defaultCenter().addObserver_selector_name_object_(
-                self, 'calendarsChanged:',
-                CalCalendarsChangedExternallyNotification, None)
+            self, "calendarsChanged:", CalCalendarsChangedExternallyNotification, None
+        )
 
         NSNotificationCenter.defaultCenter().addObserver_selector_name_object_(
-                self, 'calendarsChanged:',
-                CalCalendarsChangedNotification, None)
+            self, "calendarsChanged:", CalCalendarsChangedNotification, None
+        )
 
         NSNotificationCenter.defaultCenter().addObserver_selector_name_object_(
-                self, 'eventsChanged:',
-                CalEventsChangedExternallyNotification, None)
+            self, "eventsChanged:", CalEventsChangedExternallyNotification, None
+        )
 
         NSNotificationCenter.defaultCenter().addObserver_selector_name_object_(
-                self, 'eventsChanged:',
-                CalEventsChangedNotification, None)
+            self, "eventsChanged:", CalEventsChangedNotification, None
+        )
 
         NSNotificationCenter.defaultCenter().addObserver_selector_name_object_(
-                self, 'tasksChanged:',
-                CalTasksChangedExternallyNotification, None)
+            self, "tasksChanged:", CalTasksChangedExternallyNotification, None
+        )
 
         NSNotificationCenter.defaultCenter().addObserver_selector_name_object_(
-                self, 'tasksChanged:',
-                CalTasksChangedNotification, None)
-
+            self, "tasksChanged:", CalTasksChangedNotification, None
+        )
 
     # Set up the read-only calendars/events/tasks arrays from Calendar Store
     # as observable keys for Cocoa Bindings
@@ -94,16 +101,16 @@ class CalController (NSObject):
         store = CalCalendarStore.defaultCalendarStore()
         # Pull all events starting now from all calendars in the CalendarStore
         allEventsPredicate = CalCalendarStore.eventPredicateWithStartDate_endDate_calendars_(
-                NSDate.date(), NSDate.distantFuture(), store.calendars())
+            NSDate.date(), NSDate.distantFuture(), store.calendars()
+        )
         return store.eventsWithPredicate_(allEventsPredicate)
 
     def tasks(self):
         store = CalCalendarStore.defaultCalendarStore()
         # Pull all uncompleted tasks from all calendars in the CalendarStore
         return store.tasksWithPredicate_(
-                CalCalendarStore.taskPredicateWithUncompletedTasks_(
-                    store.calendars()))
-
+            CalCalendarStore.taskPredicateWithUncompletedTasks_(store.calendars())
+        )
 
     # With the observable keys set up above and the appropriate bindings in IB,
     # we can trigger UI updates just by signaling changes to the keys

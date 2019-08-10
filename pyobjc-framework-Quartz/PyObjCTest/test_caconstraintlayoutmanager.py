@@ -1,9 +1,9 @@
-
 from PyObjCTools.TestSupport import *
 from Quartz.QuartzCore import *
 
-class TestCAConstraintLayoutManager (TestCase):
-    @min_os_level('10.5')
+
+class TestCAConstraintLayoutManager(TestCase):
+    @min_os_level("10.5")
     def testConstants(self):
         self.assertEqual(kCAConstraintMinX, 0)
         self.assertEqual(kCAConstraintMidX, 1)
@@ -13,6 +13,7 @@ class TestCAConstraintLayoutManager (TestCase):
         self.assertEqual(kCAConstraintMidY, 5)
         self.assertEqual(kCAConstraintMaxY, 6)
         self.assertEqual(kCAConstraintHeight, 7)
+
 
 if __name__ == "__main__":
     main()

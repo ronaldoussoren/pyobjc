@@ -1,8 +1,8 @@
-
 from PyObjCTools.TestSupport import *
 from Quartz.QuartzCore import *
 
-class TestCIFilter (TestCase):
+
+class TestCIFilter(TestCase):
     def testConstants(self):
         self.assertIsInstance(kCIAttributeFilterName, unicode)
         self.assertIsInstance(kCIAttributeFilterDisplayName, unicode)
@@ -52,8 +52,7 @@ class TestCIFilter (TestCase):
         self.assertIsInstance(kCIApplyOptionUserInfo, unicode)
         self.assertIsInstance(kCIApplyOptionColorSpace, unicode)
 
-
-    @min_os_level('10.5')
+    @min_os_level("10.5")
     def testConstants10_5(self):
         self.assertIsInstance(kCICategoryReduction, unicode)
         self.assertIsInstance(kCIAttributeDescription, unicode)
@@ -91,7 +90,7 @@ class TestCIFilter (TestCase):
         self.assertIsInstance(kCIInputTargetImageKey, unicode)
         self.assertIsInstance(kCIInputExtentKey, unicode)
 
-    @min_os_level('10.11')
+    @min_os_level("10.11")
     def testConstants10_11(self):
         self.assertIsInstance(kCIAttributeFilterAvailable_Mac, unicode)
         self.assertIsInstance(kCIAttributeFilterAvailable_iOS, unicode)
@@ -101,12 +100,12 @@ class TestCIFilter (TestCase):
         self.assertIsInstance(kCIInputVersionKey, unicode)
         self.assertIsInstance(kCIInputWeightsKey, unicode)
 
-    @min_os_level('10.13')
+    @min_os_level("10.13")
     def testConstants10_13(self):
         self.assertIsInstance(kCIInputDepthImageKey, unicode)
         self.assertIsInstance(kCIInputDisparityImageKey, unicode)
 
-    @min_os_level('10.14')
+    @min_os_level("10.14")
     def testConstants10_14(self):
         self.assertIsInstance(kCIInputAmountKey, unicode)
         self.assertIsInstance(kCIInputMatteImageKey, unicode)
@@ -115,18 +114,21 @@ class TestCIFilter (TestCase):
         self.assertIsNullTerminated(CIFilter.apply_)
         self.assertIsNullTerminated(CIFilter.filterWithName_keysAndValues_)
 
-    @min_os_level('10.5')
+    @min_os_level("10.5")
     def testMethods10_5(self):
         self.assertResultIsBOOL(CIFilter.isEnabled)
         self.assertArgIsBOOL(CIFilter.setEnabled_, 0)
 
-    @min_os_level('10.9')
+    @min_os_level("10.9")
     def testMethods10_9(self):
-        self.assertArgIsOut(CIFilter.filterArrayFromSerializedXMP_inputImageExtent_error_, 2)
+        self.assertArgIsOut(
+            CIFilter.filterArrayFromSerializedXMP_inputImageExtent_error_, 2
+        )
 
-    @min_sdk_level('10.15')
+    @min_sdk_level("10.15")
     def test_protocols(self):
-        objc.protocolNamed('CIFilter')
+        objc.protocolNamed("CIFilter")
+
 
 if __name__ == "__main__":
     main()

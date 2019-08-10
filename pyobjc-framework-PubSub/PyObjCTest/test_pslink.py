@@ -1,8 +1,8 @@
-
 from PyObjCTools.TestSupport import *
 from PubSub import *
 
-class TestPSLink (TestCase):
+
+class TestPSLink(TestCase):
     def testConstants(self):
         self.assertEqual(PSLinkToOther, 0)
         self.assertEqual(PSLinkToRSS, 1)

@@ -2,7 +2,8 @@ from PyObjCTools.TestSupport import *
 
 import CoreMedia
 
-class TestCMAttachment (TestCase):
+
+class TestCMAttachment(TestCase):
     def test_constants(self):
         self.assertEqual(CoreMedia.kCMAttachmentMode_ShouldNotPropagate, 0)
         self.assertEqual(CoreMedia.kCMAttachmentMode_ShouldPropagate, 1)
@@ -10,7 +11,6 @@ class TestCMAttachment (TestCase):
     def test_functions(self):
         self.assertArgHasType(CoreMedia.CMSetAttachment, 0, objc._C_ID)
         self.assertArgHasType(CoreMedia.CMSetAttachment, 2, objc._C_ID)
-
 
         self.assertResultHasType(CoreMedia.CMGetAttachment, objc._C_ID)
         self.assertArgHasType(CoreMedia.CMGetAttachment, 0, objc._C_ID)

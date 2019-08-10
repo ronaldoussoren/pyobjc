@@ -5,11 +5,10 @@ from Foundation import NSDictionary, NSString, NSMutableDictionary
 import sys
 
 
-
-class TestTimeZone (TestCase):
+class TestTimeZone(TestCase):
     def testTypes(self):
         try:
-            if objc.lookUpClass('NSTimeZone') is CFTimeZoneRef:
+            if objc.lookUpClass("NSTimeZone") is CFTimeZoneRef:
                 return
         except objc.error:
             pass
@@ -27,7 +26,7 @@ class TestTimeZone (TestCase):
 
     def testResetSystem(self):
         v = CFTimeZoneResetSystem()
-        self.assertIs(v, None )
+        self.assertIs(v, None)
 
     def testCopyDefault(self):
         zone = CFTimeZoneCopyDefault()
@@ -37,7 +36,7 @@ class TestTimeZone (TestCase):
         self.assertResultIsCFRetained(CFTimeZoneCopyKnownNames)
         array = CFTimeZoneCopyKnownNames()
         self.assertIsInstance(array, CFArrayRef)
-        self.assertNotEqual(len(array) , 0 )
+        self.assertNotEqual(len(array), 0)
         for nm in array:
             self.assertIsInstance(nm, unicode)
 
@@ -48,30 +47,32 @@ class TestTimeZone (TestCase):
             self.assertIsInstance(key, unicode)
             self.assertIsInstance(value, unicode)
 
-    @min_os_level('10.6')
+    @min_os_level("10.6")
     def testAbbrievationDictSetting(self):
         # Setting the dictionary is technically also possible
         # on 10.5, but the code below causes a crash, even when
         # rewritten als plan Objective-C.
         map = CFTimeZoneCopyAbbreviationDictionary()
         newmap = map.mutableCopy()
-        newmap[b'AAA'.decode('ascii')] = b'Europe/Amsterdam'.decode('ascii')
+        newmap[b"AAA".decode("ascii")] = b"Europe/Amsterdam".decode("ascii")
 
         v = CFTimeZoneSetAbbreviationDictionary(newmap)
         self.assertIs(v, None)
         try:
             map2 = CFTimeZoneCopyAbbreviationDictionary()
             self.assertIsInstance(map2, CFDictionaryRef)
-            self.assertEqual(map2[b'AAA'.decode('ascii')] , b'Europe/Amsterdam'.decode('ascii') )
+            self.assertEqual(
+                map2[b"AAA".decode("ascii")], b"Europe/Amsterdam".decode("ascii")
+            )
         finally:
             CFTimeZoneSetAbbreviationDictionary(map)
 
     def testZoneObject(self):
-        with open('/usr/share/zoneinfo/posixrules', 'rb') as fp:
+        with open("/usr/share/zoneinfo/posixrules", "rb") as fp:
             data = fp.read()
         if sys.version_info[0] == 2:
             data = buffer(data)
-        zone = CFTimeZoneCreate(None, b"Europe/Amsterdam".decode('ascii'), data)
+        zone = CFTimeZoneCreate(None, b"Europe/Amsterdam".decode("ascii"), data)
         self.assertIsInstance(zone, CFTimeZoneRef)
         self.assertResultIsCFRetained(CFTimeZoneCreateWithTimeIntervalFromGMT)
         zone = CFTimeZoneCreateWithTimeIntervalFromGMT(None, 3600)
@@ -82,49 +83,38 @@ class TestTimeZone (TestCase):
         zone = CFTimeZoneCreateWithName(None, "Europe/Amsterdam", True)
         self.assertIsInstance(zone, CFTimeZoneRef)
         name = CFTimeZoneGetName(zone)
-        self.assertEqual(name, b"Europe/Amsterdam".decode('ascii'))
+        self.assertEqual(name, b"Europe/Amsterdam".decode("ascii"))
 
         data = CFTimeZoneGetData(zone)
         self.assertIsInstance(data, CFDataRef)
         abbrev = CFTimeZoneCopyAbbreviation(zone, time.time())
         self.assertIsInstance(abbrev, unicode)
-        dt = CFGregorianDate(
-                year = 2008,
-                month = 7,
-                day = 1,
-                hour = 12,
-                minute = 0,
-                second = 0)
+        dt = CFGregorianDate(year=2008, month=7, day=1, hour=12, minute=0, second=0)
 
-        r = CFTimeZoneIsDaylightSavingTime(zone,
-                CFGregorianDateGetAbsoluteTime(dt, zone))
+        r = CFTimeZoneIsDaylightSavingTime(zone, CFGregorianDateGetAbsoluteTime(dt, zone))
         self.assertIs(r, True)
-        dt = CFGregorianDate(
-                year = 2008,
-                month = 11,
-                day = 1,
-                hour = 12,
-                minute = 0,
-                second = 0)
+        dt = CFGregorianDate(year=2008, month=11, day=1, hour=12, minute=0, second=0)
 
-        r = CFTimeZoneIsDaylightSavingTime(zone,
-                CFGregorianDateGetAbsoluteTime(dt, zone))
+        r = CFTimeZoneIsDaylightSavingTime(zone, CFGregorianDateGetAbsoluteTime(dt, zone))
         self.assertIn(r, (False, True))
-        offset = CFTimeZoneGetDaylightSavingTimeOffset(zone,
-                CFGregorianDateGetAbsoluteTime(dt, zone))
+        offset = CFTimeZoneGetDaylightSavingTimeOffset(
+            zone, CFGregorianDateGetAbsoluteTime(dt, zone)
+        )
         self.assertIsInstance(offset, float)
         dt = CFTimeZoneGetNextDaylightSavingTimeTransition(
-                zone, CFGregorianDateGetAbsoluteTime(dt, zone))
+            zone, CFGregorianDateGetAbsoluteTime(dt, zone)
+        )
         self.assertIsInstance(dt, float)
-        nm = CFTimeZoneCopyLocalizedName(zone,
-                kCFTimeZoneNameStyleShortStandard, CFLocaleCopyCurrent())
+        nm = CFTimeZoneCopyLocalizedName(
+            zone, kCFTimeZoneNameStyleShortStandard, CFLocaleCopyCurrent()
+        )
         self.assertIsInstance(nm, unicode)
 
     def testConstants(self):
-        self.assertEqual(kCFTimeZoneNameStyleStandard , 0 )
-        self.assertEqual(kCFTimeZoneNameStyleShortStandard , 1 )
-        self.assertEqual(kCFTimeZoneNameStyleDaylightSaving , 2 )
-        self.assertEqual(kCFTimeZoneNameStyleShortDaylightSaving , 3 )
+        self.assertEqual(kCFTimeZoneNameStyleStandard, 0)
+        self.assertEqual(kCFTimeZoneNameStyleShortStandard, 1)
+        self.assertEqual(kCFTimeZoneNameStyleDaylightSaving, 2)
+        self.assertEqual(kCFTimeZoneNameStyleShortDaylightSaving, 3)
         self.assertIsInstance(kCFTimeZoneSystemTimeZoneDidChangeNotification, unicode)
         self.assertEqual(kCFTimeZoneNameStyleGeneric, 4)
         self.assertEqual(kCFTimeZoneNameStyleShortGeneric, 5)

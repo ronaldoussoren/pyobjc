@@ -1,8 +1,8 @@
-
 from PyObjCTools.TestSupport import *
 from XgridFoundation import *
 
-class TestXGController (TestCase):
+
+class TestXGController(TestCase):
     def testConstants(self):
         self.assertIsInstance(XGControllerWillDeallocNotification, unicode)
 

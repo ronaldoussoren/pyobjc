@@ -2,9 +2,12 @@ from PyObjCTools.TestSupport import *
 
 import CoreServices
 
-class TestMacLocales (TestCase):
+
+class TestMacLocales(TestCase):
     def assert_not_wrapped(self, name):
-        self.assertTrue(not hasattr(CoreServices, name), "%r exposed in bindings"%(name,))
+        self.assertTrue(
+            not hasattr(CoreServices, name), "%r exposed in bindings" % (name,)
+        )
 
     def test_constants(self):
         self.assertEqual(CoreServices.kLocaleLanguageMask, 1 << 0)
@@ -29,7 +32,7 @@ class TestMacLocales (TestCase):
         self.assertArgIsOut(CoreServices.LocaleRefFromLocaleString, 1)
 
         self.assertArgIsOut(CoreServices.LocaleRefGetPartString, 3)
-        #self.assertArgSizeInArg(CoreServices.LocaleRefGetPartString, 3, 2) #
+        # self.assertArgSizeInArg(CoreServices.LocaleRefGetPartString, 3, 2) #
         self.assertArgIsNullTerminated(CoreServices.LocaleRefGetPartString, 3)
 
         self.assertArgIsIn(CoreServices.LocaleStringToLangAndRegionCodes, 0)
@@ -37,17 +40,16 @@ class TestMacLocales (TestCase):
         self.assertArgIsOut(CoreServices.LocaleStringToLangAndRegionCodes, 1)
         self.assertArgIsOut(CoreServices.LocaleStringToLangAndRegionCodes, 2)
 
-        self.assert_not_wrapped('LocaleOperationCountLocales')
-        self.assert_not_wrapped('LocaleOperationGetLocales')
-        self.assert_not_wrapped('LocaleGetName')
-        self.assert_not_wrapped('LocaleCountNames')
-        self.assert_not_wrapped('LocaleGetIndName')
-        self.assert_not_wrapped('LocaleGetRegionLanguageName')
+        self.assert_not_wrapped("LocaleOperationCountLocales")
+        self.assert_not_wrapped("LocaleOperationGetLocales")
+        self.assert_not_wrapped("LocaleGetName")
+        self.assert_not_wrapped("LocaleCountNames")
+        self.assert_not_wrapped("LocaleGetIndName")
+        self.assert_not_wrapped("LocaleGetRegionLanguageName")
 
         self.assertArgIsOut(CoreServices.LocaleOperationGetName, 3)
         self.assertArgIsOut(CoreServices.LocaleOperationGetName, 4)
         self.assertArgSizeInArg(CoreServices.LocaleOperationGetName, 4, (2, 3))
-
 
         self.assertArgIsOut(CoreServices.LocaleOperationGetIndName, 3)
         self.assertArgIsOut(CoreServices.LocaleOperationGetIndName, 4)
@@ -57,6 +59,7 @@ class TestMacLocales (TestCase):
     @expectedFailure
     def test_functions_not_present(self):
         self.assertArgIsOut(LocaleOperationCountNames.LocaleOperationGetName, 1)
+
 
 if __name__ == "__main__":
     main()

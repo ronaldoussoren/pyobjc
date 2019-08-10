@@ -4,7 +4,7 @@ from PyObjCTools.TestSupport import *
 if sys.maxsize > 2 ** 32:
     import Logging
 
-    class TestMessageComponent (TestCase):
+    class TestMessageComponent(TestCase):
         def test_constants(self):
             self.assertEqual(Logging.OSLogMessageComponentArgumentCategoryUndefined, 0)
             self.assertEqual(Logging.OSLogMessageComponentArgumentCategoryData, 1)

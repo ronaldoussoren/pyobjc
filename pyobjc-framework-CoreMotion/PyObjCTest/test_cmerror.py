@@ -2,7 +2,8 @@ from PyObjCTools.TestSupport import *
 
 import CoreMotion
 
-class TestCMError (TestCase):
+
+class TestCMError(TestCase):
     def test_constants(self):
         self.assertEqual(CoreMotion.CMErrorNULL, 100)
         self.assertEqual(CoreMotion.CMErrorDeviceRequiresMovement, 101)
@@ -16,5 +17,3 @@ class TestCMError (TestCase):
         self.assertEqual(CoreMotion.CMErrorNotAvailable, 109)
         self.assertEqual(CoreMotion.CMErrorNotEntitled, 110)
         self.assertEqual(CoreMotion.CMErrorNotAuthorized, 111)
-
-

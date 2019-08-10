@@ -1,7 +1,8 @@
 from AppKit import *
 from PyObjCTools.TestSupport import *
 
-class TestNSWindowController (TestCase):
+
+class TestNSWindowController(TestCase):
     def testMethods(self):
         self.assertResultIsBOOL(NSWindowController.shouldCascadeWindows)
         self.assertArgIsBOOL(NSWindowController.setShouldCascadeWindows_, 0)

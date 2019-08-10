@@ -1,8 +1,8 @@
-
 from PyObjCTools.TestSupport import *
 from WebKit import *
 
-class TestDOMNode (TestCase):
+
+class TestDOMNode(TestCase):
     def testConstants(self):
         self.assertEqual(DOM_ELEMENT_NODE, 1)
         self.assertEqual(DOM_ATTRIBUTE_NODE, 2)
@@ -17,7 +17,7 @@ class TestDOMNode (TestCase):
         self.assertEqual(DOM_DOCUMENT_FRAGMENT_NODE, 11)
         self.assertEqual(DOM_NOTATION_NODE, 12)
 
-    @min_os_level('10.6')
+    @min_os_level("10.6")
     def testConstants10_6(self):
         self.assertEqual(DOM_DOCUMENT_POSITION_DISCONNECTED, 1)
         self.assertEqual(DOM_DOCUMENT_POSITION_PRECEDING, 2)
@@ -37,13 +37,14 @@ class TestDOMNode (TestCase):
 
         self.assertResultIsBOOL(DOMNode.isContentEditable)
 
-    @min_os_level('10.5')
+    @min_os_level("10.5")
     def testMethods10_5(self):
         self.assertResultIsBOOL(DOMNode.isDefaultNamespace_)
 
-    @min_os_level('10.7')
+    @min_os_level("10.7")
     def testMethods10_7(self):
         self.assertResultIsBOOL(DOMNode.contains_)
+
 
 if __name__ == "__main__":
     main()

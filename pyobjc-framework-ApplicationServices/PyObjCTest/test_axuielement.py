@@ -1,7 +1,8 @@
 import HIServices
 from PyObjCTools.TestSupport import *
 
-class TestAXUIElement (TestCase):
+
+class TestAXUIElement(TestCase):
     def testTypes(self):
         self.assertIsCFType(HIServices.AXUIElementRef)
         self.assertIsCFType(HIServices.AXObserverRef)
@@ -33,10 +34,14 @@ class TestAXUIElement (TestCase):
         self.assertArgIsCFRetained(HIServices.AXUIElementCopyMultipleAttributeValues, 3)
 
         self.assertArgIsOut(HIServices.AXUIElementCopyParameterizedAttributeNames, 1)
-        self.assertArgIsCFRetained(HIServices.AXUIElementCopyParameterizedAttributeNames, 1)
+        self.assertArgIsCFRetained(
+            HIServices.AXUIElementCopyParameterizedAttributeNames, 1
+        )
 
         self.assertArgIsOut(HIServices.AXUIElementCopyParameterizedAttributeValue, 3)
-        self.assertArgIsCFRetained(HIServices.AXUIElementCopyParameterizedAttributeValue, 3)
+        self.assertArgIsCFRetained(
+            HIServices.AXUIElementCopyParameterizedAttributeValue, 3
+        )
 
         self.assertArgIsOut(HIServices.AXUIElementCopyActionNames, 1)
         self.assertArgIsCFRetained(HIServices.AXUIElementCopyActionNames, 1)
@@ -58,8 +63,10 @@ class TestAXUIElement (TestCase):
 
         self.assertArgIsBOOL(HIServices.AXUIElementPostKeyboardEvent, 3)
 
-        AXObserverCallback = b'v^{__AXObserver=}^{__AXUIElement=}^{__CFString=}^v'
-        AXObserverCallbackWithInfo = b'v^{__AXObserver=}^{__AXUIElement=}^{__CFString=}^{__CFDictionary=}^v'
+        AXObserverCallback = b"v^{__AXObserver=}^{__AXUIElement=}^{__CFString=}^v"
+        AXObserverCallbackWithInfo = (
+            b"v^{__AXObserver=}^{__AXUIElement=}^{__CFString=}^{__CFDictionary=}^v"
+        )
 
         self.assertIsInstance(HIServices.AXObserverGetTypeID(), (int, long))
 
@@ -67,27 +74,32 @@ class TestAXUIElement (TestCase):
         self.assertArgIsOut(HIServices.AXObserverCreate, 2)
         self.assertArgIsCFRetained(HIServices.AXObserverCreate, 2)
 
-
         HIServices.AXObserverAddNotification
         HIServices.AXObserverRemoveNotification
 
         self.assertResultIsNotCFRetained(HIServices.AXObserverGetRunLoopSource)
 
-
-    @min_os_level('10.9')
+    @min_os_level("10.9")
     def testFunctions10_9(self):
-        AXObserverCallbackWithInfo = b'v^{__AXObserver=}^{__AXUIElement=}^{__CFString=}^{__CFDictionary=}^v'
+        AXObserverCallbackWithInfo = (
+            b"v^{__AXObserver=}^{__AXUIElement=}^{__CFString=}^{__CFDictionary=}^v"
+        )
 
         self.assertResultIsBOOL(HIServices.AXIsProcessTrustedWithOptions)
 
-        self.assertArgIsFunction(HIServices.AXObserverCreateWithInfoCallback, 1, AXObserverCallbackWithInfo, True)
+        self.assertArgIsFunction(
+            HIServices.AXObserverCreateWithInfoCallback,
+            1,
+            AXObserverCallbackWithInfo,
+            True,
+        )
         self.assertArgIsOut(HIServices.AXObserverCreateWithInfoCallback, 2)
         self.assertArgIsCFRetained(HIServices.AXObserverCreateWithInfoCallback, 2)
 
     def testConstants(self):
         self.assertEqual(HIServices.kAXCopyMultipleAttributeOptionStopOnError, 1)
 
-    @min_os_level('10.9')
+    @min_os_level("10.9")
     def testConstants10_9(self):
         self.assertIsInstance(HIServices.kAXTrustedCheckOptionPrompt, unicode)
 

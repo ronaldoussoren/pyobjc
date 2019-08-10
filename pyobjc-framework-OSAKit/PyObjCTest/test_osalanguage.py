@@ -2,7 +2,8 @@ from PyObjCTools.TestSupport import *
 
 import OSAKit
 
-class TestOSALanguage (TestCase):
+
+class TestOSALanguage(TestCase):
     def testConstants(self):
         self.assertEqual(OSAKit.OSASupportsCompiling, 0x0002)
         self.assertEqual(OSAKit.OSASupportsGetSource, 0x0004)
@@ -16,9 +17,10 @@ class TestOSALanguage (TestCase):
     def testClasses(self):
         OSAKit.OSALanguage
 
-    @min_os_level('10.6')
+    @min_os_level("10.6")
     def testMethods(self):
         self.assertResultIsBOOL(OSAKit.OSALanguage.isThreadSafe)
+
 
 if __name__ == "__main__":
     main()

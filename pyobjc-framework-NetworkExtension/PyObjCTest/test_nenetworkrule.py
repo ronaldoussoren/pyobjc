@@ -5,7 +5,7 @@ if sys.maxsize >= 2 ** 32:
 
     import NetworkExtension
 
-    class TestNENetworkRule (TestCase):
+    class TestNENetworkRule(TestCase):
         def test_constants(self):
             self.assertEqual(NetworkExtension.NENetworkRuleProtocolAny, 0)
             self.assertEqual(NetworkExtension.NENetworkRuleProtocolTCP, 1)

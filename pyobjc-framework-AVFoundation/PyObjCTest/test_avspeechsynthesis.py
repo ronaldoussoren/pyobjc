@@ -2,12 +2,15 @@ from PyObjCTools.TestSupport import *
 
 import AVFoundation
 
-AVSpeechSynthesizerBufferCallback = b'v@'
+AVSpeechSynthesizerBufferCallback = b"v@"
 
-class TestAVSpeechSynthesisHelper (AVFoundation.NSObject):
-    def speechSynthesizer_willSpeakRangeOfSpeechString_utterance_(self, a, b, c): pass
 
-class TestAVSpeechSynthesis (TestCase):
+class TestAVSpeechSynthesisHelper(AVFoundation.NSObject):
+    def speechSynthesizer_willSpeakRangeOfSpeechString_utterance_(self, a, b, c):
+        pass
+
+
+class TestAVSpeechSynthesis(TestCase):
     def testConstants(self):
         self.assertEqual(AVFoundation.AVSpeechBoundaryImmediate, 0)
         self.assertEqual(AVFoundation.AVSpeechBoundaryWord, 1)
@@ -19,7 +22,7 @@ class TestAVSpeechSynthesis (TestCase):
         self.assertEqual(AVFoundation.AVSpeechSynthesisVoiceGenderMale, 1)
         self.assertEqual(AVFoundation.AVSpeechSynthesisVoiceGenderFemale, 2)
 
-    @min_os_level('10.14')
+    @min_os_level("10.14")
     def testConstants10_14(self):
         self.assertIsInstance(AVFoundation.AVSpeechUtteranceMinimumSpeechRate, float)
         self.assertIsInstance(AVFoundation.AVSpeechUtteranceMaximumSpeechRate, float)
@@ -29,9 +32,13 @@ class TestAVSpeechSynthesis (TestCase):
         self.assertIsInstance(AVFoundation.AVSpeechSynthesisIPANotationAttribute, unicode)
 
     def testMethods(self):
-        self.assertArgHasType(TestAVSpeechSynthesisHelper.speechSynthesizer_willSpeakRangeOfSpeechString_utterance_, 1, AVFoundation.NSRange.__typestr__)
+        self.assertArgHasType(
+            TestAVSpeechSynthesisHelper.speechSynthesizer_willSpeakRangeOfSpeechString_utterance_,
+            1,
+            AVFoundation.NSRange.__typestr__,
+        )
 
-    @min_os_level('10.14')
+    @min_os_level("10.14")
     def testMethods10_14(self):
         self.assertResultIsBOOL(AVFoundation.AVSpeechSynthesizer.isSpeaking)
         self.assertResultIsBOOL(AVFoundation.AVSpeechSynthesizer.isPaused)
@@ -39,14 +46,19 @@ class TestAVSpeechSynthesis (TestCase):
         self.assertResultIsBOOL(AVFoundation.AVSpeechSynthesizer.pauseSpeakingAtBoundary_)
         self.assertResultIsBOOL(AVFoundation.AVSpeechSynthesizer.continueSpeaking)
 
-    @min_os_level('10.15')
+    @min_os_level("10.15")
     def testMethods10_15(self):
-        self.assertArgIsBlock(AVFoundation.AVSpeechSynthesizer.writeUtterance_toBufferCallback_, 1, AVSpeechSynthesizerBufferCallback)
+        self.assertArgIsBlock(
+            AVFoundation.AVSpeechSynthesizer.writeUtterance_toBufferCallback_,
+            1,
+            AVSpeechSynthesizerBufferCallback,
+        )
 
     @expectedFailure
-    @min_sdk_level('10.14')
+    @min_sdk_level("10.14")
     def testProtocols(self):
-        objc.protocolNamed('AVSpeechSynthesizerDelegate')
+        objc.protocolNamed("AVSpeechSynthesizerDelegate")
+
 
 if __name__ == "__main__":
     main()

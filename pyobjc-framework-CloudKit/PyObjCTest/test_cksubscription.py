@@ -4,7 +4,7 @@ if sys.maxsize > 2 ** 32:
     from PyObjCTools.TestSupport import *
     import CloudKit
 
-    class TestCKSubscription (TestCase):
+    class TestCKSubscription(TestCase):
         @min_os_level("10.10")
         def testClasses(self):
             self.assertHasAttr(CloudKit, "CKSubscription")
@@ -23,24 +23,36 @@ if sys.maxsize > 2 ** 32:
             self.assertEqual(CloudKit.CKSubscriptionOptionsFiresOnRecordDeletion, 4)
             self.assertEqual(CloudKit.CKSubscriptionOptionsFiresOnce, 8)
 
-            self.assertEqual(CloudKit.CKQuerySubscriptionOptionsFiresOnRecordCreation, 1 << 0)
-            self.assertEqual(CloudKit.CKQuerySubscriptionOptionsFiresOnRecordUpdate, 1 << 1)
-            self.assertEqual(CloudKit.CKQuerySubscriptionOptionsFiresOnRecordDeletion, 1 << 2)
+            self.assertEqual(
+                CloudKit.CKQuerySubscriptionOptionsFiresOnRecordCreation, 1 << 0
+            )
+            self.assertEqual(
+                CloudKit.CKQuerySubscriptionOptionsFiresOnRecordUpdate, 1 << 1
+            )
+            self.assertEqual(
+                CloudKit.CKQuerySubscriptionOptionsFiresOnRecordDeletion, 1 << 2
+            )
             self.assertEqual(CloudKit.CKQuerySubscriptionOptionsFiresOnce, 1 << 3)
-
 
         @min_os_level("10.10")
         def testMethods(self):
             self.assertResultIsBOOL(CloudKit.CKNotificationInfo.shouldBadge)
             self.assertArgIsBOOL(CloudKit.CKNotificationInfo.setShouldBadge_, 0)
 
-            self.assertResultIsBOOL(CloudKit.CKNotificationInfo.shouldSendContentAvailable)
-            self.assertArgIsBOOL(CloudKit.CKNotificationInfo.setShouldSendContentAvailable_, 0)
+            self.assertResultIsBOOL(
+                CloudKit.CKNotificationInfo.shouldSendContentAvailable
+            )
+            self.assertArgIsBOOL(
+                CloudKit.CKNotificationInfo.setShouldSendContentAvailable_, 0
+            )
 
         @min_os_level("10.13")
         def testMethods10_13(self):
             self.assertResultIsBOOL(CloudKit.CKNotificationInfo.shouldSendMutableContent)
-            self.assertArgIsBOOL(CloudKit.CKNotificationInfo.setShouldSendMutableContent_, 0)
+            self.assertArgIsBOOL(
+                CloudKit.CKNotificationInfo.setShouldSendMutableContent_, 0
+            )
+
 
 if __name__ == "__main__":
     main()

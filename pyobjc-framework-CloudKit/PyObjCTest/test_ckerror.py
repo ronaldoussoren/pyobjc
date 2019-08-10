@@ -4,7 +4,7 @@ if sys.maxsize > 2 ** 32:
     from PyObjCTools.TestSupport import *
     import CloudKit
 
-    class TestCKError (TestCase):
+    class TestCKError(TestCase):
         @min_os_level("10.10")
         def testConstants(self):
             self.assertIsInstance(CloudKit.CKErrorDomain, unicode)
@@ -49,6 +49,7 @@ if sys.maxsize > 2 ** 32:
             self.assertEqual(CloudKit.CKErrorParticipantMayNeedVerification, 33)
             self.assertEqual(CloudKit.CKErrorServerResponseLost, 34)
             self.assertEqual(CloudKit.CKErrorAssetNotAvailable, 35)
+
 
 if __name__ == "__main__":
     main()

@@ -1,7 +1,8 @@
 from PyObjCTools.TestSupport import *
 from AppKit import *
 
-class TestNSSearchFieldCell (TestCase):
+
+class TestNSSearchFieldCell(TestCase):
     def testConstants(self):
         self.assertEqual(NSSearchFieldRecentsTitleMenuItemTag, 1000)
         self.assertEqual(NSSearchFieldRecentsMenuItemTag, 1001)

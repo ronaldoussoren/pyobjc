@@ -4,7 +4,7 @@ if sys.maxsize > 2 ** 32:
     from PyObjCTools.TestSupport import *
     import CoreML
 
-    class TestMLFeatureType (TestCase):
+    class TestMLFeatureType(TestCase):
         def testConstants(self):
             self.assertEqual(CoreML.MLFeatureTypeInvalid, 0)
             self.assertEqual(CoreML.MLFeatureTypeInt64, 1)

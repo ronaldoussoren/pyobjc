@@ -1,11 +1,13 @@
-
 from PyObjCTools.TestSupport import *
 from AppKit import *
 
-class TestNSToolbarItemHelper (NSObject):
-    def validateToolbarItem_(self, a): return
 
-class TestNSToolbarItem (TestCase):
+class TestNSToolbarItemHelper(NSObject):
+    def validateToolbarItem_(self, a):
+        return
+
+
+class TestNSToolbarItem(TestCase):
     def testConstants(self):
         self.assertEqual(NSToolbarItemVisibilityPriorityStandard, 0)
         self.assertEqual(NSToolbarItemVisibilityPriorityLow, -1000)
@@ -21,11 +23,11 @@ class TestNSToolbarItem (TestCase):
         self.assertIsInstance(NSToolbarCustomizeToolbarItemIdentifier, unicode)
         self.assertIsInstance(NSToolbarPrintItemIdentifier, unicode)
 
-    @min_os_level('10.11')
+    @min_os_level("10.11")
     def testConstants10_11(self):
         self.assertIsInstance(NSToolbarToggleSidebarItemIdentifier, unicode)
 
-    @min_os_level('10.12')
+    @min_os_level("10.12")
     def testConstants10_12(self):
         self.assertIsInstance(NSToolbarCloudSharingItemIdentifier, unicode)
 
@@ -36,7 +38,7 @@ class TestNSToolbarItem (TestCase):
         self.assertArgIsBOOL(NSToolbarItem.setAutovalidates_, 0)
         self.assertResultIsBOOL(NSToolbarItem.allowsDuplicatesInToolbar)
 
-    @min_os_level('10.15')
+    @min_os_level("10.15")
     def testMethods10_15(self):
         self.assertResultIsBOOL(NSToolbarItem.isBordered)
         self.assertArgIsBOOL(NSToolbarItem.setBordered_, 0)
@@ -44,13 +46,14 @@ class TestNSToolbarItem (TestCase):
     def testProtocols(self):
         self.assertResultIsBOOL(TestNSToolbarItemHelper.validateToolbarItem_)
 
-    @min_sdk_level('10.12')
+    @min_sdk_level("10.12")
     def testProtocolObject(self):
-        objc.protocolNamed('NSCloudSharingValidation')
+        objc.protocolNamed("NSCloudSharingValidation")
 
-    @min_sdk_level('10.14')
+    @min_sdk_level("10.14")
     def testProtocolObject10_14(self):
-        objc.protocolNamed('NSToolbarItemValidation')
+        objc.protocolNamed("NSToolbarItemValidation")
+
 
 if __name__ == "__main__":
     main()

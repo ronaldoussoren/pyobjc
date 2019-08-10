@@ -77,12 +77,12 @@ class TestBridgedClasses(TestCase):
         self.assertEqual(cls.__name__, "OC_PythonSet")
 
     def test_unicode(self):
-        value = u"hello"
+        value = "hello"
         cls = OCTestClasses.classForObject_(value)
         self.assertEqual(cls.__name__, "OC_BuiltinPythonUnicode")
 
     def test_unicode_subclass(self):
-        class U(type(u"")):
+        class U(type("")):
             pass
 
         value = U()

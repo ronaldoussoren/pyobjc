@@ -2,7 +2,8 @@ import HIServices
 import sys
 from PyObjCTools.TestSupport import *
 
-class TestHIShape (TestCase):
+
+class TestHIShape(TestCase):
     def testTypes(self):
         self.assertIsCFType(HIServices.HIShapeRef)
 
@@ -35,11 +36,17 @@ class TestHIShape (TestCase):
         HIServices.HIShapeReplacePathInCGContext
 
         if sys.maxsize < 2 ** 32:
-            HIShapeEnumerateProcPtr = b'ii^{__HIShape=}n^{CGRect={CGPoint=ff}{CGSize=ff}}^v'
+            HIShapeEnumerateProcPtr = (
+                b"ii^{__HIShape=}n^{CGRect={CGPoint=ff}{CGSize=ff}}^v"
+            )
         else:
-            HIShapeEnumerateProcPtr = b'ii^{__HIShape=}n^{CGRect={CGPoint=dd}{CGSize=dd}}^v'
+            HIShapeEnumerateProcPtr = (
+                b"ii^{__HIShape=}n^{CGRect={CGPoint=dd}{CGSize=dd}}^v"
+            )
 
-        self.assertArgIsFunction(HIServices.HIShapeEnumerate, 2, HIShapeEnumerateProcPtr, False)
+        self.assertArgIsFunction(
+            HIServices.HIShapeEnumerate, 2, HIShapeEnumerateProcPtr, False
+        )
 
         self.assertResultIsCFRetained(HIServices.HIShapeCreateMutable)
         self.assertResultIsCFRetained(HIServices.HIShapeCreateMutableCopy)
@@ -58,24 +65,23 @@ class TestHIShape (TestCase):
 
         self.assertArgIsIn(HIServices.HIShapeUnionWithRect, 1)
 
-
     def testConstants(self):
         self.assertEqual(HIServices.kHIShapeEnumerateInit, 1)
         self.assertEqual(HIServices.kHIShapeEnumerateRect, 2)
         self.assertEqual(HIServices.kHIShapeEnumerateTerminate, 3)
 
-
         self.assertEqual(HIServices.kHIShapeParseFromTop, 0)
         self.assertEqual(HIServices.kHIShapeParseFromBottom, 1 << 0)
         self.assertEqual(HIServices.kHIShapeParseFromLeft, 0)
         self.assertEqual(HIServices.kHIShapeParseFromRight, 1 << 1)
-        self.assertEqual(HIServices.kHIShapeParseFromTopLeft,
-            HIServices.kHIShapeParseFromTop | HIServices.kHIShapeParseFromLeft)
-        self.assertEqual(HIServices.kHIShapeParseFromBottomRight,
-            HIServices.kHIShapeParseFromBottom | HIServices.kHIShapeParseFromRight)
-
-
-
+        self.assertEqual(
+            HIServices.kHIShapeParseFromTopLeft,
+            HIServices.kHIShapeParseFromTop | HIServices.kHIShapeParseFromLeft,
+        )
+        self.assertEqual(
+            HIServices.kHIShapeParseFromBottomRight,
+            HIServices.kHIShapeParseFromBottom | HIServices.kHIShapeParseFromRight,
+        )
 
 
 if __name__ == "__main__":

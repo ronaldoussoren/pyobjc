@@ -1,8 +1,8 @@
-
 from PyObjCTools.TestSupport import *
 from PubSub import *
 
-class TestPSFeed (TestCase):
+
+class TestPSFeed(TestCase):
     def testConstants(self):
         self.assertIsInstance(PSErrorDomain, unicode)
 

@@ -16,6 +16,7 @@ from Category import Category
 from PriorityToColourTransformer import PriorityToColourTransformer
 from OverdueTransformer import OverdueTransformer
 
+
 class ToDosDocument(NSDocument):
     nix = objc.IBOutlet()
     toDos = objc.ivar()
@@ -25,8 +26,8 @@ class ToDosDocument(NSDocument):
         if self is None:
             return None
         self.toDos = NSMutableArray()
-        return self # if this line is missing you will get the
-                    # simple message: "Can't create new document"
+        return self  # if this line is missing you will get the
+        # simple message: "Can't create new document"
 
     def categories(self):
         return Category.allCategories()
@@ -41,10 +42,11 @@ class ToDosDocument(NSDocument):
         self.toDos = NSKeyedUnarchiver.unarchiveObjectWithData_(data)
         return True
 
+
 priorityTransformer = PriorityToColourTransformer.alloc().init()
 NSValueTransformer.setValueTransformer_forName_(
-    priorityTransformer, "PriorityToColourTransformer")
+    priorityTransformer, "PriorityToColourTransformer"
+)
 
 overdueTransformer = OverdueTransformer.alloc().init()
-NSValueTransformer.setValueTransformer_forName_(
-    overdueTransformer, "OverdueTransformer")
+NSValueTransformer.setValueTransformer_forName_(overdueTransformer, "OverdueTransformer")

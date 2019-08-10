@@ -1,8 +1,8 @@
-
 from PyObjCTools.TestSupport import *
 import CoreServices
 
-class TestUTType (TestCase):
+
+class TestUTType(TestCase):
     def testConstants(self):
         self.assertIsInstance(CoreServices.kUTExportedTypeDeclarationsKey, unicode)
         self.assertIsInstance(CoreServices.kUTImportedTypeDeclarationsKey, unicode)
@@ -20,17 +20,23 @@ class TestUTType (TestCase):
 
     def testFunctions(self):
         self.assertResultIsCFRetained(CoreServices.UTTypeCreatePreferredIdentifierForTag)
-        v = CoreServices.UTTypeCreatePreferredIdentifierForTag(CoreServices.kUTTagClassFilenameExtension, "py", CoreServices.kUTTypePlainText)
+        v = CoreServices.UTTypeCreatePreferredIdentifierForTag(
+            CoreServices.kUTTagClassFilenameExtension, "py", CoreServices.kUTTypePlainText
+        )
         self.assertIsInstance(v, unicode)
 
         self.assertResultIsCFRetained(CoreServices.UTTypeCreateAllIdentifiersForTag)
-        v = CoreServices.UTTypeCreateAllIdentifiersForTag(CoreServices.kUTTagClassFilenameExtension, "py", CoreServices.kUTTypePlainText)
+        v = CoreServices.UTTypeCreateAllIdentifiersForTag(
+            CoreServices.kUTTagClassFilenameExtension, "py", CoreServices.kUTTypePlainText
+        )
         self.assertIsInstance(v, CoreServices.CFArrayRef)
         self.assertGreaterEqual(len(v), 1)
         self.assertIsInstance(v[0], unicode)
 
         self.assertResultIsCFRetained(CoreServices.UTTypeCopyPreferredTagWithClass)
-        v = CoreServices.UTTypeCopyPreferredTagWithClass("public.python-script", CoreServices.kUTTagClassFilenameExtension)
+        v = CoreServices.UTTypeCopyPreferredTagWithClass(
+            "public.python-script", CoreServices.kUTTagClassFilenameExtension
+        )
         self.assertIsInstance(v, unicode)
 
         self.assertResultIsBOOL(CoreServices.UTTypeEqual)
@@ -38,7 +44,9 @@ class TestUTType (TestCase):
         self.assertIs(v, True)
 
         self.assertResultIsBOOL(CoreServices.UTTypeConformsTo)
-        v = CoreServices.UTTypeConformsTo("public.python-script", CoreServices.kUTTypePlainText)
+        v = CoreServices.UTTypeConformsTo(
+            "public.python-script", CoreServices.kUTTypePlainText
+        )
         self.assertIs(v, True)
 
         self.assertResultIsCFRetained(CoreServices.UTTypeCopyDescription)
@@ -60,10 +68,12 @@ class TestUTType (TestCase):
         v = CoreServices.UTGetOSTypeFromString(v)
         self.assertEqual(v, 24353)
 
-    @min_os_level('10.10')
+    @min_os_level("10.10")
     def testFunctions10_10(self):
         self.assertResultIsCFRetained(CoreServices.UTTypeCopyAllTagsWithClass)
-        v = CoreServices.UTTypeCopyAllTagsWithClass(CoreServices.kUTTypeArchive, CoreServices.kUTTagClassFilenameExtension)
+        v = CoreServices.UTTypeCopyAllTagsWithClass(
+            CoreServices.kUTTypeArchive, CoreServices.kUTTagClassFilenameExtension
+        )
         self.assertIsInstance(v, (CoreServices.CFArrayRef, type(None)))
 
         self.assertResultIsBOOL(CoreServices.UTTypeConformsTo)

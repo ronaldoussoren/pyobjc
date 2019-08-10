@@ -5,8 +5,8 @@ from PyObjCTools.TestSupport import *
 if sys.maxsize > 2 ** 32:
     import MapKit
 
-    class TestMKPointOfInterestCategory (TestCase):
-        @min_os_level('10.15')
+    class TestMKPointOfInterestCategory(TestCase):
+        @min_os_level("10.15")
         def test_constants(self):
             self.assertIsInstance(MapKit.MKPointOfInterestCategoryAirport, unicode)
             self.assertIsInstance(MapKit.MKPointOfInterestCategoryAmusementPark, unicode)
@@ -38,7 +38,9 @@ if sys.maxsize > 2 ** 32:
             self.assertIsInstance(MapKit.MKPointOfInterestCategoryPharmacy, unicode)
             self.assertIsInstance(MapKit.MKPointOfInterestCategoryPolice, unicode)
             self.assertIsInstance(MapKit.MKPointOfInterestCategoryPostOffice, unicode)
-            self.assertIsInstance(MapKit.MKPointOfInterestCategoryPublicTransport, unicode)
+            self.assertIsInstance(
+                MapKit.MKPointOfInterestCategoryPublicTransport, unicode
+            )
             self.assertIsInstance(MapKit.MKPointOfInterestCategoryRestaurant, unicode)
             self.assertIsInstance(MapKit.MKPointOfInterestCategoryRestroom, unicode)
             self.assertIsInstance(MapKit.MKPointOfInterestCategorySchool, unicode)
@@ -48,6 +50,7 @@ if sys.maxsize > 2 ** 32:
             self.assertIsInstance(MapKit.MKPointOfInterestCategoryUniversity, unicode)
             self.assertIsInstance(MapKit.MKPointOfInterestCategoryWinery, unicode)
             self.assertIsInstance(MapKit.MKPointOfInterestCategoryZoo, unicode)
+
 
 if __name__ == "__main__":
     main()

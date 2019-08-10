@@ -1,19 +1,20 @@
-
 from PyObjCTools.TestSupport import *
 from Quartz import *
 import Quartz
 from Foundation import NSMutableData
 import os
 
-class TestCGDataConsumer (TestCase):
+
+class TestCGDataConsumer(TestCase):
     def testTypes(self):
         self.assertIsCFType(CGDataConsumerRef)
 
     def testFunctions(self):
         self.assertIsInstance(CGDataConsumerGetTypeID(), (int, long))
 
-        url = CFURLCreateWithFileSystemPath(None,
-            "/tmp/pyobjc.test.pdf", kCFURLPOSIXPathStyle, False)
+        url = CFURLCreateWithFileSystemPath(
+            None, "/tmp/pyobjc.test.pdf", kCFURLPOSIXPathStyle, False
+        )
         self.assertIsInstance(url, CFURLRef)
         try:
             consumer = CGDataConsumerCreateWithURL(url)
@@ -43,7 +44,6 @@ class TestCGDataConsumer (TestCase):
         def release(info):
             released.append(info)
 
-
         output = []
         released = []
         consumer = CGDataConsumerCreate(output, (putBytes, release))
@@ -55,7 +55,8 @@ class TestCGDataConsumer (TestCase):
         CGContextFillRect(ctx, ((10, 10), (50, 30)))
         CGContextEndPage(ctx)
         CGContextFlush(ctx)
-        if hasattr(Quartz, 'CGPDFContextClose'): CGPDFContextClose(ctx)
+        if hasattr(Quartz, "CGPDFContextClose"):
+            CGPDFContextClose(ctx)
 
         del ctx
         del consumer

@@ -3,9 +3,10 @@ from PyObjCTools.TestSupport import *
 import objc
 import GameKit
 
-class TestGKFriendRequestComposeViewController (TestCase):
+
+class TestGKFriendRequestComposeViewController(TestCase):
     def testProtocols(self):
-        objc.protocolNamed('GKFriendRequestComposeViewControllerDelegate')
+        objc.protocolNamed("GKFriendRequestComposeViewControllerDelegate")
 
 
 if __name__ == "__main__":

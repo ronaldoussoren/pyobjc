@@ -2,8 +2,8 @@ from PyObjCTools.TestSupport import *
 
 import Security
 
-class TestAuthorization (TestCase):
 
+class TestAuthorization(TestCase):
     def test_types(self):
         self.assertIsOpaquePointer(Security.AuthorizationRef)
 
@@ -11,12 +11,11 @@ class TestAuthorization (TestCase):
         v = Security.AuthorizationExternalForm()
         self.assertEqual(v.bytes, None)
 
-        v.bytes = b'\x00' * 32
+        v.bytes = b"\x00" * 32
 
         w = objc.repythonify(v, Security.AuthorizationExternalForm.__typestr__)
         self.assertIsInstance(w, Security.AuthorizationExternalForm)
-        self.assertEqual(w.bytes, (0,)*32)
-
+        self.assertEqual(w.bytes, (0,) * 32)
 
     def test_constants(self):
         self.assertEqual(Security.kAuthorizationEmptyEnvironment, None)
@@ -37,7 +36,7 @@ class TestAuthorization (TestCase):
         self.assertEqual(Security.errAuthorizationToolEnvironmentError, -60032)
         self.assertEqual(Security.errAuthorizationBadAddress, -60033)
 
-        self.assertEqual(Security.kAuthorizationFlagDefaults,  0)
+        self.assertEqual(Security.kAuthorizationFlagDefaults, 0)
         self.assertEqual(Security.kAuthorizationFlagInteractionAllowed, 1 << 0)
         self.assertEqual(Security.kAuthorizationFlagExtendRights, 1 << 1)
         self.assertEqual(Security.kAuthorizationFlagPartialRights, 1 << 2)
@@ -50,19 +49,45 @@ class TestAuthorization (TestCase):
 
     def test_functions(self):
         self.assertResultHasType(Security.AuthorizationFree, objc._C_INT)
-        self.assertArgHasType(Security.AuthorizationFree, 0, Security.AuthorizationRef.__typestr__)
+        self.assertArgHasType(
+            Security.AuthorizationFree, 0, Security.AuthorizationRef.__typestr__
+        )
         self.assertArgHasType(Security.AuthorizationFree, 1, objc._C_UINT)
 
         self.assertResultHasType(Security.AuthorizationMakeExternalForm, objc._C_INT)
-        self.assertArgHasType(Security.AuthorizationMakeExternalForm, 0, Security.AuthorizationRef.__typestr__)
-        self.assertArgHasType(Security.AuthorizationMakeExternalForm, 1, objc._C_OUT + objc._C_PTR + Security.AuthorizationExternalForm.__typestr__)
+        self.assertArgHasType(
+            Security.AuthorizationMakeExternalForm,
+            0,
+            Security.AuthorizationRef.__typestr__,
+        )
+        self.assertArgHasType(
+            Security.AuthorizationMakeExternalForm,
+            1,
+            objc._C_OUT + objc._C_PTR + Security.AuthorizationExternalForm.__typestr__,
+        )
 
-        self.assertResultHasType(Security.AuthorizationCreateFromExternalForm, objc._C_INT)
-        self.assertArgHasType(Security.AuthorizationCreateFromExternalForm, 0, objc._C_IN + objc._C_PTR + Security.AuthorizationExternalForm.__typestr__)
-        self.assertArgHasType(Security.AuthorizationCreateFromExternalForm, 1, objc._C_OUT + objc._C_PTR + Security.AuthorizationRef.__typestr__)
+        self.assertResultHasType(
+            Security.AuthorizationCreateFromExternalForm, objc._C_INT
+        )
+        self.assertArgHasType(
+            Security.AuthorizationCreateFromExternalForm,
+            0,
+            objc._C_IN + objc._C_PTR + Security.AuthorizationExternalForm.__typestr__,
+        )
+        self.assertArgHasType(
+            Security.AuthorizationCreateFromExternalForm,
+            1,
+            objc._C_OUT + objc._C_PTR + Security.AuthorizationRef.__typestr__,
+        )
 
-        self.assertResultHasType(Security.AuthorizationCopyPrivilegedReference, objc._C_INT)
-        self.assertArgHasType(Security.AuthorizationCopyPrivilegedReference, 0, objc._C_OUT + objc._C_PTR + Security.AuthorizationRef.__typestr__)
+        self.assertResultHasType(
+            Security.AuthorizationCopyPrivilegedReference, objc._C_INT
+        )
+        self.assertArgHasType(
+            Security.AuthorizationCopyPrivilegedReference,
+            0,
+            objc._C_OUT + objc._C_PTR + Security.AuthorizationRef.__typestr__,
+        )
 
     def test_functions_manual(self):
         status, authref = Security.AuthorizationCreate(None, None, 0, None)
@@ -73,25 +98,32 @@ class TestAuthorization (TestCase):
         self.assertEqual(status, 0)
         self.assertEqual(info, ())
 
-        status, info = Security.AuthorizationCopyInfo(authref, b'username', None)
+        status, info = Security.AuthorizationCopyInfo(authref, b"username", None)
         self.assertEqual(status, 0)
         self.assertEqual(info, ())
 
         Security.AuthorizationFree(authref, 0)
 
-        rights = (Security.AuthorizationItem(name=b'system.services.systemconfiguration.network'),)
+        rights = (
+            Security.AuthorizationItem(
+                name=b"system.services.systemconfiguration.network"
+            ),
+        )
         flags = 0
 
         status, authref = Security.AuthorizationCreate(rights, None, 0, None)
         self.assertNotEqual(status, 0)
         self.assertIs(authref, None)
 
-        self.assertFalse(hasattr(Security, 'AuthorizationFreeItemSet'))
+        self.assertFalse(hasattr(Security, "AuthorizationFreeItemSet"))
 
         # Not sure how to test this without increased privileges....
         self.assertFalse(isinstance(Security.AuthorizationCopyRights, objc.function))
         self.assertFalse(isinstance(Security.AuthorizationCopyRightsAsync, objc.function))
-        self.assertFalse(isinstance(Security.AuthorizationExecuteWithPrivileges, objc.function))
+        self.assertFalse(
+            isinstance(Security.AuthorizationExecuteWithPrivileges, objc.function)
+        )
+
 
 if __name__ == "__main__":
     main()

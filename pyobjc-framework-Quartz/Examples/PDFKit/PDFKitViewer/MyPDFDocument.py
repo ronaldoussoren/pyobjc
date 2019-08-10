@@ -3,9 +3,10 @@ from objc import super
 import Cocoa
 import Quartz
 
-class MyPDFDocument (Cocoa.NSDocument):
-    _outline        = objc.ivar()
-    _searchResults  = objc.ivar()
+
+class MyPDFDocument(Cocoa.NSDocument):
+    _outline = objc.ivar()
+    _searchResults = objc.ivar()
 
     _drawer = objc.IBOutlet()
     _noOutlineText = objc.IBOutlet()
@@ -13,7 +14,6 @@ class MyPDFDocument (Cocoa.NSDocument):
     _pdfView = objc.IBOutlet()
     _searchProgress = objc.IBOutlet()
     _searchTable = objc.IBOutlet()
-
 
     def dealloc(self):
         Cocoa.NSNotificationCenter.defaultCenter().removeObserver_(self)
@@ -28,24 +28,35 @@ class MyPDFDocument (Cocoa.NSDocument):
 
         if self.fileName():
             pdfDoc = Quartz.PDFDocument.alloc().initWithURL_(
-                    Cocoa.NSURL.fileURLWithPath_(self.fileName()))
+                Cocoa.NSURL.fileURLWithPath_(self.fileName())
+            )
             self._pdfView.setDocument_(pdfDoc)
 
         # Page changed notification.
         Cocoa.NSNotificationCenter.defaultCenter().addObserver_selector_name_object_(
-                self, "pageChanged:", Quartz.PDFViewPageChangedNotification, self._pdfView)
+            self, "pageChanged:", Quartz.PDFViewPageChangedNotification, self._pdfView
+        )
 
         # Find notifications.
         center = Cocoa.NSNotificationCenter.defaultCenter()
         center.addObserver_selector_name_object_(
-                self, 'startFind:', Quartz.PDFDocumentDidBeginFindNotification,
-                self._pdfView.document())
+            self,
+            "startFind:",
+            Quartz.PDFDocumentDidBeginFindNotification,
+            self._pdfView.document(),
+        )
         center.addObserver_selector_name_object_(
-                self, 'findProgress:', Quartz.PDFDocumentDidEndPageFindNotification,
-                self._pdfView.document())
+            self,
+            "findProgress:",
+            Quartz.PDFDocumentDidEndPageFindNotification,
+            self._pdfView.document(),
+        )
         center.addObserver_selector_name_object_(
-                self, 'endFind:', Quartz.PDFDocumentDidEndFindNotification,
-                self._pdfView.document())
+            self,
+            "endFind:",
+            Quartz.PDFDocumentDidEndFindNotification,
+            self._pdfView.document(),
+        )
 
         # Set self to be delegate (find).
         self._pdfView.document().setDelegate_(self)
@@ -70,12 +81,12 @@ class MyPDFDocument (Cocoa.NSDocument):
         self._drawer.open()
 
         # Size the window.
-        windowSize = self._pdfView.rowSizeForPage_(
-                self._pdfView.currentPage())
+        windowSize = self._pdfView.rowSizeForPage_(self._pdfView.currentPage())
 
         if (self._pdfView.displayMode() & 0x01) and (
-                    self._pdfView.document().pageCount() > 1):
-            windowSize.width +=  Cocoa.NSScroller.scrollerWidth()
+            self._pdfView.document().pageCount() > 1
+        ):
+            windowSize.width += Cocoa.NSScroller.scrollerWidth()
         controller.window().setContentSize_(windowSize)
 
     def dataRepresentationOfType_(self, aType):
@@ -93,7 +104,8 @@ class MyPDFDocument (Cocoa.NSDocument):
         # Get the destination associated with the search result list.
         # Tell the PDFView to go there.
         self._pdfView.goToDestination_(
-                sender.itemAtRow_(sender.selectedRow()).destination())
+            sender.itemAtRow_(sender.selectedRow()).destination()
+        )
 
     @objc.IBAction
     def displaySinglePage_(self, sender):
@@ -113,45 +125,46 @@ class MyPDFDocument (Cocoa.NSDocument):
             return
 
         # What is the new page number (zero-based).
-        newPageIndex = self._pdfView.document().indexForPage_(
-                self._pdfView.currentPage())
+        newPageIndex = self._pdfView.document().indexForPage_(self._pdfView.currentPage())
 
         # Walk outline view looking for best firstpage number match.
-        newlySelectedRow = -1;
+        newlySelectedRow = -1
         numRows = self._outlineView.numberOfRows()
         for i in range(numRows):
             outlineItem = self._outlineView.itemAtRow_(i)
 
-            if self._pdfView.document().indexForPage_(
-                    outlineItem.destination().page()) == newPageIndex:
+            if (
+                self._pdfView.document().indexForPage_(outlineItem.destination().page())
+                == newPageIndex
+            ):
 
                 newlySelectedRow = i
-                self._outlineView.selectRow_byExtendingSelection_(
-                        newlySelectedRow, False)
+                self._outlineView.selectRow_byExtendingSelection_(newlySelectedRow, False)
                 break
 
-            elif self._pdfView.document().indexForPage_(outlineItem.destionation().page()) > newPageIndex:
+            elif (
+                self._pdfView.document().indexForPage_(outlineItem.destionation().page())
+                > newPageIndex
+            ):
                 newlySelectedRow = i - 1
-                self._outlineView.selectRow_byExtendingSelection_(
-                        newlySelectedRow, False)
+                self._outlineView.selectRow_byExtendingSelection_(newlySelectedRow, False)
                 break
 
         # Auto-scroll.
         if newlySelectedRow != -1:
             self._outlineView.scrollRowToVisible_(newlySelectedRow)
 
-
     def doFind_(self, sender):
         if self._pdfView.document().isFinding():
             self._pdfView.document().cancelFindString()
-
 
         # Lazily allocate _searchResults.
         if self._searchResults is None:
             self._searchResults = Cocoa.NSMutableArray.arrayWithCapacity_(10)
 
         self._pdfView.document().beginFindString_withOptions_(
-                sender.stringValue(), Cocoa.NSCaseInsensitiveSearch)
+            sender.stringValue(), Cocoa.NSCaseInsensitiveSearch
+        )
 
     def startFind_(self, notification):
         # Empty arrays.
@@ -161,9 +174,11 @@ class MyPDFDocument (Cocoa.NSDocument):
 
     def findProgress_(self, notification):
         pageIndex = notification.userInfo().objectForKey_(
-                "PDFDocumentPageIndex") #.doubleValue()
+            "PDFDocumentPageIndex"
+        )  # .doubleValue()
         self._searchProgress.setDoubleValue_(
-                pageIndex / self._pdfView.document().pageCount())
+            pageIndex / self._pdfView.document().pageCount()
+        )
 
     def didMatchString_(self, instance):
         # Add page label to our array.
@@ -183,15 +198,20 @@ class MyPDFDocument (Cocoa.NSDocument):
             return 0
         return self._searchResults.count()
 
-    def tableView_objectValueForTableColumn_row_(
-            self, aTableView, theColumn, rowIndex):
+    def tableView_objectValueForTableColumn_row_(self, aTableView, theColumn, rowIndex):
 
         if theColumn.identifier() == "page":
-            return  self._searchResults.objectAtIndex_(rowIndex).pages().objectAtIndex_(0).label()
+            return (
+                self._searchResults.objectAtIndex_(rowIndex)
+                .pages()
+                .objectAtIndex_(0)
+                .label()
+            )
 
-        elif theColumn.identifier() == 'section':
+        elif theColumn.identifier() == "section":
             value = self._pdfView.document().outlineItemForSelection_(
-                    self._searchResults.objectAtIndex_(rowIndex))
+                self._searchResults.objectAtIndex_(rowIndex)
+            )
 
             if value is None:
                 return None
@@ -206,9 +226,9 @@ class MyPDFDocument (Cocoa.NSDocument):
         rowIndex = notification.object().selectedRow()
         if rowIndex >= 0:
             self._pdfView.setCurrentSelection_(
-                    self._searchResults.objectAtIndex_(rowIndex))
+                self._searchResults.objectAtIndex_(rowIndex)
+            )
             self._pdfView.centerSelectionInVisibleArea_(self)
-
 
     # The outline view is for the PDF outline.  Not all PDF's have an outline.
     def outlineView_numberOfChildrenOfItem_(self, outlineView, item):
@@ -243,5 +263,6 @@ class MyPDFDocument (Cocoa.NSDocument):
             return item.numberOfChildren() > 0
 
     def outlineView_objectValueForTableColumn_byItem_(
-            self, outlineView, tableColumn, item):
+        self, outlineView, tableColumn, item
+    ):
         return item.label()

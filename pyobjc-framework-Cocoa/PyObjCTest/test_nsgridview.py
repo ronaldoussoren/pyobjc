@@ -5,7 +5,7 @@ import Foundation
 from AppKit import *
 
 
-class TestNSGridView (TestCase):
+class TestNSGridView(TestCase):
     def testConstants(self):
         self.assertEqual(NSGridCellPlacementInherited, 0)
         self.assertEqual(NSGridCellPlacementNone, 1)
@@ -21,11 +21,11 @@ class TestNSGridView (TestCase):
         self.assertEqual(NSGridRowAlignmentFirstBaseline, 2)
         self.assertEqual(NSGridRowAlignmentLastBaseline, 3)
 
-    @min_os_level('10.12')
+    @min_os_level("10.12")
     def testConstants10_12(self):
         self.assertIsInstance(NSGridViewSizeForContent, float)
 
-    @min_os_level('10.12')
+    @min_os_level("10.12")
     def testMethods10_12(self):
         self.assertResultIsBOOL(NSGridRow.isHidden)
         self.assertArgIsBOOL(NSGridRow.setHidden_, 0)

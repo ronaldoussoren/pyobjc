@@ -5,17 +5,23 @@ from threading import Thread
 import os
 from PyObjCTools.TestSupport import *
 
-class TestRegr (TestCase):
+
+class TestRegr(TestCase):
     def testFSRepr(self):
         fm = Foundation.NSFileManager.defaultManager()
-        self.assertRaises(TypeError, fm.stringWithFileSystemRepresentation_length_, b"/var")
-        self.assertEqual(b"/var".decode('ascii'), fm.stringWithFileSystemRepresentation_length_(b"/var/boo", 4))
+        self.assertRaises(
+            TypeError, fm.stringWithFileSystemRepresentation_length_, b"/var"
+        )
+        self.assertEqual(
+            b"/var".decode("ascii"),
+            fm.stringWithFileSystemRepresentation_length_(b"/var/boo", 4),
+        )
 
     def testThreadHang(self):
 
         # Temporarily redirect stderr to a file, this allows us to check
         # that NSLog actually wrote some text.
-        fp = os.open('/tmp/pyobjc-thread.txt', os.O_RDWR|os.O_CREAT, 0o666)
+        fp = os.open("/tmp/pyobjc-thread.txt", os.O_RDWR | os.O_CREAT, 0o666)
         dupped = os.dup(2)
         os.dup2(fp, 2)
 
@@ -28,24 +34,24 @@ class TestRegr (TestCase):
                     return self
 
             aList = []
+
             class MyThread(Thread):
                 def run(self):
                     pool = NSAutoreleasePool.alloc().init()
                     aList.append("before")
-                    NSLog(b"does this print?".decode('ascii'))
+                    NSLog(b"does this print?".decode("ascii"))
                     aList.append("after")
 
             o = ThreadHangObject.alloc().init()
             o.t.join()
 
-
         finally:
             os.close(fp)
             os.dup2(dupped, 2)
 
-        with open('/tmp/pyobjc-thread.txt', 'r') as fp:
+        with open("/tmp/pyobjc-thread.txt", "r") as fp:
             data = fp.read()
-        self.assertTrue('does this print?' in data)
+        self.assertTrue("does this print?" in data)
 
         self.assertEqual(aList, ["before", "after"])
 
@@ -54,13 +60,18 @@ class TestRegr (TestCase):
         Regression test for bug #814683, that didn't initialize the memory
         space for output parameters correctly.
         """
-        if not hasattr(Foundation, 'NSPropertyListSerialization'): return
+        if not hasattr(Foundation, "NSPropertyListSerialization"):
+            return
 
         plist = 0
 
-        r = Foundation.NSPropertyListSerialization.dataFromPropertyList_format_errorDescription_(plist, Foundation.NSPropertyListXMLFormat_v1_0, None)
+        r = Foundation.NSPropertyListSerialization.dataFromPropertyList_format_errorDescription_(
+            plist, Foundation.NSPropertyListXMLFormat_v1_0, None
+        )
         self.assertEqual(r[1], None)
-        r = Foundation.NSPropertyListSerialization.dataFromPropertyList_format_errorDescription_(plist, Foundation.NSPropertyListXMLFormat_v1_0, None)
+        r = Foundation.NSPropertyListSerialization.dataFromPropertyList_format_errorDescription_(
+            plist, Foundation.NSPropertyListXMLFormat_v1_0, None
+        )
         self.assertEqual(r[1], None)
 
     def testTypeOverrideProblem(self):
@@ -68,22 +79,28 @@ class TestRegr (TestCase):
         A bug in the medatata machinery caused a crash.
         """
         cls = AppKit.NSOpenGLPixelFormat
-        dir (cls)
+        dir(cls)
 
         o = cls.alloc().initWithAttributes_(
-                (AppKit.NSOpenGLPFAAccelerated,
-                AppKit.NSOpenGLPFANoRecovery, AppKit.NSOpenGLPFAColorSize, 32))
+            (
+                AppKit.NSOpenGLPFAAccelerated,
+                AppKit.NSOpenGLPFANoRecovery,
+                AppKit.NSOpenGLPFAColorSize,
+                32,
+            )
+        )
 
-    @min_os_level('10.6')
+    @min_os_level("10.6")
     def testBinaryPlist(self):
-        pl = {
-            'key': 2 ** 64 - 1,
-        }
+        pl = {"key": 2 ** 64 - 1}
         data, error = Foundation.NSPropertyListSerialization.dataWithPropertyList_format_options_error_(
-            pl, Foundation.NSPropertyListBinaryFormat_v1_0, 0, None)
+            pl, Foundation.NSPropertyListBinaryFormat_v1_0, 0, None
+        )
         restored, format, error = Foundation.NSPropertyListSerialization.propertyListWithData_options_format_error_(
-                data, 0, None, None)
+            data, 0, None, None
+        )
         self.assertEqual(pl, restored)
+
 
 if __name__ == "__main__":
     main()

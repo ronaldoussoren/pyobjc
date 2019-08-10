@@ -2,8 +2,8 @@ from PyObjCTools.TestSupport import *
 
 import Security
 
-class TestCipherSuite (TestCase):
 
+class TestCipherSuite(TestCase):
     def test_constants(self):
         self.assertEqual(Security.SSL_NULL_WITH_NULL_NULL, 0x0000)
         self.assertEqual(Security.SSL_RSA_WITH_NULL_MD5, 0x0001)

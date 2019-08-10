@@ -2,18 +2,24 @@ from PyObjCTools.TestSupport import *
 
 import DiscRecording
 
-class TestDRFSObject (TestCase):
+
+class TestDRFSObject(TestCase):
     def testMethods(self):
         self.assertResultIsBOOL(DiscRecording.DRFSObject.isVirtual)
 
-        self.assertArgIsBOOL(DiscRecording.DRFSObject.propertyForKey_inFilesystem_mergeWithOtherFilesystems_, 2)
-        self.assertArgIsBOOL(DiscRecording.DRFSObject.propertiesForFilesystem_mergeWithOtherFilesystems_, 1)
+        self.assertArgIsBOOL(
+            DiscRecording.DRFSObject.propertyForKey_inFilesystem_mergeWithOtherFilesystems_,
+            2,
+        )
+        self.assertArgIsBOOL(
+            DiscRecording.DRFSObject.propertiesForFilesystem_mergeWithOtherFilesystems_, 1
+        )
 
     def testConstants(self):
-        self.assertEqual(DiscRecording.DRFilesystemInclusionMaskISO9660, 1<<0)
-        self.assertEqual(DiscRecording.DRFilesystemInclusionMaskJoliet, 1<<1)
-        self.assertEqual(DiscRecording.DRFilesystemInclusionMaskUDF, 1<<2)
-        self.assertEqual(DiscRecording.DRFilesystemInclusionMaskHFSPlus, 1<<3)
+        self.assertEqual(DiscRecording.DRFilesystemInclusionMaskISO9660, 1 << 0)
+        self.assertEqual(DiscRecording.DRFilesystemInclusionMaskJoliet, 1 << 1)
+        self.assertEqual(DiscRecording.DRFilesystemInclusionMaskUDF, 1 << 2)
+        self.assertEqual(DiscRecording.DRFilesystemInclusionMaskHFSPlus, 1 << 3)
 
         self.assertIsInstance(DiscRecording.DRAllFilesystems, unicode)
         self.assertIsInstance(DiscRecording.DRISO9660, unicode)

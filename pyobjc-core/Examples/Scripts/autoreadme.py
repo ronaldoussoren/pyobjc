@@ -49,10 +49,7 @@ workspace = NSWorkspace.sharedWorkspace()
 notificationCenter = workspace.notificationCenter()
 notificationHandler = NotificationHandler.new()
 notificationCenter.addObserver_selector_name_object_(
-    notificationHandler,
-    "handleMountNotification:",
-    NSWorkspaceDidMountNotification,
-    None,
+    notificationHandler, "handleMountNotification:", NSWorkspaceDidMountNotification, None
 )
 
 NSLog("Listening for mount notifications....")

@@ -2,7 +2,8 @@ from PyObjCTools.TestSupport import *
 
 from ImageCaptureCore import *
 
-class TestICDevice (TestCase):
+
+class TestICDevice(TestCase):
     def testConstants(self):
         self.assertEqual(ICDeviceTypeCamera, 0x00000001)
         self.assertEqual(ICDeviceTypeScanner, 0x00000002)
@@ -38,33 +39,42 @@ class TestICDevice (TestCase):
         self.assertIsInstance(ICLocalizedStatusNotificationKey, unicode)
         self.assertIsInstance(ICDeviceCanEjectOrDisconnect, unicode)
 
-    @min_os_level('10.8')
+    @min_os_level("10.8")
     def testConstants10_8(self):
         self.assertIsInstance(ICStatusCodeKey, unicode)
 
-    @min_os_level('10.15')
+    @min_os_level("10.15")
     def testConstants10_15(self):
         self.assertIsInstance(ICEnumerationChronologicalOrder, unicode)
 
     def testProtocolObjects(self):
-        objc.protocolNamed('ICDeviceDelegate')
+        objc.protocolNamed("ICDeviceDelegate")
 
     def testMethods(self):
         self.assertResultIsBOOL(ICDevice.isRemote)
         self.assertResultIsBOOL(ICDevice.hasConfigurableWiFiInterface)
         self.assertResultIsBOOL(ICDevice.hasOpenSession)
 
-        self.assertArgIsSEL(ICDevice.requestSendMessage_outData_maxReturnedDataSize_sendMessageDelegate_didSendMessageSelector_contextInfo_, 4, b'v@:I@@^v')
+        self.assertArgIsSEL(
+            ICDevice.requestSendMessage_outData_maxReturnedDataSize_sendMessageDelegate_didSendMessageSelector_contextInfo_,
+            4,
+            b"v@:I@@^v",
+        )
 
     @expectedFailure
     def testMethods_removed_in_10_15(self):
         self.assertResultIsBOOL(ICDevice.isShared)
 
-    @min_os_level('10.15')
+    @min_os_level("10.15")
     def testMethods10_15(self):
-        self.assertArgIsBlock(ICDevice.requestOpenSessionWithOptions_completion_, 1, b'v@')
-        self.assertArgIsBlock(ICDevice.requestCloseSessionWithOptions_completion_, 1, b'v@')
-        self.assertArgIsBlock(ICDevice.requestEjectWithCompletion_, 0, b'v@')
+        self.assertArgIsBlock(
+            ICDevice.requestOpenSessionWithOptions_completion_, 1, b"v@"
+        )
+        self.assertArgIsBlock(
+            ICDevice.requestCloseSessionWithOptions_completion_, 1, b"v@"
+        )
+        self.assertArgIsBlock(ICDevice.requestEjectWithCompletion_, 0, b"v@")
+
 
 if __name__ == "__main__":
     main()

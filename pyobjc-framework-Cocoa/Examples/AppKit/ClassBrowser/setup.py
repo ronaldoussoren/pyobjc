@@ -12,8 +12,5 @@ setup(
     app=["ClassBrowser.py"],
     data_files=["ClassBrowser.nib"],
     options=dict(py2app=dict(plist=plist)),
-    setup_requires=[
-        "py2app",
-        "pyobjc-framework-Cocoa",
-    ]
+    setup_requires=["py2app", "pyobjc-framework-Cocoa"],
 )

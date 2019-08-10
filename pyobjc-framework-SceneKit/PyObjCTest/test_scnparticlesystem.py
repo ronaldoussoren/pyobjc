@@ -2,17 +2,24 @@ from PyObjCTools.TestSupport import *
 import objc
 import sys
 
-if os_level_key(os_release()) < os_level_key('10.12') or sys.maxsize >= 2**32:
+if os_level_key(os_release()) < os_level_key("10.12") or sys.maxsize >= 2 ** 32:
 
     import SceneKit
 
     # FIXME: needs smarter metadata than what PyObjCTest supports!
-    SCNParticleEventBlock = b'v^^v^' + objc._C_NSUInteger + b'^' + objc._C_NSUInteger + objc._C_NSInteger
-    SCNParticleModifierBlock = b'v^^v^' + objc._C_NSUInteger + objc._C_NSInteger + objc._C_NSInteger + objc._C_FLT
+    SCNParticleEventBlock = (
+        b"v^^v^" + objc._C_NSUInteger + b"^" + objc._C_NSUInteger + objc._C_NSInteger
+    )
+    SCNParticleModifierBlock = (
+        b"v^^v^"
+        + objc._C_NSUInteger
+        + objc._C_NSInteger
+        + objc._C_NSInteger
+        + objc._C_FLT
+    )
 
-
-    class TestSCNParticleSystem (TestCase):
-        @min_os_level('10.10')
+    class TestSCNParticleSystem(TestCase):
+        @min_os_level("10.10")
         def testConstants10_10(self):
             self.assertIsInstance(SceneKit.SCNParticlePropertyPosition, unicode)
             self.assertIsInstance(SceneKit.SCNParticlePropertyAngle, unicode)
@@ -31,7 +38,6 @@ if os_level_key(os_release()) < os_level_key('10.12') or sys.maxsize >= 2**32:
 
             self.assertIsInstance(SceneKit.SCNParticlePropertyContactPoint, unicode)
             self.assertIsInstance(SceneKit.SCNParticlePropertyContactNormal, unicode)
-
 
             self.assertEqual(SceneKit.SCNParticleSortingModeNone, 0)
             self.assertEqual(SceneKit.SCNParticleSortingModeProjectedDepth, 1)
@@ -76,7 +82,7 @@ if os_level_key(os_release()) < os_level_key('10.12') or sys.maxsize >= 2**32:
             self.assertEqual(SceneKit.SCNParticleEventDeath, 1)
             self.assertEqual(SceneKit.SCNParticleEventCollision, 2)
 
-        @min_os_level('10.10')
+        @min_os_level("10.10")
         def testMethods10_10(self):
             self.assertResultIsBOOL(SceneKit.SCNParticleSystem.loops)
             self.assertArgIsBOOL(SceneKit.SCNParticleSystem.setLoops_, 0)
@@ -94,13 +100,25 @@ if os_level_key(os_release()) < os_level_key('10.12') or sys.maxsize >= 2**32:
             self.assertArgIsBOOL(SceneKit.SCNParticleSystem.setAffectedByGravity_, 0)
 
             self.assertResultIsBOOL(SceneKit.SCNParticleSystem.affectedByPhysicsFields)
-            self.assertArgIsBOOL(SceneKit.SCNParticleSystem.setAffectedByPhysicsFields_, 0)
+            self.assertArgIsBOOL(
+                SceneKit.SCNParticleSystem.setAffectedByPhysicsFields_, 0
+            )
 
             self.assertResultIsBOOL(SceneKit.SCNParticleSystem.particleDiesOnCollision)
-            self.assertArgIsBOOL(SceneKit.SCNParticleSystem.setParticleDiesOnCollision_, 0)
+            self.assertArgIsBOOL(
+                SceneKit.SCNParticleSystem.setParticleDiesOnCollision_, 0
+            )
 
-            self.assertArgIsBlock(SceneKit.SCNParticleSystem.handleEvent_forProperties_withBlock_, 2, SCNParticleEventBlock)
-            self.assertArgIsBlock(SceneKit.SCNParticleSystem.addModifierForProperties_atStage_withBlock_, 2, SCNParticleModifierBlock)
+            self.assertArgIsBlock(
+                SceneKit.SCNParticleSystem.handleEvent_forProperties_withBlock_,
+                2,
+                SCNParticleEventBlock,
+            )
+            self.assertArgIsBlock(
+                SceneKit.SCNParticleSystem.addModifierForProperties_atStage_withBlock_,
+                2,
+                SCNParticleModifierBlock,
+            )
 
 
 if __name__ == "__main__":

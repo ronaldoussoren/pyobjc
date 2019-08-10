@@ -10,8 +10,8 @@ from AppKit import NSBezierPath, NSColor
 from ScreenSaver import ScreenSaverView
 from random import random, randrange
 
-class SillyBalls (ScreenSaverView):
 
+class SillyBalls(ScreenSaverView):
     def animateOneFrame(self):
         # choose a random point.
         (x, y), (fw, fh) = self.frame()
@@ -21,12 +21,15 @@ class SillyBalls (ScreenSaverView):
         path = NSBezierPath.bezierPathWithOvalInRect_(((x, y), (ballSize, ballSize)))
 
         # make a random color.
-        randomColor = NSColor.colorWithCalibratedRed_green_blue_alpha_(random(), random(), random(), random())
+        randomColor = NSColor.colorWithCalibratedRed_green_blue_alpha_(
+            random(), random(), random(), random()
+        )
 
         # set it.
         randomColor.set()
 
         # draw a new ball.
         path.fill()
+
 
 objc.removeAutoreleasePool()

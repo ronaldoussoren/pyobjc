@@ -1,35 +1,33 @@
-
 from PyObjCTools.TestSupport import *
 from CoreData import *
 
-class TestCoreDataErrors (TestCase):
 
-    @min_os_level('10.6')
+class TestCoreDataErrors(TestCase):
+    @min_os_level("10.6")
     def testConstants10_6(self):
-        self.assertEqual(NSInferredMappingModelError, 134190)
-        self.assertEqual(NSExternalRecordImportError, 134200)
-        self.assertEqual(NSPersistentHistoryTokenExpiredError, 134301)
-
+        self.assertEqual(NSInferredMappingModelError, 134_190)
+        self.assertEqual(NSExternalRecordImportError, 134_200)
+        self.assertEqual(NSPersistentHistoryTokenExpiredError, 134_301)
 
     @min_os_level("10.5")
     def testConstants10_5(self):
         self.assertIsInstance(NSSQLiteErrorDomain, unicode)
 
-        self.assertEqual(NSCoreDataError, 134060)
-        self.assertEqual(NSPersistentStoreOperationError, 134070)
-        self.assertEqual(NSPersistentStoreOpenError, 134080)
-        self.assertEqual(NSPersistentStoreTimeoutError, 134090)
-        self.assertEqual(NSPersistentStoreUnsupportedRequestTypeError, 134091)
-        self.assertEqual(NSPersistentStoreIncompatibleVersionHashError, 134100)
-        self.assertEqual(NSMigrationError, 134110)
-        self.assertEqual(NSMigrationConstraintViolationError, 134111)
-        self.assertEqual(NSMigrationCancelledError, 134120)
-        self.assertEqual(NSMigrationMissingSourceModelError, 134130)
-        self.assertEqual(NSMigrationMissingMappingModelError, 134140)
-        self.assertEqual(NSMigrationManagerSourceStoreError, 134150)
-        self.assertEqual(NSMigrationManagerDestinationStoreError, 134160)
-        self.assertEqual(NSEntityMigrationPolicyError, 134170)
-        self.assertEqual(NSSQLiteError, 134180)
+        self.assertEqual(NSCoreDataError, 134_060)
+        self.assertEqual(NSPersistentStoreOperationError, 134_070)
+        self.assertEqual(NSPersistentStoreOpenError, 134_080)
+        self.assertEqual(NSPersistentStoreTimeoutError, 134_090)
+        self.assertEqual(NSPersistentStoreUnsupportedRequestTypeError, 134_091)
+        self.assertEqual(NSPersistentStoreIncompatibleVersionHashError, 134_100)
+        self.assertEqual(NSMigrationError, 134_110)
+        self.assertEqual(NSMigrationConstraintViolationError, 134_111)
+        self.assertEqual(NSMigrationCancelledError, 134_120)
+        self.assertEqual(NSMigrationMissingSourceModelError, 134_130)
+        self.assertEqual(NSMigrationMissingMappingModelError, 134_140)
+        self.assertEqual(NSMigrationManagerSourceStoreError, 134_150)
+        self.assertEqual(NSMigrationManagerDestinationStoreError, 134_160)
+        self.assertEqual(NSEntityMigrationPolicyError, 134_170)
+        self.assertEqual(NSSQLiteError, 134_180)
 
     def testConstants(self):
         self.assertIsInstance(NSDetailedErrorsKey, unicode)
@@ -56,20 +54,20 @@ class TestCoreDataErrors (TestCase):
         self.assertEqual(NSValidationStringTooShortError, 1670)
         self.assertEqual(NSValidationStringPatternMatchingError, 1680)
         self.assertEqual(NSValidationInvalidURIError, 1690)
-        self.assertEqual(NSManagedObjectContextLockingError, 132000)
-        self.assertEqual(NSPersistentStoreCoordinatorLockingError, 132010)
-        self.assertEqual(NSManagedObjectReferentialIntegrityError, 133000)
-        self.assertEqual(NSManagedObjectExternalRelationshipError, 133010)
-        self.assertEqual(NSManagedObjectMergeError, 133020)
-        self.assertEqual(NSManagedObjectConstraintMergeError, 133021)
-        self.assertEqual(NSPersistentStoreInvalidTypeError, 134000)
-        self.assertEqual(NSPersistentStoreTypeMismatchError, 134010)
-        self.assertEqual(NSPersistentStoreIncompatibleSchemaError, 134020)
-        self.assertEqual(NSPersistentStoreSaveError, 134030)
-        self.assertEqual(NSPersistentStoreIncompleteSaveError, 134040)
-        self.assertEqual(NSPersistentStoreSaveConflictsError, 134050)
+        self.assertEqual(NSManagedObjectContextLockingError, 132_000)
+        self.assertEqual(NSPersistentStoreCoordinatorLockingError, 132_010)
+        self.assertEqual(NSManagedObjectReferentialIntegrityError, 133_000)
+        self.assertEqual(NSManagedObjectExternalRelationshipError, 133_010)
+        self.assertEqual(NSManagedObjectMergeError, 133_020)
+        self.assertEqual(NSManagedObjectConstraintMergeError, 133_021)
+        self.assertEqual(NSPersistentStoreInvalidTypeError, 134_000)
+        self.assertEqual(NSPersistentStoreTypeMismatchError, 134_010)
+        self.assertEqual(NSPersistentStoreIncompatibleSchemaError, 134_020)
+        self.assertEqual(NSPersistentStoreSaveError, 134_030)
+        self.assertEqual(NSPersistentStoreIncompleteSaveError, 134_040)
+        self.assertEqual(NSPersistentStoreSaveConflictsError, 134_050)
 
-    @min_os_level('10.7')
+    @min_os_level("10.7")
     def testConstants10_7(self):
         self.assertIsInstance(NSPersistentStoreSaveConflictsErrorKey, unicode)
 

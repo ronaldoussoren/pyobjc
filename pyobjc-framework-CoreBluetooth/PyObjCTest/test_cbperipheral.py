@@ -3,7 +3,8 @@ import sys
 from PyObjCTools.TestSupport import *
 import CoreBluetooth
 
-class TestCBPeripheral (TestCase):
+
+class TestCBPeripheral(TestCase):
     @min_os_level("10.9")
     def testConstants(self):
         self.assertEqual(CoreBluetooth.CBPeripheralStateDisconnected, 0)
@@ -20,7 +21,9 @@ class TestCBPeripheral (TestCase):
 
     @min_os_level("10.9")
     def testMethods(self):
-        self.assertArgIsBOOL(CoreBluetooth.CBPeripheral.setNotifyValue_forCharacteristic_, 0)
+        self.assertArgIsBOOL(
+            CoreBluetooth.CBPeripheral.setNotifyValue_forCharacteristic_, 0
+        )
 
     @onlyOn64Bit
     @min_os_level("10.9")
@@ -34,7 +37,9 @@ class TestCBPeripheral (TestCase):
 
     @min_os_level("10.9")
     def testProtocols(self):
-        self.assertIsInstance(objc.protocolNamed("CBPeripheralDelegate"), objc.formal_protocol)
+        self.assertIsInstance(
+            objc.protocolNamed("CBPeripheralDelegate"), objc.formal_protocol
+        )
 
 
 if __name__ == "__main__":

@@ -5,27 +5,30 @@ from Foundation import *
 from PyObjCTools.TestSupport import *
 import operator
 
+
 def do_set_slice(op, start, stop, value):
     op[start:stop] = value
+
 
 def do_del_slice(op, start, stop):
     del op[start:stop]
 
-class TestNSPoint (TestCase):
+
+class TestNSPoint(TestCase):
     def testConstructor(self):
         p = NSPoint()
         self.assertIsInstance(p, NSPoint)
         self.assertEqual(p.x, 0)
         self.assertEqual(p.y, 0)
 
-        p = NSPoint(1,2)
+        p = NSPoint(1, 2)
         self.assertIsInstance(p, NSPoint)
         self.assertEqual(p.x, 1)
         self.assertEqual(p.y, 2)
         self.assertEqual(p[0], 1)
         self.assertEqual(p[1], 2)
 
-        p = NSPoint(y=1,x=2)
+        p = NSPoint(y=1, x=2)
         self.assertIsInstance(p, NSPoint)
         self.assertEqual(p.x, 2)
         self.assertEqual(p.y, 1)
@@ -70,8 +73,8 @@ class TestNSPoint (TestCase):
 
         self.assertTrue(p != q)
         self.assertTrue(p != Q)
-        self.assertTrue(not(p != p))
-        self.assertTrue(not(p != P))
+        self.assertTrue(not (p != p))
+        self.assertTrue(not (p != P))
 
         self.assertTrue(q >= p)
         self.assertTrue(q >= P)
@@ -104,23 +107,23 @@ class TestNSPoint (TestCase):
         self.assertEqual(repr(p), "<NSPoint x=<NSPoint ...> y=98>")
 
     def testSlice(self):
-        p = NSPoint(1,2)
+        p = NSPoint(1, 2)
         q = p[:]
 
         self.assertIsInstance(q, tuple)
-        self.assertEqual(q, (1.0,2.0))
+        self.assertEqual(q, (1.0, 2.0))
 
     def testDeleteAttr(self):
-        p = NSPoint(1,2)
-        self.assertRaises(TypeError, delattr, p, 'x')
+        p = NSPoint(1, 2)
+        self.assertRaises(TypeError, delattr, p, "x")
 
     def testDeleteSlice(self):
-        p = NSPoint(1,2)
+        p = NSPoint(1, 2)
         self.assertRaises(TypeError, operator.delitem, p, 0)
 
     def testAssignSlice(self):
-        p = NSPoint(1,2)
-        p[:] = (4,5)
+        p = NSPoint(1, 2)
+        p[:] = (4, 5)
 
         self.assertIsInstance(p, NSPoint)
         self.assertEqual(p.x, 4)
@@ -131,29 +134,30 @@ class TestNSPoint (TestCase):
         self.assertEqual(p.x, 4)
         self.assertEqual(p.y, 5)
 
-        self.assertRaises(TypeError, do_set_slice, p, 0, 2, [1,2,3])
+        self.assertRaises(TypeError, do_set_slice, p, 0, 2, [1, 2, 3])
         self.assertRaises(TypeError, do_set_slice, p, 0, 2, [3])
-        self.assertRaises(TypeError, do_set_slice, p, 0, 3, [1,2,3])
+        self.assertRaises(TypeError, do_set_slice, p, 0, 3, [1, 2, 3])
 
         self.assertRaises(TypeError, do_del_slice, p, 0, 0)
         self.assertRaises(TypeError, do_del_slice, p, 0, 1)
         self.assertRaises(TypeError, do_del_slice, p, 0, 2)
 
-class TestNSSize (TestCase):
+
+class TestNSSize(TestCase):
     def testConstructor(self):
         p = NSSize()
         self.assertIsInstance(p, NSSize)
         self.assertEqual(p.width, 0)
         self.assertEqual(p.height, 0)
 
-        p = NSSize(1,2)
+        p = NSSize(1, 2)
         self.assertIsInstance(p, NSSize)
         self.assertEqual(p.width, 1)
         self.assertEqual(p.height, 2)
         self.assertEqual(p[0], 1)
         self.assertEqual(p[1], 2)
 
-        p = NSSize(height=1,width=2)
+        p = NSSize(height=1, width=2)
         self.assertIsInstance(p, NSSize)
         self.assertEqual(p.width, 2)
         self.assertEqual(p.height, 1)
@@ -171,21 +175,22 @@ class TestNSSize (TestCase):
         self.assertEqual(p.width, 1)
         self.assertEqual(p.height, 2)
 
-class TestNSRange (TestCase):
+
+class TestNSRange(TestCase):
     def testConstructor(self):
         p = NSRange()
         self.assertIsInstance(p, NSRange)
         self.assertEqual(p.location, 0)
         self.assertEqual(p.length, 0)
 
-        p = NSRange(1,2)
+        p = NSRange(1, 2)
         self.assertIsInstance(p, NSRange)
         self.assertEqual(p.location, 1)
         self.assertEqual(p.length, 2)
         self.assertEqual(p[0], 1)
         self.assertEqual(p[1], 2)
 
-        p = NSRange(length=1,location=2)
+        p = NSRange(length=1, location=2)
         self.assertIsInstance(p, NSRange)
         self.assertEqual(p.location, 2)
         self.assertEqual(p.length, 1)
@@ -203,7 +208,8 @@ class TestNSRange (TestCase):
         self.assertEqual(p.width, 1)
         self.assertEqual(p.height, 2)
 
-class TestNSRect (TestCase):
+
+class TestNSRect(TestCase):
     def testConstructor(self):
         p = NSRect()
         self.assertIsInstance(p, NSRect)
@@ -212,14 +218,14 @@ class TestNSRect (TestCase):
         self.assertEqual(p.origin, NSPoint(0, 0))
         self.assertEqual(p.size, NSSize(0, 0))
 
-        p = NSRect(1,2)
+        p = NSRect(1, 2)
         self.assertIsInstance(p, NSRect)
         self.assertEqual(p.origin, 1)
         self.assertEqual(p.size, 2)
         self.assertEqual(p[0], 1)
         self.assertEqual(p[1], 2)
 
-        p = NSRect(size=1,origin=2)
+        p = NSRect(size=1, origin=2)
         self.assertIsInstance(p, NSRect)
         self.assertEqual(p.origin, 2)
         self.assertEqual(p.size, 1)
@@ -235,7 +241,7 @@ class TestNSRect (TestCase):
         p = NSMakeRect(1, 2, 3, 4)
         self.assertIsInstance(p, NSRect)
         self.assertEqual(p.origin, (1, 2))
-        self.assertEqual(p.size, (3,4))
+        self.assertEqual(p.size, (3, 4))
         self.assertEqual(p.origin.x, 1)
         self.assertEqual(p.origin.y, 2)
         self.assertEqual(p.size.width, 3)
@@ -247,7 +253,6 @@ class TestNSRect (TestCase):
         self.assertEqual(v.left, 0.0)
         self.assertEqual(v.bottom, 0.0)
         self.assertEqual(v.right, 0.0)
-
 
 
 if __name__ == "__main__":

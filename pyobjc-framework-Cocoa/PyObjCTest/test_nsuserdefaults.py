@@ -1,13 +1,19 @@
 from Foundation import *
 from PyObjCTools.TestSupport import *
 
-class PythonListAsValue (TestCase):
 
+class PythonListAsValue(TestCase):
     def testSettingPythonList(self):
         defaults = NSUserDefaults.standardUserDefaults()
-        defaults.setObject_forKey_([b'a'.decode('ascii'), b'b'.decode('ascii'), b'c'.decode('ascii')], b'randomKey'.decode('ascii'))
+        defaults.setObject_forKey_(
+            [b"a".decode("ascii"), b"b".decode("ascii"), b"c".decode("ascii")],
+            b"randomKey".decode("ascii"),
+        )
 
-        self.assertEqual(defaults.arrayForKey_(b'randomKey'.decode('ascii')), [b'a'.decode('ascii'), b'b'.decode('ascii'), b'c'.decode('ascii')])
+        self.assertEqual(
+            defaults.arrayForKey_(b"randomKey".decode("ascii")),
+            [b"a".decode("ascii"), b"b".decode("ascii"), b"c".decode("ascii")],
+        )
 
     def testMethods(self):
         self.assertResultIsBOOL(NSUserDefaults.boolForKey_)
@@ -15,7 +21,6 @@ class PythonListAsValue (TestCase):
         self.assertResultIsBOOL(NSUserDefaults.synchronize)
         self.assertResultIsBOOL(NSUserDefaults.objectIsForcedForKey_)
         self.assertResultIsBOOL(NSUserDefaults.objectIsForcedForKey_inDomain_)
-
 
     def testConstants(self):
         self.assertIsInstance(NSGlobalDomain, unicode)
@@ -50,6 +55,7 @@ class PythonListAsValue (TestCase):
         self.assertIsInstance(NSShortDateFormatString, unicode)
         self.assertIsInstance(NSPositiveCurrencyFormatString, unicode)
         self.assertIsInstance(NSNegativeCurrencyFormatString, unicode)
+
 
 if __name__ == "__main__":
     main()

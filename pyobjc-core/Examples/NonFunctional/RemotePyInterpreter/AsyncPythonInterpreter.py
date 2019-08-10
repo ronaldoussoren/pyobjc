@@ -79,7 +79,7 @@ class AsyncPythonInterpreter(NSObject):
                     rval = typeCheck(rval)
                 except TypeError:
                     NSLog(
-                        u"%s failed type check %s with value %s",
+                        "%s failed type check %s with value %s",
                         k,
                         typeCheck.__name__,
                         rval,
@@ -90,15 +90,13 @@ class AsyncPythonInterpreter(NSObject):
                 rval = v
             return rval
 
-        self.host = default(u"AsyncPythonInterpreterInterpreterHost", u"127.0.0.1", str)
-        self.port = default(u"AsyncPythonInterpreterInterpreterPort", 0, int)
+        self.host = default("AsyncPythonInterpreterInterpreterHost", "127.0.0.1", str)
+        self.port = default("AsyncPythonInterpreterInterpreterPort", 0, int)
         self.interpreterPath = default(
-            u"AsyncPythonInterpreterInterpreterPath", u"/usr/bin/python", unicode
+            "AsyncPythonInterpreterInterpreterPath", "/usr/bin/python", unicode
         )
         self.scriptPath = (
-            type(self)
-            .bundleForClass()
-            .pathForResource_ofType_(u"tcpinterpreter", u"py")
+            type(self).bundleForClass().pathForResource_ofType_("tcpinterpreter", "py")
         )
 
     def connect(self):
@@ -120,8 +118,7 @@ class AsyncPythonInterpreter(NSObject):
             if k.startswith("PYTHON"):
                 del os.environ[k]
         self.childTask = NSTask.launchedTaskWithLaunchPath_arguments_(
-            self.interpreterPath,
-            [self.scriptPath, repr(self.serverSocket.getsockname())],
+            self.interpreterPath, [self.scriptPath, repr(self.serverSocket.getsockname())]
         )
         nc.addObserver_selector_name_object_(
             self, "childTaskTerminated:", NSTaskDidTerminateNotification, self.childTask
@@ -145,7 +142,7 @@ class AsyncPythonInterpreter(NSObject):
         self.remoteFileHandle.readInBackgroundAndNotify()
         self.commandReactor.connectionEstablished_(self)
         NSNotificationCenter.defaultCenter().postNotificationName_object_(
-            u"AsyncPythonInterpreterOpened", self
+            "AsyncPythonInterpreterOpened", self
         )
 
     def remoteFileHandleReadCompleted_(self, notification):
@@ -154,7 +151,7 @@ class AsyncPythonInterpreter(NSObject):
         newData = ui.objectForKey_(NSFileHandleNotificationDataItem)
         if newData is None:
             self.close()
-            NSLog(u"Error: %@", ui.objectForKey_(NSFileHandleError))
+            NSLog("Error: %@", ui.objectForKey_(NSFileHandleError))
             return
         bytes = newData.bytes()[:]
         if len(bytes) == 0:
@@ -223,7 +220,7 @@ class AsyncPythonInterpreter(NSObject):
         NSNotificationCenter.defaultCenter().removeObserver_(self)
         self.finalClose()
         NSNotificationCenter.defaultCenter().postNotificationName_object_(
-            u"AsyncPythonInterpreterClosed", self
+            "AsyncPythonInterpreterClosed", self
         )
 
     def finalClose(self):
@@ -255,7 +252,7 @@ def test_console():
 
     stopper = ThisEventLoopStopper.alloc().init()
     NSNotificationCenter.defaultCenter().addObserver_selector_name_object_(
-        stopper, "interpFinished:", u"AsyncPythonInterpreterClosed", interp
+        stopper, "interpFinished:", "AsyncPythonInterpreterClosed", interp
     )
     AppHelper.runConsoleEventLoop(installInterrupt=True)
 

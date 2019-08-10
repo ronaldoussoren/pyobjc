@@ -2,7 +2,8 @@ from PyObjCTools.TestSupport import *
 
 from Foundation import *
 
-class TestNSDateFormatter (TestCase):
+
+class TestNSDateFormatter(TestCase):
     def testOutput(self):
         formatter = NSDateFormatter.alloc().init()
         formatter.setDateFormat_("yyyy/mm/dd")
@@ -12,10 +13,11 @@ class TestNSDateFormatter (TestCase):
         self.assertArgIsInOut(NSDateFormatter.getObjectValue_forString_range_error_, 2)
         self.assertArgIsOut(NSDateFormatter.getObjectValue_forString_range_error_, 3)
         ok, val, range, err = formatter.getObjectValue_forString_range_error_(
-                None, "2008/10/12", NSRange(0, 10), None)
+            None, "2008/10/12", NSRange(0, 10), None
+        )
         self.assertTrue(ok)
         self.assertIsInstance(val, NSDate)
-        self.assertEqual(range , NSRange(0, 10))
+        self.assertEqual(range, NSRange(0, 10))
         self.assertIs(err, None)
         self.assertResultIsBOOL(NSDateFormatter.getObjectValue_forString_range_error_)
         self.assertArgIsInOut(NSDateFormatter.getObjectValue_forString_range_error_, 2)
@@ -41,7 +43,7 @@ class TestNSDateFormatter (TestCase):
         self.assertArgIsBOOL(NSDateFormatter.initWithDateFormat_allowNaturalLanguage_, 1)
         self.assertResultIsBOOL(NSDateFormatter.allowsNaturalLanguage)
 
-    @min_os_level('10.6')
+    @min_os_level("10.6")
     def testMethods10_6(self):
         self.assertResultIsBOOL(NSDateFormatter.doesRelativeDateFormatting)
         self.assertArgIsBOOL(NSDateFormatter.setDoesRelativeDateFormatting_, 0)

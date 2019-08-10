@@ -1,11 +1,10 @@
-
 from PyObjCTools.TestSupport import *
 
 import Security
 
-class TestAuthorizationDB (TestCase):
 
-    @min_os_level('10.7')
+class TestAuthorizationDB(TestCase):
+    @min_os_level("10.7")
     def test_constants_10_6(self):
         self.assertIsInstance(Security.kSecClass, unicode)
         self.assertIsInstance(Security.kSecClassInternetPassword, unicode)
@@ -110,7 +109,7 @@ class TestAuthorizationDB (TestCase):
         self.assertIsInstance(Security.kSecUseItemList, unicode)
         self.assertIsInstance(Security.kSecMatchCaseInsensitive, unicode)
 
-    @min_os_level('10.7')
+    @min_os_level("10.7")
     def test_constants_10_7(self):
         self.assertIsInstance(Security.kSecClassGenericPassword, unicode)
         self.assertIsInstance(Security.kSecClassCertificate, unicode)
@@ -144,7 +143,7 @@ class TestAuthorizationDB (TestCase):
         self.assertIsInstance(Security.kSecMatchWidthInsensitive, unicode)
         self.assertIsInstance(Security.kSecUseKeychain, unicode)
 
-    @min_os_level('10.9')
+    @min_os_level("10.9")
     def test_constants_10_9(self):
         self.assertIsInstance(Security.kSecAttrAccessible, unicode)
         self.assertIsInstance(Security.kSecAttrAccessGroup, unicode)
@@ -153,19 +152,25 @@ class TestAuthorizationDB (TestCase):
         self.assertIsInstance(Security.kSecAttrAccessibleWhenUnlocked, unicode)
         self.assertIsInstance(Security.kSecAttrAccessibleAfterFirstUnlock, unicode)
         self.assertIsInstance(Security.kSecAttrAccessibleAlways, unicode)
-        self.assertIsInstance(Security.kSecAttrAccessibleWhenUnlockedThisDeviceOnly, unicode)
-        self.assertIsInstance(Security.kSecAttrAccessibleAfterFirstUnlockThisDeviceOnly, unicode)
+        self.assertIsInstance(
+            Security.kSecAttrAccessibleWhenUnlockedThisDeviceOnly, unicode
+        )
+        self.assertIsInstance(
+            Security.kSecAttrAccessibleAfterFirstUnlockThisDeviceOnly, unicode
+        )
         self.assertIsInstance(Security.kSecAttrAccessibleAlwaysThisDeviceOnly, unicode)
         self.assertIsInstance(Security.kSecAttrKeyTypeEC, unicode)
 
-    @min_os_level('10.10')
+    @min_os_level("10.10")
     def test_constants_10_10(self):
         self.assertIsInstance(Security.kSecAttrAccessControl, unicode)
-        self.assertIsInstance(Security.kSecAttrAccessibleWhenPasscodeSetThisDeviceOnly, unicode)
+        self.assertIsInstance(
+            Security.kSecAttrAccessibleWhenPasscodeSetThisDeviceOnly, unicode
+        )
         self.assertIsInstance(Security.kSecUseOperationPrompt, unicode)
         self.assertIsInstance(Security.kSecUseNoAuthenticationUI, unicode)
 
-    @min_os_level('10.11')
+    @min_os_level("10.11")
     def test_constants_10_11(self):
         self.assertIsInstance(Security.kSecAttrSyncViewHint, unicode)
         self.assertIsInstance(Security.kSecUseAuthenticationUI, unicode)
@@ -174,32 +179,36 @@ class TestAuthorizationDB (TestCase):
         self.assertIsInstance(Security.kSecUseAuthenticationUIFail, unicode)
         self.assertIsInstance(Security.kSecUseAuthenticationUISkip, unicode)
 
-    @min_os_level('10.12')
+    @min_os_level("10.12")
     def test_constants_10_12(self):
         self.assertIsInstance(Security.kSecAttrTokenID, unicode)
         self.assertIsInstance(Security.kSecAttrKeyTypeECSECPrimeRandom, unicode)
         self.assertIsInstance(Security.kSecAttrTokenIDSecureEnclave, unicode)
         self.assertIsInstance(Security.kSecAttrAccessGroupToken, unicode)
 
-    @min_os_level('10.13')
+    @min_os_level("10.13")
     def test_constants_10_13(self):
         self.assertIsInstance(Security.kSecAttrPersistantReference, unicode)
         self.assertIsInstance(Security.kSecAttrPersistentReference, unicode)
 
-    @min_os_level('10.15')
+    @min_os_level("10.15")
     def test_constants_10_15(self):
         self.assertIsInstance(Security.kSecUseDataProtectionKeychain, unicode)
 
-    @min_os_level('10.6')
+    @min_os_level("10.6")
     def test_functions(self):
         self.assertResultHasType(Security.SecItemCopyMatching, objc._C_INT)
         self.assertArgHasType(Security.SecItemCopyMatching, 0, objc._C_ID)
-        self.assertArgHasType(Security.SecItemCopyMatching, 1, objc._C_OUT + objc._C_PTR + objc._C_ID)
+        self.assertArgHasType(
+            Security.SecItemCopyMatching, 1, objc._C_OUT + objc._C_PTR + objc._C_ID
+        )
         self.assertArgIsCFRetained(Security.SecItemCopyMatching, 1)
 
         self.assertResultHasType(Security.SecItemAdd, objc._C_INT)
         self.assertArgHasType(Security.SecItemAdd, 0, objc._C_ID)
-        self.assertArgHasType(Security.SecItemAdd, 1, objc._C_OUT + objc._C_PTR + objc._C_ID)
+        self.assertArgHasType(
+            Security.SecItemAdd, 1, objc._C_OUT + objc._C_PTR + objc._C_ID
+        )
         self.assertArgIsCFRetained(Security.SecItemAdd, 1)
 
         self.assertResultHasType(Security.SecItemUpdate, objc._C_INT)
@@ -208,6 +217,7 @@ class TestAuthorizationDB (TestCase):
 
         self.assertResultHasType(Security.SecItemDelete, objc._C_INT)
         self.assertArgHasType(Security.SecItemDelete, 0, objc._C_ID)
+
 
 if __name__ == "__main__":
     main()

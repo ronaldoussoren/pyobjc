@@ -4,7 +4,7 @@ if sys.maxsize > 2 ** 32:
     from PyObjCTools.TestSupport import *
     import CoreML
 
-    class TestMLTask (TestCase):
+    class TestMLTask(TestCase):
         def test_constants(self):
             self.assertEqual(CoreML.MLTaskStateSuspended, 1)
             self.assertEqual(CoreML.MLTaskStateRunning, 2)

@@ -1,12 +1,12 @@
-
 from PyObjCTools.TestSupport import *
 from AppKit import *
 
-class TestNSTextList (TestCase):
+
+class TestNSTextList(TestCase):
     def testConstants(self):
         self.assertEqual(NSTextListPrependEnclosingMarker, 1)
 
-    @min_os_level('10.13')
+    @min_os_level("10.13")
     def testConstants10_13(self):
         self.assertIsInstance(NSTextListMarkerBox, unicode)
         self.assertIsInstance(NSTextListMarkerCheck, unicode)
@@ -25,6 +25,7 @@ class TestNSTextList (TestCase):
         self.assertIsInstance(NSTextListMarkerLowercaseRoman, unicode)
         self.assertIsInstance(NSTextListMarkerUppercaseRoman, unicode)
         self.assertIsInstance(NSTextListMarkerDecimal, unicode)
+
 
 if __name__ == "__main__":
     main()

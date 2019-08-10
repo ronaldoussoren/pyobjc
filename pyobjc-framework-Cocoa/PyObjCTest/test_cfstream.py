@@ -6,47 +6,46 @@ import contextlib
 from .test_cfsocket import onTheNetwork
 
 
-class TestStream (TestCase):
+class TestStream(TestCase):
     def testTypes(self):
         try:
-            if objc.lookUpClass('__NSCFInputStream') is not CFReadStreamRef:
+            if objc.lookUpClass("__NSCFInputStream") is not CFReadStreamRef:
                 self.assertIsCFType(CFReadStreamRef)
         except objc.error:
             try:
-                if objc.lookUpClass('NSCFInputStream') is not CFReadStreamRef:
+                if objc.lookUpClass("NSCFInputStream") is not CFReadStreamRef:
                     self.assertIsCFType(CFReadStreamRef)
             except objc.error:
                 self.assertIsCFType(CFReadStreamRef)
 
         try:
-            if objc.lookUpClass('__NSCFOutputStream') is not CFWriteStreamRef:
+            if objc.lookUpClass("__NSCFOutputStream") is not CFWriteStreamRef:
                 self.assertIsCFType(CFWriteStreamRef)
         except objc.error:
             try:
-                if objc.lookUpClass('NSCFOutputStream') is not CFWriteStreamRef:
+                if objc.lookUpClass("NSCFOutputStream") is not CFWriteStreamRef:
                     self.assertIsCFType(CFWriteStreamRef)
             except objc.error:
                 self.assertIsCFType(CFWriteStreamRef)
 
-
     def testConstants(self):
-        self.assertEqual(kCFStreamStatusNotOpen , 0)
-        self.assertEqual(kCFStreamStatusOpening , 1)
-        self.assertEqual(kCFStreamStatusOpen , 2)
-        self.assertEqual(kCFStreamStatusReading , 3)
-        self.assertEqual(kCFStreamStatusWriting , 4)
-        self.assertEqual(kCFStreamStatusAtEnd , 5)
-        self.assertEqual(kCFStreamStatusClosed , 6)
-        self.assertEqual(kCFStreamStatusError , 7)
-        self.assertEqual(kCFStreamEventNone , 0)
-        self.assertEqual(kCFStreamEventOpenCompleted , 1)
-        self.assertEqual(kCFStreamEventHasBytesAvailable , 2)
-        self.assertEqual(kCFStreamEventCanAcceptBytes , 4)
-        self.assertEqual(kCFStreamEventErrorOccurred , 8)
-        self.assertEqual(kCFStreamEventEndEncountered , 16)
-        self.assertEqual(kCFStreamErrorDomainCustom , -1)
-        self.assertEqual(kCFStreamErrorDomainPOSIX , 1)
-        self.assertEqual(kCFStreamErrorDomainMacOSStatus , 2)
+        self.assertEqual(kCFStreamStatusNotOpen, 0)
+        self.assertEqual(kCFStreamStatusOpening, 1)
+        self.assertEqual(kCFStreamStatusOpen, 2)
+        self.assertEqual(kCFStreamStatusReading, 3)
+        self.assertEqual(kCFStreamStatusWriting, 4)
+        self.assertEqual(kCFStreamStatusAtEnd, 5)
+        self.assertEqual(kCFStreamStatusClosed, 6)
+        self.assertEqual(kCFStreamStatusError, 7)
+        self.assertEqual(kCFStreamEventNone, 0)
+        self.assertEqual(kCFStreamEventOpenCompleted, 1)
+        self.assertEqual(kCFStreamEventHasBytesAvailable, 2)
+        self.assertEqual(kCFStreamEventCanAcceptBytes, 4)
+        self.assertEqual(kCFStreamEventErrorOccurred, 8)
+        self.assertEqual(kCFStreamEventEndEncountered, 16)
+        self.assertEqual(kCFStreamErrorDomainCustom, -1)
+        self.assertEqual(kCFStreamErrorDomainPOSIX, 1)
+        self.assertEqual(kCFStreamErrorDomainMacOSStatus, 2)
         self.assertIsInstance(kCFStreamPropertyDataWritten, unicode)
         self.assertIsInstance(kCFStreamPropertyAppendToFile, unicode)
         self.assertIsInstance(kCFStreamPropertyFileCurrentOffset, unicode)
@@ -74,8 +73,8 @@ class TestStream (TestCase):
 
     def testStructs(self):
         o = CFStreamError()
-        self.assertHasAttr(o, 'domain')
-        self.assertHasAttr(o, 'error')
+        self.assertHasAttr(o, "domain")
+        self.assertHasAttr(o, "error")
 
     def testGetTypeID(self):
         v = CFReadStreamGetTypeID()
@@ -85,17 +84,18 @@ class TestStream (TestCase):
 
     def testReadStream(self):
         strval = b"hello world"
-        self.assertArgHasType(CFReadStreamCreateWithBytesNoCopy, 1, b'n^v')
+        self.assertArgHasType(CFReadStreamCreateWithBytesNoCopy, 1, b"n^v")
         self.assertArgSizeInArg(CFReadStreamCreateWithBytesNoCopy, 1, 2)
-        stream = CFReadStreamCreateWithBytesNoCopy(None,
-                strval, len(strval), kCFAllocatorNull)
+        stream = CFReadStreamCreateWithBytesNoCopy(
+            None, strval, len(strval), kCFAllocatorNull
+        )
         self.assertIsInstance(stream, CFReadStreamRef)
         r, buf = CFReadStreamRead(stream, None, 10)
         self.assertEqual(r, -1)
-        self.assertEqual(buf, b'')
+        self.assertEqual(buf, b"")
 
         self.assertResultIsCFRetained(CFReadStreamCopyError)
-        err  = CFReadStreamCopyError(stream)
+        err = CFReadStreamCopyError(stream)
         if err is not None:
             self.assertIsInstance(err, CFErrorRef)
         status = CFReadStreamGetStatus(stream)
@@ -112,7 +112,7 @@ class TestStream (TestCase):
         self.assertResultIsBOOL(CFReadStreamHasBytesAvailable)
         r = CFReadStreamHasBytesAvailable(stream)
         self.assertIs(r, True)
-        self.assertArgHasType(CFReadStreamRead, 1, b'o^v')
+        self.assertArgHasType(CFReadStreamRead, 1, b"o^v")
         self.assertArgSizeInArg(CFReadStreamRead, 1, 2)
         self.assertArgSizeInResult(CFReadStreamRead, 1)
         r, buf = CFReadStreamRead(stream, None, 5)
@@ -131,12 +131,12 @@ class TestStream (TestCase):
         self.assertIsInstance(status, (int, long))
         self.assertEqual(status, kCFStreamStatusClosed)
 
-
         del stream
 
         self.assertResultIsCFRetained(CFReadStreamCreateWithFile)
-        stream = CFReadStreamCreateWithFile(None,
-                    CFURLCreateWithString(None, b"file:///etc/shells".decode('ascii'), None))
+        stream = CFReadStreamCreateWithFile(
+            None, CFURLCreateWithString(None, b"file:///etc/shells".decode("ascii"), None)
+        )
         self.assertIsInstance(stream, CFReadStreamRef)
         r = CFReadStreamOpen(stream)
         self.assertIs(r, True)
@@ -148,7 +148,7 @@ class TestStream (TestCase):
         self.assertEqual(r, 5)
         self.assertIsInstance(buf, bytes)
         self.assertResultSizeInArg(CFReadStreamGetBuffer, 2)
-        self.assertResultHasType(CFReadStreamGetBuffer, b'^v')
+        self.assertResultHasType(CFReadStreamGetBuffer, b"^v")
         self.assertArgIsOut(CFReadStreamGetBuffer, 2)
         buf, numBytes = CFReadStreamGetBuffer(stream, 20, None)
         if buf is objc.NULL:
@@ -167,15 +167,16 @@ class TestStream (TestCase):
 
         err = CFReadStreamGetError(stream)
         self.assertIsInstance(err, CFStreamError)
-        self.assertEqual(err.domain , 0)
-        self.assertEqual(err.error , 0)
+        self.assertEqual(err.domain, 0)
+        self.assertEqual(err.error, 0)
 
     def testWriteStream(self):
         import array
-        a = array.array('b', b" "*20)
+
+        a = array.array("b", b" " * 20)
 
         # XXX: cannot express the actual type as metadata :-(
-        self.assertArgHasType(CFWriteStreamCreateWithBuffer, 1, b'n^v')
+        self.assertArgHasType(CFWriteStreamCreateWithBuffer, 1, b"n^v")
         self.assertArgSizeInArg(CFWriteStreamCreateWithBuffer, 1, 2)
         stream = CFWriteStreamCreateWithBuffer(None, a, 20)
         self.assertIsInstance(stream, CFWriteStreamRef)
@@ -189,19 +190,19 @@ class TestStream (TestCase):
         self.assertResultIsBOOL(CFWriteStreamCanAcceptBytes)
         b = CFWriteStreamCanAcceptBytes(stream)
         self.assertIs(b, True)
-        self.assertArgHasType(CFWriteStreamWrite, 1, b'n^v')
+        self.assertArgHasType(CFWriteStreamWrite, 1, b"n^v")
         self.assertArgSizeInArg(CFWriteStreamWrite, 1, 2)
         n = CFWriteStreamWrite(stream, b"0123456789ABCDE", 15)
         self.assertEqual(n, 15)
 
         if sys.version_info[0] == 3:
-            self.assertEqual(bytes(a[0:1]), b'0')
-            self.assertEqual(bytes(a[1:2]), b'1')
-            self.assertEqual(bytes(a[9:10]), b'9')
+            self.assertEqual(bytes(a[0:1]), b"0")
+            self.assertEqual(bytes(a[1:2]), b"1")
+            self.assertEqual(bytes(a[9:10]), b"9")
         else:
-            self.assertEqual((a[0]), ord('0'))
-            self.assertEqual((a[1]), ord('1'))
-            self.assertEqual((a[9]), ord('9'))
+            self.assertEqual((a[0]), ord("0"))
+            self.assertEqual((a[1]), ord("1"))
+            self.assertEqual((a[9]), ord("9"))
 
         n = CFWriteStreamWrite(stream, b"0123456789ABCDE", 15)
         self.assertEqual(n, -1)
@@ -210,15 +211,13 @@ class TestStream (TestCase):
         self.assertIsInstance(err, CFErrorRef)
         err = CFWriteStreamGetError(stream)
         self.assertIsInstance(err, CFStreamError)
-        self.assertEqual(err.domain , kCFStreamErrorDomainPOSIX)
-        self.assertEqual(err.error , errno.ENOMEM)
+        self.assertEqual(err.domain, kCFStreamErrorDomainPOSIX)
+        self.assertEqual(err.error, errno.ENOMEM)
         status = CFWriteStreamGetStatus(stream)
         self.assertIsInstance(status, (int, long))
         self.assertEqual(status, kCFStreamStatusError)
 
-
         del stream
-
 
         self.assertResultIsCFRetained(CFWriteStreamCreateWithAllocatedBuffers)
         stream = CFWriteStreamCreateWithAllocatedBuffers(None, None)
@@ -233,7 +232,7 @@ class TestStream (TestCase):
         self.assertIsInstance(buf, CFDataRef)
         buf = CFDataGetBytes(buf, (0, CFDataGetLength(buf)), None)
         self.assertIsInstance(buf, bytes)
-        self.assertEqual(buf, b'0123456789ABCDE')
+        self.assertEqual(buf, b"0123456789ABCDE")
 
         CFWriteStreamClose(stream)
         status = CFWriteStreamGetStatus(stream)
@@ -242,9 +241,12 @@ class TestStream (TestCase):
 
         del stream
 
-
-        stream = CFWriteStreamCreateWithFile(None,
-                CFURLCreateWithString(None, b"file:///tmp/pyobjc.test.txt".decode('ascii'), None))
+        stream = CFWriteStreamCreateWithFile(
+            None,
+            CFURLCreateWithString(
+                None, b"file:///tmp/pyobjc.test.txt".decode("ascii"), None
+            ),
+        )
         self.assertIsInstance(stream, CFWriteStreamRef)
         r = CFWriteStreamOpen(stream)
         self.assertIs(r, True)
@@ -269,16 +271,16 @@ class TestStream (TestCase):
         self.assertResultIsBOOL(CFWriteStreamSetProperty)
         CFWriteStreamSetProperty(stream, kCFStreamPropertyFileCurrentOffset, 0)
 
-        with open('/tmp/pyobjc.test.txt', 'rb') as fp:
+        with open("/tmp/pyobjc.test.txt", "rb") as fp:
             data = fp.read()
-        self.assertEqual(data, b'0123456789ABCDE')
-        os.unlink('/tmp/pyobjc.test.txt')
+        self.assertEqual(data, b"0123456789ABCDE")
+        os.unlink("/tmp/pyobjc.test.txt")
 
     def testStreamPair(self):
 
         self.assertArgIsOut(CFStreamCreateBoundPair, 1)
         self.assertArgIsOut(CFStreamCreateBoundPair, 2)
-        readStream, writeStream = CFStreamCreateBoundPair(None, None, None, 1024*1024)
+        readStream, writeStream = CFStreamCreateBoundPair(None, None, None, 1024 * 1024)
         self.assertIsInstance(readStream, CFReadStreamRef)
         self.assertIsInstance(writeStream, CFWriteStreamRef)
         # Make sure we actually have streams instead of random pointers.
@@ -295,12 +297,13 @@ class TestStream (TestCase):
     @onlyIf(onTheNetwork(), "Test requires a working Internet connection")
     def testSockets(self):
         with contextlib.closing(socket.socket(socket.AF_INET, socket.SOCK_STREAM)) as sd:
-            sd.connect(('www.apple.com', 80))
+            sd.connect(("www.apple.com", 80))
 
             self.assertArgIsOut(CFStreamCreatePairWithSocket, 2)
             self.assertArgIsOut(CFStreamCreatePairWithSocket, 3)
-            readStream, writeStream = CFStreamCreatePairWithSocket(None,
-                    sd.fileno(), None, None)
+            readStream, writeStream = CFStreamCreatePairWithSocket(
+                None, sd.fileno(), None, None
+            )
 
             status = CFReadStreamGetStatus(readStream)
             self.assertIsInstance(status, (int, long))
@@ -314,8 +317,9 @@ class TestStream (TestCase):
 
         self.assertArgIsOut(CFStreamCreatePairWithSocketToHost, 3)
         self.assertArgIsOut(CFStreamCreatePairWithSocketToHost, 4)
-        readStream, writeStream = CFStreamCreatePairWithSocketToHost(None,
-                "www.apple.com", 80, None, None)
+        readStream, writeStream = CFStreamCreatePairWithSocketToHost(
+            None, "www.apple.com", 80, None, None
+        )
 
         status = CFReadStreamGetStatus(readStream)
         self.assertIsInstance(status, (int, long))
@@ -327,14 +331,14 @@ class TestStream (TestCase):
 
         del readStream, writeStream
 
-
         # Note: I don't expect anyone to actually use this api, building
         # struct sockaddr buffers by hand is madness in python.
-        ip = socket.gethostbyname('www.apple.com')
-        ip = map(int, ip.split('.'))
+        ip = socket.gethostbyname("www.apple.com")
+        ip = map(int, ip.split("."))
 
         import struct
-        sockaddr = struct.pack('>BBHBBBB', 16, socket.AF_INET, 80, *ip)
+
+        sockaddr = struct.pack(">BBHBBBB", 16, socket.AF_INET, 80, *ip)
 
         if sys.version_info[0] == 3:
             sockaddr_buffer = sockaddr
@@ -342,15 +346,17 @@ class TestStream (TestCase):
             sockaddr_buffer = buffer(sockaddr)
 
         signature = CFSocketSignature(
-                protocolFamily=socket.AF_INET,
-                socketType=socket.SOCK_STREAM,
-                protocol=0,
-                address=sockaddr_buffer)
+            protocolFamily=socket.AF_INET,
+            socketType=socket.SOCK_STREAM,
+            protocol=0,
+            address=sockaddr_buffer,
+        )
 
         self.assertArgIsOut(CFStreamCreatePairWithPeerSocketSignature, 2)
         self.assertArgIsOut(CFStreamCreatePairWithPeerSocketSignature, 3)
         readStream, writeStream = CFStreamCreatePairWithPeerSocketSignature(
-                None, signature, None, None)
+            None, signature, None, None
+        )
 
         self.assertResultIsCFRetained(CFWriteStreamCopyError)
         status = CFReadStreamGetStatus(readStream)
@@ -365,12 +371,14 @@ class TestStream (TestCase):
         rl = CFRunLoopGetCurrent()
 
         strval = b"hello world"
-        readStream = CFReadStreamCreateWithBytesNoCopy(None,
-                strval, len(strval), kCFAllocatorNull)
+        readStream = CFReadStreamCreateWithBytesNoCopy(
+            None, strval, len(strval), kCFAllocatorNull
+        )
         self.assertIsInstance(readStream, CFReadStreamRef)
         data = {}
 
         state = []
+
         def callback(stream, kind, info):
             state.append((stream, kind, info))
 
@@ -380,9 +388,14 @@ class TestStream (TestCase):
 
         CFReadStreamOpen(readStream)
 
-        ok = CFReadStreamSetClient(readStream,
-                kCFStreamEventHasBytesAvailable | kCFStreamEventErrorOccurred | kCFStreamEventEndEncountered,
-                callback, data)
+        ok = CFReadStreamSetClient(
+            readStream,
+            kCFStreamEventHasBytesAvailable
+            | kCFStreamEventErrorOccurred
+            | kCFStreamEventEndEncountered,
+            callback,
+            data,
+        )
         self.assertTrue(ok)
 
         CFReadStreamScheduleWithRunLoop(readStream, rl, kCFRunLoopDefaultMode)
@@ -392,22 +405,27 @@ class TestStream (TestCase):
         finally:
             CFReadStreamClose(readStream)
             CFReadStreamUnscheduleFromRunLoop(readStream, rl, kCFRunLoopDefaultMode)
-            ok = CFReadStreamSetClient(readStream,
-                kCFStreamEventHasBytesAvailable | kCFStreamEventErrorOccurred | kCFStreamEventEndEncountered,
-                callback, objc.NULL)
+            ok = CFReadStreamSetClient(
+                readStream,
+                kCFStreamEventHasBytesAvailable
+                | kCFStreamEventErrorOccurred
+                | kCFStreamEventEndEncountered,
+                callback,
+                objc.NULL,
+            )
             self.assertTrue(ok)
 
-        self.assertEqual(len(state) , 1)
+        self.assertEqual(len(state), 1)
         self.assertIs(state[0][0], readStream)
         self.assertIs(state[0][2], data)
         self.assertEqual(state[0][1], kCFStreamEventHasBytesAvailable)
-
 
     def testWriteSocketAsync(self):
         rl = CFRunLoopGetCurrent()
 
         import array
-        a = array.array('b', b" "*20)
+
+        a = array.array("b", b" " * 20)
 
         writeStream = CFWriteStreamCreateWithBuffer(None, a, 20)
         self.assertIsInstance(writeStream, CFWriteStreamRef)
@@ -415,12 +433,18 @@ class TestStream (TestCase):
         self.assertIs(r, True)
         data = {}
         state = []
+
         def callback(stream, kind, info):
             state.append((stream, kind, info))
 
-        ok = CFWriteStreamSetClient(writeStream,
-                kCFStreamEventCanAcceptBytes | kCFStreamEventErrorOccurred | kCFStreamEventEndEncountered,
-                callback, data)
+        ok = CFWriteStreamSetClient(
+            writeStream,
+            kCFStreamEventCanAcceptBytes
+            | kCFStreamEventErrorOccurred
+            | kCFStreamEventEndEncountered,
+            callback,
+            data,
+        )
         self.assertTrue(ok)
 
         CFWriteStreamScheduleWithRunLoop(writeStream, rl, kCFRunLoopDefaultMode)
@@ -430,25 +454,27 @@ class TestStream (TestCase):
         finally:
             CFWriteStreamClose(writeStream)
             CFWriteStreamUnscheduleFromRunLoop(writeStream, rl, kCFRunLoopDefaultMode)
-            ok = CFWriteStreamSetClient(writeStream,
-                kCFStreamEventCanAcceptBytes | kCFStreamEventErrorOccurred | kCFStreamEventEndEncountered,
-                callback, objc.NULL)
+            ok = CFWriteStreamSetClient(
+                writeStream,
+                kCFStreamEventCanAcceptBytes
+                | kCFStreamEventErrorOccurred
+                | kCFStreamEventEndEncountered,
+                callback,
+                objc.NULL,
+            )
             self.assertTrue(ok)
 
-        self.assertEqual(len(state) , 1)
+        self.assertEqual(len(state), 1)
         self.assertIs(state[0][0], writeStream)
         self.assertIs(state[0][2], data)
         self.assertEqual(state[0][1], kCFStreamEventCanAcceptBytes)
 
-    @min_os_level('10.9')
+    @min_os_level("10.9")
     def testFunctions10_9(self):
-        CFReadStreamSetDispatchQueue # Nothing to test
-        CFWriteStreamSetDispatchQueue # Nothing to test
-        CFReadStreamCopyDispatchQueue # Nothing to test
-        CFWriteStreamCopyDispatchQueue # Nothing to test
-
-
-
+        CFReadStreamSetDispatchQueue  # Nothing to test
+        CFWriteStreamSetDispatchQueue  # Nothing to test
+        CFReadStreamCopyDispatchQueue  # Nothing to test
+        CFWriteStreamCopyDispatchQueue  # Nothing to test
 
 
 if __name__ == "__main__":

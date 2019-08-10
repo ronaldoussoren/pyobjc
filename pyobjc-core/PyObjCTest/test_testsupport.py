@@ -599,12 +599,8 @@ class TestTestSupport(TestCase):
     def test_arg_type(self):
         m = Method(3, {"type": objc._C_DBL}, selector=True)
         self.assertArgHasType(m, 1, objc._C_DBL)
-        self.assertRaises(
-            self.failureException, self.assertArgHasType, m, 2, objc._C_ID
-        )
-        self.assertRaises(
-            self.failureException, self.assertArgHasType, m, 1, objc._C_ID
-        )
+        self.assertRaises(self.failureException, self.assertArgHasType, m, 2, objc._C_ID)
+        self.assertRaises(self.failureException, self.assertArgHasType, m, 1, objc._C_ID)
 
         m = Method(3, {}, selector=True)
         self.assertArgHasType(m, 1, objc._C_ID)
@@ -669,12 +665,8 @@ class TestTestSupport(TestCase):
 
         m = Method(3, {"type": objc._C_DBL}, selector=False)
         self.assertArgHasType(m, 3, objc._C_DBL)
-        self.assertRaises(
-            self.failureException, self.assertArgHasType, m, 3, objc._C_ID
-        )
-        self.assertRaises(
-            self.failureException, self.assertArgHasType, m, 2, objc._C_ID
-        )
+        self.assertRaises(self.failureException, self.assertArgHasType, m, 3, objc._C_ID)
+        self.assertRaises(self.failureException, self.assertArgHasType, m, 2, objc._C_ID)
 
         m = Method(3, {}, selector=False)
         self.assertArgHasType(m, 3, objc._C_ID)
@@ -740,15 +732,11 @@ class TestTestSupport(TestCase):
     def test_result_type(self):
         m = Method(None, {})
         self.assertResultHasType(m, objc._C_VOID)
-        self.assertRaises(
-            self.failureException, self.assertResultHasType, m, objc._C_ID
-        )
+        self.assertRaises(self.failureException, self.assertResultHasType, m, objc._C_ID)
 
         m = Method(None, {"type": objc._C_DBL})
         self.assertResultHasType(m, objc._C_DBL)
-        self.assertRaises(
-            self.failureException, self.assertResultHasType, m, objc._C_ID
-        )
+        self.assertRaises(self.failureException, self.assertResultHasType, m, objc._C_ID)
 
         if sys.maxsize > 2 ** 32:
             m = Method(None, {"type": objc._C_LNG}, selector=False)

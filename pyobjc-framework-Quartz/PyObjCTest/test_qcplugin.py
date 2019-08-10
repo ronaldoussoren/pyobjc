@@ -1,9 +1,9 @@
-
 from PyObjCTools.TestSupport import *
 from Quartz.QuartzComposer import *
 
-class TestQCPlugIn (TestCase):
-    @min_os_level('10.5')
+
+class TestQCPlugIn(TestCase):
+    @min_os_level("10.5")
     def testConstants10_5(self):
         self.assertIsInstance(QCPlugInAttributeNameKey, unicode)
         self.assertIsInstance(QCPlugInAttributeDescriptionKey, unicode)
@@ -27,11 +27,10 @@ class TestQCPlugIn (TestCase):
         self.assertEqual(kQCPlugInTimeModeIdle, 1)
         self.assertEqual(kQCPlugInTimeModeTimeBase, 2)
 
-    @min_os_level('10.7')
+    @min_os_level("10.7")
     def testConstants10_7(self):
         self.assertIsInstance(QCPlugInAttributeCategoriesKey, unicode)
         self.assertIsInstance(QCPlugInAttributeExamplesKey, unicode)
-
 
     def testConstants(self):
         self.assertIsInstance(QCPortAttributeTypeKey, unicode)
@@ -46,8 +45,7 @@ class TestQCPlugIn (TestCase):
         self.assertIsInstance(QCPortTypeImage, unicode)
         self.assertIsInstance(QCPortTypeStructure, unicode)
 
-
-    @min_os_level('10.5')
+    @min_os_level("10.5")
     def testMethods(self):
         self.assertResultIsBOOL(QCPlugIn.startExecution_)
         self.assertResultIsBOOL(QCPlugIn.execute_atTime_withArguments_)
@@ -57,9 +55,9 @@ class TestQCPlugIn (TestCase):
 
     @expectedFailure
     def testProtocols(self):
-        objc.protocolNamed('QCPlugInContext')
-        objc.protocolNamed('QCPlugInInputImageSource')
-        objc.protocolNamed('QCPlugInOutputImageProvider')
+        objc.protocolNamed("QCPlugInContext")
+        objc.protocolNamed("QCPlugInInputImageSource")
+        objc.protocolNamed("QCPlugInOutputImageProvider")
         self.fail("Test interface for QCPlugInContext")
 
 

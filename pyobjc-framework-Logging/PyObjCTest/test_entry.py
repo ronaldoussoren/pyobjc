@@ -4,12 +4,17 @@ from PyObjCTools.TestSupport import *
 if sys.maxsize > 2 ** 32:
     import Logging
 
-    class TestEntryHelper (Logging.NSObject):
-        def activityIdentifier(self): return 1
-        def processIdentifier(self): return 1
-        def threadIdentifier(self): return 1
+    class TestEntryHelper(Logging.NSObject):
+        def activityIdentifier(self):
+            return 1
 
-    class TestEntry (TestCase):
+        def processIdentifier(self):
+            return 1
+
+        def threadIdentifier(self):
+            return 1
+
+    class TestEntry(TestCase):
         def test_constants(self):
             self.assertEqual(Logging.OSLogEntryStoreCategoryUndefined, 0)
             self.assertEqual(Logging.OSLogEntryStoreCategoryMetadata, 1)
@@ -22,8 +27,8 @@ if sys.maxsize > 2 ** 32:
             self.assertEqual(Logging.OSLogEntryStoreCategoryLongTerm30, 8)
 
         def test_protocols(self):
-            objc.protocolNamed('OSLogEntryFromProcess')
-            objc.protocolNamed('OSLogEntryWithPayload')
+            objc.protocolNamed("OSLogEntryFromProcess")
+            objc.protocolNamed("OSLogEntryWithPayload")
 
         def test_methods(self):
             self.assertResultHasType(TestEntryHelper.activityIdentifier, objc._C_ULNG_LNG)

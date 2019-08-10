@@ -1,8 +1,8 @@
-
 from PyObjCTools.TestSupport import *
 from AppKit import *
 
-class TestNSImageCell (TestCase):
+
+class TestNSImageCell(TestCase):
     def testConstants(self):
         self.assertEqual(NSImageAlignCenter, 0)
         self.assertEqual(NSImageAlignTop, 1)

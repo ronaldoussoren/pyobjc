@@ -1,7 +1,8 @@
 from PyObjCTools.TestSupport import *
 from Quartz.PDFKit import *
 
-class TestPDFAnnotationUtilities (TestCase):
+
+class TestPDFAnnotationUtilities(TestCase):
     def test_constants(self):
         self.assertEqual(kPDFLineStyleNone, 0)
         self.assertEqual(kPDFLineStyleSquare, 1)
@@ -31,8 +32,7 @@ class TestPDFAnnotationUtilities (TestCase):
         self.assertEqual(kPDFWidgetOffState, 0)
         self.assertEqual(kPDFWidgetOnState, 1)
 
-
-    @min_os_level('10.13')
+    @min_os_level("10.13")
     def testConstants10_13(self):
         self.assertIsInstance(PDFAnnotationSubtypeText, unicode)
         self.assertIsInstance(PDFAnnotationSubtypeLink, unicode)
@@ -69,7 +69,7 @@ class TestPDFAnnotationUtilities (TestCase):
         self.assertIsInstance(PDFAnnotationHighlightingModeOutline, unicode)
         self.assertIsInstance(PDFAnnotationHighlightingModePush, unicode)
 
-    @min_os_level('10.13')
+    @min_os_level("10.13")
     def testMethods(self):
         self.assertResultIsBOOL(PDFAnnotation.isMultiline)
         self.assertArgIsBOOL(PDFAnnotation.setMultiline_, 0)
@@ -93,6 +93,7 @@ class TestPDFAnnotationUtilities (TestCase):
 
         self.assertResultIsBOOL(PDFAnnotation.isOpen)
         self.assertArgIsBOOL(PDFAnnotation.setOpen_, 0)
+
 
 if __name__ == "__main__":
     main()

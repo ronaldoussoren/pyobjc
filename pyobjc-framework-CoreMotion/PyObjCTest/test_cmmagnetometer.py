@@ -2,7 +2,8 @@ from PyObjCTools.TestSupport import *
 
 import CoreMotion
 
-class TestCMMagnetometer (TestCase):
+
+class TestCMMagnetometer(TestCase):
     def test_structs(self):
         v = CoreMotion.CMMagneticField()
         self.assertEqual(v.x, 0.0)

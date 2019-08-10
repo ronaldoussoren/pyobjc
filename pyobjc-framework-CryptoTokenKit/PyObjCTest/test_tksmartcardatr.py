@@ -4,10 +4,12 @@ if sys.maxsize > 2 ** 32:
     from PyObjCTools.TestSupport import *
     import CryptoTokenKit
 
-    class TestTkSmartCardATR (TestCase):
+    class TestTkSmartCardATR(TestCase):
         @min_os_level("10.10")
         def testClasses(self):
-            self.assertIsInstance(CryptoTokenKit.TKSmartCardATRInterfaceGroup, objc.objc_class)
+            self.assertIsInstance(
+                CryptoTokenKit.TKSmartCardATRInterfaceGroup, objc.objc_class
+            )
             self.assertIsInstance(CryptoTokenKit.TKSmartCardATR, objc.objc_class)
 
         @min_os_level("10.10")

@@ -3,7 +3,7 @@ from PyObjCTools.TestSupport import *
 from ImageCaptureCore import *
 
 
-class TestICScannerFunctionalUnits (TestCase):
+class TestICScannerFunctionalUnits(TestCase):
     def testConstants(self):
         self.assertEqual(ICScannerFunctionalUnitTypeFlatbed, 0)
         self.assertEqual(ICScannerFunctionalUnitTypePositiveTransparency, 1)
@@ -120,20 +120,35 @@ class TestICScannerFunctionalUnits (TestCase):
         self.assertResultIsBOOL(ICScannerFeatureBoolean.value)
         self.assertArgIsBOOL(ICScannerFeatureBoolean.setValue_, 0)
 
-        self.assertResultIsBOOL(ICScannerFunctionalUnit.acceptsThresholdForBlackAndWhiteScanning)
-        self.assertResultIsBOOL(ICScannerFunctionalUnit.usesThresholdForBlackAndWhiteScanning)
-        self.assertArgIsBOOL(ICScannerFunctionalUnit.setUsesThresholdForBlackAndWhiteScanning_, 0)
+        self.assertResultIsBOOL(
+            ICScannerFunctionalUnit.acceptsThresholdForBlackAndWhiteScanning
+        )
+        self.assertResultIsBOOL(
+            ICScannerFunctionalUnit.usesThresholdForBlackAndWhiteScanning
+        )
+        self.assertArgIsBOOL(
+            ICScannerFunctionalUnit.setUsesThresholdForBlackAndWhiteScanning_, 0
+        )
         self.assertResultIsBOOL(ICScannerFunctionalUnit.scanInProgress)
         self.assertResultIsBOOL(ICScannerFunctionalUnit.canPerformOverviewScan)
         self.assertResultIsBOOL(ICScannerFunctionalUnit.overviewScanInProgress)
-        self.assertResultIsBOOL(ICScannerFunctionalUnitDocumentFeeder.supportsDuplexScanning)
-        self.assertResultIsBOOL(ICScannerFunctionalUnitDocumentFeeder.duplexScanningEnabled)
-        self.assertArgIsBOOL(ICScannerFunctionalUnitDocumentFeeder.setDuplexScanningEnabled_, 0)
+        self.assertResultIsBOOL(
+            ICScannerFunctionalUnitDocumentFeeder.supportsDuplexScanning
+        )
+        self.assertResultIsBOOL(
+            ICScannerFunctionalUnitDocumentFeeder.duplexScanningEnabled
+        )
+        self.assertArgIsBOOL(
+            ICScannerFunctionalUnitDocumentFeeder.setDuplexScanningEnabled_, 0
+        )
         self.assertResultIsBOOL(ICScannerFunctionalUnitDocumentFeeder.documentLoaded)
 
-    @min_os_level('10.7')
+    @min_os_level("10.7")
     def testMethods10_7(self):
-        self.assertResultIsBOOL(ICScannerFunctionalUnitDocumentFeeder.reverseFeederPageOrder)
+        self.assertResultIsBOOL(
+            ICScannerFunctionalUnitDocumentFeeder.reverseFeederPageOrder
+        )
+
 
 if __name__ == "__main__":
     main()

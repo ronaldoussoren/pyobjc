@@ -15,10 +15,7 @@ class MethodAccessTest(TestCase):
             AttributeError, getattr, objc.objc_object.pyobjc_classMethods, "func_code"
         )
         self.assertRaises(
-            AttributeError,
-            getattr,
-            objc.objc_object.pyobjc_instanceMethods,
-            "func_code",
+            AttributeError, getattr, objc.objc_object.pyobjc_instanceMethods, "func_code"
         )
 
     def testNSProxyStuff(self):
@@ -27,9 +24,7 @@ class MethodAccessTest(TestCase):
         self.assertRaises(
             AttributeError, getattr, NSProxy.pyobjc_instanceMethods, "foobar"
         )
-        self.assertRaises(
-            AttributeError, getattr, NSProxy.pyobjc_classMethods, "foobar"
-        )
+        self.assertRaises(AttributeError, getattr, NSProxy.pyobjc_classMethods, "foobar")
         self.assertRaises(AttributeError, getattr, NSProxy, "foobar")
 
     #

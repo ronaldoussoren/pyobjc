@@ -3,7 +3,9 @@ from PyObjCTools.TestSupport import *
 
 
 import sys
+
 if sys.version_info[0] == 3:
+
     def cmp(a, b):
         try:
             if a < b:
@@ -15,7 +17,8 @@ if sys.version_info[0] == 3:
         except TypeError:
             return cmp(type(a).__name__, type(b).__name__)
 
-class TestCFTree (TestCase):
+
+class TestCFTree(TestCase):
     def testTypes(self):
         self.assertIsCFType(CFTreeRef)
 

@@ -16,27 +16,26 @@ from PyObjCTools.TestSupport import *
 
 import objc
 
-if sys.platform == 'darwin':
+if sys.platform == "darwin":
     import AppKit
 
     class TestWeirdness(TestCase):
-
         def doWeirdness(self, className, methodToTest):
             c = objc.lookUpClass(className)
             before = getattr(c, methodToTest)
             b = c.alloc().init()
             after = getattr(c, methodToTest)
 
-            self.assertEqual(after.definingClass, c);
+            self.assertEqual(after.definingClass, c)
 
-        @max_sdk_level('10.14')
+        @max_sdk_level("10.14")
         def testWeirdness1(self):
             self.doWeirdness("NSButtonCell", "setEnabled_")
 
-        @max_sdk_level('10.14')
+        @max_sdk_level("10.14")
         def testWeirdness2(self):
             self.doWeirdness("NSTextView", "setEditable_")
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()

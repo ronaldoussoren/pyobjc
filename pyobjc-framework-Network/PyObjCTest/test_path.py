@@ -4,10 +4,10 @@ import sys
 if sys.maxsize > 2 ** 32:
     import Network
 
-    nw_path_enumerate_interfaces_block_t = b'B@'
-    nw_path_enumerate_gateways_block_t = b'B@'
+    nw_path_enumerate_interfaces_block_t = b"B@"
+    nw_path_enumerate_gateways_block_t = b"B@"
 
-    class TestPath (TestCase):
+    class TestPath(TestCase):
         def test_constants(self):
             self.assertEqual(Network.nw_path_status_invalid, 0)
             self.assertEqual(Network.nw_path_status_satisfied, 1)
@@ -17,7 +17,11 @@ if sys.maxsize > 2 ** 32:
         def test_functions(self):
             Network.nw_path_get_status
 
-            self.assertArgIsBlock(Network.nw_path_enumerate_interfaces, 1, nw_path_enumerate_interfaces_block_t)
+            self.assertArgIsBlock(
+                Network.nw_path_enumerate_interfaces,
+                1,
+                nw_path_enumerate_interfaces_block_t,
+            )
 
             Network.nw_path_is_equal
             Network.nw_path_is_expensive
@@ -30,12 +34,13 @@ if sys.maxsize > 2 ** 32:
 
             self.assertResultIsRetained(Network.nw_path_copy_effective_remote_endpoint)
 
-        @min_os_level('10.15')
+        @min_os_level("10.15")
         def test_functions10_15(self):
             Network.nw_path_is_constrained
 
-            self.assertArgIsBlock(Network.nw_path_enumerate_gateways, 1, nw_path_enumerate_gateways_block_t)
-
+            self.assertArgIsBlock(
+                Network.nw_path_enumerate_gateways, 1, nw_path_enumerate_gateways_block_t
+            )
 
 
 if __name__ == "__main__":

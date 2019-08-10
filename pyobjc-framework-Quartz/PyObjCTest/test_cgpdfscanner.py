@@ -1,13 +1,12 @@
-
 from PyObjCTools.TestSupport import *
 from Quartz.CoreGraphics import *
 
-class TestCGPDFScanner (TestCase):
 
+class TestCGPDFScanner(TestCase):
     def testTypes(self):
         self.assertIsOpaquePointer(CGPDFScannerRef)
 
-    @expectedFailureIf(os_release().startswith('10.5.'))
+    @expectedFailureIf(os_release().startswith("10.5."))
     def testFunctionMissingOn10_5(self):
         CGPDFScannerRetain
 
@@ -44,6 +43,7 @@ class TestCGPDFScanner (TestCase):
 
         self.assertResultHasType(CGPDFScannerPopStream, objc._C_BOOL)
         self.assertArgIsOut(CGPDFScannerPopStream, 1)
+
 
 if __name__ == "__main__":
     main()

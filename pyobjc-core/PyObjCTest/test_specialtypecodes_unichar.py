@@ -32,9 +32,7 @@ def setupMetaData():
     objc.registerMetaDataForSelector(
         b"OC_TestSpecialTypeCode",
         b"UniCharArray",
-        dict(
-            retval=dict(type=objc._C_PTR + objc._C_UNICHAR, c_array_of_fixed_length=4)
-        ),
+        dict(retval=dict(type=objc._C_PTR + objc._C_UNICHAR, c_array_of_fixed_length=4)),
     )
 
     objc.registerMetaDataForSelector(
@@ -219,9 +217,7 @@ class TestTypeCode_UniChar(TestCase):
         else:
             a = array.array("h", [200, 300, 400, 500])
         v = o.UniCharArrayOf4In_(a)
-        self.assertEqual(
-            v, "".join([unichr(200), unichr(300), unichr(400), unichr(500)])
-        )
+        self.assertEqual(v, "".join([unichr(200), unichr(300), unichr(400), unichr(500)]))
 
     def testFixedArrayOut(self):
         o = OC_TestSpecialTypeCode.alloc().init()

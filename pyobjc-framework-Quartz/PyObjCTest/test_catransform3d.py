@@ -1,12 +1,11 @@
-
 from PyObjCTools.TestSupport import *
 from Quartz.QuartzCore import *
 from Quartz import *
 from Foundation import NSValue
 
-class TestCATransform3D (TestCase):
 
-    @min_os_level('10.5')
+class TestCATransform3D(TestCase):
+    @min_os_level("10.5")
     def testStructs(self):
         v = CATransform3D()
         self.assertIsInstance(v.m11, float)
@@ -29,12 +28,11 @@ class TestCATransform3D (TestCase):
         self.assertIsInstance(v.m43, float)
         self.assertIsInstance(v.m44, float)
 
-
-    @min_os_level('10.5')
+    @min_os_level("10.5")
     def testConstants(self):
         self.assertIsInstance(CATransform3DIdentity, CATransform3D)
 
-    @min_os_level('10.5')
+    @min_os_level("10.5")
     def testFunctions(self):
         self.assertResultHasType(CATransform3DIsIdentity, objc._C_BOOL)
         v = CATransform3DIsIdentity(CATransform3DIdentity)
@@ -80,9 +78,10 @@ class TestCATransform3D (TestCase):
         v = CATransform3DGetAffineTransform(tf7)
         self.assertIsInstance(v, CGAffineTransform)
 
-
         self.assertResultHasType(NSValue.CATransform3DValue, CATransform3D.__typestr__)
-        self.assertArgHasType(NSValue.valueWithCATransform3D_, 0, CATransform3D.__typestr__)
+        self.assertArgHasType(
+            NSValue.valueWithCATransform3D_, 0, CATransform3D.__typestr__
+        )
 
 
 if __name__ == "__main__":

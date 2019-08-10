@@ -1,8 +1,8 @@
-
 from PyObjCTools.TestSupport import *
 from XgridFoundation import *
 
-class TestXGActionMonitor (TestCase):
+
+class TestXGActionMonitor(TestCase):
     def testConstants(self):
         self.assertEqual(XGResourceActionNone, 0)
         self.assertEqual(XGResourceActionStop, 1)

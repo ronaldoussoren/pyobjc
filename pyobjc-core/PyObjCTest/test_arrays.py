@@ -130,14 +130,9 @@ StructArrayDelegate = objc.informal_protocol(
     "ArrayDelegate",
     [
         objc.selector(None, b"arrayOf4Ints:", signature=b"@@:[4i]", isRequired=0),
+        objc.selector(None, b"arrayOf4IntsOut:", signature=b"v@:o[4i]", isRequired=False),
         objc.selector(
-            None, b"arrayOf4IntsOut:", signature=b"v@:o[4i]", isRequired=False
-        ),
-        objc.selector(
-            None,
-            b"arrayOf4Structs:",
-            signature=b"@@:[4{FooStruct=ii}]",
-            isRequired=False,
+            None, b"arrayOf4Structs:", signature=b"@@:[4{FooStruct=ii}]", isRequired=False
         ),
         objc.selector(
             None,

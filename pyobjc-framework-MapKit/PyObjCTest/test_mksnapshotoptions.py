@@ -5,7 +5,7 @@ from PyObjCTools.TestSupport import *
 if sys.maxsize > 2 ** 32:
     import MapKit
 
-    class TestMKMapSnapshotOptions (TestCase):
+    class TestMKMapSnapshotOptions(TestCase):
         @min_os_level("10.9")
         def testClasses(self):
             self.assertIsInstance(MapKit.MKMapSnapshotOptions, objc.objc_class)
@@ -15,6 +15,7 @@ if sys.maxsize > 2 ** 32:
 
             self.assertResultIsBOOL(MapKit.MKMapSnapshotOptions.showsBuildings)
             self.assertArgIsBOOL(MapKit.MKMapSnapshotOptions.setShowsBuildings_, 0)
+
 
 if __name__ == "__main__":
     main()

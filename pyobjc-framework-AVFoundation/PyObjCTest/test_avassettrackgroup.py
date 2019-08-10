@@ -2,7 +2,8 @@ from PyObjCTools.TestSupport import *
 
 import AVFoundation
 
-class TestAVAssetTrackGroup (TestCase):
+
+class TestAVAssetTrackGroup(TestCase):
     def testClasses(self):
         AVFoundation.AVAssetTrackGroup
 

@@ -1,14 +1,19 @@
-
 from PyObjCTools.TestSupport import *
 from AppKit import *
 
-class TestNSComboBoxHelper (NSObject):
-    def numberOfItemsInComboBox_(self, b): return 1
-    def comboBox_objectValueForItemAtIndex_(self, b, i): return 1
-    def comboBox_indexOfItemWithStringValue_(self, b, s): return 1
+
+class TestNSComboBoxHelper(NSObject):
+    def numberOfItemsInComboBox_(self, b):
+        return 1
+
+    def comboBox_objectValueForItemAtIndex_(self, b, i):
+        return 1
+
+    def comboBox_indexOfItemWithStringValue_(self, b, s):
+        return 1
 
 
-class TestNSComboBox (TestCase):
+class TestNSComboBox(TestCase):
     def testConstants(self):
         self.assertIsInstance(NSComboBoxWillPopUpNotification, unicode)
         self.assertIsInstance(NSComboBoxWillDismissNotification, unicode)
@@ -25,15 +30,21 @@ class TestNSComboBox (TestCase):
         self.assertResultIsBOOL(NSComboBox.completes)
         self.assertArgIsBOOL(NSComboBox.setCompletes_, 0)
 
-    @min_os_level('10.6')
+    @min_os_level("10.6")
     def testProtocolObjects(self):
-        objc.protocolNamed('NSComboBoxDataSource')
-        objc.protocolNamed('NSComboBoxDelegate')
+        objc.protocolNamed("NSComboBoxDataSource")
+        objc.protocolNamed("NSComboBoxDelegate")
 
     def testProtocols(self):
-        self.assertResultHasType(TestNSComboBoxHelper.numberOfItemsInComboBox_, objc._C_NSInteger)
-        self.assertArgHasType(TestNSComboBoxHelper.comboBox_objectValueForItemAtIndex_, 1, objc._C_NSInteger)
-        self.assertResultHasType(TestNSComboBoxHelper.comboBox_indexOfItemWithStringValue_, objc._C_NSUInteger)
+        self.assertResultHasType(
+            TestNSComboBoxHelper.numberOfItemsInComboBox_, objc._C_NSInteger
+        )
+        self.assertArgHasType(
+            TestNSComboBoxHelper.comboBox_objectValueForItemAtIndex_, 1, objc._C_NSInteger
+        )
+        self.assertResultHasType(
+            TestNSComboBoxHelper.comboBox_indexOfItemWithStringValue_, objc._C_NSUInteger
+        )
 
 
 if __name__ == "__main__":

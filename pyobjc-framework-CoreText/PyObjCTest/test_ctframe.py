@@ -1,12 +1,11 @@
-
 from PyObjCTools.TestSupport import *
 from CoreText import *
 from Quartz import *
 
 import os
 
-class TestCTFrame (TestCase):
 
+class TestCTFrame(TestCase):
     def testTypes(self):
         self.assertIsInstance(CTFrameRef, objc.objc_class)
 
@@ -20,7 +19,7 @@ class TestCTFrame (TestCase):
 
         self.assertIsInstance(kCTFrameProgressionAttributeName, unicode)
 
-    @min_os_level('10.7')
+    @min_os_level("10.7")
     def testConstants10_7(self):
         self.assertIsInstance(kCTFramePathFillRuleAttributeName, unicode)
         self.assertIsInstance(kCTFramePathWidthAttributeName, unicode)
@@ -32,15 +31,15 @@ class TestCTFrame (TestCase):
         self.assertIsInstance(v, (int, long))
 
         setter = CTFramesetterCreateWithAttributedString(
-                CFAttributedStringCreate(None, b"hello".decode('latin1'), None))
+            CFAttributedStringCreate(None, b"hello".decode("latin1"), None)
+        )
         self.assertIsInstance(setter, CTFramesetterRef)
 
         path = CGPathCreateMutable()
         self.assertIsInstance(path, CGPathRef)
         CGPathAddRect(path, None, CGRect(CGPoint(0, 0), CGSize(400, 400)))
-        attr = { 'foo': 42 }
-        frame = CTFramesetterCreateFrame(setter, CFRange(0, 5),
-                path, attr)
+        attr = {"foo": 42}
+        frame = CTFramesetterCreateFrame(setter, CFRange(0, 5), path, attr)
         self.assertIsInstance(frame, CTFrameRef)
 
         v = CTFrameGetStringRange(frame)
@@ -66,10 +65,13 @@ class TestCTFrame (TestCase):
         self.assertEqual(len(v), 1)
         self.assertIsInstance(v[0], CGPoint)
 
-        url = CFURLCreateWithFileSystemPath(None,
-                "/tmp/pyobjc.test.pdf", kCFURLPOSIXPathStyle, False)
+        url = CFURLCreateWithFileSystemPath(
+            None, "/tmp/pyobjc.test.pdf", kCFURLPOSIXPathStyle, False
+        )
         self.assertIsInstance(url, CFURLRef)
-        ctx = CGPDFContextCreateWithURL(url, CGRect(CGPoint(0, 0), CGSize(1000, 1000)), None)
+        ctx = CGPDFContextCreateWithURL(
+            url, CGRect(CGPoint(0, 0), CGSize(1000, 1000)), None
+        )
         self.assertIsInstance(ctx, CGContextRef)
 
         CTFrameDraw(frame, ctx)

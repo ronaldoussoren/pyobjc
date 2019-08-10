@@ -9,6 +9,7 @@
 from Foundation import *
 from AppKit import *
 
+
 class xcPROJECTNAMEASIDENTIFIERxcAppDelegate(NSObject):
     def applicationDidFinishLaunching_(self, sender):
         NSLog("Application did finish launching.")

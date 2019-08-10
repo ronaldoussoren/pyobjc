@@ -1,8 +1,9 @@
 from PyObjCTools.TestSupport import *
 from Quartz.PDFKit import *
 
-class TestPDFAppearanceCharacteristic (TestCase):
-    @min_os_level('10.13')
+
+class TestPDFAppearanceCharacteristic(TestCase):
+    @min_os_level("10.13")
     def testConstants(self):
         self.assertIsInstance(PDFAppearanceCharacteristicsKeyBackgroundColor, unicode)
         self.assertIsInstance(PDFAppearanceCharacteristicsKeyBorderColor, unicode)

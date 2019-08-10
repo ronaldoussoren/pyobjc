@@ -1,7 +1,8 @@
 from AppKit import *
 from PyObjCTools.TestSupport import *
 
-class TestNSArrayControler (TestCase):
+
+class TestNSArrayControler(TestCase):
     def testMethods(self):
         self.assertResultIsBOOL(NSArrayController.automaticallyRearrangesObjects)
 
@@ -30,6 +31,7 @@ class TestNSArrayControler (TestCase):
         self.assertResultIsBOOL(NSArrayController.canInsert)
         self.assertResultIsBOOL(NSArrayController.canSelectNext)
         self.assertResultIsBOOL(NSArrayController.canSelectPrevious)
+
 
 if __name__ == "__main__":
     main()

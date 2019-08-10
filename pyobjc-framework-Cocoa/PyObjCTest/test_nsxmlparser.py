@@ -1,7 +1,8 @@
 from Foundation import *
 from PyObjCTools.TestSupport import *
 
-class TestNSXMLParser (TestCase):
+
+class TestNSXMLParser(TestCase):
     def testConstants(self):
         self.assertEqual(NSXMLParserInternalError, 1)
         self.assertEqual(NSXMLParserOutOfMemoryError, 2)
@@ -113,9 +114,10 @@ class TestNSXMLParser (TestCase):
         self.assertResultIsBOOL(NSXMLParser.shouldResolveExternalEntities)
         self.assertResultIsBOOL(NSXMLParser.parse)
 
-    @min_sdk_level('10.6')
+    @min_sdk_level("10.6")
     def testProtocols(self):
-        objc.protocolNamed('NSXMLParserDelegate')
+        objc.protocolNamed("NSXMLParserDelegate")
+
 
 if __name__ == "__main__":
     main()

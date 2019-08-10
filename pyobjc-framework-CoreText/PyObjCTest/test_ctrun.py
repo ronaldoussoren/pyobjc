@@ -1,10 +1,10 @@
-
 from PyObjCTools.TestSupport import *
 from CoreText import *
 from Foundation import NSDictionary
 from Quartz import *
 
-class TestCTRun (TestCase):
+
+class TestCTRun(TestCase):
     def testTypes(self):
         self.assertIsCFType(CTRunRef)
 
@@ -18,7 +18,8 @@ class TestCTRun (TestCase):
         self.assertIsInstance(CTRunGetTypeID(), (int, long))
 
         line = CTLineCreateWithAttributedString(
-                CFAttributedStringCreate(None, b"hello world".decode('latin1'), None))
+            CFAttributedStringCreate(None, b"hello world".decode("latin1"), None)
+        )
         self.assertIsInstance(line, CTLineRef)
 
         run = CTLineGetGlyphRuns(line)[0]
@@ -71,11 +72,14 @@ class TestCTRun (TestCase):
         self.assertIsInstance(v[2], float)
         self.assertIsInstance(v[3], float)
 
-        url = CFURLCreateWithFileSystemPath(None,
-                                "/tmp/pyobjc.test.pdf", kCFURLPOSIXPathStyle, False)
+        url = CFURLCreateWithFileSystemPath(
+            None, "/tmp/pyobjc.test.pdf", kCFURLPOSIXPathStyle, False
+        )
         self.assertIsInstance(url, CFURLRef)
 
-        ctx = CGPDFContextCreateWithURL(url, CGRect(CGPoint(0, 0), CGSize(1000, 1000)), None)
+        ctx = CGPDFContextCreateWithURL(
+            url, CGRect(CGPoint(0, 0), CGSize(1000, 1000)), None
+        )
         v = CTRunGetImageBounds(run, ctx, CFRange(0, 5))
         self.assertIsInstance(v, CGRect)
 
@@ -85,13 +89,14 @@ class TestCTRun (TestCase):
         v = CTRunDraw(run, ctx, CFRange(0, 5))
         self.assertTrue(v is None)
 
-    @min_os_level('10.5')
+    @min_os_level("10.5")
     def testFunctions10_5(self):
         self.assertArgIsOut(CTRunGetAdvances, 2)
         self.assertArgSizeInArg(CTRunGetAdvances, 2, 1)
 
         line = CTLineCreateWithAttributedString(
-                CFAttributedStringCreate(None, b"hello world".decode('latin1'), None))
+            CFAttributedStringCreate(None, b"hello world".decode("latin1"), None)
+        )
         self.assertIsInstance(line, CTLineRef)
 
         run = CTLineGetGlyphRuns(line)[0]
@@ -107,7 +112,7 @@ class TestCTRun (TestCase):
         self.assertIsInstance(v, objc.varlist)
         self.assertIsInstance(v[0], CGSize)
 
-    @min_os_level('10.11')
+    @min_os_level("10.11")
     def testFunctions10_11(self):
         self.assertArgIsOut(CTRunGetBaseAdvancesAndOrigins, 2)
         self.assertArgSizeInArg(CTRunGetBaseAdvancesAndOrigins, 2, 1)

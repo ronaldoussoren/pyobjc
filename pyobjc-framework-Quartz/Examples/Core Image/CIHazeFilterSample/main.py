@@ -1,8 +1,10 @@
-from PyObjCTools import  AppHelper
+from PyObjCTools import AppHelper
 
 import HazeFilterView
 import MyHazeFilter
 
-import objc; objc.setVerbose(True)
+import objc
+
+objc.setVerbose(True)
 
 AppHelper.runEventLoop()

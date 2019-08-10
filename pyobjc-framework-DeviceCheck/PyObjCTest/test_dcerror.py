@@ -4,7 +4,7 @@ from PyObjCTools.TestSupport import *
 if sys.maxsize > 2 ** 32:
     import DeviceCheck
 
-    class TestDCError (TestCase):
+    class TestDCError(TestCase):
         def test_constants(self):
             self.assertIsInstance(DeviceCheck.DCErrorDomain, unicode)
 

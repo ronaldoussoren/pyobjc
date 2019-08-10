@@ -2,7 +2,8 @@ from PyObjCTools.TestSupport import *
 
 import DiscRecording
 
-class TestDRBurn (TestCase):
+
+class TestDRBurn(TestCase):
     def testMethods(self):
         self.assertResultIsBOOL(DiscRecording.DRBurn.appendable)
         self.assertArgIsBOOL(DiscRecording.DRBurn.setAppendable_, 0)
@@ -34,6 +35,7 @@ class TestDRBurn (TestCase):
         self.assertIsInstance(DiscRecording.DRBurnStrategyDVDDAO, unicode)
         self.assertIsInstance(DiscRecording.DRBurnStrategyBDDAO, unicode)
         self.assertIsInstance(DiscRecording.DRBurnStatusChangedNotification, unicode)
+
 
 if __name__ == "__main__":
     main()

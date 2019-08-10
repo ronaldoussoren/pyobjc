@@ -1,12 +1,13 @@
-
 from PyObjCTools.TestSupport import *
 from AppKit import *
 
-class TestNSSoundHelper (NSObject):
-    def sound_didFinishPlaying_(self, s, p): pass
+
+class TestNSSoundHelper(NSObject):
+    def sound_didFinishPlaying_(self, s, p):
+        pass
 
 
-class TestNSSound (TestCase):
+class TestNSSound(TestCase):
     def testConstants(self):
         self.assertIsInstance(NSSoundPboardType, unicode)
 
@@ -23,12 +24,13 @@ class TestNSSound (TestCase):
         self.assertResultIsBOOL(NSSound.loops)
         self.assertArgIsBOOL(NSSound.setLoops_, 0)
 
-    @min_os_level('10.10')
+    @min_os_level("10.10")
     def testProtocolObjects(self):
-        objc.protocolNamed('NSSoundDelegate')
+        objc.protocolNamed("NSSoundDelegate")
 
     def testProtocols(self):
         self.assertArgIsBOOL(TestNSSoundHelper.sound_didFinishPlaying_, 1)
+
 
 if __name__ == "__main__":
     main()

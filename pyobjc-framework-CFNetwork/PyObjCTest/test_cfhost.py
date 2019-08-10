@@ -4,10 +4,12 @@ import sys
 import socket
 
 if sys.version_info[0] != 2:
-    def buffer(value):
-        return value.encode('latin1')
 
-class TestCFHost (TestCase):
+    def buffer(value):
+        return value.encode("latin1")
+
+
+class TestCFHost(TestCase):
     def testTypes(self):
         self.assertIsCFType(CFHostRef)
 
@@ -26,14 +28,12 @@ class TestCFHost (TestCase):
         self.assertIsInstance(v, CFHostRef)
 
         try:
-            value = socket.gethostbyname('www.python.org')
+            value = socket.gethostbyname("www.python.org")
             expected_resolution = True
         except socket.error:
             expected_resolution = False
 
-
-
-        addr = ' ' * 24;
+        addr = " " * 24
         self.assertResultIsCFRetained(CFHostCreateWithAddress)
         t = CFHostCreateWithAddress(None, buffer(addr))
         self.assertIsInstance(t, CFHostRef)
@@ -45,11 +45,10 @@ class TestCFHost (TestCase):
         self.assertIsInstance(error, CFStreamError)
 
         self.assertResultIsCFRetained(CFHostCreateCopy)
-        #w = CFHostCreateCopy(None, v)
-        #self.assertIsInstance(w, type(v))
+        # w = CFHostCreateCopy(None, v)
+        # self.assertIsInstance(w, type(v))
 
-
-        self.assertArgHasType(CFHostGetReachability, 1, b'o^' + objc._C_NSBOOL)
+        self.assertArgHasType(CFHostGetReachability, 1, b"o^" + objc._C_NSBOOL)
         lst, ok = CFHostGetReachability(v, None)
         self.assertIsInstance(lst, (CFDataRef, type(None)))
         self.assertIsInstance(ok, bool)
@@ -61,20 +60,19 @@ class TestCFHost (TestCase):
 
         CFHostUnscheduleFromRunLoop(v, rl, kCFRunLoopDefaultMode)
 
-
-        self.assertArgHasType(CFHostGetNames, 1, b'o^' + objc._C_NSBOOL)
+        self.assertArgHasType(CFHostGetNames, 1, b"o^" + objc._C_NSBOOL)
         lst, ok = CFHostGetNames(v, None)
         self.assertIsInstance(lst, CFArrayRef)
         self.assertIsInstance(ok, bool)
 
-
     def testCallbacks(self):
         lst = []
         ctx = object()
+
         def callback(host, typeinfo, error, ctx):
             lst.append([host, typeinfo, error, ctx])
 
-        host = CFHostCreateWithName(None, b"localhost".decode('latin1'))
+        host = CFHostCreateWithName(None, b"localhost".decode("latin1"))
         CFHostSetClient(host, callback, ctx)
 
         rl = CFRunLoopGetCurrent()
@@ -95,7 +93,7 @@ class TestCFHost (TestCase):
         self.assertIs(lst[0][3], ctx)
 
         self.assertResultIsNotCFRetained(CFHostGetAddressing)
-        self.assertArgHasType(CFHostGetAddressing, 1, b'o^Z')
+        self.assertArgHasType(CFHostGetAddressing, 1, b"o^Z")
         lst, ok = CFHostGetAddressing(host, None)
         self.assertIsInstance(lst, CFArrayRef)
         self.assertIsInstance(lst[0], CFDataRef)

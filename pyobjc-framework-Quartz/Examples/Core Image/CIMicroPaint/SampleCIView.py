@@ -17,7 +17,8 @@ import objc
 # The default pixel format
 _pf = None
 
-class SampleCIView (Cocoa.NSOpenGLView):
+
+class SampleCIView(Cocoa.NSOpenGLView):
     _context = objc.ivar()
     _image = objc.ivar()
     _lastBounds = objc.ivar(type=Cocoa.NSRect.__typestr__)
@@ -31,8 +32,12 @@ class SampleCIView (Cocoa.NSOpenGLView):
             # renderer is important - otherwise CoreImage may not be able to
             # create deeper context's that share textures with this one.
 
-            attr = ( Cocoa.NSOpenGLPFAAccelerated,
-                    Cocoa.NSOpenGLPFANoRecovery, Cocoa.NSOpenGLPFAColorSize, 32 )
+            attr = (
+                Cocoa.NSOpenGLPFAAccelerated,
+                Cocoa.NSOpenGLPFANoRecovery,
+                Cocoa.NSOpenGLPFAColorSize,
+                32,
+            )
             _pf = Cocoa.NSOpenGLPixelFormat.alloc().initWithAttributes_(attr)
 
         return _pf
@@ -58,7 +63,8 @@ class SampleCIView (Cocoa.NSOpenGLView):
         # Enable beam-synced updates.
 
         self.openGLContext().setValues_forParameter_(
-                (parm,), Cocoa.NSOpenGLCPSwapInterval)
+            (parm,), Cocoa.NSOpenGLCPSwapInterval
+        )
 
         # Make sure that everything we don't need is disabled. Some of these
         # are enabled by default and can slow down rendering.
@@ -73,7 +79,7 @@ class SampleCIView (Cocoa.NSOpenGLView):
         glDepthMask(GL_FALSE)
         glStencilMask(0)
         glClearColor(0.0, 0.0, 0.0, 0.0)
-        glHint (GL_TRANSFORM_HINT_APPLE, GL_FASTEST)
+        glHint(GL_TRANSFORM_HINT_APPLE, GL_FASTEST)
 
     def viewBoundsDidChange_(self, bounds):
         # For subclasses.
@@ -113,8 +119,9 @@ class SampleCIView (Cocoa.NSOpenGLView):
             if pf is None:
                 pf = type(self).defaultPixelFormat()
 
-            self._context=Quartz.CIContext.contextWithCGLContext_pixelFormat_options_(
-                CGL.CGLGetCurrentContext(), pf.CGLPixelFormatObj(), None)
+            self._context = Quartz.CIContext.contextWithCGLContext_pixelFormat_options_(
+                CGL.CGLGetCurrentContext(), pf.CGLPixelFormatObj(), None
+            )
 
         ir = Quartz.CGRectIntegral(r)
 
@@ -127,20 +134,20 @@ class SampleCIView (Cocoa.NSOpenGLView):
             # pixel in case * it has to interpolate (allow for hardware
             # inaccuracies)
 
-            rr = Quartz.CGRectIntersection (Quartz.CGRectInset(ir, -1.0, -1.0),
-                        self._lastBounds)
+            rr = Quartz.CGRectIntersection(
+                Quartz.CGRectInset(ir, -1.0, -1.0), self._lastBounds
+            )
 
             glScissor(ir.origin.x, ir.origin.y, ir.size.width, ir.size.height)
             glEnable(GL_SCISSOR_TEST)
 
             glClear(GL_COLOR_BUFFER_BIT)
 
-            if self.respondsToSelector_('drawRect:inCIContext:'):
+            if self.respondsToSelector_("drawRect:inCIContext:"):
                 self.drawRect_inCIContext_(rr, self._context)
 
             elif self._image is not None:
-                self._context.drawImage_atPoint_fromRect_(
-                    self._image, rr.origin, rr)
+                self._context.drawImage_atPoint_fromRect_(self._image, rr.origin, rr)
 
             glDisable(GL_SCISSOR_TEST)
 
@@ -148,19 +155,20 @@ class SampleCIView (Cocoa.NSOpenGLView):
             # buffered this should be replaced by [[self openGLContext]
             # flushBuffer].
 
-            glFlush ()
+            glFlush()
 
         else:
             # Printing the view contents. Render using CG, not OpenGL.
 
-            if self.respondsToSelector_('drawRect:inCIContext:'):
+            if self.respondsToSelector_("drawRect:inCIContext:"):
                 self.drawRect_inCIContext_(ir, self._context)
 
             elif self._image is not None:
-                cgImage = self._context.createCGImage_fromRect_(
-                    self._image, ir)
+                cgImage = self._context.createCGImage_fromRect_(self._image, ir)
 
                 if cgImage is not None:
                     Quartz.CGContextDrawImage(
-                            Cocoa.NSGraphicsContext.currentContext().graphicsPort(),
-                            ir, cgImage)
+                        Cocoa.NSGraphicsContext.currentContext().graphicsPort(),
+                        ir,
+                        cgImage,
+                    )

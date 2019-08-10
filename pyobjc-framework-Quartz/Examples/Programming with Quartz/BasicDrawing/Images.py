@@ -6,7 +6,7 @@ import Utilities
 import Cocoa
 import Quartz
 
-from LaunchServices import * # kUTType* constants
+from LaunchServices import *  # kUTType* constants
 
 
 def drawJPEGImage(context, url):
@@ -17,8 +17,9 @@ def drawJPEGImage(context, url):
         return
 
     # Create the CGImageRef for the JPEG image from the data provider.
-    jpgImage = Quartz.CGImageCreateWithJPEGDataProvider(jpgProvider, None,
-                            True, Quartz.kCGRenderingIntentDefault)
+    jpgImage = Quartz.CGImageCreateWithJPEGDataProvider(
+        jpgProvider, None, True, Quartz.kCGRenderingIntentDefault
+    )
 
     # CGImageCreateWithJPEGDataProvider retains the data provider.
     # Since this code created the data provider and this code no
@@ -32,9 +33,12 @@ def drawJPEGImage(context, url):
     # Make a rectangle that has its origin at (0,0) and
     # has a width and height that is 1/4 the native width
     # and height of the image.
-    jpgRect = Quartz.CGRectMake(0.0, 0.0,
-            Quartz.CGImageGetWidth(jpgImage)/4, Quartz.CGImageGetHeight(jpgImage)/4)
-
+    jpgRect = Quartz.CGRectMake(
+        0.0,
+        0.0,
+        Quartz.CGImageGetWidth(jpgImage) / 4,
+        Quartz.CGImageGetHeight(jpgImage) / 4,
+    )
 
     # Draw the image into the rectangle.
     # This is Image 1.
@@ -43,8 +47,7 @@ def drawJPEGImage(context, url):
     Quartz.CGContextSaveGState(context)
 
     # Translate to the top-right corner of the image just drawn.
-    Quartz.CGContextTranslateCTM(context, jpgRect.size.width,
-                                        jpgRect.size.height)
+    Quartz.CGContextTranslateCTM(context, jpgRect.size.width, jpgRect.size.height)
     # Rotate by -90 degrees.
     Quartz.CGContextRotateCTM(context, Utilities.DEGREES_TO_RADIANS(-90))
     # Translate in -x by the width of the drawing.
@@ -59,8 +62,9 @@ def drawJPEGImage(context, url):
 
     # Translate so that the next drawing of the image appears
     # below and to the right of the image just drawn.
-    Quartz.CGContextTranslateCTM(context,
-        jpgRect.size.width+jpgRect.size.height, jpgRect.size.height)
+    Quartz.CGContextTranslateCTM(
+        context, jpgRect.size.width + jpgRect.size.height, jpgRect.size.height
+    )
     # Scale the y axis by a negative value and flip the image.
     Quartz.CGContextScaleCTM(context, 0.75, -1.0)
     # This is Image 3.
@@ -71,12 +75,15 @@ def drawJPEGImage(context, url):
     # to the right and above where Image 3 was drawn. Adjust the
     # size of the rectangle so that it is 1/4 the image width
     # and 1/6 the image height.
-    jpgRect = Quartz.CGRectMake( 1.75*jpgRect.size.width + jpgRect.size.height,
-                            jpgRect.size.height,
-                            Quartz.CGImageGetWidth(jpgImage)/4,
-                            Quartz.CGImageGetHeight(jpgImage)/6)
+    jpgRect = Quartz.CGRectMake(
+        1.75 * jpgRect.size.width + jpgRect.size.height,
+        jpgRect.size.height,
+        Quartz.CGImageGetWidth(jpgImage) / 4,
+        Quartz.CGImageGetHeight(jpgImage) / 6,
+    )
     # This is Image 4.
     Quartz.CGContextDrawImage(context, jpgRect, jpgImage)
+
 
 def drawImageFromURL(context, url, width, height, bitsPerComponent, isRGB):
     # This routine treats color images as RGB
@@ -85,7 +92,7 @@ def drawImageFromURL(context, url, width, height, bitsPerComponent, isRGB):
     else:
         bitsPerPixel = bitsPerComponent
 
-    bytesPerRow = (width * bitsPerPixel + 7)/8
+    bytesPerRow = (width * bitsPerPixel + 7) / 8
     shouldInterpolate = True
 
     # Create a Quartz data provider from the supplied URL.
@@ -105,10 +112,19 @@ def drawImageFromURL(context, url, width, height, bitsPerComponent, isRGB):
     # and the default rendering intent for images. This code is
     # intended for Gray images of the format GGGGG... or RGB images
     # of the format RGBRGBRGB... .
-    image = Quartz.CGImageCreate(width, height, bitsPerComponent,
-                            bitsPerPixel, bytesPerRow, colorspace,
-                            Quartz.kCGImageAlphaNone, dataProvider, None,
-                            shouldInterpolate, Quartz.kCGRenderingIntentDefault)
+    image = Quartz.CGImageCreate(
+        width,
+        height,
+        bitsPerComponent,
+        bitsPerPixel,
+        bytesPerRow,
+        colorspace,
+        Quartz.kCGImageAlphaNone,
+        dataProvider,
+        None,
+        shouldInterpolate,
+        Quartz.kCGRenderingIntentDefault,
+    )
     # Quartz retains the data provider with the image and since this
     # code does not create any more images with the data provider, it
     # can release it.
@@ -122,6 +138,7 @@ def drawImageFromURL(context, url, width, height, bitsPerComponent, isRGB):
 
     # Draw the image into the rectangle.
     Quartz.CGContextDrawImage(context, imageRect, image)
+
 
 def doColorRampImage(context):
     width = 256
@@ -137,10 +154,19 @@ def doColorRampImage(context):
         return
 
     colorspace = Utilities.getTheCalibratedRGBColorSpace()
-    image = Quartz.CGImageCreate(width, height, bitsPerComponent,
-                bitsPerPixel, bytesPerRow, colorspace, Quartz.kCGImageAlphaNone,
-                imageDataProvider, None, shouldInterpolate,
-                Quartz.kCGRenderingIntentDefault)
+    image = Quartz.CGImageCreate(
+        width,
+        height,
+        bitsPerComponent,
+        bitsPerPixel,
+        bytesPerRow,
+        colorspace,
+        Quartz.kCGImageAlphaNone,
+        imageDataProvider,
+        None,
+        shouldInterpolate,
+        Quartz.kCGRenderingIntentDefault,
+    )
     # No longer need the data provider.
     del imageDataProvider
     if image is None:
@@ -151,15 +177,17 @@ def doColorRampImage(context):
     # Draw the image.
     Quartz.CGContextDrawImage(context, imageRect, image)
 
-def doImageWithCallbacksCreatedFromURL(context, url, width, height,
-        bitsPerComponent, isRGB):
+
+def doImageWithCallbacksCreatedFromURL(
+    context, url, width, height, bitsPerComponent, isRGB
+):
 
     if isRGB:
         bitsPerPixel = bitsPerComponent * 3
     else:
         bitsPerPixel = bitsPerComponent
 
-    bytesPerRow = ((width * bitsPerPixel) + 7)/8
+    bytesPerRow = ((width * bitsPerPixel) + 7) / 8
     shouldInterpolate = True
 
     dataProvider = DataProvidersAndConsumers.createSequentialAccessDPForURL(url)
@@ -175,10 +203,19 @@ def doImageWithCallbacksCreatedFromURL(context, url, width, height,
     else:
         colorspace = Utilities.getTheCalibratedGrayColorSpace()
 
-    image = Quartz.CGImageCreate(width, height, bitsPerComponent,
-                    bitsPerPixel, bytesPerRow, colorspace,
-                    Quartz.kCGImageAlphaNone, dataProvider, None, shouldInterpolate,
-                    Quartz.kCGRenderingIntentDefault)
+    image = Quartz.CGImageCreate(
+        width,
+        height,
+        bitsPerComponent,
+        bitsPerPixel,
+        bytesPerRow,
+        colorspace,
+        Quartz.kCGImageAlphaNone,
+        dataProvider,
+        None,
+        shouldInterpolate,
+        Quartz.kCGRenderingIntentDefault,
+    )
     del dataProvider
     if image is None:
         print("Couldn't create CGImageRef for this data!")
@@ -188,6 +225,7 @@ def doImageWithCallbacksCreatedFromURL(context, url, width, height,
 
     # Draw the image into the rectangle.
     Quartz.CGContextDrawImage(context, imageRect, image)
+
 
 def doGrayRamp(context):
     width = 256
@@ -203,9 +241,19 @@ def doGrayRamp(context):
         return
 
     colorspace = Utilities.getTheCalibratedGrayColorSpace()
-    image = Quartz.CGImageCreate(width, height, bitsPerComponent, bitsPerPixel,
-                bytesPerRow, colorspace, Quartz.kCGImageAlphaNone, dataProvider,
-                None, shouldInterpolate, Quartz.kCGRenderingIntentDefault)
+    image = Quartz.CGImageCreate(
+        width,
+        height,
+        bitsPerComponent,
+        bitsPerPixel,
+        bytesPerRow,
+        colorspace,
+        Quartz.kCGImageAlphaNone,
+        dataProvider,
+        None,
+        shouldInterpolate,
+        Quartz.kCGRenderingIntentDefault,
+    )
     del dataProvider
     if image is None:
         print("Couldn't create CGImageRef for image data!")
@@ -218,6 +266,7 @@ def doGrayRamp(context):
     # the destination rectangle.
     Quartz.CGContextDrawImage(context, imageRect, image)
 
+
 # This routine examines the CGImageSource at index 0 to
 # determine if the first image is a floating point image and
 # if it is, it returns an options dictionary suitable for
@@ -228,21 +277,18 @@ def createFloatingPointImageOptions(imageSource):
     # Without this, Quartz would return integer pixel data, even for
     # floating point images. Typically you don't need floating point data
     # but in some special cases you might want it.
-    options = {
-        Quartz.kCGImageSourceShouldAllowFloat: True
-    }
+    options = {Quartz.kCGImageSourceShouldAllowFloat: True}
     isFloat = False
 
     # Obtain the properties for the first image
     # in the image source. This is a 'Copy' function
     # so the code owns a reference to the
     # dictionary returned.
-    properties = Quartz.CGImageSourceCopyPropertiesAtIndex(imageSource,
-                                                        0, options)
+    properties = Quartz.CGImageSourceCopyPropertiesAtIndex(imageSource, 0, options)
     if properties is not None:
-    # Get the value for the kCGImagePropertyIsFloat if it exists
-    # and if the value is a CFBoolean then get the corresponding
-    # Boolean result.
+        # Get the value for the kCGImagePropertyIsFloat if it exists
+        # and if the value is a CFBoolean then get the corresponding
+        # Boolean result.
         if Quartz.kCGImagePropertyIsFloat in properties:
             isFloat = bool(properties[Quartz.kCGImagePropertyIsFloat])
 
@@ -250,6 +296,7 @@ def createFloatingPointImageOptions(imageSource):
         return None
 
     return options
+
 
 def myCreateImageUsingImageSource(url):
     # Set to zero, indicating the property was unavailable.
@@ -274,8 +321,7 @@ def myCreateImageUsingImageSource(url):
     # in the image source. This is a copy function so this
     # code owns the reference returned and must
     # must release it.
-    properties = Quartz.CGImageSourceCopyPropertiesAtIndex(
-                    imageSource, 0, options)
+    properties = Quartz.CGImageSourceCopyPropertiesAtIndex(imageSource, 0, options)
     if properties is not None:
         # Check for the x and y resolution of the image.
         xdpi = properties[Quartz.kCGImagePropertyDPIWidth]
@@ -295,6 +341,7 @@ def myCreateImageUsingImageSource(url):
 
     return (image, xdpi, ydpi)
 
+
 def myCreateThumbnailFromImageSource(url):
     maxThumbSize = 160
 
@@ -308,7 +355,6 @@ def myCreateThumbnailFromImageSource(url):
         # Specify 160 pixels as the maximum width and height of
         # the thumbnail for Quartz to create.
         Quartz.kCGImageSourceThumbnailMaxPixelSize: maxThumbSize,
-
         # Request that Quartz create a thumbnail image if
         # thumbnail data isn't present in the file.
         Quartz.kCGImageSourceCreateThumbnailFromImageIfAbsent: True,
@@ -330,8 +376,9 @@ def myCreateThumbnailFromImageSource(url):
 
     return thumb
 
+
 def imageHasFloatingPointSamples(image):
-    if hasattr(Quartz, 'CGImageGetBitmapInfo'):
+    if hasattr(Quartz, "CGImageGetBitmapInfo"):
         return (Quartz.kCGBitmapFloatComponents & Quartz.CGImageGetBitmapInfo(image)) != 0
     return False
 
@@ -347,9 +394,10 @@ def drawImageWithCGImageDataSource(context, url):
         print("myCreateImageFromImageSource didn't create a CGImage!")
         return
 
-    print("xdpi = %2.f, ydpi = %2.f"%(xdpi, ydpi))
-    imageRect = Quartz.CGRectMake(0.0, 0.0,
-            Quartz.CGImageGetWidth(image)/3, Quartz.CGImageGetHeight(image)/3)
+    print("xdpi = %2.f, ydpi = %2.f" % (xdpi, ydpi))
+    imageRect = Quartz.CGRectMake(
+        0.0, 0.0, Quartz.CGImageGetWidth(image) / 3, Quartz.CGImageGetHeight(image) / 3
+    )
     Quartz.CGContextDrawImage(context, imageRect, image)
 
     if 0:
@@ -366,34 +414,36 @@ def drawImageWithCGImageDataSource(context, url):
         print("myCreateThumbnailFromImageSource didn't create a CGImage!")
         return
 
-    imageRect = Quartz.CGRectMake(400.0, 0.0,
-            Quartz.CGImageGetWidth(image), Quartz.CGImageGetHeight(image))
+    imageRect = Quartz.CGRectMake(
+        400.0, 0.0, Quartz.CGImageGetWidth(image), Quartz.CGImageGetHeight(image)
+    )
     Quartz.CGContextDrawImage(context, imageRect, image)
 
     del image
 
 
-class MyIncrementalData (object):
+class MyIncrementalData(object):
     data = None
     dataSize = 0
     repCount = 0
     chunkSize = 0
 
+
 # This is a dummy data accumulation routine used to demonstrate incremental
 # loading of an image.
 def myCreateAccumulatedDataSoFar(myDataP):
     myDataP.repCount += 1
-    sizeToReturn = myDataP.chunkSize*myDataP.repCount
+    sizeToReturn = myDataP.chunkSize * myDataP.repCount
 
     if sizeToReturn > myDataP.dataSize:
         sizeToReturn = myDataP.dataSize
 
-    done = (sizeToReturn == myDataP.dataSize)
+    done = sizeToReturn == myDataP.dataSize
     data = Cocoa.CFDataCreate(None, myDataP.data, sizeToReturn)
     return data, done
 
 
-def MyDrawIncrementalImage(context, image,  fullHeight):
+def MyDrawIncrementalImage(context, image, fullHeight):
     # Obtain the width and height of the image that has been
     # accumulated so far.
     print("MyDrawIncrementalImage", context, image, fullHeight)
@@ -404,7 +454,7 @@ def MyDrawIncrementalImage(context, image,  fullHeight):
     # image top-left corner does not move as the image is filled in.
     # This is only needed for views where the y axis points up the
     # drawing canvas.
-    imageRect = Quartz.CGRectMake(0, fullHeight-height, width, height)
+    imageRect = Quartz.CGRectMake(0, fullHeight - height, width, height)
     Quartz.CGContextDrawImage(context, imageRect, image)
 
 
@@ -415,7 +465,6 @@ def myDrawFirstImageIncrementally(context, myDataP):
     if imageSource is None:
         print("Couldn't create incremental imagesource!")
         return
-
 
     # Loop, gathering the necessary data to find the True
     # height of the image.
@@ -442,8 +491,7 @@ def myDrawFirstImageIncrementally(context, myDataP):
             # to adjust the location of the drawing of the partial image in
             # a context where the y axis has the default Quartz orientation
             # pointing up the drawing canvas.
-            properties = Quartz.CGImageSourceCopyPropertiesAtIndex(
-                                            imageSource, 0, None)
+            properties = Quartz.CGImageSourceCopyPropertiesAtIndex(imageSource, 0, None)
             if properties is not None:
                 if Quartz.kCGImagePropertyPixelHeight in properties:
                     height = properties[Quartz.kCGImagePropertyPixelHeight]
@@ -455,8 +503,7 @@ def myDrawFirstImageIncrementally(context, myDataP):
         if height > 0:
             # Now create the CGImageRef from the image source for the
             # first image.
-            image = Quartz.CGImageSourceCreateImageAtIndex(
-                                                imageSource, 0, None)
+            image = Quartz.CGImageSourceCreateImageAtIndex(imageSource, 0, None)
             if image is not None:
                 # Draw the image using the height of the full image
                 # to adjust the location where the image is drawn.
@@ -474,9 +521,10 @@ def myDrawFirstImageIncrementally(context, myDataP):
         # Obtain the status for the image source for the first image.
         status = Quartz.CGImageSourceGetStatusAtIndex(imageSource, 0)
 
-        if done: # or status  == Quartz.kCGImageStatusComplete:
-            print(done, status, status  == Quartz.kCGImageStatusComplete)
+        if done:  # or status  == Quartz.kCGImageStatusComplete:
+            print(done, status, status == Quartz.kCGImageStatusComplete)
             break
+
 
 def createMyIncrementalDataFromURL(url, myDataP):
     myDataP.data = None
@@ -484,17 +532,17 @@ def createMyIncrementalDataFromURL(url, myDataP):
     myDataP.repCount = 0
 
     success, pathString = CFURLGetFileSystemRepresentation(url, True, None, 1024)
-    pathString = pathString.rstrip(b'\0')
-
+    pathString = pathString.rstrip(b"\0")
 
     if success and len(pathString):
-        fp = open(pathString, 'rb')
+        fp = open(pathString, "rb")
         myDataP.data = fp.read()
         fp.close()
         myDataP.dataSize = len(myDataP.data)
 
     if myDataP.dataSize > 0:
-        myDataP.chunkSize = myDataP.dataSize/10  # 10 chunks
+        myDataP.chunkSize = myDataP.dataSize / 10  # 10 chunks
+
 
 def doIncrementalImageWithURL(context, url):
     myData = MyIncrementalData()
@@ -504,6 +552,7 @@ def doIncrementalImageWithURL(context, url):
 
     myDrawFirstImageIncrementally(context, myData)
     del myData
+
 
 # This code requires QuickTime.framework.
 # from Carbon import Qt
@@ -519,25 +568,28 @@ def createCGImageWithQuickTimeFromURL(url):
     err = noErr
     result, dataRef, dataRefType = QTNewDataReferenceFromCFURL(url, 0, None, None)
     if dataRef is not None:
-        err, gi = GetGraphicsImporterForDataRefWithFlags(dataRef,
-                                            dataRefType, None, 0)
+        err, gi = GetGraphicsImporterForDataRefWithFlags(dataRef, dataRefType, None, 0)
         if not err and gi:
             # Tell the graphics importer that it shouldn't perform
             # gamma correction and it should create an image in
             # the original source color space rather than matching it to
             # a generic calibrated color space.
-            result = GraphicsImportSetFlags(gi,
-                            (kGraphicsImporterDontDoGammaCorrection +
-                            kGraphicsImporterDontUseColorMatching)
+            result = GraphicsImportSetFlags(
+                gi,
+                (
+                    kGraphicsImporterDontDoGammaCorrection
+                    + kGraphicsImporterDontUseColorMatching
+                ),
             )
             if result == 0:
-                result, imageRef = GraphicsImportCreateCGImage(gi,None,0)
+                result, imageRef = GraphicsImportCreateCGImage(gi, None, 0)
                 if result != 0:
-                    print("got a bad result = %d!"%(result,))
+                    print("got a bad result = %d!" % (result,))
             DisposeHandle(dataRef)
             CloseComponent(gi)
 
     return imageRef
+
 
 def drawQTImageWithQuartz(context, url):
     image = createCGImageWithQuickTimeFromURL(url)
@@ -545,9 +597,11 @@ def drawQTImageWithQuartz(context, url):
         print("createCGImageWithQuickTimeFromURL didn't create a CGImage!")
         return
 
-    imageRect = Quartz.CGRectMake(0.0, 0.0,
-            Quartz.CGImageGetWidth(image), Quartz.CGImageGetHeight(image))
+    imageRect = Quartz.CGRectMake(
+        0.0, 0.0, Quartz.CGImageGetWidth(image), Quartz.CGImageGetHeight(image)
+    )
     Quartz.CGContextDrawImage(context, imageRect, image)
+
 
 def drawJPEGDocumentWithMultipleProfiles(context, url):
     isDeviceRGBImage = False
@@ -560,7 +614,8 @@ def drawJPEGDocumentWithMultipleProfiles(context, url):
 
     # Create the Quartz.CGImageRef for the JPEG image from the data provider.
     jpgImage = Quartz.CGImageCreateWithJPEGDataProvider(
-            jpgProvider, None, True, Quartz.kCGRenderingIntentDefault)
+        jpgProvider, None, True, Quartz.kCGRenderingIntentDefault
+    )
     del jpgProvider
     if jpgImage is None:
         print("Couldn't create CGImageRef for JPEG data!")
@@ -589,28 +644,33 @@ def drawJPEGDocumentWithMultipleProfiles(context, url):
     # NOTE: 20140109: Disabled the color space comparison because that's not valid
     #       on recent enough OSX versions.
 
-    #isDeviceRGBImage = (comparisonColorSpace == originalColorSpace)
+    # isDeviceRGBImage = (comparisonColorSpace == originalColorSpace)
 
     # This code created 'comparisonColorSpace' so it must release it.
-    #del comparisonColorSpace
+    # del comparisonColorSpace
 
-    #if not isDeviceRGBImage:
+    # if not isDeviceRGBImage:
     #    print("The color space for the JPEG image is not DeviceRGB!", comparisonColorSpace, originalColorSpace)
     #    #return
 
     # Might need to adjust this based on the size of the original image.
     Quartz.CGContextScaleCTM(context, 0.5, 0.5)
 
-    imageRect = Quartz.CGRectMake(0.0, Quartz.CGImageGetHeight(jpgImage)/2,
-                    Quartz.CGImageGetWidth(jpgImage), Quartz.CGImageGetHeight(jpgImage))
+    imageRect = Quartz.CGRectMake(
+        0.0,
+        Quartz.CGImageGetHeight(jpgImage) / 2,
+        Quartz.CGImageGetWidth(jpgImage),
+        Quartz.CGImageGetHeight(jpgImage),
+    )
 
     # Draw the original image to the left of the other two.
     Quartz.CGContextDrawImage(context, imageRect, jpgImage)
 
     # Recharacterize the original image with the generic Calibrated RGB
     # color space.
-    updatedImage1 = Quartz.CGImageCreateCopyWithColorSpace(jpgImage,
-                                    Utilities.getTheCalibratedRGBColorSpace())
+    updatedImage1 = Quartz.CGImageCreateCopyWithColorSpace(
+        jpgImage, Utilities.getTheCalibratedRGBColorSpace()
+    )
     # Release the original image since this code is done with it.
     del jpgImage
     if updatedImage1 is None:
@@ -624,8 +684,9 @@ def drawJPEGDocumentWithMultipleProfiles(context, url):
 
     # Recharacterize the image but now with a color space
     # created with the sRGB profile.
-    updatedImage2 = Quartz.CGImageCreateCopyWithColorSpace(updatedImage1,
-                                            Utilities.getTheSRGBColorSpace())
+    updatedImage2 = Quartz.CGImageCreateCopyWithColorSpace(
+        updatedImage1, Utilities.getTheSRGBColorSpace()
+    )
     # Release updatedImage1 since this code is done with it.
     del updatedImage1
     if updatedImage2 is None:
@@ -636,6 +697,7 @@ def drawJPEGDocumentWithMultipleProfiles(context, url):
     # the image characterized by the generic RGB profile.
     imageRect = Quartz.CGRectOffset(imageRect, Quartz.CGRectGetWidth(imageRect) + 10, 0)
     Quartz.CGContextDrawImage(context, imageRect, updatedImage2)
+
 
 def createRedGreenRampImageData(width, height, size):
     try:
@@ -649,26 +711,27 @@ def createRedGreenRampImageData(width, height, size):
     # right and the green component increases from top to bottom.
     for g in range(height):
         for r in range(width):
-            dataP[idx+0] = r
-            dataP[idx+1] = g
-            dataP[idx+2] = 0
-            idx+=3
+            dataP[idx + 0] = r
+            dataP[idx + 1] = g
+            dataP[idx + 2] = 0
+            idx += 3
 
     return dataP
+
 
 def createRGBRampSubDataProvider(subRect):
     bytesPerSample = 3
     width = 256
     height = 256
-    bytesPerRow = width*bytesPerSample
+    bytesPerRow = width * bytesPerSample
     startOffsetX = subRect.origin.x
     startOffsetY = subRect.origin.y
-    imageDataSize = bytesPerRow*height
+    imageDataSize = bytesPerRow * height
 
     # The first image sample is at
     # (startOffsetY*bytesPerRow + startOffsetX*bytesPerSample)
     # bytes into the RGB ramp data.
-    firstByteOffset = startOffsetY*bytesPerRow + startOffsetX*bytesPerSample
+    firstByteOffset = startOffsetY * bytesPerRow + startOffsetX * bytesPerSample
 
     # The actual size of the image data provided is the full image size
     # minus the amount skipped at the beginning. This is more than the
@@ -684,14 +747,15 @@ def createRGBRampSubDataProvider(subRect):
 
     # Use the pointer to the first byte as the info parameter since
     # that is the pointer to the block to free when done.
-    dataProvider = Quartz.CGDataProviderCreateWithData(dataP,
-                        buffer(dataP, firstByteOffset),
-                        totalBytesProvided, None)
+    dataProvider = Quartz.CGDataProviderCreateWithData(
+        dataP, buffer(dataP, firstByteOffset), totalBytesProvided, None
+    )
 
     if dataProvider is None:
         return None
 
     return dataProvider
+
 
 def doColorRampSubImage(context):
     # Start 4 scanlines from the top and 16 pixels from the left edge,
@@ -704,28 +768,35 @@ def doColorRampSubImage(context):
 
     fullImageWidth = 256
     fullImageHeight = 256
-    subImageWidth = fullImageWidth-insetLeft-insetRight
-    subImageHeight = fullImageHeight-insetTop-insetBottom
+    subImageWidth = fullImageWidth - insetLeft - insetRight
+    subImageHeight = fullImageHeight - insetTop - insetBottom
     bitsPerComponent = 8
     bitsPerPixel = 24
     bytesPerRow = fullImageWidth * 3
     shouldInterpolate = True
 
-    imageSubRect = Quartz.CGRectMake(
-            insetLeft, insetTop, subImageWidth, subImageHeight)
+    imageSubRect = Quartz.CGRectMake(insetLeft, insetTop, subImageWidth, subImageHeight)
     colorspace = Utilities.getTheCalibratedRGBColorSpace()
 
-    if hasattr(Quartz, 'CGImageCreateWithImageInRect'):
+    if hasattr(Quartz, "CGImageCreateWithImageInRect"):
         imageDataProvider = DataProvidersAndConsumers.createRGBRampDataProvider()
         if imageDataProvider is None:
             print("Couldn't create Image Data provider!")
             return
 
-        fullImage = Quartz.CGImageCreate(fullImageWidth, fullImageHeight,
-                        bitsPerComponent, bitsPerPixel,
-                        bytesPerRow, colorspace, Quartz.kCGImageAlphaNone,
-                        imageDataProvider, None, shouldInterpolate,
-                        Quartz.kCGRenderingIntentDefault)
+        fullImage = Quartz.CGImageCreate(
+            fullImageWidth,
+            fullImageHeight,
+            bitsPerComponent,
+            bitsPerPixel,
+            bytesPerRow,
+            colorspace,
+            Quartz.kCGImageAlphaNone,
+            imageDataProvider,
+            None,
+            shouldInterpolate,
+            Quartz.kCGRenderingIntentDefault,
+        )
         if fullImage is not None:
             image = Quartz.CGImageCreateWithImageInRect(fullImage, imageSubRect)
             # release the full image since it is no longer required.
@@ -741,11 +812,19 @@ def doColorRampSubImage(context):
 
         # By supplying bytesPerRow, the extra data at the end of
         # each scanline and the beginning of the next is properly skipped.
-        image = Quartz.CGImageCreate(subImageWidth, subImageHeight,
-                            bitsPerComponent, bitsPerPixel,
-                            bytesPerRow, colorspace, Quartz.kCGImageAlphaNone,
-                            imageDataProvider, None, shouldInterpolate,
-                            Quartz.kCGRenderingIntentDefault)
+        image = Quartz.CGImageCreate(
+            subImageWidth,
+            subImageHeight,
+            bitsPerComponent,
+            bitsPerPixel,
+            bytesPerRow,
+            colorspace,
+            Quartz.kCGImageAlphaNone,
+            imageDataProvider,
+            None,
+            shouldInterpolate,
+            Quartz.kCGRenderingIntentDefault,
+        )
 
     # This code no longer needs the data provider.
     del imageDataProvider
@@ -758,8 +837,9 @@ def doColorRampSubImage(context):
     rect = Quartz.CGRectMake(0, 0, subImageWidth, subImageHeight)
     Quartz.CGContextDrawImage(context, rect, image)
 
+
 def exportCGImageToPNGFileWithDestination(image, url):
-    resolution = 144.
+    resolution = 144.0
 
     # Create an image destination at the supplied URL that
     # corresponds to the PNG image format.
@@ -794,20 +874,19 @@ def exportCGImageToJPEGFile(imageRef, url):
     # This doesn't actually work due to lame Python Quicktime bindings...
     return
 
-    result, dataRef, dataRefType = QTNewDataReferenceFromCFURL(
-            url, 0, None, None)
+    result, dataRef, dataRefType = QTNewDataReferenceFromCFURL(url, 0, None, None)
     if result == 0:
-        result, graphicsExporter = OpenADefaultComponent(GraphicsExporterComponentType,
-                            kQTFileTypeJPEG)
+        result, graphicsExporter = OpenADefaultComponent(
+            GraphicsExporterComponentType, kQTFileTypeJPEG
+        )
         if result == 0:
-            result = GraphicsExportSetInputCGImage(graphicsExporter,
-                                            imageRef)
+            result = GraphicsExportSetInputCGImage(graphicsExporter, imageRef)
             if result == 0:
                 result = GraphicsExportSetOutputDataReference(
-                            graphicsExporter, dataRef, dataRefType)
+                    graphicsExporter, dataRef, dataRefType
+                )
             if result == 0:
-                result, sizeWritten = GraphicsExportDoExport(
-                        graphicsExporter, None)
+                result, sizeWritten = GraphicsExportDoExport(graphicsExporter, None)
 
             CloseComponent(graphicsExporter)
 
@@ -815,7 +894,8 @@ def exportCGImageToJPEGFile(imageRef, url):
         DisposeHandle(dataRef)
 
     if result != 0:
-        print("Exporting QT image got bad result = %d!"%(result,))
+        print("Exporting QT image got bad result = %d!" % (result,))
+
 
 def exportColorRampImageWithQT(context):
     width = 256
@@ -831,10 +911,19 @@ def exportColorRampImageWithQT(context):
         return
 
     colorspace = Utilities.getTheCalibratedRGBColorSpace()
-    image = Quartz.CGImageCreate(width, height, bitsPerComponent,
-                            bitsPerPixel, bytesPerRow, colorspace,
-                            Quartz.kCGImageAlphaNone, imageDataProvider,
-                            None, shouldInterpolate, Quartz.kCGRenderingIntentDefault)
+    image = Quartz.CGImageCreate(
+        width,
+        height,
+        bitsPerComponent,
+        bitsPerPixel,
+        bytesPerRow,
+        colorspace,
+        Quartz.kCGImageAlphaNone,
+        imageDataProvider,
+        None,
+        shouldInterpolate,
+        Quartz.kCGRenderingIntentDefault,
+    )
     del imageDataProvider
     if image is None:
         print("Couldn't create CGImageRef for this data!")
@@ -845,7 +934,8 @@ def exportColorRampImageWithQT(context):
 
     # Of course this is a total hack.
     outPath = b"/tmp/imageout.jpg"
-    exportURL = CFURLCreateFromFileSystemRepresentation(None,
-                                outPath, len(outPath), False)
+    exportURL = CFURLCreateFromFileSystemRepresentation(
+        None, outPath, len(outPath), False
+    )
     if exportURL:
         exportCGImageToJPEGFile(image, exportURL)

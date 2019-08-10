@@ -7,13 +7,13 @@ Usage:
 from setuptools import setup
 
 plist = dict(
-    CFBundleDocumentTypes = [
+    CFBundleDocumentTypes=[
         dict(
             CFBundleTypeExtensions=["txt", "text", "*"],
             CFBundleTypeName="Text File",
             CFBundleTypeRole="Editor",
             NSDocumentClass="TinyTinyDocument",
-        ),
+        )
     ]
 )
 
@@ -22,8 +22,5 @@ setup(
     app=["TinyTinyEdit.py"],
     data_files=["MainMenu.nib", "TinyTinyDocument.nib"],
     options=dict(py2app=dict(plist=plist)),
-    setup_requires=[
-        "py2app",
-        "pyobjc-framework-Cocoa",
-    ]
+    setup_requires=["py2app", "pyobjc-framework-Cocoa"],
 )

@@ -27,9 +27,7 @@ class TestVersionSupport(TestCase):
         self.assertTrue(objc.macos_available(version[0], version[1] - 1))
 
         if version[2]:
-            self.assertTrue(
-                objc.macos_available(version[0], version[1], version[2] - 1)
-            )
+            self.assertTrue(objc.macos_available(version[0], version[1], version[2] - 1))
 
 
 if __name__ == "__main__":

@@ -8,8 +8,8 @@ class TestVoidPointer(TestCase):
         o = OC_TestVoidPointer.alloc().init()
         self.assertEqual(o.getvalue(), 0)
 
-        o.setvalue_(523532)
-        self.assertEqual(o.getvalue(), 523532)
+        o.setvalue_(523_532)
+        self.assertEqual(o.getvalue(), 523_532)
 
         o.setvalue_(sys.maxsize + 1)
         self.assertEqual(o.getvalue(), sys.maxsize + 1)

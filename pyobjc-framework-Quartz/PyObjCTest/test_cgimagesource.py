@@ -2,7 +2,8 @@ from PyObjCTools.TestSupport import *
 
 import Quartz
 
-class TestCGImageSource (TestCase):
+
+class TestCGImageSource(TestCase):
     def testConstants(self):
         self.assertEqual(Quartz.kCGImageStatusUnexpectedEOF, -5)
         self.assertEqual(Quartz.kCGImageStatusInvalidData, -4)
@@ -14,16 +15,20 @@ class TestCGImageSource (TestCase):
         self.assertIsInstance(Quartz.kCGImageSourceTypeIdentifierHint, unicode)
         self.assertIsInstance(Quartz.kCGImageSourceShouldCache, unicode)
         self.assertIsInstance(Quartz.kCGImageSourceShouldAllowFloat, unicode)
-        self.assertIsInstance(Quartz.kCGImageSourceCreateThumbnailFromImageIfAbsent, unicode)
-        self.assertIsInstance(Quartz.kCGImageSourceCreateThumbnailFromImageAlways, unicode)
+        self.assertIsInstance(
+            Quartz.kCGImageSourceCreateThumbnailFromImageIfAbsent, unicode
+        )
+        self.assertIsInstance(
+            Quartz.kCGImageSourceCreateThumbnailFromImageAlways, unicode
+        )
         self.assertIsInstance(Quartz.kCGImageSourceThumbnailMaxPixelSize, unicode)
         self.assertIsInstance(Quartz.kCGImageSourceCreateThumbnailWithTransform, unicode)
 
-    @min_os_level('10.9')
+    @min_os_level("10.9")
     def testConstants10_9(self):
         self.assertIsInstance(Quartz.kCGImageSourceShouldCacheImmediately, unicode)
 
-    @min_os_level('10.11')
+    @min_os_level("10.11")
     def testConstants10_11(self):
         self.assertIsInstance(Quartz.kCGImageSourceSubsampleFactor, unicode)
 
@@ -52,21 +57,22 @@ class TestCGImageSource (TestCase):
         Quartz.CGImageSourceGetStatus
         Quartz.CGImageSourceGetStatusAtIndex
 
-    @min_os_level('10.8')
+    @min_os_level("10.8")
     def testFunctions10_8(self):
         self.assertResultIsCFRetained(Quartz.CGImageSourceCopyMetadataAtIndex)
 
-    @min_os_level('10.9')
+    @min_os_level("10.9")
     def testFunctions10_9(self):
         Quartz.CGImageSourceRemoveCacheAtIndex
 
-    @min_os_level('10.13')
+    @min_os_level("10.13")
     def testFunctions10_13(self):
         self.assertResultIsCFRetained(Quartz.CGImageSourceCopyAuxiliaryDataInfoAtIndex)
 
-    @min_os_level('10.14')
+    @min_os_level("10.14")
     def testFunctions10_14(self):
         Quartz.CGImageSourceGetPrimaryImageIndex
+
 
 if __name__ == "__main__":
     main()

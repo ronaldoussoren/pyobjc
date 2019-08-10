@@ -10,6 +10,7 @@
 from objc import super
 from Cocoa import NSArrayController
 
+
 class FilteringArrayController(NSArrayController):
     _k_searchString = ""
 

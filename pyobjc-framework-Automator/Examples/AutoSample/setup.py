@@ -10,8 +10,5 @@ setup(
     name="AutoSample",
     app=["main.py"],
     data_files=["English.lproj", "workflows"],
-    setup_requires=[
-        "pyobjc-framework-Automator",
-        "pyobjc-framework-Cocoa",
-    ]
+    setup_requires=["pyobjc-framework-Automator", "pyobjc-framework-Cocoa"],
 )

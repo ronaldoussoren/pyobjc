@@ -102,9 +102,7 @@ class PyKeyValueCoding(TestCase):
     def testValueForKey2(self):
         o = KeyValueClass3()
 
-        self.assertEqual(
-            STUB.keyValue_forObject_key_(DO_VALUEFORKEY, o, "foo"), "foobar"
-        )
+        self.assertEqual(STUB.keyValue_forObject_key_(DO_VALUEFORKEY, o, "foo"), "foobar")
         self.assertEqual(
             STUB.keyValue_forObject_key_(DO_VALUEFORKEY, o, "bar"), "foobarfoobar"
         )
@@ -116,21 +114,14 @@ class PyKeyValueCoding(TestCase):
         o = KeyValueClass2()
         o.addMultiple()
 
-        self.assertEqual(
-            STUB.keyValue_forObject_key_(DO_STOREDVALUEFORKEY, o, "key1"), 1
-        )
-        self.assertEqual(
-            STUB.keyValue_forObject_key_(DO_STOREDVALUEFORKEY, o, "key2"), 2
-        )
-        self.assertEqual(
-            STUB.keyValue_forObject_key_(DO_STOREDVALUEFORKEY, o, "key3"), 3
-        )
+        self.assertEqual(STUB.keyValue_forObject_key_(DO_STOREDVALUEFORKEY, o, "key1"), 1)
+        self.assertEqual(STUB.keyValue_forObject_key_(DO_STOREDVALUEFORKEY, o, "key2"), 2)
+        self.assertEqual(STUB.keyValue_forObject_key_(DO_STOREDVALUEFORKEY, o, "key3"), 3)
         self.assertEqual(
             STUB.keyValue_forObject_key_(DO_STOREDVALUEFORKEY, o, "key4"), "4"
         )
         self.assertEqual(
-            STUB.keyValue_forObject_key_(DO_STOREDVALUEFORKEY, o, "multiple"),
-            o.multiple,
+            STUB.keyValue_forObject_key_(DO_STOREDVALUEFORKEY, o, "multiple"), o.multiple
         )
 
         self.assertRaises(
@@ -256,9 +247,7 @@ class PyKeyValueCoding(TestCase):
         self.assertEqual(o.key5, "VVVVV")
 
         self.assertNotHasAttr(o, "key9")
-        STUB.setKeyValue_forObject_key_value_(
-            DO_TAKESTOREDVALUE_FORKEY, o, "key9", "IX"
-        )
+        STUB.setKeyValue_forObject_key_value_(DO_TAKESTOREDVALUE_FORKEY, o, "key9", "IX")
         self.assertHasAttr(o, "key9")
         self.assertEqual(o.key9, "IX")
 
@@ -266,9 +255,7 @@ class PyKeyValueCoding(TestCase):
         o = KeyValueClass3()
 
         self.assertEqual(o.foo, "foobar")
-        STUB.setKeyValue_forObject_key_value_(
-            DO_TAKESTOREDVALUE_FORKEY, o, "foo", "FOO"
-        )
+        STUB.setKeyValue_forObject_key_value_(DO_TAKESTOREDVALUE_FORKEY, o, "foo", "FOO")
         self.assertEqual(o.foo, "FOO")
 
         self.assertRaises(
@@ -368,18 +355,10 @@ class TestAccMethod(TestCase):
         # Strings are automaticly converted to NSStrings, and those don't have
         # a capitalize key.
         self.assertRaises(
-            KeyError,
-            STUB.keyValue_forObject_key_,
-            DO_VALUEFORKEY,
-            "hello",
-            "capitalize",
+            KeyError, STUB.keyValue_forObject_key_, DO_VALUEFORKEY, "hello", "capitalize"
         )
         self.assertRaises(
-            KeyError,
-            STUB.keyValue_forObject_key_,
-            DO_VALUEFORKEY,
-            "hello",
-            "capitalize",
+            KeyError, STUB.keyValue_forObject_key_, DO_VALUEFORKEY, "hello", "capitalize"
         )
 
 
@@ -483,9 +462,7 @@ class TestPythonSubOverObjC(AbstractKVCodingTest, TestCase):
         )
         self.assertEqual(
             IndirectString,
-            STUB.keyValue_forObject_key_(
-                DO_VALUEFORKEY, self.base, "overIndirectString"
-            ),
+            STUB.keyValue_forObject_key_(DO_VALUEFORKEY, self.base, "overIndirectString"),
         )
 
     def testOverValueKeyPath(self):

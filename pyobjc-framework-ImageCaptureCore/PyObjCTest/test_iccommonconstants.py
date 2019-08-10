@@ -2,7 +2,8 @@ from PyObjCTools.TestSupport import *
 
 from ImageCaptureCore import *
 
-class TestICCameraDevice (TestCase):
+
+class TestICCameraDevice(TestCase):
     def testConstants(self):
         self.assertEqual(ICEXIFOrientation1, 1)
         self.assertEqual(ICEXIFOrientation2, 2)
@@ -62,21 +63,29 @@ class TestICCameraDevice (TestCase):
         self.assertEqual(ICReturnDeviceFailedToSendData, -9957)
         self.assertEqual(ICReturnSessionNotOpened, -9958)
         self.assertEqual(ICReturnThumbnailNotAvailable, ICReturnCodeThumbnailOffset)
-        self.assertEqual(ICReturnThumbnailAlreadyFetching, ICReturnCodeThumbnailOffset -1)
-        self.assertEqual(ICReturnThumbnailCanceled, ICReturnCodeThumbnailOffset -2)
-        self.assertEqual(ICReturnThumbnailInvalid, ICReturnCodeThumbnailOffset -3)
+        self.assertEqual(
+            ICReturnThumbnailAlreadyFetching, ICReturnCodeThumbnailOffset - 1
+        )
+        self.assertEqual(ICReturnThumbnailCanceled, ICReturnCodeThumbnailOffset - 2)
+        self.assertEqual(ICReturnThumbnailInvalid, ICReturnCodeThumbnailOffset - 3)
         self.assertEqual(ICReturnErrorDeviceEjected, ICReturnCodeSystemOffset)
         self.assertEqual(ICReturnMetadataNotAvailable, ICReturnCodeMetadataOffset)
         self.assertEqual(ICReturnConnectionDriverExited, ICReturnCodeDeviceOffset)
-        self.assertEqual(ICReturnConnectionClosedSessionSuddenly, ICReturnCodeDeviceOffset - 1)
+        self.assertEqual(
+            ICReturnConnectionClosedSessionSuddenly, ICReturnCodeDeviceOffset - 1
+        )
         self.assertEqual(ICReturnConnectionEjectedSuddenly, ICReturnCodeDeviceOffset - 2)
-        self.assertEqual(ICReturnConnectionSessionAlreadyOpen, ICReturnCodeDeviceOffset - 3)
+        self.assertEqual(
+            ICReturnConnectionSessionAlreadyOpen, ICReturnCodeDeviceOffset - 3
+        )
         self.assertEqual(ICReturnConnectionEjectFailed, ICReturnCodeDeviceOffset - 4)
         self.assertEqual(ICReturnConnectionFailedToOpen, ICReturnCodeDeviceConnection)
-        self.assertEqual(ICReturnConnectionFailedToOpenDevice, ICReturnCodeDeviceConnection - 1)
-        self.assertEqual(ICReturnMetadataAlreadyFetching, ICReturnCodeMetadataOffset -1)
-        self.assertEqual(ICReturnMetadataCanceled, ICReturnCodeMetadataOffset -2)
-        self.assertEqual(ICReturnMetadataInvalid, ICReturnCodeMetadataOffset -3)
+        self.assertEqual(
+            ICReturnConnectionFailedToOpenDevice, ICReturnCodeDeviceConnection - 1
+        )
+        self.assertEqual(ICReturnMetadataAlreadyFetching, ICReturnCodeMetadataOffset - 1)
+        self.assertEqual(ICReturnMetadataCanceled, ICReturnCodeMetadataOffset - 2)
+        self.assertEqual(ICReturnMetadataInvalid, ICReturnCodeMetadataOffset - 3)
         self.assertEqual(ICReturnMultiErrorDictionary, -30000)
 
         self.assertEqual(ICLegacyReturnCodeCommunicationErr, -9900)
@@ -141,6 +150,7 @@ class TestICCameraDevice (TestCase):
         self.assertEqual(ICReturnSessionNotOpened, -9958)
         self.assertEqual(ICReturnExFATVolumeInvalid, ICReturnCodeExFATOffset)
         self.assertEqual(ICReturnMultiErrorDictionary, -30000)
+
 
 if __name__ == "__main__":
     main()

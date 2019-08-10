@@ -1,11 +1,11 @@
 from PyObjCTools.TestSupport import *
 import sys
 
-if sys.maxsize > 2**32:
+if sys.maxsize > 2 ** 32:
     import ModelIO
 
-    class TestMDLValueTypes (TestCase):
-        @min_os_level('10.13')
+    class TestMDLValueTypes(TestCase):
+        @min_os_level("10.13")
         @expectedFailure
         def testMethodsSIMD(self):
             # SIMD types

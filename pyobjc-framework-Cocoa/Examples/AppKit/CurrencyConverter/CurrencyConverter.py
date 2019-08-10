@@ -5,12 +5,12 @@ import objc
 from AppKit import NSObject, NSApplicationMain
 
 
-class Converter (NSObject):
+class Converter(NSObject):
     def convertAmount_atRate_(self, amt, rate):
-        return amt*rate
+        return amt * rate
 
 
-class ConverterController (NSObject):
+class ConverterController(NSObject):
 
     # First define the IB Outlets, the 'ivar' calls below define new
     # instance variables in the objective-C class (e.g. visible
@@ -34,7 +34,7 @@ class ConverterController (NSObject):
         self.totalField.setFloatValue_(total)
         self.rateField.selectText_(self)
 
-        #x = NSRunAlertPanel("Calculation Result",
+        # x = NSRunAlertPanel("Calculation Result",
         #    "The result is %s"%(total), "OK", None, None)
 
 

@@ -4,12 +4,12 @@ from PyObjCTools.TestSupport import *
 if sys.maxsize > 2 ** 32:
     import ColorSync
 
-    class TestColorSyncTransform (TestCase):
-        @min_os_level('10.13')
+    class TestColorSyncTransform(TestCase):
+        @min_os_level("10.13")
         def testCFType(self):
             self.assertIsCFType(ColorSync.ColorSyncTransformRef)
 
-        @min_os_level('10.13')
+        @min_os_level("10.13")
         def testFunctions(self):
             self.assertIsInstance(ColorSync.ColorSyncTransformGetTypeID(), (int, long))
 
@@ -22,8 +22,7 @@ if sys.maxsize > 2 ** 32:
             self.assertArgIsIn(ColorSync.ColorSyncTransformConvert, 7)
             self.assertArgIsVariableSize(ColorSync.ColorSyncTransformConvert, 7)
 
-
-        @min_os_level('10.13')
+        @min_os_level("10.13")
         def testConstants(self):
             self.assertEqual(ColorSync.kColorSync1BitGamut, 1)
             self.assertEqual(ColorSync.kColorSync8BitInteger, 2)
@@ -56,7 +55,9 @@ if sys.maxsize > 2 ** 32:
             self.assertIsInstance(ColorSync.kColorSyncRenderingIntentRelative, unicode)
             self.assertIsInstance(ColorSync.kColorSyncRenderingIntentSaturation, unicode)
             self.assertIsInstance(ColorSync.kColorSyncRenderingIntentAbsolute, unicode)
-            self.assertIsInstance(ColorSync.kColorSyncRenderingIntentUseProfileHeader, unicode)
+            self.assertIsInstance(
+                ColorSync.kColorSyncRenderingIntentUseProfileHeader, unicode
+            )
             self.assertIsInstance(ColorSync.kColorSyncTransformTag, unicode)
             self.assertIsInstance(ColorSync.kColorSyncTransformDeviceToPCS, unicode)
             self.assertIsInstance(ColorSync.kColorSyncTransformPCSToPCS, unicode)
@@ -77,9 +78,15 @@ if sys.maxsize > 2 ** 32:
             self.assertIsInstance(ColorSync.kColorSyncTransformDstSpace, unicode)
             self.assertIsInstance(ColorSync.kColorSyncTransformCodeFragmentType, unicode)
             self.assertIsInstance(ColorSync.kColorSyncTransformCodeFragmentMD5, unicode)
-            self.assertIsInstance(ColorSync.kColorSyncTransformFullConversionData, unicode)
-            self.assertIsInstance(ColorSync.kColorSyncTransformSimplifiedConversionData, unicode)
-            self.assertIsInstance(ColorSync.kColorSyncTransformParametricConversionData, unicode)
+            self.assertIsInstance(
+                ColorSync.kColorSyncTransformFullConversionData, unicode
+            )
+            self.assertIsInstance(
+                ColorSync.kColorSyncTransformSimplifiedConversionData, unicode
+            )
+            self.assertIsInstance(
+                ColorSync.kColorSyncTransformParametricConversionData, unicode
+            )
             self.assertIsInstance(ColorSync.kColorSyncConversionMatrix, unicode)
             self.assertIsInstance(ColorSync.kColorSyncConversionParamCurve0, unicode)
             self.assertIsInstance(ColorSync.kColorSyncConversionParamCurve1, unicode)
@@ -100,14 +107,15 @@ if sys.maxsize > 2 ** 32:
             self.assertIsInstance(ColorSync.kColorSyncTransformSrcSpace, unicode)
             self.assertIsInstance(ColorSync.kColorSyncTransformDstSpace, unicode)
 
-        @min_os_level('10.13')
-        @max_os_level('10.13')
+        @min_os_level("10.13")
+        @max_os_level("10.13")
         def testConstants10_13_only(self):
             self.assertIsInstance(ColorSync.kColorSyncTranformInfo, unicode)
 
-        @min_os_level('10.14')
+        @min_os_level("10.14")
         def testConstants10_14(self):
             self.assertIsInstance(ColorSync.kColorSyncTransformInfo, unicode)
+
 
 if __name__ == "__main__":
     main()

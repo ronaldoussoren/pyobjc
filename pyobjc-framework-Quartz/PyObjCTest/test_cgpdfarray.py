@@ -1,8 +1,8 @@
-
 from PyObjCTools.TestSupport import *
 from Quartz.CoreGraphics import *
 
-class TestCGPDFArray (TestCase):
+
+class TestCGPDFArray(TestCase):
     def testTypes(self):
         self.assertIsOpaquePointer(CGPDFArrayRef)
 
@@ -38,9 +38,10 @@ class TestCGPDFArray (TestCase):
 
         CGPDFArrayGetCount
 
-    @min_os_level('10.14')
+    @min_os_level("10.14")
     def testFunctions10_14(self):
-        self.assertArgIsBlock(CGPDFArrayApplyBlock, 1, b'Bl^{CGPDFObject=}^v')
+        self.assertArgIsBlock(CGPDFArrayApplyBlock, 1, b"Bl^{CGPDFObject=}^v")
+
 
 if __name__ == "__main__":
     main()

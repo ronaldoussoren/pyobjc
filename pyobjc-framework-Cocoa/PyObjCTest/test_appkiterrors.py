@@ -1,8 +1,8 @@
-
 from PyObjCTools.TestSupport import *
 from AppKit import *
 
-class TestAppKitErrors (TestCase):
+
+class TestAppKitErrors(TestCase):
     def testConstants(self):
         self.assertEqual(NSTextReadInapplicableDocumentTypeError, 65806)
         self.assertEqual(NSTextWriteInapplicableDocumentTypeError, 66062)
@@ -28,6 +28,7 @@ class TestAppKitErrors (TestCase):
         self.assertEqual(NSWorkspaceAuthorizationInvalidError, 67328)
         self.assertEqual(NSWorkspaceErrorMinimum, 67328)
         self.assertEqual(NSWorkspaceErrorMaximum, 67455)
+
 
 if __name__ == "__main__":
     main()

@@ -1,7 +1,9 @@
-from PyObjCTools import  AppHelper
+from PyObjCTools import AppHelper
 
 import ImageBrowserController
 
-import objc; objc.setVerbose(True)
+import objc
+
+objc.setVerbose(True)
 
 AppHelper.runEventLoop()

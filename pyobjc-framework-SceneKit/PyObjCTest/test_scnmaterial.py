@@ -2,11 +2,11 @@ from PyObjCTools.TestSupport import *
 import objc
 import sys
 
-if os_level_key(os_release()) < os_level_key('10.12') or sys.maxsize >= 2**32:
+if os_level_key(os_release()) < os_level_key("10.12") or sys.maxsize >= 2 ** 32:
 
     import SceneKit
 
-    class TestSCNMaterial (TestCase):
+    class TestSCNMaterial(TestCase):
         def testConstants(self):
             self.assertIsInstance(SceneKit.SCNLightingModelPhong, unicode)
             self.assertIsInstance(SceneKit.SCNLightingModelBlinn, unicode)
@@ -23,7 +23,9 @@ if os_level_key(os_release()) < os_level_key('10.12') or sys.maxsize >= 2**32:
             self.assertEqual(SceneKit.SCNTransparencyModeRGBZero, 1)
             self.assertEqual(SceneKit.SCNTransparencyModeSingleLayer, 2)
             self.assertEqual(SceneKit.SCNTransparencyModeDualLayer, 3)
-            self.assertEqual(SceneKit.SCNTransparencyModeDefault, SceneKit.SCNTransparencyModeAOne)
+            self.assertEqual(
+                SceneKit.SCNTransparencyModeDefault, SceneKit.SCNTransparencyModeAOne
+            )
 
             self.assertEqual(SceneKit.SCNBlendModeAlpha, 0)
             self.assertEqual(SceneKit.SCNBlendModeAdd, 1)
@@ -33,11 +35,11 @@ if os_level_key(os_release()) < os_level_key('10.12') or sys.maxsize >= 2**32:
             self.assertEqual(SceneKit.SCNBlendModeReplace, 5)
             self.assertEqual(SceneKit.SCNBlendModeMax, 6)
 
-        @min_os_level('10.12')
+        @min_os_level("10.12")
         def testConstants10_12(self):
             self.assertIsInstance(SceneKit.SCNLightingModelPhysicallyBased, unicode)
 
-        @min_os_level('10.15')
+        @min_os_level("10.15")
         def testConstants10_15(self):
             self.assertIsInstance(SceneKit.SCNLightingModelShadowOnly, unicode)
 
@@ -54,7 +56,7 @@ if os_level_key(os_release()) < os_level_key('10.12') or sys.maxsize >= 2**32:
             self.assertResultIsBOOL(SceneKit.SCNMaterial.writesToDepthBuffer)
             self.assertArgIsBOOL(SceneKit.SCNMaterial.setWritesToDepthBuffer_, 0)
 
-        @min_os_level('10.9')
+        @min_os_level("10.9")
         def testMethods10_9(self):
             self.assertResultIsBOOL(SceneKit.SCNMaterial.readsFromDepthBuffer)
             self.assertArgIsBOOL(SceneKit.SCNMaterial.setReadsFromDepthBuffer_, 0)

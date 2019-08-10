@@ -1,7 +1,8 @@
 from PyObjCTools.TestSupport import *
 from Foundation import *
 
-class TestNSLocale (TestCase):
+
+class TestNSLocale(TestCase):
     def testConstants(self):
         self.assertIsInstance(NSCurrentLocaleDidChangeNotification, unicode)
         self.assertIsInstance(NSLocaleIdentifier, unicode)
@@ -26,7 +27,7 @@ class TestNSLocale (TestCase):
         self.assertIsInstance(NSIslamicCivilCalendar, unicode)
         self.assertIsInstance(NSJapaneseCalendar, unicode)
 
-    @min_os_level('10.6')
+    @min_os_level("10.6")
     def testConstants10_6(self):
         self.assertIsInstance(NSLocaleCollatorIdentifier, unicode)
         self.assertIsInstance(NSLocaleQuotationBeginDelimiterKey, unicode)
@@ -38,11 +39,21 @@ class TestNSLocale (TestCase):
         self.assertIsInstance(NSIndianCalendar, unicode)
         self.assertIsInstance(NSISO8601Calendar, unicode)
 
-        self.assertEqual(NSLocaleLanguageDirectionUnknown, kCFLocaleLanguageDirectionUnknown)
-        self.assertEqual(NSLocaleLanguageDirectionLeftToRight, kCFLocaleLanguageDirectionLeftToRight)
-        self.assertEqual(NSLocaleLanguageDirectionRightToLeft, kCFLocaleLanguageDirectionRightToLeft)
-        self.assertEqual(NSLocaleLanguageDirectionTopToBottom, kCFLocaleLanguageDirectionTopToBottom)
-        self.assertEqual(NSLocaleLanguageDirectionBottomToTop, kCFLocaleLanguageDirectionBottomToTop)
+        self.assertEqual(
+            NSLocaleLanguageDirectionUnknown, kCFLocaleLanguageDirectionUnknown
+        )
+        self.assertEqual(
+            NSLocaleLanguageDirectionLeftToRight, kCFLocaleLanguageDirectionLeftToRight
+        )
+        self.assertEqual(
+            NSLocaleLanguageDirectionRightToLeft, kCFLocaleLanguageDirectionRightToLeft
+        )
+        self.assertEqual(
+            NSLocaleLanguageDirectionTopToBottom, kCFLocaleLanguageDirectionTopToBottom
+        )
+        self.assertEqual(
+            NSLocaleLanguageDirectionBottomToTop, kCFLocaleLanguageDirectionBottomToTop
+        )
 
 
 if __name__ == "__main__":

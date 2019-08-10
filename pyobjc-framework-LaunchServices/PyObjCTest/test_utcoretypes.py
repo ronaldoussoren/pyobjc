@@ -1,12 +1,13 @@
-
 from PyObjCTools.TestSupport import *
 
 import warnings
+
 with warnings.catch_warnings():
     warnings.filterwarnings("ignore")
     import LaunchServices
 
-class TestUTCoreTypes (TestCase):
+
+class TestUTCoreTypes(TestCase):
     def testConstants(self):
         self.assertIsInstance(LaunchServices.kUTTypeItem, unicode)
         self.assertIsInstance(LaunchServices.kUTTypeContent, unicode)
@@ -77,7 +78,7 @@ class TestUTCoreTypes (TestCase):
         self.assertIsInstance(LaunchServices.kUTTypeVCard, unicode)
         self.assertIsInstance(LaunchServices.kUTTypeInkText, unicode)
 
-    @min_os_level('10.10')
+    @min_os_level("10.10")
     def testConstants10_10(self):
         self.assertIsInstance(LaunchServices.kUTTypeURLBookmarkData, unicode)
         self.assertIsInstance(LaunchServices.kUTTypeDelimitedText, unicode)
@@ -136,9 +137,10 @@ class TestUTCoreTypes (TestCase):
         self.assertIsInstance(LaunchServices.kUTTypeElectronicPublication, unicode)
         self.assertIsInstance(LaunchServices.kUTTypeLog, unicode)
 
-    @min_os_level('10.11')
+    @min_os_level("10.11")
     def testConstants10_11(self):
         self.assertIsInstance(LaunchServices.kUTTypeSwiftSource, unicode)
+
 
 if __name__ == "__main__":
     main()

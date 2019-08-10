@@ -2,16 +2,22 @@ from PyObjCTools.TestSupport import *
 
 import CoreMedia
 
-class TestCMTime (TestCase):
-    def test_constants(self):
-        self.assertEqual(CoreMedia.kCMTimeMaxTimescale, 0x7fffffff)
 
-        self.assertEqual(CoreMedia.kCMTimeFlags_Valid, 1<<0)
-        self.assertEqual(CoreMedia.kCMTimeFlags_HasBeenRounded, 1<<1)
-        self.assertEqual(CoreMedia.kCMTimeFlags_PositiveInfinity, 1<<2)
-        self.assertEqual(CoreMedia.kCMTimeFlags_NegativeInfinity, 1<<3)
-        self.assertEqual(CoreMedia.kCMTimeFlags_Indefinite, 1<<4)
-        self.assertEqual(CoreMedia.kCMTimeFlags_ImpliedValueFlagsMask, CoreMedia.kCMTimeFlags_PositiveInfinity | CoreMedia.kCMTimeFlags_NegativeInfinity | CoreMedia.kCMTimeFlags_Indefinite)
+class TestCMTime(TestCase):
+    def test_constants(self):
+        self.assertEqual(CoreMedia.kCMTimeMaxTimescale, 0x7FFFFFFF)
+
+        self.assertEqual(CoreMedia.kCMTimeFlags_Valid, 1 << 0)
+        self.assertEqual(CoreMedia.kCMTimeFlags_HasBeenRounded, 1 << 1)
+        self.assertEqual(CoreMedia.kCMTimeFlags_PositiveInfinity, 1 << 2)
+        self.assertEqual(CoreMedia.kCMTimeFlags_NegativeInfinity, 1 << 3)
+        self.assertEqual(CoreMedia.kCMTimeFlags_Indefinite, 1 << 4)
+        self.assertEqual(
+            CoreMedia.kCMTimeFlags_ImpliedValueFlagsMask,
+            CoreMedia.kCMTimeFlags_PositiveInfinity
+            | CoreMedia.kCMTimeFlags_NegativeInfinity
+            | CoreMedia.kCMTimeFlags_Indefinite,
+        )
 
         self.assertEqual(CoreMedia.kCMTimeRoundingMethod_RoundHalfAwayFromZero, 1)
         self.assertEqual(CoreMedia.kCMTimeRoundingMethod_RoundTowardZero, 2)
@@ -19,7 +25,10 @@ class TestCMTime (TestCase):
         self.assertEqual(CoreMedia.kCMTimeRoundingMethod_QuickTime, 4)
         self.assertEqual(CoreMedia.kCMTimeRoundingMethod_RoundTowardPositiveInfinity, 5)
         self.assertEqual(CoreMedia.kCMTimeRoundingMethod_RoundTowardNegativeInfinity, 6)
-        self.assertEqual(CoreMedia.kCMTimeRoundingMethod_Default, CoreMedia.kCMTimeRoundingMethod_RoundHalfAwayFromZero)
+        self.assertEqual(
+            CoreMedia.kCMTimeRoundingMethod_Default,
+            CoreMedia.kCMTimeRoundingMethod_RoundHalfAwayFromZero,
+        )
 
     def test_structs(self):
         v = CoreMedia.CMTime()
@@ -60,7 +69,7 @@ class TestCMTime (TestCase):
         CoreMedia.CMTimeMultiplyByFloat64
         CoreMedia.CMTimeCompare
 
-        self.assertFalse(hasattr(CoreMedia, 'CMTIME_COMPARE_INLINE'))
+        self.assertFalse(hasattr(CoreMedia, "CMTIME_COMPARE_INLINE"))
 
         CoreMedia.CMTimeMinimum
         CoreMedia.CMTimeMaximum
@@ -74,12 +83,9 @@ class TestCMTime (TestCase):
 
         CoreMedia.CMTimeShow
 
-    @min_os_level('10.10')
+    @min_os_level("10.10")
     def test_functions10_10(self):
         CoreMedia.CMTimeMultiplyByRatio
-
-
-
 
 
 if __name__ == "__main__":

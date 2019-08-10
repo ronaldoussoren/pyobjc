@@ -4,13 +4,13 @@ from PyObjCTools.TestSupport import *
 if sys.maxsize > 2 ** 32:
     import ColorSync
 
-    class TestColorSyncProfile (TestCase):
-        @min_os_level('10.13')
+    class TestColorSyncProfile(TestCase):
+        @min_os_level("10.13")
         def testCFType(self):
             self.assertIsCFType(ColorSync.ColorSyncProfileRef)
             self.assertIsCFType(ColorSync.ColorSyncMutableProfileRef)
 
-        @min_os_level('10.13')
+        @min_os_level("10.13")
         def testFunctions(self):
             self.assertIsInstance(ColorSync.ColorSyncProfileGetTypeID(), (int, long))
 
@@ -54,27 +54,51 @@ if sys.maxsize > 2 ** 32:
             ColorSync.ColorSyncProfileSetTag
             ColorSync.ColorSyncProfileRemoveTag
 
-            self.assertArgIsOut(ColorSync.ColorSyncProfileGetDisplayTransferFormulaFromVCGT, 1)
-            self.assertArgIsOut(ColorSync.ColorSyncProfileGetDisplayTransferFormulaFromVCGT, 2)
-            self.assertArgIsOut(ColorSync.ColorSyncProfileGetDisplayTransferFormulaFromVCGT, 3)
-            self.assertArgIsOut(ColorSync.ColorSyncProfileGetDisplayTransferFormulaFromVCGT, 4)
-            self.assertArgIsOut(ColorSync.ColorSyncProfileGetDisplayTransferFormulaFromVCGT, 5)
-            self.assertArgIsOut(ColorSync.ColorSyncProfileGetDisplayTransferFormulaFromVCGT, 6)
-            self.assertArgIsOut(ColorSync.ColorSyncProfileGetDisplayTransferFormulaFromVCGT, 7)
-            self.assertArgIsOut(ColorSync.ColorSyncProfileGetDisplayTransferFormulaFromVCGT, 8)
-            self.assertArgIsOut(ColorSync.ColorSyncProfileGetDisplayTransferFormulaFromVCGT, 9)
+            self.assertArgIsOut(
+                ColorSync.ColorSyncProfileGetDisplayTransferFormulaFromVCGT, 1
+            )
+            self.assertArgIsOut(
+                ColorSync.ColorSyncProfileGetDisplayTransferFormulaFromVCGT, 2
+            )
+            self.assertArgIsOut(
+                ColorSync.ColorSyncProfileGetDisplayTransferFormulaFromVCGT, 3
+            )
+            self.assertArgIsOut(
+                ColorSync.ColorSyncProfileGetDisplayTransferFormulaFromVCGT, 4
+            )
+            self.assertArgIsOut(
+                ColorSync.ColorSyncProfileGetDisplayTransferFormulaFromVCGT, 5
+            )
+            self.assertArgIsOut(
+                ColorSync.ColorSyncProfileGetDisplayTransferFormulaFromVCGT, 6
+            )
+            self.assertArgIsOut(
+                ColorSync.ColorSyncProfileGetDisplayTransferFormulaFromVCGT, 7
+            )
+            self.assertArgIsOut(
+                ColorSync.ColorSyncProfileGetDisplayTransferFormulaFromVCGT, 8
+            )
+            self.assertArgIsOut(
+                ColorSync.ColorSyncProfileGetDisplayTransferFormulaFromVCGT, 9
+            )
 
-            self.assertArgIsIn(ColorSync.ColorSyncProfileCreateDisplayTransferTablesFromVCGT, 1)
+            self.assertArgIsIn(
+                ColorSync.ColorSyncProfileCreateDisplayTransferTablesFromVCGT, 1
+            )
 
-            self.assertArgIsFunction(ColorSync.ColorSyncIterateInstalledProfiles, 0, objc._C_BOOL + b'^{__CFDictionary=}^v', False)
+            self.assertArgIsFunction(
+                ColorSync.ColorSyncIterateInstalledProfiles,
+                0,
+                objc._C_BOOL + b"^{__CFDictionary=}^v",
+                False,
+            )
             self.assertArgIsInOut(ColorSync.ColorSyncIterateInstalledProfiles, 1)
             self.assertArgIsOut(ColorSync.ColorSyncIterateInstalledProfiles, 3)
 
             self.assertArgIsOut(ColorSync.ColorSyncProfileInstall, 3)
             self.assertArgIsOut(ColorSync.ColorSyncProfileUninstall, 1)
 
-
-        @min_os_level('10.13')
+        @min_os_level("10.13")
         def testConstants(self):
             self.assertIsInstance(ColorSync.kColorSyncGenericGrayProfile, unicode)
             self.assertIsInstance(ColorSync.kColorSyncGenericGrayGamma22Profile, unicode)
@@ -140,12 +164,15 @@ if sys.maxsize > 2 ** 32:
             self.assertIsInstance(ColorSync.kColorSyncProfileComputerDomain, unicode)
             self.assertIsInstance(ColorSync.kColorSyncProfileUserDomain, unicode)
 
-            self.assertEqual(ColorSync.COLORSYNC_PROFILE_INSTALL_ENTITLEMENT, b"com.apple.developer.ColorSync.profile.install")
+            self.assertEqual(
+                ColorSync.COLORSYNC_PROFILE_INSTALL_ENTITLEMENT,
+                b"com.apple.developer.ColorSync.profile.install",
+            )
             self.assertEqual(ColorSync.COLORSYNC_MD5_LENGTH, 16)
 
         def testStructs(self):
             v = ColorSync.ColorSyncMD5()
-            self.assertTrue(hasattr(v, 'digest'))
+            self.assertTrue(hasattr(v, "digest"))
 
 
 if __name__ == "__main__":

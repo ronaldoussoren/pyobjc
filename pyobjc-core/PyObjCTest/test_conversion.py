@@ -48,9 +48,7 @@ class TestNumbers(TestCase):
         with warnings.catch_warnings():
             warnings.filterwarnings("ignore", category=DeprecationWarning)
 
-            self.assertRaises(
-                (IndexError, ValueError), pyObjCPy, objc._C_UCHR, SCHAR_MIN
-            )
+            self.assertRaises((IndexError, ValueError), pyObjCPy, objc._C_UCHR, SCHAR_MIN)
             self.assertRaises(
                 (IndexError, ValueError), pyObjCPy, objc._C_UCHR, SCHAR_MIN - 1
             )
@@ -245,9 +243,7 @@ class TestNumbers(TestCase):
         self.assertEqual(DBL_EPSILON, pyObjCPy(objc._C_DBL, DBL_EPSILON))
         self.assertEqual(-DBL_EPSILON, pyObjCPy(objc._C_DBL, -DBL_EPSILON))
 
-        self.assertRaises(
-            (OverflowError, ValueError), pyObjCPy, objc._C_DBL, 1 << 10000
-        )
+        self.assertRaises((OverflowError, ValueError), pyObjCPy, objc._C_DBL, 1 << 10000)
 
         self.assertRaises(ValueError, pyObjCPy, objc._C_DBL, "1")
         self.assertRaises(ValueError, pyObjCPy, objc._C_DBL, b"1")
@@ -266,9 +262,7 @@ class TestNumbers(TestCase):
         # of float
         self.assertNotEqual(DBL_MAX, pyObjCPy(objc._C_FLT, DBL_MAX))
 
-        self.assertRaises(
-            (ValueError, OverflowError), pyObjCPy, objc._C_FLT, 1 << 10000
-        )
+        self.assertRaises((ValueError, OverflowError), pyObjCPy, objc._C_FLT, 1 << 10000)
 
         self.assertRaises(ValueError, pyObjCPy, objc._C_FLT, "1")
         self.assertRaises(ValueError, pyObjCPy, objc._C_FLT, b"1")

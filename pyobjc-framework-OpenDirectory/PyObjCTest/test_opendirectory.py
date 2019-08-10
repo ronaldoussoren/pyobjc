@@ -2,12 +2,13 @@ from PyObjCTools.TestSupport import *
 import objc
 import OpenDirectory
 
-class TestOpenDirectory (TestCase):
+
+class TestOpenDirectory(TestCase):
     def testConstants(self):
         self.assertIsInstance(OpenDirectory.ODFrameworkErrorDomain, unicode)
 
     def testProtocols(self):
-        objc.protocolNamed('ODQueryDelegate')
+        objc.protocolNamed("ODQueryDelegate")
 
     def testIntegration(self):
         import CFOpenDirectory

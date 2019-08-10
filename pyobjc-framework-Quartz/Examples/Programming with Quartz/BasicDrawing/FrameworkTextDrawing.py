@@ -7,14 +7,19 @@ import sys
 import objc
 from objc import super
 
+
 def getTextString():
     # These unicode values are the characters: Q, u, a, r, t, z,
     # eighthnote, floral heart, black chess queen, and two CJK characters.
     # Note: Create an NSString, because we'll use NSString-specific API's, otherwise
     # we could just have used a python unicode object
-    return Cocoa.NSString.stringWithString_('\u0051\u0075\u0061\u0072\u0074\u007A\u266A\u2766\u265B\u3042\u304E')
+    return Cocoa.NSString.stringWithString_(
+        "\u0051\u0075\u0061\u0072\u0074\u007A\u266A\u2766\u265B\u3042\u304E"
+    )
 
-doPointDrawing=1
+
+doPointDrawing = 1
+
 
 def drawNSStringWithAttributes():
     textString = getTextString()
@@ -41,9 +46,10 @@ def drawNSStringWithAttributes():
     stringAttributes = {
         # Use the font with the PostScript name "Times-Roman" at 40 point.
         Cocoa.NSFontAttributeName: Cocoa.NSFont.fontWithName_size_("Times-Roman", 40),
-
         # Set the color attribute to an opaque red.
-        Cocoa.NSForegroundColorAttributeName: Cocoa.NSColor.colorWithCalibratedRed_green_blue_alpha_(0.663, 0, 0.031, 1.0)
+        Cocoa.NSForegroundColorAttributeName: Cocoa.NSColor.colorWithCalibratedRed_green_blue_alpha_(
+            0.663, 0, 0.031, 1.0
+        ),
     }
 
     # Draw the text.
@@ -75,7 +81,9 @@ def drawNSStringWithAttributes():
     # and stroked.
     stringAttributes[Cocoa.NSStrokeWidthAttributeName] = -3.0
     # Set the stroke color attribute to black.
-    stringAttributes[Cocoa.NSStrokeColorAttributeName] = Cocoa.NSColor.colorWithCalibratedRed_green_blue_alpha_(0, 0, 0, 1.0)
+    stringAttributes[
+        Cocoa.NSStrokeColorAttributeName
+    ] = Cocoa.NSColor.colorWithCalibratedRed_green_blue_alpha_(0, 0, 0, 1.0)
 
     textString.drawAtPoint_withAttributes_(p, stringAttributes)
 
@@ -86,20 +94,20 @@ def drawNSStringWithAttributes():
     # Tiger and later support the drawWithRect method which allows
     # string text drawing from a point on the text baseline.
     p.y -= 50
-    rect = Cocoa.NSRect(
-            origin=p,
-            size=Cocoa.NSSize(0,0),
-        )
+    rect = Cocoa.NSRect(origin=p, size=Cocoa.NSSize(0, 0))
     textString.drawWithRect_options_attributes_(
-            rect, Cocoa.NSStringDrawingDisableScreenFontSubstitution,
-            stringAttributes)
+        rect, Cocoa.NSStringDrawingDisableScreenFontSubstitution, stringAttributes
+    )
 
     if doPointDrawing:
         Utilities.drawPoint(context, p)
 
+
 _myLayout = None
 _textStorage = None
 _myTextRange = None
+
+
 def drawWithNSLayout():
     global _myLayout, _textStorage, _myTextRange
 
@@ -122,9 +130,10 @@ def drawWithNSLayout():
         stringAttributes = {
             # Use the font with the PostScript name "Times-Roman" at 40 point.
             Cocoa.NSFontAttributeName: Cocoa.NSFont.fontWithName_size_("Times-Roman", 40),
-
             # Set the text color attribute to an opaque red.
-            Cocoa.NSForegroundColorAttributeName:  Cocoa.NSColor.colorWithCalibratedRed_green_blue_alpha_(0.663, 0, 0.031, 1.0),
+            Cocoa.NSForegroundColorAttributeName: Cocoa.NSColor.colorWithCalibratedRed_green_blue_alpha_(
+                0.663, 0, 0.031, 1.0
+            ),
         }
 
         # Create the range of text for the entire length of text
@@ -143,8 +152,9 @@ def drawWithNSLayout():
         context = Cocoa.NSGraphicsContext.currentContext().graphicsPort()
         Utilities.drawPoint(context, p)
 
+
 # The interface to the NSLayoutManager subclass.
-class MyNSLayoutManager (Cocoa.NSLayoutManager):
+class MyNSLayoutManager(Cocoa.NSLayoutManager):
     # The extra instance variables for this subclass.
     _textMode = objc.ivar()
     _fColor = objc.ivar()
@@ -177,7 +187,6 @@ class MyNSLayoutManager (Cocoa.NSLayoutManager):
         if self is None:
             return None
 
-
         # Initialize the custom instance variables.
         self._textMode = Quartz.kCGTextFill
         self._fColor = None
@@ -192,14 +201,17 @@ class MyNSLayoutManager (Cocoa.NSLayoutManager):
     # to use as the True baseline for the text drawing.
     def drawGlyphsForGlyphRange_atPoint_(self, glyphsToShow, origin):
         self._yStartPosition = origin.y
-        super(MyNSLayoutManager, self).drawGlyphsForGlyphRange_atPoint_(glyphsToShow, origin)
+        super(MyNSLayoutManager, self).drawGlyphsForGlyphRange_atPoint_(
+            glyphsToShow, origin
+        )
 
     # This is the rendering method of NSLayoutManager that the
     # code overrides to perform its custom rendering.
     def showPackedGlyphs_length_glyphRange_atPoint_font_color_printAdjustment_(
-            self, glyphs, glyphLen, glyphRange, point, font, color, printingAdjustment):
+        self, glyphs, glyphLen, glyphRange, point, font, color, printingAdjustment
+    ):
 
-       # Obtain the destination drawing context.
+        # Obtain the destination drawing context.
         context = Cocoa.NSGraphicsContext.currentContext().graphicsPort()
 
         # Adjust start position y value based on the adjusted y coordinate.
@@ -215,14 +227,22 @@ class MyNSLayoutManager (Cocoa.NSLayoutManager):
         Quartz.CGContextSetTextDrawingMode(context, self._textMode)
 
         # Set the fill color if needed.
-        if (self._textMode == Quartz.kCGTextFill or _self.textMode == Quartz.kCGTextFillStroke or
-                self._textMode == Quartz.kCGTextFillClip or _textMode == Quartz.kCGTextFillStrokeClip):
+        if (
+            self._textMode == Quartz.kCGTextFill
+            or _self.textMode == Quartz.kCGTextFillStroke
+            or self._textMode == Quartz.kCGTextFillClip
+            or _textMode == Quartz.kCGTextFillStrokeClip
+        ):
             if self._fColor is not None:
                 Quartz.CGContextSetFillColorWithColor(context, self._fColor)
 
         # Set the  line width and the stroke color if needed.
-        if (self._textMode == Quartz.kCGTextStroke or self._textMode == Quartz.kCGTextFillStroke or
-                self._textMode == Quartz.kCGTextStrokeClip or self._textMode == Quartz.kCGTextFillStrokeClip):
+        if (
+            self._textMode == Quartz.kCGTextStroke
+            or self._textMode == Quartz.kCGTextFillStroke
+            or self._textMode == Quartz.kCGTextStrokeClip
+            or self._textMode == Quartz.kCGTextFillStrokeClip
+        ):
             Quartz.CGContextSetLineWidth(context, self._lineWidth)
             if self._sColor is not None:
                 Quartz.CGContextSetStrokeColorWithColor(context, self._sColor)
@@ -246,28 +266,35 @@ class MyNSLayoutManager (Cocoa.NSLayoutManager):
         # Draw the glyphs. The total number of glyphs is the length
         # of the glyphs string passed to showPackedGlyphs, divided by 2
         # since there are two bytes per glyph.
-        Quartz.CGContextShowGlyphsAtPoint(context, point.x, point.y, glyphs, glyphLen/2)
+        Quartz.CGContextShowGlyphsAtPoint(context, point.x, point.y, glyphs, glyphLen / 2)
 
         # If the text drawing mode requires clipping and there is
         # a custom clipping proc, call it. This allows drawing through
         # clipped text before the graphics state is restored.
-        if (self._textMode == Quartz.kCGTextClip or self._textMode == Quartz.kCGTextFillClip or
-                self._textMode == Quartz.kCGTextStrokeClip or
-                self._textMode == Quartz.kCGTextFillStrokeClip) and self._clippingDrawProc is not None:
+        if (
+            self._textMode == Quartz.kCGTextClip
+            or self._textMode == Quartz.kCGTextFillClip
+            or self._textMode == Quartz.kCGTextStrokeClip
+            or self._textMode == Quartz.kCGTextFillStrokeClip
+        ) and self._clippingDrawProc is not None:
 
             self._clippingDrawProc(context, point.x, point.y, self._clippingInfo)
 
         Quartz.CGContextRestoreGState(context)
 
+
 def MyClipProc(c, x, y, info):
     Quartz.CGContextTranslateCTM(c, x, y)
     Quartz.CGContextSetStrokeColorWithColor(c, Utilities.getRGBOpaqueBlackColor())
     # Draw a grid of lines through the clip.
-    QuartzTextDrawing.drawGridLines(c);
+    QuartzTextDrawing.drawGridLines(c)
+
 
 _myLayout2 = None
 _textStorage2 = None
 _myTextRange2 = None
+
+
 def drawWithCustomNSLayout():
     global _myLayout2, _textStorage2, _myTextRange2
 
@@ -285,7 +312,7 @@ def drawWithCustomNSLayout():
         # Set attributes to use when drawing the string.
         stringAttributes = {
             # Use the font with the PostScript name "Times-Roman" at 40 point.
-            Cocoa.NSFontAttributeName: Cocoa.NSFont.fontWithName_size_("Times-Roman", 40),
+            Cocoa.NSFontAttributeName: Cocoa.NSFont.fontWithName_size_("Times-Roman", 40)
         }
 
         # Create the range.
@@ -314,13 +341,13 @@ def drawWithCustomNSLayout():
     _myLayout2.setTextLineWidth_(2)
 
     # Draw text line 2.
-    p.y -= 50;
+    p.y -= 50
     _myLayout2.drawGlyphsForGlyphRange_atPoint_(_myTextRange2, p)
 
     if doPointDrawing:
         Utilities.drawPoint(context, p)
 
-    p.y -= 50;
+    p.y -= 50
 
     # Set the custom attributes of the layout subclass so that
     # the text will be filled and stroked and the fill color
@@ -334,7 +361,7 @@ def drawWithCustomNSLayout():
     if doPointDrawing:
         Utilities.drawPoint(context, p)
 
-    p.y -= 50;
+    p.y -= 50
 
     # Set the custom attributes of the layout subclass so that
     # the text will be filled, stroked, then clipped.

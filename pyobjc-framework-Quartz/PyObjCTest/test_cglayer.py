@@ -1,19 +1,19 @@
-
 from PyObjCTools.TestSupport import *
 from Quartz import *
 import Quartz
 import os
 
-class TestCGLayer (TestCase):
+
+class TestCGLayer(TestCase):
     def testTypes(self):
         self.assertIsCFType(CGLayerRef)
 
     def setUp(self):
-        url = CFURLCreateWithFileSystemPath(None,
-            "/tmp/pyobjc.test.pdf", kCFURLPOSIXPathStyle, False)
+        url = CFURLCreateWithFileSystemPath(
+            None, "/tmp/pyobjc.test.pdf", kCFURLPOSIXPathStyle, False
+        )
         self.assertIsInstance(url, CFURLRef)
-        context = CGPDFContextCreateWithURL(url,
-            ((0, 0), (1000, 1000)), None)
+        context = CGPDFContextCreateWithURL(url, ((0, 0), (1000, 1000)), None)
         self.assertIsInstance(context, CGContextRef)
         CGContextBeginPage(context, objc.NULL)
 
@@ -21,11 +21,11 @@ class TestCGLayer (TestCase):
 
     def tearDown(self):
         CGContextEndPage(self.context)
-        if hasattr(Quartz, 'CGPDFContextClose'): CGPDFContextClose(self.context)
+        if hasattr(Quartz, "CGPDFContextClose"):
+            CGPDFContextClose(self.context)
         self.context = None
         if os.path.exists("/tmp/pyobjc.test.pdf"):
             os.unlink("/tmp/pyobjc.test.pdf")
-
 
     def testFunctions(self):
         self.assertResultIsCFRetained(CGLayerCreateWithContext)
@@ -49,6 +49,7 @@ class TestCGLayer (TestCase):
         CGContextDrawLayerAtPoint(self.context, CGPoint(10, 10), layer)
 
         self.assertIsInstance(CGLayerGetTypeID(), (int, long))
+
 
 if __name__ == "__main__":
     main()

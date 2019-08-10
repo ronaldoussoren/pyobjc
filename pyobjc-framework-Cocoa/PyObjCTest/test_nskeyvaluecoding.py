@@ -4,13 +4,19 @@ from PyObjCTools.TestSupport import *
 
 from Foundation import *
 
-class TestNSKeyValueCodingHelper (NSObject):
-    def validateValue_forKey_error_(self, a, b, c): return 1
-    def validateValue_forKeyPath_error_(self, a, b, c): return 1
-    def useStoredAccessor(self): return 1
+
+class TestNSKeyValueCodingHelper(NSObject):
+    def validateValue_forKey_error_(self, a, b, c):
+        return 1
+
+    def validateValue_forKeyPath_error_(self, a, b, c):
+        return 1
+
+    def useStoredAccessor(self):
+        return 1
 
 
-class TestNSKeyValueCoding (TestCase):
+class TestNSKeyValueCoding(TestCase):
     def testConstants(self):
         self.assertIsInstance(NSUndefinedKeyException, unicode)
         self.assertIsInstance(NSAverageKeyValueOperator, unicode)
@@ -29,22 +35,26 @@ class TestNSKeyValueCoding (TestCase):
         o = NSObject.alloc().init()
 
         m = o.validateValue_forKey_error_.__metadata__()
-        self.assertEqual(  m['arguments'][4]['type'], b'o^@' )
+        self.assertEqual(m["arguments"][4]["type"], b"o^@")
 
         m = o.validateValue_forKeyPath_error_.__metadata__()
-        self.assertEqual(  m['arguments'][4]['type'], b'o^@' )
-
+        self.assertEqual(m["arguments"][4]["type"], b"o^@")
 
     def testMethods(self):
         self.assertResultIsBOOL(NSObject.accessInstanceVariablesDirectly)
 
         self.assertResultIsBOOL(TestNSKeyValueCodingHelper.validateValue_forKey_error_)
         self.assertArgIsOut(TestNSKeyValueCodingHelper.validateValue_forKey_error_, 2)
-        self.assertResultIsBOOL(TestNSKeyValueCodingHelper.validateValue_forKeyPath_error_)
+        self.assertResultIsBOOL(
+            TestNSKeyValueCodingHelper.validateValue_forKeyPath_error_
+        )
 
-        self.assertArgIsInOut(TestNSKeyValueCodingHelper.validateValue_forKeyPath_error_, 0)
+        self.assertArgIsInOut(
+            TestNSKeyValueCodingHelper.validateValue_forKeyPath_error_, 0
+        )
         self.assertArgIsOut(TestNSKeyValueCodingHelper.validateValue_forKeyPath_error_, 2)
         self.assertResultIsBOOL(TestNSKeyValueCodingHelper.useStoredAccessor)
+
 
 if __name__ == "__main__":
     main()

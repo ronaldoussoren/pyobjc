@@ -1,8 +1,8 @@
-
 from PyObjCTools.TestSupport import *
 from CalendarStore import *
 
-class TestCalRecurrenceRule (TestCase):
+
+class TestCalRecurrenceRule(TestCase):
     def testMethods(self):
         self.assertResultIsBOOL(CalRecurrenceEnd.usesEndDate)
 
@@ -13,6 +13,7 @@ class TestCalRecurrenceRule (TestCase):
         self.assertEqual(CalRecurrenceYearly, 3)
 
         self.assertIsInstance(CalDefaultRecurrenceInterval, (int, long))
+
 
 if __name__ == "__main__":
     main()

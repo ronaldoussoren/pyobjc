@@ -2,7 +2,8 @@ from PyObjCTools.TestSupport import *
 
 import OSLog
 
-class TestMessageComponent (TestCase):
+
+class TestMessageComponent(TestCase):
     def test_constants(self):
         self.assertEqual(OSLog.OSLogMessageComponentArgumentCategoryUndefined, 0)
         self.assertEqual(OSLog.OSLogMessageComponentArgumentCategoryData, 1)

@@ -1,16 +1,17 @@
-'''
+"""
 Some simple tests to check that the framework is properly wrapped.
-'''
+"""
 import objc
 from PyObjCTools.TestSupport import *
 import ScreenSaver
 
-class TestScreenSaver (TestCase):
+
+class TestScreenSaver(TestCase):
     def testClasses(self):
-        self.assertHasAttr(ScreenSaver, 'ScreenSaverDefaults')
+        self.assertHasAttr(ScreenSaver, "ScreenSaverDefaults")
         self.assertIsInstance(ScreenSaver.ScreenSaverDefaults, objc.objc_class)
 
-        self.assertHasAttr(ScreenSaver, 'ScreenSaverView')
+        self.assertHasAttr(ScreenSaver, "ScreenSaverView")
         self.assertIsInstance(ScreenSaver.ScreenSaverView, objc.objc_class)
 
         self.assertArgIsBOOL(ScreenSaver.ScreenSaverView.initWithFrame_isPreview_, 1)
@@ -18,10 +19,10 @@ class TestScreenSaver (TestCase):
         self.assertResultIsBOOL(ScreenSaver.ScreenSaverView.isPreview)
 
     def testInlines(self):
-        self.assertHasAttr(ScreenSaver, 'SSRandomIntBetween')
+        self.assertHasAttr(ScreenSaver, "SSRandomIntBetween")
         self.assertIsInstance(ScreenSaver.SSRandomIntBetween, objc.function)
 
-        self.assertHasAttr(ScreenSaver, 'SSCenteredRectInRect')
+        self.assertHasAttr(ScreenSaver, "SSCenteredRectInRect")
         self.assertIsInstance(ScreenSaver.SSCenteredRectInRect, objc.function)
 
         fn = ScreenSaver.SSCenteredRectInRect

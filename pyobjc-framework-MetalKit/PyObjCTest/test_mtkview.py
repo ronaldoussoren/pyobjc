@@ -7,11 +7,12 @@ if sys.maxsize > 2 ** 32:
     import MetalKit
     import Quartz
 
-    class TestMTKViewHelper (MetalKit.NSObject):
-        def mtkView_drawableSizeWillChange_(self, a, b): pass
+    class TestMTKViewHelper(MetalKit.NSObject):
+        def mtkView_drawableSizeWillChange_(self, a, b):
+            pass
 
-    class TestMTKView (TestCase):
-        @min_os_level('10.11')
+    class TestMTKView(TestCase):
+        @min_os_level("10.11")
         def test_methods10_11(self):
             self.assertResultIsBOOL(MetalKit.MTKView.framebufferOnly)
             self.assertArgIsBOOL(MetalKit.MTKView.setFramebufferOnly_, 0)
@@ -28,9 +29,13 @@ if sys.maxsize > 2 ** 32:
             self.assertResultIsBOOL(MetalKit.MTKView.isPaused)
             self.assertArgIsBOOL(MetalKit.MTKView.setPaused_, 0)
 
-        @min_sdk_level('10.15')
+        @min_sdk_level("10.15")
         def test_protocols(self):
-            objc.protocolNamed('MTKViewDelegate')
+            objc.protocolNamed("MTKViewDelegate")
 
         def test_methods(self):
-            self.assertArgHasType(TestMTKViewHelper.mtkView_drawableSizeWillChange_, 1, Quartz.CGSize.__typestr__)
+            self.assertArgHasType(
+                TestMTKViewHelper.mtkView_drawableSizeWillChange_,
+                1,
+                Quartz.CGSize.__typestr__,
+            )

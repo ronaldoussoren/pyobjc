@@ -6,8 +6,9 @@ try:
 except NameEror:
     unicode = str
 
-class TestNSCollectionViewLayout (TestCase):
-    @min_os_level('10.11')
+
+class TestNSCollectionViewLayout(TestCase):
+    @min_os_level("10.11")
     def testConstants10_11(self):
         self.assertEqual(NSCollectionElementCategoryItem, 0)
         self.assertEqual(NSCollectionElementCategorySupplementaryView, 1)
@@ -22,16 +23,25 @@ class TestNSCollectionViewLayout (TestCase):
 
         self.assertIsInstance(NSCollectionElementKindInterItemGapIndicator, unicode)
 
-    @min_os_level('10.11')
+    @min_os_level("10.11")
     def testMethods10_11(self):
         self.assertResultIsBOOL(NSCollectionViewLayoutAttributes.isHidden)
         self.assertArgIsBOOL(NSCollectionViewLayoutAttributes.setHidden_, 0)
 
-        self.assertResultIsBOOL(NSCollectionViewLayoutInvalidationContext.invalidateEverything)
-        self.assertResultIsBOOL(NSCollectionViewLayoutInvalidationContext.invalidateDataSourceCounts)
+        self.assertResultIsBOOL(
+            NSCollectionViewLayoutInvalidationContext.invalidateEverything
+        )
+        self.assertResultIsBOOL(
+            NSCollectionViewLayoutInvalidationContext.invalidateDataSourceCounts
+        )
 
-        self.assertResultIsBOOL(NSCollectionViewLayout.shouldInvalidateLayoutForBoundsChange_)
-        self.assertResultIsBOOL(NSCollectionViewLayout.shouldInvalidateLayoutForPreferredLayoutAttributes_withOriginalAttributes_)
+        self.assertResultIsBOOL(
+            NSCollectionViewLayout.shouldInvalidateLayoutForBoundsChange_
+        )
+        self.assertResultIsBOOL(
+            NSCollectionViewLayout.shouldInvalidateLayoutForPreferredLayoutAttributes_withOriginalAttributes_
+        )
+
 
 if __name__ == "__main__":
     main()

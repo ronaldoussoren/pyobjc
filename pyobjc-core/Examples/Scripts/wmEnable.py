@@ -21,11 +21,11 @@ INPSN = b"n^{ProcessSerialNumber=LL}"
 
 FUNCTIONS = [
     # These two are public API
-    (u"GetCurrentProcess", S(OSErr, OUTPSN)),
-    (u"SetFrontProcess", S(OSErr, INPSN)),
+    ("GetCurrentProcess", S(OSErr, OUTPSN)),
+    ("SetFrontProcess", S(OSErr, INPSN)),
     # This is undocumented SPI
-    (u"CPSSetProcessName", S(OSErr, INPSN, objc._C_CHARPTR)),
-    (u"CPSEnableForegroundOperation", S(OSErr, INPSN)),
+    ("CPSSetProcessName", S(OSErr, INPSN, objc._C_CHARPTR)),
+    ("CPSEnableForegroundOperation", S(OSErr, INPSN)),
 ]
 
 
@@ -37,9 +37,7 @@ def WMEnable(name="Python"):
     if mainBundle.bundlePath() == bPath:
         return True
     bndl = NSBundle.bundleWithPath_(
-        objc.pathForFramework(
-            "/System/Library/Frameworks/ApplicationServices.framework"
-        )
+        objc.pathForFramework("/System/Library/Frameworks/ApplicationServices.framework")
     )
     if bndl is None:
         print >>sys.stderr, "ApplicationServices missing"
@@ -71,9 +69,7 @@ def WMEnable(name="Python"):
 
 class AppDelegate(NSObject):
     def applicationDidFinishLaunching_(self, sender):
-        rval = AppKit.NSRunAlertPanel(
-            u"WM Enabled", u"WM was enabled!", None, None, None
-        )
+        rval = AppKit.NSRunAlertPanel("WM Enabled", "WM was enabled!", None, None, None)
         AppKit.NSApp().terminate_(self)
 
 

@@ -4,8 +4,8 @@ from PyObjCTools.TestSupport import *
 if sys.maxsize > 2 ** 32:
     import Intents
 
-    class TestINCallDestinationType (TestCase):
-        @min_os_level('10.12')
+    class TestINCallDestinationType(TestCase):
+        @min_os_level("10.12")
         def testConstants(self):
             self.assertEqual(Intents.INCallDestinationTypeUnknown, 0)
             self.assertEqual(Intents.INCallDestinationTypeNormalDestination, 1)

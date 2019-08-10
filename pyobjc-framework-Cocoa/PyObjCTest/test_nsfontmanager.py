@@ -1,11 +1,13 @@
-
 from PyObjCTools.TestSupport import *
 from AppKit import *
 
-class TestNSFontManagerHelper (NSObject):
-    def fontManager_willIncludeFont_(self, m, f): return 1
 
-class TestNSFontManager (TestCase):
+class TestNSFontManagerHelper(NSObject):
+    def fontManager_willIncludeFont_(self, m, f):
+        return 1
+
+
+class TestNSFontManager(TestCase):
     def testConstants(self):
         self.assertEqual(NSItalicFontMask, 0x00000001)
         self.assertEqual(NSBoldFontMask, 0x00000002)
@@ -48,6 +50,7 @@ class TestNSFontManager (TestCase):
 
     def testProtocols(self):
         self.assertResultIsBOOL(TestNSFontManagerHelper.fontManager_willIncludeFont_)
+
 
 if __name__ == "__main__":
     main()

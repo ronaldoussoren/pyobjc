@@ -12,8 +12,5 @@ setup(
     app=["Main.py"],
     data_files=["English.lproj", "CrossCursor.tiff", "Map.png"],
     options=dict(py2app=dict(plist=plist)),
-    setup_requires=[
-        "py2app",
-        "pyobjc-framework-Cocoa",
-    ]
+    setup_requires=["py2app", "pyobjc-framework-Cocoa"],
 )

@@ -4,7 +4,7 @@ from PyObjCTools.TestSupport import *
 if sys.maxsize > 2 ** 32:
     import Logging
 
-    class TestEntrySignpost (TestCase):
+    class TestEntrySignpost(TestCase):
         def test_constants(self):
             self.assertEqual(Logging.OSLogEntrySignpostTypeUndefined, 0)
             self.assertEqual(Logging.OSLogEntrySignpostTypeIntervalBegin, 1)

@@ -1,7 +1,8 @@
 import HIServices
 from PyObjCTools.TestSupport import *
 
-class TestAXRoleConstants (TestCase):
+
+class TestAXRoleConstants(TestCase):
     def testConstants(self):
         self.assertEqual(HIServices.kAXApplicationRole, "AXApplication")
         self.assertEqual(HIServices.kAXSystemWideRole, "AXSystemWide")
@@ -73,7 +74,9 @@ class TestAXRoleConstants (TestCase):
         self.assertEqual(HIServices.kAXDialogSubrole, "AXDialog")
         self.assertEqual(HIServices.kAXSystemDialogSubrole, "AXSystemDialog")
         self.assertEqual(HIServices.kAXFloatingWindowSubrole, "AXFloatingWindow")
-        self.assertEqual(HIServices.kAXSystemFloatingWindowSubrole, "AXSystemFloatingWindow")
+        self.assertEqual(
+            HIServices.kAXSystemFloatingWindowSubrole, "AXSystemFloatingWindow"
+        )
         self.assertEqual(HIServices.kAXIncrementArrowSubrole, "AXIncrementArrow")
         self.assertEqual(HIServices.kAXDecrementArrowSubrole, "AXDecrementArrow")
         self.assertEqual(HIServices.kAXIncrementPageSubrole, "AXIncrementPage")
@@ -87,15 +90,22 @@ class TestAXRoleConstants (TestCase):
         self.assertEqual(HIServices.kAXDescriptionListSubrole, "AXDescriptionList")
         self.assertEqual(HIServices.kAXToggleSubrole, "AXToggle")
         self.assertEqual(HIServices.kAXSwitchSubrole, "AXSwitch")
-        self.assertEqual(HIServices.kAXApplicationDockItemSubrole, "AXApplicationDockItem")
+        self.assertEqual(
+            HIServices.kAXApplicationDockItemSubrole, "AXApplicationDockItem"
+        )
         self.assertEqual(HIServices.kAXDocumentDockItemSubrole, "AXDocumentDockItem")
         self.assertEqual(HIServices.kAXFolderDockItemSubrole, "AXFolderDockItem")
-        self.assertEqual(HIServices.kAXMinimizedWindowDockItemSubrole, "AXMinimizedWindowDockItem")
+        self.assertEqual(
+            HIServices.kAXMinimizedWindowDockItemSubrole, "AXMinimizedWindowDockItem"
+        )
         self.assertEqual(HIServices.kAXURLDockItemSubrole, "AXURLDockItem")
         self.assertEqual(HIServices.kAXDockExtraDockItemSubrole, "AXDockExtraDockItem")
         self.assertEqual(HIServices.kAXTrashDockItemSubrole, "AXTrashDockItem")
         self.assertEqual(HIServices.kAXSeparatorDockItemSubrole, "AXSeparatorDockItem")
-        self.assertEqual(HIServices.kAXProcessSwitcherListSubrole, "AXProcessSwitcherList")
+        self.assertEqual(
+            HIServices.kAXProcessSwitcherListSubrole, "AXProcessSwitcherList"
+        )
+
 
 if __name__ == "__main__":
     main()

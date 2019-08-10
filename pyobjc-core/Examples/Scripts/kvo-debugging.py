@@ -48,11 +48,7 @@ class FooClass(NSObject):
         self, observer, keyPath, options, context
     ):
         print(
-            "addObserver_forKeyPath_options_context_",
-            observer,
-            keyPath,
-            options,
-            context,
+            "addObserver_forKeyPath_options_context_", observer, keyPath, options, context
         )
         orig = FooClass  # type(self)
         super(orig, self).addObserver_forKeyPath_options_context_(
@@ -114,7 +110,7 @@ print()
 print()
 print("***** unobserved set")
 print(foo.bar())
-foo.setBar_(u"0shw00t")
+foo.setBar_("0shw00t")
 print(foo.bar())
 
 print()
@@ -123,29 +119,26 @@ print("***** observing, setting three times")
 print("foo's ISA:", foo.pyobjc_ISA)
 print("Adding an observer")
 foo.addObserver_forKeyPath_options_context_(
-    fooObserver,
-    u"bar",
-    (NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld),
-    0,
+    fooObserver, "bar", (NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld), 0
 )
 print("foo's ISA:", foo.pyobjc_ISA)
 # foo.removeObserver_forKeyPath_(fooObserver, u'bar');sys.exit(1)
 print(foo.bar())
-foo.setBar_(u"1w00t")
+foo.setBar_("1w00t")
 print(foo.bar())
-foo.setBar_(u"2sw00t")
+foo.setBar_("2sw00t")
 print(foo.bar())
-foo.setBar_(u"3shw00t")
+foo.setBar_("3shw00t")
 print(foo.bar())
 
 print()
 print()
 print("***** removing the observer and setting twice (unobserved)")
-foo.removeObserver_forKeyPath_(fooObserver, u"bar")
+foo.removeObserver_forKeyPath_(fooObserver, "bar")
 print(foo.bar())
-foo.setBar_(u"4sw00t")
+foo.setBar_("4sw00t")
 print(foo.bar())
-foo.setBar_(u"5w00t")
+foo.setBar_("5w00t")
 print(foo.bar())
 
 print(foo.__class__)

@@ -1,8 +1,8 @@
-
 from PyObjCTools.TestSupport import *
 from Quartz import *
 
-class TestCVOpenGLTexture (TestCase):
+
+class TestCVOpenGLTexture(TestCase):
     def testTypes(self):
         self.assertIsCFType(CVOpenGLTextureRef)
 
@@ -25,6 +25,7 @@ class TestCVOpenGLTexture (TestCase):
         self.assertArgIsFixedSize(CVOpenGLTextureGetCleanTexCoords, 2, 2)
         self.assertArgIsFixedSize(CVOpenGLTextureGetCleanTexCoords, 3, 2)
         self.assertArgIsFixedSize(CVOpenGLTextureGetCleanTexCoords, 4, 2)
+
 
 if __name__ == "__main__":
     main()

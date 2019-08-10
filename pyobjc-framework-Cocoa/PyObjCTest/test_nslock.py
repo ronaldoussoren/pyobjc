@@ -4,8 +4,7 @@ import objc
 from PyObjCTools.TestSupport import *
 
 
-class TestNSLockProtocols (TestCase):
-
+class TestNSLockProtocols(TestCase):
     def testLockIsLock(self):
         # Test for bug #1735937
         lock = NSLock.alloc().init()

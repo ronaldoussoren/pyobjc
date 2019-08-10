@@ -3,8 +3,8 @@ from PyObjCTools.TestSupport import *
 import AVFoundation
 
 
-class TestAVError (TestCase):
-    @min_os_level('10.7')
+class TestAVError(TestCase):
+    @min_os_level("10.7")
     def testConstants(self):
         self.assertIsInstance(AVFoundation.AVFoundationErrorDomain, unicode)
 
@@ -12,12 +12,13 @@ class TestAVError (TestCase):
         self.assertIsInstance(AVFoundation.AVErrorTimeKey, unicode)
         self.assertIsInstance(AVFoundation.AVErrorFileSizeKey, unicode)
         self.assertIsInstance(AVFoundation.AVErrorPIDKey, unicode)
-        self.assertIsInstance(AVFoundation.AVErrorRecordingSuccessfullyFinishedKey, unicode)
+        self.assertIsInstance(
+            AVFoundation.AVErrorRecordingSuccessfullyFinishedKey, unicode
+        )
         self.assertIsInstance(AVFoundation.AVErrorMediaTypeKey, unicode)
         self.assertIsInstance(AVFoundation.AVErrorMediaSubTypeKey, unicode)
 
         self.assertIsInstance(AVFoundation.AVErrorDiscontinuityFlagsKey, unicode)
-
 
         self.assertEqual(AVFoundation.AVErrorUnknown, -11800)
         self.assertEqual(AVFoundation.AVErrorOutOfMemory, -11801)
@@ -31,21 +32,35 @@ class TestAVError (TestCase):
         self.assertEqual(AVFoundation.AVErrorMaximumDurationReached, -11810)
         self.assertEqual(AVFoundation.AVErrorMaximumFileSizeReached, -11811)
         self.assertEqual(AVFoundation.AVErrorMediaDiscontinuity, -11812)
-        self.assertEqual(AVFoundation.AVErrorMaximumNumberOfSamplesForFileFormatReached, -11813)
+        self.assertEqual(
+            AVFoundation.AVErrorMaximumNumberOfSamplesForFileFormatReached, -11813
+        )
         self.assertEqual(AVFoundation.AVErrorDeviceNotConnected, -11814)
         self.assertEqual(AVFoundation.AVErrorDeviceInUseByAnotherApplication, -11815)
-        self.assertEqual(AVFoundation.AVErrorDeviceLockedForConfigurationByAnotherProcess, -11817)
+        self.assertEqual(
+            AVFoundation.AVErrorDeviceLockedForConfigurationByAnotherProcess, -11817
+        )
         self.assertEqual(AVFoundation.AVErrorExportFailed, -11820)
         self.assertEqual(AVFoundation.AVErrorDecodeFailed, -11821)
         self.assertEqual(AVFoundation.AVErrorInvalidSourceMedia, -11822)
         self.assertEqual(AVFoundation.AVErrorFileAlreadyExists, -11823)
-        self.assertEqual(AVFoundation.AVErrorCompositionTrackSegmentsNotContiguous, -11824)
-        self.assertEqual(AVFoundation.AVErrorInvalidCompositionTrackSegmentDuration, -11825)
-        self.assertEqual(AVFoundation.AVErrorInvalidCompositionTrackSegmentSourceStartTime, -11826)
-        self.assertEqual(AVFoundation.AVErrorInvalidCompositionTrackSegmentSourceDuration, -11827)
+        self.assertEqual(
+            AVFoundation.AVErrorCompositionTrackSegmentsNotContiguous, -11824
+        )
+        self.assertEqual(
+            AVFoundation.AVErrorInvalidCompositionTrackSegmentDuration, -11825
+        )
+        self.assertEqual(
+            AVFoundation.AVErrorInvalidCompositionTrackSegmentSourceStartTime, -11826
+        )
+        self.assertEqual(
+            AVFoundation.AVErrorInvalidCompositionTrackSegmentSourceDuration, -11827
+        )
         self.assertEqual(AVFoundation.AVErrorFileFormatNotRecognized, -11828)
         self.assertEqual(AVFoundation.AVErrorFileFailedToParse, -11829)
-        self.assertEqual(AVFoundation.AVErrorMaximumStillImageCaptureRequestsExceeded, -11830)
+        self.assertEqual(
+            AVFoundation.AVErrorMaximumStillImageCaptureRequestsExceeded, -11830
+        )
         self.assertEqual(AVFoundation.AVErrorContentIsProtected, -11831)
         self.assertEqual(AVFoundation.AVErrorNoImageAtTime, -11832)
         self.assertEqual(AVFoundation.AVErrorDecoderNotFound, -11833)
@@ -64,9 +79,13 @@ class TestAVError (TestCase):
         self.assertEqual(AVFoundation.AVErrorIncompatibleAsset, -11848)
         self.assertEqual(AVFoundation.AVErrorFailedToLoadMediaData, -11849)
         self.assertEqual(AVFoundation.AVErrorServerIncorrectlyConfigured, -11850)
-        self.assertEqual(AVFoundation.AVErrorApplicationIsNotAuthorizedToUseDevice, -11852)
+        self.assertEqual(
+            AVFoundation.AVErrorApplicationIsNotAuthorizedToUseDevice, -11852
+        )
         self.assertEqual(AVFoundation.AVErrorFailedToParse, -11853)
-        self.assertEqual(AVFoundation.AVErrorFileTypeDoesNotSupportSampleReferences, -11854)
+        self.assertEqual(
+            AVFoundation.AVErrorFileTypeDoesNotSupportSampleReferences, -11854
+        )
         self.assertEqual(AVFoundation.AVErrorUndecodableMediaData, -11855)
         self.assertEqual(AVFoundation.AVErrorAirPlayControllerRequiresInternet, -11856)
         self.assertEqual(AVFoundation.AVErrorAirPlayReceiverRequiresInternet, -11857)
@@ -78,13 +97,15 @@ class TestAVError (TestCase):
         self.assertEqual(AVFoundation.AVErrorFormatUnsupported, -11864)
         self.assertEqual(AVFoundation.AVErrorMalformedDepth, -11865)
         self.assertEqual(AVFoundation.AVErrorContentNotUpdated, -11866)
-        self.assertEqual(AVFoundation.AVErrorNoLongerPlayable	, -11867)
-        self.assertEqual(AVFoundation.AVErrorNoCompatibleAlternatesForExternalDisplay, -11868)
+        self.assertEqual(AVFoundation.AVErrorNoLongerPlayable, -11867)
+        self.assertEqual(
+            AVFoundation.AVErrorNoCompatibleAlternatesForExternalDisplay, -11868
+        )
         self.assertEqual(AVFoundation.AVErrorNoSourceTrack, -11869)
         self.assertEqual(AVFoundation.AVErrorExternalPlaybackNotSupportedForAsset, -11870)
         self.assertEqual(AVFoundation.AVErrorOperationNotSupportedForPreset, -11871)
 
-    @min_os_level('10.10')
+    @min_os_level("10.10")
     def testConstants10_10(self):
         self.assertIsInstance(AVFoundation.AVErrorPresentationTimeStampKey, unicode)
         self.assertIsInstance(AVFoundation.AVErrorPersistentTrackIDKey, unicode)

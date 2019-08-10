@@ -2,7 +2,8 @@ from PyObjCTools.TestSupport import *
 
 import CoreServices
 
-class TestTextCommon (TestCase):
+
+class TestTextCommon(TestCase):
     def test_constants(self):
         self.assertEqual(CoreServices.kTextFlushDefault, 0)
         self.assertEqual(CoreServices.kTextCenter, 1)
@@ -50,11 +51,22 @@ class TestTextCommon (TestCase):
         self.assertEqual(CoreServices.kTextEncodingMacGaelic, 40)
         self.assertEqual(CoreServices.kTextEncodingMacKeyboardGlyphs, 41)
 
-        self.assertEqual(CoreServices.kTextEncodingMacTradChinese, CoreServices.kTextEncodingMacChineseTrad)
+        self.assertEqual(
+            CoreServices.kTextEncodingMacTradChinese,
+            CoreServices.kTextEncodingMacChineseTrad,
+        )
         self.assertEqual(CoreServices.kTextEncodingMacRSymbol, 8)
-        self.assertEqual(CoreServices.kTextEncodingMacSimpChinese, CoreServices.kTextEncodingMacChineseSimp)
-        self.assertEqual(CoreServices.kTextEncodingMacGeez, CoreServices.kTextEncodingMacEthiopic)
-        self.assertEqual(CoreServices.kTextEncodingMacEastEurRoman, CoreServices.kTextEncodingMacCentralEurRoman)
+        self.assertEqual(
+            CoreServices.kTextEncodingMacSimpChinese,
+            CoreServices.kTextEncodingMacChineseSimp,
+        )
+        self.assertEqual(
+            CoreServices.kTextEncodingMacGeez, CoreServices.kTextEncodingMacEthiopic
+        )
+        self.assertEqual(
+            CoreServices.kTextEncodingMacEastEurRoman,
+            CoreServices.kTextEncodingMacCentralEurRoman,
+        )
         self.assertEqual(CoreServices.kTextEncodingMacUninterp, 32)
 
         self.assertEqual(CoreServices.kTextEncodingMacUnicode, 0x7E)
@@ -338,14 +350,37 @@ class TestTextCommon (TestCase):
         self.assertEqual(CoreServices.kTECAddTextRunHeuristicsBit, 6)
         self.assertEqual(CoreServices.kTECAddFallbackInterruptBit, 7)
 
-        self.assertEqual(CoreServices.kTECKeepInfoFixMask, 1 << CoreServices.kTECKeepInfoFixBit)
-        self.assertEqual(CoreServices.kTECFallbackTextLengthFixMask, 1 << CoreServices.kTECFallbackTextLengthFixBit)
-        self.assertEqual(CoreServices.kTECTextRunBitClearFixMask, 1 << CoreServices.kTECTextRunBitClearFixBit)
-        self.assertEqual(CoreServices.kTECTextToUnicodeScanFixMask, 1 << CoreServices.kTECTextToUnicodeScanFixBit)
-        self.assertEqual(CoreServices.kTECAddForceASCIIChangesMask, 1 << CoreServices.kTECAddForceASCIIChangesBit)
-        self.assertEqual(CoreServices.kTECPreferredEncodingFixMask, 1 << CoreServices.kTECPreferredEncodingFixBit)
-        self.assertEqual(CoreServices.kTECAddTextRunHeuristicsMask, 1 << CoreServices.kTECAddTextRunHeuristicsBit)
-        self.assertEqual(CoreServices.kTECAddFallbackInterruptMask, 1 << CoreServices.kTECAddFallbackInterruptBit)
+        self.assertEqual(
+            CoreServices.kTECKeepInfoFixMask, 1 << CoreServices.kTECKeepInfoFixBit
+        )
+        self.assertEqual(
+            CoreServices.kTECFallbackTextLengthFixMask,
+            1 << CoreServices.kTECFallbackTextLengthFixBit,
+        )
+        self.assertEqual(
+            CoreServices.kTECTextRunBitClearFixMask,
+            1 << CoreServices.kTECTextRunBitClearFixBit,
+        )
+        self.assertEqual(
+            CoreServices.kTECTextToUnicodeScanFixMask,
+            1 << CoreServices.kTECTextToUnicodeScanFixBit,
+        )
+        self.assertEqual(
+            CoreServices.kTECAddForceASCIIChangesMask,
+            1 << CoreServices.kTECAddForceASCIIChangesBit,
+        )
+        self.assertEqual(
+            CoreServices.kTECPreferredEncodingFixMask,
+            1 << CoreServices.kTECPreferredEncodingFixBit,
+        )
+        self.assertEqual(
+            CoreServices.kTECAddTextRunHeuristicsMask,
+            1 << CoreServices.kTECAddTextRunHeuristicsBit,
+        )
+        self.assertEqual(
+            CoreServices.kTECAddFallbackInterruptMask,
+            1 << CoreServices.kTECAddFallbackInterruptBit,
+        )
 
         self.assertEqual(CoreServices.kUnicodeByteOrderMark, 0xFEFF)
         self.assertEqual(CoreServices.kUnicodeObjectReplacement, 0xFFFC)
@@ -419,7 +454,6 @@ class TestTextCommon (TestCase):
         self.assertEqual(CoreServices.kUCLowSurrogateRangeStart, 0xDC00)
         self.assertEqual(CoreServices.kUCLowSurrogateRangeEnd, 0xDFFF)
 
-
     def test_structs(self):
         v = CoreServices.TextEncodingRun()
         self.assertEqual(v.offset, 0)
@@ -452,7 +486,7 @@ class TestTextCommon (TestCase):
         self.assertArgIsOut(CoreServices.GetTextEncodingName, 6)
         self.assertArgIsOut(CoreServices.GetTextEncodingName, 7)
         self.assertArgIsOut(CoreServices.GetTextEncodingName, 8)
-        self.assertArgSizeInArg(CoreServices.GetTextEncodingName, 8, (4,5))
+        self.assertArgSizeInArg(CoreServices.GetTextEncodingName, 8, (4, 5))
 
         self.assertArgIsOut(CoreServices.TECGetInfo, 0)
 
@@ -479,6 +513,7 @@ class TestTextCommon (TestCase):
         self.assertResultIsBOOL(CoreServices.UCIsSurrogateHighCharacter)
         self.assertResultIsBOOL(CoreServices.UCIsSurrogateLowCharacter)
         CoreServices.UCGetUnicodeScalarValueForSurrogatePair
+
 
 if __name__ == "__main__":
     main()

@@ -1,8 +1,8 @@
-
 from PyObjCTools.TestSupport import *
 from QTKit import *
 
-class TestQTTime (TestCase):
+
+class TestQTTime(TestCase):
     def testConstants(self):
         self.assertEqual(kQTTimeIsIndefinite, 1)
         self.assertIsInstance(QTZeroTime, QTTime)
@@ -10,15 +10,15 @@ class TestQTTime (TestCase):
 
     def testStruct(self):
         v = QTTime()
-        self.assertHasAttr(v, 'timeValue')
-        self.assertHasAttr(v, 'timeScale')
-        self.assertHasAttr(v, 'flags')
+        self.assertHasAttr(v, "timeValue")
+        self.assertHasAttr(v, "timeScale")
+        self.assertHasAttr(v, "flags")
 
-        self.assertFalse(QTTime.__typestr__.startswith(b'{?'))
+        self.assertFalse(QTTime.__typestr__.startswith(b"{?"))
 
     def testFunctions(self):
-        #v = QTMakeTimeWithTimeRecord((1, 0, 0))
-        #self.assertIsInstance(v, QTTime)
+        # v = QTMakeTimeWithTimeRecord((1, 0, 0))
+        # self.assertIsInstance(v, QTTime)
 
         v = QTMakeTimeWithTimeInterval(1500.0)
         self.assertIsInstance(v, QTTime)
@@ -29,15 +29,17 @@ class TestQTTime (TestCase):
         v = QTMakeTimeScaled(v, 100)
         self.assertIsInstance(v, QTTime)
 
-        #self.assertResultIsBOOL(QTGetTimeRecord)
-        #v, o = QTGetTimeRecord(v, None)
-        #self.assertTrue(v is True)
+        # self.assertResultIsBOOL(QTGetTimeRecord)
+        # v, o = QTGetTimeRecord(v, None)
+        # self.assertTrue(v is True)
 
         v, o = QTGetTimeInterval(QTMakeTimeWithTimeInterval(1500.0), None)
         self.assertTrue(v is True)
         self.assertEqual(o, 1500.0)
 
-        v = QTTimeCompare(QTMakeTimeWithTimeInterval(1500.0), QTMakeTimeWithTimeInterval(1500.0))
+        v = QTTimeCompare(
+            QTMakeTimeWithTimeInterval(1500.0), QTMakeTimeWithTimeInterval(1500.0)
+        )
         self.assertIsInstance(v, (int, long))
 
         v = QTMakeTimeWithTimeInterval(1500.0)
@@ -60,11 +62,10 @@ class TestQTTime (TestCase):
         o = QTTimeIsIndefinite(QTIndefiniteTime)
         self.assertTrue(o is True)
 
-    @min_os_level('10.5')
+    @min_os_level("10.5")
     def testFunctions10_5(self):
         v = QTStringFromSMPTETime((0, 0, 0, 0, 0, 0, 0, 0, 0))
         self.assertIsInstance(v, unicode)
-
 
 
 if __name__ == "__main__":

@@ -1,8 +1,8 @@
-
 from PyObjCTools.TestSupport import *
 from InputMethodKit import *
 
-class TestIMKServer (TestCase):
+
+class TestIMKServer(TestCase):
     @expectedFailure
     def testBrokenConstants(self):
         # The definitions below are defined on 10.5, but not actually
@@ -13,11 +13,10 @@ class TestIMKServer (TestCase):
         self.assertIsInstance(IMKDelegateClass, unicode)
         self.assertIsInstance(IMKControllerClass, unicode)
 
-    @min_os_level('10.7')
+    @min_os_level("10.7")
     def testMethods10_7(self):
         self.assertResultIsBOOL(IMKServer.paletteWillTerminate)
         self.assertResultIsBOOL(IMKServer.lastKeyEventWasDeadKey)
-
 
 
 if __name__ == "__main__":

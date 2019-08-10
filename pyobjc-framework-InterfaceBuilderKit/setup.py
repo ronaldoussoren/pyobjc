@@ -1,4 +1,4 @@
-'''
+"""
 Wrappers for the framework "InterfaceBuilderKit" on macOS. This framework
 is only available when you've installed Xcode 3.x, but not with earlier or
 later releases of Xcode.
@@ -20,21 +20,18 @@ NOTE: To run the unittests for this framework use::
     $ env DYLD_FRAMEWORK_PATH="$(xcode-select -print-path)/Library/PrivateFrameworks/" python setup.py test
 
 This is needed because the InterfaceBuilderKit framework won't load otherwise.
-'''
+"""
 from pyobjc_setup import setup
 
-VERSION="6.0a0"
+VERSION = "6.0a0"
 
 setup(
-    name='pyobjc-framework-InterfaceBuilderKit',
-    description = "Wrappers for the framework InterfaceBuilderKit on macOS",
-    min_os_level='10.5',
-    max_os_level='10.6',
-    packages = [ "InterfaceBuilderKit" ],
+    name="pyobjc-framework-InterfaceBuilderKit",
+    description="Wrappers for the framework InterfaceBuilderKit on macOS",
+    min_os_level="10.5",
+    max_os_level="10.6",
+    packages=["InterfaceBuilderKit"],
     version=VERSION,
-    install_requires = [
-        'pyobjc-core>='+VERSION,
-        'pyobjc-framework-Cocoa>='+VERSION,
-    ],
+    install_requires=["pyobjc-core>=" + VERSION, "pyobjc-framework-Cocoa>=" + VERSION],
     long_description=__doc__,
 )

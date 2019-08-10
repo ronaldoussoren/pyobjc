@@ -1,9 +1,8 @@
-
 from PyObjCTools.TestSupport import *
 from PubSub import *
 
 
-class TestPSEnclosure (TestCase):
+class TestPSEnclosure(TestCase):
     def testConstants(self):
         self.assertEqual(PSEnclosureDownloadIsIdle, 0)
         self.assertEqual(PSEnclosureDownloadIsQueued, 1)
@@ -14,10 +13,10 @@ class TestPSEnclosure (TestCase):
 
         self.assertIsInstance(PSEnclosureDownloadStateDidChangeNotification, unicode)
 
-
     def testMethods(self):
         self.assertResultIsBOOL(PSEnclosure.download_)
         self.assertArgIsOut(PSEnclosure.download_, 0)
+
 
 if __name__ == "__main__":
     main()

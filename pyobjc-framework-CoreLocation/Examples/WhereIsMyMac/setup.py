@@ -9,13 +9,6 @@ from setuptools import setup
 setup(
     name="WhereIsMyMac",
     app=["main.py"],
-    data_files=[
-        "English.lproj",
-        "HTMLFormatString.html"
-    ],
-    setup_requires=[
-        "py2app",
-        "pyobjc-framework-Cocoa",
-        "pyobjc-framework-CoreLocation",
-    ]
+    data_files=["English.lproj", "HTMLFormatString.html"],
+    setup_requires=["py2app", "pyobjc-framework-Cocoa", "pyobjc-framework-CoreLocation"],
 )

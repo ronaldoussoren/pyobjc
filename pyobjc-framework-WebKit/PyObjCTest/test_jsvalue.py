@@ -3,11 +3,12 @@ from PyObjCTools.TestSupport import *
 import JavaScriptCore
 import objc
 
-class TestJSValue (TestCase):
+
+class TestJSValue(TestCase):
     @onlyOn64Bit
-    @min_os_level('10.9')
+    @min_os_level("10.9")
     def test_classes(self):
-        self.assertHasAttr(JavaScriptCore, 'JSValue')
+        self.assertHasAttr(JavaScriptCore, "JSValue")
 
         self.assertArgIsBOOL(JavaScriptCore.JSValue.valueWithBool_inContext_, 0)
         self.assertResultIsBOOL(JavaScriptCore.JSValue.toBool)
@@ -24,19 +25,20 @@ class TestJSValue (TestCase):
         self.assertResultIsBOOL(JavaScriptCore.JSValue.isInstanceOf_)
 
     @onlyOn64Bit
-    @min_os_level('10.11')
+    @min_os_level("10.11")
     def test_classes10_11(self):
         self.assertResultIsBOOL(JavaScriptCore.JSValue.isArray)
         self.assertResultIsBOOL(JavaScriptCore.JSValue.isDate)
 
-    @min_os_level('10.15')
+    @min_os_level("10.15")
     def test_methods10_15(self):
-        self.assertArgIsBlock(JavaScriptCore.JSValue.valueWithNewPromiseInContext_fromExecutor_, 1, b'v@@')
+        self.assertArgIsBlock(
+            JavaScriptCore.JSValue.valueWithNewPromiseInContext_fromExecutor_, 1, b"v@@"
+        )
         self.assertResultIsBOOL(JavaScriptCore.JSValue.isSymbol)
 
-
     @onlyOn64Bit
-    @min_os_level('10.9')
+    @min_os_level("10.9")
     def test_contants(self):
         self.assertIsInstance(JavaScriptCore.JSPropertyDescriptorWritableKey, unicode)
         self.assertIsInstance(JavaScriptCore.JSPropertyDescriptorEnumerableKey, unicode)
@@ -44,6 +46,7 @@ class TestJSValue (TestCase):
         self.assertIsInstance(JavaScriptCore.JSPropertyDescriptorValueKey, unicode)
         self.assertIsInstance(JavaScriptCore.JSPropertyDescriptorGetKey, unicode)
         self.assertIsInstance(JavaScriptCore.JSPropertyDescriptorSetKey, unicode)
+
 
 if __name__ == "__main__":
     main()

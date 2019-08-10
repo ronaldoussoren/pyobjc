@@ -5,6 +5,7 @@ __all__ = ()
 import objc
 from AppKit import NSGraphicsContext, NSAnimationContext
 
+
 class _ctxHelper(object):
     def __enter__(self):
         NSGraphicsContext.saveGraphicsState()
@@ -14,7 +15,7 @@ class _ctxHelper(object):
         return False
 
 
-class NSGraphicsContext (objc.Category(NSGraphicsContext)):
+class NSGraphicsContext(objc.Category(NSGraphicsContext)):
     @classmethod
     def savedGraphicsState(self):
         return _ctxHelper()
@@ -23,6 +24,7 @@ class NSGraphicsContext (objc.Category(NSGraphicsContext)):
 @objc.python_method
 def __enter__(cls):
     cls.beginGrouping()
+
 
 @objc.python_method
 def __exit__(cls, exc_type, exc_value, exc_tb):

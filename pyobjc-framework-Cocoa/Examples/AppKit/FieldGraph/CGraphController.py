@@ -5,7 +5,7 @@ from PyObjCTools import AppHelper
 from fieldMath import degToRad, radToDeg
 
 
-#____________________________________________________________
+# ____________________________________________________________
 class CGraphController(Cocoa.NSObject):
     graphModel = objc.IBOutlet()
     graphView = objc.IBOutlet()
@@ -27,8 +27,8 @@ class CGraphController(Cocoa.NSObject):
     RMSGainDisplay = objc.IBOutlet()
     spacingDisplay = objc.IBOutlet()
 
-#____________________________________________________________
-# Update GUI display and control values
+    # ____________________________________________________________
+    # Update GUI display and control values
 
     def awakeFromNib(self):
         self.mapImage = Cocoa.NSImage.imageNamed_("Map")
@@ -51,18 +51,21 @@ class CGraphController(Cocoa.NSObject):
         self.phaseSlider1.setFloatValue_(radToDeg(self.graphModel.getPhase(1)))
         self.phaseSlider2.setFloatValue_(radToDeg(self.graphModel.getPhase(2)))
 
-        totalField = self.graphModel.getField(0) + self.graphModel.getField(1) + self.graphModel.getField(2)
+        totalField = (
+            self.graphModel.getField(0)
+            + self.graphModel.getField(1)
+            + self.graphModel.getField(2)
+        )
 
         RMSGain = self.graphModel.fieldGain()
         self.graphView.setGain(RMSGain, totalField)
-        self.RMSGainDisplay.setFloatValue_(RMSGain*100.0)
+        self.RMSGainDisplay.setFloatValue_(RMSGain * 100.0)
 
-        path, maxMag  = self.graphModel.getGraph()
+        path, maxMag = self.graphModel.getGraph()
         self.graphView.setPath(path, maxMag)
 
-
-#____________________________________________________________
-# Handle GUI values
+    # ____________________________________________________________
+    # Handle GUI values
 
     @objc.IBAction
     def fieldDisplay0_(self, sender):
@@ -111,7 +114,7 @@ class CGraphController(Cocoa.NSObject):
 
             nft = 0
             for i in range(3):
-                nft +=  f[i]
+                nft += f[i]
             r = aft / (nft - f[t])
 
             for i in range(3):
@@ -120,7 +123,6 @@ class CGraphController(Cocoa.NSObject):
 
         else:
             self.graphModel.setField(t, v)
-
 
     @objc.IBAction
     def phaseDisplay0_(self, sender):

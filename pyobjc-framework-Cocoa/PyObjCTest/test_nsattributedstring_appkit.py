@@ -1,9 +1,8 @@
-
 from PyObjCTools.TestSupport import *
 from AppKit import *
 
 
-class TestNSAttributedString (TestCase):
+class TestNSAttributedString(TestCase):
     def testConstants(self):
         self.assertIsInstance(NSFontAttributeName, unicode)
         self.assertIsInstance(NSParagraphStyleAttributeName, unicode)
@@ -42,8 +41,8 @@ class TestNSAttributedString (TestCase):
         self.assertEqual(NSUnderlinePatternDashDotDot, 0x0400)
 
         self.assertEqual(NSUnderlineByWordMask, 0x8000)
-        self.assertEqual(NSWritingDirectionEmbedding, 0<<1)
-        self.assertEqual(NSWritingDirectionOverride, 1<<1)
+        self.assertEqual(NSWritingDirectionEmbedding, 0 << 1)
+        self.assertEqual(NSWritingDirectionOverride, 1 << 1)
 
         self.assertIsInstance(NSSpellingStateAttributeName, unicode)
 
@@ -120,94 +119,127 @@ class TestNSAttributedString (TestCase):
         self.assertEqual(NSTextScalingStandard, 0)
         self.assertEqual(NSTextScalingiOS, 1)
 
-    @min_os_level('10.14')
+    @min_os_level("10.14")
     def testConstants10_14(self):
         self.assertIsInstance(NSAppearanceDocumentAttribute, unicode)
 
-    @min_os_level('10.15')
+    @min_os_level("10.15")
     def testConstants10_15(self):
         self.assertIsInstance(NSTextScalingDocumentAttribute, unicode)
         self.assertIsInstance(NSSourceTextScalingDocumentAttribute, unicode)
         self.assertIsInstance(NSTargetTextScalingDocumentOption, unicode)
         self.assertIsInstance(NSSourceTextScalingDocumentOption, unicode)
 
-
     def testMethods(self):
-        self.assertArgIsOut(NSAttributedString.initWithURL_options_documentAttributes_error_, 2)
-        self.assertArgIsOut(NSAttributedString.initWithURL_options_documentAttributes_error_, 3)
-        self.assertArgIsOut(NSAttributedString.initWithData_options_documentAttributes_error_, 2)
-        self.assertArgIsOut(NSAttributedString.initWithData_options_documentAttributes_error_, 3)
+        self.assertArgIsOut(
+            NSAttributedString.initWithURL_options_documentAttributes_error_, 2
+        )
+        self.assertArgIsOut(
+            NSAttributedString.initWithURL_options_documentAttributes_error_, 3
+        )
+        self.assertArgIsOut(
+            NSAttributedString.initWithData_options_documentAttributes_error_, 2
+        )
+        self.assertArgIsOut(
+            NSAttributedString.initWithData_options_documentAttributes_error_, 3
+        )
 
         self.assertArgIsOut(NSAttributedString.dataFromRange_documentAttributes_error_, 2)
-        self.assertArgIsOut(NSAttributedString.fileWrapperFromRange_documentAttributes_error_, 2)
+        self.assertArgIsOut(
+            NSAttributedString.fileWrapperFromRange_documentAttributes_error_, 2
+        )
 
         self.assertArgIsOut(NSAttributedString.initWithPath_documentAttributes_, 1)
         self.assertArgIsOut(NSAttributedString.initWithURL_documentAttributes_, 1)
         self.assertArgIsOut(NSAttributedString.initWithRTF_documentAttributes_, 1)
         self.assertArgIsOut(NSAttributedString.initWithRTFD_documentAttributes_, 1)
         self.assertArgIsOut(NSAttributedString.initWithHTML_documentAttributes_, 1)
-        self.assertArgIsOut(NSAttributedString.initWithHTML_baseURL_documentAttributes_, 2)
+        self.assertArgIsOut(
+            NSAttributedString.initWithHTML_baseURL_documentAttributes_, 2
+        )
         self.assertArgIsOut(NSAttributedString.initWithDocFormat_documentAttributes_, 1)
-        self.assertArgIsOut(NSAttributedString.initWithHTML_options_documentAttributes_, 2)
-        self.assertArgIsOut(NSAttributedString.initWithRTFDFileWrapper_documentAttributes_, 1)
+        self.assertArgIsOut(
+            NSAttributedString.initWithHTML_options_documentAttributes_, 2
+        )
+        self.assertArgIsOut(
+            NSAttributedString.initWithRTFDFileWrapper_documentAttributes_, 1
+        )
 
+        self.assertResultIsBOOL(
+            NSMutableAttributedString.readFromURL_options_documentAttributes_error_
+        )
+        self.assertArgIsOut(
+            NSMutableAttributedString.readFromURL_options_documentAttributes_error_, 2
+        )
+        self.assertArgIsOut(
+            NSMutableAttributedString.readFromURL_options_documentAttributes_error_, 3
+        )
 
-        self.assertResultIsBOOL(NSMutableAttributedString.readFromURL_options_documentAttributes_error_)
-        self.assertArgIsOut(NSMutableAttributedString.readFromURL_options_documentAttributes_error_, 2)
-        self.assertArgIsOut(NSMutableAttributedString.readFromURL_options_documentAttributes_error_, 3)
+        self.assertResultIsBOOL(
+            NSMutableAttributedString.readFromData_options_documentAttributes_error_
+        )
+        self.assertArgIsOut(
+            NSMutableAttributedString.readFromData_options_documentAttributes_error_, 2
+        )
+        self.assertArgIsOut(
+            NSMutableAttributedString.readFromData_options_documentAttributes_error_, 3
+        )
 
-        self.assertResultIsBOOL(NSMutableAttributedString.readFromData_options_documentAttributes_error_)
-        self.assertArgIsOut(NSMutableAttributedString.readFromData_options_documentAttributes_error_, 2)
-        self.assertArgIsOut(NSMutableAttributedString.readFromData_options_documentAttributes_error_, 3)
+        self.assertResultIsBOOL(
+            NSMutableAttributedString.readFromURL_options_documentAttributes_
+        )
+        self.assertArgIsOut(
+            NSMutableAttributedString.readFromURL_options_documentAttributes_, 2
+        )
+        self.assertResultIsBOOL(
+            NSMutableAttributedString.readFromData_options_documentAttributes_
+        )
+        self.assertArgIsOut(
+            NSMutableAttributedString.readFromData_options_documentAttributes_, 2
+        )
 
-        self.assertResultIsBOOL(NSMutableAttributedString.readFromURL_options_documentAttributes_)
-        self.assertArgIsOut(NSMutableAttributedString.readFromURL_options_documentAttributes_, 2)
-        self.assertResultIsBOOL(NSMutableAttributedString.readFromData_options_documentAttributes_)
-        self.assertArgIsOut(NSMutableAttributedString.readFromData_options_documentAttributes_, 2)
-
-        self.assertArgHasType(NSAttributedString.URLAtIndex_effectiveRange_, 1, b'o^' + NSRange.__typestr__)
+        self.assertArgHasType(
+            NSAttributedString.URLAtIndex_effectiveRange_, 1, b"o^" + NSRange.__typestr__
+        )
 
         self.assertArgIsBOOL(NSMutableAttributedString.nextWordFromIndex_forward_, 1)
         self.assertResultIsBOOL(NSAttributedString.containsAttachments)
 
-
-    @min_os_level('10.11')
+    @min_os_level("10.11")
     def testMethods10_11(self):
         self.assertResultIsBOOL(NSMutableAttributedString.containsAttachmentsInRange_)
 
-
-    @min_os_level('10.5')
+    @min_os_level("10.5")
     def testConstants10_5(self):
         self.assertIsInstance(NSManagerDocumentAttribute, unicode)
 
-    @min_os_level('10.6')
+    @min_os_level("10.6")
     def testConstants10_6(self):
         self.assertIsInstance(NSWritingDirectionAttributeName, unicode)
         self.assertIsInstance(NSFileTypeDocumentAttribute, unicode)
         self.assertIsInstance(NSCategoryDocumentAttribute, unicode)
         self.assertIsInstance(NSFileTypeDocumentOption, unicode)
 
-    @min_os_level('10.7')
+    @min_os_level("10.7")
     def testConstants10_7(self):
         self.assertIsInstance(NSVerticalGlyphFormAttributeName, unicode)
         self.assertIsInstance(NSTextLayoutSectionOrientation, unicode)
         self.assertIsInstance(NSTextLayoutSectionRange, unicode)
         self.assertIsInstance(NSTextLayoutSectionsAttribute, unicode)
 
-    @min_os_level('10.8')
+    @min_os_level("10.8")
     def testConstants10_8(self):
         self.assertIsInstance(NSTextAlternativesAttributeName, unicode)
         self.assertIsInstance(NSUsesScreenFontsDocumentAttribute, unicode)
 
-    @min_os_level('10.10')
+    @min_os_level("10.10")
     def testConstants10_10(self):
         self.assertIsInstance(NSTextEffectAttributeName, unicode)
         self.assertIsInstance(NSTextEffectLetterpressStyle, unicode)
 
-    @min_os_level('10.11')
+    @min_os_level("10.11")
     def testConstants10_11(self):
         self.assertIsInstance(NSDefaultAttributesDocumentAttribute, unicode)
-
 
 
 if __name__ == "__main__":

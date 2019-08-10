@@ -8,8 +8,9 @@ def scaleShadowOffset(offset):
     # Adjust the shadow offset if scaling to export as bits. This is
     # equivalent to scaling base space by the scaling factor.
     if shadowScaling != 1.0:
-        offset = Quartz.CGSizeApplyAffineTransform(offset,
-                    Quartz.CGAffineTransformMakeScale(shadowScaling, shadowScaling))
+        offset = Quartz.CGSizeApplyAffineTransform(
+            offset, Quartz.CGAffineTransformMakeScale(shadowScaling, shadowScaling)
+        )
     return offset
 
 
@@ -19,6 +20,7 @@ def createTrianglePath(context):
     Quartz.CGContextAddLineToPoint(context, 50, 0)
     Quartz.CGContextAddLineToPoint(context, 25, 50)
     Quartz.CGContextClosePath(context)
+
 
 def drawSimpleShadow(context):
     r = Quartz.CGRectMake(20, 20, 100, 200)
@@ -77,7 +79,9 @@ def drawSimpleShadow(context):
 
     # The shadow can be colored. Create a CGColorRef
     # that represents a red color with opacity of 0.3333...
-    shadowColor = Quartz.CGColorCreateCopyWithAlpha(Utilities.getRGBOpaqueRedColor(), 1.0/3.0)
+    shadowColor = Quartz.CGColorCreateCopyWithAlpha(
+        Utilities.getRGBOpaqueRedColor(), 1.0 / 3.0
+    )
 
     Quartz.CGContextSetShadowWithColor(context, offset, blur, shadowColor)
     Quartz.CGContextStrokePath(context)
@@ -159,6 +163,7 @@ def drawFillAndStrokeWithShadow(context):
     # End the transparency layer.
     Quartz.CGContextEndTransparencyLayer(context)
 
+
 def drawColoredLogo(context):
     r = Quartz.CGRectMake(0, 0, 100, 100)
     Quartz.CGContextSaveGState(context)
@@ -169,28 +174,31 @@ def drawColoredLogo(context):
         # about the current coordinate origin.
         Quartz.CGContextRotateCTM(context, Utilities.DEGREES_TO_RADIANS(45))
         # Translate so that the center of the rect is at the previous origin.
-        Quartz.CGContextTranslateCTM(context,
-                -r.size.width/2, -r.size.height/2)
+        Quartz.CGContextTranslateCTM(context, -r.size.width / 2, -r.size.height / 2)
         # Set the fill color to a purple color.
-        Quartz.CGContextSetFillColorWithColor(context,
-                Utilities.getRGBOpaquePurpleColor())
+        Quartz.CGContextSetFillColorWithColor(
+            context, Utilities.getRGBOpaquePurpleColor()
+        )
         # Fill the first rectangle.
         Quartz.CGContextFillRect(context, r)
         # Position to draw the right-most rectangle.
         Quartz.CGContextTranslateCTM(context, 60, -60)
         # Set the fill color to a yellow color.
-        Quartz.CGContextSetFillColorWithColor(context,
-                Utilities.getRGBOpaqueYellowColor())
+        Quartz.CGContextSetFillColorWithColor(
+            context, Utilities.getRGBOpaqueYellowColor()
+        )
         Quartz.CGContextFillRect(context, r)
 
         # Position for the center rectangle.
         Quartz.CGContextTranslateCTM(context, -30, +30)
         # Set the stroke color to an orange color.
-        Quartz.CGContextSetStrokeColorWithColor(context,
-                Utilities.getRGBOpaqueOrangeColor())
+        Quartz.CGContextSetStrokeColorWithColor(
+            context, Utilities.getRGBOpaqueOrangeColor()
+        )
         # Stroke the rectangle with a linewidth of 12.
         Quartz.CGContextStrokeRectWithWidth(context, r, 12)
     Quartz.CGContextRestoreGState(context)
+
 
 def showComplexShadowIssues(context):
     offset = Quartz.CGSize(-6, -6)
@@ -200,6 +208,7 @@ def showComplexShadowIssues(context):
     Quartz.CGContextSetShadow(context, scaleShadowOffset(offset), blur)
     # Draw the colored logo.
     drawColoredLogo(context)
+
 
 def showComplexShadow(context):
     offset = Quartz.CGSize(-6, -6)
@@ -231,6 +240,7 @@ def showComplexShadow(context):
     # This restores the graphics state to that in effect
     # at the last call to CGContextBeginTransparencyLayer.
     Quartz.CGContextEndTransparencyLayer(context)
+
 
 def doLayerCompositing(context):
     r = Quartz.CGRectMake(40, 50, 142, 180)
@@ -266,13 +276,14 @@ def doLayerCompositing(context):
     # alpha value of 0.75 when the transparency layer is ended.
     Quartz.CGContextBeginTransparencyLayer(context, None)
     if 1:
-    # Draw the colored logo into the transparency layer.
+        # Draw the colored logo into the transparency layer.
         drawColoredLogo(context)
 
     # Ending the transparency layer causes the drawing
     # to then be composited with the global alpha value
     # in effect when CGContextBeginTransparencyLayer was called.
     Quartz.CGContextEndTransparencyLayer(context)
+
 
 def shadowPDFDocument(context, url):
     pdfDoc = Quartz.CGPDFDocumentCreateWithURL(url)

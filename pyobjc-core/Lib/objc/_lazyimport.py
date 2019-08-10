@@ -242,9 +242,7 @@ class ObjCLazyModule(ModuleType):
         if self.__varmap:
             varmap = []
             specials = []
-            for nm, tp in re.findall(
-                r"\$([A-Z0-9a-z_]*)(@[^$]*)?(?=\$)", self.__varmap
-            ):
+            for nm, tp in re.findall(r"\$([A-Z0-9a-z_]*)(@[^$]*)?(?=\$)", self.__varmap):
                 if tp and tp.startswith("@="):
                     specials.append((nm, tp[2:]))
                 else:
@@ -269,9 +267,7 @@ class ObjCLazyModule(ModuleType):
             self.__varmap = ""
 
         if self.__enummap:
-            for nm, val in re.findall(
-                r"\$([A-Z0-9a-z_]*)@([^$]*)(?=\$)", self.__enummap
-            ):
+            for nm, val in re.findall(r"\$([A-Z0-9a-z_]*)@([^$]*)(?=\$)", self.__enummap):
                 if nm not in self.__dict__:
                     self.__dict__[nm] = self.__prs_enum(val)
 

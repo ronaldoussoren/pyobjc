@@ -1,8 +1,8 @@
-
 from PyObjCTools.TestSupport import *
 from Quartz.PDFKit import *
 
-class TestPDFAnnotationText (TestCase):
+
+class TestPDFAnnotationText(TestCase):
     def testConstants(self):
         self.assertEqual(kPDFTextAnnotationIconComment, 0)
         self.assertEqual(kPDFTextAnnotationIconKey, 1)
@@ -15,6 +15,7 @@ class TestPDFAnnotationText (TestCase):
         self.assertEqual(kPDFDocumentPermissionsNone, 0)
         self.assertEqual(kPDFDocumentPermissionsUser, 1)
         self.assertEqual(kPDFDocumentPermissionsOwner, 2)
+
 
 if __name__ == "__main__":
     main()

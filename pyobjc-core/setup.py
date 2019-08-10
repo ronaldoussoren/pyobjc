@@ -195,7 +195,9 @@ def verify_platform():
         raise DistutilsPlatformError("PyObjC requires macOS to build")
 
     if sys.version_info[:2] < MIN_PYTHON:
-        raise DistutilsPlatformError("PyObjC requires Python {} or later to build".format(".".join(MIN_PYTHON)))
+        raise DistutilsPlatformError(
+            "PyObjC requires Python {} or later to build".format(".".join(MIN_PYTHON))
+        )
 
     if hasattr(sys, "pypy_version_info"):
         print("WARNING: PyPy is not a supported platform for PyObjC")
@@ -530,11 +532,7 @@ class oc_build_ext(build_ext.build_ext):
             None,
             "deployment target to use (can also be set using ${MACOSX_DEPLOYMENT_TARGET})",
         ),
-        (
-            "sdk-root=",
-            None,
-            "Path to the SDK to use (can also be set using ${SDKROOT})",
-        ),
+        ("sdk-root=", None, "Path to the SDK to use (can also be set using ${SDKROOT})"),
     ]
     boolean_options = ["use-system-libffi"]
 
@@ -574,9 +572,7 @@ class oc_build_ext(build_ext.build_ext):
         if not os.path.exists(self.sdk_root):
             raise DistutilsSetupError("SDK root %r does not exist" % (self.sdk_root,))
 
-        if not os.path.exists(
-            os.path.join(self.sdk_root, "usr/include/objc/runtime.h")
-        ):
+        if not os.path.exists(os.path.join(self.sdk_root, "usr/include/objc/runtime.h")):
             if "-DNO_OBJC2_RUNTIME" not in CFLAGS:
                 CFLAGS.append("-DNO_OBJC2_RUNTIME")
                 EXT_CFLAGS.append("-DNO_OBJC2_RUNTIME")
@@ -587,9 +583,7 @@ class oc_build_ext(build_ext.build_ext):
         if self.use_system_libffi:
             import shlex
 
-            LIBFFI_INCLUDEDIR = (
-                get_config_var("LIBFFI_INCLUDEDIR") or "/usr/include/ffi"
-            )
+            LIBFFI_INCLUDEDIR = get_config_var("LIBFFI_INCLUDEDIR") or "/usr/include/ffi"
 
             try:
                 p = subprocess.Popen(
@@ -775,5 +769,5 @@ setup(
     },
     package_dir={"": "Lib", "PyObjCTest": "PyObjCTest"},
     options={"egg_info": {"egg_base": "Lib"}},
-    **parse_package_metadata()
+    **parse_package_metadata(),
 )

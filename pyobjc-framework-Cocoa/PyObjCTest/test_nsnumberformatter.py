@@ -2,23 +2,34 @@ from PyObjCTools.TestSupport import *
 
 from Foundation import *
 
-class TestNSNumberFormatter (TestCase):
+
+class TestNSNumberFormatter(TestCase):
     def testConstants(self):
         self.assertEqual(NSNumberFormatterNoStyle, kCFNumberFormatterNoStyle)
         self.assertEqual(NSNumberFormatterDecimalStyle, kCFNumberFormatterDecimalStyle)
         self.assertEqual(NSNumberFormatterCurrencyStyle, kCFNumberFormatterCurrencyStyle)
         self.assertEqual(NSNumberFormatterPercentStyle, kCFNumberFormatterPercentStyle)
-        self.assertEqual(NSNumberFormatterScientificStyle, kCFNumberFormatterScientificStyle)
+        self.assertEqual(
+            NSNumberFormatterScientificStyle, kCFNumberFormatterScientificStyle
+        )
         self.assertEqual(NSNumberFormatterSpellOutStyle, kCFNumberFormatterSpellOutStyle)
 
         self.assertEqual(NSNumberFormatterBehaviorDefault, 0)
         self.assertEqual(NSNumberFormatterBehavior10_0, 1000)
         self.assertEqual(NSNumberFormatterBehavior10_4, 1040)
 
-        self.assertEqual(NSNumberFormatterPadBeforePrefix, kCFNumberFormatterPadBeforePrefix)
-        self.assertEqual(NSNumberFormatterPadAfterPrefix, kCFNumberFormatterPadAfterPrefix)
-        self.assertEqual(NSNumberFormatterPadBeforeSuffix, kCFNumberFormatterPadBeforeSuffix)
-        self.assertEqual(NSNumberFormatterPadAfterSuffix, kCFNumberFormatterPadAfterSuffix)
+        self.assertEqual(
+            NSNumberFormatterPadBeforePrefix, kCFNumberFormatterPadBeforePrefix
+        )
+        self.assertEqual(
+            NSNumberFormatterPadAfterPrefix, kCFNumberFormatterPadAfterPrefix
+        )
+        self.assertEqual(
+            NSNumberFormatterPadBeforeSuffix, kCFNumberFormatterPadBeforeSuffix
+        )
+        self.assertEqual(
+            NSNumberFormatterPadAfterSuffix, kCFNumberFormatterPadAfterSuffix
+        )
 
         self.assertEqual(NSNumberFormatterRoundCeiling, kCFNumberFormatterRoundCeiling)
         self.assertEqual(NSNumberFormatterRoundFloor, kCFNumberFormatterRoundFloor)
@@ -28,14 +39,19 @@ class TestNSNumberFormatter (TestCase):
         self.assertEqual(NSNumberFormatterRoundHalfDown, kCFNumberFormatterRoundHalfDown)
         self.assertEqual(NSNumberFormatterRoundHalfUp, kCFNumberFormatterRoundHalfUp)
 
-    @min_os_level('10.11')
+    @min_os_level("10.11")
     def testConstants(self):
         self.assertEqual(NSNumberFormatterOrdinalStyle, kCFNumberFormatterOrdinalStyle)
-        self.assertEqual(NSNumberFormatterCurrencyISOCodeStyle, kCFNumberFormatterCurrencyISOCodeStyle)
-        self.assertEqual(NSNumberFormatterCurrencyPluralStyle, kCFNumberFormatterCurrencyPluralStyle)
-        self.assertEqual(NSNumberFormatterCurrencyAccountingStyle, kCFNumberFormatterCurrencyAccountingStyle)
-
-
+        self.assertEqual(
+            NSNumberFormatterCurrencyISOCodeStyle, kCFNumberFormatterCurrencyISOCodeStyle
+        )
+        self.assertEqual(
+            NSNumberFormatterCurrencyPluralStyle, kCFNumberFormatterCurrencyPluralStyle
+        )
+        self.assertEqual(
+            NSNumberFormatterCurrencyAccountingStyle,
+            kCFNumberFormatterCurrencyAccountingStyle,
+        )
 
     def testOutput(self):
         self.assertResultIsBOOL(NSNumberFormatter.getObjectValue_forString_range_error_)
@@ -61,6 +77,7 @@ class TestNSNumberFormatter (TestCase):
         self.assertArgIsBOOL(NSNumberFormatter.setHasThousandSeparators_, 0)
         self.assertResultIsBOOL(NSNumberFormatter.localizesFormat)
         self.assertArgIsBOOL(NSNumberFormatter.setLocalizesFormat_, 0)
+
 
 if __name__ == "__main__":
     main()

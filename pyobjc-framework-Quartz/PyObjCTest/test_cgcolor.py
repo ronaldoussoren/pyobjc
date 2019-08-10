@@ -1,28 +1,29 @@
-
 from PyObjCTools.TestSupport import *
 from Quartz.CoreGraphics import *
 
-class TestCGColor (TestCase):
+
+class TestCGColor(TestCase):
     def testTypes(self):
         self.assertIsCFType(CGColorRef)
 
-    @min_os_level('10.15')
+    @min_os_level("10.15")
     def testFunctions10_15(self):
         self.assertResultIsCFRetained(CGColorCreateGenericGrayGamma2_2)
         color = CGColorCreateGenericGrayGamma2_2(1.5, 0.3)
         self.assertIsInstance(color, CGColorRef)
 
-
-    @min_os_level('10.11')
+    @min_os_level("10.11")
     def testFunctions10_11(self):
         self.assertResultIsCFRetained(CGColorCreateCopyByMatchingToColorSpace)
         color = CGColorCreateCopyByMatchingToColorSpace(
-                CGColorSpaceCreateDeviceGray(), kCGRenderingIntentDefault,
-                CGColorCreateGenericGray(0.75, 0.8), None)
+            CGColorSpaceCreateDeviceGray(),
+            kCGRenderingIntentDefault,
+            CGColorCreateGenericGray(0.75, 0.8),
+            None,
+        )
         self.assertIsInstance(color, CGColorRef)
 
-
-    @min_os_level('10.5')
+    @min_os_level("10.5")
     def testFunctions10_5(self):
         self.assertResultIsCFRetained(CGColorCreateGenericGray)
         color = CGColorCreateGenericGray(0.75, 0.8)
@@ -41,8 +42,7 @@ class TestCGColor (TestCase):
 
     def testFunctions(self):
         self.assertResultIsCFRetained(CGColorCreate)
-        color = CGColorCreate(CGColorSpaceCreateDeviceRGB(),
-                [1.0, 0.5, 0.5])
+        color = CGColorCreate(CGColorSpaceCreateDeviceRGB(), [1.0, 0.5, 0.5])
         self.assertIsInstance(color, CGColorRef)
 
         self.assertResultIsCFRetained(CGColorCreateCopy)
@@ -78,11 +78,12 @@ class TestCGColor (TestCase):
 
         # CGColorCreateWithPattern, CGColorGetPattern: tested in test_cgpattern
 
-    @min_os_level('10.5')
+    @min_os_level("10.5")
     def testConstants(self):
         self.assertIsInstance(kCGColorWhite, unicode)
         self.assertIsInstance(kCGColorBlack, unicode)
         self.assertIsInstance(kCGColorClear, unicode)
+
 
 if __name__ == "__main__":
     main()

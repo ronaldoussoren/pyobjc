@@ -1,8 +1,8 @@
-
 from PyObjCTools.TestSupport import *
 from WebKit import *
 
-class TestDOMElement (TestCase):
+
+class TestDOMElement(TestCase):
     def testConstants(self):
         self.assertEqual(DOM_ALLOW_KEYBOARD_INPUT, 1)
 
@@ -13,7 +13,7 @@ class TestDOMElement (TestCase):
         self.assertArgIsBOOL(DOMElement.scrollIntoViewIfNeeded_, 0)
         self.assertResultIsBOOL(DOMElement.hasAttributeNS__)
 
-    @min_os_level('10.6')
+    @min_os_level("10.6")
     def testMethods(self):
         self.assertResultIsBOOL(DOMElement.contains_)
 

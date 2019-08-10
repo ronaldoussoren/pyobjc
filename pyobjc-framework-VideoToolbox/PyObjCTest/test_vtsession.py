@@ -1,9 +1,10 @@
 from PyObjCTools.TestSupport import *
 import VideoToolbox
 
-class TestVTSession (TestCase):
+
+class TestVTSession(TestCase):
     @expectedFailure
-    @min_os_level('10.10')
+    @min_os_level("10.10")
     def test_types(self):
         self.assertIsCFType(VideoToolbox.VTSessionRef)
 
@@ -23,7 +24,9 @@ class TestVTSession (TestCase):
 
     def test_functions(self):
         self.assertArgIsOut(VideoToolbox.VTSessionCopySupportedPropertyDictionary, 1)
-        self.assertArgIsCFRetained(VideoToolbox.VTSessionCopySupportedPropertyDictionary, 1)
+        self.assertArgIsCFRetained(
+            VideoToolbox.VTSessionCopySupportedPropertyDictionary, 1
+        )
 
         self.assertArgHasType(VideoToolbox.VTSessionSetProperty, 2, objc._C_ID)
 

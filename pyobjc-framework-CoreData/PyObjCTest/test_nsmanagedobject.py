@@ -1,12 +1,14 @@
-
 from PyObjCTools.TestSupport import *
 from CoreData import *
 
-class TestNSManagedObject (TestCase):
+
+class TestNSManagedObject(TestCase):
     def testMethods(self):
         descr = NSEntityDescription.alloc().init()
-        descr.setName_(b'Name'.decode('ascii'))
-        o = NSManagedObject.alloc().initWithEntity_insertIntoManagedObjectContext_(descr, None)
+        descr.setName_(b"Name".decode("ascii"))
+        o = NSManagedObject.alloc().initWithEntity_insertIntoManagedObjectContext_(
+            descr, None
+        )
 
         self.assertResultIsBOOL(o.isInserted)
         self.assertResultIsBOOL(o.isUpdated)
@@ -31,7 +33,9 @@ class TestNSManagedObject (TestCase):
 
     @min_os_level("10.6")
     def testMethods10_6(self):
-        self.assertResultIsBOOL(NSManagedObject.contextShouldIgnoreUnmodeledPropertyChanges)
+        self.assertResultIsBOOL(
+            NSManagedObject.contextShouldIgnoreUnmodeledPropertyChanges
+        )
 
     @min_os_level("10.7")
     def testMethods10_7(self):
@@ -41,7 +45,7 @@ class TestNSManagedObject (TestCase):
     def testMethods10_9(self):
         self.assertResultIsBOOL(NSManagedObject.hasPersistentChangedValues)
 
-    @min_os_level('10.6')
+    @min_os_level("10.6")
     def testConstants10_6(self):
         self.assertEqual(NSSnapshotEventUndoInsertion, 1 << 1)
         self.assertEqual(NSSnapshotEventUndoDeletion, 1 << 2)
@@ -49,6 +53,7 @@ class TestNSManagedObject (TestCase):
         self.assertEqual(NSSnapshotEventRollback, 1 << 4)
         self.assertEqual(NSSnapshotEventRefresh, 1 << 5)
         self.assertEqual(NSSnapshotEventMergePolicy, 1 << 6)
+
 
 if __name__ == "__main__":
     main()

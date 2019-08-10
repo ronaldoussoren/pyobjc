@@ -1,6 +1,8 @@
 from PyObjCTools import AppHelper
 
-import objc; objc.setVerbose(True)
+import objc
+
+objc.setVerbose(True)
 import AppDelegate
 import Circle
 import Extras

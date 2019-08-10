@@ -2,7 +2,8 @@ import objc
 import Cocoa
 import TLayerDemo
 
-class AppDelegate (Cocoa.NSObject):
+
+class AppDelegate(Cocoa.NSObject):
     shadowDemo = objc.ivar()
 
     def applicationDidFinishLaunching_(self, notification):

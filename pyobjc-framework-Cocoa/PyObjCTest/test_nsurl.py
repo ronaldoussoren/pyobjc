@@ -2,7 +2,7 @@ from Foundation import *
 from PyObjCTools.TestSupport import *
 
 
-class TestNSURL (TestCase):
+class TestNSURL(TestCase):
     def testMethods(self):
         self.assertArgIsBOOL(NSURL.initFileURLWithPath_isDirectory_, 1)
         self.assertArgIsBOOL(NSURL.fileURLWithPath_isDirectory_, 1)
@@ -14,26 +14,36 @@ class TestNSURL (TestCase):
         self.assertResultIsBOOL(NSURL.setProperty_forKey_)
         self.assertArgIsBOOL(NSURL.URLHandleUsingCache_, 0)
 
-    @min_os_level('10.7')
+    @min_os_level("10.7")
     def testMethods10_7(self):
         self.assertResultIsBOOL(NSURL.startAccessingSecurityScopedResource)
 
-    @min_os_level('10.9')
+    @min_os_level("10.9")
     def testMethods10_9(self):
-        self.assertArgIsIn(NSURL.initFileURLWithFileSystemRepresentation_isDirectory_relativeToURL_, 0)
-        self.assertArgIsBOOL(NSURL.initFileURLWithFileSystemRepresentation_isDirectory_relativeToURL_, 1)
+        self.assertArgIsIn(
+            NSURL.initFileURLWithFileSystemRepresentation_isDirectory_relativeToURL_, 0
+        )
+        self.assertArgIsBOOL(
+            NSURL.initFileURLWithFileSystemRepresentation_isDirectory_relativeToURL_, 1
+        )
 
-        self.assertArgIsIn(NSURL.fileURLWithFileSystemRepresentation_isDirectory_relativeToURL_, 0)
-        self.assertArgIsBOOL(NSURL.fileURLWithFileSystemRepresentation_isDirectory_relativeToURL_, 1)
+        self.assertArgIsIn(
+            NSURL.fileURLWithFileSystemRepresentation_isDirectory_relativeToURL_, 0
+        )
+        self.assertArgIsBOOL(
+            NSURL.fileURLWithFileSystemRepresentation_isDirectory_relativeToURL_, 1
+        )
 
         self.assertResultIsBOOL(NSURL.getFileSystemRepresentation_maxLength_)
         self.assertArgIsOut(NSURL.getFileSystemRepresentation_maxLength_, 0)
         self.assertArgSizeInArg(NSURL.getFileSystemRepresentation_maxLength_, 0, 1)
 
         self.assertArgIsBOOL(NSURLComponents.initWithURL_resolvingAgainstBaseURL_, 1)
-        self.assertArgIsBOOL(NSURLComponents.componentsWithURL_resolvingAgainstBaseURL_, 1)
+        self.assertArgIsBOOL(
+            NSURLComponents.componentsWithURL_resolvingAgainstBaseURL_, 1
+        )
 
-    @min_os_level('10.10')
+    @min_os_level("10.10")
     def testMethods10_10(self):
         self.assertArgIsOut(NSURL.URLByResolvingAliasFileAtURL_options_error_, 2)
 
@@ -44,7 +54,7 @@ class TestNSURL (TestCase):
         self.assertResultIsBOOL(NSURL.checkPromisedItemIsReachableAndReturnError_)
         self.assertArgIsOut(NSURL.checkPromisedItemIsReachableAndReturnError_, 0)
 
-    @min_os_level('10.11')
+    @min_os_level("10.11")
     def testMethods10_11(self):
         self.assertArgIsBOOL(NSURL.initFileURLWithPath_isDirectory_relativeToURL_, 1)
         self.assertArgIsBOOL(NSURL.fileURLWithPath_isDirectory_relativeToURL_, 1)
@@ -53,13 +63,13 @@ class TestNSURL (TestCase):
     def testConstants(self):
         self.assertIsInstance(NSURLFileScheme, unicode)
 
-    @min_os_level('10.6')
+    @min_os_level("10.6")
     def testConstants10_6(self):
-        self.assertEqual(NSURLBookmarkCreationPreferFileIDResolution, ( 1 << 8 ))
-        self.assertEqual(NSURLBookmarkCreationMinimalBookmark, ( 1 << 9 ))
-        self.assertEqual(NSURLBookmarkCreationSuitableForBookmarkFile, ( 1 << 10 ))
-        self.assertEqual(NSURLBookmarkResolutionWithoutUI, ( 1 << 8 ))
-        self.assertEqual(NSURLBookmarkResolutionWithoutMounting, ( 1 << 9 ))
+        self.assertEqual(NSURLBookmarkCreationPreferFileIDResolution, (1 << 8))
+        self.assertEqual(NSURLBookmarkCreationMinimalBookmark, (1 << 9))
+        self.assertEqual(NSURLBookmarkCreationSuitableForBookmarkFile, (1 << 10))
+        self.assertEqual(NSURLBookmarkResolutionWithoutUI, (1 << 8))
+        self.assertEqual(NSURLBookmarkResolutionWithoutMounting, (1 << 9))
 
         self.assertIsInstance(NSURLNameKey, unicode)
         self.assertIsInstance(NSURLLocalizedNameKey, unicode)
@@ -94,7 +104,7 @@ class TestNSURL (TestCase):
         self.assertIsInstance(NSURLVolumeAvailableCapacityKey, unicode)
         self.assertIsInstance(NSURLVolumeResourceCountKey, unicode)
 
-    @min_os_level('10.6')
+    @min_os_level("10.6")
     def testConstants10_6_2(self):
         self.assertIsInstance(NSURLVolumeSupportsPersistentIDsKey, unicode)
         self.assertIsInstance(NSURLVolumeSupportsSymbolicLinksKey, unicode)
@@ -106,11 +116,11 @@ class TestNSURL (TestCase):
         self.assertIsInstance(NSURLVolumeSupportsCaseSensitiveNamesKey, unicode)
         self.assertIsInstance(NSURLVolumeSupportsCasePreservedNamesKey, unicode)
 
-    @min_os_level('10.7')
+    @min_os_level("10.7")
     def testConstants10_7(self):
-        self.assertEqual(NSURLBookmarkCreationWithSecurityScope, ( 1 << 11 ))
-        self.assertEqual(NSURLBookmarkCreationSecurityScopeAllowOnlyReadAccess, ( 1 << 12 ))
-        self.assertEqual(NSURLBookmarkResolutionWithSecurityScope, ( 1 << 10 ))
+        self.assertEqual(NSURLBookmarkCreationWithSecurityScope, (1 << 11))
+        self.assertEqual(NSURLBookmarkCreationSecurityScopeAllowOnlyReadAccess, (1 << 12))
+        self.assertEqual(NSURLBookmarkResolutionWithSecurityScope, (1 << 10))
 
         self.assertIsInstance(NSURLKeysOfUnsetValuesKey, unicode)
 
@@ -160,12 +170,12 @@ class TestNSURL (TestCase):
         self.assertIsInstance(NSURLUbiquitousItemPercentDownloadedKey, unicode)
         self.assertIsInstance(NSURLUbiquitousItemPercentUploadedKey, unicode)
 
-    @min_os_level('10.8')
+    @min_os_level("10.8")
     def testConstants10_8(self):
         self.assertIsInstance(NSURLIsExcludedFromBackupKey, unicode)
         self.assertIsInstance(NSURLPathKey, unicode)
 
-    @min_os_level('10.9')
+    @min_os_level("10.9")
     def testConstants10_9(self):
         self.assertIsInstance(NSURLTagNamesKey, unicode)
         self.assertIsInstance(NSURLUbiquitousItemDownloadingStatusKey, unicode)
@@ -175,7 +185,7 @@ class TestNSURL (TestCase):
         self.assertIsInstance(NSURLUbiquitousItemDownloadingStatusDownloaded, unicode)
         self.assertIsInstance(NSURLUbiquitousItemDownloadingStatusCurrent, unicode)
 
-    @min_os_level('10.10')
+    @min_os_level("10.10")
     def testConstants10_10(self):
         self.assertIsInstance(NSURLGenerationIdentifierKey, unicode)
         self.assertIsInstance(NSURLDocumentIdentifierKey, unicode)
@@ -187,12 +197,12 @@ class TestNSURL (TestCase):
         self.assertIsInstance(NSURLUbiquitousItemDownloadRequestedKey, unicode)
         self.assertIsInstance(NSURLUbiquitousItemContainerDisplayNameKey, unicode)
 
-    @min_os_level('10.11')
+    @min_os_level("10.11")
     def testConstants10_11(self):
         self.assertIsInstance(NSURLIsApplicationKey, unicode)
         self.assertIsInstance(NSURLApplicationIsScriptableKey, unicode)
 
-    @min_os_level('10.12')
+    @min_os_level("10.12")
     def testConstants10_12(self):
         self.assertIsInstance(NSURLVolumeIsEncryptedKey, unicode)
         self.assertIsInstance(NSURLVolumeIsRootFileSystemKey, unicode)
@@ -205,20 +215,24 @@ class TestNSURL (TestCase):
         self.assertIsInstance(NSURLUbiquitousSharedItemCurrentUserRoleKey, unicode)
         self.assertIsInstance(NSURLUbiquitousSharedItemCurrentUserPermissionsKey, unicode)
         self.assertIsInstance(NSURLUbiquitousSharedItemOwnerNameComponentsKey, unicode)
-        self.assertIsInstance(NSURLUbiquitousSharedItemMostRecentEditorNameComponentsKey, unicode)
+        self.assertIsInstance(
+            NSURLUbiquitousSharedItemMostRecentEditorNameComponentsKey, unicode
+        )
         self.assertIsInstance(NSURLUbiquitousSharedItemRoleOwner, unicode)
         self.assertIsInstance(NSURLUbiquitousSharedItemRoleParticipant, unicode)
         self.assertIsInstance(NSURLUbiquitousSharedItemPermissionsReadOnly, unicode)
         self.assertIsInstance(NSURLUbiquitousSharedItemPermissionsReadWrite, unicode)
 
-    @min_os_level('10.13')
+    @min_os_level("10.13")
     def testConstants10_13(self):
         self.assertIsInstance(NSURLVolumeSupportsImmutableFilesKey, unicode)
         self.assertIsInstance(NSURLVolumeSupportsAccessPermissionsKey, unicode)
         self.assertIsInstance(NSURLVolumeAvailableCapacityForImportantUsageKey, unicode)
-        self.assertIsInstance(NSURLVolumeAvailableCapacityForOpportunisticUsageKey, unicode)
+        self.assertIsInstance(
+            NSURLVolumeAvailableCapacityForOpportunisticUsageKey, unicode
+        )
 
-    @min_os_level('10.6')
+    @min_os_level("10.6")
     def testMethods10_6(self):
         self.assertArgIsBOOL(NSURL.URLByAppendingPathComponent_isDirectory_, 1)
 
@@ -234,14 +248,32 @@ class TestNSURL (TestCase):
         self.assertArgIsOut(NSURL.checkResourceIsReachableAndReturnError_, 0)
         self.assertResultIsBOOL(NSURL.isFileReferenceURL)
 
-        self.assertArgIsOut(NSURL.bookmarkDataWithOptions_includingResourceValuesForKeys_relativeToURL_error_, 3)
-        self.assertArgHasType(NSURL.initByResolvingBookmarkData_options_relativeToURL_bookmarkDataIsStale_error_, 3, b'o^' + objc._C_NSBOOL)
-        self.assertArgIsOut(NSURL.initByResolvingBookmarkData_options_relativeToURL_bookmarkDataIsStale_error_, 4)
-        self.assertArgHasType(NSURL.URLByResolvingBookmarkData_options_relativeToURL_bookmarkDataIsStale_error_, 3, b'o^' + objc._C_NSBOOL)
-        self.assertArgIsOut(NSURL.URLByResolvingBookmarkData_options_relativeToURL_bookmarkDataIsStale_error_, 4)
+        self.assertArgIsOut(
+            NSURL.bookmarkDataWithOptions_includingResourceValuesForKeys_relativeToURL_error_,
+            3,
+        )
+        self.assertArgHasType(
+            NSURL.initByResolvingBookmarkData_options_relativeToURL_bookmarkDataIsStale_error_,
+            3,
+            b"o^" + objc._C_NSBOOL,
+        )
+        self.assertArgIsOut(
+            NSURL.initByResolvingBookmarkData_options_relativeToURL_bookmarkDataIsStale_error_,
+            4,
+        )
+        self.assertArgHasType(
+            NSURL.URLByResolvingBookmarkData_options_relativeToURL_bookmarkDataIsStale_error_,
+            3,
+            b"o^" + objc._C_NSBOOL,
+        )
+        self.assertArgIsOut(
+            NSURL.URLByResolvingBookmarkData_options_relativeToURL_bookmarkDataIsStale_error_,
+            4,
+        )
         self.assertResultIsBOOL(NSURL.writeBookmarkData_toURL_options_error_)
         self.assertArgIsOut(NSURL.writeBookmarkData_toURL_options_error_, 3)
         self.assertArgIsOut(NSURL.bookmarkDataWithContentsOfURL_error_, 1)
+
 
 if __name__ == "__main__":
     main()

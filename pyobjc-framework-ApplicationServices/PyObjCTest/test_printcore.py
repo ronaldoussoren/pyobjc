@@ -2,7 +2,8 @@ import PrintCore
 import sys
 from PyObjCTools.TestSupport import *
 
-class TestPrintCore (TestCase):
+
+class TestPrintCore(TestCase):
     def test_functional(self):
         res, value = PrintCore.PMCreatePrintSettings(None)
         self.assertEqual(res, 0)

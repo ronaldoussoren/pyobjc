@@ -4,7 +4,7 @@ import sys
 if sys.maxsize > 2 ** 32:
     import Photos
 
-    class TestPHError (TestCase):
+    class TestPHError(TestCase):
         def test_constants(self):
             self.assertEqual(Photos.PHPhotosErrorInvalid, -1)
             self.assertEqual(Photos.PHPhotosErrorUserCancelled, 3072)

@@ -12,9 +12,9 @@ from twisted.web.xmlrpc import Proxy
 
 from RPCMethod import *
 
-#from twisted.python import log
-#import sys
-#log.startLogging(sys.stdout)
+# from twisted.python import log
+# import sys
+# log.startLogging(sys.stdout)
 
 # cheap dirty way to turn those messages off
 # from twisted.python import log
@@ -29,8 +29,18 @@ kWSTPreferencesToolbarItemIdentifier = "WST: Preferences Toolbar Identifier"
 # Identifier for URL text field toolbar item.
 kWSTUrlTextFieldToolbarItemIdentifier = "WST: URL Textfield Toolbar Identifier"
 
-def addToolbarItem(aController, anIdentifier, aLabel, aPaletteLabel,
-                   aToolTip, aTarget, anAction, anItemContent, aMenu):
+
+def addToolbarItem(
+    aController,
+    anIdentifier,
+    aLabel,
+    aPaletteLabel,
+    aToolTip,
+    aTarget,
+    anAction,
+    anItemContent,
+    aMenu,
+):
     """
     Adds an freshly created item to the toolbar defined by
     aController.  Makes a number of assumptions about the
@@ -53,18 +63,19 @@ def addToolbarItem(aController, anIdentifier, aLabel, aPaletteLabel,
         bounds = anItemContent.bounds()
         minSize = (100, bounds[1][1])
         maxSize = (1000, bounds[1][1])
-        toolbarItem.setMinSize_( minSize )
-        toolbarItem.setMaxSize_( maxSize )
+        toolbarItem.setMinSize_(minSize)
+        toolbarItem.setMaxSize_(maxSize)
 
     if aMenu:
         menuItem = AppKit.NSMenuItem.alloc().init()
         menuItem.setSubmenu_(aMenu)
-        menuItem.setTitle_( aMenu.title() )
+        menuItem.setTitle_(aMenu.title())
         toolbarItem.setMenuFormRepresentation_(menuItem)
 
     aController.k_toolbarItems[anIdentifier] = toolbarItem
 
-class WSTConnectionWindowController (AppKit.NSWindowController):
+
+class WSTConnectionWindowController(AppKit.NSWindowController):
     methodDescriptionTextView = objc.IBOutlet()
     methodsTable = objc.IBOutlet()
     progressIndicator = objc.IBOutlet()
@@ -100,7 +111,7 @@ class WSTConnectionWindowController (AppKit.NSWindowController):
         Invoked when the NIB file is loaded.  Initializes the various
         UI widgets.
         """
-        self.retain() # balanced by autorelease() in windowWillClose_
+        self.retain()  # balanced by autorelease() in windowWillClose_
 
         self.statusTextField.setStringValue_("No host specified.")
         self.progressIndicator.setStyle_(AppKit.NSProgressIndicatorSpinningStyle)
@@ -138,17 +149,38 @@ class WSTConnectionWindowController (AppKit.NSWindowController):
         determined by other mechanisms (user defaults, for example).
         """
         addToolbarItem(
-            self, kWSTReloadContentsToolbarItemIdentifier,
-            "Reload", "Reload", "Reload Contents", None,
-            "reloadVisibleData:", AppKit.NSImage.imageNamed_("Reload"), None)
+            self,
+            kWSTReloadContentsToolbarItemIdentifier,
+            "Reload",
+            "Reload",
+            "Reload Contents",
+            None,
+            "reloadVisibleData:",
+            AppKit.NSImage.imageNamed_("Reload"),
+            None,
+        )
         addToolbarItem(
-            self, kWSTPreferencesToolbarItemIdentifier,
-            "Preferences", "Preferences", "Show Preferences", None,
-            "orderFrontPreferences:", AppKit.NSImage.imageNamed_("Preferences"), None)
+            self,
+            kWSTPreferencesToolbarItemIdentifier,
+            "Preferences",
+            "Preferences",
+            "Show Preferences",
+            None,
+            "orderFrontPreferences:",
+            AppKit.NSImage.imageNamed_("Preferences"),
+            None,
+        )
         addToolbarItem(
-            self, kWSTUrlTextFieldToolbarItemIdentifier,
-            "URL", "URL", "Server URL", None,
-            None, self.urlTextField, None)
+            self,
+            kWSTUrlTextFieldToolbarItemIdentifier,
+            "URL",
+            "URL",
+            "Server URL",
+            None,
+            None,
+            self.urlTextField,
+            None,
+        )
 
         self.k_toolbarDefaultItemIdentifiers = [
             kWSTReloadContentsToolbarItemIdentifier,
@@ -182,9 +214,9 @@ class WSTConnectionWindowController (AppKit.NSWindowController):
         """
         return self.k_toolbarAllowedItemIdentifiers
 
-    def toolbar_itemForItemIdentifier_willBeInsertedIntoToolbar_(self,
-                                                                 toolbar,
-                                                                 itemIdentifier, flag):
+    def toolbar_itemForItemIdentifier_willBeInsertedIntoToolbar_(
+        self, toolbar, itemIdentifier, flag
+    ):
         """
         Delegate method fired when the toolbar is about to insert an
         item into the toolbar.  Item is identified by itemIdentifier.
@@ -195,21 +227,21 @@ class WSTConnectionWindowController (AppKit.NSWindowController):
         newItem = AppKit.NSToolbarItem.alloc().initWithItemIdentifier_(itemIdentifier)
         item = self.k_toolbarItems[itemIdentifier]
 
-        newItem.setLabel_( item.label() )
-        newItem.setPaletteLabel_( item.paletteLabel() )
+        newItem.setLabel_(item.label())
+        newItem.setPaletteLabel_(item.paletteLabel())
         if item.view():
-            newItem.setView_( item.view() )
+            newItem.setView_(item.view())
         else:
-            newItem.setImage_( item.image() )
+            newItem.setImage_(item.image())
 
-        newItem.setToolTip_( item.toolTip() )
-        newItem.setTarget_( item.target() )
-        newItem.setAction_( item.action() )
-        newItem.setMenuFormRepresentation_( item.menuFormRepresentation() )
+        newItem.setToolTip_(item.toolTip())
+        newItem.setTarget_(item.target())
+        newItem.setAction_(item.action())
+        newItem.setMenuFormRepresentation_(item.menuFormRepresentation())
 
         if newItem.view():
-            newItem.setMinSize_( item.minSize() )
-            newItem.setMaxSize_( item.maxSize() )
+            newItem.setMinSize_(item.minSize())
+            newItem.setMaxSize_(item.maxSize())
 
         return newItem
 
@@ -221,6 +253,7 @@ class WSTConnectionWindowController (AppKit.NSWindowController):
         if not aMessage:
             aMessage = "Displaying information about %d methods." % (len(self.k_methods),)
         self.statusTextField.setStringValue_(aMessage)
+
     setStatusTextFieldMessage_ = objc.accessor(setStatusTextFieldMessage_)
 
     def startWorking(self):
@@ -254,23 +287,34 @@ class WSTConnectionWindowController (AppKit.NSWindowController):
 
     @objc.python_method
     def getMethods(self, url):
-        _server = self.k_server = Proxy(url.encode('utf8'))
+        _server = self.k_server = Proxy(url.encode("utf8"))
         self.startWorking()
-        return _server.callRemote('listMethods').addCallback(
-            # call self.receivedMethods(result, _server, "") on success
-            self.receivedMethods, _server, ""
-        ).addErrback(
-            # on error, call this lambda
-            lambda e: _server.callRemote('system.listMethods').addCallback(
-                # call self.receievedMethods(result, _server, "system.")
-                self.receivedMethods, _server, 'system.'
+        return (
+            _server.callRemote("listMethods")
+            .addCallback(
+                # call self.receivedMethods(result, _server, "") on success
+                self.receivedMethods,
+                _server,
+                "",
             )
-        ).addErrback(
-            # log the failure instance, with a method
-            self.receivedMethodsFailure, 'listMethods()'
-        ).addBoth(
-            # stop working nomatter what trap all errors (returns None)
-            lambda n:self.stopWorking()
+            .addErrback(
+                # on error, call this lambda
+                lambda e: _server.callRemote("system.listMethods").addCallback(
+                    # call self.receievedMethods(result, _server, "system.")
+                    self.receivedMethods,
+                    _server,
+                    "system.",
+                )
+            )
+            .addErrback(
+                # log the failure instance, with a method
+                self.receivedMethodsFailure,
+                "listMethods()",
+            )
+            .addBoth(
+                # stop working nomatter what trap all errors (returns None)
+                lambda n: self.stopWorking()
+            )
         )
 
     @objc.python_method
@@ -278,10 +322,10 @@ class WSTConnectionWindowController (AppKit.NSWindowController):
         self.k_server = None
         self.k_methodPrefix = None
         self.setStatusTextFieldMessage_(
-           ("Server failed to respond to %s.  "
-            "See below for more information."       ) % (method,)
+            ("Server failed to respond to %s.  " "See below for more information.")
+            % (method,)
         )
-        #log.err(why)
+        # log.err(why)
         self.methodDescriptionTextView.setString_(why.getTraceback())
 
     @objc.python_method
@@ -290,7 +334,9 @@ class WSTConnectionWindowController (AppKit.NSWindowController):
         self.k_methods = {}
         self.k_methodPrefix = _methodPrefix
         for aMethod in _methods:
-            self.k_methods[aMethod] = RPCMethod.alloc().initWithDocument_name_(self, aMethod)
+            self.k_methods[aMethod] = RPCMethod.alloc().initWithDocument_name_(
+                self, aMethod
+            )
         self.setMethodArray_(self.k_methods.values())
         self.k_methodPrefix = _methodPrefix
 
@@ -302,27 +348,23 @@ class WSTConnectionWindowController (AppKit.NSWindowController):
         # but the server might not like that so we will chain them
         d = defer.succeed(None)
         for index, aMethod in enumerate(self.k_methodArray):
-            d.addCallback(
-                self.fetchMethodSignature, index, aMethod
-            ).addCallbacks(
-                callback = self.processSignatureForMethod,
-                callbackArgs = (index, aMethod),
-                errback = self.couldntProcessSignatureForMethod,
-                errbackArgs = (index, aMethod),
+            d.addCallback(self.fetchMethodSignature, index, aMethod).addCallbacks(
+                callback=self.processSignatureForMethod,
+                callbackArgs=(index, aMethod),
+                errback=self.couldntProcessSignatureForMethod,
+                errbackArgs=(index, aMethod),
             )
-        return d.addCallback(
-            lambda ig: self.setStatusTextFieldMessage_(None)
-        )
+        return d.addCallback(lambda ig: self.setStatusTextFieldMessage_(None))
 
     @objc.python_method
     def fetchMethodSignature(self, ignore, index, aMethod):
         self.setStatusTextFieldMessage_(
             "Retrieving signature for method %s (%d of %d)."
-            % (aMethod.methodName() , index, len(self.k_methods))
+            % (aMethod.methodName(), index, len(self.k_methods))
         )
         return self.k_server.callRemote(
-            (self.k_methodPrefix + 'methodSignature').encode('utf-8'),
-            aMethod.methodName().encode('utf-8')
+            (self.k_methodPrefix + "methodSignature").encode("utf-8"),
+            aMethod.methodName().encode("utf-8"),
         )
 
     @objc.python_method
@@ -332,7 +374,11 @@ class WSTConnectionWindowController (AppKit.NSWindowController):
             return
         for aSignature in methodSignature:
             if isinstance(aSignature, list) and len(aSignature) > 0:
-                signature = "%s %s(%s)" % (aSignature[0], aMethod.methodName(), ", ".join(aSignature[1:]))
+                signature = "%s %s(%s)" % (
+                    aSignature[0],
+                    aMethod.methodName(),
+                    ", ".join(aSignature[1:]),
+                )
             else:
                 signature = aSignature
         if signatures:
@@ -345,17 +391,24 @@ class WSTConnectionWindowController (AppKit.NSWindowController):
 
     @objc.python_method
     def couldntProcessSignatureForMethod(self, why, index, aMethod):
-        #log.err(why)
-        aMethod.setMethodSignature_("<error> %s %s" % (aMethod.methodName(), why.getBriefTraceback()))
+        # log.err(why)
+        aMethod.setMethodSignature_(
+            "<error> %s %s" % (aMethod.methodName(), why.getBriefTraceback())
+        )
         self.replaceObjectInMethodArrayAtIndex_withObject_(index, aMethod)
 
     def fetchMethodDescription_(self, aMethod):
         def cacheDesc(v):
-            aMethod.setMethodDescription_(v or 'No description available.')
+            aMethod.setMethodDescription_(v or "No description available.")
 
-        self.setStatusTextFieldMessage_("Retrieving documentation for method %s..." % (aMethod.methodName(),))
+        self.setStatusTextFieldMessage_(
+            "Retrieving documentation for method %s..." % (aMethod.methodName(),)
+        )
         self.startWorking()
-        self.k_server.callRemote((self.k_methodPrefix + 'methodHelp').encode('utf-8'), aMethod.methodName().encode('utf-8')).addCallback(cacheDesc)
+        self.k_server.callRemote(
+            (self.k_methodPrefix + "methodHelp").encode("utf-8"),
+            aMethod.methodName().encode("utf-8"),
+        ).addCallback(cacheDesc)
 
     def methodArray(self):
         return self.k_methodArray

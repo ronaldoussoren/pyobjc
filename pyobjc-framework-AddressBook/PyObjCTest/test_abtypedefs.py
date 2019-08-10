@@ -1,8 +1,8 @@
-
 from PyObjCTools.TestSupport import *
 from AddressBook import *
 
-class TestABTypedefs (TestCase):
+
+class TestABTypedefs(TestCase):
     def testConstants(self):
         self.assertEqual(kABMultiValueMask, 0x100)
 
@@ -21,9 +21,13 @@ class TestABTypedefs (TestCase):
         self.assertEqual(kABMultiRealProperty, kABMultiValueMask | kABRealProperty)
         self.assertEqual(kABMultiDateProperty, kABMultiValueMask | kABDateProperty)
         self.assertEqual(kABMultiArrayProperty, kABMultiValueMask | kABArrayProperty)
-        self.assertEqual(kABMultiDictionaryProperty, kABMultiValueMask | kABDictionaryProperty)
+        self.assertEqual(
+            kABMultiDictionaryProperty, kABMultiValueMask | kABDictionaryProperty
+        )
         self.assertEqual(kABMultiDataProperty, kABMultiValueMask | kABDataProperty)
-        self.assertEqual(kABMultiDateComponentsProperty, kABMultiValueMask | kABDateComponentsProperty)
+        self.assertEqual(
+            kABMultiDateComponentsProperty, kABMultiValueMask | kABDateComponentsProperty
+        )
 
         self.assertEqual(kABEqual, 0)
         self.assertEqual(kABNotEqual, 1)
@@ -53,6 +57,7 @@ class TestABTypedefs (TestCase):
 
         self.assertEqual(kABSearchAnd, 0)
         self.assertEqual(kABSearchOr, 1)
+
 
 if __name__ == "__main__":
     main()

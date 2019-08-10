@@ -2,8 +2,9 @@ from PyObjCTools.TestSupport import *
 import IMServicePlugIn
 import objc
 
-class TestIMServicePlugInChatRoomSupport (TestCase):
-    @expectedFailure # Definitions are likely part of the host application
+
+class TestIMServicePlugInChatRoomSupport(TestCase):
+    @expectedFailure  # Definitions are likely part of the host application
     def testConstantsStr(self):
         self.assertIsInstance(IMServicePlugIn.IMAccountSettingServerHost, unicode)
         self.assertIsInstance(IMServicePlugIn.IMAccountSettingServerPort, unicode)
@@ -24,7 +25,9 @@ class TestIMServicePlugInChatRoomSupport (TestCase):
 
         self.assertIsInstance(IMServicePlugIn.IMHandlePropertyAvailability, unicode)
         self.assertIsInstance(IMServicePlugIn.IMHandlePropertyStatusMessage, unicode)
-        self.assertIsInstance(IMServicePlugIn.IMHandlePropertyAuthorizationStatus, unicode)
+        self.assertIsInstance(
+            IMServicePlugIn.IMHandlePropertyAuthorizationStatus, unicode
+        )
         self.assertIsInstance(IMServicePlugIn.IMHandlePropertyIdleDate, unicode)
         self.assertIsInstance(IMServicePlugIn.IMHandlePropertyAlias, unicode)
         self.assertIsInstance(IMServicePlugIn.IMHandlePropertyFirstName, unicode)
@@ -72,6 +75,7 @@ class TestIMServicePlugInChatRoomSupport (TestCase):
         self.assertEqual(IMServicePlugIn.IMHandleAuthorizationStatusAccepted, 0)
         self.assertEqual(IMServicePlugIn.IMHandleAuthorizationStatusPending, 1)
         self.assertEqual(IMServicePlugIn.IMHandleAuthorizationStatusDeclined, 2)
+
 
 if __name__ == "__main__":
     main()

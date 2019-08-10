@@ -25,8 +25,8 @@ import types
 import string
 import traceback
 
-#from twisted.python import log
-#log.startLogging(sys.stdout)
+# from twisted.python import log
+# log.startLogging(sys.stdout)
 
 kWSTReloadContentsToolbarItemIdentifier = "WST: Reload Contents Toolbar Identifier"
 """Identifier for 'reload contents' toolbar item."""
@@ -37,8 +37,18 @@ kWSTPreferencesToolbarItemIdentifier = "WST: Preferences Toolbar Identifier"
 kWSTUrlTextFieldToolbarItemIdentifier = "WST: URL Textfield Toolbar Identifier"
 """Idnetifier for URL text field toolbar item."""
 
-def addToolbarItem(aController, anIdentifier, aLabel, aPaletteLabel,
-                   aToolTip, aTarget, anAction, anItemContent, aMenu):
+
+def addToolbarItem(
+    aController,
+    anIdentifier,
+    aLabel,
+    aPaletteLabel,
+    aToolTip,
+    aTarget,
+    anAction,
+    anItemContent,
+    aMenu,
+):
     """
     Adds an freshly created item to the toolbar defined by
     aController.  Makes a number of assumptions about the
@@ -61,38 +71,42 @@ def addToolbarItem(aController, anIdentifier, aLabel, aPaletteLabel,
         bounds = anItemContent.bounds()
         minSize = (100, bounds[1][1])
         maxSize = (1000, bounds[1][1])
-        toolbarItem.setMinSize_( minSize )
-        toolbarItem.setMaxSize_( maxSize )
+        toolbarItem.setMinSize_(minSize)
+        toolbarItem.setMaxSize_(maxSize)
 
     if aMenu:
         menuItem = Cocoa.NSMenuItem.alloc().init()
         menuItem.setSubmenu_(aMenu)
-        menuItem.setTitle_( aMenu.title() )
+        menuItem.setTitle_(aMenu.title())
         toolbarItem.setMenuFormRepresentation_(menuItem)
 
     aController._toolbarItems[anIdentifier] = toolbarItem
 
-class WSTConnectionWindowController (Cocoa.NSWindowController):
+
+class WSTConnectionWindowController(Cocoa.NSWindowController):
     """
     As per the definition in the NIB file,
     WSTConnectionWindowController is a subclass of
     NSWindowController.  It acts as a NSTableView data source and
     implements a standard toolbar.
     """
+
     methodDescriptionTextView = objc.IBOutlet()
     methodsTable = objc.IBOutlet()
     progressIndicator = objc.IBOutlet()
     statusTextField = objc.IBOutlet()
     urlTextField = objc.IBOutlet()
 
-    __slots__ = ('_toolbarItems',
-        '_toolbarDefaultItemIdentifiers',
-        '_toolbarAllowedItemIdentifiers',
-        '_methods',
-        '_methodSignatures',
-        '_methodDescriptions',
-        '_server',
-        '_methodPrefix',)
+    __slots__ = (
+        "_toolbarItems",
+        "_toolbarDefaultItemIdentifiers",
+        "_toolbarAllowedItemIdentifiers",
+        "_methods",
+        "_methodSignatures",
+        "_methodDescriptions",
+        "_server",
+        "_methodPrefix",
+    )
 
     @classmethod
     def connectionWindowController(self):
@@ -122,7 +136,7 @@ class WSTConnectionWindowController (Cocoa.NSWindowController):
         Invoked when the NIB file is loaded.  Initializes the various
         UI widgets.
         """
-        self.retain() # balanced by autorelease() in windowWillClose_
+        self.retain()  # balanced by autorelease() in windowWillClose_
 
         self.statusTextField.setStringValue_("No host specified.")
         self.progressIndicator.setStyle_(Cocoa.NSProgressIndicatorSpinningStyle)
@@ -159,14 +173,39 @@ class WSTConnectionWindowController (Cocoa.NSWindowController):
         the toolbar.  The actual set of available toolbar items is
         determined by other mechanisms (user defaults, for example).
         """
-        addToolbarItem(self, kWSTReloadContentsToolbarItemIdentifier,
-                       "Reload", "Reload", "Reload Contents", None,
-                       "reloadVisibleData:", Cocoa.NSImage.imageNamed_("Reload"), None)
-        addToolbarItem(self, kWSTPreferencesToolbarItemIdentifier,
-                       "Preferences", "Preferences", "Show Preferences", None,
-                       "orderFrontPreferences:", Cocoa.NSImage.imageNamed_("Preferences"), None)
-        addToolbarItem(self, kWSTUrlTextFieldToolbarItemIdentifier,
-                       "URL", "URL", "Server URL", None, None, self.urlTextField, None)
+        addToolbarItem(
+            self,
+            kWSTReloadContentsToolbarItemIdentifier,
+            "Reload",
+            "Reload",
+            "Reload Contents",
+            None,
+            "reloadVisibleData:",
+            Cocoa.NSImage.imageNamed_("Reload"),
+            None,
+        )
+        addToolbarItem(
+            self,
+            kWSTPreferencesToolbarItemIdentifier,
+            "Preferences",
+            "Preferences",
+            "Show Preferences",
+            None,
+            "orderFrontPreferences:",
+            Cocoa.NSImage.imageNamed_("Preferences"),
+            None,
+        )
+        addToolbarItem(
+            self,
+            kWSTUrlTextFieldToolbarItemIdentifier,
+            "URL",
+            "URL",
+            "Server URL",
+            None,
+            None,
+            self.urlTextField,
+            None,
+        )
 
         self._toolbarDefaultItemIdentifiers = [
             kWSTReloadContentsToolbarItemIdentifier,
@@ -200,9 +239,9 @@ class WSTConnectionWindowController (Cocoa.NSWindowController):
         """
         return self._toolbarAllowedItemIdentifiers
 
-    def toolbar_itemForItemIdentifier_willBeInsertedIntoToolbar_(self,
-                                                                 toolbar,
-                                                                 itemIdentifier, flag):
+    def toolbar_itemForItemIdentifier_willBeInsertedIntoToolbar_(
+        self, toolbar, itemIdentifier, flag
+    ):
         """
         Delegate method fired when the toolbar is about to insert an
         item into the toolbar.  Item is identified by itemIdentifier.
@@ -213,21 +252,21 @@ class WSTConnectionWindowController (Cocoa.NSWindowController):
         newItem = Cocoa.NSToolbarItem.alloc().initWithItemIdentifier_(itemIdentifier)
         item = self._toolbarItems[itemIdentifier]
 
-        newItem.setLabel_( item.label() )
-        newItem.setPaletteLabel_( item.paletteLabel() )
+        newItem.setLabel_(item.label())
+        newItem.setPaletteLabel_(item.paletteLabel())
         if item.view():
-            newItem.setView_( item.view() )
+            newItem.setView_(item.view())
         else:
-            newItem.setImage_( item.image() )
+            newItem.setImage_(item.image())
 
-        newItem.setToolTip_( item.toolTip() )
-        newItem.setTarget_( item.target() )
-        newItem.setAction_( item.action() )
-        newItem.setMenuFormRepresentation_( item.menuFormRepresentation() )
+        newItem.setToolTip_(item.toolTip())
+        newItem.setTarget_(item.target())
+        newItem.setAction_(item.action())
+        newItem.setMenuFormRepresentation_(item.menuFormRepresentation())
 
         if newItem.view():
-            newItem.setMinSize_( item.minSize() )
-            newItem.setMaxSize_( item.maxSize() )
+            newItem.setMinSize_(item.minSize())
+            newItem.setMaxSize_(item.maxSize())
 
         return newItem
 
@@ -278,23 +317,34 @@ class WSTConnectionWindowController (Cocoa.NSWindowController):
 
     @objc.python_method
     def getMethods(self, url):
-        _server = self._server = Proxy(url.encode('utf8'))
+        _server = self._server = Proxy(url.encode("utf8"))
         self.startWorking()
-        return _server.callRemote('listMethods').addCallback(
-            # call self.receivedMethods(result, _server, "") on success
-            self.receivedMethods, _server, ""
-        ).addErrback(
-            # on error, call this lambda
-            lambda e: _server.callRemote('system.listMethods').addCallback(
-                # call self.receievedMethods(result, _server, "system.")
-                self.receivedMethods, _server, 'system.'
+        return (
+            _server.callRemote("listMethods")
+            .addCallback(
+                # call self.receivedMethods(result, _server, "") on success
+                self.receivedMethods,
+                _server,
+                "",
             )
-        ).addErrback(
-            # log the failure instance, with a method
-            self.receivedMethodsFailure, 'listMethods()'
-        ).addBoth(
-            # stop working nomatter what trap all errors (returns None)
-            lambda n:self.stopWorking()
+            .addErrback(
+                # on error, call this lambda
+                lambda e: _server.callRemote("system.listMethods").addCallback(
+                    # call self.receievedMethods(result, _server, "system.")
+                    self.receivedMethods,
+                    _server,
+                    "system.",
+                )
+            )
+            .addErrback(
+                # log the failure instance, with a method
+                self.receivedMethodsFailure,
+                "listMethods()",
+            )
+            .addBoth(
+                # stop working nomatter what trap all errors (returns None)
+                lambda n: self.stopWorking()
+            )
         )
 
     @objc.python_method
@@ -302,10 +352,10 @@ class WSTConnectionWindowController (Cocoa.NSWindowController):
         self._server = None
         self._methodPrefix = None
         self.setStatusTextFieldMessage_(
-           ("Server failed to respond to %s.  "
-            "See below for more information."       ) % (method,)
+            ("Server failed to respond to %s.  " "See below for more information.")
+            % (method,)
         )
-        #log.err(why)
+        # log.err(why)
         self.methodDescriptionTextView.setString_(why.getTraceback())
 
     @objc.python_method
@@ -324,33 +374,25 @@ class WSTConnectionWindowController (Cocoa.NSWindowController):
         # but the server might not like that so we will chain them
         d = defer.succeed(None)
         for index, aMethod in enumerate(self._methods):
-            d.addCallback(
-                self.fetchMethodSignature, index, aMethod
-            ).addCallbacks(
-                callback = self.processSignatureForMethod,
-                callbackArgs = (index, aMethod),
-                errback = self.couldntProcessSignatureForMethod,
-                errbackArgs = (index, aMethod),
+            d.addCallback(self.fetchMethodSignature, index, aMethod).addCallbacks(
+                callback=self.processSignatureForMethod,
+                callbackArgs=(index, aMethod),
+                errback=self.couldntProcessSignatureForMethod,
+                errbackArgs=(index, aMethod),
             )
         return d.addCallback(
             lambda ig: self.setStatusTextFieldMessage_(None)
-        ).addCallback(
-            lambda ig: self.reloadData()
-        )
+        ).addCallback(lambda ig: self.reloadData())
 
     @objc.python_method
     def fetchMethodSignature(self, ignore, index, aMethod):
-        if (index % 5)==0:
+        if (index % 5) == 0:
             self.reloadData()
         self.setStatusTextFieldMessage_(
             "Retrieving signature for method %s (%d of %d)."
-            % (aMethod , index, len(self._methods))
+            % (aMethod, index, len(self._methods))
         )
-        return self._server.callRemote(
-            self._methodPrefix + 'methodSignature',
-            aMethod
-        )
-
+        return self._server.callRemote(self._methodPrefix + "methodSignature", aMethod)
 
     @objc.python_method
     def processSignatureForMethod(self, methodSignature, index, aMethod):
@@ -359,7 +401,11 @@ class WSTConnectionWindowController (Cocoa.NSWindowController):
             return
         for aSignature in methodSignature:
             if (type(aSignature) == types.ListType) and (len(aSignature) > 0):
-                signature = "%s %s(%s)" % (aSignature[0], aMethod, string.join(aSignature[1:], ", "))
+                signature = "%s %s(%s)" % (
+                    aSignature[0],
+                    aMethod,
+                    string.join(aSignature[1:], ", "),
+                )
             else:
                 signature = aSignature
         if signatures:
@@ -371,9 +417,10 @@ class WSTConnectionWindowController (Cocoa.NSWindowController):
     @objc.python_method
     def couldntProcessSignatureForMethod(self, why, index, aMethod):
 
-        #log.err(why)
-        self._methodSignatures[aMethod] = (
-            "<error> %s %s" % (aMethod, why.getBriefTraceback())
+        # log.err(why)
+        self._methodSignatures[aMethod] = "<error> %s %s" % (
+            aMethod,
+            why.getBriefTraceback(),
         )
 
     def tableViewSelectionDidChange_(self, sender):
@@ -389,6 +436,7 @@ class WSTConnectionWindowController (Cocoa.NSWindowController):
         def displayMethod(methodDescription):
             self.setStatusTextFieldMessage_(None)
             self.methodDescriptionTextView.setString_(methodDescription)
+
         self.fetchMethodDescription(selectedMethod).addCallback(displayMethod)
 
     @objc.python_method
@@ -411,11 +459,11 @@ class WSTConnectionWindowController (Cocoa.NSWindowController):
             "Retrieving signature for method %s..." % (aMethod,)
         )
         self.startWorking()
-        return self._server.callRemote(
-            self._methodPrefix + 'methodHelp',
-            aMethod
-        ).addCallback(_stopWorking).addCallback(cacheDesc)
-
+        return (
+            self._server.callRemote(self._methodPrefix + "methodHelp", aMethod)
+            .addCallback(_stopWorking)
+            .addCallback(cacheDesc)
+        )
 
     def numberOfRowsInTableView_(self, aTableView):
         """
@@ -423,7 +471,9 @@ class WSTConnectionWindowController (Cocoa.NSWindowController):
         """
         return len(self._methods)
 
-    def tableView_objectValueForTableColumn_row_(self, aTableView, aTableColumn, rowIndex):
+    def tableView_objectValueForTableColumn_row_(
+        self, aTableView, aTableColumn, rowIndex
+    ):
         """
         Returns either the raw method name or the method signature,
         depending on if a signature had been found on the server.

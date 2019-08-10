@@ -1,10 +1,11 @@
 from PyObjCTools.TestSupport import *
 from AppKit import *
 
-class TestNSSpellProtocol (TestCase):
+
+class TestNSSpellProtocol(TestCase):
     def testProtocols(self):
-        objc.protocolNamed('NSChangeSpelling')
-        objc.protocolNamed('NSIgnoreMisspelledWords')
+        objc.protocolNamed("NSChangeSpelling")
+        objc.protocolNamed("NSIgnoreMisspelledWords")
 
 
 if __name__ == "__main__":

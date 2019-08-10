@@ -2,7 +2,7 @@ import objc
 import Cocoa
 
 
-class MyBaseGradientView (Cocoa.NSView):
+class MyBaseGradientView(Cocoa.NSView):
     myGradient = objc.ivar()
     myStartColor = objc.ivar()
     myEndColor = objc.ivar()
@@ -12,16 +12,15 @@ class MyBaseGradientView (Cocoa.NSView):
     myIsRadial = objc.ivar.bool()
     myOffsetPt = objc.ivar.NSPoint()
 
-
     def resetGradient(self):
         if self.forceColorChange and self.myGradient is not None:
             self.myGradient = None
 
         if self.myGradient is None:
             self.myGradient = Cocoa.NSGradient.alloc().initWithStartingColor_endingColor_(
-                    self.myStartColor, self.myEndColor)
+                self.myStartColor, self.myEndColor
+            )
             self.forceColorChange = False
-
 
     def setStartColor_(self, startColor):
         self.myStartColor = startColor
@@ -29,7 +28,7 @@ class MyBaseGradientView (Cocoa.NSView):
         self.setNeedsDisplay_(True)
 
     def setEndColor_(self, endColor):
-        self.myEndColor = endColor;
+        self.myEndColor = endColor
         self.forceColorChange = True
         self.setNeedsDisplay_(True)
 
@@ -43,8 +42,12 @@ class MyBaseGradientView (Cocoa.NSView):
 
     def getRelativeCenterPositionFromEvent_(self, theEvent):
         curMousePt = self.convertPoint_fromView_(theEvent.locationInWindow(), None)
-        pt = Cocoa.NSMakePoint( (curMousePt.x - Cocoa.NSMidX(self.bounds())) / (self.bounds().size.width / 2.0),
-                          (curMousePt.y - Cocoa.NSMidY(self.bounds())) / (self.bounds().size.height / 2.0))
+        pt = Cocoa.NSMakePoint(
+            (curMousePt.x - Cocoa.NSMidX(self.bounds()))
+            / (self.bounds().size.width / 2.0),
+            (curMousePt.y - Cocoa.NSMidY(self.bounds()))
+            / (self.bounds().size.height / 2.0),
+        )
         return pt
 
     def mouseDown_(self, theEvent):

@@ -2,8 +2,9 @@ from PyObjCTools.TestSupport import *
 
 from Foundation import *
 
-class TestNSPersonNameComponentsFormatter (TestCase):
-    @min_os_level('10.11')
+
+class TestNSPersonNameComponentsFormatter(TestCase):
+    @min_os_level("10.11")
     def testConstants(self):
         self.assertEqual(NSPersonNameComponentsFormatterStyleDefault, 0)
         self.assertEqual(NSPersonNameComponentsFormatterStyleShort, 1)
@@ -11,7 +12,7 @@ class TestNSPersonNameComponentsFormatter (TestCase):
         self.assertEqual(NSPersonNameComponentsFormatterStyleLong, 3)
         self.assertEqual(NSPersonNameComponentsFormatterStyleAbbreviated, 4)
 
-        self.assertEqual(NSPersonNameComponentsFormatterPhonetic, 1<<1)
+        self.assertEqual(NSPersonNameComponentsFormatterPhonetic, 1 << 1)
 
         self.assertIsInstance(NSPersonNameComponentKey, unicode)
         self.assertIsInstance(NSPersonNameComponentGivenName, unicode)
@@ -22,14 +23,21 @@ class TestNSPersonNameComponentsFormatter (TestCase):
         self.assertIsInstance(NSPersonNameComponentNickname, unicode)
         self.assertIsInstance(NSPersonNameComponentDelimiter, unicode)
 
-    @min_os_level('10.11')
+    @min_os_level("10.11")
     def testOutput(self):
-        self.assertResultIsBOOL(NSPersonNameComponentsFormatter.getObjectValue_forString_errorDescription_)
-        self.assertArgIsOut(NSPersonNameComponentsFormatter.getObjectValue_forString_errorDescription_, 0)
-        self.assertArgIsOut(NSPersonNameComponentsFormatter.getObjectValue_forString_errorDescription_, 2)
+        self.assertResultIsBOOL(
+            NSPersonNameComponentsFormatter.getObjectValue_forString_errorDescription_
+        )
+        self.assertArgIsOut(
+            NSPersonNameComponentsFormatter.getObjectValue_forString_errorDescription_, 0
+        )
+        self.assertArgIsOut(
+            NSPersonNameComponentsFormatter.getObjectValue_forString_errorDescription_, 2
+        )
 
         self.assertResultIsBOOL(NSPersonNameComponentsFormatter.isPhonetic)
         self.assertArgIsBOOL(NSPersonNameComponentsFormatter.setPhonetic_, 0)
+
 
 if __name__ == "__main__":
     main()

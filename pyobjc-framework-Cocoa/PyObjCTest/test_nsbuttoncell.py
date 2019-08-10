@@ -1,8 +1,8 @@
-
 from PyObjCTools.TestSupport import *
 from AppKit import *
 
-class TestNSButtonCell (TestCase):
+
+class TestNSButtonCell(TestCase):
     def testConstants(self):
         self.assertEqual(NSMomentaryLightButton, 0)
         self.assertEqual(NSPushOnPushOffButton, 1)
@@ -65,10 +65,7 @@ class TestNSButtonCell (TestCase):
         self.assertEqual(NSBezelStyleRoundedDisclosure, 14)
         self.assertEqual(NSBezelStyleInline, 15)
 
-
-
-
-    @min_os_level('10.7')
+    @min_os_level("10.7")
     def testConstants10_7(self):
         self.assertEqual(NSInlineBezelStyle, 15)
 
@@ -84,6 +81,7 @@ class TestNSButtonCell (TestCase):
         self.assertArgIsBOOL(NSButtonCell.setImageDimsWhenDisabled_, 0)
         self.assertResultIsBOOL(NSButtonCell.showsBorderOnlyWhileMouseInside)
         self.assertArgIsBOOL(NSButtonCell.setShowsBorderOnlyWhileMouseInside_, 0)
+
 
 if __name__ == "__main__":
     main()

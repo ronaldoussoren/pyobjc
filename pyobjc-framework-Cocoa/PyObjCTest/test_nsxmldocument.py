@@ -1,7 +1,8 @@
 from Foundation import *
 from PyObjCTools.TestSupport import *
 
-class TestXMLDocument (TestCase):
+
+class TestXMLDocument(TestCase):
     def testConstants(self):
         self.assertEqual(NSXMLDocumentXMLKind, 0)
         self.assertEqual(NSXMLDocumentXHTMLKind, 1)
@@ -20,6 +21,7 @@ class TestXMLDocument (TestCase):
         self.assertResultIsBOOL(NSXMLDocument.isStandalone)
         self.assertArgIsBOOL(NSXMLDocument.setStandalone_, 0)
         self.assertResultIsBOOL(NSXMLDocument.validateAndReturnError_)
+
 
 if __name__ == "__main__":
     main()

@@ -1,8 +1,8 @@
-
 from PyObjCTools.TestSupport import *
 from AppKit import *
 
-class TestNSNib (TestCase):
+
+class TestNSNib(TestCase):
     def testConstants(self):
         self.assertIsInstance(NSNibOwner, unicode)
         self.assertIsInstance(NSNibTopLevelObjects, unicode)
@@ -13,7 +13,7 @@ class TestNSNib (TestCase):
 
         self.assertResultIsBOOL(NSNib.instantiateNibWithExternalNameTable_)
 
-    @min_os_level('10.8')
+    @min_os_level("10.8")
     def testMethods10_8(self):
         self.assertResultIsBOOL(NSNib.instantiateWithOwner_topLevelObjects_)
         self.assertArgIsOut(NSNib.instantiateWithOwner_topLevelObjects_, 1)

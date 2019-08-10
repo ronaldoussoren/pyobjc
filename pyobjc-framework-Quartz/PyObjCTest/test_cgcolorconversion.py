@@ -1,12 +1,13 @@
 from PyObjCTools.TestSupport import *
 from Quartz.CoreGraphics import *
 
-class TestCGColorConversion (TestCase):
-    @min_os_level('10.12')
+
+class TestCGColorConversion(TestCase):
+    @min_os_level("10.12")
     def testTypes(self):
         self.assertIsCFType(CGColorConversionInfoRef)
 
-    @min_os_level('10.12')
+    @min_os_level("10.12")
     def testConstants(self):
         self.assertEqual(kCGColorConversionTransformFromSpace, 0)
         self.assertEqual(kCGColorConversionTransformToSpace, 1)
@@ -14,24 +15,26 @@ class TestCGColorConversion (TestCase):
 
         self.assertIsInstance(kCGColorConversionBlackPointCompensation, unicode)
 
-    @min_os_level('10.13')
+    @min_os_level("10.13")
     def testConstants10_13(self):
         self.assertIsInstance(kCGColorConversionTRCSize, unicode)
 
-    @min_os_level('10.12')
+    @min_os_level("10.12")
     def testFunctions(self):
         self.assertResultIsCFRetained(CGColorConversionInfoCreate)
 
-    @min_os_level('10.14.6')
+    @min_os_level("10.14.6")
     def testFunctions10_14_6(self):
         self.assertResultIsCFRetained(CGColorConversionInfoCreateWithOptions)
 
     @expectedFailure
-    @min_os_level('10.12')
+    @min_os_level("10.12")
     def testFunctionHard(self):
-        self.fail("CGColorConversionInfoCreateFromList") # Varargs with annoying signature
+        self.fail(
+            "CGColorConversionInfoCreateFromList"
+        )  # Varargs with annoying signature
 
-    @min_os_level('10.13')
+    @min_os_level("10.13")
     def testFunctions(self):
         try:
             CGColorConversionInfoCreateFromList
@@ -39,6 +42,7 @@ class TestCGColorConversion (TestCase):
             pass
         else:
             self.fail("CGColorConversionInfoCreateFromList is wrapped")
+
 
 if __name__ == "__main__":
     main()

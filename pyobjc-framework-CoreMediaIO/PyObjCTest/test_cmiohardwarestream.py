@@ -2,15 +2,14 @@ from PyObjCTools.TestSupport import *
 
 import CoreMediaIO
 
-MIODeviceStreamQueueAlteredProc = b'vI^v^v'
+MIODeviceStreamQueueAlteredProc = b"vI^v^v"
 
-CMIOStreamScheduledOutputNotificationProc = b'vQQ^v'
+CMIOStreamScheduledOutputNotificationProc = b"vQQ^v"
 
 
-
-class TestCMIOHardwareStream (TestCase):
+class TestCMIOHardwareStream(TestCase):
     def testConstants(self):
-        self.assertEqual(CoreMediaIO.kCMIOStreamClassID, fourcc(b'astr'))
+        self.assertEqual(CoreMediaIO.kCMIOStreamClassID, fourcc(b"astr"))
         self.assertEqual(CoreMediaIO.kCMIOStreamUnknown, CoreMediaIO.kCMIOObjectUnknown)
 
         self.assertEqual(CoreMediaIO.kCMIODeckStatusBusy, 1)
@@ -52,40 +51,77 @@ class TestCMIOHardwareStream (TestCase):
         self.assertEqual(CoreMediaIO.kCMIODeckShuttlePlayFastest, 9)
         self.assertEqual(CoreMediaIO.kCMIODeckShuttlePlayHighSpeed, 10)
 
-        self.assertEqual(CoreMediaIO.kCMIOStreamPropertyDirection, fourcc(b'sdir'))
-        self.assertEqual(CoreMediaIO.kCMIOStreamPropertyTerminalType, fourcc(b'term'))
-        self.assertEqual(CoreMediaIO.kCMIOStreamPropertyStartingChannel, fourcc(b'schn'))
-        self.assertEqual(CoreMediaIO.kCMIOStreamPropertyLatency, fourcc(b'ltnc'))
-        self.assertEqual(CoreMediaIO.kCMIOStreamPropertyFormatDescription, fourcc(b'pft '))
-        self.assertEqual(CoreMediaIO.kCMIOStreamPropertyFormatDescriptions, fourcc(b'pfta'))
-        self.assertEqual(CoreMediaIO.kCMIOStreamPropertyStillImage, fourcc(b'stmg'))
-        self.assertEqual(CoreMediaIO.kCMIOStreamPropertyStillImageFormatDescriptions, fourcc(b'stft'))
-        self.assertEqual(CoreMediaIO.kCMIOStreamPropertyFrameRate, fourcc(b'nfrt'))
-        self.assertEqual(CoreMediaIO.kCMIOStreamPropertyMinimumFrameRate, fourcc(b'mfrt'))
-        self.assertEqual(CoreMediaIO.kCMIOStreamPropertyFrameRates, fourcc(b'nfr#'))
-        self.assertEqual(CoreMediaIO.kCMIOStreamPropertyFrameRateRanges, fourcc(b'frrg'))
-        self.assertEqual(CoreMediaIO.kCMIOStreamPropertyNoDataTimeoutInMSec, fourcc(b'pmn1'))
-        self.assertEqual(CoreMediaIO.kCMIOStreamPropertyDeviceSyncTimeoutInMSec, fourcc(b'pmn2'))
-        self.assertEqual(CoreMediaIO.kCMIOStreamPropertyNoDataEventCount, fourcc(b'pmn3'))
-        self.assertEqual(CoreMediaIO.kCMIOStreamPropertyOutputBufferUnderrunCount, fourcc(b'pmou'))
-        self.assertEqual(CoreMediaIO.kCMIOStreamPropertyOutputBufferRepeatCount, fourcc(b'pmor'))
-        self.assertEqual(CoreMediaIO.kCMIOStreamPropertyOutputBufferQueueSize, fourcc(b'pmoq'))
-        self.assertEqual(CoreMediaIO.kCMIOStreamPropertyOutputBuffersRequiredForStartup, fourcc(b'pmos'))
-        self.assertEqual(CoreMediaIO.kCMIOStreamPropertyOutputBuffersNeededForThrottledPlayback, fourcc(b'miff'))
-        self.assertEqual(CoreMediaIO.kCMIOStreamPropertyFirstOutputPresentationTimeStamp, fourcc(b'popt'))
-        self.assertEqual(CoreMediaIO.kCMIOStreamPropertyEndOfData, fourcc(b'pmed'))
-        self.assertEqual(CoreMediaIO.kCMIOStreamPropertyClock, fourcc(b'pmcl'))
-        self.assertEqual(CoreMediaIO.kCMIOStreamPropertyCanProcessDeckCommand, fourcc(b'pdcd'))
-        self.assertEqual(CoreMediaIO.kCMIOStreamPropertyDeck, fourcc(b'deck'))
-        self.assertEqual(CoreMediaIO.kCMIOStreamPropertyDeckFrameNumber, fourcc(b'tcod'))
-        self.assertEqual(CoreMediaIO.kCMIOStreamPropertyDeckDropness, fourcc(b'drop'))
-        self.assertEqual(CoreMediaIO.kCMIOStreamPropertyDeckThreaded, fourcc(b'thrd'))
-        self.assertEqual(CoreMediaIO.kCMIOStreamPropertyDeckLocal, fourcc(b'locl'))
-        self.assertEqual(CoreMediaIO.kCMIOStreamPropertyDeckCueing, fourcc(b'cuec'))
-        self.assertEqual(CoreMediaIO.kCMIOStreamPropertyInitialPresentationTimeStampForLinkedAndSyncedAudio, fourcc(b'ipls'))
-        self.assertEqual(CoreMediaIO.kCMIOStreamPropertyScheduledOutputNotificationProc, fourcc(b'sonp'))
-        self.assertEqual(CoreMediaIO.kCMIOStreamPropertyPreferredFormatDescription, fourcc(b'prfd'))
-        self.assertEqual(CoreMediaIO.kCMIOStreamPropertyPreferredFrameRate, fourcc(b'prfr'))
+        self.assertEqual(CoreMediaIO.kCMIOStreamPropertyDirection, fourcc(b"sdir"))
+        self.assertEqual(CoreMediaIO.kCMIOStreamPropertyTerminalType, fourcc(b"term"))
+        self.assertEqual(CoreMediaIO.kCMIOStreamPropertyStartingChannel, fourcc(b"schn"))
+        self.assertEqual(CoreMediaIO.kCMIOStreamPropertyLatency, fourcc(b"ltnc"))
+        self.assertEqual(
+            CoreMediaIO.kCMIOStreamPropertyFormatDescription, fourcc(b"pft ")
+        )
+        self.assertEqual(
+            CoreMediaIO.kCMIOStreamPropertyFormatDescriptions, fourcc(b"pfta")
+        )
+        self.assertEqual(CoreMediaIO.kCMIOStreamPropertyStillImage, fourcc(b"stmg"))
+        self.assertEqual(
+            CoreMediaIO.kCMIOStreamPropertyStillImageFormatDescriptions, fourcc(b"stft")
+        )
+        self.assertEqual(CoreMediaIO.kCMIOStreamPropertyFrameRate, fourcc(b"nfrt"))
+        self.assertEqual(CoreMediaIO.kCMIOStreamPropertyMinimumFrameRate, fourcc(b"mfrt"))
+        self.assertEqual(CoreMediaIO.kCMIOStreamPropertyFrameRates, fourcc(b"nfr#"))
+        self.assertEqual(CoreMediaIO.kCMIOStreamPropertyFrameRateRanges, fourcc(b"frrg"))
+        self.assertEqual(
+            CoreMediaIO.kCMIOStreamPropertyNoDataTimeoutInMSec, fourcc(b"pmn1")
+        )
+        self.assertEqual(
+            CoreMediaIO.kCMIOStreamPropertyDeviceSyncTimeoutInMSec, fourcc(b"pmn2")
+        )
+        self.assertEqual(CoreMediaIO.kCMIOStreamPropertyNoDataEventCount, fourcc(b"pmn3"))
+        self.assertEqual(
+            CoreMediaIO.kCMIOStreamPropertyOutputBufferUnderrunCount, fourcc(b"pmou")
+        )
+        self.assertEqual(
+            CoreMediaIO.kCMIOStreamPropertyOutputBufferRepeatCount, fourcc(b"pmor")
+        )
+        self.assertEqual(
+            CoreMediaIO.kCMIOStreamPropertyOutputBufferQueueSize, fourcc(b"pmoq")
+        )
+        self.assertEqual(
+            CoreMediaIO.kCMIOStreamPropertyOutputBuffersRequiredForStartup,
+            fourcc(b"pmos"),
+        )
+        self.assertEqual(
+            CoreMediaIO.kCMIOStreamPropertyOutputBuffersNeededForThrottledPlayback,
+            fourcc(b"miff"),
+        )
+        self.assertEqual(
+            CoreMediaIO.kCMIOStreamPropertyFirstOutputPresentationTimeStamp,
+            fourcc(b"popt"),
+        )
+        self.assertEqual(CoreMediaIO.kCMIOStreamPropertyEndOfData, fourcc(b"pmed"))
+        self.assertEqual(CoreMediaIO.kCMIOStreamPropertyClock, fourcc(b"pmcl"))
+        self.assertEqual(
+            CoreMediaIO.kCMIOStreamPropertyCanProcessDeckCommand, fourcc(b"pdcd")
+        )
+        self.assertEqual(CoreMediaIO.kCMIOStreamPropertyDeck, fourcc(b"deck"))
+        self.assertEqual(CoreMediaIO.kCMIOStreamPropertyDeckFrameNumber, fourcc(b"tcod"))
+        self.assertEqual(CoreMediaIO.kCMIOStreamPropertyDeckDropness, fourcc(b"drop"))
+        self.assertEqual(CoreMediaIO.kCMIOStreamPropertyDeckThreaded, fourcc(b"thrd"))
+        self.assertEqual(CoreMediaIO.kCMIOStreamPropertyDeckLocal, fourcc(b"locl"))
+        self.assertEqual(CoreMediaIO.kCMIOStreamPropertyDeckCueing, fourcc(b"cuec"))
+        self.assertEqual(
+            CoreMediaIO.kCMIOStreamPropertyInitialPresentationTimeStampForLinkedAndSyncedAudio,
+            fourcc(b"ipls"),
+        )
+        self.assertEqual(
+            CoreMediaIO.kCMIOStreamPropertyScheduledOutputNotificationProc,
+            fourcc(b"sonp"),
+        )
+        self.assertEqual(
+            CoreMediaIO.kCMIOStreamPropertyPreferredFormatDescription, fourcc(b"prfd")
+        )
+        self.assertEqual(
+            CoreMediaIO.kCMIOStreamPropertyPreferredFrameRate, fourcc(b"prfr")
+        )
 
     def testStructs(self):
         v = CoreMediaIO.CMIOStreamDeck()
@@ -115,5 +151,4 @@ class TestCMIOHardwareStream (TestCase):
 
 
 if __name__ == "__main__":
-        main()
-
+    main()

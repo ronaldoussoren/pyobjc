@@ -2,11 +2,11 @@ from PyObjCTools.TestSupport import *
 import objc
 import sys
 
-if os_level_key(os_release()) < os_level_key('10.12') or sys.maxsize >= 2**32:
+if os_level_key(os_release()) < os_level_key("10.12") or sys.maxsize >= 2 ** 32:
 
     import SceneKit
 
-    class TestSCNPhysicsBody (TestCase):
+    class TestSCNPhysicsBody(TestCase):
         def test_constants(self):
             self.assertEqual(SceneKit.SCNPhysicsBodyTypeStatic, 0)
             self.assertEqual(SceneKit.SCNPhysicsBodyTypeDynamic, 1)
@@ -14,9 +14,11 @@ if os_level_key(os_release()) < os_level_key('10.12') or sys.maxsize >= 2**32:
 
             self.assertEqual(SceneKit.SCNPhysicsCollisionCategoryDefault, 1 << 0)
             self.assertEqual(SceneKit.SCNPhysicsCollisionCategoryStatic, 1 << 1)
-            self.assertEqual(SceneKit.SCNPhysicsCollisionCategoryAll, (sys.maxsize * 2) + 1)
+            self.assertEqual(
+                SceneKit.SCNPhysicsCollisionCategoryAll, (sys.maxsize * 2) + 1
+            )
 
-        @min_os_level('10.10')
+        @min_os_level("10.10")
         def testMethods10_10(self):
             self.assertResultIsBOOL(SceneKit.SCNPhysicsBody.isResting)
 
@@ -24,20 +26,25 @@ if os_level_key(os_release()) < os_level_key('10.12') or sys.maxsize >= 2**32:
             self.assertResultIsBOOL(SceneKit.SCNPhysicsBody.allowsResting)
 
             self.assertArgIsBOOL(SceneKit.SCNPhysicsBody.applyForce_impulse_, 1)
-            self.assertArgIsBOOL(SceneKit.SCNPhysicsBody.applyForce_atPosition_impulse_, 2)
+            self.assertArgIsBOOL(
+                SceneKit.SCNPhysicsBody.applyForce_atPosition_impulse_, 2
+            )
             self.assertArgIsBOOL(SceneKit.SCNPhysicsBody.applyTorque_impulse_, 1)
 
-        @min_os_level('10.11')
+        @min_os_level("10.11")
         def testMethods10_11(self):
-            self.assertArgIsBOOL(SceneKit.SCNPhysicsBody.setUsesDefaultMomentOfInertia_, 0)
+            self.assertArgIsBOOL(
+                SceneKit.SCNPhysicsBody.setUsesDefaultMomentOfInertia_, 0
+            )
             self.assertResultIsBOOL(SceneKit.SCNPhysicsBody.usesDefaultMomentOfInertia)
 
             self.assertArgIsBOOL(SceneKit.SCNPhysicsBody.setAffectedByGravity_, 0)
             self.assertResultIsBOOL(SceneKit.SCNPhysicsBody.isAffectedByGravity)
 
-        @min_os_level('10.14')
+        @min_os_level("10.14")
         def testMethods10_14(self):
             self.assertArgIsBOOL(SceneKit.SCNPhysicsBody.setResting_, 0)
+
 
 if __name__ == "__main__":
     main()

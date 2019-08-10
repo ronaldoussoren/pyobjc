@@ -2,10 +2,10 @@ from PyObjCTools.TestSupport import *
 import objc
 import sys
 
-if sys.maxsize > 2**32:
+if sys.maxsize > 2 ** 32:
     import Contacts
 
-    class TestCNSocialProfile (TestCase):
+    class TestCNSocialProfile(TestCase):
         @min_os_level("10.11")
         def testConstants(self):
             self.assertIsInstance(Contacts.CNSocialProfileURLStringKey, unicode)
@@ -21,6 +21,7 @@ if sys.maxsize > 2**32:
             self.assertIsInstance(Contacts.CNSocialProfileServiceTwitter, unicode)
             self.assertIsInstance(Contacts.CNSocialProfileServiceYelp, unicode)
             self.assertIsInstance(Contacts.CNSocialProfileServiceGameCenter, unicode)
+
 
 if __name__ == "__main__":
     main()

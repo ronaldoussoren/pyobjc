@@ -1,7 +1,8 @@
 from PyObjCTools.TestSupport import *
 from CoreData import *
 
-class TestNSPersistentStoreResult (TestCase):
+
+class TestNSPersistentStoreResult(TestCase):
     def testConstants(self):
         self.assertEqual(NSStatusOnlyResultType, 0)
         self.assertEqual(NSUpdatedObjectIDsResultType, 1)
@@ -12,7 +13,7 @@ class TestNSPersistentStoreResult (TestCase):
         self.assertEqual(NSBatchDeleteResultTypeCount, 2)
 
         self.assertEqual(NSPersistentHistoryResultTypeStatusOnly, 0x0)
-        self.assertEqual(NSPersistentHistoryResultTypeObjectIDs, 0x1,)
+        self.assertEqual(NSPersistentHistoryResultTypeObjectIDs, 0x1)
         self.assertEqual(NSPersistentHistoryResultTypeCount, 0x2)
         self.assertEqual(NSPersistentHistoryResultTypeTransactionsOnly, 0x3)
         self.assertEqual(NSPersistentHistoryResultTypeChangesOnly, 0x4)
@@ -21,6 +22,7 @@ class TestNSPersistentStoreResult (TestCase):
         self.assertEqual(NSBatchInsertRequestResultTypeStatusOnly, 0x0)
         self.assertEqual(NSBatchInsertRequestResultTypeObjectIDs, 0x1)
         self.assertEqual(NSBatchInsertRequestResultTypeCount, 0x2)
+
 
 if __name__ == "__main__":
     main()

@@ -6,7 +6,7 @@ import objc
 from Foundation import NSAffineTransform
 
 
-class NSAffineTransform (objc.Category(NSAffineTransform)):
+class NSAffineTransform(objc.Category(NSAffineTransform)):
     def rotateByDegrees_atPoint_(self, angle, point):
         """
         Rotate the coordinatespace ``angle`` degrees around

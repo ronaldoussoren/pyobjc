@@ -2,6 +2,7 @@ import Cocoa
 
 import AppDrawing
 
+
 def myCreatePDFDataFromPasteBoard():
     # Obtain the pasteboard to examine.
     pboard = Cocoa.NSPasteboard.generalPasteboard()
@@ -13,7 +14,7 @@ def myCreatePDFDataFromPasteBoard():
     type = pboard.availableTypeFromArray_([Cocoa.NSPDFPboardType])
 
     # If the string is non-nil, there was data of one of our requested types
-        # on the pasteboard that can be obtained.
+    # on the pasteboard that can be obtained.
     if type is not None:
         # Test that the type is the PDF data type. This code is not strictly necessary
         # for this example since we only said we could handle PDF data, but is appropriate
@@ -28,6 +29,7 @@ def myCreatePDFDataFromPasteBoard():
     else:
         Cocoa.NSLog("Pasteboard doesn't contain PDF data!")
     return None
+
 
 def addPDFDataToPasteBoard(command):
     pdfData = cfDataCreatePDFDocumentFromCommand(command)

@@ -1,8 +1,8 @@
-
 from PyObjCTools.TestSupport import *
 from AppKit import *
 
-class TestNSBox (TestCase):
+
+class TestNSBox(TestCase):
     def testConstants(self):
         self.assertEqual(NSNoTitle, 0)
         self.assertEqual(NSAboveTop, 1)

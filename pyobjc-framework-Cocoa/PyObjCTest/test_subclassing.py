@@ -3,13 +3,14 @@ import objc
 
 from Foundation import *
 
+
 class TestSubclassing(TestCase):
     def testBasicSubclassing(self):
         class NSObjectSubclass(NSObject):
             def someRandomMethod(self):
                 return 42
 
-        subclassClass = NSClassFromString( "NSObjectSubclass" )
+        subclassClass = NSClassFromString("NSObjectSubclass")
 
         self.assertIsNot(subclassClass, None, "Failed to subclass NSObject.")
 
@@ -24,5 +25,6 @@ class TestSubclassing(TestCase):
         self.assertIs(subclassInstance, subclassInstance, "Identity check failed.")
         self.assertIs(subclassInstance, subclassInstance.self(), "Identity check failed.")
 
-if __name__ == '__main__':
-    main( )
+
+if __name__ == "__main__":
+    main()

@@ -2,8 +2,8 @@ from PyObjCTools.TestSupport import *
 
 import StoreKit
 
-class TestSKError (TestCase):
 
+class TestSKError(TestCase):
     def test_constants(self):
         self.assertIsInstance(StoreKit.SKErrorDomain, unicode)
 
@@ -26,4 +26,3 @@ class TestSKError (TestCase):
 
 if __name__ == "__main__":
     main()
-

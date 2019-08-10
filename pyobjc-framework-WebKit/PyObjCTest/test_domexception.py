@@ -1,8 +1,8 @@
-
 from PyObjCTools.TestSupport import *
 from WebKit import *
 
-class TestDOMException (TestCase):
+
+class TestDOMException(TestCase):
     def testConstants(self):
         self.assertEqual(DOM_INDEX_SIZE_ERR, 1)
         self.assertEqual(DOM_DOMSTRING_SIZE_ERR, 2)
@@ -21,6 +21,7 @@ class TestDOMException (TestCase):
         self.assertEqual(DOM_INVALID_ACCESS_ERR, 15)
 
         self.assertIsInstance(DOMException, unicode)
+
 
 if __name__ == "__main__":
     main()

@@ -1,4 +1,3 @@
-
 from PyObjCTools.TestSupport import *
 from WebKit import *
 import Cocoa
@@ -8,7 +7,8 @@ try:
 except ImportError:
     Quartz = None
 
-class TestCarbonUtils (TestCase):
+
+class TestCarbonUtils(TestCase):
     @onlyOn32Bit
     def testFunctions(self):
         if Quartz is None:
@@ -16,13 +16,14 @@ class TestCarbonUtils (TestCase):
 
         WebInitForCarbon()
 
-        #img = NSImage.imageNamed_('NSHelpCursor')
+        # img = NSImage.imageNamed_('NSHelpCursor')
         img = NSImage.imageNamed_(Cocoa.NSImageNameUserAccounts)
         self.assertIsInstance(img, NSImage)
 
         ref = WebConvertNSImageToCGImageRef(img)
         if ref is not None:
             self.assertIsInstance(ref, Quartz.CGImageRef)
+
 
 if __name__ == "__main__":
     main()

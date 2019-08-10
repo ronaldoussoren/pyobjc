@@ -2,15 +2,16 @@ from PyObjCTools.TestSupport import *
 from WebKit import *
 import sys
 
-class TestWKWebViewConfiguration (TestCase):
+
+class TestWKWebViewConfiguration(TestCase):
     @onlyOn64Bit
-    @min_os_level('10.10')
+    @min_os_level("10.10")
     def testMethods10_10(self):
         self.assertResultIsBOOL(WKWebViewConfiguration.suppressesIncrementalRendering)
         self.assertArgIsBOOL(WKWebViewConfiguration.setSuppressesIncrementalRendering_, 0)
 
     @onlyOn64Bit
-    @min_os_level('10.11')
+    @min_os_level("10.11")
     def testMethods10_11(self):
         self.assertResultIsBOOL(WKWebViewConfiguration.allowsAirPlayForMediaPlayback)
         self.assertArgIsBOOL(WKWebViewConfiguration.setAllowsAirPlayForMediaPlayback_, 0)
@@ -26,7 +27,6 @@ class TestWKWebViewConfiguration (TestCase):
         if sys.maxsize > 2 ** 32:
             # The entire enum is only available in 64-bit code.
             self.assertEqual(WKAudiovisualMediaTypeAll, sys.maxsize * 2 + 1)
-
 
 
 if __name__ == "__main__":

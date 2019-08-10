@@ -1,7 +1,8 @@
 from PyObjCTools.TestSupport import *
 from Quartz import *
 
-class TestCVBase (TestCase):
+
+class TestCVBase(TestCase):
     def testStructs(self):
         v = CVSMPTETime()
         self.assertIsInstance(v.subframes, (int, long))
@@ -30,7 +31,6 @@ class TestCVBase (TestCase):
         self.assertIsInstance(v.flags, (int, long))
         self.assertIsInstance(v.reserved, (int, long))
 
-
     def testConstants(self):
         self.assertEqual(kCVSMPTETimeType24, 0)
         self.assertEqual(kCVSMPTETimeType25, 1)
@@ -51,15 +51,19 @@ class TestCVBase (TestCase):
         self.assertEqual(kCVTimeStampSMPTETimeValid, 4)
         self.assertEqual(kCVTimeStampVideoRefreshPeriodValid, 8)
         self.assertEqual(kCVTimeStampRateScalarValid, 16)
-        self.assertEqual(kCVTimeStampTopField, 1<<16)
-        self.assertEqual(kCVTimeStampBottomField, 1<<17)
+        self.assertEqual(kCVTimeStampTopField, 1 << 16)
+        self.assertEqual(kCVTimeStampBottomField, 1 << 17)
 
-        self.assertEqual(kCVTimeStampVideoHostTimeValid, (kCVTimeStampVideoTimeValid | kCVTimeStampHostTimeValid))
-        self.assertEqual(kCVTimeStampIsInterlaced, (kCVTimeStampTopField | kCVTimeStampBottomField))
+        self.assertEqual(
+            kCVTimeStampVideoHostTimeValid,
+            (kCVTimeStampVideoTimeValid | kCVTimeStampHostTimeValid),
+        )
+        self.assertEqual(
+            kCVTimeStampIsInterlaced, (kCVTimeStampTopField | kCVTimeStampBottomField)
+        )
 
         self.assertIsInstance(kCVZeroTime, CVTime)
         self.assertIsInstance(kCVIndefiniteTime, CVTime)
-
 
 
 if __name__ == "__main__":

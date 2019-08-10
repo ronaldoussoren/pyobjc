@@ -4,7 +4,7 @@ import sys
 if sys.maxsize > 2 ** 32:
     import Network
 
-    class TestProtocolOptions (TestCase):
+    class TestProtocolOptions(TestCase):
         def test_functions(self):
             Network.nw_protocol_definition_is_equal
 
@@ -15,5 +15,3 @@ if sys.maxsize > 2 ** 32:
 
 if __name__ == "__main__":
     main()
-
-

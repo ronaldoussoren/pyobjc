@@ -2,15 +2,19 @@ from PyObjCTools.TestSupport import *
 from SystemConfiguration import *
 from Foundation import NSMutableDictionary
 
-class TestSCPreferencesPath (TestCase):
 
+class TestSCPreferencesPath(TestCase):
     def testFunctions(self):
         ref = SCPreferencesCreate(None, "pyobjc.test", "pyobjc.test")
         self.assertIsInstance(ref, SCPreferencesRef)
 
-        r = SCPreferencesAddValue(ref, "use",
-                NSMutableDictionary.dictionaryWithDictionary_(
-                    { "python2": True, "python3": False }))
+        r = SCPreferencesAddValue(
+            ref,
+            "use",
+            NSMutableDictionary.dictionaryWithDictionary_(
+                {"python2": True, "python3": False}
+            ),
+        )
         self.assertTrue(r)
 
         v = SCPreferencesPathCreateUniqueChild(ref, "/")
@@ -30,6 +34,7 @@ class TestSCPreferencesPath (TestCase):
 
         v = SCPreferencesPathRemoveValue(ref, "/use")
         self.assertTrue(v is True)
+
 
 if __name__ == "__main__":
     main()

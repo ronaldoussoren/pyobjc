@@ -1,16 +1,17 @@
 import Cocoa
 import objc
 
-class PathDemoController (Cocoa.NSObject):
-    button      = objc.ivar()
-    popup       = objc.ivar()
-    window      = objc.ivar()
-    demoView    = objc.ivar()
+
+class PathDemoController(Cocoa.NSObject):
+    button = objc.ivar()
+    popup = objc.ivar()
+    window = objc.ivar()
+    demoView = objc.ivar()
 
     def awakeFromNib(self):
         #  Add the title of your new demo to the END of this array.
 
-        titles = [ 'Rectangles', 'Circles', 'Bezier Paths', 'Circle Clipping' ]
+        titles = ["Rectangles", "Circles", "Bezier Paths", "Circle Clipping"]
 
         self.popup.removeAllItems()
 

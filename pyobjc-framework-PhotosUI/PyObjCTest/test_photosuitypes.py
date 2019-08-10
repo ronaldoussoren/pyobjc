@@ -4,12 +4,12 @@ import sys
 if sys.maxsize > 2 ** 32:
     import PhotosUI
 
-    class TestPhotosUITypes (TestCase):
-        @min_os_level('10.13')
+    class TestPhotosUITypes(TestCase):
+        @min_os_level("10.13")
         def testConstants(self):
             self.assertIsInstance(PhotosUI.PHProjectTypeUndefined, unicode)
 
-        @min_os_level('10.14')
+        @min_os_level("10.14")
         def test_constants_10_14(self):
             self.assertIsInstance(PhotosUI.PHProjectCategoryBook, unicode)
             self.assertIsInstance(PhotosUI.PHProjectCategoryCalendar, unicode)
@@ -19,7 +19,7 @@ if sys.maxsize > 2 ** 32:
             self.assertIsInstance(PhotosUI.PHProjectCategoryWallDecor, unicode)
             self.assertIsInstance(PhotosUI.PHProjectCategoryOther, unicode)
 
-        @min_os_level('10.14.2')
+        @min_os_level("10.14.2")
         def test_constants_10_14_4(self):
             self.assertIsInstance(PhotosUI.PHProjectCategoryUndefined, unicode)
 

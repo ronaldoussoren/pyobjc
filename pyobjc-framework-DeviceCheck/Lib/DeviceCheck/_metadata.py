@@ -5,24 +5,55 @@
 import objc, sys
 
 if sys.maxsize > 2 ** 32:
-    def sel32or64(a, b): return b
-else:
-    def sel32or64(a, b): return a
-if sys.byteorder == 'little':
-    def littleOrBig(a, b): return a
-else:
-    def littleOrBig(a, b): return b
 
-misc = {
-}
-constants = '''$DCErrorDomain$'''
-enums = '''$DCErrorFeatureUnsupported@1$DCErrorUnknownSystemFailure@0$'''
+    def sel32or64(a, b):
+        return b
+
+
+else:
+
+    def sel32or64(a, b):
+        return a
+
+
+if sys.byteorder == "little":
+
+    def littleOrBig(a, b):
+        return a
+
+
+else:
+
+    def littleOrBig(a, b):
+        return b
+
+
+misc = {}
+constants = """$DCErrorDomain$"""
+enums = """$DCErrorFeatureUnsupported@1$DCErrorUnknownSystemFailure@0$"""
 misc.update({})
 r = objc.registerMetaDataForSelector
 objc._updatingMetadata(True)
 try:
-    r(b'DCDevice', b'generateTokenWithCompletionHandler:', {'arguments': {2: {'callable': {'retval': {'type': b'v'}, 'arguments': {0: {'type': b'^v'}, 1: {'type': b'@'}, 2: {'type': b'@'}}}}}})
-    r(b'DCDevice', b'isSupported', {'retval': {'type': b'Z'}})
+    r(
+        b"DCDevice",
+        b"generateTokenWithCompletionHandler:",
+        {
+            "arguments": {
+                2: {
+                    "callable": {
+                        "retval": {"type": b"v"},
+                        "arguments": {
+                            0: {"type": b"^v"},
+                            1: {"type": b"@"},
+                            2: {"type": b"@"},
+                        },
+                    }
+                }
+            }
+        },
+    )
+    r(b"DCDevice", b"isSupported", {"retval": {"type": b"Z"}})
 finally:
     objc._updatingMetadata(False)
 expressions = {}

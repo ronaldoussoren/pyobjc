@@ -145,10 +145,7 @@ else:  # pragma: no 2.x cover
         "NSEnumerator",
         (
             ("__iter__", lambda self: self),
-            (
-                "__next__",
-                lambda self: container_unwrap(self.nextObject(), StopIteration),
-            ),
+            ("__next__", lambda self: container_unwrap(self.nextObject(), StopIteration)),
         ),
     )
 

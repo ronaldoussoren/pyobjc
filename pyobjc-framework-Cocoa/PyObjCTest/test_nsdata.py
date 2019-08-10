@@ -9,18 +9,22 @@ from PyObjCTest.testhelper import PyObjC_TestClass3
 
 if sys.version_info[0] == 3:
     buffer = memoryview
+
     def array_frombytes(a, b):
         return a.frombytes(b)
 
     def array_tobytes(a):
         return a.tobytes()
 
+
 else:
+
     def array_frombytes(a, b):
         return a.fromstring(b)
 
     def array_tobytes(a):
         return a.tostring()
+
 
 try:
     memoryview
@@ -29,8 +33,9 @@ except NameError:
 
 
 rawBytes = b"a\x13b\x00cd\xFFef\xEFgh"
-otherBytes = array.array('B')
-array_frombytes(otherBytes, b'12345678901234567890' * 5)
+otherBytes = array.array("B")
+array_frombytes(otherBytes, b"12345678901234567890" * 5)
+
 
 class TestNSData(TestCase):
     def testMethods(self):
@@ -58,64 +63,71 @@ class TestNSData(TestCase):
 
         self.assertEqual(NSAtomicWrite, 1)
 
-    @min_os_level('10.6')
+    @min_os_level("10.6")
     def testConstants10_6(self):
-        self.assertEqual(NSDataReadingMapped, 1<<0)
-        self.assertEqual(NSDataReadingUncached, 1<<1)
-        self.assertEqual(NSDataWritingAtomic, 1<<0)
-        self.assertEqual(NSDataSearchBackwards, 1<<0)
-        self.assertEqual(NSDataSearchAnchored, 1<<1)
+        self.assertEqual(NSDataReadingMapped, 1 << 0)
+        self.assertEqual(NSDataReadingUncached, 1 << 1)
+        self.assertEqual(NSDataWritingAtomic, 1 << 0)
+        self.assertEqual(NSDataSearchBackwards, 1 << 0)
+        self.assertEqual(NSDataSearchAnchored, 1 << 1)
 
-    @min_os_level('10.7')
+    @min_os_level("10.7")
     def testConstants10_7(self):
-        self.assertEqual(NSDataReadingMappedAlways, 1<<3)
+        self.assertEqual(NSDataReadingMappedAlways, 1 << 3)
 
-        self.assertEqual(NSDataReadingMappedIfSafe, 1<<0)
-        self.assertEqual(NSDataReadingUncached, 1<<1)
+        self.assertEqual(NSDataReadingMappedIfSafe, 1 << 0)
+        self.assertEqual(NSDataReadingUncached, 1 << 1)
 
-    @min_os_level('10.8')
+    @min_os_level("10.8")
     def testConstants10_8(self):
-        self.assertEqual(NSDataWritingWithoutOverwriting, 1<<1)
+        self.assertEqual(NSDataWritingWithoutOverwriting, 1 << 1)
 
-    @min_os_level('10.9')
+    @min_os_level("10.9")
     def testConstants10_9(self):
-        self.assertEqual(NSDataBase64Encoding64CharacterLineLength, 1<<0)
-        self.assertEqual(NSDataBase64Encoding76CharacterLineLength, 1<<1)
-        self.assertEqual(NSDataBase64EncodingEndLineWithCarriageReturn, 1<<4)
-        self.assertEqual(NSDataBase64EncodingEndLineWithLineFeed, 1<<5)
+        self.assertEqual(NSDataBase64Encoding64CharacterLineLength, 1 << 0)
+        self.assertEqual(NSDataBase64Encoding76CharacterLineLength, 1 << 1)
+        self.assertEqual(NSDataBase64EncodingEndLineWithCarriageReturn, 1 << 4)
+        self.assertEqual(NSDataBase64EncodingEndLineWithLineFeed, 1 << 5)
 
-        self.assertEqual(NSDataBase64DecodingIgnoreUnknownCharacters, 1<<0)
+        self.assertEqual(NSDataBase64DecodingIgnoreUnknownCharacters, 1 << 0)
 
-    @min_os_level('10.15')
+    @min_os_level("10.15")
     def testConstants10_15(self):
         self.assertEqual(NSDataCompressionAlgorithmLZFSE, 0)
         self.assertEqual(NSDataCompressionAlgorithmLZ4, 1)
         self.assertEqual(NSDataCompressionAlgorithmLZMA, 2)
         self.assertEqual(NSDataCompressionAlgorithmZlib, 3)
 
-
-    @min_os_level('10.6')
+    @min_os_level("10.6")
     def testMethods10_6(self):
         self.assertResultHasType(NSData.rangeOfData_options_range_, NSRange.__typestr__)
         self.assertArgHasType(NSData.rangeOfData_options_range_, 2, NSRange.__typestr__)
 
-    @min_os_level('10.9')
+    @min_os_level("10.9")
     def testMethods10_6(self):
-        self.assertArgIsBlock(NSData.enumerateByteRangesUsingBlock_, 0, b'vn^v' + NSRange.__typestr__ + b'o^Z')
+        self.assertArgIsBlock(
+            NSData.enumerateByteRangesUsingBlock_,
+            0,
+            b"vn^v" + NSRange.__typestr__ + b"o^Z",
+        )
         data = NSData.dataWithBytes_length_(rawBytes, len(rawBytes))
 
         l = []
-        def cb (buf, rng, done):
+
+        def cb(buf, rng, done):
             l.append((buf, rng, done))
             return False
+
         data.enumerateByteRangesUsingBlock_(cb)
-        self.assertEqual(l, [
-            (rawBytes, NSRange(0, len(rawBytes)), None),
-        ])
+        self.assertEqual(l, [(rawBytes, NSRange(0, len(rawBytes)), None)])
 
-        self.assertArgIsBlock(NSData.initWithBytesNoCopy_length_deallocator_, 2, b'vn^v' + objc._C_NSUInteger)
+        self.assertArgIsBlock(
+            NSData.initWithBytesNoCopy_length_deallocator_,
+            2,
+            b"vn^v" + objc._C_NSUInteger,
+        )
 
-    @min_os_level('10.15')
+    @min_os_level("10.15")
     def testMethods10_15(self):
         self.assertResultIsBOOL(NSMutableData.decompressUsingAlgorithm_error_)
         self.assertArgIsOut(NSMutableData.decompressUsingAlgorithm_error_, 1)
@@ -125,9 +137,19 @@ class TestNSData(TestCase):
 
     def assertDataContents(self, d1, d2, rawData):
         self.assertEqual(len(d1), d1.length(), "d1: len() and -length didn't match.")
-        self.assertEqual(len(d1), len(rawData), "d1: len(<data>) and len(<input>) didn't match. %d vs %d"%(len(d1), len(rawData)))
+        self.assertEqual(
+            len(d1),
+            len(rawData),
+            "d1: len(<data>) and len(<input>) didn't match. %d vs %d"
+            % (len(d1), len(rawData)),
+        )
         self.assertEqual(len(d2), d2.length(), "d2: len() and -length didn't match.")
-        self.assertEqual(len(d2), len(rawData), "d2: len(<data>) and len(<input>) didn't match. %d vs %d"%(len(d2), len(rawData)))
+        self.assertEqual(
+            len(d2),
+            len(rawData),
+            "d2: len(<data>) and len(<input>) didn't match. %d vs %d"
+            % (len(d2), len(rawData)),
+        )
 
     def testDataWithBytes_length_(self):
         # Test +dataWithBytes:length
@@ -148,8 +170,12 @@ class TestNSData(TestCase):
         self.assertArgSizeInArg(NSMutableData.replaceBytesInRange_withBytes_length_, 1, 2)
 
     def testDataWithBytesNoCopy_length_freeWhenDone_(self):
-        data = NSData.dataWithBytesNoCopy_length_freeWhenDone_(rawBytes, len(rawBytes), False)
-        mutableData = NSMutableData.dataWithBytesNoCopy_length_freeWhenDone_(rawBytes, len(rawBytes), False)
+        data = NSData.dataWithBytesNoCopy_length_freeWhenDone_(
+            rawBytes, len(rawBytes), False
+        )
+        mutableData = NSMutableData.dataWithBytesNoCopy_length_freeWhenDone_(
+            rawBytes, len(rawBytes), False
+        )
         self.assertDataContents(data, mutableData, rawBytes)
 
     def testInitWithBytes_length_(self):
@@ -160,28 +186,34 @@ class TestNSData(TestCase):
 
     def testInitWithBytesNoCopy_length_freeWhenDone_(self):
         # Test -initWithBytesNoCopy:length:
-        data = NSData.alloc().initWithBytesNoCopy_length_freeWhenDone_(rawBytes, len(rawBytes), False)
-        mutableData = NSMutableData.alloc().initWithBytesNoCopy_length_freeWhenDone_(rawBytes, len(rawBytes), False)
+        data = NSData.alloc().initWithBytesNoCopy_length_freeWhenDone_(
+            rawBytes, len(rawBytes), False
+        )
+        mutableData = NSMutableData.alloc().initWithBytesNoCopy_length_freeWhenDone_(
+            rawBytes, len(rawBytes), False
+        )
         self.assertDataContents(data, mutableData, rawBytes)
 
     def testBytes(self):
         # Test -bytes
         data = NSData.alloc().initWithBytes_length_(rawBytes, len(rawBytes))
         bytesValue = data.bytes()
-        self.assertEqual(len(bytesValue), len(rawBytes), "bytes() and rawBytes not equal length.")
+        self.assertEqual(
+            len(bytesValue), len(rawBytes), "bytes() and rawBytes not equal length."
+        )
 
-        if sys.version_info[:2] <= (2,6):
+        if sys.version_info[:2] <= (2, 6):
             self.assertEqual(buffer(rawBytes), bytesValue)
 
         else:
             self.assertEqual(rawBytes, bytesValue)
 
         try:
-            bytesValue[3] = b'\xAE'
+            bytesValue[3] = b"\xAE"
         except TypeError as r:
-            if str(r).find('buffer is read-only') == 0:
+            if str(r).find("buffer is read-only") == 0:
                 pass
-            elif str(r).find('cannot modify read-only memory') == 0:
+            elif str(r).find("cannot modify read-only memory") == 0:
                 pass
             else:
                 raise
@@ -191,22 +223,24 @@ class TestNSData(TestCase):
         mutableData = NSMutableData.dataWithBytes_length_(rawBytes, len(rawBytes))
         mutableBytes = mutableData.mutableBytes()
         for i in range(0, len(mutableBytes)):
-            if sys.version_info[:2] >= (3,3):
-                mutableBytes[i] = array_tobytes(otherBytes[i:i+1])[0]
+            if sys.version_info[:2] >= (3, 3):
+                mutableBytes[i] = array_tobytes(otherBytes[i : i + 1])[0]
             else:
-                mutableBytes[i] = array_tobytes(otherBytes[i:i+1])
+                mutableBytes[i] = array_tobytes(otherBytes[i : i + 1])
         mutableBytes[1:8] = array_tobytes(otherBytes[1:8])
 
         try:
             mutableBytes[2:10] = array_tobytes(otherBytes[1:5])
         except (TypeError, ValueError) as r:
-            if str(r).find('right operand length must match slice length') == 0:
+            if str(r).find("right operand length must match slice length") == 0:
                 pass
-            elif str(r).find('lvalue and rvalue have different structures') != -1:
+            elif str(r).find("lvalue and rvalue have different structures") != -1:
                 pass
-            elif 'cannot modify size of memoryview object' in str(r):
+            elif "cannot modify size of memoryview object" in str(r):
                 pass
-            elif 'ndarray assignment: lvalue and rvalue have different structures' in str(r):
+            elif "ndarray assignment: lvalue and rvalue have different structures" in str(
+                r
+            ):
                 pass
             else:
                 raise
@@ -215,11 +249,13 @@ class TestNSData(TestCase):
         # Test data of different lengths.
         #
         # Data of different lengths may be stored in different subclasses within the class cluster.
-        testFactor = list(range(1, 64)) + [ 1000, 10000, 1000000]
+        testFactor = list(range(1, 64)) + [1000, 10000, 1_000_000]
         for aFactor in testFactor:
             bigRawBytes = b"1234567890" * aFactor
 
-            mutableData = NSMutableData.dataWithBytes_length_(bigRawBytes, len(bigRawBytes))
+            mutableData = NSMutableData.dataWithBytes_length_(
+                bigRawBytes, len(bigRawBytes)
+            )
             data = NSData.dataWithBytes_length_(bigRawBytes, len(bigRawBytes))
 
             self.assertDataContents(data, mutableData, bigRawBytes)
@@ -231,34 +267,38 @@ class TestNSData(TestCase):
             self.assertEqual(len(mutableBytes), mutableData.length())
             self.assertEqual(bytes, mutableBytes)
 
-            mutableBytes[0:len(mutableBytes)] = bytes[0:len(bytes)]
+            mutableBytes[0 : len(mutableBytes)] = bytes[0 : len(bytes)]
 
     def testInitWithContents(self):
         b, err = NSData.alloc().initWithContentsOfFile_options_error_(
-                "/etc/hosts", 0, None)
+            "/etc/hosts", 0, None
+        )
         self.assertIsInstance(b, NSData)
         self.assertIs(err, None)
         b2, err = NSData.alloc().initWithContentsOfFile_options_error_(
-                "/etc/hosts.nosuchfile", 0, None)
+            "/etc/hosts.nosuchfile", 0, None
+        )
         self.assertIs(b2, None)
         self.assertIsInstance(err, NSError)
-        url = NSURL.fileURLWithPath_isDirectory_('/etc/hosts', False)
-        b, err = NSData.alloc().initWithContentsOfURL_options_error_(
-                url, 0, None)
+        url = NSURL.fileURLWithPath_isDirectory_("/etc/hosts", False)
+        b, err = NSData.alloc().initWithContentsOfURL_options_error_(url, 0, None)
         self.assertIsInstance(b, NSData)
         self.assertIs(err, None)
-        url = NSURL.fileURLWithPath_isDirectory_('/etc/hosts.nosuchfile', False)
-        b2, err = NSData.alloc().initWithContentsOfURL_options_error_(
-                url, 0, None)
+        url = NSURL.fileURLWithPath_isDirectory_("/etc/hosts.nosuchfile", False)
+        b2, err = NSData.alloc().initWithContentsOfURL_options_error_(url, 0, None)
         self.assertIs(b2, None)
         self.assertIsInstance(err, NSError)
 
-class MyData (NSData):
+
+class MyData(NSData):
     def dataWithBytes_length_(self, bytes, length):
         return ("data", bytes, length)
 
-BYTES="dummy bytes"
-class MyData2 (NSData):
+
+BYTES = "dummy bytes"
+
+
+class MyData2(NSData):
     def initWithBytes_length_(self, bytes, length):
         return ("init", bytes, length)
 
@@ -269,7 +309,7 @@ class MyData2 (NSData):
         return BYTES
 
 
-class MyData3 (NSData):
+class MyData3(NSData):
     def initWithBytes_length_(self, bytes, length):
         self._bytes = bytes
         self._length = length
@@ -279,11 +319,12 @@ class MyData3 (NSData):
         return self._bytes
 
     def length(self):
-        if hasattr(self, '_length'):
+        if hasattr(self, "_length"):
             return self._length
         return -1
 
-class MyData4 (NSData):
+
+class MyData4(NSData):
     def initWithBytes_length_(self, bytes, length):
         return self
 
@@ -292,6 +333,7 @@ class MyData4 (NSData):
 
     def length(self):
         return -1
+
 
 class MyData5(NSData):
     def initWithBytes_length_(self, bytes, length):
@@ -304,16 +346,15 @@ class MyData5(NSData):
         return -1
 
 
-
-class TestMyData (TestCase):
+class TestMyData(TestCase):
     # 'initWithBytes:length:' and 'dataWithBytes:length:' have custom IMP's
     def testData(self):
         r = PyObjC_TestClass3.makeDataWithBytes_method_(MyData, 0)
-        self.assertEqual(r, ('data', b'hello world', 11))
+        self.assertEqual(r, ("data", b"hello world", 11))
 
     def testInit(self):
         r = PyObjC_TestClass3.makeDataWithBytes_method_(MyData2, 1)
-        self.assertEqual(r, ('init', b'hello world', 11))
+        self.assertEqual(r, ("init", b"hello world", 11))
 
     def testBytes(self):
         r = PyObjC_TestClass3.makeDataWithBytes_method_(MyData3, 1)
@@ -321,13 +362,12 @@ class TestMyData (TestCase):
 
         # Check for memoryview
         if isinstance(b.bytes(), memoryview):
-            self.assertEqual(b.bytes().tobytes(), b'hello world')
+            self.assertEqual(b.bytes().tobytes(), b"hello world")
         else:
-            self.assertEqual(bytes(b.bytes()), b'hello world')
+            self.assertEqual(bytes(b.bytes()), b"hello world")
 
-        self.assertEqual(b.getBytes_length_(None, 4), b'hell')
-        self.assertEqual(b.getBytes_range_(None, NSRange(2, 4)), b'llo ')
-
+        self.assertEqual(b.getBytes_length_(None, 4), b"hell")
+        self.assertEqual(b.getBytes_range_(None, NSRange(2, 4)), b"llo ")
 
     def testBytesNone(self):
         b = PyObjC_TestClass3.makeDataWithBytes_method_(MyData4, 1)
@@ -338,35 +378,36 @@ class TestMyData (TestCase):
         self.assertRaises(ValueError, b.bytes)
 
 
-
 import array
+
+
 class TestBuffer(TestCase):
     def testArray(self):
         pool = NSAutoreleasePool.alloc().init()
-        a = array.array('b', b'foo')
+        a = array.array("b", b"foo")
         m = NSMutableData.dataWithData_(a)
         self.assertEqual(array_tobytes(a), m[:])
         self.assertTrue(objc.repythonify(a) is a)
         del pool
         array_frombytes(a, m)
-        self.assertEqual(array_tobytes(a), b'foofoo')
+        self.assertEqual(array_tobytes(a), b"foofoo")
         m.appendData_(a)
-        self.assertEqual(m[:], b'foofoofoo')
-        m[3:6] = b'bar'
-        self.assertEqual(m[:], b'foobarfoo')
+        self.assertEqual(m[:], b"foofoofoo")
+        m[3:6] = b"bar"
+        self.assertEqual(m[:], b"foobarfoo")
 
     def testBuffer(self):
         if sys.version_info[0] == 3:
-            b = b'foo'
+            b = b"foo"
         else:
-            b = buffer('foo')
+            b = buffer("foo")
         m = NSMutableData.dataWithData_(b)
         self.assertEqual(b[:], m[:])
         self.assertTrue(objc.repythonify(b) is b)
         self.assertEqual(buffer(m)[:], m[:])
 
 
-class TestRegressions (TestCase):
+class TestRegressions(TestCase):
     def testDataStr(self):
         if sys.version_info[0] == 2:
             input = buffer("hello")
@@ -379,5 +420,5 @@ class TestRegressions (TestCase):
         self.assertEqual(str(buf), input_str)
 
 
-if __name__ == '__main__':
-    main( )
+if __name__ == "__main__":
+    main()

@@ -2,10 +2,13 @@ from PyObjCTools.TestSupport import *
 
 import SecurityInterface
 
-class TestSFAuthorizationViewHelper (SecurityInterface.NSObject):
-    def authorizationViewShouldDeauthorize_(self, v): return 1
 
-class TestSFAuthorizationView (TestCase):
+class TestSFAuthorizationViewHelper(SecurityInterface.NSObject):
+    def authorizationViewShouldDeauthorize_(self, v):
+        return 1
+
+
+class TestSFAuthorizationView(TestCase):
     def test_constants(self):
         self.assertEqual(SecurityInterface.SFAuthorizationStartupState, 0)
         self.assertEqual(SecurityInterface.SFAuthorizationViewLockedState, 1)
@@ -18,13 +21,18 @@ class TestSFAuthorizationView (TestCase):
     def test_methods(self):
         self.assertResultIsBOOL(SecurityInterface.SFAuthorizationView.updateStatus_)
         self.assertArgIsBOOL(SecurityInterface.SFAuthorizationView.setAutoupdate_, 0)
-        self.assertArgIsBOOL(SecurityInterface.SFAuthorizationView.setAutoupdate_interval_, 0)
+        self.assertArgIsBOOL(
+            SecurityInterface.SFAuthorizationView.setAutoupdate_interval_, 0
+        )
         self.assertArgIsBOOL(SecurityInterface.SFAuthorizationView.setEnabled_, 0)
         self.assertResultIsBOOL(SecurityInterface.SFAuthorizationView.isEnabled)
         self.assertResultIsBOOL(SecurityInterface.SFAuthorizationView.authorize_)
         self.assertResultIsBOOL(SecurityInterface.SFAuthorizationView.deauthorize_)
 
-        self.assertResultIsBOOL(TestSFAuthorizationViewHelper.authorizationViewShouldDeauthorize_)
+        self.assertResultIsBOOL(
+            TestSFAuthorizationViewHelper.authorizationViewShouldDeauthorize_
+        )
+
 
 if __name__ == "__main__":
     main()

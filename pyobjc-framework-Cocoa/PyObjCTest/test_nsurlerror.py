@@ -6,7 +6,8 @@ try:
 except ImportError:
     CFNetwork = None
 
-class TestNSURLError (TestCase):
+
+class TestNSURLError(TestCase):
     def testConstants(self):
         self.assertIsInstance(NSURLErrorDomain, unicode)
         self.assertIsInstance(NSErrorFailingURLStringKey, unicode)
@@ -50,12 +51,11 @@ class TestNSURLError (TestCase):
         self.assertEqual(NSURLErrorDownloadDecodingFailedMidStream, -3006)
         self.assertEqual(NSURLErrorDownloadDecodingFailedToComplete, -3007)
 
-
-    @min_os_level('10.5')
+    @min_os_level("10.5")
     def testConstants10_5(self):
         self.assertEqual(NSURLErrorDataLengthExceedsMaximum, -1103)
 
-    @min_os_level('10.6')
+    @min_os_level("10.6")
     def testConstants10_6(self):
         self.assertIsInstance(NSURLErrorFailingURLPeerTrustErrorKey, unicode)
         self.assertIsInstance(NSURLErrorFailingURLErrorKey, unicode)
@@ -63,15 +63,14 @@ class TestNSURLError (TestCase):
 
         self.assertEqual(NSURLErrorClientCertificateRequired, -1206)
 
-    @min_os_level('10.7')
+    @min_os_level("10.7")
     def testConstants10_7(self):
         self.assertEqual(NSURLErrorInternationalRoamingOff, -1018)
         self.assertEqual(NSURLErrorCallIsActive, -1019)
         self.assertEqual(NSURLErrorDataNotAllowed, -1020)
         self.assertEqual(NSURLErrorRequestBodyStreamExhausted, -1021)
 
-
-    @min_os_level('10.10')
+    @min_os_level("10.10")
     def testConstants10_10(self):
         self.assertIsInstance(NSURLErrorBackgroundTaskCancelledReasonKey, unicode)
 
@@ -83,21 +82,22 @@ class TestNSURLError (TestCase):
         self.assertEqual(NSURLErrorBackgroundSessionInUseByAnotherProcess, -996)
         self.assertEqual(NSURLErrorBackgroundSessionWasDisconnected, -997)
 
-    @min_os_level('10.11')
+    @min_os_level("10.11")
     def testConstants10_11(self):
         self.assertEqual(NSURLErrorAppTransportSecurityRequiresSecureConnection, -1022)
 
-    @min_os_level('10.12')
+    @min_os_level("10.12")
     def testConstants10_12(self):
         self.assertEqual(NSURLErrorFileOutsideSafeArea, -1104)
 
-    @min_os_level('10.15')
+    @min_os_level("10.15")
     def testConstants10_15(self):
         self.assertIsInstance(NSURLErrorNetworkUnavailableReasonKey, unicode)
 
         self.assertEqual(NSURLErrorNetworkUnavailableReasonCellular, 0)
         self.assertEqual(NSURLErrorNetworkUnavailableReasonExpensive, 1)
         self.assertEqual(NSURLErrorNetworkUnavailableReasonConstrained, 2)
+
 
 if __name__ == "__main__":
     main()

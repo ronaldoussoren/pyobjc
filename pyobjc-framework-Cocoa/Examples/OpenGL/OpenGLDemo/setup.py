@@ -12,9 +12,5 @@ setup(
     app=["OpenGLDemo.py"],
     data_files=["OpenGLDemo.nib"],
     options=dict(py2app=dict(plist=plist)),
-    setup_requires=[
-        "py2app",
-        "PyOpenGL",
-        "pyobjc-framework-Cocoa",
-    ]
+    setup_requires=["py2app", "PyOpenGL", "pyobjc-framework-Cocoa"],
 )

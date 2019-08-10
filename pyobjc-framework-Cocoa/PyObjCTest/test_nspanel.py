@@ -1,9 +1,8 @@
-
 from PyObjCTools.TestSupport import *
 from AppKit import *
 
-class TestNSPanel (TestCase):
 
+class TestNSPanel(TestCase):
     def testFunctions(self):
         self.assertArgIsPrintf(NSRunAlertPanel, 1)
         self.assertArgIsPrintf(NSRunInformationalAlertPanel, 1)
@@ -12,26 +11,35 @@ class TestNSPanel (TestCase):
         self.assertArgIsPrintf(NSRunInformationalAlertPanelRelativeToWindow, 1)
         self.assertArgIsPrintf(NSRunCriticalAlertPanelRelativeToWindow, 1)
         self.assertArgIsPrintf(NSBeginAlertSheet, 9)
-        self.assertArgIsSEL(NSBeginAlertSheet, 6, b'v@:@'+objc._C_NSInteger+b'^v')
-        self.assertArgIsSEL(NSBeginAlertSheet, 7, b'v@:@'+objc._C_NSInteger+b'^v')
-        self.assertArgHasType(NSBeginAlertSheet, 8, b'^v')
+        self.assertArgIsSEL(NSBeginAlertSheet, 6, b"v@:@" + objc._C_NSInteger + b"^v")
+        self.assertArgIsSEL(NSBeginAlertSheet, 7, b"v@:@" + objc._C_NSInteger + b"^v")
+        self.assertArgHasType(NSBeginAlertSheet, 8, b"^v")
         self.assertArgIsPrintf(NSBeginInformationalAlertSheet, 9)
-        self.assertArgIsSEL(NSBeginInformationalAlertSheet, 6, b'v@:@'+objc._C_NSInteger+b'^v')
-        self.assertArgIsSEL(NSBeginInformationalAlertSheet, 7, b'v@:@'+objc._C_NSInteger+b'^v')
-        self.assertArgHasType(NSBeginInformationalAlertSheet, 8, b'^v')
+        self.assertArgIsSEL(
+            NSBeginInformationalAlertSheet, 6, b"v@:@" + objc._C_NSInteger + b"^v"
+        )
+        self.assertArgIsSEL(
+            NSBeginInformationalAlertSheet, 7, b"v@:@" + objc._C_NSInteger + b"^v"
+        )
+        self.assertArgHasType(NSBeginInformationalAlertSheet, 8, b"^v")
         self.assertArgIsPrintf(NSBeginCriticalAlertSheet, 9)
-        self.assertArgIsSEL(NSBeginCriticalAlertSheet, 6, b'v@:@'+objc._C_NSInteger+b'^v')
-        self.assertArgIsSEL(NSBeginCriticalAlertSheet, 7, b'v@:@'+objc._C_NSInteger+b'^v')
-        self.assertArgHasType(NSBeginCriticalAlertSheet, 8, b'^v')
+        self.assertArgIsSEL(
+            NSBeginCriticalAlertSheet, 6, b"v@:@" + objc._C_NSInteger + b"^v"
+        )
+        self.assertArgIsSEL(
+            NSBeginCriticalAlertSheet, 7, b"v@:@" + objc._C_NSInteger + b"^v"
+        )
+        self.assertArgHasType(NSBeginCriticalAlertSheet, 8, b"^v")
         self.assertArgIsPrintf(NSGetAlertPanel, 1)
         self.assertArgIsPrintf(NSGetInformationalAlertPanel, 1)
         self.assertArgIsPrintf(NSGetCriticalAlertPanel, 1)
 
-        panel = NSGetInformationalAlertPanel("title", "fmt %d", "ok", "cancel", "help", 10)
+        panel = NSGetInformationalAlertPanel(
+            "title", "fmt %d", "ok", "cancel", "help", 10
+        )
         self.assertIsInstance(panel, NSPanel)
 
         NSReleaseAlertPanel(panel)
-
 
     def testConstants(self):
         self.assertEqual(NSAlertDefaultReturn, 1)
@@ -56,10 +64,11 @@ class TestNSPanel (TestCase):
         self.assertResultIsBOOL(NSPanel.worksWhenModal)
         self.assertArgIsBOOL(NSPanel.setWorksWhenModal_, 0)
 
-    @min_os_level('10.11')
+    @min_os_level("10.11")
     def testMethods10_11(self):
         self.assertResultIsBOOL(NSOpenPanel.isAccessoryViewDisclosed)
         self.assertArgIsBOOL(NSOpenPanel.setAccessoryViewDisclosed_, 0)
+
 
 if __name__ == "__main__":
     main()

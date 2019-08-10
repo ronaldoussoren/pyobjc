@@ -2,14 +2,19 @@ from PyObjCTools.TestSupport import *
 
 from Foundation import *
 
-class Behaviour (NSObject):
-    def scale(self): return 1
-    def roundingMode(self): return 1
+
+class Behaviour(NSObject):
+    def scale(self):
+        return 1
+
+    def roundingMode(self):
+        return 1
+
     def exceptionDuringOperation_error_leftOperand_rightOperand_(self, exc, err, l, r):
         pass
 
 
-class TestNSDecimalNumber (TestCase):
+class TestNSDecimalNumber(TestCase):
     def testConstants(self):
         self.assertIsInstance(NSDecimalNumberExactnessException, unicode)
         self.assertIsInstance(NSDecimalNumberOverflowException, unicode)
@@ -17,15 +22,15 @@ class TestNSDecimalNumber (TestCase):
         self.assertIsInstance(NSDecimalNumberDivideByZeroException, unicode)
 
     def testNSDecimal(self):
-        dec = NSDecimal('55.0')
+        dec = NSDecimal("55.0")
 
         v = NSDecimalNumber.alloc().initWithDecimal_(dec)
         self.assertIsInstance(v, NSDecimalNumber)
-        self.assertEqual(v.description(), '55')
+        self.assertEqual(v.description(), "55")
 
         v = NSDecimalNumber.decimalNumberWithDecimal_(dec)
         self.assertIsInstance(v, NSDecimalNumber)
-        self.assertEqual(v.description(), '55')
+        self.assertEqual(v.description(), "55")
 
         o = v.decimalValue()
         self.assertIsInstance(o, NSDecimal)
@@ -44,29 +49,65 @@ class TestNSDecimalNumber (TestCase):
         o, dec = v.scanDecimal_(None)
         self.assertIsInstance(dec, NSDecimal)
         self.assertIs(o, True)
-        self.assertEqual(str(dec), '55.23')
+        self.assertEqual(str(dec), "55.23")
 
     def testMethods(self):
         self.assertArgIsBOOL(NSDecimalNumber.initWithMantissa_exponent_isNegative_, 2)
-        self.assertArgIsBOOL(NSDecimalNumber.decimalNumberWithMantissa_exponent_isNegative_, 2)
+        self.assertArgIsBOOL(
+            NSDecimalNumber.decimalNumberWithMantissa_exponent_isNegative_, 2
+        )
 
-        self.assertArgIsBOOL(NSDecimalNumberHandler.initWithRoundingMode_scale_raiseOnExactness_raiseOnOverflow_raiseOnUnderflow_raiseOnDivideByZero_, 2)
-        self.assertArgIsBOOL(NSDecimalNumberHandler.initWithRoundingMode_scale_raiseOnExactness_raiseOnOverflow_raiseOnUnderflow_raiseOnDivideByZero_, 3)
-        self.assertArgIsBOOL(NSDecimalNumberHandler.initWithRoundingMode_scale_raiseOnExactness_raiseOnOverflow_raiseOnUnderflow_raiseOnDivideByZero_, 4)
-        self.assertArgIsBOOL(NSDecimalNumberHandler.initWithRoundingMode_scale_raiseOnExactness_raiseOnOverflow_raiseOnUnderflow_raiseOnDivideByZero_, 5)
+        self.assertArgIsBOOL(
+            NSDecimalNumberHandler.initWithRoundingMode_scale_raiseOnExactness_raiseOnOverflow_raiseOnUnderflow_raiseOnDivideByZero_,
+            2,
+        )
+        self.assertArgIsBOOL(
+            NSDecimalNumberHandler.initWithRoundingMode_scale_raiseOnExactness_raiseOnOverflow_raiseOnUnderflow_raiseOnDivideByZero_,
+            3,
+        )
+        self.assertArgIsBOOL(
+            NSDecimalNumberHandler.initWithRoundingMode_scale_raiseOnExactness_raiseOnOverflow_raiseOnUnderflow_raiseOnDivideByZero_,
+            4,
+        )
+        self.assertArgIsBOOL(
+            NSDecimalNumberHandler.initWithRoundingMode_scale_raiseOnExactness_raiseOnOverflow_raiseOnUnderflow_raiseOnDivideByZero_,
+            5,
+        )
 
-        self.assertArgIsBOOL(NSDecimalNumberHandler.decimalNumberHandlerWithRoundingMode_scale_raiseOnExactness_raiseOnOverflow_raiseOnUnderflow_raiseOnDivideByZero_, 2)
-        self.assertArgIsBOOL(NSDecimalNumberHandler.decimalNumberHandlerWithRoundingMode_scale_raiseOnExactness_raiseOnOverflow_raiseOnUnderflow_raiseOnDivideByZero_, 3)
-        self.assertArgIsBOOL(NSDecimalNumberHandler.decimalNumberHandlerWithRoundingMode_scale_raiseOnExactness_raiseOnOverflow_raiseOnUnderflow_raiseOnDivideByZero_, 4)
-        self.assertArgIsBOOL(NSDecimalNumberHandler.decimalNumberHandlerWithRoundingMode_scale_raiseOnExactness_raiseOnOverflow_raiseOnUnderflow_raiseOnDivideByZero_, 5)
-
+        self.assertArgIsBOOL(
+            NSDecimalNumberHandler.decimalNumberHandlerWithRoundingMode_scale_raiseOnExactness_raiseOnOverflow_raiseOnUnderflow_raiseOnDivideByZero_,
+            2,
+        )
+        self.assertArgIsBOOL(
+            NSDecimalNumberHandler.decimalNumberHandlerWithRoundingMode_scale_raiseOnExactness_raiseOnOverflow_raiseOnUnderflow_raiseOnDivideByZero_,
+            3,
+        )
+        self.assertArgIsBOOL(
+            NSDecimalNumberHandler.decimalNumberHandlerWithRoundingMode_scale_raiseOnExactness_raiseOnOverflow_raiseOnUnderflow_raiseOnDivideByZero_,
+            4,
+        )
+        self.assertArgIsBOOL(
+            NSDecimalNumberHandler.decimalNumberHandlerWithRoundingMode_scale_raiseOnExactness_raiseOnOverflow_raiseOnUnderflow_raiseOnDivideByZero_,
+            5,
+        )
 
     def testProtocols(self):
-        objc.protocolNamed('NSDecimalNumberBehaviors')
-        self.assertArgHasType(Behaviour.exceptionDuringOperation_error_leftOperand_rightOperand_, 0, objc._C_SEL)
-        self.assertArgHasType(Behaviour.exceptionDuringOperation_error_leftOperand_rightOperand_, 1, objc._C_NSUInteger)
-        self.assertResultHasType(Behaviour.scale, objc._C_SHT) # XXX: should this happen without a protocol definition, a bit too generic!
+        objc.protocolNamed("NSDecimalNumberBehaviors")
+        self.assertArgHasType(
+            Behaviour.exceptionDuringOperation_error_leftOperand_rightOperand_,
+            0,
+            objc._C_SEL,
+        )
+        self.assertArgHasType(
+            Behaviour.exceptionDuringOperation_error_leftOperand_rightOperand_,
+            1,
+            objc._C_NSUInteger,
+        )
+        self.assertResultHasType(
+            Behaviour.scale, objc._C_SHT
+        )  # XXX: should this happen without a protocol definition, a bit too generic!
         self.assertResultHasType(Behaviour.roundingMode, objc._C_NSUInteger)
+
 
 if __name__ == "__main__":
     main()

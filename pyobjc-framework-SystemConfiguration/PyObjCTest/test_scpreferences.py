@@ -1,11 +1,11 @@
 from PyObjCTools.TestSupport import *
 from SystemConfiguration import *
 
-#from SecurityFoundation import SFAuthorization
-class TestSCPreferences (TestCase):
+# from SecurityFoundation import SFAuthorization
+class TestSCPreferences(TestCase):
     def testConstants(self):
-        self.assertEqual(kSCPreferencesNotificationCommit, 1<<0)
-        self.assertEqual(kSCPreferencesNotificationApply, 1<<1)
+        self.assertEqual(kSCPreferencesNotificationCommit, 1 << 0)
+        self.assertEqual(kSCPreferencesNotificationApply, 1 << 1)
 
     def testFunctions(self):
         self.assertIsInstance(SCPreferencesGetTypeID(), (int, long))
@@ -37,8 +37,10 @@ class TestSCPreferences (TestCase):
         self.assertIsInstance(r, CFArrayRef)
 
         l = []
+
         def callback(ref, key, ctx):
             l.append([ref, key, ctx])
+
         ctx = object()
 
         v = SCPreferencesSetCallback(ref, callback, ctx)
@@ -69,15 +71,12 @@ class TestSCPreferences (TestCase):
         self.assertResultIsBOOL(SCPreferencesUnscheduleFromRunLoop)
         r = SCPreferencesUnscheduleFromRunLoop(ref, rl, kCFRunLoopCommonModes)
 
-
         SCPreferencesSynchronize(ref)
-
 
     def testSecurityIntegreation(self):
         self.assertResultIsCFRetained(SCPreferencesCreateWithAuthorization)
 
-
-    @min_os_level('10.6')
+    @min_os_level("10.6")
     def testFunctions10_6(self):
         SCPreferencesSetDispatchQueue
 

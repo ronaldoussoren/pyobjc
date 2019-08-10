@@ -10,8 +10,5 @@ setup(
     name="DragItemAround",
     app=["DragItemAround.py"],
     data_files=["MainMenu.nib"],
-    setup_requires=[
-        "py2app",
-        "pyobjc-framework-Cocoa",
-    ]
+    setup_requires=["py2app", "pyobjc-framework-Cocoa"],
 )

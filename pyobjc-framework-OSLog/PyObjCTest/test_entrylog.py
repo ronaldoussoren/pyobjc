@@ -2,7 +2,8 @@ from PyObjCTools.TestSupport import *
 
 import OSLog
 
-class TestEntryLog (TestCase):
+
+class TestEntryLog(TestCase):
     def test_constants(self):
         self.assertEqual(OSLog.OSLogEntryLogLevelUndefined, 0)
         self.assertEqual(OSLog.OSLogEntryLogLevelDebug, 1)

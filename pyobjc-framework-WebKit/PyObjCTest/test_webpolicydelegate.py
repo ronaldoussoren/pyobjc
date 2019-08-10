@@ -1,8 +1,8 @@
-
 from PyObjCTools.TestSupport import *
 from WebKit import *
 
-class TestWebPolicyDelegate (TestCase):
+
+class TestWebPolicyDelegate(TestCase):
     def testConstants(self):
         self.assertIsInstance(WebActionNavigationTypeKey, unicode)
         self.assertIsInstance(WebActionElementKey, unicode)
@@ -18,11 +18,15 @@ class TestWebPolicyDelegate (TestCase):
         self.assertEqual(WebNavigationTypeOther, 5)
 
     def testProtocols(self):
-        self.assertIsInstance(objc.protocolNamed("WebPolicyDecisionListener"), objc.formal_protocol)
+        self.assertIsInstance(
+            objc.protocolNamed("WebPolicyDecisionListener"), objc.formal_protocol
+        )
 
-    @min_sdk_level('10.11')
+    @min_sdk_level("10.11")
     def testProtocols10_11(self):
-        self.assertIsInstance(objc.protocolNamed("WebPolicyDelegate"), objc.formal_protocol)
+        self.assertIsInstance(
+            objc.protocolNamed("WebPolicyDelegate"), objc.formal_protocol
+        )
 
 
 if __name__ == "__main__":

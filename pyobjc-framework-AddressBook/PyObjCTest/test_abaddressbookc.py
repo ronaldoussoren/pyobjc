@@ -1,19 +1,19 @@
-
 from PyObjCTools.TestSupport import *
 from AddressBook import *
 
-_C_ABAddressBookRef = b'^{__ABAddressBookRef=}'
-_C_ABMultiValueRef = b'^{__ABMultiValue=}'
-_C_ABPersonRef = b'^{__ABPerson=}'
-_C_ABGroupRef = b'^{__ABGroup=}'
-_C_ABSearchElementRef = b'^{__ABSearchElementRef=}'
-_C_CFStringRef = b'^{__CFString=}'
-_C_CFStringRefPtr = b'^^{__CFString}'
-_C_CFDictionaryRef = b'^{__CFDictionary=}'
-_C_CFArrayRef = b'^{__CFArray=}'
-_C_CFDataRef = b'^{__CFData=}'
+_C_ABAddressBookRef = b"^{__ABAddressBookRef=}"
+_C_ABMultiValueRef = b"^{__ABMultiValue=}"
+_C_ABPersonRef = b"^{__ABPerson=}"
+_C_ABGroupRef = b"^{__ABGroup=}"
+_C_ABSearchElementRef = b"^{__ABSearchElementRef=}"
+_C_CFStringRef = b"^{__CFString=}"
+_C_CFStringRefPtr = b"^^{__CFString}"
+_C_CFDictionaryRef = b"^{__CFDictionary=}"
+_C_CFArrayRef = b"^{__CFArray=}"
+_C_CFDataRef = b"^{__CFData=}"
 
-class TestABAddressBookC (TestCase):
+
+class TestABAddressBookC(TestCase):
     def testTypes(self):
         self.assertTrue(ABAddressBookRef is ABAddressBook)
         self.assertTrue(ABPersonRef is ABPerson)
@@ -47,7 +47,7 @@ class TestABAddressBookC (TestCase):
         self.assertArgHasType(ABSetMe, 1, _C_ABPersonRef)
 
         name = ABCopyRecordTypeFromUniqueId(ref, ABRecordCopyUniqueId(me))
-        self.assertEqual(name, 'ABPerson')
+        self.assertEqual(name, "ABPerson")
 
         self.assertResultHasType(ABAddPropertiesAndTypes, objc._C_CFIndex)
         self.assertArgHasType(ABAddPropertiesAndTypes, 0, _C_ABAddressBookRef)
@@ -59,7 +59,7 @@ class TestABAddressBookC (TestCase):
         self.assertArgHasType(ABRemoveProperties, 1, _C_CFStringRef)
         self.assertArgHasType(ABRemoveProperties, 2, _C_CFArrayRef)
 
-        v = ABCopyArrayOfPropertiesForRecordType(ref, 'ABPerson')
+        v = ABCopyArrayOfPropertiesForRecordType(ref, "ABPerson")
         self.assertResultIsCFRetained(ABCopyArrayOfPropertiesForRecordType)
         self.assertIsInstance(v, NSArray)
         self.assertTrue(len(v))
@@ -71,7 +71,6 @@ class TestABAddressBookC (TestCase):
         v = ABCopyRecordForUniqueId(ref, ABRecordCopyUniqueId(me))
         self.assertResultIsCFRetained(ABCopyRecordForUniqueId)
         self.assertIsInstance(v, ABPersonRef)
-
 
         self.assertResultHasType(ABAddRecord, objc._C_BOOL)
         self.assertArgHasType(ABAddRecord, 0, _C_ABAddressBookRef)
@@ -176,7 +175,9 @@ class TestABAddressBookC (TestCase):
         self.assertArgHasType(ABGroupCreateSearchElement, 3, objc._C_ID)
         self.assertArgHasType(ABGroupCreateSearchElement, 4, objc._C_CFIndex)
 
-        self.assertResultHasType(ABSearchElementCreateWithConjunction, _C_ABSearchElementRef)
+        self.assertResultHasType(
+            ABSearchElementCreateWithConjunction, _C_ABSearchElementRef
+        )
         self.assertArgHasType(ABSearchElementCreateWithConjunction, 0, objc._C_CFIndex)
         self.assertArgHasType(ABSearchElementCreateWithConjunction, 1, _C_CFArrayRef)
 
@@ -216,7 +217,6 @@ class TestABAddressBookC (TestCase):
 
         self.assertResultHasType(ABMultiValueCreateMutable, _C_ABMultiValueRef)
 
-
         self.assertResultHasType(ABMultiValueAdd, objc._C_BOOL)
         self.assertArgHasType(ABMultiValueAdd, 0, _C_ABMultiValueRef)
         self.assertArgHasType(ABMultiValueAdd, 1, objc._C_ID)
@@ -255,8 +255,12 @@ class TestABAddressBookC (TestCase):
         self.assertArgHasType(ABCopyLocalizedPropertyOrLabel, 0, _C_CFStringRef)
 
         self.assertResultHasType(ABCreateFormattedAddressFromDictionary, _C_CFStringRef)
-        self.assertArgHasType(ABCreateFormattedAddressFromDictionary, 0, _C_ABAddressBookRef)
-        self.assertArgHasType(ABCreateFormattedAddressFromDictionary, 1, _C_CFDictionaryRef)
+        self.assertArgHasType(
+            ABCreateFormattedAddressFromDictionary, 0, _C_ABAddressBookRef
+        )
+        self.assertArgHasType(
+            ABCreateFormattedAddressFromDictionary, 1, _C_CFDictionaryRef
+        )
 
         self.assertResultHasType(ABCopyDefaultCountryCode, _C_CFStringRef)
         self.assertArgHasType(ABCopyDefaultCountryCode, 0, _C_ABAddressBookRef)
@@ -277,8 +281,9 @@ class TestABAddressBookC (TestCase):
         idx = ABBeginLoadingImageDataForClient(me, callback, 99)
         self.assertIsInstance(idx, (int, long))
 
-        #CFRunLoopRunInMode(kCFRunLoopDefaultMode, 1.0, True)
+        # CFRunLoopRunInMode(kCFRunLoopDefaultMode, 1.0, True)
         ABCancelLoadingImageDataForTag(idx)
+
 
 if __name__ == "__main__":
     main()

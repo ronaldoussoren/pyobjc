@@ -1,7 +1,8 @@
 from PyObjCTools.TestSupport import *
 from CoreText import *
 
-class TestCTFontManagerErrors (TestCase):
+
+class TestCTFontManagerErrors(TestCase):
     @min_os_level("10.6")
     def testConstants10_6(self):
         self.assertIsInstance(kCTFontManagerErrorDomain, unicode)

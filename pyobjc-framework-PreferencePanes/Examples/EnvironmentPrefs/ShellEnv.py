@@ -20,26 +20,28 @@ import os
 
 # Uncomment this during development, you'll get exception tracebacks when
 # the Python code fails.
-#objc.setVerbose(1)
+# objc.setVerbose(1)
 
 # Location of the environment.plist
-ENVPLIST="~/.MacOSX/environment.plist"
+ENVPLIST = "~/.MacOSX/environment.plist"
 
 # Template for new keys
-NEWTMPL=Cocoa.NSLocalizedString("New_Variable_%d", "")
+NEWTMPL = Cocoa.NSLocalizedString("New_Variable_%d", "")
 
-class EnvironmentPane (PreferencePanes.NSPreferencePane):
+
+class EnvironmentPane(PreferencePanes.NSPreferencePane):
     """
     The 'model/controller' for the "Shell Environment" preference pane
     """
+
     deleteButton = objc.IBOutlet()
     mainTable = objc.IBOutlet()
 
-    #__slots__ = (
+    # __slots__ = (
     #    'environ',  # The actual environment, as a NSMutableDictionary
     #    'keys',     # The list of keys, in the right order for the tableView
     #    'changed',  # True if we should save before exitting
-    #)
+    # )
 
     def initWithBundle_(self, bundle):
         # Our bundle has been loaded, initialize the instance variables.
@@ -47,7 +49,8 @@ class EnvironmentPane (PreferencePanes.NSPreferencePane):
         # actually selected. That way we can easier pick up manual changes.
 
         self = super(EnvironmentPane, self).initWithBundle_(bundle)
-        if self is None: return None
+        if self is None:
+            return None
 
         self.keys = ()
         self.environ = None
@@ -62,7 +65,8 @@ class EnvironmentPane (PreferencePanes.NSPreferencePane):
         # We are the selected preference pane. Load the environment.plist.
 
         self.environ = Cocoa.NSMutableDictionary.dictionaryWithContentsOfFile_(
-            os.path.expanduser(ENVPLIST))
+            os.path.expanduser(ENVPLIST)
+        )
         if self.environ is None:
             self.environ = Cocoa.NSMutableDictionary.dictionary()
         self.keys = list(self.environ.keys())
@@ -85,7 +89,10 @@ class EnvironmentPane (PreferencePanes.NSPreferencePane):
                 None,
                 "sheetDidDismiss:returnCode:contextInfo:",
                 0,
-                Cocoa.NSLocalizedString("There are unsaved changed, should these be saved?", ""))
+                Cocoa.NSLocalizedString(
+                    "There are unsaved changed, should these be saved?", ""
+                ),
+            )
             return PreferencePanes.NSUnselectLater
         return PreferencePanes.NSUnselectNow
 
@@ -93,19 +100,22 @@ class EnvironmentPane (PreferencePanes.NSPreferencePane):
     def sheetDidDismiss_returnCode_contextInfo_(self, sheet, code, info):
         # Sheet handler for saving unsaved changes.
 
-        if code == Cocoa.NSAlertDefaultReturn: # 'Cancel'
+        if code == Cocoa.NSAlertDefaultReturn:  # 'Cancel'
             self.replyToShouldUnselect_(PreferencePanes.NSUnselectCancel)
             return
 
-        elif code == Cocoa.NSAlertAlternateReturn: # 'Don't Save'
+        elif code == Cocoa.NSAlertAlternateReturn:  # 'Don't Save'
             pass
 
-        elif code == Cocoa.NSAlertOtherReturn: # 'Save'
+        elif code == Cocoa.NSAlertOtherReturn:  # 'Save'
             r = self.saveEnvironment()
             if not r:
                 self.runAlertSheet(
                     Cocoa.NSLocalizedString("Cannot save changes", ""),
-                    Cocoa.NSLocalizedString("It was not possible to save your changes", ""))
+                    Cocoa.NSLocalizedString(
+                        "It was not possible to save your changes", ""
+                    ),
+                )
                 self.replyToShouldUnselect_(PreferencePanes.NSUnselectCancel)
                 return
 
@@ -150,10 +160,10 @@ class EnvironmentPane (PreferencePanes.NSPreferencePane):
         Add a new variable
         """
         i = 0
-        name = NEWTMPL%(i,)
+        name = NEWTMPL % (i,)
         while self.environ.has_key(name):
             i += 1
-            name = NEWTMPL%(i,)
+            name = NEWTMPL % (i,)
         self.environ[name] = Cocoa.NSLocalizedString("New Value", "")
         self.keys = list(self.environ.keys())
         self.keys.sort()
@@ -174,8 +184,7 @@ class EnvironmentPane (PreferencePanes.NSPreferencePane):
         elif name == "value":
             return self.environ[envname]
 
-    def tableView_setObjectValue_forTableColumn_row_(self,
-            aView, value, aCol,rowIndex):
+    def tableView_setObjectValue_forTableColumn_row_(self, aView, value, aCol, rowIndex):
         """ Change the name or value of an environment variable """
         if self.environ is None:
             aView.reloadData()
@@ -189,8 +198,9 @@ class EnvironmentPane (PreferencePanes.NSPreferencePane):
                 if self.environ.has_key(value):
                     self.runAlertSheet(
                         Cocoa.NSLocalizedString("Name exists", ""),
-                        Cocoa.NSLocalizedString("The name %s is already used", "")%(
-                            value,))
+                        Cocoa.NSLocalizedString("The name %s is already used", "")
+                        % (value,),
+                    )
                     aView.reloadData()
                     return
 
@@ -218,13 +228,18 @@ class EnvironmentPane (PreferencePanes.NSPreferencePane):
     @objc.python_method
     def runAlertSheet(self, title, message):
         """ Run an alertsheet without callbacks """
-        Cocoa.NSBeginAlertSheet(title,
-            Cocoa.NSLocalizedString("OK", ""), None, None,
+        Cocoa.NSBeginAlertSheet(
+            title,
+            Cocoa.NSLocalizedString("OK", ""),
+            None,
+            None,
             self.mainView().window(),
             self,
             None,
             None,
             0,
-            message)
+            message,
+        )
+
 
 objc.removeAutoreleasePool()

@@ -1,7 +1,8 @@
 from Foundation import *
 from PyObjCTools.TestSupport import *
 
-class TestXMLDTDNode (TestCase):
+
+class TestXMLDTDNode(TestCase):
     def testConstants(self):
         self.assertEqual(NSXMLEntityGeneralKind, 1)
         self.assertEqual(NSXMLEntityParsedKind, 2)
@@ -11,7 +12,7 @@ class TestXMLDTDNode (TestCase):
         self.assertEqual(NSXMLAttributeCDATAKind, 6)
         self.assertEqual(NSXMLAttributeIDKind, 7)
         self.assertEqual(NSXMLAttributeIDRefKind, 8)
-        self.assertEqual(NSXMLAttributeIDRefsKind,  9)
+        self.assertEqual(NSXMLAttributeIDRefsKind, 9)
         self.assertEqual(NSXMLAttributeEntityKind, 10)
         self.assertEqual(NSXMLAttributeEntitiesKind, 11)
         self.assertEqual(NSXMLAttributeNMTokenKind, 12)

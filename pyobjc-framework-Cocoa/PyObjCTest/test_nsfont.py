@@ -14,17 +14,15 @@ class TestNSFont(TestCase):
             # This should probably be 'assertAlmostEquals'
             self.assertEqual(v1, v2)
 
-
     def testMatrixMethods(self):
-        o = AppKit.NSFont.boldSystemFontOfSize_(10);
+        o = AppKit.NSFont.boldSystemFontOfSize_(10)
         m = o.matrix()
         self.assertTrue(isinstance(m, tuple))
         self.assertEqual(len(m), 6)
 
         nm = o.fontName()
 
-        o = AppKit.NSFont.fontWithName_matrix_(
-                nm, AppKit.NSFontIdentityMatrix)
+        o = AppKit.NSFont.fontWithName_matrix_(nm, AppKit.NSFontIdentityMatrix)
         self.assertTrue(o is not None)
 
         m = o.matrix()
@@ -35,7 +33,7 @@ class TestNSFont(TestCase):
 
         # For some reason Tiger transforms this matrix to the one below. The
         # same thing happens in pure ObjC code.
-        #o = AppKit.NSFont.fontWithName_matrix_(nm, (1.0, 2.0, 3.0, 4.0, 5.0, 6.0))
+        # o = AppKit.NSFont.fontWithName_matrix_(nm, (1.0, 2.0, 3.0, 4.0, 5.0, 6.0))
         o = AppKit.NSFont.fontWithName_matrix_(nm, (12.0, 0.0, 0.0, 12.0, 0.0, 0.0))
         self.assertTrue(o is not None)
 
@@ -43,18 +41,24 @@ class TestNSFont(TestCase):
         self.assertIsInstance(m, tuple)
         self.assertEqual(len(m), 6)
 
-        #self.matrixEquals(m, (1.0, 2.0, 3.0, 4.0, 5.0, 6.0))
+        # self.matrixEquals(m, (1.0, 2.0, 3.0, 4.0, 5.0, 6.0))
         self.matrixEquals(m, (12.0, 0.0, 0.0, 12.0, 0.0, 0.0))
 
         self.assertRaises(ValueError, AppKit.NSFont.fontWithName_matrix_, nm, "foo")
-        self.assertRaises(ValueError, AppKit.NSFont.fontWithName_matrix_, nm, (1, 2, 3, 4))
-        self.assertRaises(ValueError, AppKit.NSFont.fontWithName_matrix_, nm, (1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0))
-
+        self.assertRaises(
+            ValueError, AppKit.NSFont.fontWithName_matrix_, nm, (1, 2, 3, 4)
+        )
+        self.assertRaises(
+            ValueError,
+            AppKit.NSFont.fontWithName_matrix_,
+            nm,
+            (1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0),
+        )
 
     def testConstants(self):
         self.assertEqual(AppKit.NSFontIdentityMatrix, None)
 
-        self.assertEqual(NSControlGlyph, 0xffffff)
+        self.assertEqual(NSControlGlyph, 0xFFFFFF)
         self.assertEqual(NSNullGlyph, 0)
         self.assertEqual(NSNativeShortGlyphPacking, 5)
 
@@ -95,7 +99,7 @@ class TestNSFont(TestCase):
         self.assertIsInstance(NSAFMItalicAngle, unicode)
         self.assertIsInstance(NSAFMMappingScheme, unicode)
 
-    @min_os_level('10.13')
+    @min_os_level("10.13")
     def testMethods10_13(self):
         self.assertArgIsOut(NSFont.getBoundingRects_forCGGlyphs_count_, 0)
         self.assertArgIsIn(NSFont.getBoundingRects_forCGGlyphs_count_, 1)
@@ -107,21 +111,21 @@ class TestNSFont(TestCase):
         self.assertArgSizeInArg(NSFont.getAdvancements_forCGGlyphs_count_, 0, 2)
         self.assertArgSizeInArg(NSFont.getAdvancements_forCGGlyphs_count_, 1, 2)
 
-    @min_os_level('10.7')
+    @min_os_level("10.7")
     def testMethods10_7(self):
         self.assertResultIsBOOL(NSFont.isVertical)
 
     def testMethods(self):
         self.assertResultIsBOOL(NSFont.isFixedPitch)
         self.assertArgIsOut(NSFont.getBoundingRects_forGlyphs_count_, 0)
-        self.assertArgHasType(NSFont.getBoundingRects_forGlyphs_count_, 1, b'n^I')
+        self.assertArgHasType(NSFont.getBoundingRects_forGlyphs_count_, 1, b"n^I")
         self.assertArgSizeInArg(NSFont.getBoundingRects_forGlyphs_count_, 0, 2)
         self.assertArgSizeInArg(NSFont.getBoundingRects_forGlyphs_count_, 1, 2)
         self.assertArgIsOut(NSFont.getAdvancements_forGlyphs_count_, 0)
-        self.assertArgHasType(NSFont.getAdvancements_forGlyphs_count_, 1, b'n^I')
+        self.assertArgHasType(NSFont.getAdvancements_forGlyphs_count_, 1, b"n^I")
         self.assertArgSizeInArg(NSFont.getAdvancements_forGlyphs_count_, 0, 2)
         self.assertArgSizeInArg(NSFont.getAdvancements_forGlyphs_count_, 1, 2)
-        if hasattr(NSFont, 'getAdvancements_forPackedGlyphs_count_'):
+        if hasattr(NSFont, "getAdvancements_forPackedGlyphs_count_"):
             self.assertArgIsOut(NSFont.getAdvancements_forPackedGlyphs_count_, 0)
             self.assertArgIsIn(NSFont.getAdvancements_forPackedGlyphs_count_, 1)
         self.assertArgSizeInArg(NSFont.getAdvancements_forPackedGlyphs_length_, 0, 2)
@@ -131,28 +135,55 @@ class TestNSFont(TestCase):
     def testMethods32(self):
         self.assertResultIsBOOL(NSFont.isBaseFont)
         self.assertResultIsBOOL(NSFont.glyphIsEncoded_)
-        self.assertArgHasType(NSFont.glyphIsEncoded_, 0, b'I')
-        self.assertArgHasType(NSFont.positionOfGlyph_precededByGlyph_isNominal_, 0, b'I')
-        self.assertArgHasType(NSFont.positionOfGlyph_precededByGlyph_isNominal_, 1, b'I')
-        self.assertArgHasType(NSFont.positionOfGlyph_precededByGlyph_isNominal_, 2, b'o^'+objc._C_NSBOOL)
+        self.assertArgHasType(NSFont.glyphIsEncoded_, 0, b"I")
+        self.assertArgHasType(NSFont.positionOfGlyph_precededByGlyph_isNominal_, 0, b"I")
+        self.assertArgHasType(NSFont.positionOfGlyph_precededByGlyph_isNominal_, 1, b"I")
+        self.assertArgHasType(
+            NSFont.positionOfGlyph_precededByGlyph_isNominal_, 2, b"o^" + objc._C_NSBOOL
+        )
 
-        self.assertArgHasType(NSFont.positionsForCompositeSequence_numberOfGlyphs_pointArray_, 0, b'n^I')
-        self.assertArgSizeInArg(NSFont.positionsForCompositeSequence_numberOfGlyphs_pointArray_, 0, 1)
-        self.assertArgHasType(NSFont.positionsForCompositeSequence_numberOfGlyphs_pointArray_, 2, b'o^'+NSPoint.__typestr__)
-        self.assertArgSizeInArg(NSFont.positionsForCompositeSequence_numberOfGlyphs_pointArray_, 2, 1)
+        self.assertArgHasType(
+            NSFont.positionsForCompositeSequence_numberOfGlyphs_pointArray_, 0, b"n^I"
+        )
+        self.assertArgSizeInArg(
+            NSFont.positionsForCompositeSequence_numberOfGlyphs_pointArray_, 0, 1
+        )
+        self.assertArgHasType(
+            NSFont.positionsForCompositeSequence_numberOfGlyphs_pointArray_,
+            2,
+            b"o^" + NSPoint.__typestr__,
+        )
+        self.assertArgSizeInArg(
+            NSFont.positionsForCompositeSequence_numberOfGlyphs_pointArray_, 2, 1
+        )
 
-        self.assertArgHasType(NSFont.positionOfGlyph_struckOverGlyph_metricsExist_, 2, b'o^' + objc._C_NSBOOL)
-        self.assertArgHasType(NSFont.positionOfGlyph_struckOverRect_metricsExist_, 2, b'o^' + objc._C_NSBOOL)
+        self.assertArgHasType(
+            NSFont.positionOfGlyph_struckOverGlyph_metricsExist_,
+            2,
+            b"o^" + objc._C_NSBOOL,
+        )
+        self.assertArgHasType(
+            NSFont.positionOfGlyph_struckOverRect_metricsExist_, 2, b"o^" + objc._C_NSBOOL
+        )
 
-        if os_level_key(os_release()) < os_level_key('10.10'):
-            self.assertArgHasType(NSFont.positionOfGlyph_withRelation_toBaseGlyph_totalAdvancement_metricsExist_, 3, b'o^' + NSSize.__typestr__)
-            self.assertArgHasType(NSFont.positionOfGlyph_withRelation_toBaseGlyph_totalAdvancement_metricsExist_, 4, b'o^' + objc._C_NSBOOL)
-
+        if os_level_key(os_release()) < os_level_key("10.10"):
+            self.assertArgHasType(
+                NSFont.positionOfGlyph_withRelation_toBaseGlyph_totalAdvancement_metricsExist_,
+                3,
+                b"o^" + NSSize.__typestr__,
+            )
+            self.assertArgHasType(
+                NSFont.positionOfGlyph_withRelation_toBaseGlyph_totalAdvancement_metricsExist_,
+                4,
+                b"o^" + objc._C_NSBOOL,
+            )
 
     def testFunctions(self):
-        glyphs = [ ord('A'), ord('B'), ord('9'), ord('a') ]
+        glyphs = [ord("A"), ord("B"), ord("9"), ord("a")]
 
-        rv, packed = NSConvertGlyphsToPackedGlyphs(glyphs, len(glyphs), NSNativeShortGlyphPacking, None)
+        rv, packed = NSConvertGlyphsToPackedGlyphs(
+            glyphs, len(glyphs), NSNativeShortGlyphPacking, None
+        )
         self.assertIsInstance(rv, (int, long))
         self.assertIsInstance(packed, str)
         if rv == 0:
@@ -161,5 +192,6 @@ class TestNSFont(TestCase):
         else:
             self.assertEqual(len(packed), rv)
 
-if __name__ == '__main__':
-    main( )
+
+if __name__ == "__main__":
+    main()

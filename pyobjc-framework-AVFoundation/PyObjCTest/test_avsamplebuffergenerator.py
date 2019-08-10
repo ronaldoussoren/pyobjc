@@ -3,10 +3,14 @@ from PyObjCTools.TestSupport import *
 import AVFoundation
 
 
-class TestAVSampleBufferGenerator (TestCase):
-    @min_os_level('10.10')
+class TestAVSampleBufferGenerator(TestCase):
+    @min_os_level("10.10")
     def testMethods(self):
-        self.assertArgIsBlock(AVFoundation.AVSampleBufferGenerator.notifyOfDataReadyForSampleBuffer_completionHandler_, 1, b'vZ@')
+        self.assertArgIsBlock(
+            AVFoundation.AVSampleBufferGenerator.notifyOfDataReadyForSampleBuffer_completionHandler_,
+            1,
+            b"vZ@",
+        )
 
     def testConstants(self):
         self.assertEqual(AVFoundation.AVSampleBufferRequestDirectionForward, +1)

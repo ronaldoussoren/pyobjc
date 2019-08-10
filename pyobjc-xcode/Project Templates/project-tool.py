@@ -1,6 +1,7 @@
 #!/usr/bin/env python
+from __future__ import print_function
 
-__version__ = '0.1'
+__version__ = "0.1"
 
 import sys
 import os
@@ -15,11 +16,17 @@ import logging
 from logging import error, info, debug
 
 import site
-site.addsitedir(os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), 'source-deps'))
+
+site.addsitedir(
+    os.path.join(
+        os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "source-deps"
+    )
+)
 
 import subprocess
 
 from Foundation import NSDictionary
+
 
 def deletePath(path):
     info("Removing '%s'...", path)
@@ -28,15 +35,25 @@ def deletePath(path):
     else:
         os.remove(path)
 
+
 ## define functions used in script
-NASTYFILEEXPR = re.compile(r'|'.join([
-    r'(?:%s)' % (_exp,) for _exp in
-    [
-        r'^\.svn$', r'^CVS$', r'^\.DS_Store$', r'~.*$',
-        r'(^|/)(?!/?default).*?\.pbxuser$',
-        r'^build$', r'\.mode[0-9](v3|)$'
-    ]
-]))
+NASTYFILEEXPR = re.compile(
+    r"|".join(
+        [
+            r"(?:%s)" % (_exp,)
+            for _exp in [
+                r"^\.svn$",
+                r"^CVS$",
+                r"^\.DS_Store$",
+                r"~.*$",
+                r"(^|/)(?!/?default).*?\.pbxuser$",
+                r"^build$",
+                r"\.mode[0-9](v3|)$",
+            ]
+        ]
+    )
+)
+
 
 def killNasties(dirName, aName, options):
     if NASTYFILEEXPR.search(aName) is None:
@@ -45,76 +62,94 @@ def killNasties(dirName, aName, options):
     path = os.path.join(dirName, aName)
     deletePath(path)
 
+
 ## define per-file behaviors
 def maybenib(encoding):
     def maybenib(fn):
-        if file(fn).read(11) == 'typedstream':
+        if file(fn).read(11) == "typedstream":
             info("Convert %s to a text nib file if you need substitution", fn)
             return None
         return encoding(fn)
+
     return maybenib
+
 
 def maybeutf(encoding=None):
     def maybeutf(fn):
         header = file(fn).read(4)
         if header.startswith(codecs.BOM_UTF8):
-            return 'utf_8'
+            return "utf_8"
         elif header.startswith(codecs.BOM_UTF16_BE):
-            return 'utf_16_be'
+            return "utf_16_be"
         elif header.startswith(codecs.BOM_UTF16_LE):
-            return 'utf_16_le'
+            return "utf_16_le"
         # some hacks to guess BOM-less UTF-16 text
-        elif header[0::2] == '\x00\x00' and header[1::2] != '\x00\x00':
-            return 'utf_16_be'
-        elif header[1::2] == '\x00\x00' and header[0::2] != '\x00\x00':
-            return 'utf_16_le'
+        elif header[0::2] == "\x00\x00" and header[1::2] != "\x00\x00":
+            return "utf_16_be"
+        elif header[1::2] == "\x00\x00" and header[0::2] != "\x00\x00":
+            return "utf_16_le"
         # anything else is undetermined, can't match
         # utf-8 against <?xm because it's the same in
         # all of the latin/romanish codecs
         firstline = file(fn).readline()
         if firstline.startswith('<?xml version="1.0" encoding="UTF-8"?>'):
-            return 'utf_8'
-        if firstline.startswith('// !$*UTF8*$!'):
-            return 'utf_8'
+            return "utf_8"
+        if firstline.startswith("// !$*UTF8*$!"):
+            return "utf_8"
         return encoding
+
     return maybeutf
 
 
 def _buildEncodingsDict():
     d = {}
     # XXX - SHOULD CHECK FOR XML ENCODINGS?
-    d['.nib'] = maybenib(maybeutf('macroman'))
-    for k in ['.pbxproj', '.xib']:
-        d[k] = maybeutf('utf_8')
-    for k in ['.py', '.m', '.h', '.c', '.pch', '.rtf', '.java', '.applescript', '.dependency', '.plist', '.pbxuser']:
-        d[k] = maybeutf('macroman')
-    for k in ['.strings']:
+    d[".nib"] = maybenib(maybeutf("macroman"))
+    for k in [".pbxproj", ".xib"]:
+        d[k] = maybeutf("utf_8")
+    for k in [
+        ".py",
+        ".m",
+        ".h",
+        ".c",
+        ".pch",
+        ".rtf",
+        ".java",
+        ".applescript",
+        ".dependency",
+        ".plist",
+        ".pbxuser",
+    ]:
+        d[k] = maybeutf("macroman")
+    for k in [".strings"]:
         # should be utf_16, but that is always detectable
-        d[k] = maybeutf('utf_8')
+        d[k] = maybeutf("utf_8")
     return d
 
-extensionsThatRequireQuoting = ['.pbxproj', '.plist']
+
+extensionsThatRequireQuoting = [".pbxproj", ".plist"]
 
 ENCODINGS = _buildEncodingsDict()
 
-WORKINGCOPYFILES = ['.pch']
-CTYPEFILES = ['.pch']
+WORKINGCOPYFILES = [".pch"]
+CTYPEFILES = [".pch"]
+
 
 def doTemplateInfo(aFile, options, translator):
     basename, extension = os.path.splitext(aFile)
-    encoding = ENCODINGS.get(extension, lambda fn:None)(aFile)
+    encoding = ENCODINGS.get(extension, lambda fn: None)(aFile)
     doFileSubstitution(aFile, encoding, translator)
 
-SPECIALFILES = {
-    "TemplateInfo.plist" : doTemplateInfo,
-}
 
-SUBSTITUTIONMESSAGE = u"""
+SPECIALFILES = {"TemplateInfo.plist": doTemplateInfo}
+
+SUBSTITUTIONMESSAGE = """
 
 // WARNING
 // This file is copied from %(name)s.  Keep the two in sync.
 // --- file resumes after here ---
 """
+
 
 def doSubstitutions(dirName, aName, options):
     if options.doReverse:
@@ -129,10 +164,10 @@ def doSubstitutions(dirName, aName, options):
 
     path = os.path.join(dirName, aName)
     if os.path.isdir(path):
-        if options.rewriteNibFiles and (extension == '.nib'):
+        if options.rewriteNibFiles and (extension == ".nib"):
             if options.verbose:
-                print "Rewriting NIB %s" % path
-            ret = subprocess.call(['/usr/bin/nibtool', '-r', '--format', '4', path])
+                print("Rewriting NIB %s" % path)
+            ret = subprocess.call(["/usr/bin/nibtool", "-r", "--format", "4", path])
             if ret:
                 error("nibtool barfed back %d." % ret)
         return
@@ -142,12 +177,17 @@ def doSubstitutions(dirName, aName, options):
         specialCommand(path, options, translator)
         return
 
-    encoding = ENCODINGS.get(extension, lambda fn:None)(path)
+    encoding = ENCODINGS.get(extension, lambda fn: None)(path)
     if encoding is None:
         error("*WARN* Skipping unknown file with unknown type: %s", path)
     else:
-        info('Processing %s....', aName)
-        if options.makeWorking and (extension in WORKINGCOPYFILES) and not options.doReverse and aName.split("_", 1)[0] == 'xcPROJECTNAMExc':
+        info("Processing %s....", aName)
+        if (
+            options.makeWorking
+            and (extension in WORKINGCOPYFILES)
+            and not options.doReverse
+            and aName.split("_", 1)[0] == "xcPROJECTNAMExc"
+        ):
             deletePath(path)
         else:
             cleanQuotes = None
@@ -159,13 +199,13 @@ def doSubstitutions(dirName, aName, options):
         tail = aName.split("_", 1)[1]
         targetFile = os.path.join(dirName, "xcPROJECTNAMExc_%s" % (tail,))
 
-        info('Making working copy of %s to %s...', path, targetFile)
+        info("Making working copy of %s to %s...", path, targetFile)
 
         inFile = codecs.EncodedFile(file(path, "rb"), encoding)
-        outFile = codecs.EncodedFile(file(targetFile, 'wb'), encoding)
+        outFile = codecs.EncodedFile(file(targetFile, "wb"), encoding)
 
         if extension in CTYPEFILES:
-            outFile.write(SUBSTITUTIONMESSAGE % dict(name = aName))
+            outFile.write(SUBSTITUTIONMESSAGE % dict(name=aName))
 
         for line in inFile:
             outFile.write(line)
@@ -173,11 +213,12 @@ def doSubstitutions(dirName, aName, options):
         inFile.close()
         outFile.close()
 
-def doFileSubstitution(aFile, encoding, translator, cleanQuotes = False):
+
+def doFileSubstitution(aFile, encoding, translator, cleanQuotes=False):
     _tempFile = tempfile.TemporaryFile()
 
     # do the translation
-    info('encoding is: %s' % (encoding))
+    info("encoding is: %s" % (encoding))
     inFile = codecs.getreader(encoding)(file(aFile, "rb"))
     outFile = codecs.getwriter(encoding)(_tempFile)
     for line in inFile:
@@ -194,38 +235,49 @@ def doFileSubstitution(aFile, encoding, translator, cleanQuotes = False):
     copyFile.close()
     _tempFile.close()
 
+
 ## substitution strings
-FORWARD = u'xc', u'xc'
-REVERSE = u'\N{LEFT-POINTING DOUBLE ANGLE QUOTATION MARK}', u'\N{RIGHT-POINTING DOUBLE ANGLE QUOTATION MARK}'
+FORWARD = "xc", "xc"
+REVERSE = (
+    "\N{LEFT-POINTING DOUBLE ANGLE QUOTATION MARK}",
+    "\N{RIGHT-POINTING DOUBLE ANGLE QUOTATION MARK}",
+)
 
 SUBSTITUTIONSTRINGS = [
-    'PROJECTNAME',
-    'FULLUSERNAME',
-    'DATE',
-    'YEAR',
-    'PROJECTNAMEASIDENTIFIER',
-    'PROJECTNAMEASXML',
-    'ORGANIZATIONNAME'
+    "PROJECTNAME",
+    "FULLUSERNAME",
+    "DATE",
+    "YEAR",
+    "PROJECTNAMEASIDENTIFIER",
+    "PROJECTNAMEASXML",
+    "ORGANIZATIONNAME",
 ]
 
-BASEREGEX = '(%s)' % ('|'.join(SUBSTITUTIONSTRINGS),)
+BASEREGEX = "(%s)" % ("|".join(SUBSTITUTIONSTRINGS),)
+
 
 def getRegSub(forward, reverse, regex=BASEREGEX):
     left, right = forward
     reg = re.compile(left + regex + right)
-    sub = r'%s\1%s' % reverse
+    sub = r"%s\1%s" % reverse
+
     def getRegSub(s):
         return reg.sub(sub, s)
+
     return getRegSub
+
 
 def getQuoteSub(marks):
     left, right = marks
-    regex = '([^\s]*%s(%s)%s[^; ]*);' % (left, '|'.join(SUBSTITUTIONSTRINGS), right,)
+    regex = "([^\s]*%s(%s)%s[^; ]*);" % (left, "|".join(SUBSTITUTIONSTRINGS), right)
     reg = re.compile(regex)
     sub = r'"\1";'
+
     def getRegSub(s):
         return reg.sub(sub, s)
+
     return getRegSub
+
 
 FORWARDTRANSLATOR = getRegSub(FORWARD, REVERSE)
 REVERSETRANSLATOR = getRegSub(REVERSE, FORWARD)
@@ -247,30 +299,48 @@ def build_parser():
     parser = OptionParser(USAGE, version=__version__)
 
     def store_true(*args, **kwargs):
-        kwargs['action'] = 'store_true'
-        kwargs['default'] = False
+        kwargs["action"] = "store_true"
+        kwargs["default"] = False
         parser.add_option(*args, **kwargs)
 
-    store_true('-v', '--verbose',
-        dest='verbose', help='verbose')
-    store_true('-k', '--kill-dest',
-        dest='killDest', help='erase <dest> (no warning)')
-    store_true('-r', '--reverse',
-        dest='doReverse', help='reverse transformation (template -> editable project)')
-    store_true('-w', '--working',
-        dest='makeWorking', help='try to make destination into a working project')
-    store_true('-n', '--nib',
-        dest='rewriteNibFiles', help='rewrite NIB files to 10.5 text-only format')
+    store_true("-v", "--verbose", dest="verbose", help="verbose")
+    store_true("-k", "--kill-dest", dest="killDest", help="erase <dest> (no warning)")
+    store_true(
+        "-r",
+        "--reverse",
+        dest="doReverse",
+        help="reverse transformation (template -> editable project)",
+    )
+    store_true(
+        "-w",
+        "--working",
+        dest="makeWorking",
+        help="try to make destination into a working project",
+    )
+    store_true(
+        "-n",
+        "--nib",
+        dest="rewriteNibFiles",
+        help="rewrite NIB files to 10.5 text-only format",
+    )
 
-    parser.add_option('-t', '--template', type="string",
-        dest='templateFile', help='path to TemplateInfo.plist that should be used during conversion')
+    parser.add_option(
+        "-t",
+        "--template",
+        type="string",
+        dest="templateFile",
+        help="path to TemplateInfo.plist that should be used during conversion",
+    )
     return parser
+
 
 def simplePathWalker(walkdir, fn, arg=None):
     def _simplePathWalker(arg, dirname, fnames):
         for name in fnames:
             fn(dirname, name, arg)
+
     os.path.walk(walkdir, _simplePathWalker, arg)
+
 
 def main():
     parser = build_parser()
@@ -286,7 +356,7 @@ def main():
 
     if options.verbose:
         hdlr = logging.StreamHandler()
-        fmt = logging.Formatter('%(message)s')
+        fmt = logging.Formatter("%(message)s")
         hdlr.setFormatter(fmt)
         logger = logging.getLogger()
         logger.addHandler(hdlr)
@@ -303,7 +373,9 @@ def main():
         if options.killDest:
             deletePath(dest)
         else:
-            parser.error("Destination already exists.  -k to destroy or use different destination.")
+            parser.error(
+                "Destination already exists.  -k to destroy or use different destination."
+            )
             return
 
     if options.templateFile and (not os.path.exists(options.templateFile)):
@@ -316,11 +388,13 @@ def main():
     simplePathWalker(dest, killNasties, options)
     simplePathWalker(dest, doSubstitutions, options)
     if options.templateFile:
-        options.template = NSDictionary.dictionaryWithContentsOfFile_(options.templateFile)
+        options.template = NSDictionary.dictionaryWithContentsOfFile_(
+            options.templateFile
+        )
         if not options.template:
             parser.error("Failed to read template: %s" % options.templateFile)
             sys.exit(1)
-        filesToRename = options.template['FilesToRename']
+        filesToRename = options.template["FilesToRename"]
         for k in filesToRename:
             leftPath = os.path.join(dest, k)
             rightPath = os.path.join(dest, filesToRename[k])
@@ -331,5 +405,6 @@ def main():
                 info("rename %s ==> %s", leftPath, rightPath)
                 os.rename(leftPath, rightPath)
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     main()

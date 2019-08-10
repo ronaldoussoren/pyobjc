@@ -1,4 +1,4 @@
-'''
+"""
 Wrappers for the "SyncServices" framework on macOS.
 
 Sync Services is a framework containing all the components you need
@@ -11,32 +11,33 @@ These wrappers don't include documentation, please check Apple's documention
 for information on how to use this framework and PyObjC's documentation
 for general tips and tricks regarding the translation between Python
 and (Objective-)C frameworks
-'''
+"""
 from pyobjc_setup import setup, Extension
 import os
 
-VERSION="6.0a0"
+VERSION = "6.0a0"
 
 setup(
-    name='pyobjc-framework-SyncServices',
-    description = "Wrappers for the framework SyncServices on macOS",
-    packages = [ "SyncServices" ],
-    ext_modules = [
-        Extension("SyncServices._SyncServices",
-            [ "Modules/_SyncServices.m" ],
+    name="pyobjc-framework-SyncServices",
+    description="Wrappers for the framework SyncServices on macOS",
+    packages=["SyncServices"],
+    ext_modules=[
+        Extension(
+            "SyncServices._SyncServices",
+            ["Modules/_SyncServices.m"],
             extra_link_args=["-framework", "SyncServices"],
             depends=[
-                os.path.join('Modules', fn)
-                    for fn in os.listdir('Modules')
-                    if fn.startswith('_SyncServices')
-            ]
-        ),
+                os.path.join("Modules", fn)
+                for fn in os.listdir("Modules")
+                if fn.startswith("_SyncServices")
+            ],
+        )
     ],
     version=VERSION,
-    install_requires = [
-        'pyobjc-core>='+VERSION,
-        'pyobjc-framework-Cocoa>='+VERSION,
-        'pyobjc-framework-CoreData>='+VERSION,
+    install_requires=[
+        "pyobjc-core>=" + VERSION,
+        "pyobjc-framework-Cocoa>=" + VERSION,
+        "pyobjc-framework-CoreData>=" + VERSION,
     ],
     long_description=__doc__,
 )

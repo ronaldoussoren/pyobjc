@@ -1,13 +1,19 @@
-
 from PyObjCTools.TestSupport import *
 from AppKit import *
 
-class TestNSDrawerHelper (NSObject):
-    def drawerShouldOpen_(self, sender): return 1
-    def drawerShouldClose_(self, sender): return 1
-    def drawerWillResizeContents_toSize_(self, a, b): return 1
 
-class TestNSDrawer (TestCase):
+class TestNSDrawerHelper(NSObject):
+    def drawerShouldOpen_(self, sender):
+        return 1
+
+    def drawerShouldClose_(self, sender):
+        return 1
+
+    def drawerWillResizeContents_toSize_(self, a, b):
+        return 1
+
+
+class TestNSDrawer(TestCase):
     def testConstants(self):
         self.assertEqual(NSDrawerClosedState, 0)
         self.assertEqual(NSDrawerOpeningState, 1)
@@ -22,15 +28,20 @@ class TestNSDrawer (TestCase):
     def testMethods(self):
         self.assertArgHasType(NSDrawer.setMinContentSize_, 0, NSSize.__typestr__)
 
-    @min_sdk_level('10.10')
+    @min_sdk_level("10.10")
     def testProtocolObjects(self):
-        objc.protocolNamed('NSDrawerDelegate')
+        objc.protocolNamed("NSDrawerDelegate")
 
     def testProtocols(self):
         self.assertResultIsBOOL(TestNSDrawerHelper.drawerShouldOpen_)
         self.assertResultIsBOOL(TestNSDrawerHelper.drawerShouldClose_)
-        self.assertResultHasType(TestNSDrawerHelper.drawerWillResizeContents_toSize_, NSSize.__typestr__)
-        self.assertArgHasType(TestNSDrawerHelper.drawerWillResizeContents_toSize_, 1, NSSize.__typestr__)
+        self.assertResultHasType(
+            TestNSDrawerHelper.drawerWillResizeContents_toSize_, NSSize.__typestr__
+        )
+        self.assertArgHasType(
+            TestNSDrawerHelper.drawerWillResizeContents_toSize_, 1, NSSize.__typestr__
+        )
+
 
 if __name__ == "__main__":
     main()

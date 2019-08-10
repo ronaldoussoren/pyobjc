@@ -2,7 +2,8 @@ import PrintCore
 import sys
 from PyObjCTools.TestSupport import *
 
-class TestPMDefinitions (TestCase):
+
+class TestPMDefinitions(TestCase):
     def test_constants(self):
         self.assertEqual(PrintCore.kPMCancel, 0x0080)
 
@@ -39,7 +40,7 @@ class TestPMDefinitions (TestCase):
         self.assertEqual(PrintCore.kPMCMYKColorSpaceModel, 3)
         self.assertEqual(PrintCore.kPMDevNColorSpaceModel, 4)
 
-        self.assertEqual(PrintCore.kPMColorSpaceModelCount,  4)
+        self.assertEqual(PrintCore.kPMColorSpaceModelCount, 4)
 
         self.assertEqual(PrintCore.kPMQualityLowest, 0x0000)
         self.assertEqual(PrintCore.kPMQualityInkSaver, 0x0001)
@@ -100,17 +101,40 @@ class TestPMDefinitions (TestCase):
         self.assertEqual(PrintCore.kUserPPDDomain, 5)
         self.assertEqual(PrintCore.kCUPSPPDDomain, 6)
 
-        self.assertEqual(PrintCore.kPMPPDDescriptionType, b"PMPPDDescriptionType".decode("utf-8"))
-        self.assertEqual(PrintCore.kPMDocumentFormatDefault, b"com.apple.documentformat.default".decode("utf-8"))
-        self.assertEqual(PrintCore.kPMDocumentFormatPDF, b"application/pdf".decode("utf-8"))
-        self.assertEqual(PrintCore.kPMDocumentFormatPostScript, b"application/postscript".decode("utf-8"))
-        self.assertEqual(PrintCore.kPMGraphicsContextDefault, b"com.apple.graphicscontext.default".decode("utf-8"))
-        self.assertEqual(PrintCore.kPMGraphicsContextCoreGraphics, b"com.apple.graphicscontext.coregraphics".decode("utf-8"))
+        self.assertEqual(
+            PrintCore.kPMPPDDescriptionType, b"PMPPDDescriptionType".decode("utf-8")
+        )
+        self.assertEqual(
+            PrintCore.kPMDocumentFormatDefault,
+            b"com.apple.documentformat.default".decode("utf-8"),
+        )
+        self.assertEqual(
+            PrintCore.kPMDocumentFormatPDF, b"application/pdf".decode("utf-8")
+        )
+        self.assertEqual(
+            PrintCore.kPMDocumentFormatPostScript,
+            b"application/postscript".decode("utf-8"),
+        )
+        self.assertEqual(
+            PrintCore.kPMGraphicsContextDefault,
+            b"com.apple.graphicscontext.default".decode("utf-8"),
+        )
+        self.assertEqual(
+            PrintCore.kPMGraphicsContextCoreGraphics,
+            b"com.apple.graphicscontext.coregraphics".decode("utf-8"),
+        )
         self.assertEqual(PrintCore.kPDFWorkflowItemURLKey, b"itemURL".decode("utf-8"))
-        self.assertEqual(PrintCore.kPDFWorkflowDisplayNameKey, b"displayName".decode("utf-8"))
+        self.assertEqual(
+            PrintCore.kPDFWorkflowDisplayNameKey, b"displayName".decode("utf-8")
+        )
         self.assertEqual(PrintCore.kPDFWorkflowItemsKey, b"items".decode("utf-8"))
-        self.assertEqual(PrintCore.kPDFWorkflowModifiedKey, b"wasModifiedInline".decode("utf-8"))
-        self.assertEqual(PrintCore.kPMPrintSelectionTitleKey, b"com.apple.printSelection.title".decode("utf-8"))
+        self.assertEqual(
+            PrintCore.kPDFWorkflowModifiedKey, b"wasModifiedInline".decode("utf-8")
+        )
+        self.assertEqual(
+            PrintCore.kPMPrintSelectionTitleKey,
+            b"com.apple.printSelection.title".decode("utf-8"),
+        )
 
         self.assertEqual(PrintCore.kPMNoError, 0)
         self.assertEqual(PrintCore.kPMGeneralError, -30870)
@@ -137,10 +161,15 @@ class TestPMDefinitions (TestCase):
         self.assertEqual(PrintCore.kPMDataFormatXMLMinimal, 1)
         self.assertEqual(PrintCore.kPMDataFormatXMLCompressed, 2)
 
-        self.assertEqual(PrintCore.kPMPresetGraphicsTypeKey, b"com.apple.print.preset.graphicsType".decode("utf-8"))
+        self.assertEqual(
+            PrintCore.kPMPresetGraphicsTypeKey,
+            b"com.apple.print.preset.graphicsType".decode("utf-8"),
+        )
         self.assertEqual(PrintCore.kPMPresetGraphicsTypePhoto, b"Photo".decode("utf-8"))
         self.assertEqual(PrintCore.kPMPresetGraphicsTypeAll, b"All".decode("utf-8"))
-        self.assertEqual(PrintCore.kPMPresetGraphicsTypeGeneral, b"General".decode("utf-8"))
+        self.assertEqual(
+            PrintCore.kPMPresetGraphicsTypeGeneral, b"General".decode("utf-8")
+        )
         self.assertEqual(PrintCore.kPMPresetGraphicsTypeNone, b"None".decode("utf-8"))
 
     def test_structs(self):
@@ -158,8 +187,6 @@ class TestPMDefinitions (TestCase):
         self.assertIs(v.level, None)
         self.assertIs(v.version, None)
         self.assertIs(v.release, None)
-
-
 
 
 if __name__ == "__main__":

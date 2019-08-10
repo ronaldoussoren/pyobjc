@@ -2,7 +2,8 @@ from PyObjCTools.TestSupport import *
 
 from SystemConfiguration import *
 
-class TestSCDynamicStoreCopySpecific (TestCase):
+
+class TestSCDynamicStoreCopySpecific(TestCase):
     def testFunctions(self):
         def callback(st, keys, info):
             pass

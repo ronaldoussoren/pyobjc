@@ -3,7 +3,8 @@ from PyObjCTools.TestSupport import *
 import CoreWLAN
 import Foundation
 
-class TestCoreWLANTypes (TestCase):
+
+class TestCoreWLANTypes(TestCase):
     def testConstants(self):
         self.assertEqual(CoreWLAN.kCWNoErr, 0)
         self.assertEqual(CoreWLAN.kCWEAPOLErr, 1)
@@ -84,11 +85,24 @@ class TestCoreWLANTypes (TestCase):
         self.assertEqual(CoreWLAN.kCWNoMemErr, CoreWLAN.kCWNoMemoryErr)
         self.assertEqual(CoreWLAN.kCWUknownErr, CoreWLAN.kCWUnknownErr)
         self.assertEqual(CoreWLAN.kCWFormatErr, CoreWLAN.kCWInvalidFormatErr)
-        self.assertEqual(CoreWLAN.kCWAuthAlgUnsupportedErr, CoreWLAN.kCWAuthenticationAlgorithmUnsupportedErr)
-        self.assertEqual(CoreWLAN.kCWInvalidAuthSeqNumErr, CoreWLAN.kCWInvalidAuthenticationSequenceNumberErr)
-        self.assertEqual(CoreWLAN.kCWInvalidInfoElementErr, CoreWLAN.kCWInvalidInformationElementErr)
-        self.assertEqual(CoreWLAN.kCWHTFeaturesNotSupported, CoreWLAN.kCWHTFeaturesNotSupportedErr)
-        self.assertEqual(CoreWLAN.kCWPCOTransitionTimeNotSupported, CoreWLAN.kCWPCOTransitionTimeNotSupportedErr)
+        self.assertEqual(
+            CoreWLAN.kCWAuthAlgUnsupportedErr,
+            CoreWLAN.kCWAuthenticationAlgorithmUnsupportedErr,
+        )
+        self.assertEqual(
+            CoreWLAN.kCWInvalidAuthSeqNumErr,
+            CoreWLAN.kCWInvalidAuthenticationSequenceNumberErr,
+        )
+        self.assertEqual(
+            CoreWLAN.kCWInvalidInfoElementErr, CoreWLAN.kCWInvalidInformationElementErr
+        )
+        self.assertEqual(
+            CoreWLAN.kCWHTFeaturesNotSupported, CoreWLAN.kCWHTFeaturesNotSupportedErr
+        )
+        self.assertEqual(
+            CoreWLAN.kCWPCOTransitionTimeNotSupported,
+            CoreWLAN.kCWPCOTransitionTimeNotSupportedErr,
+        )
         self.assertEqual(CoreWLAN.kCWRefNotBoundErr, CoreWLAN.kCWReferenceNotBoundErr)
         self.assertEqual(CoreWLAN.kCWIPCError, CoreWLAN.kCWIPCFailureErr)
         self.assertEqual(CoreWLAN.kCWOpNotPermitted, CoreWLAN.kCWOperationNotPermittedErr)
@@ -134,6 +148,7 @@ class TestCoreWLANTypes (TestCase):
         # Introduced in 10.12
         self.assertEqual(CoreWLAN.CWEventTypeVirtualInterfaceStateChanged, 9)
         self.assertEqual(CoreWLAN.CWEventTypeRangingReportEvent, 10)
+
 
 if __name__ == "__main__":
     main()

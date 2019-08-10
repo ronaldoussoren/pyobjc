@@ -1,6 +1,7 @@
 import Foundation
 
-class NSDisabledAutomaticTermination (object):
+
+class NSDisabledAutomaticTermination(object):
     def __init__(self, reason):
         self._reason = reason
         self._info = Foundation.NSProcessInfo.processInfo()
@@ -12,7 +13,8 @@ class NSDisabledAutomaticTermination (object):
         self._info.enableAutomaticTermination_(self._reason)
         return False
 
-class NSDisabledSuddenTermination (object):
+
+class NSDisabledSuddenTermination(object):
     def __init__(self):
         self._info = Foundation.NSProcessInfo.processInfo()
 

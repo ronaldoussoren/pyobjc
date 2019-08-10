@@ -5,20 +5,1216 @@
 import objc, sys
 
 if sys.maxsize > 2 ** 32:
-    def sel32or64(a, b): return b
-else:
-    def sel32or64(a, b): return a
 
-misc = {
+    def sel32or64(a, b):
+        return b
+
+
+else:
+
+    def sel32or64(a, b):
+        return a
+
+
+misc = {}
+misc.update(
+    {
+        "SizeResourceRec": objc.createStructType(
+            "SizeResourceRec",
+            sel32or64(b"{SizeResourceRec=SLL}", b"{SizeResourceRec=SII}"),
+            ["flags", "preferredHeapSize", "minimumHeapSize"],
+        ),
+        "CIcon": objc.createStructType(
+            "CIcon",
+            b"{CIcon={PixMap=^cs{Rect=ssss}sslllssssL^^{ColorTable=lss[1{ColorSpec=s{RGBColor=SSS}}]}^v}{BitMap=^cs{Rect=ssss}}{BitMap=^cs{Rect=ssss}}^^c[1s]}",
+            ["iconPMap", "iconMask", "iconBMap", "iconData", "iconMaskData"],
+        ),
+        "ProcessInfoExtendedRec": objc.createStructType(
+            "ProcessInfoExtendedRec",
+            sel32or64(
+                b"{ProcessInfoExtendedRec=L^C{ProcessSerialNumber=LL}LLL^cLL{ProcessSerialNumber=LL}LL^{FSSpec=sl[64C]}LL}",
+                b"{ProcessInfoExtendedRec=I^C{ProcessSerialNumber=II}III^cII{ProcessSerialNumber=II}II^{FSRef=[80C]}II}",
+            ),
+            [
+                "processInfoLength",
+                "processName",
+                "processNumber",
+                "processType",
+                "processSignature",
+                "processMode",
+                "processLocation",
+                "processSize",
+                "processFreeMem",
+                "processLauncher",
+                "processLaunchDate",
+                "processActiveTime",
+                "processAppSpec",
+                "processTempMemTotal",
+                "processPurgeableTempMemTotal",
+            ],
+        ),
+        "ProcessInfoRec": objc.createStructType(
+            "ProcessInfoRec",
+            sel32or64(
+                b"{ProcessInfoRec=L^C{ProcessSerialNumber=LL}LLL^cLL{ProcessSerialNumber=LL}LL^{FSSpec=sl[64C]}}",
+                b"{ProcessInfoRec=I^C{ProcessSerialNumber=II}III^cII{ProcessSerialNumber=II}II^{FSRef=[80C]}}",
+            ),
+            [
+                "processInfoLength",
+                "processName",
+                "processNumber",
+                "processType",
+                "processSignature",
+                "processMode",
+                "processLocation",
+                "processSize",
+                "processFreeMem",
+                "processLauncher",
+                "processLaunchDate",
+                "processActiveTime",
+                "processAppSpec",
+            ],
+        ),
+    }
+)
+constants = """$kAXAttachmentTextAttribute@^{__CFString=}$kAXAutocorrectedTextAttribute@^{__CFString=}$kAXBackgroundColorTextAttribute@^{__CFString=}$kAXFontFamilyKey@^{__CFString=}$kAXFontNameKey@^{__CFString=}$kAXFontSizeKey@^{__CFString=}$kAXFontTextAttribute@^{__CFString=}$kAXForegoundColorTextAttribute@^{__CFString=}$kAXForegroundColorTextAttribute@^{__CFString=}$kAXLinkTextAttribute@^{__CFString=}$kAXListItemIndexTextAttribute@^{__CFString=}$kAXListItemLevelTextAttribute@^{__CFString=}$kAXListItemPrefixTextAttribute@^{__CFString=}$kAXMarkedMisspelledTextAttribute@^{__CFString=}$kAXMisspelledTextAttribute@^{__CFString=}$kAXNaturalLanguageTextAttribute@^{__CFString=}$kAXReplacementStringTextAttribute@^{__CFString=}$kAXShadowTextAttribute@^{__CFString=}$kAXStrikethroughColorTextAttribute@^{__CFString=}$kAXStrikethroughTextAttribute@^{__CFString=}$kAXSuperscriptTextAttribute@^{__CFString=}$kAXTrustedCheckOptionPrompt@^{__CFString=}$kAXUnderlineColorTextAttribute@^{__CFString=}$kAXUnderlineTextAttribute@^{__CFString=}$kAXVisibleNameKey@^{__CFString=}$"""
+enums = """$AX_ALLOW_OLD_SECURITY_METHOD@0$activDev@5$atAbsoluteCenter@5$atBottom@3$atBottomLeft@11$atBottomRight@15$atCenterBottom@7$atCenterLeft@9$atCenterRight@13$atCenterTop@6$atHorizontalCenter@4$atLeft@8$atNone@0$atRight@12$atTop@2$atTopLeft@10$atTopRight@14$atVerticalCenter@1$badPasteboardFlavorErr@-25133$badPasteboardIndexErr@-25131$badPasteboardItemErr@-25132$badPasteboardSyncErr@-25130$badTranslationRefErr@-3031$cdevGenErr@-1$cdevMemErr@0$cdevResErr@1$cdevUnset@3$clearDev@13$closeDev@2$copyDev@11$cursorDev@14$cutDev@10$deactivDev@6$duplicatePasteboardFlavorErr@-25134$extendedBlock@19523$hitDev@1$initDev@0$kAXCopyMultipleAttributeOptionStopOnError@1$kAXErrorAPIDisabled@-25211$kAXErrorActionUnsupported@-25206$kAXErrorAttributeUnsupported@-25205$kAXErrorCannotComplete@-25204$kAXErrorFailure@-25200$kAXErrorIllegalArgument@-25201$kAXErrorInvalidUIElement@-25202$kAXErrorInvalidUIElementObserver@-25203$kAXErrorNoValue@-25212$kAXErrorNotEnoughPrecision@-25214$kAXErrorNotImplemented@-25208$kAXErrorNotificationAlreadyRegistered@-25209$kAXErrorNotificationNotRegistered@-25210$kAXErrorNotificationUnsupported@-25207$kAXErrorParameterizedAttributeUnsupported@-25213$kAXErrorSuccess@0$kAXMenuItemModifierControl@4$kAXMenuItemModifierNoCommand@8$kAXMenuItemModifierNone@0$kAXMenuItemModifierOption@2$kAXMenuItemModifierShift@1$kAXPriorityHigh@90$kAXPriorityLow@10$kAXPriorityMedium@50$kAXUnderlineStyleDouble@9$kAXUnderlineStyleNone@0$kAXUnderlineStyleSingle@1$kAXUnderlineStyleThick@2$kAXValueAXErrorType@5$kAXValueCFRangeType@4$kAXValueCGPointType@1$kAXValueCGRectType@3$kAXValueCGSizeType@2$kAXValueIllegalType@0$kAXValueTypeAXError@5$kAXValueTypeCFRange@4$kAXValueTypeCGPoint@1$kAXValueTypeCGRect@3$kAXValueTypeCGSize@2$kAXValueTypeIllegal@0$kAlignAbsoluteCenter@5$kAlignBottom@3$kAlignBottomLeft@11$kAlignBottomRight@15$kAlignCenterBottom@7$kAlignCenterLeft@9$kAlignCenterRight@13$kAlignCenterTop@6$kAlignHorizontalCenter@4$kAlignLeft@8$kAlignNone@0$kAlignRight@12$kAlignTop@2$kAlignTopLeft@10$kAlignTopRight@14$kAlignVerticalCenter@1$kCurrentProcess@2$kHIShapeEnumerateInit@1$kHIShapeEnumerateRect@2$kHIShapeEnumerateTerminate@3$kHIShapeParseFromBottom@1$kHIShapeParseFromBottomRight@3$kHIShapeParseFromLeft@0$kHIShapeParseFromRight@2$kHIShapeParseFromTop@0$kHIShapeParseFromTopLeft@0$kNoProcess@0$kPasteboardClientIsOwner@2$kPasteboardFlavorNoFlags@0$kPasteboardFlavorNotSaved@4$kPasteboardFlavorPromised@512$kPasteboardFlavorRequestOnly@8$kPasteboardFlavorSenderOnly@1$kPasteboardFlavorSenderTranslated@2$kPasteboardFlavorSystemTranslated@256$kPasteboardModified@1$kPasteboardStandardLocationTrash@1953657704$kPasteboardStandardLocationUnknown@1970170734$kPlotIconRefNoImage@2$kPlotIconRefNoMask@4$kPlotIconRefNormalFlags@0$kProcessDictionaryIncludeAllInformationMask@-1$kProcessTransformToBackgroundApplication@2$kProcessTransformToForegroundApplication@1$kProcessTransformToUIElementApplication@4$kQuitAtNormalTimeMask@2$kQuitBeforeFBAsQuitMask@4$kQuitBeforeNormalTimeMask@1$kQuitBeforeShellQuitsMask@8$kQuitBeforeTerminatorAppQuitsMask@16$kQuitNeverMask@32$kQuitNotQuitDuringInstallMask@256$kQuitNotQuitDuringLogoutMask@512$kQuitOptionsMask@127$kSelectorAll1BitData@16843009$kSelectorAll32BitData@134219784$kSelectorAll4BitData@33686018$kSelectorAll8BitData@67372036$kSelectorAllAvailableData@4294967295$kSelectorAllHugeData@4278190080$kSelectorAllLargeData@255$kSelectorAllMiniData@16711680$kSelectorAllSmallData@65280$kSelectorHuge1Bit@16777216$kSelectorHuge32Bit@134217728$kSelectorHuge4Bit@33554432$kSelectorHuge8Bit@67108864$kSelectorHuge8BitMask@268435456$kSelectorLarge1Bit@1$kSelectorLarge32Bit@8$kSelectorLarge4Bit@2$kSelectorLarge8Bit@4$kSelectorLarge8BitMask@16$kSelectorMini1Bit@65536$kSelectorMini4Bit@131072$kSelectorMini8Bit@262144$kSelectorSmall1Bit@256$kSelectorSmall32Bit@2048$kSelectorSmall4Bit@512$kSelectorSmall8Bit@1024$kSelectorSmall8BitMask@4096$kSetFrontProcessCausedByUser@2$kSetFrontProcessFrontWindowOnly@1$kSystemProcess@1$kTransformDisabled@1$kTransformLabel1@256$kTransformLabel2@512$kTransformLabel3@768$kTransformLabel4@1024$kTransformLabel5@1280$kTransformLabel6@1536$kTransformLabel7@1792$kTransformNone@0$kTransformOffline@2$kTransformOpen@3$kTransformSelected@16384$kTransformSelectedDisabled@16385$kTransformSelectedOffline@16386$kTransformSelectedOpen@16387$kTranslationDataTranslation@1$kTranslationFileTranslation@2$kUAZoomFocusTypeInsertionPoint@1$kUAZoomFocusTypeOther@0$keyEvtDev@7$launchAllow24Bit@256$launchContinue@16384$launchDontSwitch@512$launchInhibitDaemon@128$launchNoFileFlags@2048$launchUseMinimum@1024$macDev@8$mode32BitCompatible@128$modeCanBackground@4096$modeControlPanel@524288$modeDeskAccessory@131072$modeDisplayManagerAware@4$modeDoesActivateOnFGSwitch@2048$modeGetAppDiedMsg@256$modeGetFrontClicks@512$modeHighLevelEventAware@64$modeLaunchDontSwitch@262144$modeLocalAndRemoteHLEvents@32$modeMultiLaunch@65536$modeNeedSuspendResume@16384$modeOnlyBackground@1024$modeReserved@16777216$modeStationeryAware@16$modeUseTextEditServices@8$noPasteboardPromiseKeeperErr@-25136$notPasteboardOwnerErr@-25135$nulDev@3$pasteDev@12$svAll1BitData@16843009$svAll4BitData@33686018$svAll8BitData@67372036$svAllAvailableData@4294967295$svAllLargeData@255$svAllMiniData@16711680$svAllSmallData@65280$svLarge1Bit@1$svLarge4Bit@2$svLarge8Bit@4$svMini1Bit@65536$svMini4Bit@131072$svMini8Bit@262144$svSmall1Bit@256$svSmall4Bit@512$svSmall8Bit@1024$ttDisabled@1$ttLabel1@256$ttLabel2@512$ttLabel3@768$ttLabel4@1024$ttLabel5@1280$ttLabel6@1536$ttLabel7@1792$ttNone@0$ttOffline@2$ttOpen@3$ttSelected@16384$ttSelectedDisabled@16385$ttSelectedOffline@16386$ttSelectedOpen@16387$undoDev@9$updateDev@4$"""
+misc.update({"extendedBlockLen": sel32or64(32, 40)})
+misc.update(
+    {
+        "kAXTableRole": "AXTable",
+        "kAXAttributedStringForRangeParameterizedAttribute": "AXAttributedStringForRange",
+        "kAXStandardWindowSubrole": "AXStandardWindow",
+        "kAXFloatingWindowSubrole": "AXFloatingWindow",
+        "kAXHiddenAttribute": "AXHidden",
+        "kAXSharedCharacterRangeAttribute": "AXSharedCharacterRange",
+        "kAXResizedNotification": "AXResized",
+        "kAXMinValueAttribute": "AXMinValue",
+        "kAXOutlineRole": "AXOutline",
+        "kAXDockItemRole": "AXDockItem",
+        "kAXFocusedWindowChangedNotification": "AXFocusedWindowChanged",
+        "kAXPopUpButtonRole": "AXPopUpButton",
+        "kAXWindowsAttribute": "AXWindows",
+        "kAXMinimizedWindowDockItemSubrole": "AXMinimizedWindowDockItem",
+        "kAXScreenSizeForLayoutSizeParameterizedAttribute": "AXScreenSizeForLayoutSize",
+        "kAXGrowAreaAttribute": "AXGrowArea",
+        "kAXDescendingSortDirectionValue": "AXDescendingSortDirection",
+        "kAXMenuItemCmdCharAttribute": "AXMenuItemCmdChar",
+        "kAXLevelIndicatorRole": "AXLevelIndicator",
+        "kAXRoleDescriptionAttribute": "AXRoleDescription",
+        "kAXSystemFloatingWindowSubrole": "AXSystemFloatingWindow",
+        "kAXRowRole": "AXRow",
+        "kAXToolbarRole": "AXToolbar",
+        "kAXVerticalUnitsAttribute": "AXVerticalUnits",
+        "kAXTitleUIElementAttribute": "AXTitleUIElement",
+        "kAXPreviousContentsAttribute": "AXPreviousContents",
+        "kAXSelectedAttribute": "AXSelected",
+        "kAXWindowAttribute": "AXWindow",
+        "kAXTabGroupRole": "AXTabGroup",
+        "kAXValueWrapsAttribute": "AXValueWraps",
+        "kAXSizeAttribute": "AXSize",
+        "kAXSelectedTextRangesAttribute": "AXSelectedTextRanges",
+        "kAXRangeForIndexParameterizedAttribute": "AXRangeForIndex",
+        "kAXSelectedTextChangedNotification": "AXSelectedTextChanged",
+        "kAXURLAttribute": "AXURL",
+        "kAXMenuItemRole": "AXMenuItem",
+        "kAXHelpTagRole": "AXHelpTag",
+        "kAXParentAttribute": "AXParent",
+        "kAXTimelineSubrole": "AXTimeline",
+        "kAXDecrementButtonAttribute": "AXDecrementButton",
+        "kAXFocusedApplicationAttribute": "AXFocusedApplication",
+        "kAXMovedNotification": "AXMoved",
+        "kAXBoundsForRangeParameterizedAttribute": "AXBoundsForRange",
+        "kAXIncrementPageSubrole": "AXIncrementPage",
+        "kAXFocusedUIElementAttribute": "AXFocusedUIElement",
+        "kAXModalAttribute": "AXModal",
+        "kAXMenuItemPrimaryUIElementAttribute": "AXMenuItemPrimaryUIElement",
+        "kAXTimeFieldRole": "AXTimeField",
+        "kAXRulerRole": "AXRuler",
+        "kAXIncrementButtonAttribute": "AXIncrementButton",
+        "kAXMenuBarAttribute": "AXMenuBar",
+        "kAXMainWindowChangedNotification": "AXMainWindowChanged",
+        "kAXSelectedChildrenMovedNotification": "AXSelectedChildrenMoved",
+        "kAXColumnCountAttribute": "AXColumnCount",
+        "kAXNextContentsAttribute": "AXNextContents",
+        "kAXFrontmostAttribute": "AXFrontmost",
+        "kAXShownMenuUIElementAttribute": "AXShownMenuUIElement",
+        "kAXColumnTitleAttribute": "AXColumnTitles",
+        "kAXAlternateUIVisibleAttribute": "AXAlternateUIVisible",
+        "kAXRangeForLineParameterizedAttribute": "AXRangeForLine",
+        "kAXSplittersAttribute": "AXSplitters",
+        "kAXPickAction": "AXPick",
+        "kAXOrderedByRowAttribute": "AXOrderedByRow",
+        "kAXHelpTagCreatedNotification": "AXHelpTagCreated",
+        "kAXStringForRangeParameterizedAttribute": "AXStringForRange",
+        "kAXStaticTextRole": "AXStaticText",
+        "kAXColumnRole": "AXColumn",
+        "kAXMinimizeButtonAttribute": "AXMinimizeButton",
+        "kAXMenuOpenedNotification": "AXMenuOpened",
+        "kAXCellForColumnAndRowParameterizedAttribute": "AXCellForColumnAndRow",
+        "kAXContentsAttribute": "AXContents",
+        "kAXRadioGroupRole": "AXRadioGroup",
+        "kAXDrawerCreatedNotification": "AXDrawerCreated",
+        "kAXSplitGroupRole": "AXSplitGroup",
+        "kAXDialogSubrole": "AXDialog",
+        "kAXDisclosureLevelAttribute": "AXDisclosureLevel",
+        "kAXMinimizedAttribute": "AXMinimized",
+        "kAXFocusedAttribute": "AXFocused",
+        "kAXServesAsTitleForUIElementsAttribute": "AXServesAsTitleForUIElements",
+        "kAXMarkerUIElementsAttribute": "AXMarkerUIElements",
+        "kAXFocusedUIElementChangedNotification": "AXFocusedUIElementChanged",
+        "kAXDescription": "AXDescription",
+        "kAXAnnouncementRequestedNotification": "AXAnnouncementRequested",
+        "kAXMatteHoleAttribute": "AXMatteHole",
+        "kAXMarkerTypeAttribute": "AXMarkerType",
+        "kAXToggleSubrole": "AXToggle",
+        "kAXNumberOfCharactersAttribute": "AXNumberOfCharacters",
+        "kAXImageRole": "AXImage",
+        "kAXDecorativeSubrole": "AXDecorative",
+        "kAXYearFieldAttribute": "AXYearField",
+        "kAXMenuRole": "AXMenu",
+        "kAXVisibleColumnsAttribute": "AXVisibleColumns",
+        "kAXUIElementTitleKey": "AXUIElementTitleKey",
+        "kAXIncrementorRole": "AXIncrementor",
+        "kAXHourFieldAttribute": "AXHourField",
+        "kAXFolderDockItemSubrole": "AXFolderDockItem",
+        "kAXMenuBarItemRole": "AXMenuBarItem",
+        "kAXLayoutChangedNotification": "AXLayoutChanged",
+        "kAXDefaultButtonAttribute": "AXDefaultButton",
+        "kAXSearchButtonAttribute": "AXSearchButton",
+        "kAXEnabledAttribute": "AXEnabled",
+        "kAXRowCountAttribute": "AXRowCount",
+        "kAXCancelButtonAttribute": "AXCancelButton",
+        "kAXIncrementAction": "AXIncrement",
+        "kAXRoleAttribute": "AXRole",
+        "kAXWindowRole": "AXWindow",
+        "kAXExpandedAttribute": "AXExpanded",
+        "kAXTitleAttribute": "AXTitle",
+        "kAXSubroleAttribute": "AXSubrole",
+        "kAXSelectedChildrenAttribute": "AXSelectedChildren",
+        "kAXPressAction": "AXPress",
+        "kAXUnknownOrientationValue": "AXUnknownOrientation",
+        "kAXApplicationShownNotification": "AXApplicationShown",
+        "kAXSelectedRowsChangedNotification": "AXSelectedRowsChanged",
+        "kPasteboardTypeFileURLPromise": "com.apple.pasteboard.promised-file-url",
+        "kAXDockExtraDockItemSubrole": "AXDockExtraDockItem",
+        "kAXCreatedNotification": "AXCreated",
+        "kAXSecureTextFieldSubrole": "AXSecureTextField",
+        "kAXHandleRole": "AXHandle",
+        "kAXDisclosedRowsAttribute": "AXDisclosedRows",
+        "kPasteboardClipboard": "com.apple.pasteboard.clipboard",
+        "kPasteboardFind": "com.apple.pasteboard.find",
+        "kAXTabsAttribute": "AXTabs",
+        "kAXWindowMiniaturizedNotification": "AXWindowMiniaturized",
+        "kAXOrientationAttribute": "AXOrientation",
+        "kAXDefinitionListSubrole": "AXDefinitionList",
+        "kAXTableRowSubrole": "AXTableRow",
+        "kAXWindowMovedNotification": "AXWindowMoved",
+        "kAXUnitDescriptionAttribute": "AXUnitDescription",
+        "kAXSharedFocusElementsAttribute": "AXSharedFocusElements",
+        "kAXStyleRangeForIndexParameterizedAttribute": "AXStyleRangeForIndex",
+        "kAXSheetRole": "AXSheet",
+        "kAXShowMenuAction": "AXShowMenu",
+        "kAXMatteRole": "AXMatte",
+        "kAXMatteContentUIElementAttribute": "AXMatteContentUIElement",
+        "kAXBusyIndicatorRole": "AXBusyIndicator",
+        "kAXRatingIndicatorSubrole": "AXRatingIndicator",
+        "kAXRowExpandedNotification": "AXRowExpanded",
+        "kAXScrollAreaRole": "AXScrollArea",
+        "kAXVisibleCellsAttribute": "AXVisibleCells",
+        "kAXExtrasMenuBarAttribute": "AXExtrasMenuBar",
+        "kAXApplicationActivatedNotification": "AXApplicationActivated",
+        "kAXUnitsAttribute": "AXUnits",
+        "kAXRulerMarkerRole": "AXRulerMarker",
+        "kAXSystemWideRole": "AXSystemWide",
+        "kAXHandlesAttribute": "AXHandles",
+        "kAXIsApplicationRunningAttribute": "AXIsApplicationRunning",
+        "kAXMenuBarRole": "AXMenuBar",
+        "kAXShowAlternateUIAction": "AXShowAlternateUI",
+        "kAXSortButtonSubrole": "AXSortButton",
+        "kAXUnknownSubrole": "AXUnknown",
+        "kAXLabelUIElementsAttribute": "AXLabelUIElements",
+        "kAXIncrementorAttribute": "AXIncrementor",
+        "kAXVisibleChildrenAttribute": "AXVisibleChildren",
+        "kAXCheckBoxRole": "AXCheckBox",
+        "kAXSelectedCellsChangedNotification": "AXSelectedCellsChanged",
+        "kAXCloseButtonSubrole": "AXCloseButton",
+        "kAXColumnTitlesAttribute": "AXColumnTitles",
+        "kAXAMPMFieldAttribute": "AXAMPMField",
+        "kAXPopoverRole": "AXPopover",
+        "kAXAnnouncementKey": "AXAnnouncementKey",
+        "kAXValueIndicatorRole": "AXValueIndicator",
+        "kAXValueChangedNotification": "AXValueChanged",
+        "kAXSelectedColumnsChangedNotification": "AXSelectedColumnsChanged",
+        "kAXApplicationRole": "AXApplication",
+        "kAXColumnHeaderUIElementsAttribute": "AXColumnHeaderUIElements",
+        "kAXMenuButtonRole": "AXMenuButton",
+        "kAXBrowserRole": "AXBrowser",
+        "kAXRowsAttribute": "AXRows",
+        "kAXTextFieldRole": "AXTextField",
+        "kAXFullScreenButtonSubrole": "AXFullScreenButton",
+        "kAXSplitterRole": "AXSplitter",
+        "kAXVisibleCharacterRangeAttribute": "AXVisibleCharacterRange",
+        "kAXUnitsChangedNotification": "AXUnitsChanged",
+        "kAXGroupRole": "AXGroup",
+        "kAXMinimizeButtonSubrole": "AXMinimizeButton",
+        "kAXDecrementPageSubrole": "AXDecrementPage",
+        "kAXElementBusyChangedNotification": "AXElementBusyChanged",
+        "kAXTitleChangedNotification": "AXTitleChanged",
+        "kAXToolbarButtonAttribute": "AXToolbarButton",
+        "kAXDecrementAction": "AXDecrement",
+        "kAXHorizontalOrientationValue": "AXHorizontalOrientation",
+        "kAXDocumentDockItemSubrole": "AXDocumentDockItem",
+        "kAXSearchFieldSubrole": "AXSearchField",
+        "kAXVerticalScrollBarAttribute": "AXVerticalScrollBar",
+        "kAXVisibleTextAttribute": "AXVisibleText",
+        "kAXRadioButtonRole": "AXRadioButton",
+        "kAXValueAttribute": "AXValue",
+        "kAXDisclosedByRowAttribute": "AXDisclosedByRow",
+        "kAXSystemDialogSubrole": "AXSystemDialog",
+        "kAXSeparatorDockItemSubrole": "AXSeparatorDockItem",
+        "kAXApplicationHiddenNotification": "AXApplicationHidden",
+        "kAXRelevanceIndicatorRole": "AXRelevanceIndicator",
+        "kAXMonthFieldAttribute": "AXMonthField",
+        "kAXVerticalUnitDescriptionAttribute": "AXVerticalUnitDescription",
+        "kAXValueIncrementAttribute": "AXValueIncrement",
+        "kAXCriticalValueAttribute": "AXCriticalValue",
+        "kAXValueDescriptionAttribute": "AXValueDescription",
+        "kAXShowDefaultUIAction": "AXShowDefaultUI",
+        "kAXProxyAttribute": "AXProxy",
+        "kAXComboBoxRole": "AXComboBox",
+        "kAXMenuItemMarkCharAttribute": "AXMenuItemMarkChar",
+        "kAXDayFieldAttribute": "AXDayField",
+        "kAXSelectedColumnsAttribute": "AXSelectedColumns",
+        "kAXGrowAreaRole": "AXGrowArea",
+        "kAXDrawerRole": "AXDrawer",
+        "kAXLinkedUIElementsAttribute": "AXLinkedUIElements",
+        "kAXHorizontalScrollBarAttribute": "AXHorizontalScrollBar",
+        "kAXListRole": "AXList",
+        "kAXMarkerTypeDescriptionAttribute": "AXMarkerTypeDescription",
+        "kAXSecondFieldAttribute": "AXSecondField",
+        "kAXSheetCreatedNotification": "AXSheetCreated",
+        "kAXWarningValueAttribute": "AXWarningValue",
+        "kAXDisclosureTriangleRole": "AXDisclosureTriangle",
+        "kAXAllowedValuesAttribute": "AXAllowedValues",
+        "kAXRowHeaderUIElementsAttribute": "AXRowHeaderUIElements",
+        "kAXHorizontalUnitDescriptionAttribute": "AXHorizontalUnitDescription",
+        "kAXOverflowButtonAttribute": "AXOverflowButton",
+        "kAXCloseButtonAttribute": "AXCloseButton",
+        "kAXColumnsAttribute": "AXColumns",
+        "kAXRangeForPositionParameterizedAttribute": "AXRangeForPosition",
+        "kAXAscendingSortDirectionValue": "AXAscendingSortDirection",
+        "kAXPriorityKey": "AXPriorityKey",
+        "kAXToolbarButtonSubrole": "AXToolbarButton",
+        "kAXZoomButtonAttribute": "AXZoomButton",
+        "kAXSliderRole": "AXSlider",
+        "kAXSelectedCellsAttribute": "AXSelectedCells",
+        "kAXRaiseAction": "AXRaise",
+        "kAXIncrementArrowSubrole": "AXIncrementArrow",
+        "kAXLayoutAreaRole": "AXLayoutArea",
+        "kAXUIElementDestroyedNotification": "AXUIElementDestroyed",
+        "kAXMenuClosedNotification": "AXMenuClosed",
+        "kAXHeaderAttribute": "AXHeader",
+        "kAXDateFieldRole": "AXDateField",
+        "kAXTextAreaRole": "AXTextArea",
+        "kAXContentListSubrole": "AXContentList",
+        "kAXOutlineRowSubrole": "AXOutlineRow",
+        "kAXUIElementsKey": "AXUIElementsKey",
+        "kAXUnknownSortDirectionValue": "AXUnknownSortDirection",
+        "kAXVisibleRowsAttribute": "AXVisibleRows",
+        "kAXLayoutItemRole": "AXLayoutItem",
+        "kAXClearButtonAttribute": "AXClearButton",
+        "kAXDescriptionListSubrole": "AXDescriptionList",
+        "kAXDecrementArrowSubrole": "AXDecrementArrow",
+        "kAXMinuteFieldAttribute": "AXMinuteField",
+        "kAXInsertionPointLineNumberAttribute": "AXInsertionPointLineNumber",
+        "kAXMenuItemSelectedNotification": "AXMenuItemSelected",
+        "kAXUnknownRole": "AXUnknown",
+        "kAXHorizontalUnitsAttribute": "AXHorizontalUnits",
+        "kAXIdentifierAttribute": "AXIdentifier",
+        "kAXApplicationDockItemSubrole": "AXApplicationDockItem",
+        "kAXLineForIndexParameterizedAttribute": "AXLineForIndex",
+        "kAXElementBusyAttribute": "AXElementBusy",
+        "kAXTrashDockItemSubrole": "AXTrashDockItem",
+        "kAXLayoutSizeForScreenSizeParameterizedAttribute": "AXLayoutSizeForScreenSize",
+        "kAXMainAttribute": "AXMain",
+        "kAXChildrenAttribute": "AXChildren",
+        "kAXRowIndexRangeAttribute": "AXRowIndexRange",
+        "kAXFilenameAttribute": "AXFilename",
+        "kAXMenuItemCmdVirtualKeyAttribute": "AXMenuItemCmdVirtualKey",
+        "kAXWindowCreatedNotification": "AXWindowCreated",
+        "kAXMenuItemCmdModifiersAttribute": "AXMenuItemCmdModifiers",
+        "kAXPositionAttribute": "AXPosition",
+        "kAXFocusedWindowAttribute": "AXFocusedWindow",
+        "kAXVerticalOrientationValue": "AXVerticalOrientation",
+        "kAXSelectedChildrenChangedNotification": "AXSelectedChildrenChanged",
+        "kAXPlaceholderValueAttribute": "AXPlaceholderValue",
+        "kAXFullScreenButtonAttribute": "AXFullScreenButton",
+        "kAXRowCountChangedNotification": "AXRowCountChanged",
+        "kAXMainWindowAttribute": "AXMainWindow",
+        "kAXSelectedTextRangeAttribute": "AXSelectedTextRange",
+        "kAXSelectedTextAttribute": "AXSelectedText",
+        "kAXCellRole": "AXCell",
+        "kAXSharedTextUIElementsAttribute": "AXSharedTextUIElements",
+        "kAXScreenPointForLayoutPointParameterizedAttribute": "AXScreenPointForLayoutPoint",
+        "kAXGridRole": "AXGrid",
+        "kAXTopLevelUIElementAttribute": "AXTopLevelUIElement",
+        "kAXDisclosingAttribute": "AXDisclosing",
+        "kAXProcessSwitcherListSubrole": "AXProcessSwitcherList",
+        "kAXApplicationDeactivatedNotification": "AXApplicationDeactivated",
+        "kAXIsEditableAttribute": "AXIsEditable",
+        "kAXWindowDeminiaturizedNotification": "AXWindowDeminiaturized",
+        "kAXScrollBarRole": "AXScrollBar",
+        "kAXCancelAction": "AXCancel",
+        "kAXColorWellRole": "AXColorWell",
+        "kAXLayoutPointForScreenPointParameterizedAttribute": "AXLayoutPointForScreenPoint",
+        "kAXMaxValueAttribute": "AXMaxValue",
+        "kPasteboardTypeFilePromiseContent": "com.apple.pasteboard.promised-file-content-type",
+        "kAXConfirmAction": "AXConfirm",
+        "kAXEditedAttribute": "AXEdited",
+        "kAXProgressIndicatorRole": "AXProgressIndicator",
+        "kAXRowCollapsedNotification": "AXRowCollapsed",
+        "kAXTextAttribute": "AXText",
+        "kAXSortDirectionAttribute": "AXSortDirection",
+        "kAXIndexAttribute": "AXIndex",
+        "kAXURLDockItemSubrole": "AXURLDockItem",
+        "kAXDocumentAttribute": "AXDocument",
+        "kAXDescriptionAttribute": "AXDescription",
+        "kAXWindowResizedNotification": "AXWindowResized",
+        "kAXMenuItemCmdGlyphAttribute": "AXMenuItemCmdGlyph",
+        "kAXSelectedRowsAttribute": "AXSelectedRows",
+        "kAXRTFForRangeParameterizedAttribute": "AXRTFForRange",
+        "kAXLabelValueAttribute": "AXLabelValue",
+        "kAXSwitchSubrole": "AXSwitch",
+        "kAXHelpAttribute": "AXHelp",
+        "kAXZoomButtonSubrole": "AXZoomButton",
+        "kAXButtonRole": "AXButton",
+        "kAXColumnIndexRangeAttribute": "AXColumnIndexRange",
+    }
+)
+functions = {
+    "HIShapeUnion": (
+        sel32or64(
+            b"l^{__HIShape=}^{__HIShape=}^{__HIShape=}",
+            b"i^{__HIShape=}^{__HIShape=}^{__HIShape=}",
+        ),
+    ),
+    "AXObserverCreateWithInfoCallback": (
+        sel32or64(b"li^?^^{__AXObserver=}", b"ii^?^^{__AXObserver=}"),
+        "",
+        {
+            "retval": {"already_cfretained": True},
+            "arguments": {
+                1: {
+                    "callable": {
+                        "retval": {"type": b"v"},
+                        "arguments": {
+                            0: {"type": b"^{__AXObserver=}"},
+                            1: {"type": b"^{__AXUIElement=}"},
+                            2: {"type": b"^{__CFString=}"},
+                            3: {"type": b"^{__CFDictionary=}"},
+                            4: {"type": b"^v"},
+                        },
+                    }
+                },
+                2: {"already_cfretained": True, "type_modifier": "o"},
+            },
+        },
+    ),
+    "TranslationCopySourceType": (
+        sel32or64(
+            b"l^{OpaqueTranslationRef=}^^{__CFString=}",
+            b"i^{OpaqueTranslationRef=}^^{__CFString=}",
+        ),
+        "",
+        {
+            "retval": {"already_cfretained": True},
+            "arguments": {1: {"already_cfretained": True, "type_modifier": "o"}},
+        },
+    ),
+    "GetIconFamilyData": (
+        sel32or64(
+            b"s^^{IconFamilyResource=Ll[1{IconFamilyElement=Ll[1C]}]}L^^c",
+            b"s^^{IconFamilyResource=Ii[1{IconFamilyElement=Ii[1C]}]}I^^c",
+        ),
+    ),
+    "IconRefIntersectsCGRect": (
+        sel32or64(
+            b"Z^{CGRect={CGPoint=ff}{CGSize=ff}}^{CGRect={CGPoint=ff}{CGSize=ff}}sL^{OpaqueIconRef=}",
+            b"Z^{CGRect={CGPoint=dd}{CGSize=dd}}^{CGRect={CGPoint=dd}{CGSize=dd}}sI^{OpaqueIconRef=}",
+        ),
+    ),
+    "DisposeCIcon": (
+        b"v^^{CIcon={PixMap=^cs{Rect=ssss}sslllssssL^^{ColorTable=lss[1{ColorSpec=s{RGBColor=SSS}}]}^v}{BitMap=^cs{Rect=ssss}}{BitMap=^cs{Rect=ssss}}^^c[1s]}",
+    ),
+    "DisposeIconSuite": (b"s^^cZ",),
+    "HIShapeCreateMutableWithRect": (
+        sel32or64(
+            b"^{__HIShape=}^{CGRect={CGPoint=ff}{CGSize=ff}}",
+            b"^{__HIShape=}^{CGRect={CGPoint=dd}{CGSize=dd}}",
+        ),
+        "",
+        {
+            "retval": {"already_cfretained": True},
+            "arguments": {0: {"type_modifier": "n"}},
+        },
+    ),
+    "PlotIconRefInContext": (
+        sel32or64(
+            b"l^{CGContext=}^{CGRect={CGPoint=ff}{CGSize=ff}}ss^{RGBColor=SSS}L^{OpaqueIconRef=}",
+            b"i^{CGContext=}^{CGRect={CGPoint=dd}{CGSize=dd}}ss^{RGBColor=SSS}I^{OpaqueIconRef=}",
+        ),
+    ),
+    "AXUIElementPerformAction": (
+        sel32or64(
+            b"l^{__AXUIElement=}^{__CFString=}", b"i^{__AXUIElement=}^{__CFString=}"
+        ),
+    ),
+    "AXUIElementPostKeyboardEvent": (
+        sel32or64(b"l^{__AXUIElement=}SSZ", b"i^{__AXUIElement=}SSZ"),
+    ),
+    "AXUIElementIsAttributeSettable": (
+        sel32or64(
+            b"l^{__AXUIElement=}^{__CFString=}^Z", b"i^{__AXUIElement=}^{__CFString=}^Z"
+        ),
+        "",
+        {"arguments": {2: {"type_modifier": "o"}}},
+    ),
+    "GetCurrentProcess": (
+        sel32or64(b"s^{ProcessSerialNumber=LL}", b"s^{ProcessSerialNumber=II}"),
+    ),
+    "HIShapeCreateCopy": (
+        b"^{__HIShape=}^{__HIShape=}",
+        "",
+        {"retval": {"already_cfretained": True}},
+    ),
+    "AddIconToSuite": (b"s^^c^^cL",),
+    "AXUIElementCopyParameterizedAttributeValue": (
+        sel32or64(
+            b"l^{__AXUIElement=}^{__CFString=}@^@", b"i^{__AXUIElement=}^{__CFString=}@^@"
+        ),
+        "",
+        {
+            "retval": {"already_cfretained": True},
+            "arguments": {3: {"already_cfretained": True, "type_modifier": "o"}},
+        },
+    ),
+    "PasteboardResolvePromises": (
+        sel32or64(b"l^{OpaquePasteboardRef=}", b"i^{OpaquePasteboardRef=}"),
+    ),
+    "GetSuiteLabel": (b"s^^c",),
+    "NewIconActionUPP": (
+        b"^?^?",
+        "",
+        {
+            "arguments": {
+                0: {
+                    "callable": {
+                        "retval": {"type": b"s"},
+                        "arguments": {
+                            0: {"type": b"I"},
+                            1: {"type": b"^^^c"},
+                            2: {"type": b"^v"},
+                        },
+                    }
+                }
+            }
+        },
+    ),
+    "AXUIElementCreateSystemWide": (
+        b"^{__AXUIElement=}",
+        "",
+        {"retval": {"already_cfretained": True}},
+    ),
+    "PtInIconRef": (b"Z^{Point=ss}^{Rect=ssss}sL^{OpaqueIconRef=}",),
+    "SetIconCacheData": (b"s^^c^v",),
+    "RectInIconRef": (b"Z^{Rect=ssss}^{Rect=ssss}sL^{OpaqueIconRef=}",),
+    "PasteboardCopyItemFlavors": (
+        sel32or64(
+            b"l^{OpaquePasteboardRef=}^v^^{__CFArray=}",
+            b"i^{OpaquePasteboardRef=}^v^^{__CFArray=}",
+        ),
+        "",
+        {"retval": {"already_cfretained": True}},
+    ),
+    "AXUIElementSetAttributeValue": (
+        sel32or64(
+            b"l^{__AXUIElement=}^{__CFString=}@", b"i^{__AXUIElement=}^{__CFString=}@"
+        ),
+    ),
+    "SetSuiteLabel": (b"s^^cs",),
+    "NewIconGetterUPP": (
+        b"^?^?",
+        "",
+        {
+            "arguments": {
+                0: {
+                    "callable": {
+                        "retval": {"type": b"^^c"},
+                        "arguments": {0: {"type": b"I"}, 1: {"type": b"^v"}},
+                    }
+                }
+            }
+        },
+    ),
+    "GetProcessInformation": (
+        sel32or64(
+            b"s^{ProcessSerialNumber=LL}^{ProcessInfoRec=L^C{ProcessSerialNumber=LL}LLL^cLL{ProcessSerialNumber=LL}LL^{FSSpec=sl[64C]}}",
+            b"s^{ProcessSerialNumber=II}^{ProcessInfoRec=I^C{ProcessSerialNumber=II}III^cII{ProcessSerialNumber=II}II^{FSRef=[80C]}}",
+        ),
+    ),
+    "ProcessInformationCopyDictionary": (
+        sel32or64(
+            b"^{__CFDictionary=}^{ProcessSerialNumber=LL}L",
+            b"^{__CFDictionary=}^{ProcessSerialNumber=II}I",
+        ),
+        "",
+        {"retval": {"already_cfretained": True}},
+    ),
+    "PlotCIconHandle": (
+        b"s^{Rect=ssss}ss^^{CIcon={PixMap=^cs{Rect=ssss}sslllssssL^^{ColorTable=lss[1{ColorSpec=s{RGBColor=SSS}}]}^v}{BitMap=^cs{Rect=ssss}}{BitMap=^cs{Rect=ssss}}^^c[1s]}",
+    ),
+    "UAZoomChangeFocus": (
+        sel32or64(
+            b"l^{CGRect={CGPoint=ff}{CGSize=ff}}^{CGRect={CGPoint=ff}{CGSize=ff}}L",
+            b"i^{CGRect={CGPoint=dd}{CGSize=dd}}^{CGRect={CGPoint=dd}{CGSize=dd}}I",
+        ),
+        "",
+        {"arguments": {0: {"type_modifier": "n"}, 1: {"type_modifier": "n"}}},
+    ),
+    "HIShapeInset": (sel32or64(b"l^{__HIShape=}ff", b"i^{__HIShape=}dd"),),
+    "AXUIElementCopyActionNames": (
+        sel32or64(
+            b"l^{__AXUIElement=}^^{__CFArray=}", b"i^{__AXUIElement=}^^{__CFArray=}"
+        ),
+        "",
+        {
+            "retval": {"already_cfretained": True},
+            "arguments": {1: {"already_cfretained": True, "type_modifier": "o"}},
+        },
+    ),
+    "HIShapeIntersectsRect": (
+        sel32or64(
+            b"Z^{__HIShape=}^{CGRect={CGPoint=ff}{CGSize=ff}}",
+            b"Z^{__HIShape=}^{CGRect={CGPoint=dd}{CGSize=dd}}",
+        ),
+        "",
+        {
+            "retval": {"c_array_of_fixed_length": 1},
+            "arguments": {1: {"type_modifier": "n"}},
+        },
+    ),
+    "HIShapeEnumerate": (
+        sel32or64(b"l^{__HIShape=}L^?^v", b"i^{__HIShape=}I^?^v"),
+        "",
+        {
+            "arguments": {
+                2: {
+                    "callable": {
+                        "retval": {"type": b"i"},
+                        "arguments": {
+                            0: {"type": b"i"},
+                            1: {"type": b"^{__HIShape=}"},
+                            2: {
+                                "type": sel32or64(
+                                    b"^{CGRect={CGPoint=ff}{CGSize=ff}}",
+                                    b"^{CGRect={CGPoint=dd}{CGSize=dd}}",
+                                ),
+                                "type_modifier": "n",
+                            },
+                            3: {"type": b"^v"},
+                        },
+                    },
+                    "callable_retained": False,
+                }
+            }
+        },
+    ),
+    "AXUIElementCopyAttributeNames": (
+        sel32or64(
+            b"l^{__AXUIElement=}^^{__CFArray=}", b"i^{__AXUIElement=}^^{__CFArray=}"
+        ),
+        "",
+        {
+            "retval": {"already_cfretained": True},
+            "arguments": {1: {"already_cfretained": True, "type_modifier": "o"}},
+        },
+    ),
+    "SameProcess": (
+        sel32or64(
+            b"s^{ProcessSerialNumber=LL}^{ProcessSerialNumber=LL}^Z",
+            b"s^{ProcessSerialNumber=II}^{ProcessSerialNumber=II}^Z",
+        ),
+    ),
+    "TransformProcessType": (
+        sel32or64(b"l^{ProcessSerialNumber=LL}L", b"i^{ProcessSerialNumber=II}I"),
+    ),
+    "PtInIconID": (b"Z{Point=ss}^{Rect=ssss}ss",),
+    "PasteboardSynchronize": (
+        sel32or64(b"L^{OpaquePasteboardRef=}", b"I^{OpaquePasteboardRef=}"),
+    ),
+    "TranslationGetTranslationFlags": (
+        sel32or64(b"l^{OpaqueTranslationRef=}^L", b"i^{OpaqueTranslationRef=}^I"),
+        "",
+        {"arguments": {1: {"type_modifier": "o"}}},
+    ),
+    "TranslationCopyDestinationType": (
+        sel32or64(
+            b"l^{OpaqueTranslationRef=}^^{__CFString=}",
+            b"i^{OpaqueTranslationRef=}^^{__CFString=}",
+        ),
+        "",
+        {
+            "retval": {"already_cfretained": True},
+            "arguments": {1: {"already_cfretained": True, "type_modifier": "o"}},
+        },
+    ),
+    "SetIconCacheProc": (b"s^^c^?",),
+    "IconIDToRgn": (b"s^{OpaqueRgnHandle=}^{Rect=ssss}ss",),
+    "IconRefContainsCGPoint": (
+        sel32or64(
+            b"Z^{CGPoint=ff}^{CGRect={CGPoint=ff}{CGSize=ff}}sL^{OpaqueIconRef=}",
+            b"Z^{CGPoint=dd}^{CGRect={CGPoint=dd}{CGSize=dd}}sI^{OpaqueIconRef=}",
+        ),
+    ),
+    "WakeUpProcess": (
+        sel32or64(b"s^{ProcessSerialNumber=LL}", b"s^{ProcessSerialNumber=II}"),
+    ),
+    "ForEachIconDo": (b"s^^cL^?^v",),
+    "GetIcon": (b"^^cs",),
+    "AXUIElementCopyParameterizedAttributeNames": (
+        sel32or64(
+            b"l^{__AXUIElement=}^^{__CFArray=}", b"i^{__AXUIElement=}^^{__CFArray=}"
+        ),
+        "",
+        {
+            "retval": {"already_cfretained": True},
+            "arguments": {1: {"already_cfretained": True, "type_modifier": "o"}},
+        },
+    ),
+    "PasteboardCreate": (
+        sel32or64(
+            b"l^{__CFString=}^^{OpaquePasteboardRef=}",
+            b"i^{__CFString=}^^{OpaquePasteboardRef=}",
+        ),
+        "",
+        {"retval": {"already_cfretained": True}},
+    ),
+    "SetFrontProcessWithOptions": (
+        sel32or64(b"l^{ProcessSerialNumber=LL}L", b"i^{ProcessSerialNumber=II}I"),
+    ),
+    "GetIconCacheProc": (b"s^^c^^?",),
+    "MakeIconCache": (b"s^^^c^?^v",),
+    "InvokeIconActionUPP": (sel32or64(b"sL^^^c^v^?", b"sI^^^c^v^?"),),
+    "IconFamilyToIconSuite": (
+        b"s^^{IconFamilyResource=Ll[1{IconFamilyElement=Ll[1C]}]}L^^^c",
+    ),
+    "TranslationGetTypeID": (sel32or64(b"L", b"Q"),),
+    "PlotIconID": (b"s^{Rect=ssss}sss",),
+    "CopyProcessName": (
+        sel32or64(
+            b"l^{ProcessSerialNumber=LL}^^{__CFString=}",
+            b"i^{ProcessSerialNumber=II}^^{__CFString=}",
+        ),
+        "",
+        {"retval": {"already_cfretained": True}},
+    ),
+    "GetIconFromSuite": (b"s^^^c^^cL",),
+    "GetIconCacheData": (b"s^^c^^v",),
+    "PasteboardGetItemIdentifier": (
+        sel32or64(b"l^{OpaquePasteboardRef=}l^^v", b"i^{OpaquePasteboardRef=}q^^v"),
+    ),
+    "IconRefToHIShape": (
+        sel32or64(
+            b"^{__HIShape=}^{CGRect={CGPoint=ff}{CGSize=ff}}sL^{OpaqueIconRef=}",
+            b"^{__HIShape=}^{CGRect={CGPoint=dd}{CGSize=dd}}sI^{OpaqueIconRef=}",
+        ),
+    ),
+    "GetIconRefVariant": (
+        sel32or64(
+            b"^{OpaqueIconRef=}^{OpaqueIconRef=}L^s",
+            b"^{OpaqueIconRef=}^{OpaqueIconRef=}I^s",
+        ),
+    ),
+    "IsProcessVisible": (
+        sel32or64(b"Z^{ProcessSerialNumber=LL}", b"Z^{ProcessSerialNumber=II}"),
+    ),
+    "HIShapeIsRectangular": (b"Z^{__HIShape=}",),
+    "HIShapeCreateWithRect": (
+        sel32or64(
+            b"^{__HIShape=}^{CGRect={CGPoint=ff}{CGSize=ff}}",
+            b"^{__HIShape=}^{CGRect={CGPoint=dd}{CGSize=dd}}",
+        ),
+        "",
+        {
+            "retval": {"already_cfretained": True},
+            "arguments": {0: {"type_modifier": "n"}},
+        },
+    ),
+    "AXUIElementCopyActionDescription": (
+        sel32or64(
+            b"l^{__AXUIElement=}^{__CFString=}^^{__CFString=}",
+            b"i^{__AXUIElement=}^{__CFString=}^^{__CFString=}",
+        ),
+        "",
+        {
+            "retval": {"already_cfretained": True},
+            "arguments": {2: {"already_cfretained": True, "type_modifier": "o"}},
+        },
+    ),
+    "AXObserverGetRunLoopSource": (b"^{__CFRunLoopSource=}^{__AXObserver=}",),
+    "PlotIconRef": (b"s^{Rect=ssss}ssL^{OpaqueIconRef=}",),
+    "GetNextProcess": (
+        sel32or64(b"s^{ProcessSerialNumber=LL}", b"s^{ProcessSerialNumber=II}"),
+    ),
+    "GetIconSuite": (b"s^^^csL",),
+    "LoadIconCache": (b"s^{Rect=ssss}ss^^c",),
+    "AXUIElementGetAttributeValueCount": (
+        sel32or64(
+            b"l^{__AXUIElement=}^{__CFString=}^l", b"i^{__AXUIElement=}^{__CFString=}^q"
+        ),
+        "",
+        {"arguments": {2: {"type_modifier": "o"}}},
+    ),
+    "TranslationPerformForURL": (
+        sel32or64(
+            b"l^{OpaqueTranslationRef=}^{__CFURL=}^{__CFURL=}^^{__CFURL=}",
+            b"i^{OpaqueTranslationRef=}^{__CFURL=}^{__CFURL=}^^{__CFURL=}",
+        ),
+        "",
+        {"arguments": {3: {"already_cfretained": True, "type_modifier": "o"}}},
+    ),
+    "AXValueGetType": (b"I^{__AXValue=}",),
+    "UAZoomEnabled": (b"Z",),
+    "GetProcessPID": (
+        sel32or64(b"l^{ProcessSerialNumber=LL}^i", b"i^{ProcessSerialNumber=II}^i"),
+    ),
+    "PtInIconMethod": (b"Z{Point=ss}^{Rect=ssss}s^?^v",),
+    "AXUIElementGetPid": (
+        sel32or64(b"l^{__AXUIElement=}^i", b"i^{__AXUIElement=}^i"),
+        "",
+        {"arguments": {1: {"type_modifier": "o"}}},
+    ),
+    "RectInIconID": (b"Z^{Rect=ssss}^{Rect=ssss}ss",),
+    "GetProcessForPID": (
+        sel32or64(b"li^{ProcessSerialNumber=LL}", b"ii^{ProcessSerialNumber=II}"),
+    ),
+    "TranslationCreate": (
+        sel32or64(
+            b"l^{__CFString=}^{__CFString=}L^^{OpaqueTranslationRef=}",
+            b"i^{__CFString=}^{__CFString=}I^^{OpaqueTranslationRef=}",
+        ),
+        "",
+        {
+            "retval": {"already_cfretained": True},
+            "arguments": {3: {"already_cfretained": True, "type_modifier": "o"}},
+        },
+    ),
+    "HIShapeUnionWithRect": (
+        sel32or64(
+            b"l^{__HIShape=}^{CGRect={CGPoint=ff}{CGSize=ff}}",
+            b"i^{__HIShape=}^{CGRect={CGPoint=dd}{CGSize=dd}}",
+        ),
+        "",
+        {"arguments": {1: {"type_modifier": "n"}}},
+    ),
+    "PasteboardGetItemFlavorFlags": (
+        sel32or64(
+            b"l^{OpaquePasteboardRef=}^v^{__CFString=}^L",
+            b"i^{OpaquePasteboardRef=}^v^{__CFString=}^I",
+        ),
+    ),
+    "PasteboardCopyPasteLocation": (
+        sel32or64(
+            b"l^{OpaquePasteboardRef=}^^{__CFURL=}",
+            b"i^{OpaquePasteboardRef=}^^{__CFURL=}",
+        ),
+        "",
+        {"retval": {"already_cfretained": True}},
+    ),
+    "PasteboardSetPromiseKeeper": (
+        sel32or64(b"l^{OpaquePasteboardRef=}^?^v", b"i^{OpaquePasteboardRef=}^?^v"),
+        "",
+        {
+            "arguments": {
+                1: {
+                    "callable": {
+                        "retval": {"type": b"i"},
+                        "arguments": {
+                            0: {"type": b"^{OpaquePasteboardRef=}"},
+                            1: {"type": b"^v"},
+                            2: {"type": b"^{__CFString=}"},
+                            3: {"type": b"^v"},
+                        },
+                    }
+                }
+            }
+        },
+    ),
+    "PlotIconMethod": (b"s^{Rect=ssss}ss^?^v",),
+    "IconSuiteToIconFamily": (
+        b"s^^cL^^^{IconFamilyResource=Ll[1{IconFamilyElement=Ll[1C]}]}",
+    ),
+    "HIShapeCreateUnion": (
+        b"^{__HIShape=}^{__HIShape=}^{__HIShape=}",
+        "",
+        {"retval": {"already_cfretained": True}},
+    ),
+    "TranslationPerformForData": (
+        sel32or64(
+            b"l^{OpaqueTranslationRef=}^{__CFData=}^^{__CFData=}",
+            b"i^{OpaqueTranslationRef=}^{__CFData=}^^{__CFData=}",
+        ),
+        "",
+        {"arguments": {2: {"already_cfretained": True, "type_modifier": "o"}}},
+    ),
+    "AXMakeProcessTrusted": (sel32or64(b"l^{__CFString=}", b"i^{__CFString=}"),),
+    "AXIsProcessTrustedWithOptions": (
+        b"Z^{__CFDictionary=}",
+        "",
+        {"arguments": {0: {"type_modifier": "o"}}},
+    ),
+    "HIShapeOffset": (sel32or64(b"l^{__HIShape=}ff", b"i^{__HIShape=}dd"),),
+    "NewIconSuite": (b"s^^^c",),
+    "AXUIElementCopyAttributeValues": (
+        sel32or64(
+            b"l^{__AXUIElement=}^{__CFString=}ll^^{__CFArray=}",
+            b"i^{__AXUIElement=}^{__CFString=}qq^^{__CFArray=}",
+        ),
+        "",
+        {
+            "retval": {"already_cfretained": True},
+            "arguments": {4: {"already_cfretained": True, "type_modifier": "o"}},
+        },
+    ),
+    "PtInIconSuite": (b"Z{Point=ss}^{Rect=ssss}s^^c",),
+    "SetIconFamilyData": (
+        sel32or64(
+            b"s^^{IconFamilyResource=Ll[1{IconFamilyElement=Ll[1C]}]}L^^c",
+            b"s^^{IconFamilyResource=Ii[1{IconFamilyElement=Ii[1C]}]}I^^c",
+        ),
+    ),
+    "HIShapeIntersect": (
+        sel32or64(
+            b"l^{__HIShape=}^{__HIShape=}^{__HIShape=}",
+            b"i^{__HIShape=}^{__HIShape=}^{__HIShape=}",
+        ),
+    ),
+    "IconRefToIconFamily": (
+        sel32or64(
+            b"s^{OpaqueIconRef=}L^^^{IconFamilyResource=Ll[1{IconFamilyElement=Ll[1C]}]}",
+            b"s^{OpaqueIconRef=}I^^^{IconFamilyResource=Ii[1{IconFamilyElement=Ii[1C]}]}",
+        ),
+    ),
+    "TranslationCreateWithSourceArray": (
+        sel32or64(
+            b"l^{__CFArray=}L^^{__CFArray=}^^{__CFDictionary=}",
+            b"i^{__CFArray=}I^^{__CFArray=}^^{__CFDictionary=}",
+        ),
+        "",
+        {
+            "retval": {"already_cfretained": True},
+            "arguments": {
+                2: {"already_cfretained": True, "type_modifier": "o"},
+                3: {"already_cfretained": True, "type_modifier": "o"},
+            },
+        },
+    ),
+    "KillProcess": (
+        sel32or64(b"s^{ProcessSerialNumber=LL}", b"s^{ProcessSerialNumber=II}"),
+    ),
+    "RectInIconSuite": (b"Z^{Rect=ssss}^{Rect=ssss}s^^c",),
+    "SetFrontProcess": (
+        sel32or64(b"s^{ProcessSerialNumber=LL}", b"s^{ProcessSerialNumber=II}"),
+    ),
+    "DisposeIconActionUPP": (b"v^?",),
+    "InvokeIconGetterUPP": (sel32or64(b"^^cL^v^?", b"^^cI^v^?"),),
+    "PasteboardCopyItemFlavorData": (
+        sel32or64(
+            b"l^{OpaquePasteboardRef=}^v^{__CFString=}^^{__CFData=}",
+            b"i^{OpaquePasteboardRef=}^v^{__CFString=}^^{__CFData=}",
+        ),
+        "",
+        {"retval": {"already_cfretained": True}},
+    ),
+    "AXUIElementCreateApplication": (
+        b"^{__AXUIElement=}i",
+        "",
+        {"retval": {"already_cfretained": True}},
+    ),
+    "PasteboardGetTypeID": (sel32or64(b"L", b"Q"),),
+    "GetProcessBundleLocation": (
+        sel32or64(
+            b"l^{ProcessSerialNumber=LL}^{FSRef=[80C]}",
+            b"i^{ProcessSerialNumber=II}^{FSRef=[80C]}",
+        ),
+    ),
+    "RectInIconMethod": (b"Z^{Rect=ssss}^{Rect=ssss}s^?^v",),
+    "HIShapeContainsPoint": (
+        sel32or64(b"Z^{__HIShape=}^{CGPoint=ff}", b"Z^{__HIShape=}^{CGPoint=dd}"),
+        "",
+        {"arguments": {1: {"type_modifier": "n"}}},
+    ),
+    "DisposeIconGetterUPP": (b"v^?",),
+    "HIShapeGetBounds": (
+        sel32or64(
+            b"^{CGRect={CGPoint=ff}{CGSize=ff}}^{__HIShape=}^{CGRect={CGPoint=ff}{CGSize=ff}}",
+            b"^{CGRect={CGPoint=dd}{CGSize=dd}}^{__HIShape=}^{CGRect={CGPoint=dd}{CGSize=dd}}",
+        ),
+        "",
+        {"arguments": {1: {"type_modifier": "o"}}},
+    ),
+    "AXObserverAddNotification": (
+        sel32or64(
+            b"l^{__AXObserver=}^{__AXUIElement=}^{__CFString=}^v",
+            b"i^{__AXObserver=}^{__AXUIElement=}^{__CFString=}^v",
+        ),
+    ),
+    "IconRefToRgn": (b"s^{OpaqueRgnHandle=}^{Rect=ssss}sL^{OpaqueIconRef=}",),
+    "IconSuiteToRgn": (b"s^{OpaqueRgnHandle=}^{Rect=ssss}s^^c",),
+    "IconMethodToRgn": (b"s^{OpaqueRgnHandle=}^{Rect=ssss}s^?^v",),
+    "HIShapeCreateIntersection": (
+        b"^{__HIShape=}^{__HIShape=}^{__HIShape=}",
+        "",
+        {"retval": {"already_cfretained": True}},
+    ),
+    "GetIconSizesFromIconRef": (b"sL^LL^{OpaqueIconRef=}",),
+    "HIShapeCreateMutableCopy": (
+        b"^{__HIShape=}^{__HIShape=}",
+        "",
+        {"retval": {"already_cfretained": True}},
+    ),
+    "AXUIElementCopyAttributeValue": (
+        sel32or64(
+            b"l^{__AXUIElement=}^{__CFString=}^@", b"i^{__AXUIElement=}^{__CFString=}^@"
+        ),
+        "",
+        {
+            "retval": {"already_cfretained": True},
+            "arguments": {2: {"already_cfretained": True, "type_modifier": "o"}},
+        },
+    ),
+    "GetFrontProcess": (
+        sel32or64(b"s^{ProcessSerialNumber=LL}", b"s^{ProcessSerialNumber=II}"),
+    ),
+    "HIShapeCreateEmpty": (
+        b"^{__HIShape=}",
+        "",
+        {"retval": {"already_cfretained": True}},
+    ),
+    "PlotIcon": (b"v^{Rect=ssss}^^c",),
+    "AXObserverGetTypeID": (sel32or64(b"L", b"Q"),),
+    "PlotCIcon": (
+        b"v^{Rect=ssss}^^{CIcon={PixMap=^cs{Rect=ssss}sslllssssL^^{ColorTable=lss[1{ColorSpec=s{RGBColor=SSS}}]}^v}{BitMap=^cs{Rect=ssss}}{BitMap=^cs{Rect=ssss}}^^c[1s]}",
+    ),
+    "AXValueGetValue": (b"Z^{__AXValue=}I^v",),
+    "HIShapeGetTypeID": (sel32or64(b"L", b"Q"),),
+    "AXObserverCreate": (
+        sel32or64(b"li^?^^{__AXObserver=}", b"ii^?^^{__AXObserver=}"),
+        "",
+        {
+            "retval": {"already_cfretained": True},
+            "arguments": {
+                1: {
+                    "callable": {
+                        "retval": {"type": b"v"},
+                        "arguments": {
+                            0: {"type": b"^{__AXObserver=}"},
+                            1: {"type": b"^{__AXUIElement=}"},
+                            2: {"type": b"^{__CFString=}"},
+                            3: {"type": b"^v"},
+                        },
+                    }
+                },
+                2: {"already_cfretained": True, "type_modifier": "o"},
+            },
+        },
+    ),
+    "PlotIconSuite": (b"s^{Rect=ssss}ss^^c",),
+    "PasteboardPutItemFlavor": (
+        sel32or64(
+            b"l^{OpaquePasteboardRef=}^v^{__CFString=}^{__CFData=}L",
+            b"i^{OpaquePasteboardRef=}^v^{__CFString=}^{__CFData=}I",
+        ),
+    ),
+    "AXAPIEnabled": (b"Z",),
+    "AXObserverRemoveNotification": (
+        sel32or64(
+            b"l^{__AXObserver=}^{__AXUIElement=}^{__CFString=}",
+            b"i^{__AXObserver=}^{__AXUIElement=}^{__CFString=}",
+        ),
+    ),
+    "PasteboardClear": (
+        sel32or64(b"l^{OpaquePasteboardRef=}", b"i^{OpaquePasteboardRef=}"),
+    ),
+    "TranslationPerformForFile": (
+        sel32or64(
+            b"l^{OpaqueTranslationRef=}^{FSRef=[80C]}^{FSRef=[80C]}^{__CFString=}^{FSRef=[80C]}",
+            b"i^{OpaqueTranslationRef=}^{FSRef=[80C]}^{FSRef=[80C]}^{__CFString=}^{FSRef=[80C]}",
+        ),
+        "",
+        {
+            "arguments": {
+                1: {"type_modifier": "n"},
+                2: {"type_modifier": "n"},
+                4: {"type_modifier": "o"},
+            }
+        },
+    ),
+    "IsIconRefMaskEmpty": (b"Z^{OpaqueIconRef=}",),
+    "GetLabel": (b"ss^{RGBColor=SSS}[256C]",),
+    "PasteboardGetItemCount": (
+        sel32or64(b"l^{OpaquePasteboardRef=}^L", b"i^{OpaquePasteboardRef=}^Q"),
+    ),
+    "PlotSICNHandle": (b"s^{Rect=ssss}ss^^c",),
+    "GetCIcon": (
+        b"^^{CIcon={PixMap=^cs{Rect=ssss}sslllssssL^^{ColorTable=lss[1{ColorSpec=s{RGBColor=SSS}}]}^v}{BitMap=^cs{Rect=ssss}}{BitMap=^cs{Rect=ssss}}^^c[1s]}s",
+    ),
+    "PlotIconHandle": (b"s^{Rect=ssss}ss^^c",),
+    "HIShapeSetWithShape": (
+        sel32or64(b"l^{__HIShape=}^{__HIShape=}", b"i^{__HIShape=}^{__HIShape=}"),
+    ),
+    "PasteboardSetPasteLocation": (
+        sel32or64(
+            b"l^{OpaquePasteboardRef=}^{__CFURL=}", b"i^{OpaquePasteboardRef=}^{__CFURL=}"
+        ),
+    ),
+    "HIShapeXor": (
+        sel32or64(
+            b"l^{__HIShape=}^{__HIShape=}^{__HIShape=}",
+            b"i^{__HIShape=}^{__HIShape=}^{__HIShape=}",
+        ),
+    ),
+    "HIShapeCreateMutable": (
+        b"^{__HIShape=}",
+        "",
+        {"retval": {"already_cfretained": True}},
+    ),
+    "ShowHideProcess": (
+        sel32or64(b"s^{ProcessSerialNumber=LL}Z", b"s^{ProcessSerialNumber=II}Z"),
+    ),
+    "HIShapeIsEmpty": (b"Z^{__HIShape=}",),
+    "AXUIElementSetMessagingTimeout": (
+        sel32or64(b"l^{__AXUIElement=}f", b"i^{__AXUIElement=}f"),
+    ),
+    "ExitToShell": (b"v",),
+    "AXIsProcessTrusted": (b"Z",),
+    "AXUIElementGetTypeID": (sel32or64(b"L", b"Q"),),
+    "PasteboardCopyName": (
+        sel32or64(
+            b"l^{OpaquePasteboardRef=}^^{__CFString=}",
+            b"i^{OpaquePasteboardRef=}^^{__CFString=}",
+        ),
+        "",
+        {"retval": {"already_cfretained": True}},
+    ),
+    "HIShapeDifference": (
+        sel32or64(
+            b"l^{__HIShape=}^{__HIShape=}^{__HIShape=}",
+            b"i^{__HIShape=}^{__HIShape=}^{__HIShape=}",
+        ),
+    ),
+    "AXValueGetTypeID": (sel32or64(b"L", b"Q"), "", {"variadic": False}),
+    "AXUIElementCopyElementAtPosition": (
+        sel32or64(
+            b"l^{__AXUIElement=}ff^^{__AXUIElement=}",
+            b"i^{__AXUIElement=}ff^^{__AXUIElement=}",
+        ),
+        "",
+        {
+            "retval": {"already_cfretained": True},
+            "arguments": {3: {"already_cfretained": True, "type_modifier": "o"}},
+        },
+    ),
+    "AXUIElementCopyMultipleAttributeValues": (
+        sel32or64(
+            b"l^{__AXUIElement=}^{__CFArray=}L^^{__CFArray=}",
+            b"i^{__AXUIElement=}^{__CFArray=}I^^{__CFArray=}",
+        ),
+        "",
+        {
+            "retval": {"already_cfretained": True},
+            "arguments": {3: {"already_cfretained": True, "type_modifier": "o"}},
+        },
+    ),
+    "AXValueCreate": (b"^{__AXValue=}I^v", "", {"retval": {"already_cfretained": True}}),
+    "HIShapeSetEmpty": (sel32or64(b"l^{__HIShape=}", b"i^{__HIShape=}"),),
+    "HIShapeReplacePathInCGContext": (
+        sel32or64(b"l^{__HIShape=}^{CGContext=}", b"i^{__HIShape=}^{CGContext=}"),
+    ),
+    "HIShapeCreateDifference": (
+        b"^{__HIShape=}^{__HIShape=}^{__HIShape=}",
+        "",
+        {"retval": {"already_cfretained": True}},
+    ),
+    "HIShapeCreateXor": (
+        b"^{__HIShape=}^{__HIShape=}^{__HIShape=}",
+        "",
+        {"retval": {"already_cfretained": True}},
+    ),
 }
-misc.update({'SizeResourceRec': objc.createStructType('SizeResourceRec', sel32or64(b'{SizeResourceRec=SLL}', b'{SizeResourceRec=SII}'), ['flags', 'preferredHeapSize', 'minimumHeapSize']), 'CIcon': objc.createStructType('CIcon', b'{CIcon={PixMap=^cs{Rect=ssss}sslllssssL^^{ColorTable=lss[1{ColorSpec=s{RGBColor=SSS}}]}^v}{BitMap=^cs{Rect=ssss}}{BitMap=^cs{Rect=ssss}}^^c[1s]}', ['iconPMap', 'iconMask', 'iconBMap', 'iconData', 'iconMaskData']), 'ProcessInfoExtendedRec': objc.createStructType('ProcessInfoExtendedRec', sel32or64(b'{ProcessInfoExtendedRec=L^C{ProcessSerialNumber=LL}LLL^cLL{ProcessSerialNumber=LL}LL^{FSSpec=sl[64C]}LL}', b'{ProcessInfoExtendedRec=I^C{ProcessSerialNumber=II}III^cII{ProcessSerialNumber=II}II^{FSRef=[80C]}II}'), ['processInfoLength', 'processName', 'processNumber', 'processType', 'processSignature', 'processMode', 'processLocation', 'processSize', 'processFreeMem', 'processLauncher', 'processLaunchDate', 'processActiveTime', 'processAppSpec', 'processTempMemTotal', 'processPurgeableTempMemTotal']), 'ProcessInfoRec': objc.createStructType('ProcessInfoRec', sel32or64(b'{ProcessInfoRec=L^C{ProcessSerialNumber=LL}LLL^cLL{ProcessSerialNumber=LL}LL^{FSSpec=sl[64C]}}', b'{ProcessInfoRec=I^C{ProcessSerialNumber=II}III^cII{ProcessSerialNumber=II}II^{FSRef=[80C]}}'), ['processInfoLength', 'processName', 'processNumber', 'processType', 'processSignature', 'processMode', 'processLocation', 'processSize', 'processFreeMem', 'processLauncher', 'processLaunchDate', 'processActiveTime', 'processAppSpec'])})
-constants = '''$kAXAttachmentTextAttribute@^{__CFString=}$kAXAutocorrectedTextAttribute@^{__CFString=}$kAXBackgroundColorTextAttribute@^{__CFString=}$kAXFontFamilyKey@^{__CFString=}$kAXFontNameKey@^{__CFString=}$kAXFontSizeKey@^{__CFString=}$kAXFontTextAttribute@^{__CFString=}$kAXForegoundColorTextAttribute@^{__CFString=}$kAXForegroundColorTextAttribute@^{__CFString=}$kAXLinkTextAttribute@^{__CFString=}$kAXListItemIndexTextAttribute@^{__CFString=}$kAXListItemLevelTextAttribute@^{__CFString=}$kAXListItemPrefixTextAttribute@^{__CFString=}$kAXMarkedMisspelledTextAttribute@^{__CFString=}$kAXMisspelledTextAttribute@^{__CFString=}$kAXNaturalLanguageTextAttribute@^{__CFString=}$kAXReplacementStringTextAttribute@^{__CFString=}$kAXShadowTextAttribute@^{__CFString=}$kAXStrikethroughColorTextAttribute@^{__CFString=}$kAXStrikethroughTextAttribute@^{__CFString=}$kAXSuperscriptTextAttribute@^{__CFString=}$kAXTrustedCheckOptionPrompt@^{__CFString=}$kAXUnderlineColorTextAttribute@^{__CFString=}$kAXUnderlineTextAttribute@^{__CFString=}$kAXVisibleNameKey@^{__CFString=}$'''
-enums = '''$AX_ALLOW_OLD_SECURITY_METHOD@0$activDev@5$atAbsoluteCenter@5$atBottom@3$atBottomLeft@11$atBottomRight@15$atCenterBottom@7$atCenterLeft@9$atCenterRight@13$atCenterTop@6$atHorizontalCenter@4$atLeft@8$atNone@0$atRight@12$atTop@2$atTopLeft@10$atTopRight@14$atVerticalCenter@1$badPasteboardFlavorErr@-25133$badPasteboardIndexErr@-25131$badPasteboardItemErr@-25132$badPasteboardSyncErr@-25130$badTranslationRefErr@-3031$cdevGenErr@-1$cdevMemErr@0$cdevResErr@1$cdevUnset@3$clearDev@13$closeDev@2$copyDev@11$cursorDev@14$cutDev@10$deactivDev@6$duplicatePasteboardFlavorErr@-25134$extendedBlock@19523$hitDev@1$initDev@0$kAXCopyMultipleAttributeOptionStopOnError@1$kAXErrorAPIDisabled@-25211$kAXErrorActionUnsupported@-25206$kAXErrorAttributeUnsupported@-25205$kAXErrorCannotComplete@-25204$kAXErrorFailure@-25200$kAXErrorIllegalArgument@-25201$kAXErrorInvalidUIElement@-25202$kAXErrorInvalidUIElementObserver@-25203$kAXErrorNoValue@-25212$kAXErrorNotEnoughPrecision@-25214$kAXErrorNotImplemented@-25208$kAXErrorNotificationAlreadyRegistered@-25209$kAXErrorNotificationNotRegistered@-25210$kAXErrorNotificationUnsupported@-25207$kAXErrorParameterizedAttributeUnsupported@-25213$kAXErrorSuccess@0$kAXMenuItemModifierControl@4$kAXMenuItemModifierNoCommand@8$kAXMenuItemModifierNone@0$kAXMenuItemModifierOption@2$kAXMenuItemModifierShift@1$kAXPriorityHigh@90$kAXPriorityLow@10$kAXPriorityMedium@50$kAXUnderlineStyleDouble@9$kAXUnderlineStyleNone@0$kAXUnderlineStyleSingle@1$kAXUnderlineStyleThick@2$kAXValueAXErrorType@5$kAXValueCFRangeType@4$kAXValueCGPointType@1$kAXValueCGRectType@3$kAXValueCGSizeType@2$kAXValueIllegalType@0$kAXValueTypeAXError@5$kAXValueTypeCFRange@4$kAXValueTypeCGPoint@1$kAXValueTypeCGRect@3$kAXValueTypeCGSize@2$kAXValueTypeIllegal@0$kAlignAbsoluteCenter@5$kAlignBottom@3$kAlignBottomLeft@11$kAlignBottomRight@15$kAlignCenterBottom@7$kAlignCenterLeft@9$kAlignCenterRight@13$kAlignCenterTop@6$kAlignHorizontalCenter@4$kAlignLeft@8$kAlignNone@0$kAlignRight@12$kAlignTop@2$kAlignTopLeft@10$kAlignTopRight@14$kAlignVerticalCenter@1$kCurrentProcess@2$kHIShapeEnumerateInit@1$kHIShapeEnumerateRect@2$kHIShapeEnumerateTerminate@3$kHIShapeParseFromBottom@1$kHIShapeParseFromBottomRight@3$kHIShapeParseFromLeft@0$kHIShapeParseFromRight@2$kHIShapeParseFromTop@0$kHIShapeParseFromTopLeft@0$kNoProcess@0$kPasteboardClientIsOwner@2$kPasteboardFlavorNoFlags@0$kPasteboardFlavorNotSaved@4$kPasteboardFlavorPromised@512$kPasteboardFlavorRequestOnly@8$kPasteboardFlavorSenderOnly@1$kPasteboardFlavorSenderTranslated@2$kPasteboardFlavorSystemTranslated@256$kPasteboardModified@1$kPasteboardStandardLocationTrash@1953657704$kPasteboardStandardLocationUnknown@1970170734$kPlotIconRefNoImage@2$kPlotIconRefNoMask@4$kPlotIconRefNormalFlags@0$kProcessDictionaryIncludeAllInformationMask@-1$kProcessTransformToBackgroundApplication@2$kProcessTransformToForegroundApplication@1$kProcessTransformToUIElementApplication@4$kQuitAtNormalTimeMask@2$kQuitBeforeFBAsQuitMask@4$kQuitBeforeNormalTimeMask@1$kQuitBeforeShellQuitsMask@8$kQuitBeforeTerminatorAppQuitsMask@16$kQuitNeverMask@32$kQuitNotQuitDuringInstallMask@256$kQuitNotQuitDuringLogoutMask@512$kQuitOptionsMask@127$kSelectorAll1BitData@16843009$kSelectorAll32BitData@134219784$kSelectorAll4BitData@33686018$kSelectorAll8BitData@67372036$kSelectorAllAvailableData@4294967295$kSelectorAllHugeData@4278190080$kSelectorAllLargeData@255$kSelectorAllMiniData@16711680$kSelectorAllSmallData@65280$kSelectorHuge1Bit@16777216$kSelectorHuge32Bit@134217728$kSelectorHuge4Bit@33554432$kSelectorHuge8Bit@67108864$kSelectorHuge8BitMask@268435456$kSelectorLarge1Bit@1$kSelectorLarge32Bit@8$kSelectorLarge4Bit@2$kSelectorLarge8Bit@4$kSelectorLarge8BitMask@16$kSelectorMini1Bit@65536$kSelectorMini4Bit@131072$kSelectorMini8Bit@262144$kSelectorSmall1Bit@256$kSelectorSmall32Bit@2048$kSelectorSmall4Bit@512$kSelectorSmall8Bit@1024$kSelectorSmall8BitMask@4096$kSetFrontProcessCausedByUser@2$kSetFrontProcessFrontWindowOnly@1$kSystemProcess@1$kTransformDisabled@1$kTransformLabel1@256$kTransformLabel2@512$kTransformLabel3@768$kTransformLabel4@1024$kTransformLabel5@1280$kTransformLabel6@1536$kTransformLabel7@1792$kTransformNone@0$kTransformOffline@2$kTransformOpen@3$kTransformSelected@16384$kTransformSelectedDisabled@16385$kTransformSelectedOffline@16386$kTransformSelectedOpen@16387$kTranslationDataTranslation@1$kTranslationFileTranslation@2$kUAZoomFocusTypeInsertionPoint@1$kUAZoomFocusTypeOther@0$keyEvtDev@7$launchAllow24Bit@256$launchContinue@16384$launchDontSwitch@512$launchInhibitDaemon@128$launchNoFileFlags@2048$launchUseMinimum@1024$macDev@8$mode32BitCompatible@128$modeCanBackground@4096$modeControlPanel@524288$modeDeskAccessory@131072$modeDisplayManagerAware@4$modeDoesActivateOnFGSwitch@2048$modeGetAppDiedMsg@256$modeGetFrontClicks@512$modeHighLevelEventAware@64$modeLaunchDontSwitch@262144$modeLocalAndRemoteHLEvents@32$modeMultiLaunch@65536$modeNeedSuspendResume@16384$modeOnlyBackground@1024$modeReserved@16777216$modeStationeryAware@16$modeUseTextEditServices@8$noPasteboardPromiseKeeperErr@-25136$notPasteboardOwnerErr@-25135$nulDev@3$pasteDev@12$svAll1BitData@16843009$svAll4BitData@33686018$svAll8BitData@67372036$svAllAvailableData@4294967295$svAllLargeData@255$svAllMiniData@16711680$svAllSmallData@65280$svLarge1Bit@1$svLarge4Bit@2$svLarge8Bit@4$svMini1Bit@65536$svMini4Bit@131072$svMini8Bit@262144$svSmall1Bit@256$svSmall4Bit@512$svSmall8Bit@1024$ttDisabled@1$ttLabel1@256$ttLabel2@512$ttLabel3@768$ttLabel4@1024$ttLabel5@1280$ttLabel6@1536$ttLabel7@1792$ttNone@0$ttOffline@2$ttOpen@3$ttSelected@16384$ttSelectedDisabled@16385$ttSelectedOffline@16386$ttSelectedOpen@16387$undoDev@9$updateDev@4$'''
-misc.update({'extendedBlockLen': sel32or64(32, 40)})
-misc.update({'kAXTableRole': 'AXTable', 'kAXAttributedStringForRangeParameterizedAttribute': 'AXAttributedStringForRange', 'kAXStandardWindowSubrole': 'AXStandardWindow', 'kAXFloatingWindowSubrole': 'AXFloatingWindow', 'kAXHiddenAttribute': 'AXHidden', 'kAXSharedCharacterRangeAttribute': 'AXSharedCharacterRange', 'kAXResizedNotification': 'AXResized', 'kAXMinValueAttribute': 'AXMinValue', 'kAXOutlineRole': 'AXOutline', 'kAXDockItemRole': 'AXDockItem', 'kAXFocusedWindowChangedNotification': 'AXFocusedWindowChanged', 'kAXPopUpButtonRole': 'AXPopUpButton', 'kAXWindowsAttribute': 'AXWindows', 'kAXMinimizedWindowDockItemSubrole': 'AXMinimizedWindowDockItem', 'kAXScreenSizeForLayoutSizeParameterizedAttribute': 'AXScreenSizeForLayoutSize', 'kAXGrowAreaAttribute': 'AXGrowArea', 'kAXDescendingSortDirectionValue': 'AXDescendingSortDirection', 'kAXMenuItemCmdCharAttribute': 'AXMenuItemCmdChar', 'kAXLevelIndicatorRole': 'AXLevelIndicator', 'kAXRoleDescriptionAttribute': 'AXRoleDescription', 'kAXSystemFloatingWindowSubrole': 'AXSystemFloatingWindow', 'kAXRowRole': 'AXRow', 'kAXToolbarRole': 'AXToolbar', 'kAXVerticalUnitsAttribute': 'AXVerticalUnits', 'kAXTitleUIElementAttribute': 'AXTitleUIElement', 'kAXPreviousContentsAttribute': 'AXPreviousContents', 'kAXSelectedAttribute': 'AXSelected', 'kAXWindowAttribute': 'AXWindow', 'kAXTabGroupRole': 'AXTabGroup', 'kAXValueWrapsAttribute': 'AXValueWraps', 'kAXSizeAttribute': 'AXSize', 'kAXSelectedTextRangesAttribute': 'AXSelectedTextRanges', 'kAXRangeForIndexParameterizedAttribute': 'AXRangeForIndex', 'kAXSelectedTextChangedNotification': 'AXSelectedTextChanged', 'kAXURLAttribute': 'AXURL', 'kAXMenuItemRole': 'AXMenuItem', 'kAXHelpTagRole': 'AXHelpTag', 'kAXParentAttribute': 'AXParent', 'kAXTimelineSubrole': 'AXTimeline', 'kAXDecrementButtonAttribute': 'AXDecrementButton', 'kAXFocusedApplicationAttribute': 'AXFocusedApplication', 'kAXMovedNotification': 'AXMoved', 'kAXBoundsForRangeParameterizedAttribute': 'AXBoundsForRange', 'kAXIncrementPageSubrole': 'AXIncrementPage', 'kAXFocusedUIElementAttribute': 'AXFocusedUIElement', 'kAXModalAttribute': 'AXModal', 'kAXMenuItemPrimaryUIElementAttribute': 'AXMenuItemPrimaryUIElement', 'kAXTimeFieldRole': 'AXTimeField', 'kAXRulerRole': 'AXRuler', 'kAXIncrementButtonAttribute': 'AXIncrementButton', 'kAXMenuBarAttribute': 'AXMenuBar', 'kAXMainWindowChangedNotification': 'AXMainWindowChanged', 'kAXSelectedChildrenMovedNotification': 'AXSelectedChildrenMoved', 'kAXColumnCountAttribute': 'AXColumnCount', 'kAXNextContentsAttribute': 'AXNextContents', 'kAXFrontmostAttribute': 'AXFrontmost', 'kAXShownMenuUIElementAttribute': 'AXShownMenuUIElement', 'kAXColumnTitleAttribute': 'AXColumnTitles', 'kAXAlternateUIVisibleAttribute': 'AXAlternateUIVisible', 'kAXRangeForLineParameterizedAttribute': 'AXRangeForLine', 'kAXSplittersAttribute': 'AXSplitters', 'kAXPickAction': 'AXPick', 'kAXOrderedByRowAttribute': 'AXOrderedByRow', 'kAXHelpTagCreatedNotification': 'AXHelpTagCreated', 'kAXStringForRangeParameterizedAttribute': 'AXStringForRange', 'kAXStaticTextRole': 'AXStaticText', 'kAXColumnRole': 'AXColumn', 'kAXMinimizeButtonAttribute': 'AXMinimizeButton', 'kAXMenuOpenedNotification': 'AXMenuOpened', 'kAXCellForColumnAndRowParameterizedAttribute': 'AXCellForColumnAndRow', 'kAXContentsAttribute': 'AXContents', 'kAXRadioGroupRole': 'AXRadioGroup', 'kAXDrawerCreatedNotification': 'AXDrawerCreated', 'kAXSplitGroupRole': 'AXSplitGroup', 'kAXDialogSubrole': 'AXDialog', 'kAXDisclosureLevelAttribute': 'AXDisclosureLevel', 'kAXMinimizedAttribute': 'AXMinimized', 'kAXFocusedAttribute': 'AXFocused', 'kAXServesAsTitleForUIElementsAttribute': 'AXServesAsTitleForUIElements', 'kAXMarkerUIElementsAttribute': 'AXMarkerUIElements', 'kAXFocusedUIElementChangedNotification': 'AXFocusedUIElementChanged', 'kAXDescription': 'AXDescription', 'kAXAnnouncementRequestedNotification': 'AXAnnouncementRequested', 'kAXMatteHoleAttribute': 'AXMatteHole', 'kAXMarkerTypeAttribute': 'AXMarkerType', 'kAXToggleSubrole': 'AXToggle', 'kAXNumberOfCharactersAttribute': 'AXNumberOfCharacters', 'kAXImageRole': 'AXImage', 'kAXDecorativeSubrole': 'AXDecorative', 'kAXYearFieldAttribute': 'AXYearField', 'kAXMenuRole': 'AXMenu', 'kAXVisibleColumnsAttribute': 'AXVisibleColumns', 'kAXUIElementTitleKey': 'AXUIElementTitleKey', 'kAXIncrementorRole': 'AXIncrementor', 'kAXHourFieldAttribute': 'AXHourField', 'kAXFolderDockItemSubrole': 'AXFolderDockItem', 'kAXMenuBarItemRole': 'AXMenuBarItem', 'kAXLayoutChangedNotification': 'AXLayoutChanged', 'kAXDefaultButtonAttribute': 'AXDefaultButton', 'kAXSearchButtonAttribute': 'AXSearchButton', 'kAXEnabledAttribute': 'AXEnabled', 'kAXRowCountAttribute': 'AXRowCount', 'kAXCancelButtonAttribute': 'AXCancelButton', 'kAXIncrementAction': 'AXIncrement', 'kAXRoleAttribute': 'AXRole', 'kAXWindowRole': 'AXWindow', 'kAXExpandedAttribute': 'AXExpanded', 'kAXTitleAttribute': 'AXTitle', 'kAXSubroleAttribute': 'AXSubrole', 'kAXSelectedChildrenAttribute': 'AXSelectedChildren', 'kAXPressAction': 'AXPress', 'kAXUnknownOrientationValue': 'AXUnknownOrientation', 'kAXApplicationShownNotification': 'AXApplicationShown', 'kAXSelectedRowsChangedNotification': 'AXSelectedRowsChanged', 'kPasteboardTypeFileURLPromise': 'com.apple.pasteboard.promised-file-url', 'kAXDockExtraDockItemSubrole': 'AXDockExtraDockItem', 'kAXCreatedNotification': 'AXCreated', 'kAXSecureTextFieldSubrole': 'AXSecureTextField', 'kAXHandleRole': 'AXHandle', 'kAXDisclosedRowsAttribute': 'AXDisclosedRows', 'kPasteboardClipboard': 'com.apple.pasteboard.clipboard', 'kPasteboardFind': 'com.apple.pasteboard.find', 'kAXTabsAttribute': 'AXTabs', 'kAXWindowMiniaturizedNotification': 'AXWindowMiniaturized', 'kAXOrientationAttribute': 'AXOrientation', 'kAXDefinitionListSubrole': 'AXDefinitionList', 'kAXTableRowSubrole': 'AXTableRow', 'kAXWindowMovedNotification': 'AXWindowMoved', 'kAXUnitDescriptionAttribute': 'AXUnitDescription', 'kAXSharedFocusElementsAttribute': 'AXSharedFocusElements', 'kAXStyleRangeForIndexParameterizedAttribute': 'AXStyleRangeForIndex', 'kAXSheetRole': 'AXSheet', 'kAXShowMenuAction': 'AXShowMenu', 'kAXMatteRole': 'AXMatte', 'kAXMatteContentUIElementAttribute': 'AXMatteContentUIElement', 'kAXBusyIndicatorRole': 'AXBusyIndicator', 'kAXRatingIndicatorSubrole': 'AXRatingIndicator', 'kAXRowExpandedNotification': 'AXRowExpanded', 'kAXScrollAreaRole': 'AXScrollArea', 'kAXVisibleCellsAttribute': 'AXVisibleCells', 'kAXExtrasMenuBarAttribute': 'AXExtrasMenuBar', 'kAXApplicationActivatedNotification': 'AXApplicationActivated', 'kAXUnitsAttribute': 'AXUnits', 'kAXRulerMarkerRole': 'AXRulerMarker', 'kAXSystemWideRole': 'AXSystemWide', 'kAXHandlesAttribute': 'AXHandles', 'kAXIsApplicationRunningAttribute': 'AXIsApplicationRunning', 'kAXMenuBarRole': 'AXMenuBar', 'kAXShowAlternateUIAction': 'AXShowAlternateUI', 'kAXSortButtonSubrole': 'AXSortButton', 'kAXUnknownSubrole': 'AXUnknown', 'kAXLabelUIElementsAttribute': 'AXLabelUIElements', 'kAXIncrementorAttribute': 'AXIncrementor', 'kAXVisibleChildrenAttribute': 'AXVisibleChildren', 'kAXCheckBoxRole': 'AXCheckBox', 'kAXSelectedCellsChangedNotification': 'AXSelectedCellsChanged', 'kAXCloseButtonSubrole': 'AXCloseButton', 'kAXColumnTitlesAttribute': 'AXColumnTitles', 'kAXAMPMFieldAttribute': 'AXAMPMField', 'kAXPopoverRole': 'AXPopover', 'kAXAnnouncementKey': 'AXAnnouncementKey', 'kAXValueIndicatorRole': 'AXValueIndicator', 'kAXValueChangedNotification': 'AXValueChanged', 'kAXSelectedColumnsChangedNotification': 'AXSelectedColumnsChanged', 'kAXApplicationRole': 'AXApplication', 'kAXColumnHeaderUIElementsAttribute': 'AXColumnHeaderUIElements', 'kAXMenuButtonRole': 'AXMenuButton', 'kAXBrowserRole': 'AXBrowser', 'kAXRowsAttribute': 'AXRows', 'kAXTextFieldRole': 'AXTextField', 'kAXFullScreenButtonSubrole': 'AXFullScreenButton', 'kAXSplitterRole': 'AXSplitter', 'kAXVisibleCharacterRangeAttribute': 'AXVisibleCharacterRange', 'kAXUnitsChangedNotification': 'AXUnitsChanged', 'kAXGroupRole': 'AXGroup', 'kAXMinimizeButtonSubrole': 'AXMinimizeButton', 'kAXDecrementPageSubrole': 'AXDecrementPage', 'kAXElementBusyChangedNotification': 'AXElementBusyChanged', 'kAXTitleChangedNotification': 'AXTitleChanged', 'kAXToolbarButtonAttribute': 'AXToolbarButton', 'kAXDecrementAction': 'AXDecrement', 'kAXHorizontalOrientationValue': 'AXHorizontalOrientation', 'kAXDocumentDockItemSubrole': 'AXDocumentDockItem', 'kAXSearchFieldSubrole': 'AXSearchField', 'kAXVerticalScrollBarAttribute': 'AXVerticalScrollBar', 'kAXVisibleTextAttribute': 'AXVisibleText', 'kAXRadioButtonRole': 'AXRadioButton', 'kAXValueAttribute': 'AXValue', 'kAXDisclosedByRowAttribute': 'AXDisclosedByRow', 'kAXSystemDialogSubrole': 'AXSystemDialog', 'kAXSeparatorDockItemSubrole': 'AXSeparatorDockItem', 'kAXApplicationHiddenNotification': 'AXApplicationHidden', 'kAXRelevanceIndicatorRole': 'AXRelevanceIndicator', 'kAXMonthFieldAttribute': 'AXMonthField', 'kAXVerticalUnitDescriptionAttribute': 'AXVerticalUnitDescription', 'kAXValueIncrementAttribute': 'AXValueIncrement', 'kAXCriticalValueAttribute': 'AXCriticalValue', 'kAXValueDescriptionAttribute': 'AXValueDescription', 'kAXShowDefaultUIAction': 'AXShowDefaultUI', 'kAXProxyAttribute': 'AXProxy', 'kAXComboBoxRole': 'AXComboBox', 'kAXMenuItemMarkCharAttribute': 'AXMenuItemMarkChar', 'kAXDayFieldAttribute': 'AXDayField', 'kAXSelectedColumnsAttribute': 'AXSelectedColumns', 'kAXGrowAreaRole': 'AXGrowArea', 'kAXDrawerRole': 'AXDrawer', 'kAXLinkedUIElementsAttribute': 'AXLinkedUIElements', 'kAXHorizontalScrollBarAttribute': 'AXHorizontalScrollBar', 'kAXListRole': 'AXList', 'kAXMarkerTypeDescriptionAttribute': 'AXMarkerTypeDescription', 'kAXSecondFieldAttribute': 'AXSecondField', 'kAXSheetCreatedNotification': 'AXSheetCreated', 'kAXWarningValueAttribute': 'AXWarningValue', 'kAXDisclosureTriangleRole': 'AXDisclosureTriangle', 'kAXAllowedValuesAttribute': 'AXAllowedValues', 'kAXRowHeaderUIElementsAttribute': 'AXRowHeaderUIElements', 'kAXHorizontalUnitDescriptionAttribute': 'AXHorizontalUnitDescription', 'kAXOverflowButtonAttribute': 'AXOverflowButton', 'kAXCloseButtonAttribute': 'AXCloseButton', 'kAXColumnsAttribute': 'AXColumns', 'kAXRangeForPositionParameterizedAttribute': 'AXRangeForPosition', 'kAXAscendingSortDirectionValue': 'AXAscendingSortDirection', 'kAXPriorityKey': 'AXPriorityKey', 'kAXToolbarButtonSubrole': 'AXToolbarButton', 'kAXZoomButtonAttribute': 'AXZoomButton', 'kAXSliderRole': 'AXSlider', 'kAXSelectedCellsAttribute': 'AXSelectedCells', 'kAXRaiseAction': 'AXRaise', 'kAXIncrementArrowSubrole': 'AXIncrementArrow', 'kAXLayoutAreaRole': 'AXLayoutArea', 'kAXUIElementDestroyedNotification': 'AXUIElementDestroyed', 'kAXMenuClosedNotification': 'AXMenuClosed', 'kAXHeaderAttribute': 'AXHeader', 'kAXDateFieldRole': 'AXDateField', 'kAXTextAreaRole': 'AXTextArea', 'kAXContentListSubrole': 'AXContentList', 'kAXOutlineRowSubrole': 'AXOutlineRow', 'kAXUIElementsKey': 'AXUIElementsKey', 'kAXUnknownSortDirectionValue': 'AXUnknownSortDirection', 'kAXVisibleRowsAttribute': 'AXVisibleRows', 'kAXLayoutItemRole': 'AXLayoutItem', 'kAXClearButtonAttribute': 'AXClearButton', 'kAXDescriptionListSubrole': 'AXDescriptionList', 'kAXDecrementArrowSubrole': 'AXDecrementArrow', 'kAXMinuteFieldAttribute': 'AXMinuteField', 'kAXInsertionPointLineNumberAttribute': 'AXInsertionPointLineNumber', 'kAXMenuItemSelectedNotification': 'AXMenuItemSelected', 'kAXUnknownRole': 'AXUnknown', 'kAXHorizontalUnitsAttribute': 'AXHorizontalUnits', 'kAXIdentifierAttribute': 'AXIdentifier', 'kAXApplicationDockItemSubrole': 'AXApplicationDockItem', 'kAXLineForIndexParameterizedAttribute': 'AXLineForIndex', 'kAXElementBusyAttribute': 'AXElementBusy', 'kAXTrashDockItemSubrole': 'AXTrashDockItem', 'kAXLayoutSizeForScreenSizeParameterizedAttribute': 'AXLayoutSizeForScreenSize', 'kAXMainAttribute': 'AXMain', 'kAXChildrenAttribute': 'AXChildren', 'kAXRowIndexRangeAttribute': 'AXRowIndexRange', 'kAXFilenameAttribute': 'AXFilename', 'kAXMenuItemCmdVirtualKeyAttribute': 'AXMenuItemCmdVirtualKey', 'kAXWindowCreatedNotification': 'AXWindowCreated', 'kAXMenuItemCmdModifiersAttribute': 'AXMenuItemCmdModifiers', 'kAXPositionAttribute': 'AXPosition', 'kAXFocusedWindowAttribute': 'AXFocusedWindow', 'kAXVerticalOrientationValue': 'AXVerticalOrientation', 'kAXSelectedChildrenChangedNotification': 'AXSelectedChildrenChanged', 'kAXPlaceholderValueAttribute': 'AXPlaceholderValue', 'kAXFullScreenButtonAttribute': 'AXFullScreenButton', 'kAXRowCountChangedNotification': 'AXRowCountChanged', 'kAXMainWindowAttribute': 'AXMainWindow', 'kAXSelectedTextRangeAttribute': 'AXSelectedTextRange', 'kAXSelectedTextAttribute': 'AXSelectedText', 'kAXCellRole': 'AXCell', 'kAXSharedTextUIElementsAttribute': 'AXSharedTextUIElements', 'kAXScreenPointForLayoutPointParameterizedAttribute': 'AXScreenPointForLayoutPoint', 'kAXGridRole': 'AXGrid', 'kAXTopLevelUIElementAttribute': 'AXTopLevelUIElement', 'kAXDisclosingAttribute': 'AXDisclosing', 'kAXProcessSwitcherListSubrole': 'AXProcessSwitcherList', 'kAXApplicationDeactivatedNotification': 'AXApplicationDeactivated', 'kAXIsEditableAttribute': 'AXIsEditable', 'kAXWindowDeminiaturizedNotification': 'AXWindowDeminiaturized', 'kAXScrollBarRole': 'AXScrollBar', 'kAXCancelAction': 'AXCancel', 'kAXColorWellRole': 'AXColorWell', 'kAXLayoutPointForScreenPointParameterizedAttribute': 'AXLayoutPointForScreenPoint', 'kAXMaxValueAttribute': 'AXMaxValue', 'kPasteboardTypeFilePromiseContent': 'com.apple.pasteboard.promised-file-content-type', 'kAXConfirmAction': 'AXConfirm', 'kAXEditedAttribute': 'AXEdited', 'kAXProgressIndicatorRole': 'AXProgressIndicator', 'kAXRowCollapsedNotification': 'AXRowCollapsed', 'kAXTextAttribute': 'AXText', 'kAXSortDirectionAttribute': 'AXSortDirection', 'kAXIndexAttribute': 'AXIndex', 'kAXURLDockItemSubrole': 'AXURLDockItem', 'kAXDocumentAttribute': 'AXDocument', 'kAXDescriptionAttribute': 'AXDescription', 'kAXWindowResizedNotification': 'AXWindowResized', 'kAXMenuItemCmdGlyphAttribute': 'AXMenuItemCmdGlyph', 'kAXSelectedRowsAttribute': 'AXSelectedRows', 'kAXRTFForRangeParameterizedAttribute': 'AXRTFForRange', 'kAXLabelValueAttribute': 'AXLabelValue', 'kAXSwitchSubrole': 'AXSwitch', 'kAXHelpAttribute': 'AXHelp', 'kAXZoomButtonSubrole': 'AXZoomButton', 'kAXButtonRole': 'AXButton', 'kAXColumnIndexRangeAttribute': 'AXColumnIndexRange'})
-functions={'HIShapeUnion': (sel32or64(b'l^{__HIShape=}^{__HIShape=}^{__HIShape=}', b'i^{__HIShape=}^{__HIShape=}^{__HIShape=}'),), 'AXObserverCreateWithInfoCallback': (sel32or64(b'li^?^^{__AXObserver=}', b'ii^?^^{__AXObserver=}'), '', {'retval': {'already_cfretained': True}, 'arguments': {1: {'callable': {'retval': {'type': b'v'}, 'arguments': {0: {'type': b'^{__AXObserver=}'}, 1: {'type': b'^{__AXUIElement=}'}, 2: {'type': b'^{__CFString=}'}, 3: {'type': b'^{__CFDictionary=}'}, 4: {'type': b'^v'}}}}, 2: {'already_cfretained': True, 'type_modifier': 'o'}}}), 'TranslationCopySourceType': (sel32or64(b'l^{OpaqueTranslationRef=}^^{__CFString=}', b'i^{OpaqueTranslationRef=}^^{__CFString=}'), '', {'retval': {'already_cfretained': True}, 'arguments': {1: {'already_cfretained': True, 'type_modifier': 'o'}}}), 'GetIconFamilyData': (sel32or64(b's^^{IconFamilyResource=Ll[1{IconFamilyElement=Ll[1C]}]}L^^c', b's^^{IconFamilyResource=Ii[1{IconFamilyElement=Ii[1C]}]}I^^c'),), 'IconRefIntersectsCGRect': (sel32or64(b'Z^{CGRect={CGPoint=ff}{CGSize=ff}}^{CGRect={CGPoint=ff}{CGSize=ff}}sL^{OpaqueIconRef=}', b'Z^{CGRect={CGPoint=dd}{CGSize=dd}}^{CGRect={CGPoint=dd}{CGSize=dd}}sI^{OpaqueIconRef=}'),), 'DisposeCIcon': (b'v^^{CIcon={PixMap=^cs{Rect=ssss}sslllssssL^^{ColorTable=lss[1{ColorSpec=s{RGBColor=SSS}}]}^v}{BitMap=^cs{Rect=ssss}}{BitMap=^cs{Rect=ssss}}^^c[1s]}',), 'DisposeIconSuite': (b's^^cZ',), 'HIShapeCreateMutableWithRect': (sel32or64(b'^{__HIShape=}^{CGRect={CGPoint=ff}{CGSize=ff}}', b'^{__HIShape=}^{CGRect={CGPoint=dd}{CGSize=dd}}'), '', {'retval': {'already_cfretained': True}, 'arguments': {0: {'type_modifier': 'n'}}}), 'PlotIconRefInContext': (sel32or64(b'l^{CGContext=}^{CGRect={CGPoint=ff}{CGSize=ff}}ss^{RGBColor=SSS}L^{OpaqueIconRef=}', b'i^{CGContext=}^{CGRect={CGPoint=dd}{CGSize=dd}}ss^{RGBColor=SSS}I^{OpaqueIconRef=}'),), 'AXUIElementPerformAction': (sel32or64(b'l^{__AXUIElement=}^{__CFString=}', b'i^{__AXUIElement=}^{__CFString=}'),), 'AXUIElementPostKeyboardEvent': (sel32or64(b'l^{__AXUIElement=}SSZ', b'i^{__AXUIElement=}SSZ'),), 'AXUIElementIsAttributeSettable': (sel32or64(b'l^{__AXUIElement=}^{__CFString=}^Z', b'i^{__AXUIElement=}^{__CFString=}^Z'), '', {'arguments': {2: {'type_modifier': 'o'}}}), 'GetCurrentProcess': (sel32or64(b's^{ProcessSerialNumber=LL}', b's^{ProcessSerialNumber=II}'),), 'HIShapeCreateCopy': (b'^{__HIShape=}^{__HIShape=}', '', {'retval': {'already_cfretained': True}}), 'AddIconToSuite': (b's^^c^^cL',), 'AXUIElementCopyParameterizedAttributeValue': (sel32or64(b'l^{__AXUIElement=}^{__CFString=}@^@', b'i^{__AXUIElement=}^{__CFString=}@^@'), '', {'retval': {'already_cfretained': True}, 'arguments': {3: {'already_cfretained': True, 'type_modifier': 'o'}}}), 'PasteboardResolvePromises': (sel32or64(b'l^{OpaquePasteboardRef=}', b'i^{OpaquePasteboardRef=}'),), 'GetSuiteLabel': (b's^^c',), 'NewIconActionUPP': (b'^?^?', '', {'arguments': {0: {'callable': {'retval': {'type': b's'}, 'arguments': {0: {'type': b'I'}, 1: {'type': b'^^^c'}, 2: {'type': b'^v'}}}}}}), 'AXUIElementCreateSystemWide': (b'^{__AXUIElement=}', '', {'retval': {'already_cfretained': True}}), 'PtInIconRef': (b'Z^{Point=ss}^{Rect=ssss}sL^{OpaqueIconRef=}',), 'SetIconCacheData': (b's^^c^v',), 'RectInIconRef': (b'Z^{Rect=ssss}^{Rect=ssss}sL^{OpaqueIconRef=}',), 'PasteboardCopyItemFlavors': (sel32or64(b'l^{OpaquePasteboardRef=}^v^^{__CFArray=}', b'i^{OpaquePasteboardRef=}^v^^{__CFArray=}'), '', {'retval': {'already_cfretained': True}}), 'AXUIElementSetAttributeValue': (sel32or64(b'l^{__AXUIElement=}^{__CFString=}@', b'i^{__AXUIElement=}^{__CFString=}@'),), 'SetSuiteLabel': (b's^^cs',), 'NewIconGetterUPP': (b'^?^?', '', {'arguments': {0: {'callable': {'retval': {'type': b'^^c'}, 'arguments': {0: {'type': b'I'}, 1: {'type': b'^v'}}}}}}), 'GetProcessInformation': (sel32or64(b's^{ProcessSerialNumber=LL}^{ProcessInfoRec=L^C{ProcessSerialNumber=LL}LLL^cLL{ProcessSerialNumber=LL}LL^{FSSpec=sl[64C]}}', b's^{ProcessSerialNumber=II}^{ProcessInfoRec=I^C{ProcessSerialNumber=II}III^cII{ProcessSerialNumber=II}II^{FSRef=[80C]}}'),), 'ProcessInformationCopyDictionary': (sel32or64(b'^{__CFDictionary=}^{ProcessSerialNumber=LL}L', b'^{__CFDictionary=}^{ProcessSerialNumber=II}I'), '', {'retval': {'already_cfretained': True}}), 'PlotCIconHandle': (b's^{Rect=ssss}ss^^{CIcon={PixMap=^cs{Rect=ssss}sslllssssL^^{ColorTable=lss[1{ColorSpec=s{RGBColor=SSS}}]}^v}{BitMap=^cs{Rect=ssss}}{BitMap=^cs{Rect=ssss}}^^c[1s]}',), 'UAZoomChangeFocus': (sel32or64(b'l^{CGRect={CGPoint=ff}{CGSize=ff}}^{CGRect={CGPoint=ff}{CGSize=ff}}L', b'i^{CGRect={CGPoint=dd}{CGSize=dd}}^{CGRect={CGPoint=dd}{CGSize=dd}}I'), '', {'arguments': {0: {'type_modifier': 'n'}, 1: {'type_modifier': 'n'}}}), 'HIShapeInset': (sel32or64(b'l^{__HIShape=}ff', b'i^{__HIShape=}dd'),), 'AXUIElementCopyActionNames': (sel32or64(b'l^{__AXUIElement=}^^{__CFArray=}', b'i^{__AXUIElement=}^^{__CFArray=}'), '', {'retval': {'already_cfretained': True}, 'arguments': {1: {'already_cfretained': True, 'type_modifier': 'o'}}}), 'HIShapeIntersectsRect': (sel32or64(b'Z^{__HIShape=}^{CGRect={CGPoint=ff}{CGSize=ff}}', b'Z^{__HIShape=}^{CGRect={CGPoint=dd}{CGSize=dd}}'), '', {'retval': {'c_array_of_fixed_length': 1}, 'arguments': {1: {'type_modifier': 'n'}}}), 'HIShapeEnumerate': (sel32or64(b'l^{__HIShape=}L^?^v', b'i^{__HIShape=}I^?^v'), '', {'arguments': {2: {'callable': {'retval': {'type': b'i'}, 'arguments': {0: {'type': b'i'}, 1: {'type': b'^{__HIShape=}'}, 2: {'type': sel32or64(b'^{CGRect={CGPoint=ff}{CGSize=ff}}', b'^{CGRect={CGPoint=dd}{CGSize=dd}}'), 'type_modifier': 'n'}, 3: {'type': b'^v'}}}, 'callable_retained': False}}}), 'AXUIElementCopyAttributeNames': (sel32or64(b'l^{__AXUIElement=}^^{__CFArray=}', b'i^{__AXUIElement=}^^{__CFArray=}'), '', {'retval': {'already_cfretained': True}, 'arguments': {1: {'already_cfretained': True, 'type_modifier': 'o'}}}), 'SameProcess': (sel32or64(b's^{ProcessSerialNumber=LL}^{ProcessSerialNumber=LL}^Z', b's^{ProcessSerialNumber=II}^{ProcessSerialNumber=II}^Z'),), 'TransformProcessType': (sel32or64(b'l^{ProcessSerialNumber=LL}L', b'i^{ProcessSerialNumber=II}I'),), 'PtInIconID': (b'Z{Point=ss}^{Rect=ssss}ss',), 'PasteboardSynchronize': (sel32or64(b'L^{OpaquePasteboardRef=}', b'I^{OpaquePasteboardRef=}'),), 'TranslationGetTranslationFlags': (sel32or64(b'l^{OpaqueTranslationRef=}^L', b'i^{OpaqueTranslationRef=}^I'), '', {'arguments': {1: {'type_modifier': 'o'}}}), 'TranslationCopyDestinationType': (sel32or64(b'l^{OpaqueTranslationRef=}^^{__CFString=}', b'i^{OpaqueTranslationRef=}^^{__CFString=}'), '', {'retval': {'already_cfretained': True}, 'arguments': {1: {'already_cfretained': True, 'type_modifier': 'o'}}}), 'SetIconCacheProc': (b's^^c^?',), 'IconIDToRgn': (b's^{OpaqueRgnHandle=}^{Rect=ssss}ss',), 'IconRefContainsCGPoint': (sel32or64(b'Z^{CGPoint=ff}^{CGRect={CGPoint=ff}{CGSize=ff}}sL^{OpaqueIconRef=}', b'Z^{CGPoint=dd}^{CGRect={CGPoint=dd}{CGSize=dd}}sI^{OpaqueIconRef=}'),), 'WakeUpProcess': (sel32or64(b's^{ProcessSerialNumber=LL}', b's^{ProcessSerialNumber=II}'),), 'ForEachIconDo': (b's^^cL^?^v',), 'GetIcon': (b'^^cs',), 'AXUIElementCopyParameterizedAttributeNames': (sel32or64(b'l^{__AXUIElement=}^^{__CFArray=}', b'i^{__AXUIElement=}^^{__CFArray=}'), '', {'retval': {'already_cfretained': True}, 'arguments': {1: {'already_cfretained': True, 'type_modifier': 'o'}}}), 'PasteboardCreate': (sel32or64(b'l^{__CFString=}^^{OpaquePasteboardRef=}', b'i^{__CFString=}^^{OpaquePasteboardRef=}'), '', {'retval': {'already_cfretained': True}}), 'SetFrontProcessWithOptions': (sel32or64(b'l^{ProcessSerialNumber=LL}L', b'i^{ProcessSerialNumber=II}I'),), 'GetIconCacheProc': (b's^^c^^?',), 'MakeIconCache': (b's^^^c^?^v',), 'InvokeIconActionUPP': (sel32or64(b'sL^^^c^v^?', b'sI^^^c^v^?'),), 'IconFamilyToIconSuite': (b's^^{IconFamilyResource=Ll[1{IconFamilyElement=Ll[1C]}]}L^^^c',), 'TranslationGetTypeID': (sel32or64(b'L', b'Q'),), 'PlotIconID': (b's^{Rect=ssss}sss',), 'CopyProcessName': (sel32or64(b'l^{ProcessSerialNumber=LL}^^{__CFString=}', b'i^{ProcessSerialNumber=II}^^{__CFString=}'), '', {'retval': {'already_cfretained': True}}), 'GetIconFromSuite': (b's^^^c^^cL',), 'GetIconCacheData': (b's^^c^^v',), 'PasteboardGetItemIdentifier': (sel32or64(b'l^{OpaquePasteboardRef=}l^^v', b'i^{OpaquePasteboardRef=}q^^v'),), 'IconRefToHIShape': (sel32or64(b'^{__HIShape=}^{CGRect={CGPoint=ff}{CGSize=ff}}sL^{OpaqueIconRef=}', b'^{__HIShape=}^{CGRect={CGPoint=dd}{CGSize=dd}}sI^{OpaqueIconRef=}'),), 'GetIconRefVariant': (sel32or64(b'^{OpaqueIconRef=}^{OpaqueIconRef=}L^s', b'^{OpaqueIconRef=}^{OpaqueIconRef=}I^s'),), 'IsProcessVisible': (sel32or64(b'Z^{ProcessSerialNumber=LL}', b'Z^{ProcessSerialNumber=II}'),), 'HIShapeIsRectangular': (b'Z^{__HIShape=}',), 'HIShapeCreateWithRect': (sel32or64(b'^{__HIShape=}^{CGRect={CGPoint=ff}{CGSize=ff}}', b'^{__HIShape=}^{CGRect={CGPoint=dd}{CGSize=dd}}'), '', {'retval': {'already_cfretained': True}, 'arguments': {0: {'type_modifier': 'n'}}}), 'AXUIElementCopyActionDescription': (sel32or64(b'l^{__AXUIElement=}^{__CFString=}^^{__CFString=}', b'i^{__AXUIElement=}^{__CFString=}^^{__CFString=}'), '', {'retval': {'already_cfretained': True}, 'arguments': {2: {'already_cfretained': True, 'type_modifier': 'o'}}}), 'AXObserverGetRunLoopSource': (b'^{__CFRunLoopSource=}^{__AXObserver=}',), 'PlotIconRef': (b's^{Rect=ssss}ssL^{OpaqueIconRef=}',), 'GetNextProcess': (sel32or64(b's^{ProcessSerialNumber=LL}', b's^{ProcessSerialNumber=II}'),), 'GetIconSuite': (b's^^^csL',), 'LoadIconCache': (b's^{Rect=ssss}ss^^c',), 'AXUIElementGetAttributeValueCount': (sel32or64(b'l^{__AXUIElement=}^{__CFString=}^l', b'i^{__AXUIElement=}^{__CFString=}^q'), '', {'arguments': {2: {'type_modifier': 'o'}}}), 'TranslationPerformForURL': (sel32or64(b'l^{OpaqueTranslationRef=}^{__CFURL=}^{__CFURL=}^^{__CFURL=}', b'i^{OpaqueTranslationRef=}^{__CFURL=}^{__CFURL=}^^{__CFURL=}'), '', {'arguments': {3: {'already_cfretained': True, 'type_modifier': 'o'}}}), 'AXValueGetType': (b'I^{__AXValue=}',), 'UAZoomEnabled': (b'Z',), 'GetProcessPID': (sel32or64(b'l^{ProcessSerialNumber=LL}^i', b'i^{ProcessSerialNumber=II}^i'),), 'PtInIconMethod': (b'Z{Point=ss}^{Rect=ssss}s^?^v',), 'AXUIElementGetPid': (sel32or64(b'l^{__AXUIElement=}^i', b'i^{__AXUIElement=}^i'), '', {'arguments': {1: {'type_modifier': 'o'}}}), 'RectInIconID': (b'Z^{Rect=ssss}^{Rect=ssss}ss',), 'GetProcessForPID': (sel32or64(b'li^{ProcessSerialNumber=LL}', b'ii^{ProcessSerialNumber=II}'),), 'TranslationCreate': (sel32or64(b'l^{__CFString=}^{__CFString=}L^^{OpaqueTranslationRef=}', b'i^{__CFString=}^{__CFString=}I^^{OpaqueTranslationRef=}'), '', {'retval': {'already_cfretained': True}, 'arguments': {3: {'already_cfretained': True, 'type_modifier': 'o'}}}), 'HIShapeUnionWithRect': (sel32or64(b'l^{__HIShape=}^{CGRect={CGPoint=ff}{CGSize=ff}}', b'i^{__HIShape=}^{CGRect={CGPoint=dd}{CGSize=dd}}'), '', {'arguments': {1: {'type_modifier': 'n'}}}), 'PasteboardGetItemFlavorFlags': (sel32or64(b'l^{OpaquePasteboardRef=}^v^{__CFString=}^L', b'i^{OpaquePasteboardRef=}^v^{__CFString=}^I'),), 'PasteboardCopyPasteLocation': (sel32or64(b'l^{OpaquePasteboardRef=}^^{__CFURL=}', b'i^{OpaquePasteboardRef=}^^{__CFURL=}'), '', {'retval': {'already_cfretained': True}}), 'PasteboardSetPromiseKeeper': (sel32or64(b'l^{OpaquePasteboardRef=}^?^v', b'i^{OpaquePasteboardRef=}^?^v'), '', {'arguments': {1: {'callable': {'retval': {'type': b'i'}, 'arguments': {0: {'type': b'^{OpaquePasteboardRef=}'}, 1: {'type': b'^v'}, 2: {'type': b'^{__CFString=}'}, 3: {'type': b'^v'}}}}}}), 'PlotIconMethod': (b's^{Rect=ssss}ss^?^v',), 'IconSuiteToIconFamily': (b's^^cL^^^{IconFamilyResource=Ll[1{IconFamilyElement=Ll[1C]}]}',), 'HIShapeCreateUnion': (b'^{__HIShape=}^{__HIShape=}^{__HIShape=}', '', {'retval': {'already_cfretained': True}}), 'TranslationPerformForData': (sel32or64(b'l^{OpaqueTranslationRef=}^{__CFData=}^^{__CFData=}', b'i^{OpaqueTranslationRef=}^{__CFData=}^^{__CFData=}'), '', {'arguments': {2: {'already_cfretained': True, 'type_modifier': 'o'}}}), 'AXMakeProcessTrusted': (sel32or64(b'l^{__CFString=}', b'i^{__CFString=}'),), 'AXIsProcessTrustedWithOptions': (b'Z^{__CFDictionary=}', '', {'arguments': {0: {'type_modifier': 'o'}}}), 'HIShapeOffset': (sel32or64(b'l^{__HIShape=}ff', b'i^{__HIShape=}dd'),), 'NewIconSuite': (b's^^^c',), 'AXUIElementCopyAttributeValues': (sel32or64(b'l^{__AXUIElement=}^{__CFString=}ll^^{__CFArray=}', b'i^{__AXUIElement=}^{__CFString=}qq^^{__CFArray=}'), '', {'retval': {'already_cfretained': True}, 'arguments': {4: {'already_cfretained': True, 'type_modifier': 'o'}}}), 'PtInIconSuite': (b'Z{Point=ss}^{Rect=ssss}s^^c',), 'SetIconFamilyData': (sel32or64(b's^^{IconFamilyResource=Ll[1{IconFamilyElement=Ll[1C]}]}L^^c', b's^^{IconFamilyResource=Ii[1{IconFamilyElement=Ii[1C]}]}I^^c'),), 'HIShapeIntersect': (sel32or64(b'l^{__HIShape=}^{__HIShape=}^{__HIShape=}', b'i^{__HIShape=}^{__HIShape=}^{__HIShape=}'),), 'IconRefToIconFamily': (sel32or64(b's^{OpaqueIconRef=}L^^^{IconFamilyResource=Ll[1{IconFamilyElement=Ll[1C]}]}', b's^{OpaqueIconRef=}I^^^{IconFamilyResource=Ii[1{IconFamilyElement=Ii[1C]}]}'),), 'TranslationCreateWithSourceArray': (sel32or64(b'l^{__CFArray=}L^^{__CFArray=}^^{__CFDictionary=}', b'i^{__CFArray=}I^^{__CFArray=}^^{__CFDictionary=}'), '', {'retval': {'already_cfretained': True}, 'arguments': {2: {'already_cfretained': True, 'type_modifier': 'o'}, 3: {'already_cfretained': True, 'type_modifier': 'o'}}}), 'KillProcess': (sel32or64(b's^{ProcessSerialNumber=LL}', b's^{ProcessSerialNumber=II}'),), 'RectInIconSuite': (b'Z^{Rect=ssss}^{Rect=ssss}s^^c',), 'SetFrontProcess': (sel32or64(b's^{ProcessSerialNumber=LL}', b's^{ProcessSerialNumber=II}'),), 'DisposeIconActionUPP': (b'v^?',), 'InvokeIconGetterUPP': (sel32or64(b'^^cL^v^?', b'^^cI^v^?'),), 'PasteboardCopyItemFlavorData': (sel32or64(b'l^{OpaquePasteboardRef=}^v^{__CFString=}^^{__CFData=}', b'i^{OpaquePasteboardRef=}^v^{__CFString=}^^{__CFData=}'), '', {'retval': {'already_cfretained': True}}), 'AXUIElementCreateApplication': (b'^{__AXUIElement=}i', '', {'retval': {'already_cfretained': True}}), 'PasteboardGetTypeID': (sel32or64(b'L', b'Q'),), 'GetProcessBundleLocation': (sel32or64(b'l^{ProcessSerialNumber=LL}^{FSRef=[80C]}', b'i^{ProcessSerialNumber=II}^{FSRef=[80C]}'),), 'RectInIconMethod': (b'Z^{Rect=ssss}^{Rect=ssss}s^?^v',), 'HIShapeContainsPoint': (sel32or64(b'Z^{__HIShape=}^{CGPoint=ff}', b'Z^{__HIShape=}^{CGPoint=dd}'), '', {'arguments': {1: {'type_modifier': 'n'}}}), 'DisposeIconGetterUPP': (b'v^?',), 'HIShapeGetBounds': (sel32or64(b'^{CGRect={CGPoint=ff}{CGSize=ff}}^{__HIShape=}^{CGRect={CGPoint=ff}{CGSize=ff}}', b'^{CGRect={CGPoint=dd}{CGSize=dd}}^{__HIShape=}^{CGRect={CGPoint=dd}{CGSize=dd}}'), '', {'arguments': {1: {'type_modifier': 'o'}}}), 'AXObserverAddNotification': (sel32or64(b'l^{__AXObserver=}^{__AXUIElement=}^{__CFString=}^v', b'i^{__AXObserver=}^{__AXUIElement=}^{__CFString=}^v'),), 'IconRefToRgn': (b's^{OpaqueRgnHandle=}^{Rect=ssss}sL^{OpaqueIconRef=}',), 'IconSuiteToRgn': (b's^{OpaqueRgnHandle=}^{Rect=ssss}s^^c',), 'IconMethodToRgn': (b's^{OpaqueRgnHandle=}^{Rect=ssss}s^?^v',), 'HIShapeCreateIntersection': (b'^{__HIShape=}^{__HIShape=}^{__HIShape=}', '', {'retval': {'already_cfretained': True}}), 'GetIconSizesFromIconRef': (b'sL^LL^{OpaqueIconRef=}',), 'HIShapeCreateMutableCopy': (b'^{__HIShape=}^{__HIShape=}', '', {'retval': {'already_cfretained': True}}), 'AXUIElementCopyAttributeValue': (sel32or64(b'l^{__AXUIElement=}^{__CFString=}^@', b'i^{__AXUIElement=}^{__CFString=}^@'), '', {'retval': {'already_cfretained': True}, 'arguments': {2: {'already_cfretained': True, 'type_modifier': 'o'}}}), 'GetFrontProcess': (sel32or64(b's^{ProcessSerialNumber=LL}', b's^{ProcessSerialNumber=II}'),), 'HIShapeCreateEmpty': (b'^{__HIShape=}', '', {'retval': {'already_cfretained': True}}), 'PlotIcon': (b'v^{Rect=ssss}^^c',), 'AXObserverGetTypeID': (sel32or64(b'L', b'Q'),), 'PlotCIcon': (b'v^{Rect=ssss}^^{CIcon={PixMap=^cs{Rect=ssss}sslllssssL^^{ColorTable=lss[1{ColorSpec=s{RGBColor=SSS}}]}^v}{BitMap=^cs{Rect=ssss}}{BitMap=^cs{Rect=ssss}}^^c[1s]}',), 'AXValueGetValue': (b'Z^{__AXValue=}I^v',), 'HIShapeGetTypeID': (sel32or64(b'L', b'Q'),), 'AXObserverCreate': (sel32or64(b'li^?^^{__AXObserver=}', b'ii^?^^{__AXObserver=}'), '', {'retval': {'already_cfretained': True}, 'arguments': {1: {'callable': {'retval': {'type': b'v'}, 'arguments': {0: {'type': b'^{__AXObserver=}'}, 1: {'type': b'^{__AXUIElement=}'}, 2: {'type': b'^{__CFString=}'}, 3: {'type': b'^v'}}}}, 2: {'already_cfretained': True, 'type_modifier': 'o'}}}), 'PlotIconSuite': (b's^{Rect=ssss}ss^^c',), 'PasteboardPutItemFlavor': (sel32or64(b'l^{OpaquePasteboardRef=}^v^{__CFString=}^{__CFData=}L', b'i^{OpaquePasteboardRef=}^v^{__CFString=}^{__CFData=}I'),), 'AXAPIEnabled': (b'Z',), 'AXObserverRemoveNotification': (sel32or64(b'l^{__AXObserver=}^{__AXUIElement=}^{__CFString=}', b'i^{__AXObserver=}^{__AXUIElement=}^{__CFString=}'),), 'PasteboardClear': (sel32or64(b'l^{OpaquePasteboardRef=}', b'i^{OpaquePasteboardRef=}'),), 'TranslationPerformForFile': (sel32or64(b'l^{OpaqueTranslationRef=}^{FSRef=[80C]}^{FSRef=[80C]}^{__CFString=}^{FSRef=[80C]}', b'i^{OpaqueTranslationRef=}^{FSRef=[80C]}^{FSRef=[80C]}^{__CFString=}^{FSRef=[80C]}'), '', {'arguments': {1: {'type_modifier': 'n'}, 2: {'type_modifier': 'n'}, 4: {'type_modifier': 'o'}}}), 'IsIconRefMaskEmpty': (b'Z^{OpaqueIconRef=}',), 'GetLabel': (b'ss^{RGBColor=SSS}[256C]',), 'PasteboardGetItemCount': (sel32or64(b'l^{OpaquePasteboardRef=}^L', b'i^{OpaquePasteboardRef=}^Q'),), 'PlotSICNHandle': (b's^{Rect=ssss}ss^^c',), 'GetCIcon': (b'^^{CIcon={PixMap=^cs{Rect=ssss}sslllssssL^^{ColorTable=lss[1{ColorSpec=s{RGBColor=SSS}}]}^v}{BitMap=^cs{Rect=ssss}}{BitMap=^cs{Rect=ssss}}^^c[1s]}s',), 'PlotIconHandle': (b's^{Rect=ssss}ss^^c',), 'HIShapeSetWithShape': (sel32or64(b'l^{__HIShape=}^{__HIShape=}', b'i^{__HIShape=}^{__HIShape=}'),), 'PasteboardSetPasteLocation': (sel32or64(b'l^{OpaquePasteboardRef=}^{__CFURL=}', b'i^{OpaquePasteboardRef=}^{__CFURL=}'),), 'HIShapeXor': (sel32or64(b'l^{__HIShape=}^{__HIShape=}^{__HIShape=}', b'i^{__HIShape=}^{__HIShape=}^{__HIShape=}'),), 'HIShapeCreateMutable': (b'^{__HIShape=}', '', {'retval': {'already_cfretained': True}}), 'ShowHideProcess': (sel32or64(b's^{ProcessSerialNumber=LL}Z', b's^{ProcessSerialNumber=II}Z'),), 'HIShapeIsEmpty': (b'Z^{__HIShape=}',), 'AXUIElementSetMessagingTimeout': (sel32or64(b'l^{__AXUIElement=}f', b'i^{__AXUIElement=}f'),), 'ExitToShell': (b'v',), 'AXIsProcessTrusted': (b'Z',), 'AXUIElementGetTypeID': (sel32or64(b'L', b'Q'),), 'PasteboardCopyName': (sel32or64(b'l^{OpaquePasteboardRef=}^^{__CFString=}', b'i^{OpaquePasteboardRef=}^^{__CFString=}'), '', {'retval': {'already_cfretained': True}}), 'HIShapeDifference': (sel32or64(b'l^{__HIShape=}^{__HIShape=}^{__HIShape=}', b'i^{__HIShape=}^{__HIShape=}^{__HIShape=}'),), 'AXValueGetTypeID': (sel32or64(b'L', b'Q'), '', {'variadic': False}), 'AXUIElementCopyElementAtPosition': (sel32or64(b'l^{__AXUIElement=}ff^^{__AXUIElement=}', b'i^{__AXUIElement=}ff^^{__AXUIElement=}'), '', {'retval': {'already_cfretained': True}, 'arguments': {3: {'already_cfretained': True, 'type_modifier': 'o'}}}), 'AXUIElementCopyMultipleAttributeValues': (sel32or64(b'l^{__AXUIElement=}^{__CFArray=}L^^{__CFArray=}', b'i^{__AXUIElement=}^{__CFArray=}I^^{__CFArray=}'), '', {'retval': {'already_cfretained': True}, 'arguments': {3: {'already_cfretained': True, 'type_modifier': 'o'}}}), 'AXValueCreate': (b'^{__AXValue=}I^v', '', {'retval': {'already_cfretained': True}}), 'HIShapeSetEmpty': (sel32or64(b'l^{__HIShape=}', b'i^{__HIShape=}'),), 'HIShapeReplacePathInCGContext': (sel32or64(b'l^{__HIShape=}^{CGContext=}', b'i^{__HIShape=}^{CGContext=}'),), 'HIShapeCreateDifference': (b'^{__HIShape=}^{__HIShape=}^{__HIShape=}', '', {'retval': {'already_cfretained': True}}), 'HIShapeCreateXor': (b'^{__HIShape=}^{__HIShape=}^{__HIShape=}', '', {'retval': {'already_cfretained': True}})}
-aliases = {'svSmall4Bit': 'kSelectorSmall4Bit', 'svLarge8Bit': 'kSelectorLarge8Bit', 'atTopLeft': 'kAlignTopLeft', 'ttOpen': 'kTransformOpen', 'ttDisabled': 'kTransformDisabled', 'svAllAvailableData': 'kSelectorAllAvailableData', 'ttSelected': 'kTransformSelected', 'atBottomRight': 'kAlignBottomRight', 'svMini1Bit': 'kSelectorMini1Bit', 'atAbsoluteCenter': 'kAlignAbsoluteCenter', 'ttLabel6': 'kTransformLabel6', 'ttLabel7': 'kTransformLabel7', 'atVerticalCenter': 'kAlignVerticalCenter', 'ttLabel5': 'kTransformLabel5', 'ttLabel2': 'kTransformLabel2', 'ttLabel3': 'kTransformLabel3', 'ttLabel1': 'kTransformLabel1', 'svSmall1Bit': 'kSelectorSmall1Bit', 'atLeft': 'kAlignLeft', 'atCenterRight': 'kAlignCenterRight', 'ttSelectedDisabled': 'kTransformSelectedDisabled', 'atHorizontalCenter': 'kAlignHorizontalCenter', 'svAllLargeData': 'kSelectorAllLargeData', 'atRight': 'kAlignRight', 'ttSelectedOpen': 'kTransformSelectedOpen', 'svAll4BitData': 'kSelectorAll4BitData', 'svMini8Bit': 'kSelectorMini8Bit', 'atCenterLeft': 'kAlignCenterLeft', 'svSmall8Bit': 'kSelectorSmall8Bit', 'MacGetCurrentProcess': 'GetCurrentProcess', 'ttLabel4': 'kTransformLabel4', 'svLarge1Bit': 'kSelectorLarge1Bit', 'kPasteboardUniqueName': 'NULL', 'atCenterTop': 'kAlignCenterTop', 'svAllSmallData': 'kSelectorAllSmallData', 'svAll8BitData': 'kSelectorAll8BitData', 'ttSelectedOffline': 'kTransformSelectedOffline', 'atTop': 'kAlignTop', 'svAll1BitData': 'kSelectorAll1BitData', 'svMini4Bit': 'kSelectorMini4Bit', 'atBottom': 'kAlignBottom', 'atTopRight': 'kAlignTopRight', 'kICComponentInterfaceVersion': 'kICComponentInterfaceVersion4', 'svAllMiniData': 'kSelectorAllMiniData', 'atNone': 'kAlignNone', 'atBottomLeft': 'kAlignBottomLeft', 'kPasteboardPromisedData': 'NULL', 'ttNone': 'kTransformNone', 'atCenterBottom': 'kAlignCenterBottom', 'ttOffline': 'kTransformOffline', 'svLarge4Bit': 'kSelectorLarge4Bit', 'kPasteboardResolveAllPromises': 'NULL'}
-cftypes=[('AXObserverRef', b'^{__AXObserver=}', 'AXObserverGetTypeID', None), ('AXUIElementRef', b'^{__AXUIElement=}', 'AXUIElementGetTypeID', None), ('AXValueRef', b'^{__AXValue=}', 'AXValueGetTypeID', None), ('HIMutableShapeRef', b'^{__HIShape=}', None, None), ('HIShapeRef', b'^{__HIShape=}', 'HIShapeGetTypeID', None), ('TranslationRef', b'^{OpaqueTranslationRef=}', 'TranslationGetTypeID', None)]
+aliases = {
+    "svSmall4Bit": "kSelectorSmall4Bit",
+    "svLarge8Bit": "kSelectorLarge8Bit",
+    "atTopLeft": "kAlignTopLeft",
+    "ttOpen": "kTransformOpen",
+    "ttDisabled": "kTransformDisabled",
+    "svAllAvailableData": "kSelectorAllAvailableData",
+    "ttSelected": "kTransformSelected",
+    "atBottomRight": "kAlignBottomRight",
+    "svMini1Bit": "kSelectorMini1Bit",
+    "atAbsoluteCenter": "kAlignAbsoluteCenter",
+    "ttLabel6": "kTransformLabel6",
+    "ttLabel7": "kTransformLabel7",
+    "atVerticalCenter": "kAlignVerticalCenter",
+    "ttLabel5": "kTransformLabel5",
+    "ttLabel2": "kTransformLabel2",
+    "ttLabel3": "kTransformLabel3",
+    "ttLabel1": "kTransformLabel1",
+    "svSmall1Bit": "kSelectorSmall1Bit",
+    "atLeft": "kAlignLeft",
+    "atCenterRight": "kAlignCenterRight",
+    "ttSelectedDisabled": "kTransformSelectedDisabled",
+    "atHorizontalCenter": "kAlignHorizontalCenter",
+    "svAllLargeData": "kSelectorAllLargeData",
+    "atRight": "kAlignRight",
+    "ttSelectedOpen": "kTransformSelectedOpen",
+    "svAll4BitData": "kSelectorAll4BitData",
+    "svMini8Bit": "kSelectorMini8Bit",
+    "atCenterLeft": "kAlignCenterLeft",
+    "svSmall8Bit": "kSelectorSmall8Bit",
+    "MacGetCurrentProcess": "GetCurrentProcess",
+    "ttLabel4": "kTransformLabel4",
+    "svLarge1Bit": "kSelectorLarge1Bit",
+    "kPasteboardUniqueName": "NULL",
+    "atCenterTop": "kAlignCenterTop",
+    "svAllSmallData": "kSelectorAllSmallData",
+    "svAll8BitData": "kSelectorAll8BitData",
+    "ttSelectedOffline": "kTransformSelectedOffline",
+    "atTop": "kAlignTop",
+    "svAll1BitData": "kSelectorAll1BitData",
+    "svMini4Bit": "kSelectorMini4Bit",
+    "atBottom": "kAlignBottom",
+    "atTopRight": "kAlignTopRight",
+    "kICComponentInterfaceVersion": "kICComponentInterfaceVersion4",
+    "svAllMiniData": "kSelectorAllMiniData",
+    "atNone": "kAlignNone",
+    "atBottomLeft": "kAlignBottomLeft",
+    "kPasteboardPromisedData": "NULL",
+    "ttNone": "kTransformNone",
+    "atCenterBottom": "kAlignCenterBottom",
+    "ttOffline": "kTransformOffline",
+    "svLarge4Bit": "kSelectorLarge4Bit",
+    "kPasteboardResolveAllPromises": "NULL",
+}
+cftypes = [
+    ("AXObserverRef", b"^{__AXObserver=}", "AXObserverGetTypeID", None),
+    ("AXUIElementRef", b"^{__AXUIElement=}", "AXUIElementGetTypeID", None),
+    ("AXValueRef", b"^{__AXValue=}", "AXValueGetTypeID", None),
+    ("HIMutableShapeRef", b"^{__HIShape=}", None, None),
+    ("HIShapeRef", b"^{__HIShape=}", "HIShapeGetTypeID", None),
+    ("TranslationRef", b"^{OpaqueTranslationRef=}", "TranslationGetTypeID", None),
+]
 expressions = {}
 
 # END OF FILE

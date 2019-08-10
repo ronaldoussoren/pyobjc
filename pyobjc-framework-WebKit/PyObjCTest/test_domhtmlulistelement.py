@@ -1,8 +1,8 @@
-
 from PyObjCTools.TestSupport import *
 from WebKit import *
 
-class TestDOMHTMLUListElement (TestCase):
+
+class TestDOMHTMLUListElement(TestCase):
     def testMethods(self):
         self.assertResultIsBOOL(DOMHTMLUListElement.compact)
         self.assertArgIsBOOL(DOMHTMLUListElement.setCompact_, 0)

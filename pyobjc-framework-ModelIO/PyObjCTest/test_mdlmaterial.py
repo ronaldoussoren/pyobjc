@@ -1,10 +1,10 @@
 from PyObjCTools.TestSupport import *
 import sys
 
-if sys.maxsize > 2**32:
+if sys.maxsize > 2 ** 32:
     import ModelIO
 
-    class TestMDLCamera (TestCase):
+    class TestMDLCamera(TestCase):
         def testConstants(self):
             self.assertEqual(ModelIO.MDLMaterialSemanticBaseColor, 0)
             self.assertEqual(ModelIO.MDLMaterialSemanticSubsurface, 1)
@@ -58,11 +58,20 @@ if sys.maxsize > 2**32:
             self.assertEqual(ModelIO.MDLMaterialFaceBack, 1)
             self.assertEqual(ModelIO.MDLMaterialFaceDoubleSided, 2)
 
-        @min_os_level('10.12')
+        @min_os_level("10.12")
         def testMethods10_12(self):
-            self.assertArgIsBlock(ModelIO.MDLMaterialPropertyNode.initWithInputs_outputs_evaluationFunction_, 2, b'v@')
-            self.assertArgIsBlock(ModelIO.MDLMaterialPropertyNode.setEvaluationFunction_, 0, b'v@')
-            self.assertResultIsBlock(ModelIO.MDLMaterialPropertyNode.evaluationFunction, b'v@')
+            self.assertArgIsBlock(
+                ModelIO.MDLMaterialPropertyNode.initWithInputs_outputs_evaluationFunction_,
+                2,
+                b"v@",
+            )
+            self.assertArgIsBlock(
+                ModelIO.MDLMaterialPropertyNode.setEvaluationFunction_, 0, b"v@"
+            )
+            self.assertResultIsBlock(
+                ModelIO.MDLMaterialPropertyNode.evaluationFunction, b"v@"
+            )
+
 
 if __name__ == "__main__":
     main()

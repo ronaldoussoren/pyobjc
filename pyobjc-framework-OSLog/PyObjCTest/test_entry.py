@@ -2,13 +2,19 @@ from PyObjCTools.TestSupport import *
 
 import OSLog
 
-class TestEntryHelper (OSLog.NSObject):
-    def activityIdentifier(self): return 1
-    def processIdentifier(self): return 1
-    def threadIdentifier(self): return 1
+
+class TestEntryHelper(OSLog.NSObject):
+    def activityIdentifier(self):
+        return 1
+
+    def processIdentifier(self):
+        return 1
+
+    def threadIdentifier(self):
+        return 1
 
 
-class TestEntry (TestCase):
+class TestEntry(TestCase):
     def test_constants(self):
         self.assertEqual(OSLog.OSLogEntryStoreCategoryUndefined, 0)
         self.assertEqual(OSLog.OSLogEntryStoreCategoryMetadata, 1)
@@ -25,8 +31,7 @@ class TestEntry (TestCase):
         self.assertResultHasType(TestEntryHelper.processIdentifier, objc._C_INT)
         self.assertResultHasType(TestEntryHelper.threadIdentifier, objc._C_LNGLNG)
 
-    @min_sdk_level('10.15')
+    @min_sdk_level("10.15")
     def test_protocols(self):
-        objc.protocolNamed('OSLogEntryFromProcess')
-        objc.protocolNamed('OSLogEntryWithPayload')
-
+        objc.protocolNamed("OSLogEntryFromProcess")
+        objc.protocolNamed("OSLogEntryWithPayload")

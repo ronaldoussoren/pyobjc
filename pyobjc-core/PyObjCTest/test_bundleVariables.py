@@ -13,10 +13,7 @@ class TestBundleVariables(TestCase):
         objc.loadBundleVariables(
             self.bundle,
             d,
-            [
-                ("NSAppleScriptErrorMessage", b"@"),
-                ("NSBundleDidLoadNotification", b"@"),
-            ],
+            [("NSAppleScriptErrorMessage", b"@"), ("NSBundleDidLoadNotification", b"@")],
         )
 
         self.assertIn("NSBundleDidLoadNotification", d)

@@ -1,9 +1,8 @@
-
 from PyObjCTools.TestSupport import *
 from Quartz.CoreGraphics import *
 
-class TestCGDisplayConfiguration (TestCase):
 
+class TestCGDisplayConfiguration(TestCase):
     def testTypes(self):
         self.assertIsOpaquePointer(CGDisplayConfigRef)
 
@@ -11,20 +10,20 @@ class TestCGDisplayConfiguration (TestCase):
         self.assertEqual(err, 0)
         self.assertIsInstance(config, CGDisplayConfigRef)
 
-        err = CGConfigureDisplayOrigin(config,
-                CGMainDisplayID(), 0, 0)
+        err = CGConfigureDisplayOrigin(config, CGMainDisplayID(), 0, 0)
         self.assertEqual(err, 0)
 
-        err = CGConfigureDisplayMode(config,
-                CGMainDisplayID(), CGDisplayAvailableModes(CGMainDisplayID())[0])
+        err = CGConfigureDisplayMode(
+            config, CGMainDisplayID(), CGDisplayAvailableModes(CGMainDisplayID())[0]
+        )
         self.assertEqual(err, 0)
 
-        err = CGConfigureDisplayStereoOperation(config,
-                CGMainDisplayID(), False, False)
+        err = CGConfigureDisplayStereoOperation(config, CGMainDisplayID(), False, False)
         self.assertEqual(err, 0)
 
-        err = CGConfigureDisplayMirrorOfDisplay(config,
-                CGMainDisplayID(), CGMainDisplayID())
+        err = CGConfigureDisplayMirrorOfDisplay(
+            config, CGMainDisplayID(), CGMainDisplayID()
+        )
         self.assertIsInstance(err, (int, long))
 
         err = CGCancelDisplayConfiguration(config)
@@ -33,6 +32,7 @@ class TestCGDisplayConfiguration (TestCase):
 
         myInfo = object()
         info = []
+
         def reconfig(display, flags, userInfo):
             self.assertIsInstance(display, (int, long))
             self.assertIsInstance(flags, (int, long))
@@ -47,14 +47,14 @@ class TestCGDisplayConfiguration (TestCase):
             err = CGDisplayRegisterReconfigurationCallback(reconfig, myInfo)
             self.assertEqual(err, 0)
 
-            err = CGConfigureDisplayMode(config,
-                    CGMainDisplayID(), CGDisplayAvailableModes(CGMainDisplayID())[0])
-
+            err = CGConfigureDisplayMode(
+                config, CGMainDisplayID(), CGDisplayAvailableModes(CGMainDisplayID())[0]
+            )
 
             CGCompleteDisplayConfiguration(config, kCGConfigureForAppOnly)
 
             # XXX: For some reason this fails on OSX 10.5:
-            if os_level_key(os_release()) > os_level_key('10.15'):
+            if os_level_key(os_release()) > os_level_key("10.15"):
                 self.assertTrue(len(info) > 0)
 
         finally:
@@ -66,7 +66,9 @@ class TestCGDisplayConfiguration (TestCase):
 
             self.assertEqual(len(info), l)
 
-        err = CGDisplaySetStereoOperation(CGMainDisplayID(), False, False, kCGConfigureForAppOnly)
+        err = CGDisplaySetStereoOperation(
+            CGMainDisplayID(), False, False, kCGConfigureForAppOnly
+        )
         self.assertIsInstance(err, (int, long))
 
         v = CGDisplayIsActive(CGMainDisplayID())
@@ -129,7 +131,6 @@ class TestCGDisplayConfiguration (TestCase):
         v = CGDisplayCopyColorSpace(CGMainDisplayID())
         self.assertIsInstance(v, CGColorSpaceRef)
 
-
     def testContents(self):
         self.assertEqual(kCGConfigureForAppOnly, 0)
         self.assertEqual(kCGConfigureForSession, 1)
@@ -147,17 +148,15 @@ class TestCGDisplayConfiguration (TestCase):
         self.assertEqual(kCGDisplayUnMirrorFlag, (1 << 11))
         self.assertEqual(kCGDisplayDesktopShapeChangedFlag, (1 << 12))
 
-    @min_os_level('10.6')
+    @min_os_level("10.6")
     def testFunctions10_6(self):
-        self.assertResultHasType(CGConfigureDisplayWithDisplayMode, b'i')
-        self.assertArgHasType(CGConfigureDisplayWithDisplayMode, 0,
-                    b'^{_CGDisplayConfigRef=}')
-        self.assertArgHasType(CGConfigureDisplayWithDisplayMode, 1,
-                        b'I')
-        self.assertArgHasType(CGConfigureDisplayWithDisplayMode, 2,
-                            b'^{CGDisplayMode=}')
-        self.assertArgHasType(CGConfigureDisplayWithDisplayMode, 3,
-                                b'^{__CFDictionary=}')
+        self.assertResultHasType(CGConfigureDisplayWithDisplayMode, b"i")
+        self.assertArgHasType(
+            CGConfigureDisplayWithDisplayMode, 0, b"^{_CGDisplayConfigRef=}"
+        )
+        self.assertArgHasType(CGConfigureDisplayWithDisplayMode, 1, b"I")
+        self.assertArgHasType(CGConfigureDisplayWithDisplayMode, 2, b"^{CGDisplayMode=}")
+        self.assertArgHasType(CGConfigureDisplayWithDisplayMode, 3, b"^{__CFDictionary=}")
 
 
 if __name__ == "__main__":

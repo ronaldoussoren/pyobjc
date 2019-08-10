@@ -240,9 +240,7 @@ if (sys.maxsize < 2 ** 32 or platform.mac_ver()[0] >= "10.7") and sys.version_in
                 def anotherProto_with_(self, a1, a2):
                     pass
 
-            self.assertEqual(
-                MyClassImplementingMyProtocol.protoMethod.signature, b"I@:"
-            )
+            self.assertEqual(MyClassImplementingMyProtocol.protoMethod.signature, b"I@:")
             self.assertEqual(
                 MyClassImplementingMyProtocol.anotherProto_with_.signature, b"v@:ii"
             )
@@ -266,8 +264,7 @@ if (sys.maxsize < 2 ** 32 or platform.mac_ver()[0] >= "10.7") and sys.version_in
                 MyClassImplementingMyOtherProtocol.protoMethod.signature, b"I@:"
             )
             self.assertEqual(
-                MyClassImplementingMyOtherProtocol.anotherProto_with_.signature,
-                b"v@:ii",
+                MyClassImplementingMyOtherProtocol.anotherProto_with_.signature, b"v@:ii"
             )
             self.assertEqual(
                 MyClassImplementingMyOtherProtocol.yetAnother_.signature, b"i@:I"
@@ -301,9 +298,7 @@ if (sys.maxsize < 2 ** 32 or platform.mac_ver()[0] >= "10.7") and sys.version_in
 
                 aClassOne_ = classmethod(aClassOne_)
 
-            self.assertEqual(
-                ImplementingMyClassProtocol.anAnotherOne_.signature, b"i@:i"
-            )
+            self.assertEqual(ImplementingMyClassProtocol.anAnotherOne_.signature, b"i@:i")
             self.assertEqual(ImplementingMyClassProtocol.aClassOne_.isClassMethod, True)
             self.assertEqual(ImplementingMyClassProtocol.aClassOne_.signature, b"@@:i")
 
@@ -315,9 +310,7 @@ if (sys.maxsize < 2 ** 32 or platform.mac_ver()[0] >= "10.7") and sys.version_in
         def testIncorrectlyDefiningFormalProtocols(self):
             # Some bad calls to objc.formal_protocol
             self.assertRaises(TypeError, objc.formal_protocol, [], None, ())
-            self.assertRaises(
-                TypeError, objc.formal_protocol, "supers", (NSObject,), ()
-            )
+            self.assertRaises(TypeError, objc.formal_protocol, "supers", (NSObject,), ())
             self.assertRaises(
                 TypeError,
                 objc.formal_protocol,
@@ -337,10 +330,7 @@ if (sys.maxsize < 2 ** 32 or platform.mac_ver()[0] >= "10.7") and sys.version_in
                 objc.formal_protocol,
                 "supers",
                 None,
-                [
-                    objc.selector(None, selector=b"fooMethod:", signature=b"v@:i"),
-                    "hello",
-                ],
+                [objc.selector(None, selector=b"fooMethod:", signature=b"v@:i"), "hello"],
             )
 
         def testMethodInfo(self):
@@ -389,8 +379,6 @@ if (sys.maxsize < 2 ** 32 or platform.mac_ver()[0] >= "10.7") and sys.version_in
             self.assertEqual(1, 0)
 
 
-
-
 class Test3InformalProtocols(TestCase):
     def testOptional(self):
         class ProtoClass3(NSObject, protocols=[MyProto3]):
@@ -420,11 +408,10 @@ MyClassProtocol3 = objc.formal_protocol(
     None,
     [
         objc.selector(None, selector=b"anAnotherOne:", signature=b"i@:i"),
-        objc.selector(
-            None, selector=b"aClassOne:", signature=b"@@:i", isClassMethod=1
-        ),
+        objc.selector(None, selector=b"aClassOne:", signature=b"@@:i", isClassMethod=1),
     ],
 )
+
 
 class TestFormalOCProtocols(TestCase):
     def testImplementFormalProtocol(self):
@@ -491,6 +478,7 @@ class TestFormalOCProtocols(TestCase):
             )
         )
 
+
 class TestFormalProtocols(TestCase):
     # Implement unittests for formal protocols here.
     #
@@ -545,15 +533,9 @@ class TestFormalProtocols(TestCase):
     def testIncorrectlyDefiningFormalProtocols(self):
         # Some bad calls to objc.formal_protocol
         self.assertRaises(TypeError, objc.formal_protocol, [], None, ())
+        self.assertRaises(TypeError, objc.formal_protocol, "supers", (NSObject,), ())
         self.assertRaises(
-            TypeError, objc.formal_protocol, "supers", (NSObject,), ()
-        )
-        self.assertRaises(
-            TypeError,
-            objc.formal_protocol,
-            "supers",
-            objc.protocolNamed("NSLocking"),
-            (),
+            TypeError, objc.formal_protocol, "supers", objc.protocolNamed("NSLocking"), ()
         )
         self.assertRaises(
             TypeError,
@@ -567,10 +549,7 @@ class TestFormalProtocols(TestCase):
             objc.formal_protocol,
             "supers",
             None,
-            [
-                objc.selector(None, selector=b"fooMethod:", signature=b"v@:i"),
-                "hello",
-            ],
+            [objc.selector(None, selector=b"fooMethod:", signature=b"v@:i"), "hello"],
         )
 
     def testMethodInfo(self):
@@ -591,9 +570,7 @@ class TestFormalProtocols(TestCase):
             (b"protoMethod", b"I@:"),
         )
 
-        self.assertEqual(
-            MyProtocol3.descriptionForInstanceMethod_(b"nosuchmethod"), None
-        )
+        self.assertEqual(MyProtocol3.descriptionForInstanceMethod_(b"nosuchmethod"), None)
 
         self.assertEqual(
             MyClassProtocol3.classMethods(),

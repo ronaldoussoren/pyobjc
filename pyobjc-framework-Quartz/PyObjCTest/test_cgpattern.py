@@ -1,10 +1,10 @@
-
 from PyObjCTools.TestSupport import *
 from Quartz import *
 import Quartz
 import os
 
-class TestCGPattern (TestCase):
+
+class TestCGPattern(TestCase):
     def testConstants(self):
         self.assertEqual(kCGPatternTilingNoDistortion, 0)
         self.assertEqual(kCGPatternTilingConstantSpacingMinimalDistortion, 1)
@@ -15,28 +15,39 @@ class TestCGPattern (TestCase):
 
         myInfo = object()
         cnt = [0]
+
         def drawPattern(info, context):
             self.assertTrue(info is myInfo)
             self.assertIsInstance(context, CGContextRef)
             cnt[0] += 1
 
-        pattern = CGPatternCreate(myInfo, CGRectMake(0, 0, 10, 10), CGAffineTransformIdentity, 10.0, 10.0,
-                kCGPatternTilingConstantSpacing, True, drawPattern)
+        pattern = CGPatternCreate(
+            myInfo,
+            CGRectMake(0, 0, 10, 10),
+            CGAffineTransformIdentity,
+            10.0,
+            10.0,
+            kCGPatternTilingConstantSpacing,
+            True,
+            drawPattern,
+        )
         self.assertIsInstance(pattern, CGPatternRef)
 
         v = CGPatternRetain(pattern)
         self.assertTrue(v is pattern)
         CGPatternRelease(pattern)
 
-        url = CFURLCreateWithFileSystemPath(None,
-                "/tmp/pyobjc.test.pdf", kCFURLPOSIXPathStyle, False)
+        url = CFURLCreateWithFileSystemPath(
+            None, "/tmp/pyobjc.test.pdf", kCFURLPOSIXPathStyle, False
+        )
         self.assertIsInstance(url, CFURLRef)
-        context = CGPDFContextCreateWithURL(url,
-            ((0, 0), (1000, 1000)), None)
+        context = CGPDFContextCreateWithURL(url, ((0, 0), (1000, 1000)), None)
         self.assertIsInstance(context, CGContextRef)
         CGContextBeginPage(context, objc.NULL)
         try:
-            color = CGColorCreateWithPattern(CGColorSpaceCreatePattern(None), pattern, (0.5, 0.5, 0.5, 0.5))
+            color = CGColorCreateWithPattern(
+                CGColorSpaceCreatePattern(None), pattern, (0.5, 0.5, 0.5, 0.5)
+            )
             self.assertIsInstance(color, CGColorRef)
 
             v = CGColorGetPattern(color)
@@ -48,10 +59,10 @@ class TestCGPattern (TestCase):
             CGContextSetStrokeColorWithColor(context, color)
             CGContextFillRect(context, ((0, 0), (50, 50)))
 
-
         finally:
             CGContextEndPage(context)
-            if hasattr(Quartz, 'CGPDFContextClose'): CGPDFContextClose(context)
+            if hasattr(Quartz, "CGPDFContextClose"):
+                CGPDFContextClose(context)
             if os.path.exists("/tmp/pyobjc.test.pdf"):
                 os.unlink("/tmp/pyobjc.test.pdf")
 

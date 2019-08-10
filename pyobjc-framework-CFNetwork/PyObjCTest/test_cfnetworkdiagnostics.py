@@ -1,11 +1,12 @@
 from CFNetwork import *
 from PyObjCTools.TestSupport import *
 
-class TestCFNetwork (TestCase):
+
+class TestCFNetwork(TestCase):
     def testTypes(self):
         # XXX: CFNetDiagnosticsRef is not actually a proper type
         # in Leopard, the result turns out to be a CFDictionaryRef...
-        #self.assertIsCFType(CFNetDiagnosticRef)
+        # self.assertIsCFType(CFNetDiagnosticRef)
         pass
 
     def testConstants(self):
@@ -14,7 +15,6 @@ class TestCFNetwork (TestCase):
         self.assertEqual(kCFNetDiagnosticConnectionUp, -66559)
         self.assertEqual(kCFNetDiagnosticConnectionIndeterminate, -66558)
         self.assertEqual(kCFNetDiagnosticConnectionDown, -66557)
-
 
     def testFuncdtions(self):
         self.assertResultIsCFRetained(CFNetDiagnosticCreateWithStreams)
@@ -25,11 +25,13 @@ class TestCFNetwork (TestCase):
         self.assertIsInstance(wr, CFWriteStreamRef)
 
         ref = CFNetDiagnosticCreateWithStreams(None, rd, wr)
-        self.assertIsInstance(ref, objc.objc_object) #CFNetDiagnosticRef)
+        self.assertIsInstance(ref, objc.objc_object)  # CFNetDiagnosticRef)
 
         self.assertResultIsCFRetained(CFNetDiagnosticCreateWithURL)
-        ref = CFNetDiagnosticCreateWithURL(None, CFURLCreateWithString(None, "http://www.apple.com/", None))
-        self.assertIsInstance(ref, objc.objc_object) #CFNetDiagnosticRef)
+        ref = CFNetDiagnosticCreateWithURL(
+            None, CFURLCreateWithString(None, "http://www.apple.com/", None)
+        )
+        self.assertIsInstance(ref, objc.objc_object)  # CFNetDiagnosticRef)
 
         CFNetDiagnosticSetName(ref, "hello world")
 
@@ -40,6 +42,7 @@ class TestCFNetwork (TestCase):
         sts, descr = CFNetDiagnosticCopyNetworkStatusPassively(ref, None)
         self.assertIsInstance(sts, (int, long))
         self.assertIsInstance(descr, unicode)
+
 
 if __name__ == "__main__":
     main()

@@ -4,7 +4,7 @@ import sys
 if sys.maxsize >= 2 ** 32:
     import GameplayKit
 
-    class TestGKStateMachine (TestCase):
+    class TestGKStateMachine(TestCase):
         def testMethods(self):
             self.assertResultIsBOOL(GameplayKit.GKStateMachine.canEnterState_)
             self.assertResultIsBOOL(GameplayKit.GKStateMachine.enterState_)

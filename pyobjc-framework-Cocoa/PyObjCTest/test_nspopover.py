@@ -2,12 +2,17 @@ from PyObjCTools.TestSupport import *
 
 import AppKit
 
-class PopoverHelper (AppKit.NSObject):
-    def popoverShouldClose_(self, a): return 1
-    def popoverShouldDetach_(self, a): return 1
 
-class TestNSPopover (TestCase):
-    @min_os_level('10.7')
+class PopoverHelper(AppKit.NSObject):
+    def popoverShouldClose_(self, a):
+        return 1
+
+    def popoverShouldDetach_(self, a):
+        return 1
+
+
+class TestNSPopover(TestCase):
+    @min_os_level("10.7")
     def testConstants10_7(self):
         self.assertEqual(AppKit.NSPopoverAppearanceMinimal, 0)
         self.assertEqual(AppKit.NSPopoverAppearanceHUD, 1)
@@ -24,7 +29,7 @@ class TestNSPopover (TestCase):
         self.assertIsInstance(AppKit.NSPopoverWillCloseNotification, unicode)
         self.assertIsInstance(AppKit.NSPopoverDidCloseNotification, unicode)
 
-    @min_os_level('10.7')
+    @min_os_level("10.7")
     def testMethods10_7(self):
         self.assertResultIsBOOL(AppKit.NSPopover.animates)
         self.assertArgIsBOOL(AppKit.NSPopover.setAnimates_, 0)
@@ -32,20 +37,24 @@ class TestNSPopover (TestCase):
         self.assertResultIsBOOL(AppKit.NSPopover.isShown)
         self.assertArgIsBOOL(AppKit.NSPopover.setShown_, 0)
 
-        self.assertArgHasType(AppKit.NSPopover.showRelativeToRect_ofView_preferredEdge_, 0, AppKit.NSRect.__typestr__)
+        self.assertArgHasType(
+            AppKit.NSPopover.showRelativeToRect_ofView_preferredEdge_,
+            0,
+            AppKit.NSRect.__typestr__,
+        )
 
-    @min_os_level('10.10')
+    @min_os_level("10.10")
     def testMethods10_10(self):
         self.assertResultIsBOOL(AppKit.NSPopover.isDetached)
-        #self.assertArgIsBOOL(AppKit.NSPopover.setDetached_, 0)
+        # self.assertArgIsBOOL(AppKit.NSPopover.setDetached_, 0)
 
-    @min_os_level('10.7')
+    @min_os_level("10.7")
     def testProtocols10_7(self):
         self.assertResultIsBOOL(PopoverHelper.popoverShouldClose_)
 
-    @min_os_level('10.10')
+    @min_os_level("10.10")
     def testProtocols10_10(self):
-        objc.protocolNamed('NSPopoverDelegate')
+        objc.protocolNamed("NSPopoverDelegate")
         self.assertResultIsBOOL(PopoverHelper.popoverShouldDetach_)
 
 

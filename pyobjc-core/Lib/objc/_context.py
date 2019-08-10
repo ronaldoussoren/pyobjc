@@ -38,7 +38,7 @@ class ContextRegistry(object):
         self._registry[uniq] = value
         return uniq
 
-    def unregister(self, value : Any):
+    def unregister(self, value: Any):
         try:
             del self._registry[id(value)]
         except KeyError:

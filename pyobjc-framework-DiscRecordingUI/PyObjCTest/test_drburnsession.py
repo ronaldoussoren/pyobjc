@@ -2,7 +2,8 @@ from PyObjCTools.TestSupport import *
 
 import DiscRecordingUI
 
-class TestDRBurnSession (TestCase):
+
+class TestDRBurnSession(TestCase):
     @expectedFailure
     def testCFTypes(self):
         self.assertIsCFType(DiscRecordingUI.DRBurnSessionRef)
@@ -13,19 +14,33 @@ class TestDRBurnSession (TestCase):
 
         self.assertEqual(DiscRecordingUI.kBurnSessionSetupDialogOptionsCurrentVersion, 1)
 
-        self.assertEqual(DiscRecordingUI.kBurnSessionSetupDialogDefaultOptions, 0x00000000)
-        self.assertEqual(DiscRecordingUI.kBurnSessionSetupDialogForceClosedDiscs, 0x00000001)
-        self.assertEqual(DiscRecordingUI.kBurnSessionSetupDialogDontHandleReservations, 0x00000002)
-        self.assertEqual(DiscRecordingUI.kBurnSessionSetupDialogAllowTestBurns, 0x80000004)
+        self.assertEqual(
+            DiscRecordingUI.kBurnSessionSetupDialogDefaultOptions, 0x00000000
+        )
+        self.assertEqual(
+            DiscRecordingUI.kBurnSessionSetupDialogForceClosedDiscs, 0x00000001
+        )
+        self.assertEqual(
+            DiscRecordingUI.kBurnSessionSetupDialogDontHandleReservations, 0x00000002
+        )
+        self.assertEqual(
+            DiscRecordingUI.kBurnSessionSetupDialogAllowTestBurns, 0x80000004
+        )
 
         self.assertEqual(DiscRecordingUI.kDRBurnSessionSetupCallbacksCurrentVersion, 1)
 
         self.assertEqual(DiscRecordingUI.kDRBurnProgressSetupCallbacksCurrentVersion, 1)
 
-        self.assertEqual(DiscRecordingUI.kBurnSessionProgressDialogOptionsCurrentVersion, 1)
+        self.assertEqual(
+            DiscRecordingUI.kBurnSessionProgressDialogOptionsCurrentVersion, 1
+        )
 
-        self.assertEqual(DiscRecordingUI.kBurnSessionProgressDialogDefaultOptions, 0x00000000)
-        self.assertEqual(DiscRecordingUI.kBurnSessionProgressDialogDisplayVerboseProgress, 0x00000001)
+        self.assertEqual(
+            DiscRecordingUI.kBurnSessionProgressDialogDefaultOptions, 0x00000000
+        )
+        self.assertEqual(
+            DiscRecordingUI.kBurnSessionProgressDialogDisplayVerboseProgress, 0x00000001
+        )
 
     def testStructs(self):
         v = DiscRecordingUI.DRBurnSessionSetupDialogOptions()

@@ -2,8 +2,8 @@ from PyObjCTools.TestSupport import *
 
 import Security
 
-class TestSecCertificateOIDs (TestCase):
 
+class TestSecCertificateOIDs(TestCase):
     def test_constants(self):
         self.assertIsInstance(Security.kSecOIDADC_CERT_POLICY, unicode)
         self.assertIsInstance(Security.kSecOIDAPPLE_CERT_POLICY, unicode)
@@ -103,7 +103,9 @@ class TestSecCertificateOIDs (TestCase):
         self.assertIsInstance(Security.kSecOIDX509V1SubjectNameStd, unicode)
         self.assertIsInstance(Security.kSecOIDX509V1SubjectPublicKey, unicode)
         self.assertIsInstance(Security.kSecOIDX509V1SubjectPublicKeyAlgorithm, unicode)
-        self.assertIsInstance(Security.kSecOIDX509V1SubjectPublicKeyAlgorithmParameters, unicode)
+        self.assertIsInstance(
+            Security.kSecOIDX509V1SubjectPublicKeyAlgorithmParameters, unicode
+        )
         self.assertIsInstance(Security.kSecOIDX509V1SubjectPublicKeyCStruct, unicode)
         self.assertIsInstance(Security.kSecOIDX509V1ValidityNotAfter, unicode)
         self.assertIsInstance(Security.kSecOIDX509V1ValidityNotBefore, unicode)
@@ -118,22 +120,29 @@ class TestSecCertificateOIDs (TestCase):
         self.assertIsInstance(Security.kSecOIDX509V3CertificateExtensionValue, unicode)
         self.assertIsInstance(Security.kSecOIDX509V3CertificateExtensionsCStruct, unicode)
         self.assertIsInstance(Security.kSecOIDX509V3CertificateExtensionsStruct, unicode)
-        self.assertIsInstance(Security.kSecOIDX509V3CertificateNumberOfExtensions, unicode)
+        self.assertIsInstance(
+            Security.kSecOIDX509V3CertificateNumberOfExtensions, unicode
+        )
         self.assertIsInstance(Security.kSecOIDX509V3SignedCertificate, unicode)
         self.assertIsInstance(Security.kSecOIDX509V3SignedCertificateCStruct, unicode)
 
     @expectedFailure
-    @min_os_level('10.7')
+    @min_os_level("10.7")
     def test_constants_missing(self):
-        self.assertIsInstance(Security.kSecOIDAPPLE_EXTENSION_INTERMEDIATE_MARKER, unicode)
+        self.assertIsInstance(
+            Security.kSecOIDAPPLE_EXTENSION_INTERMEDIATE_MARKER, unicode
+        )
         self.assertIsInstance(Security.kSecOIDAPPLE_EXTENSION_WWDR_INTERMEDIATE, unicode)
         self.assertIsInstance(Security.kSecOIDAPPLE_EXTENSION_ITMS_INTERMEDIATE, unicode)
         self.assertIsInstance(Security.kSecOIDAPPLE_EXTENSION_AAI_INTERMEDIATE, unicode)
-        self.assertIsInstance(Security.kSecOIDAPPLE_EXTENSION_APPLEID_INTERMEDIATE, unicode)
+        self.assertIsInstance(
+            Security.kSecOIDAPPLE_EXTENSION_APPLEID_INTERMEDIATE, unicode
+        )
 
-    @min_os_level('10.8')
+    @min_os_level("10.8")
     def test_constants_10_8(self):
         self.assertIsInstance(Security.kSecOIDSRVName, unicode)
+
 
 if __name__ == "__main__":
     main()

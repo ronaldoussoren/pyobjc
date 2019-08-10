@@ -14,17 +14,22 @@ import os
 # XXX: This is fairly crude, need further research.
 #      This code basicly tries to outsmart tricks that
 #      CoreData plays, and that's asking for problems.
-if os.uname()[2] < '13.':
+if os.uname()[2] < "13.":
+
     def _first_python(cls):
-        if '__objc_python_subclass__' in cls.__dict__:
+        if "__objc_python_subclass__" in cls.__dict__:
             return cls
         return None
+
+
 else:
+
     def _first_python(cls):
         for cls in cls.mro():
-            if '__objc_python_subclass__' in cls.__dict__:
+            if "__objc_python_subclass__" in cls.__dict__:
                 return cls
         return None
+
 
 def NSMOsetValue_ForKey_(self, name, value):
     try:
@@ -49,8 +54,9 @@ def NSMOgetValueForKey_(self, name):
     except KeyError as msg:
         raise AttributeError(name)
 
-if os.uname()[2] < '13.' or True:
-    addConvenienceForClass('NSManagedObject', (
-        ('__setattr__', NSMOsetValue_ForKey_),
-        ('__getattr__', NSMOgetValueForKey_),
-    ))
+
+if os.uname()[2] < "13." or True:
+    addConvenienceForClass(
+        "NSManagedObject",
+        (("__setattr__", NSMOsetValue_ForKey_), ("__getattr__", NSMOgetValueForKey_)),
+    )

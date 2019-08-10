@@ -1,9 +1,8 @@
-
 from PyObjCTools.TestSupport import *
 from Quartz import *
 
-class TestCVPixelBufferPool (TestCase):
 
+class TestCVPixelBufferPool(TestCase):
     def testTypes(self):
         self.assertIsCFType(CVPixelBufferPoolRef)
 
@@ -11,13 +10,12 @@ class TestCVPixelBufferPool (TestCase):
         self.assertIsInstance(kCVPixelBufferPoolMinimumBufferCountKey, unicode)
         self.assertIsInstance(kCVPixelBufferPoolMaximumBufferAgeKey, unicode)
 
-
-    @min_os_level('10.7')
+    @min_os_level("10.7")
     def testContants10_7(self):
         self.assertIsInstance(kCVPixelBufferPoolAllocationThresholdKey, unicode)
         self.assertIsInstance(kCVPixelBufferPoolFreeBufferNotification, unicode)
 
-    @min_os_level('10.11')
+    @min_os_level("10.11")
     def testConstants10_11(self):
         self.assertEqual(kCVPixelBufferPoolFlushExcessBuffers, 1)
 
@@ -26,17 +24,21 @@ class TestCVPixelBufferPool (TestCase):
 
         self.assertArgIsCFRetained(CVPixelBufferPoolCreate, 3)
         self.assertArgIsOut(CVPixelBufferPoolCreate, 3)
-        rv, pool = CVPixelBufferPoolCreate(None, {
-            kCVPixelBufferPoolMinimumBufferCountKey: 1,
-            kCVPixelBufferPoolMaximumBufferAgeKey: 300,
-            }, {
+        rv, pool = CVPixelBufferPoolCreate(
+            None,
+            {
+                kCVPixelBufferPoolMinimumBufferCountKey: 1,
+                kCVPixelBufferPoolMaximumBufferAgeKey: 300,
+            },
+            {
                 kCVPixelBufferWidthKey: 100,
                 kCVPixelBufferHeightKey: 100,
                 kCVPixelBufferPixelFormatTypeKey: kCVPixelFormatType_32ARGB,
-            }, None)
+            },
+            None,
+        )
         self.assertEqual(rv, 0)
         self.assertIsInstance(pool, CVPixelBufferPoolRef)
-
 
         v = CVPixelBufferPoolRetain(pool)
         self.assertTrue(v is pool)
@@ -53,26 +55,31 @@ class TestCVPixelBufferPool (TestCase):
         self.assertEqual(rv, 0)
         self.assertIsInstance(image, CVPixelBufferRef)
 
-
-    @min_os_level('10.7')
+    @min_os_level("10.7")
     def testFunctions10_7(self):
         self.assertArgIsOut(CVPixelBufferPoolCreatePixelBufferWithAuxAttributes, 3)
         self.assertArgIsCFRetained(CVPixelBufferPoolCreatePixelBufferWithAuxAttributes, 3)
 
-    @min_os_level('10.11')
+    @min_os_level("10.11")
     def testFunctions10_11(self):
-        rv, pool = CVPixelBufferPoolCreate(None, {
-            kCVPixelBufferPoolMinimumBufferCountKey: 1,
-            kCVPixelBufferPoolMaximumBufferAgeKey: 300,
-            }, {
+        rv, pool = CVPixelBufferPoolCreate(
+            None,
+            {
+                kCVPixelBufferPoolMinimumBufferCountKey: 1,
+                kCVPixelBufferPoolMaximumBufferAgeKey: 300,
+            },
+            {
                 kCVPixelBufferWidthKey: 100,
                 kCVPixelBufferHeightKey: 100,
                 kCVPixelBufferPixelFormatTypeKey: kCVPixelFormatType_32ARGB,
-            }, None)
+            },
+            None,
+        )
         self.assertEqual(rv, 0)
         self.assertIsInstance(pool, CVPixelBufferPoolRef)
 
         CVPixelBufferPoolFlush(pool, 0)
+
 
 if __name__ == "__main__":
     main()

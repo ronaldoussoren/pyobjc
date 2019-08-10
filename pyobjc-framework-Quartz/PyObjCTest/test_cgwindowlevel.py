@@ -1,8 +1,8 @@
-
 from PyObjCTools.TestSupport import *
 from Quartz.CoreGraphics import *
 
-class TestCGWindowLevel (TestCase):
+
+class TestCGWindowLevel(TestCase):
     def testConstants(self):
         self.assertEqual(kCGBaseWindowLevelKey, 0)
         self.assertEqual(kCGMinimumWindowLevelKey, 1)
@@ -33,26 +33,64 @@ class TestCGWindowLevel (TestCase):
         self.assertIsInstance(lvl, (int, long))
 
         self.assertEqual(kCGBaseWindowLevel, CGWindowLevelForKey(kCGBaseWindowLevelKey))
-        self.assertEqual(kCGMinimumWindowLevel, CGWindowLevelForKey(kCGMinimumWindowLevelKey))
-        self.assertEqual(kCGDesktopWindowLevel, CGWindowLevelForKey(kCGDesktopWindowLevelKey))
-        self.assertEqual(kCGDesktopIconWindowLevel, CGWindowLevelForKey(kCGDesktopIconWindowLevelKey))
-        self.assertEqual(kCGBackstopMenuLevel, CGWindowLevelForKey(kCGBackstopMenuLevelKey))
-        self.assertEqual(kCGNormalWindowLevel, CGWindowLevelForKey(kCGNormalWindowLevelKey))
-        self.assertEqual(kCGFloatingWindowLevel, CGWindowLevelForKey(kCGFloatingWindowLevelKey))
-        self.assertEqual(kCGTornOffMenuWindowLevel, CGWindowLevelForKey(kCGTornOffMenuWindowLevelKey))
+        self.assertEqual(
+            kCGMinimumWindowLevel, CGWindowLevelForKey(kCGMinimumWindowLevelKey)
+        )
+        self.assertEqual(
+            kCGDesktopWindowLevel, CGWindowLevelForKey(kCGDesktopWindowLevelKey)
+        )
+        self.assertEqual(
+            kCGDesktopIconWindowLevel, CGWindowLevelForKey(kCGDesktopIconWindowLevelKey)
+        )
+        self.assertEqual(
+            kCGBackstopMenuLevel, CGWindowLevelForKey(kCGBackstopMenuLevelKey)
+        )
+        self.assertEqual(
+            kCGNormalWindowLevel, CGWindowLevelForKey(kCGNormalWindowLevelKey)
+        )
+        self.assertEqual(
+            kCGFloatingWindowLevel, CGWindowLevelForKey(kCGFloatingWindowLevelKey)
+        )
+        self.assertEqual(
+            kCGTornOffMenuWindowLevel, CGWindowLevelForKey(kCGTornOffMenuWindowLevelKey)
+        )
         self.assertEqual(kCGDockWindowLevel, CGWindowLevelForKey(kCGDockWindowLevelKey))
-        self.assertEqual(kCGMainMenuWindowLevel, CGWindowLevelForKey(kCGMainMenuWindowLevelKey))
-        self.assertEqual(kCGStatusWindowLevel, CGWindowLevelForKey(kCGStatusWindowLevelKey))
-        self.assertEqual(kCGModalPanelWindowLevel, CGWindowLevelForKey(kCGModalPanelWindowLevelKey))
-        self.assertEqual(kCGPopUpMenuWindowLevel, CGWindowLevelForKey(kCGPopUpMenuWindowLevelKey))
-        self.assertEqual(kCGDraggingWindowLevel, CGWindowLevelForKey(kCGDraggingWindowLevelKey))
-        self.assertEqual(kCGScreenSaverWindowLevel, CGWindowLevelForKey(kCGScreenSaverWindowLevelKey))
-        self.assertEqual(kCGCursorWindowLevel, CGWindowLevelForKey(kCGCursorWindowLevelKey))
-        self.assertEqual(kCGOverlayWindowLevel, CGWindowLevelForKey(kCGOverlayWindowLevelKey))
+        self.assertEqual(
+            kCGMainMenuWindowLevel, CGWindowLevelForKey(kCGMainMenuWindowLevelKey)
+        )
+        self.assertEqual(
+            kCGStatusWindowLevel, CGWindowLevelForKey(kCGStatusWindowLevelKey)
+        )
+        self.assertEqual(
+            kCGModalPanelWindowLevel, CGWindowLevelForKey(kCGModalPanelWindowLevelKey)
+        )
+        self.assertEqual(
+            kCGPopUpMenuWindowLevel, CGWindowLevelForKey(kCGPopUpMenuWindowLevelKey)
+        )
+        self.assertEqual(
+            kCGDraggingWindowLevel, CGWindowLevelForKey(kCGDraggingWindowLevelKey)
+        )
+        self.assertEqual(
+            kCGScreenSaverWindowLevel, CGWindowLevelForKey(kCGScreenSaverWindowLevelKey)
+        )
+        self.assertEqual(
+            kCGCursorWindowLevel, CGWindowLevelForKey(kCGCursorWindowLevelKey)
+        )
+        self.assertEqual(
+            kCGOverlayWindowLevel, CGWindowLevelForKey(kCGOverlayWindowLevelKey)
+        )
         self.assertEqual(kCGHelpWindowLevel, CGWindowLevelForKey(kCGHelpWindowLevelKey))
-        self.assertEqual(kCGUtilityWindowLevel, CGWindowLevelForKey(kCGUtilityWindowLevelKey))
-        self.assertEqual(kCGAssistiveTechHighWindowLevel, CGWindowLevelForKey(kCGAssistiveTechHighWindowLevelKey))
-        self.assertEqual(kCGMaximumWindowLevel, CGWindowLevelForKey(kCGMaximumWindowLevelKey))
+        self.assertEqual(
+            kCGUtilityWindowLevel, CGWindowLevelForKey(kCGUtilityWindowLevelKey)
+        )
+        self.assertEqual(
+            kCGAssistiveTechHighWindowLevel,
+            CGWindowLevelForKey(kCGAssistiveTechHighWindowLevelKey),
+        )
+        self.assertEqual(
+            kCGMaximumWindowLevel, CGWindowLevelForKey(kCGMaximumWindowLevelKey)
+        )
+
 
 if __name__ == "__main__":
     main()

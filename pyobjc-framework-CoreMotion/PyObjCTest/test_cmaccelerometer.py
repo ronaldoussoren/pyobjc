@@ -2,7 +2,8 @@ from PyObjCTools.TestSupport import *
 
 import CoreMotion
 
-class TestCMAccelerometer (TestCase):
+
+class TestCMAccelerometer(TestCase):
     def test_structs(self):
         v = CoreMotion.CMAcceleration()
         self.assertEqual(v.x, 0.0)

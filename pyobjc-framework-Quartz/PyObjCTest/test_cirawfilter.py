@@ -1,9 +1,9 @@
-
 from PyObjCTools.TestSupport import *
 from Quartz.QuartzCore import *
 
-class TestCIRAWFilter (TestCase):
-    @min_os_level('10.5')
+
+class TestCIRAWFilter(TestCase):
+    @min_os_level("10.5")
     def testConstants10_5(self):
         self.assertIsInstance(kCIInputDecoderVersionKey, unicode)
         self.assertIsInstance(kCISupportedDecoderVersionsKey, unicode)
@@ -23,13 +23,13 @@ class TestCIRAWFilter (TestCase):
         self.assertIsInstance(kCIInputBoostShadowAmountKey, unicode)
         self.assertIsInstance(kCIInputBiasKey, unicode)
 
-    @min_os_level('10.7')
+    @min_os_level("10.7")
     def testConstants10_7(self):
         self.assertIsInstance(kCIInputNoiseReductionAmountKey, unicode)
         self.assertIsInstance(kCIInputLinearSpaceFilter, unicode)
         self.assertIsInstance(kCIActiveKeys, unicode)
 
-    @min_os_level('10.10')
+    @min_os_level("10.10")
     def testConstants10_10(self):
         self.assertIsInstance(kCIInputEnableVendorLensCorrectionKey, unicode)
         self.assertIsInstance(kCIInputLuminanceNoiseReductionAmountKey, unicode)
@@ -39,18 +39,19 @@ class TestCIRAWFilter (TestCase):
         self.assertIsInstance(kCIInputNoiseReductionDetailAmountKey, unicode)
         self.assertIsInstance(kCIOutputNativeSizeKey, unicode)
 
-    @min_os_level('10.12')
+    @min_os_level("10.12")
     def testConstants10_12(self):
         self.assertIsInstance(kCIInputBaselineExposureKey, unicode)
         self.assertIsInstance(kCIInputDisableGamutMapKey, unicode)
 
-    @min_os_level('10.13')
+    @min_os_level("10.13")
     def testConstants10_13(self):
         self.assertIsInstance(kCIInputMoireAmountKey, unicode)
 
-    @min_os_level('10.14')
+    @min_os_level("10.14")
     def testConstants10_14(self):
         self.assertIsInstance(kCIInputEnableEDRModeKey, unicode)
+
 
 if __name__ == "__main__":
     main()

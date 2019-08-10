@@ -1,8 +1,8 @@
-
 from PyObjCTools.TestSupport import *
 from WebKit import *
 
-class TestWebView (TestCase):
+
+class TestWebView(TestCase):
     def testConstants(self):
         self.assertIsInstance(WebElementDOMNodeKey, unicode)
         self.assertIsInstance(WebElementFrameKey, unicode)
@@ -23,7 +23,6 @@ class TestWebView (TestCase):
         self.assertIsInstance(WebViewDidEndEditingNotification, unicode)
         self.assertIsInstance(WebViewDidChangeTypingStyleNotification, unicode)
         self.assertIsInstance(WebViewDidChangeSelectionNotification, unicode)
-
 
     def testMethods(self):
         self.assertResultIsBOOL(WebView.canShowMIMEType_)
@@ -57,7 +56,6 @@ class TestWebView (TestCase):
 
         self.assertArgIsBOOL(WebView.setShouldUpdateWhileOffscreen_, 0)
         self.assertResultIsBOOL(WebView.shouldUpdateWhileOffscreen)
-
 
 
 if __name__ == "__main__":

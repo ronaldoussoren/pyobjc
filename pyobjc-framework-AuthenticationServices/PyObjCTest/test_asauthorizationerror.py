@@ -2,7 +2,8 @@ from PyObjCTools.TestSupport import *
 
 import AuthenticationServices
 
-class TestASAuthorization (TestCase):
+
+class TestASAuthorization(TestCase):
     def test_constants(self):
         self.assertEqual(AuthenticationServices.ASAuthorizationErrorUnknown, 1000)
         self.assertEqual(AuthenticationServices.ASAuthorizationErrorCanceled, 1001)

@@ -832,9 +832,7 @@ class TestArraysIn(TestCase):
         self.assertEqual(list(v), [1.0, 2.0, 3.0, 4.0])
 
         self.assertRaises(ValueError, OC_MetaDataTest.make4Tuple_on_, (1, 2, 3), o)
-        self.assertRaises(
-            ValueError, OC_MetaDataTest.make4Tuple_on_, (1, 2, 3, 4, 5), o
-        )
+        self.assertRaises(ValueError, OC_MetaDataTest.make4Tuple_on_, (1, 2, 3, 4, 5), o)
         self.assertRaises(ValueError, OC_MetaDataTest.make4Tuple_on_, objc.NULL, o)
 
         v, = OC_MetaDataTest.null4Tuple_on_(objc.NULL, o)

@@ -13,8 +13,5 @@ setup(
     app=["PyInterpreter.py"],
     data_files=["PyInterpreter.nib"],
     options=dict(py2app=dict(plist=plist)),
-    setup_requires=[
-        "py2app",
-        "pyobjc-framework-Cocoa",
-    ]
+    setup_requires=["py2app", "pyobjc-framework-Cocoa"],
 )

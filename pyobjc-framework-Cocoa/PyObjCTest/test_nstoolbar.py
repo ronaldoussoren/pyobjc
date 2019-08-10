@@ -1,11 +1,13 @@
-
 from PyObjCTools.TestSupport import *
 from AppKit import *
 
-class TestNSToolbarHelper (NSObject):
-    def toolbar_itemForItemIdentifier_willBeInsertedIntoToolbar_(self, a, b, c): return 1
 
-class TestNSToolbar (TestCase):
+class TestNSToolbarHelper(NSObject):
+    def toolbar_itemForItemIdentifier_willBeInsertedIntoToolbar_(self, a, b, c):
+        return 1
+
+
+class TestNSToolbar(TestCase):
     def testConstants(self):
         self.assertEqual(NSToolbarDisplayModeDefault, 0)
         self.assertEqual(NSToolbarDisplayModeIconAndLabel, 1)
@@ -30,17 +32,21 @@ class TestNSToolbar (TestCase):
         self.assertResultIsBOOL(NSToolbar.autosavesConfiguration)
         self.assertArgIsBOOL(NSToolbar.setAutosavesConfiguration_, 0)
 
-    @min_os_level('10.10')
+    @min_os_level("10.10")
     def testMethods10_10(self):
         self.assertResultIsBOOL(NSToolbar.allowsExtensionItems)
         self.assertArgIsBOOL(NSToolbar.setAllowsExtensionItems_, 0)
 
-    @min_sdk_level('10.6')
+    @min_sdk_level("10.6")
     def testProtocolObjects(self):
-        objc.protocolNamed('NSToolbarDelegate')
+        objc.protocolNamed("NSToolbarDelegate")
 
     def testProtocols(self):
-        self.assertArgIsBOOL(TestNSToolbarHelper.toolbar_itemForItemIdentifier_willBeInsertedIntoToolbar_, 2)
+        self.assertArgIsBOOL(
+            TestNSToolbarHelper.toolbar_itemForItemIdentifier_willBeInsertedIntoToolbar_,
+            2,
+        )
+
 
 if __name__ == "__main__":
     main()

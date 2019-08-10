@@ -4,7 +4,8 @@ import sys
 from Foundation import *
 import Foundation
 
-class TestNSByteOrder (TestCase):
+
+class TestNSByteOrder(TestCase):
     def testConstants(self):
         self.assertEqual(NS_UnknownByteOrder, CFByteOrderUnknown)
         self.assertEqual(NS_LittleEndian, CFByteOrderLittleEndian)
@@ -27,7 +28,6 @@ class TestNSByteOrder (TestCase):
             self.assertEqual(NSSwapHostLongToBig(350), CFSwapInt32HostToBig(350))
             self.assertEqual(NSSwapLittleLongToHost(350), CFSwapInt32LittleToHost(350))
             self.assertEqual(NSSwapHostLongToLittle(350), CFSwapInt32HostToLittle(350))
-
 
         self.assertEqual(NSSwapLongLong(350), CFSwapInt64(350))
         self.assertEqual(NSSwapBigShortToHost(350), CFSwapInt16BigToHost(350))
@@ -74,6 +74,7 @@ class TestNSByteOrder (TestCase):
         self.assertIsInstance(v, NSSwappedFloat)
         v = NSSwapHostFloatToLittle(55.0)
         self.assertIsInstance(v, NSSwappedFloat)
+
 
 if __name__ == "__main__":
     main()

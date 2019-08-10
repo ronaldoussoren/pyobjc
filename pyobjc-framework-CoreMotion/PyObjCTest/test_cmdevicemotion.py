@@ -2,7 +2,8 @@ from PyObjCTools.TestSupport import *
 
 import CoreMotion
 
-class TestCMDeviceMotion (TestCase):
+
+class TestCMDeviceMotion(TestCase):
     def test_constants(self):
         self.assertEqual(CoreMotion.CMMagneticFieldCalibrationAccuracyUncalibrated, -1)
         self.assertEqual(CoreMotion.CMMagneticFieldCalibrationAccuracyLow, 0)
@@ -13,4 +14,3 @@ class TestCMDeviceMotion (TestCase):
         v = CoreMotion.CMCalibratedMagneticField()
         self.assertEqual(v.field, CoreMotion.CMMagneticField())
         self.assertEqual(v.accuracy, 0)
-

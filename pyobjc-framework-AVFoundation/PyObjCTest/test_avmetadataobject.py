@@ -3,17 +3,17 @@ from PyObjCTools.TestSupport import *
 import AVFoundation
 
 
-class TestAVMetadataObject (TestCase):
-    @min_os_level('10.10')
+class TestAVMetadataObject(TestCase):
+    @min_os_level("10.10")
     def testMethods10_10(self):
         self.assertResultIsBOOL(AVFoundation.AVMetadataFaceObject.hasRollAngle)
         self.assertResultIsBOOL(AVFoundation.AVMetadataFaceObject.hasYawAngle)
 
-    @min_os_level('10.10')
+    @min_os_level("10.10")
     def testConstants10_10(self):
         self.assertIsInstance(AVFoundation.AVMetadataObjectTypeFace, unicode)
 
-    @min_os_level('10.15')
+    @min_os_level("10.15")
     def testConstants10_15(self):
         self.assertIsInstance(AVFoundation.AVMetadataObjectTypeUPCECode, unicode)
         self.assertIsInstance(AVFoundation.AVMetadataObjectTypeCode39Code, unicode)
@@ -25,10 +25,11 @@ class TestAVMetadataObject (TestCase):
         self.assertIsInstance(AVFoundation.AVMetadataObjectTypePDF417Code, unicode)
         self.assertIsInstance(AVFoundation.AVMetadataObjectTypeQRCode, unicode)
         self.assertIsInstance(AVFoundation.AVMetadataObjectTypeAztecCode, unicode)
-        self.assertIsInstance(AVFoundation.AVMetadataObjectTypeInterleaved2of5Code, unicode)
+        self.assertIsInstance(
+            AVFoundation.AVMetadataObjectTypeInterleaved2of5Code, unicode
+        )
         self.assertIsInstance(AVFoundation.AVMetadataObjectTypeITF14Code, unicode)
         self.assertIsInstance(AVFoundation.AVMetadataObjectTypeDataMatrixCode, unicode)
-
 
 
 if __name__ == "__main__":

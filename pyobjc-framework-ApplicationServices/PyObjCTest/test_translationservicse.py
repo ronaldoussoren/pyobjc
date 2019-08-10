@@ -1,7 +1,8 @@
 import HIServices
 from PyObjCTools.TestSupport import *
 
-class TestTranslationServices (TestCase):
+
+class TestTranslationServices(TestCase):
     def testConstants(self):
         self.assertEqual(HIServices.badTranslationRefErr, -3031)
 
@@ -36,6 +37,7 @@ class TestTranslationServices (TestCase):
         self.assertArgIsCFRetained(HIServices.TranslationCopyDestinationType, 1)
 
         self.assertArgIsOut(HIServices.TranslationGetTranslationFlags, 1)
+
 
 if __name__ == "__main__":
     main()

@@ -3,12 +3,18 @@ from PyObjCTools.TestSupport import *
 from Foundation import *
 from AppKit import *
 
-class TestNSErrorHelper (NSObject):
-    def attemptRecoveryFromError_optionIndex_delegate_didRecoverSelector_contextInfo_(self, a, b, c, d, e): pass
-    def attemptRecoveryFromError_optionIndex_(self, a, b): return 1
+
+class TestNSErrorHelper(NSObject):
+    def attemptRecoveryFromError_optionIndex_delegate_didRecoverSelector_contextInfo_(
+        self, a, b, c, d, e
+    ):
+        pass
+
+    def attemptRecoveryFromError_optionIndex_(self, a, b):
+        return 1
 
 
-class TestNSError (TestCase):
+class TestNSError(TestCase):
     def testConstants(self):
         self.assertIsInstance(NSCocoaErrorDomain, unicode)
 
@@ -64,22 +70,38 @@ class TestNSError (TestCase):
         self.assertIsInstance(NSWordTablesReadException, unicode)
         self.assertIsInstance(NSWordTablesWriteException, unicode)
 
-    @min_os_level('10.13')
+    @min_os_level("10.13")
     def testConstants10_13(self):
         self.assertIsInstance(NSLocalizedFailureErrorKey, unicode)
 
     def testAttemptRecovery(self):
-        self.assertArgHasType(TestNSErrorHelper.attemptRecoveryFromError_optionIndex_delegate_didRecoverSelector_contextInfo_, 1, objc._C_NSUInteger)
-        self.assertArgIsSEL(TestNSErrorHelper.attemptRecoveryFromError_optionIndex_delegate_didRecoverSelector_contextInfo_, 3, b'v@:' + objc._C_NSBOOL + b'^v')
-        self.assertArgHasType(TestNSErrorHelper.attemptRecoveryFromError_optionIndex_delegate_didRecoverSelector_contextInfo_, 4, b'^v')
+        self.assertArgHasType(
+            TestNSErrorHelper.attemptRecoveryFromError_optionIndex_delegate_didRecoverSelector_contextInfo_,
+            1,
+            objc._C_NSUInteger,
+        )
+        self.assertArgIsSEL(
+            TestNSErrorHelper.attemptRecoveryFromError_optionIndex_delegate_didRecoverSelector_contextInfo_,
+            3,
+            b"v@:" + objc._C_NSBOOL + b"^v",
+        )
+        self.assertArgHasType(
+            TestNSErrorHelper.attemptRecoveryFromError_optionIndex_delegate_didRecoverSelector_contextInfo_,
+            4,
+            b"^v",
+        )
 
         self.assertResultIsBOOL(TestNSErrorHelper.attemptRecoveryFromError_optionIndex_)
-        self.assertArgHasType(TestNSErrorHelper.attemptRecoveryFromError_optionIndex_, 1, objc._C_NSUInteger)
+        self.assertArgHasType(
+            TestNSErrorHelper.attemptRecoveryFromError_optionIndex_, 1, objc._C_NSUInteger
+        )
 
-    @min_os_level('10.11')
+    @min_os_level("10.11")
     def testMethods10_11(self):
-        self.assertArgIsBlock(NSError.setUserInfoValueProviderForDomain_provider_, 1, b'@@@')
-        self.assertResultIsBlock(NSError.userInfoValueProviderForDomain_, b'@@@')
+        self.assertArgIsBlock(
+            NSError.setUserInfoValueProviderForDomain_provider_, 1, b"@@@"
+        )
+        self.assertResultIsBlock(NSError.userInfoValueProviderForDomain_, b"@@@")
 
 
 if __name__ == "__main__":

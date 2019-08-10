@@ -4,12 +4,12 @@ import sys
 if sys.maxsize > 2 ** 32:
     import Network
 
-    nw_ws_pong_handler_t = b'v@'
-    nw_ws_subprotocol_enumerator_t = b'Bn^t'
-    nw_ws_additional_header_enumerator_t = b'Bn^tn^t'
-    nw_ws_client_request_handler_t = b'@@'
+    nw_ws_pong_handler_t = b"v@"
+    nw_ws_subprotocol_enumerator_t = b"Bn^t"
+    nw_ws_additional_header_enumerator_t = b"Bn^tn^t"
+    nw_ws_client_request_handler_t = b"@@"
 
-    class TestWSOptions (TestCase):
+    class TestWSOptions(TestCase):
         def test_constants(self):
             self.assertEqual(Network.nw_ws_opcode_invalid, -1)
             self.assertEqual(Network.nw_ws_opcode_cont, 0x0)
@@ -38,7 +38,7 @@ if sys.maxsize > 2 ** 32:
             self.assertEqual(Network.nw_ws_response_status_accept, 1)
             self.assertEqual(Network.nw_ws_response_status_reject, 2)
 
-        @min_os_level('10.15')
+        @min_os_level("10.15")
         def test_functions10_15(self):
             self.assertResultIsRetained(Network.nw_protocol_copy_ws_definition)
             self.assertResultIsRetained(Network.nw_ws_create_options)
@@ -56,28 +56,55 @@ if sys.maxsize > 2 ** 32:
             Network.nw_ws_metadata_set_close_code
             Network.nw_ws_metadata_get_close_code
 
-            self.assertArgIsBlock(Network.nw_ws_metadata_set_pong_handler, 2, nw_ws_pong_handler_t)
-            self.assertArgIsBlock(Network.nw_ws_request_enumerate_subprotocols, 1, nw_ws_subprotocol_enumerator_t)
-            self.assertArgIsBlock(Network.nw_ws_request_enumerate_additional_headers, 1, nw_ws_additional_header_enumerator_t)
+            self.assertArgIsBlock(
+                Network.nw_ws_metadata_set_pong_handler, 2, nw_ws_pong_handler_t
+            )
+            self.assertArgIsBlock(
+                Network.nw_ws_request_enumerate_subprotocols,
+                1,
+                nw_ws_subprotocol_enumerator_t,
+            )
+            self.assertArgIsBlock(
+                Network.nw_ws_request_enumerate_additional_headers,
+                1,
+                nw_ws_additional_header_enumerator_t,
+            )
 
             self.assertResultIsRetained(Network.nw_ws_response_create)
-            self.assertArgHasType(Network.nw_ws_response_create, 1, b'n^t')
+            self.assertArgHasType(Network.nw_ws_response_create, 1, b"n^t")
             self.assertArgSizeInArg(Network.nw_ws_response_create, 1, 2)
 
             Network.nw_ws_response_get_status
 
-            self.assertResultIsNullTerminated(Network.nw_ws_response_get_selected_subprotocol)
-            self.assertResultHasType(Network.nw_ws_response_get_selected_subprotocol, b'^t')
+            self.assertResultIsNullTerminated(
+                Network.nw_ws_response_get_selected_subprotocol
+            )
+            self.assertResultHasType(
+                Network.nw_ws_response_get_selected_subprotocol, b"^t"
+            )
 
-            self.assertArgHasType(Network.nw_ws_response_add_additional_header, 1, b'n^t')
-            self.assertArgIsNullTerminated(Network.nw_ws_response_add_additional_header, 1)
-            self.assertArgHasType(Network.nw_ws_response_add_additional_header, 2, b'n^t')
-            self.assertArgIsNullTerminated(Network.nw_ws_response_add_additional_header, 2)
+            self.assertArgHasType(Network.nw_ws_response_add_additional_header, 1, b"n^t")
+            self.assertArgIsNullTerminated(
+                Network.nw_ws_response_add_additional_header, 1
+            )
+            self.assertArgHasType(Network.nw_ws_response_add_additional_header, 2, b"n^t")
+            self.assertArgIsNullTerminated(
+                Network.nw_ws_response_add_additional_header, 2
+            )
 
             self.assertResultIsRetained(Network.nw_ws_metadata_copy_server_response)
 
-            self.assertArgIsBlock(Network.nw_ws_response_enumerate_additional_headers, 1, nw_ws_additional_header_enumerator_t)
-            self.assertArgIsBlock(Network.nw_ws_options_set_client_request_handler, 2, nw_ws_client_request_handler_t)
+            self.assertArgIsBlock(
+                Network.nw_ws_response_enumerate_additional_headers,
+                1,
+                nw_ws_additional_header_enumerator_t,
+            )
+            self.assertArgIsBlock(
+                Network.nw_ws_options_set_client_request_handler,
+                2,
+                nw_ws_client_request_handler_t,
+            )
+
 
 if __name__ == "__main__":
     main()

@@ -1,8 +1,8 @@
-
 from PyObjCTools.TestSupport import *
 from AppKit import *
 
-class TestNSPrinter (TestCase):
+
+class TestNSPrinter(TestCase):
     def testConstants(self):
         self.assertEqual(NSPrinterTableOK, 0)
         self.assertEqual(NSPrinterTableNotFound, 1)

@@ -4,7 +4,7 @@ import sys
 if sys.maxsize > 2 ** 32:
     import Photos
 
-    class TestPhotosTypes (TestCase):
+    class TestPhotosTypes(TestCase):
         def test_constants(self):
 
             self.assertEqual(Photos.PHAssetMediaTypeUnknown, 0)
@@ -81,8 +81,8 @@ if sys.maxsize > 2 ** 32:
             self.assertEqual(Photos.PHAssetEditOperationProperties, 3)
 
             self.assertEqual(Photos.PHAssetBurstSelectionTypeNone, 0)
-            self.assertEqual(Photos.PHAssetBurstSelectionTypeAutoPick, 1<<0)
-            self.assertEqual(Photos.PHAssetBurstSelectionTypeUserPick, 1<<1)
+            self.assertEqual(Photos.PHAssetBurstSelectionTypeAutoPick, 1 << 0)
+            self.assertEqual(Photos.PHAssetBurstSelectionTypeUserPick, 1 << 1)
 
             self.assertEqual(Photos.PHAssetSourceTypeNone, 0)
             self.assertEqual(Photos.PHAssetSourceTypeUserLibrary, 1 << 0)

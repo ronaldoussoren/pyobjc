@@ -3,6 +3,7 @@ import email, urllib
 from WebKit import WebResource, WebArchive
 from Cocoa import NSData, NSString, NSURL
 
+
 def loadMHT(filename):
     """
     Load a .HMT HTML archive and return the WebArchive representation.
@@ -10,7 +11,7 @@ def loadMHT(filename):
     return HMTLoad(filename).asWebArchive()
 
 
-class MHTLoader (object):
+class MHTLoader(object):
     """
     A loader for .mht files, and archive format used by MS Internet Explorer
     on Windows.
@@ -62,7 +63,8 @@ class MHTLoader (object):
             NSURL.URLWithString_(self.fixupURL(self.root)),
             NSString.stringWithString_(rootType),
             None,
-            None)
+            None,
+        )
 
         resources = []
         for url in self.parts:
@@ -70,15 +72,19 @@ class MHTLoader (object):
                 continue
 
             tp, data = self.parts[url]
-            resources.append(WebResource.alloc().initWithData_URL_MIMEType_textEncodingName_frameName_(
-                NSData.dataWithBytes_length_(data, len(data)),
-                NSURL.URLWithString_(self.fixupURL(url)),
-                NSString.stringWithString_(tp),
-                None,
-                None))
+            resources.append(
+                WebResource.alloc().initWithData_URL_MIMEType_textEncodingName_frameName_(
+                    NSData.dataWithBytes_length_(data, len(data)),
+                    NSURL.URLWithString_(self.fixupURL(url)),
+                    NSString.stringWithString_(tp),
+                    None,
+                    None,
+                )
+            )
 
         return WebArchive.alloc().initWithMainResource_subresources_subframeArchives_(
-            pageResource, resources, None)
+            pageResource, resources, None
+        )
 
 
 def main():
@@ -88,6 +94,7 @@ def main():
     d = a.data()
     with open("python-home.webarchive", "wb") as fp:
         fp.write(a.data().bytes())
+
 
 if __name__ == "__main__":
     main()

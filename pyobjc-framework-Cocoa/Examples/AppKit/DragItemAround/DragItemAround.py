@@ -8,6 +8,7 @@ import Cocoa
 
 class DraggableItemView(Cocoa.NSView):
     """."""
+
     _locationDefault = Cocoa.NSMakePoint(0.0, 0.0)
     _itemColorDefault = Cocoa.NSColor.redColor()
     _backgroundColorDefault = Cocoa.NSColor.whiteColor()
@@ -33,7 +34,7 @@ class DraggableItemView(Cocoa.NSView):
 
     def isOpaque(self):
         """."""
-        return (self.backgroundColor().alphaComponent() >= 1.0)
+        return self.backgroundColor().alphaComponent() >= 1.0
 
     def offsetLocationByX_andY_(self, x, y):
         """."""
@@ -48,8 +49,7 @@ class DraggableItemView(Cocoa.NSView):
 
     def mouseDown_(self, event):
         """."""
-        clickLocation = self.convertPoint_fromView_(event.locationInWindow(),
-                                                    None)
+        clickLocation = self.convertPoint_fromView_(event.locationInWindow(), None)
         itemHit = self.isPointInItem_(clickLocation)
         if itemHit:
             self.dragging = True
@@ -59,13 +59,10 @@ class DraggableItemView(Cocoa.NSView):
     def mouseDragged_(self, event):
         """."""
         if self.dragging:
-            newDragLocation = self.convertPoint_fromView_(
-                event.locationInWindow(),
-                None
-            )
+            newDragLocation = self.convertPoint_fromView_(event.locationInWindow(), None)
             self.offsetLocationByX_andY_(
                 newDragLocation.x - self.lastDragLocation.x,
-                newDragLocation.y - self.lastDragLocation.y
+                newDragLocation.y - self.lastDragLocation.y,
             )
             self.lastDragLocation = newDragLocation
             self.autoscroll_(event)
@@ -84,7 +81,7 @@ class DraggableItemView(Cocoa.NSView):
         """."""
         handled = False
         characters = event.charactersIgnoringModifiers()
-        if characters.isEqual_('r'):
+        if characters.isEqual_("r"):
             handled = True
             self.setItemPropertiesToDefault_(self)
         if handled is False:
@@ -98,8 +95,9 @@ class DraggableItemView(Cocoa.NSView):
     def resetCursorRects(self):
         """."""
         self.discardCursorRects()
-        self.addCursorRect_cursor_(self.calculatedItemBounds(),
-                                   Cocoa.NSCursor.openHandCursor())
+        self.addCursorRect_cursor_(
+            self.calculatedItemBounds(), Cocoa.NSCursor.openHandCursor()
+        )
 
     @objc.IBAction
     def moveUp_(self, sender):
@@ -166,8 +164,7 @@ class DraggableItemView(Cocoa.NSView):
 
     def calculatedItemBounds(self):
         """."""
-        return Cocoa.NSMakeRect(self.location().x, self.location().y,
-                          60.0, 20.0)
+        return Cocoa.NSMakeRect(self.location().x, self.location().y, 60.0, 20.0)
 
     def isPointInItem_(self, testPoint):
         """."""
@@ -175,6 +172,7 @@ class DraggableItemView(Cocoa.NSView):
         if itemHit:
             pass
         return itemHit
+
 
 if __name__ == "__main__":
     AppHelper.runEventLoop()

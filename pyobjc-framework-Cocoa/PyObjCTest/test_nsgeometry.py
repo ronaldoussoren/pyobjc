@@ -5,7 +5,7 @@ import Foundation
 from AppKit import *
 
 
-class TestNSGeometry (TestCase):
+class TestNSGeometry(TestCase):
     def testConstants(self):
         self.assertEqual(NSMinXEdge, 0)
         self.assertEqual(NSMinYEdge, 1)
@@ -26,7 +26,7 @@ class TestNSGeometry (TestCase):
         self.assertEqual(NSMakeSize(4, 5), NSSize(4, 5))
         self.assertEqual(NSMakeRect(1, 2, 3, 4), NSRect(NSPoint(1, 2), NSSize(3, 4)))
 
-        rect = NSRect(NSPoint(1,2), NSSize(4,6))
+        rect = NSRect(NSPoint(1, 2), NSSize(4, 6))
         self.assertEqual(NSMaxX(rect), 5)
         self.assertEqual(NSMaxY(rect), 8)
         self.assertEqual(NSMidX(rect), 3)
@@ -37,14 +37,14 @@ class TestNSGeometry (TestCase):
         self.assertEqual(NSHeight(rect), 6)
 
         # Cannot test these here, need to be tested in the Quartz unittests
-        self.assertHasAttr(Foundation, 'NSRectFromCGRect')
-        self.assertHasAttr(Foundation, 'NSRectToCGRect')
-        self.assertHasAttr(Foundation, 'NSPointFromCGPoint')
-        self.assertHasAttr(Foundation, 'NSPointToCGPoint')
-        self.assertHasAttr(Foundation, 'NSSizeFromCGSize')
-        self.assertHasAttr(Foundation, 'NSSizeToCGSize')
+        self.assertHasAttr(Foundation, "NSRectFromCGRect")
+        self.assertHasAttr(Foundation, "NSRectToCGRect")
+        self.assertHasAttr(Foundation, "NSPointFromCGPoint")
+        self.assertHasAttr(Foundation, "NSPointToCGPoint")
+        self.assertHasAttr(Foundation, "NSSizeFromCGSize")
+        self.assertHasAttr(Foundation, "NSSizeToCGSize")
 
-    @min_os_level('10.8')
+    @min_os_level("10.8")
     def testInlines10_8(self):
         v = NSEdgeInsetsMake(1, 2, 3, 4)
         self.assertIsInstance(v, NSEdgeInsets)
@@ -63,8 +63,6 @@ class TestNSGeometry (TestCase):
         r0 = NSRect(NSPoint(9, 10), NSSize(0, 0))
         r1 = NSRect(NSPoint(0, 1), NSSize(4, 5))
         r2 = NSRect(NSPoint(4.5, 5.5), NSSize(7.5, 8.5))
-
-
 
         self.assertIs(NSEqualPoints(p1, p1), True)
         self.assertIs(NSEqualPoints(p1, p2), False)
@@ -87,7 +85,7 @@ class TestNSGeometry (TestCase):
         self.assertEqual(ra, NSRect(NSPoint(0, 0), NSSize(0, 0)))
 
         ra = NSOffsetRect(r1, 5, 6)
-        self.assertEqual(ra, NSRect(NSPoint(5, 7), NSSize(4,5)))
+        self.assertEqual(ra, NSRect(NSPoint(5, 7), NSSize(4, 5)))
 
         slice, rem = NSDivideRect(r2, None, None, 1.5, NSMaxYEdge)
         self.assertEqual(slice, NSRect(NSPoint(4.5, 12.5), NSSize(7.5, 1.5)))
@@ -98,35 +96,35 @@ class TestNSGeometry (TestCase):
         self.assertIs(NSMouseInRect(p2, r2, True), False)
         self.assertIs(NSContainsRect(r1, r2), False)
         self.assertIs(NSIntersectsRect(r1, r2), False)
-        self.assertEqual(NSStringFromPoint(p1), b'{1, 2}'.decode('ascii'))
-        self.assertEqual(NSStringFromSize(s1), b'{4, 5}'.decode('ascii'))
-        self.assertEqual(NSStringFromRect(r1),  b'{{0, 1}, {4, 5}}'.decode('ascii'))
-        v = NSPointFromString('{1, 2}')
+        self.assertEqual(NSStringFromPoint(p1), b"{1, 2}".decode("ascii"))
+        self.assertEqual(NSStringFromSize(s1), b"{4, 5}".decode("ascii"))
+        self.assertEqual(NSStringFromRect(r1), b"{{0, 1}, {4, 5}}".decode("ascii"))
+        v = NSPointFromString("{1, 2}")
         self.assertEqual(v, p1)
-        v = NSSizeFromString('{4,5}')
+        v = NSSizeFromString("{4,5}")
         self.assertEqual(v, s1)
-        v = NSRectFromString(b'{   {0,1}  , {  4, 5}}'.decode('ascii'))
+        v = NSRectFromString(b"{   {0,1}  , {  4, 5}}".decode("ascii"))
         self.assertEqual(v, r1)
 
     def testValueMethods(self):
         v = NSValue.valueWithPoint_(NSPoint(2, 3))
         w = v.pointValue()
         self.assertIsInstance(w, NSPoint)
-        self.assertEqual(w, (2,3))
+        self.assertEqual(w, (2, 3))
 
         w = v.sizeValue()
         self.assertIsInstance(w, NSSize)
-        self.assertEqual(w, (2,3))
+        self.assertEqual(w, (2, 3))
 
         v = NSValue.valueWithSize_(NSSize(9, 8))
         w = v.sizeValue()
         self.assertIsInstance(w, NSSize)
-        self.assertEqual(w, (9,8))
+        self.assertEqual(w, (9, 8))
 
         v = NSValue.valueWithRect_(NSRect(NSPoint(9, 10), NSSize(11, 12)))
         w = v.rectValue()
         self.assertIsInstance(w, NSRect)
-        self.assertEqual(w, ((9,10),(11,12)))
+        self.assertEqual(w, ((9, 10), (11, 12)))
 
         self.assertArgHasType(NSValue.valueWithPoint_, 0, NSPoint.__typestr__)
         self.assertResultHasType(NSValue.pointValue, NSPoint.__typestr__)
@@ -134,7 +132,6 @@ class TestNSGeometry (TestCase):
         self.assertResultHasType(NSValue.sizeValue, NSSize.__typestr__)
         self.assertArgHasType(NSValue.valueWithRect_, 0, NSRect.__typestr__)
         self.assertResultHasType(NSValue.rectValue, NSRect.__typestr__)
-
 
     def testCoderMethods(self):
         self.assertArgHasType(NSCoder.encodePoint_, 0, NSPoint.__typestr__)
@@ -152,11 +149,11 @@ class TestNSGeometry (TestCase):
         self.assertArgHasType(NSCoder.encodeRect_forKey_, 0, NSRect.__typestr__)
         self.assertResultHasType(NSCoder.decodeRectForKey_, NSRect.__typestr__)
 
-    @min_os_level('10.10')
+    @min_os_level("10.10")
     def testConstants10_10(self):
         self.assertIsInstance(NSEdgeInsetsZero, NSEdgeInsets)
 
-    @min_os_level('10.7')
+    @min_os_level("10.7")
     def testConstants10_7(self):
         self.assertEqual(NSAlignMinXInward, 1 << 0)
         self.assertEqual(NSAlignMinYInward, 1 << 1)
@@ -177,19 +174,35 @@ class TestNSGeometry (TestCase):
         self.assertEqual(NSAlignWidthNearest, 1 << 20)
         self.assertEqual(NSAlignHeightNearest, 1 << 21)
         self.assertEqual(NSAlignRectFlipped, 1 << 63)
-        self.assertEqual(NSAlignAllEdgesInward, NSAlignMinXInward|NSAlignMaxXInward|NSAlignMinYInward|NSAlignMaxYInward)
-        self.assertEqual(NSAlignAllEdgesOutward, NSAlignMinXOutward|NSAlignMaxXOutward|NSAlignMinYOutward|NSAlignMaxYOutward)
-        self.assertEqual(NSAlignAllEdgesNearest, NSAlignMinXNearest|NSAlignMaxXNearest|NSAlignMinYNearest|NSAlignMaxYNearest)
+        self.assertEqual(
+            NSAlignAllEdgesInward,
+            NSAlignMinXInward | NSAlignMaxXInward | NSAlignMinYInward | NSAlignMaxYInward,
+        )
+        self.assertEqual(
+            NSAlignAllEdgesOutward,
+            NSAlignMinXOutward
+            | NSAlignMaxXOutward
+            | NSAlignMinYOutward
+            | NSAlignMaxYOutward,
+        )
+        self.assertEqual(
+            NSAlignAllEdgesNearest,
+            NSAlignMinXNearest
+            | NSAlignMaxXNearest
+            | NSAlignMinYNearest
+            | NSAlignMaxYNearest,
+        )
 
-    @min_os_level('10.7')
+    @min_os_level("10.7")
     def testFunctions10_7(self):
         r2 = NSRect(NSPoint(4.5, 5.5), NSSize(7.5, 8.5))
         r = NSIntegralRectWithOptions(r2, NSAlignAllEdgesNearest)
         self.assertIsInstance(r, NSRect)
 
-    @min_os_level('10.10')
+    @min_os_level("10.10")
     def testFunctions10_10(self):
         self.assertResultIsBOOL(NSEdgeInsetsEqual)
+
 
 if __name__ == "__main__":
     main()

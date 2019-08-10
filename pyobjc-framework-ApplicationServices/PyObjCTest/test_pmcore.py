@@ -2,7 +2,8 @@ import PrintCore
 import sys
 from PyObjCTools.TestSupport import *
 
-class TestPMCore (TestCase):
+
+class TestPMCore(TestCase):
     def testFunctions(self):
         PrintCore.PMRetain
         PrintCore.PMRelease
@@ -241,8 +242,10 @@ class TestPMCore (TestCase):
         PrintCore.PMPrinterWritePostScriptToURL
 
         self.assertFalse(hasattr(PrintCore, "PMPrintSettingsToOptions"))
-        self.assertFalse(hasattr(PrintCore, "PMPrintSettingsToOptionsWithPrinterAndPageFormat"))
-        #self.assertArgIsOut(PrintCore.PMPrintSettingsToOptions, 1)
+        self.assertFalse(
+            hasattr(PrintCore, "PMPrintSettingsToOptionsWithPrinterAndPageFormat")
+        )
+        # self.assertArgIsOut(PrintCore.PMPrintSettingsToOptions, 1)
 
         PrintCore.PMPrinterSendCommand
 

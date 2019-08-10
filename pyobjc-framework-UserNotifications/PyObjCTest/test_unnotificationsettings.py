@@ -4,7 +4,7 @@ import sys
 if sys.maxsize > 2 ** 32:
     import UserNotifications
 
-    class TestUNNotificationSettings (TestCase):
+    class TestUNNotificationSettings(TestCase):
         def test_constants(self):
             self.assertEqual(UserNotifications.UNAuthorizationStatusNotDetermined, 0)
             self.assertEqual(UserNotifications.UNAuthorizationStatusDenied, 1)
@@ -24,7 +24,9 @@ if sys.maxsize > 2 ** 32:
             self.assertEqual(UserNotifications.UNAlertStyleAlert, 2)
 
         def test_methods(self):
-            self.assertResultIsBOOL(UserNotifications.UNNotificationSettings.providesAppNotificationSettings)
+            self.assertResultIsBOOL(
+                UserNotifications.UNNotificationSettings.providesAppNotificationSettings
+            )
 
 
 if __name__ == "__main__":

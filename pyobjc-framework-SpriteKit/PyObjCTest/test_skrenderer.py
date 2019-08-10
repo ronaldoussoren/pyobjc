@@ -6,9 +6,8 @@ import objc
 if sys.maxsize > 2 ** 32:
     import SpriteKit
 
-    class TestSKRenderer (TestCase):
-
-        @min_os_level('10.13')
+    class TestSKRenderer(TestCase):
+        @min_os_level("10.13")
         def testMethods(self):
             self.assertResultIsBOOL(SpriteKit.SKRenderer.ignoresSiblingOrder)
             self.assertArgIsBOOL(SpriteKit.SKRenderer.setIgnoresSiblingOrder_, 0)
@@ -30,6 +29,7 @@ if sys.maxsize > 2 ** 32:
 
             self.assertResultIsBOOL(SpriteKit.SKRenderer.showsFields)
             self.assertArgIsBOOL(SpriteKit.SKRenderer.setShowsFields_, 0)
+
 
 if __name__ == "__main__":
     main()

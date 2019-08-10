@@ -1,8 +1,8 @@
-
 from PyObjCTools.TestSupport import *
 from SyncServices import *
 
-class TestISyncClient (TestCase):
+
+class TestISyncClient(TestCase):
     def testConstants(self):
         self.assertEqual(ISyncStatusRunning, 1)
         self.assertEqual(ISyncStatusSuccess, 2)
@@ -17,7 +17,6 @@ class TestISyncClient (TestCase):
         self.assertIsInstance(ISyncClientTypeServer, unicode)
         self.assertIsInstance(ISyncClientTypePeer, unicode)
 
-
     def testMethods(self):
         self.assertResultIsBOOL(ISyncClient.canPushChangesForEntityName_)
         self.assertResultIsBOOL(ISyncClient.canPullChangesForEntityName_)
@@ -28,10 +27,11 @@ class TestISyncClient (TestCase):
         self.assertResultIsBOOL(ISyncClient.shouldSynchronizeWithClientsOfType_)
         self.assertArgIsBOOL(ISyncClient.setShouldSynchronize_withClientsOfType_, 0)
 
-    @min_os_level('10.6')
+    @min_os_level("10.6")
     def testMethods10_6(self):
         self.assertResultIsBOOL(ISyncClient.formatsRelationships)
         self.assertArgIsBOOL(ISyncClient.setFormatsRelationships_, 0)
+
 
 if __name__ == "__main__":
     main()

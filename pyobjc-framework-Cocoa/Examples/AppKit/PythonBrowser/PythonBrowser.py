@@ -85,6 +85,7 @@ class PythonBrowserWindowController(Cocoa.NSWindowController):
         MainMenu.nib, to test changing the browsed object after the window
         has been created."""
         from random import choice
+
         mod = None
         while mod is None:
             mod = sys.modules[choice(sys.modules.keys())]
@@ -92,7 +93,6 @@ class PythonBrowserWindowController(Cocoa.NSWindowController):
 
 
 class PythonBrowserAppDelegate(Cocoa.NSObject):
-
     def applicationDidFinishLaunching_(self, notification):
         self.newBrowser_(self)
 
@@ -105,4 +105,5 @@ class PythonBrowserAppDelegate(Cocoa.NSObject):
 
 if __name__ == "__main__":
     from PyObjCTools import AppHelper
+
     AppHelper.runEventLoop()

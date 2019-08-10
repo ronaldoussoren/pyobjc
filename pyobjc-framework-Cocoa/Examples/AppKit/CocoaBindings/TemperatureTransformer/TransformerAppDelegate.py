@@ -46,8 +46,9 @@ class FahrenheitToCelsiusTransformer(NSValueTransformer):
         return fahrenheitOutputValue
 
 
-class TransformerAppDelegate (NSObject):
-    fahrenheit = objc.ivar('fahrenheit', objc._C_DBL)
+class TransformerAppDelegate(NSObject):
+    fahrenheit = objc.ivar("fahrenheit", objc._C_DBL)
+
 
 trans = FahrenheitToCelsiusTransformer.alloc().init()
 NSValueTransformer.setValueTransformer_forName_(trans, "FahrenheitToCelsiusTransformer")

@@ -4,7 +4,7 @@ import sys
 if sys.maxsize > 2 ** 32:
     import Network
 
-    class TestTLSOptions (TestCase):
+    class TestTLSOptions(TestCase):
         def test_functions(self):
             self.assertResultIsRetained(Network.nw_protocol_copy_tls_definition)
 

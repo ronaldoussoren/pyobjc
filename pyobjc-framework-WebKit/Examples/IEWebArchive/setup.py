@@ -7,13 +7,13 @@ Usage:
 from setuptools import setup
 
 plist = dict(
-    CFBundleDocumentTypes = [
+    CFBundleDocumentTypes=[
         dict(
             CFBundleTypeExtensions=["mht"],
             CFBundleTypeName="Internet Explorer Web Archive",
             CFBundleTypeRole="Editor",
             NSDocumentClass="MHTDocument",
-        ),
+        )
     ]
 )
 
@@ -22,9 +22,5 @@ setup(
     app=["main.py"],
     data_files=["MainMenu.nib", "MHTDocument.nib"],
     options=dict(py2app=dict(plist=plist)),
-    setup_requires=[
-        "py2app",
-        "pyobjc-framework-Cocoa",
-        "pyobjc-framework-WebKit",
-    ]
+    setup_requires=["py2app", "pyobjc-framework-Cocoa", "pyobjc-framework-WebKit"],
 )

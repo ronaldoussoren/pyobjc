@@ -735,21 +735,28 @@ CHAR_NUMBERS = [-128, -42, 0, 42, 127, b"a", 128, "hello", None]
 UCHAR_NUMBERS = [0, 42, 255, b"a", 256, "hello", None]
 SHORT_NUMBERS = [-32768, -42, 0, 32767, 32768, "hello", None]
 USHORT_NUMBERS = [0, 42, 65535, 65536, "hello", None]
-INT_NUMBERS = [-2147483648, -42, 0, 2147483647, 2147483648, "hello", None]
-UINT_NUMBERS = [0, 42, 4294967295, 4294967296, "hello", None]
-LONG_NUMBERS = [-2147483648, -42, 0, 2147483647, sys.maxsize + 1, "hello", None]
-ULONG_NUMBERS = [0, 42, 4294967295, 2 * (sys.maxsize + 1), "hello", None]
+INT_NUMBERS = [-2_147_483_648, -42, 0, 2_147_483_647, 2_147_483_648, "hello", None]
+UINT_NUMBERS = [0, 42, 4_294_967_295, 4_294_967_296, "hello", None]
+LONG_NUMBERS = [-2_147_483_648, -42, 0, 2_147_483_647, sys.maxsize + 1, "hello", None]
+ULONG_NUMBERS = [0, 42, 4_294_967_295, 2 * (sys.maxsize + 1), "hello", None]
 LONGLONG_NUMBERS = [
-    -9223372036854775808,
+    -9_223_372_036_854_775_808,
     -42,
     0,
     42,
-    9223372036854775807,
-    9223372036854775808,
+    9_223_372_036_854_775_807,
+    9_223_372_036_854_775_808,
     "hello",
     None,
 ]
-ULONGLONG_NUMBERS = [0, 42, 18446744073709551615, 18446744073709551616, "hello", None]
+ULONGLONG_NUMBERS = [
+    0,
+    42,
+    18_446_744_073_709_551_615,
+    18_446_744_073_709_551_616,
+    "hello",
+    None,
+]
 
 FLOAT_NUMBERS = [makeCFloat(0.1), makeCFloat(100.0)]
 DOUBLE_NUMBERS = [1.5, 3.5, 1e10, 1.99e10]
@@ -1118,15 +1125,9 @@ class OCPyTestSimpleCalls(TestCase):
         for o in UINT_NUMBERS[:-3]:
             self.assertEqual(self.obj.callInstanceUnsignedIntFuncOf_(self.ocobj), o)
 
-        self.assertRaises(
-            ValueError, self.obj.callInstanceUnsignedIntFuncOf_, self.ocobj
-        )
-        self.assertRaises(
-            ValueError, self.obj.callInstanceUnsignedIntFuncOf_, self.ocobj
-        )
-        self.assertRaises(
-            ValueError, self.obj.callInstanceUnsignedIntFuncOf_, self.ocobj
-        )
+        self.assertRaises(ValueError, self.obj.callInstanceUnsignedIntFuncOf_, self.ocobj)
+        self.assertRaises(ValueError, self.obj.callInstanceUnsignedIntFuncOf_, self.ocobj)
+        self.assertRaises(ValueError, self.obj.callInstanceUnsignedIntFuncOf_, self.ocobj)
 
     def testIUInt(self):
         self.pyobj.reset()
@@ -1219,24 +1220,16 @@ class OCPyTestSimpleCalls(TestCase):
         for o in LONGLONG_NUMBERS[:-3]:
             self.assertEqual(self.obj.invokeInstanceLongLongFuncOf_(self.ocobj), o)
 
-        self.assertRaises(
-            ValueError, self.obj.invokeInstanceLongLongFuncOf_, self.ocobj
-        )
-        self.assertRaises(
-            ValueError, self.obj.invokeInstanceLongLongFuncOf_, self.ocobj
-        )
-        self.assertRaises(
-            ValueError, self.obj.invokeInstanceLongLongFuncOf_, self.ocobj
-        )
+        self.assertRaises(ValueError, self.obj.invokeInstanceLongLongFuncOf_, self.ocobj)
+        self.assertRaises(ValueError, self.obj.invokeInstanceLongLongFuncOf_, self.ocobj)
+        self.assertRaises(ValueError, self.obj.invokeInstanceLongLongFuncOf_, self.ocobj)
 
     def testCULongLong(self):
         self.pyobj.reset()
         self.ocobj.reset()
 
         for o in ULONGLONG_NUMBERS[:-3]:
-            self.assertEqual(
-                self.obj.callInstanceUnsignedLongLongFuncOf_(self.ocobj), o
-            )
+            self.assertEqual(self.obj.callInstanceUnsignedLongLongFuncOf_(self.ocobj), o)
 
         self.assertRaises(
             ValueError, self.obj.callInstanceUnsignedLongLongFuncOf_, self.ocobj

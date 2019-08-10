@@ -104,9 +104,7 @@ _FunctionTable = [
         dict(
             arguments={
                 0: dict(
-                    type_modifier=objc._C_IN,
-                    c_array_length_in_arg=1,
-                    null_accepted=False,
+                    type_modifier=objc._C_IN, c_array_length_in_arg=1, null_accepted=False
                 )
             }
         ),
@@ -118,9 +116,7 @@ _FunctionTable = [
         dict(
             arguments={
                 0: dict(
-                    type_modifier=objc._C_IN,
-                    c_array_length_in_arg=1,
-                    null_accepted=False,
+                    type_modifier=objc._C_IN, c_array_length_in_arg=1, null_accepted=False
                 ),
                 1: dict(type_modifier=objc._C_IN),
             }
@@ -133,9 +129,7 @@ _FunctionTable = [
         dict(
             arguments={
                 0: dict(
-                    type_modifier=objc._C_IN,
-                    c_array_length_in_arg=1,
-                    null_accepted=True,
+                    type_modifier=objc._C_IN, c_array_length_in_arg=1, null_accepted=True
                 )
             }
         ),
@@ -176,9 +170,7 @@ _FunctionTable = [
         dict(
             arguments={
                 0: dict(
-                    type_modifier=objc._C_OUT,
-                    c_array_length_in_arg=1,
-                    null_accepted=True,
+                    type_modifier=objc._C_OUT, c_array_length_in_arg=1, null_accepted=True
                 )
             }
         ),

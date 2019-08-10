@@ -7,10 +7,10 @@ from fieldMath import degToRad
 
 # Convience global variables
 x, y = 0, 1
-llc, sze = 0, 1 # Left Lower Corner, Size
+llc, sze = 0, 1  # Left Lower Corner, Size
 
-#____________________________________________________________
-class CGraphView (Cocoa.NSView):
+# ____________________________________________________________
+class CGraphView(Cocoa.NSView):
 
     azmuthSlider = objc.IBOutlet()
     mapOffsetEWSlider = objc.IBOutlet()
@@ -50,9 +50,13 @@ class CGraphView (Cocoa.NSView):
     def setCrossCursor(self):
         crosshairImage = Cocoa.NSImage.imageNamed_("CrossCursor")
         imageSize = crosshairImage.size()
-        self.crossCursor = Cocoa.NSCursor.alloc().initWithImage_hotSpot_(crosshairImage, (8, 8))
+        self.crossCursor = Cocoa.NSCursor.alloc().initWithImage_hotSpot_(
+            crosshairImage, (8, 8)
+        )
         rect = self.bounds()
-        self.trackingRect = self.addTrackingRect_owner_userData_assumeInside_(self.bounds(), self, 0, 0)
+        self.trackingRect = self.addTrackingRect_owner_userData_assumeInside_(
+            self.bounds(), self, 0, 0
+        )
 
     @objc.python_method
     def setGridColor(self, color=Cocoa.NSColor.greenColor()):
@@ -86,11 +90,10 @@ class CGraphView (Cocoa.NSView):
         self.maxMag = maxMag
         self.setNeedsDisplay_(1)
 
-
     def drawRect_(self, rect):
         frame = self.frame()
         self.origin = frame[0]
-        self.graphCenter = (frame[sze][x]/2, frame[sze][y]/2)
+        self.graphCenter = (frame[sze][x] / 2, frame[sze][y] / 2)
         self.graphRadius = (min(frame[sze][x], frame[sze][y]) / 2) - self.graphMargin
 
         Cocoa.NSColor.whiteColor().set()
@@ -105,7 +108,12 @@ class CGraphView (Cocoa.NSView):
         if self.mapImage == 0:
             return
 
-        scale = self.mapScale * (self.graphRadius / self.mapBaseRadius) * self.gain / self.totalField
+        scale = (
+            self.mapScale
+            * (self.graphRadius / self.mapBaseRadius)
+            * self.gain
+            / self.totalField
+        )
         xImageSize = scale * self.mapRect[sze][x]
         yImageSize = scale * self.mapRect[sze][y]
         xCenterMove = self.graphCenter[x] - self.graphRadius
@@ -118,7 +126,9 @@ class CGraphView (Cocoa.NSView):
 
         drawInRect = ((xOffset, yOffset), (xImageSize, yImageSize))
 
-        self.mapImage.drawInRect_fromRect_operation_fraction_(drawInRect, self.mapRect, Cocoa.NSCompositeSourceOver, self.mapVisible)
+        self.mapImage.drawInRect_fromRect_operation_fraction_(
+            drawInRect, self.mapRect, Cocoa.NSCompositeSourceOver, self.mapVisible
+        )
 
     def drawGrid(self):
         self.gridColor.set()
@@ -127,10 +137,10 @@ class CGraphView (Cocoa.NSView):
 
     def drawCircle_(self, scale):
         center = self.graphCenter
-        radius = self.graphRadius*scale
+        radius = self.graphRadius * scale
         x, y = 0, 1
         if radius >= 1:
-            dotRect = ((center[x]-radius, center[y]-radius), (2*radius, 2*radius))
+            dotRect = ((center[x] - radius, center[y] - radius), (2 * radius, 2 * radius))
             path = Cocoa.NSBezierPath.bezierPathWithOvalInRect_(dotRect)
             path.stroke()
 
@@ -143,7 +153,7 @@ class CGraphView (Cocoa.NSView):
         radius = self.graphRadius
         x, y = 0, 1
         path = Cocoa.NSBezierPath.bezierPath()
-        for i in range(1, self.lines+1):
+        for i in range(1, self.lines + 1):
             iR = pi / i
             cosR = cos(iR) * radius
             sinR = sin(iR) * radius
@@ -154,7 +164,7 @@ class CGraphView (Cocoa.NSView):
         path.stroke()
 
     def drawField(self):
-        if self.maxMag:         # Don't want to divide by zero in the pathological case
+        if self.maxMag:  # Don't want to divide by zero in the pathological case
             self.graphColor.set()
             path = self.path.copy()
 
@@ -170,12 +180,11 @@ class CGraphView (Cocoa.NSView):
 
             path.stroke()
 
-
-#____________________________________________________________
-# Handle GUI values
+    # ____________________________________________________________
+    # Handle GUI values
     @objc.IBAction
     def mapVisibleSlider_(self, sender):
-        self.mapVisible = (sender.floatValue())
+        self.mapVisible = sender.floatValue()
         self.setNeedsDisplay_(1)
 
     @objc.IBAction
@@ -229,8 +238,12 @@ class CGraphView (Cocoa.NSView):
         xDelta = self.graphCenter[x] - xLoc
         yDelta = self.graphCenter[y] - yLoc
 
-
-        scale = 0.5 * self.mapScale * (self.gain / self.totalField) * (self.graphRadius / self.mapBaseRadius)
+        scale = (
+            0.5
+            * self.mapScale
+            * (self.gain / self.totalField)
+            * (self.graphRadius / self.mapBaseRadius)
+        )
         xOffset = xDelta / (scale * self.mapRect[sze][x])
         yOffset = yDelta / (scale * self.mapRect[sze][y])
 
@@ -240,7 +253,6 @@ class CGraphView (Cocoa.NSView):
 
     def mouseDown_(self, event):
         self.crossCursor.set()
-
 
     def setMapRect(self):
         self.mapScaleDisplay.setFloatValue_(self.mapScale)
@@ -252,7 +264,7 @@ class CGraphView (Cocoa.NSView):
         self.setNeedsDisplay_(1)
 
     def mouseEntered_(self, event):
-        print('CGraphView: mouseEntered_')
+        print("CGraphView: mouseEntered_")
 
     def mouseExited_(self, event):
-        print('CGraphView: mouseExited_')
+        print("CGraphView: mouseExited_")

@@ -7,13 +7,19 @@ kOurImageFile = "ptlobos.tif"
 
 # For best performance make bytesPerRow a multiple of 16 bytes.
 BEST_BYTE_ALIGNMENT = 16
+
+
 def COMPUTE_BEST_BYTES_PER_ROW(bpr):
-    return ((bpr + (BEST_BYTE_ALIGNMENT-1)) & ~(BEST_BYTE_ALIGNMENT-1))
+    return (bpr + (BEST_BYTE_ALIGNMENT - 1)) & ~(BEST_BYTE_ALIGNMENT - 1)
+
 
 def DEGREES_TO_RADIANS(degrees):
     return degrees * math.pi / 180
 
+
 _colorSpace = None
+
+
 def myGetGenericRGBSpace():
     global _colorSpace
 
@@ -22,7 +28,10 @@ def myGetGenericRGBSpace():
 
     return _colorSpace
 
+
 _blue = None
+
+
 def myGetBlueColor():
     global _blue
 
@@ -31,7 +40,10 @@ def myGetBlueColor():
 
     return _blue
 
+
 _green = None
+
+
 def myGetGreenColor():
     global _green
 
@@ -40,7 +52,10 @@ def myGetGreenColor():
 
     return _green
 
+
 _red = None
+
+
 def myGetRedColor():
     global _red
 
@@ -49,14 +64,19 @@ def myGetRedColor():
 
     return _red
 
+
 _ourImageURL = None
+
+
 def doDrawImageFile(context, doclip):
     global _ourImageURL
 
     if _ourImageURL is None:
-        mainBundle =  Cocoa.CFBundleGetMainBundle()
+        mainBundle = Cocoa.CFBundleGetMainBundle()
         if mainBundle:
-            _ourImageURL = Cocoa.CFBundleCopyResourceURL(mainBundle, kOurImageFile, None, None)
+            _ourImageURL = Cocoa.CFBundleCopyResourceURL(
+                mainBundle, kOurImageFile, None, None
+            )
 
         else:
             print("Can't get the app bundle!")
@@ -90,6 +110,7 @@ def myDispatchDrawing(context, drawingType):
     elif drawingType == UIHandling.kCommandDoCGLayer:
         drawSimpleCGLayer(context)
 
+
 def drawStrokedAndFilledRects(context):
     ourRect = Quartz.CGRectMake(40, 40, 130, 100)
 
@@ -120,6 +141,7 @@ def drawStrokedAndFilledRects(context):
     # call to CGContextTranslateCTM.
     Quartz.CGContextRestoreGState(context)
 
+
 #    Create a mutable path object that represents 'rect'.
 #    Note that this is for demonstrating how to create a simple
 #    CGPath object. The Quartz function CGPathAddRect would normally
@@ -131,14 +153,19 @@ def createRectPath(rect):
     Quartz.CGPathMoveToPoint(path, None, rect.origin.x, rect.origin.y)
 
     # ***** Segment 1 *****
-    Quartz.CGPathAddLineToPoint(path, None,  rect.origin.x + rect.size.width, rect.origin.y)
+    Quartz.CGPathAddLineToPoint(
+        path, None, rect.origin.x + rect.size.width, rect.origin.y
+    )
 
     # ***** Segment 2 *****
-    Quartz.CGPathAddLineToPoint(path, None, rect.origin.x + rect.size.width,
-                         rect.origin.y + rect.size.height)
+    Quartz.CGPathAddLineToPoint(
+        path, None, rect.origin.x + rect.size.width, rect.origin.y + rect.size.height
+    )
 
     # ***** Segment 3 *****
-    Quartz.CGPathAddLineToPoint(path, None, rect.origin.x, rect.origin.y + rect.size.height)
+    Quartz.CGPathAddLineToPoint(
+        path, None, rect.origin.x, rect.origin.y + rect.size.height
+    )
 
     # ***** Segment 4 is created by closing the path *****
     Quartz.CGPathCloseSubpath(path)
@@ -149,8 +176,8 @@ def createRectPath(rect):
 def drawAlphaRects(context):
     ourRect = Quartz.CGRectMake(0, 0, 130, 100)
     numRects = 6
-    rotateAngle = 2*math.pi/numRects
-    tintAdjust = 1.0/numRects
+    rotateAngle = 2 * math.pi / numRects
+    tintAdjust = 1.0 / numRects
 
     # Create the path object representing our rectangle. This
     # example is for demonstrating the use of a CGPath object.
@@ -161,8 +188,7 @@ def drawAlphaRects(context):
 
     # Move the origin of coordinates to a location that allows
     # the drawing to be within the window.
-    Quartz.CGContextTranslateCTM(context, 2*ourRect.size.width,
-                           2*ourRect.size.height)
+    Quartz.CGContextTranslateCTM(context, 2 * ourRect.size.width, 2 * ourRect.size.height)
 
     # Set the fill color to a red color.
     Quartz.CGContextSetFillColorWithColor(context, myGetRedColor())
@@ -183,6 +209,7 @@ def drawAlphaRects(context):
 
         tint -= tintAdjust
 
+
 def drawCGImage(context, url):
     # Create a CGImageSource object from 'url'.
     imageSource = Quartz.CGImageSourceCreateWithURL(url, None)
@@ -193,22 +220,27 @@ def drawCGImage(context, url):
 
     # Create a rectangle that has its origin at (100, 100) with the width
     # and height of the image itself.
-    imageRect = Quartz.CGRectMake(100, 100, Quartz.CGImageGetWidth(image), Quartz.CGImageGetHeight(image))
+    imageRect = Quartz.CGRectMake(
+        100, 100, Quartz.CGImageGetWidth(image), Quartz.CGImageGetHeight(image)
+    )
 
     # Draw the image into the rect.
     Quartz.CGContextDrawImage(context, imageRect, image)
 
+
 def clipImageToEllipse(context, url):
     # Create a CGImageSource object from 'url'.
-    imageSource =  Quartz.CGImageSourceCreateWithURL(url, None)
+    imageSource = Quartz.CGImageSourceCreateWithURL(url, None)
 
     # Create a CGImage object from the first image in the file. Image
     # indexes are 0 based.
-    image = Quartz.CGImageSourceCreateImageAtIndex( imageSource, 0, None )
+    image = Quartz.CGImageSourceCreateImageAtIndex(imageSource, 0, None)
 
     # Create a rectangle that has its origin at (100, 100) with the width
     # and height of the image itself.
-    imageRect = Quartz.CGRectMake(100, 100, Quartz.CGImageGetWidth(image), Quartz.CGImageGetHeight(image))
+    imageRect = Quartz.CGRectMake(
+        100, 100, Quartz.CGImageGetWidth(image), Quartz.CGImageGetHeight(image)
+    )
 
     Quartz.CGContextBeginPath(context)
     # Create an elliptical path corresponding to the image width and height.
@@ -219,17 +251,18 @@ def clipImageToEllipse(context, url):
     # Draw the image into the rect, clipped by the ellipse.
     Quartz.CGContextDrawImage(context, imageRect, image)
 
+
 def createRGBAImageFromQuartzDrawing(dpi, drawingCommand):
     # For generating RGBA data from drawing. Use a Letter size page as the
     # image dimensions. Typically this size would be the minimum necessary to
     # capture the drawing of interest. We want 8 bits per component and for
     # RGBA data there are 4 components.
-    width = 8.5*dpi
-    height = 11*dpi
+    width = 8.5 * dpi
+    height = 11 * dpi
     bitsPerComponent = 8
     numComps = 4
     # Compute the minimum number of bytes in a given scanline.
-    bytesPerRow = width* bitsPerComponent/8 * numComps
+    bytesPerRow = width * bitsPerComponent / 8 * numComps
 
     # This bitmapInfo value specifies that we want the format where alpha is
     # premultiplied and is the last of the components. We use this to produce
@@ -240,13 +273,19 @@ def createRGBAImageFromQuartzDrawing(dpi, drawingCommand):
     bytesPerRow = COMPUTE_BEST_BYTES_PER_ROW(bytesPerRow)
 
     # Allocate the data for the bitmap.
-    data = array.array('c', '\0' * bytesPerRow * height)
+    data = array.array("c", "\0" * bytesPerRow * height)
 
     # Create the bitmap context. Characterize the bitmap data with the
     # Generic RGB color space.
     bitmapContext = Quartz.CGBitmapContextCreate(
-                    data, width, height, bitsPerComponent, bytesPerRow,
-                    myGetGenericRGBSpace(), bitmapInfo)
+        data,
+        width,
+        height,
+        bitsPerComponent,
+        bytesPerRow,
+        myGetGenericRGBSpace(),
+        bitmapInfo,
+    )
 
     # Clear the destination bitmap so that it is completely transparent before
     # performing any drawing. This is appropriate for exporting PNG data or
@@ -256,7 +295,7 @@ def createRGBAImageFromQuartzDrawing(dpi, drawingCommand):
     Quartz.CGContextClearRect(bitmapContext, Quartz.CGRectMake(0, 0, width, height))
 
     # Scale the coordinate system so that 72 units are dpi pixels.
-    Quartz.CGContextScaleCTM(bitmapContext, dpi/72, dpi/72)
+    Quartz.CGContextScaleCTM(bitmapContext, dpi / 72, dpi / 72)
 
     # Perform the requested drawing.
     myDispatchDrawing(bitmapContext, drawingCommand)
@@ -267,7 +306,8 @@ def createRGBAImageFromQuartzDrawing(dpi, drawingCommand):
     # Return the CGImage object this code created from the drawing.
     return image
 
-def  myExportCGDrawingAsPNG(url, drawingCommand):
+
+def myExportCGDrawingAsPNG(url, drawingCommand):
     dpi = 300
     # Create an RGBA image from the Quartz drawing that corresponds to drawingCommand.
     image = createRGBAImageFromQuartzDrawing(dpi, drawingCommand)
@@ -277,8 +317,8 @@ def  myExportCGDrawingAsPNG(url, drawingCommand):
     imageDestination = Quartz.CGImageDestinationCreateWithURL(url, kUTTypePNG, 1, None)
 
     properties = {
-            Quartz.kCGImagePropertyDPIWidth: dpi,
-            Quartz.kCGImagePropertyDPIHeight: dpi,
+        Quartz.kCGImagePropertyDPIWidth: dpi,
+        Quartz.kCGImagePropertyDPIHeight: dpi,
     }
 
     # Add the image to the destination, characterizing the image with
@@ -295,23 +335,24 @@ def createCachedContent(c):
     width = height = 50
 
     # Create the layer to draw into.
-    layer = Quartz.CGLayerCreateWithContext(c,  Quartz.CGSizeMake(width, height), None)
+    layer = Quartz.CGLayerCreateWithContext(c, Quartz.CGSizeMake(width, height), None)
 
     # Get the CG context corresponding to the layer.
     layerContext = Quartz.CGLayerGetContext(layer)
 
     # Cache some very simple drawing just as an example.
-    Quartz.CGContextFillRect(layerContext, Quartz.CGRectMake(0, 0, width, height) )
+    Quartz.CGContextFillRect(layerContext, Quartz.CGRectMake(0, 0, width, height))
 
     # The layer now contains cached drawing so return it.
     return layer
+
 
 def drawSimpleCGLayer(context):
     # Create a CGLayer object that represents some drawing.
     layer = createCachedContent(context)
 
     # Get the size of the layer created.
-    s = Quartz.CGLayerGetSize(layer);
+    s = Quartz.CGLayerGetSize(layer)
 
     # Position the drawing to an appropriate location.
     Quartz.CGContextTranslateCTM(context, 40, 100)
@@ -319,9 +360,10 @@ def drawSimpleCGLayer(context):
     # Paint 4 columns of layer objects.
     for i in range(4):
         # Draw the layer at the point that varies as the code loops.
-        Quartz.CGContextDrawLayerAtPoint(context,
-                            Quartz.CGPointMake(2*(i+1)*s.width, 0),
-                            layer)
+        Quartz.CGContextDrawLayerAtPoint(
+            context, Quartz.CGPointMake(2 * (i + 1) * s.width, 0), layer
+        )
+
 
 # The equivalent drawing as doSimpleCGLayer but without creating
 # a CGLayer object and caching that drawing to a layer.
@@ -333,14 +375,15 @@ def drawUncachedForLayer(context):
     for i in range(4):
         # Adjust the origin as the code loops. Recall that
         # transformations are cummulative.
-        Quartz.CGContextTranslateCTM( context, 2*Quartz.CGRectGetWidth(r), 0 )
-        Quartz.CGContextFillRect(context, r) # Do the uncached drawing.
+        Quartz.CGContextTranslateCTM(context, 2 * Quartz.CGRectGetWidth(r), 0)
+        Quartz.CGContextFillRect(context, r)  # Do the uncached drawing.
+
 
 # Create a PDF document at 'url' from the drawing represented by drawingCommand.
 def myCreatePDFDocument(url, drawingCommand):
     # mediaRect represents the media box for the PDF document the code is
     # creating. The size here is that of a US Letter size sheet.
-    mediaRect = Quartz.CGRectMake(0, 0, 8.5*72, 11*72)
+    mediaRect = Quartz.CGRectMake(0, 0, 8.5 * 72, 11 * 72)
 
     # Create a CGContext object to capture the drawing as a PDF document located
     # at 'url'.

@@ -5,13 +5,20 @@ from PyObjCTools.TestSupport import *
 if sys.maxsize > 2 ** 32:
     import MapKit
 
-    class TestMKMapViewHelper (MapKit.NSObject):
-        def mapView_regionWillChangeAnimated_(self, v, a): pass
-        def mapView_regionDidChangeAnimated_(self, v, a): pass
-        def mapViewDidFinishRenderingMap_fullyRendered_(self, v, a): pass
-        def mapView_annotationView_didChangeDragState_fromOldState_(self, v, av, s1, s2): pass
+    class TestMKMapViewHelper(MapKit.NSObject):
+        def mapView_regionWillChangeAnimated_(self, v, a):
+            pass
 
-    class TestMKMapView (TestCase):
+        def mapView_regionDidChangeAnimated_(self, v, a):
+            pass
+
+        def mapViewDidFinishRenderingMap_fullyRendered_(self, v, a):
+            pass
+
+        def mapView_annotationView_didChangeDragState_fromOldState_(self, v, av, s1, s2):
+            pass
+
+    class TestMKMapView(TestCase):
         @min_os_level("10.9")
         def testConstants(self):
             self.assertEqual(MapKit.MKUserTrackingModeNone, 0)
@@ -23,13 +30,25 @@ if sys.maxsize > 2 ** 32:
 
         @min_os_level("10.9")
         def testProtocols(self):
-            self.assertIsInstance(objc.protocolNamed("MKMapViewDelegate"), objc.formal_protocol)
+            self.assertIsInstance(
+                objc.protocolNamed("MKMapViewDelegate"), objc.formal_protocol
+            )
 
             self.assertArgIsBOOL(TestMKMapViewHelper.mapView_regionWillChangeAnimated_, 1)
             self.assertArgIsBOOL(TestMKMapViewHelper.mapView_regionDidChangeAnimated_, 1)
-            self.assertArgIsBOOL(TestMKMapViewHelper.mapViewDidFinishRenderingMap_fullyRendered_, 1)
-            self.assertArgHasType(TestMKMapViewHelper.mapView_annotationView_didChangeDragState_fromOldState_, 2, objc._C_NSUInteger)
-            self.assertArgHasType(TestMKMapViewHelper.mapView_annotationView_didChangeDragState_fromOldState_, 3, objc._C_NSUInteger)
+            self.assertArgIsBOOL(
+                TestMKMapViewHelper.mapViewDidFinishRenderingMap_fullyRendered_, 1
+            )
+            self.assertArgHasType(
+                TestMKMapViewHelper.mapView_annotationView_didChangeDragState_fromOldState_,
+                2,
+                objc._C_NSUInteger,
+            )
+            self.assertArgHasType(
+                TestMKMapViewHelper.mapView_annotationView_didChangeDragState_fromOldState_,
+                3,
+                objc._C_NSUInteger,
+            )
 
         @min_os_level("10.9")
         def testClasses(self):
@@ -38,7 +57,9 @@ if sys.maxsize > 2 ** 32:
             self.assertArgIsBOOL(MapKit.MKMapView.setRegion_animated_, 1)
             self.assertArgIsBOOL(MapKit.MKMapView.setCenterCoordinate_animated_, 1)
             self.assertArgIsBOOL(MapKit.MKMapView.setVisibleMapRect_animated_, 1)
-            self.assertArgIsBOOL(MapKit.MKMapView.setVisibleMapRect_edgePadding_animated_, 2)
+            self.assertArgIsBOOL(
+                MapKit.MKMapView.setVisibleMapRect_edgePadding_animated_, 2
+            )
             self.assertArgIsBOOL(MapKit.MKMapView.setCamera_animated_, 1)
 
             self.assertArgIsBOOL(MapKit.MKMapView.setZoomEnabled_, 0)

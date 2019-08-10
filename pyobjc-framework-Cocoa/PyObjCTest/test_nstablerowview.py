@@ -2,8 +2,9 @@ from PyObjCTools.TestSupport import *
 
 import AppKit
 
-class TestNSTableRowView (TestCase):
-    @min_os_level('10.7')
+
+class TestNSTableRowView(TestCase):
+    @min_os_level("10.7")
     def testMethods10_7(self):
         self.assertResultIsBOOL(AppKit.NSTableRowView.isEmphasized)
         self.assertArgIsBOOL(AppKit.NSTableRowView.setEmphasized_, 0)
@@ -18,10 +19,11 @@ class TestNSTableRowView (TestCase):
         self.assertResultIsBOOL(AppKit.NSTableRowView.isNextRowSelected)
         self.assertArgIsBOOL(AppKit.NSTableRowView.setNextRowSelected_, 0)
 
-    @min_os_level('10.10')
+    @min_os_level("10.10")
     def testMethods10_10(self):
         self.assertResultIsBOOL(AppKit.NSTableRowView.isPreviousRowSelected)
         self.assertArgIsBOOL(AppKit.NSTableRowView.setPreviousRowSelected_, 0)
+
 
 if __name__ == "__main__":
     main()

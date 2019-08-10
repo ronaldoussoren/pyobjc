@@ -4,10 +4,12 @@ import sys
 from PyObjCTools.TestSupport import *
 
 if sys.version_info[0] != 2:
-    def buffer(value):
-        return value.encode('latin1')
 
-class TestCFNetServices (TestCase):
+    def buffer(value):
+        return value.encode("latin1")
+
+
+class TestCFNetServices(TestCase):
     def testTypes(self):
         self.assertIsCFType(CFNetServiceRef)
         self.assertIsCFType(CFNetServiceMonitorRef)
@@ -39,7 +41,13 @@ class TestCFNetServices (TestCase):
         self.assertIsInstance(CFNetServiceBrowserGetTypeID(), (int, long))
 
         self.assertResultIsCFRetained(CFNetServiceCreate)
-        serv = CFNetServiceCreate(None, b"pyobjc.local".decode('latin1'), b"ssh".decode('latin1'), b"pyobjc.test.local".decode('latin1'), 9999)
+        serv = CFNetServiceCreate(
+            None,
+            b"pyobjc.local".decode("latin1"),
+            b"ssh".decode("latin1"),
+            b"pyobjc.test.local".decode("latin1"),
+            9999,
+        )
         self.assertIsInstance(serv, CFNetServiceRef)
 
         self.assertResultIsCFRetained(CFNetServiceCreateCopy)
@@ -58,7 +66,9 @@ class TestCFNetServices (TestCase):
         self.assertResultIsBOOL(CFNetServiceRegisterWithOptions)
         self.assertArgIsOut(CFNetServiceRegisterWithOptions, 2)
 
-        ok, err = CFNetServiceRegisterWithOptions(serv, kCFNetServiceFlagNoAutoRename, None)
+        ok, err = CFNetServiceRegisterWithOptions(
+            serv, kCFNetServiceFlagNoAutoRename, None
+        )
         self.assertIsInstance(ok, bool)
         if ok:
             self.assertEqual(err, None)
@@ -86,7 +96,9 @@ class TestCFNetServices (TestCase):
         v = CFNetServiceGetTXTData(serv)
         self.assertIsInstance(v, (Foundation.NSData, type(None)))
 
-        v = CFNetServiceCreateTXTDataWithDictionary(None, {'key': 'value', 'key2': 'value2'})
+        v = CFNetServiceCreateTXTDataWithDictionary(
+            None, {"key": "value", "key2": "value2"}
+        )
         self.assertIsInstance(v, Foundation.NSData)
 
         v = CFNetServiceCreateDictionaryWithTXTData(None, v)
@@ -122,7 +134,6 @@ class TestCFNetServices (TestCase):
         self.fail("CFNetServiceResolve")
         self.fail("CFNetServiceGetProtocolSpecificInformation")
         self.fail("CFNetServiceSetProtocolSpecificInformation")
-
 
 
 if __name__ == "__main__":

@@ -493,9 +493,7 @@ def setup(min_os_level=None, max_os_level=None, cmdclass=None, **kwds):
                     min_os_level,
                 )
         elif max_os_level != None:
-            msg = "This distribution is only supported on MacOSX <= %s" % (
-                max_os_level,
-            )
+            msg = "This distribution is only supported on MacOSX <= %s" % (max_os_level,)
         else:
             msg = "This distribution is only supported on MacOSX"
 
@@ -549,8 +547,7 @@ def setup(min_os_level=None, max_os_level=None, cmdclass=None, **kwds):
         k["long_description"] += "-------------\n"
         k["long_description"] += "\n"
         k["long_description"] += (
-            "* `Documentation <https://%s.readthedocs.io/en/latest/>`_\n\n"
-            % (REPO_NAME,)
+            "* `Documentation <https://%s.readthedocs.io/en/latest/>`_\n\n" % (REPO_NAME,)
         )
         k["long_description"] += (
             "* `Issue Tracker <https://bitbucket.org/ronaldoussoren/%s/issues?status=new&status=open>`_\n\n"
@@ -575,7 +572,7 @@ def setup(min_os_level=None, max_os_level=None, cmdclass=None, **kwds):
         zip_safe=False,
         license="MIT License",
         classifiers=CLASSIFIERS,
-        python_requires = ">=3.6",
+        python_requires=">=3.6",
         keywords=["PyObjC"] + [p for p in k["packages"] if p not in ("PyObjCTools",)],
-        **k
+        **k,
     )

@@ -2,7 +2,8 @@ from PyObjCTools.TestSupport import *
 
 import DiscRecording
 
-class TestDRCoreErase (TestCase):
+
+class TestDRCoreErase(TestCase):
     @expectedFailure
     def testCFTypes(self):
         self.assertIsCFType(DiscRecording.DREraseRef)

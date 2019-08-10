@@ -1,8 +1,8 @@
-
 from PyObjCTools.TestSupport import *
 from CoreText import *
 
-class TestCTFontDescriptor (TestCase):
+
+class TestCTFontDescriptor(TestCase):
     def testTypes(self):
         self.assertIsInstance(CTFontDescriptorRef, objc.objc_class)
 
@@ -29,7 +29,7 @@ class TestCTFontDescriptor (TestCase):
         self.assertEqual(kCTFontHorizontalOrientation, 1)
         self.assertEqual(kCTFontVerticalOrientation, 2)
 
-    @min_os_level('10.6')
+    @min_os_level("10.6")
     def testConstants10_6(self):
         self.assertIsInstance(kCTFontURLAttribute, unicode)
         self.assertIsInstance(kCTFontFormatAttribute, unicode)
@@ -45,14 +45,14 @@ class TestCTFontDescriptor (TestCase):
         self.assertEqual(kCTFontFormatPostScript, 4)
         self.assertEqual(kCTFontFormatBitmap, 5)
 
-        self.assertEqual(kCTFontPrioritySystem,  10000)
-        self.assertEqual(kCTFontPriorityNetwork,  20000)
-        self.assertEqual(kCTFontPriorityComputer,  30000)
-        self.assertEqual(kCTFontPriorityUser,  40000)
-        self.assertEqual(kCTFontPriorityDynamic,  50000)
-        self.assertEqual(kCTFontPriorityProcess,  60000)
+        self.assertEqual(kCTFontPrioritySystem, 10000)
+        self.assertEqual(kCTFontPriorityNetwork, 20000)
+        self.assertEqual(kCTFontPriorityComputer, 30000)
+        self.assertEqual(kCTFontPriorityUser, 40000)
+        self.assertEqual(kCTFontPriorityDynamic, 50000)
+        self.assertEqual(kCTFontPriorityProcess, 60000)
 
-    @min_os_level('10.7')
+    @min_os_level("10.7")
     def testConstants10_7(self):
         self.assertEqual(kCTFontOrientationDefault, 0)
         self.assertEqual(kCTFontOrientationHorizontal, 1)
@@ -61,8 +61,7 @@ class TestCTFontDescriptor (TestCase):
         self.assertEqual(kCTFontHorizontalOrientation, kCTFontOrientationHorizontal)
         self.assertEqual(kCTFontVerticalOrientation, kCTFontOrientationVertical)
 
-
-    @min_os_level('10.8')
+    @min_os_level("10.8")
     def testConstants10_8(self):
         self.assertEqual(kCTFontDescriptorMatchingDidBegin, 0)
         self.assertEqual(kCTFontDescriptorMatchingDidFinish, 1)
@@ -84,36 +83,40 @@ class TestCTFontDescriptor (TestCase):
         self.assertIsInstance(kCTFontDescriptorMatchingTotalAssetSize, unicode)
         self.assertIsInstance(kCTFontDescriptorMatchingError, unicode)
 
-    @min_os_level('10.12')
+    @min_os_level("10.12")
     def testConstants10_12(self):
         self.assertIsInstance(kCTFontDownloadedAttribute, unicode)
 
-    @min_os_level('10.9')
+    @min_os_level("10.9")
     def testFunctions10_9(self):
         CTFontDescriptorProgressHandler = objc_C_BOOL + objc._C_UINT + objc._C_ID
-        self.assertResultHasType(CTFontDescriptorMatchFontDescriptorsWithProgressHandler, objc._C_BOOL)
-        self.assertArgIsBlock(CTFontDescriptorMatchFontDescriptorsWithProgressHandler, 2, CTFontDescriptorProgressHandler)
-
+        self.assertResultHasType(
+            CTFontDescriptorMatchFontDescriptorsWithProgressHandler, objc._C_BOOL
+        )
+        self.assertArgIsBlock(
+            CTFontDescriptorMatchFontDescriptorsWithProgressHandler,
+            2,
+            CTFontDescriptorProgressHandler,
+        )
 
     def testFunctions(self):
 
         self.assertResultIsCFRetained(CTFontDescriptorCreateWithAttributes)
         v = CTFontDescriptorCreateWithAttributes(
-                {
-                    kCTFontNameAttribute: b"Optima Bold".decode('latin1'),
-                    kCTFontSizeAttribute: b"23.4".decode('latin1'),
-                })
+            {
+                kCTFontNameAttribute: b"Optima Bold".decode("latin1"),
+                kCTFontSizeAttribute: b"23.4".decode("latin1"),
+            }
+        )
         self.assertIsInstance(v, CTFontDescriptorRef)
 
         self.assertResultIsCFRetained(CTFontDescriptorCreateWithNameAndSize)
-        v = CTFontDescriptorCreateWithNameAndSize(b"Optima Bold".decode('latin1'), 15.0)
+        v = CTFontDescriptorCreateWithNameAndSize(b"Optima Bold".decode("latin1"), 15.0)
         self.assertIsInstance(v, CTFontDescriptorRef)
         descriptor = v
 
         self.assertResultIsCFRetained(CTFontDescriptorCreateCopyWithAttributes)
-        v = CTFontDescriptorCreateCopyWithAttributes(v, {
-            "foo": "bar",
-        })
+        v = CTFontDescriptorCreateCopyWithAttributes(v, {"foo": "bar"})
         self.assertIsInstance(v, CTFontDescriptorRef)
 
         self.assertResultIsCFRetained(CTFontDescriptorCreateCopyWithVariation)
@@ -138,21 +141,24 @@ class TestCTFontDescriptor (TestCase):
 
         self.assertResultIsCFRetained(CTFontDescriptorCopyAttribute)
         v = CTFontDescriptorCopyAttribute(descriptor, kCTFontNameAttribute)
-        self.assertEqual(v, b"Optima Bold".decode('latin1'))
+        self.assertEqual(v, b"Optima Bold".decode("latin1"))
 
         self.assertResultIsCFRetained(CTFontDescriptorCopyLocalizedAttribute)
         self.assertArgIsOut(CTFontDescriptorCopyLocalizedAttribute, 2)
-        v, l = CTFontDescriptorCopyLocalizedAttribute(descriptor, kCTFontDisplayNameAttribute, None)
+        v, l = CTFontDescriptorCopyLocalizedAttribute(
+            descriptor, kCTFontDisplayNameAttribute, None
+        )
         self.assertIsInstance(v, unicode)
         self.assertIsInstance(l, (unicode, type(None)))
 
         v = CTFontDescriptorGetTypeID()
         self.assertIsInstance(v, (int, long))
 
-    @min_os_level('10.9')
+    @min_os_level("10.9")
     def testFunctions10_9(self):
         self.assertResultIsCFRetained(CTFontDescriptorCreateCopyWithFamily)
         self.assertResultIsCFRetained(CTFontDescriptorCreateCopyWithSymbolicTraits)
+
 
 if __name__ == "__main__":
     main()

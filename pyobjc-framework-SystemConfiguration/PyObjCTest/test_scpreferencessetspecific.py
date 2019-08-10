@@ -1,7 +1,8 @@
 from PyObjCTools.TestSupport import *
 from SystemConfiguration import *
 
-class TestSCPreferencesSetSpecific (TestCase):
+
+class TestSCPreferencesSetSpecific(TestCase):
     def testFunctions(self):
         ref = SCPreferencesCreate(None, "pyobjc.test", "pyobjc.test")
         self.assertIsInstance(ref, SCPreferencesRef)

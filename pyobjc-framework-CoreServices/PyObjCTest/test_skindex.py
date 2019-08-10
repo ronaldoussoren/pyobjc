@@ -1,9 +1,9 @@
-
 from PyObjCTools.TestSupport import *
 import CoreServices
 import os
 
-class TestSKIndex (TestCase):
+
+class TestSKIndex(TestCase):
     def testTypes(self):
         self.assertIsCFType(CoreServices.SKIndexRef)
         self.assertIsCFType(CoreServices.SKIndexDocumentIteratorRef)
@@ -22,19 +22,22 @@ class TestSKIndex (TestCase):
     def testFunctions(self):
 
         self.assertIsInstance(CoreServices.SKIndexGetTypeID(), (int, long))
-        self.assertIsInstance(CoreServices.SKIndexDocumentIteratorGetTypeID(), (int, long))
+        self.assertIsInstance(
+            CoreServices.SKIndexDocumentIteratorGetTypeID(), (int, long)
+        )
 
         self.assertResultIsCFRetained(CoreServices.SKIndexCreateWithURL)
         try:
             url = CoreServices.CFURLCreateWithFileSystemPath(
-                        None, b"/tmp/pyobjc.test.index".decode('latin1'),
-                        CoreServices.kCFURLPOSIXPathStyle, False)
+                None,
+                b"/tmp/pyobjc.test.index".decode("latin1"),
+                CoreServices.kCFURLPOSIXPathStyle,
+                False,
+            )
             self.assertIsInstance(url, CoreServices.CFURLRef)
             ref = CoreServices.SKIndexCreateWithURL(
-                    url,
-                    "pyobjc.test",
-                    CoreServices.kSKIndexInverted,
-                    None)
+                url, "pyobjc.test", CoreServices.kSKIndexInverted, None
+            )
             self.assertIsInstance(ref, CoreServices.SKIndexRef)
 
             v = CoreServices.SKIndexFlush(ref)
@@ -50,36 +53,31 @@ class TestSKIndex (TestCase):
                 self.assertIsInstance(ref, CoreServices.SKIndexRef)
 
         finally:
-            os.unlink('/tmp/pyobjc.test.index')
+            os.unlink("/tmp/pyobjc.test.index")
 
         data = CoreServices.NSMutableData.data()
 
         self.assertResultIsCFRetained(CoreServices.SKIndexCreateWithMutableData)
         ref = CoreServices.SKIndexCreateWithMutableData(
-                data,
-                "pyobjc.test", CoreServices.kSKIndexInverted, None)
+            data, "pyobjc.test", CoreServices.kSKIndexInverted, None
+        )
         self.assertIsInstance(ref, CoreServices.SKIndexRef)
         del ref
 
-        ref = CoreServices.SKIndexOpenWithData(
-                data,
-                "pyobjc.test")
+        ref = CoreServices.SKIndexOpenWithData(data, "pyobjc.test")
         self.assertIsInstance(ref, CoreServices.SKIndexRef)
         del ref
 
-        ref = CoreServices.SKIndexOpenWithMutableData(
-                data,
-                "pyobjc.test")
+        ref = CoreServices.SKIndexOpenWithMutableData(data, "pyobjc.test")
         if ref is not None:
             self.assertIsInstance(ref, CoreServices.SKIndexRef)
 
         data = CoreServices.NSMutableData.data()
         self.assertResultIsCFRetained(CoreServices.SKIndexCreateWithMutableData)
         ref = CoreServices.SKIndexCreateWithMutableData(
-                data,
-                "pyobjc.test", CoreServices.kSKIndexInverted, None)
+            data, "pyobjc.test", CoreServices.kSKIndexInverted, None
+        )
         self.assertIsInstance(ref, CoreServices.SKIndexRef)
-
 
         CoreServices.SKIndexSetMaximumBytesBeforeFlush(ref, 10000)
 
@@ -98,22 +96,20 @@ class TestSKIndex (TestCase):
         v = CoreServices.SKIndexGetDocumentCount(ref)
         self.assertIsInstance(v, (int, long))
 
-
         self.assertResultIsBOOL(CoreServices.SKIndexAddDocumentWithText)
         self.assertArgIsBOOL(CoreServices.SKIndexAddDocumentWithText, 3)
 
-
-        fn = b"/Library/Documentation/Acknowledgements.rtf".decode('latin1')
+        fn = b"/Library/Documentation/Acknowledgements.rtf".decode("latin1")
         if not os.path.exists(fn):
-            fn = b"/Library/Documentation/AirPort Acknowledgements.rtf".decode('latin1')
+            fn = b"/Library/Documentation/AirPort Acknowledgements.rtf".decode("latin1")
 
         doc = CoreServices.SKDocumentCreateWithURL(
-                CoreServices.CFURLCreateWithFileSystemPath(
-                    None, fn,
-                    CoreServices.kCFURLPOSIXPathStyle, False))
+            CoreServices.CFURLCreateWithFileSystemPath(
+                None, fn, CoreServices.kCFURLPOSIXPathStyle, False
+            )
+        )
 
-        v = CoreServices.SKIndexAddDocumentWithText(ref,
-                doc, "hello world", True)
+        v = CoreServices.SKIndexAddDocumentWithText(ref, doc, "hello world", True)
         self.assertTrue(v)
 
         self.assertResultIsBOOL(CoreServices.SKIndexAddDocument)
@@ -156,12 +152,10 @@ class TestSKIndex (TestCase):
         v = CoreServices.SKIndexGetDocumentTermCount(ref, docID)
         self.assertIsInstance(v, (int, long))
 
-
         v = CoreServices.SKIndexCopyTermIDArrayForDocumentID(ref, docID)
         self.assertIsInstance(v, CoreServices.CFArrayRef)
 
-        tID =  CoreServices.SKIndexGetMaximumTermID(ref) - 1
-
+        tID = CoreServices.SKIndexGetMaximumTermID(ref) - 1
 
         v = CoreServices.SKIndexGetDocumentTermFrequency(ref, docID, tID)
         self.assertIsInstance(v, (int, long))

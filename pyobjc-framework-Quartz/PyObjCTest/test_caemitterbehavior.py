@@ -1,13 +1,14 @@
 from PyObjCTools.TestSupport import *
 from Quartz.QuartzCore import *
 
-class TestCAEmitterBehavior (TestCase):
-    @min_os_level('10.9')
+
+class TestCAEmitterBehavior(TestCase):
+    @min_os_level("10.9")
     def testMethods(self):
         self.assertResultIsBOOL(CAEmitterBehavior.isEnabled)
         self.assertArgIsBOOL(CAAnimation.setEnabled_, 0)
 
-    @min_os_level('10.9')
+    @min_os_level("10.9")
     def testConstants10_9(self):
         self.assertIsInstance(kCAEmitterBehaviorWave, unicode)
         self.assertIsInstance(kCAEmitterBehaviorDrag, unicode)
@@ -17,7 +18,7 @@ class TestCAEmitterBehavior (TestCase):
         self.assertIsInstance(kCAEmitterBehaviorLight, unicode)
         self.assertIsInstance(kCAEmitterBehaviorAttractor, unicode)
 
-    @min_os_level('10.12')
+    @min_os_level("10.12")
     def testConstants10_12(self):
         self.assertIsInstance(kCAEmitterBehaviorSimpleAttractor, unicode)
 

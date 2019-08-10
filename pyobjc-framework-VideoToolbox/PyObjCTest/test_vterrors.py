@@ -1,7 +1,8 @@
 from PyObjCTools.TestSupport import *
 import VideoToolbox
 
-class TestVTErrors (TestCase):
+
+class TestVTErrors(TestCase):
     def test_constants(self):
         self.assertEqual(VideoToolbox.kVTPropertyNotSupportedErr, -12900)
         self.assertEqual(VideoToolbox.kVTPropertyReadOnlyErr, -12901)
@@ -34,10 +35,12 @@ class TestVTErrors (TestCase):
         self.assertEqual(VideoToolbox.kVTPixelTransferNotPermittedErr, -12218)
         self.assertEqual(VideoToolbox.kVTColorCorrectionImageRotationFailedErr, -12219)
         self.assertEqual(VideoToolbox.kVTVideoDecoderRemovedErr, -17690)
-        self.assertEqual(VideoToolbox.kVTDecodeFrame_EnableAsynchronousDecompression, 1<<0)
-        self.assertEqual(VideoToolbox.kVTDecodeFrame_DoNotOutputFrame, 1<<1)
-        self.assertEqual(VideoToolbox.kVTDecodeFrame_1xRealTimePlayback, 1<<2)
-        self.assertEqual(VideoToolbox.kVTDecodeFrame_EnableTemporalProcessing, 1<<3)
+        self.assertEqual(
+            VideoToolbox.kVTDecodeFrame_EnableAsynchronousDecompression, 1 << 0
+        )
+        self.assertEqual(VideoToolbox.kVTDecodeFrame_DoNotOutputFrame, 1 << 1)
+        self.assertEqual(VideoToolbox.kVTDecodeFrame_1xRealTimePlayback, 1 << 2)
+        self.assertEqual(VideoToolbox.kVTDecodeFrame_EnableTemporalProcessing, 1 << 3)
         self.assertEqual(VideoToolbox.kVTDecodeInfo_Asynchronous, 1 << 0)
         self.assertEqual(VideoToolbox.kVTDecodeInfo_FrameDropped, 1 << 1)
         self.assertEqual(VideoToolbox.kVTDecodeInfo_ImageBufferModifiable, 1 << 2)

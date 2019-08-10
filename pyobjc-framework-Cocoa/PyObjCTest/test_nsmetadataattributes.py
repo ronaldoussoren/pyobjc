@@ -1,9 +1,9 @@
 from Foundation import *
 from PyObjCTools.TestSupport import *
 
-class TestNSMetaDataAttributes (TestCase):
 
-    @min_os_level('10.7')
+class TestNSMetaDataAttributes(TestCase):
+    @min_os_level("10.7")
     def testConstants10_7(self):
         self.assertIsInstance(NSMetadataItemFSNameKey, unicode)
         self.assertIsInstance(NSMetadataItemDisplayNameKey, unicode)
@@ -21,12 +21,14 @@ class TestNSMetaDataAttributes (TestCase):
         self.assertIsInstance(NSMetadataUbiquitousItemPercentDownloadedKey, unicode)
         self.assertIsInstance(NSMetadataUbiquitousItemPercentUploadedKey, unicode)
 
-    @min_os_level('10.9')
+    @min_os_level("10.9")
     def testConstants10_9(self):
         self.assertIsInstance(NSMetadataItemContentTypeKey, unicode)
         self.assertIsInstance(NSMetadataItemContentTypeTreeKey, unicode)
         self.assertIsInstance(NSMetadataUbiquitousItemDownloadingStatusKey, unicode)
-        self.assertIsInstance(NSMetadataUbiquitousItemDownloadingStatusDownloaded, unicode)
+        self.assertIsInstance(
+            NSMetadataUbiquitousItemDownloadingStatusDownloaded, unicode
+        )
         self.assertIsInstance(NSMetadataUbiquitousItemDownloadingStatusCurrent, unicode)
         self.assertIsInstance(NSMetadataUbiquitousItemDownloadingErrorKey, unicode)
         self.assertIsInstance(NSMetadataUbiquitousItemUploadingErrorKey, unicode)
@@ -174,23 +176,30 @@ class TestNSMetaDataAttributes (TestCase):
         self.assertIsInstance(NSMetadataItemApplicationCategoriesKey, unicode)
         self.assertIsInstance(NSMetadataItemIsApplicationManagedKey, unicode)
 
-    @min_os_level('10.10')
+    @min_os_level("10.10")
     def testConstants10_10(self):
         self.assertIsInstance(NSMetadataUbiquitousItemDownloadRequestedKey, unicode)
         self.assertIsInstance(NSMetadataUbiquitousItemIsExternalDocumentKey, unicode)
         self.assertIsInstance(NSMetadataUbiquitousItemContainerDisplayNameKey, unicode)
         self.assertIsInstance(NSMetadataUbiquitousItemURLInLocalContainerKey, unicode)
 
-    @min_os_level('10.12')
+    @min_os_level("10.12")
     def testConstants10_10(self):
         self.assertIsInstance(NSMetadataUbiquitousSharedItemCurrentUserRoleKey, unicode)
-        self.assertIsInstance(NSMetadataUbiquitousSharedItemCurrentUserPermissionsKey, unicode)
-        self.assertIsInstance(NSMetadataUbiquitousSharedItemOwnerNameComponentsKey, unicode)
-        self.assertIsInstance(NSMetadataUbiquitousSharedItemMostRecentEditorNameComponentsKey, unicode)
+        self.assertIsInstance(
+            NSMetadataUbiquitousSharedItemCurrentUserPermissionsKey, unicode
+        )
+        self.assertIsInstance(
+            NSMetadataUbiquitousSharedItemOwnerNameComponentsKey, unicode
+        )
+        self.assertIsInstance(
+            NSMetadataUbiquitousSharedItemMostRecentEditorNameComponentsKey, unicode
+        )
         self.assertIsInstance(NSMetadataUbiquitousSharedItemRoleOwner, unicode)
         self.assertIsInstance(NSMetadataUbiquitousSharedItemRoleParticipant, unicode)
         self.assertIsInstance(NSMetadataUbiquitousSharedItemPermissionsReadOnly, unicode)
         self.assertIsInstance(NSMetadataUbiquitousSharedItemPermissionsReadWrite, unicode)
+
 
 if __name__ == "__main__":
     main()

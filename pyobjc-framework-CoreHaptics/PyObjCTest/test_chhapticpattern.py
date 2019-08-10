@@ -2,8 +2,9 @@ from PyObjCTools.TestSupport import *
 
 import CoreHaptics
 
-class TestCHHapticParameter (TestCase):
-    @min_sdk_level('10.15')
+
+class TestCHHapticParameter(TestCase):
+    @min_sdk_level("10.15")
     def test_constants10_15(self):
         self.assertIsInstance(CoreHaptics.CHHapticPatternKeyVersion, unicode)
         self.assertIsInstance(CoreHaptics.CHHapticPatternKeyPattern, unicode)
@@ -17,11 +18,19 @@ class TestCHHapticParameter (TestCase):
         self.assertIsInstance(CoreHaptics.CHHapticPatternKeyParameterID, unicode)
         self.assertIsInstance(CoreHaptics.CHHapticPatternKeyParameterValue, unicode)
         self.assertIsInstance(CoreHaptics.CHHapticPatternKeyParameterCurve, unicode)
-        self.assertIsInstance(CoreHaptics.CHHapticPatternKeyParameterCurveControlPoints, unicode)
+        self.assertIsInstance(
+            CoreHaptics.CHHapticPatternKeyParameterCurveControlPoints, unicode
+        )
 
-    @min_sdk_level('10.15')
+    @min_sdk_level("10.15")
     def test_methods10_15(self):
-        self.assertArgIsOut(CoreHaptics.CHHapticPattern.initWithEvents_parameters_error_, 2)
-        self.assertArgIsOut(CoreHaptics.CHHapticPattern.initWithEvents_parameterCurves_error_, 2)
+        self.assertArgIsOut(
+            CoreHaptics.CHHapticPattern.initWithEvents_parameters_error_, 2
+        )
+        self.assertArgIsOut(
+            CoreHaptics.CHHapticPattern.initWithEvents_parameterCurves_error_, 2
+        )
         self.assertArgIsOut(CoreHaptics.CHHapticPattern.initWithDictionary_error_, 1)
-        self.assertArgIsOut(CoreHaptics.CHHapticPattern.exportDictionaryAndReturnError_, 0)
+        self.assertArgIsOut(
+            CoreHaptics.CHHapticPattern.exportDictionaryAndReturnError_, 0
+        )

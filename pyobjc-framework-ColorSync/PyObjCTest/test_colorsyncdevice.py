@@ -4,7 +4,7 @@ from PyObjCTools.TestSupport import *
 if sys.maxsize > 2 ** 32:
     import ColorSync
 
-    class TestColorSyncDevice (TestCase):
+    class TestColorSyncDevice(TestCase):
         def testConstants(self):
             self.assertIsInstance(ColorSync.kColorSyncDeviceID, unicode)
             self.assertIsInstance(ColorSync.kColorSyncDeviceClass, unicode)
@@ -28,23 +28,34 @@ if sys.maxsize > 2 ** 32:
             self.assertIsInstance(ColorSync.kColorSyncDeviceProfileIsDefault, unicode)
             self.assertIsInstance(ColorSync.kColorSyncDeviceProfileIsCurrent, unicode)
             self.assertIsInstance(ColorSync.kColorSyncDeviceProfileID, unicode)
-            self.assertIsInstance(ColorSync.kColorSyncDeviceRegisteredNotification, unicode)
-            self.assertIsInstance(ColorSync.kColorSyncDeviceUnregisteredNotification, unicode)
+            self.assertIsInstance(
+                ColorSync.kColorSyncDeviceRegisteredNotification, unicode
+            )
+            self.assertIsInstance(
+                ColorSync.kColorSyncDeviceUnregisteredNotification, unicode
+            )
             self.assertIsInstance(ColorSync.kColorSyncDeviceProfilesNotification, unicode)
-            self.assertIsInstance(ColorSync.kColorSyncDisplayDeviceProfilesNotification, unicode)
-            self.assertIsInstance(ColorSync.kColorSyncProfileRepositoryChangeNotification, unicode)
-            self.assertIsInstance(ColorSync.kColorSyncRegistrationUpdateWindowServer, unicode)
+            self.assertIsInstance(
+                ColorSync.kColorSyncDisplayDeviceProfilesNotification, unicode
+            )
+            self.assertIsInstance(
+                ColorSync.kColorSyncProfileRepositoryChangeNotification, unicode
+            )
+            self.assertIsInstance(
+                ColorSync.kColorSyncRegistrationUpdateWindowServer, unicode
+            )
 
     def testFunctions(self):
         ColorSync.ColorSyncRegisterDevice
         ColorSync.ColorSyncUnregisterDevice
         ColorSync.ColorSyncDeviceSetCustomProfiles
         self.assertResultIsCFRetained(ColorSync.ColorSyncDeviceCopyDeviceInfo)
-        self.assertArgIsFunction(ColorSync.ColorSyncIterateDeviceProfiles, 0, objc._C_BOOL + b'@^v', False)
+        self.assertArgIsFunction(
+            ColorSync.ColorSyncIterateDeviceProfiles, 0, objc._C_BOOL + b"@^v", False
+        )
         self.assertResultIsCFRetained(ColorSync.CGDisplayCreateUUIDFromDisplayID)
 
         ColorSync.CGDisplayGetDisplayIDFromUUID
-
 
 
 if __name__ == "__main__":

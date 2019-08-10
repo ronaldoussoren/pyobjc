@@ -15,8 +15,9 @@ from Cocoa import NSDocument, NSMutableArray, NSKeyedArchiver, NSKeyedUnarchiver
 # in addition to just drag and drop
 CopiedRowsType = "COPIED_ROWS_TYPE"
 
-class BookmarksDocument (NSDocument):
-    bookmarksArray = objc.ivar('bookmarksArray')
+
+class BookmarksDocument(NSDocument):
+    bookmarksArray = objc.ivar("bookmarksArray")
 
     def init(self):
         self = super(BookmarksDocument, self).init()

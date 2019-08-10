@@ -1,14 +1,18 @@
-
 from PyObjCTools.TestSupport import *
 from QTKit import *
 
-class TestQTCaptureDevice (TestCase):
-    @min_os_level('10.5')
+
+class TestQTCaptureDevice(TestCase):
+    @min_os_level("10.5")
     def testConstants(self):
         self.assertIsInstance(QTCaptureDeviceWasConnectedNotification, unicode)
         self.assertIsInstance(QTCaptureDeviceWasDisconnectedNotification, unicode)
-        self.assertIsInstance(QTCaptureDeviceFormatDescriptionsWillChangeNotification, unicode)
-        self.assertIsInstance(QTCaptureDeviceFormatDescriptionsDidChangeNotification, unicode)
+        self.assertIsInstance(
+            QTCaptureDeviceFormatDescriptionsWillChangeNotification, unicode
+        )
+        self.assertIsInstance(
+            QTCaptureDeviceFormatDescriptionsDidChangeNotification, unicode
+        )
         self.assertIsInstance(QTCaptureDeviceAttributeWillChangeNotification, unicode)
         self.assertIsInstance(QTCaptureDeviceAttributeDidChangeNotification, unicode)
         self.assertIsInstance(QTCaptureDeviceChangedAttributeKey, unicode)
@@ -42,8 +46,7 @@ class TestQTCaptureDevice (TestCase):
         self.assertEqual(QTCaptureDeviceAVCTransportControlsVeryFastForwardSpeed, 16000)
         self.assertEqual(QTCaptureDeviceAVCTransportControlsFastestForwardSpeed, 19000)
 
-
-    @min_os_level('10.5')
+    @min_os_level("10.5")
     @onlyOn32Bit
     def testConstants32bit(self):
         self.assertIsInstance(QTCaptureDeviceLegacySequenceGrabberAttribute, unicode)

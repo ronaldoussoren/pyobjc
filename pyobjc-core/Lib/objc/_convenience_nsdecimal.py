@@ -68,15 +68,11 @@ addConvenienceForClass(
         ),
         (
             "__truediv__",
-            lambda self, other: NSDecimalNumber(
-                operator.truediv(NSDecimal(self), other)
-            ),
+            lambda self, other: NSDecimalNumber(operator.truediv(NSDecimal(self), other)),
         ),
         (
             "__rtruediv__",
-            lambda self, other: NSDecimalNumber(
-                operator.truediv(other, NSDecimal(self))
-            ),
+            lambda self, other: NSDecimalNumber(operator.truediv(other, NSDecimal(self))),
         ),
         (
             "__floordiv__",
@@ -116,20 +112,13 @@ if sys.version_info[0] == 2:  # pragma: no 3.x cover
         (
             (
                 "__div__",
-                lambda self, other: NSDecimalNumber(
-                    operator.div(NSDecimal(self), other)
-                ),
+                lambda self, other: NSDecimalNumber(operator.div(NSDecimal(self), other)),
             ),
             (
                 "__rdiv__",
-                lambda self, other: NSDecimalNumber(
-                    operator.div(other, NSDecimal(self))
-                ),
+                lambda self, other: NSDecimalNumber(operator.div(other, NSDecimal(self))),
             ),
-            (
-                "__cmp__",
-                lambda self, other: cmp(NSDecimalNumber(NSDecimal(self), other)),
-            ),
+            ("__cmp__", lambda self, other: cmp(NSDecimalNumber(NSDecimal(self), other))),
         ),
     )
 

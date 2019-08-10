@@ -4,8 +4,8 @@ from PyObjCTools.TestSupport import *
 if sys.maxsize > 2 ** 32:
     import Intents
 
-    class TestINParameter (TestCase):
-        @min_os_level('10.14')
+    class TestINParameter(TestCase):
+        @min_os_level("10.14")
         def test_methods(self):
             self.assertResultIsBOOL(Intents.INParameter.isEqualToParameter_)
 

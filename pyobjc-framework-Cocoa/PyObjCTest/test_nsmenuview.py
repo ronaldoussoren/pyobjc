@@ -1,7 +1,8 @@
 from AppKit import *
 from PyObjCTools.TestSupport import *
 
-class TestNSMenuView (TestCase):
+
+class TestNSMenuView(TestCase):
     @onlyOn32Bit
     def testMethods(self):
         self.assertResultIsBOOL(NSMenuView.isHorizontal)
@@ -11,6 +12,7 @@ class TestNSMenuView (TestCase):
         self.assertResultIsBOOL(NSMenuView.isAttached)
         self.assertResultIsBOOL(NSMenuView.isTornOff)
         self.assertResultIsBOOL(NSMenuView.trackWithEvent_)
+
 
 if __name__ == "__main__":
     main()

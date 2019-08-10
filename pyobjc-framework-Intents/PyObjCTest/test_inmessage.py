@@ -4,7 +4,7 @@ from PyObjCTools.TestSupport import *
 if sys.maxsize > 2 ** 32:
     import Intents
 
-    class TestINMessage (TestCase):
+    class TestINMessage(TestCase):
         def testConstants(self):
             self.assertEqual(Intents.INMessageTypeUnspecified, 0)
             self.assertEqual(Intents.INMessageTypeText, 1)
@@ -33,6 +33,7 @@ if sys.maxsize > 2 ** 32:
             self.assertEqual(Intents.INMessageTypeActivitySnippet, 23)
             self.assertEqual(Intents.INMessageTypeFile, 24)
             self.assertEqual(Intents.INMessageTypeLink, 25)
+
 
 if __name__ == "__main__":
     main()

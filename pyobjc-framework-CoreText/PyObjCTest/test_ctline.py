@@ -1,11 +1,11 @@
-
 from PyObjCTools.TestSupport import *
 from CoreText import *
 from Quartz import *
 
 import os
 
-class TestCTLine (TestCase):
+
+class TestCTLine(TestCase):
     def testTypes(self):
         self.assertIsInstance(CTLineRef, objc.objc_class)
 
@@ -19,12 +19,12 @@ class TestCTLine (TestCase):
         self.assertIsInstance(v, (int, long))
 
         self.assertResultIsCFRetained(CTLineCreateWithAttributedString)
-        astr = CFAttributedStringCreate(None, b"-".decode('latin1'), None)
+        astr = CFAttributedStringCreate(None, b"-".decode("latin1"), None)
         self.assertTrue(astr is not None)
         token = CTLineCreateWithAttributedString(astr)
         self.assertIsInstance(token, CTLineRef)
 
-        astr = CFAttributedStringCreate(None, b"hello world".decode('latin1'), None)
+        astr = CFAttributedStringCreate(None, b"hello world".decode("latin1"), None)
         self.assertTrue(astr is not None)
         line = CTLineCreateWithAttributedString(astr)
         self.assertIsInstance(line, CTLineRef)
@@ -49,10 +49,13 @@ class TestCTLine (TestCase):
         v = CTLineGetPenOffsetForFlush(line, 0.5, 40.0)
         self.assertIsInstance(v, float)
 
-        url = CFURLCreateWithFileSystemPath(None,
-                "/tmp/pyobjc.test.pdf", kCFURLPOSIXPathStyle, False)
+        url = CFURLCreateWithFileSystemPath(
+            None, "/tmp/pyobjc.test.pdf", kCFURLPOSIXPathStyle, False
+        )
         self.assertIsInstance(url, CFURLRef)
-        ctx = CGPDFContextCreateWithURL(url, CGRect(CGPoint(0, 0), CGSize(1000, 1000)), None)
+        ctx = CGPDFContextCreateWithURL(
+            url, CGRect(CGPoint(0, 0), CGSize(1000, 1000)), None
+        )
         self.assertIsInstance(ctx, CGContextRef)
 
         CTLineDraw(line, ctx)
@@ -83,7 +86,6 @@ class TestCTLine (TestCase):
         self.assertIsInstance(v[0], float)
         self.assertIsInstance(v[1], float)
 
-
         if os.path.exists("/tmp/pyobjc.test.pdf"):
             os.unlink("/tmp/pyobjc.test.pdf")
 
@@ -95,13 +97,13 @@ class TestCTLine (TestCase):
         self.assertEqual(kCTLineBoundsUseGlyphPathBounds, 1 << 3)
         self.assertEqual(kCTLineBoundsUseOpticalBounds, 1 << 4)
 
-    @min_os_level('10.11')
+    @min_os_level("10.11")
     def testConstants10_11(self):
         self.assertEqual(kCTLineBoundsIncludeLanguageExtents, 1 << 5)
 
     @min_os_level("10.8")
     def testFunctions10_8(self):
-        astr = CFAttributedStringCreate(None, b"-".decode('latin1'), None)
+        astr = CFAttributedStringCreate(None, b"-".decode("latin1"), None)
         self.assertTrue(astr is not None)
 
         token = CTLineCreateWithAttributedString(astr)
@@ -112,7 +114,8 @@ class TestCTLine (TestCase):
 
     @min_os_level("10.11")
     def testFunctions10_11(self):
-        self.assertArgIsBlock(CTLineEnumerateCaretOffsets, 1, b'vdLBo^B')
+        self.assertArgIsBlock(CTLineEnumerateCaretOffsets, 1, b"vdLBo^B")
+
 
 if __name__ == "__main__":
     main()

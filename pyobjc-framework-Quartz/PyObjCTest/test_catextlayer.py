@@ -1,20 +1,19 @@
-
 from PyObjCTools.TestSupport import *
 from Quartz.QuartzCore import *
 
-class TestCATextLayer (TestCase):
 
-    @min_os_level('10.5')
+class TestCATextLayer(TestCase):
+    @min_os_level("10.5")
     def testMethods(self):
         self.assertResultIsBOOL(CATextLayer.isWrapped)
         self.assertArgIsBOOL(CATextLayer.setWrapped_, 0)
 
-    @min_os_level('10.11')
+    @min_os_level("10.11")
     def testMethods10_11(self):
         self.assertResultIsBOOL(CATextLayer.allowsFontSubpixelQuantization)
         self.assertArgIsBOOL(CATextLayer.setAllowsFontSubpixelQuantization_, 0)
 
-    @min_os_level('10.5')
+    @min_os_level("10.5")
     def testConstants(self):
         self.assertIsInstance(kCATruncationNone, unicode)
         self.assertIsInstance(kCATruncationStart, unicode)

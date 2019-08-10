@@ -1,7 +1,8 @@
 from Foundation import *
 from PyObjCTools.TestSupport import *
 
-class TestNSOperation (TestCase):
+
+class TestNSOperation(TestCase):
     def testConstants(self):
         self.assertEqual(NSOperationQueuePriorityVeryLow, -8)
         self.assertEqual(NSOperationQueuePriorityLow, -4)
@@ -13,11 +14,16 @@ class TestNSOperation (TestCase):
         self.assertIsInstance(NSInvocationOperationCancelledException, unicode)
         self.assertEqual(NSOperationQueueDefaultMaxConcurrentOperationCount, -1)
 
-        self.assertEqual(NSOperationQualityOfServiceUserInteractive, NSQualityOfServiceUserInteractive)
-        self.assertEqual(NSOperationQualityOfServiceUserInitiated, NSQualityOfServiceUserInitiated)
+        self.assertEqual(
+            NSOperationQualityOfServiceUserInteractive, NSQualityOfServiceUserInteractive
+        )
+        self.assertEqual(
+            NSOperationQualityOfServiceUserInitiated, NSQualityOfServiceUserInitiated
+        )
         self.assertEqual(NSOperationQualityOfServiceUtility, NSQualityOfServiceUtility)
-        self.assertEqual(NSOperationQualityOfServiceBackground, NSQualityOfServiceBackground)
-
+        self.assertEqual(
+            NSOperationQualityOfServiceBackground, NSQualityOfServiceBackground
+        )
 
     def testMethods(self):
         self.assertResultIsBOOL(NSOperation.isCancelled)
@@ -29,25 +35,25 @@ class TestNSOperation (TestCase):
         self.assertResultIsBOOL(NSOperationQueue.isSuspended)
         self.assertArgIsBOOL(NSOperationQueue.setSuspended_, 0)
 
-
-    @min_os_level('10.6')
+    @min_os_level("10.6")
     def testMethods10_6(self):
-        self.assertResultIsBlock(NSOperation.completionBlock, b'v')
-        self.assertArgIsBlock(NSOperation.setCompletionBlock_, 0, b'v')
+        self.assertResultIsBlock(NSOperation.completionBlock, b"v")
+        self.assertArgIsBlock(NSOperation.setCompletionBlock_, 0, b"v")
 
-        self.assertArgIsBlock(NSBlockOperation.blockOperationWithBlock_, 0, b'v')
-        self.assertArgIsBlock(NSBlockOperation.addExecutionBlock_, 0, b'v')
+        self.assertArgIsBlock(NSBlockOperation.blockOperationWithBlock_, 0, b"v")
+        self.assertArgIsBlock(NSBlockOperation.addExecutionBlock_, 0, b"v")
 
         self.assertArgIsBOOL(NSOperationQueue.addOperations_waitUntilFinished_, 1)
-        self.assertArgIsBlock(NSOperationQueue.addOperationWithBlock_, 0, b'v')
+        self.assertArgIsBlock(NSOperationQueue.addOperationWithBlock_, 0, b"v")
 
-    @min_os_level('10.8')
+    @min_os_level("10.8")
     def testMethods10_8(self):
         self.assertResultIsBOOL(NSOperation.isAsynchronous)
 
-    @min_os_level('10.15')
+    @min_os_level("10.15")
     def testMethods10_15(self):
-        self.assertArgIsBlock(NSOperationQueue.addBarrierBlock_, 0, b'v')
+        self.assertArgIsBlock(NSOperationQueue.addBarrierBlock_, 0, b"v")
+
 
 if __name__ == "__main__":
     main()

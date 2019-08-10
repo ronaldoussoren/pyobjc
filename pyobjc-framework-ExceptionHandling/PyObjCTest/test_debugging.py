@@ -1,16 +1,15 @@
-'''
+"""
 Some simple tests to check that the framework is properly wrapped.
-'''
+"""
 import objc
 import sys
 from PyObjCTools.TestSupport import *
 from PyObjCTools import Debugging
 
-class TestDebugging (TestCase):
+
+class TestDebugging(TestCase):
     def testConstants(self):
-        for nm in (
-                'LOGSTACKTRACE', 'DEFAULTVERBOSITY',
-                'DEFAULTMASK', 'EVERYTHINGMASK'):
+        for nm in ("LOGSTACKTRACE", "DEFAULTVERBOSITY", "DEFAULTMASK", "EVERYTHINGMASK"):
             self.assertTrue(hasattr(Debugging, nm))
             self.assertTrue(isinstance(getattr(Debugging, nm), (int, long)))
 
@@ -37,7 +36,7 @@ class TestDebugging (TestCase):
 
     def test_isPythonException(self):
         try:
-            a = objc.lookUpClass('NSArray').array()
+            a = objc.lookUpClass("NSArray").array()
             a.objectAtIndex_(42)
         except Exception as exc:
             self.assertFalse(Debugging.isPythonException(exc))
@@ -45,10 +44,11 @@ class TestDebugging (TestCase):
         else:
             self.fail("Exception not raised")
 
-
         try:
-            cls = objc.lookUpClass('NSException')
-            cls.exceptionWithName_reason_userInfo_('FooBar', 'hello world', None).raise__()
+            cls = objc.lookUpClass("NSException")
+            cls.exceptionWithName_reason_userInfo_(
+                "FooBar", "hello world", None
+            ).raise__()
         except Exception as exc:
             self.assertFalse(Debugging.isPythonException(exc))
 
@@ -62,25 +62,29 @@ class TestDebugging (TestCase):
         except Exception as exc:
             self.assertTrue(Debugging.isPythonException(exc))
 
-    @expectedFailureIf(sys.byteorder == 'big')
+    @expectedFailureIf(sys.byteorder == "big")
     def testAtos(self):
-        NSThread = objc.lookUpClass('NSThread')
-        v = ' '.join(hex(x) for x in NSThread.callStackReturnAddresses())
+        NSThread = objc.lookUpClass("NSThread")
+        v = " ".join(hex(x) for x in NSThread.callStackReturnAddresses())
         fp = Debugging._run_atos(v)
         value = fp.read()
         fp.close()
 
-        self.assertIn('_objc.', value)
+        self.assertIn("_objc.", value)
 
     def testInstallExceptionHandler(self):
         self.assertFalse(Debugging.handlerInstalled())
         try:
-            Debugging.installExceptionHandler(verbosity=Debugging.LOGSTACKTRACE, mask=Debugging.EVERYTHINGMASK)
+            Debugging.installExceptionHandler(
+                verbosity=Debugging.LOGSTACKTRACE, mask=Debugging.EVERYTHINGMASK
+            )
             self.assertTrue(Debugging.handlerInstalled())
 
             try:
-                cls = objc.lookUpClass('NSException')
-                cls.exceptionWithName_reason_userInfo_('FooBar', 'hello world', None).raise__()
+                cls = objc.lookUpClass("NSException")
+                cls.exceptionWithName_reason_userInfo_(
+                    "FooBar", "hello world", None
+                ).raise__()
             except Exception as exc:
                 self.assertFalse(Debugging.isPythonException(exc))
 
@@ -88,13 +92,13 @@ class TestDebugging (TestCase):
                 self.fail("Exception not raised")
 
             try:
-                cls = objc.lookUpClass('NSArray')
+                cls = objc.lookUpClass("NSArray")
 
                 def test(value, idx, stop):
                     raise ValueError("42")
-                a = cls.alloc().initWithArray_([1,2,3,4])
-                a.indexOfObjectPassingTest_(test)
 
+                a = cls.alloc().initWithArray_([1, 2, 3, 4])
+                a.indexOfObjectPassingTest_(test)
 
             except Exception as exc:
                 self.assertTrue(Debugging.isPythonException(exc))
@@ -113,6 +117,7 @@ class TestDebugging (TestCase):
         # - nsLogObjCException
         #
         # - Actually trigger handler in various modes
+
 
 if __name__ == "__main__":
     main()

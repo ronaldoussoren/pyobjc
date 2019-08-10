@@ -1,8 +1,8 @@
-
 from PyObjCTools.TestSupport import *
 from SyncServices import *
 
-class TestISyncChange (TestCase):
+
+class TestISyncChange(TestCase):
     def testConstants(self):
         self.assertEqual(ISyncChangeTypeNone, 0)
         self.assertEqual(ISyncChangeTypeAdd, 1)
@@ -15,10 +15,11 @@ class TestISyncChange (TestCase):
         self.assertIsInstance(ISyncChangePropertyNameKey, unicode)
         self.assertIsInstance(ISyncChangePropertyValueKey, unicode)
 
-    @min_os_level('10.6')
+    @min_os_level("10.6")
     def testConstants10_5(self):
         # Document for 10.5, but not actually present there
         self.assertIsInstance(ISyncChangePropertyValueIsDefaultKey, unicode)
+
 
 if __name__ == "__main__":
     main()

@@ -2,7 +2,8 @@ from PyObjCTools.TestSupport import *
 
 import CoreMotion
 
-class TestCMGyro (TestCase):
+
+class TestCMGyro(TestCase):
     def test_structs(self):
         v = CoreMotion.CMRotationRate()
         self.assertEqual(v.x, 0.0)

@@ -1,14 +1,22 @@
-
 from PyObjCTools.TestSupport import *
 from Quartz.CoreGraphics import *
 import array
 
-class TestCGBitmapContext (TestCase):
+
+class TestCGBitmapContext(TestCase):
     def testFunctions(self):
-        bytes_val = array.array('B', (0 for i in range(100*80*4)))
+        bytes_val = array.array("B", (0 for i in range(100 * 80 * 4)))
         self.assertIsInstance(bytes_val, array.array)
-        self.assertEqual(len(bytes_val), 100*80*4)
-        ctx = CGBitmapContextCreate(bytes_val, 100, 80, 8, 400, CGColorSpaceCreateDeviceRGB(), kCGImageAlphaPremultipliedLast)
+        self.assertEqual(len(bytes_val), 100 * 80 * 4)
+        ctx = CGBitmapContextCreate(
+            bytes_val,
+            100,
+            80,
+            8,
+            400,
+            CGColorSpaceCreateDeviceRGB(),
+            kCGImageAlphaPremultipliedLast,
+        )
         self.assertIsInstance(ctx, CGContextRef)
 
         buf = CGBitmapContextGetData(ctx)
@@ -33,20 +41,40 @@ class TestCGBitmapContext (TestCase):
         img = CGBitmapContextCreateImage(ctx)
         self.assertIsInstance(img, CGImageRef)
 
-
-    @min_os_level('10.6')
+    @min_os_level("10.6")
     def testFunctions10_6(self):
-        bytes_val = array.array('B', (0 for i in range(100*80*4)))
-        ctx = CGBitmapContextCreateWithData(bytes_val, 100, 80, 8, 400, CGColorSpaceCreateDeviceRGB(), kCGImageAlphaPremultipliedLast, None, None)
+        bytes_val = array.array("B", (0 for i in range(100 * 80 * 4)))
+        ctx = CGBitmapContextCreateWithData(
+            bytes_val,
+            100,
+            80,
+            8,
+            400,
+            CGColorSpaceCreateDeviceRGB(),
+            kCGImageAlphaPremultipliedLast,
+            None,
+            None,
+        )
         self.assertIsInstance(ctx, CGContextRef)
         del ctx
 
         list = []
         release_info = object()
+
         def callback(info, data):
             list.append((info, data))
 
-        ctx = CGBitmapContextCreateWithData(bytes_val, 100, 80, 8, 400, CGColorSpaceCreateDeviceRGB(), kCGImageAlphaPremultipliedLast, callback, release_info)
+        ctx = CGBitmapContextCreateWithData(
+            bytes_val,
+            100,
+            80,
+            8,
+            400,
+            CGColorSpaceCreateDeviceRGB(),
+            kCGImageAlphaPremultipliedLast,
+            callback,
+            release_info,
+        )
         self.assertIsInstance(ctx, CGContextRef)
         del ctx
 

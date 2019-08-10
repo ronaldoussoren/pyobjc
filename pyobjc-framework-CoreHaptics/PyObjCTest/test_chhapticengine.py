@@ -2,12 +2,13 @@ from PyObjCTools.TestSupport import *
 
 import CoreHaptics
 
-CHHapticCompletionHandler = b'v@'
-CHHapticEngineFinishedHandler = objc._C_NSInteger + b'@'
-CHHapticEngineStoppedHandler = b'v' + objc._C_NSInteger
-CHHapticEngineResetHandler = b'v'
+CHHapticCompletionHandler = b"v@"
+CHHapticEngineFinishedHandler = objc._C_NSInteger + b"@"
+CHHapticEngineStoppedHandler = b"v" + objc._C_NSInteger
+CHHapticEngineResetHandler = b"v"
 
-class TestCHHapticEngine (TestCase):
+
+class TestCHHapticEngine(TestCase):
     def test_constants(self):
         self.assertEqual(CoreHaptics.CHHapticTimeImmediate, 0.0)
 
@@ -20,15 +21,21 @@ class TestCHHapticEngine (TestCase):
         self.assertEqual(CoreHaptics.CHHapticEngineStoppedReasonNotifyWhenFinished, 4)
         self.assertEqual(CoreHaptics.CHHapticEngineStoppedReasonSystemError, -1)
 
-
-
-    @min_sdk_level('10.15')
+    @min_sdk_level("10.15")
     def test_methods10_15(self):
-        self.assertResultIsBlock(CoreHaptics.CHHapticEngine.stoppedHandler, CHHapticEngineStoppedHandler)
-        self.assertResultIsBlock(CoreHaptics.CHHapticEngine.resetHandler, CHHapticEngineResetHandler)
+        self.assertResultIsBlock(
+            CoreHaptics.CHHapticEngine.stoppedHandler, CHHapticEngineStoppedHandler
+        )
+        self.assertResultIsBlock(
+            CoreHaptics.CHHapticEngine.resetHandler, CHHapticEngineResetHandler
+        )
 
-        self.assertArgIsBlock(CoreHaptics.CHHapticEngine.setStoppedHandler_, 0, CHHapticEngineStoppedHandler)
-        self.assertArgIsBlock(CoreHaptics.CHHapticEngine.setResetHandler_, 0, CHHapticEngineResetHandler)
+        self.assertArgIsBlock(
+            CoreHaptics.CHHapticEngine.setStoppedHandler_, 0, CHHapticEngineStoppedHandler
+        )
+        self.assertArgIsBlock(
+            CoreHaptics.CHHapticEngine.setResetHandler_, 0, CHHapticEngineResetHandler
+        )
 
         self.assertResultIsBOOL(CoreHaptics.CHHapticEngine.playsHapticsOnly)
         self.assertResultIsBOOL(CoreHaptics.CHHapticEngine.isMutedForAudio)
@@ -43,20 +50,38 @@ class TestCHHapticEngine (TestCase):
         self.assertArgIsOut(CoreHaptics.CHHapticEngine.initAndReturnError_, 0)
         self.assertArgIsOut(CoreHaptics.CHHapticEngine.initWithAudioSession_error_, 1)
 
-        self.assertArgIsBlock(CoreHaptics.CHHapticEngine.startWithCompletionHandler_, 0, CHHapticCompletionHandler)
+        self.assertArgIsBlock(
+            CoreHaptics.CHHapticEngine.startWithCompletionHandler_,
+            0,
+            CHHapticCompletionHandler,
+        )
 
         self.assertResultIsBOOL(CoreHaptics.CHHapticEngine.startAndReturnError_)
         self.assertArgIsOut(CoreHaptics.CHHapticEngine.startAndReturnError_, 0)
 
-        self.assertArgIsBlock(CoreHaptics.CHHapticEngine.stopWithCompletionHandler_, 0, CHHapticCompletionHandler)
+        self.assertArgIsBlock(
+            CoreHaptics.CHHapticEngine.stopWithCompletionHandler_,
+            0,
+            CHHapticCompletionHandler,
+        )
 
-        self.assertArgIsBlock(CoreHaptics.CHHapticEngine.notifyWhenPlayersFinished_, 0, CHHapticEngineFinishedHandler)
+        self.assertArgIsBlock(
+            CoreHaptics.CHHapticEngine.notifyWhenPlayersFinished_,
+            0,
+            CHHapticEngineFinishedHandler,
+        )
 
         self.assertArgIsOut(CoreHaptics.CHHapticEngine.createPlayerWithPattern_error_, 1)
-        self.assertArgIsOut(CoreHaptics.CHHapticEngine.createAdvancedPlayerWithPattern_error_, 1)
-        self.assertArgIsOut(CoreHaptics.CHHapticEngine.registerAudioResource_options_error_, 2)
+        self.assertArgIsOut(
+            CoreHaptics.CHHapticEngine.createAdvancedPlayerWithPattern_error_, 1
+        )
+        self.assertArgIsOut(
+            CoreHaptics.CHHapticEngine.registerAudioResource_options_error_, 2
+        )
 
-        self.assertResultIsBOOL(CoreHaptics.CHHapticEngine.unregisterAudioResource_error_, 1)
+        self.assertResultIsBOOL(
+            CoreHaptics.CHHapticEngine.unregisterAudioResource_error_, 1
+        )
         self.assertArgIsOut(CoreHaptics.CHHapticEngine.unregisterAudioResource_error_, 1)
 
         self.assertResultIsBOOL(CoreHaptics.CHHapticEngine.playPatternFromURL_error_, 1)

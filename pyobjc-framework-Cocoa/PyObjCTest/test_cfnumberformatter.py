@@ -2,8 +2,7 @@ from PyObjCTools.TestSupport import *
 from CoreFoundation import *
 
 
-
-class TestNumberFormatter (TestCase):
+class TestNumberFormatter(TestCase):
     def testTypes(self):
         self.assertIsCFType(CFNumberFormatterRef)
 
@@ -17,43 +16,54 @@ class TestNumberFormatter (TestCase):
         v = CFNumberFormatterGetLocale(fmt)
         self.assertIs(v, locale)
         v = CFNumberFormatterGetStyle(fmt)
-        self.assertEqual(v , kCFNumberFormatterDecimalStyle)
+        self.assertEqual(v, kCFNumberFormatterDecimalStyle)
         v = CFNumberFormatterGetFormat(fmt)
         self.assertIsInstance(v, unicode)
         CFNumberFormatterSetFormat(fmt, v[:-2])
         v2 = CFNumberFormatterGetFormat(fmt)
-        self.assertEqual(v2 , v[:-2])
+        self.assertEqual(v2, v[:-2])
         v = CFNumberFormatterCreateStringWithNumber(None, fmt, 42.5)
         self.assertIsInstance(v, unicode)
-        self.assertEqual(v , b'42.5'.decode('ascii'))
+        self.assertEqual(v, b"42.5".decode("ascii"))
 
         v = CFNumberFormatterCreateStringWithValue(None, fmt, kCFNumberDoubleType, 42.5)
         self.assertIsInstance(v, unicode)
-        self.assertEqual(v , b'42.5'.decode('ascii'))
-        num, rng = CFNumberFormatterCreateNumberFromString(None, fmt, b"42.0a".decode('ascii'), (0, 5), 0)
-        self.assertEqual(num , 42.0)
-        self.assertEqual(rng , (0, 4))
-        ok, rng, num = CFNumberFormatterGetValueFromString(fmt, b"42.0a".decode('ascii'), (0, 5), kCFNumberDoubleType, None)
+        self.assertEqual(v, b"42.5".decode("ascii"))
+        num, rng = CFNumberFormatterCreateNumberFromString(
+            None, fmt, b"42.0a".decode("ascii"), (0, 5), 0
+        )
+        self.assertEqual(num, 42.0)
+        self.assertEqual(rng, (0, 4))
+        ok, rng, num = CFNumberFormatterGetValueFromString(
+            fmt, b"42.0a".decode("ascii"), (0, 5), kCFNumberDoubleType, None
+        )
         self.assertEqual(ok, True)
-        self.assertEqual(num , 42.0)
-        self.assertEqual(rng , (0, 4))
-        num, rng = CFNumberFormatterCreateNumberFromString(None, fmt, b"42.0a".decode('ascii'), (0, 5), kCFNumberFormatterParseIntegersOnly)
-        self.assertEqual(num , 42)
-        self.assertEqual(rng , (0, 2))
+        self.assertEqual(num, 42.0)
+        self.assertEqual(rng, (0, 4))
+        num, rng = CFNumberFormatterCreateNumberFromString(
+            None,
+            fmt,
+            b"42.0a".decode("ascii"),
+            (0, 5),
+            kCFNumberFormatterParseIntegersOnly,
+        )
+        self.assertEqual(num, 42)
+        self.assertEqual(rng, (0, 2))
         v = CFNumberFormatterCopyProperty(fmt, kCFNumberFormatterCurrencyCode)
         self.assertIsInstance(v, unicode)
-        CFNumberFormatterSetProperty(fmt, kCFNumberFormatterCurrencyCode, b"HFL".decode('ascii'))
+        CFNumberFormatterSetProperty(
+            fmt, kCFNumberFormatterCurrencyCode, b"HFL".decode("ascii")
+        )
 
         self.assertResultIsCFRetained(CFNumberFormatterCopyProperty)
         v = CFNumberFormatterCopyProperty(fmt, kCFNumberFormatterCurrencyCode)
-        self.assertEqual(v , b"HFL".decode('ascii'))
+        self.assertEqual(v, b"HFL".decode("ascii"))
         self.assertArgIsOut(CFNumberFormatterGetDecimalInfoForCurrencyCode, 1)
         self.assertArgIsOut(CFNumberFormatterGetDecimalInfoForCurrencyCode, 2)
         ok, frac, rnd = CFNumberFormatterGetDecimalInfoForCurrencyCode("EUR", None, None)
         self.assertEqual(ok, True)
         self.assertEqual(frac, 2)
         self.assertEqual(rnd, 0.0)
-
 
     def testConstants(self):
         self.assertEqual(kCFNumberFormatterNoStyle, 0)
@@ -112,7 +122,7 @@ class TestNumberFormatter (TestCase):
         self.assertIsInstance(kCFNumberFormatterPerMillSymbol, unicode)
         self.assertIsInstance(kCFNumberFormatterInternationalCurrencySymbol, unicode)
 
-    @min_os_level('10.5')
+    @min_os_level("10.5")
     def testConstants10_5(self):
         self.assertIsInstance(kCFNumberFormatterCurrencyGroupingSeparator, unicode)
         self.assertIsInstance(kCFNumberFormatterIsLenient, unicode)
@@ -120,12 +130,13 @@ class TestNumberFormatter (TestCase):
         self.assertIsInstance(kCFNumberFormatterMinSignificantDigits, unicode)
         self.assertIsInstance(kCFNumberFormatterMaxSignificantDigits, unicode)
 
-    @min_os_level('10.11')
+    @min_os_level("10.11")
     def testConstants(self):
         self.assertEqual(kCFNumberFormatterOrdinalStyle, 6)
         self.assertEqual(kCFNumberFormatterCurrencyISOCodeStyle, 8)
         self.assertEqual(kCFNumberFormatterCurrencyPluralStyle, 9)
         self.assertEqual(kCFNumberFormatterCurrencyAccountingStyle, 10)
+
 
 if __name__ == "__main__":
     main()

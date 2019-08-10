@@ -1,8 +1,8 @@
-
 from PyObjCTools.TestSupport import *
 from AppKit import *
 
-class TestNSErrors (TestCase):
+
+class TestNSErrors(TestCase):
     def testConstants(self):
         self.assertIsInstance(NSTextLineTooLongException, unicode)
         self.assertIsInstance(NSTextNoSelectionException, unicode)

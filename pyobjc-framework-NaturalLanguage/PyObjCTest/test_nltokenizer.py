@@ -4,7 +4,7 @@ import sys
 if sys.maxsize > 2 ** 32:
     import NaturalLanguage
 
-    class TestNLTokenizer (TestCase):
+    class TestNLTokenizer(TestCase):
         def test_constants(self):
             self.assertEqual(NaturalLanguage.NLTokenUnitWord, 0)
             self.assertEqual(NaturalLanguage.NLTokenUnitSentence, 1)
@@ -16,8 +16,17 @@ if sys.maxsize > 2 ** 32:
             self.assertEqual(NaturalLanguage.NLTokenizerAttributeEmoji, 1 << 2)
 
         def test_methods(self):
-            self.assertArgIsBlock(NaturalLanguage.NLTokenizer.enumerateTokensInRange_usingBlock_, 1,
-                    objc._C_VOID + NaturalLanguage.NSRange.__typestr__ +  objc._C_NSUInteger + objc._C_OUT + objc._C_PTR + objc._C_NSBOOL)
+            self.assertArgIsBlock(
+                NaturalLanguage.NLTokenizer.enumerateTokensInRange_usingBlock_,
+                1,
+                objc._C_VOID
+                + NaturalLanguage.NSRange.__typestr__
+                + objc._C_NSUInteger
+                + objc._C_OUT
+                + objc._C_PTR
+                + objc._C_NSBOOL,
+            )
+
 
 if __name__ == "__main__":
     main()

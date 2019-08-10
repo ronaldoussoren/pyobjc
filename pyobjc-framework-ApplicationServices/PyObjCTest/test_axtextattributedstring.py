@@ -1,7 +1,8 @@
 import HIServices
 from PyObjCTools.TestSupport import *
 
-class TestAXTextAttributedString (TestCase):
+
+class TestAXTextAttributedString(TestCase):
     def testConstants(self):
         self.assertIsInstance(HIServices.kAXFontTextAttribute, unicode)
         self.assertIsInstance(HIServices.kAXForegroundColorTextAttribute, unicode)
@@ -28,14 +29,13 @@ class TestAXTextAttributedString (TestCase):
         self.assertEqual(HIServices.kAXUnderlineStyleThick, 0x2)
         self.assertEqual(HIServices.kAXUnderlineStyleDouble, 0x9)
 
-    @min_os_level('10.7')
+    @min_os_level("10.7")
     def testConstants10_7(self):
         self.assertIsInstance(HIServices.kAXAutocorrectedTextAttribute, unicode)
 
-    @min_os_level('10.9')
+    @min_os_level("10.9")
     def testConstants10_9(self):
         self.assertIsInstance(HIServices.kAXMarkedMisspelledTextAttribute, unicode)
-
 
 
 if __name__ == "__main__":

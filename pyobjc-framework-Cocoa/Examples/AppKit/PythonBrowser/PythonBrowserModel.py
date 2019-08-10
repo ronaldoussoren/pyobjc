@@ -79,8 +79,11 @@ def getInstanceVarNames(obj):
             for name, value in base.__dict__.items():
                 # XXX using callable() is a heuristic which isn't 100%
                 # foolproof.
-                if hasattr(value, "__get__") and not callable(value) and \
-                        hasattr(obj, name):
+                if (
+                    hasattr(value, "__get__")
+                    and not callable(value)
+                    and hasattr(obj, name)
+                ):
                     slots[name] = 1
     if "__dict__" in slots:
         del slots["__dict__"]
@@ -97,10 +100,11 @@ class NiceError:
 
     def __repr__(self):
         from traceback import format_exception_only
+
         lines = format_exception_only(*self.exc_info[:2])
         assert len(lines) == 1
         error = lines[0].strip()
-        return "*** error *** %s" %error
+        return "*** error *** %s" % error
 
 
 class PythonItem(NSObject):
@@ -125,7 +129,9 @@ class PythonItem(NSObject):
         self._setValue = setvalue
         self.type = type(obj).__name__
         try:
-            self.value = repr(obj)[:256]  # XXX [:256] makes it quite a bit faster for long reprs.
+            self.value = repr(obj)[
+                :256
+            ]  # XXX [:256] makes it quite a bit faster for long reprs.
             assert isinstance(self.value, str)
         except:
             self.value = repr(NiceError(sys.exc_info()))

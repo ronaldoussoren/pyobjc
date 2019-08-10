@@ -1,12 +1,12 @@
-
 from PyObjCTools.TestSupport import *
 from QTKit import *
 
-class TestQTTimeRange (TestCase):
+
+class TestQTTimeRange(TestCase):
     def testStructs(self):
         v = QTTimeRange()
-        self.assertHasAttr(v, 'time')
-        self.assertHasAttr(v, 'duration')
+        self.assertHasAttr(v, "time")
+        self.assertHasAttr(v, "duration")
 
     def testFunctions(self):
         v = QTMakeTimeWithTimeInterval(1500.0)
@@ -45,6 +45,7 @@ class TestQTTimeRange (TestCase):
         self.assertIsInstance(t, QTTimeRange)
 
         self.assertTrue(QTEqualTimeRanges(t, rng))
+
 
 if __name__ == "__main__":
     main()

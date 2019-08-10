@@ -1,28 +1,34 @@
-'''
+"""
 Python mapping for the SearchKit framework.
 
 This module does not contain docstrings for the wrapped code, check Apple's
 documentation for details on how to use these functions and classes.
-'''
+"""
 import objc, sys
 
 import CoreFoundation
 from CoreServices.SearchKit import _metadata
 
 mod = objc.ObjCLazyModule(
-    "SearchKit", "com.apple.SearchKit",
+    "SearchKit",
+    "com.apple.SearchKit",
     objc.pathForFramework(
-        "/System/Library/Frameworks/CoreServices.framework/Frameworks/SearchKit.framework"),
-    _metadata.__dict__, None, {
-        '__doc__': __doc__,
-        'objc': objc,
-        '__path__': __path__,
-        '__loader__': globals().get('__loader__', None),
-    }, (CoreFoundation,))
+        "/System/Library/Frameworks/CoreServices.framework/Frameworks/SearchKit.framework"
+    ),
+    _metadata.__dict__,
+    None,
+    {
+        "__doc__": __doc__,
+        "objc": objc,
+        "__path__": __path__,
+        "__loader__": globals().get("__loader__", None),
+    },
+    (CoreFoundation,),
+)
 
 import sys
-del sys.modules['CoreServices.SearchKit._metadata']
 
+del sys.modules["CoreServices.SearchKit._metadata"]
 
 
 # SKIndexGetTypeID is documented, but not actually exported by Leopard. Try to
@@ -36,8 +42,9 @@ def workaround():
 
     pool = NSAutoreleasePool.alloc().init()
     try:
-        rI = mod.SKIndexCreateWithMutableData(NSMutableData.data(),
-                None, mod.kSKIndexInverted, None)
+        rI = mod.SKIndexCreateWithMutableData(
+            NSMutableData.data(), None, mod.kSKIndexInverted, None
+        )
 
         indexID = mod.CFGetTypeID(rI)
 
@@ -48,7 +55,9 @@ def workaround():
         r = mod.SKSearchGroupCreate([rI])
         groupID = mod.CFGetTypeID(r)
 
-        r = mod.SKSearchResultsCreateWithQuery(r, ".*", mod.kSKSearchRanked, 1, None, None)
+        r = mod.SKSearchResultsCreateWithQuery(
+            r, ".*", mod.kSKSearchRanked, 1, None, None
+        )
         resultID = mod.CFGetTypeID(r)
 
         if mod.SKSearchGetTypeID() == 0:
@@ -57,7 +66,8 @@ def workaround():
             # a SKSearch object
             mod.SKSearchCreate(rI, "q", 0)
             searchref = objc.registerCFSignature(
-                    "SKSearchRef", b"^{__SKSearch=}", mod.SKSearchGetTypeID())
+                "SKSearchRef", b"^{__SKSearch=}", mod.SKSearchGetTypeID()
+            )
         else:
             searchref = mod.SKSearchRef
 
@@ -86,40 +96,59 @@ def workaround():
     def SKSummaryGetTypeID():
         return summaryID
 
-    indexType = objc.registerCFSignature(
-            "SKIndexRef", b"^{__SKIndex=}", indexID)
+    indexType = objc.registerCFSignature("SKIndexRef", b"^{__SKIndex=}", indexID)
     iterType = objc.registerCFSignature(
-            "SKIndexDocumentIteratorRef", b"^{__SKIndexDocumentIterator=}", iterID)
+        "SKIndexDocumentIteratorRef", b"^{__SKIndexDocumentIterator=}", iterID
+    )
     groupType = objc.registerCFSignature(
-            "SKSearchGroupRef", b"^{__SKSearchGroup=}", groupID)
+        "SKSearchGroupRef", b"^{__SKSearchGroup=}", groupID
+    )
     resultType = objc.registerCFSignature(
-            "SKSearchResultsRef", b"^{__SKSearchResults=}", resultID)
-    summaryType = objc.registerCFSignature(
-            "SKSummaryRef", b"^{__SKSummary=}", summaryID)
-
+        "SKSearchResultsRef", b"^{__SKSearchResults=}", resultID
+    )
+    summaryType = objc.registerCFSignature("SKSummaryRef", b"^{__SKSummary=}", summaryID)
 
     # For some reason SKDocumentGetTypeID doesn't return the right value
     # when the framework loader calls it the first time around,
     # by this time the framework is fully initialized and we get
     # the correct result.
     SKDocumentRef = objc.registerCFSignature(
-            "SKDocumentRef", b"@", mod.SKDocumentGetTypeID())
+        "SKDocumentRef", b"@", mod.SKDocumentGetTypeID()
+    )
+
+    return (
+        SKIndexGetTypeID,
+        indexType,
+        SKIndexDocumentIteratorGetTypeID,
+        iterType,
+        SKSearchGroupGetTypeID,
+        groupType,
+        SKSearchResultsGetTypeID,
+        resultType,
+        SKSummaryGetTypeID,
+        summaryType,
+        iterType,
+        SKDocumentRef,
+        searchref,
+    )
 
 
-    return (SKIndexGetTypeID, indexType, SKIndexDocumentIteratorGetTypeID, iterType,
-            SKSearchGroupGetTypeID, groupType, SKSearchResultsGetTypeID, resultType,
-            SKSummaryGetTypeID, summaryType, iterType,
-            SKDocumentRef, searchref)
-
-(mod.SKIndexGetTypeID, mod.SKIndexRef,
-    mod.SKIndexDocumentIteratorGetTypeID, mod.SKIndexDocumentRef,
-    mod.SKSearchGroupGetTypeID, mod.SKSearchGroupRef,
-    mod.SKSearchResultsGetTypeID, mod.SKSearchResultsRef,
-    mod.SKSummaryGetTypeID, mod.SKSummaryRef,
+(
+    mod.SKIndexGetTypeID,
+    mod.SKIndexRef,
+    mod.SKIndexDocumentIteratorGetTypeID,
+    mod.SKIndexDocumentRef,
+    mod.SKSearchGroupGetTypeID,
+    mod.SKSearchGroupRef,
+    mod.SKSearchResultsGetTypeID,
+    mod.SKSearchResultsRef,
+    mod.SKSummaryGetTypeID,
+    mod.SKSummaryRef,
     mod.SKIndexDocumentIteratorRef,
-    mod.SKDocumentRef, mod.SKSearchRef,
+    mod.SKDocumentRef,
+    mod.SKSearchRef,
 ) = workaround()
 
 del workaround
 
-sys.modules['CoreServices.SearchKit']  = mod
+sys.modules["CoreServices.SearchKit"] = mod

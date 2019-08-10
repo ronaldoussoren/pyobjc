@@ -1,9 +1,9 @@
-
 from PyObjCTools.TestSupport import *
 from QTKit import *
 import sys
 
-class TestQTMovieHelper (NSObject):
+
+class TestQTMovieHelper(NSObject):
     def movie_linkToURL_(self, m, u):
         return True
 
@@ -16,13 +16,13 @@ class TestQTMovieHelper (NSObject):
     def externalMovie_(self, d):
         return True
 
-    def movie_shouldContinueOperation_withPhase_atPercent_withAttributes_(self, m, o, ph, per, at):
+    def movie_shouldContinueOperation_withPhase_atPercent_withAttributes_(
+        self, m, o, ph, per, at
+    ):
         return True
 
 
-
-
-class TestQTMovie (TestCase):
+class TestQTMovie(TestCase):
     def testConstants(self):
         self.assertIsInstance(QTMoviePasteboardType, unicode)
         self.assertIsInstance(QTMovieEditabilityDidChangeNotification, unicode)
@@ -113,7 +113,7 @@ class TestQTMovie (TestCase):
         self.assertEqual(QTIncludeAggressiveTypes, 1 << 2)
         self.assertEqual(QTIncludeDynamicTypes, 1 << 3)
         self.assertEqual(QTIncludeCommonTypes, 0)
-        self.assertEqual(QTIncludeAllTypes, 0xffff)
+        self.assertEqual(QTIncludeAllTypes, 0xFFFF)
         self.assertEqual(QTMovieOperationBeginPhase, 0)
         self.assertEqual(QTMovieOperationUpdatePercentPhase, 1)
         self.assertEqual(QTMovieOperationEndPhase, 2)
@@ -123,9 +123,9 @@ class TestQTMovie (TestCase):
         self.assertEqual(QTMovieLoadStateLoaded, 2000)
         self.assertEqual(QTMovieLoadStatePlayable, 10000)
         self.assertEqual(QTMovieLoadStatePlaythroughOK, 20000)
-        self.assertEqual(QTMovieLoadStateComplete, 100000)
+        self.assertEqual(QTMovieLoadStateComplete, 100_000)
 
-    @min_os_level('10.5')
+    @min_os_level("10.5")
     def testConstants10_5(self):
         self.assertIsInstance(QTMovieApertureModeClassic, unicode)
         self.assertIsInstance(QTMovieApertureModeClean, unicode)
@@ -148,8 +148,7 @@ class TestQTMovie (TestCase):
         self.assertIsInstance(QTMovieChapterStartTime, unicode)
         self.assertIsInstance(QTMovieChapterTargetTrackAttribute, unicode)
 
-
-    @min_os_level('10.6')
+    @min_os_level("10.6")
     def testConstants10_6(self):
         self.assertIsInstance(QTMovieNaturalSizeDidChangeNotification, unicode)
         self.assertIsInstance(QTMovieOpenAsyncRequiredAttribute, unicode)
@@ -159,12 +158,18 @@ class TestQTMovie (TestCase):
         self.assertIsInstance(QTDisallowedForInitializationPurposeException, unicode)
 
     def testInformalProtocols(self):
-        #self.assertIsInstance(protocols.QTMovie_Delegate, objc.informal_protocol)
+        # self.assertIsInstance(protocols.QTMovie_Delegate, objc.informal_protocol)
         self.assertResultIsBOOL(TestQTMovieHelper.movie_linkToURL_)
         self.assertResultIsBOOL(TestQTMovieHelper.movieShouldLoadData_)
         self.assertResultIsBOOL(TestQTMovieHelper.movieShouldTask_)
-        self.assertResultIsBOOL(TestQTMovieHelper.movie_shouldContinueOperation_withPhase_atPercent_withAttributes_)
-        self.assertArgHasType(TestQTMovieHelper.movie_shouldContinueOperation_withPhase_atPercent_withAttributes_, 2, objc._C_INT)
+        self.assertResultIsBOOL(
+            TestQTMovieHelper.movie_shouldContinueOperation_withPhase_atPercent_withAttributes_
+        )
+        self.assertArgHasType(
+            TestQTMovieHelper.movie_shouldContinueOperation_withPhase_atPercent_withAttributes_,
+            2,
+            objc._C_INT,
+        )
 
     @onlyOn32Bit
     def testMethods32(self):
@@ -175,11 +180,10 @@ class TestQTMovie (TestCase):
 
     @onlyOn32Bit
     def testCarbonQuickTimeIntegration(self):
-        #FIXME: Should test integration with the Carbon.Qt module here
+        # FIXME: Should test integration with the Carbon.Qt module here
         pass
-        #- (Movie)quickTimeMovie;
-        #- (MovieController)quickTimeMovieController;
-
+        # - (Movie)quickTimeMovie;
+        # - (MovieController)quickTimeMovieController;
 
     def testMethods(self):
         self.assertResultIsBOOL(QTMovie.canInitWithPasteboard_)
@@ -187,7 +191,6 @@ class TestQTMovie (TestCase):
         self.assertResultIsBOOL(QTMovie.canInitWithURL_)
         self.assertResultIsBOOL(QTMovie.canInitWithDataReference_)
         self.assertResultIsBOOL(QTMovie.muted)
-
 
         self.assertArgIsOut(QTMovie.movieWithFile_error_, 1)
         self.assertArgIsOut(QTMovie.movieWithURL_error_, 1)
@@ -201,7 +204,9 @@ class TestQTMovie (TestCase):
         self.assertArgIsOut(QTMovie.initWithDataReference_error_, 1)
         self.assertArgIsOut(QTMovie.initWithPasteboard_error_, 1)
         self.assertArgIsOut(QTMovie.initWithData_error_, 1)
-        self.assertArgHasType(QTMovie.initWithMovie_timeRange_error_, 1, QTTimeRange.__typestr__) #b'{_QTTimeRange={_QTTime=qll}{_QTTime=qll}}')
+        self.assertArgHasType(
+            QTMovie.initWithMovie_timeRange_error_, 1, QTTimeRange.__typestr__
+        )  # b'{_QTTimeRange={_QTTime=qll}{_QTTime=qll}}')
         self.assertArgIsOut(QTMovie.initWithMovie_timeRange_error_, 2)
         self.assertArgIsOut(QTMovie.initWithAttributes_error_, 1)
         self.assertArgIsOut(QTMovie.movieWithTimeRange_error_, 1)
@@ -222,8 +227,6 @@ class TestQTMovie (TestCase):
         self.assertResultIsBOOL(QTMovie.isIdling)
         self.assertResultIsBOOL(QTMovie.hasChapters)
         self.assertResultIsBOOL(QTMovie.removeChapters)
-
-
 
 
 if __name__ == "__main__":

@@ -5,7 +5,7 @@ from PyObjCTools.TestSupport import *
 if sys.maxsize > 2 ** 32:
     import GameController
 
-    class TestGCGamepadSnapshot (TestCase):
+    class TestGCGamepadSnapshot(TestCase):
         @min_os_level("10.9")
         def testClasses(self):
             self.assertIsInstance(GameController.GCGamepadSnapshot, objc.objc_class)
@@ -31,6 +31,7 @@ if sys.maxsize > 2 ** 32:
             self.assertResultIsBOOL(GameController.GCGamepadSnapShotDataV100FromNSData)
             self.assertArgIsOut(GameController.GCGamepadSnapShotDataV100FromNSData, 0)
             self.assertArgIsIn(GameController.NSDataFromGCGamepadSnapShotDataV100, 0)
+
 
 if __name__ == "__main__":
     main()

@@ -1,8 +1,8 @@
-
 from PyObjCTools.TestSupport import *
 from AppKit import *
 
-class TestNSSliderCell (TestCase):
+
+class TestNSSliderCell(TestCase):
     def testConstants(self):
         self.assertEqual(NSTickMarkBelow, 0)
         self.assertEqual(NSTickMarkAbove, 1)
@@ -20,8 +20,6 @@ class TestNSSliderCell (TestCase):
         self.assertEqual(NSSliderTypeLinear, 0)
         self.assertEqual(NSSliderTypeCircular, 1)
 
-
-
     def testMethods(self):
         self.assertResultIsBOOL(NSSliderCell.prefersTrackingUntilMouseUp)
         self.assertArgIsBOOL(NSSliderCell.knobRectFlipped_, 0)
@@ -29,9 +27,10 @@ class TestNSSliderCell (TestCase):
         self.assertResultIsBOOL(NSSliderCell.allowsTickMarkValuesOnly)
         self.assertArgIsBOOL(NSSliderCell.setAllowsTickMarkValuesOnly_, 0)
 
-    @min_os_level('10.9')
+    @min_os_level("10.9")
     def testMethods10_9(self):
         self.assertArgIsBOOL(NSSliderCell.barRectFlipped_, 0)
+
 
 if __name__ == "__main__":
     main()

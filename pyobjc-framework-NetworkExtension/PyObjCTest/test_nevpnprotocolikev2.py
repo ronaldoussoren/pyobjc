@@ -5,8 +5,8 @@ if sys.maxsize >= 2 ** 32:
 
     import NetworkExtension
 
-    class TestNEVPNProtocolIKEv2 (TestCase):
-        @min_os_level('10.11')
+    class TestNEVPNProtocolIKEv2(TestCase):
+        @min_os_level("10.11")
         def testConstants(self):
             self.assertEqual(NetworkExtension.NEVPNIKEv2EncryptionAlgorithmDES, 1)
             self.assertEqual(NetworkExtension.NEVPNIKEv2EncryptionAlgorithm3DES, 2)
@@ -14,7 +14,9 @@ if sys.maxsize >= 2 ** 32:
             self.assertEqual(NetworkExtension.NEVPNIKEv2EncryptionAlgorithmAES256, 4)
             self.assertEqual(NetworkExtension.NEVPNIKEv2EncryptionAlgorithmAES128GCM, 5)
             self.assertEqual(NetworkExtension.NEVPNIKEv2EncryptionAlgorithmAES256GCM, 6)
-            self.assertEqual(NetworkExtension.NEVPNIKEv2EncryptionAlgorithmChaCha20Poly1305, 7)
+            self.assertEqual(
+                NetworkExtension.NEVPNIKEv2EncryptionAlgorithmChaCha20Poly1305, 7
+            )
 
             self.assertEqual(NetworkExtension.NEVPNIKEv2IntegrityAlgorithmSHA96, 1)
             self.assertEqual(NetworkExtension.NEVPNIKEv2IntegrityAlgorithmSHA160, 2)
@@ -53,26 +55,40 @@ if sys.maxsize >= 2 ** 32:
             self.assertEqual(NetworkExtension.NEVPNIKEv2TLSVersion1_1, 2)
             self.assertEqual(NetworkExtension.NEVPNIKEv2TLSVersion1_2, 3)
 
-
-        @min_os_level('10.11')
+        @min_os_level("10.11")
         def testMethods(self):
-            self.assertResultIsBOOL(NetworkExtension.NEVPNProtocolIKEv2.useConfigurationAttributeInternalIPSubnet)
-            self.assertArgIsBOOL(NetworkExtension.NEVPNProtocolIKEv2.setUseConfigurationAttributeInternalIPSubnet_, 0)
+            self.assertResultIsBOOL(
+                NetworkExtension.NEVPNProtocolIKEv2.useConfigurationAttributeInternalIPSubnet
+            )
+            self.assertArgIsBOOL(
+                NetworkExtension.NEVPNProtocolIKEv2.setUseConfigurationAttributeInternalIPSubnet_,
+                0,
+            )
 
             self.assertResultIsBOOL(NetworkExtension.NEVPNProtocolIKEv2.disableMOBIKE)
             self.assertArgIsBOOL(NetworkExtension.NEVPNProtocolIKEv2.setDisableMOBIKE_, 0)
 
             self.assertResultIsBOOL(NetworkExtension.NEVPNProtocolIKEv2.disableRedirect)
-            self.assertArgIsBOOL(NetworkExtension.NEVPNProtocolIKEv2.setDisableRedirect_, 0)
+            self.assertArgIsBOOL(
+                NetworkExtension.NEVPNProtocolIKEv2.setDisableRedirect_, 0
+            )
 
             self.assertResultIsBOOL(NetworkExtension.NEVPNProtocolIKEv2.enablePFS)
             self.assertArgIsBOOL(NetworkExtension.NEVPNProtocolIKEv2.setEnablePFS_, 0)
 
-            self.assertResultIsBOOL(NetworkExtension.NEVPNProtocolIKEv2.enableRevocationCheck)
-            self.assertArgIsBOOL(NetworkExtension.NEVPNProtocolIKEv2.setEnableRevocationCheck_, 0)
+            self.assertResultIsBOOL(
+                NetworkExtension.NEVPNProtocolIKEv2.enableRevocationCheck
+            )
+            self.assertArgIsBOOL(
+                NetworkExtension.NEVPNProtocolIKEv2.setEnableRevocationCheck_, 0
+            )
 
-            self.assertResultIsBOOL(NetworkExtension.NEVPNProtocolIKEv2.strictRevocationCheck)
-            self.assertArgIsBOOL(NetworkExtension.NEVPNProtocolIKEv2.setStrictRevocationCheck_, 0)
+            self.assertResultIsBOOL(
+                NetworkExtension.NEVPNProtocolIKEv2.strictRevocationCheck
+            )
+            self.assertArgIsBOOL(
+                NetworkExtension.NEVPNProtocolIKEv2.setStrictRevocationCheck_, 0
+            )
 
 
 if __name__ == "__main__":

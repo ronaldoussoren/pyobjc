@@ -2,7 +2,8 @@ from PyObjCTools.TestSupport import *
 
 import DiscRecording
 
-class TestDRErase (TestCase):
+
+class TestDRErase(TestCase):
     def testConstants(self):
         self.assertIsInstance(DiscRecording.DREraseTypeKey, unicode)
         self.assertIsInstance(DiscRecording.DREraseTypeQuick, unicode)

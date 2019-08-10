@@ -3,7 +3,8 @@ from PyObjCTools.TestSupport import *
 import iTunesLibrary
 import objc
 
-class TestITLibArtwork (TestCase):
+
+class TestITLibArtwork(TestCase):
     def test_classes(self):
         self.assertIsInstance(iTunesLibrary.ITLibArtwork, objc.objc_class)
 

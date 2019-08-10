@@ -2,7 +2,8 @@ from PyObjCTools.TestSupport import *
 
 import DiscRecording
 
-class TestDiscRecording (TestCase):
+
+class TestDiscRecording(TestCase):
     def testFunctions(self):
         DiscRecording.DRGetVersion
 

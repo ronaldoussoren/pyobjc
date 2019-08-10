@@ -9,13 +9,6 @@ from setuptools import setup
 setup(
     name="PyChart",
     app=["main.py"],
-    data_files=[
-        "English.lproj",
-        "Chart.qtz"
-    ],
-    setup_requires=[
-        "py2app",
-        "pyobjc-framework-Cocoa",
-        "pyobjc-framework-Quartz",
-    ]
+    data_files=["English.lproj", "Chart.qtz"],
+    setup_requires=["py2app", "pyobjc-framework-Cocoa", "pyobjc-framework-Quartz"],
 )

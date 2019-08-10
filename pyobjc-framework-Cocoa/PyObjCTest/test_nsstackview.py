@@ -1,7 +1,8 @@
 from PyObjCTools.TestSupport import *
 from AppKit import *
 
-class TestNSStackView (TestCase):
+
+class TestNSStackView(TestCase):
     def testConstants(self):
         self.assertEqual(NSUserInterfaceLayoutOrientationHorizontal, 0)
         self.assertEqual(NSUserInterfaceLayoutOrientationVertical, 1)
@@ -26,19 +27,19 @@ class TestNSStackView (TestCase):
         self.assertEqual(NSStackViewDistributionEqualSpacing, 3)
         self.assertEqual(NSStackViewDistributionEqualCentering, 4)
 
-    @min_os_level('10.9')
+    @min_os_level("10.9")
     def testMethods(self):
         self.assertResultIsBOOL(NSStackView.hasEqualSpacing)
         self.assertArgIsBOOL(NSStackView.setHasEqualSpacing_, 0)
 
-    @min_os_level('10.11')
+    @min_os_level("10.11")
     def testMethods10_11(self):
         self.assertResultIsBOOL(NSStackView.detachesHiddenViews)
         self.assertArgIsBOOL(NSStackView.setDetachesHiddenViews_, 0)
 
-    @min_sdk_level('10.10')
+    @min_sdk_level("10.10")
     def testProtocolObjects(self):
-        objc.protocolNamed('NSStackViewDelegate')
+        objc.protocolNamed("NSStackViewDelegate")
 
 
 if __name__ == "__main__":

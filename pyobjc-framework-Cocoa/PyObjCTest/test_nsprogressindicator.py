@@ -1,8 +1,8 @@
-
 from PyObjCTools.TestSupport import *
 from AppKit import *
 
-class TestNSProgressIndicator (TestCase):
+
+class TestNSProgressIndicator(TestCase):
     def testConstants(self):
         self.assertEqual(NSProgressIndicatorPreferredThickness, 14)
         self.assertEqual(NSProgressIndicatorPreferredSmallThickness, 10)

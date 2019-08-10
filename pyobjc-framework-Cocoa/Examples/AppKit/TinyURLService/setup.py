@@ -7,25 +7,17 @@ Usage:
 from setuptools import setup
 
 plist = dict(
-    CFBundleIdentifier = "net.sf.pyobjc.TinyURLService",
-    LSBackgroundOnly = 1,
-    NSServices = [
+    CFBundleIdentifier="net.sf.pyobjc.TinyURLService",
+    LSBackgroundOnly=1,
+    NSServices=[
         dict(
-            NSKeyEquivalent=dict(
-                default="0",
-            ),
-            NSMenuItem=dict(
-                default="Shorten URL"
-            ),
+            NSKeyEquivalent=dict(default="0"),
+            NSMenuItem=dict(default="Shorten URL"),
             NSMessage="doTinyURLService",
             NSPortName="TinyURLService",
-            NSReturnTypes=[
-                "NSStringPboardType",
-            ],
-            NSSendTypes=[
-                "NSStringPboardType",
-            ],
-        ),
+            NSReturnTypes=["NSStringPboardType"],
+            NSSendTypes=["NSStringPboardType"],
+        )
     ],
 )
 
@@ -33,8 +25,5 @@ plist = dict(
 setup(
     app=["TinyURLService.py"],
     options=dict(py2app=dict(plist=plist)),
-    setup_requires=[
-        "py2app",
-        "pyobjc-framework-Cocoa",
-    ]
+    setup_requires=["py2app", "pyobjc-framework-Cocoa"],
 )

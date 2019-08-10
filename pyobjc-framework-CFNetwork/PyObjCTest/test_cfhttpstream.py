@@ -2,8 +2,9 @@ from CFNetwork import *
 from PyObjCTools.TestSupport import *
 import os
 
-class TestCFHTTPStream (TestCase):
-    @min_os_level('10.5')
+
+class TestCFHTTPStream(TestCase):
+    @min_os_level("10.5")
     def testConstants10_5(self):
         self.assertIsInstance(kCFStreamPropertyHTTPFinalRequest, unicode)
 
@@ -47,15 +48,16 @@ class TestCFHTTPStream (TestCase):
             v = CFReadStreamCreateForStreamedHTTPRequest(None, req, v)
             self.assertIsInstance(v, CFReadStreamRef)
 
-            if os_level_key(os_release()) < os_level_key('10.15'):
+            if os_level_key(os_release()) < os_level_key("10.15"):
                 self.assertArgIsBOOL(CFHTTPReadStreamSetRedirectsAutomatically, 1)
                 CFHTTPReadStreamSetRedirectsAutomatically(v, True)
 
-            if os_level_key(os_release()) < os_level_key('10.10'):
+            if os_level_key(os_release()) < os_level_key("10.10"):
                 CFHTTPReadStreamSetProxy(v, "localhost", 8080)
 
         finally:
             os.dup2(fd_2, 2)
+
 
 if __name__ == "__main__":
     main()

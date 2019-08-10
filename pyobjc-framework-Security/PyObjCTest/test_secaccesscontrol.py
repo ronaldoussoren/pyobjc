@@ -2,9 +2,9 @@ from PyObjCTools.TestSupport import *
 
 import Security
 
-class TestSecAccessControl (TestCase):
 
-    @min_os_level('10.10')
+class TestSecAccessControl(TestCase):
+    @min_os_level("10.10")
     def test_types(self):
         self.assertIsCFType(Security.SecAccessControlRef)
 
@@ -22,15 +22,21 @@ class TestSecAccessControl (TestCase):
         self.assertEqual(Security.kSecAccessControlDevicePasscode, 1 << 4)
         self.assertEqual(Security.kSecAccessControlWatch, 1 << 5)
 
-
-    @min_os_level('10.10')
+    @min_os_level("10.10")
     def test_functions(self):
         self.assertResultHasType(Security.SecAccessControlCreateWithFlags, objc._C_ID)
         self.assertResultIsCFRetained(Security.SecAccessControlCreateWithFlags)
         self.assertArgHasType(Security.SecAccessControlCreateWithFlags, 0, objc._C_ID)
         self.assertArgHasType(Security.SecAccessControlCreateWithFlags, 1, objc._C_ID)
-        self.assertArgHasType(Security.SecAccessControlCreateWithFlags, 2, objc._C_NSUInteger)
-        self.assertArgHasType(Security.SecAccessControlCreateWithFlags, 3, objc._C_OUT + objc._C_PTR + objc._C_ID)
+        self.assertArgHasType(
+            Security.SecAccessControlCreateWithFlags, 2, objc._C_NSUInteger
+        )
+        self.assertArgHasType(
+            Security.SecAccessControlCreateWithFlags,
+            3,
+            objc._C_OUT + objc._C_PTR + objc._C_ID,
+        )
+
 
 if __name__ == "__main__":
     main()
