@@ -27,9 +27,9 @@ class TestEntry(TestCase):
         self.assertEqual(OSLog.OSLogEntryStoreCategoryLongTerm30, 8)
 
     def test_methods(self):
-        self.assertResultHasType(TestEntryHelper.activityIdentifier, objc._C_NSInteger)
+        self.assertResultHasType(TestEntryHelper.activityIdentifier, objc._C_NSUInteger)
         self.assertResultHasType(TestEntryHelper.processIdentifier, objc._C_INT)
-        self.assertResultHasType(TestEntryHelper.threadIdentifier, objc._C_LNGLNG)
+        self.assertResultHasType(TestEntryHelper.threadIdentifier, objc._C_ULNGLNG)
 
     @min_sdk_level("10.15")
     def test_protocols(self):

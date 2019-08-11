@@ -830,7 +830,6 @@ try:
         },
     )
     r(b"NSObject", b"saturation", {"retval": {"type": "f"}})
-    r(b"NSObject", b"scale", {"retval": {"type": "f"}})
     r(b"NSObject", b"scaleFactor", {"retval": {"type": "f"}})
     r(b"NSObject", b"setAcuteAngle:", {"arguments": {2: {"type": "f"}}})
     r(b"NSObject", b"setAlwaysSpecifyCompaction:", {"arguments": {2: {"type": "f"}}})
@@ -1004,7 +1003,6 @@ try:
     r(b"NSObject", b"setRotation:", {"arguments": {2: {"type": "f"}}})
     r(b"NSObject", b"setRows:", {"arguments": {2: {"type": "f"}}})
     r(b"NSObject", b"setSaturation:", {"arguments": {2: {"type": "f"}}})
-    r(b"NSObject", b"setScale:", {"arguments": {2: {"type": "f"}}})
     r(b"NSObject", b"setScaleFactor:", {"arguments": {2: {"type": "f"}}})
     r(b"NSObject", b"setShadowAmount:", {"arguments": {2: {"type": "f"}}})
     r(b"NSObject", b"setShadowDensity:", {"arguments": {2: {"type": "f"}}})
@@ -1048,7 +1046,6 @@ try:
         {"arguments": {2: {"type": sel32or64(b"{CGPoint=ff}", b"{CGPoint=dd}")}}},
     )
     r(b"NSObject", b"setThreshold:", {"arguments": {2: {"type": "f"}}})
-    r(b"NSObject", b"setTime:", {"arguments": {2: {"type": "f"}}})
     r(
         b"NSObject",
         b"setTimeOffset:",
@@ -1120,7 +1117,6 @@ try:
     )
     r(b"NSObject", b"texture", {"required": True, "retval": {"type": b"@"}})
     r(b"NSObject", b"threshold", {"retval": {"type": "f"}})
-    r(b"NSObject", b"time", {"retval": {"type": "f"}})
     r(b"NSObject", b"timeOffset", {"required": True, "retval": {"type": b"d"}})
     r(
         b"NSObject",

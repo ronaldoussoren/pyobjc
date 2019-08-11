@@ -14,6 +14,7 @@ import re
 import shutil
 import subprocess
 import sys
+import time
 import configparser
 from http.client import HTTPSConnection
 from urllib.parse import urlencode
@@ -315,8 +316,23 @@ def compiler_supports_arch(arch):
     os.unlink('/tmp/detect')
     return True
 
+def format_seconds(seconds):
+    seconds = int(seconds)
+
+    minutes, seconds = divmod(seconds, 60)
+    hours, minutes = divmod(minutes, 60)
+
+    if hours:
+        return "%d:%02d:%02d hours"%(hours, minutes, seconds)
+
+    elif minutes:
+        return "%02d:%02d minutes"%(minutes, seconds)
+
+    else:
+        return "%d seconds"%(seconds,)
 
 def main():
+    start_time = time.time()
     logging.basicConfig(stream=sys.stdout, level=logging.DEBUG)
     lg = logging.getLogger("runtests")
 
@@ -355,7 +371,7 @@ def main():
 
             with virtualenv("python{}".format(py_ver)) as interpreter:
                 # Install coverage to be able to have coverage reports
-                subprocess.check_call([interpreter, '-mpip', 'install', 'coverage'])
+                subprocess.check_call([interpreter, '-mpip', 'install', '-u', 'coverage', 'twine'])
 
                 # Install packages into the virtualenv
                 for project in build_order:
@@ -406,6 +422,9 @@ def main():
 
           status = subprocess.check_call([interpreter, '-mcoverage', 'combine'], cwd=proj_dir)
           status = subprocess.check_call([interpreter, '-mcoverage', 'html', '--include=Lib/*', '--omit=*/_metadata.py', '--title=%s'%(project,)], cwd=proj_dir)
+
+    end_time = time.time()
+    print("Testing took", format_seconds(end_time-start_time))
 
     if not ok:
         print()

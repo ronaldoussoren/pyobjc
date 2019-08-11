@@ -185,6 +185,22 @@
    }
   },
   "classes": {
+   "NSTextAttachmentCell": {
+    "methods": [
+     {
+      "selector": "wantsToTrackMouse",
+      "class_method": false,
+      "retval": { "type_override": "Z" }
+     },
+     {
+      "selector": "setWantsToTrackMouse:",
+      "class_method": false,
+      "args": {
+       "0": { "type_override": "Z" }
+      }
+     }
+    ]
+   },
    "NSWindowTabGroup": {
     "methods": [
      {

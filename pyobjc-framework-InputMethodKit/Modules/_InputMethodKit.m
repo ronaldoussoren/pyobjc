@@ -1,6 +1,6 @@
 #define PY_SSIZE_T_CLEAN
+#include "Python.h"
 #include "pyobjc-api.h"
-#include <Python.h>
 
 #if PyObjC_BUILD_RELEASE >= 1014
 /* The SDK included with Xcode 10 no longer includes a number

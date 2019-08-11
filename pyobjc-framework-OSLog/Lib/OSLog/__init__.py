@@ -18,7 +18,7 @@ sys.modules["OSLog"] = mod = objc.ObjCLazyModule(
     "com.apple.OSLog",
     objc.pathForFramework("/System/Library/Frameworks/OSLog.framework"),
     _metadata.__dict__,
-    _inline_list_,
+    None,
     {
         "__doc__": __doc__,
         "objc": objc,

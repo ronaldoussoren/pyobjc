@@ -410,12 +410,6 @@ _PyObjCTuple_GetItem(PyObject* tuple, Py_ssize_t idx)
 
 #endif /* __clang__ */
 
-/*
- *
- * Helper macros for Cocoa exceptions and the Python GIL
- *
- */
-
 #define PyObjC_BEGIN_WITH_GIL                                                            \
     {                                                                                    \
         PyGILState_STATE _GILState;                                                      \

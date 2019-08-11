@@ -1,6 +1,6 @@
 #define PY_SSIZE_T_CLEAN
+#include "Python.h"
 #include "pyobjc-api.h"
-#include <Python.h>
 
 #ifdef __LP64__
 /* Framework is 64-bit only */

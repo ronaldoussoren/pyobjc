@@ -2,8 +2,8 @@
  * Manual wrappers for CoreGraphics
  */
 #define PY_SSIZE_T_CLEAN
+#include "Python.h"
 #include "pyobjc-api.h"
-#include <Python.h>
 
 #import <ApplicationServices/ApplicationServices.h>
 
