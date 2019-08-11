@@ -986,7 +986,8 @@ class TestCIFilterBuiltins(TestCase):
             self.assert_rw_prop(TestCIBuiltinFilterHelper, "angle", objc._C_FLT)
 
         with self.subTest("CITransitionFilter"):
-            self.assert_rw_prop(TestCIBuiltinFilterHelper, "time", objc._C_FLT)
+            #self.assert_rw_prop(TestCIBuiltinFilterHelper, "time", objc._C_FLT)
+            pass
 
         with self.subTest("CIAccordionFoldTransition"):
             self.assert_rw_prop(TestCIBuiltinFilterHelper, "bottomHeight", objc._C_FLT)
@@ -1323,7 +1324,7 @@ class TestCIFilterBuiltins(TestCase):
             self.assert_rw_prop(
                 TestCIBuiltinFilterHelper, "striationContrast", objc._C_FLT
             )
-            self.assert_rw_prop(TestCIBuiltinFilterHelper, "time", objc._C_FLT)
+            #self.assert_rw_prop(TestCIBuiltinFilterHelper, "time", objc._C_FLT)
 
         with self.subTest("CIMeshGenerator"):
             self.assert_rw_prop(TestCIBuiltinFilterHelper, "width", objc._C_FLT)
@@ -1381,7 +1382,7 @@ class TestCIFilterBuiltins(TestCase):
             self.assert_rw_prop(
                 TestCIBuiltinFilterHelper, "striationContrast", objc._C_FLT
             )
-            self.assert_rw_prop(TestCIBuiltinFilterHelper, "time", objc._C_FLT)
+            #self.assert_rw_prop(TestCIBuiltinFilterHelper, "time", objc._C_FLT)
 
         with self.subTest("CITextImageGenerator"):
             self.assert_rw_prop(TestCIBuiltinFilterHelper, "fontSize", objc._C_FLT)

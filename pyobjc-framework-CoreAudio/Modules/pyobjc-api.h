@@ -51,7 +51,7 @@ struct pyobjc_api {
     Class (*cls_get_class)(PyObject*);
     id (*python_to_id)(PyObject*);
     PyObject* (*id_to_python)(id);
-    void (*err_objc_to_python)(NSException*);
+    void (*err_objc_to_python)(NSObject*);
     int (*py_to_objc)(const char*, PyObject*, void*);
     PyObject* (*objc_to_py)(const char*, void*);
     Py_ssize_t (*sizeof_type)(const char*);

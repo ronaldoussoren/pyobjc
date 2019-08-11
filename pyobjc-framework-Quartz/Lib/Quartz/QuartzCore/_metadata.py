@@ -1046,7 +1046,6 @@ try:
         {"arguments": {2: {"type": sel32or64(b"{CGPoint=ff}", b"{CGPoint=dd}")}}},
     )
     r(b"NSObject", b"setThreshold:", {"arguments": {2: {"type": "f"}}})
-    r(b"NSObject", b"setTime:", {"arguments": {2: {"type": "f"}}})
     r(
         b"NSObject",
         b"setTimeOffset:",
@@ -1118,7 +1117,6 @@ try:
     )
     r(b"NSObject", b"texture", {"required": True, "retval": {"type": b"@"}})
     r(b"NSObject", b"threshold", {"retval": {"type": "f"}})
-    r(b"NSObject", b"time", {"retval": {"type": "f"}})
     r(b"NSObject", b"timeOffset", {"required": True, "retval": {"type": b"d"}})
     r(
         b"NSObject",
