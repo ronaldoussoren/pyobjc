@@ -3,6 +3,15 @@ What's new in PyObjC
 
 An overview of the relevant changes in new, and older, releases.
 
+Version 5.3
+-----------
+
+* PR 21: Switch xcodebuild invocation to xcrun for sdk path
+
+  Patch by Clément Bouvier
+
+
+
 Version 5.2
 -----------
 
