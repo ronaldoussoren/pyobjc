@@ -182,6 +182,7 @@ from setuptools.command import develop, test, build_ext, install_lib
 import pkg_resources
 import shutil
 import os
+import subprocess
 import plistlib
 import sys
 
@@ -415,7 +416,10 @@ def Extension(*args, **kwds):
     if "-isysroot" not in CFLAGS:  # and os.path.exists('/usr/include/stdio.h'):
         # We're likely on a system with de Xcode Command Line Tools.
         # Explicitly use the most recent problems to avoid compile problems.
-        data = os.popen("xcodebuild -version -sdk macosx Path").read()
+        data = subprocess.check_output(
+                ["/usr/bin/xcrun", "-sdk", "macosx", "--show-sdk-path"]
+                universal_newlines=True,
+            ).strip()
         data = data.strip()
         if data:
             cflags.append("-isysroot")
