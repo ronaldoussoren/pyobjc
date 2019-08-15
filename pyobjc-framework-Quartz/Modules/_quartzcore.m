@@ -5,7 +5,10 @@
 #include "Python.h"
 #include "pyobjc-api.h"
 
+#if PyObjC_BUILD_RELEASE >= 1015
 #import <CoreImage/CIFilterBuiltins.h>
+#endif
+
 #import <CoreImage/CoreImage.h>
 #import <Quartz/Quartz.h>
 

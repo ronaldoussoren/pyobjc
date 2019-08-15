@@ -100,16 +100,6 @@ class TestAVContentKeySession(TestCase):
             1,
             b"v@@",
         )
-        self.assertArgIsBlock(
-            AVFoundation.AVContentKeySession.invalidatePersistableContentKey_options_completionHandler_,
-            2,
-            b"v@@",
-        )
-        self.assertArgIsBlock(
-            AVFoundation.AVContentKeySession.invalidateAllPersistableContentKeysForApp_options_completionHandler_,
-            2,
-            b"v@@",
-        )
 
         self.assertResultIsBOOL(
             AVFoundation.AVContentKeyRequest.respondByRequestingPersistableContentKeyRequestAndReturnError_
@@ -117,6 +107,20 @@ class TestAVContentKeySession(TestCase):
         self.assertArgIsOut(
             AVFoundation.AVContentKeyRequest.respondByRequestingPersistableContentKeyRequestAndReturnError_,
             0,
+        )
+
+    @min_os_level("10.15")
+    def testMethods10_15(self):
+        self.assertArgIsBlock(
+            AVFoundation.AVContentKeySession.invalidatePersistableContentKey_options_completionHandler_,
+            2,
+            b"v@@",
+        )
+
+        self.assertArgIsBlock(
+            AVFoundation.AVContentKeySession.invalidateAllPersistableContentKeysForApp_options_completionHandler_,
+            2,
+            b"v@@",
         )
 
     @min_sdk_level("10.12.4")

@@ -371,7 +371,7 @@ def main():
 
             with virtualenv("python{}".format(py_ver)) as interpreter:
                 # Install coverage to be able to have coverage reports
-                subprocess.check_call([interpreter, '-mpip', 'install', '-u', 'coverage', 'twine'])
+                subprocess.check_call([interpreter, '-mpip', 'install', '-U', 'coverage', 'twine'])
 
                 # Install packages into the virtualenv
                 for project in build_order:

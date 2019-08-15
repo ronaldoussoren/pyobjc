@@ -562,7 +562,7 @@ class oc_build_ext(build_ext.build_ext):
         if self.sdk_root is None:
             if os.path.exists("/usr/bin/xcodebuild"):
                 self.sdk_root = subprocess.check_output(
-                    ["/usr/bin/xcrun", "-sdk", "macosx", "--show-sdk-path"]
+                    ["/usr/bin/xcrun", "-sdk", "macosx", "--show-sdk-path"],
                     universal_newlines=True,
                 ).strip()
 

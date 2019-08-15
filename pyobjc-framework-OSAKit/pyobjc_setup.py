@@ -417,7 +417,7 @@ def Extension(*args, **kwds):
         # We're likely on a system with de Xcode Command Line Tools.
         # Explicitly use the most recent problems to avoid compile problems.
         data = subprocess.check_output(
-                ["/usr/bin/xcrun", "-sdk", "macosx", "--show-sdk-path"]
+                ["/usr/bin/xcrun", "-sdk", "macosx", "--show-sdk-path"],
                 universal_newlines=True,
             ).strip()
         data = data.strip()
