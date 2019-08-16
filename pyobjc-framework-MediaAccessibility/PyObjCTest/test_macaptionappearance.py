@@ -105,6 +105,8 @@ class TestMAAudibleMedia(TestCase):
         )
         self.assertArgIsOut(MediaAccessibility.MACaptionAppearanceGetTextEdgeStyle, 1)
 
+    @min_os_level("10.15")
+    def test_functions10_15(self):
         MediaAccessibility.MACaptionAppearanceDidDisplayCaptions
 
 

@@ -15,7 +15,7 @@ VERSION = "6.0a0"
 setup(
     name="pyobjc-framework-QuickLookThumbnailing",
     description="Wrappers for the framework QuickLookThumbnailing on macOS",
-    min_os_level="10.7",
+    min_os_level="10.15",
     packages=["QuickLookThumbnailing"],
     version=VERSION,
     install_requires=[

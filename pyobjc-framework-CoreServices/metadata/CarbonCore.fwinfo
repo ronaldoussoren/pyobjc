@@ -6023,7 +6023,6 @@
    "CFragSystem7DiskFlatLocator": { "ignore": true },
    "CFragSystem7SegmentedLocator": { "ignore": true },
    "CFragCFBundleLocator": { "ignore": true },
-   "ConvertBundlePreLocator": { "ignore": true },
    "CFragSystem7InitBlock": { "ignore": true },
    "PEFExportedSymbolKey": { "ignore": true },
    "XLibExportedSymbolKey": { "ignore": true },
@@ -6046,6 +6045,7 @@
    "TextChunk": { "ignore": true }
   },
   "functions": {
+   "ConvertBundlePreLocator": { "ignore": true },
    "PBFlushVolSync": { "ignore": true },
    "PBFlushVolAsync": { "ignore": true },
    "PBHOpenDenySync": { "ignore": true },

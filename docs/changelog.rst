@@ -39,6 +39,7 @@ Version 6.0a0
   - ExecutionPolicy
   - FileProvider
   - FileProviderUI
+  - LinkPresentation
   - Logging
   - OSLog
   - PencilKit

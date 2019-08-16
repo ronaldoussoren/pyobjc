@@ -30,6 +30,8 @@ class TestICCameraDevice(TestCase):
         self.assertIsInstance(ICDeleteAfterSuccessfulDownload, unicode)
         self.assertIsInstance(ICDownloadSidecarFiles, unicode)
 
+    @min_os_level('10.15')
+    def testConstants10_15(self):
         self.assertIsInstance(ICDeleteSuccessful, unicode)
         self.assertIsInstance(ICDeleteCanceled, unicode)
         self.assertIsInstance(ICDeleteFailed, unicode)
@@ -65,7 +67,6 @@ class TestICCameraDevice(TestCase):
         )
 
     def testMethods(self):
-        self.assertResultIsBOOL(ICCameraDevice.isEjectable)
         self.assertResultIsBOOL(ICCameraDevice.isLocked)
         self.assertResultIsBOOL(ICCameraDevice.isAccessRestrictedAppleDevice)
         self.assertResultIsBOOL(ICCameraDevice.iCloudPhotosEnabled)
@@ -97,6 +98,7 @@ class TestICCameraDevice(TestCase):
 
     @min_os_level("10.15")
     def test_methods10_15(self):
+        self.assertResultIsBOOL(ICCameraDevice.isEjectable)
         self.assertArgIsBlock(
             ICCameraDevice.requestDeleteFiles_deleteFailed_completion_, 1, b"v@"
         )

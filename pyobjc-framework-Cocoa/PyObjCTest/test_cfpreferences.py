@@ -139,7 +139,7 @@ class TestPreferences(TestCase):
             "com.apple.dock", kCFPreferencesCurrentUser, kCFPreferencesAnyHost
         )
         self.assertIsInstance(keys, CFArrayRef)
-        self.assertTrue("region" in keys)
+        self.assertTrue("region" in keys or "version" in keys)
 
     def testConstants(self):
         self.assertIsInstance(kCFPreferencesAnyApplication, unicode)

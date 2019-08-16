@@ -15,7 +15,7 @@ VERSION = "6.0a0"
 setup(
     name="pyobjc-framework-LinkPresentation",
     description="Wrappers for the framework LinkPresentation on macOS",
-    min_os_level="10.7",
+    min_os_level="10.15",
     packages=["LinkPresentation"],
     version=VERSION,
     install_requires=[

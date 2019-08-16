@@ -13,8 +13,8 @@ if sys.maxsize >= 2 ** 32:
             self.assertEqual(Vision.VNDetectFaceLandmarksRequestRevision2, 2)
             self.assertEqual(Vision.VNDetectFaceLandmarksRequestRevision3, 3)
 
-        @min_os_level("10.13")
-        def test_methods(self):
+        @min_os_level("10.15")
+        def test_methods10_15(self):
             self.assertResultIsBOOL(
                 Vision.VNDetectFaceLandmarksRequest.revision_supportsConstellation_
             )
