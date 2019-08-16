@@ -318,11 +318,6 @@
      "already_cfretained": true
     }
    },
-   "CGColorConversionInfoGetTypeID": {
-    "retval": {
-     "typestr": [ "I", "Q" ]
-    }
-   },
    "CGColorConverterCreateSimple": {
     "args": {
      "0": { "type_override": "^{CGColorSpace=}" },
@@ -3008,7 +3003,7 @@
     }
    },
    "CGColorConversionInfoGetTypeID": {
-    "retval": { "typestr": [ "I", "Q" ] },
+    "retval": { "type_override": [ "I", "Q" ] },
     "args": {
     }
    },
