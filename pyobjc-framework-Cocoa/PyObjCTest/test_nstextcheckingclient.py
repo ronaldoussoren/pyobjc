@@ -91,6 +91,7 @@ class TestNSTextCheckingClient(TestCase):
         self.assertEqual(NSTextInputTraitTypeNo, 1)
         self.assertEqual(NSTextInputTraitTypeYes, 2)
 
+    @onlyOn64Bit
     def test_methods(self):
         self.assertResultHasType(
             TestNSTextCheckingClientHelper.autocorrectionType, objc._C_NSInteger

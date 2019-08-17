@@ -347,6 +347,9 @@ class TestNSURLSession(TestCase):
     def testProtocols10_11(self):
         objc.protocolNamed("NSURLSessionStreamDelegate")
 
+   
+    @onlyOn64Bit
+    def test_protocol_methods10_15(self):
         self.assertArgHasType(
             TestNSURLSessionWebSocketDelegateHelper.URLSession_webSocketTask_didCloseWithCode_reason_,
             2,

@@ -773,7 +773,7 @@ try:
         b"preferredSizeOfLayer:",
         {
             "required": False,
-            "retval": {"type": b"{CGSize=dd}"},
+            "retval": {"type": sel32or64(b"{_NSSize=ff}", b"{CGSize=dd}")},
             "arguments": {2: {"type": b"@"}},
         },
     )
