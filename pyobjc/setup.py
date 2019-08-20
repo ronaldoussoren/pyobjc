@@ -89,7 +89,6 @@ FRAMEWORK_WRAPPERS = [
     ("LaunchServices", None, None),
     ("LinkPresentation", "10.15", None),
     ("LocalAuthentication", "10.10", None),
-    ("Logging", "10.15", None),
     ("MapKit", "10.9", None),
     ("MediaAccessibility", "10.9", None),
     ("MediaLibrary", "10.9", None),

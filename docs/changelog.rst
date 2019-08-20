@@ -22,7 +22,7 @@ Version 6.0a0
 
     The macro "PyObjC_DURING", and its siblings, have been removed as well.
 
-* Updated bindings for macOS 10.15 (beta 5)
+* Updated bindings for macOS 10.15 (beta 6)
 
 * The userspace driver frameworks introduced in macOS 10.15
   (DriverKit and related frameworks) will not be exposed through
@@ -40,7 +40,6 @@ Version 6.0a0
   - FileProvider
   - FileProviderUI
   - LinkPresentation
-  - Logging
   - OSLog
   - PencilKit
   - PushKit
@@ -52,6 +51,7 @@ Version 6.0a0
 * Add new framework wrappers for a number of older
   frameworks:
 
+  - Metal (new in macOS 10.11)
   - MetalKit (new in macOS 10.11)
 
 Version 5.2

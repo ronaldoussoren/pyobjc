@@ -15,6 +15,13 @@ more capabilities that aren't in the official format.
 As of PyObjC 2.4 [1]_ use of bridgesupport files is deprecated, the
 :doc:`compiled metadata system <compiled>` allows for faster and lazy loading.
 
+.. note::
+
+   macOS ships with bridgesupport files in most frameworks, but the
+   quality of those files is in general pretty bad and those files
+   are therefore not used by PyObjC.
+
+
 Basic structure and use
 -----------------------
 

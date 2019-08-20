@@ -260,8 +260,6 @@ The framework name links to API notes for that framework, the python packages li
 +------------------------------------------------------------------+---------------------------------------------+-----------------------------------------+
 | :doc:`LocalAuthentication </apinotes/LocalAuthentication>`       | `pyobjc-framework-LocalAuthentication`_     |                                         |
 +------------------------------------------------------------------+---------------------------------------------+-----------------------------------------+
-| :doc:`Logging </apinotes/Logging>`                               | `pyobjc-framework-Logging`_                 |                                         |
-+------------------------------------------------------------------+---------------------------------------------+-----------------------------------------+
 | :doc:`MapKit </apinotes/MapKit>`                                 | `pyobjc-framework-MapKit`_                  |                                         |
 +------------------------------------------------------------------+---------------------------------------------+-----------------------------------------+
 | :doc:`MediaAccessibility </apinotes/MediaAccessibility>`         | `pyobjc-framework-MediaAccessibility`_      |                                         |
@@ -274,7 +272,7 @@ The framework name links to API notes for that framework, the python packages li
 +------------------------------------------------------------------+---------------------------------------------+-----------------------------------------+
 | :doc:`Message </apinotes/Message>`                               | `pyobjc-framework-Message`_                 |                                         |
 +------------------------------------------------------------------+---------------------------------------------+-----------------------------------------+
-| Metal                                                            | -                                           | Not wrapped yet.                        |
+| :doc:`Metal </apinotes/Metal>`                                   | `pyobjc-framework-Metal`_                   |                                         |
 +------------------------------------------------------------------+---------------------------------------------+-----------------------------------------+
 | :doc:`MetalKit </apinotes/MetalKit>`                             | `pyobjc-framework-MetalKit`_                |                                         |
 +------------------------------------------------------------------+---------------------------------------------+-----------------------------------------+
@@ -480,7 +478,7 @@ prioritizing work.
 .. _`pyobjc-framework-CoreML`: https://pypi.org/project/pyobjc-framework-CoreML/
 .. _`pyobjc-framework-CoreMediaIO`: https://pypi.org/project/pyobjc-framework-CoreMediaIO/
 .. _`pyobjc-framework-CoreMedia`: https://pypi.org/project/pyobjc-framework-CoreMedia/
-.. _`pyobjc-framework-CoreMotion`: https://pypi.org/project/pyobjc-framework-MetalKit/
+.. _`pyobjc-framework-CoreMotion`: https://pypi.org/project/pyobjc-framework-CoreMotion/
 .. _`pyobjc-framework-CoreServices`: https://pypi.org/project/pyobjc-framework-CoreServices/
 .. _`pyobjc-framework-CoreSpotlight`: https://pypi.org/project/pyobjc-framework-CoreSpotlight/
 .. _`pyobjc-framework-CoreText`: https://pypi.org/project/pyobjc-framework-CoreText/
@@ -514,13 +512,13 @@ prioritizing work.
 .. _`pyobjc-framework-LaunchServices`: https://pypi.org/project/pyobjc-framework-LaunchServices/
 .. _`pyobjc-framework-LinkPresentation`: https://pypi.org/project/pyobjc-framework-LinkPresentation/
 .. _`pyobjc-framework-LocalAuthentication`: https://pypi.org/project/pyobjc-framework-LocalAuthentication/
-.. _`pyobjc-framework-Logging`: https://pypi.org/project/pyobjc-framework-Logging/
 .. _`pyobjc-framework-MapKit`: https://pypi.org/project/pyobjc-framework-MapKit/
 .. _`pyobjc-framework-MediaAccessibility`: https://pypi.org/project/pyobjc-framework-MediaAccessibility/
 .. _`pyobjc-framework-MediaLibrary`: https://pypi.org/project/pyobjc-framework-MediaLibrary/
 .. _`pyobjc-framework-MediaPlayer`: https://pypi.org/project/pyobjc-framework-MediaPlayer/
 .. _`pyobjc-framework-MediaToolbox`: https://pypi.org/project/pyobjc-framework-MediaToolbox/
 .. _`pyobjc-framework-Message`: https://pypi.org/project/pyobjc-framework-Message/
+.. _`pyobjc-framework-Metal`: https://pypi.org/project/pyobjc-framework-Metal/
 .. _`pyobjc-framework-MetalKit`: https://pypi.org/project/pyobjc-framework-MetalKit/
 .. _`pyobjc-framework-ModelIO`: https://pypi.org/project/pyobjc-framework-ModelIO/
 .. _`pyobjc-framework-MultipeerConnectivity`: https://pypi.org/project/pyobjc-framework-MultipeerConnectivity/

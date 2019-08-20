@@ -10,9 +10,6 @@ class TestNSFileProviderEnumerationHelper(FileProvider.NSObject):
     def currentSyncAnchorWithCompletionHandler_(self, a):
         pass
 
-    def didPresentEnumeratorInWindow_frontmost_(self, a, b):
-        pass
-
 
 class TestNSFileProviderEnumeration(TestCase):
     @min_os_level("10.15")
@@ -41,16 +38,6 @@ class TestNSFileProviderEnumeration(TestCase):
             b"v",
         )
 
-        self.assertArgHasType(
-            TestNSFileProviderEnumerationHelper.didPresentEnumeratorInWindow_frontmost_,
-            0,
-            objc._C_UINT,
-        )
-        self.assertArgHasType(
-            TestNSFileProviderEnumerationHelper.didPresentEnumeratorInWindow_frontmost_,
-            1,
-            objc._C_NSBOOL,
-        )
 
     @min_os_level("10.15")
     def test_methods10_15(self):
