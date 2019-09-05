@@ -55,7 +55,7 @@ if sys.maxsize > 2 ** 32:
                 EventKit.EKEventStore.requestAccessToEntityType_completion_, 1, b"vZ@"
             )
 
-        @min_os_level("10.14")
+        @min_os_level("10.15")
         def testMethods10_14(self):
             self.assertResultIsBOOL(EventKit.EKEventStore.saveEvent_span_error_)
             self.assertArgIsOut(EventKit.EKEventStore.saveEvent_span_error_, 2)

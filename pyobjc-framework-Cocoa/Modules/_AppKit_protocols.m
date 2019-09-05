@@ -240,8 +240,8 @@ static void __attribute__((__used__)) use_protocols(void)
     Py_XDECREF(p);
     p = PyObjC_IdToPython(@protocol(NSAccessibilityCustomRotorItemSearchDelegate));
     Py_XDECREF(p);
-    p = PyObjC_IdToPython(@protocol(NSAccessibilityCustomRotorItemLoadDelegate));
-    Py_XDECREF(p);
+    //p = PyObjC_IdToPython(@protocol(NSAccessibilityCustomRotorItemLoadDelegate));
+    //Py_XDECREF(p);
     p = PyObjC_IdToPython(@protocol(NSCollectionViewPrefetching));
     Py_XDECREF(p);
     p = PyObjC_IdToPython(@protocol(NSUserInterfaceCompression));
@@ -268,17 +268,17 @@ static void __attribute__((__used__)) use_protocols(void)
     Py_XDECREF(p);
 #endif
 #if PyObjC_BUILD_RELEASE >= 1014
+#endif
+#if PyObjC_BUILD_RELEASE >= 1015
     p = PyObjC_IdToPython(@protocol(NSCollectionLayoutContainer));
+    Py_XDECREF(p);
+    p = PyObjC_IdToPython(@protocol(NSTextInputTraits));
+    Py_XDECREF(p);
+    p = PyObjC_IdToPython(@protocol(NSSharingServicePickerToolbarItemDelegate));
     Py_XDECREF(p);
     p = PyObjC_IdToPython(@protocol(NSCollectionLayoutEnvironment));
     Py_XDECREF(p);
     p = PyObjC_IdToPython(@protocol(NSCollectionLayoutVisibleItem));
-    Py_XDECREF(p);
-#endif
-#if PyObjC_BUILD_RELEASE >= 1015
-    p = PyObjC_IdToPython(@protocol(NSTextInputTraits));
-    Py_XDECREF(p);
-    p = PyObjC_IdToPython(@protocol(NSSharingServicePickerToolbarItemDelegate));
     Py_XDECREF(p);
 #endif
 }

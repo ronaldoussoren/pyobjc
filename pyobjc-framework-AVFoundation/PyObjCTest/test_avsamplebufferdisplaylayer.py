@@ -29,7 +29,7 @@ class TestAVSampleBufferDisplayLayer(TestCase):
             b"v",
         )
 
-    @min_os_level("10.14.4")
+    @min_os_level("10.15")
     def testMethods10_15(self):
         # Header says 10.15, but new in the 10.14.4 SDK headers
         self.assertResultIsBOOL(AVFoundation.AVSampleBufferDisplayLayer.preventsCapture)

@@ -39,8 +39,8 @@ if sys.maxsize > 2 ** 32:
                 0,
             )
 
-        @min_os_level("10.14")
-        def testMethods10_14(self):
+        @min_os_level("10.15")
+        def testMethods10_15(self):
             self.assertResultIsBOOL(GameController.GCController.isSnapshot)
 
         @min_os_level("10.9")

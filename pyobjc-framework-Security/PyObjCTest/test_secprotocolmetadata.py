@@ -81,6 +81,8 @@ class TestSecProtocolMetadata(TestCase):
             Security.sec_protocol_metadata_create_secret_with_context, 4, 3
         )
 
+    @min_os_level("10.15")
+    def test_functions10_14_missing(self):
         Security.sec_protocol_metadata_get_negotiated_tls_ciphersuite
 
         self.assertResultIsNullTerminated(Security.sec_protocol_metadata_get_server_name)

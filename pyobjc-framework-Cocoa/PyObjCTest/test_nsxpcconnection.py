@@ -57,7 +57,7 @@ class TestNSXPCConnection(TestCase):
             b"v@",
         )
 
-    @min_os_level("10.14")
+    @min_os_level("10.15") # Not actually on 10.14...
     def testMethods10_14(self):
         self.assertArgIsBOOL(
             Foundation.NSXPCInterface.setXPCType_forSelector_argumentIndex_ofReply_, 3

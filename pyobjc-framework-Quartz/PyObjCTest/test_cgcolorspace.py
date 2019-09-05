@@ -80,7 +80,7 @@ class TestCGColorSpace(TestCase):
         self.assertIsInstance(kCGColorSpaceExtendedLinearITUR_2020, unicode)
         self.assertIsInstance(kCGColorSpaceExtendedLinearDisplayP3, unicode)
 
-    @min_os_level("10.14.6")
+    @min_os_level("10.15")
     def testConstants10_14_6(self):
         self.assertIsInstance(kCGColorSpaceDisplayP3_PQ_EOTF, unicode)
         self.assertIsInstance(kCGColorSpaceDisplayP3_HLG, unicode)
@@ -209,8 +209,8 @@ class TestCGColorSpace(TestCase):
     def testFunctions10_13(self):
         CGColorSpaceGetName
 
-    @min_os_level("10.14.6")
-    def testFunctions10_14_6(self):
+    @min_os_level("10.15")
+    def testFunctions10_15(self):
         CGColorSpaceIsHDR
 
 
