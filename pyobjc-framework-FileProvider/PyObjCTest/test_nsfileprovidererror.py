@@ -16,12 +16,3 @@ class TestNSFileProviderError(TestCase):
         self.assertEqual(FileProvider.NSFileProviderErrorServerUnreachable, -1004)
         self.assertEqual(FileProvider.NSFileProviderErrorNoSuchItem, -1005)
         self.assertEqual(FileProvider.NSFileProviderErrorVersionOutOfDate, -1006)
-        self.assertEqual(FileProvider.NSFileProviderErrorDirectoryNotEmpty, -1007)
-
-    @min_os_level("10.15")
-    def test_constants10_15(self):
-        self.assertIsInstance(FileProvider.NSFileProviderErrorDomain, unicode)
-        self.assertIsInstance(FileProvider.NSFileProviderErrorItemKey, unicode)
-        self.assertIsInstance(
-            FileProvider.NSFileProviderErrorNonExistentItemIdentifierKey, unicode
-        )

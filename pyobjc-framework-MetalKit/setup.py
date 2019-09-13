@@ -30,6 +30,9 @@ setup(
         )
     ],
     version=VERSION,
-    install_requires=["pyobjc-core>=" + VERSION, "pyobjc-framework-Cocoa>=" + VERSION],
+    install_requires=["pyobjc-core>=" + VERSION,
+        "pyobjc-framework-Cocoa>=" + VERSION,
+        "pyobjc-framework-Metal>=" + VERSION
+        ],
     long_description=__doc__,
 )

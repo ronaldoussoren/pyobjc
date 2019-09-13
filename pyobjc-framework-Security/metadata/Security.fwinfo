@@ -99,6 +99,7 @@
    "SecKeychainCallbackInfo": { "typestr": "{SecKeychainCallbackInfo=I@@i}", "fieldnames": [ "version", "item", "keychain", "pid" ] }
   },
   "enum": {
+   "kCMSCertificateChainWithRootOrFail": { "value": 4 },
    "errSSLATSViolation": { "value": -9880 },
    "errSSLATSMinimumVersionViolation": { "value": -9881 },
    "errSSLATSCiphersuiteViolation": { "value": -9882 },

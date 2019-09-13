@@ -45,6 +45,3 @@ class TestNSFileProviderEnumeration(TestCase):
             FileProvider.NSFileProviderExtension.enumeratorForContainerItemIdentifier_error_,
             1,
         )
-        self.assertArgIsOut(
-            FileProvider.NSFileProviderExtension.enumeratorForSearchQuery_error_, 1
-        )

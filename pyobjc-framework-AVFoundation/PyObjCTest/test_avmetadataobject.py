@@ -31,6 +31,11 @@ class TestAVMetadataObject(TestCase):
         self.assertIsInstance(AVFoundation.AVMetadataObjectTypeITF14Code, unicode)
         self.assertIsInstance(AVFoundation.AVMetadataObjectTypeDataMatrixCode, unicode)
 
+        self.assertIsInstance(AVFoundation.AVMetadataObjectTypeHumanBody, unicode)
+        self.assertIsInstance(AVFoundation.AVMetadataObjectTypeCatBody, unicode)
+        self.assertIsInstance(AVFoundation.AVMetadataObjectTypeDogBody, unicode)
+        self.assertIsInstance(AVFoundation.AVMetadataObjectTypeSalientObject, unicode)
+
 
 if __name__ == "__main__":
     main()

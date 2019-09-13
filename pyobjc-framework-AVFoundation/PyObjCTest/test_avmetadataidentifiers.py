@@ -748,6 +748,17 @@ class TestAVMetadataIdentifiers(TestCase):
     def testConstants10_12(self):
         self.assertIsInstance(AVFoundation.AVMetadataIdentifierISOUserDataDate, unicode)
 
+    @min_os_level("10.15")
+    def testConstants10_15(self):
+        self.assertIsInstance(AVFoundation.AVMetadataIdentifierQuickTimeMetadataDetectedHumanBody, unicode)
+        self.assertIsInstance(AVFoundation.AVMetadataIdentifierQuickTimeMetadataDetectedCatBody, unicode)
+        self.assertIsInstance(AVFoundation.AVMetadataIdentifierQuickTimeMetadataDetectedDogBody, unicode)
+        self.assertIsInstance(AVFoundation.AVMetadataIdentifierQuickTimeMetadataDetectedSalientObject, unicode)
+        self.assertIsInstance(AVFoundation.AVMetadataIdentifierQuickTimeMetadataAutoLivePhoto, unicode)
+        self.assertIsInstance(AVFoundation.AVMetadataIdentifierQuickTimeMetadataLivePhotoVitalityScore, unicode)
+        self.assertIsInstance(AVFoundation.AVMetadataIdentifierQuickTimeMetadataLivePhotoVitalityScoringVersion, unicode)
+        self.assertIsInstance(AVFoundation.AVMetadataIdentifierQuickTimeMetadataSpatialOverCaptureQualityScore, unicode)
+        self.assertIsInstance(AVFoundation.AVMetadataIdentifierQuickTimeMetadataSpatialOverCaptureQualityScoringVersion, unicode)
 
 if __name__ == "__main__":
     main()

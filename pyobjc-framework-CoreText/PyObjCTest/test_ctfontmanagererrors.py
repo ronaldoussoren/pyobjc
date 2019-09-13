@@ -14,6 +14,7 @@ class TestCTFontManagerErrors(TestCase):
         self.assertEqual(kCTFontManagerErrorUnrecognizedFormat, 103)
         self.assertEqual(kCTFontManagerErrorInvalidFontData, 104)
         self.assertEqual(kCTFontManagerErrorAlreadyRegistered, 105)
+        self.assertEqual(kCTFontManagerErrorExceededResourceLimit, 106)
 
         self.assertEqual(kCTFontManagerErrorNotRegistered, 201)
         self.assertEqual(kCTFontManagerErrorInUse, 202)

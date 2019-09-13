@@ -22,6 +22,7 @@ class TestCMSEncoder(TestCase):
         self.assertEqual(Security.kCMSCertificateSignerOnly, 1)
         self.assertEqual(Security.kCMSCertificateChain, 2)
         self.assertEqual(Security.kCMSCertificateChainWithRoot, 3)
+        self.assertEqual(Security.kCMSCertificateChainWithRootOrFail, 4)
 
     @min_os_level("10.11")
     def test_constants_10_11(self):
