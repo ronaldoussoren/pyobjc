@@ -51,8 +51,9 @@ Version 6.0a0
 * Add new framework wrappers for a number of older
   frameworks:
 
-  - Metal (new in macOS 10.11)
   - MetalKit (new in macOS 10.11)
+
+* Issue #271: Fix crash when creating NSData objects on macOS 10.15
 
 Version 5.2
 -----------

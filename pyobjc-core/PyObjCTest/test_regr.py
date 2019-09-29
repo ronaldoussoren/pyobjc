@@ -339,6 +339,11 @@ class TestDocTestProblem(TestCase):
         f = doctest.DocTestFinder(verbose=False)
         f.find(DocTestHelper)
 
+class TestNSDataCreationIssue (TestCase):
+    def test_issue271(self):
+        cls = objc.lookUpClass("NSData")
+
+        cls.alloc().initWithData_(b"hello")
 
 if __name__ == "__main__":
     main()
