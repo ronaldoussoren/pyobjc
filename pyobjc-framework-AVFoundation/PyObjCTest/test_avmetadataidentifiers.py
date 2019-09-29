@@ -749,16 +749,27 @@ class TestAVMetadataIdentifiers(TestCase):
         self.assertIsInstance(AVFoundation.AVMetadataIdentifierISOUserDataDate, unicode)
 
     @min_os_level("10.15")
+    @expectedFailure
     def testConstants10_15(self):
-        self.assertIsInstance(AVFoundation.AVMetadataIdentifierQuickTimeMetadataDetectedHumanBody, unicode)
-        self.assertIsInstance(AVFoundation.AVMetadataIdentifierQuickTimeMetadataDetectedCatBody, unicode)
-        self.assertIsInstance(AVFoundation.AVMetadataIdentifierQuickTimeMetadataDetectedDogBody, unicode)
-        self.assertIsInstance(AVFoundation.AVMetadataIdentifierQuickTimeMetadataDetectedSalientObject, unicode)
-        self.assertIsInstance(AVFoundation.AVMetadataIdentifierQuickTimeMetadataAutoLivePhoto, unicode)
-        self.assertIsInstance(AVFoundation.AVMetadataIdentifierQuickTimeMetadataLivePhotoVitalityScore, unicode)
-        self.assertIsInstance(AVFoundation.AVMetadataIdentifierQuickTimeMetadataLivePhotoVitalityScoringVersion, unicode)
-        self.assertIsInstance(AVFoundation.AVMetadataIdentifierQuickTimeMetadataSpatialOverCaptureQualityScore, unicode)
-        self.assertIsInstance(AVFoundation.AVMetadataIdentifierQuickTimeMetadataSpatialOverCaptureQualityScoringVersion, unicode)
+        with self.subTest("humanbody"):
+            self.assertIsInstance(AVFoundation.AVMetadataIdentifierQuickTimeMetadataDetectedHumanBody, unicode)
+
+        with self.subTest("catbody"):
+            self.assertIsInstance(AVFoundation.AVMetadataIdentifierQuickTimeMetadataDetectedCatBody, unicode)
+        with self.subTest("dogbody"):
+            self.assertIsInstance(AVFoundation.AVMetadataIdentifierQuickTimeMetadataDetectedDogBody, unicode)
+        with self.subTest("salientobject"):
+            self.assertIsInstance(AVFoundation.AVMetadataIdentifierQuickTimeMetadataDetectedSalientObject, unicode)
+        with self.subTest("livephoto"):
+            self.assertIsInstance(AVFoundation.AVMetadataIdentifierQuickTimeMetadataAutoLivePhoto, unicode)
+        with self.subTest("vitalityscore"):
+            self.assertIsInstance(AVFoundation.AVMetadataIdentifierQuickTimeMetadataLivePhotoVitalityScore, unicode)
+        with self.subTest("vitalityscoringversion"):
+            self.assertIsInstance(AVFoundation.AVMetadataIdentifierQuickTimeMetadataLivePhotoVitalityScoringVersion, unicode)
+        with self.subTest("qualityscore"):
+            self.assertIsInstance(AVFoundation.AVMetadataIdentifierQuickTimeMetadataSpatialOverCaptureQualityScore, unicode)
+        with self.subTest("qaulityscoringversion"):
+            self.assertIsInstance(AVFoundation.AVMetadataIdentifierQuickTimeMetadataSpatialOverCaptureQualityScoringVersion, unicode)
 
 if __name__ == "__main__":
     main()

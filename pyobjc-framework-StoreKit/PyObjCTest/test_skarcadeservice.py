@@ -11,6 +11,11 @@ class TestSKArcadeService(TestCase):
             2,
             b"v@I@I@",
         )
+
+
+    @min_os_level("10.15")
+    @expectedFailure
+    def test_methods10_15_missing(self):
         self.assertArgIsBlock(
             StoreKit.SKArcadeService.arcadeSubscriptionStatusWithNonce_resultHandler_,
             2,

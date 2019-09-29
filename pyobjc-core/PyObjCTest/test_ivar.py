@@ -278,20 +278,21 @@ class TestStructConvenience(TestCase):
             ("char_text", objc._C_CHAR_AS_TEXT),
             ("char_int", objc._C_CHAR_AS_INT),
         ]:
-            self.assertHasAttr(objc.ivar, name)
-            v = getattr(objc.ivar, name)()
-            self.assertIsInstance(v, objc.ivar)
-            self.assertEqual(v.__typestr__, typestr)
-            self.assertEqual(v.__name__, None)
-            self.assertFalse(v.__isOutlet__)
-            self.assertFalse(v.__isSlot__)
+            with self.subTest(name):
+                self.assertHasAttr(objc.ivar, name)
+                v = getattr(objc.ivar, name)()
+                self.assertIsInstance(v, objc.ivar)
+                self.assertEqual(v.__typestr__, typestr)
+                self.assertEqual(v.__name__, None)
+                self.assertFalse(v.__isOutlet__)
+                self.assertFalse(v.__isSlot__)
 
-            v = getattr(objc.ivar, name)("my_var")
-            self.assertIsInstance(v, objc.ivar)
-            self.assertEqual(v.__typestr__, typestr)
-            self.assertEqual(v.__name__, "my_var")
-            self.assertFalse(v.__isOutlet__)
-            self.assertFalse(v.__isSlot__)
+                v = getattr(objc.ivar, name)("my_var")
+                self.assertIsInstance(v, objc.ivar)
+                self.assertEqual(v.__typestr__, typestr)
+                self.assertEqual(v.__name__, "my_var")
+                self.assertFalse(v.__isOutlet__)
+                self.assertFalse(v.__isSlot__)
 
 
 if __name__ == "__main__":

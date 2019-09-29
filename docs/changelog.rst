@@ -22,7 +22,7 @@ Version 6.0a0
 
     The macro "PyObjC_DURING", and its siblings, have been removed as well.
 
-* Updated bindings for macOS 10.15 (Xcode 11.0 build 11A419c)
+* Updated bindings for macOS 10.15 (Xcode 11.0)
 
 * The userspace driver frameworks introduced in macOS 10.15
   (DriverKit and related frameworks) will not be exposed through

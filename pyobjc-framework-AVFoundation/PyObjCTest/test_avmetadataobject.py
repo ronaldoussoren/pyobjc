@@ -31,11 +31,18 @@ class TestAVMetadataObject(TestCase):
         self.assertIsInstance(AVFoundation.AVMetadataObjectTypeITF14Code, unicode)
         self.assertIsInstance(AVFoundation.AVMetadataObjectTypeDataMatrixCode, unicode)
 
-        self.assertIsInstance(AVFoundation.AVMetadataObjectTypeHumanBody, unicode)
-        self.assertIsInstance(AVFoundation.AVMetadataObjectTypeCatBody, unicode)
-        self.assertIsInstance(AVFoundation.AVMetadataObjectTypeDogBody, unicode)
-        self.assertIsInstance(AVFoundation.AVMetadataObjectTypeSalientObject, unicode)
 
+    @min_os_level("10.15")
+    @expectedFailure
+    def testConstants10_15_missing(self):
+        with self.subTest("humanbody"):
+            self.assertIsInstance(AVFoundationAVMetadataObjectTypeHumanBody, unicode)
+        with self.subTest("catbody"):
+            self.assertIsInstance(AVFoundation.AVMetadataObjectTypeCatBody, unicode)
+        with self.subTest("dogbody"):
+            self.assertIsInstance(AVFoundation.AVMetadataObjectTypeDogBody, unicode)
+        with self.subTest("salientobject"):
+            self.assertIsInstance(AVFoundation.AVMetadataObjectTypeSalientObject, unicode)
 
 if __name__ == "__main__":
     main()
