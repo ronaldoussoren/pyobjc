@@ -2596,6 +2596,18 @@ PyObjCClass_New(Class objc_class)
         PyType_Ready((PyTypeObject *)result);
     }
 
+    if (strcmp(className, "_NSPlaceholderData") == 0) {
+        /* Workaround for an issue on macOS 10.15: For some
+         * reason the call to class_getInstanceVariable crashes
+         * when called early in the process, likely due to an
+         * incompletely initialized class.
+         *
+         * The workaround is hardcoded for this specific class
+         * to avoid issues with other magic classes.
+         */
+        [objc_class class];
+    }
+
     var = class_getInstanceVariable(objc_class, "__dict__");
     if (var != NULL) {
         info->dictoffset = ivar_getOffset(var);

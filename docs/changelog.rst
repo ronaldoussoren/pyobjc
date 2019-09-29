@@ -10,7 +10,7 @@ Version 5.3
 
   Patch by Clément Bouvier
 
-
+* #271: Fix crash when creating NSData objects on macOS 10.15
 
 Version 5.2
 -----------
