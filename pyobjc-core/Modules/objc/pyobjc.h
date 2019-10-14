@@ -5,7 +5,7 @@
  * Central include file for PyObjC.
  */
 
-#define OBJC_VERSION "6.0a0"
+#define OBJC_VERSION "6.0c1"
 
 #define PY_SSIZE_T_CLEAN
 #include <Python.h>
@@ -18,6 +18,7 @@
 #include <objc/objc.h>
 
 #include "pyobjc-compat.h"
+#import "pyobjc-assert.h"
 
 /*
  * Configuration block
@@ -113,7 +114,6 @@
 #import "options.h"
 #import "pointer-support.h"
 #import "proxy-registry.h"
-#import "pyobjc-assert.h"
 #import "pyobjc_unicode.h"
 #import "python-method.h"
 #import "registry.h"

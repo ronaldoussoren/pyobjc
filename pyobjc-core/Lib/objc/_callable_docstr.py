@@ -1,4 +1,5 @@
 __all__ = ()
+import inspect
 import sys
 import objc
 from objc._objc import _nameForSignature
@@ -261,38 +262,33 @@ def describe_callable_metadata(name, metadata, offset="", ismethod=False):
 
 objc.options._callable_doc = describe_callable
 
-if hasattr(
-    objc.options, "_callable_signature"
-):  # pragma: no branch; pragma: no 2.x cover
-    import inspect
+def callable_signature(callable):
+    # Create an inspect.Signature for an PyObjC callable
+    # both objc.function and objc.native_selector only support positional
+    # arguments, and not keyword arguments.
+    try:
+        metadata = callable.__metadata__()
+    except objc.internal_error:
+        # This can happen with some private methods with undocumented
+        # characters in type encodings
+        return None
 
-    def callable_signature(callable):
-        # Create an inspect.Signature for an PyObjC callable
-        # both objc.function and objc.native_selector only support positional
-        # arguments, and not keyword arguments.
-        try:
-            metadata = callable.__metadata__()
-        except objc.internal_error:
-            # This can happen with some private methods with undocumented
-            # characters in type encodings
-            return None
+    ismethod = isinstance(callable, objc.selector)
 
-        ismethod = isinstance(callable, objc.selector)
+    if ismethod:
+        args = metadata["arguments"][
+            2:
+        ]  # Skip 'self' and 'selector' implicit arguments
+    else:
+        args = metadata["arguments"]
 
-        if ismethod:
-            args = metadata["arguments"][
-                2:
-            ]  # Skip 'self' and 'selector' implicit arguments
-        else:
-            args = metadata["arguments"]
+    parameters = []
+    for idx, arg in enumerate(args):
+        p_name = "arg%d" % (idx,)
+        parameters.append(
+            inspect.Parameter(p_name, inspect.Parameter.POSITIONAL_ONLY)
+        )
 
-        parameters = []
-        for idx, arg in enumerate(args):
-            p_name = "arg%d" % (idx,)
-            parameters.append(
-                inspect.Parameter(p_name, inspect.Parameter.POSITIONAL_ONLY)
-            )
+    return inspect.Signature(parameters)
 
-        return inspect.Signature(parameters)
-
-    objc.options._callable_signature = callable_signature
+objc.options._callable_signature = callable_signature

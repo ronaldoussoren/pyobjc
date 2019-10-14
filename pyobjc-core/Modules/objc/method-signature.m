@@ -907,10 +907,6 @@ setup_descr(struct _PyObjC_ArgDescr* descr, PyObject* meta, BOOL is_native)
         descr->type = tp;
         Py_XDECREF(bytes);
 
-#ifdef PyObjC_DEBUG
-        descr->type = PyMem_Realloc((void*)(descr->type), strlen(withoutModifiers) + 3);
-#endif /* PyObjC_DEBUG */
-
     } else if (descr != NULL && descr->type == NULL) {
         if (typeModifier != '\0') {
             if (descr->tmpl)
@@ -948,11 +944,6 @@ setup_descr(struct _PyObjC_ArgDescr* descr, PyObject* meta, BOOL is_native)
             /* Skip existing modifiers, we're overriding those */
             descr->typeOverride = YES;
             descr->type = tp;
-
-#ifdef PyObjC_DEBUG
-            descr->type =
-                PyMem_Realloc((void*)(descr->type), strlen(withoutModifiers) + 3);
-#endif /* PyObjC_DEBUG */
         }
     }
     return 0;

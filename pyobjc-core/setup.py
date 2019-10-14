@@ -96,7 +96,7 @@ OBJC_LDFLAGS = [
     "Carbon",
     "-fvisibility=protected",
     "-g",
-    "-O3",
+    #"-O3",
 ]
 
 
@@ -253,25 +253,10 @@ class oc_test(test.test):
         from pkg_resources import normalize_path, add_activation_listener
         from pkg_resources import working_set, require
 
-        if getattr(self.distribution, "use_2to3", False):
-
-            # Using 2to3, cannot do this inplace:
-            self.reinitialize_command("build_py", inplace=0)
-            self.run_command("build_py")
-            bpy_cmd = self.get_finalized_command("build_py")
-            build_path = normalize_path(bpy_cmd.build_lib)
-
-            self.reinitialize_command("egg_info", egg_base=build_path)
-            self.run_command("egg_info")
-
-            self.reinitialize_command("build_ext", inplace=0)
-            self.run_command("build_ext")
-
-        else:
-            self.reinitialize_command("egg_info")
-            self.run_command("egg_info")
-            self.reinitialize_command("build_ext", inplace=1)
-            self.run_command("build_ext")
+        self.reinitialize_command("egg_info")
+        self.run_command("egg_info")
+        #self.reinitialize_command("build_ext", inplace=1)
+        #self.run_command("build_ext")
 
         self.__old_path = sys.path[:]
         self.__old_modules = sys.modules.copy()
@@ -314,7 +299,7 @@ class oc_test(test.test):
     def run(self):
         verify_platform()
 
-        be_cmd = self.get_finalized_command("build_ext")
+        #be_cmd = self.get_finalized_command("build_ext")
 
         import unittest
 
@@ -335,7 +320,7 @@ class oc_test(test.test):
             meta = self.distribution.metadata
             name = meta.get_name()
             test_pkg = name + "_tests"
-            suite = makeTestSuite(be_cmd.use_system_libffi)
+            suite = makeTestSuite(True) # be_cmd.use_system_libffi)
 
             runner = unittest.TextTestRunner(verbosity=self.verbosity)
             result = runner.run(suite)

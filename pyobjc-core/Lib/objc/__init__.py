@@ -67,12 +67,8 @@ _NSAutoreleasePool = None
 
 class autorelease_pool(object):
     """
-    A context manager that implements the same feature as
-    @synchronized statements in Objective-C. Locking can also
-    be done manually using the ``lock`` and ``unlock`` methods.
-
-    The mutex for object ``anObject`` is represented by
-    ``objc.object_lock(anObject)``.
+    A context manager that runs the body of the block with a fresh
+    autorelease pool. The actual release pool is not accessible.
     """
 
     def __init__(self):

@@ -106,24 +106,7 @@ addConvenienceForClass(
     ),
 )
 
-if sys.version_info[0] == 2:  # pragma: no 3.x cover
-    addConvenienceForClass(
-        "NSDecimalNumber",
-        (
-            (
-                "__div__",
-                lambda self, other: NSDecimalNumber(operator.div(NSDecimal(self), other)),
-            ),
-            (
-                "__rdiv__",
-                lambda self, other: NSDecimalNumber(operator.div(other, NSDecimal(self))),
-            ),
-            ("__cmp__", lambda self, other: cmp(NSDecimalNumber(NSDecimal(self), other))),
-        ),
-    )
-
-else:  # pragma: no 2.x cover
-    addConvenienceForClass(
-        "NSDecimalNumber",
-        (("__round__", lambda self, n=0: NSDecimalNumber(round(NSDecimal(self), n))),),
-    )
+addConvenienceForClass(
+    "NSDecimalNumber",
+    (("__round__", lambda self, n=0: NSDecimalNumber(round(NSDecimal(self), n))),),
+)

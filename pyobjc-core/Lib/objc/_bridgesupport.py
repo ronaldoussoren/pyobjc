@@ -47,26 +47,16 @@ _BOOLEAN_ATTRIBUTES = [
 ]
 
 
-if sys.version_info[0] == 2:  # pragma: no 3.x cover
 
-    def _as_bytes(value):
+def _as_bytes(value):
+    if isinstance(value, bytes):
         return value
+    return value.encode("ascii")
 
-    def _as_string(value):
-        return value
-
-
-else:  # pragma: no 2.x cover
-
-    def _as_bytes(value):
-        if isinstance(value, bytes):
-            return value
-        return value.encode("ascii")
-
-    def _as_string(value):
-        if isinstance(value, bytes):
-            return value.decode("ascii")
-        return value
+def _as_string(value):
+    if isinstance(value, bytes):
+        return value.decode("ascii")
+    return value
 
 
 class _BridgeSupportParser(object):
@@ -823,7 +813,7 @@ if hasattr(objc, "_ivar_dict"):
 
 
 def _structConvenience(structname, structencoding):
-    def makevar(self, name=None):
+    def makevar(cls, name=None):
         if name is None:
             return objc.ivar(type=structencoding)
         else:
@@ -834,6 +824,7 @@ def _structConvenience(structname, structencoding):
     if hasattr(objc.ivar, "__qualname__"):
         makevar.__qualname__ = objc.ivar.__qualname__ + "." + structname
     _ivar_dict[structname] = classmethod(makevar)
+    print(structname, structencoding, _ivar_dict[structname], makevar)
 
 
 # Fake it for basic C types

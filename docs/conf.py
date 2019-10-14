@@ -59,7 +59,7 @@ copyright = "2017, Ronald Oussoren"
 # built documents.
 #
 # The short X.Y version.
-version = "6.0a0"
+version = "6.0c1"
 # The full version, including alpha/beta/rc tags.
 release = version
 

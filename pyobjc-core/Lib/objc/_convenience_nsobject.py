@@ -10,11 +10,6 @@ __all__ = ()
 import sys
 from objc._convenience import addConvenienceForClass
 
-if sys.version_info[0] == 2:  # pragma: no 3.x cover
-    STR_TYPES = (str, unicode)
-else:  # pragma: no 2.x cover
-    STR_TYPES = str
-
 
 def nsobject_hash(self, _max=sys.maxsize, _const=((sys.maxsize + 1) * 2)):
     rval = self.hash()
@@ -100,13 +95,13 @@ class kvc(object):
             super(kvc, self).__setattr__(key, value)
 
     def __getitem__(self, key):
-        if not isinstance(key, STR_TYPES):
+        if not isinstance(key, str):
             raise TypeError("Key must be string")
 
         return self.__object.valueForKey_(key)
 
     def __setitem__(self, key, value):
-        if not isinstance(key, STR_TYPES):
+        if not isinstance(key, str):
             raise TypeError("Key must be string")
 
         return self.__object.setValue_forKey_(value, key)
@@ -125,17 +120,3 @@ addConvenienceForClass(
         ("_", property(kvc)),
     ),
 )
-
-if sys.version_info[0] == 2:  # pragma: no 3.x cover; pragma: no branch
-
-    def nsobject__cmp__(self, other):
-        try:
-            func = self.compare_
-
-        except AttributeError:
-            return NotImplemented
-
-        else:
-            return func(other)
-
-    addConvenienceForClass("NSObject", (("__cmp__", nsobject__cmp__),))

@@ -37,10 +37,6 @@ _CONVENIENCES_MAPPING_RO = (
     ("__contains__", contains_objectForKey_),
 )
 
-if sys.version_info[0] == 2:  # pragma: no 3.x cover; pragma: no branch
-    _CONVENIENCES_MAPPING_RO += (("has_key", contains_objectForKey_),)
-
-
 def __delitem__removeObjectForKey_(self, key):
     self.removeObjectForKey_(container_wrap(key))
 

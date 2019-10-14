@@ -188,6 +188,7 @@ PyObjC_encode_fsref(PyObject* value, void* buffer)
 #endif /* USE_TOOLBOX_OBJECT_GLUE */
 
     if (PyObjC_FSRefCheck(value)) {
+        NSLog(@"encode FSRef");
         *(FSRef*)buffer = ((PyObjC_FSRefObject*)value)->ref;
         return 0;
     }
@@ -205,5 +206,6 @@ PyObjC_decode_fsref(void* buffer)
         return NULL;
     }
     result->ref = *(FSRef*)buffer;
+    NSLog(@"decode FSRef");
     return (PyObject*)result;
 }

@@ -7,26 +7,13 @@ from objc._convenience import addConvenienceForClass, container_wrap, container_
 from objc._objc import lookUpClass, registerMetaDataForSelector, _C_NSInteger, _C_ID
 from objc._objc import _NSNotFound as NSNotFound
 
-import sys
-
-if sys.version_info[0] == 2:
-    import collections as collections_abc
-else:
-    import collections.abc as collections_abc
+import sys, collections.abc
 
 NSArray = lookUpClass("NSArray")
 NSMutableArray = lookUpClass("NSMutableArray")
 
-collections_abc.Sequence.register(NSArray)
-collections_abc.MutableSequence.register(NSMutableArray)
-
-if sys.version_info[0] == 2:  # pragma: no 3.x cover
-    INT_TYPES = (int, long)
-    STR_TYPES = (str, unicode)
-
-else:  # pragma: no 2.x cover
-    INT_TYPES = int
-    STR_TYPES = str
+collections.abc.Sequence.register(NSArray)
+collections.abc.MutableSequence.register(NSMutableArray)
 
 
 registerMetaDataForSelector(
@@ -138,7 +125,7 @@ def nsarray__getitem__(self, idx):
         start, stop, step = idx.indices(len(self))
         return [self[i] for i in range(start, stop, step)]
 
-    elif not isinstance(idx, INT_TYPES):
+    elif not isinstance(idx, int):
         raise TypeError("index must be a number")
 
     if idx < 0:
@@ -243,7 +230,7 @@ def nsarray__setitem__(self, idx, anObject):
             for inIdx, outIdx in enumerate(range(start, stop, step)):
                 self.replaceObjectAtIndex_withObject_(outIdx, toAssign[inIdx])
 
-    elif not isinstance(idx, INT_TYPES):
+    elif not isinstance(idx, int):
         raise TypeError(index_error_message)
 
     else:
@@ -296,7 +283,7 @@ def nsarray_new(cls, sequence=None):
     if not sequence:
         return NSArray.array()
 
-    elif isinstance(sequence, STR_TYPES):
+    elif isinstance(sequence, str):
         return NSArray.arrayWithArray_(list(sequence))
 
     else:
@@ -310,7 +297,7 @@ def nsmutablearray_new(cls, sequence=None):
     if not sequence:
         return NSMutableArray.array()
 
-    elif isinstance(sequence, STR_TYPES):
+    elif isinstance(sequence, str):
         return NSMutableArray.arrayWithArray_(list(sequence))
 
     else:

@@ -1093,11 +1093,14 @@ getModuleFunction(char* modname, char* funcname)
     return (NSObject*)self;
 }
 
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
 - (NSObject*)replacementObjectForPortCoder:(NSPortCoder*)archiver
 {
     (void)archiver;
     return (NSObject*)self;
 }
+#pragma clang diagnostic pop
 
 - (Class)classForArchiver
 {

@@ -3,11 +3,7 @@ from objc import _objc
 import struct
 import sys
 import datetime
-
-if sys.version_info[0] == 2:
-    import collections as collections_abc
-else:
-    import collections.abc as collections_abc
+import collections.abc
 
 __all__ = [
     "registerListType",
@@ -61,17 +57,12 @@ def registerDateType(type):
     options._date_types += (type,)
 
 
-registerListType(collections_abc.Sequence)
+registerListType(collections.abc.Sequence)
 registerListType(xrange if sys.version_info[0] == 2 else range)
-registerMappingType(collections_abc.Mapping)
+registerMappingType(collections.abc.Mapping)
 registerMappingType(dict)
 registerSetType(set)
 registerSetType(frozenset)
-registerSetType(collections_abc.Set)
+registerSetType(collections.abc.Set)
 registerDateType(datetime.date)
 registerDateType(datetime.datetime)
-
-if sys.version_info[0] == 2:
-    import UserDict
-
-    registerMappingType(UserDict.UserDict)

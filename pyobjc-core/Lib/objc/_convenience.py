@@ -127,27 +127,15 @@ def container_unwrap(v, exc_type, *exc_args):
 #
 #
 
-if sys.version_info[0] == 2:  # pragma: no 3.x cover
-    addConvenienceForClass("NSNull", (("__nonzero__", lambda self: False),))
+addConvenienceForClass("NSNull", (("__bool__", lambda self: False),))
 
-    addConvenienceForClass(
-        "NSEnumerator",
-        (
-            ("__iter__", lambda self: self),
-            ("next", lambda self: container_unwrap(self.nextObject(), StopIteration)),
-        ),
-    )
-
-else:  # pragma: no 2.x cover
-    addConvenienceForClass("NSNull", (("__bool__", lambda self: False),))
-
-    addConvenienceForClass(
-        "NSEnumerator",
-        (
-            ("__iter__", lambda self: self),
-            ("__next__", lambda self: container_unwrap(self.nextObject(), StopIteration)),
-        ),
-    )
+addConvenienceForClass(
+    "NSEnumerator",
+    (
+        ("__iter__", lambda self: self),
+        ("__next__", lambda self: container_unwrap(self.nextObject(), StopIteration)),
+    ),
+)
 
 
 def __call__(self, *args, **kwds):
