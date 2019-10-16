@@ -5,15 +5,22 @@
  * Central include file for PyObjC.
  */
 
-#define OBJC_VERSION "5.2"
+#define OBJC_VERSION "5.3"
 
 #define PY_SSIZE_T_CLEAN
 #include <Python.h>
 #include "structmember.h"
 
+/* The macro ensures that pyobjc-core builds
+ * with Xcode 11 without further changes
+ * to the source code.
+ */
+#define OBJC_OLD_DISPATCH_PROTOTYPES 1
+
 #import <Foundation/Foundation.h>
 #include <AvailabilityMacros.h>
 #include <objc/objc-runtime.h>
+
 #include <objc/objc.h>
 
 

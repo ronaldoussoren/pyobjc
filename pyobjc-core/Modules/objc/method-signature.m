@@ -470,6 +470,8 @@ new_methodsignature(const char* signature)
             return NULL;
         }
         PyObjC_Assert(retval->rettype->type != NULL, NULL);
+    } else {
+        PyObjC_Assert(retval->rettype->tmpl, NULL);
     }
     PyObjC_Assert(retval->rettype->type != NULL, NULL);
 
@@ -497,6 +499,8 @@ new_methodsignature(const char* signature)
                 return NULL;
             }
             PyObjC_Assert(retval->argtype[nargs]->type != NULL, NULL);
+        } else {
+            PyObjC_Assert(retval->argtype[nargs]->tmpl, NULL);
         }
 
         cur = PyObjCRT_SkipTypeSpec(cur);

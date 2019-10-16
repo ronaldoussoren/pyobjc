@@ -12,6 +12,8 @@ Version 5.3
 
 * #271: Fix crash when creating NSData objects on macOS 10.15
 
+* Fix compile error on macOS 10.15
+
 Version 5.2
 -----------
 

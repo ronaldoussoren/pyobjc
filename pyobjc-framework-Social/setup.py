@@ -6,7 +6,7 @@ Note that this framework is only available for 64-bit code.
 
 from pyobjc_setup import setup
 
-VERSION="5.2"
+VERSION="5.3"
 
 setup(
     name='pyobjc-framework-Social',
