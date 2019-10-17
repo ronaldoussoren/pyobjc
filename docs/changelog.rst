@@ -3,6 +3,58 @@ What's new in PyObjC
 
 An overview of the relevant changes in new, and older, releases.
 
+Version 6.0
+-----------
+
+* Removed Python 2 support from the C extension in pyobjc-core
+
+* Reformatted code in pyobjc-core:
+
+  - Use "black" for Python code
+  - Use "clang-format" for Objective-C code
+
+    As a side-effect of this all usage of "NS_DURING" and "PyObjC_DURING"
+    has been replaced by the expansion of those macros, mostly because
+    "clang-format" doesn't understand these kinds of blocks.
+
+    Replacing "PyObjC_DURING" by its expansion also reduces the knowledge
+    needed to understand what's going on w.r.t. the Python GIL.
+
+    The macro "PyObjC_DURING", and its siblings, have been removed as well.
+
+* Updated bindings for macOS 10.15 (Xcode 11.0)
+
+* The userspace driver frameworks introduced in macOS 10.15
+  (DriverKit and related frameworks) will not be exposed through
+  PyObjC. Please let me know if you have a good
+  use case for using these frameworks with Python.
+
+* Add new framework wrappers for all other new frameworks
+  in macOS 10.15:
+
+  - AuthenticationServices
+  - CoreHaptics
+  - CoreMotion
+  - DeviceCheck
+  - ExecutionPolicy
+  - FileProvider
+  - FileProviderUI
+  - LinkPresentation
+  - OSLog
+  - PencilKit
+  - PushKit
+  - QuickLookThumbnailing
+  - Speech
+  - SoundAnalysis
+  - SystemExtensions
+
+* Add new framework wrappers for a number of older
+  frameworks:
+
+  - MetalKit (new in macOS 10.11)
+
+* Issue #271: Fix crash when creating NSData objects on macOS 10.15
+
 Version 5.3
 -----------
 

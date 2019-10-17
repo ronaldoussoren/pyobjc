@@ -13,6 +13,8 @@ in pure Python. See our tutorial for an example of this.
 Release information
 -------------------
 
+PyObjC 6.0 was released on 2019-10-17. See the :doc:`changelog <changelog>` for more information. PyObjC 6.0 supports Python 3.6 and later.
+
 PyObjC 5.3 was released on 2019-10-16. See the :doc:`changelog <changelog>` for more information.
 
 Supported platforms
