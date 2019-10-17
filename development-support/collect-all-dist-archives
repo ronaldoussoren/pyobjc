@@ -12,7 +12,7 @@ import subprocess
 import sys
 import time
 
-VMs=["mojave.local", "highsierra.local"]
+VMs=["catalina.local"]
 
 def is_up(vm):
     try:
