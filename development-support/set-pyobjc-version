@@ -57,8 +57,8 @@ for subdir in os.listdir(topdir):
 
     print ("Updating '%s'"%(subdir,))
     fn = os.path.join(topdir, subdir, "setup.py")
-    r = re.compile('^VERSION=.*$', re.MULTILINE)
-    data = r.sub('VERSION="%s"'%(VERSION,), load_file(fn))
+    r = re.compile('^VERSION = .*$', re.MULTILINE)
+    data = r.sub("VERSION = '%s'"%(VERSION,), load_file(fn))
     save_file(fn, data)
 
 # documentation
