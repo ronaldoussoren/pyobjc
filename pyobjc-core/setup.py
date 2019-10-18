@@ -255,8 +255,8 @@ class oc_test(test.test):
 
         self.reinitialize_command("egg_info")
         self.run_command("egg_info")
-        #self.reinitialize_command("build_ext", inplace=1)
-        #self.run_command("build_ext")
+        self.reinitialize_command("build_ext", inplace=1)
+        self.run_command("build_ext")
 
         self.__old_path = sys.path[:]
         self.__old_modules = sys.modules.copy()
@@ -299,7 +299,7 @@ class oc_test(test.test):
     def run(self):
         verify_platform()
 
-        #be_cmd = self.get_finalized_command("build_ext")
+        be_cmd = self.get_finalized_command("build_ext")
 
         import unittest
 
@@ -320,7 +320,7 @@ class oc_test(test.test):
             meta = self.distribution.metadata
             name = meta.get_name()
             test_pkg = name + "_tests"
-            suite = makeTestSuite(True) # be_cmd.use_system_libffi)
+            suite = makeTestSuite(be_cmd.use_system_libffi)
 
             runner = unittest.TextTestRunner(verbosity=self.verbosity)
             result = runner.run(suite)
