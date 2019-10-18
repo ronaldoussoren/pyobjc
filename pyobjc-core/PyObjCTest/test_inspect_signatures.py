@@ -57,6 +57,11 @@ class TestInspectSignatures(TestCase):
                     except ValueError:
                         value = None
 
+                    if value is None and cls is objc.pyobjc_unicode:
+                        if obj == getattr(str, nm): 
+                            # Don't fail for inherited methods
+                            continue
+
                     if value is None:
                         self.fail("No inspect.signature for %s.%s" % (cls.__name__, nm))
 
