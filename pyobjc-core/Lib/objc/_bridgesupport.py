@@ -824,7 +824,6 @@ def _structConvenience(structname, structencoding):
     if hasattr(objc.ivar, "__qualname__"):
         makevar.__qualname__ = objc.ivar.__qualname__ + "." + structname
     _ivar_dict[structname] = classmethod(makevar)
-    print(structname, structencoding, _ivar_dict[structname], makevar)
 
 
 # Fake it for basic C types

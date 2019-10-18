@@ -3,6 +3,11 @@ What's new in PyObjC
 
 An overview of the relevant changes in new, and older, releases.
 
+Version 6.0.1
+-------------
+
+* Remove debug print accidently left in production
+
 Version 6.0
 -----------
 
