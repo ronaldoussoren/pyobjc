@@ -2,7 +2,7 @@ Introduction
 ============
 
 The PyObjC project aims to provide a bridge between the Python and Objective-C
-programming languages. The bridge is intended to be fully bidirectional, allowing
+programming languages on macOS. The bridge is intended to be fully bidirectional, allowing
 the Python programmer to take full advantage of the power provided by various
 Objective-C based toolkits and the Objective-C programmer transparent access
 to Python based functionality.
@@ -23,6 +23,9 @@ PyObjC does not support other python implementation such as PyPy and Jython.
 
 PyObjC is regularly tested on macOS 10.14 and should work on macOS
 10.9 or later for the i386 and x86_64 architectures.
+
+PyObjC only supports macOS, and is not supported on other platforms (iOS,
+Linux, ...)
 
 General documentation
 =====================

@@ -11,6 +11,8 @@ PyObjC does not support other python implementation such as PyPy and Jython.
 PyObjC is regularly tested on macOS 10.14 and should work on macOS
 10.9 or later for the i386 and x86_64 architectures.
 
+PyObjC only supports macOS and does not support other platform (iOS, Linux, ...)
+
 Installation
 ------------
 
