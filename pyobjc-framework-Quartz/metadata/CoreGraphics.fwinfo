@@ -107,6 +107,12 @@
   },
   "classes": {},
   "enum": {
+   "kCGEventUnacceleratedPointerMovementX": {
+    "value": 170
+   },
+   "kCGEventUnacceleratedPointerMovementY": {
+    "value": 171
+   },
    "CGGlyphMax": {
     "value": 65534
    },

@@ -3,6 +3,11 @@ What's new in PyObjC
 
 An overview of the relevant changes in new, and older, releases.
 
+Version 6.1
+-----------
+
+* Updated for the macOS 10.15.1 SDK (Xcode 11.2 beta 2)
+
 Version 6.0.1
 -------------
 

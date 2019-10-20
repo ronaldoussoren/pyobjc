@@ -45,6 +45,15 @@
    }
   },
   "externs": {
+   "kCGImagePropertyExifSourceExposureTimesOfCompositeImage": {
+    "typestr": "@"
+   },
+   "kCGImagePropertyExifSourceImageNumberOfCompositeImage": {
+    "typestr": "@"
+   },
+   "kCGImagePropertyExifCompositeImage": {
+    "typestr": "@"
+   },
    "kCGImagePropertyIsSticker": {
     "typestr": "@"
    },

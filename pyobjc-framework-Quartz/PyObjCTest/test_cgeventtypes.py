@@ -122,6 +122,8 @@ class TestCGEventTypes(TestCase):
         self.assertEqual(kCGScrollWheelEventIsContinuous, 88)
         self.assertEqual(kCGMouseEventWindowUnderMousePointer, 91)
         self.assertEqual(kCGMouseEventWindowUnderMousePointerThatCanHandleThisEvent, 92)
+        self.assertEqual(kCGEventUnacceleratedPointerMovementX, 170)
+        self.assertEqual(kCGEventUnacceleratedPointerMovementY, 171)
 
         self.assertEqual(kCGEventMouseSubtypeDefault, 0)
         self.assertEqual(kCGEventMouseSubtypeTabletPoint, 1)

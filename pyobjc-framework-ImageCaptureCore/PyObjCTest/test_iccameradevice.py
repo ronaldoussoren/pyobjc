@@ -105,6 +105,9 @@ class TestICCameraDevice(TestCase):
         self.assertArgIsBlock(
             ICCameraDevice.requestDeleteFiles_deleteFailed_completion_, 2, b"v@@"
         )
+        self.assertArgIsBlock(
+            ICCameraDevice.requestSendPTPCommand_outData_completion_, 2, b"v@@@"
+        )
 
 
 if __name__ == "__main__":

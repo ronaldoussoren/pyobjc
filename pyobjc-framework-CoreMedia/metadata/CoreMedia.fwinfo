@@ -58,6 +58,7 @@
    "kCMTimebaseVeryLongCFTimeInterval": { "value": 8073216000.0 }
   },
   "externs": {
+   "kCMMetadataIdentifier_QuickTimeMetadataLivePhotoStillImageTransformReferenceDimensions": { "typestr": "@" },
    "kCMFormatDescriptionTransferFunction_Linear": { "typestr": "@" },
    "kCMFormatDescriptionExtension_AlternativeTransferCharacteristics": { "typestr": "@" }
   },

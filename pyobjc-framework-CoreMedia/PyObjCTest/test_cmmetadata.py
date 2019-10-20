@@ -108,6 +108,13 @@ class TestCMMetadata(TestCase):
             CoreMedia.kCMMetadataBaseDataType_PerspectiveTransformF64, unicode
         )
 
+    @min_os_level("10.15.1")
+    def test_constants10_15_1(self):
+        self.assertIsInstance(
+            CoreMedia.kCMMetadataIdentifier_QuickTimeMetadataLivePhotoStillImageTransformReferenceDimensions,
+            unicode,
+        )
+
     @min_os_level("10.10")
     def test_functions10_10(self):
         self.assertArgIsOut(CoreMedia.CMMetadataCreateIdentifierForKeyAndKeySpace, 3)

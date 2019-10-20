@@ -723,6 +723,17 @@ class TestCGImageProperties(TestCase):
             kCGImageAuxiliaryDataTypeSemanticSegmentationTeethMatte, unicode
         )
 
+    @min_os_level("10.15.1")
+    def testConstants10_15_1(self):
+        self.assertIsInstance(
+            kCGImagePropertyExifCompositeImage, unicode
+        )
+        self.assertIsInstance(
+            kCGImagePropertyExifSourceImageNumberOfCompositeImage, unicode
+        )
+        self.assertIsInstance(
+            kCGImagePropertyExifSourceExposureTimesOfCompositeImage, unicode
+        )
 
 if __name__ == "__main__":
     main()

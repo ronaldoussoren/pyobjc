@@ -3,6 +3,7 @@
 {
  "definitions": {
   "enum": {
+   "ICReturnCodeObjectOffset": { "value": -21450 },
    "ICReturnDeviceFailedToCompleteTransfer": { "value": -9956 },
    "ICReturnDeviceFailedToSendData": { "value": -9957 },
    "ICReturnSessionNotOpened": { "value": -9958 },
@@ -26,6 +27,17 @@
    "ICReturnDeviceIsBusyEnumerating": { "value": -9954 },
    "ICReturnDeviceCommandGeneralFailure": { "value": -9955 }
   },
+  "alias": {
+   "ICReturnPTPFailedToSendCommand": { "alias": "ICReturnCodeDownloadOffset" },
+   "ICReturnDownloadPathInvalid": { "alias": "ICReturnCodeDownloadOffset" },
+   "ICReturnCodeObjectDoesNotExist": { "alias": "ICReturnCodeObjectOffset" }
+  },
+  "expressions": {
+   "ICReturnDownloadFileWritable": { "value": "ICReturnCodeDownloadOffset-1" },
+   "ICReturnCodeObjectDataOffsetInvalid": { "value": "ICReturnCodeObjectOffset-1" },
+   "ICReturnCodeObjectCouldNotBeRead": { "value": "ICReturnCodeObjectOffset-2" },
+   "ICReturnCodeObjectDataEmpty": { "value": "ICReturnCodeObjectOffset-3" }
+  },
   "classes": {
    "ICCameraDevice": {
     "methods": [
@@ -48,6 +60,23 @@
 	  "0": { "type": "^v" },
 	  "1": { "type": "@" },
 	  "2": { "type": "@" }
+	 },
+	 "retval": { "type": "v" }
+	}
+       }
+      }
+     },
+     {
+      "selector": "requestSendPTPCommand:outData:completion:",
+      "class_method": false,
+      "args": {
+       "2": {
+        "callable": {
+	 "arguments": {
+	  "0": { "type": "^v" },
+	  "1": { "type": "@" },
+	  "2": { "type": "@" },
+	  "3": { "type": "@" }
 	 },
 	 "retval": { "type": "v" }
 	}

@@ -7,6 +7,9 @@ the Python programmer to take full advantage of the power provided by various
 Objective-C based toolkits and the Objective-C programmer transparent access
 to Python based functionality.
 
+PyObjC not only includes the basic bridge, but also bindings to most Apple
+frameworks on macOS.
+
 The most important usage of this is writing Cocoa GUI applications on macOS
 in pure Python. See our tutorial for an example of this.
 

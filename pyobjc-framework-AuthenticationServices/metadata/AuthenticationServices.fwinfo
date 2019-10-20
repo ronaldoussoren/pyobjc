@@ -2,6 +2,9 @@
 // for information on how to update this file.
 {
  "definitions": {
+  "enum": {
+   "ASAuthorizationAppleIDButtonTypeSignUp": { "value": 2 }
+  },
   "classes": {
    "ASWebAuthenticationSession": {
     "methods": [

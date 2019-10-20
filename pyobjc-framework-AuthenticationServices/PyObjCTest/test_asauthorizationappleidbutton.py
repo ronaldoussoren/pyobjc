@@ -10,6 +10,9 @@ class TestASAuthorizationAppleIDButton(TestCase):
             AuthenticationServices.ASAuthorizationAppleIDButtonTypeContinue, 1
         )
         self.assertEqual(
+            AuthenticationServices.ASAuthorizationAppleIDButtonTypeSignUp, 2
+        )
+        self.assertEqual(
             AuthenticationServices.ASAuthorizationAppleIDButtonTypeDefault,
             AuthenticationServices.ASAuthorizationAppleIDButtonTypeSignIn,
         )
