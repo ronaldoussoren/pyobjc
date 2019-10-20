@@ -3,6 +3,15 @@
 #include "pyobjc-api.h"
 #import <ScreenSaver/ScreenSaver.h>
 
+/*
+ * The definitions below can cause warnings when using
+ * -Wunguarded-availability, but those warnings are harmless
+ * because the functions are inline functions and hence will
+ * be available on all macOS versions once compiled.
+ */
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wunguarded-availability"
+
 static PyObjC_function_map function_map[] = {
     {"SSCenteredRectInRect", (PyObjC_Function_Pointer)&SSCenteredRectInRect},
     {"SSRandomFloatBetween", (PyObjC_Function_Pointer)&SSRandomFloatBetween},
@@ -10,6 +19,8 @@ static PyObjC_function_map function_map[] = {
     {"SSRandomPointForSizeWithinRect",
      (PyObjC_Function_Pointer)&SSRandomPointForSizeWithinRect},
     {0, 0}};
+
+#pragma clang diagnostic pop
 
 static PyMethodDef mod_methods[] = {
     {0, 0, 0, 0} /* sentinel */
