@@ -6,7 +6,10 @@ An overview of the relevant changes in new, and older, releases.
 Version 6.0.1
 -------------
 
-* Remove debug print accidently left in production
+* #277: Remove debug print accidently left in production
+
+* #278: Surpress "-Wunguarded-availability" warnings in the extension
+  AppKit._inlines
 
 Version 6.0
 -----------

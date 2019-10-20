@@ -4,6 +4,15 @@
 #include "pyobjc-api.h"
 #import <CoreFoundation/CoreFoundation.h>
 
+/*
+ * The definitions below can cause warnings when using
+ * -Wunguarded-availability, but those warnings are harmless
+ * because the functions are inline functions and hence will
+ * be available on all macOS versions once compiled.
+ */
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wunguarded-availability"
+
 static PyObjC_function_map function_map[] = {
     {"CFByteOrderGetCurrent", (PyObjC_Function_Pointer)&CFByteOrderGetCurrent},
     {"CFConvertDoubleHostToSwapped",
@@ -58,6 +67,8 @@ static PyObjC_function_map function_map[] = {
      (PyObjC_Function_Pointer)&CFStringGetSurrogatePairForLongCharacter},
 #endif
     {0, 0}};
+
+#pragma clang diagnostic pop
 
 static PyMethodDef mod_methods[] = {
     {0, 0, 0, 0} /* sentinel */
