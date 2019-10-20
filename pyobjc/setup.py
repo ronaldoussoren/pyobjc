@@ -16,7 +16,7 @@ import ast
 import glob
 import contextlib
 
-VERSION = "6.0"
+VERSION = '6.0.1'
 
 # Table with all framework wrappers and the OSX releases where they are
 # first supported, and where support was removed. The introduced column
