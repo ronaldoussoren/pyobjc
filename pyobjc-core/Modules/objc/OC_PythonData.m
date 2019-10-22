@@ -92,8 +92,8 @@
             PyErr_Clear();
             return 0;
         }
-        [temp release];
         rval = [temp length];
+        [temp release];
 
     PyObjC_END_WITH_GIL
     return rval;
@@ -111,8 +111,8 @@
             PyErr_Clear();
             return nil;
         }
-        [temp autorelease];
         rval = [temp buffer];
+        [temp autorelease];
 
     PyObjC_END_WITH_GIL
     return rval;
