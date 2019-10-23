@@ -2705,7 +2705,12 @@ PyObject* __attribute__((__visibility__("default"))) PyInit__objc(void)
      * Archives created with Python 2.x can contain instances of
      * OC_PythonString, use OC_PythonUnicode to decode.
      */
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
+
     [NSUnarchiver decodeClassName:@"OC_PythonString" asClassName:@"OC_PythonUnicode"];
+
+#pragma clang diagnostic pop
 
     PyObjC_Initialized = 1;
     return m;

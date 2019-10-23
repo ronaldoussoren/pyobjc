@@ -40,7 +40,7 @@
     return [number objCType];
 }
 
-+ (int)compareA:(NSNumber*)a andB:(NSNumber*)b
++ (NSComparisonResult)compareA:(NSNumber*)a andB:(NSNumber*)b
 {
     return [a compare:b];
 }

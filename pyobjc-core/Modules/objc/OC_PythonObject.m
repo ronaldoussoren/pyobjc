@@ -410,12 +410,17 @@ get_method_for_selector(PyObject* obj, SEL aSelector)
         return YES;
 
     } else if (sel_isEqual(aSelector, @selector(replacementObjectForArchiver:))) {
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
+
         NSObject* c;
         NSArchiver* archiver;
 
         [invocation getArgument:&archiver atIndex:2];
         c = [self replacementObjectForArchiver:archiver];
         [invocation setReturnValue:&c];
+
+#pragma clang diagnostic pop
 
         return YES;
 
@@ -430,12 +435,17 @@ get_method_for_selector(PyObject* obj, SEL aSelector)
         return YES;
 
     } else if (sel_isEqual(aSelector, @selector(replacementObjectForPortCoder:))) {
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
+
         NSObject* c;
         NSPortCoder* archiver;
 
         [invocation getArgument:&archiver atIndex:2];
         c = [self replacementObjectForPortCoder:archiver];
         [invocation setReturnValue:&c];
+
+#pragma clang diagnostic pop
 
         return YES;
 
@@ -1075,11 +1085,22 @@ getModuleFunction(char* modname, char* funcname)
     return self;
 }
 
+
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
+
 - (NSObject*)replacementObjectForArchiver:(NSArchiver*)archiver
 {
     (void)archiver;
     return (NSObject*)self;
 }
+
+- (NSObject*)replacementObjectForPortCoder:(NSPortCoder*)archiver
+{
+    (void)archiver;
+    return (NSObject*)self;
+}
+#pragma clang diagnostic pop
 
 - (NSObject*)replacementObjectForKeyedArchiver:(NSKeyedArchiver*)archiver
 {
@@ -1093,14 +1114,6 @@ getModuleFunction(char* modname, char* funcname)
     return (NSObject*)self;
 }
 
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Wdeprecated-declarations"
-- (NSObject*)replacementObjectForPortCoder:(NSPortCoder*)archiver
-{
-    (void)archiver;
-    return (NSObject*)self;
-}
-#pragma clang diagnostic pop
 
 - (Class)classForArchiver
 {

@@ -81,10 +81,13 @@ extern void PyObjC_encodeWithCoder(PyObject* pyObject, NSCoder* coder);
 - (void)encodeWithCoder:(NSCoder*)coder;
 - (id)initWithCoder:(NSCoder*)coder;
 + (id)classFallbacksForKeyedArchiver;
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
 - (NSObject*)replacementObjectForArchiver:(NSArchiver*)archiver;
+- (NSObject*)replacementObjectForPortCoder:(NSPortCoder*)archiver;
+#pragma clang diagnostic pop
 - (NSObject*)replacementObjectForKeyedArchiver:(NSKeyedArchiver*)archiver;
 - (NSObject*)replacementObjectForCoder:(NSCoder*)archiver;
-- (NSObject*)replacementObjectForPortCoder:(NSPortCoder*)archiver;
 - (Class)classForArchiver;
 - (Class)classForKeyedArchiver;
 + (Class)classForUnarchiver;
