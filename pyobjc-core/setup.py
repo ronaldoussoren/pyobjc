@@ -96,6 +96,7 @@ OBJC_LDFLAGS = [
     "Carbon",
     "-fvisibility=protected",
     "-g",
+    #"-fsanitize=address", "-fsanitize=undefined", "-fno-sanitize=vptr",
     #"-O3",
 ]
 
@@ -470,9 +471,10 @@ def _fixup_compiler(use_ccache):
     if cc is not None and os.path.basename(cc).startswith("gcc"):
         # Check if compiler is LLVM-GCC, that's known to
         # generate bad code.
-        data = os.popen(
+        with os.popen(
             "'%s' --version 2>/dev/null" % (cc.replace("'", "'\"'\"'"),)
-        ).read()
+            ) as fp:
+                data = fp.read()
         if "llvm-gcc" in data:
             cc = None
 
