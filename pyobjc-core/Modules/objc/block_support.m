@@ -429,6 +429,10 @@ pyobjc_PythonObject(NSObject* self, SEL _sel __attribute__((__unused__)))
     self = [self copy];
 
     rval = PyObjC_FindPythonProxy(self);
+    if (rval != NULL) {
+        [self release];
+        return rval;
+    }
 
     rval = (PyObject*)PyObjCObject_New(self, PyObjCObject_kDEFAULT, YES);
     [self release];
@@ -455,6 +459,7 @@ pyobjc_PythonTransient(NSObject* self, SEL _sel __attribute__((__unused__)), int
 
     PyObject* result = PyObjC_FindPythonProxy(self);
     if (result) {
+        [self release];
         *cookie = 0;
         return result;
     }

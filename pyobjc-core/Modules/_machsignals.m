@@ -61,7 +61,7 @@ HandleSIG(int signum)
      * Send a mach_msg to ourselves (since that is signal safe) telling us
      * to handle a signal.
      */
-    mach_msg_return_t msg_result;
+    //mach_msg_return_t msg_result;
     mach_msg_header_t header;
 
     header.msgh_bits = MACH_MSGH_BITS(MACH_MSG_TYPE_MAKE_SEND, 0);
@@ -71,7 +71,7 @@ HandleSIG(int signum)
     /* this is abuse of msgh_id */
     header.msgh_id = signum;
 
-    msg_result = mach_msg_send(&header);
+    (void)mach_msg_send(&header);
 }
 
 PyDoc_STRVAR(machsignals_handleSignal_doc,

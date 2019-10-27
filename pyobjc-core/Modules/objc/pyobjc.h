@@ -32,6 +32,8 @@
 #endif
 #endif
 
+#define PyObjC_DEBUG
+
 /* When this is defined the bridge adds a category to NSCFType (and known variants)
  * to help with the conversion to Python.
  *

@@ -425,6 +425,7 @@
     PyObject* t;
     int code;
     Py_ssize_t size;
+    OC_PythonArray* tmpVal;
 
     if ([coder allowsKeyedCoding]) {
         code = [coder decodeInt32ForKey:@"pytype"];
@@ -446,7 +447,12 @@
 
         PyObjC_END_WITH_GIL
 
-        [super initWithCoder:coder];
+        tmpVal = [super initWithCoder:coder];
+        if (tmpVal == nil) {
+            return nil;
+        }
+        PyObjC_Assert(tmpVal == self, nil);
+        self = tmpVal;
 
         PyObjC_BEGIN_WITH_GIL
             t = value;
@@ -467,8 +473,9 @@
 
         PyObjC_END_WITH_GIL
 
-        [super initWithCoder:coder];
-        return self;
+        tmpVal = [super initWithCoder:coder];
+        PyObjC_Assert(tmpVal == self, nil);
+        return tmpVal;
 
     case 3:
         PyObjC_BEGIN_WITH_GIL
@@ -536,8 +543,9 @@
 
         PyObjC_END_WITH_GIL
 
-        [super initWithCoder:coder];
-        return self;
+        tmpVal = [super initWithCoder:coder];
+        PyObjC_Assert(tmpVal == self, nil);
+        return tmpVal;
 
     case 5:
         /* tuple with more than MAX_INT elements */
@@ -555,8 +563,9 @@
             }
 
         PyObjC_END_WITH_GIL
-        [super initWithCoder:coder];
-        return self;
+        tmpVal = [super initWithCoder:coder];
+        PyObjC_Assert(tmpVal == self, nil);
+        return tmpVal;
 #else
         [NSException raise:NSInvalidArgumentException
                     format:@"decoding tuple with more than INT_MAX elements in 32-bit"];

@@ -15,7 +15,7 @@
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wincompatible-pointer-types"
 #endif
-            return [[NSNumber alloc] initWithUnsignedLongLong:lv];
+            return [[[NSNumber alloc] initWithUnsignedLongLong:lv] autorelease];
 #ifdef __clang__
 #pragma clang diagnostic pop
 #endif

@@ -1637,6 +1637,7 @@ pysel_descr_get(PyObject* _meth, PyObject* obj, PyObject* class)
     PyObjCPythonSelector* meth = (PyObjCPythonSelector*)_meth;
     PyObjCPythonSelector* result;
 
+
     if (meth->base.sel_self != NULL || obj == Py_None) {
         Py_INCREF(meth);
         return (PyObject*)meth;
@@ -1644,7 +1645,12 @@ pysel_descr_get(PyObject* _meth, PyObject* obj, PyObject* class)
 
     /* Bind 'self' */
     if (meth->base.sel_flags & PyObjCSelector_kCLASS_METHOD) {
+        if (unlikely(class == NULL)) {
+            PyErr_SetString(PyExc_TypeError, "class is NULL");
+            return NULL;
+        }
         obj = class;
+
         if (PyType_Check(obj) &&
             PyType_IsSubtype((PyTypeObject*)obj, &PyObjCClass_Type)) {
             obj = PyObjCClass_ClassForMetaClass(obj);

@@ -11,6 +11,8 @@ Version 6.1
 * Fix reference counting in -[OC_PythonData length], which resulted
   in use-after-free.
 
+* #281: Fix problems found in pyobjc-core by the clang static analyser
+
 Version 6.0.1
 -------------
 

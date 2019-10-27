@@ -185,10 +185,12 @@
         PyObjC_END_WITH_GIL
 
         result = [super initWithCoder:coder];
-        if (result != nil) {
+        PyObjC_Assert(result == self, nil);
+        self = result;
+        if (self != nil) {
             Py_TYPE(value) = &PyFrozenSet_Type;
         }
-        return result;
+        return self;
     } else if (code == 2) {
         PyObjC_BEGIN_WITH_GIL
             value = PySet_New(NULL);

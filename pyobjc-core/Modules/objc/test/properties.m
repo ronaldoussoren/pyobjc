@@ -63,6 +63,15 @@ typedef struct s {
 @synthesize prop12 = _prop12;
 @dynamic prop13;
 
+-(void)dealloc
+{
+    [self->_prop8 release];
+    [self->_prop9 release];
+    [self->_prop12 release];
+
+    [super dealloc];
+}
+
 #endif
 
 @end

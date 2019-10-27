@@ -209,10 +209,17 @@
     char* py_encoding = NULL;
     int byteorder = 0;
 
+    /*
+     * Call the super initializer first.
+     */
+    self = [super init];
+    if (self == nil) {
+        return nil;
+    }
+
     /* Detect some often used single-byte encodings that can be created in Python without
      * creating an intermediate object.
      */
-
     switch (encoding) {
     case NSASCIIStringEncoding:
         py_encoding = "ascii";
@@ -280,6 +287,7 @@
     unichar* chars = malloc(charcount * 2);
 
     if (chars == NULL) {
+        [tmpval release];
         [self release];
         return nil;
     }
