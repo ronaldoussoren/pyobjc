@@ -469,7 +469,6 @@ def _fixup_compiler(use_ccache):
         pass
 
     cc = oldcc = get_config_var("CC").split()[0]
-    print('fixup_compiler', cc)
     cc = _find_executable(cc)
     if cc is not None and os.path.basename(cc).startswith("gcc"):
         # Check if compiler is LLVM-GCC, that's known to
