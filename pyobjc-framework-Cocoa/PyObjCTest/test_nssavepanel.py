@@ -105,6 +105,10 @@ class TestNSSavePanel(TestCase):
         self.assertArgIsBOOL(NSSavePanel.setShowsTagField_, 0)
         self.assertResultIsBOOL(NSSavePanel.showsTagField)
 
+    def test_issue282(self):
+        panel = NSSavePanel.savePanel()
+        self.assertIsInstance(panel, NSSavePanel)
+
 
 if __name__ == "__main__":
     main()
