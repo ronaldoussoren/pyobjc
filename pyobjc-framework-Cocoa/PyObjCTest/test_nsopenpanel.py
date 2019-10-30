@@ -58,5 +58,10 @@ class TestOpenPanel(TestCase):
         self.assertArgIsBOOL(NSOpenPanel.setCanDownloadUbiquitousContents_, 0)
 
 
+    def test_issue_272(self):
+        panel = NSOpenPanel.openPanel()
+        panel.setAllowedFileTypes_([".html", ".txt"])
+
+
 if __name__ == "__main__":
     main()
