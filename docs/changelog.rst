@@ -6,7 +6,7 @@ An overview of the relevant changes in new, and older, releases.
 Version 6.1
 -----------
 
-* Updated for the macOS 10.15.1 SDK (Xcode 11.2 beta 2)
+* Updated for the macOS 10.15.1 SDK (Xcode 11.2)
 
 * Fix reference counting in -[OC_PythonData length], which resulted
   in use-after-free.
