@@ -102,10 +102,12 @@ class TestSocket(TestCase):
             data,
         )
         self.assertIsInstance(sock, CFSocketRef)
-        localaddr = struct.pack(">BBHBBBB", 16, socket.AF_INET, 9425, 127, 0, 0, 1)
+        localaddr = struct.pack(">BBHBBBB", 16, socket.AF_INET, 0, 127, 0, 0, 1)
         localaddr += b"\0" * 8
         if sys.version_info[0] == 2:
             localaddr = buffer(localaddr)
+
+        d = CFSocketCopyAddress(sock)
         err = CFSocketSetAddress(sock, localaddr)
         self.assertEqual(err, kCFSocketSuccess)
 
@@ -177,7 +179,7 @@ class TestSocket(TestCase):
             self.assertResultIsBOOL(CFSocketIsValid)
             ok = CFSocketIsValid(sock)
             self.assertIs(ok, False)
-            localaddr = struct.pack(">BBHBBBB", 16, socket.AF_INET, 9424, 127, 0, 0, 1)
+            localaddr = struct.pack(">BBHBBBB", 16, socket.AF_INET, 0, 127, 0, 0, 1)
             localaddr += b"\0" * 8
             signature = CFSocketSignature(
                 socket.AF_INET, socket.SOCK_STREAM, 0, buffer(localaddr)

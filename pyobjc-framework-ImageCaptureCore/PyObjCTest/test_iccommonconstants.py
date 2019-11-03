@@ -80,11 +80,7 @@ class TestICCameraDevice(TestCase):
             ICReturnConnectionSessionAlreadyOpen, ICReturnCodeDeviceOffset - 3
         )
         self.assertEqual(ICReturnConnectionEjectFailed, ICReturnCodeDeviceOffset - 4)
-        self.assertEqual(ICReturnConnectionFailedToOpen, ICReturnCodeDeviceConnection)
         self.assertEqual(ICReturnConnectionFailedToOpen, ICReturnCodeDeviceOffset - 5)
-        self.assertEqual(
-            ICReturnConnectionFailedToOpenDevice, ICReturnCodeDeviceConnection - 1
-        )
         self.assertEqual(
             ICReturnConnectionFailedToOpenDevice, ICReturnCodeDeviceOffset - 6
         )

@@ -15,7 +15,11 @@
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wincompatible-pointer-types"
 #endif
-            return [[[NSNumber alloc] initWithUnsignedLongLong:lv] autorelease];
+            /*
+             * This should return an autoreleased value, but that causes
+             * a crash in pyobjc-framework-Cocoa/test_regr.py
+             */
+            return [[NSNumber alloc] initWithUnsignedLongLong:lv];
 #ifdef __clang__
 #pragma clang diagnostic pop
 #endif

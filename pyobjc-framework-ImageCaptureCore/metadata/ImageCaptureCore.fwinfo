@@ -25,9 +25,12 @@
    "ICReturnCodePTPOffset": { "value": -21250 },
    "ICReturnCodeSystemOffset": { "value": -21300 },
    "ICReturnDeviceIsBusyEnumerating": { "value": -9954 },
-   "ICReturnDeviceCommandGeneralFailure": { "value": -9955 }
+   "ICReturnDeviceCommandGeneralFailure": { "value": -9955 },
+   "ICReturnConnectionFailedToOpen": { "value": -21355 },
+   "ICReturnConnectionFailedToOpenDevice": { "value": -21356 },
+   "ICReturnPTPFailedToSendCommand": { "value": -21100 }
   },
-  "alias": {
+  "aliases": {
    "ICReturnPTPFailedToSendCommand": { "alias": "ICReturnCodeDownloadOffset" },
    "ICReturnDownloadPathInvalid": { "alias": "ICReturnCodeDownloadOffset" },
    "ICReturnCodeObjectDoesNotExist": { "alias": "ICReturnCodeObjectOffset" }
