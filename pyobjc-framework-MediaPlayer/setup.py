@@ -10,7 +10,7 @@ and (Objective-)C frameworks
 from pyobjc_setup import setup, Extension
 import os
 
-VERSION = '6.1b1'
+VERSION = '6.1'
 
 setup(
     name="pyobjc-framework-MediaPlayer",
