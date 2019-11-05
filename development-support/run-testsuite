@@ -180,11 +180,14 @@ def run_tests(*, interpreter, arch, py_ver, project, state_dir):
 
     lg.info("testing %r using %r (%s, %7s)", project, interpreter, py_ver, arch)
     k = {}
+    k['env'] = os.environ.copy()
+    k['env']['PATH'] = os.path.dirname(interpreter) + ':' + k['env']['PATH']
     if project == 'pyobjc-framework-InterfaceBuilderKit':
         # The InterfaceBuilderKit framework requires additinal setup when testing.
-        k['env'] = os.environ.copy()
         k['env']['DYLD_FRAMEWORK_PATH'] = subprocess.check_output(['xcode-select', '-print-path']).decode('utf-8').strip() + '/Library/PrivateFrameworks/'
 
+
+    print(interpreter)
     p = subprocess.Popen(
             ["/usr/bin/arch", "-%s"%(arch,), interpreter, "-mcoverage", "run", "--branch", "--parallel", "setup.py", "test", "--verbosity=3"],
             cwd=proj_dir,
@@ -370,8 +373,8 @@ def main():
             setup_variant(py_ver, variant)
 
             with virtualenv("python{}".format(py_ver)) as interpreter:
-                # Install coverage to be able to have coverage reports
-                subprocess.check_call([interpreter, '-mpip', 'install', '-U', 'coverage', 'twine'])
+                # Install tools
+                subprocess.check_call([interpreter, '-mpip', 'install', '--no-warn-script-location', '-U', 'coverage', 'twine'])
 
                 # Install packages into the virtualenv
                 for project in build_order:
@@ -414,7 +417,7 @@ def main():
     # Save HTML coverage reports
     # TODO: Find a way to combine all of this in 1 big report
     with virtualenv("python{}".format(options.python_versions[-1])) as interpreter:
-       subprocess.check_call([interpreter, '-mpip', 'install', 'coverage'])
+       subprocess.check_call([interpreter, '-mpip', 'install', '--no-warn-script-location', 'coverage'])
        for project in build_order:
           proj_dir = os.path.join(TOP_DIR, project)
           if not os.path.exists(os.path.join(proj_dir, '.coverage')):
