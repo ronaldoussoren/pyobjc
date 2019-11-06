@@ -3,6 +3,16 @@ What's new in PyObjC
 
 An overview of the relevant changes in new, and older, releases.
 
+Version 6.1
+-----------
+
+* Updated for the macOS 10.15.1 SDK (Xcode 11.2)
+
+* Fix reference counting in -[OC_PythonData length], which resulted
+  in use-after-free.
+
+* #281: Fix problems found in pyobjc-core by the clang static analyser
+
 Version 6.0.1
 -------------
 

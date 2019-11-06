@@ -13,7 +13,7 @@ in pure Python. See our tutorial for an example of this.
 Release information
 -------------------
 
-PyObjC 6.0.1 was released on 2019-10-20. See the :doc:`changelog <changelog>` for more information. PyObjC 6.0 supports Python 3.6 and later.
+PyObjC 6.1 was released on 2019-11-06. See the :doc:`changelog <changelog>` for more information. PyObjC 6.1 supports Python 3.6 and later.
 
 PyObjC 5.3 was released on 2019-10-16. See the :doc:`changelog <changelog>` for more information.
 
